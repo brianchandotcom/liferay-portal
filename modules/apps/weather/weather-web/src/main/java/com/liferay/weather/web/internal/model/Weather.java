@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.weather.web.model;
+package com.liferay.weather.web.internal.model;
 
 import java.io.Serializable;
 

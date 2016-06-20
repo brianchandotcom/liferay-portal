@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.weather.web.portlet;
+package com.liferay.weather.web.internal.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.weather.web.constants.WeatherPortletKeys;
+import com.liferay.weather.web.internal.constants.WeatherPortletKeys;
 
 import javax.portlet.Portlet;
 

@@ -86,7 +86,7 @@ public interface DefaultDDMFormFieldTypeSettings
 			"placeholder=%enter-a-field-label",
 			"tooltip=%enter-a-descriptive-field-label-that-guides-users-to-enter-the-information-you-want"
 		},
-		required = true, type = "key_value"
+		type = "key_value"
 	)
 	public LocalizedValue label();
 

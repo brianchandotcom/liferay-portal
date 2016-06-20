@@ -14,17 +14,13 @@
 
 package com.liferay.wsrp.messaging;
 
+import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.HotDeployMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceTracker;
-import com.liferay.registry.ServiceTrackerCustomizer;
 import com.liferay.wsrp.jmx.WSRPConsumerPortletManager;
 import com.liferay.wsrp.service.WSRPConsumerPortletLocalServiceUtil;
 import com.liferay.wsrp.util.ExtensionHelperUtil;
@@ -32,8 +28,12 @@ import com.liferay.wsrp.util.ExtensionHelperUtil;
 import javax.management.MBeanServer;
 import javax.management.ObjectName;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Shuyang Zhou
@@ -49,18 +49,19 @@ public class WSRPMessageListener extends HotDeployMessageListener {
 		super(servletContextNames);
 	}
 
-	@Activate
-	protected void activate() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(
-			MBeanServer.class, new MBeanServerServiceTrackerCustomizer());
-
-		_serviceTracker.open();
-	}
-
 	public void destroy() {
 		_serviceTracker.close();
+	}
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_bundleContext = bundleContext;
+
+		_serviceTracker = ServiceTrackerFactory.open(
+			bundleContext, MBeanServer.class,
+			new MBeanServerServiceTrackerCustomizer());
+
+		_serviceTracker.open();
 	}
 
 	@Override
@@ -80,6 +81,7 @@ public class WSRPMessageListener extends HotDeployMessageListener {
 	private static final Log _log = LogFactoryUtil.getLog(
 		WSRPMessageListener.class);
 
+	private BundleContext _bundleContext;
 	private ServiceTracker<MBeanServer, MBeanServer> _serviceTracker;
 
 	private class MBeanServerServiceTrackerCustomizer
@@ -89,9 +91,8 @@ public class WSRPMessageListener extends HotDeployMessageListener {
 		public MBeanServer addingService(
 			ServiceReference<MBeanServer> serviceReference) {
 
-			Registry registry = RegistryUtil.getRegistry();
-
-			MBeanServer mBeanServer = registry.getService(serviceReference);
+			MBeanServer mBeanServer = _bundleContext.getService(
+				serviceReference);
 
 			try {
 				mBeanServer.registerMBean(

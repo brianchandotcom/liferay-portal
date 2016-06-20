@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.currency.converter.web.portlet.validator;
+package com.liferay.currency.converter.web.internal.portlet.validator;
 
-import com.liferay.currency.converter.web.constants.CurrencyConverterPortletKeys;
-import com.liferay.currency.converter.web.model.CurrencyConverter;
-import com.liferay.currency.converter.web.util.CurrencyConverterUtil;
+import com.liferay.currency.converter.web.internal.constants.CurrencyConverterPortletKeys;
+import com.liferay.currency.converter.web.internal.model.CurrencyConverter;
+import com.liferay.currency.converter.web.internal.util.CurrencyConverterUtil;
 
 import java.util.ArrayList;
 import java.util.List;

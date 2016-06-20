@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.youtube.web.upgrade;
+package com.liferay.youtube.web.internal.upgrade;
 
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.release.BaseUpgradeWebModuleRelease;
-import com.liferay.youtube.web.upgrade.v1_0_0.UpgradePortletId;
+import com.liferay.youtube.web.internal.upgrade.v1_0_0.UpgradePortletId;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;

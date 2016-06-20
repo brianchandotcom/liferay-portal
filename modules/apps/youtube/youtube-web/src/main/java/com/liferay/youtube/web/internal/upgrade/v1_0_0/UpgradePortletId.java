@@ -12,14 +12,21 @@
  * details.
  */
 
-package com.liferay.youtube.web.constants;
+package com.liferay.youtube.web.internal.upgrade.v1_0_0;
+
+import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;
+import com.liferay.youtube.web.internal.constants.YouTubePortletKeys;
 
 /**
  * @author Peter Fellwock
  */
-public class YouTubePortletKeys {
+public class UpgradePortletId extends BaseUpgradePortletId {
 
-	public static final String YOUTUBE =
-		"com_liferay_youtube_web_portlet_YouTubePortlet";
+	@Override
+	protected String[][] getRenamePortletIdsArray() {
+		return new String[][] {
+			new String[] {"1_WAR_youtubeportlet", YouTubePortletKeys.YOUTUBE}
+		};
+	}
 
 }

@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.youtube.web.portlet;
+package com.liferay.youtube.web.internal.portlet;
 
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.youtube.web.constants.YouTubePortletKeys;
+import com.liferay.youtube.web.internal.constants.YouTubePortletKeys;
 
 import javax.portlet.Portlet;
 

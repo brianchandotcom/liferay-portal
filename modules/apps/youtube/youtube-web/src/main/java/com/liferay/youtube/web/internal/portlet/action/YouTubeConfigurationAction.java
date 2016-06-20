@@ -12,21 +12,21 @@
  * details.
  */
 
-package com.liferay.youtube.web.upgrade.v1_0_0;
+package com.liferay.youtube.web.internal.portlet.action;
 
-import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;
-import com.liferay.youtube.web.constants.YouTubePortletKeys;
+import com.liferay.portal.kernel.portlet.ConfigurationAction;
+import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
+import com.liferay.youtube.web.internal.constants.YouTubePortletKeys;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Peter Fellwock
  */
-public class UpgradePortletId extends BaseUpgradePortletId {
-
-	@Override
-	protected String[][] getRenamePortletIdsArray() {
-		return new String[][] {
-			new String[] {"1_WAR_youtubeportlet", YouTubePortletKeys.YOUTUBE}
-		};
-	}
-
+@Component(
+	immediate = true,
+	property = {"javax.portlet.name=" + YouTubePortletKeys.YOUTUBE},
+	service = ConfigurationAction.class
+)
+public class YouTubeConfigurationAction extends DefaultConfigurationAction {
 }

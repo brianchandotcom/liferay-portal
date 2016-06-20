@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.weather.web.portlet.validator;
+package com.liferay.weather.web.internal.portlet.validator;
 
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.weather.web.constants.WeatherPortletKeys;
-import com.liferay.weather.web.model.Weather;
-import com.liferay.weather.web.util.WeatherUtil;
+import com.liferay.weather.web.internal.constants.WeatherPortletKeys;
+import com.liferay.weather.web.internal.model.Weather;
+import com.liferay.weather.web.internal.util.WeatherUtil;
 
 import java.util.ArrayList;
 import java.util.List;

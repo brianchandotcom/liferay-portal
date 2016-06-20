@@ -12,14 +12,24 @@
  * details.
  */
 
-package com.liferay.wiki.internal.translator;
+package com.liferay.wiki.translator.impl;
+
+import com.liferay.wiki.translator.BaseTranslator;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Jorge Ferrer
+ * @author Roberto Díaz
  */
+@Component(service = ClassicToCreoleTranslator.class)
 public class ClassicToCreoleTranslator extends BaseTranslator {
 
-	public ClassicToCreoleTranslator() {
+	@Activate
+	@Modified
+	protected void activate() {
 		initRegexps();
 	}
 

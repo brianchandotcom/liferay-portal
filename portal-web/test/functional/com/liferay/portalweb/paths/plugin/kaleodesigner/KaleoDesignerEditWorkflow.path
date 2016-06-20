@@ -355,7 +355,7 @@
 <!--SOURCE_KALEO_XML-->
 <tr>
 	<td>SOURCE_KALEO_XML_CONTENT</td>
-	<td>//div[contains(@id,'portlet_editorWrapper')]/textarea</td>
+	<td>//div[contains(@id,'KaleoDesignerPortlet')]/textarea</td>
 	<td></td>
 </tr>
 <tr>

@@ -711,8 +711,7 @@
 	</command>
 
 	<command name="viewPageFriendURLPG">
-		<execute function="AssertTextNotPresent" locator1="SitePagesEditPage#FRIENDLY_URL_FIELD" value1="${pageName}" />
-		<execute function="AssertTextEquals" locator1="SitePagesEditPage#FRIENDLY_URL_FIELD" value1="/2" />
+		<execute function="AssertTextEquals" locator1="SitePagesEditPage#FRIENDLY_URL_FIELD" value1="/${pageName}" />
 	</command>
 
 	<command name="viewPageLayout">

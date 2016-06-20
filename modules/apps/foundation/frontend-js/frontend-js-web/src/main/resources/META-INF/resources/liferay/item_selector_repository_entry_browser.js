@@ -75,7 +75,6 @@ AUI.add(
 								btnCloseCaption: instance.get('closeCaption'),
 								editItemURL: instance.get('editItemURL'),
 								links: '',
-								renderControls: false,
 								uploadItemURL: instance.get('uploadItemURL')
 							}
 						);

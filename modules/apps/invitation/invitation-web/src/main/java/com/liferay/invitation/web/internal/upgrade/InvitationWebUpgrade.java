@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.invitation.web.upgrade;
+package com.liferay.invitation.web.internal.upgrade;
 
-import com.liferay.invitation.web.constants.InvitationPortletKeys;
+import com.liferay.invitation.web.internal.constants.InvitationPortletKeys;
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;

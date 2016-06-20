@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.invitation.web.util;
+package com.liferay.invitation.web.internal.util;
 
 import com.liferay.petra.content.ContentUtil;
 import com.liferay.portal.kernel.exception.PortalException;

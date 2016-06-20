@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.invitation.web.portlet.action;
+package com.liferay.invitation.web.internal.portlet.action;
 
-import com.liferay.invitation.web.constants.InvitationPortletKeys;
+import com.liferay.invitation.web.internal.constants.InvitationPortletKeys;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.util.LocaleUtil;

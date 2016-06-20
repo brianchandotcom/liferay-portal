@@ -12,29 +12,36 @@
  * details.
  */
 
-package com.liferay.wiki.engine.jspwiki;
+package com.liferay.wiki.engine.jspwiki.internal;
 
 import com.ecyrd.jspwiki.WikiEngine;
-import com.ecyrd.jspwiki.WikiPage;
-import com.ecyrd.jspwiki.search.SearchProvider;
+import com.ecyrd.jspwiki.auth.authorize.Group;
+import com.ecyrd.jspwiki.auth.authorize.GroupDatabase;
 
-import java.util.Collection;
-import java.util.Collections;
+import java.security.Principal;
+
 import java.util.Properties;
 
 /**
  * @author Jorge Ferrer
  */
-public class LiferaySearchProvider implements SearchProvider {
+public class LiferayGroupDatabase implements GroupDatabase {
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	@Override
-	public Collection<WikiPage> findPages(String query) {
-		return Collections.emptyList();
+	public void commit() {
 	}
 
 	@Override
-	public String getProviderInfo() {
-		return LiferaySearchProvider.class.getName();
+	public void delete(Group group) {
+	}
+
+	@Override
+	public Group[] groups() {
+		return new Group[0];
 	}
 
 	@Override
@@ -42,11 +49,7 @@ public class LiferaySearchProvider implements SearchProvider {
 	}
 
 	@Override
-	public void pageRemoved(WikiPage page) {
-	}
-
-	@Override
-	public void reindexPage(WikiPage page) {
+	public void save(Group group, Principal modifier) {
 	}
 
 }

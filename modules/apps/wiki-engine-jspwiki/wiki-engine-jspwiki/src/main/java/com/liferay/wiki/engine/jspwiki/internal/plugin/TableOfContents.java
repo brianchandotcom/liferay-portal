@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.engine.jspwiki.plugin;
+package com.liferay.wiki.engine.jspwiki.internal.plugin;
 
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.parser.Heading;

@@ -12,44 +12,36 @@
  * details.
  */
 
-package com.liferay.wiki.engine.jspwiki;
+package com.liferay.wiki.engine.jspwiki.internal;
 
-import com.ecyrd.jspwiki.WikiEngine;
-import com.ecyrd.jspwiki.auth.authorize.Group;
-import com.ecyrd.jspwiki.auth.authorize.GroupDatabase;
+import com.ecyrd.jspwiki.WikiException;
 
-import java.security.Principal;
-
+import java.util.Collection;
 import java.util.Properties;
+
+import javax.servlet.ServletContext;
 
 /**
  * @author Jorge Ferrer
  */
-public class LiferayGroupDatabase implements GroupDatabase {
+public class LiferayJSPWikiEngine extends com.ecyrd.jspwiki.WikiEngine {
 
-	/**
-	 * @deprecated As of 7.0.0
-	 */
-	@Deprecated
-	@Override
-	public void commit() {
+	public LiferayJSPWikiEngine(Properties properties) throws WikiException {
+		super(properties);
+	}
+
+	public LiferayJSPWikiEngine(
+			ServletContext context, String appId, Properties props)
+		throws WikiException {
+
+		super(context, appId, props);
 	}
 
 	@Override
-	public void delete(Group group) {
-	}
+	public Collection<String> scanWikiLinks(
+		com.ecyrd.jspwiki.WikiPage page, String pageData) {
 
-	@Override
-	public Group[] groups() {
-		return new Group[0];
-	}
-
-	@Override
-	public void initialize(WikiEngine engine, Properties props) {
-	}
-
-	@Override
-	public void save(Group group, Principal modifier) {
+		return super.scanWikiLinks(page, pageData);
 	}
 
 }

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.engine.jspwiki;
+package com.liferay.wiki.engine.jspwiki.internal;
 
 import com.ecyrd.jspwiki.QueryItem;
 import com.ecyrd.jspwiki.WikiEngine;

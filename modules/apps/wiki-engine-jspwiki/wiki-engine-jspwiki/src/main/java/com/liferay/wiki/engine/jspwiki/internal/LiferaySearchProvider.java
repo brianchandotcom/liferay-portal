@@ -12,36 +12,41 @@
  * details.
  */
 
-package com.liferay.wiki.engine.jspwiki;
+package com.liferay.wiki.engine.jspwiki.internal;
 
-import com.ecyrd.jspwiki.WikiException;
+import com.ecyrd.jspwiki.WikiEngine;
+import com.ecyrd.jspwiki.WikiPage;
+import com.ecyrd.jspwiki.search.SearchProvider;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Properties;
-
-import javax.servlet.ServletContext;
 
 /**
  * @author Jorge Ferrer
  */
-public class LiferayJSPWikiEngine extends com.ecyrd.jspwiki.WikiEngine {
+public class LiferaySearchProvider implements SearchProvider {
 
-	public LiferayJSPWikiEngine(Properties properties) throws WikiException {
-		super(properties);
-	}
-
-	public LiferayJSPWikiEngine(
-			ServletContext context, String appId, Properties props)
-		throws WikiException {
-
-		super(context, appId, props);
+	@Override
+	public Collection<WikiPage> findPages(String query) {
+		return Collections.emptyList();
 	}
 
 	@Override
-	public Collection<String> scanWikiLinks(
-		com.ecyrd.jspwiki.WikiPage page, String pageData) {
+	public String getProviderInfo() {
+		return LiferaySearchProvider.class.getName();
+	}
 
-		return super.scanWikiLinks(page, pageData);
+	@Override
+	public void initialize(WikiEngine engine, Properties props) {
+	}
+
+	@Override
+	public void pageRemoved(WikiPage page) {
+	}
+
+	@Override
+	public void reindexPage(WikiPage page) {
 	}
 
 }

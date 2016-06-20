@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.engine.jspwiki.filters;
+package com.liferay.wiki.engine.jspwiki.internal.filters;
 
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiEngine;

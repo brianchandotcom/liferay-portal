@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.ip.geocoder.sample.web.portlet;
+package com.liferay.ip.geocoder.sample.web.internal.portlet;
 
 import com.liferay.ip.geocoder.IPGeocoder;
 import com.liferay.ip.geocoder.IPInfo;
-import com.liferay.ip.geocoder.sample.web.constants.IPGeocoderSamplePortletKeys;
+import com.liferay.ip.geocoder.sample.web.internal.constants.IPGeocoderSamplePortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.PortalUtil;
 

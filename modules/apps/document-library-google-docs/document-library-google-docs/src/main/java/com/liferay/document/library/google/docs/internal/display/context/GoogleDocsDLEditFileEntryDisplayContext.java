@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.document.library.google.docs.display.context;
+package com.liferay.document.library.google.docs.internal.display.context;
 
 import com.liferay.document.library.display.context.BaseDLEditFileEntryDisplayContext;
 import com.liferay.document.library.display.context.DLEditFileEntryDisplayContext;
 import com.liferay.document.library.display.context.DLFilePicker;
-import com.liferay.document.library.google.docs.util.GoogleDocsConstants;
+import com.liferay.document.library.google.docs.internal.util.GoogleDocsConstants;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
 import com.liferay.portal.kernel.exception.PortalException;

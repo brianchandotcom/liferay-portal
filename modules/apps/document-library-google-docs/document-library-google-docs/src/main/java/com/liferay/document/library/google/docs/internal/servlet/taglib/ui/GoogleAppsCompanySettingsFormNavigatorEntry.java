@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.google.docs.servlet.taglib.ui;
+package com.liferay.document.library.google.docs.internal.servlet.taglib.ui;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.BaseJSPFormNavigatorEntry;

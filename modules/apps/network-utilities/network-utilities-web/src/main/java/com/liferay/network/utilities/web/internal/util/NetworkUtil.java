@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.network.utilities.web.util;
+package com.liferay.network.utilities.web.internal.util;
 
-import com.liferay.network.utilities.web.model.DNSLookup;
-import com.liferay.network.utilities.web.model.Whois;
+import com.liferay.network.utilities.web.internal.model.DNSLookup;
+import com.liferay.network.utilities.web.internal.model.Whois;
 import com.liferay.portal.kernel.webcache.WebCacheItem;
 import com.liferay.portal.kernel.webcache.WebCachePoolUtil;
 

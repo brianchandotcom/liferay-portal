@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dictionary.web.constants;
+package com.liferay.dictionary.web.internal.constants;
 
 /**
  * @author Cristina González

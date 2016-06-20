@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.unit.converter.web.model;
+package com.liferay.unit.converter.web.internal.model;
 
 /**
  * @author James Lefeu

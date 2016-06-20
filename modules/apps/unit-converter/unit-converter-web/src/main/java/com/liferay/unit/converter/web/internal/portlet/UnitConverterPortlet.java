@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.unit.converter.web.portlet;
+package com.liferay.unit.converter.web.internal.portlet;
 
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;

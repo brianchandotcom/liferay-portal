@@ -483,6 +483,12 @@
 		</execute>
 	</command>
 
+	<command name="localizedPG">
+		<var name="key_pageLocale" value="${pageLocale}" />
+
+		<execute function="Click" locator1="Link#PAGE_LOCALE"  value1="${pageLocale}" />
+	</command>
+
 	<command name="openURLLocale">
 		<execute function="Open" locator1="${localizationPageURL}" />
 

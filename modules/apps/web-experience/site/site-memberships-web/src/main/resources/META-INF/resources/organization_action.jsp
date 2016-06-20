@@ -29,11 +29,11 @@ Organization organization = (Organization)row.getObject();
 		<portlet:param name="removeOrganizationId" value="<%= String.valueOf(organization.getOrganizationId()) %>" />
 	</portlet:actionURL>
 
-	<liferay-ui:icon
+	<liferay-ui:icon-delete
 		icon="trash"
 		linkCssClass="icon-monospaced text-default"
-		markupView="lexicon"
 		message="remove-membership"
+		showIcon="<%= true %>"
 		url="<%= deleteGroupOrganizationsURL %>"
 	/>
 </c:if>

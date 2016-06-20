@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.loan.calculator.web.portlet;
+package com.liferay.loan.calculator.web.internal.portlet;
 
-import com.liferay.loan.calculator.web.constants.LoanCalculatorPortletKeys;
+import com.liferay.loan.calculator.web.internal.constants.LoanCalculatorPortletKeys;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 

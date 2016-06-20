@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.loan.calculator.web.upgrade;
+package com.liferay.loan.calculator.web.internal.upgrade;
 
-import com.liferay.loan.calculator.web.constants.LoanCalculatorPortletKeys;
+import com.liferay.loan.calculator.web.internal.constants.LoanCalculatorPortletKeys;
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;

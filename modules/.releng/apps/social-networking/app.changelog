@@ -1,0 +1,12 @@
+#
+# Liferay App Version 3.0.0
+#
+
+app.artifacts-3.0.0=\
+	com.liferay.social.networking.api-2.0.2.jar,\
+	com.liferay.social.networking.service-2.0.3.jar,\
+	com.liferay.social.networking.web-1.0.5.jar
+
+app.change.log-3.0.0=LPS-61099 LPS-61420 LPS-64031 LPS-64713 LPS-65135 LPS-65225 LPS-65810 LPS-66050 LPS-66416
+
+app.git.id-3.0.0=5b7d3a81c8b9dcb45d517b691fe908eb54fa047b

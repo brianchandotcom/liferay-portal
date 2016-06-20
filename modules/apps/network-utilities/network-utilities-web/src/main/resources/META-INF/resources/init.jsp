@@ -23,9 +23,9 @@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.network.utilities.web.model.DNSLookup" %><%@
-page import="com.liferay.network.utilities.web.model.Whois" %><%@
-page import="com.liferay.network.utilities.web.util.NetworkUtil" %><%@
+<%@ page import="com.liferay.network.utilities.web.internal.model.DNSLookup" %><%@
+page import="com.liferay.network.utilities.web.internal.model.Whois" %><%@
+page import="com.liferay.network.utilities.web.internal.util.NetworkUtil" %><%@
 page import="com.liferay.portal.kernel.servlet.SessionErrors" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@

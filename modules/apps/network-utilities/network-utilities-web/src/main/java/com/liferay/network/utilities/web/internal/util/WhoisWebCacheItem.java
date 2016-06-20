@@ -12,73 +12,67 @@
  * details.
  */
 
-package com.liferay.network.utilities.web.util;
+package com.liferay.network.utilities.web.internal.util;
 
-import com.liferay.network.utilities.web.model.DNSLookup;
+import com.liferay.network.utilities.web.internal.model.Whois;
+import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.webcache.WebCacheException;
 import com.liferay.portal.kernel.webcache.WebCacheItem;
 
-import java.net.InetAddress;
+import java.io.InputStreamReader;
+import java.io.PrintStream;
+
+import java.net.Socket;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class DNSLookupWebCacheItem implements WebCacheItem {
+public class WhoisWebCacheItem implements WebCacheItem {
 
-	public DNSLookupWebCacheItem(String domain) {
+	public static final String WHOIS_SERVER = "whois.geektools.com";
+
+	public static final int WHOIS_SERVER_PORT = 43;
+
+	public WhoisWebCacheItem(String domain) {
 		_domain = domain;
 	}
 
 	@Override
 	public Object convert(String key) throws WebCacheException {
-		DNSLookup dnsLookup = null;
+		Whois whois = null;
 
-		try {
-			String results = null;
+		try (Socket socket = new Socket(WHOIS_SERVER, WHOIS_SERVER_PORT);
+			UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(
+					new InputStreamReader(socket.getInputStream()))) {
 
-			char[] array = _domain.trim().toCharArray();
+			PrintStream out = new PrintStream(socket.getOutputStream());
 
-			for (int i = 0; i < array.length; i++) {
-				if ((array[i] != '.') && !Character.isDigit(array[i])) {
-					InetAddress ia = InetAddress.getByName(_domain);
+			out.println(_domain);
 
-					results = ia.getHostAddress();
+			StringBundler sb = new StringBundler();
+			String line = null;
 
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				if (line.startsWith("Results ")) {
 					break;
 				}
+
+				sb.append(line).append("\n");
 			}
 
-			if (results == null) {
-				InetAddress[] ia = InetAddress.getAllByName(_domain);
-
-				if (ia.length == 0) {
-					results = StringPool.BLANK;
-				}
-				else {
-					StringBundler sb = new StringBundler(ia.length * 2 - 1);
-
-					for (int i = 0; i < ia.length; i++) {
-						sb.append(ia[i].getHostName());
-
-						if ((i + 1) <= ia.length) {
-							sb.append(StringPool.COMMA);
-						}
-					}
-
-					results = sb.toString();
-				}
-			}
-
-			dnsLookup = new DNSLookup(_domain, results);
+			whois = new Whois(
+				_domain,
+				StringUtil.replace(sb.toString().trim(), "\n\n", "\n"));
 		}
 		catch (Exception e) {
 			throw new WebCacheException(_domain + " " + e.toString());
 		}
 
-		return dnsLookup;
+		return whois;
 	}
 
 	@Override

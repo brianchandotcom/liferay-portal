@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.network.utilities.web.portlet;
+package com.liferay.network.utilities.web.internal.portlet;
 
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;

@@ -12,14 +12,40 @@
  * details.
  */
 
-package com.liferay.network.utilities.web.constants;
+package com.liferay.network.utilities.web.internal.model;
+
+import java.io.Serializable;
 
 /**
- * @author Pei-Jung Lan
+ * @author Brian Wing Shun Chan
  */
-public class NetworkUtilitiesPortletKeys {
+public class Whois implements Serializable {
 
-	public static final String NETWORK_UTILITIES =
-		"com_liferay_network_utilities_web_portlet_NetworkUtilitiesPortlet";
+	public Whois() {
+	}
+
+	public Whois(String domain, String results) {
+		_domain = domain;
+		_results = results;
+	}
+
+	public String getDomain() {
+		return _domain;
+	}
+
+	public String getResults() {
+		return _results;
+	}
+
+	public void setDomain(String domain) {
+		_domain = domain;
+	}
+
+	public void setResults(String results) {
+		_results = results;
+	}
+
+	private String _domain;
+	private String _results;
 
 }

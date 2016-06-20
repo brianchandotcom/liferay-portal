@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.network.utilities.web.upgrade;
+package com.liferay.network.utilities.web.internal.upgrade;
 
-import com.liferay.network.utilities.web.constants.NetworkUtilitiesPortletKeys;
+import com.liferay.network.utilities.web.internal.constants.NetworkUtilitiesPortletKeys;
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;

@@ -187,7 +187,6 @@
 		</execute>
 
 		<execute macro="Page#viewPageFriendURLPG">
-			<var name="localizedFriendlyURL" value="/german" />
 			<var name="pageName" value="page-name" />
 		</execute>
 	</command>

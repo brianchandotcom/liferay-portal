@@ -443,11 +443,10 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 
 				resource.write(byteArrayOutputStream);
 
-				try (ByteArrayInputStream byteArrayInputStream =
-						new ByteArrayInputStream(
-							byteArrayOutputStream.toByteArray())) {
+				try (InputStream inputStream = new ByteArrayInputStream(
+						byteArrayOutputStream.toByteArray())) {
 
-					Jar classPathJar = new Jar(entry, byteArrayInputStream);
+					Jar classPathJar = new Jar(entry, inputStream);
 
 					if (containsTLD(analyzer, classPathJar, root, uri)) {
 						return true;

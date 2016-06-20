@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.translator.web.model;
+package com.liferay.translator.web.internal.model;
 
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;

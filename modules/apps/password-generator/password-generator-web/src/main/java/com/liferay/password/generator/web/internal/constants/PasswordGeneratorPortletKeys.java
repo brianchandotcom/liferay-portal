@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.password.generator.web.constants;
+package com.liferay.password.generator.web.internal.constants;
 
 /**
  * @author Cristina González

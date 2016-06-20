@@ -710,7 +710,7 @@
 		<execute function="Refresh" />
 	</command>
 
-	<command name="viewPageFriendURLPG">
+	<command name="viewPageFriendlyURLPG">
 		<execute function="AssertTextEquals" locator1="SitePagesEditPage#FRIENDLY_URL_FIELD" value1="/${pageName}" />
 	</command>
 

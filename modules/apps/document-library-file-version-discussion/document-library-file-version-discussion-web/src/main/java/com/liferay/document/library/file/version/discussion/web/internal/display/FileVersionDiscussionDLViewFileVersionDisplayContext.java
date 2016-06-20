@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.file.version.discussion.web.display;
+package com.liferay.document.library.file.version.discussion.web.internal.display;
 
 import com.liferay.document.library.display.context.BaseDLViewFileVersionDisplayContext;
 import com.liferay.document.library.display.context.DLViewFileVersionDisplayContext;

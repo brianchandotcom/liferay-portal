@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.file.version.discussion.web.util;
+package com.liferay.document.library.file.version.discussion.web.internal.util;
 
 import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.util.DLFileVersionPolicy;

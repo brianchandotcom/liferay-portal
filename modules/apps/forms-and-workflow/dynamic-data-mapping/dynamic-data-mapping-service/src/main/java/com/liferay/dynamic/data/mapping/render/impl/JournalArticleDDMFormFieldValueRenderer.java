@@ -26,6 +26,8 @@ import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Locale;
 
@@ -53,6 +55,10 @@ public class JournalArticleDDMFormFieldValueRenderer
 
 				String className = jsonObject.getString("className");
 				long classPK = jsonObject.getLong("classPK");
+
+				if (Validator.isNull(className) && Validator.isNull(classPK)) {
+					return StringPool.BLANK;
+				}
 
 				try {
 					AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(

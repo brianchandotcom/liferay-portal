@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.web.form.web.portlet;
+package com.liferay.web.form.web.internal.portlet;
 
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.expando.kernel.model.ExpandoRow;
@@ -50,8 +50,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.web.form.web.configuration.WebFormGroupServiceConfiguration;
-import com.liferay.web.form.web.constants.WebFormPortletKeys;
-import com.liferay.web.form.web.util.WebFormUtil;
+import com.liferay.web.form.web.internal.constants.WebFormPortletKeys;
+import com.liferay.web.form.web.internal.util.WebFormUtil;
 
 import java.util.ArrayList;
 import java.util.HashSet;

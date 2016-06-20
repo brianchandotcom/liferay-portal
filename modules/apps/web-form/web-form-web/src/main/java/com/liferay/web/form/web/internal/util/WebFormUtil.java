@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.web.form.web.util;
+package com.liferay.web.form.web.internal.util;
 
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.expando.kernel.exception.NoSuchTableException;

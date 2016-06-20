@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.web.form.web.portlet.action;
+package com.liferay.web.form.web.internal.portlet.action;
 
 import com.liferay.expando.kernel.exception.ColumnNameException;
 import com.liferay.expando.kernel.exception.DuplicateColumnNameException;
@@ -27,8 +27,8 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.web.form.web.constants.WebFormPortletKeys;
-import com.liferay.web.form.web.util.WebFormUtil;
+import com.liferay.web.form.web.internal.constants.WebFormPortletKeys;
+import com.liferay.web.form.web.internal.util.WebFormUtil;
 
 import java.util.HashSet;
 import java.util.List;

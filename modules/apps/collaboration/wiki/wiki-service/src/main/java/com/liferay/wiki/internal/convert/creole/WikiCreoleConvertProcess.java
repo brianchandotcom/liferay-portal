@@ -12,16 +12,16 @@
  * details.
  */
 
-package com.liferay.wiki.internal.convert.creole;
+package com.liferay.wiki.convert.creole;
 
 import com.liferay.portal.convert.BaseConvertProcess;
 import com.liferay.portal.convert.ConvertProcess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.util.MaintenanceUtil;
-import com.liferay.wiki.internal.translator.ClassicToCreoleTranslator;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiPageLocalService;
+import com.liferay.wiki.translator.impl.ClassicToCreoleTranslator;
 
 import java.util.List;
 
@@ -62,8 +62,6 @@ public class WikiCreoleConvertProcess extends BaseConvertProcess {
 	protected void doConvert() throws Exception {
 		List<WikiPage> pages = _wikiPageLocalService.getPages("classic_wiki");
 
-		ClassicToCreoleTranslator translator = new ClassicToCreoleTranslator();
-
 		MaintenanceUtil.appendStatus(
 			"Converting " + pages.size() +
 				" Wiki pages from Classic Wiki to Creole format");
@@ -77,10 +75,18 @@ public class WikiCreoleConvertProcess extends BaseConvertProcess {
 
 			page.setFormat("creole");
 
-			page.setContent(translator.translate(page.getContent()));
+			page.setContent(
+				_classicToCreoleTranslator.translate(page.getContent()));
 
 			_wikiPageLocalService.updateWikiPage(page);
 		}
+	}
+
+	@Reference(unbind = "-")
+	protected void setClassicToCreoleTranslator(
+		ClassicToCreoleTranslator classicToCreoleTranslator) {
+
+		_classicToCreoleTranslator = classicToCreoleTranslator;
 	}
 
 	@Reference(unbind = "-")
@@ -93,6 +99,7 @@ public class WikiCreoleConvertProcess extends BaseConvertProcess {
 	private static final Log _log = LogFactoryUtil.getLog(
 		WikiCreoleConvertProcess.class);
 
+	private ClassicToCreoleTranslator _classicToCreoleTranslator;
 	private WikiPageLocalService _wikiPageLocalService;
 
 }

@@ -12,28 +12,29 @@
  * details.
  */
 
-package com.liferay.wiki.internal.translator;
+package com.liferay.wiki.translator.impl;
 
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.wiki.importer.impl.mediawiki.MediaWikiImporter;
+import com.liferay.wiki.translator.BaseTranslator;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Jorge Ferrer
  * @author Daniel Kocsis
  */
+@Component(service = MediaWikiToCreoleTranslator.class)
 public class MediaWikiToCreoleTranslator extends BaseTranslator {
 
 	public static final String TABLE_OF_CONTENTS = "<<TableOfContents>>\n\n";
-
-	public MediaWikiToCreoleTranslator() {
-		initRegexps();
-		initNowikiRegexps();
-	}
 
 	public boolean isStrictImportMode() {
 		return _strictImportMode;
@@ -41,6 +42,13 @@ public class MediaWikiToCreoleTranslator extends BaseTranslator {
 
 	public void setStrictImportMode(boolean strictImportMode) {
 		_strictImportMode = strictImportMode;
+	}
+
+	@Activate
+	@Modified
+	protected void activate() {
+		initRegexps();
+		initNowikiRegexps();
 	}
 
 	protected void initNowikiRegexps() {

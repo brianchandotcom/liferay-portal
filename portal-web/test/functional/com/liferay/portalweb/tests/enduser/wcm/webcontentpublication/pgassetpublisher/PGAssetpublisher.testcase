@@ -340,7 +340,7 @@
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewMultipleSiteScopesAddDropdowns">
-			<var name="siteName1" value="Liferay" />
+			<var name="siteName1" value="${siteName}" />
 			<var name="siteName2" value="Test Site" />
 		</execute>
 	</command>

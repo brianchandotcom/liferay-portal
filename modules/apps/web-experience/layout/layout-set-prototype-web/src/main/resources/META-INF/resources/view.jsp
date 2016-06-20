@@ -89,7 +89,7 @@
 			<c:choose>
 				<c:when test="<%= layoutSetPrototypeDisplayContext.isDescriptiveView() %>">
 					<liferay-ui:search-container-column-icon
-						icon="sites"
+						icon="site-template"
 						toggleRowChecker="<%= true %>"
 					/>
 
@@ -138,7 +138,7 @@
 							actionJsp="/layout_set_prototype_action.jsp"
 							actionJspServletContext="<%= application %>"
 							cssClass="entry-display-style"
-							icon="sites"
+							icon="site-template"
 							resultRow="<%= row %>"
 							rowChecker="<%= searchContainer.getRowChecker() %>"
 							title="<%= layoutSetPrototype.getName(locale) %>"

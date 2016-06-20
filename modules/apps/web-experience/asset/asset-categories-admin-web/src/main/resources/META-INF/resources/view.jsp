@@ -103,7 +103,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabul
 			<c:choose>
 				<c:when test='<%= Objects.equals(assetCategoriesDisplayContext.getDisplayStyle(), "descriptive") %>'>
 					<liferay-ui:search-container-column-icon
-						icon="categories"
+						icon="vocabulary"
 						toggleRowChecker="<%= true %>"
 					/>
 
@@ -145,7 +145,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabul
 						<liferay-frontend:icon-vertical-card
 							actionJsp="/vocabulary_action.jsp"
 							actionJspServletContext="<%= application %>"
-							icon="categories"
+							icon="vocabulary"
 							resultRow="<%= row %>"
 							rowChecker="<%= searchContainer.getRowChecker() %>"
 							subtitle="<%= vocabulary.getDescription(locale) %>"

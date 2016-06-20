@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.amazon.rankings.web.portlet.validator;
+package com.liferay.amazon.rankings.web.internal.portlet.validator;
 
 import com.liferay.amazon.rankings.web.configuration.AmazonRankingsConfiguration;
-import com.liferay.amazon.rankings.web.constants.AmazonRankingsPortletKeys;
-import com.liferay.amazon.rankings.web.model.AmazonRankings;
-import com.liferay.amazon.rankings.web.util.AmazonRankingsUtil;
+import com.liferay.amazon.rankings.web.internal.constants.AmazonRankingsPortletKeys;
+import com.liferay.amazon.rankings.web.internal.model.AmazonRankings;
+import com.liferay.amazon.rankings.web.internal.util.AmazonRankingsUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

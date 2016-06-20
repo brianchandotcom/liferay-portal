@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.amazon.rankings.web.upgrade;
+package com.liferay.amazon.rankings.web.internal.upgrade;
 
-import com.liferay.amazon.rankings.web.constants.AmazonRankingsPortletKeys;
+import com.liferay.amazon.rankings.web.internal.constants.AmazonRankingsPortletKeys;
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;

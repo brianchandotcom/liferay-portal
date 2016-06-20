@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.amazon.rankings.web.constants;
+package com.liferay.amazon.rankings.web.internal.constants;
 
 /**
  * @author Eudaldo Alonso

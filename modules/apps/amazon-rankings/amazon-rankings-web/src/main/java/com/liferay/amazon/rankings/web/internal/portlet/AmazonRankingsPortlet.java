@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.amazon.rankings.web.portlet;
+package com.liferay.amazon.rankings.web.internal.portlet;
 
 import com.liferay.amazon.rankings.web.configuration.AmazonRankingsConfiguration;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;

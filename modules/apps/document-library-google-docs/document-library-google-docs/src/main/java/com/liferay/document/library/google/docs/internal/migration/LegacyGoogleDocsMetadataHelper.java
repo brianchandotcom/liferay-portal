@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.google.docs.migration;
+package com.liferay.document.library.google.docs.internal.migration;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;

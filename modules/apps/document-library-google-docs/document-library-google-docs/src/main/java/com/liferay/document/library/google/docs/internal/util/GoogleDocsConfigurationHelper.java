@@ -12,14 +12,29 @@
  * details.
  */
 
-package com.liferay.document.library.google.docs.display.context;
+package com.liferay.document.library.google.docs.internal.util;
+
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
+
+import javax.portlet.PortletPreferences;
 
 /**
  * @author Iván Zaera
  */
-public class GoogleDocsUIItemKeys {
+public class GoogleDocsConfigurationHelper {
 
-	public static final String EDIT_IN_GOOGLE =
-		GoogleDocsUIItemKeys.class.getName() + "#edit-in-google-docs";
+	public GoogleDocsConfigurationHelper(long companyId) {
+		_portletPreferences = PrefsPropsUtil.getPreferences(companyId);
+	}
+
+	public String getGoogleAppsAPIKey() {
+		return _portletPreferences.getValue("googleAppsAPIKey", "");
+	}
+
+	public String getGoogleClientId() {
+		return _portletPreferences.getValue("googleClientId", "");
+	}
+
+	private final PortletPreferences _portletPreferences;
 
 }

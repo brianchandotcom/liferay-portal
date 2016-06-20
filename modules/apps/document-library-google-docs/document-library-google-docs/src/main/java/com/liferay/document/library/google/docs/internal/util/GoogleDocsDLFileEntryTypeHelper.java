@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.google.docs.util;
+package com.liferay.document.library.google.docs.internal.util;
 
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileEntryType;

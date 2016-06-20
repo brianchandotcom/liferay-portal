@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.document.library.google.docs.display.context;
+package com.liferay.document.library.google.docs.internal.display.context;
 
-import com.liferay.document.library.google.docs.util.GoogleDocsMetadataHelper;
+import com.liferay.document.library.google.docs.internal.util.GoogleDocsMetadataHelper;
 import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalService;

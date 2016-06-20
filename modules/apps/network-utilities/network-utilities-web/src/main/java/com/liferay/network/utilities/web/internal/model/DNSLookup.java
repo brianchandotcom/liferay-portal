@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.network.utilities.web.model;
+package com.liferay.network.utilities.web.internal.model;
 
 import java.io.Serializable;
 

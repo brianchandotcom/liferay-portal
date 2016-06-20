@@ -147,17 +147,12 @@ public class DocumentLibraryConvertProcessTest {
 
 	@Test
 	public void testMigrateImages() throws Exception {
-		Image image = addImage();
+		_image = addImage();
 
-		try {
-			_convertProcess.convert();
+		_convertProcess.convert();
 
-			DLContentLocalServiceUtil.getContent(
-				0, 0, image.getImageId() + ".jpg");
-		}
-		finally {
-			ImageLocalServiceUtil.deleteImage(image);
-		}
+		DLContentLocalServiceUtil.getContent(
+			0, 0, _image.getImageId() + ".jpg");
 	}
 
 	@Test
@@ -334,6 +329,9 @@ public class DocumentLibraryConvertProcessTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@DeleteAfterTestRun
+	private Image _image;
 
 	private Store _sourceStore;
 

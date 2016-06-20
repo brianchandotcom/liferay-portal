@@ -48,7 +48,6 @@ import com.liferay.wsrp.exception.WSRPConsumerPortletHandleException;
 import com.liferay.wsrp.exception.WSRPConsumerPortletNameException;
 import com.liferay.wsrp.model.WSRPConsumer;
 import com.liferay.wsrp.model.WSRPConsumerPortlet;
-import com.liferay.wsrp.service.ClpSerializer;
 import com.liferay.wsrp.service.base.WSRPConsumerPortletLocalServiceBaseImpl;
 import com.liferay.wsrp.util.ExtensionHelperUtil;
 import com.liferay.wsrp.util.LocalizedStringUtil;
@@ -515,12 +514,13 @@ public class WSRPConsumerPortletLocalServiceImpl
 
 		portlet.setCompanyId(companyId);
 		portlet.setPortletId(portletId);
+/**
 
 		PortletApp portletApp = portletLocalService.getPortletApp(
 			ClpSerializer.getServletContextName());
 
 		portlet.setPortletApp(portletApp);
-
+**/
 		portlet.setPortletName(portletId);
 		portlet.setDisplayName(portletId);
 

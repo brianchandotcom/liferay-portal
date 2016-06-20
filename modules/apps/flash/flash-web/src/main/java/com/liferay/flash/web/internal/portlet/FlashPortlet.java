@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.flash.web.portlet;
+package com.liferay.flash.web.internal.portlet;
 
-import com.liferay.flash.web.constants.FlashPortletKeys;
+import com.liferay.flash.web.internal.constants.FlashPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 import javax.portlet.Portlet;

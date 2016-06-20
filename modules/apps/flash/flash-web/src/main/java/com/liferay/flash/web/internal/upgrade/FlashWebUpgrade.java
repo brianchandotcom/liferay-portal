@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.flash.web.upgrade;
+package com.liferay.flash.web.internal.upgrade;
 
-import com.liferay.flash.web.upgrade.v1_0_0.UpgradePortletId;
+import com.liferay.flash.web.internal.upgrade.v1_0_0.UpgradePortletId;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.UpgradeException;

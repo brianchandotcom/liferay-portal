@@ -160,6 +160,7 @@
 
 		<execute macro="SiteTemplatesNavigator#gotoSiteTemplatesPage">
 			<var name="pageName" value="Page1 Name" />
+			<var name="siteName" value="${siteName}" />
 			<var name="siteTemplateName" value="Site Template Name" />
 		</execute>
 
@@ -208,6 +209,7 @@
 		</execute>
 
 		<execute macro="SiteTemplates#gotoViewPages">
+			<var name="siteName" value="${siteName}" />
 			<var name="siteTemplateName" value="Site Template Name" />
 		</execute>
 
@@ -290,6 +292,7 @@
 		</execute>
 
 		<execute macro="SiteTemplates#gotoViewPages">
+			<var name="siteName" value="${siteName}" />
 			<var name="siteTemplateName" value="Site Template Name" />
 		</execute>
 
@@ -817,6 +820,7 @@
 		</execute>
 
 		<execute macro="SiteTemplates#gotoViewPages">
+			<var name="siteName" value="${siteName}" />
 			<var name="siteTemplateName" value="Site Template Name" />
 		</execute>
 
@@ -829,6 +833,7 @@
 		</execute>
 
 		<execute macro="SiteTemplates#gotoViewPages">
+			<var name="siteName" value="${siteName}" />
 			<var name="siteTemplateName" value="Site Template Name" />
 		</execute>
 
@@ -916,6 +921,7 @@
 		</execute>
 
 		<execute macro="SiteTemplates#gotoViewPages">
+			<var name="siteName" value="${siteName}" />
 			<var name="siteTemplateName" value="Site Template Name" />
 		</execute>
 
@@ -929,6 +935,7 @@
 		</execute>
 
 		<execute macro="SiteTemplates#gotoViewPages">
+			<var name="siteName" value="${siteName}" />
 			<var name="siteTemplateName" value="Site Template Name" />
 		</execute>
 

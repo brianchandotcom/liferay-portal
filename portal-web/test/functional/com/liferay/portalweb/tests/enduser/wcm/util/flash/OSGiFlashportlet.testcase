@@ -26,7 +26,5 @@
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Flash" />
 		</execute>
-
-		<execute function="AntCommand#antCommand" locator1="build-test.xml" value1="remove-plugin -Dplugin.name=flash-web" />
 	</command>
 </definition>

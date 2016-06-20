@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.google.maps.web.upgrade;
+package com.liferay.google.maps.web.internal.upgrade;
 
-import com.liferay.google.maps.web.upgrade.v1_0_0.UpgradePortletId;
+import com.liferay.google.maps.web.internal.upgrade.v1_0_0.UpgradePortletId;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.UpgradeException;

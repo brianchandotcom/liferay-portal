@@ -14,6 +14,7 @@
 
 package com.liferay.wsrp.consumer.portlet;
 
+import com.liferay.petra.encryptor.Encryptor;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Address;
@@ -28,11 +29,11 @@ import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
-import com.liferay.portal.kernel.service.AddressLocalServiceUtil;
-import com.liferay.portal.kernel.service.EmailAddressLocalServiceUtil;
-import com.liferay.portal.kernel.service.ListTypeServiceUtil;
-import com.liferay.portal.kernel.service.PhoneLocalServiceUtil;
-import com.liferay.portal.kernel.service.WebsiteLocalServiceUtil;
+import com.liferay.portal.kernel.service.AddressLocalService;
+import com.liferay.portal.kernel.service.EmailAddressLocalService;
+import com.liferay.portal.kernel.service.ListTypeService;
+import com.liferay.portal.kernel.service.PhoneLocalService;
+import com.liferay.portal.kernel.service.WebsiteLocalService;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
@@ -52,7 +53,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TransientValue;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
-import com.liferay.util.Encryptor;
 import com.liferay.wsrp.axis.WSRPHTTPSender;
 import com.liferay.wsrp.constants.WSRPPortletKeys;
 import com.liferay.wsrp.model.WSRPConsumer;
@@ -153,6 +153,7 @@ import oasis.names.tc.wsrp.v2.types.UserProfile;
 import org.apache.axis.message.MessageElement;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -633,7 +634,7 @@ public class ConsumerPortlet extends MVCPortlet {
 		throws Exception {
 
 		List<EmailAddress> emailAddresses =
-			EmailAddressLocalServiceUtil.getEmailAddresses(
+			_emailAddressLocalService.getEmailAddresses(
 				user.getCompanyId(),
 				com.liferay.portal.kernel.model.Contact.class.getName(),
 				user.getContactId());
@@ -654,7 +655,7 @@ public class ConsumerPortlet extends MVCPortlet {
 	protected String getOnlineUri(User user, String listTypeName)
 		throws Exception {
 
-		List<Website> websites = WebsiteLocalServiceUtil.getWebsites(
+		List<Website> websites = _websiteLocalService.getWebsites(
 			user.getCompanyId(),
 			com.liferay.portal.kernel.model.Contact.class.getName(),
 			user.getContactId());
@@ -683,7 +684,7 @@ public class ConsumerPortlet extends MVCPortlet {
 		com.liferay.portal.kernel.model.Contact contact = user.getContact();
 
 		try {
-			ListType listType = ListTypeServiceUtil.getListType(
+			ListType listType = _listTypeService.getListType(
 				contact.getPrefixId());
 
 			personName.setPrefix(listType.getName());
@@ -695,7 +696,7 @@ public class ConsumerPortlet extends MVCPortlet {
 		}
 
 		try {
-			ListType listType = ListTypeServiceUtil.getListType(
+			ListType listType = _listTypeService.getListType(
 				contact.getSuffixId());
 
 			personName.setSuffix(listType.getName());
@@ -716,7 +717,7 @@ public class ConsumerPortlet extends MVCPortlet {
 	protected Postal getPostal(User user, String listTypeName)
 		throws Exception {
 
-		List<Address> addresses = AddressLocalServiceUtil.getAddresses(
+		List<Address> addresses = _addressLocalService.getAddresses(
 			user.getCompanyId(),
 			com.liferay.portal.kernel.model.Contact.class.getName(),
 			user.getContactId());
@@ -920,7 +921,7 @@ public class ConsumerPortlet extends MVCPortlet {
 	protected TelephoneNum getTelephoneNum(User user, String listTypeName)
 		throws Exception {
 
-		List<Phone> phones = PhoneLocalServiceUtil.getPhones(
+		List<Phone> phones = _phoneLocalService.getPhones(
 			user.getCompanyId(),
 			com.liferay.portal.kernel.model.Contact.class.getName(),
 			user.getContactId());
@@ -2069,6 +2070,37 @@ public class ConsumerPortlet extends MVCPortlet {
 		actionResponse.sendRedirect(redirectURL);
 	}
 
+	@Reference(unbind = "-")
+	protected void setAddressLocalService(
+		AddressLocalService addressLocalService) {
+
+		_addressLocalService = addressLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setEmailAddressLocalService(
+		EmailAddressLocalService emailAddressLocalService) {
+
+		_emailAddressLocalService = emailAddressLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setListTypeService(ListTypeService listTypeService) {
+		_listTypeService = listTypeService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setPhoneLocalService(PhoneLocalService phoneLocalService) {
+		_phoneLocalService = phoneLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setWebsiteLocalService(
+		WebsiteLocalService websiteLocalService) {
+
+		_websiteLocalService = websiteLocalService;
+	}
+
 	protected void updateSessionContext(
 		PortletSession portletSession, ServiceHolder serviceHolder,
 		SessionContext sessionContext) {
@@ -2112,13 +2144,18 @@ public class ConsumerPortlet extends MVCPortlet {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ConsumerPortlet.class);
 
+	private static AddressLocalService _addressLocalService;
+	private static EmailAddressLocalService _emailAddressLocalService;
+	private static ListTypeService _listTypeService;
 	private static final Pattern _navigationalValuesPattern = Pattern.compile(
 		"(?:([^&=]+)(?:=([^&=]*))?)&?");
 	private static final Pattern _parameterPattern = Pattern.compile(
 		"(?:([^&]+)=([^&]*))(?:&amp;|&)?");
+	private static PhoneLocalService _phoneLocalService;
 	private static final Pattern _rewritePattern = Pattern.compile(
 		"(wsrp_rewrite_)|(?:wsrp_rewrite\\?([^\\s/]+)/wsrp_rewrite)|" +
 			"(?:location\\.href\\s*=\\s*'(/widget/c/portal/layout(?:[^']+))')" +
 				"|(?:href\\s*=\\s*\"(/widget/c/portal/layout(?:[^\"]+))\")");
+	private static WebsiteLocalService _websiteLocalService;
 
 }

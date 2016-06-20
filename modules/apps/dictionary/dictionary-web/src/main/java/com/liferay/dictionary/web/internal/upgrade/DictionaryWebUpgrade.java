@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.dictionary.web.upgrade;
+package com.liferay.dictionary.web.internal.upgrade;
 
-import com.liferay.dictionary.web.constants.DictionaryPortletKeys;
+import com.liferay.dictionary.web.internal.constants.DictionaryPortletKeys;
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;

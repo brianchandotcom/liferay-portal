@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.currency.converter.web.constants;
+package com.liferay.currency.converter.web.internal.constants;
 
 /**
  * @author Eudaldo Alonso

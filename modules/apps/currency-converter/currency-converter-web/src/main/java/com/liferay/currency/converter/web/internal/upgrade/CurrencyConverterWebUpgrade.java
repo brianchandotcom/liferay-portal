@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.currency.converter.web.upgrade;
+package com.liferay.currency.converter.web.internal.upgrade;
 
-import com.liferay.currency.converter.web.constants.CurrencyConverterPortletKeys;
+import com.liferay.currency.converter.web.internal.constants.CurrencyConverterPortletKeys;
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;

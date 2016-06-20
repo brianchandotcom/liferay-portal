@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.currency.converter.web.portlet;
+package com.liferay.currency.converter.web.internal.portlet;
 
 import com.liferay.currency.converter.web.configuration.CurrencyConverterConfiguration;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;

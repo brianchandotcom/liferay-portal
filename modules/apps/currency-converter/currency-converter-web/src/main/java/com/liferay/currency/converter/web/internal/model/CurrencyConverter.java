@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.currency.converter.web.model;
+package com.liferay.currency.converter.web.internal.model;
 
 import java.io.Serializable;
 

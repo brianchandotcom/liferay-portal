@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.currency.converter.web.portlet.action;
+package com.liferay.currency.converter.web.internal.portlet.action;
 
-import com.liferay.currency.converter.web.constants.CurrencyConverterPortletKeys;
+import com.liferay.currency.converter.web.internal.constants.CurrencyConverterPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;

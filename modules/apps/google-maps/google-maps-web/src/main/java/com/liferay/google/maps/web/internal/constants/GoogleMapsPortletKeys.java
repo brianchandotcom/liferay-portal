@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.google.maps.web.constants;
+package com.liferay.google.maps.web.internal.constants;
 
 /**
  * @author Peter Fellwock

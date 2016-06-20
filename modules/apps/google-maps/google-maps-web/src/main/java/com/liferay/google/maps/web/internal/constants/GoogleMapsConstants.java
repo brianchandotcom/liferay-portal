@@ -12,23 +12,17 @@
  * details.
  */
 
-package com.liferay.google.maps.web.upgrade.v1_0_0;
-
-import com.liferay.google.maps.web.constants.GoogleMapsPortletKeys;
-import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;
+package com.liferay.google.maps.web.internal.constants;
 
 /**
- * @author Peter Fellwock
+ * @author Manuel de la Peña
  */
-public class UpgradePortletId extends BaseUpgradePortletId {
+public class GoogleMapsConstants {
 
-	@Override
-	protected String[][] getRenamePortletIdsArray() {
-		return new String[][] {
-			new String[] {
-				"1_WAR_googlemapsportlet", GoogleMapsPortletKeys.GOOGLE_MAPS
-			}
-		};
-	}
+	public static final String BICYCLING = "BICYCLING";
+
+	public static final String DRIVING = "DRIVING";
+
+	public static final String WALKING = "WALKING";
 
 }

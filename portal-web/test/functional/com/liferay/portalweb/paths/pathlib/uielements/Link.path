@@ -94,6 +94,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGE_LOCALE</td>
+	<td>//div[contains(@id,'portalMessageContainer')]/a[contains(.,'${key_pageLocale}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PRINT</td>
 	<td>//a[contains(.,'Print')]</td>
 	<td></td>

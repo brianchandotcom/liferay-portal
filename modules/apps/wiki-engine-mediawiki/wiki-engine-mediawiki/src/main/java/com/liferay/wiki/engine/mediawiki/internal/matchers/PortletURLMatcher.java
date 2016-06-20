@@ -12,40 +12,53 @@
  * details.
  */
 
-package com.liferay.wiki.engine.mediawiki.matchers;
+package com.liferay.wiki.engine.mediawiki.internal.matchers;
 
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.util.CallbackMatcher;
 import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.regex.MatchResult;
 
-/**
- * @author Shinn Lok
- */
-public class ImageTagMatcher extends CallbackMatcher {
+import javax.portlet.PortletURL;
 
-	public ImageTagMatcher() {
-		setRegex(_REGEX);
+/**
+ * @author Jonathan Potter
+ * @author Brian Wing Shun Chan
+ */
+public class PortletURLMatcher extends CallbackMatcher {
+
+	public PortletURLMatcher(PortletURL portletURL) {
+		_portletURL = portletURL;
+
+		LiferayPortletURL liferayPortletURL = (LiferayPortletURL)portletURL;
+
+		liferayPortletURL.setParameter("title", _TITLE_PLACEHOLDER, false);
 	}
 
 	public String replaceMatches(CharSequence charSequence) {
 		return replaceMatches(charSequence, _callBack);
 	}
 
-	private static final String _REGEX = "\\[\\[Image:[^\\]]+\\]\\]";
+	private static final String _TITLE_PLACEHOLDER = "__TITLE_PLACEHOLDER__";
 
 	private final Callback _callBack = new Callback() {
 
 		@Override
 		public String foundMatch(MatchResult matchResult) {
-			String title = matchResult.group(0);
+			String portletURLString = _portletURL.toString();
 
-			title = StringUtil.replace(title, CharPool.UNDERLINE, "%5F");
+			String title = matchResult.group(1);
 
-			return title;
+			title = title.replace(CharPool.UNDERLINE, CharPool.PLUS);
+
+			String url = portletURLString.replace(_TITLE_PLACEHOLDER, title);
+
+			return "<a href=\"" + url + "\"";
 		}
 
 	};
+
+	private final PortletURL _portletURL;
 
 }

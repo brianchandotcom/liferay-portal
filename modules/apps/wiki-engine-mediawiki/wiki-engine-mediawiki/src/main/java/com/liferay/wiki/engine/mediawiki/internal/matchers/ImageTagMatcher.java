@@ -12,25 +12,20 @@
  * details.
  */
 
-package com.liferay.wiki.engine.mediawiki.matchers;
+package com.liferay.wiki.engine.mediawiki.internal.matchers;
 
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.CallbackMatcher;
 import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.wiki.model.WikiPage;
 
 import java.util.regex.MatchResult;
 
 /**
- * @author Kenneth Chang
+ * @author Shinn Lok
  */
-public class DirectTagMatcher extends CallbackMatcher {
+public class ImageTagMatcher extends CallbackMatcher {
 
-	public DirectTagMatcher(WikiPage page) {
-		_page = page;
-
+	public ImageTagMatcher() {
 		setRegex(_REGEX);
 	}
 
@@ -38,43 +33,19 @@ public class DirectTagMatcher extends CallbackMatcher {
 		return replaceMatches(charSequence, _callBack);
 	}
 
-	private static final String _REGEX = "\\[\\[([^\\]]+)\\]\\]";
+	private static final String _REGEX = "\\[\\[Image:[^\\]]+\\]\\]";
 
 	private final Callback _callBack = new Callback() {
 
 		@Override
 		public String foundMatch(MatchResult matchResult) {
-			String fileName = matchResult.group(1);
+			String title = matchResult.group(0);
 
-			if (!fileName.contains(StringPool.UNDERLINE)) {
-				return null;
-			}
+			title = StringUtil.replace(title, CharPool.UNDERLINE, "%5F");
 
-			if (fileName.indexOf(CharPool.PIPE) >= 0) {
-				fileName = StringUtil.extractFirst(fileName, CharPool.PIPE);
-			}
-
-			try {
-				for (FileEntry fileEntry : _page.getAttachmentsFileEntries()) {
-					if (!fileName.equals(fileEntry.getTitle())) {
-						continue;
-					}
-
-					fileName = StringUtil.replace(
-						fileName, CharPool.UNDERLINE, "%5F");
-
-					return StringUtil.replace(
-						matchResult.group(0), matchResult.group(1), fileName);
-				}
-			}
-			catch (Exception e) {
-			}
-
-			return null;
+			return title;
 		}
 
 	};
-
-	private final WikiPage _page;
 
 }

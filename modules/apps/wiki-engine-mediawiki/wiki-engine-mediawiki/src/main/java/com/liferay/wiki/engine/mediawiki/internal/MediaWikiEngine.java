@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.engine.mediawiki;
+package com.liferay.wiki.engine.mediawiki.internal;
 
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
@@ -25,12 +25,12 @@ import com.liferay.portal.language.LanguageResources;
 import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
 import com.liferay.wiki.engine.WikiEngine;
 import com.liferay.wiki.engine.input.editor.common.BaseInputEditorWikiEngine;
-import com.liferay.wiki.engine.mediawiki.matchers.DirectTagMatcher;
-import com.liferay.wiki.engine.mediawiki.matchers.DirectURLMatcher;
-import com.liferay.wiki.engine.mediawiki.matchers.EditURLMatcher;
-import com.liferay.wiki.engine.mediawiki.matchers.ImageTagMatcher;
-import com.liferay.wiki.engine.mediawiki.matchers.ImageURLMatcher;
-import com.liferay.wiki.engine.mediawiki.matchers.ViewURLMatcher;
+import com.liferay.wiki.engine.mediawiki.internal.matchers.DirectTagMatcher;
+import com.liferay.wiki.engine.mediawiki.internal.matchers.DirectURLMatcher;
+import com.liferay.wiki.engine.mediawiki.internal.matchers.EditURLMatcher;
+import com.liferay.wiki.engine.mediawiki.internal.matchers.ImageTagMatcher;
+import com.liferay.wiki.engine.mediawiki.internal.matchers.ImageURLMatcher;
+import com.liferay.wiki.engine.mediawiki.internal.matchers.ViewURLMatcher;
 import com.liferay.wiki.exception.PageContentException;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiPageLocalService;

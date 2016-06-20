@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.engine.mediawiki.matchers;
+package com.liferay.wiki.engine.mediawiki.internal.matchers;
 
 import javax.portlet.PortletURL;
 

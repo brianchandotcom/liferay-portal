@@ -12,38 +12,34 @@
  * details.
  */
 
-package com.liferay.wiki.engine.mediawiki.matchers;
+package com.liferay.wiki.engine.mediawiki.internal.matchers;
 
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.CallbackMatcher;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.wiki.model.WikiPage;
 
 import java.util.regex.MatchResult;
 
 /**
- * @author Kenneth Chang
+ * @author Jonathan Potter
+ * @author Brian Wing Shun Chan
  */
-public class DirectURLMatcher extends CallbackMatcher {
+public class ImageURLMatcher extends CallbackMatcher {
 
-	public DirectURLMatcher(WikiPage page, String attachmentURLPrefix) {
-		_page = page;
+	public ImageURLMatcher(String attachmentURLPrefix) {
 		_attachmentURLPrefix = attachmentURLPrefix;
 
-		setRegex(_URL_REGEX);
+		setRegex(_REGEX);
 	}
 
 	public String replaceMatches(CharSequence charSequence) {
 		return replaceMatches(charSequence, _callBack);
 	}
 
-	private static final String _URL_REGEX =
-		"<a href=\"[^\"]*?Special:Edit[^\"]*?topic=[^\"]*?\".*?title=\"" +
-			"([^\"]*?)\".*?>(.*?)</a>";
+	private static final String _REGEX =
+		"<a href=\"[^\"]*?Special:Upload[^\"]*?topic=Image:([^\"]*?)\".*?</a>";
 
 	private final String _attachmentURLPrefix;
 
@@ -51,42 +47,22 @@ public class DirectURLMatcher extends CallbackMatcher {
 
 		@Override
 		public String foundMatch(MatchResult matchResult) {
-			String fileName = StringUtil.replace(
-				matchResult.group(1), "%5F", StringPool.UNDERLINE);
 			String title = StringUtil.replace(
-				matchResult.group(2), "%5F", StringPool.UNDERLINE);
+				matchResult.group(1), "%5F", StringPool.UNDERLINE);
 
-			if (Validator.isNull(title)) {
-				title = fileName;
-			}
+			String url = _attachmentURLPrefix + HttpUtil.encodeURL(title);
 
-			String url = _attachmentURLPrefix + HttpUtil.encodeURL(fileName);
+			StringBundler sb = new StringBundler(5);
 
-			try {
-				for (FileEntry fileEntry : _page.getAttachmentsFileEntries()) {
-					if (!fileName.equals(fileEntry.getTitle())) {
-						continue;
-					}
+			sb.append("<img alt=\"");
+			sb.append(title);
+			sb.append("\" class=\"wikiimg\" src=\"");
+			sb.append(url);
+			sb.append("\" />");
 
-					StringBundler sb = new StringBundler(5);
-
-					sb.append("<a href=\"");
-					sb.append(url);
-					sb.append("\">");
-					sb.append(title);
-					sb.append("</a>");
-
-					return sb.toString();
-				}
-			}
-			catch (Exception e) {
-			}
-
-			return null;
+			return sb.toString();
 		}
 
 	};
-
-	private final WikiPage _page;
 
 }

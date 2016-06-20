@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.engine.mediawiki;
+package com.liferay.wiki.engine.mediawiki.internal;
 
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;

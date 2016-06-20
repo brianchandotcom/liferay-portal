@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.amazon.rankings.web.model;
+package com.liferay.amazon.rankings.web.internal.model;
 
 import java.io.Serializable;
 

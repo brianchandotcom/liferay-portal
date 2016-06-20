@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.amazon.rankings.web.util;
+package com.liferay.amazon.rankings.web.internal.util;
 
 import com.liferay.amazon.rankings.web.configuration.AmazonRankingsConfiguration;
-import com.liferay.amazon.rankings.web.model.AmazonRankings;
+import com.liferay.amazon.rankings.web.internal.model.AmazonRankings;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;

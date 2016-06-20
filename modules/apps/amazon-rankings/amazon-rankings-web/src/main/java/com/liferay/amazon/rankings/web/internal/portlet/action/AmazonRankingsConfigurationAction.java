@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.amazon.rankings.web.portlet.action;
+package com.liferay.amazon.rankings.web.internal.portlet.action;
 
 import com.liferay.amazon.rankings.web.configuration.AmazonRankingsConfiguration;
-import com.liferay.amazon.rankings.web.constants.AmazonRankingsPortletKeys;
+import com.liferay.amazon.rankings.web.internal.constants.AmazonRankingsPortletKeys;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;

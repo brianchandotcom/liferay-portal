@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.password.generator.web.portlet;
+package com.liferay.password.generator.web.internal.portlet;
 
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;

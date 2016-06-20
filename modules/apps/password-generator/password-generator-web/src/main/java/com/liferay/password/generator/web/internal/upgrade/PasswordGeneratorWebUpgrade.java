@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.password.generator.web.upgrade;
+package com.liferay.password.generator.web.internal.upgrade;
 
-import com.liferay.password.generator.web.constants.PasswordGeneratorPortletKeys;
+import com.liferay.password.generator.web.internal.constants.PasswordGeneratorPortletKeys;
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;

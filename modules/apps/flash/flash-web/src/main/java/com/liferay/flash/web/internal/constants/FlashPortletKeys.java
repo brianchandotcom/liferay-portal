@@ -12,21 +12,14 @@
  * details.
  */
 
-package com.liferay.flash.web.portlet.action;
-
-import com.liferay.flash.web.constants.FlashPortletKeys;
-import com.liferay.portal.kernel.portlet.ConfigurationAction;
-import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
-
-import org.osgi.service.component.annotations.Component;
+package com.liferay.flash.web.internal.constants;
 
 /**
  * @author Peter Fellwock
  */
-@Component(
-	immediate = true,
-	property = {"javax.portlet.name=" + FlashPortletKeys.FLASH},
-	service = ConfigurationAction.class
-)
-public class FlashConfigurationAction extends DefaultConfigurationAction {
+public class FlashPortletKeys {
+
+	public static final String FLASH =
+		"com_liferay_flash_web_portlet_FlashPortlet";
+
 }

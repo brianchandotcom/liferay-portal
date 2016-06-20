@@ -12,21 +12,21 @@
  * details.
  */
 
-package com.liferay.flash.web.upgrade.v1_0_0;
+package com.liferay.flash.web.internal.portlet.action;
 
-import com.liferay.flash.web.constants.FlashPortletKeys;
-import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;
+import com.liferay.flash.web.internal.constants.FlashPortletKeys;
+import com.liferay.portal.kernel.portlet.ConfigurationAction;
+import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Peter Fellwock
  */
-public class UpgradePortletId extends BaseUpgradePortletId {
-
-	@Override
-	protected String[][] getRenamePortletIdsArray() {
-		return new String[][] {
-			new String[] {"1_WAR_flashportlet", FlashPortletKeys.FLASH}
-		};
-	}
-
+@Component(
+	immediate = true,
+	property = {"javax.portlet.name=" + FlashPortletKeys.FLASH},
+	service = ConfigurationAction.class
+)
+public class FlashConfigurationAction extends DefaultConfigurationAction {
 }

@@ -12,14 +12,21 @@
  * details.
  */
 
-package com.liferay.flash.web.constants;
+package com.liferay.flash.web.internal.upgrade.v1_0_0;
+
+import com.liferay.flash.web.internal.constants.FlashPortletKeys;
+import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;
 
 /**
  * @author Peter Fellwock
  */
-public class FlashPortletKeys {
+public class UpgradePortletId extends BaseUpgradePortletId {
 
-	public static final String FLASH =
-		"com_liferay_flash_web_portlet_FlashPortlet";
+	@Override
+	protected String[][] getRenamePortletIdsArray() {
+		return new String[][] {
+			new String[] {"1_WAR_flashportlet", FlashPortletKeys.FLASH}
+		};
+	}
 
 }

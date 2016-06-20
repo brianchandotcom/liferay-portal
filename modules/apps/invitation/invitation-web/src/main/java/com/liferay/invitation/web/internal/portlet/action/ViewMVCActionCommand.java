@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.invitation.web.portlet.action;
+package com.liferay.invitation.web.internal.portlet.action;
 
-import com.liferay.invitation.web.constants.InvitationPortletKeys;
-import com.liferay.invitation.web.util.InvitationUtil;
+import com.liferay.invitation.web.internal.constants.InvitationPortletKeys;
+import com.liferay.invitation.web.internal.util.InvitationUtil;
 import com.liferay.mail.kernel.model.MailMessage;
 import com.liferay.mail.kernel.service.MailService;
 import com.liferay.portal.kernel.model.Company;

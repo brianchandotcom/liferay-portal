@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.invitation.web.portlet;
+package com.liferay.invitation.web.internal.portlet;
 
-import com.liferay.invitation.web.constants.InvitationPortletKeys;
+import com.liferay.invitation.web.internal.constants.InvitationPortletKeys;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 

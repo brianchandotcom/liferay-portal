@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.invitation.web.constants;
+package com.liferay.invitation.web.internal.constants;
 
 /**
  * @author Eudaldo Alonso

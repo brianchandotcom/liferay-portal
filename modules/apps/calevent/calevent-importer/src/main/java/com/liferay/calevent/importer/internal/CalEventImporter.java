@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.calevent.importer;
+package com.liferay.calevent.importer.internal;
 
 import com.liferay.asset.kernel.exception.NoSuchVocabularyException;
 import com.liferay.asset.kernel.model.AssetCategory;

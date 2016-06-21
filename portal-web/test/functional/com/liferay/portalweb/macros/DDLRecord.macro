@@ -818,6 +818,18 @@
 		<execute function="AssertTextEquals" locator1="DDLRecord#FIELD_2" value1="${fieldFieldLabel} ${ddlRecordFieldData}" />
 	</command>
 
+	<command name="viewSelectedLinkToPage">
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute function="AssertClick" locator1="DDLEditRecord#LINK_TO_PAGE_SELECT_PAGE_BUTTON" value1="Select" />
+
+		<var name="key_pageName" value="${ddlRecordFieldData}" />
+
+		<execute function="AssertChecked" locator1="DDLEditRecord#LINK_TO_PAGE_PAGE_RADIO" />
+
+		<execute function="AssertClick" locator1="Button#CANCEL" value1="Cancel" />
+	</command>
+
 	<command name="viewStatusViaDDLDisplayTable">
 		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
 		<var name="key_workflowStatus" value="${workflowStatus}" />

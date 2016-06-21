@@ -417,12 +417,17 @@
 			<var name="navItem" value="Campaigns" />
 		</execute>
 
-		<var name="key_rowEntry" value="${campaignName}" />
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="rowEntry" value="${campaignName}" />
+		</execute>
 
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
-		<execute function="Click" locator1="MenuItem#EDIT" />
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Reports" />
+		</execute>
 
-		<execute function="AssertNotVisible" locator1="ContentTargeting#CARD_CONTENT_TITLE_GENERIC" />
+		<var name="key_rowEntry" value="${metricName}" />
+
+		<execute function="AssertElementNotPresent" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK" value1="${metricName}" />
 	</command>
 
 	<command name="viewMetricReport">

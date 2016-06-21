@@ -560,7 +560,7 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 
 	@Override
 	public void reindex(String[] ids) throws SearchException {
-		long currentCompanyId = CompanyThreadLocal.getCompanyId();
+		long companyThreadLocalCompanyId = CompanyThreadLocal.getCompanyId();
 
 		try {
 			if (IndexWriterHelperUtil.isIndexReadOnly() ||
@@ -582,7 +582,7 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 			throw new SearchException(e);
 		}
 		finally {
-			CompanyThreadLocal.setCompanyId(currentCompanyId);
+			CompanyThreadLocal.setCompanyId(companyThreadLocalCompanyId);
 		}
 	}
 

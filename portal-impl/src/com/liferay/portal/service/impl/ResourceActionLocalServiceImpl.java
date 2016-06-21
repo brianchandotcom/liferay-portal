@@ -106,11 +106,9 @@ public class ResourceActionLocalServiceImpl
 				"There are too many actions for resource " + name);
 		}
 
-		List<ResourceAction> resourceActions = getResourceActions(name);
-
 		long availableBits = -2;
 
-		for (ResourceAction resourceAction : resourceActions) {
+		for (ResourceAction resourceAction : getResourceActions(name)) {
 			availableBits &= ~resourceAction.getBitwiseValue();
 		}
 
@@ -230,7 +228,7 @@ public class ResourceActionLocalServiceImpl
 
 			};
 
-		for (final Company company : companyLocalService.getCompanies()) {
+		for (Company company : companyLocalService.getCompanies()) {
 			if (resourceBlockLocalService.isSupported(
 					resourceAction.getName())) {
 
@@ -343,7 +341,7 @@ public class ResourceActionLocalServiceImpl
 							long actionIds = resourcePermission.getActionIds();
 
 							if ((actionIds & bitwiseValue) != 0) {
-								actionIds = actionIds & (~bitwiseValue);
+								actionIds &= ~bitwiseValue;
 
 								resourcePermission.setActionIds(actionIds);
 								resourcePermission.setViewActionId(

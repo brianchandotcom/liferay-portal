@@ -20,5 +20,6 @@
 
 <liferay-ui:icon
 	message="export-users"
+	method="get"
 	url='<%= exportURL + "&compress=0&etag=0&strip=0" %>'
 />

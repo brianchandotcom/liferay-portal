@@ -1,7 +1,5 @@
 <definition>
 	<command name="createNewUserAccount">
-		<execute function="AssertClick" locator1="UserBar#USER_SIGN_IN" value1="Sign In" />
-
 		<execute macro="User#createAccount">
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userFirstName" value="${userFirstName}" />

@@ -34,10 +34,15 @@ public class KaleoServiceUpgrade implements UpgradeStepRegistrator {
 	@Override
 	public void register(Registry registry) {
 		registry.register(
-			"com.liferay.portal.workflow.kaleo.service", "0.0.1", "1.0.0",
+			"com.liferay.portal.workflow.kaleo.service", "0.0.1", "0.0.2",
 			new UpgradeKaleoTaskInstanceToken(),
 			new com.liferay.portal.workflow.kaleo.internal.upgrade.v1_0_0.
 				UpgradeSchema());
+
+		registry.register(
+			"com.liferay.portal.workflow.kaleo.service", "0.0.2", "1.0.0",
+			new com.liferay.portal.workflow.kaleo.upgrade.v1_0_0.
+				UpgradeKaleoClassNameClassPK());
 
 		registry.register(
 			"com.liferay.portal.workflow.kaleo.service", "1.0.0", "1.1.0",

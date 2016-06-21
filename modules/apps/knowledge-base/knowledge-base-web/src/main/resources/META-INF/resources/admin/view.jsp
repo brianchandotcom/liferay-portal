@@ -221,6 +221,20 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 										<%= kbFolder.getName() %>
 									</aui:a>
 								</h4>
+
+								<%
+								int kBFolderSubfoldersCount = KBFolderServiceUtil.getKBFoldersCount(kbFolder.getGroupId(), kbFolder.getKbFolderId());
+								int kBFolderArticlesCount = KBArticleServiceUtil.getKBArticlesCount(kbFolder.getGroupId(), kbFolder.getKbFolderId(), WorkflowConstants.STATUS_ANY);
+								%>
+
+								<h5 class="text-default">
+									<span>
+										<liferay-ui:message arguments="<%= kBFolderSubfoldersCount %>" key="x-folders" />
+									</span>
+									<span class="kb-article-descriptive-details">
+										<liferay-ui:message arguments="<%= kBFolderArticlesCount %>" key="x-articles" />
+									</span>
+								</h5>
 							</liferay-ui:search-container-column-text>
 
 							<liferay-ui:search-container-column-jsp

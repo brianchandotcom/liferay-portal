@@ -99,6 +99,14 @@ public class ResourceActionLocalServiceImpl
 	public void checkResourceActions(
 		String name, List<String> actionIds, boolean addDefaultActions) {
 
+		if ((actionIds.size() > Long.SIZE) ||
+			((actionIds.size() == Long.SIZE) &&
+			 !actionIds.contains(ActionKeys.VIEW))) {
+
+			throw new SystemException(
+				"There are too many actions for resource " + name);
+		}
+
 		List<ResourceAction> resourceActions = getResourceActions(name);
 		LinkedList<Long> availableBitwiseValues = new LinkedList<>();
 
@@ -133,12 +141,6 @@ public class ResourceActionLocalServiceImpl
 					bitwiseValue = 1;
 				}
 				else {
-					if (availableBitwiseValues.isEmpty()) {
-						throw new SystemException(
-							"There are more than 64 actions for resource " +
-								name);
-					}
-
 					bitwiseValue = availableBitwiseValues.pop();
 				}
 

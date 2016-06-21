@@ -1,6 +1,7 @@
 <definition component-name="portal-plugins-osgi">
-	<property name="portal.release" value="true" />
 	<property name="plugins.deployment.type" value="osgi" />
+	<property name="portal.release" value="true" />
+	<property name="portlet.plugins.includes" value="flash-web" />
 	<property name="testray.main.component.name" value="Flash" />
 
 	<set-up>
@@ -16,8 +17,6 @@
 	</tear-down>
 
 	<command name="FlashPortletSmoke" priority="4">
-		<property name="portlet.plugins.includes" value="flash-portlet" />
-
 		<var name="appName" value="Flash" />
 
 		<execute macro="Navigator#gotoPage">
@@ -27,7 +26,5 @@
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Flash" />
 		</execute>
-
-		<execute function="AntCommand#antCommand" locator1="build-test.xml" value1="remove-plugin -Dplugin.name=flash-portlet" />
 	</command>
 </definition>

@@ -483,6 +483,12 @@
 		</execute>
 	</command>
 
+	<command name="localizedPG">
+		<var name="key_pageLocale" value="${pageLocale}" />
+
+		<execute function="Click" locator1="Link#PAGE_LOCALE"  value1="${pageLocale}" />
+	</command>
+
 	<command name="openURLLocale">
 		<execute function="Open" locator1="${localizationPageURL}" />
 
@@ -704,9 +710,8 @@
 		<execute function="Refresh" />
 	</command>
 
-	<command name="viewPageFriendURLPG">
-		<execute function="AssertTextNotPresent" locator1="SitePagesEditPage#FRIENDLY_URL_FIELD" value1="${pageName}" />
-		<execute function="AssertTextEquals" locator1="SitePagesEditPage#FRIENDLY_URL_FIELD" value1="/2" />
+	<command name="viewPageFriendlyURLPG">
+		<execute function="AssertTextEquals" locator1="SitePagesEditPage#FRIENDLY_URL_FIELD" value1="/${pageName}" />
 	</command>
 
 	<command name="viewPageLayout">

@@ -255,6 +255,10 @@
 
 		<execute macro="Navigator#openURL" />
 
+		<execute macro="Page#localizedPG">
+			<var name="pageLocale" value="Mostrar la página en español (España)" />
+		</execute>
+
 		<execute macro="ProductMenu#gotoLocalizedControlPanel">
 			<var name="category" value="Sitios web" />
 			<var name="portlet" value="Plantillas de página" />
@@ -262,7 +266,7 @@
 		</execute>
 
 		<execute macro="PageTemplate#viewDefaultLocalizedCP">
-			<var name="pageTemplateDescriptionList" value="editar y ver los blogs de esta página. Explorar temas utilizando etiquetas y conectar con otros miembros de ese blog.,editar y explorar el contenido de la web desde esta página. Contenido disponible, explorar contenido relacionado con las etiquetas y buscar por categorías de contenido.,Colaborar con los miembros a través de la wiki en esta página. Descubra el contenido relacionado a través de etiquetas y navegar rápida y fácilmente con categorías." />
+			<var name="pageTemplateDescriptionList" value="edite y vea blogs desde esta página. Explore los temas usando etiquetas y conecte con otros miembros del blog.,edite y explore contenidos web de esta página. Busque contenido adicional, explore contenido relacionado con etiquetas y hojee las categorías del contenido.,Colabora con los miembros a través de la wiki en esta página. Descubre el contenido relacionado a través de etiquetas y navega rápida y fácilmente por las categorías." />
 			<var name="pageTemplateNameList" value="Blog,Seleccione una página de visualización,Wiki" />
 		</execute>
 
@@ -277,6 +281,12 @@
 			<var name="languageName" value="English (United States)" />
 			<var name="saveButton" value="Guardar" />
 			<var name="successMessage" value="Your request completed successfully." />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="Page#localizedPG">
+			<var name="pageLocale" value="Display the page in English (United States)" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelSites">

@@ -3,6 +3,7 @@
 		<var name="key_orgName" value="${orgName}" />
 
 		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+
 		<execute function="AssertClick" locator1="MenuItem#ADD_ORGANIZATION" value1="Add Organization" />
 
 		<execute function="Type" locator1="UsersAndOrganizationsEditOrganization#DETAILS_NAME_FIELD" value1="${suborgName}" />
@@ -10,6 +11,7 @@
 		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewSuccessMessage" />
+
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditOrganization#DETAILS_NAME_FIELD" value1="${suborgName}" />
 	</command>
 
@@ -20,12 +22,24 @@
 	</command>
 
 	<command name="viewCP">
-		<execute macro="Organization#viewCP">
-			<var name="orgName" value="${suborgName}" />
-			<var name="orgType" value="${suborgType}" />
-			<var name="searchToken" value="${suborgSearchName}" />
+		<execute macro="Organization#viewSubOrganizationCP">
+			<var name="orgName" value="${orgName}" />
+			<var name="orgType" value="${orgType}" />
+			<var name="suborgName" value="${suborgName}" />
+			<var name="suborgType" value="${suborgType}" />
 		</execute>
 
+		<var name="key_suborgName" value="${suborgName}" />
+
+		<execute function="Click" locator1="UsersAndOrganizationsOrganization#SUBORGANIZATION_TABLE_ACTIONS" />
+
+		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
+
+		<var name="key_orgType" value="${orgType}" />
+
+		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="Edit ${suborgName}" />
+		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditOrganization#DETAILS_NAME_FIELD" value1="${suborgName}" />
+		<execute function="AssertTextEquals#assertValue" locator1="UsersAndOrganizationsEditOrganization#DETAILS_TYPE" value1="${orgType}" />
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditOrganization#PARENT_ORGANIZATION_TABLE_NAME" value1="${orgName}" />
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditOrganization#PARENT_ORGANIZATION_TABLE_TYPE" value1="${orgType}" />
 	</command>

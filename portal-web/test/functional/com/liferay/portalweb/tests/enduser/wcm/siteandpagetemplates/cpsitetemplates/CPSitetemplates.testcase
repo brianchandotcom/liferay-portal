@@ -176,6 +176,10 @@
 
 		<execute macro="Navigator#openURL" />
 
+		<execute macro="Page#localizedPG">
+			<var name="pageLocale" value="Mostrar la página en español (España)" />
+		</execute>
+
 		<execute macro="ProductMenu#gotoLocalizedControlPanel">
 			<var name="category" value="Sitios web" />
 			<var name="portlet" value="Plantillas de sitio web" />
@@ -183,7 +187,7 @@
 		</execute>
 
 		<execute macro="SiteTemplates#viewDefaultDataLocalizedCP">
-			<var name="siteTemplateDescriptionList" value="Sitio con foros y Wiki,Sitio con noticias y documentos" />
+			<var name="siteTemplateDescriptionList" value="Sitio con foro y wiki,Sitio con documentos y noticias" />
 			<var name="siteTemplateNameList" value="Sitio de la Comunidad,Sitio de intranet" />
 		</execute>
 
@@ -198,6 +202,12 @@
 			<var name="languageName" value="English (United States)" />
 			<var name="saveButton" value="Guardar" />
 			<var name="successMessage" value="Your request completed successfully." />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="Page#localizedPG">
+			<var name="pageLocale" value="Display the page in English (United States)" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelSites">

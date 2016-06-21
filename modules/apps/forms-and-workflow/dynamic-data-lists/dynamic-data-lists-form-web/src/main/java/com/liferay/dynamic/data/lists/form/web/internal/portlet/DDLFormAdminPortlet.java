@@ -33,20 +33,15 @@ import com.liferay.dynamic.data.mapping.io.DDMFormJSONSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutJSONSerializer;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
-import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.dynamic.data.mapping.storage.StorageAdapter;
-import com.liferay.dynamic.data.mapping.storage.StorageAdapterRegistry;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.dynamic.data.mapping.util.DDMFormLayoutFactory;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesMerger;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -55,18 +50,12 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.WorkflowDefinition;
-import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
 import com.liferay.portal.kernel.workflow.WorkflowEngineManager;
 
 import java.io.IOException;
 
-import java.util.List;
-import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
@@ -135,35 +124,6 @@ public class DDLFormAdminPortlet extends MVCPortlet {
 		super.render(renderRequest, renderResponse);
 	}
 
-	protected void addWorkflowDefinitionDDMFormFieldOptionLabels(
-			DDMFormFieldOptions ddmFormFieldOptions, ThemeDisplay themeDisplay)
-		throws PortalException {
-
-		if (!_workflowEngineManager.isDeployed()) {
-			return;
-		}
-
-		List<WorkflowDefinition> workflowDefinitions =
-			_workflowDefinitionManager.getActiveWorkflowDefinitions(
-				themeDisplay.getCompanyId(), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null);
-
-		for (WorkflowDefinition workflowDefinition : workflowDefinitions) {
-			String value =
-				workflowDefinition.getName() + StringPool.AT +
-					workflowDefinition.getVersion();
-
-			String version = LanguageUtil.format(
-				themeDisplay.getLocale(), "version-x",
-				workflowDefinition.getVersion(), false);
-
-			String label = workflowDefinition.getName() + " (" + version + ")";
-
-			ddmFormFieldOptions.addOptionLabel(
-				value, themeDisplay.getLocale(), label);
-		}
-	}
-
 	protected DDMFormRenderingContext createDDMFormRenderingContext(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
@@ -197,80 +157,15 @@ public class DDLFormAdminPortlet extends MVCPortlet {
 		Map<String, DDMFormField> ddmFormFieldsMap =
 			ddmForm.getDDMFormFieldsMap(false);
 
-		// Workflow definition
-
-		DDMFormField ddmFormField = ddmFormFieldsMap.get("workflowDefinition");
-
-		DDMFormFieldOptions ddmFormFieldOptions =
-			createWorkflowDefinitionDDMFormFieldOptions(themeDisplay);
-
-		ddmFormField.setDDMFormFieldOptions(ddmFormFieldOptions);
-
 		// Storage type
 
-		ddmFormField = ddmFormFieldsMap.get("storageType");
+		DDMFormField ddmFormField = ddmFormFieldsMap.get("storageType");
 
 		if (recordSetId > 0) {
 			ddmFormField.setReadOnly(true);
 		}
 
-		ddmFormFieldOptions = createStorageTypeDDMFormFieldOptions(
-			themeDisplay);
-
-		ddmFormField.setDDMFormFieldOptions(ddmFormFieldOptions);
-
 		return ddmForm;
-	}
-
-	protected DDMFormFieldOptions createStorageTypeDDMFormFieldOptions(
-			ThemeDisplay themeDisplay)
-		throws PortalException {
-
-		Locale locale = themeDisplay.getLocale();
-
-		DDMFormFieldOptions ddmFormFieldOptions = new DDMFormFieldOptions();
-
-		ddmFormFieldOptions.setDefaultLocale(locale);
-
-		StorageAdapter storageAdapter =
-			_storageAdapterRegistry.getDefaultStorageAdapter();
-
-		String storageTypeDefault = storageAdapter.getStorageType();
-
-		ddmFormFieldOptions.addOptionLabel(
-			storageTypeDefault, locale, storageTypeDefault);
-
-		Set<String> storageTypes = _storageAdapterRegistry.getStorageTypes();
-
-		for (String storageType : storageTypes) {
-			if (storageType.equals(storageTypeDefault)) {
-				continue;
-			}
-
-			ddmFormFieldOptions.addOptionLabel(
-				storageType, locale, storageType);
-		}
-
-		return ddmFormFieldOptions;
-	}
-
-	protected DDMFormFieldOptions createWorkflowDefinitionDDMFormFieldOptions(
-			ThemeDisplay themeDisplay)
-		throws PortalException {
-
-		Locale locale = themeDisplay.getLocale();
-
-		DDMFormFieldOptions ddmFormFieldOptions = new DDMFormFieldOptions();
-
-		ddmFormFieldOptions.setDefaultLocale(locale);
-
-		ddmFormFieldOptions.addOptionLabel(
-			StringPool.BLANK, locale, LanguageUtil.get(locale, "no-workflow"));
-
-		addWorkflowDefinitionDDMFormFieldOptionLabels(
-			ddmFormFieldOptions, themeDisplay);
-
-		return ddmFormFieldOptions;
 	}
 
 	@Reference(
@@ -446,22 +341,8 @@ public class DDLFormAdminPortlet extends MVCPortlet {
 	}
 
 	@Reference(unbind = "-")
-	protected void setStorageAdapterRegistry(
-		StorageAdapterRegistry storageAdapterRegistry) {
-
-		_storageAdapterRegistry = storageAdapterRegistry;
-	}
-
-	@Reference(unbind = "-")
 	protected void setStorageEngine(StorageEngine storageEngine) {
 		_storageEngine = storageEngine;
-	}
-
-	@Reference(unbind = "-")
-	protected void setWorkflowDefinitionManager(
-		WorkflowDefinitionManager workflowDefinitionManager) {
-
-		_workflowDefinitionManager = workflowDefinitionManager;
 	}
 
 	@Reference(unbind = "-")
@@ -496,9 +377,7 @@ public class DDLFormAdminPortlet extends MVCPortlet {
 	private DDMFormValuesMerger _ddmFormValuesMerger;
 	private DDMStructureLocalService _ddmStructureLocalService;
 	private JSONFactory _jsonFactory;
-	private StorageAdapterRegistry _storageAdapterRegistry;
 	private StorageEngine _storageEngine;
-	private WorkflowDefinitionManager _workflowDefinitionManager;
 	private WorkflowEngineManager _workflowEngineManager;
 
 }

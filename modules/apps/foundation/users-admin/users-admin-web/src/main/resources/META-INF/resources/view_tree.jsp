@@ -267,7 +267,7 @@ if (organization != null) {
 								<%@ include file="/organization/organization_columns.jspf" %>
 							</liferay-ui:search-container-row>
 
-							<liferay-ui:search-iterator markupView="lexicon" />
+							<liferay-ui:search-iterator markupView="lexicon" resultRowSplitter="<%= new OrganizationResultRowSplitter() %>" />
 						</liferay-ui:search-container>
 					</liferay-ui:panel>
 				</c:if>

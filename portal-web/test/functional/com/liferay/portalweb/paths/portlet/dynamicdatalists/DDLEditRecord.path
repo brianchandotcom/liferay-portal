@@ -166,7 +166,7 @@
 </tr>
 <tr>
 	<td>LINK_TO_PAGE_PAGE_RADIO</td>
-	<td>//label[@name='tree-node-check' and contains(.,'${key_pageName}')]/input[@type='radio']</td>
+	<td>//a[contains(.,'${key_pageName}')]/../input[@type='radio']</td>
 	<td></td>
 </tr>
 <tr>

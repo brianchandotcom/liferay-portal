@@ -412,7 +412,7 @@
 		</for>
 	</command>
 
-	<command name="viewImportContentTrackingActionContentEmpty">
+	<command name="viewImportNoContentTrackingActions">
 		<execute macro="Navigator#gotoNavItem">
 			<var name="navItem" value="Campaigns" />
 		</execute>

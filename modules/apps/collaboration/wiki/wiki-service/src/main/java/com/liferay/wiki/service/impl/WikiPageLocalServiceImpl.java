@@ -101,6 +101,8 @@ import com.liferay.wiki.model.impl.WikiPageDisplayImpl;
 import com.liferay.wiki.model.impl.WikiPageImpl;
 import com.liferay.wiki.service.base.WikiPageLocalServiceBaseImpl;
 import com.liferay.wiki.social.WikiActivityKeys;
+import com.liferay.wiki.translator.WikiTitleChangeTranslator;
+import com.liferay.wiki.translator.impl.WikiTitleChangeTranslatorTracker;
 import com.liferay.wiki.util.WikiCacheHelper;
 import com.liferay.wiki.util.WikiCacheThreadLocal;
 import com.liferay.wiki.util.WikiUtil;
@@ -1790,10 +1792,32 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		serviceContext.setCommand(Constants.RENAME);
 
+		WikiTitleChangeTranslator titleChangeTranslator =
+			wikiTitleChangeTranslatorTracker.getTitleChangeTranslator(
+				page.getFormat());
+
+		String content = page.getContent();
+
+		if (titleChangeTranslator != null) {
+			List<WikiPage> versionPages = wikiPagePersistence.findByN_T_H(
+				nodeId, title, false);
+
+			for (WikiPage curPage : versionPages) {
+				curPage.setTitle(newTitle);
+				curPage.setContent(
+					titleChangeTranslator.translate(
+						curPage.getContent(), title, newTitle));
+
+				wikiPagePersistence.update(curPage);
+			}
+
+			content = titleChangeTranslator.translate(content, title, newTitle);
+		}
+
 		updatePage(
-			userId, page, 0, newTitle, page.getContent(), summary,
-			page.getMinorEdit(), page.getFormat(), page.getParentTitle(),
-			page.getRedirectTitle(), serviceContext);
+			userId, page, 0, newTitle, content, summary, page.getMinorEdit(),
+			page.getFormat(), page.getParentTitle(), page.getRedirectTitle(),
+			serviceContext);
 	}
 
 	@Override
@@ -3251,5 +3275,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 	@ServiceReference(type = WikiPageTitleValidator.class)
 	protected WikiPageTitleValidator wikiPageTitleValidator;
+
+	@ServiceReference(type = WikiTitleChangeTranslatorTracker.class)
+	protected WikiTitleChangeTranslatorTracker wikiTitleChangeTranslatorTracker;
 
 }

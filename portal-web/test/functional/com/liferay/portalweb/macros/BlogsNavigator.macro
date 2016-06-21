@@ -148,7 +148,7 @@
 		<if>
 			<isset var="blogEntryURL" />
 			<then>
-				<execute function="AssertLocation" value1="http://localhost:8080/web/guest/blogs/-/${blogEntryURL}" />
+				<execute function="AssertLocation" value1="${blogEntryURL}" />
 			</then>
 			<else>
 				<execute function="Click" locator1="BlogsEntry#TITLE_LINK" value1="${entryTitle}" />

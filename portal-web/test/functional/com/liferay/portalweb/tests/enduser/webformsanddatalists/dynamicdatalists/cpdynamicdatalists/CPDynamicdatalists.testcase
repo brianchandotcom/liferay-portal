@@ -1539,6 +1539,11 @@
 			<var name="pagePrivacy" value="Public" />
 		</execute>
 
+		<execute macro="DDLRecord#viewSelectedLinkToPage">
+			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
+			<var name="fieldName" value="${fieldName}" />
+		</execute>
+
 		<execute macro="PortletEntry#publish" />
 
 		<execute macro="Navigator#openURL" />

@@ -61,9 +61,7 @@ public class JavaScriptExecutor extends BaseScriptingExecutor {
 
 			Scriptable scriptable = context.initStandardObjects();
 
-			Class<?> clazz = getClass();
-
-			context.setApplicationClassLoader(clazz.getClassLoader());
+			context.setApplicationClassLoader(getClassLoader());
 
 			for (Map.Entry<String, Object> entry : inputObjects.entrySet()) {
 				String key = entry.getKey();

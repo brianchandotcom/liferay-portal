@@ -1,0 +1,16 @@
+#
+# Liferay App Version 2.0.0
+#
+
+app.artifacts-2.0.0=\
+	com.liferay.push.notifications.api-1.1.0.jar,\
+	com.liferay.push.notifications.sender.android-1.0.3.jar,\
+	com.liferay.push.notifications.sender.apple-1.0.4.jar,\
+	com.liferay.push.notifications.sender.microsoft-1.0.2.jar,\
+	com.liferay.push.notifications.sender.sms-1.0.2.jar,\
+	com.liferay.push.notifications.service-1.0.3.jar,\
+	com.liferay.push.notifications.web-1.0.2.jar
+
+app.change.log-2.0.0=LPS-66050 LPS-66339 LPS-66416 LPS-66526
+
+app.git.id-2.0.0=794304598dbef2585c8bed583cad98415018d573

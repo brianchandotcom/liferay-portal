@@ -15,6 +15,7 @@
 package com.liferay.wsrp.consumer.portlet;
 
 import com.liferay.petra.encryptor.Encryptor;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Address;
@@ -54,6 +55,7 @@ import com.liferay.portal.kernel.util.TransientValue;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.wsrp.axis.WSRPHTTPSender;
+import com.liferay.wsrp.configuration.WSRPGroupServiceConfiguration;
 import com.liferay.wsrp.constants.WSRPPortletKeys;
 import com.liferay.wsrp.model.WSRPConsumer;
 import com.liferay.wsrp.model.WSRPConsumerPortlet;
@@ -64,7 +66,6 @@ import com.liferay.wsrp.servlet.ServiceHolder;
 import com.liferay.wsrp.util.ConsumerRequestExtensionsHelper;
 import com.liferay.wsrp.util.ExtensionHelperUtil;
 import com.liferay.wsrp.util.MarkupCharacterSetsUtil;
-import com.liferay.wsrp.util.PortletPropsValues;
 import com.liferay.wsrp.util.WSRPConsumerManager;
 import com.liferay.wsrp.util.WSRPConsumerManagerFactory;
 import com.liferay.wsrp.util.WebKeys;
@@ -152,7 +153,10 @@ import oasis.names.tc.wsrp.v2.types.UserProfile;
 
 import org.apache.axis.message.MessageElement;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -161,10 +165,11 @@ import org.osgi.service.component.annotations.Reference;
  * @author Peter Fellwock
  */
 @Component(
-	immediate = true,
+	configurationPid = "com.liferay.wsrp.web.configuration.WSRPConfiguration",
+	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	property = {
 		"com.liferay.portlet.add-default-resource=true",
-		"com.liferay.portlet.display-category=category.hidden",
+		"com.liferay.portlet.display-category=category.WSRP",
 		"com.liferay.portlet.private-request-attributes=false",
 		"com.liferay.portlet.private-session-attributes=false",
 		"com.liferay.portlet.render-weight=50",
@@ -262,6 +267,13 @@ public class ConsumerPortlet extends MVCPortlet {
 		}
 	}
 
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_wSRPGroupServiceConfiguration = ConfigurableUtil.createConfigurable(
+			WSRPGroupServiceConfiguration.class, properties);
+	}
+
 	protected void addFormField(
 		List<NamedString> formParameters, String name, String[] values) {
 
@@ -296,7 +308,7 @@ public class ConsumerPortlet extends MVCPortlet {
 
 		sb.append(resourceID);
 		sb.append(url);
-		sb.append(PortletPropsValues.SECURE_RESOURCE_URLS_SALT);
+		sb.append(_wSRPGroupServiceConfiguration.soapDebug());
 
 		String expectedWsrpAuth = encodeWSRPAuth(
 			resourceRequest, sb.toString());
@@ -442,7 +454,7 @@ public class ConsumerPortlet extends MVCPortlet {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		if (PortletPropsValues.SECURE_RESOURCE_URLS_ENABLED) {
+		if (_wSRPGroupServiceConfiguration.secureResourceUrlsEnabled()) {
 			if (!authorize(resourceRequest, resourceResponse)) {
 				return;
 			}
@@ -1887,7 +1899,7 @@ public class ConsumerPortlet extends MVCPortlet {
 			liferayPortletURL =
 				(LiferayPortletURL)liferayPortletResponse.createResourceURL();
 
-			if (PortletPropsValues.SECURE_RESOURCE_URLS_ENABLED) {
+			if (_wSRPGroupServiceConfiguration.secureResourceUrlsEnabled()) {
 				secureResourceURL(
 					portletRequest, liferayPortletURL, parameterMap);
 			}
@@ -2049,7 +2061,7 @@ public class ConsumerPortlet extends MVCPortlet {
 
 		sb.append(resourceID);
 		sb.append(url);
-		sb.append(PortletPropsValues.SECURE_RESOURCE_URLS_SALT);
+		sb.append(_wSRPGroupServiceConfiguration.secureResourceUrlsSalt());
 
 		if (themeDisplay.isSignedIn()) {
 			sb.append(AuthTokenUtil.getToken(request));
@@ -2157,5 +2169,8 @@ public class ConsumerPortlet extends MVCPortlet {
 			"(?:location\\.href\\s*=\\s*'(/widget/c/portal/layout(?:[^']+))')" +
 				"|(?:href\\s*=\\s*\"(/widget/c/portal/layout(?:[^\"]+))\")");
 	private static WebsiteLocalService _websiteLocalService;
+
+	private volatile WSRPGroupServiceConfiguration
+		_wSRPGroupServiceConfiguration;
 
 }

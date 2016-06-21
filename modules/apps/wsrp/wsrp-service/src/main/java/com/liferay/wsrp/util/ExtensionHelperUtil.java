@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.wsrp.configuration.WSRPGroupServiceConfiguration;
 
 import java.util.List;
 
@@ -55,10 +56,15 @@ public class ExtensionHelperUtil {
 	}
 
 	public static void initialize() {
+		WSRPGroupServiceConfiguration wSRPGroupServiceConfiguration =
+			WSRPConfigurationUtil.getWSRPConfiguration();
+
 		try {
-			if (Validator.isNotNull(PortletPropsValues.EXTENSION_HELPER_IMPL)) {
+			if (Validator.isNotNull(
+					wSRPGroupServiceConfiguration.extensionHelperImpl())) {
+
 				_extensionHelper = (ExtensionHelper)InstanceFactory.newInstance(
-					PortletPropsValues.EXTENSION_HELPER_IMPL);
+					wSRPGroupServiceConfiguration.extensionHelperImpl());
 			}
 		}
 		catch (Exception e) {

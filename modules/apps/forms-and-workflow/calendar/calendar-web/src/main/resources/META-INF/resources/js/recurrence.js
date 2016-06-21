@@ -225,7 +225,7 @@ AUI.add(
 
 						var currentSavedState = instance.get('recurrence');
 
-						currentSavedState.setAsRepeatable = instance.get('repeatCheckbox').get('checked');
+						currentSavedState.repeatable = instance.get('repeatCheckbox').get('checked');
 
 						instance.set('currentSavedState', currentSavedState);
 					},
@@ -235,14 +235,14 @@ AUI.add(
 
 						var recurrenceDialog = window[instance._namespace + 'recurrenceDialog'];
 
-						if (!instance._confimeChanges) {
+						if (!instance._confirmChanges) {
 							var currentRecurrence = instance.get('currentSavedState');
 
 							instance.set('recurrence', currentRecurrence);
 
-							instance.get('repeatCheckbox').set('checked', currentRecurrence.setAsRepeatable);
+							instance.get('repeatCheckbox').set('checked', currentRecurrence.repeatable);
 
-							if (!currentRecurrence.setAsRepeatable) {
+							if (!currentRecurrence.repeatable) {
 								instance.get('summaryNode').empty();
 							}
 						}
@@ -250,7 +250,7 @@ AUI.add(
 							instance.saveState();
 						}
 
-						delete instance._confimeChanges;
+						delete instance._confirmChanges;
 
 						recurrenceDialog.bodyNode.toggle(event.newVal);
 
@@ -430,7 +430,7 @@ AUI.add(
 						var instance = this;
 
 						if (confirmed) {
-							instance._confimeChanges = true;
+							instance._confirmChanges = true;
 						}
 
 						window[instance._namespace + 'recurrenceDialog'].hide();

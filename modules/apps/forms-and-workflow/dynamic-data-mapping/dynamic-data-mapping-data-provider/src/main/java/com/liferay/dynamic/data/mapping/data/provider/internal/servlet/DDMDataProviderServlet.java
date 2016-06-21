@@ -109,36 +109,48 @@ public class DDMDataProviderServlet extends HttpServlet {
 
 	protected String doGetData(HttpServletRequest request) {
 		try {
-			long ddmDataProviderInstanceId = ParamUtil.getLong(
+			String ddmDataProviderInstanceId = ParamUtil.getString(
 				request, "ddmDataProviderInstanceId");
 
-			DDMDataProviderInstance ddmDataProviderInstance =
-				_ddmDataProviderInstanceService.getDataProviderInstance(
+			DDMDataProvider ddmDataProvider =
+				_ddmDataProviderTracker.getDDMDataProviderById(
 					ddmDataProviderInstanceId);
 
-			DDMDataProvider ddmDataProvider =
-				_ddmDataProviderTracker.getDDMDataProvider(
+			DDMDataProviderContext ddmDataProviderContext = null;
+
+			if (ddmDataProvider != null) {
+				ddmDataProviderContext = new DDMDataProviderContext(null);
+			}
+			else {
+				DDMDataProviderInstance ddmDataProviderInstance =
+					_ddmDataProviderInstanceService.getDataProviderInstance(
+						Long.valueOf(ddmDataProviderInstanceId));
+
+				ddmDataProvider = _ddmDataProviderTracker.getDDMDataProvider(
 					ddmDataProviderInstance.getType());
 
-			DDMForm ddmForm = DDMFormFactory.create(
-				ddmDataProvider.getSettings());
+				DDMForm ddmForm = DDMFormFactory.create(
+					ddmDataProvider.getSettings());
 
-			DDMFormValues ddmFormValues =
-				_ddmFormValuesJSONDeserializer.deserialize(
-					ddmForm, ddmDataProviderInstance.getDefinition());
+				DDMFormValues ddmFormValues =
+					_ddmFormValuesJSONDeserializer.deserialize(
+						ddmForm, ddmDataProviderInstance.getDefinition());
 
-			DDMDataProviderContext ddmDataProviderContext =
-				new DDMDataProviderContext(ddmFormValues);
+				ddmDataProviderContext = new DDMDataProviderContext(
+					ddmFormValues);
 
-			List<DDMDataProviderContextContributor>
-				ddmDataProviderContextContributors =
-					_ddmDataProviderTracker.
-						getDDMDataProviderContextContributors(
-							ddmDataProviderInstance.getType());
+				List<DDMDataProviderContextContributor>
+					ddmDataProviderContextContributors =
+						_ddmDataProviderTracker.
+							getDDMDataProviderContextContributors(
+								ddmDataProviderInstance.getType());
 
-			addDDMDataProviderContextParameters(
-				request, ddmDataProviderContext,
-				ddmDataProviderContextContributors);
+				addDDMDataProviderContextParameters(
+					request, ddmDataProviderContext,
+					ddmDataProviderContextContributors);
+			}
+
+			ddmDataProviderContext.setHttpServletRequest(request);
 
 			DDMDataProviderRequest ddmDataProviderRequest =
 				new DDMDataProviderRequest(ddmDataProviderContext);

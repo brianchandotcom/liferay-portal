@@ -238,7 +238,7 @@
 			<else>
 				<execute function="ScrollWebElementIntoView" locator1="Calendar#SCHEDULER_VIEW_EVENT_DAY_AND_WEEK_VIEW" />
 
-				<execute function="AssertClick#assertTextClickNoMouseOver" locator1="Calendar#SCHEDULER_VIEW_EVENT_DAY_AND_WEEK_VIEW" value1="${eventTitle}" />
+				<execute function="AssertClick#assertPartialTextClickAt" locator1="Calendar#SCHEDULER_VIEW_EVENT_DAY_AND_WEEK_VIEW" value1="${eventTitle}" />
 			</else>
 		</if>
 	</command>

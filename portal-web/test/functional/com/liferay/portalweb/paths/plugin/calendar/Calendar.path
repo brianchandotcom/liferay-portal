@@ -698,7 +698,7 @@
 </tr>
 <tr>
 	<td>SCHEDULER_VIEW_EVENT_DAY_AND_WEEK_VIEW</td>
-	<td>//td[contains(@class,'scheduler-today') and contains(.,'${key_eventTitle}')]//div[@class='scheduler-event-content']</td>
+	<td>//td[contains(@class,'scheduler-today') and contains(.,'${key_eventTitle}')]//div[@title='${key_eventTitle}']</td>
 	<td></td>
 </tr>
 <tr>

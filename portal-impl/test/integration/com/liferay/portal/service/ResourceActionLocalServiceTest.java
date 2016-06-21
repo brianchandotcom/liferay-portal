@@ -22,9 +22,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -45,22 +43,20 @@ public class ResourceActionLocalServiceTest {
 
 	@Before
 	public void setUp() {
-		List<String> actionIds = new ArrayList<>();
+		List<String> actionIds = new ArrayList<>(3);
 
-		actionIds.add(_ACTION_ID + 1);
-		actionIds.add(_ACTION_ID + 2);
-		actionIds.add(_ACTION_ID + 3);
-		actionIds.add(_VIEW_ACTION_ID);
+		actionIds.add(ActionKeys.VIEW);
+
+		actionIds.add(_ACTION_ID_1);
+		actionIds.add(_ACTION_ID_2);
 
 		ResourceActionLocalServiceUtil.checkResourceActions(_NAME, actionIds);
 
-		actionIds.remove(_ACTION_ID + 2);
-
-		actionIds.add(_ACTION_ID + 4);
+		actionIds.set(2, _ACTION_ID_3);
 
 		ResourceActionLocalServiceUtil.deleteResourceAction(
 			ResourceActionLocalServiceUtil.fetchResourceAction(
-				_NAME, _ACTION_ID + 2));
+				_NAME, _ACTION_ID_2));
 
 		ResourceActionLocalServiceUtil.checkResourceActions(_NAME, actionIds);
 	}
@@ -70,9 +66,6 @@ public class ResourceActionLocalServiceTest {
 		List<ResourceAction> resourceActions =
 			ResourceActionLocalServiceUtil.getResourceActions(_NAME);
 
-		resourceActions.addAll(
-			ResourceActionLocalServiceUtil.getResourceActions(_NAME + 2));
-
 		for (ResourceAction resourceAction : resourceActions) {
 			ResourceActionLocalServiceUtil.deleteResourceAction(resourceAction);
 		}
@@ -80,71 +73,52 @@ public class ResourceActionLocalServiceTest {
 
 	@Test(expected = SystemException.class)
 	public void testAddMoreThan64Actions() throws Exception {
-		List<String> actionIds = new ArrayList<>();
+		List<String> actionIds = new ArrayList<>(65);
 
-		for (int i = 1; i <= 65; i++) {
-			actionIds.add(_ACTION_ID + i);
+		actionIds.add(ActionKeys.VIEW);
+
+		for (int i = 0; i < 64; i++) {
+			actionIds.add("actionId" + i);
 		}
 
-		ResourceActionLocalServiceUtil.checkResourceActions(
-			_NAME + 2, actionIds);
+		ResourceActionLocalServiceUtil.checkResourceActions(_NAME, actionIds);
 	}
 
 	@Test
-	public void testFirstAvailableBitwiseValueGetsGenerated() {
-		ResourceAction resourceAction1 =
-			ResourceActionLocalServiceUtil.fetchResourceAction(
-				_NAME, _ACTION_ID + 1);
+	public void testFirstAvailableBitwiseValueGetsGenerated() throws Exception {
+		ResourceAction resourceAction =
+			ResourceActionLocalServiceUtil.getResourceAction(
+				_NAME, ActionKeys.VIEW);
 
-		ResourceAction resourceAction3 =
-			ResourceActionLocalServiceUtil.fetchResourceAction(
-				_NAME, _ACTION_ID + 3);
+		Assert.assertEquals(1L, resourceAction.getBitwiseValue());
 
-		ResourceAction resourceAction4 =
-			ResourceActionLocalServiceUtil.fetchResourceAction(
-				_NAME, _ACTION_ID + 4);
+		resourceAction = ResourceActionLocalServiceUtil.getResourceAction(
+			_NAME, _ACTION_ID_1);
 
-		ResourceAction viewResourceAction =
-			ResourceActionLocalServiceUtil.fetchResourceAction(
-				_NAME, _VIEW_ACTION_ID);
+		Assert.assertEquals(2L, resourceAction.getBitwiseValue());
 
-		Set<Long> bitwiseValues = new HashSet<>();
+		resourceAction = ResourceActionLocalServiceUtil.getResourceAction(
+			_NAME, _ACTION_ID_3);
 
-		bitwiseValues.add(resourceAction1.getBitwiseValue());
-		bitwiseValues.add(resourceAction3.getBitwiseValue());
-		bitwiseValues.add(resourceAction4.getBitwiseValue());
-		bitwiseValues.add(viewResourceAction.getBitwiseValue());
-
-		Assert.assertTrue(
-			"Unexpected set of bitwise values: " + bitwiseValues,
-			bitwiseValues.contains(1L));
-
-		Assert.assertTrue(
-			"Unexpected set of bitwise values: " + bitwiseValues,
-			bitwiseValues.contains(2L));
-
-		Assert.assertTrue(
-			"Unexpected set of bitwise values: " + bitwiseValues,
-			bitwiseValues.contains(4L));
-
-		Assert.assertTrue(
-			"Unexpected set of bitwise values: " + bitwiseValues,
-			bitwiseValues.contains(8L));
+		Assert.assertEquals(4L, resourceAction.getBitwiseValue());
 	}
 
 	@Test
-	public void testViewActionGetsBitwiseValue1() {
+	public void testViewActionBitwiseValue() throws Exception {
 		ResourceAction viewResourceAction =
-			ResourceActionLocalServiceUtil.fetchResourceAction(
-				_NAME, _VIEW_ACTION_ID);
+			ResourceActionLocalServiceUtil.getResourceAction(
+				_NAME, ActionKeys.VIEW);
 
 		Assert.assertEquals(1L, viewResourceAction.getBitwiseValue());
 	}
 
-	private static final String _ACTION_ID = "actionId";
+	private static final String _ACTION_ID_1 = "actionId1";
 
-	private static final String _NAME = "name";
+	private static final String _ACTION_ID_2 = "actionId2";
 
-	private static final String _VIEW_ACTION_ID = ActionKeys.VIEW;
+	private static final String _ACTION_ID_3 = "actionId3";
+
+	private static final String _NAME =
+		ResourceActionLocalServiceTest.class.getName();
 
 }

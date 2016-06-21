@@ -20,7 +20,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.wsrp.axis.WSRPHTTPSender;
 import com.liferay.wsrp.client.PasswordCallback;
-import com.liferay.wsrp.util.PortletPropsValues;
+import com.liferay.wsrp.configuration.WSRPGroupServiceConfiguration;
+import com.liferay.wsrp.util.WSRPConfigurationUtil;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
@@ -71,6 +72,9 @@ public class ServiceHandler implements InvocationHandler {
 		}
 
 		_serviceLocator.setMaintainSession(true);
+
+		_wSRPGroupServiceConfiguration =
+			WSRPConfigurationUtil.getWSRPConfiguration();
 	}
 
 	public Object doInvoke(Object proxy, Method method, Object[] args)
@@ -182,7 +186,7 @@ public class ServiceHandler implements InvocationHandler {
 
 		Handler logHandler = new LogHandler();
 
-		if (PortletPropsValues.SOAP_DEBUG) {
+		if (_wSRPGroupServiceConfiguration.soapDebug()) {
 			requestSimpleChain.addHandler(logHandler);
 		}
 
@@ -205,7 +209,7 @@ public class ServiceHandler implements InvocationHandler {
 
 		SimpleChain responseSimpleChain = new SimpleChain();
 
-		if (PortletPropsValues.SOAP_DEBUG) {
+		if (_wSRPGroupServiceConfiguration.soapDebug()) {
 			responseSimpleChain.addHandler(logHandler);
 		}
 
@@ -238,5 +242,6 @@ public class ServiceHandler implements InvocationHandler {
 	private final Service _serviceLocator;
 	private final boolean _v2;
 	private final String _version;
+	private final WSRPGroupServiceConfiguration _wSRPGroupServiceConfiguration;
 
 }

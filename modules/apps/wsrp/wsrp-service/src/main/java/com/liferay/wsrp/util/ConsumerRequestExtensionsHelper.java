@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.InstanceFactory;
+import com.liferay.wsrp.configuration.WSRPGroupServiceConfiguration;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -73,15 +74,21 @@ public class ConsumerRequestExtensionsHelper {
 	}
 
 	private void _initConsumerRequestExtensions() throws Exception {
-		if (PortletPropsValues.CONSUMER_REQUEST_EXTENSIONS.length == 0) {
+		WSRPGroupServiceConfiguration wSRPGroupServiceConfiguration =
+			WSRPConfigurationUtil.getWSRPConfiguration();
+
+		String[] consumerRequestExtensionsClassNames =
+			wSRPGroupServiceConfiguration.consumerRequestExtensions();
+
+		if (consumerRequestExtensionsClassNames.length == 0) {
 			return;
 		}
 
 		_consumerRequestExtensions = new ArrayList<>(
-			PortletPropsValues.CONSUMER_REQUEST_EXTENSIONS.length);
+			consumerRequestExtensionsClassNames.length);
 
 		for (String consumerRequestExtensionClassName :
-				PortletPropsValues.CONSUMER_REQUEST_EXTENSIONS) {
+				consumerRequestExtensionsClassNames) {
 
 			ConsumerRequestExtension consumerRequestExtension =
 				(ConsumerRequestExtension)InstanceFactory.newInstance(

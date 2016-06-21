@@ -24,7 +24,8 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.wsrp.util.PortletPropsValues;
+import com.liferay.wsrp.configuration.WSRPGroupServiceConfiguration;
+import com.liferay.wsrp.util.WSRPConfigurationUtil;
 import com.liferay.wsrp.util.WebKeys;
 
 import java.io.IOException;
@@ -70,7 +71,11 @@ public class ProxyServlet extends HttpServlet {
 	}
 
 	protected boolean isAllowedURL(String url) throws Exception {
-		String[] allowedIps = PortletPropsValues.PROXY_URL_IPS_ALLOWED;
+		WSRPGroupServiceConfiguration wSRPGroupServiceConfiguration =
+			WSRPConfigurationUtil.getWSRPConfiguration();
+
+		String[] allowedIps =
+			wSRPGroupServiceConfiguration.proxyUrlIpsAllowed();
 
 		if (allowedIps.length == 0) {
 			return true;

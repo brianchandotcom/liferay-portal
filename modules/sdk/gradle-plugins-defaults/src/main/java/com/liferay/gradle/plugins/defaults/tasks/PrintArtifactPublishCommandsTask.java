@@ -14,9 +14,9 @@
 
 package com.liferay.gradle.plugins.defaults.tasks;
 
+import com.liferay.gradle.plugins.baseline.BaselinePlugin;
 import com.liferay.gradle.plugins.change.log.builder.BuildChangeLogTask;
 import com.liferay.gradle.plugins.change.log.builder.ChangeLogBuilderPlugin;
-import com.liferay.gradle.plugins.defaults.LiferayOSGiDefaultsPlugin;
 import com.liferay.gradle.plugins.defaults.internal.util.FileUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
 import com.liferay.gradle.util.Validator;
@@ -161,8 +161,7 @@ public class PrintArtifactPublishCommandsTask extends DefaultTask {
 
 		// Baseline
 
-		Task baselineTask = getTask(
-			LiferayOSGiDefaultsPlugin.BASELINE_TASK_NAME);
+		Task baselineTask = getTask(BaselinePlugin.BASELINE_TASK_NAME);
 
 		if (baselineTask != null) {
 			commands.add(getGradleCommand(baselineTask));
@@ -349,8 +348,7 @@ public class PrintArtifactPublishCommandsTask extends DefaultTask {
 		}
 
 		if (isForcedCache() &&
-			!LiferayOSGiDefaultsPlugin.BASELINE_TASK_NAME.equals(
-				task.getName())) {
+			!BaselinePlugin.BASELINE_TASK_NAME.equals(task.getName())) {
 
 			sb.append(" -Dforced.cache.enabled=true");
 		}

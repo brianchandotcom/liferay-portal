@@ -19,6 +19,8 @@ import aQute.bnd.version.Version;
 
 import com.liferay.gradle.plugins.LiferayBasePlugin;
 import com.liferay.gradle.plugins.LiferayOSGiPlugin;
+import com.liferay.gradle.plugins.baseline.BaselinePlugin;
+import com.liferay.gradle.plugins.baseline.BaselineTask;
 import com.liferay.gradle.plugins.cache.CacheExtension;
 import com.liferay.gradle.plugins.cache.CachePlugin;
 import com.liferay.gradle.plugins.cache.task.TaskCache;
@@ -29,7 +31,6 @@ import com.liferay.gradle.plugins.defaults.internal.util.FileUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GitUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.IncrementVersionClosure;
-import com.liferay.gradle.plugins.defaults.tasks.BaselineTask;
 import com.liferay.gradle.plugins.defaults.tasks.InstallCacheTask;
 import com.liferay.gradle.plugins.defaults.tasks.PrintArtifactPublishCommandsTask;
 import com.liferay.gradle.plugins.defaults.tasks.ReplaceRegexTask;
@@ -102,8 +103,6 @@ import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.UncheckedIOException;
-import org.gradle.api.artifacts.ComponentSelection;
-import org.gradle.api.artifacts.ComponentSelectionRules;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.artifacts.Dependency;
@@ -115,7 +114,6 @@ import org.gradle.api.artifacts.ProjectDependency;
 import org.gradle.api.artifacts.ResolutionStrategy;
 import org.gradle.api.artifacts.ResolveException;
 import org.gradle.api.artifacts.component.ComponentSelector;
-import org.gradle.api.artifacts.component.ModuleComponentIdentifier;
 import org.gradle.api.artifacts.dsl.ArtifactHandler;
 import org.gradle.api.artifacts.dsl.DependencyHandler;
 import org.gradle.api.artifacts.dsl.RepositoryHandler;
@@ -137,12 +135,10 @@ import org.gradle.api.invocation.Gradle;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.BasePluginConvention;
-import org.gradle.api.plugins.JavaBasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.JavaPluginConvention;
 import org.gradle.api.plugins.MavenPlugin;
 import org.gradle.api.plugins.MavenPluginConvention;
-import org.gradle.api.plugins.ReportingBasePlugin;
 import org.gradle.api.plugins.quality.FindBugs;
 import org.gradle.api.plugins.quality.FindBugsPlugin;
 import org.gradle.api.plugins.quality.FindBugsReports;
@@ -187,10 +183,6 @@ import org.gradle.util.GUtil;
  * @author Andrea Di Giorgi
  */
 public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
-
-	public static final String BASELINE_CONFIGURATION_NAME = "baseline";
-
-	public static final String BASELINE_TASK_NAME = "baseline";
 
 	public static final String COMMIT_CACHE_TASK_NAME = "commitCache";
 
@@ -304,14 +296,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				project, portalConfiguration, portalTestConfiguration);
 		}
 
-		Configuration baselineConfiguration = null;
-
-		if (hasBaseline(project)) {
-			baselineConfiguration = addConfigurationBaseline(project);
-		}
-
-		Task baselineTask = addTaskBaseline(project, baselineConfiguration);
-
+		Task baselineTask = GradleUtil.getTask(
+			project, BaselinePlugin.BASELINE_TASK_NAME);
 		Task syncVersionsTask = _addTaskSyncVersions(project);
 
 		baselineTask.finalizedBy(syncVersionsTask);
@@ -514,31 +500,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		}
 	}
 
-	protected Configuration addConfigurationBaseline(final Project project) {
-		Configuration configuration = GradleUtil.addConfiguration(
-			project, BASELINE_CONFIGURATION_NAME);
-
-		configuration.defaultDependencies(
-			new Action<DependencySet>() {
-
-				@Override
-				public void execute(DependencySet dependencySet) {
-					addDependenciesBaseline(project);
-				}
-
-			});
-
-		configuration.setDescription(
-			"Configures the previous released version of this project for " +
-				"baselining.");
-		configuration.setVisible(false);
-
-		_configureConfigurationNoCache(configuration);
-		_configureConfigurationNoSnapshots(configuration);
-
-		return configuration;
-	}
-
 	protected Configuration addConfigurationPortalTest(Project project) {
 		Configuration configuration = GradleUtil.addConfiguration(
 			project, PORTAL_TEST_CONFIGURATION_NAME);
@@ -549,14 +510,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		configuration.setVisible(false);
 
 		return configuration;
-	}
-
-	protected void addDependenciesBaseline(Project project) {
-		GradleUtil.addDependency(
-			project, BASELINE_CONFIGURATION_NAME,
-			String.valueOf(project.getGroup()),
-			GradleUtil.getArchivesBaseName(project),
-			"(," + String.valueOf(project.getVersion()) + ")", false);
 	}
 
 	protected void addDependenciesPmd(Project project) {
@@ -613,112 +566,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		task.dependsOn(originalTask);
 		task.setDescription("Alias for " + originalTask);
 		task.setGroup(originalTask.getGroup());
-
-		return task;
-	}
-
-	protected Task addTaskBaseline(
-		final Project project, final Configuration baselineConfiguration) {
-
-		Task task = null;
-
-		if (baselineConfiguration != null) {
-			GradleUtil.applyPlugin(project, ReportingBasePlugin.class);
-
-			BaselineTask baselineTask = GradleUtil.addTask(
-				project, BASELINE_TASK_NAME, BaselineTask.class);
-
-			final Jar jar = (Jar)GradleUtil.getTask(
-				project, JavaPlugin.JAR_TASK_NAME);
-
-			baselineTask.dependsOn(jar);
-
-			baselineTask.doFirst(
-				new Action<Task>() {
-
-					@Override
-					public void execute(Task task) {
-						BaselineTask baselineTask = (BaselineTask)task;
-
-						File oldJarFile = baselineTask.getOldJarFile();
-
-						if (GradleUtil.isFromMavenLocal(project, oldJarFile)) {
-							throw new GradleException(
-								"Please delete " + oldJarFile.getParent() +
-									" and try again");
-						}
-					}
-
-				});
-
-			String ignoreFailures = GradleUtil.getTaskPrefixedProperty(
-				baselineTask, "ignoreFailures");
-
-			if (Validator.isNotNull(ignoreFailures)) {
-				baselineTask.setIgnoreFailures(
-					Boolean.parseBoolean(ignoreFailures));
-			}
-
-			baselineTask.setNewJarFile(
-				new Callable<File>() {
-
-					@Override
-					public File call() throws Exception {
-						return jar.getArchivePath();
-					}
-
-				});
-
-			baselineTask.setOldJarFile(
-				new Callable<File>() {
-
-					@Override
-					public File call() throws Exception {
-						return baselineConfiguration.getSingleFile();
-					}
-
-				});
-
-			baselineTask.setSourceDir(
-				new Callable<File>() {
-
-					@Override
-					public File call() throws Exception {
-						SourceSet sourceSet = GradleUtil.getSourceSet(
-							project, SourceSet.MAIN_SOURCE_SET_NAME);
-
-						return GradleUtil.getSrcDir(sourceSet.getResources());
-					}
-
-				});
-
-			task = baselineTask;
-		}
-		else {
-			task = project.task(BASELINE_TASK_NAME);
-
-			task.doLast(
-				new Action<Task>() {
-
-					@Override
-					public void execute(Task task) {
-						Logger logger = task.getLogger();
-
-						if (logger.isLifecycleEnabled()) {
-							logger.lifecycle(
-								"Unable to baseline, {} has never been " +
-									"released.",
-								project);
-						}
-					}
-
-				});
-		}
-
-		task.setDescription(
-			"Compares the public API of this project with the public API of " +
-				"the previous released version, if found.");
-		task.setGroup(JavaBasePlugin.VERIFICATION_GROUP);
 
 		return task;
 	}
@@ -1127,6 +974,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	}
 
 	protected void applyPlugins(Project project) {
+		GradleUtil.applyPlugin(project, BaselinePlugin.class);
 		GradleUtil.applyPlugin(project, EclipsePlugin.class);
 		GradleUtil.applyPlugin(project, FindBugsPlugin.class);
 		GradleUtil.applyPlugin(project, IdeaPlugin.class);
@@ -2338,18 +2186,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		}
 	}
 
-	protected boolean hasBaseline(Project project) {
-		Version version = getVersion(project.getVersion());
-
-		if ((version != null) &&
-			(version.compareTo(_LOWEST_BASELINE_VERSION) > 0)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
 	protected boolean hasTests(Project project) {
 		SourceSet sourceSet = GradleUtil.getSourceSet(
 			project, SourceSet.TEST_SOURCE_SET_NAME);
@@ -2627,33 +2463,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		resolutionStrategy.cacheChangingModulesFor(0, TimeUnit.SECONDS);
 		resolutionStrategy.cacheDynamicVersionsFor(0, TimeUnit.SECONDS);
-	}
-
-	private void _configureConfigurationNoSnapshots(
-		Configuration configuration) {
-
-		ResolutionStrategy resolutionStrategy =
-			configuration.getResolutionStrategy();
-
-		ComponentSelectionRules componentSelectionRules =
-			resolutionStrategy.getComponentSelection();
-
-		componentSelectionRules.all(
-			new Action<ComponentSelection>() {
-
-				@Override
-				public void execute(ComponentSelection componentSelection) {
-					ModuleComponentIdentifier moduleComponentIdentifier =
-						componentSelection.getCandidate();
-
-					String version = moduleComponentIdentifier.getVersion();
-
-					if (version.endsWith(GradleUtil.SNAPSHOT_VERSION_SUFFIX)) {
-						componentSelection.reject("no snapshots are allowed");
-					}
-				}
-
-			});
 	}
 
 	private void _configureTaskBaselineSyncReleaseVersions(
@@ -3148,7 +2957,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		}
 
 		if ((portalRootDir == null) || !syncRelease ||
-			!GradleUtil.hasStartParameterTask(project, BASELINE_TASK_NAME)) {
+			!GradleUtil.hasStartParameterTask(
+				project, BaselinePlugin.BASELINE_TASK_NAME)) {
 
 			return false;
 		}
@@ -3245,9 +3055,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	private static final String _GROUP = "com.liferay";
 
 	private static final JavaVersion _JAVA_VERSION = JavaVersion.VERSION_1_7;
-
-	private static final Version _LOWEST_BASELINE_VERSION = new Version(
-		1, 0, 0);
 
 	private static final boolean _MAVEN_LOCAL_IGNORE = Boolean.getBoolean(
 		"maven.local.ignore");

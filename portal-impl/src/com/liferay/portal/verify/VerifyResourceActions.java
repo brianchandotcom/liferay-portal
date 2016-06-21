@@ -16,7 +16,6 @@ package com.liferay.portal.verify;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.service.ResourceActionLocalServiceUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -51,8 +50,6 @@ public class VerifyResourceActions extends VerifyProcess {
 			while (rs.next()) {
 				String name = rs.getString("name");
 
-				long bitwiseValue = rs.getLong("bitwiseValue");
-
 				Set<Long> bitwiseValues = nameBitwiseValuesPairs.get(name);
 
 				if (bitwiseValues == null) {
@@ -61,17 +58,15 @@ public class VerifyResourceActions extends VerifyProcess {
 					nameBitwiseValuesPairs.put(name, bitwiseValues);
 				}
 
-				if (bitwiseValues.add(bitwiseValue)) {
+				if (bitwiseValues.add(rs.getLong("bitwiseValue"))) {
 					continue;
 				}
 
 				if (_log.isInfoEnabled()) {
-					String actionId = rs.getString("actionId");
-
 					StringBundler sb = new StringBundler(7);
 
 					sb.append("Deleting resource action ");
-					sb.append(actionId);
+					sb.append(rs.getString("actionId"));
 					sb.append(" from resource ");
 					sb.append(name);
 					sb.append(" because its bitwise value is the ");
@@ -81,14 +76,8 @@ public class VerifyResourceActions extends VerifyProcess {
 					_log.info(sb.toString());
 				}
 
-				long resourceActionId = rs.getLong("resourceActionId");
-
-				ResourceAction resourceAction =
-					ResourceActionLocalServiceUtil.getResourceAction(
-						resourceActionId);
-
 				ResourceActionLocalServiceUtil.deleteResourceAction(
-					resourceAction);
+					rs.getLong("resourceActionId"));
 			}
 		}
 	}

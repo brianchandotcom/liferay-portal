@@ -19,16 +19,14 @@ import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.service.ResourceActionLocalServiceUtil;
 import com.liferay.portal.kernel.service.persistence.ResourceActionUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.transaction.Propagation;
-import com.liferay.portal.kernel.transaction.TransactionConfig;
-import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
+import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.verify.test.BaseVerifyProcessTestCase;
 
-import java.util.concurrent.Callable;
-
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -41,7 +39,19 @@ public class VerifyResourceActionsTest extends BaseVerifyProcessTestCase {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(), TransactionalTestRule.INSTANCE);
+
+	@Before
+	@Transactional
+	public void setUp() throws Exception {
+		super.setUp();
+
+		createResourceAction(_NAME_1, _ACTION_ID_1, 2);
+		createResourceAction(_NAME_1, _ACTION_ID_2, 2);
+		createResourceAction(_NAME_2, _ACTION_ID_1, 2);
+		createResourceAction(_NAME_2, _ACTION_ID_2, 4);
+	}
 
 	@After
 	public void tearDown() throws Exception {
@@ -61,11 +71,6 @@ public class VerifyResourceActionsTest extends BaseVerifyProcessTestCase {
 
 	@Test
 	public void testDeleteDuplicateBitwiseValuesOnResource() throws Throwable {
-		createResourceAction(_NAME_1, _ACTION_ID_1, 2);
-		createResourceAction(_NAME_1, _ACTION_ID_2, 2);
-		createResourceAction(_NAME_2, _ACTION_ID_1, 2);
-		createResourceAction(_NAME_2, _ACTION_ID_2, 4);
-
 		ResourceActionLocalServiceUtil.checkResourceActions();
 
 		ResourceAction resourceAction =
@@ -113,31 +118,19 @@ public class VerifyResourceActionsTest extends BaseVerifyProcessTestCase {
 	}
 
 	protected void createResourceAction(
-			final String name, final String actionId, final long bitwiseValue)
-		throws Throwable {
+		final String name, final String actionId, final long bitwiseValue) {
 
-		TransactionInvokerUtil.invoke(
-			_transactionConfig,
-			new Callable<Void>() {
+		long resourceActionId = CounterLocalServiceUtil.increment(
+			ResourceAction.class.getName());
 
-				@Override
-				public Void call() throws Exception {
-					long resourceActionId = CounterLocalServiceUtil.increment(
-						ResourceAction.class.getName());
+		ResourceAction resourceAction = ResourceActionUtil.create(
+			resourceActionId);
 
-					ResourceAction resourceAction = ResourceActionUtil.create(
-						resourceActionId);
+		resourceAction.setName(name);
+		resourceAction.setActionId(actionId);
+		resourceAction.setBitwiseValue(bitwiseValue);
 
-					resourceAction.setName(name);
-					resourceAction.setActionId(actionId);
-					resourceAction.setBitwiseValue(bitwiseValue);
-
-					ResourceActionUtil.update(resourceAction);
-
-					return null;
-				}
-
-			});
+		ResourceActionUtil.update(resourceAction);
 	}
 
 	@Override
@@ -152,16 +145,5 @@ public class VerifyResourceActionsTest extends BaseVerifyProcessTestCase {
 	private static final String _NAME_1 = "portlet1";
 
 	private static final String _NAME_2 = "portlet2";
-
-	private static final TransactionConfig _transactionConfig;
-
-	static {
-		TransactionConfig.Builder builder = new TransactionConfig.Builder();
-
-		builder.setPropagation(Propagation.REQUIRED);
-		builder.setRollbackForClasses(Exception.class);
-
-		_transactionConfig = builder.build();
-	}
 
 }

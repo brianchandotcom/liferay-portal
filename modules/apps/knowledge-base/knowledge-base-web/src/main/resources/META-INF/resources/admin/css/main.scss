@@ -28,8 +28,6 @@
 	width: inherit;
 }
 
-.knowledge-base-portlet-admin h5 span {
-	&.kb-article-descriptive-details, &.kb-folder-descriptive-details{
-		margin-left: 24px;
-	}
+.knowledge-base-portlet-admin h5 span.kb-descriptive-details {
+	margin-left: 24px;
 }

@@ -226,7 +226,7 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 									<span>
 										<liferay-ui:message arguments="<%= KBFolderServiceUtil.getKBFoldersCount(kbFolder.getGroupId(), kbFolder.getKbFolderId()) %>" key="x-folders" />
 									</span>
-									<span class="kb-folder-descriptive-details">
+									<span class="kb-descriptive-details">
 										<liferay-ui:message arguments="<%= KBArticleServiceUtil.getKBArticlesCount(kbFolder.getGroupId(), kbFolder.getKbFolderId(), WorkflowConstants.STATUS_ANY) %>" key="x-articles" />
 									</span>
 								</h5>
@@ -286,18 +286,18 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 											<portlet:param name="redirect" value="<%= currentURL %>" />
 										</liferay-portlet:renderURL>
 
-										<span class="kb-article-descriptive-details">
+										<span class="kb-descriptive-details">
 											<aui:a href="<%= childKBArticlesURL.toString() %>">
 												<liferay-ui:message arguments="<%= childKBArticlesCount %>" key="x-child-articles" />
 											</aui:a>
 										</span>
 									</c:if>
 
-									<span class="kb-article-descriptive-details">
+									<span class="kb-descriptive-details">
 										<liferay-ui:message arguments="<%= BigDecimal.valueOf(kbArticle.getPriority()).toPlainString() %>" key="priority-x" />
 									</span>
 
-									<span class="kb-article-descriptive-details">
+									<span class="kb-descriptive-details">
 										<liferay-ui:message arguments="<%= kbArticle.getViewCount() %>" key="x-views" />
 									</span>
 								</h5>

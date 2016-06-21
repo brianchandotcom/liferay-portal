@@ -147,8 +147,8 @@
 
 		<execute macro="KBArticleSuggestion#viewPG">
 			<var name="kbSuggestionBody" value="Knowledge Base Article Suggestion" />
+			<var name="kbSuggestionUserName" value="Test Test" />
 			<var name="status" value="New" />
-			<var name="userName" value="Test Test" />
 		</execute>
 	</command>
 
@@ -220,8 +220,8 @@
 
 			<execute macro="KBArticleSuggestion#viewPG">
 				<var name="kbSuggestionBody" value="Knowledge Base Article1 Suggestion${suggestionCount}" />
+				<var name="kbSuggestionUserName" value="Test Test" />
 				<var name="status" value="New" />
-				<var name="userName" value="Test Test" />
 			</execute>
 		</for>
 	</command>
@@ -741,8 +741,8 @@
 
 		<execute macro="KBArticleSuggestion#viewPG">
 			<var name="kbSuggestionBody" value="Knowledge Base Article1 Suggestion" />
+			<var name="kbSuggestionUserName" value="Test Test" />
 			<var name="status" value="Resolved" />
-			<var name="userName" value="Test Test" />
 		</execute>
 	</command>
 
@@ -1274,15 +1274,15 @@
 
 		<execute macro="KBArticleSuggestion#viewPG">
 			<var name="kbSuggestionBody" value="Knowledge Base Article Suggestion" />
+			<var name="kbSuggestionUserName" value="Test Test" />
 			<var name="status" value="New" />
-			<var name="userName" value="Test Test" />
 		</execute>
 
 		<execute macro="KBArticleSuggestion#viewNoDuplicatePG">
 			<var name="kbSuggestionBody" value="Knowledge Base Article Suggestion" />
+			<var name="kbSuggestionUserName" value="Test Test" />
 			<var name="kbThereAreSuggestionsLink" value="There is one suggestion. (1 Pending)" />
 			<var name="status" value="New" />
-			<var name="userName" value="Test Test" />
 		</execute>
 	</command>
 </definition>

@@ -55,7 +55,7 @@
 </tr>
 <tr>
 	<td>DO_YOU_HAVE_ANY_SUGGESTIONS</td>
-	<td>//div[@class='kb-article-container']//div/a[contains(.,'Do you have any suggestions?')]</td>
+	<td>//div[contains(@class,'kb-entity-body')]//h5[contains(.,'Do you have any suggestions?')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -82,12 +82,12 @@
 <!--ATTACHMENTS-->
 <tr>
 	<td>ATTACHMENTS_HEADER_COLLAPSED</td>
-	<td>//div[contains(@class,'toggler-header-collapsed') and contains(.,'Attachments')]/div/span</td>
+	<td>//a[contains(@class,'collapse-icon') and contains(@aria-expanded,'false') and contains(.,'Attachments')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ATTACHMENTS_HEADER_EXPANDED</td>
-	<td>//div[contains(@class,'toggler-header-expanded') and contains(.,'Attachments')]/div/span</td>
+	<td>//a[contains(@class,'collapse-icon') and contains(@aria-expanded,'true') and contains(.,'Attachments')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -2384,8 +2384,8 @@
 
 		<execute macro="KBArticleSuggestion#viewPG">
 			<var name="kbSuggestionBody" value="Test Test Knowledge Base Article Suggestion" />
+			<var name="kbSuggestionUserName" value="Test Test" />
 			<var name="status" value="New" />
-			<var name="userName" value="Test Test" />
 		</execute>
 
 		<execute macro="User#logoutPG" />
@@ -2471,26 +2471,26 @@
 
 		<execute macro="KBArticleSuggestion#viewPG">
 			<var name="kbSuggestionBody" value="User 2 Knowledge Base Article Suggestion 1" />
+			<var name="kbSuggestionUserName" value="userfn2 userln2" />
 			<var name="status" value="New" />
-			<var name="userName" value="userfn2 userln2" />
 		</execute>
 
 		<execute macro="KBArticleSuggestion#viewPG">
 			<var name="kbSuggestionBody" value="User 1 Knowledge Base Article Suggestion 2" />
+			<var name="kbSuggestionUserName" value="userfn1 userln1" />
 			<var name="status" value="New" />
-			<var name="userName" value="userfn1 userln1" />
 		</execute>
 
 		<execute macro="KBArticleSuggestion#viewPG">
 			<var name="kbSuggestionBody" value="User 1 Knowledge Base Article Suggestion 1" />
+			<var name="kbSuggestionUserName" value="userfn1 userln1" />
 			<var name="status" value="New" />
-			<var name="userName" value="userfn1 userln1" />
 		</execute>
 
 		<execute macro="KBArticleSuggestion#viewPG">
 			<var name="kbSuggestionBody" value="Test Test Knowledge Base Article Suggestion" />
+			<var name="kbSuggestionUserName" value="Test Test" />
 			<var name="status" value="New" />
-			<var name="userName" value="Test Test" />
 		</execute>
 	</command>
 

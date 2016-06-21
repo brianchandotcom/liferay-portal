@@ -382,7 +382,7 @@
 </tr>
 <tr>
 	<td>LINK_THERE_ARE_SUGGESTIONS</td>
-	<td>//div[@class='kb-article-container']//div[@class='kb-article-suggestion-actions']/a[2]</td>
+	<td>//div[contains(@class,'kb-entity-body')]//div[contains(@id,'suggestionContainer')]//following-sibling::h5</td>
 	<td></td>
 </tr>
 <tr>

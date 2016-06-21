@@ -98,9 +98,9 @@
 		<var name="key_kbSuggestionBody" value="${kbSuggestionBody}" />
 
 		<execute function="AssertTextEquals" locator1="KnowledgeBase#LINK_THERE_ARE_SUGGESTIONS" value1="${kbThereAreSuggestionsLink}" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="KnowledgeBaseSuggestions#USER_NAME" value1="${userName}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="KnowledgeBaseSuggestions#USER_NAME" value1="${kbSuggestionUserName}" />
 		<execute function="AssertTextEquals" locator1="KnowledgeBaseSuggestions#CONTENT" value1="${kbSuggestionBody}" />
-		<execute function="AssertTextEquals" locator1="KnowledgeBaseSuggestions#STATUS" value1="Status: ${status}" />
+		<execute function="AssertTextEquals" locator1="KnowledgeBaseSuggestions#STATUS" value1="${status}" />
 		<execute function="AssertElementNotPresent" locator1="KnowledgeBaseSuggestions#CONTENT_DUPLICATE" value1="${kbSuggestionBody}" />
 	</command>
 
@@ -112,9 +112,9 @@
 	<command name="viewPG">
 		<var name="key_kbSuggestionBody" value="${kbSuggestionBody}" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="KnowledgeBaseSuggestions#USER_NAME" value1="${userName}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="KnowledgeBaseSuggestions#USER_NAME" value1="${kbSuggestionUserName}" />
 		<execute function="AssertTextEquals" locator1="KnowledgeBaseSuggestions#CONTENT" value1="${kbSuggestionBody}" />
-		<execute function="AssertTextEquals" locator1="KnowledgeBaseSuggestions#STATUS" value1="Status: ${status}" />
+		<execute function="AssertTextEquals" locator1="KnowledgeBaseSuggestions#STATUS" value1="${status}" />
 	</command>
 
 	<command name="viewSubmittedSuggestionCountNoPermissionPG">

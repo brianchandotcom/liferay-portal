@@ -561,6 +561,58 @@
 		</execute>
 	</command>
 
+	<command  name="AddRecordWithBlankDocumentsAndMediaField" priority="3">
+		<description message="This is a use case for LPS-66229." />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="Page#add">
+			<var name="pageName" value="DDL Page" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="DDL Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="pageName" value="DDL Page" />
+			<var name="portletName" value="Dynamic Data Lists Display" />
+		</execute>
+
+		<execute macro="DDLList#addViaDDLDisplayPG" />
+
+		<execute macro="DDLDataDefinition#addViaDDLDisplayPG" />
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Documents and Media" />
+			<var name="fieldFieldLabel" value="Documents and Media" />
+			<var name="fieldName" value="DocumentsAndMedia" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#saveViaDDLDisplayPG" />
+
+		<execute macro="DDLDataDefinition#selectViaDDLDisplayPG" />
+
+		<execute macro="DDLList#saveViaDDLDisplayPG" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="DDL Page" />
+		</execute>
+
+		<execute macro="DDLRecord#addViaDDLDisplayPG" />
+
+		<execute macro="PortletEntry#publish" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="DDL Page" />
+		</execute>
+
+		<execute macro="DDLRecord#viewViaDDLDisplayTable">
+			<var name="ddlRecordFieldData" value="" />
+			<var name="fieldFieldLabel" value="Documents and Media" />
+		</execute>
+	</command>
+
 	<command  name="AddRecordWithPopulatedWebContentField" priority="5">
 		<description message="This is a use case for LPS-66439." />
 

@@ -1787,7 +1787,7 @@
 			<var name="portlet" value="Audience Targeting" />
 		</execute>
 
-		<execute macro="ContentTargetingCampaign#viewImportContentTrackingActionContentEmpty">
+		<execute macro="ContentTargetingCampaign#viewImportNoContentTrackingActions">
 			<var name="campaignName" value="Campaign Name" />
 			<var name="metricName" value="Content Metric Name" />
 		</execute>

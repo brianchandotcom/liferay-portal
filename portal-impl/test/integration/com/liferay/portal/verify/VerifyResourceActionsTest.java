@@ -19,12 +19,15 @@ import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.service.ResourceActionLocalServiceUtil;
 import com.liferay.portal.kernel.service.persistence.ResourceActionUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.verify.test.BaseVerifyProcessTestCase;
 
-import org.junit.After;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -51,22 +54,6 @@ public class VerifyResourceActionsTest extends BaseVerifyProcessTestCase {
 		createResourceAction(_NAME_1, _ACTION_ID_2, 2);
 		createResourceAction(_NAME_2, _ACTION_ID_1, 2);
 		createResourceAction(_NAME_2, _ACTION_ID_2, 4);
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		for (String name : new String[] {_NAME_1, _NAME_2}) {
-			for (String actionId : new String[] {_ACTION_ID_1, _ACTION_ID_2}) {
-				ResourceAction resourceAction =
-					ResourceActionLocalServiceUtil.fetchResourceAction(
-						name, actionId);
-
-				if (resourceAction != null) {
-					ResourceActionLocalServiceUtil.deleteResourceAction(
-						resourceAction);
-				}
-			}
-		}
 	}
 
 	@Test
@@ -130,7 +117,7 @@ public class VerifyResourceActionsTest extends BaseVerifyProcessTestCase {
 		resourceAction.setActionId(actionId);
 		resourceAction.setBitwiseValue(bitwiseValue);
 
-		ResourceActionUtil.update(resourceAction);
+		_resourceActions.add(ResourceActionUtil.update(resourceAction));
 	}
 
 	@Override
@@ -145,5 +132,8 @@ public class VerifyResourceActionsTest extends BaseVerifyProcessTestCase {
 	private static final String _NAME_1 = "portlet1";
 
 	private static final String _NAME_2 = "portlet2";
+
+	@DeleteAfterTestRun
+	private final List<ResourceAction> _resourceActions = new ArrayList<>();
 
 }

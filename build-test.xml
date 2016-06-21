@@ -8146,6 +8146,18 @@ jdbc.default.password=${database.mysql.password}</echo>
 						</gradle-execute>
 					</then>
 				</if>
+
+				<if>
+					<or>
+						<equals arg1="${cmis.repository.type}" arg2="sharepoint2010" />
+						<equals arg1="${cmis.repository.type}" arg2="sharepoint2013" />
+					</or>
+					<then>
+						<gradle-execute dir="${project.dir}/modules/private/apps/sharepoint/sharepoint-hook" task="deploy">
+							<arg value="clean" />
+						</gradle-execute>
+					</then>
+				</if>
 			</then>
 		</if>
 

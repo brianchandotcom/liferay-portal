@@ -12,26 +12,22 @@
  * details.
  */
 
-package com.liferay.wsrp.util;
+package com.liferay.wsrp.configuration;
+
+import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Peter Fellwock
  */
-public class PortletPropsKeys {
+@Component
+public class WSRPGroupServiceConfigurationBeanDeclaration
+	implements ConfigurationBeanDeclaration {
 
-	public static final String CONSUMER_REQUEST_EXTENSIONS =
-		"consumer.request.extensions";
-
-	public static final String EXTENSION_HELPER_IMPL = "extension.helper.impl";
-
-	public static final String PROXY_URL_IPS_ALLOWED = "proxy.url.ips.allowed";
-
-	public static final String SECURE_RESOURCE_URLS_ENABLED =
-		"secure.resource.urls.enabled";
-
-	public static final String SECURE_RESOURCE_URLS_SALT =
-		"secure.resource.urls.salt";
-
-	public static final String SOAP_DEBUG = "soap.debug";
+	@Override
+	public Class<?> getConfigurationBeanClass() {
+		return WSRPGroupServiceConfiguration.class;
+	}
 
 }

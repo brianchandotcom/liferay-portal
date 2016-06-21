@@ -28,7 +28,7 @@
 <aui:script use="liferay-form">
 	Liferay.Form.register(
 		{
-			id: '<%= namespace + name %>'
+			id: '<%= namespace + HtmlUtil.escapeJS(name) %>'
 
 			<c:if test="<%= validatorTagsMap != null %>">
 				, fieldRules: [
@@ -72,14 +72,14 @@
 
 	var onDestroyPortlet = function(event) {
 		if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {
-			delete Liferay.Form._INSTANCES['<%= namespace + name %>'];
+			delete Liferay.Form._INSTANCES['<%= namespace + HtmlUtil.escapeJS(name) %>'];
 		}
 	};
 
 	Liferay.on('destroyPortlet', onDestroyPortlet);
 
 	<c:if test="<%= Validator.isNotNull(onSubmit) %>">
-		A.all('#<%= namespace + name %> .input-container').removeAttribute('disabled');
+		A.all('#<%= namespace + HtmlUtil.escapeJS(name) %> .input-container').removeAttribute('disabled');
 	</c:if>
 
 	Liferay.fire('<portlet:namespace />formReady');

@@ -16,12 +16,15 @@
 		<var name="key_gmailAssetType" value="${gmailAssetType}" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Gmail#GMAIL_HTML_MODE_MAIL_TABLE_USER_NAME" value1="${emailFromUserName}" />
+
 		<execute function="AssertClick#assertPartialTextClickAt" locator1="Gmail#GMAIL_HTML_MODE_MAIL_TABLE_MESSAGE_TITLE" value1="${gmailMessageTitle}" />
+
 		<execute function="Pause" locator1="3000" />
 	</command>
 
 	<command name="login">
 		<execute function="Open" locator1="http://www.gmail.com" />
+
 		<execute function="Pause" locator1="5000" />
 
 		<var name="key_userEmailAddress" value="${userEmailAddress}" />
@@ -63,6 +66,7 @@
 
 	<command name="logoutAndLogin">
 		<execute function="Open" locator1="http://www.gmail.com" />
+
 		<execute function="Pause" locator1="3000" />
 
 		<execute macro="Gmail#gotoHtmlMode" />
@@ -139,7 +143,9 @@
 
 	<command name="replyMail">
 		<execute function="Type" locator1="Gmail#GMAIL_HTML_MODE_MESSAGE_QUICK_REPLY_FIELD" value1="${gmailReplyMessage}" />
+
 		<execute function="AssertClick" locator1="Gmail#GMAIL_HTML_MODE_MESSAGE_QUICK_REPLY_SEND_BUTTON" value1="Send" />
+
 		<execute function="AssertTextEquals" locator1="Gmail#SUCCESS_MESSAGE" value1="Your message has been sent." />
 	</command>
 
@@ -155,7 +161,9 @@
 			<condition function="IsElementPresent" locator1="Gmail#GMAIL_HTML_MODE_MAIL_TABLE_GENERIC" />
 			<then>
 				<execute function="Check" locator1="Gmail#GMAIL_HTML_MODE_MAIL_TABLE_GENERIC" />
+
 				<execute function="Click" locator1="Gmail#GMAIL_HTML_MODE_MAIL_TABLE_DELETE_BUTTON" />
+
 				<execute function="Pause" locator1="3000" />
 			</then>
 		</while>
@@ -206,6 +214,7 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="Gmail#GMAIL_HTML_MODE_MESSAGE_BODY_SOCIAL_OFFICE_MESSAGE_SUMMARY" value1="${senderName} sent you a message." />
 		<execute function="AssertTextEquals#assertPartialText" locator1="Gmail#GMAIL_HTML_MODE_MESSAGE_BODY_SOCIAL_OFFICE_MESSAGE_SUBJECT" value1="${messageSubject}" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="Gmail#GMAIL_HTML_MODE_MESSAGE_BODY_SOCIAL_OFFICE_MESSAGE_BODY" value1="${messageBody}" />
+
 		<execute function="Click" locator1="Gmail#GMAIL_HTML_MODE_MESSAGE_BODY_SOCIAL_OFFICE_MESSAGE_LINK" />
 
 		<execute function="SelectWindow" locator1="SOMessages#MESSAGES_POP_UP_WINDOW" />

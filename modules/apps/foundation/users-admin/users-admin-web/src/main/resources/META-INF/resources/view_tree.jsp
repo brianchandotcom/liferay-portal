@@ -214,10 +214,6 @@ if (organization != null) {
 				List<Organization> results = searchContainer.getResults();
 				%>
 
-				<c:if test="<%= !results.isEmpty() %>">
-					<aui:button cssClass="delete-organizations" disabled="<%= true %>" name="delete" onClick='<%= renderResponse.getNamespace() + "deleteOrganizations();" %>' value="delete" />
-				</c:if>
-
 				<liferay-ui:search-container-row
 					className="com.liferay.portal.kernel.model.Organization"
 					escapedModel="<%= true %>"

@@ -49,7 +49,7 @@ if (portletTitleBasedNavigation) {
 	</liferay-frontend:info-bar>
 </c:if>
 
-<div <%= portletTitleBasedNavigation ? "class=\"closed container-fluid-1280 kb-article sidenav-container sidenav-right\" id=\"" + liferayPortletResponse.getNamespace() + "infoPanelId\"" : StringPool.BLANK %>>
+<div <%= portletTitleBasedNavigation ? "class=\"closed container-fluid-1280 " + infoPanelState + " kb-article sidenav-container sidenav-right\" id=\"" + liferayPortletResponse.getNamespace() + "infoPanelId\"" : StringPool.BLANK %>>
 	<c:if test="<%= portletTitleBasedNavigation %>">
 		<liferay-frontend:sidebar-panel>
 

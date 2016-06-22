@@ -73,6 +73,8 @@ if (!portletId.equals(BookmarksPortletKeys.BOOKMARKS) && !portletId.equals(Bookm
 }
 
 Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);
+
+String infoPanelState = GetterUtil.getString(SessionClicks.get(request, "com.liferay.info.panel_" + renderResponse.getNamespace() + "infoPanelId", null), "closed");
 %>
 
 <%@ include file="/bookmarks/init-ext.jsp" %>

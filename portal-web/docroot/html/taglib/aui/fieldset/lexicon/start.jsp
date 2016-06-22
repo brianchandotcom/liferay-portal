@@ -48,7 +48,7 @@ else if (collapsible) {
 			<div class="panel-title" id="<%= id %>Title">
 				<c:choose>
 					<c:when test="<%= collapsible %>">
-						<a aria-controls="<%= id %>Content" aria-expanded="true" class="collapse-icon collapse-icon-middle <%= collapsed ? "collapsed" : StringPool.BLANK %>" data-toggle="collapse" href="#<%= id %>Content" role="button">
+						<a aria-controls="<%= id %>Content" aria-expanded="<%= !collapsed %>" class="collapse-icon collapse-icon-middle <%= collapsed ? "collapsed" : StringPool.BLANK %>" data-toggle="collapse" href="#<%= id %>Content" role="button">
 							<%= header %>
 						</a>
 					</c:when>

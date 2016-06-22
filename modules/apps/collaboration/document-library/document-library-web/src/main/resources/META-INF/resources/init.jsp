@@ -202,6 +202,7 @@ page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortletKeys" %><%@
 page import="com.liferay.portal.kernel.util.PrefsPropsUtil" %><%@
 page import="com.liferay.portal.kernel.util.PropsKeys" %><%@
+page import="com.liferay.portal.kernel.util.SessionClicks" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.TempFileEntryUtil" %><%@
@@ -266,6 +267,8 @@ IGDisplayContextProvider igDisplayContextProvider = dlWebComponentProvider.getIG
 
 Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
+
+String infoPanelState = GetterUtil.getString(SessionClicks.get(request, "com.liferay.info.panel_" + renderResponse.getNamespace() + "infoPanelId", null), "closed");
 %>
 
 <%@ include file="/init-ext.jsp" %>

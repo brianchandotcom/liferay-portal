@@ -17,7 +17,7 @@
 <%@ include file="/management_bar_sidenav_toggler_button/init.jsp" %>
 
 <liferay-frontend:management-bar-button
-	active="<%= false %>"
+	active="<%= active %>"
 	cssClass="<%= cssClass %>"
 	data="<%= data %>"
 	disabled="<%= disabled %>"
@@ -53,7 +53,7 @@
 		sidenavSlider.on(
 			'open.lexicon.sidenav',
 			function(event) {
-				Liferay.Store('com.liferay.info.panel_<%= sidenavId %>', 'open');
+				Liferay.Store('com.liferay.info.panel_<%= sidenavId %>', 'open sidenav-js-fouc');
 			}
 		);
 	}

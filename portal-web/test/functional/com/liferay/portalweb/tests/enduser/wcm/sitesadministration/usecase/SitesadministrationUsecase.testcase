@@ -602,8 +602,9 @@
 
 		<execute macro="Gmail#gotoHtmlMode" />
 
-		<execute macro="Gmail#gotoMailMessage">
+		<execute macro="Gmail#gotoMail">
 			<var name="emailFromUserName" value="Joe Bloggs" />
+			<var name="gmailAssetType" value="New Account" />
 			<var name="gmailMessageTitle" value="Your New Account" />
 		</execute>
 
@@ -611,8 +612,9 @@
 
 		<execute macro="Gmail#gotoHtmlMode" />
 
-		<execute macro="Gmail#gotoMailMessage">
+		<execute macro="Gmail#gotoMail">
 			<var name="emailFromUserName" value="Joe Bloggs" />
+			<var name="gmailAssetType" value="Address Verification" />
 			<var name="gmailMessageTitle" value="Email Address Verification" />
 		</execute>
 
@@ -656,9 +658,9 @@
 
 		<execute macro="Gmail#gotoHtmlMode" />
 
-		<execute macro="Gmail#gotoMailMessage">
+		<execute macro="Gmail#gotoMail">
 			<var name="emailFromUserName" value="Joe Bloggs" />
-			<var name="emailVerificationURL" value="true" />
+			<var name="gmailAssetType" value="Address Verification" />
 			<var name="gmailMessageTitle" value="Email Address Verification" />
 		</execute>
 

@@ -400,7 +400,7 @@
 		<if>
 			<isset var="messageBoardsThreadURL" />
 			<then>
-				<execute function="AssertLocation" value1="http://localhost:8080/web/guest/message-boards/-/${messageBoardsThreadURL}/" />
+				<execute function="AssertLocation" value1="${messageBoardsThreadURL}" />
 			</then>
 			<else>
 				<execute function="AssertTextEquals" locator1="MessageBoards#THREAD_LIST_THREAD" value1="${threadSubject}" />

@@ -36,6 +36,25 @@
 			path="/role_action.jsp"
 		/>
 	</c:when>
+	<c:when test='<%= displayStyle.equals("icon") %>'>
+
+		<%
+		row.setCssClass("entry-card lfr-asset-item");
+		%>
+
+		<liferay-ui:search-container-column-text>
+			<liferay-frontend:icon-vertical-card
+				actionJsp="/role_action.jsp"
+				actionJspServletContext="<%= application %>"
+				icon="users"
+				resultRow="<%= row %>"
+				rowChecker="<%= searchContainer.getRowChecker() %>"
+				subtitle="<%= HtmlUtil.escape(role.getDescription(locale)) %>"
+				title="<%= HtmlUtil.escape(role.getTitle(locale)) %>"
+				url="<%= (rowURL != null) ? rowURL.toString() : null %>"
+			/>
+		</liferay-ui:search-container-column-text>
+	</c:when>
 	<c:otherwise>
 		<liferay-ui:search-container-column-text
 			cssClass="table-cell-content"

@@ -2219,8 +2219,8 @@
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
 			<var name="kfProcessName" value="${kfProcessName}" />
-			<var name="workflowDefinitionTitle" value="Single Approver" />
-			<var name="workflowDefinitionTitleEdit" value="Edited Workflow Definition" />
+			<var name="workflowDefinitionTitle" value="Edited Workflow Definition" />
+			<var name="edit" value="true" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
@@ -2308,8 +2308,8 @@
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
 			<var name="kfProcessName" value="${kfProcessName}" />
-			<var name="workflowDefinitionTitle" value="Single Approver" />
-			<var name="workflowDefinitionTitleEdit" value="Edited Workflow Definition" />
+			<var name="workflowDefinitionTitle" value="Edited Workflow Definition" />
+			<var name="edit" value="true" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
@@ -2420,9 +2420,10 @@
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
 			<var name="kfProcessName" value="${kfProcessName}" />
-			<var name="workflowDefinitionTitle" value="Single Approver" />
+			<var name="workflowDefinitionTitle" value="${workflowDefinitionTitleEdit}" />
+			<var name="edit" value="true" />
 		</execute>
-		
+
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#assignForm">

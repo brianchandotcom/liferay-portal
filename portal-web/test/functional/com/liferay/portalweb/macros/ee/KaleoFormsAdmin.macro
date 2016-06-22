@@ -152,7 +152,7 @@
 
 		<execute macro="KaleoFormsAdmin#viewSelectedWorkflow">
 			<var name="workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
-			<var name="workflowDefinitionTitleEdit" value="${workflowDefinitionTitleEdit}" />
+			<var name="edit" value="${edit}" />
 		</execute>
 	</command>
 
@@ -726,9 +726,9 @@
 
 	<command name="viewSelectedWorkflow">
 		<if>
-			<isset var="workflowDefinitionTitleEdit" />
+			<equals arg1="${edit}" arg2="true" />
 			<then>
-				<execute function="AssertTextEquals" locator1="KaleoFormsAdminEditProcess#SELECTED_WORKFLOW" value1="${workflowDefinitionTitleEdit} (Version 2)" />
+				<execute function="AssertTextEquals" locator1="KaleoFormsAdminEditProcess#SELECTED_WORKFLOW" value1="${workflowDefinitionTitle} (Version 2)" />
 			</then>
 			<else>
 				<execute function="AssertTextEquals" locator1="KaleoFormsAdminEditProcess#SELECTED_WORKFLOW" value1="${workflowDefinitionTitle} (Version 1)" />

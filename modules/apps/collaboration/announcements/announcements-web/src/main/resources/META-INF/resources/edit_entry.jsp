@@ -83,9 +83,11 @@ if (entry == null) {
 		<aui:input name="url" />
 
 		<aui:field-wrapper label="content">
-			<liferay-ui:input-editor contents="<%= content %>" editorName='<%= PropsUtil.get("editor.wysiwyg.portal-web.docroot.html.portlet.announcements.edit_entry.jsp") %>' />
+			<div class="form-group">
+				<liferay-ui:input-editor contents="<%= content %>" cssClass="form-control" editorName="alloyeditor" name="contentEditor" />
 
-			<aui:input name="content" type="hidden" />
+				<aui:input name="content" type="hidden" />
+			</div>
 		</aui:field-wrapper>
 
 		<aui:select name="type">
@@ -123,7 +125,7 @@ if (entry == null) {
 
 <aui:script>
 	function <portlet:namespace />getContent() {
-		return window.<portlet:namespace />editor.getHTML();
+		return window.<portlet:namespace />contentEditor.getHTML();
 	}
 
 	function <portlet:namespace />previewEntry() {

@@ -1,5 +1,5 @@
 AUI.add(
-	'liferay-asset-categories-selector',
+	'liferay-asset-taglib-categories-selector',
 	function(A) {
 		var Lang = A.Lang;
 
@@ -59,7 +59,7 @@ AUI.add(
 		 * portalModelResource {boolean}: Whether the asset model is on the portal level.
 		 */
 
-		var AssetCategoriesSelector = A.Component.create(
+		var AssetTaglibCategoriesSelector = A.Component.create(
 			{
 				ATTRS: {
 					curEntries: {
@@ -147,7 +147,7 @@ AUI.add(
 					}
 				},
 
-				EXTENDS: Liferay.AssetTagsSelector,
+				EXTENDS: Liferay.AssetTaglibTagsSelector,
 
 				NAME: NAME,
 
@@ -158,7 +158,7 @@ AUI.add(
 					renderUI: function() {
 						var instance = this;
 
-						AssetCategoriesSelector.superclass.constructor.superclass.renderUI.apply(instance, arguments);
+						AssetTaglibCategoriesSelector.superclass.constructor.superclass.renderUI.apply(instance, arguments);
 
 						instance._renderIcons();
 
@@ -170,13 +170,13 @@ AUI.add(
 					bindUI: function() {
 						var instance = this;
 
-						AssetCategoriesSelector.superclass.bindUI.apply(instance, arguments);
+						AssetTaglibCategoriesSelector.superclass.bindUI.apply(instance, arguments);
 					},
 
 					syncUI: function() {
 						var instance = this;
 
-						AssetCategoriesSelector.superclass.constructor.superclass.syncUI.apply(instance, arguments);
+						AssetTaglibCategoriesSelector.superclass.constructor.superclass.syncUI.apply(instance, arguments);
 
 						var matchKey = instance.get('matchKey');
 
@@ -563,13 +563,19 @@ AUI.add(
 
 						var contentBox = instance.get('contentBox');
 
+						var vocabularyId = contentBox.getAttribute('data-vocabulary-id');
+
 						instance.icons = new A.Toolbar(
 							{
 								children: [
 									{
 										label: instance.get('label'),
 										on: {
-											click: A.bind('_showSelectPopup', instance)
+											click: function(event) {
+												event.data = event.data ? event.data : {};
+												event.data.vocabularyId = vocabularyId;
+												instance._showSelectPopup.call(instance, event);
+											}
 										},
 										title: instance.get('title')
 									}
@@ -634,111 +640,66 @@ AUI.add(
 					_showSelectPopup: function(event) {
 						var instance = this;
 
-						instance._showPopup(event);
+						event.domEvent.preventDefault();
 
-						var popup = instance._popup;
+						var uri = instance.get('portletURL');
 
-						popup.titleNode.html(Liferay.Language.get('categories'));
+						uri = Liferay.Util.addParams(instance.get('namespace') + 'eventName=' + instance.get('namespace') + 'selectCategory', uri);
 
-						popup.entriesNode.addClass(CSS_TAGS_LIST);
+						uri = Liferay.Util.addParams(instance.get('namespace') + 'selectedCategories=' + instance.get('curEntryIds'), uri);
 
-						var className = instance.get('className');
+						uri = Liferay.Util.addParams(instance.get('namespace') + 'singleSelect=' + instance.get('singleSelect'), uri);
 
-						instance._getEntries(
-							className,
-							function(entries) {
-								var searchResults = instance._searchResultsNode;
-								var searchValue = instance._searchValue;
+						uri = Liferay.Util.addParams(instance.get('namespace') + 'vocabularyId=' + event.data.vocabularyId, uri);
 
-								if (searchResults) {
-									searchResults.removeClass(CSS_LOADING_ANIMATION);
+						var itemSelectorDialog = new A.LiferayItemSelectorDialog(
+							{
+								eventName: instance.get('namespace') + 'selectCategory',
+								on: {
+									selectedItemChange: function(event) {
+										var selectedCategories = event.newVal;
 
-									searchResults.toggle(!!searchValue);
-								}
+										if (selectedCategories) {
+											instance.entries.each(
+												function(item) {
+													instance.entries.remove(item);
+												}
+											);
 
-								popup.entriesNode.all('.tree-view, .loading-animation').remove(true);
+											for (var key in selectedCategories.items) {
+												instance.add(selectedCategories.items[key].value || selectedCategories.items[key].name);
+											}
 
-								entries.forEach(instance._vocabulariesIterator, instance);
+											instance.set('curEntryIds', Object.keys(selectedCategories.items).join(','));
 
-								A.each(
-									instance.TREEVIEWS,
-									function(item, index) {
-										item.toggle(!searchValue);
-
-										item.expandAll();
+											instance._updateInputHidden(selectedCategories.items);
+										}
 									}
-								);
+								},
+								'strings.add': Liferay.Language.get('done'),
+								title: Liferay.Language.get('categories'),
+								url: uri
 							}
 						);
 
-						if (instance._bindSearchHandle) {
-							instance._bindSearchHandle.detach();
-						}
-
-						instance._bindSearchHandle = popup.searchField.once('focus', instance._initSearchFocus, instance);
+						itemSelectorDialog.open();
 					},
 
-					_vocabulariesIterator: function(item, index) {
+					_updateInputHidden: function(selectedCategories) {
 						var instance = this;
 
-						var popup = instance._popup;
-						var vocabularyId = item.vocabularyId;
-						var vocabularyTitle = LString.escapeHTML(item.titleCurrentValue);
+						var hiddenInput = instance.get('hiddenInput');
 
-						if (item.groupId == themeDisplay.getCompanyGroupId()) {
-							vocabularyTitle += ' (' + Liferay.Language.get('global') + ')';
-						}
-						else {
-							vocabularyTitle += ' (' + item.group.descriptiveName + ')';
-						}
-
-						var treeId = 'vocabulary' + vocabularyId;
-
-						var vocabularyRootNode = {
-							alwaysShowHitArea: true,
-							id: treeId,
-							label: vocabularyTitle,
-							leaf: false,
-							paginator: instance._getPaginatorConfig(item),
-							type: 'io'
-						};
-
-						instance.TREEVIEWS[vocabularyId] = new A.TreeView(
-							{
-								children: [vocabularyRootNode],
-								io: {
-									cfg: {
-										data: A.bind('_formatRequestData', instance),
-										on: {
-											success: function(event) {
-												var treeViews = instance.TREEVIEWS;
-
-												var tree = treeViews[vocabularyId];
-
-												var children = tree.get('children');
-
-												if (!children || !children.length || !children[0].hasChildNodes()) {
-													tree.destroy();
-
-													delete treeViews[vocabularyId];
-												}
-											}
-										}
-									},
-									formatter: A.bind('_formatJSONResult', instance),
-									url: themeDisplay.getPathMain() + '/asset/get_categories'
-								}
-							}
-						).render(popup.entriesNode);
+						hiddenInput.val(Object.keys(selectedCategories).join(','));
 					}
 				}
 			}
 		);
 
-		Liferay.AssetCategoriesSelector = AssetCategoriesSelector;
+		Liferay.AssetTaglibCategoriesSelector = AssetTaglibCategoriesSelector;
 	},
 	'',
 	{
-		requires: ['aui-tree', 'liferay-asset-tags-selector']
+		requires: ['aui-tree', 'liferay-asset-taglib-tags-selector']
 	}
 );

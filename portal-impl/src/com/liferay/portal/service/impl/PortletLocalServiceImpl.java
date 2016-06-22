@@ -63,6 +63,7 @@ import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.spring.aop.Skip;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ClassLoaderPool;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -101,6 +102,7 @@ import com.liferay.util.ContentUtil;
 import java.net.URL;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -112,7 +114,7 @@ import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.atomic.AtomicReference;
 
 import javax.portlet.PortletMode;
 import javax.portlet.PreferencesValidator;
@@ -452,10 +454,13 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 	@Override
 	@Skip
 	public List<Portlet> getFriendlyURLMapperPortlets() {
-		List<Portlet> portlets = new ArrayList<>(
-			_friendlyURLMapperRootPortletIds.size());
+		String[] friendlyURLMapperRootPortletIds =
+			_friendlyURLMapperRootPortletIds.get();
 
-		for (String rootPortletId : _friendlyURLMapperRootPortletIds) {
+		List<Portlet> portlets = new ArrayList<>(
+			friendlyURLMapperRootPortletIds.length);
+
+		for (String rootPortletId : friendlyURLMapperRootPortletIds) {
 			Portlet portlet = _portletsMap.get(rootPortletId);
 
 			if ((portlet == null) || !portlet.isActive() ||
@@ -2598,8 +2603,8 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 	private static final Map<ClassLoader, Configuration>
 		_propertiesConfigurations = new ConcurrentHashMap<>();
 
-	private final List<String> _friendlyURLMapperRootPortletIds =
-		new CopyOnWriteArrayList<>();
+	private final AtomicReference<String[]> _friendlyURLMapperRootPortletIds =
+		new AtomicReference<>(new String[0]);
 	private ServiceTracker<FriendlyURLMapper, String[]> _serviceTracker;
 
 	private class FriendlyURLMapperServiceTrackerCustomizer
@@ -2622,22 +2627,58 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 				String rootPortletId = PortletConstants.getRootPortletId(
 					portletId);
 
-				_friendlyURLMapperRootPortletIds.add(rootPortletId);
+				while (true) {
+					String[] friendlyURLMapperRootPortletIds =
+						_friendlyURLMapperRootPortletIds.get();
 
-				return new String[] {portletId};
+					String[] newFriendlyURLMapperRootPortletIds =
+						ArrayUtil.append(
+							friendlyURLMapperRootPortletIds, rootPortletId);
+
+					Arrays.sort(newFriendlyURLMapperRootPortletIds);
+
+					if (_friendlyURLMapperRootPortletIds.compareAndSet(
+							friendlyURLMapperRootPortletIds,
+							newFriendlyURLMapperRootPortletIds)) {
+
+						break;
+					}
+				}
+
+				return new String[] {rootPortletId};
 			}
 
 			if (propertyValue instanceof String[]) {
 				String[] portletIds = (String[])propertyValue;
 
-				for (String portletId : portletIds) {
-					String rootPortletId = PortletConstants.getRootPortletId(
-						portletId);
+				String[] rootPortletIds = new String[portletIds.length];
 
-					_friendlyURLMapperRootPortletIds.add(rootPortletId);
+				for (int i = 0; i < portletIds.length; i++) {
+					String rootPortletId = PortletConstants.getRootPortletId(
+						portletIds[i]);
+
+					rootPortletIds[i] = rootPortletId;
 				}
 
-				return portletIds;
+				while (true) {
+					String[] friendlyURLMapperRootPortletIds =
+						_friendlyURLMapperRootPortletIds.get();
+
+					String[] newFriendlyURLMapperRootPortletIds =
+						ArrayUtil.append(
+							friendlyURLMapperRootPortletIds, rootPortletIds);
+
+					Arrays.sort(newFriendlyURLMapperRootPortletIds);
+
+					if (_friendlyURLMapperRootPortletIds.compareAndSet(
+							friendlyURLMapperRootPortletIds,
+							newFriendlyURLMapperRootPortletIds)) {
+
+						break;
+					}
+				}
+
+				return rootPortletIds;
 			}
 
 			return null;
@@ -2658,8 +2699,24 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			ServiceReference<FriendlyURLMapper> serviceReference,
 			String[] rootPortletIds) {
 
-			for (String rootPortletId : rootPortletIds) {
-				_friendlyURLMapperRootPortletIds.remove(rootPortletId);
+			while (true) {
+				String[] friendlyURLMapperRootPortletIds =
+					_friendlyURLMapperRootPortletIds.get();
+
+				String[] newFriendlyURLMapperRootPortletIds =
+					friendlyURLMapperRootPortletIds;
+
+				for (String rootPortletId : rootPortletIds) {
+					newFriendlyURLMapperRootPortletIds = ArrayUtil.remove(
+						newFriendlyURLMapperRootPortletIds, rootPortletId);
+				}
+
+				if (_friendlyURLMapperRootPortletIds.compareAndSet(
+						friendlyURLMapperRootPortletIds,
+						newFriendlyURLMapperRootPortletIds)) {
+
+					break;
+				}
 			}
 		}
 

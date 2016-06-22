@@ -207,7 +207,7 @@ if (layout != null) {
 		%>
 
 		Liferay.currentURL = '<%= HtmlUtil.escapeJS(currentURL) %>';
-		Liferay.currentURLEncoded = '<%= HttpUtil.encodeURL(currentURL) %>';
+		Liferay.currentURLEncoded = '<%= HtmlUtil.escapeJS(HttpUtil.encodeURL(currentURL)) %>';
 
 	// ]]>
 </script>

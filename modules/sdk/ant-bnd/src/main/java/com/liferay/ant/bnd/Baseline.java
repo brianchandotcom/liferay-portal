@@ -180,7 +180,8 @@ public abstract class Baseline {
 
 				if (((!_reportDiff || _reportOnlyDirtyPackages) &&
 					 warnings.equals("-")) ||
-					(_reportOnlyDirtyPackages && correctPackageInfo)) {
+					(_reportOnlyDirtyPackages && correctPackageInfo &&
+					 (delta == Delta.REMOVED))) {
 
 					continue;
 				}

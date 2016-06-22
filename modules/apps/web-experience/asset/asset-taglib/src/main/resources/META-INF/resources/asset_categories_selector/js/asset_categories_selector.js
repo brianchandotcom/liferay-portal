@@ -5,39 +5,13 @@ AUI.add(
 
 		var LString = Lang.String;
 
-		var AObject = A.Object;
-
 		var BOUNDING_BOX = 'boundingBox';
-
-		var CSS_LOADING_ANIMATION = 'loading-animation';
-
-		var CSS_TAGS_LIST = 'lfr-categories-selector-list';
 
 		var EMPTY_FN = Lang.emptyFn;
 
 		var ID = 'id';
 
 		var NAME = 'categoriesselector';
-
-		var STR_MAX_ENTRIES = 'maxEntries';
-
-		var STR_MORE_RESULTS_LABEL = 'moreResultsLabel';
-
-		var STR_START = 'start';
-
-		var TPL_CHECKED = ' checked="checked" ';
-
-		var TPL_INPUT = '<label title="{titleCurrentValue}">' +
-				'<span class="lfr-categories-selector-category-name" title="{titleCurrentValue}">' +
-					'<input data-categoryId="{categoryId}" data-vocabularyid="{vocabularyId}" name="{inputName}" type="{type}" value="{titleCurrentValue}" {checked} />' +
-					'{titleCurrentValue}' +
-				'</span>' +
-				'<span class="lfr-categories-selector-search-results-path" title="{path}">{path}</span>' +
-			'</label>';
-
-		var TPL_MESSAGE = '<div class="lfr-categories-message">{0}</div>';
-
-		var TPL_SEARCH_RESULTS = '<div class="lfr-categories-selector-search-results"></div>';
 
 		/**
 		 * OPTIONS
@@ -219,75 +193,6 @@ AUI.add(
 
 					_bindTagsSelector: EMPTY_FN,
 
-					_clearEntries: function() {
-						var instance = this;
-
-						var entries = instance.entries;
-
-						entries.each(A.fn('removeAt', entries, 0));
-					},
-
-					_formatJSONResult: function(json) {
-						var instance = this;
-
-						var output = [];
-
-						var type = 'check';
-
-						if (instance.get('singleSelect')) {
-							type = 'radio';
-						}
-
-						json.forEach(
-							function(item, index) {
-								var checked = false;
-								var treeId = 'category' + item.categoryId;
-
-								if (instance.entries.findIndexBy('categoryId', item.categoryId) > -1) {
-									checked = true;
-								}
-
-								var newTreeNode = {
-									after: {
-										checkedChange: A.bind('_onCheckedChange', instance)
-									},
-									checked: checked,
-									id: treeId,
-									label: LString.escapeHTML(item.titleCurrentValue),
-									leaf: !item.hasChildren,
-									paginator: instance._getPaginatorConfig(item),
-									type: type
-								};
-
-								output.push(newTreeNode);
-							}
-						);
-
-						return output;
-					},
-
-					_formatRequestData: function(treeNode) {
-						var instance = this;
-
-						var data = {};
-
-						data.p_auth = Liferay.authToken;
-
-						var assetId = instance._getTreeNodeAssetId(treeNode);
-						var assetType = instance._getTreeNodeAssetType(treeNode);
-
-						if (Lang.isValue(assetId)) {
-							if (assetType == 'category') {
-								data.categoryId = assetId;
-							}
-							else {
-								data.vocabularyId = assetId;
-							}
-						}
-
-						return data;
-					},
-
 					_getEntries: function(className, callback) {
 						var instance = this;
 
@@ -342,90 +247,6 @@ AUI.add(
 						}
 					},
 
-					_getPaginatorConfig: function(item) {
-						var instance = this;
-
-						var paginatorConfig = {
-							offsetParam: STR_START
-						};
-
-						var maxEntries = instance.get(STR_MAX_ENTRIES);
-
-						if (maxEntries > 0) {
-							paginatorConfig.limit = maxEntries;
-							paginatorConfig.moreResultsLabel = instance.get(STR_MORE_RESULTS_LABEL);
-							paginatorConfig.total = item.childrenCount;
-						}
-						else {
-							paginatorConfig.end = -1;
-							paginatorConfig.start = -1;
-						}
-
-						return paginatorConfig;
-					},
-
-					_getTreeNodeAssetId: function(treeNode) {
-						var treeId = treeNode.get(ID);
-
-						var match = treeId.match(/(\d+)$/);
-
-						return match ? match[1] : null;
-					},
-
-					_getTreeNodeAssetType: function(treeNode) {
-						var treeId = treeNode.get(ID);
-
-						var match = treeId.match(/^(vocabulary|category)/);
-
-						return match ? match[1] : null;
-					},
-
-					_initSearch: EMPTY_FN,
-
-					_initSearchFocus: function() {
-						var instance = this;
-
-						var popup = instance._popup;
-
-						var vocabularyGroupIds = instance.get('vocabularyGroupIds');
-						var vocabularyIds = instance.get('vocabularyIds');
-
-						var searchResults = instance._searchResultsNode;
-
-						if (!searchResults) {
-							searchResults = A.Node.create(TPL_SEARCH_RESULTS);
-
-							instance._searchResultsNode = searchResults;
-
-							var processSearchResults = A.bind(
-								'_processSearchResults',
-								instance,
-								searchResults
-							);
-
-							var searchCategoriesTask = A.debounce(instance._searchCategories, 350, instance);
-
-							popup.searchField.on(
-								'keyup',
-								function(event) {
-									if (!event.isNavKey()) {
-										searchCategoriesTask(event, searchResults, vocabularyIds, vocabularyGroupIds, processSearchResults);
-									}
-								}
-							);
-
-							if (instance.get('singleSelect')) {
-								var onSelectChange = A.bind('_onSelectChange', instance);
-
-								popup.entriesNode.delegate('change', onSelectChange, 'input[type=radio]');
-							}
-						}
-
-						popup.entriesNode.append(searchResults);
-
-						instance._searchBuffer = [];
-					},
-
 					_isValidString: function(value) {
 						var instance = this;
 
@@ -434,128 +255,12 @@ AUI.add(
 
 					_onBoundingBoxClick: EMPTY_FN,
 
-					_onCheckboxCheck: function(event) {
-						var instance = this;
-
-						var currentTarget = event.currentTarget;
-
-						var assetId;
-						var entryMatchKey;
-
-						if (A.instanceOf(currentTarget, A.Node)) {
-							assetId = currentTarget.attr('data-categoryId');
-
-							entryMatchKey = currentTarget.val();
-						}
-						else {
-							assetId = instance._getTreeNodeAssetId(currentTarget);
-
-							entryMatchKey = currentTarget.get('label');
-						}
-
-						var matchKey = instance.get('matchKey');
-
-						var entry = {
-							categoryId: assetId
-						};
-
-						entry[matchKey] = entryMatchKey;
-
-						entry.value = LString.unescapeHTML(entry.value);
-
-						instance.entries.add(entry);
-					},
-
-					_onCheckboxClick: function(event) {
-						var instance = this;
-
-						var method = '_onCheckboxUncheck';
-
-						if (event.currentTarget.attr('checked')) {
-							method = '_onCheckboxCheck';
-						}
-
-						instance[method](event);
-					},
-
-					_onCheckboxUncheck: function(event) {
-						var instance = this;
-
-						var currentTarget = event.currentTarget;
-
-						var assetId;
-
-						if (A.instanceOf(currentTarget, A.Node)) {
-							assetId = currentTarget.attr('data-categoryId');
-						}
-						else {
-							assetId = instance._getTreeNodeAssetId(currentTarget);
-						}
-
-						instance.entries.removeKey(assetId);
-					},
-
-					_onCheckedChange: function(event) {
-						var instance = this;
-
-						if (event.newVal) {
-							if (instance.get('singleSelect')) {
-								instance._clearEntries();
-							}
-
-							instance._onCheckboxCheck(event);
-						}
-						else {
-							instance._onCheckboxUncheck(event);
-						}
-					},
-
 					_onSelectChange: function(event) {
 						var instance = this;
 
 						instance._clearEntries();
 
 						instance._onCheckboxCheck(event);
-					},
-
-					_processSearchResults: function(searchResults, results) {
-						var instance = this;
-
-						var buffer = instance._searchBuffer;
-
-						buffer.length = 0;
-
-						var categories = results.categories;
-
-						if (categories.length > 0) {
-							var inputType = 'checkbox';
-
-							if (instance.get('singleSelect')) {
-								inputType = 'radio';
-							}
-
-							var inputName = A.guid();
-
-							categories.forEach(
-								function(item, index) {
-									item.checked = instance.entries.findIndexBy('categoryId', item.categoryId) > -1 ? TPL_CHECKED : '';
-
-									item.inputName = inputName;
-									item.type = inputType;
-
-									buffer.push(Lang.sub(TPL_INPUT, item));
-								}
-							);
-						}
-						else {
-							var message = Lang.sub(TPL_MESSAGE, [Liferay.Language.get('no-categories-were-found')]);
-
-							buffer.push(message);
-						}
-
-						searchResults.removeClass(CSS_LOADING_ANIMATION);
-
-						searchResults.html(buffer.join(''));
 					},
 
 					_renderIcons: function() {
@@ -586,55 +291,6 @@ AUI.add(
 						var iconsBoundingBox = instance.icons.get(BOUNDING_BOX);
 
 						instance.entryHolder.placeAfter(iconsBoundingBox);
-					},
-
-					_searchCategories: function(event, searchResults, vocabularyIds, vocabularyGroupIds, callback) {
-						var instance = this;
-
-						var searchValue = event.currentTarget.val().trim();
-
-						instance._searchValue = searchValue;
-
-						if (searchValue) {
-							searchResults.empty();
-
-							searchResults.addClass(CSS_LOADING_ANIMATION);
-
-							Liferay.Service(
-								{
-									'$display = /assetcategory/search-categories-display': {
-										end: -1,
-										groupIds: vocabularyGroupIds,
-										start: -1,
-										title: searchValue,
-										vocabularyIds: vocabularyIds,
-										'categories.$path = /assetcategory/get-category-path': {
-											'@categoryId': '$display.categories.categoryId'
-										}
-									}
-								},
-								callback
-							);
-						}
-
-						searchResults.toggle(!!searchValue);
-
-						var treeViews = instance.TREEVIEWS;
-
-						AObject.each(
-							treeViews,
-							function(item, index) {
-								item.toggle(!searchValue);
-							}
-						);
-					},
-
-					_showPopup: function(event) {
-						var instance = this;
-
-						Liferay.Util.getTop().AUI().use('aui-tree');
-
-						AssetCategoriesSelector.superclass._showPopup.apply(instance, arguments);
 					},
 
 					_showSelectPopup: function(event) {

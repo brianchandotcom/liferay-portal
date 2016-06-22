@@ -1698,7 +1698,7 @@
 		</execute>
 
 		<execute macro="ContentTargetingCampaign#addTrackingActionContentCP">
-			<var name="contentMetricName" value="Content Alias" />
+			<var name="contentMetricName" value="Content Metric Name" />
 			<var name="contentTitle" value="Web Content Title" />
 			<var name="menulistContent" value="Basic Web Content" />
 		</execute>
@@ -1787,8 +1787,9 @@
 			<var name="portlet" value="Audience Targeting" />
 		</execute>
 
-		<execute macro="ContentTargetingCampaign#viewImportContentTrackingActionContentEmpty">
+		<execute macro="ContentTargetingCampaign#viewImportNoContentTrackingActions">
 			<var name="campaignName" value="Campaign Name" />
+			<var name="metricName" value="Content Metric Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSite">
@@ -1905,7 +1906,7 @@
 		</execute>
 
 		<execute macro="ContentTargetingCampaign#addTrackingActionContentCP">
-			<var name="contentAlias" value="Content Alias" />
+			<var name="contentMetricName" value="Content Metric Name" />
 			<var name="contentTitle" value="Web Content Title" />
 			<var name="menulistContent" value="Basic Web Content" />
 		</execute>

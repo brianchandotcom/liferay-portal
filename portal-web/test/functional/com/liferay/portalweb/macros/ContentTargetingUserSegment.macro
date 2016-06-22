@@ -386,7 +386,7 @@
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 		<execute function="Click" locator1="MenuItem#EDIT" />
 
-		<execute function="AssertElementNotPresent#assertNotVisible" locator1="EditUserSegment#USER_SEGMENT_RULE_BEHAVIOR_CONTENT_VISITED_WEB_CONTENT_TITLE" />
+		<execute function="AssertElementNotPresent" locator1="EditUserSegment#USER_SEGMENT_RULE_BEHAVIOR_CONTENT_VISITED_WEB_CONTENT_TITLE" />
 	</command>
 
 	<command name="viewNotPresentCP">

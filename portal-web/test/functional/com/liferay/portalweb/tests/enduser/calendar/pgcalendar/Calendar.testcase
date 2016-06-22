@@ -5414,9 +5414,7 @@
 			<var name="eventTitle" value="Previous Day Event" />
 		</execute>
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
-		</execute>
+		<execute macro="CalendarNavigator#gotoNextDay" />
 
 		<execute macro="CalendarNavigator#gotoNextDay" />
 

@@ -420,7 +420,7 @@
 		<execute macro="BlogsNavigator#gotoConfigurationScopePG" />
 
 		<execute macro="BlogsConfiguration#selectScopePG">
-			<var name="scopeSelection" value="Liferay DXP" />
+			<var name="scopeSelection" value="Liferay" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -1265,11 +1265,11 @@
 		<execute macro="Gmail#viewMail">
 			<var name="emailFromUserName" value="Joe Bloggs" />
 			<var name="gmailAssetType" value="Inappropriate Content Flagged" />
-			<var name="gmailMailTableMessageTitle" value="Inappropriate Content Flagged in Liferay DXP" />
-			<var name="gmailMessageBody" value="You are receiving this email because you are administrator of Liferay DXP. Please review the content in this site." />
+			<var name="gmailMailTableMessageTitle" value="Inappropriate Content Flagged in Liferay" />
+			<var name="gmailMessageBody" value="You are receiving this email because you are administrator of Liferay. Please review the content in this site." />
 			<var name="gmailMessageBodyClosing" value="Sincerely" />
 			<var name="gmailMessageBodyGreeting" value="Dear userfn1 userln1," />
-			<var name="gmailMessageTitle" value="Inappropriate Content Flagged in Liferay DXP" />
+			<var name="gmailMessageTitle" value="Inappropriate Content Flagged in Liferay" />
 		</execute>
 
 		<execute macro="Gmail#tearDown">

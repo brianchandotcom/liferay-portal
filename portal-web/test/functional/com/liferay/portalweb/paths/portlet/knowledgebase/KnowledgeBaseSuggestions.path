@@ -20,22 +20,22 @@
 </tr>
 <tr>
 	<td>CONTENT</td>
-	<td>//div[@class='kb-article-comment']//div[contains(.,'${kbSuggestionBody}')]</td>
+	<td>//ul[contains(@class,'tabular-list-group')]/li[contains(@class,'list-group-item')]/div[contains(@class,'list-group-item-field')]/following-sibling::div[contains(@class,'list-group-item-content')]/h4[contains(.,'${kbSuggestionBody}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONTENT_DUPLICATE</td>
-	<td>xpath=(//div[@class='kb-article-comment']//div[contains(.,'${kbSuggestionBody}')])[2]</td>
+	<td>//ul[contains(@class,'tabular-list-group')]/li[contains(@class,'list-group-item')][2]/div[contains(@class,'list-group-item-field')]/following-sibling::div[contains(@class,'list-group-item-content')]/h4[contains(.,'${kbSuggestionBody}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>USER_NAME</td>
-	<td>//div[@class='kb-article-comment']//td[contains(.,'${kbSuggestionBody}')]/..//td[@class='kb-article-comment-user']//div/a</td>
+	<td>//ul[contains(@class,'tabular-list-group')]/li[contains(@class,'list-group-item')]/div[contains(@class,'list-group-item-field')]/following-sibling::div[contains(@class,'list-group-item-content')]/h5[contains(.,'${kbSuggestionUserName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>STATUS</td>
-	<td>//div[@class='kb-article-comment']//td[contains(.,'${kbSuggestionBody}')]//div[@class='kb-article-comment-date']/span[@class='taglib-workflow-status']</td>
+	<td>//ul[contains(@class,'tabular-list-group')]/li[contains(@class,'list-group-item')]/div[contains(@class,'list-group-item-field')]/following-sibling::div[contains(@class,'list-group-item-content')]/h4[contains(.,'${kbSuggestionBody}')]/following-sibling::h5[contains(.,'${status}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -71,7 +71,7 @@
 </tr>
 <tr>
 	<td>NAVIGATION_NEW</td>
-	<td>//ul[contains(@class,'navbar')]//a[contains(.,'New')]</td>
+	<td>//div[contains(@id,'kbCommentsSearchContainer')]/div[contains(@class,'splitter')]</td>
 	<td></td>
 </tr>
 <tr>

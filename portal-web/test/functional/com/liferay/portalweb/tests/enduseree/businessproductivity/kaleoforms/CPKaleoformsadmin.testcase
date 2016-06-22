@@ -2418,13 +2418,11 @@
 			<var name="workflowDefinitionTitleEdit" value="${workflowDefinitionTitleEdit}" />
 		</execute>
 
-		<var name="key_workflowDefinitionTitle" value="${workflowDefinitionTitleEdit}" />
-
-		<execute function="AssertTextEquals" locator1="KaleoFormsAdminEditProcess#WORKFLOW_TABLE_TITLE" value1="${workflowDefinitionTitleEdit}" />
-		<execute function="AssertClick" locator1="KaleoFormsAdminEditProcess#WORKFLOW_TABLE_ACTIONS" value1="Actions" />
-		<execute function="AssertClick" locator1="KaleoFormsAdminEditProcess#WORKFLOW_MENULIST_CHOOSE" value1="Choose" />
-		<execute function="AssertTextEquals" locator1="KaleoFormsAdminEditProcess#SELECTED_WORKFLOW" value1="${workflowDefinitionTitleEdit} (Version 2)" />
-
+		<execute macro="KaleoFormsAdmin#chooseWorkflow">
+			<var name="kfProcessName" value="${kfProcessName}" />
+			<var name="workflowDefinitionTitle" value="Single Approver" />
+		</execute>
+		
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#assignForm">

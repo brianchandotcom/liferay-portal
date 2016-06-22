@@ -209,31 +209,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, breadcrumbTitle, currentURL);
 			}
 			%>
 
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
-				href="<%= rowURL %>"
-				name="title"
-				value="<%= HtmlUtil.escape(role.getTitle(locale)) %>"
-			/>
-
-			<c:if test="<%= (PropsValues.ROLES_ORGANIZATION_SUBTYPES.length > 0) || (PropsValues.ROLES_REGULAR_SUBTYPES.length > 0) || (PropsValues.ROLES_SITE_SUBTYPES.length > 0) %>">
-				<liferay-ui:search-container-column-text
-					href="<%= rowURL %>"
-					name="subType"
-					value="<%= LanguageUtil.get(request, role.getSubtype()) %>"
-				/>
-			</c:if>
-
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
-				href="<%= rowURL %>"
-				name="description"
-				value="<%= HtmlUtil.escape(role.getDescription(locale)) %>"
-			/>
-
-			<liferay-ui:search-container-column-jsp
-				path="/role_action.jsp"
-			/>
+			<%@ include file="/search_columns.jspf" %>
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator markupView="lexicon" />

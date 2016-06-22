@@ -60,7 +60,7 @@
 
 		<execute function="Click#clickAt" />
 
-		<execute argument1="//script[contains(@src,'/liferay/dockbar_add_application.js')] | //script[contains(	@src,'/js/control_menu_add_content.js')] | //script[contains(@src,'js/control_menu_add_application.js')]" selenium="waitForElementPresent" />
+		<execute argument1="//script[contains(@src,'/liferay/dockbar_add_application.js')] | //script[contains(	@src,'/js/product_navigation_control_menu_add_content.js')] | //script[contains(@src,'js/product_navigation_control_menu_add_application.js')]" selenium="waitForElementPresent" />
 	</command>
 
 	<command name="clickNoMouseOver">

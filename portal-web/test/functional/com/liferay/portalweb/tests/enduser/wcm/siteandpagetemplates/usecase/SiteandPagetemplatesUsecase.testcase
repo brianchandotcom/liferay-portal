@@ -132,6 +132,11 @@
 	</command>
 
 	<command name="PortletPreferencesPersistWithSiteTemplateWhenSamePortletAddedOnSecondPage" priority="4">
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Site Templates" />
 		</execute>
@@ -155,6 +160,7 @@
 
 		<execute macro="SiteTemplatesNavigator#gotoSiteTemplatesPage">
 			<var name="pageName" value="Page1 Name" />
+			<var name="siteName" value="${siteName}" />
 			<var name="siteTemplateName" value="Site Template Name" />
 		</execute>
 
@@ -203,6 +209,7 @@
 		</execute>
 
 		<execute macro="SiteTemplates#gotoViewPages">
+			<var name="siteName" value="${siteName}" />
 			<var name="siteTemplateName" value="Site Template Name" />
 		</execute>
 
@@ -285,6 +292,7 @@
 		</execute>
 
 		<execute macro="SiteTemplates#gotoViewPages">
+			<var name="siteName" value="${siteName}" />
 			<var name="siteTemplateName" value="Site Template Name" />
 		</execute>
 
@@ -794,6 +802,11 @@
 	<command name="SitesTemplateResourceInheritance" priority="3">
 		<property name="portlet.plugins.includes" value="tasks-portlet" />
 
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Site Templates" />
 		</execute>
@@ -807,6 +820,7 @@
 		</execute>
 
 		<execute macro="SiteTemplates#gotoViewPages">
+			<var name="siteName" value="${siteName}" />
 			<var name="siteTemplateName" value="Site Template Name" />
 		</execute>
 
@@ -819,6 +833,7 @@
 		</execute>
 
 		<execute macro="SiteTemplates#gotoViewPages">
+			<var name="siteName" value="${siteName}" />
 			<var name="siteTemplateName" value="Site Template Name" />
 		</execute>
 
@@ -888,6 +903,11 @@
 	</command>
 
 	<command name="ViewInlineGuestPermissionsInSiteTemplatesViaWCD" priority="3">
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Site Templates" />
 		</execute>
@@ -901,6 +921,7 @@
 		</execute>
 
 		<execute macro="SiteTemplates#gotoViewPages">
+			<var name="siteName" value="${siteName}" />
 			<var name="siteTemplateName" value="Site Template Name" />
 		</execute>
 
@@ -914,6 +935,7 @@
 		</execute>
 
 		<execute macro="SiteTemplates#gotoViewPages">
+			<var name="siteName" value="${siteName}" />
 			<var name="siteTemplateName" value="Site Template Name" />
 		</execute>
 

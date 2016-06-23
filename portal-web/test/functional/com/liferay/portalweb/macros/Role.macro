@@ -539,16 +539,16 @@
 					</then>
 				</elseif>
 				<elseif>
-					<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_USERS_SITE_MEMBERSHIPS" />
+					<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_MEMBERS_SITE_MEMBERSHIPS" />
 					<then>
-						<var name="permissionNavigationKey" value="SITE_ADMIN_USERS_SITE_MEMBERSHIPS" />
+						<var name="permissionNavigationKey" value="SITE_ADMIN_MEMBERS_SITE_MEMBERSHIPS" />
 						<var name="permissionNavigationValue" value="Site Memberships" />
 					</then>
 				</elseif>
 				<elseif>
-					<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_USERS_SITE_TEAMS" />
+					<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_MEMBERS_SITE_TEAMS" />
 					<then>
-						<var name="permissionNavigationKey" value="SITE_ADMIN_USERS_SITE_TEAMS" />
+						<var name="permissionNavigationKey" value="SITE_ADMIN_MEMBERS_SITE_TEAMS" />
 						<var name="permissionNavigationValue" value="Site Teams" />
 					</then>
 				</elseif>
@@ -1194,9 +1194,9 @@
 				</then>
 			</elseif>
 			<elseif>
-				<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_USERS_SITE_MEMBERSHIPS" />
+				<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_MEMBERS_SITE_MEMBERSHIPS" />
 				<then>
-					<var name="permissionNavigationKey" value="SITE_ADMIN_USERS_SITE_MEMBERSHIPS" />
+					<var name="permissionNavigationKey" value="SITE_ADMIN_MEMBERS_SITE_MEMBERSHIPS" />
 					<var name="permissionNavigationValue" value="Site Memberships" />
 				</then>
 			</elseif>

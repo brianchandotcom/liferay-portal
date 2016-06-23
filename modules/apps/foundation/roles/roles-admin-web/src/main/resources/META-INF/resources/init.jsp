@@ -63,6 +63,8 @@ page import="com.liferay.portal.kernel.model.User" %><%@
 page import="com.liferay.portal.kernel.model.UserGroupRole" %><%@
 page import="com.liferay.portal.kernel.model.UserPersonalSite" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
+page import="com.liferay.portal.kernel.portlet.PortalPreferences" %><%@
+page import="com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletProvider" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletProviderUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletURLUtil" %><%@
@@ -124,6 +126,7 @@ page import="com.liferay.portlet.usersadmin.search.OrganizationSearch" %><%@
 page import="com.liferay.portlet.usersadmin.search.OrganizationSearchTerms" %><%@
 page import="com.liferay.portlet.usersadmin.search.UserSearch" %><%@
 page import="com.liferay.portlet.usersadmin.search.UserSearchTerms" %><%@
+page import="com.liferay.roles.admin.constants.RolesAdminPortletKeys" %><%@
 page import="com.liferay.roles.admin.kernel.util.RolesAdminUtil" %><%@
 page import="com.liferay.roles.admin.web.search.RoleChecker" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
@@ -151,6 +154,8 @@ page import="javax.portlet.WindowState" %>
 <portlet:defineObjects />
 
 <%
+PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(liferayPortletRequest);
+
 boolean filterManageableGroups = true;
 boolean filterManageableOrganizations = true;
 boolean filterManageableRoles = true;

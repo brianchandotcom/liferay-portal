@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String tabs3 = (String)request.getAttribute("edit_role_assignments.jsp-tabs3");
+String tabs2 = (String)request.getAttribute("edit_role_assignments.jsp-tabs2");
 
 int cur = (Integer)request.getAttribute("edit_role_assignments.jsp-cur");
 
@@ -29,7 +29,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_role_assignments.
 
 EmptyOnClickRowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
 
-if (tabs3.equals("available")) {
+if (tabs2.equals("available")) {
 	rowChecker = new OrganizationRoleChecker(renderResponse, role);
 }
 %>
@@ -52,7 +52,7 @@ if (tabs3.equals("available")) {
 
 	LinkedHashMap<String, Object> organizationParams = new LinkedHashMap<String, Object>();
 
-	if (tabs3.equals("current")) {
+	if (tabs2.equals("current")) {
 		organizationParams.put("organizationsRoles", Long.valueOf(role.getRoleId()));
 	}
 	%>

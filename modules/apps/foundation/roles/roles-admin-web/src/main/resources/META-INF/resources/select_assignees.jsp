@@ -17,8 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String tabs2 = ParamUtil.getString(request, "tabs2", "users");
-String tabs3 = ParamUtil.getString(request, "tabs3", "available");
+String tabs1 = ParamUtil.getString(request, "tabs1", "users");
 
 int cur = ParamUtil.getInteger(request, SearchContainer.DEFAULT_CUR_PARAM);
 
@@ -28,7 +27,17 @@ long roleId = ParamUtil.getLong(request, "roleId");
 
 Role role = RoleServiceUtil.fetchRole(roleId);
 
-String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
+String displayStyle = ParamUtil.getString(request, "displayStyle");
+
+if (Validator.isNull(displayStyle)) {
+	displayStyle = portalPreferences.getValue(RolesAdminPortletKeys.ROLES_ADMIN, "assignees-display-style", "list");
+}
+else {
+	portalPreferences.setValue(RolesAdminPortletKeys.ROLES_ADMIN, "assignees-display-style", displayStyle);
+
+	request.setAttribute(WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);
+}
+
 String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectAssignees");
 String orderByCol = ParamUtil.getString(request, "orderByCol", "name");
 String orderByType = ParamUtil.getString(request, "orderByType", "asc");
@@ -36,15 +45,15 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcPath", "/select_assignees.jsp");
-portletURL.setParameter("tabs2", tabs2);
-portletURL.setParameter("tabs3", "available");
+portletURL.setParameter("tabs1", tabs1);
+portletURL.setParameter("tabs2", "available");
 portletURL.setParameter("redirect", redirect);
 portletURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 portletURL.setParameter("displayStyle", displayStyle);
 portletURL.setParameter("orderByCol", orderByCol);
 portletURL.setParameter("orderByType", orderByType);
 
-request.setAttribute("edit_role_assignments.jsp-tabs3", "available");
+request.setAttribute("edit_role_assignments.jsp-tabs2", "available");
 
 request.setAttribute("edit_role_assignments.jsp-cur", cur);
 
@@ -59,33 +68,11 @@ request.setAttribute("edit_role_assignments.jsp-portletURL", portletURL);
 	<aui:nav cssClass="navbar-nav">
 
 		<%
-		portletURL.setParameter("tabs2", "users");
+		PortletURL usersPortletURL = PortletURLUtil.clone(portletURL, renderResponse);
+		usersPortletURL.setParameter("tabs1", "users");
 		%>
 
-		<aui:nav-item href="<%= portletURL.toString() %>" label="users" selected='<%= tabs2.equals("users") %>' />
-
-		<%
-		portletURL.setParameter("tabs2", "sites");
-		%>
-
-		<aui:nav-item href="<%= portletURL.toString() %>" label="sites" selected='<%= tabs2.equals("sites") %>' />
-
-		<%
-		portletURL.setParameter("tabs2", "organizations");
-		%>
-
-		<aui:nav-item href="<%= portletURL.toString() %>" label="organizations" selected='<%= tabs2.equals("organizations") %>' />
-
-		<%
-		portletURL.setParameter("tabs2", "user-groups");
-		%>
-
-		<aui:nav-item href="<%= portletURL.toString() %>" label="user-groups" selected='<%= tabs2.equals("user-groups") %>' />
-
-		<%
-		portletURL.setParameter("tabs2", tabs2);
-		%>
-
+		<aui:nav-item href="<%= portletURL.toString() %>" label="<%= tabs1 %>" selected="<%= true %>" />
 	</aui:nav>
 
 	<aui:nav-bar-search>
@@ -100,8 +87,8 @@ request.setAttribute("edit_role_assignments.jsp-portletURL", portletURL);
 </portlet:actionURL>
 
 <aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
-	<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
-	<aui:input name="tabs3" type="hidden" value="<%= tabs3 %>" />
+	<aui:input name="tabs1" type="hidden" value="<%= tabs1 %>" />
+	<aui:input name="tabs2" type="hidden" value="available" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="roleId" type="hidden" value="<%= role.getRoleId() %>" />
 
@@ -128,16 +115,16 @@ request.setAttribute("edit_role_assignments.jsp-portletURL", portletURL);
 	</liferay-frontend:management-bar>
 
 	<c:choose>
-		<c:when test='<%= tabs2.equals("users") %>'>
+		<c:when test='<%= tabs1.equals("users") %>'>
 			<liferay-util:include page="/edit_role_assignments_users.jsp" servletContext="<%= application %>" />
 		</c:when>
-		<c:when test='<%= tabs2.equals("sites") %>'>
+		<c:when test='<%= tabs1.equals("sites") %>'>
 			<liferay-util:include page="/edit_role_assignments_sites.jsp" servletContext="<%= application %>" />
 		</c:when>
-		<c:when test='<%= tabs2.equals("organizations") %>'>
+		<c:when test='<%= tabs1.equals("organizations") %>'>
 			<liferay-util:include page="/edit_role_assignments_organizations.jsp" servletContext="<%= application %>" />
 		</c:when>
-		<c:when test='<%= tabs2.equals("user-groups") %>'>
+		<c:when test='<%= tabs1.equals("user-groups") %>'>
 			<liferay-util:include page="/edit_role_assignments_user_groups.jsp" servletContext="<%= application %>" />
 		</c:when>
 	</c:choose>
@@ -163,7 +150,7 @@ request.setAttribute("edit_role_assignments.jsp-portletURL", portletURL);
 			if (<portlet:namespace />assigneeIds.length > 0) {
 				result = {
 					data: {
-						type: '<%= HtmlUtil.escapeJS(tabs2) %>',
+						type: '<%= HtmlUtil.escapeJS(tabs1) %>',
 						value: <portlet:namespace />assigneeIds.join(',')
 					}
 				};

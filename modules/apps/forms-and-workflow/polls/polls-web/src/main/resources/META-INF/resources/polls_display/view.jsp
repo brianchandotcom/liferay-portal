@@ -17,7 +17,11 @@
 <%@ include file="/polls_display/init.jsp" %>
 
 <%
-PollsQuestion question = PollsUtil.getQuestionByPortlet(portletPreferences);
+PollsQuestion question = null;
+try {
+	question = PollsUtil.getQuestionByPortlet(portletPreferences);
+} catch (NoSuchQuestionException nsqe) {
+}
 %>
 
 <%@ include file="/polls_display/view_options.jspf" %>

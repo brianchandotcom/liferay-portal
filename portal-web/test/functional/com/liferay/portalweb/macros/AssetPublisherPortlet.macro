@@ -805,6 +805,8 @@
 			<var name="assetContent" value="${assetContent}" />
 			<var name="assetTitle" value="${assetTitle}" />
 		</execute>
+
+		<execute function="Click" locator1="APAsset#ASSET_BACK_TO_ICON" />
 	</command>
 
 	<command name="viewCustomADTRichSummaryPG">

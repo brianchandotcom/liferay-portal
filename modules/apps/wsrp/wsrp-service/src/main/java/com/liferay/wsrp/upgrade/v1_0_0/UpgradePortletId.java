@@ -12,24 +12,21 @@
  * details.
  */
 
-package com.liferay.wsrp.hook.upgrade;
+package com.liferay.wsrp.upgrade.v1_0_0;
 
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.wsrp.hook.upgrade.v1_1_0.UpgradeUuid;
+import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;
+import com.liferay.wsrp.constants.WSRPPortletKeys;
 
 /**
- * @author Michael Young
+ * @author Peter Fellwock
  */
-public class UpgradeProcess_1_1_0 extends UpgradeProcess {
+public class UpgradePortletId extends BaseUpgradePortletId {
 
 	@Override
-	public int getThreshold() {
-		return 110;
-	}
-
-	@Override
-	protected void doUpgrade() throws Exception {
-		upgrade(UpgradeUuid.class);
+	protected String[][] getRenamePortletIdsArray() {
+		return new String[][] {
+			new String[] {"2_WAR_wsrpportlet", WSRPPortletKeys.WSRP_CONSUMER}
+		};
 	}
 
 }

@@ -12,28 +12,30 @@
  * details.
  */
 
-package com.liferay.wsrp.hook.upgrade;
+package com.liferay.wsrp.upgrade.v1_0_0;
 
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.wsrp.hook.upgrade.v1_0_0.UpgradeWSRPConsumer;
-import com.liferay.wsrp.hook.upgrade.v1_0_0.UpgradeWSRPConsumerPortlet;
-import com.liferay.wsrp.hook.upgrade.v1_0_0.UpgradeWSRPProducer;
+import com.liferay.portal.kernel.upgrade.BaseUpgradeLastPublishDate;
 
 /**
- * @author Michael Young
+ * @author Mate Thurzo
  */
-public class UpgradeProcess_1_0_0 extends UpgradeProcess {
-
-	@Override
-	public int getThreshold() {
-		return 100;
-	}
+public class UpgradeLastPublishDate extends BaseUpgradeLastPublishDate {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		upgrade(UpgradeWSRPConsumer.class);
-		upgrade(UpgradeWSRPConsumerPortlet.class);
-		upgrade(UpgradeWSRPProducer.class);
+		runSQL(
+			"alter table WSRP_WSRPConsumerPortlet add lastPublishDate DATE " +
+				"null");
+
+		updateLastPublishDates("1_WAR_wsrpportlet", "WSRP_WSRPConsumerPortlet");
+
+		runSQL("alter table WSRP_WSRPConsumer add lastPublishDate DATE null");
+
+		updateLastPublishDates("1_WAR_wsrpportlet", "WSRP_WSRPConsumer");
+
+		runSQL("alter table WSRP_WSRPProducer add lastPublishDate DATE null");
+
+		updateLastPublishDates("1_WAR_wsrpportlet", "WSRP_WSRPProducer");
 	}
 
 }

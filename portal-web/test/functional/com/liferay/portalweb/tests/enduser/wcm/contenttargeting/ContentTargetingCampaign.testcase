@@ -318,6 +318,20 @@
 
 		<execute macro="PortletEntry#save" />
 
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="Instance Settings" />
+		</execute>
+
+		<execute macro="Navigator#gotoTab">
+			<var name="tab" value="Configuration" />
+		</execute>
+
+		<execute macro="ContentTargeting#enableAnalytics">
+			<var name="analyticsList" value="Link,Link Clicks" />
+		</execute>
+
+		<execute macro="PortletEntry#save" />
+
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>
@@ -481,6 +495,20 @@
 			<var name="campaignStartDate" value="1/1/2015" />
 			<var name="campaignStartTime" value="12:00 AM" />
 			<var name="userSegmentSelect" value="User Segment Name" />
+		</execute>
+
+		<execute macro="PortletEntry#save" />
+
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="Instance Settings" />
+		</execute>
+
+		<execute macro="Navigator#gotoTab">
+			<var name="tab" value="Configuration" />
+		</execute>
+
+		<execute macro="ContentTargeting#enableAnalytics">
+			<var name="analyticsList" value="YouTube Videos" />
 		</execute>
 
 		<execute macro="PortletEntry#save" />

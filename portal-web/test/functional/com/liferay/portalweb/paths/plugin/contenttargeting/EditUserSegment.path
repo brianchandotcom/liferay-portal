@@ -128,7 +128,7 @@
 <!--USER_SEGMENT_RULE_BEHAVIOR_CONTENT_VISITED-->
 <tr>
 	<td>USER_SEGMENT_RULE_BEHAVIOR_CONTENT_VISITED_SELECT_CONTENT_BUTTON</td>
-	<td>//a[@title='Select Content']</td>
+	<td>//a[@title='Select']</td>
 	<td></td>
 </tr>
 <tr>

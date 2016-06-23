@@ -33,6 +33,8 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
+import org.openqa.selenium.WebDriverException;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Michael Hashimoto
@@ -91,11 +93,18 @@ public class PoshiRunner {
 
 		PoshiRunnerVariablesUtil.clear();
 
-		XMLLoggerHandler.generateXMLLog(classCommandName);
+		try {
+			XMLLoggerHandler.generateXMLLog(classCommandName);
 
-		LoggerUtil.startLogger();
+			LoggerUtil.startLogger();
 
-		SeleniumUtil.startSelenium();
+			SeleniumUtil.startSelenium();
+		}
+		catch (WebDriverException wde) {
+			wde.printStackTrace();
+
+			throw wde;
+		}
 	}
 
 	@Test

@@ -53,6 +53,7 @@ if ((user.getUserId() == fileEntry.getUserId()) || permissionChecker.isContentRe
 			>
 				<liferay-ui:search-container-column-text
 					name="title"
+					truncate="<%= true %>"
 				>
 					<c:choose>
 						<c:when test="<%= fileVersion.getFileVersionId() != curFileVersion.getFileVersionId() %>">

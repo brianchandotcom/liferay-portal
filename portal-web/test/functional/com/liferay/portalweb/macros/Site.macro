@@ -418,6 +418,8 @@
 			<var name="rowEntry" value="${userGroupName}" />
 		</execute>
 
+		<var name="key_iframeTitle" value="Assign Site Roles" />
+
 		<execute function="AssertTextEquals" locator1="IFrame#IFRAME_TITLE" value1="Assign Site Roles" />
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
@@ -426,9 +428,9 @@
 
 		<execute function="KeyPress" locator1="TextInput#SEARCH" value1="\RETURN" />
 
-		<execute function="Check" locator1="ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX">
-			<var name="rowEntry" value="roleName" />
-		</execute>
+		<var name="key_rowEntry" value="${roleName}" />
+
+		<execute function="Check" locator1="ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX" value1="${roleName}" />
 
 		<execute macro="Button#clickDone" />
 

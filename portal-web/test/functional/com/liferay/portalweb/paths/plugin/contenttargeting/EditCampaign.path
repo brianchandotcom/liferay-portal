@@ -73,7 +73,7 @@
 <!--CAMPAIGN_TRACKING_ACTIONS-->
 <tr>
 	<td>CAMPAIGN_TRACKING_ACTIONS</td>
-	<td>//li[contains(@id,'${key_campaignTrackingAction}TrackingAction')]//h5[@class='field-title']</td>
+	<td>//div[@class='property-builder-field-label']/h5[normalize-space(text())='${key_campaignTrackingAction}']</td>
 	<td></td>
 </tr>
 <tr>

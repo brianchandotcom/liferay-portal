@@ -1578,7 +1578,7 @@
 					A.some(
 						selectorButtons,
 						function(item, index) {
-							var assetEntryId = item.attr('data-assetentryid');
+							var assetEntryId = item.attr('data-entityname') || item.attr('data-entityid');
 
 							var assetEntryIndex = selectedData.indexOf(assetEntryId);
 

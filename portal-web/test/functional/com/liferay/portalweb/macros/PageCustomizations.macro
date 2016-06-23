@@ -19,18 +19,6 @@
 		<execute function="Check#checkToggleSwitch" locator1="SitePagesEditPage#CUSTOMIZATION_SETTINGS_CUSTOMIZABLE_COLUMN" />
 
 		<execute macro="PortletEntry#save" />
-
-		<execute macro="Navigator#gotoTab">
-			<var name="tab" value="Advanced" />
-		</execute>
-
-		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Customization Settings" />
-		</execute>
-
-		<execute function="Check#checkToggleSwitch" locator1="SitePagesEditPage#CUSTOMIZATION_SETTINGS_SHOW_CUSTOMIZABLE_SECTIONS" />
-
-		<execute function="AssertChecked#assertCheckedToggleSwitch" locator1="SitePagesEditPage#CUSTOMIZATION_SETTINGS_CUSTOMIZABLE_COLUMN" />
 	</command>
 
 	<command name="enableSectionCustomizablePG">

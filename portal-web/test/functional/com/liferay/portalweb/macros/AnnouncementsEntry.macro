@@ -184,8 +184,6 @@
 		<var name="key_distributionScope" value="${distributionScope}" />
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute function="Pause" locator1="2000" />
-
 		<execute function="AssertTextEquals" locator1="Announcements#CARD_VIEW_ENTRY_TITLE" value1="${entryTitle}" />
 
 		<execute function="AssertTextEquals" locator1="Announcements#CARD_VIEW_ENTRY_SCOPE" value1="${distributionScope}" />

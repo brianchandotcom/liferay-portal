@@ -36,6 +36,7 @@ import com.liferay.sync.engine.util.GetterUtil;
 import com.liferay.sync.engine.util.IODeltaUtil;
 import com.liferay.sync.engine.util.JSONUtil;
 import com.liferay.sync.engine.util.SyncEngineUtil;
+import com.liferay.sync.engine.util.Validator;
 
 import java.io.IOException;
 
@@ -667,10 +668,18 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 				FileUtil.getSanitizedFileName(
 					targetSyncFile.getName(), targetSyncFile.getExtension()));
 
-			if (isIgnoredFilePath(sourceSyncFile, filePathName) ||
-				((sourceSyncFile != null) &&
-				 (sourceSyncFile.getModifiedTime() ==
-					 targetSyncFile.getModifiedTime()))) {
+			if (isIgnoredFilePath(sourceSyncFile, filePathName)) {
+				return;
+			}
+
+			if ((sourceSyncFile != null) &&
+				(sourceSyncFile.getModifiedTime() ==
+					targetSyncFile.getModifiedTime()) &&
+				!Validator.isBlank(targetSyncFile.getChecksum())) {
+
+				sourceSyncFile.setChecksum(targetSyncFile.getChecksum());
+
+				SyncFileService.update(sourceSyncFile);
 
 				return;
 			}

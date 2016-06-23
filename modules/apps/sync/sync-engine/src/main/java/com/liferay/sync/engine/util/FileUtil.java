@@ -97,9 +97,7 @@ public class FileUtil {
 	}
 
 	public static boolean checksumsEqual(String checksum1, String checksum2) {
-		if ((checksum1 == null) || (checksum2 == null) ||
-			checksum1.isEmpty() || checksum2.isEmpty()) {
-
+		if (Validator.isBlank(checksum1) || Validator.isBlank(checksum2)) {
 			return false;
 		}
 
@@ -243,19 +241,26 @@ public class FileUtil {
 		}
 	}
 
-	public static String getChecksum(Path filePath) throws IOException {
-		if (!isValidChecksum(filePath)) {
-			return "";
-		}
-
+	public static String getChecksum(Path filePath) {
 		InputStream fileInputStream = null;
 
 		try {
+			if (!isValidChecksum(filePath)) {
+				return "";
+			}
+
 			fileInputStream = Files.newInputStream(filePath);
 
 			byte[] bytes = DigestUtils.sha1(fileInputStream);
 
 			return Base64.encodeBase64String(bytes);
+		}
+		catch (IOException ioe) {
+			if (_logger.isDebugEnabled()) {
+				_logger.debug(ioe.getMessage(), ioe);
+			}
+
+			return "";
 		}
 		finally {
 			StreamUtil.cleanUp(fileInputStream);
@@ -352,7 +357,7 @@ public class FileUtil {
 			}
 		}
 
-		if ((extension != null) && !extension.isEmpty()) {
+		if (!Validator.isBlank(extension)) {
 			int x = fileName.lastIndexOf(".");
 
 			if ((x == -1) ||
@@ -365,7 +370,7 @@ public class FileUtil {
 		if (fileName.length() > 255) {
 			int x = fileName.length() - 1;
 
-			if ((extension != null) && !extension.isEmpty()) {
+			if (!Validator.isBlank(extension)) {
 				x = fileName.lastIndexOf(".");
 			}
 
@@ -493,18 +498,7 @@ public class FileUtil {
 			}
 		}
 
-		try {
-			String checksum = getChecksum(filePath);
-
-			return !checksumsEqual(checksum, syncFile.getChecksum());
-		}
-		catch (IOException ioe) {
-			if (_logger.isDebugEnabled()) {
-				_logger.debug(ioe.getMessage(), ioe);
-			}
-
-			return true;
-		}
+		return !checksumsEqual(getChecksum(filePath), syncFile.getChecksum());
 	}
 
 	public static boolean isShortcut(Path filePath) {

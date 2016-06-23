@@ -432,6 +432,8 @@
 
 		<execute function="Check" locator1="ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX" value1="${roleName}" />
 
+		<execute function="SelectFrameTop" />
+
 		<execute macro="Button#clickDone" />
 
 		<execute macro="Alert#viewSuccessMessage" />

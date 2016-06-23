@@ -2218,9 +2218,9 @@
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
+			<var name="edit" value="true" />
 			<var name="kfProcessName" value="${kfProcessName}" />
 			<var name="workflowDefinitionTitle" value="Edited Workflow Definition" />
-			<var name="edit" value="true" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
@@ -2307,9 +2307,9 @@
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
+			<var name="edit" value="true" />
 			<var name="kfProcessName" value="${kfProcessName}" />
 			<var name="workflowDefinitionTitle" value="Edited Workflow Definition" />
-			<var name="edit" value="true" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
@@ -2426,9 +2426,9 @@
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
+			<var name="edit" value="true" />
 			<var name="kfProcessName" value="${kfProcessName}" />
 			<var name="workflowDefinitionTitle" value="${workflowDefinitionTitleEdit}" />
-			<var name="edit" value="true" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />

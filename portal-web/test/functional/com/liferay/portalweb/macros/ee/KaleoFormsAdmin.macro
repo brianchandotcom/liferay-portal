@@ -151,8 +151,8 @@
 		<execute function="AssertClick" locator1="KaleoFormsAdminEditProcess#WORKFLOW_MENULIST_CHOOSE" value1="Choose" />
 
 		<execute macro="KaleoFormsAdmin#viewSelectedWorkflow">
-			<var name="workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
 			<var name="edit" value="${edit}" />
+			<var name="workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
 		</execute>
 	</command>
 
@@ -312,7 +312,7 @@
 		<var name="key_rowEntry" value="${workflowDefinitionTitle}" />
 
 		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
-		
+
 		<execute function="AssertClick" locator1="KaleoFormsAdminEditProcess#WORKFLOW_MENULIST_EDIT" value1="Edit" />
 
 		<execute function="SelectFrame" locator1="DDMSelectStructure#DDM_STRUCTURES_IFRAME" />

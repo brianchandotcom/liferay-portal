@@ -114,7 +114,7 @@
 
 		<execute function="Click" locator1="MenuItem#EDIT" />
 
-		<execute function="AssertElementPresent#assertVisible" locator1="TextInput#TITLE" />
+		<execute function="AssertTextEquals#assertValue" locator1="TextInput#TITLE" value1="${entryTitle}" />
 
 		<execute function="Type" locator1="TextInput#TITLE" value1="${entryTitleEdit}" />
 		<execute function="Type" locator1="TextInput#URL" value1="${entryURLEdit}" />

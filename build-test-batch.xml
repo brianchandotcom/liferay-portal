@@ -1699,4 +1699,8 @@ ${output.content}</echo>
 			</test-set-up>
 		</run-batch-test>
 	</target>
+
+	<target name="upstream-functional-tomcat8-mysql56-jdk8">
+		<run-functional-test app.server.type="tomcat" database.type="mysql" />
+	</target>
 </project>

@@ -2450,7 +2450,14 @@
 
 		<execute function="AssertElementPresent" locator1="DocumentsAndMedia#ICON_DOCUMENT" />
 
-		<execute function="AssertClick" locator1="DocumentsAndMedia#ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+		<execute function="AssertClick#assertTextClickNoMouseOver" locator1="DocumentsAndMedia#ICON_DOCUMENT_TITLE_LINK" value1="${dmDocumentTitle}" />
+
+		<if>
+			<condition function="IsElementNotPresent" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_TITLE" />
+			<then>
+				<execute function="AssertClick" locator1="DocumentsAndMedia#ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+			</then>
+		</if>
 
 		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_TITLE" value1="${dmDocumentTitle}" />
 		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_VIEW_WORKFLOW_STATUS" value1="${workflowStatus}" />

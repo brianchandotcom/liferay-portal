@@ -44,7 +44,7 @@ if (layoutRevision.getLayoutRevisionId() == layoutRevisionId) {
 			</portlet:actionURL>
 
 			<%
-			String taglibURL = "javascript:submitForm(document.hrefFm, '" + HttpUtil.encodeURL(publishURL) + "');";
+			String taglibURL = "javascript:submitForm(document.hrefFm, '" + HtmlUtil.escapeJS(publishURL) + "');";
 			%>
 
 			<liferay-ui:icon

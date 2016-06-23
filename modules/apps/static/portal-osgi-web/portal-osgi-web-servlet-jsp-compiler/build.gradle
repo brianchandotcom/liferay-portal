@@ -2,7 +2,7 @@ import com.liferay.gradle.util.FileUtil
 
 task downloadSchemas
 
-String schemasUrl = "http://svn.apache.org/repos/asf/tomcat/tc7.0.x/trunk/java/javax/servlet/jsp/resources"
+String schemasUrl = "https://svn.apache.org/repos/asf/tomcat/tc7.0.x/trunk/java/javax/servlet/jsp/resources"
 
 classes {
 	dependsOn downloadSchemas
@@ -31,7 +31,7 @@ downloadSchemas {
 		}
 
 		FileUtil.get(project, schemasUrl + "/jspxml.xsd", new File(schemasDir, "jspmlx.xsd"))
-		FileUtil.get(project, "http://www.oracle.com/webfolder/technetwork/jsc/xml/ns/javaee/jsp_2_3.xsd", new File(schemasDir, "jsp_2_3.xsd"))
+		FileUtil.get(project, "https://www.oracle.com/webfolder/technetwork/jsc/xml/ns/javaee/jsp_2_3.xsd", new File(schemasDir, "jsp_2_3.xsd"))
 	}
 
 	onlyIf {

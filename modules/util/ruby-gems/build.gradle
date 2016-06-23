@@ -5,7 +5,7 @@ task downloadGems
 
 String compassVersion = "1.0.1"
 
-String compassUrl = "http://rubygems.org/gems/compass-${compassVersion}.gem"
+String compassUrl = "https://rubygems.org/gems/compass-${compassVersion}.gem"
 
 classes {
 	dependsOn downloadGems

@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.monitoring.configuration.MonitoringConfiguration;
 import com.liferay.portal.monitoring.constants.MonitoringWebKeys;
 import com.liferay.portal.monitoring.internal.statistics.portal.PortalRequestDataSample;
+import com.liferay.portal.kernel.util.HtmlUtil;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -83,7 +84,7 @@ public class MonitoringBottomDynamicInclude extends BaseDynamicInclude {
 		sb.append("<!--\n");
 
 		for (DataSample curDataSample : dataSamples) {
-			sb.append(curDataSample.toString());
+			sb.append(HtmlUtil.escape(curDataSample.toString()));
 			sb.append("\n");
 		}
 

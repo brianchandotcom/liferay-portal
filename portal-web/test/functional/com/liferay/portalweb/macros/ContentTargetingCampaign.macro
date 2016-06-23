@@ -75,6 +75,29 @@
 		<execute function="Select#selectByClick" locator1="EditCampaign#CAMPAIGN_TRACKING_ACTIONS_CUSTOM_FORM_TRACKING_ACTION_SELECT" value1="${formTrackingActionSelect}" />
 	</command>
 
+	<command name="addTrackingActionDDLFormCP">
+		<execute macro="ContentTargetingCampaign#addTrackingActionsCmd">
+			<var name="campaignTrackingAction" value="Form" />
+		</execute>
+
+		<execute function="Type" locator1="EditCampaign#CAMPAIGN_TRACKING_ACTIONS_DDL_FORM_NAME_FIELD" value1="${formAlias}" />
+		<execute function="Click" locator1="EditCampaign#CAMPAIGN_TRACKING_ACTIONS_DDL_FORM_SELECT_BUTTON" />
+
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
+		<execute macro="FormsAdmin#searchFormEntry">
+			<var name="searchTerm" value="${formName}" />
+		</execute>
+
+		<execute function="Click" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK">
+			<var name="key_rowEntry" value="${formName}" />
+		</execute>
+
+		<execute function="SelectFrameTop" />
+
+		<execute function="Select" locator1="EditCampaign#CAMPAIGN_TRACKING_ACTIONS_DDL_FORM_TRACKING_ACTION_SELECT" value1="${formTrackingActionSelect}" />
+	</command>
+
 	<command name="addTrackingActionLinkCP">
 		<execute macro="ContentTargetingCampaign#addTrackingActionsCmd">
 			<var name="campaignTrackingAction" value="Link" />
@@ -480,6 +503,14 @@
 						<execute function="AssertTextEquals" locator1="EditCampaign#CAMPAIGN_TRACKING_ACTIONS_CUSTOM_FORM_NAME_FIELD" value1="${formAlias}" />
 						<execute function="AssertTextEquals" locator1="EditCampaign#CAMPAIGN_TRACKING_ACTIONS_CUSTOM_FORM_FORM_ID_FIELD" value1="${formId}" />
 						<execute function="AssertSelectedLabel" locator1="EditCampaign#CAMPAIGN_TRACKING_ACTIONS_CUSTOM_FORM_TRACKING_ACTION_SELECT" value1="${formTrackingActionSelect}" />
+					</then>
+				</elseif>
+				<elseif>
+					<equals arg1="${trackngAction}" arg2="Form" />
+					<then>
+						<execute function="AssertTextEquals" locator1="EditCampaign#CAMPAIGN_TRACKING_ACTIONS_DDL_FORM_NAME_FIELD" value1="${formAlias}" />
+						<execute function="AssertTextEquals" locator1="EditCampaign#CAMPAIGN_TRACKING_ACTIONS_DDL_FORM_FORM_NAME_FIELD" value1="${formName}" />
+						<execute function="AssertSelectedLabel" locator1="EditCampaign#CAMPAIGN_TRACKING_ACTIONS_DDL_FORM_TRACKING_ACTION_SELECT" value1="${formTrackingActionSelect}" />
 					</then>
 				</elseif>
 				<elseif>

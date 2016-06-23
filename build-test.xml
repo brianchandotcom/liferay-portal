@@ -1344,14 +1344,18 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 		<sequential>
 			<for list="@{additional.dependencies}" param="additional.dependency">
 				<sequential>
+					<local name="dependency.group" />
+					<local name="dependency.name" />
+					<local name="dependency.version" />
+
 					<get-dependency-variables dependency="@{additional.dependency}" />
 
-					<local name="group.path" />
+					<local name="dependency.group.path" />
 
 					<propertyregex
 						input="${dependency.group}"
 						global="true"
-						property="group.path"
+						property="dependency.group.path"
 						regexp="\."
 						replace="/"
 					/>
@@ -1368,7 +1372,7 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 
 					<mirrors-get
 						dest="${dependency.jar}"
-						src="@{repository.url}/${group.path}/${dependency.name}/${dependency.version}/${dependency.name}-${dependency.version}.jar"
+						src="@{repository.url}/${dependency.group.path}/${dependency.name}/${dependency.version}/${dependency.name}-${dependency.version}.jar"
 					/>
 				</sequential>
 			</for>

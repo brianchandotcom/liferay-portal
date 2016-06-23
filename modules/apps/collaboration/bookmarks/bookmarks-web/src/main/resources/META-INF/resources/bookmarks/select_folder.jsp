@@ -100,8 +100,8 @@ if (folder != null) {
 					<%
 					Map<String, Object> data = new HashMap<String, Object>();
 
-					data.put("folderid", curFolder.getFolderId());
-					data.put("name", curFolder.getName());
+					data.put("entityid", curFolder.getFolderId());
+					data.put("entityname", curFolder.getName());
 					%>
 
 					<aui:button cssClass="selector-button" data="<%= data %>" value="choose" />
@@ -122,8 +122,8 @@ if (folder != null) {
 				<%
 				Map<String, Object> data = new HashMap<String, Object>();
 
-				data.put("folderid", folderId);
-				data.put("name", folderName);
+				data.put("entityid", folderId);
+				data.put("entityname", folderName);
 				%>
 
 				<aui:button cssClass="selector-button" data="<%= data %>" value="choose-this-folder" />
@@ -135,5 +135,5 @@ if (folder != null) {
 </div>
 
 <aui:script>
-	Liferay.Util.selectEntityHandler('#<portlet:namespace />selectFolderFm', '<%= HtmlUtil.escapeJS(eventName) %>');
+ 	Liferay.Util.selectEntityHandler('#<portlet:namespace />selectFolderFm', '<%= HtmlUtil.escapeJS(eventName) %>');
 </aui:script>

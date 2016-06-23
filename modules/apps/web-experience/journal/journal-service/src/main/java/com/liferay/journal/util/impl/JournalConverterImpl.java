@@ -577,6 +577,9 @@ public class JournalConverterImpl implements JournalConverter {
 			jsonObject.put(
 				"name", dynamicContentElement.attributeValue("name"));
 			jsonObject.put(
+				"resourcePrimKey",
+				dynamicContentElement.attributeValue("resourcePrimKey"));
+			jsonObject.put(
 				"title", dynamicContentElement.attributeValue("title"));
 			jsonObject.put(
 				"type", dynamicContentElement.attributeValue("type"));

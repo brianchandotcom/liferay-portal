@@ -592,7 +592,8 @@
 							'dd-drag',
 							'dd-drop',
 							'dd-proxy',
-							'plugin'
+							'plugin',
+							'liferay-store'
 						]
 					},
 					'liferay-search-container-select': {

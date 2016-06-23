@@ -28,8 +28,8 @@ page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.translator.web.configuration.TranslatorConfiguration" %><%@
-page import="com.liferay.translator.web.model.Translation" %><%@
-page import="com.liferay.translator.web.util.TranslatorUtil" %>
+page import="com.liferay.translator.web.internal.model.Translation" %><%@
+page import="com.liferay.translator.web.internal.util.TranslatorUtil" %>
 
 <%@ page import="java.util.Map" %>
 

@@ -338,7 +338,7 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 				if (!expandedTreeDialog) {
 					expandedTreeDialog = new Liferay.UrlPreview(
 						{
-							title: '<%= LanguageUtil.get(request, "pages") %>',
+							title: '<%= HtmlUtil.escape(LanguageUtil.get(request, "pages")) %>',
 							url: '<%= treeURL.toString() %>',
 							width: Liferay.Util.isPhone() ? '100%' : '900px'
 						}

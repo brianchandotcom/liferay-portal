@@ -283,9 +283,9 @@ if (portletTitleBasedNavigation) {
 				function(event) {
 					var folderData = {
 						idString: 'newFolderId',
-						idValue: event.folderid,
+						idValue: event.entityid,
 						nameString: 'folderName',
-						nameValue: event.name
+						nameValue: event.entityname
 					};
 
 					Liferay.Util.selectFolder(folderData, '<portlet:namespace />');

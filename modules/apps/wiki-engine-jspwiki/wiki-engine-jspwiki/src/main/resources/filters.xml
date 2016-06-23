@@ -2,6 +2,6 @@
 
 <pagefilters>
 	<filter>
-		<class>com.liferay.wiki.engine.jspwiki.filters.CreoleFilter</class>
+		<class>com.liferay.wiki.engine.jspwiki.internal.filters.CreoleFilter</class>
 	</filter>
 </pagefilters>

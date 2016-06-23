@@ -20,12 +20,12 @@ import com.liferay.portal.kernel.monitoring.DataSampleThreadLocal;
 import com.liferay.portal.kernel.monitoring.RequestStatus;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.monitoring.configuration.MonitoringConfiguration;
 import com.liferay.portal.monitoring.constants.MonitoringWebKeys;
 import com.liferay.portal.monitoring.internal.statistics.portal.PortalRequestDataSample;
-import com.liferay.portal.kernel.util.HtmlUtil;
 
 import java.io.IOException;
 import java.io.PrintWriter;

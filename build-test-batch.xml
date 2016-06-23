@@ -632,6 +632,20 @@ app.server.type=@{app.server.type}]]></echo>
 								<param name="test.sql.zip.url" value="@{test.sql.zip.url}" />
 							</antcall>
 						</then>
+						<elseif>
+							<and>
+								<available file="liferay-portal-bundle-${app.server.type}.diff" />
+								<available file="liferay-portal-source.diff" />
+							</and>
+							<then>
+								<execute>
+									<![CDATA[
+										git apply --whitespace=nowarn liferay-portal-bundle-${app.server.type}.diff
+										git apply --whitespace=nowarn liferay-portal-source.diff
+									]]>
+								</execute>
+							</then>
+						</elseif>
 						<else>
 							<if>
 								<isset property="env.DIST_PATH" />

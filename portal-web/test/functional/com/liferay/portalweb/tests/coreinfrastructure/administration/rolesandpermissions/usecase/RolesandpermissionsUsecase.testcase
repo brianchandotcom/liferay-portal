@@ -1839,13 +1839,13 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<var name="key_portletName" value="Message Boards" />
+		<var name="key_portletTitleName" value="Message Boards" />
 
-		<execute function="AssertTextEquals" locator1="BasePortlet#SPECIFIC_PORTLET_TITLE" value1="Message Boards" />
+		<execute function="AssertTextEquals" locator1="BasePortlet#SPECIFIC_TITLE" value1="Message Boards" />
 
-		<var name="key_portletName" value="Asset Publisher" />
+		<var name="key_portletTitleName" value="Asset Publisher" />
 
-		<execute function="AssertElementNotPresent" locator1="BasePortlet#SPECIFIC_PORTLET_TITLE" value1="Asset Publisher" />
+		<execute function="AssertElementNotPresent" locator1="BasePortlet#SPECIFIC_TITLE" value1="Asset Publisher" />
 
 		<execute macro="MessageboardsThread#addPG">
 			<var name="threadBody" value="This is a thread by usersn1" />
@@ -1864,13 +1864,13 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<var name="key_portletName" value="Message Boards" />
+		<var name="key_portletTitleName" value="Message Boards" />
 
-		<execute function="AssertTextEquals" locator1="BasePortlet#SPECIFIC_PORTLET_TITLE" value1="Message Boards" />
+		<execute function="AssertTextEquals" locator1="BasePortlet#SPECIFIC_TITLE" value1="Message Boards" />
 
-		<var name="key_portletName" value="Asset Publisher" />
+		<var name="key_portletTitleName" value="Asset Publisher" />
 
-		<execute function="AssertTextEquals" locator1="BasePortlet#SPECIFIC_PORTLET_TITLE" value1="Asset Publisher" />
+		<execute function="AssertTextEquals" locator1="BasePortlet#SPECIFIC_TITLE" value1="Asset Publisher" />
 
 		<execute function="AssertElementNotPresent" locator1="MessageBoards#ADD_CATEGORY_BUTTON" />
 		<execute function="AssertElementNotPresent" locator1="Button#PERMISSIONS" />
@@ -1884,12 +1884,12 @@
 			<var name="siteName" value="Organization Name 2" />
 		</execute>
 
-		<var name="key_portletName" value="Message Boards" />
+		<var name="key_portletTitleName" value="Message Boards" />
 
-		<execute function="AssertTextEquals" locator1="BasePortlet#SPECIFIC_PORTLET_TITLE" value1="Message Boards" />
+		<execute function="AssertTextEquals" locator1="BasePortlet#SPECIFIC_TITLE" value1="Message Boards" />
 
-		<execute function="AssertTextEquals" locator1="MessageBoards#ADD_CATEGORY_BUTTON" value1="Add Category" />
-		<execute function="AssertTextEquals" locator1="MessageBoards#POST_NEW_THREAD_BUTTON" value1="Post New Thread" />
+		<execute function="AssertTextEquals" locator1="Button#ADD_CATEGORY" value1="Add Category" />
+		<execute function="AssertTextEquals" locator1="Button#POST_NEW_THREAD" value1="Post New Thread" />
 		<execute function="AssertTextEquals" locator1="Button#PERMISSIONS" value1="Permissions" />
 
 		<execute macro="User#logoutPG" />
@@ -1904,15 +1904,15 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<var name="key_portletName" value="Message Boards" />
+		<var name="key_portletTitleName" value="Message Boards" />
 
-		<execute function="AssertTextEquals" locator1="BasePortlet#SPECIFIC_PORTLET_TITLE" value1="Message Boards" />
+		<execute function="AssertTextEquals" locator1="BasePortlet#SPECIFIC_TITLE" value1="Message Boards" />
 
-		<var name="key_portletName" value="Asset Publisher" />
+		<var name="key_portletTitleName" value="Asset Publisher" />
 
-		<execute function="AssertTextEquals" locator1="BasePortlet#SPECIFIC_PORTLET_TITLE" value1="Asset Publisher" />
+		<execute function="AssertTextEquals" locator1="BasePortlet#SPECIFIC_TITLE" value1="Asset Publisher" />
 
-		<execute function="AssertElementNotPresent" locator1="MessageBoards#ADD_CATEGORY_BUTTON" />
+		<execute function="AssertElementNotPresent" locator1="Button#ADD_CATEGORY" />
 
 		<execute macro="WebContent#addPGViaAP">
 			<var name="webContentContent" value="This article is by usersn3, a member of user group 3 but not site name 1" />

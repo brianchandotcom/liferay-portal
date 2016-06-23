@@ -438,7 +438,7 @@
 
 		<execute macro="Alert#viewSuccessMessage" />
 
-		<execute function="AssertTextEquals" locator1="Card#SPECIFIC_SMALL_TEXT_2" value1="${roleName}">
+		<execute function="AssertTextEquals" locator1="Card#SPECIFIC_SMALL_TEXT" value1="${roleName}">
 			<var name="key_cardText" value="${userGroupName}" />
 		</execute>
 	</command>

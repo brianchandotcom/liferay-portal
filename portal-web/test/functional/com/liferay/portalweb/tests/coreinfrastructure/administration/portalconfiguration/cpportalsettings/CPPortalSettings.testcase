@@ -389,6 +389,11 @@
 			<var name="portlet" value="Sites" />
 		</execute>
 
+		<execute macro="Site#viewChildCP">
+			<var name="childSiteName" value="Child SiteName" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
 		<execute macro="Page#add">
 			<var name="pageName" value="WC Test Page" />
 			<var name="siteName" value="Child SiteName" />

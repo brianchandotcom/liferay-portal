@@ -95,8 +95,6 @@ if (portletTitleBasedNavigation) {
 
 	renderResponse.setTitle(fileVersion.getTitle());
 }
-
-
 %>
 
 <c:if test="<%= portletTitleBasedNavigation %>">

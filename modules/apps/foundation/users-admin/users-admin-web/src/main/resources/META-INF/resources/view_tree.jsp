@@ -29,7 +29,14 @@ int usersCount = GetterUtil.getInteger(request.getAttribute("view.jsp-usersCount
 String usersListView = GetterUtil.getString(request.getAttribute("view.jsp-usersListView"));
 String viewUsersRedirect = GetterUtil.getString(request.getAttribute("view.jsp-viewUsersRedirect"));
 
+portletURL.setParameter("mvcRenderCommandName", "/users_admin/view");
+portletURL.setParameter("organizationId", String.valueOf(organizationId));
+portletURL.setParameter("toolbarItem", toolbarItem);
+portletURL.setParameter("usersListView", usersListView);
+
+String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 String keywords = ParamUtil.getString(request, "keywords");
+String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 
 if (organization != null) {
 	organizationGroupId = organization.getGroupId();
@@ -62,6 +69,32 @@ if (organization != null) {
 
 <c:choose>
 	<c:when test="<%= showList %>">
+		<liferay-frontend:management-bar
+			includeCheckBox="<%= true %>"
+		>
+			<liferay-frontend:management-bar-filters>
+				<liferay-frontend:management-bar-navigation
+					navigationKeys='<%= new String[] {"all"} %>'
+					portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
+				/>
+
+				<liferay-frontend:management-bar-sort
+					orderByCol='<%= "name" %>'
+					orderByType="<%= orderByType %>"
+					orderColumns='<%= new String[] {"name"} %>'
+					portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
+				/>
+			</liferay-frontend:management-bar-filters>
+
+			<liferay-frontend:management-bar-buttons>
+				<liferay-frontend:management-bar-display-buttons
+					displayViews='<%= new String[] {"list"} %>'
+					portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
+					selectedDisplayStyle="<%= displayStyle %>"
+				/>
+			</liferay-frontend:management-bar-buttons>
+		</liferay-frontend:management-bar>
+
 		<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "search();" %>'>
 			<liferay-portlet:renderURLParams varImpl="portletURL" />
 			<aui:input name="<%= Constants.CMD %>" type="hidden" />
@@ -145,6 +178,7 @@ if (organization != null) {
 			rowChecker.setRowIds("rowIdsOrganization");
 
 			searchContainer.setRowChecker(rowChecker);
+			searchContainer.setOrderByType(orderByType);
 			%>
 
 			<liferay-ui:search-container

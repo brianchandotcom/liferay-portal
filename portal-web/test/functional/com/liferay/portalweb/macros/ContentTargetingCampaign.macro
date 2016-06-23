@@ -127,7 +127,7 @@
 
 	<command name="addTrackingActionYoutubevideosCP">
 		<execute macro="ContentTargetingCampaign#addTrackingActionsCmd">
-			<var name="campaignTrackingAction" value="youtube" />
+			<var name="campaignTrackingAction" value="YouTube Videos" />
 		</execute>
 
 		<execute function="Type" locator1="EditCampaign#CAMPAIGN_TRACKING_ACTIONS_YOUTUBE_VIDEOS_ALIAS_FIELD" value1="${youtubeAlias}" />

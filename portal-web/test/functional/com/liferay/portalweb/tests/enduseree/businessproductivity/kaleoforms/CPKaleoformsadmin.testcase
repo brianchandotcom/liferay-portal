@@ -1354,6 +1354,10 @@
 
 		<execute macro="KaleoFormsAdmin#saveForm" />
 
+		<execute macro="KaleoFormsAdmin#chooseForm">
+			<var name="kfFormName" value="Created Task Form" />
+		</execute>
+
 		<execute macro="KaleoFormsAdmin#editForm" >
 			<var name="kfFormName" value="Created Task Form" />
 			<var name="kfFormNameEdit" value="Created Task Form Edit" />

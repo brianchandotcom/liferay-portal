@@ -275,7 +275,7 @@
 </tr>
 <tr>
 	<td>FORMS_TABLE_FORM</td>
-	<td>//table[contains(@class,'table-list')]//tr[contains(.,'${key_workflowTask}')]//td[contains(.,'${key_kfFormName}')]</td>
+	<td>//table[contains(@class,'table-list')]//tr[contains(.,'${key_workflowTask}')]//td[contains(@class,'form-column')]</td>
 	<td></td>
 </tr>
 <tr>

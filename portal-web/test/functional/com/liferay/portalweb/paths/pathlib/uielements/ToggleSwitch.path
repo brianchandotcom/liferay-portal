@@ -20,6 +20,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ANY_TOGGLE_SWITCH</td>
+	<td>//label[contains(.,'${key_toggleSwitchLabel}')]//input</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DELETE_PORTLET_DATA</td>
 	<td>//label[contains(@for,'DELETE_PORTLET_DATA')]//input</td>
 	<td></td>

@@ -68,16 +68,8 @@
 			<contains>Exception sending context destroyed event to listener instance of class com.liferay.portal.spring.context.PortalContextLoaderListener</contains>
 			<matches></matches>
 		</ignore-error>
-		<ignore-error description="LPS-23351">
-			<contains>user lacks privilege or object not found: LOCK_</contains>
-			<matches></matches>
-		</ignore-error>
 		<ignore-error description="LPS-23498">
 			<contains>JBREM00200:</contains>
-			<matches></matches>
-		</ignore-error>
-		<ignore-error description="LPS-28734">
-			<contains>java.nio.channels.ClosedChannelException</contains>
 			<matches></matches>
 		</ignore-error>
 		<ignore-error description="LPS-28954 - permanent workaround">
@@ -92,17 +84,9 @@
 			<contains>java.util.zip.ZipException: ZipFile closed</contains>
 			<matches></matches>
 		</ignore-error>
-		<ignore-error description="LPS-41257">
-			<contains>[de.schlichtherle</contains>
-			<matches>.*The web application \[\] created a ThreadLocal with key of type.*</matches>
-		</ignore-error>
 		<ignore-error description="LPS-41776 - permanent workaround">
 			<contains>SEC5054: Certificate has expired</contains>
 			<matches></matches>
-		</ignore-error>
-		<ignore-error description="LPS-41863">
-			<contains></contains>
-			<matches>.*\[org.hibernate.engine.jdbc.JdbcSupportLoader\] \(MSC service thread .*\) Disabling contextual LOB .*</matches>
 		</ignore-error>
 		<ignore-error description="LPS-46161 - permanent workaround">
 			<contains>[com.google.javascript.jscomp.Tracer.ThreadTrace]</contains>
@@ -136,15 +120,6 @@
 			<contains>[org.apache.xmlbeans.impl.store.Locale$1]</contains>
 			<matches>.*The web application \[\] created a ThreadLocal with key of type.*</matches>
 		</ignore-error>
-		<ignore-error description="LPS-49505">
-			<contains>[org.jruby.RubyEncoding$2]</contains>
-			<description>LPS-49505</description>
-			<matches>.*The web application \[\] created a ThreadLocal with key of type.*</matches>
-		</ignore-error>
-		<ignore-error description="LPS-49506">
-			<contains>[org.joni.StackMachine$1]</contains>
-			<matches>.*The web application \[\] created a ThreadLocal with key of type.*</matches>
-		</ignore-error>
 		<ignore-error description="LPS-49628 - permanent workaround">
 			<contains>[org.apache.poi.extractor.ExtractorFactory$1]</contains>
 			<matches>.*The web application \[\] created a ThreadLocal with key of type.*</matches>
@@ -152,14 +127,6 @@
 		<ignore-error description="LPS-49629 - permanent workaround">
 			<contains>[org.apache.xmlbeans.XmlBeans$1]</contains>
 			<matches>.*The web application \[\] created a ThreadLocal with key of type.*</matches>
-		</ignore-error>
-		<ignore-error description="LPS-50047">
-			<contains>[com.sun.syndication.feed.impl.ToStringBean$1]</contains>
-			<matches>.*The web application \[\] created a ThreadLocal with key of type.*</matches>
-		</ignore-error>
-		<ignore-error description="LPS-50936">
-			<contains>Liferay does not have the Xuggler native libraries installed.</contains>
-			<matches></matches>
 		</ignore-error>
 		<ignore-error description="LPS-51371 - permanent workaround">
 			<contains>[net.sf.jasperreports.engine.fonts.FontUtil$1]</contains>
@@ -219,18 +186,6 @@
 		</ignore-error>
 		<ignore-error description="LRQA-14442, temporary workaround until Kiyoshi Lee fixes it">
 			<contains>[org_eclipse_equinox_http_servlet.*Framework Event Dispatcher: Equinox Container:</contains>
-			<matches></matches>
-		</ignore-error>
-		<ignore-error description="LRQA-21866">
-			<contains></contains>
-			<matches>.*\(/o/frontend-js-metal-web-1.0.0/metal-promise/src/promise/Promise.js:.*\): @define variable  assignment must be global.*</matches>
-		</ignore-error>
-		<ignore-error description="LRQA-21866">
-			<contains></contains>
-			<matches>.*\{0\} error\(s\), \{1\} warning\(s\).*</matches>
-		</ignore-error>
-		<ignore-error description="LRQA-24859">
-			<contains>No binary licenses found</contains>
 			<matches></matches>
 		</ignore-error>
 		<ignore-error description="WCM-202">

@@ -265,8 +265,11 @@
 		<var name="key_rowEntry" value="${kfFormName}" />
 
 		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
-		<execute function="AssertClick" locator1="KaleoFormsAdminEditProcessForm#FORM_MENULIST_EDIT" value1="Edit" />
+
+		<execute function="AssertClick" locator1="KaleoFormsAdminEditProcessForm#FORM_MENULIST_EDIT" value1="Edit Form" />
+
 		<execute function="SelectFrame" locator1="DDMEditStructure#IFRAME" />
+		
 		<execute function="Type" locator1="DDMEditStructure#NAME_FIELD" value1="${kfFormNameEdit}" />
 
 		<for list="Fieldset,Paragraph,Separator" param="field">

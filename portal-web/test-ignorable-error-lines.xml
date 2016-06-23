@@ -209,10 +209,6 @@
 			<contains>The addSearchEngineConfigurator method has thrown an exception</contains>
 			<matches></matches>
 		</ignore-error>
-		<ignore-error description="LPS-65961">
-			<contains>Unable to add taglib</contains>
-			<matches></matches>
-		</ignore-error>
 		<ignore-error description="LPS-66314, temporary workaround until Jürgen Kappler fixes it">
 			<contains>Unable to add folder menu item</contains>
 			<matches></matches>

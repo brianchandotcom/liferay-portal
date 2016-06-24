@@ -162,7 +162,7 @@
 </tr>
 <tr>
 	<td>CAMPAIGN_TRACKING_ACTIONS_CONTENT_SELECT_CONTENT_BUTTON</td>
-	<td>//div[contains(@class,'contenttrackingaction')]//a[@title='Select Content']</td>
+	<td>//div[contains(@class,'contenttrackingaction')]//a[@title='Select']</td>
 	<td></td>
 </tr>
 <tr>

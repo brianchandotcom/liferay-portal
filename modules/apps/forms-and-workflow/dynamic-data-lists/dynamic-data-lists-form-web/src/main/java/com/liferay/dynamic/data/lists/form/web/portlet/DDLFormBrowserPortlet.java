@@ -15,11 +15,20 @@
 package com.liferay.dynamic.data.lists.form.web.portlet;
 
 import com.liferay.dynamic.data.lists.form.web.constants.DDLFormPortletKeys;
+import com.liferay.dynamic.data.lists.form.web.display.context.DDLFormBrowserDisplayContext;
+import com.liferay.dynamic.data.lists.service.DDLRecordSetService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.util.WebKeys;
+
+import java.io.IOException;
 
 import javax.portlet.Portlet;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jürgen Kappler
@@ -41,4 +50,35 @@ import org.osgi.service.component.annotations.Component;
 	service = Portlet.class
 )
 public class DDLFormBrowserPortlet extends MVCPortlet {
+
+	@Override
+	public void render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		DDLFormBrowserDisplayContext ddlFormBrowserDisplayContext =
+			new DDLFormBrowserDisplayContext(
+				_ddlRecordSetService, renderRequest, renderResponse);
+
+		renderRequest.setAttribute(
+			WebKeys.PORTLET_DISPLAY_CONTEXT, ddlFormBrowserDisplayContext);
+
+		super.render(renderRequest, renderResponse);
+	}
+
+	@Reference
+	protected void setDDLRecordSetService(
+		DDLRecordSetService ddlRecordSetService) {
+
+		_ddlRecordSetService = ddlRecordSetService;
+	}
+
+	protected void unsetDDLRecordSetService(
+		DDLRecordSetService ddlRecordSetService) {
+
+		_ddlRecordSetService = null;
+	}
+
+	private DDLRecordSetService _ddlRecordSetService;
+
 }

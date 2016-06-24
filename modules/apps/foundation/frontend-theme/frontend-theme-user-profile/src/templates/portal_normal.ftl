@@ -69,8 +69,6 @@
 
 						<div class="h3">${htmlUtil.escape(main_menu_user_name)}</div>
 					</div>
-
-					<div class="aspect-ratio-bg-cover bg-icon" ${main_menu_style}></div>
 				</div>
 			</#if>
 

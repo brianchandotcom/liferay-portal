@@ -60,6 +60,14 @@ public class HtmlImplTest {
 	}
 
 	@Test
+	public void testEscapeCSS() {
+		Assert.assertEquals("1", _htmlImpl.escapeCSS("1"));
+		Assert.assertEquals("\\27", _htmlImpl.escapeCSS("'"));
+		Assert.assertEquals("\\27 1", _htmlImpl.escapeCSS("'1"));
+		Assert.assertEquals("\\27a", _htmlImpl.escapeCSS("'a"));
+	}
+
+	@Test
 	public void testEscapeHREF() {
 		Assert.assertNull(_htmlImpl.escapeHREF(null));
 		Assert.assertEquals(

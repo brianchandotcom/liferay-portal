@@ -355,7 +355,7 @@
 
 	<command name="gotoCompletedTaskAssignedToMePreview">
 		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
-		
+
 		<execute function="AssertClick" locator1="MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />
 
 		<execute macro="Workflow#gotoPreviewView" />

@@ -18,9 +18,12 @@ import com.liferay.poshi.runner.util.OSDetector;
 import com.liferay.poshi.runner.util.PropsValues;
 import com.liferay.poshi.runner.util.StringPool;
 import com.liferay.poshi.runner.util.StringUtil;
+import com.liferay.poshi.runner.util.Validator;
 
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
+
+import java.io.File;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -31,6 +34,7 @@ import java.util.Map;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.ie.InternetExplorerDriver;
@@ -179,7 +183,16 @@ public class WebDriverUtil extends PropsValues {
 		firefoxProfile.setPreference("dom.max_chrome_script_run_time", 300);
 		firefoxProfile.setPreference("dom.max_script_run_time", 300);
 
-		return new FirefoxDriver(firefoxProfile);
+		if (Validator.isNotNull(PropsValues.BROWSER_FIREFOX_BIN_PATH)) {
+			File file = new File(PropsValues.BROWSER_FIREFOX_BIN_PATH);
+
+			FirefoxBinary firefoxBinary = new FirefoxBinary(file);
+
+			return new FirefoxDriver(firefoxBinary, firefoxProfile);
+		}
+		else {
+			return new FirefoxDriver(firefoxProfile);
+		}
 	}
 
 	private WebDriver _getInternetExplorerDriver() {

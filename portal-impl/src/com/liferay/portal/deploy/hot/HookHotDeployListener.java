@@ -2320,6 +2320,7 @@ public class HookHotDeployListener
 			Properties properties = new Properties();
 
 			properties.setProperty(key, valueString);
+
 			PropsUtil.addProperties(properties);
 		}
 

@@ -353,6 +353,14 @@
 		<execute function="AssertClick" locator1="Dropdown#FILTER_VALUES" value1="Completed" />
 	</command>
 
+	<command name="gotoCompletedTaskAssignedToMePreview">
+		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
+
+		<execute function="AssertClick" locator1="MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />
+
+		<execute macro="Workflow#gotoPreviewView" />
+	</command>
+
 	<command name="gotoPreviewEdit">
 		<execute function="Click" locator1="WorkflowSubmissionsTask#PREVIEW_EDIT" />
 

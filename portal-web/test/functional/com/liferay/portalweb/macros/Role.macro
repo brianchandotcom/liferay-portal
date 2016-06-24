@@ -149,12 +149,7 @@
 
 		<execute function="AssertClick" locator1="Roles#ROLE_TABLE_TITLE_LINK" value1="${roleName}" />
 
-		<if>
-			<condition function="IsElementPresent#waitForVisible" locator1="MenuItem#ASSIGNEES" />
-			<then>
-				<execute function="Click" locator1="Button#PLUS" />
-			</then>
-		</if>
+		<execute function="Click" locator1="Button#PLUS" />
 
 		<execute function="SelectFrame" locator1="IFrame#SELECT_ASSIGNEES" />
 
@@ -487,6 +482,13 @@
 					<then>
 						<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_DYNAMIC_DATA_LISTS" />
 						<var name="permissionNavigationValue" value="Dynamic Data Lists" />
+					</then>
+				</elseif>
+				<elseif>
+					<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_CONTENT_KALEO_FORMS" />
+					<then>
+						<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_KALEO_FORMS" />
+						<var name="permissionNavigationValue" value="Kaleo Forms Admin" />
 					</then>
 				</elseif>
 				<elseif>

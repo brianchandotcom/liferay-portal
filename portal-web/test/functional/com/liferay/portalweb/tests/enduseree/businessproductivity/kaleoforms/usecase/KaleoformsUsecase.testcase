@@ -623,10 +623,10 @@
 		</execute>
 
 		<execute macro="Role#definePermissionCmdCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_APPLICATIONS_KALEO_FORMS_APPLICATION_PERMISSIONS_VIEW" />
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN_GENERAL_PERMISSIONS_VIEW" />
 			<var name="permissionDefinitionValue" value="View" />
-			<var name="permissionNavigationKey" value="SITE_ADMIN_APPLICATIONS_KALEO_FORMS" />
-			<var name="permissionNavigationValue" value="Kaleo Forms" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN" />
+			<var name="permissionNavigationValue" value="Kaleo Forms Admin" />
 			<var name="roleName" value="Portal Content Reviewer" />
 		</execute>
 
@@ -635,10 +635,10 @@
 		</execute>
 
 		<execute macro="Role#definePermissionCmdCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_APPLICATIONS_KALEO_FORMS_RESOURCE_PERMISSIONS_KALEO_FORMS_PROCESS_UPDATE" />
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN_RESOURCE_PERMISSIONS_KALEO_FORMS_PROCESS_UPDATE" />
 			<var name="permissionDefinitionValue" value="Update" />
-			<var name="permissionNavigationKey" value="SITE_ADMIN_APPLICATIONS_KALEO_FORMS" />
-			<var name="permissionNavigationValue" value="Kaleo Forms" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN" />
+			<var name="permissionNavigationValue" value="Kaleo Forms Admin" />
 			<var name="roleName" value="Portal Content Reviewer" />
 		</execute>
 
@@ -761,10 +761,9 @@
 			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="Workflow#viewPendingTasks">
+		<execute macro="Workflow#viewTaskAssignedToMyRoles">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
-			<var name="workflowDefinition" value="Single Approver" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -793,7 +792,13 @@
 			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="Workflow#viewDefaultMyWorkflowTasksCP" />
+		<execute macro="Workflow#gotoAssignedToMe" />
+
+		<execute macro="Workflow#viewCompletedTask">
+			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="Review" />
+		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
@@ -810,10 +815,10 @@
 		</execute>
 
 		<execute macro="Role#definePermissionCmdCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_APPLICATIONS_KALEO_FORMS_APPLICATION_PERMISSIONS_VIEW" />
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN_GENERAL_PERMISSIONS_VIEW" />
 			<var name="permissionDefinitionValue" value="View" />
-			<var name="permissionNavigationKey" value="SITE_ADMIN_APPLICATIONS_KALEO_FORMS" />
-			<var name="permissionNavigationValue" value="Kaleo Forms" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN" />
+			<var name="permissionNavigationValue" value="Kaleo Forms Admin" />
 			<var name="roleName" value="Portal Content Reviewer" />
 		</execute>
 
@@ -822,10 +827,10 @@
 		</execute>
 
 		<execute macro="Role#definePermissionCmdCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_APPLICATIONS_KALEO_FORMS_RESOURCE_PERMISSIONS_KALEO_FORMS_PROCESS_COMPLETE_FORM" />
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN_RESOURCE_PERMISSIONS_KALEO_FORMS_PROCESS_COMPLETE_FORM" />
 			<var name="permissionDefinitionValue" value="Complete Form" />
-			<var name="permissionNavigationKey" value="SITE_ADMIN_APPLICATIONS_KALEO_FORMS" />
-			<var name="permissionNavigationValue" value="Kaleo Forms" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN" />
+			<var name="permissionNavigationValue" value="Kaleo Forms Admin" />
 			<var name="roleName" value="Portal Content Reviewer" />
 		</execute>
 
@@ -1011,10 +1016,10 @@
 		</execute>
 
 		<execute macro="Role#definePermissionCmdCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_APPLICATIONS_KALEO_FORMS_APPLICATION_PERMISSIONS_VIEW" />
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN_GENERAL_PERMISSIONS_VIEW" />
 			<var name="permissionDefinitionValue" value="View" />
-			<var name="permissionNavigationKey" value="SITE_ADMIN_APPLICATIONS_KALEO_FORMS" />
-			<var name="permissionNavigationValue" value="Kaleo Forms" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN" />
+			<var name="permissionNavigationValue" value="Kaleo Forms Admin" />
 			<var name="roleName" value="Portal Content Reviewer" />
 		</execute>
 
@@ -1023,10 +1028,10 @@
 		</execute>
 
 		<execute macro="Role#definePermissionCmdCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_APPLICATIONS_KALEO_FORMS_RESOURCE_PERMISSIONS_KALEO_FORMS_PROCESS_UPDATE" />
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN_RESOURCE_PERMISSIONS_KALEO_FORMS_PROCESS_UPDATE" />
 			<var name="permissionDefinitionValue" value="Update" />
-			<var name="permissionNavigationKey" value="SITE_ADMIN_APPLICATIONS_KALEO_FORMS" />
-			<var name="permissionNavigationValue" value="Kaleo Forms" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN" />
+			<var name="permissionNavigationValue" value="Kaleo Forms Admin" />
 			<var name="roleName" value="Portal Content Reviewer" />
 		</execute>
 
@@ -1149,10 +1154,9 @@
 			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="Workflow#viewPendingTasks">
+		<execute macro="Workflow#viewTaskAssignedToMyRoles">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
-			<var name="workflowDefinition" value="Single Approver" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -1181,7 +1185,13 @@
 			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="Workflow#viewDefaultMyWorkflowTasksCP" />
+		<execute macro="Workflow#gotoAssignedToMe" />
+
+		<execute macro="Workflow#viewCompletedTask">
+			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="Review" />
+		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
@@ -1206,10 +1216,10 @@
 		</execute>
 
 		<execute macro="Role#definePermissionCmdCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_APPLICATIONS_KALEO_FORMS_APPLICATION_PERMISSIONS_VIEW" />
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN_GENERAL_PERMISSIONS_VIEW" />
 			<var name="permissionDefinitionValue" value="View" />
-			<var name="permissionNavigationKey" value="SITE_ADMIN_APPLICATIONS_KALEO_FORMS" />
-			<var name="permissionNavigationValue" value="Kaleo Forms" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN" />
+			<var name="permissionNavigationValue" value="Kaleo Forms Admin" />
 			<var name="roleName" value="KaleoRegRole Name" />
 		</execute>
 
@@ -1218,10 +1228,10 @@
 		</execute>
 
 		<execute macro="Role#definePermissionCmdCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_APPLICATIONS_KALEO_FORMS_RESOURCE_PERMISSIONS_KALEO_FORMS_PROCESS_SUBMIT" />
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN_RESOURCE_PERMISSIONS_KALEO_FORMS_PROCESS_SUBMIT" />
 			<var name="permissionDefinitionValue" value="Submit" />
-			<var name="permissionNavigationKey" value="SITE_ADMIN_APPLICATIONS_KALEO_FORMS" />
-			<var name="permissionNavigationValue" value="Kaleo Forms" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN" />
+			<var name="permissionNavigationValue" value="Kaleo Forms Admin" />
 			<var name="roleName" value="KaleoRegRole Name" />
 		</execute>
 
@@ -1230,10 +1240,10 @@
 		</execute>
 
 		<execute macro="Role#definePermissionCmdCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_APPLICATIONS_KALEO_FORMS_RESOURCE_PERMISSIONS_KALEO_FORMS_PROCESS_VIEW" />
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN_RESOURCE_PERMISSIONS_KALEO_FORMS_PROCESS_VIEW" />
 			<var name="permissionDefinitionValue" value="View" />
-			<var name="permissionNavigationKey" value="SITE_ADMIN_APPLICATIONS_KALEO_FORMS" />
-			<var name="permissionNavigationValue" value="Kaleo Forms" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN" />
+			<var name="permissionNavigationValue" value="Kaleo Forms Admin" />
 			<var name="roleName" value="KaleoRegRole Name" />
 		</execute>
 
@@ -1404,10 +1414,10 @@
 		</execute>
 
 		<execute macro="Role#definePermissionCmdCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_APPLICATIONS_KALEO_FORMS_APPLICATION_PERMISSIONS_VIEW" />
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN_GENERAL_PERMISSIONS_VIEW" />
 			<var name="permissionDefinitionValue" value="View" />
-			<var name="permissionNavigationKey" value="SITE_ADMIN_APPLICATIONS_KALEO_FORMS" />
-			<var name="permissionNavigationValue" value="Kaleo Forms" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN" />
+			<var name="permissionNavigationValue" value="Kaleo Forms Admin" />
 			<var name="roleName" value="KaleoRegRole Name" />
 		</execute>
 
@@ -1877,35 +1887,38 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Kaleo Forms Page" />
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequests">
-			<var name="kfProcessName" value="Kaleo Forms Process" />
-			<var name="workflowDefinitionTitle" value="Single Approver" />
+		<execute macro="Workflow#viewCompletedTask">
+			<var name="workflowAssetTitle" value="${kfProcessName}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Text" />
-			<var name="kfProcessFieldData" value="Test Description" />
+		<execute macro="Workflow#gotoCompletedTaskAssignedToMePreview">
+			<var name="workflowAssetTitle" value="${kfProcessName}" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Text Box" />
-			<var name="kfProcessFieldData" value="Test Box Description" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Text" />
+			<var name="fieldValue" value="Test Description" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Select" />
-			<var name="kfProcessFieldData" value="option 2" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Text Box" />
+			<var name="fieldValue" value="Test Box Description" />
+		</execute>
+
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Select" />
+			<var name="fieldValue" value="option 2" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="//div[contains(@class,'field-wrapper-content')][1]/label" value1="Text" />
 		<execute function="AssertTextEquals" locator1="//div[contains(@class,'field-wrapper-content')][2]/label" value1="Text Box" />
 		<execute function="AssertTextEquals" locator1="//div[contains(@class,'field-wrapper-content')][3]/label" value1="Select" />
-
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsTasks" />
 	</command>
 
 	<command name="CompleteProcessAndViewEmailNotifications" priority="4">
@@ -2373,18 +2386,23 @@
 			<var name="userLoginFullName" value="${user1FirstName} ${user1LastName}" />
 		</execute>
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequests">
-			<var name="kfProcessName" value="${kfProcessName}" />
-			<var name="workflowDefinitionTitle" value="Single Approver" />
+		<execute macro="Workflow#viewCompletedTask">
+			<var name="workflowAssetTitle" value="${kfProcessName}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Assigned To" />
-			<var name="kfProcessFieldData" value="Test Test" />
+		<execute macro="Workflow#gotoCompletedTaskAssignedToMePreview">
+			<var name="workflowAssetTitle" value="${kfProcessName}" />
+		</execute>
+
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Assigned To" />
+			<var name="fieldValue" value="Test Test" />
 		</execute>
 	</command>
 
@@ -2492,8 +2510,8 @@
 
 		<execute macro="KaleoFormsAdmin#saveProcessRecord" />
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="Notifications" />
 		</execute>
 
 		<execute macro="Notifications#viewNotification">
@@ -2511,13 +2529,17 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="Notifications" />
 		</execute>
 
 		<execute macro="Notifications#viewNotification">
 			<var name="notificationContent" value="Test Test sent you a Kaleo Forms Process for review in the workflow." />
 			<var name="notificationCount" value="2" />
+		</execute>
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
 		<execute macro="Workflow#approveTaskByActions">
@@ -2526,21 +2548,24 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequests">
-			<var name="kfProcessName" value="${kfProcessName}" />
-			<var name="workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
+		<execute macro="Workflow#viewCompletedTask">
+			<var name="workflowAssetTitle" value="${kfProcessName}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="${fieldName}" />
-			<var name="kfProcessFieldData" value="${kfProcessFieldData}" />
+		<execute macro="Workflow#gotoCompletedTaskAssignedToMePreview">
+			<var name="workflowAssetTitle" value="${kfProcessName}" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsTasks" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="${fieldName}" />
+			<var name="fieldValue" value="${kfProcessFieldData}" />
+		</execute>
 	</command>
 
 	<command name="CompleteProcessLargeFieldSet" priority="2">
@@ -2802,172 +2827,179 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequests">
-			<var name="kfProcessName" value="Kaleo Forms Process" />
-			<var name="workflowDefinitionTitle" value="Single Approver" />
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="1_Boolean" />
-			<var name="kfProcessFieldData" value="Yes" />
+		<execute macro="Workflow#viewCompletedTask">
+			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="3_Boolean" />
-			<var name="kfProcessFieldData" value="Yes" />
+		<execute macro="Workflow#gotoCompletedTaskAssignedToMePreview">
+			<var name="workflowAssetTitle" value="${kfProcessName}" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="3_Date" />
-			<var name="kfProcessFieldData" value="8/4/15" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="1_Boolean" />
+			<var name="fieldValue" value="Yes" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="3_Decimal" />
-			<var name="kfProcessFieldData" value="2.13" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="3_Boolean" />
+			<var name="fieldValue" value="Yes" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="2_Decimal" />
-			<var name="kfProcessFieldData" value="89.56" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="3_Date" />
+			<var name="fieldValue" value="8/4/15" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="3_HTML" />
-			<var name="kfProcessFieldData" value="HTML Content 3" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="3_Decimal" />
+			<var name="fieldValue" value="2.13" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="2_Integer" />
-			<var name="kfProcessFieldData" value="7" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="2_Decimal" />
+			<var name="fieldValue" value="89.56" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="3_Link to Page" />
-			<var name="kfProcessFieldData" value="Kaleo Forms" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="3_HTML" />
+			<var name="fieldValue" value="HTML Content 3" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="1_Number" />
-			<var name="kfProcessFieldData" value="6" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="2_Integer" />
+			<var name="fieldValue" value="7" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="1_Radio" />
-			<var name="kfProcessFieldData" value="option 2" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="3_Link to Page" />
+			<var name="fieldValue" value="Kaleo Forms" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="1_Select" />
-			<var name="kfProcessFieldData" value="option 3" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="1_Number" />
+			<var name="fieldValue" value="6" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="1_Text" />
-			<var name="kfProcessFieldData" value="1st Test" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="1_Radio" />
+			<var name="fieldValue" value="option 2" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="1_Text Box" />
-			<var name="kfProcessFieldData" value="1st Test Text Box" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="1_Select" />
+			<var name="fieldValue" value="option 3" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="2_Radio" />
-			<var name="kfProcessFieldData" value="option 1" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="1_Text" />
+			<var name="fieldValue" value="1st Test" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="2_Text Box" />
-			<var name="kfProcessFieldData" value="2nd Test Text Box" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="1_Text Box" />
+			<var name="fieldValue" value="1st Test Text Box" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="2_Text" />
-			<var name="kfProcessFieldData" value="2nd Test" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="2_Radio" />
+			<var name="fieldValue" value="option 1" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="2_Select" />
-			<var name="kfProcessFieldData" value="option 1" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="2_Text Box" />
+			<var name="fieldValue" value="2nd Test Text Box" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="1_Link to Page" />
-			<var name="kfProcessFieldData" value="Welcome" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="2_Text" />
+			<var name="fieldValue" value="2nd Test" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="2_Number" />
-			<var name="kfProcessFieldData" value="78" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="2_Select" />
+			<var name="fieldValue" value="option 1" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="1_HTML" />
-			<var name="kfProcessFieldData" value="HTML Content 1" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="1_Link to Page" />
+			<var name="fieldValue" value="Welcome" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="1_Decimal" />
-			<var name="kfProcessFieldData" value="9.56" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="2_Number" />
+			<var name="fieldValue" value="78" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="3_Integer" />
-			<var name="kfProcessFieldData" value="2" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="1_HTML" />
+			<var name="fieldValue" value="HTML Content 1" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="3_Text Box" />
-			<var name="kfProcessFieldData" value="3rd Test Text Box" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="1_Decimal" />
+			<var name="fieldValue" value="9.56" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="2_Date" />
-			<var name="kfProcessFieldData" value="6/16/15" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="3_Integer" />
+			<var name="fieldValue" value="2" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="1_Integer" />
-			<var name="kfProcessFieldData" value="6" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="3_Text Box" />
+			<var name="fieldValue" value="3rd Test Text Box" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="3_Radio" />
-			<var name="kfProcessFieldData" value="option 3" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="2_Date" />
+			<var name="fieldValue" value="6/16/15" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="3_Select" />
-			<var name="kfProcessFieldData" value="option 3" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="1_Integer" />
+			<var name="fieldValue" value="6" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="3_Text" />
-			<var name="kfProcessFieldData" value="3rd Test" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="3_Radio" />
+			<var name="fieldValue" value="option 3" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="1_Date" />
-			<var name="kfProcessFieldData" value="7/9/16" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="3_Select" />
+			<var name="fieldValue" value="option 3" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="2_Boolean" />
-			<var name="kfProcessFieldData" value="No" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="3_Text" />
+			<var name="fieldValue" value="3rd Test" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="2_HTML" />
-			<var name="kfProcessFieldData" value="HTML Content 2" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="1_Date" />
+			<var name="fieldValue" value="7/9/16" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="3_Number" />
-			<var name="kfProcessFieldData" value="8932839301" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="2_Boolean" />
+			<var name="fieldValue" value="No" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsTasks" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="2_HTML" />
+			<var name="fieldValue" value="HTML Content 2" />
+		</execute>
+
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="3_Number" />
+			<var name="fieldValue" value="8932839301" />
+		</execute>
 	</command>
 
 	<command name="CompleteProcessPredefinedContacts" priority="3">
@@ -3102,57 +3134,64 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequests">
-			<var name="kfProcessName" value="${kfProcessName}" />
-			<var name="workflowDefinitionTitle" value="Single Approver" />
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Company" />
-			<var name="kfProcessFieldData" value="Liferay" />
+		<execute macro="Workflow#viewCompletedTask">
+			<var name="workflowAssetTitle" value="${kfProcessName}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Email" />
-			<var name="kfProcessFieldData" value="test@liferay.com" />
+		<execute macro="Workflow#gotoCompletedTaskAssignedToMePreview">
+			<var name="workflowAssetTitle" value="${kfProcessName}" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="First Name" />
-			<var name="kfProcessFieldData" value="Userfn" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Company" />
+			<var name="fieldValue" value="Liferay" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Instant Messenger" />
-			<var name="kfProcessFieldData" value="IMUsername" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Email" />
+			<var name="fieldValue" value="test@liferay.com" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Job Title" />
-			<var name="kfProcessFieldData" value="Supervisor" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="First Name" />
+			<var name="fieldValue" value="Userfn" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Last Name" />
-			<var name="kfProcessFieldData" value="Userln" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Instant Messenger" />
+			<var name="fieldValue" value="IMUsername" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Notes" />
-			<var name="kfProcessFieldData" value="Test Notes" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Job Title" />
+			<var name="fieldValue" value="Supervisor" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Phone (Mobile)" />
-			<var name="kfProcessFieldData" value="(555) 555-5555" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Last Name" />
+			<var name="fieldValue" value="Userln" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Phone (Office)" />
-			<var name="kfProcessFieldData" value="555-555-5555" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Notes" />
+			<var name="fieldValue" value="Test Notes" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsTasks" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Phone (Mobile)" />
+			<var name="fieldValue" value="(555) 555-5555" />
+		</execute>
+
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Phone (Office)" />
+			<var name="fieldValue" value="555-555-5555" />
+		</execute>
 	</command>
 
 	<command name="CompleteProcessPredefinedEvents" priority="3">
@@ -3278,47 +3317,54 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequests">
-			<var name="kfProcessName" value="${kfProcessName}" />
-			<var name="workflowDefinitionTitle" value="Single Approver" />
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Attachment" />
-			<var name="kfProcessFieldData" value="Document 1 Title" />
+		<execute macro="Workflow#viewCompletedTask">
+			<var name="workflowAssetTitle" value="${kfProcessName}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Cost" />
-			<var name="kfProcessFieldData" value="6.98" />
+		<execute macro="Workflow#gotoCompletedTaskAssignedToMePreview">
+			<var name="workflowAssetTitle" value="${kfProcessName}" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Description" />
-			<var name="kfProcessFieldData" value="Test Description" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Attachment" />
+			<var name="fieldValue" value="Document 1 Title" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Date" />
-			<var name="kfProcessFieldData" value="4/1/17" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Cost" />
+			<var name="fieldValue" value="6.98" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Event Name" />
-			<var name="kfProcessFieldData" value="Test Event" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Description" />
+			<var name="fieldValue" value="Test Description" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Time" />
-			<var name="kfProcessFieldData" value="6:30 PM" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Date" />
+			<var name="fieldValue" value="4/1/17" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Location" />
-			<var name="kfProcessFieldData" value="Diamond Bar, CA" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Event Name" />
+			<var name="fieldValue" value="Test Event" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsTasks" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Time" />
+			<var name="fieldValue" value="6:30 PM" />
+		</execute>
+
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Location" />
+			<var name="fieldValue" value="Diamond Bar, CA" />
+		</execute>
 	</command>
 
 	<command name="CompleteProcessPredefinedInventory" priority="3">
@@ -3438,42 +3484,49 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequests">
-			<var name="kfProcessName" value="${kfProcessName}" />
-			<var name="workflowDefinitionTitle" value="Single Approver" />
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
+		<execute macro="Workflow#viewCompletedTask">
+			<var name="workflowAssetTitle" value="${kfProcessName}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="Review" />
+		</execute>
+
+		<execute macro="Workflow#gotoCompletedTaskAssignedToMePreview">
+			<var name="workflowAssetTitle" value="${kfProcessName}" />
+		</execute>
+
+		<execute macro="WorkflowAsset#previewViewContent">
 			<var name="fieldName" value="Description" />
-			<var name="kfProcessFieldData" value="Test Description" />
+			<var name="fieldValue" value="Test Description" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Item" />
-			<var name="kfProcessFieldData" value="Test Item" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Item" />
+			<var name="fieldValue" value="Test Item" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Location" />
-			<var name="kfProcessFieldData" value="Diamond Bar" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Location" />
+			<var name="fieldValue" value="Diamond Bar" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Purchase Date" />
-			<var name="kfProcessFieldData" value="4/1/17" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Purchase Date" />
+			<var name="fieldValue" value="4/1/17" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Purchase Price" />
-			<var name="kfProcessFieldData" value="3.99" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Purchase Price" />
+			<var name="fieldValue" value="3.99" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Quantity" />
-			<var name="kfProcessFieldData" value="4.0" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Quantity" />
+			<var name="fieldValue" value="4.0" />
 		</execute>
-
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsTasks" />
 	</command>
 
 	<command name="CompleteProcessPredefinedIssuesTracking" priority="3">
@@ -3609,57 +3662,64 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequests">
-			<var name="kfProcessName" value="${kfProcessName}" />
-			<var name="workflowDefinitionTitle" value="Single Approver" />
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Assigned To" />
-			<var name="kfProcessFieldData" value="Test Test" />
+		<execute macro="Workflow#viewCompletedTask">
+			<var name="workflowAssetTitle" value="${kfProcessName}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Attachment" />
+		<execute macro="Workflow#gotoCompletedTaskAssignedToMePreview">
+			<var name="workflowAssetTitle" value="${kfProcessName}" />
+		</execute>
+
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Assigned To" />
+			<var name="fieldValue" value="Test Test" />
+		</execute>
+
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Attachment" />
 			<var name="kfProcessFieldData" value="Document 1 Title" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Comments" />
-			<var name="kfProcessFieldData" value="Comment" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Comments" />
+			<var name="fieldValue" value="Comment" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Description" />
-			<var name="kfProcessFieldData" value="Test Description" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Description" />
+			<var name="fieldValue" value="Test Description" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Due Date" />
-			<var name="kfProcessFieldData" value="4/1/17" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Due Date" />
+			<var name="fieldValue" value="4/1/17" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Issue ID" />
-			<var name="kfProcessFieldData" value="78543" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Issue ID" />
+			<var name="fieldValue" value="78543" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Severity" />
-			<var name="kfProcessFieldData" value="Major" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Severity" />
+			<var name="fieldValue" value="Major" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Status" />
-			<var name="kfProcessFieldData" value="Completed" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Status" />
+			<var name="fieldValue" value="Completed" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Title" />
-			<var name="kfProcessFieldData" value="Test" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Title" />
+			<var name="fieldValue" value="Test" />
 		</execute>
-
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsTasks" />
 	</command>
 
 	<command name="CompleteProcessPredefinedMeetingMinutes" priority="3">
@@ -3785,47 +3845,54 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequests">
-			<var name="kfProcessName" value="Kaleo Forms Process Predefined" />
-			<var name="workflowDefinitionTitle" value="Single Approver" />
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Attachment" />
-			<var name="kfProcessFieldData" value="Document 1 Title" />
+		<execute macro="Workflow#viewCompletedTask">
+			<var name="workflowAssetTitle" value="Kaleo Forms Process Predefined" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Author" />
-			<var name="kfProcessFieldData" value="Test Test" />
+		<execute macro="Workflow#gotoCompletedTaskAssignedToMePreview">
+			<var name="workflowAssetTitle" value="Kaleo Forms Process Predefined" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Description" />
-			<var name="kfProcessFieldData" value="Test Description" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Attachment" />
+			<var name="fieldValue" value="Document 1 Title" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Meeting Duration" />
-			<var name="kfProcessFieldData" value="1 Hour" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Author" />
+			<var name="fieldValue" value="Test Test" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Meeting Date" />
-			<var name="kfProcessFieldData" value="12/25/14" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Description" />
+			<var name="fieldValue" value="Test Description" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Minutes" />
-			<var name="kfProcessFieldData" value="Meeting Minutes" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Meeting Duration" />
+			<var name="fieldValue" value="1 Hour" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Title" />
-			<var name="kfProcessFieldData" value="Test" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Meeting Date" />
+			<var name="fieldValue" value="12/25/14" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsTasks" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Minutes" />
+			<var name="fieldValue" value="Meeting Minutes" />
+		</execute>
+
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Title" />
+			<var name="fieldValue" value="Test" />
+		</execute>
 	</command>
 
 	<command name="CompleteProcessPredefinedToDo" priority="3">
@@ -3966,62 +4033,69 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequests">
-			<var name="kfProcessName" value="${kfProcessName}" />
-			<var name="workflowDefinitionTitle" value="Single Approver" />
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Assigned To" />
-			<var name="kfProcessFieldData" value="Test Test" />
+		<execute macro="Workflow#viewCompletedTask">
+			<var name="workflowAssetTitle" value="${kfProcessName}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Attachment" />
-			<var name="kfProcessFieldData" value="Document 1 Title" />
+		<execute macro="Workflow#gotoCompletedTaskAssignedToMePreview">
+			<var name="workflowAssetTitle" value="${kfProcessName}" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Comments" />
-			<var name="kfProcessFieldData" value="Comment" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Assigned To" />
+			<var name="fieldValue" value="Test Test" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Description" />
-			<var name="kfProcessFieldData" value="Test Description" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Attachment" />
+			<var name="fieldValue" value="Document 1 Title" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="End Date" />
-			<var name="kfProcessFieldData" value="4/1/17" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Comments" />
+			<var name="fieldValue" value="Comment" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="% Complete" />
-			<var name="kfProcessFieldData" value="7" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldNafieldLabelme" value="Description" />
+			<var name="fieldValue" value="Test Description" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Severity" />
-			<var name="kfProcessFieldData" value="Major" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="End Date" />
+			<var name="fieldValue" value="4/1/17" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Start Date" />
-			<var name="kfProcessFieldData" value="11/5/15" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="% Complete" />
+			<var name="fieldValue" value="7" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Status" />
-			<var name="kfProcessFieldData" value="Pending" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Severity" />
+			<var name="fieldValue" value="Major" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Title" />
-			<var name="kfProcessFieldData" value="Test" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Start Date" />
+			<var name="fieldValue" value="11/5/15" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsTasks" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Status" />
+			<var name="fieldValue" value="Pending" />
+		</execute>
+
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Title" />
+			<var name="fieldValue" value="Test" />
+		</execute>
 	</command>
 
 	<command name="CompleteProcessSubmittedViaCP" priority="4">
@@ -4207,9 +4281,9 @@
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
+			<var name="edit" value="true" />
 			<var name="kfProcessName" value="${kfProcessName}" />
-			<var name="workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
-			<var name="workflowDefinitionTitleEdit" value="Edited Workflow Definition" />
+			<var name="workflowDefinitionTitle" value="Edited Workflow Definition" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
@@ -4230,6 +4304,7 @@
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#viewTaskNotPresent">
+			<var name="kfFormName" value=" " />
 			<var name="workflowTask" value="update" />
 		</execute>
 
@@ -4283,17 +4358,24 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequests">
-			<var name="kfProcessName" value="${kfProcessName}" />
-			<var name="workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Text" />
-			<var name="kfProcessFieldData" value="Test" />
+		<execute macro="Workflow#viewCompletedTask">
+			<var name="workflowAssetTitle" value="${kfProcessName}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsTasks" />
+		<execute macro="Workflow#gotoCompletedTaskAssignedToMePreview">
+			<var name="workflowAssetTitle" value="${kfProcessName}" />
+		</execute>
+
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Text" />
+			<var name="fieldValue" value="Test" />
+		</execute>
 	</command>
 
 	<command name="CompleteProcessWithUploadedDefinition" priority="5">
@@ -4448,62 +4530,69 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequests">
-			<var name="kfProcessName" value="${kfProcessName}" />
-			<var name="workflowDefinitionTitle" value="Uploaded Definition" />
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Assigned To" />
-			<var name="kfProcessFieldData" value="Test Test" />
+		<execute macro="Workflow#viewCompletedTask">
+			<var name="workflowAssetTitle" value="${kfProcessName}" />
+			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Attachment" />
-			<var name="kfProcessFieldData" value="Document 1 Title" />
+		<execute macro="Workflow#gotoCompletedTaskAssignedToMePreview">
+			<var name="workflowAssetTitle" value="${kfProcessName}" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Comments" />
-			<var name="kfProcessFieldData" value="Comment" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Assigned To" />
+			<var name="fieldValue" value="Test Test" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Description" />
-			<var name="kfProcessFieldData" value="Test Description" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Attachment" />
+			<var name="fieldValue" value="Document_1.txt" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="End Date" />
-			<var name="kfProcessFieldData" value="4/1/17" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Comments" />
+			<var name="fieldValue" value="Comment" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="% Complete" />
-			<var name="kfProcessFieldData" value="7" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Description" />
+			<var name="fieldValue" value="Test Description" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Severity" />
-			<var name="kfProcessFieldData" value="Major" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="End Date" />
+			<var name="fieldValue" value="4/1/17" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Start Date" />
-			<var name="kfProcessFieldData" value="11/5/15" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="% Complete" />
+			<var name="fieldValue" value="7" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Status" />
-			<var name="kfProcessFieldData" value="Pending" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Severity" />
+			<var name="fieldValue" value="Major" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Title" />
-			<var name="kfProcessFieldData" value="Test" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Start Date" />
+			<var name="fieldValue" value="11/5/15" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsTasks" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Status" />
+			<var name="fieldValue" value="Pending" />
+		</execute>
+
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Title" />
+			<var name="fieldValue" value="Test" />
+		</execute>
 	</command>
 
 	<command name="EditProcessCreateFormAfterFormSubmission" priority="4">
@@ -4616,11 +4705,9 @@
 			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#next" />
-
-		<execute macro="KaleoFormsAdmin#next" />
-
-		<execute macro="KaleoFormsAdmin#next" />
+		<execute macro="KaleoFormsAdmin#gotoProgressStep">
+			<var name="kfProgressName" value="Forms" />
+		</execute>
 
 		<execute macro="KaleoFormsAdmin#assignForm">
 			<var name="kfProcessName" value="${kfProcessName}" />
@@ -4655,14 +4742,23 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequests">
-			<var name="kfProcessName" value="Kaleo Forms Process" />
-			<var name="workflowDefinitionTitle" value="Single Approver" />
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Text" />
-			<var name="kfProcessFieldData" value="Test Data" />
+		<execute macro="Workflow#viewCompletedTask">
+			<var name="workflowAssetTitle" value="$Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="Review" />
+		</execute>
+
+		<execute macro="Workflow#gotoCompletedTaskAssignedToMePreview">
+			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
+		</execute>
+
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Text" />
+			<var name="fieldValue" value="Test Data" />
 		</execute>
 	</command>
 
@@ -4810,11 +4906,9 @@
 			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#next" />
-
-		<execute macro="KaleoFormsAdmin#next" />
-
-		<execute macro="KaleoFormsAdmin#next" />
+		<execute macro="KaleoFormsAdmin#gotoProgressStep">
+			<var name="kfProgressName" value="Forms" />
+		</execute>
 
 		<execute macro="KaleoFormsAdmin#assignForm">
 			<var name="kfProcessName" value="${kfProcessName}" />
@@ -4863,14 +4957,23 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequests">
-			<var name="kfProcessName" value="${kfProcessName}" />
-			<var name="workflowDefinitionTitle" value="Single Approver" />
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Text" />
-			<var name="kfProcessFieldData" value="Test Data" />
+		<execute macro="Workflow#viewCompletedTask">
+			<var name="workflowAssetTitle" value="${kfProcessName}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="Review" />
+		</execute>
+
+		<execute macro="Workflow#gotoCompletedTaskAssignedToMePreview">
+			<var name="workflowAssetTitle" value="${kfProcessName}" />
+		</execute>
+
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Text" />
+			<var name="fieldValue" value="Test Data" />
 		</execute>
 	</command>
 
@@ -5220,42 +5323,49 @@
 			<var name="pageName" value="Kaleo Forms Page" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequests">
-			<var name="kfProcessName" value="${kfProcessName}" />
-			<var name="workflowDefinitionTitle" value="Single Approver" />
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Description" />
-			<var name="kfProcessFieldData" value="Test Description" />
+		<execute macro="Workflow#viewCompletedTask">
+			<var name="workflowAssetTitle" value="${kfProcessName}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Item" />
-			<var name="kfProcessFieldData" value="Test Item" />
+		<execute macro="Workflow#gotoCompletedTaskAssignedToMePreview">
+			<var name="workflowAssetTitle" value="${kfProcessName}" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Location" />
-			<var name="kfProcessFieldData" value="Diamond Bar" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Description" />
+			<var name="fieldValue" value="Test Description" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Purchase Date" />
-			<var name="kfProcessFieldData" value="4/1/17" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Item" />
+			<var name="fieldValue" value="Test Item" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Purchase Price" />
-			<var name="kfProcessFieldData" value="3.99" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Location" />
+			<var name="fieldValue" value="Diamond Bar" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Quantity" />
-			<var name="kfProcessFieldData" value="4.0" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Purchase Date" />
+			<var name="fieldValue" value="4/1/17" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsTasks" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Purchase Price" />
+			<var name="fieldValue" value="3.99" />
+		</execute>
+
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Quantity" />
+			<var name="fieldValue" value="4.0" />
+		</execute>
 	</command>
 
 	<command name="EditProcessNewDetailsAfterFormApproved" priority="3">
@@ -5380,9 +5490,9 @@
 			<var name="kfProcessNameEdit" value="${kfProcessName} Edited" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#next" />
-		<execute macro="KaleoFormsAdmin#next" />
-		<execute macro="KaleoFormsAdmin#next" />
+		<execute macro="KaleoFormsAdmin#gotoProgressStep">
+			<var name="kfProgressName" value="Forms" />
+		</execute>
 
 		<execute macro="KaleoFormsAdmin#saveProcess">
 			<var name="kfProcessName" value="${kfProcessName} Edited" />
@@ -5392,18 +5502,23 @@
 			<var name="kfProcessName" value="${kfProcessName} Edited" />
 		</execute>
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Kaleo Forms Page" />
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequests">
-			<var name="kfProcessName" value="${kfProcessName} Edited" />
-			<var name="workflowDefinitionTitle" value="Single Approver" />
+		<execute macro="Workflow#viewCompletedTask">
+			<var name="workflowAssetTitle" value="${kfProcessName} Edited" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Text" />
-			<var name="kfProcessFieldData" value="Test Data" />
+		<execute macro="Workflow#gotoCompletedTaskAssignedToMePreview">
+			<var name="workflowAssetTitle" value="${kfProcessName} Edited" />
+		</execute>
+
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Text" />
+			<var name="fieldValue" value="Test Data" />
 		</execute>
 	</command>
 
@@ -5523,9 +5638,9 @@
 			<var name="kfProcessNameEdit" value="${kfProcessName} Edited" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#next" />
-		<execute macro="KaleoFormsAdmin#next" />
-		<execute macro="KaleoFormsAdmin#next" />
+		<execute macro="KaleoFormsAdmin#gotoProgressStep">
+			<var name="kfProgressName" value="Forms" />
+		</execute>
 
 		<execute macro="KaleoFormsAdmin#saveProcess">
 			<var name="kfProcessName" value="${kfProcessName} Edited" />
@@ -5545,14 +5660,23 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequests">
-			<var name="kfProcessName" value="${kfProcessName} Edited" />
-			<var name="workflowDefinitionTitle" value="Single Approver" />
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Text" />
-			<var name="kfProcessFieldData" value="Test Data" />
+		<execute macro="Workflow#viewCompletedTask">
+			<var name="workflowAssetTitle" value="${kfProcessName} Edited" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="Review" />
+		</execute>
+
+		<execute macro="Workflow#gotoCompletedTaskAssignedToMePreview">
+			<var name="workflowAssetTitle" value="${kfProcessName} Edited" />
+		</execute>
+
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Text" />
+			<var name="fieldValue" value="Test Data" />
 		</execute>
 	</command>
 
@@ -5927,46 +6051,49 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Kaleo Forms Page" />
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequests">
-			<var name="kfProcessName" value="Kaleo Forms Process" />
-			<var name="workflowDefinitionTitle" value="Uploaded Definition" />
+		<execute macro="Workflow#viewCompletedTask">
+			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Description" />
-			<var name="kfProcessFieldData" value="Test Description" />
+		<execute macro="Workflow#gotoCompletedTaskAssignedToMePreview">
+			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Item" />
-			<var name="kfProcessFieldData" value="Test Item" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Description" />
+			<var name="fieldValue" value="Test Description" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Location" />
-			<var name="kfProcessFieldData" value="Diamond Bar" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Item" />
+			<var name="fieldValue" value="Test Item" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Purchase Date" />
-			<var name="kfProcessFieldData" value="4/1/17" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Location" />
+			<var name="fieldValue" value="Diamond Bar" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Purchase Price" />
-			<var name="kfProcessFieldData" value="3.99" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Purchase Date" />
+			<var name="fieldValue" value="4/1/17" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Quantity" />
-			<var name="kfProcessFieldData" value="4.0" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Purchase Price" />
+			<var name="fieldValue" value="3.99" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsTasks" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Quantity" />
+			<var name="fieldValue" value="4.0" />
+		</execute>
 	</command>
 
 	<command name="ProcessUsesCreateFormWhenAllFormsAreMissing" priority="3">
@@ -6191,46 +6318,49 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Kaleo Forms Page" />
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequests">
-			<var name="kfProcessName" value="${kfProcessName}" />
-			<var name="workflowDefinitionTitle" value="Single Approver" />
+		<execute macro="Workflow#viewCompletedTask">
+			<var name="workflowAssetTitle" value="${kfProcessName}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Description" />
-			<var name="kfProcessFieldData" value="Test Description" />
+		<execute macro="Workflow#gotoCompletedTaskAssignedToMePreview">
+			<var name="workflowAssetTitle" value="${kfProcessName}" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Item" />
-			<var name="kfProcessFieldData" value="Test Item" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Description" />
+			<var name="fieldValue" value="Test Description" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Location" />
-			<var name="kfProcessFieldData" value="Diamond Bar" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Item" />
+			<var name="fieldValue" value="Test Item" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Purchase Date" />
-			<var name="kfProcessFieldData" value="4/1/17" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Location" />
+			<var name="fieldValue" value="Diamond Bar" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Purchase Price" />
-			<var name="kfProcessFieldData" value="3.99" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Purchase Date" />
+			<var name="fieldValue" value="4/1/17" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Quantity" />
-			<var name="kfProcessFieldData" value="4.0" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Purchase Price" />
+			<var name="fieldValue" value="3.99" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsTasks" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Quantity" />
+			<var name="fieldValue" value="4.0" />
+		</execute>
 	</command>
 
 	<command name="ProcessUsesCreateFormWhenEditFormIsMissing" priority="3">
@@ -6455,46 +6585,49 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Kaleo Forms Page" />
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequests">
-			<var name="kfProcessName" value="${kfProcessName}" />
-			<var name="workflowDefinitionTitle" value="Single Approver" />
+		<execute macro="Workflow#viewCompletedTask">
+			<var name="workflowAssetTitle" value="${kfProcessName}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Description" />
-			<var name="kfProcessFieldData" value="Test Description" />
+		<execute macro="Workflow#gotoCompletedTaskAssignedToMePreview">
+			<var name="workflowAssetTitle" value="${kfProcessName}" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Item" />
-			<var name="kfProcessFieldData" value="Test Item" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Description" />
+			<var name="fieldValue" value="Test Description" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Location" />
-			<var name="kfProcessFieldData" value="Diamond Bar" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Item" />
+			<var name="fieldValue" value="Test Item" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Purchase Date" />
-			<var name="kfProcessFieldData" value="4/1/17" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Location" />
+			<var name="fieldValue" value="Diamond Bar" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Purchase Price" />
-			<var name="kfProcessFieldData" value="3.99" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Purchase Date" />
+			<var name="fieldValue" value="4/1/17" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Quantity" />
-			<var name="kfProcessFieldData" value="4.0" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Purchase Price" />
+			<var name="fieldValue" value="3.99" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsTasks" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Quantity" />
+			<var name="fieldValue" value="4.0" />
+		</execute>
 	</command>
 
 	<command name="ProcessUsesCreateFormWhenNoEditFormIsDefined" priority="3">
@@ -6818,46 +6951,49 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Kaleo Forms Page" />
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequests">
-			<var name="kfProcessName" value="${kfProcessName}" />
-			<var name="workflowDefinitionTitle" value="Single Approver" />
+		<execute macro="Workflow#viewCompletedTask">
+			<var name="workflowAssetTitle" value="${kfProcessName}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Description" />
-			<var name="kfProcessFieldData" value="Test Description" />
+		<execute macro="Workflow#gotoCompletedTaskAssignedToMePreview">
+			<var name="workflowAssetTitle" value="${kfProcessName}" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Item" />
-			<var name="kfProcessFieldData" value="Test Item" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Description" />
+			<var name="fieldValue" value="Test Description" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Location" />
-			<var name="kfProcessFieldData" value="Diamond Bar" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Item" />
+			<var name="fieldValue" value="Test Item" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Purchase Date" />
-			<var name="kfProcessFieldData" value="4/1/17" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Location" />
+			<var name="fieldValue" value="Diamond Bar" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="Purchase Price" />
-			<var name="kfProcessFieldData" value="3.99" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Purchase Date" />
+			<var name="fieldValue" value="4/1/17" />
+		</execute>
+
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Purchase Price" />
+			<var name="fieldValue" value="3.99" />
 		</execute>
 
 		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsFieldNotPresent">
 			<var name="fieldName" value="quantity" />
 			<var name="kfProcessFieldData" value="4.0" />
 		</execute>
-
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsTasks" />
 	</command>
 
 	<command name="RejectAndResubmitProcess" priority="3">
@@ -7114,8 +7250,8 @@
 
 		<execute macro="KaleoFormsAdmin#saveProcessRecord" />
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="Notifications" />
 		</execute>
 
 		<execute macro="Notifications#viewNotification">
@@ -7133,8 +7269,8 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="Notifications" />
 		</execute>
 
 		<execute macro="Notifications#viewNotification">
@@ -7148,8 +7284,8 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="Notifications" />
 		</execute>
 
 		<execute macro="Notifications#viewNotification">
@@ -7175,8 +7311,8 @@
 
 		<execute macro="KaleoFormsPortlet#resubmitPendingProcessViaMyPendingRequests" />
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="Notifications" />
 		</execute>
 
 		<execute macro="Notifications#viewNotification">
@@ -7473,6 +7609,10 @@
 			<var name="workflowAssetTitle" value="${kfProcessName}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
+		</execute>
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="Notifications" />
 		</execute>
 
 		<execute macro="Notifications#viewNotification">
@@ -7969,10 +8109,10 @@
 		</execute>
 
 		<execute macro="Role#definePermissionCmdCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_APPLICATIONS_KALEO_FORMS_APPLICATION_PERMISSIONS_VIEW" />
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN_GENERAL_PERMISSIONS_VIEW" />
 			<var name="permissionDefinitionValue" value="View" />
-			<var name="permissionNavigationKey" value="SITE_ADMIN_APPLICATIONS_KALEO_FORMS" />
-			<var name="permissionNavigationValue" value="Kaleo Forms" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN" />
+			<var name="permissionNavigationValue" value="Kaleo Forms Admin" />
 			<var name="roleName" value="${role1Name}" />
 		</execute>
 
@@ -7981,10 +8121,10 @@
 		</execute>
 
 		<execute macro="Role#definePermissionCmdCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_APPLICATIONS_KALEO_FORMS_RESOURCE_PERMISSIONS_KALEO_FORMS_PROCESS_SUBMIT" />
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN_RESOURCE_PERMISSIONS_KALEO_FORMS_PROCESS_SUBMIT" />
 			<var name="permissionDefinitionValue" value="Submit" />
-			<var name="permissionNavigationKey" value="SITE_ADMIN_APPLICATIONS_KALEO_FORMS" />
-			<var name="permissionNavigationValue" value="Kaleo Forms" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN" />
+			<var name="permissionNavigationValue" value="Kaleo Forms Admin" />
 			<var name="roleName" value="${role1Name}" />
 		</execute>
 
@@ -7993,10 +8133,10 @@
 		</execute>
 
 		<execute macro="Role#definePermissionCmdCP">
-			<var name="permissionDefinitionKey" value="SITE_ADMIN_APPLICATIONS_KALEO_FORMS_RESOURCE_PERMISSIONS_KALEO_FORMS_PROCESS_VIEW" />
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN_RESOURCE_PERMISSIONS_KALEO_FORMS_PROCESS_VIEW" />
 			<var name="permissionDefinitionValue" value="View" />
-			<var name="permissionNavigationKey" value="SITE_ADMIN_APPLICATIONS_KALEO_FORMS" />
-			<var name="permissionNavigationValue" value="Kaleo Forms" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN" />
+			<var name="permissionNavigationValue" value="Kaleo Forms Admin" />
 			<var name="roleName" value="${role1Name}" />
 		</execute>
 
@@ -8388,8 +8528,8 @@
 
 		<execute macro="KaleoFormsAdmin#saveProcessRecord" />
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="Notifications" />
 		</execute>
 
 		<execute macro="Notifications#viewNotification">
@@ -8416,8 +8556,8 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="Notifications" />
 		</execute>
 
 		<execute macro="Notifications#viewNotification">
@@ -8444,21 +8584,15 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequests">
-			<var name="kfProcessName" value="${kfProcessName}" />
-			<var name="workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
+		<execute macro="Workflow#viewCompletedTask">
+			<var name="workflowAssetTitle" value="${kfProcessName}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="Review" />
 		</execute>
-
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsProcessName">
-			<var name="kfProcessName" value="${kfProcessName}" />
-			<var name="workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
-		</execute>
-
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsTasks" />
 	</command>
 
 	<command name="ViewMultipleProcessRecords" priority="3">
@@ -8849,21 +8983,24 @@
 			<var name="workflowTask" value="review" />
 		</execute>
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Kaleo Forms Page" />
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequests">
-			<var name="kfProcessName" value="${kfProcessName}" />
-			<var name="workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
+		<execute macro="Workflow#viewCompletedTask">
+			<var name="workflowAssetTitle" value="${kfProcessName}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsField">
-			<var name="fieldName" value="${fieldName}" />
-			<var name="kfProcessFieldData" value="${kfProcessFieldData}" />
+		<execute macro="Workflow#gotoCompletedTaskAssignedToMePreview">
+			<var name="workflowAssetTitle" value="${kfProcessName}" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsTasks" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="${fieldName}" />
+			<var name="fieldValue" value="${kfProcessFieldData}" />
+		</execute>
 
 		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsAllComments">
 			<var name="commentList" value="${commentList}" />

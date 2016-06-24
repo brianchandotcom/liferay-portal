@@ -99,8 +99,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN</td>
-	<td>//div[contains(.,'Content') and contains(@class,'permission-navigation-item-header')]/following-sibling::div//span[contains(@class,'permission-navigation-item')]/a[contains(.,'Kaleo Forms Admin')]</td>
+	<td>SITE_ADMIN_CONTENT_KALEO_FORMS</td>
+	<td>//div[contains(.,'Content') and contains(@class,'permission-navigation-item-header')]/following-sibling::ul//span[contains(@class,'permission-navigation-item')]/a[contains(.,'Kaleo Forms Admin')]</td>
 	<td></td>
 </tr>
 <tr>

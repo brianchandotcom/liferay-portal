@@ -26,27 +26,22 @@
 <!--RECORD_TABLE-->
 <tr>
 	<td>RECORD_TABLE_RECORD</td>
-	<td>//td[contains(@class,'table-cell') and contains(.,'${key_kfProcessFieldData}')]</td>
+	<td>//td[contains(.,'${key_kfProcessFieldData}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RECORD_TABLE_STATUS</td>
-	<td>//td[contains(@class,'table-cell') and contains(.,'${key_kfStatus}')]</td>
+	<td>//td[contains(@class,'status-column') and contains(.,'${key_kfStatus}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RECORD_TABLE_AUTHOR</td>
-	<td>//td[contains(@class,'table-cell') and contains(.,'${key_kfAuthor}')]</td>
+	<td>//td[contains(@class,'author-column') and contains(.,'${key_kfAuthor}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RECORD_TABLE_ACTIONS</td>
 	<td>//tr[contains(.,'${key_kfProcessFieldData}')]/td[@class='table-cell entry-action last']//div/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>RECORD_TABLE_ACTIONS_1</td>
-	<td>//tr[1]/td[@class='table-cell entry-action last']//div/a</td>
 	<td></td>
 </tr>
 <tr>

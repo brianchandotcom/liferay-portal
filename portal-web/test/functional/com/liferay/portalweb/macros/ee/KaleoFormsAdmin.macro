@@ -9,7 +9,7 @@
 
 		<var name="key_iframeTitle" value="Field Set" />
 
-		<execute function="AssertTextEquals" locator1="IFrame#IFRAME_TITLE" value1="Field Set" />
+		<execute function="AssertTextEquals" locator1="IFrame#IFRAME_TITLE" value1="New Field Set" />
 
 		<execute function="SelectFrame" locator1="DDMSelectStructure#DDM_STRUCTURES_IFRAME" />
 
@@ -22,8 +22,6 @@
 		<execute function="Click" locator1="Button#PLUS" />
 
 		<execute function="Type" locator1="DDMEditStructure#NAME_FIELD" value1="${kfFormName}" />
-
-		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="addProcess">
@@ -57,6 +55,8 @@
 		</execute>
 
 		<execute function="AssertClick" locator1="KaleoFormsAdminEditProcess#ADD_WORKFLOW_BUTTON" value1="Add Workflow" />
+
+		<execute function="SelectFrame" locator1="DDMSelectStructure#DDM_STRUCTURES_IFRAME" />
 
 		<execute function="Type" locator1="TextInput#TITLE" value1="${workflowDefinitionTitle}" />
 	</command>
@@ -112,7 +112,9 @@
 	<command name="chooseForm">
 		<var name="key_kfFormName" value="${kfFormName}" />
 
-		<execute function="AssertClick" locator1="KaleoFormsAdminEditProcessForm#CHOOSE_FORM_BUTTON" value1="Choose" />
+		<execute function="AssertClick" locator1="KaleoFormsAdminEditProcessForm#FORM_TABLE_NAME_LINK" value1="${kfFormName}" />
+
+		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="chooseWorkflow">
@@ -149,8 +151,8 @@
 		<execute function="AssertClick" locator1="KaleoFormsAdminEditProcess#WORKFLOW_MENULIST_CHOOSE" value1="Choose" />
 
 		<execute macro="KaleoFormsAdmin#viewSelectedWorkflow">
+			<var name="edit" value="${edit}" />
 			<var name="workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
-			<var name="workflowDefinitionTitleEdit" value="${workflowDefinitionTitleEdit}" />
 		</execute>
 	</command>
 
@@ -193,7 +195,7 @@
 		<if>
 			<condition function="IsElementNotPresent" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 			<then>
-				<execute function="AssertTextEquals" locator1="Message#INFO" value1="No processes were found." />
+				<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No processes were found." />
 			</then>
 			<else>
 				<execute function="AssertTextNotPresent" locator1="KaleoFormsAdmin#PROCESS_TABLE_NAME" value1="${kfProcessName}" />
@@ -310,7 +312,10 @@
 		<var name="key_rowEntry" value="${workflowDefinitionTitle}" />
 
 		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+
 		<execute function="AssertClick" locator1="KaleoFormsAdminEditProcess#WORKFLOW_MENULIST_EDIT" value1="Edit" />
+
+		<execute function="SelectFrame" locator1="DDMSelectStructure#DDM_STRUCTURES_IFRAME" />
 
 		<execute function="Type" locator1="TextInput#TITLE" value1="${workflowDefinitionTitleEdit}" />
 	</command>
@@ -341,6 +346,14 @@
 		<execute function="AssertClick" locator1="KaleoFormsAdminViewProcessRecords#EXPORT_DIALOG_BOX_OK_BUTTON" value1="OK" />
 
 		<execute function="DownloadTempFile" />
+	</command>
+
+	<command name="gotoProgressStep">
+		<var name="key_kfProgressName" value="${kfProgressName}" />
+
+		<var method="StringUtil#lowerCase('${kfProgressName}')" name="key_kfProgressName" />
+
+		<execute function="Click" locator1="KaleoFormsAdminEditProcess#FORM_NAVIGATOR_PROGRESS_BAR_NAME" />
 	</command>
 
 	<command name="next">
@@ -378,20 +391,14 @@
 		<execute function="AssertClick" locator1="DDLEditRecord#DOCUMENTS_AND_MEDIA_CHOOSE_FROM_DOCUMENT_LIBRARY_BUTTON" value1="Select" />
 
 		<execute function="SelectFrame" locator1="DocumentsAndMediaSelectDocument#SELECT_DOCUMENT_IFRAME" />
+
+		<execute function="UploadCommonFile#uploadCommonFileHidden" locator1="DocumentsAndMediaSelectDocument#SELECT_FILE_BUTTON" value1="${document}" />
+
+		<execute function="Pause" locator1="1000" />
+
+		<execute function="SelectFrameTop" value1="relative=top" />
+
 		<execute function="AssertClick" locator1="Button#ADD" value1="Add" />
-		<execute function="AssertClick" locator1="MenuItem#BASIC_DOCUMENT" value1="Basic Document" />
-
-		<execute function="UploadCommonFile" locator1="DocumentsAndMediaEditDocument#FILE_FIELD" value1="${document}" />
-		<execute function="Type" locator1="TextInput#TITLE" value1="${kfProcessFieldData}" />
-		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
-
-		<var name="key_documentTitle" value="${kfProcessFieldData}" />
-
-		<execute function="AssertTextEquals" locator1="DocumentsAndMediaSelectDocument#DOCUMENTS_TABLE_DOCUMENT" value1="${kfProcessFieldData}" />
-		<execute function="Click" locator1="DocumentsAndMediaSelectDocument#DOCUMENTS_TABLE_CHOOSE" />
-
-		<execute function="SelectFrame" value1="relative=top" />
-		<execute function="AssertTextEquals" locator1="DDLEditRecord#DOCUMENTS_AND_MEDIA_FIELD" value1="${kfProcessFieldData}" />
 	</command>
 
 	<command name="populateFieldHTML">
@@ -448,10 +455,9 @@
 	<command name="publishWorkflow">
 		<execute macro="PortletEntry#publish" />
 
-		<execute macro="KaleoFormsAdmin#viewSelectedWorkflow">
-			<var name="workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
-			<var name="workflowDefinitionTitleEdit" value="${workflowDefinitionTitleEdit}" />
-		</execute>
+		<execute function="SelectFrame" value1="relative=top" />
+
+		<execute function="Click" locator1="Icon#CLOSE" />
 	</command>
 
 	<command name="saveAndContinueForm">
@@ -478,8 +484,6 @@
 	</command>
 
 	<command name="saveForm">
-		<execute function="SelectFrame" locator1="DDMEditStructure#IFRAME" />
-
 		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewSuccessMessage" />
@@ -526,7 +530,7 @@
 			</then>
 		</while>
 
-		<execute function="AssertTextEquals" locator1="Message#INFO" value1="No processes were found." />
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No processes were found." />
 	</command>
 
 	<command name="viewFormsNotPresent">
@@ -620,7 +624,9 @@
 			<var name="kfProgressStep" value="2" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="CPKaleoformsadminEditprocess#SELECTED_FIELD_SET" value1="${kfFieldSetName}" />
+		<var name="key_kfFieldSetName" value="${kfFieldSetName}" />
+
+		<execute function="AssertTextEquals" locator1="KaleoFormsAdminEditProcess#SELECTED_FIELD_SET" value1="${kfFieldSetName}" />
 
 		<execute macro="KaleoFormsAdmin#next" />
 	</command>
@@ -631,6 +637,7 @@
 			<var name="kfProgressStep" value="4" />
 		</execute>
 
+		<var name="key_kfFormName" value="${kfFormName}" />
 		<var name="key_workflowTask" value="${workflowTask}" />
 
 		<execute function="AssertTextEquals" locator1="KaleoFormsAdminEditProcess#FORMS_TABLE_FORM" value1="${kfFormName}" />
@@ -719,9 +726,9 @@
 
 	<command name="viewSelectedWorkflow">
 		<if>
-			<isset var="workflowDefinitionTitleEdit" />
+			<equals arg1="${edit}" arg2="true" />
 			<then>
-				<execute function="AssertTextEquals" locator1="KaleoFormsAdminEditProcess#SELECTED_WORKFLOW" value1="${workflowDefinitionTitleEdit} (Version 2)" />
+				<execute function="AssertTextEquals" locator1="KaleoFormsAdminEditProcess#SELECTED_WORKFLOW" value1="${workflowDefinitionTitle} (Version 2)" />
 			</then>
 			<else>
 				<execute function="AssertTextEquals" locator1="KaleoFormsAdminEditProcess#SELECTED_WORKFLOW" value1="${workflowDefinitionTitle} (Version 1)" />
@@ -732,9 +739,13 @@
 	<command name="viewTaskNotPresent">
 		<var name="key_workflowTask" value="${workflowTask}" />
 
-		<execute function="AssertTextNotPresent" locator1="KaleoFormsAdminEditProcess#FORMS_TABLE_TASK" value1="${workflowTask}" />
-		<execute function="AssertElementNotPresent" locator1="KaleoFormsAdminEditProcess#FORMS_TABLE_FORM" />
-		<execute function="AssertElementNotPresent" locator1="KaleoFormsAdminEditProcess#FORMS_TABLE_ASSIGN_FORM_BUTTON" />
+		<execute function="AssertElementNotPresent" locator1="KaleoFormsAdminEditProcess#FORMS_TABLE_TASK" />
+	</command>
+
+	<command name="viewTaskPresent">
+		<var name="key_workflowTask" value="${workflowTask}" />
+
+		<execute function="AssertElementPresent" locator1="KaleoFormsAdminEditProcess#FORMS_TABLE_TASK" />
 	</command>
 
 	<command name="viewUnpublishedWorkflowDefinitions">

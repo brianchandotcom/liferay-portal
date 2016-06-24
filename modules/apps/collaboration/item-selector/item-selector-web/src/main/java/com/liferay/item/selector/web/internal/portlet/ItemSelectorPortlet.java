@@ -16,8 +16,6 @@ package com.liferay.item.selector.web.internal.portlet;
 
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorRendering;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -92,9 +90,6 @@ public class ItemSelectorPortlet extends MVCPortlet {
 	)
 	protected void setRelease(Release release) {
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ItemSelectorPortlet.class);
 
 	private ItemSelector _itemSelector;
 

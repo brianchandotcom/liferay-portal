@@ -1117,6 +1117,29 @@ app.server.type=@{app.server.type}]]></echo>
 		<run-lpkg-startup-test />
 	</target>
 
+	<target name="modules-compile-jdk8">
+		<run-batch-test>
+			<test-action>
+				<gradle-execute dir="modules" task="assemble">
+					<arg value="--continue" />
+					<arg value="--parallel" />
+				</gradle-execute>
+			</test-action>
+
+			<test-set-up>
+				<if>
+					<isset property="env.DIST_PATH" />
+					<then>
+						<prepare-test-environment />
+					</then>
+					<else>
+						<prepare-test-build />
+					</else>
+				</if>
+			</test-set-up>
+		</run-batch-test>
+	</target>
+
 	<target name="modules-functional-jdk8">
 		<run-batch-test>
 			<test-action>

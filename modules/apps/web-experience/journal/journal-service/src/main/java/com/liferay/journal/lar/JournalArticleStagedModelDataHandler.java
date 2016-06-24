@@ -14,6 +14,8 @@
 
 package com.liferay.journal.lar;
 
+import com.liferay.document.library.kernel.exception.NoSuchFileException;
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
@@ -28,11 +30,9 @@ import com.liferay.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.journal.internal.exportimport.content.processor.JournalArticleExportImportContentProcessor;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
-import com.liferay.journal.model.JournalArticleImage;
 import com.liferay.journal.model.JournalArticleResource;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.model.JournalFolderConstants;
-import com.liferay.journal.service.JournalArticleImageLocalService;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalArticleResourceLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Image;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ImageLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -54,13 +55,17 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portlet.documentlibrary.lar.FileEntryUtil;
 
 import java.io.File;
+import java.io.InputStream;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -345,14 +350,16 @@ public class JournalArticleStagedModelDataHandler
 			}
 		}
 
-		List<JournalArticleImage> articleImages =
-			_journalArticleImageLocalService.getArticleImages(
-				article.getGroupId(), article.getArticleId(),
-				article.getVersion());
+		JournalArticle lastArticle =
+			_journalArticleLocalService.fetchLatestArticle(
+				article.getResourcePrimKey());
 
-		for (JournalArticleImage articleImage : articleImages) {
-			exportArticleImage(
-				portletDataContext, articleImage, article, articleElement);
+		if (lastArticle.getId() == article.getId()) {
+			for (FileEntry fileEntry : article.getImagesFileEntries()) {
+				StagedModelDataHandlerUtil.exportReferenceStagedModel(
+					portletDataContext, article, fileEntry,
+					PortletDataContext.REFERENCE_TYPE_WEAK);
+			}
 		}
 
 		article.setStatusByUserUuid(article.getStatusByUserUuid());
@@ -631,20 +638,65 @@ public class JournalArticleStagedModelDataHandler
 				}
 			}
 
-			Map<String, byte[]> images = new HashMap<>();
+			JournalArticle lastArticle =
+				_journalArticleLocalService.fetchLatestArticle(
+					article.getResourcePrimKey());
 
-			List<Element> imagesElements =
-				portletDataContext.getReferenceDataElements(
-					article, Image.class);
+			if (lastArticle.getId() == article.getId()) {
+				List<Element> attachmentElements =
+					portletDataContext.getReferenceDataElements(
+						article, DLFileEntry.class,
+						PortletDataContext.REFERENCE_TYPE_WEAK);
 
-			for (Element imageElement : imagesElements) {
-				String imagePath = imageElement.attributeValue("path");
+				for (Element attachmentElement : attachmentElements) {
+					String path = attachmentElement.attributeValue("path");
 
-				String imageKey = imageElement.attributeValue("image-key");
+					FileEntry fileEntry =
+						(FileEntry)portletDataContext.getZipEntryAsObject(path);
 
-				images.put(
-					imageKey,
-					portletDataContext.getZipEntryAsByteArray(imagePath));
+					InputStream inputStream = null;
+
+					try {
+						String binPath = attachmentElement.attributeValue(
+							"bin-path");
+
+						if (Validator.isNull(binPath) &&
+							portletDataContext.isPerformDirectBinaryImport()) {
+
+							try {
+								inputStream = FileEntryUtil.getContentStream(
+									fileEntry);
+							}
+							catch (NoSuchFileException nsfe) {
+							}
+						}
+						else {
+							inputStream =
+								portletDataContext.getZipEntryAsInputStream(
+									binPath);
+						}
+
+						if (inputStream == null) {
+							if (_log.isWarnEnabled()) {
+								_log.warn(
+									"Unable to import attachment for file " +
+										"entry " + fileEntry.getFileEntryId());
+							}
+
+							continue;
+						}
+
+						TempFileEntryUtil.addTempFileEntry(
+							portletDataContext.getScopeGroupId(), userId,
+							JournalArticleStagedModelDataHandler.
+								class.getName(),
+							fileEntry.getFileName(), inputStream,
+							fileEntry.getMimeType());
+					}
+					finally {
+						StreamUtil.cleanUp(inputStream);
+					}
+				}
 			}
 
 			String articleURL = null;
@@ -719,8 +771,8 @@ public class JournalArticleStagedModelDataHandler
 						reviewDateMonth, reviewDateDay, reviewDateYear,
 						reviewDateHour, reviewDateMinute, neverReview,
 						article.isIndexable(), article.isSmallImage(),
-						article.getSmallImageURL(), smallFile, images,
-						articleURL, serviceContext);
+						article.getSmallImageURL(), smallFile, null, articleURL,
+						serviceContext);
 				}
 				else {
 					importedArticle = _journalArticleLocalService.updateArticle(
@@ -736,8 +788,8 @@ public class JournalArticleStagedModelDataHandler
 						reviewDateMonth, reviewDateDay, reviewDateYear,
 						reviewDateHour, reviewDateMinute, neverReview,
 						article.isIndexable(), article.isSmallImage(),
-						article.getSmallImageURL(), smallFile, images,
-						articleURL, serviceContext);
+						article.getSmallImageURL(), smallFile, null, articleURL,
+						serviceContext);
 
 					String articleUuid = article.getUuid();
 					String importedArticleUuid = importedArticle.getUuid();
@@ -764,7 +816,7 @@ public class JournalArticleStagedModelDataHandler
 					reviewDateMonth, reviewDateDay, reviewDateYear,
 					reviewDateHour, reviewDateMinute, neverReview,
 					article.isIndexable(), article.isSmallImage(),
-					article.getSmallImageURL(), smallFile, images, articleURL,
+					article.getSmallImageURL(), smallFile, null, articleURL,
 					serviceContext);
 			}
 
@@ -820,47 +872,6 @@ public class JournalArticleStagedModelDataHandler
 			trashHandler.restoreTrashEntry(
 				userId, existingArticle.getResourcePrimKey());
 		}
-	}
-
-	protected void exportArticleImage(
-		PortletDataContext portletDataContext, JournalArticleImage articleImage,
-		JournalArticle article, Element articleElement) {
-
-		Image image = _imageLocalService.fetchImage(
-			articleImage.getArticleImageId());
-
-		if ((image == null) || (image.getTextObj() == null)) {
-			return;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(articleImage.getElInstanceId());
-		sb.append(StringPool.UNDERLINE);
-		sb.append(articleImage.getElName());
-
-		if (Validator.isNotNull(articleImage.getLanguageId())) {
-			sb.append(articleImage.getLanguageId());
-		}
-
-		Element imageElement = portletDataContext.getExportDataElement(image);
-
-		String imageKey = sb.toString();
-
-		imageElement.addAttribute("image-key", imageKey);
-
-		String fileName = String.valueOf(articleImage.getArticleImageId());
-
-		String articleImagePath = ExportImportPathUtil.getModelPath(
-			article, fileName);
-
-		imageElement.addAttribute("path", articleImagePath);
-
-		portletDataContext.addZipEntry(articleImagePath, image.getTextObj());
-
-		portletDataContext.addReferenceElement(
-			article, articleElement, image, articleImagePath,
-			PortletDataContext.REFERENCE_TYPE_DEPENDENCY, false);
 	}
 
 	protected JournalArticle fetchExistingArticle(
@@ -955,13 +966,6 @@ public class JournalArticleStagedModelDataHandler
 	}
 
 	@Reference(unbind = "-")
-	protected void setJournalArticleImageLocalService(
-		JournalArticleImageLocalService journalArticleImageLocalService) {
-
-		_journalArticleImageLocalService = journalArticleImageLocalService;
-	}
-
-	@Reference(unbind = "-")
 	protected void setJournalArticleLocalService(
 		JournalArticleLocalService journalArticleLocalService) {
 
@@ -989,7 +993,6 @@ public class JournalArticleStagedModelDataHandler
 	private ImageLocalService _imageLocalService;
 	private JournalArticleExportImportContentProcessor
 		_journalArticleExportImportContentProcessor;
-	private JournalArticleImageLocalService _journalArticleImageLocalService;
 	private JournalArticleLocalService _journalArticleLocalService;
 	private JournalArticleResourceLocalService
 		_journalArticleResourceLocalService;

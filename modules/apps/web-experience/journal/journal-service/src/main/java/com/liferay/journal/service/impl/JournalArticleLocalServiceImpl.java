@@ -153,7 +153,6 @@ import com.liferay.portal.kernel.util.SubscriptionSender;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.xml.Document;
@@ -6350,6 +6349,17 @@ public class JournalArticleLocalServiceImpl
 			JournalArticle oldArticle, JournalArticle newArticle)
 		throws Exception {
 
+		Folder folder = newArticle.addImagesFolder();
+
+		for (FileEntry fileEntry : oldArticle.getImagesFileEntries()) {
+			PortletFileRepositoryUtil.addPortletFileEntry(
+				oldArticle.getGroupId(), newArticle.getUserId(),
+				JournalArticle.class.getName(), newArticle.getResourcePrimKey(),
+				JournalConstants.SERVICE_NAME, folder.getFolderId(),
+				fileEntry.getContentStream(), fileEntry.getFileName(),
+				fileEntry.getMimeType(), false);
+		}
+
 		Document contentDocument = oldArticle.getDocument();
 
 		contentDocument = contentDocument.clone();
@@ -6362,37 +6372,28 @@ public class JournalArticleLocalServiceImpl
 		for (Node imageNode : imageNodes) {
 			Element imageEl = (Element)imageNode;
 
-			String elInstanceId = imageEl.attributeValue("instance-id");
-			String elName = imageEl.attributeValue("name");
-
 			List<Element> dynamicContentEls = imageEl.elements(
 				"dynamic-content");
 
 			for (Element dynamicContentEl : dynamicContentEls) {
-				long imageId = GetterUtil.getLong(
-					dynamicContentEl.attributeValue("id"));
-				String languageId =
-					StringPool.UNDERLINE +
-						dynamicContentEl.attributeValue("language-id");
+				String fileName = dynamicContentEl.attributeValue("name");
 
-				Image oldImage = imageLocalService.fetchImage(imageId);
+				FileEntry fileEntry =
+					PortletFileRepositoryUtil.getPortletFileEntry(
+						newArticle.getGroupId(), folder.getFolderId(),
+						fileName);
 
-				if (oldImage == null) {
-					continue;
-				}
+				String previewURL = DLUtil.getPreviewURL(
+					fileEntry, fileEntry.getFileVersion(), null,
+					StringPool.BLANK, false, true);
 
-				imageId = journalArticleImageLocalService.getArticleImageId(
-					newArticle.getGroupId(), newArticle.getArticleId(),
-					newArticle.getVersion(), elInstanceId, elName, languageId);
+				dynamicContentEl.addAttribute(
+					"resourcePrimKey",
+					String.valueOf(newArticle.getResourcePrimKey()));
 
-				imageLocalService.updateImage(imageId, oldImage.getTextObj());
+				dynamicContentEl.clearContent();
 
-				String elContent =
-					"/image/journal/article?img_id=" + imageId + "&t=" +
-						WebServerServletTokenUtil.getToken(imageId);
-
-				dynamicContentEl.setText(elContent);
-				dynamicContentEl.addAttribute("id", String.valueOf(imageId));
+				dynamicContentEl.addCDATA(previewURL);
 			}
 		}
 

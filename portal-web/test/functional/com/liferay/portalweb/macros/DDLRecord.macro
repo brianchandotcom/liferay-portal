@@ -347,8 +347,6 @@
 
 		<execute function="AssertClick" locator1="DDLEditRecord#WEB_CONTENT_CHOOSE_FROM_WEB_CONTENT_LIBRARY_BUTTON" value1="Select" />
 
-		<execute function="SelectFrame" value1="relative=top" />
-
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
 		<execute function="AssertClick" locator1="Link#WEB_CONTENT_ARTICLE" value1="${webContentTitle}" />

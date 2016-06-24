@@ -14,6 +14,7 @@
 
 package com.liferay.network.utilities.web.internal.portlet;
 
+import com.liferay.network.utilities.web.internal.constants.NetworkUtilitiesPortletKeys;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
@@ -40,6 +41,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
+		"javax.portlet.name=" + NetworkUtilitiesPortletKeys.NETWORK_UTILITIES,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user"
 	},

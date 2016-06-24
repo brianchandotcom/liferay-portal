@@ -5,20 +5,20 @@ AUI.add(
 
 		var LString = Lang.String;
 
-		var STR_START = 'start';
-
 		var NAME = 'assetPortletCategorySelector';
+
+		var STR_START = 'start';
 
 		var AssetPortletCategorySelector = A.Component.create(
 			{
 				ATTRS: {
 					boundingBox: {
-						value:''
+						value: ''
 					},
 					entries: {
 						value: {}
 					},
-					entryIds : {
+					entryIds: {
 						value: ''
 					},
 					eventName: {
@@ -30,7 +30,7 @@ AUI.add(
 					singleSelect: {
 						value: false
 					},
-					url : {
+					url: {
 						value: ''
 					},
 					vocabularyRootNode: {
@@ -50,7 +50,7 @@ AUI.add(
 								children: [this.get('vocabularyRootNode')],
 								io: {
 									cfg: {
-										data: this.formatRequestData.bind(this),
+										data: this.formatRequestData.bind(this)
 									},
 									formatter: this.formatJSONResult.bind(this),
 									url: this.get('url')
@@ -60,7 +60,7 @@ AUI.add(
 					},
 
 					clearEntries: function() {
-						this.entries = {};
+						this.set('entries', {});
 					},
 
 					formatJSONResult: function(json) {
@@ -87,7 +87,7 @@ AUI.add(
 														this.get('eventName'),
 														{
 															data: {
-																items: this.entries
+																items: this.get('entries')
 															}
 														}
 													);
@@ -102,16 +102,18 @@ AUI.add(
 										label: LString.escapeHTML(item.titleCurrentValue),
 										leaf: !item.hasChildren,
 										paginator: this.getPaginatorConfig(item),
-										type: type,
-										parentCategoryIds: item.parentCategoryIds
+										parentCategoryIds: item.parentCategoryIds,
+										type: type
 									};
 
-
 									if (this.entryIdsArr.indexOf(item.categoryId) !== -1) {
-										this.entries = this.get('entries');
-										this.entries[item.categoryId] = item;
+										var entries = this.get('entries');
+
+										entries[item.categoryId] = item;
 										newTreeNode.checked = true;
 										newTreeNode.expanded = true;
+
+										this.set('entries', entries);
 									}
 
 									output.push(newTreeNode);
@@ -132,9 +134,12 @@ AUI.add(
 
 						if (Lang.isValue(assetId) && assetType === 'category') {
 							var urlGetSubCategories = url;
+
 							urlGetSubCategories = Liferay.Util.addParams(this.get('namespace') + 'categoryId=' + assetId, urlGetSubCategories);
 							var io = treeNode.get('io');
+
 							io.url = urlGetSubCategories;
+
 							treeNode.set('io', io);
 						}
 					},
@@ -144,7 +149,7 @@ AUI.add(
 							offsetParam: STR_START
 						};
 
-						var maxEntries = "maxEntries";
+						var maxEntries = 'maxEntries';
 
 						if (maxEntries > 0) {
 							paginatorConfig.limit = maxEntries;
@@ -186,6 +191,8 @@ AUI.add(
 
 						var entries = this.get('entries');
 
+						var entry;
+
 						if (A.instanceOf(currentTarget, A.Node)) {
 							assetId = currentTarget.attr('data-categoryId');
 
@@ -197,7 +204,7 @@ AUI.add(
 							entryMatchKey = currentTarget.get('label');
 						}
 
-						var entry = {
+						entry = {
 							categoryId: assetId
 						};
 
@@ -207,13 +214,15 @@ AUI.add(
 
 						entries[assetId] = entry;
 
-						this.entries = entries;
+						this.set('entries', entries);
 					},
 
 					onCheckboxUncheck: function(event) {
 						var currentTarget = event.currentTarget;
 
 						var assetId;
+
+						var entries = this.get('entries');
 
 						if (A.instanceOf(currentTarget, A.Node)) {
 							assetId = currentTarget.attr('data-categoryId');
@@ -223,6 +232,7 @@ AUI.add(
 						}
 
 						delete this.entries[assetId];
+						this.set('entries', entries);
 					}
 				}
 			}

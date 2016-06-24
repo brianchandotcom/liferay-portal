@@ -2312,27 +2312,29 @@ AUI.add(
 					getDocumentLibraryURL: function(criteria) {
 						var instance = this;
 
+						var parsedValue = instance.getParsedValue(ImageField.superclass.getValue.apply(instance, arguments));
+
 						var portletNamespace = instance.get('portletNamespace');
 
 						var portletURL = Liferay.PortletURL.createURL(themeDisplay.getURLControlPanel());
 
 						portletURL.setDoAsGroupId(instance.get('doAsGroupId'));
+
 						portletURL.setParameter('criteria', criteria);
 						portletURL.setParameter('itemSelectedEventName', portletNamespace + 'selectDocumentLibrary');
 
-						var criterionJSON = {
+						var journalCriterionJSON = {
+							desiredItemSelectorReturnTypes: 'com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType,com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType',
+							resourcePrimKey: parsedValue.resourcePrimKey
+						};
+
+						portletURL.setParameter('0_json', JSON.stringify(journalCriterionJSON));
+
+						var imageCriterionJSON = {
 							desiredItemSelectorReturnTypes: 'com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType,com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType'
 						};
 
-						portletURL.setParameter('0_json', JSON.stringify(criterionJSON));
-						portletURL.setParameter('1_json', JSON.stringify(criterionJSON));
-
-						var uploadCriterionJSON = {
-							desiredItemSelectorReturnTypes: 'com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType,com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType',
-							URL: instance.getUploadURL()
-						};
-
-						portletURL.setParameter('2_json', JSON.stringify(uploadCriterionJSON));
+						portletURL.setParameter('1_json', JSON.stringify(imageCriterionJSON));
 
 						portletURL.setPortletId(Liferay.PortletKeys.ITEM_SELECTOR);
 						portletURL.setPortletMode('view');

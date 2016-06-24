@@ -108,9 +108,9 @@
 	</command>
 
 	<command name="addNodeViaViewTab">
-		<var method="StringUtil#replace('${nodeType}', '-', '_')" name="key_nodeType" />
+		<var name="key_nodeName" value="${nodeName}" />
 
-		<execute function="SikuliDragAndDrop" locator1="KaleoDesignerEditWorkflow#NODE_PNG" value1="250,0" />
+		<execute function="DragAndDrop" locator1="KaleoDesignerEditWorkflow#NODE_FIELDS" locator2="KaleoDesignerEditWorkflow#NODE_BUILDER" value1="${nodeName}" />
 
 		<var name="key_nodeType" value="${nodeType}" />
 

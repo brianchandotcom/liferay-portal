@@ -101,10 +101,6 @@ if (organization != null) {
 			<aui:input name="toolbarItem" type="hidden" value="<%= toolbarItem %>" />
 			<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
 
-			<%
-			int organizationsCount = OrganizationLocalServiceUtil.searchCount(company.getCompanyId(), _getParentOrganizationId(request, organization, filterManageableOrganizations), null, null, null, null, organizationParams);
-			%>
-
 			<c:if test="<%= organization != null %>">
 
 				<%
@@ -141,18 +137,6 @@ if (organization != null) {
 			</c:if>
 
 			<%
-			boolean showOrganizations = false;
-			boolean showUsers = true;
-
-			if ((organization == null) && Validator.isNull(keywords) && !PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_USER) && !PortalPermissionUtil.contains(permissionChecker, ActionKeys.IMPERSONATE)) {
-				showOrganizations = true;
-				showUsers = false;
-			}
-
-			if (organizationsCount > 0) {
-				showOrganizations = true;
-			}
-
 			if ((status == WorkflowConstants.STATUS_APPROVED) && (usersCount == 0) && (inactiveUsersCount > 0)) {
 				status = WorkflowConstants.STATUS_INACTIVE;
 			}

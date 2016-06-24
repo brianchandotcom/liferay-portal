@@ -65,15 +65,9 @@
 		<if>
 			<isset var="siteName" />
 			<then>
-				<var name="key_rowEntry" value="${siteName}" />
-
-				<execute function="ClickNoError#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
-
-				<execute function="AssertClick" locator1="MenuItem#SITE_ADMINISTRATION" value1="Site Administration" />
-
-				<var name="key_portletTitle" value="Public Pages" />
-
-				<execute function="AssertTextEquals" locator1="Home#SITE_ADMINISTRATION_PORTLET_TITLE" value1="Public Pages" />
+				<execute macro="ProductMenu#gotoSite">
+					<var name="site" value="${siteName}" />
+				</execute>
 			</then>
 		</if>
 

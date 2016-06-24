@@ -10,12 +10,12 @@
 <tbody>
 <tr>
 	<td>MEMBERSHIP_TYPE</td>
-	<td>//div[contains(@class,'site-membership-type')]</td>
+	<td>//div[contains(@class,'sidebar-header') and contains(.,'Membership Type')]/h4</td>
 	<td></td>
 </tr>
 <tr>
 	<td>REQUEST_MESSAGE</td>
-	<td>//div[contains(@class,'site-membership-type')]/span[contains(@class,'alert-link')]/a/span</td>
+	<td>//div[contains(@class,'sidebar-header')]//a[contains(@class,'badge')]</td>
 	<td></td>
 </tr>
 <tr>

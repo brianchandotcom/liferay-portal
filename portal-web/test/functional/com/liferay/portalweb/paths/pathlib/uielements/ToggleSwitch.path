@@ -13,10 +13,14 @@
 	<td>//label[contains(.,'Active')]//input</td>
 	<td></td>
 </tr>
-
 <tr>
 	<td>ALLOW_SITE_ADMIN_MODIFY_PAGES</td>
 	<td>//label[contains(.,'Allow site administrators to modify')]//span[contains(@class,'toggle-switch-handle')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ANY_TOGGLE_SWITCH</td>
+	<td>//label[contains(.,'${key_toggleSwitchLabel}')]//input</td>
 	<td></td>
 </tr>
 <tr>

@@ -1611,6 +1611,11 @@
 			<var name="viewUserSegmentSelected" value="User Segment Name" />
 		</execute>
 
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Test Page Name" />
+			<var name="siteName" value="Import Site" />
+		</execute>
+
 		<execute macro="CampaignDisplayPortlet#viewPG">
 			<var name="entryContentText" value="Web Content Content" />
 			<var name="previewCampaignList" value="Campaign Name,default" />

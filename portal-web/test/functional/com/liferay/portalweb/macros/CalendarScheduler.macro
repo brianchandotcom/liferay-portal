@@ -222,9 +222,25 @@
 	<command name="selectSpecificEvent">
 		<var name="key_eventTitle" value="${eventTitle}" />
 
-		<execute function="ScrollWebElementIntoView" locator1="Calendar#SCHEDULER_EVENT_SPECIFIC" />
+		<if>
+			<contains string="${eventTitle}" substring="All Day" />
+			<then>
+				<execute function="AssertClick#assertTextClickNoMouseOver" locator1="Calendar#SCHEDULER_EVENT_SPECIFIC_ALL_DAY" value1="${eventTitle}" />
+			</then>
+			<elseif>
+				<equals arg1="${eventToday}" arg2="false" />
+				<then>
+					<execute function="ScrollWebElementIntoView" locator1="Calendar#SCHEDULER_VIEW_EVENT_NOT_TODAY" />
 
-		<execute function="AssertClick#assertTextClickNoMouseOver" locator1="Calendar#SCHEDULER_EVENT_SPECIFIC" value1="${eventTitle}" />
+					<execute function="AssertClick" locator1="Calendar#SCHEDULER_VIEW_EVENT_NOT_TODAY" value1="${eventTitle}" />
+				</then>
+			</elseif>
+			<else>
+				<execute function="ScrollWebElementIntoView" locator1="Calendar#SCHEDULER_VIEW_EVENT_DAY_AND_WEEK_VIEW" />
+
+				<execute function="AssertClick#assertPartialTextClickAt" locator1="Calendar#SCHEDULER_VIEW_EVENT_DAY_AND_WEEK_VIEW" value1="${eventTitle}" />
+			</else>
+		</if>
 	</command>
 
 	<command name="viewAgenda">
@@ -519,6 +535,7 @@
 	<command name="viewNoRSVP">
 		<execute macro="CalendarScheduler#selectSpecificEvent">
 			<var name="eventTitle" value="${eventTitle}" />
+			<var name="eventToday" value="${eventToday}" />
 		</execute>
 
 		<var name="key_rsvp" value="Yes" />
@@ -540,6 +557,7 @@
 	<command name="viewRSVP">
 		<execute macro="CalendarScheduler#selectSpecificEvent">
 			<var name="eventTitle" value="${eventTitle}" />
+			<var name="eventToday" value="${eventToday}" />
 		</execute>
 
 		<var name="key_rsvp" value="${rsvp}" />

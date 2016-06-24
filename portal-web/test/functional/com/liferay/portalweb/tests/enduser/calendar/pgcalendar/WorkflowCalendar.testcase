@@ -88,6 +88,10 @@
 			<return from="siteName" name="siteName" />
 		</execute>
 
+		<execute macro="CalendarNavigator#gotoView">
+			<var name="viewType" value="Day" />
+		</execute>
+
 		<execute macro="CalendarEvent#viewSiteRSVPWithUnapprovedWorkflow">
 			<var name="eventTitle" value="Calendar Event Title" />
 			<var name="siteCalendarName" value="${siteName}" />

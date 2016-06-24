@@ -609,6 +609,8 @@
 	</command>
 
 	<command name="hideCurrentSiteCalendar">
+		<execute function="ScrollWebElementIntoView" locator1="Calendar#CURRENT_SITE_CALENDARS_CALENDAR_PRIMARY_COLOR_DEFAULT" />
+
 		<execute function="Click" locator1="Calendar#CURRENT_SITE_CALENDARS_CALENDAR_PRIMARY_COLOR_DEFAULT" />
 
 		<execute function="AssertElementPresent" locator1="Calendar#CURRENT_SITE_CALENDARS_CALENDAR_PRIMARY_COLOR_HIDDEN" />
@@ -693,6 +695,8 @@
 	</command>
 
 	<command name="showCurrentSiteCalendar">
+		<execute function="ScrollWebElementIntoView" locator1="Calendar#CURRENT_SITE_CALENDARS_CALENDAR_PRIMARY_COLOR_HIDDEN" />
+
 		<execute function="Click" locator1="Calendar#CURRENT_SITE_CALENDARS_CALENDAR_PRIMARY_COLOR_HIDDEN" />
 
 		<execute function="AssertElementPresent" locator1="Calendar#CURRENT_SITE_CALENDARS_CALENDAR_PRIMARY_COLOR_DEFAULT" />
@@ -1073,6 +1077,8 @@
 		<execute function="Click" locator1="CalendarEditEvent#START_DATE" />
 
 		<execute function="AssertTextEquals" locator1="PGCalendarAddevent#MINI_CALENDAR_WEEK_START_DAY_START_DATE" value1="${weekStartDay}" />
+
+		<execute function="Click" locator1="CalendarEditEvent#DATE_CONTAINER" />
 
 		<execute function="Click" locator1="CalendarEditEvent#END_DATE" />
 

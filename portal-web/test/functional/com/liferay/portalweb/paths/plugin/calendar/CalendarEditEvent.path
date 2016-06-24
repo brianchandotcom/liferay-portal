@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>DATE_CONTAINER</td>
+	<td>//fieldset[@aria-labelledby='Title']//div[contains(@id,'DateContainer')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EDIT_EVENT_IFRAME</td>
 	<td>//iframe[contains(@class,'dialog-iframe-node ')]</td>
 	<td></td>

@@ -181,7 +181,7 @@
 	<command name="populateFieldDate">
 		<var name="key_fieldName" value="${fieldName}" />
 
-		<execute function="Type#clickAtSendKeys" locator1="DDLEditRecord#DATE_FIELD" value1="${ddlRecordFieldData}" />
+		<execute function="Type" locator1="DDLEditRecord#DATE_FIELD" value1="${ddlRecordFieldData}" />
 	</command>
 
 	<command name="populateFieldDecimal">

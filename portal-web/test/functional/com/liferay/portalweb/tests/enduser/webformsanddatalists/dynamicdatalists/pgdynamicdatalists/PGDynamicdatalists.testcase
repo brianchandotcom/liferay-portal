@@ -106,6 +106,10 @@
 
 		<execute macro="DDLTemplate#saveFormTemplateViaDDLDisplayPG" />
 
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
 		<execute macro="DDLList#selectViaDDLDisplayPG" />
 
 		<execute macro="DDLTemplate#selectFormTemplateViaDDLDisplayPG">

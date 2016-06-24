@@ -4,6 +4,10 @@ ext {
 	]
 }
 
+dependencies {
+	provided group: "com.beust", name: "jcommander", version: "1.48"
+}
+
 processResources {
 	filesMatching("**/build.gradle") {
 		filter {

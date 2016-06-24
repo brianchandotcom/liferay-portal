@@ -1,3 +1,6 @@
 Bundle-Name: Liferay Gradle Templates
 Bundle-SymbolicName: com.liferay.gradle.templates
 Bundle-Version: 1.0.19
+Export-Package: com.liferay.gradle.templates
+Main-Class: com.liferay.gradle.templates.GradleTemplates
+-includeresource: @jcommander-*.jar

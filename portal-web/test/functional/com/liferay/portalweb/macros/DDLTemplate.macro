@@ -109,6 +109,18 @@
 		<execute function="Type#clickAtSendKeys" locator1="TextInput#NAME" value1="${ddlFormTemplateName}" />
 	</command>
 
+	<command name="addFormTemplateViaBackButton">
+		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
+
+		<execute function="Click" locator1="Icon#ANGLE_LEFT_BACK" />
+
+		<execute function="Click" locator1="Button#PLUS" />
+
+		<execute function="AssertClick" locator1="MenuItem#ADD_FORM_TEMPLATE" value1="Add Form Template" />
+
+		<execute function="Type#clickAtSendKeys" locator1="TextInput#NAME" value1="${ddlFormTemplateName}" />
+	</command>
+
 	<command name="addFormTemplateViaDDLDisplayPG">
 		<execute function="Click" locator1="DDL#PORTLET_ACTIONS_ADD_FORM_TEMPLATE" />
 

@@ -2562,13 +2562,9 @@
 			<var name="fieldName" value="TextBox" />
 		</execute>
 
-		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
-
-		<execute function="Click" locator1="Icon#ANGLE_LEFT_BACK" />
-
-		<execute function="Click" locator1="Button#PLUS" />
-
-		<execute function="AssertClick" locator1="MenuItem#ADD_FORM_TEMPLATE" value1="Add Form Template" />
+		<execute macro="DDLTemplate#addFormTemplateViaBackButton">
+			<var name="ddlFormTemplateName" value="Data Definition Form Template Name" />
+		</execute>
 
 		<execute macro="DynamicDataMapping#viewCannotAddField">
 			<var name="field" value="Text Box" />

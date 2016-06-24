@@ -66,7 +66,6 @@
 	<command name="addNewDefinitionViaWorkflowCP">
 		<execute function="Click" locator1="Button#PLUS" />
 
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 		<execute function="Type" locator1="TextInput#TITLE" value1="${workflowDefinitionTitle}" />
 	</command>
 
@@ -427,7 +426,6 @@
 
 		<execute function="Click" locator1="WorkflowDefinition#DEFINITION_TABLE_SPECIFIC_DEFINITION_ELLIPSIS" />
 		<execute function="AssertClick" locator1="WorkflowDefinition#DEFINITION_MENULIST_EDIT" value1="Edit" />
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 	</command>
 
 	<command name="eraseDefinitionViaSourceXML">

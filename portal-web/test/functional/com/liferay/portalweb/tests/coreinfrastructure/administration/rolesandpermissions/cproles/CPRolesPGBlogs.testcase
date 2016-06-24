@@ -154,6 +154,7 @@
 		</execute>
 
 		<execute macro="PermissionsInline#gotoBlogsCP">
+			<var name="entriesPermissions" value="Entries Permissions" />
 			<var name="pageName" value="Blogs Page" />
 			<var name="siteName" value="Organization Name" />
 			<var name="siteURL" value="true" />
@@ -185,6 +186,7 @@
 		</execute>
 
 		<execute macro="PermissionsInline#gotoBlogsCP">
+			<var name="entriesPermissions" value="Entries Permissions" />
 			<var name="pageName" value="Blogs Page" />
 			<var name="siteName" value="Organization Name" />
 			<var name="siteURL" value="true" />

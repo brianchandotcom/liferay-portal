@@ -17,6 +17,7 @@ package com.liferay.journal.service.impl;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetLink;
 import com.liferay.asset.kernel.model.AssetLinkConstants;
+import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
 import com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException;
@@ -970,17 +971,6 @@ public class JournalArticleLocalServiceImpl
 			}
 		}
 
-		// Images
-
-		String articleId = article.getArticleId();
-
-		if (article.isInTrash()) {
-			articleId = TrashUtil.getOriginalTitle(article.getArticleId());
-		}
-
-		journalArticleImageLocalService.deleteImages(
-			article.getGroupId(), articleId, article.getVersion());
-
 		// Dynamic data mapping
 
 		if (article.getClassNameId() !=
@@ -1035,6 +1025,14 @@ public class JournalArticleLocalServiceImpl
 
 			journalContentSearchLocalService.deleteArticleContentSearches(
 				article.getGroupId(), article.getArticleId());
+
+			// Images
+
+			long folderId = article.getImagesFolderId();
+
+			if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+				PortletFileRepositoryUtil.deletePortletFolder(folderId);
+			}
 
 			// Ratings
 

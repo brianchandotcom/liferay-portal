@@ -47,6 +47,8 @@
 	</tear-down>
 
 	<command name="AddBlankCP" priority="5">
+		<property name="content.targeting.release" value="true" />
+
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>
@@ -100,6 +102,8 @@
 	</command>
 
 	<command name="AddCampaignContentCP" priority="5">
+		<property name="content.targeting.release" value="true" />
+
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>
@@ -198,6 +202,8 @@
 	</command>
 
 	<command name="AddCampaignFormCP" priority="5">
+		<property name="content.targeting.release" value="true" />
+
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>
@@ -282,6 +288,8 @@
 	</command>
 
 	<command name="AddCampaignLinkCP" priority="5">
+		<property name="content.targeting.release" value="true" />
+
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>
@@ -380,6 +388,8 @@
 	</command>
 
 	<command name="AddCampaignPageCP" priority="5">
+		<property name="content.targeting.release" value="true" />
+
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>
@@ -463,6 +473,8 @@
 	</command>
 
 	<command name="AddCampaignYouTubeCP" priority="5">
+		<property name="content.targeting.release" value="true" />
+
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>
@@ -561,6 +573,8 @@
 	</command>
 
 	<command name="DeleteCampaignCP" priority="5">
+		<property name="content.targeting.release" value="true" />
+
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>
@@ -611,6 +625,8 @@
 	</command>
 
 	<command name="EditCampaignCP" priority="5">
+		<property name="content.targeting.release" value="true" />
+
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>
@@ -768,6 +784,8 @@
 	</command>
 
 	<command name="ViewInactiveCampaignCP" priority="3">
+		<property name="content.targeting.release" value="true" />
+
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>

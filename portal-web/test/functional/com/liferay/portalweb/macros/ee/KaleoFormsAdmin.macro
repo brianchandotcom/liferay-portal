@@ -565,6 +565,18 @@
 		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No processes were found." />
 	</command>
 
+	<command name="viewFormEdit">
+		<var name="key_rowEntry" value="${kfFormNameEdit}" />
+
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+
+		<execute function="AssertClick" locator1="KaleoFormsAdminEditProcessForm#FORM_MENULIST_EDIT" value1="Edit Form" />
+
+		<execute function="SelectFrame" locator1="BasePortlet#IFRAME" />
+
+		<execute function="AssertTextEquals" locator1="DDMEditStructure#NAME_FIELD" value1="${kfFormNameEdit}" />
+	</command>
+
 	<command name="viewFormsNotPresent">
 		<var name="key_workflowTask" value="${workflowTask}" />
 

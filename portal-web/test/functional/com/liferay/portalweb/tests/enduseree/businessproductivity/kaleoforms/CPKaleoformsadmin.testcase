@@ -1398,19 +1398,9 @@
 			<var name="kfFormName" value="Created Task Form Edit" />
 		</execute>
 
-		<var name="key_rowEntry" value="${workflowTask}" />
-
-		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#ASSIGN_FORM" value1="Assign Form" />
-
-		<var name="key_kfFormName" value="Created Task Form Edit" />
-		<var name="kfFormName" value="Created Task Form Edit" />
-
-		<execute function="AssertClick" locator1="KaleoFormsAdminEditProcessForm#FORM_TABLE_NAME" value1="${kfFormName}" />
-		<execute function="AssertClick" locator1="KaleoFormsAdminEditProcessForm#FORM_TABLE_ACTIONS" value1="Actions" />
-		<execute function="AssertClick" locator1="KaleoFormsAdminEditProcessForm#FORM_MENULIST_EDIT" value1="Edit" />
-		<execute function="SelectFrame" locator1="DDMEditStructure#IFRAME" />
+		<execute macro="KaleoFormsAdmin#viewFormEdit">
+			<var name="kfFormNameEdit" value="Created Task Form Edit" />
+		</execute>
 
 		<execute macro="DynamicDataMapping#viewField">
 			<var name="fieldFieldLabel" value="Text" />

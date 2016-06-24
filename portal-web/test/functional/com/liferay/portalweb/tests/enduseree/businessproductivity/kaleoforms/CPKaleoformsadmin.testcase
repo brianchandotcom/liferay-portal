@@ -1396,8 +1396,6 @@
 
 		<execute macro="KaleoFormsAdmin#viewProcessForms">
 			<var name="kfFormName" value="Created Task Form Edit" />
-			<var name="kfProcessName" value="${kfProcessName}" />
-			<var name="workflowTask" value="create" />
 		</execute>
 
 		<var name="key_rowEntry" value="${workflowTask}" />
@@ -1689,8 +1687,6 @@
 
 		<execute macro="KaleoFormsAdmin#viewProcessForms">
 			<var name="kfFormName" value="Created Task Form" />
-			<var name="kfProcessName" value="${kfProcessName}" />
-			<var name="workflowTask" value="create" />
 		</execute>
 	</command>
 
@@ -1797,8 +1793,6 @@
 
 		<execute macro="KaleoFormsAdmin#viewProcessForms">
 			<var name="kfFormName" value="Edited Process Task Form" />
-			<var name="kfProcessName" value="${kfProcessName}" />
-			<var name="workflowTask" value="create" />
 		</execute>
 	</command>
 
@@ -2177,8 +2171,6 @@
 
 		<execute macro="KaleoFormsAdmin#viewProcessForms">
 			<var name="kfFormName" value="Created Task Form" />
-			<var name="kfProcessName" value="${kfProcessName}" />
-			<var name="workflowTask" value="TestStartNode" />
 		</execute>
 	</command>
 

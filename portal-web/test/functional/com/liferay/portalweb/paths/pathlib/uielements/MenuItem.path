@@ -180,7 +180,7 @@
 </tr>
 <tr>
 	<td>ASSIGNEES</td>
-	<td>//a[@role='menuitem' and contains(.,'Assignees')]</td>
+	<td>//a[@role='menuitem' and contains(.,'Users')]</td>
 	<td></td>
 </tr>
 <tr>

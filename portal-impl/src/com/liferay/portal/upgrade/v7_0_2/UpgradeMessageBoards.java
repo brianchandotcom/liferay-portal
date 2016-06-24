@@ -14,8 +14,12 @@
 
 package com.liferay.portal.upgrade.v7_0_2;
 
+import com.liferay.message.boards.kernel.model.MBDiscussion;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
+import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.LoggingTimer;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import java.sql.PreparedStatement;
@@ -26,8 +30,44 @@ import java.sql.ResultSet;
  */
 public class UpgradeMessageBoards extends UpgradeProcess {
 
+	protected void cleanMBDiscussion() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			long classNameId = PortalUtil.getClassNameId(
+				MBDiscussion.class.getName());
+
+			runSQL(
+				"delete from AssetEntry where classPK in (" +
+					"select messageId from MBMessage where threadId in (" +
+						"select threadId from MBThread where categoryId = -1 " +
+							"and messagecount = 1 )) and classNameId = " +
+								classNameId);
+
+			runSQL(
+				"delete from MBMessage where threadId in (" +
+					"select threadId from MBThread where categoryId = -1 and " +
+						"messagecount = 1)");
+
+			runSQL(
+				"delete from MBDiscussion where threadId in (" +
+					"select threadId from MBThread where categoryId = -1 and " +
+						"messagecount = 1)");
+
+			runSQL(
+				"delete from MBThread where categoryId = -1 and " +
+					"messagecount = 1");
+		}
+		catch (Exception e) {
+			throw new UpgradeException(e);
+		}
+	}
+
 	@Override
 	protected void doUpgrade() throws Exception {
+		cleanMBDiscussion();
+		fillMBDiscussionGroupId();
+	}
+
+	protected void fillMBDiscussionGroupId() throws Exception {
 		StringBundler sb = new StringBundler();
 
 		sb.append("select MBThread.groupId, MBDiscussion.discussionId from ");

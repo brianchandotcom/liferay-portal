@@ -187,6 +187,16 @@ public class HtmlImpl implements Html {
 
 				sb.append(hexString);
 				sb.append(postfix);
+
+				if ((mode == ESCAPE_MODE_CSS) && (i < (text.length() - 1))) {
+					char nextChar = text.charAt(i + 1);
+
+					if ((nextChar >= CharPool.NUMBER_0) &&
+						(nextChar <= CharPool.NUMBER_9)) {
+
+						sb.append(StringPool.SPACE);
+					}
+				}
 			}
 		}
 

@@ -13,28 +13,29 @@ AUI.add(
 			{
 				ATTRS: {
 					boundingBox: {
-						value: ''
+						validator: Lang.isString
 					},
 					entries: {
-						value: {}
+						validator: Lang.isObject
 					},
 					entryIds: {
-						value: ''
+						validator: Lang.isString
 					},
 					eventName: {
-						value: ''
+						validator: Lang.isString
 					},
 					namespace: {
-						value: ''
+						validator: Lang.isString
 					},
 					singleSelect: {
+						validator: Lang.isBoolean,
 						value: false
 					},
 					url: {
-						value: ''
+						validator: Lang.isString
 					},
 					vocabularyRootNode: {
-						value: {}
+						validator: Lang.isObject
 					}
 				},
 

@@ -25,4 +25,7 @@ public class DDLFormPortletKeys {
 	public static final String DYNAMIC_DATA_LISTS_FORM_ADMIN =
 		"com_liferay_dynamic_data_lists_form_web_portlet_DDLFormAdminPortlet";
 
+	public static final String DYNAMIC_DATA_LISTS_FORM_BROWSER =
+		"com_liferay_dynamic_data_lists_form_web_portlet_DDLFormBrowserPortlet";
+
 }

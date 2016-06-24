@@ -352,7 +352,7 @@
 
 		<execute macro="Bookmark#addPG">
 			<var name="bookmarkName" value="Test Bookmark2 Name" />
-			<var name="bookmarkURL" value="http://www.google.com" />
+			<var name="bookmarkURL" value="https://www.google.com" />
 			<var name="bookmarkViewableBy" value="Owner" />
 		</execute>
 
@@ -436,7 +436,7 @@
 
 		<execute macro="Bookmark#viewNoPG">
 			<var name="bookmarkName" value="Test Bookmark2 Name" />
-			<var name="bookmarkURL" value="http://www.google.com" />
+			<var name="bookmarkURL" value="https://www.google.com" />
 		</execute>
 
 		<execute macro="User#logoutPG" />

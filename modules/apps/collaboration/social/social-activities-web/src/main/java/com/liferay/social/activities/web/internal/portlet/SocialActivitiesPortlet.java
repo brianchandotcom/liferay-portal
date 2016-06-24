@@ -16,6 +16,7 @@ package com.liferay.social.activities.web.internal.portlet;
 
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.social.activities.web.internal.constants.SocialActivitiesPortletKeys;
 
 import javax.portlet.Portlet;
 
@@ -40,6 +41,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.display-name=Activities",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/",
+		"javax.portlet.name=" + SocialActivitiesPortletKeys.SOCIAL_ACTIVITIES,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=guest,power-user,user"
 	},

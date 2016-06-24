@@ -16,6 +16,7 @@ package com.liferay.item.selector.web.internal.portlet;
 
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorRendering;
+import com.liferay.item.selector.constants.ItemSelectorPortletKeys;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -49,6 +50,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
+		"javax.portlet.name=" + ItemSelectorPortletKeys.ITEM_SELECTOR,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=guest,power-user,user",
 		"javax.portlet.supports.mime-type=text/html"

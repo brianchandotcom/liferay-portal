@@ -1367,9 +1367,7 @@
 			<var name="field" value="Separator" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#saveForm" />
-
-		<execute macro="KaleoFormsAdmin#chooseForm">
+		<execute macro="KaleoFormsAdmin#saveFormEdit">
 			<var name="kfFormName" value="Created Task Form Edit" />
 		</execute>
 

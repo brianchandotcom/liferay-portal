@@ -499,10 +499,26 @@
 
 	<command name="saveForm">
 		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
+
+		<execute macro="Button#clickSave" />
+
+		<execute macro="Alert#viewSuccessMessage" />
+	</command>
+
+	<command name="saveFormEdit">
+		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
 		
 		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewSuccessMessage" />
+
+		<execute function="SelectFrame" value1="relative=top" />
+
+		<execute function="Click" locator1="Icon#CLOSE" />
+
+		<var name="key_kfFormName" value="${kfFormName}" />
+
+		<execute function="AssertTextEquals" locator1="KaleoFormsAdminEditProcessForm#FORM_TABLE_NAME" value1="${kfFormName}" />
 	</command>
 
 	<command name="saveProcess">

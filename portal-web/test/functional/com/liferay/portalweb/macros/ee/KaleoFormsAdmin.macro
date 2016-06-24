@@ -28,8 +28,6 @@
 				<var name="field" value="${field}" />
 			</execute>
 		</for>
-
-		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="addProcess">
@@ -268,8 +266,8 @@
 
 		<execute function="AssertClick" locator1="KaleoFormsAdminEditProcessForm#FORM_MENULIST_EDIT" value1="Edit Form" />
 
-		<execute function="SelectFrame" locator1="DDMEditStructure#IFRAME" />
-		
+		<execute function="SelectFrame" locator1="BasePortlet#IFRAME" />
+
 		<execute function="Type" locator1="DDMEditStructure#NAME_FIELD" value1="${kfFormNameEdit}" />
 
 		<for list="Fieldset,Paragraph,Separator" param="field">
@@ -277,8 +275,6 @@
 				<var name="field" value="${field}" />
 			</execute>
 		</for>
-
-		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="editProcess">
@@ -502,6 +498,8 @@
 	</command>
 
 	<command name="saveForm">
+		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
+		
 		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewSuccessMessage" />

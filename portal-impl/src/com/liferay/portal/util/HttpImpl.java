@@ -1082,15 +1082,35 @@ public class HttpImpl implements Http {
 			return url;
 		}
 
-		if (url.startsWith(Http.HTTP_WITH_SLASH)) {
-			return url.substring(Http.HTTP_WITH_SLASH.length());
-		}
-		else if (url.startsWith(Http.HTTPS_WITH_SLASH)) {
-			return url.substring(Http.HTTPS_WITH_SLASH.length());
-		}
-		else {
+		Matcher matcher = _relativeUrlPattern.matcher(url);
+
+		if (matcher.lookingAt()) {
 			return url;
 		}
+
+		boolean modifiedURL;
+
+		do {
+			modifiedURL = false;
+
+			matcher = _absoluteUrlPattern.matcher(url);
+
+			if (matcher.lookingAt()) {
+				url = url.substring(matcher.end());
+
+				modifiedURL = true;
+			}
+
+			matcher = _protocolRelativeUrlPattern.matcher(url);
+
+			if (matcher.lookingAt()) {
+				url = url.substring(matcher.end());
+
+				modifiedURL = true;
+			}
+		} while (modifiedURL);
+
+		return url;
 	}
 
 	@Override
@@ -1802,10 +1822,16 @@ public class HttpImpl implements Http {
 
 	private static final ThreadLocal<Cookie[]> _cookies = new ThreadLocal<>();
 
+	private final Pattern _absoluteUrlPattern = Pattern.compile(
+		"^[a-zA-Z0-9]+://");
 	private final HttpClient _httpClient = new HttpClient();
 	private final Pattern _nonProxyHostsPattern;
+	private final Pattern _protocolRelativeUrlPattern = Pattern.compile(
+		"^[\\s\\\\/]+");
 	private final Credentials _proxyCredentials;
 	private final HttpClient _proxyHttpClient = new HttpClient();
+	private final Pattern _relativeUrlPattern = Pattern.compile(
+		"^\\s*/[a-zA-Z0-9]+");
 
 	private static class FastProtocolSocketFactory
 		extends DefaultProtocolSocketFactory {

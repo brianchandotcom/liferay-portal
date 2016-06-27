@@ -5216,6 +5216,34 @@
 		</execute>
 	</command>
 
+	<command name="ViewEventDateAndTimeInResourcesAvailability" priority="">
+		<description message="This is a use case for LPS-62410." />
+
+		<execute macro="CalendarNavigator#gotoAddEvent" />
+
+		<execute macro="CalendarEvent#gotoConfigureInvitations" />
+
+		<execute macro="CalendarEvent#resourcesAvailability" />
+
+		<execute macro="CalendarEvent#compareEventDateAndTimeToSchedulerDateAndTime" />
+
+		<execute macro="CalendarEvent#setTimes" >
+			<var name="endDateTime" value="11:00 AM" />
+			<var name="startDateTime" value="08:00 AM" />
+		</execute>
+
+		<execute macro="CalendarEvent#compareEventDateAndTimeToSchedulerDateAndTime" />
+
+		<execute macro="CalendarEvent#setTomorrowAsEndDate" />
+
+		<execute macro="CalendarEvent#setTimes" >
+			<var name="endDateTime" value="07:00 AM" />
+			<var name="startDateTime" value="08:00 AM" />
+		</execute>
+
+		<execute macro="CalendarEvent#compareEventDateAndTimeToSchedulerDateAndTime" />
+	</command>
+
 	<command name="ViewEventDetailsAllDayWithModifiedUserTimeZone" priority="4">
 		<description message="This is a use case for LPS-51783." />
 
@@ -5257,34 +5285,6 @@
 			<var name="endDateTime" value="11:59 PM" />
 			<var name="startDateTime" value="12:00 AM" />
 		</execute>
-	</command>
-
-	<command name="ViewEventDateAndTimeInResourcesAvailability" priority="">
-		<description message="This is a use case for LPS-62410." />
-
-		<execute macro="CalendarNavigator#gotoAddEvent" />
-
-		<execute macro="CalendarEvent#gotoConfigureInvitations" />
-
-		<execute macro="CalendarEvent#resourcesAvailability" />
-
-		<execute macro="CalendarEvent#compareEventDateAndTimeToSchedulerDateAndTime" />
-
-		<execute macro="CalendarEvent#setTimes" >
-			<var name="endDateTime" value="11:00 AM" />
-			<var name="startDateTime" value="08:00 AM" />
-		</execute>
-
-		<execute macro="CalendarEvent#compareEventDateAndTimeToSchedulerDateAndTime" />
-
-		<execute macro="CalendarEvent#setTomorrowAsEndDate" />
-
-		<execute macro="CalendarEvent#setTimes" >
-			<var name="endDateTime" value="07:00 AM" />
-			<var name="startDateTime" value="08:00 AM" />
-		</execute>
-
-		<execute macro="CalendarEvent#compareEventDateAndTimeToSchedulerDateAndTime" />
 	</command>
 
 	<command name="ViewInactiveResourceNotPresent" priority="2">

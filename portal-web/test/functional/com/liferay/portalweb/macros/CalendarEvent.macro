@@ -1196,15 +1196,15 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="CalendarAgendaView#SCHEDULER_EVENT_SPECIFIC" value1="${eventTitleEdit}" />
 	</command>
 
-	<command name="gotoConfigureRelatedAssets">
-		<execute macro="CalendarEvent#_expandPanel">
-			<var name="panelName" value="Related Assets" />
-		</execute>
-	</command>
-
 	<command name="gotoConfigureInvitations">
 		<execute macro="CalendarEvent#_expandPanel">
 			<var name="panelName" value="Invitations" />
+		</execute>
+	</command>
+
+	<command name="gotoConfigureRelatedAssets">
+		<execute macro="CalendarEvent#_expandPanel">
+			<var name="panelName" value="Related Assets" />
 		</execute>
 	</command>
 

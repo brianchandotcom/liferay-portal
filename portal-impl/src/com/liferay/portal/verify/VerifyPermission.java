@@ -381,21 +381,22 @@ public class VerifyPermission extends VerifyProcess {
 		throws Exception {
 
 		try {
-			runSQL(
-				"create table ResourcePermissionPlid (resourcePermissionId " +
-					"LONG null, plid LONG null)");
+			runSQL ("alter table ResourcePermission add plid NUMBER null");
+
+			runSQL("create index tmp_res_plid on ResourcePermission(plid)");
 		}
 		catch (SQLException sqle) {
-			runSQL("delete from ResourcePermissionPlid");
+			runSQL("update ResourcePermission set plid = null");
 		}
 
 		StringBundler sb = new StringBundler(6);
 
-		sb.append("insert into ResourcePermissionPlid(select ");
-		sb.append("ResourcePermission.resourcePermissionId, ");
-		sb.append("SUBSTR(ResourcePermission.primKey, 0, ");
-		sb.append("INSTR(ResourcePermission.primKey, '_LAYOUT_') -1) as plid ");
-		sb.append("from ResourcePermission where ResourcePermission.primKey ");
+		sb.append("update ResourcePermission r1 set plid = ");
+		sb.append("(select SUBSTR(ResourcePermission.primKey, 0,");
+		sb.append("INSTR(ResourcePermission.primKey, '_LAYOUT_') -1) from ");
+		sb.append("ResourcePermission where r1.resourcePermissionId = ");
+		sb.append("ResourcePermission.resourcePermissionId");
+		sb.append(" and ResourcePermission.primKey ");
 		sb.append("like '%_LAYOUT_%')");
 
 		runSQL(sb.toString());
@@ -412,16 +413,16 @@ public class VerifyPermission extends VerifyProcess {
 
 			sb = new StringBundler(20);
 
-			sb.append("update ResourcePermission set roleId = ");
+			sb.append("update ResourcePermission r1 set roleId = ");
 			sb.append(userRole.getRoleId());
-			sb.append(" where resourcePermissionId in (select ");
+			sb.append(" where exists (select ");
 			sb.append("ResourcePermission.resourcePermissionId from ");
-			sb.append("ResourcePermission inner join ResourcePermissionPlid ");
-			sb.append("on ResourcePermission.resourcePermissionId = ");
-			sb.append("ResourcePermissionPlid.resourcePermissionId inner ");
-			sb.append("join Layout on ResourcePermissionPlid.plid = ");
+			sb.append("ResourcePermission inner join ");
+			sb.append("Layout on ResourcePermission.plid = ");
 			sb.append("Layout.plid inner join Group_ on Layout.groupId = ");
-			sb.append("Group_.groupId where ResourcePermission.scope = ");
+			sb.append("Group_.groupId where ");
+			sb.append("r1.resourcePermissionId = ResourcePermission.");
+			sb.append("resourcePermissionId and ResourcePermission.scope = ");
 			sb.append(ResourceConstants.SCOPE_INDIVIDUAL);
 			sb.append(" and ResourcePermission.roleId = ");
 			sb.append(powerUserRole.getRoleId());
@@ -436,7 +437,7 @@ public class VerifyPermission extends VerifyProcess {
 			runSQL(sb.toString());
 		}
 
-		runSQL("drop table ResourcePermissionPlid");
+		runSQL("alter table ResourcePermission drop column plid;");
 	}
 
 	protected boolean isPrivateLayout(String name, String primKey)

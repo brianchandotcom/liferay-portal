@@ -1188,6 +1188,12 @@
 		</execute>
 	</command>
 
+	<command name="gotoConfigureInvitations">
+		<execute macro="CalendarEvent#_expandPanel">
+			<var name="panelName" value="Invitations" />
+		</execute>
+	</command>
+
 	<command name="gotoRepeatConfiguration">
 		<execute function="Click" locator1="CalendarEditEvent#REPEAT_CHECKBOX" />
 	</command>

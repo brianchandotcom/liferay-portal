@@ -76,6 +76,27 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--DATE_PICKER-->
+<tr>
+	<td>DATE_PICKER_NEXT_MONTH_BUTTON</td>
+	<td>//div[contains(@class,'datepicker-popover') and contains(@style,'display: block')]//div[contains(@class,'calendar-header')]/a[contains(@class,'calendarnav-nextmonth')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DAY_SELECTED_IN_DATE_PICKER</td>
+	<td>//div[contains(@class,'datepicker-popover') and contains(@style,'display: block')]//table[contains(@class,'calendar-grid')]//tr//td[contains(@class,'calendar-day-selected')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DAY_SPECIFIC_IN_DATE_PICKER</td>
+	<td>//div[contains(@class,'datepicker-popover') and contains(@style,'display: block')]//table[contains(@class,'calendar-grid')]//tr//td[contains(@class,'calendar-day') and not(contains(@class,'calendar-column-hidden')) and contains(.,'${key_daySpecific}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <tr>
 	<td>ALL_DAY_CHECKBOX</td>
 	<td>//input[contains(@id,'CalendarPortlet_allDay')]</td>

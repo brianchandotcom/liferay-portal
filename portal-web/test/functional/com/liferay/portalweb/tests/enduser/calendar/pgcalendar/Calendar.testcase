@@ -5216,7 +5216,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewEventDateAndTimeInResourcesAvailability" priority="">
+	<command name="ViewEventDateAndTimeInResourcesAvailability" priority="4">
 		<description message="This is a use case for LPS-62410." />
 
 		<execute macro="CalendarNavigator#gotoAddEvent" />

@@ -7,7 +7,7 @@
 		<if>
 			<condition function="IsElementNotPresent#isNotVisible" locator1="DDMEditTemplate#DETAILS_LANGUAGE_SELECT" />
 			<then>
-				<execute function="AssertClick" locator1="DDMEditTemplate#DETAILS" value1="Details" />
+				<execute function="Click" locator1="DDMEditTemplate#DETAILS_TOGGLE" />
 			</then>
 		</if>
 
@@ -234,7 +234,7 @@
 		<if>
 			<condition function="IsElementNotPresent#isNotVisible" locator1="DDMEditStructure#DETAILS_MODE_SELECT" />
 			<then>
-				<execute function="AssertClick" locator1="DDMEditTemplate#DETAILS" value1="Details" />
+				<execute function="Click" locator1="DDMEditTemplate#DETAILS_TOGGLE" />
 			</then>
 		</if>
 

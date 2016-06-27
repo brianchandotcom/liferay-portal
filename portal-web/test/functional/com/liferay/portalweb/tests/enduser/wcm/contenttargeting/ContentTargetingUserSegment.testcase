@@ -357,6 +357,81 @@
 		</execute>
 	</command>
 
+	<command name="AddUserSegmentBehaviorPreviouslyVisitedSiteContainsCP" priority="5">
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesConfiguration">
+			<var name="portlet" value="Audience Targeting" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#addCP">
+			<var name="userSegmentDescription" value="User Segment Description" />
+			<var name="userSegmentName" value="User Segment Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#addBehaviorPreviouslyVisitedSiteRuleCP">
+			<var name="condition" value="Contains" />
+			<var name="conditionValue" value="able.com" />
+		</execute>
+
+		<execute macro="PortletEntry#save" />
+
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesConfiguration">
+			<var name="portlet" value="Audience Targeting" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#viewRulesCP">
+			<var name="condition" value="Contains" />
+			<var name="conditionValue" value="able.com" />
+			<var name="userSegmentName" value="User Segment Name" />
+			<var name="viewUserSegmentRuleList" value="Previously Visited Site" />
+		</execute>
+	</command>
+
+	<command name="AddUserSegmentBehaviorPreviouslyVisitedSiteStartsWithCP" priority="5">
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesConfiguration">
+			<var name="portlet" value="Audience Targeting" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#addCP">
+			<var name="userSegmentDescription" value="User Segment Description" />
+			<var name="userSegmentName" value="User Segment Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#addBehaviorPreviouslyVisitedSiteRuleCP">
+			<var name="condition" value="Starts with" />
+			<var name="conditionValue" value="http://www.able.com" />
+		</execute>
+
+		<execute macro="PortletEntry#save" />
+
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesConfiguration">
+			<var name="portlet" value="Audience Targeting" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#viewRulesCP">
+			<var name="condition" value="Starts with" />
+			<var name="conditionValue" value="http://www.able.com" />
+			<var name="userSegmentName" value="User Segment Name" />
+			<var name="viewUserSegmentRuleList" value="Previously Visited Site" />
+		</execute>
+	</command>
+
+
 	<command name="AddUserSegmentBehaviorScorePointsCP" priority="5">
 		<property name="content.targeting.release" value="true" />
 

@@ -109,7 +109,7 @@
 				<execute function="AssertTextEquals" locator1="Calendar#MY_CALENDARS_CALENDAR_ADDITIONAL" value1="${user} - ${calendarName}" />
 			</then>
 			<elseif>
-				<equals arg1="${calendarType}" arg2="Site Calendars" />
+				<equals arg1="${calendarType}" arg2="Current Site Calendars" />
 				<then>
 					<var name="key_site" value="${site}" />
 

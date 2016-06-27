@@ -101,7 +101,7 @@ import com.liferay.wiki.model.WikiPageDisplay;
 import com.liferay.wiki.model.WikiPageResource;
 import com.liferay.wiki.model.impl.WikiPageDisplayImpl;
 import com.liferay.wiki.model.impl.WikiPageImpl;
-import com.liferay.wiki.processor.WikiPageRenameProcessor;
+import com.liferay.wiki.processor.WikiPageRenameContentProcessor;
 import com.liferay.wiki.service.base.WikiPageLocalServiceBaseImpl;
 import com.liferay.wiki.social.WikiActivityKeys;
 import com.liferay.wiki.util.WikiCacheHelper;
@@ -477,7 +477,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		BundleContext _bundleContext = bundle.getBundleContext();
 
 		_serviceTrackerMap = ServiceTrackerMapFactory.singleValueMap(
-			_bundleContext, WikiPageRenameProcessor.class, "wiki.format.name");
+			_bundleContext, WikiPageRenameContentProcessor.class,
+			"wiki.format.name");
 
 		_serviceTrackerMap.open();
 	}
@@ -1814,26 +1815,27 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		serviceContext.setCommand(Constants.RENAME);
 
-		WikiPageRenameProcessor wikiPageRenameProcessor =
+		WikiPageRenameContentProcessor wikiPageRenameContentProcessor =
 			_serviceTrackerMap.getService(page.getFormat());
 
 		String content = page.getContent();
 
-		if (wikiPageRenameProcessor != null) {
+		if (wikiPageRenameContentProcessor != null) {
 			List<WikiPage> versionPages = wikiPagePersistence.findByN_T_H(
 				nodeId, title, false);
 
 			for (WikiPage curPage : versionPages) {
 				curPage.setTitle(newTitle);
 				curPage.setContent(
-					wikiPageRenameProcessor.translate(
-						curPage.getContent(), title, newTitle));
+					wikiPageRenameContentProcessor.processContent(
+						curPage.getContent(), title, newTitle,
+						curPage.getNodeId()));
 
 				wikiPagePersistence.update(curPage);
 			}
 
-			content = wikiPageRenameProcessor.translate(
-				content, title, newTitle);
+			content = wikiPageRenameContentProcessor.processContent(
+				content, title, newTitle, page.getNodeId());
 		}
 
 		updatePage(
@@ -3298,7 +3300,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	@ServiceReference(type = WikiPageTitleValidator.class)
 	protected WikiPageTitleValidator wikiPageTitleValidator;
 
-	private ServiceTrackerMap<String, WikiPageRenameProcessor>
+	private ServiceTrackerMap<String, WikiPageRenameContentProcessor>
 		_serviceTrackerMap;
 
 }

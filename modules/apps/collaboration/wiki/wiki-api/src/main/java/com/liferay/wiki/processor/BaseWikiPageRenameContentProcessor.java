@@ -23,11 +23,15 @@ import java.util.regex.Pattern;
  * @author Roberto Díaz
  * @author Daniel Sanz
  */
-public class BaseWikiPageRenameProcessor implements WikiPageRenameProcessor {
+public class BaseWikiPageRenameContentProcessor
+	implements WikiPageRenameContentProcessor {
 
 	@Override
-	public String translate(String content, String title, String newTitle) {
-		return runRegexps(content, title, newTitle);
+	public String processContent(
+		String originalContent, String originalTitle, String newTitle,
+		long nodeId) {
+
+		return runRegexps(originalContent, originalTitle, newTitle);
 	}
 
 	protected String runRegexp(

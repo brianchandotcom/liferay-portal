@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.wiki.engine.creole.processor;
+package com.liferay.wiki.engine.html.processor;
 
-import com.liferay.wiki.processor.BaseWikiPageRenameProcessor;
-import com.liferay.wiki.processor.WikiPageRenameProcessor;
+import com.liferay.wiki.processor.BaseWikiPageRenameContentProcessor;
+import com.liferay.wiki.processor.WikiPageRenameContentProcessor;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -26,15 +26,24 @@ import org.osgi.service.component.annotations.Modified;
  * @author Daniel Sanz
  */
 @Component(
-	immediate = true, property = "wiki.format.name=creole",
-	service = WikiPageRenameProcessor.class
+	immediate = true, property = "wiki.format.name=html",
+	service = WikiPageRenameContentProcessor.class
 )
-public class WikiPageRenameCreoleProcessor extends BaseWikiPageRenameProcessor {
+public class WikiPageRenameHTMLContentProcessor
+	extends BaseWikiPageRenameContentProcessor {
 
 	@Activate
 	@Modified
 	public void activate() {
-		regexps.put("\\{\\{@old_title@/", "{{@new_title@/");
+		regexps.put(
+			"(<img [^s]*src=\"[^g]+get_page_attachment\\?[^t]+title=)" +
+				"@old_title@&",
+			"$1@new_title@&");
+
+		regexps.put(
+			"(<a [^h]*href=\"[^g]+get_page_attachment\\?[^t]+title=)" +
+				"@old_title@&",
+			"$1@new_title@&");
 	}
 
 }

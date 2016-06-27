@@ -158,8 +158,7 @@ public class DDMStructureImplTest extends BaseDDMTestCase {
 			"Campo de Texto",
 			structure.getFieldLabel("field", LocaleUtil.BRAZIL));
 		Assert.assertEquals(
-			"Text Field",
-			structure.getFieldLabel("field", LocaleUtil.US));
+			"Text Field", structure.getFieldLabel("field", LocaleUtil.US));
 	}
 
 	@Test

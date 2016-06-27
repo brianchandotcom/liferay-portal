@@ -55,8 +55,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Shuyang Zhou
  */
 @Component(
-	immediate = true,
-	service = {CacheRegistryItem.class, FinderCache.class}
+	immediate = true, service = {CacheRegistryItem.class, FinderCache.class}
 )
 public class FinderCacheImpl
 	implements PortalCacheManagerListener, CacheRegistryItem, FinderCache {

@@ -110,8 +110,7 @@ public class BasicAuthPoolingHttpClientFactory
 			new BasicCredentialsProvider();
 
 		credentialsProvider.setCredentials(
-			_authScope,
-			new UsernamePasswordCredentials(_username, _password));
+			_authScope, new UsernamePasswordCredentials(_username, _password));
 
 		httpClientBuilder.setDefaultCredentialsProvider(credentialsProvider);
 	}

@@ -338,8 +338,7 @@ public class DDMImplTest extends BaseDDMTestCase {
 
 		Field existingNameField = createField(
 			ddmStructure.getStructureId(), "Name",
-			createValuesList("Paul", "Joe"),
-			createValuesList("Paulo", "Joao"));
+			createValuesList("Paul", "Joe"), createValuesList("Paulo", "Joao"));
 
 		Field existingPhoneField = createField(
 			ddmStructure.getStructureId(), "Phone",

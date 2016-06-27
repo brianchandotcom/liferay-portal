@@ -49,17 +49,13 @@ public class Base64InputStreamTest {
 			int position = 0;
 
 			Assert.assertEquals(
-				3,
-				base64InputStream.decode(bytes, outputBuffer, position, 0));
+				3, base64InputStream.decode(bytes, outputBuffer, position, 0));
 			Assert.assertEquals(
-				2,
-				base64InputStream.decode(bytes, outputBuffer, position, 1));
+				2, base64InputStream.decode(bytes, outputBuffer, position, 1));
 			Assert.assertEquals(
-				1,
-				base64InputStream.decode(bytes, outputBuffer, position, 2));
+				1, base64InputStream.decode(bytes, outputBuffer, position, 2));
 			Assert.assertEquals(
-				-1,
-				base64InputStream.decode(bytes, outputBuffer, position, 3));
+				-1, base64InputStream.decode(bytes, outputBuffer, position, 3));
 		}
 	}
 

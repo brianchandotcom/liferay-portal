@@ -109,8 +109,7 @@ public class FieldsToDDMFormValuesConverterTest extends BaseDDMTestCase {
 
 		Field nameField = createField(
 			ddmStructure.getStructureId(), "Name",
-			createValuesList("Paul", "Joe"),
-			createValuesList("Paulo", "Joao"));
+			createValuesList("Paul", "Joe"), createValuesList("Paulo", "Joao"));
 
 		Field phoneField = createField(
 			ddmStructure.getStructureId(), "Phone",

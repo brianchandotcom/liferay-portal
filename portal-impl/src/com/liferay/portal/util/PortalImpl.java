@@ -2693,8 +2693,7 @@ public class PortalImpl implements Portal {
 		LayoutFriendlyURLComposite layoutFriendlyURLComposite =
 			friendlyURLResolver.getLayoutFriendlyURLComposite(
 				0, groupId, privateLayout, friendlyURL,
-				new HashMap<String, String[]>(),
-				new HashMap<String, Object>());
+				new HashMap<String, String[]>(), new HashMap<String, Object>());
 
 		return layoutFriendlyURLComposite.getLayout();
 	}

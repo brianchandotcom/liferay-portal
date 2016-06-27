@@ -385,9 +385,7 @@ public class OrderUtil {
 					EnumMap<Order.Path, String[]> routes = new EnumMap<>(
 						Order.Path.class);
 
-					routes.put(
-						path,
-						_appendAndSort(pathNames, curPathNames));
+					routes.put(path, _appendAndSort(pathNames, curPathNames));
 					routes.put(oppositePath, orderRoutes.get(oppositePath));
 
 					order.setRoutes(routes);

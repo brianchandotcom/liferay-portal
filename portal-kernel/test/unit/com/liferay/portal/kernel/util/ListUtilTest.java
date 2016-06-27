@@ -317,8 +317,7 @@ public class ListUtilTest {
 		removeList.add("bbb");
 
 		Assert.assertEquals(
-			Collections.emptyList(),
-			ListUtil.remove(list, removeList));
+			Collections.emptyList(), ListUtil.remove(list, removeList));
 	}
 
 	@Test

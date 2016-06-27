@@ -27,8 +27,7 @@ public class KBCommentTable {
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
-		{"content", Types.VARCHAR},
-		{"helpful", Types.BOOLEAN}
+		{"content", Types.VARCHAR}, {"helpful", Types.BOOLEAN}
 	};
 
 	public static final String TABLE_NAME = "KBComment";

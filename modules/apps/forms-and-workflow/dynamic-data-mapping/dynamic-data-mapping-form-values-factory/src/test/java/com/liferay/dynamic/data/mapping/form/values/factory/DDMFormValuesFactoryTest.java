@@ -280,8 +280,7 @@ public class DDMFormValuesFactoryTest extends PowerMockito {
 		expectedDDMFormValues.addDDMFormFieldValue(paulDDMFormFieldValue);
 
 		DDMFormFieldValue joeDDMFormFieldValue = createDDMFormFieldValue(
-			"fahu", "Name",
-			createLocalizedValue("Joe", "Joao", LocaleUtil.US));
+			"fahu", "Name", createLocalizedValue("Joe", "Joao", LocaleUtil.US));
 
 		joeDDMFormFieldValue.addNestedDDMFormFieldValue(
 			createDDMFormFieldValue(
@@ -379,8 +378,7 @@ public class DDMFormValuesFactoryTest extends PowerMockito {
 		expectedDDMFormValues.addDDMFormFieldValue(paulDDMFormFieldValue);
 
 		DDMFormFieldValue joeDDMFormFieldValue = createDDMFormFieldValue(
-			"fahu", "Name",
-			createLocalizedValue("Joe", "Joao", LocaleUtil.US));
+			"fahu", "Name", createLocalizedValue("Joe", "Joao", LocaleUtil.US));
 
 		joeDDMFormFieldValue.addNestedDDMFormFieldValue(
 			createDDMFormFieldValue(

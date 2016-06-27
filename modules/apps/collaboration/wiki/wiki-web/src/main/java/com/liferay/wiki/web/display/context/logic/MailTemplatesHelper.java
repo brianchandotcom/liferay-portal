@@ -125,8 +125,7 @@ public class MailTemplatesHelper {
 				"the-page-content-compared-with-the-previous-version-page-" +
 					"content"));
 		definitionTerms.put(
-			"[$PAGE_ID$]",
-			LanguageUtil.get(resourceBundle, "the-page-id"));
+			"[$PAGE_ID$]", LanguageUtil.get(resourceBundle, "the-page-id"));
 		definitionTerms.put(
 			"[$PAGE_SUMMARY$]",
 			LanguageUtil.get(
@@ -136,8 +135,7 @@ public class MailTemplatesHelper {
 			"[$PAGE_TITLE$]",
 			LanguageUtil.get(resourceBundle, "the-page-title"));
 		definitionTerms.put(
-			"[$PAGE_URL$]",
-			LanguageUtil.get(resourceBundle, "the-page-url"));
+			"[$PAGE_URL$]", LanguageUtil.get(resourceBundle, "the-page-url"));
 		definitionTerms.put(
 			"[$PAGE_USER_ADDRESS$]",
 			LanguageUtil.get(

@@ -17,27 +17,47 @@ package com.liferay.item.selector;
 import java.util.List;
 
 /**
- * The type of the views that are going to be shown. This object could be use as
- * a bean to pass information to the view layer by the caller.
+ * Provides an interface that indicates the type of entity that shall be
+ * selected and what information should be returned as well. The item selector
+ * will use this criterion to display only the {@link ItemSelectorView} that can
+ * select that particular entity type and return the specified
+ * {@link ItemSelectorReturnType}.
+ *
+ * Implementations of this interface can provide additional information to have
+ * a fine grained detail about which entities can be selected. This should be
+ * done ideally using primitive types in the constructor (or very simple types
+ * that can be JSON serialized) and it is mandatory to have an empty
+ * constructor.
+ *
+ * For simplicity, it is recommended that implementations of this class extend
+ * {@link BaseItemSelectorCriterion}
  *
  * @author Iván Zaera
  */
 public interface ItemSelectorCriterion {
 
 	/**
-	 * Returns a List of the ReturnTypes that the caller could handle.
+	 * Returns a List of the return types that the caller expects because he can
+	 * handle them.
 	 *
-	 * @return a List of ReturnTypes ordered by insertion.
+	 * Order is important because in case that one item selector view can return
+	 * multiple item selector return types, the first return type specified as
+	 * desired that can be returned by the view will be used.
+	 *
+	 * @return a List of return types ordered by preference.
 	 */
 	public List<ItemSelectorReturnType> getDesiredItemSelectorReturnTypes();
 
 	/**
-	 * Sets a List of desired ReturnTypes. This return types are the ones that
-	 * the item selector caller could handle. This return types are ordered by
-	 * insertion order so the preferred ones should be introduced first.
+	 * Sets a List of desired return types that the caller expects because he
+	 * can handle them.
 	 *
-	 * @param desiredItemSelectorReturnTypes the list of ReturnTypes that could
-	 *        be handled by the caller.
+	 * Order is important because in case that one item selector view can return
+	 * multiple item selector return types, the first return type specified as
+	 * desired that can be returned by the view will be used.
+	 *
+	 * @param desiredItemSelectorReturnTypes a preference ordered list of the
+	 *        return types that can be handled by the caller
 	 */
 	public void setDesiredItemSelectorReturnTypes(
 		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes);

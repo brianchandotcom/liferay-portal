@@ -17,9 +17,8 @@ package com.liferay.item.selector.criteria;
 import com.liferay.item.selector.ItemSelectorReturnType;
 
 /**
- * When used in an {@link com.liferay.item.selector.ItemSelectorView} it should
- * return, in order to be fully compatible with other cases in portal, a String
- * with the UUID of the element.
+ * This return type should return the Universally Unique Identifier (UUID) of
+ * the entity as a String.
  *
  * @author Sergio González
  */

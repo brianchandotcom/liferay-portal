@@ -28,63 +28,76 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
 /**
- * Renders the HTML that is going to be shown in the Item Selector dialog.
+ * Provides an interface that will render an item selector view for a particular
+ * item selector criterion.
+ *
+ * If one item selector view can be displayed for multiple different criteria,
+ * it will need as many implementations of this interface as criteria.
  *
  * @author Iván Zaera
  */
 public interface ItemSelectorView<T extends ItemSelectorCriterion> {
 
 	/**
-	 * The {@link ItemSelectorCriterion} of the view.
+	 * The item selector criterion associated to this item selector view.
 	 *
-	 * @return the {@link ItemSelectorCriterion} of the view
+	 * @return the item selector criterion associated to this item selector view
 	 */
 	public Class<T> getItemSelectorCriterionClass();
 
 	/**
-	 * A list of the {@link ItemSelectorReturnType} that this view could return.
+	 * A list of the item selector return types that this view can return.
 	 *
-	 * @return a list of the {@link ItemSelectorReturnType} that this view could
+	 * @return a list of the {@link ItemSelectorReturnType} that this view can
 	 *         return
 	 */
 	public List<ItemSelectorReturnType> getSupportedItemSelectorReturnTypes();
 
 	/**
-	 * The title of the tab that will be displayed in the Item Selector popup.
+	 * The localized title of the tab that will be displayed in the Item
+	 * Selector.
 	 *
-	 * @return the title if the tab
+	 * @param  locale the current locale
+	 * @return the localized title of the tab
 	 */
 	public String getTitle(Locale locale);
 
 	/**
-	 * @return <code>true</code> if the Item Selector should show the search
-	 *         field.
+	 * Returns whether the item selector view should show the search field. If
+	 * the view supports search, this method should return <code>true</code>.
+	 *
+	 * @return <code>true</code> if the item selector view should show the
+	 *         search field.
 	 */
 	public boolean isShowSearch();
 
 	/**
+	 * Returns whether the item selector view is visible or not.
+	 *
+	 * Most of the implementations of this method will return <code>true</code>.
+	 * However, there are certain cases where the view should not be displayed
+	 * because it is not ready, it needs some additional third party
+	 * configuration, etc.
+	 *
 	 * @param  themeDisplay the current page {@link ThemeDisplay}
 	 * @return <code>true</code> if the view is visible
 	 */
 	public boolean isVisible(ThemeDisplay themeDisplay);
 
 	/**
-	 * Renders the HTML code that will be seen in the Item Selector Dialgog
-	 * under a tab named with {@link #getTitle(Locale)} value. The parameters
-	 * are used to pass information to the view. Pass the eventName is mandatory
-	 * in order to fire an event with this name.
+	 * Renders the HTML code for the item selector view.
 	 *
 	 * @param servletRequest the current {@link ServletRequest}
 	 * @param servletResponse the current {@link ServletResponse}
-	 * @param itemSelectorCriterion the instance of {@link
-	 *        ItemSelectorCriterion} with all the data that the caller of the
-	 *        Item Selector passed
-	 * @param portletURL the currentURL
+	 * @param itemSelectorCriterion the item selector criterion that was used to
+	 *        render this view
+	 * @param portletURL the portlet render url to the item selector. This url
+	 *        should be used to create urls in the view.
 	 * @param itemSelectedEventName the event name that the caller will be
-	 *        listen. It's mandatory to pass it to the view in order to fire
-	 *        this event.
-	 * @param search is <code>true</code> if the view is rendered after a search
-	 *        has been performed by the user
+	 *        listening. When an element is selected the view should fire a
+	 *        javascript event with this name.
+	 * @param search is <code>true</code> when the view should render search
+	 *        results because the user performed a search.
 	 */
 	public void renderHTML(
 			ServletRequest servletRequest, ServletResponse servletResponse,

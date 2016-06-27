@@ -17,8 +17,8 @@ package com.liferay.item.selector;
 import java.util.List;
 
 /**
- * A bean that contains info needed by the Item Selector to render the selection
- * views.
+ * Provides an interface with the necessary information to render the item
+ * selector.
  *
  * @author Iván Zaera
  */
@@ -41,7 +41,8 @@ public interface ItemSelectorRendering {
 	public List<ItemSelectorViewRenderer> getItemSelectorViewRenderers();
 
 	/**
-	 * Returns the selected tab of the Item Selector dialog.
+	 * Returns the selected tab of the Item Selector dialog that will be
+	 * rendered.
 	 *
 	 * @return the selected tab.
 	 */

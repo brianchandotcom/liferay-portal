@@ -15,26 +15,22 @@
 package com.liferay.item.selector;
 
 /**
- * This is an object that helps to the Item Selector Framework to know if the
- * caller and the registered {@link com.liferay.item.selector.ItemSelectorView}
- * if they are compatibles, using the {@link
- * com.liferay.item.selector.ItemSelectorCriterion}.
+ * Provides an interface that defines what information should be returned by the
+ * item selector view when any entity is selected.
  *
- * The client sets in each {@link
- * com.liferay.item.selector.ItemSelectorCriterion}
- * a list of the desired {@link
- * com.liferay.item.selector.ItemSelectorReturnType},
- * and each {@link com.liferay.item.selector.ItemSelectorView} declares a list
- * of
- * the supported {@link com.liferay.item.selector.ItemSelectorReturnType}.
+ * This information is also used by the item selector to decide which item
+ * selector views will be displayed to the user. Only the item selector views
+ * that can return the item selector return type will be displayed.
  *
- * In order to decide if an {@link com.liferay.item.selector.ItemSelectorView}
- * is shown or not in the Item Selector popup, the desired {@link
- * com.liferay.item.selector.ItemSelectorReturnType}
- * of the {@link com.liferay.item.selector.ItemSelectorCriterion} should be one
- * of the supported {@link com.liferay.item.selector.ItemSelectorReturnType}
- * of the {@link com.liferay.item.selector.ItemSelectorView} registered under
- * this {@link com.liferay.item.selector.ItemSelectorCriterion}.
+ * The item selector return types are used in two different cases:
+ *
+ * 1. The item selector view specifies a list of the supported item selector
+ * return types for that view using the method
+ * {@link ItemSelectorView#getSupportedItemSelectorReturnTypes()}
+ *
+ * 2. When creating a new item selector criterion we need to specify a list of
+ * the desired item selector return types that the client is expecting to
+ * receive when an entity is selected.
  *
  * @author Roberto Díaz
  */

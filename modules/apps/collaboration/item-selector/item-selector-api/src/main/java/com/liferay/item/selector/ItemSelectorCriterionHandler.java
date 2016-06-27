@@ -17,29 +17,36 @@ package com.liferay.item.selector;
 import java.util.List;
 
 /**
- * Returns the {@link ItemSelectorView} registered under the {@link
- * ItemSelectorCriterion} handled by this class. Each {@link
- * ItemSelectorCriterion} should have one {@link ItemSelectorCriterionHandler}.
+ * Provides an interface that returns the {@link ItemSelectorView} for a
+ * particular {@link ItemSelectorCriterion}. Every item selector criterion
+ * should have each own associated item selector criterion handler.
+ *
+ * Implementations of this interface needs to be registered as OSGi component
+ * using the service {@link ItemSelectorCriterionHandler}.
+ *
+ * Most of the implementations of this interface will simply need to extend
+ * {@link BaseItemSelectorCriterionHandler} and only implement the method
+ * {@link #getItemSelectorCriterionClass()}, unless you need custom logic to
+ * filter the item selector views.
  *
  * @author Iván Zaera
  */
 public interface ItemSelectorCriterionHandler<T extends ItemSelectorCriterion> {
 
 	/**
-	 * Returns the handled {@link ItemSelectorCriterion}. This method is a way
-	 * to declare which {@link ItemSelectorCriterion} this class belongs to.
+	 * Returns the item selector criterion associated to this handler.
 	 *
-	 * @return the {@link ItemSelectorCriterion} class.
+	 * @return the item selector criterion associated to this handler.
 	 */
 	public Class<T> getItemSelectorCriterionClass();
 
 	/**
-	 * Returns a List of {@link ItemSelectorView} for the handled {@link
-	 * ItemSelectorCriterion}.
+	 * Returns a List of the item selector views that meets the needs of a
+	 * particular item selector criterion and therefore will be displayed.
 	 *
-	 * @param  itemSelectorCriterion the instance of the {@link
-	 *         ItemSelectorCriterion}.
-	 * @return a List of ItemSelectorViews.
+	 * @param  itemSelectorCriterion the instance of the item selector
+	 *         criterion.
+	 * @return a List of the item selector views that will be displayed.
 	 */
 	public List<ItemSelectorView<T>> getItemSelectorViews(
 		T itemSelectorCriterion);

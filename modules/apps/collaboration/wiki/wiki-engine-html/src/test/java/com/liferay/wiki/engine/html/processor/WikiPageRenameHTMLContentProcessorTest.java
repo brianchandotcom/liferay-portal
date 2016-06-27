@@ -20,7 +20,7 @@ import org.junit.Test;
 /**
  * @author Roberto Díaz
  */
-public class WikiPageRenameHTMLProcessorTest {
+public class WikiPageRenameHTMLContentProcessorTest {
 
 	@Test
 	public void testImage() {
@@ -28,8 +28,8 @@ public class WikiPageRenameHTMLProcessorTest {
 			"This is a test <img src=\"wiki/get_page_attachment?p_l_id=1234" +
 				"&title=ORIGINAL_NAME&fileName=image.jpeg\">";
 
-		content = _wikiPageRenameHTMLProcessor.translate(
-			content, "ORIGINAL_NAME", "FINAL_NAME");
+		content = _wikiPageRenameHTMLContentProcessor.processContent(
+			content, "ORIGINAL_NAME", "FINAL_NAME", 0);
 
 		Assert.assertEquals(
 			"This is a test <img src=\"wiki/get_page_attachment?p_l_id=1234" +
@@ -43,8 +43,8 @@ public class WikiPageRenameHTMLProcessorTest {
 			"This is a test <a href=\"wiki/get_page_attachment?p_l_id=1234" +
 				"&title=ORIGINAL_NAME&fileName=image.jpeg\"/>";
 
-		content = _wikiPageRenameHTMLProcessor.translate(
-			content, "ORIGINAL_NAME", "FINAL_NAME");
+		content = _wikiPageRenameHTMLContentProcessor.processContent(
+			content, "ORIGINAL_NAME", "FINAL_NAME", 0);
 
 		Assert.assertEquals(
 			"This is a test <a href=\"wiki/get_page_attachment?p_l_id=1234" +
@@ -52,13 +52,14 @@ public class WikiPageRenameHTMLProcessorTest {
 			content);
 	}
 
-	private final WikiPageRenameHTMLProcessor _wikiPageRenameHTMLProcessor =
-		new WikiPageRenameHTMLProcessorStub();
+	private final WikiPageRenameHTMLContentProcessor
+		_wikiPageRenameHTMLContentProcessor =
+			new WikiPageRenameHTMLContentProcessorStub();
 
-	private class WikiPageRenameHTMLProcessorStub
-		extends WikiPageRenameHTMLProcessor {
+	private class WikiPageRenameHTMLContentProcessorStub
+		extends WikiPageRenameHTMLContentProcessor {
 
-		public WikiPageRenameHTMLProcessorStub() {
+		public WikiPageRenameHTMLContentProcessorStub() {
 			activate();
 		}
 

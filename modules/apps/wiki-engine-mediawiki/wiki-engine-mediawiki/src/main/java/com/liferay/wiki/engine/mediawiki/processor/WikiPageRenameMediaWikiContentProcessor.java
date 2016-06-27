@@ -14,7 +14,7 @@
 
 package com.liferay.wiki.engine.mediawiki.processor;
 
-import com.liferay.wiki.processor.BaseWikiPageRenameProcessor;
+import com.liferay.wiki.processor.BaseWikiPageRenameContentProcessor;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Modified;
@@ -23,8 +23,8 @@ import org.osgi.service.component.annotations.Modified;
  * @author Roberto Díaz
  * @author Daniel Sanz
  */
-public class WikiPageRenameMediaWikiProcessor
-	extends BaseWikiPageRenameProcessor {
+public class WikiPageRenameMediaWikiContentProcessor
+	extends BaseWikiPageRenameContentProcessor {
 
 	@Activate
 	@Modified

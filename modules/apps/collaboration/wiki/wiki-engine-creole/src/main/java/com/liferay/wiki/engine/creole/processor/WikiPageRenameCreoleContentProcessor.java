@@ -14,34 +14,28 @@
 
 package com.liferay.wiki.engine.creole.processor;
 
-import org.junit.Assert;
-import org.junit.Test;
+import com.liferay.wiki.processor.BaseWikiPageRenameContentProcessor;
+import com.liferay.wiki.processor.WikiPageRenameContentProcessor;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Roberto Díaz
+ * @author Daniel Sanz
  */
-public class WikiPageRenameCreoleProcessorTest {
+@Component(
+	immediate = true, property = "wiki.format.name=creole",
+	service = WikiPageRenameContentProcessor.class
+)
+public class WikiPageRenameCreoleContentProcessor
+	extends BaseWikiPageRenameContentProcessor {
 
-	@Test
-	public void testImage() {
-		String content = "This is a test {{ORIGINAL_NAME/image.jpg}}";
-
-		content = _wikiPageRenameCreoleProcessor.translate(
-			content, "ORIGINAL_NAME", "FINAL_NAME");
-
-		Assert.assertEquals("This is a test {{FINAL_NAME/image.jpg}}", content);
-	}
-
-	private final WikiPageRenameCreoleProcessor _wikiPageRenameCreoleProcessor =
-		new WikiPageRenameCreoleProcessorStub();
-
-	private class WikiPageRenameCreoleProcessorStub
-		extends WikiPageRenameCreoleProcessor {
-
-		public WikiPageRenameCreoleProcessorStub() {
-			activate();
-		}
-
+	@Activate
+	@Modified
+	public void activate() {
+		regexps.put("\\{\\{@old_title@/", "{{@new_title@/");
 	}
 
 }

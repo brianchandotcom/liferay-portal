@@ -16,9 +16,12 @@ package com.liferay.wiki.processor;
 
 /**
  * @author Roberto Díaz
+ * @author Sergio González
  */
-public interface WikiPageRenameProcessor {
+public interface WikiPageRenameContentProcessor {
 
-	public String translate(String content, String title, String newTitle);
+	public String processContent(
+		String originalContent, String originalTitle, String newTitle,
+		long nodeId);
 
 }

@@ -49,6 +49,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DETAILS_TOGGLE</td>
+	<td>//div[@id='structureDetailsSectionPanel']//a/span</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SAVE_BUTTON</td>
 	<td>//div[contains(@class,'button-holder ')]/button[contains(.,'Save')]</td>
 	<td></td>

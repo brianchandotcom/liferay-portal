@@ -3468,7 +3468,7 @@
 			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 
-		<execute function="AssertClick" locator1="DDMEditStructure#DETAILS" value1="Details" />
+		<execute function="Click" locator1="DDMEditStructure#DETAILS_TOGGLE" />
 		<execute function="AssertClick" locator1="DDMEditStructure#DETAILS_PARENT_SELECT_BUTTON" value1="Select" />
 		<execute function="AssertTextEquals" locator1="//div[contains(@class,'modal-header')]/h3" value1="Field Set" />
 	</command>

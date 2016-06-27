@@ -143,30 +143,11 @@
 			</then>
 		</if>
 
-		<execute function="Click" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#clickSave" />
+
+		<execute macro="Alert#viewSuccessMessage" />
 
 		<execute function="AssertTextEquals" locator1="SitesEditSite#DETAILS_NAME" value1="${siteName}" />
-
-		<if>
-			<isset var="siteLimitMembership" />
-			<then>
-				<if>
-					<equals arg1="${siteLimitMembership}" arg2="Yes" />
-					<then>
-						<execute function="Check#checkToggleSwitch" locator1="SitesEditSite#PARENT_SITE_LIMIT_MEMBERSHIP_CHECKBOX" />
-					</then>
-					<elseif>
-						<equals arg1="${siteLimitMembership}" arg2="No" />
-						<then>
-							<execute function="Uncheck#uncheckToggleSwitch" locator1="SitesEditSite#PARENT_SITE_LIMIT_MEMBERSHIP_CHECKBOX" />
-						</then>
-					</elseif>
-				</if>
-
-				<execute macro="Button#clickSave" />
-				<execute macro="Alert#viewSuccessMessage" />
-			</then>
-		</if>
 	</command>
 
 	<command name="addIntranetCP">

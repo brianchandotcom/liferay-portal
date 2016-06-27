@@ -20,8 +20,8 @@ import java.util.Map;
  * @author Roberto Díaz
  * @author Daniel Sanz
  */
-public class BaseWikiTitleChangeTranslator
-	extends BaseTranslator implements WikiTitleChangeTranslator {
+public class BaseWikiPageRenameProcessor
+	extends BaseTranslator implements WikiPageRenameProcessor {
 
 	@Override
 	public String translate(String content, String title, String newTitle) {

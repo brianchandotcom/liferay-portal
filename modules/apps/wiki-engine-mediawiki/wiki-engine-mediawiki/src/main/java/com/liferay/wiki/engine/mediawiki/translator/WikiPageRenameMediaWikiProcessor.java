@@ -12,30 +12,24 @@
  * details.
  */
 
-package com.liferay.wiki.engine.creole.translator;
+package com.liferay.wiki.engine.mediawiki.translator;
 
-import com.liferay.wiki.translator.BaseWikiTitleChangeTranslator;
-import com.liferay.wiki.translator.WikiTitleChangeTranslator;
+import com.liferay.wiki.translator.BaseWikiPageRenameProcessor;
 
 import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Roberto Díaz
  * @author Daniel Sanz
  */
-@Component(
-	immediate = true, property = "wiki.format.name=creole",
-	service = WikiTitleChangeTranslator.class
-)
-public class WikiTitleChangeCreoleTranslator
-	extends BaseWikiTitleChangeTranslator {
+public class WikiPageRenameMediaWikiProcessor
+	extends BaseWikiPageRenameProcessor {
 
 	@Activate
 	@Modified
 	public void activate() {
-		regexps.put("\\{\\{@old_title@/", "{{@new_title@/");
+		regexps.put("\\[\\[Image:@old_title@/", "[[Image:@new_title@/");
 	}
 
 }

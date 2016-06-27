@@ -20,7 +20,7 @@ import org.junit.Test;
 /**
  * @author Roberto Díaz
  */
-public class WikiTitleChangeHTMLTranslatorTest {
+public class WikiPageRenameHTMLProcessorTest {
 
 	@Test
 	public void testImage() {
@@ -28,7 +28,7 @@ public class WikiTitleChangeHTMLTranslatorTest {
 			"This is a test <img src=\"wiki/get_page_attachment?p_l_id=1234" +
 				"&title=ORIGINAL_NAME&fileName=image.jpeg\">";
 
-		content = _wikiTitleChangeHTMLTranslator.translate(
+		content = _wikiPageRenameHTMLProcessor.translate(
 			content, "ORIGINAL_NAME", "FINAL_NAME");
 
 		Assert.assertEquals(
@@ -43,7 +43,7 @@ public class WikiTitleChangeHTMLTranslatorTest {
 			"This is a test <a href=\"wiki/get_page_attachment?p_l_id=1234" +
 				"&title=ORIGINAL_NAME&fileName=image.jpeg\"/>";
 
-		content = _wikiTitleChangeHTMLTranslator.translate(
+		content = _wikiPageRenameHTMLProcessor.translate(
 			content, "ORIGINAL_NAME", "FINAL_NAME");
 
 		Assert.assertEquals(
@@ -52,13 +52,13 @@ public class WikiTitleChangeHTMLTranslatorTest {
 			content);
 	}
 
-	private final WikiTitleChangeHTMLTranslator _wikiTitleChangeHTMLTranslator =
-		new WikiTitleChangeHTMLTranslatorStub();
+	private final WikiPageRenameHTMLProcessor _wikiPageRenameHTMLProcessor =
+		new WikiPageRenameHTMLProcessorStub();
 
-	private class WikiTitleChangeHTMLTranslatorStub
-		extends WikiTitleChangeHTMLTranslator {
+	private class WikiPageRenameHTMLProcessorStub
+		extends WikiPageRenameHTMLProcessor {
 
-		public WikiTitleChangeHTMLTranslatorStub() {
+		public WikiPageRenameHTMLProcessorStub() {
 			activate();
 		}
 

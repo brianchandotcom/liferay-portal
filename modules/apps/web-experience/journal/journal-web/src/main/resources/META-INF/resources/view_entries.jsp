@@ -269,7 +269,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 
 							<h5>
 								<aui:a href="<%= rowURL != null ? rowURL.toString() : null %>">
-									<%= curFolder.getName() %>
+									<%= HtmlUtil.escape(curFolder.getName()) %>
 								</aui:a>
 							</h5>
 

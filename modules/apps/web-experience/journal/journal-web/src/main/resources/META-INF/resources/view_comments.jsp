@@ -76,7 +76,7 @@ String displayStyle = journalDisplayContext.getDisplayStyle();
 						</liferay-frontend:vertical-card-header>
 
 						<liferay-frontend:vertical-card-footer>
-							<%= content %>
+							<%= HtmlUtil.extractText(content) %>
 						</liferay-frontend:vertical-card-footer>
 					</liferay-frontend:vertical-card>
 				</liferay-ui:search-container-column-text>

@@ -27,7 +27,7 @@ JournalArticleDisplay articleDisplay = (JournalArticleDisplay)request.getAttribu
 	<div class="asset-small-image">
 		<c:choose>
 			<c:when test="<%= Validator.isNotNull(viewURL) %>">
-				<a href="<%= viewURL %>">
+				<a href="<%= HtmlUtil.escapeAttribute(viewURL) %>">
 					<img alt="<%= HtmlUtil.escapeAttribute(articleDisplay.getTitle()) %>" class="asset-small-image img-thumbnail" src="<%= HtmlUtil.escapeAttribute(articleDisplay.getArticleDisplayImageURL(themeDisplay)) %>" width="150" />
 				</a>
 			</c:when>

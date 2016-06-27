@@ -61,7 +61,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(articles)) {
 				</ul>
 			</c:if>
 
-			<h4><%= (folder != null) ? folder.getName() : LanguageUtil.get(request, "home") %></h4>
+			<h4><%= (folder != null) ? HtmlUtil.escape(folder.getName()) : LanguageUtil.get(request, "home") %></h4>
 
 			<h6 class="text-default">
 				<liferay-ui:message key="folder" />
@@ -140,7 +140,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(articles)) {
 			<h5><liferay-ui:message key="id" /></h5>
 
 			<p>
-				<%= article.getArticleId() %>
+				<%= HtmlUtil.escape(article.getArticleId()) %>
 			</p>
 
 			<h5><liferay-ui:message key="version" /></h5>
@@ -165,7 +165,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(articles)) {
 				<h5><liferay-ui:message key="template" /></h5>
 
 				<p>
-					<%= ddmTemplate.getName(locale) %>
+					<%= HtmlUtil.escape(ddmTemplate.getName(locale)) %>
 				</p>
 			</c:if>
 

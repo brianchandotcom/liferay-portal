@@ -1281,10 +1281,9 @@
 	</command>
 
 	<command name="ClusteringWithContentTargeting" priority="3">
-		<property name="content.targeting.release" value="true" />
-
 		<property name="app.server.bundles.size" value="1" />
 		<property name="cluster.enabled" value="true" />
+		<property name="content.targeting.release" value="true" />
 
 		<execute macro="Navigator#openURL" />
 

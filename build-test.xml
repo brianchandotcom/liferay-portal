@@ -7013,6 +7013,38 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 							<get-database-property property.name="database.schema" />
 							<get-database-property property.name="database.username" />
 
+							<echo>${env.SYBASE}/${env.SYBASE_ASE}/bin/charset -P${database.password} -S${database.schema} -U${database.username} binary.srt utf8</echo>
+
+							<exec executable="${env.SYBASE}/${env.SYBASE_ASE}/bin/charset">
+								<arg value="-P${database.password}" />
+								<arg value="-S${database.schema}" />
+								<arg value="-U${database.username}" />
+								<arg value="binary.srt" />
+								<arg value="utf8" />
+							</exec>
+
+							<echo>${sybase.executable} -P${database.password} -S${database.schema} -U${database.username} sp_configure 'default sortorder id', 50, 'utf8'</echo>
+
+							<exec executable="${sybase.executable}">
+								<arg value="-P${database.password}" />
+								<arg value="-S${database.schema}" />
+								<arg value="-U${database.username}" />
+								<arg line="sp_configure 'default sortorder id', 50, 'utf8'" />
+							</exec>
+
+							<echo>service sybase restart</echo>
+
+							<exec executable="service">
+								<arg value="sybase" />
+								<arg value="restart" />
+							</exec>
+
+							<waitfor maxwait="60" maxwaitunit="second">
+								<socket port="5000" server="localhost" />
+							</waitfor>
+
+							<echo>${sybase.executable} -i create.sql -P ${database.password} -S ${database.schema} -U ${database.username}</echo>
+
 							<exec executable="${sybase.executable}" failonerror="true">
 								<arg value="-i" />
 								<arg value="create.sql" />

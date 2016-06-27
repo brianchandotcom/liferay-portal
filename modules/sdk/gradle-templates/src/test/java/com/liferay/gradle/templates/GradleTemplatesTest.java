@@ -14,12 +14,18 @@
 
 package com.liferay.gradle.templates;
 
+import java.io.File;
 import java.io.IOException;
 
 import java.nio.file.DirectoryStream;
+import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
+
+import java.util.Iterator;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -39,9 +45,53 @@ public class GradleTemplatesTest {
 	}
 
 	@Test
+	public void testTemplateFiles() throws IOException {
+		_testTemplateFiles(_standaloneDirPath);
+		_testTemplateFiles(_workspaceDirPath);
+	}
+
+	@Test
 	public void testTemplates() throws IOException {
 		_testTemplates(_standaloneDirPath, _workspaceDirPath, false);
 		_testTemplates(_workspaceDirPath, _standaloneDirPath, true);
+	}
+
+	private boolean _exists(Path dirPath, String glob) throws IOException {
+		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
+				dirPath, glob)) {
+
+			Iterator<Path> iterator = directoryStream.iterator();
+
+			if (iterator.hasNext()) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private void _testTemplateFiles(Path rootDirPath) throws IOException {
+		Files.walkFileTree(
+			rootDirPath,
+			new SimpleFileVisitor<Path>() {
+
+				@Override
+				public FileVisitResult preVisitDirectory(
+						Path dirPath, BasicFileAttributes basicFileAttributes)
+					throws IOException {
+
+					if (Files.exists(dirPath.resolve("language.properties"))) {
+						String glob = "Language_*.properties";
+
+						Assert.assertFalse(
+							"Forbidden " + dirPath + File.separator + glob,
+							_exists(dirPath, glob));
+					}
+
+					return FileVisitResult.CONTINUE;
+				}
+
+			});
 	}
 
 	private void _testTemplates(

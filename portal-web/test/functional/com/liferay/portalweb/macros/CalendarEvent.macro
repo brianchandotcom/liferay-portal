@@ -720,6 +720,20 @@
 		<execute function="AssertClick" locator1="Button#SUBMIT" value1="Publish" />
 	</command>
 
+	<command name="compareEventDateAndTimeToSchedulerDateAndTime">
+		<var locator="CalendarEditEvent#END_DATE" name="endDate" />
+		<var locator="CalendarEditEvent#END_DATE_TIME" name="endDateTime" />
+		<var locator="CalendarEditEvent#START_DATE" name="startDate" />
+		<var locator="CalendarEditEvent#START_DATE_TIME" name="startDateTime" />
+
+		<execute macro="CalendarScheduler#_viewRegularEventDateAndTime">
+			<var name="endDate" value="${endDate}" />
+			<var name="endDateTime" value="${endDateTime}" />
+			<var name="startDate" value="${startDate}" />
+			<var name="startDateTime" value="${startDateTime}" />
+		</execute>
+	</command>
+
 	<command name="configureReminders">
 		<execute macro="CalendarEvent#_expandPanel">
 			<var name="panelName" value="Reminders" />

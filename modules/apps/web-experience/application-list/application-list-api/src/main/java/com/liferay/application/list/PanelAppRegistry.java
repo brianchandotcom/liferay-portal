@@ -15,7 +15,6 @@
 package com.liferay.application.list;
 
 import com.liferay.application.list.util.PanelCategoryServiceReferenceMapper;
-import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapListener;
@@ -29,10 +28,14 @@ import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PredicateFilter;
 
+import java.io.Serializable;
+
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -121,8 +124,7 @@ public class PanelAppRegistry {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
 			bundleContext, PanelApp.class, "(panel.category.key=*)",
 			new PanelCategoryServiceReferenceMapper(),
-			Collections.reverseOrder(
-				new PropertyServiceReferenceComparator("panel.app.order")),
+			new PanelAppOrderComparator(),
 			new PanelAppsServiceTrackerMapListener());
 	}
 
@@ -150,6 +152,55 @@ public class PanelAppRegistry {
 		PanelAppRegistry.class);
 
 	private ServiceTrackerMap<String, List<PanelApp>> _serviceTrackerMap;
+
+	private class PanelAppOrderComparator
+		implements Comparator<ServiceReference<PanelApp>>, Serializable {
+
+		@Override
+		public int compare(
+			ServiceReference serviceReference1,
+			ServiceReference serviceReference2) {
+
+			if (serviceReference1 == null) {
+				if (serviceReference2 == null) {
+					return 0;
+				}
+				else {
+					return 1;
+				}
+			}
+			else if (serviceReference2 == null) {
+				return -1;
+			}
+
+			Object propertyValue1 = serviceReference1.getProperty(
+				"panel.app.order");
+			Object propertyValue2 = serviceReference2.getProperty(
+				"panel.app.order");
+
+			if (propertyValue1 == null) {
+				if (propertyValue2 == null) {
+					return 0;
+				}
+				else {
+					return 1;
+				}
+			}
+			else if (propertyValue2 == null) {
+				return -1;
+			}
+
+			if (!(propertyValue2 instanceof Comparable)) {
+				return -serviceReference2.compareTo(serviceReference1);
+			}
+
+			Comparable<Object> propertyValueComparable2 =
+				(Comparable<Object>)propertyValue2;
+
+			return -propertyValueComparable2.compareTo(propertyValue1);
+		}
+
+	}
 
 	private class PanelAppsServiceTrackerMapListener
 		implements ServiceTrackerMapListener<String, PanelApp, List<PanelApp>> {

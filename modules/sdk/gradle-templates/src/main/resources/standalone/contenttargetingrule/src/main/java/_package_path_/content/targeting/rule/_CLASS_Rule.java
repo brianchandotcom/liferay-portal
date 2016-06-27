@@ -107,7 +107,7 @@ public class _CLASS_Rule extends BaseJSPRule {
 
 	@Override
 	@Reference(
-		target = "(osgi.web.symbolicname=_name_)",
+		target = "(osgi.web.symbolicname=_package_)",
 		unbind = "-"
 	)
 	public void setServletContext(ServletContext servletContext) {

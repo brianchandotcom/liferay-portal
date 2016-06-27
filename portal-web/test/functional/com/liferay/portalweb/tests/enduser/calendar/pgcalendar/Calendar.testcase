@@ -5465,7 +5465,7 @@
 	</command>
 
 	<command name="ViewShowMoreLocalization" priority="3">
-		<description message="This is a use case LPS-54786." />
+		<description message="This is a use case for LPS-54786." />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />

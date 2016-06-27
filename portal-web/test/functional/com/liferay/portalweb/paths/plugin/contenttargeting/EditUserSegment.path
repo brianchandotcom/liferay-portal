@@ -173,6 +173,27 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--USER_SEGMENT_RULE_BEHAVIOR_PREVIOUSLY_VISITED_SITE-->
+<tr>
+	<td>USER_SEGMENT_RULE_BEHAVIOR_PREVIOUSLY_VISITED_SITE_ADD_BUTTON</td>
+	<td>//button/*[.='Add']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_SEGMENT_RULE_BEHAVIOR_PREVIOUSLY_VISITED_SITE_CONDITION_SELECT</td>
+	<td>//select[contains(@id,'condition')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_SEGMENT_RULE_BEHAVIOR_PREVIOUSLY_VISITED_SITE_VALUE_FIELD</td>
+	<td>//input[contains(@id,'value')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--USER_SEGMENT_RULE_USER_ATTRIBUTES_SITE_MEMBER-->
 <tr>
 	<td>USER_SEGMENT_RULE_USER_ATTRIBUTES_SITE_MEMBER_SELECT</td>

@@ -16,7 +16,7 @@ package com.liferay.wiki.translator.impl;
 
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.wiki.translator.WikiTitleChangeTranslator;
+import com.liferay.wiki.translator.WikiPageRenameProcessor;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -27,10 +27,10 @@ import org.osgi.service.component.annotations.Modified;
 /**
  * @author Roberto Díaz
  */
-@Component(immediate = true, service = WikiTitleChangeTranslatorTracker.class)
-public class WikiTitleChangeTranslatorTracker {
+@Component(immediate = true, service = WikiPageRenameProcessorTracker.class)
+public class WikiPageRenameProcessorTracker {
 
-	public WikiTitleChangeTranslator getTitleChangeTranslator(String format) {
+	public WikiPageRenameProcessor getWikiPageRenameProcessor(String format) {
 		return _serviceTrackerMap.getService(format);
 	}
 
@@ -38,7 +38,7 @@ public class WikiTitleChangeTranslatorTracker {
 	@Modified
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, WikiTitleChangeTranslator.class, "wiki.format.name");
+			bundleContext, WikiPageRenameProcessor.class, "wiki.format.name");
 	}
 
 	@Deactivate
@@ -46,7 +46,7 @@ public class WikiTitleChangeTranslatorTracker {
 		_serviceTrackerMap.close();
 	}
 
-	private ServiceTrackerMap<String, WikiTitleChangeTranslator>
+	private ServiceTrackerMap<String, WikiPageRenameProcessor>
 		_serviceTrackerMap;
 
 }

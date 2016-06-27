@@ -14,8 +14,8 @@
 
 package com.liferay.wiki.engine.html.translator;
 
-import com.liferay.wiki.translator.BaseWikiTitleChangeTranslator;
-import com.liferay.wiki.translator.WikiTitleChangeTranslator;
+import com.liferay.wiki.translator.BaseWikiPageRenameProcessor;
+import com.liferay.wiki.translator.WikiPageRenameProcessor;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -27,10 +27,9 @@ import org.osgi.service.component.annotations.Modified;
  */
 @Component(
 	immediate = true, property = "wiki.format.name=html",
-	service = WikiTitleChangeTranslator.class
+	service = WikiPageRenameProcessor.class
 )
-public class WikiTitleChangeHTMLTranslator
-	extends BaseWikiTitleChangeTranslator {
+public class WikiPageRenameHTMLProcessor extends BaseWikiPageRenameProcessor {
 
 	@Activate
 	@Modified

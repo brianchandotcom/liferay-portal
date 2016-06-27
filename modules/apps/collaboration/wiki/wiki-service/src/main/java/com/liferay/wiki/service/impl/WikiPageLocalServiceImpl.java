@@ -101,8 +101,8 @@ import com.liferay.wiki.model.impl.WikiPageDisplayImpl;
 import com.liferay.wiki.model.impl.WikiPageImpl;
 import com.liferay.wiki.service.base.WikiPageLocalServiceBaseImpl;
 import com.liferay.wiki.social.WikiActivityKeys;
-import com.liferay.wiki.translator.WikiTitleChangeTranslator;
-import com.liferay.wiki.translator.impl.WikiTitleChangeTranslatorTracker;
+import com.liferay.wiki.translator.WikiPageRenameProcessor;
+import com.liferay.wiki.translator.impl.WikiPageRenameProcessorTracker;
 import com.liferay.wiki.util.WikiCacheHelper;
 import com.liferay.wiki.util.WikiCacheThreadLocal;
 import com.liferay.wiki.util.WikiUtil;
@@ -1792,26 +1792,27 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		serviceContext.setCommand(Constants.RENAME);
 
-		WikiTitleChangeTranslator titleChangeTranslator =
-			wikiTitleChangeTranslatorTracker.getTitleChangeTranslator(
+		WikiPageRenameProcessor wikiPageRenameProcessor =
+			wikiPageRenameProcessorTracker.getWikiPageRenameProcessor(
 				page.getFormat());
 
 		String content = page.getContent();
 
-		if (titleChangeTranslator != null) {
+		if (wikiPageRenameProcessor != null) {
 			List<WikiPage> versionPages = wikiPagePersistence.findByN_T_H(
 				nodeId, title, false);
 
 			for (WikiPage curPage : versionPages) {
 				curPage.setTitle(newTitle);
 				curPage.setContent(
-					titleChangeTranslator.translate(
+					wikiPageRenameProcessor.translate(
 						curPage.getContent(), title, newTitle));
 
 				wikiPagePersistence.update(curPage);
 			}
 
-			content = titleChangeTranslator.translate(content, title, newTitle);
+			content = wikiPageRenameProcessor.translate(
+				content, title, newTitle);
 		}
 
 		updatePage(
@@ -3273,10 +3274,10 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	@ServiceReference(type = WikiEngineRenderer.class)
 	protected WikiEngineRenderer wikiEngineRenderer;
 
+	@ServiceReference(type = WikiPageRenameProcessorTracker.class)
+	protected WikiPageRenameProcessorTracker wikiPageRenameProcessorTracker;
+
 	@ServiceReference(type = WikiPageTitleValidator.class)
 	protected WikiPageTitleValidator wikiPageTitleValidator;
-
-	@ServiceReference(type = WikiTitleChangeTranslatorTracker.class)
-	protected WikiTitleChangeTranslatorTracker wikiTitleChangeTranslatorTracker;
 
 }

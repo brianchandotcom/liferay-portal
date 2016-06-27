@@ -507,7 +507,7 @@
 
 	<command name="saveFormEdit">
 		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
-		
+
 		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewSuccessMessage" />

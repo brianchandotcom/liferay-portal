@@ -25,8 +25,8 @@ public class PropsValues {
 	public static final String BROWSER_COMMANDS_DIR_NAME = PropsUtil.get(
 		"browser.commands.dir.name");
 
-	public static final String BROWSER_FIREFOX_BIN_PATH = PropsUtil.get(
-		"browser.firefox.bin.path");
+	public static final String BROWSER_FIREFOX_BIN_FILE = PropsUtil.get(
+		"browser.firefox.bin.file");
 
 	public static final String BROWSER_TYPE = PropsUtil.get("browser.type");
 

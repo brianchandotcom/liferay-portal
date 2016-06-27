@@ -20,6 +20,8 @@ import com.liferay.asset.kernel.model.AssetLinkConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeUtil;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.comment.CommentManagerUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.diff.DiffHtmlUtil;
@@ -102,7 +104,6 @@ import com.liferay.wiki.model.impl.WikiPageImpl;
 import com.liferay.wiki.processor.WikiPageRenameProcessor;
 import com.liferay.wiki.service.base.WikiPageLocalServiceBaseImpl;
 import com.liferay.wiki.social.WikiActivityKeys;
-import com.liferay.wiki.translator.impl.WikiPageRenameProcessorTracker;
 import com.liferay.wiki.util.WikiCacheHelper;
 import com.liferay.wiki.util.WikiCacheThreadLocal;
 import com.liferay.wiki.util.WikiUtil;
@@ -131,6 +132,10 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * Provides the local service for accessing, adding, deleting, moving,
@@ -466,6 +471,18 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	}
 
 	@Override
+	public void afterPropertiesSet() {
+		Bundle bundle = FrameworkUtil.getBundle(WikiPageLocalServiceImpl.class);
+
+		BundleContext _bundleContext = bundle.getBundleContext();
+
+		_serviceTrackerMap = ServiceTrackerMapFactory.singleValueMap(
+			_bundleContext, WikiPageRenameProcessor.class, "wiki.format.name");
+
+		_serviceTrackerMap.open();
+	}
+
+	@Override
 	public WikiPage changeParent(
 			long userId, long nodeId, String title, String newParentTitle,
 			ServiceContext serviceContext)
@@ -772,6 +789,11 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		PortletFileRepositoryUtil.deletePortletFileEntries(
 			page.getGroupId(), folderId, WorkflowConstants.STATUS_IN_TRASH);
+	}
+
+	@Override
+	public void destroy() {
+		_serviceTrackerMap.close();
 	}
 
 	@Override
@@ -1793,8 +1815,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		serviceContext.setCommand(Constants.RENAME);
 
 		WikiPageRenameProcessor wikiPageRenameProcessor =
-			wikiPageRenameProcessorTracker.getWikiPageRenameProcessor(
-				page.getFormat());
+			_serviceTrackerMap.getService(page.getFormat());
 
 		String content = page.getContent();
 
@@ -3274,10 +3295,10 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	@ServiceReference(type = WikiEngineRenderer.class)
 	protected WikiEngineRenderer wikiEngineRenderer;
 
-	@ServiceReference(type = WikiPageRenameProcessorTracker.class)
-	protected WikiPageRenameProcessorTracker wikiPageRenameProcessorTracker;
-
 	@ServiceReference(type = WikiPageTitleValidator.class)
 	protected WikiPageTitleValidator wikiPageTitleValidator;
+
+	private ServiceTrackerMap<String, WikiPageRenameProcessor>
+		_serviceTrackerMap;
 
 }

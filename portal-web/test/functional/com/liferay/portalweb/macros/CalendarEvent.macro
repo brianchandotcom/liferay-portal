@@ -1456,8 +1456,17 @@
 	</command>
 
 	<command name="setTimes">
-		<execute function="Type" locator1="CalendarEditEvent#START_DATE_TIME" value1="${startDateTime}" />
-		<execute function="Type" locator1="CalendarEditEvent#END_DATE_TIME" value1="${endDateTime}" />
+		<execute function="Click" locator1="CalendarEditEvent#START_DATE_TIME" />
+
+		<var name="key_timeSpecific" value="${startDateTime}" />
+
+		<execute function="Click" locator1="CalendarEditEvent#TIME_SPECIFIC_IN_TIME_PICKER" />
+
+		<execute function="Click" locator1="CalendarEditEvent#END_DATE_TIME" />
+
+		<var name="key_timeSpecific" value="${endDateTime}" />
+
+		<execute function="Click" locator1="CalendarEditEvent#TIME_SPECIFIC_IN_TIME_PICKER" />
 
 		<execute macro="CalendarEvent#viewTimes">
 			<var name="endDateTime" value="${endDateTime}" />

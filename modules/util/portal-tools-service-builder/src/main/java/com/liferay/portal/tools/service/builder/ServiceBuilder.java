@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.cache.CacheField;
 import com.liferay.portal.kernel.plugin.Version;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ArrayUtil_IW;
 import com.liferay.portal.kernel.util.CharPool;
@@ -1644,6 +1645,20 @@ public class ServiceBuilder {
 
 	public boolean isReadOnlyMethod(
 		JavaMethod method, List<String> txRequiredList, String[] prefixes) {
+
+		Annotation[] annotations = method.getAnnotations();
+
+		if (annotations != null) {
+			for (Annotation annotation : annotations) {
+				Type type = annotation.getType();
+
+				String className = type.getFullyQualifiedName();
+
+				if (className.equals(Transactional.class.getName())) {
+					return false;
+				}
+			}
+		}
 
 		String methodName = method.getName();
 

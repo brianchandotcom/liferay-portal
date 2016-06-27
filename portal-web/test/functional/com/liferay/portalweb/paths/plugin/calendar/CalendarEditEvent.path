@@ -65,6 +65,17 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--TIME_PICKER-->
+<tr>
+	<td>TIME_SPECIFIC_IN_TIME_PICKER</td>
+	<td>//div[contains(@class,'timepicker-popover') and contains(@style,'display: block')]//li[contains(.,'${key_timeSpecific}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <tr>
 	<td>ALL_DAY_CHECKBOX</td>
 	<td>//input[contains(@id,'CalendarPortlet_allDay')]</td>

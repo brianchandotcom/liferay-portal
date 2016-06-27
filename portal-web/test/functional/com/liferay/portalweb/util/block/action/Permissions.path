@@ -208,12 +208,12 @@
 </tr>
 <tr>
 	<td>CONTENT_PERMISSIONS_UPDATE_CHECKBOX</td>
-	<td>//input[contains(@id,'${key_roleName}_ACTION_UPDATE')] | //tr[contains(.,'${key_roleName}')]//input[contains(@id,'ACTION_UPDATE')]</td>
+	<td>//input[@id='${key_roleName}_ACTION_UPDATE'] | //tr[contains(.,'${key_roleName}')]//input[contains(@id,'ACTION_UPDATE')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONTENT_PERMISSIONS_UPDATE_DISCUSSION_CHECKBOX</td>
-	<td>//input[contains(@id,'${key_roleName}_ACTION_UPDATE_DISCUSSION')]</td>
+	<td>//input[@id='${key_roleName}_ACTION_UPDATE_DISCUSSION']</td>
 	<td></td>
 </tr>
 <tr>

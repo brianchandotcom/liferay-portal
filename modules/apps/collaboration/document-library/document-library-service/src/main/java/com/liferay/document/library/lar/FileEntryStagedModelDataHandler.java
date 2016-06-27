@@ -64,6 +64,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.repository.portletrepository.PortletRepository;
+import com.liferay.portal.verify.extender.marker.VerifyProcessCompletionMarker;
 import com.liferay.portlet.documentlibrary.lar.FileEntryUtil;
 import com.liferay.trash.kernel.util.TrashUtil;
 
@@ -811,6 +812,14 @@ public class FileEntryStagedModelDataHandler
 	@Reference(unbind = "-")
 	protected void setStorageEngine(StorageEngine storageEngine) {
 		_storageEngine = storageEngine;
+	}
+
+	@Reference(
+		target = "(&(verify.process.name=com.liferay.document.library.service))",
+		unbind = "-"
+	)
+	protected void setVerifyProcessCompletionMarker(
+		VerifyProcessCompletionMarker verifyProcessCompletionMarker) {
 	}
 
 	@Override

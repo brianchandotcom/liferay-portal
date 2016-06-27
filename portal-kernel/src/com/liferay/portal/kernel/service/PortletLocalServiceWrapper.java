@@ -151,6 +151,12 @@ public class PortletLocalServiceWrapper implements PortletLocalService,
 		return _portletLocalService.fetchPortlet(id);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.model.Portlet fetchPortletById(
+		long companyId, java.lang.String portletId) {
+		return _portletLocalService.fetchPortletById(companyId, portletId);
+	}
+
 	/**
 	* Returns the portlet with the primary key.
 	*

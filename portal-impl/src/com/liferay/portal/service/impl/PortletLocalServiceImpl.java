@@ -415,6 +415,28 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 	@Override
 	@Skip
+	public Portlet fetchPortletById(long companyId, String portletId) {
+		portletId = PortalUtil.getJsSafePortletId(portletId);
+
+		Map<String, Portlet> companyPortletsMap = getPortletsMap(companyId);
+
+		String rootPortletId = PortletConstants.getRootPortletId(portletId);
+
+		if (portletId.equals(rootPortletId)) {
+			return companyPortletsMap.get(portletId);
+		}
+
+		Portlet portlet = companyPortletsMap.get(rootPortletId);
+
+		if (portlet != null) {
+			portlet = portlet.getClonedInstance(portletId);
+		}
+
+		return portlet;
+	}
+
+	@Override
+	@Skip
 	public List<CustomAttributesDisplay> getCustomAttributesDisplays() {
 		List<CustomAttributesDisplay> customAttributesDisplays =
 			new ArrayList<>();
@@ -516,24 +538,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 	@Override
 	@Skip
 	public Portlet getPortletById(long companyId, String portletId) {
-		portletId = PortalUtil.getJsSafePortletId(portletId);
-
-		Portlet portlet = null;
-
-		Map<String, Portlet> companyPortletsMap = getPortletsMap(companyId);
-
-		String rootPortletId = PortletConstants.getRootPortletId(portletId);
-
-		if (portletId.equals(rootPortletId)) {
-			portlet = companyPortletsMap.get(portletId);
-		}
-		else {
-			portlet = companyPortletsMap.get(rootPortletId);
-
-			if (portlet != null) {
-				portlet = portlet.getClonedInstance(portletId);
-			}
-		}
+		Portlet portlet = fetchPortletById(companyId, portletId);
 
 		if (portlet != null) {
 			return portlet;

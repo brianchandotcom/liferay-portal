@@ -523,7 +523,7 @@
 
 		<var name="key_orgName" value="Organization Name 1" />
 
-		<execute function="Click" locator1="CPUsersandorganizations#ORGANIZATION_TABLE_NAME" />
+		<execute function="Click" locator1="UsersAndOrganizations#ORGANIZATION_TABLE_NAME" />
 
 		<for list="usersn1,usersn3,usersn5" param="userScreenName">
 			<var name="key_userScreenName" value="${userScreenName}" />

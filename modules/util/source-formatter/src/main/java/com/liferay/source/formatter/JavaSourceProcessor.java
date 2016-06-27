@@ -210,6 +210,12 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				return;
 			}
 
+			String s = annotationParameters.substring(0, x);
+
+			if ((getLevel(s, "(", ")") != 0) || (getLevel(s, "{", "}") != 0)) {
+				continue;
+			}
+
 			if (Validator.isNotNull(previousParameterName)) {
 				y = annotationParameters.lastIndexOf(CharPool.COMMA, x);
 

@@ -27,6 +27,18 @@
 		<execute function="Type" locator1="EditUserSegment#USER_SEGMENT_RULE_BEHAVIOR_PAGE_VISITED_FRIENDLY_URL_FIELD" value1="${friendlyURL}" />
 	</command>
 
+	<command name="addBehaviorPreviouslyVisitedSiteRuleCP">
+		<execute macro="ContentTargetingUserSegment#addRuleCmdCP">
+			<var name="userSegmentRule" value="Previously Visited Site" />
+		</execute>
+
+		<execute function="Select" locator1="EditUserSegment#USER_SEGMENT_RULE_BEHAVIOR_PREVIOUSLY_VISITED_SITE_CONDITION_SELECT" value1="${condition}" />
+
+		<execute function="Type" locator1="EditUserSegment#USER_SEGMENT_RULE_BEHAVIOR_PREVIOUSLY_VISITED_SITE_VALUE_FIELD" value1="${conditionValue}" />
+
+		<execute function="Click" locator1="EditUserSegment#USER_SEGMENT_RULE_BEHAVIOR_PREVIOUSLY_VISITED_SITE_ADD_BUTTON" />
+	</command>
+
 	<command name="addBehaviorScorePointsRuleCP">
 		<execute macro="ContentTargetingUserSegment#addRuleCmdCP">
 			<var name="userSegmentRule" value="Score Points" />
@@ -440,6 +452,13 @@
 					<equals arg1="${usersegmentRuleName}" arg2="Page Visited" />
 					<then>
 						<execute function="AssertTextEquals" locator1="EditUserSegment#USER_SEGMENT_RULE_BEHAVIOR_PAGE_VISITED_FRIENDLY_URL_FIELD" value1="${friendlyURL}" />
+					</then>
+				</elseif>
+				<elseif>
+					<equals arg1="${usersegmentRuleName}" arg2="Previously Visited Site" />
+					<then>
+						<execute function="AssertTextPresent" locator1="ContentRow#ENTRY_CONTENT_ROW_1" value1="${condition}" />
+						<execute function="AssertTextPresent" locator1="ContentRow#ENTRY_CONTENT_ROW_1" value1="${conditionValue}" />
 					</then>
 				</elseif>
 				<elseif>

@@ -30,8 +30,8 @@ page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
-page import="com.liferay.weather.web.model.Weather" %><%@
-page import="com.liferay.weather.web.util.WeatherUtil" %>
+page import="com.liferay.weather.web.internal.model.Weather" %><%@
+page import="com.liferay.weather.web.internal.util.WeatherUtil" %>
 
 <%@ page import="java.util.Enumeration" %>
 

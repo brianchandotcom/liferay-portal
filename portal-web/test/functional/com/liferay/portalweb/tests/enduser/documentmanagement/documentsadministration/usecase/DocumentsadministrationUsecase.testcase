@@ -238,6 +238,8 @@
 
 		<execute macro="DMDocument#enableActionsMenuOnPortlet" />
 
+		<execute macro="IFrame#closeFrame" />
+
 		<execute macro="DMDocument#checkoutPG">
 			<var name="dmDocumentTitle" value="Document_1.doc" />
 		</execute>

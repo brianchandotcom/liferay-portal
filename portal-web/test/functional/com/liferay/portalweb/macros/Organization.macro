@@ -705,7 +705,7 @@
 			</elseif>
 		</if>
 
-		<execute function="SelectFrame" value1="relative=top" />
+		<execute macro="IFrame#closeFrame" />
 	</command>
 
 	<command name="viewRemoveMemberCP">

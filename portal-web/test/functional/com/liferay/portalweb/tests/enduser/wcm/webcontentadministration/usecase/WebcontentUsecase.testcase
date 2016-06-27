@@ -113,7 +113,7 @@
 			<var name="roleList" value="Guest,Site Member" />
 		</execute>
 
-		<execute function="SelectFrameTop" />
+		<execute macro="IFrame#closeFrame" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Web Content" />

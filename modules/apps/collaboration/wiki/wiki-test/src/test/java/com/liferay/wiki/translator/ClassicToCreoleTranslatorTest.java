@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.translator.impl;
+package com.liferay.wiki.translator;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -21,6 +21,10 @@ import org.junit.Test;
  * @author Jorge Ferrer
  */
 public class ClassicToCreoleTranslatorTest {
+
+	public ClassicToCreoleTranslatorTest() {
+		_classicToCreoleTranslator = new ClassicToCreoleTranslator();
+	}
 
 	@Test
 	public void testBold() throws Exception {
@@ -278,16 +282,6 @@ public class ClassicToCreoleTranslatorTest {
 		return _classicToCreoleTranslator.translate(content);
 	}
 
-	private final ClassicToCreoleTranslatorStub _classicToCreoleTranslator =
-		new ClassicToCreoleTranslatorStub();
-
-	private class ClassicToCreoleTranslatorStub
-		extends ClassicToCreoleTranslator {
-
-		public ClassicToCreoleTranslatorStub() {
-			initRegexps();
-		}
-
-	}
+	private final ClassicToCreoleTranslator _classicToCreoleTranslator;
 
 }

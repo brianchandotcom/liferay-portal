@@ -6730,67 +6730,11 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 					src="${tstamp.value}.zip"
 				>
 					<patternset
-						includes="liferay-*/${app.server.name}-*/**"
+						includes="liferay-*/**"
 					/>
 					<mapper
 						from="[^/]+/(.*)"
 						to="\1"
-						type="regexp"
-					/>
-				</unzip>
-
-				<unzip
-					dest="${app.server.parent.dir}"
-					src="${tstamp.value}.zip"
-				>
-					<patternset
-						includes="liferay-*/deploy/**"
-					/>
-					<mapper
-						from="[^/]+/(.*)"
-						to="${app.server.parent.dir}//\1"
-						type="regexp"
-					/>
-				</unzip>
-
-				<unzip
-					dest="${app.server.parent.dir}"
-					src="${tstamp.value}.zip"
-				>
-					<patternset
-						includes="liferay-*/osgi/**"
-					/>
-					<mapper
-						from="[^/]+/(.*)"
-						to="${app.server.parent.dir}//\1"
-						type="regexp"
-					/>
-				</unzip>
-
-				<unzip
-					dest="${app.server.parent.dir}"
-					src="${tstamp.value}.zip"
-				>
-					<patternset
-						includes="liferay-*/patching-tool/patches/**"
-					/>
-					<mapper
-						from="[^/]+/(.*)"
-						to="${app.server.dir}//\1"
-						type="regexp"
-					/>
-				</unzip>
-
-				<unzip
-					dest="${app.server.parent.dir}"
-					src="${tstamp.value}.zip"
-				>
-					<patternset
-						includes="liferay-*/tools/**"
-					/>
-					<mapper
-						from="[^/]+/(.*)"
-						to="${app.server.parent.dir}//\1"
 						type="regexp"
 					/>
 				</unzip>

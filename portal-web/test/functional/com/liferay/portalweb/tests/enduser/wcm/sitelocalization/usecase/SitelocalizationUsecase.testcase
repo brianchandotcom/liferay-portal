@@ -77,19 +77,16 @@
 	<command name="LocalizationStyle0" priority="3">
 		<property name="custom.properties" value="locale.prepend.friendly.url.style=0" />
 
-		<var name="pageName" value="Language Test Page" />
-		<var name="portletName" value="Language Selector" />
-
 		<execute macro="Page#add">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Language Test Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${portletName}" />
+			<var name="portletName" value="Language Selector" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Language Test Page" />
 		</execute>
 
 		<execute macro="LanguagePortlet#selectLanguagePG">
@@ -115,26 +112,23 @@
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Language Test Page" />
 		</execute>
 	</command>
 
 	<command name="LocalizationStyle1" priority="3">
 		<property name="custom.properties" value="locale.prepend.friendly.url.style=1" />
 
-		<var name="pageName" value="Language Test Page" />
-		<var name="portletName" value="Language Selector" />
-
 		<execute macro="Page#add">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Language Test Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${portletName}" />
+			<var name="portletName" value="Language Selector" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Language Test Page" />
 		</execute>
 
 		<execute macro="LanguagePortlet#selectLanguagePG">
@@ -160,26 +154,23 @@
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Language Test Page" />
 		</execute>
 	</command>
 
 	<command name="LocalizationStyle2" priority="3">
 		<property name="custom.properties" value="locale.prepend.friendly.url.style=2" />
 
-		<var name="pageName" value="Language Test Page" />
-		<var name="portletName" value="Language Selector" />
-
 		<execute macro="Page#add">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Language Test Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${portletName}" />
+			<var name="portletName" value="Language Selector" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Language Test Page" />
 		</execute>
 
 		<execute macro="LanguagePortlet#selectLanguagePG">
@@ -205,7 +196,7 @@
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Language Test Page" />
 		</execute>
 	</command>
 
@@ -611,8 +602,6 @@
 
 		<execute macro="Site#addCP">
 			<var name="siteName" value="Site Name" />
-			<var name="siteTemplateActive" value="${siteTemplateActive}" />
-			<var name="siteTemplateName" value="${siteTemplateName}" />
 			<var name="siteType" value="Blank" />
 		</execute>
 

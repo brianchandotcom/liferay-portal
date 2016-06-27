@@ -67,11 +67,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ORGANIZATION_TABLE_NAME</td>
-	<td>//tr[contains(.,'${key_orgName}')]/td[2]//a</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ORGANIZATION_TABLE_NAME_GENERIC</td>
 	<td>//div[@id='usersAdminOrganizationsPanelContent']//tr/td[2]//a</td>
 	<td></td>

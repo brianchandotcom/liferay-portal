@@ -47,7 +47,7 @@
 <!--RECORD_TABLE-->
 <tr>
 	<td>RECORD_TABLE_ENTRY</td>
-	<td>//tr/th[contains(.,'${key_fieldFieldLabel}')]/../../../tbody/tr/td[contains(.,'${key_ddlRecordFieldData}')]</td>
+	<td>//tr/th[contains(.,'${key_fieldFieldLabel}')]/../../../tbody/tr/td/a[.='${key_ddlRecordFieldData}']</td>
 	<td></td>
 </tr>
 <tr>

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.translator.impl;
+package com.liferay.wiki.translator;
 
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Digester;
@@ -453,27 +453,7 @@ public class MediaWikiToCreoleTranslatorTest {
 		return _mediaWikiToCreoleTranslator.runRegexps(content);
 	}
 
-	private final MediaWikiToCreoleTranslatorStub _mediaWikiToCreoleTranslator =
-		new MediaWikiToCreoleTranslatorStub();
-
-	private class MediaWikiToCreoleTranslatorStub
-		extends MediaWikiToCreoleTranslator {
-
-		public MediaWikiToCreoleTranslatorStub() {
-			initRegexps();
-			initNowikiRegexps();
-		}
-
-		@Override
-		protected String postProcess(String content) {
-			return super.postProcess(content);
-		}
-
-		@Override
-		protected String runRegexps(String content) {
-			return super.runRegexps(content);
-		}
-
-	}
+	private final MediaWikiToCreoleTranslator _mediaWikiToCreoleTranslator =
+		new MediaWikiToCreoleTranslator();
 
 }

@@ -23,7 +23,7 @@ import org.junit.Test;
 public class WikiPageRenameMediaWikiContentProcessorTest {
 
 	@Test
-	public void testImage() {
+	public void testProcessContent() {
 		String content = "This is a test [[Image:ORIGINAL_NAME/image.jpg]]";
 
 		content = _wikiPageRenameMediaWikiContentProcessor.processContent(
@@ -31,6 +31,91 @@ public class WikiPageRenameMediaWikiContentProcessorTest {
 
 		Assert.assertEquals(
 			"This is a test [[Image:FINAL_NAME/image.jpg]]", content);
+	}
+
+	@Test
+	public void testProcessContentDoNotChangeLinks() {
+		String content = "This is a test [[ORIGINAL_LINK]]";
+
+		content = _wikiPageRenameMediaWikiContentProcessor.processContent(
+			content, "ORIGINAL_LINK", "FINAL_LINK", 0);
+
+		Assert.assertEquals("This is a test [[ORIGINAL_LINK]]", content);
+	}
+
+	@Test
+	public void testProcessContentDoNotChangeOtherImages() {
+		String content =
+			"This is a test [[Image:ORIGINAL_NAME1/image.jpg]] " +
+				"[[Image:ORIGINAL_NAME2/image.jpg]]";
+
+		content = _wikiPageRenameMediaWikiContentProcessor.processContent(
+			content, "ORIGINAL_NAME1", "FINAL_NAME1", 0);
+
+		Assert.assertEquals(
+			"This is a test [[Image:FINAL_NAME1/image.jpg]] " +
+				"[[Image:ORIGINAL_NAME2/image.jpg]]",
+			content);
+	}
+
+	@Test
+	public void testProcessContentWithComplexTitle() {
+		String content =
+			"This is a test [[Image:Complex.,() original title/image.jpg]]";
+
+		content = _wikiPageRenameMediaWikiContentProcessor.processContent(
+			content, "Complex.,() original title", "Complex.,() final title",
+			0);
+
+		Assert.assertEquals(
+			"This is a test [[Image:Complex.,() final title/image.jpg]]",
+			content);
+	}
+
+	@Test
+	public void testProcessContentWithCurlyBracketsInTitle() {
+		String content = "This is a test [[Image:{ORIGINAL_NAME}/image.jpg]]";
+
+		content = _wikiPageRenameMediaWikiContentProcessor.processContent(
+			content, "{ORIGINAL_NAME}", "{FINAL_NAME}", 0);
+
+		Assert.assertEquals(
+			"This is a test [[Image:{FINAL_NAME}/image.jpg]]", content);
+	}
+
+	@Test
+	public void testProcessContentWithNumbersInTitle() {
+		String content =
+			"This is a test [[Image:ORIGINAL_NAME123456/image.jpg]]";
+
+		content = _wikiPageRenameMediaWikiContentProcessor.processContent(
+			content, "ORIGINAL_NAME123456", "FINAL_NAME123456", 0);
+
+		Assert.assertEquals(
+			"This is a test [[Image:FINAL_NAME123456/image.jpg]]", content);
+	}
+
+	@Test
+	public void testProcessContentWithParenthesisInTitle() {
+		String content = "This is a test [[Image:(ORIGINAL_NAME)/image.jpg]]";
+
+		content = _wikiPageRenameMediaWikiContentProcessor.processContent(
+			content, "(ORIGINAL_NAME)", "(FINAL_NAME)", 0);
+
+		Assert.assertEquals(
+			"This is a test [[Image:(FINAL_NAME)/image.jpg]]", content);
+	}
+
+	@Test
+	public void testProcessContentWithSpaceInTitle() {
+		String content =
+			"This is a test [[Image:ORIGINAL NAME PAGE/image.jpg]]";
+
+		content = _wikiPageRenameMediaWikiContentProcessor.processContent(
+			content, "ORIGINAL NAME PAGE", "FINAL NAME PAGE", 0);
+
+		Assert.assertEquals(
+			"This is a test [[Image:FINAL NAME PAGE/image.jpg]]", content);
 	}
 
 	private final WikiPageRenameMediaWikiContentProcessor

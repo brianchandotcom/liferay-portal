@@ -23,13 +23,106 @@ import org.junit.Test;
 public class WikiPageRenameCreoleContentProcessorTest {
 
 	@Test
-	public void testImage() {
+	public void testProcessContent() {
 		String content = "This is a test {{ORIGINAL_NAME/image.jpg}}";
 
 		content = _wikiPageRenameCreoleContentProcessor.processContent(
 			content, "ORIGINAL_NAME", "FINAL_NAME", 0);
 
 		Assert.assertEquals("This is a test {{FINAL_NAME/image.jpg}}", content);
+	}
+
+	@Test
+	public void testProcessContentDoNotChangeLinks() {
+		String content = "This is a test [[ORIGINAL_LINK]]";
+
+		content = _wikiPageRenameCreoleContentProcessor.processContent(
+			content, "ORIGINAL_LINK", "FINAL_LINK", 0);
+
+		Assert.assertEquals("This is a test [[ORIGINAL_LINK]]", content);
+	}
+
+	@Test
+	public void testProcessContentDoNotChangeOtherImages() {
+		String content =
+			"This is a test {{ORIGINAL_NAME1/image.jpg}} " +
+				"{{ORIGINAL_NAME2/image.jpg}}";
+
+		content = _wikiPageRenameCreoleContentProcessor.processContent(
+			content, "ORIGINAL_NAME1", "FINAL_NAME1", 0);
+
+		Assert.assertEquals(
+			"This is a test {{FINAL_NAME1/image.jpg}} " +
+				"{{ORIGINAL_NAME2/image.jpg}}",
+			content);
+	}
+
+	@Test
+	public void testProcessContentWithComplexTitle() {
+		String content =
+			"This is a test {{Complex.,() original title/image.jpg}}";
+
+		content = _wikiPageRenameCreoleContentProcessor.processContent(
+			content, "Complex.,() original title", "Complex.,() final title",
+			0);
+
+		Assert.assertEquals(
+			"This is a test {{Complex.,() final title/image.jpg}}", content);
+	}
+
+	@Test
+	public void testProcessContentWithCurlyBracketsInTitle() {
+		String content = "This is a test {{{ORIGINAL_NAME}/image.jpg}}";
+
+		content = _wikiPageRenameCreoleContentProcessor.processContent(
+			content, "{ORIGINAL_NAME}", "{FINAL_NAME}", 0);
+
+		Assert.assertEquals(
+			"This is a test {{{FINAL_NAME}/image.jpg}}", content);
+	}
+
+	@Test
+	public void testProcessContentWithLabel() {
+		String content = "This is a test {{ORIGINAL_NAME/image.jpg|label}}";
+
+		content = _wikiPageRenameCreoleContentProcessor.processContent(
+			content, "ORIGINAL_NAME", "FINAL_NAME", 0);
+
+		Assert.assertEquals(
+			"This is a test {{FINAL_NAME/image.jpg|label}}", content);
+	}
+
+	@Test
+	public void testProcessContentWithNumbersInTitle() {
+		String content = "This is a test {{ORIGINAL_NAME123456/image.jpg}}";
+
+		content = _wikiPageRenameCreoleContentProcessor.processContent(
+			content, "ORIGINAL_NAME123456", "FINAL_NAME123456", 0);
+
+		Assert.assertEquals(
+			"This is a test {{FINAL_NAME123456/image.jpg}}", content);
+	}
+
+	@Test
+	public void testProcessContentWithParenthesisInTitle() {
+		String content = "This is a test {{(ORIGINAL_NAME)/image.jpg}}";
+
+		content = _wikiPageRenameCreoleContentProcessor.processContent(
+			content, "(ORIGINAL_NAME)", "(FINAL_NAME)", 0);
+
+		Assert.assertEquals(
+			"This is a test {{(FINAL_NAME)/image.jpg}}", content);
+	}
+
+	@Test
+	public void testProcessContentWithSpaceInTitle() {
+		String content = "This is a test {{ORIGINAL NAME PAGE/image.jpg}}";
+
+		content = _wikiPageRenameCreoleContentProcessor.processContent(
+			content, "ORIGINAL NAME PAGE", "FINAL NAME PAGE", 0);
+
+		Assert.assertEquals(
+			"This is a test {{FINAL NAME PAGE/image.jpg}}", content);
 	}
 
 	private final WikiPageRenameCreoleContentProcessor

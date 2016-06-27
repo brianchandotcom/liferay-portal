@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.wiki.engine.creole.translator;
+package com.liferay.wiki.engine.creole.processor;
 
-import com.liferay.wiki.translator.BaseWikiPageRenameProcessor;
-import com.liferay.wiki.translator.WikiPageRenameProcessor;
+import com.liferay.wiki.processor.BaseWikiPageRenameProcessor;
+import com.liferay.wiki.processor.WikiPageRenameProcessor;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;

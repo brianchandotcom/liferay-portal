@@ -12,6 +12,7 @@ Export-Package:\
 	com.liferay.wiki.importer,\
 	com.liferay.wiki.item.selector.criterion,\
 	com.liferay.wiki.model,\
+	com.liferay.wiki.processor,\
 	com.liferay.wiki.service,\
 	com.liferay.wiki.service.persistence,\
 	com.liferay.wiki.translator,\

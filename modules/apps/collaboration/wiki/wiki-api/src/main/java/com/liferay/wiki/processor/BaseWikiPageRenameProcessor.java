@@ -12,20 +12,40 @@
  * details.
  */
 
-package com.liferay.wiki.translator;
+package com.liferay.wiki.processor;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Roberto Díaz
  * @author Daniel Sanz
  */
-public class BaseWikiPageRenameProcessor
-	extends BaseTranslator implements WikiPageRenameProcessor {
+public class BaseWikiPageRenameProcessor implements WikiPageRenameProcessor {
 
 	@Override
 	public String translate(String content, String title, String newTitle) {
 		return runRegexps(content, title, newTitle);
+	}
+
+	protected String runRegexp(
+		String content, String regexp, String replacement) {
+
+		Pattern pattern = Pattern.compile(regexp, Pattern.MULTILINE);
+
+		Matcher matcher = pattern.matcher(content);
+
+		StringBuffer sb = new StringBuffer();
+
+		while (matcher.find()) {
+			matcher.appendReplacement(sb, replacement);
+		}
+
+		matcher.appendTail(sb);
+
+		return sb.toString();
 	}
 
 	protected String runRegexps(String content, String title, String newTitle) {
@@ -42,5 +62,7 @@ public class BaseWikiPageRenameProcessor
 
 		return content;
 	}
+
+	protected Map<String, String> regexps = new LinkedHashMap<>();
 
 }

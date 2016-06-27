@@ -235,7 +235,10 @@ AUI.add(
 
 						var recurrenceDialog = window[instance._namespace + 'recurrenceDialog'];
 
-						if (!instance._confirmChanges) {
+						if (instance._confirmChanges) {
+							instance.saveState();
+						}
+						else {
 							var currentRecurrence = instance.get('currentSavedState');
 
 							instance.set('recurrence', currentRecurrence);
@@ -245,9 +248,6 @@ AUI.add(
 							if (!currentRecurrence.repeatable) {
 								instance.get('summaryNode').empty();
 							}
-						}
-						else {
-							instance.saveState();
 						}
 
 						delete instance._confirmChanges;

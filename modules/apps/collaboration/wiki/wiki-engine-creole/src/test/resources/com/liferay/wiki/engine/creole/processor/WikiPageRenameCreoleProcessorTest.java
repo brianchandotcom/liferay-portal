@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.engine.mediawiki.translator;
+package com.liferay.wiki.engine.creole.processor;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -20,27 +20,25 @@ import org.junit.Test;
 /**
  * @author Roberto Díaz
  */
-public class WikiPageRenameMediaWikiProcessorTest {
+public class WikiPageRenameCreoleProcessorTest {
 
 	@Test
 	public void testImage() {
-		String content = "This is a test [[Image:ORIGINAL_NAME/image.jpg]]";
+		String content = "This is a test {{ORIGINAL_NAME/image.jpg}}";
 
-		content = _wikiPageRenameMediaWikiProcessor.translate(
+		content = _wikiPageRenameCreoleProcessor.translate(
 			content, "ORIGINAL_NAME", "FINAL_NAME");
 
-		Assert.assertEquals(
-			"This is a test [[Image:FINAL_NAME/image.jpg]]", content);
+		Assert.assertEquals("This is a test {{FINAL_NAME/image.jpg}}", content);
 	}
 
-	private final WikiPageRenameMediaWikiProcessor
-		_wikiPageRenameMediaWikiProcessor =
-			new WikiPageRenameMediaWikiProcessorStub();
+	private final WikiPageRenameCreoleProcessor _wikiPageRenameCreoleProcessor =
+		new WikiPageRenameCreoleProcessorStub();
 
-	private class WikiPageRenameMediaWikiProcessorStub
-		extends WikiPageRenameMediaWikiProcessor {
+	private class WikiPageRenameCreoleProcessorStub
+		extends WikiPageRenameCreoleProcessor {
 
-		public WikiPageRenameMediaWikiProcessorStub() {
+		public WikiPageRenameCreoleProcessorStub() {
 			activate();
 		}
 

@@ -12,13 +12,24 @@
  * details.
  */
 
-package com.liferay.wiki.translator;
+package com.liferay.wiki.engine.mediawiki.processor;
+
+import com.liferay.wiki.processor.BaseWikiPageRenameProcessor;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Roberto Díaz
+ * @author Daniel Sanz
  */
-public interface WikiPageRenameProcessor {
+public class WikiPageRenameMediaWikiProcessor
+	extends BaseWikiPageRenameProcessor {
 
-	public String translate(String content, String title, String newTitle);
+	@Activate
+	@Modified
+	public void activate() {
+		regexps.put("\\[\\[Image:@old_title@/", "[[Image:@new_title@/");
+	}
 
 }

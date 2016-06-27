@@ -16,7 +16,7 @@ package com.liferay.wiki.translator.impl;
 
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.wiki.translator.WikiPageRenameProcessor;
+import com.liferay.wiki.processor.WikiPageRenameProcessor;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;

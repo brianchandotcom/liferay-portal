@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.engine.html.translator;
+package com.liferay.wiki.engine.html.processor;
 
 import org.junit.Assert;
 import org.junit.Test;

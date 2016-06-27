@@ -1474,6 +1474,30 @@
 		</execute>
 	</command>
 
+	<command name="setTomorrowAsEndDate">
+		<execute function="Click" locator1="CalendarEditEvent#END_DATE" />
+
+		<var locator="CalendarEditEvent#DAY_SELECTED_IN_DATE_PICKER" name="daySelected" />
+
+		<var method="MathUtil#sum('${daySelected}', '1')" name="tomorrow" />
+
+		<var name="key_daySpecific" value="${tomorrow}" />
+
+		<if>
+			<condition function="IsElementPresent" locator1="CalendarEditEvent#DAY_SPECIFIC_IN_DATE_PICKER" />
+			<then>
+				<execute function="Click" locator1="CalendarEditEvent#DAY_SPECIFIC_IN_DATE_PICKER" />
+			</then>
+			<else>
+				<execute function="Click" locator1="CalendarEditEvent#DATE_PICKER_NEXT_MONTH_BUTTON" />
+
+				<var name="key_daySpecific" value="1" />
+
+				<execute function="Click" locator1="CalendarEditEvent#DAY_SPECIFIC_IN_DATE_PICKER" />
+			</else>
+		</if>
+	</command>
+
 	<command name="tag">
 		<execute macro="CalendarEvent#_expandPanel">
 			<var name="panelName" value="Categorization" />

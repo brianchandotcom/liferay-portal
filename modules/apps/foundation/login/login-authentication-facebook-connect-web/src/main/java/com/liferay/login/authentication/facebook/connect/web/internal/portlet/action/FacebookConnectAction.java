@@ -227,7 +227,7 @@ public class FacebookConnectAction extends BaseStrutsAction {
 			WebKeys.THEME_DISPLAY);
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(
-			request, PortletKeys.LOGIN, themeDisplay.getPlid(),
+			request, PortletKeys.LOGIN, themeDisplay,
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("saveLastPath", Boolean.FALSE.toString());

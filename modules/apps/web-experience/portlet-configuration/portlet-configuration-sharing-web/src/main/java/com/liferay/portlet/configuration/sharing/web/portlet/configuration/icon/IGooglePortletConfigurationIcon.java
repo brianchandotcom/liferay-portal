@@ -75,7 +75,7 @@ public class IGooglePortletConfigurationIcon
 				portletRequest,
 				PortletConfigurationSharingPortletKeys.
 					PORTLET_CONFIGURATION_SHARING,
-				themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
+				themeDisplay, PortletRequest.RENDER_PHASE);
 
 			portletURL.setParameter(
 				"openSocialURL", getWidgetURL(portletRequest));

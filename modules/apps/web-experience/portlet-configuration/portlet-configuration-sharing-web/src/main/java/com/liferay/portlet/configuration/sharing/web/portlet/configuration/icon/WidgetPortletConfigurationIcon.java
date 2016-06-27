@@ -70,7 +70,7 @@ public class WidgetPortletConfigurationIcon
 				portletRequest,
 				PortletConfigurationSharingPortletKeys.
 					PORTLET_CONFIGURATION_SHARING,
-				themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
+				themeDisplay, PortletRequest.RENDER_PHASE);
 
 			portletURL.setParameter("widgetURL", getWidgetURL(portletRequest));
 			portletURL.setWindowState(LiferayWindowState.POP_UP);

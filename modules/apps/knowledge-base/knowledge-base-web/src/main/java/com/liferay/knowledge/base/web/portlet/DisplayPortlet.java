@@ -214,8 +214,8 @@ public class DisplayPortlet extends BaseKBPortlet {
 		}
 
 		PortletURL redirectURL = PortletURLFactoryUtil.create(
-			actionRequest, KBPortletKeys.KNOWLEDGE_BASE_DISPLAY,
-			themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
+			actionRequest, KBPortletKeys.KNOWLEDGE_BASE_DISPLAY, themeDisplay,
+			PortletRequest.RENDER_PHASE);
 
 		redirectURL.setParameter("kbFolderUrlTitle", kbFolder.getUrlTitle());
 

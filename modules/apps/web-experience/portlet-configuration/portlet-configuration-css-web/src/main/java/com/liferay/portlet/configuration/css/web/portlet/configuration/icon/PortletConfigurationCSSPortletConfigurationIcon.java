@@ -63,17 +63,17 @@ public class PortletConfigurationCSSPortletConfigurationIcon
 		PortletURL baseActionURL = PortletURLFactoryUtil.create(
 			portletRequest,
 			PortletConfigurationCSSPortletKeys.PORTLET_CONFIGURATION_CSS,
-			themeDisplay.getPlid(), PortletRequest.ACTION_PHASE);
+			themeDisplay, PortletRequest.ACTION_PHASE);
 
 		PortletURL baseRenderURL = PortletURLFactoryUtil.create(
 			portletRequest,
 			PortletConfigurationCSSPortletKeys.PORTLET_CONFIGURATION_CSS,
-			themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
+			themeDisplay, PortletRequest.RENDER_PHASE);
 
 		PortletURL baseResourceURL = PortletURLFactoryUtil.create(
 			portletRequest,
 			PortletConfigurationCSSPortletKeys.PORTLET_CONFIGURATION_CSS,
-			themeDisplay.getPlid(), PortletRequest.RESOURCE_PHASE);
+			themeDisplay, PortletRequest.RESOURCE_PHASE);
 
 		StringBundler sb = new StringBundler(9);
 

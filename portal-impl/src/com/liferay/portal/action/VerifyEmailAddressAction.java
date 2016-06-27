@@ -17,6 +17,7 @@ package com.liferay.portal.action;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
@@ -30,7 +31,6 @@ import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.struts.ActionConstants;
-import com.liferay.portlet.PortletURLImpl;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -73,8 +73,8 @@ public class VerifyEmailAddressAction extends Action {
 			verifyEmailAddress(request, response, themeDisplay);
 
 			if (!themeDisplay.isSignedIn()) {
-				PortletURL portletURL = new PortletURLImpl(
-					request, PortletKeys.LOGIN, themeDisplay.getPlid(),
+				PortletURL portletURL = PortletURLFactoryUtil.create(
+					request, PortletKeys.LOGIN, themeDisplay,
 					PortletRequest.RENDER_PHASE);
 
 				response.sendRedirect(portletURL.toString());

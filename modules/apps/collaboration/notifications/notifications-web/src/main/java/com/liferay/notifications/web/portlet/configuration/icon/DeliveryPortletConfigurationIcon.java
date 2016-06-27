@@ -118,7 +118,7 @@ public class DeliveryPortletConfigurationIcon
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(
 			portletRequest, NotificationsPortletKeys.NOTIFICATIONS,
-			themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
+			themeDisplay, PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcPath", "/notifications/configuration.jsp");
 

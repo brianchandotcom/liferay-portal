@@ -79,7 +79,7 @@ public class MarketplaceAppDisplay extends BaseAppDisplay {
 
 			PortletURL portletURL = PortletURLFactoryUtil.create(
 				request, MarketplaceStorePortletKeys.MARKETPLACE_STORE,
-				themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
+				themeDisplay, PortletRequest.RENDER_PHASE);
 
 			portletURL.setParameter(
 				"appEntryId", String.valueOf(_app.getRemoteAppId()));

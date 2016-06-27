@@ -3551,7 +3551,28 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			int nextLineTabCount = getLeadingTabCount(nextLine);
 
 			if (nextLineTabCount != (lineTabCount + 1)) {
-				int x = trimmedLine.indexOf(CharPool.COMMA);
+				int x = -1;
+
+				while (true) {
+					x = trimmedLine.indexOf(CharPool.COMMA, x + 1);
+
+					if (x == -1) {
+						break;
+					}
+
+					if (ToolsUtil.isInsideQuotes(trimmedLine, x)) {
+						continue;
+					}
+
+					String linePart = trimmedLine.substring(0, x);
+
+					if ((getLevel(linePart, "(", ")") == 0) &&
+						(getLevel(linePart, "{", "}") == 0) &&
+						(getLevel(linePart, "<", ">") == 0)) {
+
+						break;
+					}
+				}
 
 				if (x != -1) {
 					while ((previousLineLength + 1 + x) < _maxLineLength) {

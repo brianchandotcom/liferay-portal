@@ -24,7 +24,7 @@ String aboutMe = HtmlUtil.escape(ExpandoValueLocalServiceUtil.getData(themeDispl
 
 <portlet:actionURL name="updateSummary" var="updateSummaryURL" />
 
-<aui:form action="<%= updateSummaryURL %>" method="post" name="<portlet:namespace />fm">
+<aui:form action="<%= updateSummaryURL %>" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirectURL %>" />
 
 	<aui:model-context bean="<%= user2.getContact() %>" model="<%= Contact.class %>" />

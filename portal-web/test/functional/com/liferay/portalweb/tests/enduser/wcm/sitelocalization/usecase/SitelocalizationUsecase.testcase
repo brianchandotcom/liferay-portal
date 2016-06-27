@@ -616,10 +616,6 @@
 			<var name="siteType" value="Blank" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoSitesConfiguration">
-			<var name="portlet" value="Site Settings" />
-		</execute>
-
 		<execute macro="Site#configureCurrentLanguagesCP">
 			<var name="currentSiteLanguages" value="English (United States)" />
 			<var name="defaultSiteLanguage" value="English (United States)" />
@@ -760,10 +756,6 @@
 		<execute macro="Site#addCP">
 			<var name="siteName" value="Site Name" />
 			<var name="siteType" value="Blank" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSitesConfiguration">
-			<var name="portlet" value="Site Settings" />
 		</execute>
 
 		<execute macro="Site#configureCurrentLanguagesCP">

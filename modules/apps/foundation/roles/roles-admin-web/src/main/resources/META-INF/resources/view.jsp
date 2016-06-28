@@ -19,9 +19,19 @@
 <%
 int type = ParamUtil.getInteger(request, "type", 1);
 String keywords = ParamUtil.getString(request, "keywords");
-String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 String orderByCol = ParamUtil.getString(request, "orderByCol", "title");
 String orderByType = ParamUtil.getString(request, "orderByType", "asc");
+
+String displayStyle = ParamUtil.getString(request, "displayStyle");
+
+if (Validator.isNull(displayStyle)) {
+	displayStyle = portalPreferences.getValue(RolesAdminPortletKeys.ROLES_ADMIN, "displayStyle", "list");
+}
+else {
+	portalPreferences.setValue(RolesAdminPortletKeys.ROLES_ADMIN, "displayStyle", displayStyle);
+
+	request.setAttribute(WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);
+}
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
@@ -137,7 +147,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, breadcrumbTitle, currentURL);
 
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"list"} %>'
+			displayViews='<%= new String[] {"descriptive", "icon", "list"} %>'
 			portletURL="<%= portletURL %>"
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
@@ -209,34 +219,10 @@ PortalUtil.addPortletBreadcrumbEntry(request, breadcrumbTitle, currentURL);
 			}
 			%>
 
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
-				href="<%= rowURL %>"
-				name="title"
-				value="<%= HtmlUtil.escape(role.getTitle(locale)) %>"
-			/>
-
-			<c:if test="<%= (PropsValues.ROLES_ORGANIZATION_SUBTYPES.length > 0) || (PropsValues.ROLES_REGULAR_SUBTYPES.length > 0) || (PropsValues.ROLES_SITE_SUBTYPES.length > 0) %>">
-				<liferay-ui:search-container-column-text
-					href="<%= rowURL %>"
-					name="subType"
-					value="<%= LanguageUtil.get(request, role.getSubtype()) %>"
-				/>
-			</c:if>
-
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
-				href="<%= rowURL %>"
-				name="description"
-				value="<%= HtmlUtil.escape(role.getDescription(locale)) %>"
-			/>
-
-			<liferay-ui:search-container-column-jsp
-				path="/role_action.jsp"
-			/>
+			<%@ include file="/search_columns.jspf" %>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator markupView="lexicon" />
+		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 

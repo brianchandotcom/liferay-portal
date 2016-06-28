@@ -461,6 +461,8 @@
 			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
+		<execute macro="Workflow#gotoAssignedToMyRoles" />
+
 		<execute macro="Workflow#viewPendingTasks">
 			<var name="workflowAssetTitle" value="${kfProcess2Name}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
@@ -947,6 +949,8 @@
 			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
+		<execute macro="Workflow#gotoAssignedToMyRoles" />
+
 		<execute macro="Workflow#viewPendingTasks">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
@@ -1366,6 +1370,8 @@
 		<execute macro="Page#gotoMyAccount">
 			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
+
+		<execute macro="Workflow#gotoAssignedToMyRoles" />
 
 		<execute macro="Workflow#viewPendingTasks">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
@@ -8279,6 +8285,8 @@
 		<execute macro="Page#gotoMyAccount">
 			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
+
+		<execute macro="Workflow#gotoAssignedToMyRoles" />
 
 		<execute macro="Workflow#viewPendingTasks">
 			<var name="workflowAssetTitle" value="${kfProcessName}" />

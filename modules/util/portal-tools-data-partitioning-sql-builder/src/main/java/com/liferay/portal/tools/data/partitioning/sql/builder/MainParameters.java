@@ -33,6 +33,10 @@ import java.util.List;
  */
 public class MainParameters {
 
+	public String getCatalogName() {
+		return _catalogName;
+	}
+
 	public String getCompanyIds() {
 		return _companyIds;
 	}
@@ -68,6 +72,12 @@ public class MainParameters {
 
 		return companyIds;
 	}
+
+	@Parameter(
+		description = "Catalog name to be exported",
+		names = {"-K", "--catalog-name"}
+	)
+	private String _catalogName;
 
 	@Parameter(
 		description = "Comma-separated list of company IDs to be exported",

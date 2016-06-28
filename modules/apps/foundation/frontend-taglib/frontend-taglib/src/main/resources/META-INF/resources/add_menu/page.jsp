@@ -22,6 +22,7 @@ List<AddMenuItem> addMenuItems = (List<AddMenuItem>)request.getAttribute("lifera
 List<AddMenuItem> addMenuPrimaryItems = (List<AddMenuItem>)request.getAttribute("liferay-frontend:add-menu:addMenuPrimaryItems");
 List<AddMenuItem> addMenuRecentItems = (List<AddMenuItem>)request.getAttribute("liferay-frontend:add-menu:addMenuRecentItems");
 int maxItems = (int)request.getAttribute("liferay-frontend:add-menu:maxItems");
+String viewMoreUrl = (String)request.getAttribute("liferay-frontend:add-menu:viewMoreUrl");
 
 int allAddMenuItemsCount = addMenuFavItems.size() + addMenuItems.size() + addMenuRecentItems.size();
 %>
@@ -165,29 +166,35 @@ int allAddMenuItemsCount = addMenuFavItems.size() + addMenuItems.size() + addMen
 					<li class="dropdown-header">
 						<liferay-ui:message arguments="<%= new Object[] {maxItems, allAddMenuItemsCount} %>" key="showing-x-of-x-items" />
 					</li>
-					<li class="divider"></li>
-					<li>
-						<a href="javascript:;" id="<%= namespace %>view-more-add-menu-elements"><%= LanguageUtil.get(request, "more") %></a>
-					</li>
 
-					<aui:script use="liferay-util-window">
-						var viewMoreAddMenuElements = A.one('#<%= namespace %>view-more-add-menu-elements');
+					<%
+					if (Validator.isNotNull(viewMoreUrl)) {
+					%>
 
-						viewMoreAddMenuElements.on(
-							'click',
-							function(event) {
-								Liferay.Util.openWindow(
-									{
-										id: '<%= namespace %>viewMoreAddMenuElements',
-										title: '<%= LanguageUtil.get(request, "more") %>',
-										uri: '/'
-									}
-								);
-							}
-						);
-					</aui:script>
+						<li class="divider"></li>
+						<li>
+							<a href="javascript:;" id="<%= namespace %>view-more-add-menu-elements"><%= LanguageUtil.get(request, "more") %></a>
+						</li>
+
+						<aui:script use="liferay-util-window">
+							var viewMoreAddMenuElements = A.one('#<%= namespace %>view-more-add-menu-elements');
+
+							viewMoreAddMenuElements.on(
+								'click',
+								function(event) {
+									Liferay.Util.openWindow(
+										{
+											id: '<%= namespace %>viewMoreAddMenuElements',
+											title: '<%= LanguageUtil.get(request, "more") %>',
+											uri: '<%= viewMoreUrl %>'
+										}
+									);
+								}
+							);
+						</aui:script>
 
 				<%
+					}
 				}
 				%>
 

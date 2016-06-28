@@ -92,6 +92,10 @@ public class AddMenuTag extends IncludeTag {
 		servletContext = ServletContextUtil.getServletContext();
 	}
 
+	public void setViewMoreUrl(String viewMoreUrl) {
+		_viewMoreUrl = viewMoreUrl;
+	}
+
 	@Override
 	protected void cleanUp() {
 		_addMenuFavItems = new ArrayList<>();
@@ -99,6 +103,7 @@ public class AddMenuTag extends IncludeTag {
 		_addMenuPrimaryItems = new ArrayList<>();
 		_addMenuRecentItems = new ArrayList<>();
 		_maxItems = 7;
+		_viewMoreUrl = null;
 	}
 
 	@Override
@@ -114,8 +119,9 @@ public class AddMenuTag extends IncludeTag {
 
 		request.setAttribute(
 			"liferay-frontend:add-menu:addMenuItems", addMenuItems);
+		request.setAttribute("liferay-frontend:add-menu:maxItems", _maxItems);
 		request.setAttribute(
-			"liferay-frontend:add-menu:maxItems", _maxItems);
+			"liferay-frontend:add-menu:viewMoreUrl", _viewMoreUrl);
 	}
 
 	private List<AddMenuItem> _addMenuFavItems = new ArrayList<>();
@@ -123,5 +129,6 @@ public class AddMenuTag extends IncludeTag {
 	private List<AddMenuItem> _addMenuPrimaryItems = new ArrayList<>();
 	private List<AddMenuItem> _addMenuRecentItems = new ArrayList<>();
 	private int _maxItems = 7;
+	private String _viewMoreUrl;
 
 }

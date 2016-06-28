@@ -368,6 +368,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SEARCH_FIELD</td>
+	<td>//div[contains(@class,'basic-search')]/input[contains(@id,'document_library')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_BUTTON</td>
+	<td>//*[@data-qa-id='searchButton']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

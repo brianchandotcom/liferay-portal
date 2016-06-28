@@ -219,6 +219,7 @@ if (!defaultFolderView && (folder != null) && (portletName.equals(DLPortletKeys.
 			decimalSeparator: '<%= decimalFormatSymbols.getDecimalSeparator() %>',
 			displayStyle: '<%= HtmlUtil.escapeJS(displayStyle) %>',
 			editEntryUrl: '<portlet:actionURL name="/document_library/edit_entry" />',
+			downloadEntryUrl: '<portlet:resourceURL id="/document_library/download_entry"><portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" /></portlet:resourceURL>',
 			folders: {
 				defaultParentFolderId: '<%= folderId %>',
 				dimensions: {

@@ -18,13 +18,17 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.web.internal.constants.DLPortletKeys;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
@@ -39,6 +43,7 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 
 import java.util.List;
+import java.util.Locale;
 
 import javax.portlet.PortletException;
 import javax.portlet.ResourceRequest;
@@ -52,17 +57,19 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alexander Chow
  * @author Sergio González
  * @author Levente Hudák
+ * @author Roberto Díaz
  */
 @Component(
 	property = {
 		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY,
 		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
 		"javax.portlet.name=" + DLPortletKeys.MEDIA_GALLERY_DISPLAY,
-		"mvc.command.name=/document_library/edit_folder"
+		"mvc.command.name=/document_library/download_entry",
+		"mvc.command.name=/document_library/download_folder"
 	},
 	service = MVCResourceCommand.class
 )
-public class EditFolderMVCResourceCommand implements MVCResourceCommand {
+public class DownloadEntriesMVCResourceCommand implements MVCResourceCommand {
 
 	@Override
 	public boolean serveResource(
@@ -70,12 +77,110 @@ public class EditFolderMVCResourceCommand implements MVCResourceCommand {
 		throws PortletException {
 
 		try {
-			downloadFolder(resourceRequest, resourceResponse);
+			String resourceID = GetterUtil.getString(
+				resourceRequest.getResourceID());
+
+			if (resourceID.equals("/document_library/download_folder")) {
+				downloadFolder(resourceRequest, resourceResponse);
+			}
+			else {
+				downloadFileEntries(resourceRequest, resourceResponse);
+			}
 
 			return true;
 		}
 		catch (Exception e) {
 			throw new PortletException(e);
+		}
+	}
+
+	protected void downloadFileEntries(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long folderId = ParamUtil.getLong(resourceRequest, "folderId");
+
+		File file = null;
+		InputStream inputStream = null;
+
+		try {
+			List<FileEntry> fileEntries = ActionUtil.getFileEntries(
+				resourceRequest);
+
+			List<FileShortcut> fileShortcuts = ActionUtil.getFileShortcuts(
+				resourceRequest);
+
+			List<Folder> folders = ActionUtil.getFolders(resourceRequest);
+
+			if (fileEntries.isEmpty() && fileShortcuts.isEmpty() &&
+				folders.isEmpty()) {
+
+				return;
+			}
+			else if ((fileEntries.size() == 1) && fileShortcuts.isEmpty() &&
+					 folders.isEmpty()) {
+
+				FileEntry fileEntry = fileEntries.get(0);
+
+				PortletResponseUtil.sendFile(
+					resourceRequest, resourceResponse, fileEntry.getFileName(),
+					fileEntry.getContentStream(), 0, fileEntry.getMimeType(),
+					HttpHeaders.CONTENT_DISPOSITION_ATTACHMENT);
+			}
+			else if ((fileShortcuts.size() == 1) && fileEntries.isEmpty() &&
+					 folders.isEmpty()) {
+
+				FileShortcut fileShortcut = fileShortcuts.get(0);
+
+				FileEntry fileEntry = _dlAppService.getFileEntry(
+					fileShortcut.getToFileEntryId());
+
+				PortletResponseUtil.sendFile(
+					resourceRequest, resourceResponse, fileEntry.getFileName(),
+					fileEntry.getContentStream(), 0, fileEntry.getMimeType(),
+					HttpHeaders.CONTENT_DISPOSITION_ATTACHMENT);
+			}
+			else {
+				String zipFileName = getZipFileName(
+					folderId, themeDisplay.getLocale());
+
+				ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
+
+				for (FileEntry fileEntry : fileEntries) {
+					zipFileEntry(fileEntry, StringPool.SLASH, zipWriter);
+				}
+
+				for (FileShortcut fileShortcut : fileShortcuts) {
+					FileEntry fileEntry = _dlAppService.getFileEntry(
+						fileShortcut.getToFileEntryId());
+
+					zipFileEntry(fileEntry, StringPool.SLASH, zipWriter);
+				}
+
+				for (Folder folder : folders) {
+					zipFolder(
+						folder.getRepositoryId(), folder.getFolderId(),
+						StringPool.SLASH.concat(folder.getName()), zipWriter);
+				}
+
+				file = zipWriter.getFile();
+
+				inputStream = new FileInputStream(file);
+
+				PortletResponseUtil.sendFile(
+					resourceRequest, resourceResponse, zipFileName, inputStream,
+					ContentTypes.APPLICATION_ZIP);
+			}
+		}
+		finally {
+			StreamUtil.cleanUp(inputStream);
+
+			if (file != null) {
+				file.delete();
+			}
 		}
 	}
 
@@ -93,14 +198,8 @@ public class EditFolderMVCResourceCommand implements MVCResourceCommand {
 		InputStream inputStream = null;
 
 		try {
-			String zipFileName = LanguageUtil.get(
-				themeDisplay.getLocale(), "documents-and-media");
-
-			if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-				Folder folder = _dlAppService.getFolder(folderId);
-
-				zipFileName = folder.getName();
-			}
+			String zipFileName = getZipFileName(
+				folderId, themeDisplay.getLocale());
 
 			ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
 
@@ -123,9 +222,32 @@ public class EditFolderMVCResourceCommand implements MVCResourceCommand {
 		}
 	}
 
+	protected String getZipFileName(long folderId, Locale locale)
+		throws PortalException {
+
+		if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			Folder folder = _dlAppService.getFolder(folderId);
+
+			return folder.getName() + ".zip";
+		}
+		else {
+			return LanguageUtil.get(
+				locale, "documents-and-media") + ".zip";
+		}
+	}
+
 	@Reference(unbind = "-")
 	protected void setDLAppService(DLAppService dlAppService) {
 		_dlAppService = dlAppService;
+	}
+
+	protected void zipFileEntry(
+			FileEntry fileEntry, String path, ZipWriter zipWriter)
+		throws Exception {
+
+		zipWriter.addEntry(
+			path + StringPool.SLASH + HtmlUtil.escapeURL(fileEntry.getTitle()),
+			fileEntry.getContentStream());
 	}
 
 	protected void zipFolder(
@@ -147,12 +269,15 @@ public class EditFolderMVCResourceCommand implements MVCResourceCommand {
 					zipWriter);
 			}
 			else if (entry instanceof FileEntry) {
-				FileEntry fileEntry = (FileEntry)entry;
+				zipFileEntry((FileEntry)entry, path, zipWriter);
+			}
+			else if (entry instanceof FileShortcut) {
+				FileShortcut fileShortcut = (FileShortcut)entry;
 
-				zipWriter.addEntry(
-					path + StringPool.SLASH +
-						HtmlUtil.escapeURL(fileEntry.getTitle()),
-					fileEntry.getContentStream());
+				FileEntry fileEntry = _dlAppService.getFileEntry(
+					fileShortcut.getToFileEntryId());
+
+				zipFileEntry(fileEntry, path, zipWriter);
 			}
 		}
 	}

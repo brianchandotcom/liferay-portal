@@ -66,7 +66,7 @@ public class DownloadFolderPortletConfigurationIcon
 				portletRequest, DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
 				PortletRequest.RESOURCE_PHASE);
 
-		portletURL.setResourceID("/document_library/edit_folder");
+		portletURL.setResourceID("/document_library/download_folder");
 
 		Folder folder = null;
 

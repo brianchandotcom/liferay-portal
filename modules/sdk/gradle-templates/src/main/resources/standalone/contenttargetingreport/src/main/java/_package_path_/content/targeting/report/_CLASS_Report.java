@@ -85,7 +85,10 @@ public class _CLASS_Report extends BaseJSPReport {
 	}
 
 	@Override
-	@Reference(target = "(osgi.web.symbolicname=ctreport.test)", unbind = "-")
+	@Reference(
+		target = "(osgi.web.symbolicname=_name_)",
+		unbind = "-"
+	)
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);
 	}
@@ -136,7 +139,7 @@ public class _CLASS_Report extends BaseJSPReport {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		CtreportTestReport.class);
+		_CLASS_Report.class);
 
 	private ReportInstanceLocalService _reportInstanceLocalService;
 

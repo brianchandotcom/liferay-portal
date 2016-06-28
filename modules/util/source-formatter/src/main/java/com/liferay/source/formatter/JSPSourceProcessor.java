@@ -1141,7 +1141,11 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 				(beforeClosingTagChar != CharPool.TAB)) {
 
 				String closingTag = matcher.group(2);
-				String tabs = matcher.group(1);
+
+				String whitespace = matcher.group(1);
+
+				String tabs = StringUtil.removeChar(
+					whitespace, CharPool.NEW_LINE);
 
 				return StringUtil.replaceFirst(
 					content, closingTag, "\n" + tabs + closingTag,
@@ -1158,7 +1162,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 			String newTag = formatAttributes(
 				fileName, tag, singlelineTag,
-				getLineCount(content, matcher.start() + 1), false);
+				getLineCount(content, matcher.end(1)), false);
 
 			if (!tag.equals(newTag)) {
 				return StringUtil.replace(content, tag, newTag);
@@ -2184,7 +2188,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		"\n(\t*)</[-\\w]+:([-\\w]+)>\n(\t*)<[-\\w]+");
 	private boolean _moveFrequentlyUsedImportsToCommonInit;
 	private final Pattern _multilineTagPattern = Pattern.compile(
-		"\n(\t*)<[-\\w]+:[-\\w]+\n.*?(/?>)(\n|$)", Pattern.DOTALL);
+		"(\\s+)<[-\\w]+:[-\\w]+\n.*?(/?>)(\n|$)", Pattern.DOTALL);
 	private Set<String> _primitiveTagAttributeDataTypes;
 	private final Pattern _redirectBackURLPattern = Pattern.compile(
 		"(String redirect = ParamUtil\\.getString\\(request, \"redirect\".*" +

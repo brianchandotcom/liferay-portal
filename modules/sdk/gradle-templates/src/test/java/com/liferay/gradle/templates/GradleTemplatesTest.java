@@ -14,10 +14,12 @@
 
 package com.liferay.gradle.templates;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.nio.charset.StandardCharsets;
 import java.nio.file.DirectoryStream;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
@@ -83,6 +85,19 @@ public class GradleTemplatesTest {
 		return properties.getProperty(key);
 	}
 
+	private void _testLanguageProperties(Path path) throws IOException {
+		try (BufferedReader bufferedReader = Files.newBufferedReader(
+				path, StandardCharsets.UTF_8)) {
+
+			String line = null;
+
+			while ((line = bufferedReader.readLine()) != null) {
+				Assert.assertFalse(
+					"Forbidden comments in " + path, line.startsWith("##"));
+			}
+		}
+	}
+
 	private void _testTemplateFiles(Path rootDirPath) throws IOException {
 		Files.walkFileTree(
 			rootDirPath,
@@ -93,7 +108,12 @@ public class GradleTemplatesTest {
 						Path dirPath, BasicFileAttributes basicFileAttributes)
 					throws IOException {
 
-					if (Files.exists(dirPath.resolve("Language.properties"))) {
+					Path languagePropertiesPath = dirPath.resolve(
+						"Language.properties");
+
+					if (Files.exists(languagePropertiesPath)) {
+						_testLanguageProperties(languagePropertiesPath);
+
 						String glob = "Language_*.properties";
 
 						Assert.assertFalse(

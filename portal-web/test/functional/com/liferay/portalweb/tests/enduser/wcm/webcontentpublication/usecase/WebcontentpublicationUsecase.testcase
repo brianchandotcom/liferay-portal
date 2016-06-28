@@ -1884,6 +1884,16 @@
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
+		<execute macro="DMDocument#enableActionsMenuOnPortlet" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="Portlet#changeDisplayStyle">
+			<var name="displayStyle" value="Descriptive" />
+		</execute>
+
 		<execute macro="DMDocument#editPG">
 			<var name="dmDocumentDescriptionEdit" value="DM Document Description Edit" />
 			<var name="dmDocumentFileEdit" value="Document_2.docx" />

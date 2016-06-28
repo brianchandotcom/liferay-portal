@@ -51,13 +51,13 @@
 			<var name="specificURL" value="http://www.able.com:9080" />
 		</execute>
 
-		<execute macro="User#viewLoginPG" />
+		<execute macro="User#viewLoggedOutPG" />
 
 		<!-- Verify IdP is also logged out -->
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="User#viewLoginPG" />
+		<execute macro="User#viewLoggedOutPG" />
 	</command>
 
 	<command name="ViewIdPInitiatedSSOWithRememberMeChecked" priority="4">
@@ -94,13 +94,13 @@
 			<var name="specificURL" value="http://www.able.com:9080" />
 		</execute>
 
-		<execute macro="User#viewLoginPG" />
+		<execute macro="User#viewLoggedOutPG" />
 
 		<!-- Verify IdP is also logged out -->
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="User#viewLoginPG" />
+		<execute macro="User#viewLoggedOutPG" />
 	</command>
 
 	<command name="ViewSingleLogoutHTTPPostBindingInConsole" priority="4">
@@ -178,12 +178,12 @@
 			<var name="specificURL" value="http://www.able.com:9080" />
 		</execute>
 
-		<execute macro="User#viewLoginPG" />
+		<execute macro="User#viewLoggedOutPG" />
 
 		<!-- Verify IdP is also logged out -->
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="User#viewLoginPG" />
+		<execute macro="User#viewLoggedOutPG" />
 	</command>
 </definition>

@@ -161,7 +161,7 @@
 
 		<execute macro="Workflow#viewMySubmissions">
 			<var name="workflowAssetTitle" value="Page Comment Comment" />
-			<var name="workflowAssetType" value="Comments" />
+			<var name="workflowAssetType" value="Comment" />
 			<var name="workflowDefinition" value="Single Approver" />
 			<var name="workflowTask" value="Review" />
 		</execute>
@@ -206,7 +206,7 @@
 
 		<execute macro="Workflow#assignToMeTaskByActions">
 			<var name="workflowAssetTitle" value="${commentBody}" />
-			<var name="workflowAssetType" value="Comments" />
+			<var name="workflowAssetType" value="Comment" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -216,7 +216,7 @@
 
 		<execute macro="Workflow#rejectTaskByActions">
 			<var name="workflowAssetTitle" value="${commentBody}" />
-			<var name="workflowAssetType" value="Comments" />
+			<var name="workflowAssetType" value="Comment" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -226,7 +226,7 @@
 
 		<execute macro="Workflow#viewRejectedTask">
 			<var name="workflowAssetTitle" value="${commentBody}" />
-			<var name="workflowAssetType" value="Comments" />
+			<var name="workflowAssetType" value="Comment" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">

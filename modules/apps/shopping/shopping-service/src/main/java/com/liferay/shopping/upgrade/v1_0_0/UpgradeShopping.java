@@ -15,9 +15,9 @@
 package com.liferay.shopping.upgrade.v1_0_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.shopping.upgrade.v1_0_0.util.ShoppingCartTable;
-import com.liferay.shopping.upgrade.v1_0_0.util.ShoppingOrderItemTable;
-import com.liferay.shopping.upgrade.v1_0_0.util.ShoppingOrderTable;
+import com.liferay.shopping.internal.upgrade.v1_0_0.util.ShoppingCartTable;
+import com.liferay.shopping.internal.upgrade.v1_0_0.util.ShoppingOrderItemTable;
+import com.liferay.shopping.internal.upgrade.v1_0_0.util.ShoppingOrderTable;
 
 /**
  * @author Kenneth Chang

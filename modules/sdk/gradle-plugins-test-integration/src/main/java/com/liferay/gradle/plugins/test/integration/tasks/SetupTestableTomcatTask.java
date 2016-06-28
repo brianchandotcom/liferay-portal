@@ -41,6 +41,8 @@ import java.text.SimpleDateFormat;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
@@ -102,8 +104,29 @@ public class SetupTestableTomcatTask
 		};
 	}
 
+	public SetupTestableTomcatTask catalinaOptsReplacement(
+		String oldSub, Object newSub) {
+
+		_catalinaOptsReplacements.put(oldSub, newSub);
+
+		return this;
+	}
+
+	public SetupTestableTomcatTask catalinaOptsReplacements(
+		Map<String, ?> catalinaOptsReplacements) {
+
+		_catalinaOptsReplacements.putAll(catalinaOptsReplacements);
+
+		return this;
+	}
+
 	public File getBinDir() {
 		return new File(getDir(), "bin");
+	}
+
+	@Input
+	public Map<String, Object> getCatalinaOptsReplacements() {
+		return _catalinaOptsReplacements;
 	}
 
 	@Input
@@ -160,6 +183,14 @@ public class SetupTestableTomcatTask
 		return _overwriteTestModules;
 	}
 
+	public void setCatalinaOptsReplacements(
+		Map<String, ?> catalinaOptsReplacements) {
+
+		_catalinaOptsReplacements.clear();
+
+		catalinaOptsReplacements(catalinaOptsReplacements);
+	}
+
 	public void setDebugLogging(boolean debugLogging) {
 		_debugLogging = debugLogging;
 	}
@@ -202,6 +233,7 @@ public class SetupTestableTomcatTask
 
 	@TaskAction
 	public void setupTestableTomcat() throws Exception {
+		setupCatalinaOpts();
 		setupJmx();
 		setupLogging();
 		setupManager();
@@ -247,6 +279,38 @@ public class SetupTestableTomcatTask
 		sb.append(isJmxRemoteSsl());
 
 		return sb.toString();
+	}
+
+	protected void replace(String fileName, Map<String, Object> replacements)
+		throws IOException {
+
+		File dir = getDir();
+
+		Path dirPath = dir.toPath();
+
+		Path path = dirPath.resolve(fileName);
+
+		String content = new String(Files.readAllBytes(path));
+
+		for (Map.Entry<String, Object> entry : replacements.entrySet()) {
+			String oldSub = entry.getKey();
+			String newSub = GradleUtil.toString(entry.getValue());
+
+			content = content.replace(oldSub, newSub);
+		}
+
+		Files.write(path, content.getBytes());
+	}
+
+	protected void setupCatalinaOpts() throws IOException {
+		Map<String, Object> replacements = getCatalinaOptsReplacements();
+
+		if (replacements.isEmpty()) {
+			return;
+		}
+
+		replace("bin/setenv.bat", replacements);
+		replace("bin/setenv.sh", replacements);
 	}
 
 	protected void setupJmx() throws IOException {
@@ -451,6 +515,8 @@ public class SetupTestableTomcatTask
 		"tomcat"
 	};
 
+	private final Map<String, Object> _catalinaOptsReplacements =
+		new LinkedHashMap<>();
 	private boolean _debugLogging;
 	private Object _dir;
 	private boolean _jmxRemoteAuthenticate;

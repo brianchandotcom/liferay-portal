@@ -79,9 +79,9 @@ page import="com.liferay.social.networking.model.WallEntry" %><%@
 page import="com.liferay.social.networking.service.MeetupsEntryLocalServiceUtil" %><%@
 page import="com.liferay.social.networking.service.MeetupsRegistrationLocalServiceUtil" %><%@
 page import="com.liferay.social.networking.service.WallEntryLocalServiceUtil" %><%@
-page import="com.liferay.social.networking.web.constants.SocialNetworkingWebKeys" %><%@
-page import="com.liferay.social.networking.web.meetups.util.MeetupsConstants" %><%@
-page import="com.liferay.social.networking.web.util.WallUtil" %><%@
+page import="com.liferay.social.networking.web.internal.constants.SocialNetworkingWebKeys" %><%@
+page import="com.liferay.social.networking.web.internal.meetups.util.MeetupsConstants" %><%@
+page import="com.liferay.social.networking.web.internal.util.WallUtil" %><%@
 page import="com.liferay.taglib.search.ResultRow" %>
 
 <%@ page import="java.text.Format" %>

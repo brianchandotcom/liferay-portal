@@ -32,10 +32,10 @@ import org.gradle.api.tasks.TaskAction;
 /**
  * @author Andrea Di Giorgi
  */
-public class SetupArquillianTask
+public class SetUpArquillianTask1
 	extends DefaultTask implements JmxRemotePortSpec, ManagerSpec {
 
-	public SetupArquillianTask() {
+	public SetUpArquillianTask1() {
 		onlyIf(
 			new Spec<Task>() {
 

@@ -18,8 +18,8 @@ import com.liferay.gradle.plugins.test.integration.tasks.BaseAppServerTask;
 import com.liferay.gradle.plugins.test.integration.tasks.JmxRemotePortSpec;
 import com.liferay.gradle.plugins.test.integration.tasks.ManagerSpec;
 import com.liferay.gradle.plugins.test.integration.tasks.ModuleFrameworkBaseDirSpec;
-import com.liferay.gradle.plugins.test.integration.tasks.SetupArquillianTask;
-import com.liferay.gradle.plugins.test.integration.tasks.SetupTestableTomcatTask;
+import com.liferay.gradle.plugins.test.integration.tasks.SetUpArquillianTask1;
+import com.liferay.gradle.plugins.test.integration.tasks.SetUpTestableTomcatTask1;
 import com.liferay.gradle.plugins.test.integration.tasks.StartTestableTomcatTask;
 import com.liferay.gradle.plugins.test.integration.tasks.StopTestableTomcatTask;
 import com.liferay.gradle.plugins.test.integration.util.GradleUtil;
@@ -93,14 +93,14 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 				project, PLUGIN_NAME + "Tomcat",
 				TestIntegrationTomcatExtension.class);
 
-		SetupTestableTomcatTask setupTestableTomcatTask =
+		SetUpTestableTomcatTask1 setUpTestableTomcatTask1 =
 			addTaskSetupTestableTomcat(project, testIntegrationTomcatExtension);
 		StopTestableTomcatTask stopTestableTomcatTask =
 			addTaskStopTestableTomcat(
 				project, testIntegrationTask, testIntegrationTomcatExtension);
 		StartTestableTomcatTask startTestableTomcatTask =
 			addTaskStartTestableTomcat(
-				project, setupTestableTomcatTask, stopTestableTomcatTask,
+				project, setUpTestableTomcatTask1, stopTestableTomcatTask,
 				testIntegrationTomcatExtension);
 
 		PluginContainer pluginContainer = project.getPlugins();
@@ -111,12 +111,12 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(WarPlugin warPlugin) {
-					SetupArquillianTask setupArquillianTask =
+					SetUpArquillianTask1 setUpArquillianTask1 =
 						addTaskSetupArquillian(
 							project, testIntegrationSourceSet,
 							testIntegrationTomcatExtension);
 
-					testIntegrationTask.dependsOn(setupArquillianTask);
+					testIntegrationTask.dependsOn(setUpArquillianTask1);
 				}
 
 			});
@@ -126,18 +126,18 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 			testIntegrationTomcatExtension, startTestableTomcatTask);
 	}
 
-	protected SetupArquillianTask addTaskSetupArquillian(
+	protected SetUpArquillianTask1 addTaskSetupArquillian(
 		final Project project, final SourceSet testIntegrationSourceSet,
 		TestIntegrationTomcatExtension testIntegrationTomcatExtension) {
 
-		SetupArquillianTask setupArquillianTask = GradleUtil.addTask(
-			project, SETUP_ARQUILLIAN_TASK_NAME, SetupArquillianTask.class);
+		SetUpArquillianTask1 setUpArquillianTask1 = GradleUtil.addTask(
+			project, SETUP_ARQUILLIAN_TASK_NAME, SetUpArquillianTask1.class);
 
-		setupArquillianTask.setDescription(
+		setUpArquillianTask1.setDescription(
 			"Creates the Arquillian container configuration file for this " +
 				"project.");
 
-		setupArquillianTask.setOutputDir(
+		setUpArquillianTask1.setOutputDir(
 			new Callable<File>() {
 
 				@Override
@@ -148,23 +148,23 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 			});
 
 		configureJmxRemotePortSpec(
-			setupArquillianTask, testIntegrationTomcatExtension);
+			setUpArquillianTask1, testIntegrationTomcatExtension);
 		configureManagerSpec(
-			setupArquillianTask, testIntegrationTomcatExtension);
+			setUpArquillianTask1, testIntegrationTomcatExtension);
 
-		return setupArquillianTask;
+		return setUpArquillianTask1;
 	}
 
-	protected SetupTestableTomcatTask addTaskSetupTestableTomcat(
+	protected SetUpTestableTomcatTask1 addTaskSetupTestableTomcat(
 		Project project,
 		final TestIntegrationTomcatExtension testIntegrationTomcatExtension) {
 
-		final SetupTestableTomcatTask setupTestableTomcatTask =
+		final SetUpTestableTomcatTask1 setUpTestableTomcatTask1 =
 			GradleUtil.addTask(
 				project, SETUP_TESTABLE_TOMCAT_TASK_NAME,
-				SetupTestableTomcatTask.class);
+				SetUpTestableTomcatTask1.class);
 
-		setupTestableTomcatTask.onlyIf(
+		setUpTestableTomcatTask1.onlyIf(
 			new Spec<Task>() {
 
 				@Override
@@ -173,7 +173,7 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 
 					try {
 						if (_startedAppServerBinDirs.contains(
-								setupTestableTomcatTask.getBinDir())) {
+								setUpTestableTomcatTask1.getBinDir())) {
 
 							return false;
 						}
@@ -187,11 +187,11 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 
 			});
 
-		setupTestableTomcatTask.setDescription(
+		setUpTestableTomcatTask1.setDescription(
 			"Configures the local Liferay Tomcat bundle to run integration " +
 				"tests.");
 
-		setupTestableTomcatTask.setDir(
+		setUpTestableTomcatTask1.setDir(
 			new Callable<File>() {
 
 				@Override
@@ -202,17 +202,17 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 			});
 
 		configureJmxRemotePortSpec(
-			setupTestableTomcatTask, testIntegrationTomcatExtension);
+			setUpTestableTomcatTask1, testIntegrationTomcatExtension);
 		configureManagerSpec(
-			setupTestableTomcatTask, testIntegrationTomcatExtension);
+			setUpTestableTomcatTask1, testIntegrationTomcatExtension);
 		configureModuleFrameworkBaseDirSpec(
-			setupTestableTomcatTask, testIntegrationTomcatExtension);
+			setUpTestableTomcatTask1, testIntegrationTomcatExtension);
 
-		return setupTestableTomcatTask;
+		return setUpTestableTomcatTask1;
 	}
 
 	protected StartTestableTomcatTask addTaskStartTestableTomcat(
-		Project project, SetupTestableTomcatTask setupTestableTomcatTask,
+		Project project, SetUpTestableTomcatTask1 setUpTestableTomcatTask1,
 		StopTestableTomcatTask stopTestableTomcatTask,
 		final TestIntegrationTomcatExtension testIntegrationTomcatExtension) {
 
@@ -220,7 +220,7 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 			project, START_TESTABLE_TOMCAT_TASK_NAME,
 			StartTestableTomcatTask.class);
 
-		startTestableTomcatTask.dependsOn(setupTestableTomcatTask);
+		startTestableTomcatTask.dependsOn(setUpTestableTomcatTask1);
 
 		Action<Task> action = new Action<Task>() {
 

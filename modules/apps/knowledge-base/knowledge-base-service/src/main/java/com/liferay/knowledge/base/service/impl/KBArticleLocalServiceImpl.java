@@ -109,6 +109,22 @@ import java.util.Map;
 public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 	@Override
+	public FileEntry addAttachment(
+			long userId, long resourcePrimKey, String fileName,
+			InputStream inputStream, String mimeType)
+		throws PortalException {
+
+		KBArticle kbArticle = kbArticleLocalService.getLatestKBArticle(
+			resourcePrimKey, WorkflowConstants.STATUS_ANY);
+
+		return portletFileRepository.addPortletFileEntry(
+			kbArticle.getGroupId(), userId, KBArticle.class.getName(),
+			kbArticle.getClassPK(), KBPortletKeys.KNOWLEDGE_BASE_ARTICLE,
+			kbArticle.getAttachmentsFolderId(), inputStream, fileName, mimeType,
+			false);
+	}
+
+	@Override
 	public KBArticle addKBArticle(
 			long userId, long parentResourceClassNameId,
 			long parentResourcePrimKey, String title, String urlTitle,
@@ -1333,21 +1349,6 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		kbArticle.setViewCount(viewCount);
 
 		kbArticlePersistence.update(kbArticle);
-	}
-
-	protected void addAttachment(
-			long userId, long resourcePrimKey, String fileName,
-			InputStream inputStream, String mimeType)
-		throws PortalException {
-
-		KBArticle kbArticle = kbArticleLocalService.getLatestKBArticle(
-			resourcePrimKey, WorkflowConstants.STATUS_ANY);
-
-		portletFileRepository.addPortletFileEntry(
-			kbArticle.getGroupId(), userId, KBArticle.class.getName(),
-			kbArticle.getClassPK(), KBPortletKeys.KNOWLEDGE_BASE_ARTICLE,
-			kbArticle.getAttachmentsFolderId(), inputStream, fileName, mimeType,
-			false);
 	}
 
 	protected void addKBArticleAttachment(

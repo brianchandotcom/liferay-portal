@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Knowledge Base Item Selector Web
+Bundle-SymbolicName: com.liferay.knowledge.base.item.selector.web
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Knowledge Base
+Web-ContextPath: /knowledge-base-item-selector-web

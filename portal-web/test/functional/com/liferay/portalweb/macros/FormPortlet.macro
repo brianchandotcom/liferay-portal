@@ -42,4 +42,10 @@
 
 		<execute function="AssertTextEquals" locator1="Message#ERROR_FORM_FIELD_REQUIRED" value1="${validationErrorMessage}" />
 	</command>
+
+	<command name="submitWithoutPortletClick">
+		<execute function="AssertClick" locator1="Button#SUBMIT" value1="Submit" />
+
+		<execute macro="Alert#viewSuccessMessage" />
+	</command>
 </definition>

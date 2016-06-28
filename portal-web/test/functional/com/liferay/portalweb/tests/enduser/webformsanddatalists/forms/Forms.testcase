@@ -2904,7 +2904,7 @@
 			<var name="fieldName" value="CheckboxField" />
 		</execute>
 
-		<execute macro="FormPortlet#submit" />
+		<execute macro="FormPortlet#submitWithoutPortletClick" />
 
 		<execute macro="Navigator#openURL" />
 

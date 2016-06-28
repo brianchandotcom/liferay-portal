@@ -114,7 +114,13 @@ public class GradleTemplatesTest {
 				Assert.assertTrue(
 					"Missing " + otherDirPath, Files.exists(otherDirPath));
 
-				Path gitIgnorePath = path.resolve(".gitignore");
+				Path gitIgnorePath = path.resolve("gitignore");
+				Path dotGitIgnorePath = path.resolve(".gitignore");
+
+				Assert.assertFalse(
+					"Rename " + dotGitIgnorePath + " to " + gitIgnorePath +
+						" to bypass GRADLE-1883",
+					Files.exists(dotGitIgnorePath));
 
 				if (gitIgnoreForbidden) {
 					Assert.assertFalse(

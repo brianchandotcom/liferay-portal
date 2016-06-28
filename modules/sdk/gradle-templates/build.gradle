@@ -1,0 +1,3 @@
+processResources {
+	rename "gitignore", ".gitignore"
+}

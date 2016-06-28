@@ -32,11 +32,26 @@ public class AddMenuTag extends IncludeTag {
 
 	@Override
 	public int doEndTag() throws JspException {
+		List<AddMenuItem> addMenuFavItems =
+			(List<AddMenuItem>)request.getAttribute(
+				"liferay-frontend:add-menu:addMenuFavItems");
+
 		List<AddMenuItem> addMenuItems =
 			(List<AddMenuItem>)request.getAttribute(
 				"liferay-frontend:add-menu:addMenuItems");
 
-		if (ListUtil.isEmpty(addMenuItems)) {
+		List<AddMenuItem> addMenuPrimaryItems =
+			(List<AddMenuItem>)request.getAttribute(
+				"liferay-frontend:add-menu:addMenuPrimaryItems");
+
+		List<AddMenuItem> addMenuRecentItems =
+			(List<AddMenuItem>)request.getAttribute(
+				"liferay-frontend:add-menu:addMenuRecentItems");
+
+		if (ListUtil.isEmpty(addMenuFavItems) &&
+			ListUtil.isEmpty(addMenuItems) &&
+			ListUtil.isEmpty(addMenuRecentItems) &&
+			ListUtil.isEmpty(addMenuPrimaryItems)) {
 			return SKIP_BODY;
 		}
 
@@ -46,7 +61,18 @@ public class AddMenuTag extends IncludeTag {
 	@Override
 	public int doStartTag() {
 		request.setAttribute(
+			"liferay-frontend:add-menu:addMenuFavItems", _addMenuFavItems);
+
+		request.setAttribute(
 			"liferay-frontend:add-menu:addMenuItems", _addMenuItems);
+
+		request.setAttribute(
+			"liferay-frontend:add-menu:addMenuPrimaryItems",
+			_addMenuPrimaryItems);
+
+		request.setAttribute(
+			"liferay-frontend:add-menu:addMenuRecentItems",
+			_addMenuRecentItems);
 
 		return EVAL_BODY_INCLUDE;
 	}
@@ -64,7 +90,10 @@ public class AddMenuTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		_addMenuFavItems = new ArrayList<>();
 		_addMenuItems = new ArrayList<>();
+		_addMenuPrimaryItems = new ArrayList<>();
+		_addMenuRecentItems = new ArrayList<>();
 	}
 
 	@Override
@@ -82,6 +111,9 @@ public class AddMenuTag extends IncludeTag {
 			"liferay-frontend:add-menu:addMenuItems", addMenuItems);
 	}
 
+	private List<AddMenuItem> _addMenuFavItems = new ArrayList<>();
 	private List<AddMenuItem> _addMenuItems = new ArrayList<>();
+	private List<AddMenuItem> _addMenuPrimaryItems = new ArrayList<>();
+	private List<AddMenuItem> _addMenuRecentItems = new ArrayList<>();
 
 }

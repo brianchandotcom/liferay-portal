@@ -61,6 +61,10 @@ public class IconTag extends IncludeTag {
 		return _cssClass;
 	}
 
+	public String getIcon() {
+		return _icon;
+	}
+
 	public void setAlt(String alt) {
 		_alt = alt;
 	}

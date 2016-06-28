@@ -93,7 +93,7 @@ public class GradleTemplatesTest {
 						Path dirPath, BasicFileAttributes basicFileAttributes)
 					throws IOException {
 
-					if (Files.exists(dirPath.resolve("language.properties"))) {
+					if (Files.exists(dirPath.resolve("Language.properties"))) {
 						String glob = "Language_*.properties";
 
 						Assert.assertFalse(

@@ -12,23 +12,13 @@
  * details.
  */
 
-package com.liferay.knowledge.base.upgrade.v2_0_0;
-
-import com.liferay.portal.kernel.upgrade.BaseUpgradeRepository;
+package com.liferay.knowledge.base.constants;
 
 /**
- * @author Adolfo Pérez
+ * @author Roberto Díaz
  */
-public class UpgradeRepository extends BaseUpgradeRepository {
+public class KBConstants {
 
-	@Override
-	protected String[][] getRenamePortletNamesArray() {
-		return new String[][] {
-			{
-				"com.liferay.knowledgebase.admin.portlet.AdminPortlet",
-				"com.liferay.knowledge.base"
-			}
-		};
-	}
+	public static final String SERVICE_NAME = "com.liferay.knowledge.base";
 
 }

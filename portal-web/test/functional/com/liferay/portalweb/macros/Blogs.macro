@@ -211,6 +211,32 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="AP#ASSET_ABSTRACT_DESCRIPTION" value1="${entryContent}" />
 	</command>
 
+	<command name="addViaAPSelectScope">
+		<execute function="Click#makeVisibleClickAt" locator1="AP#ADD_ASSET_PLUS_ICON" />
+
+		<execute function="Click" locator1="AP#ADD_ASSET_SCOPED" />
+
+		<execute function="SelectFrame" locator1="IFrame#MODAL_IFRAME" />
+
+		<execute function="Select" locator1="Select#TYPE" value1="Blogs Entry" />
+
+		<execute function="AssertClick" locator1="Button#ADD" value1="Add" />
+
+		<execute function="Type#typeEditor" locator1="AlloyEditor#TITLE_FIELD" value1="${entryTitle}" />
+		<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${entryContent}" />
+
+		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
+
+		<execute function="SelectFrameTop" value1="relative=top" />
+
+		<execute function="Pause" locator1="5000" />
+
+		<var name="key_assetTitle" value="${entryTitle}" />
+
+		<execute function="AssertTextEquals" locator1="AP#ASSET_ABSTRACT_TITLE" value1="${entryTitle}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="AP#ASSET_ABSTRACT_DESCRIPTION" value1="${entryContent}" />
+	</command>
+
 	<command name="addWithCustomAbstract">
 		<execute macro="BlogsNavigator#gotoAddEntry" />
 

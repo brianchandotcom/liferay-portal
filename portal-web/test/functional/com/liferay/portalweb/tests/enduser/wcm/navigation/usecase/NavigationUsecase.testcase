@@ -206,6 +206,15 @@
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Roles" />
+		</execute>
+
+		<execute macro="Role#assignRegRoleCP">
+			<var name="roleName" value="Power User" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
 		<execute macro="User#logoutPG" />
 
 		<execute macro="User#loginUserPG">

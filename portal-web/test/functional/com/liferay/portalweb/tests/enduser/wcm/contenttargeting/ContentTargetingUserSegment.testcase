@@ -47,6 +47,8 @@
 	</tear-down>
 
 	<command name="AddGlobalUserSegmentToSiteViaUserSegmentContentDisplayPortlet" priority="5">
+		<property name="content.targeting.release" value="true" />
+
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Global" />
 		</execute>
@@ -129,6 +131,8 @@
 	</command>
 
 	<command name="AddParentSiteUserSegmentToChildSiteViaUserSegmentContentDisplayPortlet" priority="5">
+		<property name="content.targeting.release" value="true" />
+
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>
@@ -258,6 +262,8 @@
 	</command>
 
 	<command name="AddUserSegmentBehaviorContentVisitedCP" priority="5">
+		<property name="content.targeting.release" value="true" />
+
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>
@@ -315,6 +321,8 @@
 	</command>
 
 	<command name="AddUserSegmentBehaviorPageVisitedCP" priority="5">
+		<property name="content.targeting.release" value="true" />
+
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>
@@ -350,6 +358,8 @@
 	</command>
 
 	<command name="AddUserSegmentBehaviorScorePointsCP" priority="5">
+		<property name="content.targeting.release" value="true" />
+
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>
@@ -385,6 +395,8 @@
 	</command>
 
 	<command name="AddUserSegmentBlankCP" priority="5">
+		<property name="content.targeting.release" value="true" />
+
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>
@@ -402,6 +414,8 @@
 	</command>
 
 	<command name="AddUserSegmentSocialFacebookAgeCP" priority="5">
+		<property name="content.targeting.release" value="true" />
+
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>
@@ -439,6 +453,8 @@
 	</command>
 
 	<command name="AddUserSegmentSocialFacebookCityCP" priority="5">
+		<property name="content.targeting.release" value="true" />
+
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>
@@ -474,6 +490,8 @@
 	</command>
 
 	<command name="AddUserSegmentSocialFacebookEducationCP" priority="5">
+		<property name="content.targeting.release" value="true" />
+
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>
@@ -511,6 +529,8 @@
 	</command>
 
 	<command name="AddUserSegmentSocialFacebookFriendsCP" priority="5">
+		<property name="content.targeting.release" value="true" />
+
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>
@@ -548,6 +568,8 @@
 	</command>
 
 	<command name="AddUserSegmentSocialFacebookGenderCP" priority="5">
+		<property name="content.targeting.release" value="true" />
+
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>
@@ -583,6 +605,8 @@
 	</command>
 
 	<command name="AddUserSegmentSocialFacebookPageLikeCP" priority="5">
+		<property name="content.targeting.release" value="true" />
+
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>
@@ -618,6 +642,8 @@
 	</command>
 
 	<command name="AddUserSegmentSystemAttributesBrowserCP" priority="5">
+		<property name="content.targeting.release" value="true" />
+
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>
@@ -653,6 +679,8 @@
 	</command>
 
 	<command name="AddUserSegmentSystemAttributesDeviceCP" priority="5">
+		<property name="content.targeting.release" value="true" />
+
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>
@@ -701,6 +729,8 @@
 	</command>
 
 	<command name="AddUserSegmentSystemAttributesLocationCP" priority="5">
+		<property name="content.targeting.release" value="true" />
+
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>
@@ -738,6 +768,8 @@
 	</command>
 
 	<command name="AddUserSegmentSystemAttributesOperatingSystemCP" priority="5">
+		<property name="content.targeting.release" value="true" />
+
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>
@@ -773,6 +805,8 @@
 	</command>
 
 	<command name="AddUserSegmentSystemAttributesTimeCP" priority="5">
+		<property name="content.targeting.release" value="true" />
+
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>
@@ -810,6 +844,8 @@
 	</command>
 
 	<command name="AddUserSegmentUserAttributesAgeCP" priority="5">
+		<property name="content.targeting.release" value="true" />
+
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>
@@ -847,6 +883,8 @@
 	</command>
 
 	<command name="AddUserSegmentUserAttributesGenderCP" priority="5">
+		<property name="content.targeting.release" value="true" />
+
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>
@@ -882,6 +920,8 @@
 	</command>
 
 	<command name="AddUserSegmentUserAttributesOrganizationMemberCP" priority="5">
+		<property name="content.targeting.release" value="true" />
+
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
@@ -928,6 +968,8 @@
 	</command>
 
 	<command name="AddUserSegmentUserAttributesOrganizationRoleCP" priority="5">
+		<property name="content.targeting.release" value="true" />
+
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
@@ -976,6 +1018,8 @@
 	</command>
 
 	<command name="AddUserSegmentUserAttributesRegularRoleCP" priority="5">
+		<property name="content.targeting.release" value="true" />
+
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>
@@ -1011,6 +1055,8 @@
 	</command>
 
 	<command name="AddUserSegmentUserAttributesSiteMemberCP" priority="5">
+		<property name="content.targeting.release" value="true" />
+
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>
@@ -1046,6 +1092,8 @@
 	</command>
 
 	<command name="AddUserSegmentUserAttributesSiteRoleCP" priority="5">
+		<property name="content.targeting.release" value="true" />
+
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>
@@ -1083,6 +1131,8 @@
 	</command>
 
 	<command name="AddUserSegmentUserAttributesUserGroupMemberCP" priority="5">
+		<property name="content.targeting.release" value="true" />
+
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="User Groups" />
 		</execute>
@@ -1126,6 +1176,8 @@
 	</command>
 
 	<command name="AddUserSegmentUserAttributesUserSignedInCP" priority="5">
+		<property name="content.targeting.release" value="true" />
+
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>
@@ -1158,6 +1210,8 @@
 	</command>
 
 	<command name="DeleteUserSegmentCP" priority="5">
+		<property name="content.targeting.release" value="true" />
+
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>
@@ -1187,6 +1241,8 @@
 	</command>
 
 	<command name="EditUserSegmentCP" priority="5">
+		<property name="content.targeting.release" value="true" />
+
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>
@@ -1237,6 +1293,8 @@
 	</command>
 
 	<command name="UserSegmentContentViewReport" priority="5">
+		<property name="content.targeting.release" value="true" />
+
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>
@@ -1333,6 +1391,8 @@
 	</command>
 
 	<command name="ViewRulesAppliedUserSegmentContentDisplayPortlet" priority="5">
+		<property name="content.targeting.release" value="true" />
+
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>

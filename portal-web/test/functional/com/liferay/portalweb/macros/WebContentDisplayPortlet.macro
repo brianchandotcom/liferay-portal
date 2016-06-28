@@ -149,7 +149,9 @@
 		</if>
 
 		<execute function="SelectFrameTop" />
+
 		<execute function="SelectFrame" locator1="IFrame#MODAL_IFRAME" />
+
 		<execute function="Type#clickAtSendKeys" locator1="TextInput#NAME" value1="Template Edit" />
 
 		<if>
@@ -394,11 +396,12 @@
 		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
 		<execute macro="Navigator#gotoNavItem">
 			<var name="navItem" value="Scope" />
 		</execute>
 
-		<execute function="AssertSelectedLabel#assertPartialSelectedLabel" locator1="Select#SCOPE" value1="${scopeSelection}" />
+		<execute function="AssertSelectedLabel" locator1="Select#SCOPE" value1="${scopeSelection}" />
 	</command>
 
 	<command name="viewContentPageBreak">

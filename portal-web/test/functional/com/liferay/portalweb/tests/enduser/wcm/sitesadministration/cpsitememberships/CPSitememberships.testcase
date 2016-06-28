@@ -363,8 +363,11 @@
 
 		<execute macro="Site#addBlankCP">
 			<var name="parentSiteName" value="Site Name" />
-			<var name="siteLimitMembership" value="Yes" />
 			<var name="siteName" value="Child SiteName" />
+		</execute>
+
+		<execute macro="Site#limitMembership">
+			<var name="siteLimitMembership" value="Yes" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">

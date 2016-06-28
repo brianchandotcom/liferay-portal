@@ -179,11 +179,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ASSIGNEES</td>
-	<td>//a[@role='menuitem' and contains(.,'Assignees')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>BASIC_ARTICLE</td>
 	<td>//a[contains(@id,'menuItem') and contains(.,'Basic Article')]</td>
 	<td></td>

@@ -787,7 +787,9 @@
 	<command name="viewContentSharingPG">
 		<execute function="Click#makeVisibleClickAt" locator1="AP#ADD_ASSET_PLUS_ICON" />
 
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+		<execute function="AssertClick" locator1="AP#ADD_ASSET_SCOPED" value1="Add Content (Select Scope and Type)" />
+
+		<execute function="SelectFrame" locator1="IFrame#MODAL_IFRAME" />
 
 		<execute function="Select" locator1="Select#SCOPE" value1="${siteScope1}" />
 
@@ -803,6 +805,8 @@
 			<var name="assetContent" value="${assetContent}" />
 			<var name="assetTitle" value="${assetTitle}" />
 		</execute>
+
+		<execute function="Click" locator1="APAsset#ASSET_BACK_TO_ICON" />
 	</command>
 
 	<command name="viewCustomADTRichSummaryPG">

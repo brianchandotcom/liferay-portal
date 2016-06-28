@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>ASSET_BACK_TO_ICON</td>
+	<td>//span[@class='header-back-to']/a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ASSET_TITLE</td>
 	<td>//h4[@class='asset-title']/a[contains(.,'${key_assetTitle}')]</td>
 	<td></td>

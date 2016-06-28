@@ -1783,6 +1783,11 @@
 		<execute function="AssertClick" locator1="Calendar#CURRENT_SITE_CALENDARS_CALENDAR" value1="${siteCalendarName}" />
 	</command>
 
+	<command name="viewNoRepeating">
+		<execute function="AssertNotVisible" locator1="CalendarEditEvent#REPEAT_SUMMARY" />
+		<execute function="AssertNotChecked" locator1="CalendarEditEvent#REPEAT_CHECKBOX" />
+	</command>
+
 	<command name="viewNoUserInviteWithUnapprovedWorkflow">
 		<execute macro="TestCase#getSiteName">
 			<return from="siteName" name="siteName" />

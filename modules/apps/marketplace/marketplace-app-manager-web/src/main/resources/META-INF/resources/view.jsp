@@ -129,7 +129,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "app-man
 		</liferay-ui:search-container-results>
 
 		<liferay-ui:search-container-row
-			className="com.liferay.marketplace.app.manager.web.util.AppDisplay"
+			className="com.liferay.marketplace.app.manager.web.internal.util.AppDisplay"
 			modelVar="appDisplay"
 		>
 			<%@ include file="/app_display_columns.jspf" %>

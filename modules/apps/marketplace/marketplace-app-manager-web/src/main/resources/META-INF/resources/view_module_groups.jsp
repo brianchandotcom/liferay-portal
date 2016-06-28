@@ -142,7 +142,7 @@ MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, request, renderR
 		</liferay-ui:search-container-results>
 
 		<liferay-ui:search-container-row
-			className="com.liferay.marketplace.app.manager.web.util.ModuleGroupDisplay"
+			className="com.liferay.marketplace.app.manager.web.internal.util.ModuleGroupDisplay"
 			modelVar="moduleGroupDisplay"
 		>
 			<%@ include file="/module_group_display_columns.jspf" %>

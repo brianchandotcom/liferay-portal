@@ -385,7 +385,6 @@
 		</execute>
 	</command>
 
-
 	<command name="AddCampaignLinkCP" priority="5">
 		<property name="content.targeting.release" value="true" />
 

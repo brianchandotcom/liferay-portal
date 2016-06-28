@@ -216,12 +216,12 @@
 </tr>
 <tr>
 	<td>MY_CALENDARS_CALENDAR_ADDITIONAL</td>
-	<td>//div[contains(@id,'CalendarPortlet_myCalendarList')]/div/div/span[contains(.,'${key_user} - ${key_calendarName}')]</td>
+	<td>//div[contains(@id,'CalendarPortlet_myCalendarList')]/div/div/span[contains(.,'${key_calendarName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MY_CALENDARS_CALENDAR_ADDITIONAL_MENULIST_ARROW</td>
-	<td>//div[contains(@id,'CalendarPortlet_myCalendarList')]/div/div[contains(., '${key_user} - ${key_calendarName}')]/div[@class='calendar-list-item-arrow']/i[contains(@class,'icon-caret-down')]</td>
+	<td>//div[contains(@id,'CalendarPortlet_myCalendarList')]/div/div[contains(., '${key_calendarName}')]/div[@class='calendar-list-item-arrow']/i[contains(@class,'icon-caret-down')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -314,7 +314,7 @@
 </tr>
 <tr>
 	<td>CURRENT_SITE_CALENDARS_CALENDAR_ADDITIONAL</td>
-	<td>//div[contains(@id,'CalendarPortlet_siteCalendarList')]/div/div/span[contains(.,'${key_site} - ${key_calendarName}')]</td>
+	<td>//div[contains(@id,'CalendarPortlet_siteCalendarList')]/div/div/span[contains(.,'${key_calendarName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -329,7 +329,7 @@
 </tr>
 <tr>
 	<td>CURRENT_SITE_CALENDARS_CALENDAR_ADDITIONAL_MENULIST_ARROW</td>
-	<td>//div[contains(@id,'CalendarPortlet_siteCalendarList')]//div[contains(., '${key_site} - ${key_calendarName}')]/div[@class='calendar-list-item-arrow']|//div[contains(@id,'CalendarPortlet_siteCalendarList')]//div[contains(., '${key_site} - ${key_calendarName}')]/div[@class='calendar-list-item-arrow']/i[contains(@class,'icon-caret-down')]</td>
+	<td>//div[contains(@id,'CalendarPortlet_siteCalendarList')]//div[contains(., '${key_calendarName}')]/div[@class='calendar-list-item-arrow']|//div[contains(@id,'CalendarPortlet_siteCalendarList')]//div[contains(., '${key_calendarName}')]/div[@class='calendar-list-item-arrow']/i[contains(@class,'icon-caret-down')]</td>
 	<td></td>
 </tr>
 <tr>

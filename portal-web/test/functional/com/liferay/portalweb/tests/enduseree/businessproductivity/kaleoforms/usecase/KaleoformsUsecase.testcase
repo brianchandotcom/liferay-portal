@@ -4693,6 +4693,10 @@
 			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
+		</execute>
+
 		<execute macro="Workflow#approveTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
@@ -5593,6 +5597,10 @@
 
 		<execute macro="KaleoFormsAdmin#viewProcess">
 			<var name="kfProcessName" value="${kfProcessName} Edited" />
+		</execute>
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
 		<execute macro="Workflow#approveTaskByActions">
@@ -7209,6 +7217,10 @@
 			<var name="notificationCount" value="2" />
 		</execute>
 
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
+		</execute>
+
 		<execute macro="Workflow#rejectTaskByActions">
 			<var name="workflowAssetTitle" value="${kfProcessName}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
@@ -7238,6 +7250,10 @@
 		<execute macro="KaleoFormsPortlet#viewMyPendingRequestsField">
 			<var name="fieldName" value="${fieldName}" />
 			<var name="kfProcessFieldData" value="${kfProcessFieldData}" />
+		</execute>
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
 		<execute macro="KaleoFormsPortlet#resubmitPendingProcessViaMyPendingRequests" />
@@ -7365,6 +7381,10 @@
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#saveProcessRecord" />
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
+		</execute>
 
 		<execute macro="Workflow#updateDueDateTaskByActions">
 			<var name="workflowAssetTitle" value="${kfProcessName}" />
@@ -8500,6 +8520,10 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
+		</execute>
+
 		<execute macro="Workflow#approveTaskByActions">
 			<var name="workflowAssetTitle" value="${kfProcessName}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
@@ -8841,6 +8865,10 @@
 
 		<execute macro="KaleoFormsAdmin#saveProcessRecord" />
 
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
+		</execute>
+
 		<execute macro="Workflow#updateDueDateTaskByActions">
 			<var name="workflowActivityComment" value="Updating the due date on a process assigned to my roles." />
 			<var name="workflowAssetTitle" value="${kfProcessName}" />
@@ -8855,6 +8883,10 @@
 			<var name="workflowAssetTitle" value="${kfProcessName}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
+		</execute>
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
 		<execute macro="Workflow#updateDueDateTaskByActions">
@@ -8890,6 +8922,10 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
+		</execute>
+
 		<execute macro="KaleoFormsPortlet#approveProcess">
 			<var name="comment" value="Process is approved." />
 			<var name="kfProcessName" value="${kfProcessName}" />
@@ -8913,6 +8949,10 @@
 		<execute macro="WorkflowAsset#previewViewContent">
 			<var name="fieldLabel" value="${fieldName}" />
 			<var name="fieldValue" value="${kfProcessFieldData}" />
+		</execute>
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
 		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsAllComments">

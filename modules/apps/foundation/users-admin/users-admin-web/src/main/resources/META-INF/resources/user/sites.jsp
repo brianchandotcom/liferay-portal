@@ -62,8 +62,13 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites"
 		/>
 
 		<%
-		List<UserGroupRole> userGroupRoles = UserGroupRoleLocalServiceUtil.getUserGroupRoles(selUser.getUserId(), group.getGroupId(), 0, PropsValues.USERS_ADMIN_ROLE_COLUMN_LIMIT);
-		int userGroupRolesCount = UserGroupRoleLocalServiceUtil.getUserGroupRolesCount(selUser.getUserId(), group.getGroupId());
+		List<UserGroupRole> userGroupRoles = new ArrayList<UserGroupRole>();
+		int userGroupRolesCount = 0;
+
+		if (selUser != null) {
+			userGroupRoles = UserGroupRoleLocalServiceUtil.getUserGroupRoles(selUser.getUserId(), group.getGroupId(), 0, PropsValues.USERS_ADMIN_ROLE_COLUMN_LIMIT);
+			userGroupRolesCount = UserGroupRoleLocalServiceUtil.getUserGroupRolesCount(selUser.getUserId(), group.getGroupId());
+		}
 		%>
 
 		<liferay-ui:search-container-column-text
@@ -71,7 +76,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites"
 			value="<%= HtmlUtil.escape(UsersAdminUtil.getUserColumnText(locale, userGroupRoles, UsersAdmin.USER_GROUP_ROLE_TITLE_ACCESSOR, userGroupRolesCount)) %>"
 		/>
 
-		<c:if test="<%= !portletName.equals(myAccountPortletId) && !SiteMembershipPolicyUtil.isMembershipRequired(selUser.getUserId(), group.getGroupId()) && !SiteMembershipPolicyUtil.isMembershipProtected(permissionChecker, selUser.getUserId(), group.getGroupId()) %>">
+		<c:if test="<%= !portletName.equals(myAccountPortletId) && (selUser != null) && !SiteMembershipPolicyUtil.isMembershipRequired(selUser.getUserId(), group.getGroupId()) && !SiteMembershipPolicyUtil.isMembershipProtected(permissionChecker, selUser.getUserId(), group.getGroupId()) %>">
 			<liferay-ui:search-container-column-text cssClass="list-group-item-field">
 				<c:if test="<%= group.isManualMembership() %>">
 					<a class="modify-link" data-rowId="<%= group.getGroupId() %>" href="javascript:;"><%= removeGroupIcon %></a>
@@ -125,7 +130,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites"
 						<%
 						PortletURL groupSelectorURL = PortletProviderUtil.getPortletURL(request, Group.class.getName(), PortletProvider.Action.BROWSE);
 
-						groupSelectorURL.setParameter("p_u_i_d", String.valueOf(selUser.getUserId()));
+						groupSelectorURL.setParameter("p_u_i_d", (selUser == null) ? "0" : String.valueOf(selUser.getUserId()));
 						groupSelectorURL.setParameter("includeCurrentGroup", Boolean.FALSE.toString());
 						groupSelectorURL.setParameter("manualMembership", Boolean.TRUE.toString());
 						groupSelectorURL.setParameter("eventName", eventName);
@@ -242,8 +247,13 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites"
 		/>
 
 		<%
-		List<Role> inheritedRoles = RoleLocalServiceUtil.getUserGroupGroupRoles(selUser.getUserId(), inheritedSite.getGroupId(), 0, 50);
-		int inheritedRolesCount = RoleLocalServiceUtil.getUserGroupGroupRolesCount(selUser.getUserId(), inheritedSite.getGroupId());
+		List<Role> inheritedRoles = new ArrayList<Role>();
+		int inheritedRolesCount = 0;
+
+		if (selUser != null) {
+			inheritedRoles = RoleLocalServiceUtil.getUserGroupGroupRoles(selUser.getUserId(), inheritedSite.getGroupId(), 0, 50);
+			inheritedRolesCount = RoleLocalServiceUtil.getUserGroupGroupRolesCount(selUser.getUserId(), inheritedSite.getGroupId());
+		}
 		%>
 
 		<liferay-ui:search-container-column-text

@@ -30,10 +30,10 @@ User user2 = (User)row.getObject();
 	<portlet:param name="removeUserId" value="<%= String.valueOf(user2.getUserId()) %>" />
 </portlet:actionURL>
 
-<liferay-ui:icon
+<liferay-ui:icon-delete
 	icon="trash"
 	linkCssClass="icon-monospaced text-default"
-	markupView="lexicon"
 	message="delete"
+	showIcon="<%= true %>"
 	url="<%= deleteTeamUsersURL %>"
 />

@@ -43,6 +43,10 @@ public class AddMenuItemTag extends IncludeTag {
 		_title = title;
 	}
 
+	public void setType(String type) {
+		_type = type;
+	}
+
 	public void setUrl(String url) {
 		_url = url;
 	}
@@ -71,6 +75,7 @@ public class AddMenuItemTag extends IncludeTag {
 	private Map<String, Object> _anchorData;
 	private String _id;
 	private String _title;
+	private String _type;
 	private String _url;
 
 }

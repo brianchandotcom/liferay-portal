@@ -17,9 +17,6 @@ package com.liferay.jenkins.results.parser;
 import java.io.File;
 import java.io.StringReader;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -35,8 +32,6 @@ import java.util.concurrent.TimeoutException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.tools.ant.Project;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -45,67 +40,27 @@ import org.json.JSONObject;
  */
 public class LoadBalancerUtil {
 
-	public static String getMostAvailableMasterURL(Project project)
-		throws Exception {
-
-		return getMostAvailableMasterURL(
-			"base.invocation.url", project.getProperty("base.invocation.url"),
-			"invoked.job.batch.size",
-			project.getProperty("invoked.job.batch.size"),
-			"top.level.shared.dir",
-			project.getProperty("top.level.shared.dir"));
-	}
-
 	public static String getMostAvailableMasterURL(Properties properties)
 		throws Exception {
 
 		long start = System.currentTimeMillis();
 
-		boolean readOnly = false;
 		int retryCount = 0;
 
 		while (true) {
 			String baseInvocationURL = properties.getProperty(
 				"base.invocation.url");
 
-			String hostNamePrefix = getHostNamePrefix(baseInvocationURL);
+			String masterNamePrefix = getMasterNamePrefix(baseInvocationURL);
 
-			if (hostNamePrefix.equals(baseInvocationURL)) {
+			if (masterNamePrefix.equals(baseInvocationURL)) {
 				return baseInvocationURL;
 			}
 
-			List<String> hostNames = getHostNames(properties, hostNamePrefix);
+			List<String> masters = getMasters(masterNamePrefix, properties);
 
-			if (hostNames.size() == 1) {
-				return "http://" + hostNamePrefix + "-1";
-			}
-
-			File sharedDir = new File(
-				properties.getProperty("jenkins.shared.dir", "NULL"));
-
-			if (!sharedDir.exists() || !sharedDir.isDirectory()) {
-				readOnly = true;
-
-				System.out.println(
-					"Load balancer will run in read only mode because of " +
-						"missing shared directory " + sharedDir.getPath() +
-							".");
-			}
-
-			Map<String, Integer> recentJobMap = new HashMap<>();
-
-			if (!readOnly) {
-				File baseDir = new File(sharedDir, hostNamePrefix);
-
-				File semaphoreFile = new File(
-					baseDir, hostNamePrefix + ".semaphore");
-
-				waitForTurn(semaphoreFile, hostNames.size());
-
-				JenkinsResultsParserUtil.write(semaphoreFile, _MY_HOST_NAME);
-
-				recentJobMap = getRecentJobCountMap(
-					new File(baseDir, "recentJob"));
+			if (masters.size() == 1) {
+				return "http://" + masterNamePrefix + "-1";
 			}
 
 			int maxAvailableSlaveCount = Integer.MIN_VALUE;
@@ -113,11 +68,10 @@ public class LoadBalancerUtil {
 
 			try {
 				List<FutureTask<Integer>> futureTasks = new ArrayList<>(
-					hostNames.size());
+					masters.size());
 
 				startParallelTasks(
-					recentJobMap, hostNames, hostNamePrefix, properties,
-					futureTasks);
+					futureTasks, masters, masterNamePrefix, properties);
 
 				List<Integer> badIndices = new ArrayList<>(futureTasks.size());
 				List<Integer> maxIndices = new ArrayList<>(futureTasks.size());
@@ -136,7 +90,7 @@ public class LoadBalancerUtil {
 					catch (TimeoutException te) {
 						System.out.println(
 							"Unable to assess master availability for " +
-								hostNames.get(i) + ".");
+								masters.get(i) + ".");
 
 						availableSlaveCount = null;
 					}
@@ -147,7 +101,7 @@ public class LoadBalancerUtil {
 						continue;
 					}
 
-					sb.append(hostNames.get(i));
+					sb.append(masters.get(i));
 					sb.append(" : ");
 					sb.append(availableSlaveCount);
 					sb.append("\n");
@@ -181,7 +135,7 @@ public class LoadBalancerUtil {
 				}
 				else {
 					while (true) {
-						x = getRandomValue(0, hostNames.size() - 1);
+						x = getRandomValue(0, masters.size() - 1);
 
 						if (badIndices.contains(x)) {
 							continue;
@@ -192,73 +146,40 @@ public class LoadBalancerUtil {
 				}
 
 				sb.append("\nMost available master ");
-				sb.append(hostNames.get(x));
+				sb.append(masters.get(x));
 				sb.append(" has ");
 				sb.append(maxAvailableSlaveCount);
 				sb.append(" available slaves.");
 
 				System.out.println(sb);
 
-				return "http://" + hostNames.get(x);
+				return "http://" + masters.get(x);
 			}
 			finally {
-				if (!readOnly) {
-					File baseDir = new File(sharedDir, hostNamePrefix);
+				if (recentBatchPeriod > 0) {
+					List<BatchSizeRecord> masterRecentBatchSizes =
+						_recentBatchSizesMap.get(masters.get(x));
 
-					File semaphoreFile = new File(
-						baseDir, hostNamePrefix + ".semaphore");
-
-					long age =
-						System.currentTimeMillis() -
-							semaphoreFile.lastModified();
-
-					System.out.println(
-						"Semaphore " + semaphoreFile + " was last modified " +
-							(age / 1000F) + " seconds ago.");
-
-					String content = JenkinsResultsParserUtil.read(
-						semaphoreFile);
-
-					if (content.equals(_MY_HOST_NAME)) {
-						if (recentJobPeriod > 0) {
-							StringBuilder sb = new StringBuilder();
-
-							File recentJobFile = new File(
-								baseDir, "recentJob/" + hostNames.get(x));
-
-							if (recentJobFile.exists()) {
-								sb.append(
-									JenkinsResultsParserUtil.read(
-										recentJobFile));
-
-								if (sb.length() > 0) {
-									sb.append("|");
-								}
-							}
-
-							String invokedJobBatchSize = properties.getProperty(
-								"invoked.job.batch.size");
-
-							if ((invokedJobBatchSize == null) ||
-								(invokedJobBatchSize.length() == 0)) {
-
-								invokedJobBatchSize = "1";
-							}
-
-							sb.append(invokedJobBatchSize);
-							sb.append("-");
-							sb.append(System.currentTimeMillis());
-
-							JenkinsResultsParserUtil.write(
-								recentJobFile, sb.toString());
-						}
-
-						JenkinsResultsParserUtil.write(semaphoreFile, "");
+					if (masterRecentBatchSizes == null) {
+						masterRecentBatchSizes = new ArrayList<>();
+						_recentBatchSizesMap.put(
+							masters.get(x), masterRecentBatchSizes);
 					}
-					else {
-						System.out.println(
-							"Sempahore " + semaphoreFile +
-								" was overwritten with: " + content);
+
+					int invokedBatchSize = 0;
+
+					try {
+						invokedBatchSize = Integer.parseInt(
+							properties.getProperty("invoked.job.batch.size"));
+					}
+					catch (Exception e) {
+						invokedBatchSize = 1;
+					}
+
+					if (invokedBatchSize != 0) {
+						masterRecentBatchSizes.add(
+							new BatchSizeRecord(
+								invokedBatchSize, System.currentTimeMillis()));
 					}
 				}
 
@@ -330,48 +251,48 @@ public class LoadBalancerUtil {
 		return blacklist;
 	}
 
-	protected static String getHostNamePrefix(String baseInvocationURL) {
+	protected static String getMasterNamePrefix(String baseInvocationURL) {
 		Matcher matcher = _urlPattern.matcher(baseInvocationURL);
 
 		if (!matcher.find()) {
 			return baseInvocationURL;
 		}
 
-		return matcher.group("hostNamePrefix");
+		return matcher.group("masterNamePrefix");
 	}
 
-	protected static List<String> getHostNames(
-		Properties properties, String hostNamePrefix) {
+	protected static List<String> getMasters(
+		String masterNamePrefix, Properties properties) {
 
 		List<String> blacklist = getBlacklist(properties);
-		List<String> hostNames = new ArrayList<>();
+		List<String> masters = new ArrayList<>();
 		int i = 1;
 
 		while (true) {
 			String jenkinsLocalURL = properties.getProperty(
-				"jenkins.local.url[" + hostNamePrefix + "-" + i + "]");
+				"jenkins.local.url[" + masterNamePrefix + "-" + i + "]");
 
 			if ((jenkinsLocalURL != null) && (jenkinsLocalURL.length() > 0)) {
-				Matcher matcher = _hostnamePattern.matcher(jenkinsLocalURL);
+				Matcher matcher = _masterNamePattern.matcher(jenkinsLocalURL);
 
 				if (!matcher.find()) {
 					continue;
 				}
 
-				String jenkinsLocalHostName = matcher.group("hostname");
+				String jenkinsLocalMaster = matcher.group("masterName");
 
-				if (!blacklist.contains(jenkinsLocalHostName)) {
-					hostNames.add(jenkinsLocalHostName);
+				if (!blacklist.contains(jenkinsLocalMaster)) {
+					masters.add(jenkinsLocalMaster);
 				}
 
 				i++;
 				continue;
 			}
 
-			System.out.println("Host name prefix: " + hostNamePrefix);
-			System.out.println("Host names: " + hostNames);
+			System.out.println("Master name prefix: " + masterNamePrefix);
+			System.out.println("Masters: " + masters);
 
-			return hostNames;
+			return masters;
 		}
 	}
 
@@ -383,87 +304,55 @@ public class LoadBalancerUtil {
 		return start + (int)Math.round(size * randomDouble);
 	}
 
-	protected static Map<String, Integer> getRecentJobCountMap(File dir)
+	protected static int getRecentBatchSizesTotal(String master)
 		throws Exception {
 
-		Map<String, Integer> jobCountMap = new HashMap<>();
+		List<BatchSizeRecord> masterRecentBatchSizes = _recentBatchSizesMap.get(
+			master);
 
-		if (!dir.exists()) {
-			return jobCountMap;
+		if ((masterRecentBatchSizes == null) ||
+			masterRecentBatchSizes.isEmpty()) {
+
+			return 0;
 		}
 
-		for (File file : dir.listFiles()) {
-			if ((System.currentTimeMillis() - file.lastModified()) >
-					recentJobPeriod) {
+		int recentBatchSizesTotal = 0;
 
-				file.delete();
+		List<BatchSizeRecord> masterRecentBatchSizeEntriesToBeRemoved =
+			new ArrayList<>(masterRecentBatchSizes.size());
 
-				continue;
+		for (BatchSizeRecord recentBatchSizeRecord : masterRecentBatchSizes) {
+			if ((recentBatchSizeRecord.timestamp + recentBatchPeriod) >
+					System.currentTimeMillis()) {
+
+				recentBatchSizesTotal += recentBatchSizeRecord.size;
 			}
-
-			try {
-				String content = JenkinsResultsParserUtil.read(file);
-
-				if (content.length() == 0) {
-					continue;
-				}
-
-				StringBuilder sb = new StringBuilder();
-				int totalJobCount = 0;
-
-				for (String jobCountData : content.split("\\|")) {
-					int x = jobCountData.indexOf("-");
-
-					int jobCount = Integer.parseInt(
-						jobCountData.substring(0, x));
-					long timestamp = Long.parseLong(
-						jobCountData.substring(x + 1));
-
-					if ((timestamp + recentJobPeriod) >
-							System.currentTimeMillis()) {
-
-						if (sb.length() > 0) {
-							sb.append("|");
-						}
-
-						sb.append(jobCountData);
-
-						totalJobCount += jobCount;
-					}
-				}
-
-				jobCountMap.put(file.getName(), totalJobCount);
-
-				if (sb.length() > 0) {
-					JenkinsResultsParserUtil.write(file, sb.toString());
-				}
-				else {
-					file.delete();
-				}
-			}
-			catch (Exception e) {
-				file.delete();
+			else {
+				masterRecentBatchSizeEntriesToBeRemoved.add(
+					recentBatchSizeRecord);
 			}
 		}
 
-		return jobCountMap;
+		masterRecentBatchSizes.removeAll(
+			masterRecentBatchSizeEntriesToBeRemoved);
+
+		return recentBatchSizesTotal;
 	}
 
 	protected static void startParallelTasks(
-			Map<String, Integer> recentJobMap, List<String> hostNames,
-			String hostNamePrefix, Properties properties,
-			List<FutureTask<Integer>> futureTasks)
+			List<FutureTask<Integer>> futureTasks, List<String> masters,
+			String masterNamePrefix, Properties properties)
 		throws Exception {
 
 		ExecutorService executorService = Executors.newFixedThreadPool(
-			hostNames.size());
+			masters.size());
 
-		for (String targetHostName : hostNames) {
+		for (String targetMaster : masters) {
 			FutureTask<Integer> futureTask = new FutureTask<>(
 				new AvailableSlaveCallable(
-					recentJobMap.get(targetHostName),
+					getRecentBatchSizesTotal(targetMaster),
 					properties.getProperty(
-						"jenkins.local.url[" + targetHostName + "]")));
+						"jenkins.local.url[" + targetMaster + "]")));
 
 			executorService.execute(futureTask);
 
@@ -473,7 +362,7 @@ public class LoadBalancerUtil {
 		executorService.shutdown();
 	}
 
-	protected static void waitForTurn(File file, int hostNameCount)
+	protected static void waitForTurn(File file, int masterCount)
 		throws Exception {
 
 		long start = System.currentTimeMillis();
@@ -512,31 +401,16 @@ public class LoadBalancerUtil {
 		}
 	}
 
-	protected static long recentJobPeriod = 120 * 1000;
+	protected static long recentBatchPeriod = 120 * 1000;
 
 	private static final long _MAX_AGE = 30 * 1000;
 
-	private static final String _MY_HOST_NAME;
-
-	private static final Pattern _hostnamePattern =
-		Pattern.compile(".*/(?<hostname>[^/]+)/?");
+	private static final Pattern _masterNamePattern =
+		Pattern.compile(".*/(?<masterName>[^/]+)/?");
+	private static final Map<String, List<BatchSizeRecord>>
+		_recentBatchSizesMap = new HashMap<>();
 	private static final Pattern _urlPattern = Pattern.compile(
-		"http://(?<hostNamePrefix>.+-\\d?).liferay.com");
-
-	static {
-		String inetHostName = null;
-
-		try {
-			InetAddress inetAddress = InetAddress.getLocalHost();
-
-			inetHostName = inetAddress.getHostName();
-		}
-		catch (UnknownHostException uhe) {
-			inetHostName = "UNKNOWN";
-		}
-
-		_MY_HOST_NAME = inetHostName;
-	}
+		"http://(?<masterNamePrefix>.+-\\d?).liferay.com");
 
 	private static class AvailableSlaveCallable implements Callable<Integer> {
 
@@ -619,8 +493,8 @@ public class LoadBalancerUtil {
 
 			int availableSlaveCount = idleCount - queueCount;
 
-			if (recentJobCount != null) {
-				availableSlaveCount -= recentJobCount;
+			if (recentBatchSizesTotal != null) {
+				availableSlaveCount -= recentBatchSizesTotal;
 			}
 
 			StringBuilder sb = new StringBuilder();
@@ -633,8 +507,8 @@ public class LoadBalancerUtil {
 			sb.append(idleCount);
 			sb.append(", queue=");
 			sb.append(queueCount);
-			sb.append(", recentJobs=");
-			sb.append(recentJobCount);
+			sb.append(", recentBatchSizesTotal=");
+			sb.append(recentBatchSizesTotal);
 			sb.append(", url=");
 			sb.append(url);
 			sb.append("}");
@@ -644,14 +518,28 @@ public class LoadBalancerUtil {
 			return availableSlaveCount;
 		}
 
-		protected AvailableSlaveCallable(Integer recentJobCount, String url) {
-			this.recentJobCount = recentJobCount;
+		protected AvailableSlaveCallable(
+			Integer recentBatchSizesTotal, String url) {
+
+			this.recentBatchSizesTotal = recentBatchSizesTotal;
 
 			this.url = url;
 		}
 
-		protected Integer recentJobCount;
+		protected Integer recentBatchSizesTotal;
 		protected String url;
+
+	}
+
+	private static class BatchSizeRecord {
+
+		public int size;
+		public long timestamp;
+
+		private BatchSizeRecord(int size, long timestamp) {
+			this.size = size;
+			this.timestamp = timestamp;
+		}
 
 	}
 

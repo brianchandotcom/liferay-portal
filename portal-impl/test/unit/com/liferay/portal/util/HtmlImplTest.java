@@ -97,7 +97,7 @@ public class HtmlImplTest {
 	@Test
 	public void testEscapeHtmlEncodingDoubleQuotes() {
 		Assert.assertEquals(
-			"&lt;span class=&#034;test&#034;&gt;Test&lt;/span&gt;",
+			"&lt;span class=&#34;test&#34;&gt;Test&lt;/span&gt;",
 			_htmlImpl.escape("<span class=\"test\">Test</span>"));
 	}
 
@@ -114,7 +114,7 @@ public class HtmlImplTest {
 	@Test
 	public void testEscapeHtmlEncodingQuotes() {
 		Assert.assertEquals(
-			"I&#039;m quoting: &#034;this is a quote&#034;",
+			"I&#39;m quoting: &#34;this is a quote&#34;",
 			_htmlImpl.escape("I'm quoting: \"this is a quote\""));
 	}
 

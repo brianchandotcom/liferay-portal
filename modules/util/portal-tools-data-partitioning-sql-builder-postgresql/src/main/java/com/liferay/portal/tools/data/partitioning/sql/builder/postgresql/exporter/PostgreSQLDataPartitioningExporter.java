@@ -15,6 +15,7 @@
 package com.liferay.portal.tools.data.partitioning.sql.builder.postgresql.exporter;
 
 import com.liferay.portal.tools.data.partitioning.sql.builder.exporter.BaseDataPartitioningExporter;
+import com.liferay.portal.tools.data.partitioning.sql.builder.exporter.context.ExportContext;
 
 import java.sql.Date;
 import java.sql.Timestamp;
@@ -26,18 +27,18 @@ public class PostgreSQLDataPartitioningExporter
 	extends BaseDataPartitioningExporter {
 
 	@Override
-	public String getControlTableNamesSQL(String schema) {
+	public String getControlTableNamesSQL(ExportContext exportContext) {
 		StringBuilder sb = new StringBuilder(11);
 
 		sb.append("select c1.");
 		sb.append(getTableNameFieldName());
 		sb.append(
 			" from information_schema.columns c1 where c1.table_catalog = '");
-		sb.append(schema);
+		sb.append(exportContext.getSchemaName());
 		sb.append("' and c1.table_schema = 'public' and c1.");
 		sb.append(getTableNameFieldName());
 		sb.append(" not in (");
-		sb.append(getPartitionedTableNamesSQL(schema));
+		sb.append(getPartitionedTableNamesSQL(exportContext));
 		sb.append(") group by c1.");
 		sb.append(getTableNameFieldName());
 		sb.append(" order by c1.table_name");
@@ -46,14 +47,14 @@ public class PostgreSQLDataPartitioningExporter
 	}
 
 	@Override
-	public String getPartitionedTableNamesSQL(String schema) {
+	public String getPartitionedTableNamesSQL(ExportContext exportContext) {
 		StringBuilder sb = new StringBuilder(9);
 
 		sb.append("select c2.");
 		sb.append(getTableNameFieldName());
 		sb.append(
 			" from information_schema.columns c2 where c2.table_catalog = '");
-		sb.append(schema);
+		sb.append(exportContext.getSchemaName());
 		sb.append("' and c2.table_schema = 'public' and c2.column_name = ");
 		sb.append("'companyid' group by c2.");
 		sb.append(getTableNameFieldName());

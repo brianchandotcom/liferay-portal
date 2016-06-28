@@ -213,7 +213,7 @@
 			<contains>The addSearchEngineConfigurator method has thrown an exception</contains>
 			<matches></matches>
 		</ignore-error>
-		<ignore-error description="LPS-66314, temporary workaround until Jürgen Kappler fixes it">
+		<ignore-error description="LRQA-26173, temporary workaround until Peter Yoo fixes it">
 			<contains>Unable to add folder menu item</contains>
 			<matches></matches>
 		</ignore-error>

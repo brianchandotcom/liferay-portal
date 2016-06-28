@@ -88,32 +88,30 @@ AUI.add(
 					_updateIntervalSelector: function(event) {
 						var instance = this;
 
-						if (!instance._intervalSelectorUpdated) {
+						var prevDate = event.prevVal;
+
+						var newDate = event.newVal;
+
+						if (!instance._intervalSelectorUpdated && (prevDate.getTime() !== newDate.getTime())) {
 							var intervalSelector = instance.get('intervalSelector');
 
 							var schedulerEvent = instance.get('schedulerEvent');
 
+							var attribute = event.attrName;
+
+							var prefix = attribute.replace('Date', '');
+
+							var date = schedulerEvent.get(attribute);
+
+							var datePicker = intervalSelector.get(prefix + 'DatePicker');
+
+							var timePicker = intervalSelector.get(prefix + 'TimePicker');
+
 							intervalSelector.stopDurationPreservation();
 
-							var startDate = schedulerEvent.get('startDate');
-
-							var startDatePicker = intervalSelector.get('startDatePicker');
-
-							var startTimePicker = intervalSelector.get('startTimePicker');
-
-							startDatePicker.deselectDates();
-							startDatePicker.selectDates([startDate]);
-							startTimePicker.selectDates([startDate]);
-
-							var endDate = schedulerEvent.get('endDate');
-
-							var endDatePicker = intervalSelector.get('endDatePicker');
-
-							var endTimePicker = intervalSelector.get('endTimePicker');
-
-							endDatePicker.deselectDates();
-							endDatePicker.selectDates([endDate]);
-							endTimePicker.selectDates([endDate]);
+							datePicker.deselectDates();
+							datePicker.selectDates([date]);
+							timePicker.selectDates([date]);
 
 							intervalSelector.startDurationPreservation();
 						}

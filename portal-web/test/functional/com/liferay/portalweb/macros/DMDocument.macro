@@ -2213,14 +2213,13 @@
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
 		<execute function="AssertTextPresent" locator1="DocumentsAndMedia#BREADCRUMB_HOME" value1="HOME" />
-		<execute function="Type" locator1="Search#SEARCH_FIELD" value1="${dmDocumentTitle}" />
-		<execute function="Click" locator1="Search#SEARCH_BUTTON" />
+		<execute function="Type" locator1="DocumentsAndMedia#SEARCH_FIELD" value1="${dmDocumentTitle}" />
+		<execute function="Click" locator1="DocumentsAndMedia#SEARCH_BUTTON" />
 
 		<execute function="AssertClick#assertPartialTextClickAt" locator1="DocumentsAndMedia#SEARCH_TITLE" value1="${dmDocumentTitle}" />
 
-		<execute macro="DMDocument#viewDocumentToolbarCmdPG" />
-
 		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_TITLE" value1="${dmDocumentTitle}" />
+		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_RELATED_ASSETS_TITLE" value1="${assetTitle}" />
 
 		<execute function="AssertElementPresent" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_THUMBNAIL" />
 		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_UPLOADED_BY" value1="${dmDocumentUploader}" />
@@ -2228,11 +2227,14 @@
 
 		<execute function="AssertTextEquals" locator1="Comments#SUBSCRIBE_TO_COMMENTS_LINK" value1="Subscribe to Comments" />
 
+		<execute function="Click" locator1="Button#INFO" />
+
+		<var name="key_dmDocumentSize" value="${dmDocumentSize}" />
+		<var name="key_dmDocumentUploader" value="${dmDocumentUploader}" />
 		<var name="key_dmDocumentVersionNumber" value="${dmDocumentVersionNumber}" />
 
-		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_DETAILS_VERSION" value1="Version ${dmDocumentVersionNumber}" />
-		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_DETAILS_UPLOADER" value1="Last Updated by ${dmDocumentUploader}" />
-		<execute function="AssertElementPresent" locator1="DocumentsAndMediaDocument#DOCUMENT_DETAILS_DATE" />
+		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_DETAILS_VERSION" value1="${dmDocumentVersionNumber}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="DocumentsAndMediaDocument#DOCUMENT_DETAILS_UPLOADER" value1="By ${dmDocumentUploader}" />
 		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_DETAILS_WORKFLOW" value1="${workflow}" />
 		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_DETAILS_DOWNLOAD" value1="Download (${dmDocumentSize})" />
 		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_DETAILS_URL" value1="Get URL or WebDAV URL." />

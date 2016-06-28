@@ -67,10 +67,10 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 
 	public static final String PLUGIN_NAME = "testIntegration";
 
-	public static final String SETUP_ARQUILLIAN_TASK_NAME = "setupArquillian";
+	public static final String SET_UP_ARQUILLIAN_TASK_NAME = "setUpArquillian";
 
-	public static final String SETUP_TESTABLE_TOMCAT_TASK_NAME =
-		"setupTestableTomcat";
+	public static final String SET_UP_TESTABLE_TOMCAT_TASK_NAME =
+		"setUpTestableTomcat";
 
 	public static final String START_TESTABLE_TOMCAT_TASK_NAME =
 		"startTestableTomcat";
@@ -94,7 +94,7 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 				TestIntegrationTomcatExtension.class);
 
 		SetUpTestableTomcatTask setUpTestableTomcatTask =
-			addTaskSetupTestableTomcat(project, testIntegrationTomcatExtension);
+			addTaskSetUpTestableTomcat(project, testIntegrationTomcatExtension);
 		StopTestableTomcatTask stopTestableTomcatTask =
 			addTaskStopTestableTomcat(
 				project, testIntegrationTask, testIntegrationTomcatExtension);
@@ -112,7 +112,7 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 				@Override
 				public void execute(WarPlugin warPlugin) {
 					SetUpArquillianTask setUpArquillianTask =
-						addTaskSetupArquillian(
+						addTaskSetUpArquillian(
 							project, testIntegrationSourceSet,
 							testIntegrationTomcatExtension);
 
@@ -126,12 +126,12 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 			testIntegrationTomcatExtension, startTestableTomcatTask);
 	}
 
-	protected SetUpArquillianTask addTaskSetupArquillian(
+	protected SetUpArquillianTask addTaskSetUpArquillian(
 		final Project project, final SourceSet testIntegrationSourceSet,
 		TestIntegrationTomcatExtension testIntegrationTomcatExtension) {
 
 		SetUpArquillianTask setUpArquillianTask = GradleUtil.addTask(
-			project, SETUP_ARQUILLIAN_TASK_NAME, SetUpArquillianTask.class);
+			project, SET_UP_ARQUILLIAN_TASK_NAME, SetUpArquillianTask.class);
 
 		setUpArquillianTask.setDescription(
 			"Creates the Arquillian container configuration file for this " +
@@ -155,13 +155,13 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 		return setUpArquillianTask;
 	}
 
-	protected SetUpTestableTomcatTask addTaskSetupTestableTomcat(
+	protected SetUpTestableTomcatTask addTaskSetUpTestableTomcat(
 		Project project,
 		final TestIntegrationTomcatExtension testIntegrationTomcatExtension) {
 
 		final SetUpTestableTomcatTask setUpTestableTomcatTask =
 			GradleUtil.addTask(
-				project, SETUP_TESTABLE_TOMCAT_TASK_NAME,
+				project, SET_UP_TESTABLE_TOMCAT_TASK_NAME,
 				SetUpTestableTomcatTask.class);
 
 		setUpTestableTomcatTask.onlyIf(
@@ -333,10 +333,10 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 
 			@Override
 			public void execute(Task task) {
-				StopTestableTomcatTask setupTestableTomcatTask =
+				StopTestableTomcatTask setUpTestableTomcatTask =
 					(StopTestableTomcatTask)task;
 
-				File binDir = setupTestableTomcatTask.getBinDir();
+				File binDir = setUpTestableTomcatTask.getBinDir();
 
 				_startedAppServersReentrantLock.lock();
 
@@ -378,14 +378,14 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 
 			@Override
 			public void execute(Task task) {
-				StopTestableTomcatTask setupTestableTomcatTask =
+				StopTestableTomcatTask setUpTestableTomcatTask =
 					(StopTestableTomcatTask)task;
 
 				_startedAppServersReentrantLock.lock();
 
 				try {
 					_startedAppServerBinDirs.remove(
-						setupTestableTomcatTask.getBinDir());
+						setUpTestableTomcatTask.getBinDir());
 				}
 				finally {
 					_startedAppServersReentrantLock.unlock();

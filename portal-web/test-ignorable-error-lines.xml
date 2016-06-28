@@ -213,10 +213,6 @@
 			<contains>The addSearchEngineConfigurator method has thrown an exception</contains>
 			<matches></matches>
 		</ignore-error>
-		<ignore-error description="LRQA-26173, temporary workaround until Peter Yoo fixes it">
-			<contains>Unable to add folder menu item</contains>
-			<matches></matches>
-		</ignore-error>
 		<ignore-error description="LPS-66736, temporary workaround until Marcos Castro fixes it">
 			<contains></contains>
 			<matches>.*Unable to process message.*product-app-theme.*</matches>
@@ -235,6 +231,10 @@
 		</ignore-error>
 		<ignore-error description="LRQA-24859">
 			<contains>No binary licenses found</contains>
+			<matches></matches>
+		</ignore-error>
+		<ignore-error description="LRQA-26173, temporary workaround until Peter Yoo fixes it">
+			<contains>Unable to add folder menu item</contains>
 			<matches></matches>
 		</ignore-error>
 		<ignore-error description="WCM-202">

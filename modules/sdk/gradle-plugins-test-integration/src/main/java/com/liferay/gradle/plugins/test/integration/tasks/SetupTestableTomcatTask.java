@@ -67,6 +67,9 @@ public class SetupTestableTomcatTask
 	implements JmxRemotePortSpec, ManagerSpec, ModuleFrameworkBaseDirSpec {
 
 	public SetupTestableTomcatTask() {
+		_catalinaOptsReplacements.put(
+			_OLD_CATALINA_OPTS_GC, _NEW_CATALINA_OPTS_GC);
+
 		_zipUrl = new Callable<String>() {
 
 			@Override
@@ -510,11 +513,45 @@ public class SetupTestableTomcatTask
 			});
 	}
 
+	private static final String _NEW_CATALINA_OPTS_GC;
+
+	private static final String _OLD_CATALINA_OPTS_GC =
+		"-Xmx1024m -XX:MaxPermSize=384m";
+
 	private static final String[] _TOMCAT_USERS_ROLE_NAMES = {
 		"manager-gui", "manager-jmx", "manager-script", "manager-status",
 		"tomcat"
 	};
 
+	static {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("-verbose:gc -Xloggc:");
+
+		String tmpDir = System.getProperty("java.io.tmpdir");
+
+		if (File.separatorChar != '/') {
+			tmpDir = tmpDir.replace(File.separatorChar, '/');
+		}
+
+		sb.append(tmpDir);
+
+		if (sb.charAt(sb.length() - 1) != '/') {
+			sb.append('/');
+		}
+
+		sb.append("tomcat-gc.log -Xms512m -Xmx1024m -XX:MaxNewSize=32m ");
+		sb.append("-XX:MaxPermSize=256m -XX:MaxTenuringThreshold=0 ");
+		sb.append("-XX:NewSize=32m -XX:ParallelGCThreads=2 -XX:PermSize=256m ");
+		sb.append("-XX:+PrintGCCause -XX:+PrintGCDetails ");
+		sb.append("-XX:SurvivorRatio=65536 -XX:TargetSurvivorRatio=0 ");
+		sb.append("-XX:+UseParNewGC");
+
+		_NEW_CATALINA_OPTS_GC = sb.toString();
+	}
+
+	private final Map<String, Object> _catalinaOptsReplacements =
+		new LinkedHashMap<>();
 	private boolean _debugLogging;
 	private Object _dir;
 	private boolean _jmxRemoteAuthenticate;

@@ -5467,15 +5467,15 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 	<target name="prepare-poshi-runner-properties">
 		<echo append="true" file="${test.ext.properties.file}">
 			component.names=${component.names}
-			ignore.errors.file.name=${project.dir.unix}/portal-web/test-ignorable-error-lines.xml
+			ignore.errors.file.name=${project.dir}/portal-web/test-ignorable-error-lines.xml
 			output.dir.name=${selenium.output.dir.name}
 			product.names=${product.names}
-			project.dir=${project.dir.unix}
+			project.dir=${project.dir}
 			test.case.available.property.names=${test.case.available.property.names}
 			test.console.log.file.name=${liferay.home}/logs/liferay.*.xml
-			test.console.shut.down.file.name=${project.dir.unix}/console-shut-down
+			test.console.shut.down.file.name=${project.dir}/console-shut-down
 			test.dependencies.dir.name=dependencies
-			test.poshi.warnings.file.name=${project.dir.unix}/poshi-warnings.xml
+			test.poshi.warnings.file.name=${project.dir}/poshi-warnings.xml
 			test.retry.command.wait.time=${test.retry.command.wait.time}
 		</echo>
 

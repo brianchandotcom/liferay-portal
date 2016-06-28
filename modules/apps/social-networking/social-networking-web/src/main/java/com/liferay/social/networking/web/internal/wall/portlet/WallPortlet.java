@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.social.kernel.model.SocialRelationConstants;
 import com.liferay.social.kernel.service.SocialRelationLocalService;
+import com.liferay.social.networking.constants.SocialNetworkingPortletKeys;
 import com.liferay.social.networking.model.WallEntry;
 import com.liferay.social.networking.service.WallEntryLocalService;
 
@@ -50,6 +51,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.init-param.clear-request-parameters=true",
 		"javax.portlet.init-param.view-template=/wall/view.jsp",
 		"javax.portlet.keywords=Wall",
+		"javax.portlet.name=" + SocialNetworkingPortletKeys.WALL,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=administrator,guest,power-user,user",
 		"javax.portlet.supports.mime-type=text/html"

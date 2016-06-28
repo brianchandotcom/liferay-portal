@@ -15,6 +15,7 @@
 package com.liferay.social.networking.web.internal.members.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.social.networking.constants.SocialNetworkingPortletKeys;
 import com.liferay.social.networking.service.MeetupsEntryLocalService;
 import com.liferay.social.networking.service.MeetupsRegistrationLocalService;
 import com.liferay.social.networking.service.WallEntryLocalService;
@@ -39,6 +40,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.info.short-title=Members",
 		"javax.portlet.info.title=Members",
 		"javax.portlet.init-param.view-template=/members/view.jsp",
+		"javax.portlet.name=" + SocialNetworkingPortletKeys.MEMBERS,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref.role-name=administrator",
 		"javax.portlet.security-role-ref.role-name=guest",

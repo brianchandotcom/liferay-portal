@@ -2078,10 +2078,7 @@ tell application "Safari" to quit
 
 	<macrodef name="prepare-tomcat-setenv">
 		<sequential>
-			<replace file="${app.server.tomcat.bin.dir}/setenv${file.suffix.bat}">
-				<replacetoken><![CDATA[-Xmx1024m -XX:MaxPermSize=384m]]></replacetoken>
-				<replacevalue><![CDATA[-verbose:gc -Xloggc:/tmp/tomcat-gc.log -Xms512m -Xmx1024m -XX:MaxNewSize=32m -XX:MaxPermSize=256m -XX:MaxTenuringThreshold=0 -XX:NewSize=32m -XX:ParallelGCThreads=2 -XX:PermSize=256m -XX:+PrintGCCause -XX:+PrintGCDetails -XX:SurvivorRatio=65536 -XX:TargetSurvivorRatio=0 -XX:+UseParNewGC]]></replacevalue>
-			</replace>
+			<replace file="${app.server.tomcat.bin.dir}/setenv${file.suffix.bat}" token="${app.server.tomcat.setenv.gc.old}" value="${app.server.tomcat.setenv.gc.new}" />
 		</sequential>
 	</macrodef>
 

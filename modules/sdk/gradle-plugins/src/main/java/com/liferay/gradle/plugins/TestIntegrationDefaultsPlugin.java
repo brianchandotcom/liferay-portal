@@ -22,6 +22,7 @@ import com.liferay.gradle.plugins.test.integration.tasks.SetUpTestableTomcatTask
 import com.liferay.gradle.plugins.test.integration.tasks.StartTestableTomcatTask;
 import com.liferay.gradle.plugins.test.integration.tasks.StopAppServerTask;
 import com.liferay.gradle.plugins.util.GradleUtil;
+import com.liferay.gradle.util.Validator;
 
 import java.io.File;
 
@@ -61,6 +62,18 @@ public class TestIntegrationDefaultsPlugin
 			(SetUpTestableTomcatTask)GradleUtil.getTask(
 				project,
 				TestIntegrationPlugin.SET_UP_TESTABLE_TOMCAT_TASK_NAME);
+
+		String setenvGCNew = GradleUtil.getProperty(
+			project, "app.server.tomcat.setenv.gc.new", (String)null);
+		String setenvGCOld = GradleUtil.getProperty(
+			project, "app.server.tomcat.setenv.gc.old", (String)null);
+
+		if (Validator.isNotNull(setenvGCNew) &&
+			Validator.isNotNull(setenvGCOld)) {
+
+			setUpTestableTomcatTask.catalinaOptsReplacement(
+				setenvGCOld, setenvGCNew);
+		}
 
 		setUpTestableTomcatTask.setZipUrl(
 			new Callable<String>() {

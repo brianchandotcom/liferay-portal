@@ -201,7 +201,7 @@
 		</execute>
 	</command>
 
-	<command name="AddCampaignFormCP" priority="5">
+	<command name="AddCampaignCustomFormCP" priority="5">
 		<property name="content.targeting.release" value="true" />
 
 		<execute macro="ProductMenu#gotoSite">
@@ -257,7 +257,7 @@
 			<var name="reportName" value="Content Report Name" />
 		</execute>
 
-		<execute macro="ContentTargetingCampaign#addTrackingActionFormCP">
+		<execute macro="ContentTargetingCampaign#addTrackingActionCustomFormCP">
 			<var name="formAlias" value="Form Alias" />
 			<var name="formId" value="Form id" />
 			<var name="formTrackingActionSelect" value="Submit" />
@@ -283,7 +283,7 @@
 			<var name="formAlias" value="Form Alias" />
 			<var name="formId" value="Form id" />
 			<var name="formTrackingActionSelect" value="Submit" />
-			<var name="viewTrackingActionsList" value="Form" />
+			<var name="viewTrackingActionsList" value="Custom Form" />
 		</execute>
 	</command>
 
@@ -687,7 +687,7 @@
 			<var name="reportName" value="Content Report Name" />
 		</execute>
 
-		<execute macro="ContentTargetingCampaign#addTrackingActionFormCP">
+		<execute macro="ContentTargetingCampaign#addTrackingActionCustomFormCP">
 			<var name="formAlias" value="Form Alias" />
 			<var name="formId" value="Form id" />
 			<var name="formTrackingActionSelect" value="Submit" />

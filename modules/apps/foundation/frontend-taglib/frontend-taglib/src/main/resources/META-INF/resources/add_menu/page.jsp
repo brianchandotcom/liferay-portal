@@ -17,11 +17,17 @@
 <%@ include file="/add_menu/init.jsp" %>
 
 <%
+List<AddMenuItem> addMenuFavItems = (List<AddMenuItem>)request.getAttribute("liferay-frontend:add-menu:addMenuFavItems");
 List<AddMenuItem> addMenuItems = (List<AddMenuItem>)request.getAttribute("liferay-frontend:add-menu:addMenuItems");
+List<AddMenuItem> addMenuPrimaryItems = (List<AddMenuItem>)request.getAttribute("liferay-frontend:add-menu:addMenuPrimaryItems");
+List<AddMenuItem> addMenuRecentItems = (List<AddMenuItem>)request.getAttribute("liferay-frontend:add-menu:addMenuRecentItems");
+int maxItems = (int)request.getAttribute("liferay-frontend:add-menu:maxItems");
+
+int allAddMenuItemsCount = addMenuFavItems.size() + addMenuItems.size() + addMenuRecentItems.size();
 %>
 
 <c:choose>
-	<c:when test="<%= addMenuItems.size() == 1 %>">
+	<c:when test="<%= allAddMenuItemsCount + addMenuPrimaryItems.size() == 1 %>">
 
 		<%
 		AddMenuItem addMenuItem = addMenuItems.get(0);
@@ -52,18 +58,19 @@ List<AddMenuItem> addMenuItems = (List<AddMenuItem>)request.getAttribute("lifera
 		</aui:script>
 	</c:when>
 	<c:otherwise>
-		<div class="btn-action-secondary btn-bottom-right dropdown">
+		<div class="add-menu btn-action-secondary btn-bottom-right dropdown">
 			<button aria-expanded="false" class="btn btn-primary" data-qa-id="addButton" data-toggle="dropdown" type="button">
 				<aui:icon image="plus" markupView="lexicon" />
 			</button>
 
 			<ul class="dropdown-menu dropdown-menu-left-side-bottom">
+				<li class="active"><a><%= LanguageUtil.get(request, "you-can-customize-this-menu-or-see-all-you-have-by-pressing-more") %></a></li>
 
 				<%
-				for (int i = 0; i < addMenuItems.size(); i++) {
-					AddMenuItem addMenuItem = addMenuItems.get(i);
+				for (int i = 0; i< addMenuPrimaryItems.size(); i++) {
+					AddMenuItem addMenuPrimaryItem = addMenuPrimaryItems.get(i);
 
-					String id = addMenuItem.getId();
+					String id = addMenuPrimaryItem.getId();
 
 					if (Validator.isNull(id)) {
 						id = "menuItem" + i;
@@ -71,8 +78,114 @@ List<AddMenuItem> addMenuItems = (List<AddMenuItem>)request.getAttribute("lifera
 				%>
 
 					<li>
-						<a <%= AUIUtil.buildData(addMenuItem.getAnchorData()) %> href="<%= HtmlUtil.escapeAttribute(addMenuItem.getUrl()) %>" id="<%= namespace + id %>"><%= HtmlUtil.escape(addMenuItem.getLabel()) %></a>
+						<a <%= AUIUtil.buildData(addMenuPrimaryItem.getAnchorData()) %> href="<%= HtmlUtil.escapeAttribute(addMenuPrimaryItem.getUrl()) %>" id="<%= namespace + id %>"><%= HtmlUtil.escape(addMenuPrimaryItem.getLabel()) %></a>
 					</li>
+
+				<%
+				}
+				%>
+
+				<li class="divider"></li>
+
+				<%
+				if (addMenuFavItems.size() > 0) {
+				%>
+
+					<li class="dropdown-header"><%= LanguageUtil.get(request, "favorites") %></li>
+
+				<%
+				}
+
+				for (int i = 0; i < addMenuFavItems.size() && i < allAddMenuItemsCount; i++) {
+					AddMenuItem addMenuFavItem = addMenuFavItems.get(i);
+
+					String id = addMenuFavItem.getId();
+
+					if (Validator.isNull(id)) {
+						id = "menuItem" + i;
+					}
+				%>
+
+					<li>
+						<a <%= AUIUtil.buildData(addMenuFavItem.getAnchorData()) %> href="<%= HtmlUtil.escapeAttribute(addMenuFavItem.getUrl()) %>" id="<%= namespace + id %>"><%= HtmlUtil.escape(addMenuFavItem.getLabel()) %></a>
+					</li>
+
+				<%
+				}
+
+				if (addMenuFavItems.size() < maxItems && (addMenuRecentItems.size() > 0 || addMenuItems.size() > 0)) {
+					if (addMenuFavItems.size() > 0) {
+				%>
+
+						<li class="divider"></li>
+
+					<%
+					}
+
+					for (int i = 0; i < addMenuRecentItems.size() && addMenuFavItems.size() + i < maxItems; i++) {
+						AddMenuItem addMenuRecentItem = addMenuRecentItems.get(i);
+
+						String id = addMenuRecentItem.getId();
+
+						if (Validator.isNull(id)) {
+							id = "menuItem" + i;
+						}
+					%>
+
+						<li>
+							<a <%= AUIUtil.buildData(addMenuRecentItem.getAnchorData()) %> href="<%= HtmlUtil.escapeAttribute(addMenuRecentItem.getUrl()) %>" id="<%= namespace + id %>"><%= HtmlUtil.escape(addMenuRecentItem.getLabel()) %></a>
+						</li>
+
+					<%
+					}
+
+					if (addMenuFavItems.size() + addMenuRecentItems.size() < maxItems) {
+						for (int i = 0; i < addMenuItems.size() && addMenuFavItems.size() + addMenuRecentItems.size() + i < maxItems; i++) {
+							AddMenuItem addMenuItem = addMenuItems.get(i);
+
+							String id = addMenuItem.getId();
+
+							if (Validator.isNull(id)) {
+								id = "menuItem" + i;
+							}
+					%>
+
+							<li>
+								<a <%= AUIUtil.buildData(addMenuItem.getAnchorData()) %> href="<%= HtmlUtil.escapeAttribute(addMenuItem.getUrl()) %>" id="<%= namespace + id %>"><%= HtmlUtil.escape(addMenuItem.getLabel()) %></a>
+							</li>
+
+				<%
+						}
+					}
+				}
+
+				if (allAddMenuItemsCount > maxItems) {
+				%>
+
+					<li class="dropdown-header">
+						<liferay-ui:message arguments="<%= new Object[] {maxItems, allAddMenuItemsCount} %>" key="showing-x-of-x-items" />
+					</li>
+					<li class="divider"></li>
+					<li>
+						<a href="javascript:;" id="<%= namespace %>view-more-add-menu-elements"><%= LanguageUtil.get(request, "more") %></a>
+					</li>
+
+					<aui:script use="liferay-util-window">
+						var viewMoreAddMenuElements = A.one('#<%= namespace %>view-more-add-menu-elements');
+
+						viewMoreAddMenuElements.on(
+							'click',
+							function(event) {
+								Liferay.Util.openWindow(
+									{
+										id: '<%= namespace %>viewMoreAddMenuElements',
+										title: '<%= LanguageUtil.get(request, "more") %>',
+										uri: '/'
+									}
+								);
+							}
+						);
+					</aui:script>
 
 				<%
 				}

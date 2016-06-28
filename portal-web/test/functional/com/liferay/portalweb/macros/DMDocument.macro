@@ -1179,7 +1179,7 @@
 
 		<execute macro="PortletEntry#save" />
 
-		<execute function="SelectFrame" locator1="relative=top" />
+		<execute macro="IFrame#closeFrame" />
 	</command>
 
 	<command name="expandInfo">

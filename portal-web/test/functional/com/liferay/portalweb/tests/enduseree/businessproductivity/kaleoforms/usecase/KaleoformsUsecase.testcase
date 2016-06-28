@@ -144,18 +144,16 @@
 
 		<execute macro="KaleoFormsAdmin#saveProcessRecord" />
 
-		<var name="key_kfProcessName" value="${kfProcessName}" />
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
+		</execute>
 
-		<execute function="AssertClick" locator1="KaleoForms#ASSIGNED_TO_MY_ROLES_TABLE_NAME" value1="${kfProcessName}" />
+		<execute macro="Workflow#gotoAssignedToMyRoles" />
 
-		<execute function="AssertTextEquals" locator1="KaleoFormsViewProcessRecord#ASSIGNED_TO_LABEL" value1="Assigned to" />
-		<execute function="AssertTextEquals" locator1="KaleoFormsViewProcessRecord#ASSIGNED_TO" value1="Assigned to Nobody - Assign to Me" />
-		<execute function="AssertTextEquals" locator1="KaleoFormsViewProcessRecord#ASSIGNED_TO_ASSIGN_TO_ME_LINK" value1="Assign to Me" />
-		<execute function="AssertTextEquals" locator1="KaleoFormsViewProcessRecord#WORKFLOW_STATUS_LABEL" value1="State" />
-		<execute function="AssertTextEquals" locator1="KaleoFormsViewProcessRecord#WORKFLOW_STATUS" value1="State ${kfProcessStatus}" />
-		<execute function="AssertTextEquals" locator1="KaleoFormsViewProcessRecord#DUE_DATE_LABEL" value1="Due Date" />
-		<execute function="AssertTextEquals" locator1="KaleoFormsViewProcessRecord#DUE_DATE_DATE" value1="Due Date Never - (Change)" />
-		<execute function="AssertTextEquals" locator1="KaleoFormsViewProcessRecord#WORKFLOW_STATUS" value1="${kfProcessStatus}" />
+		<execute macro="Workflow#viewTaskAssignedToMyRolesDetails">
+			<var name="workflowAssetTitle" value="${kfProcessName}" />
+			<var name="workflowTask" value="${kfProcessStatus}" />
+		</execute>
 	</command>
 
 	<command name="AssertEditFormNotUsedAsCreateForm" priority="3">

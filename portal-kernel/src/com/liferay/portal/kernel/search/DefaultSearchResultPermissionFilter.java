@@ -81,16 +81,15 @@ public class DefaultSearchResultPermissionFilter
 
 	@Override
 	protected boolean isGroupAdmin(SearchContext searchContext) {
-		long[] groupIds = searchContext.getGroupIds();
+		int groupId = GetterUtil.getInteger(
+			searchContext.getAttribute(Field.GROUP_ID));
 
-		if (groupIds == null) {
+		if (groupId == 0) {
 			return false;
 		}
 
-		for (long groupId : groupIds) {
-			if (!_permissionChecker.isGroupAdmin(groupId)) {
-				return false;
-			}
+		if (!_permissionChecker.isGroupAdmin(groupId)) {
+			return false;
 		}
 
 		return true;

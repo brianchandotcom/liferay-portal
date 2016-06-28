@@ -12,24 +12,24 @@
  * details.
  */
 
-package com.liferay.push.notifications.web.upgrade;
+package com.liferay.push.notifications.web.internal.upgrade.v1_0_0;
 
-import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-
-import org.osgi.service.component.annotations.Component;
+import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;
+import com.liferay.push.notifications.constants.PushNotificationsPortletKeys;
 
 /**
  * @author Andrea Di Giorgi
  */
-@Component(immediate = true, service = UpgradeStepRegistrator.class)
-public class PushNotificationsWebUpgrade implements UpgradeStepRegistrator {
+public class UpgradePortletId extends BaseUpgradePortletId {
 
 	@Override
-	public void register(Registry registry) {
-		registry.register(
-			"com.liferay.push.notifications.web", "0.0.0", "1.0.0",
-			new com.liferay.push.notifications.web.upgrade.v1_0_0.
-				UpgradePortletId());
+	protected String[][] getRenamePortletIdsArray() {
+		return new String[][] {
+			{
+				"1_WAR_pushnotificationsportlet",
+				PushNotificationsPortletKeys.PUSH_NOTIFICATIONS
+			}
+		};
 	}
 
 }

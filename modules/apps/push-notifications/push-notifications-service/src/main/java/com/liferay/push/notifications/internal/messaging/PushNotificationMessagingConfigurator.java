@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.push.notifications.messaging;
+package com.liferay.push.notifications.internal.messaging;
 
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.messaging.Destination;

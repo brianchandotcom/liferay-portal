@@ -12,24 +12,14 @@
  * details.
  */
 
-package com.liferay.push.notifications.web.upgrade.v1_0_0;
-
-import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;
-import com.liferay.push.notifications.constants.PushNotificationsPortletKeys;
+package com.liferay.push.notifications.web.internal.constants;
 
 /**
  * @author Andrea Di Giorgi
  */
-public class UpgradePortletId extends BaseUpgradePortletId {
+public class PushNotificationsWebKeys {
 
-	@Override
-	protected String[][] getRenamePortletIdsArray() {
-		return new String[][] {
-			{
-				"1_WAR_pushnotificationsportlet",
-				PushNotificationsPortletKeys.PUSH_NOTIFICATIONS
-			}
-		};
-	}
+	public static final String RESOURCE_BUNDLE_LOADER_PROVIDER =
+		"RESOURCE_BUNDLE_LOADER_PROVIDER";
 
 }

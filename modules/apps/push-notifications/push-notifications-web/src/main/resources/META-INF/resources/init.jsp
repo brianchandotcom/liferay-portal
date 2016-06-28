@@ -37,9 +37,9 @@ page import="com.liferay.push.notifications.constants.PushNotificationsActionKey
 page import="com.liferay.push.notifications.model.PushNotificationsDevice" %><%@
 page import="com.liferay.push.notifications.service.PushNotificationsDeviceLocalServiceUtil" %><%@
 page import="com.liferay.push.notifications.service.permission.PushNotificationsPermission" %><%@
-page import="com.liferay.push.notifications.web.constants.PushNotificationsWebKeys" %><%@
-page import="com.liferay.push.notifications.web.util.PushNotificationsUtil" %><%@
-page import="com.liferay.push.notifications.web.util.ResourceBundleLoaderProvider" %>
+page import="com.liferay.push.notifications.web.internal.constants.PushNotificationsWebKeys" %><%@
+page import="com.liferay.push.notifications.web.internal.util.PushNotificationsUtil" %><%@
+page import="com.liferay.push.notifications.web.internal.util.ResourceBundleLoaderProvider" %>
 
 <%@ page import="java.util.ResourceBundle" %>
 

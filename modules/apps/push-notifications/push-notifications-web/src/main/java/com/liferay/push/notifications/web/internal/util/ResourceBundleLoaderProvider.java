@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.push.notifications.web.util;
+package com.liferay.push.notifications.web.internal.util;
 
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;

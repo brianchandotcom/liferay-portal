@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.push.notifications.web.util;
+package com.liferay.push.notifications.web.internal.util;
 
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.push.notifications.model.PushNotificationsDevice;

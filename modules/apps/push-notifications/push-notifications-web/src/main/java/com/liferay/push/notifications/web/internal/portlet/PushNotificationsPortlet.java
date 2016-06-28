@@ -12,15 +12,15 @@
  * details.
  */
 
-package com.liferay.push.notifications.web.portlet;
+package com.liferay.push.notifications.web.internal.portlet;
 
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.push.notifications.constants.PushNotificationsPortletKeys;
 import com.liferay.push.notifications.service.PushNotificationsDeviceService;
-import com.liferay.push.notifications.web.constants.PushNotificationsWebKeys;
-import com.liferay.push.notifications.web.util.ResourceBundleLoaderProvider;
+import com.liferay.push.notifications.web.internal.constants.PushNotificationsWebKeys;
+import com.liferay.push.notifications.web.internal.util.ResourceBundleLoaderProvider;
 
 import java.io.IOException;
 

@@ -12,14 +12,24 @@
  * details.
  */
 
-package com.liferay.push.notifications.web.constants;
+package com.liferay.push.notifications.web.internal.upgrade;
+
+import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Andrea Di Giorgi
  */
-public class PushNotificationsWebKeys {
+@Component(immediate = true, service = UpgradeStepRegistrator.class)
+public class PushNotificationsWebUpgrade implements UpgradeStepRegistrator {
 
-	public static final String RESOURCE_BUNDLE_LOADER_PROVIDER =
-		"RESOURCE_BUNDLE_LOADER_PROVIDER";
+	@Override
+	public void register(Registry registry) {
+		registry.register(
+			"com.liferay.push.notifications.web", "0.0.0", "1.0.0",
+			new com.liferay.push.notifications.web.internal.upgrade.v1_0_0.
+				UpgradePortletId());
+	}
 
 }

@@ -57,9 +57,16 @@ public class BaseWikiPageRenameContentProcessor
 			String regexp = entry.getKey();
 			String replacement = entry.getValue();
 
-			regexp = regexp.replaceAll("@old_title@", title);
+			String escapedTitle = title.replaceAll(
+				"([\\\\\\.\\[\\{\\(\\)\\*\\+\\?\\^\\$\\|])", "\\\\\\\\$1");
 
-			replacement = replacement.replaceAll("@new_title@", newTitle);
+			regexp = regexp.replaceAll("@old_title@", escapedTitle);
+
+			String escapedNewTitle = newTitle.replaceAll(
+				"([\\\\\\.\\[\\{\\(\\)\\*\\+\\?\\^\\$\\|])", "\\\\\\\\$1");
+
+			replacement = replacement.replaceAll(
+				"@new_title@", escapedNewTitle);
 
 			content = runRegexp(content, regexp, replacement);
 		}

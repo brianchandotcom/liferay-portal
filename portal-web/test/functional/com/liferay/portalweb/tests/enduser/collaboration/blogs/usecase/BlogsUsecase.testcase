@@ -2046,7 +2046,7 @@
 
 		<execute function="AssertElementPresent" locator1="Message#EMPTY_INFO" />
 
-		<execute macro="IFrame#selectTopFrame" />
+		<execute macro="IFrame#closeFrame" />
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />

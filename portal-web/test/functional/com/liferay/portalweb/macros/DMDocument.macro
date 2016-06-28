@@ -2226,18 +2226,6 @@
 		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_UPLOADED_BY" value1="${dmDocumentUploader}" />
 		<execute function="AssertElementPresent" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_RATING" value1="Ratings" />
 
-		<if>
-			<condition function="IsElementPresent" locator1="SODocuments#VERSION_HISTORY_TITLE" />
-			<then>
-				<execute function="AssertTextEquals" locator1="SODocuments#VERSION_HISTORY_TITLE" value1="Version History" />
-				<execute function="AssertTextEquals" locator1="SODocuments#VERSION_HISTORY_NUMBER" value1="Version ${dmDocumentVersionNumber}" />
-				<execute function="AssertTextEquals" locator1="SODocuments#VERSION_HISTORY_UPLOADER_NAME" value1="By: ${dmDocumentUploader}" />
-				<execute function="AssertElementPresent" locator1="SODocuments#VERSION_HISTORY_DATE" />
-				<execute function="AssertTextEquals" locator1="SODocuments#VERSION_HISTORY_SIZE" value1="Size: ${dmDocumentSizeSO}" />
-				<execute function="AssertTextEquals" locator1="SODocuments#VERSION_HISTORY_CHANGE_LOG" value1="${changeLog}" />
-			</then>
-		</if>
-
 		<execute function="AssertTextEquals" locator1="Comments#SUBSCRIBE_TO_COMMENTS_LINK" value1="Subscribe to Comments" />
 
 		<var name="key_dmDocumentVersionNumber" value="${dmDocumentVersionNumber}" />

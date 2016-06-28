@@ -18,6 +18,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.RandomAccessFile;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.DirectoryStream;
@@ -28,8 +29,11 @@ import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Properties;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 
 import org.junit.Assert;
@@ -61,6 +65,28 @@ public class GradleTemplatesTest {
 		_testTemplates(_workspaceDirPath, _standaloneDirPath, true, true);
 	}
 
+	private boolean _endsWithEmptyLine(Path path) throws IOException {
+		try (RandomAccessFile randomAccessFile = new RandomAccessFile(
+				path.toFile(), "r")) {
+
+			long pos = randomAccessFile.length() - 1;
+
+			if (pos < 0) {
+				return false;
+			}
+
+			randomAccessFile.seek(pos);
+
+			int c = randomAccessFile.read();
+
+			if ((c == '\n') || (c == '\r')) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	private boolean _exists(Path dirPath, String glob) throws IOException {
 		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
 				dirPath, glob)) {
@@ -70,6 +96,30 @@ public class GradleTemplatesTest {
 			if (iterator.hasNext()) {
 				return true;
 			}
+		}
+
+		return false;
+	}
+
+	private boolean _isTextFile(Path path) {
+		Path fileNamePath = path.getFileName();
+
+		String fileName = fileNamePath.toString();
+
+		if (fileName.equals("gitignore")) {
+			return true;
+		}
+
+		int pos = fileName.indexOf('.');
+
+		if (pos == -1) {
+			return false;
+		}
+
+		String extension = fileName.substring(pos + 1);
+
+		if (_textFileExtensions.contains(extension)) {
+			return true;
 		}
 
 		return false;
@@ -119,6 +169,25 @@ public class GradleTemplatesTest {
 						Assert.assertFalse(
 							"Forbidden " + dirPath + File.separator + glob,
 							_exists(dirPath, glob));
+					}
+
+					return FileVisitResult.CONTINUE;
+				}
+
+				@Override
+				public FileVisitResult visitFile(
+						Path path, BasicFileAttributes basicFileAttributes)
+					throws IOException {
+
+					Path fileNamePath = path.getFileName();
+
+					if (_isTextFile(path) &&
+						!_trailingEmptyLineAllowedFileNames.contains(
+							fileNamePath.toString())) {
+
+						Assert.assertFalse(
+							"Trailing empty line in " + path,
+							_endsWithEmptyLine(path));
 					}
 
 					return FileVisitResult.CONTINUE;
@@ -201,6 +270,13 @@ public class GradleTemplatesTest {
 	}
 
 	private static Path _standaloneDirPath;
+	private static final Set<String> _textFileExtensions = new HashSet<>(
+		Arrays.asList(
+			"bnd", "gradle", "java", "jsp", "jspf", "properties", "xml"));
+	private static final Set<String> _trailingEmptyLineAllowedFileNames =
+		new HashSet<>(
+			Arrays.asList(
+				"gradle-wrapper.properties", "gradlew", "gradlew.bat"));
 	private static Path _workspaceDirPath;
 
 }

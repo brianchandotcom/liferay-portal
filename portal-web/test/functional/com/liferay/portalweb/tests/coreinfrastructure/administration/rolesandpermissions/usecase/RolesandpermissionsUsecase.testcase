@@ -2319,7 +2319,7 @@
 
 		<execute macro="Role#viewPermissionCP">
 			<var name="permissionDefinitionValue" value="View Site Administration Menu" />
-			<var name="permissionNavigationValue" value="Site Memberships > Site" />
+			<var name="permissionNavigationValue" value="Site Settings > Site" />
 		</execute>
 	</command>
 

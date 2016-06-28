@@ -119,8 +119,7 @@ public class PortletTracker
 			Class<?> clazz = portlet.getClass();
 
 			portletName = StringUtil.replace(
-				clazz.getName(), new char[] {'.', '$'},
-				new char[] {'_', '_'});
+				clazz.getName(), new char[] {'.', '$'}, new char[] {'_', '_'});
 		}
 
 		String portletId = StringUtil.replace(

@@ -364,14 +364,12 @@ public class InputAssetLinksDisplayContext {
 			Map<String, Object> selectorEntry = new HashMap<>();
 
 			selectorEntry.put(
-				"data",
-				_getSelectorEntryData(assetRendererFactory, classType));
+				"data", _getSelectorEntryData(assetRendererFactory, classType));
 			selectorEntry.put(
 				"iconCssClass",
 				_getSelectorEntryIconCssClass(assetRendererFactory));
 			selectorEntry.put(
-				"id",
-				_getSelectorEntryId(assetRendererFactory, classType));
+				"id", _getSelectorEntryId(assetRendererFactory, classType));
 			selectorEntry.put("message", _getSelectorEntryMessage(classType));
 
 			selectorEntries.add(selectorEntry);

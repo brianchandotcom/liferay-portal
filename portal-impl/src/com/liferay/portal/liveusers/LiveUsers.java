@@ -122,8 +122,7 @@ public class LiveUsers {
 	}
 
 	private void _addClusterNode(
-		String clusterNodeId,
-		Map<Long, Map<Long, Set<String>>> clusterUsers) {
+		String clusterNodeId, Map<Long, Map<Long, Set<String>>> clusterUsers) {
 
 		if (Validator.isNull(clusterNodeId)) {
 			return;

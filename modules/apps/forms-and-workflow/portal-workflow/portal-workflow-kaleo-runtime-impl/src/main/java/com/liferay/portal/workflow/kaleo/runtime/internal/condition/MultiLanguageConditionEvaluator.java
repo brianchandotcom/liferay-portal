@@ -66,8 +66,7 @@ public class MultiLanguageConditionEvaluator implements ConditionEvaluator {
 		target = "(scripting.language=*)", unbind = "removeConditionEvaluator"
 	)
 	protected void addConditionEvaluator(
-		ConditionEvaluator conditionEvaluator,
-		Map<String, Object> properties) {
+		ConditionEvaluator conditionEvaluator, Map<String, Object> properties) {
 
 		String[] scriptingLanguages = getScriptingLanguages(
 			conditionEvaluator, properties);
@@ -93,8 +92,7 @@ public class MultiLanguageConditionEvaluator implements ConditionEvaluator {
 	}
 
 	protected String[] getScriptingLanguages(
-		ConditionEvaluator conditionEvaluator,
-		Map<String, Object> properties) {
+		ConditionEvaluator conditionEvaluator, Map<String, Object> properties) {
 
 		Object value = properties.get("scripting.language");
 
@@ -111,8 +109,7 @@ public class MultiLanguageConditionEvaluator implements ConditionEvaluator {
 	}
 
 	protected void removeConditionEvaluator(
-		ConditionEvaluator conditionEvaluator,
-		Map<String, Object> properties) {
+		ConditionEvaluator conditionEvaluator, Map<String, Object> properties) {
 
 		String[] scriptingLanguages = getScriptingLanguages(
 			conditionEvaluator, properties);

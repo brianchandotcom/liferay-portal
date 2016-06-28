@@ -715,15 +715,11 @@ public class JournalConverterUtilTest {
 
 		User user = TestPropsValues.getUser();
 
-		layouts.put(
-			_PRIVATE_LAYOUT,
-			LayoutTestUtil.addLayout(_group, true));
+		layouts.put(_PRIVATE_LAYOUT, LayoutTestUtil.addLayout(_group, true));
 		layouts.put(
 			_PRIVATE_USER_LAYOUT,
 			LayoutTestUtil.addLayout(user.getGroupId(), true));
-		layouts.put(
-			_PUBLIC_LAYOUT,
-			LayoutTestUtil.addLayout(_group, false));
+		layouts.put(_PUBLIC_LAYOUT, LayoutTestUtil.addLayout(_group, false));
 		layouts.put(
 			_PUBLIC_USER_LAYOUT,
 			LayoutTestUtil.addLayout(user.getGroupId(), false));

@@ -184,8 +184,7 @@ public class PortletSessionAttributeMap extends AbstractMap<String, Object> {
 		}
 
 		return new MappingEnumeration<>(
-			enumeration,
-			new AttributeNameMapper(scopePrefix, removePrefix));
+			enumeration, new AttributeNameMapper(scopePrefix, removePrefix));
 	}
 
 	protected final String scopePrefix;

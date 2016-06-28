@@ -407,8 +407,7 @@ public class ConfigurationModelToDDMFormValuesConverterTest extends Mockito {
 	}
 
 	protected void whenGetProperties(
-		Configuration configuration,
-		Dictionary<String, Object> properties) {
+		Configuration configuration, Dictionary<String, Object> properties) {
 
 		when(
 			configuration.getProperties()

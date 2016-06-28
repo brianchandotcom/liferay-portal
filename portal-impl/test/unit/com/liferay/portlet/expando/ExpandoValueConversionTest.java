@@ -207,15 +207,13 @@ public class ExpandoValueConversionTest {
 	@Test(expected = NumberFormatException.class)
 	public void testDateArray5() {
 		_converter.convertType(
-			ExpandoColumnConstants.DATE_ARRAY,
-			"1376510136750, other");
+			ExpandoColumnConstants.DATE_ARRAY, "1376510136750, other");
 	}
 
 	@Test(expected = NumberFormatException.class)
 	public void testDateArray6() {
 		_converter.convertType(
-			ExpandoColumnConstants.DATE_ARRAY,
-			"[1376510136750, other]");
+			ExpandoColumnConstants.DATE_ARRAY, "[1376510136750, other]");
 	}
 
 	@Test(expected = NumberFormatException.class)
@@ -289,8 +287,7 @@ public class ExpandoValueConversionTest {
 		int double2 = 56;
 
 		double[] convertedDoubles = _converter.convertType(
-			ExpandoColumnConstants.DOUBLE_ARRAY,
-			double1 + ", " + double2);
+			ExpandoColumnConstants.DOUBLE_ARRAY, double1 + ", " + double2);
 
 		Assert.assertEquals(2, convertedDoubles.length);
 		Assert.assertEquals(double1, convertedDoubles[0], 0);
@@ -527,8 +524,7 @@ public class ExpandoValueConversionTest {
 		Integer integer2 = 56;
 
 		int[] convertedIntegers = _converter.convertType(
-			ExpandoColumnConstants.INTEGER_ARRAY,
-			integer1 + ", " + integer2);
+			ExpandoColumnConstants.INTEGER_ARRAY, integer1 + ", " + integer2);
 
 		Assert.assertEquals(2, convertedIntegers.length);
 		Assert.assertEquals(integer1.intValue(), convertedIntegers[0]);

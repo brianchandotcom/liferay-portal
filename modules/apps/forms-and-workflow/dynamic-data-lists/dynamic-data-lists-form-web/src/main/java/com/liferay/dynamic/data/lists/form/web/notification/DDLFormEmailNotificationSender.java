@@ -325,8 +325,7 @@ public class DDLFormEmailNotificationSender {
 		List<String> fieldNames = getFieldNames(ddmFormLayoutPage);
 
 		pageMap.put(
-			"fields",
-			getFields(fieldNames, ddmFormFieldValuesMap, locale));
+			"fields", getFields(fieldNames, ddmFormFieldValuesMap, locale));
 
 		LocalizedValue title = ddmFormLayoutPage.getTitle();
 

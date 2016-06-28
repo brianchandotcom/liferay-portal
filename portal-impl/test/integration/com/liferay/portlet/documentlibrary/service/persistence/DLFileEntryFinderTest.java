@@ -184,8 +184,7 @@ public class DLFileEntryFinderTest {
 		queryDefinition.setStatus(WorkflowConstants.STATUS_APPROVED);
 
 		Assert.assertEquals(
-			1,
-			doCountBy_G_U_F_M(0, ContentTypes.TEXT_PLAIN, queryDefinition));
+			1, doCountBy_G_U_F_M(0, ContentTypes.TEXT_PLAIN, queryDefinition));
 	}
 
 	@Test
@@ -287,8 +286,7 @@ public class DLFileEntryFinderTest {
 		queryDefinition.setStatus(WorkflowConstants.STATUS_IN_TRASH, true);
 
 		Assert.assertEquals(
-			1,
-			doCountBy_G_U_F_M(0, ContentTypes.TEXT_PLAIN, queryDefinition));
+			1, doCountBy_G_U_F_M(0, ContentTypes.TEXT_PLAIN, queryDefinition));
 	}
 
 	@Test

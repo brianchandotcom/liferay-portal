@@ -206,8 +206,7 @@ public class DDMFormValuesToFieldsConverterTest extends BaseDDMTestCase {
 		ddmFormValues.addDDMFormFieldValue(paulDDMFormFieldValue);
 
 		DDMFormFieldValue joeDDMFormFieldValue = createDDMFormFieldValue(
-			"rght", "Name",
-			createLocalizedValue("Joe", "Joao", LocaleUtil.US));
+			"rght", "Name", createLocalizedValue("Joe", "Joao", LocaleUtil.US));
 
 		List<DDMFormFieldValue> joeNestedDDMFormFieldValue =
 			joeDDMFormFieldValue.getNestedDDMFormFieldValues();

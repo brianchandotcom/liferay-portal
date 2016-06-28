@@ -35,8 +35,7 @@ public class JOnASAppServer extends AppServer {
 		File dir = new File(getDir(), "lib/endorsed");
 
 		GradleUtil.addDependency(
-			project, configurationName,
-			FileUtil.getJarsFileTree(project, dir));
+			project, configurationName, FileUtil.getJarsFileTree(project, dir));
 	}
 
 }

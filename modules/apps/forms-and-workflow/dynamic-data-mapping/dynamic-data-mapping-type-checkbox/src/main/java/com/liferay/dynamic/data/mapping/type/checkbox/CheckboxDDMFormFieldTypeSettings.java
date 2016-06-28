@@ -29,6 +29,7 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
  */
 @DDMForm
 @DDMFormLayout(
+	paginationMode = com.liferay.dynamic.data.mapping.model.DDMFormLayout.SETTINGS_MODE,
 	value = {
 		@DDMFormLayoutPage(
 			title = "basic",
@@ -63,9 +64,7 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 				)
 			}
 		)
-	},
-	paginationMode =
-		com.liferay.dynamic.data.mapping.model.DDMFormLayout.SETTINGS_MODE
+	}
 )
 public interface CheckboxDDMFormFieldTypeSettings
 	extends DefaultDDMFormFieldTypeSettings {

@@ -50,6 +50,7 @@ import org.gradle.api.Action;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.Project;
 import org.gradle.api.file.CopySpec;
+import org.gradle.api.logging.Logger;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.TaskAction;
 import org.gradle.util.VersionNumber;
@@ -284,6 +285,8 @@ public class SetUpTestableTomcatTask
 	protected void replace(String fileName, Map<String, Object> replacements)
 		throws IOException {
 
+		Logger logger = getLogger();
+
 		File dir = getDir();
 
 		Path dirPath = dir.toPath();
@@ -295,6 +298,10 @@ public class SetUpTestableTomcatTask
 		for (Map.Entry<String, Object> entry : replacements.entrySet()) {
 			String oldSub = entry.getKey();
 			String newSub = GradleUtil.toString(entry.getValue());
+
+			if (logger.isWarnEnabled() && !content.contains(oldSub)) {
+				logger.warn("Unable to find \"" + oldSub + "\" in " + path);
+			}
 
 			content = content.replace(oldSub, newSub);
 		}

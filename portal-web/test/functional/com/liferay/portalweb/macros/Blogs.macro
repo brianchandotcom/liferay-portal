@@ -186,7 +186,7 @@
 			<var name="uploadFileName" value="${uploadFileName}" />
 		</execute>
 
-		<execute function="Pause" locator1="1000" />
+		<execute function="Pause" locator1="5000" />
 	</command>
 
 	<command name="addViaAP">

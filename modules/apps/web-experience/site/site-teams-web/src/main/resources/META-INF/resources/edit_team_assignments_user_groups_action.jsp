@@ -30,10 +30,10 @@ UserGroup userGroup = (UserGroup)row.getObject();
 	<portlet:param name="removeUserGroupId" value="<%= String.valueOf(userGroup.getUserGroupId()) %>" />
 </portlet:actionURL>
 
-<liferay-ui:icon
+<liferay-ui:icon-delete
 	icon="trash"
 	linkCssClass="icon-monospaced text-default"
-	markupView="lexicon"
 	message="delete"
+	showIcon="<%= true %>"
 	url="<%= deleteTeamUserGroupsURL %>"
 />

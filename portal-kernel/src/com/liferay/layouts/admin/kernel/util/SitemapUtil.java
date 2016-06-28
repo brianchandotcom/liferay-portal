@@ -65,6 +65,15 @@ public class SitemapUtil {
 		return getSitemap().getSitemap(groupId, privateLayout, themeDisplay);
 	}
 
+	public static String getSitemap(
+			long groupId, String layoutUuid, boolean privateLayout,
+			ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		return getSitemap().getSitemap(
+			groupId, layoutUuid, privateLayout, themeDisplay);
+	}
+
 	public void setSitemap(Sitemap sitemap) {
 		PortalRuntimePermission.checkSetBeanProperty(getClass());
 

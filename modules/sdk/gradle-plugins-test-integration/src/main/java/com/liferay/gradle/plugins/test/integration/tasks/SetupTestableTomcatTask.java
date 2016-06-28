@@ -26,6 +26,7 @@ import groovy.xml.XmlUtil;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
@@ -40,6 +41,8 @@ import java.text.SimpleDateFormat;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
@@ -64,6 +67,9 @@ public class SetupTestableTomcatTask
 	implements JmxRemotePortSpec, ManagerSpec, ModuleFrameworkBaseDirSpec {
 
 	public SetupTestableTomcatTask() {
+		_catalinaOptsReplacements.put(
+			_OLD_CATALINA_OPTS_GC, _NEW_CATALINA_OPTS_GC);
+
 		_zipUrl = new Callable<String>() {
 
 			@Override
@@ -101,8 +107,29 @@ public class SetupTestableTomcatTask
 		};
 	}
 
+	public SetupTestableTomcatTask catalinaOptsReplacement(
+		String oldSub, Object newSub) {
+
+		_catalinaOptsReplacements.put(oldSub, newSub);
+
+		return this;
+	}
+
+	public SetupTestableTomcatTask catalinaOptsReplacements(
+		Map<String, ?> catalinaOptsReplacements) {
+
+		_catalinaOptsReplacements.putAll(catalinaOptsReplacements);
+
+		return this;
+	}
+
 	public File getBinDir() {
 		return new File(getDir(), "bin");
+	}
+
+	@Input
+	public Map<String, Object> getCatalinaOptsReplacements() {
+		return _catalinaOptsReplacements;
 	}
 
 	@Input
@@ -159,6 +186,14 @@ public class SetupTestableTomcatTask
 		return _overwriteTestModules;
 	}
 
+	public void setCatalinaOptsReplacements(
+		Map<String, ?> catalinaOptsReplacements) {
+
+		_catalinaOptsReplacements.clear();
+
+		catalinaOptsReplacements(catalinaOptsReplacements);
+	}
+
 	public void setDebugLogging(boolean debugLogging) {
 		_debugLogging = debugLogging;
 	}
@@ -201,6 +236,7 @@ public class SetupTestableTomcatTask
 
 	@TaskAction
 	public void setupTestableTomcat() throws Exception {
+		setupCatalinaOpts();
 		setupJmx();
 		setupLogging();
 		setupManager();
@@ -211,7 +247,7 @@ public class SetupTestableTomcatTask
 		_zipUrl = zipUrl;
 	}
 
-	protected boolean contains(String fileName, String s) throws Exception {
+	protected boolean contains(String fileName, String s) throws IOException {
 		File file = new File(getDir(), fileName);
 
 		String fileContent = new String(Files.readAllBytes(file.toPath()));
@@ -224,7 +260,7 @@ public class SetupTestableTomcatTask
 	}
 
 	protected PrintWriter getAppendPrintWriter(String fileName)
-		throws Exception {
+		throws IOException {
 
 		File file = new File(getDir(), fileName);
 
@@ -248,7 +284,39 @@ public class SetupTestableTomcatTask
 		return sb.toString();
 	}
 
-	protected void setupJmx() throws Exception {
+	protected void replace(String fileName, Map<String, Object> replacements)
+		throws IOException {
+
+		File dir = getDir();
+
+		Path dirPath = dir.toPath();
+
+		Path path = dirPath.resolve(fileName);
+
+		String content = new String(Files.readAllBytes(path));
+
+		for (Map.Entry<String, Object> entry : replacements.entrySet()) {
+			String oldSub = entry.getKey();
+			String newSub = GradleUtil.toString(entry.getValue());
+
+			content = content.replace(oldSub, newSub);
+		}
+
+		Files.write(path, content.getBytes());
+	}
+
+	protected void setupCatalinaOpts() throws IOException {
+		Map<String, Object> replacements = getCatalinaOptsReplacements();
+
+		if (replacements.isEmpty()) {
+			return;
+		}
+
+		replace("bin/setenv.bat", replacements);
+		replace("bin/setenv.sh", replacements);
+	}
+
+	protected void setupJmx() throws IOException {
 		String jmxOptions = getJmxOptions();
 
 		if (!contains("bin/setenv.bat", jmxOptions)) {
@@ -286,7 +354,7 @@ public class SetupTestableTomcatTask
 		}
 	}
 
-	protected void setupLogging() throws Exception {
+	protected void setupLogging() throws IOException {
 		if (!isDebugLogging() ||
 			contains("conf/Logging.properties", "org.apache.catalina.level")) {
 
@@ -445,11 +513,45 @@ public class SetupTestableTomcatTask
 			});
 	}
 
+	private static final String _NEW_CATALINA_OPTS_GC;
+
+	private static final String _OLD_CATALINA_OPTS_GC =
+		"-Xmx1024m -XX:MaxPermSize=384m";
+
 	private static final String[] _TOMCAT_USERS_ROLE_NAMES = {
 		"manager-gui", "manager-jmx", "manager-script", "manager-status",
 		"tomcat"
 	};
 
+	static {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("-verbose:gc -Xloggc:");
+
+		String tmpDir = System.getProperty("java.io.tmpdir");
+
+		if (File.separatorChar != '/') {
+			tmpDir = tmpDir.replace(File.separatorChar, '/');
+		}
+
+		sb.append(tmpDir);
+
+		if (sb.charAt(sb.length() - 1) != '/') {
+			sb.append('/');
+		}
+
+		sb.append("tomcat-gc.log -Xms512m -Xmx1024m -XX:MaxNewSize=32m ");
+		sb.append("-XX:MaxPermSize=256m -XX:MaxTenuringThreshold=0 ");
+		sb.append("-XX:NewSize=32m -XX:ParallelGCThreads=2 -XX:PermSize=256m ");
+		sb.append("-XX:+PrintGCCause -XX:+PrintGCDetails ");
+		sb.append("-XX:SurvivorRatio=65536 -XX:TargetSurvivorRatio=0 ");
+		sb.append("-XX:+UseParNewGC");
+
+		_NEW_CATALINA_OPTS_GC = sb.toString();
+	}
+
+	private final Map<String, Object> _catalinaOptsReplacements =
+		new LinkedHashMap<>();
 	private boolean _debugLogging;
 	private Object _dir;
 	private boolean _jmxRemoteAuthenticate;

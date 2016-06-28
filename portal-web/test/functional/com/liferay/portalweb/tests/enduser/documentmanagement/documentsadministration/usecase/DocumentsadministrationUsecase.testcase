@@ -685,6 +685,8 @@
 			<var name="larFileName" value="DM_Test_DB_Store.lar" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>

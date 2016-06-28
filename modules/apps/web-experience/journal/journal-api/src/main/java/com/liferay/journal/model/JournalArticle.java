@@ -73,6 +73,9 @@ public interface JournalArticle extends JournalArticleModel, PersistedModel,
 			}
 		};
 
+	public com.liferay.portal.kernel.repository.model.Folder addImagesFolder()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 	@Override
 	public java.lang.String buildTreePath()
 		throws com.liferay.portal.kernel.exception.PortalException;
@@ -102,6 +105,22 @@ public interface JournalArticle extends JournalArticleModel, PersistedModel,
 	public JournalFolder getFolder()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getImagesFileEntries()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getImagesFileEntries(
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getImagesFileEntries(
+		int start, int end, com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public int getImagesFileEntriesCount()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public long getImagesFolderId();
+
 	public com.liferay.portal.kernel.model.Layout getLayout();
 
 	public java.lang.String getSmallImageType()
@@ -130,6 +149,8 @@ public interface JournalArticle extends JournalArticleModel, PersistedModel,
 	public void setDefaultLanguageId(java.lang.String defaultLanguageId);
 
 	public void setDocument(com.liferay.portal.kernel.xml.Document document);
+
+	public void setImagesFolderId(long imagesFolderId);
 
 	public void setSmallImageType(java.lang.String smallImageType);
 

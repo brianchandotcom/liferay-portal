@@ -98,6 +98,7 @@
 			<var name="authenticationMethod" value="${authenticationMethod}" />
 			<var name="nodePort" value="${nodePort}" />
 			<var name="password" value="${password}" />
+			<var name="samlEnabled" value="${samlEnabled}" />
 			<var name="specificURL" value="${idpInitiatedSSOURL}" />
 			<var name="syntaxCheckingEnabled" value="${syntaxCheckingEnabled}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />

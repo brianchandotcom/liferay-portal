@@ -1600,7 +1600,14 @@
 			</else>
 		</if>
 
-		<execute function="AssertClick" locator1="UserBar#USER_SIGN_IN" value1="Sign In" />
+		<if>
+			<not>
+				<equals arg1="${samlEnabled}" arg2="true" />
+			</not>
+			<then>
+				<execute function="AssertClick" locator1="UserBar#USER_SIGN_IN" value1="Sign In" />
+			</then>
+		</if>
 
 		<if>
 			<and>

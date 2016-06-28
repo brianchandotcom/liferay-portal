@@ -286,6 +286,28 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="get-dependency-variables">
+		<attribute name="dependency" />
+
+		<sequential>
+			<local name="dependency" />
+
+			<property name="dependency" value="@{dependency}" />
+
+			<beanshell>
+				<![CDATA[
+					String dependency = project.getProperty("dependency");
+
+					String[] dependencyInfo = dependency.split(":");
+
+					project.setProperty("dependency.group", dependencyInfo[0]);
+					project.setProperty("dependency.name", dependencyInfo[1]);
+					project.setProperty("dependency.version", dependencyInfo[2]);
+				]]>
+			</beanshell>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="get-env-app-server">
 		<sequential>
 			<propertyregex
@@ -1311,6 +1333,49 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 					<var name="database.index" unset="true" />
 				</then>
 			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="prepare-additional-osgi-jars">
+		<attribute name="additional.dependencies" />
+		<attribute name="osgi.dir" />
+		<attribute name="repository.url" />
+
+		<sequential>
+			<for list="@{additional.dependencies}" param="additional.dependency">
+				<sequential>
+					<local name="dependency.group" />
+					<local name="dependency.name" />
+					<local name="dependency.version" />
+
+					<get-dependency-variables dependency="@{additional.dependency}" />
+
+					<local name="dependency.group.path" />
+
+					<propertyregex
+						input="${dependency.group}"
+						global="true"
+						property="dependency.group.path"
+						regexp="\."
+						replace="/"
+					/>
+
+					<first id="dependency.jar">
+						<fileset dir="@{osgi.dir}" includes="**/${dependency.name}*.jar" />
+					</first>
+
+					<local name="dependency.jar" />
+
+					<condition else="${toString:dependency.jar}" property="dependency.jar" value="@{osgi.dir}/modules/${dependency.name}.jar">
+						<equals arg1="${toString:dependency.jar}" arg2="" />
+					</condition>
+
+					<mirrors-get
+						dest="${dependency.jar}"
+						src="@{repository.url}/${dependency.group.path}/${dependency.name}/${dependency.version}/${dependency.name}-${dependency.version}.jar"
+					/>
+				</sequential>
+			</for>
 		</sequential>
 	</macrodef>
 
@@ -6802,6 +6867,17 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 						<include name="*.sh" />
 					</fileset>
 				</chmod>
+
+				<if>
+					<isset property="test.build.additional.osgi.dependencies" />
+					<then>
+						<prepare-additional-osgi-jars
+							additional.dependencies="${test.build.additional.osgi.dependencies}"
+							osgi.dir="${app.server.parent.dir}/osgi"
+							repository.url="${sonatype.release.url}"
+						/>
+					</then>
+				</if>
 
 				<prepare-fix-pack-bundle />
 			</then>

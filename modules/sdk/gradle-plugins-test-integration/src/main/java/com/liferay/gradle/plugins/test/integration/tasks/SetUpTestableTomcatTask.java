@@ -62,11 +62,11 @@ import org.w3c.dom.NodeList;
 /**
  * @author Andrea Di Giorgi
  */
-public class SetUpTestableTomcatTask1
+public class SetUpTestableTomcatTask
 	extends DefaultTask
 	implements JmxRemotePortSpec, ManagerSpec, ModuleFrameworkBaseDirSpec {
 
-	public SetUpTestableTomcatTask1() {
+	public SetUpTestableTomcatTask() {
 		_zipUrl = new Callable<String>() {
 
 			@Override
@@ -104,7 +104,7 @@ public class SetUpTestableTomcatTask1
 		};
 	}
 
-	public SetUpTestableTomcatTask1 catalinaOptsReplacement(
+	public SetUpTestableTomcatTask catalinaOptsReplacement(
 		String oldSub, Object newSub) {
 
 		_catalinaOptsReplacements.put(oldSub, newSub);
@@ -112,7 +112,7 @@ public class SetUpTestableTomcatTask1
 		return this;
 	}
 
-	public SetUpTestableTomcatTask1 catalinaOptsReplacements(
+	public SetUpTestableTomcatTask catalinaOptsReplacements(
 		Map<String, ?> catalinaOptsReplacements) {
 
 		_catalinaOptsReplacements.putAll(catalinaOptsReplacements);

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.translator;
+package com.liferay.wiki.internal.translator;
 
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Digester;
@@ -114,7 +114,7 @@ public class MediaWikiToCreoleTranslatorTest {
 
 		String expected =
 			MediaWikiToCreoleTranslator.TABLE_OF_CONTENTS +
-				"== Header 1 ==\n=== Header 2 ===";
+			"== Header 1 ==\n=== Header 2 ===";
 		String actual = _mediaWikiToCreoleTranslator.postProcess(
 			_translate(content));
 

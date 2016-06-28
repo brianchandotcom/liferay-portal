@@ -49,8 +49,10 @@ public class GradleTemplatesTest {
 	public static void setUpClass() {
 		Path resourcesDirPath = Paths.get("src/main/resources");
 
-		_standaloneDirPath = resourcesDirPath.resolve("standalone");
-		_workspaceDirPath = resourcesDirPath.resolve("workspace");
+		_standaloneDirPath = resourcesDirPath.resolve(
+			GradleTemplates.TEMPLATES_STANDALONE_DIR);
+		_workspaceDirPath = resourcesDirPath.resolve(
+			GradleTemplates.TEMPLATES_WORKSPACE_DIR);
 	}
 
 	@Test

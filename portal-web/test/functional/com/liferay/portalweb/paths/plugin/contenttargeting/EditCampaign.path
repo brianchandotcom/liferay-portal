@@ -112,19 +112,19 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--CAMPAIGN_TRACKING_ACTIONS_FORM-->
+<!--CAMPAIGN_TRACKING_ACTIONS_CUSTOM_FORM-->
 <tr>
-	<td>CAMPAIGN_TRACKING_ACTIONS_FORM_NAME_FIELD</td>
+	<td>CAMPAIGN_TRACKING_ACTIONS_CUSTOM_FORM_NAME_FIELD</td>
 	<td>//div[contains(@class,'formtrackingaction')]//input[contains(@id,'alias')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CAMPAIGN_TRACKING_ACTIONS_FORM_FORM_ID_FIELD</td>
+	<td>CAMPAIGN_TRACKING_ACTIONS_CUSTOM_FORM_FORM_ID_FIELD</td>
 	<td>//div[contains(@class,'formtrackingaction')]//input[contains(@id,'elementId')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CAMPAIGN_TRACKING_ACTIONS_FORM_TRACKING_ACTION_SELECT</td>
+	<td>CAMPAIGN_TRACKING_ACTIONS_CUSTOM_FORM_TRACKING_ACTION_SELECT</td>
 	<td>//div[contains(@class,'formtrackingaction')]//select[contains(@id,'eventType')]</td>
 	<td></td>
 </tr>

@@ -1,4 +1,4 @@
-<definition component-name="portal-user-interface">
+<definition component-name="portal-legacy">
 	<property name="portal.release" value="true" />
 	<property name="testray.component.names" value="Accessibility" />
 	<property name="testray.main.component.name" value="User Interface" />
@@ -20,7 +20,9 @@
 		</if>
 	</tear-down>
 
-	<command name="Smoke" priority="3">
+	<!-- LRQA-26245 -->
+
+<!--<command name="Smoke" priority="3">
 		<execute macro="Page#add">
 			<var name="defaultURL" value="${defaultURL}" />
 			<var name="nodePort" value="${nodePort}" />
@@ -28,24 +30,6 @@
 			<var name="pageTemplateName" value="${pageTemplateName}" />
 			<var name="sitePageType" value="${pageType}" />
 		</execute>
-
-		<execute macro="Page#add">
-			<var name="defaultURL" value="${defaultURL}" />
-			<var name="nodePort" value="${nodePort}" />
-			<var name="pageName" value="Test Page2" />
-			<var name="pageTemplateName" value="${pageTemplateName}" />
-			<var name="sitePageType" value="${pageType}" />
-		</execute>
-
-		<execute macro="Page#add">
-			<var name="defaultURL" value="${defaultURL}" />
-			<var name="nodePort" value="${nodePort}" />
-			<var name="pageName" value="Test Page3" />
-			<var name="pageTemplateName" value="${pageTemplateName}" />
-			<var name="sitePageType" value="${pageType}" />
-		</execute>
-
-		<execute macro="SignOut#signOut" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Test Page1" />
@@ -60,10 +44,12 @@
 			<var name="webContentTitle" value="Web Content Title" />
 		</execute>
 
-		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="Web Content Content" />
+		<execute macro="SignOut#signOut" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Test Page1" />
 		</execute>
 
 		<execute function="AssertAccessible" />
-	</command>
+	</command>-->
 </definition>

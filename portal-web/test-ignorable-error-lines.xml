@@ -184,6 +184,10 @@
 			<contains>Unable to add taglib</contains>
 			<matches></matches>
 		</ignore-error>
+		<ignore-error description="LPS-66736 - temporary workaround">
+			<contains>Unable to process message {destinationName=liferay/hot_deploy, response=null, responseDestinationName=null, responseId=null, payload=null, values={companyId=0, groupId=0, command=deploy, servletContextName=product-app-theme}}</contains>
+			<matches></matches>
+		</ignore-error>
 		<ignore-error description="LRQA-26173 - temporary workaround">
 			<contains>Unable to add folder menu item</contains>
 			<matches></matches>

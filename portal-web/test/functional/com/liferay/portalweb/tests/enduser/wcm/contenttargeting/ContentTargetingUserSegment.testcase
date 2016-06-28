@@ -431,7 +431,6 @@
 		</execute>
 	</command>
 
-
 	<command name="AddUserSegmentBehaviorScorePointsCP" priority="5">
 		<property name="content.targeting.release" value="true" />
 

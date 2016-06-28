@@ -18,6 +18,7 @@ import java.util.Map;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
+
 import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Activate;
@@ -68,12 +69,12 @@ public class _CLASS_Report extends BaseJSPReport {
 		String setting1 = ParamUtil.getString(portletRequest, "setting1");
 		String setting2 = ParamUtil.getString(portletRequest, "setting2");
 
-		JSONObject jsonObj = JSONFactoryUtil.createJSONObject();
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		jsonObj.put("setting1", setting1);
-		jsonObj.put("setting2", setting2);
+		jsonObject.put("setting1", setting1);
+		jsonObject.put("setting2", setting2);
 
-		return jsonObj.toString();
+		return jsonObject.toString();
 	}
 
 	@Reference(unbind = "-")
@@ -113,11 +114,11 @@ public class _CLASS_Report extends BaseJSPReport {
 
 		if (reportInstance != null) {
 			try {
-				JSONObject jsonObj = JSONFactoryUtil.createJSONObject(
+				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 					reportInstance.getTypeSettings());
 
-				setting1 = jsonObj.getString("setting1");
-				setting2 = jsonObj.getString("setting2");
+				setting1 = jsonObject.getString("setting1");
+				setting2 = jsonObject.getString("setting2");
 			}
 			catch (JSONException jsone) {
 			}

@@ -106,8 +106,6 @@
 	<command name="ViewSingleLogoutHTTPPostBindingInConsole" priority="4">
 		<description message="LPS-49666 - SAML Single Logout should support HTTP-POST binding." />
 
-		<execute macro="User#logoutPG" />
-
 		<execute macro="User#loginPG">
 			<var name="password" value="test" />
 			<var name="userEmailAddress" value="test@liferay.com" />

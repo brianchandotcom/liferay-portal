@@ -127,7 +127,16 @@
 	<command name="gotoSite">
 		<var name="key_site" value="${site}" />
 
-		<execute function="Type" locator1="TextInput#SEARCH" value1="${site}" />
+		<if>
+			<equals arg1="${site}" arg2="Liferay" />
+			<then>
+				<execute function="Type" locator1="TextInput#SEARCH" value1="guest" />
+			</then>
+			<else>
+				<execute function="Type" locator1="TextInput#SEARCH" value1="${site}" />
+			</else>
+		</if>
+
 		<execute function="AssertElementPresent" locator1="Icon#BASIC_SEARCH" />
 
 		<execute function="Click" locator1="Icon#BASIC_SEARCH" />

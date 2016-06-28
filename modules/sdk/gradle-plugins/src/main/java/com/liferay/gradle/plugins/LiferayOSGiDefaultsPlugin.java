@@ -1869,9 +1869,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		Test test = (Test)GradleUtil.getTask(
 			project, JavaPlugin.TEST_TASK_NAME);
 
-		test.jvmArgs(_TEST_JVM_ARGS);
-
 		configureTaskTestIgnoreFailures(test);
+		configureTaskTestJvmArgs(test, "junit.java.unit.gc");
 		configureTaskTestLogging(test);
 	}
 
@@ -1883,9 +1882,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		Test test = (Test)GradleUtil.getTask(
 			project, TestIntegrationBasePlugin.TEST_INTEGRATION_TASK_NAME);
 
-		test.jvmArgs(_TEST_INTEGRATION_JVM_ARGS);
-
 		configureTaskTestIgnoreFailures(test);
+		configureTaskTestJvmArgs(test, "junit.java.integration.gc");
 		configureTaskTestLogging(test);
 
 		File resultsDir = project.file("test-results/integration");
@@ -1897,6 +1895,15 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		JUnitXmlReport jUnitXmlReport = testTaskReports.getJunitXml();
 
 		jUnitXmlReport.setDestination(resultsDir);
+	}
+
+	protected void configureTaskTestJvmArgs(Test test, String propertyName) {
+		String jvmArgs = GradleUtil.getProperty(
+			test.getProject(), propertyName, (String)null);
+
+		if (Validator.isNotNull(jvmArgs)) {
+			test.jvmArgs((Object[])jvmArgs.split("\\s+"));
+		}
 	}
 
 	protected void configureTaskTestLogging(Test test) {
@@ -2256,23 +2263,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 	private static final String _REPOSITORY_URL = System.getProperty(
 		"repository.url", DEFAULT_REPOSITORY_URL);
-
-	private static final Object[] _TEST_INTEGRATION_JVM_ARGS = {
-		"-Xms512m", "-Xmx512m", "-XX:MaxNewSize=32m", "-XX:MaxPermSize=200m",
-		"-XX:MaxTenuringThreshold=0", "-XX:NewSize=32m",
-		"-XX:ParallelGCThreads=2", "-XX:PermSize=200m",
-		"-XX:SurvivorRatio=65536", "-XX:TargetSurvivorRatio=0",
-		"-XX:-UseAdaptiveSizePolicy", "-XX:+UseParallelOldGC"
-	};
-
-	private static final Object[] _TEST_JVM_ARGS = {
-		"-Xms256m", "-Xmx256m", "-XX:MaxNewSize=32m", "-XX:MaxPermSize=64m",
-		"-XX:MaxTenuringThreshold=0", "-XX:NewSize=32m",
-		"-XX:ParallelGCThreads=2", "-XX:PermSize=64m",
-		"-XX:SurvivorRatio=65536", "-XX:TargetSurvivorRatio=0",
-		"-XX:-UseAdaptiveSizePolicy", "-XX:+UseParallelOldGC",
-		"-XX:-UseSplitVerifier"
-	};
 
 	private static final Logger _logger = Logging.getLogger(
 		LiferayOSGiDefaultsPlugin.class);

@@ -17,19 +17,6 @@ package com.liferay.item.selector.criteria;
 import com.liferay.item.selector.ItemSelectorReturnType;
 
 /**
- * When used in an {@link com.liferay.item.selector.ItemSelectorView} it should
- * return, in order to be fully compatible with other cases in portal, a
- * JSONObject containing:
- *
- * {
- * 		fileEntryId: The ID of the uploaded File
- * 		groupId: The group of the uploaded File
- * 		title: The title of the uploaded File
- * 		type: The type of the uploaded File
- * 		url: The url of the uploaded File
- * 		uuid: The UUID of the uploaded File
- * 	}
- *
  * @author Roberto Díaz
  */
 public class UploadableFileReturnType implements ItemSelectorReturnType {

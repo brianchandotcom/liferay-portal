@@ -33,13 +33,7 @@ Date toDate = PortalUtil.getDate(toMonth, toDay, toYear);
 
 JSONArray rangesJSONArray = dataJSONObject.getJSONArray("ranges");
 
-String modifiedLabel = StringPool.BLANK;
-
 int index = 0;
-
-if (fieldParamSelection.equals("0")) {
-	modifiedLabel = LanguageUtil.get(request, HtmlUtil.escape(facetConfiguration.getLabel()));
-}
 %>
 
 <div class="panel panel-default">
@@ -65,10 +59,13 @@ if (fieldParamSelection.equals("0")) {
 							defaultRangeCssClass = "text-primary";
 						}
 
-						String taglibClearFacet = "window['" + renderResponse.getNamespace() + HtmlUtil.escapeJS(facet.getFieldId()) + "clearFacet'](0);";
+						Map<String, Object> data = new HashMap<>();
+
+						data.put("value", StringPool.BLANK);
+						data.put("selection", 0);
 						%>
 
-						<aui:a cssClass="<%= defaultRangeCssClass %>" href="javascript:;" onClick="<%= taglibClearFacet %>">
+						<aui:a cssClass="<%= defaultRangeCssClass %>" href="javascript:;">
 							<liferay-ui:message key="<%= HtmlUtil.escape(facetConfiguration.getLabel()) %>" />
 						</aui:a>
 					</li>
@@ -81,10 +78,6 @@ if (fieldParamSelection.equals("0")) {
 						String range = rangesJSONObject.getString("range");
 
 						index = (i + 1);
-
-						if (fieldParamSelection.equals(String.valueOf(index))) {
-							modifiedLabel = LanguageUtil.get(request, label);
-						}
 					%>
 
 						<li class="facet-value">
@@ -96,10 +89,13 @@ if (fieldParamSelection.equals("0")) {
 								rangeCssClass = "text-primary";
 							}
 
-							String taglibSetRange = "window['" + renderResponse.getNamespace() + HtmlUtil.escapeJS(facet.getFieldId()) + "setRange'](" + index + ", '" + HtmlUtil.escapeJS(range) + "');";
+							data = new HashMap<>();
+
+							data.put("value", HtmlUtil.escape(range));
+							data.put("selection", index);
 							%>
 
-							<aui:a cssClass="<%= rangeCssClass %>" href="javascript:;" onClick="<%= taglibSetRange %>">
+							<aui:a cssClass="<%= rangeCssClass %>" data="<%= data %>" href="javascript:;">
 								<liferay-ui:message key="<%= label %>" />
 
 								<%
@@ -131,8 +127,6 @@ if (fieldParamSelection.equals("0")) {
 						TermCollector termCollector = null;
 
 						if (fieldParamSelection.equals(String.valueOf(index + 1))) {
-							modifiedLabel = LanguageUtil.get(request, "custom-range");
-
 							termCollector = facetCollector.getTermCollector(fieldParam);
 						}
 						%>
@@ -209,15 +203,6 @@ if (fieldParamSelection.equals("0")) {
 </div>
 
 <aui:script>
-	function <portlet:namespace /><%= HtmlUtil.escapeJS(facet.getFieldId()) %>clearFacet(selection) {
-		var form = AUI.$(document.<portlet:namespace />fm);
-
-		form.fm('<%= HtmlUtil.escapeJS(facet.getFieldId()) %>').val('');
-		form.fm('<%= HtmlUtil.escapeJS(facet.getFieldId()) %>selection').val(selection);
-
-		submitForm(form);
-	}
-
 	function <portlet:namespace /><%= HtmlUtil.escapeJS(facet.getFieldId()) %>searchCustomRange(selection) {
 		var A = AUI();
 		var Lang = A.Lang;
@@ -234,15 +219,6 @@ if (fieldParamSelection.equals("0")) {
 		var yearTo = form.fm('<%= HtmlUtil.escapeJS(facet.getFieldId()) %>yearTo').val();
 
 		var range = '[' + yearFrom + LString.padNumber(monthFrom, 2) + LString.padNumber(dayFrom, 2) + '000000 TO ' + yearTo + LString.padNumber(monthTo, 2) + LString.padNumber(dayTo, 2) + '235959]';
-
-		form.fm('<%= HtmlUtil.escapeJS(facet.getFieldId()) %>').val(range);
-		form.fm('<%= HtmlUtil.escapeJS(facet.getFieldId()) %>selection').val(selection);
-
-		submitForm(form);
-	}
-
-	function <portlet:namespace /><%= HtmlUtil.escapeJS(facet.getFieldId()) %>setRange(selection, range) {
-		var form = AUI.$(document.<portlet:namespace />fm);
 
 		form.fm('<%= HtmlUtil.escapeJS(facet.getFieldId()) %>').val(range);
 		form.fm('<%= HtmlUtil.escapeJS(facet.getFieldId()) %>selection').val(selection);

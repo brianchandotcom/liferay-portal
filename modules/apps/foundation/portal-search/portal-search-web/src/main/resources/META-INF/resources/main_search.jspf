@@ -55,9 +55,14 @@ Hits hits = searchDisplayContext.getHits();
 							var form = $(document.<portlet:namespace />fm);
 
 							var field = form.fm(searchFacet.data('facetfieldname'));
+							var fieldSelection = form.fm(searchFacet.data('facetfieldname') + 'selection');
 
 							if (field.length) {
 								field.val(term.data('value'));
+
+								if (fieldSelection.length) {
+									fieldSelection.val(term.data('selection'));
+								}
 
 								form.fm('<%= SearchContainer.DEFAULT_CUR_PARAM %>').val(1);
 

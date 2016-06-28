@@ -4,7 +4,7 @@ import org.apache.tools.ant.filters.FixCrLfFilter
 
 apply plugin: "antlr"
 
-String parserDirName = "com/liferay/wiki/engine/creole/parser/parser"
+String parserDirName = "com/liferay/wiki/engine/creole/internal/parser/parser"
 
 cleanGenerateGrammarSource {
 	delete "src/main/java/" + parserDirName

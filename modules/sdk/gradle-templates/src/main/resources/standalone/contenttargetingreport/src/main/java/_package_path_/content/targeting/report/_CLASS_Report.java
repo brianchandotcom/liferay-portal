@@ -43,18 +43,11 @@ public class _CLASS_Report extends BaseJSPReport {
 
 	@Override
 	public String getReportType() {
-
-		// Change to Campaign.class.getNamme() to have a Campaign Report
-
 		return UserSegment.class.getName();
 	}
 
 	@Override
 	public boolean isInstantiable() {
-
-		// return false if you don't want users to create different
-		// instances of this report
-
 		return true;
 	}
 
@@ -62,9 +55,6 @@ public class _CLASS_Report extends BaseJSPReport {
 			PortletRequest portletRequest, PortletResponse portletResponse,
 			ReportInstance reportInstance)
 		throws Exception {
-
-		// Logic to Store user configuration. This is only needed if
-		// the report is instantiable
 
 		String setting1 = ParamUtil.getString(portletRequest, "setting1");
 		String setting2 = ParamUtil.getString(portletRequest, "setting2");
@@ -104,7 +94,7 @@ public class _CLASS_Report extends BaseJSPReport {
 			}
 		}
 		catch (Exception e) {
-			_log.error("Cannot update report", e);
+			_log.error("Unable to update report", e);
 		}
 	}
 

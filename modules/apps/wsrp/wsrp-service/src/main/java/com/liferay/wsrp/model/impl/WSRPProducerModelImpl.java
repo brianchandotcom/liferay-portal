@@ -91,7 +91,7 @@ public class WSRPProducerModelImpl extends BaseModelImpl<WSRPProducer>
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table WSRP_WSRPProducer (uuid_ VARCHAR(75) null,wsrpProducerId LONG not null primary key,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,version VARCHAR(75) null,portletIds STRING null,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table WSRP_WSRPProducer (uuid_ VARCHAR(75) null,wsrpProducerId LONG not null primary key,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,version VARCHAR(75) null,portletIds VARCHAR(75) null,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table WSRP_WSRPProducer";
 	public static final String ORDER_BY_JPQL = " ORDER BY wsrpProducer.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY WSRP_WSRPProducer.name ASC";

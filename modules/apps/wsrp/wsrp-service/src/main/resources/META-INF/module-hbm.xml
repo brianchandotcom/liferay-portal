@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
-<hibernate-mapping auto-import="false" default-lazy="false">
+<hibernate-mapping default-lazy="false" auto-import="false">
 	<import class="com.liferay.wsrp.model.WSRPConsumer" />
 	<import class="com.liferay.wsrp.model.WSRPConsumerPortlet" />
 	<import class="com.liferay.wsrp.model.WSRPProducer" />
@@ -15,8 +15,8 @@
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="url" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="wsdl" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
-		<property name="registrationContextString" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
+		<property name="wsdl" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="registrationContextString" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="registrationPropertiesString" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="forwardCookies" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="forwardHeaders" type="com.liferay.portal.dao.orm.hibernate.StringType" />

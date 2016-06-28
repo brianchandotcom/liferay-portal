@@ -8,27 +8,13 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="name" type="String" />
-		<field name="url" type="String">
-			<hint-collection name="URL" />
-		</field>
-		<field name="wsdl" type="String">
-			<hint-collection name="CLOB" />
-		</field>
-		<field name="registrationContextString" type="String">
-			<hint-collection name="CLOB" />
-		</field>
-		<field name="registrationPropertiesString" type="String">
-			<hint-collection name="TEXTAREA" />
-		</field>
-		<field name="forwardCookies" type="String">
-			<hint name="max-length">255</hint>
-		</field>
-		<field name="forwardHeaders" type="String">
-			<hint name="max-length">255</hint>
-		</field>
-		<field name="markupCharacterSets" type="String">
-			<hint name="max-length">255</hint>
-		</field>
+		<field name="url" type="String" />
+		<field name="wsdl" type="String" />
+		<field name="registrationContextString" type="String" />
+		<field name="registrationPropertiesString" type="String" />
+		<field name="forwardCookies" type="String" />
+		<field name="forwardHeaders" type="String" />
+		<field name="markupCharacterSets" type="String" />
 		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.wsrp.model.WSRPConsumerPortlet">
@@ -39,9 +25,7 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="wsrpConsumerId" type="long" />
 		<field name="name" type="String" />
-		<field name="portletHandle" type="String">
-			<hint name="max-length">255</hint>
-		</field>
+		<field name="portletHandle" type="String" />
 		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.wsrp.model.WSRPProducer">
@@ -53,9 +37,7 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="name" type="String" />
 		<field name="version" type="String" />
-		<field name="portletIds" type="String">
-			<hint-collection name="TEXTAREA" />
-		</field>
+		<field name="portletIds" type="String" />
 		<field name="lastPublishDate" type="Date" />
 	</model>
 </model-hints>

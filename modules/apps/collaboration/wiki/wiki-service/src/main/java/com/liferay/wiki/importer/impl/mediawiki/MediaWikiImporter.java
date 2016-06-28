@@ -51,11 +51,11 @@ import com.liferay.wiki.exception.ImportFilesException;
 import com.liferay.wiki.exception.NoSuchPageException;
 import com.liferay.wiki.importer.WikiImporter;
 import com.liferay.wiki.importer.impl.WikiImporterKeys;
+import com.liferay.wiki.internal.translator.MediaWikiToCreoleTranslator;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.WikiPageConstants;
 import com.liferay.wiki.service.WikiPageLocalService;
-import com.liferay.wiki.translator.MediaWikiToCreoleTranslator;
 import com.liferay.wiki.validator.WikiPageTitleValidator;
 
 import java.io.IOException;

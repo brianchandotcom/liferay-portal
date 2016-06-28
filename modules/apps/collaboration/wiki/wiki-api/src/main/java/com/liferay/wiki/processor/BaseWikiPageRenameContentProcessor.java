@@ -14,6 +14,8 @@
 
 package com.liferay.wiki.processor;
 
+import com.liferay.portal.kernel.util.StringParser;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -57,16 +59,13 @@ public class BaseWikiPageRenameContentProcessor
 			String regexp = entry.getKey();
 			String replacement = entry.getValue();
 
-			String escapedTitle = title.replaceAll(
-				"([\\\\\\.\\[\\{\\(\\)\\*\\+\\?\\^\\$\\|])", "\\\\\\\\$1");
-
-			regexp = regexp.replaceAll("@old_title@", escapedTitle);
-
-			String escapedNewTitle = newTitle.replaceAll(
-				"([\\\\\\.\\[\\{\\(\\)\\*\\+\\?\\^\\$\\|])", "\\\\\\\\$1");
+			regexp = regexp.replaceAll(
+				"@old_title@",
+				Matcher.quoteReplacement(StringParser.escapeRegex(title)));
 
 			replacement = replacement.replaceAll(
-				"@new_title@", escapedNewTitle);
+				"@new_title@",
+				Matcher.quoteReplacement(StringParser.escapeRegex(newTitle)));
 
 			content = runRegexp(content, regexp, replacement);
 		}

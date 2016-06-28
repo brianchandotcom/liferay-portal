@@ -67,8 +67,9 @@ public abstract class BaseDataPartitioningExporter
 	}
 
 	@Override
-	public List<String> getControlTableNames(String schemaName) {
-		return getTableNames(getControlTableNamesSQL(schemaName));
+	public List<String> getControlTableNames(ExportContext exportContext) {
+		return getTableNames(
+			getControlTableNamesSQL(exportContext.getSchemaName()));
 	}
 
 	@Override
@@ -87,8 +88,9 @@ public abstract class BaseDataPartitioningExporter
 	}
 
 	@Override
-	public List<String> getPartitionedTableNames(String schemaName) {
-		return getTableNames(getPartitionedTableNamesSQL(schemaName));
+	public List<String> getPartitionedTableNames(ExportContext exportContext) {
+		return getTableNames(
+			getPartitionedTableNamesSQL(exportContext.getSchemaName()));
 	}
 
 	@Override

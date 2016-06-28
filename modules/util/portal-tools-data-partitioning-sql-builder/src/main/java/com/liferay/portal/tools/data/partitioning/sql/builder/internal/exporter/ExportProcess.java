@@ -36,9 +36,9 @@ public class ExportProcess {
 
 	public void export(ExportContext exportContext) throws IOException {
 		List<String> partitionedTableNames =
-			_dbExporter.getPartitionedTableNames(exportContext.getSchemaName());
+			_dbExporter.getPartitionedTableNames(exportContext);
 		List<String> controlTableNames = _dbExporter.getControlTableNames(
-			exportContext.getSchemaName());
+			exportContext);
 
 		List<Long> companyIds = exportContext.getCompanyIds();
 

@@ -26,6 +26,7 @@ import groovy.xml.XmlUtil;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
@@ -211,7 +212,7 @@ public class SetupTestableTomcatTask
 		_zipUrl = zipUrl;
 	}
 
-	protected boolean contains(String fileName, String s) throws Exception {
+	protected boolean contains(String fileName, String s) throws IOException {
 		File file = new File(getDir(), fileName);
 
 		String fileContent = new String(Files.readAllBytes(file.toPath()));
@@ -224,7 +225,7 @@ public class SetupTestableTomcatTask
 	}
 
 	protected PrintWriter getAppendPrintWriter(String fileName)
-		throws Exception {
+		throws IOException {
 
 		File file = new File(getDir(), fileName);
 
@@ -248,7 +249,7 @@ public class SetupTestableTomcatTask
 		return sb.toString();
 	}
 
-	protected void setupJmx() throws Exception {
+	protected void setupJmx() throws IOException {
 		String jmxOptions = getJmxOptions();
 
 		if (!contains("bin/setenv.bat", jmxOptions)) {
@@ -286,7 +287,7 @@ public class SetupTestableTomcatTask
 		}
 	}
 
-	protected void setupLogging() throws Exception {
+	protected void setupLogging() throws IOException {
 		if (!isDebugLogging() ||
 			contains("conf/Logging.properties", "org.apache.catalina.level")) {
 

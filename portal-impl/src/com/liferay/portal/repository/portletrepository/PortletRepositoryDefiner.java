@@ -14,9 +14,10 @@
 
 package com.liferay.portal.repository.portletrepository;
 
-import com.liferay.document.library.kernel.service.DLAppHelperLocalServiceUtil;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.repository.DocumentRepository;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
+import com.liferay.portal.kernel.repository.capabilities.PortalCapabilityLocator;
 import com.liferay.portal.kernel.repository.capabilities.ProcessorCapability;
 import com.liferay.portal.kernel.repository.capabilities.RelatedModelCapability;
 import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
@@ -24,18 +25,6 @@ import com.liferay.portal.kernel.repository.capabilities.WorkflowCapability;
 import com.liferay.portal.kernel.repository.registry.BaseRepositoryDefiner;
 import com.liferay.portal.kernel.repository.registry.CapabilityRegistry;
 import com.liferay.portal.kernel.repository.registry.RepositoryFactoryRegistry;
-import com.liferay.portal.repository.capabilities.LiferayProcessorCapability;
-import com.liferay.portal.repository.capabilities.LiferayRelatedModelCapability;
-import com.liferay.portal.repository.capabilities.LiferayTrashCapability;
-import com.liferay.portal.repository.capabilities.MinimalWorkflowCapability;
-import com.liferay.portal.repository.capabilities.util.DLAppServiceAdapter;
-import com.liferay.portal.repository.capabilities.util.DLFileEntryServiceAdapter;
-import com.liferay.portal.repository.capabilities.util.DLFolderServiceAdapter;
-import com.liferay.portal.repository.capabilities.util.RepositoryEntryChecker;
-import com.liferay.portal.repository.capabilities.util.RepositoryEntryConverter;
-import com.liferay.portal.repository.capabilities.util.RepositoryServiceAdapter;
-import com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil;
-import com.liferay.trash.kernel.service.TrashVersionLocalServiceUtil;
 
 /**
  * @author Adolfo Pérez
@@ -58,33 +47,23 @@ public class PortletRepositoryDefiner extends BaseRepositoryDefiner {
 
 		DocumentRepository documentRepository = capabilityRegistry.getTarget();
 
-		DLFileEntryServiceAdapter dlFileEntryServiceAdapter =
-			DLFileEntryServiceAdapter.create(documentRepository);
-
 		capabilityRegistry.addExportedCapability(
 			RelatedModelCapability.class,
-			new LiferayRelatedModelCapability(
-				new RepositoryEntryConverter(),
-				new RepositoryEntryChecker(documentRepository)));
-
-		TrashCapability trashCapability = new LiferayTrashCapability(
-			DLAppHelperLocalServiceUtil.getService(),
-			DLAppServiceAdapter.create(documentRepository),
-			dlFileEntryServiceAdapter,
-			DLFolderServiceAdapter.create(documentRepository),
-			RepositoryServiceAdapter.create(documentRepository),
-			TrashEntryLocalServiceUtil.getService(),
-			TrashVersionLocalServiceUtil.getService());
+			portalCapabilityLocator.getRelatedModelCapability(
+				documentRepository));
 
 		capabilityRegistry.addExportedCapability(
-			TrashCapability.class, trashCapability);
+			TrashCapability.class,
+			portalCapabilityLocator.getTrashCapability(documentRepository));
 
 		capabilityRegistry.addExportedCapability(
 			WorkflowCapability.class,
-			new MinimalWorkflowCapability(dlFileEntryServiceAdapter));
+			portalCapabilityLocator.getWorkflowCapability(
+				documentRepository, WorkflowCapability.OperationMode.MINIMAL));
 
 		capabilityRegistry.addSupportedCapability(
-			ProcessorCapability.class, new LiferayProcessorCapability());
+			ProcessorCapability.class,
+			portalCapabilityLocator.getProcessorCapability(documentRepository));
 	}
 
 	@Override
@@ -97,6 +76,9 @@ public class PortletRepositoryDefiner extends BaseRepositoryDefiner {
 	public void setRepositoryFactory(RepositoryFactory repositoryFactory) {
 		_repositoryFactory = repositoryFactory;
 	}
+
+	@BeanReference(type = PortalCapabilityLocator.class)
+	protected PortalCapabilityLocator portalCapabilityLocator;
 
 	private RepositoryFactory _repositoryFactory;
 

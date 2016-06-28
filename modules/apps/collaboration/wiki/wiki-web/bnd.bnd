@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Wiki Web
 Bundle-SymbolicName: com.liferay.wiki.web
-Bundle-Version: 1.0.12
+Bundle-Version: 2.0.0
 Export-Package: com.liferay.wiki.web.util
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Wiki

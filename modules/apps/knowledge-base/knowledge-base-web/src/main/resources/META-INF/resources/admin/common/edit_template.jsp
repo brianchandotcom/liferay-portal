@@ -60,7 +60,7 @@ renderResponse.setTitle((kbTemplate == null) ? LanguageUtil.get(request, "new-te
 			<c:if test="<%= kbTemplate == null %>">
 				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
 					<liferay-ui:input-permissions
-							modelName="<%= KBTemplate.class.getName() %>"
+						modelName="<%= KBTemplate.class.getName() %>"
 					/>
 				</aui:fieldset>
 			</c:if>

@@ -102,7 +102,7 @@
 </tr>
 <tr>
 	<td>DOCUMENT_INFO_RELATED_ASSETS_TITLE</td>
-	<td>//li[@class='asset-links-list-item']//a/span</td>
+	<td>//li[@class='asset-links-list-item']//a</td>
 	<td></td>
 </tr>
 <tr>
@@ -183,17 +183,17 @@
 </tr>
 <tr>
 	<td>DOCUMENT_DETAILS_UPLOADER</td>
-	<td>//div[@class='asset-details-content']/div[contains(@class,'icon-user') and contains(@class,'lfr-asset-icon')]</td>
+	<td>//div[contains(@class,'sidebar-body')]//dt[contains(.,'Created')]/../../..//dd[contains(.,'${key_dmDocumentUploader}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DOCUMENT_DETAILS_DATE</td>
-	<td>//div[@class='asset-details-content']//div[contains(@class,'lfr-asset-icon') and contains(@class,'icon-calendar')]</td>
+	<td>//div[contains(@class,'sidebar-body')]//div[contains(@class,'lfr-asset-icon') and contains(@class,'icon-calendar')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DOCUMENT_DETAILS_WORKFLOW</td>
-	<td>//div[@class='asset-details-content']//span[contains(@class,'workflow-status')]</td>
+	<td>//div[contains(@class,'sidebar-body')]//span[contains(@class,'workflow-status')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -203,12 +203,12 @@
 </tr>
 <tr>
 	<td>DOCUMENT_DETAILS_DOWNLOAD</td>
-	<td>//span[@class='download-document']/span/a/span[contains(.,'Download (${key_dmDocumentSize}KB)')]</td>
+	<td>//span[@class='download-document']/span/a/span[contains(.,'Download (${key_dmDocumentSize})')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DOCUMENT_DETAILS_URL</td>
-	<td>//div[@class='asset-details-content']//span[@class='webdav-url']</td>
+	<td>//div[contains(@class,'sidebar-body')]//span[@class='webdav-url']</td>
 	<td></td>
 </tr>
 <tr>

@@ -644,12 +644,12 @@
 
 	<command name="viewAsRelatedAssetPG">
 		<var name="key_assetTitle" value="${assetTitle}" />
+		<var name="key_entryContent" value="${entryContent}" />
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute function="AssertTextEquals" locator1="BlogsEntryTITLE" value1="${entryTitle}" />
+		<execute function="AssertTextEquals" locator1="BlogsEntry#TITLE" value1="${entryTitle}" />
 		<execute function="AssertTextEquals" locator1="BlogsEntry#CONTENT" value1="${entryContent}" />
 		<execute function="AssertTextEquals" locator1="AssetRelatedAssets#HEADER" value1="Related Assets:" />
-		<execute function="AssertElementPresent" locator1="AssetRelatedAssets#IMAGE" />
 		<execute function="AssertTextEquals" locator1="AssetRelatedAssets#ASSET_TITLE" value1="${assetTitle}" />
 	</command>
 

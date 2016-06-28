@@ -195,6 +195,11 @@
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
+		<execute macro="Navigator#gotoSpecificURLPage">
+			<var name="pageName" value="Web Content Page" />
+			<var name="url" value="http://www.able.com:8080" />
+		</execute>
+
 		<execute macro="WebContent#viewPGViaWCD">
 			<var name="webContentContent" value="WC WebContent Content" />
 		</execute>
@@ -1877,6 +1882,16 @@
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="DMDocument#enableActionsMenuOnPortlet" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="Portlet#changeDisplayStyle">
+			<var name="displayStyle" value="Descriptive" />
 		</execute>
 
 		<execute macro="DMDocument#editPG">

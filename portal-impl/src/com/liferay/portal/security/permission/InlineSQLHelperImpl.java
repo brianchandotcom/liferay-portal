@@ -665,6 +665,39 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 		sb.append("))");
 
+		StringBundler defaultResourceForGroupAdmin = new StringBundler(3);
+
+		if (Validator.isNotNull(groupIdField) && (groupIds.length > 1)) {
+			StringBundler defaultResource = new StringBundler(4);
+
+			defaultResource.append("(ResourcePermission.primKeyId = 0) AND ");
+			defaultResource.append("(ResourcePermission.roleId = ");
+			defaultResource.append(permissionChecker.getOwnerRoleId());
+			defaultResource.append(")");
+
+			StringBundler groupAdmin = new StringBundler(groupIds.length);
+
+			groupAdmin.append(groupIdField);
+			groupAdmin.append(" IN (");
+
+			for (int i = 0; i < groupIds.length; i++) {
+				if (!isEnabled(0, groupIds[i])) {
+					groupAdmin.append(groupIds[i]);
+					groupAdmin.append(',');
+				}
+			}
+
+			groupAdmin.setIndex(groupAdmin.index() - 1);
+			groupAdmin.append(")");
+
+			defaultResourceForGroupAdmin.append(defaultResource);
+			defaultResourceForGroupAdmin.append(" AND ");
+			defaultResourceForGroupAdmin.append(groupAdmin);
+		}
+		else {
+			defaultResourceForGroupAdmin.append("[$FALSE$]");
+		}
+
 		String roleIdsOrOwnerIdSQL = getRoleIdsOrOwnerIdSQL(
 			permissionChecker, groupIds, userIdField);
 
@@ -674,11 +707,13 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 			permissionJoin,
 			new String[] {
 				"[$CLASS_NAME$]", "[$COMPANY_ID$]", "[$PRIM_KEYS$]",
-				"[$RESOURCE_SCOPE_INDIVIDUAL$]", "[$ROLE_IDS_OR_OWNER_ID$]"
+				"[$RESOURCE_SCOPE_INDIVIDUAL$]", "[$ROLE_IDS_OR_OWNER_ID$]",
+				"[$DEFAULT_RESOURCE_FOR_GROUP_ADMIN$]"
 			},
 			new String[] {
 				className, String.valueOf(companyId), sb.toString(),
-				String.valueOf(scope), roleIdsOrOwnerIdSQL
+				String.valueOf(scope), roleIdsOrOwnerIdSQL,
+				defaultResourceForGroupAdmin.toString()
 			});
 
 		int pos = sql.indexOf(_WHERE_CLAUSE);

@@ -195,6 +195,11 @@
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
+		<execute macro="Navigator#gotoSpecificURLPage">
+			<var name="pageName" value="Web Content Page" />
+			<var name="url" value="http://www.able.com:8080" />
+		</execute>
+
 		<execute macro="WebContent#viewPGViaWCD">
 			<var name="webContentContent" value="WC WebContent Content" />
 		</execute>

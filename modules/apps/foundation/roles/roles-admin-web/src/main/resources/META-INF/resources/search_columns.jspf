@@ -30,6 +30,10 @@
 			<h6 class="text-default">
 				<span><%= HtmlUtil.escape(role.getDescription(locale)) %></span>
 			</h6>
+
+			<h6 class="text-default">
+				<span><%= _getAssigneesMessage(request, role) %></span>
+			</h6>
 		</liferay-ui:search-container-column-text>
 
 		<liferay-ui:search-container-column-jsp
@@ -49,7 +53,7 @@
 				icon="users"
 				resultRow="<%= row %>"
 				rowChecker="<%= searchContainer.getRowChecker() %>"
-				subtitle="<%= HtmlUtil.escape(role.getDescription(locale)) %>"
+				subtitle="<%= _getAssigneesMessage(request, role) %>"
 				title="<%= HtmlUtil.escape(role.getTitle(locale)) %>"
 				url="<%= (rowURL != null) ? rowURL.toString() : null %>"
 			/>
@@ -76,6 +80,13 @@
 			href="<%= rowURL %>"
 			name="description"
 			value="<%= HtmlUtil.escape(role.getDescription(locale)) %>"
+		/>
+
+		<liferay-ui:search-container-column-text
+			cssClass="table-cell-content"
+			href="<%= rowURL %>"
+			name="number-of-assignees"
+			value='<%= _isImpliedRole(role) ? LanguageUtil.get(request, "not-available") : String.valueOf(RoleLocalServiceUtil.getAssigneesTotal(role.getRoleId())) %>'
 		/>
 
 		<liferay-ui:search-container-column-jsp

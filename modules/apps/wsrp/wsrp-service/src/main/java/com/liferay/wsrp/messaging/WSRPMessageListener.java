@@ -45,10 +45,6 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 )
 public class WSRPMessageListener extends HotDeployMessageListener {
 
-	public WSRPMessageListener(String... servletContextNames) {
-		super(servletContextNames);
-	}
-
 	public void destroy() {
 		_serviceTracker.close();
 	}

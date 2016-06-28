@@ -1,4 +1,4 @@
-package _package_;
+package _package_.content.targeting.tracking.action;
 
 import com.liferay.content.targeting.api.model.BaseJSPTrackingAction;
 import com.liferay.content.targeting.api.model.TrackingAction;
@@ -74,7 +74,7 @@ public class _CLASS_TrackingAction extends BaseJSPTrackingAction {
 		String eventType = StringPool.BLANK;
 
 		if (!values.isEmpty()) {
-			
+
 			// Values from the request in case there is an error
 
 			alias = values.get("alias");
@@ -98,13 +98,13 @@ public class _CLASS_TrackingAction extends BaseJSPTrackingAction {
 
 	@Override
 	public String processTrackingAction(
-			PortletRequest request, PortletResponse response, String id,
+			PortletRequest portletRequest, PortletResponse portletResponse, String id,
 			Map<String, String> values)
 		throws InvalidTrackingActionException {
 
-		// Custom logic to Store the configuration	
-		
-		return null;	
+		// Custom logic to Store the configuration
+
+		return null;
 	}
 
 	// The different event types that can be tracked for this element (e.g. click, view, submit, play...)

@@ -48,8 +48,7 @@ public class RatingsStatsFinderImpl
 		RatingsStatsModelImpl.ENTITY_CACHE_ENABLED,
 		RatingsStatsModelImpl.FINDER_CACHE_ENABLED, RatingsStatsImpl.class,
 		RatingsStatsPersistenceImpl.FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-		"findByC_C",
-		new String[] {Long.class.getName(), List.class.getName()});
+		"findByC_C", new String[] {Long.class.getName(), List.class.getName()});
 
 	@Override
 	public Map<Serializable, RatingsStats> fetchByPrimaryKeys(

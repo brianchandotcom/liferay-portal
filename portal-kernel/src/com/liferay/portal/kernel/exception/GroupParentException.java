@@ -87,9 +87,7 @@ public class GroupParentException extends PortalException {
 
 		public MustNotBeOwnParent(long groupId) {
 			super(
-				String.format(
-					"Site %s cannot be its own parent site",
-					groupId),
+				String.format("Site %s cannot be its own parent site", groupId),
 				SELF_DESCENDANT);
 
 			this.groupId = groupId;

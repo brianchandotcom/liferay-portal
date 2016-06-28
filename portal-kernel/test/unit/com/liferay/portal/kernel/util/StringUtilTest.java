@@ -791,14 +791,12 @@ public class StringUtilTest {
 		// Leading spaces
 
 		Assert.assertEquals(
-			"\t\r\n\t\r",
-			StringUtil.trimLeading(" \t\r\n\t\r", exceptions));
+			"\t\r\n\t\r", StringUtil.trimLeading(" \t\r\n\t\r", exceptions));
 
 		// Trailing spaces
 
 		Assert.assertSame(
-			"\t\r \t\r\n",
-			StringUtil.trimLeading("\t\r \t\r\n", exceptions));
+			"\t\r \t\r\n", StringUtil.trimLeading("\t\r \t\r\n", exceptions));
 
 		// Surrounding spaces
 
@@ -884,14 +882,12 @@ public class StringUtilTest {
 		// Leading spaces
 
 		Assert.assertSame(
-			" \t\r\n\t\r",
-			StringUtil.trimTrailing(" \t\r\n\t\r", exceptions));
+			" \t\r\n\t\r", StringUtil.trimTrailing(" \t\r\n\t\r", exceptions));
 
 		// Trailing spaces
 
 		Assert.assertEquals(
-			"\t\r \t\r",
-			StringUtil.trimTrailing("\t\r \t\r\n", exceptions));
+			"\t\r \t\r", StringUtil.trimTrailing("\t\r \t\r\n", exceptions));
 
 		// Surrounding spaces
 

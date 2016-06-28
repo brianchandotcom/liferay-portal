@@ -164,8 +164,7 @@ public class LanguageImplTest {
 
 			String value = _languageImpl.format(
 				mockLanguageServletRequest.getRequest(),
-				_LANG_KEY_WITH_ARGUMENT,
-				new LanguageWrapper("a", "31", "a"));
+				_LANG_KEY_WITH_ARGUMENT, new LanguageWrapper("a", "31", "a"));
 
 			Assert.assertEquals("a31a Hours", value);
 		}
@@ -225,8 +224,7 @@ public class LanguageImplTest {
 
 			String value = _languageImpl.format(
 				mockLanguageServletRequest.getRequest(),
-				_LANG_KEY_WITH_ARGUMENTS,
-				new Object[] {"A", "B"});
+				_LANG_KEY_WITH_ARGUMENTS, new Object[] {"A", "B"});
 
 			Assert.assertEquals("A has invited you to join B.", value);
 		}

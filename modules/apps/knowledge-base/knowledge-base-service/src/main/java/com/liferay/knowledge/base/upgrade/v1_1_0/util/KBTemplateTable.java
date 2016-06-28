@@ -27,8 +27,7 @@ public class KBTemplateTable {
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"title", Types.VARCHAR}, {"content", Types.CLOB},
-		{"engineType", Types.INTEGER},
-		{"cacheable", Types.BOOLEAN}
+		{"engineType", Types.INTEGER}, {"cacheable", Types.BOOLEAN}
 	};
 
 	public static final String TABLE_NAME = "KBTemplate";

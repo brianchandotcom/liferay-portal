@@ -88,8 +88,7 @@ public interface Registry {
 	public <S, T> ServiceTracker<S, T> trackServices(Filter filter);
 
 	public <S, T> ServiceTracker<S, T> trackServices(
-		Filter filter,
-		ServiceTrackerCustomizer<S, T> serviceTrackerCustomizer);
+		Filter filter, ServiceTrackerCustomizer<S, T> serviceTrackerCustomizer);
 
 	public <S, T> ServiceTracker<S, T> trackServices(String className);
 

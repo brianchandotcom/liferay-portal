@@ -210,6 +210,12 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				return;
 			}
 
+			String s = annotationParameters.substring(0, x);
+
+			if ((getLevel(s, "(", ")") != 0) || (getLevel(s, "{", "}") != 0)) {
+				continue;
+			}
+
 			if (Validator.isNotNull(previousParameterName)) {
 				y = annotationParameters.lastIndexOf(CharPool.COMMA, x);
 
@@ -784,7 +790,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		newContent = fixIncorrectLineBreaks(newContent, fileName);
 
 		newContent = formatAnnotations(
-			fileName, StringPool.BLANK, newContent, StringPool.BLANK);
+			fileName, StringPool.BLANK, newContent, StringPool.BLANK, true);
 
 		Matcher matcher = _logPattern.matcher(newContent);
 
@@ -1598,7 +1604,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected String formatAnnotations(
-			String fileName, String javaTermName, String content, String indent)
+			String fileName, String javaTermName, String content, String indent,
+			boolean sortAnnotations)
 		throws IOException {
 
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
@@ -1614,8 +1621,15 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				return content;
 			}
 
-			if ((StringUtil.count(line, CharPool.TAB) == indent.length()) &&
-				!line.startsWith(indent + StringPool.CLOSE_PARENTHESIS)) {
+			int tabCount = StringUtil.count(line, CharPool.TAB);
+
+			if ((tabCount < indent.length()) && Validator.isNull(annotation)) {
+				continue;
+			}
+
+			if ((tabCount < indent.length()) ||
+				((tabCount == indent.length()) &&
+				 !line.startsWith(indent + StringPool.CLOSE_PARENTHESIS))) {
 
 				if (Validator.isNotNull(annotation) &&
 					annotation.contains(StringPool.OPEN_PARENTHESIS)) {
@@ -1650,14 +1664,25 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 					if (!newContent.equals(content)) {
 						return formatAnnotations(
-							fileName, javaTermName, newContent, indent);
+							fileName, javaTermName, newContent, indent,
+							sortAnnotations);
+					}
+
+					String newAnnotation = formatAnnotations(
+						fileName, javaTermName, annotation, indent + "\t\t",
+						false);
+
+					if (!newAnnotation.equals(annotation)) {
+						return StringUtil.replace(
+							content, annotation, newAnnotation);
 					}
 
 					checkAnnotationParameters(
 						fileName, javaTermName, annotation);
 				}
 
-				if (Validator.isNotNull(previousAnnotation) &&
+				if (sortAnnotations &&
+					Validator.isNotNull(previousAnnotation) &&
 					(previousAnnotation.compareToIgnoreCase(annotation) > 0)) {
 
 					content = StringUtil.replaceFirst(
@@ -1666,7 +1691,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 						content, annotation, previousAnnotation);
 
 					return formatAnnotations(
-						fileName, javaTermName, content, indent);
+						fileName, javaTermName, content, indent,
+						sortAnnotations);
 				}
 
 				if (line.startsWith(indent + StringPool.AT)) {
@@ -3551,7 +3577,28 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			int nextLineTabCount = getLeadingTabCount(nextLine);
 
 			if (nextLineTabCount != (lineTabCount + 1)) {
-				int x = trimmedLine.indexOf(CharPool.COMMA);
+				int x = -1;
+
+				while (true) {
+					x = trimmedLine.indexOf(CharPool.COMMA, x + 1);
+
+					if (x == -1) {
+						break;
+					}
+
+					if (ToolsUtil.isInsideQuotes(trimmedLine, x)) {
+						continue;
+					}
+
+					String linePart = trimmedLine.substring(0, x);
+
+					if ((getLevel(linePart, "(", ")") == 0) &&
+						(getLevel(linePart, "{", "}") == 0) &&
+						(getLevel(linePart, "<", ">") == 0)) {
+
+						break;
+					}
+				}
 
 				if (x != -1) {
 					while ((previousLineLength + 1 + x) < _maxLineLength) {

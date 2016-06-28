@@ -29,6 +29,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidation;
  */
 @DDMForm
 @DDMFormLayout(
+	paginationMode = com.liferay.dynamic.data.mapping.model.DDMFormLayout.SETTINGS_MODE,
 	value = {
 		@DDMFormLayoutPage(
 			title = "basic",
@@ -61,9 +62,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidation;
 				)
 			}
 		)
-	},
-	paginationMode =
-		com.liferay.dynamic.data.mapping.model.DDMFormLayout.SETTINGS_MODE
+	}
 )
 public interface RadioDDMFormFieldTypeSettings
 	extends DefaultDDMFormFieldTypeSettings {

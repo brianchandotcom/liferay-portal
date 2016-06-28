@@ -66,8 +66,7 @@ public class ArrayUtilTest {
 				new float[] {1.0f, 2.0f, 3.0f}, new float[] {4.0f, 5.0f, 6.0f}),
 			0.0001f);
 		Assert.assertArrayEquals(
-			new int[] {1, 2, 3, 4},
-			ArrayUtil.append(new int[] {1, 2, 3}, 4));
+			new int[] {1, 2, 3, 4}, ArrayUtil.append(new int[] {1, 2, 3}, 4));
 		Assert.assertArrayEquals(
 			new int[] {1, 2, 3, 4, 5, 6},
 			ArrayUtil.append(new int[] {1, 2, 3}, new int[] {4, 5, 6}));

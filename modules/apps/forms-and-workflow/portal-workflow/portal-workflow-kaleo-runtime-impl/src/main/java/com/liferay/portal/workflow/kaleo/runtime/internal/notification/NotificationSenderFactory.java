@@ -56,8 +56,7 @@ public class NotificationSenderFactory {
 		target = "(notification.type=*)", unbind = "removeNotificationSender"
 	)
 	protected void addNotificationSender(
-		NotificationSender notificationSender,
-		Map<String, Object> properties) {
+		NotificationSender notificationSender, Map<String, Object> properties) {
 
 		String[] notificationTypes = getNotificationTypes(
 			notificationSender, properties);
@@ -85,8 +84,7 @@ public class NotificationSenderFactory {
 	}
 
 	protected void removeNotificationSender(
-		NotificationSender notificationSender,
-		Map<String, Object> properties) {
+		NotificationSender notificationSender, Map<String, Object> properties) {
 
 		String[] notificationTypes = getNotificationTypes(
 			notificationSender, properties);

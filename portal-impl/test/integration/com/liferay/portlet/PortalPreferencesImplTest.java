@@ -173,8 +173,7 @@ public class PortalPreferencesImplTest {
 							PortletKeys.PREFS_OWNER_ID_DEFAULT, true);
 
 					portalPreferences.setValues(
-						_NAMESPACE, _KEY_1,
-						new String[] {null, _VALUE_2});
+						_NAMESPACE, _KEY_1, new String[] {null, _VALUE_2});
 
 					return null;
 				}

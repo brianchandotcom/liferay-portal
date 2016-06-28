@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.editor.configuration;
+package com.liferay.wiki.editor.configuration.internal;
 
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;

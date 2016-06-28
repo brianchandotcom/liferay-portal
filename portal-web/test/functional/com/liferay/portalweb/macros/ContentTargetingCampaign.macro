@@ -53,11 +53,13 @@
 		<var name="key_menuItem" value="${menulistContent}" />
 
 		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" />
+
 		<execute function="SelectFrame" locator1="IFrame#SELECT_CONTENT" />
 
 		<var name="key_rowEntry" value="${contentTitle}" />
 
 		<execute function="Click" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK" />
+
 		<execute function="SelectFrame" value1="relative=top" />
 
 		<execute function="Type" locator1="EditCampaign#CAMPAIGN_TRACKING_ACTIONS_CONTENT_NAME_FIELD" value1="${contentMetricName}" />
@@ -81,6 +83,7 @@
 		</execute>
 
 		<execute function="Type" locator1="EditCampaign#CAMPAIGN_TRACKING_ACTIONS_DDL_FORM_NAME_FIELD" value1="${formAlias}" />
+
 		<execute function="Click" locator1="EditCampaign#CAMPAIGN_TRACKING_ACTIONS_DDL_FORM_SELECT_BUTTON" />
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
@@ -143,7 +146,9 @@
 		<execute function="Check#checkAll" locator1="Checkbox#SELECT_ALL" />
 
 		<execute function="ClickNoError" locator1="Icon#DELETE" />
+
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
+
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
@@ -155,7 +160,9 @@
 		<var name="key_rowEntry" value="${campaignName}" />
 
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+
 		<execute function="ClickNoError" locator1="MenuItem#DELETE" />
+
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 	</command>
 
@@ -167,6 +174,7 @@
 		<var name="key_rowEntry" value="${campaignName}" />
 
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+
 		<execute function="Click" locator1="MenuItem#EDIT" />
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${campaignNameEdit}" />
@@ -225,6 +233,7 @@
 					<var name="key_trackingAction" value="${trackingActionDelete}" />
 
 					<execute function="ClickNoError" locator1="EditCampaign#CAMPAIGN_TRACKING_ACTIONS_DELETE" />
+
 					<execute function="Confirm" value1="Are you sure you want to delete the selected field(s)?" />
 				</for>
 			</then>
@@ -335,6 +344,7 @@
 
 	<command name="saveCP">
 		<execute function="Pause" locator1="5000" />
+
 		<execute macro="PortletEntry#save" />
 	</command>
 
@@ -407,7 +417,9 @@
 			<isset var="userSegmentSelect" />
 			<then>
 				<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+
 				<execute function="Click" locator1="MenuItem#EDIT" />
+
 				<execute function="AssertTextEquals" locator1="EditCampaign#CAMPAIGN_USER_SEGMENT_APPLIED" value1="${userSegmentSelect}" />
 			</then>
 		</if>

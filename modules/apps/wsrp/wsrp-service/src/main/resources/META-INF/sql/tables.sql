@@ -5,13 +5,13 @@ create table WSRP_WSRPConsumer (
 	createDate DATE null,
 	modifiedDate DATE null,
 	name VARCHAR(75) null,
-	url STRING null,
-	wsdl TEXT null,
-	registrationContextString TEXT null,
-	registrationPropertiesString STRING null,
-	forwardCookies VARCHAR(255) null,
-	forwardHeaders VARCHAR(255) null,
-	markupCharacterSets VARCHAR(255) null,
+	url VARCHAR(75) null,
+	wsdl VARCHAR(75) null,
+	registrationContextString VARCHAR(75) null,
+	registrationPropertiesString VARCHAR(75) null,
+	forwardCookies VARCHAR(75) null,
+	forwardHeaders VARCHAR(75) null,
+	markupCharacterSets VARCHAR(75) null,
 	lastPublishDate DATE null
 );
 
@@ -23,7 +23,7 @@ create table WSRP_WSRPConsumerPortlet (
 	modifiedDate DATE null,
 	wsrpConsumerId LONG,
 	name VARCHAR(75) null,
-	portletHandle VARCHAR(255) null,
+	portletHandle VARCHAR(75) null,
 	lastPublishDate DATE null
 );
 
@@ -36,6 +36,6 @@ create table WSRP_WSRPProducer (
 	modifiedDate DATE null,
 	name VARCHAR(75) null,
 	version VARCHAR(75) null,
-	portletIds STRING null,
+	portletIds VARCHAR(75) null,
 	lastPublishDate DATE null
 );

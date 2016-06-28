@@ -235,7 +235,8 @@ public class WSRPConsumerPersistenceTest {
 	protected OrderByComparator<WSRPConsumer> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("WSRP_WSRPConsumer", "uuid",
 			true, "wsrpConsumerId", true, "companyId", true, "createDate",
-			true, "modifiedDate", true, "name", true, "url", true,
+			true, "modifiedDate", true, "name", true, "url", true, "wsdl",
+			true, "registrationContextString", true,
 			"registrationPropertiesString", true, "forwardCookies", true,
 			"forwardHeaders", true, "markupCharacterSets", true,
 			"lastPublishDate", true);

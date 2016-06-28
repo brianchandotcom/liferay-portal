@@ -7,10 +7,11 @@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.content.targeting.util.ContentTargetingUtil" %>
-<%@ page import="com.liferay.portal.kernel.util.GetterUtil" %>
-<%@ page import="java.util.Map" %>
-<%@ page import="java.util.List" %>
+<%@ page import="com.liferay.content.targeting.util.ContentTargetingUtil" %><%@
+page import="com.liferay.portal.kernel.util.GetterUtil" %>
+
+<%@ page import="java.util.List" %><%@
+page import="java.util.Map" %>
 
 <liferay-frontend:defineObjects />
 
@@ -22,11 +23,11 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 Map<String, Object> context = (Map<String, Object>)request.getAttribute("context");
 %>
 
-<aui:input helpMessage="name-help" label="name" name='<%= ContentTargetingUtil.GUID_REPLACEMENT + "alias" %>' type="text" value="<%= GetterUtil.getString(context.get("alias")) %>">
+<aui:input helpMessage="name-help" label="name" name='<%= ContentTargetingUtil.GUID_REPLACEMENT + "alias" %>' type="text" value='<%= GetterUtil.getString(context.get("alias")) %>'>
 	<aui:validator name="required" />
 </aui:input>
 
-<aui:input helpMessage="enter-the-id-of-the-link-to-be-tracked" label="element-id" name='<%= ContentTargetingUtil.GUID_REPLACEMENT + "elementId" %>' type="text" value="<%= GetterUtil.getString(context.get("elementId")) %>">
+<aui:input helpMessage="enter-the-id-of-the-link-to-be-tracked" label="element-id" name='<%= ContentTargetingUtil.GUID_REPLACEMENT + "elementId" %>' type="text" value='<%= GetterUtil.getString(context.get("elementId")) %>'>
 	<aui:validator name="required" />
 </aui:input>
 
@@ -36,7 +37,7 @@ Map<String, Object> context = (Map<String, Object>)request.getAttribute("context
 	for (String curEventType : (List<String>)context.get("eventTypes")) {
 	%>
 
-		<aui:option label="<%= curEventType %>" selected="<%= curEventType.equals(GetterUtil.getString(context.get("eventType"), "click")) %>" value="<%= curEventType %>" />
+		<aui:option label="<%= curEventType %>" selected='<%= curEventType.equals(GetterUtil.getString(context.get("eventType"), "click")) %>' value="<%= curEventType %>" />
 
 	<%
 	}

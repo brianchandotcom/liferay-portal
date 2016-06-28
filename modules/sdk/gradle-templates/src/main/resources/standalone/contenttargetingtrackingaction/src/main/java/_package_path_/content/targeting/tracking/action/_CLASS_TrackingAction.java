@@ -14,6 +14,7 @@ import java.util.Map;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
+
 import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Activate;
@@ -53,6 +54,17 @@ public class _CLASS_TrackingAction extends BaseJSPTrackingAction {
 			});
 
 		return summary;
+	}
+
+	@Override
+	public String processTrackingAction(
+			PortletRequest portletRequest, PortletResponse portletResponse,
+			String id, Map<String, String> values)
+		throws InvalidTrackingActionException {
+
+		// Custom logic to Store the configuration
+
+		return null;
 	}
 
 	@Override
@@ -96,18 +108,8 @@ public class _CLASS_TrackingAction extends BaseJSPTrackingAction {
 		context.put("eventTypes", getEventTypes());
 	}
 
-	@Override
-	public String processTrackingAction(
-			PortletRequest portletRequest, PortletResponse portletResponse, String id,
-			Map<String, String> values)
-		throws InvalidTrackingActionException {
-
-		// Custom logic to Store the configuration
-
-		return null;
-	}
-
-	// The different event types that can be tracked for this element (e.g. click, view, submit, play...)
+	// The different event types that can be tracked for this element
+	// (e.g. click, view, submit, play...)
 
 	private static final String[] _EVENT_TYPES = {"click"};
 

@@ -47,7 +47,7 @@
 <!--FORM_MENULIST-->
 <tr>
 	<td>FORM_MENULIST_EDIT</td>
-	<td>//a[@role='menuitem' and contains(.,'Edit')]</td>
+	<td>//a[@role='menuitem' and contains(.,'Edit Form')]</td>
 	<td></td>
 </tr>
 <tr>

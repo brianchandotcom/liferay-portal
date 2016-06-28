@@ -81,6 +81,10 @@ public class AddMenuTag extends IncludeTag {
 		_addMenuItems = addMenuItems;
 	}
 
+	public void setMaxItems(int maxItems) {
+		_maxItems = maxItems;
+	}
+
 	@Override
 	public void setPageContext(PageContext pageContext) {
 		super.setPageContext(pageContext);
@@ -94,6 +98,7 @@ public class AddMenuTag extends IncludeTag {
 		_addMenuItems = new ArrayList<>();
 		_addMenuPrimaryItems = new ArrayList<>();
 		_addMenuRecentItems = new ArrayList<>();
+		_maxItems = 7;
 	}
 
 	@Override
@@ -109,11 +114,14 @@ public class AddMenuTag extends IncludeTag {
 
 		request.setAttribute(
 			"liferay-frontend:add-menu:addMenuItems", addMenuItems);
+		request.setAttribute(
+			"liferay-frontend:add-menu:maxItems", _maxItems);
 	}
 
 	private List<AddMenuItem> _addMenuFavItems = new ArrayList<>();
 	private List<AddMenuItem> _addMenuItems = new ArrayList<>();
 	private List<AddMenuItem> _addMenuPrimaryItems = new ArrayList<>();
 	private List<AddMenuItem> _addMenuRecentItems = new ArrayList<>();
+	private int _maxItems = 7;
 
 }

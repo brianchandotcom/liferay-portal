@@ -73,13 +73,6 @@ public class JSPSourceTabCalculator {
 			return -1;
 		}
 
-		if ((!text.startsWith("<") && !text.startsWith(">") &&
-			 !text.startsWith("/>")) ||
-			text.matches("(<%@ )?(page|taglib).*")) {
-
-			return 0;
-		}
-
 		text = _stripJavaSource(text);
 
 		text = _jspSourceProcessor.stripQuotes(text);
@@ -102,6 +95,12 @@ public class JSPSourceTabCalculator {
 				}
 			}
 			else if ((c == '>') && (i > 0) && (text.charAt(i - 1) == '/')) {
+				level -= 1;
+			}
+			else if (c == '{') {
+				level += 1;
+			}
+			else if (c == '}') {
 				level -= 1;
 			}
 		}
@@ -133,9 +132,15 @@ public class JSPSourceTabCalculator {
 			String line = jspLine.getLine();
 
 			if (!jspLine.isOpenTag()) {
-				if (!jspLine.isJavaSource() && line.matches("\t*<.*")) {
+				if (!jspLine.isJavaSource()) {
 					int actualTabCount = jspLine.getLeadingTabCount();
 					int expectedTabCount = jspLine.getTabLevel();
+
+					String trimmedLine = StringUtil.trim(line);
+
+					if (trimmedLine.equals(StringPool.GREATER_THAN)) {
+						expectedTabCount -= 1;
+					}
 
 					if (expectedTabCount != actualTabCount) {
 						return _fixTabs(
@@ -249,7 +254,7 @@ public class JSPSourceTabCalculator {
 	private String _fixTabs(
 		String content, int startLine, int endLine, int diff) {
 
-		boolean insidePreTag = false;
+		boolean insideUnformattedTextTag = false;
 
 		for (int i = startLine; i <= endLine; i++) {
 			String line = _jspSourceProcessor.getLine(content, i);
@@ -260,9 +265,13 @@ public class JSPSourceTabCalculator {
 
 			String trimmedLine = StringUtil.trimLeading(line);
 
-			if (insidePreTag) {
-				if (trimmedLine.equals("</pre>")) {
-					insidePreTag = false;
+			if (insideUnformattedTextTag) {
+				if (trimmedLine.matches(".*</(pre|textarea)>")) {
+					insideUnformattedTextTag = false;
+
+					if (trimmedLine.matches(".+</(pre|textarea)>")) {
+						continue;
+					}
 				}
 				else {
 					continue;
@@ -282,8 +291,10 @@ public class JSPSourceTabCalculator {
 						content.substring(lineStartPos + 1);
 			}
 
-			if (!insidePreTag && trimmedLine.equals("<pre>")) {
-				insidePreTag = true;
+			if (!insideUnformattedTextTag &&
+				trimmedLine.matches("<(pre|textarea).*")) {
+
+				insideUnformattedTextTag = true;
 			}
 		}
 
@@ -368,7 +379,7 @@ public class JSPSourceTabCalculator {
 			boolean javaSource = false;
 			boolean scriptSource = false;
 			boolean multiLineComment = false;
-			boolean insidePreTag = false;
+			boolean insideUnformattedTextTag = false;
 
 			while ((line = unsyncBufferedReader.readLine()) != null) {
 				lineCount++;
@@ -379,9 +390,13 @@ public class JSPSourceTabCalculator {
 
 				String trimmedLine = StringUtil.trimLeading(line);
 
-				if (insidePreTag) {
-					if (trimmedLine.equals("</pre>")) {
-						insidePreTag = false;
+				if (insideUnformattedTextTag) {
+					if (trimmedLine.matches(".*</(pre|textarea)>")) {
+						insideUnformattedTextTag = false;
+
+						if (trimmedLine.matches(".+</(pre|textarea)>")) {
+							continue;
+						}
 					}
 					else {
 						continue;
@@ -457,8 +472,8 @@ public class JSPSourceTabCalculator {
 					else if (trimmedLine.startsWith("<%--")) {
 						multiLineComment = true;
 					}
-					else if (trimmedLine.equals("<pre>")) {
-						insidePreTag = true;
+					else if (trimmedLine.matches("<(pre|textarea).*")) {
+						insideUnformattedTextTag = true;
 					}
 				}
 			}

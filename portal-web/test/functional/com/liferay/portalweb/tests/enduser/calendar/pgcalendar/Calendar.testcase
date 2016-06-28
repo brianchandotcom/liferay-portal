@@ -1858,6 +1858,10 @@
 
 		<execute macro="CalendarEvent#viewNoRepeating" />
 
+		<execute macro="CalendarEvent#viewTitle">
+			<var name="eventTitle" value="Calendar Non-Repeating Event 1" />
+		</execute>
+
 		<execute macro="CalendarEvent#publish" />
 
 		<execute macro="Navigator#gotoPage">
@@ -1875,6 +1879,10 @@
 		<execute macro="CalendarEvent#gotoRepeatConfiguration" />
 
 		<execute macro="Button#clickCancel" />
+
+		<execute macro="CalendarEvent#viewTitle">
+			<var name="eventTitle" value="Calendar Non-Repeating Event 2" />
+		</execute>
 
 		<execute macro="CalendarEvent#viewNoRepeating" />
 

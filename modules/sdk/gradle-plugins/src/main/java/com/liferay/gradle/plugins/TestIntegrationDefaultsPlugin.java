@@ -18,7 +18,7 @@ import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.extensions.TomcatAppServer;
 import com.liferay.gradle.plugins.test.integration.TestIntegrationPlugin;
 import com.liferay.gradle.plugins.test.integration.TestIntegrationTomcatExtension;
-import com.liferay.gradle.plugins.test.integration.tasks.SetupTestableTomcatTask;
+import com.liferay.gradle.plugins.test.integration.tasks.SetUpTestableTomcatTask;
 import com.liferay.gradle.plugins.test.integration.tasks.StartTestableTomcatTask;
 import com.liferay.gradle.plugins.test.integration.tasks.StopAppServerTask;
 import com.liferay.gradle.plugins.util.GradleUtil;
@@ -49,19 +49,20 @@ public class TestIntegrationDefaultsPlugin
 		configureTestIntegrationTomcat(
 			project, liferayExtension, tomcatAppServer);
 
-		configureTaskSetupTestableTomcat(project, tomcatAppServer);
+		configureTaskSetUpTestableTomcat(project, tomcatAppServer);
 		configureTaskStartTestableTomcat(project, tomcatAppServer);
 		configureTaskStopTestableTomcat(project, tomcatAppServer);
 	}
 
-	protected void configureTaskSetupTestableTomcat(
+	protected void configureTaskSetUpTestableTomcat(
 		Project project, final TomcatAppServer tomcatAppServer) {
 
-		SetupTestableTomcatTask setupTestableTomcatTask =
-			(SetupTestableTomcatTask)GradleUtil.getTask(
-				project, TestIntegrationPlugin.SETUP_TESTABLE_TOMCAT_TASK_NAME);
+		SetUpTestableTomcatTask setUpTestableTomcatTask =
+			(SetUpTestableTomcatTask)GradleUtil.getTask(
+				project,
+				TestIntegrationPlugin.SET_UP_TESTABLE_TOMCAT_TASK_NAME);
 
-		setupTestableTomcatTask.setZipUrl(
+		setUpTestableTomcatTask.setZipUrl(
 			new Callable<String>() {
 
 				@Override

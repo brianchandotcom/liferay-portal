@@ -217,6 +217,10 @@
 			<contains>Unable to add folder menu item</contains>
 			<matches></matches>
 		</ignore-error>
+		<ignore-error description="LPS-66736, temporary workaround until Marcos Castro fixes it">
+			<contains></contains>
+			<matches>.*Unable to process message.*product-app-theme.*</matches>
+		</ignore-error>
 		<ignore-error description="LRQA-14442, temporary workaround until Kiyoshi Lee fixes it">
 			<contains>[org_eclipse_equinox_http_servlet.*Framework Event Dispatcher: Equinox Container:</contains>
 			<matches></matches>

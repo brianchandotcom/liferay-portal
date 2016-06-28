@@ -88,10 +88,34 @@ AUI.add(
 					_updateIntervalSelector: function(event) {
 						var instance = this;
 
-						var intervalSelector = instance.get('intervalSelector');
-
 						if (!instance._intervalSelectorUpdated) {
-							Liferay.DatePickerUtil.syncUI(event.currentTarget, intervalSelector);
+							var intervalSelector = instance.get('intervalSelector');
+
+							var schedulerEvent = instance.get('schedulerEvent');
+
+							intervalSelector.stopDurationPreservation();
+
+							var startDate = schedulerEvent.get('startDate');
+
+							var startDatePicker = intervalSelector.get('startDatePicker');
+
+							var startTimePicker = intervalSelector.get('startTimePicker');
+
+							startDatePicker.deselectDates();
+							startDatePicker.selectDates([startDate]);
+							startTimePicker.selectDates([startDate]);
+
+							var endDate = schedulerEvent.get('endDate');
+
+							var endDatePicker = intervalSelector.get('endDatePicker');
+
+							var endTimePicker = intervalSelector.get('endTimePicker');
+
+							endDatePicker.deselectDates();
+							endDatePicker.selectDates([endDate]);
+							endTimePicker.selectDates([endDate]);
+
+							intervalSelector.startDurationPreservation();
 						}
 					},
 
@@ -138,6 +162,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'liferay-calendar-date-picker-util', 'liferay-portlet-base']
+		requires: ['aui-base', 'liferay-portlet-base']
 	}
 );

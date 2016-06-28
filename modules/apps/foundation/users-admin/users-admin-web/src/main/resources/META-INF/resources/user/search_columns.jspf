@@ -14,70 +14,121 @@
  */
 --%>
 
-<liferay-ui:search-container-column-text
-	cssClass="table-cell-content"
-	href="<%= rowURL %>"
-	name="name"
-	orderable="<%= true %>"
->
-	<aui:a href="<%= String.valueOf(rowURL) %>"><strong><%= user2.getFullName() %></strong></aui:a>
-</liferay-ui:search-container-column-text>
-
-<liferay-ui:search-container-column-text
-	cssClass="table-cell-content"
-	href="<%= rowURL %>"
-	name="screen-name"
-	orderable="<%= true %>"
-	property="screenName"
-/>
-
-<liferay-ui:search-container-column-text
-	cssClass="table-cell-content"
-	href="<%= rowURL %>"
-	name="job-title"
-	orderable="<%= true %>"
-	value="<%= user2.getJobTitle() %>"
-/>
-
 <c:choose>
-	<c:when test="<%= organizationContextView && (organizationGroupId > 0) %>">
-
-		<%
-		List<UserGroupRole> userGroupRoles = UserGroupRoleLocalServiceUtil.getUserGroupRoles(user2.getUserId(), organizationGroupId, 0, PropsValues.USERS_ADMIN_ROLE_COLUMN_LIMIT);
-		int userGroupRolesCount = UserGroupRoleLocalServiceUtil.getUserGroupRolesCount(user2.getUserId(), organizationGroupId);
-		%>
+	<c:when test='<%= displayStyle.equals("descriptive") %>'>
+		<liferay-ui:search-container-column-text>
+			<liferay-ui:user-portrait
+				cssClass="user-icon-lg"
+				userId="<%= user2.getUserId() %>"
+			/>
+		</liferay-ui:search-container-column-text>
 
 		<liferay-ui:search-container-column-text
-			cssClass="table-cell-content"
-			href="<%= rowURL %>"
-			name="organization-roles"
-			value="<%= HtmlUtil.escape(UsersAdminUtil.getUserColumnText(locale, userGroupRoles, UsersAdmin.USER_GROUP_ROLE_TITLE_ACCESSOR, userGroupRolesCount)) %>"
+			colspan="<%= 2 %>"
+		>
+			<h5><%= user2.getFullName() %></h5>
+
+			<h6 class="text-default">
+				<span><%= user2.getScreenName() %></span>
+			</h6>
+		</liferay-ui:search-container-column-text>
+
+		<liferay-ui:search-container-column-jsp
+			cssClass="entry-action-column"
+			path="/user_action.jsp"
 		/>
 	</c:when>
-	<c:otherwise>
+	<c:when test='<%= displayStyle.equals("icon") %>'>
 
 		<%
-		List<Organization> userOrganizations = OrganizationLocalServiceUtil.getUserOrganizations(user2.getUserId(), 0, PropsValues.USERS_ADMIN_ORGANIZATION_COLUMN_LIMIT);
-		int userOrganizationsCount = OrganizationLocalServiceUtil.getUserOrganizationsCount(user2.getUserId());
+		row.setCssClass("entry-card lfr-asset-item");
+		%>
+
+		<liferay-ui:search-container-column-text>
+			<liferay-frontend:user-vertical-card
+				actionJsp="/user_action.jsp"
+				actionJspServletContext="<%= application %>"
+				cssClass="entry-display-style"
+				resultRow="<%= row %>"
+				rowChecker="<%= rowChecker %>"
+				subtitle="<%= user2.getScreenName() %>"
+				title="<%= user2.getFullName() %>"
+				userId="<%= user2.getUserId() %>"
+			/>
+		</liferay-ui:search-container-column-text>
+	</c:when>
+	<c:otherwise>
+		<liferay-ui:search-container-column-text
+			cssClass="table-cell-content"
+			href="<%= rowURL %>"
+			name="name"
+			orderable="<%= true %>"
+		>
+			<aui:a href="<%= String.valueOf(rowURL) %>"><strong><%= user2.getFullName() %></strong></aui:a>
+		</liferay-ui:search-container-column-text>
+
+		<liferay-ui:search-container-column-text
+			cssClass="table-cell-content"
+			href="<%= rowURL %>"
+			name="screen-name"
+			orderable="<%= true %>"
+			property="screenName"
+		/>
+
+		<liferay-ui:search-container-column-text
+			cssClass="table-cell-content"
+			href="<%= rowURL %>"
+			name="job-title"
+			orderable="<%= true %>"
+			value="<%= user2.getJobTitle() %>"
+		/>
+
+		<c:choose>
+			<c:when test="<%= organizationContextView && (organizationGroupId > 0) %>">
+
+				<%
+				List<UserGroupRole> userGroupRoles = UserGroupRoleLocalServiceUtil.getUserGroupRoles(user2.getUserId(), organizationGroupId, 0, PropsValues.USERS_ADMIN_ROLE_COLUMN_LIMIT);
+				int userGroupRolesCount = UserGroupRoleLocalServiceUtil.getUserGroupRolesCount(user2.getUserId(), organizationGroupId);
+				%>
+
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-content"
+					href="<%= rowURL %>"
+					name="organization-roles"
+					value="<%= HtmlUtil.escape(UsersAdminUtil.getUserColumnText(locale, userGroupRoles, UsersAdmin.USER_GROUP_ROLE_TITLE_ACCESSOR, userGroupRolesCount)) %>"
+				/>
+			</c:when>
+			<c:otherwise>
+
+				<%
+				List<Organization> userOrganizations = OrganizationLocalServiceUtil.getUserOrganizations(user2.getUserId(), 0, PropsValues.USERS_ADMIN_ORGANIZATION_COLUMN_LIMIT);
+				int userOrganizationsCount = OrganizationLocalServiceUtil.getUserOrganizationsCount(user2.getUserId());
+				%>
+
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-content"
+					href="<%= rowURL %>"
+					name="organizations"
+					value="<%= HtmlUtil.escape(UsersAdminUtil.getUserColumnText(locale, userOrganizations, Organization.NAME_ACCESSOR, userOrganizationsCount)) %>"
+				/>
+			</c:otherwise>
+		</c:choose>
+
+		<%
+		List<UserGroup> userUserGroups = UserGroupLocalServiceUtil.getUserUserGroups(user2.getUserId(), 0, PropsValues.USERS_ADMIN_USER_GROUP_COLUMN_LIMIT);
+		int userUserGroupsCount = UserGroupLocalServiceUtil.getUserUserGroupsCount(user2.getUserId());
 		%>
 
 		<liferay-ui:search-container-column-text
 			cssClass="table-cell-content"
 			href="<%= rowURL %>"
-			name="organizations"
-			value="<%= HtmlUtil.escape(UsersAdminUtil.getUserColumnText(locale, userOrganizations, Organization.NAME_ACCESSOR, userOrganizationsCount)) %>"
+			name="user-groups"
+			value="<%= HtmlUtil.escape(UsersAdminUtil.getUserColumnText(locale, userUserGroups, UserGroup.NAME_ACCESSOR, userUserGroupsCount)) %>"
+		/>
+
+		<liferay-ui:search-container-column-jsp
+			cssClass="entry-action-column"
+			path="/user_action.jsp"
 		/>
 	</c:otherwise>
 </c:choose>
-
-<%
-List<UserGroup> userUserGroups = UserGroupLocalServiceUtil.getUserUserGroups(user2.getUserId(), 0, PropsValues.USERS_ADMIN_USER_GROUP_COLUMN_LIMIT);
-int userUserGroupsCount = UserGroupLocalServiceUtil.getUserUserGroupsCount(user2.getUserId());
-%>
-
-<liferay-ui:search-container-column-text
-	cssClass="table-cell-content"
-	href="<%= rowURL %>"
-	name="user-groups"
-	value="<%= HtmlUtil.escape(UsersAdminUtil.getUserColumnText(locale, userUserGroups, UserGroup.NAME_ACCESSOR, userUserGroupsCount)) %>"
-/>

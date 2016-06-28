@@ -19,7 +19,16 @@
 <%
 String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all-organizations");
 
-String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
+String displayStyle = ParamUtil.getString(request, "displayStyle");
+
+if (Validator.isNull(displayStyle)) {
+	displayStyle = portalPreferences.getValue(UsersAdminPortletKeys.USERS_ADMIN, "display-style", "list");
+}
+else {
+	portalPreferences.setValue(UsersAdminPortletKeys.USERS_ADMIN, "display-style", displayStyle);
+
+	request.setAttribute(WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);
+}
 
 String usersListView = (String)request.getAttribute("view.jsp-usersListView");
 
@@ -28,6 +37,8 @@ PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 String keywords = ParamUtil.getString(request, "keywords");
 
 LinkedHashMap<String, Object> organizationParams = new LinkedHashMap<String, Object>();
+
+portletURL.setParameter("displayStyle", displayStyle);
 
 boolean showList = true;
 
@@ -71,21 +82,21 @@ boolean hasAddOrganizationPermission = PortalPermissionUtil.contains(permissionC
 			<liferay-frontend:management-bar-filters>
 				<liferay-frontend:management-bar-navigation
 					navigationKeys='<%= new String[] {"all"} %>'
-					portletURL="<%= renderResponse.createRenderURL() %>"
+					portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
 				/>
 
 				<liferay-frontend:management-bar-sort
 					orderByCol="<%= searchContainer.getOrderByCol() %>"
 					orderByType="<%= searchContainer.getOrderByType() %>"
 					orderColumns='<%= new String[] {"name", "type"} %>'
-					portletURL="<%= portletURL %>"
+					portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
 				/>
 			</liferay-frontend:management-bar-filters>
 
 			<liferay-frontend:management-bar-buttons>
 				<liferay-frontend:management-bar-display-buttons
-					displayViews='<%= new String[] {"list"} %>'
-					portletURL="<%= renderResponse.createRenderURL() %>"
+					displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
+					portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
 					selectedDisplayStyle="<%= displayStyle %>"
 				/>
 			</liferay-frontend:management-bar-buttons>
@@ -149,14 +160,9 @@ boolean hasAddOrganizationPermission = PortalPermissionUtil.contains(permissionC
 					%>
 
 					<%@ include file="/organization/search_columns.jspf" %>
-
-					<liferay-ui:search-container-column-jsp
-						cssClass="entry-action-column"
-						path="/organization_action.jsp"
-					/>
 				</liferay-ui:search-container-row>
 
-				<liferay-ui:search-iterator markupView="lexicon" />
+				<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
 			</liferay-ui:search-container>
 		</aui:form>
 	</c:when>

@@ -224,6 +224,16 @@
 	<td>//div[@data-fieldname='${key_fieldName}']//textarea</td>
 	<td></td>
 </tr>
+<tr>
+	<td>WEB_CONTENT_FIELD</td>
+	<td>//div[@data-fieldname='${key_fieldName}']//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WEB_CONTENT_CHOOSE_FROM_WEB_CONTENT_LIBRARY_BUTTON</td>
+	<td>//div[@data-fieldname='${key_fieldName}']//button[contains(.,'Select')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

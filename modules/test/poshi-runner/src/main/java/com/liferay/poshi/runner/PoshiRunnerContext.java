@@ -721,7 +721,8 @@ public class PoshiRunnerContext {
 						extendsCommandElement.attributeValue("name");
 
 					if (_isIgnorableCommandNames(
-							rootElement, extendsCommandName)) {
+							rootElement, extendsCommandElement,
+							extendsCommandName)) {
 
 						continue;
 					}
@@ -742,7 +743,9 @@ public class PoshiRunnerContext {
 			for (Element commandElement : commandElements) {
 				String commandName = commandElement.attributeValue("name");
 
-				if (_isIgnorableCommandNames(rootElement, commandName)) {
+				if (_isIgnorableCommandNames(
+						rootElement, commandElement, commandName)) {
+
 					continue;
 				}
 
@@ -770,7 +773,15 @@ public class PoshiRunnerContext {
 	}
 
 	private static boolean _isIgnorableCommandNames(
-		Element rootElement, String commandName) {
+		Element rootElement, Element commandElement, String commandName) {
+
+		if (commandElement.attributeValue("disabled") != null) {
+			String disabled = commandElement.attributeValue("disabled");
+
+			if (disabled.equals("true")) {
+				return true;
+			}
+		}
 
 		List<String> ignorableCommandNames = new ArrayList<>();
 

@@ -484,7 +484,7 @@ while (manageableCalendarsIterator.hasNext()) {
 	</c:if>
 </aui:script>
 
-<aui:script use="json,liferay-calendar-date-picker-util,liferay-calendar-interval-selector,liferay-calendar-list,liferay-calendar-recurrence-util,liferay-calendar-reminders,liferay-calendar-simple-menu,liferay-calendar-util">
+<aui:script use="json,liferay-calendar-interval-selector,liferay-calendar-interval-selector-scheduler-event-link,liferay-calendar-list,liferay-calendar-recurrence-util,liferay-calendar-reminders,liferay-calendar-simple-menu,liferay-calendar-util">
 	var defaultCalendarId = <%= calendarId %>;
 
 	var scheduler = window.<portlet:namespace />scheduler;
@@ -635,8 +635,6 @@ while (manageableCalendarsIterator.hasNext()) {
 
 	syncCalendarsMap();
 
-	var intervalSelectorUpdated = false;
-
 	var intervalSelector = new Liferay.IntervalSelector(
 		{
 			endDatePicker: Liferay.component('<portlet:namespace />endTimeDatePicker'),
@@ -646,78 +644,8 @@ while (manageableCalendarsIterator.hasNext()) {
 		}
 	);
 
-	intervalSelector.get('endDatePicker').after(
-		'selectionChange',
-		function() {
-			updatePlaceholderSchedulerEventEndDate();
-		}
-	);
-
-	intervalSelector.get('endTimePicker').after(
-		'selectionChange',
-		function() {
-			updatePlaceholderSchedulerEventEndDate();
-		}
-	);
-
-	intervalSelector.get('startDatePicker').after(
-		'selectionChange',
-		function() {
-			updatePlaceholderSchedulerEventStartDate();
-		}
-	);
-
-	intervalSelector.get('startTimePicker').after(
-		'selectionChange',
-		function() {
-			updatePlaceholderSchedulerEventStartDate();
-		}
-	);
-
-	function updatePlaceholderSchedulerEventEndDate() {
-		var endDate = intervalSelector.get('endDatePicker').getDate();
-		var endTime = intervalSelector.get('endTimePicker').getTime();
-
-		endDate.setHours(endTime.getHours());
-		endDate.setMinutes(endTime.getMinutes());
-
-		updatePlaceholderSchedulerEvent('endDate', endDate);
-	}
-
-	function updatePlaceholderSchedulerEventStartDate() {
-		var startDate = intervalSelector.get('startDatePicker').getDate();
-		var startTime = intervalSelector.get('startTimePicker').getTime();
-
-		startDate.setHours(startTime.getHours());
-		startDate.setMinutes(startTime.getMinutes());
-
-		updatePlaceholderSchedulerEvent('startDate', startDate);
-	}
-
-	function updatePlaceholderSchedulerEvent(eventDateType, eventDate) {
-		intervalSelectorUpdated = true;
-
-		window.<portlet:namespace />placeholderSchedulerEvent.set(eventDateType, eventDate);
-
-		intervalSelectorUpdated = false;
-
-		scheduler.syncEventsUI();
-	}
-
 	window.<portlet:namespace />placeholderSchedulerEvent = new Liferay.SchedulerEvent(
 		{
-			after: {
-				endDateChange: function(event) {
-					if (!intervalSelectorUpdated) {
-						Liferay.DatePickerUtil.syncUI(event.currentTarget, intervalSelector);
-					}
-				},
-				startDateChange: function(event) {
-					if (!intervalSelectorUpdated) {
-						Liferay.DatePickerUtil.syncUI(event.currentTarget, intervalSelector);
-					}
-				}
-			},
 			borderColor: '#000',
 			borderStyle: 'dashed',
 			borderWidth: '2px',
@@ -736,6 +664,13 @@ while (manageableCalendarsIterator.hasNext()) {
 			preventDateChange: true,
 			scheduler: scheduler,
 			startDate: Liferay.CalendarUtil.toLocalTime(new Date(<%= startTime %>))
+		}
+	);
+
+	var intervalSelectorSchedulerEventLink = new Liferay.IntervalSelectorSchedulerEventLink(
+		{
+			intervalSelector: intervalSelector,
+			schedulerEvent: window.<portlet:namespace />placeholderSchedulerEvent
 		}
 	);
 

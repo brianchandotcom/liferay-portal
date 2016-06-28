@@ -20,6 +20,14 @@
 								'liferay-portlet-base'
 							]
 						},
+						'liferay-calendar-interval-selector-scheduler-event-link': {
+							path: 'interval_selector_scheduler_event_link.js',
+							requires: [
+								'aui-base',
+								'liferay-calendar-date-picker-util',
+								'liferay-portlet-base'
+							]
+						},
 						'liferay-calendar-list': {
 							path: 'calendar_list.js',
 							requires: [

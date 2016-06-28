@@ -96,7 +96,7 @@ public class SetUpArquillianTask
 	}
 
 	@TaskAction
-	public void setupArquillian() throws IOException {
+	public void setUpArquillian() throws IOException {
 		File outputFile = getOutputFile();
 
 		String xml = FileUtil.read(

@@ -232,12 +232,12 @@ public class SetUpTestableTomcatTask
 	}
 
 	@TaskAction
-	public void setupTestableTomcat() throws Exception {
-		setupCatalinaOpts();
-		setupJmx();
-		setupLogging();
-		setupManager();
-		setupOsgiModules();
+	public void setUpTestableTomcat() throws Exception {
+		setUpCatalinaOpts();
+		setUpJmx();
+		setUpLogging();
+		setUpManager();
+		setUpOsgiModules();
 	}
 
 	public void setZipUrl(Object zipUrl) {
@@ -302,7 +302,7 @@ public class SetUpTestableTomcatTask
 		Files.write(path, content.getBytes());
 	}
 
-	protected void setupCatalinaOpts() throws IOException {
+	protected void setUpCatalinaOpts() throws IOException {
 		Map<String, Object> replacements = getCatalinaOptsReplacements();
 
 		if (replacements.isEmpty()) {
@@ -313,7 +313,7 @@ public class SetUpTestableTomcatTask
 		replace("bin/setenv.sh", replacements);
 	}
 
-	protected void setupJmx() throws IOException {
+	protected void setUpJmx() throws IOException {
 		String jmxOptions = getJmxOptions();
 
 		if (!contains("bin/setenv.bat", jmxOptions)) {
@@ -351,7 +351,7 @@ public class SetUpTestableTomcatTask
 		}
 	}
 
-	protected void setupLogging() throws IOException {
+	protected void setUpLogging() throws IOException {
 		if (!isDebugLogging() ||
 			contains("conf/Logging.properties", "org.apache.catalina.level")) {
 
@@ -374,7 +374,7 @@ public class SetUpTestableTomcatTask
 		}
 	}
 
-	protected void setupManager() throws Exception {
+	protected void setUpManager() throws Exception {
 		final File managerDir = new File(getDir(), "webapps/manager");
 
 		if (!managerDir.exists()) {
@@ -485,7 +485,7 @@ public class SetUpTestableTomcatTask
 		}
 	}
 
-	protected void setupOsgiModules() {
+	protected void setUpOsgiModules() {
 		Project project = getProject();
 
 		project.copy(

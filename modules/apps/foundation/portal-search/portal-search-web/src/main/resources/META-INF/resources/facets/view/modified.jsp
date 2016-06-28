@@ -33,13 +33,7 @@ Date toDate = PortalUtil.getDate(toMonth, toDay, toYear);
 
 JSONArray rangesJSONArray = dataJSONObject.getJSONArray("ranges");
 
-String modifiedLabel = StringPool.BLANK;
-
 int index = 0;
-
-if (fieldParamSelection.equals("0")) {
-	modifiedLabel = LanguageUtil.get(request, HtmlUtil.escape(facetConfiguration.getLabel()));
-}
 %>
 
 <div class="panel panel-default">
@@ -84,10 +78,6 @@ if (fieldParamSelection.equals("0")) {
 						String range = rangesJSONObject.getString("range");
 
 						index = (i + 1);
-
-						if (fieldParamSelection.equals(String.valueOf(index))) {
-							modifiedLabel = LanguageUtil.get(request, label);
-						}
 					%>
 
 						<li class="facet-value">
@@ -137,8 +127,6 @@ if (fieldParamSelection.equals("0")) {
 						TermCollector termCollector = null;
 
 						if (fieldParamSelection.equals(String.valueOf(index + 1))) {
-							modifiedLabel = LanguageUtil.get(request, "custom-range");
-
 							termCollector = facetCollector.getTermCollector(fieldParam);
 						}
 						%>

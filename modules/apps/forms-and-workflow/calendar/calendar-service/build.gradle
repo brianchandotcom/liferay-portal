@@ -7,7 +7,7 @@ dependencies {
 	provided group: "backport-util-concurrent", name: "backport-util-concurrent", version: "3.1"
 	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
 	provided group: "com.liferay", name: "com.google.ical", version: "20110304"
-	provided group: "com.liferay", name: "com.liferay.calendar.api", version: "default"
+	provided group: "com.liferay", name: "com.liferay.calendar.api", version: "2.1.0"
 	provided group: "com.liferay", name: "com.liferay.exportimport.api", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.exportimport.service", version: "3.0.0"
 	provided group: "com.liferay", name: "com.liferay.petra.content", version: "1.0.0"

@@ -1581,11 +1581,6 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#completeFormForTaskViaTable">
-			<var name="kfProcessName" value="Kaleo Forms Process" />
-			<var name="workflowTask" value="review" />
-		</execute>
-
 		<execute macro="KaleoFormsPortlet#viewCompleteFormFieldText">
 			<var name="fieldName" value="Text" />
 			<var name="kfProcessFieldData" value="Test 1" />
@@ -1823,11 +1818,6 @@
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="KaleoFormsPortlet#completeFormForTaskViaTable">
-			<var name="kfProcessName" value="Kaleo Forms Process" />
-			<var name="workflowTask" value="review" />
 		</execute>
 
 		<execute macro="KaleoFormsPortlet#viewCompleteFormFieldText">
@@ -4844,11 +4834,6 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#completeFormForTaskViaTable">
-			<var name="kfProcessName" value="${kfProcessName}" />
-			<var name="workflowTask" value="review" />
-		</execute>
-
 		<execute macro="KaleoFormsPortlet#viewCompleteFormFieldText">
 			<var name="fieldName" value="Text" />
 			<var name="kfProcessFieldData" value="Test Data" />
@@ -6172,11 +6157,6 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#completeFormForTaskViaTable">
-			<var name="kfProcessName" value="${kfProcessName}" />
-			<var name="workflowTask" value="review" />
-		</execute>
-
 		<execute macro="KaleoFormsPortlet#viewCompleteFormFieldTextBox">
 			<var name="fieldName" value="description" />
 			<var name="kfProcessFieldData" value="Test Description" />
@@ -6215,11 +6195,6 @@
 		<execute macro="DDLTemplate#deleteTemplateCP">
 			<var name="dataDefinitionName" value="Inventory" />
 			<var name="ddlTemplateName" value="Task Form" />
-		</execute>
-
-		<execute macro="KaleoFormsPortlet#completeFormForTaskViaTable">
-			<var name="kfProcessName" value="${kfProcessName}" />
-			<var name="workflowTask" value="review" />
 		</execute>
 
 		<execute macro="KaleoFormsPortlet#viewCompleteFormFieldTextBox">
@@ -6435,11 +6410,6 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#completeFormForTaskViaTable">
-			<var name="kfProcessName" value="${kfProcessName}" />
-			<var name="workflowTask" value="review" />
-		</execute>
-
 		<execute macro="KaleoFormsPortlet#viewCompleteFormFieldTextBox">
 			<var name="fieldName" value="description" />
 			<var name="kfProcessFieldData" value="Test Description" />
@@ -6478,11 +6448,6 @@
 		<execute macro="DDLTemplate#deleteTemplateCP">
 			<var name="dataDefinitionName" value="Inventory" />
 			<var name="ddlTemplateName" value="Review" />
-		</execute>
-
-		<execute macro="KaleoFormsPortlet#completeFormForTaskViaTable">
-			<var name="kfProcessName" value="${kfProcessName}" />
-			<var name="workflowTask" value="review" />
 		</execute>
 
 		<execute macro="KaleoFormsPortlet#viewCompleteFormFieldTextBox">
@@ -6679,11 +6644,6 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#completeFormForTaskViaTable">
-			<var name="kfProcessName" value="${kfProcessName}" />
-			<var name="workflowTask" value="review" />
-		</execute>
-
 		<execute macro="KaleoFormsPortlet#viewCompleteFormFieldTextBox">
 			<var name="fieldName" value="description" />
 			<var name="kfProcessFieldData" value="Test Description" />
@@ -6845,11 +6805,6 @@
 			<var name="workflowAssetTitle" value="${kfProcessName}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="KaleoFormsPortlet#completeFormForTaskViaTable">
-			<var name="kfProcessName" value="${kfProcessName}" />
-			<var name="workflowTask" value="review" />
 		</execute>
 
 		<execute macro="KaleoFormsPortlet#viewCompleteFormFieldTextBox">

@@ -113,8 +113,10 @@ public class LayoutsTreeUtil {
 		Locale locale = PortalUtil.getLocale(request);
 
 		for (int i = 0; i < ancestorLayouts.size(); i++) {
-			ancestorLayoutIds[i] = ancestorLayouts.get(i).getLayoutId();
-			ancestorLayoutNames[i] = ancestorLayouts.get(i).getName(locale);
+			Layout ancestorLayout = ancestorLayouts.get(i);
+
+			ancestorLayoutIds[i] = ancestorLayout.getLayoutId();
+			ancestorLayoutNames[i] = ancestorLayout.getName(locale);
 		}
 
 		List<Layout> layouts = LayoutServiceUtil.getLayouts(

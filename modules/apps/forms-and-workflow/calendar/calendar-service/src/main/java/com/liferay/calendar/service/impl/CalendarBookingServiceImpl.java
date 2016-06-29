@@ -17,6 +17,7 @@ package com.liferay.calendar.service.impl;
 import com.liferay.calendar.constants.CalendarActionKeys;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarBooking;
+import com.liferay.calendar.model.CalendarBookingConstants;
 import com.liferay.calendar.service.base.CalendarBookingServiceBaseImpl;
 import com.liferay.calendar.service.permission.CalendarPermission;
 import com.liferay.calendar.util.CalendarUtil;
@@ -120,6 +121,50 @@ public class CalendarBookingServiceImpl extends CalendarBookingServiceBaseImpl {
 			startTime, endTime, allDay, recurrence, firstReminder,
 			firstReminderType, secondReminder, secondReminderType,
 			serviceContext);
+	}
+
+	@Deprecated
+	@Override
+	public CalendarBooking addCalendarBooking(
+			long calendarId, long[] childCalendarIds,
+			long parentCalendarBookingId, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap, String location,
+			int startTimeYear, int startTimeMonth, int startTimeDay,
+			int startTimeHour, int startTimeMinute, int endTimeYear,
+			int endTimeMonth, int endTimeDay, int endTimeHour,
+			int endTimeMinute, String timeZoneId, boolean allDay,
+			String recurrence, long firstReminder, String firstReminderType,
+			long secondReminder, String secondReminderType,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return calendarBookingService.addCalendarBooking(
+			calendarId, childCalendarIds, parentCalendarBookingId,
+			CalendarBookingConstants.RECURRING_CALENDAR_BOOKING_ID_DEFAULT,
+			titleMap, descriptionMap, location, startTimeYear, startTimeMonth,
+			startTimeDay, startTimeHour, startTimeMinute, endTimeYear,
+			endTimeMonth, endTimeDay, endTimeHour, endTimeMinute, timeZoneId,
+			allDay, recurrence, firstReminder, firstReminderType,
+			secondReminder, secondReminderType, serviceContext);
+	}
+
+	@Deprecated
+	@Override
+	public CalendarBooking addCalendarBooking(
+			long calendarId, long[] childCalendarIds,
+			long parentCalendarBookingId, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap, String location, long startTime,
+			long endTime, boolean allDay, String recurrence, long firstReminder,
+			String firstReminderType, long secondReminder,
+			String secondReminderType, ServiceContext serviceContext)
+		throws PortalException {
+
+		return calendarBookingService.addCalendarBooking(
+			calendarId, childCalendarIds, parentCalendarBookingId,
+			CalendarBookingConstants.RECURRING_CALENDAR_BOOKING_ID_DEFAULT,
+			titleMap, descriptionMap, location, startTime, endTime, allDay,
+			recurrence, firstReminder, firstReminderType, secondReminder,
+			secondReminderType, serviceContext);
 	}
 
 	@Override

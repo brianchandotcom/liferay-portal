@@ -504,6 +504,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MANAGE_FIELD_SETS</td>
+	<td>//a[@role='menuitem']//span[contains(.,'Manage Field Sets')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MANAGE_FORMS</td>
+	<td>//div[contains(@class,'open')]//a[@role='menuitem' and contains(.,'Manage Forms')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MANAGE_TEMPLATES</td>
 	<td>//div[contains(@class,'open')]//a[@role='menuitem' and contains(.,'Manage Templates')]</td>
 	<td></td>

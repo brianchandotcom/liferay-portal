@@ -1,0 +1,24 @@
+<definition>
+	<command name="gotoManageFieldSets">
+		<execute function="Pause" locator1="5000" />
+
+		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
+
+		<execute function="AssertClick" locator1="MenuItem#MANAGE_FIELD_SETS" value1="Manage Field Sets" />
+
+		<execute function="AssertTextEquals" locator1="ControlMenu#HEADER_TITLE" value1="Field Sets" />
+	</command>
+
+	<command name="gotoManageForms">
+		<execute macro="KaleoFormsNavigator#gotoManageFieldSets" />
+
+		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${kfFieldSetName}" />
+		
+		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
+
+		<var name="key_kfFieldSetName" value="${kfFieldSetName}" />
+
+		<execute function="Click#waitForMenuToggleJSClick" locator1="KaleoFormsAdminSelectStructure#KALEO_FORMS_STRUCTURE_ELLIPSIS" />
+		<execute function="AssertClick" locator1="MenuItem#MANAGE_FORMS" value1="Manage Forms" />
+	</command>
+</definition>

@@ -25,7 +25,7 @@
 
 		<liferay-ui:search-container-column-text
 			colspan="<%= 2 %>"
-			>
+		>
 			<h5><%= user2.getFullName() %></h5>
 
 			<h6 class="text-default">

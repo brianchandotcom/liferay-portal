@@ -26,8 +26,8 @@
 
 				<span class="user-avatar-image">
 					<liferay-ui:user-portrait
-					imageCssClass="user-icon-lg"
-					userId="<%= user.getUserId() %>"
+						imageCssClass="user-icon-lg"
+						userId="<%= user.getUserId() %>"
 					/>
 				</span>
 

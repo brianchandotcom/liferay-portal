@@ -246,7 +246,7 @@ String signature = ParamUtil.getString(request, "signature");
 				</div>
 
 			<%
-				}
+			}
 			%>
 
 		</div>
@@ -361,9 +361,9 @@ String signature = ParamUtil.getString(request, "signature");
 
 						<aui:input id='<%= "field" + i %>' label="<%= methodParameterName %>" name="<%= methodParameterName %>" size="<%= size %>" suffix="<%= methodParameterTypeClassName %>" />
 
-				<%
+					<%
 					}
-				%>
+					%>
 
 					<aui:script>
 
@@ -579,7 +579,7 @@ String signature = ParamUtil.getString(request, "signature");
 			);
 		</aui:script>
 
-<textarea class="hide" id="scriptTpl">
+		<textarea class="hide" id="scriptTpl">
 Liferay.Service(
   '<%= jsonWebServiceActionMapping.getPath() %>',
   <tpl if="data.length">{
@@ -590,18 +590,18 @@ Liferay.Service(
 <%= StringPool.FOUR_SPACES %>console.log(obj);
   }
 );
-</textarea>
+		</textarea>
 
-<textarea class="hide" id="curlTpl">
+		<textarea class="hide" id="curlTpl">
 curl <%= themeDisplay.getPortalURL() + jsonWSPath + jsonWebServiceActionMapping.getPath() %> \\
   -u test@liferay.com:test <tpl if="data.length">\\
   <tpl for="data">-{parent.flag} {key}={[this.formatDataType(values.key, values.value)]} <tpl if="!$last">\\
   </tpl></tpl></tpl>
-</textarea>
+		</textarea>
 
-<textarea class="hide" id="urlTpl">
+		<textarea class="hide" id="urlTpl">
 <%= themeDisplay.getPortalURL() + jsonWSPath + jsonWebServiceActionMapping.getPath() %><tpl if="data.length">/<tpl for="data">{key:this.toURIParam}<tpl if="value.length">/{value}</tpl><tpl if="!$last">/</tpl></tpl></tpl><tpl if="extraData.length">?<tpl for="extraData">{key:this.toURIParam}={value}<tpl if="!$last">&amp;</tpl></tpl></tpl>
-</textarea>
+		</textarea>
 	</c:when>
 	<c:otherwise>
 		<div class="alert alert-info">

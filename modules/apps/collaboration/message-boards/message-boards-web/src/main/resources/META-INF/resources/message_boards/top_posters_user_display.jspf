@@ -21,8 +21,8 @@ User topUser = UserLocalServiceUtil.fetchUserById(statsUser.getUserId());
 <c:if test="<%= topUser != null %>">
 	<liferay-ui:search-container-column-text>
 		<liferay-ui:user-portrait
-				cssClass="user-icon-lg"
-				userId="<%= statsUser.getUserId() %>"
+			cssClass="user-icon-lg"
+			userId="<%= statsUser.getUserId() %>"
 		/>
 	</liferay-ui:search-container-column-text>
 

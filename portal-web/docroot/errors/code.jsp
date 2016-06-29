@@ -85,15 +85,14 @@ String xRequestWith = request.getHeader(HttpHeaders.X_REQUESTED_WITH);
 			<body onload="javascript:location.replace('<%= HtmlUtil.escapeJS(redirect) %>')">
 
 				<!--
-			The numbers below are used to fill up space so that this works properly in IE.
-			See http://support.microsoft.com/default.aspx?scid=kb;en-us;Q294807 for more
-			information on why this is necessary.
+				The numbers below are used to fill up space so that this works properly in IE.
+				See http://support.microsoft.com/default.aspx?scid=kb;en-us;Q294807 for more
+				information on why this is necessary.
 
-			12345678901234567890123456789012345678901234567890123456789012345678901234567890
-			12345678901234567890123456789012345678901234567890123456789012345678901234567890
-			12345678901234567890123456789012345678901234567890123456789012345678901234567890
-			-->
-
+				12345678901234567890123456789012345678901234567890123456789012345678901234567890
+				12345678901234567890123456789012345678901234567890123456789012345678901234567890
+				12345678901234567890123456789012345678901234567890123456789012345678901234567890
+				-->
 			</body>
 		</c:when>
 		<c:otherwise>

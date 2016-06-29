@@ -79,7 +79,7 @@
 
 			<liferay-ui:search-container-column-text
 				colspan="<%= 2 %>"
-				>
+			>
 				<h5><%= name %></h5>
 
 				<h6 class="text-default">

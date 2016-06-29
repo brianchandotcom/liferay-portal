@@ -133,7 +133,7 @@
 
 		List<Theme> themes = ThemeLocalServiceUtil.getPageThemes(company.getCompanyId(), 0, user.getUserId());
 
-		for (Theme curTheme: themes) {
+		for (Theme curTheme : themes) {
 			if (Objects.equals(defaultRegularThemeId, curTheme.getThemeId())) {
 				deployed = true;
 			}
@@ -159,7 +159,7 @@
 
 		List<Theme> themes = ThemeLocalServiceUtil.getControlPanelThemes(company.getCompanyId(), user.getUserId());
 
-		for (Theme curTheme: themes) {
+		for (Theme curTheme : themes) {
 			if (Objects.equals(defaultControlPanelThemeId, curTheme.getThemeId())) {
 				deployed = true;
 			}

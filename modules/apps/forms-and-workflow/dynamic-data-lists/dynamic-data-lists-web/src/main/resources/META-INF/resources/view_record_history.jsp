@@ -23,7 +23,7 @@ DateSearchEntry dateSearchEntry = new DateSearchEntry();
 
 List<DDLRecordVersion> recordVersions = DDLRecordVersionServiceUtil.getRecordVersions(record.getRecordId());
 
-for (DDLRecordVersion recordVersion: recordVersions) {
+for (DDLRecordVersion recordVersion : recordVersions) {
 	dateSearchEntry.setDate(recordVersion.getCreateDate());
 
 	request.setAttribute(DDLWebKeys.DYNAMIC_DATA_LISTS_RECORD_VERSION, recordVersion);

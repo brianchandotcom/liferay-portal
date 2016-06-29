@@ -187,7 +187,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 								<div class="asset-subtypefields-wrapper hide" id="<portlet:namespace /><%= className %>subtypeFieldsWrapper">
 
 									<%
-									for (ClassType classType: classTypes) {
+									for (ClassType classType : classTypes) {
 										if (classType.getClassTypeFieldsCount() == 0) {
 											continue;
 										}
@@ -591,7 +591,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 			continue;
 		}
 
-		for (ClassType classType: assetAvailableClassTypes) {
+		for (ClassType classType : assetAvailableClassTypes) {
 			List<ClassTypeField> classTypeFields = classType.getClassTypeFields();
 
 			if (classTypeFields.isEmpty()) {

@@ -98,7 +98,7 @@ public class PersistenceNestedSetsTreeManager<T extends NestedSetsTreeNodeModel>
 		Session session = null;
 
 		try {
-			session =_basePersistenceImpl.openSession();
+			session = _basePersistenceImpl.openSession();
 
 			StringBundler sb = new StringBundler(9);
 

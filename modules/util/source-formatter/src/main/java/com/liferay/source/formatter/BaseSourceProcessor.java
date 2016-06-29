@@ -1142,6 +1142,29 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return line;
 	}
 
+	protected String formatIncorrectSyntax(String line, String regex) {
+		Pattern pattern = Pattern.compile(regex);
+
+		Matcher matcher = pattern.matcher(line);
+
+		if (!matcher.find()) {
+			return line;
+		}
+
+		if (ToolsUtil.isInsideQuotes(line, matcher.start(1))) {
+			return line;
+		}
+
+		String whitespace = matcher.group(1);
+
+		if (whitespace.length() > 0) {
+			return line;
+		}
+
+		return line.substring(0, matcher.start(1)) + StringPool.SPACE +
+			line.substring(matcher.start(1));
+	}
+
 	protected String formatIncorrectSyntax(
 		String line, String incorrectSyntax, String correctSyntax,
 		boolean lineStart) {
@@ -1325,6 +1348,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			linePart = formatIncorrectSyntax(linePart, " }", "}", false);
 			linePart = formatIncorrectSyntax(linePart, " )", ")", false);
 			linePart = formatIncorrectSyntax(linePart, "( ", "(", false);
+			linePart = formatIncorrectSyntax(linePart, "\\w( ?)=");
+			linePart = formatIncorrectSyntax(linePart, "=( ?)\\w");
+			linePart = formatIncorrectSyntax(linePart, "for \\(.*( ?):");
+			linePart = formatIncorrectSyntax(linePart, "for \\(.*:( ?).+");
 		}
 
 		if (!linePart.startsWith("##")) {
@@ -1349,38 +1376,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 			return formatIncorrectSyntax(
 				line, StringPool.SPACE + StringPool.TAB, StringPool.TAB, false);
-		}
-
-		for (int x = 0;;) {
-			x = linePart.indexOf(CharPool.EQUAL, x + 1);
-
-			if (x == -1) {
-				break;
-			}
-
-			if (ToolsUtil.isInsideQuotes(linePart, x)) {
-				continue;
-			}
-
-			char c = linePart.charAt(x - 1);
-
-			if (Character.isLetterOrDigit(c)) {
-				linePart = StringUtil.replaceFirst(linePart, "=", " =", x);
-
-				break;
-			}
-
-			if (x == (linePart.length() - 1)) {
-				break;
-			}
-
-			c = linePart.charAt(x + 1);
-
-			if (Character.isLetterOrDigit(c)) {
-				linePart = StringUtil.replaceFirst(linePart, "=", "= ", x);
-
-				break;
-			}
 		}
 
 		if (!line.contains(StringPool.DOUBLE_SLASH)) {

@@ -92,7 +92,7 @@ public class PortletStatistics
 		PortletRequestType portletRequestType =
 			portletRequestDataSample.getRequestType();
 
-		RequestStatistics requestStatistics =_requestStatistics.get(
+		RequestStatistics requestStatistics = _requestStatistics.get(
 			portletRequestType);
 
 		if (requestStatistics == null) {

@@ -21,7 +21,7 @@
 <%@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %>
 <%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.journal.content.asset.addon.entry.comments.CommentsContentMetadataAssetAddonEntry" %>
+<%@ page import="com.liferay.journal.content.asset.addon.entry.comments.internal.CommentsContentMetadataAssetAddonEntry" %>
 <%@ page import="com.liferay.journal.model.JournalArticle" %>
 <%@ page import="com.liferay.journal.model.JournalArticleDisplay" %>
 <%@ page import="com.liferay.portal.kernel.comment.CommentManagerUtil" %>

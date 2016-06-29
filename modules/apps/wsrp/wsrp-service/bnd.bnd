@@ -2,18 +2,7 @@ Bundle-Name: Liferay WSRP Service
 Bundle-SymbolicName: com.liferay.wsrp.service
 Bundle-Version: 1.0.0
 Export-Package:\
-	com.liferay.wsrp.axis,\
-	com.liferay.wsrp.bind,\
-	com.liferay.wsrp.client,\
-	com.liferay.wsrp.jmx,\
-	com.liferay.wsrp.messaging,\
 	com.liferay.wsrp.model.impl,\
-	com.liferay.wsrp.proxy,\
-	com.liferay.wsrp.service.base,\
-	com.liferay.wsrp.service.impl,\
-	com.liferay.wsrp.service.persistence.impl,\
-	com.liferay.wsrp.servlet,\
-	com.liferay.wsrp.servlet.filters,\
 	com.liferay.wsrp.util
 Import-Package:\
 	!junit.framework.*,\
@@ -22,6 +11,7 @@ Import-Package:\
 	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
+Liferay-Service: true
 Web-ContextPath: /wsrp-consumer
 -includeresource:\
 	@bcprov-jdk16-1.46.jar,\

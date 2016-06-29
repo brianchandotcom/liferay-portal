@@ -80,6 +80,8 @@ public class LiferaySettingsPlugin implements Plugin<Settings> {
 			final Path projectPathRootDirPath)
 		throws IOException {
 
+		final String ignoreModuleType = System.getProperty(
+			"ignore.module.type");
 		final boolean modulesOnlyBuild = Boolean.getBoolean(
 			"modules.only.build");
 		final boolean portalBuild = Boolean.getBoolean("portal.build");
@@ -94,6 +96,14 @@ public class LiferaySettingsPlugin implements Plugin<Settings> {
 
 					if (dirPath.equals(rootDirPath)) {
 						return FileVisitResult.CONTINUE;
+					}
+
+					Path fileName = dirPath.getFileName();
+
+					if (ignoreModuleType != null &&
+						ignoreModuleType.equals(fileName.toString())) {
+
+						return FileVisitResult.SKIP_SUBTREE;
 					}
 
 					boolean moduleProjectDir = false;

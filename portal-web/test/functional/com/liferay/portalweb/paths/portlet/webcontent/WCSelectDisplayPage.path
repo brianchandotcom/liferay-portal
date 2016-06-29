@@ -46,7 +46,7 @@
 </tr>
 <tr>
 	<td>PUBLIC_DISPLAY_PAGE_SELECTION</td>
-	<td>//li[contains(@id,'treeContainerPublicPages')]/div/span/a[contains(.,'${key_displayPageSelection}')]</td>
+	<td>//li[contains(@class,'tree-node')]/div/span/a[contains(.,'${key_displayPageSelection}')]</td>
 	<td></td>
 </tr>
 <tr>

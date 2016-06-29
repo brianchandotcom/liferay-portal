@@ -195,21 +195,24 @@ public class ServiceTrackerMapImpl<K, SR, TS, R>
 
 		@Override
 		public void emit(K key) {
-			if ((_keyedServiceReferenceServiceTuple == null) &&
-				!_invokedServiceTrackerCustomizer) {
+			if (_keyedServiceReferenceServiceTuple == null) {
+				if (!_invokedServiceTrackerCustomizer) {
+					TS service = _serviceTrackerCustomizer.addingService(
+						_serviceReference);
 
-				TS service = _serviceTrackerCustomizer.addingService(
-					_serviceReference);
+					_invokedServiceTrackerCustomizer = true;
 
-				_invokedServiceTrackerCustomizer = true;
+					if (service == null) {
+						return;
+					}
 
-				if (service == null) {
+					_keyedServiceReferenceServiceTuple =
+						new KeyedServiceReferenceServiceTuple<>(
+							_serviceReference, service);
+				}
+				else {
 					return;
 				}
-
-				_keyedServiceReferenceServiceTuple =
-					new KeyedServiceReferenceServiceTuple<>(
-						_serviceReference, service);
 			}
 
 			_storeKey(key, _keyedServiceReferenceServiceTuple);

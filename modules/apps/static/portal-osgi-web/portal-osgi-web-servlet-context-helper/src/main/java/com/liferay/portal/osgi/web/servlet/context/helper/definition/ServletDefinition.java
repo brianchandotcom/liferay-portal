@@ -87,7 +87,7 @@ public class ServletDefinition {
 	}
 
 	public void setURLPatterns(List<String> urlPatterns) {
-		_urlPatterns = urlPatterns;
+		_urlPatterns.addAll(urlPatterns);
 	}
 
 	private boolean _asyncSupported;

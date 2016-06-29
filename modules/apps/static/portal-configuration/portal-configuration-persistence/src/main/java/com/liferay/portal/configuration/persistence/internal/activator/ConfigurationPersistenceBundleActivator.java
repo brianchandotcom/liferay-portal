@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.configuration.persistence.activator;
+package com.liferay.portal.configuration.persistence.internal.activator;
 
 import com.liferay.portal.configuration.persistence.ConfigurationPersistenceManager;
 import com.liferay.portal.configuration.persistence.ReloadablePersistenceManager;

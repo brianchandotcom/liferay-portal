@@ -194,25 +194,6 @@ public class LayoutsTreeUtil {
 		return _toJSON(request, groupId, layoutTreeNodes);
 	}
 
-	private static JSONObject _toJSONObject(
-			HttpServletRequest request, long groupId, List<Layout> layouts,
-			int total)
-		throws Exception {
-
-		List<LayoutTreeNode> layoutTreeNodesList = new ArrayList<>();
-
-		for (Layout layout : layouts) {
-			LayoutTreeNode layoutTreeNode = new LayoutTreeNode(layout);
-
-			layoutTreeNodesList.add(layoutTreeNode);
-		}
-
-		LayoutTreeNodes layoutTreeNodes = new LayoutTreeNodes(
-			layoutTreeNodesList, total);
-
-		return _toJSONObject(request, groupId, layoutTreeNodes);
-	}
-
 	private static Layout _fetchCurrentLayout(HttpServletRequest request) {
 		long selPlid = ParamUtil.getLong(request, "selPlid");
 
@@ -604,6 +585,25 @@ public class LayoutsTreeUtil {
 		responseJSONObject.put("total", layoutTreeNodes.getTotal());
 
 		return responseJSONObject;
+	}
+
+	private static JSONObject _toJSONObject(
+			HttpServletRequest request, long groupId, List<Layout> layouts,
+			int total)
+		throws Exception {
+
+		List<LayoutTreeNode> layoutTreeNodesList = new ArrayList<>();
+
+		for (Layout layout : layouts) {
+			LayoutTreeNode layoutTreeNode = new LayoutTreeNode(layout);
+
+			layoutTreeNodesList.add(layoutTreeNode);
+		}
+
+		LayoutTreeNodes layoutTreeNodes = new LayoutTreeNodes(
+			layoutTreeNodesList, total);
+
+		return _toJSONObject(request, groupId, layoutTreeNodes);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

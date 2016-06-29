@@ -14,8 +14,11 @@
 
 package com.liferay.wiki.engine.html.processor;
 
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.wiki.processor.BaseWikiPageRenameContentProcessor;
 import com.liferay.wiki.processor.WikiPageRenameContentProcessor;
+
+import java.net.URLEncoder;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -44,6 +47,19 @@ public class WikiPageRenameHTMLContentProcessor
 			"(<a [^h]*href=\"[^g]+get_page_attachment\\?[^t]+title=)" +
 				"@old_title@&",
 			"$1@new_title@&");
+	}
+
+	@Override
+	protected String runRegexps(String content, String title, String newTitle) {
+		try {
+			return super.runRegexps(
+				content, URLEncoder.encode(title, StringPool.UTF8),
+				URLEncoder.encode(newTitle, StringPool.UTF8));
+		}
+		catch (Exception e) {
+		}
+
+		return content;
 	}
 
 }

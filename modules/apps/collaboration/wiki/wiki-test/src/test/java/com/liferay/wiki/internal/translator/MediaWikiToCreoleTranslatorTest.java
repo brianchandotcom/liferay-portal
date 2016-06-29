@@ -114,7 +114,7 @@ public class MediaWikiToCreoleTranslatorTest {
 
 		String expected =
 			MediaWikiToCreoleTranslator.TABLE_OF_CONTENTS +
-			"== Header 1 ==\n=== Header 2 ===";
+				"== Header 1 ==\n=== Header 2 ===";
 		String actual = _mediaWikiToCreoleTranslator.postProcess(
 			_translate(content));
 

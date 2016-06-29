@@ -117,12 +117,12 @@ AUI.add(
 						value: ''
 					},
 
-					namespace: {
-						validator: Lang.isString
-					},
-
 					matchKey: {
 						value: 'value'
+					},
+
+					namespace: {
+						validator: Lang.isString
 					},
 
 					portalModelResource: {

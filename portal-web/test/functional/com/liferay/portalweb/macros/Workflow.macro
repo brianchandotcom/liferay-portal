@@ -1022,6 +1022,10 @@
 		<execute function="AssertTextEquals" locator1="MyWorkflowTasksTask#PREVIEW_TITLE" value1="${workflowAssetTitle}" />
 	</command>
 
+	<command name="viewTaskHeaderTitle">
+		<execute function="AssertTextEquals" locator1="ControlMenu#HEADER_TITLE" value1="${workflowTask}: ${kfProcessName}" />
+	</command>
+	
 	<command name="viewTaskNotPresentAssignedToMyRoles">
 		<execute macro="Workflow#gotoAssignedToMyRoles" />
 

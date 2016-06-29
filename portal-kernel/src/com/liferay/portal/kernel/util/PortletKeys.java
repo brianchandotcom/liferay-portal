@@ -40,7 +40,8 @@ public class PortletKeys {
 
 	public static final String CALENDAR = "8";
 
-	public static final String CHAT = "1_WAR_chatportlet";
+	public static final String CHAT =
+		"com_liferay_chat_web_portlet_ChatPortlet";
 
 	public static final String DIRECTORY =
 		"com_liferay_directory_web_portlet_DirectoryPortlet";

@@ -95,6 +95,9 @@ public class MBPortletDataHandler extends BasePortletDataHandler {
 			new StagedModelType(MBThreadFlag.class));
 		setExportControls(
 			new PortletDataHandlerBoolean(
+				NAMESPACE, "categories", true, false, null,
+				MBCategory.class.getName()),
+			new PortletDataHandlerBoolean(
 				NAMESPACE, "messages", true, false, null,
 				MBMessage.class.getName()),
 			new PortletDataHandlerBoolean(
@@ -149,13 +152,17 @@ public class MBPortletDataHandler extends BasePortletDataHandler {
 		rootElement.addAttribute(
 			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
 
-		if (portletDataContext.getBooleanParameter(NAMESPACE, "messages")) {
+		if (portletDataContext.getBooleanParameter(NAMESPACE, "categories") ||
+			portletDataContext.getBooleanParameter(NAMESPACE, "messages")) {
+
 			ActionableDynamicQuery categoryActionableDynamicQuery =
 				_mbCategoryLocalService.getExportActionableDynamicQuery(
 					portletDataContext);
 
 			categoryActionableDynamicQuery.performActions();
+		}
 
+		if (portletDataContext.getBooleanParameter(NAMESPACE, "messages")) {
 			ActionableDynamicQuery messageActionableDynamicQuery =
 				getMessageActionableDynamicQuery(portletDataContext);
 
@@ -189,7 +196,9 @@ public class MBPortletDataHandler extends BasePortletDataHandler {
 
 		portletDataContext.importPortletPermissions(MBPermission.RESOURCE_NAME);
 
-		if (portletDataContext.getBooleanParameter(NAMESPACE, "messages")) {
+		if (portletDataContext.getBooleanParameter(NAMESPACE, "categories") ||
+			portletDataContext.getBooleanParameter(NAMESPACE, "messages")) {
+
 			Element categoriesElement =
 				portletDataContext.getImportDataGroupElement(MBCategory.class);
 
@@ -199,7 +208,9 @@ public class MBPortletDataHandler extends BasePortletDataHandler {
 				StagedModelDataHandlerUtil.importStagedModel(
 					portletDataContext, categoryElement);
 			}
+		}
 
+		if (portletDataContext.getBooleanParameter(NAMESPACE, "messages")) {
 			Element messagesElement =
 				portletDataContext.getImportDataGroupElement(MBMessage.class);
 

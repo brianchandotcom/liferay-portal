@@ -93,7 +93,6 @@ public class LayoutsTreeUtil {
 			groupId, privateLayout, parentLayoutId);
 
 		int start = (int)includedLayoutIndex - 1;
-
 		int end = (int)includedLayoutIndex + max;
 
 		if (end > total) {
@@ -108,15 +107,14 @@ public class LayoutsTreeUtil {
 		List<Layout> ancestorLayouts = LayoutServiceUtil.getAncestorLayouts(
 			layout.getPlid());
 
-		long[] ancestorLayoutsIds = new long[ancestorLayouts.size()];
-
-		String[] ancestorLayoutsNames = new String[ancestorLayouts.size()];
+		long[] ancestorLayoutIds = new long[ancestorLayouts.size()];
+		String[] ancestorLayoutNames = new String[ancestorLayouts.size()];
 
 		Locale locale = PortalUtil.getLocale(request);
 
 		for (int i = 0; i < ancestorLayouts.size(); i++) {
-			ancestorLayoutsIds[i] = ancestorLayouts.get(i).getLayoutId();
-			ancestorLayoutsNames[i] = ancestorLayouts.get(i).getName(locale);
+			ancestorLayoutIds[i] = ancestorLayouts.get(i).getLayoutId();
+			ancestorLayoutNames[i] = ancestorLayouts.get(i).getName(locale);
 		}
 
 		List<Layout> layouts = LayoutServiceUtil.getLayouts(
@@ -124,8 +122,8 @@ public class LayoutsTreeUtil {
 
 		JSONObject jsonObject = _toJSONObject(request, groupId, layouts, total);
 
-		jsonObject.put("ancestorIds", ancestorLayoutsIds);
-		jsonObject.put("ancestorNames", ancestorLayoutsNames);
+		jsonObject.put("ancestorLayoutIds", ancestorLayoutIds);
+		jsonObject.put("ancestorLayoutNames", ancestorLayoutNames);
 		jsonObject.put("startIndex", start);
 
 		return jsonObject.toString();

@@ -14,11 +14,13 @@
 
 package com.liferay.journal.model.impl;
 
+import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.journal.constants.JournalConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleResource;
 import com.liferay.journal.model.JournalFolder;
@@ -29,20 +31,27 @@ import com.liferay.journal.service.JournalArticleResourceLocalServiceUtil;
 import com.liferay.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.journal.transformer.LocaleTransformerListener;
 import com.liferay.journal.util.impl.JournalUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Image;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.cache.CacheField;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.ImageLocalServiceUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.templateparser.TransformerListener;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -52,7 +61,9 @@ import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -100,6 +111,30 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 
 			return content;
 		}
+	}
+
+	@Override
+	public Folder addImagesFolder() throws PortalException {
+		if (_imagesFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			return PortletFileRepositoryUtil.getPortletFolder(_imagesFolderId);
+		}
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+
+		Repository repository = PortletFileRepositoryUtil.addPortletRepository(
+			getGroupId(), JournalConstants.SERVICE_NAME, serviceContext);
+
+		Folder folder = PortletFileRepositoryUtil.addPortletFolder(
+			getUserId(), repository.getRepositoryId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			String.valueOf(getResourcePrimKey()), serviceContext);
+
+		_imagesFolderId = folder.getFolderId();
+
+		return folder;
 	}
 
 	@Override
@@ -245,6 +280,82 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 	}
 
 	@Override
+	public List<FileEntry> getImagesFileEntries() throws PortalException {
+		return getImagesFileEntries(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+	}
+
+	@Override
+	public List<FileEntry> getImagesFileEntries(int start, int end)
+		throws PortalException {
+
+		return getImagesFileEntries(start, end, null);
+	}
+
+	@Override
+	public List<FileEntry> getImagesFileEntries(
+			int start, int end, OrderByComparator obc)
+		throws PortalException {
+
+		long imagesFolderId = getImagesFolderId();
+
+		if (imagesFolderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			return new ArrayList<>();
+		}
+
+		return PortletFileRepositoryUtil.getPortletFileEntries(
+			getGroupId(), imagesFolderId, WorkflowConstants.STATUS_APPROVED,
+			start, end, obc);
+	}
+
+	@Override
+	public int getImagesFileEntriesCount() throws PortalException {
+		long imagesFolderId = getImagesFolderId();
+
+		if (imagesFolderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			return 0;
+		}
+
+		return PortletFileRepositoryUtil.getPortletFileEntriesCount(
+			getGroupId(), imagesFolderId, WorkflowConstants.STATUS_APPROVED);
+	}
+
+	@Override
+	public long getImagesFolderId() {
+		if (_imagesFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			return _imagesFolderId;
+		}
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+
+		Repository repository =
+			PortletFileRepositoryUtil.fetchPortletRepository(
+				getGroupId(), JournalConstants.SERVICE_NAME);
+
+		if (repository == null) {
+			return DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+		}
+
+		try {
+			Folder folder = PortletFileRepositoryUtil.getPortletFolder(
+				repository.getRepositoryId(),
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				String.valueOf(getResourcePrimKey()));
+
+			_imagesFolderId = folder.getFolderId();
+		}
+		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to find folder for " + getResourcePrimKey());
+			}
+		}
+
+		return _imagesFolderId;
+	}
+
+	@Override
 	public Layout getLayout() {
 		String layoutUuid = getLayoutUuid();
 
@@ -375,6 +486,11 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 	}
 
 	@Override
+	public void setImagesFolderId(long imagesFolderId) {
+		_imagesFolderId = imagesFolderId;
+	}
+
+	@Override
 	public void setSmallImageType(String smallImageType) {
 		_smallImageType = smallImageType;
 	}
@@ -413,6 +529,7 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 	@CacheField(propagateToInterface = true)
 	private Document _document;
 
+	private long _imagesFolderId;
 	private String _smallImageType;
 
 }

@@ -538,6 +538,12 @@ public class JournalArticleWrapper implements JournalArticle,
 		return _journalArticle.getLayout();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.repository.model.Folder addImagesFolder()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _journalArticle.addImagesFolder();
+	}
+
 	/**
 	* Returns the trash handler for this journal article.
 	*
@@ -577,6 +583,12 @@ public class JournalArticleWrapper implements JournalArticle,
 	@Override
 	public int compareTo(JournalArticle journalArticle) {
 		return _journalArticle.compareTo(journalArticle);
+	}
+
+	@Override
+	public int getImagesFileEntriesCount()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _journalArticle.getImagesFileEntriesCount();
 	}
 
 	/**
@@ -1016,6 +1028,26 @@ public class JournalArticleWrapper implements JournalArticle,
 		return _journalArticle.getStatusDate();
 	}
 
+	@Override
+	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getImagesFileEntries()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _journalArticle.getImagesFileEntries();
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getImagesFileEntries(
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _journalArticle.getImagesFileEntries(start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getImagesFileEntries(
+		int start, int end, com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _journalArticle.getImagesFileEntries(start, end, obc);
+	}
+
 	/**
 	* Returns a map of the locales and localized descriptions of this journal article.
 	*
@@ -1101,6 +1133,11 @@ public class JournalArticleWrapper implements JournalArticle,
 	@Override
 	public long getId() {
 		return _journalArticle.getId();
+	}
+
+	@Override
+	public long getImagesFolderId() {
+		return _journalArticle.getImagesFolderId();
 	}
 
 	/**
@@ -1409,6 +1446,11 @@ public class JournalArticleWrapper implements JournalArticle,
 	@Override
 	public void setId(long id) {
 		_journalArticle.setId(id);
+	}
+
+	@Override
+	public void setImagesFolderId(long imagesFolderId) {
+		_journalArticle.setImagesFolderId(imagesFolderId);
 	}
 
 	/**

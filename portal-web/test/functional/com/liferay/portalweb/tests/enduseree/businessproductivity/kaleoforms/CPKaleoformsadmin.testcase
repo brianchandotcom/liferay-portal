@@ -653,6 +653,7 @@
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#deleteForm">
+			<var name="kfFieldSetName" value="Inventory" />
 			<var name="kfFormName" value="Created Task Form" />
 		</execute>
 	</command>
@@ -830,6 +831,7 @@
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#deleteForm">
+			<var name="kfFieldSetName" value="Inventory" />
 			<var name="kfFormName" value="Review Task Form" />
 		</execute>
 	</command>

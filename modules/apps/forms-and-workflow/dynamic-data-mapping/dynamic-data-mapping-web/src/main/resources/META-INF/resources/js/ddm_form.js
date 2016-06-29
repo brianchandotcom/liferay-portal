@@ -2114,7 +2114,7 @@ AUI.add(
 
 												var key = [parentLayoutId, groupId, privateLayout].join('-');
 
-												var start = response.startIndex;
+												var start = response.start;
 
 												var end = start + layouts.length;
 

@@ -16,6 +16,7 @@ package com.liferay.gradle.templates;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 import java.nio.file.DirectoryStream;
 import java.nio.file.FileVisitResult;
@@ -26,6 +27,8 @@ import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.Iterator;
+import java.util.Properties;
+import java.util.concurrent.atomic.AtomicReference;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -52,8 +55,8 @@ public class GradleTemplatesTest {
 
 	@Test
 	public void testTemplates() throws IOException {
-		_testTemplates(_standaloneDirPath, _workspaceDirPath, false);
-		_testTemplates(_workspaceDirPath, _standaloneDirPath, true);
+		_testTemplates(_standaloneDirPath, _workspaceDirPath, false, false);
+		_testTemplates(_workspaceDirPath, _standaloneDirPath, true, true);
 	}
 
 	private boolean _exists(Path dirPath, String glob) throws IOException {
@@ -68,6 +71,16 @@ public class GradleTemplatesTest {
 		}
 
 		return false;
+	}
+
+	private String _readProperty(Path path, String key) throws IOException {
+		Properties properties = new Properties();
+
+		try (InputStream inputStream = Files.newInputStream(path)) {
+			properties.load(inputStream);
+		}
+
+		return properties.getProperty(key);
 	}
 
 	private void _testTemplateFiles(Path rootDirPath) throws IOException {
@@ -95,11 +108,15 @@ public class GradleTemplatesTest {
 	}
 
 	private void _testTemplates(
-			Path rootDirPath, Path otherRootDirPath, boolean gitIgnoreForbidden)
+			Path rootDirPath, Path otherRootDirPath, boolean gitIgnoreForbidden,
+			boolean gradlewForbidden)
 		throws IOException {
 
 		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
 				rootDirPath)) {
+
+			final AtomicReference<String> previousGradlewDistributionUrl =
+				new AtomicReference<>(null);
 
 			for (Path path : directoryStream) {
 				if (!Files.isDirectory(path)) {
@@ -131,6 +148,33 @@ public class GradleTemplatesTest {
 					Assert.assertTrue(
 						"Missing " + gitIgnorePath,
 						Files.exists(gitIgnorePath));
+				}
+
+				boolean gradlewExists = Files.exists(path.resolve("gradlew"));
+
+				if (gradlewForbidden) {
+					Assert.assertFalse(
+						"Forbidden Gradle wrapper in " + path, gradlewExists);
+				}
+				else {
+					Assert.assertTrue(
+						"Missing Gradle wrapper in " + path, gradlewExists);
+
+					String gradlewDistributionUrl = _readProperty(
+						path.resolve(
+							"gradle/wrapper/gradle-wrapper.properties"),
+						"distributionUrl");
+
+					boolean first =
+						previousGradlewDistributionUrl.compareAndSet(
+							null, gradlewDistributionUrl);
+
+					if (!first) {
+						Assert.assertEquals(
+							"Wrong Gradle wrapper distribution URL in " + path,
+							previousGradlewDistributionUrl.get(),
+							gradlewDistributionUrl);
+					}
 				}
 			}
 		}

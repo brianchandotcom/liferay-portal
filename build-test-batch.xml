@@ -1123,6 +1123,7 @@ app.server.type=@{app.server.type}]]></echo>
 				<gradle-execute dir="modules" task="assemble">
 					<arg value="--continue" />
 					<arg value="--parallel" />
+					<arg value="-Dbuild.exclude.dirs=third-party" />
 				</gradle-execute>
 			</test-action>
 

@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.iframe.web.display.context;
+package com.liferay.iframe.web.internal.display.context;
 
 import com.liferay.iframe.web.configuration.IFramePortletInstanceConfiguration;
-import com.liferay.iframe.web.constants.IFrameWebKeys;
-import com.liferay.iframe.web.util.IFrameUtil;
+import com.liferay.iframe.web.internal.constants.IFrameWebKeys;
+import com.liferay.iframe.web.internal.util.IFrameUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.theme.PortletDisplay;

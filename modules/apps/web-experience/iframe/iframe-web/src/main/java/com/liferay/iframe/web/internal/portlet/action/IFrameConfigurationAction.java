@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.iframe.web.portlet.action;
+package com.liferay.iframe.web.internal.portlet.action;
 
-import com.liferay.iframe.web.constants.IFramePortletKeys;
-import com.liferay.iframe.web.util.IFrameUtil;
+import com.liferay.iframe.web.internal.constants.IFramePortletKeys;
+import com.liferay.iframe.web.internal.util.IFrameUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;

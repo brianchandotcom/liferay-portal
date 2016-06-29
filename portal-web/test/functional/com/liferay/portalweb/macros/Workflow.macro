@@ -641,6 +641,48 @@
 		</while>
 	</command>
 
+	<command name="updateDueDateAssignedToMeTaskByActions">
+		<execute macro="Workflow#viewTaskAssignedToMe">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="${workflowTask}" />
+		</execute>
+
+		<execute macro="Workflow#gotoTaskAssignedToMeActionsCmd">
+			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
+			<var name="workflowTask" value="${workflowTask}" />
+		</execute>
+
+		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
+		<var name="key_workflowTask" value="${workflowTask}" />
+
+		<execute function="AssertClick" locator1="MenuItem#UPDATE_DUE_DATE" value1="Update Due Date" />
+
+		<execute function="Type" locator1="MyWorkflowTasks#DIALOG_BOX_DUE_DATE" value1="${workflowDueDate}" />
+		<execute function="Type" locator1="MyWorkflowTasks#DIALOG_BOX_DUE_DATE_TIME" value1="${workflowDueDateTime}" />
+
+		<if>
+			<isset var="workflowActivityComment" />
+			<then>
+				<var name="key_workflowActivityComment" value="${workflowActivityComment}" />
+
+				<execute function="Type#clickAtType" locator1="MyWorkflowTasks#DIALOG_BOX_COMMENT_FIELD" value1="${workflowActivityComment}" />
+			</then>
+		</if>
+
+		<execute macro="Workflow#confirmAndViewSucessMessageViaActions" />
+
+		<execute macro="Workflow#viewTaskAssignedToMe">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="${workflowTask}" />
+		</execute>
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_DUE_DATE" value1="Within" />
+	</command>
+
 	<command name="updateDueDateTaskByActions">
 		<execute macro="Workflow#viewTaskAssignedToMyRoles">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />

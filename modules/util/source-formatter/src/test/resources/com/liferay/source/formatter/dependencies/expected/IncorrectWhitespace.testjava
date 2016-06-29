@@ -107,6 +107,10 @@ public class IncorrectWhitespace {
 	public void method5(String... strings) {
 	}
 
+	public void method6(String testString) {
+		testString = _trim(testString);
+	}
+
 	protected class SubClass1 {
 	}
 
@@ -115,6 +119,10 @@ public class IncorrectWhitespace {
 		protected void method1() {
 		}
 
+	}
+
+	private String _trim(String s) {
+		return StringUtil.trim(s);
 	}
 
 	private class SubClass3

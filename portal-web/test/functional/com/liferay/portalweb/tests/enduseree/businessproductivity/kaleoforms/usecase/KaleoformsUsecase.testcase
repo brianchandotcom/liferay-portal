@@ -7400,14 +7400,7 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#updateProcessDueDate">
-			<var name="assignedToMe" value="true" />
-			<var name="kfProcessDueDateDate" value="09/30/2017" />
-			<var name="kfProcessDueDateTime" value="04:30 PM" />
-			<var name="kfProcessName" value="${kfProcessName}" />
-		</execute>
-
-		<execute macro="Workflow#updateDueDateTaskByActions">
+		<execute macro="Workflow#updateDueDateAssignedToMeTaskByActions">
 			<var name="workflowAssetTitle" value="${kfProcessName}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowDueDate" value="09/30/2017" />
@@ -8885,7 +8878,7 @@
 			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="Workflow#updateDueDateTaskByActions">
+		<execute macro="Workflow#updateDueDateAssignedToMeTaskByActions">
 			<var name="workflowActivityComment" value="Updating the due date on a process assigned to me." />
 			<var name="workflowAssetTitle" value="${kfProcessName}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />

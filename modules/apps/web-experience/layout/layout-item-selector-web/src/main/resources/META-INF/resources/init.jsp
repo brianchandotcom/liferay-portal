@@ -29,7 +29,7 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 page import="com.liferay.item.selector.criteria.UUIDItemSelectorReturnType" %><%@
 page import="com.liferay.layout.item.selector.criterion.LayoutItemSelectorCriterion" %><%@
 page import="com.liferay.layout.item.selector.web.BaseLayoutsItemSelectorView" %><%@
-page import="com.liferay.layout.item.selector.web.display.context.LayoutItemSelectorViewDisplayContext" %><%@
+page import="com.liferay.layout.item.selector.web.internal.display.context.LayoutItemSelectorViewDisplayContext" %><%@
 page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.Portlet" %><%@
 page import="com.liferay.portal.kernel.service.PortletLocalServiceUtil" %><%@

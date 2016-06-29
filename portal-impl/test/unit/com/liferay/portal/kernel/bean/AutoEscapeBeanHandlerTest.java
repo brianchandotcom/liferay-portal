@@ -47,7 +47,7 @@ public class AutoEscapeBeanHandlerTest {
 			_UNESCAPED_TEXT, escapedBean.getUnescapedAttribute());
 	}
 
-	private static final String _ESCAPED_TEXT = "Old Mc&#039;Donald";
+	private static final String _ESCAPED_TEXT = "Old Mc&#39;Donald";
 
 	private static final String _UNESCAPED_TEXT = "Old Mc'Donald";
 

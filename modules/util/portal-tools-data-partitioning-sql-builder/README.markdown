@@ -31,6 +31,11 @@ Here are the tool's arguments:
     
 * The name of the schema you want to export. **(Required)**
 
+* The name of the catalog you want to export. Use it only in those cases
+  where the DBMS uses different object to handle catalogs and schemas,
+  such as DB2. If no argument is specified, the schema name will be used.
+  **(Optional)**
+
 * The IDs of the companies/shards you want to export. A company's ID is in the
   `companyId` field. **(Required)**
 	
@@ -43,7 +48,7 @@ Here are the tool's arguments:
 
 The command to execute the tool should be similar to this:
 
-    java -classpath "PATH-TO-LIBS/*:/PATH-TO-TOOL/com.liferay.portal.tools.data.partitioning.sql.builder-1.0.0.jar" com.liferay.portal.tools.data.partitioning.sql.builder.Main [-P|--properties-file] PATH-TO-DB-PROPERTIES [-S|--schema-name] SCHEMA_NAME [-C|--company-ids] COMMA-SEPARATED-COMPANY_IDS [-O|--output-dir] OUTPUT-DIR [-W|--write-file]
+    java -classpath "PATH-TO-LIBS/*:/PATH-TO-TOOL/com.liferay.portal.tools.data.partitioning.sql.builder-1.0.0.jar" com.liferay.portal.tools.data.partitioning.sql.builder.Main [-P|--properties-file] PATH-TO-DB-PROPERTIES [-S|--schema-name] SCHEMA_NAME [-K|--catalog-name] CATALOG_NAME [-C|--company-ids] COMMA-SEPARATED-COMPANY_IDS [-O|--output-dir] OUTPUT-DIR [-W|--write-file]
 
 Remember to use a colon (:) as a file separator on Unix-like machines, and a
 semicolon (;) on Windows machines.

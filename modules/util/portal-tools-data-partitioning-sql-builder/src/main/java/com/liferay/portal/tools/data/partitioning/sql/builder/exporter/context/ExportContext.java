@@ -26,11 +26,25 @@ public class ExportContext {
 		List<Long> companyIds, String outputDirName, Properties properties,
 		String schemaName, boolean writeFile) {
 
+		this(
+			schemaName, companyIds, outputDirName, properties, schemaName,
+			writeFile);
+	}
+
+	public ExportContext(
+		String catalogName, List<Long> companyIds, String outputDirName,
+		Properties properties, String schemaName, boolean writeFile) {
+
+		_catalogName = catalogName;
 		_companyIds = companyIds;
 		_outputDirName = outputDirName;
 		_properties = properties;
 		_schemaName = schemaName;
 		_writeFile = writeFile;
+	}
+
+	public String getCatalogName() {
+		return _catalogName;
 	}
 
 	public List<Long> getCompanyIds() {
@@ -53,6 +67,7 @@ public class ExportContext {
 		return _writeFile;
 	}
 
+	private final String _catalogName;
 	private final List<Long> _companyIds;
 	private final String _outputDirName;
 	private final Properties _properties;

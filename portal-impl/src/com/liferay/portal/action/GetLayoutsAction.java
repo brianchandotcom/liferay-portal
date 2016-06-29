@@ -46,11 +46,11 @@ public class GetLayoutsAction extends JSONAction {
 		if (cmd.equals("get")) {
 			return getLayoutsJSON(request, groupId, treeId);
 		}
-		else if (cmd.equals("getSiblingLayouts")) {
-			return getSiblingLayouts(request, groupId);
-		}
 		else if (cmd.equals("getAll")) {
 			return LayoutsTreeUtil.getLayoutsJSON(request, groupId, treeId);
+		}
+		else if (cmd.equals("getSiblingLayouts")) {
+			return getSiblingLayouts(request, groupId);
 		}
 
 		return null;

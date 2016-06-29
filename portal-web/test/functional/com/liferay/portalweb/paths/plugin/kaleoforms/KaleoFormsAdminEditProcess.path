@@ -115,7 +115,7 @@
 <!--FIELD_SET_PAGINATION-->
 <tr>
 	<td>FIELD_SET_PAGINATION_SELECTOR_BUTTON</td>
-	<td>//div[@class='lfr-pagination-delta-selector']/div/a/span</td>
+	<td>//div[@class='dropdown pagination-items-per-page']//a[@type='button']</td>
 	<td></td>
 </tr>
 <tr>

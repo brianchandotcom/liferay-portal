@@ -255,12 +255,12 @@
 	</command>
 
 	<command name="editFieldSetPagination">
-		<execute function="AssertClick" locator1="KaleoFormsAdminEditProcess#FIELD_SET_PAGINATION_SELECTOR_BUTTON" value1="20 Items per Page" />
+		<execute function="AssertClick" locator1="KaleoFormsAdminEditProcess#FIELD_SET_PAGINATION_SELECTOR_BUTTON" value1="20 Entries" />
 
 		<var name="key_paginationNumber" value="${paginationNumber}" />
 
 		<execute function="AssertClick" locator1="KaleoFormsAdminEditProcess#FIELD_SET_PAGINATION_MENULIST_NUMBER" value1="${paginationNumber}" />
-		<execute function="AssertTextEquals" locator1="KaleoFormsAdminEditProcess#FIELD_SET_PAGINATION_SELECTOR_BUTTON" value1="${paginationNumber} Items per Page" />
+		<execute function="AssertTextEquals" locator1="KaleoFormsAdminEditProcess#FIELD_SET_PAGINATION_SELECTOR_BUTTON" value1="${paginationNumber} Entries" />
 	</command>
 
 	<command name="editForm">

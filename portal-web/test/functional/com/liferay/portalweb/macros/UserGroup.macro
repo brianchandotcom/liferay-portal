@@ -405,15 +405,15 @@
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 		<execute function="AssertClick#assertPartialTextClickAt" locator1="UserGroupsEditUserGroup#PUBLIC_PAGES_OPEN_PAGES" value1="Open Pages" />
-		<execute function="SelectWindow" locator1="home - ${userGroupName} - Liferay" />
+		<execute function="SelectWindow" locator1="home - ${userGroupName} - ${siteName}" />
 
-		<execute function="AssertTextEquals" locator1="Home#SITE_NAME" value1="${siteName}" />
+		<execute function="AssertTextEquals" locator1="Home#SITE_NAME" value1="${userGroupName}" />
 
 		<var name="key_portletName" value="${portletName}" />
 
 		<execute function="AssertTextEquals" locator1="BasePortlet#TITLE" value1="${portletName}" />
 
-		<execute function="Close" locator1="home - ${userGroupName} - Liferay" />
+		<execute function="Close" locator1="home - ${userGroupName} - ${siteName}" />
 	</command>
 
 	<command name="viewPortletCP">

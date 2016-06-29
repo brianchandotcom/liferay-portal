@@ -2292,9 +2292,10 @@
 			<var name="workflowTask" value="Update" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#resubmitPendingProcessViaInbox">
-			<var name="kfProcessName" value="${kfProcessName}" />
-			<var name="workflowTask" value="update" />
+		<execute macro="Workflow#resubmitTaskByActions">
+			<var name="workflowAssetTitle" value="${kfProcessName}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="Update" />
 		</execute>
 
 		<execute function="Pause" locator1="30000" />
@@ -7068,7 +7069,11 @@
 			<var name="kfProcessFieldData" value="${kfProcessFieldData}" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#resubmitPendingProcessViaMyPendingRequests" />
+		<execute macro="Workflow#resubmitTaskByActions">
+			<var name="workflowAssetTitle" value="${kfProcessName}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="Update" />
+		</execute>
 
 		<execute macro="Page#gotoMyAccount">
 			<var name="portletName" value="My Workflow Tasks" />
@@ -7252,7 +7257,11 @@
 			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#resubmitPendingProcessViaMyPendingRequests" />
+		<execute macro="Workflow#resubmitTaskByActions" >
+			<var name="workflowAssetTitle" value="${kfProcessName}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="Update" />
+		</execute>
 
 		<execute macro="Page#gotoMyAccount">
 			<var name="portletName" value="Notifications" />
@@ -8894,10 +8903,10 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#resubmitPendingProcessViaInbox">
-			<var name="comment" value="Resubmitting." />
-			<var name="kfProcessName" value="${kfProcessName}" />
-			<var name="workflowTask" value="update" />
+		<execute macro="Workflow#resubmitTaskByActions">
+			<var name="workflowAssetTitle" value="${kfProcessName}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="Update" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">

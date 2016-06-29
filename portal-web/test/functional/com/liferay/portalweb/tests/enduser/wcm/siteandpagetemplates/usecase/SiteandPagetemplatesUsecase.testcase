@@ -360,7 +360,7 @@
 		<execute macro="UserGroup#viewPG">
 			<var name="pageName" value="home" />
 			<var name="portletName" value="Message Boards" />
-			<var name="siteName" value="UG UserGroup Name" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userGroupName" value="UG UserGroup Name" />
 		</execute>
 

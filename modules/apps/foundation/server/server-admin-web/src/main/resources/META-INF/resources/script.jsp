@@ -37,7 +37,7 @@ String scriptOutput = (String)SessionMessages.get(renderRequest, "scriptOutput")
 		<aui:select name="language">
 
 			<%
-			for (String supportedLanguage: ScriptingUtil.getSupportedLanguages()) {
+			for (String supportedLanguage : ScriptingUtil.getSupportedLanguages()) {
 			%>
 
 				<aui:option label="<%= TextFormatter.format(supportedLanguage, TextFormatter.J) %>" selected="<%= supportedLanguage.equals(language) %>" value="<%= supportedLanguage %>" />

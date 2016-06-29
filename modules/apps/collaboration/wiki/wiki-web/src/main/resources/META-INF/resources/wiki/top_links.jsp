@@ -54,7 +54,7 @@ if (portletTitleBasedNavigation) {
 		<aui:nav cssClass="nav-tabs">
 
 			<%
-			for (WikiNode curNode: nodes) {
+			for (WikiNode curNode : nodes) {
 				String cssClass = StringPool.BLANK;
 
 				if (curNode.getNodeId() == node.getNodeId()) {

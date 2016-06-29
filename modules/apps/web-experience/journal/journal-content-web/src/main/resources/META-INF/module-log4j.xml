@@ -2,7 +2,7 @@
 <!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
 
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
-	<category name="com.liferay.journal.content.web.JournalContentPortletLayoutListener">
+	<category name="com.liferay.journal.content.web.internal.JournalContentPortletLayoutListener">
 		<priority value="ERROR" />
 	</category>
 </log4j:configuration>

@@ -891,7 +891,7 @@
 			<var name="panelHeading" value="Display Page" />
 		</execute>
 
-		<execute function="AssertClick" locator1="WCEditWebContent#DISPLAY_PAGE_CHOOSE" value1="Choose" />
+		<execute function="AssertClick" locator1="Button#CHOOSE" value1="Choose" />
 		<execute function="Pause" locator1="5000" />
 
 		<var name="key_pageName" value="${pageName}" />

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.iframe.web.constants;
+package com.liferay.iframe.web.internal.constants;
 
 /**
  * @author Eudaldo Alonso

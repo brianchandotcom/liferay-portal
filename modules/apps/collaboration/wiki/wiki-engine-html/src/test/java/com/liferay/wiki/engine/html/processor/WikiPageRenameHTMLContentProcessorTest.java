@@ -60,16 +60,17 @@ public class WikiPageRenameHTMLContentProcessorTest {
 	public void testProcessContentImageWithComplexTitle() {
 		String content =
 			"This is a test <img src=\"wiki/get_page_attachment?p_l_id=1234" +
-				"&title=Complex.%2C%28%29+original+title&fileName=" +
+				"&title=Complex.%2C%28%29+original+%26+title&fileName=" +
 					"image.jpeg\"/>";
 
 		content = _wikiPageRenameHTMLContentProcessor.processContent(
-			content, "Complex.,() original title", "Complex.,() final title",
-			0);
+			content, "Complex.,() original & title",
+			"Complex.,() final & title", 0);
 
 		Assert.assertEquals(
 			"This is a test <img src=\"wiki/get_page_attachment?p_l_id=1234" +
-				"&title=Complex.%2C%28%29+final+title&fileName=image.jpeg\"/>",
+				"&title=Complex.%2C%28%29+final+%26+title&fileName=" +
+					"image.jpeg\"/>",
 			content);
 	}
 
@@ -201,16 +202,17 @@ public class WikiPageRenameHTMLContentProcessorTest {
 	public void testProcessContentLinkWithComplexTitle() {
 		String content =
 			"This is a test <a href=\"wiki/get_page_attachment?p_l_id=1234" +
-				"&title=Complex.%2C%28%29+original+title&fileName=" +
+				"&title=Complex.%2C%28%29+original+%26+title&fileName=" +
 					"image.jpeg\"/>";
 
 		content = _wikiPageRenameHTMLContentProcessor.processContent(
-			content, "Complex.,() original title", "Complex.,() final title",
-			0);
+			content, "Complex.,() original & title",
+			"Complex.,() final & title", 0);
 
 		Assert.assertEquals(
 			"This is a test <a href=\"wiki/get_page_attachment?p_l_id=1234" +
-				"&title=Complex.%2C%28%29+final+title&fileName=image.jpeg\"/>",
+				"&title=Complex.%2C%28%29+final+%26+title&fileName=" +
+					"image.jpeg\"/>",
 			content);
 	}
 

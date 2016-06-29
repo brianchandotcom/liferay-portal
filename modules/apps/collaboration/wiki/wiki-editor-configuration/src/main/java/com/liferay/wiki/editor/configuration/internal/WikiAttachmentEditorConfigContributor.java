@@ -18,9 +18,13 @@ import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
+import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UploadableFileReturnType;
+import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
 import com.liferay.item.selector.criteria.upload.criterion.UploadItemSelectorCriterion;
+import com.liferay.item.selector.criteria.url.criterion.URLItemSelectorCriterion;
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
+import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
@@ -36,13 +40,24 @@ import java.util.Map;
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 
+import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Sergio González
  * @author Roberto Díaz
  */
-public abstract class BaseWikiAttachmentEditorConfigContributor
+@Component(
+	property = {
+		"editor.config.key=contentEditor",
+		"javax.portlet.name=" + WikiPortletKeys.WIKI,
+		"javax.portlet.name=" + WikiPortletKeys.WIKI_ADMIN,
+		"javax.portlet.name=" + WikiPortletKeys.WIKI_DISPLAY,
+		"service.ranking:Integer=100"
+	},
+	service = EditorConfigContributor.class
+)
+public class WikiAttachmentEditorConfigContributor
 	extends BaseEditorConfigContributor {
 
 	@Override
@@ -56,8 +71,6 @@ public abstract class BaseWikiAttachmentEditorConfigContributor
 				"liferay-ui:input-editor:allowBrowseDocuments"));
 
 		if (!allowBrowseDocuments) {
-			removeImageButton(jsonObject);
-
 			return;
 		}
 
@@ -73,13 +86,8 @@ public abstract class BaseWikiAttachmentEditorConfigContributor
 		}
 
 		if (wikiPageResourcePrimKey == 0) {
-			removeImageButton(jsonObject);
-
 			return;
 		}
-
-		ItemSelectorCriterion attachmentItemSelectorCriterion =
-			new WikiAttachmentItemSelectorCriterion(wikiPageResourcePrimKey);
 
 		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
 			new ArrayList<>();
@@ -88,8 +96,66 @@ public abstract class BaseWikiAttachmentEditorConfigContributor
 		desiredItemSelectorReturnTypes.add(
 			new FileEntryItemSelectorReturnType());
 
-		attachmentItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+		ItemSelectorCriterion attachmentItemSelectorCriterion =
+			getWikiAttachmentItemSelectorCriterion(
+				wikiPageResourcePrimKey, desiredItemSelectorReturnTypes);
+
+		ItemSelectorCriterion imageItemSelectorCriterion =
+			getImageItemSelectorCriterion(desiredItemSelectorReturnTypes);
+
+		ItemSelectorCriterion urlItemSelectorCriterion =
+			getURLItemSelectorCriterion();
+
+		ItemSelectorCriterion uploadItemSelectorCriterion =
+			getUploadItemSelectorCriterion(
+				wikiPageResourcePrimKey, themeDisplay,
+				requestBackedPortletURLFactory);
+
+		String name = GetterUtil.getString(
+			inputEditorTaglibAttributes.get("liferay-ui:input-editor:name"));
+
+		boolean inlineEdit = GetterUtil.getBoolean(
+			inputEditorTaglibAttributes.get(
+				"liferay-ui:input-editor:inlineEdit"));
+
+		if (!inlineEdit) {
+			String namespace = GetterUtil.getString(
+				inputEditorTaglibAttributes.get(
+					"liferay-ui:input-editor:namespace"));
+
+			name = namespace + name;
+		}
+
+		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
+			requestBackedPortletURLFactory, name + "selectItem",
+			attachmentItemSelectorCriterion, imageItemSelectorCriterion,
+			urlItemSelectorCriterion, uploadItemSelectorCriterion);
+
+		jsonObject.put(
+			"filebrowserImageBrowseLinkUrl", itemSelectorURL.toString());
+		jsonObject.put("filebrowserImageBrowseUrl", itemSelectorURL.toString());
+	}
+
+	@Reference(unbind = "-")
+	public void setItemSelector(ItemSelector itemSelector) {
+		_itemSelector = itemSelector;
+	}
+
+	protected ItemSelectorCriterion getImageItemSelectorCriterion(
+		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes) {
+
+		ItemSelectorCriterion imageItemSelectorCriterion =
+			new ImageItemSelectorCriterion();
+
+		imageItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			desiredItemSelectorReturnTypes);
+
+		return imageItemSelectorCriterion;
+	}
+
+	protected ItemSelectorCriterion getUploadItemSelectorCriterion(
+		long wikiPageResourcePrimKey, ThemeDisplay themeDisplay,
+		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
 		PortletURL uploadURL = requestBackedPortletURLFactory.createActionURL(
 			WikiPortletKeys.WIKI);
@@ -113,36 +179,36 @@ public abstract class BaseWikiAttachmentEditorConfigContributor
 		uploadItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			uploadDesiredItemSelectorReturnTypes);
 
-		String name = GetterUtil.getString(
-			inputEditorTaglibAttributes.get("liferay-ui:input-editor:name"));
-
-		boolean inlineEdit = GetterUtil.getBoolean(
-			inputEditorTaglibAttributes.get(
-				"liferay-ui:input-editor:inlineEdit"));
-
-		if (!inlineEdit) {
-			String namespace = GetterUtil.getString(
-				inputEditorTaglibAttributes.get(
-					"liferay-ui:input-editor:namespace"));
-
-			name = namespace + name;
-		}
-
-		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
-			requestBackedPortletURLFactory, name + "selectItem",
-			attachmentItemSelectorCriterion, uploadItemSelectorCriterion);
-
-		jsonObject.put(
-			"filebrowserImageBrowseLinkUrl", itemSelectorURL.toString());
-		jsonObject.put("filebrowserImageBrowseUrl", itemSelectorURL.toString());
+		return uploadItemSelectorCriterion;
 	}
 
-	@Reference(unbind = "-")
-	public void setItemSelector(ItemSelector itemSelector) {
-		_itemSelector = itemSelector;
+	protected ItemSelectorCriterion getURLItemSelectorCriterion() {
+		ItemSelectorCriterion urlItemSelectorCriterion =
+			new URLItemSelectorCriterion();
+
+		List<ItemSelectorReturnType> urlDesiredItemSelectorReturnTypes =
+			new ArrayList<>();
+
+		urlDesiredItemSelectorReturnTypes.add(new URLItemSelectorReturnType());
+
+		urlItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			urlDesiredItemSelectorReturnTypes);
+
+		return urlItemSelectorCriterion;
 	}
 
-	protected abstract void removeImageButton(JSONObject jsonObject);
+	protected ItemSelectorCriterion getWikiAttachmentItemSelectorCriterion(
+		long wikiPageResourcePrimKey,
+		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes) {
+
+		ItemSelectorCriterion attachmentItemSelectorCriterion =
+			new WikiAttachmentItemSelectorCriterion(wikiPageResourcePrimKey);
+
+		attachmentItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			desiredItemSelectorReturnTypes);
+
+		return attachmentItemSelectorCriterion;
+	}
 
 	private ItemSelector _itemSelector;
 

@@ -408,10 +408,10 @@ if (portletTitleBasedNavigation) {
 				form.fm('title').val(titleEditor.getText());
 			}
 
-			var editor = window.<portlet:namespace />editor;
+			var contentEditor = window.<portlet:namespace />contentEditor;
 
-			if (editor) {
-				form.fm('content').val(editor.getHTML());
+			if (contentEditor) {
+				form.fm('content').val(contentEditor.getHTML());
 			}
 
 			form.attr('action', '<%= editPageRenderURL %>');
@@ -441,10 +441,10 @@ if (portletTitleBasedNavigation) {
 			form.fm('title').val(titleEditor.getText());
 		}
 
-		var editor = window.<portlet:namespace />editor;
+		var contentEditor = window.<portlet:namespace />contentEditor;
 
-		if (editor) {
-			form.fm('content').val(editor.getHTML());
+		if (contentEditor) {
+			form.fm('content').val(contentEditor.getHTML());
 		}
 
 		submitForm(form);

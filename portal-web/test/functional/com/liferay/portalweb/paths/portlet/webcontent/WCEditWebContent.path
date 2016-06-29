@@ -137,11 +137,6 @@
 </tr>
 <!--DISPLAY_PAGE-->
 <tr>
-	<td>DISPLAY_PAGE_CHOOSE</td>
-	<td>//button[contains(@id,'DisplayPage') and contains(.,'Choose')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>DISPLAY_PAGE_SELECTION</td>
 	<td>//span[contains(@id,'displayPageNameInput')]</td>
 	<td></td>

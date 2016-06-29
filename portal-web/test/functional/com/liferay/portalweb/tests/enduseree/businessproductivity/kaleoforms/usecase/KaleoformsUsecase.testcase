@@ -4899,11 +4899,7 @@
 			<var name="fieldName" value="Text" />
 			<var name="kfProcessFieldData" value="Test Data" />
 		</execute>
-
-		<var name="key_fieldName" value="Fieldset" />
-
-		<execute function="AssertElementNotPresent" locator1="DDLEditRecord#FIELD_FIELDSET" />
-
+		
 		<execute macro="Workflow#approveTaskByActions">
 			<var name="workflowAssetTitle" value="${kfProcessName}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />

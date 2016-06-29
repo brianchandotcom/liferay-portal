@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.application.list.user.personal.site.permissions.instance.lifecycle;
+package com.liferay.application.list.user.personal.site.permissions.internal.instance.lifecycle;
 
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.PanelAppRegistry;
 import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
-import com.liferay.application.list.user.personal.site.permissions.UserPersonalSitePermissions;
+import com.liferay.application.list.user.personal.site.permissions.internal.UserPersonalSitePermissions;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.model.Company;

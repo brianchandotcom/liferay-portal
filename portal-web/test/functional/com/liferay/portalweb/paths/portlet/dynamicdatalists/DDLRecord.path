@@ -59,6 +59,17 @@
 	<td>//div[@data-fieldname='${key_nestedParentFieldFieldName}' and @data-repeatable='true']/following-sibling::div[@data-fieldname='${key_nestedParentFieldFieldName}']/div[@class='form-group']/following-sibling::div[@data-fieldname='${key_nestedChildFieldFieldName}']</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--INFO_SIDEBAR-->
+<tr>
+	<td>INFO_SIDEBAR_EXPANDED</td>
+	<td>//div[@class='sidenav-menu-slider' and contains(@style,'width: 320px')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

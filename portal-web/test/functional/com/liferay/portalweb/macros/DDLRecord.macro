@@ -132,6 +132,15 @@
 		<execute function="AssertClick" locator1="Button#EDIT" value1="Edit" />
 	</command>
 
+	<command name="expandInfo">
+		<execute function="AssertElementNotPresent" locator1="DDLRecord#INFO_SIDEBAR_EXPANDED" />
+
+		<execute function="Click" locator1="Icon#INFO" />
+
+		<execute function="AssertVisible" locator1="Icon#INFO_ACTIVE" />
+		<execute function="AssertElementPresent" locator1="DDLRecord#INFO_SIDEBAR_EXPANDED" />
+	</command>
+
 	<command name="gotoRecordPreview">
 		<execute function="AssertClick" locator1="DDL#RECORD_TABLE_COLUMN_ONE_PREVIEW_1" value1="(Preview)" />
 	</command>

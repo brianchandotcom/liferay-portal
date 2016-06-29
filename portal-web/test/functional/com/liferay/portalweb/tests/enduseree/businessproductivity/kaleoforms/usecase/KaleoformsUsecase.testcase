@@ -7100,11 +7100,6 @@
 			<var name="workflowTask" value="Update" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyPendingRequestsField">
-			<var name="fieldName" value="${fieldName}" />
-			<var name="kfProcessFieldData" value="${kfProcessFieldData}" />
-		</execute>
-
 		<execute macro="Workflow#resubmitTaskByActions">
 			<var name="workflowAssetTitle" value="${kfProcessName}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />

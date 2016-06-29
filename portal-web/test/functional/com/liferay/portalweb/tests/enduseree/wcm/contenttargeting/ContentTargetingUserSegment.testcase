@@ -1454,7 +1454,7 @@
 		</execute>
 
 		<execute macro="ContentTargetingUserSegment#viewReportContentViews">
-			<var name="reportsContentTableList" value="Test Page Name,Page,View,12" />
+			<var name="reportsContentTableList" value="Test Page Name,Page,View,10" />
 			<var name="reportTitle" value="Test Page Name" />
 		</execute>
 

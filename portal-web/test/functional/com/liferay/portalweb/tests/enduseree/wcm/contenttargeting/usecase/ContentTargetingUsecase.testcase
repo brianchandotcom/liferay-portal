@@ -619,7 +619,7 @@
 		</execute>
 
 		<execute macro="ContentTargetingCampaign#viewContentReportCP">
-			<var name="reportsContentTableList" value="DM Document Title,Document,View,8" />
+			<var name="reportsContentTableList" value="DM Document Title,Document,View,4" />
 			<var name="reportTitle" value="DM Document Title" />
 		</execute>
 	</command>
@@ -1276,7 +1276,7 @@
 
 		<execute macro="ContentTargetingCampaign#viewMetricReport">
 			<var name="metricName" value="Content Metric Name" />
-			<var name="metricReportsTableList" value="Content Metric Name,View,4" />
+			<var name="metricReportsTableList" value="Content Metric Name,View,2" />
 		</execute>
 	</command>
 

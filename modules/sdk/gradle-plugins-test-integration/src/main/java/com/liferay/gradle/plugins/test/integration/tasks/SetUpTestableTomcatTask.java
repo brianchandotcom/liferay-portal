@@ -26,6 +26,7 @@ import groovy.xml.XmlUtil;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
@@ -40,6 +41,8 @@ import java.text.SimpleDateFormat;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
@@ -47,6 +50,7 @@ import org.gradle.api.Action;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.Project;
 import org.gradle.api.file.CopySpec;
+import org.gradle.api.logging.Logger;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.TaskAction;
 import org.gradle.util.VersionNumber;
@@ -59,11 +63,11 @@ import org.w3c.dom.NodeList;
 /**
  * @author Andrea Di Giorgi
  */
-public class SetupTestableTomcatTask
+public class SetUpTestableTomcatTask
 	extends DefaultTask
 	implements JmxRemotePortSpec, ManagerSpec, ModuleFrameworkBaseDirSpec {
 
-	public SetupTestableTomcatTask() {
+	public SetUpTestableTomcatTask() {
 		_zipUrl = new Callable<String>() {
 
 			@Override
@@ -101,8 +105,29 @@ public class SetupTestableTomcatTask
 		};
 	}
 
+	public SetUpTestableTomcatTask catalinaOptsReplacement(
+		String oldSub, Object newSub) {
+
+		_catalinaOptsReplacements.put(oldSub, newSub);
+
+		return this;
+	}
+
+	public SetUpTestableTomcatTask catalinaOptsReplacements(
+		Map<String, ?> catalinaOptsReplacements) {
+
+		_catalinaOptsReplacements.putAll(catalinaOptsReplacements);
+
+		return this;
+	}
+
 	public File getBinDir() {
 		return new File(getDir(), "bin");
+	}
+
+	@Input
+	public Map<String, Object> getCatalinaOptsReplacements() {
+		return _catalinaOptsReplacements;
 	}
 
 	@Input
@@ -159,6 +184,14 @@ public class SetupTestableTomcatTask
 		return _overwriteTestModules;
 	}
 
+	public void setCatalinaOptsReplacements(
+		Map<String, ?> catalinaOptsReplacements) {
+
+		_catalinaOptsReplacements.clear();
+
+		catalinaOptsReplacements(catalinaOptsReplacements);
+	}
+
 	public void setDebugLogging(boolean debugLogging) {
 		_debugLogging = debugLogging;
 	}
@@ -200,18 +233,19 @@ public class SetupTestableTomcatTask
 	}
 
 	@TaskAction
-	public void setupTestableTomcat() throws Exception {
-		setupJmx();
-		setupLogging();
-		setupManager();
-		setupOsgiModules();
+	public void setUpTestableTomcat() throws Exception {
+		setUpCatalinaOpts();
+		setUpJmx();
+		setUpLogging();
+		setUpManager();
+		setUpOsgiModules();
 	}
 
 	public void setZipUrl(Object zipUrl) {
 		_zipUrl = zipUrl;
 	}
 
-	protected boolean contains(String fileName, String s) throws Exception {
+	protected boolean contains(String fileName, String s) throws IOException {
 		File file = new File(getDir(), fileName);
 
 		String fileContent = new String(Files.readAllBytes(file.toPath()));
@@ -224,7 +258,7 @@ public class SetupTestableTomcatTask
 	}
 
 	protected PrintWriter getAppendPrintWriter(String fileName)
-		throws Exception {
+		throws IOException {
 
 		File file = new File(getDir(), fileName);
 
@@ -248,7 +282,45 @@ public class SetupTestableTomcatTask
 		return sb.toString();
 	}
 
-	protected void setupJmx() throws Exception {
+	protected void replace(String fileName, Map<String, Object> replacements)
+		throws IOException {
+
+		Logger logger = getLogger();
+
+		File dir = getDir();
+
+		Path dirPath = dir.toPath();
+
+		Path path = dirPath.resolve(fileName);
+
+		String content = new String(Files.readAllBytes(path));
+
+		for (Map.Entry<String, Object> entry : replacements.entrySet()) {
+			String oldSub = entry.getKey();
+			String newSub = GradleUtil.toString(entry.getValue());
+
+			if (logger.isWarnEnabled() && !content.contains(oldSub)) {
+				logger.warn("Unable to find \"" + oldSub + "\" in " + path);
+			}
+
+			content = content.replace(oldSub, newSub);
+		}
+
+		Files.write(path, content.getBytes());
+	}
+
+	protected void setUpCatalinaOpts() throws IOException {
+		Map<String, Object> replacements = getCatalinaOptsReplacements();
+
+		if (replacements.isEmpty()) {
+			return;
+		}
+
+		replace("bin/setenv.bat", replacements);
+		replace("bin/setenv.sh", replacements);
+	}
+
+	protected void setUpJmx() throws IOException {
 		String jmxOptions = getJmxOptions();
 
 		if (!contains("bin/setenv.bat", jmxOptions)) {
@@ -286,7 +358,7 @@ public class SetupTestableTomcatTask
 		}
 	}
 
-	protected void setupLogging() throws Exception {
+	protected void setUpLogging() throws IOException {
 		if (!isDebugLogging() ||
 			contains("conf/Logging.properties", "org.apache.catalina.level")) {
 
@@ -309,7 +381,7 @@ public class SetupTestableTomcatTask
 		}
 	}
 
-	protected void setupManager() throws Exception {
+	protected void setUpManager() throws Exception {
 		final File managerDir = new File(getDir(), "webapps/manager");
 
 		if (!managerDir.exists()) {
@@ -420,7 +492,7 @@ public class SetupTestableTomcatTask
 		}
 	}
 
-	protected void setupOsgiModules() {
+	protected void setUpOsgiModules() {
 		Project project = getProject();
 
 		project.copy(
@@ -450,6 +522,8 @@ public class SetupTestableTomcatTask
 		"tomcat"
 	};
 
+	private final Map<String, Object> _catalinaOptsReplacements =
+		new LinkedHashMap<>();
 	private boolean _debugLogging;
 	private Object _dir;
 	private boolean _jmxRemoteAuthenticate;

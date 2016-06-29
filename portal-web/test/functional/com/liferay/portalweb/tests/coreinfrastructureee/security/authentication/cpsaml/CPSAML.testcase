@@ -26,6 +26,7 @@
 			<var name="idpInitiatedSSOURL" value="http://localhost:8080/c/portal/saml/sso?entityId=samlsp&amp;RelayState=http://www.able.com:9080" />
 			<var name="password" value="test" />
 			<var name="rememberMeChecked" value="false" />
+			<var name="samlEnabled" value="true" />
 			<var name="spURL" value="http://www.able.com:9080/" />
 			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
@@ -50,13 +51,13 @@
 			<var name="specificURL" value="http://www.able.com:9080" />
 		</execute>
 
-		<execute macro="User#viewLoginPG" />
+		<execute macro="User#viewLoggedOutPG" />
 
 		<!-- Verify IdP is also logged out -->
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="User#viewLoginPG" />
+		<execute macro="User#viewLoggedOutPG" />
 	</command>
 
 	<command name="ViewIdPInitiatedSSOWithRememberMeChecked" priority="4">
@@ -68,6 +69,7 @@
 			<var name="idpInitiatedSSOURL" value="http://localhost:8080/c/portal/saml/sso?entityId=samlsp&amp;RelayState=http://www.able.com:9080" />
 			<var name="password" value="test" />
 			<var name="rememberMeChecked" value="true" />
+			<var name="samlEnabled" value="true" />
 			<var name="spURL" value="http://www.able.com:9080/" />
 			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
@@ -92,19 +94,17 @@
 			<var name="specificURL" value="http://www.able.com:9080" />
 		</execute>
 
-		<execute macro="User#viewLoginPG" />
+		<execute macro="User#viewLoggedOutPG" />
 
 		<!-- Verify IdP is also logged out -->
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="User#viewLoginPG" />
+		<execute macro="User#viewLoggedOutPG" />
 	</command>
 
 	<command name="ViewSingleLogoutHTTPPostBindingInConsole" priority="4">
 		<description message="LPS-49666 - SAML Single Logout should support HTTP-POST binding." />
-
-		<execute macro="User#logoutPG" />
 
 		<execute macro="User#loginPG">
 			<var name="password" value="test" />
@@ -126,21 +126,18 @@
 			<var name="idpInitiatedSSOURL" value="http://localhost:8080/c/portal/saml/sso?entityId=samlsp&amp;RelayState=http://www.able.com:9080" />
 			<var name="password" value="test" />
 			<var name="rememberMeChecked" value="true" />
+			<var name="samlEnabled" value="true" />
 			<var name="spURL" value="http://www.able.com:9080/" />
 			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
+
+		<execute function="AssertConsoleTextPresent" value1="Sending SAML message &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;_&lt;saml2p:Response Destination=&quot;http://www.able.com:9080/c/portal/saml/acs&quot;" />
 
 		<execute macro="User#logoutPG">
 			<var name="specificURL" value="http://www.able.com:9080" />
 		</execute>
 
-		<!-- Verify the following HTTP Post binding are displayed in the console after a successful SLO -->
-
-		<execute function="Pause" locator1="5000" />
-
-		<execute function="AssertConsoleTextPresent" value1="Received message using binding urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" />
-		<execute function="AssertConsoleTextPresent" value1="saml2p:LogoutRequest Destination=&quot;http://localhost:8080/c/portal/saml/slo&quot;" />
-		<execute function="AssertConsoleTextPresent" value1="saml2p:LogoutResponse Destination=&quot;http://www.able.com:9080/c/portal/saml/slo&quot;" />
+		<execute function="AssertConsoleTextPresent" value1="Validation of protocol message signature succeeded, message type: {urn:oasis:names:tc:SAML:2.0:protocol}LogoutRequest" />
 	</command>
 
 	<command name="ViewSPInitiatedSSO" priority="4">
@@ -175,12 +172,12 @@
 			<var name="specificURL" value="http://www.able.com:9080" />
 		</execute>
 
-		<execute macro="User#viewLoginPG" />
+		<execute macro="User#viewLoggedOutPG" />
 
 		<!-- Verify IdP is also logged out -->
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="User#viewLoginPG" />
+		<execute macro="User#viewLoggedOutPG" />
 	</command>
 </definition>

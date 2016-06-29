@@ -1833,6 +1833,62 @@
 		</execute>
 	</command>
 
+	<command name="CancelRepeatingDialog" priority="4">
+		<description message="This is a use case for LPS-45616." />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarNavigator#gotoAddEvent" />
+
+		<execute macro="CalendarEvent#editTitle">
+			<var name="eventTitle" value="Calendar Non-Repeating Event 1" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewNoRepeating" />
+
+		<execute macro="CalendarEvent#gotoRepeatConfiguration" />
+
+		<execute macro="CalendarEvent#selectRepeatFrequency">
+			<var name="frequency" value="Daily" />
+		</execute>
+
+		<execute function="KeyPress" locator1="CalendarEditEvent#REPEAT_REPEATS_DROPDOWN" value1="\ESCAPE" />
+
+		<execute macro="CalendarEvent#viewNoRepeating" />
+
+		<execute macro="CalendarEvent#viewTitle">
+			<var name="eventTitle" value="Calendar Non-Repeating Event 1" />
+		</execute>
+
+		<execute macro="CalendarEvent#publish" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarNavigator#gotoAddEvent" />
+
+		<execute macro="CalendarEvent#editTitle">
+			<var name="eventTitle" value="Calendar Non-Repeating Event 2" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewNoRepeating" />
+
+		<execute macro="CalendarEvent#gotoRepeatConfiguration" />
+
+		<execute macro="Button#clickCancel" />
+
+		<execute macro="CalendarEvent#viewTitle">
+			<var name="eventTitle" value="Calendar Non-Repeating Event 2" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewNoRepeating" />
+
+		<execute macro="CalendarEvent#publish" />
+	</command>
+
 	<command name="ChangeCalendarTypeForAllDayEvent" priority="3">
 		<execute macro="TestCase#getSiteName">
 			<return from="siteName" name="siteName" />

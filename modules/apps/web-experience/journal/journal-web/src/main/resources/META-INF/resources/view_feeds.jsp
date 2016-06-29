@@ -111,8 +111,8 @@ renderResponse.setTitle(LanguageUtil.get(request, "feeds"));
 	>
 		<liferay-ui:search-container-row
 			className="com.liferay.journal.model.JournalFeed"
-			keyProperty="feedId"
 			escapedModel="<%= true %>"
+			keyProperty="feedId"
 			modelVar="feed"
 		>
 			<c:choose>

@@ -265,7 +265,7 @@ public class ExpandoValueConversionTest {
 	public void testDouble2() {
 		Double positiveDouble = 345.4;
 
-		Double convertedDouble =_converter.convertType(
+		Double convertedDouble = _converter.convertType(
 			ExpandoColumnConstants.DOUBLE, positiveDouble.toString());
 
 		Assert.assertEquals(positiveDouble, convertedDouble);

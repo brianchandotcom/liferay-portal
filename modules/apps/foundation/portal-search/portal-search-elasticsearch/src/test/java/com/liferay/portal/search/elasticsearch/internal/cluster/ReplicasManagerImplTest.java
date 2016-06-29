@@ -99,7 +99,7 @@ public class ReplicasManagerImplTest {
 	protected ReplicasClusterContext createReplicasClusterContext() {
 		ElasticsearchCluster elasticsearchCluster = new ElasticsearchCluster();
 
-		elasticsearchCluster.companyLocalService =_companyLocalService;
+		elasticsearchCluster.companyLocalService = _companyLocalService;
 
 		elasticsearchCluster.indexNameBuilder = new IndexNameBuilder() {
 

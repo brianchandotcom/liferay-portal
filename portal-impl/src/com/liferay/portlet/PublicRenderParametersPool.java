@@ -41,7 +41,7 @@ public class PublicRenderParametersPool {
 		Map<String, String[]> map1 = get(request, plid);
 
 		if (warFile) {
-			Map<String, String[]> map2 =_publicRenderParametersMap.get();
+			Map<String, String[]> map2 = _publicRenderParametersMap.get();
 
 			map1.putAll(map2);
 

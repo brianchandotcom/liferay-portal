@@ -360,7 +360,7 @@ public class BlogsEntryStagedModelDataHandler
 		}
 
 		if ((coverImageSelector != null) || (smallImageSelector != null)) {
-			importedEntry =_blogsEntryLocalService.getBlogsEntry(
+			importedEntry = _blogsEntryLocalService.getBlogsEntry(
 				importedEntry.getEntryId());
 		}
 

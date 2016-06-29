@@ -183,7 +183,7 @@ public class InstrumentationAgent {
 
 		_instrumentation.addTransformer(_whipClassFileTransformer, true);
 
-		Class<?>[] allLoadedClasses =_instrumentation.getAllLoadedClasses();
+		Class<?>[] allLoadedClasses = _instrumentation.getAllLoadedClasses();
 
 		List<Class<?>> modifiableClasses = new ArrayList<>();
 

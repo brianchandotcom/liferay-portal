@@ -111,7 +111,7 @@ public class BookmarksEntryStagedModelDataHandler
 				entry.getUuid(), portletDataContext.getScopeGroupId());
 
 		if (existingEntry == null) {
-			importedEntry =_stagedModelRepository.addStagedModel(
+			importedEntry = _stagedModelRepository.addStagedModel(
 				portletDataContext, importedEntry);
 		}
 		else {

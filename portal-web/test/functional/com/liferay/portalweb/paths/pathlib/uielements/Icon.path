@@ -215,7 +215,7 @@
 </tr>
 <tr>
 	<td>INHERIT_CHANGES_TOOLTIP</td>
-	<td>//label[contains(.,'Inherit Changes')]//span/*[name()='svg'][contains(@class,'icon-question')]</td>
+	<td>//div[not(contains(@class,'hide'))]/div/label[contains(.,'Inherit Changes')]//span/*[name()='svg'][contains(@class,'icon-question')]</td>
 	<td></td>
 </tr>
 <tr>

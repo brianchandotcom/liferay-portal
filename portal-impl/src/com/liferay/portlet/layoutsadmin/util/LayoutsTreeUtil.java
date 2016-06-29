@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.SessionClicks;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -50,6 +51,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -72,6 +74,62 @@ public class LayoutsTreeUtil {
 		return getLayoutsJSON(
 			request, groupId, privateLayout, parentLayoutId, null, incomplete,
 			treeId);
+	}
+
+	public static String getLayoutsJSON(
+			HttpServletRequest request, long groupId, boolean privateLayout,
+			long layoutId, int quantity)
+		throws Exception {
+
+		Layout layout = LayoutLocalServiceUtil.getLayout(
+			groupId, privateLayout, layoutId);
+
+		long parentLayoutId = layout.getParentLayoutId();
+
+		long includedLayoutIndex = LayoutServiceUtil.getLayoutsCount(
+			groupId, privateLayout, parentLayoutId, layout.getPriority());
+
+		int total = LayoutServiceUtil.getLayoutsCount(
+			groupId, privateLayout, parentLayoutId);
+
+		int start = (int)includedLayoutIndex - 1;
+
+		int end = (int)includedLayoutIndex + quantity;
+
+		if (end > total) {
+			start = total - quantity;
+			end = total;
+
+			if (start < 0) {
+				start = 0;
+			}
+		}
+
+		List<Layout> ancestorLayouts = LayoutServiceUtil.getAncestorLayouts(
+			layout.getPlid());
+
+		long[] ancestorLayoutsIds = new long[ancestorLayouts.size()];
+
+		String[] ancestorLayoutsNames = new String[ancestorLayouts.size()];
+
+		Locale locale = PortalUtil.getLocale(request);
+
+		for (int i = 0; i < ancestorLayouts.size(); i++) {
+			ancestorLayoutsIds[i] = ancestorLayouts.get(i).getLayoutId();
+			ancestorLayoutsNames[i] = ancestorLayouts.get(i).getName(locale);
+		}
+
+		List<Layout> layouts = LayoutServiceUtil.getLayouts(
+			groupId, privateLayout, parentLayoutId, true, start, end);
+
+		JSONObject response = _convertListLayoutToJSONObject(
+			layouts, request, groupId, total);
+
+		response.put("ancestorIds", ancestorLayoutsIds);
+		response.put("ancestorNames", ancestorLayoutsNames);
+		response.put("startIndex", start);
+
+		return response.toString();
 	}
 
 	public static String getLayoutsJSON(
@@ -135,6 +193,25 @@ public class LayoutsTreeUtil {
 				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, false, null, treeId));
 
 		return _toJSON(request, groupId, layoutTreeNodes);
+	}
+
+	private static JSONObject _convertListLayoutToJSONObject(
+			List<Layout> layouts, HttpServletRequest request, long groupId,
+			int total)
+		throws Exception {
+
+		List<LayoutTreeNode> layoutTreeNodesList = new ArrayList<>();
+
+		for (Layout layout : layouts) {
+			LayoutTreeNode layoutTreeNode = new LayoutTreeNode(layout);
+
+			layoutTreeNodesList.add(layoutTreeNode);
+		}
+
+		LayoutTreeNodes layoutTreeNodes = new LayoutTreeNodes(
+			layoutTreeNodesList, total);
+
+		return _toJSONObject(request, groupId, layoutTreeNodes);
 	}
 
 	private static Layout _fetchCurrentLayout(HttpServletRequest request) {
@@ -409,6 +486,14 @@ public class LayoutsTreeUtil {
 			LayoutTreeNodes layoutTreeNodes)
 		throws Exception {
 
+		return _toJSONObject(request, groupId, layoutTreeNodes).toString();
+	}
+
+	private static JSONObject _toJSONObject(
+			HttpServletRequest request, long groupId,
+			LayoutTreeNodes layoutTreeNodes)
+		throws Exception {
+
 		if (_log.isDebugEnabled()) {
 			StringBundler sb = new StringBundler(5);
 
@@ -433,11 +518,10 @@ public class LayoutsTreeUtil {
 		for (LayoutTreeNode layoutTreeNode : layoutTreeNodes) {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-			String childrenJSON = _toJSON(
+			JSONObject childrenJSONObject = _toJSONObject(
 				request, groupId, layoutTreeNode.getChildLayoutTreeNodes());
 
-			jsonObject.put(
-				"children", JSONFactoryUtil.createJSONObject(childrenJSON));
+			jsonObject.put("children", childrenJSONObject);
 
 			Layout layout = layoutTreeNode.getLayout();
 
@@ -520,7 +604,7 @@ public class LayoutsTreeUtil {
 		responseJSONObject.put("layouts", jsonArray);
 		responseJSONObject.put("total", layoutTreeNodes.getTotal());
 
-		return responseJSONObject.toString();
+		return responseJSONObject;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

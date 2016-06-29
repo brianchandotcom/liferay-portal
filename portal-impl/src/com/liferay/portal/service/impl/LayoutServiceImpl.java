@@ -901,6 +901,15 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	}
 
 	@Override
+	public int getLayoutsCount(
+		long groupId, boolean privateLayout, long parentLayoutId,
+		int priority) {
+
+		return layoutPersistence.filterCountByG_P_P_LtP(
+			groupId, privateLayout, parentLayoutId, priority);
+	}
+
+	@Override
 	public String[] getTempFileNames(long groupId, String folderName)
 		throws PortalException {
 

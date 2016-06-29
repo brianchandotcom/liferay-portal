@@ -666,9 +666,11 @@ public class WSRPConsumerPortletLocalServiceImpl
 		}
 	}
 
-	private static final String _CONSUMER_PORTLET_ID = "2_WAR_wsrpportlet";
+	private static final String _CONSUMER_PORTLET_ID =
+		WSRPPortletKeys.WSRP_CONSUMER;
 
-	private static final String _CONSUMER_PORTLET_NAME = "2";
+	private static final String _CONSUMER_PORTLET_NAME =
+		WSRPPortletKeys.WSRP_CONSUMER;
 
 	private static final String _WSRP_CATEGORY = "category.wsrp";
 
@@ -679,7 +681,8 @@ public class WSRPConsumerPortletLocalServiceImpl
 		new ConcurrentHashMap<>();
 
 	@ServiceReference(
-		filterString = "(javax.portlet.name=" + WSRPPortletKeys.WSRP_CONSUMER + ")"
+		filterString = "(javax.portlet.name=" + WSRPPortletKeys.WSRP_CONSUMER + ")",
+		type = Portlet.class
 	)
 	private Portlet _consumerPortlet;
 

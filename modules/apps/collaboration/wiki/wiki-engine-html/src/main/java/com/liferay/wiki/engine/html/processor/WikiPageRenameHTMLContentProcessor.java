@@ -14,9 +14,13 @@
 
 package com.liferay.wiki.engine.html.processor;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.wiki.processor.BaseWikiPageRenameContentProcessor;
 import com.liferay.wiki.processor.WikiPageRenameContentProcessor;
+
+import java.io.UnsupportedEncodingException;
 
 import java.net.URLEncoder;
 
@@ -56,10 +60,16 @@ public class WikiPageRenameHTMLContentProcessor
 				content, URLEncoder.encode(title, StringPool.UTF8),
 				URLEncoder.encode(newTitle, StringPool.UTF8));
 		}
-		catch (Exception e) {
+		catch (UnsupportedEncodingException uee) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(uee, uee);
+			}
 		}
 
 		return content;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		WikiPageRenameHTMLContentProcessor.class);
 
 }

@@ -11,7 +11,6 @@
 							requires: [
 								'aui-io-plugin-deprecated',
 								'aui-live-search-deprecated',
-								'aui-modal',
 								'aui-template-deprecated',
 								'aui-textboxlist-deprecated',
 								'datasource-cache',

@@ -16,6 +16,8 @@
 
 <%@ include file="/init.jsp" %>
 
+<%@ page import="com.liferay.portal.kernel.util.SessionClicks" %>
+
 <%
 String cssClass = (String)request.getAttribute("liferay-frontend:management-bar-sidenav-toggler-button:cssClass");
 Map<String, Object> data = (Map<String, Object>)request.getAttribute("liferay-frontend:management-bar-sidenav-toggler-button:data");
@@ -30,7 +32,10 @@ String type = (String)request.getAttribute("liferay-frontend:management-bar-side
 String typeMobile = (String)request.getAttribute("liferay-frontend:management-bar-sidenav-toggler-button:typeMobile");
 String width = (String)request.getAttribute("liferay-frontend:management-bar-sidenav-toggler-button:width");
 
+boolean active = false;
 String sidenavId = liferayPortletResponse.getNamespace() + "infoPanelId";
+
+String infoPanelState = GetterUtil.getString(SessionClicks.get(request, "com.liferay.info.panel_" + sidenavId, null), "closed");
 
 if (Validator.isNull(href)) {
 	href = "#" + sidenavId;
@@ -50,5 +55,10 @@ if (Validator.isNull(typeMobile)) {
 
 if (Validator.isNull(width)) {
 	width = "320px";
+}
+
+if (infoPanelState.contains("open")) {
+	active = true;
+	cssClass += " open";
 }
 %>

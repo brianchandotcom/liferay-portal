@@ -57,7 +57,7 @@ if (group != null) {
 </liferay-util:include>
 
 <div id="<portlet:namespace />sitesContainer">
-	<div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
+	<div class="container-fluid-1280 <%= infoPanelState %> sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
 		<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/site/info_panel" var="sidebarPanelURL">
 			<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 			<portlet:param name="displayStyle" value="<%= displayStyle %>" />

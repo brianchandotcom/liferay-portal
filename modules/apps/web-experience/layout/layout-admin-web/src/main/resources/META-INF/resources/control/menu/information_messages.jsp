@@ -21,8 +21,8 @@
 <%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 <%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.layout.admin.web.constants.LayoutAdminPortletKeys" %>
-<%@ page import="com.liferay.layout.admin.web.product.navigation.control.menu.InformationMessagesProductNavigationControlMenuEntry" %>
+<%@ page import="com.liferay.layout.admin.web.internal.constants.LayoutAdminPortletKeys" %>
+<%@ page import="com.liferay.layout.admin.web.internal.product.navigation.control.menu.InformationMessagesProductNavigationControlMenuEntry" %>
 <%@ page import="com.liferay.portal.kernel.model.Group" %>
 <%@ page import="com.liferay.portal.kernel.portlet.PortletURLFactoryUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.GetterUtil" %>

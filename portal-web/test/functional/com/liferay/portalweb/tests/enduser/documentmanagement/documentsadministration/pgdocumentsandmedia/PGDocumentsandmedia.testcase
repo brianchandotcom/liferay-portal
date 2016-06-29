@@ -230,7 +230,7 @@
 
 			<execute macro="DMDocument#viewPG">
 				<var name="dmDocumentDescription" value="DM Document Description" />
-				<var name="dmDocumentSize" value="22" />
+				<var name="dmDocumentSize" value="22KB" />
 				<var name="dmDocumentTitle" value="Document_${entryCount}.doc" />
 			</execute>
 		</for>

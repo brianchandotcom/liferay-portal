@@ -31,7 +31,7 @@
 
 		<var name="dmDocumentDescription" value="DM Document Description" />
 		<var name="dmDocumentFile" value="Document_1.txt" />
-		<var name="dmDocumentSize" value="0" />
+		<var name="dmDocumentSize" value="0KB" />
 		<var name="dmDocumentTitle" value="DM Document Title" />
 
 		<execute macro="Navigator#openURL" />
@@ -84,7 +84,7 @@
 		<var name="dmDocumentDescription" value="DM Document Description" />
 		<var name="dmDocumentDescriptionEdit" value="DM Document Description Edit" />
 		<var name="dmDocumentFile" value="Document_1.txt" />
-		<var name="dmDocumentSize" value="0" />
+		<var name="dmDocumentSize" value="0KB" />
 		<var name="dmDocumentTitle" value="DM Document Title" />
 		<var name="dmDocumentTitleEdit" value="DM Document Title Edit" />
 
@@ -171,7 +171,7 @@
 	<command name="MoveDocumentToFolder" priority="5">
 		<var name="dmDocumentDescription" value="DM Document Description" />
 		<var name="dmDocumentFile" value="Document_1.txt" />
-		<var name="dmDocumentSize" value="0" />
+		<var name="dmDocumentSize" value="0KB" />
 		<var name="dmDocumentTitle" value="DM Document Title" />
 		<var name="dmFolderDescription" value="DM Folder Description" />
 		<var name="dmFolderName" value="DM Folder Name" />
@@ -261,7 +261,7 @@
 		<var name="assetType" value="Document" />
 		<var name="dmDocumentDescription" value="DM Document Description1" />
 		<var name="dmDocumentFile" value="Document_1.txt" />
-		<var name="dmDocumentSize" value="0" />
+		<var name="dmDocumentSize" value="0KB" />
 		<var name="dmDocumentTitle" value="DM Document Title" />
 
 		<execute macro="Navigator#openURL" />

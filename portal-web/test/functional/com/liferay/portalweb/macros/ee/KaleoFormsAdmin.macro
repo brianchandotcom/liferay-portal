@@ -585,7 +585,7 @@
 		<var name="key_workflowTask" value="${workflowTask}" />
 
 		<execute function="AssertElementNotPresent" locator1="KaleoFormsAdminEditProcess#FORMS_TABLE_TASK" />
-		<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no results." />
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no results." />
 	</command>
 
 	<command name="viewHeaderTitle">
@@ -622,13 +622,13 @@
 	</command>
 
 	<command name="viewNoPublishedWorkflowDefinitions">
-		<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no published definitions." />
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no published definitions." />
 	</command>
 
 	<command name="viewNoUnpublishedWorkflowDefinitions">
 		<execute macro="KaleoFormsAdmin#viewUnpublishedWorkflowDefinitions" />
 
-		<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no unpublished definitions." />
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no unpublished definitions." />
 	</command>
 
 	<command name="viewPreviousFieldSetPage">
@@ -706,7 +706,7 @@
 			<var name="workflowTask" value="${workflowTask}" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no results." />
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no results." />
 	</command>
 
 	<command name="viewProcessNoRecords">

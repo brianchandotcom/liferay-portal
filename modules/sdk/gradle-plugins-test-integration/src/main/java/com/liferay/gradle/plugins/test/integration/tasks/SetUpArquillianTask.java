@@ -32,10 +32,10 @@ import org.gradle.api.tasks.TaskAction;
 /**
  * @author Andrea Di Giorgi
  */
-public class SetupArquillianTask
+public class SetUpArquillianTask
 	extends DefaultTask implements JmxRemotePortSpec, ManagerSpec {
 
-	public SetupArquillianTask() {
+	public SetUpArquillianTask() {
 		onlyIf(
 			new Spec<Task>() {
 
@@ -96,7 +96,7 @@ public class SetupArquillianTask
 	}
 
 	@TaskAction
-	public void setupArquillian() throws IOException {
+	public void setUpArquillian() throws IOException {
 		File outputFile = getOutputFile();
 
 		String xml = FileUtil.read(

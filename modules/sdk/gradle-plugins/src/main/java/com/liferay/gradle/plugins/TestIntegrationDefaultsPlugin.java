@@ -18,10 +18,11 @@ import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.extensions.TomcatAppServer;
 import com.liferay.gradle.plugins.test.integration.TestIntegrationPlugin;
 import com.liferay.gradle.plugins.test.integration.TestIntegrationTomcatExtension;
-import com.liferay.gradle.plugins.test.integration.tasks.SetupTestableTomcatTask;
+import com.liferay.gradle.plugins.test.integration.tasks.SetUpTestableTomcatTask;
 import com.liferay.gradle.plugins.test.integration.tasks.StartTestableTomcatTask;
 import com.liferay.gradle.plugins.test.integration.tasks.StopAppServerTask;
 import com.liferay.gradle.plugins.util.GradleUtil;
+import com.liferay.gradle.util.Validator;
 
 import java.io.File;
 
@@ -49,19 +50,32 @@ public class TestIntegrationDefaultsPlugin
 		configureTestIntegrationTomcat(
 			project, liferayExtension, tomcatAppServer);
 
-		configureTaskSetupTestableTomcat(project, tomcatAppServer);
+		configureTaskSetUpTestableTomcat(project, tomcatAppServer);
 		configureTaskStartTestableTomcat(project, tomcatAppServer);
 		configureTaskStopTestableTomcat(project, tomcatAppServer);
 	}
 
-	protected void configureTaskSetupTestableTomcat(
+	protected void configureTaskSetUpTestableTomcat(
 		Project project, final TomcatAppServer tomcatAppServer) {
 
-		SetupTestableTomcatTask setupTestableTomcatTask =
-			(SetupTestableTomcatTask)GradleUtil.getTask(
-				project, TestIntegrationPlugin.SETUP_TESTABLE_TOMCAT_TASK_NAME);
+		SetUpTestableTomcatTask setUpTestableTomcatTask =
+			(SetUpTestableTomcatTask)GradleUtil.getTask(
+				project,
+				TestIntegrationPlugin.SET_UP_TESTABLE_TOMCAT_TASK_NAME);
 
-		setupTestableTomcatTask.setZipUrl(
+		String setenvGCNew = GradleUtil.getProperty(
+			project, "app.server.tomcat.setenv.gc.new", (String)null);
+		String setenvGCOld = GradleUtil.getProperty(
+			project, "app.server.tomcat.setenv.gc.old", (String)null);
+
+		if (Validator.isNotNull(setenvGCNew) &&
+			Validator.isNotNull(setenvGCOld)) {
+
+			setUpTestableTomcatTask.catalinaOptsReplacement(
+				setenvGCOld, setenvGCNew);
+		}
+
+		setUpTestableTomcatTask.setZipUrl(
 			new Callable<String>() {
 
 				@Override

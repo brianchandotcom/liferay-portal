@@ -43,8 +43,6 @@
 		<execute function="Type" locator1="FormFields#FIELD_NAME_EDIT" value1="${fieldValue}" />
 
 		<execute function="Click" locator1="FormFields#FIELD_NAME_EDIT_DONE" />
-
-		<execute function="AssertTextEquals" locator1="FormFields#FIELD_NAME" value1="Field Name:${fieldValue}" />
 	</command>
 
 	<command name="editOptionsRow">

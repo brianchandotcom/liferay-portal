@@ -140,7 +140,7 @@
 </tr>
 <tr>
 	<td>ASSIGN_FORM</td>
-	<td>//a[@role='menuitem' and contains(.,'Assign Form')]</td>
+	<td>//a[@role='menuitem' and contains(.,'Assign Form') and contains(@onclick,'${key_workflowTask}')]</td>
 	<td></td>
 </tr>
 <tr>

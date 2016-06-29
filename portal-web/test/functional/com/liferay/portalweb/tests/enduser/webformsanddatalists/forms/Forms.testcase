@@ -3202,6 +3202,116 @@
 		</execute>
 	</command>
 
+	<command name="ViewDefaultFieldNamesWithPunctuationCharacters" priority="4">
+		<description message="This is a use case for LPS-64305." />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Forms" />
+		</execute>
+
+		<execute macro="FormsAdminNavigator#gotoAddForm" />
+
+		<execute macro="Form#editName" />
+
+		<execute macro="Form#editDescription" />
+
+		<execute macro="Form#gotoAddFirstField">
+			<var name="fieldType" value="Text Field" />
+		</execute>
+
+		<execute macro="FormFields#editText">
+			<var name="fieldName" value="label" />
+			<var name="fieldValue" value=",.?/;:{}[]\|-+!@#$%^*()=_" />
+		</execute>
+
+		<execute macro="FormFields#viewFieldName">
+			<var name="fieldName" value="text" />
+		</execute>
+
+		<execute macro="FormFields#editFieldName">
+			<var name="fieldValue" value=",.?/;:{}[]\|-+!@#$%^*()=_" />
+		</execute>
+
+		<execute macro="FormFields#viewFieldName">
+			<var name="fieldName" value="text" />
+		</execute>
+
+		<execute macro="FormFields#save" />
+
+		<execute macro="Form#gotoAddAdditionalField">
+			<var name="fieldType" value="Text Field" />
+			<var name="previousFieldLabel" value=",.?/;:{}[]\|-+!@#$%^*()=_" />
+		</execute>
+
+		<execute macro="FormFields#editText">
+			<var name="fieldName" value="label" />
+			<var name="fieldValue" value="Jump, She exclaimed!" />
+		</execute>
+
+		<execute macro="FormFields#viewFieldName">
+			<var name="fieldName" value="JumpSheExclaimed" />
+		</execute>
+
+		<execute macro="FormFields#editFieldName">
+			<var name="fieldValue" value="Jump, She exclaimed!" />
+		</execute>
+
+		<execute macro="FormFields#viewFieldName">
+			<var name="fieldName" value="JumpSheExclaimed" />
+		</execute>
+
+		<execute macro="FormFields#save" />
+
+		<execute macro="Form#save" />
+
+		<execute macro="Page#add">
+			<var name="pageName" value="Form Page" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Form Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="pageName" value="Form Page" />
+			<var name="portletName" value="Form" />
+		</execute>
+
+		<execute macro="FormPortletNavigator#gotoSelectForm" />
+
+		<execute macro="FormPortletConfiguration#selectForm" />
+
+		<execute macro="PortletEntry#save" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Form Page" />
+		</execute>
+
+		<execute macro="FormFields#viewTextField">
+			<var name="fieldLabel" value=",.?/;:{}[]\|-+!@#$%^*()=_" />
+			<var name="fieldName" value="text" />
+		</execute>
+
+		<execute macro="FormFields#viewTextField">
+			<var name="fieldLabel" value="Jump, She exclaimed!" />
+			<var name="fieldName" value="JumpSheExclaimed" />
+		</execute>
+
+		<execute macro="FormFields#editText">
+			<var name="fieldName" value="text" />
+			<var name="fieldValue" value="1,2,3." />
+		</execute>
+
+		<execute macro="FormFields#editText">
+			<var name="fieldName" value="JumpSheExclaimed" />
+			<var name="fieldValue" value=",.?/;:{}[]\|-+!@#$%^*()=_" />
+		</execute>
+
+		<execute macro="FormPortlet#submitSuccessfully" />
+	</command>
+
 	<command name="ViewRepeatableTextFieldLabel" priority="4">
 		<execute macro="Navigator#openURL" />
 

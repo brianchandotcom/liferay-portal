@@ -134,7 +134,7 @@ public class WikiPageRenameHTMLContentProcessorTest {
 	}
 
 	@Test
-	public void testProcessContentImageWithSrcAsFirstParameterDoNotChange() {
+	public void testProcessContentImageWithTitleAsFirstParameterDoNotChange() {
 		String content =
 			"This is a test <img src=\"wiki/get_page_attachment?" +
 				"title=ORIGINAL_NAME&fileName=image.jpeg\">";
@@ -149,7 +149,7 @@ public class WikiPageRenameHTMLContentProcessorTest {
 	}
 
 	@Test
-	public void testProcessContentImageWithSrcAsLastParameterDoNotChange() {
+	public void testProcessContentImageWithTitleAsLastParameterDoNotChange() {
 		String content =
 			"This is a test <img src=\"wiki/get_page_attachment?p_l_id=1234" +
 				"&title=ORIGINAL_NAME\">";
@@ -230,7 +230,7 @@ public class WikiPageRenameHTMLContentProcessorTest {
 	}
 
 	@Test
-	public void testProcessContentLinkWithHrefAsFirstParameterDoNotChange() {
+	public void testProcessContentLinkWithTitleAsFirstParameterDoNotChange() {
 		String content =
 			"This is a test <a href=\"wiki/get_page_attachment?" +
 				"title=ORIGINAL_NAME&fileName=image.jpeg\"/>";
@@ -245,7 +245,7 @@ public class WikiPageRenameHTMLContentProcessorTest {
 	}
 
 	@Test
-	public void testProcessContentLinkWithHrefAsLastParameterDoNotChange() {
+	public void testProcessContentLinkWithTitleAsLastParameterDoNotChange() {
 		String content =
 			"This is a test <a href=\"wiki/get_page_attachment?p_l_id=1234" +
 				"&title=ORIGINAL_NAME\"/>";

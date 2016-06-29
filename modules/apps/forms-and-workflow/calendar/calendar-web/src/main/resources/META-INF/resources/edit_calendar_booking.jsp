@@ -644,7 +644,7 @@ while (manageableCalendarsIterator.hasNext()) {
 		}
 	);
 
-	window.<portlet:namespace />placeholderSchedulerEvent = new Liferay.SchedulerEvent(
+	var placeholderSchedulerEvent = new Liferay.SchedulerEvent(
 		{
 			borderColor: '#000',
 			borderStyle: 'dashed',
@@ -662,14 +662,14 @@ while (manageableCalendarsIterator.hasNext()) {
 	var intervalSelectorSchedulerEventLink = new Liferay.IntervalSelectorSchedulerEventLink(
 		{
 			intervalSelector: intervalSelector,
-			schedulerEvent: window.<portlet:namespace />placeholderSchedulerEvent
+			schedulerEvent: placeholderSchedulerEvent
 		}
 	);
 
 	scheduler.after(
 		'*:load',
 		function(event) {
-			scheduler.addEvents(window.<portlet:namespace />placeholderSchedulerEvent);
+			scheduler.addEvents(placeholderSchedulerEvent);
 
 			scheduler.syncEventsUI();
 		}
@@ -768,10 +768,10 @@ while (manageableCalendarsIterator.hasNext()) {
 			var checked = allDayCheckbox.get('checked');
 
 			if (checked) {
-				window.<portlet:namespace />placeholderSchedulerEvent.set('allDay', true);
+				placeholderSchedulerEvent.set('allDay', true);
 			}
 			else {
-				window.<portlet:namespace />placeholderSchedulerEvent.set('allDay', false);
+				placeholderSchedulerEvent.set('allDay', false);
 
 				endDateContainer.show();
 			}

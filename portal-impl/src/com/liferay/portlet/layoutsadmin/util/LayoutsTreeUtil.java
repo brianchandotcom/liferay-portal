@@ -122,14 +122,13 @@ public class LayoutsTreeUtil {
 		List<Layout> layouts = LayoutServiceUtil.getLayouts(
 			groupId, privateLayout, parentLayoutId, true, start, end);
 
-		JSONObject response = _convertListLayoutToJSONObject(
-			layouts, request, groupId, total);
+		JSONObject jsonObject = _toJSONObject(layouts, request, groupId, total);
 
-		response.put("ancestorIds", ancestorLayoutsIds);
-		response.put("ancestorNames", ancestorLayoutsNames);
-		response.put("startIndex", start);
+		jsonObject.put("ancestorIds", ancestorLayoutsIds);
+		jsonObject.put("ancestorNames", ancestorLayoutsNames);
+		jsonObject.put("startIndex", start);
 
-		return response.toString();
+		return jsonObject.toString();
 	}
 
 	public static String getLayoutsJSON(
@@ -195,7 +194,7 @@ public class LayoutsTreeUtil {
 		return _toJSON(request, groupId, layoutTreeNodes);
 	}
 
-	private static JSONObject _convertListLayoutToJSONObject(
+	private static JSONObject _toJSONObject(
 			List<Layout> layouts, HttpServletRequest request, long groupId,
 			int total)
 		throws Exception {

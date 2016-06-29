@@ -948,6 +948,15 @@
 		<execute function="AssertElementNotPresent" locator1="WorkflowSubmissions#PENDING_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />
 	</command>
 
+	<command name="viewCannotRejectTaskByActions">
+		<execute macro="Workflow#gotoTaskAssignedToMeActionsCmd">
+			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
+			<var name="workflowTask" value="${workflowTask}" />
+		</execute>
+
+		<execute function="AssertElementNotPresent" locator1="MyWorkflowTasksTask#MENU_REJECT" />
+	</command>
+
 	<command name="viewTaskAssignedToMe">
 		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
 		<var name="key_workflowTask" value="${workflowTask}" />

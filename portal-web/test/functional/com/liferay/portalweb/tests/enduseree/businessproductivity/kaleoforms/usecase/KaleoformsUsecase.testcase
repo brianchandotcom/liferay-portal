@@ -4309,10 +4309,10 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<var name="key_kfProcessName" value="${kfProcessName}" />
-
-		<execute function="Click" locator1="KaleoForms#ASSIGNED_TO_ME_TABLE_ACTIONS_1" />
-		<execute function="AssertElementNotPresent" locator1="KaleoForms#ASSIGNED_TO_ME_MENULIST_REJECT" />
+		<execute macro="Workflow#viewCannotRejectTaskByActions">
+			<var name="workflowAssetTitle" value="${kfProcessName}" />
+			<var name="workflowTask" value="Review" />
+		</execute>
 
 		<execute macro="Workflow#approveTaskByActions">
 			<var name="workflowAssetTitle" value="${kfProcessName}" />

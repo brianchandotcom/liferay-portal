@@ -2116,7 +2116,7 @@ AUI.add(
 											var layouts = response && response.layouts;
 
 											if (layouts) {
-												var parentLayoutId = response.ancestorIds[0];
+												var parentLayoutId = response.ancestorLayoutIds[0];
 
 												var key = [parentLayoutId, groupId, privateLayout].join('-');
 
@@ -2152,19 +2152,19 @@ AUI.add(
 					_setSelectedLayoutPath: function(groupId, privateLayout, response) {
 						var instance = this;
 
-						var ancestorIds = response.ancestorIds;
+						var ancestorLayoutIds = response.ancestorLayoutIds;
 
-						if (ancestorIds) {
+						if (ancestorLayoutIds) {
 							var selectedLayoutPath = [instance.get('selectedLayoutPath')[0]];
 
-							var ancestorNames = response.ancestorNames;
+							var ancestorLayoutNames = response.ancestorLayoutNames;
 
-							for (var index = ancestorIds.length - 1; index >= 0; index--) {
+							for (var index = ancestorLayoutIds.length - 1; index >= 0; index--) {
 								selectedLayoutPath.push(
 									{
 										groupId: groupId,
-										label: ancestorNames[index],
-										layoutId: ancestorIds[index],
+										label: ancestorLayoutNames[index],
+										layoutId: ancestorLayoutIds[index],
 										privateLayout: privateLayout
 									}
 								);

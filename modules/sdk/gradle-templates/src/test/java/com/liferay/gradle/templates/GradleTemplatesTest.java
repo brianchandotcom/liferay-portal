@@ -14,9 +14,12 @@
 
 package com.liferay.gradle.templates;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.RandomAccessFile;
 
+import java.nio.charset.StandardCharsets;
 import java.nio.file.DirectoryStream;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
@@ -25,7 +28,10 @@ import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -56,6 +62,28 @@ public class GradleTemplatesTest {
 		_testTemplates(_workspaceDirPath, _standaloneDirPath, true);
 	}
 
+	private boolean _endsWithEmptyLine(Path path) throws IOException {
+		try (RandomAccessFile randomAccessFile = new RandomAccessFile(
+				path.toFile(), "r")) {
+
+			long pos = randomAccessFile.length() - 1;
+
+			if (pos < 0) {
+				return false;
+			}
+
+			randomAccessFile.seek(pos);
+
+			int c = randomAccessFile.read();
+
+			if ((c == '\n') || (c == '\r')) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	private boolean _exists(Path dirPath, String glob) throws IOException {
 		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
 				dirPath, glob)) {
@@ -70,6 +98,43 @@ public class GradleTemplatesTest {
 		return false;
 	}
 
+	private boolean _isTextFile(Path path) {
+		Path fileNamePath = path.getFileName();
+
+		String fileName = fileNamePath.toString();
+
+		if (fileName.equals("gitignore")) {
+			return true;
+		}
+
+		int pos = fileName.indexOf('.');
+
+		if (pos == -1) {
+			return false;
+		}
+
+		String extension = fileName.substring(pos + 1);
+
+		if (_textFileExtensions.contains(extension)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private void _testLanguageProperties(Path path) throws IOException {
+		try (BufferedReader bufferedReader = Files.newBufferedReader(
+				path, StandardCharsets.UTF_8)) {
+
+			String line = null;
+
+			while ((line = bufferedReader.readLine()) != null) {
+				Assert.assertFalse(
+					"Forbidden comments in " + path, line.startsWith("##"));
+			}
+		}
+	}
+
 	private void _testTemplateFiles(Path rootDirPath) throws IOException {
 		Files.walkFileTree(
 			rootDirPath,
@@ -80,12 +145,31 @@ public class GradleTemplatesTest {
 						Path dirPath, BasicFileAttributes basicFileAttributes)
 					throws IOException {
 
-					if (Files.exists(dirPath.resolve("language.properties"))) {
+					Path languagePropertiesPath = dirPath.resolve(
+						"Language.properties");
+
+					if (Files.exists(languagePropertiesPath)) {
+						_testLanguageProperties(languagePropertiesPath);
+
 						String glob = "Language_*.properties";
 
 						Assert.assertFalse(
 							"Forbidden " + dirPath + File.separator + glob,
 							_exists(dirPath, glob));
+					}
+
+					return FileVisitResult.CONTINUE;
+				}
+
+				@Override
+				public FileVisitResult visitFile(
+						Path path, BasicFileAttributes basicFileAttributes)
+					throws IOException {
+
+					if (_isTextFile(path)) {
+						Assert.assertFalse(
+							"Trailing empty line in " + path,
+							_endsWithEmptyLine(path));
 					}
 
 					return FileVisitResult.CONTINUE;
@@ -137,6 +221,9 @@ public class GradleTemplatesTest {
 	}
 
 	private static Path _standaloneDirPath;
+	private static final Set<String> _textFileExtensions = new HashSet<>(
+		Arrays.asList(
+			"bnd", "gradle", "java", "jsp", "jspf", "properties", "xml"));
 	private static Path _workspaceDirPath;
 
 }

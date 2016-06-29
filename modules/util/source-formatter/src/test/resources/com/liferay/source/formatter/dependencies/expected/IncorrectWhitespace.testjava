@@ -111,6 +111,20 @@ public class IncorrectWhitespace {
 		testString = _trim(testString);
 	}
 
+	public List<String> method7(List<String> list1, List<String> list2) {
+		List<String> newList = new ArrayList<>();
+
+		for (String s : list1) {
+			newList.add(s);
+		}
+
+		for (String s : list2) {
+			newList.add(s);
+		}
+
+		return newList;
+	}
+
 	protected class SubClass1 {
 	}
 

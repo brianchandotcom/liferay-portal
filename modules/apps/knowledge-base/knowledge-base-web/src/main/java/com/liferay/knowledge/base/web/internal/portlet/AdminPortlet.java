@@ -27,6 +27,7 @@ import com.liferay.knowledge.base.exception.NoSuchTemplateException;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.model.KBTemplate;
+import com.liferay.knowledge.base.service.util.AdminUtil;
 import com.liferay.knowledge.base.web.internal.constants.KBWebKeys;
 import com.liferay.portal.kernel.exception.NoSuchSubscriptionException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -74,7 +75,9 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.portlet.WindowStateException;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -322,35 +325,87 @@ public class AdminPortlet extends BaseKBPortlet {
 		super.render(renderRequest, renderResponse);
 	}
 
+	@Override
 	public void serveResource(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws IOException, PortletException {
 
-		try {
-			HttpServletRequest request = PortalUtil.getHttpServletRequest(
-				resourceRequest);
+		String resourceID = GetterUtil.getString(
+			resourceRequest.getResourceID());
 
-			List<KBArticle> kbArticles = getKBArticles(request);
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			resourceRequest);
+
+		HttpServletResponse response = PortalUtil.getHttpServletResponse(
+			resourceResponse);
+
+		if (resourceID.equals("compareVersions")) {
+			long resourcePrimKey = ParamUtil.getLong(
+				resourceRequest, "resourcePrimKey");
+			double sourceVersion = ParamUtil.getDouble(
+				resourceRequest, "filterSourceVersion");
+			double targetVersion = ParamUtil.getDouble(
+				resourceRequest, "filterTargetVersion");
+
+			String diffHtmlResults = null;
+
+			try {
+				diffHtmlResults = AdminUtil.getKBArticleDiff(
+					resourcePrimKey, GetterUtil.getInteger(sourceVersion),
+					GetterUtil.getInteger(targetVersion), "content");
+			}
+			catch (Exception e) {
+				try {
+					PortalUtil.sendError(e, request, response);
+				}
+				catch (ServletException se) {
+				}
+			}
 
 			resourceRequest.setAttribute(
-				KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLES, kbArticles);
-
-			List<KBFolder> kbFolders = getKBFolders(request);
-
-			resourceRequest.setAttribute(
-				KBWebKeys.KNOWLEDGE_BASE_KB_FOLDERS, kbFolders);
+				WebKeys.DIFF_HTML_RESULTS, diffHtmlResults);
 
 			PortletSession portletSession = resourceRequest.getPortletSession();
 
 			PortletContext portletContext = portletSession.getPortletContext();
 
 			PortletRequestDispatcher portletRequestDispatcher =
-				portletContext.getRequestDispatcher("/admin/info_panel.jsp");
+				portletContext.getRequestDispatcher(
+					"/admin/common/compare_versions_diff_html.jsp");
 
 			portletRequestDispatcher.include(resourceRequest, resourceResponse);
 		}
-		catch (Exception e) {
-			throw new PortletException(e);
+		else if (resourceID.equals("infoPanel")) {
+			try {
+				List<KBArticle> kbArticles = getKBArticles(request);
+
+				resourceRequest.setAttribute(
+					KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLES, kbArticles);
+
+				List<KBFolder> kbFolders = getKBFolders(request);
+
+				resourceRequest.setAttribute(
+					KBWebKeys.KNOWLEDGE_BASE_KB_FOLDERS, kbFolders);
+
+				PortletSession portletSession =
+					resourceRequest.getPortletSession();
+
+				PortletContext portletContext =
+					portletSession.getPortletContext();
+
+				PortletRequestDispatcher portletRequestDispatcher =
+					portletContext.getRequestDispatcher(
+						"/admin/info_panel.jsp");
+
+				portletRequestDispatcher.include(
+					resourceRequest, resourceResponse);
+			}
+			catch (Exception e) {
+				throw new PortletException(e);
+			}
+		}
+		else {
+			super.serveResource(resourceRequest, resourceResponse);
 		}
 	}
 

@@ -1541,14 +1541,6 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 					<matches pattern="http" string="${test.build.fix.pack.zip.url}" />
 				</and>
 				<then>
-					<path id="app.server.dir">
-						<dirset dir="${app.server.parent.dir}">
-							<include name="*${app.server.type}-*" />
-						</dirset>
-					</path>
-
-					<property name="app.server.dir" refid="app.server.dir" />
-
 					<mirrors-get
 						dest="${basedir}"
 						src="${test.fix.pack.base.url}/patching-tool/LATEST.txt"
@@ -1563,52 +1555,11 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 
 					<property name="test.build.patching.tool.zip.url" value="${test.fix.pack.base.url}/patching-tool/patching-tool-${patching.tool.version}.zip" />
 
-					<mirrors-get
-						dest="${basedir}"
-						src="${test.build.patching.tool.zip.url}"
+					<prepare-fix-pack
+						bundles.dir="${app.server.parent.dir}"
+						fix.pack.zip.url="${test.build.fix.pack.zip.url}"
+						patching.tool.zip.url="${test.build.patching.tool.zip.url}"
 					/>
-
-					<unzip dest="${app.server.dir}">
-						<fileset
-							dir="${basedir}"
-							includes="patching-tool*"
-						/>
-					</unzip>
-
-					<chmod perm="a+x">
-						<fileset dir="${app.server.dir}/patching-tool">
-							<include name="*.sh" />
-						</fileset>
-					</chmod>
-
-					<mirrors-get
-						dest="${app.server.dir}/patching-tool/patches"
-						src="${test.build.fix.pack.zip.url}"
-					/>
-
-					<propertyregex
-						input="${test.build.fix.pack.zip.url}"
-						property="test.build.fix.pack.zip.file.name"
-						regexp=".+/"
-						replace=""
-					/>
-
-					<check-fix-pack-requirements
-						fix.pack.dir="${app.server.dir}/patching-tool/patches"
-						fix.pack.file.name="${test.build.fix.pack.zip.file.name}"
-					/>
-
-					<execute dir="${app.server.dir}/patching-tool">
-						patching-tool${file.suffix.bat} auto-discovery
-						patching-tool${file.suffix.bat} install -force
-						patching-tool${file.suffix.bat} update-plugins
-					</execute>
-
-					<antelope:stringutil property="patching.tool.zip.file.name" string="${test.build.patching.tool.zip.url}">
-						<antelope:replace regex=".+/patching-tool-" replacement="patching-tool-" />
-					</antelope:stringutil>
-
-					<delete file="${basedir}/${patching.tool.zip.file.name}" />
 				</then>
 			</if>
 		</sequential>

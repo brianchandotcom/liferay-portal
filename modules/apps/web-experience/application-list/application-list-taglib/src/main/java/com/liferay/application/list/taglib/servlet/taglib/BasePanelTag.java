@@ -16,7 +16,7 @@ package com.liferay.application.list.taglib.servlet.taglib;
 
 import com.liferay.application.list.GroupProvider;
 import com.liferay.application.list.constants.ApplicationListWebKeys;
-import com.liferay.application.list.taglib.servlet.ServletContextUtil;
+import com.liferay.application.list.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;

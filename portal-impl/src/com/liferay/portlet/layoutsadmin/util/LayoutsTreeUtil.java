@@ -78,7 +78,7 @@ public class LayoutsTreeUtil {
 
 	public static String getLayoutsJSON(
 			HttpServletRequest request, long groupId, boolean privateLayout,
-			long layoutId, int quantity)
+			long layoutId, int max)
 		throws Exception {
 
 		Layout layout = LayoutLocalServiceUtil.getLayout(
@@ -94,10 +94,10 @@ public class LayoutsTreeUtil {
 
 		int start = (int)includedLayoutIndex - 1;
 
-		int end = (int)includedLayoutIndex + quantity;
+		int end = (int)includedLayoutIndex + max;
 
 		if (end > total) {
-			start = total - quantity;
+			start = total - max;
 			end = total;
 
 			if (start < 0) {

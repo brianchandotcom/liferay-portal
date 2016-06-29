@@ -75,10 +75,10 @@ public class GetLayoutsAction extends JSONAction {
 
 		boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 		long layoutId = ParamUtil.getLong(request, "layoutId");
-		int quantity = ParamUtil.getInteger(request, "quantity");
+		int max = ParamUtil.getInteger(request, "max");
 
 		return LayoutsTreeUtil.getLayoutsJSON(
-			request, groupId, privateLayout, layoutId, quantity);
+			request, groupId, privateLayout, layoutId, max);
 	}
 
 }

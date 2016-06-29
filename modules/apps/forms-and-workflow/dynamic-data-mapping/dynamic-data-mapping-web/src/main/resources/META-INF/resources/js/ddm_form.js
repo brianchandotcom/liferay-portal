@@ -2133,10 +2133,10 @@ AUI.add(
 										expandParentLayouts: false,
 										groupId: groupId,
 										layoutId: selectedLayout.layoutId,
+										max: instance.get('delta'),
 										p_auth: Liferay.authToken,
 										paginate: true,
-										privateLayout: privateLayout,
-										quantity: instance.get('delta')
+										privateLayout: privateLayout
 									}
 								}
 							);

@@ -272,8 +272,8 @@ public class HtmlImpl implements Html {
 	}
 
 	/**
-	 * Escapes the attribute value so that it is safe to use as an attribute
-	 * value.
+	 * Escapes the attribute value so that it is safe to use within a quoted
+	 * attribute.
 	 *
 	 * @param  attribute the attribute to escape
 	 * @return the escaped attribute value, or <code>null</code> if the

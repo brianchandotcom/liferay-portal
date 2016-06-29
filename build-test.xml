@@ -1471,6 +1471,58 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="prepare-fix-pack">
+		<attribute default="${app.server.parent.dir}" name="bundles.dir" />
+		<attribute name="fix.pack.zip.url" />
+		<attribute name="patching.tool.zip.url" />
+
+		<sequential>
+			<mirrors-get
+				dest="${basedir}"
+				src="@{patching.tool.zip.url}"
+			/>
+
+			<unzip dest="@{bundles.dir}">
+				<fileset
+					dir="${basedir}"
+					includes="patching-tool*"
+				/>
+			</unzip>
+
+			<chmod perm="a+x">
+				<fileset dir="@{bundles.dir}/patching-tool">
+					<include name="*.sh" />
+				</fileset>
+			</chmod>
+
+			<mirrors-get
+				dest="@{bundles.dir}/patching-tool/patches"
+				src="@{fix.pack.zip.url}"
+			/>
+
+			<local name="fix.pack.file.name" />
+
+			<basename file="@{fix.pack.zip.url}" property="fix.pack.file.name" />
+
+			<check-fix-pack-requirements
+				fix.pack.dir="@{bundles.dir}/patching-tool/patches"
+				fix.pack.file.name="${fix.pack.file.name}"
+			/>
+
+			<execute dir="@{bundles.dir}/patching-tool">
+				patching-tool${file.suffix.bat} auto-discovery
+				patching-tool${file.suffix.bat} install -force
+				patching-tool${file.suffix.bat} update-plugins
+			</execute>
+
+			<local name="patching.tool.file.name" />
+
+			<basename file="@{patching.tool.zip.url}" property="patching.tool.file.name" />
+
+			<delete file="${basedir}/${patching.tool.file.name}" />
+		</sequential>
+	</macrodef>
+
 	<macrodef name="prepare-fix-pack-bundle" >
 		<sequential>
 			<if>

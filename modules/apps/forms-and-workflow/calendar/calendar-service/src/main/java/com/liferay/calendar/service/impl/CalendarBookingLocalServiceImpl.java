@@ -245,6 +245,25 @@ public class CalendarBookingLocalServiceImpl
 		return calendarBooking;
 	}
 
+	@Deprecated
+	@Override
+	public CalendarBooking addCalendarBooking(
+			long userId, long calendarId, long[] childCalendarIds,
+			long parentCalendarBookingId, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap, String location, long startTime,
+			long endTime, boolean allDay, String recurrence, long firstReminder,
+			String firstReminderType, long secondReminder,
+			String secondReminderType, ServiceContext serviceContext)
+		throws PortalException {
+
+		return addCalendarBooking(
+			userId, calendarId, childCalendarIds, parentCalendarBookingId,
+			CalendarBookingConstants.RECURRING_CALENDAR_BOOKING_ID_DEFAULT,
+			titleMap, descriptionMap, location, startTime, endTime, allDay,
+			recurrence, firstReminder, firstReminderType, secondReminder,
+			secondReminderType, serviceContext);
+	}
+
 	@Override
 	public void checkCalendarBookings() throws PortalException {
 		Date now = new Date();

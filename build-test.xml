@@ -1543,15 +1543,15 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 				<then>
 					<mirrors-get
 						dest="${basedir}"
-						src="${test.fix.pack.base.url}/patching-tool/LATEST.txt"
+						src="${test.fix.pack.base.url}/patching-tool/${patching.tool.latest.txt}"
 					/>
 
 					<loadfile
 						property="patching.tool.version"
-						srcFile="LATEST.txt"
+						srcFile="${patching.tool.latest.txt}"
 					/>
 
-					<delete file="${basedir}/LATEST.txt" />
+					<delete file="${basedir}/${patching.tool.latest.txt}" />
 
 					<property name="test.build.patching.tool.zip.url" value="${test.fix.pack.base.url}/patching-tool/patching-tool-${patching.tool.version}.zip" />
 

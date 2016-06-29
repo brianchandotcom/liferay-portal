@@ -8485,7 +8485,7 @@
 			<var name="contentBody" value="Test Test sent you a Kaleo Forms Process for review in the workflow." />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewInboxProcessName">
+		<execute macro="Workflow#viewTaskHeaderTitle">
 			<var name="kfProcessName" value="${kfProcessName}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
@@ -8513,7 +8513,7 @@
 			<var name="contentBody" value="Test Test sent you a Kaleo Forms Process for review in the workflow." />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewInboxProcessName">
+		<execute macro="Workflow#viewTaskHeaderTitle">
 			<var name="kfProcessName" value="${kfProcessName}" />
 			<var name="workflowTask" value="Review" />
 		</execute>

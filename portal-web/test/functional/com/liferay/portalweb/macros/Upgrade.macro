@@ -107,7 +107,7 @@
 
 		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_WORKFLOW_STATUS" value1="Approved" />
 		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_DETAILS_DOWNLOAD" value1="Download (22KB)">
-			<var name="key_dmDocumentSize" value="22" />
+			<var name="key_dmDocumentSize" value="22KB" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">

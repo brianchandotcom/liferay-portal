@@ -4692,4 +4692,52 @@
 			<var name="ddlTemplateName" value="${ddlFormTemplateName}" />
 		</execute>
 	</command>
+
+	<command name="ViewRecordInfoSidebar" priority="3">
+		<description message="This is a use case for LPS-66384." />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLList#addCP" />
+
+		<execute macro="DDLDataDefinition#selectCP">
+			<var name="ddlDataDefinitionName" value="To Do" />
+		</execute>
+
+		<execute macro="DDLList#save" />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLRecord#addCP">
+			<var name="ddlDataDefinitionName" value="To Do" />
+		</execute>
+
+		<execute macro="DDLRecord#populateFieldText">
+			<var name="ddlRecordFieldData" value="Test Test" />
+			<var name="fieldFieldLabel" value="Assigned To" />
+			<var name="fieldName" value="assignedTo" />
+		</execute>
+
+		<execute macro="PortletEntry#publish" />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLNavigator#gotoListRecords" />
+
+		<execute macro="DDLNavigator#gotoEdit" />
+
+		<execute macro="DDLRecord#expandInfo" />
+	</command>
 </definition>

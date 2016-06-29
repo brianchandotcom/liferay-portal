@@ -22,8 +22,8 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
 <%@ page import="com.liferay.document.library.kernel.util.DLUtil" %><%@
 page import="com.liferay.knowledge.base.item.selector.criterion.KBAttachmentItemSelectorCriterion" %><%@
-page import="com.liferay.knowledge.base.item.selector.web.KBAttachmentItemSelectorView" %><%@
-page import="com.liferay.knowledge.base.item.selector.web.display.context.KBAttachmentItemSelectorViewDisplayContext" %><%@
+page import="com.liferay.knowledge.base.item.selector.web.internal.KBAttachmentItemSelectorView" %><%@
+page import="com.liferay.knowledge.base.item.selector.web.internal.display.context.KBAttachmentItemSelectorViewDisplayContext" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchPaginationUtil" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@

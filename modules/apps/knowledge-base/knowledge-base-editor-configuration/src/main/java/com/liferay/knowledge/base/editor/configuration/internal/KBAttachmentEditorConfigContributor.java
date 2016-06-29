@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.knowledge.base.editor.configuration;
+package com.liferay.knowledge.base.editor.configuration.internalgr ;
 
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;

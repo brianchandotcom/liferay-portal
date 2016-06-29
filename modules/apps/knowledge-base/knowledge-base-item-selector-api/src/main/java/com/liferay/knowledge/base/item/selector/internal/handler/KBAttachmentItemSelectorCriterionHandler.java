@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.knowledge.base.item.selector.handler;
+package com.liferay.knowledge.base.item.selector.internal.handler;
 
 import com.liferay.item.selector.BaseItemSelectorCriterionHandler;
 import com.liferay.item.selector.ItemSelectorCriterionHandler;

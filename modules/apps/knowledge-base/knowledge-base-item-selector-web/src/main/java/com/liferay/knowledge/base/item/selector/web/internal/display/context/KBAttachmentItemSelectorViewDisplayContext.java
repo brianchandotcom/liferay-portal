@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.knowledge.base.item.selector.web.display.context;
+package com.liferay.knowledge.base.item.selector.web.internal.display.context;
 
 import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.item.selector.criterion.KBAttachmentItemSelectorCriterion;
-import com.liferay.knowledge.base.item.selector.web.KBAttachmentItemSelectorView;
+import com.liferay.knowledge.base.item.selector.web.internal.KBAttachmentItemSelectorView;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.service.KBArticleLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.knowledge.base.web.upload;
+package com.liferay.knowledge.base.web.internal.upload;
 
 import com.liferay.knowledge.base.constants.KBActionKeys;
 import com.liferay.knowledge.base.model.KBArticle;

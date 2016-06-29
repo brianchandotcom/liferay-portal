@@ -2129,7 +2129,7 @@ AUI.add(
 										}
 									},
 									data: {
-										cmd: 'getSiblingLayouts',
+										cmd: 'getSiblingLayoutsJSON',
 										expandParentLayouts: false,
 										groupId: groupId,
 										layoutId: selectedLayout.layoutId,

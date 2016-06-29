@@ -404,6 +404,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-io-plugin-deprecated', 'aui-live-search-deprecated', 'aui-template-deprecated', 'aui-textboxlist', 'datasource-cache', 'liferay-item-selector-dialog', 'liferay-service-datasource', 'liferay-util-window']
+		requires: ['aui-io-plugin-deprecated', 'aui-live-search-deprecated', 'aui-template-deprecated', 'aui-textboxlist-deprecated', 'datasource-cache', 'liferay-item-selector-dialog', 'liferay-service-datasource']
 	}
 );

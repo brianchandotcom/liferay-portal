@@ -653,14 +653,6 @@ while (manageableCalendarsIterator.hasNext()) {
 			content: '',
 			editingEvent: true,
 			endDate: Liferay.CalendarUtil.toLocalTime(new Date(<%= endTime %>)),
-			on: {
-				endDateChange: function(event) {
-					event.stopPropagation();
-				},
-				startDateChange: function(event) {
-					event.stopPropagation();
-				}
-			},
 			preventDateChange: true,
 			scheduler: scheduler,
 			startDate: Liferay.CalendarUtil.toLocalTime(new Date(<%= startTime %>))

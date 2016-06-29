@@ -203,6 +203,11 @@ public class JournalPortlet extends MVCPortlet {
 		updateFolder(actionRequest, actionResponse);
 	}
 
+	public void addToFavorites(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+	}
+
 	public void deleteArticle(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {

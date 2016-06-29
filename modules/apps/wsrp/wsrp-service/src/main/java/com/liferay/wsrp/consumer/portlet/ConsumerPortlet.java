@@ -169,7 +169,7 @@ import org.osgi.service.component.annotations.Reference;
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	property = {
 		"com.liferay.portlet.add-default-resource=true",
-		"com.liferay.portlet.display-category=category.WSRP",
+		"com.liferay.portlet.display-category=category.wsrp",
 		"com.liferay.portlet.private-request-attributes=false",
 		"com.liferay.portlet.private-session-attributes=false",
 		"com.liferay.portlet.render-weight=50",

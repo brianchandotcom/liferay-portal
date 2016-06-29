@@ -172,14 +172,18 @@
 	</command>
 
 	<command name="deleteForm">
-		<execute function="AssertElementPresent" locator1="Icon#BACK" />
+		<execute macro="KaleoFormsNavigator#gotoManageForms">
+			<var name="kfFieldSetName" value="${kfFieldSetName}" />
+		</execute>
 
 		<var name="key_rowEntry" value="${kfFormName}" />
 
 		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+
 		<execute function="AssertClickNoError" locator1="KaleoFormsAdminEditProcessForm#FORM_MENULIST_DELETE" value1="Delete" />
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
-		<execute function="AssertElementNotPresent" locator1="Icon#BACK" />
+
+		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="deleteProcess">

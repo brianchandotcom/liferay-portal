@@ -95,7 +95,7 @@
 
 	<property name="doc.dir" value="${project.dir}/api" />
 
-	<loadproperties srcfile="app.server.properties">
+	<loadproperties srcfile="${project.dir}/app.server.properties">
 		<filterchain>
 			<linecontains>
 				<contains value="app.server.${app.server.type}" />

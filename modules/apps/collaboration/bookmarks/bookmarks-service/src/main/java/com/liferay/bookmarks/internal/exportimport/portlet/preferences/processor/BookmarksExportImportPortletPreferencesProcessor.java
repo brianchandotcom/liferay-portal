@@ -15,7 +15,7 @@
 package com.liferay.bookmarks.internal.exportimport.portlet.preferences.processor;
 
 import com.liferay.bookmarks.constants.BookmarksPortletKeys;
-import com.liferay.bookmarks.lar.BookmarksPortletDataHandler;
+import com.liferay.bookmarks.internal.exportimport.data.handler.BookmarksPortletDataHandler;
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.model.BookmarksFolderConstants;
 import com.liferay.bookmarks.service.BookmarksFolderLocalService;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.bookmarks.lar;
+package com.liferay.bookmarks.internal.exportimport.data.handler;
 
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.model.BookmarksFolderConstants;

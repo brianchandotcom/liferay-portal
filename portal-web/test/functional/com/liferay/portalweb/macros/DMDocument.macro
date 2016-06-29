@@ -1818,7 +1818,7 @@
 
 				<execute function="AssertVisible" locator1="DocumentsAndMediaDocument#DOCUMENT_DETAILS_DOWNLOAD" />
 
-				<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_DETAILS_DOWNLOAD" value1="Download (${dmDocumentSize}KB)" />
+				<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_DETAILS_DOWNLOAD" value1="Download (${dmDocumentSize})" />
 			</then>
 		</if>
 	</command>

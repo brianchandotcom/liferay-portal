@@ -9,6 +9,7 @@ Export-Package:\
 	com.liferay.calendar.service.permission,\
 	com.liferay.calendar.social,\
 	com.liferay.calendar.upgrade.v1_0_2,\
+	com.liferay.calendar.upgrade.v1_0_6,\
 	com.liferay.calendar.util,\
 	com.liferay.calendar.workflow
 Import-Package:\

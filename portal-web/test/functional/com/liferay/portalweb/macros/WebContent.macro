@@ -934,7 +934,9 @@
 
 		<execute function="AssertClick" locator1="WCSelectDisplayPage#PUBLIC_DISPLAY_PAGE_SELECTION" value1="${displayPageSelection}" />
 
-		<execute function="AssertClick" locator1="Button#CHOOSE" value1="Choose" />
+		<execute function="SelectFrame" value1="relative=top" />
+
+		<execute macro="Button#clickDone" />
 
 		<execute function="SelectFrame" value1="relative=top" />
 

@@ -84,6 +84,8 @@
 
 		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
+		<var name="key_workflowTask" value="${workflowTask}" />
+
 		<execute function="AssertClick" locator1="MenuItem#ASSIGN_FORM" value1="Assign Form" />
 	</command>
 

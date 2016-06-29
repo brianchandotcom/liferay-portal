@@ -2466,7 +2466,16 @@ sprite.root.dir=/tmp/sprite]]></echo>
 					<var name="app.server.tomcat.version" value="6.0.29" />
 				</then>
 				<elseif>
-					<equals arg1="@{liferay.portal.bundle}" arg2="6.1.2" />
+					<equals arg1="@{liferay.portal.bundle}" arg2="6.0.12" />
+					<then>
+						<var name="app.server.tomcat.version" value="6.0.32" />
+					</then>
+				</elseif>
+				<elseif>
+					<or>
+						<equals arg1="@{liferay.portal.bundle}" arg2="6.1.2" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="6.1.30" />
+					</or>
 					<then>
 						<var name="app.server.tomcat.version" value="7.0.40" />
 					</then>
@@ -2501,7 +2510,10 @@ sprite.root.dir=/tmp/sprite]]></echo>
 					</then>
 				</elseif>
 				<elseif>
-					<equals arg1="@{liferay.portal.bundle}" arg2="6.2.10.15" />
+					<or>
+						<equals arg1="@{liferay.portal.bundle}" arg2="6.2.5" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="6.2.10.15" />
+					</or>
 					<then>
 						<var name="app.server.tomcat.version" value="7.0.62" />
 					</then>

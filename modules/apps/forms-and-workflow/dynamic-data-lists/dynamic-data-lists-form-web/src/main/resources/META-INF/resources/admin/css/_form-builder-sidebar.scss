@@ -1,0 +1,54 @@
+.form-builder-sidebar {
+	$width: 500px;
+
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+
+	&.form-builder-sidebar.sidenav-menu-slider {
+		width: 0;
+
+		&.open {
+			width: $width;
+		}
+	}
+
+	.sidebar-body {
+		height: 100%;
+		padding: 0;
+		width: $width;
+	}
+
+	.sidebar-content {
+		right: 0;
+		top: 0;
+		width: $width;
+	}
+
+	.sidebar-header {
+		margin-top: 64px;
+	}
+
+	.navbar-nav {
+		border-bottom-width: 0;
+
+		a {
+			text-transform: capitalize;
+
+			&:hover {
+				border-bottom-color: transparent;
+			}
+		}
+
+		li {
+			font-size: initial;
+		}
+	}
+
+	.tab-pane {
+		bottom: 0;
+		overflow: auto;
+		padding: 24px;
+		position: absolute;
+		top: 208px;
+		width: $width;
+	}
+}

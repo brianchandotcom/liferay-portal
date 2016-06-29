@@ -3,13 +3,7 @@ AUI.add(
 	function(A) {
 		var CSS_FIELD = A.getClassName('form', 'builder', 'field');
 
-		var CSS_FIELD_CONTENT_TOOLBAR = A.getClassName('form', 'builder', 'field', 'content', 'toolbar');
-
 		var CSS_FIELD_REPEATABLE_TOOLBAR = A.getClassName('lfr', 'ddm', 'form', 'field', 'repeatable', 'toolbar');
-
-		var CSS_FIELD_TOOLBAR_CONTAINER = A.getClassName('form', 'builder', 'field', 'toolbar', 'container');
-
-		var CSS_FORM_GROUP = A.getClassName('form', 'group');
 
 		var RendererUtil = Liferay.DDM.Renderer.Util;
 
@@ -78,16 +72,6 @@ AUI.add(
 				settings.context = A.clone(settings);
 
 				return settings;
-			},
-
-			getSettingsModal: function() {
-				var instance = this;
-
-				var builder = instance.get('builder');
-
-				var settingsModal = builder._fieldSettingsModal;
-
-				return settingsModal;
 			},
 
 			isAdding: function() {
@@ -171,12 +155,6 @@ AUI.add(
 
 				container.setData('field-instance', instance);
 
-				var wrapper = container.one('.' + CSS_FORM_GROUP);
-
-				wrapper.append('<div class="' + CSS_FIELD_TOOLBAR_CONTAINER + '"></div>');
-
-				wrapper.addClass(CSS_FIELD_CONTENT_TOOLBAR);
-
 				if (instance.get('repeatable')) {
 					var toolbar = container.one('.' + CSS_FIELD_REPEATABLE_TOOLBAR);
 
@@ -189,8 +167,6 @@ AUI.add(
 			_updateSettingsFormValues: function(settingsForm) {
 				var instance = this;
 
-				var context = instance.get('context');
-
 				settingsForm.get('fields').forEach(
 					function(item, index) {
 						var name = item.get('fieldName');
@@ -198,6 +174,8 @@ AUI.add(
 						if (name === 'name') {
 							name = 'fieldName';
 						}
+
+						var context = instance.get('context');
 
 						if (context.hasOwnProperty(name)) {
 							item.set('errorMessage', '');

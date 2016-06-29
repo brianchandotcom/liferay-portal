@@ -1,5 +1,6 @@
 .form-builder-field-toolbar,
 .form-builder-field-toolbar-toggle {
+	position: static;
 	z-index: 20;
 }
 
@@ -44,4 +45,8 @@
 
 .form-builder-field-toolbar-item {
 	width: 48px;
+}
+
+.layout-builder-move-cut-col-button  {
+	position: static;
 }

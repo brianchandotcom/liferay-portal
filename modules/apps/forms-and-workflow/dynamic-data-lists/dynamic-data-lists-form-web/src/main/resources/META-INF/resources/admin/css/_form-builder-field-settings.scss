@@ -23,27 +23,7 @@
 		margin-right: 125px;
 	}
 
-	.settings-toggler {
-		background-color: transparent;
-		font-weight: 500;
-		padding: 18px 0;
-		position: static;
-		text-align: left;
-		width: 100%;
-
-		.settings-toggle-label {
-			float: left;
-		}
-
-		.settings-toggle-icon {
-			float: right;
-		}
-	}
-
 	.lfr-ddm-form-page {
-		padding-bottom: 0;
-		padding-top: 0;
-
 		&.active.advanced {
 			display: block;
 		}
@@ -132,6 +112,8 @@
 	}
 
 	.liferay-ddm-form-field-options {
+		margin-bottom: 0;
+
 		.close {
 			font-size: 22px;
 			position: absolute;
@@ -174,35 +156,5 @@
 
 	.liferay-ddm-form-field-text textarea + .input-group-addon {
 		vertical-align: bottom;
-	}
-
-	.lfr-ddm-form-container {
-		.lfr-ddm-form-field-container {
-			position: relative;
-
-			.lfr-form-row {
-				border-width: 0;
-				padding-bottom: 5px;
-				padding-top: 5px;
-
-				&:hover {
-					padding-top: 5px;
-				}
-
-				.lfr-autorow-controls {
-					bottom: 0;
-					right: 0;
-
-					.add-row {
-						margin-right: 3px;
-					}
-				}
-			}
-
-			.toggle-switch-bar .toggle-switch-handle {
-				text-transform: none;
-				word-break: break-word;
-			}
-		}
 	}
 }

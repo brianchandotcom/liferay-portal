@@ -1,13 +1,9 @@
 AUI.add(
 	'liferay-ddl-form-builder-field-settings-form',
 	function(A) {
-		var CSS_FIELD_SETTINGS_SAVE = A.getClassName('lfr', 'ddl', 'field', 'settings', 'save');
-
 		var TPL_SETTINGS_FORM = '<form action="javascript:;"></form>';
 
 		var TPL_SETTINGS_TOGGLER = '<button class="btn settings-toggler" type="button"><span class="settings-toggle-label"></span><span class="settings-toggle-icon"></span></button>';
-
-		var TPL_SUBMIT_BUTTON = '<button class="hide" type="submit" />';
 
 		var RendererUtil = Liferay.DDM.Renderer.Util;
 
@@ -52,40 +48,6 @@ AUI.add(
 						);
 					},
 
-					submit: function(callback) {
-						var instance = this;
-
-						instance.validateSettings(
-							function(hasErrors) {
-								if (!hasErrors) {
-									var settingsForm = instance.get('field');
-
-									var settingsModal = settingsForm.getSettingsModal();
-
-									settingsForm.saveSettings(instance);
-								}
-
-								if (callback) {
-									callback.apply(instance, arguments);
-								}
-							}
-						);
-					},
-
-					validateSettings: function(callback) {
-						var instance = this;
-
-						instance.validate(
-							function(hasErrors) {
-								hasErrors = instance._handleValidationResponse(hasErrors);
-
-								if (callback) {
-									callback.call(instance, hasErrors);
-								}
-							}
-						);
-					},
-
 					_afterAddOption: function(event) {
 						var instance = this;
 
@@ -114,8 +76,6 @@ AUI.add(
 								}
 							);
 						}
-
-						instance.alignModal();
 					},
 
 					_afterLabelFieldNormalizeKey: function(key) {
@@ -126,13 +86,6 @@ AUI.add(
 
 					_afterSettingsFormRender: function() {
 						var instance = this;
-
-						var container = instance.get('container');
-
-						container.append(TPL_SUBMIT_BUTTON);
-
-						instance._createModeToggler();
-						instance._syncModeToggler();
 
 						var labelField = instance.getField('label');
 						var nameField = instance.getField('name');
@@ -195,16 +148,6 @@ AUI.add(
 						return name;
 					},
 
-					_getModalStdModeNode: function(mode) {
-						var instance = this;
-
-						var field = instance.get('field');
-
-						var settingsModal = field.getSettingsModal();
-
-						return settingsModal._modal.getStdModNode(mode);
-					},
-
 					_handleValidationResponse: function(hasErrors) {
 						var instance = this;
 
@@ -255,8 +198,6 @@ AUI.add(
 						var instance = this;
 
 						event.preventDefault();
-
-						instance.submit();
 					},
 
 					_syncModeToggler: function() {

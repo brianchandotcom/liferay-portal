@@ -102,7 +102,7 @@ AUI.add(
 				);
 
 				if (fieldToFocus) {
-					fieldToFocus.focus();
+					fieldToFocus.scrollIntoView();
 				}
 			},
 
@@ -122,7 +122,7 @@ AUI.add(
 				);
 
 				if (fieldToFocus) {
-					fieldToFocus.focus();
+					fieldToFocus.scrollIntoView();
 				}
 			},
 

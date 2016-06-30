@@ -22,7 +22,7 @@ import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortle
 import com.liferay.exportimport.portlet.preferences.processor.capability.ReferencedStagedModelImporterCapability;
 import com.liferay.polls.constants.PollsPortletKeys;
 import com.liferay.polls.exception.NoSuchQuestionException;
-import com.liferay.polls.lar.PollsPortletDataHandler;
+import com.liferay.polls.exportimport.data.handler.PollsPortletDataHandler;
 import com.liferay.polls.model.PollsChoice;
 import com.liferay.polls.model.PollsQuestion;
 import com.liferay.polls.model.PollsVote;

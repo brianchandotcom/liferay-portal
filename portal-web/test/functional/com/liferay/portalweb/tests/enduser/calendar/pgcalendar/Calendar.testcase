@@ -5546,7 +5546,8 @@
 		</execute>
 
 		<execute macro="Calendar#viewCurrentSiteCalendarName">
-			<var name="site" value="Site Name" />
+			<var name="calendarName" value="Site Name" />
+			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSite">
@@ -5568,7 +5569,8 @@
 		</execute>
 
 		<execute macro="Calendar#viewCurrentSiteCalendarName">
-			<var name="site" value="Site Name Edit - Site Name" />
+			<var name="calendarName" value="Site Name" />
+			<var name="siteName" value="Site Name Edit" />
 		</execute>
 	</command>
 

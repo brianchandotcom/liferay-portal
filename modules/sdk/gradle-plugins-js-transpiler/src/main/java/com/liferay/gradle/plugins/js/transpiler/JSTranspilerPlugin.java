@@ -181,7 +181,7 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 
 		FileCollection fileCollection = transpileJSTask.getSourceFiles();
 
-		if (fileCollection.isEmpty()) {
+		if (!transpileJSTask.isEnabled() || fileCollection.isEmpty()) {
 			transpileJSTask.setDependsOn(Collections.emptySet());
 			transpileJSTask.setEnabled(false);
 

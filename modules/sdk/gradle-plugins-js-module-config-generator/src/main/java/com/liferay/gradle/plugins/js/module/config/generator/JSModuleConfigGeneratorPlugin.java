@@ -148,7 +148,9 @@ public class JSModuleConfigGeneratorPlugin implements Plugin<Project> {
 
 		File file = configJSModulesTask.getModuleConfigFile();
 
-		if ((file == null) || !file.exists()) {
+		if (!configJSModulesTask.isEnabled() || (file == null) ||
+			!file.exists()) {
+
 			configJSModulesTask.setDependsOn(Collections.emptySet());
 			configJSModulesTask.setEnabled(false);
 

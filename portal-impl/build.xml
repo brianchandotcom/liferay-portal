@@ -600,7 +600,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 		</jarjar>
 	</target>
 
-	<target name="clean" depends="build-common-java.clean">
+	<target depends="build-common-java.clean" name="clean">
 		<if>
 			<and>
 				<equals arg1="${app.server.type}" arg2="tomcat" />

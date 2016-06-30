@@ -91,7 +91,7 @@
 		</java>
 	</target>
 
-	<target name="clean" depends="build-common-java.clean">
+	<target depends="build-common-java.clean" name="clean">
 		<delete failonerror="false" file="${liferay.home}/osgi/portal/${jar.file}.jar" />
 	</target>
 

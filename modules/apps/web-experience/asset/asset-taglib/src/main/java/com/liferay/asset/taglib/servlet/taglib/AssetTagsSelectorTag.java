@@ -14,15 +14,20 @@
 
 package com.liferay.asset.taglib.servlet.taglib;
 
+import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.asset.kernel.service.AssetTagServiceUtil;
 import com.liferay.asset.taglib.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
+
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
@@ -98,6 +103,27 @@ public class AssetTagsSelectorTag extends IncludeTag {
 		_removeCallback = null;
 	}
 
+	protected String getCurTags() {
+		String curTags = _curTags;
+
+		if (Validator.isNotNull(_className) && (_classPK > 0)) {
+			List<AssetTag> tags = AssetTagServiceUtil.getTags(
+				_className, _classPK);
+
+			curTags = ListUtil.toString(tags, AssetTag.NAME_ACCESSOR);
+		}
+
+		if (!_ignoreRequestValue) {
+			String curTagsParam = request.getParameter(_hiddenInput);
+
+			if (Validator.isNotNull(curTagsParam)) {
+				curTags = curTagsParam;
+			}
+		}
+
+		return curTags;
+	}
+
 	protected long[] getGroupIds() {
 		if (_groupIds != null) {
 			return _groupIds;
@@ -153,20 +179,12 @@ public class AssetTagsSelectorTag extends IncludeTag {
 			"liferay-asset:asset-tags-selector:autoFocus",
 			String.valueOf(_autoFocus));
 		request.setAttribute(
-			"liferay-asset:asset-tags-selector:className", _className);
-		request.setAttribute(
-			"liferay-asset:asset-tags-selector:classPK",
-			String.valueOf(_classPK));
-		request.setAttribute(
-			"liferay-asset:asset-tags-selector:curTags", _curTags);
+			"liferay-asset:asset-tags-selector:curTags", getCurTags());
 		request.setAttribute(
 			"liferay-asset:asset-tags-selector:groupIds", getGroupIds());
 		request.setAttribute(
 			"liferay-asset:asset-tags-selector:hiddenInput", _hiddenInput);
 		request.setAttribute("liferay-asset:asset-tags-selector:id", getId());
-		request.setAttribute(
-			"liferay-asset:asset-tags-selector:ignoreRequestValue",
-			_ignoreRequestValue);
 		request.setAttribute(
 			"liferay-asset:asset-tags-selector:removeCallback",
 			String.valueOf(_removeCallback));

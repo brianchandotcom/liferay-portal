@@ -20,28 +20,11 @@
 String addCallback = GetterUtil.getString((String)request.getAttribute("liferay-asset:asset-tags-selector:addCallback"));
 boolean allowAddEntry = GetterUtil.getBoolean((String)request.getAttribute("liferay-asset:asset-tags-selector:allowAddEntry"));
 boolean autoFocus = GetterUtil.getBoolean((String)request.getAttribute("liferay-asset:asset-tags-selector:autoFocus"));
-String className = (String)request.getAttribute("liferay-asset:asset-tags-selector:className");
-long classPK = GetterUtil.getLong((String)request.getAttribute("liferay-asset:asset-tags-selector:classPK"));
 String curTags = GetterUtil.getString((String)request.getAttribute("liferay-asset:asset-tags-selector:curTags"));
 long[] groupIds = (long[])request.getAttribute("liferay-asset:asset-tags-selector:groupIds");
 String hiddenInput = (String)request.getAttribute("liferay-asset:asset-tags-selector:hiddenInput");
 String id = GetterUtil.getString((String)request.getAttribute("liferay-asset:asset-tags-selector:id"));
-boolean ignoreRequestValue = GetterUtil.getBoolean(request.getAttribute("liferay-asset:asset-tags-selector:ignoreRequestValue"));
 String removeCallback = GetterUtil.getString((String)request.getAttribute("liferay-asset:asset-tags-selector:removeCallback"));
-
-if (Validator.isNotNull(className) && (classPK > 0)) {
-	List<AssetTag> tags = AssetTagServiceUtil.getTags(className, classPK);
-
-	curTags = ListUtil.toString(tags, AssetTag.NAME_ACCESSOR);
-}
-
-if (!ignoreRequestValue) {
-	String curTagsParam = request.getParameter(hiddenInput);
-
-	if (Validator.isNotNull(curTagsParam)) {
-		curTags = curTagsParam;
-	}
-}
 %>
 
 <div class="lfr-tags-selector-content" id="<portlet:namespace /><%= id %>assetTagsSelector">

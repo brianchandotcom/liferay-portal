@@ -40,34 +40,34 @@
 				replace="\1"
 			/>
 
-			<local name="md5.checksum" />
-
 			<if>
-				<http url="${src}.md5" />
+				<not>
+					<available file="${mirrors.cache.artifact.dir}/${mirrors.cache.artifact.file.name}" />
+				</not>
 				<then>
-					<local name="curl" />
+					<local name="md5.checksum" />
 
-					<exec executable="curl" outputproperty="curl">
-						<arg line="-s ${src}.md5" />
-					</exec>
-
-					<propertyregex
-						input="${curl}"
-						override="true"
-						property="md5.checksum"
-						regexp="([0-9a-f]{32}).*"
-						replace="\1"
-					/>
-				</then>
-			</if>
-
-			<retry retrycount="3" retrydelay="5000">
-				<sequential>
 					<if>
-						<not>
-							<available file="${mirrors.cache.artifact.dir}/${mirrors.cache.artifact.file.name}" />
-						</not>
+						<http url="${src}.md5" />
 						<then>
+							<local name="curl" />
+
+							<exec executable="curl" outputproperty="curl">
+								<arg line="-s ${src}.md5" />
+							</exec>
+
+							<propertyregex
+								input="${curl}"
+								override="true"
+								property="md5.checksum"
+								regexp="([0-9a-f]{32}).*"
+								replace="\1"
+							/>
+						</then>
+					</if>
+
+					<retry retrycount="3" retrydelay="5000">
+						<sequential>
 							<mkdir dir="${mirrors.cache.artifact.dir}" />
 
 							<propertyregex
@@ -109,26 +109,26 @@
 									/>
 								</else>
 							</if>
-						</then>
-					</if>
 
-					<if>
-						<and>
-							<isset property="md5.checksum" />
-							<not>
-								<checksum file="${mirrors.cache.artifact.dir}/${mirrors.cache.artifact.file.name}" property="${md5.checksum}" />
-							</not>
-						</and>
-						<then>
-							<echo>MD5 checksum failure for ${mirrors.cache.artifact.dir}/${mirrors.cache.artifact.file.name}</echo>
+							<if>
+								<and>
+									<isset property="md5.checksum" />
+									<not>
+										<checksum file="${mirrors.cache.artifact.dir}/${mirrors.cache.artifact.file.name}" property="${md5.checksum}" />
+									</not>
+								</and>
+								<then>
+									<echo>MD5 checksum failure for ${mirrors.cache.artifact.dir}/${mirrors.cache.artifact.file.name}</echo>
 
-							<delete file="${mirrors.cache.artifact.dir}/${mirrors.cache.artifact.file.name}" />
+									<delete file="${mirrors.cache.artifact.dir}/${mirrors.cache.artifact.file.name}" />
 
-							<fail message="MD5 checksum failure for ${mirrors.cache.artifact.dir}/${mirrors.cache.artifact.file.name}" />
-						</then>
-					</if>
-				</sequential>
-			</retry>
+									<fail message="MD5 checksum failure for ${mirrors.cache.artifact.dir}/${mirrors.cache.artifact.file.name}" />
+								</then>
+							</if>
+						</sequential>
+					</retry>
+				</then>
+			</if>
 
 			<if>
 				<available file="@{dest}" type="dir" />

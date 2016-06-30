@@ -254,7 +254,7 @@
 <!--CURRENT_SITE_CALENDARS_CALENDAR-->
 <tr>
 	<td>CURRENT_SITE_CALENDARS_CALENDAR_PRIMARY</td>
-	<td>//div[contains(@id,'CalendarPortlet_siteCalendarList')]/div/div/span[contains(.,'${key_site}')]</td>
+	<td>//div[contains(@id,'CalendarPortlet_siteCalendarList')]/div/div/span[contains(.,'${key_calendarName}')]</td>
 	<td></td>
 </tr>
 <tr>

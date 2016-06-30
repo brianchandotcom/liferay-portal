@@ -2,6 +2,7 @@ Bundle-Name: Liferay Asset Taglib
 Bundle-SymbolicName: com.liferay.asset.taglib
 Bundle-Version: 2.0.4
 Export-Package: com.liferay.asset.taglib.servlet.taglib
+Liferay-JS-Config: /META-INF/resources/config.js
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
 Provide-Capability: osgi.extender;osgi.extender="jsp.taglib";uri="http://liferay.com/tld/asset";version:Version="${Bundle-Version}"

@@ -36,7 +36,3 @@ dependencies {
 downloadLiferayModuleConfigGenerator {
 	enabled = false
 }
-
-transpileJS {
-	enabled = false
-}

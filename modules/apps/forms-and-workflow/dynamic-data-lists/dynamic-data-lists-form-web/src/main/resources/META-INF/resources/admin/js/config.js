@@ -100,8 +100,8 @@
 								'liferay-ddm-form-renderer-wizard'
 							]
 						},
-						'liferay-ddl-form-builder-settings-form': {
-							path: 'form_builder_settings_form.js',
+						'liferay-ddl-form-builder-field-settings-form': {
+							path: 'form_builder_field_settings_form.js',
 							requires: [
 								'liferay-ddm-form-renderer',
 								'liferay-form'
@@ -120,10 +120,10 @@
 								'aui-request'
 							]
 						},
-						'liferay-ddl-form-builder-settings-support': {
-							path: 'form_builder_settings_support.js',
+						'liferay-ddl-form-builder-field-support': {
+							path: 'form_builder_field_support.js',
 							requires: [
-								'liferay-ddl-form-builder-settings-form',
+								'liferay-ddl-form-builder-field-settings-form',
 								'liferay-ddl-form-builder-settings-retriever'
 							]
 						},

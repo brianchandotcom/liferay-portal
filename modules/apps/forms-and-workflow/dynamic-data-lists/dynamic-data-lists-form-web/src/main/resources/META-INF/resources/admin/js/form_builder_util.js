@@ -29,6 +29,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['liferay-ddl-form-builder-settings-support', 'liferay-ddm-form-renderer-util']
+		requires: ['liferay-ddl-form-builder-field-support', 'liferay-ddm-form-renderer-util']
 	}
 );

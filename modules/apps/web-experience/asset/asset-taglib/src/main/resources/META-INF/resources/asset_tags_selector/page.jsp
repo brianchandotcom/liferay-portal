@@ -21,6 +21,7 @@ String addCallback = GetterUtil.getString((String)request.getAttribute("liferay-
 boolean allowAddEntry = GetterUtil.getBoolean((String)request.getAttribute("liferay-asset:asset-tags-selector:allowAddEntry"));
 boolean autoFocus = GetterUtil.getBoolean((String)request.getAttribute("liferay-asset:asset-tags-selector:autoFocus"));
 String curTags = GetterUtil.getString((String)request.getAttribute("liferay-asset:asset-tags-selector:curTags"));
+String eventName = (String)request.getAttribute("liferay-asset:asset-tags-selector:eventName");
 long[] groupIds = (long[])request.getAttribute("liferay-asset:asset-tags-selector:groupIds");
 String hiddenInput = (String)request.getAttribute("liferay-asset:asset-tags-selector:hiddenInput");
 String id = GetterUtil.getString((String)request.getAttribute("liferay-asset:asset-tags-selector:id"));
@@ -53,12 +54,8 @@ String removeCallback = GetterUtil.getString((String)request.getAttribute("lifer
 				input: '#<%= id %>assetTagNames',
 			</c:if>
 
-			<%
-			String portletId = PortletProviderUtil.getPortletId(AssetTag.class.getName(), PortletProvider.Action.BROWSE);
-			%>
-
-			<c:if test="<%= Validator.isNotNull(portletId) %>">
-				namespace: '<%= PortalUtil.getPortletNamespace(portletId) %>',
+			<c:if test="<%= Validator.isNotNull(eventName) %>">
+				eventName: '<%= eventName %>',
 			</c:if>
 
 			<c:if test="<%= portletURL != null %>">

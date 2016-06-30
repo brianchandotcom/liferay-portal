@@ -301,7 +301,7 @@
 				</execute>
 
 				<execute macro="Calendar#_viewEmailHeader">
-					<var name="header" value="${calendarName}" />
+					<var name="header" value="${user} - ${calendarName}" />
 				</execute>
 			</then>
 			<elseif>
@@ -318,7 +318,7 @@
 					</execute>
 
 					<execute macro="Calendar#_viewEmailHeader">
-						<var name="header" value="${calendarName}" />
+						<var name="header" value="${site} - ${calendarName}" />
 					</execute>
 				</then>
 			</elseif>

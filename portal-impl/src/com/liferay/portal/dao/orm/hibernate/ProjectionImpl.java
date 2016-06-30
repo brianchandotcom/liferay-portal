@@ -15,6 +15,8 @@
 package com.liferay.portal.dao.orm.hibernate;
 
 import com.liferay.portal.kernel.dao.orm.Projection;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 
 /**
  * @author Brian Wing Shun Chan
@@ -31,7 +33,20 @@ public class ProjectionImpl implements Projection {
 
 	@Override
 	public String toString() {
-		return _projection.toString();
+		StringBundler sb = new StringBundler(3);
+
+		sb.append("{_projection=");
+
+		if (_projection != null) {
+			sb.append(_projection.toString());
+		}
+		else {
+			sb.append(StringPool.NULL);
+		}
+
+		sb.append("}");
+
+		return sb.toString();
 	}
 
 	private final org.hibernate.criterion.Projection _projection;

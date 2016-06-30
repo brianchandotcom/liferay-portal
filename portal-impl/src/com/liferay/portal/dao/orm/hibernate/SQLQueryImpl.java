@@ -24,6 +24,8 @@ import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.security.pacl.NotPrivileged;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Serializable;
 
@@ -407,6 +409,28 @@ public class SQLQueryImpl implements SQLQuery {
 		_sqlQuery.setTimestamp(name, value);
 
 		return this;
+	}
+
+	@Override
+	public String toString() {
+		StringBundler sb = new StringBundler(7);
+
+		sb.append("{names=");
+		sb.append(Arrays.toString(_names));
+		sb.append(", _query=");
+
+		if (_sqlQuery != null) {
+			sb.append(_sqlQuery.toString());
+		}
+		else {
+			sb.append(StringPool.NULL);
+		}
+
+		sb.append(", _strictName=");
+		sb.append(_strictName);
+		sb.append("}");
+
+		return sb.toString();
 	}
 
 	@NotPrivileged

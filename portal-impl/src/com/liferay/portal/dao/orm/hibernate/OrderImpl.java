@@ -15,20 +15,41 @@
 package com.liferay.portal.dao.orm.hibernate;
 
 import com.liferay.portal.kernel.dao.orm.Order;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 
 /**
  * @author Brian Wing Shun Chan
  */
 public class OrderImpl implements Order {
 
-	public OrderImpl(org.hibernate.criterion.Order criterion) {
-		_criterion = criterion;
+	public OrderImpl(org.hibernate.criterion.Order order) {
+		_order = order;
 	}
 
 	public org.hibernate.criterion.Order getWrappedOrder() {
-		return _criterion;
+		return _order;
 	}
 
-	private final org.hibernate.criterion.Order _criterion;
+
+	@Override
+	public String toString() {
+		StringBundler sb = new StringBundler(3);
+
+		sb.append("{_order=");
+
+		if (_order != null) {
+			sb.append(_order.toString());
+		}
+		else {
+			sb.append(StringPool.NULL);
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
+
+	private final org.hibernate.criterion.Order _order;
 
 }

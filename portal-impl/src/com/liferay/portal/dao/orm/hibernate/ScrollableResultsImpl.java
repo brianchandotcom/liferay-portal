@@ -16,6 +16,8 @@ package com.liferay.portal.dao.orm.hibernate;
 
 import com.liferay.portal.kernel.dao.orm.ORMException;
 import com.liferay.portal.kernel.dao.orm.ScrollableResults;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 
 /**
  * @author Brian Wing Shun Chan
@@ -96,6 +98,24 @@ public class ScrollableResultsImpl implements ScrollableResults {
 		catch (Exception e) {
 			throw ExceptionTranslator.translate(e);
 		}
+	}
+
+	@Override
+	public String toString() {
+		StringBundler sb = new StringBundler(3);
+
+		sb.append("{_scrollableResults=");
+
+		if (_scrollableResults != null) {
+			sb.append(_scrollableResults.toString());
+		}
+		else {
+			sb.append(StringPool.NULL);
+		}
+
+		sb.append("}");
+
+		return sb.toString();
 	}
 
 	private final org.hibernate.ScrollableResults _scrollableResults;

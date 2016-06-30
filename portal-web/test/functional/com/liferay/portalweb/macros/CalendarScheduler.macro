@@ -220,8 +220,8 @@
 	</command>
 
 	<command name="selectSpecificEvent">
-		<var name="key_eventTitle" value="${eventTitle}" />
 		<var method="selenium#getCurrentHour()" name="currentHour" />
+		<var name="key_eventTitle" value="${eventTitle}" />
 
 		<if>
 			<equals arg1="${currentHour}" arg2="23" />

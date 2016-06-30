@@ -23,7 +23,7 @@ import java.sql.ResultSet;
 /**
  * @author Adolfo Pérez
  */
-public class UpgradeDiscussion extends UpgradeProcess {
+public class UpgradeMessageBoards extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {

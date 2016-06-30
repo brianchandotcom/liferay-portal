@@ -2,7 +2,7 @@
 	<property name="portal.release" value="true" />
 	<property name="testray.main.component.name" value="Web Search" />
 
-	<var name="searchPageName" value="Search Page" />
+	<var name="searchPageName" value="Test Page" />
 	<var name="searchPortletName" value="Search" />
 
 	<set-up>
@@ -11,7 +11,7 @@
 		<execute macro="User#firstLoginPG" />
 
 		<execute macro="Page#add">
-			<var name="pageName" value="Search Page" />
+			<var name="pageName" value="Test Page" />
 		</execute>
 	</set-up>
 
@@ -56,7 +56,7 @@
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Search Page" />
+			<var name="pageName" value="Test Page" />
 		</execute>
 
 		<execute macro="Search#searchPG">
@@ -202,7 +202,7 @@
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Search Page" />
+			<var name="pageName" value="Test Page" />
 		</execute>
 
 		<execute macro="Search#searchPG">
@@ -282,7 +282,7 @@
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Search Page" />
+			<var name="pageName" value="Test Page" />
 		</execute>
 
 		<execute macro="Search#searchPG">
@@ -353,7 +353,7 @@
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Search Page" />
+			<var name="pageName" value="Test Page" />
 		</execute>
 
 		<execute macro="Search#searchPG">
@@ -517,7 +517,7 @@
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Search Page" />
+			<var name="pageName" value="Test Page" />
 		</execute>
 
 		<execute macro="Search#searchPG">
@@ -581,7 +581,7 @@
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Search Page" />
+			<var name="pageName" value="Test Page" />
 		</execute>
 
 		<execute macro="Search#searchPG">
@@ -654,7 +654,7 @@
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Search Page" />
+			<var name="pageName" value="Test Page" />
 		</execute>
 
 		<execute macro="Search#searchPG">
@@ -765,7 +765,7 @@
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Search Page" />
+			<var name="pageName" value="Test Page" />
 		</execute>
 
 		<execute macro="Search#searchPG">
@@ -906,7 +906,7 @@
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Search Page" />
+			<var name="pageName" value="Test Page" />
 		</execute>
 
 		<execute macro="Search#searchPG">
@@ -993,7 +993,7 @@
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Search Page" />
+			<var name="pageName" value="Test Page" />
 		</execute>
 
 		<execute macro="Search#searchPG">
@@ -1036,7 +1036,7 @@
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Search Page" />
+			<var name="pageName" value="Test Page" />
 		</execute>
 
 		<execute macro="Search#searchPG">
@@ -1162,7 +1162,7 @@
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Search Page" />
+			<var name="pageName" value="Test Page" />
 		</execute>
 
 		<execute macro="Search#searchPG">

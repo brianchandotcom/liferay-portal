@@ -24,6 +24,7 @@ import com.liferay.blogs.kernel.exception.EntrySmallImageScaleException;
 import com.liferay.blogs.kernel.exception.EntryTitleException;
 import com.liferay.blogs.kernel.model.BlogsEntry;
 import com.liferay.blogs.kernel.util.comparator.EntryDisplayDateComparator;
+import com.liferay.blogs.kernel.util.comparator.EntryIdComparator;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.comment.CommentManagerUtil;
@@ -684,10 +685,28 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		BlogsEntry entry = blogsEntryPersistence.findByPrimaryKey(entryId);
 
-		return blogsEntryPersistence.findByG_S_PrevAndNext(
-			entry.getEntryId(), entry.getGroupId(),
-			WorkflowConstants.STATUS_APPROVED,
-			new EntryDisplayDateComparator(true));
+		long groupId = entry.getGroupId();
+
+		Date displayDate = entry.getDisplayDate();
+
+		BlogsEntry[] blogsEntries =
+			blogsEntryPersistence.findByG_D_S_PrevAndNext(
+				entryId, groupId, displayDate,
+				WorkflowConstants.STATUS_APPROVED, new EntryIdComparator(true));
+
+		if (blogsEntries[0] == null) {
+			blogsEntries[0] = blogsEntryPersistence.fetchByG_LtD_S_Last(
+				groupId, displayDate, WorkflowConstants.STATUS_APPROVED,
+				new EntryDisplayDateComparator(true));
+		}
+
+		if (blogsEntries[2] == null) {
+			blogsEntries[2] = blogsEntryPersistence.fetchByG_GtD_S_First(
+				groupId, displayDate, WorkflowConstants.STATUS_APPROVED,
+				new EntryDisplayDateComparator(true));
+		}
+
+		return blogsEntries;
 	}
 
 	@Override

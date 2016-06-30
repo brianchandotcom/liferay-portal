@@ -25,6 +25,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.gradle.api.Project;
+import org.gradle.api.logging.Logger;
+import org.gradle.api.logging.Logging;
 import org.gradle.util.GUtil;
 
 /**
@@ -54,6 +56,12 @@ public class NodeExecutor {
 		processBuilder.directory(getWorkingDir());
 
 		updateEnvironment(processBuilder.environment());
+
+		if (_logger.isInfoEnabled()) {
+			_logger.info(
+				"Running {} from {}", processBuilder.command(),
+				processBuilder.directory());
+		}
 
 		Process process = processBuilder.start();
 
@@ -195,6 +203,8 @@ public class NodeExecutor {
 	}
 
 	private static final String[] _PATH_KEYS = {"Path", "PATH"};
+
+	private static final Logger _logger = Logging.getLogger(NodeExecutor.class);
 
 	private final List<Object> _args = new ArrayList<>();
 	private Object _command = "node";

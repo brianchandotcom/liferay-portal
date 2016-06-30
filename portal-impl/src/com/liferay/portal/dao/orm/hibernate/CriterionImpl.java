@@ -29,6 +29,14 @@ public class CriterionImpl implements Criterion {
 		return _criterion;
 	}
 
-	private final org.hibernate.criterion.Criterion _criterion;
+	@Override
+	public String toString() {
+		if (null == getWrappedCriterion()) {
+			return super.toString();
+		}
+		
+		return "Wrapped Criterion: " + getWrappedCriterion().toString();
+	}
 
+	private final org.hibernate.criterion.Criterion _criterion;
 }

@@ -18,6 +18,7 @@ import com.liferay.sync.engine.document.library.handler.DownloadFileHandler;
 import com.liferay.sync.engine.document.library.handler.Handler;
 import com.liferay.sync.engine.document.library.util.BatchDownloadEvent;
 import com.liferay.sync.engine.document.library.util.BatchEventManager;
+import com.liferay.sync.engine.document.library.util.ServerUtil;
 import com.liferay.sync.engine.model.SyncAccount;
 import com.liferay.sync.engine.model.SyncFile;
 import com.liferay.sync.engine.service.SyncAccountService;
@@ -78,7 +79,10 @@ public class DownloadFileEvent extends BaseEvent {
 		SyncAccount syncAccount = SyncAccountService.fetchSyncAccount(
 			getSyncAccountId());
 
-		sb.append(syncAccount.getUrl());
+		String url = ServerUtil.getDownloadURL(
+			syncAccount.getSyncAccountId(), syncAccount.getUrl());
+
+		sb.append(url);
 		sb.append(getURLPath());
 		sb.append("/");
 		sb.append(syncFile.getRepositoryId());

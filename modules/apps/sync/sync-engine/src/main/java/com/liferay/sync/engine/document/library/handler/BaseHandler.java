@@ -225,6 +225,10 @@ public class BaseHandler implements Handler<Void> {
 	protected SyncFile getLocalSyncFile() {
 		SyncFile localSyncFile = (SyncFile)getParameterValue("syncFile");
 
+		if (localSyncFile == null) {
+			return null;
+		}
+
 		return SyncFileService.fetchSyncFile(localSyncFile.getSyncFileId());
 	}
 

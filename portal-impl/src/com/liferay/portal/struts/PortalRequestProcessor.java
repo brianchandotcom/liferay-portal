@@ -762,9 +762,7 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 			else if ((user != null) && !user.isPasswordReset() &&
 					 path.equals(_PATH_PORTAL_UPDATE_PASSWORD)) {
 
-				response.sendRedirect(themeDisplay.getPathMain());
-
-				return null;
+				return _PATH_PORTAL_LAYOUT;
 			}
 
 			// Authenticated users must have an email address

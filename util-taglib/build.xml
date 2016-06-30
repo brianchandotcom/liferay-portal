@@ -8,10 +8,6 @@
 	<property name="manifest.bundle.name" value="Liferay Util Taglib" />
 	<property name="manifest.bundle.symbolic.name" value="com.liferay.util.taglib" />
 
-	<target name="clean" depends="build-common-java.clean">
-		<delete failonerror="false" file="${liferay.home}/osgi/portal/${jar.file}.jar" />
-	</target>
-
 	<macrodef name="compile-java">
 		<sequential>
 			<compile-java-cmd>
@@ -93,6 +89,10 @@
 			<jvmarg value="-Dtagbuilder.templates.dir=com/liferay/alloy/tools/tagbuilder/templates/" />
 			<jvmarg value="-Dtagbuilder.tld.dir=${project.dir}/util-taglib/src/META-INF/" />
 		</java>
+	</target>
+
+	<target name="clean" depends="build-common-java.clean">
+		<delete failonerror="false" file="${liferay.home}/osgi/portal/${jar.file}.jar" />
 	</target>
 
 	<target depends="taglibdoc" name="jar-tlddoc">

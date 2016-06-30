@@ -110,7 +110,7 @@ AUI.add(
 					}
 
 					return value;
-				};
+				}
 			}
 		};
 

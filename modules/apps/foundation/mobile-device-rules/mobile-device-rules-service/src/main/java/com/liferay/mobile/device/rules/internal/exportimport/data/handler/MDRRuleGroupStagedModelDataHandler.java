@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.mobile.device.rules.lar;
+package com.liferay.mobile.device.rules.internal.exportimport.data.handler;
 
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;

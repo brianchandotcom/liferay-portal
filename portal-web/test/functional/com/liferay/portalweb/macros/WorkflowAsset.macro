@@ -23,6 +23,12 @@
 		<execute function="AssertTextEquals" locator1="AssetWorkflow#CONTENT_PREVIEW_VIEW" value1="${fieldLabel} ${fieldValue}" />
 	</command>
 
+	<command name="previewViewContentFieldNotPresent">
+		<var name="key_fieldLabel" value="${fieldLabel}" />
+
+		<execute function="AssertElementNotPresent" locator1="AssetWorkflow#CONTENT_FIELD_PREVIEW_VIEW" value1="${fieldLabel}" />
+	</command>
+
 	<command name="viewDetails">
 		<execute function="Click" locator1="Icon#INFO" />
 

@@ -77,6 +77,10 @@ AUI.add(
 						}
 					},
 
+					eventName: {
+						validator: Lang.isString
+					},
+
 					groupIds: {
 						setter: '_setGroupIds',
 						validator: Lang.isString
@@ -92,10 +96,6 @@ AUI.add(
 
 							return A.one(value + instance.get('guid'));
 						}
-					},
-
-					namespace: {
-						validator: Lang.isString
 					},
 
 					portletURL: {
@@ -323,7 +323,7 @@ AUI.add(
 
 						var itemSelectorDialog = new A.LiferayItemSelectorDialog(
 							{
-								eventName: instance.get('namespace') + 'selectTag',
+								eventName: instance.get('eventName'),
 								on: {
 									selectedItemChange: function(event) {
 										var selectedItem = event.newVal;

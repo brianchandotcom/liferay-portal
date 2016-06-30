@@ -129,6 +129,13 @@ public class AssetTagsSelectorTag extends IncludeTag {
 		return curTags;
 	}
 
+	protected String getEventName() {
+		String portletId = PortletProviderUtil.getPortletId(
+			AssetTag.class.getName(), PortletProvider.Action.BROWSE);
+
+		return PortalUtil.getPortletNamespace(portletId) + "selectTag";
+	}
+
 	protected long[] getGroupIds() {
 		if (_groupIds != null) {
 			return _groupIds;
@@ -182,7 +189,7 @@ public class AssetTagsSelectorTag extends IncludeTag {
 				return null;
 			}
 
-			portletURL.setParameter("eventName", "selectTag");
+			portletURL.setParameter("eventName", getEventName());
 			portletURL.setParameter("selectedTags", "{selectedTags}");
 
 			portletURL.setWindowState(LiferayWindowState.POP_UP);
@@ -208,6 +215,8 @@ public class AssetTagsSelectorTag extends IncludeTag {
 			String.valueOf(_autoFocus));
 		request.setAttribute(
 			"liferay-asset:asset-tags-selector:curTags", getCurTags());
+		request.setAttribute(
+			"liferay-asset:asset-tags-selector:eventName", getEventName());
 		request.setAttribute(
 			"liferay-asset:asset-tags-selector:groupIds", getGroupIds());
 		request.setAttribute(

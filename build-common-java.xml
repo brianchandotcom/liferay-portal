@@ -10,25 +10,6 @@
 		</and>
 	</condition>
 
-	<macrodef name="clean-cmd">
-		<element name="clean-post" optional="true" />
-
-		<sequential>
-			<delete dir="classes" />
-			<delete dir="test-classes" />
-			<delete dir="test-coverage" />
-			<delete dir="test-results" />
-			<delete dir="woven-classes" />
-			<delete dir="${doc.dir}/${ant.project.name}/javadocs" />
-			<delete failonerror="false" file="${deploy.dir}/${jar.file}.jar" />
-			<delete failonerror="false" file="${jar.file}.jar" />
-			<delete failonerror="false" file="${jar.file}-javadoc.jar" />
-			<delete failonerror="false" file="${jar.file}-sources.jar" />
-
-			<clean-post />
-		</sequential>
-	</macrodef>
-
 	<macrodef name="compile-java">
 		<sequential>
 			<compile-java-cmd />
@@ -287,7 +268,16 @@
 	</macrodef>
 
 	<target name="clean">
-		<clean-cmd />
+		<delete dir="classes" />
+		<delete dir="test-classes" />
+		<delete dir="test-coverage" />
+		<delete dir="test-results" />
+		<delete dir="woven-classes" />
+		<delete dir="${doc.dir}/${ant.project.name}/javadocs" />
+		<delete failonerror="false" file="${deploy.dir}/${jar.file}.jar" />
+		<delete failonerror="false" file="${jar.file}.jar" />
+		<delete failonerror="false" file="${jar.file}-javadoc.jar" />
+		<delete failonerror="false" file="${jar.file}-sources.jar" />
 	</target>
 
 	<target name="compile">

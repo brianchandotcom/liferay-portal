@@ -8,15 +8,9 @@
 	<property name="manifest.bundle.name" value="Liferay Util Taglib" />
 	<property name="manifest.bundle.symbolic.name" value="com.liferay.util.taglib" />
 
-	<macrodef name="clean">
-		<sequential>
-			<clean-cmd>
-				<clean-post>
-					<delete failonerror="false" file="${liferay.home}/osgi/portal/${jar.file}.jar" />
-				</clean-post>
-			</clean-cmd>
-		</sequential>
-	</macrodef>
+	<target name="clean" depends="build-common-java.clean">
+		<delete failonerror="false" file="${liferay.home}/osgi/portal/${jar.file}.jar" />
+	</target>
 
 	<macrodef name="compile-java">
 		<sequential>

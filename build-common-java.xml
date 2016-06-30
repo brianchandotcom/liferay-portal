@@ -112,7 +112,7 @@
 					</uptodate>
 				</not>
 				<then>
-					<jar-macro />
+					<antcall target="jar" />
 
 					<copy if:true="@{copy.jar}" file="@{jar.file}.jar" todir="@{deploy.dir}" preservelastmodified="true" />
 
@@ -122,150 +122,132 @@
 		</sequential>
 	</macrodef>
 
-	<macrodef name="jar-macro">
-		<sequential>
-			<jar-macro-cmd />
-		</sequential>
-	</macrodef>
+	<target depends="compile,init-jar" name="jar" unless="jar.uptodate">
+		<if>
+			<available file="bnd.bnd" />
+			<then>
+				<manifest-helper />
 
-	<macrodef name="jar-macro-cmd">
-		<element name="jar-post" optional="true" />
-		<element name="jar-pre" optional="true" />
+				<bndexpand propertyfile="${project.dir}/common.bnd" />
 
-		<sequential>
-			<if>
-				<not>
-					<uptodate targetfile="${jar.file}.jar">
-						<srcfiles dir="${basedir}" includes="bnd.bnd,build.xml,ivy.xml,src/**/*.*" />
-					</uptodate>
-				</not>
-				<then>
-					<compile-java />
+				<bnd eclipse="false" exceptions="true" failok="false" inherit="true" output="${jar.file}.jar">
+					<bndfiles>
+						<fileset dir=".">
+							<include name="bnd.bnd" />
+						</fileset>
+					</bndfiles>
+					<classpath>
+						<pathelement location="classes" />
+					</classpath>
+					<property name="-sourcepath" value="." />
+				</bnd>
 
-					<jar-pre />
+				<var name="-baseline" unset="true" />
 
-					<if>
-						<available file="bnd.bnd" />
-						<then>
-							<manifest-helper />
+				<if>
+					<not>
+						<equals arg1="${baseline.jar.report.level}" arg2="off" />
+					</not>
+					<then>
+						<loadproperties srcFile="bnd.bnd">
+							<filterchain>
+								<linecontains>
+									<contains value="-baseline" />
+								</linecontains>
+							</filterchain>
+						</loadproperties>
+					</then>
+				</if>
 
-							<bndexpand propertyfile="${project.dir}/common.bnd" />
+				<if>
+					<isset property="-baseline" />
+					<then>
+						<antelope:stringutil property="baseline.file.beginindex" string="${-baseline}">
+							<indexof string="=" />
+						</antelope:stringutil>
 
-							<bnd eclipse="false" exceptions="true" failok="false" inherit="true" output="${jar.file}.jar">
-								<bndfiles>
-									<fileset dir=".">
-										<include name="bnd.bnd" />
-									</fileset>
-								</bndfiles>
-								<classpath>
-									<pathelement location="classes" />
-								</classpath>
-								<property name="-sourcepath" value="." />
-							</bnd>
+						<math
+							datatype="int"
+							operand1="${baseline.file.beginindex}"
+							operand2="1"
+							operation="+"
+							result="baseline.file.beginindex"
+						/>
 
-							<var name="-baseline" unset="true" />
+						<antelope:stringutil property="baseline.file" string="${-baseline}">
+							<substring beginindex="${baseline.file.beginindex}" />
+						</antelope:stringutil>
 
-							<if>
-								<not>
-									<equals arg1="${baseline.jar.report.level}" arg2="off" />
-								</not>
-								<then>
-									<loadproperties srcFile="bnd.bnd">
-										<filterchain>
-											<linecontains>
-												<contains value="-baseline" />
-											</linecontains>
-										</filterchain>
-									</loadproperties>
-								</then>
-							</if>
+						<var name="-baseline" unset="true" />
 
-							<if>
-								<isset property="-baseline" />
-								<then>
-									<antelope:stringutil property="baseline.file.beginindex" string="${-baseline}">
-										<indexof string="=" />
-									</antelope:stringutil>
+						<antelope:stringutil property="baseline.file.name.beginindex" string="${baseline.file}">
+							<lastindexof string="/" />
+						</antelope:stringutil>
 
-									<math
-										datatype="int"
-										operand1="${baseline.file.beginindex}"
-										operand2="1"
-										operation="+"
-										result="baseline.file.beginindex"
-									/>
+						<math
+							datatype="int"
+							operand1="${baseline.file.name.beginindex}"
+							operand2="1"
+							operation="+"
+							result="baseline.file.name.beginindex"
+						/>
 
-									<antelope:stringutil property="baseline.file" string="${-baseline}">
-										<substring beginindex="${baseline.file.beginindex}" />
-									</antelope:stringutil>
+						<antelope:stringutil property="baseline.file.name.endindex" string="${baseline.file}">
+							<lastindexof string="-" />
+						</antelope:stringutil>
 
-									<var name="-baseline" unset="true" />
+						<antelope:stringutil property="baseline.file.name" string="${baseline.file}">
+							<substring beginindex="${baseline.file.name.beginindex}" endindex="${baseline.file.name.endindex}" />
+						</antelope:stringutil>
 
-									<antelope:stringutil property="baseline.file.name.beginindex" string="${baseline.file}">
-										<lastindexof string="/" />
-									</antelope:stringutil>
+						<math
+							datatype="int"
+							operand1="${baseline.file.name.endindex}"
+							operand2="1"
+							operation="+"
+							result="baseline.file.version.beginindex"
+						/>
 
-									<math
-										datatype="int"
-										operand1="${baseline.file.name.beginindex}"
-										operand2="1"
-										operation="+"
-										result="baseline.file.name.beginindex"
-									/>
+						<antelope:stringutil property="baseline.file.version.endindex" string="${baseline.file}">
+							<lastindexof string="." />
+						</antelope:stringutil>
 
-									<antelope:stringutil property="baseline.file.name.endindex" string="${baseline.file}">
-										<lastindexof string="-" />
-									</antelope:stringutil>
+						<antelope:stringutil property="baseline.file.version" string="${baseline.file}">
+							<substring beginindex="${baseline.file.version.beginindex}" endindex="${baseline.file.version.endindex}" />
+						</antelope:stringutil>
 
-									<antelope:stringutil property="baseline.file.name" string="${baseline.file}">
-										<substring beginindex="${baseline.file.name.beginindex}" endindex="${baseline.file.name.endindex}" />
-									</antelope:stringutil>
+						<mirrors-get
+							dest="${baseline.file}"
+							src="${baseline.jar.url}/com/liferay/portal/${baseline.file.name}/${baseline.file.version}/${baseline.file.name}-${baseline.file.version}.jar"
+						/>
+					</then>
+				</if>
 
-									<math
-										datatype="int"
-										operand1="${baseline.file.name.endindex}"
-										operand2="1"
-										operation="+"
-										result="baseline.file.version.beginindex"
-									/>
+				<baseline-jar
+					bndFile="bnd.bnd"
+					bndRootFile="${project.dir}/common.bnd"
+					newJarFile="${jar.file}.jar"
+				/>
+			</then>
+			<else>
+				<antcall target="manifest" />
 
-									<antelope:stringutil property="baseline.file.version.endindex" string="${baseline.file}">
-										<lastindexof string="." />
-									</antelope:stringutil>
+				<jar
+					basedir="classes"
+					jarfile="${jar.file}.jar"
+					manifest="classes/META-INF/MANIFEST.MF"
+				/>
+			</else>
+		</if>
+	</target>
 
-									<antelope:stringutil property="baseline.file.version" string="${baseline.file}">
-										<substring beginindex="${baseline.file.version.beginindex}" endindex="${baseline.file.version.endindex}" />
-									</antelope:stringutil>
-
-									<mirrors-get
-										dest="${baseline.file}"
-										src="${baseline.jar.url}/com/liferay/portal/${baseline.file.name}/${baseline.file.version}/${baseline.file.name}-${baseline.file.version}.jar"
-									/>
-								</then>
-							</if>
-
-							<baseline-jar
-								bndFile="bnd.bnd"
-								bndRootFile="${project.dir}/common.bnd"
-								newJarFile="${jar.file}.jar"
-							/>
-						</then>
-						<else>
-							<antcall target="manifest" />
-
-							<jar
-								basedir="classes"
-								jarfile="${jar.file}.jar"
-								manifest="classes/META-INF/MANIFEST.MF"
-							/>
-						</else>
-					</if>
-
-					<jar-post />
-				</then>
-			</if>
-		</sequential>
-	</macrodef>
+	<target depends="compile" name="init-jar">
+		<condition property="jar.uptodate">
+			<uptodate targetfile="${jar.file}.jar">
+				<srcfiles dir="${basedir}" includes="bnd.bnd,build.xml,ivy.xml,src/**/*.*" />
+			</uptodate>
+		</condition>
+	</target>
 
 	<target name="clean">
 		<delete dir="classes" />
@@ -302,10 +284,6 @@
 		<install-portal-artifact snapshot="true">
 			<attach classifier="sources" file="${artifact.name}-sources.jar" />
 		</install-portal-artifact>
-	</target>
-
-	<target name="jar">
-		<jar-macro />
 	</target>
 
 	<target depends="javadoc" name="jar-javadoc">

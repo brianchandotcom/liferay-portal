@@ -248,8 +248,15 @@ public class HtmlImpl implements Html {
 		for (int i = 0; i < text.length(); i++) {
 			char c = text.charAt(i);
 
-			if ((c > 255) || (c == CharPool.DASH) ||
-				(c == CharPool.UNDERLINE) || Character.isLetterOrDigit(c)) {
+			if ((mode == ESCAPE_MODE_ATTRIBUTE) &&
+				(!_isValidXmlCharacter(c) ||
+				 _isUnicodeCompatibilityCharacter(c))) {
+
+				sb.append(StringPool.SPACE);
+			}
+			else if ((c > 255) || (c == CharPool.DASH) ||
+					 (c == CharPool.UNDERLINE) ||
+					 Character.isLetterOrDigit(c)) {
 
 				sb.append(c);
 			}
@@ -277,7 +284,7 @@ public class HtmlImpl implements Html {
 			}
 		}
 
-		if (sb.length() == text.length()) {
+		if ((mode != ESCAPE_MODE_ATTRIBUTE) && (sb.length() == text.length())) {
 			return text;
 		}
 

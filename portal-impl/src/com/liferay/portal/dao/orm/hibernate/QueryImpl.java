@@ -32,6 +32,8 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import org.hibernate.LockOptions;
 
 /**
@@ -350,6 +352,28 @@ public class QueryImpl implements Query {
 		_query.setTimestamp(name, value);
 
 		return this;
+	}
+
+	@Override
+	public String toString() {
+		StringBundler sb = new StringBundler(7);
+
+		sb.append("{names=");
+		sb.append(Arrays.toString(_names));
+		sb.append(", _query=");
+
+		if (_query != null) {
+			sb.append(_query.toString());
+		}
+		else {
+			sb.append(StringPool.NULL);
+		}
+
+		sb.append(", _strictName=");
+		sb.append(_strictName);
+		sb.append("}");
+
+		return sb.toString();
 	}
 
 	@NotPrivileged

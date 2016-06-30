@@ -221,6 +221,14 @@
 
 	<command name="selectSpecificEvent">
 		<var name="key_eventTitle" value="${eventTitle}" />
+		<var method="selenium#getCurrentHour()" name="currentHour" />
+
+		<if>
+			<equals arg1="${currentHour}" arg2="23" />
+			<then>
+				<var name="eventToday" value="false" />
+			</then>
+		</if>
 
 		<if>
 			<contains string="${eventTitle}" substring="All Day" />

@@ -58,8 +58,15 @@ public class MainParameters {
 	}
 
 	public ExportContext toExportContext() throws IOException {
+		if ((_catalogName == null) || _catalogName.isEmpty()) {
+			return new ExportContext(
+				_getCompanyIds(), _outputDirName,
+				PropsReader.read(getPropertiesFileName()), _schemaName,
+				_writeFile);
+		}
+
 		return new ExportContext(
-			_getCompanyIds(), _outputDirName,
+			_catalogName, _getCompanyIds(), _outputDirName,
 			PropsReader.read(getPropertiesFileName()), _schemaName, _writeFile);
 	}
 

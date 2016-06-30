@@ -1471,6 +1471,58 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="prepare-fix-pack">
+		<attribute default="${app.server.parent.dir}" name="bundles.dir" />
+		<attribute name="fix.pack.zip.url" />
+		<attribute name="patching.tool.zip.url" />
+
+		<sequential>
+			<mirrors-get
+				dest="${basedir}"
+				src="@{patching.tool.zip.url}"
+			/>
+
+			<unzip dest="@{bundles.dir}">
+				<fileset
+					dir="${basedir}"
+					includes="patching-tool*"
+				/>
+			</unzip>
+
+			<chmod perm="a+x">
+				<fileset dir="@{bundles.dir}/patching-tool">
+					<include name="*.sh" />
+				</fileset>
+			</chmod>
+
+			<mirrors-get
+				dest="@{bundles.dir}/patching-tool/patches"
+				src="@{fix.pack.zip.url}"
+			/>
+
+			<local name="fix.pack.file.name" />
+
+			<basename file="@{fix.pack.zip.url}" property="fix.pack.file.name" />
+
+			<check-fix-pack-requirements
+				fix.pack.dir="@{bundles.dir}/patching-tool/patches"
+				fix.pack.file.name="${fix.pack.file.name}"
+			/>
+
+			<execute dir="@{bundles.dir}/patching-tool">
+				patching-tool${file.suffix.bat} auto-discovery
+				patching-tool${file.suffix.bat} install -force
+				patching-tool${file.suffix.bat} update-plugins
+			</execute>
+
+			<local name="patching.tool.file.name" />
+
+			<basename file="@{patching.tool.zip.url}" property="patching.tool.file.name" />
+
+			<delete file="${basedir}/${patching.tool.file.name}" />
+		</sequential>
+	</macrodef>
+
 	<macrodef name="prepare-fix-pack-bundle" >
 		<sequential>
 			<if>
@@ -1489,74 +1541,25 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 					<matches pattern="http" string="${test.build.fix.pack.zip.url}" />
 				</and>
 				<then>
-					<path id="app.server.dir">
-						<dirset dir="${app.server.parent.dir}">
-							<include name="*${app.server.type}-*" />
-						</dirset>
-					</path>
-
-					<property name="app.server.dir" refid="app.server.dir" />
-
 					<mirrors-get
 						dest="${basedir}"
-						src="${test.fix.pack.base.url}/patching-tool/LATEST.txt"
+						src="${test.fix.pack.base.url}/patching-tool/${patching.tool.latest.txt}"
 					/>
 
 					<loadfile
 						property="patching.tool.version"
-						srcFile="LATEST.txt"
+						srcFile="${patching.tool.latest.txt}"
 					/>
 
-					<delete file="${basedir}/LATEST.txt" />
+					<delete file="${basedir}/${patching.tool.latest.txt}" />
 
 					<property name="test.build.patching.tool.zip.url" value="${test.fix.pack.base.url}/patching-tool/patching-tool-${patching.tool.version}.zip" />
 
-					<mirrors-get
-						dest="${basedir}"
-						src="${test.build.patching.tool.zip.url}"
+					<prepare-fix-pack
+						bundles.dir="${app.server.parent.dir}"
+						fix.pack.zip.url="${test.build.fix.pack.zip.url}"
+						patching.tool.zip.url="${test.build.patching.tool.zip.url}"
 					/>
-
-					<unzip dest="${app.server.dir}">
-						<fileset
-							dir="${basedir}"
-							includes="patching-tool*"
-						/>
-					</unzip>
-
-					<chmod perm="a+x">
-						<fileset dir="${app.server.dir}/patching-tool">
-							<include name="*.sh" />
-						</fileset>
-					</chmod>
-
-					<mirrors-get
-						dest="${app.server.dir}/patching-tool/patches"
-						src="${test.build.fix.pack.zip.url}"
-					/>
-
-					<propertyregex
-						input="${test.build.fix.pack.zip.url}"
-						property="test.build.fix.pack.zip.file.name"
-						regexp=".+/"
-						replace=""
-					/>
-
-					<check-fix-pack-requirements
-						fix.pack.dir="${app.server.dir}/patching-tool/patches"
-						fix.pack.file.name="${test.build.fix.pack.zip.file.name}"
-					/>
-
-					<execute dir="${app.server.dir}/patching-tool">
-						patching-tool${file.suffix.bat} auto-discovery
-						patching-tool${file.suffix.bat} install -force
-						patching-tool${file.suffix.bat} update-plugins
-					</execute>
-
-					<antelope:stringutil property="patching.tool.zip.file.name" string="${test.build.patching.tool.zip.url}">
-						<antelope:replace regex=".+/patching-tool-" replacement="patching-tool-" />
-					</antelope:stringutil>
-
-					<delete file="${basedir}/${patching.tool.zip.file.name}" />
 				</then>
 			</if>
 		</sequential>
@@ -6722,74 +6725,9 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 					src="${test.build.bundle.zip.url}"
 				/>
 
-				<unzip
-					dest="${app.server.parent.dir}"
-					src="${tstamp.value}.zip"
-				>
-					<patternset
-						includes="liferay-*/${app.server.name}-*/**"
-					/>
-					<mapper
-						from="[^/]+/(.*)"
-						to="\1"
-						type="regexp"
-					/>
-				</unzip>
-
-				<unzip
-					dest="${app.server.parent.dir}"
-					src="${tstamp.value}.zip"
-				>
-					<patternset
-						includes="liferay-*/deploy/**"
-					/>
-					<mapper
-						from="[^/]+/(.*)"
-						to="${app.server.parent.dir}//\1"
-						type="regexp"
-					/>
-				</unzip>
-
-				<unzip
-					dest="${app.server.parent.dir}"
-					src="${tstamp.value}.zip"
-				>
-					<patternset
-						includes="liferay-*/osgi/**"
-					/>
-					<mapper
-						from="[^/]+/(.*)"
-						to="${app.server.parent.dir}//\1"
-						type="regexp"
-					/>
-				</unzip>
-
-				<unzip
-					dest="${app.server.parent.dir}"
-					src="${tstamp.value}.zip"
-				>
-					<patternset
-						includes="liferay-*/patching-tool/patches/**"
-					/>
-					<mapper
-						from="[^/]+/(.*)"
-						to="${app.server.dir}//\1"
-						type="regexp"
-					/>
-				</unzip>
-
-				<unzip
-					dest="${app.server.parent.dir}"
-					src="${tstamp.value}.zip"
-				>
-					<patternset
-						includes="liferay-*/tools/**"
-					/>
-					<mapper
-						from="[^/]+/(.*)"
-						to="${app.server.parent.dir}//\1"
-						type="regexp"
-					/>
+				<unzip dest="${app.server.parent.dir}" src="${tstamp.value}.zip">
+					<patternset includes="liferay-*/**" />
+					<mapper from="[^/]+/(.*)" to="\1" type="regexp" />
 				</unzip>
 
 				<delete file="${tstamp.value}.zip" />

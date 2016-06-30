@@ -69,8 +69,6 @@ if (!ignoreRequestValue) {
 				input: '#<%= id %>assetTagNames',
 			</c:if>
 
-			instanceVar: '<portlet:namespace /><%= id %>',
-
 			<%
 			String portletId = PortletProviderUtil.getPortletId(AssetTag.class.getName(), PortletProvider.Action.BROWSE);
 			%>
@@ -78,8 +76,6 @@ if (!ignoreRequestValue) {
 			<c:if test="<%= Validator.isNotNull(portletId) %>">
 				namespace: '<%= PortalUtil.getPortletNamespace(portletId) %>',
 			</c:if>
-
-			portalModelResource: <%= Validator.isNotNull(className) && (ResourceActionsUtil.isPortalModelResource(className) || className.equals(Group.class.getName())) %>,
 
 			<%
 			PortletURL portletURL = PortletProviderUtil.getPortletURL(request, AssetTag.class.getName(), PortletProvider.Action.BROWSE);

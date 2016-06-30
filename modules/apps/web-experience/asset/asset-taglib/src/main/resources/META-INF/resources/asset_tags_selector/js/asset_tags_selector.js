@@ -5,10 +5,6 @@ AUI.add(
 
 		var AArray = A.Array;
 
-		var LString = Lang.String;
-
-		var CSS_INPUT_NODE = 'lfr-tag-selector-input';
-
 		var MAP_INVALID_CHARACTERS = AArray.hash(
 			[
 				'"',
@@ -40,24 +36,13 @@ AUI.add(
 			]
 		);
 
-		var NAME = 'tagselector';
-
-		var STR_BLANK = '';
-
 		/**
 		 * OPTIONS
 		 *
 		 * Required
-		 * className (string): The class name of the current asset.
 		 * curEntries (string): The current tags.
-		 * instanceVar {string}: The instance variable for this class.
 		 * hiddenInput {string}: The hidden input used to pass in the current tags.
-		 * textInput {string}: The text input for users to add tags.
-		 * summarySpan {string}: The summary span to show the current tags.
 		 *
-		 * Optional
-		 * focus {boolean}: Whether the text input should be focused.
-		 * portalModelResource {boolean}: Whether the asset model is on the portal level.
 		 */
 
 		var AssetTaglibTagsSelector = A.Component.create(
@@ -69,10 +54,6 @@ AUI.add(
 
 					allowAnyEntry: {
 						value: true
-					},
-
-					className: {
-						value: null
 					},
 
 					curEntries: {
@@ -113,20 +94,8 @@ AUI.add(
 						}
 					},
 
-					instanceVar: {
-						value: ''
-					},
-
-					matchKey: {
-						value: 'value'
-					},
-
 					namespace: {
 						validator: Lang.isString
-					},
-
-					portalModelResource: {
-						value: false
 					},
 
 					portletURL: {
@@ -142,7 +111,7 @@ AUI.add(
 
 				EXTENDS: A.TextboxList,
 
-				NAME: NAME,
+				NAME: 'tagselector',
 
 				prototype: {
 					renderUI: function() {
@@ -152,7 +121,7 @@ AUI.add(
 
 						instance._renderIcons();
 
-						instance.inputNode.addClass(CSS_INPUT_NODE);
+						instance.inputNode.addClass('lfr-tag-selector-input');
 
 						instance._overlayAlign.node = instance.entryHolder;
 					},
@@ -189,7 +158,7 @@ AUI.add(
 					_addEntries: function() {
 						var instance = this;
 
-						var text = LString.escapeHTML(instance.inputNode.val());
+						var text = Lang.String.escapeHTML(instance.inputNode.val());
 
 						if (text) {
 							if (text.indexOf(',') > -1) {
@@ -237,7 +206,7 @@ AUI.add(
 										var key = term;
 
 										if (term == '*') {
-											term = STR_BLANK;
+											term = '';
 										}
 
 										var serviceQueryObj = serviceQueryCache[key];
@@ -248,7 +217,7 @@ AUI.add(
 												groupIds: instance.get('groupIds'),
 												name: '%' + term + '%',
 												start: 0,
-												tagProperties: STR_BLANK
+												tagProperties: ''
 											};
 
 											serviceQueryCache[key] = serviceQueryObj;
@@ -267,12 +236,6 @@ AUI.add(
 						);
 
 						return dataSource;
-					},
-
-					_namespace: function(name) {
-						var instance = this;
-
-						return instance.get('namespace');
 					},
 
 					_onAddEntryClick: function(event) {

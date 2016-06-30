@@ -99,6 +99,7 @@ import org.junit.runner.RunWith;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.portlet.MockPortletRequest;
+import org.springframework.mock.web.portlet.MockPortletResponse;
 
 /**
  * @author Julio Camarero
@@ -1112,7 +1113,8 @@ public class AssetPublisherExportImportTest
 
 		AssetPublisherDisplayContext assetPublisherDisplayContext =
 			new AssetPublisherDisplayContext(
-				mockHttpServletRequest, portletPreferences);
+				new MockPortletRequest(), new MockPortletResponse(),
+				portletPreferences);
 
 		SearchContainer<AssetEntry> searchContainer = new SearchContainer<>();
 

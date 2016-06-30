@@ -22,10 +22,8 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
-import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.toolbar.contributor.PortletToolbarContributor;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
@@ -108,7 +106,7 @@ public class AssetPublisherPortletToolbarContributor
 
 		AssetPublisherDisplayContext assetPublisherDisplayContext =
 			new AssetPublisherDisplayContext(
-				PortalUtil.getHttpServletRequest(portletRequest),
+				portletRequest, portletResponse,
 				portletRequest.getPreferences());
 
 		if (!assetPublisherDisplayContext.isShowAddContentButton() ||
@@ -124,9 +122,7 @@ public class AssetPublisherPortletToolbarContributor
 		}
 
 		Map<Long, Map<String, PortletURL>> scopeAddPortletURLs =
-			_getScopeAddPortletURLs(
-				assetPublisherDisplayContext, portletRequest, portletResponse,
-				1);
+			assetPublisherDisplayContext.getScopeAddPortletURLs(1);
 
 		if (MapUtil.isEmpty(scopeAddPortletURLs)) {
 			return;
@@ -300,63 +296,6 @@ public class AssetPublisherPortletToolbarContributor
 		urlMenuItem.setUseDialog(true);
 
 		return urlMenuItem;
-	}
-
-	private Map<Long, Map<String, PortletURL>> _getScopeAddPortletURLs(
-			AssetPublisherDisplayContext assetPublisherDisplayContext,
-			PortletRequest portletRequest, PortletResponse portletResponse,
-			int max)
-		throws Exception {
-
-		long[] groupIds = assetPublisherDisplayContext.getGroupIds();
-
-		if (groupIds.length == 0) {
-			return Collections.emptyMap();
-		}
-
-		Map<Long, Map<String, PortletURL>> scopeAddPortletURLs = new HashMap();
-
-		LiferayPortletResponse liferayPortletResponse =
-			(LiferayPortletResponse)portletResponse;
-
-		PortletURL redirectURL = liferayPortletResponse.createRenderURL();
-
-		redirectURL.setParameter(
-			"hideDefaultSuccessMessage", Boolean.TRUE.toString());
-		redirectURL.setParameter("mvcPath", "/add_asset_redirect.jsp");
-
-		LiferayPortletRequest liferayPortletRequest =
-			(LiferayPortletRequest)portletRequest;
-
-		PortletURL currentURLObj = PortletURLUtil.getCurrent(
-			liferayPortletRequest, liferayPortletResponse);
-
-		redirectURL.setParameter("redirect", currentURLObj.toString());
-
-		redirectURL.setWindowState(LiferayWindowState.POP_UP);
-
-		String redirect = redirectURL.toString();
-
-		for (long groupId : groupIds) {
-			Map<String, PortletURL> addPortletURLs =
-				AssetUtil.getAddPortletURLs(
-					liferayPortletRequest, liferayPortletResponse, groupId,
-					assetPublisherDisplayContext.getClassNameIds(),
-					assetPublisherDisplayContext.getClassTypeIds(),
-					assetPublisherDisplayContext.getAllAssetCategoryIds(),
-					assetPublisherDisplayContext.getAllAssetTagNames(),
-					redirect);
-
-			if (MapUtil.isNotEmpty(addPortletURLs)) {
-				scopeAddPortletURLs.put(groupId, addPortletURLs);
-			}
-
-			if (scopeAddPortletURLs.size() > max) {
-				break;
-			}
-		}
-
-		return scopeAddPortletURLs;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

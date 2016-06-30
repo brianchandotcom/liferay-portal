@@ -15,6 +15,7 @@
 package com.liferay.gradle.plugins;
 
 import com.liferay.gradle.plugins.util.GradleUtil;
+import com.liferay.gradle.util.Validator;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,6 +25,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
+
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.gradle.api.Plugin;
 import org.gradle.api.UncheckedIOException;
@@ -59,6 +64,22 @@ public class LiferaySettingsPlugin implements Plugin<Settings> {
 		}
 	}
 
+	protected Set<Path> getDirPaths(String key, Path rootDirPath) {
+		String dirNamesString = System.getProperty(key);
+
+		if (Validator.isNull(dirNamesString)) {
+			return Collections.emptySet();
+		}
+
+		Set<Path> dirPaths = new HashSet<>();
+
+		for (String dirName : dirNamesString.split(",")) {
+			dirPaths.add(rootDirPath.resolve(dirName));
+		}
+
+		return dirPaths;
+	}
+
 	protected void includeProject(
 		Settings settings, Path projectDirPath, Path projectPathRootDirPath) {
 
@@ -80,8 +101,8 @@ public class LiferaySettingsPlugin implements Plugin<Settings> {
 			final Path projectPathRootDirPath)
 		throws IOException {
 
-		final String ignoreModuleType = System.getProperty(
-			"ignore.module.type");
+		final Set<Path> excludedDirPaths = getDirPaths(
+			"build.exclude.dirs", rootDirPath);
 		final boolean modulesOnlyBuild = Boolean.getBoolean(
 			"modules.only.build");
 		final boolean portalBuild = Boolean.getBoolean("portal.build");
@@ -98,11 +119,7 @@ public class LiferaySettingsPlugin implements Plugin<Settings> {
 						return FileVisitResult.CONTINUE;
 					}
 
-					Path fileName = dirPath.getFileName();
-
-					if (ignoreModuleType != null &&
-						ignoreModuleType.equals(fileName.toString())) {
-
+					if (excludedDirPaths.contains(dirPath)) {
 						return FileVisitResult.SKIP_SUBTREE;
 					}
 

@@ -62,6 +62,14 @@ if (filterManageableOrganizations && organizations.isEmpty()) {
 	showList = false;
 }
 
+PortletURL homeURL = renderResponse.createRenderURL();
+
+homeURL.setParameter("mvcPath", "/view.jsp");
+homeURL.setParameter("toolbarItem", "view-all-organizations");
+homeURL.setParameter("usersListView", UserConstants.LIST_VIEW_FLAT_ORGANIZATIONS);
+
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "users-and-organizations"), homeURL.toString());
+
 if (organization != null) {
 	UsersAdminUtil.addPortletBreadcrumbEntries(organization, request, renderResponse);
 }

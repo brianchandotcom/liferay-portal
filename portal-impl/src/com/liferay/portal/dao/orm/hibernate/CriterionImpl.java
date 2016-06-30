@@ -15,6 +15,8 @@
 package com.liferay.portal.dao.orm.hibernate;
 
 import com.liferay.portal.kernel.dao.orm.Criterion;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 
 /**
  * @author Brian Wing Shun Chan
@@ -31,11 +33,20 @@ public class CriterionImpl implements Criterion {
 
 	@Override
 	public String toString() {
-		if (null == getWrappedCriterion()) {
-			return super.toString();
+		StringBundler sb = new StringBundler(3);
+
+		sb.append("{_criterion=");
+
+		if (_criterion != null) {
+			sb.append(_criterion.toString());
 		}
-		
-		return "Wrapped Criterion: " + getWrappedCriterion().toString();
+		else {
+			sb.append(StringPool.NULL);
+		}
+
+		sb.append("}");
+
+		return sb.toString();
 	}
 
 	private final org.hibernate.criterion.Criterion _criterion;

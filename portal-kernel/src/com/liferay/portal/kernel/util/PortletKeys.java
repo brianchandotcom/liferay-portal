@@ -83,7 +83,8 @@ public class PortletKeys {
 	public static final String LOGIN =
 		"com_liferay_login_web_portlet_LoginPortlet";
 
-	public static final String MAIL = "1_WAR_mailportlet";
+	public static final String MAIL =
+		"com_liferay_mail_web_portlet_MailPortlet";
 
 	public static final String MARKETPLACE_APP_MANAGER =
 		"3_WAR_marketplaceportlet";

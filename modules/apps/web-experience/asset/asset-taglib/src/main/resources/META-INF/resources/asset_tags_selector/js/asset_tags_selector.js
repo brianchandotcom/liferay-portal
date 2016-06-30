@@ -314,11 +314,12 @@ AUI.add(
 
 						event.domEvent.preventDefault();
 
-						var uri = instance.get('portletURL');
-
-						uri = Liferay.Util.addParams(instance.get('namespace') + 'eventName=' + instance.get('namespace') + 'selectTag', uri);
-
-						uri = Liferay.Util.addParams(instance.get('namespace') + 'selectedTags=' + instance.entries.keys.join(), uri);
+						var uri = Lang.sub(
+							decodeURIComponent(instance.get('portletURL')),
+							{
+								selectedTags: instance.entries.keys.join()
+							}
+						);
 
 						var itemSelectorDialog = new A.LiferayItemSelectorDialog(
 							{

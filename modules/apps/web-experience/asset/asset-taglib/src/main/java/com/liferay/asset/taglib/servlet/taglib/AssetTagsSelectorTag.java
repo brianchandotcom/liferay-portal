@@ -18,6 +18,9 @@ import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagServiceUtil;
 import com.liferay.asset.taglib.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -28,6 +31,8 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.List;
+
+import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
@@ -167,6 +172,29 @@ public class AssetTagsSelectorTag extends IncludeTag {
 		return _PAGE;
 	}
 
+	protected PortletURL getPortletURL() {
+		try {
+			PortletURL portletURL = PortletProviderUtil.getPortletURL(
+				request, AssetTag.class.getName(),
+				PortletProvider.Action.BROWSE);
+
+			if (portletURL == null) {
+				return null;
+			}
+
+			portletURL.setParameter("eventName", "selectTag");
+			portletURL.setParameter("selectedTags", "{selectedTags}");
+
+			portletURL.setWindowState(LiferayWindowState.POP_UP);
+
+			return portletURL;
+		}
+		catch (Exception e) {
+		}
+
+		return null;
+	}
+
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute(
@@ -185,6 +213,8 @@ public class AssetTagsSelectorTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-asset:asset-tags-selector:hiddenInput", _hiddenInput);
 		request.setAttribute("liferay-asset:asset-tags-selector:id", getId());
+		request.setAttribute(
+			"liferay-asset:asset-tags-selector:portletURL", getPortletURL());
 		request.setAttribute(
 			"liferay-asset:asset-tags-selector:removeCallback",
 			String.valueOf(_removeCallback));

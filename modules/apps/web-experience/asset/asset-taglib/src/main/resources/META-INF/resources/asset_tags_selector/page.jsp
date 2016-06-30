@@ -24,6 +24,7 @@ String curTags = GetterUtil.getString((String)request.getAttribute("liferay-asse
 long[] groupIds = (long[])request.getAttribute("liferay-asset:asset-tags-selector:groupIds");
 String hiddenInput = (String)request.getAttribute("liferay-asset:asset-tags-selector:hiddenInput");
 String id = GetterUtil.getString((String)request.getAttribute("liferay-asset:asset-tags-selector:id"));
+PortletURL portletURL = (PortletURL)request.getAttribute("liferay-asset:asset-tags-selector:portletURL");
 String removeCallback = GetterUtil.getString((String)request.getAttribute("liferay-asset:asset-tags-selector:removeCallback"));
 %>
 
@@ -60,16 +61,7 @@ String removeCallback = GetterUtil.getString((String)request.getAttribute("lifer
 				namespace: '<%= PortalUtil.getPortletNamespace(portletId) %>',
 			</c:if>
 
-			<%
-			PortletURL portletURL = PortletProviderUtil.getPortletURL(request, AssetTag.class.getName(), PortletProvider.Action.BROWSE);
-			%>
-
 			<c:if test="<%= portletURL != null %>">
-
-				<%
-				portletURL.setWindowState(LiferayWindowState.POP_UP);
-				%>
-
 				portletURL: '<%= portletURL.toString() %>'
 			</c:if>
 		}

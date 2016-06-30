@@ -98,6 +98,44 @@ public class AssetTagsSelectorTag extends IncludeTag {
 		_removeCallback = null;
 	}
 
+	protected long[] getGroupIds() {
+		if (_groupIds != null) {
+			return _groupIds;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long[] groupIds = null;
+
+		Group group = themeDisplay.getScopeGroup();
+
+		if (group.isLayout()) {
+			groupIds = new long[] {group.getParentGroupId()};
+		}
+		else {
+			groupIds = new long[] {group.getGroupId()};
+		}
+
+		if (group.getParentGroupId() != themeDisplay.getCompanyGroupId()) {
+			groupIds = ArrayUtil.append(
+				groupIds, themeDisplay.getCompanyGroupId());
+		}
+
+		return groupIds;
+	}
+
+	protected String getId() {
+		if (Validator.isNotNull(_id)) {
+			return _id;
+		}
+
+		String randomKey = PortalUtil.generateRandomKey(
+			request, "taglib_ui_asset_tags_selector_page");
+
+		return randomKey + StringPool.UNDERLINE;
+	}
+
 	@Override
 	protected String getPage() {
 		return _PAGE;
@@ -105,14 +143,6 @@ public class AssetTagsSelectorTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		String id = _id;
-
-		if (Validator.isNull(id)) {
-			id = PortalUtil.generateRandomKey(
-				request,
-				"taglib_ui_asset_tags_selector_page") + StringPool.UNDERLINE;
-		}
-
 		request.setAttribute(
 			"liferay-asset:asset-tags-selector:addCallback",
 			String.valueOf(_addCallback));
@@ -130,41 +160,16 @@ public class AssetTagsSelectorTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-asset:asset-tags-selector:curTags", _curTags);
 		request.setAttribute(
-			"liferay-asset:asset-tags-selector:removeCallback",
-			String.valueOf(_removeCallback));
-
-		if (_groupIds == null) {
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-			long[] groupIds = null;
-
-			Group group = themeDisplay.getScopeGroup();
-
-			if (group.isLayout()) {
-				groupIds = new long[] {group.getParentGroupId()};
-			}
-			else {
-				groupIds = new long[] {group.getGroupId()};
-			}
-
-			if (group.getParentGroupId() != themeDisplay.getCompanyGroupId()) {
-				groupIds = ArrayUtil.append(
-					groupIds, themeDisplay.getCompanyGroupId());
-			}
-
-			_groupIds = groupIds;
-		}
-
-		request.setAttribute(
-			"liferay-asset:asset-tags-selector:groupIds", _groupIds);
-
+			"liferay-asset:asset-tags-selector:groupIds", getGroupIds());
 		request.setAttribute(
 			"liferay-asset:asset-tags-selector:hiddenInput", _hiddenInput);
-		request.setAttribute("liferay-asset:asset-tags-selector:id", id);
+		request.setAttribute("liferay-asset:asset-tags-selector:id", getId());
 		request.setAttribute(
 			"liferay-asset:asset-tags-selector:ignoreRequestValue",
 			_ignoreRequestValue);
+		request.setAttribute(
+			"liferay-asset:asset-tags-selector:removeCallback",
+			String.valueOf(_removeCallback));
 	}
 
 	private static final String _PAGE = "/asset_tags_selector/page.jsp";

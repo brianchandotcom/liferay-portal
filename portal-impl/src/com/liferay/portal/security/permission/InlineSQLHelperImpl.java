@@ -668,6 +668,8 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		StringBundler defaultResourceForGroupAdmin = new StringBundler(3);
 
 		if (Validator.isNotNull(groupIdField) && (groupIds.length > 1)) {
+			boolean isGroupAdmin = false;
+
 			StringBundler defaultResource = new StringBundler(4);
 
 			defaultResource.append("(ResourcePermission.primKeyId = 0) AND ");
@@ -684,15 +686,21 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 				if (!isEnabled(0, groupIds[i])) {
 					groupAdmin.append(groupIds[i]);
 					groupAdmin.append(',');
+					isGroupAdmin = true;
 				}
 			}
 
 			groupAdmin.setIndex(groupAdmin.index() - 1);
 			groupAdmin.append(")");
 
-			defaultResourceForGroupAdmin.append(defaultResource);
-			defaultResourceForGroupAdmin.append(" AND ");
-			defaultResourceForGroupAdmin.append(groupAdmin);
+			if (isGroupAdmin) {
+				defaultResourceForGroupAdmin.append(defaultResource);
+				defaultResourceForGroupAdmin.append(" AND ");
+				defaultResourceForGroupAdmin.append(groupAdmin);
+			}
+			else {
+				defaultResourceForGroupAdmin.append("[$FALSE$]");
+			}
 		}
 		else {
 			defaultResourceForGroupAdmin.append("[$FALSE$]");

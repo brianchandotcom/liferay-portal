@@ -101,42 +101,6 @@
 		</sequential>
 	</macrodef>
 
-	<target depends="build-common-java.init-jar" name="init-jar">
-		<ant dir="../util-bridges" inheritAll="false" target="jar" />
-		<ant dir="../util-java" inheritAll="false" target="jar" />
-		<ant dir="../util-taglib" inheritAll="false" target="jar" />
-
-		<property name="portal.deploy.dependencies.dir" value="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies" />
-
-		<for list="1,2,3,4,5,6,7,8,9" param="index">
-			<sequential>
-				<if>
-					<available file="${portal.deploy.dependencies.dir}/plugins@{index}" />
-					<then>
-						<fileset dir="${portal.deploy.dependencies.dir}/plugins@{index}" id="plugins@{index}.wars">
-							<include name="*.war" />
-						</fileset>
-
-						<pathconvert pathsep="," property="plugins@{index}.wars.list" refid="plugins@{index}.wars">
-							<flattenmapper />
-						</pathconvert>
-
-						<if>
-							<not>
-								<uptodate targetfile="${jar.file}.jar">
-									<srcfiles dir="${portal.deploy.dependencies.dir}/plugins@{index}" includes="**/*.*" />
-								</uptodate>
-							</not>
-							<then>
-								<echo file="${portal.deploy.dependencies.dir}/plugins@{index}/wars.txt">${plugins@{index}.wars.list}</echo>
-							</then>
-						</if>
-					</then>
-				</if>
-			</sequential>
-		</for>
-	</target>
-
 	<target name="build-alloy-taglib-jar">
 		<if>
 			<not>
@@ -701,6 +665,42 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 		</java>
 
 		<delete file="ServiceBuilder.temp" />
+	</target>
+
+	<target depends="build-common-java.init-jar" name="init-jar">
+		<ant dir="../util-bridges" inheritAll="false" target="jar" />
+		<ant dir="../util-java" inheritAll="false" target="jar" />
+		<ant dir="../util-taglib" inheritAll="false" target="jar" />
+
+		<property name="portal.deploy.dependencies.dir" value="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies" />
+
+		<for list="1,2,3,4,5,6,7,8,9" param="index">
+			<sequential>
+				<if>
+					<available file="${portal.deploy.dependencies.dir}/plugins@{index}" />
+					<then>
+						<fileset dir="${portal.deploy.dependencies.dir}/plugins@{index}" id="plugins@{index}.wars">
+							<include name="*.war" />
+						</fileset>
+
+						<pathconvert pathsep="," property="plugins@{index}.wars.list" refid="plugins@{index}.wars">
+							<flattenmapper />
+						</pathconvert>
+
+						<if>
+							<not>
+								<uptodate targetfile="${jar.file}.jar">
+									<srcfiles dir="${portal.deploy.dependencies.dir}/plugins@{index}" includes="**/*.*" />
+								</uptodate>
+							</not>
+							<then>
+								<echo file="${portal.deploy.dependencies.dir}/plugins@{index}/wars.txt">${plugins@{index}.wars.list}</echo>
+							</then>
+						</if>
+					</then>
+				</if>
+			</sequential>
+		</for>
 	</target>
 
 	<target name="prepare-upgrade-table">

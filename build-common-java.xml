@@ -122,6 +122,51 @@
 		</sequential>
 	</macrodef>
 
+	<target name="clean">
+		<delete dir="classes" />
+		<delete dir="test-classes" />
+		<delete dir="test-coverage" />
+		<delete dir="test-results" />
+		<delete dir="woven-classes" />
+		<delete dir="${doc.dir}/${ant.project.name}/javadocs" />
+		<delete failonerror="false" file="${deploy.dir}/${jar.file}.jar" />
+		<delete failonerror="false" file="${jar.file}.jar" />
+		<delete failonerror="false" file="${jar.file}-javadoc.jar" />
+		<delete failonerror="false" file="${jar.file}-sources.jar" />
+	</target>
+
+	<target name="compile">
+		<compile-java />
+	</target>
+
+	<target name="deploy">
+		<deploy
+			deploy.dir="${deploy.dir}"
+			jar.file="${jar.file}"
+			src.dir="${basedir}"
+		/>
+	</target>
+
+	<target depends="compile" name="init-jar">
+		<condition property="jar.uptodate">
+			<uptodate targetfile="${jar.file}.jar">
+				<srcfiles dir="${basedir}" includes="bnd.bnd,build.xml,ivy.xml,src/**/*.*" />
+			</uptodate>
+		</condition>
+	</target>
+
+	<target depends="jar,jar-sources" name="install-portal-release">
+		<install-portal-artifact>
+			<attach classifier="sources" file="${artifact.name}-sources.jar" />
+		</install-portal-artifact>
+	</target>
+
+	<target depends="jar,jar-sources" name="install-portal-snapshot">
+		<install-portal-artifact snapshot="true">
+			<attach classifier="sources" file="${artifact.name}-sources.jar" />
+		</install-portal-artifact>
+	</target>
+
 	<target depends="compile,init-jar" name="jar" unless="jar.uptodate">
 		<if>
 			<available file="bnd.bnd" />
@@ -239,51 +284,6 @@
 				/>
 			</else>
 		</if>
-	</target>
-
-	<target depends="compile" name="init-jar">
-		<condition property="jar.uptodate">
-			<uptodate targetfile="${jar.file}.jar">
-				<srcfiles dir="${basedir}" includes="bnd.bnd,build.xml,ivy.xml,src/**/*.*" />
-			</uptodate>
-		</condition>
-	</target>
-
-	<target name="clean">
-		<delete dir="classes" />
-		<delete dir="test-classes" />
-		<delete dir="test-coverage" />
-		<delete dir="test-results" />
-		<delete dir="woven-classes" />
-		<delete dir="${doc.dir}/${ant.project.name}/javadocs" />
-		<delete failonerror="false" file="${deploy.dir}/${jar.file}.jar" />
-		<delete failonerror="false" file="${jar.file}.jar" />
-		<delete failonerror="false" file="${jar.file}-javadoc.jar" />
-		<delete failonerror="false" file="${jar.file}-sources.jar" />
-	</target>
-
-	<target name="compile">
-		<compile-java />
-	</target>
-
-	<target name="deploy">
-		<deploy
-			deploy.dir="${deploy.dir}"
-			jar.file="${jar.file}"
-			src.dir="${basedir}"
-		/>
-	</target>
-
-	<target depends="jar,jar-sources" name="install-portal-release">
-		<install-portal-artifact>
-			<attach classifier="sources" file="${artifact.name}-sources.jar" />
-		</install-portal-artifact>
-	</target>
-
-	<target depends="jar,jar-sources" name="install-portal-snapshot">
-		<install-portal-artifact snapshot="true">
-			<attach classifier="sources" file="${artifact.name}-sources.jar" />
-		</install-portal-artifact>
 	</target>
 
 	<target depends="javadoc" name="jar-javadoc">

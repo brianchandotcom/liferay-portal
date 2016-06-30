@@ -165,6 +165,12 @@ public class HtmlImpl implements Html {
 					break;
 			}
 
+			if (!_isValidXmlCharacter(c) ||
+				_isUnicodeCompatibilityCharacter(c)) {
+
+				replacement = StringPool.SPACE;
+			}
+
 			if (replacement != null) {
 				if (sb == null) {
 					sb = new StringBundler();
@@ -830,6 +836,28 @@ public class HtmlImpl implements Html {
 		}
 
 		return pos;
+	}
+
+	private boolean _isUnicodeCompatibilityCharacter(char c) {
+		if (((c >= '\u007f') && (c <= '\u0084')) ||
+			((c >= '\u0086') && (c <= '\u009f')) ||
+			((c >= '\ufdd0') && (c <= '\ufdef'))) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isValidXmlCharacter(char c) {
+		if ((c == '\u0009') || (c == CharPool.NEW_LINE) ||
+			(c == CharPool.RETURN) || ((c >= '\u0020') && (c <= '\ud7ff')) ||
+			((c >= '\ue000') && (c <= '\ufffd'))) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final String[] _MS_WORD_HTML = new String[] {

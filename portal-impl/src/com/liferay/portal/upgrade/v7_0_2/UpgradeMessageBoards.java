@@ -28,7 +28,7 @@ public class UpgradeMessageBoards extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		StringBundler sb  = new StringBundler();
+		StringBundler sb = new StringBundler();
 
 		sb.append("select MBThread.groupId, MBDiscussion.discussionId from ");
 		sb.append("MBDiscussion inner join MBThread on MBDiscussion.threadId ");

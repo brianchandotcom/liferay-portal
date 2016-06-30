@@ -16,6 +16,7 @@ package com.liferay.portal.upgrade.v7_0_2;
 
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -27,16 +28,19 @@ public class UpgradeMessageBoards extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		StringBundler sb  = new StringBundler();
+
+		sb.append("select MBThread.groupId, MBDiscussion.discussionId from ");
+		sb.append("MBDiscussion inner join MBThread on MBDiscussion.threadId ");
+		sb.append("= MBThread.threadId where MBDiscussion.groupId = 0");
+
 		try (PreparedStatement ps1 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
-					"update MBDiscussion set groupId = ? where " +
-						"discussionId = ?");
+					"update MBDiscussion set groupId = ? where discussionId " +
+						"= ?");
 			PreparedStatement ps2 = connection.prepareStatement(
-				"select MBThread.groupId, MBDiscussion.discussionId from " +
-					"MBDiscussion inner join MBThread on " +
-						"MBDiscussion.threadId = MBThread.threadId where " +
-							"MBDiscussion.groupId = 0")) {
+				sb.toString())) {
 
 			try (ResultSet rs = ps2.executeQuery()) {
 				while (rs.next()) {

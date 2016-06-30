@@ -7,7 +7,7 @@
 					combine: Liferay.AUI.getCombine(),
 					modules: {
 						'liferay-asset-taglib-tags-selector': {
-							path: 'asset_tags_selector/js/asset_tags_selector.js',
+							path: 'asset_tags_selector/js/asset_taglib_tags_selector.js',
 							requires: [
 								'aui-io-plugin-deprecated',
 								'aui-live-search-deprecated',

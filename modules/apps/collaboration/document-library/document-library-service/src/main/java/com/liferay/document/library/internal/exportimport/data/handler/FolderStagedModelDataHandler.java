@@ -14,7 +14,6 @@
 
 package com.liferay.document.library.internal.exportimport.data.handler;
 
-import com.liferay.document.library.internal.lar.FolderUtil;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFolder;

@@ -381,13 +381,17 @@ public class VerifyPermission extends VerifyProcess {
 		throws Exception {
 
 		try {
-			runSQL ("alter table ResourcePermission add plid NUMBER null");
-
-			runSQL("create index tmp_res_plid on ResourcePermission(plid)");
+			runSQL("alter table ResourcePermission drop column plid");
 		}
 		catch (SQLException sqle) {
-			runSQL("update ResourcePermission set plid = null");
+			if (_log.isDebugEnabled()) {
+				_log.debug(sqle, sqle);
+			}
 		}
+
+		runSQL("alter table ResourcePermission add plid NUMBER null");
+
+		runSQL("create index tmp_res_plid on ResourcePermission(plid)");
 
 		StringBundler sb = new StringBundler(6);
 
@@ -395,9 +399,8 @@ public class VerifyPermission extends VerifyProcess {
 		sb.append("(select SUBSTR(ResourcePermission.primKey, 0,");
 		sb.append("INSTR(ResourcePermission.primKey, '_LAYOUT_') -1) from ");
 		sb.append("ResourcePermission where r1.resourcePermissionId = ");
-		sb.append("ResourcePermission.resourcePermissionId");
-		sb.append(" and ResourcePermission.primKey ");
-		sb.append("like '%_LAYOUT_%')");
+		sb.append("ResourcePermission.resourcePermissionId and ");
+		sb.append("ResourcePermission.primKey like '%_LAYOUT_%')");
 
 		runSQL(sb.toString());
 
@@ -437,7 +440,7 @@ public class VerifyPermission extends VerifyProcess {
 			runSQL(sb.toString());
 		}
 
-		runSQL("alter table ResourcePermission drop column plid;");
+		runSQL("alter table ResourcePermission drop column plid");
 	}
 
 	protected boolean isPrivateLayout(String name, String primKey)

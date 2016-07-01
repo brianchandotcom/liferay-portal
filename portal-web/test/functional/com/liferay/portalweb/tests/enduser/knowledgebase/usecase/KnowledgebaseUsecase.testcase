@@ -1344,6 +1344,8 @@
 			<var name="newKBPageScope" value="Knowledge Base Display Page 1 (Create New)" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="Page#add">
 			<var name="pageName" value="Knowledge Base Display Page 2" />
 		</execute>

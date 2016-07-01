@@ -195,6 +195,15 @@ public class KBArticleServiceUtil {
 		return getService().getTempAttachmentNames(groupId, tempFolderName);
 	}
 
+	public static java.util.List<com.liferay.knowledge.base.model.KBArticle> getAllDescendantKBArticles(
+		long resourcePrimKey, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.knowledge.base.model.KBArticle> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getAllDescendantKBArticles(resourcePrimKey, status,
+			orderByComparator);
+	}
+
 	public static java.util.List<com.liferay.knowledge.base.model.KBArticle> getGroupKBArticles(
 		long groupId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.knowledge.base.model.KBArticle> orderByComparator) {
@@ -204,16 +213,17 @@ public class KBArticleServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.knowledge.base.model.KBArticle> getKBArticleAndAllDescendantKBArticles(
-		long groupId, long resourcePrimKey, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.knowledge.base.model.KBArticle> orderByComparator) {
+		long resourcePrimKey, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.knowledge.base.model.KBArticle> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .getKBArticleAndAllDescendantKBArticles(groupId,
-			resourcePrimKey, status, orderByComparator);
+				   .getKBArticleAndAllDescendantKBArticles(resourcePrimKey,
+			status, orderByComparator);
 	}
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link
-	#getKBArticleAndAllDescendantKBArticles(long, long, int,
+	#getKBArticleAndAllDescendantKBArticles(long, int,
 	OrderByComparator)}
 	*/
 	@Deprecated

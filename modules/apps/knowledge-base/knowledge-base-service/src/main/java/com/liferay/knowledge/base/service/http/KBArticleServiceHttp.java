@@ -284,13 +284,47 @@ public class KBArticleServiceHttp {
 		}
 	}
 
+	public static java.util.List<com.liferay.knowledge.base.model.KBArticle> getAllDescendantKBArticles(
+		HttpPrincipal httpPrincipal, long resourcePrimKey, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.knowledge.base.model.KBArticle> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(KBArticleServiceUtil.class,
+					"getAllDescendantKBArticles",
+					_getAllDescendantKBArticlesParameterTypes7);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					resourcePrimKey, status, orderByComparator);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (java.util.List<com.liferay.knowledge.base.model.KBArticle>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static java.util.List<com.liferay.knowledge.base.model.KBArticle> getGroupKBArticles(
 		HttpPrincipal httpPrincipal, long groupId, int status, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.knowledge.base.model.KBArticle> orderByComparator) {
 		try {
 			MethodKey methodKey = new MethodKey(KBArticleServiceUtil.class,
-					"getGroupKBArticles", _getGroupKBArticlesParameterTypes7);
+					"getGroupKBArticles", _getGroupKBArticlesParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					status, start, end, orderByComparator);
@@ -318,7 +352,7 @@ public class KBArticleServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(KBArticleServiceUtil.class,
 					"getGroupKBArticlesCount",
-					_getGroupKBArticlesCountParameterTypes8);
+					_getGroupKBArticlesCountParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					status);
@@ -349,7 +383,7 @@ public class KBArticleServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(KBArticleServiceUtil.class,
 					"getGroupKBArticlesRSS",
-					_getGroupKBArticlesRSSParameterTypes9);
+					_getGroupKBArticlesRSSParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, status,
 					rssDelta, rssDisplayStyle, rssFormat, themeDisplay);
@@ -381,7 +415,7 @@ public class KBArticleServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(KBArticleServiceUtil.class,
-					"getKBArticle", _getKBArticleParameterTypes10);
+					"getKBArticle", _getKBArticleParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					resourcePrimKey, version);
@@ -409,15 +443,15 @@ public class KBArticleServiceHttp {
 	}
 
 	public static java.util.List<com.liferay.knowledge.base.model.KBArticle> getKBArticleAndAllDescendantKBArticles(
-		HttpPrincipal httpPrincipal, long groupId, long resourcePrimKey,
-		int status,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.knowledge.base.model.KBArticle> orderByComparator) {
+		HttpPrincipal httpPrincipal, long resourcePrimKey, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.knowledge.base.model.KBArticle> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(KBArticleServiceUtil.class,
 					"getKBArticleAndAllDescendantKBArticles",
-					_getKBArticleAndAllDescendantKBArticlesParameterTypes11);
+					_getKBArticleAndAllDescendantKBArticlesParameterTypes12);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+			MethodHandler methodHandler = new MethodHandler(methodKey,
 					resourcePrimKey, status, orderByComparator);
 
 			Object returnObj = null;
@@ -426,6 +460,10 @@ public class KBArticleServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
@@ -445,7 +483,7 @@ public class KBArticleServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(KBArticleServiceUtil.class,
 					"getKBArticleAndAllDescendants",
-					_getKBArticleAndAllDescendantsParameterTypes12);
+					_getKBArticleAndAllDescendantsParameterTypes13);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					resourcePrimKey, status, orderByComparator);
@@ -476,7 +514,7 @@ public class KBArticleServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(KBArticleServiceUtil.class,
-					"getKBArticleRSS", _getKBArticleRSSParameterTypes13);
+					"getKBArticleRSS", _getKBArticleRSSParameterTypes14);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					resourcePrimKey, status, rssDelta, rssDisplayStyle,
@@ -510,7 +548,7 @@ public class KBArticleServiceHttp {
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.knowledge.base.model.KBArticle> orderByComparator) {
 		try {
 			MethodKey methodKey = new MethodKey(KBArticleServiceUtil.class,
-					"getKBArticles", _getKBArticlesParameterTypes14);
+					"getKBArticles", _getKBArticlesParameterTypes15);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					parentResourcePrimKey, status, start, end, orderByComparator);
@@ -539,7 +577,7 @@ public class KBArticleServiceHttp {
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.knowledge.base.model.KBArticle> orderByComparator) {
 		try {
 			MethodKey methodKey = new MethodKey(KBArticleServiceUtil.class,
-					"getKBArticles", _getKBArticlesParameterTypes15);
+					"getKBArticles", _getKBArticlesParameterTypes16);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					resourcePrimKeys, status, start, end, orderByComparator);
@@ -568,7 +606,7 @@ public class KBArticleServiceHttp {
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.knowledge.base.model.KBArticle> orderByComparator) {
 		try {
 			MethodKey methodKey = new MethodKey(KBArticleServiceUtil.class,
-					"getKBArticles", _getKBArticlesParameterTypes16);
+					"getKBArticles", _getKBArticlesParameterTypes17);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					resourcePrimKeys, status, orderByComparator);
@@ -595,7 +633,7 @@ public class KBArticleServiceHttp {
 		long groupId, long parentResourcePrimKey, int status) {
 		try {
 			MethodKey methodKey = new MethodKey(KBArticleServiceUtil.class,
-					"getKBArticlesCount", _getKBArticlesCountParameterTypes17);
+					"getKBArticlesCount", _getKBArticlesCountParameterTypes18);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					parentResourcePrimKey, status);
@@ -622,7 +660,7 @@ public class KBArticleServiceHttp {
 		long groupId, long[] resourcePrimKeys, int status) {
 		try {
 			MethodKey methodKey = new MethodKey(KBArticleServiceUtil.class,
-					"getKBArticlesCount", _getKBArticlesCountParameterTypes18);
+					"getKBArticlesCount", _getKBArticlesCountParameterTypes19);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					resourcePrimKeys, status);
@@ -655,7 +693,7 @@ public class KBArticleServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(KBArticleServiceUtil.class,
 					"getKBArticleSearchDisplay",
-					_getKBArticleSearchDisplayParameterTypes19);
+					_getKBArticleSearchDisplayParameterTypes20);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					title, content, status, startDate, endDate, andOperator,
@@ -690,7 +728,7 @@ public class KBArticleServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(KBArticleServiceUtil.class,
 					"getKBArticleVersions",
-					_getKBArticleVersionsParameterTypes20);
+					_getKBArticleVersionsParameterTypes21);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					resourcePrimKey, status, start, end, orderByComparator);
@@ -718,7 +756,7 @@ public class KBArticleServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(KBArticleServiceUtil.class,
 					"getKBArticleVersionsCount",
-					_getKBArticleVersionsCountParameterTypes21);
+					_getKBArticleVersionsCountParameterTypes22);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					resourcePrimKey, status);
@@ -746,7 +784,7 @@ public class KBArticleServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(KBArticleServiceUtil.class,
-					"getLatestKBArticle", _getLatestKBArticleParameterTypes22);
+					"getLatestKBArticle", _getLatestKBArticleParameterTypes23);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					resourcePrimKey, status);
@@ -780,7 +818,7 @@ public class KBArticleServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(KBArticleServiceUtil.class,
 					"getSectionsKBArticles",
-					_getSectionsKBArticlesParameterTypes23);
+					_getSectionsKBArticlesParameterTypes24);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					sections, status, start, end, orderByComparator);
@@ -808,7 +846,7 @@ public class KBArticleServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(KBArticleServiceUtil.class,
 					"getSectionsKBArticlesCount",
-					_getSectionsKBArticlesCountParameterTypes24);
+					_getSectionsKBArticlesCountParameterTypes25);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					sections, status);
@@ -838,7 +876,7 @@ public class KBArticleServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(KBArticleServiceUtil.class,
 					"getSiblingKBArticles",
-					_getSiblingKBArticlesParameterTypes25);
+					_getSiblingKBArticlesParameterTypes26);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					parentResourcePrimKey, status, start, end, orderByComparator);
@@ -866,7 +904,7 @@ public class KBArticleServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(KBArticleServiceUtil.class,
 					"getSiblingKBArticlesCount",
-					_getSiblingKBArticlesCountParameterTypes26);
+					_getSiblingKBArticlesCountParameterTypes27);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					parentResourcePrimKey, status);
@@ -896,7 +934,7 @@ public class KBArticleServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(KBArticleServiceUtil.class,
 					"getTempAttachmentNames",
-					_getTempAttachmentNamesParameterTypes27);
+					_getTempAttachmentNamesParameterTypes28);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					tempFolderName);
@@ -929,7 +967,7 @@ public class KBArticleServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(KBArticleServiceUtil.class,
-					"moveKBArticle", _moveKBArticleParameterTypes28);
+					"moveKBArticle", _moveKBArticleParameterTypes29);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					resourcePrimKey, parentResourceClassNameId,
@@ -959,7 +997,7 @@ public class KBArticleServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(KBArticleServiceUtil.class,
-					"revertKBArticle", _revertKBArticleParameterTypes29);
+					"revertKBArticle", _revertKBArticleParameterTypes30);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					resourcePrimKey, version, serviceContext);
@@ -992,7 +1030,7 @@ public class KBArticleServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(KBArticleServiceUtil.class,
 					"subscribeGroupKBArticles",
-					_subscribeGroupKBArticlesParameterTypes30);
+					_subscribeGroupKBArticlesParameterTypes31);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					portletId);
@@ -1020,7 +1058,7 @@ public class KBArticleServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(KBArticleServiceUtil.class,
-					"subscribeKBArticle", _subscribeKBArticleParameterTypes31);
+					"subscribeKBArticle", _subscribeKBArticleParameterTypes32);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					resourcePrimKey);
@@ -1049,7 +1087,7 @@ public class KBArticleServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(KBArticleServiceUtil.class,
 					"unsubscribeGroupKBArticles",
-					_unsubscribeGroupKBArticlesParameterTypes32);
+					_unsubscribeGroupKBArticlesParameterTypes33);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					portletId);
@@ -1078,7 +1116,7 @@ public class KBArticleServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(KBArticleServiceUtil.class,
 					"unsubscribeKBArticle",
-					_unsubscribeKBArticleParameterTypes33);
+					_unsubscribeKBArticleParameterTypes34);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					resourcePrimKey);
@@ -1111,7 +1149,7 @@ public class KBArticleServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(KBArticleServiceUtil.class,
-					"updateKBArticle", _updateKBArticleParameterTypes34);
+					"updateKBArticle", _updateKBArticleParameterTypes35);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					resourcePrimKey, title, content, description, sourceURL,
@@ -1147,7 +1185,7 @@ public class KBArticleServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(KBArticleServiceUtil.class,
 					"updateKBArticlesPriorities",
-					_updateKBArticlesPrioritiesParameterTypes35);
+					_updateKBArticlesPrioritiesParameterTypes36);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					resourcePrimKeyToPriorityMap);
@@ -1202,112 +1240,116 @@ public class KBArticleServiceHttp {
 	private static final Class<?>[] _fetchLatestKBArticleParameterTypes6 = new Class[] {
 			long.class, int.class
 		};
-	private static final Class<?>[] _getGroupKBArticlesParameterTypes7 = new Class[] {
+	private static final Class<?>[] _getAllDescendantKBArticlesParameterTypes7 = new Class[] {
+			long.class, int.class,
+			com.liferay.portal.kernel.util.OrderByComparator.class
+		};
+	private static final Class<?>[] _getGroupKBArticlesParameterTypes8 = new Class[] {
 			long.class, int.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getGroupKBArticlesCountParameterTypes8 = new Class[] {
+	private static final Class<?>[] _getGroupKBArticlesCountParameterTypes9 = new Class[] {
 			long.class, int.class
 		};
-	private static final Class<?>[] _getGroupKBArticlesRSSParameterTypes9 = new Class[] {
+	private static final Class<?>[] _getGroupKBArticlesRSSParameterTypes10 = new Class[] {
 			int.class, int.class, java.lang.String.class, java.lang.String.class,
 			com.liferay.portal.kernel.theme.ThemeDisplay.class
 		};
-	private static final Class<?>[] _getKBArticleParameterTypes10 = new Class[] {
+	private static final Class<?>[] _getKBArticleParameterTypes11 = new Class[] {
 			long.class, int.class
 		};
-	private static final Class<?>[] _getKBArticleAndAllDescendantKBArticlesParameterTypes11 =
+	private static final Class<?>[] _getKBArticleAndAllDescendantKBArticlesParameterTypes12 =
+		new Class[] {
+			long.class, int.class,
+			com.liferay.portal.kernel.util.OrderByComparator.class
+		};
+	private static final Class<?>[] _getKBArticleAndAllDescendantsParameterTypes13 =
 		new Class[] {
 			long.class, long.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getKBArticleAndAllDescendantsParameterTypes12 =
-		new Class[] {
-			long.class, long.class, int.class,
-			com.liferay.portal.kernel.util.OrderByComparator.class
-		};
-	private static final Class<?>[] _getKBArticleRSSParameterTypes13 = new Class[] {
+	private static final Class<?>[] _getKBArticleRSSParameterTypes14 = new Class[] {
 			long.class, int.class, int.class, java.lang.String.class,
 			java.lang.String.class,
 			com.liferay.portal.kernel.theme.ThemeDisplay.class
 		};
-	private static final Class<?>[] _getKBArticlesParameterTypes14 = new Class[] {
+	private static final Class<?>[] _getKBArticlesParameterTypes15 = new Class[] {
 			long.class, long.class, int.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getKBArticlesParameterTypes15 = new Class[] {
+	private static final Class<?>[] _getKBArticlesParameterTypes16 = new Class[] {
 			long.class, long[].class, int.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getKBArticlesParameterTypes16 = new Class[] {
+	private static final Class<?>[] _getKBArticlesParameterTypes17 = new Class[] {
 			long.class, long[].class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getKBArticlesCountParameterTypes17 = new Class[] {
+	private static final Class<?>[] _getKBArticlesCountParameterTypes18 = new Class[] {
 			long.class, long.class, int.class
 		};
-	private static final Class<?>[] _getKBArticlesCountParameterTypes18 = new Class[] {
+	private static final Class<?>[] _getKBArticlesCountParameterTypes19 = new Class[] {
 			long.class, long[].class, int.class
 		};
-	private static final Class<?>[] _getKBArticleSearchDisplayParameterTypes19 = new Class[] {
+	private static final Class<?>[] _getKBArticleSearchDisplayParameterTypes20 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
 			int.class, java.util.Date.class, java.util.Date.class, boolean.class,
 			int[].class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getKBArticleVersionsParameterTypes20 = new Class[] {
+	private static final Class<?>[] _getKBArticleVersionsParameterTypes21 = new Class[] {
 			long.class, long.class, int.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getKBArticleVersionsCountParameterTypes21 = new Class[] {
+	private static final Class<?>[] _getKBArticleVersionsCountParameterTypes22 = new Class[] {
 			long.class, long.class, int.class
 		};
-	private static final Class<?>[] _getLatestKBArticleParameterTypes22 = new Class[] {
+	private static final Class<?>[] _getLatestKBArticleParameterTypes23 = new Class[] {
 			long.class, int.class
 		};
-	private static final Class<?>[] _getSectionsKBArticlesParameterTypes23 = new Class[] {
+	private static final Class<?>[] _getSectionsKBArticlesParameterTypes24 = new Class[] {
 			long.class, java.lang.String[].class, int.class, int.class,
 			int.class, com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getSectionsKBArticlesCountParameterTypes24 = new Class[] {
+	private static final Class<?>[] _getSectionsKBArticlesCountParameterTypes25 = new Class[] {
 			long.class, java.lang.String[].class, int.class
 		};
-	private static final Class<?>[] _getSiblingKBArticlesParameterTypes25 = new Class[] {
+	private static final Class<?>[] _getSiblingKBArticlesParameterTypes26 = new Class[] {
 			long.class, long.class, int.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getSiblingKBArticlesCountParameterTypes26 = new Class[] {
+	private static final Class<?>[] _getSiblingKBArticlesCountParameterTypes27 = new Class[] {
 			long.class, long.class, int.class
 		};
-	private static final Class<?>[] _getTempAttachmentNamesParameterTypes27 = new Class[] {
+	private static final Class<?>[] _getTempAttachmentNamesParameterTypes28 = new Class[] {
 			long.class, java.lang.String.class
 		};
-	private static final Class<?>[] _moveKBArticleParameterTypes28 = new Class[] {
+	private static final Class<?>[] _moveKBArticleParameterTypes29 = new Class[] {
 			long.class, long.class, long.class, double.class
 		};
-	private static final Class<?>[] _revertKBArticleParameterTypes29 = new Class[] {
+	private static final Class<?>[] _revertKBArticleParameterTypes30 = new Class[] {
 			long.class, int.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _subscribeGroupKBArticlesParameterTypes30 = new Class[] {
+	private static final Class<?>[] _subscribeGroupKBArticlesParameterTypes31 = new Class[] {
 			long.class, java.lang.String.class
 		};
-	private static final Class<?>[] _subscribeKBArticleParameterTypes31 = new Class[] {
+	private static final Class<?>[] _subscribeKBArticleParameterTypes32 = new Class[] {
 			long.class, long.class
 		};
-	private static final Class<?>[] _unsubscribeGroupKBArticlesParameterTypes32 = new Class[] {
+	private static final Class<?>[] _unsubscribeGroupKBArticlesParameterTypes33 = new Class[] {
 			long.class, java.lang.String.class
 		};
-	private static final Class<?>[] _unsubscribeKBArticleParameterTypes33 = new Class[] {
+	private static final Class<?>[] _unsubscribeKBArticleParameterTypes34 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _updateKBArticleParameterTypes34 = new Class[] {
+	private static final Class<?>[] _updateKBArticleParameterTypes35 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class,
 			java.lang.String[].class, java.lang.String[].class, long[].class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _updateKBArticlesPrioritiesParameterTypes35 = new Class[] {
+	private static final Class<?>[] _updateKBArticlesPrioritiesParameterTypes36 = new Class[] {
 			long.class, java.util.Map.class
 		};
 }

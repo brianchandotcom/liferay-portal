@@ -56,12 +56,12 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 	String headerTitle = StringPool.BLANK;
 
 	if (kbFolderView) {
-		KBFolder kbFolder = KBFolderLocalServiceUtil.getKBFolder(parentResourcePrimKey);
+		KBFolder kbFolder = KBFolderServiceUtil.getKBFolder(parentResourcePrimKey);
 
 		headerTitle = kbFolder.getName();
 	}
 	else {
-		KBArticle kbArticle = KBArticleLocalServiceUtil.getLatestKBArticle(parentResourcePrimKey, WorkflowConstants.STATUS_ANY);
+		KBArticle kbArticle = KBArticleServiceUtil.getLatestKBArticle(parentResourcePrimKey, WorkflowConstants.STATUS_ANY);
 
 		headerTitle = kbArticle.getTitle();
 	}

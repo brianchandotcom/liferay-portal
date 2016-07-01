@@ -143,6 +143,24 @@ public class KBArticleServiceSoap {
 		}
 	}
 
+	public static com.liferay.knowledge.base.model.KBArticleSoap[] getAllDescendantKBArticles(
+		long resourcePrimKey, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.knowledge.base.model.KBArticle> orderByComparator)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.knowledge.base.model.KBArticle> returnValue =
+				KBArticleServiceUtil.getAllDescendantKBArticles(resourcePrimKey,
+					status, orderByComparator);
+
+			return com.liferay.knowledge.base.model.KBArticleSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.knowledge.base.model.KBArticleSoap[] getGroupKBArticles(
 		long groupId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.knowledge.base.model.KBArticle> orderByComparator)
@@ -192,13 +210,13 @@ public class KBArticleServiceSoap {
 	}
 
 	public static com.liferay.knowledge.base.model.KBArticleSoap[] getKBArticleAndAllDescendantKBArticles(
-		long groupId, long resourcePrimKey, int status,
+		long resourcePrimKey, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.knowledge.base.model.KBArticle> orderByComparator)
 		throws RemoteException {
 		try {
 			java.util.List<com.liferay.knowledge.base.model.KBArticle> returnValue =
-				KBArticleServiceUtil.getKBArticleAndAllDescendantKBArticles(groupId,
-					resourcePrimKey, status, orderByComparator);
+				KBArticleServiceUtil.getKBArticleAndAllDescendantKBArticles(resourcePrimKey,
+					status, orderByComparator);
 
 			return com.liferay.knowledge.base.model.KBArticleSoap.toSoapModels(returnValue);
 		}
@@ -211,7 +229,7 @@ public class KBArticleServiceSoap {
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link
-	#getKBArticleAndAllDescendantKBArticles(long, long, int,
+	#getKBArticleAndAllDescendantKBArticles(long, int,
 	OrderByComparator)}
 	*/
 	@Deprecated

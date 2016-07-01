@@ -102,7 +102,7 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 								<c:if test="<%= childKBArticleExpanded %>">
 
 									<%
-									List<KBArticle> allDescendantKBArticles = KBArticleLocalServiceUtil.getAllDescendantKBArticles(childKBArticle.getResourcePrimKey(), WorkflowConstants.STATUS_APPROVED, new KBArticlePriorityComparator(true));
+									List<KBArticle> allDescendantKBArticles = KBArticleServiceUtil.getAllDescendantKBArticles(childKBArticle.getResourcePrimKey(), WorkflowConstants.STATUS_APPROVED, new KBArticlePriorityComparator(true));
 
 									for (KBArticle descendantKBArticle : allDescendantKBArticles) {
 										PortletURL viewCurKBArticleURL = kbArticleURLHelper.createViewURL(descendantKBArticle);

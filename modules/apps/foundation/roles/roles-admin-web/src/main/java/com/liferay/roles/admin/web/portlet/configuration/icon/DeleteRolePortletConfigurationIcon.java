@@ -69,8 +69,8 @@ public class DeleteRolePortletConfigurationIcon
 
 		try {
 			PortletURL portletURL = PortletURLFactoryUtil.create(
-				portletRequest, RolesAdminPortletKeys.ROLES_ADMIN,
-				themeDisplay.getPlid(), PortletRequest.ACTION_PHASE);
+				portletRequest, RolesAdminPortletKeys.ROLES_ADMIN, themeDisplay,
+				PortletRequest.ACTION_PHASE);
 
 			portletURL.setParameter(ActionRequest.ACTION_NAME, "deleteRole");
 			portletURL.setParameter("mvcPath", "/view.jsp");

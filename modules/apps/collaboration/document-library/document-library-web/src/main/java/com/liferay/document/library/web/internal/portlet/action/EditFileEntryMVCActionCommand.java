@@ -699,8 +699,8 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			WebKeys.THEME_DISPLAY);
 
 		LiferayPortletURL portletURL = PortletURLFactoryUtil.create(
-			actionRequest, portletConfig.getPortletName(),
-			themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
+			actionRequest, portletConfig.getPortletName(), themeDisplay,
+			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter(
 			"mvcRenderCommandName", "/document_library/edit_file_entry");

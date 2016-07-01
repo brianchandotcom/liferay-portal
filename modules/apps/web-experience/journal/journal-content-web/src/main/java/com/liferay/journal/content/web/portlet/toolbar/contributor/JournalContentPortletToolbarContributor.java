@@ -183,7 +183,7 @@ public class JournalContentPortletToolbarContributor
 
 		PortletURL redirectURL = PortletURLFactoryUtil.create(
 			portletRequest, JournalContentPortletKeys.JOURNAL_CONTENT,
-			themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
+			themeDisplay, PortletRequest.RENDER_PHASE);
 
 		redirectURL.setWindowState(LiferayWindowState.POP_UP);
 

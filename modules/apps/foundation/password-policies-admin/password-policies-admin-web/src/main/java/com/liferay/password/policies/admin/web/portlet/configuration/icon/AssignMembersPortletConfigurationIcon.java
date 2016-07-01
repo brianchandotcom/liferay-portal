@@ -66,7 +66,7 @@ public class AssignMembersPortletConfigurationIcon
 			PortletURL portletURL = PortletURLFactoryUtil.create(
 				portletRequest,
 				PasswordPoliciesAdminPortletKeys.PASSWORD_POLICIES_ADMIN,
-				themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
+				themeDisplay, PortletRequest.RENDER_PHASE);
 
 			portletURL.setParameter(
 				"mvcPath", "/edit_password_policy_assignments.jsp");

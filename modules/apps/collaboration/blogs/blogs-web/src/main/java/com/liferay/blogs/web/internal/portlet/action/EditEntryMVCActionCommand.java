@@ -375,8 +375,8 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 			JavaConstants.JAVAX_PORTLET_CONFIG);
 
 		LiferayPortletURL portletURL = PortletURLFactoryUtil.create(
-			actionRequest, portletConfig.getPortletName(),
-			themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
+			actionRequest, portletConfig.getPortletName(), themeDisplay,
+			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcRenderCommandName", "/blogs/edit_entry");
 

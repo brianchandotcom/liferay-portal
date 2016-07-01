@@ -66,7 +66,7 @@ public class DDMDataProviderPortletConfigurationIcon
 			WebKeys.THEME_DISPLAY);
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(
-			portletRequest, portletId, themeDisplay.getPlid(),
+			portletRequest, portletId, themeDisplay,
 			PortletRequest.RENDER_PHASE);
 
 		try {

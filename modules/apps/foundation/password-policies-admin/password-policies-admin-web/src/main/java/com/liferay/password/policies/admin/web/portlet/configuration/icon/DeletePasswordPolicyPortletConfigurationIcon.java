@@ -71,7 +71,7 @@ public class DeletePasswordPolicyPortletConfigurationIcon
 			PortletURL portletURL = PortletURLFactoryUtil.create(
 				portletRequest,
 				PasswordPoliciesAdminPortletKeys.PASSWORD_POLICIES_ADMIN,
-				themeDisplay.getPlid(), PortletRequest.ACTION_PHASE);
+				themeDisplay, PortletRequest.ACTION_PHASE);
 
 			portletURL.setParameter(
 				ActionRequest.ACTION_NAME, "deletePasswordPolicy");

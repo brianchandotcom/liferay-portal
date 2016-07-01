@@ -79,7 +79,7 @@ public abstract class DDMBaseMVCActionCommand extends BaseMVCActionCommand {
 		String eventName = ParamUtil.getString(actionRequest, "eventName");
 
 		LiferayPortletURL portletURL = PortletURLFactoryUtil.create(
-			actionRequest, themeDisplay.getPpid(), themeDisplay.getPlid(),
+			actionRequest, themeDisplay.getPpid(), themeDisplay,
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcPath", "/edit_structure.jsp");
@@ -116,7 +116,7 @@ public abstract class DDMBaseMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "structureAvailableFields");
 
 		LiferayPortletURL portletURL = PortletURLFactoryUtil.create(
-			actionRequest, themeDisplay.getPpid(), themeDisplay.getPlid(),
+			actionRequest, themeDisplay.getPpid(), themeDisplay,
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcPath", "/edit_template.jsp");

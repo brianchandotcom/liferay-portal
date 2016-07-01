@@ -55,7 +55,8 @@ public abstract class BasePortletProvider implements PortletProvider {
 		}
 		else {
 			return PortletURLFactoryUtil.create(
-				request, getPortletName(), plid, PortletRequest.RENDER_PHASE);
+				request, getPortletName(), themeDisplay,
+				PortletRequest.RENDER_PHASE);
 		}
 	}
 

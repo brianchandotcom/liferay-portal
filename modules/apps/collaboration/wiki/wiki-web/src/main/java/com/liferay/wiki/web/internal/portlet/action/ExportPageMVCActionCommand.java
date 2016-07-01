@@ -92,8 +92,8 @@ public class ExportPageMVCActionCommand extends BaseMVCActionCommand {
 				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
 			PortletURL viewPageURL = PortletURLFactoryUtil.create(
-				actionRequest, portletConfig.getPortletName(),
-				themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
+				actionRequest, portletConfig.getPortletName(), themeDisplay,
+				PortletRequest.RENDER_PHASE);
 
 			viewPageURL.setParameter("mvcRenderCommandName", "/wiki/view");
 			viewPageURL.setParameter("nodeName", nodeName);
@@ -102,8 +102,8 @@ public class ExportPageMVCActionCommand extends BaseMVCActionCommand {
 			viewPageURL.setWindowState(WindowState.MAXIMIZED);
 
 			PortletURL editPageURL = PortletURLFactoryUtil.create(
-				actionRequest, portletConfig.getPortletName(),
-				themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
+				actionRequest, portletConfig.getPortletName(), themeDisplay,
+				PortletRequest.RENDER_PHASE);
 
 			editPageURL.setParameter("mvcRenderCommandName", "/wiki/edit_page");
 			editPageURL.setParameter("nodeId", String.valueOf(nodeId));

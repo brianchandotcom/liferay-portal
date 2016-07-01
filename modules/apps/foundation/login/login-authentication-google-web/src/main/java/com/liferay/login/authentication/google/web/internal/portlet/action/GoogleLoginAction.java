@@ -129,7 +129,7 @@ public class GoogleLoginAction extends BaseStrutsAction {
 			WebKeys.THEME_DISPLAY);
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(
-			request, PortletKeys.LOGIN, themeDisplay.getPlid(),
+			request, PortletKeys.LOGIN, themeDisplay,
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter(
@@ -147,7 +147,7 @@ public class GoogleLoginAction extends BaseStrutsAction {
 			WebKeys.THEME_DISPLAY);
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(
-			request, PortletKeys.LOGIN, themeDisplay.getPlid(),
+			request, PortletKeys.LOGIN, themeDisplay,
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("saveLastPath", Boolean.FALSE.toString());
@@ -155,7 +155,7 @@ public class GoogleLoginAction extends BaseStrutsAction {
 			"mvcRenderCommandName", "/login/associate_google_user");
 
 		PortletURL redirectURL = PortletURLFactoryUtil.create(
-			request, PortletKeys.LOGIN, themeDisplay.getPlid(),
+			request, PortletKeys.LOGIN, themeDisplay,
 			PortletRequest.RENDER_PHASE);
 
 		redirectURL.setParameter(

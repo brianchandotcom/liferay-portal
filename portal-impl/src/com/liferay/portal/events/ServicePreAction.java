@@ -962,7 +962,7 @@ public class ServicePreAction extends Action {
 
 				if (hasPublishStagingPermission) {
 					PortletURL publishToLiveURL = PortletURLFactoryUtil.create(
-						request, PortletKeys.EXPORT_IMPORT, plid,
+						request, PortletKeys.EXPORT_IMPORT, themeDisplay,
 						PortletRequest.RENDER_PHASE);
 
 					publishToLiveURL.setParameter(

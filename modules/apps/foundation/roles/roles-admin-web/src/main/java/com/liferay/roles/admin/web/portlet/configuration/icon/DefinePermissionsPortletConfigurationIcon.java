@@ -74,8 +74,8 @@ public class DefinePermissionsPortletConfigurationIcon
 
 		try {
 			PortletURL portletURL = PortletURLFactoryUtil.create(
-				portletRequest, RolesAdminPortletKeys.ROLES_ADMIN,
-				themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
+				portletRequest, RolesAdminPortletKeys.ROLES_ADMIN, themeDisplay,
+				PortletRequest.RENDER_PHASE);
 
 			portletURL.setParameter("mvcPath", "/edit_role_permissions.jsp");
 			portletURL.setParameter(Constants.CMD, Constants.VIEW);

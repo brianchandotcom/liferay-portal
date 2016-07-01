@@ -125,7 +125,7 @@ public class CopyStructureMVCActionCommand extends DDMBaseMVCActionCommand {
 			WebKeys.THEME_DISPLAY);
 
 		LiferayPortletURL portletURL = PortletURLFactoryUtil.create(
-			actionRequest, themeDisplay.getPpid(), themeDisplay.getPlid(),
+			actionRequest, themeDisplay.getPpid(), themeDisplay,
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcPath", "/copy_structure");

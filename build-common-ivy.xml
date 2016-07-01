@@ -45,47 +45,88 @@
 					<available file="${mirrors.cache.artifact.dir}/${mirrors.cache.artifact.file.name}" />
 				</not>
 				<then>
-					<mkdir dir="${mirrors.cache.artifact.dir}" />
-
-					<propertyregex
-						input="${src}"
-						override="true"
-						property="mirrors.src"
-						regexp="http://"
-						replace="http://mirrors.lax.liferay.com/"
-					/>
+					<local name="md5.checksum" />
 
 					<if>
-						<equals arg1="@{trylocalnetwork}" arg2="true" />
+						<http url="${src}.md5" />
 						<then>
-							<trycatch>
-								<try>
-									<get
-										dest="${mirrors.cache.artifact.dir}"
-										ignoreerrors="@{ignoreerrors}"
-										src="${mirrors.src}"
-										verbose="@{verbose}"
-									/>
-								</try>
-								<catch>
+							<local name="curl" />
+
+							<exec executable="curl" outputproperty="curl">
+								<arg line="-s ${src}.md5" />
+							</exec>
+
+							<propertyregex
+								input="${curl}"
+								override="true"
+								property="md5.checksum"
+								regexp="([0-9a-f]{32}).*"
+								replace="\1"
+							/>
+						</then>
+					</if>
+
+					<retry retrycount="3" retrydelay="5000">
+						<sequential>
+							<mkdir dir="${mirrors.cache.artifact.dir}" />
+
+							<propertyregex
+								input="${src}"
+								override="true"
+								property="mirrors.src"
+								regexp="http://"
+								replace="http://mirrors.lax.liferay.com/"
+							/>
+
+							<if>
+								<equals arg1="@{trylocalnetwork}" arg2="true" />
+								<then>
+									<trycatch>
+										<try>
+											<get
+												dest="${mirrors.cache.artifact.dir}"
+												ignoreerrors="@{ignoreerrors}"
+												src="${mirrors.src}"
+												verbose="@{verbose}"
+											/>
+										</try>
+										<catch>
+											<get
+												dest="${mirrors.cache.artifact.dir}"
+												ignoreerrors="@{ignoreerrors}"
+												src="${src}"
+												verbose="@{verbose}"
+											/>
+										</catch>
+									</trycatch>
+								</then>
+								<else>
 									<get
 										dest="${mirrors.cache.artifact.dir}"
 										ignoreerrors="@{ignoreerrors}"
 										src="${src}"
 										verbose="@{verbose}"
 									/>
-								</catch>
-							</trycatch>
-						</then>
-						<else>
-							<get
-								dest="${mirrors.cache.artifact.dir}"
-								ignoreerrors="@{ignoreerrors}"
-								src="${src}"
-								verbose="@{verbose}"
-							/>
-						</else>
-					</if>
+								</else>
+							</if>
+
+							<if>
+								<and>
+									<isset property="md5.checksum" />
+									<not>
+										<checksum file="${mirrors.cache.artifact.dir}/${mirrors.cache.artifact.file.name}" property="${md5.checksum}" />
+									</not>
+								</and>
+								<then>
+									<echo>MD5 checksum failure for ${mirrors.cache.artifact.dir}/${mirrors.cache.artifact.file.name}</echo>
+
+									<delete file="${mirrors.cache.artifact.dir}/${mirrors.cache.artifact.file.name}" />
+
+									<fail message="MD5 checksum failure for ${mirrors.cache.artifact.dir}/${mirrors.cache.artifact.file.name}" />
+								</then>
+							</if>
+						</sequential>
+					</retry>
 				</then>
 			</if>
 

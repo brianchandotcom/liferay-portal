@@ -143,6 +143,9 @@ public class GradleTemplatesTest {
 
 			while ((line = bufferedReader.readLine()) != null) {
 				Assert.assertFalse(
+					"Forbidden empty line in " + path, line.isEmpty());
+
+				Assert.assertFalse(
 					"Forbidden comments in " + path, line.startsWith("##"));
 			}
 		}

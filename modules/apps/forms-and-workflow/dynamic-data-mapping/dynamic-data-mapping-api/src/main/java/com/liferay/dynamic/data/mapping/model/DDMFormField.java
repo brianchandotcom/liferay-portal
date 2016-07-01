@@ -82,6 +82,7 @@ public class DDMFormField implements Serializable {
 		setTip(new LocalizedValue());
 	}
 
+	@Deprecated
 	public void addDDMFormFieldRule(DDMFormFieldRule ddmFormFieldRule) {
 		_ddmFormFieldRules.add(ddmFormFieldRule);
 	}
@@ -126,6 +127,7 @@ public class DDMFormField implements Serializable {
 		return (DDMFormFieldOptions)_properties.get("options");
 	}
 
+	@Deprecated
 	public List<DDMFormFieldRule> getDDMFormFieldRules() {
 		return _ddmFormFieldRules;
 	}
@@ -260,6 +262,7 @@ public class DDMFormField implements Serializable {
 		_properties.put("options", ddmFormFieldOptions);
 	}
 
+	@Deprecated
 	public void setDDMFormFieldRules(List<DDMFormFieldRule> ddmFormFieldRules) {
 		_ddmFormFieldRules = ddmFormFieldRules;
 	}

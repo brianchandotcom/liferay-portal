@@ -19,6 +19,7 @@ import java.io.Serializable;
 /**
  * @author Leonardo Barros
  */
+@Deprecated
 public enum DDMFormFieldRuleType implements Serializable {
 
 	DATA_PROVIDER("DATA_PROVIDER"), READ_ONLY("READ_ONLY"), VALUE("VALUE"),

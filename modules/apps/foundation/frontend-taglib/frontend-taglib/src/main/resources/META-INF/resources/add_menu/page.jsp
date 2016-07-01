@@ -76,7 +76,7 @@ int allAddMenuItemsCount = addMenuFavItems.size() + addMenuItems.size() + addMen
 					String id = addMenuPrimaryItem.getId();
 
 					if (Validator.isNull(id)) {
-						id = "menuItem" + i;
+						id = "menuPrimaryItem" + i;
 					}
 				%>
 
@@ -103,7 +103,7 @@ int allAddMenuItemsCount = addMenuFavItems.size() + addMenuItems.size() + addMen
 					String id = addMenuFavItem.getId();
 
 					if (Validator.isNull(id)) {
-						id = "menuItem" + i;
+						id = "menuFavItem" + i;
 					}
 				%>
 
@@ -127,7 +127,7 @@ int allAddMenuItemsCount = addMenuFavItems.size() + addMenuItems.size() + addMen
 						String id = addMenuRecentItem.getId();
 
 						if (Validator.isNull(id)) {
-							id = "menuItem" + i;
+							id = "menuRecentItem" + i;
 						}
 					%>
 

@@ -21,9 +21,8 @@ import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeSettings
 import com.liferay.dynamic.data.mapping.io.internal.DDMFormJSONDeserializerImpl;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
-import com.liferay.dynamic.data.mapping.model.DDMFormFieldRule;
-import com.liferay.dynamic.data.mapping.model.DDMFormFieldRuleType;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidation;
+import com.liferay.dynamic.data.mapping.model.DDMFormRule;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormFieldTypeSettingsTestUtil;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -168,27 +167,33 @@ public class DDMFormJSONDeserializerTest
 			"You must check this box to continue.",
 			ddmFormFieldValidation.getErrorMessage());
 		Assert.assertEquals("true", ddmFormField.getVisibilityExpression());
+	}
 
-		List<DDMFormFieldRule> ddmFormFieldRules =
-			ddmFormField.getDDMFormFieldRules();
+	@Override
+	protected void testDDMFormRules(List<DDMFormRule> ddmFormRules) {
+		Assert.assertEquals(2, ddmFormRules.size());
 
-		Assert.assertEquals(2, ddmFormFieldRules.size());
+		DDMFormRule ddmFormRule1 = ddmFormRules.get(0);
 
-		DDMFormFieldRule ddmFormFieldRule = ddmFormFieldRules.get(0);
+		List<String> actions = ddmFormRule1.getActions();
+		Assert.assertEquals(2, actions.size());
 
-		Assert.assertEquals("1 + 2 > 3", ddmFormFieldRule.getExpression());
-		Assert.assertEquals(
-			DDMFormFieldRuleType.VISIBILITY,
-			ddmFormFieldRule.getDDMFormFieldRuleType());
+		Assert.assertArrayEquals(
+			new String[] {"setReadOnly(Date2510)", "setVisible(Text_Box6748)"},
+			actions.toArray());
 
-		ddmFormFieldRule = ddmFormFieldRules.get(1);
+		Assert.assertEquals("1 + 2 > 4", ddmFormRule1.getCondition());
+		Assert.assertEquals("Warning", ddmFormRule1.getMessage());
+		Assert.assertTrue(ddmFormRule1.isEnabled());
 
-		Assert.assertEquals(
-			"isReadOnly(Date2510) && isVisible(Decimal3479)",
-			ddmFormFieldRule.getExpression());
-		Assert.assertEquals(
-			DDMFormFieldRuleType.READ_ONLY,
-			ddmFormFieldRule.getDDMFormFieldRuleType());
+		DDMFormRule ddmFormRule2 = ddmFormRules.get(1);
+
+		actions = ddmFormRule2.getActions();
+
+		Assert.assertEquals(0, actions.size());
+		Assert.assertEquals("isURL(Text6513)", ddmFormRule2.getCondition());
+		Assert.assertEquals("Error", ddmFormRule2.getMessage());
+		Assert.assertFalse(ddmFormRule2.isEnabled());
 	}
 
 	@Override

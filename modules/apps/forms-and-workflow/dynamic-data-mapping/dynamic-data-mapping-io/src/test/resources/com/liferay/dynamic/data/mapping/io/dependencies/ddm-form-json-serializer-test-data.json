@@ -84,12 +84,6 @@
 			"readOnly": false,
 			"repeatable": false,
 			"required": true,
-			"rules": [
-			{
-					"expression": "isReadOnly(SelectField)",
-					"type": "READ_ONLY"
-				}
-			],
 			"showLabel": false,
 			"type": "radio",
 			"validation": {
@@ -123,12 +117,6 @@
 			"readOnly": false,
 			"repeatable": false,
 			"required": false,
-			"rules": [
-				{
-					"expression": "isVisible(TextField)",
-					"type": "VISIBILITY"
-				}
-			],
 			"showLabel": true,
 			"type": "select",
 			"validation": {
@@ -184,6 +172,21 @@
 				"pt_BR": "Dica"
 			},
 			"type": "ddm-text-html"
+		}
+	],
+	"rules": [
+		{
+			"actions": [
+				"setVisible(SelectField)", "setVisible(HTMLField)"
+			],
+			"condition": "isVisible(TextField)",
+			"enabled": true,
+			"message": "Warning message"
+		},
+		{
+			"condition": "isReadOnly(SelectField)",
+			"enabled": false,
+			"message": "Error message"
 		}
 	]
 }

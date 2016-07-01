@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.mapping.io;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
+import com.liferay.dynamic.data.mapping.model.DDMFormRule;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -98,6 +99,8 @@ public abstract class BaseDDMFormDeserializerTestCase extends BaseDDMTestCase {
 		testHTMLDDMFormField(ddmFormFieldsMap.get("HTML4512"));
 		testNestedDDMFormFields(ddmFormFieldsMap.get("Text6980"));
 		testRadioDDMFormField(ddmFormFieldsMap.get("Radio5699"));
+
+		testDDMFormRules(ddmForm.getDDMFormRules());
 	}
 
 	protected abstract DDMForm deserialize(String serializedDDMForm)
@@ -141,6 +144,9 @@ public abstract class BaseDDMFormDeserializerTestCase extends BaseDDMTestCase {
 		Assert.assertEquals("ddm", ddmFormField.getFieldNamespace());
 		Assert.assertEquals("ddm-date", ddmFormField.getType());
 		Assert.assertTrue(ddmFormField.isShowLabel());
+	}
+
+	protected void testDDMFormRules(List<DDMFormRule> ddmFormRules) {
 	}
 
 	protected void testDecimalDDMFormField(DDMFormField ddmFormField) {

@@ -20,13 +20,17 @@ import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServices
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeSettings;
 import com.liferay.dynamic.data.mapping.io.internal.DDMFormJSONSerializerImpl;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMFormRule;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormFieldTypeSettingsTestUtil;
 import com.liferay.portal.json.JSONFactoryImpl;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 
 import java.lang.reflect.Field;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.Before;
@@ -58,9 +62,31 @@ public class DDMFormJSONSerializerTest extends BaseDDMFormSerializerTestCase {
 
 		DDMForm ddmForm = createDDMForm();
 
+		ddmForm.setDDMFormRules(createDDMFormRules());
+
 		String actualJSON = _ddmFormJSONSerializer.serialize(ddmForm);
 
 		JSONAssert.assertEquals(expectedJSON, actualJSON, false);
+	}
+
+	protected List<DDMFormRule> createDDMFormRules() {
+		List<DDMFormRule> ddmFormRules = new ArrayList<>();
+
+		DDMFormRule ddmFormRule1 = new DDMFormRule(
+			ListUtil.toList(
+				new String[] {
+					"setVisible(SelectField)", "setVisible(HTMLField)"
+				}),
+			"isVisible(TextField)", true, "Warning message");
+
+		ddmFormRules.add(ddmFormRule1);
+
+		DDMFormRule ddmFormRule2 = new DDMFormRule(
+			null, "isReadOnly(SelectField)", false, "Error message");
+
+		ddmFormRules.add(ddmFormRule2);
+
+		return ddmFormRules;
 	}
 
 	protected DDMFormFieldTypeServicesTracker

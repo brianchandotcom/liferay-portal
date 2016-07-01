@@ -19,16 +19,6 @@
 			"readOnly": false,
 			"repeatable": true,
 			"required": false,
-			"rules": [
-				{
-					"expression": "1 + 2 > 3",
-					"type": "VISIBILITY"
-				},
-				{
-					"expression": "isReadOnly(Date2510) && isVisible(Decimal3479)",
-					"type": "READ_ONLY"
-				}
-			],
 			"showLabel": false,
 			"tip": {
 				"en_US": "",
@@ -556,6 +546,21 @@
 			},
 			"type": "text",
 			"visibilityExpression": "true"
+		}
+	],
+	"rules": [
+		{
+			"actions": [
+				"setReadOnly(Date2510)", "setVisible(Text_Box6748)"
+			],
+			"condition": "1 + 2 > 4",
+			"enabled": true,
+			"message": "Warning"
+		},
+		{
+			"condition": "isURL(Text6513)",
+			"enabled": false,
+			"message": "Error"
 		}
 	]
 }

@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 public class _CLASS_Portlet extends MVCPortlet {
 
 	@Override
-	protected void doView(
+	public void doView(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 

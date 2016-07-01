@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.blogs.web.lar;
+package com.liferay.blogs.web.internal.exportimport.data.handler;
 
 import com.liferay.blogs.kernel.model.BlogsEntry;
 import com.liferay.blogs.kernel.service.BlogsEntryLocalService;

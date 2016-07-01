@@ -58,9 +58,9 @@
 
 		<execute macro="PortletEntry#clickEditFromEllipsis" />
 
-		<execute function="Type" locator1="CPPortalinstancesEdit#MAIL_DOMAIN_FIELD" value1="${mailDomain}" />
+		<execute function="Type" locator1="TextInput#MAIL_DOMAIN" value1="${mailDomain}" />
 
-		<execute function="AssertClick" locator1="CPPortalinstancesEdit#SAVE_BUTTON" value1="Save" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>

@@ -2,10 +2,10 @@
 	<command name="addPollCP">
 		<execute function="Click" locator1="Button#PLUS" />
 
-		<execute function="Type" locator1="CPPollsAddquestion#TITLE_FIELD" value1="${pollsQuestionTitle}" />
-		<execute function="Type" locator1="CPPollsAddquestion#POLLS_QUESTION_FIELD" value1="${pollsQuestion}" />
-		<execute function="Type" locator1="CPPollsAddquestion#CHOICE_A_FIELD" value1="${pollsQuestionChoiceA}" />
-		<execute function="Type" locator1="CPPollsAddquestion#CHOICE_B_FIELD" value1="${pollsQuestionChoiceB}" />
+		<execute function="Type" locator1="TextInput#TITLE" value1="${pollsQuestionTitle}" />
+		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${pollsQuestion}" />
+		<execute function="Type" locator1="Polls#CHOICE_A_FIELD" value1="${pollsQuestionChoiceA}" />
+		<execute function="Type" locator1="Polls#CHOICE_B_FIELD" value1="${pollsQuestionChoiceB}" />
 
 		<execute function="AssertChecked" locator1="Checkbox#NEVER_EXPIRE" value1="Never Expire" />
 
@@ -13,7 +13,7 @@
 			<isset var="pollsQuestionChoiceC" />
 			<then>
 				<execute function="AssertClick" locator1="Polls#ADD_CHOICE_BUTTON" value1="Add Choice" />
-				<execute function="Type" locator1="CPPollsAddquestion#CHOICE_C_FIELD" value1="${pollsQuestionChoiceC}" />
+				<execute function="Type" locator1="Polls#CHOICE_C_FIELD" value1="${pollsQuestionChoiceC}" />
 			</then>
 		</if>
 
@@ -23,7 +23,7 @@
 			<isset var="pollsQuestionChoiceD" />
 			<then>
 				<execute function="AssertClick" locator1="Polls#ADD_CHOICE_BUTTON" value1="Add Choice" />
-				<execute function="Type" locator1="CPPollsAddquestion#CHOICE_D_FIELD" value1="${pollsQuestionChoiceD}" />
+				<execute function="Type" locator1="Polls#CHOICE_D_FIELD" value1="${pollsQuestionChoiceD}" />
 			</then>
 		</if>
 
@@ -33,7 +33,7 @@
 			<isset var="pollsQuestionChoiceE" />
 			<then>
 				<execute function="AssertClick" locator1="Polls#ADD_CHOICE_BUTTON" value1="Add Choice" />
-				<execute function="Type" locator1="CPPollsAddquestion#CHOICE_E_FIELD" value1="${pollsQuestionChoiceE}" />
+				<execute function="Type" locator1="Polls#CHOICE_E_FIELD" value1="${pollsQuestionChoiceE}" />
 			</then>
 		</if>
 
@@ -52,16 +52,16 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="CPPollsAddquestion#SAVE_BUTTON" value1="Save" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 	</command>
 
 	<command name="addPollCPWithExpirationDate">
 		<execute function="Click" locator1="Button#PLUS" />
 
-		<execute function="Type" locator1="CPPollsAddquestion#TITLE_FIELD" value1="${pollsQuestionTitle}" />
-		<execute function="Type" locator1="CPPollsAddquestion#POLLS_QUESTION_FIELD" value1="${pollsQuestion}" />
-		<execute function="Type" locator1="CPPollsAddquestion#CHOICE_A_FIELD" value1="${pollsQuestionChoiceA}" />
-		<execute function="Type" locator1="CPPollsAddquestion#CHOICE_B_FIELD" value1="${pollsQuestionChoiceB}" />
+		<execute function="Type" locator1="TextInput#TITLE" value1="${pollsQuestionTitle}" />
+		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${pollsQuestion}" />
+		<execute function="Type" locator1="Polls#CHOICE_A_FIELD" value1="${pollsQuestionChoiceA}" />
+		<execute function="Type" locator1="Polls#CHOICE_B_FIELD" value1="${pollsQuestionChoiceB}" />
 
 		<execute function="AssertChecked" locator1="Checkbox#NEVER_EXPIRE" value1="Never Expire" />
 		<execute function="Uncheck" locator1="Checkbox#NEVER_EXPIRE" value1="Never Expire" />
@@ -72,7 +72,7 @@
 			<then>
 				<execute function="AssertClick" locator1="Polls#ADD_CHOICE_BUTTON" value1="Add Choice" />
 
-				<execute function="Type" locator1="CPPollsAddquestion#CHOICE_C_FIELD" value1="${pollsQuestionChoiceC}" />
+				<execute function="Type" locator1="Polls#CHOICE_C_FIELD" value1="${pollsQuestionChoiceC}" />
 			</then>
 		</if>
 
@@ -83,7 +83,7 @@
 			<isset var="pollsQuestionChoiceD" />
 			<then>
 				<execute function="AssertClick" locator1="Polls#ADD_CHOICE_BUTTON" value1="Add Choice" />
-				<execute function="Type" locator1="CPPollsAddquestion#CHOICE_D_FIELD" value1="${pollsQuestionChoiceD}" />
+				<execute function="Type" locator1="Polls#CHOICE_D_FIELD" value1="${pollsQuestionChoiceD}" />
 			</then>
 		</if>
 
@@ -94,7 +94,7 @@
 			<isset var="pollsQuestionChoiceE" />
 			<then>
 				<execute function="AssertClick" locator1="Polls#ADD_CHOICE_BUTTON" value1="Add Choice" />
-				<execute function="Type" locator1="CPPollsAddquestion#CHOICE_E_FIELD" value1="${pollsQuestionChoiceE}" />
+				<execute function="Type" locator1="Polls#CHOICE_E_FIELD" value1="${pollsQuestionChoiceE}" />
 			</then>
 		</if>
 
@@ -114,7 +114,7 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="CPPollsAddquestion#SAVE_BUTTON" value1="Save" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 	</command>
 
 	<command name="addPollPG">
@@ -160,7 +160,7 @@
 				<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
 				<execute function="Confirm#waitForConfirmation" value1="Are you sure you want to delete this? It will be deleted immediately." />
 
-				<execute function="AssertTextEquals#assertPartialText" locator1="CPPolls#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+				<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 			</then>
 		</while>
 	</command>
@@ -177,7 +177,7 @@
 		</for>
 
 		<execute function="AssertElementNotPresent" locator1="Button#VOTE" />
-		<execute function="AssertTextEquals" locator1="PGPollsdisplay#INFO_MESSAGE" value1="Please sign in to vote." />
+		<execute function="AssertTextEquals" locator1="Message#INFO" value1="Please sign in to vote." />
 	</command>
 
 	<command name="viewPollChartArea">
@@ -225,6 +225,6 @@
 		<execute function="Click" locator1="Polls#POLL_QUESTION_CHOICE" />
 		<execute function="AssertClick" locator1="Button#VOTE" value1="Vote" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="PGPollsdisplayVotes#SUCCESS_MESSAGE" value1="Thank you for your vote." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Thank you for your vote." />
 	</command>
 </definition>

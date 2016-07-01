@@ -39,7 +39,7 @@
 				<if>
 					<equals arg1="${customFieldType}" arg2="True/False" />
 					<then>
-						<execute function="Select" locator1="CPCustomfieldsResourceAddcustomfield#DEFAULT_VALUE_SELECT" value1="${defaultValue}" />
+						<execute function="Select" locator1="Select#DEFAULT_VALUE_SELECT" value1="${defaultValue}" />
 					</then>
 				</if>
 			</then>

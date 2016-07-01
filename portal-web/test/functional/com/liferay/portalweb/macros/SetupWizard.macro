@@ -183,10 +183,10 @@
 
 	<command name="viewDefaultDatabasePG">
 		<if>
-			<condition function="IsElementPresent" locator1="Setupwizard#DATABASE_DEFAULT_LABEL" />
+			<condition function="IsElementPresent" locator1="SetupWizard#DATABASE_DEFAULT_LABEL" />
 			<then>
-				<execute function="AssertTextEquals#assertText" locator1="Setupwizard#DATABASE_DEFAULT_LABEL" value1="Default Database (Hypersonic)" />
-				<execute function="AssertTextEquals#assertPartialText" locator1="Setupwizard#DATABASE_DEFAULT_DESCRIPTION" value1="This database is useful for development and demo'ing purposes, but it is not recommended for production use." />
+				<execute function="AssertTextEquals#assertText" locator1="SetupWizard#DATABASE_DEFAULT_LABEL" value1="Default Database (Hypersonic)" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="SetupWizard#DATABASE_DEFAULT_DESCRIPTION" value1="This database is useful for development and demo'ing purposes, but it is not recommended for production use." />
 				<execute function="AssertTextEquals#assertText" locator1="SetupWizard#DATABASE_CHANGE_LINK" value1="(Change)" />
 			</then>
 			<else>

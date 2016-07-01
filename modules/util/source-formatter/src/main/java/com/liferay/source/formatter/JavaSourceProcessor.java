@@ -1089,6 +1089,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		newContent = fixLineStartingWithCloseParenthesis(newContent, fileName);
 
+		matcher = _incorrectSynchronizedPattern.matcher(newContent);
+
+		newContent = matcher.replaceAll("$1$3 $2");
+
 		pos = newContent.indexOf("\npublic ");
 
 		if (pos != -1) {
@@ -4663,6 +4667,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		"\n(\t*)\\{.+(?<!\\}(,|;)?)\n");
 	private final Pattern _incorrectLineBreakPattern7 = Pattern.compile(
 		"\n(\t+\\{)\n(.*[^;])\n\t+(\\},?)");
+	private final Pattern _incorrectSynchronizedPattern = Pattern.compile(
+		"([\n\t])(synchronized) (private|public|protected)");
 	private final Pattern[] _javaSerializationVulnerabilityPatterns =
 		new Pattern[] {
 			Pattern.compile(

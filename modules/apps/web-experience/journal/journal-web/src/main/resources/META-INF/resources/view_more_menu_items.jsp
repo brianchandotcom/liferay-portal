@@ -46,44 +46,46 @@ portletURL.setParameter("folderId", String.valueOf(journalDisplayContext.getFold
 	</liferay-frontend:management-bar-buttons>
 </liferay-frontend:management-bar>
 
-<liferay-ui:search-container>
+<div class="container-fluid-1280">
+	<liferay-ui:search-container>
 
-	<%
-	List<DDMStructure> ddmStructures = JournalFolderServiceUtil.getDDMStructures(PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId), journalDisplayContext.getFolderId(), journalDisplayContext.getRestrictionType());
-	%>
+		<%
+		List<DDMStructure> ddmStructures = JournalFolderServiceUtil.getDDMStructures(PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId), journalDisplayContext.getFolderId(), journalDisplayContext.getRestrictionType());
+		%>
 
-	<liferay-ui:search-container-results
-		results="<%= ddmStructures %>"
-	/>
-
-	<liferay-ui:search-container-row
-		className="com.liferay.dynamic.data.mapping.model.DDMStructure"
-		cssClass="selectable"
-		escapedModel="<%= true %>"
-		modelVar="ddmStructure"
-	>
-		<liferay-ui:search-container-column-text
-			name="menu-item-name"
-			truncate="<%= true %>"
-			value="<%= ddmStructure.getUnambiguousName(ddmStructures, themeDisplay.getScopeGroupId(), locale) %>"
+		<liferay-ui:search-container-results
+			results="<%= ddmStructures %>"
 		/>
 
-		<liferay-ui:search-container-column-text
-			name="user"
-			property="userName"
-		/>
-
-		<liferay-ui:search-container-column-text
-			name="created"
+		<liferay-ui:search-container-row
+			className="com.liferay.dynamic.data.mapping.model.DDMStructure"
+			cssClass="selectable"
+			escapedModel="<%= true %>"
+			modelVar="ddmStructure"
 		>
-			<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - ddmStructure.getCreateDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
-		</liferay-ui:search-container-column-text>
+			<liferay-ui:search-container-column-text
+				name="menu-item-name"
+				truncate="<%= true %>"
+				value="<%= ddmStructure.getUnambiguousName(ddmStructures, themeDisplay.getScopeGroupId(), locale) %>"
+			/>
 
-		<liferay-ui:search-container-column-jsp
-			name="add-to-favorites"
-			path="/view_more_menu_items_actions.jsp"
-		/>
-	</liferay-ui:search-container-row>
+			<liferay-ui:search-container-column-text
+				name="user"
+				property="userName"
+			/>
 
-	<liferay-ui:search-iterator displayStyle="list" markupView="lexicon" />
-</liferay-ui:search-container>
+			<liferay-ui:search-container-column-text
+				name="created"
+			>
+				<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - ddmStructure.getCreateDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
+			</liferay-ui:search-container-column-text>
+
+			<liferay-ui:search-container-column-jsp
+				name="add-to-favorites"
+				path="/view_more_menu_items_actions.jsp"
+			/>
+		</liferay-ui:search-container-row>
+
+		<liferay-ui:search-iterator displayStyle="list" markupView="lexicon" />
+	</liferay-ui:search-container>
+</div>

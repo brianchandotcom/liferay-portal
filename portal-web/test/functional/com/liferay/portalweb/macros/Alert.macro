@@ -1,4 +1,16 @@
 <definition>
+	<command name="closePortalLocalizationWarning">
+		<if>
+			<and>
+				<condition function="IsVisible" locator1="Home#PORTAL_LOCALIZATION_CONFIRMATION_INFO_MESSAGE" />
+				<condition function="IsVisible" locator1="Icon#CLOSE" />
+			</and>
+			<then>
+				<execute function="Click" locator1="Icon#CLOSE" />
+			</then>
+		</if>
+	</command>
+
 	<command name="viewRequestFailedToComplete">
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_REQUEST_FAILED_TO_COMPLETE" value1="Your request failed to complete." />
 	</command>

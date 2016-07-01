@@ -53,6 +53,9 @@ import org.gradle.util.GUtil;
 public class BuildChangeLogTask extends DefaultTask {
 
 	public BuildChangeLogTask() {
+		Project project = getProject();
+
+		setGitDir(project.getRootDir());
 		setTicketIdPrefixes("CLDSVCS", "LPS", "SOS", "SYNC");
 	}
 
@@ -76,7 +79,7 @@ public class BuildChangeLogTask extends DefaultTask {
 
 		Set<String> ticketIds;
 
-		try (Repository repository = GitUtil.openRepository(project)) {
+		try (Repository repository = GitUtil.openRepository(getGitDir())) {
 			if (Validator.isNull(rangeEnd)) {
 				rangeEnd = GitUtil.getHashHead(repository);
 			}
@@ -164,6 +167,11 @@ public class BuildChangeLogTask extends DefaultTask {
 	}
 
 	@Input
+	public File getGitDir() {
+		return GradleUtil.toFile(getProject(), _gitDir);
+	}
+
+	@Input
 	@Optional
 	public String getRangeEnd() {
 		return GradleUtil.toString(_rangeEnd);
@@ -196,6 +204,10 @@ public class BuildChangeLogTask extends DefaultTask {
 
 	public void setDirs(Object... dirs) {
 		setDirs(Arrays.asList(dirs));
+	}
+
+	public void setGitDir(Object gitDir) {
+		_gitDir = gitDir;
 	}
 
 	public void setRangeEnd(Object rangeEnd) {
@@ -299,6 +311,7 @@ public class BuildChangeLogTask extends DefaultTask {
 	private Object _changeLogFile;
 	private Object _changeLogHeader;
 	private final Set<Object> _dirs = new HashSet<>();
+	private Object _gitDir;
 	private Object _rangeEnd;
 	private Object _rangeStart;
 	private final Set<String> _ticketIdPrefixes = new HashSet<>();

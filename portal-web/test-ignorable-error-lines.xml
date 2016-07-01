@@ -72,10 +72,6 @@
 			<contains>JBREM00200:</contains>
 			<matches></matches>
 		</ignore-error>
-		<ignore-error description="LPS-28734">
-			<contains>java.nio.channels.ClosedChannelException</contains>
-			<matches></matches>
-		</ignore-error>
 		<ignore-error description="LPS-28954">
 			<contains>[org.apache.axis.utils.XMLUtils.ThreadLocalDocumentBuilder]</contains>
 			<matches>.*The web application \[/wsrp-portlet\] created a ThreadLocal with key of type.*</matches>

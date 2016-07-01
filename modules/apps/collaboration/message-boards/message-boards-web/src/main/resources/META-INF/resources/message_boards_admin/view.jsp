@@ -37,8 +37,6 @@ if (Validator.isNotNull(keywords)) {
 	portletURL.setParameter("keywords", keywords);
 }
 
-long groupThreadsUserId = ParamUtil.getLong(request, "groupThreadsUserId");
-
 request.setAttribute("view.jsp-categoryId", categoryId);
 request.setAttribute("view.jsp-portletURL", portletURL);
 request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
@@ -145,9 +143,7 @@ request.setAttribute("view.jsp-entriesSearchContainer", searchContainer);
 		<div class="container-fluid-1280">
 
 			<%
-			if (themeDisplay.isSignedIn()) {
-				groupThreadsUserId = user.getUserId();
-			}
+			long groupThreadsUserId = ParamUtil.getLong(request, "groupThreadsUserId");
 
 			if (groupThreadsUserId > 0) {
 				portletURL.setParameter("groupThreadsUserId", String.valueOf(groupThreadsUserId));
@@ -176,10 +172,7 @@ request.setAttribute("view.jsp-entriesSearchContainer", searchContainer);
 		</liferay-util:include>
 
 		<%
-		String pageSubtitle = "recent-posts";
-
-		PortalUtil.setPageSubtitle(LanguageUtil.get(request, StringUtil.replace(pageSubtitle, CharPool.UNDERLINE, CharPool.DASH)), request);
-		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, TextFormatter.format(pageSubtitle, TextFormatter.O)), portletURL.toString());
+		PortalUtil.setPageSubtitle(LanguageUtil.get(request, StringUtil.replace("recent-posts", CharPool.UNDERLINE, CharPool.DASH)), request);
 		%>
 
 	</c:when>

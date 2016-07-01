@@ -2602,8 +2602,13 @@
 			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Kaleo Forms Admin" />
+		</execute>
+
 		<execute macro="KaleoFormsAdmin#exportRecords">
 			<var name="fileExtension" value="CSV" />
+			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 	</command>
 
@@ -2748,8 +2753,13 @@
 			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Kaleo Forms Admin" />
+		</execute>
+
 		<execute macro="KaleoFormsAdmin#exportRecords">
 			<var name="fileExtension" value="XML" />
+			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 	</command>
 
@@ -2894,9 +2904,14 @@
 			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Kaleo Forms Admin" />
+		</execute>
+
 		<execute macro="KaleoFormsAdmin#exportRecords">
 			<var name="approvedOnly" value="true" />
 			<var name="fileExtension" value="CSV" />
+			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 	</command>
 
@@ -3041,9 +3056,14 @@
 			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Kaleo Forms Admin" />
+		</execute>
+
 		<execute macro="KaleoFormsAdmin#exportRecords">
 			<var name="approvedOnly" value="true" />
 			<var name="fileExtension" value="XML" />
+			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 	</command>
 

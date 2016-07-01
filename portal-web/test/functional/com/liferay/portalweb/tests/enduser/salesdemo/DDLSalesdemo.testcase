@@ -170,9 +170,9 @@
 			</execute>
 		</for>
 
-		<execute macro="DDLRecord#viewViaDDLDisplayTable">
-			<var name="ddlRecordFieldData" value="Approved" />
+		<execute macro="DDLRecord#viewStatusViaDDLDisplayTable">
 			<var name="fieldFieldLabel" value="Status" />
+			<var name="workflowStatus" value="Approved" />
 		</execute>
 
 		<execute macro="DDLRecord#viewViaDDLDisplayTable">

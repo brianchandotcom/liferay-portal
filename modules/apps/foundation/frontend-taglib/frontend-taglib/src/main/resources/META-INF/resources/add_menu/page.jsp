@@ -65,7 +65,9 @@ int allAddMenuItemsCount = addMenuFavItems.size() + addMenuItems.size() + addMen
 			</button>
 
 			<ul class="dropdown-menu dropdown-menu-left-side-bottom">
-				<li class="active"><a><%= LanguageUtil.get(request, "you-can-customize-this-menu-or-see-all-you-have-by-pressing-more") %></a></li>
+				<li class="active">
+					<a href="javascript:;"><liferay-ui:message key="you-can-customize-this-menu-or-see-all-you-have-by-pressing-more" /></a>
+				</li>
 
 				<%
 				for (int i = 0; i< addMenuPrimaryItems.size(); i++) {
@@ -88,16 +90,14 @@ int allAddMenuItemsCount = addMenuFavItems.size() + addMenuItems.size() + addMen
 
 				<li class="divider"></li>
 
+				<c:if test="<%= addMenuFavItems.size() > 0 %>">
+					<li class="dropdown-header">
+						<liferay-ui:message key="favorites" />
+					</li>
+				</c:if>
+
 				<%
-				if (addMenuFavItems.size() > 0) {
-				%>
-
-					<li class="dropdown-header"><%= LanguageUtil.get(request, "favorites") %></li>
-
-				<%
-				}
-
-				for (int i = 0; i < addMenuFavItems.size() && i < allAddMenuItemsCount; i++) {
+				for (int i = 0; i < addMenuFavItems.size() && (i < allAddMenuItemsCount); i++) {
 					AddMenuItem addMenuFavItem = addMenuFavItems.get(i);
 
 					String id = addMenuFavItem.getId();
@@ -113,17 +113,15 @@ int allAddMenuItemsCount = addMenuFavItems.size() + addMenuItems.size() + addMen
 
 				<%
 				}
-
-				if (addMenuFavItems.size() < maxItems && (addMenuRecentItems.size() > 0 || addMenuItems.size() > 0)) {
-					if (addMenuFavItems.size() > 0) {
 				%>
 
+				<c:if test="<%= (addMenuFavItems.size() < maxItems) && ((addMenuRecentItems.size() > 0) || (addMenuItems.size() > 0)) %>">
+					<c:if test="<%= addMenuFavItems.size() > 0 %>">
 						<li class="divider"></li>
+					</c:if>
 
 					<%
-					}
-
-					for (int i = 0; i < addMenuRecentItems.size() && addMenuFavItems.size() + i < maxItems; i++) {
+					for (int i = 0; i < addMenuRecentItems.size() && ((addMenuFavItems.size() + i) < maxItems); i++) {
 						AddMenuItem addMenuRecentItem = addMenuRecentItems.get(i);
 
 						String id = addMenuRecentItem.getId();
@@ -139,9 +137,12 @@ int allAddMenuItemsCount = addMenuFavItems.size() + addMenuItems.size() + addMen
 
 					<%
 					}
+					%>
 
-					if (addMenuFavItems.size() + addMenuRecentItems.size() < maxItems) {
-						for (int i = 0; i < addMenuItems.size() && addMenuFavItems.size() + addMenuRecentItems.size() + i < maxItems; i++) {
+					<c:if test="<%= (addMenuFavItems.size() + addMenuRecentItems.size()) < maxItems %>">
+
+						<%
+						for (int i = 0; i < addMenuItems.size() && ((addMenuFavItems.size() + addMenuRecentItems.size() + i) < maxItems); i++) {
 							AddMenuItem addMenuItem = addMenuItems.get(i);
 
 							String id = addMenuItem.getId();
@@ -149,35 +150,35 @@ int allAddMenuItemsCount = addMenuFavItems.size() + addMenuItems.size() + addMen
 							if (Validator.isNull(id)) {
 								id = "menuItem" + i;
 							}
-					%>
+						%>
 
 							<li>
 								<a <%= AUIUtil.buildData(addMenuItem.getAnchorData()) %> href="<%= HtmlUtil.escapeAttribute(addMenuItem.getUrl()) %>" id="<%= namespace + id %>"><%= HtmlUtil.escape(addMenuItem.getLabel()) %></a>
 							</li>
 
-				<%
+						<%
 						}
-					}
-				}
+						%>
 
-				if (allAddMenuItemsCount > maxItems) {
-				%>
+					</c:if>
+				</c:if>
 
+				<c:if test="<%= allAddMenuItemsCount > maxItems %>">
 					<li class="dropdown-header">
 						<liferay-ui:message arguments="<%= new Object[] {maxItems, allAddMenuItemsCount} %>" key="showing-x-of-x-items" />
 					</li>
 
-					<%
-					if (Validator.isNotNull(viewMoreUrl)) {
-					%>
-
+					<c:if test="<%= Validator.isNotNull(viewMoreUrl) %>">
 						<li class="divider"></li>
+
 						<li>
-							<a href="javascript:;" id="<%= namespace %>view-more-add-menu-elements"><%= LanguageUtil.get(request, "more") %></a>
+							<a class="text-center" href="javascript:;" id="<%= namespace %>viewMoreButton">
+								<strong><liferay-ui:message key="more" /></strong>
+							</a>
 						</li>
 
 						<aui:script use="liferay-util-window">
-							var viewMoreAddMenuElements = A.one('#<%= namespace %>view-more-add-menu-elements');
+							var viewMoreAddMenuElements = A.one('#<%= namespace %>viewMoreButton');
 
 							viewMoreAddMenuElements.on(
 								'click',
@@ -185,19 +186,15 @@ int allAddMenuItemsCount = addMenuFavItems.size() + addMenuItems.size() + addMen
 									Liferay.Util.openWindow(
 										{
 											id: '<%= namespace %>viewMoreAddMenuElements',
-											title: '<%= LanguageUtil.get(request, "more") %>',
+											title: '<liferay-ui:message key="more" />',
 											uri: '<%= viewMoreUrl %>'
 										}
 									);
 								}
 							);
 						</aui:script>
-
-				<%
-					}
-				}
-				%>
-
+					</c:if>
+				</c:if>
 			</ul>
 		</div>
 	</c:otherwise>

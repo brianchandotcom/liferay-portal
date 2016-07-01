@@ -250,6 +250,7 @@ if (Validator.isNotNull(keywords)) {
 
 						<%
 						}
+
 						if (folder != null) {
 							PortletURL viewFolderURL = PortletURLUtil.clone(portletURL, liferayPortletResponse);
 

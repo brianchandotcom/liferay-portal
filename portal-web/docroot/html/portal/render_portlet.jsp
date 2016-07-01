@@ -510,6 +510,7 @@ if (urlConfiguration != null) {
 
 	portletDisplay.setURLConfigurationJS(urlConfigurationJSSB.toString());
 }
+
 // URL edit
 
 PortletURLImpl urlEdit = new PortletURLImpl(request, portletDisplay.getId(), plid, PortletRequest.RENDER_PHASE);

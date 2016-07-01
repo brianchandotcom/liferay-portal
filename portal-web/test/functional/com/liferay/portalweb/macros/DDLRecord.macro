@@ -801,6 +801,13 @@
 		<execute function="AssertTextEquals" locator1="DDLRecord#FIELD_2" value1="${fieldFieldLabel} ${ddlRecordFieldData}" />
 	</command>
 
+	<command name="viewStatusViaDDLDisplayTable">
+		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
+		<var name="key_workflowStatus" value="${workflowStatus}" />
+
+		<execute function="AssertTextEquals" locator1="DDL#RECORD_TABLE_WORKFLOW_STATUS" value1="${workflowStatus}" />
+	</command>
+
 	<command name="viewTextFieldRepeated">
 		<execute function="AssertTextEquals" locator1="xpath=(//div[@data-fieldname='Text'][1]//a[contains(@class,'ddm-repeatable-add-button')]/../div//input)" value1="${ddlRecordFieldData1}" />
 		<execute function="AssertTextEquals" locator1="xpath=(//div[@data-fieldname='Text'][2]//a[contains(@class,'ddm-repeatable-add-button')]/../div//input)" value1="${ddlRecordFieldData2}" />

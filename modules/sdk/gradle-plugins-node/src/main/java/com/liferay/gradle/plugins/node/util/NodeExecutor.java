@@ -52,7 +52,9 @@ public class NodeExecutor {
 	public void execute() throws Exception {
 		ProcessBuilder processBuilder = new ProcessBuilder(getCommandLine());
 
-		processBuilder.directory(getWorkingDir());
+		File workingDir = getWorkingDir();
+
+		processBuilder.directory(workingDir);
 		processBuilder.inheritIO();
 
 		updateEnvironment(processBuilder.environment());
@@ -62,6 +64,8 @@ public class NodeExecutor {
 				"Running {} from {}", processBuilder.command(),
 				processBuilder.directory());
 		}
+
+		workingDir.mkdirs();
 
 		Process process = processBuilder.start();
 

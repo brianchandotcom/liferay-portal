@@ -3221,7 +3221,7 @@
 			<var name="fieldLabel" value="Multiple Selection" />
 			<var name="fieldName" value="MultipleSelection" />
 		</execute>
-		
+
 		<execute macro="Form#save" />
 
 		<execute macro="Page#add">

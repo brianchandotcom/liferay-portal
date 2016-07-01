@@ -152,6 +152,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGE_TREE_PAGE_EDIT_COG</td>
+	<td>xpath=(//a[contains(@id,'layoutsTree_layout_')])[1]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGE_TREE_PAGE_SPECIFIC_PAGE</td>
 	<td>//a[span[contains(.,'${key_page}')]]</td>
 	<td></td>

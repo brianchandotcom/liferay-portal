@@ -66,9 +66,9 @@
 
 	<command name="configureFileUploadOverallMaximumFileSize">
 		<execute function="AssertClick" locator1="NavBar#FILE_UPLOADS" value1="File Uploads" />
-		<execute function="Type" locator1="CPServeradministrationFileuploads#FILE_UPLOADS_GENERAL_OVERALL_MAX_FILE_SIZE_FIELD" value1="${maxFileSize}" />
-		<execute function="AssertClick" locator1="CPServeradministrationFileuploads#SAVE_BUTTON" value1="Save" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="CPServeradministrationFileuploads#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="Type" locator1="ServerAdministrationFileUploads#GENERAL_OVERALL_MAX_FILE_SIZE_FIELD" value1="${maxFileSize}" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="configureMailServerSettings">
@@ -104,9 +104,9 @@
 		</if>
 
 		<execute function="Type" locator1="ServerAdministrationMail#OUTGOING_PASSWORD" value1="${userPassword}" />
-		<execute function="AssertClick" locator1="CPServeradministrationMail#SAVE_BUTTON" value1="Save" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="CPServeradministrationMail#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="executeServerResourcesActions">
@@ -154,7 +154,7 @@
 
 		<execute function="AssertClick" locator1="NavBar#FILE_UPLOADS" value1="File Uploads" />
 		<execute function="Type" locator1="ServerAdministrationFileUploads#DOCS_AND_MEDIA_MAX_FILE_SIZE_FIELD" value1="" />
-		<execute function="AssertClick" locator1="CPServeradministrationFileuploads#SAVE_BUTTON" value1="Save" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 	</command>
 
 	<command name="tearDownMailServerSettings">
@@ -174,8 +174,8 @@
 		<execute function="Uncheck" locator1="ServerAdministrationMail#OUTGOING_SECURE_CONNECTION_CHECKBOX" />
 		<execute function="Type" locator1="ServerAdministrationMail#OUTGOING_USER_NAME" value1="" />
 		<execute function="Type" locator1="ServerAdministrationMail#OUTGOING_PASSWORD" value1="" />
-		<execute function="AssertClick" locator1="CPServeradministrationMail#SAVE_BUTTON" value1="Save" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="CPServeradministrationMail#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 </definition>

@@ -239,13 +239,13 @@
 	</command>
 
 	<command name="expandRootCP">
-		<execute function="Click" locator1="CPUsergroupsSitepages#PAGE_TREE_ROOT_ARROW" />
-		<execute function="AssertElementPresent#assertElementPresent" locator1="CPUsergroupsSitepages#PAGE_TREE_PAGE_EDIT_COG" />
+		<execute function="Click" locator1="SitePages#PAGE_TREE_ROOT_ARROW" />
+		<execute function="AssertElementPresent#assertElementPresent" locator1="SitePages#PAGE_TREE_PAGE_EDIT_COG" />
 
 		<if>
-			<condition function="IsElementNotPresent#isNotVisible" locator1="CPUsergroupsSitepages#PAGE_TREE_PAGE_EDIT_COG" />
+			<condition function="IsElementNotPresent#isNotVisible" locator1="Sitepages#PAGE_TREE_PAGE_EDIT_COG" />
 			<then>
-				<execute function="Click" locator1="CPUsergroupsSitepages#PAGE_TREE_ROOT_ARROW" />
+				<execute function="Click" locator1="SitePages#PAGE_TREE_ROOT_ARROW" />
 			</then>
 		</if>
 	</command>

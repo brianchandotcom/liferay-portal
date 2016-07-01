@@ -405,8 +405,8 @@
 			<var name="searchTerm" value="usersn" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="CPUsergroupsAssignmembers#USER_TABLE_GENERIC_SCREEN_NAME_1" value1="usersn" />
-		<execute function="AssertNotVisible" locator1="CPUsergroupsAssignmembers#USER_TABLE_GENERIC_SCREEN_NAME_2" />
+		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsAssignOrganizationalRoles#USER_TABLE_SCREEN_NAME_1" value1="usersn" />
+		<execute function="AssertNotVisible" locator1="UsersAndOrganizationsAssignOrganizationalRoles#USER_TABLE_SCREEN_NAME_2" />
 	</command>
 
 	<command name="SearchUserGroup" priority="3">

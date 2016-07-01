@@ -1,14 +1,31 @@
+import com.liferay.gradle.plugins.change.log.builder.BuildChangeLogTask
 import com.liferay.gradle.util.FileUtil
 import com.liferay.gradle.util.StringUtil
 import com.liferay.gradle.util.copy.RenameDependencyClosure
+
+import java.util.regex.Matcher
 
 buildscript {
 	apply from: file("build-buildscript.gradle"), to: buildscript
 }
 
+task buildFixPackChangeLog(type: BuildChangeLogTask)
 task cleanReleng
 task setUpPortalTools
 task wrapper(type: Wrapper)
+
+buildFixPackChangeLog {
+	changeLogHeader = {
+		File releaseInfoFile = file("../portal-kernel/src/com/liferay/portal/kernel/util/ReleaseInfo.java")
+
+		Matcher matcher = (releaseInfoFile.text =~ /private static final String _VERSION = "(.+)";/)
+
+		return matcher[0][1]
+	}
+
+	changeLogFile = "../.releng/fix-pack.changelog"
+	dirs = ["../portal-impl", "../portal-kernel", "../portal-web", "../util-bridges", "../util-java", "../util-slf4j", "../util-taglib"]
+}
 
 cleanReleng << {
 	File relengRootDir = file(".releng")

@@ -2832,7 +2832,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					sb.append(previousLine);
 					sb.append("\n");
 
-					if (addExtraEmptyLine(previousLine, line)) {
+					if (addExtraEmptyLine(previousLine, line, true)) {
 						sb.append("\n");
 					}
 				}

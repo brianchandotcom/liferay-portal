@@ -184,15 +184,48 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		_init();
 	}
 
-	protected boolean addExtraEmptyLine(String previousLine, String line) {
+	protected boolean addExtraEmptyLine(
+		String previousLine, String line, boolean javaSource) {
+
+		String trimmedLine = StringUtil.trimLeading(line);
+		String trimmedPreviousLine = StringUtil.trimLeading(previousLine);
+
+		if (this instanceof JSPSourceProcessor) {
+			if (trimmedPreviousLine.matches("(--)?%>") &&
+				Validator.isNotNull(line) && !trimmedLine.equals("-->")) {
+
+				return true;
+			}
+
+			if (Validator.isNotNull(previousLine) &&
+				!trimmedPreviousLine.equals("<!--") &&
+				trimmedLine.matches("<%(--)?")) {
+
+				return true;
+			}
+
+			if (trimmedPreviousLine.equals("<%") &&
+				trimmedLine.startsWith("//")) {
+
+				return true;
+			}
+
+			if (trimmedPreviousLine.startsWith("//") &&
+				trimmedLine.equals("%>")) {
+
+				return true;
+			}
+		}
+
+		if (!javaSource) {
+			return false;
+		}
+
 		if (Validator.isNull(previousLine) || Validator.isNull(line) ||
 			previousLine.contains("/*") || previousLine.endsWith("*/")) {
 
 			return false;
 		}
-
-		String trimmedLine = StringUtil.trimLeading(line);
-		String trimmedPreviousLine = StringUtil.trimLeading(previousLine);
 
 		if ((trimmedPreviousLine.startsWith("// ") &&
 			 !trimmedLine.startsWith("// ")) ||

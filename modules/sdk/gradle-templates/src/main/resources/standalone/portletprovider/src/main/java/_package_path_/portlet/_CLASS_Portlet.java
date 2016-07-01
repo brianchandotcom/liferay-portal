@@ -6,6 +6,7 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -16,7 +17,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import javax.portlet.GenericPortlet;
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
@@ -32,12 +32,14 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.display-category=category.hidden",
 		"com.liferay.portlet.instanceable=true",
 		"javax.portlet.display-name=_NAME_ Portlet",
+		"javax.portlet.init-param.template-path=/",
+		"javax.portlet.init-param.view-template=/view.jsp",
 		"javax.portlet.name=" + _CLASS_PortletKeys._CLASS_,
 		"javax.portlet.security-role-ref=power-user,user"
 	},
 	service = Portlet.class
 )
-public class _CLASS_Portlet extends GenericPortlet {
+public class _CLASS_Portlet extends MVCPortlet {
 
 	@Override
 	protected void doView(
@@ -73,9 +75,9 @@ public class _CLASS_Portlet extends GenericPortlet {
 		catch (PortalException pe) {
 		}
 
-		PrintWriter printWriter = renderResponse.getWriter();
+		renderRequest.setAttribute("portletProviderMessage", message);
 
-		printWriter.print(message);
+		super.doView(renderRequest, renderResponse);
 	}
 
 	@Reference(unbind = "-")

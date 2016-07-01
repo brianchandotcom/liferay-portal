@@ -176,6 +176,8 @@ request.setAttribute("view.jsp-entriesSearchContainer", searchContainer);
 		</liferay-util:include>
 
 		<%
+		renderResponse.setTitle(LanguageUtil.get(request, "recent-posts"));
+
 		PortalUtil.setPageSubtitle(LanguageUtil.get(request, StringUtil.replace("recent-posts", CharPool.UNDERLINE, CharPool.DASH)), request);
 		%>
 

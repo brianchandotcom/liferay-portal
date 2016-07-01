@@ -309,7 +309,7 @@
 		</execute>
 
 		<execute macro="FormFields#viewFieldName">
-			<var name="fieldValue" value="ParagraphName" />
+			<var name="fieldName" value="ParagraphName" />
 		</execute>
 
 		<execute macro="FormFields#editParagraphBody">
@@ -336,7 +336,7 @@
 		</execute>
 
 		<execute macro="FormFields#viewFieldName">
-			<var name="fieldValue" value="TextName" />
+			<var name="fieldName" value="TextName" />
 		</execute>
 
 		<execute macro="FormFields#save" />
@@ -359,7 +359,7 @@
 		</execute>
 
 		<execute macro="FormFields#viewFieldName">
-			<var name="fieldValue" value="SelectName" />
+			<var name="fieldName" value="SelectName" />
 		</execute>
 
 		<execute macro="FormFields#editOptionsRow">
@@ -411,7 +411,7 @@
 		</execute>
 
 		<execute macro="FormFields#viewFieldName">
-			<var name="fieldValue" value="RadioName" />
+			<var name="fieldName" value="RadioName" />
 		</execute>
 
 		<execute macro="FormFields#editOptionsRow">
@@ -463,7 +463,7 @@
 		</execute>
 
 		<execute macro="FormFields#viewFieldName">
-			<var name="fieldValue" value="DateName" />
+			<var name="fieldName" value="DateName" />
 		</execute>
 
 		<execute macro="FormFields#save" />
@@ -486,7 +486,7 @@
 		</execute>
 
 		<execute macro="FormFields#viewFieldName">
-			<var name="fieldValue" value="CheckboxName" />
+			<var name="fieldName" value="CheckboxName" />
 		</execute>
 
 		<execute macro="FormFields#save" />

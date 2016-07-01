@@ -62,7 +62,7 @@
 		<delete failonerror="false" file="${jar.file}-sources.jar" />
 	</target>
 
-	<target depend="init-compile" name="compile" unless="compile.uptodate">
+	<target depends="init-compile" name="compile" unless="compile.uptodate">
 		<property name="javac.destdir" value="classes" />
 		<property name="javac.srcdir" value="src" />
 		<property name="javac.classpathref" value="project.classpath" />

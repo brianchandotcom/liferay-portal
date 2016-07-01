@@ -68,10 +68,6 @@
 			<contains>Exception sending context destroyed event to listener instance of class com.liferay.portal.spring.context.PortalContextLoaderListener</contains>
 			<matches></matches>
 		</ignore-error>
-		<ignore-error description="LPS-23351">
-			<contains>user lacks privilege or object not found: LOCK_</contains>
-			<matches></matches>
-		</ignore-error>
 		<ignore-error description="LPS-23498">
 			<contains>JBREM00200:</contains>
 			<matches></matches>

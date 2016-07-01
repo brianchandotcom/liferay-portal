@@ -310,8 +310,8 @@
 
 		<execute function="Open" locator1="${portalURL}/web/site-name/home" />
 
-		<execute function="AssertTextEquals" locator1="PGPollsdisplay#ERROR_MESSAGE_1_COLUMN_1" value1="You do not have the roles required to access this portlet." />
-		<execute function="AssertTextEquals" locator1="PGPollsdisplay#ERROR_MESSAGE_1_COLUMN_2" value1="You do not have the roles required to access this portlet." />
+		<execute function="AssertTextEquals" locator1="Message#ERROR_1_COLUMN_1" value1="You do not have the roles required to access this portlet." />
+		<execute function="AssertTextEquals" locator1="Message#ERROR_1_COLUMN_2" value1="You do not have the roles required to access this portlet." />
 	</command>
 
 	<command name="ViewDefaultGlobalScopeLandingPage" priority="4">

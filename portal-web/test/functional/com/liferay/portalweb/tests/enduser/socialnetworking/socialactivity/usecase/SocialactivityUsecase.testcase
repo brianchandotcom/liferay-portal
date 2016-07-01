@@ -113,7 +113,7 @@
 
 		<var name="key_portletName" value="User Statistics" />
 
-		<execute function="AssertTextEquals" locator1="PGUserstatistics#PORTLET_BODY" value1="There are no active users for this period." />
+		<execute function="AssertTextEquals" locator1="Portlet#BODY" value1="There are no active users for this period." />
 
 		<execute macro="Page#add">
 			<var name="pageName" value="Blogs Page" />

@@ -892,6 +892,7 @@
 		</execute>
 
 		<execute function="AssertClick" locator1="Button#CHOOSE" value1="Choose" />
+
 		<execute function="Pause" locator1="5000" />
 
 		<var name="key_pageName" value="${pageName}" />
@@ -900,9 +901,9 @@
 
 		<execute function="AssertClick" locator1="WCSelectDisplayPage#PUBLIC_PAGES_SELECTION" value1="${pageName}" />
 
-		<execute function="AssertTextEquals" locator1="WCSelectDisplayPage#SELECTED_PAGE_INFO_MESSAGE" value1="Public Pages > ${pageName}" />
+		<execute function="SelectFrame" value1="relative=top" />
 
-		<execute function="AssertClick" locator1="Button#CHOOSE" value1="Choose" />
+		<execute macro="Button#clickDone" />
 
 		<execute function="SelectFrame" value1="relative=top" />
 

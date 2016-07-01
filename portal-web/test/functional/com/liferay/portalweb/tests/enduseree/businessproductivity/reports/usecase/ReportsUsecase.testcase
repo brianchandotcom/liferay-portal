@@ -46,7 +46,7 @@
 
 		<execute macro="Alert#viewRequestFailedToComplete" />
 
-		<execute function="AssertTextEquals" locator1="CPReportsadminAddreportdefinition#ERROR_MESSAGE_2" value1="Please enter a valid file." />
+		<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="Please enter a valid file." />
 	</command>
 
 	<command name="DownloadReportPG" priority="4">

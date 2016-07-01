@@ -62,7 +62,7 @@
 
 		<execute function="Click" locator1="Polls#POLLS_TABLE_ACTION" />
 
-		<execute function="AssertClick" locator1="CPPolls#POLLS_MENULIST_EDIT" value1="Edit" />
+		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
 		<execute function="AssertNotChecked" locator1="Checkbox#NEVER_EXPIRE" value1="Never Expire" />
 
@@ -324,7 +324,7 @@
 			<var name="pollsQuestionTitle" value="${pollsQuestionTitle}" />
 		</execute>
 
-		<execute function="AssertClick" locator1="PGPollsdisplay#INFO_MESSAGE_LINK" value1="Please sign in to vote." />
+		<execute function="AssertClick" locator1="Message#INFO_LINK" value1="Please sign in to vote." />
 
 		<execute function="Type" locator1="TextInput#EMAIL_ADDRESS" value1="test@liferay.com" />
 		<execute function="Type" locator1="TextInput#PASSWORD" value1="test" />

@@ -2,14 +2,9 @@ package _package_.portlet;
 
 import _package_.constants._CLASS_PortletKeys;
 
-import java.io.IOException;
-import java.io.PrintWriter;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
-import javax.portlet.GenericPortlet;
 import javax.portlet.Portlet;
-import javax.portlet.PortletException;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -24,6 +19,8 @@ import org.osgi.service.component.annotations.Component;
 		"com.liferay.portlet.render-weight=50",
 		"com.liferay.portlet.use-default-template=true",
 		"javax.portlet.display-name=_NAME_ Portlet",
+		"javax.portlet.init-param.template-path=/",
+		"javax.portlet.init-param.view-template=/view.jsp",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.name=" + _CLASS_PortletKeys._CLASS_,
 		"javax.portlet.resource-bundle=content.Language",
@@ -32,16 +29,5 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = Portlet.class
 )
-public class _CLASS_Portlet extends GenericPortlet {
-
-	@Override
-	protected void doView(
-			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws IOException, PortletException {
-
-		PrintWriter printWriter = renderResponse.getWriter();
-
-		printWriter.print("_NAME_ Portlet - Hello World!");
-	}
-
+public class _CLASS_Portlet extends MVCPortlet {
 }

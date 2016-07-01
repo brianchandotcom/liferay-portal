@@ -118,55 +118,35 @@ public class HtmlImpl implements Html {
 
 			String replacement = null;
 
-			switch (c) {
-				case '<':
-					replacement = "&lt;";
-
-					break;
-
-				case '>':
-					replacement = "&gt;";
-
-					break;
-
-				case '&':
-					replacement = "&amp;";
-
-					break;
-
-				case '"':
-					replacement = "&#34;";
-
-					break;
-
-				case '\'':
-					replacement = "&#39;";
-
-					break;
-
-				case '\u00bb':
-					replacement = "&#187;";
-
-					break;
-
-				case '\u2013':
-					replacement = "&#x2013;";
-
-					break;
-
-				case '\u2014':
-					replacement = "&#x2014;";
-
-					break;
-
-				case '\u2028':
-					replacement = "&#x2028;";
-
-					break;
+			if (c == '<') {
+				replacement = "&lt;";
 			}
-
-			if (!_isValidXmlCharacter(c) ||
-				_isUnicodeCompatibilityCharacter(c)) {
+			else if (c == '>') {
+				replacement = "&gt;";
+			}
+			else if (c == '&') {
+				replacement = "&amp;";
+			}
+			else if (c == '"') {
+				replacement = "&#34;";
+			}
+			else if (c == '\'') {
+				replacement = "&#39;";
+			}
+			else if (c == '\u00bb') {
+				replacement = "&#187;";
+			}
+			else if (c == '\u2013') {
+				replacement = "&#x2013;";
+			}
+			else if (c == '\u2014') {
+				replacement = "&#x2014;";
+			}
+			else if (c == '\u2028') {
+				replacement = "&#x2028;";
+			}
+			else if (!_isValidXmlCharacter(c) ||
+					 _isUnicodeCompatibilityCharacter(c)) {
 
 				replacement = StringPool.SPACE;
 			}

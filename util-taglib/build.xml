@@ -51,26 +51,6 @@
 		</sequential>
 	</macrodef>
 
-	<macrodef name="jar-macro">
-		<sequential>
-			<jar-macro-cmd>
-				<jar-post>
-					<copy file="${jar.file}.jar" preservelastmodified="true" todir="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies" />
-
-					<copy preservelastmodified="true" todir="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies">
-						<fileset dir="classes/META-INF" />
-					</copy>
-
-					<copy file="${jar.file}.jar" preservelastmodified="true" todir="${project.dir}/portal-web/docroot/WEB-INF/lib" />
-
-					<copy overwrite="true" preservelastmodified="true" todir="${project.dir}/portal-web/docroot/WEB-INF/tld">
-						<fileset dir="classes/META-INF" includes="*.tld" />
-					</copy>
-				</jar-post>
-			</jar-macro-cmd>
-		</sequential>
-	</macrodef>
-
 	<target name="build-taglibs">
 		<java
 			classname="com.liferay.alloy.tools.tagbuilder.TagBuilder"
@@ -93,6 +73,20 @@
 
 	<target depends="build-common-java.clean" name="clean">
 		<delete failonerror="false" file="${liferay.home}/osgi/portal/${jar.file}.jar" />
+	</target>
+
+	<target depends="build-common-java.jar" name="jar">
+		<copy file="${jar.file}.jar" preservelastmodified="true" todir="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies" />
+
+		<copy preservelastmodified="true" todir="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies">
+			<fileset dir="classes/META-INF" />
+		</copy>
+
+		<copy file="${jar.file}.jar" preservelastmodified="true" todir="${project.dir}/portal-web/docroot/WEB-INF/lib" />
+
+		<copy overwrite="true" preservelastmodified="true" todir="${project.dir}/portal-web/docroot/WEB-INF/tld">
+			<fileset dir="classes/META-INF" includes="*.tld" />
+		</copy>
 	</target>
 
 	<target depends="taglibdoc" name="jar-tlddoc">

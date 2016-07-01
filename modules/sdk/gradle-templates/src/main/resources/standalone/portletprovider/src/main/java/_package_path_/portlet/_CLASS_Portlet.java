@@ -15,7 +15,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
@@ -70,7 +69,6 @@ public class _CLASS_Portlet extends MVCPortlet {
 
 				message = assetEntry.getTitle(themeDisplay.getLocale());
 			}
-
 		}
 		catch (PortalException pe) {
 		}

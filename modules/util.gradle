@@ -25,6 +25,10 @@ buildFixPackChangeLog {
 
 	changeLogFile = "../.releng/fix-pack.changelog"
 	dirs = ["../portal-impl", "../portal-kernel", "../portal-web", "../util-bridges", "../util-java", "../util-slf4j", "../util-taglib"]
+
+	if (project.hasProperty("rangeStart")) {
+		rangeStart = project.rangeStart
+	}
 }
 
 cleanReleng << {

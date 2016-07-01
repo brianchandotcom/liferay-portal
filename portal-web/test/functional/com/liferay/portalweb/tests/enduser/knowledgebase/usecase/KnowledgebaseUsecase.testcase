@@ -1419,7 +1419,7 @@
 			<var name="pageName" value="Knowledge Base Display Page 2" />
 		</execute>
 
-		<execute macro="KBArticle#viewPGViaKBArticle">
+		<execute macro="KBArticle#viewPGViaKBDisplay">
 			<var name="kbArticleContent" value="Knowledge Base Article Content" />
 			<var name="kbArticleTitle" value="Knowledge Base Article Title for Page 2" />
 		</execute>

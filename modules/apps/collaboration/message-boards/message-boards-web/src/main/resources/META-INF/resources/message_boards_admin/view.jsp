@@ -50,26 +50,32 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 	portletURL="<%= restoreTrashEntriesURL %>"
 />
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<liferay-util:include page="/message_boards_admin/nav.jsp" servletContext="<%= application %>">
-		<liferay-util:param name="navItemSelected" value="threads" />
-	</liferay-util:include>
+<%
+MBListDisplayContext mbListDisplayContext = mbDisplayContextProvider.getMbListDisplayContext(request, response, categoryId);
+%>
 
-	<liferay-portlet:renderURL varImpl="searchURL">
-		<portlet:param name="mvcRenderCommandName" value="/message_boards_admin/search" />
-	</liferay-portlet:renderURL>
+<c:if test="<%= !mbListDisplayContext.isShowRecentPosts() %>">
+	<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+		<liferay-util:include page="/message_boards_admin/nav.jsp" servletContext="<%= application %>">
+			<liferay-util:param name="navItemSelected" value="threads" />
+		</liferay-util:include>
 
-	<aui:nav-bar-search>
-		<aui:form action="<%= searchURL %>" name="searchFm">
-			<liferay-portlet:renderURLParams varImpl="searchURL" />
-			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-			<aui:input name="breadcrumbsCategoryId" type="hidden" value="<%= categoryId %>" />
-			<aui:input name="searchCategoryId" type="hidden" value="<%= categoryId %>" />
+		<liferay-portlet:renderURL varImpl="searchURL">
+			<portlet:param name="mvcRenderCommandName" value="/message_boards_admin/search" />
+		</liferay-portlet:renderURL>
 
-			<liferay-ui:input-search markupView="lexicon" />
-		</aui:form>
-	</aui:nav-bar-search>
-</aui:nav-bar>
+		<aui:nav-bar-search>
+			<aui:form action="<%= searchURL %>" name="searchFm">
+				<liferay-portlet:renderURLParams varImpl="searchURL" />
+				<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+				<aui:input name="breadcrumbsCategoryId" type="hidden" value="<%= categoryId %>" />
+				<aui:input name="searchCategoryId" type="hidden" value="<%= categoryId %>" />
+
+				<liferay-ui:input-search markupView="lexicon" />
+			</aui:form>
+		</aui:nav-bar-search>
+	</aui:nav-bar>
+</c:if>
 
 <%
 SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "cur1", 0, SearchContainer.DEFAULT_DELTA, portletURL, null, "there-are-no-threads-nor-categories");
@@ -86,8 +92,6 @@ if (categoryId == 0) {
 else {
 	entriesChecker.setRememberCheckBoxStateURLRegex("mbCategoryId=" + categoryId);
 }
-
-MBListDisplayContext mbListDisplayContext = mbDisplayContextProvider.getMbListDisplayContext(request, response, categoryId);
 
 mbListDisplayContext.populateResultsAndTotal(searchContainer);
 %>
@@ -189,7 +193,7 @@ request.setAttribute("view.jsp-entriesSearchContainer", searchContainer);
 	</c:otherwise>
 </c:choose>
 
-<c:if test="<%= !mbListDisplayContext.isShowSearch() %>">
+<c:if test="<%= !mbListDisplayContext.isShowSearch() && !mbListDisplayContext.isShowRecentPosts() %>">
 	<liferay-util:include page="/message_boards_admin/add_button.jsp" servletContext="<%= application %>" />
 </c:if>
 

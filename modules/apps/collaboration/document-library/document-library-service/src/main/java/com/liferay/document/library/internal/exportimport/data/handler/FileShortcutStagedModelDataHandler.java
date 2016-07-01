@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.internal.lar;
+package com.liferay.document.library.internal.exportimport.data.handler;
 
 import com.liferay.document.library.kernel.model.DLFileShortcut;
 import com.liferay.document.library.kernel.model.DLFileShortcutConstants;

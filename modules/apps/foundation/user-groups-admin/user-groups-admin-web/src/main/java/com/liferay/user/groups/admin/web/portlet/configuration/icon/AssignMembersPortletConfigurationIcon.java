@@ -64,7 +64,7 @@ public class AssignMembersPortletConfigurationIcon
 		try {
 			PortletURL portletURL = PortletURLFactoryUtil.create(
 				portletRequest, UserGroupsAdminPortletKeys.USER_GROUPS_ADMIN,
-				themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
+				themeDisplay, PortletRequest.RENDER_PHASE);
 
 			portletURL.setParameter(
 				"mvcPath", "/edit_user_group_assignments.jsp");

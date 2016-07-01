@@ -51,6 +51,7 @@ import com.liferay.portal.kernel.model.impl.VirtualLayout;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -100,7 +101,6 @@ import com.liferay.portal.util.LayoutCloneFactory;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.PortletURLImpl;
 import com.liferay.sites.kernel.util.SitesUtil;
 
 import java.io.File;
@@ -961,8 +961,8 @@ public class ServicePreAction extends Action {
 				}
 
 				if (hasPublishStagingPermission) {
-					PortletURL publishToLiveURL = new PortletURLImpl(
-						request, PortletKeys.EXPORT_IMPORT, plid,
+					PortletURL publishToLiveURL = PortletURLFactoryUtil.create(
+						request, PortletKeys.EXPORT_IMPORT, themeDisplay,
 						PortletRequest.RENDER_PHASE);
 
 					publishToLiveURL.setParameter(

@@ -64,8 +64,8 @@ public class EditOrganizationPortletConfigurationIcon
 
 		try {
 			PortletURL portletURL = PortletURLFactoryUtil.create(
-				portletRequest, UsersAdminPortletKeys.USERS_ADMIN,
-				themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
+				portletRequest, UsersAdminPortletKeys.USERS_ADMIN, themeDisplay,
+				PortletRequest.RENDER_PHASE);
 
 			portletURL.setParameter(
 				"mvcRenderCommandName", "/users_admin/edit_organization");

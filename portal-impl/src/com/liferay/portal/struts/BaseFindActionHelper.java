@@ -95,7 +95,7 @@ public abstract class BaseFindActionHelper implements FindActionHelper {
 			String portletId = result.getPortletId();
 
 			PortletURL portletURL = PortletURLFactoryUtil.create(
-				request, portletId, plid, PortletRequest.RENDER_PHASE);
+				request, portletId, layout, PortletRequest.RENDER_PHASE);
 
 			addRequiredParameters(request, portletId, portletURL);
 

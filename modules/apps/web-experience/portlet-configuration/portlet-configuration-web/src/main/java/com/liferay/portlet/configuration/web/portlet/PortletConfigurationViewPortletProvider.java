@@ -14,11 +14,20 @@
 
 package com.liferay.portlet.configuration.web.portlet;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.ViewPortletProvider;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.configuration.kernel.util.PortletConfigurationApplicationType;
 import com.liferay.portlet.configuration.web.constants.PortletConfigurationPortletKeys;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -40,6 +49,22 @@ public class PortletConfigurationViewPortletProvider
 		return PortletConfigurationPortletKeys.PORTLET_CONFIGURATION;
 	}
 
+	@Override
+	public PortletURL getPortletURL(HttpServletRequest request, Group group)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return PortletURLFactoryUtil.create(
+			request, getPortletName(), themeDisplay,
+			PortletRequest.RENDER_PHASE);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	@Override
 	protected long getPlid(ThemeDisplay themeDisplay) {
 		return themeDisplay.getPlid();

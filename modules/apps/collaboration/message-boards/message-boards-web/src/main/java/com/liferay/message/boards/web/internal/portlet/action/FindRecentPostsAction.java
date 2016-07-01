@@ -15,11 +15,11 @@
 package com.liferay.message.boards.web.internal.portlet.action;
 
 import com.liferay.message.boards.web.constants.MBPortletKeys;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.struts.BaseStrutsAction;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portlet.PortletURLImpl;
 
 import javax.portlet.PortletMode;
 import javax.portlet.PortletRequest;
@@ -52,7 +52,7 @@ public class FindRecentPostsAction extends BaseStrutsAction {
 		try {
 			long plid = ParamUtil.getLong(request, "p_l_id");
 
-			PortletURL portletURL = new PortletURLImpl(
+			PortletURL portletURL = PortletURLFactoryUtil.create(
 				request, MBPortletKeys.MESSAGE_BOARDS, plid,
 				PortletRequest.RENDER_PHASE);
 

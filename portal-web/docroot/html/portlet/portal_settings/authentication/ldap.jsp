@@ -42,6 +42,7 @@ if (ldapAuthEnabled && (ldapServerIds.length <= 0) && Validator.isNull(PrefsProp
 	String ldapGroupDefaultObjectClasses = ParamUtil.getString(request, "settings--" + PropsKeys.LDAP_GROUP_DEFAULT_OBJECT_CLASSES + "--", PrefsPropsUtil.getString(company.getCompanyId(), PropsKeys.LDAP_GROUP_DEFAULT_OBJECT_CLASSES));
 	String ldapUserMappings = ParamUtil.getString(request, "settings--" + PropsKeys.LDAP_USER_MAPPINGS + "--", PrefsPropsUtil.getString(company.getCompanyId(), PropsKeys.LDAP_USER_MAPPINGS));
 	String ldapGroupMappings = ParamUtil.getString(request, "settings--" + PropsKeys.LDAP_GROUP_MAPPINGS + "--", PrefsPropsUtil.getString(company.getCompanyId(), PropsKeys.LDAP_GROUP_MAPPINGS));
+	String ldapType = ParamUtil.getString(request, "settings--" + "ldap.server.type" + "--", PrefsPropsUtil.getString(company.getCompanyId(), "ldap.server.type"));
 
 	if (Validator.isNotNull(ldapBaseProviderUrl)) {
 		long ldapServerId = CounterLocalServiceUtil.increment();
@@ -66,11 +67,13 @@ if (ldapAuthEnabled && (ldapServerIds.length <= 0) && Validator.isNull(PrefsProp
 		properties.put(PropsKeys.LDAP_GROUP_DEFAULT_OBJECT_CLASSES + postfix, ldapGroupDefaultObjectClasses);
 		properties.put(PropsKeys.LDAP_USER_MAPPINGS + postfix, ldapUserMappings);
 		properties.put(PropsKeys.LDAP_GROUP_MAPPINGS + postfix, ldapGroupMappings);
+		properties.put("ldap.server.type" + postfix, ldapServerName);
 		properties.put("ldap.server.ids", StringUtil.merge(ldapServerIds));
 
 		List<String> keys = new ArrayList<String>();
 
 		keys.add("ldap.server.name");
+		keys.add("ldap.server.type");
 		keys.add(PropsKeys.LDAP_BASE_PROVIDER_URL);
 		keys.add(PropsKeys.LDAP_BASE_DN);
 		keys.add(PropsKeys.LDAP_SECURITY_PRINCIPAL);

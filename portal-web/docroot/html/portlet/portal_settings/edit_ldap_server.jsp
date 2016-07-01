@@ -25,9 +25,11 @@ long ldapServerId = ParamUtil.getLong(request, "ldapServerId", 0);
 String postfix = LDAPSettingsUtil.getPropertyPostfix(ldapServerId);
 
 String ldapServerName = PrefsPropsUtil.getString(company.getCompanyId(), "ldap.server.name" + postfix, StringPool.BLANK);
+String ldapServerType = PrefsPropsUtil.getString(company.getCompanyId(), "ldap.server.type" + postfix, StringPool.BLANK);
 String ldapBaseProviderUrl = PrefsPropsUtil.getString(company.getCompanyId(), PropsKeys.LDAP_BASE_PROVIDER_URL + postfix);
 String ldapBaseDN = PrefsPropsUtil.getString(company.getCompanyId(), PropsKeys.LDAP_BASE_DN + postfix);
 String ldapSecurityPrincipal = PrefsPropsUtil.getString(company.getCompanyId(), PropsKeys.LDAP_SECURITY_PRINCIPAL + postfix);
+pageContext.setAttribute("ldapServerType", ldapServerType);
 
 String ldapSecurityCredentials = PrefsPropsUtil.getString(company.getCompanyId(), PropsKeys.LDAP_SECURITY_CREDENTIALS + postfix);
 
@@ -178,14 +180,13 @@ for (int i = 0 ; i < groupMappingArray.length ; i++) {
 
 	<aui:fieldset>
 		<aui:field-wrapper>
-			<aui:input label="Apache Directory Server" name="defaultLdap" type="radio" value="apache" />
-			<aui:input label="Fedora Directory Server" name="defaultLdap" type="radio" value="fedora" />
-			<aui:input label="Microsoft Active Directory Server" name="defaultLdap" type="radio" value="microsoft" />
-			<aui:input label="Novell eDirectory" name="defaultLdap" type="radio" value="novell" />
-			<aui:input label="OpenLDAP" name="defaultLdap" type="radio" value="open" />
-			<aui:input label="other-directory-server" name="defaultLdap" type="radio" value="other" />
+			<aui:input label="Apache Directory Server" name='<%= "settings--ldap.server.type" + postfix + "--" %>' type="radio" value="apache" checked="${ldapServerType eq 'apache'}"/>
+			<aui:input label="Fedora Directory Server" name='<%= "settings--ldap.server.type" + postfix + "--" %>' type="radio" value="fedora" checked="${ldapServerType eq 'fedora'}"/>
+			<aui:input label="Microsoft Active Directory Server" name='<%= "settings--ldap.server.type" + postfix + "--" %>' type="radio" value="microsoft" checked="${ldapServerType eq 'microsoft'}"/>
+			<aui:input label="Novell eDirectory" name='<%= "settings--ldap.server.type" + postfix + "--" %>' type="radio" value="novell" checked="${ldapServerType eq 'novell'}"/>
+			<aui:input label="OpenLDAP" name='<%= "settings--ldap.server.type" + postfix + "--" %>' type="radio" value="open" checked="${ldapServerType eq 'open'}"/>
+			<aui:input label="other-directory-server" name='<%= "settings--ldap.server.type" + postfix + "--" %>' type="radio" value="other" checked="${ldapServerType eq 'other'}"/>
 		</aui:field-wrapper>
-
 		<aui:button-row>
 			<aui:button onClick='<%= renderResponse.getNamespace() + "updateDefaultLdap();" %>' value="reset-values" />
 		</aui:button-row>
@@ -448,7 +449,7 @@ for (int i = 0 ; i < groupMappingArray.length ; i++) {
 			var exportMappingGroupDefaultObjectClass = "";
 
 			if (!ldapType) {
-				A.all(document.<portlet:namespace />fm.<portlet:namespace />defaultLdap).some(
+				A.all(document.<portlet:namespace />fm['<portlet:namespace />settings--ldap.server.type<%= postfix %>--']).some(
 					function(item, index, collection) {
 						var checked = item.get('checked');
 

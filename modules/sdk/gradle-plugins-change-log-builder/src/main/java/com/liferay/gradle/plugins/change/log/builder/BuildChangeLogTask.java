@@ -140,6 +140,16 @@ public class BuildChangeLogTask extends DefaultTask {
 		}
 	}
 
+	public BuildChangeLogTask dirs(Iterable<?> dirs) {
+		GUtil.addToCollection(_dirs, dirs);
+
+		return this;
+	}
+
+	public BuildChangeLogTask dirs(Object... dirs) {
+		return dirs(Arrays.asList(dirs));
+	}
+
 	@Input
 	public File getChangeLogFile() {
 		return GradleUtil.toFile(getProject(), _changeLogFile);
@@ -148,6 +158,13 @@ public class BuildChangeLogTask extends DefaultTask {
 	@Input
 	public String getChangeLogHeader() {
 		return GradleUtil.toString(_changeLogHeader);
+	}
+
+	@Input
+	public Iterable<File> getDirs() {
+		Project project = getProject();
+
+		return project.files(_dirs);
 	}
 
 	@Input
@@ -161,6 +178,16 @@ public class BuildChangeLogTask extends DefaultTask {
 
 	public void setChangeLogHeader(Object changeLogHeader) {
 		_changeLogHeader = changeLogHeader;
+	}
+
+	public void setDirs(Iterable<?> dirs) {
+		_dirs.clear();
+
+		dirs(dirs);
+	}
+
+	public void setDirs(Object... dirs) {
+		setDirs(Arrays.asList(dirs));
 	}
 
 	public void setTicketIdPrefixes(Iterable<String> ticketIdPrefixes) {
@@ -218,11 +245,10 @@ public class BuildChangeLogTask extends DefaultTask {
 		Set<String> ticketIds = new TreeSet<>(
 			new NaturalOrderStringComparator());
 
-		Project project = getProject();
 		Set<String> ticketIdPrefixes = getTicketIdPrefixes();
 
 		Iterable<RevCommit> revCommits = GitUtil.getCommits(
-			project.getProjectDir(), rangeStart, rangeEnd, repository);
+			getDirs(), rangeStart, rangeEnd, repository);
 
 		for (RevCommit revCommit : revCommits) {
 			String message = revCommit.getShortMessage();
@@ -256,6 +282,7 @@ public class BuildChangeLogTask extends DefaultTask {
 
 	private Object _changeLogFile;
 	private Object _changeLogHeader;
+	private final Set<Object> _dirs = new HashSet<>();
 	private final Set<String> _ticketIdPrefixes = new HashSet<>();
 
 }

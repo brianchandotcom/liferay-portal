@@ -43,13 +43,16 @@ import org.gradle.api.Project;
 public class GitUtil {
 
 	public static Iterable<RevCommit> getCommits(
-			File dir, String rangeStart, String rangeEnd, Repository repository)
+			Iterable<File> dirs, String rangeStart, String rangeEnd,
+			Repository repository)
 		throws Exception {
 
 		try (Git git = Git.wrap(repository)) {
 			LogCommand logCommand = git.log();
 
-			logCommand.addPath(_relativize(dir, repository));
+			for (File dir : dirs) {
+				logCommand.addPath(_relativize(dir, repository));
+			}
 
 			logCommand.addRange(
 				repository.resolve(rangeStart), repository.resolve(rangeEnd));

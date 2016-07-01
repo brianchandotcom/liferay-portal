@@ -139,32 +139,32 @@
 <!--HISTORY-->
 <tr>
 	<td>HISTORY_TITLE</td>
-	<td>//div[@class='kb-title']</td>
+	<td>//div[contains(@class,'taglib-diff')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>HISTORY_CONTENT</td>
-	<td>//div[@class='kb-entity-body']</td>
+	<td>//div[contains(@class,'taglib-diff')]//p</td>
 	<td></td>
 </tr>
 <tr>
 	<td>HISTORY_CONTENT_ADDED_DIFF</td>
-	<td>//div[@class='kb-entity-body']//span[contains(@id,'added-diff')]</td>
+	<td>//div[@class='panel-body']//p//span[contains(@id,'added-diff')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>HISTORY_CONTENT_REMOVED_DIFF</td>
-	<td>//div[@class='kb-entity-body']//span[contains(@id,'removed-diff')]</td>
+	<td>//div[@class='panel-body']//p[contains(.,'${key_kbArticleContentRemovedDiff}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>HISTORY_TITLE_ADDED_DIFF</td>
-	<td>//div[@class='kb-title']//span[contains(@id,'added-diff')]</td>
+	<td>//div[@class='panel-body']//span[contains(@id,'added-diff')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>HISTORY_TITLE_REMOVED_DIFF</td>
-	<td>//div[@class='kb-title']//span[contains(@id,'removed-diff')]</td>
+	<td>//div[@class='panel-body']//p//span</td>
 	<td></td>
 </tr>
 <tr>

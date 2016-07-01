@@ -52,8 +52,8 @@ public class NodeExecutor {
 	public void execute() throws Exception {
 		ProcessBuilder processBuilder = new ProcessBuilder(getCommandLine());
 
-		processBuilder.inheritIO();
 		processBuilder.directory(getWorkingDir());
+		processBuilder.inheritIO();
 
 		updateEnvironment(processBuilder.environment());
 

@@ -8,20 +8,14 @@
 	<property name="manifest.bundle.name" value="Liferay Util Taglib" />
 	<property name="manifest.bundle.symbolic.name" value="com.liferay.util.taglib" />
 
-	<macrodef name="compile-java">
-		<sequential>
-			<compile-java-cmd>
-				<compile-java-post>
-					<copy file="classes/META-INF/liferay-portlet.tld" preservelastmodified="true" tofile="classes/META-INF/liferay-portlet_2_0.tld" />
+	<target depends="build-common-java.compile" name="compile">
+		<copy file="classes/META-INF/liferay-portlet.tld" preservelastmodified="true" tofile="classes/META-INF/liferay-portlet_2_0.tld" />
 
-					<replace file="classes/META-INF/liferay-portlet_2_0.tld">
-						<replacetoken><![CDATA[<uri>http://java.sun.com/portlet</uri>]]></replacetoken>
-						<replacevalue><![CDATA[<uri>http://java.sun.com/portlet_2_0</uri>]]></replacevalue>
-					</replace>
-				</compile-java-post>
-			</compile-java-cmd>
-		</sequential>
-	</macrodef>
+		<replace file="classes/META-INF/liferay-portlet_2_0.tld">
+			<replacetoken><![CDATA[<uri>http://java.sun.com/portlet</uri>]]></replacetoken>
+			<replacevalue><![CDATA[<uri>http://java.sun.com/portlet_2_0</uri>]]></replacevalue>
+		</replace>
+	</target>
 
 	<macrodef name="deploy">
 		<attribute name="deploy.dir" />

@@ -19,48 +19,40 @@
 	<property name="manifest.bundle.symbolic.name" value="com.liferay.portal.impl;singleton:=true" />
 	<property name="service.file" value="service.xml" />
 
-	<macrodef name="compile-dependencies">
-		<sequential>
-			<copy preservelastmodified="true" todir="${portal-impl.classes.dir}/com/liferay/portal/definitions">
-				<fileset dir="${project.dir}/definitions" />
-			</copy>
+	<target depends="build-common-java.init-compile" name="init-compile">
+		<copy preservelastmodified="true" todir="${portal-impl.classes.dir}/com/liferay/portal/definitions">
+			<fileset dir="${project.dir}/definitions" />
+		</copy>
 
-			<copy preservelastmodified="true" todir="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies">
-				<fileset
-					dir="${project.dir}/classes"
-					includes="*.properties"
-				/>
-				<fileset
-					dir="${project.dir}/portal-web/docroot/WEB-INF/tld"
-					includes="*.tld"
-				/>
-			</copy>
+		<copy preservelastmodified="true" todir="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies">
+			<fileset
+				dir="${project.dir}/classes"
+				includes="*.properties"
+			/>
+			<fileset
+				dir="${project.dir}/portal-web/docroot/WEB-INF/tld"
+				includes="*.tld"
+			/>
+		</copy>
 
-			<copy preservelastmodified="true" todir="${portal-impl.classes.dir}/com/liferay/portal/tools/sql/dependencies">
-				<fileset
-					dir="${project.dir}/sql"
-					includes="portal-data-common.sql,portal-data-counter.sql,portal-data-release.sql,portal-tables.sql,indexes.properties,indexes.sql,sequences.sql,update-*.sql"
-				/>
-			</copy>
+		<copy preservelastmodified="true" todir="${portal-impl.classes.dir}/com/liferay/portal/tools/sql/dependencies">
+			<fileset
+				dir="${project.dir}/sql"
+				includes="portal-data-common.sql,portal-data-counter.sql,portal-data-release.sql,portal-tables.sql,indexes.properties,indexes.sql,sequences.sql,update-*.sql"
+			/>
+		</copy>
 
-			<copy file="${project.dir}/classes/log4j.properties" preservelastmodified="true" todir="${portal-impl.classes.dir}" />
-			<copy file="${project.dir}/classes/logging.properties" preservelastmodified="true" todir="${portal-impl.classes.dir}" />
+		<copy file="${project.dir}/classes/log4j.properties" preservelastmodified="true" todir="${portal-impl.classes.dir}" />
+		<copy file="${project.dir}/classes/logging.properties" preservelastmodified="true" todir="${portal-impl.classes.dir}" />
 
-			<copy preservelastmodified="true" todir="${portal-impl.classes.dir}">
-				<fileset dir="src" excludes="**/*.java,**/META-INF/javadocs-all*.xml" />
-			</copy>
-		</sequential>
-	</macrodef>
+		<copy preservelastmodified="true" todir="${portal-impl.classes.dir}">
+			<fileset dir="src" excludes="**/*.java,**/META-INF/javadocs-all*.xml" />
+		</copy>
+	</target>
 
-	<macrodef name="compile-java">
-		<sequential>
-			<compile-dependencies />
-
-			<compile-java-cmd />
-
-			<print-current-time />
-		</sequential>
-	</macrodef>
+	<target depends="build-common-java.compile,init-compile" name="compile">
+		<print-current-time />
+	</target>
 
 	<macrodef name="deploy">
 		<attribute name="deploy.dir" />
@@ -182,10 +174,10 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 
 		<delete file="json-java.zip" />
 
-		<compile-java
-			javac.destdir="${tstamp.value}"
-			javac.srcdir="${tstamp.value}"
-		/>
+		<antcall target="compile">
+			<param name="javac.destdir" value="${tstamp.value}" />
+			<param name="javac.srcdir" value="${tstamp.value}" />
+		</antcall>
 
 		<zip
 			basedir="${tstamp.value}"

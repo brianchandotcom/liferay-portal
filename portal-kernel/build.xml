@@ -5,18 +5,11 @@
 
 	<property name="deploy.dir" value="${app.server.lib.global.dir}" />
 	<property name="jar.file" value="${ant.project.name}" />
+	<property name="javac.classpathref" value="web.classpath" />
 	<property name="manifest.bundle.name" value="Liferay Portal Kernel" />
 	<property name="manifest.bundle.symbolic.name" value="com.liferay.portal.kernel" />
 
 	<path id="web-lib.classpath">
 		<fileset dir="${project.dir}/lib/development" includes="junit.jar" />
 	</path>
-
-	<macrodef name="compile-java">
-		<sequential>
-			<compile-java-cmd
-				javac.classpathref="web.classpath"
-			/>
-		</sequential>
-	</macrodef>
 </project>

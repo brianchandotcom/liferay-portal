@@ -5,6 +5,7 @@
 
 	<property name="deploy.dir" value="${app.server.lib.portal.dir}" />
 	<property name="jar.file" value="${ant.project.name}" />
+	<property name="javac.classpathref" value="web.classpath" />
 	<property name="manifest.bundle.name" value="Liferay Util Bridges" />
 	<property name="manifest.bundle.symbolic.name" value="com.liferay.util.bridges" />
 
@@ -14,14 +15,6 @@
 		<fileset dir="${project.dir}/lib/development" includes="groovy.jar,jruby.jar,resin.jar" />
 		<fileset dir="${project.dir}/lib/portal" includes="bsf.jar,commons-logging.jar,liferay-rhino.jar,portals-bridges.jar,struts-core.jar,struts-extras.jar,struts-taglib.jar,struts-tiles.jar" />
 	</path>
-
-	<macrodef name="compile-java">
-		<sequential>
-			<compile-java-cmd
-				javac.classpathref="web.classpath"
-			/>
-		</sequential>
-	</macrodef>
 
 	<target depends="build-common-java.jar" name="jar">
 		<copy file="${jar.file}.jar" preservelastmodified="true" todir="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies" />

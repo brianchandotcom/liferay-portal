@@ -10,78 +10,66 @@
 		</and>
 	</condition>
 
-	<macrodef name="compile-java">
-		<sequential>
-			<compile-java-cmd />
-		</sequential>
-	</macrodef>
+	<target name="init-compile">
+		<condition property="compile.uptodate">
+			<uptodate targetfile="classes/.touch">
+				<srcfiles dir="${basedir}" includes="bnd.bnd,build.xml,ivy.xml,src/**/*.*" />
+			</uptodate>
+		</condition>
+	</target>
 
-	<macrodef name="compile-java-cmd">
-		<attribute default="project.classpath" name="javac.classpathref" />
-		<attribute default="classes" name="javac.destdir" />
-		<attribute default="src" name="javac.srcdir" />
-		<element name="compile-java-post" optional="true" />
+	<target depend="init-compile" name="compile" unless="compile.uptodate">
+		<property name="javac.destdir" value="classes" />
+		<property name="javac.srcdir" value="src" />
+		<property name="javac.classpathref" value="project.classpath" />
 
-		<sequential>
-			<if>
-				<not>
-					<uptodate targetfile="classes/.touch">
-						<srcfiles dir="${basedir}" includes="bnd.bnd,build.xml,ivy.xml,src/**/*.*" />
-					</uptodate>
-				</not>
-				<then>
-					<copy preservelastmodified="true" todir="@{javac.destdir}">
-						<fileset dir="@{javac.srcdir}" excludes="**/*.java" />
-					</copy>
+		<copy preservelastmodified="true" todir="${javac.destdir}">
+			<fileset dir="${javac.srcdir}" excludes="**/*.java" />
+		</copy>
 
-					<if>
-						<equals arg1="${javac.deprecation}" arg2="on" />
-						<then>
-							<record action="start" name="${project.dir}/${ant.project.name}/javac.output.txt" />
-						</then>
-					</if>
+		<if>
+			<equals arg1="${javac.deprecation}" arg2="on" />
+			<then>
+				<record action="start" name="${project.dir}/${ant.project.name}/javac.output.txt" />
+			</then>
+		</if>
 
-					<javac
-						classpathref="@{javac.classpathref}"
-						compiler="${javac.compiler}"
-						debug="${javac.debug}"
-						deprecation="${javac.deprecation}"
-						destdir="@{javac.destdir}"
-						encoding="${javac.encoding}"
-						includeAntRuntime="false"
-						nowarn="${javac.nowarn}"
-						srcdir="@{javac.srcdir}"
-					/>
+		<javac
+			classpathref="${javac.classpathref}"
+			compiler="${javac.compiler}"
+			debug="${javac.debug}"
+			deprecation="${javac.deprecation}"
+			destdir="${javac.destdir}"
+			encoding="${javac.encoding}"
+			includeAntRuntime="false"
+			nowarn="${javac.nowarn}"
+			srcdir="${javac.srcdir}"
+		/>
 
-					<if>
-						<equals arg1="${javac.deprecation}" arg2="on" />
-						<then>
-							<record action="stop" name="${project.dir}/${ant.project.name}/javac.output.txt" />
+		<if>
+			<equals arg1="${javac.deprecation}" arg2="on" />
+			<then>
+				<record action="stop" name="${project.dir}/${ant.project.name}/javac.output.txt" />
 
-							<loadfile property="javac.output.txt.content" srcfile="${project.dir}/${ant.project.name}/javac.output.txt" />
+				<loadfile property="javac.output.txt.content" srcfile="${project.dir}/${ant.project.name}/javac.output.txt" />
 
-							<delete file="${project.dir}/${ant.project.name}/javac.output.txt" />
+				<delete file="${project.dir}/${ant.project.name}/javac.output.txt" />
 
-							<if>
-								<or>
-									<contains string="${javac.output.txt.content}" substring="a deprecated API" />
-									<contains string="${javac.output.txt.content}" substring="[deprecation]" />
-								</or>
-								<then>
-									<echo append="true" file="${project.dir}/javac.output.txt" message="${line.separator}${ant.project.name}${line.separator}" />
-									<echo append="true" file="${project.dir}/javac.output.txt" message="${javac.output.txt.content}" />
-								</then>
-							</if>
-						</then>
-					</if>
+				<if>
+					<or>
+						<contains string="${javac.output.txt.content}" substring="a deprecated API" />
+						<contains string="${javac.output.txt.content}" substring="[deprecation]" />
+					</or>
+					<then>
+						<echo append="true" file="${project.dir}/javac.output.txt" message="${line.separator}${ant.project.name}${line.separator}" />
+						<echo append="true" file="${project.dir}/javac.output.txt" message="${javac.output.txt.content}" />
+					</then>
+				</if>
+			</then>
+		</if>
 
-					<compile-java-post />
-
-					<echo file="@{javac.destdir}/.touch"></echo>
-				</then>
-			</if>
-		</sequential>
-	</macrodef>
+		<echo file="${javac.destdir}/.touch"></echo>
+	</target>
 
 	<macrodef name="deploy">
 		<attribute name="deploy.dir" />
@@ -133,10 +121,6 @@
 		<delete failonerror="false" file="${jar.file}.jar" />
 		<delete failonerror="false" file="${jar.file}-javadoc.jar" />
 		<delete failonerror="false" file="${jar.file}-sources.jar" />
-	</target>
-
-	<target name="compile">
-		<compile-java />
 	</target>
 
 	<target name="deploy">

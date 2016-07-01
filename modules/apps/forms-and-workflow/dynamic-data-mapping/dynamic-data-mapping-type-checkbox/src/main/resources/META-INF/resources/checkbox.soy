@@ -24,7 +24,9 @@
 				</span>
 
 				<span class="toggle-switch-text toggle-switch-text-right">
-					{$label}
+					{if $showLabel}
+						{$label}
+					{/if}
 
 					{if $required}
 						<span class="icon-asterisk text-warning"></span>

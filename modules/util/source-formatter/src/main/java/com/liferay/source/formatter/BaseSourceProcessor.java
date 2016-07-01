@@ -184,6 +184,49 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		_init();
 	}
 
+	protected boolean addExtraEmptyLine(String previousLine, String line) {
+		if (Validator.isNull(previousLine) || Validator.isNull(line) ||
+			previousLine.contains("/*") || previousLine.endsWith("*/")) {
+
+			return false;
+		}
+
+		String trimmedLine = StringUtil.trimLeading(line);
+		String trimmedPreviousLine = StringUtil.trimLeading(previousLine);
+
+		if ((trimmedPreviousLine.startsWith("// ") &&
+			 !trimmedLine.startsWith("// ")) ||
+			(!trimmedPreviousLine.startsWith("// ") &&
+			 trimmedLine.startsWith("// "))) {
+
+			return true;
+		}
+
+		if (!trimmedPreviousLine.endsWith(StringPool.OPEN_CURLY_BRACE) &&
+			 !trimmedPreviousLine.endsWith(StringPool.COLON) &&
+			 (trimmedLine.startsWith("for (") ||
+			  trimmedLine.startsWith("if (") ||
+			  trimmedLine.startsWith("try {"))) {
+
+			return true;
+		}
+
+		if (previousLine.endsWith(
+				StringPool.TAB + StringPool.CLOSE_CURLY_BRACE) &&
+			!trimmedLine.startsWith(StringPool.CLOSE_CURLY_BRACE) &&
+			!trimmedLine.startsWith(StringPool.CLOSE_PARENTHESIS) &&
+			!trimmedLine.startsWith(StringPool.DOUBLE_SLASH) &&
+			!trimmedLine.equals("*/") && !trimmedLine.startsWith("catch ") &&
+			!trimmedLine.startsWith("else ") &&
+			!trimmedLine.startsWith("finally ") &&
+			!trimmedLine.startsWith("while ")) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	protected int adjustLevel(int level, String text, String s, int diff) {
 		String[] lines = StringUtil.splitLines(text);
 

@@ -88,10 +88,6 @@
 			<contains>SEC5054: Certificate has expired</contains>
 			<matches></matches>
 		</ignore-error>
-		<ignore-error description="LPS-41863">
-			<contains></contains>
-			<matches>.*\[org.hibernate.engine.jdbc.JdbcSupportLoader\] \(MSC service thread .*\) Disabling contextual LOB .*</matches>
-		</ignore-error>
 		<ignore-error description="LPS-46161">
 			<contains>[com.google.javascript.jscomp.Tracer.ThreadTrace]</contains>
 			<matches>.*The web application \[\] created a ThreadLocal with key of type.*</matches>

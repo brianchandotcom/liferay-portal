@@ -1040,6 +1040,8 @@
 		<if>
 			<isset var="kbArticleContentRemovedDiff" />
 			<then>
+				<var name="key_kbArticleContentRemovedDiff" value="${kbArticleContentRemovedDiff}" />
+
 				<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#HISTORY_CONTENT_REMOVED_DIFF" value1="${kbArticleContentRemovedDiff}" />
 			</then>
 		</if>

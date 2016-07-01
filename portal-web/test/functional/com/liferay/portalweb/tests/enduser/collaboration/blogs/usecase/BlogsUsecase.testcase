@@ -1427,8 +1427,12 @@
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="pageName2" value="Blogs Page2" />
 		<var name="portletName2" value="Blogs (Blogs Page2)" />
-			<var name="siteName" value="${siteName}" />
 
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+		
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -1526,7 +1530,7 @@
 		<execute macro="BlogsNavigator#gotoConfigurationScopePG" />
 
 		<execute macro="BlogsConfiguration#viewScopeSelection">
-			<var name="scopeSelection" value="${scopeSelection}" />
+			<var name="scopeSelection" value="${siteName}" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">

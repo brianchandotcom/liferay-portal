@@ -1,6 +1,10 @@
 <definition>
 	<var name="validationErrorMessage" value="This field is required." />
 
+	<command name="clickSubmit">
+		<execute function="AssertClick" locator1="Button#SUBMIT" value1="Submit" />
+	</command>
+
 	<command name="gotoFormPage">
 		<var name="key_formPageName" value="${formPageName}" />
 
@@ -22,7 +26,7 @@
 	<command name="submit">
 		<execute function="Click" locator1="FormPortlet#FORM_CONTENT" />
 
-		<execute function="AssertClick" locator1="Button#SUBMIT" value1="Submit" />
+		<execute macro="FormPortlet#clickSubmit" />
 	</command>
 
 	<command name="submitSuccessfully">

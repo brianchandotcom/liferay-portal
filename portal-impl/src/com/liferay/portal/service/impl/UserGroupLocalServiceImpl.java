@@ -42,20 +42,24 @@ import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.exportimport.UserGroupImportTransactionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.service.base.UserGroupLocalServiceBaseImpl;
+import com.liferay.portal.service.persistence.constants.UserGroupFinderConstants;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
@@ -501,8 +505,30 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		long companyId, String keywords, LinkedHashMap<String, Object> params,
 		int start, int end, OrderByComparator<UserGroup> obc) {
 
-		return userGroupFinder.filterFindByKeywords(
-			companyId, keywords, params, start, end, obc);
+		if (isUseCustomSQL(params)) {
+			LinkedHashMap<String, Object> finderSafeParams =
+				_getFinderSafeParams(params);
+
+			return userGroupFinder.filterFindByKeywords(
+				companyId, keywords, finderSafeParams, start, end, obc);
+		}
+
+		String orderByType = StringPool.BLANK;
+
+		if (obc.isAscending()) {
+			orderByType = "asc";
+		}
+
+		Sort sort = SortFactoryUtil.getSort(
+			UserGroup.class, obc.getOrderBy(), orderByType);
+
+		try {
+			return UsersAdminUtil.getUserGroups(
+				search(companyId, keywords, params, start, end, sort));
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
 	}
 
 	/**
@@ -595,8 +621,33 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		LinkedHashMap<String, Object> params, boolean andOperator, int start,
 		int end, OrderByComparator<UserGroup> obc) {
 
-		return userGroupFinder.filterFindByC_N_D(
-			companyId, name, description, params, andOperator, start, end, obc);
+		if (isUseCustomSQL(params)) {
+			LinkedHashMap<String, Object> finderSafeParams =
+				_getFinderSafeParams(params);
+
+			return userGroupFinder.filterFindByC_N_D(
+				companyId, name, description, finderSafeParams, andOperator,
+				start, end, obc);
+		}
+
+		String orderByType = StringPool.BLANK;
+
+		if (obc.isAscending()) {
+			orderByType = "asc";
+		}
+
+		Sort sort = SortFactoryUtil.getSort(
+			UserGroup.class, obc.getOrderBy(), orderByType);
+
+		try {
+			return UsersAdminUtil.getUserGroups(
+				search(
+					companyId, name, description, params, andOperator, start,
+					end, sort));
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
 	}
 
 	/**
@@ -670,12 +721,12 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		Indexer<?> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			UserGroup.class);
 
-		if (!indexer.isIndexerEnabled() ||
-			!PropsValues.USER_GROUPS_SEARCH_WITH_INDEX ||
-			isUseCustomSQL(params)) {
+		if (isUseCustomSQL(params, indexer)) {
+			LinkedHashMap<String, Object> finderSafeParams =
+				_getFinderSafeParams(params);
 
 			return userGroupFinder.filterCountByKeywords(
-				companyId, keywords, params);
+				companyId, keywords, finderSafeParams);
 		}
 
 		String name = null;
@@ -729,12 +780,12 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		Indexer<?> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			UserGroup.class);
 
-		if (!indexer.isIndexerEnabled() ||
-			!PropsValues.USER_GROUPS_SEARCH_WITH_INDEX ||
-			isUseCustomSQL(params)) {
+		if (isUseCustomSQL(params, indexer)) {
+			LinkedHashMap<String, Object> finderSafeParams =
+				_getFinderSafeParams(params);
 
 			return userGroupFinder.filterCountByC_N_D(
-				companyId, name, description, params, andOperator);
+				companyId, name, description, finderSafeParams, andOperator);
 		}
 
 		try {
@@ -1130,11 +1181,24 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	}
 
 	protected boolean isUseCustomSQL(LinkedHashMap<String, Object> params) {
-		if (MapUtil.isEmpty(params)) {
+		return isUseCustomSQL(
+			params, IndexerRegistryUtil.nullSafeGetIndexer(UserGroup.class));
+	}
+
+	protected boolean isUseCustomSQL(
+		LinkedHashMap<String, Object> params, Indexer<?> indexer) {
+
+		if (indexer.isIndexerEnabled() &&
+			PropsValues.USER_GROUPS_SEARCH_WITH_INDEX &&
+			MapUtil.isEmpty(params)) {
+
 			return false;
 		}
 
-		return true;
+		LinkedHashMap<String, Object> finderSafeParams = _getFinderSafeParams(
+			params);
+
+		return !finderSafeParams.isEmpty();
 	}
 
 	protected void validate(long userGroupId, long companyId, String name)
@@ -1159,6 +1223,24 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 
 			throw new DuplicateUserGroupException("{name=" + name + "}");
 		}
+	}
+
+	private LinkedHashMap<String, Object> _getFinderSafeParams(
+		LinkedHashMap<String, Object> params) {
+
+		LinkedHashMap<String, Object> finderSafeParams = new LinkedHashMap<>();
+
+		MapUtil.copy(params, finderSafeParams);
+
+		for (String key : params.keySet()) {
+			if (!ArrayUtil.contains(
+					UserGroupFinderConstants.PARAMS_USER_GROUP_FINDER, key)) {
+
+				finderSafeParams.remove(key);
+			}
+		}
+
+		return finderSafeParams;
 	}
 
 }

@@ -995,6 +995,10 @@
 		<execute function="AssertTextEquals" locator1="Blogs#RSS_ENTRY_CONTENT" value1="${entryContent}" />
 	</command>
 
+	<command name="viewStatus">
+		<execute function="AssertTextEquals" locator1="AssetWorkflow#WORKFLOW_STATUS" value1="${entryStatus}" />
+	</command>
+
 	<command name="viewSubtitle">
 		<execute function="AssertTextEquals" locator1="BlogsEntry#SUBTITLE" value1="${entrySubtitle}" />
 	</command>

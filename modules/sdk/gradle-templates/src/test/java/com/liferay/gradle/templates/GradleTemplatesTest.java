@@ -182,10 +182,15 @@ public class GradleTemplatesTest {
 						Path path, BasicFileAttributes basicFileAttributes)
 					throws IOException {
 
+					if (!_isTextFile(path)) {
+						return FileVisitResult.CONTINUE;
+					}
+
+					_testTextFileLines(path);
+
 					Path fileNamePath = path.getFileName();
 
-					if (_isTextFile(path) &&
-						!_trailingEmptyLineAllowedFileNames.contains(
+					if (!_trailingEmptyLineAllowedFileNames.contains(
 							fileNamePath.toString())) {
 
 						Assert.assertFalse(
@@ -268,6 +273,24 @@ public class GradleTemplatesTest {
 							gradlewDistributionUrl);
 					}
 				}
+			}
+		}
+	}
+
+	private void _testTextFileLines(Path path) throws IOException {
+		try (BufferedReader bufferedReader = Files.newBufferedReader(
+				path, StandardCharsets.UTF_8)) {
+
+			String line = null;
+
+			while ((line = bufferedReader.readLine()) != null) {
+				if (line.isEmpty()) {
+					continue;
+				}
+
+				Assert.assertFalse(
+					"Forbidden whitespace trailing character in " + path,
+					Character.isWhitespace(line.charAt(line.length() - 1)));
 			}
 		}
 	}

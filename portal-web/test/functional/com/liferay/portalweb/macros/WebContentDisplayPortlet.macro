@@ -62,9 +62,7 @@
 
 				<execute function="SelectFrameTop" />
 
-				<for list="${userToolNameList}" param="userToolName">
-					<var name="key_userToolName" value="${userToolName}" />
-
+				<for list="${userToolNameList}" param="key_toggleCardLabel">
 					<if>
 						<condition function="IsNotChecked" locator1="WCDConfiguration#TOGGLE_CARD_CHECKBOX" />
 						<then>
@@ -84,12 +82,7 @@
 
 				<execute function="Click" locator1="WCDConfiguration#CONTENT_METADATA_SELECT" />
 
-				<for list="${metadataNameList}" param="metadataName">
-					<var name="key_metadataName" value="${metadataName}" />
-
-					<var name="key_metadataNameToggleOff" value="${metadataNameToggleOff}" />
-					<var method="StringUtil#replace('${metadataName}', ' ', '')" name="metadataNameToggleOff" />
-
+				<for list="${metadataNameList}" param="key_toggleCardLabel">
 					<execute function="Pause" locator1="1000" />
 
 					<execute function="SelectFrameTop" />

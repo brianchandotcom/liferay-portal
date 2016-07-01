@@ -29,6 +29,8 @@ buildFixPackChangeLog {
 	if (project.hasProperty("rangeStart")) {
 		rangeStart = project.rangeStart
 	}
+
+	ticketIdPrefixes "LRQA"
 }
 
 cleanReleng << {

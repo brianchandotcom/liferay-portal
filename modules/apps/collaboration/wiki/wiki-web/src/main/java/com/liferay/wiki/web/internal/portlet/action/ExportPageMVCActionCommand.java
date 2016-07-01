@@ -17,6 +17,7 @@ package com.liferay.wiki.web.internal.portlet.action;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
@@ -31,7 +32,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PrefsPropsUtil;
-import com.liferay.portlet.PortletURLImpl;
 import com.liferay.portlet.documentlibrary.util.DocumentConversionUtil;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.engine.impl.WikiEngineRenderer;
@@ -91,7 +91,7 @@ public class ExportPageMVCActionCommand extends BaseMVCActionCommand {
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
-			PortletURL viewPageURL = new PortletURLImpl(
+			PortletURL viewPageURL = PortletURLFactoryUtil.create(
 				actionRequest, portletConfig.getPortletName(),
 				themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
 
@@ -101,7 +101,7 @@ public class ExportPageMVCActionCommand extends BaseMVCActionCommand {
 			viewPageURL.setPortletMode(PortletMode.VIEW);
 			viewPageURL.setWindowState(WindowState.MAXIMIZED);
 
-			PortletURL editPageURL = new PortletURLImpl(
+			PortletURL editPageURL = PortletURLFactoryUtil.create(
 				actionRequest, portletConfig.getPortletName(),
 				themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
 

@@ -442,7 +442,15 @@
 		<var name="key_ddlRecordFieldData" value="${ddlRecordFieldData}" />
 		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
 
-		<execute function="AssertTextEquals" locator1="DDL#RECORD_TABLE_ENTRY" value1="${ddlRecordFieldData}" />
+		<if>
+			<equals arg1="${fieldBlank}" arg2="true" />
+			<then>
+				<execute function="AssertElementPresent" locator1="DDL#RECORD_TABLE_ENTRY" value1="${ddlRecordFieldData}" />
+			</then>
+			<else>
+				<execute function="AssertTextEquals" locator1="DDL#RECORD_TABLE_ENTRY" value1="${ddlRecordFieldData}" />
+			</else>
+		</if>
 
 		<if>
 			<isset var="ddlRecordNestedFieldData" />

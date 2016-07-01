@@ -299,17 +299,7 @@ public class CalendarBookingLocalServiceImpl
 		}
 	}
 
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #deleteCalendarBooking(
-	 *             CalendarBooking, boolean)}
-	 */
-	@Deprecated
-	@Indexable(type = IndexableType.DELETE)
 	@Override
-	@SystemEvent(
-		action = SystemEventConstants.ACTION_SKIP,
-		type = SystemEventConstants.TYPE_DELETE
-	)
 	public CalendarBooking deleteCalendarBooking(
 			CalendarBooking calendarBooking)
 		throws PortalException {
@@ -403,11 +393,6 @@ public class CalendarBookingLocalServiceImpl
 		return calendarBooking;
 	}
 
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #deleteCalendarBooking(long,
-	 *             boolean)}
-	 */
-	@Deprecated
 	@Override
 	public CalendarBooking deleteCalendarBooking(long calendarBookingId)
 		throws PortalException {
@@ -547,6 +532,22 @@ public class CalendarBookingLocalServiceImpl
 		for (CalendarBooking calendarBooking : calendarBookings) {
 			calendarBookingLocalService.deleteCalendarBooking(calendarBooking);
 		}
+	}
+
+	@Override
+	public CalendarBooking deleteRecurringCalendarBooking(
+			CalendarBooking calendarBooking)
+		throws PortalException {
+
+		return deleteCalendarBooking(calendarBooking, true);
+	}
+
+	@Override
+	public CalendarBooking deleteRecurringCalendarBooking(
+			long calendarBookingId)
+		throws PortalException {
+
+		return deleteCalendarBooking(calendarBookingId, true);
 	}
 
 	@Override

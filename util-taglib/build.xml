@@ -8,15 +8,6 @@
 	<property name="manifest.bundle.name" value="Liferay Util Taglib" />
 	<property name="manifest.bundle.symbolic.name" value="com.liferay.util.taglib" />
 
-	<target depends="build-common-java.compile" name="compile">
-		<copy file="classes/META-INF/liferay-portlet.tld" preservelastmodified="true" tofile="classes/META-INF/liferay-portlet_2_0.tld" />
-
-		<replace file="classes/META-INF/liferay-portlet_2_0.tld">
-			<replacetoken><![CDATA[<uri>http://java.sun.com/portlet</uri>]]></replacetoken>
-			<replacevalue><![CDATA[<uri>http://java.sun.com/portlet_2_0</uri>]]></replacevalue>
-		</replace>
-	</target>
-
 	<macrodef name="deploy">
 		<attribute name="deploy.dir" />
 		<attribute name="jar.file" />
@@ -67,6 +58,15 @@
 
 	<target depends="build-common-java.clean" name="clean">
 		<delete failonerror="false" file="${liferay.home}/osgi/portal/${jar.file}.jar" />
+	</target>
+
+	<target depends="build-common-java.compile" name="compile">
+		<copy file="classes/META-INF/liferay-portlet.tld" preservelastmodified="true" tofile="classes/META-INF/liferay-portlet_2_0.tld" />
+
+		<replace file="classes/META-INF/liferay-portlet_2_0.tld">
+			<replacetoken><![CDATA[<uri>http://java.sun.com/portlet</uri>]]></replacetoken>
+			<replacevalue><![CDATA[<uri>http://java.sun.com/portlet_2_0</uri>]]></replacevalue>
+		</replace>
 	</target>
 
 	<target depends="build-common-java.jar" name="jar">

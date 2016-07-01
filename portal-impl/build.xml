@@ -19,41 +19,6 @@
 	<property name="manifest.bundle.symbolic.name" value="com.liferay.portal.impl;singleton:=true" />
 	<property name="service.file" value="service.xml" />
 
-	<target depends="build-common-java.init-compile" name="init-compile">
-		<copy preservelastmodified="true" todir="${portal-impl.classes.dir}/com/liferay/portal/definitions">
-			<fileset dir="${project.dir}/definitions" />
-		</copy>
-
-		<copy preservelastmodified="true" todir="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies">
-			<fileset
-				dir="${project.dir}/classes"
-				includes="*.properties"
-			/>
-			<fileset
-				dir="${project.dir}/portal-web/docroot/WEB-INF/tld"
-				includes="*.tld"
-			/>
-		</copy>
-
-		<copy preservelastmodified="true" todir="${portal-impl.classes.dir}/com/liferay/portal/tools/sql/dependencies">
-			<fileset
-				dir="${project.dir}/sql"
-				includes="portal-data-common.sql,portal-data-counter.sql,portal-data-release.sql,portal-tables.sql,indexes.properties,indexes.sql,sequences.sql,update-*.sql"
-			/>
-		</copy>
-
-		<copy file="${project.dir}/classes/log4j.properties" preservelastmodified="true" todir="${portal-impl.classes.dir}" />
-		<copy file="${project.dir}/classes/logging.properties" preservelastmodified="true" todir="${portal-impl.classes.dir}" />
-
-		<copy preservelastmodified="true" todir="${portal-impl.classes.dir}">
-			<fileset dir="src" excludes="**/*.java,**/META-INF/javadocs-all*.xml" />
-		</copy>
-	</target>
-
-	<target depends="build-common-java.compile,init-compile" name="compile">
-		<print-current-time />
-	</target>
-
 	<macrodef name="deploy">
 		<attribute name="deploy.dir" />
 		<attribute name="jar.file" />
@@ -562,6 +527,10 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 		</if>
 	</target>
 
+	<target depends="build-common-java.compile,init-compile" name="compile">
+		<print-current-time />
+	</target>
+
 	<target name="compile-test">
 		<ant dir="${project.dir}/portal-kernel" inheritAll="false" target="compile-test" />
 
@@ -657,6 +626,37 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 		</java>
 
 		<delete file="ServiceBuilder.temp" />
+	</target>
+
+	<target depends="build-common-java.init-compile" name="init-compile">
+		<copy preservelastmodified="true" todir="${portal-impl.classes.dir}/com/liferay/portal/definitions">
+			<fileset dir="${project.dir}/definitions" />
+		</copy>
+
+		<copy preservelastmodified="true" todir="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies">
+			<fileset
+				dir="${project.dir}/classes"
+				includes="*.properties"
+			/>
+			<fileset
+				dir="${project.dir}/portal-web/docroot/WEB-INF/tld"
+				includes="*.tld"
+			/>
+		</copy>
+
+		<copy preservelastmodified="true" todir="${portal-impl.classes.dir}/com/liferay/portal/tools/sql/dependencies">
+			<fileset
+				dir="${project.dir}/sql"
+				includes="portal-data-common.sql,portal-data-counter.sql,portal-data-release.sql,portal-tables.sql,indexes.properties,indexes.sql,sequences.sql,update-*.sql"
+			/>
+		</copy>
+
+		<copy file="${project.dir}/classes/log4j.properties" preservelastmodified="true" todir="${portal-impl.classes.dir}" />
+		<copy file="${project.dir}/classes/logging.properties" preservelastmodified="true" todir="${portal-impl.classes.dir}" />
+
+		<copy preservelastmodified="true" todir="${portal-impl.classes.dir}">
+			<fileset dir="src" excludes="**/*.java,**/META-INF/javadocs-all*.xml" />
+		</copy>
 	</target>
 
 	<target depends="build-common-java.init-jar" name="init-jar">

@@ -10,12 +10,56 @@
 		</and>
 	</condition>
 
-	<target name="init-compile">
-		<condition property="compile.uptodate">
-			<uptodate targetfile="classes/.touch">
-				<srcfiles dir="${basedir}" includes="bnd.bnd,build.xml,ivy.xml,src/**/*.*" />
-			</uptodate>
-		</condition>
+	<macrodef name="deploy">
+		<attribute name="deploy.dir" />
+		<attribute name="jar.file" />
+		<attribute name="src.dir" />
+
+		<sequential>
+			<deploy-cmd
+				deploy.dir="@{deploy.dir}"
+				jar.file="@{jar.file}"
+				src.dir="@{src.dir}"
+			/>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="deploy-cmd">
+		<attribute default="true" name="copy.jar" />
+		<attribute name="deploy.dir" />
+		<attribute name="jar.file" />
+		<attribute name="src.dir" />
+		<element name="deploy-post" optional="true" />
+
+		<sequential>
+			<if>
+				<not>
+					<uptodate targetfile="@{deploy.dir}/@{jar.file}.jar">
+						<srcfiles dir="@{src.dir}" includes="bnd.bnd,build.xml,ivy.xml,src/**/*.*" />
+					</uptodate>
+				</not>
+				<then>
+					<antcall target="jar" />
+
+					<copy if:true="@{copy.jar}" file="@{jar.file}.jar" todir="@{deploy.dir}" preservelastmodified="true" />
+
+					<deploy-post />
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<target name="clean">
+		<delete dir="classes" />
+		<delete dir="test-classes" />
+		<delete dir="test-coverage" />
+		<delete dir="test-results" />
+		<delete dir="woven-classes" />
+		<delete dir="${doc.dir}/${ant.project.name}/javadocs" />
+		<delete failonerror="false" file="${deploy.dir}/${jar.file}.jar" />
+		<delete failonerror="false" file="${jar.file}.jar" />
+		<delete failonerror="false" file="${jar.file}-javadoc.jar" />
+		<delete failonerror="false" file="${jar.file}-sources.jar" />
 	</target>
 
 	<target depend="init-compile" name="compile" unless="compile.uptodate">
@@ -71,64 +115,20 @@
 		<echo file="${javac.destdir}/.touch"></echo>
 	</target>
 
-	<macrodef name="deploy">
-		<attribute name="deploy.dir" />
-		<attribute name="jar.file" />
-		<attribute name="src.dir" />
-
-		<sequential>
-			<deploy-cmd
-				deploy.dir="@{deploy.dir}"
-				jar.file="@{jar.file}"
-				src.dir="@{src.dir}"
-			/>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="deploy-cmd">
-		<attribute default="true" name="copy.jar" />
-		<attribute name="deploy.dir" />
-		<attribute name="jar.file" />
-		<attribute name="src.dir" />
-		<element name="deploy-post" optional="true" />
-
-		<sequential>
-			<if>
-				<not>
-					<uptodate targetfile="@{deploy.dir}/@{jar.file}.jar">
-						<srcfiles dir="@{src.dir}" includes="bnd.bnd,build.xml,ivy.xml,src/**/*.*" />
-					</uptodate>
-				</not>
-				<then>
-					<antcall target="jar" />
-
-					<copy if:true="@{copy.jar}" file="@{jar.file}.jar" todir="@{deploy.dir}" preservelastmodified="true" />
-
-					<deploy-post />
-				</then>
-			</if>
-		</sequential>
-	</macrodef>
-
-	<target name="clean">
-		<delete dir="classes" />
-		<delete dir="test-classes" />
-		<delete dir="test-coverage" />
-		<delete dir="test-results" />
-		<delete dir="woven-classes" />
-		<delete dir="${doc.dir}/${ant.project.name}/javadocs" />
-		<delete failonerror="false" file="${deploy.dir}/${jar.file}.jar" />
-		<delete failonerror="false" file="${jar.file}.jar" />
-		<delete failonerror="false" file="${jar.file}-javadoc.jar" />
-		<delete failonerror="false" file="${jar.file}-sources.jar" />
-	</target>
-
 	<target name="deploy">
 		<deploy
 			deploy.dir="${deploy.dir}"
 			jar.file="${jar.file}"
 			src.dir="${basedir}"
 		/>
+	</target>
+
+	<target name="init-compile">
+		<condition property="compile.uptodate">
+			<uptodate targetfile="classes/.touch">
+				<srcfiles dir="${basedir}" includes="bnd.bnd,build.xml,ivy.xml,src/**/*.*" />
+			</uptodate>
+		</condition>
 	</target>
 
 	<target depends="compile" name="init-jar">

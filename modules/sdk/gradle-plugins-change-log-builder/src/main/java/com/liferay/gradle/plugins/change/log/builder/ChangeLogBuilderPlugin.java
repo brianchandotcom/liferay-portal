@@ -46,6 +46,18 @@ public class ChangeLogBuilderPlugin implements Plugin<Project> {
 		final BuildChangeLogTask buildChangeLogTask = GradleUtil.addTask(
 			project, BUILD_CHANGE_LOG_TASK_NAME, BuildChangeLogTask.class);
 
+		buildChangeLogTask.setChangeLogHeader(
+			new Callable<String>() {
+
+				@Override
+				public String call() throws Exception {
+					Project project = buildChangeLogTask.getProject();
+
+					return "Bundle Version " + project.getVersion();
+				}
+
+			});
+
 		buildChangeLogTask.setChangeLogFile(_CHANGE_LOG_FILE_NAME);
 		buildChangeLogTask.setDescription(
 			"Builds the change log file for this project.");

@@ -32,7 +32,6 @@ import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.concurrent.Callable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -53,18 +52,6 @@ import org.gradle.util.GUtil;
 public class BuildChangeLogTask extends DefaultTask {
 
 	public BuildChangeLogTask() {
-		setChangeLogHeader(
-			new Callable<String>() {
-
-				@Override
-				public String call() throws Exception {
-					Project project = getProject();
-
-					return "Bundle Version " + project.getVersion();
-				}
-
-			});
-
 		setTicketIdPrefixes("CLDSVCS", "LPS", "SOS", "SYNC");
 	}
 

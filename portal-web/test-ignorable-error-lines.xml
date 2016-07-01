@@ -128,10 +128,6 @@
 			<contains>[org.apache.xmlbeans.XmlBeans$1]</contains>
 			<matches>.*The web application \[\] created a ThreadLocal with key of type.*</matches>
 		</ignore-error>
-		<ignore-error description="LPS-50936">
-			<contains>Liferay does not have the Xuggler native libraries installed.</contains>
-			<matches></matches>
-		</ignore-error>
 		<ignore-error description="LPS-51371">
 			<contains>[net.sf.jasperreports.engine.fonts.FontUtil$1]</contains>
 			<matches>.*The web application \[/jasperreports-web\] created a ThreadLocal with key of type.*</matches>

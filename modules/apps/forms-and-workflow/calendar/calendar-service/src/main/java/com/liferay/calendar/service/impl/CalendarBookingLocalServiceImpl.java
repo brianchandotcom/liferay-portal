@@ -313,7 +313,7 @@ public class CalendarBookingLocalServiceImpl
 			CalendarBooking calendarBooking)
 		throws PortalException {
 
-		return deleteCalendarBooking(calendarBooking, true);
+		return deleteCalendarBooking(calendarBooking, false);
 	}
 
 	@Indexable(type = IndexableType.DELETE)
@@ -410,7 +410,7 @@ public class CalendarBookingLocalServiceImpl
 	public CalendarBooking deleteCalendarBooking(long calendarBookingId)
 		throws PortalException {
 
-		return deleteCalendarBooking(calendarBookingId, true);
+		return deleteCalendarBooking(calendarBookingId, false);
 	}
 
 	@Override
@@ -464,7 +464,7 @@ public class CalendarBookingLocalServiceImpl
 		throws PortalException {
 
 		deleteCalendarBookingInstance(
-			calendarBooking, startTime, allFollowing, true);
+			calendarBooking, startTime, allFollowing, false);
 	}
 
 	@Override

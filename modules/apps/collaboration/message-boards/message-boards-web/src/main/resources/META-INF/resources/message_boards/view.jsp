@@ -258,6 +258,12 @@ MBListDisplayContext mbListDisplayContext = mbDisplayContextProvider.getMbListDi
 			</c:when>
 			<c:when test="<%= mbListDisplayContext.isShowMyPosts() || mbListDisplayContext.isShowRecentPosts() %>">
 				<div class="main-content-body">
+					<c:if test="<%= Validator.isNotNull(redirect) && mbListDisplayContext.isShowRecentPosts() %>">
+						<liferay-ui:header
+							backURL="<%= redirect %>"
+							title="recent-posts"
+						/>
+					</c:if>
 
 					<%
 					if (mbListDisplayContext.isShowMyPosts() && themeDisplay.isSignedIn()) {

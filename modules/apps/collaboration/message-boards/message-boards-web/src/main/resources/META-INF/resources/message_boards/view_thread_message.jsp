@@ -109,6 +109,7 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 						<portlet:renderURL var="recentPostsURL">
 							<portlet:param name="mvcRenderCommandName" value="/message_boards/view_recent_posts" />
 							<portlet:param name="groupThreadsUserId" value="<%= String.valueOf(messageUser.getUserId()) %>" />
+							<portlet:param name="redirect" value="<%= currentURL %>" />
 						</portlet:renderURL>
 
 						<span class="h5">

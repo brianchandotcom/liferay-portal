@@ -17,6 +17,8 @@
 <%@ include file="/message_boards/init.jsp" %>
 
 <%
+String redirect = ParamUtil.getString(request, "redirect");
+
 MBCategory category = (MBCategory)request.getAttribute(WebKeys.MESSAGE_BOARDS_CATEGORY);
 
 long categoryId = MBUtil.getCategoryId(request, category);
@@ -176,6 +178,9 @@ request.setAttribute("view.jsp-entriesSearchContainer", searchContainer);
 		</liferay-util:include>
 
 		<%
+		portletDisplay.setShowBackIcon(true);
+		portletDisplay.setURLBack(redirect);
+
 		renderResponse.setTitle(LanguageUtil.get(request, "recent-posts"));
 
 		PortalUtil.setPageSubtitle(LanguageUtil.get(request, StringUtil.replace("recent-posts", CharPool.UNDERLINE, CharPool.DASH)), request);

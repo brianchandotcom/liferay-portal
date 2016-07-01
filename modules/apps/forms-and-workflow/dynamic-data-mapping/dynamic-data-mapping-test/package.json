@@ -1,0 +1,25 @@
+{
+	"devDependencies": {
+		"chai": "^3.5.0",
+		"glob": "^4.4.0",
+		"gulp": "^3.9.0",
+		"istanbul": "^0.3.17",
+		"karma-chai": "^0.1.0",
+		"karma-commonjs": "0.0.13",
+		"karma-mocha": "^0.2.0",
+		"karma-mocha-reporter": "^1.0.2",
+		"karma-replacer-preprocessor": "0.0.1",
+		"karma-sinon": "^1.0.4",
+		"karma-threshold-reporter": "^0.1.15",
+		"liferay-forms-gulp-tasks": "^0.0.8",
+		"mocha": "^2.2.5",
+		"open": "0.0.5",
+		"ps-tree": "^1.0.0",
+		"q": "^1.4.1",
+		"require-dir": "^0.3.0",
+		"run-sequence": "^1.1.0",
+		"sinon": "^1.15.3"
+	},
+	"name": "com-liferay-dynamic-data-mapping-test",
+	"version": "1.0.0"
+}

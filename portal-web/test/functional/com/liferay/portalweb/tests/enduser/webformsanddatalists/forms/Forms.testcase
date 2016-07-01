@@ -3391,6 +3391,8 @@
 			<var name="fieldLabel" value="Multiple Selection" />
 			<var name="fieldName" value="MultipleSelection" />
 		</execute>
+
+		<execute macro="FormPortlet#submitSuccessfully" />
 	</command>
 
 	<command name="ViewRepeatableTextFieldLabel" priority="4">

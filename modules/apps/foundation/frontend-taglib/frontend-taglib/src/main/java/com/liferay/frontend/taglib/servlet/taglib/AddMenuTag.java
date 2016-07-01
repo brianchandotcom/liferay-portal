@@ -52,6 +52,7 @@ public class AddMenuTag extends IncludeTag {
 			ListUtil.isEmpty(addMenuItems) &&
 			ListUtil.isEmpty(addMenuRecentItems) &&
 			ListUtil.isEmpty(addMenuPrimaryItems)) {
+
 			return SKIP_BODY;
 		}
 

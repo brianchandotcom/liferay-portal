@@ -1005,14 +1005,6 @@
 					<execute function="Pause" value1="1000" />
 					<execute function="AssertChecked" locator1="CalendarEditEvent#REPEAT_CHECKBOX" />
 					<execute function="AssertTextEquals" locator1="CalendarEditEvent#REPEAT_SUMMARY" value1="Daily, 1 Times" />
-					<execute function="Click" locator1="Button#PUBLISH" />
-
-					<if>
-						<condition function="IsElementPresent" locator1="CalendarEditEvent#ENTIRE_SERIES_BUTTON" />
-						<then>
-							<execute function="AssertClick" locator1="CalendarEditEvent#ENTIRE_SERIES_BUTTON" value1="Entire Series"  />
-						</then>
-					</if>
 
 					<if>
 						<equals arg1="${optionSet}" arg2="true" />
@@ -1028,6 +1020,13 @@
 		</if>
 
 		<execute function="Click" locator1="Button#PUBLISH" />
+
+		<if>
+			<condition function="IsElementPresent" locator1="CalendarEditEvent#ENTIRE_SERIES_BUTTON" />
+			<then>
+				<execute function="AssertClick" locator1="CalendarEditEvent#ENTIRE_SERIES_BUTTON" value1="Entire Series"  />
+			</then>
+		</if>
 
 		<if>
 			<equals arg1="${optionSetValue}" arg2="inviteResource" />

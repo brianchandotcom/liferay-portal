@@ -65,12 +65,13 @@
 
 		<execute function="AssertChecked" locator1="Checkbox#NEVER_EXPIRE" value1="Never Expire" />
 		<execute function="Uncheck" locator1="Checkbox#NEVER_EXPIRE" value1="Never Expire" />
-		<execute function="Type#clickAtSendKeys" locator1="TextInput#EXPIRATION_DATE" value1="${expirationDate}" />
+		<execute function="Type" locator1="TextInput#EXPIRATION_DATE" value1="${expirationDate}" />
 
 		<if>
 			<isset var="pollsQuestionChoiceC" />
 			<then>
 				<execute function="AssertClick" locator1="Polls#ADD_CHOICE_BUTTON" value1="Add Choice" />
+
 				<execute function="Type" locator1="CPPollsAddquestion#CHOICE_C_FIELD" value1="${pollsQuestionChoiceC}" />
 			</then>
 		</if>

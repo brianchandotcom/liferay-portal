@@ -101,6 +101,10 @@
 			<var name="pageName" value="Calendar Page" />
 		</execute>
 
+		<execute macro="CalendarNavigator#gotoView">
+			<var name="viewType" value="Week" />
+		</execute>
+
 		<execute macro="CalendarEvent#viewNoUserInviteWithUnapprovedWorkflow">
 			<var name="eventTitle" value="Calendar Event Title" />
 			<var name="siteCalendarName" value="${siteName}" />
@@ -128,6 +132,10 @@
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="CalendarNavigator#gotoView">
+			<var name="viewType" value="Week" />
 		</execute>
 
 		<execute macro="CalendarEvent#viewSiteRSVPWithApprovedWorkflow">
@@ -171,6 +179,10 @@
 			<var name="pageName" value="Calendar Page" />
 		</execute>
 
+		<execute macro="CalendarNavigator#gotoView">
+			<var name="viewType" value="Week" />
+		</execute>
+
 		<execute macro="CalendarEvent#viewSiteRSVPWithUnapprovedWorkflow">
 			<var name="eventTitle" value="Calendar Event Title" />
 			<var name="siteCalendarName" value="${siteName}" />
@@ -190,12 +202,20 @@
 			<var name="pageName" value="Calendar Page" />
 		</execute>
 
+		<execute macro="CalendarNavigator#gotoView">
+			<var name="viewType" value="Week" />
+		</execute>
+
 		<execute macro="CalendarEvent#deleteSpecific">
 			<var name="eventTitle" value="Calendar Event Title" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="CalendarNavigator#gotoView">
+			<var name="viewType" value="Week" />
 		</execute>
 
 		<execute macro="CalendarScheduler#viewDefault">
@@ -223,6 +243,10 @@
 			<var name="pageName" value="Calendar Page" />
 		</execute>
 
+		<execute macro="CalendarNavigator#gotoView">
+			<var name="viewType" value="Week" />
+		</execute>
+
 		<execute macro="CalendarEvent#viewSiteRSVPWithUnapprovedWorkflow">
 			<var name="eventTitle" value="Calendar Event Title" />
 			<var name="siteCalendarName" value="${siteName}" />
@@ -248,12 +272,20 @@
 			<var name="pageName" value="Calendar Page" />
 		</execute>
 
+		<execute macro="CalendarNavigator#gotoView">
+			<var name="viewType" value="Week" />
+		</execute>
+
 		<execute macro="CalendarEvent#deleteSpecific">
 			<var name="eventTitle" value="Calendar Event Title" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="CalendarNavigator#gotoView">
+			<var name="viewType" value="Week" />
 		</execute>
 
 		<execute macro="CalendarScheduler#viewDefault">
@@ -306,6 +338,10 @@
 			<var name="pageName" value="Calendar Page" />
 		</execute>
 
+		<execute macro="CalendarNavigator#gotoView">
+			<var name="viewType" value="Week" />
+		</execute>
+
 		<execute macro="CalendarEvent#viewSiteRSVPWithApprovedWorkflow">
 			<var name="eventTitle" value="Calendar Event Title" />
 			<var name="rsvp" value="Yes" />
@@ -345,6 +381,10 @@
 			<var name="pageName" value="Calendar Page" />
 		</execute>
 
+		<execute macro="CalendarNavigator#gotoView">
+			<var name="viewType" value="Week" />
+		</execute>
+
 		<execute macro="CalendarEvent#viewSiteRSVPWithUnapprovedWorkflow">
 			<var name="eventTitle" value="Calendar Event Title" />
 			<var name="siteCalendarName" value="${siteName}" />
@@ -352,6 +392,10 @@
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="CalendarNavigator#gotoView">
+			<var name="viewType" value="Week" />
 		</execute>
 
 		<execute macro="CalendarEvent#viewNoUserInviteWithUnapprovedWorkflow">
@@ -381,6 +425,10 @@
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="CalendarNavigator#gotoView">
+			<var name="viewType" value="Week" />
 		</execute>
 
 		<execute macro="CalendarEvent#viewSiteRSVPWithUnapprovedWorkflow">

@@ -1023,8 +1023,6 @@
 	<command name="viewArticleHistoryPG">
 		<execute function="AssertClick" locator1="KnowledgeBaseArticle#HISTORY" value1="History" />
 
-		<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#HISTORY_TITLE" value1="${kbArticleTitle}" />
-
 		<if>
 			<isset var="kbArticleTitleRemovedDiff" />
 			<then>
@@ -1038,8 +1036,6 @@
 				<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#HISTORY_TITLE_ADDED_DIFF" value1="${kbArticleTitleAddedDiff}" />
 			</then>
 		</if>
-
-		<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#HISTORY_CONTENT" value1="${kbArticleContent}" />
 
 		<if>
 			<isset var="kbArticleContentRemovedDiff" />

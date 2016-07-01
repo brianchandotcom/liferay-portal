@@ -314,6 +314,11 @@
 		<var name="pageName2" value="Blogs Page2" />
 		<var name="portletName2" value="Blogs (Blogs Page2)" />
 
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 		</execute>

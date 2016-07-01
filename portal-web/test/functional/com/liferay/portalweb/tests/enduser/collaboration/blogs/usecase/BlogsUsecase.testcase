@@ -1427,7 +1427,7 @@
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="pageName2" value="Blogs Page2" />
 		<var name="portletName2" value="Blogs (Blogs Page2)" />
-		<var name="scopeSelection" value="Liferay" />
+			<var name="siteName" value="${siteName}" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />

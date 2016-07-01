@@ -355,7 +355,12 @@
 	</command>
 
 	<command name="exportRecords">
-		<execute function="AssertClick" locator1="KaleoFormsAdminViewProcessRecords#EXPORT" value1="Export" />
+		<var name="key_rowEntry" value="${kfProcessName}" />
+
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+
+		<execute function="AssertClick" locator1="MenuItem#EXPORT" value1="Export" />
+
 		<execute function="Select" locator1="KaleoFormsAdminViewProcessRecords#EXPORT_DIALOG_BOX_FILE_EXTENSION_SELECT" value1="${fileExtension}" />
 
 		<if>

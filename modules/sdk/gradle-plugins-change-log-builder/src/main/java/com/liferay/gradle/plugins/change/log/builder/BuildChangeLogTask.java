@@ -32,7 +32,6 @@ import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.concurrent.Callable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -43,6 +42,7 @@ import org.gradle.api.DefaultTask;
 import org.gradle.api.GradleException;
 import org.gradle.api.Project;
 import org.gradle.api.tasks.Input;
+import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.StopExecutionException;
 import org.gradle.api.tasks.TaskAction;
 import org.gradle.util.GUtil;
@@ -53,18 +53,9 @@ import org.gradle.util.GUtil;
 public class BuildChangeLogTask extends DefaultTask {
 
 	public BuildChangeLogTask() {
-		setChangeLogHeader(
-			new Callable<String>() {
+		Project project = getProject();
 
-				@Override
-				public String call() throws Exception {
-					Project project = getProject();
-
-					return "Bundle Version " + project.getVersion();
-				}
-
-			});
-
+		setGitDir(project.getRootDir());
 		setTicketIdPrefixes("CLDSVCS", "LPS", "SOS", "SYNC");
 	}
 
@@ -83,16 +74,24 @@ public class BuildChangeLogTask extends DefaultTask {
 				Files.readAllBytes(changeLogPath), StandardCharsets.UTF_8);
 		}
 
-		String range;
+		String rangeEnd = getRangeEnd();
+		String rangeStart = getRangeStart();
+
 		Set<String> ticketIds;
 
-		try (Repository repository = GitUtil.openRepository(project)) {
-			String rangeEnd = GitUtil.getHashHead(repository);
-			String rangeStart = getRangeStart(changeLogContent, repository);
+		try (Repository repository = GitUtil.openRepository(getGitDir())) {
+			if (Validator.isNull(rangeEnd)) {
+				rangeEnd = GitUtil.getHashHead(repository);
+			}
 
-			range = rangeStart + ".." + rangeEnd;
+			if (Validator.isNull(rangeStart)) {
+				rangeStart = getRangeStart(changeLogContent, repository);
+			}
+
 			ticketIds = getTicketIds(rangeStart, rangeEnd, repository);
 		}
+
+		String range = rangeStart + ".." + rangeEnd;
 
 		if (ticketIds.isEmpty()) {
 			throw new StopExecutionException(
@@ -140,6 +139,16 @@ public class BuildChangeLogTask extends DefaultTask {
 		}
 	}
 
+	public BuildChangeLogTask dirs(Iterable<?> dirs) {
+		GUtil.addToCollection(_dirs, dirs);
+
+		return this;
+	}
+
+	public BuildChangeLogTask dirs(Object... dirs) {
+		return dirs(Arrays.asList(dirs));
+	}
+
 	@Input
 	public File getChangeLogFile() {
 		return GradleUtil.toFile(getProject(), _changeLogFile);
@@ -148,6 +157,30 @@ public class BuildChangeLogTask extends DefaultTask {
 	@Input
 	public String getChangeLogHeader() {
 		return GradleUtil.toString(_changeLogHeader);
+	}
+
+	@Input
+	public Iterable<File> getDirs() {
+		Project project = getProject();
+
+		return project.files(_dirs);
+	}
+
+	@Input
+	public File getGitDir() {
+		return GradleUtil.toFile(getProject(), _gitDir);
+	}
+
+	@Input
+	@Optional
+	public String getRangeEnd() {
+		return GradleUtil.toString(_rangeEnd);
+	}
+
+	@Input
+	@Optional
+	public String getRangeStart() {
+		return GradleUtil.toString(_rangeStart);
 	}
 
 	@Input
@@ -161,6 +194,28 @@ public class BuildChangeLogTask extends DefaultTask {
 
 	public void setChangeLogHeader(Object changeLogHeader) {
 		_changeLogHeader = changeLogHeader;
+	}
+
+	public void setDirs(Iterable<?> dirs) {
+		_dirs.clear();
+
+		dirs(dirs);
+	}
+
+	public void setDirs(Object... dirs) {
+		setDirs(Arrays.asList(dirs));
+	}
+
+	public void setGitDir(Object gitDir) {
+		_gitDir = gitDir;
+	}
+
+	public void setRangeEnd(Object rangeEnd) {
+		_rangeEnd = rangeEnd;
+	}
+
+	public void setRangeStart(Object rangeStart) {
+		_rangeStart = rangeStart;
 	}
 
 	public void setTicketIdPrefixes(Iterable<String> ticketIdPrefixes) {
@@ -218,11 +273,10 @@ public class BuildChangeLogTask extends DefaultTask {
 		Set<String> ticketIds = new TreeSet<>(
 			new NaturalOrderStringComparator());
 
-		Project project = getProject();
 		Set<String> ticketIdPrefixes = getTicketIdPrefixes();
 
 		Iterable<RevCommit> revCommits = GitUtil.getCommits(
-			project.getProjectDir(), rangeStart, rangeEnd, repository);
+			getDirs(), rangeStart, rangeEnd, repository);
 
 		for (RevCommit revCommit : revCommits) {
 			String message = revCommit.getShortMessage();
@@ -256,6 +310,10 @@ public class BuildChangeLogTask extends DefaultTask {
 
 	private Object _changeLogFile;
 	private Object _changeLogHeader;
+	private final Set<Object> _dirs = new HashSet<>();
+	private Object _gitDir;
+	private Object _rangeEnd;
+	private Object _rangeStart;
 	private final Set<String> _ticketIdPrefixes = new HashSet<>();
 
 }

@@ -34,6 +34,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DEFAULT_VALUE_SELECT</td>
+	<td>//select[contains(@id,'defaultValue')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DISPLAY_STYLE</td>
 	<td>//div[label[contains(.,'Display Style')]]/select</td>
 	<td></td>

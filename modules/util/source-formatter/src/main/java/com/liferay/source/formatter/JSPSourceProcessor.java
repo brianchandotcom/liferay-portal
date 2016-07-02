@@ -724,8 +724,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 				}
 
 				String trimmedLine = StringUtil.trimLeading(line);
-				String trimmedPreviousLine = StringUtil.trimLeading(
-					previousLine);
 
 				if (line.matches(".*\\WgetClass\\(\\)\\..+")) {
 					processErrorMessage(

@@ -51,6 +51,12 @@ public class IfClauseIncorrectLineBreaks {
 			return;
 		}
 
+		if (test1.equals("hello world") || test1.equals("HELLO WORLD") ||
+			test1.equals("HeLlO WoRlD")) {
+
+			return;
+		}
+
 		int thisIsAnIntegerWithARatherLongName1 = 0;
 		int thisIsAnIntegerWithARatherLongName2 = 0;
 

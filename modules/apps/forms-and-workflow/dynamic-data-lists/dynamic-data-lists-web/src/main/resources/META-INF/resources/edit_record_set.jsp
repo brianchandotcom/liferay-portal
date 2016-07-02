@@ -45,6 +45,7 @@ if (ddmStructureId > 0) {
 	catch (NoSuchStructureException nsse) {
 	}
 }
+
 if (ddlDisplayContext.isAdminPortlet()) {
 	portletDisplay.setShowBackIcon(true);
 	portletDisplay.setURLBack(redirect);

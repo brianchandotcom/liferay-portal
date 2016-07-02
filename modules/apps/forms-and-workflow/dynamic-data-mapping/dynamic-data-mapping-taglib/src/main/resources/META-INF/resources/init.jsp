@@ -35,6 +35,7 @@ private static Object _deserialize(Object obj) {
 		json = StringUtil.unquote(json);
 		return JSONFactoryUtil.looseDeserialize(json);
 	}
+
 	return null;
 }
 

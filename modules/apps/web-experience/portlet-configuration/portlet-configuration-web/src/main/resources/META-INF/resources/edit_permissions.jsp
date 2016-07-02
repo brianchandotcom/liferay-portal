@@ -85,6 +85,7 @@ try {
 			throw new NoSuchResourceException();
 		}
 	}
+
 	resource = ResourceLocalServiceUtil.getResource(company.getCompanyId(), selResource, ResourceConstants.SCOPE_INDIVIDUAL, resourcePrimKey);
 }
 catch (NoSuchResourceException nsre) {

@@ -73,7 +73,8 @@ public class _CLASS_Portlet extends MVCPortlet {
 		catch (PortalException pe) {
 		}
 
-		renderRequest.setAttribute("portletProviderMessage", message);
+		renderRequest.setAttribute(
+			_CLASS_PortletKeys.PORTLET_PROVIDER_MESSAGE, message);
 
 		super.doView(renderRequest, renderResponse);
 	}

@@ -253,8 +253,8 @@ public class SyncJSONFilter implements Filter {
 				String key = iterator.next();
 
 				if (key.startsWith("/sync-web.") ||
-					key.startsWith("/sync-web/") ||
-					key.startsWith("/sync.") || key.startsWith("/sync/")) {
+					key.startsWith("/sync-web/") || key.startsWith("/sync.") ||
+					key.startsWith("/sync/")) {
 
 					return true;
 				}

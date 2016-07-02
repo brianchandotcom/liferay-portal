@@ -58,8 +58,8 @@ public class JenkinsResultsParserUtil {
 
 		JSONObject jsonObject = new JSONObject(jsonString);
 
-		if (jsonObject.isNull("duration") ||
-			jsonObject.isNull("result") || jsonObject.isNull("url")) {
+		if (jsonObject.isNull("duration") || jsonObject.isNull("result") ||
+			jsonObject.isNull("url")) {
 
 			return jsonObject;
 		}

@@ -30,8 +30,8 @@ public class IdReplacer {
 			String s, String begin, ValueMapper valueMapper)
 		throws Exception {
 
-		if ((s == null) || (begin == null) ||
-			(valueMapper == null) || (valueMapper.size() == 0)) {
+		if ((s == null) || (begin == null) || (valueMapper == null) ||
+			(valueMapper.size() == 0)) {
 
 			return s;
 		}

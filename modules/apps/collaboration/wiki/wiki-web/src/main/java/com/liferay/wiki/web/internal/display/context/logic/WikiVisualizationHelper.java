@@ -47,8 +47,8 @@ public class WikiVisualizationHelper {
 
 		String frontPageName = _wikiGroupServiceConfiguration.frontPageName();
 
-		if (Validator.isNull(mvcRenderCommandName) ||
-			(wikiPage != null) && frontPageName.equals(wikiPage.getTitle())) {
+		if (Validator.isNull(mvcRenderCommandName) || (wikiPage != null) &&
+			frontPageName.equals(wikiPage.getTitle())) {
 
 			return true;
 		}

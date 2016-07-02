@@ -351,9 +351,9 @@ public abstract class Watcher implements Runnable {
 				 !FileUtil.isValidChecksum(filePath)) ||
 				FileUtil.isIgnoredFileName(
 					String.valueOf(filePath.getFileName())) ||
-				FileUtil.isTempFile(filePath) ||
-				Files.notExists(filePath) || Files.isDirectory(filePath) ||
-				FileUtil.isHidden(filePath) || FileUtil.isShortcut(filePath)) {
+				FileUtil.isTempFile(filePath) || Files.notExists(filePath) ||
+				Files.isDirectory(filePath) || FileUtil.isHidden(filePath) ||
+				FileUtil.isShortcut(filePath)) {
 
 				return;
 			}

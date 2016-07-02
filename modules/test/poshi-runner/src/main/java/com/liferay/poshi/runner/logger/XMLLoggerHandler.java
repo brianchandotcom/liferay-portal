@@ -183,9 +183,8 @@ public final class XMLLoggerHandler {
 
 		if (!childElements.isEmpty() &&
 			(_isExecutingFunction(element) ||
-			 _isExecutingGroovyScript(element) ||
-			 _isExecutingMacro(element) || _isExecutingTestCase(element) ||
-			 _isExecutingMethod(element))) {
+			 _isExecutingGroovyScript(element) || _isExecutingMacro(element) ||
+			 _isExecutingTestCase(element) || _isExecutingMethod(element))) {
 
 			sb.append(_getBtnItemText("btn-var"));
 		}

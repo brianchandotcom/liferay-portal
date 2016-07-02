@@ -305,8 +305,8 @@ public class WebFormConfigurationAction extends DefaultConfigurationAction {
 					return;
 				}
 
-				if (Validator.isNotNull(fieldLabelValue) &&
-					saveToDatabase && (fieldLabelValue.length() > 75)) {
+				if (Validator.isNotNull(fieldLabelValue) && saveToDatabase &&
+					(fieldLabelValue.length() > 75)) {
 
 					SessionErrors.add(
 						actionRequest, "fieldSizeInvalid" + formFieldsIndex);

@@ -2250,7 +2250,7 @@ this task.
 					dir="${app.server.weblogic.dir}"
 					includes="**/*.cmd,**/*.domains,**/*.properties,**/*.sh,**/*.xml"
 				>
-					<replacefilter token="${env.JAVA_HOME}" value="@env.JAVA_HOME@" />
+					<replacefilter token="@env.JAVA_HOME@" value="${env.JAVA_HOME}" />
 				</replace>
 			</then>
 			<elseif>

@@ -2279,12 +2279,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					line = formatWhitespace(line, trimmedLine, true);
 				}
 
-				if (line.contains(StringPool.TAB + "for (") &&
-					line.contains(":") && !line.contains(" :")) {
-
-					line = StringUtil.replace(line, ":", " :");
-				}
-
 				// LPS-42924
 
 				if (line.contains("PortalUtil.getClassNameId(") &&

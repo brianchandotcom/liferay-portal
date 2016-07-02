@@ -509,7 +509,7 @@ public class JavaClass {
 		}
 
 		Pattern pattern = Pattern.compile(
-			"\t(private |protected |public )" +
+			"\t(private|protected|public)\\s+" +
 				"(((final|static|transient)( |\n))*)([\\s\\S]*?)" +
 					javaTermName);
 

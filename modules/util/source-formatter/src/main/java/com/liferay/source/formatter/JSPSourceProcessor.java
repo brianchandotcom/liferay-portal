@@ -880,6 +880,14 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 					checkIfClauseParentheses(trimmedLine, fileName, lineCount);
 				}
 
+				if (javaSource &&
+					trimmedLine.matches("^\\} (catch|else|finally) .*")) {
+
+					processErrorMessage(
+						fileName,
+						"line break: " + fileName + " " + lineCount);
+				}
+
 				Matcher matcher = _ifTagPattern.matcher(trimmedLine);
 
 				if (matcher.find()) {

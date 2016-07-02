@@ -1850,6 +1850,48 @@
 		</for>
 	</command>
 
+	<command name="CheckExternalLinksAvailabilityForTemplateDisplayClasses" priority="4">
+		<description message="This is a use case for LPS-66228." />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLNavigator#gotoManageDataDefinitions" />
+
+		<execute function="Click#waitForMenuToggleJSClick" locator1="DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS_1" />
+
+		<execute function="AssertClick" locator1="MenuItem#MANAGE_TEMPLATES" value1="Manage Templates" />
+
+		<execute function="Click" locator1="Button#PLUS" />
+
+		<execute function="Click" locator1="MenuItem#ADD_DISPLAY_TEMPLATE" />
+
+		<for list="Device,Company,PermissionChecker" param="fieldName">
+			<var name="key_fieldName" value="${fieldName}" />
+
+			<if>
+				<equals arg1="${fieldName}" arg2="PermissionChecker" />
+				<then>
+					<execute function="MouseOver" locator1="DDMEditTemplate#SCRIPT_UTIL" />
+				</then>
+				<else>
+					<execute function="MouseOver" locator1="DDMEditTemplate#SCRIPT_VARIABLE" />
+				</else>
+			</if>
+
+			<execute function="AssertClick" locator1="DDMEditTemplate#TOOLTIP_JAVA_CLASS_LINK" value1="${fieldName}" />
+
+			<execute function="SelectWindow#selectPopUp" locator1="null" />
+
+			<execute function="AssertTextEquals" locator1="DDMEditTemplate#JAVA_CLASS_NAME" value1="${fieldName}" />
+
+			<execute function="Close#closeAndSelectWindow" locator1="title=New Template for Structure: Contacts - Liferay" />
+		</for>
+	</command>
+
 	<command name="DeleteStructure" priority="3">
 		<var name="ddlDataDefinitionName" value="DDL Definition" />
 		<var name="ddlListName" value="DDL List" />

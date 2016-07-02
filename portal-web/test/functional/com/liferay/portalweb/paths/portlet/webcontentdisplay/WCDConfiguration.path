@@ -49,6 +49,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TOGGLE_CARD_CHECKBOX</td>
+	<td>//label[contains(.,'${key_toggleCardLabel}')]/input</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -96,16 +101,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>USER_TOOLS_TOGGLE</td>
-	<td>//div[@class='toggle-card-label' and contains(.,'${key_userToolName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>USER_TOOLS_TOGGLE_OFF</td>
-	<td>//input[contains(@data-label,'${key_userToolName}') or contains(@data-key,'${key_userToolName}')]/following-sibling::div//span[contains(@class,'toggle-card-off')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -114,16 +109,6 @@
 <tr>
 	<td>CONTENT_METADATA_SELECT</td>
 	<td>//div[contains(@id,'contentMetadata')]/button[contains(.,'Select')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONTENT_METADATA_TOGGLE</td>
-	<td>//div[@class='toggle-card-label' and contains(.,'${metadataName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONTENT_METADATA_TOGGLE_OFF</td>
-	<td>//input[contains(@data-key,'${metadataNameToggleOff}')]/following-sibling::div//span[contains(@class,'toggle-card-off')]</td>
 	<td></td>
 </tr>
 </tbody>

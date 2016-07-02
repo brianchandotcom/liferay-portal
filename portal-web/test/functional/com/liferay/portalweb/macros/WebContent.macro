@@ -1864,7 +1864,7 @@
 
 		<var name="key_localizedLanguage" value="Spanish (Spain)" />
 
-		<execute function="Click" locator1="Translation#CURRENT_LOCALE" />
+		<execute function="Click" locator1="Translation#AVAILABLE_TRANSLATION" />
 
 		<execute function="AssertTextEquals" locator1="TextInput#TITLE" value1="${localizedTitle}" />
 

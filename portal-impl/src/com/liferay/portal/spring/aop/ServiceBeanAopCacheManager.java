@@ -175,7 +175,7 @@ public class ServiceBeanAopCacheManager {
 		new ConcurrentHashMap<>();
 	private static final Annotation[] _nullAnnotations = new Annotation[0];
 
-	private
+	private final
 		Map<Class<? extends Annotation>, AnnotationChainableMethodAdvice<?>[]>
 			_annotationChainableMethodAdvices = new HashMap
 				<Class<? extends Annotation>,

@@ -474,7 +474,8 @@ if (urlConfiguration != null) {
 		if (Validator.isNotNull(settingsScope)) {
 			urlConfiguration.setParameter("settingsScope", settingsScope);
 		}
-	} else {
+	}
+	else {
 		urlConfiguration.setParameter("mvcPath", "/edit_sharing.jsp");
 	}
 

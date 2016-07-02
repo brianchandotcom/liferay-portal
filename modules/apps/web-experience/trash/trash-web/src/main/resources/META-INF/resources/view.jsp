@@ -198,7 +198,8 @@ request.setAttribute("view.jsp-recycleBinEntrySearch", entrySearch);
 					}
 					else if(trashEntry.getRootEntry() == null) {
 						actionPath = "/entry_action.jsp";
-					} else {
+					}
+					else {
 						request.setAttribute(TrashWebKeys.TRASH_RENDERER, trashRenderer);
 					}
 					%>

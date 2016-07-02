@@ -510,7 +510,7 @@ public class JavaClass {
 
 		Pattern pattern = Pattern.compile(
 			"\t(private|protected|public)\\s+" +
-				"(((final|static|transient)( |\n))*)([\\s\\S]*?)" +
+				"(((final|static|transient|volatile)( |\n))*)([\\s\\S]*?)" +
 					javaTermName);
 
 		String javaTermContent = javaTerm.getContent();
@@ -611,7 +611,7 @@ public class JavaClass {
 				}
 			}
 		}
-		else {
+		else if (!modifierDefinition.contains("volatile")) {
 			checkFinalableFieldType(
 				javaTerm, annotationsExclusions, modifierDefinition);
 		}

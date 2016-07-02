@@ -78,8 +78,9 @@
 		</execute>
 
 		<for list="${tagNameList}" param="tagName">
-			<execute function="Type#clickAtSendKeys" locator1="AssetCategorization#TAGS_FIELD" value1="${tagName}" />
-			<execute function="Click" locator1="AssetCategorization#TAGS_ADD_BUTTON" />
+			<execute macro="AssetCategorization#addTag">
+				<var name="tagName" value="${tagName}" />
+			</execute>
 		</for>
 
 		<execute function="Click" locator1="Button#PUBLISH" />
@@ -92,8 +93,10 @@
 			<var name="panelHeading" value="Categorization" />
 		</execute>
 
-		<execute function="Type" locator1="AssetCategorization#TAGS_FIELD" value1="${tagName}" />
-		<execute function="AssertClick" locator1="AssetCategorization#TAGS_ADD_BUTTON" value1="Add" />
+		<execute macro="AssetCategorization#addTag">
+			<var name="tagName" value="${tagName}" />
+		</execute>
+
 		<execute macro="PortletEntry#save" />
 	</command>
 

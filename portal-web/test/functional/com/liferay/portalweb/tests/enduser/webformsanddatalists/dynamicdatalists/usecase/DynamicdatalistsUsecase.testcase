@@ -1822,34 +1822,6 @@
 		</execute>
 	</command>
 
-	<command name="CreateSiteAndViewDefaultDataDefinitions" priority="3">
-		<description message="This is a use case for LPS-50557." />
-
-		<execute macro="ProductMenu#gotoControlPanelSites">
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSitesContent">
-			<var name="portlet" value="Dynamic Data Lists" />
-		</execute>
-
-		<execute macro="DDLNavigator#gotoManageDataDefinitions" />
-
-		<for list="Contacts,Events,Inventory,Issues Tracking,Meeting Minutes,To Do" param="ddlDataDefinitionName">
-			<execute macro="DDLDataDefinition#viewName">
-				<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
-			</execute>
-		</for>
-	</command>
-
 	<command name="CheckExternalLinksAvailabilityForTemplateDisplayClasses" priority="4">
 		<description message="This is a use case for LPS-66228." />
 
@@ -1889,6 +1861,34 @@
 			<execute function="AssertTextEquals" locator1="DDMEditTemplate#JAVA_CLASS_NAME" value1="${fieldName}" />
 
 			<execute function="Close#closeAndSelectWindow" locator1="title=New Template for Structure: Contacts - Liferay" />
+		</for>
+	</command>
+
+	<command name="CreateSiteAndViewDefaultDataDefinitions" priority="3">
+		<description message="This is a use case for LPS-50557." />
+
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLNavigator#gotoManageDataDefinitions" />
+
+		<for list="Contacts,Events,Inventory,Issues Tracking,Meeting Minutes,To Do" param="ddlDataDefinitionName">
+			<execute macro="DDLDataDefinition#viewName">
+				<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			</execute>
 		</for>
 	</command>
 

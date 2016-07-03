@@ -816,6 +816,7 @@ public class MBUtil {
 		}
 
 		if (messageFormat.equals("bbcode") &&
+			!editorName.equals("alloyeditor_bbcode") &&
 			!editorName.equals("ckeditor_bbcode")) {
 
 			return false;

@@ -39,9 +39,11 @@ if (Validator.isNull(body)) {
 		body = LanguageUtil.format(request, "the-new-thread-can-be-found-at-x", sb.toString(), false);
 	}
 }
+
+String editorName = PropsUtil.get("editor.wysiwyg.portal-web.docroot.html.portlet.message_boards.edit_message.html.jsp");
 %>
 
-<liferay-ui:input-editor allowBrowseDocuments="<%= false %>" contents="<%= body %>" editorName='<%= PropsUtil.get("editor.wysiwyg.portal-web.docroot.html.portlet.message_boards.edit_message.html.jsp") %>' />
+<liferay-ui:input-editor allowBrowseDocuments="<%= false %>" contents="<%= body %>" cssClass='<%= editorName.startsWith("alloyeditor") ? "form-control" : StringPool.BLANK %>' editorName="<%= editorName %>" />
 
 <aui:script>
 	function <portlet:namespace />getHTML() {

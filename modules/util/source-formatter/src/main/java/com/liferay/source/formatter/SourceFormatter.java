@@ -75,8 +75,16 @@ public class SourceFormatter {
 			sourceFormatterArgs.setFormatLocalChanges(formatLocalChanges);
 
 			if (formatCurrentBranch) {
+				String gitWorkingBranchName = GetterUtil.getString(
+					arguments.get("git.working.branch.name"),
+					SourceFormatterArgs.GIT_WORKING_BRANCH_NAME);
+
+				sourceFormatterArgs.setGitWorkingBranchName(
+					gitWorkingBranchName);
+
 				sourceFormatterArgs.setRecentChangesFileNames(
-					GitUtil.getCurrentBranchFileNames(baseDirName));
+					GitUtil.getCurrentBranchFileNames(
+						baseDirName, gitWorkingBranchName));
 			}
 			else if (formatLatestAuthor) {
 				sourceFormatterArgs.setRecentChangesFileNames(

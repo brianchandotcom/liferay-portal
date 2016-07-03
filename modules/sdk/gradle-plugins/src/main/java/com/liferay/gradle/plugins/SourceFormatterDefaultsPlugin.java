@@ -42,6 +42,14 @@ public class SourceFormatterDefaultsPlugin
 	protected void configureTasksFormatSource(
 		FormatSourceTask formatSourceTask) {
 
+		String gitWorkingBranchName = GradleUtil.getProperty(
+			formatSourceTask.getProject(),
+			"source.formatter.git.working.branch.name", (String)null);
+
+		if (Validator.isNotNull(gitWorkingBranchName)) {
+			formatSourceTask.setGitWorkingBranchName(gitWorkingBranchName);
+		}
+
 		String maxLineLength = GradleUtil.getProperty(
 			formatSourceTask.getProject(), "source.formatter.max.line.length",
 			(String)null);

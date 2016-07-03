@@ -96,6 +96,10 @@ public class FormatSourceTask extends Task {
 		_sourceFormatterArgs.setFormatLocalChanges(formatLocalChanges);
 	}
 
+	public void setGitWorkingBranchName(String gitWorkingBranchName) {
+		_sourceFormatterArgs.setGitWorkingBranchName(gitWorkingBranchName);
+	}
+
 	public void setMaxLineLength(int maxLineLength) {
 		_sourceFormatterArgs.setMaxLineLength(maxLineLength);
 	}

@@ -81,6 +81,10 @@ public class FormatSourceTask extends JavaExec {
 		return project.files(fileNames);
 	}
 
+	public String getGitWorkingBranchName() {
+		return _sourceFormatterArgs.getGitWorkingBranchName();
+	}
+
 	public int getMaxLineLength() {
 		return _sourceFormatterArgs.getMaxLineLength();
 	}
@@ -150,6 +154,10 @@ public class FormatSourceTask extends JavaExec {
 		_sourceFormatterArgs.setFormatLocalChanges(formatLocalChanges);
 	}
 
+	public void setGitWorkingBranchName(String gitWorkingBranchName) {
+		_sourceFormatterArgs.setGitWorkingBranchName(gitWorkingBranchName);
+	}
+
 	public void setMaxLineLength(int maxLineLength) {
 		_sourceFormatterArgs.setMaxLineLength(maxLineLength);
 	}
@@ -176,6 +184,7 @@ public class FormatSourceTask extends JavaExec {
 		args.add("format.current.branch=" + isFormatCurrentBranch());
 		args.add("format.latest.author=" + isFormatLatestAuthor());
 		args.add("format.local.changes=" + isFormatLocalChanges());
+		args.add("git.working.branch.name=" + getGitWorkingBranchName());
 		args.add("max.line.length=" + getMaxLineLength());
 		args.add("processor.thread.count=" + getProcessorThreadCount());
 		args.add("source.auto.fix=" + isAutoFix());

@@ -33,11 +33,12 @@ import java.util.List;
  */
 public class GitUtil {
 
-	public static List<String> getCurrentBranchFileNames(String baseDirName)
+	public static List<String> getCurrentBranchFileNames(
+			String baseDirName, String gitWorkingBranchName)
 		throws Exception {
 
 		UnsyncBufferedReader unsyncBufferedReader = getGitCommandReader(
-			"git merge-base HEAD " + _WORKING_BRANCH_NAME);
+			"git merge-base HEAD " + gitWorkingBranchName);
 
 		String mergeBaseCommitId = unsyncBufferedReader.readLine();
 
@@ -174,7 +175,5 @@ public class GitUtil {
 		throw new GitException(
 			"Unable to retrieve files because .git directory is missing.");
 	}
-
-	private static final String _WORKING_BRANCH_NAME = "master";
 
 }

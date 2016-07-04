@@ -25,6 +25,7 @@ DDMStructure ddmStructure = (DDMStructure)row.getObject();
 <c:choose>
 	<c:when test="<%= ArrayUtil.contains(journalDisplayContext.getAddMenuFavItems(), ddmStructure.getStructureKey()) %>">
 		<portlet:actionURL name="removeAddMenuFavItem" var="removeAddMenuFavItemURL">
+			<portlet:param name="mvcPath" value="/view_more_menu_items.jsp" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="ddmStructureKey" value="<%= ddmStructure.getStructureKey() %>" />
 		</portlet:actionURL>
@@ -39,6 +40,7 @@ DDMStructure ddmStructure = (DDMStructure)row.getObject();
 	</c:when>
 	<c:otherwise>
 		<portlet:actionURL name="addAddMenuFavItem" var="addAddMenuFavItemURL">
+			<portlet:param name="mvcPath" value="/view_more_menu_items.jsp" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="ddmStructureKey" value="<%= ddmStructure.getStructureKey() %>" />
 		</portlet:actionURL>

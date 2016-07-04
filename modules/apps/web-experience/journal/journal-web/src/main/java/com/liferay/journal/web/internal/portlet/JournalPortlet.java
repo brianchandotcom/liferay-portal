@@ -74,6 +74,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletProvider.Action;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
@@ -91,6 +92,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.LiferayFileItemException;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -182,6 +184,24 @@ public class JournalPortlet extends MVCPortlet {
 
 	public static final String VERSION_SEPARATOR = "_version_";
 
+	public void addAddMenuFavItem(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		String ddmStructureKey = ParamUtil.getString(
+			actionRequest, "ddmStructureKey");
+
+		PortalPreferences portalPreferences =
+			PortletPreferencesFactoryUtil.getPortalPreferences(actionRequest);
+
+		String[] addMenuFavItems = portalPreferences.getValues(
+			JournalPortletKeys.JOURNAL, "add-menu-fav-items", new String[0]);
+
+		portalPreferences.setValues(
+			JournalPortletKeys.JOURNAL, "add-menu-fav-items",
+			ArrayUtil.append(addMenuFavItems, ddmStructureKey));
+	}
+
 	public void addArticle(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -201,11 +221,6 @@ public class JournalPortlet extends MVCPortlet {
 		throws Exception {
 
 		updateFolder(actionRequest, actionResponse);
-	}
-
-	public void addToFavorites(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
 	}
 
 	public void deleteArticle(
@@ -392,6 +407,24 @@ public class JournalPortlet extends MVCPortlet {
 		throws Exception {
 
 		updateArticle(actionRequest, actionResponse);
+	}
+
+	public void removeAddMenuFavItem(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		String ddmStructureKey = ParamUtil.getString(
+			actionRequest, "ddmStructureKey");
+
+		PortalPreferences portalPreferences =
+			PortletPreferencesFactoryUtil.getPortalPreferences(actionRequest);
+
+		String[] addMenuFavItems = portalPreferences.getValues(
+			JournalPortletKeys.JOURNAL, "add-menu-fav-items");
+
+		portalPreferences.setValues(
+			JournalPortletKeys.JOURNAL, "add-menu-fav-items",
+			ArrayUtil.remove(addMenuFavItems, ddmStructureKey));
 	}
 
 	@Override

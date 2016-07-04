@@ -112,6 +112,20 @@ public class JournalDisplayContext {
 			_request);
 	}
 
+	public String[] getAddMenuFavItems() {
+		if (_addMenuFavItems != null) {
+			return _addMenuFavItems;
+		}
+
+		PortalPreferences portalPreferences =
+			PortletPreferencesFactoryUtil.getPortalPreferences(_request);
+
+		_addMenuFavItems = portalPreferences.getValues(
+			JournalPortletKeys.JOURNAL, "add-menu-fav-items", new String[0]);
+
+		return _addMenuFavItems;
+	}
+
 	public JournalArticle getArticle() throws PortalException {
 		if (_article != null) {
 			return _article;
@@ -1066,6 +1080,7 @@ public class JournalDisplayContext {
 			portletURL.toString());
 	}
 
+	private String[] _addMenuFavItems;
 	private JournalArticle _article;
 	private DDMFormValues _ddmFormValues;
 	private String _ddmStructureKey;

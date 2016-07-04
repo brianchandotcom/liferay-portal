@@ -53,6 +53,9 @@ public interface JournalWebConfiguration {
 	@Meta.AD(deflt = "true", required = false)
 	public boolean journalFeedForceAutogenerateId();
 
+	@Meta.AD(deflt = "7", required = false)
+	public int maxAddMenuItems();
+
 	@Meta.AD(deflt = "true", required = false)
 	public boolean publishToLiveByDefault();
 

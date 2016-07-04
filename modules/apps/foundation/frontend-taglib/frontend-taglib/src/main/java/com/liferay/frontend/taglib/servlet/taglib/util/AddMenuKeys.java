@@ -21,4 +21,10 @@ public class AddMenuKeys {
 
 	public static final int MAX_ITEMS = 7;
 
+	public enum AddMenuType {
+
+		DEFAULT, FAVORITE, PRIMARY, RECENT
+
+	}
+
 }

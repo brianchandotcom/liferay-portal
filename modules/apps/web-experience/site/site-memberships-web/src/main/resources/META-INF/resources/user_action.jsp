@@ -56,7 +56,7 @@ boolean userGroupUser = GetterUtil.getBoolean(row.getParameter("userGroupUser"))
 			<portlet:param name="removeUserId" value="<%= String.valueOf(user2.getUserId()) %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon
+		<liferay-ui:icon-delete
 			message="remove-membership"
 			url="<%= deleteGroupUsersURL %>"
 		/>

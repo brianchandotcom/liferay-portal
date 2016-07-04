@@ -53,7 +53,7 @@ UserGroup userGroup = (UserGroup)row.getObject();
 			<portlet:param name="removeUserGroupId" value="<%= String.valueOf(userGroup.getUserGroupId()) %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon
+		<liferay-ui:icon-delete
 			message="remove-membership"
 			url="<%= deleteGroupUserGroupsURL %>"
 		/>

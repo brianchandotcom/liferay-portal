@@ -16,14 +16,39 @@
 
 <%@ include file="/init.jsp" %>
 
-<portlet:actionURL name="addToFavorites" var="addToFavorites">
-	<portlet:param name="redirect" value="<%= currentURL %>" />
-</portlet:actionURL>
+<%
+ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
-<liferay-ui:icon
-	icon="star-o"
-	linkCssClass="icon-monospaced text-default"
-	markupView="lexicon"
-	message="favorite"
-	url="<%= addToFavorites %>"
-/>
+DDMStructure ddmStructure = (DDMStructure)row.getObject();
+%>
+
+<c:choose>
+	<c:when test="<%= ArrayUtil.contains(journalDisplayContext.getAddMenuFavItems(), ddmStructure.getStructureKey()) %>">
+		<portlet:actionURL name="removeAddMenuFavItem" var="removeAddMenuFavItemURL">
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="ddmStructureKey" value="<%= ddmStructure.getStructureKey() %>" />
+		</portlet:actionURL>
+
+		<liferay-ui:icon
+			icon="star"
+			linkCssClass="icon-monospaced text-default"
+			markupView="lexicon"
+			message="remove-favorite"
+			url="<%= removeAddMenuFavItemURL %>"
+		/>
+	</c:when>
+	<c:otherwise>
+		<portlet:actionURL name="addAddMenuFavItem" var="addAddMenuFavItemURL">
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="ddmStructureKey" value="<%= ddmStructure.getStructureKey() %>" />
+		</portlet:actionURL>
+
+		<liferay-ui:icon
+			icon="star-o"
+			linkCssClass="icon-monospaced text-default"
+			markupView="lexicon"
+			message="add-favorite"
+			url="<%= addAddMenuFavItemURL %>"
+		/>
+	</c:otherwise>
+</c:choose>

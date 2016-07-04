@@ -23,6 +23,8 @@ portletURL.setParameter("mvcPath", "/view_more_menu_items.jsp");
 portletURL.setParameter("folderId", String.valueOf(journalDisplayContext.getFolderId()));
 %>
 
+<liferay-ui:error exception="<%= MaxAddMenuFavItemsException.class %>" message='<%= LanguageUtil.format(resourceBundle, "you-cannot-add-more-than-x-favorites", journalWebConfiguration.maxAddMenuItems()) %>' />
+
 <aui:nav-bar markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
 		<aui:nav-item label="all-menu-items" selected="<%= true %>" />

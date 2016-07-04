@@ -22,7 +22,7 @@
 		<portlet:param name="folderId" value="<%= String.valueOf(journalDisplayContext.getFolderId()) %>" />
 	</portlet:renderURL>
 
-	<liferay-frontend:add-menu viewMoreURL="<%= viewMoreURL %>">
+	<liferay-frontend:add-menu maxItems="<%= journalDisplayContext.getMaxAddMenuItems() %>" viewMoreURL="<%= viewMoreURL %>">
 		<c:if test="<%= JournalFolderPermission.contains(permissionChecker, scopeGroupId, journalDisplayContext.getFolderId(), ActionKeys.ADD_FOLDER) %>">
 			<portlet:renderURL var="addFolderURL">
 				<portlet:param name="mvcPath" value="/edit_folder.jsp" />

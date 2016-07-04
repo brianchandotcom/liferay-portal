@@ -25,21 +25,21 @@ import java.sql.SQLException;
 /**
  * @author Rafael Praxedes
  */
-public class UpgradeKaleoClassNameClassPK extends UpgradeProcess {
+public class UpgradeKaleoClassNameAndKaleoClassPKs extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		upgradeKaleoClassNameClassPK(
+		upgradeKaleoClassNameAndKaleoClassPK(
 			"KaleoAction", KaleoNode.class.getName(), "kaleoNodeId");
-		upgradeKaleoClassNameClassPK(
+		upgradeKaleoClassNameAndKaleoClassPK(
 			"KaleoLog", KaleoNode.class.getName(), "kaleoNodeId");
-		upgradeKaleoClassNameClassPK(
+		upgradeKaleoClassNameAndKaleoClassPK(
 			"KaleoNotification", KaleoNode.class.getName(), "kaleoNodeId");
-		upgradeKaleoClassNameClassPK(
+		upgradeKaleoClassNameAndKaleoClassPK(
 			"KaleoTaskAssignment", KaleoTask.class.getName(), "kaleoTaskId");
 	}
 
-	protected void upgradeKaleoClassNameClassPK(
+	protected void upgradeKaleoClassNameAndKaleoClassPK(
 			String tableName, String kaleoClassName,
 			String kaleoClassPKOldColumn)
 		throws SQLException {

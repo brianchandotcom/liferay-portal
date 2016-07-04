@@ -25,12 +25,14 @@ import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.persistence.UserGroupFinder;
 import com.liferay.portal.kernel.service.persistence.UserGroupUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.impl.UserGroupImpl;
+import com.liferay.portal.service.persistence.constants.UserGroupFinderConstants;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.Iterator;
@@ -368,6 +370,11 @@ public class UserGroupFinderImpl
 
 		for (Map.Entry<String, Object> entry : params.entrySet()) {
 			String key = entry.getKey();
+
+			if (!_isFinderParam(key)) {
+				continue;
+			}
+
 			Object value = entry.getValue();
 
 			if (Validator.isNotNull(value)) {
@@ -381,19 +388,21 @@ public class UserGroupFinderImpl
 	protected String getJoin(String key) {
 		String join = StringPool.BLANK;
 
-		if (key.equals("userGroupGroupRole")) {
+		if (key.equals(UserGroupFinderConstants.PARAM_USER_GROUP_GROUP_ROLE)) {
 			join = CustomSQLUtil.get(JOIN_BY_USER_GROUP_GROUP_ROLE);
 		}
-		else if (key.equals("userGroupsGroups")) {
+		else if (key.equals(
+					UserGroupFinderConstants.PARAM_USER_GROUPS_GROUPS)) {
+
 			join = CustomSQLUtil.get(JOIN_BY_USER_GROUPS_GROUPS);
 		}
-		else if (key.equals("userGroupsRoles")) {
+		else if (key.equals(UserGroupFinderConstants.PARAM_USER_GROUPS_ROLES)) {
 			join = CustomSQLUtil.get(JOIN_BY_USER_GROUPS_ROLES);
 		}
-		else if (key.equals("userGroupsTeams")) {
+		else if (key.equals(UserGroupFinderConstants.PARAM_USER_GROUPS_TEAMS)) {
 			join = CustomSQLUtil.get(JOIN_BY_USER_GROUPS_TEAMS);
 		}
-		else if (key.equals("userGroupsUsers")) {
+		else if (key.equals(UserGroupFinderConstants.PARAM_USER_GROUPS_USERS)) {
 			join = CustomSQLUtil.get(JOIN_BY_USER_GROUPS_USERS);
 		}
 
@@ -417,6 +426,11 @@ public class UserGroupFinderImpl
 
 		for (Map.Entry<String, Object> entry : params.entrySet()) {
 			String key = entry.getKey();
+
+			if (!_isFinderParam(key)) {
+				continue;
+			}
+
 			Object value = entry.getValue();
 
 			if (Validator.isNotNull(value)) {
@@ -430,10 +444,12 @@ public class UserGroupFinderImpl
 	protected String getWhere(String key, Object value) {
 		String join = StringPool.BLANK;
 
-		if (key.equals("userGroupGroupRole")) {
+		if (key.equals(UserGroupFinderConstants.PARAM_USER_GROUP_GROUP_ROLE)) {
 			join = CustomSQLUtil.get(JOIN_BY_USER_GROUP_GROUP_ROLE);
 		}
-		else if (key.equals("userGroupsGroups")) {
+		else if (key.equals(
+					UserGroupFinderConstants.PARAM_USER_GROUPS_GROUPS)) {
+
 			if (value instanceof Long) {
 				join = CustomSQLUtil.get(JOIN_BY_USER_GROUPS_GROUPS);
 			}
@@ -463,13 +479,13 @@ public class UserGroupFinderImpl
 				}
 			}
 		}
-		else if (key.equals("userGroupsRoles")) {
+		else if (key.equals(UserGroupFinderConstants.PARAM_USER_GROUPS_ROLES)) {
 			join = CustomSQLUtil.get(JOIN_BY_USER_GROUPS_ROLES);
 		}
-		else if (key.equals("userGroupsTeams")) {
+		else if (key.equals(UserGroupFinderConstants.PARAM_USER_GROUPS_TEAMS)) {
 			join = CustomSQLUtil.get(JOIN_BY_USER_GROUPS_TEAMS);
 		}
-		else if (key.equals("userGroupsUsers")) {
+		else if (key.equals(UserGroupFinderConstants.PARAM_USER_GROUPS_USERS)) {
 			join = CustomSQLUtil.get(JOIN_BY_USER_GROUPS_USERS);
 		}
 
@@ -495,6 +511,12 @@ public class UserGroupFinderImpl
 		}
 
 		for (Map.Entry<String, Object> entry : params.entrySet()) {
+			String key = entry.getKey();
+
+			if (!_isFinderParam(key)) {
+				continue;
+			}
+
 			Object value = entry.getValue();
 
 			if (value instanceof Long) {
@@ -521,6 +543,11 @@ public class UserGroupFinderImpl
 				}
 			}
 		}
+	}
+
+	private boolean _isFinderParam(String key) {
+		return ArrayUtil.contains(
+			UserGroupFinderConstants.PARAMS_USER_GROUP_FINDER, key);
 	}
 
 }

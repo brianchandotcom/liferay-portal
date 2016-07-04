@@ -839,7 +839,8 @@ public class HtmlImpl implements Html {
 	private boolean _isValidXmlCharacter(char c) {
 		if ((c == '\u0009') || (c == CharPool.NEW_LINE) ||
 			(c == CharPool.RETURN) || ((c >= '\u0020') && (c <= '\ud7ff')) ||
-			((c >= '\ue000') && (c <= '\ufffd'))) {
+			((c >= '\ue000') && (c <= '\ufffd')) ||
+			Character.isLowSurrogate(c) || Character.isHighSurrogate(c)) {
 
 			return true;
 		}

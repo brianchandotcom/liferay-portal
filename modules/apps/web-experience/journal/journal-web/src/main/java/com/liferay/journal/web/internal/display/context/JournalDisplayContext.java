@@ -126,6 +126,12 @@ public class JournalDisplayContext {
 		return _addMenuFavItems;
 	}
 
+	public int getAddMenuFavItemsLength() {
+		String[] addMenuFavItems = getAddMenuFavItems();
+
+		return addMenuFavItems.length;
+	}
+
 	public JournalArticle getArticle() throws PortalException {
 		if (_article != null) {
 			return _article;

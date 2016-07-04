@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.message.boards.internal.lar;
+package com.liferay.message.boards.internal.exportimport.data.handler;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolderConstants;

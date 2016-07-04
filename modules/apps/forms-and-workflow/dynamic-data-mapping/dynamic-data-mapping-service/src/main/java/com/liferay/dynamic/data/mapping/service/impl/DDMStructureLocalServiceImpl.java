@@ -1532,7 +1532,23 @@ public class DDMStructureLocalServiceImpl
 
 		DDMForm parentDDMForm = getParentDDMForm(parentStructureId);
 
-		validate(nameMap, parentDDMForm, ddmForm);
+		Locale defaultLocale = ddmForm.getDefaultLocale();
+
+		if (!nameMap.containsKey(defaultLocale)) {
+			String defaultName = structure.getName(defaultLocale, false);
+
+			if (Validator.isNull(defaultName)) {
+				throw new StructureNameException(
+					"Name is null for locale " +
+						defaultLocale.getDisplayName());
+			}
+		}
+
+		validate(ddmForm);
+
+		if (parentDDMForm != null) {
+			validate(parentDDMForm, ddmForm);
+		}
 
 		structure.setParentStructureId(parentStructureId);
 

@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIconMenu;
 import com.liferay.portal.kernel.portlet.toolbar.PortletToolbar;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -798,7 +799,11 @@ public class PortletDisplay implements Cloneable, Serializable {
 	}
 
 	public void setURLBack(String urlBack) {
-		_urlBack = urlBack;
+		_urlBack = PortalUtil.escapeRedirect(urlBack);
+
+		if (_urlBack == null) {
+			_urlBack = StringPool.BLANK;
+		}
 	}
 
 	public void setURLClose(String urlClose) {

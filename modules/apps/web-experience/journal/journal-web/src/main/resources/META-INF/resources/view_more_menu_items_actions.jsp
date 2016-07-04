@@ -39,18 +39,30 @@ DDMStructure ddmStructure = (DDMStructure)row.getObject();
 		/>
 	</c:when>
 	<c:otherwise>
-		<portlet:actionURL name="addAddMenuFavItem" var="addAddMenuFavItemURL">
-			<portlet:param name="mvcPath" value="/view_more_menu_items.jsp" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="ddmStructureKey" value="<%= ddmStructure.getStructureKey() %>" />
-		</portlet:actionURL>
+		<c:choose>
+			<c:when test="<%= journalDisplayContext.getAddMenuFavItemsLength() < journalWebConfiguration.maxAddMenuItems() %>">
+				<portlet:actionURL name="addAddMenuFavItem" var="addAddMenuFavItemURL">
+					<portlet:param name="mvcPath" value="/view_more_menu_items.jsp" />
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+					<portlet:param name="ddmStructureKey" value="<%= ddmStructure.getStructureKey() %>" />
+				</portlet:actionURL>
 
-		<liferay-ui:icon
-			icon="star-o"
-			linkCssClass="icon-monospaced text-default"
-			markupView="lexicon"
-			message="add-favorite"
-			url="<%= addAddMenuFavItemURL %>"
-		/>
+				<liferay-ui:icon
+					icon="star-o"
+					linkCssClass="icon-monospaced text-default"
+					markupView="lexicon"
+					message="add-favorite"
+					url="<%= addAddMenuFavItemURL %>"
+				/>
+			</c:when>
+			<c:otherwise>
+				<liferay-ui:icon
+					cssClass="icon-monospaced text-muted"
+					icon="star-o"
+					markupView="lexicon"
+					message="add-favorite"
+				/>
+			</c:otherwise>
+		</c:choose>
 	</c:otherwise>
 </c:choose>

@@ -53,14 +53,18 @@ portletURL.setParameter("folderId", String.valueOf(journalDisplayContext.getFold
 </liferay-frontend:management-bar>
 
 <div class="container-fluid-1280">
-	<liferay-ui:search-container>
 
-		<%
-		List<DDMStructure> ddmStructures = JournalFolderServiceUtil.getDDMStructures(PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId), journalDisplayContext.getFolderId(), journalDisplayContext.getRestrictionType());
-		%>
+	<%
+	List<DDMStructure> ddmStructures = JournalFolderServiceUtil.getDDMStructures(PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId), journalDisplayContext.getFolderId(), journalDisplayContext.getRestrictionType());
+	%>
+
+	<liferay-ui:search-container
+		total="<%= ddmStructures.size() %>"
+		iteratorURL="<%= portletURL %>"
+	>
 
 		<liferay-ui:search-container-results
-			results="<%= ddmStructures %>"
+			results="<%= ListUtil.subList(ddmStructures, searchContainer.getStart(), searchContainer.getEnd()) %>"
 		/>
 
 		<liferay-ui:search-container-row

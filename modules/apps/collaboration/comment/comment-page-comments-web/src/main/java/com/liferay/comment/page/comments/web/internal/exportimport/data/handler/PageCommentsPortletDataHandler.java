@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.comment.page.comments.web.internal.lar;
+package com.liferay.comment.page.comments.web.internal.exportimport.data.handler;
 
 import com.liferay.comment.page.comments.web.internal.constants.PageCommentsPortletKeys;
 import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;

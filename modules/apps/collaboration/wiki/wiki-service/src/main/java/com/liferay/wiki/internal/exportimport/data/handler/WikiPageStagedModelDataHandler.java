@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.lar;
+package com.liferay.wiki.internal.exportimport.data.handler;
 
 import com.liferay.document.library.kernel.exception.NoSuchFileException;
 import com.liferay.document.library.kernel.model.DLFileEntry;

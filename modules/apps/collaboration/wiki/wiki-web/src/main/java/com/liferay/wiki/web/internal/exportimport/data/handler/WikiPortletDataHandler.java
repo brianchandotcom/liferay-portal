@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.web.internal.lar;
+package com.liferay.wiki.web.internal.exportimport.data.handler;
 
 import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;

@@ -48,7 +48,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 /**
  * @author Leonardo Barros
  */
-@PrepareForTest({ResourceBundleUtil.class})
+@PrepareForTest({LanguageUtil.class, ResourceBundleUtil.class})
 @RunWith(PowerMockRunner.class)
 public class DDMFormEvaluatorHelperTest extends PowerMockito {
 
@@ -148,11 +148,8 @@ public class DDMFormEvaluatorHelperTest extends PowerMockito {
 
 		Assert.assertFalse(ddmFormFieldEvaluationResult.isValid());
 
-		String defaultErrorMessage = LanguageUtil.get(
-			LocaleUtil.US, "this-field-is-invalid");
-
 		Assert.assertEquals(
-			defaultErrorMessage,
+			"This field is invalid",
 			ddmFormFieldEvaluationResult.getErrorMessage());
 	}
 
@@ -179,9 +176,12 @@ public class DDMFormEvaluatorHelperTest extends PowerMockito {
 	}
 
 	protected void setUpLanguageUtil() {
-		LanguageUtil languageUtil = new LanguageUtil();
+		mockStatic(LanguageUtil.class);
 
-		languageUtil.setLanguage(_language);
+		when(LanguageUtil.getLanguage()).thenReturn(_language);
+
+		when(LanguageUtil.get(_resourceBundle, "this-field-is-invalid")).
+			thenReturn("This field is invalid");
 	}
 
 	protected void setUpResourceBundleUtil() {
@@ -189,14 +189,12 @@ public class DDMFormEvaluatorHelperTest extends PowerMockito {
 
 		when(
 			ResourceBundleUtil.getBundle(
-				"content.Language", LocaleUtil.US, _classLoader)
+				Matchers.anyString(), Matchers.any(Locale.class),
+				Matchers.any(ClassLoader.class))
 		).thenReturn(
 			_resourceBundle
 		);
 	}
-
-	@Mock
-	private ClassLoader _classLoader;
 
 	@Mock
 	private DDMExpression<Boolean> _ddmExpression;

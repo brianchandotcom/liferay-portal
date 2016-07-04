@@ -77,6 +77,23 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 							<span> - </span>
 							<span class="hide-accessible"><liferay-ui:message key="published-date" /></span>
 							<%= dateFormatDate.format(entry.getDisplayDate()) %>
+							<span> - </span>
+
+							<%
+							String strippedContent = HtmlUtil.stripHtml(entry.getContent());
+
+							String[] words = StringUtil.split(strippedContent, StringPool.SPACE);
+
+							int wordCount = words.length - 1;
+
+							int minutes = Math.round((float)wordCount / 250);
+
+							if (minutes == 0) {
+								minutes = 1;
+							}
+							%>
+
+							<span><%= LanguageUtil.format(resourceBundle, "x-min-read", new String[] {String.valueOf(minutes)}, false) %></span>
 						</small>
 					</div>
 				</c:if>

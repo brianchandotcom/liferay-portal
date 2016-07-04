@@ -14,6 +14,7 @@
 
 package com.liferay.portal.upgrade.v7_0_2;
 
+import com.liferay.message.boards.kernel.model.MBCategoryConstants;
 import com.liferay.message.boards.kernel.model.MBDiscussion;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
@@ -38,23 +39,27 @@ public class UpgradeMessageBoards extends UpgradeProcess {
 			runSQL(
 				"delete from AssetEntry where classPK in (" +
 					"select messageId from MBMessage where threadId in (" +
-						"select threadId from MBThread where categoryId = -1 " +
-							"and messagecount = 1 )) and classNameId = " +
+						"select threadId from MBThread where categoryId = " +
+							MBCategoryConstants.DISCUSSION_CATEGORY_ID +
+							" and messagecount = 1 )) and classNameId = " +
 								classNameId);
 
 			runSQL(
 				"delete from MBMessage where threadId in (" +
-					"select threadId from MBThread where categoryId = -1 and " +
-						"messagecount = 1)");
+					"select threadId from MBThread where categoryId = " +
+						MBCategoryConstants.DISCUSSION_CATEGORY_ID +
+							" and messagecount = 1)");
 
 			runSQL(
 				"delete from MBDiscussion where threadId in (" +
-					"select threadId from MBThread where categoryId = -1 and " +
-						"messagecount = 1)");
+					"select threadId from MBThread where categoryId = " +
+						MBCategoryConstants.DISCUSSION_CATEGORY_ID +
+							" and messagecount = 1)");
 
 			runSQL(
-				"delete from MBThread where categoryId = -1 and " +
-					"messagecount = 1");
+				"delete from MBThread where categoryId = " +
+					MBCategoryConstants.DISCUSSION_CATEGORY_ID +
+						" and messagecount = 1");
 		}
 		catch (Exception e) {
 			throw new UpgradeException(e);

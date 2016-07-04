@@ -14,9 +14,7 @@
 
 package com.liferay.portal.search.test;
 
-import com.liferay.message.boards.kernel.model.MBMessage;
-import com.liferay.message.boards.kernel.model.MBMessageDisplay;
-import com.liferay.message.boards.kernel.service.MBMessageLocalServiceUtil;
+import com.liferay.portal.kernel.comment.CommentManagerUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.model.Group;
@@ -30,6 +28,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.IdentityServiceContextFunction;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.IdempotentRetryAssert;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -248,19 +247,10 @@ public abstract class BaseSearchTestCase {
 
 		User user = TestPropsValues.getUser();
 
-		MBMessageDisplay messageDisplay =
-			MBMessageLocalServiceUtil.getDiscussionMessageDisplay(
+		CommentManagerUtil.addComment(
 			user.getUserId(), serviceContext.getScopeGroupId(),
-			getBaseModelClassName(), getBaseModelClassPK(classedModel),
-			WorkflowConstants.STATUS_ANY);
-
-		MBMessage message = messageDisplay.getMessage();
-
-		MBMessageLocalServiceUtil.addDiscussionMessage(
-			user.getUserId(), user.getFullName(),
-			serviceContext.getScopeGroupId(), getBaseModelClassName(),
-			getBaseModelClassPK(classedModel), message.getThreadId(),
-			message.getMessageId(), message.getSubject(), body, serviceContext);
+			getBaseModelClassName(), getBaseModelClassPK(classedModel), body,
+			new IdentityServiceContextFunction(serviceContext));
 	}
 
 	protected void assertBaseModelsCount(

@@ -1,6 +1,6 @@
 {
-	"defaultLanguageId": "en_US",
 	"availableLanguageIds": ["en_US", "pt_BR"],
+	"defaultLanguageId": "en_US",
 	"fieldValues": [
 		{
 			"instanceId": "uayx",

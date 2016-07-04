@@ -3,13 +3,13 @@
 	"boolean": true,
 	"email": "test@liferay.com",
 	"integer": 1,
-	"number": 1.5,
 	"null": null,
+	"number": 1.5,
 	"object": {
 		"additionalProperty": "valid",
 		"requiredString": "abc"
 	},
-	"string": "abc",
 	"patternProperty1": 1,
-	"patternProperty2": 2
+	"patternProperty2": 2,
+	"string": "abc"
 }

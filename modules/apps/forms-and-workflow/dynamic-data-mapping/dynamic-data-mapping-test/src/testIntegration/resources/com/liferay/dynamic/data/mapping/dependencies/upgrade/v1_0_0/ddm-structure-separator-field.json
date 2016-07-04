@@ -3,8 +3,8 @@
 	"defaultLanguageId": "en_US",
 	"fields": [
 		{
-			"indexType": "keyword",
 			"fieldNamespace": "ddm",
+			"indexType": "keyword",
 			"label": {
 				"en_US": "Separator Label"
 			},

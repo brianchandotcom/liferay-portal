@@ -81,6 +81,7 @@ page import="com.liferay.journal.exception.FeedTargetLayoutFriendlyUrlException"
 page import="com.liferay.journal.exception.FeedTargetPortletIdException" %><%@
 page import="com.liferay.journal.exception.FolderNameException" %><%@
 page import="com.liferay.journal.exception.InvalidDDMStructureException" %><%@
+page import="com.liferay.journal.exception.MaxAddMenuFavItemsException" %><%@
 page import="com.liferay.journal.exception.NoSuchArticleException" %><%@
 page import="com.liferay.journal.exception.NoSuchFolderException" %><%@
 page import="com.liferay.journal.model.JournalArticle" %><%@

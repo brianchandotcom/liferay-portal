@@ -402,6 +402,20 @@ public class JournalDisplayContext {
 		return WorkflowConstants.getStatusLabel(getStatus());
 	}
 
+	public int getMaxAddMenuItems() {
+		if (_maxAddMenuItems != null) {
+			return _maxAddMenuItems;
+		}
+
+		JournalWebConfiguration journalWebConfiguration =
+			(JournalWebConfiguration)_request.getAttribute(
+				JournalWebConfiguration.class.getName());
+
+		_maxAddMenuItems = journalWebConfiguration.maxAddMenuItems();
+
+		return _maxAddMenuItems;
+	}
+
 	public String getNavigation() {
 		if (_navigation != null) {
 			return _navigation;
@@ -1093,6 +1107,7 @@ public class JournalDisplayContext {
 	private String _keywords;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
+	private Integer _maxAddMenuItems;
 	private String _navigation;
 	private String _orderByCol;
 	private String _orderByType;

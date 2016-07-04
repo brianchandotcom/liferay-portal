@@ -47,6 +47,7 @@ import com.liferay.journal.exception.FeedTargetLayoutFriendlyUrlException;
 import com.liferay.journal.exception.FeedTargetPortletIdException;
 import com.liferay.journal.exception.FolderNameException;
 import com.liferay.journal.exception.InvalidDDMStructureException;
+import com.liferay.journal.exception.MaxAddMenuFavItemsException;
 import com.liferay.journal.exception.NoSuchArticleException;
 import com.liferay.journal.exception.NoSuchFeedException;
 import com.liferay.journal.exception.NoSuchFolderException;
@@ -196,6 +197,14 @@ public class JournalPortlet extends MVCPortlet {
 
 		String[] addMenuFavItems = portalPreferences.getValues(
 			JournalPortletKeys.JOURNAL, "add-menu-fav-items", new String[0]);
+
+		if (addMenuFavItems.length >=
+				_journalWebConfiguration.maxAddMenuItems()) {
+
+			hideDefaultErrorMessage(actionRequest);
+
+			throw new MaxAddMenuFavItemsException();
+		}
 
 		portalPreferences.setValues(
 			JournalPortletKeys.JOURNAL, "add-menu-fav-items",
@@ -1192,6 +1201,7 @@ public class JournalPortlet extends MVCPortlet {
 			cause instanceof FileSizeException ||
 			cause instanceof LiferayFileItemException ||
 			cause instanceof LocaleException ||
+			cause instanceof MaxAddMenuFavItemsException ||
 			cause instanceof StorageFieldRequiredException ||
 			super.isSessionErrorException(cause)) {
 

@@ -84,11 +84,10 @@ portletURL.setParameter("folderId", String.valueOf(journalDisplayContext.getFold
 				property="userName"
 			/>
 
-			<liferay-ui:search-container-column-text
-				name="created"
-			>
-				<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - ddmStructure.getCreateDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
-			</liferay-ui:search-container-column-text>
+			<liferay-ui:search-container-column-date
+				name="create-date"
+				property="createDate"
+			/>
 
 			<liferay-ui:search-container-column-jsp
 				name="add-to-favorites"

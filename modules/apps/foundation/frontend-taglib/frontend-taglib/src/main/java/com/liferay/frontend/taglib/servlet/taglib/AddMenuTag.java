@@ -15,6 +15,7 @@
 package com.liferay.frontend.taglib.servlet.taglib;
 
 import com.liferay.frontend.taglib.servlet.ServletContextUtil;
+import com.liferay.frontend.taglib.servlet.taglib.util.AddMenuKeys;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.taglib.util.IncludeTag;
 
@@ -103,7 +104,7 @@ public class AddMenuTag extends IncludeTag {
 		_addMenuItems = new ArrayList<>();
 		_addMenuPrimaryItems = new ArrayList<>();
 		_addMenuRecentItems = new ArrayList<>();
-		_maxItems = 7;
+		_maxItems = AddMenuKeys.MAX_ITEMS;
 		_viewMoreUrl = null;
 	}
 
@@ -129,7 +130,7 @@ public class AddMenuTag extends IncludeTag {
 	private List<AddMenuItem> _addMenuItems = new ArrayList<>();
 	private List<AddMenuItem> _addMenuPrimaryItems = new ArrayList<>();
 	private List<AddMenuItem> _addMenuRecentItems = new ArrayList<>();
-	private int _maxItems = 7;
+	private int _maxItems = AddMenuKeys.MAX_ITEMS;
 	private String _viewMoreUrl;
 
 }

@@ -105,7 +105,7 @@ public class CalendarBookingIndexerTest {
 
 		addCalendarBooking(title);
 
-		assertSearch(title, 1);
+		assertSearchHitsLength(title, 1);
 	}
 
 	@Test
@@ -116,7 +116,7 @@ public class CalendarBookingIndexerTest {
 
 		addCalendarBooking(title);
 
-		assertSearch(title, 1);
+		assertSearchHitsLength(title, 1);
 	}
 
 	protected static SearchContext getSearchContext(Group group, User user)
@@ -160,7 +160,8 @@ public class CalendarBookingIndexerTest {
 			"email", 0, "email", serviceContext);
 	}
 
-	protected void assertSearch(final String keywords, final int length)
+	protected void assertSearchHitsLength(
+			final String keywords, final int expectedLength)
 		throws Exception {
 
 		IdempotentRetryAssert.retryAssert(
@@ -177,7 +178,7 @@ public class CalendarBookingIndexerTest {
 
 					Hits hits = indexer.search(_searchContext);
 
-					Assert.assertEquals(length, hits.getLength());
+					Assert.assertEquals(expectedLength, hits.getLength());
 
 					return null;
 				}

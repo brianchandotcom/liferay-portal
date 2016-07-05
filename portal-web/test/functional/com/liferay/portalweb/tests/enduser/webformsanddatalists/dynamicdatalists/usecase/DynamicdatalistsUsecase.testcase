@@ -1854,11 +1854,11 @@
 				</else>
 			</if>
 
-			<execute function="AssertClick" locator1="DDMEditTemplate#TOOLTIP_JAVA_CLASS_LINK" value1="${fieldName}" />
+			<execute function="AssertClick" locator1="JavaDocs#TOOLTIP_JAVA_CLASS_LINK" value1="${fieldName}" />
 
 			<execute function="SelectWindow#selectPopUp" locator1="null" />
 
-			<execute function="AssertTextEquals" locator1="DDMEditTemplate#JAVA_CLASS_NAME" value1="${fieldName}" />
+			<execute function="AssertTextEquals" locator1="JavaDocs#JAVA_CLASS_NAME" value1="${fieldName}" />
 
 			<execute function="Close#closeAndSelectWindow" locator1="title=New Template for Structure: Contacts - Liferay" />
 		</for>

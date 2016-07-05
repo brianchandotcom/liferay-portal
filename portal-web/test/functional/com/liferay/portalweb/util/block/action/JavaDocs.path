@@ -1,0 +1,24 @@
+<html>
+<head>
+<title>JavaDocs</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">JavaDocs</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>JAVA_CLASS_NAME</td>
+	<td>//div[contains(@class,'content')]//li/pre/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TOOLTIP_JAVA_CLASS_LINK</td>
+	<td>//div[contains(@class, 'tooltip-content')]//a</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

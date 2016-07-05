@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.xsl.content.web.constants;
+package com.liferay.xsl.content.web.internal.constants;
 
 /**
  * @author Eudaldo Alonso

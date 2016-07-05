@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.xsl.content.web.portlet;
+package com.liferay.xsl.content.web.internal.portlet;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.xsl.content.web.configuration.XSLContentConfiguration;
-import com.liferay.xsl.content.web.constants.XSLContentPortletKeys;
+import com.liferay.xsl.content.web.internal.constants.XSLContentPortletKeys;
 
 import java.io.IOException;
 

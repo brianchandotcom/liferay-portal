@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.xsl.content.web.upgrade;
+package com.liferay.xsl.content.web.internal.upgrade;
 
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-import com.liferay.xsl.content.web.constants.XSLContentPortletKeys;
+import com.liferay.xsl.content.web.internal.constants.XSLContentPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 

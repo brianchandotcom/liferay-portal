@@ -32,6 +32,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.NavigableMap;
+import java.util.Optional;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -747,14 +748,13 @@ public class BasicRegistryImpl implements Registry {
 
 		@Override
 		public T getService() {
-			Entry<ServiceReference<S>, T> firstEntry =
-				_trackedServices.firstEntry();
+			Optional<Entry<ServiceReference<S>, T>> optionalEntry =
+				ServiceRankingUtil.getHighestRankingEntry(_trackedServices);
 
-			if (firstEntry == null) {
-				return null;
-			}
+			Optional<T> optionalTrackedService = optionalEntry.map(
+				Entry::getValue);
 
-			return firstEntry.getValue();
+			return optionalTrackedService.orElse(null);
 		}
 
 		@Override
@@ -775,7 +775,13 @@ public class BasicRegistryImpl implements Registry {
 
 		@Override
 		public ServiceReference<S> getServiceReference() {
-			return _trackedServices.firstKey();
+			Optional<Entry<ServiceReference<S>, T>> optionalEntry =
+				ServiceRankingUtil.getHighestRankingEntry(_trackedServices);
+
+			Optional<ServiceReference<S>> optionalServiceReference =
+				optionalEntry.map(Entry::getKey);
+
+			return optionalServiceReference.orElse(null);
 		}
 
 		@Override

@@ -2,6 +2,14 @@ Bundle-Name: Liferay Dynamic Data Mapping Expression
 Bundle-SymbolicName: com.liferay.dynamic.data.mapping.expression
 Bundle-Version: 2.0.2
 Export-Package: com.liferay.dynamic.data.mapping.expression
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Runtime
--includeresource: @EvalEx-[0-9]*.jar
+Import-Package:\
+	!javax.imageio.*,\
+	\
+	!javax.print.*,\
+	\
+	!javax.swing.*,\
+	*
+Liferay-Releng-Module-Group-Description:Liferay-Releng-Module-Group-Title: Runtime
+-includeresource:\
+	@antlr4-runtime-[0-9]*.jar,\
+	@org.abego.treelayout.core-[0-9]*.jar

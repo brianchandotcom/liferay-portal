@@ -1304,8 +1304,9 @@
 		</for>
 	</command>
 
-	<command name="SubmitFormContainingCaptchaAndViewTextFieldValue" priority="3">
+	<command name="SubmitFormContainingCaptchaAndViewTextFieldValue" priority="5">
 		<description message="This is a use case for LPS-60818." />
+		<property name="portal.acceptance" value="true" />
 		<property name="custom.properties" value="captcha.max.challenges=0" />
 
 		<execute macro="Navigator#openURL" />

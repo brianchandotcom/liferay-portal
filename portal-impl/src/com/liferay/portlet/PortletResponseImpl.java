@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.model.PortletURLListener;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
@@ -628,7 +629,7 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 			plid = _plid;
 		}
 
-		PortletURLImpl portletURLImpl = null;
+		LiferayPortletURL portletURL = null;
 
 		Portlet portlet = getPortlet();
 
@@ -640,8 +641,7 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 			if (portletURLClass.equals(
 					StrutsActionPortletURL.class.getName())) {
 
-				portletURLImpl = new StrutsActionPortletURL(
-					this, plid, lifecycle);
+				portletURL = new StrutsActionPortletURL(this, plid, lifecycle);
 			}
 			else {
 				try {
@@ -663,7 +663,7 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 						_constructors.put(portletURLClass, constructor);
 					}
 
-					portletURLImpl = constructor.newInstance(
+					portletURL = constructor.newInstance(
 						new Object[] {this, plid, lifecycle});
 				}
 				catch (Exception e) {
@@ -672,8 +672,8 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 			}
 		}
 
-		if (portletURLImpl == null) {
-			portletURLImpl = new PortletURLImpl(
+		if (portletURL == null) {
+			portletURL = PortletURLFactoryUtil.create(
 				_portletRequestImpl, portletName, plid, lifecycle);
 		}
 
@@ -688,16 +688,13 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 					PortletURLListenerFactory.create(portletURLListener);
 
 				if (lifecycle.equals(PortletRequest.ACTION_PHASE)) {
-					portletURLGenerationListener.filterActionURL(
-						portletURLImpl);
+					portletURLGenerationListener.filterActionURL(portletURL);
 				}
 				else if (lifecycle.equals(PortletRequest.RENDER_PHASE)) {
-					portletURLGenerationListener.filterRenderURL(
-						portletURLImpl);
+					portletURLGenerationListener.filterRenderURL(portletURL);
 				}
 				else if (lifecycle.equals(PortletRequest.RESOURCE_PHASE)) {
-					portletURLGenerationListener.filterResourceURL(
-						portletURLImpl);
+					portletURLGenerationListener.filterResourceURL(portletURL);
 				}
 			}
 			catch (PortletException pe) {
@@ -706,24 +703,24 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 		}
 
 		try {
-			portletURLImpl.setWindowState(_portletRequestImpl.getWindowState());
+			portletURL.setWindowState(_portletRequestImpl.getWindowState());
 		}
 		catch (WindowStateException wse) {
 			_log.error(wse.getMessage());
 		}
 
 		try {
-			portletURLImpl.setPortletMode(_portletRequestImpl.getPortletMode());
+			portletURL.setPortletMode(_portletRequestImpl.getPortletMode());
 		}
 		catch (PortletModeException pme) {
 			_log.error(pme.getMessage());
 		}
 
 		if (lifecycle.equals(PortletRequest.RESOURCE_PHASE)) {
-			portletURLImpl.setCopyCurrentRenderParameters(true);
+			portletURL.setCopyCurrentRenderParameters(true);
 		}
 
-		return portletURLImpl;
+		return portletURL;
 	}
 
 	protected void init(

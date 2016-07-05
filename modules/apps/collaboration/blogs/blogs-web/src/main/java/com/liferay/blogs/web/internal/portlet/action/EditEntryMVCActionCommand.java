@@ -38,7 +38,9 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
@@ -68,7 +70,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portlet.PortletURLImpl;
 import com.liferay.portlet.blogs.BlogsEntryAttachmentFileEntryHelper;
 import com.liferay.portlet.blogs.BlogsEntryAttachmentFileEntryReference;
 import com.liferay.portlet.blogs.BlogsEntryImageSelectorHelper;
@@ -373,7 +374,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		PortletConfig portletConfig = (PortletConfig)actionRequest.getAttribute(
 			JavaConstants.JAVAX_PORTLET_CONFIG);
 
-		PortletURLImpl portletURL = new PortletURLImpl(
+		LiferayPortletURL portletURL = PortletURLFactoryUtil.create(
 			actionRequest, portletConfig.getPortletName(),
 			themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
 

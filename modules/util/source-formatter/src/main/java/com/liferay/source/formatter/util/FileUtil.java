@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import org.apache.commons.io.FileUtils;
@@ -33,15 +32,10 @@ public class FileUtil {
 	}
 
 	public static String read(File file) throws IOException {
-		try {
-			String s = FileUtils.readFileToString(file, StringPool.UTF8);
+		String s = FileUtils.readFileToString(file, StringPool.UTF8);
 
-			return StringUtil.replace(
-				s, StringPool.RETURN_NEW_LINE, StringPool.NEW_LINE);
-		}
-		catch (FileNotFoundException fnfe) {
-			return null;
-		}
+		return StringUtil.replace(
+			s, StringPool.RETURN_NEW_LINE, StringPool.NEW_LINE);
 	}
 
 	public static void write(File file, String s) throws IOException {

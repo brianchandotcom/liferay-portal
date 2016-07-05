@@ -23,7 +23,7 @@ public interface SourceProcessor {
 
 	public void format() throws Exception;
 
-	public List<String> getErrorMessages();
+	public List<SourceFormatterMessage> getErrorMessages();
 
 	public SourceMismatchException getFirstSourceMismatchException();
 
@@ -32,6 +32,9 @@ public interface SourceProcessor {
 	public List<String> getModifiedFileNames();
 
 	public void processErrorMessage(String fileName, String message);
+
+	public void processErrorMessage(
+		String fileName, String message, int lineCount);
 
 	public void setSourceFormatterArgs(SourceFormatterArgs sourceFormatterArgs);
 

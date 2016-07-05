@@ -130,11 +130,11 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	@Override
-	public List<String> getErrorMessages() {
-		List<String> errorMessages = new ArrayList<>();
+	public List<SourceFormatterMessage> getErrorMessages() {
+		List<SourceFormatterMessage> errorMessages = new ArrayList<>();
 
-		for (Map.Entry<String, List<String>> entry :
-				_errorMessagesMap.entrySet()) {
+		for (Map.Entry<String, List<SourceFormatterMessage>> entry :
+				_messagesMap.entrySet()) {
 
 			errorMessages.addAll(entry.getValue());
 		}
@@ -164,15 +164,22 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 	@Override
 	public void processErrorMessage(String fileName, String message) {
-		List<String> errorMessages = _errorMessagesMap.get(fileName);
+		processErrorMessage(fileName, message, -1);
+	}
 
-		if (errorMessages == null) {
-			errorMessages = new ArrayList<>();
+	@Override
+	public void processErrorMessage(
+		String fileName, String message, int lineCount) {
+
+		List<SourceFormatterMessage> messages = _messagesMap.get(fileName);
+
+		if (messages == null) {
+			messages = new ArrayList<>();
 		}
 
-		errorMessages.add(message);
+		messages.add(new SourceFormatterMessage(fileName, message, lineCount));
 
-		_errorMessagesMap.put(fileName, errorMessages);
+		_messagesMap.put(fileName, messages);
 	}
 
 	@Override
@@ -991,7 +998,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			File file, String fileName, String absolutePath, String content)
 		throws Exception {
 
-		_errorMessagesMap.remove(fileName);
+		_messagesMap.remove(fileName);
 
 		checkUTF8(file, fileName);
 
@@ -2488,11 +2495,12 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		if (sourceFormatterArgs.isPrintErrors()) {
-			List<String> errorMessages = _errorMessagesMap.get(fileName);
+			List<SourceFormatterMessage> messages = _messagesMap.get(fileName);
 
-			if (errorMessages != null) {
-				for (String errorMessage : errorMessages) {
-					_sourceFormatterHelper.printError(fileName, errorMessage);
+			if (messages != null) {
+				for (SourceFormatterMessage message : messages) {
+					_sourceFormatterHelper.printError(
+						fileName, message.toString());
 				}
 			}
 		}
@@ -2915,7 +2923,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	private void _init() {
 		portalSource = _isPortalSource();
 
-		_errorMessagesMap = new HashMap<>();
+		_messagesMap = new HashMap<>();
 
 		try {
 			_properties = _getProperties();
@@ -2976,7 +2984,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	private String _copyright;
 	private final Pattern _definitionPattern = Pattern.compile(
 		"^[A-Za-z-][\\s\\S]*?([^\\\\]\n|\\Z)", Pattern.MULTILINE);
-	private Map<String, List<String>> _errorMessagesMap =
+	private Map<String, List<SourceFormatterMessage>> _messagesMap =
 		new ConcurrentHashMap<>();
 	private String[] _excludes;
 	private SourceMismatchException _firstSourceMismatchException;

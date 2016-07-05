@@ -70,7 +70,7 @@ KBCommentResultRowSplitter resultRowSplitter = (KBCommentResultRowSplitter)reque
 
 				<h5>
 					<span class="kb-comment-status text-default">
-						<liferay-ui:message key="<%= KnowledgeBaseUtil.getStatusLabel(kbComment.getStatus()) %>" />
+						<liferay-ui:message key="<%= KBUtil.getStatusLabel(kbComment.getStatus()) %>" />
 					</span>
 
 					<%

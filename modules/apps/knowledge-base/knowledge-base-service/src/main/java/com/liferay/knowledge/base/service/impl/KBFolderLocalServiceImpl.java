@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.exception.DuplicateKBFolderNameException;
 import com.liferay.knowledge.base.exception.InvalidKBFolderNameException;
+import com.liferay.knowledge.base.exception.KBFolderParentException;
 import com.liferay.knowledge.base.exception.NoSuchFolderException;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.base.KBFolderLocalServiceBaseImpl;
@@ -31,11 +32,8 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.Collection;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author Brian Wing Shun Chan
@@ -242,19 +240,6 @@ public class KBFolderLocalServiceImpl extends KBFolderLocalServiceBaseImpl {
 			kbFolder.getKbFolderId(), groupPermissions, guestPermissions);
 	}
 
-	protected void getSubfolderIds(
-		KBFolder parentKBFolder, Collection<Long> kbFolderIds) {
-
-		Collection<KBFolder> kbFolders = kbFolderPersistence.findByG_P(
-			parentKBFolder.getGroupId(), parentKBFolder.getKbFolderId());
-
-		for (KBFolder kbFolder : kbFolders) {
-			getSubfolderIds(kbFolder, kbFolderIds);
-		}
-
-		kbFolderIds.add(parentKBFolder.getKbFolderId());
-	}
-
 	protected String getUniqueUrlTitle(
 		long groupId, long parentKbFolderId, long kbFolderId, String name) {
 
@@ -301,12 +286,11 @@ public class KBFolderLocalServiceImpl extends KBFolderLocalServiceBaseImpl {
 					parentKBFolder.getKbFolderId(), kbFolder.getGroupId()));
 		}
 
-		Set<Long> subfolderIds = new HashSet<>();
+		List<Long> ancestorKBFolderIds =
+			parentKBFolder.getAncestorKBFolderIds();
 
-		getSubfolderIds(kbFolder, subfolderIds);
-
-		if (subfolderIds.contains(parentKBFolder.getKbFolderId())) {
-			throw new InvalidKBFolderNameException(
+		if (ancestorKBFolderIds.contains(kbFolder.getKbFolderId())) {
+			throw new KBFolderParentException(
 				String.format(
 					"Cannot move KBFolder %s inside its descendant KBFolder %s",
 					kbFolder.getKbFolderId(), parentKBFolder.getKbFolderId()));

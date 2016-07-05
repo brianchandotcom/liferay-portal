@@ -189,8 +189,19 @@ public class KBFolderWrapper implements KBFolder, ModelWrapper<KBFolder> {
 	}
 
 	@Override
+	public boolean isRoot() {
+		return _kbFolder.isRoot();
+	}
+
+	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return _kbFolder.getExpandoBridge();
+	}
+
+	@Override
+	public KBFolder getParentKBFolder()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kbFolder.getParentKBFolder();
 	}
 
 	@Override
@@ -322,6 +333,12 @@ public class KBFolderWrapper implements KBFolder, ModelWrapper<KBFolder> {
 	@Override
 	public Date getModifiedDate() {
 		return _kbFolder.getModifiedDate();
+	}
+
+	@Override
+	public java.util.List<java.lang.Long> getAncestorKBFolderIds()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kbFolder.getAncestorKBFolderIds();
 	}
 
 	@Override

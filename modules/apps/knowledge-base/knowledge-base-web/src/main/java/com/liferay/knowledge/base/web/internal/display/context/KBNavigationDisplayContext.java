@@ -21,6 +21,7 @@ import com.liferay.knowledge.base.service.KBArticleLocalServiceUtil;
 import com.liferay.knowledge.base.service.KBFolderServiceUtil;
 import com.liferay.knowledge.base.util.KnowledgeBaseUtil;
 import com.liferay.knowledge.base.web.configuration.KBDisplayPortletInstanceConfiguration;
+import com.liferay.knowledge.base.web.internal.KBUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -74,10 +75,9 @@ public class KBNavigationDisplayContext {
 	}
 
 	public String getCurrentKBFolderURLTitle() throws PortalException {
-		String currentKBFolderURLTitle =
-			KnowledgeBaseUtil.getPreferredKBFolderURLTitle(
-				_portalPreferences,
-				_kbDisplayPortletInstanceConfiguration.contentRootPrefix());
+		String currentKBFolderURLTitle = KBUtil.getPreferredKBFolderURLTitle(
+			_portalPreferences,
+			_kbDisplayPortletInstanceConfiguration.contentRootPrefix());
 
 		long rootResourcePrimKey = getRootResourcePrimKey();
 
@@ -130,7 +130,7 @@ public class KBNavigationDisplayContext {
 			if (_rootResourcePrimKey ==
 					KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
-				_rootResourcePrimKey = KnowledgeBaseUtil.getRootResourcePrimKey(
+				_rootResourcePrimKey = KBUtil.getRootResourcePrimKey(
 					_portletRequest,
 					PortalUtil.getScopeGroupId(_portletRequest),
 					getResourceClassNameId(), getResourcePrimKey());
@@ -195,9 +195,8 @@ public class KBNavigationDisplayContext {
 			KBFolderConstants.getClassName());
 
 		if (getResourceClassNameId() == kbFolderClassNameId) {
-			List<KBFolder> kbFolders =
-				KnowledgeBaseUtil.getAlternateRootKBFolders(
-					scopeGroupId, getResourcePrimKey());
+			List<KBFolder> kbFolders = KBUtil.getAlternateRootKBFolders(
+				scopeGroupId, getResourcePrimKey());
 
 			if (kbFolders.size() > 1) {
 				int maxKBArticlesCount = 0;

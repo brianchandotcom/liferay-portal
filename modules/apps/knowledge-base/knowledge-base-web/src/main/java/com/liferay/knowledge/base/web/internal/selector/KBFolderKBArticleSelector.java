@@ -25,6 +25,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.util.List;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -214,27 +216,22 @@ public class KBFolderKBArticleSelector implements KBArticleSelector {
 		return kbFolder;
 	}
 
-	protected boolean isDescendant(
-			KBArticle kbArticle, KBFolder ancestorKBFolder)
+	protected boolean isDescendant(KBArticle kbArticle, KBFolder kbFolder)
 		throws PortalException {
 
-		if (ancestorKBFolder.getKbFolderId() ==
+		if (kbFolder.getKbFolderId() ==
 				KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
 			return true;
 		}
 
-		KBFolder parentKBFolder = _kbFolderLocalService.fetchKBFolder(
+		KBFolder parentKBFolder = _kbFolderLocalService.getKBFolder(
 			kbArticle.getKbFolderId());
 
-		while ((parentKBFolder != null) &&
-			   !parentKBFolder.equals(ancestorKBFolder)) {
+		List<Long> ancestorKBFolderIds =
+			parentKBFolder.getAncestorKBFolderIds();
 
-			parentKBFolder = _kbFolderLocalService.fetchKBFolder(
-				parentKBFolder.getParentKBFolderId());
-		}
-
-		if (parentKBFolder != null) {
+		if (ancestorKBFolderIds.contains(kbFolder.getKbFolderId())) {
 			return true;
 		}
 

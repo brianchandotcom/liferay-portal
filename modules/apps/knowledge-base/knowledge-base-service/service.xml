@@ -369,6 +369,7 @@
 		<exception>KBArticleTitle</exception>
 		<exception>KBArticleUrlTitle</exception>
 		<exception>KBCommentContent</exception>
+		<exception>KBFolderParent</exception>
 		<exception>KBTemplateContent</exception>
 		<exception>KBTemplateTitle</exception>
 		<exception>NoSuchKBArticleSelector</exception>

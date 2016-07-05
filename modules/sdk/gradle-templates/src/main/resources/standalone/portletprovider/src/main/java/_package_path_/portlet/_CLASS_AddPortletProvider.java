@@ -1,6 +1,6 @@
 package _package_.portlet;
 
-import _package_.constants._CLASS_PortletKeys;
+import _package_.constants._CLASS_WebKeys;
 
 import com.liferay.portal.kernel.portlet.AddPortletProvider;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
@@ -23,7 +23,7 @@ public class _CLASS_AddPortletProvider
 
 	@Override
 	public String getPortletName() {
-		return _CLASS_PortletKeys._CLASS_;
+		return _CLASS_WebKeys._CLASS_;
 	}
 
 	@Override

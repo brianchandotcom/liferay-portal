@@ -1,6 +1,6 @@
 package _package_.portlet;
 
-import _package_.constants._CLASS_PortletKeys;
+import _package_.constants._CLASS_WebKeys;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.display-name=_NAME_ Portlet",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
-		"javax.portlet.name=" + _CLASS_PortletKeys._CLASS_,
+		"javax.portlet.name=" + _CLASS_WebKeys._CLASS_,
 		"javax.portlet.security-role-ref=power-user,user"
 	},
 	service = Portlet.class
@@ -73,7 +73,8 @@ public class _CLASS_Portlet extends MVCPortlet {
 		catch (PortalException pe) {
 		}
 
-		renderRequest.setAttribute("portletProviderMessage", message);
+		renderRequest.setAttribute(
+			_CLASS_WebKeys.PORTLET_PROVIDER_MESSAGE, message);
 
 		super.doView(renderRequest, renderResponse);
 	}

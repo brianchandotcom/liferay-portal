@@ -65,7 +65,7 @@ public class AssociateFacebookUserMVCRenderCommand implements MVCRenderCommand {
 		long facebookIncompleteUserId = ParamUtil.getLong(
 			renderRequest, "userId");
 
-		if (!Validator.isNull(facebookIncompleteUserId)) {
+		if (Validator.isNotNull(facebookIncompleteUserId)) {
 			User user = _userLocalService.fetchUser(facebookIncompleteUserId);
 
 			return renderUpdateAccount(renderRequest, user);

@@ -84,7 +84,7 @@ public class ModelValidatorUtil {
 				public void validate(FileContentReference fileContentReference)
 					throws PortalException {
 
-					if (!Validator.isNull(
+					if (Validator.isNotNull(
 							fileContentReference.getSourceFileName())) {
 
 						DLValidatorUtil.validateFileName(

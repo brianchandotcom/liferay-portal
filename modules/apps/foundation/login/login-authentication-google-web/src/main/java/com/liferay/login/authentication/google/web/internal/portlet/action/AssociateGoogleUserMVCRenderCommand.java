@@ -68,7 +68,7 @@ public class AssociateGoogleUserMVCRenderCommand implements MVCRenderCommand {
 		long googleIncompleteUserId = ParamUtil.getLong(
 			renderRequest, "userId");
 
-		if (!Validator.isNull(googleIncompleteUserId)) {
+		if (Validator.isNotNull(googleIncompleteUserId)) {
 			User user = _userLocalService.fetchUser(googleIncompleteUserId);
 
 			return renderUpdateAccount(renderRequest, user);

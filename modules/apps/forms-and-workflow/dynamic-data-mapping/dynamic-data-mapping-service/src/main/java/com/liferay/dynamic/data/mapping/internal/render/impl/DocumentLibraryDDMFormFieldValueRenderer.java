@@ -57,7 +57,7 @@ public class DocumentLibraryDDMFormFieldValueRenderer
 				String uuid = jsonObject.getString("uuid");
 				long groupId = jsonObject.getLong("groupId");
 
-				if (Validator.isNull(uuid) && Validator.isNull(groupId)) {
+				if (Validator.isNull(uuid) && (groupId == 0)) {
 					return StringPool.BLANK;
 				}
 

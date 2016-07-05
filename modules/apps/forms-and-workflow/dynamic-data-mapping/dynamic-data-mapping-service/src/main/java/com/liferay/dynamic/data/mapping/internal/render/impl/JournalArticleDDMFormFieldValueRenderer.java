@@ -56,7 +56,7 @@ public class JournalArticleDDMFormFieldValueRenderer
 				String className = jsonObject.getString("className");
 				long classPK = jsonObject.getLong("classPK");
 
-				if (Validator.isNull(className) && Validator.isNull(classPK)) {
+				if (Validator.isNull(className) && (classPK == 0)) {
 					return StringPool.BLANK;
 				}
 

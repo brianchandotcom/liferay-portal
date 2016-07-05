@@ -59,7 +59,7 @@ public class LinkToPageDDMFormFieldValueRenderer
 				boolean privateLayout = jsonObject.getBoolean("privateLayout");
 				long layoutId = jsonObject.getLong("layoutId");
 
-				if (Validator.isNull(groupId) && Validator.isNull(layoutId)) {
+				if ((groupId == 0) && (layoutId == 0)) {
 					return StringPool.BLANK;
 				}
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.display.template.web.lar;
+package com.liferay.portlet.display.template.web.internal.lar;
 
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateConstants;

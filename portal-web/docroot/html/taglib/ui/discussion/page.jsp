@@ -188,7 +188,7 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 		</div>
 
 		<%
-		PortletURL loginURL = PortletURLFactoryUtil.create(request, PortletKeys.FAST_LOGIN, themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
+		PortletURL loginURL = PortletURLFactoryUtil.create(request, PortletKeys.FAST_LOGIN, PortletRequest.RENDER_PHASE);
 
 		loginURL.setParameter("saveLastPath", Boolean.FALSE.toString());
 		loginURL.setParameter("mvcRenderCommandName", "/login/login");

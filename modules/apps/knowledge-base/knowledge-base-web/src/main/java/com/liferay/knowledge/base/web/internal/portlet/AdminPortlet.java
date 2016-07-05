@@ -545,12 +545,9 @@ public class AdminPortlet extends BaseKBPortlet {
 		throws PortalException {
 
 		try {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
-
 			PortletURL portletURL = PortletURLFactoryUtil.create(
 				actionRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
-				themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
+				PortletRequest.RENDER_PHASE);
 
 			portletURL.setParameter(
 				"mvcPath", templatePath + "edit_article.jsp");

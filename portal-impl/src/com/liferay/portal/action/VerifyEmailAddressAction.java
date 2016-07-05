@@ -74,8 +74,7 @@ public class VerifyEmailAddressAction extends Action {
 
 			if (!themeDisplay.isSignedIn()) {
 				PortletURL portletURL = PortletURLFactoryUtil.create(
-					request, PortletKeys.LOGIN, themeDisplay.getPlid(),
-					PortletRequest.RENDER_PHASE);
+					request, PortletKeys.LOGIN, PortletRequest.RENDER_PHASE);
 
 				response.sendRedirect(portletURL.toString());
 

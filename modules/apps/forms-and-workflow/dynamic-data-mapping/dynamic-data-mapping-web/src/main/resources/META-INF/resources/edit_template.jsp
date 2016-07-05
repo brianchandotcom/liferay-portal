@@ -388,7 +388,7 @@ DDMNavigationHelper ddmNavigationHelper = ddmDisplay.getDDMNavigationHelper();
 			function <portlet:namespace />openDDMStructureSelector() {
 				Liferay.Util.openDDMPortlet(
 					{
-						basePortletURL: '<%= PortletURLFactoryUtil.create(request, DDMPortletKeys.DYNAMIC_DATA_MAPPING, themeDisplay.getPlid(), PortletRequest.RENDER_PHASE) %>',
+						basePortletURL: '<%= PortletURLFactoryUtil.create(request, DDMPortletKeys.DYNAMIC_DATA_MAPPING, PortletRequest.RENDER_PHASE) %>',
 						classNameId: '<%= PortalUtil.getClassNameId(DDMStructure.class) %>',
 						classPK: 0,
 						eventName: '<portlet:namespace />selectStructure',

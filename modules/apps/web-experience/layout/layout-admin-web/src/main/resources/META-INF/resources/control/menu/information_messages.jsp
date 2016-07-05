@@ -78,7 +78,7 @@ data.put("qa-id", "info");
 				</span>
 
 				<%
-				PortletURL resetPrototypeURL = PortletURLFactoryUtil.create(request, LayoutAdminPortletKeys.LAYOUT_ADMIN, plid, PortletRequest.ACTION_PHASE);
+				PortletURL resetPrototypeURL = PortletURLFactoryUtil.create(request, LayoutAdminPortletKeys.LAYOUT_ADMIN, PortletRequest.ACTION_PHASE);
 
 				resetPrototypeURL.setParameter(ActionRequest.ACTION_NAME, "resetPrototype");
 				resetPrototypeURL.setParameter("redirect", PortalUtil.getLayoutURL(themeDisplay));

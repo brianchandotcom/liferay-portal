@@ -119,7 +119,7 @@ public class LayoutAction extends Action {
 
 				if (Validator.isNull(authLoginURL)) {
 					PortletURL loginURL = PortletURLFactoryUtil.create(
-						request, PortletKeys.LOGIN, themeDisplay.getPlid(),
+						request, PortletKeys.LOGIN,
 						PortletRequest.RENDER_PHASE);
 
 					loginURL.setParameter(

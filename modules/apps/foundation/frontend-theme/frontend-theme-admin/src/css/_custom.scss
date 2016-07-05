@@ -49,6 +49,19 @@ body {
 	}
 }
 
+/* ---------- Journal ---------- */
+
+.portlet-boundary_com_liferay_journal_web_portlet_JournalPortlet_ {
+	.lfr-menu-item-name-column {
+		max-width: 600px;
+		min-width: 600px;
+	}
+
+	.lfr-user-column, .lfr-created-column {
+		width: auto;
+	}
+}
+
 /* ---------- Sites ---------- */
 
 .portlet-boundary_com_liferay_site_admin_web_portlet_SiteAdminPortlet_ {

@@ -23,20 +23,18 @@ import com.liferay.portal.kernel.util.StringUtil;
  */
 public class BlogsUtil {
 
-	public static int getReadingTime(String content) {
+	public static int getReadingTimeMinutes(String content) {
 		String strippedContent = HtmlUtil.stripHtml(content);
 
 		String[] words = StringUtil.split(strippedContent, StringPool.SPACE);
 
-		int wordCount = words.length + 1;
+		int wordCount = words.length;
 
-		int minutes = Math.round((float)wordCount / 250);
-
-		if (minutes == 0) {
-			minutes = 1;
+		if (wordCount < 250) {
+			return 1;
 		}
 
-		return minutes;
+		return Math.round(wordCount / 250F);
 	}
 
 }

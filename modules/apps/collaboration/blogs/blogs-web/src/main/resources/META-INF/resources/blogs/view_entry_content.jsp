@@ -78,7 +78,7 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 							<span class="hide-accessible"><liferay-ui:message key="published-date" /></span>
 							<%= dateFormatDate.format(entry.getDisplayDate()) %>
 							<span> - </span>
-							<span><%= LanguageUtil.format(resourceBundle, "x-min-read", new String[] {String.valueOf(com.liferay.blogs.web.internal.util.BlogsUtil.getReadingTime(entry.getContent()))}, false) %></span>
+							<span><%= LanguageUtil.format(resourceBundle, "x-min-read", new String[] {String.valueOf(com.liferay.blogs.web.internal.util.BlogsUtil.getReadingTimeMinutes(entry.getContent()))}, false) %></span>
 						</small>
 					</div>
 				</c:if>

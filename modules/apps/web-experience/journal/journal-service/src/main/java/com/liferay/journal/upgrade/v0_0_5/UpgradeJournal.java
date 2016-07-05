@@ -16,6 +16,7 @@ package com.liferay.journal.upgrade.v0_0_5;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLinkLocalService;
 import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
 import com.liferay.journal.constants.JournalPortletKeys;
@@ -38,6 +39,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -52,11 +54,14 @@ import java.sql.ResultSet;
 
 import java.text.DateFormat;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -69,6 +74,7 @@ public class UpgradeJournal extends UpgradeProcess {
 	public UpgradeJournal(
 		CompanyLocalService companyLocalService,
 		DDMStorageLinkLocalService ddmStorageLinkLocalService,
+		DDMStructureLocalService ddmStructureLocalService,
 		DDMTemplateLinkLocalService ddmTemplateLinkLocalService,
 		DefaultDDMStructureHelper defaultDDMStructureHelper,
 		GroupLocalService groupLocalService,
@@ -77,6 +83,7 @@ public class UpgradeJournal extends UpgradeProcess {
 
 		_companyLocalService = companyLocalService;
 		_ddmStorageLinkLocalService = ddmStorageLinkLocalService;
+		_ddmStructureLocalService = ddmStructureLocalService;
 		_ddmTemplateLinkLocalService = ddmTemplateLinkLocalService;
 		_defaultDDMStructureHelper = defaultDDMStructureHelper;
 		_groupLocalService = groupLocalService;
@@ -116,11 +123,27 @@ public class UpgradeJournal extends UpgradeProcess {
 		return StringUtil.toUpperCase(structureElement.elementText("name"));
 	}
 
+	protected void addDDMStorageLink(
+			Map<Long, List<Long>> journalArticleStructureMap)
+		throws Exception {
+
+		long journalArticleClassNameId = PortalUtil.getClassNameId(
+			JournalArticle.class.getName());
+
+		for (Map.Entry<Long, List<Long>> entry :
+				journalArticleStructureMap.entrySet()) {
+
+			long ddmStructureId = getDDMStructureId(
+				entry.getKey(), entry.getValue());
+
+			_ddmStorageLinkLocalService.addStorageLink(
+				journalArticleClassNameId, entry.getKey(), ddmStructureId,
+				new ServiceContext());
+		}
+	}
+
 	protected void addDDMStorageLinks() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			long journalArticleClassNameId = PortalUtil.getClassNameId(
-				JournalArticle.class.getName());
-
 			StringBundler sb = new StringBundler(8);
 
 			sb.append("select DDMStructure.structureId, JournalArticle.id_ ");
@@ -132,22 +155,34 @@ public class UpgradeJournal extends UpgradeProcess {
 			sb.append("and DDMStructure.structureKey = JournalArticle.");
 			sb.append("DDMStructureKey and JournalArticle.classNameId != ?)");
 
-			try (PreparedStatement ps = connection.prepareStatement(
-					sb.toString())) {
+			try (PreparedStatement ps =
+					connection.prepareStatement(sb.toString())) {
 
 				ps.setString(1, GroupConstants.GLOBAL_FRIENDLY_URL);
 				ps.setLong(
 					2, PortalUtil.getClassNameId(DDMStructure.class.getName()));
 
 				try (ResultSet rs = ps.executeQuery()) {
+					Map<Long, List<Long>> journalArticleStructureMap =
+						new HashMap<>();
+
 					while (rs.next()) {
 						long structureId = rs.getLong("structureId");
 						long id = rs.getLong("id_");
 
-						_ddmStorageLinkLocalService.addStorageLink(
-							journalArticleClassNameId, id, structureId,
-							new ServiceContext());
+						List<Long> ddmStructureIds =
+							journalArticleStructureMap.get(id);
+
+						if (ddmStructureIds == null) {
+							ddmStructureIds = new ArrayList<>();
+						}
+
+						ddmStructureIds.add(structureId);
+
+						journalArticleStructureMap.put(id, ddmStructureIds);
 					}
+
+					addDDMStorageLink(journalArticleStructureMap);
 				}
 			}
 		}
@@ -251,12 +286,96 @@ public class UpgradeJournal extends UpgradeProcess {
 		addDDMTemplateLinks();
 	}
 
+	protected Set<String> getArticleDynamicElements(Element rootElement) {
+		List<String> dynamicElementNames = new ArrayList<>();
+
+		List<Element> dynamicElementElements = rootElement.elements(
+			"dynamic-element");
+
+		for (Element element : dynamicElementElements) {
+			dynamicElementNames.add(element.attributeValue("name"));
+
+			dynamicElementNames.addAll(getArticleDynamicElements(element));
+		}
+
+		return SetUtil.fromList(dynamicElementNames);
+	}
+
+	protected Set<String> getArticleFieldNames(long articleId)
+		throws Exception {
+
+		Set<String> articleFieldNames = new HashSet<>();
+
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			StringBundler sb = new StringBundler(2);
+
+			sb.append("select JournalArticle.content from JournalArticle ");
+			sb.append("where JournalArticle.id_ = ?");
+
+			try (PreparedStatement ps = connection.prepareStatement(
+					sb.toString())) {
+
+				ps.setLong(1, articleId);
+
+				try (ResultSet rs = ps.executeQuery()) {
+					if (rs.next()) {
+						String content = rs.getString("content");
+
+						Document document = SAXReaderUtil.read(content);
+
+						Element rootElement = document.getRootElement();
+
+						articleFieldNames = getArticleDynamicElements(
+							rootElement);
+					}
+				}
+			}
+		}
+
+		return articleFieldNames;
+	}
+
+	protected long getBestDDMStructureIdMatch(
+			long id, long ddmStructureId1, long ddmStructureId2)
+		throws Exception {
+
+		DDMStructure ddmStructure1 = _ddmStructureLocalService.getStructure(
+			ddmStructureId1);
+		DDMStructure ddmStructure2 = _ddmStructureLocalService.getStructure(
+			ddmStructureId2);
+
+		Set<String> fieldNames1 = ddmStructure1.getFieldNames();
+		Set<String> fieldNames2 = ddmStructure2.getFieldNames();
+
+		Set<String> articleFieldNames = getArticleFieldNames(id);
+
+		fieldNames1.removeAll(articleFieldNames);
+		fieldNames2.removeAll(articleFieldNames);
+
+		if (fieldNames1.size() <= fieldNames2.size()) {
+			return ddmStructure1.getStructureId();
+		}
+
+		return ddmStructure2.getStructureId();
+	}
+
 	protected String getContent(String fileName) {
 		Class<?> clazz = getClass();
 
 		return ContentUtil.get(
 			clazz.getClassLoader(),
 			"com/liferay/journal/upgrade/v1_0_0/dependencies/" + fileName);
+	}
+
+	protected long getDDMStructureId(long id, List<Long> ddmStructureIds)
+		throws Exception {
+
+		if (ddmStructureIds.size() == 1) {
+			return ddmStructureIds.get(0);
+		}
+
+		return getBestDDMStructureIdMatch(
+			id, ddmStructureIds.get(0), ddmStructureIds.get(1));
 	}
 
 	protected List<Element> getDDMStructures(Locale locale)
@@ -470,6 +589,7 @@ public class UpgradeJournal extends UpgradeProcess {
 
 	private final CompanyLocalService _companyLocalService;
 	private final DDMStorageLinkLocalService _ddmStorageLinkLocalService;
+	private final DDMStructureLocalService _ddmStructureLocalService;
 	private final DDMTemplateLinkLocalService _ddmTemplateLinkLocalService;
 	private final DefaultDDMStructureHelper _defaultDDMStructureHelper;
 	private final GroupLocalService _groupLocalService;

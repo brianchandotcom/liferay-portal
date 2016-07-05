@@ -80,9 +80,10 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 			new UpgradeCompanyId(),
 			new UpgradeJournal(
 				_companyLocalService, _ddmStorageLinkLocalService,
-				_ddmTemplateLinkLocalService, _defaultDDMStructureHelper,
-				_groupLocalService, _resourceActionLocalService,
-				_resourceActions, _userLocalService),
+				_ddmStructureLocalService, _ddmTemplateLinkLocalService,
+				_defaultDDMStructureHelper, _groupLocalService,
+				_resourceActionLocalService, _resourceActions,
+				_userLocalService),
 			new UpgradeJournalArticles(
 				_assetCategoryLocalService, _ddmStructureLocalService,
 				_groupLocalService, _layoutLocalService),

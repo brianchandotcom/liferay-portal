@@ -84,7 +84,6 @@ portletURL.setParameter("eventName", eventName);
 
 			<liferay-ui:search-container-column-text
 				name="menu-item-name"
-				truncate="<%= true %>"
 			>
 				<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
 					<%= ddmStructure.getUnambiguousName(ddmStructures, themeDisplay.getScopeGroupId(), locale) %>
@@ -102,6 +101,7 @@ portletURL.setParameter("eventName", eventName);
 			/>
 
 			<liferay-ui:search-container-column-jsp
+				align="center"
 				name="add-to-favorites"
 				path="/view_more_menu_items_actions.jsp"
 			/>

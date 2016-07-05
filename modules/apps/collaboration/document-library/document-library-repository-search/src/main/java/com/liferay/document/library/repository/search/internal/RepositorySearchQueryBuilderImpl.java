@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.search.TermQuery;
 import com.liferay.portal.kernel.search.TermRangeQuery;
 import com.liferay.portal.kernel.search.WildcardQuery;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
+import com.liferay.portal.kernel.search.generic.TermQueryImpl;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -110,7 +111,9 @@ public class RepositorySearchQueryBuilderImpl
 				continue;
 			}
 
-			folderIdsQuery.addTerm(Field.FOLDER_ID, folderId);
+			folderIdsQuery.add(
+				new TermQueryImpl(Field.FOLDER_ID, String.valueOf(folderId)),
+				BooleanClauseOccur.SHOULD);
 		}
 
 		contextQuery.add(folderIdsQuery, BooleanClauseOccur.MUST);

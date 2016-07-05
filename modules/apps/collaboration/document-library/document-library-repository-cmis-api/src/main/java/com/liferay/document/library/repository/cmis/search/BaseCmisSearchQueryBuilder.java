@@ -33,7 +33,9 @@ import com.liferay.portal.kernel.search.TermQuery;
 import com.liferay.portal.kernel.search.TermRangeQuery;
 import com.liferay.portal.kernel.search.WildcardQuery;
 import com.liferay.portal.kernel.search.generic.MatchQuery;
+import com.liferay.portal.kernel.service.RepositoryEntryLocalService;
 import com.liferay.portal.kernel.service.RepositoryEntryLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -52,6 +54,12 @@ import java.util.regex.Pattern;
  * @author Mika Koivisto
  */
 public class BaseCmisSearchQueryBuilder implements CMISSearchQueryBuilder {
+
+	public BaseCmisSearchQueryBuilder() {
+		this(
+			RepositoryEntryLocalServiceUtil.getService(),
+			UserLocalServiceUtil.getService());
+	}
 
 	@Override
 	public String buildQuery(SearchContext searchContext, Query query)
@@ -140,6 +148,14 @@ public class BaseCmisSearchQueryBuilder implements CMISSearchQueryBuilder {
 		return sb.toString();
 	}
 
+	protected BaseCmisSearchQueryBuilder(
+		RepositoryEntryLocalService repositoryEntryLocalService,
+		UserLocalService userLocalService) {
+
+		_repositoryEntryLocalService = repositoryEntryLocalService;
+		_userLocalService = userLocalService;
+	}
+
 	protected CMISCriterion buildFieldExpression(
 			String field, String value,
 			CMISSimpleExpressionOperator cmisSimpleExpressionOperator,
@@ -159,8 +175,7 @@ public class BaseCmisSearchQueryBuilder implements CMISSearchQueryBuilder {
 
 			try {
 				RepositoryEntry repositoryEntry =
-					RepositoryEntryLocalServiceUtil.fetchRepositoryEntry(
-						folderId);
+					_repositoryEntryLocalService.fetchRepositoryEntry(folderId);
 
 				if (repositoryEntry != null) {
 					String objectId = repositoryEntry.getMappedId();
@@ -186,7 +201,7 @@ public class BaseCmisSearchQueryBuilder implements CMISSearchQueryBuilder {
 			try {
 				long userId = GetterUtil.getLong(value);
 
-				User user = UserLocalServiceUtil.getUserById(userId);
+				User user = _userLocalService .getUserById(userId);
 
 				String screenName = CMISParameterValueUtil.formatParameterValue(
 					field, user.getScreenName(), wildcard, queryConfig);
@@ -510,5 +525,8 @@ public class BaseCmisSearchQueryBuilder implements CMISSearchQueryBuilder {
 		_supportedFields.add(Field.USER_ID);
 		_supportedFields.add(Field.USER_NAME);
 	}
+
+	private final RepositoryEntryLocalService _repositoryEntryLocalService;
+	private final UserLocalService _userLocalService;
 
 }

@@ -3,4 +3,12 @@ dependencies {
 	provided group: "com.liferay", name: "com.liferay.portal.configuration.metatype", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
 	provided group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+
+	testCompile group: "org.apache.chemistry.opencmis", name: "chemistry-opencmis-client-api", version: "0.13.0"
+	testCompile group: "org.apache.lucene", name: "lucene-analyzers-common", version: "5.2.1"
+	testCompile group: "org.apache.lucene", name: "lucene-core", version: "5.2.1"
+	testCompile group: "org.apache.lucene", name: "lucene-queries", version: "5.2.1"
+	testCompile group: "org.apache.lucene", name: "lucene-queryparser", version: "5.2.1"
+	testCompile group: "org.apache.lucene", name: "lucene-sandbox", version: "5.2.1"
+	testCompile project(":apps:collaboration:document-library:document-library-repository-search")
 }

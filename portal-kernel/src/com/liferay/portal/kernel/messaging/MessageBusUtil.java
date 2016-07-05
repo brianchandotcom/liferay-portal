@@ -34,7 +34,7 @@ import com.liferay.registry.ServiceTrackerCustomizer;
 public class MessageBusUtil {
 
 	public static void addDestination(Destination destination) {
-		getInstance()._addDestination(destination);
+		getMessageBus().addDestination(destination);
 	}
 
 	public static Message createResponseMessage(Message requestMessage) {
@@ -58,132 +58,20 @@ public class MessageBusUtil {
 	}
 
 	public static Destination getDestination(String destinationName) {
-		return getInstance()._getDestination(destinationName);
+		return getMessageBus().getDestination(destinationName);
 	}
 
+	/**
+	 * @deprecated As of 7.1.0, with no direct replacement.
+	 */
+	@Deprecated
 	public static MessageBusUtil getInstance() {
 		PortalRuntimePermission.checkGetBeanProperty(MessageBusUtil.class);
 
-		return _instance;
+		return new MessageBusUtil();
 	}
 
 	public static MessageBus getMessageBus() {
-		return _instance._getMessageBus();
-	}
-
-	public static boolean hasMessageListener(String destination) {
-		return getInstance()._hasMessageListener(destination);
-	}
-
-	public static void registerMessageListener(
-		String destinationName, MessageListener messageListener) {
-
-		getInstance()._registerMessageListener(
-			destinationName, messageListener);
-	}
-
-	public static void removeDestination(String destinationName) {
-		getInstance()._removeDestination(destinationName);
-	}
-
-	public static void sendMessage(String destinationName, Message message) {
-		getInstance()._sendMessage(destinationName, message);
-	}
-
-	public static void sendMessage(String destinationName, Object payload) {
-		getInstance()._sendMessage(destinationName, payload);
-	}
-
-	public static Object sendSynchronousMessage(
-			String destinationName, Message message)
-		throws MessageBusException {
-
-		return getInstance()._sendSynchronousMessage(destinationName, message);
-	}
-
-	public static Object sendSynchronousMessage(
-			String destinationName, Message message, long timeout)
-		throws MessageBusException {
-
-		return getInstance()._sendSynchronousMessage(
-			destinationName, message, timeout);
-	}
-
-	public static Object sendSynchronousMessage(
-			String destinationName, Object payload)
-		throws MessageBusException {
-
-		return getInstance()._sendSynchronousMessage(
-			destinationName, payload, null);
-	}
-
-	public static Object sendSynchronousMessage(
-			String destinationName, Object payload, long timeout)
-		throws MessageBusException {
-
-		return getInstance()._sendSynchronousMessage(
-			destinationName, payload, null, timeout);
-	}
-
-	public static Object sendSynchronousMessage(
-			String destinationName, Object payload,
-			String responseDestinationName)
-		throws MessageBusException {
-
-		return getInstance()._sendSynchronousMessage(
-			destinationName, payload, responseDestinationName);
-	}
-
-	public static Object sendSynchronousMessage(
-			String destinationName, Object payload,
-			String responseDestinationName, long timeout)
-		throws MessageBusException {
-
-		return getInstance()._sendSynchronousMessage(
-			destinationName, payload, responseDestinationName, timeout);
-	}
-
-	public static void shutdown() {
-		getInstance()._shutdown();
-	}
-
-	public static void shutdown(boolean force) {
-		getInstance()._shutdown(force);
-	}
-
-	public static boolean unregisterMessageListener(
-		String destinationName, MessageListener messageListener) {
-
-		PortalMessageBusPermission.checkListen(destinationName);
-
-		return getInstance()._unregisterMessageListener(
-			destinationName, messageListener);
-	}
-
-	public MessageBusUtil() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(
-			MessageBus.class, new MessageBusServiceTrackerCustomizer());
-
-		_serviceTracker.open();
-	}
-
-	public void setSynchronousMessageSenderMode(
-		SynchronousMessageSender.Mode synchronousMessageSenderMode) {
-
-		_synchronousMessageSenderMode = synchronousMessageSenderMode;
-	}
-
-	private void _addDestination(Destination destination) {
-		_getMessageBus().addDestination(destination);
-	}
-
-	private Destination _getDestination(String destinationName) {
-		return _getMessageBus().getDestination(destinationName);
-	}
-
-	private MessageBus _getMessageBus() {
 		try {
 			while (!_initialized && (_serviceTracker.getService() == null)) {
 				if (_log.isDebugEnabled()) {
@@ -201,40 +89,40 @@ public class MessageBusUtil {
 		return _messageBus;
 	}
 
-	private boolean _hasMessageListener(String destinationName) {
-		return _getMessageBus().hasMessageListener(destinationName);
+	public static boolean hasMessageListener(String destination) {
+		return getMessageBus().hasMessageListener(destination);
 	}
 
-	private void _registerMessageListener(
+	public static void registerMessageListener(
 		String destinationName, MessageListener messageListener) {
 
 		PortalMessageBusPermission.checkListen(destinationName);
 
-		_getMessageBus().registerMessageListener(
+		getMessageBus().registerMessageListener(
 			destinationName, messageListener);
 	}
 
-	private void _removeDestination(String destinationName) {
-		_getMessageBus().removeDestination(destinationName);
+	public static void removeDestination(String destinationName) {
+		getMessageBus().removeDestination(destinationName);
 	}
 
-	private void _sendMessage(String destinationName, Message message) {
+	public static void sendMessage(String destinationName, Message message) {
 		PortalMessageBusPermission.checkSend(destinationName);
 
-		_getMessageBus().sendMessage(destinationName, message);
+		getMessageBus().sendMessage(destinationName, message);
 	}
 
-	private void _sendMessage(String destinationName, Object payload) {
+	public static void sendMessage(String destinationName, Object payload) {
 		PortalMessageBusPermission.checkSend(destinationName);
 
 		Message message = new Message();
 
 		message.setPayload(payload);
 
-		_sendMessage(destinationName, message);
+		getMessageBus().sendMessage(destinationName, message);
 	}
 
-	private Object _sendSynchronousMessage(
+	public static Object sendSynchronousMessage(
 			String destinationName, Message message)
 		throws MessageBusException {
 
@@ -247,7 +135,7 @@ public class MessageBusUtil {
 		return synchronousMessageSender.send(destinationName, message);
 	}
 
-	private Object _sendSynchronousMessage(
+	public static Object sendSynchronousMessage(
 			String destinationName, Message message, long timeout)
 		throws MessageBusException {
 
@@ -260,7 +148,21 @@ public class MessageBusUtil {
 		return synchronousMessageSender.send(destinationName, message, timeout);
 	}
 
-	private Object _sendSynchronousMessage(
+	public static Object sendSynchronousMessage(
+			String destinationName, Object payload)
+		throws MessageBusException {
+
+		return sendSynchronousMessage(destinationName, payload, null);
+	}
+
+	public static Object sendSynchronousMessage(
+			String destinationName, Object payload, long timeout)
+		throws MessageBusException {
+
+		return sendSynchronousMessage(destinationName, payload, null, timeout);
+	}
+
+	public static Object sendSynchronousMessage(
 			String destinationName, Object payload,
 			String responseDestinationName)
 		throws MessageBusException {
@@ -272,10 +174,10 @@ public class MessageBusUtil {
 		message.setResponseDestinationName(responseDestinationName);
 		message.setPayload(payload);
 
-		return _sendSynchronousMessage(destinationName, message);
+		return sendSynchronousMessage(destinationName, message);
 	}
 
-	private Object _sendSynchronousMessage(
+	public static Object sendSynchronousMessage(
 			String destinationName, Object payload,
 			String responseDestinationName, long timeout)
 		throws MessageBusException {
@@ -287,40 +189,56 @@ public class MessageBusUtil {
 		message.setResponseDestinationName(responseDestinationName);
 		message.setPayload(payload);
 
-		return _sendSynchronousMessage(destinationName, message, timeout);
+		return sendSynchronousMessage(destinationName, message, timeout);
 	}
 
-	private void _shutdown() {
+	public static void shutdown() {
 		PortalRuntimePermission.checkGetBeanProperty(MessageBusUtil.class);
 
-		_getMessageBus().shutdown();
+		getMessageBus().shutdown();
 	}
 
-	private void _shutdown(boolean force) {
+	public static void shutdown(boolean force) {
 		PortalRuntimePermission.checkGetBeanProperty(MessageBusUtil.class);
 
-		_getMessageBus().shutdown(force);
+		getMessageBus().shutdown(force);
 	}
 
-	private boolean _unregisterMessageListener(
+	public static boolean unregisterMessageListener(
 		String destinationName, MessageListener messageListener) {
 
-		return _getMessageBus().unregisterMessageListener(
+		PortalMessageBusPermission.checkListen(destinationName);
+
+		return getMessageBus().unregisterMessageListener(
 			destinationName, messageListener);
+	}
+
+	public void setSynchronousMessageSenderMode(
+		SynchronousMessageSender.Mode synchronousMessageSenderMode) {
+
+		_synchronousMessageSenderMode = synchronousMessageSenderMode;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(MessageBusUtil.class);
 
 	private static final MessageBusUtil _instance = new MessageBusUtil();
 
+	private static volatile boolean _initialized;
+	private static final MessageBus _messageBus =
+		ProxyFactory.newServiceTrackedInstance(MessageBus.class);
+	private static final ServiceTracker<MessageBus, MessageBus> _serviceTracker;
 	private static SynchronousMessageSender.Mode _synchronousMessageSenderMode;
 
-	private volatile boolean _initialized;
-	private final MessageBus _messageBus =
-		ProxyFactory.newServiceTrackedInstance(MessageBus.class);
-	private final ServiceTracker<MessageBus, MessageBus> _serviceTracker;
+	static {
+		Registry registry = RegistryUtil.getRegistry();
 
-	private class MessageBusServiceTrackerCustomizer
+		_serviceTracker = registry.trackServices(
+			MessageBus.class, new MessageBusServiceTrackerCustomizer());
+
+		_serviceTracker.open();
+	}
+
+	private static class MessageBusServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer<MessageBus, MessageBus> {
 
 		@Override

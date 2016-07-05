@@ -2852,54 +2852,11 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 				if (lineCount > 1) {
 					sb.append(previousLine);
-
-					if (Validator.isNotNull(previousLine) &&
-						Validator.isNotNull(trimmedLine) &&
-						!previousLine.contains("/*") &&
-						!previousLine.endsWith("*/")) {
-
-						String trimmedPreviousLine = StringUtil.trimLeading(
-							previousLine);
-
-						trimmedLine = StringUtil.trimLeading(line);
-
-						if ((trimmedPreviousLine.startsWith("// ") &&
-							 !trimmedLine.startsWith("// ")) ||
-							(!trimmedPreviousLine.startsWith("// ") &&
-							 trimmedLine.startsWith("// "))) {
-
-							sb.append("\n");
-						}
-						else if (!trimmedPreviousLine.endsWith(
-									StringPool.OPEN_CURLY_BRACE) &&
-								 !trimmedPreviousLine.endsWith(
-									 StringPool.COLON) &&
-								 (trimmedLine.startsWith("for (") ||
-								  trimmedLine.startsWith("if (") ||
-								  trimmedLine.startsWith("try {"))) {
-
-							sb.append("\n");
-						}
-						else if (previousLine.endsWith(
-									StringPool.TAB +
-										StringPool.CLOSE_CURLY_BRACE) &&
-								 !trimmedLine.startsWith(
-									 StringPool.CLOSE_CURLY_BRACE) &&
-								 !trimmedLine.startsWith(
-									 StringPool.CLOSE_PARENTHESIS) &&
-								 !trimmedLine.startsWith(
-									 StringPool.DOUBLE_SLASH) &&
-								 !trimmedLine.equals("*/") &&
-								 !trimmedLine.startsWith("catch ") &&
-								 !trimmedLine.startsWith("else ") &&
-								 !trimmedLine.startsWith("finally ") &&
-								 !trimmedLine.startsWith("while ")) {
-
-							sb.append("\n");
-						}
-					}
-
 					sb.append("\n");
+
+					if (addExtraEmptyLine(previousLine, line, true)) {
+						sb.append("\n");
+					}
 				}
 
 				previousLine = line;

@@ -36,6 +36,7 @@ boolean showIconsActions = themeDisplay.isSignedIn() && !layout.isLayoutPrototyp
 	if (question != null) {
 		redirectURL.setParameter("questionId", String.valueOf(question.getQuestionId()));
 	}
+
 	redirectURL.setParameter("mvcRenderCommandName", "/polls_display/add_question_redirect");
 	redirectURL.setWindowState(LiferayWindowState.POP_UP);
 	%>

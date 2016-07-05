@@ -511,6 +511,7 @@ if (urlConfiguration != null) {
 
 	portletDisplay.setURLConfigurationJS(urlConfigurationJSSB.toString());
 }
+
 // URL edit
 
 LiferayPortletURL urlEdit = PortletURLFactoryUtil.create(request, portletDisplay.getId(), plid, PortletRequest.RENDER_PHASE);

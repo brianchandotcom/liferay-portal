@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,12 +11,22 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %>
+package com.liferay.staging.bar.web.internal.upgrade.v1_0_0;
 
-<%@ page import="com.liferay.staging.bar.web.internal.portlet.constants.StagingBarPortletKeys" %>
+import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;
+import com.liferay.staging.bar.web.internal.portlet.constants.StagingBarPortletKeys;
 
-<li class="control-menu-nav-item staging-links">
-	<liferay-portlet:runtime portletName="<%= StagingBarPortletKeys.STAGING_BAR %>" />
-</li>
+/**
+ * @author Levente Hudák
+ */
+public class UpgradePortletId extends BaseUpgradePortletId {
+
+	@Override
+	protected String[][] getRenamePortletIdsArray() {
+		return new String[][] {
+			new String[] {"170", StagingBarPortletKeys.STAGING_BAR}
+		};
+	}
+
+}

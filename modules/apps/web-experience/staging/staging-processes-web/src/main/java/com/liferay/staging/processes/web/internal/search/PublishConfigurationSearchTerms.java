@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,12 +11,24 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %>
+package com.liferay.staging.processes.web.internal.search;
 
-<%@ page import="com.liferay.staging.bar.web.internal.portlet.constants.StagingBarPortletKeys" %>
+import com.liferay.portal.kernel.dao.search.DAOParamUtil;
 
-<li class="control-menu-nav-item staging-links">
-	<liferay-portlet:runtime portletName="<%= StagingBarPortletKeys.STAGING_BAR %>" />
-</li>
+import javax.portlet.PortletRequest;
+
+/**
+ * @author Mate Thurzo
+ */
+public class PublishConfigurationSearchTerms
+	extends PublishConfigurationDisplayTerms {
+
+	public PublishConfigurationSearchTerms(PortletRequest portletRequest) {
+		super(portletRequest);
+
+		description = DAOParamUtil.getString(portletRequest, DESCRIPTION);
+		name = DAOParamUtil.getString(portletRequest, NAME);
+	}
+
+}

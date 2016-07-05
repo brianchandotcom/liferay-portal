@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,12 +11,15 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %>
+package com.liferay.staging.bar.web.internal.portlet.constants;
 
-<%@ page import="com.liferay.staging.bar.web.internal.portlet.constants.StagingBarPortletKeys" %>
+/**
+ * @author Daniel Kocsis
+ */
+public class StagingBarPortletKeys {
 
-<li class="control-menu-nav-item staging-links">
-	<liferay-portlet:runtime portletName="<%= StagingBarPortletKeys.STAGING_BAR %>" />
-</li>
+	public static final String STAGING_BAR =
+		"com_liferay_staging_bar_web_portlet_StagingBarPortlet";
+
+}

@@ -136,6 +136,31 @@ public class ExecuteNpmTask extends ExecuteNodeScriptTask {
 			completeArgs.add(FileUtil.getAbsolutePath(cacheDir));
 		}
 
+		String logLevel = null;
+
+		Logger logger = getLogger();
+
+		if (logger.isTraceEnabled()) {
+			logLevel = "silly";
+		}
+		else if (logger.isDebugEnabled()) {
+			logLevel = "verbose";
+		}
+		else if (logger.isInfoEnabled()) {
+			logLevel = "info";
+		}
+		else if (logger.isWarnEnabled()) {
+			logLevel = "warn";
+		}
+		else if (logger.isErrorEnabled()) {
+			logLevel = "error";
+		}
+
+		if (logLevel != null) {
+			completeArgs.add("--loglevel");
+			completeArgs.add(logLevel);
+		}
+
 		if (isInheritProxy()) {
 			addProxyArg(completeArgs, "--proxy", "http");
 			addProxyArg(completeArgs, "--https-proxy", "https");

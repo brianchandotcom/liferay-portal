@@ -1145,7 +1145,7 @@
 		</execute>
 
 		<execute macro="KBArticle#moveArticleCP">
-			<var name="kbArticleCurrentParent" value="(None)" />
+			<var name="kbArticleCurrentParent" value="Home" />
 			<var name="kbArticleTitle" value="${kbArticleTitle}" />
 		</execute>
 
@@ -1154,7 +1154,7 @@
 		</execute>
 
 		<execute macro="KBArticle#moveArticleCP">
-			<var name="kbArticleCurrentParent" value="(None)" />
+			<var name="kbArticleCurrentParent" value="Home" />
 			<var name="kbArticleTitle" value="Article 2 Title" />
 		</execute>
 

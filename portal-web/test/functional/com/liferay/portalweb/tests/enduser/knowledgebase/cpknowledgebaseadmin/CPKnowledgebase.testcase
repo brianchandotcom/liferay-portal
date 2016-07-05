@@ -657,7 +657,7 @@
 		</execute>
 
 		<execute macro="KBArticle#moveArticleCP">
-			<var name="kbArticleCurrentParent" value="(None)" />
+			<var name="kbArticleCurrentParent" value="Home" />
 			<var name="kbArticleTitle" value="Knowledge Base Article Title Child" />
 		</execute>
 
@@ -709,7 +709,7 @@
 		</execute>
 
 		<execute macro="KBArticle#moveArticleCP">
-			<var name="kbArticleCurrentParent" value="(None)" />
+			<var name="kbArticleCurrentParent" value="Home" />
 			<var name="kbArticleTitle" value="Knowledge Base Article Title Child" />
 		</execute>
 

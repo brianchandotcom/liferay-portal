@@ -163,7 +163,16 @@ if (portletTitleBasedNavigation) {
 				<aui:input name="title" type="hidden" />
 
 				<div class="kb-entity-body">
-					<liferay-ui:input-editor contents="<%= content %>" editorName="<%= kbGroupServiceConfiguration.getEditorName() %>" name="contentEditor" placeholder="content" />
+
+					<%
+					Map<String, String> fileBrowserParams = new HashMap();
+
+					if (kbArticle != null) {
+						fileBrowserParams.put("resourcePrimKey", String.valueOf(kbArticle.getResourcePrimKey()));
+					}
+					%>
+
+					<liferay-ui:input-editor contents="<%= content %>" editorName="<%= kbGroupServiceConfiguration.getEditorName() %>" fileBrowserParams="<%= fileBrowserParams %>" name="contentEditor" placeholder="content" />
 
 					<aui:input name="content" type="hidden" />
 				</div>

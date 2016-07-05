@@ -6,8 +6,8 @@
 			"dataType": "string",
 			"indexType": "keyword",
 			"label": {
-				"pt_BR": "Select",
-				"en_US": "Select"
+				"en_US": "Select",
+				"pt_BR": "Select"
 			},
 			"localizable": true,
 			"multiple": false,
@@ -36,8 +36,8 @@
 				}
 			],
 			"predefinedValue": {
-				"pt_BR": "[\"\"]",
-				"en_US": "[\"\"]"
+				"en_US": "[\"\"]",
+				"pt_BR": "[\"\"]"
 			},
 			"readOnly": false,
 			"repeatable": false,

@@ -9,8 +9,8 @@
 				"en_US": "Supported Versions"
 			},
 			"localizable": true,
-			"name": "SupportedVersions",
 			"multiple": true,
+			"name": "SupportedVersions",
 			"options": [
 				{
 					"label": {

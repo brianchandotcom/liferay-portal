@@ -1,6 +1,6 @@
 {
-	"defaultLanguageId": "en_US",
 	"availableLanguageIds": ["en_US", "pt_BR"],
+	"defaultLanguageId": "en_US",
 	"fields": [
 		{
 			"dataType": "boolean",
@@ -523,8 +523,8 @@
 						}
 					],
 					"predefinedValue": {
-						"pt_BR": "",
-						"en_US": ""
+						"en_US": "",
+						"pt_BR": ""
 					},
 					"readOnly": false,
 					"repeatable": false,

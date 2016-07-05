@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
 
@@ -75,6 +76,18 @@ public class JSONSourceProcessor extends BaseSourceProcessor {
 			content = content.substring(0, content.length() - 1);
 		}
 
+		Matcher matcher = _incorrectLineBreakPattern.matcher(content);
+
+		if (matcher.find()) {
+			processErrorMessage(
+				fileName,
+				"line break: " + fileName + " " +
+					getLineCount(content, matcher.start()));
+		}
+		else {
+			content = sort(content);
+		}
+
 		return content;
 	}
 
@@ -83,8 +96,64 @@ public class JSONSourceProcessor extends BaseSourceProcessor {
 		return getFileNames(new String[0], getIncludes());
 	}
 
+	protected String sort(String content) {
+		String tabs = StringPool.BLANK;
+
+		while (true) {
+			Pattern pattern1 = Pattern .compile(
+				"(\n|^)" + tabs + "[^\n\t]*[\\{\\[]\n");
+
+			Matcher matcher1 = pattern1.matcher(content);
+
+			if (!matcher1.find()) {
+				break;
+			}
+
+			Pattern pattern2 = Pattern.compile(
+				"((\n|^)" + tabs + "[^\n\t]*\\{\n" + tabs +
+					"\t[^\n\t][\\s\\S]*?)\n" + tabs + "\\}");
+
+			Matcher matcher2 = pattern2.matcher(content);
+
+			while (matcher2.find()) {
+				Pattern pattern3 = Pattern.compile(
+					"(" + tabs + "\t[^\n\t]*?([^\\{\\[]|([\\{\\[]\n[\\s\\S]*?" +
+						"\n" + tabs + "\t[\\}\\]]))),?(\n|$)");
+
+				String match = matcher2.group(1);
+
+				Matcher matcher3 = pattern3.matcher(match);
+
+				String previousProperty = null;
+
+				while (matcher3.find()) {
+					String property = matcher3.group(1);
+
+					if (Validator.isNotNull(previousProperty) &&
+						(previousProperty.compareTo(property) > 0)) {
+
+						String replacement = StringUtil.replaceFirst(
+							match, previousProperty, property);
+						replacement = StringUtil.replaceLast(
+							replacement, property, previousProperty);
+
+						return StringUtil.replace(content, match, replacement);
+					}
+
+					previousProperty = property;
+				}
+			}
+
+			tabs += "\t";
+		}
+
+		return content;
+	}
+
 	private static final String[] _INCLUDES = new String[] {"**/*.json"};
 
+	private final Pattern _incorrectLineBreakPattern = Pattern.compile(
+		"\t[\\}\\]]{2}");
 	private final Pattern _leadingSpacesPattern = Pattern.compile(
 		"(^[\t ]*)(  )([^ ])");
 

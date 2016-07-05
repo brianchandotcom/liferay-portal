@@ -1,4 +1,5 @@
 {
+	"$schema": "http://json-schema.org/draft-04/schema#",
 	"additionalProperties": false,
 	"definitions": {
 		"array": {
@@ -18,6 +19,11 @@
 		}
 	},
 	"description": "This object is intended to be used to test basic json schema features",
+	"patternProperties": {
+		"^patternProperty[0-9]+$": {
+			"type": "integer"
+		}
+	},
 	"properties": {
 		"array": {
 			"$ref": "#/definitions/array"
@@ -45,11 +51,5 @@
 			"type": "string"
 		}
 	},
-	"patternProperties": {
-		"^patternProperty[0-9]+$": {
-			"type": "integer"
-		}
-	},
-	"$schema": "http://json-schema.org/draft-04/schema#",
 	"type": "object"
 }

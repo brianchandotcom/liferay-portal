@@ -21,10 +21,13 @@ import com.liferay.registry.Filter;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceTracker;
+import com.liferay.registry.ServiceTrackerFieldUpdaterCustomizer;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 
 /**
  * @author Brian Wing Shun Chan
@@ -59,12 +62,94 @@ public class ProxyFactory {
 			new ClassLoaderBeanHandler(instance, classLoader));
 	}
 
+	/**
+	 * @deprecated As of 7.1.0, replaced by {@link
+	 *             #newServiceTrackedInstance(Class, Class, String)}
+	 */
+	@Deprecated
 	public static <T> T newServiceTrackedInstance(Class<T> interfaceClass) {
 		return (T)ProxyUtil.newProxyInstance(
 			interfaceClass.getClassLoader(), new Class[] {interfaceClass},
 			new ServiceTrackedInvocationHandler<>(interfaceClass));
 	}
 
+	public static <T> T newServiceTrackedInstance(
+		Class<T> serviceClass, Class<?> declaringClass, String fieldName) {
+
+		return newServiceTrackedInstance(
+			serviceClass, declaringClass, fieldName, null);
+	}
+
+	public static <T> T newServiceTrackedInstance(
+		Class<T> serviceClass, Class<?> declaringClass, String fieldName,
+		String filterString) {
+
+		T dummyService = newDummyInstance(serviceClass);
+
+		try {
+			Field field = declaringClass.getDeclaredField(fieldName);
+
+			if (!Modifier.isStatic(field.getModifiers())) {
+				throw new IllegalArgumentException(field + " is not static");
+			}
+
+			field.setAccessible(true);
+
+			field.set(null, dummyService);
+
+			ServiceTracker<?, ?> serviceTracker = null;
+
+			String serviceName = serviceClass.getName();
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			if (Validator.isNull(filterString)) {
+				serviceTracker = registry.trackServices(
+					serviceName,
+					new ServiceTrackerFieldUpdaterCustomizer<>(
+						field, null, dummyService));
+			}
+			else {
+				StringBundler sb = new StringBundler(7);
+
+				sb.append("(&(objectClass=");
+				sb.append(serviceName);
+				sb.append(StringPool.CLOSE_PARENTHESIS);
+
+				if (!filterString.startsWith(StringPool.OPEN_PARENTHESIS)) {
+					sb.append(StringPool.OPEN_PARENTHESIS);
+				}
+
+				sb.append(filterString);
+
+				if (!filterString.endsWith(StringPool.CLOSE_PARENTHESIS)) {
+					sb.append(StringPool.CLOSE_PARENTHESIS);
+				}
+
+				sb.append(StringPool.CLOSE_PARENTHESIS);
+
+				Filter filter = registry.getFilter(sb.toString());
+
+				serviceTracker = registry.trackServices(
+					filter,
+					new ServiceTrackerFieldUpdaterCustomizer<>(
+						field, null, dummyService));
+			}
+
+			serviceTracker.open();
+
+			return (T)field.get(null);
+		}
+		catch (ReflectiveOperationException roe) {
+			return ReflectionUtil.throwException(roe);
+		}
+	}
+
+	/**
+	 * @deprecated As of 7.1.0, replaced by {@link
+	 *             #newServiceTrackedInstance(Class, Class, String, String)}
+	 */
+	@Deprecated
 	public static <T> T newServiceTrackedInstance(
 		Class<T> interfaceClass, String filterString) {
 

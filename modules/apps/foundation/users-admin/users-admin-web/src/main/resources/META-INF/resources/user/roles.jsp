@@ -54,6 +54,7 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 <aui:input name="deleteRoleIds" type="hidden" />
 
 <liferay-ui:search-container
+	cssClass="lfr-search-container-roles"
 	curParam="regularRolesCur"
 	headerNames="title,null"
 	id="rolesSearchContainer"
@@ -70,6 +71,7 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 		modelVar="role"
 	>
 		<liferay-ui:search-container-column-text
+			cssClass="table-cell-content"
 			name="title"
 		>
 			<liferay-ui:icon
@@ -80,7 +82,7 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 		</liferay-ui:search-container-column-text>
 
 		<c:if test="<%= !portletName.equals(myAccountPortletId) && !RoleMembershipPolicyUtil.isRoleRequired(selUser.getUserId(), role.getRoleId()) %>">
-			<liferay-ui:search-container-column-text cssClass="list-group-item-field">
+			<liferay-ui:search-container-column-text>
 				<a class="modify-link" data-rowId="<%= role.getRoleId() %>" href="javascript:;"><%= removeRoleIcon %></a>
 			</liferay-ui:search-container-column-text>
 		</c:if>
@@ -145,6 +147,7 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 </c:if>
 
 <liferay-ui:search-container
+	cssClass="lfr-search-container-inherited-regular-roles"
 	curParam="inheritedRegularRolesCur"
 	headerNames="title,group"
 	id="inheritedRolesSearchContainer"
@@ -194,6 +197,7 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 
 <c:if test="<%= !organizations.isEmpty() %>">
 	<liferay-ui:search-container
+		cssClass="lfr-search-container-organization-roles"
 		curParam="organizationRolesCur"
 		headerNames="title,organization,null"
 		id="organizationRolesSearchContainer"
@@ -210,6 +214,7 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 			modelVar="userGroupRole"
 		>
 			<liferay-ui:search-container-column-text
+				cssClass="table-cell-content"
 				name="title"
 			>
 				<liferay-ui:icon
@@ -220,6 +225,7 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text
+				cssClass="table-cell-content"
 				name="organization"
 				value="<%= HtmlUtil.escape(userGroupRole.getGroup().getDescriptiveName(locale)) %>"
 			/>
@@ -240,7 +246,7 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 			%>
 
 			<c:if test="<%= !portletName.equals(myAccountPortletId) && !membershipProtected %>">
-				<liferay-ui:search-container-column-text cssClass="list-group-item-field">
+				<liferay-ui:search-container-column-text>
 					<a class="modify-link" data-groupId="<%= userGroupRole.getGroupId() %>" data-rowId="<%= userGroupRole.getRoleId() %>" href="javascript:;"><%= removeRoleIcon %></a>
 				</liferay-ui:search-container-column-text>
 			</c:if>
@@ -364,6 +370,7 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 	</c:when>
 	<c:otherwise>
 		<liferay-ui:search-container
+			cssClass="lfr-search-container-site-roles"
 			curParam="siteRolesCur"
 			headerNames="title,site,null"
 			id="siteRolesSearchContainer"
@@ -380,6 +387,7 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 				modelVar="userGroupRole"
 			>
 				<liferay-ui:search-container-column-text
+					cssClass="table-cell-content"
 					name="title"
 				>
 					<liferay-ui:icon
@@ -390,6 +398,7 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 				</liferay-ui:search-container-column-text>
 
 				<liferay-ui:search-container-column-text
+					cssClass="table-cell-content"
 					name="site"
 					value="<%= HtmlUtil.escape(userGroupRole.getGroup().getDescriptiveName(locale)) %>"
 				/>
@@ -410,7 +419,7 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 				%>
 
 				<c:if test="<%= !portletName.equals(myAccountPortletId) && !membershipProtected %>">
-					<liferay-ui:search-container-column-text cssClass="list-group-item-field">
+					<liferay-ui:search-container-column-text>
 						<a class="modify-link" data-groupId="<%= userGroupRole.getGroupId() %>" data-rowId="<%= userGroupRole.getRoleId() %>" href="javascript:;"><%= removeRoleIcon %></a>
 					</liferay-ui:search-container-column-text>
 				</c:if>
@@ -530,6 +539,7 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 
 <c:if test="<%= !inheritedSiteRoles.isEmpty() %>">
 	<liferay-ui:search-container
+		cssClass="lfr-search-container-inherited-site-roles"
 		curParam="inheritedSiteRolesCur"
 		headerNames="title,site,user-group"
 		id="inheritedSiteRolesSearchContainer"
@@ -546,6 +556,7 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 			modelVar="userGroupGroupRole"
 		>
 			<liferay-ui:search-container-column-text
+				cssClass="table-cell-content"
 				name="title"
 			>
 				<liferay-ui:icon
@@ -556,11 +567,13 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text
+				cssClass="table-cell-content"
 				name="site"
 				value="<%= HtmlUtil.escape(userGroupGroupRole.getGroup().getDescriptiveName(locale)) %>"
 			/>
 
 			<liferay-ui:search-container-column-text
+				cssClass="table-cell-content"
 				name="user-group"
 				value="<%= HtmlUtil.escape(userGroupGroupRole.getUserGroup().getName()) %>"
 			/>

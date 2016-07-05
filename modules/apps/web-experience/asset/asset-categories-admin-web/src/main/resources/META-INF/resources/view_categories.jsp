@@ -164,15 +164,15 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(assetCategoriesDisplayContext.getVoc
 				</c:when>
 				<c:when test='<%= Objects.equals(assetCategoriesDisplayContext.getDisplayStyle(), "list") %>'>
 					<liferay-ui:search-container-column-text
+						cssClass="table-cell-content"
 						href="<%= rowURL %>"
 						name="category"
-						truncate="<%= true %>"
 						value="<%= HtmlUtil.escape(curCategory.getTitle(locale)) %>"
 					/>
 
 					<liferay-ui:search-container-column-text
+						cssClass="table-cell-content"
 						name="description"
-						truncate="<%= true %>"
 						value="<%= HtmlUtil.escape(curCategory.getDescription(locale)) %>"
 					/>
 

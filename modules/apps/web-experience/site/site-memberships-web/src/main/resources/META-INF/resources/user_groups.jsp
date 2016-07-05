@@ -103,7 +103,7 @@ userGroupSearch.setResults(userGroups);
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= deleteGroupUserGroupsURL %>" cssClass="container-fluid-1280" name="fm">
+<aui:form action="<%= deleteGroupUserGroupsURL %>" cssClass="container-fluid-1280 portlet-site-memberships-user-groups" name="fm">
 	<aui:input name="tabs1" type="hidden" value="user-groups" />
 
 	<liferay-ui:search-container

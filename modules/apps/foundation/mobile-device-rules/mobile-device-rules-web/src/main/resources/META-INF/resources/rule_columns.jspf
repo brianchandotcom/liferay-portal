@@ -15,14 +15,14 @@
 --%>
 
 <liferay-ui:search-container-column-text
+	cssClass="table-cell-content"
 	name="name"
-	truncate="<%= true %>"
 	value="<%= rule.getName(locale) %>"
 />
 
 <liferay-ui:search-container-column-text
+	cssClass="table-cell-content"
 	name="description"
-	truncate="<%= true %>"
 	value="<%= rule.getDescription(locale) %>"
 />
 

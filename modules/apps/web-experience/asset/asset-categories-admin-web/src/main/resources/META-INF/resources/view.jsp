@@ -164,15 +164,15 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabul
 				</c:when>
 				<c:when test='<%= Objects.equals(assetCategoriesDisplayContext.getDisplayStyle(), "list") %>'>
 					<liferay-ui:search-container-column-text
+						cssClass="table-cell-content"
 						href="<%= rowURL %>"
 						name="name"
-						truncate="<%= true %>"
 						value="<%= HtmlUtil.escape(vocabulary.getTitle(locale)) %>"
 					/>
 
 					<liferay-ui:search-container-column-text
+						cssClass="table-cell-content"
 						name="description"
-						truncate="<%= true %>"
 						value="<%= HtmlUtil.escape(vocabulary.getDescription(locale)) %>"
 					/>
 

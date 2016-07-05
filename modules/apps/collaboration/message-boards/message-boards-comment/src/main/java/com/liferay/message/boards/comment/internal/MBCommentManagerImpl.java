@@ -177,6 +177,25 @@ public class MBCommentManagerImpl implements CommentManager {
 	}
 
 	@Override
+	public DiscussionComment fetchDiscussionComment(long userId, long commentId)
+		throws PortalException {
+
+		MBMessage mbMessage = _mbMessageLocalService.fetchMBMessage(commentId);
+
+		if (mbMessage == null) {
+			return null;
+		}
+
+		MBMessageDisplay messageDisplay =
+			_mbMessageLocalService.getDiscussionMessageDisplay(
+				userId, mbMessage.getGroupId(), mbMessage.getClassName(),
+				mbMessage.getClassPK(), WorkflowConstants.STATUS_ANY,
+				new MessageThreadComparator());
+
+		return getDiscussionComment(userId, messageDisplay);
+	}
+
+	@Override
 	public int getCommentsCount(String className, long classPK) {
 		long classNameId = PortalUtil.getClassNameId(className);
 
@@ -195,30 +214,8 @@ public class MBCommentManagerImpl implements CommentManager {
 				userId, groupId, className, classPK,
 				WorkflowConstants.STATUS_ANY, new MessageThreadComparator());
 
-		MBTreeWalker treeWalker = messageDisplay.getTreeWalker();
-
-		List<MBMessage> messages = treeWalker.getMessages();
-
-		List<RatingsEntry> ratingsEntries = Collections.emptyList();
-		List<RatingsStats> ratingsStats = Collections.emptyList();
-
-		if (messages.size() > 1) {
-			List<Long> classPKs = new ArrayList<>();
-
-			for (MBMessage curMessage : messages) {
-				if (!curMessage.isRoot()) {
-					classPKs.add(curMessage.getMessageId());
-				}
-			}
-
-			ratingsEntries = _ratingsEntryLocalService.getEntries(
-				userId, CommentConstants.getDiscussionClassName(), classPKs);
-			ratingsStats = _ratingsStatsLocalService.getStats(
-				CommentConstants.getDiscussionClassName(), classPKs);
-		}
-
-		DiscussionComment rootDiscussionComment = new MBDiscussionCommentImpl(
-			treeWalker.getRoot(), treeWalker, ratingsEntries, ratingsStats);
+		DiscussionComment rootDiscussionComment = getDiscussionComment(
+			userId, messageDisplay);
 
 		return new MBDiscussionImpl(
 			rootDiscussionComment, messageDisplay.isDiscussionMaxComments());
@@ -333,6 +330,35 @@ public class MBCommentManagerImpl implements CommentManager {
 			serviceContext);
 
 		return message.getMessageId();
+	}
+
+	protected DiscussionComment getDiscussionComment(
+		long userId, MBMessageDisplay messageDisplay) {
+
+		MBTreeWalker treeWalker = messageDisplay.getTreeWalker();
+
+		List<MBMessage> messages = treeWalker.getMessages();
+
+		List<RatingsEntry> ratingsEntries = Collections.emptyList();
+		List<RatingsStats> ratingsStats = Collections.emptyList();
+
+		if (messages.size() > 1) {
+			List<Long> classPKs = new ArrayList<>();
+
+			for (MBMessage curMessage : messages) {
+				if (!curMessage.isRoot()) {
+					classPKs.add(curMessage.getMessageId());
+				}
+			}
+
+			ratingsEntries = _ratingsEntryLocalService.getEntries(
+				userId, CommentConstants.getDiscussionClassName(), classPKs);
+			ratingsStats = _ratingsStatsLocalService.getStats(
+				CommentConstants.getDiscussionClassName(), classPKs);
+		}
+
+		return new MBDiscussionCommentImpl(
+			treeWalker.getRoot(), treeWalker, ratingsEntries, ratingsStats);
 	}
 
 	@Reference(unbind = "-")

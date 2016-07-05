@@ -104,7 +104,7 @@ public class MBDiscussionCommentImpl
 
 	@Override
 	public int getThreadCommentsCount() {
-		List<MBMessage> messages = _treeWalker.getMessages();
+		List<MBMessage> messages = _treeWalker.getChildren(getMessage());
 
 		return messages.size();
 	}

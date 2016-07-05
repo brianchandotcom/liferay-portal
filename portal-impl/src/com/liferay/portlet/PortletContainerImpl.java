@@ -427,7 +427,7 @@ public class PortletContainerImpl implements PortletContainer {
 
 				PortletURL portletURL = PortletURLFactoryUtil.create(
 					actionRequestImpl, actionRequestImpl.getPortletName(),
-					layout.getPlid(), PortletRequest.RENDER_PHASE);
+					layout, PortletRequest.RENDER_PHASE);
 
 				Map<String, String[]> renderParameters =
 					actionResponseImpl.getRenderParameterMap();

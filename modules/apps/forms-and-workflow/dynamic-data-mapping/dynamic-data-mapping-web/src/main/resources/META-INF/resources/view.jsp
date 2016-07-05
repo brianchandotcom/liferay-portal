@@ -105,7 +105,6 @@ structureSearch.setOrderByType(ddmDisplayContext.getOrderByType());
 				%>
 
 				<liferay-ui:search-container-column-text
-					cssClass="text-strong"
 					href="<%= rowHREF %>"
 					name="id"
 					orderable="<%= true %>"
@@ -114,13 +113,14 @@ structureSearch.setOrderByType(ddmDisplayContext.getOrderByType());
 				/>
 
 				<liferay-ui:search-container-column-text
-					cssClass="text-strong"
+					cssClass="table-cell-content"
 					href="<%= rowHREF %>"
 					name="name"
 					value="<%= HtmlUtil.escape(structure.getName(locale)) %>"
 				/>
 
 				<liferay-ui:search-container-column-text
+					cssClass="table-cell-content"
 					href="<%= rowHREF %>"
 					name="description"
 					value="<%= HtmlUtil.escape(structure.getDescription(locale)) %>"
@@ -160,8 +160,6 @@ structureSearch.setOrderByType(ddmDisplayContext.getOrderByType());
 				/>
 
 				<liferay-ui:search-container-column-jsp
-					align="right"
-					cssClass="entry-action"
 					path="/structure_action.jsp"
 				/>
 			</liferay-ui:search-container-row>

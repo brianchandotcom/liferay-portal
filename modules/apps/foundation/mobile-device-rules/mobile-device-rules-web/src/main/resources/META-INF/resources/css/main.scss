@@ -1,3 +1,15 @@
+.mobile-device-rules {
+	.lfr-description-column {
+		width: 60%;
+	}
+
+	.lfr-name-column {
+		max-width: 150px;
+		min-width: 150px;
+		width: 20%;
+	}
+}
+
 .rule-group-handle {
 	cursor: move;
 }

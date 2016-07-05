@@ -40,6 +40,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "userGr
 
 <liferay-ui:search-container
 	compactEmptyResultsMessage="<%= true %>"
+	cssClass="lfr-search-container-user-groups"
 	curParam="userGroupsCur"
 	emptyResultsMessage="this-user-does-not-belong-to-a-user-group"
 	headerNames="name,null"
@@ -57,12 +58,13 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "userGr
 		modelVar="userGroup"
 	>
 		<liferay-ui:search-container-column-text
+			cssClass="table-cell-content"
 			name="name"
 			property="name"
 		/>
 
 		<c:if test="<%= !portletName.equals(myAccountPortletId) && !UserGroupMembershipPolicyUtil.isMembershipRequired((selUser != null) ? selUser.getUserId() : 0, userGroup.getUserGroupId()) %>">
-			<liferay-ui:search-container-column-text cssClass="list-group-item-field">
+			<liferay-ui:search-container-column-text>
 				<a class="modify-link" data-rowId="<%= userGroup.getUserGroupId() %>" href="javascript:;"><%= removeUserGroupIcon %></a>
 			</liferay-ui:search-container-column-text>
 		</c:if>

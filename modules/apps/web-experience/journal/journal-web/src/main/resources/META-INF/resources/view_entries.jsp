@@ -176,15 +176,15 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 						/>
 
 						<liferay-ui:search-container-column-jsp
+							cssClass="table-cell-content"
 							href="<%= rowURL %>"
 							name="title"
 							path="/article_title.jsp"
-							truncate="<%= true %>"
 						/>
 
 						<liferay-ui:search-container-column-text
+							cssClass="table-cell-content"
 							name="description"
-							truncate="<%= true %>"
 							value="<%= HtmlUtil.escape(curArticle.getDescription(locale)) %>"
 						/>
 
@@ -314,15 +314,15 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 						/>
 
 						<liferay-ui:search-container-column-text
+							cssClass="table-cell-content"
 							href="<%= rowURL.toString() %>"
 							name="title"
-							truncate="<%= true %>"
 							value="<%= HtmlUtil.escape(curFolder.getName()) %>"
 						/>
 
 						<liferay-ui:search-container-column-text
+							cssClass="table-cell-content"
 							name="description"
-							truncate="<%= true %>"
 							value="<%= HtmlUtil.escape(curFolder.getDescription()) %>"
 						/>
 
@@ -353,7 +353,6 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 
 						<c:if test="<%= journalDisplayContext.isShowEditActions() %>">
 							<liferay-ui:search-container-column-jsp
-								cssClass="entry-action-column"
 								path="/folder_action.jsp"
 							/>
 						</c:if>

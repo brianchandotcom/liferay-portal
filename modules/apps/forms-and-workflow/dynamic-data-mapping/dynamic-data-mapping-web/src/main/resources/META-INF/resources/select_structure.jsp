@@ -85,15 +85,13 @@ request.setAttribute(WebKeys.SEARCH_CONTAINER, structureSearch);
 			modelVar="structure"
 		>
 			<liferay-ui:search-container-column-text
-				cssClass="id-column text-column"
 				name="id"
 				value="<%= String.valueOf(structure.getStructureId()) %>"
 			/>
 
 			<liferay-ui:search-container-column-text
-				cssClass="content-column name-column title-column"
+				cssClass="table-cell-content"
 				name="name"
-				truncate="<%= true %>"
 			>
 				<c:choose>
 					<c:when test="<%= (structure.getStructureId() != classPK) && ((classPK == 0) || (structure.getParentStructureId() == 0) || (structure.getParentStructureId() != classPK)) %>">
@@ -116,20 +114,18 @@ request.setAttribute(WebKeys.SEARCH_CONTAINER, structureSearch);
 						</aui:a>
 					</c:when>
 					<c:otherwise>
-						<span class="text-muted"><%= HtmlUtil.escape(structure.getUnambiguousName(structureSearch.getResults(), themeDisplay.getScopeGroupId(), locale)) %></span>
+						<%= HtmlUtil.escape(structure.getUnambiguousName(structureSearch.getResults(), themeDisplay.getScopeGroupId(), locale)) %>
 					</c:otherwise>
 				</c:choose>
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text
-				cssClass="content-column description-column"
+				cssClass="table-cell-content"
 				name="description"
-				truncate="<%= true %>"
 				value="<%= HtmlUtil.escape(structure.getDescription(locale)) %>"
 			/>
 
 			<liferay-ui:search-container-column-date
-				cssClass="modified-date-column text-column"
 				name="modified-date"
 				value="<%= structure.getModifiedDate() %>"
 			/>

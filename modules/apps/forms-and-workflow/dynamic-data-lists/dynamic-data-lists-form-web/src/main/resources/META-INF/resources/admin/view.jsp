@@ -70,15 +70,15 @@ portletURL.setParameter("displayStyle", displayStyle);
 					</c:when>
 					<c:otherwise>
 						<liferay-ui:search-container-column-text
+							cssClass="table-cell-content"
 							href="<%= rowURL %>"
 							name="name"
-							truncate="<%= true %>"
 							value="<%= HtmlUtil.escape(recordSet.getName(locale)) %>"
 						/>
 
 						<liferay-ui:search-container-column-text
+							cssClass="table-cell-content"
 							name="description"
-							truncate="<%= true %>"
 							value="<%= HtmlUtil.escape(recordSet.getDescription(locale)) %>"
 						/>
 

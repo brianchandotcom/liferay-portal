@@ -163,17 +163,17 @@ TemplateSearchTerms templateSearchTerms = (TemplateSearchTerms)templateSearch.ge
 
 				<c:if test='<%= !excludedColumnNames.contains("name") %>'>
 					<liferay-ui:search-container-column-text
+						cssClass="table-cell-content"
 						href="<%= rowHREF %>"
 						name="name"
-						truncate="<%= true %>"
 						value="<%= HtmlUtil.escape(template.getName(locale)) %>"
 					/>
 				</c:if>
 
 				<liferay-ui:search-container-column-jsp
+					cssClass="table-cell-content"
 					name="description"
 					path="/template_description.jsp"
-					truncate="<%= true %>"
 				/>
 
 				<c:if test='<%= !excludedColumnNames.contains("structure") && (structure == null) %>'>

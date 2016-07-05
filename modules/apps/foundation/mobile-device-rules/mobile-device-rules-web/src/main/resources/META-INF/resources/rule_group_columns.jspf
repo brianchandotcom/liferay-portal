@@ -15,15 +15,15 @@
 --%>
 
 <liferay-ui:search-container-column-text
+	cssClass="table-cell-content"
 	href="<%= rowHREF %>"
 	name="name"
-	truncate="<%= true %>"
 	value="<%= ruleGroup.getName(locale) %>"
 />
 
 <liferay-ui:search-container-column-text
+	cssClass="table-cell-content"
 	name="description"
-	truncate="<%= true %>"
 	value="<%= ruleGroup.getDescription(locale) %>"
 />
 

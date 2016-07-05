@@ -68,18 +68,19 @@ User membershipRequestUser = UserLocalServiceUtil.fetchUserById(membershipReques
 	</c:when>
 	<c:when test='<%= displayStyle.equals("list") %>'>
 		<liferay-ui:search-container-column-text
+			cssClass="table-cell-content"
 			name="user"
-			truncate="<%= true %>"
 			value="<%= HtmlUtil.escape(membershipRequestUser.getFullName()) %>"
 		/>
 
 		<liferay-ui:search-container-column-text
+			cssClass="table-cell-content"
 			name="user-comments"
-			truncate="<%= true %>"
 			value="<%= HtmlUtil.escape(membershipRequest.getComments()) %>"
 		/>
 
 		<liferay-ui:search-container-column-text
+			cssClass="table-cell-content"
 			name="email-address"
 			value="<%= membershipRequestUser.getEmailAddress() %>"
 		/>

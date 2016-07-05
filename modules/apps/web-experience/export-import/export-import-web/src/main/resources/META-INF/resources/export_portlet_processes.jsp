@@ -88,6 +88,7 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 		/>
 
 		<liferay-ui:search-container-column-text
+			cssClass="table-cell-content"
 			name="download"
 		>
 

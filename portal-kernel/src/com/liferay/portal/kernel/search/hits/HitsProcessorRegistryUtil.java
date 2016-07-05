@@ -34,7 +34,9 @@ public class HitsProcessorRegistryUtil {
 		return getHitsProcessorRegistry().process(searchContext, hits);
 	}
 
-	private static final HitsProcessorRegistry _hitsProcessorRegistry =
-		ProxyFactory.newServiceTrackedInstance(HitsProcessorRegistry.class);
+	private static volatile HitsProcessorRegistry _hitsProcessorRegistry =
+		ProxyFactory.newServiceTrackedInstance(
+			HitsProcessorRegistry.class, HitsProcessorRegistryUtil.class,
+			"_hitsProcessorRegistry");
 
 }

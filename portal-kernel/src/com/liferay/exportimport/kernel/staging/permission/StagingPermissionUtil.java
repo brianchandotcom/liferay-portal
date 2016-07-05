@@ -40,7 +40,9 @@ public class StagingPermissionUtil {
 			actionId);
 	}
 
-	private static final StagingPermission _stagingPermission =
-		ProxyFactory.newServiceTrackedInstance(StagingPermission.class);
+	private static volatile StagingPermission _stagingPermission =
+		ProxyFactory.newServiceTrackedInstance(
+			StagingPermission.class, StagingPermissionUtil.class,
+			"_stagingPermission");
 
 }

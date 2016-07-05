@@ -52,8 +52,10 @@ public class BackgroundTaskStatusRegistryUtil {
 			backgroundTaskId);
 	}
 
-	private static final BackgroundTaskStatusRegistry
+	private static volatile BackgroundTaskStatusRegistry
 		_backgroundTaskStatusRegistry = ProxyFactory.newServiceTrackedInstance(
-			BackgroundTaskStatusRegistry.class);
+			BackgroundTaskStatusRegistry.class,
+			BackgroundTaskStatusRegistryUtil.class,
+			"_backgroundTaskStatusRegistry");
 
 }

@@ -30,8 +30,10 @@ public class ExportImportLifecycleManagerUtil {
 			code, processFlag, arguments);
 	}
 
-	private static final ExportImportLifecycleManager
+	private static volatile ExportImportLifecycleManager
 		_exportImportLifecycleManager = ProxyFactory.newServiceTrackedInstance(
-			ExportImportLifecycleManager.class);
+			ExportImportLifecycleManager.class,
+			ExportImportLifecycleManagerUtil.class,
+			"_exportImportLifecycleManager");
 
 }

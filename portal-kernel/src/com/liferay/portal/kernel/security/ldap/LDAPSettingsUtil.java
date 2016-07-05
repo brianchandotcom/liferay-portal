@@ -99,7 +99,8 @@ public class LDAPSettingsUtil {
 		return _ldapSettings.isPasswordPolicyEnabled(companyId);
 	}
 
-	private static final LDAPSettings _ldapSettings =
-		ProxyFactory.newServiceTrackedInstance(LDAPSettings.class);
+	private static volatile LDAPSettings _ldapSettings =
+		ProxyFactory.newServiceTrackedInstance(
+			LDAPSettings.class, LDAPSettingsUtil.class, "_ldapSettings");
 
 }

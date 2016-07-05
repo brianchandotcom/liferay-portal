@@ -62,7 +62,9 @@ public class StorageEngineManagerUtil {
 		_storageEngineManager.update(classPK, ddmFormValues, serviceContext);
 	}
 
-	private static final StorageEngineManager _storageEngineManager =
-		ProxyFactory.newServiceTrackedInstance(StorageEngineManager.class);
+	private static volatile StorageEngineManager _storageEngineManager =
+		ProxyFactory.newServiceTrackedInstance(
+			StorageEngineManager.class, StorageEngineManagerUtil.class,
+			"_storageEngineManager");
 
 }

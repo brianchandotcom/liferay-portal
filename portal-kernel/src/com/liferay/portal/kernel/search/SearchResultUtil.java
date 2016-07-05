@@ -42,7 +42,9 @@ public class SearchResultUtil {
 			hits, locale, portletRequest, portletResponse);
 	}
 
-	private static final SearchResultTranslator _searchResultTranslator =
-		ProxyFactory.newServiceTrackedInstance(SearchResultTranslator.class);
+	private static volatile SearchResultTranslator _searchResultTranslator =
+		ProxyFactory.newServiceTrackedInstance(
+			SearchResultTranslator.class, SearchResultUtil.class,
+			"_searchResultTranslator");
 
 }

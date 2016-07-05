@@ -69,7 +69,8 @@ public class TriggerFactoryUtil {
 			jobName, groupName, null, null, cronExpression);
 	}
 
-	private static final TriggerFactory _triggerFactory =
-		ProxyFactory.newServiceTrackedInstance(TriggerFactory.class);
+	private static volatile TriggerFactory _triggerFactory =
+		ProxyFactory.newServiceTrackedInstance(
+			TriggerFactory.class, TriggerFactoryUtil.class, "_triggerFactory");
 
 }

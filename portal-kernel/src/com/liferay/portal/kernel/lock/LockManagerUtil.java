@@ -113,7 +113,8 @@ public class LockManagerUtil {
 		_lockManager.unlock(className, key, owner);
 	}
 
-	private static final LockManager _lockManager =
-		ProxyFactory.newServiceTrackedInstance(LockManager.class);
+	private static volatile LockManager _lockManager =
+		ProxyFactory.newServiceTrackedInstance(
+			LockManager.class, LockManagerUtil.class, "_lockManager");
 
 }

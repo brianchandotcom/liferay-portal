@@ -71,7 +71,9 @@ public class PortletDataContextFactoryUtil {
 			themeDisplay, startDate, endDate);
 	}
 
-	private static final PortletDataContextFactory _portletDataContextFactory =
-		ProxyFactory.newServiceTrackedInstance(PortletDataContextFactory.class);
+	private static volatile PortletDataContextFactory
+		_portletDataContextFactory = ProxyFactory.newServiceTrackedInstance(
+			PortletDataContextFactory.class,
+			PortletDataContextFactoryUtil.class, "_portletDataContextFactory");
 
 }

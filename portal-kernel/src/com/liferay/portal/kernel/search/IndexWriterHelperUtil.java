@@ -247,7 +247,9 @@ public class IndexWriterHelperUtil {
 		_indexWriterHelper.updatePermissionFields(name, primKey);
 	}
 
-	private static final IndexWriterHelper _indexWriterHelper =
-		ProxyFactory.newServiceTrackedInstance(IndexWriterHelper.class);
+	private static volatile IndexWriterHelper _indexWriterHelper =
+		ProxyFactory.newServiceTrackedInstance(
+			IndexWriterHelper.class, IndexWriterHelperUtil.class,
+			"_indexWriterHelper");
 
 }

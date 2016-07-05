@@ -42,7 +42,9 @@ public class TemplateHandlerRegistryUtil {
 		return _templateHandlerRegistry.getTemplateHandlers();
 	}
 
-	private static final TemplateHandlerRegistry _templateHandlerRegistry =
-		ProxyFactory.newServiceTrackedInstance(TemplateHandlerRegistry.class);
+	private static volatile TemplateHandlerRegistry _templateHandlerRegistry =
+		ProxyFactory.newServiceTrackedInstance(
+			TemplateHandlerRegistry.class, TemplateHandlerRegistryUtil.class,
+			"_templateHandlerRegistry");
 
 }

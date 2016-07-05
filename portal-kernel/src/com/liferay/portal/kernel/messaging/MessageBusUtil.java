@@ -224,8 +224,9 @@ public class MessageBusUtil {
 	private static final MessageBusUtil _instance = new MessageBusUtil();
 
 	private static volatile boolean _initialized;
-	private static final MessageBus _messageBus =
-		ProxyFactory.newServiceTrackedInstance(MessageBus.class);
+	private static volatile MessageBus _messageBus =
+		ProxyFactory.newServiceTrackedInstance(
+			MessageBus.class, MessageBusUtil.class, "_messageBus");
 	private static final ServiceTracker<MessageBus, MessageBus> _serviceTracker;
 	private static SynchronousMessageSender.Mode _synchronousMessageSenderMode;
 

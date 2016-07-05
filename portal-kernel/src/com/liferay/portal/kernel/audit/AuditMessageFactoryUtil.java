@@ -81,7 +81,9 @@ public class AuditMessageFactoryUtil {
 			additionalInfo);
 	}
 
-	private static final AuditMessageFactory _auditMessageFactory =
-		ProxyFactory.newServiceTrackedInstance(AuditMessageFactory.class);
+	private static volatile AuditMessageFactory _auditMessageFactory =
+		ProxyFactory.newServiceTrackedInstance(
+			AuditMessageFactory.class, AuditMessageFactoryUtil.class,
+			"_auditMessageFactory");
 
 }

@@ -73,7 +73,8 @@ public class FinderCacheUtil {
 		_finderCache.removeResult(finderPath, args);
 	}
 
-	private static final FinderCache _finderCache =
-		ProxyFactory.newServiceTrackedInstance(FinderCache.class);
+	private static volatile FinderCache _finderCache =
+		ProxyFactory.newServiceTrackedInstance(
+			FinderCache.class, FinderCacheUtil.class, "_finderCache");
 
 }

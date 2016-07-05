@@ -58,8 +58,10 @@ public class PortletDisplayTemplateManagerUtil {
 			request, response, templateId, entries, contextObjects);
 	}
 
-	private static final PortletDisplayTemplateManager
+	private static volatile PortletDisplayTemplateManager
 		_portletDisplayTemplateManager = ProxyFactory.newServiceTrackedInstance(
-			PortletDisplayTemplateManager.class);
+			PortletDisplayTemplateManager.class,
+			PortletDisplayTemplateManagerUtil.class,
+			"_portletDisplayTemplateManager");
 
 }

@@ -56,7 +56,8 @@ public class LayoutStagingUtil {
 		return _layoutStaging.isBranchingLayoutSet(group, privateLayout);
 	}
 
-	private static final LayoutStaging _layoutStaging =
-		ProxyFactory.newServiceTrackedInstance(LayoutStaging.class);
+	private static volatile LayoutStaging _layoutStaging =
+		ProxyFactory.newServiceTrackedInstance(
+			LayoutStaging.class, LayoutStagingUtil.class, "_layoutStaging");
 
 }

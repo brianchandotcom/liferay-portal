@@ -322,7 +322,9 @@ public class SchedulerEngineHelperUtil {
 		getSchedulerEngineHelper().update(trigger, storageType);
 	}
 
-	private static final SchedulerEngineHelper _instance =
-		ProxyFactory.newServiceTrackedInstance(SchedulerEngineHelper.class);
+	private static volatile SchedulerEngineHelper _instance =
+		ProxyFactory.newServiceTrackedInstance(
+			SchedulerEngineHelper.class, SchedulerEngineHelperUtil.class,
+			"_instance");
 
 }

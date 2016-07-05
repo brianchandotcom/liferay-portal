@@ -732,7 +732,8 @@ public class StagingUtil {
 			remoteGroupId);
 	}
 
-	private static final Staging _staging =
-		ProxyFactory.newServiceTrackedInstance(Staging.class);
+	private static volatile Staging _staging =
+		ProxyFactory.newServiceTrackedInstance(
+			Staging.class, StagingUtil.class, "_staging");
 
 }

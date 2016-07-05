@@ -33,7 +33,9 @@ public class JournalConverterManagerUtil {
 		return _journalConverterManager.getDDMXSD(journalXSD, defaultLocale);
 	}
 
-	private static final JournalConverterManager _journalConverterManager =
-		ProxyFactory.newServiceTrackedInstance(JournalConverterManager.class);
+	private static volatile JournalConverterManager _journalConverterManager =
+		ProxyFactory.newServiceTrackedInstance(
+			JournalConverterManager.class, JournalConverterManagerUtil.class,
+			"_journalConverterManager");
 
 }

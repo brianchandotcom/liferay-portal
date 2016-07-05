@@ -107,9 +107,13 @@ public class SearchEngineHelperUtil {
 		searchEngine.initialize(CompanyConstants.SYSTEM);
 	}
 
-	private static final SearchEngineHelper _searchEngineHelper =
-		ProxyFactory.newServiceTrackedInstance(SearchEngineHelper.class);
-	private static final SearchPermissionChecker _searchPermissionChecker =
-		ProxyFactory.newServiceTrackedInstance(SearchPermissionChecker.class);
+	private static volatile SearchEngineHelper _searchEngineHelper =
+		ProxyFactory.newServiceTrackedInstance(
+			SearchEngineHelper.class, SearchEngineHelperUtil.class,
+			"_searchEngineHelper");
+	private static volatile SearchPermissionChecker _searchPermissionChecker =
+		ProxyFactory.newServiceTrackedInstance(
+			SearchPermissionChecker.class, SearchEngineHelperUtil.class,
+			"_searchPermissionChecker");
 
 }

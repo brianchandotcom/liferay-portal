@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.xsl.content.web.util;
+package com.liferay.xsl.content.web.internal.util;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.theme.ThemeDisplay;

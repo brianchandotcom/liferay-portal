@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.xsl.content.web.portlet.action;
+package com.liferay.xsl.content.web.internal.portlet.action;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
@@ -22,8 +22,8 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.xsl.content.web.configuration.XSLContentConfiguration;
-import com.liferay.xsl.content.web.constants.XSLContentPortletKeys;
-import com.liferay.xsl.content.web.util.XSLContentUtil;
+import com.liferay.xsl.content.web.internal.constants.XSLContentPortletKeys;
+import com.liferay.xsl.content.web.internal.util.XSLContentUtil;
 
 import java.util.Map;
 

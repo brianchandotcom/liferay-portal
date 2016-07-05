@@ -1822,7 +1822,7 @@
 		</execute>
 	</command>
 
-	<command name="CheckExternalLinksAvailabilityForTemplateDisplayClasses" priority="4">
+	<command name="ViewDisplayTemplateClassLinks" priority="4">
 		<description message="This is a use case for LPS-66228." />
 
 		<execute macro="Navigator#openURL" />

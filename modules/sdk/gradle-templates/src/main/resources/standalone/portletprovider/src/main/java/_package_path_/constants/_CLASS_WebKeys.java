@@ -1,6 +1,6 @@
 package _package_.constants;
 
-public class _CLASS_PortletKeys {
+public class _CLASS_WebKeys {
 
 	public static final String _CLASS_ = "_CLASS_";
 

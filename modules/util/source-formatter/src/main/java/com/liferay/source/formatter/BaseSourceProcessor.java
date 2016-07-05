@@ -2984,12 +2984,12 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	private String _copyright;
 	private final Pattern _definitionPattern = Pattern.compile(
 		"^[A-Za-z-][\\s\\S]*?([^\\\\]\n|\\Z)", Pattern.MULTILINE);
-	private Map<String, List<SourceFormatterMessage>> _messagesMap =
-		new ConcurrentHashMap<>();
 	private String[] _excludes;
 	private SourceMismatchException _firstSourceMismatchException;
 	private Set<String> _immutableFieldTypes;
 	private String _mainReleaseVersion;
+	private Map<String, List<SourceFormatterMessage>> _messagesMap =
+		new ConcurrentHashMap<>();
 	private final List<String> _modifiedFileNames =
 		new CopyOnWriteArrayList<>();
 	private final Map<String, Properties> _moduleLangLanguageProperties =

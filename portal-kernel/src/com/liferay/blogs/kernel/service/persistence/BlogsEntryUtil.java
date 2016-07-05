@@ -3581,6 +3581,573 @@ public class BlogsEntryUtil {
 	}
 
 	/**
+	* Returns all the blogs entries where groupId = &#63; and displayDate = &#63; and status = &#63;.
+	*
+	* @param groupId the group ID
+	* @param displayDate the display date
+	* @param status the status
+	* @return the matching blogs entries
+	*/
+	public static List<BlogsEntry> findByG_D_S(long groupId, Date displayDate,
+		int status) {
+		return getPersistence().findByG_D_S(groupId, displayDate, status);
+	}
+
+	/**
+	* Returns a range of all the blogs entries where groupId = &#63; and displayDate = &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param displayDate the display date
+	* @param status the status
+	* @param start the lower bound of the range of blogs entries
+	* @param end the upper bound of the range of blogs entries (not inclusive)
+	* @return the range of matching blogs entries
+	*/
+	public static List<BlogsEntry> findByG_D_S(long groupId, Date displayDate,
+		int status, int start, int end) {
+		return getPersistence()
+				   .findByG_D_S(groupId, displayDate, status, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the blogs entries where groupId = &#63; and displayDate = &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param displayDate the display date
+	* @param status the status
+	* @param start the lower bound of the range of blogs entries
+	* @param end the upper bound of the range of blogs entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching blogs entries
+	*/
+	public static List<BlogsEntry> findByG_D_S(long groupId, Date displayDate,
+		int status, int start, int end,
+		OrderByComparator<BlogsEntry> orderByComparator) {
+		return getPersistence()
+				   .findByG_D_S(groupId, displayDate, status, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the blogs entries where groupId = &#63; and displayDate = &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param displayDate the display date
+	* @param status the status
+	* @param start the lower bound of the range of blogs entries
+	* @param end the upper bound of the range of blogs entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching blogs entries
+	*/
+	public static List<BlogsEntry> findByG_D_S(long groupId, Date displayDate,
+		int status, int start, int end,
+		OrderByComparator<BlogsEntry> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByG_D_S(groupId, displayDate, status, start, end,
+			orderByComparator, retrieveFromCache);
+	}
+
+	/**
+	* Returns the first blogs entry in the ordered set where groupId = &#63; and displayDate = &#63; and status = &#63;.
+	*
+	* @param groupId the group ID
+	* @param displayDate the display date
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching blogs entry
+	* @throws NoSuchEntryException if a matching blogs entry could not be found
+	*/
+	public static BlogsEntry findByG_D_S_First(long groupId, Date displayDate,
+		int status, OrderByComparator<BlogsEntry> orderByComparator)
+		throws com.liferay.blogs.kernel.exception.NoSuchEntryException {
+		return getPersistence()
+				   .findByG_D_S_First(groupId, displayDate, status,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first blogs entry in the ordered set where groupId = &#63; and displayDate = &#63; and status = &#63;.
+	*
+	* @param groupId the group ID
+	* @param displayDate the display date
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
+	*/
+	public static BlogsEntry fetchByG_D_S_First(long groupId, Date displayDate,
+		int status, OrderByComparator<BlogsEntry> orderByComparator) {
+		return getPersistence()
+				   .fetchByG_D_S_First(groupId, displayDate, status,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last blogs entry in the ordered set where groupId = &#63; and displayDate = &#63; and status = &#63;.
+	*
+	* @param groupId the group ID
+	* @param displayDate the display date
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching blogs entry
+	* @throws NoSuchEntryException if a matching blogs entry could not be found
+	*/
+	public static BlogsEntry findByG_D_S_Last(long groupId, Date displayDate,
+		int status, OrderByComparator<BlogsEntry> orderByComparator)
+		throws com.liferay.blogs.kernel.exception.NoSuchEntryException {
+		return getPersistence()
+				   .findByG_D_S_Last(groupId, displayDate, status,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last blogs entry in the ordered set where groupId = &#63; and displayDate = &#63; and status = &#63;.
+	*
+	* @param groupId the group ID
+	* @param displayDate the display date
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
+	*/
+	public static BlogsEntry fetchByG_D_S_Last(long groupId, Date displayDate,
+		int status, OrderByComparator<BlogsEntry> orderByComparator) {
+		return getPersistence()
+				   .fetchByG_D_S_Last(groupId, displayDate, status,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the blogs entries before and after the current blogs entry in the ordered set where groupId = &#63; and displayDate = &#63; and status = &#63;.
+	*
+	* @param entryId the primary key of the current blogs entry
+	* @param groupId the group ID
+	* @param displayDate the display date
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next blogs entry
+	* @throws NoSuchEntryException if a blogs entry with the primary key could not be found
+	*/
+	public static BlogsEntry[] findByG_D_S_PrevAndNext(long entryId,
+		long groupId, Date displayDate, int status,
+		OrderByComparator<BlogsEntry> orderByComparator)
+		throws com.liferay.blogs.kernel.exception.NoSuchEntryException {
+		return getPersistence()
+				   .findByG_D_S_PrevAndNext(entryId, groupId, displayDate,
+			status, orderByComparator);
+	}
+
+	/**
+	* Returns all the blogs entries that the user has permission to view where groupId = &#63; and displayDate = &#63; and status = &#63;.
+	*
+	* @param groupId the group ID
+	* @param displayDate the display date
+	* @param status the status
+	* @return the matching blogs entries that the user has permission to view
+	*/
+	public static List<BlogsEntry> filterFindByG_D_S(long groupId,
+		Date displayDate, int status) {
+		return getPersistence().filterFindByG_D_S(groupId, displayDate, status);
+	}
+
+	/**
+	* Returns a range of all the blogs entries that the user has permission to view where groupId = &#63; and displayDate = &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param displayDate the display date
+	* @param status the status
+	* @param start the lower bound of the range of blogs entries
+	* @param end the upper bound of the range of blogs entries (not inclusive)
+	* @return the range of matching blogs entries that the user has permission to view
+	*/
+	public static List<BlogsEntry> filterFindByG_D_S(long groupId,
+		Date displayDate, int status, int start, int end) {
+		return getPersistence()
+				   .filterFindByG_D_S(groupId, displayDate, status, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the blogs entries that the user has permissions to view where groupId = &#63; and displayDate = &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param displayDate the display date
+	* @param status the status
+	* @param start the lower bound of the range of blogs entries
+	* @param end the upper bound of the range of blogs entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching blogs entries that the user has permission to view
+	*/
+	public static List<BlogsEntry> filterFindByG_D_S(long groupId,
+		Date displayDate, int status, int start, int end,
+		OrderByComparator<BlogsEntry> orderByComparator) {
+		return getPersistence()
+				   .filterFindByG_D_S(groupId, displayDate, status, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the blogs entries before and after the current blogs entry in the ordered set of blogs entries that the user has permission to view where groupId = &#63; and displayDate = &#63; and status = &#63;.
+	*
+	* @param entryId the primary key of the current blogs entry
+	* @param groupId the group ID
+	* @param displayDate the display date
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next blogs entry
+	* @throws NoSuchEntryException if a blogs entry with the primary key could not be found
+	*/
+	public static BlogsEntry[] filterFindByG_D_S_PrevAndNext(long entryId,
+		long groupId, Date displayDate, int status,
+		OrderByComparator<BlogsEntry> orderByComparator)
+		throws com.liferay.blogs.kernel.exception.NoSuchEntryException {
+		return getPersistence()
+				   .filterFindByG_D_S_PrevAndNext(entryId, groupId,
+			displayDate, status, orderByComparator);
+	}
+
+	/**
+	* Removes all the blogs entries where groupId = &#63; and displayDate = &#63; and status = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param displayDate the display date
+	* @param status the status
+	*/
+	public static void removeByG_D_S(long groupId, Date displayDate, int status) {
+		getPersistence().removeByG_D_S(groupId, displayDate, status);
+	}
+
+	/**
+	* Returns the number of blogs entries where groupId = &#63; and displayDate = &#63; and status = &#63;.
+	*
+	* @param groupId the group ID
+	* @param displayDate the display date
+	* @param status the status
+	* @return the number of matching blogs entries
+	*/
+	public static int countByG_D_S(long groupId, Date displayDate, int status) {
+		return getPersistence().countByG_D_S(groupId, displayDate, status);
+	}
+
+	/**
+	* Returns the number of blogs entries that the user has permission to view where groupId = &#63; and displayDate = &#63; and status = &#63;.
+	*
+	* @param groupId the group ID
+	* @param displayDate the display date
+	* @param status the status
+	* @return the number of matching blogs entries that the user has permission to view
+	*/
+	public static int filterCountByG_D_S(long groupId, Date displayDate,
+		int status) {
+		return getPersistence().filterCountByG_D_S(groupId, displayDate, status);
+	}
+
+	/**
+	* Returns all the blogs entries where groupId = &#63; and displayDate &gt; &#63; and status = &#63;.
+	*
+	* @param groupId the group ID
+	* @param displayDate the display date
+	* @param status the status
+	* @return the matching blogs entries
+	*/
+	public static List<BlogsEntry> findByG_GtD_S(long groupId,
+		Date displayDate, int status) {
+		return getPersistence().findByG_GtD_S(groupId, displayDate, status);
+	}
+
+	/**
+	* Returns a range of all the blogs entries where groupId = &#63; and displayDate &gt; &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param displayDate the display date
+	* @param status the status
+	* @param start the lower bound of the range of blogs entries
+	* @param end the upper bound of the range of blogs entries (not inclusive)
+	* @return the range of matching blogs entries
+	*/
+	public static List<BlogsEntry> findByG_GtD_S(long groupId,
+		Date displayDate, int status, int start, int end) {
+		return getPersistence()
+				   .findByG_GtD_S(groupId, displayDate, status, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the blogs entries where groupId = &#63; and displayDate &gt; &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param displayDate the display date
+	* @param status the status
+	* @param start the lower bound of the range of blogs entries
+	* @param end the upper bound of the range of blogs entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching blogs entries
+	*/
+	public static List<BlogsEntry> findByG_GtD_S(long groupId,
+		Date displayDate, int status, int start, int end,
+		OrderByComparator<BlogsEntry> orderByComparator) {
+		return getPersistence()
+				   .findByG_GtD_S(groupId, displayDate, status, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the blogs entries where groupId = &#63; and displayDate &gt; &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param displayDate the display date
+	* @param status the status
+	* @param start the lower bound of the range of blogs entries
+	* @param end the upper bound of the range of blogs entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching blogs entries
+	*/
+	public static List<BlogsEntry> findByG_GtD_S(long groupId,
+		Date displayDate, int status, int start, int end,
+		OrderByComparator<BlogsEntry> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByG_GtD_S(groupId, displayDate, status, start, end,
+			orderByComparator, retrieveFromCache);
+	}
+
+	/**
+	* Returns the first blogs entry in the ordered set where groupId = &#63; and displayDate &gt; &#63; and status = &#63;.
+	*
+	* @param groupId the group ID
+	* @param displayDate the display date
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching blogs entry
+	* @throws NoSuchEntryException if a matching blogs entry could not be found
+	*/
+	public static BlogsEntry findByG_GtD_S_First(long groupId,
+		Date displayDate, int status,
+		OrderByComparator<BlogsEntry> orderByComparator)
+		throws com.liferay.blogs.kernel.exception.NoSuchEntryException {
+		return getPersistence()
+				   .findByG_GtD_S_First(groupId, displayDate, status,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first blogs entry in the ordered set where groupId = &#63; and displayDate &gt; &#63; and status = &#63;.
+	*
+	* @param groupId the group ID
+	* @param displayDate the display date
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
+	*/
+	public static BlogsEntry fetchByG_GtD_S_First(long groupId,
+		Date displayDate, int status,
+		OrderByComparator<BlogsEntry> orderByComparator) {
+		return getPersistence()
+				   .fetchByG_GtD_S_First(groupId, displayDate, status,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last blogs entry in the ordered set where groupId = &#63; and displayDate &gt; &#63; and status = &#63;.
+	*
+	* @param groupId the group ID
+	* @param displayDate the display date
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching blogs entry
+	* @throws NoSuchEntryException if a matching blogs entry could not be found
+	*/
+	public static BlogsEntry findByG_GtD_S_Last(long groupId, Date displayDate,
+		int status, OrderByComparator<BlogsEntry> orderByComparator)
+		throws com.liferay.blogs.kernel.exception.NoSuchEntryException {
+		return getPersistence()
+				   .findByG_GtD_S_Last(groupId, displayDate, status,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last blogs entry in the ordered set where groupId = &#63; and displayDate &gt; &#63; and status = &#63;.
+	*
+	* @param groupId the group ID
+	* @param displayDate the display date
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
+	*/
+	public static BlogsEntry fetchByG_GtD_S_Last(long groupId,
+		Date displayDate, int status,
+		OrderByComparator<BlogsEntry> orderByComparator) {
+		return getPersistence()
+				   .fetchByG_GtD_S_Last(groupId, displayDate, status,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the blogs entries before and after the current blogs entry in the ordered set where groupId = &#63; and displayDate &gt; &#63; and status = &#63;.
+	*
+	* @param entryId the primary key of the current blogs entry
+	* @param groupId the group ID
+	* @param displayDate the display date
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next blogs entry
+	* @throws NoSuchEntryException if a blogs entry with the primary key could not be found
+	*/
+	public static BlogsEntry[] findByG_GtD_S_PrevAndNext(long entryId,
+		long groupId, Date displayDate, int status,
+		OrderByComparator<BlogsEntry> orderByComparator)
+		throws com.liferay.blogs.kernel.exception.NoSuchEntryException {
+		return getPersistence()
+				   .findByG_GtD_S_PrevAndNext(entryId, groupId, displayDate,
+			status, orderByComparator);
+	}
+
+	/**
+	* Returns all the blogs entries that the user has permission to view where groupId = &#63; and displayDate &gt; &#63; and status = &#63;.
+	*
+	* @param groupId the group ID
+	* @param displayDate the display date
+	* @param status the status
+	* @return the matching blogs entries that the user has permission to view
+	*/
+	public static List<BlogsEntry> filterFindByG_GtD_S(long groupId,
+		Date displayDate, int status) {
+		return getPersistence().filterFindByG_GtD_S(groupId, displayDate, status);
+	}
+
+	/**
+	* Returns a range of all the blogs entries that the user has permission to view where groupId = &#63; and displayDate &gt; &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param displayDate the display date
+	* @param status the status
+	* @param start the lower bound of the range of blogs entries
+	* @param end the upper bound of the range of blogs entries (not inclusive)
+	* @return the range of matching blogs entries that the user has permission to view
+	*/
+	public static List<BlogsEntry> filterFindByG_GtD_S(long groupId,
+		Date displayDate, int status, int start, int end) {
+		return getPersistence()
+				   .filterFindByG_GtD_S(groupId, displayDate, status, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the blogs entries that the user has permissions to view where groupId = &#63; and displayDate &gt; &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BlogsEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param displayDate the display date
+	* @param status the status
+	* @param start the lower bound of the range of blogs entries
+	* @param end the upper bound of the range of blogs entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching blogs entries that the user has permission to view
+	*/
+	public static List<BlogsEntry> filterFindByG_GtD_S(long groupId,
+		Date displayDate, int status, int start, int end,
+		OrderByComparator<BlogsEntry> orderByComparator) {
+		return getPersistence()
+				   .filterFindByG_GtD_S(groupId, displayDate, status, start,
+			end, orderByComparator);
+	}
+
+	/**
+	* Returns the blogs entries before and after the current blogs entry in the ordered set of blogs entries that the user has permission to view where groupId = &#63; and displayDate &gt; &#63; and status = &#63;.
+	*
+	* @param entryId the primary key of the current blogs entry
+	* @param groupId the group ID
+	* @param displayDate the display date
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next blogs entry
+	* @throws NoSuchEntryException if a blogs entry with the primary key could not be found
+	*/
+	public static BlogsEntry[] filterFindByG_GtD_S_PrevAndNext(long entryId,
+		long groupId, Date displayDate, int status,
+		OrderByComparator<BlogsEntry> orderByComparator)
+		throws com.liferay.blogs.kernel.exception.NoSuchEntryException {
+		return getPersistence()
+				   .filterFindByG_GtD_S_PrevAndNext(entryId, groupId,
+			displayDate, status, orderByComparator);
+	}
+
+	/**
+	* Removes all the blogs entries where groupId = &#63; and displayDate &gt; &#63; and status = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param displayDate the display date
+	* @param status the status
+	*/
+	public static void removeByG_GtD_S(long groupId, Date displayDate,
+		int status) {
+		getPersistence().removeByG_GtD_S(groupId, displayDate, status);
+	}
+
+	/**
+	* Returns the number of blogs entries where groupId = &#63; and displayDate &gt; &#63; and status = &#63;.
+	*
+	* @param groupId the group ID
+	* @param displayDate the display date
+	* @param status the status
+	* @return the number of matching blogs entries
+	*/
+	public static int countByG_GtD_S(long groupId, Date displayDate, int status) {
+		return getPersistence().countByG_GtD_S(groupId, displayDate, status);
+	}
+
+	/**
+	* Returns the number of blogs entries that the user has permission to view where groupId = &#63; and displayDate &gt; &#63; and status = &#63;.
+	*
+	* @param groupId the group ID
+	* @param displayDate the display date
+	* @param status the status
+	* @return the number of matching blogs entries that the user has permission to view
+	*/
+	public static int filterCountByG_GtD_S(long groupId, Date displayDate,
+		int status) {
+		return getPersistence()
+				   .filterCountByG_GtD_S(groupId, displayDate, status);
+	}
+
+	/**
 	* Returns all the blogs entries where groupId = &#63; and displayDate &lt; &#63; and status = &#63;.
 	*
 	* @param groupId the group ID

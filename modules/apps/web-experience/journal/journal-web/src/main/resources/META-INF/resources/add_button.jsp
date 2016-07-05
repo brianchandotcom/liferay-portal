@@ -20,6 +20,7 @@
 	<portlet:renderURL var="viewMoreURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 		<portlet:param name="mvcPath" value="/view_more_menu_items.jsp" />
 		<portlet:param name="folderId" value="<%= String.valueOf(journalDisplayContext.getFolderId()) %>" />
+		<portlet:param name="eventName" value='<%= renderResponse.getNamespace() + "selectAddMenuItem" %>' />
 	</portlet:renderURL>
 
 	<liferay-frontend:add-menu maxItems="<%= journalDisplayContext.getMaxAddMenuItems() %>" viewMoreURL="<%= viewMoreURL %>">
@@ -63,4 +64,24 @@
 
 		</c:if>
 	</liferay-frontend:add-menu>
+
+	<portlet:renderURL var="addArticleURL">
+		<portlet:param name="mvcPath" value="/edit_article.jsp" />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
+		<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
+		<portlet:param name="folderId" value="<%= String.valueOf(journalDisplayContext.getFolderId()) %>" />
+	</portlet:renderURL>
+
+	<aui:script>
+		Liferay.on(
+			'<portlet:namespace />selectAddMenuItem',
+			function(event) {
+				var uri = '<%= addArticleURL %>';
+
+				uri = Liferay.Util.addParams('<portlet:namespace />ddmStructureKey=' + event.ddmStructureKey, uri);
+
+				location.href = uri;
+			}
+		);
+	</aui:script>
 </c:if>

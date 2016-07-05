@@ -17,10 +17,13 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String eventName = ParamUtil.getString(request, "eventName", renderResponse.getNamespace() + "selectAddMenuItem");
+
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcPath", "/view_more_menu_items.jsp");
 portletURL.setParameter("folderId", String.valueOf(journalDisplayContext.getFolderId()));
+portletURL.setParameter("eventName", eventName);
 %>
 
 <liferay-ui:error exception="<%= MaxAddMenuFavItemsException.class %>" message='<%= LanguageUtil.format(resourceBundle, "you-cannot-add-more-than-x-favorites", journalWebConfiguration.maxAddMenuItems()) %>' />
@@ -52,17 +55,16 @@ portletURL.setParameter("folderId", String.valueOf(journalDisplayContext.getFold
 	</liferay-frontend:management-bar-buttons>
 </liferay-frontend:management-bar>
 
-<div class="container-fluid-1280">
+<aui:form cssClass="container-fluid-1280" name="addMenuItemFm">
 
 	<%
 	List<DDMStructure> ddmStructures = JournalFolderServiceUtil.getDDMStructures(PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId), journalDisplayContext.getFolderId(), journalDisplayContext.getRestrictionType());
 	%>
 
 	<liferay-ui:search-container
-		total="<%= ddmStructures.size() %>"
 		iteratorURL="<%= portletURL %>"
+		total="<%= ddmStructures.size() %>"
 	>
-
 		<liferay-ui:search-container-results
 			results="<%= ListUtil.subList(ddmStructures, searchContainer.getStart(), searchContainer.getEnd()) %>"
 		/>
@@ -73,11 +75,21 @@ portletURL.setParameter("folderId", String.valueOf(journalDisplayContext.getFold
 			escapedModel="<%= true %>"
 			modelVar="ddmStructure"
 		>
+
+			<%
+			Map<String, Object> data = new HashMap<>();
+
+			data.put("ddmStructureKey", ddmStructure.getStructureKey());
+			%>
+
 			<liferay-ui:search-container-column-text
 				name="menu-item-name"
 				truncate="<%= true %>"
-				value="<%= ddmStructure.getUnambiguousName(ddmStructures, themeDisplay.getScopeGroupId(), locale) %>"
-			/>
+			>
+				<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+					<%= ddmStructure.getUnambiguousName(ddmStructures, themeDisplay.getScopeGroupId(), locale) %>
+				</aui:a>
+			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text
 				name="user"
@@ -97,4 +109,23 @@ portletURL.setParameter("folderId", String.valueOf(journalDisplayContext.getFold
 
 		<liferay-ui:search-iterator displayStyle="list" markupView="lexicon" />
 	</liferay-ui:search-container>
-</div>
+</aui:form>
+
+<aui:script use="aui-base">
+	var Util = Liferay.Util;
+
+	A.one('#<portlet:namespace />addMenuItemFm').delegate(
+		'click',
+		function(event) {
+			Util.getOpener().Liferay.fire(
+				'<%= HtmlUtil.escapeJS(eventName) %>',
+				{
+					ddmStructureKey: event.currentTarget.attr('data-ddmStructureKey')
+				}
+			);
+
+			Util.getWindow().destroy();
+		},
+		'.selector-button'
+	);
+</aui:script>

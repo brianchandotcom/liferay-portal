@@ -26,6 +26,8 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Locale;
 
@@ -54,6 +56,10 @@ public class DocumentLibraryDDMFormFieldValueRenderer
 
 				String uuid = jsonObject.getString("uuid");
 				long groupId = jsonObject.getLong("groupId");
+
+				if (Validator.isNull(uuid) && Validator.isNull(groupId)) {
+					return StringPool.BLANK;
+				}
 
 				try {
 					FileEntry fileEntry =

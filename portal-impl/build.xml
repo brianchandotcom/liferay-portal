@@ -581,6 +581,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 			<jvmarg value="-Dsource.formatter.check.registry.in.test.classes=${source.formatter.check.registry.in.test.classes}" />
 			<jvmarg value="-Dsource.formatter.check.unprocessed.exceptions=${source.formatter.check.unprocessed.exceptions}" />
 			<jvmarg value="-Dsource.formatter.excludes=${source.formatter.excludes}" />
+			<jvmarg value="-Dsource.formatter.git.working.branch.name=${source.formatter.git.working.branch.name}" />
 			<jvmarg value="-Dsource.formatter.max.line.length=${source.formatter.max.line.length}" />
 			<jvmarg value="-Dsource.formatter.processor.thread.count=${source.formatter.processor.thread.count}" />
 			<arg value="format.current.branch=${format.current.branch}" />

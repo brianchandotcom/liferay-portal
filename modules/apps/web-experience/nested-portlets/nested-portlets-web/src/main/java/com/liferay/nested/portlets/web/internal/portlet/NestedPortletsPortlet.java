@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.nested.portlets.web.portlet;
+package com.liferay.nested.portlets.web.internal.portlet;
 
-import com.liferay.nested.portlets.web.constants.NestedPortletsPortletKeys;
-import com.liferay.nested.portlets.web.constants.NestedPortletsWebKeys;
-import com.liferay.nested.portlets.web.display.context.NestedPortletsDisplayContext;
+import com.liferay.nested.portlets.web.internal.constants.NestedPortletsPortletKeys;
+import com.liferay.nested.portlets.web.internal.constants.NestedPortletsWebKeys;
+import com.liferay.nested.portlets.web.internal.display.context.NestedPortletsDisplayContext;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;

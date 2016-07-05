@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.nested.portlets.web.upgrade;
+package com.liferay.nested.portlets.web.internal.upgrade;
 
-import com.liferay.nested.portlets.web.upgrade.v1_0_0.UpgradePortletId;
+import com.liferay.nested.portlets.web.internal.upgrade.v1_0_0.UpgradePortletId;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 

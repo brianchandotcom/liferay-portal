@@ -3075,7 +3075,6 @@
 		<execute macro="DDLRecord#viewFieldCP">
 			<var name="ddlRecordFieldData" value="" />
 			<var name="ddlRecordNestedFieldData" value="253" />
-			<var name="fieldBlank" value="true" />
 			<var name="fieldFieldLabel" value="Text" />
 			<var name="nestedFieldFieldLabel" value="Integer" />
 		</execute>

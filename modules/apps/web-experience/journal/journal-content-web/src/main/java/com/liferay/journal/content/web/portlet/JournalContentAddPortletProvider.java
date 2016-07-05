@@ -22,12 +22,19 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalContentSearchLocalService;
 import com.liferay.journal.web.asset.JournalArticleAssetRenderer;
 import com.liferay.journal.web.asset.JournalArticleAssetRendererFactory;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.AddPortletProvider;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 import javax.portlet.PortletPreferences;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -46,6 +53,14 @@ public class JournalContentAddPortletProvider
 	@Override
 	public String getPortletName() {
 		return JournalContentPortletKeys.JOURNAL_CONTENT;
+	}
+
+	@Override
+	public PortletURL getPortletURL(HttpServletRequest request, Group group)
+		throws PortalException {
+
+		return PortletURLFactoryUtil.create(
+			request, getPortletName(), PortletRequest.RENDER_PHASE);
 	}
 
 	@Override
@@ -80,6 +95,10 @@ public class JournalContentAddPortletProvider
 			portletId, article.getArticleId(), true);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	@Override
 	protected long getPlid(ThemeDisplay themeDisplay) {
 		return themeDisplay.getPlid();

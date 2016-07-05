@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.display.template.web.webdav;
+package com.liferay.portlet.display.template.web.internal.webdav;
 
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;

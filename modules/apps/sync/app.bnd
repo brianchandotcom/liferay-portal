@@ -7,6 +7,7 @@ Liferay-Releng-Deprecated: false
 Liferay-Releng-Labs: false
 Liferay-Releng-Marketplace: true
 Liferay-Releng-Public: ${liferay.releng.public}
+Liferay-Releng-Required: false
 Liferay-Releng-Restart-Required: true
 Liferay-Releng-Support-Url: http://www.liferay.com
 Liferay-Releng-Supported: ${liferay.releng.supported}

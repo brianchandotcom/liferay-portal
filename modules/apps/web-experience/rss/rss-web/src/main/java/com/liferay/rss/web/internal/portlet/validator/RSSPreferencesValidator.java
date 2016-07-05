@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.rss.web.portlet.validator;
+package com.liferay.rss.web.internal.portlet.validator;
 
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.rss.web.constants.RSSPortletKeys;
+import com.liferay.rss.web.internal.constants.RSSPortletKeys;
 
 import java.util.ArrayList;
 import java.util.List;

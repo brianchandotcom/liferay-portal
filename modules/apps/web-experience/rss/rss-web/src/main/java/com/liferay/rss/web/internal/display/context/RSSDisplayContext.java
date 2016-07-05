@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.rss.web.display.context;
+package com.liferay.rss.web.internal.display.context;
 
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.rss.web.configuration.RSSPortletInstanceConfiguration;
 import com.liferay.rss.web.configuration.RSSWebCacheConfiguration;
-import com.liferay.rss.web.util.RSSFeed;
+import com.liferay.rss.web.internal.util.RSSFeed;
 
 import java.util.ArrayList;
 import java.util.List;

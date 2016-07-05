@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.rss.web.constants;
+package com.liferay.rss.web.internal.constants;
 
 /**
  * @author Eudaldo Alonso

@@ -16,6 +16,8 @@ package com.liferay.portal.kernel.portlet;
 
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletRequest;
 
@@ -43,6 +45,23 @@ public class PortletURLFactoryUtil {
 	}
 
 	public static LiferayPortletURL create(
+		HttpServletRequest request, String portletId, String lifecycle) {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Layout layout = themeDisplay.getLayout();
+
+		if (layout != null) {
+			return getPortletURLFactory().create(
+				request, portletId, layout, lifecycle);
+		}
+
+		return getPortletURLFactory().create(
+			request, portletId, themeDisplay.getPlid(), lifecycle);
+	}
+
+	public static LiferayPortletURL create(
 		PortletRequest portletRequest, String portletId, Layout layout,
 		String lifecycle) {
 
@@ -56,6 +75,23 @@ public class PortletURLFactoryUtil {
 
 		return getPortletURLFactory().create(
 			portletRequest, portletId, plid, lifecycle);
+	}
+
+	public static LiferayPortletURL create(
+		PortletRequest portletRequest, String portletId, String lifecycle) {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Layout layout = themeDisplay.getLayout();
+
+		if (layout != null) {
+			return getPortletURLFactory().create(
+				portletRequest, portletId, layout, lifecycle);
+		}
+
+		return getPortletURLFactory().create(
+			portletRequest, portletId, themeDisplay.getPlid(), lifecycle);
 	}
 
 	public static PortletURLFactory getPortletURLFactory() {

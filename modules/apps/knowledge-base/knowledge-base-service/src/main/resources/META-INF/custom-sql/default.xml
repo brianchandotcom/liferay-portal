@@ -41,7 +41,7 @@
 		WHERE
 			(KBArticle.groupId = ?) AND
 			(KBArticle.parentResourcePrimKey = ?) AND
-			(KBArticle.main = ?) AND
+			(KBArticle.latest = ?) AND
 			([$STATUS$])
 	</sql>
 	<sql id="com.liferay.knowledge.base.service.persistence.KBFolderFinder.countF_ByG_P">
@@ -61,7 +61,7 @@
 		WHERE
 			(KBArticle.groupId = ?) AND
 			(KBArticle.parentResourcePrimKey = ?) AND
-			(KBArticle.main = ?) AND
+			(KBArticle.latest = ?) AND
 			([$STATUS$])
 	</sql>
 	<sql id="com.liferay.knowledge.base.service.persistence.KBFolderFinder.findF_ByG_P">

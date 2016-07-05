@@ -6,7 +6,6 @@ Export-Package:\
 	com.liferay.wiki.engine.impl,\
 	com.liferay.wiki.importer.impl,\
 	com.liferay.wiki.importer.impl.mediawiki,\
-	com.liferay.wiki.lar,\
 	com.liferay.wiki.model.impl,\
 	com.liferay.wiki.search,\
 	com.liferay.wiki.service.permission,\

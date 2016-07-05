@@ -43,12 +43,6 @@ AUI.add(
 				);
 			},
 
-			hasErrors: function() {
-				var instance = this;
-
-				return !!instance.get('errorMessage');
-			},
-
 			hasValidation: function() {
 				var instance = this;
 
@@ -96,10 +90,11 @@ AUI.add(
 						}
 
 						if (errorMessage) {
-							instance.set('errorMessage', errorMessage);
+							instance.showErrorMessage(errorMessage);
 						}
-
-						instance.showValidationStatus();
+						else {
+							instance.clearErrorMessage();
+						}
 					}
 				}
 			},

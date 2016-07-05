@@ -14,8 +14,6 @@
 
 package com.liferay.dynamic.data.mapping.expression.internal;
 
-import java.math.BigDecimal;
-
 /**
  * @author Miguel Angelo Caldas Gallindo
  */
@@ -23,11 +21,6 @@ public class Variable {
 
 	public Variable(String name) {
 		_name = name;
-	}
-
-	public Variable(String name, BigDecimal value) {
-		_name = name;
-		_value = value;
 	}
 
 	public String getExpressionString() {
@@ -38,7 +31,7 @@ public class Variable {
 		return _name;
 	}
 
-	public BigDecimal getValue() {
+	public Object getValue() {
 		return _value;
 	}
 
@@ -46,16 +39,12 @@ public class Variable {
 		_expressionString = expressionString;
 	}
 
-	public void setName(String name) {
-		_name = name;
-	}
-
-	public void setValue(BigDecimal value) {
+	public void setValue(Object value) {
 		_value = value;
 	}
 
 	private String _expressionString;
-	private String _name;
-	private BigDecimal _value;
+	private final String _name;
+	private Object _value;
 
 }

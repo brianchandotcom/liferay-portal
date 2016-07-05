@@ -1837,9 +1837,7 @@
 
 		<execute function="AssertClick" locator1="MenuItem#MANAGE_TEMPLATES" value1="Manage Templates" />
 
-		<execute function="Click" locator1="Button#PLUS" />
-
-		<execute function="Click" locator1="MenuItem#ADD_DISPLAY_TEMPLATE" />
+		<execute macro="DDLNavigator#gotoAddDisplayTemplate" />
 
 		<for list="Device,Company,PermissionChecker" param="fieldName">
 			<var name="key_fieldName" value="${fieldName}" />

@@ -58,7 +58,7 @@ public class BlogsPortletDisplayTemplateHandler
 	public Map<String, Object> getCustomContextObjects() {
 		Map<String, Object> customContextObjects = new HashMap<>(1);
 
-		customContextObjects.put("blogsUtil", BlogsUtil.class);
+		customContextObjects.put("blogsUtil", new BlogsUtil());
 
 		return customContextObjects;
 	}
@@ -85,19 +85,16 @@ public class BlogsPortletDisplayTemplateHandler
 		Map<String, TemplateVariableGroup> templateVariableGroups =
 			super.getTemplateVariableGroups(classPK, language, locale);
 
-		TemplateVariableGroup templateVariableGroup =
-			templateVariableGroups.get("fields");
+		String[] restrictedVariables = getRestrictedVariables(language);
 
-		templateVariableGroup.empty();
+		TemplateVariableGroup blogsUtilTemplateVariableGroup =
+			new TemplateVariableGroup("blogs-util", restrictedVariables);
 
-		templateVariableGroup.addCollectionVariable(
-			"blog-entries", List.class, PortletDisplayTemplateManager.ENTRIES,
-			"blog-entry", BlogsEntry.class, "curBlogEntry", "title");
-
-		templateVariableGroup.addVariable(
+		blogsUtilTemplateVariableGroup.addVariable(
 			"blogs-util", BlogsUtil.class, "blogsUtil");
 
-		String[] restrictedVariables = getRestrictedVariables(language);
+		templateVariableGroups.put(
+			"blogs-util", blogsUtilTemplateVariableGroup);
 
 		TemplateVariableGroup blogServicesTemplateVariableGroup =
 			new TemplateVariableGroup("blog-services", restrictedVariables);
@@ -110,6 +107,15 @@ public class BlogsPortletDisplayTemplateHandler
 		templateVariableGroups.put(
 			blogServicesTemplateVariableGroup.getLabel(),
 			blogServicesTemplateVariableGroup);
+
+		TemplateVariableGroup fieldsTemplateVariableGroup =
+			templateVariableGroups.get("fields");
+
+		fieldsTemplateVariableGroup.empty();
+
+		fieldsTemplateVariableGroup.addCollectionVariable(
+			"blog-entries", List.class, PortletDisplayTemplateManager.ENTRIES,
+			"blog-entry", BlogsEntry.class, "curBlogEntry", "title");
 
 		return templateVariableGroups;
 	}

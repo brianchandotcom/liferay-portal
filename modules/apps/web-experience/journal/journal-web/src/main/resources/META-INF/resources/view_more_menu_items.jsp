@@ -102,7 +102,7 @@ portletURL.setParameter("eventName", eventName);
 
 			<liferay-ui:search-container-column-jsp
 				align="center"
-				name="add-to-favorites"
+				name='<%= LanguageUtil.format(request, "add-to-favorites-x", String.valueOf(journalDisplayContext.getAddMenuFavItemsLength())) %>'
 				path="/view_more_menu_items_actions.jsp"
 			/>
 		</liferay-ui:search-container-row>

@@ -63,6 +63,15 @@
 		<execute function="AssertTextEquals" locator1="ControlMenu#HEADER_TITLE" value1="Structures" />
 	</command>
 
+	<command name="gotoManageTemplates">
+		<execute macro="DDLNavigator#gotoManageDataDefinitions" />
+
+		<var name="key_ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+
+		<execute function="Click#waitForMenuToggleJSClick" locator1="DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS" />
+		<execute function="AssertClick" locator1="MenuItem#MANAGE_TEMPLATES" value1="Manage Templates" />
+	</command>
+
 	<command name="gotoOptionalConfiguration">
 		<execute function="SelectFrame" locator1="DDLConfiguration#CONFIGURATION_IFRAME" />
 

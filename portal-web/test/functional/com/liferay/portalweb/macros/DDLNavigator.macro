@@ -2,6 +2,12 @@
 	<var name="ddlDataDefinitionName" value="Data Definition Name" />
 	<var name="ddlListName" value="List Name" />
 
+	<command name="gotoAddDisplayTemplate">
+		<execute function="Click" locator1="Button#PLUS" />
+
+		<execute function="AssertClick" locator1="MenuItem#ADD_DISPLAY_TEMPLATE" value1="Add Display Template" />
+	</command>
+
 	<command name="gotoAddListRecord">
 		<execute function="Click" locator1="Button#PLUS" />
 
@@ -51,12 +57,6 @@
 		<execute macro="SiteAdmin#viewPortletTitle">
 			<var name="portletTitle" value="${ddlListName}" />
 		</execute>
-	</command>
-
-	<command name="gotoAddDisplayTemplate">
-		<execute function="Click" locator1="Button#PLUS" />
-
-		<execute function="AssertClick" locator1="MenuItem#ADD_DISPLAY_TEMPLATE" value1="Add Display Template" />
 	</command>
 
 	<command name="gotoManageDataDefinitions">

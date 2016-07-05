@@ -1822,44 +1822,6 @@
 		</execute>
 	</command>
 
-	<command name="ViewDisplayTemplateClassLinks" priority="4">
-		<description message="This is a use case for LPS-66228." />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoSitesContent">
-			<var name="portlet" value="Dynamic Data Lists" />
-		</execute>
-
-		<execute macro="DDLNavigator#gotoManageTemplates">
-			<var name="ddlDataDefinitionName" value="Contacts" />
-		</execute>
-
-		<execute macro="DDLNavigator#gotoAddDisplayTemplate" />
-
-		<for list="Device,Company,PermissionChecker" param="fieldName">
-			<var name="key_fieldName" value="${fieldName}" />
-
-			<if>
-				<equals arg1="${fieldName}" arg2="PermissionChecker" />
-				<then>
-					<execute function="MouseOver" locator1="DDMEditTemplate#SCRIPT_UTIL" />
-				</then>
-				<else>
-					<execute function="MouseOver" locator1="DDMEditTemplate#SCRIPT_VARIABLE" />
-				</else>
-			</if>
-
-			<execute function="AssertClick" locator1="JavaDocs#TOOLTIP_JAVA_CLASS_LINK" value1="${fieldName}" />
-
-			<execute function="SelectWindow#selectPopUp" locator1="null" />
-
-			<execute function="AssertTextEquals" locator1="JavaDocs#JAVA_CLASS_NAME" value1="${fieldName}" />
-
-			<execute function="Close#closeAndSelectWindow" locator1="title=New Template for Structure: Contacts - Liferay" />
-		</for>
-	</command>
-
 	<command name="CreateSiteAndViewDefaultDataDefinitions" priority="3">
 		<description message="This is a use case for LPS-50557." />
 
@@ -2678,6 +2640,44 @@
 		<execute macro="DynamicDataMapping#viewFieldNameNested">
 			<var name="fieldNameNested" value="Text2" />
 		</execute>
+	</command>
+
+	<command name="ViewDisplayTemplateClassLinks" priority="4">
+		<description message="This is a use case for LPS-66228." />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLNavigator#gotoManageTemplates">
+			<var name="ddlDataDefinitionName" value="Contacts" />
+		</execute>
+
+		<execute macro="DDLNavigator#gotoAddDisplayTemplate" />
+
+		<for list="Device,Company,PermissionChecker" param="fieldName">
+			<var name="key_fieldName" value="${fieldName}" />
+
+			<if>
+				<equals arg1="${fieldName}" arg2="PermissionChecker" />
+				<then>
+					<execute function="MouseOver" locator1="DDMEditTemplate#SCRIPT_UTIL" />
+				</then>
+				<else>
+					<execute function="MouseOver" locator1="DDMEditTemplate#SCRIPT_VARIABLE" />
+				</else>
+			</if>
+
+			<execute function="AssertClick" locator1="JavaDocs#TOOLTIP_JAVA_CLASS_LINK" value1="${fieldName}" />
+
+			<execute function="SelectWindow#selectPopUp" locator1="null" />
+
+			<execute function="AssertTextEquals" locator1="JavaDocs#JAVA_CLASS_NAME" value1="${fieldName}" />
+
+			<execute function="Close#closeAndSelectWindow" locator1="title=New Template for Structure: Contacts - Liferay" />
+		</for>
 	</command>
 
 	<command name="ViewFieldsNestedInDDLRecord" priority="3">

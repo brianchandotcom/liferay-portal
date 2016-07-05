@@ -22,9 +22,7 @@ import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ResourceBundle;
 
@@ -62,12 +60,8 @@ public class DDMDataProviderPortletConfigurationIcon
 			DDMDataProviderInstance.class.getName(),
 			PortletProvider.Action.EDIT);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		PortletURL portletURL = PortletURLFactoryUtil.create(
-			portletRequest, portletId, themeDisplay.getPlid(),
-			PortletRequest.RENDER_PHASE);
+			portletRequest, portletId, PortletRequest.RENDER_PHASE);
 
 		try {
 			portletURL.setWindowState(LiferayWindowState.POP_UP);

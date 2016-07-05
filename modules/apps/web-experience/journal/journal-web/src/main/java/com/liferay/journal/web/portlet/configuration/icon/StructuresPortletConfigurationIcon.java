@@ -70,7 +70,7 @@ public class StructuresPortletConfigurationIcon
 			portletRequest,
 			PortletProviderUtil.getPortletId(
 				DDMStructure.class.getName(), PortletProvider.Action.VIEW),
-			themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
+			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcPath", "/view.jsp");
 		portletURL.setParameter("backURL", themeDisplay.getURLCurrent());

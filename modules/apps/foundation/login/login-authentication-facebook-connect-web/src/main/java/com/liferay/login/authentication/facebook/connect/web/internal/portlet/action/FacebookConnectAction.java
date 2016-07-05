@@ -223,12 +223,8 @@ public class FacebookConnectAction extends BaseStrutsAction {
 			HttpServletRequest request, HttpServletResponse response, User user)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		PortletURL portletURL = PortletURLFactoryUtil.create(
-			request, PortletKeys.LOGIN, themeDisplay.getPlid(),
-			PortletRequest.RENDER_PHASE);
+			request, PortletKeys.LOGIN, PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("saveLastPath", Boolean.FALSE.toString());
 		portletURL.setParameter(

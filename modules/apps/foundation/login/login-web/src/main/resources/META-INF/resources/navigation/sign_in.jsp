@@ -32,7 +32,7 @@ if (Validator.isNotNull(mvcRenderCommandName) && !mvcRenderCommandName.equals("/
 	String signInURL = themeDisplay.getURLSignIn();
 
 	if (portletName.equals(PortletKeys.FAST_LOGIN)) {
-		PortletURL fastLoginURL = PortletURLFactoryUtil.create(request, PortletKeys.FAST_LOGIN, themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
+		PortletURL fastLoginURL = PortletURLFactoryUtil.create(request, PortletKeys.FAST_LOGIN, PortletRequest.RENDER_PHASE);
 
 		fastLoginURL.setParameter("saveLastPath", Boolean.FALSE.toString());
 		fastLoginURL.setParameter("mvcRenderCommandName", "/login/login");

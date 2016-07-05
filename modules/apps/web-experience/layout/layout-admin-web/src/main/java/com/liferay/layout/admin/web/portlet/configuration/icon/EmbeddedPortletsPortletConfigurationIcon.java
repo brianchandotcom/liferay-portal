@@ -72,7 +72,7 @@ public class EmbeddedPortletsPortletConfigurationIcon
 
 		try {
 			PortletURL portletURL = PortletURLFactoryUtil.create(
-				portletRequest, portletDisplay.getId(), themeDisplay.getPlid(),
+				portletRequest, portletDisplay.getId(),
 				PortletRequest.RENDER_PHASE);
 
 			portletURL.setParameter("mvcPath", "/embedded_portlets.jsp");

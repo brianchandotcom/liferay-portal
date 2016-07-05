@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.rss.web.portlet.template;
+package com.liferay.rss.web.internal.portlet.template;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
@@ -23,9 +23,9 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portlet.display.template.PortletDisplayTemplateConstants;
 import com.liferay.rss.web.configuration.RSSWebConfigurationValues;
-import com.liferay.rss.web.constants.RSSPortletKeys;
-import com.liferay.rss.web.display.context.RSSDisplayContext;
-import com.liferay.rss.web.util.RSSFeed;
+import com.liferay.rss.web.internal.constants.RSSPortletKeys;
+import com.liferay.rss.web.internal.display.context.RSSDisplayContext;
+import com.liferay.rss.web.internal.util.RSSFeed;
 
 import java.util.List;
 import java.util.Locale;

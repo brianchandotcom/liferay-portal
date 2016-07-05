@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.rss.web.util;
+package com.liferay.rss.web.internal.util;
 
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Http;

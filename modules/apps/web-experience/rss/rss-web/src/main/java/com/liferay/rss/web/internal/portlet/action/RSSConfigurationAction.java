@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.rss.web.portlet.action;
+package com.liferay.rss.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.rss.web.constants.RSSPortletKeys;
+import com.liferay.rss.web.internal.constants.RSSPortletKeys;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

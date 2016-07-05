@@ -146,7 +146,7 @@ String viewMoreURL = (String)request.getAttribute("liferay-frontend:add-menu:vie
 								function(event) {
 									Liferay.Store('com.liferay.addmenu_customizeAddMenuAdviceMessage', true);
 
-									Liferay.Util.selectEntity(
+									Liferay.Util.openWindow(
 										{
 											dialog: {
 												destroyOnHide: true,
@@ -155,11 +155,6 @@ String viewMoreURL = (String)request.getAttribute("liferay-frontend:add-menu:vie
 											id: '<%= namespace %>selectAddMenuItem',
 											title: '<liferay-ui:message key="more" />',
 											uri: '<%= viewMoreURL %>'
-										},
-										function(event) {
-											event.preventDefault();
-
-											location.href = event.url;
 										}
 									);
 								}

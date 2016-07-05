@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.nested.portlets.web.display.context;
+package com.liferay.nested.portlets.web.internal.display.context;
 
 import com.liferay.nested.portlets.web.configuration.NestedPortletsPortletInstanceConfiguration;
 import com.liferay.portal.kernel.model.LayoutTemplate;

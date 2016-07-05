@@ -12,14 +12,15 @@
  * details.
  */
 
-package com.liferay.nested.portlets.web.constants;
+package com.liferay.nested.portlets.web.internal.constants;
 
 /**
- * @author Eudaldo Alonso
+ * @author Jürgen Kappler
  */
-public class NestedPortletsPortletKeys {
+public class NestedPortletsWebKeys {
 
-	public static final String NESTED_PORTLETS =
-		"com_liferay_nested_portlets_web_portlet_NestedPortletsPortlet";
+	public static final String TEMPLATE_CONTENT = "TEMPLATE_CONTENT";
+
+	public static final String TEMPLATE_ID = "TEMPLATE_ID";
 
 }

@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.nested.portlets.web.portlet.action;
+package com.liferay.nested.portlets.web.internal.portlet.action;
 
-import com.liferay.nested.portlets.web.constants.NestedPortletsPortletKeys;
+import com.liferay.nested.portlets.web.internal.constants.NestedPortletsPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTemplate;

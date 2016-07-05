@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.nested.portlets.web.upgrade.v1_0_0;
+package com.liferay.nested.portlets.web.internal.upgrade.v1_0_0;
 
-import com.liferay.nested.portlets.web.constants.NestedPortletsPortletKeys;
+import com.liferay.nested.portlets.web.internal.constants.NestedPortletsPortletKeys;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;

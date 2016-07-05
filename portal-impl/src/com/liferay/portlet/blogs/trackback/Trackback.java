@@ -33,6 +33,10 @@ public interface Trackback {
 			Function<String, ServiceContext> serviceContextFunction)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of 7.1.0, with no direct replacement
+	 */
+	@Deprecated
 	public void setCommentManager(CommentManager commentManager);
 
 	public void setLinkbackConsumer(LinkbackConsumer linkbackConsumer);

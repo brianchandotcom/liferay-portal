@@ -20,7 +20,6 @@ import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.blogs.kernel.model.BlogsEntry;
 import com.liferay.blogs.kernel.util.comparator.EntryDisplayDateComparator;
 import com.liferay.blogs.kernel.util.comparator.EntryTitleComparator;
-import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.comment.CommentManagerUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.dao.search.SearchContainerResults;
@@ -56,9 +55,7 @@ public class BlogsUtil {
 	public static final String DISPLAY_STYLE_TITLE = "title";
 
 	public static int getCommentsCount(BlogsEntry entry) {
-		CommentManager commentManager = CommentManagerUtil.getCommentManager();
-
-		return commentManager.getCommentsCount(
+		return CommentManagerUtil.getCommentsCount(
 			BlogsEntry.class.getName(), entry.getEntryId());
 	}
 

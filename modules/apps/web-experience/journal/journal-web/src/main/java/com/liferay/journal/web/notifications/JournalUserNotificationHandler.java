@@ -17,7 +17,7 @@ package com.liferay.journal.web.notifications;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.model.JournalArticleEntryConstants;
+import com.liferay.journal.model.JournalArticleConstants;
 import com.liferay.journal.web.asset.JournalArticleAssetRenderer;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.notifications.BaseModelUserNotificationHandler;
@@ -70,14 +70,14 @@ public class JournalUserNotificationHandler
 		int notificationType = jsonObject.getInt("notificationType");
 
 		if (notificationType ==
-				JournalArticleEntryConstants.NOTIFICATION_TYPE_ADD_ENTRY) {
+				JournalArticleConstants.NOTIFICATION_TYPE_ADD_ENTRY) {
 
 			title = ResourceBundleUtil.getString(
 				resourceBundle, "x-added-a-new-web-content-article",
 				userFullName);
 		}
 		else if (notificationType ==
-					JournalArticleEntryConstants.
+					JournalArticleConstants.
 						NOTIFICATION_TYPE_UPDATE_ENTRY) {
 
 			title = ResourceBundleUtil.getString(
@@ -85,7 +85,7 @@ public class JournalUserNotificationHandler
 				userFullName);
 		}
 		else if (notificationType ==
-					JournalArticleEntryConstants.
+					JournalArticleConstants.
 						NOTIFICATION_TYPE_MOVE_ENTRY_FROM_FOLDER) {
 
 			title = ResourceBundleUtil.getString(
@@ -93,7 +93,7 @@ public class JournalUserNotificationHandler
 				userFullName);
 		}
 		else if (notificationType ==
-					JournalArticleEntryConstants.
+					JournalArticleConstants.
 						NOTIFICATION_TYPE_MOVE_ENTRY_TO_FOLDER) {
 
 			title = ResourceBundleUtil.getString(

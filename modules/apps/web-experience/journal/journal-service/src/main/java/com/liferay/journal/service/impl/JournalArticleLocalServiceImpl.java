@@ -57,7 +57,7 @@ import com.liferay.journal.exception.NoSuchArticleException;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
 import com.liferay.journal.model.JournalArticleDisplay;
-import com.liferay.journal.model.JournalArticleEntryConstants;
+import com.liferay.journal.model.JournalArticleConstants;
 import com.liferay.journal.model.JournalArticleResource;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.model.impl.JournalArticleDisplayImpl;
@@ -7230,8 +7230,7 @@ public class JournalArticleLocalServiceImpl
 					emailArticleMovedToFolderBody());
 
 			notificationType =
-				JournalArticleEntryConstants.
-					NOTIFICATION_TYPE_MOVE_ENTRY_TO_FOLDER;
+				JournalArticleConstants.NOTIFICATION_TYPE_MOVE_ENTRY_TO_FOLDER;
 		}
 		else if (action.equals("move_from")) {
 			localizedSubjectMap = LocalizationUtil.getMap(
@@ -7242,7 +7241,7 @@ public class JournalArticleLocalServiceImpl
 					emailArticleMovedFromFolderBody());
 
 			notificationType =
-				JournalArticleEntryConstants.
+				JournalArticleConstants.
 					NOTIFICATION_TYPE_MOVE_ENTRY_FROM_FOLDER;
 		}
 		else if (action.equals("update")) {
@@ -7252,7 +7251,7 @@ public class JournalArticleLocalServiceImpl
 				journalGroupServiceConfiguration.emailArticleUpdatedBody());
 
 			notificationType =
-				JournalArticleEntryConstants.NOTIFICATION_TYPE_UPDATE_ENTRY;
+				JournalArticleConstants.NOTIFICATION_TYPE_UPDATE_ENTRY;
 		}
 
 		String articleContent = StringPool.BLANK;

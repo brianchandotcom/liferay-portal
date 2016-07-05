@@ -30,7 +30,7 @@ page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.util.LayoutDescription" %><%@
 page import="com.liferay.site.navigation.site.map.web.configuration.SiteNavigationSiteMapPortletInstanceConfiguration" %><%@
-page import="com.liferay.site.navigation.site.map.web.display.context.SiteNavigationSiteMapDisplayContext" %>
+page import="com.liferay.site.navigation.site.map.web.internal.display.context.SiteNavigationSiteMapDisplayContext" %>
 
 <%@ page import="java.util.HashMap" %><%@
 page import="java.util.List" %><%@

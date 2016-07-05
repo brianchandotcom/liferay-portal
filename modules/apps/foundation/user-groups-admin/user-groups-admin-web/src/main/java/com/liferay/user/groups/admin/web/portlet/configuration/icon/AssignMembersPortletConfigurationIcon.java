@@ -58,13 +58,10 @@ public class AssignMembersPortletConfigurationIcon
 	public String getURL(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		try {
 			PortletURL portletURL = PortletURLFactoryUtil.create(
 				portletRequest, UserGroupsAdminPortletKeys.USER_GROUPS_ADMIN,
-				themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
+				PortletRequest.RENDER_PHASE);
 
 			portletURL.setParameter(
 				"mvcPath", "/edit_user_group_assignments.jsp");

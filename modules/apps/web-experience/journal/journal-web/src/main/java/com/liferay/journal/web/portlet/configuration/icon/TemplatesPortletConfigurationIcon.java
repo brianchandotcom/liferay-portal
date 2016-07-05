@@ -74,7 +74,7 @@ public class TemplatesPortletConfigurationIcon
 			portletRequest,
 			PortletProviderUtil.getPortletId(
 				DDMTemplate.class.getName(), PortletProvider.Action.VIEW),
-			themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
+			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcPath", "/view_template.jsp");
 		portletURL.setParameter(

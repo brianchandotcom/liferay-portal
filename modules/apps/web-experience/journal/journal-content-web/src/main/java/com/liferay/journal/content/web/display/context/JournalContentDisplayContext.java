@@ -541,7 +541,7 @@ public class JournalContentDisplayContext {
 
 			PortletURL redirectURL = PortletURLFactoryUtil.create(
 				_portletRequest, JournalContentPortletKeys.JOURNAL_CONTENT,
-				themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
+				PortletRequest.RENDER_PHASE);
 
 			redirectURL.setParameter(
 				"mvcPath", "/update_journal_article_redirect.jsp");
@@ -580,7 +580,7 @@ public class JournalContentDisplayContext {
 				_portletRequest,
 				PortletProviderUtil.getPortletId(
 					DDMTemplate.class.getName(), PortletProvider.Action.EDIT),
-				themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
+				PortletRequest.RENDER_PHASE);
 
 			DDMTemplate ddmTemplate = getDDMTemplate();
 
@@ -596,7 +596,7 @@ public class JournalContentDisplayContext {
 			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 			PortletURL redirectURL = PortletURLFactoryUtil.create(
-				_portletRequest, portletDisplay.getId(), themeDisplay.getPlid(),
+				_portletRequest, portletDisplay.getId(),
 				PortletRequest.RENDER_PHASE);
 
 			redirectURL.setParameter(

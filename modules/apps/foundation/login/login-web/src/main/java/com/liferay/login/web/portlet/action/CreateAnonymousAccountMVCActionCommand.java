@@ -183,7 +183,7 @@ public class CreateAnonymousAccountMVCActionCommand
 			actionRequest, "emailAddress");
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(
-			actionRequest, LoginPortletKeys.FAST_LOGIN, themeDisplay.getPlid(),
+			actionRequest, LoginPortletKeys.FAST_LOGIN,
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter(

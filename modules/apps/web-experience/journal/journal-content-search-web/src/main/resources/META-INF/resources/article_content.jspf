@@ -56,7 +56,7 @@ List hitLayoutIds = JournalContentSearchLocalServiceUtil.getLayoutIds(layout.get
 	<c:when test="<%= Validator.isNotNull(journalContentSearchPortletInstanceConfiguration.targetPortletId()) %>">
 
 		<%
-		PortletURL webContentPortletURL = PortletURLFactoryUtil.create(request, journalContentSearchPortletInstanceConfiguration.targetPortletId(), plid, PortletRequest.RENDER_PHASE);
+		PortletURL webContentPortletURL = PortletURLFactoryUtil.create(request, journalContentSearchPortletInstanceConfiguration.targetPortletId(), PortletRequest.RENDER_PHASE);
 
 		webContentPortletURL.setParameter("groupId", String.valueOf(articleGroupId));
 		webContentPortletURL.setParameter("articleId", articleId);

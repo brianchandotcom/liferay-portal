@@ -207,8 +207,7 @@ public class ImageEditorDLDisplayContextHelper {
 			Image.class.getName(), PortletProvider.Action.EDIT);
 
 		PortletURL imageEditorURL = PortletURLFactoryUtil.create(
-			_request, imageEditorPortletId, _themeDisplay.getPlid(),
-			PortletRequest.RENDER_PHASE);
+			_request, imageEditorPortletId, PortletRequest.RENDER_PHASE);
 
 		imageEditorURL.setParameter(
 			"mvcRenderCommandName", "/image_editor/view");

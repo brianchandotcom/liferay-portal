@@ -65,7 +65,7 @@ int allAddMenuItemsCount = addMenuFavItems.size() + addMenuItems.size() + addMen
 			</button>
 
 			<ul class="dropdown-menu dropdown-menu-left-side-bottom">
-				<li class="active">
+				<li class="active add-menu-advice">
 					<a href="javascript:;"><liferay-ui:message key="you-can-customize-this-menu-or-see-all-you-have-by-pressing-more" /></a>
 				</li>
 

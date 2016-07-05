@@ -85,9 +85,7 @@ public class SearchUtil {
 								"scopeGroupId",
 								OpenSearchUtil.LIFERAY_NAMESPACE)));
 
-					if (Validator.isNotNull(entryScopeGroupId) &&
-						(inactiveGroupsCount > 0)) {
-
+					if ((entryScopeGroupId != 0) && (inactiveGroupsCount > 0)) {
 						Group entryGroup = GroupServiceUtil.getGroup(
 							entryScopeGroupId);
 

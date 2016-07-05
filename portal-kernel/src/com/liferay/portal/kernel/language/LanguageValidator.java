@@ -43,7 +43,7 @@ public class LanguageValidator {
 		else if (key.equals(LanguageConstants.KEY_USER_NAME_PREFIX_VALUES) ||
 				 key.equals(LanguageConstants.KEY_USER_NAME_SUFFIX_VALUES)) {
 
-			return !Validator.isNull(value);
+			return Validator.isNotNull(value);
 		}
 		else if (key.equals(
 					LanguageConstants.KEY_USER_NAME_REQUIRED_FIELD_NAMES)) {

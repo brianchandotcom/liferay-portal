@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletException;
@@ -65,7 +64,7 @@ public class AssociateFacebookUserMVCRenderCommand implements MVCRenderCommand {
 		long facebookIncompleteUserId = ParamUtil.getLong(
 			renderRequest, "userId");
 
-		if (!Validator.isNull(facebookIncompleteUserId)) {
+		if (facebookIncompleteUserId != 0) {
 			User user = _userLocalService.fetchUser(facebookIncompleteUserId);
 
 			return renderUpdateAccount(renderRequest, user);

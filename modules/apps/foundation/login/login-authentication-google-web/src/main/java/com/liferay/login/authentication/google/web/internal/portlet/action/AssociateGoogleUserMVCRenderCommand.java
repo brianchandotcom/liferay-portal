@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletException;
@@ -68,7 +67,7 @@ public class AssociateGoogleUserMVCRenderCommand implements MVCRenderCommand {
 		long googleIncompleteUserId = ParamUtil.getLong(
 			renderRequest, "userId");
 
-		if (!Validator.isNull(googleIncompleteUserId)) {
+		if (googleIncompleteUserId != 0) {
 			User user = _userLocalService.fetchUser(googleIncompleteUserId);
 
 			return renderUpdateAccount(renderRequest, user);

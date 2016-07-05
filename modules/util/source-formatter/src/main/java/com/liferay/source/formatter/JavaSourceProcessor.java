@@ -810,6 +810,11 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				"private static final Log _log");
 		}
 
+		newContent = StringUtil.replace(
+			newContent,
+			new String[] {"!Validator.isNotNull(", "!Validator.isNull("},
+			new String[] {"Validator.isNull(", "Validator.isNotNull("});
+
 		if (newContent.contains("*/\npackage ")) {
 			processErrorMessage(fileName, "package: " + fileName);
 		}

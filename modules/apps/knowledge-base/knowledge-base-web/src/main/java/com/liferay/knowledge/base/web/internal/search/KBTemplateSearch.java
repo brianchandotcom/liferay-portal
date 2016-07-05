@@ -16,7 +16,7 @@ package com.liferay.knowledge.base.web.internal.search;
 
 import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.model.KBTemplate;
-import com.liferay.knowledge.base.util.KnowledgeBaseUtil;
+import com.liferay.knowledge.base.web.internal.KBUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -75,8 +75,7 @@ public class KBTemplateSearch extends SearchContainer<KBTemplate> {
 			}
 
 			OrderByComparator<KBTemplate> orderByComparator =
-				KnowledgeBaseUtil.getKBTemplateOrderByComparator(
-					orderByCol, orderByType);
+				KBUtil.getKBTemplateOrderByComparator(orderByCol, orderByType);
 
 			setOrderByCol(orderByCol);
 			setOrderByType(orderByType);

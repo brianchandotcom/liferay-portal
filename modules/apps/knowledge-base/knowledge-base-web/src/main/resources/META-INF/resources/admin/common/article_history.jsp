@@ -24,7 +24,7 @@ int selStatus = KBArticlePermission.contains(permissionChecker, kbArticle, KBAct
 String orderByCol = ParamUtil.getString(request, "orderByCol", "version");
 String orderByType = ParamUtil.getString(request, "orderByType", "desc");
 
-OrderByComparator orderByComparator = KnowledgeBaseUtil.getKBArticleOrderByComparator(orderByCol, orderByType);
+OrderByComparator orderByComparator = KBUtil.getKBArticleOrderByComparator(orderByCol, orderByType);
 
 List<KBArticle> kbArticles = KBArticleServiceUtil.getKBArticleVersions(scopeGroupId, kbArticle.getResourcePrimKey(), selStatus, QueryUtil.ALL_POS, QueryUtil.ALL_POS, orderByComparator);
 

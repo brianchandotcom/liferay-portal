@@ -79,12 +79,9 @@ public class KBFolderStagedModelDataHandler
 			PortletDataContext portletDataContext, KBFolder kbFolder)
 		throws Exception {
 
-		if (kbFolder.getParentKBFolderId() !=
-				KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+		KBFolder parentKBFolder = kbFolder.getParentKBFolder();
 
-			KBFolder parentKBFolder = _kbFolderLocalService.getKBFolder(
-				kbFolder.getParentKBFolderId());
-
+		if (parentKBFolder != null) {
 			StagedModelDataHandlerUtil.exportReferenceStagedModel(
 				portletDataContext, kbFolder, parentKBFolder,
 				PortletDataContext.REFERENCE_TYPE_PARENT);

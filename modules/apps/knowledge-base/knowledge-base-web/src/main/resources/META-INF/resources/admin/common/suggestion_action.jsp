@@ -25,8 +25,8 @@ KBComment kbComment = (KBComment)row.getObject();
 
 KBSuggestionListDisplayContext kbSuggestionListDisplayContext = (KBSuggestionListDisplayContext)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_KB_SUGGESTION_LIST_DISPLAY_CONTEXT);
 
-int previousStatus = KnowledgeBaseUtil.getPreviousStatus(kbComment.getStatus());
-int nextStatus = KnowledgeBaseUtil.getNextStatus(kbComment.getStatus());
+int previousStatus = KBUtil.getPreviousStatus(kbComment.getStatus());
+int nextStatus = KBUtil.getNextStatus(kbComment.getStatus());
 %>
 
 <c:if test="<%= KBArticlePermission.contains(permissionChecker, kbArticle, KBActionKeys.UPDATE) %>">
@@ -38,7 +38,7 @@ int nextStatus = KnowledgeBaseUtil.getNextStatus(kbComment.getStatus());
 			</liferay-portlet:actionURL>
 
 			<liferay-ui:icon
-				message="<%= KnowledgeBaseUtil.getStatusTransitionLabel(previousStatus) %>"
+				message="<%= KBUtil.getStatusTransitionLabel(previousStatus) %>"
 				url="<%= kbSuggestionListDisplayContext.getViewSuggestionURL(previousStatusURL) %>"
 			/>
 		</c:if>
@@ -50,7 +50,7 @@ int nextStatus = KnowledgeBaseUtil.getNextStatus(kbComment.getStatus());
 			</liferay-portlet:actionURL>
 
 			<liferay-ui:icon
-				message="<%= KnowledgeBaseUtil.getStatusTransitionLabel(nextStatus) %>"
+				message="<%= KBUtil.getStatusTransitionLabel(nextStatus) %>"
 				url="<%= kbSuggestionListDisplayContext.getViewSuggestionURL(nextStatusURL) %>"
 			/>
 		</c:if>

@@ -14,34 +14,10 @@
 
 package com.liferay.knowledge.base.util;
 
-import com.liferay.knowledge.base.constants.KBArticleConstants;
-import com.liferay.knowledge.base.constants.KBCommentConstants;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.model.KBArticle;
-import com.liferay.knowledge.base.model.KBComment;
-import com.liferay.knowledge.base.model.KBFolder;
-import com.liferay.knowledge.base.model.KBTemplate;
 import com.liferay.knowledge.base.service.KBArticleLocalServiceUtil;
-import com.liferay.knowledge.base.service.KBArticleServiceUtil;
-import com.liferay.knowledge.base.service.KBFolderServiceUtil;
-import com.liferay.knowledge.base.util.comparator.KBArticleCreateDateComparator;
-import com.liferay.knowledge.base.util.comparator.KBArticleModifiedDateComparator;
-import com.liferay.knowledge.base.util.comparator.KBArticlePriorityComparator;
-import com.liferay.knowledge.base.util.comparator.KBArticleStatusComparator;
-import com.liferay.knowledge.base.util.comparator.KBArticleTitleComparator;
-import com.liferay.knowledge.base.util.comparator.KBArticleUserNameComparator;
-import com.liferay.knowledge.base.util.comparator.KBArticleVersionComparator;
-import com.liferay.knowledge.base.util.comparator.KBArticleViewCountComparator;
-import com.liferay.knowledge.base.util.comparator.KBCommentCreateDateComparator;
-import com.liferay.knowledge.base.util.comparator.KBCommentModifiedDateComparator;
-import com.liferay.knowledge.base.util.comparator.KBCommentStatusComparator;
-import com.liferay.knowledge.base.util.comparator.KBCommentUserNameComparator;
-import com.liferay.knowledge.base.util.comparator.KBTemplateCreateDateComparator;
-import com.liferay.knowledge.base.util.comparator.KBTemplateModifiedDateComparator;
-import com.liferay.knowledge.base.util.comparator.KBTemplateTitleComparator;
-import com.liferay.knowledge.base.util.comparator.KBTemplateUserNameComparator;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.json.JSONException;
@@ -49,18 +25,11 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.search.SortFactoryUtil;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -69,15 +38,11 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.InputStream;
 
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -85,214 +50,11 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.portlet.PortletPreferences;
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
-import javax.portlet.RenderResponse;
-
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * @author Peter Shin
  * @author Brian Wing Shun Chan
  */
 public class KnowledgeBaseUtil {
-
-	public static void addPortletBreadcrumbEntries(
-			long originalParentResourceClassNameId,
-			long originalParentResourcePrimKey, long parentResourceClassNameId,
-			long parentResourcePrimKey, String mvcPath,
-			HttpServletRequest request, RenderResponse renderResponse)
-		throws PortalException {
-
-		Map<String, Object> parameters = new HashMap<>();
-
-		parameters.put(
-			"originalParentResourceClassNameId",
-			originalParentResourceClassNameId);
-		parameters.put(
-			"originalParentResourcePrimKey", originalParentResourcePrimKey);
-		parameters.put("parentResourceClassNameId", parentResourceClassNameId);
-		parameters.put("parentResourcePrimKey", parentResourcePrimKey);
-		parameters.put("mvcPath", mvcPath);
-
-		addPortletBreadcrumbEntries(parameters, request, renderResponse);
-	}
-
-	public static void addPortletBreadcrumbEntries(
-			long parentResourceClassNameId, long parentResourcePrimKey,
-			String mvcPath, HttpServletRequest request,
-			RenderResponse renderResponse)
-		throws PortalException {
-
-		Map<String, Object> parameters = new HashMap<>();
-
-		parameters.put("parentResourceClassNameId", parentResourceClassNameId);
-		parameters.put("parentResourcePrimKey", parentResourcePrimKey);
-
-		String mvcPathParameterValue = (String)parameters.get("mvcPath");
-
-		if (Validator.isNull(mvcPathParameterValue) ||
-			mvcPathParameterValue.equals("/admin/view.jsp") ||
-			mvcPathParameterValue.equals("/admin/view_articles.jsp") ||
-			mvcPathParameterValue.equals("/admin/view_folders.jsp")) {
-
-			if (parentResourceClassNameId ==
-					PortalUtil.getClassNameId(
-						KBFolderConstants.getClassName())) {
-
-				parameters.put("mvcPath", "/admin/view_folders.jsp");
-			}
-			else if (parentResourceClassNameId ==
-						PortalUtil.getClassNameId(
-							KBArticleConstants.getClassName())) {
-
-				parameters.put("mvcPath", "/admin/view_articles.jsp");
-				parameters.put("resourcePrimKey", parentResourcePrimKey);
-			}
-			else {
-				parameters.put("mvcPath", "/admin/view.jsp");
-			}
-		}
-		else {
-			parameters.put("mvcPath", mvcPath);
-		}
-
-		addPortletBreadcrumbEntries(parameters, request, renderResponse);
-	}
-
-	public static List<KBFolder> getAlternateRootKBFolders(
-			long groupId, long kbFolderId)
-		throws PortalException {
-
-		List<KBFolder> kbFolders = KBFolderServiceUtil.getKBFolders(
-			groupId, kbFolderId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		kbFolders = new ArrayList<>(kbFolders);
-
-		Iterator<KBFolder> itr = kbFolders.iterator();
-
-		while (itr.hasNext()) {
-			KBFolder kbFolder = itr.next();
-
-			if (kbFolder.isEmpty()) {
-				itr.remove();
-			}
-		}
-
-		return ListUtil.sort(
-			kbFolders,
-			new Comparator<KBFolder>() {
-
-				@Override
-				public int compare(KBFolder kbFolder1, KBFolder kbFolder2) {
-					String name1 = kbFolder1.getName();
-					String name2 = kbFolder2.getName();
-
-					return name1.compareTo(name2) * -1;
-				}
-
-			});
-	}
-
-	public static OrderByComparator getKBArticleOrderByComparator(
-		String orderByCol, String orderByType) {
-
-		if (Validator.isNull(orderByCol) || Validator.isNull(orderByType)) {
-			return null;
-		}
-
-		boolean ascending = false;
-
-		if (orderByType.equals("asc")) {
-			ascending = true;
-		}
-
-		if (orderByCol.equals("create-date")) {
-			return new KBArticleCreateDateComparator(ascending);
-		}
-		else if (orderByCol.equals("modified-date")) {
-			return new KBArticleModifiedDateComparator(ascending);
-		}
-		else if (orderByCol.equals("priority")) {
-			return new KBArticlePriorityComparator(ascending);
-		}
-		else if (orderByCol.equals("status")) {
-			return new KBArticleStatusComparator(ascending);
-		}
-		else if (orderByCol.equals("title")) {
-			return new KBArticleTitleComparator(ascending);
-		}
-		else if (orderByCol.equals("user-name")) {
-			return new KBArticleUserNameComparator(ascending);
-		}
-		else if (orderByCol.equals("version")) {
-			return new KBArticleVersionComparator(ascending);
-		}
-		else if (orderByCol.equals("view-count")) {
-			return new KBArticleViewCountComparator(ascending);
-		}
-
-		return null;
-	}
-
-	public static Sort[] getKBArticleSorts(
-		String orderByCol, String orderByType) {
-
-		if (Validator.isNull(orderByCol) || Validator.isNull(orderByType)) {
-			return SortFactoryUtil.getDefaultSorts();
-		}
-
-		boolean reverse = true;
-
-		if (orderByType.equals("asc")) {
-			reverse = false;
-		}
-
-		if (orderByCol.equals("create-date")) {
-			String fieldName = Field.CREATE_DATE;
-
-			return new Sort[] {
-				SortFactoryUtil.create(fieldName, Sort.LONG_TYPE, reverse),
-				SortFactoryUtil.create(null, Sort.SCORE_TYPE, false)
-			};
-		}
-		else if (orderByCol.equals("modified-date")) {
-			String fieldName = Field.MODIFIED_DATE;
-
-			return new Sort[] {
-				SortFactoryUtil.create(fieldName, Sort.LONG_TYPE, reverse),
-				SortFactoryUtil.create(null, Sort.SCORE_TYPE, false)
-			};
-		}
-		else if (orderByCol.equals("score")) {
-			String fieldName = null;
-
-			return new Sort[] {
-				SortFactoryUtil.create(fieldName, Sort.SCORE_TYPE, !reverse),
-				SortFactoryUtil.create(
-					Field.MODIFIED_DATE, Sort.LONG_TYPE, true)
-			};
-		}
-		else if (orderByCol.equals("title")) {
-			String fieldName = "titleKeyword";
-
-			return new Sort[] {
-				SortFactoryUtil.create(fieldName, Sort.STRING_TYPE, reverse),
-				SortFactoryUtil.create(null, Sort.SCORE_TYPE, false)
-			};
-		}
-		else if (orderByCol.equals("user-name")) {
-			String fieldName = Field.USER_NAME;
-
-			return new Sort[] {
-				SortFactoryUtil.create(fieldName, Sort.STRING_TYPE, reverse),
-				SortFactoryUtil.create(null, Sort.SCORE_TYPE, false)
-			};
-		}
-
-		return SortFactoryUtil.getDefaultSorts();
-	}
 
 	public static String getKBArticleURL(
 		long plid, long resourcePrimKey, int status, String portalURL,
@@ -327,35 +89,6 @@ public class KnowledgeBaseUtil {
 		return url;
 	}
 
-	public static OrderByComparator<KBComment> getKBCommentOrderByComparator(
-		String orderByCol, String orderByType) {
-
-		if (Validator.isNull(orderByCol) || Validator.isNull(orderByType)) {
-			return new KBCommentStatusComparator();
-		}
-
-		boolean ascending = false;
-
-		if (orderByType.equals("asc")) {
-			ascending = true;
-		}
-
-		if (orderByCol.equals("create-date")) {
-			return new KBCommentCreateDateComparator(ascending);
-		}
-		else if (orderByCol.equals("modified-date")) {
-			return new KBCommentModifiedDateComparator(ascending);
-		}
-		else if (orderByCol.equals("status")) {
-			return new KBCommentStatusComparator(ascending);
-		}
-		else if (orderByCol.equals("user-name")) {
-			return new KBCommentUserNameComparator(ascending);
-		}
-
-		return null;
-	}
-
 	public static long getKBFolderId(
 			long parentResourceClassNameId, long parentResourcePrimKey)
 		throws PortalException {
@@ -373,35 +106,6 @@ public class KnowledgeBaseUtil {
 		return kbArticle.getKbFolderId();
 	}
 
-	public static OrderByComparator<KBTemplate> getKBTemplateOrderByComparator(
-		String orderByCol, String orderByType) {
-
-		if (Validator.isNull(orderByCol) || Validator.isNull(orderByType)) {
-			return null;
-		}
-
-		boolean ascending = false;
-
-		if (orderByType.equals("asc")) {
-			ascending = true;
-		}
-
-		if (orderByCol.equals("create-date")) {
-			return new KBTemplateCreateDateComparator(ascending);
-		}
-		else if (orderByCol.equals("modified-date")) {
-			return new KBTemplateModifiedDateComparator(ascending);
-		}
-		else if (orderByCol.equals("title")) {
-			return new KBTemplateTitleComparator(ascending);
-		}
-		else if (orderByCol.equals("user-name")) {
-			return new KBTemplateUserNameComparator(ascending);
-		}
-
-		return null;
-	}
-
 	public static String getMimeType(byte[] bytes, String fileName) {
 		InputStream inputStream = new UnsyncByteArrayInputStream(bytes);
 
@@ -410,18 +114,6 @@ public class KnowledgeBaseUtil {
 		}
 		finally {
 			StreamUtil.cleanUp(inputStream);
-		}
-	}
-
-	public static final int getNextStatus(int status) {
-		if (status == KBCommentConstants.STATUS_IN_PROGRESS) {
-			return KBCommentConstants.STATUS_COMPLETED;
-		}
-		else if (status == KBCommentConstants.STATUS_NEW) {
-			return KBCommentConstants.STATUS_IN_PROGRESS;
-		}
-		else {
-			return KBCommentConstants.STATUS_NONE;
 		}
 	}
 
@@ -438,80 +130,6 @@ public class KnowledgeBaseUtil {
 			ArrayUtil.subset(params, _SQL_DATA_MAX_PARAMETERS, params.length),
 			ArrayUtil.subset(params, 0, _SQL_DATA_MAX_PARAMETERS)
 		};
-	}
-
-	public static String getPreferredKBFolderURLTitle(
-			PortalPreferences portalPreferences, String contentRootPrefix)
-		throws JSONException {
-
-		String preferredKBFolderURLTitle = portalPreferences.getValue(
-			KBPortletKeys.KNOWLEDGE_BASE_DISPLAY, "preferredKBFolderURLTitle",
-			"{}");
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			preferredKBFolderURLTitle);
-
-		return jsonObject.getString(contentRootPrefix, StringPool.BLANK);
-	}
-
-	public static final int getPreviousStatus(int status) {
-		if (status == KBCommentConstants.STATUS_COMPLETED) {
-			return KBCommentConstants.STATUS_IN_PROGRESS;
-		}
-		else if (status == KBCommentConstants.STATUS_IN_PROGRESS) {
-			return KBCommentConstants.STATUS_NEW;
-		}
-		else {
-			return KBCommentConstants.STATUS_NONE;
-		}
-	}
-
-	public static long getRootResourcePrimKey(
-			PortletRequest portletRequest, long groupId,
-			long resourceClassNameId, long resourcePrimKey)
-		throws PortalException {
-
-		long kbFolderClassNameId = PortalUtil.getClassNameId(
-			KBFolderConstants.getClassName());
-
-		if (resourceClassNameId == kbFolderClassNameId) {
-			return _getCurrentRootKBFolder(
-				portletRequest, groupId, resourcePrimKey);
-		}
-
-		return getKBFolderId(resourceClassNameId, resourcePrimKey);
-	}
-
-	public static final String getStatusLabel(int status) {
-		if (status == KBCommentConstants.STATUS_COMPLETED) {
-			return "resolved";
-		}
-		else if (status == KBCommentConstants.STATUS_IN_PROGRESS) {
-			return "in-progress";
-		}
-		else if (status == KBCommentConstants.STATUS_NEW) {
-			return "new";
-		}
-		else {
-			throw new IllegalArgumentException(
-				String.format("Invalid suggestion status %s", status));
-		}
-	}
-
-	public static final String getStatusTransitionLabel(int status) {
-		if (status == KBCommentConstants.STATUS_COMPLETED) {
-			return "resolve";
-		}
-		else if (status == KBCommentConstants.STATUS_IN_PROGRESS) {
-			return "move-to-in-progress";
-		}
-		else if (status == KBCommentConstants.STATUS_NEW) {
-			return "move-to-new";
-		}
-		else {
-			throw new IllegalArgumentException(
-				String.format("Invalid suggestion status %s", status));
-		}
 	}
 
 	public static String getUrlTitle(long id, String title) {
@@ -624,104 +242,6 @@ public class KnowledgeBaseUtil {
 		}
 
 		return s.substring(x, s.length());
-	}
-
-	protected static void addPortletBreadcrumbEntries(
-			Map<String, Object> parameters, HttpServletRequest request,
-			RenderResponse renderResponse)
-		throws PortalException {
-
-		PortletURL portletURL = renderResponse.createRenderURL();
-
-		for (Map.Entry<String, Object> entry : parameters.entrySet()) {
-			Object value = entry.getValue();
-
-			portletURL.setParameter(entry.getKey(), value.toString());
-		}
-
-		long kbFolderClassNameId = PortalUtil.getClassNameId(
-			KBFolderConstants.getClassName());
-
-		long parentResourceClassNameId = (Long)parameters.get(
-			"parentResourceClassNameId");
-		long parentResourcePrimKey = (Long)parameters.get(
-			"parentResourcePrimKey");
-
-		String mvcPath = (String)parameters.get("mvcPath");
-
-		if (parentResourcePrimKey ==
-				KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-
-			portletURL.setParameter("mvcPath", "/admin/view.jsp");
-
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-			PortalUtil.addPortletBreadcrumbEntry(
-				request, themeDisplay.translate("home"), portletURL.toString());
-		}
-		else if (parentResourceClassNameId == kbFolderClassNameId) {
-			KBFolder kbFolder = KBFolderServiceUtil.getKBFolder(
-				parentResourcePrimKey);
-
-			addPortletBreadcrumbEntries(
-				kbFolder.getClassNameId(), kbFolder.getParentKBFolderId(),
-				mvcPath, request, renderResponse);
-
-			PortalUtil.addPortletBreadcrumbEntry(
-				request, kbFolder.getName(), portletURL.toString());
-		}
-		else {
-			KBArticle kbArticle = KBArticleServiceUtil.getLatestKBArticle(
-				parentResourcePrimKey, WorkflowConstants.STATUS_ANY);
-
-			addPortletBreadcrumbEntries(
-				kbArticle.getParentResourceClassNameId(),
-				kbArticle.getParentResourcePrimKey(), mvcPath, request,
-				renderResponse);
-
-			PortalUtil.addPortletBreadcrumbEntry(
-				request, kbArticle.getTitle(), portletURL.toString());
-		}
-	}
-
-	private static long _getCurrentRootKBFolder(
-			PortletRequest portletRequest, long groupId, long kbFolderId)
-		throws PortalException {
-
-		PortalPreferences portalPreferences =
-			PortletPreferencesFactoryUtil.getPortalPreferences(portletRequest);
-
-		PortletPreferences portletPreferences = portletRequest.getPreferences();
-
-		String contentRootPrefix = GetterUtil.getString(
-			portletPreferences.getValue("contentRootPrefix", null));
-
-		String kbFolderURLTitle = getPreferredKBFolderURLTitle(
-			portalPreferences, contentRootPrefix);
-
-		long childKbFolderId = KBFolderConstants.DEFAULT_PARENT_FOLDER_ID;
-
-		if (kbFolderURLTitle == null) {
-			List<KBFolder> kbFolders = getAlternateRootKBFolders(
-				groupId, kbFolderId);
-
-			if (!kbFolders.isEmpty()) {
-				KBFolder kbFolder = kbFolders.get(0);
-
-				childKbFolderId = kbFolder.getKbFolderId();
-			}
-		}
-		else {
-			KBFolder kbFolder = KBFolderServiceUtil.fetchKBFolderByUrlTitle(
-				groupId, kbFolderId, kbFolderURLTitle);
-
-			if (kbFolder != null) {
-				childKbFolderId = kbFolder.getKbFolderId();
-			}
-		}
-
-		return childKbFolderId;
 	}
 
 	private static final int _SQL_DATA_MAX_PARAMETERS = GetterUtil.getInteger(

@@ -26,6 +26,7 @@ import com.liferay.knowledge.base.service.KBArticleLocalService;
 import com.liferay.knowledge.base.service.permission.KBArticlePermission;
 import com.liferay.knowledge.base.util.KnowledgeBaseUtil;
 import com.liferay.knowledge.base.util.comparator.KBArticlePriorityComparator;
+import com.liferay.knowledge.base.web.internal.KBUtil;
 import com.liferay.knowledge.base.web.internal.constants.KBWebKeys;
 import com.liferay.knowledge.base.web.internal.selector.KBArticleSelection;
 import com.liferay.knowledge.base.web.internal.selector.KBArticleSelector;
@@ -179,7 +180,7 @@ public class DisplayPortlet extends BaseKBPortlet {
 			portletPreferences.getValue("contentRootPrefix", null));
 
 		String previousPreferredKBFolderURLTitle =
-			KnowledgeBaseUtil.getPreferredKBFolderURLTitle(
+			KBUtil.getPreferredKBFolderURLTitle(
 				portalPreferences, contentRootPrefix);
 
 		KnowledgeBaseUtil.setPreferredKBFolderURLTitle(
@@ -366,7 +367,7 @@ public class DisplayPortlet extends BaseKBPortlet {
 		String contentRootPrefix = GetterUtil.getString(
 			portletPreferences.getValue("contentRootPrefix", null));
 
-		return KnowledgeBaseUtil.getPreferredKBFolderURLTitle(
+		return KBUtil.getPreferredKBFolderURLTitle(
 			portalPreferences, contentRootPrefix);
 	}
 

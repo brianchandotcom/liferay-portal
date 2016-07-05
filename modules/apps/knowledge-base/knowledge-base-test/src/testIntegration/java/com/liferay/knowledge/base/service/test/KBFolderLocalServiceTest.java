@@ -17,6 +17,8 @@ package com.liferay.knowledge.base.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.knowledge.base.constants.KBArticleConstants;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
+import com.liferay.knowledge.base.exception.KBFolderParentException;
+import com.liferay.knowledge.base.exception.NoSuchFolderException;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.KBArticleLocalServiceUtil;
@@ -318,6 +320,60 @@ public class KBFolderLocalServiceTest {
 			_kbFolder.getKbFolderId(), currentKBFolder.getKbFolderId());
 		Assert.assertEquals(
 			newKBArticle.getKbArticleId(), currentKBArticle1.getKbArticleId());
+	}
+
+	@Test(expected = KBFolderParentException.class)
+	public void testMoveKBArticleToInvalidParentKBFolder() throws Exception {
+		KBFolder kbFolder = addKBFolder(_kbFolder.getKbFolderId());
+
+		KBFolder kbSubfolder = addKBFolder(kbFolder.getKbFolderId());
+
+		KBFolderLocalServiceUtil.moveKBFolder(
+			kbFolder.getKbFolderId(), kbSubfolder.getKbFolderId());
+	}
+
+	@Test(expected = NoSuchFolderException.class)
+	public void testMoveKBFolderToParentKBArticle() throws Exception {
+		KBFolder kbFolder = addKBFolder(_kbFolder.getKbFolderId());
+		KBArticle kbArticle = addKBArticle(
+			_kbFolder.getKbFolderId(), RandomTestUtil.randomString());
+
+		KBFolderLocalServiceUtil.moveKBFolder(
+			kbFolder.getKbFolderId(), kbArticle.getResourcePrimKey());
+	}
+
+	@Test
+	public void testMoveKBFolderToParentKBFolderInFolder() throws Exception {
+		KBFolder kbFolder = addKBFolder(_kbFolder.getKbFolderId());
+		KBFolder parentKBFolder = addKBFolder(_kbFolder.getKbFolderId());
+
+		KBFolderLocalServiceUtil.moveKBFolder(
+			kbFolder.getKbFolderId(), parentKBFolder.getKbFolderId());
+
+		kbFolder = KBFolderLocalServiceUtil.getKBFolder(
+			kbFolder.getKbFolderId());
+
+		Assert.assertEquals(
+			parentKBFolder.getKbFolderId(), kbFolder.getParentKBFolderId());
+	}
+
+	@Test
+	public void testMoveKBFolderToParentKBFolderInHomeFolder()
+		throws Exception {
+
+		KBFolder kbFolder = addKBFolder(
+			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+		KBFolder parentKBFolder = addKBFolder(
+			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		KBFolderLocalServiceUtil.moveKBFolder(
+			kbFolder.getKbFolderId(), parentKBFolder.getKbFolderId());
+
+		kbFolder = KBFolderLocalServiceUtil.getKBFolder(
+			kbFolder.getKbFolderId());
+
+		Assert.assertEquals(
+			parentKBFolder.getKbFolderId(), kbFolder.getParentKBFolderId());
 	}
 
 	protected KBArticle addChildKBArticle(KBArticle kbArticle, String title)

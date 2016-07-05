@@ -895,7 +895,15 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			long parentResourcePrimKey, double priority)
 		throws PortalException {
 
-		// KB article
+		KBArticle kbArticle = getLatestKBArticle(
+			resourcePrimKey, WorkflowConstants.STATUS_ANY);
+
+		if (kbArticle.getResourcePrimKey() == parentResourcePrimKey) {
+			return;
+		}
+
+		validateParent(
+			kbArticle, parentResourceClassNameId, parentResourcePrimKey);
 
 		validate(priority);
 
@@ -911,10 +919,10 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			kbFolderId = parentResourcePrimKey;
 		}
 		else {
-			KBArticle latestKBArticle = getLatestKBArticle(
+			KBArticle parentKBArticle = getLatestKBArticle(
 				parentResourcePrimKey, WorkflowConstants.STATUS_ANY);
 
-			kbFolderId = latestKBArticle.getKbFolderId();
+			kbFolderId = parentKBArticle.getKbFolderId();
 		}
 
 		List<KBArticle> kbArticles = getKBArticleVersions(
@@ -931,9 +939,6 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 			kbArticlePersistence.update(curKBArticle);
 		}
-
-		KBArticle kbArticle = getLatestKBArticle(
-			resourcePrimKey, WorkflowConstants.STATUS_ANY);
 
 		if (kbArticle.getKbFolderId() != kbFolderId) {
 			List<KBArticle> descendantKBArticles = getAllDescendantKBArticles(
@@ -1968,6 +1973,36 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		}
 
 		validateSourceURL(sourceURL);
+	}
+
+	protected void validateParent(
+			KBArticle kbArticle, long parentResourceClassNameId,
+			long parentResourcePrimKey)
+		throws PortalException {
+
+		validateParent(parentResourceClassNameId, parentResourcePrimKey);
+
+		long kbArticleClassNameId = classNameLocalService.getClassNameId(
+			KBArticleConstants.getClassName());
+
+		if (parentResourceClassNameId == kbArticleClassNameId) {
+			KBArticle parentKBArticle = getLatestKBArticle(
+				parentResourcePrimKey, WorkflowConstants.STATUS_ANY);
+
+			List<Long> ancestorResourcePrimaryKeys =
+				parentKBArticle.getAncestorResourcePrimaryKeys();
+
+			if (ancestorResourcePrimaryKeys.contains(
+					kbArticle.getResourcePrimKey())) {
+
+				throw new KBArticleParentException(
+					String.format(
+						"Cannot move KBArticle %s inside its descendant " +
+							"KBArticle %s",
+						kbArticle.getResourcePrimKey(),
+						parentKBArticle.getResourcePrimKey()));
+			}
+		}
 	}
 
 	protected void validateParent(

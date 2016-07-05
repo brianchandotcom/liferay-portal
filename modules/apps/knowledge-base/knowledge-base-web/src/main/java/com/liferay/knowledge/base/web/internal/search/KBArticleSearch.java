@@ -17,8 +17,8 @@ package com.liferay.knowledge.base.web.internal.search;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.model.KBFolder;
-import com.liferay.knowledge.base.util.KnowledgeBaseUtil;
 import com.liferay.knowledge.base.util.comparator.KBObjectsTitleComparator;
+import com.liferay.knowledge.base.web.internal.KBUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -101,9 +101,8 @@ public class KBArticleSearch extends SearchContainer<Object> {
 				orderByComparator = new KBObjectsTitleComparator<>(false, true);
 			}
 			else {
-				orderByComparator =
-					KnowledgeBaseUtil.getKBArticleOrderByComparator(
-						orderByCol, orderByType);
+				orderByComparator = KBUtil.getKBArticleOrderByComparator(
+					orderByCol, orderByType);
 			}
 
 			setOrderByCol(orderByCol);

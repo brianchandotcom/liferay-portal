@@ -156,7 +156,7 @@ if (ratingsType == null) {
 				<liferay-ui:search-container
 					emptyResultsMessage="no-comments-found"
 					iteratorURL="<%= iteratorURL %>"
-					orderByComparator='<%= KnowledgeBaseUtil.getKBCommentOrderByComparator("modified-date", "desc") %>'
+					orderByComparator='<%= KBUtil.getKBCommentOrderByComparator("modified-date", "desc") %>'
 					total="<%= kbCommentsCount %>"
 				>
 					<liferay-ui:search-container-results
@@ -189,7 +189,7 @@ if (ratingsType == null) {
 							name="status"
 							orderable="<%= true %>"
 						>
-							<liferay-ui:message key="<%= KnowledgeBaseUtil.getStatusLabel(kbComment.getStatus()) %>" />
+							<liferay-ui:message key="<%= KBUtil.getStatusLabel(kbComment.getStatus()) %>" />
 						</liferay-ui:search-container-column-text>
 					</liferay-ui:search-container-row>
 

@@ -70,7 +70,7 @@ if (portletTitleBasedNavigation) {
 			emptyResultsMessage="no-articles-were-found"
 			iteratorURL="<%= iteratorURL %>"
 			orderByCol="<%= orderByCol %>"
-			orderByComparator="<%= KnowledgeBaseUtil.getKBArticleOrderByComparator(orderByCol, orderByType) %>"
+			orderByComparator="<%= KBUtil.getKBArticleOrderByComparator(orderByCol, orderByType) %>"
 			orderByType="<%= orderByType %>"
 			rowChecker="<%= rowChecker %>"
 			total="<%= KBArticleServiceUtil.getKBArticleVersionsCount(scopeGroupId, kbArticle.getResourcePrimKey(), selStatus) %>"

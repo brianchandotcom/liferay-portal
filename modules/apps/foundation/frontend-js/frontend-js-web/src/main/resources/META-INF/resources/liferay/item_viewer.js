@@ -475,13 +475,16 @@ AUI.add(
 					},
 
 					_renderControls: function() {
-						var imageViewerBase = A.one(STR_DOT + CSS_IMAGE_VIEWER_BASE);
-						var imageViewerClose = A.one('.image-viewer-close');
+						var instance = this;
 
-						this._closeEl = A.Node.create(this.TPL_CLOSE);
+						var boundingBox = instance.get('boundingBox');
 
-						if (imageViewerBase && !imageViewerClose) {
-							imageViewerBase.prepend(this._closeEl);
+						var imageViewerClose = boundingBox.one('.image-viewer-close');
+
+						if (!imageViewerClose) {
+							this._closeEl = A.Node.create(this.TPL_CLOSE);
+
+							boundingBox.prepend(this._closeEl);
 						}
 					},
 

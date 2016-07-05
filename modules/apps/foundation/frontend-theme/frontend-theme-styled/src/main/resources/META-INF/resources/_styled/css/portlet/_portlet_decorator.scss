@@ -1,6 +1,7 @@
 .portlet-decorate .portlet-content {
 	background: $portlet-decorate-bg;
 	border: $portlet-decorate-border-width solid $portlet-decorate-border-color;
+	word-break: break-word;
 }
 
 .portlet-barebone .portlet-content {

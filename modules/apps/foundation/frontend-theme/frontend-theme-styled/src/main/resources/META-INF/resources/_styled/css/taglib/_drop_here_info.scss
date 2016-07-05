@@ -22,4 +22,5 @@
 
 .drop-active .drop-here-info {
 	background-color: transparentize(#000, 0.4);
+	z-index: 100;
 }

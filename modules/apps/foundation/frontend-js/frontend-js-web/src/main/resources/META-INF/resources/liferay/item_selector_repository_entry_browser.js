@@ -73,9 +73,7 @@ AUI.add(
 						instance._uploadItemViewer = new A.LiferayItemViewer(
 							{
 								btnCloseCaption: instance.get('closeCaption'),
-								editItemURL: instance.get('editItemURL'),
 								links: '',
-								renderControls: false,
 								uploadItemURL: instance.get('uploadItemURL')
 							}
 						);

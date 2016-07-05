@@ -1,6 +1,7 @@
 package _package_.portlet;
 
 import _package_.constants._CLASS_PortletKeys;
+import _package_.constants._CLASS_WebKeys;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
@@ -74,7 +75,7 @@ public class _CLASS_Portlet extends MVCPortlet {
 		}
 
 		renderRequest.setAttribute(
-			_CLASS_PortletKeys.PORTLET_PROVIDER_MESSAGE, message);
+			_CLASS_WebKeys.PORTLET_PROVIDER_MESSAGE, message);
 
 		super.doView(renderRequest, renderResponse);
 	}

@@ -288,6 +288,8 @@
 	</command>
 
 	<command name="AddCampaignDDLFormCP" priority="5">
+		<property name="content.targeting.release" value="true" />
+
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>

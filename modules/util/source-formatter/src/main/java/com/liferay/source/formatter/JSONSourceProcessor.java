@@ -79,10 +79,8 @@ public class JSONSourceProcessor extends BaseSourceProcessor {
 		Matcher matcher = _incorrectLineBreakPattern.matcher(content);
 
 		if (matcher.find()) {
-			processErrorMessage(
-				fileName,
-				"line break: " + fileName + " " +
-					getLineCount(content, matcher.start()));
+			processMessage(
+				fileName, "line break", getLineCount(content, matcher.start()));
 		}
 		else {
 			content = sort(content);

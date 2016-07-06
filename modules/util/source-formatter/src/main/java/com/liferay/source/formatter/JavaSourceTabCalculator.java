@@ -369,10 +369,8 @@ public class JavaSourceTabCalculator {
 		}
 		else {
 			if (_printIncorrectTabMessage) {
-				sourceProcessor.processErrorMessage(
-					fileName,
-					"Incorrect tab or line break: " + fileName + " " +
-						lineCount);
+				sourceProcessor.processMessage(
+					fileName, "Incorrect tab or line break", lineCount);
 			}
 
 			_printIncorrectTabMessage = false;

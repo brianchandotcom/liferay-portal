@@ -88,10 +88,8 @@ public class JavaClass {
 				!_javaSourceProcessor.isExcludedPath(
 					javaTermSortExcludes, _absolutePath)) {
 
-				_javaSourceProcessor.processErrorMessage(
-					_fileName,
-					"Parsing error around line " + ijte.getLineCount() + ": " +
-						_fileName);
+				_javaSourceProcessor.processMessage(
+					_fileName, "Parsing error", ijte.getLineCount());
 			}
 
 			return _classContent;
@@ -137,10 +135,9 @@ public class JavaClass {
 				javaTerm.hasAnnotation("Indexable") &&
 				!javaTerm.hasReturnType()) {
 
-				_javaSourceProcessor.processErrorMessage(
-					_fileName,
-					"Missing return type for method with @Indexable: " +
-						_fileName + " " + javaTerm.getLineCount());
+				_javaSourceProcessor.processMessage(
+					_fileName, "Missing return type for method with @Indexable",
+					javaTerm.getLineCount());
 			}
 
 			if (!_javaSourceProcessor.isExcludedPath(
@@ -253,23 +250,22 @@ public class JavaClass {
 
 		if (javaTerm.hasAnnotation(annotation)) {
 			if (!matcher.find()) {
-				_javaSourceProcessor.processErrorMessage(
+				_javaSourceProcessor.processMessage(
 					_fileName,
-					"LPS-36303: Incorrect method name: " + methodName + " " +
-						_fileName);
+					"LPS-36303: Incorrect method name '" + methodName + "'");
 			}
 			else if (javaTerm.getType() != requiredMethodType) {
-				_javaSourceProcessor.processErrorMessage(
+				_javaSourceProcessor.processMessage(
 					_fileName,
-					"LPS-36303: Incorrect method type for " + methodName + " " +
-						_fileName);
+					"LPS-36303: Incorrect method type for '" + methodName +
+						"'");
 			}
 		}
 		else if (matcher.find() && !javaTerm.hasAnnotation("Override")) {
-			_javaSourceProcessor.processErrorMessage(
+			_javaSourceProcessor.processMessage(
 				_fileName,
-				"Annotation @" + annotation + " required for " + methodName +
-					" " + _fileName);
+				"Annotation @" + annotation + " required for '" + methodName +
+					"'");
 		}
 	}
 
@@ -282,8 +278,8 @@ public class JavaClass {
 					_javaSourceProcessor.getLineCount(
 						javaTerm.getContent(), matcher.end()) - 1;
 
-			_javaSourceProcessor.processErrorMessage(
-				_fileName, "chaining: " + _fileName + " " + lineCount);
+			_javaSourceProcessor.processMessage(
+				_fileName, "chaining", lineCount);
 		}
 	}
 
@@ -333,10 +329,10 @@ public class JavaClass {
 		matcher = pattern.matcher(cleanUpMethodContent);
 
 		if (!matcher.find()) {
-			_javaSourceProcessor.processErrorMessage(
+			_javaSourceProcessor.processMessage(
 				_fileName,
-				"LPS-66242: Initial value differs from value in cleanUp " +
-					"method: " + _fileName + " " + javaTerm.getLineCount());
+				"LPS-66242: Initial value differs from value in cleanUp method",
+				javaTerm.getLineCount());
 		}
 	}
 
@@ -428,10 +424,8 @@ public class JavaClass {
 			int pos = matcher.start(2);
 
 			if (previousPos > pos) {
-				_javaSourceProcessor.processErrorMessage(
-					_fileName,
-					"Constructor parameter order " + parameterName + ": " +
-						_fileName);
+				_javaSourceProcessor.processMessage(
+					_fileName, "Constructor parameter order " + parameterName);
 
 				return;
 			}
@@ -528,11 +522,11 @@ public class JavaClass {
 			if (javaTerm.isPrivate()) {
 				if (!javaTermContent.contains("@Reference")) {
 					if (getJavaTermCount(javaTerms, javaTermName) > 1) {
-						_javaSourceProcessor.processErrorMessage(
+						_javaSourceProcessor.processMessage(
 							_fileName,
 							"Private method or variable should start with " +
-								"underscore: " + _fileName + " " +
-									javaTerm.getLineCount());
+								"underscore",
+							javaTerm.getLineCount());
 					}
 					else {
 						_classContent = _classContent.replaceAll(
@@ -542,11 +536,11 @@ public class JavaClass {
 				}
 			}
 			else {
-				_javaSourceProcessor.processErrorMessage(
+				_javaSourceProcessor.processMessage(
 					_fileName,
 					"Only private method or variable should start with " +
-						"underscore: " + _fileName + " " +
-							javaTerm.getLineCount());
+						"underscore",
+					javaTerm.getLineCount());
 			}
 		}
 
@@ -631,10 +625,11 @@ public class JavaClass {
 					_javaSourceProcessor.getLineCount(
 						javaTerm.getContent(), matcher.end(1));
 
-			_javaSourceProcessor.processErrorMessage(
+			_javaSourceProcessor.processMessage(
 				_fileName,
 				"Create a new var for " + StringUtil.trim(matcher.group(1)) +
-					" for better readability: " + _fileName + " " + lineCount);
+					" for better readability",
+				lineCount);
 		}
 	}
 
@@ -651,10 +646,10 @@ public class JavaClass {
 			javaTermContent.contains(".compareTo") &&
 			!javaTermContent.contains("Collator")) {
 
-			_javaSourceProcessor.processErrorMessage(
+			_javaSourceProcessor.processMessage(
 				_fileName,
 				"LPS-65690 Use Collator for locale-sensitive String " +
-					"comparison: " + _fileName);
+					"comparison");
 		}
 	}
 
@@ -702,10 +697,9 @@ public class JavaClass {
 					"(?<=[\\W&&[^.\"]])(" + javaTermName + ")\\b", newName);
 			}
 			else {
-				_javaSourceProcessor.processErrorMessage(
-					_fileName,
-					"Rename " + javaTermName + " to " + newName + ": " +
-						_fileName + " " + javaTerm.getLineCount());
+				_javaSourceProcessor.processMessage(
+					_fileName, "Rename " + javaTermName + " to " + newName,
+					javaTerm.getLineCount());
 			}
 		}
 	}
@@ -715,11 +709,11 @@ public class JavaClass {
 			if (Validator.isVariableName(parameterName) &&
 				parameterName.matches("_?[A-Z].+")) {
 
-				_javaSourceProcessor.processErrorMessage(
+				_javaSourceProcessor.processMessage(
 					_fileName,
 					"Parameter " + parameterName +
-						" should not start with uppercase: " + _fileName + " " +
-							javaTerm.getLineCount());
+						" should not start with uppercase",
+					javaTerm.getLineCount());
 			}
 		}
 	}
@@ -768,10 +762,9 @@ public class JavaClass {
 
 		for (String parameterName : javaTerm.getParameterNames()) {
 			if (StringUtil.count(javaTerm.getContent(), parameterName) == 1) {
-				_javaSourceProcessor.processErrorMessage(
-					_fileName,
-					"Unused parameter " + parameterName + ": " + _fileName +
-						" " + javaTerm.getLineCount());
+				_javaSourceProcessor.processMessage(
+					_fileName, "Unused parameter " + parameterName,
+					javaTerm.getLineCount());
 			}
 		}
 	}
@@ -795,10 +788,8 @@ public class JavaClass {
 						_javaSourceProcessor.getLineCount(
 							javaTerm.getContent(), matcher.start()) - 1;
 
-				_javaSourceProcessor.processErrorMessage(
-					_fileName,
-					"avoid using Validator.IsNull(long): " + _fileName + " " +
-						lineCount);
+				_javaSourceProcessor.processMessage(
+					_fileName, "avoid using Validator.IsNull(long)", lineCount);
 			}
 		}
 	}
@@ -813,11 +804,11 @@ public class JavaClass {
 					_javaSourceProcessor.getLineCount(
 						javaTerm.getContent(), matcher.start(1)) - 1;
 
-			_javaSourceProcessor.processErrorMessage(
+			_javaSourceProcessor.processMessage(
 				_fileName,
 				"Variable " + matcher.group(1) +
-					" should not start with uppercase: " + _fileName + " " +
-						lineCount);
+					" should not start with uppercase",
+				lineCount);
 		}
 	}
 
@@ -1277,9 +1268,8 @@ public class JavaClass {
 						staticBlocks.add(javaTerm);
 					}
 					else if (!javaTerms.add(javaTerm)) {
-						_javaSourceProcessor.processErrorMessage(
-							_fileName,
-							"Duplicate " + javaTermName + ": " + _fileName);
+						_javaSourceProcessor.processMessage(
+							_fileName, "Duplicate " + javaTermName);
 
 						_javaTerms = Collections.emptySet();
 
@@ -1318,10 +1308,9 @@ public class JavaClass {
 								_javaSourceProcessor.getLineCount(
 									_classContent, index) - 1;
 
-						_javaSourceProcessor.processErrorMessage(
-							_fileName,
-							"Missing access level modifier: " + _fileName +
-								" " + lineCount);
+						_javaSourceProcessor.processMessage(
+							_fileName, "Missing access level modifier",
+							lineCount);
 					}
 				}
 			}
@@ -1342,8 +1331,8 @@ public class JavaClass {
 				staticBlocks.add(javaTerm);
 			}
 			else if (!javaTerms.add(javaTerm)) {
-				_javaSourceProcessor.processErrorMessage(
-					_fileName, "Duplicate " + javaTermName + ": " + _fileName);
+				_javaSourceProcessor.processMessage(
+					_fileName, "Duplicate " + javaTermName);
 
 				_javaTerms = Collections.emptySet();
 

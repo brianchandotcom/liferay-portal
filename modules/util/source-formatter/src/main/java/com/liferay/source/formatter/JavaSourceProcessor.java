@@ -247,7 +247,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				return;
 			}
 
-			StringBundler sb = new StringBundler(8);
+			StringBundler sb = new StringBundler(6);
 
 			sb.append("sort: ");
 
@@ -262,10 +262,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 			sb.append(StringPool.POUND);
 			sb.append(parameterName);
-			sb.append(StringPool.SPACE);
-			sb.append(fileName);
 
-			processErrorMessage(fileName, sb.toString());
+			processMessage(fileName, sb.toString());
 
 			return;
 		}
@@ -311,7 +309,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				continue;
 			}
 
-			StringBundler sb = new StringBundler(5);
+			StringBundler sb = new StringBundler(3);
 
 			if (isRunOutsidePortalExclusion) {
 				sb.append("Possible Java Serialization Remote Code Execution ");
@@ -322,10 +320,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			}
 
 			sb.append(matcher.group(1));
-			sb.append(": ");
-			sb.append(fileName);
 
-			processErrorMessage(fileName, sb.toString());
+			processMessage(fileName, sb.toString());
 		}
 	}
 
@@ -341,10 +337,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		Matcher matcher = _fetchByPrimaryKeysMethodPattern.matcher(content);
 
 		if (!matcher.find()) {
-			processErrorMessage(
+			processMessage(
 				fileName,
 				"LPS-49552: Missing override of BasePersistenceImpl." +
-					"fetchByPrimaryKeys(Set<Serializable>): " + fileName);
+					"fetchByPrimaryKeys(Set<Serializable>)");
 		}
 	}
 
@@ -378,15 +374,12 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				int lineCount = getLineCount(content, matcher.start(1));
 
 				if (codeBlock.contains(s)) {
-					processErrorMessage(
-						fileName,
-						"Do not use _log.isErrorEnabled(): " + fileName + " " +
-							lineCount);
+					processMessage(
+						fileName, "Do not use _log.isErrorEnabled()",
+						lineCount);
 				}
 				else {
-					processErrorMessage(
-						fileName,
-						"Use " + s + ": " + fileName + " " + lineCount);
+					processMessage(fileName, "Use " + s, lineCount);
 				}
 			}
 		}
@@ -396,7 +389,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		String content, String fileName, String className) {
 
 		if (!content.contains(" * @author ")) {
-			processErrorMessage(fileName, "Missing author: " + fileName);
+			processMessage(fileName, "Missing author");
 		}
 	}
 
@@ -406,8 +399,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		if (!content.contains(
 				"package " + packagePath + StringPool.SEMICOLON)) {
 
-			processErrorMessage(
-				fileName, "Incorrect package path: " + fileName);
+			processMessage(fileName, "Incorrect package path");
 		}
 	}
 
@@ -438,9 +430,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			regexPattern, StringPool.PLUS, StringPool.BLANK);
 
 		if (Validator.isNull(regexPattern)) {
-			processErrorMessage(
-				fileName,
-				"create pattern as global var: " + fileName + " " + lineCount);
+			processMessage(fileName, "create pattern as global var", lineCount);
 		}
 	}
 
@@ -509,7 +499,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			}
 
 			if (!localServiceImplContent.contains("@SystemEvent")) {
-				processErrorMessage(
+				processMessage(
 					fileName,
 					"Missing deletion system event: " +
 						localServiceImplFileName);
@@ -530,20 +520,18 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		int pos = content.indexOf("LocaleUtil.getDefault()");
 
 		if (pos != -1) {
-			processErrorMessage(
+			processMessage(
 				fileName,
 				"Use UpgradeProcessUtil.getDefaultLanguageId(companyId) " +
-					"instead of LocaleUtil.getDefault(): " + fileName + " " +
-						getLineCount(content, pos));
+					"instead of LocaleUtil.getDefault()",
+				getLineCount(content, pos));
 		}
 
 		pos = content.indexOf("rs.getDate(");
 
 		if (pos != -1) {
-			processErrorMessage(
-				fileName,
-				"Use rs.getTimeStamp: " + fileName + " " +
-					getLineCount(content, pos));
+			processMessage(
+				fileName, "Use rs.getTimeStamp", getLineCount(content, pos));
 		}
 
 		// LPS-34911
@@ -557,8 +545,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			pos = content.indexOf("ServiceUtil.");
 
 			if (pos != -1) {
-				processErrorMessage(fileName, "ServiceUtil: " + fileName + " " +
-					getLineCount(content, pos));
+				processMessage(
+					fileName, "ServiceUtil", getLineCount(content, pos));
 			}
 		}
 
@@ -575,8 +563,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				String componentAnnotation = matcher.group();
 
 				if (!componentAnnotation.contains("service =")) {
-					processErrorMessage(
-						fileName, "Missing service in @Component " + fileName);
+					processMessage(fileName, "Missing service in @Component");
 				}
 			}
 		}
@@ -610,16 +597,11 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					(previousUpgradeClassName.compareTo(
 						upgradeClassName) > 0)) {
 
-					StringBundler sb = new StringBundler(6);
-
-					sb.append("LPS-65685: Break up Upgrade classes with a ");
-					sb.append("minor version increment or order ");
-					sb.append("alphabetically: ");
-					sb.append(fileName);
-					sb.append(StringPool.SPACE);
-					sb.append(getLineCount(content, matcher1.start()));
-
-					processErrorMessage(fileName, sb.toString());
+					processMessage(
+						fileName,
+						"LPS-65685: Break up Upgrade classes with a minor " +
+							"version increment or order alphabetically",
+						getLineCount(content, matcher1.start()));
 
 					break;
 				}
@@ -655,11 +637,11 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				break;
 			}
 
-			processErrorMessage(
+			processMessage(
 				fileName,
 				"Use existing connection field instead of " +
-					"DataAccess.getUpgradeOptimizedConnection " + fileName +
-						" " + getLineCount(content, x));
+					"DataAccess.getUpgradeOptimizedConnection",
+				getLineCount(content, x));
 		}
 	}
 
@@ -682,7 +664,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				continue;
 			}
 
-			StringBundler sb = new StringBundler(5);
+			StringBundler sb = new StringBundler(3);
 
 			if (isRunOutsidePortalExclusion) {
 				sb.append("Possible XXE or Quadratic Blowup security ");
@@ -694,10 +676,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			}
 
 			sb.append(xmlVulnerabitily);
-			sb.append(": ");
-			sb.append(fileName);
 
-			processErrorMessage(fileName, sb.toString());
+			processMessage(fileName, sb.toString());
 		}
 	}
 
@@ -729,7 +709,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		String newContent = trimContent(content, false);
 
 		if (newContent.contains("$\n */")) {
-			processErrorMessage(fileName, "*: " + fileName);
+			processMessage(fileName, "*");
 
 			newContent = StringUtil.replace(newContent, "$\n */", "$\n *\n */");
 		}
@@ -738,7 +718,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			newContent, absolutePath, fileName, className);
 
 		if (newContent.contains(className + ".java.html")) {
-			processErrorMessage(fileName, "Java2HTML: " + fileName);
+			processMessage(fileName, "Java2HTML");
 		}
 
 		if (newContent.contains(" * @author Raymond Aug") &&
@@ -747,7 +727,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			newContent = newContent.replaceFirst(
 				"Raymond Aug.++", "Raymond Aug\u00e9");
 
-			processErrorMessage(fileName, "UTF-8: " + fileName);
+			processMessage(fileName, "UTF-8");
 		}
 
 		checkMissingAuthor(newContent, fileName, className);
@@ -816,7 +796,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			new String[] {"Validator.isNull(", "Validator.isNotNull("});
 
 		if (newContent.contains("*/\npackage ")) {
-			processErrorMessage(fileName, "package: " + fileName);
+			processMessage(fileName, "package");
 		}
 
 		if (portalSource && !_allowUseServiceUtilInServiceImpl &&
@@ -825,7 +805,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			className.endsWith("ServiceImpl") &&
 			newContent.contains("ServiceUtil.")) {
 
-			processErrorMessage(fileName, "ServiceUtil: " + fileName);
+			processMessage(fileName, "ServiceUtil");
 		}
 
 		boolean isRunOutsidePortalExclusion = isExcludedPath(
@@ -835,16 +815,15 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			!isExcludedPath(_proxyExcludes, absolutePath) &&
 			newContent.contains("import java.lang.reflect.Proxy;")) {
 
-			processErrorMessage(fileName, "Proxy: " + fileName);
+			processMessage(fileName, "Proxy");
 		}
 
 		if (newContent.contains("import edu.emory.mathcs.backport.java")) {
-			processErrorMessage(
-				fileName, "edu.emory.mathcs.backport.java: " + fileName);
+			processMessage(fileName, "edu.emory.mathcs.backport.java");
 		}
 
 		if (newContent.contains("import jodd.util.StringPool")) {
-			processErrorMessage(fileName, "jodd.util.StringPool: " + fileName);
+			processMessage(fileName, "jodd.util.StringPool");
 		}
 
 		// LPS-45027
@@ -852,11 +831,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		if (newContent.contains(
 				"com.liferay.portal.kernel.util.UnmodifiableList")) {
 
-			processErrorMessage(
+			processMessage(
 				fileName,
 				"Use java.util.Collections.unmodifiableList instead of " +
-					"com.liferay.portal.kernel.util.UnmodifiableList: " +
-						fileName);
+					"com.liferay.portal.kernel.util.UnmodifiableList");
 		}
 
 		// LPS-28266
@@ -883,8 +861,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			}
 
 			if ((pos3 < pos4) && (pos4 < pos5)) {
-				processErrorMessage(
-					fileName, "Use getInt(1) for count: " + fileName);
+				processMessage(fileName, "Use getInt(1) for count");
 			}
 		}
 
@@ -895,10 +872,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		if (matcher.find() &&
 			!content.contains("private static final long serialVersionUID")) {
 
-			processErrorMessage(
+			processMessage(
 				fileName,
-				"Assign ProcessCallable implementation a serialVersionUID: " +
-					fileName);
+				"Assign ProcessCallable implementation a serialVersionUID");
 		}
 
 		checkLanguageKeys(
@@ -924,11 +900,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			content.contains("java.security.SecureRandom") &&
 			!content.contains("javax.crypto.KeyGenerator")) {
 
-			processErrorMessage(
+			processMessage(
 				fileName,
 				"Use SecureRandomUtil or com.liferay.portal.kernel.security." +
-					"SecureRandom instead of java.security.SecureRandom: " +
-						fileName);
+					"SecureRandom instead of java.security.SecureRandom");
 		}
 
 		// LPS-41315
@@ -966,10 +941,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		if (portalSource && fileName.contains("/portal-kernel/") &&
 			content.contains("import javax.servlet.jsp.")) {
 
-			processErrorMessage(
+			processMessage(
 				fileName,
-				"Never import javax.servlet.jsp.* from portal-kernel " +
-					fileName);
+				"Never import javax.servlet.jsp.* from portal-kernel");
 		}
 
 		// LPS-48153
@@ -1004,10 +978,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		// LPS-55690
 
 		if (newContent.contains("org.testng.Assert")) {
-			processErrorMessage(
-				fileName,
-				"Use org.junit.Assert instead of org.testng.Assert: " +
-					fileName);
+			processMessage(
+				fileName, "Use org.junit.Assert instead of org.testng.Assert");
 		}
 
 		if (portalSource && isModulesFile(absolutePath)) {
@@ -1024,10 +996,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		if (newContent.contains(".supportsBatchUpdates()") &&
 			!fileName.endsWith("AutoBatchPreparedStatementUtil.java")) {
 
-			processErrorMessage(
+			processMessage(
 				fileName,
 				"Use AutoBatchPreparedStatementUtil instead of " +
-					"DatabaseMetaData.supportsBatchUpdates: " + fileName);
+					"DatabaseMetaData.supportsBatchUpdates");
 		}
 
 		// LPS-64056
@@ -1035,10 +1007,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		if (newContent.contains("Configurable.createConfigurable(") &&
 			!fileName.endsWith("ConfigurableUtil.java")) {
 
-			processErrorMessage(
+			processMessage(
 				fileName,
 				"Use ConfigurableUtil.createConfigurable instead of " +
-					"Configurable.createConfigurable: " + fileName);
+					"Configurable.createConfigurable");
 		}
 
 		// LPS-62786
@@ -1058,10 +1030,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		if (fileName.endsWith("ResourceCommand.java") &&
 			newContent.contains("ServletResponseUtil.sendFile(")) {
 
-			processErrorMessage(
+			processMessage(
 				fileName,
 				"Use PortletResponseUtil.sendFile instead of " +
-					"ServletResponseUtil.sendFile: " + fileName);
+					"ServletResponseUtil.sendFile");
 		}
 
 		if (!fileName.endsWith("GetterUtilTest.java")) {
@@ -1403,8 +1375,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			if (getLevel(matcher.group()) == 0) {
 				int lineCount = getLineCount(content, matcher.start());
 
-				processErrorMessage(
-					fileName, "line break: " + fileName + " " + lineCount);
+				processMessage(fileName, "line break", lineCount);
 			}
 		}
 
@@ -1425,10 +1396,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			String lastCharacterPreviousLine = matcher.group(1);
 
 			if (lastCharacterPreviousLine.equals(StringPool.OPEN_PARENTHESIS)) {
-				processErrorMessage(
-					fileName,
-					"line break: " + fileName + " " +
-						getLineCount(content, matcher.start(1)));
+				processMessage(
+					fileName, "line break",
+					getLineCount(content, matcher.start(1)));
 
 				return content;
 			}
@@ -2027,10 +1997,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 					int lineCount = getLineCount(content, matcher.start(2));
 
-					processErrorMessage(
-						fileName,
-						"Unprocessed " + originalExceptionClassName + ": " +
-							fileName + " " + lineCount);
+					processMessage(
+						fileName, "Unprocessed " + originalExceptionClassName,
+						lineCount);
 
 					break;
 				}
@@ -2269,8 +2238,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 				if (line.startsWith("import ")) {
 					if (line.endsWith(".*;")) {
-						processErrorMessage(
-							fileName, "import: " + fileName + " " + lineCount);
+						processMessage(fileName, "import", lineCount);
 					}
 
 					int pos = line.lastIndexOf(CharPool.PERIOD);
@@ -2317,10 +2285,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				if (line.contains("PortalUtil.getClassNameId(") &&
 					fileName.endsWith("ServiceImpl.java")) {
 
-					processErrorMessage(
-						fileName,
-						"Use classNameLocalService.getClassNameId: " +
-							fileName + " " + lineCount);
+					processMessage(
+						fileName, "Use classNameLocalService.getClassNameId",
+						lineCount);
 				}
 
 				// LPS-42599
@@ -2348,10 +2315,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				// LPS-45492
 
 				if (trimmedLine.contains("StopWatch stopWatch = null;")) {
-					processErrorMessage(
-						fileName,
-						"Do not set stopwatch to null: " + fileName + " " +
-							lineCount);
+					processMessage(
+						fileName, "Do not set stopwatch to null", lineCount);
 				}
 
 				checkEmptyCollection(trimmedLine, fileName, lineCount);
@@ -2389,37 +2354,30 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				if (trimmedLine.startsWith("* @see ") &&
 					(StringUtil.count(trimmedLine, CharPool.AT) > 1)) {
 
-					processErrorMessage(
-						fileName,
-						"Do not use @see with another annotation: " + fileName +
-							" " + lineCount);
+					processMessage(
+						fileName, "Do not use @see with another annotation",
+						lineCount);
 				}
 
 				checkInefficientStringMethods(
 					line, fileName, absolutePath, lineCount, true);
 
 				if (trimmedLine.startsWith(StringPool.EQUAL)) {
-					processErrorMessage(
-						fileName, "line break: " + fileName + " " + lineCount);
+					processMessage(fileName, "line break", lineCount);
 				}
 
 				if (trimmedLine.startsWith("},") && !trimmedLine.equals("},")) {
-					processErrorMessage(
-						fileName, "line break: " + fileName + " " + lineCount);
+					processMessage(fileName, "line break", lineCount);
 				}
 
 				if (line.contains("ActionForm form")) {
-					processErrorMessage(
-						fileName,
-						"Rename form to actionForm: " + fileName + " " +
-							lineCount);
+					processMessage(
+						fileName, "Rename form to actionForm", lineCount);
 				}
 
 				if (line.contains("ActionMapping mapping")) {
-					processErrorMessage(
-						fileName,
-						"Rename mapping to ActionMapping: " + fileName + " " +
-							lineCount);
+					processMessage(
+						fileName, "Rename mapping to ActionMapping", lineCount);
 				}
 
 				if (!trimmedLine.equals("{") && line.endsWith("{") &&
@@ -2463,16 +2421,12 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 						(strippedQuotesLineOpenParenthesisCount > 0) &&
 						(getLevel(trimmedLine) > 0)) {
 
-						processErrorMessage(
-							fileName,
-							"line break: " + fileName + " " + lineCount);
+						processMessage(fileName, "line break", lineCount);
 					}
 
 					if (line.endsWith(StringPool.OPEN_PARENTHESIS)) {
 						if (line.contains(" && ") || line.contains(" || ")) {
-							processErrorMessage(
-								fileName,
-								"line break: " + fileName + " " + lineCount);
+							processMessage(fileName, "line break", lineCount);
 						}
 
 						int pos = strippedQuotesLine.indexOf(" + ");
@@ -2484,10 +2438,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 							if ((getLevel(linePart, "(", ")") == 0) &&
 								(getLevel(linePart, "[", "]") == 0)) {
 
-								processErrorMessage(
-									fileName,
-									"line break: " + fileName + " " +
-										lineCount);
+								processMessage(
+									fileName, "line break", lineCount);
 							}
 						}
 					}
@@ -2592,10 +2544,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 								(previousLine.endsWith(StringPool.PLUS) &&
 								 (level <= 0))) {
 
-								processErrorMessage(
-									fileName,
-									"line break: " + fileName + " " +
-										lineCount);
+								processMessage(
+									fileName, "line break: ", lineCount);
 							}
 						}
 					}
@@ -2606,18 +2556,14 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 						String linePart = strippedQuotesLine.substring(0, x);
 
 						if (getLevel(linePart) < 0) {
-							processErrorMessage(
-								fileName,
-								"line break: " + fileName + " " + lineCount);
+							processMessage(fileName, "line break", lineCount);
 						}
 					}
 					else if (trimmedLine.endsWith(StringPool.COMMA) &&
 							 !trimmedLine.startsWith("for (")) {
 
 						if (getLevel(trimmedLine) > 0) {
-							processErrorMessage(
-								fileName,
-								"line break: " + fileName + " " + lineCount);
+							processMessage(fileName, "line break", lineCount);
 						}
 					}
 
@@ -2630,10 +2576,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 							int y = line.indexOf(CharPool.QUOTE);
 
 							if ((y == -1) || (x < y)) {
-								processErrorMessage(
-									fileName,
-									"line break: " + fileName + " " +
-										lineCount);
+								processMessage(
+									fileName, "line break", lineCount);
 							}
 						}
 					}
@@ -2645,45 +2589,36 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 						 (line.endsWith(StringPool.OPEN_CURLY_BRACE) ||
 						  line.endsWith(StringPool.SEMICOLON)))) {
 
-						processErrorMessage(
-							fileName,
-							"line break: " + fileName + " " + lineCount);
+						processMessage(fileName, "line break", lineCount);
 					}
 
 					if (trimmedLine.startsWith(StringPool.PERIOD) ||
 						(line.endsWith(StringPool.PERIOD) &&
 						 line.contains(StringPool.EQUAL))) {
 
-						processErrorMessage(
-							fileName,
-							"line break: " + fileName + " " + lineCount);
+						processMessage(fileName, "line break", lineCount);
 					}
 
 					if (trimmedLine.matches("^\\} (catch|else|finally) .*")) {
-						processErrorMessage(
-							fileName,
-							"line break: " + fileName + " " + lineCount);
+						processMessage(fileName, "line break", lineCount);
 					}
 
 					if (previousLine.endsWith(StringPool.OPEN_PARENTHESIS) &&
 						trimmedLine.startsWith(StringPool.CLOSE_PARENTHESIS)) {
 
-						processErrorMessage(
-							fileName,
-							"line break: " + fileName + " " + lineCount);
+						processMessage(
+							fileName, "line break", lineCount);
 					}
 				}
 
 				if (line.contains("    ") && !line.matches("\\s*\\*.*")) {
 					if (!fileName.endsWith("StringPool.java")) {
-						processErrorMessage(
-							fileName, "tab: " + fileName + " " + lineCount);
+						processMessage(fileName, "tab", lineCount);
 					}
 				}
 
 				if (line.contains("  {") && !line.matches("\\s*\\*.*")) {
-					processErrorMessage(
-						fileName, "{:" + fileName + " " + lineCount);
+					processMessage(fileName, "{", lineCount);
 				}
 
 				if (trimmedLine.startsWith("catch (") ||
@@ -2713,10 +2648,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 						if (!trimmedIfClause.startsWith("while ") &&
 							!trimmedIfClause.contains("{\t")) {
 
-							processErrorMessage(
-								fileName,
-								"Incorrect if statement: " + fileName + " " +
-									lineCount);
+							processMessage(
+								fileName, "Incorrect if statement", lineCount);
 						}
 
 						ifClause = StringPool.BLANK;
@@ -2753,10 +2686,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 								return truncateLongLinesContent;
 							}
 
-							processErrorMessage(
-								fileName,
-								"> " + _maxLineLength + ": " + fileName + " " +
-									lineCount);
+							processMessage(
+								fileName, "> " + _maxLineLength, lineCount);
 						}
 					}
 					else {
@@ -2768,10 +2699,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 								(lineLeadingTabCount >
 									previousLineLeadingTabCount)) {
 
-								processErrorMessage(
-									fileName,
-									"line break: " + fileName + " " +
-										lineCount);
+								processMessage(
+									fileName, "line break", lineCount);
 							}
 
 							if ((lineLeadingTabCount ==
@@ -2780,9 +2709,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 								 previousLine.endsWith(
 									 StringPool.OPEN_PARENTHESIS))) {
 
-								processErrorMessage(
-									fileName,
-									"tab: " + fileName + " " + lineCount);
+								processMessage(fileName, "tab", lineCount);
 							}
 
 							if (Validator.isNotNull(trimmedLine) &&
@@ -2793,9 +2720,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 								((previousLineLeadingTabCount + 1) !=
 									lineLeadingTabCount)) {
 
-								processErrorMessage(
-									fileName,
-									"tab: " + fileName + " " + lineCount);
+								processMessage(fileName, "tab", lineCount);
 							}
 
 							if (previousLine.endsWith(StringPool.PERIOD)) {
@@ -2810,10 +2735,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 									 (trimmedLine.charAt(x + 1) !=
 										 CharPool.CLOSE_PARENTHESIS))) {
 
-									processErrorMessage(
-										fileName,
-										"line break: " + fileName + " " +
-											lineCount);
+									processMessage(
+										fileName, "line break", lineCount);
 								}
 							}
 
@@ -2824,9 +2747,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 							if (trimmedLine.startsWith("throws ") &&
 								((diff == 0) || (diff > 1))) {
 
-								processErrorMessage(
-									fileName,
-									"tab: " + fileName + " " + lineCount);
+								processMessage(fileName, "tab", lineCount);
 							}
 
 							if ((diff == 2) &&
@@ -2893,37 +2814,34 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				if (content.contains("@RunWith(Arquillian.class)") &&
 					content.contains("import org.powermock.")) {
 
-					processErrorMessage(
+					processMessage(
 						fileName,
-						"Do not use PowerMock inside Arquillian tests: " +
-							fileName);
+						"Do not use PowerMock inside Arquillian tests");
 				}
 
 				if (!packagePath.endsWith(".test")) {
-					processErrorMessage(
+					processMessage(
 						fileName,
 						"Module integration test must be under a test " +
-							"subpackage" + fileName);
+							"subpackage");
 				}
 			}
 			else if ((absolutePath.contains("/test/unit/") ||
 					  absolutePath.contains("/src/test/java/")) &&
 					 packagePath.endsWith(".test")) {
 
-				processErrorMessage(
+				processMessage(
 					fileName,
-					"Module unit test should not be under a test subpackage" +
-						fileName);
+					"Module unit test should not be under a test subpackage");
 			}
 		}
 
 		// LPS-57358
 
 		if (content.contains("ProxyFactory.newServiceTrackedInstance(")) {
-			processErrorMessage(
+			processMessage(
 				fileName,
-				"Do not use ProxyFactory.newServiceTrackedInstance in " +
-					"modules: " + fileName);
+				"Do not use ProxyFactory.newServiceTrackedInstance in modules");
 		}
 
 		// LPS-59076
@@ -2945,10 +2863,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			Matcher matcher = _registryImportPattern.matcher(content);
 
 			if (matcher.find()) {
-				processErrorMessage(
+				processMessage(
 					fileName,
-					"Do not use com.liferay.registry classes in modules: " +
-						fileName);
+					"Do not use com.liferay.registry classes in modules");
 			}
 		}
 
@@ -2957,28 +2874,24 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		if (!absolutePath.contains("/test/") && content.contains("@Meta.OCD") &&
 			!content.contains("@ExtendedObjectClassDefinition")) {
 
-			processErrorMessage(
+			processMessage(
 				fileName,
-				"Specify category using @ExtendedObjectClassDefinition: " +
-					fileName);
+				"Specify category using @ExtendedObjectClassDefinition");
 		}
 
 		// LPS-64238
 
 		if (content.contains("import com.liferay.util.dao.orm.CustomSQLUtil")) {
-			processErrorMessage(
+			processMessage(
 				fileName,
-				"Do not use com.liferay.util.dao.orm.CustomSQLUtil in " +
-					"modules: " + fileName);
+				"Do not use com.liferay.util.dao.orm.CustomSQLUtil in modules");
 		}
 
 		// LPS-64335
 
 		if (content.contains("import com.liferay.util.ContentUtil")) {
-			processErrorMessage(
-				fileName,
-				"Do not use com.liferay.util.ContentUtil in modules:" +
-					fileName);
+			processMessage(
+				fileName, "Do not use com.liferay.util.ContentUtil in modules");
 		}
 
 		return content;
@@ -3011,10 +2924,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				}
 			}
 
-			processErrorMessage(
+			processMessage(
 				fileName,
 				"LPS-59076: Use @Reference instead of calling " +
-					serviceUtilClassName + " directly: " + fileName);
+					serviceUtilClassName + " directly");
 		}
 
 		matcher = _referenceMethodPattern.matcher(content);
@@ -3236,8 +3149,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				}
 			}
 			else {
-				processErrorMessage(
-					fileName, "line break: " + fileName + " " + lineCount);
+				processMessage(fileName, "line break", lineCount);
 
 				return null;
 			}
@@ -3372,8 +3284,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 			if (previousLine.endsWith(StringPool.EQUAL)) {
 				if (line.endsWith(StringPool.OPEN_CURLY_BRACE)) {
-					processErrorMessage(
-						fileName, "line break: " + fileName + " " + lineCount);
+					processMessage(fileName, "line break", lineCount);
 
 					return null;
 				}
@@ -3387,9 +3298,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 						if (Validator.isNull(nextLine) ||
 							nextLine.endsWith(") {")) {
 
-							processErrorMessage(
-								fileName,
-								"line break: " + fileName + " " + lineCount);
+							processMessage(fileName, "line break", lineCount);
 
 							return null;
 						}
@@ -3540,8 +3449,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				}
 
 				if (trimmedLine.equals(linePart)) {
-					processErrorMessage(
-						fileName, "line break: " + fileName + " " + lineCount);
+					processMessage(fileName, "line break", lineCount);
 
 					return null;
 				}

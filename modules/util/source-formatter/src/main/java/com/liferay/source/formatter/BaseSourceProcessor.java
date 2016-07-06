@@ -305,10 +305,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			String collectionType = TextFormatter.format(
 				matcher.group(1), TextFormatter.J);
 
-			processErrorMessage(
-				fileName,
-				"Use Collections.empty" + collectionType + "(): " + fileName +
-					" " + lineCount);
+			processMessage(
+				fileName, "Use Collections.empty" + collectionType + "()",
+				lineCount);
 		}
 	}
 
@@ -339,10 +338,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			}
 
 			if (Objects.equals(value, defaultValue)) {
-				processErrorMessage(
-					fileName,
-					"No need to pass default value: " + fileName + " " +
-						getLineCount(content, matcher.start()));
+				processMessage(
+					fileName, "No need to pass default value",
+					getLineCount(content, matcher.start()));
 			}
 		}
 	}
@@ -367,9 +365,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		if (hasRedundantParentheses(ifClause, "||", "&&") ||
 			hasRedundantParentheses(ifClause, "&&", "||")) {
 
-			processErrorMessage(
-				fileName,
-				"redundant parentheses: " + fileName + " " + lineCount);
+			processMessage(fileName, "redundant parentheses", lineCount);
 
 			return;
 		}
@@ -393,10 +389,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 						previousParenthesisPos + 1, i);
 
 					if (hasMissingParentheses(s)) {
-						processErrorMessage(
-							fileName,
-							"missing parentheses: " + fileName + " " +
-								lineCount);
+						processMessage(
+							fileName, "missing parentheses", lineCount);
 
 						return;
 					}
@@ -425,10 +419,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 								posOpenParenthesis + 1, i);
 
 							if (hasRedundantParentheses(s)) {
-								processErrorMessage(
-									fileName,
-									"redundant parentheses: " + fileName + " " +
-										lineCount);
+								processMessage(
+									fileName, "redundant parentheses",
+									lineCount);
 
 								return;
 							}
@@ -437,10 +430,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 						if ((previousChar == CharPool.OPEN_PARENTHESIS) &&
 							(nextChar == CharPool.CLOSE_PARENTHESIS)) {
 
-							processErrorMessage(
-								fileName,
-								"redundant parentheses: " + fileName + " " +
-									lineCount);
+							processMessage(
+								fileName, "redundant parentheses", lineCount);
 
 							return;
 						}
@@ -472,10 +463,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		if (pos != -1) {
-			processErrorMessage(
-				fileName,
-				"Use StringUtil." + methodName + ": " + fileName + " " +
-					lineCount);
+			processMessage(fileName, "Use StringUtil." + methodName, lineCount);
 		}
 	}
 
@@ -572,10 +560,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				if ((bndFileLanguageProperties == null) ||
 					!bndFileLanguageProperties.containsKey(languageKey)) {
 
-					processErrorMessage(
-						fileName,
-						"missing language key: " + languageKey +
-							StringPool.SPACE + fileName);
+					processMessage(
+						fileName, "missing language key: " + languageKey);
 				}
 			}
 		}
@@ -597,22 +583,21 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			if ((previousElement != null) &&
 				(elementComparator.compare(previousElement, element) > 0)) {
 
-				StringBundler sb = new StringBundler(8);
+				StringBundler sb = new StringBundler(7);
 
 				sb.append("order ");
 				sb.append(elementName);
-				sb.append(": ");
-				sb.append(fileName);
-				sb.append(StringPool.SPACE);
+				sb.append(StringPool.COLON);
 
 				if (Validator.isNotNull(parentElementName)) {
-					sb.append(parentElementName);
 					sb.append(StringPool.SPACE);
+					sb.append(parentElementName);
 				}
 
+				sb.append(StringPool.SPACE);
 				sb.append(elementComparator.getElementName(element));
 
-				processErrorMessage(fileName, sb.toString());
+				processMessage(fileName, sb.toString());
 			}
 
 			previousElement = element;
@@ -642,10 +627,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		if (content.contains("org.apache.commons.beanutils.PropertyUtils")) {
-			processErrorMessage(
+			processMessage(
 				fileName,
-				"Do not use org.apache.commons.beanutils.PropertyUtils: " +
-					fileName);
+				"Do not use org.apache.commons.beanutils.PropertyUtils");
 		}
 	}
 
@@ -657,17 +641,19 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		if (line.contains("ResourceBundle.getBundle(")) {
-			processErrorMessage(
+			processMessage(
 				fileName,
 				"Use ResourceBundleUtil.getBundle instead of " +
-					"ResourceBundle.getBundle: " + fileName + " " + lineCount);
+					"ResourceBundle.getBundle",
+				lineCount);
 		}
 
 		if (line.contains("resourceBundle.getString(")) {
-			processErrorMessage(
+			processMessage(
 				fileName,
 				"Use ResourceBundleUtil.getString instead of " +
-					"resourceBundle.getString: " + fileName + " " + lineCount);
+					"resourceBundle.getString",
+				lineCount);
 		}
 	}
 
@@ -706,18 +692,17 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 			String method = matcher.group(1);
 
-			StringBundler sb = new StringBundler(8);
+			StringBundler sb = new StringBundler(5);
 
 			sb.append("Use StringUtil.");
 			sb.append(method);
 			sb.append("(String, char, char) or StringUtil.");
 			sb.append(method);
-			sb.append("(String, char, String) instead: ");
-			sb.append(fileName);
-			sb.append(StringPool.SPACE);
-			sb.append(getLineCount(content, matcher.start()));
+			sb.append("(String, char, String) instead");
 
-			processErrorMessage(fileName, sb.toString());
+			processMessage(
+				fileName, sb.toString(),
+				getLineCount(content, matcher.start()));
 		}
 	}
 
@@ -732,7 +717,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			charsetDecoder.decode(ByteBuffer.wrap(bytes));
 		}
 		catch (Exception e) {
-			processErrorMessage(fileName, "UTF-8: " + fileName);
+			processMessage(fileName, "UTF-8");
 		}
 	}
 
@@ -805,7 +790,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 			content = StringUtil.replace(content, _oldCopyright, copyright);
 
-			processErrorMessage(fileName, "old (c): " + fileName);
+			processMessage(fileName, "old (c)");
 		}
 
 		if (!content.contains(copyright)) {
@@ -816,20 +801,18 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			}
 
 			if (!content.contains(copyright)) {
-				processErrorMessage(fileName, "(c): " + fileName);
+				processMessage(fileName, "(c)");
 			}
 			else if (!content.startsWith(copyright) &&
 					 !content.startsWith("<%--\n" + copyright)) {
 
-				processErrorMessage(
-					fileName, "File must start with copyright: " + fileName);
+				processMessage(fileName, "File must start with copyright");
 			}
 		}
 		else if (!content.startsWith(copyright) &&
 				 !content.startsWith("<%--\n" + copyright)) {
 
-			processErrorMessage(
-				fileName, "File must start with copyright: " + fileName);
+			processMessage(fileName, "File must start with copyright");
 		}
 
 		if (fileName.endsWith(".jsp") || fileName.endsWith(".jspf")) {
@@ -894,11 +877,11 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				});
 		}
 		else {
-			processErrorMessage(
+			processMessage(
 				fileName,
 				"(Unicode)LanguageUtil.format/get methods require " +
 					expectedParameter + " parameter instead of " +
-						incorrectParameter + " " + fileName);
+						incorrectParameter);
 		}
 
 		return content;
@@ -1092,8 +1075,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				}
 
 				if (delimeter != CharPool.AMPERSAND) {
-					processErrorMessage(
-						fileName, "delimeter: " + fileName + " " + lineCount);
+					processMessage(fileName, "delimeter", lineCount);
 				}
 
 				return line;
@@ -1337,10 +1319,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				}
 			}
 
-			processErrorMessage(
-				fileName,
-				"plus: " + fileName + " " +
-					getLineCount(content, matcher.start(1)));
+			processMessage(
+				fileName, "plus", getLineCount(content, matcher.start(1)));
 		}
 
 		matcher = sbAppendWithStartingSpacePattern.matcher(content);
@@ -1355,10 +1335,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			if ((maxLineLength != -1) &&
 				(getLineLength(firstLine) >= maxLineLength)) {
 
-				processErrorMessage(
-					fileName,
-					"leading space in sb: " + fileName + " " +
-						getLineCount(content, matcher.start(3)));
+				processMessage(
+					fileName, "leading space in sb", 
+					getLineCount(content, matcher.start(3)));
 			}
 			else {
 				content = StringUtil.replaceFirst(

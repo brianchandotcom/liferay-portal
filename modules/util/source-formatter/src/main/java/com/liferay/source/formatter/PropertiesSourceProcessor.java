@@ -155,9 +155,7 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 		}
 
 		if ((z - y + x + 2) <= _maxLineLength) {
-			processErrorMessage(
-				fileName,
-				"> " + _maxLineLength + ": " + fileName + " " + lineCount);
+			processMessage(fileName, "> " + _maxLineLength, lineCount);
 		}
 	}
 
@@ -281,7 +279,7 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 			}
 		}
 
-		processErrorMessage(
+		processMessage(
 			"portal-impl/src/content/Language.properties", sb.toString());
 
 		processFormattedFile(
@@ -343,8 +341,7 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 				}
 
 				if (pos < previousPos) {
-					processErrorMessage(
-						fileName, "sort " + fileName + " " + lineCount);
+					processMessage(fileName, "sort", lineCount);
 				}
 
 				previousPos = pos;
@@ -405,8 +402,7 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 				if (Validator.isNotNull(previousProperty) &&
 					(previousProperty.compareToIgnoreCase(property) > 0)) {
 
-					processErrorMessage(
-						fileName, "sort: " + fileName + " " + lineCount);
+					processMessage(fileName, "sort", lineCount);
 				}
 
 				previousProperty = property;
@@ -527,10 +523,9 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 				File file = new File(path + propertyFileName);
 
 				if (!file.exists()) {
-					processErrorMessage(
+					processMessage(
 						fileName,
-						"Incorrect property value: " + propertyFileName + " " +
-							fileName);
+						"Incorrect property value: " + propertyFileName);
 				}
 			}
 		}

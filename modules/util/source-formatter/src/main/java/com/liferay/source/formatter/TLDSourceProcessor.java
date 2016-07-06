@@ -48,10 +48,9 @@ public class TLDSourceProcessor extends BaseSourceProcessor {
 			String typeName = matcher.group(1);
 
 			if (typeName.matches("[A-Z]\\w*")) {
-				processErrorMessage(
-					fileName,
-					"Use fully qualified classType: " + fileName + " " +
-						getLineCount(content, matcher.start(1)));
+				processMessage(
+					fileName, "Use fully qualified classType",
+					getLineCount(content, matcher.start(1)));
 			}
 			else if (typeName.equals("java.lang.String")) {
 				content = StringUtil.replaceFirst(

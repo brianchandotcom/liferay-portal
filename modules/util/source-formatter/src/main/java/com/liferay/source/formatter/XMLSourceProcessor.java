@@ -249,8 +249,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		String projectName = rootElement.attributeValue("name");
 
 		if (!projectName.equals(expectedProjectName)) {
-			processErrorMessage(
-				fileName, fileName + " has an incorrect project name");
+			processMessage(fileName, "incorrect project name");
 		}
 	}
 
@@ -273,10 +272,8 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			File file = new File(importFileName);
 
 			if (!file.exists()) {
-				processErrorMessage(
-					fileName,
-					"Incorrect import file: " + fileName + " - " +
-						matcher.group(1));
+				processMessage(
+					fileName,"Incorrect import file: " + matcher.group(1));
 			}
 		}
 	}
@@ -287,9 +284,8 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		if (content.contains("/definition>") &&
 			!content.endsWith("/definition>")) {
 
-			processErrorMessage(
-				fileName,
-				"Characters found after definition element: " + fileName);
+			processMessage(
+				fileName, "Characters found after definition element");
 		}
 	}
 
@@ -297,9 +293,8 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		String fileName, String content) {
 
 		if (!content.startsWith("<definition")) {
-			processErrorMessage(
-				fileName,
-				"Characters found before definition element: " + fileName);
+			processMessage(
+				fileName, "Characters found before definition element");
 		}
 	}
 
@@ -321,9 +316,8 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		}
 
 		if (!targetNames.contains(targetName)) {
-			processErrorMessage(
-				fileName,
-				"Target '" + targetName + "' does not exist: " + fileName);
+			processMessage(
+				fileName, "Target '" + targetName + "' does not exist");
 		}
 	}
 
@@ -667,15 +661,13 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		int y = content.indexOf("<process-ivy");
 
 		if ((y != -1) && (x > y)) {
-			processErrorMessage(
-				fileName, "macrodefs go before process-ivy: " + fileName);
+			processMessage(fileName, "macrodefs go before process-ivy");
 		}
 
 		int z = content.indexOf("</target>");
 
 		if ((z != -1) && (x > z)) {
-			processErrorMessage(
-				fileName, "macrodefs go before targets: " + fileName);
+			processMessage(fileName, "macrodefs go before targets");
 		}
 
 		checkImportFiles(fileName, newContent);
@@ -706,9 +698,9 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		int z = content.indexOf(CharPool.QUOTE, y + 1);
 
-		processErrorMessage(
+		processMessage(
 			fileName,
-			"LPS-51315 Avoid using WHERE ... NOT IN: " + fileName + " " +
+			"LPS-51315 Avoid using WHERE ... NOT IN: " +
 				content.substring(y + 1, z));
 	}
 
@@ -844,11 +836,9 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 				String portletNameText = portletNameElement.getText();
 
 				if (!Validator.isNumber(portletNameText)) {
-					processErrorMessage(
+					processMessage(
 						fileName,
-						fileName +
-							" contains a nonstandard portlet-name element " +
-								portletNameText);
+						"nonstandard portlet-name element " + portletNameText);
 				}
 			}
 
@@ -922,9 +912,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			String correctFileName =
 				matcher.group(1) + "-default-portlet-preferences.xml";
 
-			processErrorMessage(
-				fileName,
-				"Rename file to " + correctFileName + ": " + fileName);
+			processMessage(fileName, "Rename file to " + correctFileName);
 		}
 	}
 
@@ -1052,7 +1040,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 				"com/liferay/portal/deploy/dependencies/web.xml");
 
 			if (content.equals(webXML)) {
-				processErrorMessage(fileName, fileName);
+				processMessage(fileName, StringPool.BLANK);
 			}
 
 			return content;
@@ -1254,10 +1242,9 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		if (!file.exists()) {
 			if (!importFile) {
-				processErrorMessage(
+				processMessage(
 					fileName,
-					fileName + " contains an Ant element pointing to " +
-						"non-existing " + buildfileName);
+					"ant element pointing to non-existing " + buildfileName);
 			}
 
 			return null;

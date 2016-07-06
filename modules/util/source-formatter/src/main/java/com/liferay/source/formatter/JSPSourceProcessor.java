@@ -183,10 +183,9 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		String variableName, String value, String tag) {
 
 		if (line.contains(objectType + " " + variableName + " = " + value)) {
-			processErrorMessage(
-				fileName,
-				"Use '" + tag + ":defineObjects' or rename var: " + fileName +
-					" " + lineCount);
+			processMessage(
+				fileName, "Use '" + tag + ":defineObjects' or rename var",
+				lineCount);
 		}
 	}
 
@@ -232,11 +231,11 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		Matcher matcher = validatorEqualsPattern.matcher(content);
 
 		while (matcher.find()) {
-			processErrorMessage(
+			processMessage(
 				fileName,
 				"Use Objects.equals(Object, Object) instead of " +
-					"Validator.equals(Object, Object): " + fileName + " " +
-						getLineCount(content, matcher.start()));
+					"Validator.equals(Object, Object)",
+				getLineCount(content, matcher.start()));
 		}
 	}
 
@@ -347,8 +346,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			!fileName.endsWith("touch.jsp") &&
 			(fileName.endsWith(".jspf") || content.contains("include file="))) {
 
-			processErrorMessage(
-				fileName, "move imports to init.jsp: " + fileName);
+			processMessage(fileName, "move imports to init.jsp");
 		}
 
 		newContent = fixCopyright(newContent, absolutePath, fileName, null);
@@ -368,7 +366,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		if (newContent.contains("    ")) {
 			if (!fileName.matches(".*template.*\\.vm$")) {
-				processErrorMessage(fileName, "tab: " + fileName);
+				processMessage(fileName, "tab");
 			}
 		}
 
@@ -419,8 +417,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		if (portalSource && isModulesFile(absolutePath) &&
 			newContent.contains("import=\"com.liferay.registry.Registry")) {
 
-			processErrorMessage(
-				fileName, "Do not use Registry in modules: " + fileName);
+			processMessage(fileName, "Do not use Registry in modules");
 		}
 
 		// LPS-64335
@@ -428,10 +425,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		if (portalSource && isModulesFile(absolutePath) &&
 			newContent.contains("import=\"com.liferay.util.ContentUtil")) {
 
-			processErrorMessage(
-				fileName,
-				"Do not use com.liferay.util.ContentUtil in modules: " +
-					fileName);
+			processMessage(
+				fileName, "Do not use com.liferay.util.ContentUtil in modules");
 		}
 
 		// LPS-62786
@@ -714,20 +709,17 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 				if (line.contains("<aui:button ") &&
 					line.contains("type=\"button\"")) {
 
-					processErrorMessage(
-						fileName, "aui:button " + fileName + " " + lineCount);
+					processMessage(fileName, "aui:button", lineCount);
 				}
 
 				if (line.contains("debugger.")) {
-					processErrorMessage(
-						fileName, "debugger " + fileName + " " + lineCount);
+					processMessage(fileName, "debugger", lineCount);
 				}
 
 				String trimmedLine = StringUtil.trimLeading(line);
 
 				if (line.matches(".*\\WgetClass\\(\\)\\..+")) {
-					processErrorMessage(
-						fileName, "chaining: " + fileName + " " + lineCount);
+					processMessage(fileName, "chaining", lineCount);
 				}
 
 				checkEmptyCollection(trimmedLine, fileName, lineCount);
@@ -785,10 +777,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 				if (line.contains(".sendRedirect(") &&
 					!fileName.endsWith("_jsp.jsp")) {
 
-					processErrorMessage(
-						fileName,
-						"Do not use sendRedirect in jsp: " + fileName + " " +
-							lineCount);
+					processMessage(
+						fileName, "Do not use sendRedirect in jsp", lineCount);
 				}
 
 				// LPS-55341
@@ -823,9 +813,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 				if (!fileName.endsWith("test.jsp") &&
 					line.contains("System.out.print")) {
 
-					processErrorMessage(
-						fileName,
-						"System.out.print: " + fileName + " " + lineCount);
+					processMessage(
+						fileName, "System.out.print", lineCount);
 				}
 
 				if (!trimmedLine.equals("%>") && line.contains("%>") &&
@@ -850,9 +839,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 				if (javaSource &&
 					trimmedLine.matches("^\\} (catch|else|finally) .*")) {
 
-					processErrorMessage(
-						fileName,
-						"line break: " + fileName + " " + lineCount);
+					processMessage(fileName, "line break", lineCount);
 				}
 
 				Matcher matcher = _ifTagPattern.matcher(trimmedLine);
@@ -943,9 +930,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 								includeFileName);
 
 							if (!matcher.find()) {
-								processErrorMessage(
-									fileName,
-									"include: " + fileName + " " + lineCount);
+								processMessage(fileName, "include", lineCount);
 							}
 						}
 					}
@@ -1000,8 +985,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			if ((StringUtil.count(content, currentException) > 1) ||
 				(StringUtil.count(content, previousException) > 1)) {
 
-				processErrorMessage(
-					fileName, "unsorted exceptions: " + fileName);
+				processMessage(fileName, "unsorted exceptions");
 			}
 			else {
 				content = StringUtil.replaceFirst(
@@ -1297,10 +1281,9 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			String nextTag = matcher.group(4);
 
 			if (!nextTag.contains(taglibName)) {
-				processErrorMessage(
-					fileName,
-					"No need to specify taglib variable: " + fileName + " " +
-						getLineCount(content, matcher.start()));
+				processMessage(
+					fileName, "No need to specify taglib variable",
+					getLineCount(content, matcher.start()));
 
 				continue;
 			}

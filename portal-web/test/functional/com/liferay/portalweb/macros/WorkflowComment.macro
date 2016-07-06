@@ -37,4 +37,10 @@
 			<var name="workflowComment" value="${workflowComment}" />
 		</execute>
 	</command>
+
+	<command name="viewCommentsNotPresent">
+		<execute macro="WorkflowComment#_openComments" />
+
+		<execute function="AssertElementNotPresent" locator1="Comments#COMMENT_BODY" />
+	</command>
 </definition>

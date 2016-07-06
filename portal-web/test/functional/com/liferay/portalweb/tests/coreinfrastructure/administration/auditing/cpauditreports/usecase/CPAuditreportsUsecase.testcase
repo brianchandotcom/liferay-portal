@@ -38,8 +38,8 @@
 		</execute>
 
 		<execute macro="Audit#searchCP">
-			<var name="searchTerm" value="20250" />
-			<var name="userId" value="20250" />
+			<var name="searchTerm" value="20164" />
+			<var name="userId" value="20164" />
 			<var name="userName" value="Test Test" />
 		</execute>
 
@@ -57,8 +57,8 @@
 		</execute>
 
 		<execute macro="Audit#searchCP">
-			<var name="resourceId" value="20250" />
-			<var name="searchTerm" value="20250" />
+			<var name="resourceId" value="20164" />
+			<var name="searchTerm" value="20164" />
 			<var name="userName" value="Test Test" />
 		</execute>
 

@@ -7,6 +7,8 @@ AUI.add(
 
 		var CSS_FORM_BUILDER_MOVING_MESSAGE_DISMISS_BUTTOM = A.getClassName('form', 'builder', 'moving', 'message', 'dismiss', 'button');
 
+		var CSS_LAYOUT_BUILDER_MOVE_CUT_COL_BUTTON = A.getClassName('layout', 'builder', 'move', 'cut', 'col', 'button');
+
 		var FormBuilderLayoutBuilderSupport = function() {
 		};
 
@@ -28,6 +30,16 @@ AUI.add(
 					boundingBox.delegate('mouseenter', A.bind(instance._showCutRowHelperMessage, instance), '.layout-builder-move-cut-row-button'),
 					boundingBox.delegate('mouseleave', A.bind(instance._hideCutRowHelperMessage, instance), '.layout-builder-move-cut-row-button')
 				);
+			},
+
+			moveField: function(field) {
+				var instance = this;
+
+				var fieldNode = field.get('content');
+
+				var col = fieldNode.ancestor('.col').getData('layout-col');
+
+				instance._layoutBuilder.get('chooseColMoveTarget')(fieldNode.one('.input-group-container '), col);
 			},
 
 			_afterMainClassRender: function() {
@@ -78,6 +90,16 @@ AUI.add(
 				var instance = this;
 
 				instance._popoverHelperMessage.hide();
+			},
+
+			_onClickOutsideMoveColTarget: function(event) {
+				var instance = this;
+
+				var target = event.target;
+
+				if (!target.hasClass(CSS_LAYOUT_BUILDER_MOVE_CUT_COL_BUTTON)) {
+					Liferay.DDL.FormBuilder.superclass._onClickOutsideMoveColTarget.apply(instance, arguments);
+				}
 			},
 
 			_onClickOutsideMoveRowTarget: function(event) {

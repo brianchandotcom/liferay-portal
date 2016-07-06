@@ -27,7 +27,7 @@ import com.liferay.item.selector.ItemSelectorReturnType;
  * 		title: The title of the selected file entry
  * 		url: The URL of the selected FileEntry
  * 		uuid: The UUID of the selected file entry
- * 	}
+ * }
  * </code>
  *
  * @author Sergio González

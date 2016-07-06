@@ -49,8 +49,8 @@ LayoutSet layoutSet = themeDisplay.getLayoutSet();
 		<aui:script use="liferay-plugin-privatemessaging">
 			new Liferay.PrivateMessaging(
 				{
-					baseActionURL: '<%= PortletURLFactoryUtil.create(request, portletDisplay.getId(), themeDisplay.getPlid(), PortletRequest.ACTION_PHASE) %>',
-					baseRenderURL: '<%= PortletURLFactoryUtil.create(request, portletDisplay.getId(), themeDisplay.getPlid(), PortletRequest.RENDER_PHASE) %>',
+					baseActionURL: '<%= PortletURLFactoryUtil.create(request, portletDisplay.getId(), PortletRequest.ACTION_PHASE) %>',
+					baseRenderURL: '<%= PortletURLFactoryUtil.create(request, portletDisplay.getId(), PortletRequest.RENDER_PHASE) %>',
 					namespace: '<portlet:namespace />',
 					portletId: '<%= portletDisplay.getId() %>'
 				}

@@ -88,8 +88,7 @@ public class CopyTemplateMVCActionCommand extends DDMBaseMVCActionCommand {
 			WebKeys.THEME_DISPLAY);
 
 		LiferayPortletURL portletURL = PortletURLFactoryUtil.create(
-			actionRequest, themeDisplay.getPpid(), themeDisplay.getPlid(),
-			PortletRequest.RENDER_PHASE);
+			actionRequest, themeDisplay.getPpid(), PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcPath", "/copy_template");
 		portletURL.setParameter(

@@ -260,8 +260,7 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 		Layout layout = (Layout)actionRequest.getAttribute(WebKeys.LAYOUT);
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(
-			actionRequest, portletName, layout.getPlid(),
-			PortletRequest.RENDER_PHASE);
+			actionRequest, portletName, layout, PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("saveLastPath", Boolean.FALSE.toString());
 

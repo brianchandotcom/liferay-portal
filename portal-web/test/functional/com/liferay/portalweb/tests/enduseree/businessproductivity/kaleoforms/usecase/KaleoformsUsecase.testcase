@@ -1581,21 +1581,19 @@
 
 		<execute macro="Workflow#_gotoPendingFilter" />
 
-		<var name="key_workflowAssetTitle" value="Kaleo Forms Process" />
+		<execute macro="Workflow#gotoAssetViaTableTitle">
+			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
+		</execute>
 
-		<execute function="AssertClick" locator1="MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_ASSET_TITLE" value1="Kaleo Forms Process" />
+		<execute macro="WorkflowComment#viewCommentsNotPresent">
 
-		<var name="key_workflowComment" value="" />
+		<execute macro="WorkflowComment#add">
+			<var name="workflowComment" value="Comment One" />
+		</execute>
 
-		<execute function="AssertElementNotPresent" locator1="MyWorkflowTasksTask#COMMENTS_COMMENT" />
-
-		<execute function="Type" locator1="Comments#COMMENT_FIELD" value1="Comment One" />
-
-		<execute function="AssertClick" locator1="Button#REPLY" value1="Reply" />
-
-		<var name="key_entryComment" value="Comment One" />
-
-		<execute function="AssertTextEquals" locator1="Comments#COMMENT_BODY_SPECIFIC" value1="Comment One" />
+		<execute macro="WorkflowComment#view">
+			<var name="workflowComment" value="Comment One" />
+		</execute>
 
 		<execute macro="Page#gotoMyAccount">
 			<var name="portletName" value="My Workflow Tasks" />
@@ -1634,19 +1632,19 @@
 
 		<execute macro="Workflow#_gotoPendingFilter" />
 
-		<execute function="AssertClick" locator1="MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_ASSET_TITLE" value1="Kaleo Forms Process" />
+		<execute macro="Workflow#gotoAssetViaTableTitle">
+			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
+		</execute>
 
-		<var name="key_workflowComment" value="" />
+		<execute macro="WorkflowComment#viewCommentsNotPresent">
 
-		<execute function="AssertElementNotPresent" locator1="MyWorkflowTasksTask#COMMENTS_COMMENT" />
+		<execute macro="WorkflowComment#add">
+			<var name="workflowComment" value="Comment Two" />
+		</execute>
 
-		<execute function="Type" locator1="Comments#COMMENT_FIELD" value1="Comment Two" />
-
-		<execute function="AssertClick" locator1="Button#REPLY" value1="Reply" />
-
-		<var name="key_entryComment" value="Comment Two" />
-
-		<execute function="AssertTextEquals" locator1="Comments#COMMENT_BODY_SPECIFIC" value1="Comment Two" />
+		<execute macro="WorkflowComment#view">
+			<var name="workflowComment" value="Comment Two" />
+		</execute>
 	</command>
 
 	<command name="CompleteFormWithMultipleAssignedProcessRecordsAndViewChanges" priority="3">

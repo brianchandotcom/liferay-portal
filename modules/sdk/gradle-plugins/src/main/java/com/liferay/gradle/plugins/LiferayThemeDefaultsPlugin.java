@@ -14,12 +14,8 @@
 
 package com.liferay.gradle.plugins;
 
-import com.liferay.gradle.plugins.cache.CacheExtension;
-import com.liferay.gradle.plugins.cache.CachePlugin;
-import com.liferay.gradle.plugins.cache.task.TaskCache;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.gulp.ExecuteGulpTask;
-import com.liferay.gradle.plugins.node.NodePlugin;
 import com.liferay.gradle.plugins.tasks.ReplaceRegexTask;
 import com.liferay.gradle.plugins.util.FileUtil;
 import com.liferay.gradle.plugins.util.GradleUtil;
@@ -35,7 +31,6 @@ import java.util.Properties;
 import java.util.concurrent.Callable;
 
 import org.gradle.api.Action;
-import org.gradle.api.DomainObjectCollection;
 import org.gradle.api.GradleException;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
@@ -70,9 +65,6 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 
 		applyPlugins(project);
 
-		CacheExtension cacheExtension = GradleUtil.getExtension(
-			project, CacheExtension.class);
-
 		// GRADLE-2427
 
 		addTaskInstall(project);
@@ -89,9 +81,6 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 		final ReplaceRegexTask updateVersionTask = addTaskUpdateVersion(
 			project);
 
-		TaskCache gulpBuildTaskCache = configureCacheGulpBuild(
-			project, cacheExtension);
-
 		configureDeployDir(project);
 		configureProject(project);
 
@@ -102,18 +91,7 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 
 		configureTasksExecuteGulp(
 			project, expandFrontendCSSCommonTask, frontendThemeStyledProject,
-			frontendThemeUnstyledProject, gulpBuildTaskCache);
-
-		GradleUtil.withPlugin(
-			project, CachePlugin.class,
-			new Action<CachePlugin>() {
-
-				@Override
-				public void execute(CachePlugin cachePlugin) {
-					configureTaskUpdateVersionForCachePlugin(updateVersionTask);
-				}
-
-			});
+			frontendThemeUnstyledProject);
 
 		project.afterEvaluate(
 			new Action<Project>() {
@@ -223,16 +201,6 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 		return upload;
 	}
 
-	protected void addTaskSkippedDependency(
-		Task task, TaskCache taskCache, Object taskDependency) {
-
-		task.dependsOn(taskDependency);
-
-		if (taskCache != null) {
-			taskCache.skipTaskDependency(taskDependency);
-		}
-	}
-
 	protected ReplaceRegexTask addTaskUpdateVersion(final Project project) {
 		ReplaceRegexTask replaceRegexTask = GradleUtil.addTask(
 			project, LiferayRelengPlugin.UPDATE_VERSION_TASK_NAME,
@@ -257,28 +225,7 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 	}
 
 	protected void applyPlugins(Project project) {
-		GradleUtil.applyPlugin(project, CachePlugin.class);
 		GradleUtil.applyPlugin(project, MavenPlugin.class);
-	}
-
-	protected TaskCache configureCacheGulpBuild(
-		Project project, CacheExtension cacheExtension) {
-
-		return cacheExtension.task(
-			LiferayThemePlugin.GULP_BUILD_TASK_NAME,
-			new Closure<Void>(project) {
-
-				@SuppressWarnings("unused")
-				public void doCall(TaskCache taskCache) {
-					taskCache.setBaseDir("dist");
-					taskCache.setCacheDir(".task-cache");
-					taskCache.skipTaskDependency(
-						NodePlugin.DOWNLOAD_NODE_TASK_NAME,
-						NodePlugin.NPM_INSTALL_TASK_NAME);
-					taskCache.testFile("gulpfile.js", "package.json", "src");
-				}
-
-			});
 	}
 
 	protected void configureDeployDir(Project project) {
@@ -321,7 +268,7 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 	protected void configureTaskExecuteGulp(
 		ExecuteGulpTask executeGulpTask, final Copy expandFrontendCSSCommonTask,
 		Project frontendThemeStyledProject,
-		Project frontendThemeUnstyledProject, TaskCache taskCache) {
+		Project frontendThemeUnstyledProject) {
 
 		executeGulpTask.args(
 			new Callable<String>() {
@@ -335,19 +282,16 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 
 			});
 
-		addTaskSkippedDependency(
-			executeGulpTask, taskCache, expandFrontendCSSCommonTask);
+		executeGulpTask.dependsOn(expandFrontendCSSCommonTask);
 
 		configureTaskExecuteGulpParentTheme(
-			executeGulpTask, frontendThemeStyledProject, "styled", taskCache);
+			executeGulpTask, frontendThemeStyledProject, "styled");
 		configureTaskExecuteGulpParentTheme(
-			executeGulpTask, frontendThemeUnstyledProject, "unstyled",
-			taskCache);
+			executeGulpTask, frontendThemeUnstyledProject, "unstyled");
 	}
 
 	protected void configureTaskExecuteGulpParentTheme(
-		ExecuteGulpTask executeGulpTask, Project themeProject, String name,
-		TaskCache taskCache) {
+		ExecuteGulpTask executeGulpTask, Project themeProject, String name) {
 
 		if (themeProject == null) {
 			if (_logger.isWarnEnabled()) {
@@ -363,20 +307,14 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 		executeGulpTask.args(
 			"--" + name + "-path=" + FileUtil.getAbsolutePath(dir));
 
-		addTaskSkippedDependency(
-			executeGulpTask, taskCache,
+		executeGulpTask.dependsOn(
 			themeProject.getPath() + ":" + JavaPlugin.CLASSES_TASK_NAME);
-
-		if (taskCache != null) {
-			taskCache.testFile(themeProject.getBuildFile(), dir);
-		}
 	}
 
 	protected void configureTasksExecuteGulp(
 		Project project, final Copy expandFrontendCSSCommonTask,
 		final Project frontendThemeStyledProject,
-		final Project frontendThemeUnstyledProject,
-		final TaskCache... taskCaches) {
+		final Project frontendThemeUnstyledProject) {
 
 		TaskContainer taskContainer = project.getTasks();
 
@@ -386,41 +324,10 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(ExecuteGulpTask executeGulpTask) {
-					TaskCache executeGulpTaskCache = null;
-
-					for (TaskCache taskCache : taskCaches) {
-						if (executeGulpTask.equals(taskCache.getTask())) {
-							executeGulpTaskCache = taskCache;
-
-							break;
-						}
-					}
-
 					configureTaskExecuteGulp(
 						executeGulpTask, expandFrontendCSSCommonTask,
 						frontendThemeStyledProject,
-						frontendThemeUnstyledProject, executeGulpTaskCache);
-				}
-
-			});
-	}
-
-	protected void configureTaskUpdateVersionForCachePlugin(
-		final ReplaceRegexTask updateVersionTask) {
-
-		CacheExtension cacheExtension = GradleUtil.getExtension(
-			updateVersionTask.getProject(), CacheExtension.class);
-
-		DomainObjectCollection<TaskCache> taskCaches =
-			cacheExtension.getTasks();
-
-		taskCaches.all(
-			new Action<TaskCache>() {
-
-				@Override
-				public void execute(TaskCache taskCache) {
-					updateVersionTask.finalizedBy(
-						taskCache.getRefreshDigestTaskName());
+						frontendThemeUnstyledProject);
 				}
 
 			});

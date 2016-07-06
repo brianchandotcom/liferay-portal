@@ -1,10 +1,10 @@
 dependencies {
 	testCompile group: "com.liferay", name: "com.liferay.exportimport.api", version: "2.0.0"
 	testCompile group: "com.liferay", name: "com.liferay.exportimport.service", version: "3.0.0"
-	testCompile group: "com.liferay", name: "com.liferay.wiki.api", version: "2.0.0"
-	testCompile group: "com.liferay", name: "com.liferay.wiki.service", version: "1.0.0"
 	testCompile group: "com.liferay", name: "com.liferay.wiki.web", version: "1.0.0"
 	testCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
+	testCompile project(":apps:collaboration:wiki:wiki-api")
+	testCompile project(":apps:collaboration:wiki:wiki-service")
 
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.5"
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.registry.api", version: "1.0.0"

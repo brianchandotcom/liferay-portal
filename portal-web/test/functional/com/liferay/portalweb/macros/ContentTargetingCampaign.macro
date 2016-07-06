@@ -84,6 +84,8 @@
 
 		<execute function="Type" locator1="EditCampaign#CAMPAIGN_TRACKING_ACTIONS_DDL_FORM_NAME_FIELD" value1="${formAlias}" />
 
+		<execute function="Click" locator1="EditCampaign#CAMPAIGN_TRACKING_ACTIONS_DDL_FORM_FORM_NAME_FIELD" />
+
 		<execute function="Click" locator1="EditCampaign#CAMPAIGN_TRACKING_ACTIONS_DDL_FORM_SELECT_BUTTON" />
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />

@@ -1,0 +1,249 @@
+<definition component-name="extra-apps-content-targeting">
+	<property name="custom.properties" value="layout.parallel.render.enable=false" />
+	<property name="extraapps.plugins.includes" value="content-targeting" />
+	<property name="ignore.errors" value="IX_DC6100CC" />
+	<property name="testray.main.component.name" value="Content Targeting" />
+
+	<set-up>
+		<execute macro="TestCase#setUpPortalInstance" />
+
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="Page#add">
+			<var name="pageName" value="Test Page Name" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+	</set-up>
+
+	<tear-down>
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+			<else>
+				<execute macro="User#logoutAndLoginPG">
+					<var name="userLoginEmailAddress" value="test@liferay.com" />
+					<var name="userLoginFullName" value="Test Test" />
+				</execute>
+
+				<execute macro="Site#tearDownCP" />
+			</else>
+		</if>
+	</tear-down>
+
+	<command name="Smoke" priority="5">
+		<property name="content.targeting.release" value="true" />
+
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesConfiguration">
+			<var name="portlet" value="Audience Targeting" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#addCP">
+			<var name="userSegmentDescription" value="User Segment Description" />
+			<var name="userSegmentName" value="User Segment Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#addSystemAttributesBrowserRuleCP">
+			<var name="browserName" value="Firefox" />
+		</execute>
+
+		<execute macro="PortletEntry#save" />
+
+		<execute macro="ProductMenu#gotoSitesConfiguration">
+			<var name="portlet" value="Audience Targeting" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#addCP">
+			<var name="campaignDescription" value="Campaign Description" />
+			<var name="campaignEndDate" value="1/1/2099" />
+			<var name="campaignEndTime" value="12:00 PM" />
+			<var name="campaignName" value="Campaign Name" />
+			<var name="campaignPriorityField" value="3" />
+			<var name="campaignStartDate" value="1/1/2015" />
+			<var name="campaignStartTime" value="12:00 AM" />
+			<var name="userSegmentSelect" value="User Segment Name" />
+		</execute>
+
+		<execute macro="PortletEntry#save" />
+
+		<execute macro="ProductMenu#gotoSitesConfiguration">
+			<var name="portlet" value="Audience Targeting" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#viewCampaignCP">
+			<var name="campaignDescription" value="Campaign Description" />
+			<var name="campaignName" value="Campaign Name" />
+			<var name="campaignPriority" value="3" />
+			<var name="campaignStatus" value="Started" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
+		<execute macro="WebContent#addWithCategoryCP">
+			<var name="categoryName" value="User Segment Name" />
+			<var name="vocabularyName" value="User Segment" />
+			<var name="webContentContent" value="WC User Segment Content" />
+			<var name="webContentTitle" value="WC User Segment Title" />
+		</execute>
+
+		<execute macro="WebContent#viewTitle">
+			<var name="webContentTitle" value="WC User Segment Title" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
+		<execute macro="WebContent#addWithCategoryCP">
+			<var name="categoryName" value="User Segment Name" />
+			<var name="vocabularyName" value="User Segment" />
+			<var name="webContentContent" value="WC Campaign Content" />
+			<var name="webContentTitle" value="WC Campaign Title" />
+		</execute>
+
+		<execute macro="WebContent#viewTitle">
+			<var name="webContentTitle" value="WC User Segment Title" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesConfiguration">
+			<var name="portlet" value="Audience Targeting" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#gotoAddReport">
+			<var name="campaignName" value="Campaign Name" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#addReportName">
+			<var name="reportDescription" value="Custom Report Description" />
+			<var name="reportName" value="Custom Report Name" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#addTrackingActionContentCP">
+			<var name="contentMetricName" value="Content Metric Name" />
+			<var name="contentTitle" value="WC Campaign Title" />
+			<var name="contentTrackingActionSelect" value="View" />
+			<var name="menulistContent" value="Basic Web Content" />
+		</execute>
+
+		<execute macro="PortletEntry#save" />
+
+		<for list="Campaign Content Display,User Segment Content Display,User Segment Content List" param="portletName">
+			<execute macro="Navigator#gotoSitePage">
+				<var name="pageName" value="Test Page Name" />
+				<var name="siteName" value="Site Name" />
+			</execute>
+
+			<execute macro="Portlet#addPG">
+				<var name="portletName" value="${portletName}" />
+			</execute>
+		</for>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Test Page Name" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="User Segment Content Display" />
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute macro="UserSegmentContentDisplayPortlet#configureDisplayContent">
+			<var name="belongs" value="true" />
+			<var name="contentTitle" value="WC User Segment Title" />
+			<var name="contentType" value="Basic Web Content" />
+			<var name="rowNumber" value="1" />
+			<var name="toAll" value="true" />
+			<var name="userSegmentName" value="User Segment Name" />
+		</execute>
+
+		<execute macro="UserSegmentContentDisplayPortlet#savePG" />
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Test Page Name" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="Campaign Content Display" />
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute macro="CampaignDisplayPortlet#configureCampaignRule">
+			<var name="campaignName" value="Campaign Name" />
+			<var name="contentTitle" value="WC Campaign Title" />
+			<var name="contentType" value="Basic Web Content" />
+			<var name="rowNumber" value="1" />
+		</execute>
+
+		<execute macro="CampaignDisplayPortlet#savePG" />
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Test Page Name" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="CampaignDisplayPortlet#viewPG">
+			<var name="entryContentText" value="WC Campaign Content" />
+			<var name="previewCampaignList" value="Campaign Name,default" />
+			<var name="viewCampaignSelected" value="Campaign Name" />
+			<var name="viewDontDisplay" value="true" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Test Page Name" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="UserSegmentContentDisplayPortlet#viewEntryPG">
+			<var name="entryContentText" value="WC User Segment Content" />
+			<var name="previewUserSegmentList" value="User Segment Name,default" />
+			<var name="viewDontDisplay" value="true" />
+			<var name="viewUserSegmentSelected" value="User Segment Name" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Test Page Name" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="UserSegmentContentListPortlet#viewContent">
+			<var name="viewEntryContentList" value="WC Campaign Content,WC User Segment Content" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesConfiguration">
+			<var name="portlet" value="Audience Targeting" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#updateReport">
+			<var name="campaignName" value="Campaign Name" />
+			<var name="viewReportType" value="Custom Report Name" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#viewContentReportCP">
+			<var name="reportsContentTableList" value="Content Metric Name,View,3" />
+			<var name="reportTitle" value="Content Metric Name" />
+		</execute>
+	</command>
+</definition>

@@ -358,6 +358,8 @@
 	</command>
 
 	<command name="AddUserSegmentBehaviorPreviouslyVisitedSiteContainsCP" priority="5">
+		<property name="content.targeting.release" value="true" />
+
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>
@@ -395,6 +397,8 @@
 	</command>
 
 	<command name="AddUserSegmentBehaviorPreviouslyVisitedSiteStartsWithCP" priority="5">
+		<property name="content.targeting.release" value="true" />
+
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>

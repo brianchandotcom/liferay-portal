@@ -61,7 +61,7 @@ public class ElementComparator extends NaturalOrderStringComparator {
 
 	private static final String _NAME_ATTRIBUTE_DEFAULT = "name";
 
-	private boolean _importPackage;
-	private String _nameAttribute;
+	private final boolean _importPackage;
+	private final String _nameAttribute;
 
 }

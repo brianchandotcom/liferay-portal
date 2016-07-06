@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.util.StringPool;
  * @author Hugo Huijser
  */
 public class SourceFormatterMessage
-	implements Comparable<SourceFormatterMessage>{
+	implements Comparable<SourceFormatterMessage> {
 
 	public SourceFormatterMessage(String fileName, String message) {
 		this(fileName, message, -1);

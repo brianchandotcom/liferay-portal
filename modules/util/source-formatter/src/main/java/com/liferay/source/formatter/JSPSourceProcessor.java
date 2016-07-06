@@ -125,9 +125,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected void addJSPUnusedImports(
-		String fileName, List<String> importLines,
-		List<String> unneededImports, Set<String> checkedForIncludesFileNames,
-		Set<String> includeFileNames) {
+		String fileName, List<String> importLines, List<String> unneededImports,
+		Set<String> checkedForIncludesFileNames, Set<String> includeFileNames) {
 
 		for (String importLine : importLines) {
 			int x = importLine.indexOf(CharPool.QUOTE);
@@ -813,8 +812,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 				if (!fileName.endsWith("test.jsp") &&
 					line.contains("System.out.print")) {
 
-					processMessage(
-						fileName, "System.out.print", lineCount);
+					processMessage(fileName, "System.out.print", lineCount);
 				}
 
 				if (!trimmedLine.equals("%>") && line.contains("%>") &&
@@ -1572,8 +1570,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 	protected boolean hasUnusedJSPTerm(
 		String fileName, String regex, String type,
-		Set<String> checkedForIncludesFileNames,
-		Set<String> includeFileNames) {
+		Set<String> checkedForIncludesFileNames, Set<String> includeFileNames) {
 
 		includeFileNames.add(fileName);
 

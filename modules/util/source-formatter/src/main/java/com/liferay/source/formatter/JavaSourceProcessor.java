@@ -2545,7 +2545,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 								 (level <= 0))) {
 
 								processMessage(
-									fileName, "line break: ", lineCount);
+									fileName, "line break", lineCount);
 							}
 						}
 					}
@@ -2606,8 +2606,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					if (previousLine.endsWith(StringPool.OPEN_PARENTHESIS) &&
 						trimmedLine.startsWith(StringPool.CLOSE_PARENTHESIS)) {
 
-						processMessage(
-							fileName, "line break", lineCount);
+						processMessage(fileName, "line break", lineCount);
 					}
 				}
 

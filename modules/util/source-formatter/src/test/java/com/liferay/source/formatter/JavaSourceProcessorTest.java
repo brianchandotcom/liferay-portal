@@ -209,7 +209,6 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 				"Variable TestString should not start with uppercase"
 			},
 			new Integer[] {26, 29});
-
 	}
 
 	@Test
@@ -222,8 +221,8 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 		test(
 			"InefficientStringMethods.testjava",
 			new String[] {
-				"Use StringUtil.equalsIgnoreCase",
-				"Use StringUtil.toLowerCase", "Use StringUtil.toUpperCase"
+				"Use StringUtil.equalsIgnoreCase", "Use StringUtil.toLowerCase",
+				"Use StringUtil.toUpperCase"
 			},
 			new Integer[] {26, 30, 31});
 	}
@@ -238,10 +237,9 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 		test(
 			"Levels.testjava",
 			new String[] {
-				"Do not use _log.isErrorEnabled()",
-				"Use _log.isDebugEnabled()", "Use _log.isDebugEnabled()",
-				"Use _log.isInfoEnabled()", "Use _log.isTraceEnabled()",
-				"Use _log.isWarnEnabled()"
+				"Do not use _log.isErrorEnabled()", "Use _log.isDebugEnabled()",
+				"Use _log.isDebugEnabled()", "Use _log.isInfoEnabled()",
+				"Use _log.isTraceEnabled()", "Use _log.isWarnEnabled()"
 			},
 			new Integer[] {27, 36, 41, 53, 58, 68});
 	}

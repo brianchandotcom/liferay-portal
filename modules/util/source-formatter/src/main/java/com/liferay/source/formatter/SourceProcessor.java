@@ -23,11 +23,11 @@ public interface SourceProcessor {
 
 	public void format() throws Exception;
 
-	public List<SourceFormatterMessage> getMessages();
-
 	public SourceMismatchException getFirstSourceMismatchException();
 
 	public String[] getIncludes();
+
+	public List<SourceFormatterMessage> getMessages();
 
 	public List<String> getModifiedFileNames();
 

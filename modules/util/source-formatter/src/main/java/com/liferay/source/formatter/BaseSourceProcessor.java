@@ -129,19 +129,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		_sourceFormatterHelper.close();
 	}
 
-	@Override
-	public List<SourceFormatterMessage> getMessages() {
-		List<SourceFormatterMessage> messages = new ArrayList<>();
-
-		for (Map.Entry<String, List<SourceFormatterMessage>> entry :
-				_messagesMap.entrySet()) {
-
-			messages.addAll(entry.getValue());
-		}
-
-		return messages;
-	}
-
 	public final List<String> getFileNames() throws Exception {
 		List<String> fileNames = sourceFormatterArgs.getFileNames();
 
@@ -155,6 +142,19 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	@Override
 	public SourceMismatchException getFirstSourceMismatchException() {
 		return _firstSourceMismatchException;
+	}
+
+	@Override
+	public List<SourceFormatterMessage> getMessages() {
+		List<SourceFormatterMessage> messages = new ArrayList<>();
+
+		for (Map.Entry<String, List<SourceFormatterMessage>> entry :
+				_messagesMap.entrySet()) {
+
+			messages.addAll(entry.getValue());
+		}
+
+		return messages;
 	}
 
 	@Override
@@ -241,10 +241,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		if (!trimmedPreviousLine.endsWith(StringPool.OPEN_CURLY_BRACE) &&
-			 !trimmedPreviousLine.endsWith(StringPool.COLON) &&
-			 (trimmedLine.startsWith("for (") ||
-			  trimmedLine.startsWith("if (") ||
-			  trimmedLine.startsWith("try {"))) {
+			!trimmedPreviousLine.endsWith(StringPool.COLON) &&
+			(trimmedLine.startsWith("for (") ||
+			 trimmedLine.startsWith("if (") ||
+			 trimmedLine.startsWith("try {"))) {
 
 			return true;
 		}
@@ -1336,7 +1336,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				(getLineLength(firstLine) >= maxLineLength)) {
 
 				processMessage(
-					fileName, "leading space in sb", 
+					fileName, "leading space in sb",
 					getLineCount(content, matcher.start(3)));
 			}
 			else {
@@ -2255,14 +2255,23 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			return true;
 		}
 
-		boolean containsCompareOperator =
-			(s.contains(" == ") || s.contains(" != ") || s.contains(" < ") ||
+		boolean containsCompareOperator = false;
+
+		if ((s.contains(" == ") || s.contains(" != ") || s.contains(" < ") ||
 			 s.contains(" > ") || s.contains(" =< ") || s.contains(" => ") ||
-			 s.contains(" <= ") || s.contains(" >= "));
-		boolean containsMathOperator =
-			(s.contains(" = ") || s.contains(" - ") || s.contains(" + ") ||
+			 s.contains(" <= ") || s.contains(" >= "))) {
+
+			containsCompareOperator = true;
+		}
+
+		boolean containsMathOperator = false;
+
+		if ((s.contains(" = ") || s.contains(" - ") || s.contains(" + ") ||
 			 s.contains(" & ") || s.contains(" % ") || s.contains(" * ") ||
-			 s.contains(" / "));
+			 s.contains(" / "))) {
+
+			containsMathOperator = true;
+		}
 
 		if (containsCompareOperator &&
 			(containsAndOperator || containsOrOperator ||

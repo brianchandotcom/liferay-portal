@@ -16,6 +16,7 @@ package com.liferay.source.formatter;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ArgumentsUtil;
@@ -223,8 +224,15 @@ public class SourceFormatter {
 		}
 
 		if (_sourceFormatterArgs.isThrowException()) {
-			if (!_errorMessages.isEmpty()) {
-				throw new Exception(StringUtil.merge(_errorMessages, "\n"));
+			if (!_messages.isEmpty()) {
+				StringBundler sb = new StringBundler(_messages.size() * 2);
+
+				for (SourceFormatterMessage message : _messages) {
+					sb.append(message.toString());
+					sb.append("\n");
+				}
+
+				throw new Exception(sb.toString());
 			}
 
 			if (_firstSourceMismatchException != null) {
@@ -233,8 +241,8 @@ public class SourceFormatter {
 		}
 	}
 
-	public List<String> getErrorMessages() {
-		return new ArrayList<>(_errorMessages);
+	public List<SourceFormatterMessage> getMessages() {
+		return new ArrayList<>(_messages);
 	}
 
 	public List<String> getModifiedFileNames() {
@@ -256,7 +264,7 @@ public class SourceFormatter {
 
 		sourceProcessor.format();
 
-		_errorMessages.addAll(sourceProcessor.getErrorMessages());
+		_messages.addAll(sourceProcessor.getMessages());
 		_modifiedFileNames.addAll(sourceProcessor.getModifiedFileNames());
 
 		if (_firstSourceMismatchException == null) {
@@ -265,8 +273,9 @@ public class SourceFormatter {
 		}
 	}
 
-	private final Set<String> _errorMessages = new ConcurrentSkipListSet<>();
 	private volatile SourceMismatchException _firstSourceMismatchException;
+	private final Set<SourceFormatterMessage> _messages =
+		new ConcurrentSkipListSet<>();
 	private final List<String> _modifiedFileNames =
 		new CopyOnWriteArrayList<>();
 	private final SourceFormatterArgs _sourceFormatterArgs;

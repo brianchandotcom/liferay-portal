@@ -84,7 +84,7 @@ public class JSSourceProcessor extends BaseSourceProcessor {
 			fileName, absolutePath, newContent, languageKeyPattern);
 
 		if (newContent.contains("debugger.")) {
-			processErrorMessage(fileName, "debugger " + fileName);
+			processMessage(fileName, "debugger");
 		}
 
 		return newContent;

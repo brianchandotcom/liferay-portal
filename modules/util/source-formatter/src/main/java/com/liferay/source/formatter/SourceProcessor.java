@@ -23,15 +23,17 @@ public interface SourceProcessor {
 
 	public void format() throws Exception;
 
-	public List<String> getErrorMessages();
-
 	public SourceMismatchException getFirstSourceMismatchException();
 
 	public String[] getIncludes();
 
 	public List<String> getModifiedFileNames();
 
-	public void processErrorMessage(String fileName, String message);
+	public List<SourceFormatterMessage> getSourceFormatterMessages();
+
+	public void processMessage(String fileName, String message);
+
+	public void processMessage(String fileName, String message, int lineCount);
 
 	public void setSourceFormatterArgs(SourceFormatterArgs sourceFormatterArgs);
 

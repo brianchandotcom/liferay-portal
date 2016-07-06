@@ -58,7 +58,7 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 		if (dirName.endsWith("-taglib-web")) {
 			String newDirName = dirName.substring(0, dirName.length() - 4);
 
-			processErrorMessage(
+			processMessage(
 				fileName,
 				"Rename module '" + dirName + "' to '" + newDirName + "'");
 		}
@@ -78,7 +78,7 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 				"liferay" + StringUtil.removeChars(dirName, CharPool.DASH);
 
 			if (!strippedBundleName.equalsIgnoreCase(expectedBundleName)) {
-				processErrorMessage(fileName, "Bundle-Name: " + fileName);
+				processMessage(fileName, "Bundle-Name");
 			}
 		}
 
@@ -99,8 +99,7 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 			if (!bundleSymbolicName.equalsIgnoreCase(
 					expectedBundleSymbolicName)) {
 
-				processErrorMessage(
-					fileName, "Bundle-SymbolicName: " + fileName);
+				processMessage(fileName, "Bundle-SymbolicName");
 			}
 		}
 
@@ -110,7 +109,7 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 			String webContextPath = matcher.group(1);
 
 			if (!webContextPath.equals("/" + dirName)) {
-				processErrorMessage(fileName, "Web-ContextPath: " + fileName);
+				processMessage(fileName, "Web-ContextPath");
 			}
 		}
 	}
@@ -141,10 +140,10 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 			String wildcardImport = matcher.group(1);
 
 			if (wildcardImport.matches("^!?com\\.liferay\\..+")) {
-				processErrorMessage(
+				processMessage(
 					fileName,
 					"Do not use wildcard in Export-Package '" + wildcardImport +
-						"': " + fileName);
+						"'");
 			}
 		}
 	}
@@ -165,10 +164,10 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 		if (fileName.endsWith("-web/bnd.bnd") &&
 			content.contains("Liferay-Require-SchemaVersion: 1.0.0")) {
 
-			processErrorMessage(
+			processMessage(
 				fileName,
 				"Do not include the header Liferay-Require-SchemaVersion in " +
-					"web modules: " + fileName);
+					"web modules");
 		}
 
 		content = StringUtil.replace(content, " \\\n", "\\\n");

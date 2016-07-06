@@ -15,7 +15,7 @@
 package com.liferay.source.formatter;
 
 import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -101,8 +101,7 @@ public class BaseSourceProcessorTestCase {
 	}
 
 	protected void test(
-			String fileName, String[] expectedErrorMessages,
-			Integer[] lineNumbers)
+			String fileName, String[] expectedMessages, Integer[] lineNumbers)
 		throws Exception {
 
 		String originalExtension = FilenameUtils.getExtension(fileName);
@@ -144,35 +143,38 @@ public class BaseSourceProcessorTestCase {
 					" does not end with a valid extension");
 		}
 
-		List<String> errorMessages = sourceFormatter.getErrorMessages();
+		List<SourceFormatterMessage> sourceFormatterMessages =
+			sourceFormatter.getSourceFormatterMessages();
 
-		Collections.sort(errorMessages, new NaturalOrderStringComparator());
+		Collections.sort(sourceFormatterMessages);
 
-		if (!errorMessages.isEmpty() || (expectedErrorMessages.length > 0)) {
+		if (!sourceFormatterMessages.isEmpty() ||
+			(expectedMessages.length > 0)) {
+
 			Assert.assertEquals(
-				expectedErrorMessages.length, errorMessages.size());
+				expectedMessages.length, sourceFormatterMessages.size());
 
-			for (int i = 0; i < errorMessages.size(); i++) {
-				String actualErrorMessage = errorMessages.get(i);
-				String expectedErrorMessage = expectedErrorMessages[i];
+			for (int i = 0; i < sourceFormatterMessages.size(); i++) {
+				SourceFormatterMessage sourceFormatterMessage =
+					sourceFormatterMessages.get(i);
 
-				StringBundler sb = new StringBundler(5);
+				Assert.assertEquals(
+					expectedMessages[i], sourceFormatterMessage.getMessage());
 
-				sb.append(expectedErrorMessage);
-				sb.append(StringPool.SPACE);
+				int lineCount = sourceFormatterMessage.getLineCount();
+
+				if (lineCount > -1) {
+					Assert.assertEquals(
+						GetterUtil.getString(lineNumbers[i]),
+						GetterUtil.getString(lineCount));
+				}
 
 				String absolutePath = StringUtil.replace(
 					newFile.getAbsolutePath(), CharPool.BACK_SLASH,
 					CharPool.SLASH);
 
-				sb.append(absolutePath);
-
-				if (lineNumbers != null) {
-					sb.append(StringPool.SPACE);
-					sb.append(lineNumbers[i]);
-				}
-
-				Assert.assertEquals(sb.toString(), actualErrorMessage);
+				Assert.assertEquals(
+					absolutePath, sourceFormatterMessage.getFileName());
 			}
 		}
 		else {

@@ -67,7 +67,7 @@ public class DefaultCommentSectionDisplayContext
 			return false;
 		}
 
-		if ((_rootDiscussionComment.getThreadCommentsCount() > 1) ||
+		if ((_rootDiscussionComment.getThreadCommentsCount() > 0) ||
 			hasViewPermission()) {
 
 			return true;
@@ -79,7 +79,7 @@ public class DefaultCommentSectionDisplayContext
 	@Override
 	public boolean isMessageThreadVisible() {
 		if ((_rootDiscussionComment != null) &&
-			(_rootDiscussionComment.getThreadCommentsCount() > 1)) {
+			(_rootDiscussionComment.getThreadCommentsCount() > 0)) {
 
 			return true;
 		}

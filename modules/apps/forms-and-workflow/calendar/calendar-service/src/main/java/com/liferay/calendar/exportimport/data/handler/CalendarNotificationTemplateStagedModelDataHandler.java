@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.calendar.lar;
+package com.liferay.calendar.exportimport.data.handler;
 
 import com.liferay.calendar.constants.CalendarPortletKeys;
 import com.liferay.calendar.exportimport.content.processor.CalendarNotificationTemplateExportImportContentProcessor;

@@ -10,6 +10,9 @@ alter table KaleoLog add kaleoClassPK LONG;
 
 alter table KaleoNode add metadata TEXT null;
 
+alter table KaleoNotification add kaleoClassName VARCHAR(200) null;
+alter table KaleoNotification add kaleoClassPK LONG;
+
 alter table KaleoTaskAssignment add assigneeActionId VARCHAR(75) null;
 alter table KaleoTaskAssignment add assigneeScript TEXT null;
 alter table KaleoTaskAssignment add assigneeScriptLanguage VARCHAR(75) null;

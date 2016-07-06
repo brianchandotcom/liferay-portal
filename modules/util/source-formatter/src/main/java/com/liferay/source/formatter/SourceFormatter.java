@@ -278,10 +278,10 @@ public class SourceFormatter {
 	}
 
 	private volatile SourceMismatchException _firstSourceMismatchException;
-	private final Set<SourceFormatterMessage> _sourceFormatterMessages =
-		new ConcurrentSkipListSet<>();
 	private final List<String> _modifiedFileNames =
 		new CopyOnWriteArrayList<>();
 	private final SourceFormatterArgs _sourceFormatterArgs;
+	private final Set<SourceFormatterMessage> _sourceFormatterMessages =
+		new ConcurrentSkipListSet<>();
 
 }

@@ -145,6 +145,11 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	@Override
+	public List<String> getModifiedFileNames() {
+		return _modifiedFileNames;
+	}
+
+	@Override
 	public List<SourceFormatterMessage> getSourceFormatterMessages() {
 		List<SourceFormatterMessage> sourceFormatterMessages =
 			new ArrayList<>();
@@ -156,11 +161,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		return sourceFormatterMessages;
-	}
-
-	@Override
-	public List<String> getModifiedFileNames() {
-		return _modifiedFileNames;
 	}
 
 	@Override
@@ -2980,9 +2980,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	private SourceMismatchException _firstSourceMismatchException;
 	private Set<String> _immutableFieldTypes;
 	private String _mainReleaseVersion;
-	private Map<String, List<SourceFormatterMessage>>
-		_sourceFormatterMessagesMap =
-			new ConcurrentHashMap<>();
 	private final List<String> _modifiedFileNames =
 		new CopyOnWriteArrayList<>();
 	private final Map<String, Properties> _moduleLangLanguageProperties =
@@ -2995,6 +2992,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	private Properties _properties;
 	private List<String> _runOutsidePortalExcludes;
 	private SourceFormatterHelper _sourceFormatterHelper;
+	private Map<String, List<SourceFormatterMessage>>
+		_sourceFormatterMessagesMap = new ConcurrentHashMap<>();
 	private boolean _usePortalCompatImport;
 
 	private class PutOrSetParameterNameComparator

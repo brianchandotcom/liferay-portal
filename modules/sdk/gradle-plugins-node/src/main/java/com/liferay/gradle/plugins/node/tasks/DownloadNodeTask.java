@@ -14,9 +14,9 @@
 
 package com.liferay.gradle.plugins.node.tasks;
 
+import com.liferay.gradle.plugins.node.util.FileUtil;
 import com.liferay.gradle.plugins.node.util.GradleUtil;
 import com.liferay.gradle.plugins.node.util.NodeExecutor;
-import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.OSDetector;
 import com.liferay.gradle.util.copy.StripPathSegmentsAction;
 

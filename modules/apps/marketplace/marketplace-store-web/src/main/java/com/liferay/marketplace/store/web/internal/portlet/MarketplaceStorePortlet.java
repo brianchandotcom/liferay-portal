@@ -26,6 +26,7 @@ import com.liferay.marketplace.store.web.internal.util.MarketplaceLicenseUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.patcher.PatcherUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -385,6 +386,11 @@ public class MarketplaceStorePortlet extends RemoteMVCPortlet {
 			parameterMap.put(
 				"compatibility",
 				new String[] {String.valueOf(ReleaseInfo.getBuildNumber())});
+		}
+
+		if (!parameterMap.containsKey("installedPatches")) {
+			parameterMap.put(
+				"installedPatches", PatcherUtil.getInstalledPatches());
 		}
 
 		parameterMap.put(

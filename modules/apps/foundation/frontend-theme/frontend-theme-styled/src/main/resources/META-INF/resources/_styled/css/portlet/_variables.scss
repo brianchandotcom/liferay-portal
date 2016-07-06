@@ -1,4 +1,4 @@
-// Portlet Topper
+/* ---------- Portlet topper ---------- */
 
 $portlet-topper-bg: $navbar-default-bg !default;
 $portlet-topper-border: $navbar-default-border !default;
@@ -22,7 +22,7 @@ $portlet-content-border-right-width: 1px !default;
 $portlet-content-border-top-width: 1px !default;
 $portlet-content-border-width: $portlet-content-border-top-width $portlet-content-border-right-width $portlet-content-border-bottom-width $portlet-content-border-left-width !default;
 
-// Portlet Decorator
+/* ---------- Portlet decorator ---------- */
 
 $portlet-decorate-bg: #FFF !default;
 $portlet-decorate-border-color: #DEEEEE !default;

@@ -322,6 +322,11 @@
 	<command name="MultipleUsersandOrganizations" priority="4">
 		<var name="count" value="1" />
 
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
 		<while>
 			<not>
 				<equals arg1="${count}" arg2="6" />
@@ -593,7 +598,7 @@
 			<var name="siteName" value="Organization Name 2" />
 		</execute>
 
-		<execute function="SelectWindow" locator1="Home - Organization Name 2 - Liferay" />
+		<execute function="SelectWindow" locator1="Home - Organization Name 2 - ${siteName}" />
 
 		<execute macro="Page#viewSpecificPG">
 			<var name="pageNameList" value="Home,Wiki" />

@@ -14,13 +14,15 @@
 
 package com.liferay.source.formatter;
 
+import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 
 /**
  * @author Hugo Huijser
  */
-public class SourceFormatterMessage {
+public class SourceFormatterMessage
+	implements Comparable<SourceFormatterMessage>{
 
 	public SourceFormatterMessage(String fileName, String message) {
 		this(fileName, message, -1);
@@ -32,6 +34,15 @@ public class SourceFormatterMessage {
 		_fileName = fileName;
 		_message = message;
 		_lineCount = lineCount;
+	}
+
+	@Override
+	public int compareTo(SourceFormatterMessage sourceFormatterMessage) {
+		NaturalOrderStringComparator naturalOrderStringComparator =
+			new NaturalOrderStringComparator();
+
+		return naturalOrderStringComparator.compare(
+			toString(), sourceFormatterMessage.toString());
 	}
 
 	public String getFileName() {

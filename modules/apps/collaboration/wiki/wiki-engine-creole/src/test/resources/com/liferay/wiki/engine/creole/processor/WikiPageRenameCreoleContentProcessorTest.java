@@ -27,7 +27,7 @@ public class WikiPageRenameCreoleContentProcessorTest {
 		String content = "This is a test {{ORIGINAL_NAME/image.jpg}}";
 
 		content = _wikiPageRenameCreoleContentProcessor.processContent(
-			content, "ORIGINAL_NAME", "FINAL_NAME", 0);
+			0, "ORIGINAL_NAME", "FINAL_NAME", content);
 
 		Assert.assertEquals("This is a test {{FINAL_NAME/image.jpg}}", content);
 	}
@@ -37,7 +37,7 @@ public class WikiPageRenameCreoleContentProcessorTest {
 		String content = "This is a test [[ORIGINAL_LINK]]";
 
 		content = _wikiPageRenameCreoleContentProcessor.processContent(
-			content, "ORIGINAL_LINK", "FINAL_LINK", 0);
+			0, "ORIGINAL_LINK", "FINAL_LINK", content);
 
 		Assert.assertEquals("This is a test [[ORIGINAL_LINK]]", content);
 	}
@@ -49,7 +49,7 @@ public class WikiPageRenameCreoleContentProcessorTest {
 				"{{ORIGINAL_NAME2/image.jpg}}";
 
 		content = _wikiPageRenameCreoleContentProcessor.processContent(
-			content, "ORIGINAL_NAME1", "FINAL_NAME1", 0);
+			0, "ORIGINAL_NAME1", "FINAL_NAME1", content);
 
 		Assert.assertEquals(
 			"This is a test {{FINAL_NAME1/image.jpg}} " +
@@ -63,8 +63,8 @@ public class WikiPageRenameCreoleContentProcessorTest {
 			"This is a test {{Complex.,() original title/image.jpg}}";
 
 		content = _wikiPageRenameCreoleContentProcessor.processContent(
-			content, "Complex.,() original title", "Complex.,() final title",
-			0);
+			0, "Complex.,() original title", "Complex.,() final title",
+			content);
 
 		Assert.assertEquals(
 			"This is a test {{Complex.,() final title/image.jpg}}", content);
@@ -75,7 +75,7 @@ public class WikiPageRenameCreoleContentProcessorTest {
 		String content = "This is a test {{{ORIGINAL_NAME}/image.jpg}}";
 
 		content = _wikiPageRenameCreoleContentProcessor.processContent(
-			content, "{ORIGINAL_NAME}", "{FINAL_NAME}", 0);
+			0, "{ORIGINAL_NAME}", "{FINAL_NAME}", content);
 
 		Assert.assertEquals(
 			"This is a test {{{FINAL_NAME}/image.jpg}}", content);
@@ -86,7 +86,7 @@ public class WikiPageRenameCreoleContentProcessorTest {
 		String content = "This is a test {{ORIGINAL_NAME/image.jpg|label}}";
 
 		content = _wikiPageRenameCreoleContentProcessor.processContent(
-			content, "ORIGINAL_NAME", "FINAL_NAME", 0);
+			0, "ORIGINAL_NAME", "FINAL_NAME", content);
 
 		Assert.assertEquals(
 			"This is a test {{FINAL_NAME/image.jpg|label}}", content);
@@ -97,7 +97,7 @@ public class WikiPageRenameCreoleContentProcessorTest {
 		String content = "This is a test {{ORIGINAL_NAME123456/image.jpg}}";
 
 		content = _wikiPageRenameCreoleContentProcessor.processContent(
-			content, "ORIGINAL_NAME123456", "FINAL_NAME123456", 0);
+			0, "ORIGINAL_NAME123456", "FINAL_NAME123456", content);
 
 		Assert.assertEquals(
 			"This is a test {{FINAL_NAME123456/image.jpg}}", content);
@@ -108,7 +108,7 @@ public class WikiPageRenameCreoleContentProcessorTest {
 		String content = "This is a test {{(ORIGINAL_NAME)/image.jpg}}";
 
 		content = _wikiPageRenameCreoleContentProcessor.processContent(
-			content, "(ORIGINAL_NAME)", "(FINAL_NAME)", 0);
+			0, "(ORIGINAL_NAME)", "(FINAL_NAME)", content);
 
 		Assert.assertEquals(
 			"This is a test {{(FINAL_NAME)/image.jpg}}", content);
@@ -119,7 +119,7 @@ public class WikiPageRenameCreoleContentProcessorTest {
 		String content = "This is a test {{ORIGINAL NAME PAGE/image.jpg}}";
 
 		content = _wikiPageRenameCreoleContentProcessor.processContent(
-			content, "ORIGINAL NAME PAGE", "FINAL NAME PAGE", 0);
+			0, "ORIGINAL NAME PAGE", "FINAL NAME PAGE", content);
 
 		Assert.assertEquals(
 			"This is a test {{FINAL NAME PAGE/image.jpg}}", content);

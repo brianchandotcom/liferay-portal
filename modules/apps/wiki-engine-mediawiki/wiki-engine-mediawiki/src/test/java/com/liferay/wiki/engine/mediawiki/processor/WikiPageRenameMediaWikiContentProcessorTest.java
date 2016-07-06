@@ -27,7 +27,7 @@ public class WikiPageRenameMediaWikiContentProcessorTest {
 		String content = "This is a test [[Image:ORIGINAL_NAME/image.jpg]]";
 
 		content = _wikiPageRenameMediaWikiContentProcessor.processContent(
-			content, "ORIGINAL_NAME", "FINAL_NAME", 0);
+			0, "ORIGINAL_NAME", "FINAL_NAME", content);
 
 		Assert.assertEquals(
 			"This is a test [[Image:FINAL_NAME/image.jpg]]", content);
@@ -38,7 +38,7 @@ public class WikiPageRenameMediaWikiContentProcessorTest {
 		String content = "This is a test [[ORIGINAL_LINK]]";
 
 		content = _wikiPageRenameMediaWikiContentProcessor.processContent(
-			content, "ORIGINAL_LINK", "FINAL_LINK", 0);
+			0, "ORIGINAL_LINK", "FINAL_LINK", content);
 
 		Assert.assertEquals("This is a test [[ORIGINAL_LINK]]", content);
 	}
@@ -50,7 +50,7 @@ public class WikiPageRenameMediaWikiContentProcessorTest {
 				"[[Image:ORIGINAL_NAME2/image.jpg]]";
 
 		content = _wikiPageRenameMediaWikiContentProcessor.processContent(
-			content, "ORIGINAL_NAME1", "FINAL_NAME1", 0);
+			0, "ORIGINAL_NAME1", "FINAL_NAME1", content);
 
 		Assert.assertEquals(
 			"This is a test [[Image:FINAL_NAME1/image.jpg]] " +
@@ -64,8 +64,8 @@ public class WikiPageRenameMediaWikiContentProcessorTest {
 			"This is a test [[Image:Complex.,() original title/image.jpg]]";
 
 		content = _wikiPageRenameMediaWikiContentProcessor.processContent(
-			content, "Complex.,() original title", "Complex.,() final title",
-			0);
+			0, "Complex.,() original title", "Complex.,() final title", content
+		);
 
 		Assert.assertEquals(
 			"This is a test [[Image:Complex.,() final title/image.jpg]]",
@@ -77,7 +77,7 @@ public class WikiPageRenameMediaWikiContentProcessorTest {
 		String content = "This is a test [[Image:{ORIGINAL_NAME}/image.jpg]]";
 
 		content = _wikiPageRenameMediaWikiContentProcessor.processContent(
-			content, "{ORIGINAL_NAME}", "{FINAL_NAME}", 0);
+			0, "{ORIGINAL_NAME}", "{FINAL_NAME}", content);
 
 		Assert.assertEquals(
 			"This is a test [[Image:{FINAL_NAME}/image.jpg]]", content);
@@ -89,7 +89,7 @@ public class WikiPageRenameMediaWikiContentProcessorTest {
 			"This is a test [[Image:ORIGINAL_NAME123456/image.jpg]]";
 
 		content = _wikiPageRenameMediaWikiContentProcessor.processContent(
-			content, "ORIGINAL_NAME123456", "FINAL_NAME123456", 0);
+			0, "ORIGINAL_NAME123456", "FINAL_NAME123456", content);
 
 		Assert.assertEquals(
 			"This is a test [[Image:FINAL_NAME123456/image.jpg]]", content);
@@ -100,7 +100,7 @@ public class WikiPageRenameMediaWikiContentProcessorTest {
 		String content = "This is a test [[Image:(ORIGINAL_NAME)/image.jpg]]";
 
 		content = _wikiPageRenameMediaWikiContentProcessor.processContent(
-			content, "(ORIGINAL_NAME)", "(FINAL_NAME)", 0);
+			0, "(ORIGINAL_NAME)", "(FINAL_NAME)", content);
 
 		Assert.assertEquals(
 			"This is a test [[Image:(FINAL_NAME)/image.jpg]]", content);
@@ -112,7 +112,7 @@ public class WikiPageRenameMediaWikiContentProcessorTest {
 			"This is a test [[Image:ORIGINAL NAME PAGE/image.jpg]]";
 
 		content = _wikiPageRenameMediaWikiContentProcessor.processContent(
-			content, "ORIGINAL NAME PAGE", "FINAL NAME PAGE", 0);
+			0, "ORIGINAL NAME PAGE", "FINAL NAME PAGE", content);
 
 		Assert.assertEquals(
 			"This is a test [[Image:FINAL NAME PAGE/image.jpg]]", content);

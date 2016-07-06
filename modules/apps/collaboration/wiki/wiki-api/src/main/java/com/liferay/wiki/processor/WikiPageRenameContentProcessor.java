@@ -21,7 +21,7 @@ package com.liferay.wiki.processor;
 public interface WikiPageRenameContentProcessor {
 
 	public String processContent(
-		String originalContent, String originalTitle, String newTitle,
-		long nodeId);
+		long nodeId, String originalTitle, String newTitle,
+		String originalContent);
 
 }

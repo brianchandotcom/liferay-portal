@@ -29,7 +29,7 @@ public class WikiPageRenameHTMLContentProcessorTest {
 				"&title=ORIGINAL_NAME&fileName=image.jpeg\">";
 
 		content = _wikiPageRenameHTMLContentProcessor.processContent(
-			content, "ORIGINAL_NAME", "FINAL_NAME", 0);
+			0, "ORIGINAL_NAME", "FINAL_NAME", content);
 
 		Assert.assertEquals(
 			"This is a test <img src=\"wiki/get_page_attachment?p_l_id=1234" +
@@ -46,7 +46,7 @@ public class WikiPageRenameHTMLContentProcessorTest {
 						"&title=ORIGINAL_NAME2&fileName=image.jpeg\"/>";
 
 		content = _wikiPageRenameHTMLContentProcessor.processContent(
-			content, "ORIGINAL_NAME1", "FINAL_NAME1", 0);
+			0, "ORIGINAL_NAME1", "FINAL_NAME1", content);
 
 		Assert.assertEquals(
 			"This is a test <img src=\"wiki/get_page_attachment?p_l_id=1234" +
@@ -64,8 +64,8 @@ public class WikiPageRenameHTMLContentProcessorTest {
 					"image.jpeg\"/>";
 
 		content = _wikiPageRenameHTMLContentProcessor.processContent(
-			content, "Complex.,() original & title",
-			"Complex.,() final & title", 0);
+			0, "Complex.,() original & title", "Complex.,() final & title",
+			content);
 
 		Assert.assertEquals(
 			"This is a test <img src=\"wiki/get_page_attachment?p_l_id=1234" +
@@ -81,7 +81,7 @@ public class WikiPageRenameHTMLContentProcessorTest {
 				"&title=%7BORIGINAL_NAME%7D&fileName=image.jpeg\"/>";
 
 		content = _wikiPageRenameHTMLContentProcessor.processContent(
-			content, "{ORIGINAL_NAME}", "{FINAL_NAME}", 0);
+			0, "{ORIGINAL_NAME}", "{FINAL_NAME}", content);
 
 		Assert.assertEquals(
 			"This is a test <img src=\"wiki/get_page_attachment?p_l_id=1234" +
@@ -96,7 +96,7 @@ public class WikiPageRenameHTMLContentProcessorTest {
 				"&title=ORIGINAL_NAME123456&fileName=image.jpeg\"/>";
 
 		content = _wikiPageRenameHTMLContentProcessor.processContent(
-			content, "ORIGINAL_NAME123456", "FINAL_NAME123456", 0);
+			0, "ORIGINAL_NAME123456", "FINAL_NAME123456", content);
 
 		Assert.assertEquals(
 			"This is a test <img src=\"wiki/get_page_attachment?p_l_id=1234" +
@@ -111,7 +111,7 @@ public class WikiPageRenameHTMLContentProcessorTest {
 				"&title=%28ORIGINAL_NAME%29&fileName=image.jpeg\"/>";
 
 		content = _wikiPageRenameHTMLContentProcessor.processContent(
-			content, "(ORIGINAL_NAME)", "(FINAL_NAME)", 0);
+			0, "(ORIGINAL_NAME)", "(FINAL_NAME)", content);
 
 		Assert.assertEquals(
 			"This is a test <img src=\"wiki/get_page_attachment?p_l_id=1234" +
@@ -126,7 +126,7 @@ public class WikiPageRenameHTMLContentProcessorTest {
 				"&title=ORIGINAL+NAME+PAGE&fileName=image.jpeg\"/>";
 
 		content = _wikiPageRenameHTMLContentProcessor.processContent(
-			content, "ORIGINAL NAME PAGE", "FINAL NAME PAGE", 0);
+			0, "ORIGINAL NAME PAGE", "FINAL NAME PAGE", content);
 
 		Assert.assertEquals(
 			"This is a test <img src=\"wiki/get_page_attachment?p_l_id=1234" +
@@ -141,7 +141,7 @@ public class WikiPageRenameHTMLContentProcessorTest {
 				"title=ORIGINAL_NAME&fileName=image.jpeg\">";
 
 		content = _wikiPageRenameHTMLContentProcessor.processContent(
-			content, "ORIGINAL_NAME", "FINAL_NAME", 0);
+			0, "ORIGINAL_NAME", "FINAL_NAME", content);
 
 		Assert.assertEquals(
 			"This is a test <img src=\"wiki/get_page_attachment?" +
@@ -156,7 +156,7 @@ public class WikiPageRenameHTMLContentProcessorTest {
 				"&title=ORIGINAL_NAME\">";
 
 		content = _wikiPageRenameHTMLContentProcessor.processContent(
-			content, "ORIGINAL_NAME", "FINAL_NAME", 0);
+			0, "ORIGINAL_NAME", "FINAL_NAME", content);
 
 		Assert.assertEquals(
 			"This is a test <img src=\"wiki/get_page_attachment?p_l_id=1234" +
@@ -171,7 +171,7 @@ public class WikiPageRenameHTMLContentProcessorTest {
 				"&title=ORIGINAL_NAME&fileName=image.jpeg\"/>";
 
 		content = _wikiPageRenameHTMLContentProcessor.processContent(
-			content, "ORIGINAL_NAME", "FINAL_NAME", 0);
+			0, "ORIGINAL_NAME", "FINAL_NAME", content);
 
 		Assert.assertEquals(
 			"This is a test <a href=\"wiki/get_page_attachment?p_l_id=1234" +
@@ -188,7 +188,7 @@ public class WikiPageRenameHTMLContentProcessorTest {
 						"&title=ORIGINAL_NAME2&fileName=image.jpeg\"/>";
 
 		content = _wikiPageRenameHTMLContentProcessor.processContent(
-			content, "ORIGINAL_NAME1", "FINAL_NAME1", 0);
+			0, "ORIGINAL_NAME1", "FINAL_NAME1", content);
 
 		Assert.assertEquals(
 			"This is a test <a href=\"wiki/get_page_attachment?p_l_id=1234" +
@@ -206,8 +206,8 @@ public class WikiPageRenameHTMLContentProcessorTest {
 					"image.jpeg\"/>";
 
 		content = _wikiPageRenameHTMLContentProcessor.processContent(
-			content, "Complex.,() original & title",
-			"Complex.,() final & title", 0);
+			0, "Complex.,() original & title", "Complex.,() final & title",
+			content);
 
 		Assert.assertEquals(
 			"This is a test <a href=\"wiki/get_page_attachment?p_l_id=1234" +
@@ -223,7 +223,7 @@ public class WikiPageRenameHTMLContentProcessorTest {
 				"&title=%7BORIGINAL_NAME%7D&fileName=image.jpeg\"/>";
 
 		content = _wikiPageRenameHTMLContentProcessor.processContent(
-			content, "{ORIGINAL_NAME}", "{FINAL_NAME}", 0);
+			0, "{ORIGINAL_NAME}", "{FINAL_NAME}", content);
 
 		Assert.assertEquals(
 			"This is a test <a href=\"wiki/get_page_attachment?p_l_id=1234" +
@@ -238,7 +238,7 @@ public class WikiPageRenameHTMLContentProcessorTest {
 				"&title=ORIGINAL_NAME123456&fileName=image.jpeg\"/>";
 
 		content = _wikiPageRenameHTMLContentProcessor.processContent(
-			content, "ORIGINAL_NAME123456", "FINAL_NAME123456", 0);
+			0, "ORIGINAL_NAME123456", "FINAL_NAME123456", content);
 
 		Assert.assertEquals(
 			"This is a test <a href=\"wiki/get_page_attachment?p_l_id=1234" +
@@ -253,7 +253,7 @@ public class WikiPageRenameHTMLContentProcessorTest {
 				"&title=%28ORIGINAL_NAME%29&fileName=image.jpeg\"/>";
 
 		content = _wikiPageRenameHTMLContentProcessor.processContent(
-			content, "(ORIGINAL_NAME)", "(FINAL_NAME)", 0);
+			0, "(ORIGINAL_NAME)", "(FINAL_NAME)", content);
 
 		Assert.assertEquals(
 			"This is a test <a href=\"wiki/get_page_attachment?p_l_id=1234" +
@@ -268,7 +268,7 @@ public class WikiPageRenameHTMLContentProcessorTest {
 				"&title=ORIGINAL+NAME+PAGE&fileName=image.jpeg\"/>";
 
 		content = _wikiPageRenameHTMLContentProcessor.processContent(
-			content, "ORIGINAL NAME PAGE", "FINAL NAME PAGE", 0);
+			0, "ORIGINAL NAME PAGE", "FINAL NAME PAGE", content);
 
 		Assert.assertEquals(
 			"This is a test <a href=\"wiki/get_page_attachment?p_l_id=1234" +
@@ -283,7 +283,7 @@ public class WikiPageRenameHTMLContentProcessorTest {
 				"title=ORIGINAL_NAME&fileName=image.jpeg\"/>";
 
 		content = _wikiPageRenameHTMLContentProcessor.processContent(
-			content, "ORIGINAL_NAME", "FINAL_NAME", 0);
+			0, "ORIGINAL_NAME", "FINAL_NAME", content);
 
 		Assert.assertEquals(
 			"This is a test <a href=\"wiki/get_page_attachment?" +
@@ -298,7 +298,7 @@ public class WikiPageRenameHTMLContentProcessorTest {
 				"&title=ORIGINAL_NAME\"/>";
 
 		content = _wikiPageRenameHTMLContentProcessor.processContent(
-			content, "ORIGINAL_NAME", "FINAL_NAME", 0);
+			0, "ORIGINAL_NAME", "FINAL_NAME", content);
 
 		Assert.assertEquals(
 			"This is a test <a href=\"wiki/get_page_attachment?p_l_id=1234" +

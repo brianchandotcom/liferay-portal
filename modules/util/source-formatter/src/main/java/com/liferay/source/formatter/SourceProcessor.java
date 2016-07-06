@@ -27,7 +27,7 @@ public interface SourceProcessor {
 
 	public String[] getIncludes();
 
-	public List<SourceFormatterMessage> getMessages();
+	public List<SourceFormatterMessage> getSourceFormatterMessages();
 
 	public List<String> getModifiedFileNames();
 

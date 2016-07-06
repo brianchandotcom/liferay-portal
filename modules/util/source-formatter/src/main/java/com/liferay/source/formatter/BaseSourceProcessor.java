@@ -145,16 +145,17 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	@Override
-	public List<SourceFormatterMessage> getMessages() {
-		List<SourceFormatterMessage> messages = new ArrayList<>();
+	public List<SourceFormatterMessage> getSourceFormatterMessages() {
+		List<SourceFormatterMessage> sourceFormatterMessages =
+			new ArrayList<>();
 
 		for (Map.Entry<String, List<SourceFormatterMessage>> entry :
-				_messagesMap.entrySet()) {
+				_sourceFormatterMessagesMap.entrySet()) {
 
-			messages.addAll(entry.getValue());
+			sourceFormatterMessages.addAll(entry.getValue());
 		}
 
-		return messages;
+		return sourceFormatterMessages;
 	}
 
 	@Override
@@ -169,15 +170,17 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 	@Override
 	public void processMessage(String fileName, String message, int lineCount) {
-		List<SourceFormatterMessage> messages = _messagesMap.get(fileName);
+		List<SourceFormatterMessage> sourceFormatterMessages =
+			_sourceFormatterMessagesMap.get(fileName);
 
-		if (messages == null) {
-			messages = new ArrayList<>();
+		if (sourceFormatterMessages == null) {
+			sourceFormatterMessages = new ArrayList<>();
 		}
 
-		messages.add(new SourceFormatterMessage(fileName, message, lineCount));
+		sourceFormatterMessages.add(
+			new SourceFormatterMessage(fileName, message, lineCount));
 
-		_messagesMap.put(fileName, messages);
+		_sourceFormatterMessagesMap.put(fileName, sourceFormatterMessages);
 	}
 
 	@Override
@@ -979,7 +982,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			File file, String fileName, String absolutePath, String content)
 		throws Exception {
 
-		_messagesMap.remove(fileName);
+		_sourceFormatterMessagesMap.remove(fileName);
 
 		checkUTF8(file, fileName);
 
@@ -2481,12 +2484,15 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		if (sourceFormatterArgs.isPrintErrors()) {
-			List<SourceFormatterMessage> messages = _messagesMap.get(fileName);
+			List<SourceFormatterMessage> sourceFormatterMessages =
+				_sourceFormatterMessagesMap.get(fileName);
 
-			if (messages != null) {
-				for (SourceFormatterMessage message : messages) {
+			if (sourceFormatterMessages != null) {
+				for (SourceFormatterMessage sourceFormatterMessage :
+						sourceFormatterMessages) {
+
 					_sourceFormatterHelper.printError(
-						fileName, message.toString());
+						fileName, sourceFormatterMessage.toString());
 				}
 			}
 		}
@@ -2909,7 +2915,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	private void _init() {
 		portalSource = _isPortalSource();
 
-		_messagesMap = new HashMap<>();
+		_sourceFormatterMessagesMap = new HashMap<>();
 
 		try {
 			_properties = _getProperties();
@@ -2974,8 +2980,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	private SourceMismatchException _firstSourceMismatchException;
 	private Set<String> _immutableFieldTypes;
 	private String _mainReleaseVersion;
-	private Map<String, List<SourceFormatterMessage>> _messagesMap =
-		new ConcurrentHashMap<>();
+	private Map<String, List<SourceFormatterMessage>>
+		_sourceFormatterMessagesMap =
+			new ConcurrentHashMap<>();
 	private final List<String> _modifiedFileNames =
 		new CopyOnWriteArrayList<>();
 	private final Map<String, Properties> _moduleLangLanguageProperties =

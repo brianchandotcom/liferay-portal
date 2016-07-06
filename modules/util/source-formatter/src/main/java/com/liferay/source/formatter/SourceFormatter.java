@@ -224,11 +224,14 @@ public class SourceFormatter {
 		}
 
 		if (_sourceFormatterArgs.isThrowException()) {
-			if (!_messages.isEmpty()) {
-				StringBundler sb = new StringBundler(_messages.size() * 2);
+			if (!_sourceFormatterMessages.isEmpty()) {
+				StringBundler sb = new StringBundler(
+					_sourceFormatterMessages.size() * 2);
 
-				for (SourceFormatterMessage message : _messages) {
-					sb.append(message.toString());
+				for (SourceFormatterMessage sourceFormatterMessage :
+						_sourceFormatterMessages) {
+
+					sb.append(sourceFormatterMessage.toString());
 					sb.append("\n");
 				}
 
@@ -241,8 +244,8 @@ public class SourceFormatter {
 		}
 	}
 
-	public List<SourceFormatterMessage> getMessages() {
-		return new ArrayList<>(_messages);
+	public List<SourceFormatterMessage> getSourceFormatterMessages() {
+		return new ArrayList<>(_sourceFormatterMessages);
 	}
 
 	public List<String> getModifiedFileNames() {
@@ -264,7 +267,8 @@ public class SourceFormatter {
 
 		sourceProcessor.format();
 
-		_messages.addAll(sourceProcessor.getMessages());
+		_sourceFormatterMessages.addAll(
+			sourceProcessor.getSourceFormatterMessages());
 		_modifiedFileNames.addAll(sourceProcessor.getModifiedFileNames());
 
 		if (_firstSourceMismatchException == null) {
@@ -274,7 +278,7 @@ public class SourceFormatter {
 	}
 
 	private volatile SourceMismatchException _firstSourceMismatchException;
-	private final Set<SourceFormatterMessage> _messages =
+	private final Set<SourceFormatterMessage> _sourceFormatterMessages =
 		new ConcurrentSkipListSet<>();
 	private final List<String> _modifiedFileNames =
 		new CopyOnWriteArrayList<>();

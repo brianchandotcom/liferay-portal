@@ -143,15 +143,20 @@ public class BaseSourceProcessorTestCase {
 					" does not end with a valid extension");
 		}
 
-		List<SourceFormatterMessage> messages = sourceFormatter.getMessages();
+		List<SourceFormatterMessage> sourceFormatterMessages =
+			sourceFormatter.getSourceFormatterMessages();
 
-		Collections.sort(messages);
+		Collections.sort(sourceFormatterMessages);
 
-		if (!messages.isEmpty() || (expectedMessages.length > 0)) {
-			Assert.assertEquals(expectedMessages.length, messages.size());
+		if (!sourceFormatterMessages.isEmpty() ||
+			(expectedMessages.length > 0)) {
 
-			for (int i = 0; i < messages.size(); i++) {
-				SourceFormatterMessage sourceFormatterMessage = messages.get(i);
+			Assert.assertEquals(
+				expectedMessages.length, sourceFormatterMessages.size());
+
+			for (int i = 0; i < sourceFormatterMessages.size(); i++) {
+				SourceFormatterMessage sourceFormatterMessage =
+					sourceFormatterMessages.get(i);
 
 				Assert.assertEquals(
 					expectedMessages[i], sourceFormatterMessage.getMessage());

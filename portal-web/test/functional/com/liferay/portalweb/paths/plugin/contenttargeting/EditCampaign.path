@@ -146,7 +146,7 @@
 </tr>
 <tr>
 	<td>CAMPAIGN_TRACKING_ACTIONS_DDL_FORM_FORM_NAME_FIELD</td>
-	<td>//div[contains(@class,'ddlformtrackingaction')]//input[contains(@class,'resource')]</td>
+	<td>//div[contains(@class,'ddlformtrackingaction')]//input[@readonly='true']</td>
 	<td></td>
 </tr>
 <tr>

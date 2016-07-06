@@ -56,6 +56,10 @@
 			<contains>INFO:</contains>
 			<matches></matches>
 		</ignore-error>
+		<ignore-error description="">
+			<contains>No binary licenses found</contains>
+			<matches></matches>
+		</ignore-error>
 		<ignore-error description="LPS-22821">
 			<contains>Exception sending context destroyed event to listener instance of class com.liferay.portal.spring.context.PortalContextLoaderListener</contains>
 			<matches></matches>

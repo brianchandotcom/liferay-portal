@@ -24,8 +24,8 @@ import java.util.Map;
 import javax.portlet.PortletURL;
 
 /**
- * A helper class to retrieve the ItemSelectorRendering and the PortletURL for
- * the Item Selector.
+ * Provides a helper class to retrieve the {@link ItemSelectorRendering} and the
+ * {@link PortletURL} for the item selector.
  *
  * @author Iván Zaera
  * @author Roberto Díaz
@@ -36,36 +36,34 @@ public interface ItemSelector {
 		Map<String, String[]> parameters);
 
 	/**
-	 * Returns the ItemSelectorRendering.
+	 * Returns the {@link ItemSelectorRendering} according to the parameters.
 	 *
 	 * @param  requestBackedPortletURLFactory the factory used to generate the
-	 *         PortletURL
-	 * @param  parameters the map of parameters received in the url. Item
-	 *         Selector framework will use them to get the views and render the
-	 *         views
+	 *         {@link PortletURL}
+	 * @param  parameters the map of parameters received in the URL. The item
+	 *         selector framework uses them to get and render the views.
 	 * @param  themeDisplay the current theme display
-	 * @return the ItemSelectorRendering.
+	 * @return the {@link ItemSelectorRendering}
 	 */
 	public ItemSelectorRendering getItemSelectorRendering(
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory,
 		Map<String, String[]> parameters, ThemeDisplay themeDisplay);
 
 	/**
-	 * Generates the item selector PortletURL according with the parameters.
-	 * This method is not recommended for external use. Should be used by the
-	 * client to render the Item Selector and show the selection views scoped to
-	 * the group matching the {@link ItemSelectorCriterion} and the {@link
+	 * Returns a generated item selector {@link PortletURL} according to the
+	 * parameters. This method is not recommended for external use. The client
+	 * should use it to render the item selector and show the selection views
+	 * scoped to the group matching the {@link ItemSelectorCriterion} and {@link
 	 * ItemSelectorReturnType}.
 	 *
 	 * @param  requestBackedPortletURLFactory the factory used to generate the
-	 *         PortletURL
-	 * @param  group the group we want to select elements from
-	 * @param  refererGroupId the group ID of the Item Selector client
-	 * @param  itemSelectedEventName the event name that should be fired by
-	 *         views.
-	 * @param  itemSelectorCriteria an array of the Criteria that item selector
-	 *         should use to retrive the views.
-	 * @return the item selector PortletURL.
+	 *         {@link PortletURL}
+	 * @param  group the group from which to select items
+	 * @param  refererGroupId the group ID of the item selector client
+	 * @param  itemSelectedEventName the event name for views to fire
+	 * @param  itemSelectorCriteria an array of criteria for the item selector
+	 *         to use to retrieve views
+	 * @return a generated item selector {@link PortletURL}
 	 */
 	public PortletURL getItemSelectorURL(
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory,
@@ -73,18 +71,17 @@ public interface ItemSelector {
 		ItemSelectorCriterion... itemSelectorCriteria);
 
 	/**
-	 * Generates the item selector PortletURL according with the parameters.
-	 * Should be used by the client to render the Item Selector and show the
-	 * selection views matching the {@link ItemSelectorCriterion} and the {@link
-	 * ItemSelectorReturnType}.
+	 * Returns a generated item selector {@link PortletURL} according to the
+	 * parameters. The client should call this method to render the item
+	 * selector and show the selection views matching the {@link
+	 * ItemSelectorCriterion} and {@link ItemSelectorReturnType}.
 	 *
 	 * @param  requestBackedPortletURLFactory the factory used to generate the
-	 *         PortletURL
-	 * @param  itemSelectedEventName the event name that should be fired by
-	 *         views.
-	 * @param  itemSelectorCriteria an array of the Criteria that item selector
-	 *         should use to retrive the views.
-	 * @return the item selector PortletURL.
+	 *         {@link PortletURL}
+	 * @param  itemSelectedEventName the event name for views to fire
+	 * @param  itemSelectorCriteria an array of criteria for the item selector
+	 *         to use to retrieve the views
+	 * @return a generated item selector {@link PortletURL}
 	 */
 	public PortletURL getItemSelectorURL(
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory,

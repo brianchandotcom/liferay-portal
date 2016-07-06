@@ -19,15 +19,18 @@ import java.util.List;
 /**
  * Provides an interface that returns the {@link ItemSelectorView} for a
  * particular {@link ItemSelectorCriterion}. Every item selector criterion
- * should have each own associated item selector criterion handler.
+ * should have its own associated item selector criterion handler.
  *
- * Implementations of this interface needs to be registered as OSGi component
+ * <p>
+ * Implementations of this interface need to be registered as OSGi components
  * using the service {@link ItemSelectorCriterionHandler}.
+ * </p>
  *
- * Most of the implementations of this interface will simply need to extend
- * {@link BaseItemSelectorCriterionHandler} and only implement the method
- * {@link #getItemSelectorCriterionClass()}, unless you need custom logic to
- * filter the item selector views.
+ * <p>
+ * Unless an implementation needs custom logic to filter item selector views, it
+ * will simply need to extend {@link BaseItemSelectorCriterionHandler} and only
+ * implement the method {@link #getItemSelectorCriterionClass()}.
+ * </p>
  *
  * @author Iván Zaera
  */
@@ -36,17 +39,16 @@ public interface ItemSelectorCriterionHandler<T extends ItemSelectorCriterion> {
 	/**
 	 * Returns the item selector criterion associated to this handler.
 	 *
-	 * @return the item selector criterion associated to this handler.
+	 * @return the item selector criterion associated to this handler
 	 */
 	public Class<T> getItemSelectorCriterionClass();
 
 	/**
-	 * Returns a List of the item selector views that meets the needs of a
-	 * particular item selector criterion and therefore will be displayed.
+	 * Returns the item selector views to display that meet the needs of the
+	 * item selector criterion.
 	 *
-	 * @param  itemSelectorCriterion the instance of the item selector
-	 *         criterion.
-	 * @return a List of the item selector views that will be displayed.
+	 * @param  itemSelectorCriterion the item selector criterion instance
+	 * @return the item selector views to display
 	 */
 	public List<ItemSelectorView<T>> getItemSelectorViews(
 		T itemSelectorCriterion);

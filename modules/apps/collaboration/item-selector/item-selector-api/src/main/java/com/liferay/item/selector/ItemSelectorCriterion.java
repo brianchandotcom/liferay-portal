@@ -17,47 +17,60 @@ package com.liferay.item.selector;
 import java.util.List;
 
 /**
- * Provides an interface that indicates the type of entity that shall be
- * selected and what information should be returned as well. The item selector
- * will use this criterion to display only the {@link ItemSelectorView} that can
- * select that particular entity type and return the specified
- * {@link ItemSelectorReturnType}.
+ * Provides an interface that determines the type of entity that shall be
+ * selected and information to return. The item selector uses the criterion to
+ * display only the {@link ItemSelectorView} that can select that particular
+ * entity type and that can support the {@link ItemSelectorReturnType}.
  *
- * Implementations of this interface can provide additional information to have
- * a fine grained detail about which entities can be selected. This should be
- * done ideally using primitive types in the constructor (or very simple types
- * that can be JSON serialized) and it is mandatory to have an empty
- * constructor.
+ * <p>
+ * Implementations of this interface can hold fine-grained details about
+ * entities that can be selected. This detailed information should be specified
+ * ideally using primitive types (or using very simple types that can be JSON
+ * serialized). The implementation can set this data and make it accessible,
+ * however desired. It must, however, specify a non-parametrized constructor.
+ * </p>
  *
- * For simplicity, it is recommended that implementations of this class extend
- * {@link BaseItemSelectorCriterion}
+ * <p>
+ * As an example, see the <a
+ * href="https://github.com/liferay/liferay-portal/blob/7.0.x/modules/apps/collaboration/blogs/blogs-item-selector-api/src/main/java/com/liferay/blogs/item/selector/criterion/BlogsItemSelectorCriterion.java">BlogsItemSelectorCriterion</a>
+ * class and how <a
+ * href="https://github.com/liferay/liferay-portal/blob/7.0.x/modules/apps/collaboration/blogs/blogs-editor-configuration/src/main/java/com/liferay/blogs/editor/configuration/internal/BlogsContentEditorConfigContributor.java">BlogsContentEditorConfigContributor's
+ * populateFileBrowserURL</a> method populates an instance of it and uses it.
+ * </p>
+ *
+ * <p>
+ * For simplicity, it is recommended that implementations extend {@link
+ * BaseItemSelectorCriterion}.
+ * </p>
  *
  * @author Iván Zaera
  */
 public interface ItemSelectorCriterion {
 
 	/**
-	 * Returns a List of the return types that the caller expects because he can
-	 * handle them.
+	 * Returns the desired return types that the caller expects and can handle,
+	 * ordered by preference.
 	 *
-	 * Order is important because in case that one item selector view can return
-	 * multiple item selector return types, the first return type specified as
-	 * desired that can be returned by the view will be used.
+	 * <p>
+	 * The order of return types is important because the first return type that
+	 * can be used will be used.
+	 * </p>
 	 *
-	 * @return a List of return types ordered by preference.
+	 * @return the return types ordered by preference
 	 */
 	public List<ItemSelectorReturnType> getDesiredItemSelectorReturnTypes();
 
 	/**
-	 * Sets a List of desired return types that the caller expects because he
-	 * can handle them.
+	 * Sets a list of desired return types that the caller expects and can
+	 * handle, ordered by preference.
 	 *
-	 * Order is important because in case that one item selector view can return
-	 * multiple item selector return types, the first return type specified as
-	 * desired that can be returned by the view will be used.
+	 * <p>
+	 * The order of return types is important because the first return type that
+	 * can be used will be used.
+	 * </p>
 	 *
 	 * @param desiredItemSelectorReturnTypes a preference ordered list of the
-	 *        return types that can be handled by the caller
+	 *        return types the caller can handle
 	 */
 	public void setDesiredItemSelectorReturnTypes(
 		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes);

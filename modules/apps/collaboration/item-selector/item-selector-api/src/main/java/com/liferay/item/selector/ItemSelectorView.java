@@ -28,34 +28,36 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
 /**
- * Provides an interface that will render an item selector view for a particular
- * item selector criterion.
+ * Provides an interface to render an item selector view for a particular item
+ * selector criterion.
  *
+ * <p>
  * If one item selector view can be displayed for multiple different criteria,
- * it will need as many implementations of this interface as criteria.
+ * it needs as many implementations of this interface as criteria.
+ * </p>
  *
  * @author Iván Zaera
  */
 public interface ItemSelectorView<T extends ItemSelectorCriterion> {
 
 	/**
-	 * The item selector criterion associated to this item selector view.
+	 * Returns the item selector criterion associated to this item selector
+	 * view.
 	 *
 	 * @return the item selector criterion associated to this item selector view
 	 */
 	public Class<T> getItemSelectorCriterionClass();
 
 	/**
-	 * A list of the item selector return types that this view can return.
+	 * Returns the item selector return types that this view supports.
 	 *
-	 * @return a list of the {@link ItemSelectorReturnType} that this view can
-	 *         return
+	 * @return the {@link ItemSelectorReturnType}s that this view supports
 	 */
 	public List<ItemSelectorReturnType> getSupportedItemSelectorReturnTypes();
 
 	/**
-	 * The localized title of the tab that will be displayed in the Item
-	 * Selector.
+	 * Returns the localized title of the tab to display in the Item Selector
+	 * dialog.
 	 *
 	 * @param  locale the current locale
 	 * @return the localized title of the tab
@@ -67,17 +69,19 @@ public interface ItemSelectorView<T extends ItemSelectorCriterion> {
 	 * the view supports search, this method should return <code>true</code>.
 	 *
 	 * @return <code>true</code> if the item selector view should show the
-	 *         search field.
+	 *         search field
 	 */
 	public boolean isShowSearch();
 
 	/**
-	 * Returns whether the item selector view is visible or not.
+	 * Returns whether the item selector view is visible.
 	 *
+	 * <p>
 	 * Most of the implementations of this method will return <code>true</code>.
-	 * However, there are certain cases where the view should not be displayed
-	 * because it is not ready, it needs some additional third party
+	 * However, there are certain cases where the view should not be displayed:
+	 * the view isn't ready, the view needs some additional third-party
 	 * configuration, etc.
+	 * </p>
 	 *
 	 * @param  themeDisplay the current page {@link ThemeDisplay}
 	 * @return <code>true</code> if the view is visible
@@ -91,12 +95,12 @@ public interface ItemSelectorView<T extends ItemSelectorCriterion> {
 	 * @param servletResponse the current {@link ServletResponse}
 	 * @param itemSelectorCriterion the item selector criterion that was used to
 	 *        render this view
-	 * @param portletURL the portlet render url to the item selector. This url
-	 *        should be used to create urls in the view.
+	 * @param portletURL the portlet render URL to the item selector. This URL
+	 *        should be used to create URLs in the view.
 	 * @param itemSelectedEventName the event name that the caller will be
-	 *        listening. When an element is selected the view should fire a
-	 *        javascript event with this name.
-	 * @param search is <code>true</code> when the view should render search
+	 *        listening for. When an element is selected, the view should fire a
+	 *        JavaScript event with this name.
+	 * @param search set to <code>true</code> when the view should render search
 	 *        results because the user performed a search.
 	 */
 	public void renderHTML(

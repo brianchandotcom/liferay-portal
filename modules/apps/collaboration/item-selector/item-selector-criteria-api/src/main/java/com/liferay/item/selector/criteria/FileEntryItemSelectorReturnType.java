@@ -17,16 +17,18 @@ package com.liferay.item.selector.criteria;
 import com.liferay.item.selector.ItemSelectorReturnType;
 
 /**
- * This return type should return the following information of a file entry as
- * a json object:
+ * This return type should return the following information of a file entry as a
+ * JSON object:
  *
+ * <code>
  * {
  * 		fileEntryId: The ID of the selected file entry
- * 		groupId: The group id of the selected file entry
+ * 		groupId: The group ID of the selected file entry
  * 		title: The title of the selected file entry
- * 		url: The url of the selected FileEntry
+ * 		url: The URL of the selected FileEntry
  * 		uuid: The UUID of the selected file entry
  * 	}
+ * </code>
  *
  * @author Sergio González
  */

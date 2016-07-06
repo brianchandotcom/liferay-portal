@@ -25,26 +25,25 @@ import java.util.List;
 public interface ItemSelectorRendering {
 
 	/**
-	 * Returns the event name that the view should throw once the selection is
+	 * Returns the event name that the view should fire once the selection is
 	 * performed.
 	 *
-	 * @return the event name.
+	 * @return the event name
 	 */
 	public String getItemSelectedEventName();
 
 	/**
-	 * Returns a list of {@link ItemSelectorViewRenderer} of the selection views
-	 * that are going to be rendered.
+	 * Returns a list of {@link ItemSelectorViewRenderer} objects of the
+	 * selection views to be rendered.
 	 *
-	 * @return a list of {@link ItemSelectorViewRenderer}.
+	 * @return a list of {@link ItemSelectorViewRenderer}
 	 */
 	public List<ItemSelectorViewRenderer> getItemSelectorViewRenderers();
 
 	/**
-	 * Returns the selected tab of the Item Selector dialog that will be
-	 * rendered.
+	 * Returns the selected tab of the Item Selector dialog to be rendered.
 	 *
-	 * @return the selected tab.
+	 * @return the selected tab
 	 */
 	public String getSelectedTab();
 

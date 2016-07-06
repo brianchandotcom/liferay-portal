@@ -17,14 +17,12 @@ package com.liferay.gradle.plugins.node;
 import com.liferay.gradle.plugins.node.tasks.DownloadNodeTask;
 import com.liferay.gradle.plugins.node.tasks.ExecuteNodeTask;
 import com.liferay.gradle.plugins.node.tasks.ExecuteNpmTask;
+import com.liferay.gradle.plugins.node.tasks.NpmInstallTask;
 import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask;
 import com.liferay.gradle.plugins.node.util.GradleUtil;
 
-import groovy.json.JsonSlurper;
-
 import java.io.File;
 
-import java.util.Map;
 import java.util.concurrent.Callable;
 
 import org.gradle.api.Action;
@@ -34,8 +32,6 @@ import org.gradle.api.Task;
 import org.gradle.api.internal.plugins.osgi.OsgiHelper;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.TaskContainer;
-import org.gradle.api.tasks.TaskInputs;
-import org.gradle.api.tasks.TaskOutputs;
 
 /**
  * @author Andrea Di Giorgi
@@ -54,7 +50,7 @@ public class NodePlugin implements Plugin<Project> {
 			project, EXTENSION_NAME, NodeExtension.class);
 
 		addTaskDownloadNode(project, nodeExtension);
-		addTaskNpmInstall(project);
+		addTaskNpmInstall(project, nodeExtension);
 
 		configureTasksDownloadNode(project, nodeExtension);
 		configureTasksExecuteNode(project, nodeExtension);
@@ -93,70 +89,16 @@ public class NodePlugin implements Plugin<Project> {
 		return downloadNodeTask;
 	}
 
-	protected ExecuteNpmTask addTaskNpmInstall(Project project) {
-		final ExecuteNpmTask executeNpmTask = GradleUtil.addTask(
-			project, NPM_INSTALL_TASK_NAME, ExecuteNpmTask.class);
+	protected NpmInstallTask addTaskNpmInstall(
+		Project project, final NodeExtension nodeExtension) {
 
-		executeNpmTask.onlyIf(
-			new Spec<Task>() {
+		final NpmInstallTask npmInstallTask = GradleUtil.addTask(
+			project, NPM_INSTALL_TASK_NAME, NpmInstallTask.class);
 
-				@Override
-				public boolean isSatisfiedBy(Task task) {
-					Project project = task.getProject();
-
-					File packageJsonFile = project.file("package.json");
-
-					if (!packageJsonFile.exists()) {
-						return false;
-					}
-
-					JsonSlurper jsonSlurper = new JsonSlurper();
-
-					Map<String, Object> packageJson =
-						(Map<String, Object>)jsonSlurper.parse(packageJsonFile);
-
-					if (packageJson.containsKey("dependencies") ||
-						packageJson.containsKey("devDependencies")) {
-
-						return true;
-					}
-
-					return false;
-				}
-
-			});
-
-		executeNpmTask.setArgs("install");
-		executeNpmTask.setDescription(
+		npmInstallTask.setDescription(
 			"Install Node packages from package.json.");
 
-		TaskInputs taskInputs = executeNpmTask.getInputs();
-
-		taskInputs.file(
-			new Callable<File>() {
-
-				@Override
-				public File call() throws Exception {
-					return new File(
-						executeNpmTask.getWorkingDir(), "package.json");
-				}
-
-			});
-
-		TaskOutputs taskOutputs = executeNpmTask.getOutputs();
-
-		taskOutputs.dir(
-			new Callable<File>() {
-
-				@Override
-				public File call() throws Exception {
-					return new File(
-						executeNpmTask.getWorkingDir(), "node_modules");
-				}
-
-			});
-
-		return executeNpmTask;
+		return npmInstallTask;
 	}
 
 	protected void configureTaskDownloadNode(

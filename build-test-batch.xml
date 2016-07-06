@@ -631,6 +631,8 @@ app.server.type=@{app.server.type}]]></echo>
 							<antcall target="deploy-sql-zip">
 								<param name="test.sql.zip.url" value="@{test.sql.zip.url}" />
 							</antcall>
+
+							<antcall inheritAll="false" target="setup-sdk" />
 						</then>
 						<elseif>
 							<and>

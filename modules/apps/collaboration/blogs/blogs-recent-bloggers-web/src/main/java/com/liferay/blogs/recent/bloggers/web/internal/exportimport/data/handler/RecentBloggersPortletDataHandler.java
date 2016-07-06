@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.blogs.recent.bloggers.web.internal.lar;
+package com.liferay.blogs.recent.bloggers.web.internal.exportimport.data.handler;
 
 import com.liferay.blogs.recent.bloggers.web.internal.constants.RecentBloggersPortletKeys;
 import com.liferay.exportimport.kernel.lar.DataLevel;

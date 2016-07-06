@@ -4,7 +4,6 @@ Bundle-Version: 1.0.12
 Export-Package:\
 	com.liferay.blogs.web.asset,\
 	com.liferay.blogs.web.constants,\
-	com.liferay.blogs.web.lar,\
 	com.liferay.blogs.web.social
 Liferay-JS-Config: /META-INF/resources/blogs/js/config.js
 Liferay-Releng-Module-Group-Description:

@@ -1938,7 +1938,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			tldFileName = StringUtil.replace(
 				tldFileName, StringPool.BACK_SLASH, StringPool.SLASH);
 
-			String content = FileUtil.read(tldFile);
+			String content = FileUtil.read(tldFile, true);
 
 			if (content == null) {
 				System.out.println("NULL: " + tldFileName);

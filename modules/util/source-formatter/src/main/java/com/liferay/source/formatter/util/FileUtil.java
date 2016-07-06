@@ -46,12 +46,20 @@ public class FileUtil {
 	}
 
 	public static String read(File file) throws IOException {
-		System.out.println("readFile: " + file.getName());
+		return read(file, false);
+	}
+
+	public static String read(File file, boolean print) throws IOException {
+		if (print) {
+			System.out.println("readFile: " + file.getName());
+		}
 
 		byte[] bytes = getBytes(file);
 
 		if (bytes == null) {
-			System.out.println("bytes == null");
+			if (print) {
+				System.out.println("bytes == null");
+			}
 
 			return null;
 		}

@@ -852,7 +852,7 @@
 
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#REMOVE_MEMBERSHIP" value1="Remove Membership" />
+		<execute function="AssertClickNoError" locator1="MenuItem#REMOVE_MEMBERSHIP" value1="Remove Membership" />
 
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>

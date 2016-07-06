@@ -388,11 +388,7 @@ public class MarketplaceStorePortlet extends RemoteMVCPortlet {
 				new String[] {String.valueOf(ReleaseInfo.getBuildNumber())});
 		}
 
-		if (!parameterMap.containsKey("installedPatches")) {
-			parameterMap.put(
-				"installedPatches", PatcherUtil.getInstalledPatches());
-		}
-
+		parameterMap.put("installedPatches", PatcherUtil.getInstalledPatches());
 		parameterMap.put(
 			"supportsHotDeploy",
 			new String[] {

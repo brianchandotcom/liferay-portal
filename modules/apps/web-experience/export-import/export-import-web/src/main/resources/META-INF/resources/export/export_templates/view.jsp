@@ -114,12 +114,14 @@ if (liveGroup == null) {
 				</liferay-portlet:renderURL>
 
 				<liferay-ui:search-container-column-text
+					cssClass="table-cell-content"
 					href="<%= rowURL %>"
 					name="title"
 					value="<%= HtmlUtil.escape(exportImportConfiguration.getName()) %>"
 				/>
 
 				<liferay-ui:search-container-column-text
+					cssClass="table-cell-content"
 					name="description"
 					value="<%= HtmlUtil.escape(exportImportConfiguration.getDescription()) %>"
 				/>
@@ -136,8 +138,6 @@ if (liveGroup == null) {
 				%>
 
 				<liferay-ui:search-container-column-jsp
-					align="right"
-					cssClass="entry-action"
 					path="/export/export_templates/actions.jsp"
 				/>
 			</liferay-ui:search-container-row>

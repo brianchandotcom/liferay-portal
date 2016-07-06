@@ -42,17 +42,16 @@ for (int j = 0; j < entryColumns.length; j++) {
 		</c:when>
 		<c:when test='<%= curEntryColumn.equals("name") %>'>
 			<liferay-ui:search-container-column-text
+				cssClass="table-cell-content"
 				href="<%= entryHREF %>"
 				name="<%= curEntryColumn %>"
-				truncate="<%= true %>"
 				value="<%= HtmlUtil.escape(entry.getName()) %>"
 			/>
 		</c:when>
 		<c:when test='<%= curEntryColumn.equals("url") %>'>
 			<liferay-ui:search-container-column-text
-				cssClass="row-url"
+				cssClass="table-cell-content"
 				name="<%= curEntryColumn %>"
-				truncate="<%= true %>"
 				value="<%= HtmlUtil.escape(entry.getUrl()) %>"
 			/>
 		</c:when>

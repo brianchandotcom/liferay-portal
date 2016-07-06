@@ -99,7 +99,7 @@ userSearch.setResults(users);
 	</liferay-frontend:management-bar-filters>
 </liferay-frontend:management-bar>
 
-<aui:form cssClass="container-fluid-1280" name="fm">
+<aui:form cssClass="container-fluid-1280 portlet-site-memberships-select-users" name="fm">
 	<liferay-ui:membership-policy-error />
 
 	<liferay-ui:search-container

@@ -68,15 +68,15 @@
 	</c:when>
 	<c:otherwise>
 		<liferay-ui:search-container-column-text
+			cssClass="table-cell-content"
 			name="name"
 			orderable="<%= true %>"
-			truncate="<%= true %>"
 			value="<%= organization.getName() %>"
 		/>
 
 		<liferay-ui:search-container-column-text
+			cssClass="table-cell-content"
 			name="parent-organization"
-			truncate="<%= true %>"
 			value="<%= HtmlUtil.escape(organization.getParentOrganizationName()) %>"
 		/>
 

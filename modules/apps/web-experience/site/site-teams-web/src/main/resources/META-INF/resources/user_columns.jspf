@@ -60,15 +60,15 @@
 	</c:when>
 	<c:otherwise>
 		<liferay-ui:search-container-column-text
+			cssClass="table-cell-content"
 			name="name"
 			property="fullName"
-			truncate="<%= true %>"
 		/>
 
 		<liferay-ui:search-container-column-text
+			cssClass="table-cell-content"
 			name="screen-name"
 			property="screenName"
-			truncate="<%= true %>"
 		/>
 
 		<c:if test="<%= showActions %>">

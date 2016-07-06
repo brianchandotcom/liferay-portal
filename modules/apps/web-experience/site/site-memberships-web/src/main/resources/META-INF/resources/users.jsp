@@ -127,7 +127,7 @@ userSearch.setResults(users);
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 		</portlet:actionURL>
 
-		<aui:form action="<%= deleteGroupUsersURL %>" method="post" name="fm">
+		<aui:form action="<%= deleteGroupUsersURL %>" cssClass="portlet-site-memberships-users" method="post" name="fm">
 			<aui:input name="tabs1" type="hidden" value="users" />
 			<aui:input name="addUserIds" type="hidden" />
 

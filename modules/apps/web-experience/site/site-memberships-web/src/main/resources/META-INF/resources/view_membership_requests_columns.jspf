@@ -106,7 +106,6 @@ previewURL.setParameter("membershipRequestId", String.valueOf(membershipRequest.
 	<c:when test='<%= displayStyle.equals("list") %>'>
 		<liferay-ui:search-container-column-text
 			name="user"
-			truncate="<%= true %>"
 		>
 			<aui:a href="<%= previewURL.toString() %>">
 				<%= HtmlUtil.escape(membershipRequestUser.getFullName()) %>

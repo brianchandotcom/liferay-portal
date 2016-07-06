@@ -18,11 +18,14 @@ import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluationException;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluationResult;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluator;
+import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormFieldEvaluationResult;
+import com.liferay.dynamic.data.mapping.form.evaluator.internal.rules.DDMFormRuleEvaluatorHelper;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 
+import java.util.List;
 import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
@@ -40,14 +43,20 @@ public class DDMFormEvaluatorImpl implements DDMFormEvaluator {
 		throws DDMFormEvaluationException {
 
 		try {
-			DDMFormEvaluatorHelper ddmFormEvaluatorHelper =
-				new DDMFormEvaluatorHelper(ddmForm, ddmFormValues, locale);
+			DDMFormRuleEvaluatorHelper ddmFormRuleEvaluatorHelper =
+				new DDMFormRuleEvaluatorHelper(
+					_ddmExpressionFactory, ddmForm, ddmFormValues, locale);
 
-			ddmFormEvaluatorHelper.setDDMExpressionFactory(
-				_ddmExpressionFactory);
-			ddmFormEvaluatorHelper.setJSONFactory(_jsonFactory);
+			List<DDMFormFieldEvaluationResult> ddmFormFieldEvaluationResults =
+				ddmFormRuleEvaluatorHelper.evaluate();
 
-			return ddmFormEvaluatorHelper.evaluate();
+			DDMFormEvaluationResult ddmFormEvaluationResult =
+				new DDMFormEvaluationResult();
+
+			ddmFormEvaluationResult.setDDMFormFieldEvaluationResults(
+				ddmFormFieldEvaluationResults);
+
+			return ddmFormEvaluationResult;
 		}
 		catch (PortalException pe) {
 			throw new DDMFormEvaluationException(pe);

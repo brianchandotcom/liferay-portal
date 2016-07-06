@@ -18,30 +18,56 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.RandomAccessFile;
 
 import org.apache.commons.io.FileUtils;
 
 /**
  * @author Andrea Di Giorgi
+ * @author Hugo Huijser
  */
 public class FileUtil {
 
 	public static byte[] getBytes(File file) throws IOException {
-		return FileUtils.readFileToByteArray(file);
+		if ((file == null) || !file.exists()) {
+			return null;
+		}
+
+		try (RandomAccessFile randomAccessFile = new RandomAccessFile(
+				file, "r")) {
+
+			byte[] bytes = new byte[(int)randomAccessFile.length()];
+
+			randomAccessFile.readFully(bytes);
+
+			return bytes;
+		}
 	}
 
 	public static String read(File file) throws IOException {
-		try {
-			String s = FileUtils.readFileToString(file, StringPool.UTF8);
+		return read(file, false);
+	}
 
-			return StringUtil.replace(
-				s, StringPool.RETURN_NEW_LINE, StringPool.NEW_LINE);
+	public static String read(File file, boolean print) throws IOException {
+		if (print) {
+			System.out.println("readFile: " + file.getName());
 		}
-		catch (FileNotFoundException fnfe) {
+
+		byte[] bytes = getBytes(file);
+
+		if (bytes == null) {
+			if (print) {
+				System.out.println("bytes == null");
+			}
+
 			return null;
 		}
+
+		String s = new String(bytes, StringPool.UTF8);
+
+		return StringUtil.replace(
+			s, StringPool.RETURN_NEW_LINE, StringPool.NEW_LINE);
 	}
 
 	public static void write(File file, String s) throws IOException {

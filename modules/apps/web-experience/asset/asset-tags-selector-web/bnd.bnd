@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Asset Tags Selector Web
+Bundle-SymbolicName: com.liferay.asset.tags.selector.web
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Asset

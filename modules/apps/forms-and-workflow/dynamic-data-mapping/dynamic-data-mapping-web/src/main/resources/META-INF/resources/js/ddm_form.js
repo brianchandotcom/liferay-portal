@@ -2086,20 +2086,24 @@ AUI.add(
 
 						var cache;
 
-						var selectedLayout = instance.get('selectedLayout');
-
-						var path = selectedLayout;
+						var path = instance.get('selectedLayoutPath');
 
 						var lastIndex = path.length - 1;
 
 						if (lastIndex >= 0) {
-							cache = instance._getCache(path[lastIndex]);
+							var parentLayout = path[lastIndex];
+
+							var key = [parentLayout.layoutId, parentLayout.groupId, parentLayout.privateLayout].join('-');
+
+							cache = instance._getCache(key);
 						}
 
 						if (cache) {
 							callback.call(instance, cache.layouts);
 						}
 						else {
+							var selectedLayout = instance.get('selectedLayout');
+
 							A.io.request(
 								themeDisplay.getPathMain() + '/portal/get_layouts',
 								{

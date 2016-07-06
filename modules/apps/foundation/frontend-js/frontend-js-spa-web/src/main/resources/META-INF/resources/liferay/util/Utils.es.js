@@ -1,6 +1,12 @@
 'use strict';
 
+const MAX_TIMEOUT = Math.pow(2, 31) - 1;
+
 class Utils {
+	static getMaxTimeout() {
+		return MAX_TIMEOUT;
+	}
+
 	static getPortletBoundaryId(portletId) {
 		return 'p_p_id_' + portletId + '_';
 	}

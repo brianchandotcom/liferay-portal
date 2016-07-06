@@ -34,7 +34,6 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.storage.Fields;
-import com.liferay.dynamic.data.mapping.util.DDMXML;
 import com.liferay.expando.kernel.util.ExpandoBridgeUtil;
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.content.processor.ExportImportContentProcessorRegistryUtil;
@@ -63,6 +62,7 @@ import com.liferay.journal.model.impl.JournalArticleDisplayImpl;
 import com.liferay.journal.service.base.JournalArticleLocalServiceBaseImpl;
 import com.liferay.journal.service.permission.JournalPermission;
 import com.liferay.journal.social.JournalActivityKeys;
+import com.liferay.journal.util.JournalConverter;
 import com.liferay.journal.util.comparator.ArticleIDComparator;
 import com.liferay.journal.util.comparator.ArticleVersionComparator;
 import com.liferay.journal.util.impl.JournalUtil;
@@ -7927,7 +7927,7 @@ public class JournalArticleLocalServiceImpl
 			Locale defaultlocale)
 		throws PortalException {
 
-		Fields fields = ddmXML.getFields(ddmStructure, content);
+		Fields fields = journalConverter.getDDMFields(ddmStructure, content);
 
 		validateDDMStructureFields(
 			ddmStructure, classNameId, fields, defaultlocale);
@@ -8051,8 +8051,8 @@ public class JournalArticleLocalServiceImpl
 	@ServiceReference(type = DDMTemplateLocalService.class)
 	protected DDMTemplateLocalService ddmTemplateLocalService;
 
-	@ServiceReference(type = DDMXML.class)
-	protected DDMXML ddmXML;
+	@ServiceReference(type = JournalConverter.class)
+	protected JournalConverter journalConverter;
 
 	private static final long _JOURNAL_ARTICLE_CHECK_INTERVAL =
 		JournalServiceConfigurationValues.JOURNAL_ARTICLE_CHECK_INTERVAL

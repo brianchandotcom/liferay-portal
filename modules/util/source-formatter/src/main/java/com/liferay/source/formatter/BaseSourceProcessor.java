@@ -130,16 +130,16 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	@Override
-	public List<SourceFormatterMessage> getErrorMessages() {
-		List<SourceFormatterMessage> errorMessages = new ArrayList<>();
+	public List<SourceFormatterMessage> getMessages() {
+		List<SourceFormatterMessage> messages = new ArrayList<>();
 
 		for (Map.Entry<String, List<SourceFormatterMessage>> entry :
 				_messagesMap.entrySet()) {
 
-			errorMessages.addAll(entry.getValue());
+			messages.addAll(entry.getValue());
 		}
 
-		return errorMessages;
+		return messages;
 	}
 
 	public final List<String> getFileNames() throws Exception {
@@ -163,14 +163,12 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	@Override
-	public void processErrorMessage(String fileName, String message) {
-		processErrorMessage(fileName, message, -1);
+	public void processMessage(String fileName, String message) {
+		processMessage(fileName, message, -1);
 	}
 
 	@Override
-	public void processErrorMessage(
-		String fileName, String message, int lineCount) {
-
+	public void processMessage(String fileName, String message, int lineCount) {
 		List<SourceFormatterMessage> messages = _messagesMap.get(fileName);
 
 		if (messages == null) {

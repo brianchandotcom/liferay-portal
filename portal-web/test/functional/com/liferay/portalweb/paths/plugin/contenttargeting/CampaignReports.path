@@ -11,7 +11,7 @@
 <!--CONTENT_GRAPH-->
 <tr>
 	<td>CONTENT_GRAPH_CONTENT_TITLE</td>
-	<td>//div[@id='campaignContentChart']//span[contains(.,'${key_reportTitle}')]</td>
+	<td>//div[contains(@id,'Chart')]//span[contains(.,'${key_reportTitle}')]</td>
 	<td></td>
 </tr>
 <tr>

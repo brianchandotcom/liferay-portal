@@ -92,7 +92,8 @@ public class EntityCacheUtil {
 		_entityCache.removeResult(entityCacheEnabled, clazz, primaryKey);
 	}
 
-	private static final EntityCache _entityCache =
-		ProxyFactory.newServiceTrackedInstance(EntityCache.class);
+	private static volatile EntityCache _entityCache =
+		ProxyFactory.newServiceTrackedInstance(
+			EntityCache.class, EntityCacheUtil.class, "_entityCache");
 
 }

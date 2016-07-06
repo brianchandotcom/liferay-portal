@@ -92,7 +92,8 @@ public class SingleVMPoolUtil {
 		_singleVMPool.removePortalCache(portalCacheName);
 	}
 
-	private static final SingleVMPool _singleVMPool =
-		ProxyFactory.newServiceTrackedInstance(SingleVMPool.class);
+	private static volatile SingleVMPool _singleVMPool =
+		ProxyFactory.newServiceTrackedInstance(
+			SingleVMPool.class, SingleVMPoolUtil.class, "_singleVMPool");
 
 }

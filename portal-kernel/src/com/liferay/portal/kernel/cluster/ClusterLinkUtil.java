@@ -87,7 +87,8 @@ public class ClusterLinkUtil {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ClusterLinkUtil.class);
 
-	private static final ClusterLink _clusterLink =
-		ProxyFactory.newServiceTrackedInstance(ClusterLink.class);
+	private static volatile ClusterLink _clusterLink =
+		ProxyFactory.newServiceTrackedInstance(
+			ClusterLink.class, ClusterLinkUtil.class, "_clusterLink");
 
 }

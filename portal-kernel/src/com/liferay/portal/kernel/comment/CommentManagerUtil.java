@@ -158,7 +158,8 @@ public class CommentManagerUtil {
 			serviceContextFunction);
 	}
 
-	private static final CommentManager _commentManager =
-		ProxyFactory.newServiceTrackedInstance(CommentManager.class);
+	private static volatile CommentManager _commentManager =
+		ProxyFactory.newServiceTrackedInstance(
+			CommentManager.class, CommentManagerUtil.class, "_commentManager");
 
 }

@@ -648,7 +648,9 @@ public class ExportImportHelperUtil {
 		_exportImportHelper.writeManifestSummary(document, manifestSummary);
 	}
 
-	private static final ExportImportHelper _exportImportHelper =
-		ProxyFactory.newServiceTrackedInstance(ExportImportHelper.class);
+	private static volatile ExportImportHelper _exportImportHelper =
+		ProxyFactory.newServiceTrackedInstance(
+			ExportImportHelper.class, ExportImportHelperUtil.class,
+			"_exportImportHelper");
 
 }

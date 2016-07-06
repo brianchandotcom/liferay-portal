@@ -58,7 +58,9 @@ public class DDMStructureLinkManagerUtil {
 		return _ddmStructureLinkManager.getStructureLinks(classNameId, classPK);
 	}
 
-	private static final DDMStructureLinkManager _ddmStructureLinkManager =
-		ProxyFactory.newServiceTrackedInstance(DDMStructureLinkManager.class);
+	private static volatile DDMStructureLinkManager _ddmStructureLinkManager =
+		ProxyFactory.newServiceTrackedInstance(
+			DDMStructureLinkManager.class, DDMStructureLinkManagerUtil.class,
+			"_ddmStructureLinkManager");
 
 }

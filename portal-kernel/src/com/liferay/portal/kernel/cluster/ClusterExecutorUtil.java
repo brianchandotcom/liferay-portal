@@ -121,7 +121,9 @@ public class ClusterExecutorUtil {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ClusterExecutorUtil.class);
 
-	private static final ClusterExecutor _clusterExecutor =
-		ProxyFactory.newServiceTrackedInstance(ClusterExecutor.class);
+	private static volatile ClusterExecutor _clusterExecutor =
+		ProxyFactory.newServiceTrackedInstance(
+			ClusterExecutor.class, ClusterExecutorUtil.class,
+			"_clusterExecutor");
 
 }

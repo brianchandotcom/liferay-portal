@@ -62,7 +62,9 @@ public class IndexSearcherHelperUtil {
 		return _indexSearcherHelper.suggestKeywordQueries(searchContext, max);
 	}
 
-	private static final IndexSearcherHelper _indexSearcherHelper =
-		ProxyFactory.newServiceTrackedInstance(IndexSearcherHelper.class);
+	private static volatile IndexSearcherHelper _indexSearcherHelper =
+		ProxyFactory.newServiceTrackedInstance(
+			IndexSearcherHelper.class, IndexSearcherHelperUtil.class,
+			"_indexSearcherHelper");
 
 }

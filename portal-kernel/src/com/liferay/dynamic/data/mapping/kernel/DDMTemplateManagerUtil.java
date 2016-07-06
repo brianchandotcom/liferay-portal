@@ -60,7 +60,9 @@ public class DDMTemplateManagerUtil {
 		return _ddmTemplateManager.getTemplate(templateId);
 	}
 
-	private static final DDMTemplateManager _ddmTemplateManager =
-		ProxyFactory.newServiceTrackedInstance(DDMTemplateManager.class);
+	private static volatile DDMTemplateManager _ddmTemplateManager =
+		ProxyFactory.newServiceTrackedInstance(
+			DDMTemplateManager.class, DDMTemplateManagerUtil.class,
+			"_ddmTemplateManager");
 
 }

@@ -50,8 +50,10 @@ public class BackgroundTaskDisplayFactoryUtil {
 		return _backgroundTaskDisplayFactory;
 	}
 
-	private static final BackgroundTaskDisplayFactory
+	private static volatile BackgroundTaskDisplayFactory
 		_backgroundTaskDisplayFactory = ProxyFactory.newServiceTrackedInstance(
-			BackgroundTaskDisplayFactory.class);
+			BackgroundTaskDisplayFactory.class,
+			BackgroundTaskDisplayFactoryUtil.class,
+			"_backgroundTaskDisplayFactory");
 
 }

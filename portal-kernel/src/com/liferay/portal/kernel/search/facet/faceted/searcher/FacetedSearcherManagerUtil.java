@@ -25,7 +25,9 @@ public class FacetedSearcherManagerUtil {
 		return _facetedSearcherManager;
 	}
 
-	private static final FacetedSearcherManager _facetedSearcherManager =
-		ProxyFactory.newServiceTrackedInstance(FacetedSearcherManager.class);
+	private static volatile FacetedSearcherManager _facetedSearcherManager =
+		ProxyFactory.newServiceTrackedInstance(
+			FacetedSearcherManager.class, FacetedSearcherManagerUtil.class,
+			"_facetedSearcherManager");
 
 }

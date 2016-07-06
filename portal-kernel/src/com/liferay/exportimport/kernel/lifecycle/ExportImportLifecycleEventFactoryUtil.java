@@ -30,9 +30,11 @@ public class ExportImportLifecycleEventFactoryUtil {
 			code, processFlag, attributes);
 	}
 
-	private static final ExportImportLifecycleEventFactory
+	private static volatile ExportImportLifecycleEventFactory
 		_exportImportLifecycleEventFactory =
 			ProxyFactory.newServiceTrackedInstance(
-				ExportImportLifecycleEventFactory.class);
+				ExportImportLifecycleEventFactory.class,
+				ExportImportLifecycleEventFactoryUtil.class,
+				"_exportImportLifecycleEventFactory");
 
 }

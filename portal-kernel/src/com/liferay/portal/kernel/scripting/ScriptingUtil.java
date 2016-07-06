@@ -96,7 +96,8 @@ public class ScriptingUtil {
 		return getScripting().getSupportedLanguages();
 	}
 
-	private static final Scripting _scripting =
-		ProxyFactory.newServiceTrackedInstance(Scripting.class);
+	private static volatile Scripting _scripting =
+		ProxyFactory.newServiceTrackedInstance(
+			Scripting.class, ScriptingUtil.class, "_scripting");
 
 }

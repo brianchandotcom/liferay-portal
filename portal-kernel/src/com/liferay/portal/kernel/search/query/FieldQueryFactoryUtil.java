@@ -29,7 +29,9 @@ public class FieldQueryFactoryUtil {
 			field, value, like, splitKeywords);
 	}
 
-	private static final FieldQueryFactory _fieldQueryFactory =
-		ProxyFactory.newServiceTrackedInstance(FieldQueryFactory.class);
+	private static volatile FieldQueryFactory _fieldQueryFactory =
+		ProxyFactory.newServiceTrackedInstance(
+			FieldQueryFactory.class, FieldQueryFactoryUtil.class,
+			"_fieldQueryFactory");
 
 }

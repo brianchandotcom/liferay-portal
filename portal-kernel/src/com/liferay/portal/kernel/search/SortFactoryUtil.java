@@ -67,7 +67,8 @@ public class SortFactoryUtil {
 		return getSortFactory().toArray(sorts);
 	}
 
-	private static final SortFactory _sortFactory =
-		ProxyFactory.newServiceTrackedInstance(SortFactory.class);
+	private static volatile SortFactory _sortFactory =
+		ProxyFactory.newServiceTrackedInstance(
+			SortFactory.class, SortFactoryUtil.class, "_sortFactory");
 
 }

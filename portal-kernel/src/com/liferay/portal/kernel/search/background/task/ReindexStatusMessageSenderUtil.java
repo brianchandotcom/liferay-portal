@@ -48,8 +48,10 @@ public class ReindexStatusMessageSenderUtil {
 			phase, companyId, companyIds);
 	}
 
-	private static final ReindexStatusMessageSender
+	private static volatile ReindexStatusMessageSender
 		_reindexStatusMessageSender = ProxyFactory.newServiceTrackedInstance(
-			ReindexStatusMessageSender.class);
+			ReindexStatusMessageSender.class,
+			ReindexStatusMessageSenderUtil.class,
+			"_reindexStatusMessageSender");
 
 }

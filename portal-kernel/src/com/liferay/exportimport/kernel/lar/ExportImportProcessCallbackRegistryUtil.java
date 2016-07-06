@@ -27,9 +27,11 @@ public class ExportImportProcessCallbackRegistryUtil {
 		_exportImportProcessCommitCallbackRegistry.registerCallback(callable);
 	}
 
-	private static final ExportImportProcessCallbackRegistry
+	private static volatile ExportImportProcessCallbackRegistry
 		_exportImportProcessCommitCallbackRegistry =
 			ProxyFactory.newServiceTrackedInstance(
-				ExportImportProcessCallbackRegistry.class);
+				ExportImportProcessCallbackRegistry.class,
+				ExportImportProcessCallbackRegistryUtil.class,
+				"_exportImportProcessCommitCallbackRegistry");
 
 }

@@ -94,7 +94,9 @@ public class ClusterMasterExecutorUtil {
 			clusterMasterTokenTransitionListener);
 	}
 
-	private static final ClusterMasterExecutor _instance =
-		ProxyFactory.newServiceTrackedInstance(ClusterMasterExecutor.class);
+	private static volatile ClusterMasterExecutor _instance =
+		ProxyFactory.newServiceTrackedInstance(
+			ClusterMasterExecutor.class, ClusterMasterExecutorUtil.class,
+			"_instance");
 
 }

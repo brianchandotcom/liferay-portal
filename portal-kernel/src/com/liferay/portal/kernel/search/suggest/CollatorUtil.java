@@ -32,7 +32,8 @@ public class CollatorUtil {
 		return _collator.collate(suggestions, keywords);
 	}
 
-	private static final Collator _collator =
-		ProxyFactory.newServiceTrackedInstance(Collator.class);
+	private static volatile Collator _collator =
+		ProxyFactory.newServiceTrackedInstance(
+			Collator.class, CollatorUtil.class, "_collator");
 
 }

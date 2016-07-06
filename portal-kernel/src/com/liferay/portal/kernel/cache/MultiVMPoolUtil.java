@@ -94,7 +94,8 @@ public class MultiVMPoolUtil {
 		_multiVMPool.removePortalCache(portalCacheName);
 	}
 
-	private static final MultiVMPool _multiVMPool =
-		ProxyFactory.newServiceTrackedInstance(MultiVMPool.class);
+	private static volatile MultiVMPool _multiVMPool =
+		ProxyFactory.newServiceTrackedInstance(
+			MultiVMPool.class, MultiVMPoolUtil.class, "_multiVMPool");
 
 }

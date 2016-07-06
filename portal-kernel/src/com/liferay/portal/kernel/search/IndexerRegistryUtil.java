@@ -67,7 +67,9 @@ public class IndexerRegistryUtil {
 		getIndexerRegistry().unregister(className);
 	}
 
-	private static final IndexerRegistry _indexerRegistry =
-		ProxyFactory.newServiceTrackedInstance(IndexerRegistry.class);
+	private static volatile IndexerRegistry _indexerRegistry =
+		ProxyFactory.newServiceTrackedInstance(
+			IndexerRegistry.class, IndexerRegistryUtil.class,
+			"_indexerRegistry");
 
 }

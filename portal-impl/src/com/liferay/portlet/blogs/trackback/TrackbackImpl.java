@@ -52,7 +52,7 @@ public class TrackbackImpl implements Trackback {
 
 		String body = buildBody(themeDisplay, excerpt, url);
 
-		long commentId = _commentManager.addComment(
+		long commentId = CommentManagerUtil.addComment(
 			userId, groupId, className, classPK, blogName, title, body,
 			serviceContextFunction);
 
@@ -61,9 +61,12 @@ public class TrackbackImpl implements Trackback {
 		_linkbackConsumer.addNewTrackback(commentId, url, entryURL);
 	}
 
+	/**
+	 * @deprecated As of 7.1.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public void setCommentManager(CommentManager commentManager) {
-		_commentManager = commentManager;
 	}
 
 	@Override
@@ -130,8 +133,6 @@ public class TrackbackImpl implements Trackback {
 		return sb.toString();
 	}
 
-	private CommentManager _commentManager =
-		CommentManagerUtil.getCommentManager();
 	private LinkbackConsumer _linkbackConsumer =
 		LinkbackConsumerUtil.getLinkbackConsumer();
 

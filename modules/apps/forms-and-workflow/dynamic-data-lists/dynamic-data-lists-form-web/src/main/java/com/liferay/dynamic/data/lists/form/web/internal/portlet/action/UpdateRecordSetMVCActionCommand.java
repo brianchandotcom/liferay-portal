@@ -83,9 +83,9 @@ public class UpdateRecordSetMVCActionCommand
 
 		return ddmStructureService.updateStructure(
 			ddmStructureId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
-			getLocalizedMap(themeDisplay.getLocale(), name),
-			getLocalizedMap(themeDisplay.getLocale(), description), ddmForm,
-			ddmFormLayout, serviceContext);
+			getLocalizedMap(themeDisplay.getSiteDefaultLocale(), name),
+			getLocalizedMap(themeDisplay.getSiteDefaultLocale(), description),
+			ddmForm, ddmFormLayout, serviceContext);
 	}
 
 	protected DDLRecordSet updateRecordSet(
@@ -105,8 +105,8 @@ public class UpdateRecordSetMVCActionCommand
 
 		return ddlRecordSetService.updateRecordSet(
 			recordSetId, ddmStructureId,
-			getLocalizedMap(themeDisplay.getLocale(), name),
-			getLocalizedMap(themeDisplay.getLocale(), description),
+			getLocalizedMap(themeDisplay.getSiteDefaultLocale(), name),
+			getLocalizedMap(themeDisplay.getSiteDefaultLocale(), description),
 			DDLRecordSetConstants.MIN_DISPLAY_ROWS_DEFAULT, serviceContext);
 	}
 

@@ -785,6 +785,7 @@
 
 	<command name="ExportImportSiteWithChangedSiteDefaultLanguage" priority="5">
 		<property name="portal.acceptance" value="true" />
+		<property name="test.name.skip.portal.instance" value="ExportImport#ExportImportSiteWithChangedSiteDefaultLanguage" />
 
 		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="Site Name" />

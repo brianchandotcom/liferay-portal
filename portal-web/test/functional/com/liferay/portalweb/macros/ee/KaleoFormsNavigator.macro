@@ -1,7 +1,5 @@
 <definition>
 	<command name="gotoManageFieldSets">
-		<execute function="Pause" locator1="5000" />
-
 		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MenuItem#MANAGE_FIELD_SETS" value1="Manage Field Sets" />

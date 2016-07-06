@@ -1895,7 +1895,7 @@
 			<var name="panelHeading" value="Permissions" />
 		</execute>
 
-		<execute function="AssertSelectedLabel" locator1="WCEditWebContent#PERMISSIONS_VIEWABLE_BY_SELECT" value1="Anyone (Guest Role)" />
+		<execute function="AssertSelectedLabel" locator1="WCEditWebContent#PERMISSIONS_VIEWABLE_BY_SELECT" value1="Site Members" />
 	</command>
 
 	<command name="viewWithStructureCP">

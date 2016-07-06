@@ -1940,6 +1940,10 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 			String content = FileUtil.read(tldFile);
 
+			if (content == null) {
+				System.out.println("NULL: " + tldFileName);
+			}
+
 			Document document = readXML(content);
 
 			Element rootElement = document.getRootElement();

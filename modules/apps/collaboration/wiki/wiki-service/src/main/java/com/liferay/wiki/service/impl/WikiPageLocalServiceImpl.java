@@ -1828,14 +1828,14 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 				curPage.setTitle(newTitle);
 				curPage.setContent(
 					wikiPageRenameContentProcessor.processContent(
-						curPage.getNodeId(), title, newTitle,
+						title, newTitle,
 						curPage.getContent()));
 
 				wikiPagePersistence.update(curPage);
 			}
 
 			content = wikiPageRenameContentProcessor.processContent(
-				page.getNodeId(), title, newTitle, content);
+				title, newTitle, content);
 		}
 
 		updatePage(

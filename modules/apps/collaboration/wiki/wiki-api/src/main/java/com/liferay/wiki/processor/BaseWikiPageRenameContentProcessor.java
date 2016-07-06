@@ -30,8 +30,7 @@ public class BaseWikiPageRenameContentProcessor
 
 	@Override
 	public String processContent(
-		long nodeId, String originalTitle, String newTitle,
-		String originalContent) {
+		String originalTitle, String newTitle, String originalContent) {
 
 		return runRegexps(originalContent, originalTitle, newTitle);
 	}

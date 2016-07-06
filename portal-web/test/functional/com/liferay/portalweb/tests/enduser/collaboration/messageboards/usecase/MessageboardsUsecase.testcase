@@ -34,7 +34,7 @@
 		</if>
 	</tear-down>
 
-	<command name="CopyAndPasteTextInCKEditor" priority="4">
+	<command name="CopyAndPasteTextInAlloyEditor" priority="4">
 		<execute macro="Page#add">
 			<var name="pageName" value="Message Boards Page" />
 		</execute>

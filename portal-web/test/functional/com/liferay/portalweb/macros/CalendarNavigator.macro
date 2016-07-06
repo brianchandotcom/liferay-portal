@@ -11,6 +11,14 @@
 		<execute function="SelectFrame" locator1="CalendarPermissions#CALENDAR_PERMISSIONS_IFRAME" />
 	</command>
 
+	<command name="closeModal">
+		<execute function="SelectFrameTop" />
+
+		<var name="key_modalTitle" value="${modalTitle}" />
+
+		<execute function="Click" locator1="Button#CLOSE_MODAL" />
+	</command>
+
 	<command name="gotoAddCurrentSiteCalendars">
 		<execute macro="TestCase#getSiteName">
 			<return from="siteName" name="siteName" />

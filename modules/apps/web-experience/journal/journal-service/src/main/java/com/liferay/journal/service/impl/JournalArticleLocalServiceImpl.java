@@ -3426,8 +3426,8 @@ public class JournalArticleLocalServiceImpl
 		for (JournalArticle article : articles) {
 			if (serviceContext != null) {
 				notifySubscribers(
-					serviceContext.getUserId(), article, article.getUrlTitle(),
-					"move_from", serviceContext);
+					serviceContext.getUserId(), article, "move_from",
+					serviceContext);
 			}
 
 			article.setFolderId(newFolderId);
@@ -3437,8 +3437,8 @@ public class JournalArticleLocalServiceImpl
 
 			if (serviceContext != null) {
 				notifySubscribers(
-					serviceContext.getUserId(), article, article.getUrlTitle(),
-					"move_to", serviceContext);
+					serviceContext.getUserId(), article, "move_to",
+					serviceContext);
 			}
 		}
 
@@ -5924,9 +5924,7 @@ public class JournalArticleLocalServiceImpl
 			}
 
 			notifySubscribers(
-				user.getUserId(), article,
-				(String)workflowContext.get(WorkflowConstants.CONTEXT_URL),
-				action, serviceContext);
+				user.getUserId(), article, action, serviceContext);
 		}
 
 		return article;
@@ -7169,9 +7167,15 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	protected void notifySubscribers(
-			long userId, JournalArticle article, String articleURL,
-			String action, ServiceContext serviceContext)
+			long userId, JournalArticle article, String action,
+			ServiceContext serviceContext)
 		throws PortalException {
+
+		String portletId = PortletProviderUtil.getPortletId(
+			JournalArticle.class.getName(), PortletProvider.Action.EDIT);
+
+		String articleURL = PortalUtil.getControlPanelFullURL(
+			article.getGroupId(), portletId, null);
 
 		if (!article.isApproved() || Validator.isNull(articleURL)) {
 			return;
@@ -7313,12 +7317,7 @@ public class JournalArticleLocalServiceImpl
 		subscriptionSender.setMailId("journal_article", article.getId());
 
 		subscriptionSender.setNotificationType(notificationType);
-
-		String portletId = PortletProviderUtil.getPortletId(
-			JournalArticle.class.getName(), PortletProvider.Action.EDIT);
-
 		subscriptionSender.setPortletId(portletId);
-
 		subscriptionSender.setReplyToAddress(fromAddress);
 		subscriptionSender.setScopeGroupId(article.getGroupId());
 		subscriptionSender.setServiceContext(serviceContext);
@@ -7542,14 +7541,6 @@ public class JournalArticleLocalServiceImpl
 		throws PortalException {
 
 		Map<String, Serializable> workflowContext = new HashMap<>();
-
-		String portletId = PortletProviderUtil.getPortletId(
-			JournalArticle.class.getName(), PortletProvider.Action.EDIT);
-
-		workflowContext.put(
-			WorkflowConstants.CONTEXT_URL,
-			PortalUtil.getControlPanelFullURL(
-				article.getGroupId(), portletId, null));
 
 		WorkflowHandlerRegistryUtil.startWorkflowInstance(
 			article.getCompanyId(), article.getGroupId(), userId,

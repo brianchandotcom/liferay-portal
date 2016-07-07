@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.portlet;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.model.Layout;
 
 import javax.portlet.PortletRequest;
@@ -23,6 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Brian Wing Shun Chan
  */
+@ProviderType
 public interface PortletURLFactory {
 
 	public LiferayPortletURL create(

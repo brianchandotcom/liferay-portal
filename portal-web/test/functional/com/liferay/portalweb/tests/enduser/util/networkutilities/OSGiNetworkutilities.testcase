@@ -1,4 +1,5 @@
 <definition component-name="portal-util-misc">
+	<property name="osgi.modules.includes" value="network-utilities-web" />
 	<property name="portal.release" value="true" />
 	<property name="testray.main.component.name" value="Util" />
 
@@ -8,15 +9,15 @@
 		<execute macro="User#firstLoginPG" />
 
 		<execute macro="Page#add">
-			<var name="pageName" value="Amazon Rankings Page" />
+			<var name="pageName" value="Network Utilities Page" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Amazon Rankings Page" />
+			<var name="pageName" value="Network Utilities Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Amazon Rankings" />
+			<var name="portletName" value="Network Utilities" />
 		</execute>
 	</set-up>
 
@@ -31,14 +32,16 @@
 		</if>
 	</tear-down>
 
-	<command name="ViewAmazonRankingsPortlet" priority="2">
+	<command name="SearchDNSDomain" priority="2">
+		<property name="portal.acceptance" value="jason" />
+
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Amazon Rankings Page" />
+			<var name="pageName" value="Network Utilities Page" />
 		</execute>
 
-		<execute macro="Portlet#viewPG">
-			<var name="portletBody" value="Please contact the administrator to configure an Amazon license." />
-			<var name="portletName" value="Amazon Rankings" />
+		<execute macro="NetworkUtilities#searchPG">
+			<var name="dnsDomain" value="" />
+			<var name="networkDomain" value="localhost" />
 		</execute>
 	</command>
 </definition>

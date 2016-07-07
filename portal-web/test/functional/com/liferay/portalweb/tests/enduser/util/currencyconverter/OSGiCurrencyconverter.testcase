@@ -1,4 +1,5 @@
 <definition component-name="portal-util-misc">
+	<property name="osgi.modules.includes" value="currency-converter-web" />
 	<property name="portal.release" value="true" />
 	<property name="testray.main.component.name" value="Util" />
 
@@ -8,15 +9,15 @@
 		<execute macro="User#firstLoginPG" />
 
 		<execute macro="Page#add">
-			<var name="pageName" value="Network Utilities Page" />
+			<var name="pageName" value="Currency Converter Page" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Network Utilities Page" />
+			<var name="pageName" value="Currency Converter Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Network Utilities" />
+			<var name="portletName" value="Currency Converter" />
 		</execute>
 	</set-up>
 
@@ -31,14 +32,19 @@
 		</if>
 	</tear-down>
 
-	<command name="SearchDNSDomain" priority="2">
+	<command name="ConvertCurrencyUSDToEUR" priority="2">
+		<property name="portal.acceptance" value="jason" />
+
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Network Utilities Page" />
+			<var name="pageName" value="Currency Converter Page" />
 		</execute>
 
-		<execute macro="NetworkUtilities#searchPG">
-			<var name="dnsDomain" value="" />
-			<var name="networkDomain" value="localhost" />
+		<execute macro="CurrencyConverter#convertPG">
+			<var name="currencyDataFrom" value="USD" />
+			<var name="currencyDataTo" value="EUR" />
+			<var name="currencyFrom" value="USD" />
+			<var name="currencyTo" value="EUR" />
+			<var name="currencyValue" value="4" />
 		</execute>
 	</command>
 </definition>

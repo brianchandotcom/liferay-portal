@@ -20,6 +20,8 @@
 		<property name="test.assert.warning.exceptions" value="true" />
 
 		<execute macro="Upgrade#viewWCStructureAndTemplate" />
+
+		<execute macro="Upgrade#publishWCDraft" />
 	</command>
 
 	<command name="View612WorkflowArchive" priority="4">

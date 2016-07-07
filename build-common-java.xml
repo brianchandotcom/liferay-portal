@@ -10,21 +10,6 @@
 		</and>
 	</condition>
 
-	<target depends="jar" name="init-deploy">
-		<property name="copy.jar" value="true" />
-		<property name="src.dir" value="${basedir}" />
-
-		<condition property="deploy.uptodate">
-			<uptodate targetfile="${deploy.dir}/${jar.file}.jar">
-				<srcfiles dir="${src.dir}" includes="bnd.bnd,build.xml,ivy.xml,src/**/*.*" />
-			</uptodate>
-		</condition>
-	</target>
-
-	<target depends="init-deploy,jar" if="copy.jar" name="deploy" unless="deploy.uptodate">
-		<copy file="${jar.file}.jar" todir="${deploy.dir}" preservelastmodified="true" />
-	</target>
-
 	<target name="clean">
 		<delete dir="classes" />
 		<delete dir="test-classes" />
@@ -91,10 +76,25 @@
 		<echo file="${javac.destdir}/.touch"></echo>
 	</target>
 
+	<target depends="init-deploy,jar" if="copy.jar" name="deploy" unless="deploy.uptodate">
+		<copy file="${jar.file}.jar" todir="${deploy.dir}" preservelastmodified="true" />
+	</target>
+
 	<target name="init-compile">
 		<condition property="compile.uptodate">
 			<uptodate targetfile="classes/.touch">
 				<srcfiles dir="${basedir}" includes="bnd.bnd,build.xml,ivy.xml,src/**/*.*" />
+			</uptodate>
+		</condition>
+	</target>
+
+	<target depends="jar" name="init-deploy">
+		<property name="copy.jar" value="true" />
+		<property name="src.dir" value="${basedir}" />
+
+		<condition property="deploy.uptodate">
+			<uptodate targetfile="${deploy.dir}/${jar.file}.jar">
+				<srcfiles dir="${src.dir}" includes="bnd.bnd,build.xml,ivy.xml,src/**/*.*" />
 			</uptodate>
 		</condition>
 	</target>

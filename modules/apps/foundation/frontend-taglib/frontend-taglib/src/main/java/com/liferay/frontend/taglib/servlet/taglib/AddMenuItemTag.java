@@ -19,7 +19,6 @@ import com.liferay.taglib.util.IncludeTag;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -63,28 +62,13 @@ public class AddMenuItemTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		List<AddMenuItem> addMenuItems = null;
-
-		if (Objects.equals(_type, AddMenuKeys.AddMenuType.PRIMARY)) {
-			addMenuItems = (List<AddMenuItem>)request.getAttribute(
-				"liferay-frontend:add-menu:addMenuPrimaryItems");
-		}
-		else if (Objects.equals(_type, AddMenuKeys.AddMenuType.FAVORITE)) {
-			addMenuItems = (List<AddMenuItem>)request.getAttribute(
-				"liferay-frontend:add-menu:addMenuFavItems");
-		}
-		else if (Objects.equals(_type, AddMenuKeys.AddMenuType.RECENT)) {
-			addMenuItems = (List<AddMenuItem>)request.getAttribute(
-				"liferay-frontend:add-menu:addMenuRecentItems");
-		}
-		else {
-			addMenuItems = (List<AddMenuItem>)request.getAttribute(
+		List<AddMenuItem> addMenuItems =
+			(List<AddMenuItem>)request.getAttribute(
 				"liferay-frontend:add-menu:addMenuItems");
-		}
 
 		if (addMenuItems != null) {
 			AddMenuItem addMenuItem = new AddMenuItem(
-				_anchorData, _id, _title, _url);
+				_anchorData, _id, _title, _type, _url);
 
 			addMenuItems.add(addMenuItem);
 		}

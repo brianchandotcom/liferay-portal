@@ -67,10 +67,10 @@ int allAddMenuItemsCount = addMenuFavItems.size() + addMenuItems.size() + addMen
 			<ul class="dropdown-menu dropdown-menu-left-side-bottom">
 
 				<%
-				boolean customizeAddMenuAdviceHidden = GetterUtil.getBoolean(SessionClicks.get(request, "com.liferay.addmenu_customizeAddMenuAdviceHidden", "false"));
+				boolean customizeAddMenuAdviceMessage = GetterUtil.getBoolean(SessionClicks.get(request, "com.liferay.addmenu_customizeAddMenuAdviceMessage", null));
 				%>
 
-				<c:if test="<%= !customizeAddMenuAdviceHidden %>">
+				<c:if test="<%= !customizeAddMenuAdviceMessage %>">
 					<li class="active add-menu-advice">
 						<a href="javascript:;"><liferay-ui:message key="you-can-customize-this-menu-or-see-all-you-have-by-pressing-more" /></a>
 					</li>
@@ -192,7 +192,7 @@ int allAddMenuItemsCount = addMenuFavItems.size() + addMenuItems.size() + addMen
 							viewMoreAddMenuElements.on(
 								'click',
 								function(event) {
-									Liferay.Store('com.liferay.addmenu_customizeAddMenuAdviceHidden', true);
+									Liferay.Store('com.liferay.addmenu_customizeAddMenuAdviceMessage', true);
 
 									Liferay.Util.selectEntity(
 										{

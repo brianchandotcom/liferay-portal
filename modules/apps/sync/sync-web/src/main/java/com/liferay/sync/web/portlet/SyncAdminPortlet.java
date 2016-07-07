@@ -15,7 +15,6 @@
 package com.liferay.sync.web.portlet;
 
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -68,7 +67,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = Portlet.class
 )
-public class SyncAdminPortlet extends MVCPortlet {
+public class SyncAdminPortlet extends BaseSyncPortlet {
 
 	public void updatePreferences(
 			ActionRequest actionRequest, ActionResponse actionResponse)

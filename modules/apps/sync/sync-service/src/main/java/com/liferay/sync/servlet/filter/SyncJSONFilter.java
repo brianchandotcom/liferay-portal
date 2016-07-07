@@ -14,6 +14,25 @@
 
 package com.liferay.sync.servlet.filter;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.InetAddress;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+
+import org.osgi.service.component.annotations.Component;
+
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.upload.UploadServletRequest;
@@ -34,25 +53,6 @@ import com.liferay.sync.service.configuration.SyncServiceConfigurationKeys;
 import com.liferay.sync.service.configuration.SyncServiceConfigurationValues;
 import com.liferay.sync.util.SyncDeviceThreadLocal;
 import com.liferay.sync.util.SyncUtil;
-
-import java.io.IOException;
-import java.io.OutputStream;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
-
-import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Shinn Lok
@@ -77,8 +77,7 @@ public class SyncJSONFilter implements Filter {
 			FilterChain filterChain)
 		throws IOException, ServletException {
 
-		String uri = (String)servletRequest.getAttribute(
-			WebKeys.INVOKER_FILTER_URI);
+		SyncDevice syncDevice = null;
 
 		HttpServletRequest httpServletRequest =
 			(HttpServletRequest)servletRequest;
@@ -86,16 +85,27 @@ public class SyncJSONFilter implements Filter {
 		String uuid = httpServletRequest.getHeader("Sync-UUID");
 
 		if (uuid != null) {
-			SyncDevice syncDevice =
+			syncDevice =
 				SyncDeviceLocalServiceUtil.fetchSyncDeviceByUuidAndCompanyId(
 					uuid, PortalUtil.getCompanyId(httpServletRequest));
+		}
 
-			SyncDeviceThreadLocal.setSyncDevice(syncDevice);
+		if (syncDevice == null) {
+			syncDevice = SyncDeviceLocalServiceUtil.createSyncDevice(0);
+		}
 
+		syncDevice.setHost(servletRequest.getRemoteHost());
+
+		SyncDeviceThreadLocal.setSyncDevice(syncDevice);
+
+		if (uuid != null) {
 			filterChain.doFilter(servletRequest, servletResponse);
 
 			return;
 		}
+
+		String uri = (String)servletRequest.getAttribute(
+			WebKeys.INVOKER_FILTER_URI);
 
 		if (uri.equals("/api/jsonws/invoke")) {
 			String contentType = httpServletRequest.getHeader(
@@ -142,12 +152,12 @@ public class SyncJSONFilter implements Filter {
 			int absoluteSyncClientMinBuild = 0;
 			int syncClientMinBuild = 0;
 
-			String syncDevice = httpServletRequest.getHeader("Sync-Device");
+			String syncDeviceType = httpServletRequest.getHeader("Sync-Device");
 
-			if (syncDevice == null) {
+			if (syncDeviceType == null) {
 				throwable = new SyncDeviceHeaderException();
 			}
-			else if (syncDevice.startsWith("desktop")) {
+			else if (syncDeviceType.startsWith("desktop")) {
 				absoluteSyncClientMinBuild =
 					_ABSOLUTE_SYNC_CLIENT_MIN_BUILD_DESKTOP;
 
@@ -157,7 +167,7 @@ public class SyncJSONFilter implements Filter {
 					SyncServiceConfigurationValues.
 						SYNC_CLIENT_MIN_BUILD_DESKTOP);
 			}
-			else if (syncDevice.equals("mobile-android")) {
+			else if (syncDeviceType.equals("mobile-android")) {
 				absoluteSyncClientMinBuild =
 					_ABSOLUTE_SYNC_CLIENT_MIN_BUILD_ANDROID;
 
@@ -167,7 +177,7 @@ public class SyncJSONFilter implements Filter {
 					SyncServiceConfigurationValues.
 						SYNC_CLIENT_MIN_BUILD_ANDROID);
 			}
-			else if (syncDevice.equals("mobile-ios")) {
+			else if (syncDeviceType.equals("mobile-ios")) {
 				absoluteSyncClientMinBuild =
 					_ABSOLUTE_SYNC_CLIENT_MIN_BUILD_IOS;
 

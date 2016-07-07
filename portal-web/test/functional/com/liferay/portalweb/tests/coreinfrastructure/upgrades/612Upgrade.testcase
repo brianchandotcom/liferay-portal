@@ -15,6 +15,13 @@
 		<execute macro="Upgrade#searchForAssetsAfterUpgrade" />
 	</command>
 
+	<command name="View612WebContentArchive" priority="3">
+		<property name="portal.upgrades" value="true" />
+		<property name="test.assert.warning.exceptions" value="true" />
+
+		<execute macro="Upgrade#viewWCStructureAndTemplate" />
+	</command>
+
 	<command name="View612WorkflowArchive" priority="4">
 		<property name="portal.upgrades" value="true" />
 		<property name="test.assert.warning.exceptions" value="true" />

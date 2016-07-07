@@ -2087,10 +2087,10 @@
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Workflow Definition" />
+			<var name="portlet" value="Kaleo Designer" />
 		</execute>
 
-		<execute macro="KaleoDesigner#editWorkflowDefinitionViaWorkflowCP">
+		<execute macro="KaleoDesigner#editWorkflowDefinitionViaKDCP">
 			<var name="workflowDefinitionTitle" value="Single Approver" />
 		</execute>
 
@@ -7463,10 +7463,10 @@
 		<var name="nodeNotificationsTemplate"><![CDATA[Submission reviewed. The reviewer left the following: $taskComments.]]></var>
 
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Workflow Definition" />
+			<var name="portlet" value="Kaleo Designer" />
 		</execute>
 
-		<execute macro="KaleoDesigner#editWorkflowDefinitionViaWorkflowCP">
+		<execute macro="KaleoDesigner#editWorkflowDefinitionViaKDCP">
 			<var name="workflowDefinitionTitle" value="Single Approver" />
 		</execute>
 
@@ -8121,10 +8121,10 @@
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Workflow Definition" />
+			<var name="portlet" value="Kaleo Designer" />
 		</execute>
 
-		<execute macro="KaleoDesigner#editWorkflowDefinitionViaWorkflowCP">
+		<execute macro="KaleoDesigner#editWorkflowDefinitionViaKDCP">
 			<var name="workflowDefinitionTitle" value="Single Approver" />
 		</execute>
 

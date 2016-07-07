@@ -164,11 +164,14 @@
 		<execute macro="FormsAdmin#viewNoDuplicateForms" />
 	</command>
 
-	<command name="ConfigureAutocompleteWithManualInput" priority="5">
-		<property name="portal.acceptance" value="pending" />
-		<property name="test.name.skip.portal.instance" value="Forms#ConfigureAutoCompleteWithManualInput" />
+	<command name="AddFormWithSpanishAsDefaultPortalLanguage" priority="5">
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="Instance Settings" />
+		</execute>
 
-		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+		<execute macro="PortalSettings#configureCurrentLanguagesCP">
+			<var name="defaultPortalLanguage" value="Spanish (Spain)" />
+		</execute>
 
 		<execute macro="Navigator#openURL" />
 
@@ -180,35 +183,17 @@
 
 		<execute macro="Form#editName" />
 
-		<execute macro="Form#gotoAddField">
+		<execute macro="Form#editDescription" />
+
+		<execute macro="Form#gotoAddFirstField">
 			<var name="fieldType" value="Text Field" />
 		</execute>
 
 		<execute macro="Form#editFieldLabel">
-			<var name="fieldValue" value="Text Field With Autocomplete" />
+			<var name="fieldValue" value="Text Field On Spanish Portal" />
 		</execute>
 
-		<execute macro="Form#gotoAdvancedTab" />
-
-		<execute macro="Form#gotoAutocompleteConfiguration" />
-
-		<execute macro="FormFields#selectRadioOption">
-			<var name="fieldName" value="dataSourceType" />
-			<var name="radioOption" value="Manually" />
-		</execute>
-
-		<execute macro="FormFields#editOptionsRow">
-			<var name="optionName" value="One" />
-			<var name="optionValue" value="One" />
-		</execute>
-
-		<execute macro="FormFields#editOptionsRow">
-			<var name="optionName" value="Two" />
-			<var name="optionValue" value="Two" />
-			<var name="rowNumber" value="2" />
-		</execute>
-
-		<execute macro="Form#closeSidebar" />
+		<execute macro="FormFields#save" />
 
 		<execute macro="Form#save" />
 
@@ -235,46 +220,14 @@
 			<var name="pageName" value="Form Page" />
 		</execute>
 
-		<execute macro="FormFields#editText">
-			<var name="fieldName" value="TextFieldWithAutocomplete" />
-			<var name="fieldValue" value="n" />
-		</execute>
-
-		<execute macro="FormFields#viewAutoCompleteOptions">
-			<var name="autocompleteOption" value="One" />
-			<var name="autocompleteOptionNotVisible" value="Two" />
+		<execute macro="FormFields#viewTextLabel">
+			<var name="fieldLabel" value="Text Field On Spanish Portal" />
+			<var name="fieldName" value="TextFieldOnSpanishPortal" />
 		</execute>
 
 		<execute macro="FormFields#editText">
-			<var name="fieldName" value="TextFieldWithAutocomplete" />
-			<var name="fieldValue" value="T" />
-		</execute>
-
-		<execute macro="FormFields#viewAutoCompleteOptions">
-			<var name="autocompleteOption" value="Two" />
-			<var name="autocompleteOptionNotVisible" value="One" />
-		</execute>
-
-		<execute macro="FormFields#editText">
-			<var name="fieldName" value="TextFieldWithAutocomplete" />
-			<var name="fieldValue" value="O" />
-		</execute>
-
-		<execute macro="FormFields#viewAutoCompleteOptions">
-			<var name="autocompleteOption" value="One" />
-		</execute>
-
-		<execute macro="FormFields#viewAutoCompleteOptions">
-			<var name="autocompleteOption" value="Two" />
-		</execute>
-
-		<execute macro="FormFields#editText">
-			<var name="fieldName" value="TextFieldWithAutocomplete" />
-			<var name="fieldValue" value="On" />
-		</execute>
-
-		<execute macro="FormFields#selectAutoCompleteOption">
-			<var name="autocompleteOption" value="One" />
+			<var name="fieldName" value="TextFieldOnSpanishPortal" />
+			<var name="fieldValue" value="Text Field Value" />
 		</execute>
 
 		<execute macro="FormPortlet#submit" />
@@ -288,8 +241,16 @@
 		<execute macro="FormsAdminNavigator#gotoViewEntries" />
 
 		<execute macro="FormsAdmin#viewFormTableEntry">
-			<var name="fieldLabel" value="Text Field With Autocomplete" />
-			<var name="fieldValue" value="One" />
+			<var name="fieldLabel" value="Text Field On Spanish Portal" />
+			<var name="fieldValue" value="Text Field Value" />
+		</execute>
+
+		<execute macro="FormsAdminNavigator#gotoView" />
+
+		<execute macro="FormsAdmin#viewTextEntry">
+			<var name="fieldLabel" value="Text Field On Spanish Portal" />
+			<var name="fieldName" value="TextFieldOnSpanishPortal" />
+			<var name="fieldValue" value="Text Field Value" />
 		</execute>
 	</command>
 

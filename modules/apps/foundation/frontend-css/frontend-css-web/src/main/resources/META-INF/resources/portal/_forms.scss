@@ -175,6 +175,52 @@
 	}
 }
 
+.lfr-ddm-link-to-page-modal {
+	.lfr-ddm-breadcrumb {
+		padding-left: 0;
+		padding-right: 0;
+	}
+
+	.lfr-ddm-pages-container {
+		height: 283px;
+		margin-right: -23px;
+		overflow: auto;
+		padding-left: 5px;
+		padding-top: 50px;
+
+		&.top-ended {
+			padding-top: 0;
+		}
+
+		.loading-icon {
+			display: block;
+			font-size: 48px;
+			margin: 0 auto;
+		}
+
+		&.nav {
+			> li {
+				> a {
+					margin-left: 20px;
+					padding-left: 0;
+				}
+
+				.loading-icon {
+					font-size: 18px;
+					position: absolute;
+					right: 36px;
+					top: 12px;
+				}
+			}
+
+			.lfr-ddm-page-radio {
+				position: absolute;
+				top: 10px;
+			}
+		}
+	}
+}
+
 .field-wrapper .btn {
 	margin-top: 6px;
 }

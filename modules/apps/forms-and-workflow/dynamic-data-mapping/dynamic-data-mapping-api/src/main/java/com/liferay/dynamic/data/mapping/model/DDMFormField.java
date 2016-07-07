@@ -82,6 +82,9 @@ public class DDMFormField implements Serializable {
 		setTip(new LocalizedValue());
 	}
 
+	/**
+	 * @deprecated As of 3.4.0, with no direct replacement
+	 */
 	@Deprecated
 	public void addDDMFormFieldRule(DDMFormFieldRule ddmFormFieldRule) {
 		_ddmFormFieldRules.add(ddmFormFieldRule);
@@ -127,6 +130,9 @@ public class DDMFormField implements Serializable {
 		return (DDMFormFieldOptions)_properties.get("options");
 	}
 
+	/**
+	 * @deprecated As of 3.4.0, with no direct replacement
+	 */
 	@Deprecated
 	public List<DDMFormFieldRule> getDDMFormFieldRules() {
 		return _ddmFormFieldRules;
@@ -262,6 +268,9 @@ public class DDMFormField implements Serializable {
 		_properties.put("options", ddmFormFieldOptions);
 	}
 
+	/**
+	 * @deprecated As of 3.4.0, with no direct replacement
+	 */
 	@Deprecated
 	public void setDDMFormFieldRules(List<DDMFormFieldRule> ddmFormFieldRules) {
 		_ddmFormFieldRules = ddmFormFieldRules;

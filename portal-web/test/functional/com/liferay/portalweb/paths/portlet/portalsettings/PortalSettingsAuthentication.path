@@ -327,77 +327,77 @@
 </tr>
 <tr>
 	<td>AUTHENTICATION_OPEN_SSO_IMPORT_FROM_LDAP_CHECKBOX</td>
-	<td>//input[contains(@id,'open-sso-ldap-import-enabled')]</td>
+	<td>//input[contains(@name,'opensso--importFromLDAP')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_OPEN_SSO_LOGIN_URL_HEADER</td>
-	<td>//label[contains(@for,'open-sso-login-url')]</td>
+	<td>//label[contains(@for,'loginU')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_OPEN_SSO_LOGIN_URL_FIELD</td>
-	<td>//input[contains(@id,'open-sso-login-url')]</td>
+	<td>//input[contains(@name,'opensso--loginURL')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_OPEN_SSO_LOGOUT_URL_HEADER</td>
-	<td>//label[contains(@for,'open-sso-logout-url')]</td>
+	<td>//label[contains(@for,'logoutU')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_OPEN_SSO_LOGOUT_URL_FIELD</td>
-	<td>//input[contains(@id,'open-sso-logout-url')]</td>
+	<td>//input[contains(@name,'opensso--logoutURL')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_OPEN_SSO_SERVICE_URL_HEADER</td>
-	<td>//label[contains(@for,'open-sso-service-url')]</td>
+	<td>//label[contains(@for,'serviceU')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_OPEN_SSO_SERVICE_URL_FIELD</td>
-	<td>//input[contains(@id,'open-sso-service-url')]</td>
+	<td>//input[contains(@name,'opensso--serviceURL')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_OPEN_SSO_SCREEN_NAME_ATTRIBUTE_HEADER</td>
-	<td>//label[contains(@for,'open-sso-screen-name-attr')]</td>
+	<td>//label[contains(@for,'screenNameAt')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_OPEN_SSO_SCREEN_NAME_ATTRIBUTE_FIELD</td>
-	<td>//input[contains(@id,'open-sso-screen-name-attr')]</td>
+	<td>//input[contains(@name,'opensso--screenNameAttr')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_OPEN_SSO_EMAIL_ADDRESS_ATTRIBUTE_HEADER</td>
-	<td>//label[contains(@for,'open-sso-email-address-attr')]</td>
+	<td>//label[contains(@for,'emailAddressAt')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_OPEN_SSO_EMAIL_ADDRESS_ATTRIBUTE_FIELD</td>
-	<td>//input[contains(@id,'open-sso-email-address-attr')]</td>
+	<td>//input[contains(@name,'opensso--emailAddressAttr')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_OPEN_SSO_FIRST_NAME_ATTRIBUTE_HEADER</td>
-	<td>//label[contains(@for,'open-sso-first-name-attr')]</td>
+	<td>//label[contains(@for,'firstNameAt')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_OPEN_SSO_FIRST_NAME_ATTRIBUTE_FIELD</td>
-	<td>//input[contains(@id,'open-sso-first-name-attr')]</td>
+	<td>//input[contains(@name,'opensso--firstNameAttr')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_OPEN_SSO_LAST_NAME_ATTRIBUTE_HEADER</td>
-	<td>//label[contains(@for,'open-sso-last-name-attr')]</td>
+	<td>//label[contains(@for,'lastNameAt')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>AUTHENTICATION_OPEN_SSO_LAST_NAME_ATTRIBUTE_FIELD</td>
-	<td>//input[contains(@id,'open-sso-last-name-attr')]</td>
+	<td>//input[contains(@name,'opensso--lastNameAttr')]</td>
 	<td></td>
 </tr>
 <tr>

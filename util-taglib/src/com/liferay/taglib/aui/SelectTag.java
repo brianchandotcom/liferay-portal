@@ -16,15 +16,12 @@ package com.liferay.taglib.aui;
 
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.servlet.taglib.aui.ValidatorTag;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.aui.base.BaseSelectTag;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -37,39 +34,47 @@ import javax.servlet.jsp.JspException;
  */
 public class SelectTag extends BaseSelectTag {
 
+	/**
+	 * @deprecated As of 7.0.1, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public int doEndTag() throws JspException {
-		updateFormValidators();
-
 		return super.doEndTag();
 	}
 
 	@Override
 	public int doStartTag() throws JspException {
-		addRequiredValidatorTag();
+		if (getRequired()) {
+			addRequiredValidatorTag();
+		}
 
 		return super.doStartTag();
 	}
 
-	protected void addRequiredValidatorTag() {
-		if (!getRequired()) {
-			return;
-		}
-
-		ValidatorTag validatorTag = new ValidatorTagImpl(
-			"required", null, null, false);
-
-		addValidatorTag("required", validatorTag);
+	/**
+	 * @deprecated As of 7.0.1, with no direct replacement
+	 */
+	@Deprecated
+	@Override
+	public void addRequiredValidatorTag() {
+		super.addRequiredValidatorTag();
 	}
 
-	protected void addValidatorTag(
+	/**
+	 * @deprecated As of 7.0.1, with no direct replacement
+	 */
+	@Deprecated
+	@Override
+	public void addValidatorTag(
 		String validatorName, ValidatorTag validatorTag) {
 
-		if (_validators == null) {
-			_validators = new HashMap<>();
-		}
+		super.addValidatorTag(validatorName, validatorTag);
+	}
 
-		_validators.put(validatorName, validatorTag);
+	@Override
+	public String getInputName() {
+		return getName();
 	}
 
 	@Override
@@ -140,30 +145,31 @@ public class SelectTag extends BaseSelectTag {
 		setNamespacedAttribute(request, "listTypeFieldName", listTypeFieldName);
 		setNamespacedAttribute(request, "title", String.valueOf(title));
 		setNamespacedAttribute(request, "value", value);
+
+		Map<String, ValidatorTag> validatorTags = getValidatorTags();
+
+		if ((validatorTags != null) &&
+			(validatorTags.get("required") != null)) {
+
+			setNamespacedAttribute(
+				request, "required", Boolean.TRUE.toString());
+		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.1, with no direct replacement
+	 */
+	@Deprecated
 	protected void updateFormValidators() {
-		if (_validators == null) {
-			return;
-		}
-
-		HttpServletRequest request =
-			(HttpServletRequest)pageContext.getRequest();
-
-		Map<String, List<ValidatorTag>> validatorTagsMap =
-			(Map<String, List<ValidatorTag>>)request.getAttribute(
-				"aui:form:validatorTagsMap");
-
-		if (validatorTagsMap != null) {
-			List<ValidatorTag> validatorTags = ListUtil.fromMapValues(
-				_validators);
-
-			validatorTagsMap.put(getName(), validatorTags);
-		}
+		super.updateFormValidatorTags();
 	}
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;
 
-	private Map<String, ValidatorTag> _validators;
+	/**
+	 * @deprecated As of 7.0.1, with no direct replacement
+	 */
+	@Deprecated
+	private final Map<String, ValidatorTag> _validators = null;
 
 }

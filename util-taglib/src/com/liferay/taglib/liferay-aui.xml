@@ -1325,7 +1325,7 @@
 			</attribute>
 		</attributes>
 	</component>
-	<component bodyContent="true" name="Select">
+	<component bodyContent="true" name="Select" parentClass="com.liferay.taglib.BaseValidatorTagSupport">
 		<description>Creates a select field (or combo box) for holding <![CDATA[<code>&lt;aui:option&gt;</code>]]> components.</description>
 		<attributes>
 			<attribute>

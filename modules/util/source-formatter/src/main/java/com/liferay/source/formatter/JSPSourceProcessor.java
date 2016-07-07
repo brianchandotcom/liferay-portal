@@ -1905,6 +1905,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 	private void _populateTagJavaClasses() throws Exception {
 		List<String> tldFileNames = getFileNames(
+			sourceFormatterArgs.getBaseDirName(), null,
 			new String[] {"**/dependencies/**", "**/util-taglib/**"},
 			new String[] {"**/*.tld"});
 

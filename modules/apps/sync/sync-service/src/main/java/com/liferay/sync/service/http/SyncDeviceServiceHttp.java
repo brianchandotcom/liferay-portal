@@ -56,7 +56,7 @@ import com.liferay.sync.service.SyncDeviceServiceUtil;
 @ProviderType
 public class SyncDeviceServiceHttp {
 	public static com.liferay.sync.model.SyncDevice registerSyncDevice(
-		HttpPrincipal httpPrincipal, java.lang.String type, int buildNumber,
+		HttpPrincipal httpPrincipal, java.lang.String type, long buildNumber,
 		int featureSet, java.lang.String uuid)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -117,7 +117,8 @@ public class SyncDeviceServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(SyncDeviceServiceHttp.class);
 	private static final Class<?>[] _registerSyncDeviceParameterTypes0 = new Class[] {
-			java.lang.String.class, int.class, int.class, java.lang.String.class
+			java.lang.String.class, long.class, int.class,
+			java.lang.String.class
 		};
 	private static final Class<?>[] _unregisterSyncDeviceParameterTypes1 = new Class[] {
 			java.lang.String.class

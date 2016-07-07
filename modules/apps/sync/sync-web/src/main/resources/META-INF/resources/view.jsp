@@ -42,10 +42,18 @@ portletURL.setParameter("tabs1", tabs1);
 		%>
 
 		<aui:nav-item href="<%= sitesURL.toString() %>" label="sites" selected='<%= tabs1.equals("sites") %>' />
+
+		<%
+		PortletURL devicesURL = PortletURLUtil.clone(portletURL, renderResponse);
+
+		devicesURL.setParameter("tabs1", "devices");
+		%>
+
+		<aui:nav-item href="<%= devicesURL.toString() %>" label="devices" selected='<%= tabs1.equals("devices") %>' />
 	</aui:nav>
 
 	<c:choose>
-		<c:when test='<%= tabs1.equals("sites") %>'>
+		<c:when test='<%= !tabs1.equals("settings") %>'>
 			<aui:form action="<%= portletURL.toString() %>" name="searchFm">
 				<aui:nav-bar-search>
 					<liferay-ui:input-search markupView="lexicon" />
@@ -59,7 +67,10 @@ portletURL.setParameter("tabs1", tabs1);
 	<c:when test='<%= tabs1.equals("settings") %>'>
 		<liferay-util:include page="/settings.jsp" servletContext="<%= application %>" />
 	</c:when>
-	<c:otherwise>
+	<c:when test='<%= tabs1.equals("sites") %>'>
 		<liferay-util:include page="/sites.jsp" servletContext="<%= application %>" />
+	</c:when>
+	<c:otherwise>
+		<liferay-util:include page="/devices.jsp" servletContext="<%= application %>" />
 	</c:otherwise>
 </c:choose>

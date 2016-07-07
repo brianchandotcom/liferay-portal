@@ -97,7 +97,8 @@ public interface SyncDeviceLocalService extends BaseLocalService,
 	public SyncDevice addSyncDevice(SyncDevice syncDevice);
 
 	public SyncDevice addSyncDevice(long userId, java.lang.String type,
-		int buildNumber, int featureSet) throws PortalException;
+		long buildNumber, java.lang.String host, int featureSet)
+		throws PortalException;
 
 	/**
 	* Creates a new sync device with the primary key. Does not add the sync device to the database.
@@ -174,8 +175,8 @@ public interface SyncDeviceLocalService extends BaseLocalService,
 	public SyncDevice updateSyncDevice(SyncDevice syncDevice);
 
 	public SyncDevice updateSyncDevice(long syncDeviceId,
-		java.lang.String type, int buildNumber, int featureSet, int status)
-		throws PortalException;
+		java.lang.String type, long buildNumber, int featureSet,
+		java.lang.String host, int status) throws PortalException;
 
 	/**
 	* Returns the number of sync devices.
@@ -244,6 +245,10 @@ public interface SyncDeviceLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SyncDevice> getSyncDevices(int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<SyncDevice> getSyncDevices(long userId, int start, int end,
+		OrderByComparator orderByComparator) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SyncDevice> search(long companyId, java.lang.String keywords,

@@ -441,6 +441,161 @@ public class SyncDeviceUtil {
 	}
 
 	/**
+	* Returns all the sync devices where userId = &#63;.
+	*
+	* @param userId the user ID
+	* @return the matching sync devices
+	*/
+	public static List<SyncDevice> findByUserId(long userId) {
+		return getPersistence().findByUserId(userId);
+	}
+
+	/**
+	* Returns a range of all the sync devices where userId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SyncDeviceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param userId the user ID
+	* @param start the lower bound of the range of sync devices
+	* @param end the upper bound of the range of sync devices (not inclusive)
+	* @return the range of matching sync devices
+	*/
+	public static List<SyncDevice> findByUserId(long userId, int start, int end) {
+		return getPersistence().findByUserId(userId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the sync devices where userId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SyncDeviceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param userId the user ID
+	* @param start the lower bound of the range of sync devices
+	* @param end the upper bound of the range of sync devices (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching sync devices
+	*/
+	public static List<SyncDevice> findByUserId(long userId, int start,
+		int end, OrderByComparator<SyncDevice> orderByComparator) {
+		return getPersistence()
+				   .findByUserId(userId, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the sync devices where userId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SyncDeviceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param userId the user ID
+	* @param start the lower bound of the range of sync devices
+	* @param end the upper bound of the range of sync devices (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching sync devices
+	*/
+	public static List<SyncDevice> findByUserId(long userId, int start,
+		int end, OrderByComparator<SyncDevice> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByUserId(userId, start, end, orderByComparator,
+			retrieveFromCache);
+	}
+
+	/**
+	* Returns the first sync device in the ordered set where userId = &#63;.
+	*
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching sync device
+	* @throws NoSuchDeviceException if a matching sync device could not be found
+	*/
+	public static SyncDevice findByUserId_First(long userId,
+		OrderByComparator<SyncDevice> orderByComparator)
+		throws com.liferay.sync.exception.NoSuchDeviceException {
+		return getPersistence().findByUserId_First(userId, orderByComparator);
+	}
+
+	/**
+	* Returns the first sync device in the ordered set where userId = &#63;.
+	*
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching sync device, or <code>null</code> if a matching sync device could not be found
+	*/
+	public static SyncDevice fetchByUserId_First(long userId,
+		OrderByComparator<SyncDevice> orderByComparator) {
+		return getPersistence().fetchByUserId_First(userId, orderByComparator);
+	}
+
+	/**
+	* Returns the last sync device in the ordered set where userId = &#63;.
+	*
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching sync device
+	* @throws NoSuchDeviceException if a matching sync device could not be found
+	*/
+	public static SyncDevice findByUserId_Last(long userId,
+		OrderByComparator<SyncDevice> orderByComparator)
+		throws com.liferay.sync.exception.NoSuchDeviceException {
+		return getPersistence().findByUserId_Last(userId, orderByComparator);
+	}
+
+	/**
+	* Returns the last sync device in the ordered set where userId = &#63;.
+	*
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching sync device, or <code>null</code> if a matching sync device could not be found
+	*/
+	public static SyncDevice fetchByUserId_Last(long userId,
+		OrderByComparator<SyncDevice> orderByComparator) {
+		return getPersistence().fetchByUserId_Last(userId, orderByComparator);
+	}
+
+	/**
+	* Returns the sync devices before and after the current sync device in the ordered set where userId = &#63;.
+	*
+	* @param syncDeviceId the primary key of the current sync device
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next sync device
+	* @throws NoSuchDeviceException if a sync device with the primary key could not be found
+	*/
+	public static SyncDevice[] findByUserId_PrevAndNext(long syncDeviceId,
+		long userId, OrderByComparator<SyncDevice> orderByComparator)
+		throws com.liferay.sync.exception.NoSuchDeviceException {
+		return getPersistence()
+				   .findByUserId_PrevAndNext(syncDeviceId, userId,
+			orderByComparator);
+	}
+
+	/**
+	* Removes all the sync devices where userId = &#63; from the database.
+	*
+	* @param userId the user ID
+	*/
+	public static void removeByUserId(long userId) {
+		getPersistence().removeByUserId(userId);
+	}
+
+	/**
+	* Returns the number of sync devices where userId = &#63;.
+	*
+	* @param userId the user ID
+	* @return the number of matching sync devices
+	*/
+	public static int countByUserId(long userId) {
+		return getPersistence().countByUserId(userId);
+	}
+
+	/**
 	* Returns all the sync devices where companyId = &#63; and userName LIKE &#63;.
 	*
 	* @param companyId the company ID

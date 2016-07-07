@@ -128,6 +128,12 @@ gradle.beforeProject {
 		}
 
 		if (System.getenv("JENKINS_HOME")) {
+			pluginManager.withPlugin("com.liferay.theme.plugin") {
+				npmInstall {
+					nodeModulesCacheDir = new File(System.properties["user.home"], ".liferay/node-modules-cache")
+				}
+			}
+
 			tasks.withType(DownloadNodeTask) {
 				doFirst {
 					if (plugins.hasPlugin("com.liferay.cache")) {

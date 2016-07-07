@@ -23,49 +23,49 @@ import java.util.List;
  */
 public class MenuItemGroup {
 
-	public MenuItemGroup(List<AddMenuItem> addMenuItems) {
-		_addMenuItems = addMenuItems;
+	public MenuItemGroup(List<MenuItem> menuItems) {
+		_menuItems = menuItems;
 
 		_label = StringPool.BLANK;
 		_showDivider = false;
 	}
 
-	public MenuItemGroup(String label, List<AddMenuItem> addMenuItems) {
-		_label = label;
-		_addMenuItems = addMenuItems;
-
-		_showDivider = false;
-	}
-
-	public MenuItemGroup(List<AddMenuItem> addMenuItems, boolean showDivider) {
-		_addMenuItems = addMenuItems;
+	public MenuItemGroup(List<MenuItem> menuItems, boolean showDivider) {
+		_menuItems = menuItems;
 		_showDivider = showDivider;
 
 		_label = StringPool.BLANK;
+	}
+
+	public MenuItemGroup(String label, List<MenuItem> menuItems) {
+		_label = label;
+		_menuItems = menuItems;
+
+		_showDivider = false;
 	}
 
 	public MenuItemGroup(
-		String label, List<AddMenuItem> addMenuItems, boolean showDivider) {
+		String label, List<MenuItem> menuItems, boolean showDivider) {
 
 		_label = label;
-		_addMenuItems = addMenuItems;
+		_menuItems = menuItems;
 		_showDivider = showDivider;
-	}
-
-	public List<AddMenuItem> getAddMenuItems() {
-		return _addMenuItems;
 	}
 
 	public String getLabel() {
 		return _label;
 	}
 
+	public List<MenuItem> getMenuItems() {
+		return _menuItems;
+	}
+
 	public boolean isShowDivider() {
 		return _showDivider;
 	}
 
-	private final List<AddMenuItem> _addMenuItems;
 	private final String _label;
+	private final List<MenuItem> _menuItems;
 	private final boolean _showDivider;
 
 }

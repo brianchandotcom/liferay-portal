@@ -17,36 +17,36 @@
 <%@ include file="/add_menu/init.jsp" %>
 
 <%
-int addMenuItemsCount = GetterUtil.getInteger(request.getAttribute("liferay-frontend:add-menu:addMenuItemsCount"));
+int menuItemsCount = GetterUtil.getInteger(request.getAttribute("liferay-frontend:add-menu:menuItemsCount"));
 int maxItems = GetterUtil.getInteger(request.getAttribute("liferay-frontend:add-menu:maxItems"));
-List<MenuItemGroup> menuItems = (List<MenuItemGroup>)request.getAttribute("liferay-frontend:add-menu:menuItems");
+List<MenuItemGroup> menuItemGroups = (List<MenuItemGroup>)request.getAttribute("liferay-frontend:add-menu:menuItemGroups");
 String viewMoreUrl = (String)request.getAttribute("liferay-frontend:add-menu:viewMoreUrl");
 %>
 
 <c:choose>
-	<c:when test="<%= addMenuItemsCount == 1 %>">
+	<c:when test="<%= menuItemsCount == 1 %>">
 
 		<%
-		MenuItemGroup menuItem = menuItems.get(0);
+		MenuItemGroup menuItemGroup = menuItemGroups.get(0);
 
-		List<AddMenuItem> addMenuItems = menuItem.getAddMenuItems();
+		List<MenuItem> menuItems = menuItemGroup.getMenuItems();
 
-		AddMenuItem addMenuItem = addMenuItems.get(0);
+		MenuItem menuItem = menuItems.get(0);
 
-		String id = addMenuItem.getId();
+		String id = menuItem.getId();
 
 		if (Validator.isNull(id)) {
 			id = "menuItem";
 		}
 
-		String title = addMenuItem.getLabel();
+		String title = menuItem.getLabel();
 
 		if (Validator.isNull(title)) {
 			title = LanguageUtil.get(request, "new-item");
 		}
 		%>
 
-		<a <%= AUIUtil.buildData(addMenuItem.getAnchorData()) %> class="btn btn-action btn-bottom-right btn-primary" data-placement="left" data-qa-id="addButton" data-toggle="tooltip" href="<%= HtmlUtil.escapeAttribute(addMenuItem.getUrl()) %>" id="<%= namespace + id %>" title="<%= title %>">
+		<a <%= AUIUtil.buildData(menuItem.getAnchorData()) %> class="btn btn-action btn-bottom-right btn-primary" data-placement="left" data-qa-id="addButton" data-toggle="tooltip" href="<%= HtmlUtil.escapeAttribute(menuItem.getUrl()) %>" id="<%= namespace + id %>" title="<%= title %>">
 			<aui:icon image="plus" markupView="lexicon" />
 		</a>
 
@@ -70,7 +70,7 @@ String viewMoreUrl = (String)request.getAttribute("liferay-frontend:add-menu:vie
 				boolean customizeAddMenuAdviceMessage = GetterUtil.getBoolean(SessionClicks.get(request, "com.liferay.addmenu_customizeAddMenuAdviceMessage", null));
 				%>
 
-				<c:if test="<%= !customizeAddMenuAdviceMessage && Validator.isNotNull(viewMoreUrl) && (addMenuItemsCount > maxItems) %>">
+				<c:if test="<%= !customizeAddMenuAdviceMessage && Validator.isNotNull(viewMoreUrl) && (menuItemsCount > maxItems) %>">
 					<li class="active add-menu-advice">
 						<a href="javascript:;"><liferay-ui:message key="you-can-customize-this-menu-or-see-all-you-have-by-pressing-more" /></a>
 					</li>
@@ -79,11 +79,11 @@ String viewMoreUrl = (String)request.getAttribute("liferay-frontend:add-menu:vie
 				<%
 				int index = 0;
 
-				for (MenuItemGroup menuItemGroup : menuItems) {
-					List<AddMenuItem> addMenuItems = menuItemGroup.getAddMenuItems();
+				for (MenuItemGroup menuItemGroup : menuItemGroups) {
+					List<MenuItem> menuItems = menuItemGroup.getMenuItems();
 				%>
 
-					<c:if test="<%= !addMenuItems.isEmpty() %>">
+					<c:if test="<%= !menuItems.isEmpty() %>">
 						<c:if test="<%= Validator.isNotNull(menuItemGroup.getLabel()) %>">
 							<li class="dropdown-header">
 								<liferay-ui:message key="<%= menuItemGroup.getLabel() %>" />
@@ -91,8 +91,8 @@ String viewMoreUrl = (String)request.getAttribute("liferay-frontend:add-menu:vie
 						</c:if>
 
 						<%
-						for (AddMenuItem addMenuItem : addMenuItems) {
-							String id = addMenuItem.getId();
+						for (MenuItem menuItem : menuItems) {
+							String id = menuItem.getId();
 
 							if (Validator.isNull(id)) {
 								id = "menuItem" + index;
@@ -100,7 +100,7 @@ String viewMoreUrl = (String)request.getAttribute("liferay-frontend:add-menu:vie
 						%>
 
 							<li>
-								<a <%= AUIUtil.buildData(addMenuItem.getAnchorData()) %> href="<%= HtmlUtil.escapeAttribute(addMenuItem.getUrl()) %>" id="<%= namespace + id %>"><%= HtmlUtil.escape(addMenuItem.getLabel()) %></a>
+								<a <%= AUIUtil.buildData(menuItem.getAnchorData()) %> href="<%= HtmlUtil.escapeAttribute(menuItem.getUrl()) %>" id="<%= namespace + id %>"><%= HtmlUtil.escape(menuItem.getLabel()) %></a>
 							</li>
 
 						<%
@@ -124,9 +124,9 @@ String viewMoreUrl = (String)request.getAttribute("liferay-frontend:add-menu:vie
 				}
 				%>
 
-				<c:if test="<%= addMenuItemsCount > maxItems %>">
+				<c:if test="<%= menuItemsCount > maxItems %>">
 					<li class="dropdown-header">
-						<liferay-ui:message arguments="<%= new Object[] {maxItems, addMenuItemsCount} %>" key="showing-x-of-x-items" />
+						<liferay-ui:message arguments="<%= new Object[] {maxItems, menuItemsCount} %>" key="showing-x-of-x-items" />
 					</li>
 
 					<c:if test="<%= Validator.isNotNull(viewMoreUrl) %>">

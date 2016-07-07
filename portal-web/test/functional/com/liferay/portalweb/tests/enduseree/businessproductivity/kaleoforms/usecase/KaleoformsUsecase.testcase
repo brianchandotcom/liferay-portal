@@ -1585,7 +1585,7 @@
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
 		</execute>
 
-		<execute macro="WorkflowComment#viewCommentsNotPresent">
+		<execute macro="WorkflowComment#viewCommentsNotPresent" />
 
 		<execute macro="WorkflowComment#add">
 			<var name="workflowComment" value="Comment One" />
@@ -1636,7 +1636,7 @@
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
 		</execute>
 
-		<execute macro="WorkflowComment#viewCommentsNotPresent">
+		<execute macro="WorkflowComment#viewCommentsNotPresent" />
 
 		<execute macro="WorkflowComment#add">
 			<var name="workflowComment" value="Comment Two" />

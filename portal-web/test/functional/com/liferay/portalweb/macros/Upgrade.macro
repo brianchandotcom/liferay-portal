@@ -360,6 +360,38 @@
 		</execute>
 	</command>
 
+	<command name="viewPolls">
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Polls" />
+		</execute>
+
+		<execute function="AssertElementNotPresent" locator1="Message#INFO" value1="Please configure this portlet to make it visible to all users" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Polls" />
+		</execute>
+
+		<execute macro="Polls#viewPollPG">
+			<var name="pollsQuestion" value="Sample Polls Question" />
+			<var name="pollsQuestionChoiceList" value="Yes,No" />
+		</execute>
+
+		<execute macro="Polls#votePollPG">
+			<var name="pollsQuestionChoice" value="Yes" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Polls" />
+		</execute>
+
+		<execute macro="Polls#viewVotedPollPG">
+			<var name="pollsQuestionChoice" value="Yes" />
+			<var name="pollsQuestionTotalVotes" value="1" />
+			<var name="pollsQuestionVoteCount" value="1" />
+			<var name="pollsQuestionVotePercent" value="100%" />
+		</execute>
+	</command>
+
 	<command name="viewUpgrade">
 		<execute macro="SignIn#signIn" />
 

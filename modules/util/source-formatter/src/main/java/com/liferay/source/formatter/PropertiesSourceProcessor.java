@@ -47,6 +47,12 @@ import org.apache.commons.io.IOUtils;
  */
 public class PropertiesSourceProcessor extends BaseSourceProcessor {
 
+	public static final String AUTOMATIC_COPY =
+		com.liferay.portal.tools.LangBuilder.AUTOMATIC_COPY;
+
+	public static final String AUTOMATIC_TRANSLATION =
+		com.liferay.portal.tools.LangBuilder.AUTOMATIC_TRANSLATION;
+
 	@Override
 	public String[] getIncludes() {
 		if (portalSource) {
@@ -127,8 +133,9 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 
 				String value = getTranslatedKey(content, key);
 
-				if (!value.endsWith(" (Automatic Copy)") &&
-					!value.endsWith(" (Automatic Translation)")) {
+				if (Validator.isNotNull(value) &&
+					!value.endsWith(AUTOMATIC_COPY) &&
+					!value.endsWith(AUTOMATIC_TRANSLATION)) {
 
 					translationMap.put(key, value);
 				}

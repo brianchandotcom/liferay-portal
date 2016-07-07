@@ -17,6 +17,7 @@ Import-Package:\
 	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portal/tools/ImportPackage.class,\
 	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portal/tools/ImportsFormatter.class,\
 	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portal/tools/JavaImportsFormatter.class,\
+	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portal/tools/LangBuilder.class,\
 	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portal/tools/ToolsUtil.class,\
 	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portal/util/EntityResolver.class,\
 	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portal/xml/SAXReaderFactory.class,\

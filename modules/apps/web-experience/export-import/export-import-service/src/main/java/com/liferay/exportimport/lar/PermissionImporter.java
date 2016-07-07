@@ -14,10 +14,10 @@
 
 package com.liferay.exportimport.lar;
 
+import com.liferay.exportimport.internal.util.ExportImportPermissionUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
-import com.liferay.exportimport.util.ExportImportPermissionUtil;
 import com.liferay.portal.kernel.exception.NoSuchTeamException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;

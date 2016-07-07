@@ -29,7 +29,7 @@ page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.util.LayoutDescription" %><%@
-page import="com.liferay.site.navigation.menu.web.display.context.SiteNavigationMenuDisplayContext" %>
+page import="com.liferay.site.navigation.menu.web.internal.display.context.SiteNavigationMenuDisplayContext" %>
 
 <%@ page import="java.util.Objects" %>
 

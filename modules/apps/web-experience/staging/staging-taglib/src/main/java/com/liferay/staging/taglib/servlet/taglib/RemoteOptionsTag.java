@@ -14,7 +14,7 @@
 
 package com.liferay.staging.taglib.servlet.taglib;
 
-import com.liferay.staging.taglib.servlet.ServletContextUtil;
+import com.liferay.staging.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;

@@ -27,7 +27,7 @@ page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.xsl.content.web.configuration.XSLContentConfiguration" %><%@
 page import="com.liferay.xsl.content.web.configuration.XSLContentPortletInstanceConfiguration" %><%@
-page import="com.liferay.xsl.content.web.display.context.XSLContentDisplayContext" %>
+page import="com.liferay.xsl.content.web.internal.display.context.XSLContentDisplayContext" %>
 
 <liferay-theme:defineObjects />
 

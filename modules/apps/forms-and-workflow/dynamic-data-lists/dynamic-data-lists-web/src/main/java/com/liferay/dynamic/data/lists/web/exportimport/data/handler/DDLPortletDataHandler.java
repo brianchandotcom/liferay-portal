@@ -12,27 +12,24 @@
  * details.
  */
 
-package com.liferay.dynamic.data.lists.form.web.lar;
+package com.liferay.dynamic.data.lists.web.exportimport.data.handler;
 
-import com.liferay.dynamic.data.lists.exportimport.staged.model.repository.DDLRecordSetStagedModelRepository;
-import com.liferay.dynamic.data.lists.exportimport.staged.model.repository.DDLRecordStagedModelRepository;
-import com.liferay.dynamic.data.lists.form.web.constants.DDLFormPortletKeys;
+import com.liferay.dynamic.data.lists.constants.DDLPortletKeys;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
-import com.liferay.dynamic.data.lists.model.DDLRecordSetConstants;
 import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.dynamic.data.lists.service.permission.DDLPermission;
-import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerBoolean;
-import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -40,6 +37,7 @@ import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.xml.Element;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.portlet.PortletPreferences;
 
@@ -48,15 +46,15 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Leonardo Barros
+ * @author Michael C. Han
  */
 @Component(
-	property = {"javax.portlet.name=" + DDLFormPortletKeys.DYNAMIC_DATA_LISTS_FORM_ADMIN},
+	property = {"javax.portlet.name=" + DDLPortletKeys.DYNAMIC_DATA_LISTS},
 	service = PortletDataHandler.class
 )
-public class DDLFormAdminPortletDataHandler extends BasePortletDataHandler {
+public class DDLPortletDataHandler extends BasePortletDataHandler {
 
-	public static final String NAMESPACE = "forms";
+	public static final String NAMESPACE = "dynamic_data_lists";
 
 	public static final String SCHEMA_VERSION = "1.0.0";
 
@@ -71,21 +69,12 @@ public class DDLFormAdminPortletDataHandler extends BasePortletDataHandler {
 		setDeletionSystemEventStagedModelTypes(
 			new StagedModelType(DDLRecord.class),
 			new StagedModelType(DDLRecordSet.class));
-
-		PortletDataHandlerControl[] formsPortletDataHandlerControlChildren =
-			new PortletDataHandlerControl[] {
-				new PortletDataHandlerBoolean(
-					NAMESPACE, "ddm-data-provider", true, false, null,
-					DDMDataProviderInstance.class.getName())
-			};
-
 		setExportControls(
 			new PortletDataHandlerBoolean(
-				NAMESPACE, "forms", true, false,
-				formsPortletDataHandlerControlChildren,
+				NAMESPACE, "record-sets", true, false, null,
 				DDLRecordSet.class.getName()),
 			new PortletDataHandlerBoolean(
-				NAMESPACE, "form-entries", true, false, null,
+				NAMESPACE, "records", true, false, null,
 				DDLRecord.class.getName()));
 	}
 
@@ -100,11 +89,16 @@ public class DDLFormAdminPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	@Deprecated
+	protected void deleteDDMStructures(Set<Long> ddmStructureIds)
+		throws PortalException {
+	}
+
+	@Deprecated
 	protected void deleteRecordSets(PortletDataContext portletDataContext)
 		throws PortalException {
 
 		_ddlRecordSetStagedModelRepository.deleteStagedModels(
-			portletDataContext, DDLRecordSetConstants.SCOPE_FORMS);
+			portletDataContext);
 	}
 
 	@Override
@@ -114,13 +108,13 @@ public class DDLFormAdminPortletDataHandler extends BasePortletDataHandler {
 		throws Exception {
 
 		if (portletDataContext.addPrimaryKey(
-				DDLFormAdminPortletDataHandler.class, "deleteData")) {
+				DDLPortletDataHandler.class, "deleteData")) {
 
 			return portletPreferences;
 		}
 
 		_ddlRecordSetStagedModelRepository.deleteStagedModels(
-			portletDataContext, DDLRecordSetConstants.SCOPE_FORMS);
+			portletDataContext);
 
 		return portletPreferences;
 	}
@@ -135,19 +129,18 @@ public class DDLFormAdminPortletDataHandler extends BasePortletDataHandler {
 
 		Element rootElement = addExportDataRootElement(portletDataContext);
 
-		if (portletDataContext.getBooleanParameter(NAMESPACE, "forms")) {
+		if (portletDataContext.getBooleanParameter(NAMESPACE, "record-sets")) {
 			ActionableDynamicQuery recordSetActionableDynamicQuery =
 				_ddlRecordSetStagedModelRepository.
-					getExportActionableDynamicQuery(
-						portletDataContext, DDLRecordSetConstants.SCOPE_FORMS);
+					getExportActionableDynamicQuery(portletDataContext);
 
 			recordSetActionableDynamicQuery.performActions();
 		}
 
-		if (portletDataContext.getBooleanParameter(NAMESPACE, "form-entries")) {
+		if (portletDataContext.getBooleanParameter(NAMESPACE, "records")) {
 			ActionableDynamicQuery recordActionableDynamicQuery =
 				_ddlRecordStagedModelRepository.getExportActionableDynamicQuery(
-					portletDataContext, DDLRecordSetConstants.SCOPE_FORMS);
+					portletDataContext);
 
 			recordActionableDynamicQuery.performActions();
 		}
@@ -164,7 +157,7 @@ public class DDLFormAdminPortletDataHandler extends BasePortletDataHandler {
 		portletDataContext.importPortletPermissions(
 			DDLPermission.RESOURCE_NAME);
 
-		if (portletDataContext.getBooleanParameter(NAMESPACE, "forms")) {
+		if (portletDataContext.getBooleanParameter(NAMESPACE, "record-sets")) {
 			Element recordSetsElement =
 				portletDataContext.getImportDataGroupElement(
 					DDLRecordSet.class);
@@ -188,22 +181,18 @@ public class DDLFormAdminPortletDataHandler extends BasePortletDataHandler {
 					portletDataContext, ddmStructureElement);
 			}
 
-			Element ddmDataProviderInstancesElement =
-				portletDataContext.getImportDataGroupElement(
-					DDMDataProviderInstance.class);
+			Element ddmTemplatesElement =
+				portletDataContext.getImportDataGroupElement(DDMTemplate.class);
 
-			List<Element> ddmDataProviderInstanceElements =
-				ddmDataProviderInstancesElement.elements();
+			List<Element> ddmTemplateElements = ddmTemplatesElement.elements();
 
-			for (Element ddmDataProviderInstanceElement :
-					ddmDataProviderInstanceElements) {
-
+			for (Element ddmTemplateElement : ddmTemplateElements) {
 				StagedModelDataHandlerUtil.importStagedModel(
-					portletDataContext, ddmDataProviderInstanceElement);
+					portletDataContext, ddmTemplateElement);
 			}
 		}
 
-		if (portletDataContext.getBooleanParameter(NAMESPACE, "form-entries")) {
+		if (portletDataContext.getBooleanParameter(NAMESPACE, "records")) {
 			Element recordsElement =
 				portletDataContext.getImportDataGroupElement(DDLRecord.class);
 
@@ -226,13 +215,13 @@ public class DDLFormAdminPortletDataHandler extends BasePortletDataHandler {
 
 		ActionableDynamicQuery recordSetActionableDynamicQuery =
 			_ddlRecordSetStagedModelRepository.getExportActionableDynamicQuery(
-				portletDataContext, DDLRecordSetConstants.SCOPE_FORMS);
+				portletDataContext);
 
 		recordSetActionableDynamicQuery.performCount();
 
 		ActionableDynamicQuery recordActionableDynamicQuery =
 			_ddlRecordStagedModelRepository.getExportActionableDynamicQuery(
-				portletDataContext, DDLRecordSetConstants.SCOPE_FORMS);
+				portletDataContext);
 
 		recordActionableDynamicQuery.performCount();
 	}
@@ -242,7 +231,7 @@ public class DDLFormAdminPortletDataHandler extends BasePortletDataHandler {
 		final PortletDataContext portletDataContext) {
 
 		return _ddlRecordStagedModelRepository.getExportActionableDynamicQuery(
-			portletDataContext, DDLRecordSetConstants.SCOPE_FORMS);
+			portletDataContext);
 	}
 
 	@Deprecated
@@ -250,8 +239,7 @@ public class DDLFormAdminPortletDataHandler extends BasePortletDataHandler {
 		final PortletDataContext portletDataContext) {
 
 		return _ddlRecordSetStagedModelRepository.
-			getExportActionableDynamicQuery(
-				portletDataContext, DDLRecordSetConstants.SCOPE_FORMS);
+			getExportActionableDynamicQuery(portletDataContext);
 	}
 
 	@Deprecated
@@ -269,7 +257,7 @@ public class DDLFormAdminPortletDataHandler extends BasePortletDataHandler {
 		unbind = "-"
 	)
 	protected void setDDLRecordSetStagedModelRepository(
-		DDLRecordSetStagedModelRepository ddlRecordSetStagedModelRepository) {
+		StagedModelRepository<DDLRecordSet> ddlRecordSetStagedModelRepository) {
 
 		_ddlRecordSetStagedModelRepository = ddlRecordSetStagedModelRepository;
 	}
@@ -279,7 +267,7 @@ public class DDLFormAdminPortletDataHandler extends BasePortletDataHandler {
 		unbind = "-"
 	)
 	protected void setDDLRecordStagedModelRepository(
-		DDLRecordStagedModelRepository ddlRecordStagedModelRepository) {
+		StagedModelRepository<DDLRecord> ddlRecordStagedModelRepository) {
 
 		_ddlRecordStagedModelRepository = ddlRecordStagedModelRepository;
 	}
@@ -294,8 +282,8 @@ public class DDLFormAdminPortletDataHandler extends BasePortletDataHandler {
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
-	private DDLRecordSetStagedModelRepository
+	private StagedModelRepository<DDLRecordSet>
 		_ddlRecordSetStagedModelRepository;
-	private DDLRecordStagedModelRepository _ddlRecordStagedModelRepository;
+	private StagedModelRepository<DDLRecord> _ddlRecordStagedModelRepository;
 
 }

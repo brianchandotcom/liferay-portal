@@ -2599,6 +2599,7 @@
 				<execute macro="DynamicDataMapping#addField">
 					<var name="field" value="${field}" />
 					<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+					<var name="fieldName" value="${field}" />
 				</execute>
 			</for>
 		</for>
@@ -4406,6 +4407,7 @@
 		<execute macro="KaleoFormsAdmin#addProcess" />
 
 		<execute macro="KaleoFormsAdmin#addProcessDetails">
+			<var name="kfProcessDescription" value="Kaleo Process Description" />
 			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 
@@ -8805,6 +8807,7 @@
 		<var name="kfProcessFieldData" value="Test" />
 		<var name="kfProcessName" value="Kaleo Forms Process" />
 		<var name="workflowDefinitionTitle" value="Single Approver" />
+		<var name="workflowTaskwAssetType" value="${workflowAssetType}" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -8905,6 +8908,7 @@
 		<execute macro="Workflow#updateDueDateTaskByActions">
 			<var name="workflowActivityComment" value="Updating the due date on a process assigned to my roles." />
 			<var name="workflowAssetTitle" value="${kfProcessName}" />
+			<var name="workflowAssetType" value="${workflowAssetType}"/>
 			<var name="workflowDueDate" value="04/01/2017" />
 			<var name="workflowDueDateTime" value="05:30 PM" />
 			<var name="workflowTask" value="Review" />

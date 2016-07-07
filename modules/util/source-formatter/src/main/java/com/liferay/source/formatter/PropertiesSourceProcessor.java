@@ -33,11 +33,9 @@ import java.net.URL;
 
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -67,17 +65,80 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 		};
 	}
 
-	protected void addDuplicateLanguageKey(String fileName, String line) {
-		Set<String> duplicateLines = _duplicateLanguageKeyLinesMap.get(
-			fileName);
+	protected void addDuplicateLanguageKey(
+		String fileName, String key, String value) {
 
-		if (duplicateLines == null) {
-			duplicateLines = new HashSet<>();
+		if (fileName.endsWith("portal-impl/src/content/Language.properties")) {
+			return;
 		}
 
-		duplicateLines.add(line);
+		Map<String, String> duplicateLanguageKeysMap =
+			_duplicateFileLanguageKeysMap.get(fileName);
 
-		_duplicateLanguageKeyLinesMap.put(fileName, duplicateLines);
+		if (duplicateLanguageKeysMap == null) {
+			duplicateLanguageKeysMap = new HashMap<>();
+		}
+
+		duplicateLanguageKeysMap.put(key, value);
+
+		_duplicateFileLanguageKeysMap.put(fileName, duplicateLanguageKeysMap);
+	}
+
+	protected Map<String, Map<String, String>> addTranslations(
+			String fileName, Map<String, String> duplicateLanguageKeysMap,
+			Map<String, Map<String, String>> languagePropertiesTranslationsMap)
+		throws Exception {
+
+		String dirName = StringUtil.replaceLast(
+			fileName, "Language.properties", StringPool.BLANK);
+		String[] includes = new String[] {"**/Language_*.properties"};
+
+		List<String> translationFileNames = getFileNames(
+			dirName, null, new String[0], includes);
+
+		for (String translationFileName : translationFileNames) {
+			translationFileName = StringUtil.replace(
+				translationFileName, StringPool.BACK_SLASH, StringPool.SLASH);
+
+			File translationFile = new File(translationFileName);
+
+			String content = FileUtil.read(translationFile);
+
+			int pos = translationFileName.lastIndexOf(StringPool.SLASH);
+
+			String shortTranslationFileName = translationFileName.substring(
+				pos + 1);
+
+			Map<String, String> translationMap =
+				languagePropertiesTranslationsMap.get(shortTranslationFileName);
+
+			if (translationMap == null) {
+				translationMap = new HashMap<>();
+			}
+
+			for (Map.Entry<String, String> entry :
+					duplicateLanguageKeysMap.entrySet()) {
+
+				String key = entry.getKey();
+
+				if (translationMap.containsKey(key)) {
+					continue;
+				}
+
+				String value = getTranslatedKey(content, key);
+
+				if (!value.endsWith(" (Automatic Copy)") &&
+					!value.endsWith(" (Automatic Translation)")) {
+
+					translationMap.put(key, value);
+				}
+			}
+
+			languagePropertiesTranslationsMap.put(
+				shortTranslationFileName, translationMap);
+		}
+
+		return languagePropertiesTranslationsMap;
 	}
 
 	protected void checkLanguageProperties(String fileName) throws Exception {
@@ -112,15 +173,8 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 						continue;
 					}
 
-					String line = key + "=" + value1;
-
-					addDuplicateLanguageKey(fileName, line);
-
-					if (!fileName2.endsWith(
-							"portal-impl/src/content/Language.properties")) {
-
-						addDuplicateLanguageKey(fileName2, line);
-					}
+					addDuplicateLanguageKey(fileName, key, value1);
+					addDuplicateLanguageKey(fileName2, key, value1);
 				}
 			}
 		}
@@ -222,70 +276,67 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 			matcher.start());
 	}
 
+	protected String getTranslatedKey(String content, String key) {
+		if (content.startsWith(key + "=")) {
+			int x = content.indexOf("\n");
+
+			if (x == -1) {
+				return content.substring(key.length() + 1);
+			}
+
+			return content.substring(key.length() + 1, x);
+		}
+
+		int x = content.indexOf("\n" + key + "=");
+
+		if (x == -1) {
+			return null;
+		}
+
+		int y = x + key.length() + 2;
+
+		int z = content.indexOf("\n", y);
+
+		if (z == -1) {
+			return content.substring(y);
+		}
+
+		return content.substring(y, z);
+	}
+
 	protected void formatDuplicateLanguageKeys() throws Exception {
-		if (_duplicateLanguageKeyLinesMap.isEmpty()) {
+		if (_duplicateFileLanguageKeysMap.isEmpty()) {
 			return;
 		}
 
-		Set<String> allDuplicateLines = new HashSet<>();
+		Map<String, Map<String, String>> languagePropertiesTranslationsMap =
+			new HashMap<>();
 
-		for (Map.Entry<String, Set<String>> entry :
-				_duplicateLanguageKeyLinesMap.entrySet()) {
+		Map<String, String> allDuplicateLanguageKeysMap = new HashMap<>();
 
-			Set<String> duplicateLines = entry.getValue();
+		for (Map.Entry<String, Map<String, String>> entry :
+				_duplicateFileLanguageKeysMap.entrySet()) {
 
-			removeDuplicateKeys(entry.getKey(), duplicateLines);
+			String fileName = entry.getKey();
+			Map<String, String> duplicateLanguageKeysMap = entry.getValue();
 
-			allDuplicateLines.addAll(duplicateLines);
+			removeDuplicateKeys(fileName, duplicateLanguageKeysMap);
+
+			languagePropertiesTranslationsMap = addTranslations(
+				fileName, duplicateLanguageKeysMap,
+				languagePropertiesTranslationsMap);
+
+			allDuplicateLanguageKeysMap.putAll(duplicateLanguageKeysMap);
 		}
 
-		File coreLanguagePropertiesFile = new File(
-			getFile("portal-impl", PORTAL_MAX_DIR_LEVEL),
-			"src/content/Language.properties");
+		writeLanguageKeysToFile(
+			"Language.properties", allDuplicateLanguageKeysMap, true);
 
-		String coreLanguagePropertiesContent = FileUtil.read(
-			coreLanguagePropertiesFile);
+		for (Map.Entry<String, Map<String, String>> entry :
+				languagePropertiesTranslationsMap.entrySet()) {
 
-		String newCoreLanguagePropertiesContent = coreLanguagePropertiesContent;
-
-		String[][] categoryPrefixAndNameArray = getCategoryPrefixAndNameArray();
-
-		StringBundler sb = new StringBundler(allDuplicateLines.size() + 4);
-
-		sb.append("The following language keys were used in multiple modules ");
-		sb.append("and have been consolidated, or they already existed in ");
-		sb.append("portal-impl\\src\\content\\Language.properties:");
-		sb.append("\n");
-
-		for (String line : allDuplicateLines) {
-			sb.append(line);
-			sb.append("\n");
-
-			String categoryName = getCategoryName(
-				line, categoryPrefixAndNameArray);
-
-			int pos = newCoreLanguagePropertiesContent.indexOf(
-				"## " + categoryName);
-
-			for (int i = 0; i < 3; i++) {
-				pos = newCoreLanguagePropertiesContent.indexOf("\n", pos + 1);
-			}
-
-			if (!newCoreLanguagePropertiesContent.contains(
-					"\n" + line + "\n")) {
-
-				newCoreLanguagePropertiesContent = StringUtil.insert(
-					newCoreLanguagePropertiesContent, line + "\n", pos + 1);
-			}
+			writeLanguageKeysToFile(entry.getKey(), entry.getValue(), false);
 		}
-
-		processMessage(
-			"portal-impl/src/content/Language.properties", sb.toString());
-
-		processFormattedFile(
-			coreLanguagePropertiesFile,
-			"portal-impl/src/content/Language.properties",
-			coreLanguagePropertiesContent, newCoreLanguagePropertiesContent);
 	}
 
 	protected String formatPluginPackageProperties(
@@ -629,7 +680,8 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 		_maxLineLength = sourceFormatterArgs.getMaxLineLength();
 	}
 
-	protected void removeDuplicateKeys(String fileName, Set<String> lines)
+	protected void removeDuplicateKeys(
+			String fileName, Map<String, String> duplicateLanguageKeysMap)
 		throws Exception {
 
 		File file = new File(fileName);
@@ -638,7 +690,11 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 
 		String newContent = content;
 
-		for (String line : lines) {
+		for (Map.Entry<String, String> entry :
+				duplicateLanguageKeysMap.entrySet()) {
+
+			String line = entry.getKey() + "=" + entry.getValue();
+
 			if (newContent.startsWith(line)) {
 				if (newContent.equals(line)) {
 					newContent = StringPool.BLANK;
@@ -657,8 +713,73 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 		processFormattedFile(file, fileName, content, newContent);
 	}
 
-	private final Map<String, Set<String>> _duplicateLanguageKeyLinesMap =
-		new ConcurrentHashMap<>();
+	protected void writeLanguageKeysToFile(
+			String fileName, Map<String, String> languageKeysMap,
+			boolean processMessage)
+		throws Exception {
+
+		File languagePropertiesFile = new File(
+			getFile("portal-impl", PORTAL_MAX_DIR_LEVEL),
+			"src/content/" + fileName);
+
+		if (!languagePropertiesFile.exists()) {
+			return;
+		}
+
+		String languagePropertiesContent = FileUtil.read(
+			languagePropertiesFile);
+
+		String newLanguagePropertiesContent = languagePropertiesContent;
+
+		String[][] categoryPrefixAndNameArray = getCategoryPrefixAndNameArray();
+
+		StringBundler sb = new StringBundler();
+
+		if (processMessage) {
+			sb.append("The following language keys were used in multiple modules ");
+			sb.append("and have been consolidated, or they already existed in ");
+			sb.append("portal-impl\\src\\content\\Language.properties:");
+			sb.append("\n");
+		}
+
+		for (Map.Entry<String, String> entry : languageKeysMap.entrySet()) {
+			String line = entry.getKey() + "=" + entry.getValue();
+
+			if (processMessage) {
+				sb.append(line);
+				sb.append("\n");
+			}
+
+			String categoryName = getCategoryName(
+				line, categoryPrefixAndNameArray);
+
+			int pos = newLanguagePropertiesContent.indexOf(
+				"## " + categoryName);
+
+			for (int i = 0; i < 3; i++) {
+				pos = newLanguagePropertiesContent.indexOf("\n", pos + 1);
+			}
+
+			if (!newLanguagePropertiesContent.contains("\n" + line + "\n")) {
+				newLanguagePropertiesContent = StringUtil.insert(
+					newLanguagePropertiesContent, line + "\n", pos + 1);
+			}
+		}
+
+		if (processMessage) {
+			processMessage(
+				"portal-impl/src/content/" + fileName, sb.toString());
+		}
+
+		processFormattedFile(
+			languagePropertiesFile, "portal-impl/src/content/" + fileName,
+			languagePropertiesContent, newLanguagePropertiesContent);
+
+	}
+
+	private final Map<String, Map<String, String>>
+		_duplicateFileLanguageKeysMap =
+			new ConcurrentHashMap<>();
 	private Map<String, Properties> _languagePropertiesMap;
 	private final Pattern _licensesPattern = Pattern.compile(
 		"\nlicenses=(\\w+)\n");

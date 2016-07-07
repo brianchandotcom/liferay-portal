@@ -57,8 +57,8 @@
 	</tear-down>
 
 	<command name="ApprovePageCommentPG" priority="5">
-		<property name="portal.acceptance" value="false" />
-		<property name="portal.acceptance.quarantine" value="true" />
+		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance.quarantine" value="false" />
 
 		<var name="commentAuthor" value="Test Test (You)" />
 		<var name="commentBody" value="Page Comment Comment" />

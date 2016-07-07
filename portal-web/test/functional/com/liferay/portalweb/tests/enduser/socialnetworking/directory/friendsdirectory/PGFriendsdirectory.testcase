@@ -47,6 +47,8 @@
 	</tear-down>
 
 	<command name="SearchFriendsDirectory" priority="3">
+		<property name="portal.acceptance" value="jason" />
+
 		<var name="pageName" value="${pageName}" />
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />

@@ -17,6 +17,8 @@
 	</tear-down>
 
 	<command name="YouTubePortletSmoke" priority="4">
+		<property name="portal.acceptance" value="jason" />
+
 		<var name="appName" value="YouTube" />
 
 		<execute macro="Navigator#gotoPage">

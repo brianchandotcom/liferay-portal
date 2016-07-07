@@ -33,6 +33,8 @@
 	</tear-down>
 
 	<command name="ViewAmazonRankingsPortlet" priority="2">
+		<property name="portal.acceptance" value="jason" />
+
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Amazon Rankings Page" />
 		</execute>

@@ -370,4 +370,76 @@
 
 		<execute macro="SignIn#signIn" />
 	</command>
+
+	<command name="viewWCStructureAndTemplate">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoManageStructures" />
+
+		<execute function="AssertElementNotPresent" locator1="Message#ERROR" value1="Structures is temporarily unavailable" />
+
+		<execute macro="WebContentStructures#addCP">
+			<var name="structureDescription" value="WC Structure Description" />
+			<var name="structureName" value="WC Structure Name" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Text" />
+			<var name="fieldName" value="Text" />
+		</execute>
+
+		<execute macro="WebContentStructures#saveCP">
+			<var name="structureName" value="WC Structure Name" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentTemplates#addCP">
+			<var name="templateDescription" value="WC Template Description" />
+			<var name="templateFieldNames" value="Text" />
+			<var name="templateName" value="WC Template Name" />
+		</execute>
+
+		<execute macro="WebContentTemplates#addStructure">
+			<var name="structureName" value="WC Structure Name" />
+		</execute>
+
+		<execute macro="PortletEntry#save" />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddWithStructureCP">
+			<var name="structureName" value="WC Structure Name" />
+		</execute>
+
+		<execute macro="WebContent#addWithStructureCP">
+			<var name="structureName" value="WC Structure Name" />
+			<var name="webContentText" value="WC WebContent Text" />
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="PortletEntry#publish" />
+
+		<execute macro="WebContent#viewTitle">
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="WebContent#viewWithStructureCP">
+			<var name="webContentText" value="WC WebContent Text" />
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+	</command>
 </definition>

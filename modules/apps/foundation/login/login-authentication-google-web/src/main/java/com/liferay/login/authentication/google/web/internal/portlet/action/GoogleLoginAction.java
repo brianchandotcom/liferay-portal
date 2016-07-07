@@ -125,12 +125,8 @@ public class GoogleLoginAction extends BaseStrutsAction {
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		PortletURL portletURL = PortletURLFactoryUtil.create(
-			request, PortletKeys.LOGIN, themeDisplay.getPlid(),
-			PortletRequest.RENDER_PHASE);
+			request, PortletKeys.LOGIN, PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter(
 			"mvcRenderCommandName", "/login/login_redirect");
@@ -143,20 +139,15 @@ public class GoogleLoginAction extends BaseStrutsAction {
 			HttpServletRequest request, HttpServletResponse response, User user)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		PortletURL portletURL = PortletURLFactoryUtil.create(
-			request, PortletKeys.LOGIN, themeDisplay.getPlid(),
-			PortletRequest.RENDER_PHASE);
+			request, PortletKeys.LOGIN, PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("saveLastPath", Boolean.FALSE.toString());
 		portletURL.setParameter(
 			"mvcRenderCommandName", "/login/associate_google_user");
 
 		PortletURL redirectURL = PortletURLFactoryUtil.create(
-			request, PortletKeys.LOGIN, themeDisplay.getPlid(),
-			PortletRequest.RENDER_PHASE);
+			request, PortletKeys.LOGIN, PortletRequest.RENDER_PHASE);
 
 		redirectURL.setParameter(
 			"mvcRenderCommandName", "/login/login_redirect");

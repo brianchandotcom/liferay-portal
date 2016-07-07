@@ -132,8 +132,7 @@ public class LoginAction extends Action {
 
 		if (Validator.isNull(redirect)) {
 			PortletURL portletURL = PortletURLFactoryUtil.create(
-				request, PortletKeys.LOGIN, themeDisplay.getPlid(),
-				PortletRequest.RENDER_PHASE);
+				request, PortletKeys.LOGIN, PortletRequest.RENDER_PHASE);
 
 			portletURL.setParameter("saveLastPath", Boolean.FALSE.toString());
 			portletURL.setParameter("mvcRenderCommandName", "/login/login");

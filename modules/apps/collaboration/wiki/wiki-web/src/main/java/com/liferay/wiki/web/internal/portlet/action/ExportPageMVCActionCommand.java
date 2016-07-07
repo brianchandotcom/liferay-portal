@@ -93,7 +93,7 @@ public class ExportPageMVCActionCommand extends BaseMVCActionCommand {
 
 			PortletURL viewPageURL = PortletURLFactoryUtil.create(
 				actionRequest, portletConfig.getPortletName(),
-				themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
+				PortletRequest.RENDER_PHASE);
 
 			viewPageURL.setParameter("mvcRenderCommandName", "/wiki/view");
 			viewPageURL.setParameter("nodeName", nodeName);
@@ -103,7 +103,7 @@ public class ExportPageMVCActionCommand extends BaseMVCActionCommand {
 
 			PortletURL editPageURL = PortletURLFactoryUtil.create(
 				actionRequest, portletConfig.getPortletName(),
-				themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
+				PortletRequest.RENDER_PHASE);
 
 			editPageURL.setParameter("mvcRenderCommandName", "/wiki/edit_page");
 			editPageURL.setParameter("nodeId", String.valueOf(nodeId));

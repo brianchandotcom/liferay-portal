@@ -21,11 +21,18 @@ import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.dynamic.data.lists.constants.DDLPortletKeys;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.AddPortletProvider;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 import javax.portlet.PortletPreferences;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -44,6 +51,14 @@ public class DDLDisplayAddPortletProvider
 	@Override
 	public String getPortletName() {
 		return DDLPortletKeys.DYNAMIC_DATA_LISTS_DISPLAY;
+	}
+
+	@Override
+	public PortletURL getPortletURL(HttpServletRequest request, Group group)
+		throws PortalException {
+
+		return PortletURLFactoryUtil.create(
+			request, getPortletName(), PortletRequest.RENDER_PHASE);
 	}
 
 	@Override
@@ -68,6 +83,10 @@ public class DDLDisplayAddPortletProvider
 			"recordSetId", String.valueOf(record.getRecordSetId()));
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	@Override
 	protected long getPlid(ThemeDisplay themeDisplay) {
 		return themeDisplay.getPlid();

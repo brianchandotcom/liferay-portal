@@ -1,11 +1,11 @@
 Manifest-Version: 1.0
-Bnd-LastModified: 1465496756127
+Bnd-LastModified: 1467776601368
 Bundle-ManifestVersion: 2
 Bundle-Name: system.packages.extra
 Bundle-SymbolicName: system.packages.extra
 Bundle-Vendor: Liferay, Inc.
 Bundle-Version: 1.0.0
-Created-By: 1.7.0_71 (Oracle Corporation)
+Created-By: 1.8.0_91 (Oracle Corporation)
 Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  u.impl;version="4.0.1";uses:="com.liferay.ibm.icu.math,com.liferay.ib
  m.icu.text,com.liferay.ibm.icu.util",com.liferay.ibm.icu.impl.coll;ve
@@ -2649,7 +2649,7 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  ler.comet;version="7.0.0";uses:="com.liferay.portal.kernel.exception,
  javax.servlet.http",com.liferay.portal.kernel.pop;version="6.2.0";use
  s:="com.liferay.portal.kernel.exception,javax.mail",com.liferay.porta
- l.kernel.portlet;version="7.2.0";uses:="com.liferay.asset.kernel.mode
+ l.kernel.portlet;version="8.0.0";uses:="com.liferay.asset.kernel.mode
  l,com.liferay.expando.kernel.model,com.liferay.exportimport.kernel.la
  r,com.liferay.portal.kernel.atom,com.liferay.portal.kernel.exception,
  com.liferay.portal.kernel.json,com.liferay.portal.kernel.model,com.li
@@ -3502,7 +3502,7 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  version="1.0.0",com.liferay.portal.xsl;uses:="com.liferay.portal.kern
  el.template,javax.xml.transform";version="1.0.0",com.liferay.portal.z
  ip;uses:="com.liferay.portal.kernel.zip";version="1.0.0",com.liferay.
- portlet;version="1.1.0";uses:="com.liferay.asset.kernel.model,com.lif
+ portlet;version="1.2.0";uses:="com.liferay.asset.kernel.model,com.lif
  eray.expando.kernel.model,com.liferay.exportimport.kernel.lar,com.lif
  eray.portal.kernel.atom,com.liferay.portal.kernel.exception,com.lifer
  ay.portal.kernel.model,com.liferay.portal.kernel.notifications,com.li
@@ -4255,5 +4255,5 @@ Provide-Capability: liferay.resource.bundle;bundle.symbolic.name="syst
 Require-Capability: osgi.extender;filter:="(&(osgi.extender=jsp.taglib
  )(uri=http://java.sun.com/portlet_2_0))",osgi.extender;filter:="(&(os
  gi.extender=jsp.taglib)(uri=http://liferay.com/tld/util))",osgi.ee;fi
- lter:="(&(osgi.ee=JavaSE)(version=1.7))"
+ lter:="(&(osgi.ee=JavaSE)(version=1.8))"
 Tool: Bnd-3.2.0.201605172007

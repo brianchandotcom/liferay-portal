@@ -1,4 +1,4 @@
-define(['exports', 'metal/src/metal'], function (exports, _metal) {
+define(['exports'], function (exports) {
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
@@ -11,45 +11,44 @@ define(['exports', 'metal/src/metal'], function (exports, _metal) {
 		}
 	}
 
+	var comps_ = [];
+
 	var IncrementalDomUnusedComponents = function () {
 		function IncrementalDomUnusedComponents() {
 			_classCallCheck(this, IncrementalDomUnusedComponents);
 		}
+
+		IncrementalDomUnusedComponents.disposeUnused = function disposeUnused() {
+			for (var i = 0; i < comps_.length; i++) {
+				if (!comps_[i].isDisposed()) {
+					var renderer = comps_[i].getRenderer();
+					if (!renderer.getParent()) {
+						// Don't let disposing cause the element to be removed, since it may
+						// be currently being reused by another component.
+						comps_[i].element = null;
+
+						var ref = comps_[i].config.ref;
+						var owner = renderer.getOwner();
+						if (owner.components[ref] === comps_[i]) {
+							owner.disposeSubComponents([ref]);
+						} else {
+							comps_[i].dispose();
+						}
+					}
+				}
+			}
+			comps_ = [];
+		};
 
 		IncrementalDomUnusedComponents.schedule = function schedule(comps) {
 			for (var i = 0; i < comps.length; i++) {
 				comps[i].getRenderer().parent_ = null;
 				comps_.push(comps[i]);
 			}
-			if (!scheduled_) {
-				scheduled_ = true;
-				_metal.async.nextTick(disposeUnused_);
-			}
 		};
 
 		return IncrementalDomUnusedComponents;
 	}();
-
-	var comps_ = [];
-	var scheduled_ = false;
-
-	/**
-  * Disposes all sub components that were not rerendered since the last
-  * time this function was scheduled.
-  * @protected
-  */
-	function disposeUnused_() {
-		for (var i = 0; i < comps_.length; i++) {
-			if (!comps_[i].isDisposed()) {
-				var renderer = comps_[i].getRenderer();
-				if (!renderer.getParent()) {
-					renderer.getOwner().disposeSubComponents([comps_[i].config.key]);
-				}
-			}
-		}
-		scheduled_ = false;
-		comps_ = [];
-	}
 
 	exports.default = IncrementalDomUnusedComponents;
 });

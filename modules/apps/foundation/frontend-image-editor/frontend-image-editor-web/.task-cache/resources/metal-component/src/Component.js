@@ -1,11 +1,9 @@
-define(['exports', 'metal/src/metal', 'metal-dom/src/all/dom', './ComponentRegistry', './ComponentRenderer', 'metal-events/src/events', 'metal-state/src/State'], function (exports, _metal, _dom, _ComponentRegistry, _ComponentRenderer, _events, _State2) {
+define(['exports', 'metal/src/metal', 'metal-dom/src/all/dom', './ComponentRenderer', 'metal-events/src/events', 'metal-state/src/State'], function (exports, _metal, _dom, _ComponentRenderer, _events, _State2) {
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
-
-	var _ComponentRegistry2 = _interopRequireDefault(_ComponentRegistry);
 
 	var _ComponentRenderer2 = _interopRequireDefault(_ComponentRenderer);
 
@@ -185,24 +183,8 @@ define(['exports', 'metal/src/metal', 'metal-dom/src/all/dom', './ComponentRegis
 
 		Component.prototype.attached = function attached() {};
 
-		Component.prototype.addSubComponent = function addSubComponent(key, componentNameOrCtor, opt_data, opt_dontDispose) {
-			var ConstructorFn = componentNameOrCtor;
-			if (_metal.core.isString(ConstructorFn)) {
-				ConstructorFn = _ComponentRegistry2.default.getConstructor(componentNameOrCtor);
-			}
-
-			var component = this.components[key];
-			if (component && component.constructor !== ConstructorFn) {
-				if (!opt_dontDispose) {
-					component.dispose();
-				}
-				component = null;
-			}
-
-			if (!component) {
-				this.components[key] = new ConstructorFn(opt_data, false);
-			}
-			return this.components[key];
+		Component.prototype.addSubComponent = function addSubComponent(ref, component) {
+			this.components[ref] = component;
 		};
 
 		Component.prototype.created = function created() {};
@@ -255,6 +237,7 @@ define(['exports', 'metal/src/metal', 'metal-dom/src/all/dom', './ComponentRegis
 			for (var i = 0; i < keys.length; i++) {
 				var component = this.components[keys[i]];
 				if (component && !component.isDisposed()) {
+					component.element = null;
 					component.dispose();
 					delete this.components[keys[i]];
 				}
@@ -314,7 +297,7 @@ define(['exports', 'metal/src/metal', 'metal-dom/src/all/dom', './ComponentRegis
 		};
 
 		Component.isComponentCtor = function isComponentCtor(fn) {
-			return !!fn.prototype[Component.COMPONENT_FLAG];
+			return fn.prototype && fn.prototype[Component.COMPONENT_FLAG];
 		};
 
 		Component.prototype.mergeElementClasses_ = function mergeElementClasses_(values) {
@@ -339,8 +322,10 @@ define(['exports', 'metal/src/metal', 'metal-dom/src/all/dom', './ComponentRegis
 
 			this.setUpProxy_();
 			this.elementEventProxy_.setOriginEmitter(event.newVal);
-			this.addElementClasses();
-			this.syncVisible(this.visible);
+			if (event.newVal) {
+				this.addElementClasses();
+				this.syncVisible(this.visible);
+			}
 		};
 
 		Component.prototype.onEventsChanged_ = function onEventsChanged_(event) {
@@ -348,9 +333,15 @@ define(['exports', 'metal/src/metal', 'metal-dom/src/all/dom', './ComponentRegis
 			this.addListenersFromObj_(event.newVal);
 		};
 
-		Component.render = function render(Ctor, opt_config, opt_element) {
-			var instance = new Ctor(opt_config, false);
-			instance.render_(opt_element);
+		Component.render = function render(Ctor, opt_configOrElement, opt_element) {
+			var config = opt_configOrElement;
+			var element = opt_element;
+			if (_metal.core.isElement(opt_configOrElement)) {
+				config = null;
+				element = opt_configOrElement;
+			}
+			var instance = new Ctor(config, false);
+			instance.render_(element);
 			return instance;
 		};
 

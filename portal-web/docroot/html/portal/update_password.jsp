@@ -38,7 +38,7 @@ PasswordPolicy passwordPolicy = user.getPasswordPolicy();
 			<liferay-ui:message key="your-password-reset-link-is-no-longer-valid" />
 
 			<%
-			PortletURL portletURL = PortletURLFactoryUtil.create(request, PortletKeys.LOGIN, plid, PortletRequest.RENDER_PHASE);
+			PortletURL portletURL = PortletURLFactoryUtil.create(request, PortletKeys.LOGIN, PortletRequest.RENDER_PHASE);
 
 			portletURL.setParameter("mvcRenderCommandName", "/login/forgot_password");
 			portletURL.setWindowState(WindowState.MAXIMIZED);

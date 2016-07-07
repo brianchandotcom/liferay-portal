@@ -72,7 +72,7 @@ if (!portletCategories.isEmpty() || !portlets.isEmpty()) {
 				<c:if test="<%= !portlet.isInstanceable() %>">
 
 					<%
-					PortletURL portletURL = PortletURLFactoryUtil.create(request, portlet.getRootPortletId(), plid, PortletRequest.ACTION_PHASE);
+					PortletURL portletURL = PortletURLFactoryUtil.create(request, portlet.getRootPortletId(), PortletRequest.ACTION_PHASE);
 
 					portletURL.setPortletMode(PortletMode.VIEW);
 					portletURL.setWindowState(WindowState.MAXIMIZED);

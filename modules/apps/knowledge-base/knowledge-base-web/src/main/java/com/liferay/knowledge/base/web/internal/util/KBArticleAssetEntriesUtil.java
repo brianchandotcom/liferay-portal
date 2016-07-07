@@ -131,8 +131,7 @@ public class KBArticleAssetEntriesUtil {
 
 		if (className.equals(BlogsEntry.class.getName())) {
 			portletURL = PortletURLFactoryUtil.create(
-				request, portletId, themeDisplay.getPlid(),
-				PortletRequest.RENDER_PHASE);
+				request, portletId, PortletRequest.RENDER_PHASE);
 
 			portletURL.setParameter(
 				"mvcRenderCommandName", "/blogs/view_entry");
@@ -143,8 +142,7 @@ public class KBArticleAssetEntriesUtil {
 				JournalArticleLocalServiceUtil.getLatestArticle(classPK);
 
 			portletURL = PortletURLFactoryUtil.create(
-				request, portletId, themeDisplay.getPlid(),
-				PortletRequest.RENDER_PHASE);
+				request, portletId, PortletRequest.RENDER_PHASE);
 
 			portletURL.setParameter("struts_action", "/journal_content/view");
 			portletURL.setParameter(
@@ -154,15 +152,14 @@ public class KBArticleAssetEntriesUtil {
 		else if (className.equals(KBArticle.class.getName())) {
 			portletURL = PortletURLFactoryUtil.create(
 				request, KBPortletKeys.KNOWLEDGE_BASE_ARTICLE_DEFAULT_INSTANCE,
-				themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
+				PortletRequest.RENDER_PHASE);
 
 			portletURL.setParameter("mvcPath", "/article/view_article.jsp");
 			portletURL.setParameter("resourcePrimKey", String.valueOf(classPK));
 		}
 		else if (className.equals(MBMessage.class.getName())) {
 			portletURL = PortletURLFactoryUtil.create(
-				request, portletId, themeDisplay.getPlid(),
-				PortletRequest.RENDER_PHASE);
+				request, portletId, PortletRequest.RENDER_PHASE);
 
 			portletURL.setParameter(
 				"struts_action", "/message_boards/view_message");
@@ -172,8 +169,7 @@ public class KBArticleAssetEntriesUtil {
 			WikiPage wikiPage = WikiPageLocalServiceUtil.getPage(classPK);
 
 			portletURL = PortletURLFactoryUtil.create(
-				request, portletId, themeDisplay.getPlid(),
-				PortletRequest.RENDER_PHASE);
+				request, portletId, PortletRequest.RENDER_PHASE);
 
 			portletURL.setParameter("struts_action", "/wiki/view");
 			portletURL.setParameter(

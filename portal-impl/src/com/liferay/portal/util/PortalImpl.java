@@ -1755,8 +1755,7 @@ public class PortalImpl implements Portal {
 
 		if (Validator.isNull(PropsValues.COMPANY_SECURITY_STRANGERS_URL)) {
 			PortletURL createAccountURL = PortletURLFactoryUtil.create(
-				request, PortletKeys.LOGIN, themeDisplay.getPlid(),
-				PortletRequest.RENDER_PHASE);
+				request, PortletKeys.LOGIN, PortletRequest.RENDER_PHASE);
 
 			createAccountURL.setParameter(
 				"saveLastPath", Boolean.FALSE.toString());
@@ -5759,7 +5758,7 @@ public class PortalImpl implements Portal {
 				Layout layout = (Layout)request.getAttribute(WebKeys.LAYOUT);
 
 				PortletURL portletURL = PortletURLFactoryUtil.create(
-					request, PortletKeys.DIRECTORY, layout.getPlid(),
+					request, PortletKeys.DIRECTORY, layout,
 					PortletRequest.RENDER_PHASE);
 
 				portletURL.setParameter(

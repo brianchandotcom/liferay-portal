@@ -34,11 +34,17 @@ public interface PortletURLFactory {
 		String lifecycle);
 
 	public LiferayPortletURL create(
+		HttpServletRequest request, String portletId, String lifecycle);
+
+	public LiferayPortletURL create(
 		PortletRequest portletRequest, String portletId, Layout layout,
 		String lifecycle);
 
 	public LiferayPortletURL create(
 		PortletRequest portletRequest, String portletId, long plid,
 		String lifecycle);
+
+	public LiferayPortletURL create(
+		PortletRequest portletRequest, String portletId, String lifecycle);
 
 }

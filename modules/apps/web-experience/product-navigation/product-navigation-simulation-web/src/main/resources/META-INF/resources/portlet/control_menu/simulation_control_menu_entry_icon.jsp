@@ -19,7 +19,7 @@
 <%
 String portletNamespace = PortalUtil.getPortletNamespace(ProductNavigationSimulationPortletKeys.PRODUCT_NAVIGATION_SIMULATION);
 
-PortletURL simulationPanelURL = PortletURLFactoryUtil.create(request, ProductNavigationSimulationPortletKeys.PRODUCT_NAVIGATION_SIMULATION, plid, PortletRequest.RENDER_PHASE);
+PortletURL simulationPanelURL = PortletURLFactoryUtil.create(request, ProductNavigationSimulationPortletKeys.PRODUCT_NAVIGATION_SIMULATION, PortletRequest.RENDER_PHASE);
 
 simulationPanelURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 %>

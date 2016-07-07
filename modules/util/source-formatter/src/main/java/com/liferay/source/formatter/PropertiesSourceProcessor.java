@@ -594,7 +594,8 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected void populateLanguagePropertiesMap() throws Exception {
-		_languagePropertiesMap = new HashMap<>();
+		Map<String, Properties> languagePropertiesMap =
+			new ConcurrentHashMap<>();
 
 		String[] includes = new String[] {"**/Language.properties"};
 
@@ -612,8 +613,10 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 
 			properties.load(inputStream);
 
-			_languagePropertiesMap.put(fileName, properties);
+			languagePropertiesMap.put(fileName, properties);
 		}
+
+		_languagePropertiesMap = languagePropertiesMap;
 	}
 
 	@Override

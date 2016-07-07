@@ -39,6 +39,10 @@ public interface Trackback {
 	@Deprecated
 	public void setCommentManager(CommentManager commentManager);
 
+	/**
+	 * @deprecated As of 7.1.0, with no direct replacement
+	 */
+	@Deprecated
 	public void setLinkbackConsumer(LinkbackConsumer linkbackConsumer);
 
 }

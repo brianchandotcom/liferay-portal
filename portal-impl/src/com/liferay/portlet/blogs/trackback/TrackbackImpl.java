@@ -69,9 +69,12 @@ public class TrackbackImpl implements Trackback {
 	public void setCommentManager(CommentManager commentManager) {
 	}
 
+	/**
+	 * @deprecated As of 7.1.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public void setLinkbackConsumer(LinkbackConsumer linkbackConsumer) {
-		_linkbackConsumer = linkbackConsumer;
 	}
 
 	protected String buildBBCodeBody(
@@ -132,8 +135,5 @@ public class TrackbackImpl implements Trackback {
 
 		return sb.toString();
 	}
-
-	private LinkbackConsumer _linkbackConsumer =
-		LinkbackConsumerUtil.getLinkbackConsumer();
 
 }

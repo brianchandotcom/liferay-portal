@@ -77,7 +77,7 @@
 	</target>
 
 	<target depends="init-deploy,jar" if="copy.jar" name="deploy" unless="deploy.uptodate">
-		<copy file="${jar.file}.jar" todir="${deploy.dir}" preservelastmodified="true" />
+		<copy file="${jar.file}.jar" preservelastmodified="true" todir="${deploy.dir}" />
 	</target>
 
 	<target name="init-compile">

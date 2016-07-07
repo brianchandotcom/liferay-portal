@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Bnd-LastModified: 1465496756127
+Bnd-LastModified: 1467844298728
 Bundle-ManifestVersion: 2
 Bundle-Name: system.packages.extra
 Bundle-SymbolicName: system.packages.extra
@@ -2870,7 +2870,7 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  al.kernel.exception,com.liferay.portal.kernel.model,com.liferay.porta
  l.kernel.security.auth,com.liferay.portal.kernel.security.permission,
  javax.portlet,javax.servlet.http",com.liferay.portal.kernel.service.p
- ersistence;version="1.1.0";uses:="com.liferay.portal.kernel.dao.orm,c
+ ersistence;version="1.2.0";uses:="com.liferay.portal.kernel.dao.orm,c
  om.liferay.portal.kernel.exception,com.liferay.portal.kernel.model,co
  m.liferay.portal.kernel.security.permission,com.liferay.portal.kernel
  .service,com.liferay.portal.kernel.util",com.liferay.portal.kernel.se
@@ -3231,7 +3231,7 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  ration,com.liferay.portal.kernel.service,com.liferay.portal.kernel.se
  rvice.configuration,com.liferay.portal.kernel.service.configuration.c
  onfigurator";version="1.0.0",com.liferay.portal.service.http;version=
- "1.1.0";uses:="com.liferay.announcements.kernel.model,com.liferay.exp
+ "1.2.0";uses:="com.liferay.announcements.kernel.model,com.liferay.exp
  ortimport.kernel.lar,com.liferay.exportimport.kernel.model,com.lifera
  y.portal.kernel.exception,com.liferay.portal.kernel.json,com.liferay.
  portal.kernel.model,com.liferay.portal.kernel.repository.model,com.li

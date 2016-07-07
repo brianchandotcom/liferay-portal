@@ -3425,8 +3425,8 @@ public class JournalArticleLocalServiceImpl
 		for (JournalArticle article : articles) {
 			if (serviceContext != null) {
 				notifySubscribers(
-					serviceContext.getUserId(), article, article.getUrlTitle(),
-					"move_from", serviceContext);
+					serviceContext.getUserId(), article, "move_from",
+					serviceContext);
 			}
 
 			article.setFolderId(newFolderId);
@@ -3436,8 +3436,8 @@ public class JournalArticleLocalServiceImpl
 
 			if (serviceContext != null) {
 				notifySubscribers(
-					serviceContext.getUserId(), article, article.getUrlTitle(),
-					"move_to", serviceContext);
+					serviceContext.getUserId(), article, "move_to",
+					serviceContext);
 			}
 		}
 
@@ -5923,9 +5923,7 @@ public class JournalArticleLocalServiceImpl
 			}
 
 			notifySubscribers(
-				user.getUserId(), article,
-				(String)workflowContext.get(WorkflowConstants.CONTEXT_URL),
-				action, serviceContext);
+				user.getUserId(), article, action, serviceContext);
 		}
 
 		return article;
@@ -7168,9 +7166,15 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	protected void notifySubscribers(
-			long userId, JournalArticle article, String articleURL,
-			String action, ServiceContext serviceContext)
+			long userId, JournalArticle article, String action,
+			ServiceContext serviceContext)
 		throws PortalException {
+
+		String portletId = PortletProviderUtil.getPortletId(
+			JournalArticle.class.getName(), PortletProvider.Action.EDIT);
+
+		String articleURL = PortalUtil.getControlPanelFullURL(
+			article.getGroupId(), portletId, null);
 
 		if (!article.isApproved() || Validator.isNull(articleURL)) {
 			return;
@@ -7211,6 +7215,9 @@ public class JournalArticleLocalServiceImpl
 		Map<Locale, String> localizedSubjectMap = null;
 		Map<Locale, String> localizedBodyMap = null;
 
+		int notificationType =
+			UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY;
+
 		if (action.equals("add")) {
 			localizedSubjectMap = LocalizationUtil.getMap(
 				journalGroupServiceConfiguration.emailArticleAddedSubject());
@@ -7224,6 +7231,9 @@ public class JournalArticleLocalServiceImpl
 			localizedBodyMap = LocalizationUtil.getMap(
 				journalGroupServiceConfiguration.
 					emailArticleMovedToFolderBody());
+
+			notificationType =
+				JournalArticleConstants.NOTIFICATION_TYPE_MOVE_ENTRY_TO_FOLDER;
 		}
 		else if (action.equals("move_from")) {
 			localizedSubjectMap = LocalizationUtil.getMap(
@@ -7232,12 +7242,19 @@ public class JournalArticleLocalServiceImpl
 			localizedBodyMap = LocalizationUtil.getMap(
 				journalGroupServiceConfiguration.
 					emailArticleMovedFromFolderBody());
+
+			notificationType =
+				JournalArticleConstants.
+					NOTIFICATION_TYPE_MOVE_ENTRY_FROM_FOLDER;
 		}
 		else if (action.equals("update")) {
 			localizedSubjectMap = LocalizationUtil.getMap(
 				journalGroupServiceConfiguration.emailArticleUpdatedSubject());
 			localizedBodyMap = LocalizationUtil.getMap(
 				journalGroupServiceConfiguration.emailArticleUpdatedBody());
+
+			notificationType =
+				JournalArticleConstants.NOTIFICATION_TYPE_UPDATE_ENTRY;
 		}
 
 		String articleContent = StringPool.BLANK;
@@ -7298,21 +7315,8 @@ public class JournalArticleLocalServiceImpl
 		subscriptionSender.setLocalizedSubjectMap(localizedSubjectMap);
 		subscriptionSender.setMailId("journal_article", article.getId());
 
-		int notificationType =
-			UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY;
-
-		if (serviceContext.isCommandUpdate()) {
-			notificationType =
-				UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY;
-		}
-
 		subscriptionSender.setNotificationType(notificationType);
-
-		String portletId = PortletProviderUtil.getPortletId(
-			JournalArticle.class.getName(), PortletProvider.Action.EDIT);
-
 		subscriptionSender.setPortletId(portletId);
-
 		subscriptionSender.setReplyToAddress(fromAddress);
 		subscriptionSender.setScopeGroupId(article.getGroupId());
 		subscriptionSender.setServiceContext(serviceContext);
@@ -7342,6 +7346,19 @@ public class JournalArticleLocalServiceImpl
 			JournalArticle.class.getName(), article.getResourcePrimKey());
 
 		subscriptionSender.flushNotificationsAsync();
+	}
+
+	/**
+	 * @deprecated As of 7.0.1, replaced by {@link #notifySubscribers(long,
+	 *             JournalArticle, String, ServiceContext)}
+	 */
+	@Deprecated
+	protected void notifySubscribers(
+			long userId, JournalArticle article, String articleURL,
+			String action, ServiceContext serviceContext)
+		throws PortalException {
+
+		notifySubscribers(userId, article, action, serviceContext);
 	}
 
 	protected void saveImages(
@@ -7536,14 +7553,6 @@ public class JournalArticleLocalServiceImpl
 		throws PortalException {
 
 		Map<String, Serializable> workflowContext = new HashMap<>();
-
-		String portletId = PortletProviderUtil.getPortletId(
-			JournalArticle.class.getName(), PortletProvider.Action.EDIT);
-
-		workflowContext.put(
-			WorkflowConstants.CONTEXT_URL,
-			PortalUtil.getControlPanelFullURL(
-				article.getGroupId(), portletId, null));
 
 		WorkflowHandlerRegistryUtil.startWorkflowInstance(
 			article.getCompanyId(), article.getGroupId(), userId,

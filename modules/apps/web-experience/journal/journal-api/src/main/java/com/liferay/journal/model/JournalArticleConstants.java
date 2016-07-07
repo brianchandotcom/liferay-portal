@@ -34,6 +34,14 @@ public class JournalArticleConstants {
 
 	public static final String DISPLAY_PAGE = "display-page";
 
+	public static final int NOTIFICATION_TYPE_ADD_ENTRY = 0;
+
+	public static final int NOTIFICATION_TYPE_MOVE_ENTRY_FROM_FOLDER = 2;
+
+	public static final int NOTIFICATION_TYPE_MOVE_ENTRY_TO_FOLDER = 1;
+
+	public static final int NOTIFICATION_TYPE_UPDATE_ENTRY = 3;
+
 	public static final String PORTLET = "portlet";
 
 	public static final String STAND_ALONE = "stand-alone";

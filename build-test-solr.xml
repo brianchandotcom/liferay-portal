@@ -27,7 +27,7 @@
 					<available file="${app.server.parent.dir}/${solr.zip.name}" />
 				</not>
 				<then>
-					<get
+					<mirrors-get
 						dest="${app.server.parent.dir}/${solr.zip.name}"
 						src="${solr.zip.url}"
 						verbose="true"

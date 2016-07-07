@@ -18,6 +18,8 @@ import com.liferay.portal.target.platform.indexer.internal.LPKGIndexer;
 
 import java.io.File;
 
+import java.util.Set;
+
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -26,8 +28,8 @@ import org.osgi.service.component.annotations.Component;
 @Component(immediate = true, service = IndexerFactory.class)
 public class IndexerFactory {
 
-	public Indexer createLPKGIndexer(File lpkgFile) {
-		return new LPKGIndexer(lpkgFile);
+	public Indexer createLPKGIndexer(File lpkgFile, Set<String> blackListSet) {
+		return new LPKGIndexer(lpkgFile, blackListSet);
 	}
 
 }

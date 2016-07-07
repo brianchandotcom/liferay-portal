@@ -151,7 +151,7 @@ public class TargetPlatformIndexerClient {
 			new ByteArrayOutputStream();
 
 		for (File lpkgFile : lpkgFiles) {
-			LPKGIndexer lpkgIndexer = new LPKGIndexer(lpkgFile);
+			LPKGIndexer lpkgIndexer = new LPKGIndexer(lpkgFile, null);
 
 			lpkgIndexer.index(byteArrayOutputStream);
 

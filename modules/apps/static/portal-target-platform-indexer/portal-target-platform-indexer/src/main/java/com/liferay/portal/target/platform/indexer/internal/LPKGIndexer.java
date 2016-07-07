@@ -41,8 +41,9 @@ import org.osgi.service.indexer.impl.RepoIndex;
  */
 public class LPKGIndexer implements Indexer {
 
-	public LPKGIndexer(File lpkgFile) {
+	public LPKGIndexer(File lpkgFile, Set<String> blackListSet) {
 		_lpkgFile = lpkgFile;
+		_blackListSet = blackListSet;
 
 		_config.put("compressed", "false");
 		_config.put(
@@ -54,15 +55,17 @@ public class LPKGIndexer implements Indexer {
 
 	@Override
 	public void index(OutputStream outputStream) throws Exception {
-		try (FileSystem fileSystem = FileSystems.newFileSystem(
-				_lpkgFile.toPath(), null)) {
+		if (_blackListSet == null) {
+			try (FileSystem fileSystem = FileSystems.newFileSystem(
+					_lpkgFile.toPath(), null)) {
 
-			Path indexPath = fileSystem.getPath("index.xml");
+				Path indexPath = fileSystem.getPath("index.xml");
 
-			if (Files.exists(indexPath)) {
-				Files.copy(indexPath, outputStream);
+				if (Files.exists(indexPath)) {
+					Files.copy(indexPath, outputStream);
 
-				return;
+					return;
+				}
 			}
 		}
 
@@ -83,6 +86,12 @@ public class LPKGIndexer implements Indexer {
 				String name = zipEntry.getName();
 
 				if (!name.endsWith(".jar")) {
+					continue;
+				}
+
+				if ((_blackListSet != null) &&
+					_blackListSet.contains("/".concat(name))) {
+
 					continue;
 				}
 
@@ -116,6 +125,7 @@ public class LPKGIndexer implements Indexer {
 		return fileName;
 	}
 
+	private final Set<String> _blackListSet;
 	private final Map<String, String> _config = new HashMap<>();
 	private final File _lpkgFile;
 

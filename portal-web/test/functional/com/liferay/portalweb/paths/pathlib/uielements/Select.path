@@ -84,6 +84,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LENGTH</td>
+	<td>//select[contains(@id,'length')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LOCKOUT_DURATION</td>
 	<td>//div[label[contains(.,'Lockout Duration')]]/select</td>
 	<td></td>

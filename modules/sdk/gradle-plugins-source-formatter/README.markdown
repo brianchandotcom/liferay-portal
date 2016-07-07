@@ -61,20 +61,20 @@ Property Name | Default Value
 
 Property Name | Type | Default Value | Description
 ------------- | ---- | ------------- | -----------
-`autoFix` | `boolean` | `false` | If `true`, automatically fixes source formatting errors.
+`autoFix` | `boolean` | `false` | Whether to automatically fix source formatting errors.
 `baseDir` | `File` |  | The Source Formatter base directory. *(Read-only)*
 `baseDirName` | `String` | `"./"` | The name of the Source Formatter base directory, relative to the project directory.
 `copyrightFile` | `File` | | The file containing the copyright header enforced by Source Formatter. *(Read-only)*
 `copyrightFileName` | `String` | `"copyright.txt"` | The name of the file containing the copyright header enforced by Source Formatter, relative to the project directory.
 `files` | `List<File>` | | The list of files to format. *(Read-only)*
 `fileNames` | `List<String>` | `null` | The file names to format, relative to the project directory. If `null`, all files contained in `baseDir` will be formatted.
-`formatCurrentBranch` | `boolean` | `false` | If `true`, formats only the files contained in `baseDir` that are added or modified in the current Git branch.
-`formatLatestAuthor` | `boolean` | `false` | If `true`, formats only the files contained in `baseDir` that are added or modified in the latest Git commits of the same author.
-`formatLocalChanges` | `boolean` | `false` | If `true`, formats only the unstaged files contained in `baseDir`.
+`formatCurrentBranch` | `boolean` | `false` | Whether to format only the files contained in `baseDir` that are added or modified in the current Git branch.
+`formatLatestAuthor` | `boolean` | `false` | Whether to format only the files contained in `baseDir` that are added or modified in the latest Git commits of the same author.
+`formatLocalChanges` | `boolean` | `false` | Whether to format only the unstaged files contained in `baseDir`.
 `maxLineLength` | `int` | `80` | The maximum number of characters allowed in Java files.
-`printErrors` | `boolean` | `true` | If `true`, prints formatting errors on the Standard Output stream.
+`printErrors` | `boolean` | `true` | Whether to print formatting errors on the Standard Output stream.
 `processThreadCount` | `int` | `5` | The number of threads used by Source Formatter.
-`throwException` | `boolean` | `false` | If `true`, fails the build if formatting errors are found.
+`throwException` | `boolean` | `false` | Whether to fail the build if formatting errors are found.
 
 ## Additional Configuration
 

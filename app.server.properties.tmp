@@ -1,0 +1,19 @@
+#Ant properties
+#Thu Jul 07 09:12:06 CST 2016
+app.server.tomcat.bin.dir=/home/documents/server/trunk-git/tomcat-8.0.32/bin
+app.server.tomcat.classes.global.dir=/home/documents/server/trunk-git/tomcat-8.0.32/lib
+app.server.tomcat.classes.portal.dir=/home/documents/server/trunk-git/tomcat-8.0.32/webapps/ROOT/WEB-INF/classes
+app.server.tomcat.deploy.dir=/home/documents/server/trunk-git/tomcat-8.0.32/webapps
+app.server.tomcat.dir=/home/documents/server/trunk-git/tomcat-8.0.32
+app.server.tomcat.lib.endorsed.dir=/home/documents/server/trunk-git/tomcat-8.0.32/lib/ext
+app.server.tomcat.lib.global.dir=/home/documents/server/trunk-git/tomcat-8.0.32/lib/ext
+app.server.tomcat.lib.portal.dir=/home/documents/server/trunk-git/tomcat-8.0.32/webapps/ROOT/WEB-INF/lib
+app.server.tomcat.lib.support.dir=/home/documents/server/trunk-git/tomcat-8.0.32/lib/ext
+app.server.tomcat.log.dir=/home/documents/server/trunk-git/tomcat-8.0.32/logs
+app.server.tomcat.portal.context=ROOT
+app.server.tomcat.portal.dir=/home/documents/server/trunk-git/tomcat-8.0.32/webapps/ROOT
+app.server.tomcat.temp.dir=/home/documents/server/trunk-git/tomcat-8.0.32/temp
+app.server.tomcat.version=8.0.32
+app.server.tomcat.work.dir=/home/documents/server/trunk-git/tomcat-8.0.32/work
+app.server.tomcat.zip.name=apache-tomcat-8.0.32.zip
+app.server.tomcat.zip.url=http\://archive.apache.org/dist/tomcat/tomcat-8/v8.0.32/bin/apache-tomcat-8.0.32.zip

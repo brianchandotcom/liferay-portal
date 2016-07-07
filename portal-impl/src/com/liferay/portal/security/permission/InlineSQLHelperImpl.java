@@ -699,11 +699,11 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 				defaultResourceForGroupAdmin.append(groupAdmin);
 			}
 			else {
-				defaultResourceForGroupAdmin.append("[$FALSE$]");
+				defaultResourceForGroupAdmin.append("[$FALSE$] <> [$FALSE$]");
 			}
 		}
 		else {
-			defaultResourceForGroupAdmin.append("[$FALSE$]");
+			defaultResourceForGroupAdmin.append("[$FALSE$] <> [$FALSE$]");
 		}
 
 		String roleIdsOrOwnerIdSQL = getRoleIdsOrOwnerIdSQL(

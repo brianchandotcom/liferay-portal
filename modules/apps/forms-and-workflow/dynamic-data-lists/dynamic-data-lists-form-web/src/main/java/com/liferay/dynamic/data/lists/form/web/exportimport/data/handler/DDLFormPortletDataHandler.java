@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.dynamic.data.lists.web.lar;
+package com.liferay.dynamic.data.lists.form.web.exportimport.data.handler;
 
-import com.liferay.dynamic.data.lists.constants.DDLPortletKeys;
+import com.liferay.dynamic.data.lists.form.web.constants.DDLFormPortletKeys;
 import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
 import com.liferay.exportimport.kernel.lar.DataLevel;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -30,16 +30,16 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Michael C. Han
+ * @author Marcellus Tavares
  */
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + DDLPortletKeys.DYNAMIC_DATA_LISTS_DISPLAY
+		"javax.portlet.name=" + DDLFormPortletKeys.DYNAMIC_DATA_LISTS_FORM
 	},
 	service = PortletDataHandler.class
 )
-public class DDLDisplayPortletDataHandler extends BasePortletDataHandler {
+public class DDLFormPortletDataHandler extends BasePortletDataHandler {
 
 	public static final String SCHEMA_VERSION = "1.0.0";
 
@@ -51,8 +51,7 @@ public class DDLDisplayPortletDataHandler extends BasePortletDataHandler {
 	@Activate
 	protected void activate() {
 		setDataLevel(DataLevel.PORTLET_INSTANCE);
-		setDataPortletPreferences(
-			"displayDDMTemplateId", "formDDMTemplateId", "recordSetId");
+		setDataPortletPreferences("recordSetId");
 		setExportControls(new PortletDataHandlerControl[0]);
 	}
 
@@ -66,12 +65,7 @@ public class DDLDisplayPortletDataHandler extends BasePortletDataHandler {
 			return portletPreferences;
 		}
 
-		portletPreferences.setValue("displayDDMTemplateId", StringPool.BLANK);
-		portletPreferences.setValue("editable", Boolean.TRUE.toString());
-		portletPreferences.setValue("formDDMTemplateId", StringPool.BLANK);
-		portletPreferences.setValue("formView", Boolean.FALSE.toString());
 		portletPreferences.setValue("recordSetId", StringPool.BLANK);
-		portletPreferences.setValue("spreadsheet", Boolean.FALSE.toString());
 
 		return portletPreferences;
 	}

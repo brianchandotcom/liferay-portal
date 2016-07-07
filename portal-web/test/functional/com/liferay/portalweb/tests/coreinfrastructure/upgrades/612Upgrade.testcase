@@ -5,6 +5,14 @@
 	<property name="portal.version" value="6.1.2" />
 	<property name="testray.main.component.name" value="Upgrades" />
 
+	<set-up>
+		<execute macro="TestCase#setUpPortalInstance" />
+
+		<execute macro="SignIn#signIn" />
+
+		<execute macro="Smoke#viewWelcomePage" />
+	</set-up>
+
 	<command name="View612CalendarArchive" priority="3">
 		<property name="osgi.modules.includes" value="calevent-importer" />
 		<property name="test.assert.warning.exceptions" value="true" />

@@ -393,10 +393,6 @@
 	</command>
 
 	<command name="viewUpgrade">
-		<execute macro="SignIn#signIn" />
-
-		<execute macro="Smoke#viewWelcomePage" />
-
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Web Content" />
 		</execute>

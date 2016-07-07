@@ -5,6 +5,14 @@
 	<property name="portal.version" value="6.2.3" />
 	<property name="testray.main.component.name" value="Upgrades" />
 
+	<command name="View623CalendarArchive" priority="3">
+		<property name="osgi.modules.includes" value="calevent-importer" />
+		<property name="portal.upgrades" value="true" />
+		<property name="test.assert.warning.exceptions" value="true" />
+
+		<execute macro="Upgrade#viewCalendar" />
+	</command>
+
 	<command name="View623DataArchive" priority="5">
 		<property name="portal.acceptance" value="true" />
 		<property name="portal.upgrades" value="true" />

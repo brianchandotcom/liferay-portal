@@ -42,26 +42,6 @@ public class SelectTag extends BaseSelectTag {
 	 */
 	@Deprecated
 	@Override
-	public int doEndTag() throws JspException {
-		return super.doEndTag();
-	}
-
-	@Override
-	public int doStartTag() throws JspException {
-		addModelValidatorTags();
-
-		if (getRequired()) {
-			addRequiredValidatorTag();
-		}
-
-		return super.doStartTag();
-	}
-
-	/**
-	 * @deprecated As of 7.0.1, with no direct replacement
-	 */
-	@Deprecated
-	@Override
 	public void addRequiredValidatorTag() {
 		super.addRequiredValidatorTag();
 	}
@@ -75,6 +55,26 @@ public class SelectTag extends BaseSelectTag {
 		String validatorName, ValidatorTag validatorTag) {
 
 		super.addValidatorTag(validatorName, validatorTag);
+	}
+
+	/**
+	 * @deprecated As of 7.0.1, with no direct replacement
+	 */
+	@Deprecated
+	@Override
+	public int doEndTag() throws JspException {
+		return super.doEndTag();
+	}
+
+	@Override
+	public int doStartTag() throws JspException {
+		addModelValidatorTags();
+
+		if (getRequired()) {
+			addRequiredValidatorTag();
+		}
+
+		return super.doStartTag();
 	}
 
 	@Override

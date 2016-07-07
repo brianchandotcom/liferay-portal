@@ -240,6 +240,7 @@
 
 	<command name="editFieldSet">
 		<execute macro="KaleoFormsAdmin#viewNewProcessProgressBar">
+			<var name="kfFieldSetName" value="${kfFieldSetName}" />
 			<var name="kfProgressName" value="Fields" />
 			<var name="kfProgressStep" value="2" />
 		</execute>

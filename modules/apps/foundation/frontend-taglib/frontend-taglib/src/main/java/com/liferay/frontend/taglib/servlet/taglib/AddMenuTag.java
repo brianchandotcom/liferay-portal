@@ -21,6 +21,7 @@ import com.liferay.taglib.util.IncludeTag;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
@@ -33,27 +34,11 @@ public class AddMenuTag extends IncludeTag {
 
 	@Override
 	public int doEndTag() throws JspException {
-		List<AddMenuItem> addMenuFavItems =
-			(List<AddMenuItem>)request.getAttribute(
-				"liferay-frontend:add-menu:addMenuFavItems");
-
 		List<AddMenuItem> addMenuItems =
 			(List<AddMenuItem>)request.getAttribute(
 				"liferay-frontend:add-menu:addMenuItems");
 
-		List<AddMenuItem> addMenuPrimaryItems =
-			(List<AddMenuItem>)request.getAttribute(
-				"liferay-frontend:add-menu:addMenuPrimaryItems");
-
-		List<AddMenuItem> addMenuRecentItems =
-			(List<AddMenuItem>)request.getAttribute(
-				"liferay-frontend:add-menu:addMenuRecentItems");
-
-		if (ListUtil.isEmpty(addMenuFavItems) &&
-			ListUtil.isEmpty(addMenuItems) &&
-			ListUtil.isEmpty(addMenuRecentItems) &&
-			ListUtil.isEmpty(addMenuPrimaryItems)) {
-
+		if (ListUtil.isEmpty(addMenuItems)) {
 			return SKIP_BODY;
 		}
 
@@ -63,18 +48,7 @@ public class AddMenuTag extends IncludeTag {
 	@Override
 	public int doStartTag() {
 		request.setAttribute(
-			"liferay-frontend:add-menu:addMenuFavItems", _addMenuFavItems);
-
-		request.setAttribute(
 			"liferay-frontend:add-menu:addMenuItems", _addMenuItems);
-
-		request.setAttribute(
-			"liferay-frontend:add-menu:addMenuPrimaryItems",
-			_addMenuPrimaryItems);
-
-		request.setAttribute(
-			"liferay-frontend:add-menu:addMenuRecentItems",
-			_addMenuRecentItems);
 
 		return EVAL_BODY_INCLUDE;
 	}
@@ -100,12 +74,100 @@ public class AddMenuTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
-		_addMenuFavItems = new ArrayList<>();
 		_addMenuItems = new ArrayList<>();
-		_addMenuPrimaryItems = new ArrayList<>();
-		_addMenuRecentItems = new ArrayList<>();
 		_maxItems = AddMenuKeys.MAX_ITEMS;
 		_viewMoreUrl = null;
+	}
+
+	protected List<AddMenuItem> getAddMenuItems() {
+		List<AddMenuItem> addMenuItems =
+			(List<AddMenuItem>)request.getAttribute(
+				"liferay-frontend:add-menu:addMenuItems");
+
+		return addMenuItems;
+	}
+
+	protected int getAddMenuItemsCount() {
+		List<AddMenuItem> addMenuItems = getAddMenuItems();
+
+		return addMenuItems.size();
+	}
+
+	protected List<MenuItemGroup> getMenuItems() {
+		List<MenuItemGroup> menuItems = new ArrayList<>();
+
+		if (getAddMenuItemsCount() == 1) {
+			MenuItemGroup menuItem = new MenuItemGroup(
+				AddMenuKeys.getAddMenuTypeLabel(
+					AddMenuKeys.AddMenuType.DEFAULT),
+				getAddMenuItems());
+
+			menuItems.add(menuItem);
+
+			return menuItems;
+		}
+
+		List<AddMenuItem> primaryAddMenuItems = new ArrayList<>();
+		List<AddMenuItem> favoriteAddMenuItems = new ArrayList<>();
+		List<AddMenuItem> recentAddMenuItems = new ArrayList<>();
+		List<AddMenuItem> defaultAddMenuItems = new ArrayList<>();
+
+		for (AddMenuItem addMenuItem : getAddMenuItems()) {
+			if (Objects.equals(
+					AddMenuKeys.AddMenuType.DEFAULT, addMenuItem.getType())) {
+
+				defaultAddMenuItems.add(addMenuItem);
+			}
+			else if (Objects.equals(
+						AddMenuKeys.AddMenuType.FAVORITE,
+						addMenuItem.getType())) {
+
+				favoriteAddMenuItems.add(addMenuItem);
+			}
+			else if (Objects.equals(
+						AddMenuKeys.AddMenuType.PRIMARY,
+						addMenuItem.getType())) {
+
+				primaryAddMenuItems.add(addMenuItem);
+			}
+			else if (Objects.equals(
+						AddMenuKeys.AddMenuType.RECENT,
+						addMenuItem.getType())) {
+
+				recentAddMenuItems.add(addMenuItem);
+			}
+		}
+
+		boolean showDivider = false;
+
+		if (!primaryAddMenuItems.isEmpty() &&
+			(!defaultAddMenuItems.isEmpty() || !favoriteAddMenuItems.isEmpty() ||
+				!recentAddMenuItems.isEmpty())) {
+
+			showDivider = true;
+		}
+
+		menuItems.add(new MenuItemGroup(primaryAddMenuItems, showDivider));
+
+		showDivider = false;
+
+		if ((primaryAddMenuItems.size() < _maxItems) &&
+			!favoriteAddMenuItems.isEmpty() &&
+			(!recentAddMenuItems.isEmpty() || !defaultAddMenuItems.isEmpty())) {
+
+			showDivider = true;
+		}
+
+		MenuItemGroup favoriteMenuItem = new MenuItemGroup(
+			AddMenuKeys.getAddMenuTypeLabel(AddMenuKeys.AddMenuType.FAVORITE),
+			favoriteAddMenuItems, showDivider);
+
+		menuItems.add(favoriteMenuItem);
+
+		menuItems.add(new MenuItemGroup(recentAddMenuItems));
+		menuItems.add(new MenuItemGroup(defaultAddMenuItems));
+
+		return menuItems;
 	}
 
 	@Override
@@ -115,21 +177,17 @@ public class AddMenuTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		List<AddMenuItem> addMenuItems =
-			(List<AddMenuItem>)request.getAttribute(
-				"liferay-frontend:add-menu:addMenuItems");
-
 		request.setAttribute(
-			"liferay-frontend:add-menu:addMenuItems", addMenuItems);
+			"liferay-frontend:add-menu:addMenuItemsCount",
+			getAddMenuItemsCount());
 		request.setAttribute("liferay-frontend:add-menu:maxItems", _maxItems);
+		request.setAttribute(
+			"liferay-frontend:add-menu:menuItems", getMenuItems());
 		request.setAttribute(
 			"liferay-frontend:add-menu:viewMoreUrl", _viewMoreUrl);
 	}
 
-	private List<AddMenuItem> _addMenuFavItems = new ArrayList<>();
 	private List<AddMenuItem> _addMenuItems = new ArrayList<>();
-	private List<AddMenuItem> _addMenuPrimaryItems = new ArrayList<>();
-	private List<AddMenuItem> _addMenuRecentItems = new ArrayList<>();
 	private int _maxItems = AddMenuKeys.MAX_ITEMS;
 	private String _viewMoreUrl;
 

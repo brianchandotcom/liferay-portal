@@ -1992,6 +1992,8 @@ AUI.add(
 									if (cache.start > 0 && listNode.get('scrollTop') === 0) {
 										listNode.set('scrollTop', 50);
 									}
+
+									instance._hideLoader();
 								}
 							);
 						}

@@ -1592,9 +1592,10 @@
 			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="Workflow#viewCompletedTask">
+		<execute macro="Workflow#viewPendingTasks">
 			<var name="workflowAssetTitle" value="${kfProcessName}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowDefinition" value="Single Approver" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -1859,9 +1860,10 @@
 			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="Workflow#viewCompletedTask">
+		<execute macro="Workflow#viewPendingTasks">
 			<var name="workflowAssetTitle" value="${kfProcessName}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowDefinition" value="Single Approver" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -6228,9 +6230,10 @@
 			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="Workflow#viewCompletedTask">
+		<execute macro="Workflow#viewPendingTasks">
 			<var name="workflowAssetTitle" value="${kfProcessName}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowDefinition" value="Single Approver" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -6713,9 +6716,10 @@
 			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="Workflow#viewCompletedTask">
+		<execute macro="Workflow#viewPendingTasks">
 			<var name="workflowAssetTitle" value="${kfProcessName}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowDefinition" value="Single Approver" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -6888,9 +6892,10 @@
 			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="Workflow#viewCompletedTask">
+		<execute macro="Workflow#viewPendingTasks">
 			<var name="workflowAssetTitle" value="${kfProcessName}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowDefinition" value="Single Approver" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 

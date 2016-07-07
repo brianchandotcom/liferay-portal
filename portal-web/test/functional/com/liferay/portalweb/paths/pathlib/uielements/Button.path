@@ -369,6 +369,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>GENERATE</td>
+	<td>//button[contains(.,'Generate')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>I_AGREE</td>
 	<td>//button[contains(.,'I Agree')]</td>
 	<td></td>

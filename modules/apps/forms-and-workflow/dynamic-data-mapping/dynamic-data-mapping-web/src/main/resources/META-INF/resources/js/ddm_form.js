@@ -1542,6 +1542,7 @@ AUI.add(
 
 						return {
 							dialog:	{
+								cssClass: 'lfr-ddm-link-to-page-modal',
 								height: 600,
 								modal: true,
 								on: {

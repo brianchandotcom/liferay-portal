@@ -2657,6 +2657,11 @@
 
 		<execute macro="DDLNavigator#gotoAddDisplayTemplate" />
 
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
 		<for list="Device,Company,PermissionChecker" param="fieldName">
 			<var name="key_fieldName" value="${fieldName}" />
 
@@ -2676,7 +2681,7 @@
 
 			<execute function="AssertTextEquals" locator1="JavaDocs#JAVA_CLASS_NAME" value1="${fieldName}" />
 
-			<execute function="Close#closeAndSelectWindow" locator1="title=New Template for Structure: Contacts - Liferay" />
+			<execute function="Close#closeAndSelectWindow" locator1="title=New Template for Structure: Contacts - ${siteName}" />
 		</for>
 	</command>
 

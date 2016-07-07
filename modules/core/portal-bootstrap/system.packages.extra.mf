@@ -1,11 +1,11 @@
 Manifest-Version: 1.0
-Bnd-LastModified: 1465496756127
+Bnd-LastModified: 1467935019239
 Bundle-ManifestVersion: 2
 Bundle-Name: system.packages.extra
 Bundle-SymbolicName: system.packages.extra
 Bundle-Vendor: Liferay, Inc.
 Bundle-Version: 1.0.0
-Created-By: 1.7.0_71 (Oracle Corporation)
+Created-By: 1.8.0_25 (Oracle Corporation)
 Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  u.impl;version="4.0.1";uses:="com.liferay.ibm.icu.math,com.liferay.ib
  m.icu.text,com.liferay.ibm.icu.util",com.liferay.ibm.icu.impl.coll;ve
@@ -2070,11 +2070,11 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  ernel.servlet.taglib.ui,com.liferay.portal.kernel.systemevent,com.lif
  eray.portal.kernel.theme,com.liferay.portal.kernel.transaction,com.li
  feray.portal.kernel.util",com.liferay.blogs.kernel.service.persistenc
- e;version="1.0.0";uses:="com.liferay.blogs.kernel.exception,com.lifer
+ e;version="1.1.0";uses:="com.liferay.blogs.kernel.exception,com.lifer
  ay.blogs.kernel.model,com.liferay.portal.kernel.dao.orm,com.liferay.p
  ortal.kernel.service,com.liferay.portal.kernel.service.persistence,co
  m.liferay.portal.kernel.util",com.liferay.blogs.kernel.util.comparato
- r;version="1.0.0";uses:="com.liferay.blogs.kernel.model,com.liferay.p
+ r;version="1.1.0";uses:="com.liferay.blogs.kernel.model,com.liferay.p
  ortal.kernel.util",com.liferay.counter;version="1.0.0",com.liferay.co
  unter.kernel;version="2.2.0",com.liferay.counter.kernel.exception;ver
  sion="1.0.0";uses:="com.liferay.portal.kernel.exception",com.liferay.
@@ -4255,5 +4255,5 @@ Provide-Capability: liferay.resource.bundle;bundle.symbolic.name="syst
 Require-Capability: osgi.extender;filter:="(&(osgi.extender=jsp.taglib
  )(uri=http://java.sun.com/portlet_2_0))",osgi.extender;filter:="(&(os
  gi.extender=jsp.taglib)(uri=http://liferay.com/tld/util))",osgi.ee;fi
- lter:="(&(osgi.ee=JavaSE)(version=1.7))"
+ lter:="(&(osgi.ee=JavaSE)(version=1.8))"
 Tool: Bnd-3.2.0.201605172007

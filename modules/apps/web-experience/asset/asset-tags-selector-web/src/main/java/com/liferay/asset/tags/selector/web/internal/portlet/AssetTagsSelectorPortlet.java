@@ -14,6 +14,7 @@
 
 package com.liferay.asset.tags.selector.web.internal.portlet;
 
+import com.liferay.asset.tags.selector.web.internal.contants.AssetTagsSelectorPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 import javax.portlet.Portlet;
@@ -36,6 +37,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.display-name=Asset Tags Selector",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
+		"javax.portlet.name=" + AssetTagsSelectorPortletKeys.ASSET_TAGS_SELECTOR,
 		"javax.portlet.security-role-ref=guest,power-user,user",
 		"javax.portlet.supports.mime-type=text/html"
 	},

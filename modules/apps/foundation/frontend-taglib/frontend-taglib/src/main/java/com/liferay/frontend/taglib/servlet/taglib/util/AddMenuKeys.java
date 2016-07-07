@@ -19,7 +19,7 @@ package com.liferay.frontend.taglib.servlet.taglib.util;
  */
 public class AddMenuKeys {
 
-	public static final int MAX_ITEMS = 7;
+	public static final int MAX_ITEMS = Integer.MAX_VALUE;
 
 	public enum AddMenuType {
 

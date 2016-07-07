@@ -53,6 +53,10 @@ public abstract class BaseSelectTag extends com.liferay.taglib.BaseValidatorTagS
 		return _disabled;
 	}
 
+	public java.lang.String getField() {
+		return _field;
+	}
+
 	public boolean getFirst() {
 		return _first;
 	}
@@ -95,6 +99,10 @@ public abstract class BaseSelectTag extends com.liferay.taglib.BaseValidatorTagS
 
 	public boolean getLocalizeLabel() {
 		return _localizeLabel;
+	}
+
+	public java.lang.Class<?> getModel() {
+		return _model;
 	}
 
 	public boolean getMultiple() {
@@ -179,6 +187,12 @@ public abstract class BaseSelectTag extends com.liferay.taglib.BaseValidatorTagS
 		setScopedAttribute("disabled", disabled);
 	}
 
+	public void setField(java.lang.String field) {
+		_field = field;
+
+		setScopedAttribute("field", field);
+	}
+
 	public void setFirst(boolean first) {
 		_first = first;
 
@@ -243,6 +257,12 @@ public abstract class BaseSelectTag extends com.liferay.taglib.BaseValidatorTagS
 		_localizeLabel = localizeLabel;
 
 		setScopedAttribute("localizeLabel", localizeLabel);
+	}
+
+	public void setModel(java.lang.Class<?> model) {
+		_model = model;
+
+		setScopedAttribute("model", model);
 	}
 
 	public void setMultiple(boolean multiple) {
@@ -332,6 +352,7 @@ public abstract class BaseSelectTag extends com.liferay.taglib.BaseValidatorTagS
 		_cssClass = null;
 		_data = null;
 		_disabled = false;
+		_field = null;
 		_first = false;
 		_helpMessage = null;
 		_id = null;
@@ -343,6 +364,7 @@ public abstract class BaseSelectTag extends com.liferay.taglib.BaseValidatorTagS
 		_listType = null;
 		_listTypeFieldName = null;
 		_localizeLabel = true;
+		_model = null;
 		_multiple = false;
 		_name = null;
 		_onChange = null;
@@ -375,6 +397,7 @@ public abstract class BaseSelectTag extends com.liferay.taglib.BaseValidatorTagS
 		setNamespacedAttribute(request, "cssClass", _cssClass);
 		setNamespacedAttribute(request, "data", _data);
 		setNamespacedAttribute(request, "disabled", _disabled);
+		setNamespacedAttribute(request, "field", _field);
 		setNamespacedAttribute(request, "first", _first);
 		setNamespacedAttribute(request, "helpMessage", _helpMessage);
 		setNamespacedAttribute(request, "id", _id);
@@ -386,6 +409,7 @@ public abstract class BaseSelectTag extends com.liferay.taglib.BaseValidatorTagS
 		setNamespacedAttribute(request, "listType", _listType);
 		setNamespacedAttribute(request, "listTypeFieldName", _listTypeFieldName);
 		setNamespacedAttribute(request, "localizeLabel", _localizeLabel);
+		setNamespacedAttribute(request, "model", _model);
 		setNamespacedAttribute(request, "multiple", _multiple);
 		setNamespacedAttribute(request, "name", _name);
 		setNamespacedAttribute(request, "onChange", _onChange);
@@ -414,6 +438,7 @@ public abstract class BaseSelectTag extends com.liferay.taglib.BaseValidatorTagS
 	private java.lang.String _cssClass = null;
 	private java.util.Map<java.lang.String, java.lang.Object> _data = null;
 	private boolean _disabled = false;
+	private java.lang.String _field = null;
 	private boolean _first = false;
 	private java.lang.String _helpMessage = null;
 	private java.lang.String _id = null;
@@ -425,6 +450,7 @@ public abstract class BaseSelectTag extends com.liferay.taglib.BaseValidatorTagS
 	private java.lang.String _listType = null;
 	private java.lang.String _listTypeFieldName = null;
 	private boolean _localizeLabel = true;
+	private java.lang.Class<?> _model = null;
 	private boolean _multiple = false;
 	private java.lang.String _name = null;
 	private java.lang.String _onChange = null;

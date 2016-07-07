@@ -1359,6 +1359,11 @@
 				<outputType>boolean</outputType>
 			</attribute>
 			<attribute>
+				<name>field</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
 				<description>Whether the component should be the first element of the form. The default value is <![CDATA[<code>false</code>]]>.</description>
 				<name>first</name>
 				<inputType>boolean</inputType>
@@ -1422,6 +1427,12 @@
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>
 				<defaultValue>true</defaultValue>
+			</attribute>
+			<attribute>
+				<description>Sets the class for the bean object.</description>
+				<name>model</name>
+				<inputType><![CDATA[java.lang.Class<?>]]></inputType>
+				<outputType><![CDATA[java.lang.Class<?>]]></outputType>
 			</attribute>
 			<attribute>
 				<description>Whether multiple options can be selected. If set to <![CDATA[<code>true</code>]]>, the select field expands to allow for multiple selections. The default value is <![CDATA[<code>false</code>]]>.</description>

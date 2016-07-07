@@ -15,13 +15,16 @@
 package com.liferay.taglib.aui;
 
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
+import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.servlet.taglib.aui.ValidatorTag;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.TextFormatter;
+import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.aui.base.BaseSelectTag;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -45,6 +48,8 @@ public class SelectTag extends BaseSelectTag {
 
 	@Override
 	public int doStartTag() throws JspException {
+		addModelValidatorTags();
+
 		if (getRequired()) {
 			addRequiredValidatorTag();
 		}
@@ -73,8 +78,59 @@ public class SelectTag extends BaseSelectTag {
 	}
 
 	@Override
+	public String getField() {
+		String field = super.getField();
+
+		if (Validator.isNull(field)) {
+			field = getName();
+		}
+
+		return field;
+	}
+
+	@Override
 	public String getInputName() {
 		return getName();
+	}
+
+	@Override
+	public Class<?> getModel() {
+		Class<?> model = super.getModel();
+
+		if (model == null) {
+			model = (Class<?>)pageContext.getAttribute(
+				"aui:model-context:model");
+		}
+
+		return model;
+	}
+
+	protected void addModelValidatorTags() {
+		Class<?> model = getModel();
+
+		if (model == null) {
+			return;
+		}
+
+		List<Tuple> modelValidators = ModelHintsUtil.getValidators(
+			model.getName(), getField());
+
+		if (modelValidators == null) {
+			return;
+		}
+
+		for (Tuple modelValidator : modelValidators) {
+			String validatorName = (String)modelValidator.getObject(1);
+			String validatorErrorMessage = (String)modelValidator.getObject(2);
+			String validatorValue = (String)modelValidator.getObject(3);
+			boolean customValidator = (Boolean)modelValidator.getObject(4);
+
+			ValidatorTag validatorTag = new ValidatorTagImpl(
+				validatorName, validatorErrorMessage, validatorValue,
+				customValidator);
+
+			addValidatorTag(validatorName, validatorTag);
+		}
 	}
 
 	@Override
@@ -92,12 +148,20 @@ public class SelectTag extends BaseSelectTag {
 			bean = pageContext.getAttribute("aui:model-context:bean");
 		}
 
+		Class<?> model = getModel();
+
 		String name = getName();
 
 		int pos = name.indexOf(StringPool.DOUBLE_DASH);
 
 		if (pos != -1) {
 			name = name.substring(pos + 2, name.length() - 2);
+		}
+
+		String field = getField();
+
+		if (Validator.isNull(field)) {
+			field = getName();
 		}
 
 		String id = getId();
@@ -140,9 +204,11 @@ public class SelectTag extends BaseSelectTag {
 		}
 
 		setNamespacedAttribute(request, "bean", bean);
+		setNamespacedAttribute(request, "field", field);
 		setNamespacedAttribute(request, "id", id);
 		setNamespacedAttribute(request, "label", label);
 		setNamespacedAttribute(request, "listTypeFieldName", listTypeFieldName);
+		setNamespacedAttribute(request, "model", model);
 		setNamespacedAttribute(request, "title", String.valueOf(title));
 		setNamespacedAttribute(request, "value", value);
 

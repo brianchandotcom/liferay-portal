@@ -87,87 +87,91 @@ public class AddMenuTag extends IncludeTag {
 		return addMenuItems;
 	}
 
-	protected int getAddMenuItemsCount() {
-		List<AddMenuItem> addMenuItems = getAddMenuItems();
+	protected List<MenuItemGroup> getMenuItemGroups() {
+		List<MenuItemGroup> menuItemGroups = new ArrayList<>();
 
-		return addMenuItems.size();
-	}
+		if (getMenuItemsCount() == 1) {
+			List<MenuItem> menuItems = new ArrayList<>();
 
-	protected List<MenuItemGroup> getMenuItems() {
-		List<MenuItemGroup> menuItems = new ArrayList<>();
+			menuItems.addAll(getAddMenuItems());
 
-		if (getAddMenuItemsCount() == 1) {
 			MenuItemGroup menuItem = new MenuItemGroup(
 				AddMenuKeys.getAddMenuTypeLabel(
 					AddMenuKeys.AddMenuType.DEFAULT),
-				getAddMenuItems());
+				menuItems);
 
-			menuItems.add(menuItem);
+			menuItemGroups.add(menuItem);
 
-			return menuItems;
+			return menuItemGroups;
 		}
 
-		List<AddMenuItem> primaryAddMenuItems = new ArrayList<>();
-		List<AddMenuItem> favoriteAddMenuItems = new ArrayList<>();
-		List<AddMenuItem> recentAddMenuItems = new ArrayList<>();
-		List<AddMenuItem> defaultAddMenuItems = new ArrayList<>();
+		List<MenuItem> primaryMenuItems = new ArrayList<>();
+		List<MenuItem> favoriteMenuItems = new ArrayList<>();
+		List<MenuItem> recentMenuItems = new ArrayList<>();
+		List<MenuItem> defaultMenuItems = new ArrayList<>();
 
 		for (AddMenuItem addMenuItem : getAddMenuItems()) {
 			if (Objects.equals(
 					AddMenuKeys.AddMenuType.DEFAULT, addMenuItem.getType())) {
 
-				defaultAddMenuItems.add(addMenuItem);
+				defaultMenuItems.add(addMenuItem);
 			}
 			else if (Objects.equals(
 						AddMenuKeys.AddMenuType.FAVORITE,
 						addMenuItem.getType())) {
 
-				favoriteAddMenuItems.add(addMenuItem);
+				favoriteMenuItems.add(addMenuItem);
 			}
 			else if (Objects.equals(
 						AddMenuKeys.AddMenuType.PRIMARY,
 						addMenuItem.getType())) {
 
-				primaryAddMenuItems.add(addMenuItem);
+				primaryMenuItems.add(addMenuItem);
 			}
 			else if (Objects.equals(
 						AddMenuKeys.AddMenuType.RECENT,
 						addMenuItem.getType())) {
 
-				recentAddMenuItems.add(addMenuItem);
+				recentMenuItems.add(addMenuItem);
 			}
 		}
 
 		boolean showDivider = false;
 
-		if (!primaryAddMenuItems.isEmpty() &&
-			(!defaultAddMenuItems.isEmpty() || !favoriteAddMenuItems.isEmpty() ||
-				!recentAddMenuItems.isEmpty())) {
+		if (!primaryMenuItems.isEmpty() &&
+			(!defaultMenuItems.isEmpty() || !favoriteMenuItems.isEmpty() ||
+			 !recentMenuItems.isEmpty())) {
 
 			showDivider = true;
 		}
 
-		menuItems.add(new MenuItemGroup(primaryAddMenuItems, showDivider));
+		menuItemGroups.add(new MenuItemGroup(primaryMenuItems, showDivider));
 
 		showDivider = false;
 
-		if ((primaryAddMenuItems.size() < _maxItems) &&
-			!favoriteAddMenuItems.isEmpty() &&
-			(!recentAddMenuItems.isEmpty() || !defaultAddMenuItems.isEmpty())) {
+		if ((primaryMenuItems.size() < _maxItems) &&
+			!favoriteMenuItems.isEmpty() &&
+			(!recentMenuItems.isEmpty() || !defaultMenuItems.isEmpty())) {
 
 			showDivider = true;
 		}
 
 		MenuItemGroup favoriteMenuItem = new MenuItemGroup(
 			AddMenuKeys.getAddMenuTypeLabel(AddMenuKeys.AddMenuType.FAVORITE),
-			favoriteAddMenuItems, showDivider);
+			favoriteMenuItems, showDivider);
 
-		menuItems.add(favoriteMenuItem);
+		menuItemGroups.add(favoriteMenuItem);
 
-		menuItems.add(new MenuItemGroup(recentAddMenuItems));
-		menuItems.add(new MenuItemGroup(defaultAddMenuItems));
+		menuItemGroups.add(new MenuItemGroup(recentMenuItems));
+		menuItemGroups.add(new MenuItemGroup(defaultMenuItems));
 
-		return menuItems;
+		return menuItemGroups;
+	}
+
+	protected int getMenuItemsCount() {
+		List<AddMenuItem> addMenuItems = getAddMenuItems();
+
+		return addMenuItems.size();
 	}
 
 	@Override
@@ -177,12 +181,11 @@ public class AddMenuTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute(
-			"liferay-frontend:add-menu:addMenuItemsCount",
-			getAddMenuItemsCount());
 		request.setAttribute("liferay-frontend:add-menu:maxItems", _maxItems);
 		request.setAttribute(
-			"liferay-frontend:add-menu:menuItems", getMenuItems());
+			"liferay-frontend:add-menu:menuItemGroups", getMenuItemGroups());
+		request.setAttribute(
+			"liferay-frontend:add-menu:menuItemsCount", getMenuItemsCount());
 		request.setAttribute(
 			"liferay-frontend:add-menu:viewMoreUrl", _viewMoreUrl);
 	}

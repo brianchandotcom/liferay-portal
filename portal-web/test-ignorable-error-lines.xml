@@ -56,7 +56,7 @@
 			<contains>INFO:</contains>
 			<matches></matches>
 		</ignore-error>
-		<ignore-error description="">
+		<ignore-error description="LRQA-24859">
 			<contains>No binary licenses found</contains>
 			<matches></matches>
 		</ignore-error>

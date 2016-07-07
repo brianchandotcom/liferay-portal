@@ -121,21 +121,22 @@ public class Session {
 
 		headers.add(syncBuildHeader);
 
-		String syncDevice = null;
+		String syncDeviceType = null;
 
 		if (OSDetector.isApple()) {
-			syncDevice = "desktop-mac";
+			syncDeviceType = "desktop-mac";
 		}
 		else if (OSDetector.isLinux()) {
-			syncDevice = "desktop-linux";
+			syncDeviceType = "desktop-linux";
 		}
 		else if (OSDetector.isWindows()) {
-			syncDevice = "desktop-windows";
+			syncDeviceType = "desktop-windows";
 		}
 
-		Header syncDeviceHeader = new BasicHeader("Sync-Device", syncDevice);
+		Header syncDeviceTypeHeader = 
+			new BasicHeader("Sync-Device", syncDeviceType);
 
-		headers.add(syncDeviceHeader);
+		headers.add(syncDeviceTypeHeader);
 
 		httpClientBuilder.setDefaultHeaders(headers);
 

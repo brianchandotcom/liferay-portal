@@ -22,4 +22,7 @@ public class SyncAdminPortletKeys {
 	public static final String SYNC_ADMIN_PORTLET =
 		"com_liferay_sync_connector_web_portlet_SyncAdminPortlet";
 
+	public static final String SYNC_DEVICES_PORTLET =
+		"com_liferay_sync_connector_web_portlet_SyncDevicesPortlet";
+
 }

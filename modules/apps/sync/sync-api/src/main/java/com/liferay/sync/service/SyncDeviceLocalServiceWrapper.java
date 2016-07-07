@@ -85,10 +85,11 @@ public class SyncDeviceLocalServiceWrapper implements SyncDeviceLocalService,
 
 	@Override
 	public com.liferay.sync.model.SyncDevice addSyncDevice(long userId,
-		java.lang.String type, int buildNumber, int featureSet)
+		java.lang.String type, long buildNumber, java.lang.String host,
+		int featureSet)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _syncDeviceLocalService.addSyncDevice(userId, type, buildNumber,
-			featureSet);
+			host, featureSet);
 	}
 
 	/**
@@ -189,11 +190,11 @@ public class SyncDeviceLocalServiceWrapper implements SyncDeviceLocalService,
 
 	@Override
 	public com.liferay.sync.model.SyncDevice updateSyncDevice(
-		long syncDeviceId, java.lang.String type, int buildNumber,
-		int featureSet, int status)
+		long syncDeviceId, java.lang.String type, long buildNumber,
+		int featureSet, java.lang.String host, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _syncDeviceLocalService.updateSyncDevice(syncDeviceId, type,
-			buildNumber, featureSet, status);
+			buildNumber, featureSet, host, status);
 	}
 
 	/**
@@ -284,6 +285,15 @@ public class SyncDeviceLocalServiceWrapper implements SyncDeviceLocalService,
 	public java.util.List<com.liferay.sync.model.SyncDevice> getSyncDevices(
 		int start, int end) {
 		return _syncDeviceLocalService.getSyncDevices(start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.sync.model.SyncDevice> getSyncDevices(
+		long userId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _syncDeviceLocalService.getSyncDevices(userId, start, end,
+			orderByComparator);
 	}
 
 	@Override

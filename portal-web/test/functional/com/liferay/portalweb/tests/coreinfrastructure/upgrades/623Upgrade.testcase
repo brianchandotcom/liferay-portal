@@ -6,7 +6,6 @@
 	<property name="testray.main.component.name" value="Upgrades" />
 
 	<command name="View623CalendarArchive" priority="3">
-		<property name="osgi.modules.includes" value="calevent-importer" />
 		<property name="portal.upgrades" value="true" />
 		<property name="test.assert.warning.exceptions" value="true" />
 

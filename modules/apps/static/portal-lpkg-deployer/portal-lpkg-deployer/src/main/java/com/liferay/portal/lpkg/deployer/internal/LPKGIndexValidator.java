@@ -65,6 +65,7 @@ import java.util.Set;
 import java.util.concurrent.Future;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.zip.ZipFile;
 
 import org.osgi.framework.Bundle;
 import org.osgi.service.component.annotations.Component;
@@ -180,6 +181,12 @@ public class LPKGIndexValidator {
 
 	public void setLPKGDeployer(LPKGDeployer lpkgDeployer) {
 		_lpkgDeployer = lpkgDeployer;
+	}
+
+	public void setLPKGItemBlackListMap(
+		Map<String, Set<String>> lpkgItemBlacklistMap) {
+
+		_lpkgItemBlacklistMap = lpkgItemBlacklistMap;
 	}
 
 	public void updateIntegrityProperties() {
@@ -334,7 +341,22 @@ public class LPKGIndexValidator {
 
 		try {
 			for (File lpkgFile : lpkgFiles) {
-				Indexer indexer = _indexerFactory.createLPKGIndexer(lpkgFile);
+				Set<String> blacklistSet = null;
+
+				try (ZipFile zipFile = new ZipFile(lpkgFile)) {
+					Properties properties = new Properties();
+
+					properties.load(
+						zipFile.getInputStream(
+							zipFile.getEntry(
+								"liferay-marketplace.properties")));
+
+					blacklistSet = _lpkgItemBlacklistMap.get(
+						properties.getProperty("title"));
+				}
+
+				Indexer indexer = _indexerFactory.createLPKGIndexer(
+					lpkgFile, blacklistSet);
 
 				indexer.index(unsyncByteArrayOutputStream);
 
@@ -415,6 +437,7 @@ public class LPKGIndexValidator {
 		PropsValues.MODULE_FRAMEWORK_BASE_DIR, Indexer.DIR_NAME_TARGET_PLATFORM,
 		"integrity.properties");
 	private LPKGDeployer _lpkgDeployer;
+	private Map<String, Set<String>> _lpkgItemBlacklistMap;
 	private final ProcessConfig _processConfig;
 
 }

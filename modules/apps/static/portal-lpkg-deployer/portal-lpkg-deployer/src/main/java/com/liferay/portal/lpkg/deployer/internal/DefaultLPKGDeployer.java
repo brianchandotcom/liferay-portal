@@ -43,12 +43,16 @@ import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Dictionary;
 import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.jar.Attributes;
 import java.util.jar.JarFile;
@@ -230,9 +234,13 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 			URLStreamHandlerService.class.getName(),
 			new LPKGURLStreamHandlerService(_urls), properties);
 
+		Map<String, Set<String>> lpkgItemBlacklistMap = _parseLPKGItemBlacklist(
+			bundleContext);
+
 		_lpkgBundleTracker = new BundleTracker<>(
 			bundleContext, ~Bundle.UNINSTALLED,
-			new LPKGBundleTrackerCustomizer(bundleContext, _urls));
+			new LPKGBundleTrackerCustomizer(
+				bundleContext, _urls, lpkgItemBlacklistMap));
 
 		_lpkgBundleTracker.open();
 
@@ -271,6 +279,7 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 			});
 
 		_lpkgIndexValidator.setLPKGDeployer(this);
+		_lpkgIndexValidator.setLPKGItemBlackListMap(lpkgItemBlacklistMap);
 
 		boolean updateIntegrityProperties = _lpkgIndexValidator.validate(
 			lpkgFiles);
@@ -318,6 +327,30 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 		finally {
 			LPKGIndexValidatorThreadLocal.setEnabled(enabled);
 		}
+	}
+
+	private Map<String, Set<String>> _parseLPKGItemBlacklist(
+		BundleContext bundleContext) {
+
+		Map<String, Set<String>> lpkgItemBlacklistMap = new HashMap<>();
+
+		for (String entry : StringUtil.split(
+				bundleContext.getProperty("lpkg.item.blacklist"))) {
+
+			String[] pair = StringUtil.split(entry, ':');
+
+			Set<String> items = lpkgItemBlacklistMap.get(pair[0]);
+
+			if (items == null) {
+				items = new HashSet<>();
+
+				lpkgItemBlacklistMap.put(pair[0], items);
+			}
+
+			items.addAll(Arrays.asList(StringUtil.split(pair[1], ';')));
+		}
+
+		return lpkgItemBlacklistMap;
 	}
 
 	/**

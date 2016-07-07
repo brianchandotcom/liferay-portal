@@ -201,6 +201,42 @@
 		</execute>
 	</command>
 
+	<command name="publishWCDraft">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoViewStatus">
+			<var name="webContentStatus" value="Draft" />
+			<var name="webContentTitle" value="Web Content Draft Title" />
+		</execute>
+
+		<execute macro="WebContent#viewStatus">
+			<var name="webContentContent" value="Web Content Draft Content" />
+			<var name="webContentStatus" value="Draft" />
+			<var name="webContentTitle" value="Web Content Draft Title" />
+		</execute>
+
+		<execute macro="WebContent#editCP">
+			<var name="webContentContentEdit" value="Web Content Content" />
+			<var name="webContentTitle" value="Web Content Draft Title" />
+			<var name="webContentTitleEdit" value="Web Content Title" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoViewStatus">
+			<var name="webContentStatus" value="Approved" />
+			<var name="webContentTitle" value="Web Content Title" />
+		</execute>
+
+		<execute macro="WebContent#viewStatus">
+			<var name="webContentContent" value="Web Content Content" />
+			<var name="webContentStatus" value="Approved" />
+			<var name="webContentTitle" value="Web Content Title" />
+		</execute>
+	</command>
+
 	<command name="searchForAssetsAfterUpgrade">
 		<execute macro="Navigator#openURL" />
 

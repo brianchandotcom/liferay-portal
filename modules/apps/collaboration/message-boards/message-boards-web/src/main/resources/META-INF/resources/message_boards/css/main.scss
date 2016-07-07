@@ -2,6 +2,10 @@
 @import "mixins";
 
 .portlet-asset-publisher, .portlet-message-boards, .portlet-trash {
+	.advanced-reply {
+		float: right;
+	}
+
 	.category-subscriptions {
 		clear: both;
 		margin-bottom: 1em;

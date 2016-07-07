@@ -41,47 +41,35 @@ MBBreadcrumbUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
 		<liferay-util:include page="/message_boards/top_links.jsp" servletContext="<%= application %>" />
 	</c:if>
 
-	<c:choose>
-		<c:when test="<%= includeFormTag %>">
-			<aui:form name="fm">
-				<aui:input name="breadcrumbsCategoryId" type="hidden" value="<%= category.getCategoryId() %>" />
-				<aui:input name="breadcrumbsMessageId" type="hidden" value="<%= message.getMessageId() %>" />
-				<aui:input name="threadId" type="hidden" value="<%= message.getThreadId() %>" />
-
-				<liferay-util:include page="/message_boards/view_message_content.jsp" servletContext="<%= application %>" />
-			</aui:form>
-		</c:when>
-		<c:otherwise>
-			<liferay-util:include page="/message_boards/view_message_content.jsp" servletContext="<%= application %>" />
-		</c:otherwise>
-	</c:choose>
-
-	<c:if test="<%= MBCategoryPermission.contains(permissionChecker, scopeGroupId, message.getCategoryId(), ActionKeys.REPLY_TO_MESSAGE) && !thread.isLocked() %>">
-		<div class="hide" id="<portlet:namespace />addQuickReplyDiv">
-			<%@ include file="/message_boards/edit_message_quick.jspf" %>
-		</div>
-	</c:if>
+	<liferay-util:include page="/message_boards/view_message_content.jsp" servletContext="<%= application %>" />
 </div>
 
 <aui:script>
-	function <portlet:namespace />addQuickReply(cmd, messageId) {
-		var addQuickReplyDiv = AUI.$('#<portlet:namespace />addQuickReplyDiv');
+	function <portlet:namespace />addReplyToMessage(messageId) {
+		var addQuickReplyContainer = AUI.$('#<portlet:namespace />addReplyToMessage' + messageId);
 
-		if (cmd == 'reply') {
-			addQuickReplyDiv.removeClass('hide');
+		addQuickReplyContainer.removeClass('hide');
 
-			addQuickReplyDiv.find('#<portlet:namespace />parentMessageId').val(messageId);
+		addQuickReplyContainer.find('#<portlet:namespace />parentMessageId').val(messageId);
 
-			var editorInput = addQuickReplyDiv.find('textarea');
+		addQuickReplyContainer.scrollTop();
 
-			var editorInstance = window[editorInput.attr('id')];
+		var editorName = '<portlet:namespace />replyMessageBody' + messageId;
 
-			if (editorInstance) {
-				setTimeout(AUI._.bind(editorInstance.focus, editorInstance), 50);
-			}
-		}
-		else {
-			addQuickReplyDiv.addClass('hide');
+		window[editorName].create();
+
+		document.getElementById(editorName).focus();
+
+		Liferay.Util.toggleDisabled('#<portlet:namespace />replyMessageButton' + messageId, true);
+	}
+
+	function <portlet:namespace />hideReplyMessage(messageId) {
+		AUI.$('#<portlet:namespace />addReplyToMessage' + messageId).addClass('hide');
+
+		var editorName = '<portlet:namespace />replyMessageBody' + messageId;
+
+		if (window[editorName]) {
+			window[editorName].dispose();
 		}
 	}
 

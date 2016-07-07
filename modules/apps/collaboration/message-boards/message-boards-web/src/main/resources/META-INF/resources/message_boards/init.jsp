@@ -204,7 +204,6 @@ String rssDisplayStyle = mbGroupServiceSettings.getRSSDisplayStyle();
 String rssFeedType = mbGroupServiceSettings.getRSSFeedType();
 
 boolean childrenMessagesTaggable = true;
-boolean includeFormTag = true;
 boolean showSearch = true;
 
 MBWebComponentProvider mbWebComponentProvider = MBWebComponentProvider.getMBWebComponentProvider();

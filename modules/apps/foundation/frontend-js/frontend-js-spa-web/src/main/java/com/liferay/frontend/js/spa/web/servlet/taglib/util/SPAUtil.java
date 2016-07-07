@@ -107,6 +107,18 @@ public class SPAUtil {
 		return jsonObject.toString();
 	}
 
+	public int getRequestTimeout() {
+		int requestTimeout = 0;
+
+		SPAConfiguration spaConfiguration =
+			_spaConfigurationActivator.getSPAConfiguration();
+
+		requestTimeout = GetterUtil.getInteger(
+			spaConfiguration.requestTimeout(), requestTimeout);
+
+		return requestTimeout;
+	}
+
 	public String getValidStatusCodes() {
 		return _VALID_STATUS_CODES;
 	}

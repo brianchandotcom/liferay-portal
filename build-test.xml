@@ -8228,30 +8228,39 @@ jdbc.default.password=${database.mysql.password}</echo>
 
 		<remake-dir dir="${selenium.output.dir.name}" />
 
-		<start-app-server />
-
-		<get-testcase-property property.name="app.server.bundles.size" />
+		<get-testcase-property property.name="skip.start-app-server" />
 
 		<if>
-			<isset property="app.server.bundles.size" />
+			<not>
+				<equals arg1="${skip.start-app-server}" arg2="true" />
+			</not>
 			<then>
-				<var name="app.server.bundle.index" value="1" />
+				<start-app-server />
 
-				<antelope:repeat count="${app.server.bundles.size}">
-					<start-app-server
-						app.server.bundle.index="${app.server.bundle.index}"
-					/>
+				<get-testcase-property property.name="app.server.bundles.size" />
 
-					<math
-						datatype="int"
-						operand1="${app.server.bundle.index}"
-						operand2="1"
-						operation="+"
-						result="app.server.bundle.index"
-					/>
-				</antelope:repeat>
+				<if>
+					<isset property="app.server.bundles.size" />
+					<then>
+						<var name="app.server.bundle.index" value="1" />
 
-				<var name="app.server.bundle.index" unset="true" />
+						<antelope:repeat count="${app.server.bundles.size}">
+							<start-app-server
+								app.server.bundle.index="${app.server.bundle.index}"
+							/>
+
+							<math
+								datatype="int"
+								operand1="${app.server.bundle.index}"
+								operand2="1"
+								operation="+"
+								result="app.server.bundle.index"
+							/>
+						</antelope:repeat>
+
+						<var name="app.server.bundle.index" unset="true" />
+					</then>
+				</if>
 			</then>
 		</if>
 

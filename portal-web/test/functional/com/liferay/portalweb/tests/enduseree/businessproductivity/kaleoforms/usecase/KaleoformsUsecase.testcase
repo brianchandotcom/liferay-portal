@@ -1483,7 +1483,7 @@
 		</execute>
 	</command>
 
-	<command name="CheckComments" priority="3">
+	<command name="ViewWorkflowComments" priority="3">
 		<description message="This is a use case for LPS-65977." />
 
 		<var name="kfFieldSetName" value="Field Set Data Definition" />

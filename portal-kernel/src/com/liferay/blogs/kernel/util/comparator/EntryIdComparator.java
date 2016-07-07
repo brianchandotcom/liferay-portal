@@ -15,44 +15,38 @@
 package com.liferay.blogs.kernel.util.comparator;
 
 import com.liferay.blogs.kernel.model.BlogsEntry;
-import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 /**
- * @author Alexander Chow
+ * @author Christopher Kian
  */
-public class EntryDisplayDateComparator extends OrderByComparator<BlogsEntry> {
+public class EntryIdComparator extends OrderByComparator<BlogsEntry> {
 
-	public static final String ORDER_BY_ASC =
-		"BlogsEntry.displayDate ASC, BlogsEntry.entryId ASC";
+	public static final String ORDER_BY_ASC = "BlogsEntry.entryId ASC";
 
-	public static final String[] ORDER_BY_CONDITION_FIELDS = {"displayDate"};
+	public static final String[] ORDER_BY_CONDITION_FIELDS = {"entryId"};
 
-	public static final String ORDER_BY_DESC =
-		"BlogsEntry.displayDate DESC, BlogsEntry.entryId DESC";
+	public static final String ORDER_BY_DESC = " BlogsEntry.entryId DESC";
 
-	public static final String[] ORDER_BY_FIELDS = {"displayDate", "entryId"};
+	public static final String[] ORDER_BY_FIELDS = {"entryId"};
 
-	public EntryDisplayDateComparator() {
+	public EntryIdComparator() {
 		this(false);
 	}
 
-	public EntryDisplayDateComparator(boolean ascending) {
+	public EntryIdComparator(boolean ascending) {
 		_ascending = ascending;
 	}
 
 	@Override
 	public int compare(BlogsEntry entry1, BlogsEntry entry2) {
-		int value = DateUtil.compareTo(
-			entry1.getDisplayDate(), entry2.getDisplayDate());
+		int value = 0;
 
-		if (value == 0) {
-			if (entry1.getEntryId() < entry2.getEntryId()) {
-				value = -1;
-			}
-			else if (entry1.getEntryId() > entry2.getEntryId()) {
-				value = 1;
-			}
+		if (entry1.getEntryId() < entry2.getEntryId()) {
+			value = -1;
+		}
+		else if (entry1.getEntryId() > entry2.getEntryId()) {
+			value = 1;
 		}
 
 		if (_ascending) {

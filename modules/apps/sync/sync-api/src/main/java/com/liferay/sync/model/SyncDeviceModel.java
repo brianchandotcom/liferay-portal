@@ -237,6 +237,21 @@ public interface SyncDeviceModel extends BaseModel<SyncDevice>, ShardedModel,
 	public void setFeatureSet(int featureSet);
 
 	/**
+	 * Returns the host of this sync device.
+	 *
+	 * @return the host of this sync device
+	 */
+	@AutoEscape
+	public String getHost();
+
+	/**
+	 * Sets the host of this sync device.
+	 *
+	 * @param host the host of this sync device
+	 */
+	public void setHost(String host);
+
+	/**
 	 * Returns the status of this sync device.
 	 *
 	 * @return the status of this sync device

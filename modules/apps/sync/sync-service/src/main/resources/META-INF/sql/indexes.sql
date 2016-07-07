@@ -12,4 +12,5 @@ create index IX_28CD54BB on SyncDLObject (type_[$COLUMN_LENGTH:75$], version[$CO
 create index IX_1CCA3B5 on SyncDLObject (version[$COLUMN_LENGTH:75$], type_[$COLUMN_LENGTH:75$]);
 
 create index IX_176DF87B on SyncDevice (companyId, userName[$COLUMN_LENGTH:75$]);
+create index IX_A18EDDB1 on SyncDevice (userId);
 create index IX_AE38DEAB on SyncDevice (uuid_[$COLUMN_LENGTH:75$], companyId);

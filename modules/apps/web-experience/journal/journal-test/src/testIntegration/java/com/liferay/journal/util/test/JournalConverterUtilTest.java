@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.kernel.util.DLUtil;
+import com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializer;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
@@ -50,6 +51,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -57,6 +59,7 @@ import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
@@ -112,6 +115,7 @@ public class JournalConverterUtilTest {
 	@Before
 	public void setUp() throws Exception {
 		setUpDDMFormXSDDeserializer();
+		setUpDDMFormJSONDeserializer();
 		setUpDDMXML();
 
 		_group = GroupTestUtil.addGroup();
@@ -119,14 +123,14 @@ public class JournalConverterUtilTest {
 		_ddmStructureTestHelper = new DDMStructureTestHelper(
 			PortalUtil.getClassNameId(JournalArticle.class), _group);
 
-		long classNameId = PortalUtil.getClassNameId(JournalArticle.class);
+		_classNameId = PortalUtil.getClassNameId(JournalArticle.class);
 
 		String definition = read("test-ddm-structure-all-fields.xml");
 
 		DDMForm ddmForm = _ddmFormXSDDeserializer.deserialize(definition);
 
 		_ddmStructure = _ddmStructureTestHelper.addStructure(
-			classNameId, null, "Test Structure", ddmForm,
+			_classNameId, null, "Test Structure", ddmForm,
 			StorageType.JSON.getValue(), DDMStructureConstants.TYPE_DEFAULT);
 
 		Registry registry = RegistryUtil.getRegistry();
@@ -312,6 +316,39 @@ public class JournalConverterUtilTest {
 			_ddmStructure, fields);
 
 		assertEquals(expectedContent, actualContent);
+	}
+
+	@Test
+	public void testGetDDMFields() throws Exception {
+		String serializedDDMForm = read(
+			"ddm-structure-select-field-multiple.json");
+
+		DDMForm ddmForm = _ddmFormJSONDeserializer.deserialize(
+			serializedDDMForm);
+
+		DDMStructure structure = _ddmStructureTestHelper.addStructure(
+			_classNameId, null, "Test Structure", ddmForm,
+			StorageType.JSON.getValue(), DDMStructureConstants.TYPE_DEFAULT);
+
+		String content = read("test-journal-content-list-field-multiple.xml");
+
+		Fields fields = _journalConverter.getDDMFields(structure, content);
+
+		Assert.assertEquals(2, fields.getNames().size());
+
+		for (Field field : fields) {
+			Assert.assertTrue(structure.hasField(field.getName()));
+
+			if (structure.getFieldRequired(field.getName())) {
+				String value = (String)field.getValue(LocaleUtil.US);
+
+				value = StringUtil.removeChars(
+					value, CharPool.RETURN, CharPool.NEW_LINE, CharPool.TAB,
+					CharPool.SPACE);
+
+				Assert.assertTrue(Validator.isNotNull(value));
+			}
+		}
 	}
 
 	@Test
@@ -959,6 +996,13 @@ public class JournalConverterUtilTest {
 			});
 	}
 
+	protected void setUpDDMFormJSONDeserializer() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		_ddmFormJSONDeserializer = registry.getService(
+			DDMFormJSONDeserializer.class);
+	}
+
 	protected void setUpDDMFormXSDDeserializer() {
 		Registry registry = RegistryUtil.getRegistry();
 
@@ -1044,6 +1088,8 @@ public class JournalConverterUtilTest {
 	private static Locale _enLocale;
 	private static Locale _ptLocale;
 
+	private long _classNameId;
+	private DDMFormJSONDeserializer _ddmFormJSONDeserializer;
 	private DDMFormXSDDeserializer _ddmFormXSDDeserializer;
 	private DDMStructure _ddmStructure;
 	private DDMStructureTestHelper _ddmStructureTestHelper;

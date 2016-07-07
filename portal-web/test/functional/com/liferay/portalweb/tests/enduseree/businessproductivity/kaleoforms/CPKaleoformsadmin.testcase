@@ -1584,7 +1584,7 @@
 
 		<execute macro="DDLDataDefinition#editCP">
 			<var name="ddlDataDefinitionDescriptionEdit" value="To Do" />
-			<var name="ddlDataDefinitionName" value="Do" />
+			<var name="ddlDataDefinitionName" value="&quot;To Do Edit&quot;" />
 			<var name="ddlDataDefinitionNameEdit" value="To Do" />
 		</execute>
 

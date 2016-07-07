@@ -15,22 +15,7 @@
 		<pathelement location="${project.dir}/modules/core/registry-api/classes" />
 	</path>
 
-	<macrodef name="deploy">
-		<attribute name="deploy.dir" />
-		<attribute name="jar.file" />
-		<attribute name="src.dir" />
-
-		<sequential>
-			<deploy-cmd
-				copy.jar="false"
-				deploy.dir="@{deploy.dir}"
-				jar.file="@{jar.file}"
-				src.dir="@{src.dir}"
-			>
-				<deploy-post>
-					<copy file="@{jar.file}.jar" preservelastmodified="true" tofile="@{deploy.dir}/${manifest.bundle.symbolic.name}.jar" />
-				</deploy-post>
-			</deploy-cmd>
-		</sequential>
-	</macrodef>
+	<target depends="build-common-java.deploy" name="deploy">
+		<copy file="${jar.file}.jar" preservelastmodified="true" tofile="${deploy.dir}/${manifest.bundle.symbolic.name}.jar" />
+	</target>
 </project>

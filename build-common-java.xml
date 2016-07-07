@@ -10,44 +10,20 @@
 		</and>
 	</condition>
 
-	<macrodef name="deploy">
-		<attribute name="deploy.dir" />
-		<attribute name="jar.file" />
-		<attribute name="src.dir" />
+	<target depends="jar" name="init-deploy">
+		<property name="copy.jar" value="true" />
+		<property name="src.dir" value="${basedir}" />
 
-		<sequential>
-			<deploy-cmd
-				deploy.dir="@{deploy.dir}"
-				jar.file="@{jar.file}"
-				src.dir="@{src.dir}"
-			/>
-		</sequential>
-	</macrodef>
+		<condition property="deploy.uptodate">
+			<uptodate targetfile="${deploy.dir}/${jar.file}.jar">
+				<srcfiles dir="${src.dir}" includes="bnd.bnd,build.xml,ivy.xml,src/**/*.*" />
+			</uptodate>
+		</condition>
+	</target>
 
-	<macrodef name="deploy-cmd">
-		<attribute default="true" name="copy.jar" />
-		<attribute name="deploy.dir" />
-		<attribute name="jar.file" />
-		<attribute name="src.dir" />
-		<element name="deploy-post" optional="true" />
-
-		<sequential>
-			<if>
-				<not>
-					<uptodate targetfile="@{deploy.dir}/@{jar.file}.jar">
-						<srcfiles dir="@{src.dir}" includes="bnd.bnd,build.xml,ivy.xml,src/**/*.*" />
-					</uptodate>
-				</not>
-				<then>
-					<antcall target="jar" />
-
-					<copy if:true="@{copy.jar}" file="@{jar.file}.jar" todir="@{deploy.dir}" preservelastmodified="true" />
-
-					<deploy-post />
-				</then>
-			</if>
-		</sequential>
-	</macrodef>
+	<target depends="init-deploy,jar" if="copy.jar" name="deploy" unless="deploy.uptodate">
+		<copy file="${jar.file}.jar" todir="${deploy.dir}" preservelastmodified="true" />
+	</target>
 
 	<target name="clean">
 		<delete dir="classes" />
@@ -113,14 +89,6 @@
 		</if>
 
 		<echo file="${javac.destdir}/.touch"></echo>
-	</target>
-
-	<target name="deploy">
-		<deploy
-			deploy.dir="${deploy.dir}"
-			jar.file="${jar.file}"
-			src.dir="${basedir}"
-		/>
 	</target>
 
 	<target name="init-compile">

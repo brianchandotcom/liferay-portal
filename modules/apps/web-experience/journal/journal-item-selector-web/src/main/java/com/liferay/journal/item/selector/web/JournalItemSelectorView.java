@@ -18,7 +18,6 @@ import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
-import com.liferay.item.selector.criteria.UploadableFileReturnType;
 import com.liferay.journal.item.selector.criterion.JournalItemSelectorCriterion;
 import com.liferay.journal.item.selector.web.context.JournalItemSelectorViewDisplayContext;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -122,7 +121,6 @@ public class JournalItemSelectorView
 			ListUtil.fromArray(
 				new ItemSelectorReturnType[] {
 					new FileEntryItemSelectorReturnType(),
-					new UploadableFileReturnType(),
 					new URLItemSelectorReturnType()
 				}));
 

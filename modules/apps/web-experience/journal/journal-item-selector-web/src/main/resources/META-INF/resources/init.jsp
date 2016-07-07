@@ -21,7 +21,7 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.item.selector.criteria.UploadableFileReturnType" %><%@
+<%@ page import="com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType" %><%@
 page import="com.liferay.journal.item.selector.web.JournalItemSelectorView" %><%@
 page import="com.liferay.journal.item.selector.web.context.JournalItemSelectorViewDisplayContext" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %>

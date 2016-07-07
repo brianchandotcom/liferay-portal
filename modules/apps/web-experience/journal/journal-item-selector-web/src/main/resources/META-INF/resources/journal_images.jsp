@@ -44,7 +44,7 @@ JournalItemSelectorViewDisplayContext journalItemSelectorViewDisplayContext = (J
 				}
 			},
 			rootNode: '#itemSelectorUploadContainer',
-			uploadItemReturnType: '<%= HtmlUtil.escapeAttribute(UploadableFileReturnType.class.getName()) %>',
+			uploadItemReturnType: '<%= HtmlUtil.escapeAttribute(FileEntryItemSelectorReturnType.class.getName()) %>',
 			uploadItemURL: '<%= journalItemSelectorViewDisplayContext.getUploadURL(liferayPortletResponse) %>'
 		}
 	);

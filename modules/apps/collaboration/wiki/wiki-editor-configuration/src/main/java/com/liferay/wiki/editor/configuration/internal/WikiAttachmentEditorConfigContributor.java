@@ -19,7 +19,6 @@ import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
-import com.liferay.item.selector.criteria.UploadableFileReturnType;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
 import com.liferay.item.selector.criteria.upload.criterion.UploadItemSelectorCriterion;
 import com.liferay.item.selector.criteria.url.criterion.URLItemSelectorCriterion;
@@ -92,7 +91,6 @@ public class WikiAttachmentEditorConfigContributor
 		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
 			new ArrayList<>();
 
-		desiredItemSelectorReturnTypes.add(new UploadableFileReturnType());
 		desiredItemSelectorReturnTypes.add(
 			new FileEntryItemSelectorReturnType());
 
@@ -174,7 +172,7 @@ public class WikiAttachmentEditorConfigContributor
 			new ArrayList<>();
 
 		uploadDesiredItemSelectorReturnTypes.add(
-			new UploadableFileReturnType());
+			new FileEntryItemSelectorReturnType());
 
 		uploadItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			uploadDesiredItemSelectorReturnTypes);

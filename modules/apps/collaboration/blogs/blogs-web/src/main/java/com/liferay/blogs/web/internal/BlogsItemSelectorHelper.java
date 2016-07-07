@@ -19,7 +19,6 @@ import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
-import com.liferay.item.selector.criteria.UploadableFileReturnType;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
 import com.liferay.item.selector.criteria.upload.criterion.UploadItemSelectorCriterion;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -57,7 +56,6 @@ public class BlogsItemSelectorHelper {
 
 		desiredItemSelectorReturnTypes.add(
 			new FileEntryItemSelectorReturnType());
-		desiredItemSelectorReturnTypes.add(new UploadableFileReturnType());
 
 		BlogsItemSelectorCriterion blogsItemSelectorCriterion =
 			new BlogsItemSelectorCriterion();
@@ -72,10 +70,10 @@ public class BlogsItemSelectorHelper {
 			desiredItemSelectorReturnTypes);
 
 		List<ItemSelectorReturnType>
-			uploadCriterionsDesiredItemSelectorReturnTypes = new ArrayList<>();
+			uploadCriterionDesiredItemSelectorReturnTypes = new ArrayList<>();
 
-		uploadCriterionsDesiredItemSelectorReturnTypes.add(
-			new UploadableFileReturnType());
+		uploadCriterionDesiredItemSelectorReturnTypes.add(
+			new FileEntryItemSelectorReturnType());
 
 		PortletURL uploadURL = requestBackedPortletURLFactory.createActionURL(
 			BlogsPortletKeys.BLOGS);
@@ -89,7 +87,7 @@ public class BlogsItemSelectorHelper {
 				LanguageUtil.get(themeDisplay.getLocale(), "blog-images"));
 
 		uploadItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			uploadCriterionsDesiredItemSelectorReturnTypes);
+			uploadCriterionDesiredItemSelectorReturnTypes);
 
 		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
 			requestBackedPortletURLFactory, itemSelectedEventName,

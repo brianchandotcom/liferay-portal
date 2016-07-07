@@ -17,8 +17,8 @@ package com.liferay.knowledge.base.editor.configuration.internal;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorReturnType;
+import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
-import com.liferay.item.selector.criteria.UploadableFileReturnType;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
 import com.liferay.item.selector.criteria.upload.criterion.UploadItemSelectorCriterion;
 import com.liferay.item.selector.criteria.url.criterion.URLItemSelectorCriterion;
@@ -96,7 +96,8 @@ public class KBAttachmentEditorConfigContributor
 		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
 			new ArrayList<>();
 
-		desiredItemSelectorReturnTypes.add(new UploadableFileReturnType());
+		desiredItemSelectorReturnTypes.add(
+			new FileEntryItemSelectorReturnType());
 		desiredItemSelectorReturnTypes.add(new URLItemSelectorReturnType());
 
 		ItemSelectorCriterion kbAttachmentsItemSelectorCriterion =
@@ -185,7 +186,7 @@ public class KBAttachmentEditorConfigContributor
 			new ArrayList<>();
 
 		uploadDesiredItemSelectorReturnTypes.add(
-			new UploadableFileReturnType());
+			new FileEntryItemSelectorReturnType());
 
 		uploadItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			uploadDesiredItemSelectorReturnTypes);

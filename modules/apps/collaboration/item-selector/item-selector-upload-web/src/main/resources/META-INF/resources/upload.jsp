@@ -49,7 +49,7 @@ ItemSelectorUploadViewDisplayContext itemSelectorUploadViewDisplayContext = (Ite
 				}
 			},
 			rootNode: '#itemSelectorUploadContainer',
-			uploadItemReturnType: '<%= HtmlUtil.escapeAttribute(UploadableFileReturnType.class.getName()) %>',
+			uploadItemReturnType: '<%= HtmlUtil.escapeAttribute(FileEntryItemSelectorReturnType.class.getName()) %>',
 			uploadItemURL: '<%= itemSelectorUploadViewDisplayContext.getURL() %>'
 		}
 	);

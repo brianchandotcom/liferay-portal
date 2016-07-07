@@ -19,8 +19,8 @@ import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorReturnType;
+import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
-import com.liferay.item.selector.criteria.UploadableFileReturnType;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
 import com.liferay.item.selector.criteria.upload.criterion.UploadItemSelectorCriterion;
 import com.liferay.item.selector.criteria.url.criterion.URLItemSelectorCriterion;
@@ -115,7 +115,7 @@ public class BlogsContentEditorConfigContributor
 				new ArrayList<>();
 
 		blogsContentEditorDesiredItemSelectorReturnTypes.add(
-			new UploadableFileReturnType());
+			new FileEntryItemSelectorReturnType());
 
 		blogsContentEditorDesiredItemSelectorReturnTypes.add(
 			new URLItemSelectorReturnType());
@@ -159,7 +159,7 @@ public class BlogsContentEditorConfigContributor
 			new ArrayList<>();
 
 		uploadDesiredItemSelectorReturnTypes.add(
-			new UploadableFileReturnType());
+			new FileEntryItemSelectorReturnType());
 
 		uploadItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			uploadDesiredItemSelectorReturnTypes);

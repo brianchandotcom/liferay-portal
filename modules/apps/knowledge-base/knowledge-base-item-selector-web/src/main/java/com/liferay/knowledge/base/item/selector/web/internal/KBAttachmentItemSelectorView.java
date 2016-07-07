@@ -18,7 +18,6 @@ import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
-import com.liferay.item.selector.criteria.UploadableFileReturnType;
 import com.liferay.knowledge.base.item.selector.criterion.KBAttachmentItemSelectorCriterion;
 import com.liferay.knowledge.base.item.selector.web.internal.display.context.KBAttachmentItemSelectorViewDisplayContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -142,7 +141,6 @@ public class KBAttachmentItemSelectorView
 			ListUtil.fromArray(
 				new ItemSelectorReturnType[] {
 					new FileEntryItemSelectorReturnType(),
-					new UploadableFileReturnType(),
 					new URLItemSelectorReturnType()
 				}));
 

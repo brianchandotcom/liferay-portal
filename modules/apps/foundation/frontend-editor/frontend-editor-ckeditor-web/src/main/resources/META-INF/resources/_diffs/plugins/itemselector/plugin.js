@@ -1,8 +1,6 @@
 (function() {
 	var STR_FILE_ENTRY_RETURN_TYPE = 'com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType';
 
-	var STR_UPLOADABLE_FILE_RETURN_TYPE = 'com.liferay.item.selector.criteria.UploadableFileReturnType';
-
 	var TPL_AUDIO_SCRIPT = 'boundingBox: "#" + mediaId,' +
 		'oggUrl: "{oggUrl}",' +
 		'url: "{url}"';
@@ -321,8 +319,7 @@
 			_getItemSrc: function(editor, selectedItem) {
 				var itemSrc = selectedItem.value;
 
-				if (selectedItem.returnType === STR_FILE_ENTRY_RETURN_TYPE ||
-					selectedItem.returnType === STR_UPLOADABLE_FILE_RETURN_TYPE) {
+				if (selectedItem.returnType === STR_FILE_ENTRY_RETURN_TYPE) {
 					try {
 						var itemValue = JSON.parse(selectedItem.value);
 

@@ -168,11 +168,11 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 	public static final long LAYOUTID_COLUMN_BITMASK = 16L;
 	public static final long LAYOUTPROTOTYPEUUID_COLUMN_BITMASK = 32L;
 	public static final long PARENTLAYOUTID_COLUMN_BITMASK = 64L;
-	public static final long PRIVATELAYOUT_COLUMN_BITMASK = 128L;
-	public static final long SOURCEPROTOTYPELAYOUTUUID_COLUMN_BITMASK = 256L;
-	public static final long TYPE_COLUMN_BITMASK = 512L;
-	public static final long UUID_COLUMN_BITMASK = 1024L;
-	public static final long PRIORITY_COLUMN_BITMASK = 2048L;
+	public static final long PRIORITY_COLUMN_BITMASK = 128L;
+	public static final long PRIVATELAYOUT_COLUMN_BITMASK = 256L;
+	public static final long SOURCEPROTOTYPELAYOUTUUID_COLUMN_BITMASK = 512L;
+	public static final long TYPE_COLUMN_BITMASK = 1024L;
+	public static final long UUID_COLUMN_BITMASK = 2048L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -1411,7 +1411,17 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 	public void setPriority(int priority) {
 		_columnBitmask = -1L;
 
+		if (!_setOriginalPriority) {
+			_setOriginalPriority = true;
+
+			_originalPriority = _priority;
+		}
+
 		_priority = priority;
+	}
+
+	public int getOriginalPriority() {
+		return _originalPriority;
 	}
 
 	@JSON
@@ -1817,6 +1827,10 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		layoutModelImpl._originalIconImageId = layoutModelImpl._iconImageId;
 
 		layoutModelImpl._setOriginalIconImageId = false;
+
+		layoutModelImpl._originalPriority = layoutModelImpl._priority;
+
+		layoutModelImpl._setOriginalPriority = false;
 
 		layoutModelImpl._originalLayoutPrototypeUuid = layoutModelImpl._layoutPrototypeUuid;
 
@@ -2259,6 +2273,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 	private String _colorSchemeId;
 	private String _css;
 	private int _priority;
+	private int _originalPriority;
+	private boolean _setOriginalPriority;
 	private String _layoutPrototypeUuid;
 	private String _originalLayoutPrototypeUuid;
 	private boolean _layoutPrototypeLinkEnabled;

@@ -11,6 +11,8 @@ AUI.add(
 
 		var SELECTOR_REPEAT_BUTTONS = '.lfr-ddm-repeatable-add-button, .lfr-ddm-repeatable-delete-button';
 
+		var TPL_ICON_CARET = '<span class="collapse-icon-closed"><span class="icon-caret-right"></span></span>';
+
 		var TPL_LAYOUTS_NAVBAR = '<nav class="navbar navbar-default">' +
 				'<div class="collapse navbar-collapse">' +
 					'<ul class="nav navbar-nav">' +
@@ -20,7 +22,20 @@ AUI.add(
 				'</div>' +
 			'</nav>';
 
-		var TPL_LOADER = '<div class="loading-animation"></div>';
+		var TPL_LOADER = '<span class="linear loading-icon"></span>';
+
+		var TPL_PAGE = '<li class="lfr-ddm-link" data-groupId="{groupId}" data-layoutId="{layoutId}" data-nodeType="{nodeType}" data-privateLayout="{privateLayout}">' +
+				'<input class="lfr-ddm-page-radio" {checked} name="lfr-ddm-page" type="radio" />' +
+				'<a class="collapsed collapse-icon lfr-ddm-page-label" href="javascript:;">{pageTitle}{icon}</a>' +
+			'</li>';
+
+		var TPL_PAGES_BREADCRUMB = '<ul class="breadcrumb lfr-ddm-breadcrumb"></ul>';
+
+		var TPL_PAGES_BREADCRUMB_ELEMENT = '<li class="lfr-ddm-breadcrumb-element" data-groupId={groupId} data-layoutId={layoutId} data-privateLayout={privateLayout}>' +
+				'<a title="{label}">{label}</a>' +
+			'</li>';
+
+		var TPL_PAGES_CONTAINER = '<ul class="lfr-ddm-pages-container nav"></ul>';
 
 		var TPL_REPEATABLE_ADD = '<a class="icon-plus-sign lfr-ddm-repeatable-add-button" href="javascript:;"></a>';
 
@@ -1307,11 +1322,40 @@ AUI.add(
 			{
 				ATTRS: {
 					delta: {
-						value: 20
+						value: 10
 					},
 
 					selectedLayout: {
-						value: null
+						valueFn: function() {
+							var instance = this;
+
+							var layoutValue = instance.getParsedValue(instance.getValue());
+
+							if (layoutValue.layoutId) {
+								return layoutValue;
+							}
+
+							return null;
+						}
+					},
+
+					selectedLayoutPath: {
+						valueFn: function() {
+							var instance = this;
+
+							var value = instance.getValue();
+
+							var privateLayout = !!(value && value.privateLayout);
+
+							var layoutsRoot = {
+								groupId: themeDisplay.getScopeGroupId(),
+								label: Liferay.Language.get('all'),
+								layoutId: 0,
+								privateLayout: privateLayout
+							};
+
+							return [layoutsRoot];
+						}
 					}
 				},
 
@@ -1323,36 +1367,15 @@ AUI.add(
 
 						var container = instance.get('container');
 
-						container.delegate('click', instance._handleControlButtonsClick, '> .form-group .btn', instance);
-					},
+						instance._currentParentLayoutId = 0;
+						instance._loadingAnimationNode = A.Node.create(TPL_LOADER);
 
-					getInitialLayouts: function(privateLayout, callback) {
-						var instance = this;
+						instance._cache = {};
 
-						A.io.request(
-							themeDisplay.getPathMain() + '/portal/get_layouts',
-							{
-								after: {
-									success: function() {
-										var	response = JSON.parse(this.get('responseData'));
+						instance.after('selectedLayoutChange', instance._afterSelectedLayoutChange);
+						instance.after('selectedLayoutPathChange', instance._afterSelectedLayoutPathChange);
 
-										if (response && response.layouts) {
-											callback.call(instance, response);
-										}
-									}
-								},
-								data: {
-									cmd: 'get',
-									end: instance.get('delta'),
-									expandParentLayouts: true,
-									groupId: themeDisplay.getScopeGroupId(),
-									p_auth: Liferay.authToken,
-									paginate: true,
-									privateLayout: privateLayout,
-									start: 0
-								}
-							}
-						);
+						container.delegate('click', instance._handleControlButtonsClick, '.btn', instance);
 					},
 
 					getParsedValue: function(value) {
@@ -1411,33 +1434,107 @@ AUI.add(
 						selectButtonNode.attr('disabled', instance.get('readOnly'));
 					},
 
-					_createTreeView: function(node, layouts, privateLayout) {
+					_addBreadcrumbElement: function(label, layoutId, groupId, privateLayout) {
 						var instance = this;
 
-						return new Liferay.LayoutsTree(
-							{
-								boundingBox: node,
-								incomplete: true,
-								layouts: layouts,
-								maxChildren: instance.get('delta'),
-								on: {
-									radioNodeCheckedChange: A.bind(instance._onRadioNodeCheckedChange, instance, privateLayout)
-								},
-								plugins: [
-									{
-										fn: A.Plugin.LayoutsTreeRadio
-									}
-								],
-								root: {
-									defaultParentLayoutId: 0,
-									expand: true,
-									groupId: themeDisplay.getScopeGroupId(),
-									label: 'Root Node',
+						var breadcrumbNode = instance._modal.bodyNode.one('.lfr-ddm-breadcrumb');
+
+						var breadcrumbElementNode = A.Node.create(
+							Lang.sub(
+								TPL_PAGES_BREADCRUMB_ELEMENT,
+								{
+									groupId: groupId,
+									label: label,
+									layoutId: layoutId,
 									privateLayout: privateLayout
-								},
-								urls: []
-							}
-						).render();
+								}
+							)
+						);
+
+						breadcrumbNode.append(breadcrumbElementNode);
+					},
+
+					_addListElement: function(layout, container, selected, prepend) {
+						var instance = this;
+
+						var entryNode = A.Node.create(
+							Lang.sub(
+								TPL_PAGE,
+								{
+									checked: selected ? 'checked="checked"' : '',
+									groupId: layout.groupId,
+									icon: layout.hasChildren ? TPL_ICON_CARET : '',
+									layoutId: layout.layoutId,
+									nodeType: layout.hasChildren ? 'root' : 'leaf',
+									pageTitle: layout.name,
+									privateLayout: layout.privateLayout
+								}
+							)
+						);
+
+						if (prepend) {
+							container.prepend(entryNode);
+						}
+						else {
+							container.append(entryNode);
+						}
+
+						if (selected) {
+							entryNode.scrollIntoView();
+						}
+					},
+
+					_afterSelectedLayoutChange: function(event) {
+						var instance = this;
+
+						if (instance._modal) {
+							var notSelected = !event.newVal;
+
+							var selectButton = instance._modal.get('toolbars.footer')[0];
+
+							var boundingBox = selectButton.boundingBox;
+
+							boundingBox.attr('disabled', notSelected);
+							boundingBox.toggleClass('disabled', notSelected);
+						}
+					},
+
+					_afterSelectedLayoutPathChange: function(event) {
+						var instance = this;
+
+						instance._renderBreadcrumb(event.newVal);
+					},
+
+					_canLoadMore: function(key, start, end) {
+						var instance = this;
+
+						var cache = instance._getCache(key);
+
+						return !cache || start < cache.start || end > cache.end;
+					},
+
+					_cleanSelectedLayout: function() {
+						var instance = this;
+
+						var checkedElement = instance._modal.bodyNode.one('.lfr-ddm-page-radio:checked');
+
+						if (checkedElement) {
+							checkedElement.set('checked', false);
+
+							instance.set('selectedLayout', null);
+						}
+					},
+
+					_getCache: function(key) {
+						var instance = this;
+
+						var cache;
+
+						if (instance._cache && instance._cache[key]) {
+							cache = instance._cache[key];
+						}
+
+						return cache;
 					},
 
 					_getModalConfig: function() {
@@ -1445,7 +1542,7 @@ AUI.add(
 
 						return {
 							dialog:	{
-								destroyOnHide: true,
+								cssClass: 'lfr-ddm-link-to-page-modal',
 								height: 600,
 								modal: true,
 								on: {
@@ -1458,6 +1555,7 @@ AUI.add(
 									footer: [
 										{
 											cssClass: 'btn-lg btn-primary',
+											disabled: !instance.get('selectedLayout'),
 											label: Liferay.Language.get('select'),
 											on: {
 												click: A.bind(instance._handleChooseButtonClick, instance)
@@ -1488,26 +1586,79 @@ AUI.add(
 						};
 					},
 
-					_handleCancelButtonClick: function(event) {
+					_handleBreadcrumbElementClick: function(event) {
 						var instance = this;
 
-						instance.modal.destroy();
+						var currentTargetLayoutId = Number(event.currentTarget.getData('layoutId'));
+
+						var selectedLayoutPath = instance.get('selectedLayoutPath');
+
+						var lastLayoutIndex = selectedLayoutPath.length - 1;
+
+						var lastLayout = selectedLayoutPath[lastLayoutIndex];
+
+						var clickedLastElement = Number(lastLayout.layoutId) === currentTargetLayoutId;
+
+						if (!clickedLastElement) {
+							instance._cleanSelectedLayout();
+
+							while (!clickedLastElement) {
+								if (Number(lastLayout.layoutId) !== currentTargetLayoutId) {
+									selectedLayoutPath.pop();
+
+									lastLayoutIndex = selectedLayoutPath.length - 1;
+
+									lastLayout = selectedLayoutPath[lastLayoutIndex];
+								}
+								else {
+									clickedLastElement = true;
+
+									var groupId = lastLayout.groupId;
+
+									var privateLayout = lastLayout.privateLayout;
+
+									instance._currentParentLayoutId = Number(currentTargetLayoutId);
+
+									var bodyNode = instance._modal.bodyNode;
+
+									var listNode = bodyNode.one('.lfr-ddm-pages-container');
+
+									listNode.empty();
+
+									instance._showLoader(listNode);
+
+									listNode.addClass('top-ended');
+
+									instance._requestInitialLayouts(currentTargetLayoutId, groupId, privateLayout, instance._renderLayouts);
+								}
+							}
+
+							instance.set('selectedLayoutPath', selectedLayoutPath);
+						}
 					},
 
-					_handleChooseButtonClick: function(event) {
+					_handleCancelButtonClick: function() {
+						var instance = this;
+
+						instance._modal.hide();
+					},
+
+					_handleChooseButtonClick: function() {
 						var instance = this;
 
 						var selectedLayout = instance.get('selectedLayout');
 
 						instance.setValue(selectedLayout);
 
-						instance.modal.destroy();
+						instance._modal.hide();
 					},
 
-					_handleClearButtonClick: function(event) {
+					_handleClearButtonClick: function() {
 						var instance = this;
 
 						instance.setValue('');
+
+						instance.set('selectedLayout', instance.get('selectedLayoutPath')[0]);
 					},
 
 					_handleControlButtonsClick: function(event) {
@@ -1523,6 +1674,117 @@ AUI.add(
 						}
 					},
 
+					_handleListEntryClick: function(event) {
+						var instance = this;
+
+						var currentTarget = event.currentTarget;
+
+						var label = event.currentTarget.text();
+
+						var layoutId = event.currentTarget.getData('layoutId');
+
+						var groupId = Number(event.currentTarget.getData('groupId'));
+
+						var privateLayout = A.DataType.Boolean.parse(event.currentTarget.getData('privateLayout'));
+
+						if (event.target.hasClass('lfr-ddm-page-label')) {
+							if (currentTarget.getData('nodeType') === 'root') {
+								instance._cleanSelectedLayout();
+
+								instance._currentParentLayoutId = layoutId;
+
+								instance._showLoader(currentTarget);
+
+								var selectedLayoutPath = instance.get('selectedLayoutPath');
+
+								selectedLayoutPath.push(
+									{
+										groupId: groupId,
+										label: label,
+										layoutId: layoutId,
+										privateLayout: privateLayout
+									}
+								);
+
+								instance.set('selectedLayoutPath', selectedLayoutPath);
+
+								var listNode = instance._modal.bodyNode.one('.lfr-ddm-pages-container');
+
+								listNode.addClass('top-ended');
+
+								instance._requestInitialLayouts(layoutId, groupId, privateLayout, instance._renderLayouts);
+							}
+						}
+						else if (event.target.hasClass('lfr-ddm-page-radio')) {
+							var path = instance.get('selectedLayoutPath');
+
+							instance.set(
+								'selectedLayout',
+								{
+									groupId: groupId,
+									label: label,
+									layoutId: layoutId,
+									path: path,
+									privateLayout: privateLayout
+								}
+							);
+						}
+					},
+
+					_handleModalScroll: function(event) {
+						var instance = this;
+
+						var listNode = event.currentTarget;
+
+						var innerHeight = listNode.innerHeight();
+						var scrollHeight = listNode.get('scrollHeight');
+						var scrollTop = listNode.get('scrollTop');
+
+						var delta = instance.get('delta');
+
+						var groupId = themeDisplay.getScopeGroupId();
+						var parentLayoutId = instance._currentParentLayoutId;
+						var privateLayout = !!instance._navbar.one('.private').hasClass('active');
+
+						var key = [parentLayoutId, groupId, privateLayout].join('-');
+
+						if (!instance._isListNodeEmpty(key)) {
+							var cache = instance._getCache(key);
+
+							var end = cache.end;
+							var start = cache.start;
+
+							if (scrollTop === 0) {
+								start -= delta;
+
+								if (start < 0) {
+									start = 0;
+									end = cache.start;
+								}
+
+								if (end <= start) {
+									return;
+								}
+
+								listNode.prepend(instance._loadingAnimationNode);
+
+								instance._requestLayouts(parentLayoutId, groupId, privateLayout, start, end, A.rbind(instance._renderLayoutsFragment, instance, key, 'up'));
+							}
+							else if (scrollTop + innerHeight === scrollHeight) {
+								start = end + 1;
+								end = start + delta;
+
+								if (start > cache.total) {
+									return;
+								}
+
+								listNode.append(instance._loadingAnimationNode);
+
+								instance._requestLayouts(parentLayoutId, groupId, privateLayout, start, end, A.rbind(instance._renderLayoutsFragment, instance, key));
+							}
+						}
+					},
+
 					_handleNavbarClick: function(event) {
 						var instance = this;
 
@@ -1531,115 +1793,441 @@ AUI.add(
 						event.container.one('.active').removeClass('active');
 						currentTarget.addClass('active');
 
-						instance._renderTreeView(currentTarget.test('.private'));
+						instance._cleanSelectedLayout();
+
+						instance._renderLayoutsList(currentTarget.test('.private'));
 					},
 
 					_handleSelectButtonClick: function() {
 						var instance = this;
 
-						var modal = instance._openLinkToPageModal();
-
-						var value = instance.getValue();
-
-						var privateLayout = !!(value && value.privateLayout);
-
-						var navbar = instance._renderNavbar(privateLayout);
-
-						navbar.insertBefore(navbar, modal.bodyNode);
-
-						instance.modal = modal;
-						instance.navbar = navbar;
-
-						instance._renderTreeView(privateLayout);
+						instance._openLinkToPageModal();
 					},
 
-					_onRadioNodeCheckedChange: function(privateLayout, event) {
+					_hideLoader: function() {
 						var instance = this;
 
-						var node = event.node;
+						instance._loadingAnimationNode.remove();
+					},
 
-						var treeView = event.target;
+					_initBreadcrumb: function() {
+						var instance = this;
 
-						instance.set(
-							'selectedLayout',
-							{
-								groupId: treeView.extractGroupId(node),
-								label: node.get('labelEl').text(),
-								layoutId: treeView.extractLayoutId(node),
-								privateLayout: privateLayout
-							}
-						);
+						var breadcrumbNode = A.Node.create(TPL_PAGES_BREADCRUMB);
+
+						instance._modal.bodyNode.append(breadcrumbNode);
+
+						breadcrumbNode.delegate('click', instance._handleBreadcrumbElementClick, '.lfr-ddm-breadcrumb-element', instance);
+					},
+
+					_initLayoutsList: function() {
+						var instance = this;
+
+						var bodyNode = instance._modal.bodyNode;
+
+						if (!bodyNode.one('.lfr-ddm-pages-container')) {
+							var navNode = A.Node.create(TPL_PAGES_CONTAINER);
+
+							bodyNode.append(navNode);
+
+							navNode.delegate('click', instance._handleListEntryClick, '.lfr-ddm-link', instance);
+						}
+					},
+
+					_isListNodeEmpty: function(key) {
+						var instance = this;
+
+						var cache = instance._getCache(key);
+
+						return !(cache && cache.layouts);
 					},
 
 					_openLinkToPageModal: function() {
 						var instance = this;
 
-						var config = instance._getModalConfig();
+						var value = instance.getParsedValue(instance.getValue());
 
-						var modal = Liferay.Util.Window.getWindow(config);
+						var privateLayout = !!value.privateLayout;
 
-						return modal.render();
+						if (!instance._modal) {
+							var config = instance._getModalConfig();
+
+							instance._modal = Liferay.Util.Window.getWindow(config);
+
+							instance._modal.render();
+
+							instance._initBreadcrumb();
+							instance._initLayoutsList();
+
+							instance._renderNavbar(privateLayout);
+							instance._renderBreadcrumb(instance.get('selectedLayoutPath'));
+							instance._renderLayoutsList(privateLayout);
+
+							var listNode = instance._modal.bodyNode.one('.lfr-ddm-pages-container');
+
+							listNode.on('scroll', instance._handleModalScroll, instance);
+						}
+						else {
+							var path = instance.get('selectedLayoutPath');
+
+							instance.set(
+								'selectedLayout',
+								{
+									groupId: value.groupId,
+									label: value.label,
+									layoutId: value.layoutId,
+									path: path.slice(),
+									privateLayout: privateLayout
+								}
+							);
+
+							instance._renderLayoutsList(privateLayout);
+						}
+
+						instance._modal.show();
+
+						instance._syncModalHeight();
+					},
+
+					_renderBreadcrumb: function(layoutsPath) {
+						var instance = this;
+
+						var bodyNode = instance._modal.bodyNode;
+
+						var breadcrumbContainer = bodyNode.one('.lfr-ddm-breadcrumb');
+
+						breadcrumbContainer.empty();
+
+						var layoutsPathLenght = layoutsPath.length;
+
+						for (var index = 0; index < layoutsPathLenght; index++) {
+							var layoutPath = layoutsPath[index];
+
+							instance._addBreadcrumbElement(layoutPath.label, layoutPath.layoutId, layoutPath.groupId, layoutPath.privateLayout);
+						}
+					},
+
+					_renderLayouts: function(layouts) {
+						var instance = this;
+
+						var bodyNode = instance._modal.bodyNode;
+
+						var listNode = bodyNode.one('.lfr-ddm-pages-container');
+
+						var selectedLayout = instance.get('selectedLayout');
+
+						listNode.empty();
+
+						layouts.forEach(
+							function(layout) {
+								var selected = false;
+
+								if (selectedLayout && layout.layoutId === selectedLayout.layoutId) {
+									selected = true;
+								}
+
+								instance._addListElement(layout, listNode, selected);
+							}
+						);
+
+						instance._syncModalHeight();
+					},
+
+					_renderLayoutsFragment: function(layouts, key, direction) {
+						var instance = this;
+
+						var bodyNode = instance._modal.bodyNode;
+
+						var index;
+
+						var listNode = bodyNode.one('.lfr-ddm-pages-container');
+
+						instance._hideLoader();
+
+						var total = layouts.length;
+
+						if (direction === 'up') {
+							var cache = instance._getCache(key);
+
+							listNode.toggleClass('top-ended', cache.start === 0);
+
+							for (index = total - 1; index >= 0; index--) {
+								instance._addListElement(layouts[index], listNode, false, true);
+							}
+
+							if (cache.start > 0 && listNode.get('scrollTop') === 0) {
+								listNode.set('scrollTop', 60);
+							}
+						}
+						else {
+							for (index = 0; index < total; index++) {
+								instance._addListElement(layouts[index], listNode, false);
+							}
+						}
+
+						instance._syncModalHeight();
+					},
+
+					_renderLayoutsList: function(privateLayout) {
+						var instance = this;
+
+						var bodyNode = instance._modal.bodyNode;
+
+						var listNode = bodyNode.one('.lfr-ddm-pages-container');
+
+						instance._showLoader(listNode);
+
+						instance._syncModalHeight();
+
+						var selectedLayout = instance.get('selectedLayout');
+
+						if (selectedLayout && selectedLayout.layoutId) {
+							var groupId = themeDisplay.getScopeGroupId();
+
+							instance._requestSiblingLayouts(
+								groupId,
+								privateLayout,
+								function(layouts) {
+									var key = [instance._currentParentLayoutId, groupId, privateLayout].join('-');
+
+									var cache = instance._getCache(key);
+
+									listNode.toggleClass('top-ended', cache.start === 0);
+
+									instance._renderLayouts(layouts);
+
+									if (cache.start > 0 && listNode.get('scrollTop') === 0) {
+										listNode.set('scrollTop', 50);
+									}
+
+									instance._hideLoader();
+								}
+							);
+						}
+						else {
+							listNode.addClass('top-ended');
+
+							instance._requestInitialLayouts(0, themeDisplay.getScopeGroupId(), privateLayout, instance._renderLayouts);
+						}
 					},
 
 					_renderNavbar: function(privateLayout) {
 						var instance = this;
 
-						var navbar = A.Node.create(
-							Lang.sub(
-								TPL_LAYOUTS_NAVBAR,
-								{
-									privateLayoutClass: privateLayout ? 'active' : '',
-									publicLayoutClass: privateLayout ? '' : 'active'
-								}
-							)
-						);
+						if (!instance._navbar) {
+							var navbar = A.Node.create(
+								Lang.sub(
+									TPL_LAYOUTS_NAVBAR,
+									{
+										privateLayoutClass: privateLayout ? 'active' : '',
+										publicLayoutClass: privateLayout ? '' : 'active'
+									}
+								)
+							);
 
-						navbar.delegate('click', instance._handleNavbarClick, 'li', instance);
+							navbar.delegate('click', instance._handleNavbarClick, 'li', instance);
 
-						return navbar;
+							instance._navbar = navbar;
+
+							instance._navbar.insertBefore(navbar, instance._modal.bodyNode);
+						}
 					},
 
-					_renderTreeView: function(privateLayout) {
+					_requestInitialLayouts: function(parentLayoutId, groupId, privateLayout, callback) {
 						var instance = this;
 
-						var modal = instance.modal;
+						var end = instance.get('delta');
 
-						var bodyNode = modal.bodyNode;
+						var start = 0;
 
-						var loader = A.Node.create(TPL_LOADER);
+						instance._requestLayouts(parentLayoutId, groupId, privateLayout, start, end, callback);
+					},
 
-						if (instance.treeView) {
-							instance.treeView.destroy();
+					_requestLayouts: function(parentLayoutId, groupId, privateLayout, start, end, callback) {
+						var instance = this;
+
+						var key = [parentLayoutId, groupId, privateLayout].join('-');
+
+						var cache = instance._getCache(key);
+
+						if (cache && start > cache.total) {
+							return;
 						}
 
-						var treeViewNode = A.Node.create('<div></div>');
+						if (instance._canLoadMore(key, start, end)) {
+							A.io.request(
+								themeDisplay.getPathMain() + '/portal/get_layouts',
+								{
+									after: {
+										success: function() {
+											var	response = JSON.parse(this.get('responseData'));
 
-						bodyNode.empty();
-						bodyNode.append(loader);
-						bodyNode.append(treeViewNode);
+											var layouts = response && response.layouts;
 
-						instance._syncModalHeight();
+											if (layouts) {
+												instance._updateCache(key, layouts, start, end, response.total);
 
-						instance.getInitialLayouts(
-							privateLayout,
-							function(layouts) {
-								loader.remove();
+												callback.call(instance, layouts);
+											}
+										}
+									},
+									data: {
+										cmd: 'get',
+										end: end,
+										expandParentLayouts: false,
+										groupId: groupId,
+										p_auth: Liferay.authToken,
+										paginate: true,
+										parentLayoutId: parentLayoutId,
+										privateLayout: privateLayout,
+										start: start
+									}
+								}
+							);
+						}
+						else if (cache) {
+							callback.call(instance, cache.layouts);
+						}
+					},
 
-								instance.treeView = instance._createTreeView(treeViewNode, layouts, privateLayout);
+					_requestSiblingLayouts: function(groupId, privateLayout, callback) {
+						var instance = this;
 
-								instance._syncModalHeight();
+						var cache;
+
+						var path = instance.get('selectedLayoutPath');
+
+						var lastIndex = path.length - 1;
+
+						if (lastIndex >= 0) {
+							var parentLayout = path[lastIndex];
+
+							var key = [parentLayout.layoutId, parentLayout.groupId, parentLayout.privateLayout].join('-');
+
+							cache = instance._getCache(key);
+						}
+
+						if (cache) {
+							callback.call(instance, cache.layouts);
+						}
+						else {
+							var selectedLayout = instance.get('selectedLayout');
+
+							A.io.request(
+								themeDisplay.getPathMain() + '/portal/get_layouts',
+								{
+									after: {
+										success: function() {
+											var	response = JSON.parse(this.get('responseData'));
+
+											var layouts = response && response.layouts;
+
+											if (layouts) {
+												var parentLayoutId = response.ancestorLayoutIds[0];
+
+												var key = [parentLayoutId, groupId, privateLayout].join('-');
+
+												var start = response.start;
+
+												var end = start + layouts.length;
+
+												instance._currentParentLayoutId = parentLayoutId;
+
+												instance._setSelectedLayoutPath(groupId, privateLayout, response);
+
+												instance._updateCache(key, layouts, start, end, response.total);
+
+												callback.call(instance, layouts);
+											}
+										}
+									},
+									data: {
+										cmd: 'getSiblingLayoutsJSON',
+										expandParentLayouts: false,
+										groupId: groupId,
+										layoutId: selectedLayout.layoutId,
+										max: instance.get('delta'),
+										p_auth: Liferay.authToken,
+										paginate: true,
+										privateLayout: privateLayout
+									}
+								}
+							);
+						}
+					},
+
+					_setSelectedLayoutPath: function(groupId, privateLayout, response) {
+						var instance = this;
+
+						var ancestorLayoutIds = response.ancestorLayoutIds;
+
+						if (ancestorLayoutIds) {
+							var selectedLayoutPath = [instance.get('selectedLayoutPath')[0]];
+
+							var ancestorLayoutNames = response.ancestorLayoutNames;
+
+							for (var index = ancestorLayoutIds.length - 1; index >= 0; index--) {
+								selectedLayoutPath.push(
+									{
+										groupId: groupId,
+										label: ancestorLayoutNames[index],
+										layoutId: ancestorLayoutIds[index],
+										privateLayout: privateLayout
+									}
+								);
 							}
-						);
+
+							instance.set('selectedLayoutPath', selectedLayoutPath);
+						}
+					},
+
+					_showLoader: function(node) {
+						var instance = this;
+
+						instance._loadingAnimationNode.appendTo(node);
 					},
 
 					_syncModalHeight: function() {
 						var instance = this;
 
-						var bodyNode = instance.modal.bodyNode;
+						var bodyNode = instance._modal.bodyNode;
 
-						instance.modal.fillHeight(bodyNode);
+						instance._modal.fillHeight(bodyNode);
 
-						bodyNode.set('offsetHeight', Lang.toInt(bodyNode.get('offsetHeight')) - Lang.toInt(instance.navbar.get('offsetHeight')));
+						bodyNode.set('offsetHeight', Lang.toInt(bodyNode.get('offsetHeight')) - Lang.toInt(instance._navbar.get('offsetHeight')));
+					},
+
+					_updateCache: function(key, layouts, start, end, total) {
+						var instance = this;
+
+						if (!instance._cache[key]) {
+							var path = instance.get('selectedLayoutPath');
+
+							instance._cache[key] = {
+								end: end,
+								layouts: layouts,
+								path: path.slice(),
+								start: start,
+								total: total
+							};
+						}
+						else {
+							var cachedLayouts = instance._cache[key].layouts || [];
+
+							if (instance._cache[key].start > start) {
+								cachedLayouts = layouts.concat(cachedLayouts);
+
+								instance._cache[key].start = start;
+							}
+
+							if (instance._cache[key].end < end) {
+								cachedLayouts = cachedLayouts.concat(layouts);
+
+								instance._cache[key].end = end;
+							}
+
+							instance._cache[key].layouts = cachedLayouts;
+						}
 					}
 				}
 			}

@@ -928,10 +928,16 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 						return content;
 					}
 
+					String configuration =
+						ProvidedBasePlugin.getPROVIDED_CONFIGURATION_NAME() +
+							" ";
+
 					return content.replaceAll(
-						Pattern.quote(getProjectDependency(project)),
+						Pattern.quote(
+							configuration + getProjectDependency(project)),
 						Matcher.quoteReplacement(
-							getModuleDependency(project, true)));
+							configuration +
+								getModuleDependency(project, true)));
 				}
 
 			});

@@ -262,7 +262,7 @@ public class CalendarBookingLocalServiceImpl
 			String secondReminderType, ServiceContext serviceContext)
 		throws PortalException {
 
-		return addCalendarBooking(
+		return calendarBookingLocalService.addCalendarBooking(
 			userId, calendarId, childCalendarIds, parentCalendarBookingId,
 			CalendarBookingConstants.RECURRING_CALENDAR_BOOKING_ID_DEFAULT,
 			titleMap, descriptionMap, location, startTime, endTime, allDay,
@@ -309,7 +309,8 @@ public class CalendarBookingLocalServiceImpl
 			CalendarBooking calendarBooking)
 		throws PortalException {
 
-		return deleteCalendarBooking(calendarBooking, false);
+		return calendarBookingLocalService.deleteCalendarBooking(
+			calendarBooking, false);
 	}
 
 	@Indexable(type = IndexableType.DELETE)
@@ -544,7 +545,8 @@ public class CalendarBookingLocalServiceImpl
 			CalendarBooking calendarBooking)
 		throws PortalException {
 
-		return deleteCalendarBooking(calendarBooking, true);
+		return calendarBookingLocalService.deleteCalendarBooking(
+			calendarBooking, true);
 	}
 
 	@Override
@@ -552,7 +554,8 @@ public class CalendarBookingLocalServiceImpl
 			long calendarBookingId)
 		throws PortalException {
 
-		return deleteCalendarBooking(calendarBookingId, true);
+		return calendarBookingLocalService.deleteCalendarBooking(
+			calendarBookingId, true);
 	}
 
 	@Override

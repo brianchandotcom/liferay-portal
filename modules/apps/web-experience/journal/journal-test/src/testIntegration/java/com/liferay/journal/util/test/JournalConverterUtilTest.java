@@ -114,6 +114,7 @@ public class JournalConverterUtilTest {
 	public void setUp() throws Exception {
 		setUpDDMFormJSONDeserializer();
 		setUpDDMFormXSDDeserializer();
+		setUpDDMFormJSONDeserializer();
 		setUpDDMXML();
 
 		_group = GroupTestUtil.addGroup();

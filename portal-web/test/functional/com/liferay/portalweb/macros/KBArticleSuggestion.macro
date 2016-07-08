@@ -1,6 +1,6 @@
 <definition>
 	<command name="addPG">
-		<execute function="AssertClick" locator1="KnowledgeBaseArticle#DO_YOU_HAVE_ANY_SUGGESTIONS" value1="Do you have any suggestions?" />
+		<execute function="Click" locator1="KnowledgeBaseSuggestions#CONTENT_INPUT" />
 		<execute function="Type" locator1="KnowledgeBaseSuggestions#CONTENT_INPUT" value1="${kbSuggestionBody}" />
 		<execute function="AssertClick" locator1="Button#SUBMIT" value1="Submit" />
 		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
@@ -25,9 +25,13 @@
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 		<var name="key_kbSuggestionBody" value="${kbSuggestionBody}" />
 
+		<var name="key_rowEntry" value="${kbSuggestionBody}" />
+
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+
 		<execute function="AssertTextEquals" locator1="KnowledgeBaseSuggestions#CONTENT" value1="${kbSuggestionBody}" />
 
-		<execute function="AssertClickNoError" locator1="Button#DELETE" value1="Delete" />
+		<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
 
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 
@@ -62,7 +66,12 @@
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 		<var name="key_kbSuggestionBody" value="${kbSuggestionBody}" />
 
-		<execute function="AssertClick" locator1="KnowledgeBaseSuggestions#MOVE_TO_IN_PROGRESS_BUTTON" value1="Move to in Progress" />
+		<var name="key_rowEntry" value="${kbSuggestionBody}" />
+
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+
+		<execute function="AssertClick" locator1="MenuItem#MOVE_TO_IN_PROGRESS" value1="Move to In Progress" />
+
 		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 	</command>
 
@@ -70,7 +79,12 @@
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 		<var name="key_kbSuggestionBody" value="${kbSuggestionBody}" />
 
-		<execute function="AssertClick" locator1="KnowledgeBaseSuggestions#MOVE_TO_NEW_BUTTON" value1="Move to New" />
+		<var name="key_rowEntry" value="${kbSuggestionBody}" />
+
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+
+		<execute function="AssertClick" locator1="MenuItem#MOVE_TO_NEW" value1="Move to New" />
+
 		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 	</command>
 
@@ -78,7 +92,12 @@
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 		<var name="key_kbSuggestionBody" value="${kbSuggestionBody}" />
 
-		<execute function="AssertClick" locator1="KnowledgeBaseSuggestions#RESOLVE_BUTTON" value1="Resolve" />
+		<var name="key_rowEntry" value="${kbSuggestionBody}" />
+
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+
+		<execute function="AssertClick" locator1="MenuItem#RESOLVE" value1="Resolve" />
+
 		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 	</command>
 
@@ -104,6 +123,10 @@
 		<execute function="AssertElementNotPresent" locator1="KnowledgeBaseSuggestions#CONTENT_DUPLICATE" value1="${kbSuggestionBody}" />
 	</command>
 
+	<command name="viewNoSuggestions">
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no suggestions." />
+	</command>
+
 	<command name="viewNoSuggestionsPG">
 		<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#DO_YOU_HAVE_ANY_SUGGESTIONS" value1="Do you have any suggestions?" />
 		<execute function="AssertElementNotPresent" locator1="KnowledgeBase#LINK_THERE_ARE_SUGGESTIONS" />
@@ -114,7 +137,7 @@
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="KnowledgeBaseSuggestions#USER_NAME" value1="${kbSuggestionUserName}" />
 		<execute function="AssertTextEquals" locator1="KnowledgeBaseSuggestions#CONTENT" value1="${kbSuggestionBody}" />
-		<execute function="AssertTextEquals" locator1="KnowledgeBaseSuggestions#STATUS" value1="${status}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="KnowledgeBaseSuggestions#STATUS" value1="${status}" />
 	</command>
 
 	<command name="viewSubmittedSuggestionCountNoPermissionPG">

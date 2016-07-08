@@ -39,26 +39,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>MOVE_TO_IN_PROGRESS_BUTTON</td>
-	<td>//tr[contains(.,'${key_kbSuggestionBody}')]//a[contains(.,'Move to in Progress')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>MOVE_TO_NEW_BUTTON</td>
-	<td>//tr[contains(.,'${key_kbSuggestionBody}')]//a[contains(.,'Move to New')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>RESOLVE_BUTTON</td>
-	<td>//tr[contains(.,'${key_kbSuggestionBody}')]//a[contains(.,'Resolve')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DELETE_BUTTON</td>
-	<td>//tr[contains(.,'${key_kbSuggestionBody}')]//a[contains(.,'Delete')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>

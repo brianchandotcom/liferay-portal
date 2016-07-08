@@ -55,7 +55,7 @@
 </tr>
 <tr>
 	<td>DO_YOU_HAVE_ANY_SUGGESTIONS</td>
-	<td>//div[contains(@class,'kb-entity-body')]//h5[contains(.,'Do you have any suggestions?')]</td>
+	<td>//div[contains(.,'Do you have any suggestions?')]/h5</td>
 	<td></td>
 </tr>
 <tr>

@@ -1717,8 +1717,12 @@
 			<var name="kbSuggestionBody" value="Knowledge Base Article Suggestion" />
 		</execute>
 
-		<execute macro="KBArticleSuggestion#gotoSuggestionStatusInProgress">
-			<var name="suggestionCount" value="1" />
+		<execute macro="KBArticle#gotoSuggestionsNavigationCP" />
+
+		<execute macro="KBArticleSuggestion#viewPG">
+			<var name="kbSuggestionBody" value="Knowledge Base Article Suggestion" />
+			<var name="kbSuggestionUserName" value="userfn userln" />
+			<var name="status" value="In Progress" />
 		</execute>
 
 		<execute macro="KBArticleSuggestion#moveToResolvedStatus">
@@ -1726,8 +1730,12 @@
 			<var name="kbSuggestionBody" value="Knowledge Base Article Suggestion" />
 		</execute>
 
-		<execute macro="KBArticleSuggestion#gotoSuggestionStatusResolved">
-			<var name="suggestionCount" value="1" />
+		<execute macro="KBArticle#gotoSuggestionsNavigationCP" />
+
+		<execute macro="KBArticleSuggestion#viewPG">
+			<var name="kbSuggestionBody" value="Knowledge Base Article Suggestion" />
+			<var name="kbSuggestionUserName" value="userfn userln" />
+			<var name="status" value="Resolved" />
 		</execute>
 
 		<execute macro="KBArticleSuggestion#deleteCP">
@@ -1742,23 +1750,7 @@
 
 		<execute macro="KBArticle#gotoSuggestionsNavigationCP" />
 
-		<execute macro="KBArticleSuggestion#gotoSuggestionStatusNew">
-			<var name="suggestionCount" value="0" />
-		</execute>
-
-		<execute macro="KBArticleSuggestion#viewDefaultNew" />
-
-		<execute macro="KBArticleSuggestion#gotoSuggestionStatusInProgress">
-			<var name="suggestionCount" value="0" />
-		</execute>
-
-		<execute macro="KBArticleSuggestion#viewDefaultInProgress" />
-
-		<execute macro="KBArticleSuggestion#gotoSuggestionStatusResolved">
-			<var name="suggestionCount" value="0" />
-		</execute>
-
-		<execute macro="KBArticleSuggestion#viewDefaultResolved" />
+		<execute macro="KBArticleSuggestion#viewNoSuggestions" />
 	</command>
 
 	<command name="ViewKBArticleSuggestionsWorkflowNotificationEmail" priority="3">
@@ -2406,8 +2398,6 @@
 			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
 		</execute>
 
-		<execute macro="KBArticleSuggestion#viewNoSuggestionsPG" />
-
 		<execute macro="KBArticleSuggestion#addPG">
 			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
 			<var name="kbSuggestionBody" value="User 1 Knowledge Base Article Suggestion 1" />
@@ -2438,8 +2428,6 @@
 			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
 		</execute>
 
-		<execute macro="KBArticleSuggestion#viewNoSuggestionsPG" />
-
 		<execute macro="KBArticleSuggestion#addPG">
 			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
 			<var name="kbSuggestionBody" value="User 2 Knowledge Base Article Suggestion 1" />
@@ -2464,8 +2452,6 @@
 			<var name="kbArticleContent" value="Knowledge Base Article Content" />
 			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
 		</execute>
-
-		<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#DO_YOU_HAVE_ANY_SUGGESTIONS" value1="Do you have any suggestions?" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="KnowledgeBase#LINK_THERE_ARE_SUGGESTIONS" value1="There are 4 suggestions." />
 

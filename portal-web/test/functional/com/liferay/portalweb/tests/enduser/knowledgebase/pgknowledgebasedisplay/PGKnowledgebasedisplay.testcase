@@ -139,12 +139,6 @@
 			<var name="pageName" value="Knowledge Base Display Page" />
 		</execute>
 
-		<execute macro="KBArticle#gotoSuggestionsNavigationPG" />
-
-		<execute macro="KBArticleSuggestion#gotoSuggestionStatusNew">
-			<var name="suggestionCount" value="1" />
-		</execute>
-
 		<execute macro="KBArticleSuggestion#viewPG">
 			<var name="kbSuggestionBody" value="Knowledge Base Article Suggestion" />
 			<var name="kbSuggestionUserName" value="Test Test" />
@@ -209,15 +203,9 @@
 			<var name="pageName" value="Knowledge Base Display Page" />
 		</execute>
 
-		<execute macro="KBArticle#gotoKBArticleViaKBDisplayHierarchyNavigationPG">
-			<var name="kbArticleTitle" value="Knowledge Base Article1 Title" />
-		</execute>
-
 		<execute function="AssertTextEquals" locator1="KnowledgeBase#LINK_THERE_ARE_SUGGESTIONS" value1="There are 3 suggestions. (3 Pending)" />
 
 		<for list="${kbSuggestionCounterList}" param="suggestionCount" >
-			<execute macro="KBArticle#gotoSuggestionsNavigationPG" />
-
 			<execute macro="KBArticleSuggestion#viewPG">
 				<var name="kbSuggestionBody" value="Knowledge Base Article1 Suggestion${suggestionCount}" />
 				<var name="kbSuggestionUserName" value="Test Test" />
@@ -693,50 +681,26 @@
 			<var name="suggestionCount" value="1" />
 		</execute>
 
+		<execute macro="KBArticleSuggestion#viewPG">
+			<var name="kbSuggestionBody" value="Knowledge Base Article1 Suggestion" />
+			<var name="kbSuggestionUserName" value="Test Test" />
+			<var name="status" value="New" />
+		</execute>
+
 		<execute macro="KBArticleSuggestion#moveToInProgressStatus">
 			<var name="kbArticleTitle" value="Knowledge Base Article1 Title" />
 			<var name="kbSuggestionBody" value="Knowledge Base Article1 Suggestion" />
 		</execute>
 
-		<execute macro="KBArticle#gotoSuggestionsNavigationPG" />
-
-		<execute macro="KBArticleSuggestion#gotoSuggestionStatusInProgress">
+		<execute macro="KBArticleSuggestion#viewPG">
 			<var name="kbSuggestionBody" value="Knowledge Base Article1 Suggestion" />
-			<var name="suggestionCount" value="1" />
+			<var name="kbSuggestionUserName" value="Test Test" />
+			<var name="status" value="In Progress" />
 		</execute>
 
 		<execute macro="KBArticleSuggestion#moveToResolvedStatus">
 			<var name="kbArticleTitle" value="Knowledge Base Article1 Title" />
 			<var name="kbSuggestionBody" value="Knowledge Base Article1 Suggestion" />
-		</execute>
-
-		<execute macro="KBArticle#gotoSuggestionsNavigationPG" />
-
-		<execute macro="KBArticleSuggestion#gotoSuggestionStatusResolved">
-			<var name="kbSuggestionBody" value="Knowledge Base Article1 Suggestion" />
-			<var name="suggestionCount" value="1" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Knowledge Base Display Page" />
-		</execute>
-
-		<execute macro="KBArticle#gotoSuggestionsNavigationPG" />
-
-		<execute macro="KBArticleSuggestion#gotoSuggestionStatusNew">
-			<var name="suggestionCount" value="0" />
-		</execute>
-
-		<execute macro="KBArticleSuggestion#viewDefaultNew" />
-
-		<execute macro="KBArticleSuggestion#gotoSuggestionStatusInProgress">
-			<var name="suggestionCount" value="0" />
-		</execute>
-
-		<execute macro="KBArticleSuggestion#viewDefaultInProgress" />
-
-		<execute macro="KBArticleSuggestion#gotoSuggestionStatusResolved">
-			<var name="suggestionCount" value="1" />
 		</execute>
 
 		<execute macro="KBArticleSuggestion#viewPG">

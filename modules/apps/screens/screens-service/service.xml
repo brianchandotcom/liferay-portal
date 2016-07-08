@@ -20,6 +20,10 @@
 	<entity local-service="false" name="ScreensDDLRecord" remote-service="true">
 		<reference entity="DDLRecord" package-path="com.liferay.dynamic.data.lists" />
 	</entity>
+	<entity local-service="false" name="ScreensRatingsEntry" remote-service="true">
+		<reference entity="RatingsEntry" package-path="com.liferay.portlet.ratings" />
+		<reference entity="AssetEntry" package-path="com.liferay.portlet.asset" />
+	</entity>
 	<entity local-service="false" name="ScreensJournalArticle" remote-service="true">
 		<reference entity="JournalArticle" package-path="com.liferay.journal" />
 		<reference entity="JournalArticleResource" package-path="com.liferay.journal" />

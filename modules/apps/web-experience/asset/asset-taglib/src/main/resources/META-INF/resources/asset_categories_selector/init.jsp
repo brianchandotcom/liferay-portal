@@ -26,7 +26,6 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 page import="com.liferay.asset.kernel.model.AssetVocabulary" %><%@
 page import="com.liferay.asset.kernel.service.AssetCategoryServiceUtil" %><%@
 page import="com.liferay.asset.kernel.service.AssetVocabularyServiceUtil" %><%@
-page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.Group" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletProvider" %><%@
@@ -46,11 +45,9 @@ page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portlet.asset.util.AssetUtil" %><%@
 page import="com.liferay.taglib.aui.AUIUtil" %><%@
-page import="com.liferay.taglib.util.AssetCategoryUtil" %><%@
-page import="com.liferay.taglib.util.TagResourceBundleUtil" %>
+page import="com.liferay.taglib.util.AssetCategoryUtil" %>
 
-<%@ page import="java.util.List" %><%@
-page import="java.util.ResourceBundle" %>
+<%@ page import="java.util.List" %>
 
 <%@ page import="javax.portlet.PortletRequest" %><%@
 page import="javax.portlet.PortletResponse" %><%@
@@ -70,6 +67,4 @@ String namespace = AUIUtil.getNamespace(portletRequest, portletResponse);
 if (Validator.isNull(namespace)) {
 	namespace = AUIUtil.getNamespace(request);
 }
-
-ResourceBundle resourceBundle = TagResourceBundleUtil.getResourceBundle(request, locale);
 %>

@@ -41,75 +41,141 @@ else {
 }
 
 List<AssetVocabulary> vocabularies = AssetVocabularyServiceUtil.getGroupVocabularies(groupIds);
+%>
 
-if (Validator.isNotNull(className)) {
-	vocabularies = AssetUtil.filterVocabularies(vocabularies, className, classTypePK);
+<c:choose>
+	<c:when test="<%= Validator.isNotNull(className) %>">
 
-	long classNameId = PortalUtil.getClassNameId(className);
+		<%
+		vocabularies = AssetUtil.filterVocabularies(vocabularies, className, classTypePK);
 
-	for (AssetVocabulary vocabulary : vocabularies) {
-		vocabulary = vocabulary.toEscapedModel();
+		for (AssetVocabulary vocabulary : vocabularies) {
+			vocabulary = vocabulary.toEscapedModel();
 
-		if (AssetCategoryServiceUtil.getVocabularyCategoriesCount(vocabulary.getGroupId(), vocabulary.getVocabularyId()) == 0) {
-			continue;
+			if (AssetCategoryServiceUtil.getVocabularyCategoriesCount(vocabulary.getGroupId(), vocabulary.getVocabularyId()) == 0) {
+				continue;
+			}
+
+			if (Validator.isNotNull(className) && (classPK > 0)) {
+				List<AssetCategory> categories = AssetCategoryServiceUtil.getCategories(className, classPK);
+
+				curCategoryIds = ListUtil.toString(categories, AssetCategory.CATEGORY_ID_ACCESSOR);
+				curCategoryNames = ListUtil.toString(categories, AssetCategory.NAME_ACCESSOR);
+			}
+
+			if (!ignoreRequestValue) {
+				String curCategoryIdsParam = request.getParameter(hiddenInput + StringPool.UNDERLINE + vocabulary.getVocabularyId());
+
+				if (Validator.isNotNull(curCategoryIdsParam)) {
+					curCategoryIds = curCategoryIdsParam;
+					curCategoryNames = StringPool.BLANK;
+				}
+			}
+
+			String[] categoryIdsTitles = AssetCategoryUtil.getCategoryIdsTitles(curCategoryIds, curCategoryNames, vocabulary.getVocabularyId(), themeDisplay);
+		%>
+
+			<span class="field-content">
+				<label id="<%= namespace %>assetCategoriesLabel_<%= vocabulary.getVocabularyId() %>">
+					<%= vocabulary.getTitle(locale) %>
+
+					<c:if test="<%= vocabulary.getGroupId() != themeDisplay.getSiteGroupId() %>">
+
+						<%
+						Group vocabularyGroup = GroupLocalServiceUtil.getGroup(vocabulary.getGroupId());
+						%>
+
+						(<%= vocabularyGroup.getDescriptiveName(locale) %>)
+					</c:if>
+
+					<c:if test="<%= vocabulary.isRequired(PortalUtil.getClassNameId(className), classTypePK) && showRequiredLabel %>">
+						<span class="icon-asterisk text-warning">
+							<span class="hide-accessible"><liferay-ui:message key="required" /></span>
+						</span>
+					</c:if>
+				</label>
+
+				<div class="lfr-tags-selector-content" data-vocabulary-id="<%= vocabulary.getVocabularyId() %>" id="<%= namespace + randomNamespace %>assetCategoriesSelector_<%= vocabulary.getVocabularyId() %>">
+					<aui:input name="<%= hiddenInput + StringPool.UNDERLINE + vocabulary.getVocabularyId() %>" type="hidden" />
+				</div>
+			</span>
+
+			<aui:script use="liferay-asset-taglib-categories-selector">
+				new Liferay.AssetTaglibCategoriesSelector(
+					{
+						className: '<%= className %>',
+						contentBox: '#<%= namespace + randomNamespace %>assetCategoriesSelector_<%= vocabulary.getVocabularyId() %>',
+						curEntries: '<%= HtmlUtil.escapeJS(categoryIdsTitles[1]) %>',
+						curEntryIds: '<%= categoryIdsTitles[0] %>',
+						hiddenInput: '#<%= namespace + hiddenInput + StringPool.UNDERLINE + vocabulary.getVocabularyId() %>',
+						instanceVar: '<%= namespace + randomNamespace %>',
+						labelNode: '#<%= namespace %>assetCategoriesLabel_<%= vocabulary.getVocabularyId() %>',
+						maxEntries: <%= maxEntries %>,
+						moreResultsLabel: '<liferay-ui:message key="load-more-results" />',
+
+						<%
+						String portletId = PortletProviderUtil.getPortletId(AssetCategory.class.getName(), PortletProvider.Action.BROWSE);
+						%>
+
+						<c:if test="<%= Validator.isNotNull(portletId) %>">
+							namespace: '<%= PortalUtil.getPortletNamespace(portletId) %>',
+						</c:if>
+
+						portalModelResource: <%= Validator.isNotNull(className) && (ResourceActionsUtil.isPortalModelResource(className) || className.equals(Group.class.getName())) %>,
+
+						<c:if test="<%= portletURL != null %>">
+
+							<%
+							portletURL.setWindowState(LiferayWindowState.POP_UP);
+							%>
+
+							portletURL: '<%= portletURL.toString() %>',
+						</c:if>
+
+						singleSelect: <%= !vocabulary.isMultiValued() %>,
+						title: '<liferay-ui:message arguments="<%= vocabulary.getTitle(locale) %>" key="select-x" translateArguments="<%= false %>" />',
+						vocabularyGroupIds: '<%= StringUtil.merge(groupIds) %>',
+						vocabularyIds: '<%= String.valueOf(vocabulary.getVocabularyId()) %>'
+					}
+				).render();
+			</aui:script>
+
+		<%
 		}
+		%>
 
-		if (Validator.isNotNull(className) && (classPK > 0)) {
-			List<AssetCategory> categories = AssetCategoryServiceUtil.getCategories(className, classPK);
+	</c:when>
+	<c:otherwise>
 
-			curCategoryIds = ListUtil.toString(categories, AssetCategory.CATEGORY_ID_ACCESSOR);
-			curCategoryNames = ListUtil.toString(categories, AssetCategory.NAME_ACCESSOR);
-		}
-
+		<%
 		if (!ignoreRequestValue) {
-			String curCategoryIdsParam = request.getParameter(hiddenInput + StringPool.UNDERLINE + vocabulary.getVocabularyId());
+			String curCategoryIdsParam = request.getParameter(hiddenInput);
 
-			if (Validator.isNotNull(curCategoryIdsParam)) {
+			if (curCategoryIdsParam != null) {
 				curCategoryIds = curCategoryIdsParam;
-				curCategoryNames = StringPool.BLANK;
 			}
 		}
 
-		String[] categoryIdsTitles = AssetCategoryUtil.getCategoryIdsTitles(curCategoryIds, curCategoryNames, vocabulary.getVocabularyId(), themeDisplay);
-%>
+		String[] categoryIdsTitles = AssetCategoryUtil.getCategoryIdsTitles(curCategoryIds, curCategoryNames, 0, themeDisplay);
+		%>
 
-		<span class="field-content">
-			<label id="<%= namespace %>assetCategoriesLabel_<%= vocabulary.getVocabularyId() %>">
-				<%= vocabulary.getTitle(locale) %>
-
-				<c:if test="<%= vocabulary.getGroupId() != themeDisplay.getSiteGroupId() %>">
-
-					<%
-					Group vocabularyGroup = GroupLocalServiceUtil.getGroup(vocabulary.getGroupId());
-					%>
-
-					(<%= vocabularyGroup.getDescriptiveName(locale) %>)
-				</c:if>
-
-				<c:if test="<%= vocabulary.isRequired(classNameId, classTypePK) && showRequiredLabel %>">
-					<span class="icon-asterisk text-warning">
-						<span class="hide-accessible"><liferay-ui:message key="required" /></span>
-					</span>
-				</c:if>
-			</label>
-
-			<div class="lfr-tags-selector-content" data-vocabulary-id="<%= vocabulary.getVocabularyId() %>" id="<%= namespace + randomNamespace %>assetCategoriesSelector_<%= vocabulary.getVocabularyId() %>">
-				<aui:input name="<%= hiddenInput + StringPool.UNDERLINE + vocabulary.getVocabularyId() %>" type="hidden" />
-			</div>
-		</span>
+		<div class="lfr-tags-selector-content" id="<%= namespace + randomNamespace %>assetCategoriesSelector">
+			<aui:input name="<%= hiddenInput %>" type="hidden" />
+		</div>
 
 		<aui:script use="liferay-asset-taglib-categories-selector">
 			new Liferay.AssetTaglibCategoriesSelector(
 				{
 					className: '<%= className %>',
-					contentBox: '#<%= namespace + randomNamespace %>assetCategoriesSelector_<%= vocabulary.getVocabularyId() %>',
+					contentBox: '#<%= namespace + randomNamespace %>assetCategoriesSelector',
 					curEntries: '<%= HtmlUtil.escapeJS(categoryIdsTitles[1]) %>',
 					curEntryIds: '<%= categoryIdsTitles[0] %>',
-					hiddenInput: '#<%= namespace + hiddenInput + StringPool.UNDERLINE + vocabulary.getVocabularyId() %>',
+					hiddenInput: '#<%= namespace + hiddenInput %>',
 					instanceVar: '<%= namespace + randomNamespace %>',
-					labelNode: '#<%= namespace %>assetCategoriesLabel_<%= vocabulary.getVocabularyId() %>',
 					maxEntries: <%= maxEntries %>,
-					moreResultsLabel: '<%= UnicodeLanguageUtil.get(resourceBundle, "load-more-results") %>',
+					moreResultsLabel: '<liferay-ui:message key="load-more-results" />',
+					namespace: '<%= namespace %>',
+					portalModelResource: <%= Validator.isNotNull(className) && (ResourceActionsUtil.isPortalModelResource(className) || className.equals(Group.class.getName())) %>,
 
 					<%
 					String portletId = PortletProviderUtil.getPortletId(AssetCategory.class.getName(), PortletProvider.Action.BROWSE);
@@ -130,72 +196,10 @@ if (Validator.isNotNull(className)) {
 						portletURL: '<%= portletURL.toString() %>',
 					</c:if>
 
-					singleSelect: <%= !vocabulary.isMultiValued() %>,
-					title: '<%= UnicodeLanguageUtil.format(request, "select-x", vocabulary.getTitle(locale), false) %>',
 					vocabularyGroupIds: '<%= StringUtil.merge(groupIds) %>',
-					vocabularyIds: '<%= String.valueOf(vocabulary.getVocabularyId()) %>'
+					vocabularyIds: '<%= ListUtil.toString(vocabularies, "vocabularyId") %>'
 				}
 			).render();
 		</aui:script>
-
-<%
-	}
-}
-else {
-	if (!ignoreRequestValue) {
-		String curCategoryIdsParam = request.getParameter(hiddenInput);
-
-		if (curCategoryIdsParam != null) {
-			curCategoryIds = curCategoryIdsParam;
-		}
-	}
-
-	String[] categoryIdsTitles = AssetCategoryUtil.getCategoryIdsTitles(curCategoryIds, curCategoryNames, 0, themeDisplay);
-%>
-
-	<div class="lfr-tags-selector-content" id="<%= namespace + randomNamespace %>assetCategoriesSelector">
-		<aui:input name="<%= hiddenInput %>" type="hidden" />
-	</div>
-
-	<aui:script use="liferay-asset-taglib-categories-selector">
-		new Liferay.AssetTaglibCategoriesSelector(
-			{
-				className: '<%= className %>',
-				contentBox: '#<%= namespace + randomNamespace %>assetCategoriesSelector',
-				curEntries: '<%= HtmlUtil.escapeJS(categoryIdsTitles[1]) %>',
-				curEntryIds: '<%= categoryIdsTitles[0] %>',
-				hiddenInput: '#<%= namespace + hiddenInput %>',
-				instanceVar: '<%= namespace + randomNamespace %>',
-				maxEntries: <%= maxEntries %>,
-				moreResultsLabel: '<%= UnicodeLanguageUtil.get(resourceBundle, "load-more-results") %>',
-				namespace: '<%= namespace %>',
-				portalModelResource: <%= Validator.isNotNull(className) && (ResourceActionsUtil.isPortalModelResource(className) || className.equals(Group.class.getName())) %>,
-
-				<%
-				String portletId = PortletProviderUtil.getPortletId(AssetCategory.class.getName(), PortletProvider.Action.BROWSE);
-				%>
-
-				<c:if test="<%= Validator.isNotNull(portletId) %>">
-					namespace: '<%= PortalUtil.getPortletNamespace(portletId) %>',
-				</c:if>
-
-				portalModelResource: <%= Validator.isNotNull(className) && (ResourceActionsUtil.isPortalModelResource(className) || className.equals(Group.class.getName())) %>,
-
-				<c:if test="<%= portletURL != null %>">
-
-					<%
-					portletURL.setWindowState(LiferayWindowState.POP_UP);
-					%>
-
-					portletURL: '<%= portletURL.toString() %>',
-				</c:if>
-
-				vocabularyGroupIds: '<%= StringUtil.merge(groupIds) %>',
-				vocabularyIds: '<%= ListUtil.toString(vocabularies, "vocabularyId") %>'
-			}
-		).render();
-	</aui:script>
-
-<%
-}
-%>
+	</c:otherwise>
+</c:choose>

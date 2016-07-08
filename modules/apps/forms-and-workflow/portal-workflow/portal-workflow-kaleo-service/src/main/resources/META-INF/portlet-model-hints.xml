@@ -352,6 +352,61 @@
 		<field name="completed" type="boolean" />
 		<field name="completionDate" type="Date" />
 	</model>
+	<model name="com.liferay.portal.workflow.kaleo.model.KaleoTaskForm">
+		<field name="kaleoTaskFormId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="kaleoDefinitionId" type="long" />
+		<field name="kaleoNodeId" type="long" />
+		<field name="kaleoTaskId" type="long" />
+		<field name="kaleoTaskName" type="String">
+			<hint name="max-length">200</hint>
+		</field>
+		<field name="name" type="String">
+			<hint name="max-length">200</hint>
+		</field>
+		<field name="description" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="formCompanyId" type="long" />
+		<field name="formDefinition" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="formGroupId" type="long" />
+		<field name="formId" type="long" />
+		<field name="formUuid" type="String" />
+		<field name="metadata" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="priority" type="int" />
+	</model>
+	<model name="com.liferay.portal.workflow.kaleo.model.KaleoTaskFormInstance">
+		<field name="kaleoTaskFormInstanceId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="kaleoDefinitionId" type="long" />
+		<field name="kaleoInstanceId" type="long" />
+		<field name="kaleoTaskId" type="long" />
+		<field name="kaleoTaskInstanceTokenId" type="long" />
+		<field name="kaleoTaskFormId" type="long" />
+		<field name="formValues" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="formValueEntryGroupId" type="long" />
+		<field name="formValueEntryId" type="long" />
+		<field name="formValueEntryUuid" type="String" />
+		<field name="metadata" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+	</model>
 	<model name="com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken">
 		<field name="kaleoTaskInstanceTokenId" type="long" />
 		<field name="groupId" type="long" />

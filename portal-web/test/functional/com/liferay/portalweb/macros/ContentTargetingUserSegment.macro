@@ -677,7 +677,7 @@
 				<elseif>
 					<equals arg1="${usersegmentRuleName}" arg2="Device" />
 					<then>
-						<execute function="Select" locator1="EditUserSegment#USER_SEGMENT_RULE_SESSION_ATTRIBUTES_DEVICE_SELECT" value1="${deviceFamilyName}" />
+						<execute function="AssertSelectedLabel" locator1="EditUserSegment#USER_SEGMENT_RULE_SESSION_ATTRIBUTES_DEVICE_SELECT" value1="${deviceFamilyName}" />
 					</then>
 				</elseif>
 			</if>

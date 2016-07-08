@@ -34,6 +34,11 @@ public class ScreensRatingsEntryServiceWrapper
 		_screensRatingsEntryService = screensRatingsEntryService;
 	}
 
+	/**
+	* NOTE FOR DEVELOPERS:
+	*
+	* Never reference this class directly. Always use {@link ScreensRatingsEntryServiceUtil} to access the screens ratings entry remote service.
+	*/
 	@Override
 	public com.liferay.portal.kernel.json.JSONObject deleteRatingEntry(
 		long classPK, java.lang.String className, int stepCount)

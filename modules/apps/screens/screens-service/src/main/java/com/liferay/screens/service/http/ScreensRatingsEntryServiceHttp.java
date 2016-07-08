@@ -88,45 +88,12 @@ public class ScreensRatingsEntryServiceHttp {
 		}
 	}
 
-	public static com.liferay.portal.kernel.json.JSONObject updateRatingEntry(
-		HttpPrincipal httpPrincipal, long classPK, java.lang.String className,
-		double score, int stepCount)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(ScreensRatingsEntryServiceUtil.class,
-					"updateRatingEntry", _updateRatingEntryParameterTypes1);
-
-			MethodHandler methodHandler = new MethodHandler(methodKey, classPK,
-					className, score, stepCount);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
-			}
-
-			return (com.liferay.portal.kernel.json.JSONObject)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
 	public static com.liferay.portal.kernel.json.JSONObject getRatingsEntries(
 		HttpPrincipal httpPrincipal, long entryId, int stepCount)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ScreensRatingsEntryServiceUtil.class,
-					"getRatingsEntries", _getRatingsEntriesParameterTypes2);
+					"getRatingsEntries", _getRatingsEntriesParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, entryId,
 					stepCount);
@@ -159,10 +126,43 @@ public class ScreensRatingsEntryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ScreensRatingsEntryServiceUtil.class,
-					"getRatingsEntries", _getRatingsEntriesParameterTypes3);
+					"getRatingsEntries", _getRatingsEntriesParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, classPK,
 					className, stepCount);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.portal.kernel.json.JSONObject)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.portal.kernel.json.JSONObject updateRatingEntry(
+		HttpPrincipal httpPrincipal, long classPK, java.lang.String className,
+		double score, int stepCount)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(ScreensRatingsEntryServiceUtil.class,
+					"updateRatingEntry", _updateRatingEntryParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, classPK,
+					className, score, stepCount);
 
 			Object returnObj = null;
 
@@ -190,13 +190,13 @@ public class ScreensRatingsEntryServiceHttp {
 	private static final Class<?>[] _deleteRatingEntryParameterTypes0 = new Class[] {
 			long.class, java.lang.String.class, int.class
 		};
-	private static final Class<?>[] _updateRatingEntryParameterTypes1 = new Class[] {
-			long.class, java.lang.String.class, double.class, int.class
-		};
-	private static final Class<?>[] _getRatingsEntriesParameterTypes2 = new Class[] {
+	private static final Class<?>[] _getRatingsEntriesParameterTypes1 = new Class[] {
 			long.class, int.class
 		};
-	private static final Class<?>[] _getRatingsEntriesParameterTypes3 = new Class[] {
+	private static final Class<?>[] _getRatingsEntriesParameterTypes2 = new Class[] {
 			long.class, java.lang.String.class, int.class
+		};
+	private static final Class<?>[] _updateRatingEntryParameterTypes3 = new Class[] {
+			long.class, java.lang.String.class, double.class, int.class
 		};
 }

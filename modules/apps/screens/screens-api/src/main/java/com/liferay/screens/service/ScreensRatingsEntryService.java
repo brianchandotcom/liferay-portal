@@ -51,6 +51,12 @@ public interface ScreensRatingsEntryService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ScreensRatingsEntryServiceUtil} to access the screens ratings entry remote service. Add custom service methods to {@link com.liferay.screens.service.impl.ScreensRatingsEntryServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+
+	/**
+	* NOTE FOR DEVELOPERS:
+	*
+	* Never reference this class directly. Always use {@link ScreensRatingsEntryServiceUtil} to access the screens ratings entry remote service.
+	*/
 	public JSONObject deleteRatingEntry(long classPK,
 		java.lang.String className, int stepCount) throws PortalException;
 

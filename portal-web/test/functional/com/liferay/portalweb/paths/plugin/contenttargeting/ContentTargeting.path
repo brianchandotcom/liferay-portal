@@ -26,7 +26,7 @@
 </tr>
 <tr>
 	<td>FORM_FIELD_COLLAPSED</td>
-	<td>//div[contains(@class,'toggler-header-collapsed')]//h2[contains(.,'${key_fieldName}')]</td>
+	<td>//div[contains(@class,'field-header') and contains(@class,'collapsed')]//h2[contains(.,'${key_fieldName}')]</td>
 	<td></td>
 </tr>
 <tr>

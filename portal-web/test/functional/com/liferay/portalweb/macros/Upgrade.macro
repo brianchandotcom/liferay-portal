@@ -312,6 +312,21 @@
 		</execute>
 	</command>
 
+	<command name="viewAssetPublisher">
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Asset Publisher" />
+		</execute>
+
+		<var name="key_portletName" value="Asset Publisher" />
+
+		<execute function="AssertTextEquals" locator1="BasePortlet#TITLE" value1="Asset Publisher" />
+
+		<execute macro="WebContent#viewPGViaAP">
+			<var name="webContentContent" value="Web Content Content" />
+			<var name="webContentTitle" value="Web Content Title" />
+		</execute>
+	</command>
+
 	<command name="viewCalendar">
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Calendar" />

@@ -14,8 +14,7 @@
 
 package com.liferay.frontend.taglib.servlet.taglib;
 
-import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.frontend.taglib.servlet.taglib.util.AddMenuKeys;
 
 import java.util.Map;
 
@@ -25,47 +24,42 @@ import java.util.Map;
 public class AddMenuItem extends MenuItem {
 
 	public AddMenuItem(
+		Map<String, Object> anchorData, String id, String label,
+		AddMenuKeys.AddMenuType type, String url) {
+
+		super(anchorData, id, label, url);
+
+		_type = type;
+	}
+
+	public AddMenuItem(
 		Map<String, Object> anchorData, String id, String label, String url) {
 
-		_anchorData = anchorData;
-		_id = id;
-		_url = url;
+		super(anchorData, id, label, url);
 
-		setLabel(label);
+		_type = AddMenuKeys.AddMenuType.DEFAULT;
 	}
 
 	public AddMenuItem(String label, String url) {
-		_id = StringPool.BLANK;
-		_url = url;
+		super(label, url);
 
-		_anchorData = null;
-
-		setLabel(label);
+		_type = AddMenuKeys.AddMenuType.DEFAULT;
 	}
 
 	public AddMenuItem(String id, String label, String url) {
-		_id = id;
-		_url = url;
+		super(id, label, url);
 
-		_anchorData = null;
-
-		setLabel(label);
+		_type = AddMenuKeys.AddMenuType.DEFAULT;
 	}
 
-	public Map<String, Object> getAnchorData() {
-		return _anchorData;
+	public AddMenuKeys.AddMenuType getType() {
+		return _type;
 	}
 
-	public String getId() {
-		return _id;
+	public void setType(AddMenuKeys.AddMenuType type) {
+		_type = type;
 	}
 
-	public String getUrl() {
-		return _url;
-	}
-
-	private final Map<String, Object> _anchorData;
-	private final String _id;
-	private final String _url;
+	private AddMenuKeys.AddMenuType _type;
 
 }

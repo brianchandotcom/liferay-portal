@@ -126,12 +126,12 @@
 
 		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="Liferay" />
+			<var name="siteName" value="${siteName}" />
 		</execute>
 
 		<execute macro="AnnouncementsEntry#viewPG">
 			<var name="announcementType" value="${announcementType}" />
-			<var name="distributionScope" value="Liferay" />
+			<var name="distributionScope" value="${siteName}" />
 			<var name="entryContent" value="Announcements Entry2 Scoped Content" />
 			<var name="entryTitle" value="Announcements Entry2 Scoped Title" />
 		</execute>
@@ -165,7 +165,7 @@
 
 		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="Liferay" />
+			<var name="siteName" value="${siteName}" />
 		</execute>
 
 		<execute macro="AnnouncementsEntry#viewViaEntriesPG">
@@ -175,7 +175,7 @@
 		</execute>
 
 		<execute macro="AnnouncementsEntry#viewViaEntriesPG">
-			<var name="distributionScope" value="Liferay" />
+			<var name="distributionScope" value="${siteName}" />
 			<var name="entryContent" value="Announcements Entry2 Scoped Content" />
 			<var name="entryTitle" value="Announcements Entry2 Scoped Title" />
 		</execute>

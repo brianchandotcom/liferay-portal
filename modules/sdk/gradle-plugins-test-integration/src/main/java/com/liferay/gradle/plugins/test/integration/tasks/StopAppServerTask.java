@@ -14,6 +14,8 @@
 
 package com.liferay.gradle.plugins.test.integration.tasks;
 
+import java.util.concurrent.Callable;
+
 import org.gradle.api.tasks.TaskAction;
 
 import org.zeroturnaround.exec.ProcessExecutor;
@@ -32,6 +34,16 @@ public class StopAppServerTask extends BaseAppServerTask {
 		ProcessExecutor processExecutor = getProcessExecutor();
 
 		processExecutor.executeNoTimeout();
+
+		waitFor(
+			new Callable<Boolean>() {
+
+				@Override
+				public Boolean call() throws Exception {
+					return !isReachable();
+				}
+
+			});
 	}
 
 }

@@ -84,7 +84,7 @@ public class KBAdminViewDisplayContext {
 		}
 		else if (parentResourceClassNameId == kbFolderClassNameId) {
 			KBFolder kbFolder = KBFolderServiceUtil.getKBFolder(
-				_parentResourcePrimKey);
+				parentResourcePrimKey);
 
 			currentURL.setParameter("mvcPath", "/admin/view_folders.jsp");
 

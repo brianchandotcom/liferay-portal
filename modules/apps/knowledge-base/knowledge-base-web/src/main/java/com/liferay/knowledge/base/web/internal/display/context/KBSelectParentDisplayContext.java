@@ -82,7 +82,7 @@ public class KBSelectParentDisplayContext {
 		}
 		else if (parentResourceClassNameId == kbFolderClassNameId) {
 			KBFolder kbFolder = KBFolderServiceUtil.getKBFolder(
-				_parentResourcePrimKey);
+				parentResourcePrimKey);
 
 			_populatePortletBreadcrumbEntries(
 				kbFolder.getClassNameId(), kbFolder.getParentKBFolderId(),

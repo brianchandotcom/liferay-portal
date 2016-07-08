@@ -29,7 +29,7 @@ Organization organization = OrganizationServiceUtil.fetchOrganization(organizati
 <liferay-ui:asset-tags-error />
 
 <aui:fieldset>
-	<aui:input name="categories" type="assetCategories" />
+	<liferay-asset:asset-categories-selector className="<%= Organization.class.getName() %>" classPK="<%= (organization != null) ? organization.getPrimaryKey() : 0 %>" />
 
-	<aui:input name="tags" type="assetTags" />
+	<liferay-asset:asset-tags-selector className="<%= Organization.class.getName() %>" classPK="<%= (organization != null) ? organization.getPrimaryKey() : 0 %>" />
 </aui:fieldset>

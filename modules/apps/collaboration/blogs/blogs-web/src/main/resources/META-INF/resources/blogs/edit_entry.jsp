@@ -170,9 +170,9 @@ renderResponse.setTitle((entry != null) ? entry.getTitle() : LanguageUtil.get(re
 			</aui:fieldset>
 
 			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="categorization">
-				<aui:input name="categories" type="assetCategories" />
+				<liferay-asset:asset-categories-selector className="<%= BlogsEntry.class.getName() %>" classPK="<%= entryId %>" />
 
-				<aui:input name="tags" type="assetTags" />
+				<liferay-asset:asset-tags-selector className="<%= BlogsEntry.class.getName() %>" classPK="<%= entryId %>" />
 			</aui:fieldset>
 
 			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="related-assets">

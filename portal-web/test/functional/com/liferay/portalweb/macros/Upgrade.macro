@@ -442,6 +442,23 @@
 		</execute>
 	</command>
 
+	<command name="viewNestedPortlets">
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Nested Portlets" />
+		</execute>
+
+		<var name="key_portletName" value="Nested Portlets" />
+
+		<execute function="AssertTextEquals" locator1="BasePortlet#TITLE" value1="Nested Portlets" />
+
+		<execute function="AssertTextNotEquals" locator1="Message#INFO" value1="Drag portlets below to nest them." />
+
+		<execute macro="NestedPortlets#viewPG">
+			<var name="portletColumnNumberTo" value="1" />
+			<var name="portletName" value="Web Content Display" />
+		</execute>
+	</command>
+
 	<command name="viewPolls">
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Polls" />

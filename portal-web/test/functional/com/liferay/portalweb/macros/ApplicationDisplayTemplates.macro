@@ -96,6 +96,14 @@
 			<then>
 				<execute function="AssertClick" locator1="Configuration#SETUP_DISPLAY_SETTINGS" value1="Display Settings" />
 			</then>
+			<elseif>
+				<condition function="IsElementPresent" locator1="Configuration#SETUP_DISPLAY_SETTINGS_PANEL" />
+				<then>
+					<execute macro="Panel#expandPanel">
+						<var name="panelHeading" value="Display Settings" />
+					</execute>
+				</then>
+			</elseif>
 		</if>
 
 		<execute function="AssertClick" locator1="ApplicationDisplayTemplatesConfiguration#MANAGE_DISPLAY_TEMPLATES_LINK" value1="Manage Display Templates for ${siteName}" />

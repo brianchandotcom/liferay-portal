@@ -26,11 +26,10 @@ String curCategoryIds = GetterUtil.getString((String)request.getAttribute("lifer
 long[] groupIds = (long[])request.getAttribute("liferay-asset:asset-categories-selector:groupIds");
 String hiddenInput = (String)request.getAttribute("liferay-asset:asset-categories-selector:hiddenInput");
 boolean ignoreRequestValue = GetterUtil.getBoolean(request.getAttribute("liferay-asset:asset-categories-selector:ignoreRequestValue"));
+PortletURL portletURL = (PortletURL)request.getAttribute("liferay-asset:asset-categories-selector:portletURL");
 boolean showRequiredLabel = GetterUtil.getBoolean((String)request.getAttribute("liferay-asset:asset-categories-selector:showRequiredLabel"), true);
 
 int maxEntries = GetterUtil.getInteger(PropsUtil.get(PropsKeys.ASSET_CATEGORIES_SELECTOR_MAX_ENTRIES));
-
-PortletURL portletURL = PortletProviderUtil.getPortletURL(request, AssetCategory.class.getName(), PortletProvider.Action.BROWSE);
 
 List<AssetVocabulary> vocabularies = AssetVocabularyServiceUtil.getGroupVocabularies(groupIds);
 %>
@@ -105,23 +104,9 @@ List<AssetVocabulary> vocabularies = AssetVocabularyServiceUtil.getGroupVocabula
 						labelNode: '#<%= namespace %>assetCategoriesLabel_<%= vocabulary.getVocabularyId() %>',
 						maxEntries: <%= maxEntries %>,
 						moreResultsLabel: '<liferay-ui:message key="load-more-results" />',
-
-						<%
-						String portletId = PortletProviderUtil.getPortletId(AssetCategory.class.getName(), PortletProvider.Action.BROWSE);
-						%>
-
-						<c:if test="<%= Validator.isNotNull(portletId) %>">
-							namespace: '<%= PortalUtil.getPortletNamespace(portletId) %>',
-						</c:if>
-
 						portalModelResource: <%= Validator.isNotNull(className) && (ResourceActionsUtil.isPortalModelResource(className) || className.equals(Group.class.getName())) %>,
 
 						<c:if test="<%= portletURL != null %>">
-
-							<%
-							portletURL.setWindowState(LiferayWindowState.POP_UP);
-							%>
-
 							portletURL: '<%= portletURL.toString() %>',
 						</c:if>
 
@@ -170,22 +155,7 @@ List<AssetVocabulary> vocabularies = AssetVocabularyServiceUtil.getGroupVocabula
 					namespace: '<%= namespace %>',
 					portalModelResource: <%= Validator.isNotNull(className) && (ResourceActionsUtil.isPortalModelResource(className) || className.equals(Group.class.getName())) %>,
 
-					<%
-					String portletId = PortletProviderUtil.getPortletId(AssetCategory.class.getName(), PortletProvider.Action.BROWSE);
-					%>
-
-					<c:if test="<%= Validator.isNotNull(portletId) %>">
-						namespace: '<%= PortalUtil.getPortletNamespace(portletId) %>',
-					</c:if>
-
-					portalModelResource: <%= Validator.isNotNull(className) && (ResourceActionsUtil.isPortalModelResource(className) || className.equals(Group.class.getName())) %>,
-
 					<c:if test="<%= portletURL != null %>">
-
-						<%
-						portletURL.setWindowState(LiferayWindowState.POP_UP);
-						%>
-
 						portletURL: '<%= portletURL.toString() %>',
 					</c:if>
 

@@ -14,13 +14,19 @@
 
 package com.liferay.asset.taglib.servlet.taglib;
 
+import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.taglib.servlet.ServletContextUtil;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
+
+import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
@@ -81,6 +87,13 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 		_showRequiredLabel = true;
 	}
 
+	protected String getEventName() {
+		String portletId = PortletProviderUtil.getPortletId(
+			AssetCategory.class.getName(), PortletProvider.Action.BROWSE);
+
+		return PortalUtil.getPortletNamespace(portletId) + "selectCategory";
+	}
+
 	protected long[] getGroupIds() {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -104,6 +117,32 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 		return _PAGE;
 	}
 
+	protected PortletURL getPortletURL() {
+		try {
+			PortletURL portletURL = PortletProviderUtil.getPortletURL(
+				request, AssetCategory.class.getName(),
+				PortletProvider.Action.BROWSE);
+
+			if (portletURL == null) {
+				return null;
+			}
+
+			portletURL.setParameter("eventName", getEventName());
+			portletURL.setParameter(
+				"selectedCategories", "{selectedCategories}");
+			portletURL.setParameter("singleSelect", "{singleSelect}");
+			portletURL.setParameter("vocabularyId", "{vocabularyId}");
+
+			portletURL.setWindowState(LiferayWindowState.POP_UP);
+
+			return portletURL;
+		}
+		catch (Exception e) {
+		}
+
+		return null;
+	}
+
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute(
@@ -125,6 +164,9 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-asset:asset-categories-selector:ignoreRequestValue",
 			_ignoreRequestValue);
+		request.setAttribute(
+			"liferay-asset:asset-categories-selector:portletURL",
+			getPortletURL());
 		request.setAttribute(
 			"liferay-asset:asset-categories-selector:showRequiredLabel",
 			String.valueOf(_showRequiredLabel));

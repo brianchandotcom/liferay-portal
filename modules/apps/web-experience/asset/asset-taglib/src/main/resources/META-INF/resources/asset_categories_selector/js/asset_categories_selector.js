@@ -298,15 +298,14 @@ AUI.add(
 
 						event.domEvent.preventDefault();
 
-						var uri = instance.get('portletURL');
-
-						uri = Liferay.Util.addParams(instance.get('namespace') + 'eventName=' + instance.get('namespace') + 'selectCategory', uri);
-
-						uri = Liferay.Util.addParams(instance.get('namespace') + 'selectedCategories=' + instance.get('curEntryIds'), uri);
-
-						uri = Liferay.Util.addParams(instance.get('namespace') + 'singleSelect=' + instance.get('singleSelect'), uri);
-
-						uri = Liferay.Util.addParams(instance.get('namespace') + 'vocabularyId=' + event.data.vocabularyId, uri);
+						var uri = Lang.sub(
+							decodeURIComponent(instance.get('portletURL')),
+							{
+								selectedCategories: instance.get('curEntryIds'),
+								singleSelect: instance.get('singleSelect'),
+								vocabularyId: event.data.vocabularyId
+							}
+						);
 
 						var itemSelectorDialog = new A.LiferayItemSelectorDialog(
 							{

@@ -29,6 +29,12 @@
 		<execute macro="Upgrade#searchForAssetsAfterUpgrade" />
 	</command>
 
+	<command name="View623FormsArchive" priority="5">
+		<property name="test.assert.warning.exceptions" value="true" />
+
+		<execute macro="Upgrade#viewForms" />
+	</command>
+
 	<command name="View623PollsArchive" priority="3">
 		<property name="test.assert.warning.exceptions" value="true" />
 

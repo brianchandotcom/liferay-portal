@@ -21,13 +21,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A list of menu items.</description>
 			<name>maxItems</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Url for the view more jsp.</description>
 			<name>viewMoreUrl</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

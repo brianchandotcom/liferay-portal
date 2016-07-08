@@ -344,6 +344,39 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
+	protected void checkInternalImports(
+		String fileName, String absolutePath, String content) {
+
+		if (fileName.contains("/test/") ||
+			fileName.contains("/testIntegration/")) {
+
+			return;
+		}
+
+		Matcher matcher = _internalImportPattern.matcher(content);
+
+		int pos = -1;
+
+		while (matcher.find()) {
+			if (pos == -1) {
+				pos = absolutePath.lastIndexOf("/com/liferay/");
+			}
+
+			String expectedImportFileLocation =
+				absolutePath.substring(0, pos + 13) +
+					StringUtil.replace(matcher.group(1), ".", "/") + ".java";
+
+			File file = new File(expectedImportFileLocation);
+
+			if (!file.exists()) {
+				processMessage(
+					fileName,
+					"Do not import internal class from another module",
+					getLineCount(content, matcher.start(1)));
+			}
+		}
+	}
+
 	protected void checkLogLevel(String content, String fileName) {
 		if (fileName.contains("Log")) {
 			return;
@@ -982,7 +1015,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				fileName, "Use org.junit.Assert instead of org.testng.Assert");
 		}
 
-		if (portalSource && isModulesFile(absolutePath)) {
+		if (portalSource && isModulesFile(absolutePath) &&
+			packagePath.startsWith("com.liferay")) {
+
 			newContent = formatModulesFile(
 				fileName, absolutePath, className, packagePath, newContent);
 		}
@@ -2893,6 +2928,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				fileName, "Do not use com.liferay.util.ContentUtil in modules");
 		}
 
+		// LPS-67042
+
+		checkInternalImports(fileName, absolutePath, content);
+
 		return content;
 	}
 
@@ -4558,6 +4597,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		"\n(\t+\\{)\n(.*[^;])\n\t+(\\},?)");
 	private final Pattern _incorrectSynchronizedPattern = Pattern.compile(
 		"([\n\t])(synchronized) (private|public|protected)");
+	private final Pattern _internalImportPattern = Pattern.compile(
+		"\nimport com\\.liferay\\.(.*\\.internal\\..*?\\.[A-Z].*?)[\\.|;]");
 	private final Pattern[] _javaSerializationVulnerabilityPatterns =
 		new Pattern[] {
 			Pattern.compile(

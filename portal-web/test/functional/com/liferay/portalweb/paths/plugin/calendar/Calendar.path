@@ -728,7 +728,7 @@
 </tr>
 <tr>
 	<td>SCHEDULER_VIEW_EVENT_NOT_TODAY</td>
-	<td>//td[not(contains(@class,'scheduler-today')) and contains(.,'${key_eventTitle}')]//div[@class='scheduler-event-content']</td>
+	<td>//td[not(contains(@class,'scheduler-today')) and contains(.,'${key_eventTitle}')]//div[@class='scheduler-event-content']/../../div</td>
 	<td></td>
 </tr>
 </tbody>

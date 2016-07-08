@@ -30,6 +30,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>USER_SEGMENT_RULES_CATEGORY_COLLAPSED</td>
+	<td>//div[@class='category-wrapper']/div[contains(@class,'category-header') and contains(@class,'collapsed')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_SEGMENT_RULES_CATEGORY_EXPANDED</td>
+	<td>//div[@class='category-wrapper']/div[contains(@class,'category-header') and contains(@class,'expanded')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

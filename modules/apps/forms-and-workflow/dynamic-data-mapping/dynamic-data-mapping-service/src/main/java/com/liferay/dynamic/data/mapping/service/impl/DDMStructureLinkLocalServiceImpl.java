@@ -52,11 +52,6 @@ public class DDMStructureLinkLocalServiceImpl
 	}
 
 	@Override
-	public int countByC_C(long classNameId, long classPK) {
-		return ddmStructureLinkPersistence.countByC_C(classNameId, classPK);
-	}
-
-	@Override
 	public void deleteStructureLink(DDMStructureLink structureLink) {
 		ddmStructureLinkPersistence.remove(structureLink);
 	}
@@ -141,6 +136,11 @@ public class DDMStructureLinkLocalServiceImpl
 
 		return ddmStructureLinkPersistence.findByC_C(
 			classNameId, classPK, start, end);
+	}
+
+	@Override
+	public int getStructureLinksCount(long classNameId, long classPK) {
+		return ddmStructureLinkPersistence.countByC_C(classNameId, classPK);
 	}
 
 	@Override

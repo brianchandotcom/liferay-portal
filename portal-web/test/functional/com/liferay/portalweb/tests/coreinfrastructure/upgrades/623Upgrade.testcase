@@ -6,7 +6,6 @@
 	<property name="testray.main.component.name" value="Upgrades" />
 
 	<command name="View623CalendarArchive" priority="3">
-		<property name="portal.upgrades" value="true" />
 		<property name="test.assert.warning.exceptions" value="true" />
 
 		<execute macro="Upgrade#viewCalendar" />
@@ -23,14 +22,12 @@
 	</command>
 
 	<command name="View623PollsArchive" priority="3">
-		<property name="portal.upgrades" value="true" />
 		<property name="test.assert.warning.exceptions" value="true" />
 
 		<execute macro="Upgrade#viewPolls" />
 	</command>
 
 	<command name="View623WebContentArchive" priority="3">
-		<property name="portal.upgrades" value="true" />
 		<property name="test.assert.warning.exceptions" value="true" />
 
 		<execute macro="Upgrade#viewWCStructureAndTemplate" />
@@ -39,7 +36,6 @@
 	</command>
 
 	<command name="View623WorkflowArchive" priority="4">
-		<property name="portal.upgrades" value="true" />
 		<property name="test.assert.warning.exceptions" value="true" />
 
 		<execute macro="Upgrade#approveWorkflow" />

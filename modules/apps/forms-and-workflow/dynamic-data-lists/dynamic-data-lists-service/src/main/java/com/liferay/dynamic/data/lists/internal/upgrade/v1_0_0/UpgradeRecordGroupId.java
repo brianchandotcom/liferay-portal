@@ -14,14 +14,11 @@
 
 package com.liferay.dynamic.data.lists.internal.upgrade.v1_0_0;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.upgrade.AutoBatchPreparedStatementUtil;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 /**
  * @author Pedro Queiroz
@@ -34,15 +31,19 @@ public class UpgradeRecordGroupId extends UpgradeProcess {
 	}
 
 	protected void updateRecordGroupId() throws Exception {
-		String sql = "SELECT DDLRecordSet.groupId, DDLRecord.recordId " 
-				+ "FROM DDLRecord INNER JOIN DDLRecordSet "
-				+ "ON DDLRecord.recordSetId = DDLRecordSet.recordSetId "
-				+ "WHERE DDLRecord.groupId != DDLRecordSet.groupId;";
+		String sql =
+			"SELECT DDLRecordSet.groupId, DDLRecord.recordId " +
+			"FROM DDLRecord INNER JOIN DDLRecordSet " +
+			"ON DDLRecord.recordSetId = DDLRecordSet.recordSetId " +
+			"WHERE DDLRecord.groupId != DDLRecordSet.groupId;";
 
 		try (PreparedStatement ps1 = connection.prepareStatement(sql);
-				ResultSet rs = ps1.executeQuery();
-				PreparedStatement ps2 = AutoBatchPreparedStatementUtil.concurrentAutoBatch(connection,
-						"update DDLRecord set groupId = ? where recordId = ?");) {
+			ResultSet rs = ps1.executeQuery();
+			PreparedStatement ps2 =
+				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+					connection,
+					"update DDLRecord set groupId = ? where recordId = ?")) {
+
 			while (rs.next()) {
 				long groupId = rs.getLong("groupId");
 				long recordId = rs.getLong("recordId");
@@ -56,4 +57,5 @@ public class UpgradeRecordGroupId extends UpgradeProcess {
 			ps2.executeBatch();
 		}
 	}
+
 }

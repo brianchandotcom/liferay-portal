@@ -114,4 +114,41 @@ writeURL=http://localhost:8983/solr/liferay</echo>
 			</elseif>
 		</if>
 	</target>
+
+	<target name="stop-solr">
+		<local name="solr.server.running" />
+
+		<if>
+			<os family="unix" />
+			<then>
+				<exec dir="${solr.dir}/bin" executable="/bin/bash">
+					<arg value="-c" />
+					<arg value="./solr stop -p 8983" />
+				</exec>
+
+				<waitfor maxwait="15" maxwaitunit="second" timeoutproperty="solr.server.not.started">
+					<not>
+						<http url="http://localhost:8983/solr" />
+					</not>
+				</waitfor>
+
+				<fail if="solr.server.running" message="Solr server failed to stop." />
+			</then>
+			<elseif>
+				<os family="windows" />
+				<then>
+					<exec dir="${solr.dir}/bin" executable="cmd" spawn="true">
+						<arg value="/c" />
+						<arg value="solr -p 8983" />
+					</exec>
+
+					<waitfor maxwait="15" maxwaitunit="second" timeoutproperty="solr.server.running">
+						<http url="http://localhost:8983/solr" />
+					</waitfor>
+
+					<fail if="solr.server.running" message="Solr server failed to stop." />
+				</then>
+			</elseif>
+		</if>
+	</target>
 </project>

@@ -1028,6 +1028,59 @@
 		</execute>
 	</command>
 
+	<command name="AddUserSegmentUserAttributesCustomFieldCP" priority="5">
+		<property name="content.targeting.release" value="true" />
+
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="Custom Fields" />
+		</execute>
+
+		<execute macro="CustomFields#addCP">
+			<var name="customFieldName" value="Usercustomfield" />
+			<var name="customFieldType" value="Text Field - Indexed" />
+			<var name="resourceName" value="User" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesConfiguration">
+			<var name="portlet" value="Audience Targeting" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#addCP">
+			<var name="userSegmentDescription" value="User Segment Description" />
+			<var name="userSegmentName" value="User Segment Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#addUserAttributesCustomFieldCP">
+			<var name="customFieldKey" value="usercustomfield" />
+			<var name="customFieldValue" value="User Custom Field Value" />
+		</execute>
+
+		<execute macro="PortletEntry#save" />
+
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesConfiguration">
+			<var name="portlet" value="Audience Targeting" />
+		</execute>
+
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Edit" />
+			<var name="rowEntry" value="User Segment Name" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#viewRulesCP">
+			<var name="customFieldKey" value="usercustomfield" />
+			<var name="customFieldValue" value="User Custom Field Value" />
+			<var name="viewUserSegmentRuleList" value="Custom Field" />
+		</execute>
+	</command>
+
 	<command name="AddUserSegmentUserAttributesGenderCP" priority="5">
 		<property name="content.targeting.release" value="true" />
 

@@ -15,11 +15,13 @@
 package com.liferay.frontend.taglib.servlet.taglib;
 
 import com.liferay.frontend.taglib.servlet.ServletContextUtil;
+import com.liferay.frontend.taglib.servlet.taglib.util.AddMenuKeys;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
@@ -55,6 +57,10 @@ public class AddMenuTag extends IncludeTag {
 		_addMenuItems = addMenuItems;
 	}
 
+	public void setMaxItems(int maxItems) {
+		_maxItems = maxItems;
+	}
+
 	@Override
 	public void setPageContext(PageContext pageContext) {
 		super.setPageContext(pageContext);
@@ -62,9 +68,106 @@ public class AddMenuTag extends IncludeTag {
 		servletContext = ServletContextUtil.getServletContext();
 	}
 
+	public void setViewMoreUrl(String viewMoreUrl) {
+		_viewMoreUrl = viewMoreUrl;
+	}
+
 	@Override
 	protected void cleanUp() {
 		_addMenuItems = new ArrayList<>();
+		_maxItems = AddMenuKeys.MAX_ITEMS;
+		_viewMoreUrl = null;
+	}
+
+	protected List<AddMenuItem> getAddMenuItems() {
+		List<AddMenuItem> addMenuItems =
+			(List<AddMenuItem>)request.getAttribute(
+				"liferay-frontend:add-menu:addMenuItems");
+
+		return addMenuItems;
+	}
+
+	protected int getAddMenuItemsCount() {
+		List<AddMenuItem> addMenuItems = getAddMenuItems();
+
+		return addMenuItems.size();
+	}
+
+	protected List<MenuItemGroup> getMenuItems() {
+		List<MenuItemGroup> menuItems = new ArrayList<>();
+
+		if (getAddMenuItemsCount() == 1) {
+			MenuItemGroup menuItem = new MenuItemGroup(
+				AddMenuKeys.getAddMenuTypeLabel(
+					AddMenuKeys.AddMenuType.DEFAULT),
+				getAddMenuItems());
+
+			menuItems.add(menuItem);
+
+			return menuItems;
+		}
+
+		List<AddMenuItem> primaryAddMenuItems = new ArrayList<>();
+		List<AddMenuItem> favoriteAddMenuItems = new ArrayList<>();
+		List<AddMenuItem> recentAddMenuItems = new ArrayList<>();
+		List<AddMenuItem> defaultAddMenuItems = new ArrayList<>();
+
+		for (AddMenuItem addMenuItem : getAddMenuItems()) {
+			if (Objects.equals(
+					AddMenuKeys.AddMenuType.DEFAULT, addMenuItem.getType())) {
+
+				defaultAddMenuItems.add(addMenuItem);
+			}
+			else if (Objects.equals(
+						AddMenuKeys.AddMenuType.FAVORITE,
+						addMenuItem.getType())) {
+
+				favoriteAddMenuItems.add(addMenuItem);
+			}
+			else if (Objects.equals(
+						AddMenuKeys.AddMenuType.PRIMARY,
+						addMenuItem.getType())) {
+
+				primaryAddMenuItems.add(addMenuItem);
+			}
+			else if (Objects.equals(
+						AddMenuKeys.AddMenuType.RECENT,
+						addMenuItem.getType())) {
+
+				recentAddMenuItems.add(addMenuItem);
+			}
+		}
+
+		boolean showDivider = false;
+
+		if (!primaryAddMenuItems.isEmpty() &&
+			(!defaultAddMenuItems.isEmpty() || !favoriteAddMenuItems.isEmpty() ||
+				!recentAddMenuItems.isEmpty())) {
+
+			showDivider = true;
+		}
+
+		menuItems.add(new MenuItemGroup(primaryAddMenuItems, showDivider));
+
+		showDivider = false;
+
+		if ((primaryAddMenuItems.size() < _maxItems) &&
+			!favoriteAddMenuItems.isEmpty() &&
+			(!recentAddMenuItems.isEmpty() || !defaultAddMenuItems.isEmpty())) {
+
+			showDivider = true;
+		}
+
+		MenuItemGroup favoriteMenuItem = new MenuItemGroup(
+			AddMenuKeys.getAddMenuTypeLabel(AddMenuKeys.AddMenuType.FAVORITE),
+			favoriteAddMenuItems, showDivider);
+
+		menuItems.add(favoriteMenuItem);
+
+		menuItems.add(new MenuItemGroup(recentAddMenuItems));
+		menuItems.add(new MenuItemGroup(defaultAddMenuItems));
+
+		return menuItems;
 	}
 
 	@Override
@@ -74,14 +177,18 @@ public class AddMenuTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		List<AddMenuItem> addMenuItems =
-			(List<AddMenuItem>)request.getAttribute(
-				"liferay-frontend:add-menu:addMenuItems");
-
 		request.setAttribute(
-			"liferay-frontend:add-menu:addMenuItems", addMenuItems);
+			"liferay-frontend:add-menu:addMenuItemsCount",
+			getAddMenuItemsCount());
+		request.setAttribute("liferay-frontend:add-menu:maxItems", _maxItems);
+		request.setAttribute(
+			"liferay-frontend:add-menu:menuItems", getMenuItems());
+		request.setAttribute(
+			"liferay-frontend:add-menu:viewMoreUrl", _viewMoreUrl);
 	}
 
 	private List<AddMenuItem> _addMenuItems = new ArrayList<>();
+	private int _maxItems = AddMenuKeys.MAX_ITEMS;
+	private String _viewMoreUrl;
 
 }

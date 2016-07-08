@@ -14,6 +14,7 @@
 
 package com.liferay.frontend.taglib.servlet.taglib;
 
+import com.liferay.frontend.taglib.servlet.taglib.util.AddMenuKeys;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.util.StringPool;
 
@@ -25,11 +26,25 @@ import java.util.Map;
 public class AddMenuItem extends MenuItem {
 
 	public AddMenuItem(
+		Map<String, Object> anchorData, String id, String label,
+		AddMenuKeys.AddMenuType type, String url) {
+
+		_anchorData = anchorData;
+		_id = id;
+		_type = type;
+		_url = url;
+
+		setLabel(label);
+	}
+
+	public AddMenuItem(
 		Map<String, Object> anchorData, String id, String label, String url) {
 
 		_anchorData = anchorData;
 		_id = id;
 		_url = url;
+
+		_type = AddMenuKeys.AddMenuType.DEFAULT;
 
 		setLabel(label);
 	}
@@ -39,6 +54,7 @@ public class AddMenuItem extends MenuItem {
 		_url = url;
 
 		_anchorData = null;
+		_type = AddMenuKeys.AddMenuType.DEFAULT;
 
 		setLabel(label);
 	}
@@ -48,6 +64,7 @@ public class AddMenuItem extends MenuItem {
 		_url = url;
 
 		_anchorData = null;
+		_type = AddMenuKeys.AddMenuType.DEFAULT;
 
 		setLabel(label);
 	}
@@ -60,12 +77,17 @@ public class AddMenuItem extends MenuItem {
 		return _id;
 	}
 
+	public AddMenuKeys.AddMenuType getType() {
+		return _type;
+	}
+
 	public String getUrl() {
 		return _url;
 	}
 
 	private final Map<String, Object> _anchorData;
 	private final String _id;
+	private final AddMenuKeys.AddMenuType _type;
 	private final String _url;
 
 }

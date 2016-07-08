@@ -15,3 +15,7 @@
 --%>
 
 <%@ include file="/init.jsp" %>
+
+<%@ page import="com.liferay.frontend.taglib.servlet.taglib.MenuItemGroup" %><%@
+page import="com.liferay.frontend.taglib.servlet.taglib.util.AddMenuKeys" %><%@
+page import="com.liferay.portal.kernel.util.SessionClicks" %>

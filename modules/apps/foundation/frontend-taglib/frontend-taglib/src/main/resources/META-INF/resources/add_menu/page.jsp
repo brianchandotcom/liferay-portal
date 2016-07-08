@@ -17,13 +17,20 @@
 <%@ include file="/add_menu/init.jsp" %>
 
 <%
-List<AddMenuItem> addMenuItems = (List<AddMenuItem>)request.getAttribute("liferay-frontend:add-menu:addMenuItems");
+int addMenuItemsCount = GetterUtil.getInteger(request.getAttribute("liferay-frontend:add-menu:addMenuItemsCount"));
+int maxItems = GetterUtil.getInteger(request.getAttribute("liferay-frontend:add-menu:maxItems"));
+List<MenuItemGroup> menuItems = (List<MenuItemGroup>)request.getAttribute("liferay-frontend:add-menu:menuItems");
+String viewMoreUrl = (String)request.getAttribute("liferay-frontend:add-menu:viewMoreUrl");
 %>
 
 <c:choose>
-	<c:when test="<%= addMenuItems.size() == 1 %>">
+	<c:when test="<%= addMenuItemsCount == 1 %>">
 
 		<%
+		MenuItemGroup menuItem = menuItems.get(0);
+
+		List<AddMenuItem> addMenuItems = menuItem.getAddMenuItems();
+
 		AddMenuItem addMenuItem = addMenuItems.get(0);
 
 		String id = addMenuItem.getId();
@@ -52,7 +59,7 @@ List<AddMenuItem> addMenuItems = (List<AddMenuItem>)request.getAttribute("lifera
 		</aui:script>
 	</c:when>
 	<c:otherwise>
-		<div class="btn-action-secondary btn-bottom-right dropdown">
+		<div class="add-menu btn-action-secondary btn-bottom-right dropdown">
 			<button aria-expanded="false" class="btn btn-primary" data-qa-id="addButton" data-toggle="dropdown" type="button">
 				<aui:icon image="plus" markupView="lexicon" />
 			</button>
@@ -60,24 +67,106 @@ List<AddMenuItem> addMenuItems = (List<AddMenuItem>)request.getAttribute("lifera
 			<ul class="dropdown-menu dropdown-menu-left-side-bottom">
 
 				<%
-				for (int i = 0; i < addMenuItems.size(); i++) {
-					AddMenuItem addMenuItem = addMenuItems.get(i);
-
-					String id = addMenuItem.getId();
-
-					if (Validator.isNull(id)) {
-						id = "menuItem" + i;
-					}
+				boolean customizeAddMenuAdviceMessage = GetterUtil.getBoolean(SessionClicks.get(request, "com.liferay.addmenu_customizeAddMenuAdviceMessage", null));
 				%>
 
-					<li>
-						<a <%= AUIUtil.buildData(addMenuItem.getAnchorData()) %> href="<%= HtmlUtil.escapeAttribute(addMenuItem.getUrl()) %>" id="<%= namespace + id %>"><%= HtmlUtil.escape(addMenuItem.getLabel()) %></a>
+				<c:if test="<%= !customizeAddMenuAdviceMessage && Validator.isNotNull(viewMoreUrl) && (addMenuItemsCount > maxItems) %>">
+					<li class="active add-menu-advice">
+						<a href="javascript:;"><liferay-ui:message key="you-can-customize-this-menu-or-see-all-you-have-by-pressing-more" /></a>
 					</li>
+				</c:if>
 
 				<%
+				int index = 0;
+
+				for (MenuItemGroup menuItemGroup : menuItems) {
+					List<AddMenuItem> addMenuItems = menuItemGroup.getAddMenuItems();
+				%>
+
+					<c:if test="<%= !addMenuItems.isEmpty() %>">
+						<c:if test="<%= Validator.isNotNull(menuItemGroup.getLabel()) %>">
+							<li class="dropdown-header">
+								<liferay-ui:message key="<%= menuItemGroup.getLabel() %>" />
+							</li>
+						</c:if>
+
+						<%
+						for (AddMenuItem addMenuItem : addMenuItems) {
+							String id = addMenuItem.getId();
+
+							if (Validator.isNull(id)) {
+								id = "menuItem" + index;
+							}
+						%>
+
+							<li>
+								<a <%= AUIUtil.buildData(addMenuItem.getAnchorData()) %> href="<%= HtmlUtil.escapeAttribute(addMenuItem.getUrl()) %>" id="<%= namespace + id %>"><%= HtmlUtil.escape(addMenuItem.getLabel()) %></a>
+							</li>
+
+						<%
+							index++;
+
+							if (index >= maxItems) {
+								break;
+							}
+						}
+						%>
+
+						<c:if test="<%= menuItemGroup.isShowDivider() %>">
+							<li class="divider"></li>
+						</c:if>
+					</c:if>
+
+				<%
+					if (index >= maxItems) {
+						break;
+					}
 				}
 				%>
 
+				<c:if test="<%= addMenuItemsCount > maxItems %>">
+					<li class="dropdown-header">
+						<liferay-ui:message arguments="<%= new Object[] {maxItems, addMenuItemsCount} %>" key="showing-x-of-x-items" />
+					</li>
+
+					<c:if test="<%= Validator.isNotNull(viewMoreUrl) %>">
+						<li class="divider"></li>
+
+						<li>
+							<a class="text-center" href="javascript:;" id="<%= namespace %>viewMoreButton">
+								<strong><liferay-ui:message key="more" /></strong>
+							</a>
+						</li>
+
+						<aui:script use="liferay-util-window">
+							var viewMoreAddMenuElements = A.one('#<%= namespace %>viewMoreButton');
+
+							viewMoreAddMenuElements.on(
+								'click',
+								function(event) {
+									Liferay.Store('com.liferay.addmenu_customizeAddMenuAdviceMessage', true);
+
+									Liferay.Util.selectEntity(
+										{
+											dialog: {
+												destroyOnHide: true,
+												modal: true
+											},
+											id: '<%= namespace %>selectAddMenuItem',
+											title: '<liferay-ui:message key="more" />',
+											uri: '<%= viewMoreUrl %>'
+										},
+										function(event) {
+											event.preventDefault();
+
+											location.href = event.url;
+										}
+									);
+								}
+							);
+						</aui:script>
+					</c:if>
+				</c:if>
 			</ul>
 		</div>
 	</c:otherwise>

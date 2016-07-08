@@ -2,6 +2,6 @@
 
 <root available-locales="en_US" default-locale="en_US">
 	<dynamic-element index-type="keyword" instance-id="pcm9WPVX" name="list" type="list">
-		<dynamic-content language-id="en_US"><![CDATA[a]]></dynamic-content>
+		<dynamic-content language-id="en_US"><![CDATA[value 01]]></dynamic-content>
 	</dynamic-element>
 </root>

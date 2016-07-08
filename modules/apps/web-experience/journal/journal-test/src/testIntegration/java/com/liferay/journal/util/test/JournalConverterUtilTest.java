@@ -51,7 +51,6 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -59,7 +58,6 @@ import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
@@ -316,39 +314,6 @@ public class JournalConverterUtilTest {
 			_ddmStructure, fields);
 
 		assertEquals(expectedContent, actualContent);
-	}
-
-	@Test
-	public void testGetDDMFields() throws Exception {
-		String serializedDDMForm = read(
-			"ddm-structure-select-field-multiple.json");
-
-		DDMForm ddmForm = _ddmFormJSONDeserializer.deserialize(
-			serializedDDMForm);
-
-		DDMStructure structure = _ddmStructureTestHelper.addStructure(
-			_classNameId, null, "Test Structure", ddmForm,
-			StorageType.JSON.getValue(), DDMStructureConstants.TYPE_DEFAULT);
-
-		String content = read("test-journal-content-list-field-multiple.xml");
-
-		Fields fields = _journalConverter.getDDMFields(structure, content);
-
-		Assert.assertEquals(2, fields.getNames().size());
-
-		for (Field field : fields) {
-			Assert.assertTrue(structure.hasField(field.getName()));
-
-			if (structure.getFieldRequired(field.getName())) {
-				String value = (String)field.getValue(LocaleUtil.US);
-
-				value = StringUtil.removeChars(
-					value, CharPool.RETURN, CharPool.NEW_LINE, CharPool.TAB,
-					CharPool.SPACE);
-
-				Assert.assertTrue(Validator.isNotNull(value));
-			}
-		}
 	}
 
 	@Test
@@ -805,7 +770,7 @@ public class JournalConverterUtilTest {
 		field.setDDMStructureId(ddmStructureId);
 		field.setName("list");
 
-		field.addValue(_enLocale, "[\"a\"]");
+		field.addValue(_enLocale, "[\"value 01\"]");
 
 		return field;
 	}
@@ -816,7 +781,7 @@ public class JournalConverterUtilTest {
 		field.setDDMStructureId(ddmStructureId);
 		field.setName("multi_list");
 
-		field.addValue(_enLocale, "[\"a\"]");
+		field.addValue(_enLocale, "[\"value 01\",\"value 02\"]");
 
 		return field;
 	}

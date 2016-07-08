@@ -3,7 +3,8 @@
 <root available-locales="en_US" default-locale="en_US">
 	<dynamic-element index-type="keyword" instance-id="9X5wVsSv" name="multi_list" type="multi-list">
 		<dynamic-content language-id="en_US">
-			<option><![CDATA[a]]></option>
+			<option><![CDATA[value 01]]></option>
+			<option><![CDATA[value 02]]></option>
 		</dynamic-content>
 	</dynamic-element>
 </root>

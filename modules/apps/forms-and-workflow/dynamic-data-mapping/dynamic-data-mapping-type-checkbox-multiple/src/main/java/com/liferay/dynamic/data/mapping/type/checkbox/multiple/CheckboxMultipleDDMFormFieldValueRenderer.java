@@ -30,14 +30,14 @@ import org.osgi.service.component.annotations.Reference;
  * @author Dylan Rebelak
  */
 @Component(
-	immediate = true, property = {"ddm.form.field.type.name=multi-checkbox"}
+	immediate = true, property = {"ddm.form.field.type.name=checkbox-multiple"}
 )
-public class MultiCheckboxDDMFormFieldValueRenderer
+public class CheckboxMultipleDDMFormFieldValueRenderer
 	implements DDMFormFieldValueRenderer {
 
 	@Override
 	public String render(DDMFormFieldValue ddmFormFieldValue, Locale locale) {
-		String optionValue = multiCheckboxDDMFormFieldValueAccessor.getValue(
+		String optionValue = checkboxMultipleDDMFormFieldValueAccessor.getValue(
 			ddmFormFieldValue, locale);
 
 		DDMFormFieldOptions ddmFormFieldOptions = getDDMFormFieldOptions(
@@ -62,7 +62,7 @@ public class MultiCheckboxDDMFormFieldValueRenderer
 	}
 
 	@Reference
-	protected MultiCheckboxDDMFormFieldValueAccessor
-		multiCheckboxDDMFormFieldValueAccessor;
+	protected CheckboxMultipleDDMFormFieldValueAccessor
+		checkboxMultipleDDMFormFieldValueAccessor;
 
 }

@@ -28,24 +28,24 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"ddm.form.field.type.display.order:Integer=7",
 		"ddm.form.field.type.icon=check-circle",
-		"ddm.form.field.type.js.class.name=Liferay.DDM.Field.MultiCheckbox",
-		"ddm.form.field.type.js.module=liferay-ddm-form-field-multi-checkbox",
-		"ddm.form.field.type.name=multi-checkbox"
+		"ddm.form.field.type.js.class.name=Liferay.DDM.Field.CheckboxMultiple",
+		"ddm.form.field.type.js.module=liferay-ddm-form-field-checkbox-multiple",
+		"ddm.form.field.type.name=checkbox-multiple"
 	},
 	service = DDMFormFieldType.class
 )
-public class MultiCheckboxDDMFormFieldType extends BaseDDMFormFieldType {
+public class CheckboxMultipleDDMFormFieldType extends BaseDDMFormFieldType {
 
 	@Override
 	public Class<? extends DDMFormFieldTypeSettings>
 		getDDMFormFieldTypeSettings() {
 
-		return MultiCheckboxDDMFormFieldTypeSettings.class;
+		return CheckboxMultipleDDMFormFieldTypeSettings.class;
 	}
 
 	@Override
 	public String getName() {
-		return "multi-checkbox";
+		return "checkbox-multiple";
 	}
 
 }

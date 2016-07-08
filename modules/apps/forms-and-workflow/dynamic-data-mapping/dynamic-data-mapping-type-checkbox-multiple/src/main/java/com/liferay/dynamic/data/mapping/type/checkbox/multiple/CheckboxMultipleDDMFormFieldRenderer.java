@@ -35,10 +35,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Dylan Rebelak
  */
 @Component(
-	immediate = true, property = "ddm.form.field.type.name=multi-checkbox",
+	immediate = true, property = "ddm.form.field.type.name=checkbox-multiple",
 	service = DDMFormFieldRenderer.class
 )
-public class MultiCheckboxDDMFormFieldRenderer
+public class CheckboxMultipleDDMFormFieldRenderer
 	extends BaseDDMFormFieldRenderer {
 
 	@Override
@@ -48,7 +48,7 @@ public class MultiCheckboxDDMFormFieldRenderer
 
 	@Override
 	public String getTemplateNamespace() {
-		return "ddm.multi_checkbox";
+		return "ddm.checkbox_multiple";
 	}
 
 	@Override
@@ -59,7 +59,7 @@ public class MultiCheckboxDDMFormFieldRenderer
 	@Activate
 	protected void activate(Map<String, Object> properties) {
 		_templateResource = getTemplateResource(
-			"/META-INF/resources/multi_checkbox.soy");
+			"/META-INF/resources/checkbox_multiple.soy");
 	}
 
 	@Deactivate
@@ -71,15 +71,15 @@ public class MultiCheckboxDDMFormFieldRenderer
 		DDMFormField ddmFormField,
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
-		MultiCheckboxDDMFormFieldContextHelper
-			multiCheckboxDDMFormFieldContextHelper =
-				new MultiCheckboxDDMFormFieldContextHelper(
+		CheckboxMultipleDDMFormFieldContextHelper
+			checkboxMultipleDDMFormFieldContextHelper =
+				new CheckboxMultipleDDMFormFieldContextHelper(
 					jsonFactory, ddmFormField.getDDMFormFieldOptions(),
 					ddmFormFieldRenderingContext.getValue(),
 					ddmFormField.getPredefinedValue(),
 					ddmFormFieldRenderingContext.getLocale());
 
-		return multiCheckboxDDMFormFieldContextHelper.getOptions();
+		return checkboxMultipleDDMFormFieldContextHelper.getOptions();
 	}
 
 	@Override

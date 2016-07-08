@@ -27,9 +27,9 @@ import org.osgi.service.component.annotations.Reference;
  * @author Dylan Rebelak
  */
 @Component(
-	immediate = true, property = "ddm.form.field.type.name=multi-checkbox"
+	immediate = true, property = "ddm.form.field.type.name=checkbox-multiple"
 )
-public class MultiCheckboxDDMFormFieldValueRequestParameterRetriever
+public class CheckboxMultipleDDMFormFieldValueRequestParameterRetriever
 	implements DDMFormFieldValueRequestParameterRetriever {
 
 	@Override

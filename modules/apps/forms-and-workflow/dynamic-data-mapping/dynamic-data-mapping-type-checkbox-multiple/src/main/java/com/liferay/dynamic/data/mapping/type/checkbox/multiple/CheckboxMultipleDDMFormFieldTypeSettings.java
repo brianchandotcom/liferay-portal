@@ -66,7 +66,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidation;
 		)
 	}
 )
-public interface MultiCheckboxDDMFormFieldTypeSettings
+public interface CheckboxMultipleDDMFormFieldTypeSettings
 	extends DefaultDDMFormFieldTypeSettings {
 
 	@DDMFormField(label = "%inline", properties = {"showAsSwitcher=true"})

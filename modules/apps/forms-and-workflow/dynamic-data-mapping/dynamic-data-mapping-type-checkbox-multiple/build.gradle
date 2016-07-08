@@ -36,7 +36,7 @@ wrapSoyTemplates {
 	doLast {
 		FileTree soyJsFileTree = fileTree(dir: "classes", include: "**/*.soy.js")
 
-		String soyJsWrapperHeader = "AUI.add('liferay-ddm-form-field-multi-checkbox-template', function(A) {"
+		String soyJsWrapperHeader = "AUI.add('liferay-ddm-form-field-checkbox-multiple-template', function(A) {"
 		String soyJsWrapperFooter = "}, '', {requires: ['soyutils']});";
 
 		soyJsFileTree.each {

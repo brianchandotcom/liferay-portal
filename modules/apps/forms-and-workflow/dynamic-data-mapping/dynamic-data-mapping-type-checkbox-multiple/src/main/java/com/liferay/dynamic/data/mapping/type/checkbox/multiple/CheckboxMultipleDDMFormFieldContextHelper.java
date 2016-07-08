@@ -32,9 +32,9 @@ import java.util.Map;
 /**
  * @author Dylan Rebelak
  */
-public class MultiCheckboxDDMFormFieldContextHelper {
+public class CheckboxMultipleDDMFormFieldContextHelper {
 
-	public MultiCheckboxDDMFormFieldContextHelper(
+	public CheckboxMultipleDDMFormFieldContextHelper(
 		JSONFactory jsonFactory, DDMFormFieldOptions ddmFormFieldOptions,
 		String value, LocalizedValue predefinedValue, Locale locale) {
 

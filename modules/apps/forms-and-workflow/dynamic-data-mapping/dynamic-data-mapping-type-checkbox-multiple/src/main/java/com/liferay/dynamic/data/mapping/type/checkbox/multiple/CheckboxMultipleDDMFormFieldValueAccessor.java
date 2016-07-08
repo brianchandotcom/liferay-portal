@@ -33,13 +33,13 @@ import org.osgi.service.component.annotations.Reference;
  * @author Dylan Rebelak
  */
 @Component(
-	immediate = true, property = "ddm.form.field.type.name=multi-checkbox",
+	immediate = true, property = "ddm.form.field.type.name=checkbox-multiple",
 	service = {
-		MultiCheckboxDDMFormFieldValueAccessor.class,
+		CheckboxMultipleDDMFormFieldValueAccessor.class,
 		DDMFormFieldValueAccessor.class
 	}
 )
-public class MultiCheckboxDDMFormFieldValueAccessor
+public class CheckboxMultipleDDMFormFieldValueAccessor
 	implements DDMFormFieldValueAccessor<String> {
 
 	@Override
@@ -63,6 +63,6 @@ public class MultiCheckboxDDMFormFieldValueAccessor
 	protected JSONFactory jsonFactory;
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		MultiCheckboxDDMFormFieldValueAccessor.class);
+		CheckboxMultipleDDMFormFieldValueAccessor.class);
 
 }

@@ -16,6 +16,7 @@ package com.liferay.gradle.plugins.test.integration.tasks;
 
 import java.util.concurrent.Callable;
 
+import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.TaskAction;
 
 import org.zeroturnaround.exec.ProcessExecutor;
@@ -24,6 +25,15 @@ import org.zeroturnaround.exec.ProcessExecutor;
  * @author Andrea Di Giorgi
  */
 public class StopAppServerTask extends BaseAppServerTask {
+
+	@Input
+	public long getAdditionalWaitTime() {
+		return _additionalWaitTime;
+	}
+
+	public void setAdditionalWaitTime(long additionalWaitTime) {
+		_additionalWaitTime = additionalWaitTime;
+	}
 
 	@TaskAction
 	public void stopAppServer() throws Exception {
@@ -44,6 +54,14 @@ public class StopAppServerTask extends BaseAppServerTask {
 				}
 
 			});
+
+		long additionalWaitTime = getAdditionalWaitTime();
+
+		if (additionalWaitTime > 0) {
+			Thread.sleep(additionalWaitTime);
+		}
 	}
+
+	private long _additionalWaitTime = 2000;
 
 }

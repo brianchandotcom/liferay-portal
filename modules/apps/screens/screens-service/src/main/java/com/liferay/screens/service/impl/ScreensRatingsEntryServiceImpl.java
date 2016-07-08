@@ -55,9 +55,13 @@ public class ScreensRatingsEntryServiceImpl
 	 * Never reference this class directly. Always use {@link com.liferay.screens.service.ScreensRatingsEntryServiceUtil} to access the screens ratings entry remote service.
 	 */
 
-	public JSONObject deleteRatingEntry(long classPK, String className, int stepCount)
-			throws PortalException {
-		return null;
+	public JSONObject deleteRatingEntry(
+			long classPK, String className, int stepCount)
+		throws PortalException {
+
+		ratingsEntryLocalService.deleteEntry(getUserId(), className, classPK);
+
+		return getRatingsEntries(classPK, className, stepCount);
 	}
 
 	public JSONObject updateRatingEntry(

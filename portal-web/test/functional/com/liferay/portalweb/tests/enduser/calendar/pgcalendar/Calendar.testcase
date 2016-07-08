@@ -1442,8 +1442,8 @@
 		</execute>
 
 		<execute macro="CalendarEvent#setDates">
-			<var name="endDate" value="02/15/2015" />
-			<var name="startDate" value="02/15/2015" />
+			<var name="endDate" value="02/21/2016" />
+			<var name="startDate" value="02/21/2016" />
 		</execute>
 
 		<execute macro="CalendarEvent#setTimes">
@@ -2584,8 +2584,8 @@
 		</execute>
 
 		<execute macro="CalendarEvent#setDates">
-			<var name="endDate" value="02/2/2015" />
-			<var name="startDate" value="02/2/2015" />
+			<var name="endDate" value="02/2/2016" />
+			<var name="startDate" value="02/2/2016" />
 		</execute>
 
 		<execute macro="CalendarEvent#setTimes">
@@ -2605,7 +2605,7 @@
 		</execute>
 
 		<execute macro="CalendarNavigator#gotoMonthViaSmallCalendar">
-			<var name="dateMonth" value="February 2015" />
+			<var name="dateMonth" value="February 2016" />
 		</execute>
 
 		<execute macro="CalendarNavigator#gotoSpecificBusyDayViaSmallCalendar">
@@ -2628,7 +2628,7 @@
 		</execute>
 
 		<execute macro="CalendarNavigator#gotoMonthViaSmallCalendar">
-			<var name="dateMonth" value="February 2015" />
+			<var name="dateMonth" value="February 2016" />
 		</execute>
 
 		<execute macro="CalendarNavigator#gotoSpecificBusyDayViaSmallCalendar">
@@ -3046,8 +3046,8 @@
 		</execute>
 
 		<execute macro="CalendarEvent#setDates">
-			<var name="endDate" value="12/29/2015" />
-			<var name="startDate" value="12/29/2015" />
+			<var name="endDate" value="3/29/2016" />
+			<var name="startDate" value="3/29/2016" />
 		</execute>
 
 		<execute macro="CalendarEvent#publishWithUserNotification" />
@@ -3057,7 +3057,7 @@
 		</execute>
 
 		<execute macro="CalendarNavigator#gotoMonthViaSmallCalendar">
-			<var name="dateMonth" value="December 2015" />
+			<var name="dateMonth" value="March 2016" />
 		</execute>
 
 		<execute macro="CalendarNavigator#gotoSpecificBusyDayViaSmallCalendar">
@@ -4916,19 +4916,19 @@
 		</execute>
 
 		<execute macro="Calendar#viewMonth">
-			<var name="dateMonth" value="February 2015" />
-		</execute>
-
-		<execute macro="Calendar#viewWeekCountViaMonthView">
-			<var name="weekNumber" value="4" />
-		</execute>
-
-		<execute macro="Calendar#viewMonth">
-			<var name="dateMonth" value="October 2015" />
+			<var name="dateMonth" value="April 2016" />
 		</execute>
 
 		<execute macro="Calendar#viewWeekCountViaMonthView">
 			<var name="weekNumber" value="5" />
+		</execute>
+
+		<execute macro="Calendar#viewMonth">
+			<var name="dateMonth" value="July 2016" />
+		</execute>
+
+		<execute macro="Calendar#viewWeekCountViaMonthView">
+			<var name="weekNumber" value="6" />
 		</execute>
 	</command>
 

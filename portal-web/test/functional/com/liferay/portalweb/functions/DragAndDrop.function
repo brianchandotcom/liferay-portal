@@ -48,7 +48,7 @@
 
 		<execute argument1="${locator1}" selenium="mouseOver" />
 
-		<execute argument1="${locator1}" argument2="${value1}" selenium="waitForText" />
+		<execute argument1="${locator1}" argument2="${value1}" selenium="waitForPartialText" />
 
 		<execute argument1="${locator2}" selenium="waitForVisible" />
 

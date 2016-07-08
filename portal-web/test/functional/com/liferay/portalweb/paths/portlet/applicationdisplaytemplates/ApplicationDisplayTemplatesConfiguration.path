@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>MANAGE_DISPLAY_TEMPLATES_LINK</td>
-	<td>//span/a/span[contains(.,'Manage Display Templates')]</td>
+	<td>//div[contains(@class,'display-template')]//a[contains(@id,'selectDDMTemplate') and contains(.,'Manage Display Templates')]</td>
 	<td></td>
 </tr>
 <tr>

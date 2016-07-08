@@ -91,8 +91,13 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SETUP_DISPLAY_SETTINGS_PANEL</td>
+	<td>//a[contains(@class,'collapse-icon') and contains(.,'Display Settings')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SETUP_DISPLAY_SETTINGS</td>
-	<td>//a[contains(@class,'collapse-icon') and contains(.,'Display Settings')] | //ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Display Settings')]</td>
+	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Display Settings')]</td>
 	<td></td>
 </tr>
 <tr>

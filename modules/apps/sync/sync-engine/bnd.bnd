@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Sync Engine
 Bundle-SymbolicName: com.liferay.sync.engine
-Bundle-Version: 3.2.1
+Bundle-Version: 3.2.2
 -includeresource:\
 	@ch.securityvision.xattrj-[0-9]*.jar,\
 	@com.barbarysoftware.watchservice-[0-9]*.jar,\

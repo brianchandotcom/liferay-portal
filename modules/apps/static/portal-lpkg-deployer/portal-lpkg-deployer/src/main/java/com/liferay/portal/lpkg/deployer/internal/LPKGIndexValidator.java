@@ -178,6 +178,18 @@ public class LPKGIndexValidator {
 		return true;
 	}
 
+	public void setJarFiles(List<File> jarFiles) {
+		_jarFiles = jarFiles;
+
+		Set<String> jarFileNames = new HashSet<>();
+
+		for (File file : jarFiles) {
+			jarFileNames.add(StringUtil.toLowerCase(file.getName()));
+		}
+
+		_jarFileNames = jarFileNames;
+	}
+
 	public void setLPKGDeployer(LPKGDeployer lpkgDeployer) {
 		_lpkgDeployer = lpkgDeployer;
 	}
@@ -296,15 +308,17 @@ public class LPKGIndexValidator {
 
 		LocalProcessExecutor localProcessExecutor = new LocalProcessExecutor();
 
+		List<File> additionalJarFiles = new ArrayList<>(_jarFiles);
+
+		additionalJarFiles.add(
+			new File(PropsValues.LIFERAY_LIB_PORTAL_DIR, "util-taglib.jar"));
+
 		try {
 			ProcessChannel<byte[]> processChannel =
 				localProcessExecutor.execute(
 					_processConfig,
 					new TargetPlatformIndexerProcessCallable(
-						Arrays.asList(
-							new File(
-								PropsValues.LIFERAY_LIB_PORTAL_DIR,
-								"util-taglib.jar")),
+						additionalJarFiles,
 						PropsValues.MODULE_FRAMEWORK_STOP_WAIT_TIMEOUT,
 						PropsValues.MODULE_FRAMEWORK_BASE_DIR + "/static",
 						PropsValues.MODULE_FRAMEWORK_MODULES_DIR,
@@ -334,7 +348,8 @@ public class LPKGIndexValidator {
 
 		try {
 			for (File lpkgFile : lpkgFiles) {
-				Indexer indexer = _indexerFactory.createLPKGIndexer(lpkgFile);
+				Indexer indexer = _indexerFactory.createLPKGIndexer(
+					lpkgFile, _jarFileNames);
 
 				indexer.index(unsyncByteArrayOutputStream);
 
@@ -414,6 +429,8 @@ public class LPKGIndexValidator {
 	private final Path _integrityPropertiesFilePath = Paths.get(
 		PropsValues.MODULE_FRAMEWORK_BASE_DIR, Indexer.DIR_NAME_TARGET_PLATFORM,
 		"integrity.properties");
+	private Set<String> _jarFileNames;
+	private List<File> _jarFiles;
 	private LPKGDeployer _lpkgDeployer;
 	private final ProcessConfig _processConfig;
 

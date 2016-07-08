@@ -17,6 +17,7 @@ package com.liferay.portal.target.platform.indexer.internal;
 import com.liferay.portal.target.platform.indexer.Indexer;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.OutputStream;
 
 import java.nio.file.FileSystem;
@@ -30,6 +31,8 @@ import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -41,8 +44,9 @@ import org.osgi.service.indexer.impl.RepoIndex;
  */
 public class LPKGIndexer implements Indexer {
 
-	public LPKGIndexer(File lpkgFile) {
+	public LPKGIndexer(File lpkgFile, Set<String> excludedJarFileNames) {
 		_lpkgFile = lpkgFile;
+		_excludedJarFileNames = excludedJarFileNames;
 
 		_config.put("compressed", "false");
 		_config.put(
@@ -54,16 +58,8 @@ public class LPKGIndexer implements Indexer {
 
 	@Override
 	public void index(OutputStream outputStream) throws Exception {
-		try (FileSystem fileSystem = FileSystems.newFileSystem(
-				_lpkgFile.toPath(), null)) {
-
-			Path indexPath = fileSystem.getPath("index.xml");
-
-			if (Files.exists(indexPath)) {
-				Files.copy(indexPath, outputStream);
-
-				return;
-			}
+		if (_excludedJarFileNames.isEmpty() && _readCachedIndex(outputStream)) {
+			return;
 		}
 
 		Path tempPath = Files.createTempDirectory(null);
@@ -77,12 +73,22 @@ public class LPKGIndexer implements Indexer {
 
 			Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
 
+			boolean hasExcludedJarFile = false;
+
 			while (enumeration.hasMoreElements()) {
 				ZipEntry zipEntry = enumeration.nextElement();
 
 				String name = zipEntry.getName();
 
 				if (!name.endsWith(".jar")) {
+					continue;
+				}
+
+				if (_excludedJarFileNames.contains(
+						_toExcludedJarFileName(name))) {
+
+					hasExcludedJarFile = true;
+
 					continue;
 				}
 
@@ -93,6 +99,10 @@ public class LPKGIndexer implements Indexer {
 					StandardCopyOption.REPLACE_EXISTING);
 
 				files.add(file);
+			}
+
+			if (!hasExcludedJarFile && _readCachedIndex(outputStream)) {
+				return;
 			}
 
 			ResourceIndexer resourceIndexer = new RepoIndex();
@@ -116,7 +126,39 @@ public class LPKGIndexer implements Indexer {
 		return fileName;
 	}
 
+	private boolean _readCachedIndex(OutputStream outputStream)
+		throws IOException {
+
+		try (FileSystem fileSystem = FileSystems.newFileSystem(
+				_lpkgFile.toPath(), null)) {
+
+			Path indexPath = fileSystem.getPath("index.xml");
+
+			if (Files.exists(indexPath)) {
+				Files.copy(indexPath, outputStream);
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private String _toExcludedJarFileName(String name) {
+		Matcher matcher = _pattern.matcher(name);
+
+		if (matcher.matches()) {
+			name = matcher.group(1) + matcher.group(3);
+		}
+
+		return name.toLowerCase();
+	}
+
+	private static final Pattern _pattern = Pattern.compile(
+		"(.*?)(-\\d+\\.\\d+\\.\\d)(\\.jar)");
+
 	private final Map<String, String> _config = new HashMap<>();
+	private final Set<String> _excludedJarFileNames;
 	private final File _lpkgFile;
 
 }

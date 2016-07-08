@@ -68,15 +68,15 @@ public class AddMenuTag extends IncludeTag {
 		servletContext = ServletContextUtil.getServletContext();
 	}
 
-	public void setViewMoreUrl(String viewMoreUrl) {
-		_viewMoreUrl = viewMoreUrl;
+	public void setViewMoreUrl(String viewMoreURL) {
+		_viewMoreURL = viewMoreURL;
 	}
 
 	@Override
 	protected void cleanUp() {
 		_addMenuItems = new ArrayList<>();
 		_maxItems = AddMenuKeys.MAX_ITEMS;
-		_viewMoreUrl = null;
+		_viewMoreURL = null;
 	}
 
 	protected List<AddMenuItem> getAddMenuItems() {
@@ -187,11 +187,11 @@ public class AddMenuTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-frontend:add-menu:menuItemsCount", getMenuItemsCount());
 		request.setAttribute(
-			"liferay-frontend:add-menu:viewMoreUrl", _viewMoreUrl);
+			"liferay-frontend:add-menu:viewMoreURL", _viewMoreURL);
 	}
 
 	private List<AddMenuItem> _addMenuItems = new ArrayList<>();
 	private int _maxItems = AddMenuKeys.MAX_ITEMS;
-	private String _viewMoreUrl;
+	private String _viewMoreURL;
 
 }

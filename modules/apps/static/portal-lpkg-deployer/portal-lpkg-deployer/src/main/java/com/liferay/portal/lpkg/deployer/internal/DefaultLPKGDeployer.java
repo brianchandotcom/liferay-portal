@@ -30,25 +30,31 @@ import com.liferay.portal.lpkg.deployer.LPKGVerifyException;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 
 import java.net.URL;
 
-import java.nio.file.FileVisitResult;
+import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.SimpleFileVisitor;
-import java.nio.file.attribute.BasicFileAttributes;
+import java.nio.file.StandardCopyOption;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Dictionary;
 import java.util.Enumeration;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Properties;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.jar.Attributes;
 import java.util.jar.JarFile;
@@ -230,47 +236,29 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 			URLStreamHandlerService.class.getName(),
 			new LPKGURLStreamHandlerService(_urls), properties);
 
+		_deploymentDirPath = _getDeploymentDirPath(bundleContext);
+
+		Path overwrittenDirPath = _deploymentDirPath.resolve("overwritten");
+
+		List<File> jarFiles = _scanFiles(overwrittenDirPath, ".jar");
+
+		_uninstallOrphanOverwrittenJars(bundleContext, jarFiles);
+
+		List<File> warFiles = _scanFiles(overwrittenDirPath, ".war");
+
+		_uninstallOrphanOverwrittenWars(bundleContext, warFiles);
+
 		_lpkgBundleTracker = new BundleTracker<>(
 			bundleContext, ~Bundle.UNINSTALLED,
-			new LPKGBundleTrackerCustomizer(bundleContext, _urls));
+			new LPKGBundleTrackerCustomizer(
+				bundleContext, _urls, _toFileNames(jarFiles, warFiles)));
 
 		_lpkgBundleTracker.open();
 
-		String deploymentDir = GetterUtil.getString(
-			bundleContext.getProperty("lpkg.deployer.dir"),
-			PropsValues.MODULE_FRAMEWORK_BASE_DIR + "/marketplace");
-
-		_deploymentDirPath = Paths.get(deploymentDir);
-
-		Files.createDirectories(_deploymentDirPath);
-
-		final List<File> lpkgFiles = new ArrayList<>();
-
-		Files.walkFileTree(
-			_deploymentDirPath,
-			new SimpleFileVisitor<Path>() {
-
-				@Override
-				public FileVisitResult visitFile(
-					Path filePath, BasicFileAttributes basicFileAttributes) {
-
-					Path fileNamePath = filePath.getFileName();
-
-					String fileName = StringUtil.toLowerCase(
-						fileNamePath.toString());
-
-					if (!fileName.endsWith(".lpkg")) {
-						return FileVisitResult.CONTINUE;
-					}
-
-					lpkgFiles.add(filePath.toFile());
-
-					return FileVisitResult.CONTINUE;
-				}
-
-			});
+		List<File> lpkgFiles = _scanFiles(_deploymentDirPath, ".lpkg");
 
 		_lpkgIndexValidator.setLPKGDeployer(this);
+		_lpkgIndexValidator.setJarFiles(jarFiles);
 
 		boolean updateIntegrityProperties = _lpkgIndexValidator.validate(
 			lpkgFiles);
@@ -280,36 +268,11 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 		LPKGIndexValidatorThreadLocal.setEnabled(false);
 
 		try {
-			for (File lpkgFile : lpkgFiles) {
-				try {
-					List<Bundle> bundles = deploy(bundleContext, lpkgFile);
+			_instalLPKGs(bundleContext, lpkgFiles);
 
-					for (Bundle bundle : bundles) {
-						Dictionary<String, String> headers =
-							bundle.getHeaders();
+			_installOverwrittenJars(bundleContext, jarFiles);
 
-						String fragmentHost = headers.get(
-							Constants.FRAGMENT_HOST);
-
-						if (fragmentHost != null) {
-							continue;
-						}
-
-						try {
-							bundle.start();
-						}
-						catch (BundleException be) {
-							_log.error(
-								"Unable to start " + bundle + " for " +
-									lpkgFile,
-								be);
-						}
-					}
-				}
-				catch (Exception e) {
-					_log.error("Unable to deploy LPKG file " + lpkgFile, e);
-				}
-			}
+			_installOverwrittenWars(bundleContext, warFiles);
 
 			if (updateIntegrityProperties) {
 				_lpkgIndexValidator.updateIntegrityProperties();
@@ -318,6 +281,142 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 		finally {
 			LPKGIndexValidatorThreadLocal.setEnabled(enabled);
 		}
+	}
+
+	private Path _getDeploymentDirPath(BundleContext bundleContext)
+		throws IOException {
+
+		String deploymentDir = GetterUtil.getString(
+			bundleContext.getProperty("lpkg.deployer.dir"),
+			PropsValues.MODULE_FRAMEWORK_MARKETPLACE_DIR);
+
+		Path deploymentDirPath = Paths.get(deploymentDir);
+
+		Files.createDirectories(deploymentDirPath);
+
+		return deploymentDirPath;
+	}
+
+	private void _installOverwrittenJars(
+			BundleContext bundleContext, List<File> jarFiles)
+		throws Exception {
+
+		for (File jarFile : jarFiles) {
+			String location = _LPKG_OVERWRITTEN_PREFIX.concat(
+				jarFile.getCanonicalPath());
+
+			Bundle jarBundle = bundleContext.getBundle(location);
+
+			if (jarBundle != null) {
+				if (_log.isInfoEnabled()) {
+					_log.info("Using overwritten jar bundle " + location);
+				}
+
+				continue;
+			}
+
+			jarBundle = bundleContext.installBundle(
+				location, new FileInputStream(jarFile));
+
+			BundleStartLevel bundleStartLevel = jarBundle.adapt(
+				BundleStartLevel.class);
+
+			bundleStartLevel.setStartLevel(
+				PropsValues.MODULE_FRAMEWORK_DYNAMIC_INSTALL_START_LEVEL);
+
+			_startBundle(jarBundle);
+
+			if (_log.isInfoEnabled()) {
+				_log.info("Installed overwritten jar bundle " + location);
+			}
+		}
+	}
+
+	private void _installOverwrittenWars(
+			BundleContext bundleContext, List<File> warFiles)
+		throws Exception {
+
+		Properties properties = _loadOverwrittenWarsProperties(bundleContext);
+
+		Path osgiWarDir = Paths.get(PropsValues.MODULE_FRAMEWORK_WAR_DIR);
+
+		boolean modified = false;
+
+		for (File warFile : warFiles) {
+			String sourceLocation = warFile.getCanonicalPath();
+
+			String targetLocation = properties.getProperty(sourceLocation);
+
+			if (targetLocation != null) {
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						"Using overwritten war bundle " + targetLocation);
+				}
+
+				continue;
+			}
+
+			Path sourceWarPath = warFile.toPath();
+
+			Path targetWarPath = osgiWarDir.resolve(
+				sourceWarPath.getFileName());
+
+			Files.copy(
+				sourceWarPath, targetWarPath,
+				StandardCopyOption.REPLACE_EXISTING);
+
+			targetLocation = targetWarPath.toString();
+
+			properties.put(sourceLocation, targetLocation);
+
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Deployed overwritten war bundle to " + targetLocation);
+			}
+
+			modified = true;
+		}
+
+		if (modified) {
+			_saveOverwrittenWarsProperties(bundleContext, properties);
+		}
+	}
+
+	private void _instalLPKGs(
+		BundleContext bundleContext, List<File> lpkgFiles) {
+
+		for (File lpkgFile : lpkgFiles) {
+			try {
+				List<Bundle> bundles = deploy(bundleContext, lpkgFile);
+
+				for (Bundle bundle : bundles) {
+					_startBundle(bundle);
+				}
+			}
+			catch (Exception e) {
+				_log.error("Unable to deploy LPKG file " + lpkgFile, e);
+			}
+		}
+	}
+
+	private Properties _loadOverwrittenWarsProperties(
+			BundleContext bundleContext)
+		throws IOException {
+
+		File overwrittenWarsPropertiesFile = bundleContext.getDataFile(
+			"overwritten-wars.properties");
+
+		Properties overwrittenWarsProperties = new Properties();
+
+		if (overwrittenWarsPropertiesFile.exists()) {
+			try (InputStream inputStream = new FileInputStream(
+					overwrittenWarsPropertiesFile)) {
+
+				overwrittenWarsProperties.load(inputStream);
+			}
+		}
+
+		return overwrittenWarsProperties;
 	}
 
 	/**
@@ -374,6 +473,134 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 		}
 	}
 
+	private void _saveOverwrittenWarsProperties(
+			BundleContext bundleContext, Properties properties)
+		throws IOException {
+
+		File overwrittenWarsPropertiesFile = bundleContext.getDataFile(
+			"overwritten-wars.properties");
+
+		try (OutputStream outputStream = new FileOutputStream(
+				overwrittenWarsPropertiesFile)) {
+
+			properties.store(outputStream, null);
+		}
+	}
+
+	private List<File> _scanFiles(Path dirPath, String extension)
+		throws IOException {
+
+		if (Files.notExists(dirPath)) {
+			return Collections.emptyList();
+		}
+
+		List<File> files = new ArrayList<>();
+
+		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
+				dirPath)) {
+
+			for (Path path : directoryStream) {
+				String pathName = StringUtil.toLowerCase(
+					String.valueOf(path.getFileName()));
+
+				if (pathName.endsWith(extension)) {
+					files.add(path.toFile());
+				}
+			}
+		}
+
+		return files;
+	}
+
+	private void _startBundle(Bundle bundle) {
+		Dictionary<String, String> headers = bundle.getHeaders();
+
+		String fragmentHost = headers.get(Constants.FRAGMENT_HOST);
+
+		if (fragmentHost != null) {
+			return;
+		}
+
+		try {
+			bundle.start();
+		}
+		catch (BundleException be) {
+			_log.error("Unable to start " + bundle, be);
+		}
+	}
+
+	private Set<String> _toFileNames(List<File> jarFiles, List<File> warFiles) {
+		Set<String> fileNames = new HashSet<>();
+
+		for (File file : jarFiles) {
+			fileNames.add(StringUtil.toLowerCase(file.getName()));
+		}
+
+		for (File file : warFiles) {
+			fileNames.add(StringUtil.toLowerCase(file.getName()));
+		}
+
+		return fileNames;
+	}
+
+	private void _uninstallOrphanOverwrittenJars(
+			BundleContext bundleContext, List<File> jarFiles)
+		throws BundleException {
+
+		for (Bundle bundle : bundleContext.getBundles()) {
+			String location = bundle.getLocation();
+
+			if (!location.startsWith(_LPKG_OVERWRITTEN_PREFIX)) {
+				continue;
+			}
+
+			String filePath = location.substring(
+				_LPKG_OVERWRITTEN_PREFIX.length());
+
+			if (jarFiles.contains(new File(filePath))) {
+				continue;
+			}
+
+			bundle.uninstall();
+
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Uninstalled orphan overwritten jar bundle " + location);
+			}
+		}
+	}
+
+	private void _uninstallOrphanOverwrittenWars(
+			BundleContext bundleContext, List<File> warFiles)
+		throws IOException {
+
+		Properties properties = _loadOverwrittenWarsProperties(bundleContext);
+
+		Set<Entry<Object, Object>> entrySet = properties.entrySet();
+
+		Iterator<Entry<Object, Object>> iterator = entrySet.iterator();
+
+		boolean modified = false;
+
+		while (iterator.hasNext()) {
+			Entry<Object, Object> entry = iterator.next();
+
+			if (warFiles.contains(new File((String)entry.getKey()))) {
+				continue;
+			}
+
+			iterator.remove();
+
+			Files.deleteIfExists(Paths.get((String)entry.getValue()));
+
+			modified = true;
+		}
+
+		if (modified) {
+			_saveOverwrittenWarsProperties(bundleContext, properties);
+		}
+	}
+
 	private void _writeManifest(
 			ZipFile zipFile, JarOutputStream jarOutputStream)
 		throws IOException {
@@ -405,6 +632,8 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 
 		jarOutputStream.closeEntry();
 	}
+
+	private static final String _LPKG_OVERWRITTEN_PREFIX = "LPKG-Overwritten::";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultLPKGDeployer.class);

@@ -44,10 +44,13 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 import java.util.jar.Attributes;
 import java.util.jar.JarFile;
 import java.util.jar.JarOutputStream;
 import java.util.jar.Manifest;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -70,10 +73,12 @@ public class LPKGBundleTrackerCustomizer
 	implements BundleTrackerCustomizer<List<Bundle>> {
 
 	public LPKGBundleTrackerCustomizer(
-		BundleContext bundleContext, Map<String, URL> urls) {
+		BundleContext bundleContext, Map<String, URL> urls,
+		Set<String> overwrittenFileNames) {
 
 		_bundleContext = bundleContext;
 		_urls = urls;
+		_overwrittenFileNames = overwrittenFileNames;
 	}
 
 	@Override
@@ -102,6 +107,10 @@ public class LPKGBundleTrackerCustomizer
 				while (enumeration.hasMoreElements()) {
 					url = enumeration.nextElement();
 
+					if (_checkOverwritten(symbolicName, url)) {
+						continue;
+					}
+
 					Bundle newBundle = _bundleContext.installBundle(
 						url.getPath(), url.openStream());
 
@@ -124,6 +133,10 @@ public class LPKGBundleTrackerCustomizer
 
 			while (enumeration.hasMoreElements()) {
 				url = enumeration.nextElement();
+
+				if (_checkOverwritten(symbolicName, url)) {
+					continue;
+				}
 
 				// Install a wrapper bundle for this WAR bundle. The wrapper
 				// bundle defers the WAR bundle installation until the WAB
@@ -180,27 +193,7 @@ public class LPKGBundleTrackerCustomizer
 
 		for (Bundle newBundle : bundles) {
 			try {
-				newBundle.uninstall();
-
-				String symbolicName = newBundle.getSymbolicName();
-
-				if (symbolicName.startsWith(prefix) &&
-					symbolicName.endsWith("-wrapper")) {
-
-					String wrappedBundleSymbolicName = symbolicName.substring(
-						prefix.length(), symbolicName.length() - 8);
-
-					Version version = newBundle.getVersion();
-
-					for (Bundle curBundle : _bundleContext.getBundles()) {
-						if (wrappedBundleSymbolicName.equals(
-								curBundle.getSymbolicName()) &&
-							version.equals(curBundle.getVersion())) {
-
-							curBundle.uninstall();
-						}
-					}
-				}
+				_uninstallBundle(prefix, newBundle);
 			}
 			catch (BundleException be) {
 				_log.error(
@@ -228,6 +221,36 @@ public class LPKGBundleTrackerCustomizer
 		}
 
 		return sb.toString();
+	}
+
+	private boolean _checkOverwritten(String symbolicName, URL url)
+		throws BundleException {
+
+		String path = url.getPath();
+
+		Matcher matcher = _pattern.matcher(path);
+
+		if (matcher.matches()) {
+			path = matcher.group(1) + matcher.group(3);
+		}
+
+		path = StringUtil.toLowerCase(path);
+
+		if (_overwrittenFileNames.contains(path)) {
+			Bundle bundle = _bundleContext.getBundle(url.getPath());
+
+			if (bundle != null) {
+				_uninstallBundle(symbolicName.concat(StringPool.DASH), bundle);
+			}
+
+			if (_log.isInfoEnabled()) {
+				_log.info("Disabled " + symbolicName + ":" + url.getPath());
+			}
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private String _readServletContextName(URL url) throws IOException {
@@ -334,6 +357,32 @@ public class LPKGBundleTrackerCustomizer
 		}
 	}
 
+	private void _uninstallBundle(String prefix, Bundle bundle)
+		throws BundleException {
+
+		String symbolicName = bundle.getSymbolicName();
+
+		if (symbolicName.startsWith(prefix) &&
+			symbolicName.endsWith("-wrapper")) {
+
+			String wrappedBundleSymbolicName = symbolicName.substring(
+				prefix.length(), symbolicName.length() - 8);
+
+			Version version = bundle.getVersion();
+
+			for (Bundle curBundle : _bundleContext.getBundles()) {
+				if (wrappedBundleSymbolicName.equals(
+						curBundle.getSymbolicName()) &&
+					version.equals(curBundle.getVersion())) {
+
+					curBundle.uninstall();
+				}
+			}
+		}
+
+		bundle.uninstall();
+	}
+
 	private void _writeClasses(
 			JarOutputStream jarOutputStream, Class<?>... classes)
 		throws IOException {
@@ -399,7 +448,11 @@ public class LPKGBundleTrackerCustomizer
 	private static final Log _log = LogFactoryUtil.getLog(
 		LPKGBundleTrackerCustomizer.class);
 
+	private static final Pattern _pattern = Pattern.compile(
+		"/(.*?)(-\\d+\\.\\d+\\.\\d)(\\.[jw]ar)");
+
 	private final BundleContext _bundleContext;
+	private final Set<String> _overwrittenFileNames;
 	private final Map<String, URL> _urls;
 
 }

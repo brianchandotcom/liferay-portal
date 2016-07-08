@@ -1,4 +1,4 @@
 dependencies {
-	provided group: "com.liferay", name: "com.liferay.portal.target.platform.indexer", version: "3.0.0"
 	provided group: "org.osgi", name: "org.osgi.core", version: "6.0.0"
+	provided project(":apps:static:portal-target-platform-indexer:portal-target-platform-indexer")
 }

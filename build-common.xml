@@ -95,11 +95,11 @@
 
 	<property name="doc.dir" value="${project.dir}/api" />
 
-	<tempfile deleteonexit="true" property="${project.dir}/app.server.properties.tmp" />
+	<tempfile deleteonexit="true" destdir="${project.dir}" property="app.server.tmp.properties" suffix=".properties" />
 
-	<echoproperties destfile="${project.dir}/app.server.properties.tmp" regex="app\.server\.${app.server.type}\..*" />
+	<echoproperties destfile="${app.server.tmp.properties}" regex="app\.server\.${app.server.type}\..*" />
 
-	<loadproperties srcfile="${project.dir}/app.server.properties.tmp">
+	<loadproperties srcfile="${app.server.tmp.properties}">
 		<filterchain>
 			<tokenfilter>
 				<replacestring from="app.server.${app.server.type}." to="app.server." />

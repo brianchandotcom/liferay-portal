@@ -35,6 +35,12 @@ public class KaleoTaskInstanceTokenLocalServiceWrapper
 	}
 
 	@Override
+	public boolean hasPendingKaleoTaskForms(long kaleoTaskInstanceTokenId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kaleoTaskInstanceTokenLocalService.hasPendingKaleoTaskForms(kaleoTaskInstanceTokenId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _kaleoTaskInstanceTokenLocalService.getActionableDynamicQuery();
 	}

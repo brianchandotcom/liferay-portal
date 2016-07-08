@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>USER_SEGMENT_RULE_APPLIED</td>
-	<td>//div[@class='field-info']//h2[contains(.,'${key_userSegmentRuleName}')]</td>
+	<td>xpath=(//div[@class='field-info']//h2[contains(.,'${key_userSegmentRuleName}')])['${ruleInstance}']</td>
 	<td></td>
 </tr>
 <tr>

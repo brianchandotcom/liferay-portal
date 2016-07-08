@@ -426,11 +426,27 @@
 		<for list="${viewUserSegmentRuleList}" param="usersegmentRuleName">
 			<var name="key_userSegmentRuleName" value="${usersegmentRuleName}" />
 
+			<if>
+				<not>
+					<isset var="ruleInstance" />
+				</not>
+				<then>
+					<var name="ruleInstance" value="1" />
+				</then>
+			</if>
+
 			<execute function="AssertTextEquals#assertPartialText" locator1="EditUserSegment#USER_SEGMENT_RULE_APPLIED" value1="${usersegmentRuleName}" />
 
-			<execute macro="ContentTargetingUserSegment#openFormField">
-				<var name="usersegmentRuleName" value="${usersegmentRuleName}" />
-			</execute>
+			<if>
+				<not>
+					<equals arg1="${ruleInstance}" arg2="1" />
+				</not>
+				<then>
+					<execute macro="ContentTargetingUserSegment#openFormField">
+						<var name="usersegmentRuleName" value="${usersegmentRuleName}" />
+					</execute>
+				</then>
+			</if>
 
 			<if>
 				<equals arg1="${usersegmentRuleName}" arg2="Content Visited" />

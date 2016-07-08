@@ -7,7 +7,6 @@
 
 	<command name="View612CalendarArchive" priority="3">
 		<property name="osgi.modules.includes" value="calevent-importer" />
-		<property name="portal.upgrades" value="true" />
 		<property name="test.assert.warning.exceptions" value="true" />
 
 		<execute macro="Upgrade#viewCalendar" />
@@ -24,14 +23,12 @@
 	</command>
 
 	<command name="View612PollsArchive" priority="3">
-		<property name="portal.upgrades" value="true" />
 		<property name="test.assert.warning.exceptions" value="true" />
 
 		<execute macro="Upgrade#viewPolls" />
 	</command>
 
 	<command name="View612WebContentArchive" priority="3">
-		<property name="portal.upgrades" value="true" />
 		<property name="test.assert.warning.exceptions" value="true" />
 
 		<execute macro="Upgrade#viewWCStructureAndTemplate" />
@@ -40,7 +37,6 @@
 	</command>
 
 	<command name="View612WorkflowArchive" priority="4">
-		<property name="portal.upgrades" value="true" />
 		<property name="test.assert.warning.exceptions" value="true" />
 
 		<execute macro="Upgrade#approveWorkflow" />

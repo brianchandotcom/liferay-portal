@@ -1481,10 +1481,12 @@ AUI.add(
 					_afterSelectedLayoutChange: function(event) {
 						var instance = this;
 
-						if (instance._modal) {
+						var modal = instance._modal;
+
+						if (modal) {
 							var notSelected = !event.newVal;
 
-							var selectButton = instance._modal.get('toolbars.footer')[0];
+							var selectButton = modal.get('toolbars.footer')[0];
 
 							var boundingBox = selectButton.boundingBox;
 
@@ -1513,7 +1515,7 @@ AUI.add(
 						var checkedElement = instance._modal.bodyNode.one('.lfr-ddm-page-radio:checked');
 
 						if (checkedElement) {
-							checkedElement.set('checked', false);
+							checkedElement.attr('checked', false);
 
 							instance.set('selectedLayout', null);
 						}
@@ -1731,13 +1733,16 @@ AUI.add(
 						var listNode = event.currentTarget;
 
 						var innerHeight = listNode.innerHeight();
+
 						var scrollHeight = listNode.get('scrollHeight');
 						var scrollTop = listNode.get('scrollTop');
 
 						var delta = instance.get('delta');
 
 						var groupId = themeDisplay.getScopeGroupId();
+
 						var parentLayoutId = instance._currentParentLayoutId;
+
 						var privateLayout = !!instance._navbar.one('.private').hasClass('active');
 
 						var key = [parentLayoutId, groupId, privateLayout].join('-');
@@ -1756,25 +1761,21 @@ AUI.add(
 									end = cache.start;
 								}
 
-								if (end <= start) {
-									return;
+								if (end > start) {
+									listNode.prepend(instance._loadingAnimationNode);
+
+									instance._requestLayouts(parentLayoutId, groupId, privateLayout, start, end, A.rbind('_renderLayoutsFragment', instance, key, 'up'));
 								}
-
-								listNode.prepend(instance._loadingAnimationNode);
-
-								instance._requestLayouts(parentLayoutId, groupId, privateLayout, start, end, A.rbind(instance._renderLayoutsFragment, instance, key, 'up'));
 							}
 							else if (scrollTop + innerHeight === scrollHeight) {
 								start = end + 1;
 								end = start + delta;
 
-								if (start > cache.total) {
-									return;
+								if (start <= cache.total) {
+									listNode.append(instance._loadingAnimationNode);
+
+									instance._requestLayouts(parentLayoutId, groupId, privateLayout, start, end, A.rbind('_renderLayoutsFragment', instance, key));
 								}
-
-								listNode.append(instance._loadingAnimationNode);
-
-								instance._requestLayouts(parentLayoutId, groupId, privateLayout, start, end, A.rbind(instance._renderLayoutsFragment, instance, key));
 							}
 						}
 					},
@@ -1785,6 +1786,7 @@ AUI.add(
 						var currentTarget = event.currentTarget;
 
 						event.container.one('.active').removeClass('active');
+
 						currentTarget.addClass('active');
 
 						instance._cleanSelectedLayout();
@@ -1843,12 +1845,14 @@ AUI.add(
 
 						var privateLayout = !!value.privateLayout;
 
-						if (!instance._modal) {
+						var modal = instance._modal;
+
+						if (!modal) {
 							var config = instance._getModalConfig();
 
-							instance._modal = Liferay.Util.Window.getWindow(config);
+							modal = Liferay.Util.Window.getWindow(config);
 
-							instance._modal.render();
+							modal.render();
 
 							instance._initBreadcrumb();
 							instance._initLayoutsList();
@@ -1857,9 +1861,11 @@ AUI.add(
 							instance._renderBreadcrumb(instance.get('selectedLayoutPath'));
 							instance._renderLayoutsList(privateLayout);
 
-							var listNode = instance._modal.bodyNode.one('.lfr-ddm-pages-container');
+							var listNode = modal.bodyNode.one('.lfr-ddm-pages-container');
 
 							listNode.on('scroll', instance._handleModalScroll, instance);
+
+							instance._modal = modal;
 						}
 						else {
 							var path = instance.get('selectedLayoutPath');
@@ -1878,7 +1884,7 @@ AUI.add(
 							instance._renderLayoutsList(privateLayout);
 						}
 
-						instance._modal.show();
+						modal.show();
 
 						instance._syncModalHeight();
 					},
@@ -1914,11 +1920,7 @@ AUI.add(
 
 						layouts.forEach(
 							function(layout) {
-								var selected = false;
-
-								if (selectedLayout && layout.layoutId === selectedLayout.layoutId) {
-									selected = true;
-								}
+								var selected = selectedLayout && layout.layoutId === selectedLayout.layoutId;
 
 								instance._addListElement(layout, listNode, selected);
 							}
@@ -2008,8 +2010,10 @@ AUI.add(
 					_renderNavbar: function(privateLayout) {
 						var instance = this;
 
-						if (!instance._navbar) {
-							var navbar = A.Node.create(
+						var navbar = instance._navbar;
+
+						if (!navbar) {
+							navbar = A.Node.create(
 								Lang.sub(
 									TPL_LAYOUTS_NAVBAR,
 									{
@@ -2023,7 +2027,7 @@ AUI.add(
 
 							instance._navbar = navbar;
 
-							instance._navbar.insertBefore(navbar, instance._modal.bodyNode);
+							navbar.insertBefore(navbar, instance._modal.bodyNode);
 						}
 					},
 
@@ -2044,43 +2048,41 @@ AUI.add(
 
 						var cache = instance._getCache(key);
 
-						if (cache && start > cache.total) {
-							return;
-						}
+						if (!cache || start <= cache.total) {
+							if (instance._canLoadMore(key, start, end)) {
+								A.io.request(
+									themeDisplay.getPathMain() + '/portal/get_layouts',
+									{
+										after: {
+											success: function() {
+												var	response = JSON.parse(this.get('responseData'));
 
-						if (instance._canLoadMore(key, start, end)) {
-							A.io.request(
-								themeDisplay.getPathMain() + '/portal/get_layouts',
-								{
-									after: {
-										success: function() {
-											var	response = JSON.parse(this.get('responseData'));
+												var layouts = response && response.layouts;
 
-											var layouts = response && response.layouts;
+												if (layouts) {
+													instance._updateCache(key, layouts, start, end, response.total);
 
-											if (layouts) {
-												instance._updateCache(key, layouts, start, end, response.total);
-
-												callback.call(instance, layouts);
+													callback.call(instance, layouts);
+												}
 											}
+										},
+										data: {
+											cmd: 'get',
+											end: end,
+											expandParentLayouts: false,
+											groupId: groupId,
+											p_auth: Liferay.authToken,
+											paginate: true,
+											parentLayoutId: parentLayoutId,
+											privateLayout: privateLayout,
+											start: start
 										}
-									},
-									data: {
-										cmd: 'get',
-										end: end,
-										expandParentLayouts: false,
-										groupId: groupId,
-										p_auth: Liferay.authToken,
-										paginate: true,
-										parentLayoutId: parentLayoutId,
-										privateLayout: privateLayout,
-										start: start
 									}
-								}
-							);
-						}
-						else if (cache) {
-							callback.call(instance, cache.layouts);
+								);
+							}
+							else if (cache) {
+								callback.call(instance, cache.layouts);
+							}
 						}
 					},
 
@@ -2184,9 +2186,11 @@ AUI.add(
 					_syncModalHeight: function() {
 						var instance = this;
 
-						var bodyNode = instance._modal.bodyNode;
+						var modal = instance._modal;
 
-						instance._modal.fillHeight(bodyNode);
+						var bodyNode = modal.bodyNode;
+
+						modal.fillHeight(bodyNode);
 
 						bodyNode.set('offsetHeight', Lang.toInt(bodyNode.get('offsetHeight')) - Lang.toInt(instance._navbar.get('offsetHeight')));
 					},
@@ -2194,33 +2198,37 @@ AUI.add(
 					_updateCache: function(key, layouts, start, end, total) {
 						var instance = this;
 
-						if (!instance._cache[key]) {
+						var cache = instance._cache[key];
+
+						if (!cache) {
 							var path = instance.get('selectedLayoutPath');
 
-							instance._cache[key] = {
+							cache = {
 								end: end,
 								layouts: layouts,
 								path: path.slice(),
 								start: start,
 								total: total
 							};
+
+							instance._cache[key] = cache;
 						}
 						else {
-							var cachedLayouts = instance._cache[key].layouts || [];
+							var cachedLayouts = cache.layouts || [];
 
-							if (instance._cache[key].start > start) {
+							if (cache.start > start) {
 								cachedLayouts = layouts.concat(cachedLayouts);
 
-								instance._cache[key].start = start;
+								cache.start = start;
 							}
 
-							if (instance._cache[key].end < end) {
+							if (cache.end < end) {
 								cachedLayouts = cachedLayouts.concat(layouts);
 
-								instance._cache[key].end = end;
+								cache.end = end;
 							}
 
-							instance._cache[key].layouts = cachedLayouts;
+							cache.layouts = cachedLayouts;
 						}
 					}
 				}

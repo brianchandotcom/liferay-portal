@@ -423,11 +423,6 @@
 	</command>
 
 	<command name="viewRulesCP">
-		<var name="key_rowEntry" value="${userSegmentName}" />
-
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
-		<execute function="Click" locator1="MenuItem#EDIT" />
-
 		<for list="${viewUserSegmentRuleList}" param="usersegmentRuleName">
 			<var name="key_userSegmentRuleName" value="${usersegmentRuleName}" />
 

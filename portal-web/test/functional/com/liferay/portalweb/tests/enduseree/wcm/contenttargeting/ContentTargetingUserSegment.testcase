@@ -313,8 +313,12 @@
 			<var name="portlet" value="Audience Targeting" />
 		</execute>
 
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Edit" />
+			<var name="rowEntry" value="User Segment Name" />
+		</execute>
+
 		<execute macro="ContentTargetingUserSegment#viewRulesCP">
-			<var name="userSegmentName" value="User Segment Name" />
 			<var name="viewUserSegmentRuleList" value="Content Visited" />
 			<var name="webContentTitle" value="Web Content Title" />
 		</execute>
@@ -350,9 +354,13 @@
 			<var name="portlet" value="Audience Targeting" />
 		</execute>
 
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Edit" />
+			<var name="rowEntry" value="User Segment Name" />
+		</execute>
+
 		<execute macro="ContentTargetingUserSegment#viewRulesCP">
 			<var name="friendlyURL" value="/test-page-name" />
-			<var name="userSegmentName" value="User Segment Name" />
 			<var name="viewUserSegmentRuleList" value="Page Visited" />
 		</execute>
 	</command>
@@ -388,10 +396,14 @@
 			<var name="portlet" value="Audience Targeting" />
 		</execute>
 
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Edit" />
+			<var name="rowEntry" value="User Segment Name" />
+		</execute>
+
 		<execute macro="ContentTargetingUserSegment#viewRulesCP">
 			<var name="condition" value="Contains" />
 			<var name="conditionValue" value="able.com" />
-			<var name="userSegmentName" value="User Segment Name" />
 			<var name="viewUserSegmentRuleList" value="Previously Visited Site" />
 		</execute>
 	</command>
@@ -427,10 +439,14 @@
 			<var name="portlet" value="Audience Targeting" />
 		</execute>
 
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Edit" />
+			<var name="rowEntry" value="User Segment Name" />
+		</execute>
+
 		<execute macro="ContentTargetingUserSegment#viewRulesCP">
 			<var name="condition" value="Starts with" />
 			<var name="conditionValue" value="http://www.able.com" />
-			<var name="userSegmentName" value="User Segment Name" />
 			<var name="viewUserSegmentRuleList" value="Previously Visited Site" />
 		</execute>
 	</command>
@@ -465,9 +481,13 @@
 			<var name="portlet" value="Audience Targeting" />
 		</execute>
 
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Edit" />
+			<var name="rowEntry" value="User Segment Name" />
+		</execute>
+
 		<execute macro="ContentTargetingUserSegment#viewRulesCP">
 			<var name="scorePoints" value="100" />
-			<var name="userSegmentName" value="User Segment Name" />
 			<var name="viewUserSegmentRuleList" value="Score Points" />
 		</execute>
 	</command>
@@ -522,10 +542,14 @@
 			<var name="portlet" value="Audience Targeting" />
 		</execute>
 
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Edit" />
+			<var name="rowEntry" value="User Segment Name" />
+		</execute>
+
 		<execute macro="ContentTargetingUserSegment#viewRulesCP">
 			<var name="facebookOlderThanAge" value="18" />
 			<var name="facebookYoungerThanAge" value="50" />
-			<var name="userSegmentName" value="User Segment Name" />
 			<var name="viewUserSegmentRuleList" value="Facebook Age" />
 		</execute>
 	</command>
@@ -560,9 +584,13 @@
 			<var name="portlet" value="Audience Targeting" />
 		</execute>
 
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Edit" />
+			<var name="rowEntry" value="User Segment Name" />
+		</execute>
+
 		<execute macro="ContentTargetingUserSegment#viewRulesCP">
 			<var name="facebookCity" value="Diamond Bar" />
-			<var name="userSegmentName" value="User Segment Name" />
 			<var name="viewUserSegmentRuleList" value="Facebook City" />
 		</execute>
 	</command>
@@ -598,10 +626,14 @@
 			<var name="portlet" value="Audience Targeting" />
 		</execute>
 
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Edit" />
+			<var name="rowEntry" value="User Segment Name" />
+		</execute>
+
 		<execute macro="ContentTargetingUserSegment#viewRulesCP">
 			<var name="facebookCollegeHighSchoolName" value="UC Irvine" />
 			<var name="facebookEducationLevel" value="College" />
-			<var name="userSegmentName" value="User Segment Name" />
 			<var name="viewUserSegmentRuleList" value="Facebook Education" />
 		</execute>
 	</command>
@@ -637,10 +669,14 @@
 			<var name="portlet" value="Audience Targeting" />
 		</execute>
 
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Edit" />
+			<var name="rowEntry" value="User Segment Name" />
+		</execute>
+
 		<execute macro="ContentTargetingUserSegment#viewRulesCP">
 			<var name="moreLessThan" value="More" />
 			<var name="numberOfFriends" value="50" />
-			<var name="userSegmentName" value="User Segment Name" />
 			<var name="viewUserSegmentRuleList" value="Facebook Friends" />
 		</execute>
 	</command>
@@ -675,9 +711,13 @@
 			<var name="portlet" value="Audience Targeting" />
 		</execute>
 
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Edit" />
+			<var name="rowEntry" value="User Segment Name" />
+		</execute>
+
 		<execute macro="ContentTargetingUserSegment#viewRulesCP">
 			<var name="facebookGenderRadio" value="Male" />
-			<var name="userSegmentName" value="User Segment Name" />
 			<var name="viewUserSegmentRuleList" value="Facebook Gender" />
 		</execute>
 	</command>
@@ -712,9 +752,13 @@
 			<var name="portlet" value="Audience Targeting" />
 		</execute>
 
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Edit" />
+			<var name="rowEntry" value="User Segment Name" />
+		</execute>
+
 		<execute macro="ContentTargetingUserSegment#viewRulesCP">
 			<var name="facebookURL" value="liferay" />
-			<var name="userSegmentName" value="User Segment Name" />
 			<var name="viewUserSegmentRuleList" value="Facebook Page Like" />
 		</execute>
 	</command>
@@ -749,9 +793,13 @@
 			<var name="portlet" value="Audience Targeting" />
 		</execute>
 
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Edit" />
+			<var name="rowEntry" value="User Segment Name" />
+		</execute>
+
 		<execute macro="ContentTargetingUserSegment#viewRulesCP">
 			<var name="browserName" value="Firefox" />
-			<var name="userSegmentName" value="User Segment Name" />
 			<var name="viewUserSegmentRuleList" value="Browser" />
 		</execute>
 	</command>
@@ -799,9 +847,13 @@
 			<var name="portlet" value="Audience Targeting" />
 		</execute>
 
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Edit" />
+			<var name="rowEntry" value="User Segment Name" />
+		</execute>
+
 		<execute macro="ContentTargetingUserSegment#viewRulesCP">
 			<var name="deviceFamilyName" value="Device Family Name" />
-			<var name="userSegmentName" value="User Segment Name" />
 			<var name="viewUserSegmentRuleList" value="Device" />
 		</execute>
 	</command>
@@ -837,10 +889,14 @@
 			<var name="portlet" value="Audience Targeting" />
 		</execute>
 
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Edit" />
+			<var name="rowEntry" value="User Segment Name" />
+		</execute>
+
 		<execute macro="ContentTargetingUserSegment#viewRulesCP">
 			<var name="countryName" value="Spain" />
 			<var name="regionName" value="Madrid" />
-			<var name="userSegmentName" value="User Segment Name" />
 			<var name="viewUserSegmentRuleList" value="Location" />
 		</execute>
 	</command>
@@ -875,9 +931,13 @@
 			<var name="portlet" value="Audience Targeting" />
 		</execute>
 
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Edit" />
+			<var name="rowEntry" value="User Segment Name" />
+		</execute>
+
 		<execute macro="ContentTargetingUserSegment#viewRulesCP">
 			<var name="operatingSystemName" value="Mac" />
-			<var name="userSegmentName" value="User Segment Name" />
 			<var name="viewUserSegmentRuleList" value="Operating System" />
 		</execute>
 	</command>
@@ -913,10 +973,14 @@
 			<var name="portlet" value="Audience Targeting" />
 		</execute>
 
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Edit" />
+			<var name="rowEntry" value="User Segment Name" />
+		</execute>
+
 		<execute macro="ContentTargetingUserSegment#viewRulesCP">
 			<var name="endTime" value="11:30 PM" />
 			<var name="startTime" value="10:30 AM" />
-			<var name="userSegmentName" value="User Segment Name" />
 			<var name="viewUserSegmentRuleList" value="Time" />
 		</execute>
 	</command>
@@ -952,9 +1016,13 @@
 			<var name="portlet" value="Audience Targeting" />
 		</execute>
 
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Edit" />
+			<var name="rowEntry" value="User Segment Name" />
+		</execute>
+
 		<execute macro="ContentTargetingUserSegment#viewRulesCP">
 			<var name="olderThanAge" value="21" />
-			<var name="userSegmentName" value="User Segment Name" />
 			<var name="viewUserSegmentRuleList" value="Age" />
 			<var name="youngerThanAge" value="99" />
 		</execute>
@@ -990,9 +1058,13 @@
 			<var name="portlet" value="Audience Targeting" />
 		</execute>
 
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Edit" />
+			<var name="rowEntry" value="User Segment Name" />
+		</execute>
+
 		<execute macro="ContentTargetingUserSegment#viewRulesCP">
 			<var name="genderRadio" value="Female" />
-			<var name="userSegmentName" value="User Segment Name" />
 			<var name="viewUserSegmentRuleList" value="Gender" />
 		</execute>
 	</command>
@@ -1036,9 +1108,13 @@
 			<var name="portlet" value="Audience Targeting" />
 		</execute>
 
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Edit" />
+			<var name="rowEntry" value="User Segment Name" />
+		</execute>
+
 		<execute macro="ContentTargetingUserSegment#viewRulesCP">
 			<var name="organizationName" value="Organization Name" />
-			<var name="userSegmentName" value="User Segment Name" />
 			<var name="viewUserSegmentRuleList" value="Organization Member" />
 		</execute>
 
@@ -1085,10 +1161,14 @@
 			<var name="portlet" value="Audience Targeting" />
 		</execute>
 
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Edit" />
+			<var name="rowEntry" value="User Segment Name" />
+		</execute>
+
 		<execute macro="ContentTargetingUserSegment#viewRulesCP">
 			<var name="organizationName" value="Organization Name" />
 			<var name="organizationRole" value="Organization Owner" />
-			<var name="userSegmentName" value="User Segment Name" />
 			<var name="viewUserSegmentRuleList" value="Organization Role" />
 		</execute>
 
@@ -1125,9 +1205,13 @@
 			<var name="portlet" value="Audience Targeting" />
 		</execute>
 
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Edit" />
+			<var name="rowEntry" value="User Segment Name" />
+		</execute>
+
 		<execute macro="ContentTargetingUserSegment#viewRulesCP">
 			<var name="regularRole" value="Guest" />
-			<var name="userSegmentName" value="User Segment Name" />
 			<var name="viewUserSegmentRuleList" value="Regular Role" />
 		</execute>
 	</command>
@@ -1162,9 +1246,13 @@
 			<var name="portlet" value="Audience Targeting" />
 		</execute>
 
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Edit" />
+			<var name="rowEntry" value="User Segment Name" />
+		</execute>
+
 		<execute macro="ContentTargetingUserSegment#viewRulesCP">
 			<var name="selectSiteMemberSite" value="Site Name" />
-			<var name="userSegmentName" value="User Segment Name" />
 			<var name="viewUserSegmentRuleList" value="Site Member" />
 		</execute>
 	</command>
@@ -1200,10 +1288,14 @@
 			<var name="portlet" value="Audience Targeting" />
 		</execute>
 
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Edit" />
+			<var name="rowEntry" value="User Segment Name" />
+		</execute>
+
 		<execute macro="ContentTargetingUserSegment#viewRulesCP">
 			<var name="siteRole" value="Site Owner" />
 			<var name="siteRoleSite" value="Liferay" />
-			<var name="userSegmentName" value="User Segment Name" />
 			<var name="viewUserSegmentRuleList" value="Site Role" />
 		</execute>
 	</command>
@@ -1246,9 +1338,13 @@
 			<var name="portlet" value="Audience Targeting" />
 		</execute>
 
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Edit" />
+			<var name="rowEntry" value="User Segment Name" />
+		</execute>
+
 		<execute macro="ContentTargetingUserSegment#viewRulesCP">
 			<var name="userGroupName" value="User Group Name" />
-			<var name="userSegmentName" value="User Segment Name" />
 			<var name="viewUserSegmentRuleList" value="User Group Member" />
 		</execute>
 	</command>
@@ -1281,8 +1377,12 @@
 			<var name="portlet" value="Audience Targeting" />
 		</execute>
 
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Edit" />
+			<var name="rowEntry" value="User Segment Name" />
+		</execute>
+
 		<execute macro="ContentTargetingUserSegment#viewRulesCP">
-			<var name="userSegmentName" value="User Segment Name" />
 			<var name="viewUserSegmentRuleList" value="User Signed In" />
 		</execute>
 	</command>

@@ -986,6 +986,13 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		checkUTF8(file, fileName);
 
+		if (!(this instanceof JavaSourceProcessor) &&
+			absolutePath.matches(".*\\/modules\\/.*\\/src\\/.*\\/java\\/.*")) {
+
+			processMessage(
+				fileName, "Only *.java files are allowed in /src/*/java/");
+		}
+
 		String newContent = doFormat(file, fileName, absolutePath, content);
 
 		newContent = StringUtil.replace(

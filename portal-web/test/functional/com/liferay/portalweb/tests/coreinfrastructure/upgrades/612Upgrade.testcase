@@ -46,6 +46,10 @@
 		<execute macro="Upgrade#viewWCStructureAndTemplate" />
 
 		<execute macro="Upgrade#publishWCDraft" />
+
+		<execute macro="Upgrade#viewAssetPublisher" />
+
+		<execute macro="Upgrade#viewNestedPortlets" />
 	</command>
 
 	<command name="View612WorkflowArchive" priority="4">

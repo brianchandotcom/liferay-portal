@@ -1,6 +1,6 @@
 # Service Builder Gradle Plugin
 
-The Service Builder Gradle plugin allows you to generate the service layer
+The Service Builder Gradle plugin allows you to generate a service layer
 defined in a [Service Builder](https://dev.liferay.com/develop/tutorials/-/knowledge_base/7-0/what-is-service-builder)
 `service.xml` file.
 
@@ -27,10 +27,9 @@ apply plugin: "com.liferay.service.builder"
 The Service Builder plugin automatically applies the [`java`](https://docs.gradle.org/current/userguide/java_plugin.html)
 plugin.
 
-The plugin automatically resolves the Liferay Service Builder library as a
-dependency, therefore, you have to configure a repository hosting the library
-and its transitive dependencies. One repository that hosts them all is the
-Liferay CDN:
+Since the plugin automatically resolves the Liferay Service Builder library as a
+dependency, you have to configure a repository that hosts the library
+and its transitive dependencies. The Liferay CDN repository hosts them all:
 
 ```gradle
 repositories {
@@ -46,11 +45,11 @@ The plugin adds one task to your project:
 
 Name | Depends On | Type | Description
 ---- | ---------- | ---- | -----------
-`buildService` | \- | [`BuildServiceTask`](#buildservicetask) | Runs Liferay Service Builder.
+`buildService` | \- | [`BuildServiceTask`](#buildservicetask) | Runs the Liferay Service Builder.
 
 The `buildService` task is automatically configured with sensible defaults,
 depending on whether the [`war`](https://docs.gradle.org/current/userguide/war_plugin.html)
-plugin is applied or not, or if the [`osgiModule`](#osgimodule) property is `true` or not:
+plugin is applied, or whether the [`osgiModule`](#osgimodule) property is `true`:
 
 Property Name | Default Value
 ------------- | -------------
@@ -70,8 +69,7 @@ of a data-driven Liferay OSGi application split in `myapp-app`, `myapp-service`
 and `myapp-web` modules, the `service.xml` file is usually contained in the root
 directory of `myapp-service`. In the `build.gradle` of the same module, it is
 enough to apply the `com.liferay.service.builder` plugin [as described](#usage),
-and then add the following snippet in order to enable the use of Liferay Service
-Builder:
+and then add the following snippet to enable the use of Liferay Service Builder:
 
 ```gradle
 buildService {
@@ -81,13 +79,12 @@ buildService {
 ```
 
 While `apiDir` is required, the `testDir` property assignment can be left out,
-in which case the Arquillian-based integration test classes will not be
-generated.
+in which case Arquillian-based integration test classes are generated.
 
 ### BuildServiceTask
 
 Tasks of type `BuildWSDDTask` extend [`JavaExec`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.JavaExec.html),
-so all its properties and methods, like [`args`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.JavaExec.html#org.gradle.api.tasks.JavaExec:args(java.lang.Iterable))
+so all its properties and methods, such as [`args`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.JavaExec.html#org.gradle.api.tasks.JavaExec:args(java.lang.Iterable))
 and [`maxHeapSize`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.JavaExec.html#org.gradle.api.tasks.JavaExec:maxHeapSize)
 are available. They also have the following properties set by default:
 
@@ -103,41 +100,39 @@ Property Name | Default Value
 
 Property Name | Type | Default Value | Description
 ------------- | ---- | ------------- | -----------
-<a name="apidir"></a>`apiDir` | `File` | `null` | The directory where the service API Java source files are generated.
-`autoImportDefaultReferences` | `boolean` | `true` | Whether to automatically add default references like `com.liferay.portal.ClassName`, `com.liferay.portal.Resource` and `com.liferay.portal.User` to the services.
+<a name="apidir"></a>`apiDir` | `File` | `null` | A directory where the service API Java source files are generated.
+`autoImportDefaultReferences` | `boolean` | `true` | Whether to automatically add default references, like `com.liferay.portal.ClassName`, `com.liferay.portal.Resource` and `com.liferay.portal.User`, to the services.
 `autoNamespaceTables` | `boolean` | `true` | Whether to prefix table names by the namespace specified in the `service.xml` file.
-`beanLocatorUtil` | `String` | `"com.liferay.util.bean.PortletBeanLocatorUtil"` | The fully qualified class name of the bean locator class to use in the generated service classes.
-`buildNumber` | `long` | `1` | Force a specific value for the `build.number` property in the `service.properties` file.
+`beanLocatorUtil` | `String` | `"com.liferay.util.bean.PortletBeanLocatorUtil"` | The fully qualified class name of a bean locator class to use in the generated service classes.
+`buildNumber` | `long` | `1` | A specific value to assign the `build.number` property in the `service.properties` file.
 `buildNumberIncrement` | `boolean` | `true` | Whether to automatically increment the `build.number` property in the `service.properties` file by one at every service generation.
-<a name="hbmfile"></a>`hbmFile` | `File` | `null` | The destination of the generated Hibernate Mapping file.
-<a name="impldir"></a>`implDir` | `File` | `null` | The directory where the service Java source files are generated.
-<a name="inputfile"></a>`inputFile` | `File` | `null` | The `service.xml` file of the project.
-`modelHintsConfigs` | `Set` | `["classpath*:META-INF/portal-model-hints.xml", "META-INF/portal-model-hints.xml", "classpath*:META-INF/ext-model-hints.xml", "classpath*:META-INF/portlet-model-hints.xml"]` | The locations of the [model hints](https://dev.liferay.com/develop/tutorials/-/knowledge_base/7-0/customizing-model-entities-with-model-hints) files used by Liferay Service Builder in order to generate the service layer.
-<a name="modelhintsfile"></a>`modelHintsFile` | `File` | `null` | The model hints file of the project.
+<a name="hbmfile"></a>`hbmFile` | `File` | `null` | A Hibernate Mapping file to generate.
+<a name="impldir"></a>`implDir` | `File` | `null` | A directory where the service Java source files are generated.
+<a name="inputfile"></a>`inputFile` | `File` | `null` | The project's `service.xml` file.
+`modelHintsConfigs` | `Set` | `["classpath*:META-INF/portal-model-hints.xml", "META-INF/portal-model-hints.xml", "classpath*:META-INF/ext-model-hints.xml", "classpath*:META-INF/portlet-model-hints.xml"]` | Paths to the [model hints](https://dev.liferay.com/develop/tutorials/-/knowledge_base/7-0/customizing-model-entities-with-model-hints) files for Liferay Service Builder to use in generating the service layer.
+<a name="modelhintsfile"></a>`modelHintsFile` | `File` | `null` | A model hints file for the project.
 <a name="osgimodule"></a>`osgiModule` | `boolean` | `false` | Whether to generate the service layer for OSGi modules.
-<a name="pluginname"></a>`pluginName` | `String` | `null` | If specified, enables additional generation features for non-OSGi modules, like the `Clp` classes.
-<a name="propsutil"></a>`propsUtil` | `String` | `null` | The fully qualified class name of the generated service properties util class.
-`readOnlyPrefixes` | `Set` | `["fetch", "get", "has", "is", "load", "reindex", "search"]` | The prefixes of the methods to consider as read-only.
-`resourceActionsConfigs` | `Set` | `["META-INF/resource-actions/default.xml", "resource-actions/default.xml"]` | The locations of the [resource actions](https://dev.liferay.com/develop/tutorials/-/knowledge_base/7-0/adding-permissions-to-resources) files used by Liferay Service Builder in order to generate the service layer.
-<a name="resourcesdir"></a>`resourcesDir` | `File` | `null` | The directory where the service non-Java files are generated.
-<a name="springfile"></a>`springFile` | `File` | `null` | The destination of the generated service Spring file.
-`springNamespaces` | `Set` | `["beans"]` | The namespaces of the Spring XML Schemas to add to the service Spring file.
-<a name="sqldir"></a>`sqlDir` | `File` | `null` | The directory where the SQL files are generated.
-`sqlFileName` | `String` | `"tables.sql"` | The name (relative to `sqlDir`) of the file where the SQL table creation instructions are generated.
-`sqlIndexesFileName` | `String` | `"indexes.sql"` | The name (relative to `sqlDir`) of the file where the SQL index creation instructions are generated.
-`sqlSequencesFileName` | `String` | `"sequences.sql"` | The name (relative to `sqlDir`) of the file where the SQL sequence creation instructions are generated.
-`targetEntityName` | `String` | `null` | If specified, the name of the entity for which Liferay Service Builder should generate the service.
-`testDir` | `File` | `null` | If specified, the directory where the integration test Java source files are generated.
+<a name="pluginname"></a>`pluginName` | `String` | `null` | If specified, a plugin can enable additional generation features, such as `Clp` class generation, for non-OSGi modules.
+<a name="propsutil"></a>`propsUtil` | `String` | `null` | The fully qualified class name of the service properties util class to generate.
+`readOnlyPrefixes` | `Set` | `["fetch", "get", "has", "is", "load", "reindex", "search"]` | Prefixes of methods to consider read-only.
+`resourceActionsConfigs` | `Set` | `["META-INF/resource-actions/default.xml", "resource-actions/default.xml"]` | Paths to the [resource actions](https://dev.liferay.com/develop/tutorials/-/knowledge_base/7-0/adding-permissions-to-resources) files for Liferay Service Builder to use in generating the service layer.
+<a name="resourcesdir"></a>`resourcesDir` | `File` | `null` | A directory where the service non-Java files are generated.
+<a name="springfile"></a>`springFile` | `File` | `null` | A service Spring file to generate.
+`springNamespaces` | `Set` | `["beans"]` | Namespaces of Spring XML Schemas to add to the service Spring file.
+<a name="sqldir"></a>`sqlDir` | `File` | `null` | A directory where the SQL files are generated.
+`sqlFileName` | `String` | `"tables.sql"` | A name (relative to `sqlDir`) for the file in which the SQL table creation instructions are generated.
+`sqlIndexesFileName` | `String` | `"indexes.sql"` | A name (relative to `sqlDir`) for the file in which the SQL index creation instructions are generated.
+`sqlSequencesFileName` | `String` | `"sequences.sql"` | A name (relative to `sqlDir`) for the file in which the SQL sequence creation instructions are generated.
+`targetEntityName` | `String` | `null` | If specified, it's the name of the entity for which Liferay Service Builder should generate the service.
+`testDir` | `File` | `null` | If specified, it's a directory where integration test Java source files are generated.
 
 The properties of type `File` supports any type that can be resolved by [`project.file`](https://docs.gradle.org/current/dsl/org.gradle.api.Project.html#org.gradle.api.Project:file(java.lang.Object)).
 Moreover, it is possible to use Closures and Callables as values for the
-`String` properties, in order to defer their evaluation at the moment of the
-task execution.
+`String` properties, to defer evaluation until task execution.
 
 ## Additional Configuration
 
-There are additional configurations related to the Service Builder, which can
-aid in your usage of the plugin.
+There are additional configurations that can help you use Service Builder.
 
 ### Liferay Service Builder Dependency
 

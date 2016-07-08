@@ -23,10 +23,9 @@ buildscript {
 apply plugin: "com.liferay.tld.formatter"
 ```
 
-The plugin automatically resolves the Liferay TLD Formatter library as a
-dependency, therefore, you have to configure a repository hosting the library
-and its transitive dependencies. One repository that hosts them all is the
-Liferay CDN:
+Since the plugin automatically resolves the Liferay TLD Formatter library as a
+dependency, you have to configure a repository that hosts the library
+and its transitive dependencies. The Liferay CDN repository hosts them all:
 
 ```gradle
 repositories {
@@ -42,13 +41,13 @@ The plugin adds one task to your project:
 
 Name | Depends On | Type | Description
 ---- | ---------- | ---- | -----------
-`formatTLD` | \- | [`FormatTLDTask`](#formattldtask) | Runs Liferay TLD Formatter to format files.
+`formatTLD` | \- | [`FormatTLDTask`](#formattldtask) | Runs the Liferay TLD Formatter to format files.
 
 ### FormatTLDTask
 
 Tasks of type `FormatTLDTask` extend [`JavaExec`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.JavaExec.html),
-so all its properties and methods, like [`args`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.JavaExec.html#org.gradle.api.tasks.JavaExec:args(java.lang.Iterable))
-and [`maxHeapSize`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.JavaExec.html#org.gradle.api.tasks.JavaExec:maxHeapSize)
+so all its properties and methods, such as [`args`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.JavaExec.html#org.gradle.api.tasks.JavaExec:args(java.lang.Iterable))
+and [`maxHeapSize`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.JavaExec.html#org.gradle.api.tasks.JavaExec:maxHeapSize),
 are available. They also have the following properties set by default:
 
 Property Name | Default Value
@@ -61,12 +60,11 @@ Property Name | Default Value
 
 Property Name | Type | Default Value | Description
 ------------- | ---- | ------------- | -----------
-`plugin` | `boolean` | `true` | Whether to format all the TLD files contained in the [`workingDir`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.JavaExec.html#org.gradle.api.tasks.JavaExec:workingDir) directory. Otherwise, the file `liferay-portlet-ext.tld`, if found, will be ignored.
+`plugin` | `boolean` | `true` | Whether to format all the TLD files contained in the [`workingDir`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.JavaExec.html#org.gradle.api.tasks.JavaExec:workingDir) directory. If `false`, all `liferay-portlet-ext.tld` files are ignored.
 
 ## Additional Configuration
 
-There are additional configurations related to the TLD Formatter, which can aid
-in your usage of the plugin.
+There are additional configurations that can help you use the TLD Formatter.
 
 ### Liferay TLD Formatter Dependency
 

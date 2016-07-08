@@ -28,10 +28,9 @@ apply plugin: "com.liferay.wsdd.builder"
 The WSDD Builder plugin automatically applies the [`java`](https://docs.gradle.org/current/userguide/java_plugin.html)
 plugin.
 
-The plugin automatically resolves the Liferay WSDD Builder library as a
-dependency, therefore, you have to configure a repository hosting the library
-and its transitive dependencies. One repository that hosts them all is the
-Liferay CDN:
+Since the plugin automatically resolves the Liferay WSDD Builder library as a
+dependency, you have to configure a repository that hosts the library and its
+transitive dependencies. The Liferay CDN repository hosts them all:
 
 ```gradle
 repositories {
@@ -47,24 +46,24 @@ The plugin adds one task to your project:
 
 Name | Depends On | Type | Description
 ---- | ---------- | ---- | -----------
-`buildWSDD` | [`compileJava`](https://docs.gradle.org/current/userguide/java_plugin.html#sec:compile) | [`BuildWSDDTask`](#buildwsddtask) | Runs Liferay WSDD Builder.
+`buildWSDD` | [`compileJava`](https://docs.gradle.org/current/userguide/java_plugin.html#sec:compile) | [`BuildWSDDTask`](#buildwsddtask) | Runs the Liferay WSDD Builder.
 
 By default, the `buildWSDD` task uses the `${project.projectDir}/service.xml`
-file as input. Then it generates `${project.projectDir}/server-config.wsdd` and
+file as input. Then, it generates `${project.projectDir}/server-config.wsdd` and
 the `*_deploy.wsdd` and `*_undeploy.wsdd` files in the first [`resources`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.SourceSet.html#org.gradle.api.tasks.SourceSet:resources)
 directory of the `main` [source set](https://docs.gradle.org/current/userguide/java_plugin.html#N1503E)
 (by default: `src/main/resources`).
 
-Instead, if the [`war`](https://docs.gradle.org/current/userguide/war_plugin.html)
+If the [`war`](https://docs.gradle.org/current/userguide/war_plugin.html)
 plugin is applied, the task uses `${project.webAppDir}/WEB-INF/service.xml` as
-input, and generates `${project.webAppDir}/WEB-INF/server-config.wsdd`. The
+input to generate `${project.webAppDir}/WEB-INF/server-config.wsdd`. The
 `*_deploy.wsdd` and `*_undeploy.wsdd` files are still generated in the first
 `resources` directory of the `main` source set.
 
 Liferay WSDD Build Service requires an additional classpath (configured with the
-`buildWSDD.builderClasspath` property) in order to correctly generate the WSDD
-files. The `buildWSDD` task uses the following default value, which creates an
-implicit dependency to the `compileJava` task:
+`buildWSDD.builderClasspath` property), to correctly generate the WSDD files.
+The `buildWSDD` task uses the following default value, which creates an implicit
+dependency to the `compileJava` task:
 
 ```gradle
 tasks.compileJava.outputs.files + sourceSets.main.compileClasspath + sourceSets.main.runtimeClasspath
@@ -73,8 +72,8 @@ tasks.compileJava.outputs.files + sourceSets.main.compileClasspath + sourceSets.
 ### BuildWSDDTask
 
 Tasks of type `BuildWSDDTask` extend [`JavaExec`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.JavaExec.html),
-so all its properties and methods, like [`args`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.JavaExec.html#org.gradle.api.tasks.JavaExec:args(java.lang.Iterable))
-and [`maxHeapSize`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.JavaExec.html#org.gradle.api.tasks.JavaExec:maxHeapSize)
+so all its properties and methods, such as [`args`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.JavaExec.html#org.gradle.api.tasks.JavaExec:args(java.lang.Iterable))
+and [`maxHeapSize`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.JavaExec.html#org.gradle.api.tasks.JavaExec:maxHeapSize),
 are available. They also have the following properties set by default:
 
 Property Name | Default Value
@@ -87,26 +86,24 @@ Property Name | Default Value
 
 Property Name | Type | Default Value | Description
 ------------- | ---- | ------------- | -----------
-`builderClasspath` | `String` | `null` | The classpath used by Liferay WSDD Builder to generate the WSDD files.
-`inputFile` | `File` | `null` | The `service.xml` from which to generate the WSDD files.
-`outputDir` | `File` | `null` | The directory where the `*_deploy.wsdd` and `*_undeploy.wsdd` files should be generated.
-`serverConfigFile` | `File` | `${project.projectDir}/server-config.wsdd` | The destination of the generated `server-config.wsdd` file.
-`serviceNamespace` | `String` | `"Plugin"` | The WSDD Service namespace.
+`builderClasspath` | `String` | `null` | A classpath that the Liferay WSDD Builder uses to generate WSDD files.
+`inputFile` | `File` | `null` | A `service.xml` from which to generate the WSDD files.
+`outputDir` | `File` | `null` | A directory where the `*_deploy.wsdd` and `*_undeploy.wsdd` files are generated.
+`serverConfigFile` | `File` | `${project.projectDir}/server-config.wsdd` | A `server-config.wsdd` file to generate.
+`serviceNamespace` | `String` | `"Plugin"` | A namespace for the WSDD Service.
 
-The properties of type `File` supports any type that can be resolved by [`project.file`](https://docs.gradle.org/current/dsl/org.gradle.api.Project.html#org.gradle.api.Project:file(java.lang.Object)).
+The properties of type `File` support any type that can be resolved by [`project.file`](https://docs.gradle.org/current/dsl/org.gradle.api.Project.html#org.gradle.api.Project:file(java.lang.Object)).
 Moreover, it is possible to use Closures and Callables as values for the
-`String` properties, in order to defer their evaluation at the moment of the
-task execution.
+`String` properties, to defer evaluation until task execution.
 
 ## Additional Configuration
 
-There are additional configurations related to the WSDD Builder, which can aid
-in your usage of the plugin.
+There are additional configurations that can help you use the WSDD Builder.
 
 ### Liferay WSDD Builder Dependency
 
-By default, the plugin creates a configuration called `wsddBuilder` and adds
-a dependency to the latest released version of Liferay WSDD Builder. It is
+By default, the plugin creates a configuration called `wsddBuilder` and adds a
+dependency to the latest released version of the Liferay WSDD Builder. It is
 possible to override this setting and use a specific version of the tool by
 manually adding a dependency to the `wsddBuilder` configuration:
 

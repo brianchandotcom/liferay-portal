@@ -26,9 +26,9 @@ apply plugin: "com.liferay.xsd.builder"
 The XSD Builder plugin automatically applies the [`java`](https://docs.gradle.org/current/userguide/java_plugin.html)
 plugin.
 
-The plugin automatically resolves the Apache XMLBeans library as a dependency,
-therefore, you have to configure a repository hosting the library and its
-transitive dependencies. One repository that hosts them all is the Liferay CDN:
+Since the plugin automatically resolves the Liferay Service Builder library as a
+dependency, you have to configure a repository that hosts the library and its
+transitive dependencies. The Liferay CDN repository hosts them all:
 
 ```gradle
 repositories {
@@ -45,14 +45,14 @@ The plugin adds three tasks to your project:
 Name | Depends On | Type | Description
 ---- | ---------- | ---- | -----------
 `buildXSD` | `buildXSDCompile` | [`BuildXSDTask`](#buildxsdtask) | Generates XMLBeans bindings and compiles them in a JAR file.
-`buildXSDGenerate` | `cleanBuildXSDGenerate` | [`JavaExec`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.JavaExec.html) | Invokes the [XMLBeans Schema Compiler](https://xmlbeans.apache.org/docs/2.6.0/guide/tools.html#scomp) in order to generate Java types from XML Schema.
+`buildXSDGenerate` | `cleanBuildXSDGenerate` | [`JavaExec`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.JavaExec.html) | Invokes the [XMLBeans Schema Compiler](https://xmlbeans.apache.org/docs/2.6.0/guide/tools.html#scomp) to generate Java types from XML Schema.
 `buildXSDCompile` | `buildXSDGenerate`, `cleanBuildXSDCompile` | [`JavaCompile`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.compile.JavaCompile.html) | Compiles the generated Java types.
 
 By default, the `buildXSD` task looks for XSD files in the
 `${project.projectDir}/xsd` directory, and saves the generated JAR file as
 `${project.projectDir}/lib/${project.archivesBaseName}-xbean.jar`.
 
-Instead, if the [`war`](https://docs.gradle.org/current/userguide/war_plugin.html)
+If the [`war`](https://docs.gradle.org/current/userguide/war_plugin.html)
 plugin is applied, the task looks for XSD files in the
 `${project.webAppDir}/WEB-INF/xsd` directory, and saves the generated JAR file
 as `${project.webAppDir}/WEB-INF/lib/${project.archivesBaseName}-xbean.jar`.
@@ -77,21 +77,20 @@ For each task of type `BuildXSDTask`, the following helper tasks are created:
 
 Property Name | Type | Default Value | Description
 ------------- | ---- | ------------- | -----------
-`inputDir` | `File` | `null` | The directory containing the XSD files.
+`inputDir` | `File` | `null` | A directory containing XSD files from which to generate [Apache XMLBeans](https://xmlbeans.apache.org/) bindings.
 
-The properties of type `File` supports any type that can be resolved by [`project.file`](https://docs.gradle.org/current/dsl/org.gradle.api.Project.html#org.gradle.api.Project:file(java.lang.Object)).
+The properties of type `File` support any type that can be resolved by [`project.file`](https://docs.gradle.org/current/dsl/org.gradle.api.Project.html#org.gradle.api.Project:file(java.lang.Object)).
 
 ## Additional Configuration
 
-There are additional configurations related to the XSD Builder, which can aid in
-your usage of the plugin.
+There are additional configurations that can help you use the XSD Builder.
 
 ### Apache XMLBeans Dependency
 
-By default, the plugin creates a configuration called `xsdBuilder` and adds
-a dependency to the 2.5.0 version of Apache XMLBeans. It is possible to override
-this setting and use a specific version of the library by manually adding a
-dependency to the `xsdBuilder` configuration:
+By default, the XSD Builder Gradle plugin creates a configuration called
+`xsdBuilder` and adds a dependency to the 2.5.0 version of Apache XMLBeans. It
+is possible to override this setting and use a specific version of the library
+by manually adding a dependency to the `xsdBuilder` configuration:
 
 ```gradle
 dependencies {

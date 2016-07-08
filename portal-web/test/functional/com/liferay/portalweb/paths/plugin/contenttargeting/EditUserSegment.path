@@ -215,6 +215,27 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--USER_SEGMENT_RULE_USER_ATTRIBUTES_CUSTOM_FIELD-->
+<tr>
+	<td>USER_SEGMENT_RULE_USER_ATTRIBUTES_CUSTOM_FIELD_SELECT</td>
+	<td>//select[contains(@id,'CustomFieldSelectorPortlet')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_SEGMENT_RULE_USER_ATTRIBUTES_CUSTOM_FIELD_SELECT_BUTTON</td>
+	<td>//div[contains(@class,'customfieldrule')]//div[contains(@class,'field-editor') and contains(@class,'expanded')]//button[span[.='Select']]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_SEGMENT_RULE_USER_ATTRIBUTES_CUSTOM_FIELD_ATTRIBUTE_CONTAINER</td>
+	<td>//div[contains(@class,'customfieldrule')]//div[contains(@class,'field-editor') and contains(@class,'expanded')]//div[contains(@id,'attributeContainer')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--USER_SEGMENT_RULE_USER_ATTRIBUTES_GENDER-->
 <tr>
 	<td>USER_SEGMENT_RULE_USER_ATTRIBUTES_GENDER_MALE_RADIO</td>

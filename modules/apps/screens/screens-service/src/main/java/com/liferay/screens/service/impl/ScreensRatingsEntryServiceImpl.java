@@ -60,9 +60,14 @@ public class ScreensRatingsEntryServiceImpl
 		return null;
 	}
 
-	public JSONObject updateRatingEntry(long classPK, String className, double score, int stepCount)
-			throws PortalException {
-		return null;
+	public JSONObject updateRatingEntry(
+			long classPK, String className, double score, int stepCount)
+		throws PortalException {
+
+		ratingsEntryLocalService.updateEntry(
+			getUserId(), className, classPK, score, new ServiceContext());
+
+		return getRatingsEntries(classPK, className, stepCount);
 	}
 
 	public JSONObject getRatingsEntries(long entryId, int stepCount)

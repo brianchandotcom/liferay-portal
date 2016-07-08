@@ -20,7 +20,7 @@
 int menuItemsCount = GetterUtil.getInteger(request.getAttribute("liferay-frontend:add-menu:menuItemsCount"));
 int maxItems = GetterUtil.getInteger(request.getAttribute("liferay-frontend:add-menu:maxItems"));
 List<MenuItemGroup> menuItemGroups = (List<MenuItemGroup>)request.getAttribute("liferay-frontend:add-menu:menuItemGroups");
-String viewMoreUrl = (String)request.getAttribute("liferay-frontend:add-menu:viewMoreUrl");
+String viewMoreURL = (String)request.getAttribute("liferay-frontend:add-menu:viewMoreURL");
 %>
 
 <c:choose>
@@ -70,7 +70,7 @@ String viewMoreUrl = (String)request.getAttribute("liferay-frontend:add-menu:vie
 				boolean customizeAddMenuAdviceMessage = GetterUtil.getBoolean(SessionClicks.get(request, "com.liferay.addmenu_customizeAddMenuAdviceMessage", null));
 				%>
 
-				<c:if test="<%= !customizeAddMenuAdviceMessage && Validator.isNotNull(viewMoreUrl) && (menuItemsCount > maxItems) %>">
+				<c:if test="<%= !customizeAddMenuAdviceMessage && Validator.isNotNull(viewMoreURL) && (menuItemsCount > maxItems) %>">
 					<li class="active add-menu-advice">
 						<a href="javascript:;"><liferay-ui:message key="you-can-customize-this-menu-or-see-all-you-have-by-clicking-more" /></a>
 					</li>
@@ -129,7 +129,7 @@ String viewMoreUrl = (String)request.getAttribute("liferay-frontend:add-menu:vie
 						<liferay-ui:message arguments="<%= new Object[] {maxItems, menuItemsCount} %>" key="showing-x-of-x-items" />
 					</li>
 
-					<c:if test="<%= Validator.isNotNull(viewMoreUrl) %>">
+					<c:if test="<%= Validator.isNotNull(viewMoreURL) %>">
 						<li class="divider"></li>
 
 						<li>
@@ -154,7 +154,7 @@ String viewMoreUrl = (String)request.getAttribute("liferay-frontend:add-menu:vie
 											},
 											id: '<%= namespace %>selectAddMenuItem',
 											title: '<liferay-ui:message key="more" />',
-											uri: '<%= viewMoreUrl %>'
+											uri: '<%= viewMoreURL %>'
 										},
 										function(event) {
 											event.preventDefault();

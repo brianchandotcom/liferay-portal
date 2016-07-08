@@ -2,7 +2,7 @@
 	<command name="closePortalLocalizationWarning">
 		<if>
 			<and>
-				<condition function="IsVisible" locator1="Home#PORTAL_LOCALIZATION_CONFIRMATION_INFO_MESSAGE" />
+				<condition function="IsVisible" locator1="Home#PORTAL_LOCALIZATION_INFO_MESSAGE" />
 				<condition function="IsVisible" locator1="Icon#CLOSE" />
 			</and>
 			<then>

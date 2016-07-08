@@ -704,8 +704,6 @@
 			<var name="specificURL" value="http://localhost:8080/fr" />
 		</execute>
 
-		<execute macro="Alert#closePortalLocalizationWarning" />
-
 		<execute function="AssertLocation" value1="http://localhost:8080/web/guest" />
 
 		<execute macro="ProductMenu#gotoSite">
@@ -724,8 +722,6 @@
 		<execute macro="Navigator#openSpecificURL">
 			<var name="url" value="http://www.able.com:8080/fr/" />
 		</execute>
-
-		<execute macro="Alert#closePortalLocalizationWarning" />
 
 		<execute macro="Site#viewVirtualHostsURLPG">
 			<var name="pageName" value="Language Page" />

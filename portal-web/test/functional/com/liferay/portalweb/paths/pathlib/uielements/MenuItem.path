@@ -564,6 +564,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MOVE_TO_IN_PROGRESS</td>
+	<td>//a[@role='menuitem']/span[contains(.,'Move to In Progress')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MOVE_TO_NEW</td>
+	<td>//a[@role='menuitem']/span[contains(.,'Move to New')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MOVE_TO_THE_RECYCLE_BIN</td>
 	<td>//div[contains(@class,'open')]//a[@role='menuitem' and contains(.,'Move to the Recycle Bin')] | //li[contains(@class,'open')]//a[@role='menuitem' and contains(.,'Move to the Recycle Bin')]</td>
 	<td></td>
@@ -691,6 +701,11 @@
 <tr>
 	<td>REQUEST_MEMBERSHIP</td>
 	<td>//div[contains(@class,'open')]//a[@role='menuitem' and contains(.,'Request Membership')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESOLVE</td>
+	<td>//a[@role='menuitem']/span[contains(.,'Resolve')]</td>
 	<td></td>
 </tr>
 <tr>

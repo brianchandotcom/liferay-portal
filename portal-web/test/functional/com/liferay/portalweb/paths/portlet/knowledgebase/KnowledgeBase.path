@@ -31,7 +31,7 @@
 </tr>
 <tr>
 	<td>ADMIN_TABS_SUGGESTIONS</td>
-	<td>//ul[contains(@class,'nav-tabs')]/li[contains(.,'Suggestions')]/a</td>
+	<td>//ul[contains(@class,'navbar')]/li/a[contains(.,'Suggestions')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -139,7 +139,7 @@
 </tr>
 <tr>
 	<td>ARTICLE_TABLE_ARTICLE_STATUS</td>
-	<td>//tr[contains(.,'${key_kbArticleTitle}')]/td[7]</td>
+	<td>//div[contains(.,'${key_kbArticleTitle}')]//h5//span</td>
 	<td></td>
 </tr>
 <tr>
@@ -398,7 +398,7 @@
 </tr>
 <tr>
 	<td>LINK_THERE_ARE_SUGGESTIONS</td>
-	<td>//div[contains(@class,'kb-entity-body')]//div[contains(@id,'suggestionContainer')]//following-sibling::h5</td>
+	<td>//div[contains(@class,'kb-entity-body')]//following-sibling::h5[2]</td>
 	<td></td>
 </tr>
 <tr>

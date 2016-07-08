@@ -1601,6 +1601,13 @@
 		</if>
 
 		<if>
+			<condition function="IsElementPresent" locator1="Home#PORTAL_LOCALIZATION_INFO_MESSAGE" />
+			<then>
+				<execute macro="Alert#closePortalLocalizationWarning" />
+			</then>
+		</if>
+
+		<if>
 			<not>
 				<equals arg1="${samlEnabled}" arg2="true" />
 			</not>

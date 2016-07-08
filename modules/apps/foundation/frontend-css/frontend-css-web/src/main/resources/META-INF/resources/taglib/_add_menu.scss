@@ -1,0 +1,18 @@
+.add-menu {
+	.add-menu-advice {
+		margin-top: -6px;
+
+		&+ .divider {
+			margin-top: 0;
+		}
+
+		a {
+			white-space: normal;
+		}
+	}
+
+	.dropdown-menu {
+		max-height: none;
+		min-width: 290px;
+	}
+}

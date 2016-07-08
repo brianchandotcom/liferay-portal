@@ -119,6 +119,7 @@ public class CalendarBookingImpl extends CalendarBookingBaseImpl {
 		return false;
 	}
 
+	@Override
 	public boolean isMasterRecurringBooking() {
 		if (getRecurringCalendarBookingId() == getCalendarBookingId()) {
 			return true;

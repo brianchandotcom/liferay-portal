@@ -23,7 +23,6 @@ String className = (String)request.getAttribute("liferay-asset:asset-categories-
 long classPK = GetterUtil.getLong((String)request.getAttribute("liferay-asset:asset-categories-selector:classPK"));
 long classTypePK = GetterUtil.getLong((String)request.getAttribute("liferay-asset:asset-categories-selector:classTypePK"));
 String curCategoryIds = GetterUtil.getString((String)request.getAttribute("liferay-asset:asset-categories-selector:curCategoryIds"), "");
-String curCategoryNames = StringPool.BLANK;
 long[] groupIds = (long[])request.getAttribute("liferay-asset:asset-categories-selector:groupIds");
 String hiddenInput = (String)request.getAttribute("liferay-asset:asset-categories-selector:hiddenInput");
 boolean ignoreRequestValue = GetterUtil.getBoolean(request.getAttribute("liferay-asset:asset-categories-selector:ignoreRequestValue"));
@@ -32,13 +31,6 @@ boolean showRequiredLabel = GetterUtil.getBoolean((String)request.getAttribute("
 int maxEntries = GetterUtil.getInteger(PropsUtil.get(PropsKeys.ASSET_CATEGORIES_SELECTOR_MAX_ENTRIES));
 
 PortletURL portletURL = PortletProviderUtil.getPortletURL(request, AssetCategory.class.getName(), PortletProvider.Action.BROWSE);
-
-if (ArrayUtil.isEmpty(groupIds)) {
-	groupIds = PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId);
-}
-else {
-	groupIds = PortalUtil.getCurrentAndAncestorSiteGroupIds(groupIds);
-}
 
 List<AssetVocabulary> vocabularies = AssetVocabularyServiceUtil.getGroupVocabularies(groupIds);
 %>
@@ -56,6 +48,8 @@ List<AssetVocabulary> vocabularies = AssetVocabularyServiceUtil.getGroupVocabula
 				continue;
 			}
 
+			String curCategoryNames = StringPool.BLANK;
+
 			if (Validator.isNotNull(className) && (classPK > 0)) {
 				List<AssetCategory> categories = AssetCategoryServiceUtil.getCategories(className, classPK);
 
@@ -68,7 +62,6 @@ List<AssetVocabulary> vocabularies = AssetVocabularyServiceUtil.getGroupVocabula
 
 				if (Validator.isNotNull(curCategoryIdsParam)) {
 					curCategoryIds = curCategoryIdsParam;
-					curCategoryNames = StringPool.BLANK;
 				}
 			}
 
@@ -156,7 +149,7 @@ List<AssetVocabulary> vocabularies = AssetVocabularyServiceUtil.getGroupVocabula
 			}
 		}
 
-		String[] categoryIdsTitles = AssetCategoryUtil.getCategoryIdsTitles(curCategoryIds, curCategoryNames, 0, themeDisplay);
+		String[] categoryIdsTitles = AssetCategoryUtil.getCategoryIdsTitles(curCategoryIds, StringPool.BLANK, 0, themeDisplay);
 		%>
 
 		<div class="lfr-tags-selector-content" id="<%= namespace + randomNamespace %>assetCategoriesSelector">

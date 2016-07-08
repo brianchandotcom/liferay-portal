@@ -16,6 +16,10 @@ package com.liferay.asset.taglib.servlet.taglib;
 
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.taglib.servlet.ServletContextUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;
@@ -77,6 +81,24 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 		_showRequiredLabel = true;
 	}
 
+	protected long[] getGroupIds() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		try {
+			if (ArrayUtil.isEmpty(_groupIds)) {
+				return PortalUtil.getCurrentAndAncestorSiteGroupIds(
+					themeDisplay.getScopeGroupId());
+			}
+
+			return PortalUtil.getCurrentAndAncestorSiteGroupIds(_groupIds);
+		}
+		catch (Exception e) {
+		}
+
+		return new long[0];
+	}
+
 	@Override
 	protected String getPage() {
 		return _PAGE;
@@ -96,7 +118,7 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 			"liferay-asset:asset-categories-selector:curCategoryIds",
 			_curCategoryIds);
 		request.setAttribute(
-			"liferay-asset:asset-categories-selector:groupIds", _groupIds);
+			"liferay-asset:asset-categories-selector:groupIds", getGroupIds());
 		request.setAttribute(
 			"liferay-asset:asset-categories-selector:hiddenInput",
 			_hiddenInput);

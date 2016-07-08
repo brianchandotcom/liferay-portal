@@ -72,7 +72,7 @@ String viewMoreUrl = (String)request.getAttribute("liferay-frontend:add-menu:vie
 
 				<c:if test="<%= !customizeAddMenuAdviceMessage && Validator.isNotNull(viewMoreUrl) && (menuItemsCount > maxItems) %>">
 					<li class="active add-menu-advice">
-						<a href="javascript:;"><liferay-ui:message key="you-can-customize-this-menu-or-see-all-you-have-by-pressing-more" /></a>
+						<a href="javascript:;"><liferay-ui:message key="you-can-customize-this-menu-or-see-all-you-have-by-clicking-more" /></a>
 					</li>
 				</c:if>
 

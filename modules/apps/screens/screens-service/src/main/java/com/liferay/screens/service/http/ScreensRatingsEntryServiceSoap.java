@@ -54,27 +54,16 @@ import java.rmi.RemoteException;
  */
 @ProviderType
 public class ScreensRatingsEntryServiceSoap {
+	/**
+	* NOTE FOR DEVELOPERS:
+	*
+	* Never reference this class directly. Always use {@link ScreensRatingsEntryServiceUtil} to access the screens ratings entry remote service.
+	*/
 	public static java.lang.String deleteRatingEntry(long classPK,
 		java.lang.String className, int stepCount) throws RemoteException {
 		try {
 			com.liferay.portal.kernel.json.JSONObject returnValue = ScreensRatingsEntryServiceUtil.deleteRatingEntry(classPK,
 					className, stepCount);
-
-			return returnValue.toString();
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static java.lang.String updateRatingEntry(long classPK,
-		java.lang.String className, double score, int stepCount)
-		throws RemoteException {
-		try {
-			com.liferay.portal.kernel.json.JSONObject returnValue = ScreensRatingsEntryServiceUtil.updateRatingEntry(classPK,
-					className, score, stepCount);
 
 			return returnValue.toString();
 		}
@@ -105,6 +94,22 @@ public class ScreensRatingsEntryServiceSoap {
 		try {
 			com.liferay.portal.kernel.json.JSONObject returnValue = ScreensRatingsEntryServiceUtil.getRatingsEntries(classPK,
 					className, stepCount);
+
+			return returnValue.toString();
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static java.lang.String updateRatingEntry(long classPK,
+		java.lang.String className, double score, int stepCount)
+		throws RemoteException {
+		try {
+			com.liferay.portal.kernel.json.JSONObject returnValue = ScreensRatingsEntryServiceUtil.updateRatingEntry(classPK,
+					className, score, stepCount);
 
 			return returnValue.toString();
 		}

@@ -41,6 +41,12 @@ public class ScreensRatingsEntryServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.screens.service.impl.ScreensRatingsEntryServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+
+	/**
+	* NOTE FOR DEVELOPERS:
+	*
+	* Never reference this class directly. Always use {@link ScreensRatingsEntryServiceUtil} to access the screens ratings entry remote service.
+	*/
 	public static com.liferay.portal.kernel.json.JSONObject deleteRatingEntry(
 		long classPK, java.lang.String className, int stepCount)
 		throws com.liferay.portal.kernel.exception.PortalException {

@@ -228,7 +228,7 @@
 				<execute function="AssertClick#assertTextClickNoMouseOver" locator1="Calendar#SCHEDULER_EVENT_SPECIFIC_ALL_DAY" value1="${eventTitle}" />
 			</then>
 			<elseif>
-				<condition function="IsElementPresent" locator1="Calendar#SCHEDULER_VIEW_EVENT_NOT_TODAY" />
+				<condition function="IsElementNotPresent" locator1="Calendar#SCHEDULER_VIEW_EVENT_DAY_AND_WEEK_VIEW" />
 				<then>
 					<execute macro="CalendarNavigator#gotoView">
 						<var name="viewType" value="Week" />

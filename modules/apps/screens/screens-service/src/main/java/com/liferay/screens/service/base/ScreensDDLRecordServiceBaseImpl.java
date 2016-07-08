@@ -112,6 +112,25 @@ public abstract class ScreensDDLRecordServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
+	 * Returns the screens ratings entry remote service.
+	 *
+	 * @return the screens ratings entry remote service
+	 */
+	public com.liferay.screens.service.ScreensRatingsEntryService getScreensRatingsEntryService() {
+		return screensRatingsEntryService;
+	}
+
+	/**
+	 * Sets the screens ratings entry remote service.
+	 *
+	 * @param screensRatingsEntryService the screens ratings entry remote service
+	 */
+	public void setScreensRatingsEntryService(
+		com.liferay.screens.service.ScreensRatingsEntryService screensRatingsEntryService) {
+		this.screensRatingsEntryService = screensRatingsEntryService;
+	}
+
+	/**
 	 * Returns the counter local service.
 	 *
 	 * @return the counter local service
@@ -365,6 +384,8 @@ public abstract class ScreensDDLRecordServiceBaseImpl extends BaseServiceImpl
 	protected ScreensDDLRecordService screensDDLRecordService;
 	@BeanReference(type = com.liferay.screens.service.ScreensJournalArticleService.class)
 	protected com.liferay.screens.service.ScreensJournalArticleService screensJournalArticleService;
+	@BeanReference(type = com.liferay.screens.service.ScreensRatingsEntryService.class)
+	protected com.liferay.screens.service.ScreensRatingsEntryService screensRatingsEntryService;
 	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
 	@ServiceReference(type = com.liferay.dynamic.data.lists.service.DDLRecordLocalService.class)

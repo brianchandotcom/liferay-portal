@@ -67,11 +67,59 @@ public class ScreensRatingsEntryServiceImpl
 
 	public JSONObject getRatingsEntries(long entryId, int stepCount)
 			throws PortalException {
-		return null;
+
+		AssetEntry entry = assetEntryLocalService.fetchEntry(entryId);
+
+		return getRatingsEntries(
+			entry.getClassPK(), entry.getClassName(), stepCount);
 	}
 
-	public JSONObject getRatingsEntries(long classPK, String className, int stepCount)
-			throws PortalException {
-		return null;
+	public JSONObject getRatingsEntries(
+			long classPK, String className, int stepCount)
+		throws PortalException {
+
+		JSONObject result = JSONFactoryUtil.createJSONObject();
+
+		result.put("className", className);
+		result.put("classPK", classPK);
+
+		List<RatingsEntry> entries =
+			ratingsEntryLocalService.getEntries(className, classPK);
+
+		int[] ratings = new int[stepCount];
+		double totalScore = 0;
+
+		long userId = getUserId();
+		double userScore = -1;
+
+		for (RatingsEntry entry : entries) {
+
+			int position = (int) entry.getScore() * stepCount;
+
+			if (position == stepCount) {
+				position--;
+			}
+
+			ratings[position]++;
+			totalScore += entry.getScore();
+
+			if (entry.getUserId() == userId) {
+				userScore = entry.getScore();
+			}
+		}
+
+		if (entries.size() > 0) {
+			result.put("average", totalScore / entries.size());
+		}
+		else {
+			result.put("average", 0);
+		}
+
+		result.put("ratings", ratings);
+		result.put("totalCount", entries.size());
+		result.put("totalScore", totalScore);
+		result.put("userScore", userScore);
+
+		return result;
 	}
 }

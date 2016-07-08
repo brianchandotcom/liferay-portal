@@ -37,11 +37,19 @@ repositories {
 
 ## Tasks
 
-The plugin adds one task to your project:
+The plugin adds two tasks to your project:
 
 Name | Depends On | Type | Description
 ---- | ---------- | ---- | -----------
+`checkSourceFormatting` | \- | [`FormatSourceTask`](#formatsourcetask) | Runs the Liferay Source Formatter to check for source formatting errors.
 `formatSource` | \- | [`FormatSourceTask`](#formatsourcetask) | Runs the Liferay Source Formatter to format the project files.
+
+The plugin also adds the following dependencies to tasks defined by the [`base`](https://docs.gradle.org/current/userguide/standard_plugins.html#N135C1)
+plugin:
+
+Name | Depends On
+---- | ----------
+`check` | `checkSourceFormatting`
 
 ### FormatSourceTask
 

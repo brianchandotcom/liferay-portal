@@ -75,17 +75,17 @@
 <!--USER_SEGMENT_RULE_SOCIAL_FACEBOOK_GENDER-->
 <tr>
 	<td>USER_SEGMENT_RULE_SOCIAL_FACEBOOK_GENDER_MALE_RADIO</td>
-	<td>//div[@id='fields_field_FacebookGenderRule']//input[@value='male']</td>
+	<td>//div[contains(@class,'facebookgenderrule')]//input[@value='male']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>USER_SEGMENT_RULE_SOCIAL_FACEBOOK_GENDER_FEMALE_RADIO</td>
-	<td>//div[@id='fields_field_FacebookGenderRule']//input[@value='female']</td>
+	<td>//div[contains(@class,'facebookgenderrule')]//input[@value='female']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>USER_SEGMENT_RULE_SOCIAL_FACEBOOK_GENDER_CUSTOM_RADIO</td>
-	<td>//div[@id='fields_field_FacebookGenderRule']//input[@value='custom']</td>
+	<td>//div[contains(@class,'facebookgenderrule')]//input[@value='custom']</td>
 	<td></td>
 </tr>
 <tr>
@@ -112,12 +112,12 @@
 <!--USER_SEGMENT_RULE_SOCIAL_FACEBOOK_AGE-->
 <tr>
 	<td>USER_SEGMENT_RULE_SOCIAL_FACEBOOK_AGE_OLDER_THAN_FIELD</td>
-	<td>//div[@id='fields_field_FacebookAgeRule']//input[contains(@id,'OlderThan')]</td>
+	<td>//div[contains(@class,'facebookagerule')]//input[contains(@id,'OlderThan')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>USER_SEGMENT_RULE_SOCIAL_FACEBOOK_AGE_YOUNGER_OLDER_THAN_FIELD</td>
-	<td>//div[@id='fields_field_FacebookAgeRule']//input[contains(@id,'YoungerThan')]</td>
+	<td>//div[contains(@class,'facebookagerule')]//input[contains(@id,'YoungerThan')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -208,12 +208,12 @@
 <!--USER_SEGMENT_RULE_USER_ATTRIBUTES_GENDER-->
 <tr>
 	<td>USER_SEGMENT_RULE_USER_ATTRIBUTES_GENDER_MALE_RADIO</td>
-	<td>//div[@id='fields_field_GenderRule']//input[@value='male']</td>
+	<td>//div[contains(@class,'genderrule')]//input[@value='male']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>USER_SEGMENT_RULE_USER_ATTRIBUTES_GENDER_FEMALE_RADIO</td>
-	<td>//div[@id='fields_field_GenderRule']//input[@value='female']</td>
+	<td>//div[contains(@class,'genderrule')]//input[@value='female']</td>
 	<td></td>
 </tr>
 <tr>
@@ -224,12 +224,12 @@
 <!--USER_SEGMENT_RULE_USER_ATTRIBUTES_SITE_ROLE-->
 <tr>
 	<td>USER_SEGMENT_RULE_USER_ATTRIBUTES_SITE_ROLE_SITE_ROLE_SELECT</td>
-	<td>//div[@id='fields_field_SiteRoleRule']//select[contains(@id,'roleId')]</td>
+	<td>//div[contains(@class,'siterolerule')]//select[contains(@id,'roleId')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>USER_SEGMENT_RULE_USER_ATTRIBUTES_SITE_ROLE_SITE_SELECT</td>
-	<td>//div[@id='fields_field_SiteRoleRule']//select[contains(@id,'siteId')]</td>
+	<td>//div[contains(@class,'siterolerule')]//select[contains(@id,'siteId')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -273,12 +273,12 @@
 <!--USER_SEGMENT_RULE_USER_ATTRIBUTES_ORGANIZATION_ROLE-->
 <tr>
 	<td>USER_SEGMENT_RULE_USER_ATTRIBUTES_ORGANIZATION_ROLE_SELECT</td>
-	<td>//div[@id='fields_field_OrganizationRoleRule']//select[contains(@id,'roleId')]</td>
+	<td>//div[contains(@class,'organizationrolerule')]//select[contains(@id,'roleId')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>USER_SEGMENT_RULE_USER_ATTRIBUTES_ORGANIZATION_ORGANIZATION_SELECT</td>
-	<td>//div[@id='fields_field_OrganizationRoleRule']//select[contains(@id,'organizationId')]</td>
+	<td>//div[contains(@class,'organizationrolerule')]//select[contains(@id,'organizationId')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -289,7 +289,7 @@
 <!--USER_SEGMENT_RULE_USER_ATTRIBUTES_ORGANIZATION_MEMBER-->
 <tr>
 	<td>USER_SEGMENT_RULE_USER_ATTRIBUTES_ORGANIZATION_MEMBER_SELECT</td>
-	<td>//div[@id='fields_field_OrganizationMemberRule']//select[contains(@id,'organizationId')]</td>
+	<td>//div[contains(@class,'organizationmemberrule')]//select[contains(@id,'organizationId')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -316,12 +316,12 @@
 <!--USER_SEGMENT_RULE_USER_ATTRIBUTES_AGE-->
 <tr>
 	<td>USER_SEGMENT_RULE_USER_ATTRIBUTES_AGE_OLDER_THAN_FIELD</td>
-	<td>//div[@id='fields_field_AgeRule']//input[contains(@id,'olderThan')]</td>
+	<td>//div[contains(@class,'agerule')]//input[contains(@id,'olderthan')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>USER_SEGMENT_RULE_USER_ATTRIBUTES_AGE_YOUNGER_THAN_FIELD</td>
-	<td>//div[@id='fields_field_AgeRule']//input[contains(@id,'youngerThan')]</td>
+	<td>//div[contains(@class,'agerule')]//input[contains(@id,'youngerthan')]</td>
 	<td></td>
 </tr>
 <tr>

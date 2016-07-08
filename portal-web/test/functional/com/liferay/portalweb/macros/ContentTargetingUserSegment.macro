@@ -196,6 +196,24 @@
 		<execute function="Type" locator1="EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_AGE_YOUNGER_THAN_FIELD" value1="${youngerThanAge}" />
 	</command>
 
+	<command name="addUserAttributesCustomFieldCP">
+		<execute macro="ContentTargetingUserSegment#addRuleCmdCP">
+			<var name="userSegmentRule" value="Custom Field" />
+		</execute>
+
+		<execute function="Click" locator1="EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_CUSTOM_FIELD_SELECT_BUTTON" />
+
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
+		<execute function="Select" locator1="EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_CUSTOM_FIELD_SELECT" value1="${customFieldKey}" />
+
+		<execute function="Type" locator1="TextInput#CUSTOM_FIELD" value1="${customFieldValue}" />
+
+		<execute macro="Button#clickDone" />
+
+		<execute function="SelectFrameTop" />
+	</command>
+
 	<command name="addUserAttributesGenderRuleCP">
 		<execute macro="ContentTargetingUserSegment#addRuleCmdCP">
 			<var name="userSegmentRule" value="Gender" />
@@ -552,6 +570,12 @@
 						<var name="key_selectSiteMemberSite" value="${selectSiteMemberSite}" />
 
 						<execute function="AssertSelectedLabel" locator1="EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_SITE_MEMBER_SELECT" value1="${selectSiteMemberSite}" />
+					</then>
+				</elseif>
+				<elseif>
+					<equals arg1="${userSegmentRuleName}" arg2="Custom Field" />
+					<then>
+						<execute function="AssertTextEquals" locator1="EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_CUSTOM_FIELD_ATTRIBUTE_CONTAINER" value1="${customFieldKey}: ${customFieldValue}" />
 					</then>
 				</elseif>
 				<elseif>

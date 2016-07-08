@@ -167,6 +167,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>REPEAT_REPEAT_ON_DAY_OF_THE_WEEK_WEEKDAY_WEEK_START_DAY</td>
+	<td>xpath=(//td[contains(@class,'calendar-recurrence-weekday-checkbox')]//div/label)[1]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -434,6 +439,22 @@
 <tr>
 	<td>REMINDERS_DURATION_SELECT_ACTIVE_2</td>
 	<td>xpath=(//div[@class='calendar-portlet-reminder-section form-inline']//select[contains(@name,'reminderDuration')])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--MINI_CALENDAR-->
+<tr>
+	<td>MINI_CALENDAR_WEEK_START_DAY_START_DATE</td>
+	<td>xpath=(//div[@class='yui3-widget-bd popover-content']//tr[@class='yui3-calendar-weekdayrow']/th[1])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MINI_CALENDAR_WEEK_START_DAY_END_DATE</td>
+	<td>xpath=(//div[@class='yui3-widget-bd popover-content']//tr[@class='yui3-calendar-weekdayrow']/th[1])[2]</td>
 	<td></td>
 </tr>
 <tr>

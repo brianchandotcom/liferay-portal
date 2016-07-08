@@ -35,7 +35,11 @@ boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_artic
 
 long folderId = journalDisplayContext.getFolderId();
 
-boolean searchRestriction = journalDisplayContext.getRestrictionType() == JournalFolderConstants.RESTRICTION_TYPE_DDM_STRUCTURES_AND_WORKFLOW;
+boolean searchRestriction = false;
+
+if (journalDisplayContext.getRestrictionType() == JournalFolderConstants.RESTRICTION_TYPE_DDM_STRUCTURES_AND_WORKFLOW) {
+	searchRestriction = true;
+}
 
 if (!searchRestriction) {
 	folderId = JournalFolderLocalServiceUtil.getOverridedDDMStructuresFolderId(folderId);

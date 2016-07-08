@@ -27,7 +27,7 @@ if (showAncestorScopes) {
 }
 
 if (searchTerms.isSearchRestriction()) {
-	total = DDMStructureLinkLocalServiceUtil.countByC_C(searchRestrictionClassNameId, searchRestrictionClassPK);
+	total = DDMStructureLinkLocalServiceUtil.getStructureLinksCount(searchRestrictionClassNameId, searchRestrictionClassPK);
 
 	searchContainer.setTotal(total);
 

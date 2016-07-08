@@ -23,8 +23,9 @@ import org.gradle.api.Project;
 /**
  * @author Andrea Di Giorgi
  */
-public abstract class BasePortalToolDefaultsPlugin<T extends Plugin<Project>>
-	extends BaseDefaultsPlugin<T> {
+public abstract class BasePortalToolDefaultsPlugin
+	<T extends Plugin<? extends Project>>
+		extends BaseDefaultsPlugin<T> {
 
 	protected void addPortalToolDependencies(Project project) {
 		addPortalToolDependencies(

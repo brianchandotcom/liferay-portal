@@ -3,6 +3,26 @@
 <project basedir="." name="portal-test-solr" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build-test.xml" />
 
+	<macrodef name="create-solr-ssl-keystore">
+		<sequential>
+			<get-ip-address />
+
+			<exec dir="${solr.dir}/server/etc" executable="keytool">
+				<arg value="-genkeypair" />
+				<arg line="-alias solr-ssl" />
+				<arg line="-keyalg RSA" />
+				<arg line="-keysize 2048" />
+				<arg line="-keypass secret" />
+				<arg line="-storepass secret" />
+				<arg line="-validity 9999" />
+				<arg line="-keystore solr-ssl.keystore.jks" />
+				<arg line="-ext SAN=DNS:localhost,IP:${ip.address},IP:127.0.0.1" />
+				<arg value="-dname" />
+				<arg value="CN=localhost, OU=Organizational Unit, O=Organization, L=Location, ST=State, C=Country" />
+			</exec>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="prepare-solr">
 		<sequential>
 			<copy overwrite="true" todir="${solr.dir}/server/solr/liferay/conf">

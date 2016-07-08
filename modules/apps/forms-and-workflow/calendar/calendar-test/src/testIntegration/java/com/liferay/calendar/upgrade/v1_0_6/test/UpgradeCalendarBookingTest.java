@@ -121,8 +121,7 @@ public class UpgradeCalendarBookingTest extends UpgradeCalendarBooking {
 			CalendarResourceUtil.getUserCalendarResource(
 				_user.getUserId(), serviceContext);
 
-		Calendar calendar = calendarResource.getDefaultCalendar();
-		return calendar;
+		return calendarResource.getDefaultCalendar();
 	}
 
 	protected CalendarBooking addCalendarBooking() throws PortalException {
@@ -142,7 +141,7 @@ public class UpgradeCalendarBookingTest extends UpgradeCalendarBooking {
 	}
 
 	protected void dropColumnRecurringCalendarBookingId()
-		throws Exception, IOException, SQLException {
+		throws Exception {
 
 		try (Connection con = DataAccess.getUpgradeOptimizedConnection()) {
 			connection = con;

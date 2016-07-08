@@ -107,7 +107,7 @@ public class CalendarBookingLocalServiceTest {
 	}
 
 	@Test
-	public void testDeleteCalendarBookingPreservesModified() throws Exception {
+	public void testDeleteCalendarBooking() throws Exception {
 		ServiceContext serviceContext = createServiceContext();
 
 		CalendarResource calendarResource =
@@ -157,7 +157,7 @@ public class CalendarBookingLocalServiceTest {
 	}
 
 	@Test
-	public void testDeleteCalendarBookingWithFalsePreservesModified()
+	public void testDeleteCalendarBookingWithoutAllRecurringInstances()
 		throws Exception {
 
 		ServiceContext serviceContext = createServiceContext();
@@ -210,7 +210,7 @@ public class CalendarBookingLocalServiceTest {
 	}
 
 	@Test
-	public void testDeleteCalendarBookingWithTrueDeletesModified()
+	public void testDeleteCalendarBookingWithAllRecurringInstances()
 		throws Exception {
 
 		ServiceContext serviceContext = createServiceContext();
@@ -926,9 +926,7 @@ public class CalendarBookingLocalServiceTest {
 	}
 
 	@Test
-	public void testUpdateCalendarBookingInstanceUpdatesModified()
-		throws Exception {
-
+	public void testUpdateCalendarBookingInstance() throws Exception {
 		ServiceContext serviceContext = createServiceContext();
 
 		CalendarResource calendarResource =
@@ -1352,7 +1350,7 @@ public class CalendarBookingLocalServiceTest {
 	}
 
 	@Test
-	public void testUpdateRecurringCalendarBookingUpdatesModified()
+	public void testUpdateRecurringCalendarBooking()
 		throws Exception {
 
 		ServiceContext serviceContext = createServiceContext();

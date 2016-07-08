@@ -12,7 +12,7 @@
 
 		<execute macro="Smoke#viewWelcomePage" />
 	</set-up>
-	
+
 	<command name="View623CalendarArchive" priority="3">
 		<property name="test.assert.warning.exceptions" value="true" />
 

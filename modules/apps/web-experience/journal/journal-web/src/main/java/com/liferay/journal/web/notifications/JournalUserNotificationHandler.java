@@ -21,6 +21,7 @@ import com.liferay.journal.model.JournalArticleConstants;
 import com.liferay.journal.web.asset.JournalArticleAssetRenderer;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.notifications.BaseModelUserNotificationHandler;
+import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.notifications.UserNotificationHandler;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -70,14 +71,14 @@ public class JournalUserNotificationHandler
 		int notificationType = jsonObject.getInt("notificationType");
 
 		if (notificationType ==
-				JournalArticleConstants.NOTIFICATION_TYPE_ADD_ENTRY) {
+				UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY) {
 
 			title = ResourceBundleUtil.getString(
 				resourceBundle, "x-added-a-new-web-content-article",
 				userFullName);
 		}
 		else if (notificationType ==
-					JournalArticleConstants.
+					UserNotificationDefinition.
 						NOTIFICATION_TYPE_UPDATE_ENTRY) {
 
 			title = ResourceBundleUtil.getString(

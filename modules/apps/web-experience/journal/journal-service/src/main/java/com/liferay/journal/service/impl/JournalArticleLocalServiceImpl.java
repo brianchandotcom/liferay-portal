@@ -7254,7 +7254,7 @@ public class JournalArticleLocalServiceImpl
 				journalGroupServiceConfiguration.emailArticleUpdatedBody());
 
 			notificationType =
-				JournalArticleConstants.NOTIFICATION_TYPE_UPDATE_ENTRY;
+				UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY;
 		}
 
 		String articleContent = StringPool.BLANK;

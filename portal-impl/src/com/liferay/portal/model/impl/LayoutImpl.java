@@ -1403,7 +1403,7 @@ public class LayoutImpl extends LayoutBaseImpl {
 					layoutTypePortlet.getStateMax())[0];
 
 				LiferayPortletURL portletURL = PortletURLFactoryUtil.create(
-					request, portletId, getPlid(), PortletRequest.ACTION_PHASE);
+					request, portletId, this, PortletRequest.ACTION_PHASE);
 
 				try {
 					portletURL.setWindowState(WindowState.NORMAL);

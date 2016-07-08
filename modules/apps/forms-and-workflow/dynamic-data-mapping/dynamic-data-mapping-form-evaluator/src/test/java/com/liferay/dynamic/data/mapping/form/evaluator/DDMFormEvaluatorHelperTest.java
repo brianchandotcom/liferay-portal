@@ -149,7 +149,7 @@ public class DDMFormEvaluatorHelperTest extends PowerMockito {
 		Assert.assertFalse(ddmFormFieldEvaluationResult.isValid());
 
 		Assert.assertEquals(
-			"This field is invalid",
+			"This field is invalid.",
 			ddmFormFieldEvaluationResult.getErrorMessage());
 	}
 

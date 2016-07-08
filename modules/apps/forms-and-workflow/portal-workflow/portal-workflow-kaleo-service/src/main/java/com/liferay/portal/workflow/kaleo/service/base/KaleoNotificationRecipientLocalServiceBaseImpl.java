@@ -54,6 +54,8 @@ import com.liferay.portal.workflow.kaleo.service.persistence.KaleoNotificationPe
 import com.liferay.portal.workflow.kaleo.service.persistence.KaleoNotificationRecipientPersistence;
 import com.liferay.portal.workflow.kaleo.service.persistence.KaleoTaskAssignmentInstancePersistence;
 import com.liferay.portal.workflow.kaleo.service.persistence.KaleoTaskAssignmentPersistence;
+import com.liferay.portal.workflow.kaleo.service.persistence.KaleoTaskFormInstancePersistence;
+import com.liferay.portal.workflow.kaleo.service.persistence.KaleoTaskFormPersistence;
 import com.liferay.portal.workflow.kaleo.service.persistence.KaleoTaskInstanceTokenFinder;
 import com.liferay.portal.workflow.kaleo.service.persistence.KaleoTaskInstanceTokenPersistence;
 import com.liferay.portal.workflow.kaleo.service.persistence.KaleoTaskPersistence;
@@ -794,6 +796,82 @@ public abstract class KaleoNotificationRecipientLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the kaleo task form local service.
+	 *
+	 * @return the kaleo task form local service
+	 */
+	public com.liferay.portal.workflow.kaleo.service.KaleoTaskFormLocalService getKaleoTaskFormLocalService() {
+		return kaleoTaskFormLocalService;
+	}
+
+	/**
+	 * Sets the kaleo task form local service.
+	 *
+	 * @param kaleoTaskFormLocalService the kaleo task form local service
+	 */
+	public void setKaleoTaskFormLocalService(
+		com.liferay.portal.workflow.kaleo.service.KaleoTaskFormLocalService kaleoTaskFormLocalService) {
+		this.kaleoTaskFormLocalService = kaleoTaskFormLocalService;
+	}
+
+	/**
+	 * Returns the kaleo task form persistence.
+	 *
+	 * @return the kaleo task form persistence
+	 */
+	public KaleoTaskFormPersistence getKaleoTaskFormPersistence() {
+		return kaleoTaskFormPersistence;
+	}
+
+	/**
+	 * Sets the kaleo task form persistence.
+	 *
+	 * @param kaleoTaskFormPersistence the kaleo task form persistence
+	 */
+	public void setKaleoTaskFormPersistence(
+		KaleoTaskFormPersistence kaleoTaskFormPersistence) {
+		this.kaleoTaskFormPersistence = kaleoTaskFormPersistence;
+	}
+
+	/**
+	 * Returns the kaleo task form instance local service.
+	 *
+	 * @return the kaleo task form instance local service
+	 */
+	public com.liferay.portal.workflow.kaleo.service.KaleoTaskFormInstanceLocalService getKaleoTaskFormInstanceLocalService() {
+		return kaleoTaskFormInstanceLocalService;
+	}
+
+	/**
+	 * Sets the kaleo task form instance local service.
+	 *
+	 * @param kaleoTaskFormInstanceLocalService the kaleo task form instance local service
+	 */
+	public void setKaleoTaskFormInstanceLocalService(
+		com.liferay.portal.workflow.kaleo.service.KaleoTaskFormInstanceLocalService kaleoTaskFormInstanceLocalService) {
+		this.kaleoTaskFormInstanceLocalService = kaleoTaskFormInstanceLocalService;
+	}
+
+	/**
+	 * Returns the kaleo task form instance persistence.
+	 *
+	 * @return the kaleo task form instance persistence
+	 */
+	public KaleoTaskFormInstancePersistence getKaleoTaskFormInstancePersistence() {
+		return kaleoTaskFormInstancePersistence;
+	}
+
+	/**
+	 * Sets the kaleo task form instance persistence.
+	 *
+	 * @param kaleoTaskFormInstancePersistence the kaleo task form instance persistence
+	 */
+	public void setKaleoTaskFormInstancePersistence(
+		KaleoTaskFormInstancePersistence kaleoTaskFormInstancePersistence) {
+		this.kaleoTaskFormInstancePersistence = kaleoTaskFormInstancePersistence;
+	}
+
+	/**
 	 * Returns the kaleo task instance token local service.
 	 *
 	 * @return the kaleo task instance token local service
@@ -1214,6 +1292,14 @@ public abstract class KaleoNotificationRecipientLocalServiceBaseImpl
 	protected com.liferay.portal.workflow.kaleo.service.KaleoTaskAssignmentInstanceLocalService kaleoTaskAssignmentInstanceLocalService;
 	@BeanReference(type = KaleoTaskAssignmentInstancePersistence.class)
 	protected KaleoTaskAssignmentInstancePersistence kaleoTaskAssignmentInstancePersistence;
+	@BeanReference(type = com.liferay.portal.workflow.kaleo.service.KaleoTaskFormLocalService.class)
+	protected com.liferay.portal.workflow.kaleo.service.KaleoTaskFormLocalService kaleoTaskFormLocalService;
+	@BeanReference(type = KaleoTaskFormPersistence.class)
+	protected KaleoTaskFormPersistence kaleoTaskFormPersistence;
+	@BeanReference(type = com.liferay.portal.workflow.kaleo.service.KaleoTaskFormInstanceLocalService.class)
+	protected com.liferay.portal.workflow.kaleo.service.KaleoTaskFormInstanceLocalService kaleoTaskFormInstanceLocalService;
+	@BeanReference(type = KaleoTaskFormInstancePersistence.class)
+	protected KaleoTaskFormInstancePersistence kaleoTaskFormInstancePersistence;
 	@BeanReference(type = com.liferay.portal.workflow.kaleo.service.KaleoTaskInstanceTokenLocalService.class)
 	protected com.liferay.portal.workflow.kaleo.service.KaleoTaskInstanceTokenLocalService kaleoTaskInstanceTokenLocalService;
 	@BeanReference(type = KaleoTaskInstanceTokenPersistence.class)

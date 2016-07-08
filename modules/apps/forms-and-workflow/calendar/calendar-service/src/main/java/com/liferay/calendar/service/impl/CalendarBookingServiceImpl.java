@@ -123,6 +123,11 @@ public class CalendarBookingServiceImpl extends CalendarBookingServiceBaseImpl {
 			serviceContext);
 	}
 
+	/**
+	 * @deprecated As of 2.1.0, replaced by {@link #addCalendarBooking(long,
+	 *             long[], long, long, Map, Map, String, long, long, boolean,
+	 *             String, long, String, long, String, ServiceContext)}
+	 */
 	@Deprecated
 	@Override
 	public CalendarBooking addCalendarBooking(

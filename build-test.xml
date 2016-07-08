@@ -471,6 +471,15 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 					<var name="ip.address" value="${ip.address}" />
 				</then>
 				<elseif>
+					<os family="mac" />
+					<then>
+						<exec executable="/bin/bash" outputproperty="ip.address">
+							<arg value="-c" />
+							<arg value="ifconfig | grep 'inet ' | grep -v 127.0.0.1 | cut -d\  -f2" />
+						</exec>
+					</then>
+				</elseif>
+				<elseif>
 					<os family="unix" />
 					<then>
 						<exec executable="/bin/bash" os="${os.unix}" outputproperty="ip.address">

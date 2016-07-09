@@ -4,21 +4,21 @@
  * Prints the DDM form checkbox multiple field.
  *
  * @param? childElementsHTML
+ * @param dir
+ * @param inline
  * @param label
  * @param name
+ * @param options
+ * @param readOnly
  * @param required
+ * @param showAsSwitcher
  * @param showLabel
  * @param tip
- * @param readOnly
- * @param showAsSwitcher
- * @param options
- * @param inline
- * @param dir
  */
 {template .checkbox_multiple autoescape="deprecated-contextual"}
 	<div class="form-group liferay-ddm-form-field-checkbox-multiple" data-fieldname="{$name}">
-        {if $showLabel and length($options) > 1}
-			<label class="control-label" for="{$name}">
+		{if $showLabel and length($options) > 1}
+			<label for="{$name}">
 				{$label}
 
 				{if $required}
@@ -31,37 +31,38 @@
 			{/if}
 		{/if}
 
-        <div class="clearfix checkbox-multiple-options">
-            {foreach $option in $options}
-                {if not $inline}
-                    <div class="checkbox">
-                {/if}
+		<div class="clearfix checkbox-multiple-options">
+			{foreach $option in $options}
+				{if not $inline}
+					<div class="checkbox">
+				{/if}
 
-                {if $showAsSwitcher}
-                    <label class="checkbox-default{$inline ? ' checkbox-inline' : ''} checkbox-option-{$option.value}" for="{$name}_{$option.value}">
-                        <input class="hide toggle-switch " {if $readOnly}disabled{/if} id="{$name}_{$option.value}" name="{$name}" {$option.status} type="checkbox" value="{$option.value}" />
+				{if $showAsSwitcher}
+					<label class="checkbox-default{$inline ? ' checkbox-inline' : ''} checkbox-option-{$option.value}" for="{$name}_{$option.value}">
+						<input class="hide toggle-switch " {if $readOnly}disabled{/if} id="{$name}_{$option.value}" name="{$name}" {$option.status} type="checkbox" value="{$option.value}" />
 
-                        <span aria-hidden="true" class="toggle-switch-bar">
-                            <span class="toggle-switch-handle"></span>
-                        </span>
-                        <span class="toggle-switch-text toggle-switch-text-right">
-                            {$option.label}
-                        </span>
-                    </label>
-                {else}
-                    <label class="checkbox-default{$inline ? ' checkbox-inline' : ''} checkbox-option-{$option.value}" for="{$name}_{$option.value}">
-                        <input class="field" dir="{$dir}" {if $readOnly}disabled{/if} id="{$name}_{$option.value}" name="{$name}" {$option.status} type="checkbox" value="{$option.value}" /> {$option.label}
-                    </label>
-                {/if}
+						<span aria-hidden="true" class="toggle-switch-bar">
+							<span class="toggle-switch-handle"></span>
+						</span>
+						<span class="toggle-switch-text toggle-switch-text-right">
+							{$option.label}
+						</span>
+					</label>
 
-                {if not $inline}
-                    </div>
-                {/if}
-            {/foreach}
-        </div>
+				{else}
+					<label class="checkbox-default{$inline ? ' checkbox-inline' : ''} checkbox-option-{$option.value}" for="{$name}_{$option.value}">
+						<input class="field" dir="{$dir}" {if $readOnly}disabled{/if} id="{$name}_{$option.value}" name="{$name}" {$option.status} type="checkbox" value="{$option.value}" /> {$option.label}
+					</label>
+				{/if}
 
-        {if $childElementsHTML}
-            {$childElementsHTML|noAutoescape}
-        {/if}
+				{if not $inline}
+					</div>
+				{/if}
+			{/foreach}
+		</div>
+
+		{if $childElementsHTML}
+			{$childElementsHTML|noAutoescape}
+		{/if}
 	</div>
 {/template}

@@ -12,6 +12,8 @@
  * details.
  */
 
+apply plugin: "com.liferay.lang.merger"
+
 dependencies {
 	provided group: "com.liferay", name: "com.liferay.dynamic.data.mapping.api", version: "3.0.0"
 	provided group: "com.liferay", name: "com.liferay.dynamic.data.mapping.form.field.type", version: "2.0.0"
@@ -25,6 +27,13 @@ task wrapSoyTemplates
 
 classes {
 	dependsOn wrapSoyTemplates
+}
+
+mergeLang {
+	sourceDirs = [
+		"../dynamic-data-mapping-lang/src/main/resources/content",
+		"src/main/resources/content"
+	]
 }
 
 transpileJS {

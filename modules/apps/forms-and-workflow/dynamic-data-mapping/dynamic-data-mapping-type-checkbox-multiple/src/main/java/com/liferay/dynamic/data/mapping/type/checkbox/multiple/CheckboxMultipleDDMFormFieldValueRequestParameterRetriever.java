@@ -38,8 +38,7 @@ public class CheckboxMultipleDDMFormFieldValueRequestParameterRetriever
 		String defaultDDMFormFieldParameterValue) {
 
 		String[] parameterValues = ParamUtil.getParameterValues(
-			httpServletRequest, ddmFormFieldParameterName,
-			new String[] {defaultDDMFormFieldParameterValue});
+			httpServletRequest, ddmFormFieldParameterName);
 
 		return jsonFactory.serialize(parameterValues);
 	}

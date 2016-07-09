@@ -19,6 +19,8 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -40,8 +42,8 @@ public class CheckboxMultipleDDMFormFieldContextHelper {
 
 		_jsonFactory = jsonFactory;
 		_ddmFormFieldOptions = ddmFormFieldOptions;
-		_value = toString(value);
-		_predefinedValue = toString(predefinedValue.getString(locale));
+		_values = toStringArray(value);
+		_predefinedValues = toStringArray(predefinedValue.getString(locale));
 		_locale = locale;
 	}
 
@@ -67,38 +69,36 @@ public class CheckboxMultipleDDMFormFieldContextHelper {
 	}
 
 	protected boolean isChecked(String optionValue) {
-		if (Validator.isNull(_value)) {
-			return _predefinedValue.contains(optionValue);
+		if (ArrayUtil.isEmpty(_values)) {
+			return ArrayUtil.contains(_predefinedValues, optionValue);
 		}
 
-		return _value.contains(optionValue);
+		if (ArrayUtil.contains(_values, optionValue)) {
+			return true;
+		}
+
+		return false;
 	}
 
-	protected String toString(String value) {
+	protected String[] toStringArray(String value) {
 		if (Validator.isNull(value)) {
-			return StringPool.BLANK;
+			return GetterUtil.DEFAULT_STRING_VALUES;
 		}
 
 		try {
 			JSONArray jsonArray = _jsonFactory.createJSONArray(value);
 
-			return jsonArray.getString(0);
+			return ArrayUtil.toStringArray(jsonArray);
 		}
 		catch (JSONException jsone) {
-			String[] values = StringUtil.split(value);
-
-			if (values.length > 0) {
-				return values[0];
-			}
-
-			return StringPool.BLANK;
+			return StringUtil.split(value);
 		}
 	}
 
 	private final DDMFormFieldOptions _ddmFormFieldOptions;
 	private final JSONFactory _jsonFactory;
 	private final Locale _locale;
-	private final String _predefinedValue;
-	private final String _value;
+	private final String[] _predefinedValues;
+	private final String[] _values;
 
 }

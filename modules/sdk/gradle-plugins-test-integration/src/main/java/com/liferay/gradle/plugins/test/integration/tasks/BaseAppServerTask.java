@@ -25,8 +25,10 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import org.gradle.api.DefaultTask;
+import org.gradle.api.GradleException;
 import org.gradle.api.tasks.Input;
 import org.gradle.util.GUtil;
 
@@ -52,8 +54,18 @@ public abstract class BaseAppServerTask extends DefaultTask {
 	}
 
 	@Input
+	public long getCheckInterval() {
+		return _checkInterval;
+	}
+
+	@Input
 	public String getCheckPath() {
 		return GradleUtil.toString(_checkPath);
+	}
+
+	@Input
+	public long getCheckTimeout() {
+		return _checkTimeout;
 	}
 
 	@Input
@@ -105,8 +117,16 @@ public abstract class BaseAppServerTask extends DefaultTask {
 		_binDir = binDir;
 	}
 
+	public void setCheckInterval(long checkInterval) {
+		_checkInterval = checkInterval;
+	}
+
 	public void setCheckPath(Object checkPath) {
 		_checkPath = checkPath;
+	}
+
+	public void setCheckTimeout(long checkTimeout) {
+		_checkTimeout = checkTimeout;
 	}
 
 	public void setExecutable(Object executable) {
@@ -146,8 +166,28 @@ public abstract class BaseAppServerTask extends DefaultTask {
 		return processExecutor;
 	}
 
+	protected void waitFor(Callable<Boolean> callable) {
+		boolean success = false;
+
+		try {
+			success = GradleUtil.waitFor(
+				callable, getCheckInterval(), getCheckTimeout());
+		}
+		catch (Exception e) {
+			throw new GradleException(
+				"Unable to wait for the application server", e);
+		}
+
+		if (!success) {
+			throw new GradleException(
+				"Timeout while waiting for the application server");
+		}
+	}
+
 	private Object _binDir;
+	private long _checkInterval = 500;
 	private Object _checkPath;
+	private long _checkTimeout = 5 * 60 * 1000;
 	private Object _executable;
 	private final List<Object> _executableArgs = new ArrayList<>();
 	private Object _portNumber;

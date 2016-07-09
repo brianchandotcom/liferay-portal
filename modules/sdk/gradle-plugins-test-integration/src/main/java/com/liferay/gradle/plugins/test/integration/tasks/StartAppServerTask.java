@@ -14,15 +14,11 @@
 
 package com.liferay.gradle.plugins.test.integration.tasks;
 
-import com.liferay.gradle.plugins.test.integration.util.GradleUtil;
-
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 
 import java.util.concurrent.Callable;
 
-import org.gradle.api.GradleException;
-import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.TaskAction;
 
 import org.zeroturnaround.exec.ProcessExecutor;
@@ -32,24 +28,6 @@ import org.zeroturnaround.exec.StartedProcess;
  * @author Andrea Di Giorgi
  */
 public class StartAppServerTask extends BaseAppServerTask {
-
-	@Input
-	public long getCheckInterval() {
-		return _checkInterval;
-	}
-
-	@Input
-	public long getCheckTimeout() {
-		return _checkTimeout;
-	}
-
-	public void setCheckInterval(long checkInterval) {
-		_checkInterval = checkInterval;
-	}
-
-	public void setCheckTimeout(long checkTimeout) {
-		_checkTimeout = checkTimeout;
-	}
 
 	@TaskAction
 	public void startAppServer() throws Exception {
@@ -80,31 +58,10 @@ public class StartAppServerTask extends BaseAppServerTask {
 			});
 	}
 
-	protected void waitFor(Callable<Boolean> callable) {
-		boolean success = false;
-
-		try {
-			success = GradleUtil.waitFor(
-				callable, getCheckInterval(), getCheckTimeout());
-		}
-		catch (Exception e) {
-			throw new GradleException(
-				"Unable to wait for the application server", e);
-		}
-
-		if (!success) {
-			throw new GradleException(
-				"Timeout while waiting for the application server");
-		}
-	}
-
 	protected void waitForStarted(
 		StartedProcess startedProcess, OutputStream outputStream) {
 
 		waitForReachable();
 	}
-
-	private long _checkInterval = 500;
-	private long _checkTimeout = 5 * 60 * 1000;
 
 }

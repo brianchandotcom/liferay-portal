@@ -76,9 +76,21 @@ AUI.add(
 					getValue: function() {
 						var instance = this;
 
-						var inputNode = instance.getInputNode();
+						var container = instance.get('container');
 
-						return inputNode.attr('name');
+						var values = [];
+
+						container.all(instance.getInputSelector()).each(
+							function(optionNode) {
+								var isChecked = !!optionNode.attr('checked');
+
+								if (isChecked) {
+									values.push(optionNode.val());
+								}
+							}
+						);
+
+						return values.join();
 					},
 
 					setValue: function(value) {

@@ -12,21 +12,18 @@
  * details.
  */
 
-package com.liferay.frontend.js.bundle.config.extender;
+package com.liferay.frontend.js.loader.modules.extender.internal;
+
+import aQute.lib.converter.Converter;
 
 import com.liferay.osgi.util.ServiceTrackerFactory;
 
-import java.net.URL;
-
 import java.util.Collection;
-import java.util.Dictionary;
 import java.util.Map;
 import java.util.concurrent.ConcurrentSkipListMap;
 
 import javax.servlet.ServletContext;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
@@ -38,11 +35,10 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 /**
  * @author Carlos Sierra Andrés
  */
-@Component(immediate = true, service = JSBundleConfigTracker.class)
-public class JSBundleConfigTracker
-	implements
-		ServiceTrackerCustomizer
-			<ServletContext, ServiceReference<ServletContext>> {
+@Component(immediate = true, service = JSLoaderModulesTracker.class)
+public class JSLoaderModulesTracker
+	implements ServiceTrackerCustomizer
+		<ServletContext, ServiceReference<ServletContext>> {
 
 	@Activate
 	public void activate(
@@ -53,10 +49,10 @@ public class JSBundleConfigTracker
 			_serviceTracker.close();
 		}
 
-		_bundleContext = componentContext.getBundleContext();
+		setDetails(Converter.cnv(Details.class, properties));
 
 		_serviceTracker = ServiceTrackerFactory.open(
-			_bundleContext,
+			componentContext.getBundleContext(),
 			"(&(objectClass=" + ServletContext.class.getName() +
 				")(osgi.web.contextpath=*))",
 			this);
@@ -66,31 +62,20 @@ public class JSBundleConfigTracker
 	public ServiceReference<ServletContext> addingService(
 		ServiceReference<ServletContext> serviceReference) {
 
-		Bundle bundle = serviceReference.getBundle();
+		String contextPath = (String)serviceReference.getProperty(
+			"osgi.web.contextpath");
 
-		Dictionary<String, String> headers = bundle.getHeaders();
+		JSLoaderModule jsLoaderModule = new JSLoaderModule(
+			_details.applyVersioning(), serviceReference.getBundle(),
+			contextPath);
 
-		String jsConfig = headers.get("Liferay-JS-Config");
+		_jsLoaderModules.put(serviceReference, jsLoaderModule);
 
-		if (jsConfig != null) {
-			URL url = bundle.getEntry(jsConfig);
-
-			if (url != null) {
-				ServletContext servletContext = _bundleContext.getService(
-					serviceReference);
-
-				_jsConfigs.put(
-					serviceReference, new JSConfig(servletContext, url));
-
-				return serviceReference;
-			}
-		}
-
-		return null;
+		return serviceReference;
 	}
 
-	public Collection<JSConfig> getJSConfigs() {
-		return _jsConfigs.values();
+	public Collection<JSLoaderModule> getJSLoaderModules() {
+		return _jsLoaderModules.values();
 	}
 
 	public long getTrackingCount() {
@@ -112,31 +97,7 @@ public class JSBundleConfigTracker
 		ServiceReference<ServletContext> serviceReference,
 		ServiceReference<ServletContext> trackedServiceReference) {
 
-		JSConfig jsConfig = _jsConfigs.remove(serviceReference);
-
-		if (jsConfig != null) {
-			_bundleContext.ungetService(serviceReference);
-		}
-	}
-
-	public static class JSConfig {
-
-		public ServletContext getServletContext() {
-			return _servletContext;
-		}
-
-		public URL getURL() {
-			return _url;
-		}
-
-		private JSConfig(ServletContext servletContext, URL url) {
-			_servletContext = servletContext;
-			_url = url;
-		}
-
-		private final ServletContext _servletContext;
-		private final URL _url;
-
+		_jsLoaderModules.remove(serviceReference);
 	}
 
 	@Deactivate
@@ -146,9 +107,13 @@ public class JSBundleConfigTracker
 		_serviceTracker = null;
 	}
 
-	private BundleContext _bundleContext;
-	private final Map<ServiceReference<ServletContext>, JSConfig> _jsConfigs =
-		new ConcurrentSkipListMap<>();
+	protected void setDetails(Details details) {
+		_details = details;
+	}
+
+	private volatile Details _details;
+	private final Map<ServiceReference <ServletContext>, JSLoaderModule>
+		_jsLoaderModules = new ConcurrentSkipListMap<>();
 	private ServiceTracker<ServletContext, ServiceReference<ServletContext>>
 		_serviceTracker;
 

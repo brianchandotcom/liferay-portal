@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.frontend.js.spa.web.constants;
+package com.liferay.frontend.js.spa.web.internal.constants;
 
 /**
  * @author Bruno Basto

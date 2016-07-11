@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.frontend.js.loader.modules.extender;
+package com.liferay.frontend.js.loader.modules.extender.internal;
 
 import aQute.bnd.annotation.metatype.Meta;
 

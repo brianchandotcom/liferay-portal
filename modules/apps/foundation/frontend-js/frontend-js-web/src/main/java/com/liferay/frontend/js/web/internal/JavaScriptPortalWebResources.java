@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.frontend.js.web;
+package com.liferay.frontend.js.web.internal;
 
 import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;
 import com.liferay.portal.kernel.servlet.PortalWebResources;

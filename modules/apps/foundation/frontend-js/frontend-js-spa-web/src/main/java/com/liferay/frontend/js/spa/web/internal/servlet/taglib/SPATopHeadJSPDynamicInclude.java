@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.frontend.js.spa.web.servlet.taglib;
+package com.liferay.frontend.js.spa.web.internal.servlet.taglib;
 
-import com.liferay.frontend.js.spa.web.constants.SPAWebKeys;
-import com.liferay.frontend.js.spa.web.servlet.taglib.util.SPAUtil;
+import com.liferay.frontend.js.spa.web.internal.constants.SPAWebKeys;
+import com.liferay.frontend.js.spa.web.internal.servlet.taglib.util.SPAUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.BaseJSPDynamicInclude;

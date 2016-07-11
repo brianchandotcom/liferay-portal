@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.frontend.js.bundle.config.extender;
+package com.liferay.frontend.js.loader.modules.extender.internal;
 
 import javax.servlet.ServletContext;
 
@@ -24,11 +24,10 @@ import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Carlos Sierra Andrés
- * @author Chema Balsas
+ * @author Raymond Augé
  */
 @Component(immediate = true)
-public class JSBundleConfigPortalWebResources {
+public class JSLoaderModulesPortalWebResources {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
@@ -53,21 +52,21 @@ public class JSBundleConfigPortalWebResources {
 	}
 
 	@Reference(unbind = "-")
-	protected void setBundlerConfigServlet(
-		JSBundleConfigServlet jsLBundleConfigServlet) {
+	protected void setJSLoaderModulesServlet(
+		JSLoaderModulesServlet jsLoaderModulesServlet) {
 
-		_jsBundleConfigServlet = jsLBundleConfigServlet;
+		_jsLoaderModulesServlet = jsLoaderModulesServlet;
 	}
 
 	@Reference(unbind = "-")
-	protected void setJSBundleConfigTracker(
-		JSBundleConfigTracker jsBundleConfigTracker) {
+	protected void setJSLoaderModulesTracker(
+		JSLoaderModulesTracker jsLoaderModulesTracker) {
 
-		_jsBundleConfigTracker = jsBundleConfigTracker;
+		_jsLoaderModulesTracker = jsLoaderModulesTracker;
 	}
 
-	private JSBundleConfigServlet _jsBundleConfigServlet;
-	private JSBundleConfigTracker _jsBundleConfigTracker;
+	private JSLoaderModulesServlet _jsLoaderModulesServlet;
+	private JSLoaderModulesTracker _jsLoaderModulesTracker;
 	private ServiceRegistration<?> _serviceRegistration;
 
 	private class InternalPortalWebResources
@@ -82,18 +81,18 @@ public class JSBundleConfigPortalWebResources {
 
 		@Override
 		public long getLastModified() {
-			return _jsBundleConfigTracker.getTrackingCount();
+			return _jsLoaderModulesTracker.getTrackingCount();
 		}
 
 		@Override
 		public String getResourceType() {
 			return com.liferay.portal.kernel.servlet.PortalWebResourceConstants.
-				RESOURCE_TYPE_JS_BUNDLE_CONFIG;
+				RESOURCE_TYPE_JS_LOADER_MODULES;
 		}
 
 		@Override
 		public ServletContext getServletContext() {
-			return _jsBundleConfigServlet.getServletContext();
+			return _jsLoaderModulesServlet.getServletContext();
 		}
 
 	}

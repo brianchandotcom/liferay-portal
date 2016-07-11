@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.frontend.js.bundle.config.extender;
+package com.liferay.frontend.js.bundle.config.extender.internal;
 
-import com.liferay.frontend.js.bundle.config.extender.JSBundleConfigTracker.JSConfig;
+import com.liferay.frontend.js.bundle.config.extender.internal.JSBundleConfigTracker.JSConfig;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
@@ -50,7 +50,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"osgi.http.whiteboard.servlet.name=com.liferay.frontend.js.bundle.config.extender.JSBundleConfigServlet",
+		"osgi.http.whiteboard.servlet.name=com.liferay.frontend.js.bundle.config.extender.internal.JSBundleConfigServlet",
 		"osgi.http.whiteboard.servlet.pattern=/js_bundle_config",
 		"service.ranking:Integer=" + (Integer.MAX_VALUE - 1000)
 	},

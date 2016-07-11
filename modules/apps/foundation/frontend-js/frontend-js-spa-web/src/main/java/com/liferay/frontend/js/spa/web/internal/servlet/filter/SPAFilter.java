@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.frontend.js.spa.web.servlet.filter;
+package com.liferay.frontend.js.spa.web.internal.servlet.filter;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

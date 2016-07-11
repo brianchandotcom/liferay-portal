@@ -11,6 +11,12 @@
 		<execute macro="Smoke#viewWelcomePage" />
 	</set-up>
 
+	<command name="AddFormAfterUpgrade" priority="5">
+		<property name="test.assert.warning.exceptions" value="true" />
+
+		<execute macro="Upgrade#addForm" />
+	</command>
+
 	<command name="AddOrganizationAfterUpgrade" priority="4">
 		<property name="test.assert.warning.exceptions" value="true" />
 
@@ -32,12 +38,6 @@
 		<execute macro="Upgrade#viewUpgrade" />
 
 		<execute macro="Upgrade#searchForAssetsAfterUpgrade" />
-	</command>
-
-	<command name="AddFormAfterUpgrade" priority="5">
-		<property name="test.assert.warning.exceptions" value="true" />
-
-		<execute macro="Upgrade#addForm" />
 	</command>
 
 	<command name="View612PollsArchive" priority="3">

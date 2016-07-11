@@ -57,9 +57,6 @@ public class ScreensRatingsEntryServiceImpl
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		jsonObject.put("className", className);
-		jsonObject.put("classPK", classPK);
-
 		List<RatingsEntry> entries = ratingsEntryLocalService.getEntries(
 			className, classPK);
 
@@ -91,6 +88,8 @@ public class ScreensRatingsEntryServiceImpl
 			jsonObject.put("average", 0);
 		}
 
+		jsonObject.put("className", className);
+		jsonObject.put("classPK", classPK);
 		jsonObject.put("ratings", ratings);
 		jsonObject.put("totalCount", entries.size());
 		jsonObject.put("totalScore", totalScore);

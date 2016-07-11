@@ -449,7 +449,7 @@ public class LPKGBundleTrackerCustomizer
 		LPKGBundleTrackerCustomizer.class);
 
 	private static final Pattern _pattern = Pattern.compile(
-		"/(.*?)(-\\d+\\.\\d+\\.\\d)(\\.[jw]ar)");
+		"/(.*?)(-\\d+\\.\\d+\\.\\d+)(\\.[jw]ar)");
 
 	private final BundleContext _bundleContext;
 	private final Set<String> _overwrittenFileNames;

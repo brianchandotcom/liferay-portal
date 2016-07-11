@@ -32,6 +32,7 @@ import com.liferay.journal.service.JournalFolderServiceUtil;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.journal.util.comparator.FolderArticleDisplayDateComparator;
 import com.liferay.journal.util.comparator.FolderArticleModifiedDateComparator;
+import com.liferay.journal.util.comparator.FolderArticleTitleComparator;
 import com.liferay.journal.web.configuration.JournalWebConfiguration;
 import com.liferay.journal.web.internal.portlet.action.ActionUtil;
 import com.liferay.journal.web.internal.search.ArticleSearch;
@@ -549,6 +550,10 @@ public class JournalDisplayContext {
 	}
 
 	public ArticleSearch getSearchContainer() throws PortalException {
+		if (_articleSearchContainer != null) {
+			return _articleSearchContainer;
+		}
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -670,20 +675,23 @@ public class JournalDisplayContext {
 					JournalWebConfiguration.class.getName());
 
 			if (journalWebConfiguration.journalArticlesSearchWithIndex()) {
-				boolean orderByAsc = false;
+				boolean reverse = true;
 
 				if (Objects.equals(getOrderByType(), "asc")) {
-					orderByAsc = true;
+					reverse = false;
 				}
 
 				Sort sort = null;
 
 				if (Objects.equals(getOrderByCol(), "display-date")) {
-					sort = new Sort("displayDate", Sort.LONG_TYPE, orderByAsc);
+					sort = new Sort("displayDate", Sort.LONG_TYPE, reverse);
 				}
 				else if (Objects.equals(getOrderByCol(), "modified-date")) {
 					sort = new Sort(
-						Field.MODIFIED_DATE, Sort.LONG_TYPE, orderByAsc);
+						Field.MODIFIED_DATE, Sort.LONG_TYPE, reverse);
+				}
+				else if (Objects.equals(getOrderByCol(), "title")) {
+					sort = new Sort("title", Sort.STRING_TYPE, reverse);
 				}
 
 				LinkedHashMap<String, Object> params = new LinkedHashMap<>();
@@ -785,16 +793,22 @@ public class JournalDisplayContext {
 				folderOrderByComparator =
 					new FolderArticleModifiedDateComparator(orderByAsc);
 			}
+			else if (Objects.equals(getOrderByCol(), "title")) {
+				folderOrderByComparator = new FolderArticleTitleComparator(
+					orderByAsc);
+			}
 
 			List results = JournalFolderServiceUtil.getFoldersAndArticles(
 				themeDisplay.getScopeGroupId(), 0, getFolderId(), getStatus(),
-				articleSearchContainer.getStart(),
+				themeDisplay.getLocale(), articleSearchContainer.getStart(),
 				articleSearchContainer.getEnd(), folderOrderByComparator);
 
 			articleSearchContainer.setResults(results);
 		}
 
-		return articleSearchContainer;
+		_articleSearchContainer = articleSearchContainer;
+
+		return _articleSearchContainer;
 	}
 
 	public int getStatus() {
@@ -1105,6 +1119,7 @@ public class JournalDisplayContext {
 
 	private String[] _addMenuFavItems;
 	private JournalArticle _article;
+	private ArticleSearch _articleSearchContainer;
 	private DDMFormValues _ddmFormValues;
 	private String _ddmStructureKey;
 	private String _ddmStructureName;

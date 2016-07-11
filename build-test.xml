@@ -5481,6 +5481,52 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		</replace>
 	</target>
 
+	<target name="prepare-portlet-ext-properties">
+		<for list="${test.case.available.property.names}" param="test.case.available.property.name">
+			<sequential>
+				<if>
+					<contains string="@{test.case.available.property.name}" substring="portlet.properties.com.liferay" />
+					<then>
+						<get-testcase-property property.name="@{test.case.available.property.name}" />
+
+						<propertycopy from="@{test.case.available.property.name}" name="osgi.module.custom.properties" silent="true" />
+
+						<if>
+							<isset property="osgi.module.custom.properties" />
+							<then>
+								<propertyregex
+									input="@{test.case.available.property.name}"
+									override="true"
+									property="osgi.module.name"
+									regexp="portlet\.properties\.(.*)"
+									select="\1"
+								/>
+
+								<pathconvert property="osgi.module.jar.file">
+									<path>
+										<fileset dir="${liferay.home}/osgi">
+											<include name="**/${osgi.module.name}.jar" />
+										</fileset>
+									</path>
+								</pathconvert>
+
+								<echo file="${liferay.home}/tmp/portlet-ext.properties">${osgi.module.custom.properties}</echo>
+
+								<jar destfile="${osgi.module.jar.file}" update="true">
+									<fileset dir="${liferay.home}/tmp">
+										<include name="portlet-ext.properties" />
+									</fileset>
+								</jar>
+
+								<delete dir="${liferay.home}/tmp" />
+							</then>
+						</if>
+					</then>
+				</if>
+			</sequential>
+		</for>
+	</target>
+
 	<target name="prepare-poshi-runner-properties">
 		<echo append="true" file="${test.ext.properties.file}">
 			component.names=${component.names}
@@ -7916,6 +7962,8 @@ jdbc.default.password=${database.mysql.password}</echo>
 				<antcall target="prepare-portal-properties" />
 
 				<antcall target="prepare-portal-ext-properties" />
+
+				<antcall target="prepare-portlet-ext-properties" />
 
 				<antcall target="prepare-system-ext-properties" />
 			</else>

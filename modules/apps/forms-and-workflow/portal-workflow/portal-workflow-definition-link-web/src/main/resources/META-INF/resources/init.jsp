@@ -27,10 +27,10 @@ page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowDefinition" %><%@
-page import="com.liferay.portal.workflow.definition.link.web.display.context.WorkflowDefinitionLinkDisplayContext" %><%@
-page import="com.liferay.portal.workflow.definition.link.web.search.WorkflowDefinitionLinkDisplayTerms" %><%@
-page import="com.liferay.portal.workflow.definition.link.web.search.WorkflowDefinitionLinkSearch" %><%@
-page import="com.liferay.portal.workflow.definition.link.web.search.WorkflowDefinitionLinkSearchEntry" %>
+page import="com.liferay.portal.workflow.definition.link.web.internal.display.context.WorkflowDefinitionLinkDisplayContext" %><%@
+page import="com.liferay.portal.workflow.definition.link.web.internal.search.WorkflowDefinitionLinkDisplayTerms" %><%@
+page import="com.liferay.portal.workflow.definition.link.web.internal.search.WorkflowDefinitionLinkSearch" %><%@
+page import="com.liferay.portal.workflow.definition.link.web.internal.search.WorkflowDefinitionLinkSearchEntry" %>
 
 <%@ page import="javax.portlet.PortletURL" %><%@
 page import="javax.portlet.WindowState" %>

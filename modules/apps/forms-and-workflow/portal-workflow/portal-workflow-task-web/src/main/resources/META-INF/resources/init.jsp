@@ -42,9 +42,9 @@ page import="com.liferay.portal.kernel.workflow.WorkflowHandler" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowLog" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowTask" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowTaskDueDateException" %><%@
-page import="com.liferay.portal.workflow.task.web.dao.search.WorkflowTaskResultRowSplitter" %><%@
-page import="com.liferay.portal.workflow.task.web.display.context.WorkflowTaskDisplayContext" %><%@
-page import="com.liferay.portal.workflow.task.web.search.WorkflowTaskSearch" %><%@
+page import="com.liferay.portal.workflow.task.web.internal.dao.search.WorkflowTaskResultRowSplitter" %><%@
+page import="com.liferay.portal.workflow.task.web.internal.display.context.WorkflowTaskDisplayContext" %><%@
+page import="com.liferay.portal.workflow.task.web.internal.search.WorkflowTaskSearch" %><%@
 page import="com.liferay.taglib.search.DateSearchEntry" %>
 
 <%@ page import="java.util.List" %>

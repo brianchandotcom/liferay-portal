@@ -65,13 +65,13 @@ public class ScreensRatingsEntryServiceImpl
 		double userScore = -1;
 
 		for (RatingsEntry ratingsEntry : ratingsEntries) {
-			int position = (int)(ratingsEntry.getScore() * stepCount);
+			int index = (int)(ratingsEntry.getScore() * stepCount);
 
-			if (position == stepCount) {
-				position--;
+			if (index == stepCount) {
+				index--;
 			}
 
-			ratings[position]++;
+			ratings[index]++;
 			totalScore += ratingsEntry.getScore();
 
 			if (ratingsEntry.getUserId() == getUserId()) {

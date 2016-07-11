@@ -24,4 +24,8 @@
 		<reference entity="JournalArticle" package-path="com.liferay.journal" />
 		<reference entity="JournalArticleResource" package-path="com.liferay.journal" />
 	</entity>
+	<entity local-service="false" name="ScreensRatingsEntry" remote-service="true">
+		<reference entity="AssetEntry" package-path="com.liferay.portlet.asset" />
+		<reference entity="RatingsEntry" package-path="com.liferay.portlet.ratings" />
+	</entity>
 </service-builder>

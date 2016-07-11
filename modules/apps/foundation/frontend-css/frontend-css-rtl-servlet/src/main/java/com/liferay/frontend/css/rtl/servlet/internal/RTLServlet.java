@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.frontend.css.rtl.servlet;
+package com.liferay.frontend.css.rtl.servlet.internal;
 
 import com.liferay.frontend.css.rtl.converter.CSSRTLConverter;
 import com.liferay.portal.kernel.log.Log;

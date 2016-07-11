@@ -157,6 +157,58 @@ public class CalendarBookingLocalServiceTest {
 	}
 
 	@Test
+	public void testDeleteCalendarBookingWithAllRecurringInstances()
+		throws Exception {
+
+		ServiceContext serviceContext = createServiceContext();
+
+		CalendarResource calendarResource =
+			CalendarResourceUtil.getUserCalendarResource(
+				_user.getUserId(), serviceContext);
+
+		Calendar calendar = calendarResource.getDefaultCalendar();
+
+		long startTime = System.currentTimeMillis();
+
+		Recurrence recurrence = new Recurrence();
+
+		recurrence.setFrequency(Frequency.DAILY);
+		recurrence.setPositionalWeekdays(new ArrayList<PositionalWeekday>());
+
+		CalendarBooking calendarBooking =
+			CalendarBookingLocalServiceUtil.addCalendarBooking(
+				_user.getUserId(), calendar.getCalendarId(), new long[0],
+				CalendarBookingConstants.PARENT_CALENDAR_BOOKING_ID_DEFAULT,
+				CalendarBookingConstants.RECURRING_CALENDAR_BOOKING_ID_DEFAULT,
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomString(), startTime, startTime + 36000000,
+				false, RecurrenceSerializer.serialize(recurrence), 0, null, 0,
+				null, serviceContext);
+
+		long instanceStartTime = startTime + Time.DAY * 2;
+
+		CalendarBooking calendarBookingInstance =
+			CalendarBookingLocalServiceUtil.updateCalendarBookingInstance(
+				_user.getUserId(), calendarBooking.getCalendarBookingId(), 2,
+				calendar.getCalendarId(),
+				RandomTestUtil.randomLocaleStringMap(),
+				calendarBooking.getDescriptionMap(),
+				calendarBooking.getLocation(), instanceStartTime,
+				instanceStartTime + 36000000, false, null, false, 0, null, 0,
+				null, serviceContext);
+
+		CalendarBookingLocalServiceUtil.deleteCalendarBooking(
+			calendarBooking, true);
+
+		calendarBookingInstance =
+			CalendarBookingLocalServiceUtil.fetchCalendarBooking(
+				calendarBookingInstance.getCalendarBookingId());
+
+		Assert.assertNull(calendarBookingInstance);
+	}
+
+	@Test
 	public void testDeleteCalendarBookingWithoutAllRecurringInstances()
 		throws Exception {
 
@@ -207,58 +259,6 @@ public class CalendarBookingLocalServiceTest {
 				calendarBookingInstance.getCalendarBookingId());
 
 		Assert.assertEquals(titleMap, calendarBookingInstance.getTitleMap());
-	}
-
-	@Test
-	public void testDeleteCalendarBookingWithAllRecurringInstances()
-		throws Exception {
-
-		ServiceContext serviceContext = createServiceContext();
-
-		CalendarResource calendarResource =
-			CalendarResourceUtil.getUserCalendarResource(
-				_user.getUserId(), serviceContext);
-
-		Calendar calendar = calendarResource.getDefaultCalendar();
-
-		long startTime = System.currentTimeMillis();
-
-		Recurrence recurrence = new Recurrence();
-
-		recurrence.setFrequency(Frequency.DAILY);
-		recurrence.setPositionalWeekdays(new ArrayList<PositionalWeekday>());
-
-		CalendarBooking calendarBooking =
-			CalendarBookingLocalServiceUtil.addCalendarBooking(
-				_user.getUserId(), calendar.getCalendarId(), new long[0],
-				CalendarBookingConstants.PARENT_CALENDAR_BOOKING_ID_DEFAULT,
-				CalendarBookingConstants.RECURRING_CALENDAR_BOOKING_ID_DEFAULT,
-				RandomTestUtil.randomLocaleStringMap(),
-				RandomTestUtil.randomLocaleStringMap(),
-				RandomTestUtil.randomString(), startTime, startTime + 36000000,
-				false, RecurrenceSerializer.serialize(recurrence), 0, null, 0,
-				null, serviceContext);
-
-		long instanceStartTime = startTime + Time.DAY * 2;
-
-		CalendarBooking calendarBookingInstance =
-			CalendarBookingLocalServiceUtil.updateCalendarBookingInstance(
-				_user.getUserId(), calendarBooking.getCalendarBookingId(), 2,
-				calendar.getCalendarId(),
-				RandomTestUtil.randomLocaleStringMap(),
-				calendarBooking.getDescriptionMap(),
-				calendarBooking.getLocation(), instanceStartTime,
-				instanceStartTime + 36000000, false, null, false, 0, null, 0,
-				null, serviceContext);
-
-		CalendarBookingLocalServiceUtil.deleteCalendarBooking(
-			calendarBooking, true);
-
-		calendarBookingInstance =
-			CalendarBookingLocalServiceUtil.fetchCalendarBooking(
-				calendarBookingInstance.getCalendarBookingId());
-
-		Assert.assertNull(calendarBookingInstance);
 	}
 
 	@Test
@@ -1350,9 +1350,7 @@ public class CalendarBookingLocalServiceTest {
 	}
 
 	@Test
-	public void testUpdateRecurringCalendarBooking()
-		throws Exception {
-
+	public void testUpdateRecurringCalendarBooking() throws Exception {
 		ServiceContext serviceContext = createServiceContext();
 
 		CalendarResource calendarResource =

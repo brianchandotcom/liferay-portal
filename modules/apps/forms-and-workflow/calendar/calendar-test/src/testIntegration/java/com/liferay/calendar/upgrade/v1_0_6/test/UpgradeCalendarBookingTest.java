@@ -36,11 +36,8 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.io.IOException;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 
 import org.junit.Assert;
@@ -140,9 +137,7 @@ public class UpgradeCalendarBookingTest extends UpgradeCalendarBooking {
 			ServiceContextTestUtil.getServiceContext());
 	}
 
-	protected void dropColumnRecurringCalendarBookingId()
-		throws Exception {
-
+	protected void dropColumnRecurringCalendarBookingId() throws Exception {
 		try (Connection con = DataAccess.getUpgradeOptimizedConnection()) {
 			connection = con;
 

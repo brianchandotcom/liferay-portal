@@ -23,7 +23,7 @@
 			<var name="orgType" value="Organization" />
 		</execute>
 	</command>
-	
+
 	<command name="View623CalendarArchive" priority="3">
 		<property name="test.assert.warning.exceptions" value="true" />
 

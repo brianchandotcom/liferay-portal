@@ -262,6 +262,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FOLDER_NAVIGATION_MENULIST</td>
+	<td>//div[contains(@class,'form-group')]/select</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FOLDER_SELECT_DROPDOWN</td>
 	<td>//select[contains(@id,'rootKBFolderId')]</td>
 	<td></td>

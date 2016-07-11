@@ -29,7 +29,6 @@ page import="com.liferay.portal.kernel.model.Group" %><%@
 page import="com.liferay.portal.kernel.service.GroupLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
-page import="com.liferay.portal.kernel.util.JavaConstants" %><%@
 page import="com.liferay.portal.kernel.util.ListUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.kernel.util.PropsKeys" %><%@
@@ -37,27 +36,12 @@ page import="com.liferay.portal.kernel.util.PropsUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
-page import="com.liferay.taglib.aui.AUIUtil" %><%@
 page import="com.liferay.taglib.util.AssetCategoryUtil" %>
 
 <%@ page import="java.util.List" %>
 
-<%@ page import="javax.portlet.PortletRequest" %><%@
-page import="javax.portlet.PortletResponse" %><%@
-page import="javax.portlet.PortletURL" %>
+<%@ page import="javax.portlet.PortletURL" %>
 
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />
-
-<%
-PortletRequest portletRequest = (PortletRequest)request.getAttribute(JavaConstants.JAVAX_PORTLET_REQUEST);
-
-PortletResponse portletResponse = (PortletResponse)request.getAttribute(JavaConstants.JAVAX_PORTLET_RESPONSE);
-
-String namespace = AUIUtil.getNamespace(portletRequest, portletResponse);
-
-if (Validator.isNull(namespace)) {
-	namespace = AUIUtil.getNamespace(request);
-}
-%>

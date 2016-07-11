@@ -241,7 +241,7 @@ AUI.add(
 
 						var itemSelectorDialog = new A.LiferayItemSelectorDialog(
 							{
-								eventName: instance.get('namespace') + 'selectCategory',
+								eventName: instance.get('eventName'),
 								on: {
 									selectedItemChange: function(event) {
 										var selectedCategories = event.newVal;

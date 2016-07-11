@@ -890,6 +890,40 @@ public class UpgradeDynamicDataMappingTest {
 	}
 
 	@Test
+	public void testUpgradeTemplateFreemarkerScriptUTCDateFields()
+		throws Exception {
+
+		addStructure(
+			_structureId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
+			DDMStructureConstants.VERSION_DEFAULT,
+			read("ddm-structure-date-field.xsd"), "xml");
+
+		addTemplate(
+			_templateId, _structureId, null,
+			read("ddm-template-with-utc-date-field.ftl"), "ftl",
+			DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY);
+
+		_upgradeDynamicDataMapping.upgrade();
+
+		String actualDefinition = getTemplateScript(_templateId);
+
+		String dateFieldName = "date1";
+
+		StringBundler sb = null;
+
+		// Date getDate statement
+
+		sb = new StringBundler(4);
+
+		sb.append("dateUtil.getDate(");
+		sb.append(dateFieldName);
+		sb.append("_DateObj");
+		sb.append(", \"dd MMM yyyy - HH:mm:ss\", locale)");
+
+		Assert.assertTrue(actualDefinition.contains(sb.toString()));
+	}
+
+	@Test
 	public void testUpgradeTemplatePermissions() throws Exception {
 		addStructure(
 			_structureId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
@@ -1023,6 +1057,40 @@ public class UpgradeDynamicDataMappingTest {
 
 			Assert.assertTrue(actualDefinition.contains(sb.toString()));
 		}
+	}
+
+	@Test
+	public void testUpgradeTemplateVelocityScriptDateUTCFields()
+		throws Exception {
+
+		addStructure(
+			_structureId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
+			DDMStructureConstants.VERSION_DEFAULT,
+			read("ddm-structure-date-field.xsd"), "xml");
+
+		addTemplate(
+			_templateId, _structureId, null,
+			read("ddm-template-with-utc-date-field.vm"), "vm",
+			DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY);
+
+		_upgradeDynamicDataMapping.upgrade();
+
+		String actualDefinition = getTemplateScript(_templateId);
+
+		String dateFieldName = "$date1";
+
+		StringBundler sb = null;
+
+		// Date getDate statement
+
+		sb = new StringBundler(4);
+
+		sb.append("$dateUtil.getDate(");
+		sb.append(dateFieldName);
+		sb.append("_DateObj");
+		sb.append(", \"dd MMM yyyy - HH:mm:ss\", $locale)");
+
+		Assert.assertTrue(actualDefinition.contains(sb.toString()));
 	}
 
 	@Test

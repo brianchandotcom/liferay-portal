@@ -16,6 +16,7 @@ package com.liferay.portal.workflow.kaleo.definition.internal.parser;
 
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionFileException;
@@ -46,6 +47,8 @@ import com.liferay.portal.workflow.kaleo.definition.ScriptAssignment;
 import com.liferay.portal.workflow.kaleo.definition.ScriptRecipient;
 import com.liferay.portal.workflow.kaleo.definition.State;
 import com.liferay.portal.workflow.kaleo.definition.Task;
+import com.liferay.portal.workflow.kaleo.definition.TaskForm;
+import com.liferay.portal.workflow.kaleo.definition.TaskFormReference;
 import com.liferay.portal.workflow.kaleo.definition.Timer;
 import com.liferay.portal.workflow.kaleo.definition.Transition;
 import com.liferay.portal.workflow.kaleo.definition.UserAssignment;
@@ -601,11 +604,80 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 			task.setAssignments(assignments);
 		}
 
+		Element formsElement = taskElement.element("task-forms");
+
+		parseTaskFormsElements(formsElement, task);
+
 		Element timersElement = taskElement.element("task-timers");
 
 		parseTaskTimerElements(timersElement, task);
 
 		return task;
+	}
+
+	protected void parseTaskFormsElements(Element taskFormsElement, Task task) {
+		if (taskFormsElement == null) {
+			return;
+		}
+
+		List<Element> taskFormElements = taskFormsElement.elements("task-form");
+
+		if (ListUtil.isEmpty(taskFormElements)) {
+			return;
+		}
+
+		for (Element taskFormElement : taskFormElements) {
+			String name = taskFormElement.elementText("name");
+
+			int priority = GetterUtil.getInteger(
+				taskFormElement.elementText("priority"));
+
+			TaskForm taskForm = new TaskForm(name, priority);
+
+			String description = taskFormElement.elementText("description");
+
+			if (Validator.isNotNull(description)) {
+				taskForm.setDescription(description);
+			}
+
+			String formDefinition = taskFormElement.elementText(
+				"form-definition");
+
+			if (Validator.isNotNull(formDefinition)) {
+				taskForm.setFormDefinition(formDefinition);
+			}
+			else {
+				Element formReferenceElement = taskFormElement.element(
+					"form-reference");
+
+				TaskFormReference taskFormReference = new TaskFormReference();
+
+				long companyId = GetterUtil.getLong(
+					formReferenceElement.elementText("company-id"));
+				taskFormReference.setCompanyId(companyId);
+
+				long groupId = GetterUtil.getLong(
+					formReferenceElement.elementText("group-id"));
+				taskFormReference.setGroupId(groupId);
+
+				long formId = GetterUtil.getLong(
+					formReferenceElement.elementText("form-id"));
+				taskFormReference.setFormId(formId);
+
+				String formUuid = formReferenceElement.elementText("form-uuid");
+				taskFormReference.setFormUuid(formUuid);
+
+				taskForm.setTaskFormReference(taskFormReference);
+			}
+
+			String metadata = taskFormElement.elementText("metadata");
+
+			if (Validator.isNotNull(metadata)) {
+				taskForm.setMetadata(metadata);
+			}
+
+			task.addTaskForm(taskForm);
+		}
 	}
 
 	protected void parseTaskTimerElements(

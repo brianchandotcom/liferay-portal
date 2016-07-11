@@ -181,8 +181,12 @@ public class RootProjectConfigurator implements Plugin<Project> {
 						}
 					}
 
+					String bundleUrl = workspaceExtension.getBundleUrl();
+
+					bundleUrl = bundleUrl.replace(" ", "%20");
+
 					try {
-						download.src(workspaceExtension.getBundleUrl());
+						download.src(bundleUrl);
 					}
 					catch (MalformedURLException murle) {
 						throw new GradleException(murle.getMessage(), murle);

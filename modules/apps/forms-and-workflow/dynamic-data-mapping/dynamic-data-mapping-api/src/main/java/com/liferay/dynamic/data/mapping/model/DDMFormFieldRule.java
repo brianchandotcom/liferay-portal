@@ -17,8 +17,10 @@ package com.liferay.dynamic.data.mapping.model;
 import java.io.Serializable;
 
 /**
- * @author Leonardo Barros
+ * @author     Leonardo Barros
+ * @deprecated As of 3.4.0, replaced by {@link DDMFormRule}
  */
+@Deprecated
 public class DDMFormFieldRule implements Serializable {
 
 	public DDMFormFieldRule(DDMFormFieldRule ddmFormFieldRule) {

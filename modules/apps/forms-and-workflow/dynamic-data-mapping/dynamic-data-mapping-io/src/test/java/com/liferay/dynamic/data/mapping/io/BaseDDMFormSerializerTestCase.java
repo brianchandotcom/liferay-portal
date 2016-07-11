@@ -17,8 +17,6 @@ package com.liferay.dynamic.data.mapping.io;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
-import com.liferay.dynamic.data.mapping.model.DDMFormFieldRule;
-import com.liferay.dynamic.data.mapping.model.DDMFormFieldRuleType;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidation;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
@@ -70,24 +68,8 @@ public abstract class BaseDDMFormSerializerTestCase extends BaseDDMTestCase {
 		ddmFormFields.add(
 			createNestedDDMFormFields("ParentField", "ChildField"));
 
-		DDMFormField booleanDDMFormField = createRadioDDMFormField(
-			"BooleanField");
-
-		booleanDDMFormField.addDDMFormFieldRule(
-			new DDMFormFieldRule(
-				"isReadOnly(SelectField)", DDMFormFieldRuleType.READ_ONLY));
-
-		ddmFormFields.add(booleanDDMFormField);
-
-		DDMFormField selectDDMFormField = createSelectDDMFormField(
-			"SelectField");
-
-		selectDDMFormField.addDDMFormFieldRule(
-			new DDMFormFieldRule(
-				"isVisible(TextField)", DDMFormFieldRuleType.VISIBILITY));
-
-		ddmFormFields.add(selectDDMFormField);
-
+		ddmFormFields.add(createRadioDDMFormField("BooleanField"));
+		ddmFormFields.add(createSelectDDMFormField("SelectField"));
 		ddmFormFields.add(createTextDDMFormField("TextField"));
 		ddmFormFields.add(createHTMLDDMFormField("HTMLField"));
 

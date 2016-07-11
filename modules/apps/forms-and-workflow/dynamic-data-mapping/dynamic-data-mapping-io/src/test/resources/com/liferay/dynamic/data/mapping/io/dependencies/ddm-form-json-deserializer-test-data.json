@@ -19,16 +19,6 @@
 			"readOnly": false,
 			"repeatable": true,
 			"required": false,
-			"rules": [
-				{
-					"expression": "1 + 2 > 3",
-					"type": "VISIBILITY"
-				},
-				{
-					"expression": "isReadOnly(Date2510) && isVisible(Decimal3479)",
-					"type": "READ_ONLY"
-				}
-			],
 			"showLabel": false,
 			"tip": {
 				"en_US": "",
@@ -556,6 +546,23 @@
 			},
 			"type": "text",
 			"visibilityExpression": "true"
+		}
+	],
+	"rules": [
+		{
+			"actions": [
+				"Action 1",
+				"Action 2"
+			],
+			"condition": "Condition 1",
+			"enabled": true
+		},
+		{
+			"actions": [
+				"Action 3"
+			],
+			"condition": "Condition 2",
+			"enabled": false
 		}
 	]
 }

@@ -202,23 +202,25 @@ AUI.add(
 
 						var vocabularyId = contentBox.getAttribute('data-vocabulary-id');
 
-						instance.icons = new A.Toolbar(
-							{
-								children: [
-									{
-										label: instance.get('label'),
-										on: {
-											click: function(event) {
-												event.data = event.data ? event.data : {};
-												event.data.vocabularyId = vocabularyId;
-												instance._showSelectPopup.call(instance, event);
-											}
-										},
-										title: instance.get('title')
-									}
-								]
-							}
-						).render(contentBox);
+						if (instance.get('portletURL')) {
+							instance.icons = new A.Toolbar(
+								{
+									children: [
+										{
+											label: instance.get('label'),
+											on: {
+												click: function(event) {
+													event.data = event.data ? event.data : {};
+													event.data.vocabularyId = vocabularyId;
+													instance._showSelectPopup.call(instance, event);
+												}
+											},
+											title: instance.get('title')
+										}
+									]
+								}
+							).render(contentBox);
+						}
 
 						var iconsBoundingBox = instance.icons.get(BOUNDING_BOX);
 

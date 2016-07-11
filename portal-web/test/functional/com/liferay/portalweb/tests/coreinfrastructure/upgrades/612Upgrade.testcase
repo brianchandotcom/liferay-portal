@@ -14,14 +14,7 @@
 	<command name="AddOrganizationAfterUpgrade" priority="4">
 		<property name="test.assert.warning.exceptions" value="true" />
 
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="Organization#addCP">
-			<var name="orgName" value="Organization Name" />
-			<var name="orgType" value="Organization" />
-		</execute>
+		<execute macro="Upgrade#addOrganization" />
 	</command>
 
 	<command name="View612CalendarArchive" priority="3">

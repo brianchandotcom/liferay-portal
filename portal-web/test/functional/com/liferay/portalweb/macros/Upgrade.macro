@@ -386,7 +386,7 @@
 		</execute>
 	</command>
 
-	<command name="viewForms">
+	<command name="addForm">
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Forms" />
 		</execute>
@@ -593,7 +593,7 @@
 		<execute macro="SignIn#signIn" />
 	</command>
 
-	<command name="viewWCStructureAndTemplate">
+	<command name="addWCStructureAndTemplate">
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">

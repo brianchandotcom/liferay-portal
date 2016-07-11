@@ -37,7 +37,7 @@
 	<command name="View612FormsArchive" priority="5">
 		<property name="test.assert.warning.exceptions" value="true" />
 
-		<execute macro="Upgrade#viewForms" />
+		<execute macro="Upgrade#addForm" />
 	</command>
 
 	<command name="View612PollsArchive" priority="3">
@@ -49,7 +49,7 @@
 	<command name="View612WebContentArchive" priority="3">
 		<property name="test.assert.warning.exceptions" value="true" />
 
-		<execute macro="Upgrade#viewWCStructureAndTemplate" />
+		<execute macro="Upgrade#addWCStructureAndTemplate" />
 
 		<execute macro="Upgrade#publishWCDraft" />
 

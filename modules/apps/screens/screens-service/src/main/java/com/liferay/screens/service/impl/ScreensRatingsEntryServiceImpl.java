@@ -62,8 +62,6 @@ public class ScreensRatingsEntryServiceImpl
 
 		int[] ratings = new int[stepCount];
 		double totalScore = 0;
-
-		long userId = getUserId();
 		double userScore = -1;
 
 		for (RatingsEntry ratingsEntry : ratingsEntries) {
@@ -76,7 +74,7 @@ public class ScreensRatingsEntryServiceImpl
 			ratings[position]++;
 			totalScore += ratingsEntry.getScore();
 
-			if (ratingsEntry.getUserId() == userId) {
+			if (ratingsEntry.getUserId() == getUserId()) {
 				userScore = ratingsEntry.getScore();
 			}
 		}

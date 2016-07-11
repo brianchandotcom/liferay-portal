@@ -28,24 +28,17 @@ String hiddenInput = (String)request.getAttribute("liferay-asset:asset-categorie
 boolean ignoreRequestValue = GetterUtil.getBoolean(request.getAttribute("liferay-asset:asset-categories-selector:ignoreRequestValue"));
 PortletURL portletURL = (PortletURL)request.getAttribute("liferay-asset:asset-categories-selector:portletURL");
 boolean showRequiredLabel = GetterUtil.getBoolean((String)request.getAttribute("liferay-asset:asset-categories-selector:showRequiredLabel"), true);
+List<AssetVocabulary> vocabularies = (List<AssetVocabulary>)request.getAttribute("liferay-asset:asset-categories-selector:vocabularies");
 
 int maxEntries = GetterUtil.getInteger(PropsUtil.get(PropsKeys.ASSET_CATEGORIES_SELECTOR_MAX_ENTRIES));
-
-List<AssetVocabulary> vocabularies = AssetVocabularyServiceUtil.getGroupVocabularies(groupIds);
 %>
 
 <c:choose>
 	<c:when test="<%= Validator.isNotNull(className) %>">
 
 		<%
-		vocabularies = AssetUtil.filterVocabularies(vocabularies, className, classTypePK);
-
 		for (AssetVocabulary vocabulary : vocabularies) {
 			vocabulary = vocabulary.toEscapedModel();
-
-			if (AssetCategoryServiceUtil.getVocabularyCategoriesCount(vocabulary.getGroupId(), vocabulary.getVocabularyId()) == 0) {
-				continue;
-			}
 
 			String curCategoryNames = StringPool.BLANK;
 

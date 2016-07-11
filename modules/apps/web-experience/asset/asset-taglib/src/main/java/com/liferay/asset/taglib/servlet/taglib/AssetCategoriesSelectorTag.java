@@ -16,15 +16,24 @@ package com.liferay.asset.taglib.servlet.taglib;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
+import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.service.AssetCategoryServiceUtil;
+import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
 import com.liferay.asset.taglib.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PredicateFilter;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portlet.asset.util.AssetUtil;
 import com.liferay.taglib.util.IncludeTag;
+
+import java.util.List;
 
 import javax.portlet.PortletURL;
 
@@ -143,6 +152,37 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 		return null;
 	}
 
+	protected List<AssetVocabulary> getVocabularies() {
+		List<AssetVocabulary> vocabularies =
+			AssetVocabularyServiceUtil.getGroupVocabularies(getGroupIds());
+
+		if (Validator.isNull(_className)) {
+			return vocabularies;
+		}
+
+		vocabularies = AssetUtil.filterVocabularies(
+			vocabularies, _className, _classTypePK);
+
+		return ListUtil.filter(
+			vocabularies,
+			new PredicateFilter<AssetVocabulary>() {
+
+				public boolean filter(AssetVocabulary vocabulary) {
+					int vocabularyCategoriesCount =
+						AssetCategoryServiceUtil.getVocabularyCategoriesCount(
+							vocabulary.getGroupId(),
+							vocabulary.getVocabularyId());
+
+					if (vocabularyCategoriesCount > 0) {
+						return true;
+					}
+
+					return false;
+				}
+
+			});
+	}
+
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute(
@@ -170,6 +210,9 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-asset:asset-categories-selector:showRequiredLabel",
 			String.valueOf(_showRequiredLabel));
+		request.setAttribute(
+			"liferay-asset:asset-categories-selector:vocabularies",
+			getVocabularies());
 	}
 
 	private static final String _PAGE = "/asset_categories_selector/page.jsp";

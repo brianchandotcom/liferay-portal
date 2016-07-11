@@ -47,6 +47,8 @@ public class JournalContentSearchLocalServiceImpl
 
 	@Override
 	public void afterPropertiesSet() {
+		super.afterPropertiesSet();
+
 		Bundle bundle = FrameworkUtil.getBundle(
 			JournalContentSearchLocalServiceImpl.class);
 
@@ -180,6 +182,8 @@ public class JournalContentSearchLocalServiceImpl
 
 	@Override
 	public void destroy() {
+		super.destroy();
+
 		_serviceTrackerMap.close();
 	}
 

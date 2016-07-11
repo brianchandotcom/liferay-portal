@@ -67,6 +67,8 @@ public class PushNotificationsDeviceLocalServiceImpl
 
 	@Override
 	public void afterPropertiesSet() {
+		super.afterPropertiesSet();
+
 		Bundle bundle = FrameworkUtil.getBundle(
 			PushNotificationsDeviceLocalServiceImpl.class);
 
@@ -92,6 +94,8 @@ public class PushNotificationsDeviceLocalServiceImpl
 
 	@Override
 	public void destroy() {
+		super.destroy();
+
 		_serviceTrackerMap.close();
 	}
 

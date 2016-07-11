@@ -17,7 +17,6 @@ AUI.add(
 		 * OPTIONS
 		 *
 		 * Required
-		 * className {String}: The class name of the current asset.
 		 * curEntryIds (string): The ids of the current categories.
 		 * curEntries (string): The names of the current categories.
 		 * hiddenInput {string}: The hidden input used to pass in the current categories.
@@ -30,7 +29,6 @@ AUI.add(
 		 * Optional
 		 * maxEntries {Number}: The maximum number of entries that will be loaded. The default value is -1, which will load all categories.
 		 * moreResultsLabel {String}: The localized label for link "Load more results".
-		 * portalModelResource {boolean}: Whether the asset model is on the portal level.
 		 */
 
 		var AssetTaglibCategoriesSelector = A.Component.create(
@@ -152,8 +150,6 @@ AUI.add(
 
 						AssetTaglibCategoriesSelector.superclass.constructor.superclass.syncUI.apply(instance, arguments);
 
-						var matchKey = instance.get('matchKey');
-
 						instance.entries.getKey = function(obj) {
 							return obj.categoryId;
 						};
@@ -167,9 +163,7 @@ AUI.add(
 									categoryId: item
 								};
 
-								entry[matchKey] = curEntries[index];
-
-								entry.value = LString.unescapeHTML(entry.value);
+								entry.value = LString.unescapeHTML(curEntries[index]);
 
 								instance.entries.add(entry);
 							}
@@ -193,60 +187,6 @@ AUI.add(
 
 					_bindTagsSelector: EMPTY_FN,
 
-					_getEntries: function(className, callback) {
-						var instance = this;
-
-						var portalModelResource = instance.get('portalModelResource');
-
-						var groupIds = [];
-
-						var vocabularyIds = instance.get('vocabularyIds');
-
-						if (vocabularyIds.length > 0) {
-							Liferay.Service(
-								{
-									'$vocabularies = /assetvocabulary/get-vocabularies': {
-										vocabularyIds: vocabularyIds,
-										'$childrenCount = /assetcategory/get-vocabulary-root-categories-count': {
-											'@groupId': '$vocabularies.groupId',
-											'@vocabularyId': '$vocabularies.vocabularyId'
-										},
-
-										'$group[descriptiveName] = /group/get-group': {
-											'@groupId': '$vocabularies.groupId'
-										}
-									}
-								},
-								callback
-							);
-						}
-						else {
-							if (!portalModelResource && themeDisplay.getSiteGroupId() != themeDisplay.getCompanyGroupId()) {
-								groupIds.push(themeDisplay.getSiteGroupId());
-							}
-
-							groupIds.push(themeDisplay.getCompanyGroupId());
-
-							Liferay.Service(
-								{
-									'$vocabularies = /assetvocabulary/get-groups-vocabularies': {
-										className: className,
-										groupIds: groupIds,
-										'$childrenCount = /assetcategory/get-vocabulary-root-categories-count': {
-											'groupId': '$vocabularies.groupId',
-											'@vocabularyId': '$vocabularies.vocabularyId'
-										},
-
-										'$group[descriptiveName] = /group/get-group': {
-											'@groupId': '$vocabularies.groupId'
-										}
-									}
-								},
-								callback
-							);
-						}
-					},
-
 					_isValidString: function(value) {
 						var instance = this;
 
@@ -254,14 +194,6 @@ AUI.add(
 					},
 
 					_onBoundingBoxClick: EMPTY_FN,
-
-					_onSelectChange: function(event) {
-						var instance = this;
-
-						instance._clearEntries();
-
-						instance._onCheckboxCheck(event);
-					},
 
 					_renderIcons: function() {
 						var instance = this;

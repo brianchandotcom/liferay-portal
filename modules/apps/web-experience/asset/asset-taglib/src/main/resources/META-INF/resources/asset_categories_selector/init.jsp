@@ -27,7 +27,6 @@ page import="com.liferay.asset.kernel.model.AssetVocabulary" %><%@
 page import="com.liferay.asset.kernel.service.AssetCategoryServiceUtil" %><%@
 page import="com.liferay.asset.kernel.service.AssetVocabularyServiceUtil" %><%@
 page import="com.liferay.portal.kernel.model.Group" %><%@
-page import="com.liferay.portal.kernel.security.permission.ResourceActionsUtil" %><%@
 page import="com.liferay.portal.kernel.service.GroupLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@

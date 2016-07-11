@@ -95,7 +95,6 @@ List<AssetVocabulary> vocabularies = AssetVocabularyServiceUtil.getGroupVocabula
 			<aui:script use="liferay-asset-taglib-categories-selector">
 				new Liferay.AssetTaglibCategoriesSelector(
 					{
-						className: '<%= className %>',
 						contentBox: '#<%= namespace + randomNamespace %>assetCategoriesSelector_<%= vocabulary.getVocabularyId() %>',
 						curEntries: '<%= HtmlUtil.escapeJS(categoryIdsTitles[1]) %>',
 						curEntryIds: '<%= categoryIdsTitles[0] %>',
@@ -104,7 +103,6 @@ List<AssetVocabulary> vocabularies = AssetVocabularyServiceUtil.getGroupVocabula
 						labelNode: '#<%= namespace %>assetCategoriesLabel_<%= vocabulary.getVocabularyId() %>',
 						maxEntries: <%= maxEntries %>,
 						moreResultsLabel: '<liferay-ui:message key="load-more-results" />',
-						portalModelResource: <%= Validator.isNotNull(className) && (ResourceActionsUtil.isPortalModelResource(className) || className.equals(Group.class.getName())) %>,
 
 						<c:if test="<%= portletURL != null %>">
 							portletURL: '<%= portletURL.toString() %>',
@@ -144,7 +142,6 @@ List<AssetVocabulary> vocabularies = AssetVocabularyServiceUtil.getGroupVocabula
 		<aui:script use="liferay-asset-taglib-categories-selector">
 			new Liferay.AssetTaglibCategoriesSelector(
 				{
-					className: '<%= className %>',
 					contentBox: '#<%= namespace + randomNamespace %>assetCategoriesSelector',
 					curEntries: '<%= HtmlUtil.escapeJS(categoryIdsTitles[1]) %>',
 					curEntryIds: '<%= categoryIdsTitles[0] %>',
@@ -153,7 +150,6 @@ List<AssetVocabulary> vocabularies = AssetVocabularyServiceUtil.getGroupVocabula
 					maxEntries: <%= maxEntries %>,
 					moreResultsLabel: '<liferay-ui:message key="load-more-results" />',
 					namespace: '<%= namespace %>',
-					portalModelResource: <%= Validator.isNotNull(className) && (ResourceActionsUtil.isPortalModelResource(className) || className.equals(Group.class.getName())) %>,
 
 					<c:if test="<%= portletURL != null %>">
 						portletURL: '<%= portletURL.toString() %>',

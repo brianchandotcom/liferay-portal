@@ -92,6 +92,34 @@ define("frontend-js-spa-web@1.0.8/liferay/screen/EventScreen.es", ['exports', 's
 			}
 		};
 
+		EventScreen.prototype.clearRequestTimer_ = function clearRequestTimer_() {
+			if (this.requestTimer) {
+				clearTimeout(this.requestTimer);
+			}
+
+			if (this.timeoutAlert) {
+				this.timeoutAlert.hide();
+			}
+		};
+
+		EventScreen.prototype.createTimeoutNotification_ = function createTimeoutNotification_() {
+			var instance = this;
+
+			AUI().use('liferay-notification', function () {
+				instance.timeoutAlert = new Liferay.Notification({
+					closeable: true,
+					delay: {
+						hide: 0,
+						show: 0
+					},
+					duration: 500,
+					message: Liferay.Language.get('it-looks-like-this-is-taking-longer-than-expected'),
+					title: Liferay.Language.get('oops'),
+					type: 'warning'
+				}).render('body');
+			});
+		};
+
 		EventScreen.prototype.deactivate = function deactivate() {
 			_HtmlScreen.prototype.deactivate.call(this);
 
@@ -153,7 +181,11 @@ define("frontend-js-spa-web@1.0.8/liferay/screen/EventScreen.es", ['exports', 's
 		EventScreen.prototype.load = function load(path) {
 			var _this3 = this;
 
+			this.startRequestTimer_(path);
+
 			return _HtmlScreen.prototype.load.call(this, path).then(function (content) {
+				_this3.clearRequestTimer_();
+
 				var redirectPath = _this3.beforeUpdateHistoryPath(path);
 
 				_this3.checkRedirectPath(redirectPath);
@@ -173,6 +205,26 @@ define("frontend-js-spa-web@1.0.8/liferay/screen/EventScreen.es", ['exports', 's
 
 			if (onLoad) {
 				onLoad();
+			}
+		};
+
+		EventScreen.prototype.startRequestTimer_ = function startRequestTimer_(path) {
+			var _this4 = this;
+
+			if (Liferay.SPA.userNotificationTimeout > 0) {
+				this.clearRequestTimer_();
+
+				this.requestTimer = setTimeout(function () {
+					Liferay.fire('spaRequestTimeout', {
+						path: path
+					});
+
+					if (!_this4.timeoutAlert) {
+						_this4.createTimeoutNotification_();
+					} else {
+						_this4.timeoutAlert.show();
+					}
+				}, Liferay.SPA.userNotificationTimeout);
 			}
 		};
 

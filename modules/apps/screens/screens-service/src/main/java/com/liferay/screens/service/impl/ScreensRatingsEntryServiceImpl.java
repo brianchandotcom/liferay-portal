@@ -55,10 +55,10 @@ public class ScreensRatingsEntryServiceImpl
 			long classPK, String className, int stepCount)
 		throws PortalException {
 
-		JSONObject result = JSONFactoryUtil.createJSONObject();
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		result.put("className", className);
-		result.put("classPK", classPK);
+		jsonObject.put("className", className);
+		jsonObject.put("classPK", classPK);
 
 		List<RatingsEntry> entries = ratingsEntryLocalService.getEntries(
 			className, classPK);
@@ -85,18 +85,18 @@ public class ScreensRatingsEntryServiceImpl
 		}
 
 		if (entries.size() > 0) {
-			result.put("average", totalScore / entries.size());
+			jsonObject.put("average", totalScore / entries.size());
 		}
 		else {
-			result.put("average", 0);
+			jsonObject.put("average", 0);
 		}
 
-		result.put("ratings", ratings);
-		result.put("totalCount", entries.size());
-		result.put("totalScore", totalScore);
-		result.put("userScore", userScore);
+		jsonObject.put("ratings", ratings);
+		jsonObject.put("totalCount", entries.size());
+		jsonObject.put("totalScore", totalScore);
+		jsonObject.put("userScore", userScore);
 
-		return result;
+		return jsonObject;
 	}
 
 	public JSONObject updateRatingEntry(

@@ -28,11 +28,14 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PredicateFilter;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.asset.util.AssetUtil;
+import com.liferay.taglib.util.AssetCategoryUtil;
 import com.liferay.taglib.util.IncludeTag;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.PortletURL;
@@ -94,6 +97,74 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 		_hiddenInput = "assetCategoryIds";
 		_ignoreRequestValue = false;
 		_showRequiredLabel = true;
+	}
+
+	protected List<String[]> getCategoryIdsTitles() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		List<String[]> categoryIdsTitles = new ArrayList<>();
+
+		String curCategoryIds = StringPool.BLANK;
+
+		if (Validator.isNotNull(_curCategoryIds)) {
+			curCategoryIds = _curCategoryIds;
+		}
+
+		if (Validator.isNull(_className)) {
+			if (!_ignoreRequestValue) {
+				String curCategoryIdsParam = request.getParameter(_hiddenInput);
+
+				if (curCategoryIdsParam != null) {
+					curCategoryIds = curCategoryIdsParam;
+				}
+			}
+
+			String[] categoryIdsTitle = AssetCategoryUtil.getCategoryIdsTitles(
+				curCategoryIds, StringPool.BLANK, 0, themeDisplay);
+
+			categoryIdsTitles.add(categoryIdsTitle);
+
+			return categoryIdsTitles;
+		}
+
+		try {
+			for (AssetVocabulary vocabulary : getVocabularies()) {
+				String curCategoryNames = StringPool.BLANK;
+
+				if (Validator.isNotNull(_className) && (_classPK > 0)) {
+					List<AssetCategory> categories =
+						AssetCategoryServiceUtil.getCategories(
+							_className, _classPK);
+
+					curCategoryIds = ListUtil.toString(
+						categories, AssetCategory.CATEGORY_ID_ACCESSOR);
+					curCategoryNames = ListUtil.toString(
+						categories, AssetCategory.NAME_ACCESSOR);
+				}
+
+				if (!_ignoreRequestValue) {
+					String curCategoryIdsParam = request.getParameter(
+						_hiddenInput + StringPool.UNDERLINE +
+							vocabulary.getVocabularyId());
+
+					if (Validator.isNotNull(curCategoryIdsParam)) {
+						curCategoryIds = curCategoryIdsParam;
+					}
+				}
+
+				String[] categoryIdsTitle =
+					AssetCategoryUtil.getCategoryIdsTitles(
+						curCategoryIds, curCategoryNames,
+						vocabulary.getVocabularyId(), themeDisplay);
+
+				categoryIdsTitles.add(categoryIdsTitle);
+			}
+		}
+		catch (Exception e) {
+		}
+
+		return categoryIdsTitles;
 	}
 
 	protected String getEventName() {
@@ -185,6 +256,9 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
+		request.setAttribute(
+			"liferay-asset:asset-categories-selector:categoryIdsTitles",
+			getCategoryIdsTitles());
 		request.setAttribute(
 			"liferay-asset:asset-categories-selector:className", _className);
 		request.setAttribute(

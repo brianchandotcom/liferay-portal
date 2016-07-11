@@ -17,14 +17,12 @@
 <%@ include file="/asset_categories_selector/init.jsp" %>
 
 <%
+List<String[]> categoryIdsTitles = (List<String[]>)request.getAttribute("liferay-asset:asset-categories-selector:categoryIdsTitles");
 String className = (String)request.getAttribute("liferay-asset:asset-categories-selector:className");
-long classPK = GetterUtil.getLong((String)request.getAttribute("liferay-asset:asset-categories-selector:classPK"));
 long classTypePK = GetterUtil.getLong((String)request.getAttribute("liferay-asset:asset-categories-selector:classTypePK"));
-String curCategoryIds = (String)request.getAttribute("liferay-asset:asset-categories-selector:curCategoryIds");
 String eventName = (String)request.getAttribute("liferay-asset:asset-categories-selector:eventName");
 long[] groupIds = (long[])request.getAttribute("liferay-asset:asset-categories-selector:groupIds");
 String hiddenInput = (String)request.getAttribute("liferay-asset:asset-categories-selector:hiddenInput");
-boolean ignoreRequestValue = GetterUtil.getBoolean(request.getAttribute("liferay-asset:asset-categories-selector:ignoreRequestValue"));
 PortletURL portletURL = (PortletURL)request.getAttribute("liferay-asset:asset-categories-selector:portletURL");
 boolean showRequiredLabel = GetterUtil.getBoolean((String)request.getAttribute("liferay-asset:asset-categories-selector:showRequiredLabel"), true);
 List<AssetVocabulary> vocabularies = (List<AssetVocabulary>)request.getAttribute("liferay-asset:asset-categories-selector:vocabularies");
@@ -36,27 +34,10 @@ int maxEntries = GetterUtil.getInteger(PropsUtil.get(PropsKeys.ASSET_CATEGORIES_
 	<c:when test="<%= Validator.isNotNull(className) %>">
 
 		<%
-		for (AssetVocabulary vocabulary : vocabularies) {
+		for (int i = 0; i < vocabularies.size(); i++) {
+			AssetVocabulary vocabulary = vocabularies.get(i);
+
 			vocabulary = vocabulary.toEscapedModel();
-
-			String curCategoryNames = StringPool.BLANK;
-
-			if (Validator.isNotNull(className) && (classPK > 0)) {
-				List<AssetCategory> categories = AssetCategoryServiceUtil.getCategories(className, classPK);
-
-				curCategoryIds = ListUtil.toString(categories, AssetCategory.CATEGORY_ID_ACCESSOR);
-				curCategoryNames = ListUtil.toString(categories, AssetCategory.NAME_ACCESSOR);
-			}
-
-			if (!ignoreRequestValue) {
-				String curCategoryIdsParam = request.getParameter(hiddenInput + StringPool.UNDERLINE + vocabulary.getVocabularyId());
-
-				if (Validator.isNotNull(curCategoryIdsParam)) {
-					curCategoryIds = curCategoryIdsParam;
-				}
-			}
-
-			String[] categoryIdsTitles = AssetCategoryUtil.getCategoryIdsTitles(curCategoryIds, curCategoryNames, vocabulary.getVocabularyId(), themeDisplay);
 		%>
 
 			<span class="field-content">
@@ -84,12 +65,16 @@ int maxEntries = GetterUtil.getInteger(PropsUtil.get(PropsKeys.ASSET_CATEGORIES_
 				</div>
 			</span>
 
+			<%
+			String[] categoryIdsTitle = categoryIdsTitles.get(i);
+			%>
+
 			<aui:script use="liferay-asset-taglib-categories-selector">
 				new Liferay.AssetTaglibCategoriesSelector(
 					{
 						contentBox: '#<portlet:namespace />assetCategoriesSelector_<%= vocabulary.getVocabularyId() %>',
-						curEntries: '<%= HtmlUtil.escapeJS(categoryIdsTitles[1]) %>',
-						curEntryIds: '<%= categoryIdsTitles[0] %>',
+						curEntries: '<%= HtmlUtil.escapeJS(categoryIdsTitle[1]) %>',
+						curEntryIds: '<%= categoryIdsTitle[0] %>',
 						eventName: '<%= eventName %>',
 						hiddenInput: '#<portlet:namespace /><%= hiddenInput + StringPool.UNDERLINE + vocabulary.getVocabularyId() %>',
 						instanceVar: '<portlet:namespace />',
@@ -117,15 +102,7 @@ int maxEntries = GetterUtil.getInteger(PropsUtil.get(PropsKeys.ASSET_CATEGORIES_
 	<c:otherwise>
 
 		<%
-		if (!ignoreRequestValue) {
-			String curCategoryIdsParam = request.getParameter(hiddenInput);
-
-			if (curCategoryIdsParam != null) {
-				curCategoryIds = curCategoryIdsParam;
-			}
-		}
-
-		String[] categoryIdsTitles = AssetCategoryUtil.getCategoryIdsTitles(curCategoryIds, StringPool.BLANK, 0, themeDisplay);
+		String[] categoryIdsTitle = categoryIdsTitles.get(0);
 		%>
 
 		<div class="lfr-tags-selector-content" id="<portlet:namespace />assetCategoriesSelector">
@@ -136,8 +113,8 @@ int maxEntries = GetterUtil.getInteger(PropsUtil.get(PropsKeys.ASSET_CATEGORIES_
 			new Liferay.AssetTaglibCategoriesSelector(
 				{
 					contentBox: '#<portlet:namespace />assetCategoriesSelector',
-					curEntries: '<%= HtmlUtil.escapeJS(categoryIdsTitles[1]) %>',
-					curEntryIds: '<%= categoryIdsTitles[0] %>',
+					curEntries: '<%= HtmlUtil.escapeJS(categoryIdsTitle[1]) %>',
+					curEntryIds: '<%= categoryIdsTitle[0] %>',
 					eventName: '<%= eventName %>',
 					hiddenInput: '#<portlet:namespace /><%= hiddenInput %>',
 					instanceVar: '<portlet:namespace />',

@@ -838,6 +838,20 @@
 
 		<execute macro="PortletEntry#save" />
 
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="Instance Settings" />
+		</execute>
+
+		<execute macro="Navigator#gotoTab">
+			<var name="tab" value="Configuration" />
+		</execute>
+
+		<execute macro="ContentTargeting#enableAnalytics">
+			<var name="analyticsList" value="YouTube Videos" />
+		</execute>
+
+		<execute macro="PortletEntry#save" />
+
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>

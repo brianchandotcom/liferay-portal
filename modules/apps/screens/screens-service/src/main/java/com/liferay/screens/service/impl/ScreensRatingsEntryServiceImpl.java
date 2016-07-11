@@ -98,7 +98,7 @@ public class ScreensRatingsEntryServiceImpl
 		return jsonObject;
 	}
 
-	public JSONObject updateRatingEntry(
+	public JSONObject updateRatingsEntry(
 			long classPK, String className, double score, int stepCount)
 		throws PortalException {
 

@@ -41,4 +41,10 @@ public interface SPAConfiguration {
 	)
 	public String requestTimeout();
 
+	@Meta.AD(
+		deflt = "30000", description = "user.notification.timeout.description",
+		name = "user.notification.timeout.name", required = true
+	)
+	public String userNotificationTimeout();
+
 }

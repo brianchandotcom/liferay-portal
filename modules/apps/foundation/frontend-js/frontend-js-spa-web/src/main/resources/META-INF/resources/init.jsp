@@ -34,6 +34,7 @@ SPAUtil spaUtil = (SPAUtil)request.getAttribute(SPAWebKeys.SPA_UTIL);
 	Liferay.SPA.excludedPaths = <%= spaUtil.getExcludedPaths() %>;
 	Liferay.SPA.loginRedirect = '<%= spaUtil.getLoginRedirect(request) %>';
 	Liferay.SPA.requestTimeout = <%= spaUtil.getRequestTimeout() %>;
+	Liferay.SPA.userNotificationTimeout = <%= spaUtil.getUserNotificationTimeout() %>;
 
 	frontendJsSpaWebLiferayInitEs.default.init(
 		function(app) {

@@ -51,6 +51,39 @@ class EventScreen extends HtmlScreen {
 		}
 	}
 
+	clearRequestTimer_() {
+		if (this.requestTimer) {
+			clearTimeout(this.requestTimer);
+		}
+
+		if (this.timeoutAlert) {
+			this.timeoutAlert.hide();
+		}
+	}
+
+	createTimeoutNotification_() {
+		var instance = this;
+
+		AUI().use(
+			'liferay-notification',
+			() => {
+				instance.timeoutAlert = new Liferay.Notification(
+					{
+						closeable: true,
+						delay: {
+							hide: 0,
+							show: 0
+						},
+						duration: 500,
+						message: Liferay.Language.get('it-looks-like-this-is-taking-longer-than-expected'),
+						title: Liferay.Language.get('oops'),
+						type: 'warning'
+					}
+				).render('body');
+			}
+		);
+	}
+
 	deactivate() {
 		super.deactivate();
 
@@ -122,9 +155,13 @@ class EventScreen extends HtmlScreen {
 	}
 
 	load(path) {
+		this.startRequestTimer_(path);
+
 		return super.load(path)
 			.then(
 				(content) => {
+					this.clearRequestTimer_();
+
 					var redirectPath = this.beforeUpdateHistoryPath(path);
 
 					this.checkRedirectPath(redirectPath);
@@ -148,6 +185,31 @@ class EventScreen extends HtmlScreen {
 
 		if (onLoad) {
 			onLoad();
+		}
+	}
+
+	startRequestTimer_(path) {
+		if (Liferay.SPA.userNotificationTimeout > 0) {
+			this.clearRequestTimer_();
+
+			this.requestTimer = setTimeout(
+				() => {
+					Liferay.fire(
+						'spaRequestTimeout',
+						{
+							path: path
+						}
+					);
+
+					if (!this.timeoutAlert) {
+						this.createTimeoutNotification_();
+					}
+					else {
+						this.timeoutAlert.show();
+					}
+				},
+				Liferay.SPA.userNotificationTimeout
+			);
 		}
 	}
 }

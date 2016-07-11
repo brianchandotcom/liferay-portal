@@ -119,6 +119,19 @@ public class SPAUtil {
 		return requestTimeout;
 	}
 
+	public int getUserNotificationTimeout() {
+		int userNotificationTimeout = 0;
+
+		SPAConfiguration spaConfiguration =
+			_spaConfigurationActivator.getSPAConfiguration();
+
+		userNotificationTimeout = GetterUtil.getInteger(
+			spaConfiguration.userNotificationTimeout(),
+			userNotificationTimeout);
+
+		return userNotificationTimeout;
+	}
+
 	public String getValidStatusCodes() {
 		return _VALID_STATUS_CODES;
 	}

@@ -100,11 +100,8 @@ public class JavadocFormatter {
 	}
 
 	public JavadocFormatter(Map<String, String> arguments) throws Exception {
-		String author = GetterUtil.getString(arguments.get("javadoc.author"));
-
-		if (Validator.isNull(author) || author.startsWith("$")) {
-			author = JavadocFormatterArgs.AUTHOR;
-		}
+		String author = ArgumentsUtil.getString(
+			arguments, "javadoc.author", JavadocFormatterArgs.AUTHOR);
 
 		_author = author;
 
@@ -115,12 +112,8 @@ public class JavadocFormatter {
 
 		_initializeMissingJavadocs = GetterUtil.getBoolean(init);
 
-		String inputDirName = GetterUtil.getString(
-			arguments.get("javadoc.input.dir"));
-
-		if (Validator.isNull(inputDirName) || inputDirName.startsWith("$")) {
-			inputDirName = "./";
-		}
+		String inputDirName = ArgumentsUtil.getString(
+			arguments, "javadoc.input.dir", "./");
 
 		if (!inputDirName.endsWith("/")) {
 			inputDirName += "/";
@@ -160,14 +153,9 @@ public class JavadocFormatter {
 			arguments.get("javadoc.lowest.supported.java.version"),
 			JavadocFormatterArgs.LOWEST_SUPPORTED_JAVA_VERSION);
 
-		String outputFilePrefix = GetterUtil.getString(
-			arguments.get("javadoc.output.file.prefix"));
-
-		if (Validator.isNull(outputFilePrefix) ||
-			outputFilePrefix.startsWith("$")) {
-
-			outputFilePrefix = JavadocFormatterArgs.OUTPUT_FILE_PREFIX;
-		}
+		String outputFilePrefix = ArgumentsUtil.getString(
+			arguments, "javadoc.output.file.prefix",
+			JavadocFormatterArgs.OUTPUT_FILE_PREFIX);
 
 		_outputFilePrefix = outputFilePrefix;
 

@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.ReflectionUtil;
 
 import java.lang.reflect.Field;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -175,24 +176,16 @@ public class DDMFormJSONDeserializerTest
 
 		DDMFormRule ddmFormRule1 = ddmFormRules.get(0);
 
-		List<String> actions = ddmFormRule1.getActions();
-		Assert.assertEquals(2, actions.size());
-
-		Assert.assertArrayEquals(
-			new String[] {"setReadOnly(Date2510)", "setVisible(Text_Box6748)"},
-			actions.toArray());
-
-		Assert.assertEquals("1 + 2 > 4", ddmFormRule1.getCondition());
-		Assert.assertEquals("Warning", ddmFormRule1.getMessage());
+		Assert.assertEquals("Condition 1", ddmFormRule1.getCondition());
+		Assert.assertEquals(
+			Arrays.asList("Action 1", "Action 2"), ddmFormRule1.getActions());
 		Assert.assertTrue(ddmFormRule1.isEnabled());
 
 		DDMFormRule ddmFormRule2 = ddmFormRules.get(1);
 
-		actions = ddmFormRule2.getActions();
-
-		Assert.assertEquals(0, actions.size());
-		Assert.assertEquals("isURL(Text6513)", ddmFormRule2.getCondition());
-		Assert.assertEquals("Error", ddmFormRule2.getMessage());
+		Assert.assertEquals("Condition 2", ddmFormRule2.getCondition());
+		Assert.assertEquals(
+			Arrays.asList("Action 3"), ddmFormRule2.getActions());
 		Assert.assertFalse(ddmFormRule2.isEnabled());
 	}
 

@@ -177,16 +177,18 @@
 	"rules": [
 		{
 			"actions": [
-				"setVisible(SelectField)", "setVisible(HTMLField)"
+				"Action 1",
+				"Action 2"
 			],
-			"condition": "isVisible(TextField)",
-			"enabled": true,
-			"message": "Warning message"
+			"condition": "Condition 1",
+			"enabled": true
 		},
 		{
-			"condition": "isReadOnly(SelectField)",
-			"enabled": false,
-			"message": "Error message"
+			"actions": [
+				"Action 3"
+			],
+			"condition": "Condition 2",
+			"enabled": false
 		}
 	]
 }

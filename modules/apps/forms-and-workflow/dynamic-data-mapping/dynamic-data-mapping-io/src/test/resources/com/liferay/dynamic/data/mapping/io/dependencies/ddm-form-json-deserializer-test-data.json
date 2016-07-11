@@ -551,16 +551,18 @@
 	"rules": [
 		{
 			"actions": [
-				"setReadOnly(Date2510)", "setVisible(Text_Box6748)"
+				"Action 1",
+				"Action 2"
 			],
-			"condition": "1 + 2 > 4",
-			"enabled": true,
-			"message": "Warning"
+			"condition": "Condition 1",
+			"enabled": true
 		},
 		{
-			"condition": "isURL(Text6513)",
-			"enabled": false,
-			"message": "Error"
+			"actions": [
+				"Action 3"
+			],
+			"condition": "Condition 2",
+			"enabled": false
 		}
 	]
 }

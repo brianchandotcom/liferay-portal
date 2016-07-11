@@ -86,6 +86,7 @@ public abstract class BaseDDMFormDeserializerTestCase extends BaseDDMTestCase {
 		DDMForm ddmForm = deserialize(serializedDDMForm);
 
 		testAvailableLocales(ddmForm);
+		testDDMFormRules(ddmForm.getDDMFormRules());
 		testDefaultLocale(ddmForm);
 
 		Map<String, DDMFormField> ddmFormFieldsMap =
@@ -99,8 +100,6 @@ public abstract class BaseDDMFormDeserializerTestCase extends BaseDDMTestCase {
 		testHTMLDDMFormField(ddmFormFieldsMap.get("HTML4512"));
 		testNestedDDMFormFields(ddmFormFieldsMap.get("Text6980"));
 		testRadioDDMFormField(ddmFormFieldsMap.get("Radio5699"));
-
-		testDDMFormRules(ddmForm.getDDMFormRules());
 	}
 
 	protected abstract DDMForm deserialize(String serializedDDMForm)

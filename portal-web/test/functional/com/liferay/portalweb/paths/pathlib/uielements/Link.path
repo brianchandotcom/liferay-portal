@@ -130,7 +130,7 @@
 </tr>
 <tr>
 	<td>STAGING</td>
-	<td>//a[contains(@data-qa-id,'staging')]</td>
+	<td>//ul[contains(@data-qa-id,'header')]//span[contains(.,'Staging')]</td>
 	<td></td>
 </tr>
 <tr>

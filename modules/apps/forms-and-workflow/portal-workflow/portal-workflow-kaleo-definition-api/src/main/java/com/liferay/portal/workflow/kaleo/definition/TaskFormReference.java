@@ -14,40 +14,46 @@
 
 package com.liferay.portal.workflow.kaleo.definition;
 
-import java.util.Collections;
-import java.util.Set;
-import java.util.TreeSet;
-
 /**
  * @author Michael C. Han
  */
-public class Task extends Node {
+public class TaskFormReference {
 
-	public Task(String name, String description) {
-		super(NodeType.TASK, name, description);
+	public long getCompanyId() {
+		return _companyId;
 	}
 
-	public void addTaskForm(TaskForm taskForm) {
-		_taskForms.add(taskForm);
+	public long getFormId() {
+		return _formId;
 	}
 
-	public void addTaskForms(Set<TaskForm> taskForms) {
-		_taskForms.addAll(taskForms);
+	public String getFormUuid() {
+		return _formUuid;
 	}
 
-	public Set<Assignment> getAssignments() {
-		return _assignments;
+	public long getGroupId() {
+		return _groupId;
 	}
 
-	public Set<TaskForm> getTaskForms() {
-		return Collections.unmodifiableSet(_taskForms);
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
 	}
 
-	public void setAssignments(Set<Assignment> assignments) {
-		_assignments = assignments;
+	public void setFormId(long formId) {
+		_formId = formId;
 	}
 
-	private Set<Assignment> _assignments;
-	private final Set<TaskForm> _taskForms = new TreeSet<>();
+	public void setFormUuid(String formUuid) {
+		_formUuid = formUuid;
+	}
+
+	public void setGroupId(long groupId) {
+		_groupId = groupId;
+	}
+
+	private long _companyId;
+	private long _formId;
+	private String _formUuid;
+	private long _groupId;
 
 }

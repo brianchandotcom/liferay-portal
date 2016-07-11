@@ -46,6 +46,7 @@ public class CalendarBookingSoap implements Serializable {
 		soapModel.setCalendarId(model.getCalendarId());
 		soapModel.setCalendarResourceId(model.getCalendarResourceId());
 		soapModel.setParentCalendarBookingId(model.getParentCalendarBookingId());
+		soapModel.setRecurringCalendarBookingId(model.getRecurringCalendarBookingId());
 		soapModel.setVEventUid(model.getVEventUid());
 		soapModel.setTitle(model.getTitle());
 		soapModel.setDescription(model.getDescription());
@@ -213,6 +214,14 @@ public class CalendarBookingSoap implements Serializable {
 		_parentCalendarBookingId = parentCalendarBookingId;
 	}
 
+	public long getRecurringCalendarBookingId() {
+		return _recurringCalendarBookingId;
+	}
+
+	public void setRecurringCalendarBookingId(long recurringCalendarBookingId) {
+		_recurringCalendarBookingId = recurringCalendarBookingId;
+	}
+
 	public String getVEventUid() {
 		return _vEventUid;
 	}
@@ -365,6 +374,7 @@ public class CalendarBookingSoap implements Serializable {
 	private long _calendarId;
 	private long _calendarResourceId;
 	private long _parentCalendarBookingId;
+	private long _recurringCalendarBookingId;
 	private String _vEventUid;
 	private String _title;
 	private String _description;

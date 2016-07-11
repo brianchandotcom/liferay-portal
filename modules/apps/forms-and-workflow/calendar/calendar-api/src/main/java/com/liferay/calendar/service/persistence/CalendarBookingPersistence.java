@@ -911,6 +911,145 @@ public interface CalendarBookingPersistence extends BasePersistence<CalendarBook
 	public int countByParentCalendarBookingId(long parentCalendarBookingId);
 
 	/**
+	* Returns all the calendar bookings where recurringCalendarBookingId = &#63;.
+	*
+	* @param recurringCalendarBookingId the recurring calendar booking ID
+	* @return the matching calendar bookings
+	*/
+	public java.util.List<CalendarBooking> findByRecurringCalendarBookingId(
+		long recurringCalendarBookingId);
+
+	/**
+	* Returns a range of all the calendar bookings where recurringCalendarBookingId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CalendarBookingModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param recurringCalendarBookingId the recurring calendar booking ID
+	* @param start the lower bound of the range of calendar bookings
+	* @param end the upper bound of the range of calendar bookings (not inclusive)
+	* @return the range of matching calendar bookings
+	*/
+	public java.util.List<CalendarBooking> findByRecurringCalendarBookingId(
+		long recurringCalendarBookingId, int start, int end);
+
+	/**
+	* Returns an ordered range of all the calendar bookings where recurringCalendarBookingId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CalendarBookingModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param recurringCalendarBookingId the recurring calendar booking ID
+	* @param start the lower bound of the range of calendar bookings
+	* @param end the upper bound of the range of calendar bookings (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching calendar bookings
+	*/
+	public java.util.List<CalendarBooking> findByRecurringCalendarBookingId(
+		long recurringCalendarBookingId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CalendarBooking> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the calendar bookings where recurringCalendarBookingId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CalendarBookingModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param recurringCalendarBookingId the recurring calendar booking ID
+	* @param start the lower bound of the range of calendar bookings
+	* @param end the upper bound of the range of calendar bookings (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching calendar bookings
+	*/
+	public java.util.List<CalendarBooking> findByRecurringCalendarBookingId(
+		long recurringCalendarBookingId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CalendarBooking> orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
+	* Returns the first calendar booking in the ordered set where recurringCalendarBookingId = &#63;.
+	*
+	* @param recurringCalendarBookingId the recurring calendar booking ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching calendar booking
+	* @throws NoSuchBookingException if a matching calendar booking could not be found
+	*/
+	public CalendarBooking findByRecurringCalendarBookingId_First(
+		long recurringCalendarBookingId,
+		com.liferay.portal.kernel.util.OrderByComparator<CalendarBooking> orderByComparator)
+		throws NoSuchBookingException;
+
+	/**
+	* Returns the first calendar booking in the ordered set where recurringCalendarBookingId = &#63;.
+	*
+	* @param recurringCalendarBookingId the recurring calendar booking ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching calendar booking, or <code>null</code> if a matching calendar booking could not be found
+	*/
+	public CalendarBooking fetchByRecurringCalendarBookingId_First(
+		long recurringCalendarBookingId,
+		com.liferay.portal.kernel.util.OrderByComparator<CalendarBooking> orderByComparator);
+
+	/**
+	* Returns the last calendar booking in the ordered set where recurringCalendarBookingId = &#63;.
+	*
+	* @param recurringCalendarBookingId the recurring calendar booking ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching calendar booking
+	* @throws NoSuchBookingException if a matching calendar booking could not be found
+	*/
+	public CalendarBooking findByRecurringCalendarBookingId_Last(
+		long recurringCalendarBookingId,
+		com.liferay.portal.kernel.util.OrderByComparator<CalendarBooking> orderByComparator)
+		throws NoSuchBookingException;
+
+	/**
+	* Returns the last calendar booking in the ordered set where recurringCalendarBookingId = &#63;.
+	*
+	* @param recurringCalendarBookingId the recurring calendar booking ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching calendar booking, or <code>null</code> if a matching calendar booking could not be found
+	*/
+	public CalendarBooking fetchByRecurringCalendarBookingId_Last(
+		long recurringCalendarBookingId,
+		com.liferay.portal.kernel.util.OrderByComparator<CalendarBooking> orderByComparator);
+
+	/**
+	* Returns the calendar bookings before and after the current calendar booking in the ordered set where recurringCalendarBookingId = &#63;.
+	*
+	* @param calendarBookingId the primary key of the current calendar booking
+	* @param recurringCalendarBookingId the recurring calendar booking ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next calendar booking
+	* @throws NoSuchBookingException if a calendar booking with the primary key could not be found
+	*/
+	public CalendarBooking[] findByRecurringCalendarBookingId_PrevAndNext(
+		long calendarBookingId, long recurringCalendarBookingId,
+		com.liferay.portal.kernel.util.OrderByComparator<CalendarBooking> orderByComparator)
+		throws NoSuchBookingException;
+
+	/**
+	* Removes all the calendar bookings where recurringCalendarBookingId = &#63; from the database.
+	*
+	* @param recurringCalendarBookingId the recurring calendar booking ID
+	*/
+	public void removeByRecurringCalendarBookingId(
+		long recurringCalendarBookingId);
+
+	/**
+	* Returns the number of calendar bookings where recurringCalendarBookingId = &#63;.
+	*
+	* @param recurringCalendarBookingId the recurring calendar booking ID
+	* @return the number of matching calendar bookings
+	*/
+	public int countByRecurringCalendarBookingId(
+		long recurringCalendarBookingId);
+
+	/**
 	* Returns the calendar booking where calendarId = &#63; and parentCalendarBookingId = &#63; or throws a {@link NoSuchBookingException} if it could not be found.
 	*
 	* @param calendarId the calendar ID

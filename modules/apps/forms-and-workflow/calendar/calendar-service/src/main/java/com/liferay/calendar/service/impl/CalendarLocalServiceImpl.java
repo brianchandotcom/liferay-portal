@@ -180,6 +180,7 @@ public class CalendarLocalServiceImpl extends CalendarLocalServiceBaseImpl {
 			groupId, calendarResourceId, defaultCalendar);
 	}
 
+	@Override
 	public boolean hasStagingCalendar(Calendar calendar)
 		throws PortalException {
 
@@ -216,6 +217,7 @@ public class CalendarLocalServiceImpl extends CalendarLocalServiceBaseImpl {
 		calendarDataHandler.importCalendar(calendarId, data);
 	}
 
+	@Override
 	public boolean isStagingCalendar(Calendar calendar) {
 		long groupId = calendar.getGroupId();
 

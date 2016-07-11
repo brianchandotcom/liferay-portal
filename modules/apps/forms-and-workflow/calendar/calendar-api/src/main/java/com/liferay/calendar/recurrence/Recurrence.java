@@ -103,6 +103,10 @@ public class Recurrence {
 		return weekdays;
 	}
 
+	public void removeExceptionDate(Calendar calendar) {
+		_exceptionJCalendars.remove(calendar);
+	}
+
 	public void setCount(int count) {
 		_count = count;
 	}

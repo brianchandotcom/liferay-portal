@@ -22,13 +22,5 @@
 			<default-portlet-decorator>true</default-portlet-decorator>
 			<portlet-decorator-css-class>portlet-decorate</portlet-decorator-css-class>
 		</portlet-decorator>
-		<layout-templates>
-			<custom>
-				<layout-template id="westeros_2_width_limited" name="Westeros 2 columns width limited">
-					<template-path>/layoutttpl/custom/westeros_2_width_limited.tpl</template-path>
-					<thumbnail-path>/layoutttpl/custom/westeros_2_width_limited.png</thumbnail-path>
-				</layout-template>
-			</custom>
-		</layout-templates>
 	</theme>
 </look-and-feel>

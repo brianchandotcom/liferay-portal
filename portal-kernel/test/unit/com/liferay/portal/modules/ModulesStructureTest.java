@@ -115,6 +115,8 @@ public class ModulesStructureTest {
 						return FileVisitResult.SKIP_SUBTREE;
 					}
 					else if (Files.exists(dirPath.resolve("package.json"))) {
+						_testThemeBuildScripts(dirPath);
+
 						return FileVisitResult.SKIP_SUBTREE;
 					}
 
@@ -191,6 +193,23 @@ public class ModulesStructureTest {
 				}
 			}
 		}
+	}
+
+	private boolean _contains(Path path, String s) throws IOException {
+		try (FileReader fileReader = new FileReader(path.toFile());
+				UnsyncBufferedReader unsyncBufferedReader =
+					new UnsyncBufferedReader(fileReader)) {
+
+			String line = null;
+
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				if (line.contains(s)) {
+					return true;
+				}
+			}
+		}
+
+		return false;
 	}
 
 	private String _getGitRepoBuildGradle(
@@ -288,6 +307,20 @@ public class ModulesStructureTest {
 		Assert.assertEquals(
 			"Incorrect " + settingsGradlePath, settingsGradleTemplate,
 			settingsGradle);
+	}
+
+	private void _testThemeBuildScripts(Path dirPath) throws IOException {
+		if (!_contains(
+				dirPath.resolve("package.json"), "\"liferay-theme-tasks\":")) {
+
+			return;
+		}
+
+		Path gulpfileJsPath = dirPath.resolve("gulpfile.js");
+
+		if (Files.notExists(gulpfileJsPath)) {
+			Assert.fail("Missing " + gulpfileJsPath);
+		}
 	}
 
 }

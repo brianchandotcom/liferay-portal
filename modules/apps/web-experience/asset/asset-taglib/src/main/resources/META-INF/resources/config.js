@@ -7,7 +7,7 @@
 					combine: Liferay.AUI.getCombine(),
 					modules: {
 						'liferay-asset-taglib-categories-selector': {
-							path: 'asset_categories_selector/js/asset_categories_selector.js',
+							path: 'asset_categories_selector/js/asset_taglib_categories_selector.js',
 							requires: [
 								'aui-tree',
 								'liferay-asset-taglib-tags-selector'

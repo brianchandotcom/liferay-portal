@@ -257,28 +257,32 @@ public class DDMFormJSONDeserializerImpl implements DDMFormJSONDeserializer {
 	}
 
 	protected DDMFormRule getDDMFormRule(JSONObject jsonObject) {
-		JSONArray actionJSONArray = jsonObject.getJSONArray("actions");
+		String condition = jsonObject.getString("condition");
+
+		List<String> actions = getDDMFormRuleActions(
+			jsonObject.getJSONArray("actions"));
+
+		DDMFormRule ddmFormRule = new DDMFormRule(condition, actions);
+
+		boolean enabled = jsonObject.getBoolean("enabled", true);
+
+		ddmFormRule.setEnabled(enabled);
+
+		return ddmFormRule;
+	}
+
+	protected List<String> getDDMFormRuleActions(JSONArray jsonArray) {
 		List<String> actions = new ArrayList<>();
 
-		if (Validator.isNotNull(actionJSONArray)) {
-			for (int i = 0; i < actionJSONArray.length(); i++) {
-				actions.add(actionJSONArray.getString(i));
-			}
+		for (int i = 0; i < jsonArray.length(); i++) {
+			actions.add(jsonArray.getString(i));
 		}
 
-		String condition = jsonObject.getString("condition");
-		boolean enabled = jsonObject.getBoolean("enabled");
-		String message = jsonObject.getString("message");
-
-		return new DDMFormRule(actions, condition, enabled, message);
+		return actions;
 	}
 
 	protected List<DDMFormRule> getDDMFormRules(JSONArray jsonArray) {
 		List<DDMFormRule> ddmFormRules = new ArrayList<>();
-
-		if (Validator.isNull(jsonArray)) {
-			return ddmFormRules;
-		}
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			DDMFormRule ddmFormRule = getDDMFormRule(
@@ -398,6 +402,10 @@ public class DDMFormJSONDeserializerImpl implements DDMFormJSONDeserializer {
 	}
 
 	protected void setDDMFormRules(JSONArray jsonArray, DDMForm ddmForm) {
+		if ((jsonArray == null) || (jsonArray.length() == 0)) {
+			return;
+		}
+
 		List<DDMFormRule> ddmFormRules = getDDMFormRules(jsonArray);
 
 		ddmForm.setDDMFormRules(ddmFormRules);

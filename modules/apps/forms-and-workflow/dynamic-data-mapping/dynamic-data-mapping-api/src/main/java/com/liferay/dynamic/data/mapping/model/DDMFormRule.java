@@ -26,22 +26,16 @@ public class DDMFormRule implements Serializable {
 
 	public DDMFormRule(DDMFormRule ddmFormRule) {
 		_condition = ddmFormRule._condition;
+		_actions = new ArrayList<>(ddmFormRule._actions);
 		_enabled = ddmFormRule._enabled;
-		_message = ddmFormRule._message;
-
-		for (String action : ddmFormRule._actions) {
-			addAction(action);
-		}
 	}
 
-	public DDMFormRule(
-		List<String> actions, String condition, boolean enabled,
-		String message) {
-
-		_actions = actions;
+	public DDMFormRule(String condition, List<String> actions) {
 		_condition = condition;
-		_enabled = enabled;
-		_message = message;
+		_actions = actions;
+	}
+
+	public DDMFormRule() {
 	}
 
 	public void addAction(String action) {
@@ -54,10 +48,6 @@ public class DDMFormRule implements Serializable {
 
 	public String getCondition() {
 		return _condition;
-	}
-
-	public String getMessage() {
-		return _message;
 	}
 
 	public boolean isEnabled() {
@@ -76,13 +66,8 @@ public class DDMFormRule implements Serializable {
 		_enabled = enabled;
 	}
 
-	public void setMessage(String message) {
-		_message = message;
-	}
-
 	private List<String> _actions = new ArrayList<>();
 	private String _condition;
 	private boolean _enabled = true;
-	private String _message;
 
 }

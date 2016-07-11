@@ -55,7 +55,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 public class SPAUtil {
 
 	public long getCacheExpirationTime(long companyId) {
-		long cacheExpirationTime = -1;
+		long cacheExpirationTime = 0;
 
 		SPAConfiguration spaConfiguration =
 			_spaConfigurationActivator.getSPAConfiguration();
@@ -63,7 +63,7 @@ public class SPAUtil {
 		cacheExpirationTime = GetterUtil.getLong(
 			spaConfiguration.cacheExpirationTime(), cacheExpirationTime);
 
-		if (cacheExpirationTime > -1) {
+		if (cacheExpirationTime > 0) {
 			cacheExpirationTime *= Time.MINUTE;
 		}
 

@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portlet.blogs.util.BlogsUtil;
+import com.liferay.registry.BasicRegistryImpl;
+import com.liferay.registry.RegistryUtil;
 
 import java.io.IOException;
 
@@ -48,6 +50,8 @@ public class LinkbackConsumerImplTest extends PowerMockito {
 	@Before
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
+
+		RegistryUtil.setRegistry(new BasicRegistryImpl());
 
 		setUpBlogsUtil();
 		setUpHttpUtil();

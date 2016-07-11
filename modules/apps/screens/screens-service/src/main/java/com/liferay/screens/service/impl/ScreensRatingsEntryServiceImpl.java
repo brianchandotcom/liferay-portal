@@ -87,7 +87,7 @@ public class ScreensRatingsEntryServiceImpl
 		double userScore = -1;
 
 		for (RatingsEntry entry : entries) {
-			int position = (int)entry.getScore() * stepCount;
+			int position = (int) (entry.getScore() * stepCount);
 
 			if (position == stepCount) {
 				position--;

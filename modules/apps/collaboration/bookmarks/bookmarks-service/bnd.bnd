@@ -3,7 +3,6 @@ Bundle-SymbolicName: com.liferay.bookmarks.service
 Bundle-Version: 1.0.8
 Export-Package:\
 	com.liferay.bookmarks.asset,\
-	com.liferay.bookmarks.lar,\
 	com.liferay.bookmarks.search,\
 	com.liferay.bookmarks.service.permission,\
 	com.liferay.bookmarks.social,\

@@ -106,6 +106,27 @@
 			<xs:element minOccurs="0" name="script-required-contexts" type="xs:string" />
 		</xs:sequence>
 	</xs:complexType>
+	<xs:complexType name="task-form-complex-type">
+		<xs:sequence>
+			<xs:element name="name" type="xs:string" />
+			<xs:element minOccurs="0" name="description" type="xs:string" />
+			<xs:choice maxOccurs="1">
+				<xs:element name="form-definition" type="xs:string" />
+				<xs:element name="form-reference">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="company-id" type="xs:long" />
+							<xs:element name="form-id" type="xs:long" />
+							<xs:element name="form-uuid" type="xs:string" />
+							<xs:element name="group-id" type="xs:long" />
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:choice>
+			<xs:element minOccurs="0" name="metadata" type="xs:string" />
+			<xs:element name="priority" type="xs:int" />
+		</xs:sequence>
+	</xs:complexType>
 	<xs:complexType name="task-notification-complex-type">
 		<xs:complexContent>
 			<xs:extension base="abstract-notification-complex-type">
@@ -246,6 +267,13 @@
 								<xs:choice>
 									<xs:group ref="assignments-group" />
 								</xs:choice>
+							</xs:complexType>
+						</xs:element>
+						<xs:element minOccurs="0" name="task-forms">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element maxOccurs="unbounded" name="task-form" type="task-form-complex-type" />
+								</xs:sequence>
 							</xs:complexType>
 						</xs:element>
 						<xs:element minOccurs="0" name="task-timers">

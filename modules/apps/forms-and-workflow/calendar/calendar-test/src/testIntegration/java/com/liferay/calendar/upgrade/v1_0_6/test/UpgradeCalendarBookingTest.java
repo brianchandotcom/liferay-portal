@@ -103,7 +103,7 @@ public class UpgradeCalendarBookingTest extends UpgradeCalendarBooking {
 			ResultSet rs = statement.executeQuery(
 				"select recurringCalendarBookingId from CalendarBooking " +
 					"where calendarBookingId = " +
-					calendarBooking.getCalendarBookingId());
+						calendarBooking.getCalendarBookingId());
 
 			rs.next();
 

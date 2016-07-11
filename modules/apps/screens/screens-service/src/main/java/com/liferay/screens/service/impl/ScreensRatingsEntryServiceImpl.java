@@ -33,7 +33,7 @@ import java.util.List;
 public class ScreensRatingsEntryServiceImpl
 	extends ScreensRatingsEntryServiceBaseImpl {
 
-	public JSONObject deleteRatingEntry(
+	public JSONObject deleteRatingsEntry(
 			long classPK, String className, int stepCount)
 		throws PortalException {
 

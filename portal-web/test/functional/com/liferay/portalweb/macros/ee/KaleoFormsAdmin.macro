@@ -628,7 +628,7 @@
 	</command>
 
 	<command name="viewNextFieldSetPage">
-		<execute function="AssertClick" locator1="Pagination#NEXT_LINK" value1="Next" />
+		<execute function="Click" locator1="Pagination#NEXT_LINK" />
 	</command>
 
 	<command name="viewNoPublishedWorkflowDefinitions">

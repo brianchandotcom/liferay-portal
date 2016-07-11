@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.expando.web.portlet;
+package com.liferay.expando.web.internal.portlet;
 
 import com.liferay.expando.kernel.exception.ColumnNameException;
 import com.liferay.expando.kernel.exception.ColumnTypeException;
@@ -24,7 +24,7 @@ import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.service.ExpandoColumnService;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.expando.kernel.util.ExpandoPresetUtil;
-import com.liferay.expando.web.constants.ExpandoPortletKeys;
+import com.liferay.expando.web.internal.constants.ExpandoPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;

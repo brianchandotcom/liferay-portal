@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.expando.web.search;
+package com.liferay.expando.web.internal.search;
 
 import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalServiceUtil;

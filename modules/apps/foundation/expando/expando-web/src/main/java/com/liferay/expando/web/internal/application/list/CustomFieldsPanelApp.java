@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.expando.web.application.list;
+package com.liferay.expando.web.internal.application.list;
 
 import com.liferay.application.list.BasePanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;
-import com.liferay.expando.web.constants.ExpandoPortletKeys;
+import com.liferay.expando.web.internal.constants.ExpandoPortletKeys;
 import com.liferay.portal.kernel.model.Portlet;
 
 import org.osgi.service.component.annotations.Component;

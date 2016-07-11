@@ -244,7 +244,7 @@
 </tr>
 <tr>
 	<td>USER_SEGMENT_RULE_USER_ATTRIBUTES_GENDER_FEMALE_RADIO</td>
-	<td>//div[contains(@class,'genderrule')]//div[contains(@class,'field-editor') and contains(@class,'expanded')]//div[contains(@class,'field-editor') and contains(@class,'expanded')]//input[@value='female']</td>
+	<td>//div[contains(@class,'genderrule')]//div[contains(@class,'field-editor') and contains(@class,'expanded')]//input[@value='female']</td>
 	<td></td>
 </tr>
 <tr>
@@ -347,12 +347,12 @@
 <!--USER_SEGMENT_RULE_USER_ATTRIBUTES_AGE-->
 <tr>
 	<td>USER_SEGMENT_RULE_USER_ATTRIBUTES_AGE_OLDER_THAN_FIELD</td>
-	<td>//div[contains(@class,'agerule')]//div[contains(@class,'field-editor') and contains(@class,'expanded')]//input[contains(@id,'olderthan')]</td>
+	<td>//div[contains(@class,'agerule')]//div[contains(@class,'field-editor') and contains(@class,'expanded')]//input[contains(@id,'olderThan')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>USER_SEGMENT_RULE_USER_ATTRIBUTES_AGE_YOUNGER_THAN_FIELD</td>
-	<td>//div[contains(@class,'agerule')]//div[contains(@class,'field-editor') and contains(@class,'expanded')]//input[contains(@id,'youngerthan')]</td>
+	<td>//div[contains(@class,'agerule')]//div[contains(@class,'field-editor') and contains(@class,'expanded')]//input[contains(@id,'youngerThan')]</td>
 	<td></td>
 </tr>
 <tr>

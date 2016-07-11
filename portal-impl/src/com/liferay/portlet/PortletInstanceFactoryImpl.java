@@ -28,12 +28,11 @@ import com.liferay.portal.kernel.portlet.PortletInstanceFactory;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.util.ClassLoaderUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
 import com.liferay.registry.ServiceTracker;
-import com.liferay.registry.ServiceTrackerCustomizer;
+import com.liferay.registry.ServiceTrackerFieldUpdaterCustomizer;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -51,14 +50,27 @@ import javax.servlet.ServletContext;
 @DoPrivileged
 public class PortletInstanceFactoryImpl implements PortletInstanceFactory {
 
-	public PortletInstanceFactoryImpl() {
-		_pool = new ConcurrentHashMap<>();
-
+	public void afterPropertiesSet() throws Exception {
 		Registry registry = RegistryUtil.getRegistry();
 
 		_serviceTracker = registry.trackServices(
 			InvokerPortletFactory.class,
-			new InvokerPortletFactoryTrackerCustomizer());
+			new ServiceTrackerFieldUpdaterCustomizer
+				<InvokerPortletFactory, InvokerPortletFactory>(
+					ReflectionUtil.getDeclaredField(
+						PortletInstanceFactoryImpl.class,
+						"_invokerPortletFactory"),
+					this, _defaultInvokerPortletFactory) {
+
+				@Override
+				protected void afterServiceUpdate(
+					InvokerPortletFactory oldInvokerPortletFactory,
+					InvokerPortletFactory newInvokerPortletFactory) {
+
+					_pool.clear();
+				}
+
+			});
 
 		_serviceTracker.open();
 	}
@@ -247,6 +259,14 @@ public class PortletInstanceFactoryImpl implements PortletInstanceFactory {
 		PortletLocalServiceUtil.destroyPortlet(portlet);
 	}
 
+	public void setDefaultInvokerPortletFactory(
+		InvokerPortletFactory defaultInvokerPortletFactory) {
+
+		_defaultInvokerPortletFactory = defaultInvokerPortletFactory;
+
+		_invokerPortletFactory = defaultInvokerPortletFactory;
+	}
+
 	protected void destroyRelated(Portlet portlet) {
 		PortletConfigFactoryUtil.destroy(portlet);
 		PortletContextFactoryUtil.destroy(portlet);
@@ -270,64 +290,11 @@ public class PortletInstanceFactoryImpl implements PortletInstanceFactory {
 		return invokerPortlet;
 	}
 
-	private InvokerPortletFactory _invokerPortletFactory;
-	private final Map<String, Map<String, InvokerPortlet>> _pool;
-	private long _serviceRanking;
-	private final ServiceTracker<InvokerPortletFactory, InvokerPortletFactory>
+	private InvokerPortletFactory _defaultInvokerPortletFactory;
+	private volatile InvokerPortletFactory _invokerPortletFactory;
+	private final Map<String, Map<String, InvokerPortlet>> _pool =
+		new ConcurrentHashMap<>();
+	private ServiceTracker<InvokerPortletFactory, InvokerPortletFactory>
 		_serviceTracker;
-
-	private class InvokerPortletFactoryTrackerCustomizer
-		implements ServiceTrackerCustomizer
-			<InvokerPortletFactory, InvokerPortletFactory> {
-
-		@Override
-		public synchronized InvokerPortletFactory addingService(
-			ServiceReference<InvokerPortletFactory> serviceReference) {
-
-			Registry registry = RegistryUtil.getRegistry();
-
-			InvokerPortletFactory invokerPortletFactory = registry.getService(
-				serviceReference);
-
-			long serviceRanking = GetterUtil.getLong(
-				serviceReference.getProperty("service.ranking"));
-
-			if ((_invokerPortletFactory == null) ||
-				(serviceRanking > _serviceRanking)) {
-
-				_invokerPortletFactory = invokerPortletFactory;
-				_serviceRanking = serviceRanking;
-			}
-
-			return invokerPortletFactory;
-		}
-
-		@Override
-		public void modifiedService(
-			ServiceReference<InvokerPortletFactory> serviceReference,
-			InvokerPortletFactory invokerPortletFactory) {
-		}
-
-		@Override
-		public synchronized void removedService(
-			ServiceReference<InvokerPortletFactory> serviceReference,
-			InvokerPortletFactory invokerPortletFactory) {
-
-			Registry registry = RegistryUtil.getRegistry();
-
-			registry.ungetService(serviceReference);
-
-			serviceReference = registry.getServiceReference(
-				InvokerPortletFactory.class);
-
-			if (serviceReference != null) {
-				_invokerPortletFactory = registry.getService(serviceReference);
-
-				_serviceRanking = GetterUtil.getLong(
-					serviceReference.getProperty("service.ranking"));
-			}
-		}
-
-	}
 
 }

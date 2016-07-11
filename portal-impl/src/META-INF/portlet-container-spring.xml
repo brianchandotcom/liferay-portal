@@ -18,7 +18,9 @@
 	<bean class="com.liferay.portal.kernel.portlet.PortletContextFactoryUtil" id="com.liferay.portal.kernel.portlet.PortletContextFactoryUtil">
 		<property name="portletContextFactory" ref="com.liferay.portal.kernel.portlet.PortletContextFactory" />
 	</bean>
-	<bean class="com.liferay.portlet.PortletInstanceFactoryImpl" id="com.liferay.portal.kernel.portlet.PortletInstanceFactory" />
+	<bean class="com.liferay.portlet.PortletInstanceFactoryImpl" id="com.liferay.portal.kernel.portlet.PortletInstanceFactory">
+		<property name="defaultInvokerPortletFactory" ref="com.liferay.portal.kernel.portlet.InvokerPortletFactory" />
+	</bean>
 	<bean class="com.liferay.portal.kernel.portlet.PortletInstanceFactoryUtil" id="com.liferay.portal.kernel.portlet.PortletInstanceFactoryUtil">
 		<property name="portletInstanceFactory" ref="com.liferay.portal.kernel.portlet.PortletInstanceFactory" />
 	</bean>

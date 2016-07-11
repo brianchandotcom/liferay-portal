@@ -74,6 +74,12 @@ public class ServiceTrackerFieldUpdaterCustomizer<S, T>
 		doRemovedService(serviceReference, service);
 	}
 
+	protected void afterServiceUpdate(T oldService, T newService) {
+	}
+
+	protected void beforeServiceUpdate(T oldService, T newService) {
+	}
+
 	protected T doAddingService(ServiceReference<S> serviceReference) {
 		Registry registry = RegistryUtil.getRegistry();
 
@@ -98,11 +104,17 @@ public class ServiceTrackerFieldUpdaterCustomizer<S, T>
 
 		Optional<T> optionalService = optionalEntry.map(Entry::getValue);
 
-		T service = optionalService.orElse(_dummyTrackedService);
+		T newService = optionalService.orElse(_dummyTrackedService);
 
 		try {
-			if (service != _serviceField.get(_serviceHolder)) {
-				_serviceField.set(_serviceHolder, service);
+			T oldService = (T)_serviceField.get(_serviceHolder);
+
+			if (newService != oldService) {
+				beforeServiceUpdate(oldService, newService);
+
+				_serviceField.set(_serviceHolder, newService);
+
+				afterServiceUpdate(oldService, newService);
 			}
 		}
 		catch (IllegalAccessException iae) {

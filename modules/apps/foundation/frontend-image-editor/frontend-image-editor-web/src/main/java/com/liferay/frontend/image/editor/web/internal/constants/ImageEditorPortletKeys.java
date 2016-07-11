@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,13 +11,15 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
-taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
+package com.liferay.frontend.image.editor.web.internal.constants;
 
-<%@ page import="com.liferay.frontend.image.editor.integration.document.library.internal.constants.ImageEditorIntegrationDLWebKeys" %><%@
-page import="com.liferay.frontend.image.editor.integration.document.library.internal.display.context.logic.ImageEditorDLDisplayContextHelper" %><%@
-page import="com.liferay.portal.kernel.repository.model.FileVersion" %>
+/**
+ * @author Chema Balsas
+ */
+public class ImageEditorPortletKeys {
 
-<liferay-frontend:defineObjects />
+	public static final String IMAGE_EDITOR =
+		"com_liferay_image_editor_web_portlet_ImageEditorPortlet";
+
+}

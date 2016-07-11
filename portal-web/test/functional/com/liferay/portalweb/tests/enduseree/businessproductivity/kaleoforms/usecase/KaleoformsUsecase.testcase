@@ -3504,7 +3504,7 @@
 		</execute>
 
 		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldName" value="Description" />
+			<var name="fieldLabel" value="Description" />
 			<var name="fieldValue" value="Test Description" />
 		</execute>
 
@@ -3688,7 +3688,7 @@
 
 		<execute macro="WorkflowAsset#previewViewContent">
 			<var name="fieldLabel" value="Attachment" />
-			<var name="kfProcessFieldData" value="Document_1.txt" />
+			<var name="fieldValue" value="Document_1.txt" />
 		</execute>
 
 		<execute macro="WorkflowAsset#previewViewContent">
@@ -4068,7 +4068,7 @@
 		</execute>
 
 		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldNafieldLabelme" value="Description" />
+			<var name="fieldLabel" value="Description" />
 			<var name="fieldValue" value="Test Description" />
 		</execute>
 
@@ -4752,7 +4752,7 @@
 		</execute>
 
 		<execute macro="Workflow#viewCompletedTask">
-			<var name="workflowAssetTitle" value="$Kaleo Forms Process" />
+			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>

@@ -4,3 +4,7 @@ dependencies {
 	testCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
 	testCompile group: "net.sourceforge.pmd", name: "pmd-test", version: "5.5.0"
 }
+
+updateFileVersions {
+	match(/com\.liferay\.pmd=(\d.+)/, "../../sdk/gradle-plugins/src/main/resources/com/liferay/gradle/plugins/dependencies/portal-tools.properties")
+}

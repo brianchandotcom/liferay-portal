@@ -33,6 +33,7 @@ import com.liferay.portal.util.PropsValues;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * @author Juan Fernández
@@ -186,6 +187,18 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 
 		return journalFolderFinder.filterFindF_A_ByG_F(
 			groupId, folderId, queryDefinition);
+	}
+
+	@Override
+	public List<Object> getFoldersAndArticles(
+		long groupId, long userId, long folderId, int status, Locale locale,
+		int start, int end, OrderByComparator<?> obc) {
+
+		QueryDefinition<?> queryDefinition = new QueryDefinition<>(
+			status, userId, true, start, end, (OrderByComparator<Object>)obc);
+
+		return journalFolderFinder.filterFindF_A_ByG_F_L(
+			groupId, folderId, locale, queryDefinition);
 	}
 
 	@Override

@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -38,6 +39,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * @author Juan Fernández
@@ -55,11 +57,17 @@ public class JournalFolderFinderImpl
 	public static final String FIND_A_BY_G_U_F =
 		JournalFolderFinder.class.getName() + ".findA_ByG_U_F";
 
+	public static final String FIND_A_BY_G_U_F_L =
+		JournalFolderFinder.class.getName() + ".findA_ByG_U_F_L";
+
 	public static final String FIND_F_BY_NO_ASSETS =
 		JournalFolderFinder.class.getName() + ".findByF_ByNoAssets";
 
 	public static final String FIND_F_BY_G_F =
 		JournalFolderFinder.class.getName() + ".findF_ByG_F";
+
+	public static final String FIND_F_BY_G_F_L =
+		JournalFolderFinder.class.getName() + ".findF_ByG_F_L";
 
 	@Override
 	public int countF_A_ByG_F(
@@ -80,6 +88,15 @@ public class JournalFolderFinderImpl
 		long groupId, long folderId, QueryDefinition<?> queryDefinition) {
 
 		return doFindF_A_ByG_F(groupId, folderId, queryDefinition, true);
+	}
+
+	@Override
+	public List<Object> filterFindF_A_ByG_F_L(
+		long groupId, long folderId, Locale locale,
+		QueryDefinition<?> queryDefinition) {
+
+		return doFindF_A_ByG_F_L(
+			groupId, folderId, locale, queryDefinition, true);
 	}
 
 	@Override
@@ -239,6 +256,103 @@ public class JournalFolderFinderImpl
 			if (folderId >= 0) {
 				qPos.add(folderId);
 			}
+
+			List<Object> models = new ArrayList<>();
+
+			Iterator<Object[]> itr = (Iterator<Object[]>)QueryUtil.iterate(
+				q, getDialect(), queryDefinition.getStart(),
+				queryDefinition.getEnd());
+
+			while (itr.hasNext()) {
+				Object[] array = itr.next();
+
+				long curFolderId = (Long)array[0];
+				long modelFolder = (Long)array[1];
+
+				Object obj = null;
+
+				if (modelFolder == 1) {
+					obj = JournalFolderUtil.findByPrimaryKey(curFolderId);
+				}
+				else {
+					String articleId = (String)array[2];
+					double version = (Double)array[3];
+
+					obj = JournalArticleUtil.findByG_A_V(
+						groupId, articleId, version);
+				}
+
+				models.add(obj);
+			}
+
+			return models;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected List<Object> doFindF_A_ByG_F_L(
+		long groupId, long folderId, Locale locale,
+		QueryDefinition<?> queryDefinition, boolean inlineSQLHelper) {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			StringBundler sb = new StringBundler(5);
+
+			sb.append(StringPool.OPEN_PARENTHESIS);
+			sb.append(
+				getFoldersSQL(
+					FIND_F_BY_G_F_L, groupId, queryDefinition,
+					inlineSQLHelper));
+			sb.append(") UNION ALL (");
+			sb.append(
+				getArticlesSQL(
+					FIND_A_BY_G_U_F_L, groupId, queryDefinition,
+					inlineSQLHelper));
+			sb.append(StringPool.CLOSE_PARENTHESIS);
+
+			String sql = updateSQL(sb.toString(), folderId);
+
+			sql = CustomSQLUtil.replaceOrderBy(
+				sql, queryDefinition.getOrderByComparator());
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar("modelFolderId", Type.LONG);
+			q.addScalar("modelFolder", Type.LONG);
+			q.addScalar("articleId", Type.STRING);
+			q.addScalar("version", Type.DOUBLE);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+			qPos.add(queryDefinition.getStatus());
+
+			if (folderId >= 0) {
+				qPos.add(folderId);
+			}
+
+			qPos.add(groupId);
+
+			if (queryDefinition.getOwnerUserId() > 0) {
+				qPos.add(queryDefinition.getOwnerUserId());
+				qPos.add(WorkflowConstants.STATUS_IN_TRASH);
+			}
+
+			qPos.add(queryDefinition.getStatus());
+
+			if (folderId >= 0) {
+				qPos.add(folderId);
+			}
+
+			qPos.add(LocaleUtil.toLanguageId(locale));
 
 			List<Object> models = new ArrayList<>();
 

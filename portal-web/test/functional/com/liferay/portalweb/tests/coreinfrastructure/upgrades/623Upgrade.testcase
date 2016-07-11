@@ -11,17 +11,16 @@
 		<execute macro="Smoke#viewWelcomePage" />
 	</set-up>
 
+	<command name="AddFormAfterUpgrade" priority="5">
+		<property name="test.assert.warning.exceptions" value="true" />
+
+		<execute macro="Upgrade#addForm" />
+	</command>
+
 	<command name="AddOrganizationAfterUpgrade" priority="4">
 		<property name="test.assert.warning.exceptions" value="true" />
 
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="Organization#addCP">
-			<var name="orgName" value="Organization Name" />
-			<var name="orgType" value="Organization" />
-		</execute>
+		<execute macro="Upgrade#addOrganization" />
 	</command>
 
 	<command name="View623CalendarArchive" priority="3">
@@ -40,12 +39,6 @@
 		<execute macro="Upgrade#searchForAssetsAfterUpgrade" />
 	</command>
 
-	<command name="View623FormsArchive" priority="5">
-		<property name="test.assert.warning.exceptions" value="true" />
-
-		<execute macro="Upgrade#viewForms" />
-	</command>
-
 	<command name="View623PollsArchive" priority="3">
 		<property name="test.assert.warning.exceptions" value="true" />
 
@@ -55,7 +48,7 @@
 	<command name="View623WebContentArchive" priority="3">
 		<property name="test.assert.warning.exceptions" value="true" />
 
-		<execute macro="Upgrade#viewWCStructureAndTemplate" />
+		<execute macro="Upgrade#addWCStructureAndTemplate" />
 
 		<execute macro="Upgrade#publishWCDraft" />
 

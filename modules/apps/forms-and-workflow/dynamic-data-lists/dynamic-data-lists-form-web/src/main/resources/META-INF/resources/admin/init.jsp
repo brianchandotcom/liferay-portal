@@ -27,8 +27,8 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.dynamic.data.lists.exception.RecordSetNameException" %><%@
-page import="com.liferay.dynamic.data.lists.form.web.display.context.DDLFormAdminDisplayContext" %><%@
-page import="com.liferay.dynamic.data.lists.form.web.display.context.DDLFormViewRecordsDisplayContext" %><%@
+page import="com.liferay.dynamic.data.lists.form.web.internal.display.context.DDLFormAdminDisplayContext" %><%@
+page import="com.liferay.dynamic.data.lists.form.web.internal.display.context.DDLFormViewRecordsDisplayContext" %><%@
 page import="com.liferay.dynamic.data.lists.model.DDLRecord" %><%@
 page import="com.liferay.dynamic.data.lists.model.DDLRecordSet" %><%@
 page import="com.liferay.dynamic.data.lists.model.DDLRecordVersion" %><%@

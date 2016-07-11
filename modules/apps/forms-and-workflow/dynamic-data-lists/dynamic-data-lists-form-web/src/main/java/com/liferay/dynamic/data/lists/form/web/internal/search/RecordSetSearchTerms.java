@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,17 +11,23 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
+package com.liferay.dynamic.data.lists.form.web.internal.search;
 
-<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %>
+import com.liferay.portal.kernel.dao.search.DAOParamUtil;
 
-<%@ page import="com.liferay.dynamic.data.lists.form.web.internal.display.context.DDLFormViewRecordDisplayContext" %><%@
-page import="com.liferay.portal.kernel.util.WebKeys" %>
+import javax.portlet.PortletRequest;
 
-<portlet:defineObjects />
+/**
+ * @author Marcellus Tavares
+ */
+public class RecordSetSearchTerms extends RecordSetDisplayTerms {
 
-<aui:script>
-	Liferay.namespace('Forms').portletNamespace = '<portlet:namespace />';
-</aui:script>
+	public RecordSetSearchTerms(PortletRequest portletRequest) {
+		super(portletRequest);
+
+		description = DAOParamUtil.getString(portletRequest, DESCRIPTION);
+		name = DAOParamUtil.getString(portletRequest, NAME);
+	}
+
+}

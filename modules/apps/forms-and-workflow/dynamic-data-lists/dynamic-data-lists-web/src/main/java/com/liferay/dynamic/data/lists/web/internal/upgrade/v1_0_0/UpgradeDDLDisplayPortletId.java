@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,17 +11,24 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
+package com.liferay.dynamic.data.lists.web.internal.upgrade.v1_0_0;
 
-<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %>
+import com.liferay.dynamic.data.lists.constants.DDLPortletKeys;
 
-<%@ page import="com.liferay.dynamic.data.lists.form.web.internal.display.context.DDLFormViewRecordDisplayContext" %><%@
-page import="com.liferay.portal.kernel.util.WebKeys" %>
+/**
+ * @author Leonardo Barros
+ */
+public class UpgradeDDLDisplayPortletId
+	extends com.liferay.portal.kernel.upgrade.BaseUpgradePortletId {
 
-<portlet:defineObjects />
+	@Override
+	protected String[][] getRenamePortletIdsArray() {
+		return new String[][] {
+			new String[] {
+				"169", DDLPortletKeys.DYNAMIC_DATA_LISTS_DISPLAY
+			}
+		};
+	}
 
-<aui:script>
-	Liferay.namespace('Forms').portletNamespace = '<portlet:namespace />';
-</aui:script>
+}

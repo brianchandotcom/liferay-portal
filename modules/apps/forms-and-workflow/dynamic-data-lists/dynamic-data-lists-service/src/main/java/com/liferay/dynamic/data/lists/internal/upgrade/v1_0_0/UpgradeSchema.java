@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,17 +11,23 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
+package com.liferay.dynamic.data.lists.internal.upgrade.v1_0_0;
 
-<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %>
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.StringUtil;
 
-<%@ page import="com.liferay.dynamic.data.lists.form.web.internal.display.context.DDLFormViewRecordDisplayContext" %><%@
-page import="com.liferay.portal.kernel.util.WebKeys" %>
+/**
+ * @author Inácio Nery
+ */
+public class UpgradeSchema extends UpgradeProcess {
 
-<portlet:defineObjects />
+	@Override
+	protected void doUpgrade() throws Exception {
+		String template = StringUtil.read(
+			UpgradeSchema.class.getResourceAsStream("dependencies/update.sql"));
 
-<aui:script>
-	Liferay.namespace('Forms').portletNamespace = '<portlet:namespace />';
-</aui:script>
+		runSQLTemplateString(template, false, false);
+	}
+
+}

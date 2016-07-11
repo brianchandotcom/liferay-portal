@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,17 +11,20 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
+package com.liferay.dynamic.data.lists.form.web.internal.display.context.util;
 
-<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %>
+import com.liferay.portal.kernel.display.context.util.BaseRequestHelper;
 
-<%@ page import="com.liferay.dynamic.data.lists.form.web.internal.display.context.DDLFormViewRecordDisplayContext" %><%@
-page import="com.liferay.portal.kernel.util.WebKeys" %>
+import javax.servlet.http.HttpServletRequest;
 
-<portlet:defineObjects />
+/**
+ * @author Lino Alves
+ */
+public class DDLFormWebRequestHelper extends BaseRequestHelper {
 
-<aui:script>
-	Liferay.namespace('Forms').portletNamespace = '<portlet:namespace />';
-</aui:script>
+	public DDLFormWebRequestHelper(HttpServletRequest request) {
+		super(request);
+	}
+
+}

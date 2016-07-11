@@ -42,6 +42,7 @@ public class VerifyProcessSuite extends VerifyProcess {
 		verify(new VerifyMessageBoards());
 		verify(new VerifyOrganization());
 		verify(new VerifyRatings());
+		verify(new VerifyResourceActions());
 		verify(new VerifyResourcePermissions());
 		verify(new VerifySocial());
 		verify(new VerifyUser());

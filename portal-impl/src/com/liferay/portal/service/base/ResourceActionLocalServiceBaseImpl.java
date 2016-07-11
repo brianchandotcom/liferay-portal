@@ -37,9 +37,15 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
+import com.liferay.portal.kernel.service.persistence.CompanyPersistence;
 import com.liferay.portal.kernel.service.persistence.ResourceActionPersistence;
+import com.liferay.portal.kernel.service.persistence.ResourceBlockFinder;
+import com.liferay.portal.kernel.service.persistence.ResourceBlockPermissionPersistence;
+import com.liferay.portal.kernel.service.persistence.ResourceBlockPersistence;
 import com.liferay.portal.kernel.service.persistence.ResourcePermissionFinder;
 import com.liferay.portal.kernel.service.persistence.ResourcePermissionPersistence;
+import com.liferay.portal.kernel.service.persistence.ResourceTypePermissionFinder;
+import com.liferay.portal.kernel.service.persistence.ResourceTypePermissionPersistence;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -370,6 +376,137 @@ public abstract class ResourceActionLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the company local service.
+	 *
+	 * @return the company local service
+	 */
+	public com.liferay.portal.kernel.service.CompanyLocalService getCompanyLocalService() {
+		return companyLocalService;
+	}
+
+	/**
+	 * Sets the company local service.
+	 *
+	 * @param companyLocalService the company local service
+	 */
+	public void setCompanyLocalService(
+		com.liferay.portal.kernel.service.CompanyLocalService companyLocalService) {
+		this.companyLocalService = companyLocalService;
+	}
+
+	/**
+	 * Returns the company persistence.
+	 *
+	 * @return the company persistence
+	 */
+	public CompanyPersistence getCompanyPersistence() {
+		return companyPersistence;
+	}
+
+	/**
+	 * Sets the company persistence.
+	 *
+	 * @param companyPersistence the company persistence
+	 */
+	public void setCompanyPersistence(CompanyPersistence companyPersistence) {
+		this.companyPersistence = companyPersistence;
+	}
+
+	/**
+	 * Returns the resource block local service.
+	 *
+	 * @return the resource block local service
+	 */
+	public com.liferay.portal.kernel.service.ResourceBlockLocalService getResourceBlockLocalService() {
+		return resourceBlockLocalService;
+	}
+
+	/**
+	 * Sets the resource block local service.
+	 *
+	 * @param resourceBlockLocalService the resource block local service
+	 */
+	public void setResourceBlockLocalService(
+		com.liferay.portal.kernel.service.ResourceBlockLocalService resourceBlockLocalService) {
+		this.resourceBlockLocalService = resourceBlockLocalService;
+	}
+
+	/**
+	 * Returns the resource block persistence.
+	 *
+	 * @return the resource block persistence
+	 */
+	public ResourceBlockPersistence getResourceBlockPersistence() {
+		return resourceBlockPersistence;
+	}
+
+	/**
+	 * Sets the resource block persistence.
+	 *
+	 * @param resourceBlockPersistence the resource block persistence
+	 */
+	public void setResourceBlockPersistence(
+		ResourceBlockPersistence resourceBlockPersistence) {
+		this.resourceBlockPersistence = resourceBlockPersistence;
+	}
+
+	/**
+	 * Returns the resource block finder.
+	 *
+	 * @return the resource block finder
+	 */
+	public ResourceBlockFinder getResourceBlockFinder() {
+		return resourceBlockFinder;
+	}
+
+	/**
+	 * Sets the resource block finder.
+	 *
+	 * @param resourceBlockFinder the resource block finder
+	 */
+	public void setResourceBlockFinder(ResourceBlockFinder resourceBlockFinder) {
+		this.resourceBlockFinder = resourceBlockFinder;
+	}
+
+	/**
+	 * Returns the resource block permission local service.
+	 *
+	 * @return the resource block permission local service
+	 */
+	public com.liferay.portal.kernel.service.ResourceBlockPermissionLocalService getResourceBlockPermissionLocalService() {
+		return resourceBlockPermissionLocalService;
+	}
+
+	/**
+	 * Sets the resource block permission local service.
+	 *
+	 * @param resourceBlockPermissionLocalService the resource block permission local service
+	 */
+	public void setResourceBlockPermissionLocalService(
+		com.liferay.portal.kernel.service.ResourceBlockPermissionLocalService resourceBlockPermissionLocalService) {
+		this.resourceBlockPermissionLocalService = resourceBlockPermissionLocalService;
+	}
+
+	/**
+	 * Returns the resource block permission persistence.
+	 *
+	 * @return the resource block permission persistence
+	 */
+	public ResourceBlockPermissionPersistence getResourceBlockPermissionPersistence() {
+		return resourceBlockPermissionPersistence;
+	}
+
+	/**
+	 * Sets the resource block permission persistence.
+	 *
+	 * @param resourceBlockPermissionPersistence the resource block permission persistence
+	 */
+	public void setResourceBlockPermissionPersistence(
+		ResourceBlockPermissionPersistence resourceBlockPermissionPersistence) {
+		this.resourceBlockPermissionPersistence = resourceBlockPermissionPersistence;
+	}
+
+	/**
 	 * Returns the resource permission local service.
 	 *
 	 * @return the resource permission local service
@@ -424,6 +561,63 @@ public abstract class ResourceActionLocalServiceBaseImpl
 	public void setResourcePermissionFinder(
 		ResourcePermissionFinder resourcePermissionFinder) {
 		this.resourcePermissionFinder = resourcePermissionFinder;
+	}
+
+	/**
+	 * Returns the resource type permission local service.
+	 *
+	 * @return the resource type permission local service
+	 */
+	public com.liferay.portal.kernel.service.ResourceTypePermissionLocalService getResourceTypePermissionLocalService() {
+		return resourceTypePermissionLocalService;
+	}
+
+	/**
+	 * Sets the resource type permission local service.
+	 *
+	 * @param resourceTypePermissionLocalService the resource type permission local service
+	 */
+	public void setResourceTypePermissionLocalService(
+		com.liferay.portal.kernel.service.ResourceTypePermissionLocalService resourceTypePermissionLocalService) {
+		this.resourceTypePermissionLocalService = resourceTypePermissionLocalService;
+	}
+
+	/**
+	 * Returns the resource type permission persistence.
+	 *
+	 * @return the resource type permission persistence
+	 */
+	public ResourceTypePermissionPersistence getResourceTypePermissionPersistence() {
+		return resourceTypePermissionPersistence;
+	}
+
+	/**
+	 * Sets the resource type permission persistence.
+	 *
+	 * @param resourceTypePermissionPersistence the resource type permission persistence
+	 */
+	public void setResourceTypePermissionPersistence(
+		ResourceTypePermissionPersistence resourceTypePermissionPersistence) {
+		this.resourceTypePermissionPersistence = resourceTypePermissionPersistence;
+	}
+
+	/**
+	 * Returns the resource type permission finder.
+	 *
+	 * @return the resource type permission finder
+	 */
+	public ResourceTypePermissionFinder getResourceTypePermissionFinder() {
+		return resourceTypePermissionFinder;
+	}
+
+	/**
+	 * Sets the resource type permission finder.
+	 *
+	 * @param resourceTypePermissionFinder the resource type permission finder
+	 */
+	public void setResourceTypePermissionFinder(
+		ResourceTypePermissionFinder resourceTypePermissionFinder) {
+		this.resourceTypePermissionFinder = resourceTypePermissionFinder;
 	}
 
 	public void afterPropertiesSet() {
@@ -484,12 +678,32 @@ public abstract class ResourceActionLocalServiceBaseImpl
 	protected ResourceActionPersistence resourceActionPersistence;
 	@BeanReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
+	@BeanReference(type = com.liferay.portal.kernel.service.CompanyLocalService.class)
+	protected com.liferay.portal.kernel.service.CompanyLocalService companyLocalService;
+	@BeanReference(type = CompanyPersistence.class)
+	protected CompanyPersistence companyPersistence;
+	@BeanReference(type = com.liferay.portal.kernel.service.ResourceBlockLocalService.class)
+	protected com.liferay.portal.kernel.service.ResourceBlockLocalService resourceBlockLocalService;
+	@BeanReference(type = ResourceBlockPersistence.class)
+	protected ResourceBlockPersistence resourceBlockPersistence;
+	@BeanReference(type = ResourceBlockFinder.class)
+	protected ResourceBlockFinder resourceBlockFinder;
+	@BeanReference(type = com.liferay.portal.kernel.service.ResourceBlockPermissionLocalService.class)
+	protected com.liferay.portal.kernel.service.ResourceBlockPermissionLocalService resourceBlockPermissionLocalService;
+	@BeanReference(type = ResourceBlockPermissionPersistence.class)
+	protected ResourceBlockPermissionPersistence resourceBlockPermissionPersistence;
 	@BeanReference(type = com.liferay.portal.kernel.service.ResourcePermissionLocalService.class)
 	protected com.liferay.portal.kernel.service.ResourcePermissionLocalService resourcePermissionLocalService;
 	@BeanReference(type = ResourcePermissionPersistence.class)
 	protected ResourcePermissionPersistence resourcePermissionPersistence;
 	@BeanReference(type = ResourcePermissionFinder.class)
 	protected ResourcePermissionFinder resourcePermissionFinder;
+	@BeanReference(type = com.liferay.portal.kernel.service.ResourceTypePermissionLocalService.class)
+	protected com.liferay.portal.kernel.service.ResourceTypePermissionLocalService resourceTypePermissionLocalService;
+	@BeanReference(type = ResourceTypePermissionPersistence.class)
+	protected ResourceTypePermissionPersistence resourceTypePermissionPersistence;
+	@BeanReference(type = ResourceTypePermissionFinder.class)
+	protected ResourceTypePermissionFinder resourceTypePermissionFinder;
 	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
 	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 }

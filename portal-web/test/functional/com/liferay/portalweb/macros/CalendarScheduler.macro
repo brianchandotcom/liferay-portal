@@ -220,15 +220,7 @@
 	</command>
 
 	<command name="selectSpecificEvent">
-		<var method="selenium#getCurrentHour()" name="currentHour" />
 		<var name="key_eventTitle" value="${eventTitle}" />
-
-		<if>
-			<equals arg1="${currentHour}" arg2="23" />
-			<then>
-				<var name="eventToday" value="false" />
-			</then>
-		</if>
 
 		<if>
 			<contains string="${eventTitle}" substring="All Day" />
@@ -236,11 +228,15 @@
 				<execute function="AssertClick#assertTextClickNoMouseOver" locator1="Calendar#SCHEDULER_EVENT_SPECIFIC_ALL_DAY" value1="${eventTitle}" />
 			</then>
 			<elseif>
-				<equals arg1="${eventToday}" arg2="false" />
+				<condition function="IsElementNotPresent" locator1="Calendar#SCHEDULER_VIEW_EVENT_DAY_AND_WEEK_VIEW" />
 				<then>
+					<execute macro="CalendarNavigator#gotoView">
+						<var name="viewType" value="Week" />
+					</execute>
+
 					<execute function="ScrollWebElementIntoView" locator1="Calendar#SCHEDULER_VIEW_EVENT_NOT_TODAY" />
 
-					<execute function="AssertClick" locator1="Calendar#SCHEDULER_VIEW_EVENT_NOT_TODAY" value1="${eventTitle}" />
+					<execute function="AssertClick#assertPartialTextClickAt" locator1="Calendar#SCHEDULER_VIEW_EVENT_NOT_TODAY" value1="${eventTitle}" />
 				</then>
 			</elseif>
 			<else>
@@ -277,11 +273,10 @@
 
 		<execute function="Pause" value1="1000" />
 
-		<var method="selenium#getCurrentHour()" name="currentHour" />
 		<var name="key_eventTitle" value="${eventTitle}" />
 
 		<if>
-			<equals arg1="${currentHour}" arg2="23" />
+			<condition function="IsElementNotPresent" locator1="Calendar#SCHEDULER_VIEW_EVENT_DAY_AND_WEEK_VIEW" />
 			<then>
 				<execute macro="CalendarNavigator#gotoNextDay" />
 
@@ -622,11 +617,10 @@
 			<var name="viewType" value="Week" />
 		</execute>
 
-		<var method="selenium#getCurrentHour()" name="currentHour" />
 		<var name="key_eventTitle" value="${eventTitle}" />
 
 		<if>
-			<equals arg1="${currentHour}" arg2="23" />
+			<condition function="IsElementNotPresent" locator1="Calendar#SCHEDULER_VIEW_EVENT_DAY_AND_WEEK_VIEW" />
 			<then>
 				<execute function="AssertElementPresent" locator1="Calendar#SCHEDULER_EVENT_SPECIFIC" value1="${eventTitle}" />
 			</then>

@@ -320,7 +320,7 @@
 			<then>
 				<execute function="SelectFrame" locator1="KnowledgeBaseSelectParent#SELECT_PARENT_DISPLAY_IFRAME" />
 
-				<execute function="AssertClick" locator1="PGKnowledgebasedisplaySelectParentArticleDisplay#FOLDER_TITLE_LINK" value1="${kbFolderName}" />
+				<execute function="AssertClick" locator1="KnowledgeBaseSelectParent#FOLDER_TITLE_LINK" value1="${kbFolderName}" />
 
 				<execute function="SelectFrame" value1="relative=top" />
 			</then>
@@ -330,7 +330,7 @@
 
 		<execute function="SelectFrame" locator1="KnowledgeBaseSelectParent#SELECT_PARENT_DISPLAY_IFRAME" />
 
-		<execute function="Click" locator1="PGKnowledgebasedisplaySelectParentArticleDisplay#CHOOSE_BUTTON" />
+		<execute function="Click" locator1="KnowledgeBaseSelectParent#CHOOSE_BUTTON" />
 
 		<execute function="SelectFrame" value1="relative=top" />
 
@@ -595,7 +595,7 @@
 
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Editar" />
 
-		<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplayEditarticle#HEADER_TITLE" value1="${kbArticleTitle}" />
+		<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#HEADER_TITLE" value1="${kbArticleTitle}" />
 		<execute function="Type#typeEditor" locator1="AlloyEditor#TITLE_FIELD" value1="${kbArticleTitleEdit}" />
 		<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${kbArticleContentEdit}" />
 
@@ -762,7 +762,7 @@
 		<execute function="AssertClick" locator1="KnowledgeBase#KB_TOOLS" value1="Move" />
 
 		<execute function="AssertTextEquals" locator1="Portlet#H3_HEADER" value1="${kbArticleTitle}" />
-		<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplayMoveArticle#CURRENT_PARENT_TITLE_LABEL" value1="Current Parent" />
+		<execute function="AssertTextEquals" locator1="KnowledgeBase#MOVE_CURRENT_PARENT_TITLE_LABEL" value1="Current Parent" />
 		<execute function="AssertTextEquals" locator1="KnowledgeBase#MOVE_CURRENT_PARENT_TITLE_FIELD" value1="Home" />
 		<execute function="AssertTextEquals" locator1="KnowledgeBase#MOVE_CURRENT_PARENT_PRIORITY_LABEL" value1="Priority" />
 		<execute function="AssertTextEquals" locator1="KnowledgeBase#MOVE_NEW_PARENT_TITLE_LABEL" value1="New Parent" />
@@ -1219,7 +1219,7 @@
 
 	<command name="viewDefaultViaKBArticlePG">
 		<execute function="AssertTextEquals" locator1="Message#INFO" value1="Please configure this portlet to make it visible to all users." />
-		<execute function="AssertElementNotPresent" locator1="PGKnowledgebasearticle#ARTICLE_TITLE" />
+		<execute function="AssertElementNotPresent" locator1="KnowledgeBaseArticle#ARTICLE_TITLE" />
 	</command>
 
 	<command name="viewDefaultViaKBDisplayPG">
@@ -1371,7 +1371,7 @@
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
 		<execute function="AssertElementNotPresent" locator1="KnowledgeBase#HIERARCHY_NAVIGATION_PARENT" />
-		<execute function="AssertElementPresent" locator1="PGKnowledgebasedisplay#FOLDER_NAVIGATION_MENULIST" />
+		<execute function="AssertElementPresent" locator1="KnowledgeBase#FOLDER_NAVIGATION_MENULIST" />
 	</command>
 
 	<command name="viewNoPGViaKBDisplay">

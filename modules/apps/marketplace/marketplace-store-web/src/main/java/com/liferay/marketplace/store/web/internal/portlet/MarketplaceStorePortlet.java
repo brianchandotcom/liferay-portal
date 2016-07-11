@@ -24,9 +24,9 @@ import com.liferay.marketplace.store.web.internal.configuration.MarketplaceStore
 import com.liferay.marketplace.store.web.internal.oauth.util.OAuthManager;
 import com.liferay.marketplace.store.web.internal.util.MarketplaceLicenseUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.patcher.PatcherUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.io.File;
 import java.io.IOException;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -130,6 +131,18 @@ public class MarketplaceStorePortlet extends RemoteMVCPortlet {
 		JSONObject jsonObject = getAppJSONObject(remoteAppId);
 
 		jsonObject.put("cmd", "getApp");
+		jsonObject.put("message", "success");
+
+		writeJSON(actionRequest, actionResponse, jsonObject);
+	}
+
+	public void getInstalledApps(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		JSONObject jsonObject = getInstalledAppsJSONObject();
+
+		jsonObject.put("cmd", "getInstalledApps");
 		jsonObject.put("message", "success");
 
 		writeJSON(actionRequest, actionResponse, jsonObject);
@@ -362,6 +375,25 @@ public class MarketplaceStorePortlet extends RemoteMVCPortlet {
 		return MarketplaceStorePortletKeys.MARKETPLACE_STORE;
 	}
 
+	protected JSONObject getInstalledAppsJSONObject() {
+		List<App> installedApps = _appLocalService.getInstalledApps();
+		JSONArray appList = JSONFactoryUtil.createJSONArray();
+
+		for (App app : installedApps) {
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+			jsonObject.put("appId", app.getRemoteAppId());
+			jsonObject.put("version", app.getVersion());
+
+			appList.put(jsonObject);
+		}
+
+		JSONObject json = JSONFactoryUtil.createJSONObject();
+		json.put("appList", appList);
+
+		return json;
+	}
+
 	@Override
 	protected String getServerPortletId() {
 		return MarketplaceStoreWebConfigurationValues.MARKETPLACE_PORTLET_ID;
@@ -388,7 +420,6 @@ public class MarketplaceStorePortlet extends RemoteMVCPortlet {
 				new String[] {String.valueOf(ReleaseInfo.getBuildNumber())});
 		}
 
-		parameterMap.put("installedPatches", PatcherUtil.getInstalledPatches());
 		parameterMap.put(
 			"supportsHotDeploy",
 			new String[] {

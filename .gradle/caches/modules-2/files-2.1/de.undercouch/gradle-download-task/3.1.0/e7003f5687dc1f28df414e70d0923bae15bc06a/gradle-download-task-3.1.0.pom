@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>de.undercouch</groupId>
   <artifactId>gradle-download-task</artifactId>
-  <version>2.1.0</version>
+  <version>3.1.0</version>
   <name>gradle-download-task</name>
   <description>Adds a download task to Gradle that displays progress information</description>
   <url>https://github.com/michel-kraemer/gradle-download-task</url>
@@ -27,4 +27,30 @@
     <developerConnection>scm:git:git://github.com/michel-kraemer/gradle-download-task.git</developerConnection>
     <url>scm:git:git://github.com/michel-kraemer/gradle-download-task.git</url>
   </scm>
+  <dependencies>
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpclient</artifactId>
+      <version>4.4.1</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.12</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.littleshoot</groupId>
+      <artifactId>littleproxy</artifactId>
+      <version>1.1.0-beta2</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.mortbay.jetty</groupId>
+      <artifactId>jetty</artifactId>
+      <version>6.1.26</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
 </project>

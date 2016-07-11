@@ -9,7 +9,7 @@
 	<cache
 		eternal="false"
 		maxElementsInMemory="10000"
-		name="com.liferay.dynamic.data.mapping.data.provider.rest.DDMRESTDataProvider"
+		name="com.liferay.dynamic.data.mapping.data.provider.rest.internal.DDMRESTDataProvider"
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
 	>

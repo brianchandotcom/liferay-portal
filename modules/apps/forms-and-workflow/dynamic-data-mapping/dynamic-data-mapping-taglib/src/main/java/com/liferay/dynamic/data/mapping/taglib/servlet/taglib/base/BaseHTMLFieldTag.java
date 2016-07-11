@@ -14,7 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.taglib.servlet.taglib.base;
 
-import com.liferay.dynamic.data.mapping.taglib.servlet.ServletContextUtil;
+import com.liferay.dynamic.data.mapping.taglib.internal.servlet.ServletContextUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;

@@ -180,11 +180,6 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 						</liferay-ui:search-container-column-text>
 					</c:when>
 					<c:otherwise>
-						<liferay-ui:search-container-column-text
-							name="id"
-							value="<%= HtmlUtil.escape(curArticle.getArticleId()) %>"
-						/>
-
 						<liferay-ui:search-container-column-jsp
 							cssClass="table-cell-content"
 							href="<%= rowURL %>"
@@ -318,11 +313,6 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 						</liferay-ui:search-container-column-text>
 					</c:when>
 					<c:otherwise>
-						<liferay-ui:search-container-column-text
-							name="id"
-							value="<%= String.valueOf(curFolder.getFolderId()) %>"
-						/>
-
 						<liferay-ui:search-container-column-text
 							cssClass="table-cell-content"
 							href="<%= rowURL.toString() %>"

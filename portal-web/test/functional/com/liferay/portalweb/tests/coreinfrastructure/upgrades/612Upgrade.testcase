@@ -6,8 +6,6 @@
 	<property name="testray.main.component.name" value="Upgrades" />
 
 	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
-
 		<execute macro="SignIn#signIn" />
 
 		<execute macro="Smoke#viewWelcomePage" />

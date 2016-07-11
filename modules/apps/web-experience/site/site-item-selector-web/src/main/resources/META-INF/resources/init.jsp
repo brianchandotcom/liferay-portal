@@ -30,8 +30,8 @@ page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portlet.usersadmin.search.GroupSearch" %><%@
 page import="com.liferay.site.constants.SiteWebKeys" %><%@
-page import="com.liferay.site.item.selector.web.constants.SitesItemSelectorWebKeys" %><%@
-page import="com.liferay.site.item.selector.web.display.context.SitesItemSelectorViewDisplayContext" %><%@
+page import="com.liferay.site.item.selector.web.internal.constants.SitesItemSelectorWebKeys" %><%@
+page import="com.liferay.site.item.selector.web.internal.display.context.SitesItemSelectorViewDisplayContext" %><%@
 page import="com.liferay.site.util.GroupURLProvider" %>
 
 <%@ page import="java.util.HashMap" %><%@

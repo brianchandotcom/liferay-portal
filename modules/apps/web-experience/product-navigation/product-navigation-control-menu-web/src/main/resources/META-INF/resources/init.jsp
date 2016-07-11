@@ -72,8 +72,8 @@ page import="com.liferay.portal.util.PortletCategoryUtil" %><%@
 page import="com.liferay.portal.util.PropsValues" %><%@
 page import="com.liferay.portal.util.WebAppPool" %><%@
 page import="com.liferay.portlet.asset.util.AssetUtil" %><%@
-page import="com.liferay.product.navigation.control.menu.web.constants.ProductNavigationControlMenuPortletKeys" %><%@
-page import="com.liferay.product.navigation.control.menu.web.constants.ProductNavigationControlMenuWebKeys" %><%@
+page import="com.liferay.product.navigation.control.menu.web.internal.constants.ProductNavigationControlMenuPortletKeys" %><%@
+page import="com.liferay.product.navigation.control.menu.web.internal.constants.ProductNavigationControlMenuWebKeys" %><%@
 page import="com.liferay.taglib.aui.AUIUtil" %>
 
 <%@ page import="java.util.ArrayList" %><%@

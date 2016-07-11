@@ -33,8 +33,8 @@ page import="com.liferay.portal.kernel.util.HttpUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.product.navigation.product.menu.web.display.context.ProductMenuDisplayContext" %><%@
-page import="com.liferay.product.navigation.user.application.list.UserPanelCategory" %><%@
-page import="com.liferay.product.navigation.user.display.context.MyAccountPanelCategoryDisplayContext" %><%@
+page import="com.liferay.product.navigation.user.internal.application.list.UserPanelCategory" %><%@
+page import="com.liferay.product.navigation.user.internal.display.context.MyAccountPanelCategoryDisplayContext" %><%@
 page import="com.liferay.taglib.aui.AUIUtil" %>
 
 <%@ page import="java.util.Locale" %><%@

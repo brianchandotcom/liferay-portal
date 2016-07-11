@@ -31,11 +31,11 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 page import="com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys" %><%@
 page import="com.liferay.exportimport.kernel.staging.LayoutStagingUtil" %><%@
 page import="com.liferay.exportimport.kernel.staging.StagingUtil" %><%@
-page import="com.liferay.layout.admin.web.constants.LayoutAdminPortletKeys" %><%@
-page import="com.liferay.layout.admin.web.display.context.LayoutsAdminDisplayContext" %><%@
-page import="com.liferay.layout.admin.web.display.context.LayoutsPrototypeTreeDisplayContext" %><%@
-page import="com.liferay.layout.admin.web.display.context.LayoutsTreeDisplayContext" %><%@
-page import="com.liferay.layout.admin.web.util.comparator.ThemeNameComparator" %><%@
+page import="com.liferay.layout.admin.web.internal.constants.LayoutAdminPortletKeys" %><%@
+page import="com.liferay.layout.admin.web.internal.display.context.LayoutsAdminDisplayContext" %><%@
+page import="com.liferay.layout.admin.web.internal.display.context.LayoutsPrototypeTreeDisplayContext" %><%@
+page import="com.liferay.layout.admin.web.internal.display.context.LayoutsTreeDisplayContext" %><%@
+page import="com.liferay.layout.admin.web.internal.util.comparator.ThemeNameComparator" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker" %><%@
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@

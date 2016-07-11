@@ -16,7 +16,7 @@
 
 <%@ taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %>
 
-<%@ page import="com.liferay.staging.bar.web.portlet.constants.StagingBarPortletKeys" %>
+<%@ page import="com.liferay.staging.bar.web.internal.portlet.constants.StagingBarPortletKeys" %>
 
 <li class="control-menu-nav-item staging-links">
 	<liferay-portlet:runtime portletName="<%= StagingBarPortletKeys.STAGING_BAR %>" />

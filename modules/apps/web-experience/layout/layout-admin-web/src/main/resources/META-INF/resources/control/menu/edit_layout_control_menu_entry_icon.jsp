@@ -19,7 +19,7 @@
 <%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 <%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.layout.admin.web.constants.LayoutAdminPortletKeys" %>
+<%@ page import="com.liferay.layout.admin.web.internal.constants.LayoutAdminPortletKeys" %>
 <%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %>
 <%@ page import="com.liferay.portal.kernel.model.Group" %>
 <%@ page import="com.liferay.portal.kernel.util.HtmlUtil" %>

@@ -30,7 +30,7 @@ import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.kernel.util.AssetEntryQueryProcessor;
 import com.liferay.asset.publisher.web.background.task.AssetPublisherNotificationBackgroundTaskExecutor;
-import com.liferay.asset.publisher.web.configuration.AssetPublisherWebConfigurationValues;
+import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfigurationValues;
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.web.display.context.AssetEntryResult;
 import com.liferay.asset.publisher.web.display.context.AssetPublisherDisplayContext;

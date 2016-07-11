@@ -67,10 +67,10 @@ page import="com.liferay.portlet.usergroupsadmin.search.UserGroupDisplayTerms" %
 page import="com.liferay.portlet.usergroupsadmin.search.UserGroupSearch" %><%@
 page import="com.liferay.portlet.usersadmin.search.UserSearch" %><%@
 page import="com.liferay.portlet.usersadmin.search.UserSearchTerms" %><%@
-page import="com.liferay.site.teams.web.constants.SiteTeamsPortletKeys" %><%@
-page import="com.liferay.site.teams.web.display.context.SiteTeamsDisplayContext" %><%@
-page import="com.liferay.site.teams.web.search.TeamDisplayTerms" %><%@
-page import="com.liferay.site.teams.web.search.TeamSearch" %><%@
+page import="com.liferay.site.teams.web.internal.constants.SiteTeamsPortletKeys" %><%@
+page import="com.liferay.site.teams.web.internal.display.context.SiteTeamsDisplayContext" %><%@
+page import="com.liferay.site.teams.web.internal.search.TeamDisplayTerms" %><%@
+page import="com.liferay.site.teams.web.internal.search.TeamSearch" %><%@
 page import="com.liferay.users.admin.kernel.util.UsersAdminUtil" %>
 
 <%@ page import="java.util.HashMap" %><%@

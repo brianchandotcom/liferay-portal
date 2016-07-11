@@ -1,4 +1,71 @@
 <definition>
+	<command name="addForm">
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Forms" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no forms. Click on the plus button to add the first one." />
+
+		<execute macro="FormsAdminNavigator#gotoAddForm" />
+
+		<execute macro="Form#editName">
+			<var name="formName" value="Form Name" />
+		</execute>
+
+		<execute macro="Form#editDescription">
+			<var name="formDescription" value="Form Description" />
+		</execute>
+
+		<execute macro="Form#gotoAddFirstField">
+			<var name="fieldType" value="Text Field" />
+		</execute>
+
+		<execute macro="Form#editFieldLabel">
+			<var name="fieldValue" value="Text Field" />
+		</execute>
+
+		<execute macro="FormFields#save" />
+
+		<execute macro="Form#save" />
+
+		<execute macro="FormsAdmin#viewForm">
+			<var name="formDescription" value="Form Description" />
+			<var name="formName" value="Form Name" />
+		</execute>
+
+		<execute macro="Page#add">
+			<var name="pageName" value="Form Page" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Form Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="pageName" value="Form Page" />
+			<var name="portletName" value="Form" />
+		</execute>
+
+		<execute macro="FormPortletNavigator#gotoSelectForm">
+			<var name="formName" value="Form Name" />
+		</execute>
+
+		<execute macro="FormPortletConfiguration#selectForm">
+			<var name="formName" value="Form Name" />
+		</execute>
+
+		<execute macro="PortletEntry#save" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Form Page" />
+		</execute>
+
+		<execute macro="FormFields#viewTextField">
+			<var name="fieldLabel" value="Text Field" />
+			<var name="fieldName" value="TextField" />
+		</execute>
+	</command>
+
 	<command name="addOrganization">
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
@@ -7,6 +74,78 @@
 		<execute macro="Organization#addCP">
 			<var name="orgName" value="Organization Name" />
 			<var name="orgType" value="Organization" />
+		</execute>
+	</command>
+
+	<command name="addWCStructureAndTemplate">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoManageStructures" />
+
+		<execute function="AssertElementNotPresent" locator1="Message#ERROR" value1="Structures is temporarily unavailable" />
+
+		<execute macro="WebContentStructures#addCP">
+			<var name="structureDescription" value="WC Structure Description" />
+			<var name="structureName" value="WC Structure Name" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Text" />
+			<var name="fieldName" value="Text" />
+		</execute>
+
+		<execute macro="WebContentStructures#saveCP">
+			<var name="structureName" value="WC Structure Name" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentTemplates#addCP">
+			<var name="templateDescription" value="WC Template Description" />
+			<var name="templateFieldNames" value="Text" />
+			<var name="templateName" value="WC Template Name" />
+		</execute>
+
+		<execute macro="WebContentTemplates#addStructure">
+			<var name="structureName" value="WC Structure Name" />
+		</execute>
+
+		<execute macro="PortletEntry#save" />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddWithStructureCP">
+			<var name="structureName" value="WC Structure Name" />
+		</execute>
+
+		<execute macro="WebContent#addWithStructureCP">
+			<var name="structureName" value="WC Structure Name" />
+			<var name="webContentText" value="WC WebContent Text" />
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="PortletEntry#publish" />
+
+		<execute macro="WebContent#viewTitle">
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="WebContent#viewWithStructureCP">
+			<var name="webContentText" value="WC WebContent Text" />
+			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 	</command>
 
@@ -386,73 +525,6 @@
 		</execute>
 	</command>
 
-	<command name="addForm">
-		<execute macro="ProductMenu#gotoSitesContent">
-			<var name="portlet" value="Forms" />
-		</execute>
-
-		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no forms. Click on the plus button to add the first one." />
-
-		<execute macro="FormsAdminNavigator#gotoAddForm" />
-
-		<execute macro="Form#editName">
-			<var name="formName" value="Form Name" />
-		</execute>
-
-		<execute macro="Form#editDescription">
-			<var name="formDescription" value="Form Description" />
-		</execute>
-
-		<execute macro="Form#gotoAddFirstField">
-			<var name="fieldType" value="Text Field" />
-		</execute>
-
-		<execute macro="Form#editFieldLabel">
-			<var name="fieldValue" value="Text Field" />
-		</execute>
-
-		<execute macro="FormFields#save" />
-
-		<execute macro="Form#save" />
-
-		<execute macro="FormsAdmin#viewForm">
-			<var name="formDescription" value="Form Description" />
-			<var name="formName" value="Form Name" />
-		</execute>
-
-		<execute macro="Page#add">
-			<var name="pageName" value="Form Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Form Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="pageName" value="Form Page" />
-			<var name="portletName" value="Form" />
-		</execute>
-
-		<execute macro="FormPortletNavigator#gotoSelectForm">
-			<var name="formName" value="Form Name" />
-		</execute>
-
-		<execute macro="FormPortletConfiguration#selectForm">
-			<var name="formName" value="Form Name" />
-		</execute>
-
-		<execute macro="PortletEntry#save" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Form Page" />
-		</execute>
-
-		<execute macro="FormFields#viewTextField">
-			<var name="fieldLabel" value="Text Field" />
-			<var name="fieldName" value="TextField" />
-		</execute>
-	</command>
-
 	<command name="viewNestedPortlets">
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Nested Portlets" />
@@ -591,77 +663,5 @@
 		<execute macro="SignOut#signOut" />
 
 		<execute macro="SignIn#signIn" />
-	</command>
-
-	<command name="addWCStructureAndTemplate">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoSitesContent">
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoManageStructures" />
-
-		<execute function="AssertElementNotPresent" locator1="Message#ERROR" value1="Structures is temporarily unavailable" />
-
-		<execute macro="WebContentStructures#addCP">
-			<var name="structureDescription" value="WC Structure Description" />
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="Text" />
-			<var name="fieldFieldLabel" value="Text" />
-			<var name="fieldName" value="Text" />
-		</execute>
-
-		<execute macro="WebContentStructures#saveCP">
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoSitesContent">
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentTemplates#addCP">
-			<var name="templateDescription" value="WC Template Description" />
-			<var name="templateFieldNames" value="Text" />
-			<var name="templateName" value="WC Template Name" />
-		</execute>
-
-		<execute macro="WebContentTemplates#addStructure">
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="PortletEntry#save" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoSitesContent">
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoAddWithStructureCP">
-			<var name="structureName" value="WC Structure Name" />
-		</execute>
-
-		<execute macro="WebContent#addWithStructureCP">
-			<var name="structureName" value="WC Structure Name" />
-			<var name="webContentText" value="WC WebContent Text" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
-
-		<execute macro="WebContent#viewWithStructureCP">
-			<var name="webContentText" value="WC WebContent Text" />
-			<var name="webContentTitle" value="WC WebContent Title" />
-		</execute>
 	</command>
 </definition>

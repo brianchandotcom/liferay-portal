@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.contacts.web.portlet;
+package com.liferay.contacts.web.internal.portlet;
 
-import com.liferay.contacts.web.constants.ContactsPortletKeys;
+import com.liferay.contacts.web.internal.constants.ContactsPortletKeys;
 
 import javax.portlet.Portlet;
 

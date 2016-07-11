@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.contacts.web.upgrade.v1_0_0;
+package com.liferay.contacts.web.internal.upgrade.v1_0_0;
 
-import com.liferay.contacts.web.constants.ContactsPortletKeys;
+import com.liferay.contacts.web.internal.constants.ContactsPortletKeys;
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;
 
 /**

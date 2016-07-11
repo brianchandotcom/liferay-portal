@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.contacts.upgrade.v2_0_0;
+package com.liferay.contacts.internal.upgrade.v2_0_0;
 
 import com.liferay.contacts.model.Entry;
 import com.liferay.contacts.service.EntryLocalServiceUtil;

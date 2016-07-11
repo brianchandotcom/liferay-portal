@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.contacts.web.constants;
+package com.liferay.contacts.web.internal.constants;
 
 /**
  * @author Ryan Park

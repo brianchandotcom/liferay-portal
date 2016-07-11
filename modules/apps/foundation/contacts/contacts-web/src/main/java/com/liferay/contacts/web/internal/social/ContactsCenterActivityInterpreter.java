@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.contacts.web.social;
+package com.liferay.contacts.web.internal.social;
 
-import com.liferay.contacts.web.constants.ContactsPortletKeys;
+import com.liferay.contacts.web.internal.constants.ContactsPortletKeys;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;

@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.contacts.web.upgrade;
+package com.liferay.contacts.web.internal.upgrade;
 
-import com.liferay.contacts.web.upgrade.v1_0_0.UpgradePortletId;
+import com.liferay.contacts.web.internal.upgrade.v1_0_0.UpgradePortletId;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 

@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.contacts.web.notifications;
+package com.liferay.contacts.web.internal.notifications;
 
-import com.liferay.contacts.web.constants.ContactsPortletKeys;
+import com.liferay.contacts.web.internal.constants.ContactsPortletKeys;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.User;

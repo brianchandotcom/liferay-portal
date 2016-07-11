@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.contacts.web.social;
+package com.liferay.contacts.web.internal.social;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

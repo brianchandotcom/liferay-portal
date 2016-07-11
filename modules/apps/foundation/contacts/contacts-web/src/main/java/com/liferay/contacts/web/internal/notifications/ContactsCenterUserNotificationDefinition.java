@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.contacts.web.notifications;
+package com.liferay.contacts.web.internal.notifications;
 
 import com.liferay.contacts.constants.SocialRelationConstants;
-import com.liferay.contacts.web.constants.ContactsPortletKeys;
+import com.liferay.contacts.web.internal.constants.ContactsPortletKeys;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.notifications.UserNotificationDeliveryType;

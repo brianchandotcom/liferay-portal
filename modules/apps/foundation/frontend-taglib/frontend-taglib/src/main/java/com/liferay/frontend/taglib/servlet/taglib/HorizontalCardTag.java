@@ -14,7 +14,7 @@
 
 package com.liferay.frontend.taglib.servlet.taglib;
 
-import com.liferay.frontend.taglib.servlet.ServletContextUtil;
+import com.liferay.frontend.taglib.internal.servlet.ServletContextUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;

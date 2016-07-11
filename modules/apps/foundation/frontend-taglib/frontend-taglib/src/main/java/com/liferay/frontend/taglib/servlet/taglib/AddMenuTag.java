@@ -14,7 +14,7 @@
 
 package com.liferay.frontend.taglib.servlet.taglib;
 
-import com.liferay.frontend.taglib.servlet.ServletContextUtil;
+import com.liferay.frontend.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.frontend.taglib.servlet.taglib.util.AddMenuKeys;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.taglib.util.IncludeTag;

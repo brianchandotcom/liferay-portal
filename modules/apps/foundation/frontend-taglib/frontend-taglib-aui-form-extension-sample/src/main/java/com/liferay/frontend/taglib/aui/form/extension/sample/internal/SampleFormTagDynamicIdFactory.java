@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.frontend.taglib.aui.form.extension.sample;
+package com.liferay.frontend.taglib.aui.form.extension.sample.internal;
 
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.servlet.taglib.TagDynamicIdFactory;

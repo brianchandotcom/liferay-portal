@@ -57,7 +57,7 @@ public class ScreensRatingsEntryServiceImpl
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		List<RatingsEntry> entries = ratingsEntryLocalService.getEntries(
+		List<RatingsEntry> ratingsEntries = ratingsEntryLocalService.getEntries(
 			className, classPK);
 
 		int[] ratings = new int[stepCount];
@@ -66,23 +66,23 @@ public class ScreensRatingsEntryServiceImpl
 		long userId = getUserId();
 		double userScore = -1;
 
-		for (RatingsEntry entry : entries) {
-			int position = (int)(entry.getScore() * stepCount);
+		for (RatingsEntry ratingsEntry : ratingsEntries) {
+			int position = (int)(ratingsEntry.getScore() * stepCount);
 
 			if (position == stepCount) {
 				position--;
 			}
 
 			ratings[position]++;
-			totalScore += entry.getScore();
+			totalScore += ratingsEntry.getScore();
 
-			if (entry.getUserId() == userId) {
-				userScore = entry.getScore();
+			if (ratingsEntry.getUserId() == userId) {
+				userScore = ratingsEntry.getScore();
 			}
 		}
 
-		if (entries.size() > 0) {
-			jsonObject.put("average", totalScore / entries.size());
+		if (ratingsEntries.size() > 0) {
+			jsonObject.put("average", totalScore / ratingsEntries.size());
 		}
 		else {
 			jsonObject.put("average", 0);
@@ -91,7 +91,7 @@ public class ScreensRatingsEntryServiceImpl
 		jsonObject.put("className", className);
 		jsonObject.put("classPK", classPK);
 		jsonObject.put("ratings", ratings);
-		jsonObject.put("totalCount", entries.size());
+		jsonObject.put("totalCount", ratingsEntries.size());
 		jsonObject.put("totalScore", totalScore);
 		jsonObject.put("userScore", userScore);
 

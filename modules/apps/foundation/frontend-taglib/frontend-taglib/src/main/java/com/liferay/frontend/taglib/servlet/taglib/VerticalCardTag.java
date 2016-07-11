@@ -15,6 +15,7 @@
 package com.liferay.frontend.taglib.servlet.taglib;
 
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -35,6 +36,10 @@ public class VerticalCardTag extends CardTag {
 		_header = header;
 	}
 
+	public void setOnClick(String onClick) {
+		_onClick = onClick;
+	}
+
 	public void setStickerBottom(String stickerBottom) {
 		_stickerBottom = stickerBottom;
 	}
@@ -52,6 +57,7 @@ public class VerticalCardTag extends CardTag {
 		_backgroundImage = true;
 		_footer = null;
 		_header = null;
+		_onClick = null;
 		_stickerBottom = null;
 		_subtitle = null;
 		_title = null;
@@ -70,15 +76,21 @@ public class VerticalCardTag extends CardTag {
 			"liferay-frontend:card:backgroundImage", _backgroundImage);
 		request.setAttribute("liferay-frontend:card:footer", _footer);
 		request.setAttribute("liferay-frontend:card:header", _header);
+		request.setAttribute("liferay-frontend:card:onClick", _onClick);
 		request.setAttribute(
 			"liferay-frontend:card:stickerBottom", _stickerBottom);
 		request.setAttribute("liferay-frontend:card:subtitle", _subtitle);
 		request.setAttribute("liferay-frontend:card:title", _title);
+
+		if (Validator.isNotNull(_onClick)) {
+			request.setAttribute("liferay-frontend:card:url", "javascript:;");
+		}
 	}
 
 	private boolean _backgroundImage = true;
 	private String _footer;
 	private String _header;
+	private String _onClick;
 	private String _stickerBottom;
 	private String _subtitle;
 	private String _title;

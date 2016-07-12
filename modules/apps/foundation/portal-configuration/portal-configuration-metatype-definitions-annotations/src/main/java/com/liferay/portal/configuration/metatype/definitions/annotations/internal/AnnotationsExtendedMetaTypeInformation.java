@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.configuration.metatype.definitions.equinox;
+package com.liferay.portal.configuration.metatype.definitions.annotations.internal;
 
 import com.liferay.portal.configuration.metatype.definitions.ExtendedMetaTypeInformation;
 import com.liferay.portal.configuration.metatype.definitions.ExtendedObjectClassDefinition;
@@ -23,12 +23,13 @@ import org.osgi.service.metatype.MetaTypeInformation;
 /**
  * @author Iván Zaera
  */
-public class EquinoxExtendedMetaTypeInformation
+public class AnnotationsExtendedMetaTypeInformation
 	implements ExtendedMetaTypeInformation {
 
-	public EquinoxExtendedMetaTypeInformation(
-		MetaTypeInformation metaTypeInformation) {
+	public AnnotationsExtendedMetaTypeInformation(
+		Bundle bundle, MetaTypeInformation metaTypeInformation) {
 
+		_bundle = bundle;
 		_metaTypeInformation = metaTypeInformation;
 	}
 
@@ -51,8 +52,8 @@ public class EquinoxExtendedMetaTypeInformation
 	public ExtendedObjectClassDefinition getObjectClassDefinition(
 		String id, String locale) {
 
-		return new EquinoxExtendedObjectClassDefinition(
-			_metaTypeInformation.getObjectClassDefinition(id, locale));
+		return new AnnotationsExtendedObjectClassDefinition(
+			_bundle, _metaTypeInformation.getObjectClassDefinition(id, locale));
 	}
 
 	@Override
@@ -60,6 +61,7 @@ public class EquinoxExtendedMetaTypeInformation
 		return _metaTypeInformation.getPids();
 	}
 
+	private final Bundle _bundle;
 	private final MetaTypeInformation _metaTypeInformation;
 
 }

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.configuration.metatype.definitions.annotations;
+package com.liferay.portal.configuration.metatype.definitions.annotations.internal;
 
 import com.liferay.portal.configuration.metatype.definitions.ExtendedAttributeDefinition;
 

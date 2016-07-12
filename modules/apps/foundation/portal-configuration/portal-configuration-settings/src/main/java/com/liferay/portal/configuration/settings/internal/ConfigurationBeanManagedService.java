@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.configuration.settings;
+package com.liferay.portal.configuration.settings.internal;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.configuration.settings.util.ConfigurationPidUtil;
+import com.liferay.portal.configuration.settings.internal.util.ConfigurationPidUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 
 import java.security.AccessController;

@@ -232,7 +232,7 @@ AUI.add(
 							assetId = this.getTreeNodeAssetId(currentTarget);
 						}
 
-						delete this.entries[assetId];
+						delete entries[assetId];
 						this.set('entries', entries);
 					}
 				}

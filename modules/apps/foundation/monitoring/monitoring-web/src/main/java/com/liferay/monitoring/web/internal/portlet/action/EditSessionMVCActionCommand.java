@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.monitoring.web.portlet.action;
+package com.liferay.monitoring.web.internal.portlet.action;
 
-import com.liferay.monitoring.web.constants.MonitoringPortletKeys;
+import com.liferay.monitoring.web.internal.constants.MonitoringPortletKeys;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;

@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.monitoring.web.upgrade.v1_0_0;
+package com.liferay.monitoring.web.internal.upgrade.v1_0_0;
 
-import com.liferay.monitoring.web.constants.MonitoringPortletKeys;
+import com.liferay.monitoring.web.internal.constants.MonitoringPortletKeys;
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;
 
 /**

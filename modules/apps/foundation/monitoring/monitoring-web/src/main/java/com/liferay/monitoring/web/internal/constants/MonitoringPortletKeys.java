@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.monitoring.web.constants;
+package com.liferay.monitoring.web.internal.constants;
 
 /**
  * @author Philip Jones

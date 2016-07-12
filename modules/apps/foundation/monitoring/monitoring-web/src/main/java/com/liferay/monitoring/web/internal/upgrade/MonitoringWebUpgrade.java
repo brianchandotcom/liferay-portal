@@ -12,32 +12,29 @@
  * details.
  */
 
-package com.liferay.monitoring.web.portlet.action;
+package com.liferay.monitoring.web.internal.upgrade;
 
-import com.liferay.monitoring.web.constants.MonitoringPortletKeys;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
+import com.liferay.monitoring.web.internal.upgrade.v1_0_0.UpgradePortletId;
+import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
+import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Philip Jones
+ * @author Drew Brokke
  */
-@Component(
-	property = {
-		"javax.portlet.name=" + MonitoringPortletKeys.MONITORING,
-		"mvc.command.name=/monitoring/edit_session"
-	}
-)
-public class EditSessionMVCRenderCommand implements MVCRenderCommand {
+@Component(immediate = true, service = UpgradeStepRegistrator.class)
+public class MonitoringWebUpgrade implements UpgradeStepRegistrator {
 
 	@Override
-	public String render(
-		RenderRequest renderRequest, RenderResponse renderResponse) {
+	public void register(Registry registry) {
+		registry.register(
+			"com.liferay.monitoring.web", "0.0.0", "1.0.0",
+			new DummyUpgradeStep());
 
-		return "/edit_session.jsp";
+		registry.register(
+			"com.liferay.monitoring.web", "0.0.1", "1.0.0",
+			new UpgradePortletId());
 	}
 
 }

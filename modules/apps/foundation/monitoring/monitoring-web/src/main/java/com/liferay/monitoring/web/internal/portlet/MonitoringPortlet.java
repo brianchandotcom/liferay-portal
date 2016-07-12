@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.monitoring.web.portlet;
+package com.liferay.monitoring.web.internal.portlet;
 
-import com.liferay.monitoring.web.constants.MonitoringPortletKeys;
+import com.liferay.monitoring.web.internal.constants.MonitoringPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 import javax.portlet.Portlet;

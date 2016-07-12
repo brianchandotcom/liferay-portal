@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.map.google.maps.display.context;
+package com.liferay.map.google.maps.internal.display.context;
 
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.theme.ThemeDisplay;

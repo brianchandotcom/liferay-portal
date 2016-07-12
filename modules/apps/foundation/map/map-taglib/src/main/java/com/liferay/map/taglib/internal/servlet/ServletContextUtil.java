@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.map.taglib.servlet;
+package com.liferay.map.taglib.internal.servlet;
 
 import com.liferay.map.util.MapProviderHelper;
 import com.liferay.map.util.MapProviderTracker;

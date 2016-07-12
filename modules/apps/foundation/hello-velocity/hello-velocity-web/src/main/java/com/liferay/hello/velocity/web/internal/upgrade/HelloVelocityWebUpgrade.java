@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.hello.velocity.web.upgrade;
+package com.liferay.hello.velocity.web.internal.upgrade;
 
-import com.liferay.hello.velocity.web.constants.HelloVelocityPortletKeys;
+import com.liferay.hello.velocity.web.internal.constants.HelloVelocityPortletKeys;
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;

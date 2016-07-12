@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.hello.velocity.web.constants;
+package com.liferay.hello.velocity.web.internal.constants;
 
 /**
  * @author Cristina González

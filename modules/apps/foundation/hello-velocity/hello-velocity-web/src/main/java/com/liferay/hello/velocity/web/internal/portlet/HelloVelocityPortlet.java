@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.hello.velocity.web.portlet;
+package com.liferay.hello.velocity.web.internal.portlet;
 
+import com.liferay.hello.velocity.web.internal.constants.HelloVelocityPortletKeys;
 import com.liferay.petra.content.ContentUtil;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.template.StringTemplateResource;
@@ -48,6 +49,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.vm",
+		"javax.portlet.name=" + HelloVelocityPortletKeys.HELLO_VELOCITY,
 		"javax.portlet.portlet.info.keywords=Hello Velocity",
 		"javax.portlet.portlet.info.short-title=Hello Velocity",
 		"javax.portlet.portlet.info.title=Hello Velocity",

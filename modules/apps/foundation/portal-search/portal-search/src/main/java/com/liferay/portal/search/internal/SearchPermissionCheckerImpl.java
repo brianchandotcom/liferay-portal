@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.internal;
 
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.NoSuchResourceException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -48,8 +49,10 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.search.configuration.SearchPermissionCheckerConfiguration;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -58,7 +61,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -68,7 +73,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Amos Fong
  * @author Preston Crary
  */
-@Component(immediate = true, service = SearchPermissionChecker.class)
+@Component(
+	configurationPid = "com.liferay.portal.search.configuration.SearchPermissionCheckerConfiguration",
+	immediate = true, service = SearchPermissionChecker.class
+)
 public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 
 	@Override
@@ -153,6 +161,14 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 		}
 	}
 
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_searchPermissionCheckerConfiguration =
+			ConfigurableUtil.createConfigurable(
+				SearchPermissionCheckerConfiguration.class, properties);
+	}
+
 	protected void doAddPermissionFields_6(
 			long companyId, long groupId, String className, String classPK,
 			String viewActionId, Document doc)
@@ -233,8 +249,12 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 		Set<Role> roles = new HashSet<>();
 		Map<Long, List<Role>> usersGroupIdsToRoles = new HashMap<>();
 
-		populate(
-			companyId, userId, permissionChecker, roles, usersGroupIdsToRoles);
+		if (!populate(
+				companyId, userId, permissionChecker, roles,
+				usersGroupIdsToRoles)) {
+
+			return booleanFilter;
+		}
 
 		return doGetPermissionFilter_6(
 			companyId, searchGroupIds, userId, permissionChecker, className,
@@ -366,7 +386,7 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 		indexer.reindex(resourceName, GetterUtil.getLong(resourceClassPK));
 	}
 
-	protected void populate(
+	protected boolean populate(
 			long companyId, long userId, PermissionChecker permissionChecker,
 			Set<Role> roles, Map<Long, List<Role>> usersGroupIdsToRoles)
 		throws Exception {
@@ -388,12 +408,29 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 					userId, Collections.singletonList(guestGroup)));
 		}
 
+		int termsCount = roles.size();
+
+		int permissionTermsLimit =
+			_searchPermissionCheckerConfiguration.permissionTermsLimit();
+
+		if (termsCount > permissionTermsLimit) {
+			return false;
+		}
+
 		Role organizationUserRole = _roleLocalService.getRole(
 			companyId, RoleConstants.ORGANIZATION_USER);
 		Role siteMemberRole = _roleLocalService.getRole(
 			companyId, RoleConstants.SITE_MEMBER);
 
-		for (Group group : userBag.getGroups()) {
+		Collection<Group> groups = userBag.getGroups();
+
+		termsCount += groups.size();
+
+		if (termsCount > permissionTermsLimit) {
+			return false;
+		}
+
+		for (Group group : groups) {
 			long[] roleIds = permissionChecker.getRoleIds(
 				userId, group.getGroupId());
 
@@ -424,7 +461,15 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 			}
 
 			usersGroupIdsToRoles.put(group.getGroupId(), groupRoles);
+
+			termsCount += groupRoles.size();
+
+			if (termsCount > permissionTermsLimit) {
+				return false;
+			}
 		}
+
+		return true;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -447,6 +492,9 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 
 	@Reference
 	private RoleLocalService _roleLocalService;
+
+	private volatile SearchPermissionCheckerConfiguration
+		_searchPermissionCheckerConfiguration;
 
 	@Reference
 	private UserLocalService _userLocalService;

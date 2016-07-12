@@ -3423,7 +3423,9 @@ public class JournalArticleLocalServiceImpl
 			groupId, articleId);
 
 		for (JournalArticle article : articles) {
-			if (serviceContext != null) {
+			if ((serviceContext != null) &&
+				(article.getId() == latestArticle.getId())) {
+
 				notifySubscribers(
 					serviceContext.getUserId(), article, "move_from",
 					serviceContext);
@@ -3434,7 +3436,9 @@ public class JournalArticleLocalServiceImpl
 
 			journalArticlePersistence.update(article);
 
-			if (serviceContext != null) {
+			if ((serviceContext != null) &&
+				(article.getId() == latestArticle.getId())) {
+
 				notifySubscribers(
 					serviceContext.getUserId(), article, "move_to",
 					serviceContext);

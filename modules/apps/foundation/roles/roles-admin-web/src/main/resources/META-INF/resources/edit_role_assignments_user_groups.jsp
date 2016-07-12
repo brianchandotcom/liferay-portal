@@ -50,7 +50,7 @@ if (tabs2.equals("available")) {
 	LinkedHashMap<String, Object> userGroupParams = new LinkedHashMap<String, Object>();
 
 	if (tabs2.equals("current")) {
-		userGroupParams.put("userGroupsRoles", Long.valueOf(role.getRoleId()));
+		userGroupParams.put(UserGroupFinderConstants.PARAM_USER_GROUPS_ROLES, Long.valueOf(role.getRoleId()));
 	}
 	%>
 

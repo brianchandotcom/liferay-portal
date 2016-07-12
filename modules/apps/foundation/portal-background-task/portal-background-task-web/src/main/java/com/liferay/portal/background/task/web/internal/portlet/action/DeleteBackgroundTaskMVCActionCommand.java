@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.background.task.web.portlet.action;
+package com.liferay.portal.background.task.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.exception.NoSuchBackgroundTaskException;

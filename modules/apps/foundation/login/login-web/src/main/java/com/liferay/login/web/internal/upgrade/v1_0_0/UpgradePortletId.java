@@ -12,33 +12,22 @@
  * details.
  */
 
-package com.liferay.login.web.portlet.action;
+package com.liferay.login.web.internal.upgrade.v1_0_0;
 
-import com.liferay.login.web.constants.LoginPortletKeys;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-
-import org.osgi.service.component.annotations.Component;
+import com.liferay.login.web.internal.constants.LoginPortletKeys;
+import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;
 
 /**
  * @author Peter Fellwock
  */
-@Component(
-	property = {
-		"javax.portlet.name=" + LoginPortletKeys.LOGIN,
-		"mvc.command.name=/login/login"
-	},
-	service = MVCRenderCommand.class
-)
-public class LoginMVCRenderCommand implements MVCRenderCommand {
+public class UpgradePortletId extends BaseUpgradePortletId {
 
 	@Override
-	public String render(
-		RenderRequest renderRequest, RenderResponse renderResponse) {
-
-		return "/login.jsp";
+	protected String[][] getRenamePortletIdsArray() {
+		return new String[][] {
+			new String[] {"58", LoginPortletKeys.LOGIN},
+			new String[] {"164", LoginPortletKeys.FAST_LOGIN}
+		};
 	}
 
 }

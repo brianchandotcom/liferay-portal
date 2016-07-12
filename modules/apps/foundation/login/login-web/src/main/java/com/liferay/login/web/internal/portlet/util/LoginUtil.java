@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.login.web.portlet.util;
+package com.liferay.login.web.internal.portlet.util;
 
-import com.liferay.login.web.constants.LoginPortletKeys;
+import com.liferay.login.web.internal.constants.LoginPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;

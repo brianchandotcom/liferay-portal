@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.login.web.portlet;
+package com.liferay.login.web.internal.portlet;
 
-import com.liferay.login.web.constants.LoginPortletKeys;
+import com.liferay.login.web.internal.constants.LoginPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 import javax.portlet.Portlet;

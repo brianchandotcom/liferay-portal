@@ -12,33 +12,28 @@
  * details.
  */
 
-package com.liferay.login.web.portlet.action;
+package com.liferay.login.web.internal.upgrade;
 
-import com.liferay.login.web.constants.LoginPortletKeys;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
+import com.liferay.login.web.internal.upgrade.v1_0_0.UpgradePortletId;
+import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
+import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Sergio González
+ * @author Raymond Augé
+ * @author Peter Fellwock
  */
-@Component(
-	property = {
-		"javax.portlet.name=" + LoginPortletKeys.FAST_LOGIN,
-		"javax.portlet.name=" + LoginPortletKeys.LOGIN,
-		"mvc.command.name=/login/login_redirect"
-	}
-)
-public class LoginRedirectMVCRenderCommand implements MVCRenderCommand {
+@Component(immediate = true, service = UpgradeStepRegistrator.class)
+public class LoginWebUpgrade implements UpgradeStepRegistrator {
 
 	@Override
-	public String render(
-		RenderRequest renderRequest, RenderResponse renderResponse) {
+	public void register(Registry registry) {
+		registry.register(
+			"com.liferay.login.web", "0.0.0", "1.0.0", new DummyUpgradeStep());
 
-		return "/login_redirect.jsp";
+		registry.register(
+			"com.liferay.login.web", "0.0.1", "1.0.0", new UpgradePortletId());
 	}
 
 }

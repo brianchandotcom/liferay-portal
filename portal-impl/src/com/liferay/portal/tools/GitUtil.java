@@ -31,8 +31,6 @@ import java.util.List;
  */
 public class GitUtil {
 
-	public static final int PORTAL_MAX_DIR_LEVEL = 7;
-
 	public static List<String> getCurrentBranchFileNames(
 			String baseDirName, String gitWorkingBranchName)
 		throws Exception {
@@ -162,7 +160,7 @@ public class GitUtil {
 	}
 
 	protected static int getGitLevel(String baseDirName) throws GitException {
-		for (int i = 0; i < PORTAL_MAX_DIR_LEVEL; i++) {
+		for (int i = 0; i < ToolsUtil.PORTAL_MAX_DIR_LEVEL; i++) {
 			File file = new File(baseDirName + ".git");
 
 			if (file.exists()) {

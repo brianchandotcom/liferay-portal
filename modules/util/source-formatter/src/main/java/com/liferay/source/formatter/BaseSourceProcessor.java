@@ -81,9 +81,11 @@ import org.dom4j.io.SAXReader;
  */
 public abstract class BaseSourceProcessor implements SourceProcessor {
 
-	public static final int PLUGINS_MAX_DIR_LEVEL = 3;
+	public static final int PLUGINS_MAX_DIR_LEVEL =
+		ToolsUtil.PLUGINS_MAX_DIR_LEVEL;
 
-	public static final int PORTAL_MAX_DIR_LEVEL = 7;
+	public static final int PORTAL_MAX_DIR_LEVEL =
+		ToolsUtil.PORTAL_MAX_DIR_LEVEL;
 
 	@Override
 	public final void format() throws Exception {

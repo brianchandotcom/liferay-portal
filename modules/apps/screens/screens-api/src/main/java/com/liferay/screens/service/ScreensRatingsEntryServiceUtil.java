@@ -47,29 +47,33 @@ public class ScreensRatingsEntryServiceUtil {
 	*
 	* Never reference this class directly. Always use {@link ScreensRatingsEntryServiceUtil} to access the screens ratings entry remote service.
 	*/
-	public static com.liferay.portal.kernel.json.JSONObject deleteRatingEntry(
-		long classPK, java.lang.String className, int stepCount)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deleteRatingEntry(classPK, className, stepCount);
-	}
-
-	public static com.liferay.portal.kernel.json.JSONObject getRatingsEntries(
-		long classPK, java.lang.String className, int stepCount)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getRatingsEntries(classPK, className, stepCount);
-	}
-
-	public static com.liferay.portal.kernel.json.JSONObject getRatingsEntries(
-		long entryId, int stepCount)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getRatingsEntries(entryId, stepCount);
-	}
-
-	public static com.liferay.portal.kernel.json.JSONObject updateRatingEntry(
-		long classPK, java.lang.String className, double score, int stepCount)
+	public static com.liferay.portal.kernel.json.JSONObject deleteRatingsEntry(
+		long classPK, java.lang.String className, int ratingGroupCount)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .updateRatingEntry(classPK, className, score, stepCount);
+				   .deleteRatingsEntry(classPK, className, ratingGroupCount);
+	}
+
+	public static com.liferay.portal.kernel.json.JSONObject getRatingsEntries(
+		long assetEntryId, int ratingGroupCount)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getRatingsEntries(assetEntryId, ratingGroupCount);
+	}
+
+	public static com.liferay.portal.kernel.json.JSONObject getRatingsEntries(
+		long classPK, java.lang.String className, int ratingGroupCount)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getRatingsEntries(classPK, className, ratingGroupCount);
+	}
+
+	public static com.liferay.portal.kernel.json.JSONObject updateRatingsEntry(
+		long classPK, java.lang.String className, double score,
+		int ratingGroupCount)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateRatingsEntry(classPK, className, score,
+			ratingGroupCount);
 	}
 
 	/**

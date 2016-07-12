@@ -57,19 +57,21 @@ public interface ScreensRatingsEntryService extends BaseService {
 	*
 	* Never reference this class directly. Always use {@link ScreensRatingsEntryServiceUtil} to access the screens ratings entry remote service.
 	*/
-	public JSONObject deleteRatingEntry(long classPK,
-		java.lang.String className, int stepCount) throws PortalException;
+	public JSONObject deleteRatingsEntry(long classPK,
+		java.lang.String className, int ratingGroupCount)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public JSONObject getRatingsEntries(long assetEntryId, int ratingGroupCount)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public JSONObject getRatingsEntries(long classPK,
-		java.lang.String className, int stepCount) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public JSONObject getRatingsEntries(long entryId, int stepCount)
+		java.lang.String className, int ratingGroupCount)
 		throws PortalException;
 
-	public JSONObject updateRatingEntry(long classPK,
-		java.lang.String className, double score, int stepCount)
+	public JSONObject updateRatingsEntry(long classPK,
+		java.lang.String className, double score, int ratingGroupCount)
 		throws PortalException;
 
 	/**

@@ -40,34 +40,36 @@ public class ScreensRatingsEntryServiceWrapper
 	* Never reference this class directly. Always use {@link ScreensRatingsEntryServiceUtil} to access the screens ratings entry remote service.
 	*/
 	@Override
-	public com.liferay.portal.kernel.json.JSONObject deleteRatingEntry(
-		long classPK, java.lang.String className, int stepCount)
+	public com.liferay.portal.kernel.json.JSONObject deleteRatingsEntry(
+		long classPK, java.lang.String className, int ratingGroupCount)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _screensRatingsEntryService.deleteRatingEntry(classPK,
-			className, stepCount);
+		return _screensRatingsEntryService.deleteRatingsEntry(classPK,
+			className, ratingGroupCount);
 	}
 
 	@Override
 	public com.liferay.portal.kernel.json.JSONObject getRatingsEntries(
-		long classPK, java.lang.String className, int stepCount)
+		long assetEntryId, int ratingGroupCount)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _screensRatingsEntryService.getRatingsEntries(assetEntryId,
+			ratingGroupCount);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.json.JSONObject getRatingsEntries(
+		long classPK, java.lang.String className, int ratingGroupCount)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _screensRatingsEntryService.getRatingsEntries(classPK,
-			className, stepCount);
+			className, ratingGroupCount);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.json.JSONObject getRatingsEntries(
-		long entryId, int stepCount)
+	public com.liferay.portal.kernel.json.JSONObject updateRatingsEntry(
+		long classPK, java.lang.String className, double score,
+		int ratingGroupCount)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _screensRatingsEntryService.getRatingsEntries(entryId, stepCount);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.json.JSONObject updateRatingEntry(
-		long classPK, java.lang.String className, double score, int stepCount)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _screensRatingsEntryService.updateRatingEntry(classPK,
-			className, score, stepCount);
+		return _screensRatingsEntryService.updateRatingsEntry(classPK,
+			className, score, ratingGroupCount);
 	}
 
 	/**

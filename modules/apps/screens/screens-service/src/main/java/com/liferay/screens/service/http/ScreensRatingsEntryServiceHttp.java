@@ -55,16 +55,16 @@ import com.liferay.screens.service.ScreensRatingsEntryServiceUtil;
  */
 @ProviderType
 public class ScreensRatingsEntryServiceHttp {
-	public static com.liferay.portal.kernel.json.JSONObject deleteRatingEntry(
+	public static com.liferay.portal.kernel.json.JSONObject deleteRatingsEntry(
 		HttpPrincipal httpPrincipal, long classPK, java.lang.String className,
-		int stepCount)
+		int ratingGroupCount)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ScreensRatingsEntryServiceUtil.class,
-					"deleteRatingEntry", _deleteRatingEntryParameterTypes0);
+					"deleteRatingsEntry", _deleteRatingsEntryParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, classPK,
-					className, stepCount);
+					className, ratingGroupCount);
 
 			Object returnObj = null;
 
@@ -89,14 +89,14 @@ public class ScreensRatingsEntryServiceHttp {
 	}
 
 	public static com.liferay.portal.kernel.json.JSONObject getRatingsEntries(
-		HttpPrincipal httpPrincipal, long entryId, int stepCount)
+		HttpPrincipal httpPrincipal, long assetEntryId, int ratingGroupCount)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ScreensRatingsEntryServiceUtil.class,
 					"getRatingsEntries", _getRatingsEntriesParameterTypes1);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey, entryId,
-					stepCount);
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					assetEntryId, ratingGroupCount);
 
 			Object returnObj = null;
 
@@ -122,14 +122,14 @@ public class ScreensRatingsEntryServiceHttp {
 
 	public static com.liferay.portal.kernel.json.JSONObject getRatingsEntries(
 		HttpPrincipal httpPrincipal, long classPK, java.lang.String className,
-		int stepCount)
+		int ratingGroupCount)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ScreensRatingsEntryServiceUtil.class,
 					"getRatingsEntries", _getRatingsEntriesParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, classPK,
-					className, stepCount);
+					className, ratingGroupCount);
 
 			Object returnObj = null;
 
@@ -153,16 +153,16 @@ public class ScreensRatingsEntryServiceHttp {
 		}
 	}
 
-	public static com.liferay.portal.kernel.json.JSONObject updateRatingEntry(
+	public static com.liferay.portal.kernel.json.JSONObject updateRatingsEntry(
 		HttpPrincipal httpPrincipal, long classPK, java.lang.String className,
-		double score, int stepCount)
+		double score, int ratingGroupCount)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ScreensRatingsEntryServiceUtil.class,
-					"updateRatingEntry", _updateRatingEntryParameterTypes3);
+					"updateRatingsEntry", _updateRatingsEntryParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, classPK,
-					className, score, stepCount);
+					className, score, ratingGroupCount);
 
 			Object returnObj = null;
 
@@ -187,7 +187,7 @@ public class ScreensRatingsEntryServiceHttp {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(ScreensRatingsEntryServiceHttp.class);
-	private static final Class<?>[] _deleteRatingEntryParameterTypes0 = new Class[] {
+	private static final Class<?>[] _deleteRatingsEntryParameterTypes0 = new Class[] {
 			long.class, java.lang.String.class, int.class
 		};
 	private static final Class<?>[] _getRatingsEntriesParameterTypes1 = new Class[] {
@@ -196,7 +196,7 @@ public class ScreensRatingsEntryServiceHttp {
 	private static final Class<?>[] _getRatingsEntriesParameterTypes2 = new Class[] {
 			long.class, java.lang.String.class, int.class
 		};
-	private static final Class<?>[] _updateRatingEntryParameterTypes3 = new Class[] {
+	private static final Class<?>[] _updateRatingsEntryParameterTypes3 = new Class[] {
 			long.class, java.lang.String.class, double.class, int.class
 		};
 }

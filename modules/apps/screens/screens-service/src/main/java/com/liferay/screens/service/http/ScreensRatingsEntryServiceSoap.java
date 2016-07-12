@@ -59,11 +59,12 @@ public class ScreensRatingsEntryServiceSoap {
 	*
 	* Never reference this class directly. Always use {@link ScreensRatingsEntryServiceUtil} to access the screens ratings entry remote service.
 	*/
-	public static java.lang.String deleteRatingEntry(long classPK,
-		java.lang.String className, int stepCount) throws RemoteException {
+	public static java.lang.String deleteRatingsEntry(long classPK,
+		java.lang.String className, int ratingGroupCount)
+		throws RemoteException {
 		try {
-			com.liferay.portal.kernel.json.JSONObject returnValue = ScreensRatingsEntryServiceUtil.deleteRatingEntry(classPK,
-					className, stepCount);
+			com.liferay.portal.kernel.json.JSONObject returnValue = ScreensRatingsEntryServiceUtil.deleteRatingsEntry(classPK,
+					className, ratingGroupCount);
 
 			return returnValue.toString();
 		}
@@ -74,11 +75,11 @@ public class ScreensRatingsEntryServiceSoap {
 		}
 	}
 
-	public static java.lang.String getRatingsEntries(long entryId, int stepCount)
-		throws RemoteException {
+	public static java.lang.String getRatingsEntries(long assetEntryId,
+		int ratingGroupCount) throws RemoteException {
 		try {
-			com.liferay.portal.kernel.json.JSONObject returnValue = ScreensRatingsEntryServiceUtil.getRatingsEntries(entryId,
-					stepCount);
+			com.liferay.portal.kernel.json.JSONObject returnValue = ScreensRatingsEntryServiceUtil.getRatingsEntries(assetEntryId,
+					ratingGroupCount);
 
 			return returnValue.toString();
 		}
@@ -90,10 +91,11 @@ public class ScreensRatingsEntryServiceSoap {
 	}
 
 	public static java.lang.String getRatingsEntries(long classPK,
-		java.lang.String className, int stepCount) throws RemoteException {
+		java.lang.String className, int ratingGroupCount)
+		throws RemoteException {
 		try {
 			com.liferay.portal.kernel.json.JSONObject returnValue = ScreensRatingsEntryServiceUtil.getRatingsEntries(classPK,
-					className, stepCount);
+					className, ratingGroupCount);
 
 			return returnValue.toString();
 		}
@@ -104,12 +106,12 @@ public class ScreensRatingsEntryServiceSoap {
 		}
 	}
 
-	public static java.lang.String updateRatingEntry(long classPK,
-		java.lang.String className, double score, int stepCount)
+	public static java.lang.String updateRatingsEntry(long classPK,
+		java.lang.String className, double score, int ratingGroupCount)
 		throws RemoteException {
 		try {
-			com.liferay.portal.kernel.json.JSONObject returnValue = ScreensRatingsEntryServiceUtil.updateRatingEntry(classPK,
-					className, score, stepCount);
+			com.liferay.portal.kernel.json.JSONObject returnValue = ScreensRatingsEntryServiceUtil.updateRatingsEntry(classPK,
+					className, score, ratingGroupCount);
 
 			return returnValue.toString();
 		}

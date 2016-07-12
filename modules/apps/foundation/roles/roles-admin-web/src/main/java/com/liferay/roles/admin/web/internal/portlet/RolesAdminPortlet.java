@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.roles.admin.web.portlet;
+package com.liferay.roles.admin.web.internal.portlet;
 
 import com.liferay.application.list.PanelAppRegistry;
 import com.liferay.application.list.PanelCategoryRegistry;

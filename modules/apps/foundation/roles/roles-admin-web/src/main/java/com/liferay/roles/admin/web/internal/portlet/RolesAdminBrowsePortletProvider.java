@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.roles.admin.web.portlet;
+package com.liferay.roles.admin.web.internal.portlet;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;

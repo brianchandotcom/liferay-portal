@@ -12,16 +12,13 @@
  * details.
  */
 
-package com.liferay.roles.admin.web.portlet.configuration.icon;
+package com.liferay.roles.admin.web.internal.portlet.configuration.icon;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.Role;
-import com.liferay.portal.kernel.model.RoleConstants;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.RoleService;
 import com.liferay.portal.kernel.service.permission.RolePermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -29,15 +26,14 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.roles.admin.constants.RolesAdminPortletKeys;
-import com.liferay.taglib.security.PermissionsURLTag;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
+import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pei-Jung Lan
@@ -46,57 +42,45 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + RolesAdminPortletKeys.ROLES_ADMIN,
-		"path=/edit_role.jsp", "path=/edit_role_assignments.jsp",
-		"path=/edit_role_permissions.jsp"
+		"path=/edit_role_assignments.jsp", "path=/edit_role_permissions.jsp"
 	},
 	service = PortletConfigurationIcon.class
 )
-public class PermissionsPortletConfigurationIcon
+public class EditRolePortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
 		return LanguageUtil.get(
-			getResourceBundle(getLocale(portletRequest)), "permissions");
+			getResourceBundle(getLocale(portletRequest)), "edit");
 	}
 
 	@Override
 	public String getURL(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		String url = StringPool.BLANK;
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		try {
-			long roleId = _getRoleId(portletRequest);
+			PortletURL portletURL = PortletURLFactoryUtil.create(
+				portletRequest, RolesAdminPortletKeys.ROLES_ADMIN,
+				PortletRequest.RENDER_PHASE);
 
-			Role role = _roleService.fetchRole(roleId);
+			portletURL.setParameter("mvcPath", "/edit_role.jsp");
+			portletURL.setParameter(
+				"redirect", PortalUtil.getCurrentURL(portletRequest));
+			portletURL.setParameter(
+				"roleId", String.valueOf(_getRoleId(portletRequest)));
 
-			int[] roleTypes = {role.getType()};
-
-			if (role.getType() != RoleConstants.TYPE_REGULAR) {
-				roleTypes =
-					new int[] {RoleConstants.TYPE_REGULAR, role.getType()};
-			}
-
-			url = PermissionsURLTag.doTag(
-				StringPool.BLANK, Role.class.getName(),
-				themeDisplay.getScopeGroupName(), null,
-				String.valueOf(_getRoleId(portletRequest)),
-				LiferayWindowState.POP_UP.toString(), roleTypes,
-				themeDisplay.getRequest());
+			return portletURL.toString();
 		}
 		catch (Exception e) {
 		}
 
-		return url;
+		return StringPool.BLANK;
 	}
 
 	@Override
 	public double getWeight() {
-		return 103;
+		return 104;
 	}
 
 	@Override
@@ -106,36 +90,14 @@ public class PermissionsPortletConfigurationIcon
 				(ThemeDisplay)portletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
-			long roleId = _getRoleId(portletRequest);
-
-			Role role = _roleService.fetchRole(roleId);
-
-			String roleName = role.getName();
-
-			if (!roleName.equals(RoleConstants.OWNER) &&
-				RolePermissionUtil.contains(
-					themeDisplay.getPermissionChecker(), roleId,
-					ActionKeys.PERMISSIONS)) {
-
-				return true;
-			}
-
-			return false;
+			return RolePermissionUtil.contains(
+				themeDisplay.getPermissionChecker(), _getRoleId(portletRequest),
+				ActionKeys.UPDATE);
 		}
 		catch (Exception e) {
 		}
 
 		return false;
-	}
-
-	@Override
-	public boolean isUseDialog() {
-		return true;
-	}
-
-	@Reference(unbind = "-")
-	protected void setRoleService(RoleService roleService) {
-		_roleService = roleService;
 	}
 
 	private long _getRoleId(PortletRequest portletRequest) {
@@ -144,7 +106,5 @@ public class PermissionsPortletConfigurationIcon
 
 		return ParamUtil.getLong(request, "roleId");
 	}
-
-	private RoleService _roleService;
 
 }

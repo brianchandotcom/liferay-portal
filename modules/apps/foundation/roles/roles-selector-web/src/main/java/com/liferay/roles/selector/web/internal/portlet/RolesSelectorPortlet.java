@@ -12,13 +12,14 @@
  * details.
  */
 
-package com.liferay.roles.selector.web.portlet;
+package com.liferay.roles.selector.web.internal.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.UserGroupGroupRoleService;
 import com.liferay.portal.kernel.service.UserGroupRoleService;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.roles.selector.web.internal.constants.RolesSelectorPortletKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -43,6 +44,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.display-name=Roles Selector",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
+		"javax.portlet.name=" + RolesSelectorPortletKeys.ROLES_SELECTOR,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=guest,power-user,user",
 		"javax.portlet.supports.mime-type=text/html"

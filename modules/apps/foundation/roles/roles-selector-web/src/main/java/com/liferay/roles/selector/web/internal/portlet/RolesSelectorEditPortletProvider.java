@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.roles.selector.web.portlet;
+package com.liferay.roles.selector.web.internal.portlet;
 
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
 import com.liferay.portal.kernel.portlet.EditPortletProvider;
-import com.liferay.roles.selector.web.constants.RolesSelectorPortletKeys;
+import com.liferay.roles.selector.web.internal.constants.RolesSelectorPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.roles.selector.web.constants;
+package com.liferay.roles.selector.web.internal.constants;
 
 /**
  * @author Eudaldo Alonso

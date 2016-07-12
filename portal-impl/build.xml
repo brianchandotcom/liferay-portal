@@ -173,6 +173,8 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 			<jvmarg value="-Dfile.encoding=UTF-8" />
 			<jvmarg value="-Duser.country=US" />
 			<jvmarg value="-Duser.language=en" />
+			<arg value="build.current.branch=${build.current.branch}" />
+			<arg value="git.working.branch.name=${git.working.branch.name}" />
 			<arg value="lang.dir=${lang.dir}" />
 			<arg value="lang.file=${lang.file}" />
 			<arg value="lang.plugin=false" />
@@ -180,6 +182,14 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 			<arg value="lang.translate.client.id=${microsoft.translator.client.id}" />
 			<arg value="lang.translate.client.secret=${microsoft.translator.client.secret}" />
 		</java>
+	</target>
+
+	<target name="build-lang-current-branch">
+		<antcall target="build-lang-cmd">
+			<param name="build.current.branch" value="true" />
+			<param name="lang.dir" value="src/content" />
+			<param name="lang.file" value="Language" />
+		</antcall>
 	</target>
 
 	<target name="build-lib-versions">

@@ -28,6 +28,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ArgumentsUtil;
+import com.liferay.portal.tools.GitException;
+import com.liferay.portal.tools.GitUtil;
 
 import com.memetix.mst.language.Language;
 import com.memetix.mst.translate.Translate;
@@ -46,6 +48,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
@@ -53,6 +56,7 @@ import java.util.TreeMap;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Hugo Huijser
  */
 public class LangBuilder {
 
@@ -81,6 +85,21 @@ public class LangBuilder {
 		String translateClientId = arguments.get("lang.translate.client.id");
 		String translateClientSecret = arguments.get(
 			"lang.translate.client.secret");
+
+		boolean buildCurrentBranch = ArgumentsUtil.getBoolean(
+			arguments, "build.current.branch", false);
+
+		if (buildCurrentBranch) {
+			String gitWorkingBranchName = ArgumentsUtil.getString(
+				arguments, "git.working.branch.name", "master");
+
+			_processCurrentBranch(
+				langFileName, plugin, portalLanguagePropertiesFileName,
+				translate, translateClientId, translateClientSecret,
+				gitWorkingBranchName);
+
+			return;
+		}
 
 		try {
 			new LangBuilder(
@@ -226,6 +245,40 @@ public class LangBuilder {
 		}
 
 		return StringPool.BLANK;
+	}
+
+	private static void _processCurrentBranch(
+			String langFileName, boolean plugin,
+			String portalLanguagePropertiesFileName, boolean translate,
+			String translateClientId, String translateClientSecret,
+			String gitWorkingBranchName)
+		throws Exception {
+
+		try {
+			String basedir = ".././";
+
+			List<String> fileNames = GitUtil.getCurrentBranchFileNames(
+				basedir, gitWorkingBranchName);
+
+			for (String fileName : fileNames) {
+				int pos = fileName.indexOf(
+					"content/" + langFileName + ".properties");
+
+				if (pos == -1) {
+					continue;
+				}
+
+				String langDirName = basedir + fileName.substring(0, pos + 7);
+
+				new LangBuilder(
+					langDirName, langFileName, plugin,
+					portalLanguagePropertiesFileName, translate,
+					translateClientId, translateClientSecret);
+			}
+		}
+		catch (GitException ge) {
+			System.out.println(ge.getMessage());
+		}
 	}
 
 	private void _copyProperties(File file, String languageId)

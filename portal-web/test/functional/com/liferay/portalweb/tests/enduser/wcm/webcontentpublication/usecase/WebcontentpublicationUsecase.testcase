@@ -1988,7 +1988,7 @@
 
 		<execute macro="WebContent#editDisplayPagePGViaAP">
 			<var name="assetTitle" value="WC WebContent Title" />
-			<var name="displayPageSelection" value="Asset Publisher Page 2" />
+			<var name="displayPageName" value="Asset Publisher Page 2" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">

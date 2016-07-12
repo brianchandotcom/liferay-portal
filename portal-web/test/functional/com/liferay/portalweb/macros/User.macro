@@ -539,7 +539,7 @@
 	</command>
 
 	<command name="advancedSearchViaFriendsDirectoryPG">
-		<execute function="Click" locator1="PGFriendsdirectory#BASIC_SEARCH_ADVANCED" />
+		<execute function="Click" locator1="NavBar#SEARCH_TOGGLE_ADVANCED" />
 
 		<if>
 			<equals arg1="${searchField}" arg2="First Name" />
@@ -567,121 +567,7 @@
 			<elseif>
 				<equals arg1="${searchField}" arg2="Email Address" />
 				<then>
-					<execute function="Type" locator1="PGFriendsdirectory#ADVANCED_SEARCH_EMAIL_ADDRESS_FIELD" value1="${searchTerm}" />
-				</then>
-			</elseif>
-		</if>
-
-		<execute function="AssertClick" locator1="PGFriendsdirectory#BASIC_SEARCH_BUTTON" value1="Search" />
-
-		<if>
-			<equals arg1="${searchNoResults}" arg2="true" />
-			<then>
-				<execute function="AssertTextEquals" locator1="PGFriendsdirectory#INFO_MESSAGE" value1="No users were found." />
-
-				<var name="key_userScreenName" value="${userScreenName}" />
-
-				<execute function="AssertElementNotPresent" locator1="PGFriendsdirectory#USER_TABLE_FIRST_NAME" value1="${userFirstName}" />
-				<execute function="AssertElementNotPresent" locator1="PGFriendsdirectory#USER_TABLE_LAST_NAME" value1="${userLastName}" />
-				<execute function="AssertElementNotPresent" locator1="PGFriendsdirectory#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
-			</then>
-			<else>
-				<var name="key_userScreenName" value="${userScreenName}" />
-
-				<execute function="AssertTextEquals" locator1="PGFriendsdirectory#USER_TABLE_FIRST_NAME" value1="${userFirstName}" />
-				<execute function="AssertTextEquals" locator1="PGFriendsdirectory#USER_TABLE_LAST_NAME" value1="${userLastName}" />
-				<execute function="AssertTextEquals" locator1="PGFriendsdirectory#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
-			</else>
-		</if>
-	</command>
-
-	<command name="advancedSearchViaMySitesDirectoryPG" >
-		<execute function="Click" locator1="PGMysitesdirectory#BASIC_SEARCH_ADVANCED" />
-
-		<if>
-			<equals arg1="${searchField}" arg2="First Name" />
-			<then>
-				<execute function="Type" locator1="TextInput#FIRST_NAME" value1="${searchTerm}" />
-			</then>
-			<elseif>
-				<equals arg1="${searchField}" arg2="Middle Name" />
-				<then>
-					<execute function="Type" locator1="TextInput#MIDDLE_NAME" value1="${searchTerm}" />
-				</then>
-			</elseif>
-			<elseif>
-				<equals arg1="${searchField}" arg2="Last Name" />
-				<then>
-					<execute function="Type" locator1="TextInput#LAST_NAME" value1="${searchTerm}" />
-				</then>
-			</elseif>
-			<elseif>
-				<equals arg1="${searchField}" arg2="Screen Name" />
-				<then>
-					<execute function="Type" locator1="TextInput#SCREEN_NAME" value1="${searchTerm}" />
-				</then>
-			</elseif>
-			<elseif>
-				<equals arg1="${searchField}" arg2="Email Address" />
-				<then>
-					<execute function="Type" locator1="PGMysitesdirectory#ADVANCED_SEARCH_EMAIL_ADDRESS_FIELD" value1="${searchTerm}" />
-				</then>
-			</elseif>
-		</if>
-
-		<execute function="AssertClick" locator1="PGMysitesdirectory#BASIC_SEARCH_BUTTON" value1="Search" />
-
-		<if>
-			<equals arg1="${searchNoResults}" arg2="true" />
-			<then>
-				<execute function="AssertTextEquals" locator1="PGMysitesdirectory#INFO_MESSAGE" value1="No users were found." />
-
-				<var name="key_userScreenName" value="${userScreenName}" />
-
-				<execute function="AssertElementNotPresent" locator1="PGMysitesdirectory#USER_TABLE_FIRST_NAME" value1="${userFirstName}" />
-				<execute function="AssertElementNotPresent" locator1="PGMysitesdirectory#USER_TABLE_LAST_NAME" value1="${userLastName}" />
-				<execute function="AssertElementNotPresent" locator1="PGMysitesdirectory#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
-			</then>
-			<else>
-				<var name="key_userScreenName" value="${userScreenName}" />
-
-				<execute function="AssertTextEquals" locator1="PGMysitesdirectory#USER_TABLE_FIRST_NAME" value1="${userFirstName}" />
-				<execute function="AssertTextEquals" locator1="PGMysitesdirectory#USER_TABLE_LAST_NAME" value1="${userLastName}" />
-				<execute function="AssertTextEquals" locator1="PGMysitesdirectory#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
-			</else>
-		</if>
-	</command>
-
-	<command name="advancedSearchViaPortalDirectoryPG" >
-		<execute function="Click" locator1="PGPortaldirectory#BASIC_SEARCH_ADVANCED" />
-
-		<if>
-			<equals arg1="${searchField}" arg2="First Name" />
-			<then>
-				<execute function="Type" locator1="TextInput#FIRST_NAME" value1="${searchTerm}" />
-			</then>
-			<elseif>
-				<equals arg1="${searchField}" arg2="Middle Name" />
-				<then>
-					<execute function="Type" locator1="TextInput#MIDDLE_NAME" value1="${searchTerm}" />
-				</then>
-			</elseif>
-			<elseif>
-				<equals arg1="${searchField}" arg2="Last Name" />
-				<then>
-					<execute function="Type" locator1="TextInput#LAST_NAME" value1="${searchTerm}" />
-				</then>
-			</elseif>
-			<elseif>
-				<equals arg1="${searchField}" arg2="Screen Name" />
-				<then>
-					<execute function="Type" locator1="TextInput#SCREEN_NAME" value1="${searchTerm}" />
-				</then>
-			</elseif>
-			<elseif>
-				<equals arg1="${searchField}" arg2="Email Address" />
-				<then>
-					<execute function="Type" locator1="PGPortaldirectory#ADVANCED_SEARCH_EMAIL_ADDRESS_FIELD" value1="${searchTerm}" />
+					<execute function="Type" locator1="AdvancedSearch#EMAIL_ADDRESS_FIELD" value1="${searchTerm}" />
 				</then>
 			</elseif>
 		</if>
@@ -691,7 +577,121 @@
 		<if>
 			<equals arg1="${searchNoResults}" arg2="true" />
 			<then>
-				<execute function="AssertTextEquals" locator1="PGPortaldirectory#INFO_MESSAGE" value1="No users were found." />
+				<execute function="AssertTextEquals" locator1="Message#INFO" value1="No users were found." />
+
+				<var name="key_userScreenName" value="${userScreenName}" />
+
+				<execute function="AssertElementNotPresent" locator1="PortalDirectory#USER_TABLE_FIRST_NAME_LINK" value1="${userFirstName}" />
+				<execute function="AssertElementNotPresent" locator1="PortalDirectory#USER_TABLE_LAST_NAME_LINK" value1="${userLastName}" />
+				<execute function="AssertElementNotPresent" locator1="PortalDirectory#USER_TABLE_SCREEN_NAME_LINK" value1="${userScreenName}" />
+			</then>
+			<else>
+				<var name="key_userScreenName" value="${userScreenName}" />
+
+				<execute function="AssertTextEquals" locator1="PortalDirectory#USER_TABLE_FIRST_NAME_LINK" value1="${userFirstName}" />
+				<execute function="AssertTextEquals" locator1="PortalDirectory#USER_TABLE_LAST_NAME_LINK" value1="${userLastName}" />
+				<execute function="AssertTextEquals" locator1="PortalDirectory#USER_TABLE_SCREEN_NAME_LINK" value1="${userScreenName}" />
+			</else>
+		</if>
+	</command>
+
+	<command name="advancedSearchViaMySitesDirectoryPG" >
+		<execute function="Click" locator1="NavBar#SEARCH_TOGGLE_ADVANCED" />
+
+		<if>
+			<equals arg1="${searchField}" arg2="First Name" />
+			<then>
+				<execute function="Type" locator1="TextInput#FIRST_NAME" value1="${searchTerm}" />
+			</then>
+			<elseif>
+				<equals arg1="${searchField}" arg2="Middle Name" />
+				<then>
+					<execute function="Type" locator1="TextInput#MIDDLE_NAME" value1="${searchTerm}" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${searchField}" arg2="Last Name" />
+				<then>
+					<execute function="Type" locator1="TextInput#LAST_NAME" value1="${searchTerm}" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${searchField}" arg2="Screen Name" />
+				<then>
+					<execute function="Type" locator1="TextInput#SCREEN_NAME" value1="${searchTerm}" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${searchField}" arg2="Email Address" />
+				<then>
+					<execute function="Type" locator1="AdvancedSearch#EMAIL_ADDRESS_FIELD" value1="${searchTerm}" />
+				</then>
+			</elseif>
+		</if>
+
+		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
+
+		<if>
+			<equals arg1="${searchNoResults}" arg2="true" />
+			<then>
+				<execute function="AssertTextEquals" locator1="Message#INFO" value1="No users were found." />
+
+				<var name="key_userScreenName" value="${userScreenName}" />
+
+				<execute function="AssertElementNotPresent" locator1="PortalDirectory#USER_TABLE_FIRST_NAME_LINK" value1="${userFirstName}" />
+				<execute function="AssertElementNotPresent" locator1="PortalDirectory#USER_TABLE_LAST_NAME_LINK" value1="${userLastName}" />
+				<execute function="AssertElementNotPresent" locator1="PortalDirectory#USER_TABLE_SCREEN_NAME_LINK" value1="${userScreenName}" />
+			</then>
+			<else>
+				<var name="key_userScreenName" value="${userScreenName}" />
+
+				<execute function="AssertTextEquals" locator1="PortalDirectory#USER_TABLE_FIRST_NAME_LINK" value1="${userFirstName}" />
+				<execute function="AssertTextEquals" locator1="PortalDirectory#USER_TABLE_LAST_NAME_LINK" value1="${userLastName}" />
+				<execute function="AssertTextEquals" locator1="PortalDirectory#USER_TABLE_SCREEN_NAME_LINK" value1="${userScreenName}" />
+			</else>
+		</if>
+	</command>
+
+	<command name="advancedSearchViaPortalDirectoryPG" >
+		<execute function="Click" locator1="NavBar#SEARCH_TOGGLE_ADVANCED" />
+
+		<if>
+			<equals arg1="${searchField}" arg2="First Name" />
+			<then>
+				<execute function="Type" locator1="TextInput#FIRST_NAME" value1="${searchTerm}" />
+			</then>
+			<elseif>
+				<equals arg1="${searchField}" arg2="Middle Name" />
+				<then>
+					<execute function="Type" locator1="TextInput#MIDDLE_NAME" value1="${searchTerm}" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${searchField}" arg2="Last Name" />
+				<then>
+					<execute function="Type" locator1="TextInput#LAST_NAME" value1="${searchTerm}" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${searchField}" arg2="Screen Name" />
+				<then>
+					<execute function="Type" locator1="TextInput#SCREEN_NAME" value1="${searchTerm}" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${searchField}" arg2="Email Address" />
+				<then>
+					<execute function="Type" locator1="AdvancedSearch#EMAIL_ADDRESS_FIELD" value1="${searchTerm}" />
+				</then>
+			</elseif>
+		</if>
+
+		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
+
+		<if>
+			<equals arg1="${searchNoResults}" arg2="true" />
+			<then>
+				<execute function="AssertTextEquals" locator1="Message#INFO" value1="No users were found." />
 
 				<var name="key_userFirstName" value="${userFirstName}" />
 
@@ -722,7 +722,7 @@
 	</command>
 
 	<command name="advancedSearchViaSiteMembersDirectoryPG" >
-		<execute function="Click" locator1="PGSitemembersdirectory#BASIC_SEARCH_ADVANCED" />
+		<execute function="Click" locator1="NavBar#SEARCH_TOGGLE_ADVANCED" />
 
 		<if>
 			<equals arg1="${searchField}" arg2="First Name" />
@@ -750,30 +750,30 @@
 			<elseif>
 				<equals arg1="${searchField}" arg2="Email Address" />
 				<then>
-					<execute function="Type" locator1="PGSitemembersdirectory#ADVANCED_SEARCH_EMAIL_ADDRESS_FIELD" value1="${searchTerm}" />
+					<execute function="Type" locator1="AdvancedSearch#EMAIL_ADDRESS_FIELD" value1="${searchTerm}" />
 				</then>
 			</elseif>
 		</if>
 
-		<execute function="AssertClick" locator1="PGSitemembersdirectory#BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
 
 		<if>
 			<equals arg1="${searchNoResults}" arg2="true" />
 			<then>
-				<execute function="AssertTextEquals" locator1="PGSitemembersdirectory#INFO_MESSAGE" value1="No users were found." />
+				<execute function="AssertTextEquals" locator1="Message#INFO" value1="No users were found." />
 
 				<var name="key_userScreenName" value="${userScreenName}" />
 
-				<execute function="AssertElementNotPresent" locator1="PGSitemembersdirectory#USER_TABLE_FIRST_NAME" value1="${userFirstName}" />
-				<execute function="AssertElementNotPresent" locator1="PGSitemembersdirectory#USER_TABLE_LAST_NAME" value1="${userLastName}" />
-				<execute function="AssertElementNotPresent" locator1="PGSitemembersdirectory#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
+				<execute function="AssertElementNotPresent" locator1="PortalDirectory#USER_TABLE_FIRST_NAME_LINK" value1="${userFirstName}" />
+				<execute function="AssertElementNotPresent" locator1="PortalDirectory#USER_TABLE_LAST_NAME_LINK" value1="${userLastName}" />
+				<execute function="AssertElementNotPresent" locator1="PortalDirectory#USER_TABLE_SCREEN_NAME_LINK" value1="${userScreenName}" />
 			</then>
 			<else>
 				<var name="key_userScreenName" value="${userScreenName}" />
 
-				<execute function="AssertTextEquals" locator1="PGSitemembersdirectory#USER_TABLE_FIRST_NAME" value1="${userFirstName}" />
-				<execute function="AssertTextEquals" locator1="PGSitemembersdirectory#USER_TABLE_LAST_NAME" value1="${userLastName}" />
-				<execute function="AssertTextEquals" locator1="PGSitemembersdirectory#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
+				<execute function="AssertTextEquals" locator1="PortalDirectory#USER_TABLE_FIRST_NAME_LINK" value1="${userFirstName}" />
+				<execute function="AssertTextEquals" locator1="PortalDirectory#USER_TABLE_LAST_NAME_LINK" value1="${userLastName}" />
+				<execute function="AssertTextEquals" locator1="PortalDirectory#USER_TABLE_SCREEN_NAME_LINK" value1="${userScreenName}" />
 			</else>
 		</if>
 	</command>

@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.hello.world.web.upgrade.v1_0_0;
+package com.liferay.hello.world.web.internal.upgrade.v1_0_0;
 
-import com.liferay.hello.world.web.constants.HelloWorldPortletKeys;
+import com.liferay.hello.world.web.internal.constants.HelloWorldPortletKeys;
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;
 
 /**

@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.hello.world.web.portlet;
+package com.liferay.hello.world.web.internal.portlet;
 
-import com.liferay.hello.world.web.constants.HelloWorldPortletKeys;
+import com.liferay.hello.world.web.internal.constants.HelloWorldPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ReleaseInfo;

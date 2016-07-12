@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.hello.world.web.constants;
+package com.liferay.hello.world.web.internal.constants;
 
 /**
  * @author Peter Fellwock

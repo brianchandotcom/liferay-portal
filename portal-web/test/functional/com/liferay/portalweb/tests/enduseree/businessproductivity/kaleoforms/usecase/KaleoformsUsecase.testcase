@@ -466,7 +466,6 @@
 		<execute macro="Workflow#viewPendingTasks">
 			<var name="workflowAssetTitle" value="${kfProcess2Name}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
-			<var name="workflowDefinition" value="Single Approver" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 	</command>
@@ -954,7 +953,6 @@
 		<execute macro="Workflow#viewPendingTasks">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
-			<var name="workflowDefinition" value="Single Approver" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -1383,7 +1381,6 @@
 		<execute macro="Workflow#viewPendingTasks">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
-			<var name="workflowDefinition" value="Single Approver" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -1595,7 +1592,6 @@
 		<execute macro="Workflow#viewPendingTasks">
 			<var name="workflowAssetTitle" value="${kfProcessName}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
-			<var name="workflowDefinition" value="Single Approver" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -1879,7 +1875,6 @@
 		<execute macro="Workflow#viewPendingTasks">
 			<var name="workflowAssetTitle" value="${kfProcessName}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
-			<var name="workflowDefinition" value="Single Approver" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -6783,7 +6778,6 @@
 		<execute macro="Workflow#viewPendingTasks">
 			<var name="workflowAssetTitle" value="${kfProcessName}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
-			<var name="workflowDefinition" value="Single Approver" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -7188,7 +7182,6 @@
 		<execute macro="Workflow#viewPendingTasks">
 			<var name="workflowAssetTitle" value="${kfProcessName}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
-			<var name="workflowDefinition" value="${workflowDefinitionTitle}" />
 			<var name="workflowTask" value="Update" />
 		</execute>
 
@@ -7205,7 +7198,6 @@
 		<execute macro="Workflow#viewPendingTasks">
 			<var name="workflowAssetTitle" value="${kfProcessName}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
-			<var name="workflowDefinition" value="${workflowDefinitionTitle}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 	</command>
@@ -7401,7 +7393,6 @@
 		<execute macro="Workflow#viewPendingTasks">
 			<var name="workflowAssetTitle" value="${kfProcessName}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
-			<var name="workflowDefinition" value="${workflowDefinitionTitle}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 	</command>
@@ -8431,7 +8422,6 @@
 		<execute macro="Workflow#viewPendingTasks">
 			<var name="workflowAssetTitle" value="${kfProcessName}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
-			<var name="workflowDefinition" value="Single Approver" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 

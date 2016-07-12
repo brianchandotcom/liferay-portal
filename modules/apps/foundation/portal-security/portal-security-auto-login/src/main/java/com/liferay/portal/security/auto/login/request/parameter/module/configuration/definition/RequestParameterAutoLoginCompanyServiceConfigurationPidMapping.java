@@ -15,7 +15,7 @@
 package com.liferay.portal.security.auto.login.request.parameter.module.configuration.definition;
 
 import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
-import com.liferay.portal.security.auto.login.request.parameter.constants.RequestParameterAutoLoginConstants;
+import com.liferay.portal.security.auto.login.internal.request.parameter.constants.RequestParameterAutoLoginConstants;
 import com.liferay.portal.security.auto.login.request.parameter.module.configuration.RequestParameterAutoLoginConfiguration;
 
 import org.osgi.service.component.annotations.Component;

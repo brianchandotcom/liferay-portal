@@ -134,9 +134,17 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 						%>
 
 						<liferay-ui:search-container-column-text>
+							<liferay-portlet:renderURL plid="<%= JournalUtil.getPreviewPlid(curArticle, themeDisplay) %>" var="previewArticleContentURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+								<portlet:param name="mvcPath" value="/preview_article_content.jsp" />
+								<portlet:param name="groupId" value="<%= String.valueOf(curArticle.getGroupId()) %>" />
+								<portlet:param name="articleId" value="<%= curArticle.getArticleId() %>" />
+								<portlet:param name="version" value="<%= String.valueOf(curArticle.getVersion()) %>" />
+							</liferay-portlet:renderURL>
 
 							<%
 							String articleImageURL = curArticle.getArticleImageURL(themeDisplay);
+
+							String cardOnClick = "Liferay.fire('previewArticle', {title: '" + HtmlUtil.escapeJS(curArticle.getTitle(locale)) + "', uri: '" + HtmlUtil.escapeJS(previewArticleContentURL.toString()) + "'});";
 							%>
 
 							<c:choose>
@@ -145,6 +153,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 										actionJsp='<%= journalDisplayContext.isShowEditActions() ? "/article_action.jsp" : null %>'
 										actionJspServletContext="<%= application %>"
 										imageUrl="<%= articleImageURL %>"
+										onClick="<%= cardOnClick %>"
 										resultRow="<%= row %>"
 										rowChecker="<%= articleSearchContainer.getRowChecker() %>"
 										title="<%= curArticle.getTitle(locale) %>"
@@ -158,6 +167,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 										actionJsp='<%= journalDisplayContext.isShowEditActions() ? "/article_action.jsp" : null %>'
 										actionJspServletContext="<%= application %>"
 										icon="web-content"
+										onClick="<%= cardOnClick %>"
 										resultRow="<%= row %>"
 										rowChecker="<%= articleSearchContainer.getRowChecker() %>"
 										title="<%= curArticle.getTitle(locale) %>"
@@ -170,11 +180,6 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 						</liferay-ui:search-container-column-text>
 					</c:when>
 					<c:otherwise>
-						<liferay-ui:search-container-column-text
-							name="id"
-							value="<%= HtmlUtil.escape(curArticle.getArticleId()) %>"
-						/>
-
 						<liferay-ui:search-container-column-jsp
 							cssClass="table-cell-content"
 							href="<%= rowURL %>"
@@ -308,11 +313,6 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 						</liferay-ui:search-container-column-text>
 					</c:when>
 					<c:otherwise>
-						<liferay-ui:search-container-column-text
-							name="id"
-							value="<%= String.valueOf(curFolder.getFolderId()) %>"
-						/>
-
 						<liferay-ui:search-container-column-text
 							cssClass="table-cell-content"
 							href="<%= rowURL.toString() %>"

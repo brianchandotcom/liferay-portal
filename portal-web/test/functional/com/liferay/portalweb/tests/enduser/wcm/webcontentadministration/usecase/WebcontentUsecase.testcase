@@ -621,7 +621,6 @@
 	</command>
 
 	<command name="AddWebContentRemoveGuestViewPermission" priority="4">
-		<property name="custom.properties" value="journal.article.view.permission.check.enabled=true" />
 		<property name="portlet.properties.com.liferay.journal.service" value="journal.article.view.permission.check.enabled=true" />
 
 		<var name="portletOption" value="Configuration" />

@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.plugins.admin.web.upgrade;
+package com.liferay.plugins.admin.web.internal.upgrade;
 
-import com.liferay.plugins.admin.web.constants.PluginsAdminPortletKeys;
+import com.liferay.plugins.admin.web.internal.constants.PluginsAdminPortletKeys;
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;

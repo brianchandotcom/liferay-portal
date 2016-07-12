@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.plugins.admin.web.portlet.action;
+package com.liferay.plugins.admin.web.internal.portlet.action;
 
-import com.liferay.plugins.admin.web.constants.PluginsAdminPortletKeys;
+import com.liferay.plugins.admin.web.internal.constants.PluginsAdminPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 
 import javax.portlet.RenderRequest;
@@ -28,17 +28,17 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	property = {
 		"javax.portlet.name=" + PluginsAdminPortletKeys.PLUGINS_ADMIN,
-		"mvc.command.name=/plugins_admin/edit_plugin"
+		"mvc.command.name=/"
 	},
 	service = MVCRenderCommand.class
 )
-public class EditPluginMVCRenderCommand implements MVCRenderCommand {
+public class ViewPluginMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		return "/edit_plugin.jsp";
+		return "/view.jsp";
 	}
 
 }

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.plugins.admin.web.constants;
+package com.liferay.plugins.admin.web.internal.constants;
 
 /**
  * @author Brian Wing Shun Chan

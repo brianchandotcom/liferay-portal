@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.plugins.admin.web.portlet.action;
+package com.liferay.plugins.admin.web.internal.portlet.action;
 
-import com.liferay.plugins.admin.web.constants.PluginsAdminPortletKeys;
+import com.liferay.plugins.admin.web.internal.constants.PluginsAdminPortletKeys;
 import com.liferay.portal.kernel.model.Plugin;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;

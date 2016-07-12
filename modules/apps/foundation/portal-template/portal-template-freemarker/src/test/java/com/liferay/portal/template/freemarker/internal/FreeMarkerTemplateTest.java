@@ -12,36 +12,28 @@
  * details.
  */
 
-package com.liferay.portal.velocity;
+package com.liferay.portal.template.freemarker.internal;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.SingleVMPool;
-import com.liferay.portal.kernel.concurrent.ConcurrentHashSet;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.Template;
-import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateResource;
-import com.liferay.portal.kernel.template.TemplateResourceLoader;
-import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.template.ClassLoaderResourceParser;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.template.TemplateContextHelper;
-import com.liferay.portal.template.TemplateResourceParser;
-import com.liferay.portal.template.velocity.configuration.VelocityEngineConfiguration;
-import com.liferay.portal.template.velocity.internal.FastExtendedProperties;
-import com.liferay.portal.template.velocity.internal.LiferayMethodExceptionEventHandler;
-import com.liferay.portal.template.velocity.internal.LiferayResourceLoader;
-import com.liferay.portal.template.velocity.internal.LiferayResourceManager;
-import com.liferay.portal.template.velocity.internal.VelocityTemplate;
-import com.liferay.portal.template.velocity.internal.VelocityTemplateResourceLoader;
+import com.liferay.portal.template.freemarker.configuration.FreeMarkerEngineConfiguration;
 import com.liferay.portal.tools.ToolDependencies;
-import com.liferay.portal.util.FileImpl;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceRegistration;
+
+import freemarker.cache.TemplateCache;
+
+import freemarker.core.ParseException;
+
+import freemarker.template.Configuration;
 
 import java.io.IOException;
 import java.io.ObjectInput;
@@ -56,13 +48,6 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.collections.ExtendedProperties;
-import org.apache.velocity.app.VelocityEngine;
-import org.apache.velocity.exception.ParseErrorException;
-import org.apache.velocity.runtime.RuntimeConstants;
-import org.apache.velocity.util.introspection.SecureUberspector;
-
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -70,129 +55,50 @@ import org.junit.Test;
 
 /**
  * @author Tina Tian
- * @author Raymond Augé
  */
-public class VelocityTemplateTest {
+public class FreeMarkerTemplateTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		ToolDependencies.wireCaches();
-
-		FileUtil fileUtil = new FileUtil();
-
-		fileUtil.setFile(new FileImpl());
-
-		_templateResourceLoader = new MockTemplateResourceLoader();
-
-		_templateResourceLoader.activate(
-			Collections.<String, Object>emptyMap());
-
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceRegistrations.add(
-			registry.registerService(
-				TemplateResourceLoader.class, _templateResourceLoader));
-
-		_serviceRegistrations.add(
-			registry.registerService(
-				TemplateResourceParser.class, new ClassLoaderResourceParser(),
-				Collections.<String, Object>singletonMap(
-					"lang.type", TemplateConstants.LANG_TYPE_VM)));
-	}
-
-	@AfterClass
-	public static void tearDownClass() {
-		for (ServiceRegistration<?> serviceRegistration :
-				_serviceRegistrations) {
-
-			serviceRegistration.unregister();
-		}
-
-		_serviceRegistrations.clear();
 	}
 
 	@Before
 	public void setUp() throws Exception {
-		VelocityEngineConfiguration _velocityEngineConfiguration =
-			ConfigurableUtil.createConfigurable(
-				VelocityEngineConfiguration.class, Collections.emptyMap());
+		_configuration = new Configuration();
+
+		FreeMarkerTemplateResourceLoader freeMarkerTemplateResourceLoader =
+			new FreeMarkerTemplateResourceLoader();
+
+		Registry registry = RegistryUtil.getRegistry();
+
+		freeMarkerTemplateResourceLoader.setMultiVMPool(
+			registry.getService(MultiVMPool.class));
+		freeMarkerTemplateResourceLoader.setSingleVMPool(
+			registry.getService(SingleVMPool.class));
+
+		freeMarkerTemplateResourceLoader.activate(
+			Collections.<String, Object>emptyMap());
+
+		TemplateCache templateCache = new LiferayTemplateCache(
+			_configuration, _freemarkerEngineConfiguration,
+			freeMarkerTemplateResourceLoader,
+			registry.getService(SingleVMPool.class));
+
+		ReflectionTestUtil.setFieldValue(
+			_configuration, "cache", templateCache);
+
+		_configuration.setLocalizedLookup(false);
 
 		_templateContextHelper = new MockTemplateContextHelper();
-
-		_velocityEngine = new VelocityEngine();
-
-		boolean cacheEnabled = false;
-
-		ExtendedProperties extendedProperties = new FastExtendedProperties();
-
-		extendedProperties.setProperty(
-			VelocityEngine.DIRECTIVE_IF_TOSTRING_NULLCHECK,
-			String.valueOf(
-				_velocityEngineConfiguration.directiveIfToStringNullCheck()));
-		extendedProperties.setProperty(
-			VelocityEngine.EVENTHANDLER_METHODEXCEPTION,
-			LiferayMethodExceptionEventHandler.class.getName());
-		extendedProperties.setProperty(
-			RuntimeConstants.INTROSPECTOR_RESTRICT_CLASSES,
-			StringUtil.merge(_velocityEngineConfiguration.restrictedClasses()));
-		extendedProperties.setProperty(
-			RuntimeConstants.INTROSPECTOR_RESTRICT_PACKAGES,
-			StringUtil.merge(
-				_velocityEngineConfiguration.restrictedPackages()));
-		extendedProperties.setProperty(
-			VelocityEngine.RESOURCE_LOADER, "liferay");
-		extendedProperties.setProperty(
-			"liferay." + VelocityEngine.RESOURCE_LOADER + ".cache",
-			String.valueOf(cacheEnabled));
-		extendedProperties.setProperty(
-			"liferay." + VelocityEngine.RESOURCE_LOADER +
-				".resourceModificationCheckInterval",
-			_velocityEngineConfiguration.resourceModificationCheckInterval() +
-				"");
-		extendedProperties.setProperty(
-			"liferay." + VelocityEngine.RESOURCE_LOADER + ".class",
-			LiferayResourceLoader.class.getName());
-		extendedProperties.setProperty(
-			VelocityEngine.RESOURCE_MANAGER_CLASS,
-			LiferayResourceManager.class.getName());
-		extendedProperties.setProperty(
-			"liferay." + VelocityEngine.RESOURCE_MANAGER_CLASS +
-				".resourceModificationCheckInterval",
-			_velocityEngineConfiguration.resourceModificationCheckInterval() +
-				"");
-		extendedProperties.setProperty(
-			VelocityTemplateResourceLoader.class.getName(),
-			_templateResourceLoader);
-		extendedProperties.setProperty(
-			VelocityEngine.RUNTIME_LOG_LOGSYSTEM_CLASS,
-			_velocityEngineConfiguration.logger());
-		extendedProperties.setProperty(
-			VelocityEngine.RUNTIME_LOG_LOGSYSTEM + ".log4j.category",
-			_velocityEngineConfiguration.loggerCategory());
-		extendedProperties.setProperty(
-			RuntimeConstants.UBERSPECT_CLASSNAME,
-			SecureUberspector.class.getName());
-		extendedProperties.setProperty(
-			VelocityEngine.VM_LIBRARY,
-			StringUtil.merge(
-				_velocityEngineConfiguration.velocimacroLibrary()));
-		extendedProperties.setProperty(
-			VelocityEngine.VM_LIBRARY_AUTORELOAD,
-			String.valueOf(!cacheEnabled));
-		extendedProperties.setProperty(
-			VelocityEngine.VM_PERM_ALLOW_INLINE_REPLACE_GLOBAL,
-			String.valueOf(!cacheEnabled));
-
-		_velocityEngine.setExtendedProperties(extendedProperties);
-
-		_velocityEngine.init();
 	}
 
 	@Test
 	public void testGet() throws Exception {
-		Template template = new VelocityTemplate(
+		Template template = new FreeMarkerTemplate(
 			new MockTemplateResource(_TEMPLATE_FILE_NAME), null, null,
-			_velocityEngine, _templateContextHelper, 60, false);
+			_configuration, _templateContextHelper, false,
+			_freemarkerEngineConfiguration.resourceModificationCheck());
 
 		template.put(_TEST_KEY, _TEST_VALUE);
 
@@ -209,9 +115,10 @@ public class VelocityTemplateTest {
 
 	@Test
 	public void testPrepare() throws Exception {
-		Template template = new VelocityTemplate(
+		Template template = new FreeMarkerTemplate(
 			new MockTemplateResource(_TEMPLATE_FILE_NAME), null, null,
-			_velocityEngine, _templateContextHelper, 60, false);
+			_configuration, _templateContextHelper, false,
+			_freemarkerEngineConfiguration.resourceModificationCheck());
 
 		template.put(_TEST_KEY, _TEST_VALUE);
 
@@ -230,9 +137,10 @@ public class VelocityTemplateTest {
 
 	@Test
 	public void testProcessTemplate1() throws Exception {
-		Template template = new VelocityTemplate(
+		Template template = new FreeMarkerTemplate(
 			new MockTemplateResource(_TEMPLATE_FILE_NAME), null, null,
-			_velocityEngine, _templateContextHelper, 60, false);
+			_configuration, _templateContextHelper, false,
+			_freemarkerEngineConfiguration.resourceModificationCheck());
 
 		template.put(_TEST_KEY, _TEST_VALUE);
 
@@ -247,9 +155,10 @@ public class VelocityTemplateTest {
 
 	@Test
 	public void testProcessTemplate2() throws Exception {
-		Template template = new VelocityTemplate(
+		Template template = new FreeMarkerTemplate(
 			new MockTemplateResource(_WRONG_TEMPLATE_ID), null, null,
-			_velocityEngine, _templateContextHelper, 60, false);
+			_configuration, _templateContextHelper, false,
+			_freemarkerEngineConfiguration.resourceModificationCheck());
 
 		template.put(_TEST_KEY, _TEST_VALUE);
 
@@ -269,10 +178,11 @@ public class VelocityTemplateTest {
 
 	@Test
 	public void testProcessTemplate3() throws Exception {
-		Template template = new VelocityTemplate(
+		Template template = new FreeMarkerTemplate(
 			new StringTemplateResource(
 				_WRONG_TEMPLATE_ID, _TEST_TEMPLATE_CONTENT),
-			null, null, _velocityEngine, _templateContextHelper, 60, false);
+			null, null, _configuration, _templateContextHelper, false,
+			_freemarkerEngineConfiguration.resourceModificationCheck());
 
 		template.put(_TEST_KEY, _TEST_VALUE);
 
@@ -287,10 +197,11 @@ public class VelocityTemplateTest {
 
 	@Test
 	public void testProcessTemplate4() throws Exception {
-		Template template = new VelocityTemplate(
+		Template template = new FreeMarkerTemplate(
 			new MockTemplateResource(_TEMPLATE_FILE_NAME),
 			new MockTemplateResource(_WRONG_ERROR_TEMPLATE_ID), null,
-			_velocityEngine, _templateContextHelper, 60, false);
+			_configuration, _templateContextHelper, false,
+			_freemarkerEngineConfiguration.resourceModificationCheck());
 
 		template.put(_TEST_KEY, _TEST_VALUE);
 
@@ -305,10 +216,11 @@ public class VelocityTemplateTest {
 
 	@Test
 	public void testProcessTemplate5() throws Exception {
-		Template template = new VelocityTemplate(
+		Template template = new FreeMarkerTemplate(
 			new MockTemplateResource(_WRONG_TEMPLATE_ID),
-			new MockTemplateResource(_TEMPLATE_FILE_NAME), null,
-			_velocityEngine, _templateContextHelper, 60, false);
+			new MockTemplateResource(_TEMPLATE_FILE_NAME), null, _configuration,
+			_templateContextHelper, false,
+			_freemarkerEngineConfiguration.resourceModificationCheck());
 
 		template.put(_TEST_KEY, _TEST_VALUE);
 
@@ -323,10 +235,11 @@ public class VelocityTemplateTest {
 
 	@Test
 	public void testProcessTemplate6() throws Exception {
-		Template template = new VelocityTemplate(
+		Template template = new FreeMarkerTemplate(
 			new MockTemplateResource(_WRONG_TEMPLATE_ID),
 			new MockTemplateResource(_WRONG_ERROR_TEMPLATE_ID), null,
-			_velocityEngine, _templateContextHelper, 60, false);
+			_configuration, _templateContextHelper, false,
+			_freemarkerEngineConfiguration.resourceModificationCheck());
 
 		template.put(_TEST_KEY, _TEST_VALUE);
 
@@ -346,11 +259,12 @@ public class VelocityTemplateTest {
 
 	@Test
 	public void testProcessTemplate7() throws Exception {
-		Template template = new VelocityTemplate(
+		Template template = new FreeMarkerTemplate(
 			new MockTemplateResource(_WRONG_TEMPLATE_ID),
 			new StringTemplateResource(
 				_WRONG_ERROR_TEMPLATE_ID, _TEST_TEMPLATE_CONTENT),
-			null, _velocityEngine, _templateContextHelper, 60, false);
+			null, _configuration, _templateContextHelper, false,
+			_freemarkerEngineConfiguration.resourceModificationCheck());
 
 		template.put(_TEST_KEY, _TEST_VALUE);
 
@@ -369,9 +283,10 @@ public class VelocityTemplateTest {
 
 		context.put(_TEST_KEY, _TEST_VALUE);
 
-		Template template = new VelocityTemplate(
+		Template template = new FreeMarkerTemplate(
 			new MockTemplateResource(_TEMPLATE_FILE_NAME), null, context,
-			_velocityEngine, _templateContextHelper, 60, false);
+			_configuration, _templateContextHelper, false,
+			_freemarkerEngineConfiguration.resourceModificationCheck());
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
@@ -382,11 +297,11 @@ public class VelocityTemplateTest {
 		Assert.assertEquals(_TEST_VALUE, result);
 	}
 
-	private static final String _TEMPLATE_FILE_NAME = "test.vm";
+	private static final String _TEMPLATE_FILE_NAME = "test.ftl";
 
 	private static final String _TEST_KEY = "TEST_KEY";
 
-	private static final String _TEST_TEMPLATE_CONTENT = "$" + _TEST_KEY;
+	private static final String _TEST_TEMPLATE_CONTENT = "${" + _TEST_KEY + "}";
 
 	private static final String _TEST_VALUE = "TEST_VALUE";
 
@@ -395,12 +310,11 @@ public class VelocityTemplateTest {
 
 	private static final String _WRONG_TEMPLATE_ID = "WRONG_TEMPLATE_ID";
 
-	private static final Set<ServiceRegistration<?>> _serviceRegistrations =
-		new ConcurrentHashSet<>();
-	private static MockTemplateResourceLoader _templateResourceLoader;
-
+	private Configuration _configuration;
+	private final FreeMarkerEngineConfiguration _freemarkerEngineConfiguration =
+		ConfigurableUtil.createConfigurable(
+			FreeMarkerEngineConfiguration.class, Collections.emptyMap());
 	private TemplateContextHelper _templateContextHelper;
-	private VelocityEngine _velocityEngine;
 
 	private static class MockTemplateContextHelper
 		extends TemplateContextHelper {
@@ -448,13 +362,14 @@ public class VelocityTemplateTest {
 		}
 
 		@Override
-		public Reader getReader() {
+		public Reader getReader() throws IOException {
 			if (_templateId.equals(_TEMPLATE_FILE_NAME)) {
 				return new StringReader(_TEST_TEMPLATE_CONTENT);
 			}
 
-			throw new ParseErrorException(
-				"Unable to get reader for template source " + _templateId);
+			throw new ParseException(
+				"Unable to get reader for template source " + _templateId, 0,
+				0);
 		}
 
 		@Override
@@ -478,21 +393,6 @@ public class VelocityTemplateTest {
 
 		private long _lastModified = System.currentTimeMillis();
 		private String _templateId;
-
-	}
-
-	private static class MockTemplateResourceLoader
-		extends VelocityTemplateResourceLoader {
-
-		@Override
-		protected void activate(Map<String, Object> properties) {
-			Registry registry = RegistryUtil.getRegistry();
-
-			setMultiVMPool(registry.getService(MultiVMPool.class));
-			setSingleVMPool(registry.getService(SingleVMPool.class));
-
-			super.activate(properties);
-		}
 
 	}
 

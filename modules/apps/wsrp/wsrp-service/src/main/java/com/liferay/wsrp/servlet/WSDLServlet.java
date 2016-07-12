@@ -35,14 +35,28 @@ import java.io.IOException;
 
 import java.util.Set;
 
+import javax.servlet.Servlet;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
+
 /**
  * @author Brian Wing Shun Chan
+ * @author Peter Fellwock
  */
+@Component(
+	immediate = true,
+	property = {
+		HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT + "=(osgi.http.whiteboard.context.name=wsrp-consumer)",
+		HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_NAME + "=com.liferay.wsrp.servlet.WSDLServlet",
+		HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_PATTERN + "=/wsdl/*"
+	},
+	service = Servlet.class
+)
 public class WSDLServlet extends HttpServlet {
 
 	@Override

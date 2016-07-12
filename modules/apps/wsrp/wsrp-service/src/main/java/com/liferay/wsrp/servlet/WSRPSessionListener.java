@@ -29,9 +29,13 @@ import oasis.names.tc.wsrp.v2.intf.WSRP_v2_Markup_PortType;
 import oasis.names.tc.wsrp.v2.types.ReleaseSessions;
 import oasis.names.tc.wsrp.v2.types.SessionContext;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Michael Young
+ * @author Peter Fellwock
  */
+@Component(immediate = true, service = HttpSessionListener.class)
 public class WSRPSessionListener implements HttpSessionListener {
 
 	@Override

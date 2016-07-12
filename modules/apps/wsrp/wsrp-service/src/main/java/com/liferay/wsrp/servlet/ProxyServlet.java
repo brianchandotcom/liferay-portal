@@ -40,14 +40,28 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.servlet.Servlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
+
 /**
  * @author Brian Wing Shun Chan
+ * @author Peter Fellwock
  */
+@Component(
+	immediate = true,
+	property = {
+		HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT + "=(osgi.http.whiteboard.context.name=wsrp-consumer)",
+		HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_NAME + "=com.liferay.wsrp.servlet.ProxyServlet",
+		HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_PATTERN + "=/proxy/*"
+	},
+	service = Servlet.class
+)
 public class ProxyServlet extends HttpServlet {
 
 	@Override

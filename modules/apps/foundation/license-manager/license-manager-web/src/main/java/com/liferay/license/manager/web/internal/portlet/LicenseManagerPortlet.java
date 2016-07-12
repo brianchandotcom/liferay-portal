@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.license.manager.web.portlet;
+package com.liferay.license.manager.web.internal.portlet;
 
-import com.liferay.license.manager.web.constants.LicenseManagerPortletKeys;
+import com.liferay.license.manager.web.internal.constants.LicenseManagerPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 import javax.portlet.Portlet;

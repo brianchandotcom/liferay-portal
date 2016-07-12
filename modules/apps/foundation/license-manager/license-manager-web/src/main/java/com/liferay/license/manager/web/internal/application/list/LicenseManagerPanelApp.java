@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.license.manager.web.application.list;
+package com.liferay.license.manager.web.internal.application.list;
 
 import com.liferay.application.list.BasePanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;
-import com.liferay.license.manager.web.constants.LicenseManagerPortletKeys;
+import com.liferay.license.manager.web.internal.constants.LicenseManagerPortletKeys;
 import com.liferay.portal.kernel.model.Portlet;
 
 import org.osgi.service.component.annotations.Component;

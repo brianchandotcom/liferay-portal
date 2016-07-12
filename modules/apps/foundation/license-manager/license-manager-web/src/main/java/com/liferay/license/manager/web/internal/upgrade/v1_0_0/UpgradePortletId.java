@@ -12,14 +12,21 @@
  * details.
  */
 
-package com.liferay.license.manager.web.constants;
+package com.liferay.license.manager.web.internal.upgrade.v1_0_0;
+
+import com.liferay.license.manager.web.internal.constants.LicenseManagerPortletKeys;
+import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;
 
 /**
  * @author Peter Fellwock
  */
-public class LicenseManagerPortletKeys {
+public class UpgradePortletId extends BaseUpgradePortletId {
 
-	public static final String LICENSE_MANAGER =
-		"com_liferay_license_manager_web_portlet_LicenseManagerPortlet";
+	@Override
+	protected String[][] getRenamePortletIdsArray() {
+		return new String[][] {
+			new String[] {"173", LicenseManagerPortletKeys.LICENSE_MANAGER}
+		};
+	}
 
 }

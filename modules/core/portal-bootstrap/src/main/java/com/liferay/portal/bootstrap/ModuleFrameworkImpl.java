@@ -1136,7 +1136,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 						if (matcher.matches()) {
 							String fileName =
-								matcher.group(1) + matcher.group(3);
+								matcher.group(1) + matcher.group(4);
 
 							if (overwrittenFileNames.contains(fileName)) {
 								if (_log.isInfoEnabled()) {
@@ -1377,7 +1377,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		ModuleFrameworkImpl.class);
 
 	private static final Pattern _pattern = Pattern.compile(
-		"(.*?)(-\\d+\\.\\d+\\.\\d+)(\\.jar)");
+		"(.*?)(-\\d+\\.\\d+\\.\\d+)(\\..*)?(\\.jar)");
 
 	private Framework _framework;
 	private final Map<ApplicationContext, List<ServiceRegistration<?>>>

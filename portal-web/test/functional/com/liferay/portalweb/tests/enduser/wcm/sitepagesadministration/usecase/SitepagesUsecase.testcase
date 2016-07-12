@@ -688,7 +688,7 @@
 		</execute>
 
 		<execute macro="Site#assignUserSitesCP">
-			<var name="siteName" value="Liferay" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userScreenName" value="usersn2" />
 		</execute>
 
@@ -716,7 +716,7 @@
 
 		<execute macro="Page#add">
 			<var name="pageName" value="Test Private Page" />
-			<var name="siteName" value="Liferay" />
+			<var name="siteName" value="${siteName}" />
 			<var name="sitePagePrivacy" value="Private" />
 		</execute>
 
@@ -964,7 +964,7 @@
 
 		<execute macro="Page#add">
 			<var name="pageName" value="Test Private Page" />
-			<var name="siteName" value="Liferay" />
+			<var name="siteName" value="${siteName}" />
 			<var name="sitePagePrivacy" value="Private Pages" />
 		</execute>
 

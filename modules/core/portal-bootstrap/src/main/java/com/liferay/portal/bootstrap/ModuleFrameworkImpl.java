@@ -87,6 +87,8 @@ import java.util.concurrent.CountDownLatch;
 import java.util.jar.Attributes;
 import java.util.jar.JarInputStream;
 import java.util.jar.Manifest;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -1069,13 +1071,19 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 		Collections.sort(jarPaths);
 
+		Set<String> overwrittenFileNames = new HashSet<>();
+
 		for (Path jarPath : jarPaths) {
 			try (InputStream inputStream = Files.newInputStream(jarPath)) {
-				Bundle bundle = _installInitialBundle(
-					jarPath.toString(), inputStream);
+				String path = jarPath.toString();
+
+				Bundle bundle = _installInitialBundle(path, inputStream);
 
 				if (bundle != null) {
 					bundles.add(bundle);
+
+					overwrittenFileNames.add(
+						path.substring(path.lastIndexOf(StringPool.SLASH) + 1));
 				}
 			}
 		}
@@ -1122,9 +1130,30 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 					try (InputStream inputStream = zipFile.getInputStream(
 							zipEntry)) {
 
+						String zipEntryName = zipEntry.getName();
+
+						Matcher matcher = _pattern.matcher(zipEntryName);
+
+						if (matcher.matches()) {
+							String fileName =
+								matcher.group(1) + matcher.group(3);
+
+							if (overwrittenFileNames.contains(fileName)) {
+								if (_log.isInfoEnabled()) {
+									_log.info(
+										"Disabled " + zipFile + ":" + zipEntry +
+											" due to " + fileName + " in " +
+											PropsValues.
+												MODULE_FRAMEWORK_BASE_DIR +
+											"/static");
+								}
+
+								continue;
+							}
+						}
+
 						Bundle bundle = _installInitialBundle(
-							StringPool.SLASH.concat(zipEntry.getName()),
-							inputStream);
+							StringPool.SLASH.concat(zipEntryName), inputStream);
 
 						if (bundle != null) {
 							bundles.add(bundle);
@@ -1340,6 +1369,9 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ModuleFrameworkImpl.class);
+
+	private static final Pattern _pattern = Pattern.compile(
+		"(.*?)(-\\d+\\.\\d+\\.\\d+)(\\.jar)");
 
 	private Framework _framework;
 	private final Map<ApplicationContext, List<ServiceRegistration<?>>>

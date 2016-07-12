@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.hello.soy.web.portlet;
+package com.liferay.hello.soy.web.internal.portlet;
 
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.theme.ThemeDisplay;

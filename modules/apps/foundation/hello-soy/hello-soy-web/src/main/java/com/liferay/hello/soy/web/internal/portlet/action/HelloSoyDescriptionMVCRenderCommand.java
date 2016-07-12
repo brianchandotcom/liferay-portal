@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.hello.soy.web.portlet.action;
+package com.liferay.hello.soy.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 

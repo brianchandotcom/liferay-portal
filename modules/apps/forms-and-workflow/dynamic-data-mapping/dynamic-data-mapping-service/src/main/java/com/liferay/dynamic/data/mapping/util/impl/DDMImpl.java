@@ -524,10 +524,6 @@ public class DDMImpl implements DDM {
 		String[] existingFieldsDisplayValues = splitFieldsDisplayValue(
 			existingFields.get(DDMImpl.FIELDS_DISPLAY_NAME));
 
-		if (newFieldsDisplayValues.length == 0) {
-			newFieldsDisplayValues = existingFieldsDisplayValues;
-		}
-
 		Iterator<Field> itr = newFields.iterator(true);
 
 		while (itr.hasNext()) {
@@ -1267,10 +1263,6 @@ public class DDMImpl implements DDM {
 	}
 
 	protected String[] splitFieldsDisplayValue(Field fieldsDisplayField) {
-		if (fieldsDisplayField == null) {
-			return new String[0];
-		}
-
 		String value = (String)fieldsDisplayField.getValue();
 
 		return StringUtil.split(value);

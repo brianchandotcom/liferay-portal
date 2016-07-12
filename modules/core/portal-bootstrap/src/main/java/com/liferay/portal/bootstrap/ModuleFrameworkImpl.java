@@ -1141,11 +1141,11 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 							if (overwrittenFileNames.contains(fileName)) {
 								if (_log.isInfoEnabled()) {
 									_log.info(
-										"Disabled " + zipFile + ":" + zipEntry +
-											" due to " + fileName + " in " +
-											PropsValues.
-												MODULE_FRAMEWORK_BASE_DIR +
-											"/static");
+										zipFile + ":" + zipEntry +
+											" is overwritten by " +
+												PropsValues.
+													MODULE_FRAMEWORK_BASE_DIR +
+												"/static/" + fileName);
 								}
 
 								continue;

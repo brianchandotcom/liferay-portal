@@ -925,7 +925,7 @@
 			<var name="panelHeading" value="Display Page" />
 		</execute>
 
-		<var name="key_displayPageSelection" value="${displayPageSelection}" />
+		<var name="key_displayPageName" value="${displayPageName}" />
 
 		<execute function="Click" locator1="Button#CHOOSE" />
 
@@ -933,7 +933,7 @@
 
 		<execute function="SelectFrame" locator1="WCSelectDisplayPage#DISPLAY_PAGE_CONFIGURATION_IFRAME" />
 
-		<execute function="AssertClick" locator1="WCSelectDisplayPage#PUBLIC_DISPLAY_PAGE_SELECTION" value1="${displayPageSelection}" />
+		<execute function="AssertClick" locator1="WCSelectDisplayPage#PUBLIC_DISPLAY_PAGE_SELECTION" value1="${displayPageName}" />
 
 		<execute function="SelectFrame" value1="relative=top" />
 

@@ -154,6 +154,19 @@ writeURL=http://localhost:8983/solr/liferay</echo>
 
 		<antcall target="configure-solr-osgi-bundle-properties" />
 
+		<get-testcase-property property.name="solr.ssl.authentication.enabled" />
+
+		<if>
+			<equals arg1="${solr.ssl.authentication.enabled}" arg2="true" />
+			<then>
+				<create-solr-ssl-keystore />
+
+				<configure-solr-ssl-properties />
+
+				<configure-app-server-solr-ssl-jvm-arguments />
+			</then>
+		</if>
+
 		<local name="solr.server.not.started" />
 
 		<if>

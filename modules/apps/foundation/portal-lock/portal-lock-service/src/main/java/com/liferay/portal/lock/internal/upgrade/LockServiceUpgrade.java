@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.lock.upgrade;
+package com.liferay.portal.lock.internal.upgrade;
 
-import com.liferay.portal.lock.upgrade.v1_0_0.UpgradeLock;
+import com.liferay.portal.lock.internal.upgrade.v1_0_0.UpgradeLock;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;

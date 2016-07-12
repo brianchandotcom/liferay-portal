@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.lock.upgrade.v1_0_0.util;
+package com.liferay.portal.lock.internal.upgrade.v1_0_0.util;
 
 import java.sql.Types;
 

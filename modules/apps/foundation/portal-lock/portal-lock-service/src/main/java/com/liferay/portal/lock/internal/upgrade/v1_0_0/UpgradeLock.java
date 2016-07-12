@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.lock.upgrade.v1_0_0;
+package com.liferay.portal.lock.internal.upgrade.v1_0_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.lock.upgrade.v1_0_0.util.LockTable;
+import com.liferay.portal.lock.internal.upgrade.v1_0_0.util.LockTable;
 
 /**
  * @author Miguel Pastor

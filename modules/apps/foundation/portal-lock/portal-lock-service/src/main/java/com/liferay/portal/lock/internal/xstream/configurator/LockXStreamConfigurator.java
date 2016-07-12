@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.lock.xstream.configurator;
+package com.liferay.portal.lock.internal.xstream.configurator;
 
 import com.liferay.exportimport.kernel.xstream.XStreamAlias;
 import com.liferay.exportimport.kernel.xstream.XStreamConverter;

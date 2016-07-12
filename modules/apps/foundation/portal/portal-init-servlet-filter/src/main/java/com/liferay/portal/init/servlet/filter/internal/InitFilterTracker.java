@@ -12,11 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.weblogic.support;
+package com.liferay.portal.init.servlet.filter.internal;
 
-import com.liferay.portal.kernel.util.ServerDetector;
-import com.liferay.portal.servlet.filters.weblogic.WebLogicIncludeServletResponseFactory;
-import com.liferay.portal.weblogic.support.include.WebLogicIncludeServletResponseFactoryImpl;
+import com.liferay.portal.kernel.util.HashMapDictionary;
+
+import java.util.Dictionary;
+
+import javax.servlet.Filter;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
@@ -25,32 +27,37 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 
 /**
- * @author Shuyang Zhou
+ * @author Matthew Tambara
  */
 @Component(immediate = true)
-public class WebLogicSupport {
+public class InitFilterTracker {
 
 	@Activate
-	public void activate(BundleContext bundleContext) {
-		if (!ServerDetector.isWebLogic()) {
-			return;
-		}
+	protected void activate(BundleContext bundleContext) {
+		InitFilter initFilter = new InitFilter();
+
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
+
+		properties.put("dispatcher", new String[] {"FORWARD", "REQUEST"});
+		properties.put("servlet-context-name", "");
+		properties.put("servlet-filter-name", "Init Filter");
+		properties.put("url-pattern", "/c/*");
 
 		_serviceRegistration = bundleContext.registerService(
-			WebLogicIncludeServletResponseFactory.class,
-			new WebLogicIncludeServletResponseFactoryImpl(), null);
+			Filter.class, initFilter, properties);
+
+		initFilter.setServiceRegistration(_serviceRegistration);
 	}
 
 	@Deactivate
-	public void deactivate() {
-		if (!ServerDetector.isWebLogic()) {
-			return;
+	protected void deactivate() {
+		try {
+			_serviceRegistration.unregister();
 		}
-
-		_serviceRegistration.unregister();
+		catch (IllegalStateException ise) {
+		}
 	}
 
-	private ServiceRegistration<WebLogicIncludeServletResponseFactory>
-		_serviceRegistration;
+	private ServiceRegistration<Filter> _serviceRegistration;
 
 }

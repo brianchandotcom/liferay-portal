@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.init.servlet.filter;
+package com.liferay.portal.init.servlet.filter.internal;
 
 import com.liferay.portal.kernel.concurrent.CompeteLatch;
 import com.liferay.portal.servlet.filters.BasePortalFilter;

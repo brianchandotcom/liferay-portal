@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.license.deployer.installer;
+package com.liferay.portal.license.deployer.internal.installer;
 
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;

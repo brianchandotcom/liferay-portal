@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.weblogic.support.include;
+package com.liferay.portal.weblogic.support.internal.include;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;

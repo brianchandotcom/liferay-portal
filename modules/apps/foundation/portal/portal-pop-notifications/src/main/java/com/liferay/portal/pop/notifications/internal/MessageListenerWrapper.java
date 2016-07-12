@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.pop.notifications;
+package com.liferay.portal.pop.notifications.internal;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.license.deployer;
+package com.liferay.portal.license.deployer.internal;
 
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.license.deployer.installer.LicenseInstaller;
+import com.liferay.portal.license.deployer.internal.installer.LicenseInstaller;
 
 import org.apache.felix.fileinstall.ArtifactInstaller;
 import org.apache.felix.fileinstall.ArtifactListener;

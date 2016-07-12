@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.pop.notifications.messaging;
+package com.liferay.portal.pop.notifications.internal.messaging;
 
 import com.liferay.mail.kernel.model.Account;
 import com.liferay.petra.mail.MailEngine;
@@ -31,7 +31,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.pop.notifications.MessageListenerWrapper;
+import com.liferay.portal.pop.notifications.internal.MessageListenerWrapper;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.Map;

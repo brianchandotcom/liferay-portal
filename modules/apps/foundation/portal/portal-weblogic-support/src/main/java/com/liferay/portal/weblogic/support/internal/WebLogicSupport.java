@@ -12,13 +12,11 @@
  * details.
  */
 
-package com.liferay.portal.init.servlet.filter;
+package com.liferay.portal.weblogic.support.internal;
 
-import com.liferay.portal.kernel.util.HashMapDictionary;
-
-import java.util.Dictionary;
-
-import javax.servlet.Filter;
+import com.liferay.portal.kernel.util.ServerDetector;
+import com.liferay.portal.servlet.filters.weblogic.WebLogicIncludeServletResponseFactory;
+import com.liferay.portal.weblogic.support.internal.include.WebLogicIncludeServletResponseFactoryImpl;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
@@ -27,37 +25,32 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 
 /**
- * @author Matthew Tambara
+ * @author Shuyang Zhou
  */
 @Component(immediate = true)
-public class InitFilterTracker {
+public class WebLogicSupport {
 
 	@Activate
-	protected void activate(BundleContext bundleContext) {
-		InitFilter initFilter = new InitFilter();
-
-		Dictionary<String, Object> properties = new HashMapDictionary<>();
-
-		properties.put("dispatcher", new String[] {"FORWARD", "REQUEST"});
-		properties.put("servlet-context-name", "");
-		properties.put("servlet-filter-name", "Init Filter");
-		properties.put("url-pattern", "/c/*");
+	public void activate(BundleContext bundleContext) {
+		if (!ServerDetector.isWebLogic()) {
+			return;
+		}
 
 		_serviceRegistration = bundleContext.registerService(
-			Filter.class, initFilter, properties);
-
-		initFilter.setServiceRegistration(_serviceRegistration);
+			WebLogicIncludeServletResponseFactory.class,
+			new WebLogicIncludeServletResponseFactoryImpl(), null);
 	}
 
 	@Deactivate
-	protected void deactivate() {
-		try {
-			_serviceRegistration.unregister();
+	public void deactivate() {
+		if (!ServerDetector.isWebLogic()) {
+			return;
 		}
-		catch (IllegalStateException ise) {
-		}
+
+		_serviceRegistration.unregister();
 	}
 
-	private ServiceRegistration<Filter> _serviceRegistration;
+	private ServiceRegistration<WebLogicIncludeServletResponseFactory>
+		_serviceRegistration;
 
 }

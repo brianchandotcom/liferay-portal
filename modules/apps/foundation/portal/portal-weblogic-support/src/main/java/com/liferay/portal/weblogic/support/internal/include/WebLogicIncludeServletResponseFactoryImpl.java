@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.weblogic.support.include;
+package com.liferay.portal.weblogic.support.internal.include;
 
 import com.liferay.portal.kernel.servlet.MetaInfoCacheServletResponse;
 import com.liferay.portal.servlet.filters.weblogic.WebLogicIncludeServletResponseFactory;

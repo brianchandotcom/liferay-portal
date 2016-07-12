@@ -12,14 +12,12 @@
  * details.
  */
 
-package com.liferay.source.formatter.util;
+package com.liferay.portal.tools;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.source.formatter.BaseSourceProcessor;
-import com.liferay.source.formatter.GitException;
 
 import java.io.File;
 import java.io.IOException;
@@ -32,6 +30,8 @@ import java.util.List;
  * @author Hugo Huijser
  */
 public class GitUtil {
+
+	public static final int PORTAL_MAX_DIR_LEVEL = 7;
 
 	public static List<String> getCurrentBranchFileNames(
 			String baseDirName, String gitWorkingBranchName)
@@ -162,7 +162,7 @@ public class GitUtil {
 	}
 
 	protected static int getGitLevel(String baseDirName) throws GitException {
-		for (int i = 0; i < BaseSourceProcessor.PORTAL_MAX_DIR_LEVEL; i++) {
+		for (int i = 0; i < PORTAL_MAX_DIR_LEVEL; i++) {
 			File file = new File(baseDirName + ".git");
 
 			if (file.exists()) {

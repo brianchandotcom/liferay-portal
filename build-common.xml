@@ -1253,6 +1253,7 @@ rerun your task.
 					<propertyref name="app.server.type" />
 					<propertyref name="baseline.jar.report.level" />
 					<propertyref name="baseline.jar.report.only.dirty.packages" />
+					<propertyref name="git.working.branch.name" />
 					<propertyref name="jsp.precompile.enabled" />
 					<propertyref name="junit.java.integration.gc" />
 					<propertyref name="junit.java.unit.gc" />
@@ -1268,7 +1269,6 @@ rerun your task.
 					<propertyref name="sass.compiler.class.name" />
 					<propertyref name="sass.generate.source.map" />
 					<propertyref name="sass.precision" />
-					<propertyref name="git.working.branch.name" />
 					<propertyref name="source.formatter.max.line.length" />
 					<propertyref name="source.formatter.processor.thread.count" />
 					<propertyref name="timeout.app.server.wait" />

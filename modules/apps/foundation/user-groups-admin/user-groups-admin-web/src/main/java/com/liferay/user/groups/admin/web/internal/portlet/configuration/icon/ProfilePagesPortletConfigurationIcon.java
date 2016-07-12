@@ -12,25 +12,23 @@
  * details.
  */
 
-package com.liferay.user.groups.admin.web.portlet.configuration.icon;
+package com.liferay.user.groups.admin.web.internal.portlet.configuration.icon;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.UserGroup;
-import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.permission.UserGroupPermissionUtil;
+import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.user.groups.admin.constants.UserGroupsAdminPortletKeys;
-import com.liferay.user.groups.admin.web.portlet.action.ActionUtil;
+import com.liferay.user.groups.admin.web.internal.portlet.action.ActionUtil;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -41,17 +39,18 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + UserGroupsAdminPortletKeys.USER_GROUPS_ADMIN,
-		"path=/edit_user_group_assignments.jsp"
+		"path=/edit_user_group.jsp", "path=/edit_user_group_assignments.jsp"
 	},
 	service = PortletConfigurationIcon.class
 )
-public class EditUserGroupPortletConfigurationIcon
+public class ProfilePagesPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
 		return LanguageUtil.get(
-			getResourceBundle(getLocale(portletRequest)), "edit");
+			getResourceBundle(getLocale(portletRequest)),
+			"go-to-profile-pages");
 	}
 
 	@Override
@@ -59,20 +58,15 @@ public class EditUserGroupPortletConfigurationIcon
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
 		try {
-			PortletURL portletURL = PortletURLFactoryUtil.create(
-				portletRequest, UserGroupsAdminPortletKeys.USER_GROUPS_ADMIN,
-				PortletRequest.RENDER_PHASE);
-
-			portletURL.setParameter("mvcPath", "/edit_user_group.jsp");
-			portletURL.setParameter(
-				"redirect", PortalUtil.getCurrentURL(portletRequest));
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)portletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
 			UserGroup userGroup = ActionUtil.getUserGroup(portletRequest);
 
-			portletURL.setParameter(
-				"userGroupId", String.valueOf(userGroup.getUserGroupId()));
+			Group group = userGroup.getGroup();
 
-			return portletURL.toString();
+			return group.getDisplayURL(themeDisplay, false);
 		}
 		catch (Exception e) {
 		}
@@ -82,7 +76,7 @@ public class EditUserGroupPortletConfigurationIcon
 
 	@Override
 	public double getWeight() {
-		return 108;
+		return 104;
 	}
 
 	@Override
@@ -94,12 +88,12 @@ public class EditUserGroupPortletConfigurationIcon
 
 			UserGroup userGroup = ActionUtil.getUserGroup(portletRequest);
 
-			if (UserGroupPermissionUtil.contains(
-					themeDisplay.getPermissionChecker(),
-					userGroup.getUserGroupId(), ActionKeys.UPDATE) &&
-				UserGroupPermissionUtil.contains(
-					themeDisplay.getPermissionChecker(),
-					userGroup.getUserGroupId(), ActionKeys.VIEW)) {
+			Group group = userGroup.getGroup();
+
+			if (GroupPermissionUtil.contains(
+					themeDisplay.getPermissionChecker(), group,
+					ActionKeys.VIEW) &&
+				(group.getPublicLayoutsPageCount() > 0)) {
 
 				return true;
 			}

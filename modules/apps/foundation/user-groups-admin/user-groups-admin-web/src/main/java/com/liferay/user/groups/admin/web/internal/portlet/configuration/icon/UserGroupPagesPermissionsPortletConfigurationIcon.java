@@ -12,20 +12,25 @@
  * details.
  */
 
-package com.liferay.user.groups.admin.web.portlet.configuration.icon;
+package com.liferay.user.groups.admin.web.internal.portlet.configuration.icon;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.UserGroup;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.taglib.security.PermissionsURLTag;
 import com.liferay.user.groups.admin.constants.UserGroupsAdminPortletKeys;
-import com.liferay.user.groups.admin.web.portlet.action.ActionUtil;
+import com.liferay.user.groups.admin.web.internal.portlet.action.ActionUtil;
+
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -43,40 +48,45 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = PortletConfigurationIcon.class
 )
-public class DashboardPagesPortletConfigurationIcon
+public class UserGroupPagesPermissionsPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return LanguageUtil.get(
-			getResourceBundle(getLocale(portletRequest)),
-			"go-to-dashboard-pages");
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", getLocale(portletRequest), getClass());
+
+		return LanguageUtil.get(resourceBundle, "user-group-pages-permissions");
 	}
 
 	@Override
 	public String getURL(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		try {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)portletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
+		String url = StringPool.BLANK;
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		try {
 			UserGroup userGroup = ActionUtil.getUserGroup(portletRequest);
 
-			Group group = userGroup.getGroup();
-
-			return group.getDisplayURL(themeDisplay, true);
+			url = PermissionsURLTag.doTag(
+				StringPool.BLANK, Group.class.getName(),
+				themeDisplay.getScopeGroupName(), null,
+				String.valueOf(userGroup.getGroup().getGroupId()),
+				LiferayWindowState.POP_UP.toString(), null,
+				themeDisplay.getRequest());
 		}
 		catch (Exception e) {
 		}
 
-		return StringPool.BLANK;
+		return url;
 	}
 
 	@Override
 	public double getWeight() {
-		return 103;
+		return 106;
 	}
 
 	@Override
@@ -88,22 +98,19 @@ public class DashboardPagesPortletConfigurationIcon
 
 			UserGroup userGroup = ActionUtil.getUserGroup(portletRequest);
 
-			Group group = userGroup.getGroup();
-
-			if (GroupPermissionUtil.contains(
-					themeDisplay.getPermissionChecker(), group,
-					ActionKeys.VIEW) &&
-				(group.getPrivateLayoutsPageCount() > 0)) {
-
-				return true;
-			}
-
-			return false;
+			return GroupPermissionUtil.contains(
+				themeDisplay.getPermissionChecker(), userGroup.getGroup(),
+				ActionKeys.PERMISSIONS);
 		}
 		catch (Exception e) {
 		}
 
 		return false;
+	}
+
+	@Override
+	public boolean isUseDialog() {
+		return true;
 	}
 
 }

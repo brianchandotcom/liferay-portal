@@ -12,20 +12,21 @@
  * details.
  */
 
-package com.liferay.user.groups.admin.web.portlet.configuration.icon;
+package com.liferay.user.groups.admin.web.internal.portlet.configuration.icon;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.UserGroup;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.UserGroupPermissionUtil;
-import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.taglib.security.PermissionsURLTag;
 import com.liferay.user.groups.admin.constants.UserGroupsAdminPortletKeys;
-import com.liferay.user.groups.admin.web.portlet.action.ActionUtil;
+import com.liferay.user.groups.admin.web.internal.portlet.action.ActionUtil;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -43,55 +44,43 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = PortletConfigurationIcon.class
 )
-public class DeleteUserGroupPortletConfigurationIcon
+public class PermissionsPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
 		return LanguageUtil.get(
-			getResourceBundle(getLocale(portletRequest)), "delete");
-	}
-
-	@Override
-	public String getOnClick(
-		PortletRequest portletRequest, PortletResponse portletResponse) {
-
-		StringBundler sb = new StringBundler(6);
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		try {
-			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-			sb.append(portletDisplay.getNamespace());
-
-			sb.append("doDeleteUserGroup('");
-			sb.append(UserGroup.class.getName());
-			sb.append("','");
-
-			UserGroup userGroup = ActionUtil.getUserGroup(portletRequest);
-
-			sb.append(userGroup.getUserGroupId());
-
-			sb.append("');");
-		}
-		catch (Exception e) {
-		}
-
-		return sb.toString();
+			getResourceBundle(getLocale(portletRequest)), "permissions");
 	}
 
 	@Override
 	public String getURL(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		return "javascript:;";
+		String url = StringPool.BLANK;
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		try {
+			UserGroup userGroup = ActionUtil.getUserGroup(portletRequest);
+
+			url = PermissionsURLTag.doTag(
+				StringPool.BLANK, UserGroup.class.getName(),
+				themeDisplay.getScopeGroupName(), null,
+				String.valueOf(userGroup.getUserGroupId()),
+				LiferayWindowState.POP_UP.toString(), null,
+				themeDisplay.getRequest());
+		}
+		catch (Exception e) {
+		}
+
+		return url;
 	}
 
 	@Override
 	public double getWeight() {
-		return 101;
+		return 107;
 	}
 
 	@Override
@@ -105,12 +94,17 @@ public class DeleteUserGroupPortletConfigurationIcon
 
 			return UserGroupPermissionUtil.contains(
 				themeDisplay.getPermissionChecker(), userGroup.getUserGroupId(),
-				ActionKeys.DELETE);
+				ActionKeys.PERMISSIONS);
 		}
 		catch (Exception e) {
 		}
 
 		return false;
+	}
+
+	@Override
+	public boolean isUseDialog() {
+		return true;
 	}
 
 }

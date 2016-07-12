@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.user.groups.admin.web.portlet.action;
+package com.liferay.user.groups.admin.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.service.UserGroupServiceUtil;

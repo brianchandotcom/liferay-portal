@@ -12,23 +12,27 @@
  * details.
  */
 
-package com.liferay.user.groups.admin.web.portlet.configuration.icon;
+package com.liferay.user.groups.admin.web.internal.portlet.configuration.icon;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.UserGroup;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.user.groups.admin.constants.UserGroupsAdminPortletKeys;
-import com.liferay.user.groups.admin.web.portlet.action.ActionUtil;
+import com.liferay.user.groups.admin.web.internal.portlet.action.ActionUtil;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
+import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -43,14 +47,13 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = PortletConfigurationIcon.class
 )
-public class ProfilePagesPortletConfigurationIcon
+public class ManagePagesPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
 		return LanguageUtil.get(
-			getResourceBundle(getLocale(portletRequest)),
-			"go-to-profile-pages");
+			getResourceBundle(getLocale(portletRequest)), "manage-pages");
 	}
 
 	@Override
@@ -58,15 +61,16 @@ public class ProfilePagesPortletConfigurationIcon
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
 		try {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)portletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
 			UserGroup userGroup = ActionUtil.getUserGroup(portletRequest);
 
-			Group group = userGroup.getGroup();
+			PortletURL portletURL = PortletProviderUtil.getPortletURL(
+				portletRequest, userGroup.getGroup(), Layout.class.getName(),
+				PortletProvider.Action.EDIT);
 
-			return group.getDisplayURL(themeDisplay, false);
+			portletURL.setParameter(
+				"redirect", PortalUtil.getCurrentURL(portletRequest));
+
+			return portletURL.toString();
 		}
 		catch (Exception e) {
 		}
@@ -76,7 +80,7 @@ public class ProfilePagesPortletConfigurationIcon
 
 	@Override
 	public double getWeight() {
-		return 104;
+		return 105;
 	}
 
 	@Override
@@ -88,17 +92,9 @@ public class ProfilePagesPortletConfigurationIcon
 
 			UserGroup userGroup = ActionUtil.getUserGroup(portletRequest);
 
-			Group group = userGroup.getGroup();
-
-			if (GroupPermissionUtil.contains(
-					themeDisplay.getPermissionChecker(), group,
-					ActionKeys.VIEW) &&
-				(group.getPublicLayoutsPageCount() > 0)) {
-
-				return true;
-			}
-
-			return false;
+			return GroupPermissionUtil.contains(
+				themeDisplay.getPermissionChecker(), userGroup.getGroup(),
+				ActionKeys.PERMISSIONS);
 		}
 		catch (Exception e) {
 		}

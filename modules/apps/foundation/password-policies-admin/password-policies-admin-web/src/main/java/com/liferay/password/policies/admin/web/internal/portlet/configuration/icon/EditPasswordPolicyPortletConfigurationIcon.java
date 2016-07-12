@@ -12,16 +12,14 @@
  * details.
  */
 
-package com.liferay.password.policies.admin.web.portlet.configuration.icon;
+package com.liferay.password.policies.admin.web.internal.portlet.configuration.icon;
 
 import com.liferay.password.policies.admin.constants.PasswordPoliciesAdminPortletKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.PasswordPolicy;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.PasswordPolicyLocalService;
 import com.liferay.portal.kernel.service.permission.PasswordPolicyPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -29,7 +27,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
@@ -37,7 +34,6 @@ import javax.portlet.PortletURL;
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pei-Jung Lan
@@ -46,18 +42,17 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + PasswordPoliciesAdminPortletKeys.PASSWORD_POLICIES_ADMIN,
-		"path=/edit_password_policy.jsp",
 		"path=/edit_password_policy_assignments.jsp"
 	},
 	service = PortletConfigurationIcon.class
 )
-public class DeletePasswordPolicyPortletConfigurationIcon
+public class EditPasswordPolicyPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
 		return LanguageUtil.get(
-			getResourceBundle(getLocale(portletRequest)), "delete");
+			getResourceBundle(getLocale(portletRequest)), "edit");
 	}
 
 	@Override
@@ -68,11 +63,11 @@ public class DeletePasswordPolicyPortletConfigurationIcon
 			PortletURL portletURL = PortletURLFactoryUtil.create(
 				portletRequest,
 				PasswordPoliciesAdminPortletKeys.PASSWORD_POLICIES_ADMIN,
-				PortletRequest.ACTION_PHASE);
+				PortletRequest.RENDER_PHASE);
 
+			portletURL.setParameter("mvcPath", "/edit_password_policy.jsp");
 			portletURL.setParameter(
-				ActionRequest.ACTION_NAME, "deletePasswordPolicy");
-			portletURL.setParameter("mvcPath", "/view.jsp");
+				"redirect", PortalUtil.getCurrentURL(portletRequest));
 			portletURL.setParameter(
 				"passwordPolicyId",
 				String.valueOf(_getPasswordPolicyId(portletRequest)));
@@ -87,7 +82,7 @@ public class DeletePasswordPolicyPortletConfigurationIcon
 
 	@Override
 	public double getWeight() {
-		return 101;
+		return 104;
 	}
 
 	@Override
@@ -97,16 +92,9 @@ public class DeletePasswordPolicyPortletConfigurationIcon
 				(ThemeDisplay)portletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
-			long passwordPolicyId = _getPasswordPolicyId(portletRequest);
-
-			PasswordPolicy passwordPolicy =
-				_passwordPolicyLocalService.fetchPasswordPolicy(
-					passwordPolicyId);
-
-			if (!passwordPolicy.getDefaultPolicy() &&
-				PasswordPolicyPermissionUtil.contains(
-					themeDisplay.getPermissionChecker(), passwordPolicyId,
-					ActionKeys.UPDATE)) {
+			if (PasswordPolicyPermissionUtil.contains(
+					themeDisplay.getPermissionChecker(),
+					_getPasswordPolicyId(portletRequest), ActionKeys.UPDATE)) {
 
 				return true;
 			}
@@ -117,20 +105,11 @@ public class DeletePasswordPolicyPortletConfigurationIcon
 		return false;
 	}
 
-	@Reference(unbind = "-")
-	protected void setPasswordPolicyLocalService(
-		PasswordPolicyLocalService passwordPolicyLocalService) {
-
-		_passwordPolicyLocalService = passwordPolicyLocalService;
-	}
-
 	private long _getPasswordPolicyId(PortletRequest portletRequest) {
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			portletRequest);
 
 		return ParamUtil.getLong(request, "passwordPolicyId");
 	}
-
-	private PasswordPolicyLocalService _passwordPolicyLocalService;
 
 }

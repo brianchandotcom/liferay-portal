@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.password.policies.admin.web.portlet.configuration.icon;
+package com.liferay.password.policies.admin.web.internal.portlet.configuration.icon;
 
 import com.liferay.password.policies.admin.constants.PasswordPoliciesAdminPortletKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;

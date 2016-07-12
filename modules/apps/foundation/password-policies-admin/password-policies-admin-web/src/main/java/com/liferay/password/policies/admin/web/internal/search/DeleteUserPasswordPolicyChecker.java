@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.password.policies.admin.web.search;
+package com.liferay.password.policies.admin.web.internal.search;
 
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.PasswordPolicy;
 import com.liferay.portal.kernel.model.PasswordPolicyRel;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.PasswordPolicyRelLocalServiceUtil;
 
 import javax.portlet.RenderResponse;
@@ -27,10 +27,9 @@ import javax.portlet.RenderResponse;
 /**
  * @author Scott Lee
  */
-public class DeleteOrganizationPasswordPolicyChecker
-	extends EmptyOnClickRowChecker {
+public class DeleteUserPasswordPolicyChecker extends EmptyOnClickRowChecker {
 
-	public DeleteOrganizationPasswordPolicyChecker(
+	public DeleteUserPasswordPolicyChecker(
 		RenderResponse renderResponse, PasswordPolicy passwordPolicy) {
 
 		super(renderResponse);
@@ -40,13 +39,12 @@ public class DeleteOrganizationPasswordPolicyChecker
 
 	@Override
 	public boolean isDisabled(Object obj) {
-		Organization organization = (Organization)obj;
+		User user = (User)obj;
 
 		try {
 			PasswordPolicyRel passwordPolicyRel =
 				PasswordPolicyRelLocalServiceUtil.fetchPasswordPolicyRel(
-					Organization.class.getName(),
-					organization.getOrganizationId());
+					User.class.getName(), user.getUserId());
 
 			if ((passwordPolicyRel != null) &&
 				(passwordPolicyRel.getPasswordPolicyId() !=
@@ -63,7 +61,7 @@ public class DeleteOrganizationPasswordPolicyChecker
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DeleteOrganizationPasswordPolicyChecker.class);
+		DeleteUserPasswordPolicyChecker.class);
 
 	private final PasswordPolicy _passwordPolicy;
 

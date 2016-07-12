@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.password.policies.admin.web.portlet;
+package com.liferay.password.policies.admin.web.internal.portlet;
 
 import com.liferay.password.policies.admin.constants.PasswordPoliciesAdminPortletKeys;
 import com.liferay.portal.kernel.exception.DuplicatePasswordPolicyException;

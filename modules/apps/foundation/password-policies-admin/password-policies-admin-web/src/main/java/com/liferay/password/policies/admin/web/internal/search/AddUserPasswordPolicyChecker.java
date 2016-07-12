@@ -12,26 +12,25 @@
  * details.
  */
 
-package com.liferay.password.policies.admin.web.search;
+package com.liferay.password.policies.admin.web.internal.search;
 
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.PasswordPolicy;
 import com.liferay.portal.kernel.model.PasswordPolicyRel;
-import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.PasswordPolicyRelLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 
 import javax.portlet.RenderResponse;
 
 /**
  * @author Scott Lee
  */
-public class AddOrganizationPasswordPolicyChecker
-	extends EmptyOnClickRowChecker {
+public class AddUserPasswordPolicyChecker extends EmptyOnClickRowChecker {
 
-	public AddOrganizationPasswordPolicyChecker(
+	public AddUserPasswordPolicyChecker(
 		RenderResponse renderResponse, PasswordPolicy passwordPolicy) {
 
 		super(renderResponse);
@@ -41,12 +40,11 @@ public class AddOrganizationPasswordPolicyChecker
 
 	@Override
 	public boolean isChecked(Object obj) {
-		Organization organization = (Organization)obj;
+		User user = (User)obj;
 
 		try {
-			return OrganizationLocalServiceUtil.hasPasswordPolicyOrganization(
-				_passwordPolicy.getPasswordPolicyId(),
-				organization.getOrganizationId());
+			return UserLocalServiceUtil.hasPasswordPolicyUser(
+				_passwordPolicy.getPasswordPolicyId(), user.getUserId());
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -57,7 +55,7 @@ public class AddOrganizationPasswordPolicyChecker
 
 	@Override
 	public boolean isDisabled(Object obj) {
-		Organization organization = (Organization)obj;
+		User user = (User)obj;
 
 		if (isChecked(obj)) {
 			return true;
@@ -66,8 +64,7 @@ public class AddOrganizationPasswordPolicyChecker
 		try {
 			PasswordPolicyRel passwordPolicyRel =
 				PasswordPolicyRelLocalServiceUtil.fetchPasswordPolicyRel(
-					Organization.class.getName(),
-					organization.getOrganizationId());
+					User.class.getName(), user.getUserId());
 
 			if ((passwordPolicyRel != null) &&
 				(passwordPolicyRel.getPasswordPolicyId() !=
@@ -84,7 +81,7 @@ public class AddOrganizationPasswordPolicyChecker
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		AddOrganizationPasswordPolicyChecker.class);
+		AddUserPasswordPolicyChecker.class);
 
 	private final PasswordPolicy _passwordPolicy;
 

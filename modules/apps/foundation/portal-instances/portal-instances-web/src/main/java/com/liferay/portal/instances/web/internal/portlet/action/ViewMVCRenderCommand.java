@@ -12,30 +12,34 @@
  * details.
  */
 
-package com.liferay.portal.instances.web.upgrade;
+package com.liferay.portal.instances.web.internal.portlet.action;
 
-import com.liferay.portal.instances.web.upgrade.v1_0_0.UpgradePortletId;
-import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
-import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+import com.liferay.portal.instances.web.internal.constants.PortalInstancesPortletKeys;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Eudaldo Alonso
  * @author Pei-Jung Lan
  */
-@Component(immediate = true, service = UpgradeStepRegistrator.class)
-public class PortalInstancesWebUpgrade implements UpgradeStepRegistrator {
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + PortalInstancesPortletKeys.PORTAL_INSTANCES,
+		"mvc.command.name=/", "mvc.command.name=/portal_instances/view"
+	},
+	service = MVCRenderCommand.class
+)
+public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
-	public void register(Registry registry) {
-		registry.register(
-			"com.liferay.portal.instances.web", "0.0.0", "1.0.0",
-			new DummyUpgradeStep());
+	public String render(
+		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		registry.register(
-			"com.liferay.portal.instances.web", "0.0.1", "1.0.0",
-			new UpgradePortletId());
+		return "/view.jsp";
 	}
 
 }

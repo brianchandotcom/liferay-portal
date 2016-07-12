@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.instances.web.portlet;
+package com.liferay.portal.instances.web.internal.portlet;
 
-import com.liferay.portal.instances.web.constants.PortalInstancesPortletKeys;
+import com.liferay.portal.instances.web.internal.constants.PortalInstancesPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 import javax.portlet.Portlet;

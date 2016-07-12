@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.instances.web.upgrade.v1_0_0;
+package com.liferay.portal.instances.web.internal.upgrade.v1_0_0;
 
-import com.liferay.portal.instances.web.constants.PortalInstancesPortletKeys;
+import com.liferay.portal.instances.web.internal.constants.PortalInstancesPortletKeys;
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;
 
 /**

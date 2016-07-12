@@ -12,11 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.instances.web.portlet.action;
+package com.liferay.portal.instances.web.internal.portlet.action;
 
-import com.liferay.portal.instances.web.constants.PortalInstancesPortletKeys;
+import com.liferay.portal.instances.web.internal.constants.PortalInstancesPortletKeys;
+import com.liferay.portal.kernel.exception.NoSuchCompanyException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 
+import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -29,17 +33,34 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + PortalInstancesPortletKeys.PORTAL_INSTANCES,
-		"mvc.command.name=/", "mvc.command.name=/portal_instances/view"
+		"mvc.command.name=/portal_instances/edit_instance"
 	},
 	service = MVCRenderCommand.class
 )
-public class ViewMVCRenderCommand implements MVCRenderCommand {
+public class EditInstanceMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(
-		RenderRequest renderRequest, RenderResponse renderResponse) {
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws PortletException {
 
-		return "/view.jsp";
+		try {
+			ActionUtil.getInstance(renderRequest);
+		}
+		catch (Exception e) {
+			if (e instanceof NoSuchCompanyException ||
+				e instanceof PrincipalException) {
+
+				SessionErrors.add(renderRequest, e.getClass());
+
+				return "/error.jsp";
+			}
+			else {
+				throw new PortletException(e);
+			}
+		}
+
+		return "/edit_instance.jsp";
 	}
 
 }

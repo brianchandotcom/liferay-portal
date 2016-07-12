@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.instances.web.portlet.action;
+package com.liferay.portal.instances.web.internal.portlet.action;
 
-import com.liferay.portal.instances.web.constants.PortalInstancesPortletKeys;
+import com.liferay.portal.instances.web.internal.constants.PortalInstancesPortletKeys;
 import com.liferay.portal.kernel.exception.CompanyMxException;
 import com.liferay.portal.kernel.exception.CompanyVirtualHostException;
 import com.liferay.portal.kernel.exception.CompanyWebIdException;

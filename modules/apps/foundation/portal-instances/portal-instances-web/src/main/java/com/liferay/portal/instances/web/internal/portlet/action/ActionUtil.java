@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.instances.web.portlet.action;
+package com.liferay.portal.instances.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;

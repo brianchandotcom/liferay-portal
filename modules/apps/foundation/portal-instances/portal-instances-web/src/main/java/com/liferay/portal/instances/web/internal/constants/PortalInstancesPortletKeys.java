@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.instances.web.constants;
+package com.liferay.portal.instances.web.internal.constants;
 
 /**
  * @author Pei-Jung Lan

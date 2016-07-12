@@ -14,6 +14,8 @@
 
 package com.liferay.portal.workflow.kaleo.runtime;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
@@ -26,6 +28,7 @@ import java.util.Map;
 /**
  * @author Michael C. Han
  */
+@ProviderType
 public interface TaskManager {
 
 	public WorkflowTask assignWorkflowTaskToRole(

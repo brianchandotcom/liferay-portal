@@ -24,25 +24,34 @@ Map<String, Object> contextObjects = new HashMap<String, Object>();
 contextObjects.put("rssDisplayContext", rssDisplayContext);
 %>
 
-<liferay-ddm:template-renderer className="<%= RSSFeed.class.getName() %>" contextObjects="<%= contextObjects %>" displayStyle="<%= rssPortletInstanceConfiguration.displayStyle() %>" displayStyleGroupId="<%= rssDisplayContext.getDisplayStyleGroupId() %>" entries="<%= rssFeeds %>">
+<c:choose>
+	<c:when test="<%= rssFeeds.size() > 0 %>">
+		<liferay-ddm:template-renderer className="<%= RSSFeed.class.getName() %>" contextObjects="<%= contextObjects %>" displayStyle="<%= rssPortletInstanceConfiguration.displayStyle() %>" displayStyleGroupId="<%= rssDisplayContext.getDisplayStyleGroupId() %>" entries="<%= rssFeeds %>">
 
-	<%
-	for (int i = 0; i < rssFeeds.size(); i++) {
-		RSSFeed rssFeed = rssFeeds.get(i);
+			<%
+			for (int i = 0; i < rssFeeds.size(); i++) {
+				RSSFeed rssFeed = rssFeeds.get(i);
 
-		boolean last = false;
+				boolean last = false;
 
-		if (i == (rssFeeds.size() - 1)) {
-			last = true;
-		}
+				if (i == (rssFeeds.size() - 1)) {
+					last = true;
+				}
 
-		SyndFeed syndFeed = rssFeed.getSyndFeed();
-	%>
+				SyndFeed syndFeed = rssFeed.getSyndFeed();
+			%>
 
-		<%@ include file="/feed.jspf" %>
+				<%@ include file="/feed.jspf" %>
 
-	<%
-	}
-	%>
+			<%
+			}
+			%>
 
-</liferay-ddm:template-renderer>
+		</liferay-ddm:template-renderer>
+	</c:when>
+	<c:otherwise>
+		<div class="alert alert-info portlet-configuration">
+			<liferay-ui:message key="please-configure-this-portlet-and-select-at-least-one-valid-rss-feed" />
+		</div>
+	</c:otherwise>
+</c:choose>

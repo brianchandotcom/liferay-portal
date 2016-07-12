@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.web.proxy.web.portlet;
+package com.liferay.web.proxy.web.internal.portlet;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.RenderResponseImpl;
-import com.liferay.web.proxy.web.constants.WebProxyPortletKeys;
+import com.liferay.web.proxy.web.internal.constants.WebProxyPortletKeys;
 
 import java.io.IOException;
 import java.io.PrintWriter;

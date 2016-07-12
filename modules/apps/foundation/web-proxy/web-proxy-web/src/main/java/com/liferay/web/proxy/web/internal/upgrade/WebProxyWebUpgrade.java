@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.web.proxy.web.upgrade;
+package com.liferay.web.proxy.web.internal.upgrade;
 
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-import com.liferay.web.proxy.web.constants.WebProxyPortletKeys;
+import com.liferay.web.proxy.web.internal.constants.WebProxyPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 

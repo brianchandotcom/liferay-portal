@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.web.proxy.web.constants;
+package com.liferay.web.proxy.web.internal.constants;
 
 /**
  * @author Eudaldo Alonso

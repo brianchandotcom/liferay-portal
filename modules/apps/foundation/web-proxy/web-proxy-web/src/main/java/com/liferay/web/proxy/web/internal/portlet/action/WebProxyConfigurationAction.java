@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.web.proxy.web.portlet.action;
+package com.liferay.web.proxy.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.web.proxy.web.constants.WebProxyPortletKeys;
+import com.liferay.web.proxy.web.internal.constants.WebProxyPortletKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;

@@ -1346,10 +1346,10 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 		for (JournalArticle article : articles) {
 			JournalArticlePermission.check(
 				getPermissionChecker(), article, ActionKeys.UPDATE);
-
-			journalArticleLocalService.moveArticle(
-				groupId, articleId, newFolderId, serviceContext);
 		}
+
+		journalArticleLocalService.moveArticle(
+			groupId, articleId, newFolderId, serviceContext);
 	}
 
 	/**

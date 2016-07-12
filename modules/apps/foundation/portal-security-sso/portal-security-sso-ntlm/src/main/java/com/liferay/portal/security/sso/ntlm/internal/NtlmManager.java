@@ -16,9 +16,6 @@ package com.liferay.portal.security.sso.ntlm.internal;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.security.sso.ntlm.NetlogonConnectionManager;
-import com.liferay.portal.security.sso.ntlm.NtlmLogonException;
-import com.liferay.portal.security.sso.ntlm.NtlmServiceAccount;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;

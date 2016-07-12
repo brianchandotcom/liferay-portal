@@ -12,22 +12,28 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.ntlm;
+package com.liferay.portal.security.sso.ntlm.internal;
 
-import com.liferay.portal.security.sso.ntlm.internal.NetlogonConnection;
-
-import java.io.IOException;
-
-import java.security.NoSuchAlgorithmException;
+import com.liferay.portal.kernel.exception.SystemException;
 
 /**
  * @author Michael C. Han
  */
-public interface NetlogonConnectionManager {
+public class NtlmLogonException extends SystemException {
 
-	public NetlogonConnection connect(
-			String domainController, String domainControllerName,
-			NtlmServiceAccount ntlmServiceAccount)
-		throws IOException, NoSuchAlgorithmException, NtlmLogonException;
+	public NtlmLogonException() {
+	}
+
+	public NtlmLogonException(String msg) {
+		super(msg);
+	}
+
+	public NtlmLogonException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
+
+	public NtlmLogonException(Throwable cause) {
+		super(cause);
+	}
 
 }

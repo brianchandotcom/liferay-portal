@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.server.admin.web.application.list;
+package com.liferay.server.admin.web.internal.application.list;
 
 import com.liferay.application.list.BasePanelApp;
 import com.liferay.application.list.PanelApp;

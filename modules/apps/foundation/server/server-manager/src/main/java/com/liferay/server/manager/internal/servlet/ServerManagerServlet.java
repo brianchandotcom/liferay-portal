@@ -29,8 +29,8 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StackTraceUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.server.manager.executor.Executor;
 import com.liferay.server.manager.internal.constants.JSONKeys;
+import com.liferay.server.manager.internal.executor.Executor;
 import com.liferay.server.manager.internal.executor.ExecutorPathResolver;
 import com.liferay.server.manager.internal.executor.ExecutorServiceRegistry;
 

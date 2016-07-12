@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.server.admin.web.messaging;
+package com.liferay.server.admin.web.internal.messaging;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;

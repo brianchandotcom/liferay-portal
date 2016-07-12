@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.server.admin.web.upgrade;
+package com.liferay.server.admin.web.internal.upgrade;
 
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-import com.liferay.server.admin.web.upgrade.v1_0_0.UpgradePortletId;
+import com.liferay.server.admin.web.internal.upgrade.v1_0_0.UpgradePortletId;
 
 import org.osgi.service.component.annotations.Component;
 

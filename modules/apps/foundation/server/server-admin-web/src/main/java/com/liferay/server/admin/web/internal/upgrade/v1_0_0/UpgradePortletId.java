@@ -12,31 +12,19 @@
  * details.
  */
 
-package com.liferay.server.admin.web.portlet.route;
+package com.liferay.server.admin.web.internal.upgrade.v1_0_0;
 
-import com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper;
-import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
+import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;
 import com.liferay.portal.kernel.util.PortletKeys;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
- * @author Philip Jones
+ * @author Pei-Jung Lan
  */
-@Component(
-	property = {
-		"com.liferay.portlet.friendly-url-routes=META-INF/friendly-url-routes/routes.xml",
-		"javax.portlet.name=" + PortletKeys.SERVER_ADMIN
-	},
-	service = FriendlyURLMapper.class
-)
-public class ServerAdminFriendlyURLMapper extends DefaultFriendlyURLMapper {
+public class UpgradePortletId extends BaseUpgradePortletId {
 
 	@Override
-	public String getMapping() {
-		return _MAPPING;
+	protected String[][] getRenamePortletIdsArray() {
+		return new String[][] {new String[] {"137", PortletKeys.SERVER_ADMIN}};
 	}
-
-	private static final String _MAPPING = "server";
 
 }

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.server.manager.executor;
+package com.liferay.server.manager.internal.executor;
 
 import com.liferay.portal.kernel.json.JSONObject;
 
@@ -24,42 +24,26 @@ import javax.servlet.http.HttpServletRequest;
  * @author Jonathan Potter
  * @author Brian Wing Shun Chan
  */
-public abstract class BaseExecutor implements Executor {
+public interface Executor {
 
-	@Override
 	public void executeCreate(
 			HttpServletRequest request, JSONObject responseJSONObject,
 			Queue<String> arguments)
-		throws Exception {
+		throws Exception;
 
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public void executeDelete(
 			HttpServletRequest request, JSONObject responseJSONObject,
 			Queue<String> arguments)
-		throws Exception {
+		throws Exception;
 
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public void executeRead(
 			HttpServletRequest request, JSONObject responseJSONObject,
 			Queue<String> arguments)
-		throws Exception {
+		throws Exception;
 
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public void executeUpdate(
 			HttpServletRequest request, JSONObject responseJSONObject,
 			Queue<String> arguments)
-		throws Exception {
-
-		throw new UnsupportedOperationException();
-	}
+		throws Exception;
 
 }

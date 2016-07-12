@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.server.admin.web.portlet.action;
+package com.liferay.server.admin.web.internal.portlet.action;
 
 import com.liferay.document.library.kernel.util.DLPreviewableProcessor;
 import com.liferay.mail.kernel.model.Account;

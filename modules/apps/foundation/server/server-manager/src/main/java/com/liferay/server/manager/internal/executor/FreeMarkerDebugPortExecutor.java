@@ -14,8 +14,6 @@
 
 package com.liferay.server.manager.internal.executor;
 
-import com.liferay.server.manager.executor.Executor;
-
 import org.osgi.service.component.annotations.Component;
 
 /**

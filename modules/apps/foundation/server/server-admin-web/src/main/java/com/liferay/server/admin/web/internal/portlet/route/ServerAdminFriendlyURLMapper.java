@@ -12,13 +12,11 @@
  * details.
  */
 
-package com.liferay.server.admin.web.portlet.action;
+package com.liferay.server.admin.web.internal.portlet.route;
 
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper;
+import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
 import com.liferay.portal.kernel.util.PortletKeys;
-
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -27,17 +25,18 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
-		"javax.portlet.name=" + PortletKeys.SERVER_ADMIN,
-		"mvc.command.name=/server_admin/view"
-	}
+		"com.liferay.portlet.friendly-url-routes=META-INF/friendly-url-routes/routes.xml",
+		"javax.portlet.name=" + PortletKeys.SERVER_ADMIN
+	},
+	service = FriendlyURLMapper.class
 )
-public class ViewMVCRenderCommand implements MVCRenderCommand {
+public class ServerAdminFriendlyURLMapper extends DefaultFriendlyURLMapper {
 
 	@Override
-	public String render(
-		RenderRequest renderRequest, RenderResponse renderResponse) {
-
-		return "/view.jsp";
+	public String getMapping() {
+		return _MAPPING;
 	}
+
+	private static final String _MAPPING = "server";
 
 }

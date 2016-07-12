@@ -12,19 +12,32 @@
  * details.
  */
 
-package com.liferay.server.admin.web.upgrade.v1_0_0;
+package com.liferay.server.admin.web.internal.portlet.action;
 
-import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.PortletKeys;
 
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+
+import org.osgi.service.component.annotations.Component;
+
 /**
- * @author Pei-Jung Lan
+ * @author Philip Jones
  */
-public class UpgradePortletId extends BaseUpgradePortletId {
+@Component(
+	property = {
+		"javax.portlet.name=" + PortletKeys.SERVER_ADMIN,
+		"mvc.command.name=/server_admin/view"
+	}
+)
+public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
-	protected String[][] getRenamePortletIdsArray() {
-		return new String[][] {new String[] {"137", PortletKeys.SERVER_ADMIN}};
+	public String render(
+		RenderRequest renderRequest, RenderResponse renderResponse) {
+
+		return "/view.jsp";
 	}
 
 }

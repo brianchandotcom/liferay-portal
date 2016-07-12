@@ -100,7 +100,7 @@ boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_artic
 		</c:choose>
 	</c:if>
 
-	<aui:input ignoreRequestValue="<%= changeStructure %>" label="summary" name="description" />
+	<aui:input ignoreRequestValue="<%= changeStructure %>" label="summary" name="description" wrapperCssClass="article-content-description" />
 
 	<liferay-ddm:html
 		checkRequired="<%= classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT %>"

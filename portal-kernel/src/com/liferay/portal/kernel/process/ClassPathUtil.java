@@ -229,7 +229,7 @@ public class ClassPathUtil {
 
 		if ((ServerDetector.isJBoss() || ServerDetector.isWildfly()) &&
 			(protocol.equals("vfs") || protocol.equals("vfsfile") ||
-			protocol.equals("vfszip"))) {
+			 protocol.equals("vfszip"))) {
 
 			int pos = path.indexOf(".jar/");
 

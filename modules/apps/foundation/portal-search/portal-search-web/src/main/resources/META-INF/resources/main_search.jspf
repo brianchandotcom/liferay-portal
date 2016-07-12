@@ -108,7 +108,7 @@ Hits hits = searchDisplayContext.getHits();
 					assetRenderer = assetRendererFactory.getAssetRenderer(classPK);
 				}
 
-				String viewURL = com.liferay.portal.search.web.util.SearchUtil.getSearchResultViewURL(renderRequest, renderResponse, className, classPK, searchDisplayContext.isViewInContext(), currentURL);
+				String viewURL = com.liferay.portal.search.web.internal.util.SearchUtil.getSearchResultViewURL(renderRequest, renderResponse, className, classPK, searchDisplayContext.isViewInContext(), currentURL);
 
 				Indexer indexer = IndexerRegistryUtil.getIndexer(className);
 

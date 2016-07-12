@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.my.account.web.portlet.action;
+package com.liferay.my.account.web.internal.portlet.action;
 
-import com.liferay.my.account.web.constants.MyAccountPortletKeys;
+import com.liferay.my.account.web.internal.constants.MyAccountPortletKeys;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;

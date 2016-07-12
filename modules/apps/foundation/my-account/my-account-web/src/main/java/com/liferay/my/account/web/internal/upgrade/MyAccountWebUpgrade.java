@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.my.account.web.upgrade;
+package com.liferay.my.account.web.internal.upgrade;
 
-import com.liferay.my.account.web.constants.MyAccountPortletKeys;
+import com.liferay.my.account.web.internal.constants.MyAccountPortletKeys;
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;

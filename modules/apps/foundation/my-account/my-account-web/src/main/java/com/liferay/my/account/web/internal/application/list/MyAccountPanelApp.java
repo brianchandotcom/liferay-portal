@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.my.account.web.application.list;
+package com.liferay.my.account.web.internal.application.list;
 
 import com.liferay.application.list.BasePanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;
-import com.liferay.my.account.web.constants.MyAccountPortletKeys;
+import com.liferay.my.account.web.internal.constants.MyAccountPortletKeys;
 import com.liferay.portal.kernel.model.Portlet;
 
 import org.osgi.service.component.annotations.Component;

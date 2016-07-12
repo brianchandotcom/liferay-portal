@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.my.account.web.portlet;
+package com.liferay.my.account.web.internal.portlet;
 
-import com.liferay.my.account.web.constants.MyAccountPortletKeys;
+import com.liferay.my.account.web.internal.constants.MyAccountPortletKeys;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 

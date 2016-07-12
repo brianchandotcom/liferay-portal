@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.language.servlet.filter;
+package com.liferay.portal.language.servlet.filter.internal;
 
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;

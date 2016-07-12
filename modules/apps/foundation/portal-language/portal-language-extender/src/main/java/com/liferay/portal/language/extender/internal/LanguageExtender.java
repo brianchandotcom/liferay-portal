@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.language.extender;
+package com.liferay.portal.language.extender.internal;
 
 import java.util.List;
 

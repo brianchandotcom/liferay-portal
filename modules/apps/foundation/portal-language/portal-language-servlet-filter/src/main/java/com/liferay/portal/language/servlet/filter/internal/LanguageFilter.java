@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.language.servlet.filter;
+package com.liferay.portal.language.servlet.filter.internal;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;

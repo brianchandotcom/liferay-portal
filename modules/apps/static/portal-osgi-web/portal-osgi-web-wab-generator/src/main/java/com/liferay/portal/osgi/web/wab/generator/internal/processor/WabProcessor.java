@@ -20,6 +20,7 @@ import aQute.bnd.metatype.MetatypeAnnotations;
 import aQute.bnd.osgi.Analyzer;
 import aQute.bnd.osgi.Jar;
 import aQute.bnd.osgi.JarResource;
+import aQute.bnd.osgi.Packages;
 import aQute.bnd.osgi.Resource;
 import aQute.bnd.version.Version;
 
@@ -1243,6 +1244,12 @@ public class WabProcessor {
 		analyzer.setProperties(pluginPackageProperties);
 
 		try {
+			analyzer.calcManifest();
+
+			Packages packages = analyzer.getImports();
+
+			packages.remove(analyzer.getPackageRef("junit.framework"));
+
 			writeManifest(analyzer.calcManifest());
 
 			copyOSGI_INFToWab(analyzer);

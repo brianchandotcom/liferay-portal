@@ -21,7 +21,8 @@ import java.util.Map;
 /**
  * @author Eudaldo Alonso
  */
-public class MenuItem {
+public class MenuItem
+	extends com.liferay.portal.kernel.servlet.taglib.ui.MenuItem {
 
 	public MenuItem(
 		Map<String, Object> anchorData, String id, String label, String url) {

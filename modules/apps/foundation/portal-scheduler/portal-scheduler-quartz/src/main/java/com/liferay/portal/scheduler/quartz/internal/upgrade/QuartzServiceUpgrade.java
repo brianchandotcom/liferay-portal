@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.scheduler.quartz.upgrade;
+package com.liferay.portal.scheduler.quartz.internal.upgrade;
 
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
-import com.liferay.portal.scheduler.quartz.upgrade.v1_0_0.UpgradeQuartz;
+import com.liferay.portal.scheduler.quartz.internal.upgrade.v1_0_0.UpgradeQuartz;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;

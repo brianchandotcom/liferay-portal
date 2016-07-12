@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.sync.servlet;
+package com.liferay.sync.internal.servlet;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.sync.messaging;
+package com.liferay.sync.internal.messaging;
 
 import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
 import com.liferay.portal.kernel.messaging.Message;

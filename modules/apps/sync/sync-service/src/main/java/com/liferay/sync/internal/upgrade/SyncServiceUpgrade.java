@@ -12,13 +12,12 @@
  * details.
  */
 
-package com.liferay.sync.upgrade;
+package com.liferay.sync.internal.upgrade;
 
 import com.liferay.document.library.kernel.service.DLSyncEventLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-import com.liferay.sync.upgrade.v1_0_2.UpgradeSyncDLObject;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -41,13 +40,13 @@ public class SyncServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"com.liferay.sync.service", "1.0.1", "1.0.2",
-			new com.liferay.sync.upgrade.v1_0_2.UpgradeSchema(),
-			new UpgradeSyncDLObject(
+			new com.liferay.sync.internal.upgrade.v1_0_2.UpgradeSchema(),
+			new com.liferay.sync.internal.upgrade.v1_0_2.UpgradeSyncDLObject(
 				_dlSyncEventLocalService, _groupLocalService));
 
 		registry.register(
 			"com.liferay.sync.service", "1.0.2", "1.0.3",
-			new com.liferay.sync.upgrade.v1_0_3.UpgradeSchema());
+			new com.liferay.sync.internal.upgrade.v1_0_3.UpgradeSchema());
 	}
 
 	@Reference(unbind = "-")

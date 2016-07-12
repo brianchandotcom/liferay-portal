@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.sync.servlet;
+package com.liferay.sync.internal.servlet;
 
 import com.liferay.document.library.kernel.exception.DuplicateFileException;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
@@ -86,7 +86,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"osgi.http.whiteboard.context.path=/sync",
-		"osgi.http.whiteboard.servlet.name=com.liferay.sync.servlet.SyncDownloadServlet",
+		"osgi.http.whiteboard.servlet.name=SyncDownloadServlet",
 		"osgi.http.whiteboard.servlet.pattern=/sync/download/*"
 	},
 	service = Servlet.class

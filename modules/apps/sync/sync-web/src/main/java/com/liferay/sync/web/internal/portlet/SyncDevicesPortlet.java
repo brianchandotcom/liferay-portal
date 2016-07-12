@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.sync.web.portlet;
+package com.liferay.sync.web.internal.portlet;
 
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;

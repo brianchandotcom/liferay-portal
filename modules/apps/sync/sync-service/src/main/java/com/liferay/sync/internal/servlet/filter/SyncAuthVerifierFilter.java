@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.sync.servlet.filter;
+package com.liferay.sync.internal.servlet.filter;
 
 import com.liferay.portal.servlet.filters.authverifier.AuthVerifierFilter;
 
@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"filter.init.auth.verifier.OAuthVerifier.urls.includes=/sync/download/*",
 		"filter.init.auth.verifier.SyncAuthVerifier.urls.includes=/sync/download/*",
-		"osgi.http.whiteboard.filter.name=com.liferay.sync.servlet.filter.SyncAuthVerifierFilter",
+		"osgi.http.whiteboard.filter.name=SyncAuthVerifierFilter",
 		"osgi.http.whiteboard.filter.pattern=/sync/download/*"
 	},
 	service = Filter.class

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.sync.upgrade.v1_0_2;
+package com.liferay.sync.internal.upgrade.v1_0_2;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringUtil;

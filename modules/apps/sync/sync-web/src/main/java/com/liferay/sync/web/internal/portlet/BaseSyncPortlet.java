@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.sync.web.portlet;
+package com.liferay.sync.web.internal.portlet;
 
 import com.liferay.ip.geocoder.IPGeocoder;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.sync.service.SyncDeviceLocalService;
-import com.liferay.sync.web.constants.SyncWebKeys;
+import com.liferay.sync.web.internal.constants.SyncWebKeys;
 
 import java.io.IOException;
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.sync.configurator;
+package com.liferay.sync.internal.configurator;
 
 import com.liferay.document.library.kernel.service.DLSyncEventLocalService;
 import com.liferay.portal.kernel.log.Log;
@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.sender.SingleDestinationMessageSenderFactory;
 import com.liferay.portal.kernel.util.HashMapDictionary;
-import com.liferay.sync.messaging.SyncDLFileVersionDiffMessageListener;
+import com.liferay.sync.internal.messaging.SyncDLFileVersionDiffMessageListener;
 import com.liferay.sync.service.configuration.SyncServiceConfigurationValues;
 import com.liferay.sync.util.VerifyUtil;
 

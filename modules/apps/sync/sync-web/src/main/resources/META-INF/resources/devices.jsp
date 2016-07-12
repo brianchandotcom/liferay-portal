@@ -111,17 +111,17 @@ portletURL.setParameter("delta", String.valueOf(delta));
 				/>
 
 				<%
-				String location = syncDevice.getHost();
+				String location = syncDevice.getHostname();
 
 				IPGeocoder ipGeocoder = (IPGeocoder)request.getAttribute(SyncWebKeys.IP_GEOCODER);
 
-				IPInfo ipInfo = ipGeocoder.getIPInfo(syncDevice.getHost());
+				IPInfo ipInfo = ipGeocoder.getIPInfo(location);
 
 				if (ipInfo != null) {
 					String city = ipInfo.getCity();
 
 					if (city != null) {
-						location = city + " " + syncDevice.getHost();
+						location = city + " " + location;
 					}
 				}
 				%>

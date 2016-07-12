@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.sync.web.application;
+package com.liferay.sync.web.internal.application;
 
 import com.liferay.application.list.BasePanelApp;
 import com.liferay.application.list.PanelApp;

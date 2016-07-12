@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.sync.servlet.filter;
+package com.liferay.sync.internal.servlet.filter;
 
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
@@ -94,7 +94,7 @@ public class SyncJSONFilter implements Filter {
 			syncDevice = SyncDeviceLocalServiceUtil.createSyncDevice(0);
 		}
 
-		syncDevice.setHost(servletRequest.getRemoteHost());
+		syncDevice.setHostname(servletRequest.getRemoteHost());
 
 		SyncDeviceThreadLocal.setSyncDevice(syncDevice);
 

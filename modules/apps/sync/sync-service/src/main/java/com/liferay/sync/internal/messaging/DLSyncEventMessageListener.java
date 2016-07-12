@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.sync.messaging;
+package com.liferay.sync.internal.messaging;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolder;

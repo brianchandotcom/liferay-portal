@@ -97,7 +97,7 @@ public interface SyncDeviceLocalService extends BaseLocalService,
 	public SyncDevice addSyncDevice(SyncDevice syncDevice);
 
 	public SyncDevice addSyncDevice(long userId, java.lang.String type,
-		long buildNumber, java.lang.String host, int featureSet)
+		long buildNumber, java.lang.String hostname, int featureSet)
 		throws PortalException;
 
 	/**
@@ -176,7 +176,7 @@ public interface SyncDeviceLocalService extends BaseLocalService,
 
 	public SyncDevice updateSyncDevice(long syncDeviceId,
 		java.lang.String type, long buildNumber, int featureSet,
-		java.lang.String host, int status) throws PortalException;
+		java.lang.String hostname, int status) throws PortalException;
 
 	/**
 	* Returns the number of sync devices.

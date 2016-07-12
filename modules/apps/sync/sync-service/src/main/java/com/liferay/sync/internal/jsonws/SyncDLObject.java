@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.sync.jsonws;
+package com.liferay.sync.internal.jsonws;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;

@@ -12,13 +12,22 @@
  * details.
  */
 
-package com.liferay.sync.web.constants;
+package com.liferay.sync.internal.upgrade.v1_0_3;
+
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.StringUtil;
 
 /**
  * @author Shinn Lok
  */
-public interface SyncWebKeys {
+public class UpgradeSchema extends UpgradeProcess {
 
-	public static final String IP_GEOCODER = "IP_GEOCODER";
+	@Override
+	protected void doUpgrade() throws Exception {
+		String template = StringUtil.read(
+			UpgradeSchema.class.getResourceAsStream("dependencies/update.sql"));
+
+		runSQLTemplateString(template, false, false);
+	}
 
 }

@@ -1829,6 +1829,8 @@ information. Make sure to commit in all build services results.
 
 		<clean-restart-sybase />
 
+		<set-sybase-charset-utf8 />
+
 		<echo file="create-header.sql">use master
 dump transaction master with no_log
 go

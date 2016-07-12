@@ -56,7 +56,7 @@
 </tr>
 <tr>
 	<td>NOTIFICATIONS_CONTENT</td>
-	<td>//div[@class='body-container']//div[@class='body' and contains(.,'${key_contentBody}')]</td>
+	<td>//div[contains(@id,'NotificationEvents')]//div[@class='body-container']</td>
 	<td></td>
 </tr>
 <tr>

@@ -4231,6 +4231,10 @@
 			<var name="rsvp" value="Yes" />
 		</execute>
 
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
 		<execute macro="CalendarEvent#view">
 			<var name="eventTitle" value="Calendar Event Title" />
 		</execute>

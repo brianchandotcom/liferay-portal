@@ -57,6 +57,12 @@ public class ScreensAssetEntryServiceUtil {
 			locale, max);
 	}
 
+	public static com.liferay.portal.kernel.json.JSONObject getAssetEntry(
+		long entryId, java.util.Locale locale)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getAssetEntry(entryId, locale);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*

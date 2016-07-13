@@ -23,7 +23,6 @@ import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationExcepti
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -32,7 +31,6 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
@@ -114,10 +112,6 @@ public class DDLFormPortlet extends MVCPortlet {
 			}
 
 			if (isSharedLayout(actionRequest)) {
-				actionRequest.setAttribute(
-					WebKeys.REDIRECT, getPublishedFormURL(actionRequest));
-
-				sendRedirect(actionRequest, actionResponse);
 			}
 		}
 	}
@@ -146,24 +140,9 @@ public class DDLFormPortlet extends MVCPortlet {
 		}
 
 		super.render(renderRequest, renderResponse);
-	}
 
-	protected String getPublishedFormURL(ActionRequest actionRequest) {
-		String recordSetId = ParamUtil.getString(actionRequest, "recordSetId");
 
-		StringBundler sb = new StringBundler(4);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		Group group = themeDisplay.getSiteGroup();
-
-		sb.append(themeDisplay.getPortalURL());
-		sb.append(group.getPathFriendlyURL(false, themeDisplay));
-		sb.append("/forms/shared/-/form/");
-		sb.append(recordSetId);
-
-		return sb.toString();
 	}
 
 	protected Throwable getRootCause(Throwable throwable) {

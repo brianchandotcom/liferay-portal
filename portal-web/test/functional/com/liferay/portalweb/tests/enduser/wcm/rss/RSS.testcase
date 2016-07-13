@@ -172,7 +172,9 @@
 		</execute>
 	</command>
 
-	<command name="AddRSSFeed" priority="4">
+	<command name="AddRSSFeed" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Site Page Name" />
 			<var name="siteName" value="Site Name" />

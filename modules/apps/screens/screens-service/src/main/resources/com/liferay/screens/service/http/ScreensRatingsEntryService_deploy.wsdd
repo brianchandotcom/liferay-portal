@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+
+<deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+	<service name="Plugin_Screens_ScreensRatingsEntryService" provider="java:RPC" style="rpc" use="encoded">
+		<operation xmlns:operNS="urn:http.service.screens.liferay.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="deleteRatingEntry" qname="operNS:deleteRatingEntry" returnQName="deleteRatingEntryReturn" returnType="rtns:string" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="classPK" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="className" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="stepCount" type="tns:int"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.screens.liferay.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getRatingsEntries" qname="operNS:getRatingsEntries" returnQName="getRatingsEntriesReturn" returnType="rtns:string" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="entryId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="stepCount" type="tns:int"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.screens.liferay.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getRatingsEntries" qname="operNS:getRatingsEntries" returnQName="getRatingsEntriesReturn" returnType="rtns:string" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="classPK" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="className" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="stepCount" type="tns:int"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.screens.liferay.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="updateRatingEntry" qname="operNS:updateRatingEntry" returnQName="updateRatingEntryReturn" returnType="rtns:string" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="classPK" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="className" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="score" type="tns:double"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="stepCount" type="tns:int"></parameter>
+		</operation>
+		<parameter name="allowedMethods" value="deleteRatingEntry getRatingsEntries updateRatingEntry" />
+		<parameter name="className" value="com.liferay.screens.service.http.ScreensRatingsEntryServiceSoap" />
+		<parameter name="typeMappingVersion" value="1.2" />
+		<parameter name="wsdlPortType" value="ScreensRatingsEntryServiceSoap" />
+		<parameter name="wsdlServiceElement" value="ScreensRatingsEntryServiceSoapService" />
+		<parameter name="wsdlServicePort" value="Plugin_Screens_ScreensRatingsEntryService" />
+		<parameter name="wsdlTargetNamespace" value="urn:http.service.screens.liferay.com" />
+	</service>
+</deployment>

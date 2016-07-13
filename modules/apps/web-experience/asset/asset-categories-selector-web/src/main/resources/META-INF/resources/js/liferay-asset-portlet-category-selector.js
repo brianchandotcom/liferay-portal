@@ -84,18 +84,19 @@ AUI.add(
 
 													this.onCheckboxCheck(event);
 
-													Liferay.Util.getOpener().Liferay.fire(
-														this.get('eventName'),
-														{
-															data: {
-																items: this.get('entries')
-															}
-														}
-													);
 												}
 												else {
 													this.onCheckboxUncheck(event);
 												}
+
+												Liferay.Util.getOpener().Liferay.fire(
+													this.get('eventName'),
+													{
+														data: {
+															items: this.get('entries')
+														}
+													}
+												);
 											}.bind(this)
 										},
 										checked: false,
@@ -104,16 +105,14 @@ AUI.add(
 										leaf: !item.hasChildren,
 										paginator: this.getPaginatorConfig(item),
 										parentCategoryIds: item.parentCategoryIds,
-										type: type
+										type: type,
+										categoryId: item.categoryId
 									};
 
 									if (this.entryIdsArr.indexOf(item.categoryId) !== -1) {
 										var entries = this.get('entries');
-
-										entries[item.categoryId] = item;
+										entries[LString.escapeHTML(item.titleCurrentValue)] = item;
 										newTreeNode.checked = true;
-										newTreeNode.expanded = true;
-
 										this.set('entries', entries);
 									}
 
@@ -213,7 +212,9 @@ AUI.add(
 
 						entry.value = LString.unescapeHTML(entry.value);
 
-						entries[assetId] = entry;
+						entry[0] = LString.unescapeHTML(entry.value);
+
+						entries[entryMatchKey] = entry;
 
 						this.set('entries', entries);
 					},
@@ -221,19 +222,23 @@ AUI.add(
 					onCheckboxUncheck: function(event) {
 						var currentTarget = event.currentTarget;
 
-						var assetId;
+						var entryMatchKey;
 
 						var entries = this.get('entries');
 
 						if (A.instanceOf(currentTarget, A.Node)) {
 							assetId = currentTarget.attr('data-categoryId');
+							entryMatchKey = currentTarget.val();
 						}
 						else {
 							assetId = this.getTreeNodeAssetId(currentTarget);
+							entryMatchKey = currentTarget.get('label');
 						}
 
-						delete entries[assetId];
+						entries[entryMatchKey].unchecked = true;
+
 						this.set('entries', entries);
+
 					}
 				}
 			}

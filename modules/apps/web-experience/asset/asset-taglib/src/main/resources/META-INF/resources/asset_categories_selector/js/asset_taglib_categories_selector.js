@@ -136,6 +136,8 @@ AUI.add(
 
 						instance.inputContainer.addClass('hide-accessible');
 
+						var contentBox = instance.get('contentBox');
+
 						instance._applyARIARoles();
 					},
 
@@ -143,6 +145,11 @@ AUI.add(
 						var instance = this;
 
 						AssetTaglibCategoriesSelector.superclass.bindUI.apply(instance, arguments);
+
+						var entries = instance.entries;
+
+						entries.after('remove', function(event) {
+						}.bind(this), instance);
 					},
 
 					syncUI: function() {
@@ -155,6 +162,7 @@ AUI.add(
 						};
 
 						var curEntries = instance.get('curEntries');
+
 						var curEntryIds = instance.get('curEntryIds');
 
 						curEntryIds.forEach(
@@ -164,8 +172,7 @@ AUI.add(
 								};
 
 								entry.value = LString.unescapeHTML(curEntries[index]);
-
-								instance.entries.add(entry);
+								instance.add(entry.value);
 							}
 						);
 					},
@@ -232,6 +239,8 @@ AUI.add(
 
 						event.domEvent.preventDefault();
 
+						instance.set('curEntryIds', instance.entries.keys.join(','));
+
 						var uri = Lang.sub(
 							decodeURIComponent(instance.get('portletURL')),
 							{
@@ -246,23 +255,45 @@ AUI.add(
 								eventName: instance.get('eventName'),
 								on: {
 									selectedItemChange: function(event) {
-										var selectedCategories = event.newVal;
 
-										if (selectedCategories) {
-											instance.entries.each(
-												function(item) {
-													instance.entries.remove(item);
-												}
-											);
+										var data = event.newVal;
 
-											for (var key in selectedCategories.items) {
-												instance.add(selectedCategories.items[key].value || selectedCategories.items[key].name);
-											}
+										var selectedEntryIds = instance.get('curEntryIds');
 
-											instance.set('curEntryIds', Object.keys(selectedCategories.items).join(','));
-
-											instance._updateInputHidden(selectedCategories.items);
+										if (selectedEntryIds.length === 1 && selectedEntryIds[0] === "") {
+											selectedEntryIds = [];
 										}
+
+
+										if (data && data.items) {
+											for (var key in data.items) {
+
+												var found = false;
+
+												instance.entries.each(
+													function(item) {
+														if (key === item[0]) {
+															found = true;
+														}
+
+														if (key === item[0] && data.items[key].unchecked) {
+															instance.entries.remove(item);
+														}
+													}
+												)
+
+												data.items[key][0] = key;
+
+												if (!found && !data.items[key].unchecked) {
+													instance.entries.add(data.items[key]);
+												}
+
+											}
+										}
+
+										instance.set('curEntryIds', instance.entries.keys.join(','));
+
+										instance._updateInputHidden();
 									}
 								},
 								'strings.add': Liferay.Language.get('done'),
@@ -274,13 +305,14 @@ AUI.add(
 						itemSelectorDialog.open();
 					},
 
-					_updateInputHidden: function(selectedCategories) {
+					_updateInputHidden: function() {
 						var instance = this;
 
 						var hiddenInput = instance.get('hiddenInput');
 
-						hiddenInput.val(Object.keys(selectedCategories).join(','));
+						hiddenInput.val(instance.entries.keys.join(','));
 					}
+
 				}
 			}
 		);

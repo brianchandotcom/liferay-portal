@@ -217,11 +217,9 @@ if (Validator.isNotNull(languageId)) {
 					<span class="diff-html-added">
 						<liferay-ui:message key="added" />
 					</span>
-
 					<span class="diff-html-removed">
 						<liferay-ui:message key="deleted" />
 					</span>
-
 					<span class="diff-html-changed legend-item">
 						<liferay-ui:message key="format-changes" />
 					</span>

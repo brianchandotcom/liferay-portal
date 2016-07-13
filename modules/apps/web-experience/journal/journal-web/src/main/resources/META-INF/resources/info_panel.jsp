@@ -54,7 +54,6 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(articles)) {
 					<li>
 						<liferay-util:include page="/subscribe.jsp" servletContext="<%= application %>" />
 					</li>
-
 					<li>
 						<liferay-util:include page="/folder_action.jsp" servletContext="<%= application %>" />
 					</li>

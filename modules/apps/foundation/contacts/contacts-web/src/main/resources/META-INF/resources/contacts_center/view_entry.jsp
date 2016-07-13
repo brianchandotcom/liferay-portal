@@ -46,6 +46,7 @@ long entryId = ParamUtil.getLong(request, "entryId");
 				</div>
 			</div>
 		</div>
+
 		<div class="lfr-detail-info">
 			<div class="comments">
 				<%= entry.getComments() %>

@@ -52,7 +52,6 @@ PanelCategoryHelper panelCategoryHelper = (PanelCategoryHelper)request.getAttrib
 								</c:otherwise>
 							</c:choose>
 						</span>
-
 						<span class="nav-equal-height-heading-field">
 							<liferay-ui:icon-menu direction="left" icon="cog" markupView="lexicon" message="" showArrow="<%= false %>">
 

@@ -245,7 +245,6 @@ String portletResource = ParamUtil.getString(request, "portletResource");
 													<aui:option label="em" />
 												</aui:select>
 											</span>
-
 											<span class="field-row">
 												<aui:input inlineField="<%= true %>" label="right" name="lfr-border-width-right" />
 
@@ -255,7 +254,6 @@ String portletResource = ParamUtil.getString(request, "portletResource");
 													<aui:option label="em" />
 												</aui:select>
 											</span>
-
 											<span class="field-row">
 												<aui:input inlineField="<%= true %>" label="bottom" name="lfr-border-width-bottom" />
 
@@ -265,7 +263,6 @@ String portletResource = ParamUtil.getString(request, "portletResource");
 													<aui:option label="em" />
 												</aui:select>
 											</span>
-
 											<span class="field-row">
 												<aui:input inlineField="<%= true %>" label="left" name="lfr-border-width-left" />
 
@@ -363,7 +360,6 @@ String portletResource = ParamUtil.getString(request, "portletResource");
 													<aui:option label="em" />
 												</aui:select>
 											</span>
-
 											<span class="field-row">
 												<aui:input inlineField="<%= true %>" label="right" name="lfr-padding-right" />
 
@@ -373,7 +369,6 @@ String portletResource = ParamUtil.getString(request, "portletResource");
 													<aui:option label="em" />
 												</aui:select>
 											</span>
-
 											<span class="field-row">
 												<aui:input inlineField="<%= true %>" label="bottom" name="lfr-padding-bottom" />
 
@@ -383,7 +378,6 @@ String portletResource = ParamUtil.getString(request, "portletResource");
 													<aui:option label="em" />
 												</aui:select>
 											</span>
-
 											<span class="field-row">
 												<aui:input inlineField="<%= true %>" label="left" name="lfr-padding-left" />
 
@@ -409,7 +403,6 @@ String portletResource = ParamUtil.getString(request, "portletResource");
 													<aui:option label="em" />
 												</aui:select>
 											</span>
-
 											<span class="field-row">
 												<aui:input inlineField="<%= true %>" label="right" name="lfr-margin-right" />
 
@@ -419,7 +412,6 @@ String portletResource = ParamUtil.getString(request, "portletResource");
 													<aui:option label="em" />
 												</aui:select>
 											</span>
-
 											<span class="field-row">
 												<aui:input inlineField="<%= true %>" label="bottom" name="lfr-margin-bottom" />
 
@@ -429,7 +421,6 @@ String portletResource = ParamUtil.getString(request, "portletResource");
 													<aui:option label="em" />
 												</aui:select>
 											</span>
-
 											<span class="field-row">
 												<aui:input inlineField="<%= true %>" label="left" name="lfr-margin-left" />
 

@@ -36,6 +36,7 @@ User statusByUser = UserLocalServiceUtil.fetchUser(statusByUserId);
 				<div class="user-status-name">
 					<aui:a href="<%= statusByUser.getDisplayURL(themeDisplay) %>"><%= HtmlUtil.escape(StringUtil.shorten(statusByUser.getFullName(), 20)) %></aui:a>
 				</div>
+
 				<div class="user-status-date">
 					<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - statusDate.getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
 				</div>

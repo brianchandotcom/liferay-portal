@@ -32,5 +32,6 @@
 			</c:if>
 		</div>
 	</div>
+
 	<div class="<%= contentCssClass %>" id="<%= id %>Content">
 		<div class="panel-body">

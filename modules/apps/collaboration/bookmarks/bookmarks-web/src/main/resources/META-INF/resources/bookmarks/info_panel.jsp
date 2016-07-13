@@ -53,7 +53,6 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(entries)) {
 				<li>
 					<liferay-util:include page="/bookmarks/subscribe.jsp" servletContext="<%= application %>" />
 				</li>
-
 				<li>
 					<liferay-util:include page="/bookmarks/folder_action.jsp" servletContext="<%= application %>" />
 				</li>
@@ -109,7 +108,6 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(entries)) {
 				<li>
 					<liferay-util:include page="/bookmarks/subscribe.jsp" servletContext="<%= application %>" />
 				</li>
-
 				<li>
 					<liferay-util:include page="/bookmarks/entry_action.jsp" servletContext="<%= application %>" />
 				</li>

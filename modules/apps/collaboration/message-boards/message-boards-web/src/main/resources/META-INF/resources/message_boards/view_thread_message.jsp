@@ -101,7 +101,6 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 					<span class="h5 text-default">
 						<span><liferay-ui:message key="posts" />:</span> <%= posts %>
 					</span>
-
 					<span class="h5 text-default">
 						<span><liferay-ui:message key="join-date" />:</span> <%= dateFormatDate.format(messageUser.getCreateDate()) %>
 					</span>

@@ -51,7 +51,6 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 				<span class="displaying-help-message-holder <%= (selRecordSet == null) ? StringPool.BLANK : "hide" %>">
 					<liferay-ui:message key="please-select-a-list-entry-from-the-list-below" />
 				</span>
-
 				<span class="displaying-record-set-id-holder <%= (selRecordSet == null) ? "hide" : StringPool.BLANK %>">
 					<liferay-ui:message key="displaying-list" />: <span class="displaying-record-set-id"><%= (selRecordSet != null) ? HtmlUtil.escape(selRecordSet.getName(locale)) : StringPool.BLANK %></span>
 				</span>

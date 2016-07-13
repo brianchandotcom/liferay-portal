@@ -54,7 +54,6 @@ boolean hasOutgoingLinkPages = ListUtil.isNotEmpty(outgoingLinkPages);
 											<a class="text-default" href="<%= portletURL.toString() %>"><%= incomingLinkPage.getTitle() %></a>
 										</h4>
 									</dt>
-
 									<dd>
 										<small>
 											<aui:workflow-status markupView="lexicon" showLabel="<%= false %>" status="<%= incomingLinkPage.getStatus() %>" />
@@ -110,7 +109,6 @@ boolean hasOutgoingLinkPages = ListUtil.isNotEmpty(outgoingLinkPages);
 													<a class="text-default" href="<%= portletURL.toString() %>"><%= outgoingLinkPage.getTitle() %></a>
 												</h4>
 											</dt>
-
 											<dd>
 												<small>
 													<aui:workflow-status markupView="lexicon" showLabel="<%= false %>" status="<%= outgoingLinkPage.getStatus() %>" />

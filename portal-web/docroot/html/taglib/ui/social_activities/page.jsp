@@ -88,6 +88,7 @@
 					<div class="card-col-field">
 						<liferay-ui:user-portrait userId="<%= activityDescriptor.getUserId() %>" />
 					</div>
+
 					<div class="card-col-content card-col-gutters">
 						<h5 class="text-default">
 							<%= timeFormatDate.format(activityDescriptor.getCreateDate()) %>

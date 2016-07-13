@@ -43,7 +43,6 @@ for (FileVersion fileVersion : fileVersions) {
 				<dt class="h5">
 					<liferay-ui:message arguments="<%= fileVersion.getVersion() %>" key="version-x" />
 				</dt>
-
 				<dd>
 					<c:choose>
 						<c:when test="<%= Validator.isNull(fileVersion.getChangeLog()) %>">

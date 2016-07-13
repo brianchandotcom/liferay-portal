@@ -67,6 +67,7 @@ renderResponse.setTitle(headerTitle);
 												<liferay-ui:user-portrait userId="<%= workflowTask.getAssigneeUserId() %>" />
 											</div>
 										</div>
+
 										<div class="card-col-content card-col-gutters">
 											<div class="lfr-asset-assigned">
 												<%= workflowTaskDisplayContext.getWorkflowTaskAssigneeUserName(workflowTask) %>

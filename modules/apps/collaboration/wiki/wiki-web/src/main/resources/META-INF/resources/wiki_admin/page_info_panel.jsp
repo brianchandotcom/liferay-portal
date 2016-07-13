@@ -35,7 +35,6 @@ WikiPageInfoPanelDisplayContext wikiPageInfoPanelDisplayContext = wikiDisplayCon
 					<li>
 						<liferay-util:include page="/wiki/subscribe.jsp" servletContext="<%= application %>" />
 					</li>
-
 					<li>
 						<liferay-util:include page="/wiki/page_action.jsp" servletContext="<%= application %>" />
 					</li>
@@ -95,7 +94,6 @@ if (wikiPageInfoPanelDisplayContext.isSinglePageSelection()) {
 						<dd>
 							<liferay-ui:message key="<%= wikiEngineRenderer.getFormatLabel(wikiPage.getFormat(), locale) %>" />
 						</dd>
-
 						<dt class="h5"><liferay-ui:message key="latest-version" /></dt>
 
 						<dd>
@@ -105,25 +103,21 @@ if (wikiPageInfoPanelDisplayContext.isSinglePageSelection()) {
 								(<liferay-ui:message key="minor-edit" />)
 							</c:if>
 						</dd>
-
 						<dt class="h5"><liferay-ui:message key="create-date" /></dt>
 
 						<dd>
 							<%= dateFormatDateTime.format(wikiPage.getCreateDate()) %>
 						</dd>
-
 						<dt class="h5"><liferay-ui:message key="last-modified" /></dt>
 
 						<dd>
 							<%= dateFormatDateTime.format(wikiPage.getModifiedDate()) %>
 						</dd>
-
 						<dt class="h5"><liferay-ui:message key="attachments" /></dt>
 
 						<dd>
 							<%= wikiPage.getAttachmentsFileEntriesCount() %>
 						</dd>
-
 						<dt class="h5"><liferay-ui:message key="rss" /></dt>
 
 						<dd>
@@ -222,7 +216,6 @@ if (wikiPageInfoPanelDisplayContext.isSinglePageSelection()) {
 							<dt class="h5">
 								<h4><liferay-ui:message arguments="<%= curPage.getVersion() %>" key="version-x" /></h4>
 							</dt>
-
 							<dd>
 								<small class="text-muted">
 									<liferay-ui:message arguments="<%= new Object[] {curPage.getUserName(), dateFormatDateTime.format(curPage.getCreateDate())} %>" key="by-x-on-x" />
@@ -272,7 +265,6 @@ if (wikiPageInfoPanelDisplayContext.isSinglePageSelection()) {
 						<dt class="h5">
 							<h4><%= wikiSocialActivityHelper.getSocialActivityDescription(wikiPage, socialActivity, extraDataJSONObject, resourceBundle) %></h4>
 						</dt>
-
 						<dd>
 							<small class="text-muted">
 								<%= dateFormatDateTime.format(socialActivity.getCreateDate()) %>

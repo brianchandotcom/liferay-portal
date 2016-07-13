@@ -31,6 +31,7 @@ NumberFormat percentFormat = NumberFormat.getPercentInstance(locale);
 				</th>
 			</tr>
 		</thead>
+
 		<tbody class="table-data">
 
 			<%
@@ -65,13 +66,11 @@ NumberFormat percentFormat = NumberFormat.getPercentInstance(locale);
 					<td class="table-cell">
 						<%= numberFormat.format(choiceVotes) %>
 					</td>
-
 					<td class="table-cell">
 						<div class="progress progress-xs" style="width: <%= votesPixelWidth %>px;">
 							<div aria-valuemax="100" aria-valuemin="0" aria-valuenow="<%= votesPercentWidth %>" class="progress-bar" role="progressbar" style="width: <%= votesPercentWidth %>%;"></div>
 						</div>
 					</td>
-
 					<td class="table-cell">
 						<strong><%= choice.getName() %>.</strong>
 					</td>

@@ -51,7 +51,6 @@ List<DiffResult> targetResults = diffResults[1];
 						<liferay-ui:message key="line" /> <%= targetResult.getLineNumber() %>
 					</th>
 				</tr>
-
 				<tr>
 					<td class="table-cell" width="50%">
 						<table class="taglib-diff-table">

@@ -173,7 +173,6 @@ if (portletTitleBasedNavigation) {
 									<liferay-ui:message key="version" />
 								</span>
 							</dt>
-
 							<dd>
 								<%= HtmlUtil.escape(fileVersion.getVersion()) %>
 							</dd>
@@ -182,25 +181,20 @@ if (portletTitleBasedNavigation) {
 						<dt class="h5">
 							<liferay-ui:message key="status" />
 						</dt>
-
 						<dd>
 							<aui:model-context bean="<%= fileVersion %>" model="<%= DLFileVersion.class %>" />
 
 							<aui:workflow-status model="<%= DLFileEntry.class %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= fileVersion.getStatus() %>" />
 						</dd>
-
 						<dt class="h5">
 							<liferay-ui:message key="created" />
 						</dt>
-
 						<dd>
 							<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(fileVersion.getUserName()), dateFormatDateTime.format(fileVersion.getCreateDate())} %>" key="by-x-on-x" translateArguments="<%= false %>" />
 						</dd>
-
 						<dt class="h5">
 							<liferay-ui:message key="modified" />
 						</dt>
-
 						<dd>
 							<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(fileVersion.getStatusByUserName()), dateFormatDateTime.format(fileVersion.getModifiedDate())} %>" key="by-x-on-x" translateArguments="<%= false %>" />
 						</dd>
@@ -209,7 +203,6 @@ if (portletTitleBasedNavigation) {
 							<dt class="h5">
 								<liferay-ui:message key="description" />
 							</dt>
-
 							<dd>
 								<%= HtmlUtil.escape(fileEntry.getDescription()) %>
 							</dd>
@@ -225,7 +218,6 @@ if (portletTitleBasedNavigation) {
 								url="<%= DLUtil.getDownloadURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK) %>"
 							/>
 						</span>
-
 						<span class="conversions">
 
 							<%
@@ -246,7 +238,6 @@ if (portletTitleBasedNavigation) {
 							%>
 
 						</span>
-
 						<span class="webdav-url">
 							<c:choose>
 								<c:when test="<%= portletDisplay.isWebDAVEnabled() && fileEntry.isSupportsSocial() %>">
@@ -453,7 +444,6 @@ if (portletTitleBasedNavigation) {
 							<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="thumbnail" />" class="thumbnail" src="<%= thumbnailSrc %>" style="<%= DLUtil.getThumbnailStyle(true, 0, 128, 128) %>" />
 						</c:if>
 					</span>
-
 					<span class="user-date">
 
 						<%

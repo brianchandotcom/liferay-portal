@@ -56,7 +56,6 @@
 			<span class="entry-title-text">
 				<%= HtmlUtil.escape(title) %>
 			</span>
-
 			<span class="entry-result-icon"></span>
 		</span>
 
@@ -72,7 +71,6 @@
 					<dt>
 						<liferay-ui:message key="type" />:
 					</dt>
-
 					<dd>
 						<%= classTypeName %>
 					</dd>
@@ -88,7 +86,6 @@
 						<dt>
 							<liferay-ui:message key="site" />:
 						</dt>
-
 						<dd>
 
 							<%
@@ -112,7 +109,6 @@
 						<dt>
 							<liferay-ui:message key="scope" />:
 						</dt>
-
 						<dd>
 							<%= group.getDescriptiveName(locale) %>
 						</dd>
@@ -123,7 +119,6 @@
 					<dt>
 						<liferay-ui:message key="version" />:
 					</dt>
-
 					<dd>
 						<%= HtmlUtil.escape(version) %>
 					</dd>
@@ -206,7 +201,6 @@
 					<dd>
 						<%= HtmlUtil.escape(latestApprovedVersion) %>
 					</dd>
-
 					<dt>
 						<liferay-ui:message key="latest-aproved-version-author" />:
 					</dt>
@@ -217,6 +211,7 @@
 			</c:if>
 		</small>
 	</div>
+
 	<c:choose>
 		<c:when test="<%= Validator.isNull(url) %>">
 			</span>

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.wsrp.axis.WSRPHTTPSender;
 import com.liferay.wsrp.client.PasswordCallback;
 import com.liferay.wsrp.configuration.WSRPGroupServiceConfiguration;
+import com.liferay.wsrp.constants.WSRPPortletKeys;
 import com.liferay.wsrp.util.WSRPConfigurationUtil;
 
 import java.lang.reflect.InvocationHandler;
@@ -57,6 +58,9 @@ public class ServiceHandler implements InvocationHandler {
 		String forwardCookies, String forwardHeaders, String userToken,
 		boolean v2) {
 
+		_wSRPGroupServiceConfiguration =
+			WSRPConfigurationUtil.getWSRPConfiguration();
+
 		_engineConfiguration = getEngineConfiguration(
 			forwardCookies, forwardHeaders, userToken);
 
@@ -72,9 +76,6 @@ public class ServiceHandler implements InvocationHandler {
 		}
 
 		_serviceLocator.setMaintainSession(true);
-
-		_wSRPGroupServiceConfiguration =
-			WSRPConfigurationUtil.getWSRPConfiguration();
 	}
 
 	public Object doInvoke(Object proxy, Method method, Object[] args)
@@ -98,9 +99,14 @@ public class ServiceHandler implements InvocationHandler {
 			return markupService;
 		}
 
+		/**
 		Thread currentThread = Thread.currentThread();
 
 		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+
+		**/
+
+		ClassLoader contextClassLoader = WSRPPortletKeys.class.getClassLoader();
 
 		URL bindingURL = (URL)args[0];
 

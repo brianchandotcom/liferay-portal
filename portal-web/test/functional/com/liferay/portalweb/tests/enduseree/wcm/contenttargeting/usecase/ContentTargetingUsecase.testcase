@@ -2754,10 +2754,7 @@
 			<var name="uncheckContentNameList" value="Web Content" />
 		</execute>
 
-		<execute macro="Staging#publishToLive">
-			<var name="failureExpected" value="true" />
-			<var name="validateErrorMessage" value="An unexpected error occurred with the publication process. Please check your portal and publishing configuration." />
-		</execute>
+		<execute macro="Staging#publishToLive" />
 	</command>
 
 	<command name="UserSegmentAddCategorizationToContent" priority="4">

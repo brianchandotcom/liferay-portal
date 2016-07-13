@@ -191,18 +191,50 @@ public class MicroblogsEntryLocalServiceUtil {
 		return getService().getMicroblogsEntriesCount();
 	}
 
+	public static int getMicroblogsEntriesCount(long companyId,
+		long creatorClassNameId, java.lang.String assetTagName) {
+		return getService()
+				   .getMicroblogsEntriesCount(companyId, creatorClassNameId,
+			assetTagName);
+	}
+
+	public static int getMicroblogsEntriesCount(long companyId,
+		long creatorClassNameId, long creatorClassPK) {
+		return getService()
+				   .getMicroblogsEntriesCount(companyId, creatorClassNameId,
+			creatorClassPK);
+	}
+
+	public static int getMicroblogsEntriesCount(long companyId,
+		long creatorClassNameId, long creatorClassPK, int type) {
+		return getService()
+				   .getMicroblogsEntriesCount(companyId, creatorClassNameId,
+			creatorClassPK, type);
+	}
+
+	public static int getMicroblogsEntriesCount(long companyId,
+		long creatorClassNameId, long creatorClassPK,
+		java.lang.String assetTagName, boolean andOperator) {
+		return getService()
+				   .getMicroblogsEntriesCount(companyId, creatorClassNameId,
+			creatorClassPK, assetTagName, andOperator);
+	}
+
+	@Deprecated
 	public static int getMicroblogsEntriesCount(long creatorClassNameId,
 		java.lang.String assetTagName) {
 		return getService()
 				   .getMicroblogsEntriesCount(creatorClassNameId, assetTagName);
 	}
 
+	@Deprecated
 	public static int getMicroblogsEntriesCount(long creatorClassNameId,
 		long creatorClassPK) {
 		return getService()
 				   .getMicroblogsEntriesCount(creatorClassNameId, creatorClassPK);
 	}
 
+	@Deprecated
 	public static int getMicroblogsEntriesCount(long creatorClassNameId,
 		long creatorClassPK, int type) {
 		return getService()
@@ -210,6 +242,7 @@ public class MicroblogsEntryLocalServiceUtil {
 			creatorClassPK, type);
 	}
 
+	@Deprecated
 	public static int getMicroblogsEntriesCount(long creatorClassNameId,
 		long creatorClassPK, java.lang.String assetTagName, boolean andOperator) {
 		return getService()
@@ -313,6 +346,47 @@ public class MicroblogsEntryLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> getMicroblogsEntries(
+		long companyId, long creatorClassNameId, int type, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc) {
+		return getService()
+				   .getMicroblogsEntries(companyId, creatorClassNameId, type,
+			start, end, obc);
+	}
+
+	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> getMicroblogsEntries(
+		long companyId, long creatorClassNameId, java.lang.String assetTagName,
+		int start, int end) {
+		return getService()
+				   .getMicroblogsEntries(companyId, creatorClassNameId,
+			assetTagName, start, end);
+	}
+
+	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> getMicroblogsEntries(
+		long companyId, long creatorClassNameId, long creatorClassPK,
+		int start, int end) {
+		return getService()
+				   .getMicroblogsEntries(companyId, creatorClassNameId,
+			creatorClassPK, start, end);
+	}
+
+	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> getMicroblogsEntries(
+		long companyId, long creatorClassNameId, long creatorClassPK, int type,
+		int start, int end) {
+		return getService()
+				   .getMicroblogsEntries(companyId, creatorClassNameId,
+			creatorClassPK, type, start, end);
+	}
+
+	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> getMicroblogsEntries(
+		long companyId, long creatorClassNameId, long creatorClassPK,
+		java.lang.String assetTagName, boolean andOperator, int start, int end) {
+		return getService()
+				   .getMicroblogsEntries(companyId, creatorClassNameId,
+			creatorClassPK, assetTagName, andOperator, start, end);
+	}
+
+	@Deprecated
+	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> getMicroblogsEntries(
 		long creatorClassNameId, int type, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator obc) {
 		return getService()
@@ -320,6 +394,7 @@ public class MicroblogsEntryLocalServiceUtil {
 			obc);
 	}
 
+	@Deprecated
 	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> getMicroblogsEntries(
 		long creatorClassNameId, java.lang.String assetTagName, int start,
 		int end) {
@@ -328,6 +403,7 @@ public class MicroblogsEntryLocalServiceUtil {
 			start, end);
 	}
 
+	@Deprecated
 	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> getMicroblogsEntries(
 		long creatorClassNameId, long creatorClassPK, int start, int end) {
 		return getService()
@@ -335,6 +411,7 @@ public class MicroblogsEntryLocalServiceUtil {
 			start, end);
 	}
 
+	@Deprecated
 	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> getMicroblogsEntries(
 		long creatorClassNameId, long creatorClassPK, int type, int start,
 		int end) {
@@ -343,6 +420,7 @@ public class MicroblogsEntryLocalServiceUtil {
 			type, start, end);
 	}
 
+	@Deprecated
 	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> getMicroblogsEntries(
 		long creatorClassNameId, long creatorClassPK,
 		java.lang.String assetTagName, boolean andOperator, int start, int end) {

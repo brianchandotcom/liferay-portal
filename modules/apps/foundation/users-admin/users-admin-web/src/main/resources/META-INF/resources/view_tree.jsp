@@ -288,58 +288,7 @@ if (organization != null) {
 					}
 					%>
 
-					<c:choose>
-						<c:when test="<%= curOrganization != null %>">
-							<liferay-portlet:renderURL varImpl="rowURL">
-								<portlet:param name="mvcRenderCommandName" value="/users_admin/view" />
-								<portlet:param name="toolbarItem" value="<%= toolbarItem %>" />
-								<portlet:param name="organizationId" value="<%= String.valueOf(curOrganization.getOrganizationId()) %>" />
-								<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_TREE %>" />
-							</liferay-portlet:renderURL>
-
-							<%
-							if (!OrganizationPermissionUtil.contains(permissionChecker, curOrganization, ActionKeys.VIEW)) {
-								rowURL = null;
-							}
-							%>
-
-							<%@ include file="/organization/organization_columns.jspf" %>
-						</c:when>
-						<c:otherwise>
-							<liferay-portlet:renderURL varImpl="rowURL">
-								<portlet:param name="mvcRenderCommandName" value="/users_admin/edit_user" />
-								<portlet:param name="redirect" value="<%= currentURL %>" />
-								<portlet:param name="p_u_i_d" value="<%= String.valueOf(user2.getUserId()) %>" />
-							</liferay-portlet:renderURL>
-
-							<%
-							if (!UserPermissionUtil.contains(permissionChecker, user2.getUserId(), ActionKeys.UPDATE)) {
-								rowURL = null;
-							}
-							%>
-
-							<liferay-ui:search-container-column-text
-								cssClass="table-cell-content"
-								href="<%= rowURL %>"
-								name="name"
-								orderable="<%= true %>"
-							>
-								<aui:a href="<%= String.valueOf(rowURL) %>"><strong><%= user2.getFullName() %></strong></aui:a>
-							</liferay-ui:search-container-column-text>
-
-							<liferay-ui:search-container-column-text
-								cssClass="table-cell-content"
-								href="<%= rowURL %>"
-								name="type"
-								value='<%= LanguageUtil.get(request, "user") %>'
-							/>
-
-							<liferay-ui:search-container-column-jsp
-								cssClass="entry-action-column"
-								path="/user_action.jsp"
-							/>
-						</c:otherwise>
-					</c:choose>
+					<%@ include file="/organization/organization_columns.jspf" %>
 				</liferay-ui:search-container-row>
 
 				<liferay-ui:search-iterator markupView="lexicon" resultRowSplitter="<%= new OrganizationResultRowSplitter() %>" searchContainer="<%= membersSearchContainer %>" />

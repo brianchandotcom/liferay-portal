@@ -119,7 +119,7 @@ public class WSDLServlet extends HttpServlet {
 
 		String content = StringUtil.read(
 			servletContext.getResourceAsStream(
-				"/WEB-INF/wsdl/wsrp-" + version + "-service.wsdl"));
+				"/META-INF/wsdl/wsrp-" + version + "-service.wsdl"));
 
 		content = replaceLocations(request, content);
 

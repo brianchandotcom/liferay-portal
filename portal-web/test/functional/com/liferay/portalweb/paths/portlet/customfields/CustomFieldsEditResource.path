@@ -26,7 +26,7 @@
 </tr>
 <tr>
 	<td>CUSTOM_FIELDS_TABLE_NAME</td>
-	<td>//tr[contains(.,'${customFieldName}')]/td[2]//a/strong</td>
+	<td>//tr[contains(.,'${customFieldName}')][last()]/td[2]//a/strong</td>
 	<td></td>
 </tr>
 <tr>

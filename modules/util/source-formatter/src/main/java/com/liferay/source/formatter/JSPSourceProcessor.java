@@ -559,14 +559,30 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected String fixMissingEmptyLinesBetweenTags(String content) {
-		Matcher matcher = _missingEmptyLineBetweenTagsPattern.matcher(content);
+		Matcher matcher = _emptyLineBetweenTagsPattern.matcher(content);
 
 		while (matcher.find()) {
 			String tabs1 = matcher.group(1);
-			String tabs2 = matcher.group(3);
-			String tagName = matcher.group(2);
+			String tabs2 = matcher.group(4);
 
-			if (tabs1.equals(tabs2) && !tagName.equals("when")) {
+			if (!tabs1.equals(tabs2)) {
+				continue;
+			}
+
+			String lineBreaks = matcher.group(3);
+			String tagName1 = matcher.group(2);
+			String tagName2 = matcher.group(5);
+
+			if (tagName1.endsWith(":when") ||
+				(tagName1.matches("dd|dt|li|span|td|th|tr") &&
+				 tagName2.matches("dd|dt|li|span|td|th|tr"))) {
+
+				if (lineBreaks.equals("\n\n")) {
+					return StringUtil.replaceFirst(
+						content, "\n\n", "\n", matcher.end(1));
+				}
+			}
+			else if (lineBreaks.equals("\n")) {
 				return StringUtil.replaceFirst(
 					content, "\n", "\n\n", matcher.end(1));
 			}
@@ -2174,8 +2190,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		"Log _log = LogFactoryUtil\\.getLog\\(\"(.*?)\"\\)");
 	private final Pattern _missingEmptyLineBetweenDefineOjbectsPattern =
 		Pattern.compile("<.*:defineObjects />\n<.*:defineObjects />\n");
-	private final Pattern _missingEmptyLineBetweenTagsPattern = Pattern.compile(
-		"\n(\t*)</[-\\w]+:([-\\w]+)>\n(\t*)<[-\\w]+");
+	private final Pattern _emptyLineBetweenTagsPattern = Pattern.compile(
+		"\n(\t*)</([-\\w:]+)>(\n*)(\t*)<([-\\w:]+)[> ]");
 	private boolean _moveFrequentlyUsedImportsToCommonInit;
 	private final Pattern _multilineTagPattern = Pattern.compile(
 		"(\\s+)<[-\\w]+:[-\\w]+\n.*?(/?>)(\n|$)", Pattern.DOTALL);

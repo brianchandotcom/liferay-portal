@@ -44,7 +44,7 @@ WSRPConsumer wsrpConsumer = WSRPConsumerLocalServiceUtil.fetchWSRPConsumer(wsrpC
 	<aui:fieldset>
 		<aui:input name="name" />
 
-		<aui:input name="url" />
+		<aui:input name="url" type="textarea" />
 
 		<aui:input name="forwardCookies" />
 

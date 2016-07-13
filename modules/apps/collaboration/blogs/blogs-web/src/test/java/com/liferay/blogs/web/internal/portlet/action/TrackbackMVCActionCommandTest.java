@@ -12,12 +12,10 @@
  * details.
  */
 
-package com.liferay.blogs.action;
+package com.liferay.blogs.web.internal.portlet.action;
 
 import com.liferay.blogs.kernel.exception.NoSuchEntryException;
 import com.liferay.blogs.kernel.model.BlogsEntry;
-import com.liferay.blogs.web.portlet.action.ActionUtil;
-import com.liferay.blogs.web.portlet.action.TrackbackMVCActionCommand;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;

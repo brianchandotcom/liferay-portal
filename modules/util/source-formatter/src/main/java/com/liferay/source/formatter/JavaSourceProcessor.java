@@ -347,7 +347,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	protected void checkInternalImports(
 		String fileName, String absolutePath, String content) {
 
-		if (fileName.contains("/test/") ||
+		if (absolutePath.contains("/modules/core/") ||
+			absolutePath.contains("/modules/util/") ||
+			fileName.contains("/test/") ||
 			fileName.contains("/testIntegration/")) {
 
 			return;

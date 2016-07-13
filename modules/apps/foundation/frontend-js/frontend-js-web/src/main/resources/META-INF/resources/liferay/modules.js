@@ -647,6 +647,12 @@
 							'aui-node'
 						]
 					},
+					'liferay-sortable': {
+						path: 'sortable.js',
+						requires: [
+							'sortable'
+						]
+					},
 					'liferay-source-editor': {
 						path: 'source_editor.js',
 						requires: [

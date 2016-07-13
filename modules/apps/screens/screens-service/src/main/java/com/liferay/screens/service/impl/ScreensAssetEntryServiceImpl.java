@@ -325,14 +325,14 @@ public class ScreensAssetEntryServiceImpl
 
 	protected JSONObject toJSONObject(AssetEntry assetEntry, Locale locale)
 		throws PortalException {
+
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			JSONFactoryUtil.looseSerialize(assetEntry));
 
 		jsonObject.put("className", assetEntry.getClassName());
 		jsonObject.put("description", assetEntry.getDescription(locale));
 		jsonObject.put("locale", String.valueOf(locale));
-		jsonObject.put(
-			"object", getAssetObjectJSONObject(assetEntry, locale));
+		jsonObject.put("object", getAssetObjectJSONObject(assetEntry, locale));
 		jsonObject.put("summary", assetEntry.getSummary(locale));
 		jsonObject.put("title", assetEntry.getTitle(locale));
 		return jsonObject;

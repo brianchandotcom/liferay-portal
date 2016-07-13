@@ -252,7 +252,6 @@ if (portletTitleBasedNavigation) {
 								<c:when test="<%= portletDisplay.isWebDAVEnabled() && fileEntry.isSupportsSocial() %>">
 									<liferay-ui:message key="get-url-or-webdav-url" />
 								</c:when>
-
 								<c:otherwise>
 									<liferay-ui:message key="get-url" />
 								</c:otherwise>

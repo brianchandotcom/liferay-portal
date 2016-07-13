@@ -79,7 +79,6 @@ String[] tempFileNames = LayoutServiceUtil.getTempFileNames(scopeGroupId, Export
 			</c:choose>
 		</div>
 	</c:when>
-
 	<c:when test='<%= tabs3.equals("current-and-previous") %>'>
 		<div class="process-list" id="<portlet:namespace />importProcesses">
 			<liferay-util:include page="/import_portlet_processes.jsp" servletContext="<%= application %>" />

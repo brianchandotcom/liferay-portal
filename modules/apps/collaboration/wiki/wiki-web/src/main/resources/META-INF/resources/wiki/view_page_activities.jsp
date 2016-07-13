@@ -86,7 +86,6 @@ iteratorURL.setParameter("title", wikiPage.getTitle());
 							message="<%= wikiSocialActivityHelper.getSocialActivityDescription(wikiPage, socialActivity, extraDataJSONObject, resourceBundle) %>"
 						/>
 					</c:when>
-
 					<c:when test="<%= wikiSocialActivityHelper.isSocialActivitySupported(socialActivity) %>">
 						<liferay-ui:icon
 							iconCssClass="<%= wikiSocialActivityHelper.getSocialActivityIcon(socialActivity) %>"

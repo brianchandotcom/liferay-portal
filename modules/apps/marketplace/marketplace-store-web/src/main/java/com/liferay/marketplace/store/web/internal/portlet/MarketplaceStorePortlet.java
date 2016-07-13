@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.patcher.PatcherUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -420,6 +421,7 @@ public class MarketplaceStorePortlet extends RemoteMVCPortlet {
 				new String[] {String.valueOf(ReleaseInfo.getBuildNumber())});
 		}
 
+		parameterMap.put("installedPatches", PatcherUtil.getInstalledPatches());
 		parameterMap.put(
 			"supportsHotDeploy",
 			new String[] {

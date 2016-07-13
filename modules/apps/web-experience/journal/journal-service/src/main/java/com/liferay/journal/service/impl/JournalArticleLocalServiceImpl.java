@@ -1981,6 +1981,46 @@ public class JournalArticleLocalServiceImpl
 			groupId, articleId, viewMode, null, languageId, null, themeDisplay);
 	}
 
+	@Override
+	public String getArticleDescription(long articleId, Locale locale) {
+		String languageId = LocaleUtil.toLanguageId(locale);
+
+		return getArticleDescription(articleId, languageId);
+	}
+
+	@Override
+	public String getArticleDescription(long articleId, String languageId) {
+		JournalArticleLocalization journalArticleLocalization =
+			journalArticleLocalizationPersistence.fetchByA_L(
+				articleId, languageId);
+
+		if (journalArticleLocalization == null) {
+			return null;
+		}
+
+		return journalArticleLocalization.getDescription();
+	}
+
+	@Override
+	public Map<Locale, String> getArticleDescriptionMap(long articleId) {
+		Map<Locale, String> journalArticleLocalizationDescriptionMap =
+			new HashMap<>();
+
+		List<JournalArticleLocalization> journalArticleLocalizationList =
+			journalArticleLocalizationPersistence.findByArticlePK(articleId);
+
+		for (JournalArticleLocalization journalArticleLocalization :
+				journalArticleLocalizationList) {
+
+			journalArticleLocalizationDescriptionMap.put(
+				LocaleUtil.fromLanguageId(
+					journalArticleLocalization.getLanguageId()),
+				journalArticleLocalization.getDescription());
+		}
+
+		return journalArticleLocalizationDescriptionMap;
+	}
+
 	/**
 	 * Returns a web content article display for the specified page of the
 	 * latest version of the web content article, based on the DDM template. Web
@@ -2515,6 +2555,46 @@ public class JournalArticleLocalServiceImpl
 	@Override
 	public int getArticlesCount(long groupId, String articleId) {
 		return journalArticlePersistence.countByG_A(groupId, articleId);
+	}
+
+	@Override
+	public String getArticleTitle(long articleId, Locale locale) {
+		String languageId = LocaleUtil.toLanguageId(locale);
+
+		return getArticleTitle(articleId, languageId);
+	}
+
+	@Override
+	public String getArticleTitle(long articleId, String languageId) {
+		JournalArticleLocalization journalArticleLocalization =
+			journalArticleLocalizationPersistence.fetchByA_L(
+				articleId, languageId);
+
+		if (journalArticleLocalization == null) {
+			return null;
+		}
+
+		return journalArticleLocalization.getTitle();
+	}
+
+	@Override
+	public Map<Locale, String> getArticleTitleMap(long articleId) {
+		Map<Locale, String> journalArticleLocalizationTitleMap =
+			new HashMap<>();
+
+		List<JournalArticleLocalization> journalArticleLocalizationList =
+			journalArticleLocalizationPersistence.findByArticlePK(articleId);
+
+		for (JournalArticleLocalization journalArticleLocalization :
+				journalArticleLocalizationList) {
+
+			journalArticleLocalizationTitleMap.put(
+				LocaleUtil.fromLanguageId(
+					journalArticleLocalization.getLanguageId()),
+				journalArticleLocalization.getTitle());
+		}
+
+		return journalArticleLocalizationTitleMap;
 	}
 
 	/**

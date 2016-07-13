@@ -4598,7 +4598,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private final Pattern _incorrectSynchronizedPattern = Pattern.compile(
 		"([\n\t])(synchronized) (private|public|protected)");
 	private final Pattern _internalImportPattern = Pattern.compile(
-		"\nimport com\\.liferay\\.(.*\\.internal\\..*?\\.[A-Z].*?)[\\.|;]");
+		"\nimport com\\.liferay\\.(.*\\.internal\\.([a-z].*?\\.)?[A-Z].*?)" +
+			"[\\.|;]");
 	private final Pattern[] _javaSerializationVulnerabilityPatterns =
 		new Pattern[] {
 			Pattern.compile(

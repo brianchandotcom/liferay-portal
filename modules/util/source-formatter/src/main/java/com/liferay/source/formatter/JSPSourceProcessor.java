@@ -2158,6 +2158,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		"\n\t*(<.*:defineObjects />)(\n|$)");
 	private final Pattern _directiveLinePattern = Pattern.compile("<%@\n?.*%>");
 	private final List<String> _duplicateImportClassNames = new ArrayList<>();
+	private final Pattern _emptyLineBetweenTagsPattern = Pattern.compile(
+		"\n(\t*)</([-\\w:]+)>(\n*)(\t*)<([-\\w:]+)[> ]");
 	private final Pattern _emptyJavaSourceTagPattern = Pattern.compile(
 		"\n\t*<%\n+\t*%>\n");
 	private final Pattern _emptyLineInNestedTagsPattern1 = Pattern.compile(
@@ -2190,8 +2192,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		"Log _log = LogFactoryUtil\\.getLog\\(\"(.*?)\"\\)");
 	private final Pattern _missingEmptyLineBetweenDefineOjbectsPattern =
 		Pattern.compile("<.*:defineObjects />\n<.*:defineObjects />\n");
-	private final Pattern _emptyLineBetweenTagsPattern = Pattern.compile(
-		"\n(\t*)</([-\\w:]+)>(\n*)(\t*)<([-\\w:]+)[> ]");
 	private boolean _moveFrequentlyUsedImportsToCommonInit;
 	private final Pattern _multilineTagPattern = Pattern.compile(
 		"(\\s+)<[-\\w]+:[-\\w]+\n.*?(/?>)(\n|$)", Pattern.DOTALL);

@@ -29,4 +29,6 @@ public interface TriggerFactory {
 		String jobName, String groupName, Date startDate, Date endDate,
 		String cronExpression);
 
+	public Trigger createTrigger(Trigger trigger, Date startDate, Date endDate);
+
 }

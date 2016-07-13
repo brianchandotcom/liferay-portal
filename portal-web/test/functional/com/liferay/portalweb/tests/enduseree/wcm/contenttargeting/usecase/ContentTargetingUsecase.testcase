@@ -3122,20 +3122,20 @@
 
 		<execute macro="UserSegmentContentDisplayPortlet#configureDisplayContent">
 			<var name="belongs" value="true" />
-			<var name="contentTitle" value="WC Title Admin" />
+			<var name="contentTitle" value="WC Title Page Visited" />
 			<var name="contentType" value="Basic Web Content" />
 			<var name="rowNumber" value="1" />
-			<var name="toAny" value="true" />
-			<var name="userSegmentName" value="Site Role Admin User Segment" />
+			<var name="toAll" value="true" />
+			<var name="userSegmentName" value="Page Visited User Segment,Male User Segment" />
 		</execute>
 
 		<execute macro="UserSegmentContentDisplayPortlet#configureDisplayContent">
 			<var name="belongs" value="true" />
-			<var name="contentTitle" value="WC Title Page Visited" />
+			<var name="contentTitle" value="WC Title Admin" />
 			<var name="contentType" value="Basic Web Content" />
 			<var name="rowNumber" value="2" />
-			<var name="toAll" value="true" />
-			<var name="userSegmentName" value="Page Visited User Segment,Male User Segment" />
+			<var name="toAny" value="true" />
+			<var name="userSegmentName" value="Site Role Admin User Segment" />
 		</execute>
 
 		<execute macro="UserSegmentContentDisplayPortlet#configureDisplayContent">

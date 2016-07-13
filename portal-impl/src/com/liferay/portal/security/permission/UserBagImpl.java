@@ -48,6 +48,21 @@ public class UserBagImpl implements UserBag {
 		_userRoleIds = _toSortedLongArray(userRoles);
 	}
 
+	public UserBagImpl(
+		long userId, Collection<Group> userGroups,
+		Collection<Organization> userOrgs, Collection<Group> userOrgGroups,
+		long[] userRoleIds) {
+
+		_userId = userId;
+		_userGroupIds = _toSortedLongArray(userGroups);
+		_userOrgIds = _toSortedLongArray(userOrgs);
+		_userOrgGroupIds = _toSortedLongArray(userOrgGroups);
+
+		Arrays.sort(userRoleIds);
+
+		_userRoleIds = userRoleIds;
+	}
+
 	@Override
 	public Set<Group> getGroups() throws PortalException {
 		Set<Group> groups = new HashSet<>(getUserGroups());

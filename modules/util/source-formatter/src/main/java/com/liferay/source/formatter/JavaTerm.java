@@ -85,6 +85,10 @@ public class JavaTerm {
 		return _content;
 	}
 
+	public String getIndent() {
+		return _indent;
+	}
+
 	public int getLineCount() {
 		return _lineCount;
 	}

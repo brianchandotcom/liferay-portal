@@ -310,20 +310,26 @@ public class ScreensAssetEntryServiceImpl
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		for (AssetEntry assetEntry : assetEntries) {
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-				JSONFactoryUtil.looseSerialize(assetEntry));
-
-			jsonObject.put("className", assetEntry.getClassName());
-			jsonObject.put("description", assetEntry.getDescription(locale));
-			jsonObject.put("locale", String.valueOf(locale));
-			jsonObject.put(
-				"object", getAssetObjectJSONObject(assetEntry, locale));
-			jsonObject.put("summary", assetEntry.getSummary(locale));
-			jsonObject.put("title", assetEntry.getTitle(locale));
+			JSONObject jsonObject = toJSONObject(assetEntry, locale);
 			jsonArray.put(jsonObject);
 		}
 
 		return jsonArray;
+	}
+
+	protected JSONObject toJSONObject(AssetEntry assetEntry, Locale locale)
+		throws PortalException {
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			JSONFactoryUtil.looseSerialize(assetEntry));
+
+		jsonObject.put("className", assetEntry.getClassName());
+		jsonObject.put("description", assetEntry.getDescription(locale));
+		jsonObject.put("locale", String.valueOf(locale));
+		jsonObject.put(
+			"object", getAssetObjectJSONObject(assetEntry, locale));
+		jsonObject.put("summary", assetEntry.getSummary(locale));
+		jsonObject.put("title", assetEntry.getTitle(locale));
+		return jsonObject;
 	}
 
 }

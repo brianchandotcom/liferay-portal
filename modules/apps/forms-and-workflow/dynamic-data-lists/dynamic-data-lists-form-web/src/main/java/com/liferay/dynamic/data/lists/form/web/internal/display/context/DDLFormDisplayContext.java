@@ -35,16 +35,19 @@ import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
+import com.liferay.portal.kernel.util.SessionParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 
+import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceURL;
@@ -135,6 +138,10 @@ public class DDLFormDisplayContext {
 
 		_recordSetId = PrefsParamUtil.getLong(
 			_renderRequest.getPreferences(), _renderRequest, "recordSetId");
+
+		if (_recordSetId == 0) {
+			_recordSetId = getRecordSetIdFromSession();
+		}
 
 		return _recordSetId;
 	}
@@ -296,6 +303,22 @@ public class DDLFormDisplayContext {
 		return portletDisplay.getPortletResource();
 	}
 
+	protected long getRecordSetIdFromSession() {
+		PortletSession portletSession = _renderRequest.getPortletSession(false);
+		long recordSetId = 0;
+
+		if (Validator.isNotNull(portletSession)) {
+			String portletSessionValue = (String)portletSession.getAttribute(
+				"recordSetId");
+
+			if (Validator.isNotNull(portletSessionValue)) {
+				recordSetId = GetterUtil.getLong(portletSessionValue);
+			}
+		}
+
+		return recordSetId;
+	}
+
 	protected String getSubmitLabel(DDLRecordSet recordSet) {
 		ThemeDisplay themeDisplay = getThemeDisplay();
 
@@ -366,7 +389,7 @@ public class DDLFormDisplayContext {
 	}
 
 	protected boolean isFormShared() {
-		return ParamUtil.getBoolean(_renderRequest, "shared");
+		return SessionParamUtil.getBoolean(_renderRequest, "shared");
 	}
 
 	protected boolean isPreview() {

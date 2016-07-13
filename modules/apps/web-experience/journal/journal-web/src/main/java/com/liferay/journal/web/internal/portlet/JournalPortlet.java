@@ -208,6 +208,12 @@ public class JournalPortlet extends MVCPortlet {
 		portalPreferences.setValues(
 			JournalPortletKeys.JOURNAL, "add-menu-fav-items",
 			ArrayUtil.append(addMenuFavItems, ddmStructureKey));
+
+		SessionMessages.add(
+			actionRequest,
+			PortalUtil.getPortletId(actionRequest) +
+				SessionMessages.KEY_SUFFIX_REFRESH_PORTLET,
+			JournalPortletKeys.JOURNAL);
 	}
 
 	public void addArticle(
@@ -433,6 +439,12 @@ public class JournalPortlet extends MVCPortlet {
 		portalPreferences.setValues(
 			JournalPortletKeys.JOURNAL, "add-menu-fav-items",
 			ArrayUtil.remove(addMenuFavItems, ddmStructureKey));
+
+		SessionMessages.add(
+			actionRequest,
+			PortalUtil.getPortletId(actionRequest) +
+				SessionMessages.KEY_SUFFIX_REFRESH_PORTLET,
+			JournalPortletKeys.JOURNAL);
 	}
 
 	@Override

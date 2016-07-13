@@ -37,7 +37,6 @@ import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestHelper;
 import com.liferay.dynamic.data.mapping.test.util.storage.FailStorageAdapter;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -282,7 +281,7 @@ public class DDLRecordServiceTest {
 	}
 
 	@Test
-	public void testUpdateRecordFromMap() throws Exception {
+	public void testUpdateRecord() throws Exception {
 		DDMForm ddmForm = createDDMForm();
 
 		ddmForm.addDDMFormField(createTextDDMFormField("Name", true, false));
@@ -325,7 +324,7 @@ public class DDLRecordServiceTest {
 
 	protected void assertRecordDDMFormValues(
 			DDMForm ddmForm, DDMFormValues expectedDDMFormValues)
-		throws Exception, PortalException {
+		throws Exception {
 
 		DDLRecordSet recordSet = addRecordSet(ddmForm);
 
@@ -345,7 +344,7 @@ public class DDLRecordServiceTest {
 
 	protected void assertRecordFieldValue(
 			DDLRecord record, String fieldName, String expectedValue)
-		throws Exception, PortalException {
+		throws Exception {
 
 		List<DDMFormFieldValue> ddmFormFieldValues =
 			record.getDDMFormFieldValues(fieldName);
@@ -370,12 +369,6 @@ public class DDLRecordServiceTest {
 		ddmForm.setDefaultLocale(LocaleUtil.US);
 
 		return ddmForm;
-	}
-
-	protected DDMFormFieldValue createDDMFormFieldValue(
-		String name, Value value) {
-
-		return DDMFormValuesTestUtil.createDDMFormFieldValue(name, value);
 	}
 
 	protected DDMFormValues createDDMFormValues(DDMForm ddmForm) {

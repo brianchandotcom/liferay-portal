@@ -761,9 +761,9 @@
 
 		<execute function="AssertClick" locator1="KnowledgeBase#KB_TOOLS" value1="Move" />
 
-		<execute function="AssertTextEquals" locator1="ControlMenu#HEADER_TITLE" value1="${kbArticleTitle}" />
+		<execute function="AssertTextEquals" locator1="Portlet#H3_HEADER" value1="${kbArticleTitle}" />
 		<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplayMoveArticle#CURRENT_PARENT_TITLE_LABEL" value1="Current Parent" />
-		<execute function="AssertTextEquals" locator1="KnowledgeBase#MOVE_CURRENT_PARENT_TITLE_FIELD" value1="(None)" />
+		<execute function="AssertTextEquals" locator1="KnowledgeBase#MOVE_CURRENT_PARENT_TITLE_FIELD" value1="Home" />
 		<execute function="AssertTextEquals" locator1="KnowledgeBase#MOVE_CURRENT_PARENT_PRIORITY_LABEL" value1="Priority" />
 		<execute function="AssertTextEquals" locator1="KnowledgeBase#MOVE_NEW_PARENT_TITLE_LABEL" value1="New Parent" />
 		<execute function="AssertTextEquals" locator1="KnowledgeBase#MOVE_NEW_PARENT_PRIORITY_LABEL" value1="Priority" />

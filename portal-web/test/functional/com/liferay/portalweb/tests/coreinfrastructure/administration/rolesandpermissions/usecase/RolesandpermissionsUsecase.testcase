@@ -2212,6 +2212,10 @@
 
 		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no site teams. You can add a site team by clicking the plus button on the bottom right corner." />
 
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Liferay" />
+		</execute>
+
 		<execute macro="Page#add">
 			<var name="pageName" value="USA Ice Hockey Team Blog" />
 			<var name="pageTemplateName" value="Blog" />

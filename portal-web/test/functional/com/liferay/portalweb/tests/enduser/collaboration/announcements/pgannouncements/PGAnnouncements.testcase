@@ -41,8 +41,7 @@
 	</tear-down>
 
 	<command name="AddAnnouncementsEntry" priority="5">
-		<property name="portal.acceptance" value="false" />
-		<property name="portal.acceptance.quarantine" value="true" />
+		<property name="portal.acceptance" value="true" />
 		<property name="test.name.skip.portal.instance" value="PGAnnouncements#AddAnnouncementsEntry" />
 
 		<var name="announcementType" value="General" />
@@ -233,8 +232,7 @@
 	</command>
 
 	<command name="DeleteAnnouncementsEntry" priority="5">
-		<property name="portal.acceptance" value="false" />
-		<property name="portal.acceptance.quarantine" value="true" />
+		<property name="portal.acceptance" value="true" />
 		<property name="test.name.skip.portal.instance" value="PGAnnouncements#DeleteAnnouncementsEntry" />
 
 		<var name="distributionScope" value="General" />
@@ -270,8 +268,7 @@
 	</command>
 
 	<command name="EditAnnouncementsEntry" priority="5">
-		<property name="portal.acceptance" value="false" />
-		<property name="portal.acceptance.quarantine" value="true" />
+		<property name="portal.acceptance" value="true" />
 		<property name="test.name.skip.portal.instance" value="PGAnnouncements#EditAnnouncementsEntry" />
 
 		<var name="distributionScope" value="General" />
@@ -319,8 +316,7 @@
 	</command>
 
 	<command name="ViewPreviousAnnouncementEntries" priority="5">
-		<property name="portal.acceptance" value="false" />
-		<property name="portal.acceptance.quarantine" value="true" />
+		<property name="portal.acceptance" value="true" />
 		<property name="test.name.skip.portal.instance" value="PGAnnouncements#ViewPreviousAnnouncementEntries" />
 
 		<var name="distributionScope" value="General" />

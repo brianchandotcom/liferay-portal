@@ -294,7 +294,7 @@
 		<if>
 			<isset var="threadBodyEdit" />
 			<then>
-				<execute function="Type#typeCKEditor" locator1="CKEditor#BODY_FIELD" value1="${threadBodyEdit}" />
+				<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${threadBodyEdit}" />
 			</then>
 		</if>
 
@@ -466,9 +466,9 @@
 			<then>
 				<execute function="SelectFrame" value1="relative=top" />
 				<execute function="AssertElementPresent" locator1="MessageBoardsMoveThread#CATEGORY_FIELD" />
-				<execute function="Check" locator1="MessageBoardsMoveThread#ADD_EXPLANATION_POST_CHECKBOX" />
-				<execute function="Type" locator1="MessageBoardsMoveThread#ADD_EXPLANATION_POST_SUBJECT_FIELD" value1="${explanationSubject}" />
-				<execute function="Type#typeCKEditor" locator1="MessageBoardsMoveThread#ADD_EXPLANATION_POST_BODY_FIELD" value1="${explanationBody}" />
+				<execute function="Check" locator1="Checkbox#ADD_EXPLANATION_POST" />
+				<execute function="Type" locator1="TextInput#SUBJECT" value1="${explanationSubject}" />
+				<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${explanationBody}" />
 			</then>
 		</if>
 
@@ -515,9 +515,9 @@
 			<then>
 				<execute function="SelectFrame" value1="relative=top" />
 				<execute function="AssertElementPresent" locator1="MessageBoardsMoveThread#CATEGORY_FIELD" />
-				<execute function="Check" locator1="MessageBoardsMoveThread#ADD_EXPLANATION_POST_CHECKBOX" />
-				<execute function="Type" locator1="MessageBoardsMoveThread#ADD_EXPLANATION_POST_SUBJECT_FIELD" value1="${explanationSubject}" />
-				<execute function="Type#typeCKEditor" locator1="MessageBoardsMoveThread#ADD_EXPLANATION_POST_BODY_FIELD" value1="${explanationBody}" />
+				<execute function="Check" locator1="Checkbox#ADD_EXPLANATION_POST" />
+				<execute function="Type" locator1="TextInput#SUBJECT" value1="${explanationSubject}" />
+				<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${explanationBody}" />
 			</then>
 		</if>
 
@@ -618,7 +618,8 @@
 
 		<execute function="Click" locator1="MessageBoardsThread#THREAD_REPLY_BUTTON" />
 
-		<execute function="Type#typeCKEditor" locator1="CKEditor#BODY_FIELD" value1="${threadReplyBody}" />
+		<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${threadReplyBody}" />
+
 		<execute macro="PortletEntry#publish" />
 
 		<if>

@@ -69,8 +69,6 @@
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 
-		<execute function="Click" locator1="BlogsEditEntry#COVER_IMAGE" />
-
 		<execute function="AssertClick" locator1="BlogsEntry#ENTRY_COVER_IMAGE_SELECT_FILE" value1="Select File" />
 
 		<execute macro="ItemSelector#selectDMImage">

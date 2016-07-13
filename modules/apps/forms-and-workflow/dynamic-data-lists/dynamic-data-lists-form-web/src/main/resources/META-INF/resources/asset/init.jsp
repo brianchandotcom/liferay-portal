@@ -18,7 +18,7 @@
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %>
 
-<%@ page import="com.liferay.dynamic.data.lists.form.web.display.context.DDLFormViewRecordDisplayContext" %><%@
+<%@ page import="com.liferay.dynamic.data.lists.form.web.internal.display.context.DDLFormViewRecordDisplayContext" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %>
 
 <portlet:defineObjects />

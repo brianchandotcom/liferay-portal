@@ -30,7 +30,7 @@ WorkflowDefinitionLinkSearch workflowDefinitionLinkSearchContainer = workflowDef
 		searchContainer="<%= workflowDefinitionLinkSearchContainer %>"
 	>
 		<liferay-ui:search-container-row
-			className="com.liferay.portal.workflow.definition.link.web.search.WorkflowDefinitionLinkSearchEntry"
+			className="com.liferay.portal.workflow.definition.link.web.internal.search.WorkflowDefinitionLinkSearchEntry"
 			modelVar="workflowDefinitionLinkSearchEntry"
 		>
 			<liferay-ui:search-container-row-parameter

@@ -51,10 +51,10 @@ page import="com.liferay.portal.kernel.workflow.WorkflowDefinition" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowDefinitionFileException" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowException" %><%@
 page import="com.liferay.portal.util.PropsValues" %><%@
-page import="com.liferay.portal.workflow.definition.web.display.context.WorkflowDefinitionDisplayContext" %><%@
-page import="com.liferay.portal.workflow.definition.web.portlet.action.UploadWorkflowDefinitionFileMVCActionCommand" %><%@
-page import="com.liferay.portal.workflow.definition.web.search.WorkflowDefinitionDisplayTerms" %><%@
-page import="com.liferay.portal.workflow.definition.web.search.WorkflowDefinitionSearch" %>
+page import="com.liferay.portal.workflow.definition.web.internal.display.context.WorkflowDefinitionDisplayContext" %><%@
+page import="com.liferay.portal.workflow.definition.web.internal.portlet.action.UploadWorkflowDefinitionFileMVCActionCommand" %><%@
+page import="com.liferay.portal.workflow.definition.web.internal.search.WorkflowDefinitionDisplayTerms" %><%@
+page import="com.liferay.portal.workflow.definition.web.internal.search.WorkflowDefinitionSearch" %>
 
 <%@ page import="java.text.DecimalFormatSymbols" %>
 

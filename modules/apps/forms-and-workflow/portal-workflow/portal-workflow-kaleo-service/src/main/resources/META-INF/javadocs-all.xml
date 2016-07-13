@@ -4628,7 +4628,7 @@
 	</javadoc>
 	<javadoc>
 		<name>BaseKaleoUpgradeTableListener</name>
-		<type>com.liferay.portal.workflow.kaleo.model.upgrade.BaseKaleoUpgradeTableListener</type>
+		<type>com.liferay.portal.workflow.kaleo.internal.model.upgrade.BaseKaleoUpgradeTableListener</type>
 		<author><![CDATA[Brian Wing Shun Chan]]></author>
 		<method>
 			<name>getKeyValueMap</name>
@@ -4696,7 +4696,7 @@
 	</javadoc>
 	<javadoc>
 		<name>KaleoActionUpgradeTableListener</name>
-		<type>com.liferay.portal.workflow.kaleo.model.upgrade.KaleoActionUpgradeTableListener</type>
+		<type>com.liferay.portal.workflow.kaleo.internal.model.upgrade.KaleoActionUpgradeTableListener</type>
 		<author><![CDATA[Brian Wing Shun Chan]]></author>
 		<method>
 			<name>onAfterUpdateTable</name>
@@ -4740,7 +4740,7 @@
 	</javadoc>
 	<javadoc>
 		<name>KaleoLogUpgradeTableListener</name>
-		<type>com.liferay.portal.workflow.kaleo.model.upgrade.KaleoLogUpgradeTableListener</type>
+		<type>com.liferay.portal.workflow.kaleo.internal.model.upgrade.KaleoLogUpgradeTableListener</type>
 		<author><![CDATA[Brian Wing Shun Chan]]></author>
 		<method>
 			<name>onAfterUpdateTable</name>
@@ -4784,7 +4784,7 @@
 	</javadoc>
 	<javadoc>
 		<name>KaleoNotificationUpgradeTableListener</name>
-		<type>com.liferay.portal.workflow.kaleo.model.upgrade.KaleoNotificationUpgradeTableListener</type>
+		<type>com.liferay.portal.workflow.kaleo.internal.model.upgrade.KaleoNotificationUpgradeTableListener</type>
 		<author><![CDATA[Brian Wing Shun Chan]]></author>
 		<method>
 			<name>onAfterUpdateTable</name>
@@ -4828,7 +4828,7 @@
 	</javadoc>
 	<javadoc>
 		<name>KaleoTaskAssignmentUpgradeTableListener</name>
-		<type>com.liferay.portal.workflow.kaleo.model.upgrade.KaleoTaskAssignmentUpgradeTableListener</type>
+		<type>com.liferay.portal.workflow.kaleo.internal.model.upgrade.KaleoTaskAssignmentUpgradeTableListener</type>
 		<author><![CDATA[Brian Wing Shun Chan]]></author>
 		<method>
 			<name>onAfterUpdateTable</name>

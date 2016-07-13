@@ -1358,7 +1358,9 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(${entity.regularColList?size * 2 + 1});
+		<#assign colListSize = entity.regularColList?size * 2 + 1>
+
+		StringBundler sb = new StringBundler(${colListSize?c});
 
 		<#list entity.regularColList as column>
 			<#if (column.type != "Blob") || !column.lazy>
@@ -1381,7 +1383,9 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(${entity.regularColList?size * 3 + 4});
+		<#assign colListSize = entity.regularColList?size * 3 + 4>
+
+		StringBundler sb = new StringBundler(${colListSize?c});
 
 		sb.append("<model><model-name>");
 		sb.append("${apiPackagePath}.model.${entity.name}");

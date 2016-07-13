@@ -288,7 +288,7 @@ if (organization != null) {
 					}
 					%>
 
-					<%@ include file="/organization/organization_columns.jspf" %>
+					<%@ include file="/organization/organization_user_search_columns.jspf" %>
 				</liferay-ui:search-container-row>
 
 				<liferay-ui:search-iterator markupView="lexicon" resultRowSplitter="<%= new OrganizationResultRowSplitter() %>" searchContainer="<%= membersSearchContainer %>" />

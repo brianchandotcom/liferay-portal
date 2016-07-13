@@ -153,6 +153,12 @@ public class ScreensAssetEntryServiceImpl
 		}
 	}
 
+	public JSONObject getAssetEntry(long entryId, Locale locale)
+		throws PortalException {
+
+		return toJSONObject(assetEntryLocalService.getEntry(entryId), locale);
+	}
+
 	protected List<AssetEntry> filterAssetEntries(List<AssetEntry> assetEntries)
 		throws PortalException {
 

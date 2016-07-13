@@ -227,6 +227,13 @@
 	<command name="viewFieldValidationErrorMessage">
 		<var name="key_fieldName" value="${fieldName}" />
 
+		<if>
+			<condition function="IsElementNotPresent" locator1="Message#ERROR_SPECIFIC_FORM_FIELD_REQUIRED" />
+			<then>
+				<execute function="Click" locator1="FormPortlet#FORM_CONTAINER" />
+			</then>
+		</if>
+
 		<execute function="AssertTextEquals" locator1="Message#ERROR_SPECIFIC_FORM_FIELD_REQUIRED" value1="${fieldValidationErrorMessage}" />
 	</command>
 

@@ -334,6 +334,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SOURCE_URL_ENABLED</td>
+	<td>//label[contains(@for,'sourceURLEnabled')]//input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>STAGED_CONTENT</td>
 	<td>//li[contains(.,'${key_contentName}')]//input</td>
 	<td></td>

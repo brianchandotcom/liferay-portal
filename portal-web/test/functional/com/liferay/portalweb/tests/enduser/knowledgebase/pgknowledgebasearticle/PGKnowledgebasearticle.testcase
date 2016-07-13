@@ -72,12 +72,13 @@
 			<var name="pageName" value="Knowledge Base Article Page" />
 		</execute>
 
-		<execute macro="KBArticle#viewPGViaKBArticle">
+		<execute macro="KBArticle#viewPG">
 			<var name="kbArticleContent" value="Knowledge Base Article Content" />
 			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
 		</execute>
 
-		<execute macro="KBArticle#deletePGViaKBArticle">
+		<execute macro="KBArticle#deletePG">
+			<var name="deleteViaKBArticle" value="true" />
 			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
 		</execute>
 

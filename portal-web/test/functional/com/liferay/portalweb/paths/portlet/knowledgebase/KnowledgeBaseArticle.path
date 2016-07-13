@@ -185,7 +185,12 @@
 <!--SECTIONS-->
 <tr>
 	<td>SECTIONS_SELECT</td>
-	<td>//select[contains(@id, 'knowledge_base_web') and contains(@id, 'sections')]</td>
+	<td>//select[contains(@id, 'knowledge_base_web') and contains(@id, 'sections')]//option[contains(.,'${key_kbArticleSection}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADMIN_KB_ARTICLE_SECTION</td>
+	<td>xpath=(//div[contains(@data-fieldname,'KBArticleSections')]//textarea)[${key_counter}]</td>
 	<td></td>
 </tr>
 <tr>

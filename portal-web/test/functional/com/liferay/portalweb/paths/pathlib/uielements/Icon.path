@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>ADD_REPEATABLE_ENTRY</td>
+	<td>xpath=(//div[contains(@data-fieldname,'${key_assetType}')]/../div//a[contains(@class,'repeatable-add-button')])[${key_counter}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADVANCED_SEARCH</td>
 	<td>//button[contains(@class,'toggle-advanced') and span[@class='caret']] | //a[contains(@id,'searchtoggleAdvanced')]</td>
 	<td></td>

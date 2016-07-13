@@ -140,6 +140,12 @@ public class JavaClass {
 					javaTerm.getLineCount());
 			}
 
+			// LPS-67111
+
+			if (_fileName.endsWith("ServiceImpl.java")) {
+				checkServiceImpl(javaTerm);
+			}
+
 			if (!_javaSourceProcessor.isExcludedPath(
 					checkJavaFieldTypesExcludes, _absolutePath)) {
 
@@ -716,6 +722,32 @@ public class JavaClass {
 					javaTerm.getLineCount());
 			}
 		}
+	}
+
+	protected void checkServiceImpl(JavaTerm javaTerm) {
+		String javaTermName = javaTerm.getName();
+
+		if ((!javaTermName.equals("afterPropertiesSet") &&
+			 !javaTermName.equals("destroy")) ||
+			!javaTerm.hasAnnotation("Override")) {
+
+			return;
+		}
+
+		String javaTermContent = javaTerm.getContent();
+
+		String superMethodCall = "super." + javaTermName + "();";
+
+		if (javaTermContent.contains(superMethodCall)) {
+			return;
+		}
+
+		String newJavaTermContent = StringUtil.replaceFirst(
+			javaTermContent, "{\n",
+			"{\n" + javaTerm.getIndent() + "\t" + superMethodCall  + "\n\n");
+
+		_classContent = StringUtil.replace(
+			_classContent, javaTermContent, newJavaTermContent);
 	}
 
 	protected void checkStaticableFieldType(String javaTermContent) {

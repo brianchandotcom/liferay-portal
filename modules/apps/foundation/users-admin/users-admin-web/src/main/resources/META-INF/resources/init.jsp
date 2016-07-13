@@ -175,6 +175,7 @@ page import="com.liferay.taglib.search.SearchEntry" %><%@
 page import="com.liferay.users.admin.constants.UsersAdminPortletKeys" %><%@
 page import="com.liferay.users.admin.kernel.util.UsersAdmin" %><%@
 page import="com.liferay.users.admin.kernel.util.UsersAdminUtil" %><%@
+page import="com.liferay.users.admin.web.constants.UsersAdminWebKeys" %><%@
 page import="com.liferay.users.admin.web.search.OrganizationChecker" %>
 
 <%@ page import="java.text.Format" %>

@@ -16,6 +16,7 @@ package com.liferay.journal.service.impl;
 
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
+import com.liferay.journal.model.JournalArticleResource;
 import com.liferay.journal.model.JournalFolderConstants;
 import com.liferay.journal.service.base.JournalArticleServiceBaseImpl;
 import com.liferay.journal.service.permission.JournalArticlePermission;
@@ -1340,13 +1341,11 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			getPermissionChecker(), groupId, newFolderId,
 			ActionKeys.ADD_ARTICLE);
 
-		List<JournalArticle> articles = journalArticlePersistence.findByG_A(
+		JournalArticle article = journalArticleLocalService.getArticle(
 			groupId, articleId);
 
-		for (JournalArticle article : articles) {
-			JournalArticlePermission.check(
-				getPermissionChecker(), article, ActionKeys.UPDATE);
-		}
+		JournalArticlePermission.check(
+			getPermissionChecker(), article, ActionKeys.UPDATE);
 
 		journalArticleLocalService.moveArticle(
 			groupId, articleId, newFolderId, serviceContext);

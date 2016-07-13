@@ -22,7 +22,7 @@ buildscript {
 	}
 }
 
-apply plugin: "com.liferay.wsdd.builder"
+apply plugin: "com.liferay.portal.tools.wsdd.builder"
 ```
 
 The WSDD Builder plugin automatically applies the [`java`](https://docs.gradle.org/current/userguide/java_plugin.html)

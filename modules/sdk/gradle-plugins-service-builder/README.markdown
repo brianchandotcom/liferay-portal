@@ -21,7 +21,7 @@ buildscript {
 	}
 }
 
-apply plugin: "com.liferay.service.builder"
+apply plugin: "com.liferay.portal.tools.service.builder"
 ```
 
 The Service Builder plugin automatically applies the [`java`](https://docs.gradle.org/current/userguide/java_plugin.html)

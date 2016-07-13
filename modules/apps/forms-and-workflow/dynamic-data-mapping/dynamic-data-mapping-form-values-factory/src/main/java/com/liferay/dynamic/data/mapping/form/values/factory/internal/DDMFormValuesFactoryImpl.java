@@ -72,6 +72,8 @@ public class DDMFormValuesFactoryImpl implements DDMFormValuesFactory {
 		httpServletRequest = updateHttpServletRequestIfWrapped(
 			httpServletRequest);
 
+		setDDLFormName(httpServletRequest);
+
 		DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
 
 		setDDMFormValuesAvailableLocales(httpServletRequest, ddmFormValues);
@@ -341,7 +343,16 @@ public class DDMFormValuesFactoryImpl implements DDMFormValuesFactory {
 		String ddmFormFieldParameterName,
 		String defaultDDMFormFieldParameterValue, Locale locale) {
 
-		StringBundler sb = new StringBundler(4);
+		StringBundler sb;
+
+		if (_httpServletRequestWrapped) {
+			sb = new StringBundler(5);
+
+			sb.append(_ddlFormName);
+		}
+		else {
+			sb = new StringBundler(4);
+		}
 
 		sb.append(DDMFormRendererConstants.DDM_FORM_FIELD_NAME_PREFIX);
 		sb.append(ddmFormFieldParameterName);
@@ -510,7 +521,10 @@ public class DDMFormValuesFactoryImpl implements DDMFormValuesFactory {
 
 	protected boolean isDDMFormFieldParameter(String parameterName) {
 		if (parameterName.startsWith(
-				DDMFormRendererConstants.DDM_FORM_FIELD_NAME_PREFIX)) {
+				DDMFormRendererConstants.DDM_FORM_FIELD_NAME_PREFIX) ||
+			parameterName.startsWith(
+				_ddlFormName + DDMFormRendererConstants.
+					DDM_FORM_FIELD_NAME_PREFIX)) {
 
 			return true;
 		}
@@ -535,6 +549,18 @@ public class DDMFormValuesFactoryImpl implements DDMFormValuesFactory {
 				ddmFormField.getNestedDDMFormFields(),
 				defaultDDMFormFieldParameterName,
 				defaultDDMFormFieldParameterNames);
+		}
+	}
+
+	protected void setDDLFormName(HttpServletRequest httpServletRequest) {
+		String portletId = PortalUtil.getPortletId(httpServletRequest);
+
+		if (Validator.isNotNull(portletId)) {
+			_ddlFormName =
+				StringPool.UNDERLINE + portletId + StringPool.UNDERLINE;
+		}
+		else {
+			_ddlFormName = StringPool.BLANK;
 		}
 	}
 
@@ -652,6 +678,8 @@ public class DDMFormValuesFactoryImpl implements DDMFormValuesFactory {
 	protected HttpServletRequest updateHttpServletRequestIfWrapped(
 		HttpServletRequest httpServletRequest) {
 
+		_httpServletRequestWrapped = false;
+
 		if (httpServletRequest instanceof DynamicServletRequest) {
 			DynamicServletRequest dynamicServletRequest =
 				(DynamicServletRequest)httpServletRequest;
@@ -669,6 +697,8 @@ public class DDMFormValuesFactoryImpl implements DDMFormValuesFactory {
 				if (wrappedServletRequest instanceof HttpServletRequest) {
 					httpServletRequest =
 						(HttpServletRequest)wrappedServletRequest;
+
+					_httpServletRequestWrapped = true;
 				}
 			}
 		}
@@ -682,9 +712,11 @@ public class DDMFormValuesFactoryImpl implements DDMFormValuesFactory {
 
 	private static final int _DDM_FORM_FIELD_NAME_INDEX = 0;
 
+	private String _ddlFormName;
 	private final DDMFormFieldValueRequestParameterRetriever
 		_defaultDDMFormFieldValueRequestParameterRetriever =
 			new DefaultDDMFormFieldValueRequestParameterRetriever();
+	private boolean _httpServletRequestWrapped;
 	private ServiceTrackerMap
 		<String, DDMFormFieldValueRequestParameterRetriever> _serviceTrackerMap;
 

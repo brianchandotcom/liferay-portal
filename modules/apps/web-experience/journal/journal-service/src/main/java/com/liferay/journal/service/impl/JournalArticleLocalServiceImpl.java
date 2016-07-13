@@ -57,6 +57,7 @@ import com.liferay.journal.exception.NoSuchArticleException;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
 import com.liferay.journal.model.JournalArticleDisplay;
+import com.liferay.journal.model.JournalArticleLocalization;
 import com.liferay.journal.model.JournalArticleResource;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.model.impl.JournalArticleDisplayImpl;
@@ -179,6 +180,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -434,6 +436,11 @@ public class JournalArticleLocalServiceImpl
 		article.setExpandoBridgeAttributes(serviceContext);
 
 		journalArticlePersistence.update(article);
+
+		// Localization
+
+		_addArticleLocalizedFields(
+			user.getCompanyId(), article.getId(), titleMap, descriptionMap);
 
 		// Resources
 
@@ -7946,6 +7953,59 @@ public class JournalArticleLocalServiceImpl
 
 	@ServiceReference(type = JournalConverter.class)
 	protected JournalConverter journalConverter;
+
+	private List<JournalArticleLocalization> _addArticleLocalizedFields(
+			long companyId, long articleId, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap)
+		throws PortalException {
+
+		Set<Locale> localeSet = new HashSet<>();
+
+		localeSet.addAll(titleMap.keySet());
+		localeSet.addAll(descriptionMap.keySet());
+
+		List<JournalArticleLocalization> journalArticleLocalizations =
+			new ArrayList<>();
+
+		for (Locale locale : localeSet) {
+			String title = titleMap.get(locale);
+			String description = descriptionMap.get(locale);
+
+			if (Validator.isNull(title) && Validator.isNull(description)) {
+				continue;
+			}
+
+			JournalArticleLocalization journalArticleLocalization =
+				_addArticleLocalizedFields(
+					companyId, articleId, title, description,
+					LocaleUtil.toLanguageId(locale));
+
+			journalArticleLocalizations.add(journalArticleLocalization);
+		}
+
+		return journalArticleLocalizations;
+	}
+
+	private JournalArticleLocalization _addArticleLocalizedFields(
+			long companyId, long articleId, String title, String description,
+			String languageId)
+		throws PortalException {
+
+		long journalArticleLocalizationId = counterLocalService.increment();
+
+		JournalArticleLocalization journalArticleLocalization =
+			journalArticleLocalizationPersistence.create(
+				journalArticleLocalizationId);
+
+		journalArticleLocalization.setCompanyId(companyId);
+		journalArticleLocalization.setArticlePK(articleId);
+		journalArticleLocalization.setTitle(title);
+		journalArticleLocalization.setDescription(description);
+		journalArticleLocalization.setLanguageId(languageId);
+
+		return journalArticleLocalizationPersistence.update(
+			journalArticleLocalization);
+	}
 
 	private static final long _JOURNAL_ARTICLE_CHECK_INTERVAL =
 		JournalServiceConfigurationValues.JOURNAL_ARTICLE_CHECK_INTERVAL

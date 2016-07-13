@@ -347,7 +347,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	protected void checkInternalImports(
 		String fileName, String absolutePath, String content) {
 
-		if (fileName.contains("/test/") ||
+		if (absolutePath.contains("/modules/core/") ||
+			absolutePath.contains("/modules/util/") ||
+			fileName.contains("/test/") ||
 			fileName.contains("/testIntegration/")) {
 
 			return;
@@ -4598,7 +4600,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private final Pattern _incorrectSynchronizedPattern = Pattern.compile(
 		"([\n\t])(synchronized) (private|public|protected)");
 	private final Pattern _internalImportPattern = Pattern.compile(
-		"\nimport com\\.liferay\\.(.*\\.internal\\..*?\\.[A-Z].*?)[\\.|;]");
+		"\nimport com\\.liferay\\.(.*\\.internal\\.([a-z].*?\\.)?[A-Z].*?)" +
+			"[\\.|;]");
 	private final Pattern[] _javaSerializationVulnerabilityPatterns =
 		new Pattern[] {
 			Pattern.compile(

@@ -141,8 +141,9 @@ public class MarketplaceStorePortlet extends RemoteMVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		JSONObject jsonObject = getInstalledAppsJSONObject();
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
+		jsonObject.put("apps", getInstalledAppsJSONArray());
 		jsonObject.put("cmd", "getInstalledApps");
 		jsonObject.put("message", "success");
 
@@ -350,23 +351,30 @@ public class MarketplaceStorePortlet extends RemoteMVCPortlet {
 		FileUtil.write(file, response.getStream());
 	}
 
-	protected JSONObject getAppJSONObject(long remoteAppId) throws Exception {
+	protected JSONObject getAppJSONObject(App app) throws Exception {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
+		jsonObject.put("appId", app.getRemoteAppId());
+		jsonObject.put("downloaded", app.isDownloaded());
+		jsonObject.put("installed", app.isInstalled());
+		jsonObject.put("version", app.getVersion());
+
+		return jsonObject;
+	}
+
+	protected JSONObject getAppJSONObject(long remoteAppId) throws Exception {
 		App app = _appLocalService.fetchRemoteApp(remoteAppId);
 
 		if (app != null) {
-			jsonObject.put("appId", app.getRemoteAppId());
-			jsonObject.put("downloaded", app.isDownloaded());
-			jsonObject.put("installed", app.isInstalled());
-			jsonObject.put("version", app.getVersion());
+			return getAppJSONObject(app);
 		}
-		else {
-			jsonObject.put("appId", remoteAppId);
-			jsonObject.put("downloaded", false);
-			jsonObject.put("installed", false);
-			jsonObject.put("version", StringPool.BLANK);
-		}
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		jsonObject.put("appId", remoteAppId);
+		jsonObject.put("downloaded", false);
+		jsonObject.put("installed", false);
+		jsonObject.put("version", StringPool.BLANK);
 
 		return jsonObject;
 	}
@@ -376,23 +384,18 @@ public class MarketplaceStorePortlet extends RemoteMVCPortlet {
 		return MarketplaceStorePortletKeys.MARKETPLACE_STORE;
 	}
 
-	protected JSONObject getInstalledAppsJSONObject() {
-		List<App> installedApps = _appLocalService.getInstalledApps();
-		JSONArray appList = JSONFactoryUtil.createJSONArray();
+	protected JSONArray getInstalledAppsJSONArray() throws Exception {
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		for (App app : installedApps) {
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		List<App> apps = _appLocalService.getInstalledApps();
 
-			jsonObject.put("appId", app.getRemoteAppId());
-			jsonObject.put("version", app.getVersion());
-
-			appList.put(jsonObject);
+		for (App app : apps) {
+			if (app.getRemoteAppId() > 0) {
+				jsonArray.put(getAppJSONObject(app));
+			}
 		}
 
-		JSONObject json = JSONFactoryUtil.createJSONObject();
-		json.put("appList", appList);
-
-		return json;
+		return jsonArray;
 	}
 
 	@Override

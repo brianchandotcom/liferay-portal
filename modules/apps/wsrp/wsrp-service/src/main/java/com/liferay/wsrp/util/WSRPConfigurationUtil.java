@@ -52,7 +52,7 @@ public class WSRPConfigurationUtil {
 	private static final WSRPConfigurationUtil _instance =
 		new WSRPConfigurationUtil();
 
-	private volatile WSRPGroupServiceConfiguration
+	private static volatile WSRPGroupServiceConfiguration
 		_wSRPGroupServiceConfiguration;
 
 }

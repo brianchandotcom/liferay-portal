@@ -68,7 +68,7 @@ public class AddMenuTag extends IncludeTag {
 		servletContext = ServletContextUtil.getServletContext();
 	}
 
-	public void setViewMoreUrl(String viewMoreURL) {
+	public void setViewMoreURL(String viewMoreURL) {
 		_viewMoreURL = viewMoreURL;
 	}
 

@@ -48,6 +48,8 @@
 
 		<execute function="AssertElementPresent" locator1="EditCampaign#CAMPAIGN_TRACKING_ACTIONS_CONTENT_SELECT_CONTENT_BUTTON" />
 
+		<execute function="Type" locator1="EditCampaign#CAMPAIGN_TRACKING_ACTIONS_CONTENT_NAME_FIELD" value1="${contentMetricName}" />
+
 		<execute function="Click" locator1="EditCampaign#CAMPAIGN_TRACKING_ACTIONS_CONTENT_SELECT_CONTENT_BUTTON" />
 
 		<var name="key_menuItem" value="${menulistContent}" />
@@ -61,8 +63,6 @@
 		<execute function="Click" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK" />
 
 		<execute function="SelectFrame" value1="relative=top" />
-
-		<execute function="Type" locator1="EditCampaign#CAMPAIGN_TRACKING_ACTIONS_CONTENT_NAME_FIELD" value1="${contentMetricName}" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="EditCampaign#CAMPAIGN_TRACKING_ACTIONS_CONTENT_TRACKING_ACTION" value1="View" />
 	</command>

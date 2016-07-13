@@ -42,8 +42,6 @@ if (organization != null) {
 	organizationGroupId = organization.getGroupId();
 }
 
-LinkedHashMap<String, Object> organizationParams = new LinkedHashMap<String, Object>();
-
 List<Organization> organizations = new ArrayList<Organization>();
 
 if (filterManageableOrganizations) {
@@ -163,19 +161,14 @@ if (organization != null) {
 			<aui:input name="deleteOrganizationIds" type="hidden" />
 
 			<%
-			SearchContainer searchContainer = new OrganizationSearch(renderRequest, "cur1", currentURLObj);
+			SearchContainer organizationSearch = new OrganizationSearch(renderRequest, "cur1", currentURLObj);
 
-			RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
-
-			rowChecker.setRowIds("rowIdsOrganization");
-
-			searchContainer.setRowChecker(rowChecker);
-			searchContainer.setOrderByType(orderByType);
+			organizationSearch.setOrderByType(orderByType);
 			%>
 
 			<liferay-ui:search-container
 				id="organizations"
-				searchContainer="<%= searchContainer %>"
+				searchContainer="<%= organizationSearch %>"
 				var="organizationSearchContainer"
 			>
 
@@ -187,6 +180,8 @@ if (organization != null) {
 				if (organization != null) {
 					parentOrganizationId = organization.getOrganizationId();
 				}
+
+				LinkedHashMap<String, Object> organizationParams = new LinkedHashMap<String, Object>();
 
 				List<Long> excludedOrganizationIds = new ArrayList<Long>();
 
@@ -202,11 +197,11 @@ if (organization != null) {
 							<%
 							total = organizations.size();
 
-							searchContainer.setTotal(total);
+							organizationSearchContainer.setTotal(total);
 
-							results = ListUtil.subList(organizations, searchContainer.getStart(), searchContainer.getEnd());
+							results = ListUtil.subList(organizations, organizationSearchContainer.getStart(), organizationSearchContainer.getEnd());
 
-							searchContainer.setResults(results);
+							organizationSearchContainer.setResults(results);
 							%>
 
 						</liferay-ui:search-container-results>
@@ -235,34 +230,119 @@ if (organization != null) {
 						<liferay-ui:organization-search-container-results organizationParams="<%= organizationParams %>" parentOrganizationId="<%= parentOrganizationId %>" />
 					</c:otherwise>
 				</c:choose>
+			</liferay-ui:search-container>
+
+			<%
+			SearchContainer userSearch = new UserSearch(renderRequest, "cur2", currentURLObj);
+
+			userSearch.setOrderByType(orderByType);
+			%>
+
+			<liferay-ui:search-container
+				id="users"
+				searchContainer="<%= userSearch %>"
+				var="userSearchContainer"
+			>
 
 				<%
-				List<Organization> results = searchContainer.getResults();
+				LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
+
+				userParams.put("usersOrgs", Long.valueOf(organizationId));
+				%>
+
+				<liferay-ui:user-search-container-results userParams="<%= userParams %>" />
+			</liferay-ui:search-container>
+
+			<liferay-ui:search-container
+				emptyResultsMessage="no-results-were-found"
+				emptyResultsMessageCssClass="taglib-empty-result-message-header-has-plus-btn"
+				headerNames="name,type"
+				iteratorURL="<%= currentURLObj %>"
+				total="<%= organizationSearch.getTotal() + userSearch.getTotal() %>"
+				var="membersSearchContainer"
+			>
+
+				<%
+				List<Object> results = new ArrayList<>();
+
+				results.addAll(organizationSearch.getResults());
+				results.addAll(userSearch.getResults());
+
+				membersSearchContainer.setResults(ListUtil.subList(results, membersSearchContainer.getStart(), membersSearchContainer.getEnd()));
 				%>
 
 				<liferay-ui:search-container-row
-					className="com.liferay.portal.kernel.model.Organization"
-					escapedModel="<%= true %>"
-					keyProperty="organizationId"
-					modelVar="curOrganization"
+					className="Object"
+					modelVar="result"
 				>
-					<liferay-portlet:renderURL varImpl="rowURL">
-						<portlet:param name="mvcRenderCommandName" value="/users_admin/view" />
-						<portlet:param name="toolbarItem" value="<%= toolbarItem %>" />
-						<portlet:param name="organizationId" value="<%= String.valueOf(curOrganization.getOrganizationId()) %>" />
-						<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_TREE %>" />
-					</liferay-portlet:renderURL>
 
 					<%
-					if (!OrganizationPermissionUtil.contains(permissionChecker, curOrganization, ActionKeys.VIEW)) {
-						rowURL = null;
+					Organization curOrganization = null;
+					User user2 = null;
+
+					if (result instanceof Organization) {
+						curOrganization = (Organization)result;
+					}
+					else {
+						user2 = (User)result;
 					}
 					%>
 
-					<%@ include file="/organization/organization_columns.jspf" %>
+					<c:choose>
+						<c:when test="<%= curOrganization != null %>">
+							<liferay-portlet:renderURL varImpl="rowURL">
+								<portlet:param name="mvcRenderCommandName" value="/users_admin/view" />
+								<portlet:param name="toolbarItem" value="<%= toolbarItem %>" />
+								<portlet:param name="organizationId" value="<%= String.valueOf(curOrganization.getOrganizationId()) %>" />
+								<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_TREE %>" />
+							</liferay-portlet:renderURL>
+
+							<%
+							if (!OrganizationPermissionUtil.contains(permissionChecker, curOrganization, ActionKeys.VIEW)) {
+								rowURL = null;
+							}
+							%>
+
+							<%@ include file="/organization/organization_columns.jspf" %>
+						</c:when>
+						<c:otherwise>
+							<liferay-portlet:renderURL varImpl="rowURL">
+								<portlet:param name="mvcRenderCommandName" value="/users_admin/edit_user" />
+								<portlet:param name="redirect" value="<%= currentURL %>" />
+								<portlet:param name="p_u_i_d" value="<%= String.valueOf(user2.getUserId()) %>" />
+							</liferay-portlet:renderURL>
+
+							<%
+							if (!UserPermissionUtil.contains(permissionChecker, user2.getUserId(), ActionKeys.UPDATE)) {
+								rowURL = null;
+							}
+							%>
+
+							<liferay-ui:search-container-column-text
+								cssClass="table-cell-content"
+								href="<%= rowURL %>"
+								name="name"
+								orderable="<%= true %>"
+							>
+								<aui:a href="<%= String.valueOf(rowURL) %>"><strong><%= user2.getFullName() %></strong></aui:a>
+							</liferay-ui:search-container-column-text>
+
+							<liferay-ui:search-container-column-text
+								cssClass="table-cell-content"
+								href="<%= rowURL %>"
+								name="type"
+								value='<%= LanguageUtil.get(request, "user") %>'
+							/>
+
+							<liferay-ui:search-container-column-jsp
+								cssClass="entry-action-column"
+								path="/user_action.jsp"
+							/>
+						</c:otherwise>
+					</c:choose>
 				</liferay-ui:search-container-row>
 
-				<liferay-ui:search-iterator markupView="lexicon" resultRowSplitter="<%= new OrganizationResultRowSplitter() %>" />
+				<liferay-ui:search-iterator markupView="lexicon" resultRowSplitter="<%= new OrganizationResultRowSplitter() %>" searchContainer="<%= membersSearchContainer %>" />
 			</liferay-ui:search-container>
 		</aui:form>
 	</c:when>

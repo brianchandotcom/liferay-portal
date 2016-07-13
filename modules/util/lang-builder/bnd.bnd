@@ -9,6 +9,10 @@ Main-Class: com.liferay.lang.builder.LangBuilder
 -includeresource:\
 	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portal/tools/ArgumentsMap.class,\
 	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portal/tools/ArgumentsUtil.class,\
+	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portal/tools/GitException.class,\
+	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portal/tools/GitUtil.class,\
+	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/exception/NestableException.class,\
+	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/exception/PortalException.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/io/OutputStreamWriter.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/io/unsync/UnsyncBufferedReader.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/io/unsync/UnsyncBufferedWriter.class,\

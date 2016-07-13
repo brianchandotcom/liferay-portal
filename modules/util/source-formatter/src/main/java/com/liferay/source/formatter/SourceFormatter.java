@@ -19,7 +19,8 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ArgumentsUtil;
-import com.liferay.source.formatter.util.GitUtil;
+import com.liferay.portal.tools.GitException;
+import com.liferay.portal.tools.GitUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;

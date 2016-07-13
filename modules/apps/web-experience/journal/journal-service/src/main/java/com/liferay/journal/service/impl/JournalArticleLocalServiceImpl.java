@@ -3423,26 +3423,23 @@ public class JournalArticleLocalServiceImpl
 			groupId, articleId);
 
 		for (JournalArticle article : articles) {
-			if ((serviceContext != null) &&
-				(article.getId() == latestArticle.getId())) {
-
-				notifySubscribers(
-					serviceContext.getUserId(), article, "move_from",
-					serviceContext);
-			}
-
 			article.setFolderId(newFolderId);
 			article.setTreePath(article.buildTreePath());
 
 			journalArticlePersistence.update(article);
+		}
 
-			if ((serviceContext != null) &&
-				(article.getId() == latestArticle.getId())) {
+		if (serviceContext != null) {
+			notifySubscribers(
+				serviceContext.getUserId(), latestArticle, "move_from",
+				serviceContext);
 
-				notifySubscribers(
-					serviceContext.getUserId(), article, "move_to",
-					serviceContext);
-			}
+			latestArticle.setFolderId(newFolderId);
+			latestArticle.setTreePath(latestArticle.buildTreePath());
+
+			notifySubscribers(
+				serviceContext.getUserId(), latestArticle, "move_to",
+				serviceContext);
 		}
 
 		return getArticle(groupId, articleId);

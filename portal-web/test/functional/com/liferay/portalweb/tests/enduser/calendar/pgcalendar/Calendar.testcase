@@ -3659,6 +3659,12 @@
 			<var name="viewType" value="Week" />
 		</execute>
 
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Alert#viewSuccessMessage" />
+
 		<execute macro="CalendarScheduler#viewLocalizedEvent">
 			<var name="eventTitle" value="Calendar Event Title" />
 			<var name="viewTypeLocalized" value="Semana" />

@@ -1,20 +1,28 @@
-<#assign fullScreenNavigation = getterUtil.getBoolean(themeDisplay.getThemeSetting("full-screen-navigation"))>
-<#assign socialMediaFacebook = getterUtil.getBoolean(themeDisplay.getThemeSetting("social-media-facebook"))>
-<#assign socialMediaTwitter = getterUtil.getBoolean(themeDisplay.getThemeSetting("social-media-twitter"))>
-<#assign socialMediaFacebookUrl = themeDisplay.getThemeSetting("social-media-facebook-url")>
-<#assign socialMediaTwitterUrl = themeDisplay.getThemeSetting("social-media-twitter-url")>
-<#assign siteLogoRetina = getterUtil.getBoolean(themeDisplay.getThemeSetting("site-logo-retina"))>
+<#assign
+	fullScreenNavigation = getterUtil.getBoolean(themeDisplay.getThemeSetting("full-screen-navigation"))
+	socialMediaFacebook = getterUtil.getBoolean(themeDisplay.getThemeSetting("social-media-facebook"))
+	socialMediaTwitter = getterUtil.getBoolean(themeDisplay.getThemeSetting("social-media-twitter"))
+	socialMediaFacebookUrl = themeDisplay.getThemeSetting("social-media-facebook-url")
+	socialMediaTwitterUrl = themeDisplay.getThemeSetting("social-media-twitter-url")
+	siteLogoRetina = getterUtil.getBoolean(themeDisplay.getThemeSetting("site-logo-retina"))
+>
 
 <#if fullScreenNavigation>
-	<#assign css_class = css_class + " full-screen-navigation">
-	<#assign nav_collapse = "">
-	<#assign nav_css_right = "">
+	<#assign
+		css_class = css_class + " full-screen-navigation"
+		nav_collapse = ""
+		nav_css_right = ""
+	>
 <#else>
-	<#assign nav_css_right = "navbar-right">
-	<#assign nav_collapse = "navbar-collapse">
+	<#assign
+		nav_css_right = "navbar-right"
+		nav_collapse = "navbar-collapse"
+	>
 </#if>
 
 <#if siteLogoRetina>
-	<#assign company_logo_height = company_logo_height/2>
-	<#assign company_logo_width = company_logo_width/2>
+	<#assign
+		company_logo_height = company_logo_height/2
+		company_logo_width = company_logo_width/2
+	>
 </#if>

@@ -14,7 +14,9 @@
 
 package com.liferay.wsrp.servlet.filters;
 
-import com.liferay.wsrp.constants.WSRPPortletKeys;
+import com.liferay.portal.kernel.servlet.PortalClassLoaderFilter;
+import com.liferay.wsrp.axis.WSRPHTTPSender;
+import com.liferay.wsrp.util.WSRPConsumerManagerFactory;
 
 import java.io.IOException;
 
@@ -24,48 +26,51 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
 
 /**
- * @author Michael Young
  * @author Peter Fellwock
  */
 @Component(
 	immediate = true,
 	property = {
 		HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT + "=(osgi.http.whiteboard.context.name=wsrp-consumer)",
-		HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_DISPATCHER + "=" + HttpWhiteboardConstants.DISPATCHER_INCLUDE,
-		HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_NAME + "=com.liferay.wsrp.servlet.filters.WSRPFilter",
-		HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_PATTERN + "=/" + WSRPPortletKeys.WSRP_ADMIN + "/*",
-		HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_PATTERN + "=/" + WSRPPortletKeys.WSRP_CONSUMER + "/*"
+		HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_NAME + "=com.liferay.wsrp.servlet.filters.WSRPProxyServletFilter",
+		HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_PATTERN + "=/proxy/*",
+		HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_INIT_PARAM_PREFIX + "filter-class=com.liferay.portal.servlet.filters.secure.SecureFilter",
+		HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_INIT_PARAM_PREFIX + "portal_property_prefix=proxy.servlet."
 	},
 	service = Filter.class
 )
-public class WSRPFilter implements Filter {
+public class WSRPProxyServletFilter extends PortalClassLoaderFilter {
 
 	@Override
 	public void destroy() {
-
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void doFilter(
-			ServletRequest arg0, ServletResponse arg1, FilterChain arg2)
+			ServletRequest servletRequest, ServletResponse servletResponse,
+			FilterChain filterChain)
 		throws IOException, ServletException {
 
-		// TODO Auto-generated method stub
+		HttpServletRequest request = (HttpServletRequest)servletRequest;
 
+		HttpSession session = request.getSession();
+
+		WSRPConsumerManagerFactory.setSession(session);
+
+		WSRPHTTPSender.setCurrentRequest((HttpServletRequest)servletRequest);
+
+		filterChain.doFilter(servletRequest, servletResponse);
 	}
 
 	@Override
-	public void init(FilterConfig arg0) throws ServletException {
-
-		// TODO Auto-generated method stub
-
+	public void init(FilterConfig filterConfig) {
 	}
 
 }

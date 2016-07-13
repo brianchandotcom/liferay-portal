@@ -48,8 +48,7 @@ public class ScreensRatingsEntryServiceImpl
 		AssetEntry assetEntry = assetEntryLocalService.fetchEntry(assetEntryId);
 
 		return getRatingsEntries(
-			assetEntry.getClassPK(), assetEntry.getClassName(),
-			ratingsLength);
+			assetEntry.getClassPK(), assetEntry.getClassName(), ratingsLength);
 	}
 
 	public JSONObject getRatingsEntries(

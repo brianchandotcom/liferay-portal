@@ -14,9 +14,9 @@
 	<command name="_selectSpecificEventCurrentDay">
 		<var name="key_eventTitle" value="${eventTitle}" />
 
-		<execute function="ScrollWebElementIntoView" locator1="PGCalendar#SCHEDULER_REGULAR_EVENT_SPECIFIC_CURRENT_DAY_VIA_DAY_OR_WEEK_VIEW" />
+		<execute function="ScrollWebElementIntoView" locator1="Calendar#SCHEDULER_REGULAR_EVENT_SPECIFIC_CURRENT_DAY_VIA_DAY_OR_WEEK_VIEW" />
 
-		<execute function="AssertClick#assertTextClickNoMouseOver" locator1="PGCalendar#SCHEDULER_REGULAR_EVENT_SPECIFIC_CURRENT_DAY_VIA_DAY_OR_WEEK_VIEW" value1="${eventTitle}" />
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="Calendar#SCHEDULER_REGULAR_EVENT_SPECIFIC_CURRENT_DAY_VIA_DAY_OR_WEEK_VIEW" value1="${eventTitle}" />
 	</command>
 
 	<command name="_viewCalendarViaDialogBox">

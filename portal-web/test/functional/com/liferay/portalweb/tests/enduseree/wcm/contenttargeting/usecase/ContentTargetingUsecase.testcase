@@ -1743,12 +1743,6 @@
 
 		<execute macro="LAR#configureExportSiteOptions">
 			<var name="contentName" value="Audience Targeting" />
-			<var name="subContent" value="Campaigns" />
-			<var name="uncheckSubSubContent" value="Referenced Content" />
-		</execute>
-
-		<execute macro="LAR#configureExportSiteOptions">
-			<var name="contentName" value="Audience Targeting" />
 			<var name="subContent" value="User Segments" />
 			<var name="uncheckSubSubContent" value="Referenced Content" />
 		</execute>
@@ -2753,12 +2747,6 @@
 			<var name="contentDateRange" value="All" />
 			<var name="contentName" value="Audience Targeting" />
 			<var name="subContent" value="User Segments" />
-			<var name="uncheckSubSubContent" value="Referenced Content" />
-		</execute>
-
-		<execute macro="Staging#configurePublishToLive">
-			<var name="contentName" value="Audience Targeting" />
-			<var name="subContent" value="Campaigns" />
 			<var name="uncheckSubSubContent" value="Referenced Content" />
 		</execute>
 

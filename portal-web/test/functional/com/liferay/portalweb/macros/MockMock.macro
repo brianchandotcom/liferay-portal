@@ -42,6 +42,16 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="MockMock#MOCKMOCK_MESSAGE_BODY" value1="${content}" />
 	</command>
 
+	<command name="clickBodyLink">
+		<execute macro="MockMock#_gotoMailMessage">
+			<var name="asset" value="${asset}" />
+		</execute>
+
+		<var name="key_bodyLink" value="${bodyLink}" />
+
+		<execute function="AssertClick" locator1="MockMock#MOCKMOCK_HTML_BODY_LINK" value1="${bodyLink}" />
+	</command>
+
 	<command name="viewMail">
 		<execute macro="MockMock#_gotoMail" />
 

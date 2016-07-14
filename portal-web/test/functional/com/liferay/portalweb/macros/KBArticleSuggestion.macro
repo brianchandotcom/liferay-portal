@@ -7,8 +7,8 @@
 	</command>
 
 	<command name="cancelSuggestionPG">
-		<execute function="AssertTextEquals" locator1="PGKnowledgebasearticle#ARTICLE_TITLE" value1="${kbArticleTitle}" />
-		<execute function="AssertTextEquals" locator1="PGKnowledgebasearticle#ARTICLE_CONTENT" value1="${kbArticleContent}" />
+		<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#ARTICLE_TITLE" value1="${kbArticleTitle}" />
+		<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#ARTICLE_CONTENT" value1="${kbArticleContent}" />
 
 		<execute function="AssertClick" locator1="KnowledgeBaseArticle#DO_YOU_HAVE_ANY_SUGGESTIONS" value1="Do you have any suggestions?" />
 

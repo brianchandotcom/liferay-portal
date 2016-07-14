@@ -727,7 +727,7 @@
 				<execute function="Click" locator1="xpath=(//div[contains(@class,'scheduler-view-agenda-event') and contains(@data-clientid,'scheduler-event')])[${i}]" />
 
 				<if>
-					<condition function="IsElementNotPresent" locator1="PGCalendarAgendaView#SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON" />
+					<condition function="IsElementNotPresent" locator1="Calendar#SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON" />
 					<then>
 						<var method="MathUtil#sum('${i}', '1')" name="i" />
 
@@ -738,14 +738,14 @@
 							<condition function="IsElementNotPresent" locator1="xpath=(//input[contains(@value,'Repeating')])" />
 							<then>
 								<execute function="Pause" value1="1000" />
-								<execute function="ClickNoError" locator1="PGCalendarAgendaView#SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON" value1="Delete" />
+								<execute function="ClickNoError" locator1="Calendar#SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON" value1="Delete" />
 
 								<execute function="Confirm#waitForConfirmation" value1="Deleting this event will cancel the meeting with your guests. Would you like to delete?" />
 								<execute function="Pause" value1="2000" />
 							</then>
 							<else>
 								<execute function="Pause" value1="1000" />
-								<execute function="ClickNoError" locator1="PGCalendarAgendaView#SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON" value1="Delete" />
+								<execute function="ClickNoError" locator1="Calendar#SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON" value1="Delete" />
 
 								<execute function="AssertClick" locator1="CalendarEditEvent#ENTIRE_SERIES_BUTTON" value1="Entire Series"  />
 								<execute function="Pause" value1="10000" />
@@ -824,9 +824,9 @@
 			</elseif>
 		</if>
 
-		<execute function="AssertElementPresent" locator1="PGCalendarAgendaView#SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON" />
+		<execute function="AssertElementPresent" locator1="Calendar#SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON" />
 		<execute function="Pause" value1="1000" />
-		<execute function="ClickNoError" locator1="PGCalendarAgendaView#SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON" value1="Delete" />
+		<execute function="ClickNoError" locator1="Calendar#SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON" value1="Delete" />
 
 		<if>
 			<equals arg1="${deleteOptionSet}" arg2="Entire Series" />
@@ -1814,25 +1814,25 @@
 	</command>
 
 	<command name="viewRepeatingEventViaViewDetails">
-		<execute function="AssertTextEquals" locator1="PGCalendarVieweventdetails#EVENT_TITLE" value1="${eventTitle}" />
+		<execute function="AssertTextEquals" locator1="CalendarViewEventDetails#EVENT_TITLE" value1="${eventTitle}" />
 
 		<if>
 			<equals arg1="${frequency}" arg2="Daily" />
 			<then>
-				<execute function="AssertTextEquals" locator1="PGCalendarVieweventdetails#REPEAT_OCCURRENCE_SUMMARY" value1="Daily, ${numberOfOccurrences} Times" />
+				<execute function="AssertTextEquals" locator1="CalendarViewEventDetails#REPEAT_OCCURRENCE_SUMMARY" value1="Daily, ${numberOfOccurrences} Times" />
 			</then>
 			<elseif>
 				<equals arg1="${frequency}" arg2="Weekly" />
 				<then>
 					<var method="selenium#getCurrentDayName()" name="today" />
 
-					<execute function="AssertTextEquals" locator1="PGCalendarVieweventdetails#REPEAT_OCCURRENCE_SUMMARY" value1="Weekly, on ${today}, ${numberOfOccurrences} Times" />
+					<execute function="AssertTextEquals" locator1="CalendarViewEventDetails#REPEAT_OCCURRENCE_SUMMARY" value1="Weekly, on ${today}, ${numberOfOccurrences} Times" />
 				</then>
 			</elseif>
 			<elseif>
 				<equals arg1="${frequency}" arg2="Yearly" />
 				<then>
-					<execute function="AssertTextEquals" locator1="PGCalendarVieweventdetails#REPEAT_OCCURRENCE_SUMMARY" value1="${yearlyRecurrenceSummary}" />
+					<execute function="AssertTextEquals" locator1="CalendarViewEventDetails#REPEAT_OCCURRENCE_SUMMARY" value1="${yearlyRecurrenceSummary}" />
 				</then>
 			</elseif>
 			<elseif>
@@ -1840,9 +1840,9 @@
 				<then>
 					<var method="selenium#getCurrentDayName()" name="today" />
 
-					<execute function="AssertTextEquals#assertPartialText" locator1="PGCalendarVieweventdetails#REPEAT_OCCURRENCE_SUMMARY" value1="Monthly" />
-					<execute function="AssertTextEquals#assertPartialText" locator1="PGCalendarVieweventdetails#REPEAT_OCCURRENCE_SUMMARY" value1="${numberOfOccurrences} Times" />
-					<execute function="AssertTextEquals#assertPartialText" locator1="PGCalendarVieweventdetails#REPEAT_OCCURRENCE_SUMMARY" value1="${today} " />
+					<execute function="AssertTextEquals#assertPartialText" locator1="CalendarViewEventDetails#REPEAT_OCCURRENCE_SUMMARY" value1="Monthly" />
+					<execute function="AssertTextEquals#assertPartialText" locator1="CalendarViewEventDetails#REPEAT_OCCURRENCE_SUMMARY" value1="${numberOfOccurrences} Times" />
+					<execute function="AssertTextEquals#assertPartialText" locator1="CalendarViewEventDetails#REPEAT_OCCURRENCE_SUMMARY" value1="${today} " />
 				</then>
 			</elseif>
 		</if>
@@ -1884,7 +1884,7 @@
 	</command>
 
 	<command name="viewRepeatWeekStartDay">
-		<execute function="AssertTextEquals" locator1="PGCalendarAddevent#REPEAT_REPEAT_ON_DAY_OF_THE_WEEK_WEEKDAY_WEEK_START_DAY" value1="${weekStartDay}" />
+		<execute function="AssertTextEquals" locator1="CalendarEditEvent#REPEAT_REPEAT_ON_DAY_OF_THE_WEEK_WEEKDAY_WEEK_START_DAY" value1="${weekStartDay}" />
 	</command>
 
 	<command name="viewRSVPAccepted">
@@ -1896,13 +1896,13 @@
 	<command name="viewRSVPDeclined">
 		<var name="key_resource" value="${resourceName}" />
 
-		<execute function="AssertTextEquals" locator1="PGCalendarAddevent#INVITATIONS_DECLINED" value1="${resourceName}" />
+		<execute function="AssertTextEquals" locator1="CalendarEditEvent#INVITATIONS_DECLINED" value1="${resourceName}" />
 	</command>
 
 	<command name="viewRSVPMaybe">
 		<var name="key_resource" value="${resourceName}" />
 
-		<execute function="AssertTextEquals" locator1="PGCalendarAddevent#INVITATIONS_MAYBE" value1="${resourceName}" />
+		<execute function="AssertTextEquals" locator1="CalendarEditEvent#INVITATIONS_MAYBE" value1="${resourceName}" />
 	</command>
 
 	<command name="viewRSVPPending">

@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>HEADER_TITLE</td>
+	<td>//h3[@class='header-title']/span</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONTENT_IMAGE</td>
 	<td>//p/img</td>
 	<td></td>
@@ -26,6 +31,16 @@
 <tr>
 	<td>EDIT_ON_GITHUB</td>
 	<td>//span[contains(.,'Edit on GitHub')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_TITLE</td>
+	<td>//div[@class='kb-article-container']//h1[@class='kb-title']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_CONTENT</td>
+	<td>//div[@class='kb-article-container']//div[@class='kb-article-body']</td>
 	<td></td>
 </tr>
 <tr>

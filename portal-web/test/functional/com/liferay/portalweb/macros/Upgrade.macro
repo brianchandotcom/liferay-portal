@@ -16,7 +16,7 @@
 			<var name="formDescription" value="Form Description" />
 		</execute>
 
-		<execute macro="Form#gotoAddFirstField">
+		<execute macro="Form#gotoAddField">
 			<var name="fieldType" value="Text Field" />
 		</execute>
 

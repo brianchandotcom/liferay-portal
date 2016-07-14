@@ -92,12 +92,7 @@
 </tr>
 <!--ADD_FIELD-->
 <tr>
-	<td>ADD_ADDITIONAL_FIELD</td>
-	<td>//div[contains(@class,'col col-md-${key_columnSize}') and contains(.,'${key_previousFieldLabel}')]/../../following-sibling::div//span[contains(@class,'plus-icon')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADD_FIRST_FIELD</td>
+	<td>ADD_FIELD</td>
 	<td>//div[contains(@class,'col col-md-${key_columnSize}')]//span[contains(@class,'add-button-plus-icon')]</td>
 	<td></td>
 </tr>

@@ -52,7 +52,7 @@
 
 		<execute macro="Form#editDescription" />
 
-		<execute macro="Form#gotoAddFirstField">
+		<execute macro="Form#gotoAddField">
 			<var name="fieldType" value="Text Field" />
 		</execute>
 
@@ -174,7 +174,7 @@
 
 		<execute macro="Form#editDescription" />
 
-		<execute macro="Form#gotoAddFirstField">
+		<execute macro="Form#gotoAddField">
 			<var name="fieldType" value="Date" />
 		</execute>
 
@@ -299,7 +299,7 @@
 
 		<execute macro="Form#editDescription" />
 
-		<execute macro="Form#gotoAddFirstField">
+		<execute macro="Form#gotoAddField">
 			<var name="fieldType" value="Select from List" />
 		</execute>
 
@@ -314,7 +314,7 @@
 
 		<execute macro="FormFields#save" />
 
-		<execute macro="Form#gotoAddAdditionalField">
+		<execute macro="Form#gotoAddField">
 			<var name="fieldType" value="Text Field" />
 			<var name="previousFieldLabel" value="Select" />
 		</execute>
@@ -332,7 +332,7 @@
 
 		<execute macro="FormFields#save" />
 
-		<execute macro="Form#gotoAddAdditionalField">
+		<execute macro="Form#gotoAddField">
 			<var name="fieldType" value="Single Selection" />
 			<var name="previousFieldLabel" value="Text" />
 		</execute>
@@ -348,7 +348,7 @@
 
 		<execute macro="FormFields#save" />
 
-		<execute macro="Form#gotoAddAdditionalField">
+		<execute macro="Form#gotoAddField">
 			<var name="fieldType" value="Text Field" />
 			<var name="previousFieldLabel" value="Radio" />
 		</execute>

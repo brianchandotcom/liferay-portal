@@ -336,7 +336,7 @@
 
 		<execute macro="Form#editDescription" />
 
-		<execute macro="Form#gotoAddFirstField">
+		<execute macro="Form#gotoAddField">
 			<var name="fieldType" value="Text Field" />
 		</execute>
 

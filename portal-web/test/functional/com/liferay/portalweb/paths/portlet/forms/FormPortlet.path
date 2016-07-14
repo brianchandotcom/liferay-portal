@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>FORM_CONTAINER</td>
+	<td>//div[contains(@class,'form-container')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FORM_CONTENT</td>
 	<td>//div[contains(@class,'form-container')]/div[contains(@class,'form-content')]</td>
 	<td></td>

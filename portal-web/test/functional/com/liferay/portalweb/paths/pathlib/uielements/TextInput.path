@@ -484,6 +484,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>WORD</td>
+	<td>//input[@id='_com_liferay_dictionary_web_portlet_DictionaryPortlet_word']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>YEARS</td>
 	<td>//input[@type='text' and contains(@name,'years')]</td>
 	<td></td>

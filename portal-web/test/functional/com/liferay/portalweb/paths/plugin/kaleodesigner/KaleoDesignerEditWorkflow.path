@@ -323,12 +323,12 @@
 <!--VIEW_FORM_CONNECTOR-->
 <tr>
 	<td>VIEW_FORM_CONNECTOR_DEFAULT</td>
-	<td>//span[@class='diagram-builder-connector-name unselectable' and contains(.,'connector')]</td>
+	<td>//span[contains(@class,'diagram-builder-connector-name') and not(contains(@class,'hide')) and contains(.,'connector')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>VIEW_FORM_CONNECTOR</td>
-	<td>//span[@class='diagram-builder-connector-name unselectable' and contains(.,'${key_connectorLabel}')]</td>
+	<td>//span[contains(@class,'diagram-builder-connector-name') and not(contains(@class,'hide')) and contains(.,'${key_connectorLabel}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -339,7 +339,7 @@
 <!--VIEW_FORM_ADD_NEW-->
 <tr>
 	<td>VIEW_FORM_ADD_NEW_NODE</td>
-	<td>//div[contains(@class,'diagram-node-suggest-connector')]//div[@class='diagram-builder-field-label' and contains(.,'${key_newNode}')]</td>
+	<td>//div[@class='property-builder-field-label' and contains(.,'${key_newNode}')]</td>
 	<td></td>
 </tr>
 <tr>

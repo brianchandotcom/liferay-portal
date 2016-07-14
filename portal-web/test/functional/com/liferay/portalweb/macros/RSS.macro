@@ -10,7 +10,13 @@
 			<var name="panelHeading" value="Feeds" />
 		</execute>
 
-		<execute function="Click" locator1="RSSFeed#FEEDS_ADD_ROW_BUTTON" />
+		<if>
+			<isset var="buttonRowIndexNumber" />
+			<then>
+				<execute function="Click" locator1="RSSFeed#FEEDS_ADD_ROW_BUTTON" />
+			</then>
+		</if>
+
 		<execute function="Type" locator1="RSSFeed#FEEDS_TITLE_NAME_FIELD" value1="${feedTitle}" />
 		<execute function="Type" locator1="RSSFeed#FEEDS_URL_NAME_FIELD" value1="${feedUrlLink}" />
 	</command>
@@ -80,16 +86,16 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="RSSFeed#FEEDS_CUSTOM_ADT_TITLE" value1="${feedContentTitle}" />
 	</command>
 
-	<command name="viewDefaultDisplayFeedTitle">
-		<var name="key_feedTitle" value="${feedTitle}" />
-
-		<execute function="AssertTextEquals#assertPartialText" locator1="RSSFeed#FEEDS_TITLE" value1="${feedTitle}" />
-	</command>
-
 	<command name="viewDeleteFeed">
 		<var name="key_feedTitle" value="${feedTitle}" />
 
 		<execute function="AssertTextNotPresent" locator1="RSSFeed#FEEDS_TITLE" value1="${feedTitle}" />
+	</command>
+
+	<command name="viewDisplayFeedTitle">
+		<var name="key_feedTitle" value="${feedTitle}" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="RSSFeed#FEEDS_TITLE" value1="${feedTitle}" />
 	</command>
 
 	<command name="viewNavigationDisplayFeedTitle">
@@ -124,6 +130,10 @@
 
 		<execute function="AssertElementPresent" locator1="RSSFeed#FEEDS_DEFAULT" />
 		<execute function="AssertTextEquals" locator1="RSSFeed#FEEDS_URL_NAME_FIELD" value1="${feedUrlLink}" />
+	</command>
+
+	<command name="viewPortletConfigurationInfo">
+		<execute function="AssertTextEquals" locator1="Message#INFO" value1="Please configure this portlet and select at least one valid RSS feed." />
 	</command>
 
 	<command name="viewWarningMessageDisplay">

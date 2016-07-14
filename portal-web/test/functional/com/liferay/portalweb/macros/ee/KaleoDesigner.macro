@@ -110,9 +110,9 @@
 	<command name="addNodeViaViewTab">
 		<execute function="AssertClick#pauseAssertTextClickAt" locator1="KaleoDesignerEditWorkflow#NODES_TAB" value1="Nodes" />
 
-		<var name="key_nodeName" value="${nodeName}" />
+		<var method="StringUtil#replace('${nodeType}', '-', '_')" name="key_nodeType" />
 
-		<execute function="DragAndDrop" locator1="KaleoDesignerEditWorkflow#NODE_FIELDS" locator2="KaleoDesignerEditWorkflow#NODE_BUILDER" value1="${nodeName}" />
+		<execute function="SikuliDragAndDrop" locator1="KaleoDesignerEditWorkflow#NODE_PNG" value1="250,0" />
 
 		<var name="key_nodeType" value="${nodeType}" />
 

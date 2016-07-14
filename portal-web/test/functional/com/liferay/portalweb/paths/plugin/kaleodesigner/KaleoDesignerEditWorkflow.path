@@ -56,16 +56,6 @@
 </tr>
 <!--NODES-->
 <tr>
-	<td>NODE_BUILDER</td>
-	<td>//div[contains(@class,'property-builder-drop-container')]/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NODE_FIELDS</td>
-	<td>//ul[contains(@class,'builder-fields')]//li[contains(@class,'builder-field-draggable') and @title='${key_nodeName}']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>NODES_TAB</td>
 	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Nodes')]</td>
 	<td></td>
@@ -78,6 +68,11 @@
 <tr>
 	<td>NODES_NODE_UNSELECTABLE</td>
 	<td>//div[@class='tab-content']/div/ul/li[contains(@class,'unselectable') and @title='${key_nodeType}']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NODE_PNG</td>
+	<td>portal/screenshots/kaleodesigner/node_${key_nodeType}.png</td>
 	<td></td>
 </tr>
 <tr>

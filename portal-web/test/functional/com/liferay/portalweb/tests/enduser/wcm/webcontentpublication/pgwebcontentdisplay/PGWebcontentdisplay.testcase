@@ -72,10 +72,12 @@
 
 		<execute macro="IFrame#selectEditAssetFrame" />
 
-		<execute macro="WebContent#addPGViaPanel">
+		<execute macro="WebContent#addCP">
 			<var name="webContentContent" value="WC WebContent Content" />
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
+
+		<execute macro="WebContent#publishViaWCD" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Web Content Page" />
@@ -388,11 +390,18 @@
 
 		<execute macro="IFrame#selectEditAssetFrame" />
 
-		<execute macro="WebContent#addPGViaPanel">
-			<var name="templateName" value="Second Basic Template" />
+		<execute macro="WebContent#addCP">
 			<var name="webContentContent" value="WC WebContent Content" />
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
+
+		<execute macro="WebContent#selectTemplateCP">
+			<var name="templateName" value="Second Basic Template" />
+		</execute>
+
+		<execute macro="IFrame#selectEditAssetFrame" />
+
+		<execute macro="WebContent#publishViaWCD" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Web Content Page" />

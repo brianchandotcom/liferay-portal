@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portlet.blogs.linkback.LinkbackConsumer;
 import com.liferay.portlet.blogs.linkback.LinkbackConsumerUtil;
 import com.liferay.portlet.blogs.trackback.Trackback;
 import com.liferay.portlet.blogs.trackback.TrackbackImpl;
@@ -97,10 +96,7 @@ public class TrackbackImplTest {
 			CommentManagerUtil.getCommentsCount(
 				BlogsEntry.class.getName(), _blogsEntry.getEntryId()));
 
-		LinkbackConsumer linkbackConsumer =
-			LinkbackConsumerUtil.getLinkbackConsumer();
-
-		linkbackConsumer.verifyNewTrackbacks();
+		LinkbackConsumerUtil.verifyNewTrackbacks();
 	}
 
 	@DeleteAfterTestRun

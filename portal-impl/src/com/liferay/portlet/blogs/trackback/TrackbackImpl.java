@@ -58,7 +58,7 @@ public class TrackbackImpl implements Trackback {
 
 		String entryURL = buildEntryURL(entry, themeDisplay);
 
-		_linkbackConsumer.addNewTrackback(commentId, url, entryURL);
+		LinkbackConsumerUtil.addNewTrackback(commentId, url, entryURL);
 	}
 
 	/**

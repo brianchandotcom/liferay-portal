@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.blogs.recent.bloggers.web.internal.constants;
+package com.liferay.blogs.recent.bloggers.web.constants;
 
 /**
  * @author Sergio González

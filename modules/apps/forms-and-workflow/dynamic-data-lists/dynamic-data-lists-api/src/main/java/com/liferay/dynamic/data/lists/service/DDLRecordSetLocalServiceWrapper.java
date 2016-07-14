@@ -198,6 +198,13 @@ public class DDLRecordSetLocalServiceWrapper implements DDLRecordSetLocalService
 			groupId);
 	}
 
+	@Override
+	public com.liferay.dynamic.data.lists.model.DDLRecordSet getRecordSet(
+		java.lang.String uuid, long recordSetId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddlRecordSetLocalService.getRecordSet(uuid, recordSetId);
+	}
+
 	/**
 	* Returns the record set matching the group and record set key.
 	*

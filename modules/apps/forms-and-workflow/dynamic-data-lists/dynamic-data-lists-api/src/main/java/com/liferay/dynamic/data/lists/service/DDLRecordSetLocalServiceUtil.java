@@ -194,6 +194,12 @@ public class DDLRecordSetLocalServiceUtil {
 		return getService().getDDLRecordSetByUuidAndGroupId(uuid, groupId);
 	}
 
+	public static com.liferay.dynamic.data.lists.model.DDLRecordSet getRecordSet(
+		java.lang.String uuid, long recordSetId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getRecordSet(uuid, recordSetId);
+	}
+
 	/**
 	* Returns the record set matching the group and record set key.
 	*

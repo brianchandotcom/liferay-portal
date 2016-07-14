@@ -327,6 +327,13 @@ public class DDLRecordSetLocalServiceImpl
 		return ddlRecordSetPersistence.findByG_R(groupId, recordSetKey);
 	}
 
+	@Override
+	public DDLRecordSet getRecordSet(String uuid, long recordSetId)
+		throws PortalException {
+
+		return ddlRecordSetPersistence.findByUUID_G(uuid, recordSetId);
+	}
+
 	/**
 	 * Returns all the record sets belonging the group.
 	 *

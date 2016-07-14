@@ -316,7 +316,6 @@
 
 		<execute macro="Form#gotoAddField">
 			<var name="fieldType" value="Text Field" />
-			<var name="previousFieldLabel" value="Select" />
 		</execute>
 
 		<execute macro="Form#editFieldLabel">
@@ -334,7 +333,6 @@
 
 		<execute macro="Form#gotoAddField">
 			<var name="fieldType" value="Single Selection" />
-			<var name="previousFieldLabel" value="Text" />
 		</execute>
 
 		<execute macro="Form#editFieldLabel">
@@ -350,7 +348,6 @@
 
 		<execute macro="Form#gotoAddField">
 			<var name="fieldType" value="Text Field" />
-			<var name="previousFieldLabel" value="Radio" />
 		</execute>
 
 		<execute macro="Form#editFieldLabel">

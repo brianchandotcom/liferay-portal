@@ -190,7 +190,6 @@
 
 		<execute macro="Form#gotoAddField">
 			<var name="fieldType" value="Date" />
-			<var name="previousFieldLabel" value="Text Field" />
 		</execute>
 
 		<execute macro="Form#editFieldLabel">
@@ -320,7 +319,6 @@
 
 		<execute macro="Form#gotoAddField">
 			<var name="fieldType" value="Text Field" />
-			<var name="previousFieldLabel" value="Paragraph" />
 		</execute>
 
 		<execute macro="Form#editFieldLabel">
@@ -343,7 +341,6 @@
 
 		<execute macro="Form#gotoAddField">
 			<var name="fieldType" value="Select from List" />
-			<var name="previousFieldLabel" value="Text" />
 		</execute>
 
 		<execute macro="Form#editFieldLabel">
@@ -395,7 +392,6 @@
 
 		<execute macro="Form#gotoAddField">
 			<var name="fieldType" value="Single Selection" />
-			<var name="previousFieldLabel" value="Select" />
 		</execute>
 
 		<execute macro="Form#editFieldLabel">
@@ -447,7 +443,6 @@
 
 		<execute macro="Form#gotoAddField">
 			<var name="fieldType" value="Date" />
-			<var name="previousFieldLabel" value="Radio" />
 		</execute>
 
 		<execute macro="Form#editFieldLabel">
@@ -470,7 +465,6 @@
 
 		<execute macro="Form#gotoAddField">
 			<var name="fieldType" value="Multiple Selection" />
-			<var name="previousFieldLabel" value="Date" />
 		</execute>
 
 		<execute macro="Form#editFieldLabel">
@@ -1213,7 +1207,6 @@
 
 		<execute macro="Form#gotoAddField">
 			<var name="fieldType" value="Text Field" />
-			<var name="previousFieldLabel" value="name" />
 		</execute>
 
 		<execute macro="Form#editFieldLabel">
@@ -1510,7 +1503,6 @@
 
 		<execute macro="Form#gotoAddField">
 			<var name="fieldType" value="Text Field" />
-			<var name="previousFieldLabel" value="Paragraph" />
 		</execute>
 
 		<execute macro="Form#editFieldLabel">
@@ -1521,7 +1513,6 @@
 
 		<execute macro="Form#gotoAddField">
 			<var name="fieldType" value="Select from List" />
-			<var name="previousFieldLabel" value="Text" />
 		</execute>
 
 		<execute macro="Form#editFieldLabel">
@@ -1543,7 +1534,6 @@
 
 		<execute macro="Form#gotoAddField">
 			<var name="fieldType" value="Single Selection" />
-			<var name="previousFieldLabel" value="Select" />
 		</execute>
 
 		<execute macro="Form#editFieldLabel">
@@ -1565,7 +1555,6 @@
 
 		<execute macro="Form#gotoAddField">
 			<var name="fieldType" value="Date" />
-			<var name="previousFieldLabel" value="Radio" />
 		</execute>
 
 		<execute macro="Form#editFieldLabel">
@@ -1576,7 +1565,6 @@
 
 		<execute macro="Form#gotoAddField">
 			<var name="fieldType" value="Multiple Selection" />
-			<var name="previousFieldLabel" value="Date" />
 		</execute>
 
 		<execute macro="Form#editFieldLabel">
@@ -1885,7 +1873,6 @@
 
 		<execute macro="Form#gotoAddField">
 			<var name="fieldType" value="Text Field" />
-			<var name="previousFieldLabel" value="Paragraph" />
 		</execute>
 
 		<execute macro="Form#editFieldLabel">
@@ -1896,7 +1883,6 @@
 
 		<execute macro="Form#gotoAddField">
 			<var name="fieldType" value="Text Field" />
-			<var name="previousFieldLabel" value="SingleLineText" />
 		</execute>
 
 		<execute macro="Form#editFieldLabel">
@@ -1915,7 +1901,6 @@
 
 		<execute macro="Form#gotoAddField">
 			<var name="fieldType" value="Select from List" />
-			<var name="previousFieldLabel" value="MultilineText" />
 		</execute>
 
 		<execute macro="Form#editFieldLabel">
@@ -1937,7 +1922,6 @@
 
 		<execute macro="Form#gotoAddField">
 			<var name="fieldType" value="Single Selection" />
-			<var name="previousFieldLabel" value="Select" />
 		</execute>
 
 		<execute macro="Form#editFieldLabel">
@@ -1963,7 +1947,6 @@
 
 		<execute macro="Form#gotoAddField">
 			<var name="fieldType" value="Date" />
-			<var name="previousFieldLabel" value="Radio" />
 		</execute>
 
 		<execute macro="Form#editFieldLabel">
@@ -1974,7 +1957,6 @@
 
 		<execute macro="Form#gotoAddField">
 			<var name="fieldType" value="Multiple Selection" />
-			<var name="previousFieldLabel" value="Date" />
 		</execute>
 
 		<execute macro="Form#editFieldLabel">
@@ -2262,7 +2244,6 @@
 
 		<execute macro="Form#gotoAddField">
 			<var name="fieldType" value="Multiple Selection" />
-			<var name="previousFieldLabel" value="Text Field" />
 		</execute>
 
 		<execute macro="Form#editFieldLabel">
@@ -2273,7 +2254,6 @@
 
 		<execute macro="Form#gotoAddField">
 			<var name="fieldType" value="Single Selection" />
-			<var name="previousFieldLabel" value="Checkbox Field" />
 		</execute>
 
 		<execute macro="Form#editFieldLabel">
@@ -2295,7 +2275,6 @@
 
 		<execute macro="Form#gotoAddField">
 			<var name="fieldType" value="Select from List" />
-			<var name="previousFieldLabel" value="Radio Field" />
 		</execute>
 
 		<execute macro="Form#editFieldLabel">
@@ -3338,7 +3317,6 @@
 
 		<execute macro="Form#gotoAddField">
 			<var name="fieldType" value="Text Field" />
-			<var name="previousFieldLabel" value=",.?/;:{}[]\|-+!@#$%^*()=_" />
 		</execute>
 
 		<execute macro="FormFields#editText">
@@ -3500,7 +3478,6 @@
 
 		<execute macro="Form#gotoAddField">
 			<var name="fieldType" value="Text Field" />
-			<var name="previousFieldLabel" value="Visible Field" />
 		</execute>
 
 		<execute macro="Form#editFieldLabel">

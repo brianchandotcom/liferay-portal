@@ -8,19 +8,6 @@
 	<property name="manifest.bundle.name" value="Liferay Util Taglib" />
 	<property name="manifest.bundle.symbolic.name" value="com.liferay.util.taglib" />
 
-	<target depends="build-common-java.deploy" name="deploy">
-		<if>
-			<equals arg1="${app.server.type}" arg2="tomcat" />
-			<then>
-				<copy file="${jar.file}.jar" preservelastmodified="true" todir="${deploy.dir}" />
-
-				<copy preservelastmodified="true" todir="${app.server.portal.dir}/WEB-INF/tld">
-					<fileset dir="classes/META-INF" includes="*.tld" />
-				</copy>
-			</then>
-		</if>
-	</target>
-
 	<target name="build-taglibs">
 		<java
 			classname="com.liferay.alloy.tools.tagbuilder.TagBuilder"
@@ -52,6 +39,19 @@
 			<replacetoken><![CDATA[<uri>http://java.sun.com/portlet</uri>]]></replacetoken>
 			<replacevalue><![CDATA[<uri>http://java.sun.com/portlet_2_0</uri>]]></replacevalue>
 		</replace>
+	</target>
+
+	<target depends="build-common-java.deploy" name="deploy">
+		<if>
+			<equals arg1="${app.server.type}" arg2="tomcat" />
+			<then>
+				<copy file="${jar.file}.jar" preservelastmodified="true" todir="${deploy.dir}" />
+
+				<copy preservelastmodified="true" todir="${app.server.portal.dir}/WEB-INF/tld">
+					<fileset dir="classes/META-INF" includes="*.tld" />
+				</copy>
+			</then>
+		</if>
 	</target>
 
 	<target depends="build-common-java.jar" name="jar">

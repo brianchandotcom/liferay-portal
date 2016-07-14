@@ -1536,6 +1536,8 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
+		<execute macro="Alert#viewSuccessMessage" />
+
 		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Month" />
 		</execute>
@@ -2701,6 +2703,7 @@
 		<execute macro="Calendar#viewSiteCalendarNoMenulistOption">
 			<var name="menuListOption" value="RSS" />
 			<var name="siteCalendarName" value="${siteName}" />
+			<var name="siteName" value="${siteName}" />
 		</execute>
 
 		<execute macro="Calendar#viewNoRSS">
@@ -3659,6 +3662,12 @@
 			<var name="viewType" value="Week" />
 		</execute>
 
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Alert#viewSuccessMessage" />
+
 		<execute macro="CalendarScheduler#viewLocalizedEvent">
 			<var name="eventTitle" value="Calendar Event Title" />
 			<var name="viewTypeLocalized" value="Semana" />
@@ -4310,6 +4319,10 @@
 		<execute macro="CalendarEvent#viewApprovedRSVP">
 			<var name="eventTitle" value="Calendar Event Title" />
 			<var name="rsvp" value="Yes" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
 		</execute>
 
 		<execute macro="CalendarEvent#view">

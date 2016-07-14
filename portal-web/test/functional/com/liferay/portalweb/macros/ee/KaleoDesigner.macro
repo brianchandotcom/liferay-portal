@@ -226,7 +226,7 @@
 	<command name="editConnectorName">
 		<execute function="DoubleClick" locator1="KaleoDesignerEditWorkflow#SETTINGS_NAME" />
 		<execute function="Type" locator1="KaleoDesignerEditWorkflow#SETTINGS_NAME_FIELD" value1="${connectorName}" />
-		<execute function="AssertClick" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 		<execute function="AssertTextEquals" locator1="KaleoDesignerEditWorkflow#SETTINGS_NAME" value1="${connectorName}" />
 	</command>
 
@@ -269,7 +269,7 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 	</command>
 
 	<command name="editNodeAssignments">
@@ -287,7 +287,7 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
 		<if>
 			<equals arg1="${nodeAssignmentType}" arg2="Role" />
@@ -300,14 +300,14 @@
 	<command name="editNodeDescription">
 		<execute function="DoubleClick" locator1="KaleoDesignerEditWorkflow#SETTINGS_DESCRIPTION" />
 		<execute function="Type" locator1="KaleoDesignerEditWorkflow#SETTINGS_DESCRIPTION_FIELD" value1="${nodeDescription}" />
-		<execute function="AssertClick" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 		<execute function="AssertTextEquals" locator1="KaleoDesignerEditWorkflow#SETTINGS_DESCRIPTION" value1="${nodeDescription}" />
 	</command>
 
 	<command name="editNodeName">
 		<execute function="DoubleClick" locator1="KaleoDesignerEditWorkflow#SETTINGS_NAME" />
 		<execute function="Type" locator1="KaleoDesignerEditWorkflow#SETTINGS_NAME_FIELD" value1="${nodeName}" />
-		<execute function="AssertClick" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 		<execute function="AssertTextEquals" locator1="KaleoDesignerEditWorkflow#SETTINGS_NAME" value1="${nodeName}" />
 	</command>
 
@@ -376,30 +376,30 @@
 				</if>
 
 				<execute function="Pause" locator1="1000" />
-				<execute function="AssertClick" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_SAVE_BUTTON" value1="Save" />
+				<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 			</then>
 		</if>
 
 		<execute function="Pause" locator1="1000" />
-		<execute function="AssertClick" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 	</command>
 
 	<command name="editNodeScript">
 		<execute function="DoubleClick" locator1="KaleoDesignerEditWorkflow#SETTINGS_SCRIPT" />
 		<execute function="Type#typeAceEditorNoMouseOver" locator1="KaleoDesignerEditWorkflow#SETTINGS_SCRIPT_CONTENT" value1="${nodeScript}" />
-		<execute function="AssertClick" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 	</command>
 
 	<command name="editNodeScriptLanguage">
 		<execute function="DoubleClick" locator1="KaleoDesignerEditWorkflow#SETTINGS_SCRIPT_LANGUAGE" />
 		<execute function="Select" locator1="KaleoDesignerEditWorkflow#SETTINGS_SCRIPT_LANGUAGE" value1="${nodeScriptLanguage}" />
-		<execute function="AssertClick" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 	</command>
 
 	<command name="editNodeSettings">
 		<execute function="DoubleClick" locator1="KaleoDesignerEditWorkflow#SETTINGS_NAME" />
 		<execute function="Type" locator1="KaleoDesignerEditWorkflow#SETTINGS_NAME_FIELD" value1="${nodeName}" />
-		<execute function="AssertClick" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 		<execute function="AssertTextEquals" locator1="KaleoDesignerEditWorkflow#SETTINGS_NAME" value1="${nodeName}" />
 	</command>
 

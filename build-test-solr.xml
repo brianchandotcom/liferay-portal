@@ -31,6 +31,27 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="configure-liferay-solr-adapter-properties">
+		<sequential>
+			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.solr.configuration.SolrConfiguration.cfg">readURL=http://localhost:8983/solr/liferay
+writeURL=http://localhost:8983/solr/liferay</echo>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="configure-liferay-solr-ssl-adapter-properties">
+		<sequential>
+			<replace file="${liferay.home}/osgi/configs/com.liferay.portal.search.solr.configuration.SolrConfiguration.cfg" value="https://">
+			 	<replacetoken>http://</replacetoken>
+			</replace>
+
+			<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.portal.search.solr.configuration.SolrConfiguration.cfg">
+authenticationMode=CERT</echo>
+
+			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.solr.configuration.SolrSSLSocketFactoryConfiguration.cfg">keyStorePath=${solr.dir}/server/etc/solr-ssl.keystore.jks
+trustStorePath=${solr.dir}/server/etc/solr-ssl.keystore.jks</echo>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="configure-solr-ssl-properties">
 		<sequential>
 			<if>
@@ -55,16 +76,29 @@
 					</then>
 				</elseif>
 			</if>
+		</sequential>
+	</macrodef>
 
-			<replace file="${liferay.home}/osgi/configs/com.liferay.portal.search.solr.configuration.SolrConfiguration.cfg" value="https://">
-			 	<replacetoken>http://</replacetoken>
-			</replace>
-
-			<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.portal.search.solr.configuration.SolrConfiguration.cfg">
-authenticationMode=CERT</echo>
-
-			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.solr.configuration.SolrSSLSocketFactoryConfiguration.cfg">keyStorePath=${solr.dir}/server/etc/solr-ssl.keystore.jks
-trustStorePath=${solr.dir}/server/etc/solr-ssl.keystore.jks</echo>
+	<macrodef name="create-solr-core">
+		<sequential>
+			<if>
+				<os family="unix" />
+				<then>
+					<exec dir="${solr.dir}/bin" executable="/bin/bash">
+						<arg value="-c" />
+						<arg value="./solr create_core -c liferay -d ${solr.dir}/server/solr/liferay/conf" />
+					</exec>
+				</then>
+				<elseif>
+					<os family="windows" />
+					<then>
+						<exec dir="${solr.dir}/bin" executable="cmd" >
+							<arg value="/c" />
+							<arg value="solr create_core -c liferay -d ${solr.dir}/server/solr/liferay/conf" />
+						</exec>
+					</then>
+				</elseif>
+			</if>
 		</sequential>
 	</macrodef>
 
@@ -88,7 +122,18 @@ trustStorePath=${solr.dir}/server/etc/solr-ssl.keystore.jks</echo>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="prepare-solr">
+	<macrodef name="delete-elasticseach-osgi-bundle">
+		<sequential>
+			<delete failonerror="false">
+				<fileset
+					dir="${liferay.home}/osgi/portal"
+					includes="com.liferay.portal.search.elasticsearch*.jar"
+				/>
+			</delete>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="prepare-solr-configurations">
 		<sequential>
 			<copy overwrite="true" todir="${solr.dir}/server/solr/liferay/conf">
 				<fileset dir="${solr.dir}/server/solr/configsets/data_driven_schema_configs/conf">
@@ -100,6 +145,84 @@ trustStorePath=${solr.dir}/server/etc/solr-ssl.keystore.jks</echo>
 					<include name="solrconfig.xml" />
 				</fileset>
 			</copy>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="start-solr-core">
+		<sequential>
+			<local name="solr.server.not.started" />
+
+			<if>
+				<os family="unix" />
+				<then>
+					<chmod file="${solr.dir}/bin/solr" perm="a+x" />
+
+					<exec dir="${solr.dir}/bin" executable="/bin/bash">
+						<arg value="-c" />
+						<arg value="./solr start -V" />
+					</exec>
+
+					<waitfor maxwait="10" maxwaitunit="second" timeoutproperty="solr.server.not.started">
+						<http url="http://localhost:8983/solr" />
+					</waitfor>
+
+					<fail if="solr.server.not.started" message="Solr server failed to initialize." />
+				</then>
+				<elseif>
+					<os family="windows" />
+					<then>
+						<exec dir="${solr.dir}/bin" executable="cmd" spawn="true">
+							<arg value="/c" />
+							<arg value="solr -V" />
+						</exec>
+
+						<waitfor maxwait="10" maxwaitunit="second" timeoutproperty="solr.server.not.started">
+							<http url="http://localhost:8983/solr" />
+						</waitfor>
+
+						<fail if="solr.server.not.started" message="Solr server failed to initialize." />
+					</then>
+				</elseif>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="stop-solr-core">
+		<sequential>
+			<local name="solr.server.running" />
+
+			<if>
+				<os family="unix" />
+				<then>
+					<exec dir="${solr.dir}/bin" executable="/bin/bash">
+						<arg value="-c" />
+						<arg value="./solr stop -p 8983" />
+					</exec>
+
+					<waitfor maxwait="15" maxwaitunit="second" timeoutproperty="solr.server.not.started">
+						<not>
+							<http url="http://localhost:8983/solr" />
+						</not>
+					</waitfor>
+
+					<fail if="solr.server.running" message="Solr server failed to stop." />
+				</then>
+				<elseif>
+					<os family="windows" />
+					<then>
+						<exec dir="${solr.dir}/bin" executable="cmd" spawn="true">
+							<arg value="/c" />
+							<arg value="solr -p 8983" />
+						</exec>
+
+						<waitfor maxwait="15" maxwaitunit="second" timeoutproperty="solr.server.running">
+							<http url="http://localhost:8983/solr" />
+						</waitfor>
+
+						<fail if="solr.server.running" message="Solr server failed to stop." />
+					</then>
+				</elseif>
+			</if>
 		</sequential>
 	</macrodef>
 
@@ -127,32 +250,18 @@ trustStorePath=${solr.dir}/server/etc/solr-ssl.keystore.jks</echo>
 		</sequential>
 	</macrodef>
 
-	<target name="configure-solr-osgi-bundle-properties">
-		<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.solr.configuration.SolrConfiguration.cfg">readURL=http://localhost:8983/solr/liferay
-writeURL=http://localhost:8983/solr/liferay</echo>
-	</target>
-
-	<target name="delete-elasticseach-osgi-bundle">
-		<delete failonerror="false">
-			<fileset
-				dir="${liferay.home}/osgi/portal"
-				includes="com.liferay.portal.search.elasticsearch*.jar"
-			/>
-		</delete>
-	</target>
-
 	<target name="start-solr">
 		<unzip-solr />
 
-		<prepare-solr />
+		<prepare-solr-configurations/>
 
-		<antcall target="delete-elasticseach-osgi-bundle" />
+		<delete-elasticseach-osgi-bundle />
 
 		<gradle-execute dir="modules/apps/portal-search-solr/portal-search-solr" task="deploy">
 			<arg value="clean" />
 		</gradle-execute>
 
-		<antcall target="configure-solr-osgi-bundle-properties" />
+		<configure-liferay-solr-adapter-properties />
 
 		<get-testcase-property property.name="solr.ssl.authentication.enabled" />
 
@@ -163,90 +272,14 @@ writeURL=http://localhost:8983/solr/liferay</echo>
 
 				<configure-solr-ssl-properties />
 
-				<configure-app-server-solr-ssl-jvm-arguments />
+				<configure-liferay-solr-ssl-adapter-properties />
+
+				<configure-app-server-ssl-jvm-arguments />
 			</then>
 		</if>
 
-		<local name="solr.server.not.started" />
+		<start-solr-core />
 
-		<if>
-			<os family="unix" />
-			<then>
-				<chmod file="${solr.dir}/bin/solr" perm="a+x" />
-
-				<exec dir="${solr.dir}/bin" executable="/bin/bash">
-					<arg value="-c" />
-					<arg value="./solr start -V" />
-				</exec>
-
-				<waitfor maxwait="10" maxwaitunit="second" timeoutproperty="solr.server.not.started">
-					<http url="http://localhost:8983/solr" />
-				</waitfor>
-
-				<fail if="solr.server.not.started" message="Solr server failed to initialize." />
-
-				<exec dir="${solr.dir}/bin" executable="/bin/bash">
-					<arg value="-c" />
-					<arg value="./solr create_core -c liferay -d ${solr.dir}/server/solr/liferay/conf" />
-				</exec>
-			</then>
-			<elseif>
-				<os family="windows" />
-				<then>
-					<exec dir="${solr.dir}/bin" executable="cmd" spawn="true">
-						<arg value="/c" />
-						<arg value="solr -V" />
-					</exec>
-
-					<waitfor maxwait="10" maxwaitunit="second" timeoutproperty="solr.server.not.started">
-						<http url="http://localhost:8983/solr" />
-					</waitfor>
-
-					<fail if="solr.server.not.started" message="Solr server failed to initialize." />
-
-					<exec dir="${solr.dir}/bin" executable="cmd" >
-						<arg value="/c" />
-						<arg value="solr create_core -c liferay -d ${solr.dir}/server/solr/liferay/conf" />
-					</exec>
-				</then>
-			</elseif>
-		</if>
-	</target>
-
-	<target name="stop-solr">
-		<local name="solr.server.running" />
-
-		<if>
-			<os family="unix" />
-			<then>
-				<exec dir="${solr.dir}/bin" executable="/bin/bash">
-					<arg value="-c" />
-					<arg value="./solr stop -p 8983" />
-				</exec>
-
-				<waitfor maxwait="15" maxwaitunit="second" timeoutproperty="solr.server.not.started">
-					<not>
-						<http url="http://localhost:8983/solr" />
-					</not>
-				</waitfor>
-
-				<fail if="solr.server.running" message="Solr server failed to stop." />
-			</then>
-			<elseif>
-				<os family="windows" />
-				<then>
-					<exec dir="${solr.dir}/bin" executable="cmd" spawn="true">
-						<arg value="/c" />
-						<arg value="solr -p 8983" />
-					</exec>
-
-					<waitfor maxwait="15" maxwaitunit="second" timeoutproperty="solr.server.running">
-						<http url="http://localhost:8983/solr" />
-					</waitfor>
-
-					<fail if="solr.server.running" message="Solr server failed to stop." />
-				</then>
-			</elseif>
-		</if>
+		<create-solr-core />
 	</target>
 </project>

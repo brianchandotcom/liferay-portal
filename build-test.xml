@@ -8378,7 +8378,7 @@ jdbc.default.password=${database.mysql.password}</echo>
 		<if>
 			<equals arg1="${solr.enabled}" arg2="true" />
 			<then>
-				<ant antfile="build-test-solr.xml" target="stop-solr" />
+				<ant antfile="build-test-solr.xml" target="stop-solr-core" />
 			</then>
 		</if>
 

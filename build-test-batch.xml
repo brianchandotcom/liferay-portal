@@ -774,7 +774,7 @@ app.server.type=@{app.server.type}]]></echo>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="run-lpkg-startup-test">
+	<macrodef name="run-lpkg-overwrite-test">
 		<sequential>
 			<run-batch-test tomcat.gc.log="true">
 				<test-action>
@@ -797,8 +797,142 @@ app.server.type=@{app.server.type}]]></echo>
 							<trycatch>
 								<try>
 									<antcall inheritall="false" target="start-app-server" />
+								</try>
+
+								<finally>
+									<ant dir="portal-kernel" inheritAll="false" target="test-class">
+										<property name="test.class" value="PortalLogAssertorTest" />
+									</ant>
+								</finally>
+							</trycatch>
+
+							<antcall inheritall="false" target="stop-app-server" />
+
+							<delete dir="${liferay.home}/logs" />
+
+							<gradle-execute dir="modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test" task="test">
+								<arg value="test" />
+								<arg value="--tests" />
+								<arg value="*.LPKGOverwriteTest" />
+								<arg value="-Dliferay.home=${liferay.home}" />
+								<arg value="-Dmodules.only.build=true" />
+							</gradle-execute>
+
+							<trycatch>
+								<try>
+									<antcall inheritall="false" target="start-app-server-preserve-liferay-home" />
 
 									<gradle-execute dir="modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test" task="testIntegration">
+										<arg value="testIntegration" />
+										<arg value="--tests" />
+										<arg value="*.LPKGOverwriteVerifyTest" />
+										<arg value="-Dmodules.only.build=true" />
+									</gradle-execute>
+								</try>
+
+								<finally>
+									<ant dir="portal-kernel" inheritAll="false" target="test-class">
+										<property name="test.class" value="PortalLogAssertorTest" />
+									</ant>
+								</finally>
+							</trycatch>
+
+							<antcall inheritall="false" target="stop-app-server" />
+
+							<delete dir="${liferay.home}/logs" />
+
+							<trycatch>
+								<try>
+									<antcall inheritall="false" target="start-app-server" />
+
+									<gradle-execute dir="modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test" task="testIntegration">
+										<arg value="testIntegration" />
+										<arg value="--tests" />
+										<arg value="*.LPKGOverwriteVerifyTest" />
+										<arg value="-Dlpkg.clean.startup=true" />
+										<arg value="-Dmodules.only.build=true" />
+									</gradle-execute>
+								</try>
+								<finally>
+									<ant dir="portal-kernel" inheritAll="false" target="test-class">
+										<property name="test.class" value="PortalLogAssertorTest" />
+									</ant>
+								</finally>
+							</trycatch>
+
+							<antcall inheritall="false" target="stop-app-server" />
+
+							<delete dir="${liferay.home}/osgi/marketplace/overwritten" />
+
+							<delete>
+								<fileset dir="${liferay.home}/osgi/static" />
+							</delete>
+
+							<trycatch>
+								<try>
+									<antcall inheritall="false" target="start-app-server-preserve-liferay-home" />
+
+									<gradle-execute dir="modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test" task="testIntegration">
+										<arg value="testIntegration" />
+										<arg value="--tests" />
+										<arg value="*.LPKGRevertOverwriteVerifyTest" />
+										<arg value="-Dmodules.only.build=true" />
+									</gradle-execute>
+								</try>
+
+								<finally>
+									<ant dir="portal-kernel" inheritAll="false" target="test-class">
+										<property name="test.class" value="PortalLogAssertorTest" />
+									</ant>
+								</finally>
+							</trycatch>
+						</test-action>
+					</database-test-run-test>
+				</test-action>
+
+				<test-set-up>
+					<if>
+						<isset property="env.DIST_PATH" />
+						<then>
+							<prepare-test-environment />
+						</then>
+						<else>
+							<prepare-test-build />
+						</else>
+					</if>
+				</test-set-up>
+			</run-batch-test>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="run-lpkg-startup-test">
+		<sequential>
+			<run-batch-test tomcat.gc.log="true">
+				<test-action>
+					<database-test-run-test database.type="mysql" stop.app.server="true">
+						<test-action>
+							<trycatch>
+								<antcall inheritAll="false" target="prepare-log4j-ext-xml">
+									<param name="database.type" value="@{database.type}" />
+								</antcall>
+
+								<antcall inheritAll="false" target="prepare-portal-ext-properties">
+									<param name="database.type" value="@{database.type}" />
+								</antcall>
+
+								<antcall inheritAll="false" target="prepare-system-ext-properties" />
+
+								<ant dir="modules" inheritAll="false" target="build-app-lpkg-all">
+									<property name="osgi.dir" value="${app.server.parent.dir}/osgi" />
+								</ant>
+
+								<try>
+									<antcall inheritall="false" target="start-app-server" />
+
+									<gradle-execute dir="modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test" task="testIntegration">
+										<arg value="testIntegration" />
+										<arg value="--tests" />
+										<arg value="*.LPKGDeployerTest" />
 										<arg value="-Dbefore.lpkg.upgrade=true" />
 										<arg value="-Dmodules.only.build=true" />
 									</gradle-execute>
@@ -832,6 +966,9 @@ app.server.type=@{app.server.type}]]></echo>
 									<antcall inheritall="false" target="start-app-server-preserve-liferay-home" />
 
 									<gradle-execute dir="modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test" task="testIntegration">
+										<arg value="testIntegration" />
+										<arg value="--tests" />
+										<arg value="*.LPKGDeployerTest" />
 										<arg value="-Dmodules.only.build=true" />
 									</gradle-execute>
 
@@ -1113,6 +1250,10 @@ app.server.type=@{app.server.type}]]></echo>
 
 	<target name="legacy-functional-bundle-tomcat-sybase16-jdk7">
 		<run-legacy-database-dump database.type="sybase" />
+	</target>
+
+	<target name="lpkg-overwrite-jdk8">
+		<run-lpkg-overwrite-test />
 	</target>
 
 	<target name="lpkg-startup-jdk8">

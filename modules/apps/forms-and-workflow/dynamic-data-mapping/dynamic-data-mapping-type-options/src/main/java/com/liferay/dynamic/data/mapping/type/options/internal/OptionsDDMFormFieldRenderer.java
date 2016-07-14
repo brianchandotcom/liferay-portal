@@ -60,20 +60,6 @@ public class OptionsDDMFormFieldRenderer extends BaseDDMFormFieldRenderer {
 			"/META-INF/resources/options.soy");
 	}
 
-	protected List<Object> getOptions(
-		DDMFormField ddmFormField,
-		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
-
-		OptionsDDMFormFieldContextHelper optionsDDMFormFieldContextHelper =
-			new OptionsDDMFormFieldContextHelper(
-				jsonFactory, ddmFormField.getDDMFormFieldOptions(),
-				ddmFormFieldRenderingContext.getValue(),
-				ddmFormField.getPredefinedValue(),
-				ddmFormFieldRenderingContext.getLocale());
-
-		return optionsDDMFormFieldContextHelper.getOptions();
-	}
-
 	@Override
 	protected void populateRequiredContext(
 		Template template, DDMFormField ddmFormField,
@@ -82,12 +68,16 @@ public class OptionsDDMFormFieldRenderer extends BaseDDMFormFieldRenderer {
 		super.populateRequiredContext(
 			template, ddmFormField, ddmFormFieldRenderingContext);
 
-		template.put(
-			"options", getOptions(ddmFormField, ddmFormFieldRenderingContext));
+		Map<String, Object> parameters =
+			optionsDDMFormFieldTemplateContextContributor.getParameters(
+				ddmFormField, ddmFormFieldRenderingContext);
+
+		template.putAll(parameters);
 	}
 
 	@Reference
-	protected JSONFactory jsonFactory;
+	protected OptionsDDMFormFieldTemplateContextContributor
+		optionsDDMFormFieldTemplateContextContributor;
 
 	private TemplateResource _templateResource;
 

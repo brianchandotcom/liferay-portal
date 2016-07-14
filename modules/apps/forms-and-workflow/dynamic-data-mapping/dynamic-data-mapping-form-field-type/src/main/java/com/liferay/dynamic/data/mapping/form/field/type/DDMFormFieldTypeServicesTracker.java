@@ -14,6 +14,8 @@
 
 package com.liferay.dynamic.data.mapping.form.field.type;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -21,9 +23,13 @@ import java.util.Set;
 /**
  * @author Marcellus Tavares
  */
+@ProviderType
 public interface DDMFormFieldTypeServicesTracker {
 
 	public DDMFormFieldRenderer getDDMFormFieldRenderer(String name);
+
+	public DDMFormFieldTemplateContextContributor
+		getDDMFormFieldTemplateContextContributor(String name);
 
 	public DDMFormFieldType getDDMFormFieldType(String name);
 

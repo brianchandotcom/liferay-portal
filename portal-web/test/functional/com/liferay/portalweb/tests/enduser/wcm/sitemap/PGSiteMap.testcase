@@ -58,8 +58,6 @@
 	</tear-down>
 
 	<command name="DisplayPrivatePageWithChildPage" priority="4">
-		<property name="portal.acceptance" value="true" />
-
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Site Map" />
 		</execute>

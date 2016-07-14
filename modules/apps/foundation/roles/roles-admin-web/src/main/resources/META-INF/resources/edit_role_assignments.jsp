@@ -108,6 +108,8 @@ String[] tabs2Urls = {
 };
 %>
 
+<liferay-util:include page="/edit_role_tabs.jsp" servletContext="<%= application %>" />
+
 <div class="container-fluid-1280">
 	<liferay-ui:tabs
 		names="<%= tabs2Names %>"

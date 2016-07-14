@@ -46,14 +46,14 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcPath", "/select_assignees.jsp");
 portletURL.setParameter("tabs1", tabs1);
-portletURL.setParameter("tabs2", "available");
+portletURL.setParameter("tabs3", "available");
 portletURL.setParameter("redirect", redirect);
 portletURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 portletURL.setParameter("displayStyle", displayStyle);
 portletURL.setParameter("orderByCol", orderByCol);
 portletURL.setParameter("orderByType", orderByType);
 
-request.setAttribute("edit_role_assignments.jsp-tabs2", "available");
+request.setAttribute("edit_role_assignments.jsp-tabs3", "available");
 
 request.setAttribute("edit_role_assignments.jsp-cur", cur);
 
@@ -89,7 +89,7 @@ request.setAttribute("edit_role_assignments.jsp-portletURL", portletURL);
 
 <aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="tabs1" type="hidden" value="<%= tabs1 %>" />
-	<aui:input name="tabs2" type="hidden" value="available" />
+	<aui:input name="tabs3" type="hidden" value="available" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="roleId" type="hidden" value="<%= role.getRoleId() %>" />
 

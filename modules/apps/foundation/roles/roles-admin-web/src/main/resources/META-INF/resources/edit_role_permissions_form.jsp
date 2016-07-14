@@ -18,7 +18,7 @@
 
 <%
 String tabs1 = "roles";
-String tabs2 = ParamUtil.getString(request, "tabs2", "current");
+String tabs3 = ParamUtil.getString(request, "tabs3", "current");
 
 String redirect = ParamUtil.getString(request, "redirect");
 
@@ -58,7 +58,7 @@ if (Validator.isNotNull(portletResource)) {
 </portlet:actionURL>
 
 <aui:form action="<%= editRolePermissionsURL %>" method="post" name="fm">
-	<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
+	<aui:input name="tabs3" type="hidden" value="<%= tabs3 %>" />
 	<aui:input name="redirect" type="hidden" />
 	<aui:input name="roleId" type="hidden" value="<%= role.getRoleId() %>" />
 	<aui:input name="portletResource" type="hidden" value="<%= portletResource %>" />

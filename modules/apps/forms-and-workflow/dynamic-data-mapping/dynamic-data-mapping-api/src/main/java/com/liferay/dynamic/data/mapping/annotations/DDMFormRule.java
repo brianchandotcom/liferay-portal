@@ -23,7 +23,7 @@ import java.lang.annotation.Target;
  * @author Leonardo Barros
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.METHOD)
+@Target(ElementType.TYPE)
 public @interface DDMFormRule {
 
 	public String[] actions() default {};

@@ -70,6 +70,8 @@
 			<var name="assetType" value="Basic Web Content" />
 		</execute>
 
+		<execute macro="IFrame#selectEditAssetFrame" />
+
 		<execute macro="WebContent#addPGViaPanel">
 			<var name="webContentContent" value="WC WebContent Content" />
 			<var name="webContentTitle" value="WC WebContent Title" />
@@ -383,6 +385,8 @@
 		<execute macro="Content#addNewPG">
 			<var name="assetType" value="Basic Web Content" />
 		</execute>
+
+		<execute macro="IFrame#selectEditAssetFrame" />
 
 		<execute macro="WebContent#addPGViaPanel">
 			<var name="templateName" value="Second Basic Template" />

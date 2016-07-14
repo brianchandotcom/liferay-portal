@@ -22,6 +22,10 @@
 		<execute function="SelectFrame" locator1="Configuration#CONFIGURATION_IFRAME" />
 	</command>
 
+	<command name="selectEditAssetFrame">
+		<execute function="SelectFrame" locator1="IFrame#EDIT_ASSET" />
+	</command>
+
 	<command name="selectPermissionsFrame">
 		<var name="key_iframeTitle" value="Permissions" />
 

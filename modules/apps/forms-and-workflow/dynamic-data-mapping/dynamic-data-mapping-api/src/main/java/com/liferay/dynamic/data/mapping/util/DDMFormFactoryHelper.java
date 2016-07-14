@@ -52,8 +52,8 @@ public class DDMFormFactoryHelper {
 
 		ddmForm.setAvailableLocales(_availableLocales);
 		ddmForm.setDefaultLocale(_defaultLocale);
-
 		ddmForm.setDDMFormFields(getDDMFormFields());
+		ddmForm.setDDMFormRules(getDDMFormRules());
 
 		return ddmForm;
 	}
@@ -116,6 +116,15 @@ public class DDMFormFactoryHelper {
 		}
 
 		return ddmFormFields;
+	}
+
+	protected List<com.liferay.dynamic.data.mapping.model.DDMFormRule>
+		getDDMFormRules() {
+
+		DDMFormRuleFactoryHelper ddmFormRuleFactoryHelper =
+			new DDMFormRuleFactoryHelper(_ddmForm);
+
+		return ddmFormRuleFactoryHelper.createDDMFormRules();
 	}
 
 	protected Locale getDefaultLocale() {

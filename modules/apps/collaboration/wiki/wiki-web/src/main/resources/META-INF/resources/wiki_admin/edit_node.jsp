@@ -50,7 +50,7 @@ renderResponse.setTitle((node == null) ? LanguageUtil.get(request, "new-wiki-nod
 			</aui:fieldset>
 
 			<c:if test="<%= node == null %>">
-				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
+				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" id='<%= renderResponse.getNamespace() + "permissions" %>' label="permissions">
 					<liferay-ui:input-permissions
 						modelName="<%= WikiNode.class.getName() %>"
 					/>

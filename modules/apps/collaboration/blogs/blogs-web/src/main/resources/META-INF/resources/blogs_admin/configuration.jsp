@@ -61,7 +61,7 @@ BlogsGroupServiceOverriddenConfiguration blogsGroupServiceOverriddenConfiguratio
 					<aui:input cssClass="lfr-input-text-container" label="address" name="preferences--emailFromAddress--" value="<%= blogsGroupServiceSettings.getEmailFromAddress() %>" />
 				</aui:fieldset>
 
-				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="definition-of-terms">
+				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" id='<%= renderResponse.getNamespace() + "definitionOfTerms" %>' label="definition-of-terms">
 					<dl>
 
 						<%

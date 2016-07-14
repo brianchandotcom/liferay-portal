@@ -71,7 +71,7 @@ if (portletTitleBasedNavigation) {
 				<aui:input name="description" />
 			</aui:fieldset>
 
-			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="repository-configuration">
+			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" id='<%= renderResponse.getNamespace() + "repositoryConfiguration" %>' label="repository-configuration">
 				<c:choose>
 					<c:when test="<%= repository == null %>">
 						<aui:select id="repositoryTypes" label="repository-type" name="className">
@@ -133,7 +133,7 @@ if (portletTitleBasedNavigation) {
 			</aui:fieldset>
 
 			<c:if test="<%= repository == null %>">
-				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
+				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" id='<%= renderResponse.getNamespace() + "permissions" %>' label="permissions">
 					<liferay-ui:input-permissions
 						modelName="<%= DLFolderConstants.getClassName() %>"
 					/>

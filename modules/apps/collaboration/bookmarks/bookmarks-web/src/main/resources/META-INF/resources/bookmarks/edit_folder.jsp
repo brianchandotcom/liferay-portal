@@ -98,7 +98,7 @@ if (portletTitleBasedNavigation) {
 			</aui:fieldset>
 
 			<c:if test="<%= folder != null %>">
-				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="parent-folder">
+				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" id='<%= renderResponse.getNamespace() + "parentFolder" %>' label="parent-folder">
 
 					<%
 					String parentFolderName = LanguageUtil.get(request, "home");
@@ -160,7 +160,7 @@ if (portletTitleBasedNavigation) {
 			</c:if>
 
 			<liferay-ui:custom-attributes-available className="<%= BookmarksFolder.class.getName() %>">
-				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="custom-fields">
+				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" id='<%= renderResponse.getNamespace() + "customFields" %>' label="custom-fields">
 					<liferay-ui:custom-attribute-list
 						className="<%= BookmarksFolder.class.getName() %>"
 						classPK="<%= (folder != null) ? folder.getFolderId() : 0 %>"
@@ -171,7 +171,7 @@ if (portletTitleBasedNavigation) {
 			</liferay-ui:custom-attributes-available>
 
 			<c:if test="<%= folder == null %>">
-				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
+				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" id='<%= renderResponse.getNamespace() + "permissions" %>' label="permissions">
 					<aui:field-wrapper label="permissions">
 						<liferay-ui:input-permissions
 							modelName="<%= BookmarksFolder.class.getName() %>"

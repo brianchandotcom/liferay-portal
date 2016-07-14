@@ -42,32 +42,32 @@
 <!--ENTRY-->
 <tr>
 	<td>ENTRY_ATTACHMENTS</td>
-	<td>//div[@id='attachmentsHeader']//a</td>
+	<td>//div[contains(@id,'attachmentsHeader')]//a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENTRY_CATEGORIZATION</td>
-	<td>//div[@id='categorizationHeader']//a</td>
+	<td>//div[contains(@id,'categorizationHeader')]//a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENTRY_RELATED_ASSETS</td>
-	<td>//div[@id='relatedAssetsHeader']//a</td>
+	<td>//div[contains(@id,'relatedAssetsHeader')]//a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENTRY_CONFIGURATION</td>
-	<td>//div[@id='configurationHeader']//a</td>
+	<td>//div[contains(@id,'configurationHeader')]//a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENTRY_REPOSITORY_CONFIGURATION</td>
-	<td>//div[@id='repository-configurationHeader']//a</td>
+	<td>//div[contains(@id,'repository-configurationHeader)']//a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENTRY_PERMISSIONS</td>
-	<td>//div[@id='permissionsHeader']//a</td>
+	<td>//div[contains(@id,'permissionsHeader')]//a</td>
 	<td></td>
 </tr>
 <tr>

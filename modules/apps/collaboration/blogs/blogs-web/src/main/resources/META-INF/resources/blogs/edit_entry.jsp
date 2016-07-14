@@ -169,20 +169,20 @@ renderResponse.setTitle((entry != null) ? entry.getTitle() : LanguageUtil.get(re
 				</div>
 			</aui:fieldset>
 
-			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="categorization">
+			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" id='<%= renderResponse.getNamespace() + "categorization" %>' label="categorization">
 				<aui:input name="categories" type="assetCategories" />
 
 				<aui:input name="tags" type="assetTags" />
 			</aui:fieldset>
 
-			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="related-assets">
+			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" id='<%= renderResponse.getNamespace() + "relatedAssets" %>' label="related-assets">
 				<liferay-ui:input-asset-links
 					className="<%= BlogsEntry.class.getName() %>"
 					classPK="<%= entryId %>"
 				/>
 			</aui:fieldset>
 
-			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="configuration">
+			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" id='<%= renderResponse.getNamespace() + "configuration" %>' label="configuration">
 				<div class="clearfix form-group">
 					<label><liferay-ui:message key="abstract" /> <liferay-ui:icon-help message="an-abstract-is-a-brief-summary-of-a-blog-entry" /></label>
 
@@ -265,7 +265,7 @@ renderResponse.setTitle((entry != null) ? entry.getTitle() : LanguageUtil.get(re
 			</aui:fieldset>
 
 			<liferay-ui:custom-attributes-available className="<%= BlogsEntry.class.getName() %>">
-				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="custom-fields">
+				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" id='<%= renderResponse.getNamespace() + "customFields" %>' label="custom-fields">
 					<liferay-ui:custom-attribute-list
 						className="<%= BlogsEntry.class.getName() %>"
 						classPK="<%= entryId %>"
@@ -276,7 +276,7 @@ renderResponse.setTitle((entry != null) ? entry.getTitle() : LanguageUtil.get(re
 			</liferay-ui:custom-attributes-available>
 
 			<c:if test="<%= (entry == null) || (entry.getStatus() == WorkflowConstants.STATUS_DRAFT) %>">
-				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
+				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" id='<%= renderResponse.getNamespace() + "permissions" %>' label="permissions">
 					<liferay-ui:input-permissions
 						modelName="<%= BlogsEntry.class.getName() %>"
 					/>

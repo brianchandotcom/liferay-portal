@@ -138,7 +138,7 @@ renderResponse.setTitle((fileEntryType == null) ? LanguageUtil.get(request, "new
 			</aui:fieldset>
 
 			<c:if test="<%= fileEntryType == null %>">
-				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions" markupView="lexicon">
+				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" id='<%= renderResponse.getNamespace() + "permissions" %>' label="permissions" markupView="lexicon">
 					<liferay-ui:input-permissions
 						modelName="<%= DLFileEntryType.class.getName() %>"
 					/>

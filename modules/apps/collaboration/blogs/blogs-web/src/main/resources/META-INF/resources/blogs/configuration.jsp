@@ -29,7 +29,7 @@ blogsPortletInstanceConfiguration = ConfigurationProviderUtil.getConfiguration(B
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
 	<aui:fieldset-group markupView="lexicon">
-		<aui:fieldset collapsible="<%= true %>" label="display-settings">
+		<aui:fieldset collapsible="<%= true %>" id='<%= renderResponse.getNamespace() + "displaySettings" %>' label="display-settings">
 			<aui:select label="maximum-items-to-display" name="preferences--pageDelta--">
 
 				<%

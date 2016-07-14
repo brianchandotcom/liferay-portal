@@ -152,7 +152,7 @@ if (portletTitleBasedNavigation) {
 				}
 				%>
 
-				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" helpMessage='<%= rootFolder ? "" : "document-type-restrictions-help" %>' label='<%= rootFolder ? "" : (workflowEnabled ? "document-type-restrictions-and-workflow" : "document-type-restrictions") %>'>
+				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" helpMessage='<%= rootFolder ? "" : "document-type-restrictions-help" %>' id='<%= renderResponse.getNamespace() + "restrictionsAndWorkflow" %>' label='<%= rootFolder ? "" : (workflowEnabled ? "document-type-restrictions-and-workflow" : "document-type-restrictions") %>'>
 					<c:if test="<%= !rootFolder %>">
 						<aui:input checked="<%= dlFolder.getRestrictionType() == DLFolderConstants.RESTRICTION_TYPE_INHERIT %>" id="restrictionTypeInherit" label='<%= workflowEnabled ? LanguageUtil.format(request, "use-document-type-restrictions-and-workflow-of-the-parent-folder-x", parentFolderName, false) : LanguageUtil.format(request, "use-document-type-restrictions-of-the-parent-folder-x", parentFolderName, false) %>' name="restrictionType" type="radio" value="<%= DLFolderConstants.RESTRICTION_TYPE_INHERIT %>" />
 
@@ -288,7 +288,7 @@ if (portletTitleBasedNavigation) {
 
 			<c:if test="<%= (parentFolder == null) || parentFolder.isSupportsMetadata() %>">
 				<liferay-ui:custom-attributes-available className="<%= DLFolderConstants.getClassName() %>">
-					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="custom-fields">
+					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" id='<%= renderResponse.getNamespace() + "customFields" %>' label="custom-fields">
 						<liferay-ui:custom-attribute-list
 							className="<%= DLFolderConstants.getClassName() %>"
 							classPK="<%= (folder != null) ? folder.getFolderId() : 0 %>"
@@ -300,7 +300,7 @@ if (portletTitleBasedNavigation) {
 			</c:if>
 
 			<c:if test="<%= !rootFolder && (folder == null) %>">
-				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
+				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" id='<%= renderResponse.getNamespace() + "permissions" %>' label="permissions">
 					<liferay-ui:input-permissions
 						modelName="<%= DLFolderConstants.getClassName() %>"
 					/>

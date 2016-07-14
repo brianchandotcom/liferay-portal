@@ -178,26 +178,26 @@ if (portletTitleBasedNavigation) {
 				</div>
 			</aui:fieldset>
 
-			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="attachments">
+			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" id='<%= renderResponse.getNamespace() + "attachments" %>' label="attachments">
 				<div id="<portlet:namespace />attachments">
 					<liferay-util:include page="/admin/common/attachments.jsp" servletContext="<%= application %>" />
 				</div>
 			</aui:fieldset>
 
-			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="categorization">
+			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" id='<%= renderResponse.getNamespace() + "categorization" %>' label="categorization">
 				<aui:input classPK="<%= (kbArticle != null) ? kbArticle.getClassPK() : 0 %>" name="categories" type="assetCategories" />
 
 				<aui:input classPK="<%= (kbArticle != null) ? kbArticle.getClassPK() : 0 %>" name="tags" type="assetTags" />
 			</aui:fieldset>
 
-			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="related-assets">
+			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" id='<%= renderResponse.getNamespace() + "relatedAssets" %>' label="related-assets">
 				<liferay-ui:input-asset-links
 					className="<%= KBArticle.class.getName() %>"
 					classPK="<%= (kbArticle == null) ? KBArticleConstants.DEFAULT_PARENT_RESOURCE_PRIM_KEY : kbArticle.getClassPK() %>"
 				/>
 			</aui:fieldset>
 
-			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="configuration">
+			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" id='<%= renderResponse.getNamespace() + "configuration" %>' label="configuration">
 				<aui:input cssClass="input-medium" data-customUrl="<%= false %>" disabled="<%= kbArticle != null %>" helpMessage='<%= LanguageUtil.format(request, "for-example-x", "<em>/introduction-to-service-builder</em>") %>' ignoreRequestValue="<%= true %>" label="friendly-url" name="urlTitle" placeholder="sample-article-url-title" prefix="<%= _getFriendlyURLPrefix(parentResourceClassNameId, parentResourcePrimKey) %>" type="text" value="<%= urlTitle %>" />
 
 				<c:if test="<%= enableKBArticleDescription %>">
@@ -236,7 +236,7 @@ if (portletTitleBasedNavigation) {
 			</aui:fieldset>
 
 			<c:if test="<%= kbArticle == null %>">
-				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" cssClass='<%= (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) ? "hide" : StringPool.BLANK %>' label="permissions">
+				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" cssClass='<%= (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) ? "hide" : StringPool.BLANK %>' id='<%= renderResponse.getNamespace() + "permissions" %>' label="permissions">
 					<liferay-ui:input-permissions
 						modelName="<%= KBArticle.class.getName() %>"
 					/>

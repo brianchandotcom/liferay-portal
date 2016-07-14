@@ -16,15 +16,23 @@ package com.liferay.portal.workflow.kaleo.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.workflow.kaleo.model.KaleoTaskForm;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskFormInstance;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
+import com.liferay.portal.workflow.kaleo.runtime.form.FormValueProcessor;
 import com.liferay.portal.workflow.kaleo.service.base.KaleoTaskFormInstanceLocalServiceBaseImpl;
 
 import java.util.Date;
 import java.util.List;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Michael C. Han
@@ -66,7 +74,30 @@ public class KaleoTaskFormInstanceLocalServiceImpl
 		kaleoTaskFormInstance.setKaleoTaskInstanceTokenId(
 			kaleoTaskInstanceToken.getKaleoTaskInstanceTokenId());
 		kaleoTaskFormInstance.setKaleoTaskFormId(kaleoTaskFormId);
-		kaleoTaskFormInstance.setFormValues(formValues);
+
+		KaleoTaskForm kaleoTaskForm =
+			kaleoTaskFormLocalService.getKaleoTaskForm(kaleoTaskFormId);
+
+		if (Validator.isNotNull(kaleoTaskForm.getFormDefinition())) {
+			kaleoTaskFormInstance.setFormValues(formValues);
+		}
+		else {
+			FormValueProcessor formValueProcessor = getFormValueProcessor();
+
+			if (formValueProcessor != null) {
+				kaleoTaskFormInstance = formValueProcessor.processFormValues(
+					kaleoTaskForm, kaleoTaskFormInstance, formValues,
+					serviceContext);
+			}
+			else {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"No FormValueProcessor defined to for form: " +
+							kaleoTaskForm.getKaleoTaskFormId() + " values: " +
+								formValues);
+				}
+			}
+		}
 
 		kaleoTaskFormInstancePersistence.update(kaleoTaskFormInstance);
 
@@ -122,5 +153,15 @@ public class KaleoTaskFormInstanceLocalServiceImpl
 
 		return kaleoTaskFormInstancePersistence.findByKaleoTaskId(kaleoTaskId);
 	}
+
+	protected FormValueProcessor getFormValueProcessor() {
+		return _serviceTracker.getService();
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		KaleoTaskFormInstanceLocalServiceImpl.class);
+
+	private static final ServiceTracker<FormValueProcessor, FormValueProcessor>
+		_serviceTracker = ServiceTrackerFactory.open(FormValueProcessor.class);
 
 }

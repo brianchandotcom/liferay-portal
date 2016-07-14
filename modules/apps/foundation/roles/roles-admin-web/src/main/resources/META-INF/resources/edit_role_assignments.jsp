@@ -156,10 +156,6 @@ String[] tabs2Urls = {
 			<aui:input name="addGroupIds" type="hidden" />
 			<aui:input name="removeGroupIds" type="hidden" />
 
-			<%
-			String portletId = PortletProviderUtil.getPortletId(User.class.getName(), PortletProvider.Action.VIEW);
-			%>
-
 			<liferay-ui:breadcrumb
 				showLayout="<%= false %>"
 				showPortletBreadcrumb="<%= true %>"

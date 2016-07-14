@@ -121,7 +121,7 @@
 	<command name="gotoAddField">
 		<var name="key_columnSize" value="${columnSize}" />
 
-		<execute function="Click" locator1="Form#ADD_FIELD" />
+		<execute function="Click#makeVisibleClickAt" locator1="Form#ADD_FIELD" />
 
 		<var name="key_fieldType" value="${fieldType}" />
 

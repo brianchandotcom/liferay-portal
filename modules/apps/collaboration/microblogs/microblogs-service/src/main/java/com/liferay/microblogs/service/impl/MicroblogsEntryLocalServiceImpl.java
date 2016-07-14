@@ -255,6 +255,7 @@ public class MicroblogsEntryLocalServiceImpl
 		return microblogsEntryPersistence.countByCompanyId(companyId);
 	}
 
+	@Deprecated
 	@Override
 	public List<MicroblogsEntry> getMicroblogsEntries(
 		long creatorClassNameId, int type, int start, int end,
@@ -264,6 +265,7 @@ public class MicroblogsEntryLocalServiceImpl
 			creatorClassNameId, type, start, end, obc);
 	}
 
+	@Deprecated
 	@Override
 	public List<MicroblogsEntry> getMicroblogsEntries(
 		long creatorClassNameId, long creatorClassPK, int start, int end) {
@@ -272,6 +274,7 @@ public class MicroblogsEntryLocalServiceImpl
 			creatorClassNameId, creatorClassPK, start, end);
 	}
 
+	@Deprecated
 	@Override
 	public List<MicroblogsEntry> getMicroblogsEntries(
 		long creatorClassNameId, long creatorClassPK, int type, int start,
@@ -281,6 +284,44 @@ public class MicroblogsEntryLocalServiceImpl
 			creatorClassNameId, creatorClassPK, type, start, end);
 	}
 
+	@Override
+	public List<MicroblogsEntry> getMicroblogsEntries(
+		long companyId, long creatorClassNameId, int type, int start, int end,
+		OrderByComparator obc) {
+
+		return microblogsEntryPersistence.findByC_CCNI_T(
+			companyId, creatorClassNameId, type, start, end, obc);
+	}
+
+	@Override
+	public List<MicroblogsEntry> getMicroblogsEntries(
+		long companyId, long creatorClassNameId, long creatorClassPK, int start,
+		int end) {
+
+		return microblogsEntryPersistence.findByC_CCNI_CCPK(
+			companyId, creatorClassNameId, creatorClassPK, start, end);
+	}
+
+	@Override
+	public List<MicroblogsEntry> getMicroblogsEntries(
+		long companyId, long creatorClassNameId, long creatorClassPK, int type,
+		int start, int end) {
+
+		return microblogsEntryPersistence.findByC_CCNI_CCPK_T(
+			companyId, creatorClassNameId, creatorClassPK, type, start, end);
+	}
+
+	@Override
+	public List<MicroblogsEntry> getMicroblogsEntries(
+		long companyId, long creatorClassNameId, long creatorClassPK,
+		String assetTagName, boolean andOperator, int start, int end) {
+
+		return microblogsEntryFinder.findByC_CCNI_CCPK_ATN(
+			companyId, creatorClassNameId, creatorClassPK, assetTagName,
+			andOperator, start, end);
+	}
+
+	@Deprecated
 	@Override
 	public List<MicroblogsEntry> getMicroblogsEntries(
 		long creatorClassNameId, long creatorClassPK, String assetTagName,
@@ -293,12 +334,23 @@ public class MicroblogsEntryLocalServiceImpl
 
 	@Override
 	public List<MicroblogsEntry> getMicroblogsEntries(
+		long companyId, long creatorClassNameId, String assetTagName, int start,
+		int end) {
+
+		return microblogsEntryFinder.findByC_CCNI_ATN(
+			companyId, creatorClassNameId, assetTagName, start, end);
+	}
+
+	@Deprecated
+	@Override
+	public List<MicroblogsEntry> getMicroblogsEntries(
 		long creatorClassNameId, String assetTagName, int start, int end) {
 
 		return microblogsEntryFinder.findByCCNI_ATN(
 			creatorClassNameId, assetTagName, start, end);
 	}
 
+	@Deprecated
 	@Override
 	public int getMicroblogsEntriesCount(
 		long creatorClassNameId, long creatorClassPK) {
@@ -307,6 +359,7 @@ public class MicroblogsEntryLocalServiceImpl
 			creatorClassNameId, creatorClassPK);
 	}
 
+	@Deprecated
 	@Override
 	public int getMicroblogsEntriesCount(
 		long creatorClassNameId, long creatorClassPK, int type) {
@@ -317,6 +370,42 @@ public class MicroblogsEntryLocalServiceImpl
 
 	@Override
 	public int getMicroblogsEntriesCount(
+		long companyId, long creatorClassNameId, long creatorClassPK) {
+
+		return microblogsEntryPersistence.countByC_CCNI_CCPK(
+			companyId, creatorClassNameId, creatorClassPK);
+	}
+
+	@Override
+	public int getMicroblogsEntriesCount(
+		long companyId, long creatorClassNameId, long creatorClassPK,
+		int type) {
+
+		return microblogsEntryPersistence.countByC_CCNI_CCPK_T(
+			companyId, creatorClassNameId, creatorClassPK, type);
+	}
+
+	@Override
+	public int getMicroblogsEntriesCount(
+		long companyId, long creatorClassNameId, long creatorClassPK,
+		String assetTagName, boolean andOperator) {
+
+		return microblogsEntryFinder.countByC_CCNI_CCPK_ATN(
+			companyId, creatorClassNameId, creatorClassPK, assetTagName,
+			andOperator);
+	}
+
+	@Override
+	public int getMicroblogsEntriesCount(
+		long companyId, long creatorClassNameId, String assetTagName) {
+
+		return microblogsEntryFinder.countByC_CCNI_ATN(
+			companyId, creatorClassNameId, assetTagName);
+	}
+
+	@Deprecated
+	@Override
+	public int getMicroblogsEntriesCount(
 		long creatorClassNameId, long creatorClassPK, String assetTagName,
 		boolean andOperator) {
 
@@ -324,6 +413,7 @@ public class MicroblogsEntryLocalServiceImpl
 			creatorClassNameId, creatorClassPK, assetTagName, andOperator);
 	}
 
+	@Deprecated
 	@Override
 	public int getMicroblogsEntriesCount(
 		long creatorClassNameId, String assetTagName) {

@@ -1071,13 +1071,51 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 		Collections.sort(jarPaths);
 
+		String prefix = "reference:".concat(_STATIC_JAR);
+
+		List<Bundle> refreshBundles = new ArrayList<>();
+
+		for (Bundle bundle : bundleContext.getBundles()) {
+			String location = bundle.getLocation();
+
+			if (!location.startsWith(prefix)) {
+				continue;
+			}
+
+			Path filePath = Paths.get(location.substring(prefix.length()));
+
+			if (jarPaths.contains(filePath)) {
+				bundles.add(bundle);
+
+				continue;
+			}
+
+			bundle.uninstall();
+
+			refreshBundles.add(bundle);
+
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Uninstalled orphan overwritten static JAR bundle " +
+						location);
+			}
+		}
+
+		FrameworkWiring frameworkWiring = _framework.adapt(
+			FrameworkWiring.class);
+
+		frameworkWiring.refreshBundles(refreshBundles);
+
+		refreshBundles.clear();
+
 		Set<String> overwrittenFileNames = new HashSet<>();
 
 		for (Path jarPath : jarPaths) {
 			try (InputStream inputStream = Files.newInputStream(jarPath)) {
 				String path = jarPath.toString();
 
-				Bundle bundle = _installInitialBundle(path, inputStream);
+				Bundle bundle = _installInitialBundle(
+					_STATIC_JAR.concat(path), inputStream);
 
 				if (bundle != null) {
 					bundles.add(bundle);
@@ -1244,18 +1282,13 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			hostBundleSymbolicNames.add(fragmentHost);
 		}
 
-		List<Bundle> hostBundles = new ArrayList<>();
-
 		for (Bundle bundle : installedBundles) {
 			if (hostBundleSymbolicNames.contains(bundle.getSymbolicName())) {
-				hostBundles.add(bundle);
+				refreshBundles.add(bundle);
 			}
 		}
 
-		FrameworkWiring frameworkWiring = _framework.adapt(
-			FrameworkWiring.class);
-
-		frameworkWiring.refreshBundles(hostBundles);
+		frameworkWiring.refreshBundles(refreshBundles);
 
 		return new HashSet<>(Arrays.asList(initialBundles));
 	}
@@ -1372,6 +1405,8 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			}
 		}
 	}
+
+	private static final String _STATIC_JAR = "Static-Jar::";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ModuleFrameworkImpl.class);

@@ -45,14 +45,14 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcPath", "/edit_role_assignments.jsp");
 portletURL.setParameter("tabs1", tabs1);
-portletURL.setParameter("tabs2", "current");
+portletURL.setParameter("tabs3", "current");
 portletURL.setParameter("redirect", redirect);
 portletURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 portletURL.setParameter("displayStyle", displayStyle);
 portletURL.setParameter("orderByCol", orderByCol);
 portletURL.setParameter("orderByType", orderByType);
 
-request.setAttribute("edit_role_assignments.jsp-tabs2", "current");
+request.setAttribute("edit_role_assignments.jsp-tabs3", "current");
 
 request.setAttribute("edit_role_assignments.jsp-cur", cur);
 
@@ -164,7 +164,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, role.getName(), currentURL);
 
 <aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="tabs1" type="hidden" value="<%= tabs1 %>" />
-	<aui:input name="tabs2" type="hidden" value="current" />
+	<aui:input name="tabs3" type="hidden" value="current" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="roleId" type="hidden" value="<%= role.getRoleId() %>" />
 	<aui:input name="addUserIds" type="hidden" />

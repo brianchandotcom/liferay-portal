@@ -156,7 +156,7 @@ if (portletTitleBasedNavigation) {
 			</aui:fieldset>
 
 			<liferay-ui:custom-attributes-available className="<%= BookmarksEntry.class.getName() %>">
-				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="custom-fields">
+				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" id='<%= renderResponse.getNamespace() + "customFields" %>' label="custom-fields">
 					<liferay-ui:custom-attribute-list
 						className="<%= BookmarksEntry.class.getName() %>"
 						classPK="<%= entryId %>"
@@ -166,13 +166,13 @@ if (portletTitleBasedNavigation) {
 				</aui:fieldset>
 			</liferay-ui:custom-attributes-available>
 
-			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="categorization">
+			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" id='<%= renderResponse.getNamespace() + "categorization" %>' label="categorization">
 				<aui:input name="categories" type="assetCategories" />
 
 				<aui:input name="tags" type="assetTags" />
 			</aui:fieldset>
 
-			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="related-assets">
+			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" id='<%= renderResponse.getNamespace() + "relatedAssets" %>' label="related-assets">
 				<liferay-ui:input-asset-links
 					className="<%= BookmarksEntry.class.getName() %>"
 					classPK="<%= entryId %>"
@@ -180,7 +180,7 @@ if (portletTitleBasedNavigation) {
 			</aui:fieldset>
 
 			<c:if test="<%= entry == null %>">
-				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
+				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" id='<%= renderResponse.getNamespace() + "permissions" %>' label="permissions">
 					<liferay-ui:input-permissions
 						modelName="<%= BookmarksEntry.class.getName() %>"
 					/>

@@ -27,7 +27,7 @@
 	<liferay-ui:error key="visibleNodesCount" message="please-specify-at-least-one-visible-node" />
 
 	<aui:fieldset-group markupView="lexicon">
-		<aui:fieldset collapsible="<%= true %>" label="display-settings">
+		<aui:fieldset collapsible="<%= true %>" id='<%= renderResponse.getNamespace() + "displaySettings" %>' label="display-settings">
 			<aui:input name="preferences--enableRelatedAssets--" type="checkbox" value="<%= wikiPortletInstanceSettingsHelper.isEnableRelatedAssets() %>" />
 
 			<aui:input name="preferences--enablePageRatings--" type="checkbox" value="<%= wikiPortletInstanceSettingsHelper.isEnablePageRatings() %>" />
@@ -37,7 +37,7 @@
 			<aui:input name="preferences--enableCommentRatings--" type="checkbox" value="<%= wikiPortletInstanceSettingsHelper.isEnableCommentRatings() %>" />
 		</aui:fieldset>
 
-		<aui:fieldset collapsible="<%= true %>" label="templates">
+		<aui:fieldset collapsible="<%= true %>" id='<%= renderResponse.getNamespace() + "templates" %>' label="templates">
 			<div class="display-template">
 				<liferay-ddm:template-selector
 					className="<%= WikiPage.class.getName() %>"
@@ -49,7 +49,7 @@
 			</div>
 		</aui:fieldset>
 
-		<aui:fieldset collapsible="<%= true %>" label="visible-wikis">
+		<aui:fieldset collapsible="<%= true %>" id='<%= renderResponse.getNamespace() + "visibleWikis" %>' label="visible-wikis">
 			<aui:input name="preferences--visibleNodes--" type="hidden" />
 			<aui:input name="preferences--hiddenNodes--" type="hidden" />
 

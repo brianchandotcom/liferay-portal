@@ -236,7 +236,7 @@ if (portletTitleBasedNavigation) {
 			</aui:fieldset>
 
 			<liferay-ui:custom-attributes-available className="<%= MBMessage.class.getName() %>">
-				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="custom-fields">
+				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" id='<%= renderResponse.getNamespace() + "customFields" %>' label="custom-fields">
 					<liferay-ui:custom-attribute-list
 						className="<%= MBMessage.class.getName() %>"
 						classPK="<%= messageId %>"
@@ -247,7 +247,7 @@ if (portletTitleBasedNavigation) {
 			</liferay-ui:custom-attributes-available>
 
 			<c:if test="<%= MBCategoryPermission.contains(permissionChecker, scopeGroupId, categoryId, ActionKeys.ADD_FILE) %>">
-				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="attachments">
+				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" id='<%= renderResponse.getNamespace() + "attachments" %>' label="attachments">
 					<c:if test="<%= existingAttachmentsFileEntries.size() > 0 %>">
 						<ul>
 
@@ -336,19 +336,19 @@ if (portletTitleBasedNavigation) {
 			</c:if>
 
 			<c:if test="<%= (curParentMessage == null) || childrenMessagesTaggable %>">
-				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="categorization">
+				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" id='<%= renderResponse.getNamespace() + "categorization" %>' label="categorization">
 					<aui:input name="tags" type="assetTags" />
 				</aui:fieldset>
 			</c:if>
 
-			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="related-assets">
+			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" id='<%= renderResponse.getNamespace() + "relatedAssets" %>' label="related-assets">
 				<liferay-ui:input-asset-links
 					className="<%= MBMessage.class.getName() %>"
 					classPK="<%= (message != null) ? message.getMessageId() : 0 %>"
 				/>
 			</aui:fieldset>
 
-			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="more-settings">
+			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" id='<%= renderResponse.getNamespace() + "moreSettings" %>' label="more-settings">
 				<c:if test="<%= curParentMessage == null %>">
 
 					<%
@@ -423,7 +423,7 @@ if (portletTitleBasedNavigation) {
 			</aui:fieldset>
 
 			<c:if test="<%= message == null %>">
-				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
+				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" id='<%= renderResponse.getNamespace() + "permissions" %>' label="permissions">
 					<liferay-ui:input-permissions
 						modelName="<%= MBMessage.class.getName() %>"
 					/>

@@ -444,7 +444,7 @@ if (portletTitleBasedNavigation) {
 
 			<c:if test="<%= (folder == null) || folder.isSupportsMetadata() %>">
 				<liferay-ui:custom-attributes-available className="<%= DLFileEntryConstants.getClassName() %>">
-					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="custom-fields">
+					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" id='<%= renderResponse.getNamespace() + "customFields" %>' label="custom-fields">
 						<liferay-ui:custom-attribute-list
 							className="<%= DLFileEntryConstants.getClassName() %>"
 							classPK="<%= fileVersionId %>"
@@ -456,13 +456,13 @@ if (portletTitleBasedNavigation) {
 			</c:if>
 
 			<c:if test="<%= (folder == null) || folder.isSupportsSocial() %>">
-				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="categorization">
+				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" id='<%= renderResponse.getNamespace() + "categorization" %>' label="categorization">
 					<aui:input classPK="<%= assetClassPK %>" classTypePK="<%= fileEntryTypeId %>" model="<%= DLFileEntry.class %>" name="categories" type="assetCategories" />
 
 					<aui:input classPK="<%= assetClassPK %>" model="<%= DLFileEntry.class %>" name="tags" type="assetTags" />
 				</aui:fieldset>
 
-				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="related-assets">
+				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" id='<%= renderResponse.getNamespace() + "relatedAssets" %>' label="related-assets">
 					<liferay-ui:input-asset-links
 						className="<%= DLFileEntry.class.getName() %>"
 						classPK="<%= assetClassPK %>"
@@ -471,7 +471,7 @@ if (portletTitleBasedNavigation) {
 			</c:if>
 
 			<c:if test="<%= fileEntry == null %>">
-				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
+				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" id='<%= renderResponse.getNamespace() + "permissions" %>' label="permissions">
 					<liferay-ui:input-permissions
 						modelName="<%= DLFileEntryConstants.getClassName() %>"
 					/>

@@ -225,7 +225,7 @@ if (portletTitleBasedNavigation) {
 					</aui:fieldset>
 
 					<c:if test="<%= (wikiPage != null) && (wikiPage.getPageId() > 0) %>">
-						<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="attachments">
+						<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" id='<%= renderResponse.getNamespace() + "attachments" %>' label="attachments">
 							<c:if test="<%= WikiNodePermissionChecker.contains(permissionChecker, node.getNodeId(), ActionKeys.ADD_ATTACHMENT) %>">
 								<liferay-util:include page="/wiki/edit_page_attachment.jsp" servletContext="<%= application %>" />
 							</c:if>
@@ -257,13 +257,13 @@ if (portletTitleBasedNavigation) {
 					}
 					%>
 
-					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="categorization">
+					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" id='<%= renderResponse.getNamespace() + "categorization" %>' label="categorization">
 						<aui:input classPK="<%= classPK %>" name="categories" type="assetCategories" />
 
 						<aui:input classPK="<%= classPK %>" name="tags" type="assetTags" />
 					</aui:fieldset>
 
-					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="related-assets">
+					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" id='<%= renderResponse.getNamespace() + "relatedAssets" %>' label="related-assets">
 						<liferay-ui:input-asset-links
 							assetEntryId="<%= assetEntryId %>"
 							className="<%= WikiPage.class.getName() %>"
@@ -271,7 +271,7 @@ if (portletTitleBasedNavigation) {
 						/>
 					</aui:fieldset>
 
-					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="configuration">
+					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" id='<%= renderResponse.getNamespace() + "configuration" %>' label="configuration">
 						<c:if test="<%= (wikiPage == null) || wikiPage.isNew() || wikiPage.isApproved() %>">
 							<aui:model-context bean="<%= new WikiPageImpl() %>" model="<%= WikiPage.class %>" />
 						</c:if>
@@ -318,7 +318,7 @@ if (portletTitleBasedNavigation) {
 
 					<c:if test="<%= wikiPage != null %>">
 						<liferay-ui:custom-attributes-available className="<%= WikiPage.class.getName() %>">
-							<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="custom-fields">
+							<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" id='<%= renderResponse.getNamespace() + "customFields" %>' label="custom-fields">
 								<liferay-ui:custom-attribute-list
 									className="<%= WikiPage.class.getName() %>"
 									classPK="<%= (templatePage != null) ? templatePage.getPrimaryKey() : wikiPage.getPrimaryKey() %>"
@@ -330,7 +330,7 @@ if (portletTitleBasedNavigation) {
 					</c:if>
 
 					<c:if test="<%= (wikiPage == null) || wikiPage.isNew() %>">
-						<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
+						<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" id='<%= renderResponse.getNamespace() + "permissions" %>' label="permissions">
 							<liferay-ui:input-permissions
 								modelName="<%= WikiPage.class.getName() %>"
 							/>

@@ -47,7 +47,7 @@
 					<aui:input cssClass="lfr-input-text-container" label="address" name="preferences--emailFromAddress--" value="<%= dlGroupServiceSettings.getEmailFromAddress() %>" />
 				</aui:fieldset>
 
-				<aui:fieldset collapsible="<%= true %>" label="definition-of-terms">
+				<aui:fieldset collapsible="<%= true %>" id='<%= renderResponse.getNamespace() + "definitionOfTerms" %>' label="definition-of-terms">
 					<dl>
 
 						<%

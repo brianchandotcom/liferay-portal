@@ -149,7 +149,7 @@ if (portletTitleBasedNavigation) {
 				</aui:select>
 			</aui:fieldset>
 
-			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="mailing-list">
+			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" id='<%= renderResponse.getNamespace() + "mailingList" %>' label="mailing-list">
 				<aui:model-context bean="<%= mailingList %>" model="<%= MBMailingList.class %>" />
 
 				<aui:input label="active" name="mailingListActive" type="toggle-switch" value='<%= ParamUtil.getBoolean(request, "mailingListActive", BeanPropertiesUtil.getBoolean(mailingList, "active")) %>' />
@@ -212,7 +212,7 @@ if (portletTitleBasedNavigation) {
 			</aui:fieldset>
 
 			<liferay-ui:custom-attributes-available className="<%= MBCategory.class.getName() %>">
-				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="custom-fields">
+				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" id='<%= renderResponse.getNamespace() + "customFields" %>' label="custom-fields">
 					<liferay-ui:custom-attribute-list
 						className="<%= MBCategory.class.getName() %>"
 						classPK="<%= (category != null) ? category.getCategoryId() : 0 %>"
@@ -223,7 +223,7 @@ if (portletTitleBasedNavigation) {
 			</liferay-ui:custom-attributes-available>
 
 			<c:if test="<%= category == null %>">
-				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
+				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" id='<%= renderResponse.getNamespace() + "permissions" %>' label="permissions">
 					<liferay-ui:input-permissions
 						modelName="<%= MBCategory.class.getName() %>"
 					/>

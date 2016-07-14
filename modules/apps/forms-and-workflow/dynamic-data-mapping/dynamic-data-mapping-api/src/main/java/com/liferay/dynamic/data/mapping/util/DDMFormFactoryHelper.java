@@ -15,6 +15,8 @@
 package com.liferay.dynamic.data.mapping.util;
 
 import com.liferay.dynamic.data.mapping.annotations.DDMForm;
+import com.liferay.dynamic.data.mapping.annotations.DDMFormRule;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -121,10 +123,17 @@ public class DDMFormFactoryHelper {
 	protected List<com.liferay.dynamic.data.mapping.model.DDMFormRule>
 		getDDMFormRules() {
 
-		DDMFormRuleFactoryHelper ddmFormRuleFactoryHelper =
-			new DDMFormRuleFactoryHelper(_ddmForm);
+		List<com.liferay.dynamic.data.mapping.model.DDMFormRule> ddmFormRules =
+			new ArrayList<>();
 
-		return ddmFormRuleFactoryHelper.createDDMFormRules();
+		for (DDMFormRule ddmFormRule : _ddmForm.rules()) {
+			ddmFormRules.add(
+				new com.liferay.dynamic.data.mapping.model.DDMFormRule(
+					ddmFormRule.condition(),
+					ListUtil.fromArray(ddmFormRule.actions())));
+		}
+
+		return ddmFormRules;
 	}
 
 	protected Locale getDefaultLocale() {

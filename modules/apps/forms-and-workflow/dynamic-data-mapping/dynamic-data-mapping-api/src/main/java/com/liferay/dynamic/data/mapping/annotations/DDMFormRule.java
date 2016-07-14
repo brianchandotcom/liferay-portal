@@ -25,6 +25,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 public @interface DDMFormRule {
+
 	public String[] actions() default {};
 
 	public String condition() default "TRUE";

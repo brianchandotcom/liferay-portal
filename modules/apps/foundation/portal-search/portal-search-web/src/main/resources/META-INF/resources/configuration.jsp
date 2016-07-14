@@ -29,24 +29,32 @@ String tabs2 = ParamUtil.getString(request, "tabs2");
 	<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
-	<liferay-ui:tabs
-		formName="fm"
-		names="display-settings,spell-check-settings,other-settings"
-		param="tabs2"
-		refresh="<%= false %>"
-	>
-		<liferay-ui:section>
-			<%@ include file="/display_settings.jspf" %>
-		</liferay-ui:section>
+	<div class="portlet-configuration-body-content">
+		<liferay-ui:tabs
+			formName="fm"
+			names="display-settings,spell-check-settings,other-settings"
+			param="tabs2"
+			refresh="<%= false %>"
+		>
+			<liferay-ui:section>
+				<div class="container-fluid-1280">
+					<%@ include file="/display_settings.jspf" %>
+				</div>
+			</liferay-ui:section>
 
-		<liferay-ui:section>
-			<%@ include file="/spell_check_settings.jspf" %>
-		</liferay-ui:section>
+			<liferay-ui:section>
+				<div class="container-fluid-1280">
+					<%@ include file="/spell_check_settings.jspf" %>
+				</div>
+			</liferay-ui:section>
 
-		<liferay-ui:section>
-			<%@ include file="/other_settings.jspf" %>
-		</liferay-ui:section>
-	</liferay-ui:tabs>
+			<liferay-ui:section>
+				<div class="container-fluid-1280">
+					<%@ include file="/other_settings.jspf" %>
+				</div>
+			</liferay-ui:section>
+		</liferay-ui:tabs>
+	</div>
 
 	<aui:button-row>
 		<aui:button cssClass="btn-lg" type="submit" />

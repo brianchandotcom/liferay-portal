@@ -64,7 +64,8 @@ public class StagingPortletConfigurationIcon
 
 		StringBundler sb = new StringBundler(11);
 
-		sb.append("Liferay.Portlet.openWindow({namespace: '");
+		sb.append("Liferay.Portlet.openWindow({bodyCssClass: ");
+		sb.append("'dialog-with-footer', namespace: '");
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);

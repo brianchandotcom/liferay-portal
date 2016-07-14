@@ -24,27 +24,31 @@
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
-	<liferay-ui:error key="xmlUrl" message="please-enter-a-valid-xml-url" />
-	<liferay-ui:error key="xslUrl" message="please-enter-a-valid-xsl-url" />
-	<liferay-ui:error key="transformation" message="an-error-occurred-while-processing-your-xml-and-xsl" />
+	<div class="portlet-configuration-body-content">
+		<div class="container-fluid-1280">
+			<liferay-ui:error key="xmlUrl" message="please-enter-a-valid-xml-url" />
+			<liferay-ui:error key="xslUrl" message="please-enter-a-valid-xsl-url" />
+			<liferay-ui:error key="transformation" message="an-error-occurred-while-processing-your-xml-and-xsl" />
 
-	<%
-	String validUrlPrefixes = xslContentConfiguration.validUrlPrefixes();
-	%>
+			<%
+			String validUrlPrefixes = xslContentConfiguration.validUrlPrefixes();
+			%>
 
-	<c:if test="<%= Validator.isNotNull(validUrlPrefixes) %>">
-		<div class="alert alert-info">
-			<liferay-ui:message arguments="<%= validUrlPrefixes %>" key="urls-must-begin-with-one-of-the-following" />
+			<c:if test="<%= Validator.isNotNull(validUrlPrefixes) %>">
+				<div class="alert alert-info">
+					<liferay-ui:message arguments="<%= validUrlPrefixes %>" key="urls-must-begin-with-one-of-the-following" />
+				</div>
+			</c:if>
+
+			<aui:fieldset-group markupView="lexicon">
+				<aui:fieldset>
+					<aui:input cssClass="lfr-input-text-container" name="preferences--xmlUrl--" type="text" value="<%= xslContentPortletInstanceConfiguration.xmlUrl() %>" />
+
+					<aui:input cssClass="lfr-input-text-container" name="preferences--xslUrl--" type="text" value="<%= xslContentPortletInstanceConfiguration.xslUrl() %>" />
+				</aui:fieldset>
+			</aui:fieldset-group>
 		</div>
-	</c:if>
-
-	<aui:fieldset-group markupView="lexicon">
-		<aui:fieldset>
-			<aui:input cssClass="lfr-input-text-container" name="preferences--xmlUrl--" type="text" value="<%= xslContentPortletInstanceConfiguration.xmlUrl() %>" />
-
-			<aui:input cssClass="lfr-input-text-container" name="preferences--xslUrl--" type="text" value="<%= xslContentPortletInstanceConfiguration.xslUrl() %>" />
-		</aui:fieldset>
-	</aui:fieldset-group>
+	</div>
 
 	<aui:button-row>
 		<aui:button cssClass="btn-lg" type="submit" />

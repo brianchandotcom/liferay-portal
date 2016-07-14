@@ -26,15 +26,6 @@ long recordSetId = PrefsParamUtil.getLong(PortletPreferencesFactoryUtil.getPortl
 DDLRecordSet selRecordSet = DDLRecordSetServiceUtil.fetchRecordSet(recordSetId);
 %>
 
-<div class="alert alert-info">
-	<span class="displaying-help-message-holder <%= (selRecordSet == null) ? StringPool.BLANK : "hide" %>">
-		<liferay-ui:message key="please-select-a-form-from-the-list-below" />
-	</span>
-	<span class="displaying-record-set-id-holder <%= (selRecordSet == null) ? "hide" : StringPool.BLANK %>">
-		<liferay-ui:message key="displaying-form" />: <span class="displaying-record-set-id"><%= (selRecordSet != null) ? HtmlUtil.escape(selRecordSet.getName(locale)) : StringPool.BLANK %></span>
-	</span>
-</div>
-
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />
 
 <liferay-portlet:renderURL portletConfiguration="<%= true %>" varImpl="configurationRenderURL" />
@@ -42,74 +33,88 @@ DDLRecordSet selRecordSet = DDLRecordSetServiceUtil.fetchRecordSet(recordSetId);
 <aui:form action="<%= configurationRenderURL %>" method="post" name="fm1">
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL.toString() %>" />
 
-	<aui:fieldset>
-		<liferay-ui:search-container
-			emptyResultsMessage="no-forms-were-found"
-			iteratorURL="<%= configurationRenderURL %>"
-			total="<%= DDLRecordSetServiceUtil.searchCount(company.getCompanyId(), scopeGroupId, keywords, DDLRecordSetConstants.SCOPE_FORMS) %>"
-		>
-			<div class="form-search input-append">
-				<liferay-ui:input-search autoFocus="<%= true %>" placeholder='<%= LanguageUtil.get(request, "keywords") %>' />
+	<div class="portlet-configuration-body-content">
+		<div class="container-fluid-1280">
+			<div class="alert alert-info">
+				<span class="displaying-help-message-holder <%= (selRecordSet == null) ? StringPool.BLANK : "hide" %>">
+					<liferay-ui:message key="please-select-a-form-from-the-list-below" />
+				</span>
+
+				<span class="displaying-record-set-id-holder <%= (selRecordSet == null) ? "hide" : StringPool.BLANK %>">
+					<liferay-ui:message key="displaying-form" />: <span class="displaying-record-set-id"><%= (selRecordSet != null) ? HtmlUtil.escape(selRecordSet.getName(locale)) : StringPool.BLANK %></span>
+				</span>
 			</div>
 
-			<liferay-ui:search-container-results
-				results="<%= DDLRecordSetServiceUtil.search(company.getCompanyId(), scopeGroupId, keywords, DDLRecordSetConstants.SCOPE_FORMS, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
-			/>
-
-			<liferay-ui:search-container-row
-				className="com.liferay.dynamic.data.lists.model.DDLRecordSet"
-				escapedModel="<%= true %>"
-				keyProperty="recordSetId"
-				modelVar="recordSet"
-			>
-
-				<%
-				StringBundler sb = new StringBundler(7);
-
-				sb.append("javascript:");
-				sb.append(renderResponse.getNamespace());
-				sb.append("selectRecordSet('");
-				sb.append(recordSet.getRecordSetId());
-				sb.append("','");
-				sb.append(recordSet.getName(locale));
-				sb.append("');");
-
-				String rowURL = sb.toString();
-				%>
-
-				<liferay-ui:search-container-column-text
-					href="<%= rowURL %>"
-					name="name"
-					orderable="<%= false %>"
-					property="name"
-				/>
-
-				<liferay-ui:search-container-column-text
-					buffer="buffer"
-					href="<%= rowURL %>"
-					name="description"
-					orderable="<%= false %>"
+			<aui:fieldset>
+				<liferay-ui:search-container
+					emptyResultsMessage="no-forms-were-found"
+					iteratorURL="<%= configurationRenderURL %>"
+					total="<%= DDLRecordSetServiceUtil.searchCount(company.getCompanyId(), scopeGroupId, keywords, DDLRecordSetConstants.SCOPE_FORMS) %>"
 				>
+					<div class="form-search input-append">
+						<liferay-ui:input-search autoFocus="<%= true %>" placeholder='<%= LanguageUtil.get(request, "keywords") %>' />
+					</div>
 
-					<%
-					buffer.append(StringUtil.shorten(recordSet.getDescription(locale), 100));
-					%>
+					<liferay-ui:search-container-results
+						results="<%= DDLRecordSetServiceUtil.search(company.getCompanyId(), scopeGroupId, keywords, DDLRecordSetConstants.SCOPE_FORMS, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
+					/>
 
-				</liferay-ui:search-container-column-text>
+					<liferay-ui:search-container-row
+						className="com.liferay.dynamic.data.lists.model.DDLRecordSet"
+						escapedModel="<%= true %>"
+						keyProperty="recordSetId"
+						modelVar="recordSet"
+					>
 
-				<liferay-ui:search-container-column-date
-					href="<%= rowURL %>"
-					name="modified-date"
-					orderable="<%= false %>"
-					value="<%= recordSet.getModifiedDate() %>"
-				/>
-			</liferay-ui:search-container-row>
+						<%
+						StringBundler sb = new StringBundler(7);
 
-			<div class="separator"><!-- --></div>
+						sb.append("javascript:");
+						sb.append(renderResponse.getNamespace());
+						sb.append("selectRecordSet('");
+						sb.append(recordSet.getRecordSetId());
+						sb.append("','");
+						sb.append(recordSet.getName(locale));
+						sb.append("');");
 
-			<liferay-ui:search-iterator />
-		</liferay-ui:search-container>
-	</aui:fieldset>
+						String rowURL = sb.toString();
+						%>
+
+						<liferay-ui:search-container-column-text
+							href="<%= rowURL %>"
+							name="name"
+							orderable="<%= false %>"
+							property="name"
+						/>
+
+						<liferay-ui:search-container-column-text
+							buffer="buffer"
+							href="<%= rowURL %>"
+							name="description"
+							orderable="<%= false %>"
+						>
+
+							<%
+							buffer.append(StringUtil.shorten(recordSet.getDescription(locale), 100));
+							%>
+
+						</liferay-ui:search-container-column-text>
+
+						<liferay-ui:search-container-column-date
+							href="<%= rowURL %>"
+							name="modified-date"
+							orderable="<%= false %>"
+							value="<%= recordSet.getModifiedDate() %>"
+						/>
+					</liferay-ui:search-container-row>
+
+					<div class="separator"><!-- --></div>
+
+					<liferay-ui:search-iterator />
+				</liferay-ui:search-container>
+			</aui:fieldset>
+		</div>
+	</div>
 </aui:form>
 
 <aui:form action="<%= configurationActionURL %>" method="post" name="fm">

@@ -7,12 +7,86 @@
 	padding: 5px;
 }
 
-.dialog-with-footer {
-	.portlet-layout {
-		height: calc(100% - #{$input-height-base} - #{2 * $dialog-footer-padding});
-		overflow-y: auto;
+.dialog-iframe-popup {
+	.contacts-portlet .portlet-configuration-container .form {
+		position: static;
 	}
 
+	.portlet-body,
+	.portlet-column,
+	.portlet-configuration,
+	.portlet-export-import,
+	.portlet-layout {
+		height: 100%;
+	}
+
+	.portlet-column {
+		position: static;
+	}
+
+	.portlet-configuration-body-content,
+	.export-dialog-tree,
+	.lfr-dynamic-uploader,
+	.process-list {
+		> .container-fluid-1280 {
+			padding-top: 20px;
+		}
+	}
+
+	.portlet-configuration-body-content {
+		bottom: 0;
+		left: 0;
+		margin-bottom: 0;
+		overflow: auto;
+		position: absolute;
+		right: 0;
+		top: 0;
+		-webkit-overflow-scrolling: touch;
+	}
+
+	.navbar ~ .portlet-configuration-setup,
+	.portlet-export-import-container {
+		height: calc(100% - #{$dialog-navbar-height});
+		position: relative;
+
+		@include sm {
+			height: calc(100% - #{$dialog-desktop-navbar-height});
+		}
+	}
+
+	.portlet-configuration-setup {
+		.lfr-nav {
+			margin-left: auto;
+			margin-right: auto;
+			max-width: 1280px;
+			padding-left: 8px;
+			padding-right: 8px;
+		}
+	}
+
+	.export-dialog-tree,
+	.lfr-dynamic-uploader,
+	.process-list {
+		bottom: 0;
+		display: block;
+		left: 0;
+		overflow: auto;
+		position: absolute;
+		right: 0;
+		top: $dialog-navbar-height;
+		-webkit-overflow-scrolling: touch;
+
+		@include sm {
+			top: $dialog-desktop-navbar-height;
+		}
+	}
+
+	.portlet-export-import-publish-processes {
+		top: 0;
+	}
+}
+
+.dialog-with-footer {
 	.button-holder {
 		&.dialog-footer {
 			background-color: #FFF;
@@ -20,9 +94,42 @@
 			bottom: 0;
 			left: 0;
 			margin: 0;
-			padding: $dialog-footer-padding;
-			position: fixed;
+			padding: 10px 15px;
+			position: absolute;
 			width: 100%;
+
+			@include sm {
+				padding: $dialog-footer-padding;
+			}
 		}
+
+		.btn-lg {
+			@include media-query(null, $screen-xs-max) {
+				font-size: 12px;
+				padding: 8px 24px;
+			}
+		}
+	}
+
+	.export-dialog-tree,
+	.lfr-dynamic-uploader,
+	.portlet-configuration-body-content {
+		bottom: $dialog-footer-height;
+
+		@include sm {
+			bottom: $dialog-desktop-footer-height;
+		}
+	}
+
+	.lfr-dynamic-uploader.hide-dialog-footer {
+		bottom: 0;
+
+		+ .dialog-footer {
+			display: none;
+		}
+	}
+
+	.portlet-configuration-edit-templates .portlet-configuration-body-content {
+		bottom: 0;
 	}
 }

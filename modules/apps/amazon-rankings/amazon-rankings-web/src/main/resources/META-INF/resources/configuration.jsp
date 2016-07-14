@@ -32,32 +32,36 @@ isbnsString = StringUtil.merge(isbns, StringPool.SPACE);
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
-	<liferay-ui:error exception="<%= ValidatorException.class %>">
+	<div class="portlet-configuration-body-content">
+		<div class="container-fluid-1280">
+			<liferay-ui:error exception="<%= ValidatorException.class %>">
 
-		<%
-		ValidatorException ve = (ValidatorException)errorException;
-		%>
+				<%
+				ValidatorException ve = (ValidatorException)errorException;
+				%>
 
-		<liferay-ui:message key="the-following-are-invalid-isbn-numbers" />
+				<liferay-ui:message key="the-following-are-invalid-isbn-numbers" />
 
-		<%
-		Enumeration enu = ve.getFailedKeys();
+				<%
+				Enumeration enu = ve.getFailedKeys();
 
-		while (enu.hasMoreElements()) {
-			String isbn = (String)enu.nextElement();
-		%>
+				while (enu.hasMoreElements()) {
+					String isbn = (String)enu.nextElement();
+				%>
 
-			<strong><%= HtmlUtil.escape(isbn) %></strong><%= (enu.hasMoreElements()) ? ", " : "." %>
+					<strong><%= HtmlUtil.escape(isbn) %></strong><%= (enu.hasMoreElements()) ? ", " : "." %>
 
-		<%
-		}
-		%>
+				<%
+				}
+				%>
 
-	</liferay-ui:error>
+			</liferay-ui:error>
 
-	<aui:fieldset>
-		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) || windowState.equals(LiferayWindowState.POP_UP) %>" cssClass="lfr-textarea-container" label="add-all-isbn-numbers-separated-by-spaces" name="preferences--isbns--" type="textarea" value="<%= isbnsString %>" wrap="soft" />
-	</aui:fieldset>
+			<aui:fieldset>
+				<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) || windowState.equals(LiferayWindowState.POP_UP) %>" cssClass="lfr-textarea-container" label="add-all-isbn-numbers-separated-by-spaces" name="preferences--isbns--" type="textarea" value="<%= isbnsString %>" wrap="soft" />
+			</aui:fieldset>
+		</div>
+	</div>
 
 	<aui:button-row>
 		<aui:button cssClass="btn-lg" type="submit" />

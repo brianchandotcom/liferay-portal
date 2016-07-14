@@ -25,41 +25,45 @@
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 	<aui:input name="oldLayoutTemplateId" type="hidden" value="<%= nestedPortletsDisplayContext.getLayoutTemplateId() %>" />
 
-	<aui:fieldset-group markupView="lexicon">
-		<aui:fieldset cssClass="display-style-icon">
-			<h4><liferay-ui:message key="layout-template" /></h4>
+	<div class="portlet-configuration-body-content">
+		<div class="container-fluid-1280">
+			<aui:fieldset-group markupView="lexicon">
+				<aui:fieldset cssClass="display-style-icon">
+					<h4><liferay-ui:message key="layout-template" /></h4>
 
-			<%
-			String layoutTemplateId = nestedPortletsDisplayContext.getLayoutTemplateId();
+					<%
+					String layoutTemplateId = nestedPortletsDisplayContext.getLayoutTemplateId();
 
-			for (LayoutTemplate layoutTemplate : nestedPortletsDisplayContext.getLayoutTemplates()) {
-			%>
+					for (LayoutTemplate layoutTemplate : nestedPortletsDisplayContext.getLayoutTemplates()) {
+					%>
 
-				<div class="entry-card lfr-asset-item">
-					<div class="radio radio-card radio-top-left">
-						<label>
-							<aui:input checked="<%= layoutTemplateId.equals(layoutTemplate.getLayoutTemplateId()) %>" label="" name="preferences--layoutTemplateId--" type="radio" value="<%= layoutTemplate.getLayoutTemplateId() %>" />
+						<div class="entry-card lfr-asset-item">
+							<div class="radio radio-card radio-top-left">
+								<label>
+									<aui:input checked="<%= layoutTemplateId.equals(layoutTemplate.getLayoutTemplateId()) %>" label="" name="preferences--layoutTemplateId--" type="radio" value="<%= layoutTemplate.getLayoutTemplateId() %>" />
 
-							<div class="card">
-								<div class="aspect-ratio aspect-ratio-bg-cover" style="background-image:url('<%= layoutTemplate.getStaticResourcePath() + HtmlUtil.escapeAttribute(layoutTemplate.getThumbnailPath()) %>')">
-								</div>
+									<div class="card">
+										<div class="aspect-ratio aspect-ratio-bg-cover" style="background-image:url('<%= layoutTemplate.getStaticResourcePath() + HtmlUtil.escapeAttribute(layoutTemplate.getThumbnailPath()) %>')">
+										</div>
 
-								<div class="card-row card-row-padded">
-									<div class="card-col-field">
-										<%= layoutTemplate.getName(locale) %>
+										<div class="card-row card-row-padded">
+											<div class="card-col-field">
+												<%= layoutTemplate.getName(locale) %>
+											</div>
+										</div>
 									</div>
-								</div>
+								</label>
 							</div>
-						</label>
-					</div>
-				</div>
+						</div>
 
-			<%
-			}
-			%>
+					<%
+					}
+					%>
 
-		</aui:fieldset>
-	</aui:fieldset-group>
+				</aui:fieldset>
+			</aui:fieldset-group>
+		</div>
+	</div>
 
 	<aui:button-row>
 		<aui:button cssClass="btn-lg" type="submit" />

@@ -37,7 +37,7 @@ portletURL.setParameter("portletResource", portletResource);
 		</div>
 	</c:when>
 	<c:otherwise>
-		<aui:nav-bar markupView="lexicon">
+		<aui:nav-bar cssClass="navbar-collapse-absolute" markupView="lexicon">
 			<aui:nav cssClass="navbar-nav">
 
 				<%
@@ -62,7 +62,7 @@ portletURL.setParameter("portletResource", portletResource);
 			</aui:nav>
 		</aui:nav-bar>
 
-		<div class="container-fluid-1280" id="<portlet:namespace />exportImportPortletContainer">
+		<div class="portlet-export-import-container" id="<portlet:namespace />exportImportPortletContainer">
 			<liferay-util:include page="/export_import_error.jsp" servletContext="<%= application %>" />
 
 			<c:choose>

@@ -29,16 +29,18 @@ String redirect = ParamUtil.getString(request, "redirect");
 </liferay-portlet:resourceURL>
 
 <aui:form action="<%= importPortletURL %>" cssClass="lfr-export-dialog" method="post" name="fm1">
-	<div class="lfr-dynamic-uploader">
-		<div class="lfr-upload-container" id="<portlet:namespace />fileUpload"></div>
-	</div>
-
 	<%
 	FileEntry fileEntry = ExportImportHelperUtil.getTempFileEntry(scopeGroupId, themeDisplay.getUserId(), ExportImportHelper.TEMP_FOLDER_NAME + selPortlet.getPortletId());
 	%>
 
+	<div class='lfr-dynamic-uploader <%= fileEntry == null ? "hide-dialog-footer" : StringPool.BLANK %>'>
+		<div class="container-fluid-1280">
+			<div class="lfr-upload-container" id="<portlet:namespace />fileUpload"></div>
+		</div>
+	</div>
+
 	<aui:button-row>
-		<aui:button cssClass='<%= fileEntry == null ? "btn-lg hide" : "btn-lg" %>' name="continueButton" type="submit" value="continue" />
+		<aui:button cssClass='btn-lg' name="continueButton" type="submit" value="continue" />
 	</aui:button-row>
 
 	<%
@@ -80,8 +82,6 @@ String redirect = ParamUtil.getString(request, "redirect");
 			}
 		);
 
-		var continueButton = A.one('#<portlet:namespace />continueButton');
-
 		liferayUpload._uploader.on(
 			'alluploadscomplete',
 			function(event) {
@@ -97,13 +97,14 @@ String redirect = ParamUtil.getString(request, "redirect");
 		);
 
 		function toggleContinueButton() {
+			var lfrDynamicUploader = liferayUpload.get('boundingBox').ancestor('.lfr-dynamic-uploader');
 			var uploadedFiles = liferayUpload._fileListContent.all('.upload-file.upload-complete');
 
 			if (uploadedFiles.size() == 1) {
-				continueButton.show();
+				lfrDynamicUploader.removeClass('hide-dialog-footer');
 			}
 			else {
-				continueButton.hide();
+				lfrDynamicUploader.addClass('hide-dialog-footer');
 			}
 		}
 	</aui:script>

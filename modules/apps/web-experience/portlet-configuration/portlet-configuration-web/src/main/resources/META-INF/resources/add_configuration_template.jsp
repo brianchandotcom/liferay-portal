@@ -20,39 +20,45 @@
 String redirect = ParamUtil.getString(request, "redirect");
 %>
 
-<liferay-ui:error exception="<%= PortletItemNameException.class %>" message="please-enter-a-valid-setup-name" />
-
 <portlet:actionURL name="updateArchivedSetup" var="updateArchivedSetupURL">
 	<portlet:param name="mvcPath" value="/edit_configuration_templates.jsp" />
 	<portlet:param name="portletConfiguration" value="<%= Boolean.TRUE.toString() %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= updateArchivedSetupURL %>" cssClass="container-fluid-1280" method="post" name="fm">
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="portletResource" type="hidden" value="<%= portletResource %>" />
+<div class="portlet-configuration-add-template">
+	<aui:form action="<%= updateArchivedSetupURL %>" cssClass="form" method="post" name="fm">
+		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+		<aui:input name="portletResource" type="hidden" value="<%= portletResource %>" />
 
-	<aui:fieldset-group markupView="lexicon">
-		<aui:fieldset>
+		<div class="portlet-configuration-body-content">
+			<div class="container-fluid-1280">
+				<liferay-ui:error exception="<%= PortletItemNameException.class %>" message="please-enter-a-valid-setup-name" />
 
-			<%
-			String name = StringPool.BLANK;
+				<aui:fieldset-group markupView="lexicon">
+					<aui:fieldset>
 
-			boolean useCustomTitle = GetterUtil.getBoolean(portletPreferences.getValue("portletSetupUseCustomTitle", null));
+						<%
+						String name = StringPool.BLANK;
 
-			if (useCustomTitle) {
-				name = PortletConfigurationUtil.getPortletTitle(portletPreferences, LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()));
-			}
-			%>
+						boolean useCustomTitle = GetterUtil.getBoolean(portletPreferences.getValue("portletSetupUseCustomTitle", null));
 
-			<aui:input name="name" placeholder="name" required="<%= true %>" type="text" value="<%= name %>">
-				<aui:validator name="maxLength">75</aui:validator>
-			</aui:input>
-		</aui:fieldset>
-	</aui:fieldset-group>
+						if (useCustomTitle) {
+							name = PortletConfigurationUtil.getPortletTitle(portletPreferences, LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()));
+						}
+						%>
 
-	<aui:button-row>
-		<aui:button type="submit" />
+						<aui:input name="name" placeholder="name" required="<%= true %>" type="text" value="<%= name %>">
+							<aui:validator name="maxLength">75</aui:validator>
+						</aui:input>
+					</aui:fieldset>
+				</aui:fieldset-group>
+			</div>
+		</div>
 
-		<aui:button href="<%= redirect %>" type="cancel" />
-	</aui:button-row>
-</aui:form>
+		<aui:button-row>
+			<aui:button cssClass="btn-lg" type="submit" />
+
+			<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
+		</aui:button-row>
+	</aui:form>
+</div>

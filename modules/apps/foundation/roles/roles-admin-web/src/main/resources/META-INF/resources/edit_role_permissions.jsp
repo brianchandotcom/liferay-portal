@@ -73,6 +73,8 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 <liferay-ui:success key="permissionDeleted" message="the-permission-was-deleted" />
 <liferay-ui:success key="permissionsUpdated" message="the-role-permissions-were-updated" />
 
+<liferay-util:include page="/edit_role_tabs.jsp" servletContext="<%= application %>" />
+
 <aui:container cssClass="container-fluid-1280" id="permissionContainer">
 	<aui:row>
 		<c:if test="<%= !portletName.equals(PortletKeys.SERVER_ADMIN) %>">

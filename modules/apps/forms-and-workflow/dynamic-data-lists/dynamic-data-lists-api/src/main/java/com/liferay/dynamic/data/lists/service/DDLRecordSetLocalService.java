@@ -197,6 +197,10 @@ public interface DDLRecordSetLocalService extends BaseLocalService,
 	public DDLRecordSet getDDLRecordSetByUuidAndGroupId(java.lang.String uuid,
 		long groupId) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DDLRecordSet getRecordSet(java.lang.String uuid, long recordSetId)
+		throws PortalException;
+
 	/**
 	* Returns the record set matching the group and record set key.
 	*

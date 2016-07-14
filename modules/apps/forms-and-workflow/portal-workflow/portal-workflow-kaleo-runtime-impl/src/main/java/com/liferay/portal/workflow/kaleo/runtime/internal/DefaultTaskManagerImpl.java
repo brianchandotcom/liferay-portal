@@ -14,7 +14,10 @@
 
 package com.liferay.portal.workflow.kaleo.runtime.internal;
 
+import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -32,18 +35,25 @@ import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
 import com.liferay.portal.workflow.kaleo.model.KaleoTask;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignmentInstance;
+import com.liferay.portal.workflow.kaleo.model.KaleoTaskForm;
+import com.liferay.portal.workflow.kaleo.model.KaleoTaskFormInstance;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
+import com.liferay.portal.workflow.kaleo.model.KaleoTransition;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.TaskManager;
 import com.liferay.portal.workflow.kaleo.runtime.action.KaleoActionExecutor;
+import com.liferay.portal.workflow.kaleo.runtime.form.FormDefinitionRetriever;
 import com.liferay.portal.workflow.kaleo.runtime.notification.NotificationHelper;
 import com.liferay.portal.workflow.kaleo.runtime.util.WorkflowContextUtil;
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Michael C. Han
@@ -91,6 +101,74 @@ public class DefaultTaskManagerImpl
 
 	@Override
 	public WorkflowTask completeWorkflowTask(
+			long workflowTaskInstanceId, long workflowTaskFormId,
+			String formValues, Map<String, Serializable> workflowContext,
+			ServiceContext serviceContext)
+		throws WorkflowException {
+
+		return completeWorkflowTask(
+			workflowTaskInstanceId, workflowTaskFormId, formValues, null,
+			workflowContext, serviceContext);
+	}
+
+	@Override
+	public WorkflowTask completeWorkflowTask(
+			long workflowTaskInstanceId, long workflowTaskFormId,
+			String formValues, String transitionName,
+			Map<String, Serializable> workflowContext,
+			ServiceContext serviceContext)
+		throws WorkflowException {
+
+		try {
+			KaleoTaskInstanceToken kaleoTaskInstanceToken =
+				kaleoTaskInstanceTokenLocalService.getKaleoTaskInstanceToken(
+					workflowTaskInstanceId);
+
+			KaleoTaskFormInstance kaleoTaskFormInstance =
+				kaleoTaskFormInstanceLocalService.addKaleoTaskFormInstance(
+					kaleoTaskInstanceToken.getGroupId(), workflowTaskFormId,
+					formValues, kaleoTaskInstanceToken, serviceContext);
+
+			if (kaleoTaskInstanceTokenLocalService.hasPendingKaleoTaskForms(
+					workflowTaskInstanceId)) {
+
+				return _kaleoWorkflowModelConverter.toWorkflowTask(
+					kaleoTaskInstanceToken, workflowContext);
+			}
+
+			if (Validator.isNull(transitionName)) {
+				KaleoTask kaleoTask = kaleoTaskLocalService.getKaleoTask(
+					kaleoTaskInstanceToken.getKaleoTaskId());
+
+				KaleoNode kaleoNode = kaleoTask.getKaleoNode();
+
+				List<KaleoTransition> kaleoTransitions =
+					kaleoNode.getKaleoTransitions();
+
+				if (kaleoTransitions.size() == 1) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							"Automatically completing form task: " +
+								kaleoTask.getName());
+					}
+
+					KaleoTransition kaleoTransition = kaleoTransitions.get(0);
+
+					transitionName = kaleoTransition.getName();
+				}
+			}
+
+			return doCompleteWorkflowTask(
+				workflowTaskInstanceId, transitionName, null, workflowContext,
+				serviceContext);
+		}
+		catch (Exception e) {
+			throw new WorkflowException(e);
+		}
+	}
+
+	@Override
+	public WorkflowTask completeWorkflowTask(
 			long workflowTaskInstanceId, String transitionName, String comment,
 			Map<String, Serializable> workflowContext,
 			ServiceContext serviceContext)
@@ -103,6 +181,54 @@ public class DefaultTaskManagerImpl
 		}
 		catch (Exception e) {
 			throw new WorkflowException(e);
+		}
+	}
+
+	@Override
+	public List<String> getWorkflowTaskFormDefinitions(
+			long workflowTaskInstanceId, ServiceContext serviceContext)
+		throws WorkflowException {
+
+		try {
+			KaleoTaskInstanceToken kaleoTaskInstanceToken =
+				kaleoTaskInstanceTokenLocalService.getKaleoTaskInstanceToken(
+					workflowTaskInstanceId);
+
+			List<KaleoTaskForm> kaleoTaskForms =
+				kaleoTaskFormLocalService.getKaleoTaskForms(
+					kaleoTaskInstanceToken.getKaleoTaskId());
+
+			List<String> kaleoTaskFormDefinitions = new ArrayList<>(
+				kaleoTaskForms.size());
+
+			for (KaleoTaskForm kaleoTaskForm : kaleoTaskForms) {
+				String kaleoFormDefinition = kaleoTaskForm.getFormDefinition();
+
+				if (Validator.isNull(kaleoFormDefinition)) {
+					FormDefinitionRetriever formDefinitionRetriever =
+						getFormDefinitionRetriever();
+
+					if (formDefinitionRetriever != null) {
+						kaleoFormDefinition =
+							formDefinitionRetriever.getFormDefinition(
+								kaleoTaskForm, kaleoTaskInstanceToken);
+					}
+					else {
+						if (_log.isWarnEnabled()) {
+							_log.warn("No FormDefinitionRetriever defined");
+						}
+					}
+				}
+
+				if (Validator.isNotNull(kaleoFormDefinition)) {
+					kaleoTaskFormDefinitions.add(kaleoFormDefinition);
+				}
+			}
+
+			return kaleoTaskFormDefinitions;
+		}
+		catch (PortalException pe) {
+			throw new WorkflowException(pe);
 		}
 	}
 
@@ -257,6 +383,10 @@ public class DefaultTaskManagerImpl
 			kaleoTaskInstanceToken, workflowContext);
 	}
 
+	protected FormDefinitionRetriever getFormDefinitionRetriever() {
+		return _serviceTracker.getService();
+	}
+
 	protected Map<String, Serializable> updateWorkflowContext(
 			Map<String, Serializable> workflowContext,
 			KaleoTaskInstanceToken kaleoTaskInstanceToken)
@@ -287,6 +417,13 @@ public class DefaultTaskManagerImpl
 
 		return workflowContext;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DefaultTaskManagerImpl.class);
+
+	private static final ServiceTracker
+		<FormDefinitionRetriever, FormDefinitionRetriever> _serviceTracker =
+			ServiceTrackerFactory.open(FormDefinitionRetriever.class);
 
 	@ServiceReference(type = KaleoActionExecutor.class)
 	private KaleoActionExecutor _kaleoActionExecutor;

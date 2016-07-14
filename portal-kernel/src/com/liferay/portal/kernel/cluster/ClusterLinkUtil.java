@@ -28,16 +28,18 @@ public class ClusterLinkUtil {
 		return (Address)message.get(_ADDRESS);
 	}
 
+	/**
+	 * @deprecated As of 7.1.0, replaced by {@link #_getClusterLink()}
+	 */
+	@Deprecated
 	public static ClusterLink getClusterLink() {
-		PortalRuntimePermission.checkGetBeanProperty(ClusterLinkUtil.class);
-
-		return _clusterLink;
+		return _getClusterLink();
 	}
 
 	public static void sendMulticastMessage(
 		Message message, Priority priority) {
 
-		getClusterLink().sendMulticastMessage(message, priority);
+		_getClusterLink().sendMulticastMessage(message, priority);
 	}
 
 	public static void sendMulticastMessage(Object payload, Priority priority) {
@@ -51,13 +53,19 @@ public class ClusterLinkUtil {
 	public static void sendUnicastMessage(
 		Address address, Message message, Priority priority) {
 
-		getClusterLink().sendUnicastMessage(address, message, priority);
+		_getClusterLink().sendUnicastMessage(address, message, priority);
 	}
 
 	public static Message setAddress(Message message, Address address) {
 		message.put(_ADDRESS, address);
 
 		return message;
+	}
+
+	private static ClusterLink _getClusterLink() {
+		PortalRuntimePermission.checkGetBeanProperty(ClusterLinkUtil.class);
+
+		return _clusterLink;
 	}
 
 	private static final String _ADDRESS = "CLUSTER_ADDRESS";

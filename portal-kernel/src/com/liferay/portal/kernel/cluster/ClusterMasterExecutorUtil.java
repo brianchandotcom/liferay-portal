@@ -31,31 +31,35 @@ public class ClusterMasterExecutorUtil {
 		ClusterMasterTokenTransitionListener
 			clusterMasterTokenTransitionListener) {
 
-		getClusterMasterExecutor().addClusterMasterTokenTransitionListener(
+		_clusterMasterExecutor.addClusterMasterTokenTransitionListener(
 			clusterMasterTokenTransitionListener);
 	}
 
 	public static <T> Future<T> executeOnMaster(MethodHandler methodHandler) {
-		return getClusterMasterExecutor().executeOnMaster(methodHandler);
+		return _clusterMasterExecutor.executeOnMaster(methodHandler);
 	}
 
+	/**
+	 * @deprecated As of 7.1.0, with no direct replacement
+	 */
+	@Deprecated
 	public static ClusterMasterExecutor getClusterMasterExecutor() {
 		return _clusterMasterExecutor;
 	}
 
 	public static boolean isEnabled() {
-		return getClusterMasterExecutor().isEnabled();
+		return _clusterMasterExecutor.isEnabled();
 	}
 
 	public static boolean isMaster() {
-		return getClusterMasterExecutor().isMaster();
+		return _clusterMasterExecutor.isMaster();
 	}
 
 	public static void removeClusterMasterTokenTransitionListener(
 		ClusterMasterTokenTransitionListener
 			clusterMasterTokenTransitionListener) {
 
-		getClusterMasterExecutor().removeClusterMasterTokenTransitionListener(
+		_clusterMasterExecutor.removeClusterMasterTokenTransitionListener(
 			clusterMasterTokenTransitionListener);
 	}
 

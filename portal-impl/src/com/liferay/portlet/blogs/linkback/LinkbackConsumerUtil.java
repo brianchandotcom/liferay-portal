@@ -25,6 +25,10 @@ public class LinkbackConsumerUtil {
 		_linkbackConsumer.addNewTrackback(commentId, url, entryURL);
 	}
 
+	/**
+	 * @deprecated As of 7.1.0, with no direct replacement
+	 */
+	@Deprecated
 	public static LinkbackConsumer getLinkbackConsumer() {
 		return _linkbackConsumer;
 	}

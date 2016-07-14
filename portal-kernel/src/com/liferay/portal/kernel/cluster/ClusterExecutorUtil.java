@@ -28,41 +28,49 @@ public class ClusterExecutorUtil {
 	public static void addClusterEventListener(
 		ClusterEventListener clusterEventListener) {
 
-		getClusterExecutor().addClusterEventListener(clusterEventListener);
+		_getClusterExecutor().addClusterEventListener(clusterEventListener);
 	}
 
 	public static FutureClusterResponses execute(
 		ClusterRequest clusterRequest) {
 
-		return getClusterExecutor().execute(clusterRequest);
+		return _getClusterExecutor().execute(clusterRequest);
 	}
 
+	/**
+	 * @deprecated As of 7.1.0, replaced by {@link #_getClusterExecutor()}
+	 */
+	@Deprecated
 	public static ClusterExecutor getClusterExecutor() {
-		PortalRuntimePermission.checkGetBeanProperty(ClusterExecutorUtil.class);
-
-		return _clusterExecutor;
+		return _getClusterExecutor();
 	}
 
 	public static List<ClusterNode> getClusterNodes() {
-		return getClusterExecutor().getClusterNodes();
+		return _getClusterExecutor().getClusterNodes();
 	}
 
 	public static ClusterNode getLocalClusterNode() {
-		return getClusterExecutor().getLocalClusterNode();
+		return _getClusterExecutor().getLocalClusterNode();
 	}
 
 	public static boolean isClusterNodeAlive(String clusterNodeId) {
-		return getClusterExecutor().isClusterNodeAlive(clusterNodeId);
+		return _getClusterExecutor().isClusterNodeAlive(clusterNodeId);
 	}
 
 	public static boolean isEnabled() {
-		return getClusterExecutor().isEnabled();
+		return _getClusterExecutor().isEnabled();
 	}
 
 	public static void removeClusterEventListener(
 		ClusterEventListener clusterEventListener) {
 
-		getClusterExecutor().removeClusterEventListener(clusterEventListener);
+		_getClusterExecutor().removeClusterEventListener(clusterEventListener);
+	}
+
+	private static ClusterExecutor _getClusterExecutor() {
+		PortalRuntimePermission.checkGetBeanProperty(ClusterExecutorUtil.class);
+
+		return _clusterExecutor;
 	}
 
 	private static volatile ClusterExecutor _clusterExecutor =

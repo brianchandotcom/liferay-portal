@@ -24,6 +24,10 @@ import com.liferay.portal.kernel.util.ProxyFactory;
  */
 public class HitsProcessorRegistryUtil {
 
+	/**
+	 * @deprecated As of 7.1.0, with no direct replacement
+	 */
+	@Deprecated
 	public static HitsProcessorRegistry getHitsProcessorRegistry() {
 		return _hitsProcessorRegistry;
 	}
@@ -31,7 +35,7 @@ public class HitsProcessorRegistryUtil {
 	public static boolean process(SearchContext searchContext, Hits hits)
 		throws SearchException {
 
-		return getHitsProcessorRegistry().process(searchContext, hits);
+		return _hitsProcessorRegistry.process(searchContext, hits);
 	}
 
 	private static volatile HitsProcessorRegistry _hitsProcessorRegistry =

@@ -30,19 +30,29 @@ public class BackgroundTaskDisplayFactoryUtil {
 	public static BackgroundTaskDisplay getBackgroundTaskDisplay(
 		BackgroundTask backgroundTask) {
 
-		return getBackgroundTaskDisplayFactory().getBackgroundTaskDisplay(
+		return _getBackgroundTaskDisplayFactory().getBackgroundTaskDisplay(
 			backgroundTask);
 	}
 
 	public static BackgroundTaskDisplay getBackgroundTaskDisplay(
 		long backgroundTaskId) {
 
-		return getBackgroundTaskDisplayFactory().getBackgroundTaskDisplay(
+		return _getBackgroundTaskDisplayFactory().getBackgroundTaskDisplay(
 			backgroundTaskId);
 	}
 
+	/**
+	 * @deprecated As of 7.1.0, replaced by {@link #_getBackgroundTaskDisplayFactory()}
+	 */
+	@Deprecated
 	public static BackgroundTaskDisplayFactory
 		getBackgroundTaskDisplayFactory() {
+
+		return _getBackgroundTaskDisplayFactory();
+	}
+
+	private static BackgroundTaskDisplayFactory
+		_getBackgroundTaskDisplayFactory() {
 
 		PortalRuntimePermission.checkGetBeanProperty(
 			BackgroundTaskStatusRegistryUtil.class);

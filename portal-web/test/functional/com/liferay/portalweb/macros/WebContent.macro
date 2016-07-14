@@ -210,45 +210,6 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="AP#ASSET_ABSTRACT_DESCRIPTION" value1="${webContentContent}" />
 	</command>
 
-	<command name="addPGViaPanel">
-		<execute function="SelectFrame" locator1="IFrame#EDIT_ASSET" />
-
-		<if>
-			<isset var="templateName" />
-			<then>
-				<execute macro="Panel#expandPanel">
-					<var name="panelHeading" value="Structure and Template" />
-				</execute>
-
-				<execute function="AssertClick" locator1="WCEditWebContent#SELECT_TEMPLATE" value1="Select" />
-
-				<execute function="SelectFrame" value1="relative=top" />
-				<execute function="SelectFrame" locator1="IFrame#TEMPLATES" />
-
-				<var name="key_rowEntry" value="${templateName}" />
-
-				<execute function="AssertClickNoError" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK" value1="${templateName}" />
-
-				<execute function="Confirm#assertConfirmationNoWait" value1="Selecting a new template deletes all unsaved content. Do you want to proceed?" />
-
-				<execute function="SelectFrame" value1="relative=top" />
-
-				<execute function="SelectFrame" locator1="IFrame#EDIT_ASSET" />
-			</then>
-		</if>
-
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="${webContentContent}" />
-			<var name="webContentTitle" value="${webContentTitle}" />
-		</execute>
-
-		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
-
-		<execute function="SelectFrameTop" />
-
-		<execute function="AssertVisible" locator1="WCD#WEB_CONTENT_CONTENT" />
-	</command>
-
 	<command name="addPGViaWCD">
 		<execute macro="WebContentNavigator#gotoAddPGViaWCD" />
 
@@ -1168,6 +1129,14 @@
 		</if>
 
 		<execute function="AssertTextEquals" locator1="WCPreview#BODY_FIELD" value1="${webContentText}" />
+	</command>
+
+	<command name="publishViaWCD">
+		<execute macro="Button#clickPublish" />
+
+		<execute function="SelectFrameTop" />
+
+		<execute function="AssertVisible" locator1="WCD#WEB_CONTENT_CONTENT" />
 	</command>
 
 	<command name="saveAsDraftViaAP">

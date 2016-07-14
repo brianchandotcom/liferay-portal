@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.blogs.util;
+package com.liferay.blogs.internal.util;
 
 import com.liferay.blogs.kernel.model.BlogsEntry;
 import com.liferay.blogs.kernel.service.BlogsEntryLocalService;
@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFunction;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -364,8 +365,10 @@ public class PingbackMethodImplTest extends PowerMockito {
 	}
 
 	protected PingbackMethodImpl getPingbackMethodImpl() {
-		PingbackMethodImpl pingbackMethodImpl = new PingbackMethodImpl(
-			_commentManager);
+		PingbackMethodImpl pingbackMethodImpl = new PingbackMethodImpl();
+
+		ReflectionTestUtil.setFieldValue(
+			pingbackMethodImpl, "_commentManager", _commentManager);
 
 		pingbackMethodImpl.setBlogsEntryLocalService(_blogsEntryLocalService);
 		pingbackMethodImpl.setPortletLocalService(_portletLocalService);

@@ -122,7 +122,7 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 				beansWrapper.getStaticModels();
 
 			TemplateModel templateModel = templateHashModel.get(
-				variableClass.getCanonicalName());
+				variableClass.getName());
 
 			contextObjects.put(variableName, templateModel);
 		}

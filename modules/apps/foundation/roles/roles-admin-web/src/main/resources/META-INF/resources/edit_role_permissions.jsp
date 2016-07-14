@@ -19,7 +19,7 @@
 <%
 String cmd = ParamUtil.getString(request, Constants.CMD);
 
-String tabs1 = "roles";
+String tabs2 = "roles";
 String tabs3 = ParamUtil.getString(request, "tabs3", "current");
 
 String redirect = ParamUtil.getString(request, "redirect");
@@ -36,7 +36,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcPath", "/edit_role_permissions.jsp");
 portletURL.setParameter(Constants.CMD, Constants.VIEW);
-portletURL.setParameter("tabs1", tabs1);
+portletURL.setParameter("tabs2", tabs2);
 portletURL.setParameter("tabs3", tabs3);
 portletURL.setParameter("backURL", backURL);
 portletURL.setParameter("roleId", String.valueOf(role.getRoleId()));
@@ -56,7 +56,7 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 <liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" varImpl="editPermissionsResourceURL">
 	<portlet:param name="mvcPath" value="/view_resources.jsp" />
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EDIT %>" />
-	<portlet:param name="tabs1" value="roles" />
+	<portlet:param name="tabs2" value="roles" />
 	<portlet:param name="redirect" value="<%= backURL %>" />
 	<portlet:param name="roleId" value="<%= String.valueOf(role.getRoleId()) %>" />
 </liferay-portlet:resourceURL>
@@ -64,7 +64,7 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 <liferay-portlet:renderURL copyCurrentRenderParameters="<%= false %>" varImpl="editPermissionsURL">
 	<portlet:param name="mvcPath" value="/view_resources.jsp" />
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EDIT %>" />
-	<portlet:param name="tabs1" value="roles" />
+	<portlet:param name="tabs2" value="roles" />
 	<portlet:param name="redirect" value="<%= backURL %>" />
 	<portlet:param name="backURL" value="<%= backURL %>" />
 	<portlet:param name="roleId" value="<%= String.valueOf(role.getRoleId()) %>" />

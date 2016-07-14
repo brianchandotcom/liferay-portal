@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String tabs1 = "roles";
+String tabs2 = "roles";
 String tabs3 = ParamUtil.getString(request, "tabs3", "current");
 
 String redirect = ParamUtil.getString(request, "redirect");
@@ -226,7 +226,7 @@ if (Validator.isNotNull(portletResource)) {
 
 	resourceURL.setParameter("mvcPath", "/edit_role.jsp");
 	resourceURL.setParameter(Constants.CMD, Constants.EDIT);
-	resourceURL.setParameter("tabs1", tabs1);
+	resourceURL.setParameter("tabs2", tabs2);
 	resourceURL.setParameter("portletResource", portletResource);
 
 	PortalUtil.addPortletBreadcrumbEntry(request, portletResourceLabel, resourceURL.toString());

@@ -17,8 +17,12 @@
 <%@ include file="/init.jsp" %>
 
 <div class="container-fluid-1280">
-	<div class="lfr-categories-selector-list lfr-tags-selector-list" id="<portlet:namespace />listCategories">
-	</div>
+	<aui:fieldset-group>
+		<aui:fieldset markupView="lexicon">
+			<div class="lfr-categories-selector-list lfr-tags-selector-list" id="<portlet:namespace />listCategories">
+			</div>
+		</aui:fieldset>
+	</aui:fieldset-group>
 </div>
 
 <portlet:resourceURL id="getCategories" var="resourceURL">

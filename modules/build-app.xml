@@ -262,7 +262,7 @@
 		</pathconvert>
 	</target>
 
-	<target name="index-modules-and-app-lpkgs"><fail>${portal.lib.dir}</fail>
+	<target name="index-modules-and-app-lpkgs">
 		<path id="target.platform.indexer.classpath">
 
 			<!-- Order is important -->

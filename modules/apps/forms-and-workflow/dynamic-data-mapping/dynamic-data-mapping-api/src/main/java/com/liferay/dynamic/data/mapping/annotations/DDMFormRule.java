@@ -14,26 +14,19 @@
 
 package com.liferay.dynamic.data.mapping.annotations;
 
-import com.liferay.portal.kernel.util.StringPool;
-
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * @author Marcellus Tavares
+ * @author Leonardo Barros
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.TYPE)
-public @interface DDMForm {
+@Target(ElementType.METHOD)
+public @interface DDMFormRule {
+	public String[] actions() default {};
 
-	public String availableLanguageIds() default StringPool.BLANK;
-
-	public String defaultLanguageId() default StringPool.BLANK;
-
-	public String localization() default StringPool.BLANK;
-
-	public DDMFormRule[] rules() default {};
+	public String condition() default "TRUE";
 
 }

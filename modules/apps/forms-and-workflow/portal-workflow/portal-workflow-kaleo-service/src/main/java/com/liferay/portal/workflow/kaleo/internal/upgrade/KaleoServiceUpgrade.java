@@ -15,7 +15,6 @@
 package com.liferay.portal.workflow.kaleo.internal.upgrade;
 
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-import com.liferay.portal.workflow.kaleo.upgrade.v1_0_0.UpgradeKaleoClassNameAndKaleoClassPKs;
 import com.liferay.portal.workflow.kaleo.internal.upgrade.v1_0_0.UpgradeKaleoTaskInstanceToken;
 import com.liferay.portal.workflow.kaleo.internal.upgrade.v1_1_0.UpgradeWorkflowContext;
 import com.liferay.portal.workflow.kaleo.internal.upgrade.v1_2_1.UpgradeKaleoLog;
@@ -23,6 +22,7 @@ import com.liferay.portal.workflow.kaleo.internal.upgrade.v1_2_1.UpgradeKaleoNot
 import com.liferay.portal.workflow.kaleo.internal.upgrade.v1_3_0.UpgradeClassNames;
 import com.liferay.portal.workflow.kaleo.internal.upgrade.v1_3_0.UpgradeKaleoAction;
 import com.liferay.portal.workflow.kaleo.internal.upgrade.v1_3_0.UpgradeKaleoDefinition;
+import com.liferay.portal.workflow.kaleo.internal.upgrade.v1_3_2.UpgradeKaleoClassNameAndKaleoClassPKs;
 
 import org.osgi.service.component.annotations.Component;
 

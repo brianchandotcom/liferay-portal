@@ -146,31 +146,31 @@
 
 		<execute function="Type#sendKeys" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${roleName}" />
 
-		<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
+		<execute function="Click" locator1="Button#SUBMIT" />
 
-		<execute function="Click" locator1="Roles#ROLE_TABLE_ACTIONS" />
+		<execute function="AssertClick" locator1="Roles#ROLE_TABLE_TITLE_LINK" value1="${roleName}" />
 
-		<execute function="AssertClick" locator1="MenuItem#ASSIGN_MEMBERS" value1="Assign Members" />
+		<execute function="AssertClick" locator1="NavBar#USER_GROUPS" value1="User Groups" />
 
-		<execute function="AssertClick" locator1="NavTab#USER_GROUPS" value1="User Groups" />
+		<execute function="Click" locator1="Button#PLUS" />
+
+		<execute function="SelectFrame" locator1="IFrame#SELECT_ASSIGNEES" />
 
 		<var name="key_userGroupName" value="${userGroupName}" />
 
-		<execute function="AssertClick" locator1="NavTab#AVAILABLE" value1="Available" />
-
 		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${userGroupName}" />
 
-		<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
+		<execute function="Click" locator1="Button#SUBMIT" />
 
 		<execute function="AssertTextEquals" locator1="RolesAssignMembers#USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
 
 		<execute function="Check" locator1="RolesAssignMembers#USER_GROUP_TABLE_CHECKBOX" />
 
-		<execute function="AssertClick" locator1="Button#UPDATE_ASSOCIATIONS" value1="Update Associations" />
+		<execute function="SelectFrameTop" value1="relative=top" />
+
+		<execute function="AssertClick" locator1="Button#ADD" value1="Add" />
 
 		<execute macro="Alert#viewSuccessMessage" />
-
-		<execute function="AssertChecked" locator1="RolesAssignMembers#USER_GROUP_TABLE_CHECKBOX" />
 	</command>
 
 	<command name="assignRegRoleCP">

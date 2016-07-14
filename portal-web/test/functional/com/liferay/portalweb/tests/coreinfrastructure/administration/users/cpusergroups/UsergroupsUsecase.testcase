@@ -291,16 +291,15 @@
 			<var name="userEmailAddress" value="userea3@liferay.com" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoControlPanelSites">
-			<var name="portlet" value="Sites" />
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Site Name" />
 		</execute>
 
-		<var name="key_siteName" value="Site Name" />
+		<execute macro="ProductMenu#gotoSitesMembers">
+			<var name="portlet" value="Site Memberships" />
+		</execute>
 
-		<execute function="AssertClick#assertPartialTextClickAt" locator1="Sites#SITE_TABLE_NAME" value1="Site Name" />
-
-		<execute function="AssertClick#assertPartialTextClickAtCPNavigation" locator1="Home#SITE_ADMINISTRATION_MEMBERS" value1="Members" />
-		<execute function="AssertClick#assertPartialTextClickAtCPNavigation" locator1="Home#SITE_ADMINISTRATION_MEMBERS_SITE_MEMBERSHIPS" value1="Site Memberships" />
+		<execute function="Click" locator1="Icon#DISPLAY_STYLE_LIST" />
 
 		<var name="key_userScreenName" value="usersn3" />
 

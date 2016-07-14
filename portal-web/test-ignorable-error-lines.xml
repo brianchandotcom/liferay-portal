@@ -160,13 +160,13 @@
 			<contains>The web application [/reports-portlet] appears to have started a thread named [C3P0PooledConnectionPool</contains>
 			<matches></matches>
 		</ignore-error>
-		<ignore-error description="LPS-63595">
-			<contains>Application exception overridden by commit exception</contains>
-			<matches></matches>
-		</ignore-error>
 		<ignore-error description="LPS-55160">
 			<contains></contains>
 			<matches>.*osgi.compendium:service=.*version=1.[0-9]+.*</matches>
+		</ignore-error>
+		<ignore-error description="LPS-63595">
+			<contains>Application exception overridden by commit exception</contains>
+			<matches></matches>
 		</ignore-error>
 		<ignore-error description="LPS-65878, temporary workaround until Tina Tian fixes it">
 			<contains>The addSearchEngineConfigurator method has thrown an exception</contains>

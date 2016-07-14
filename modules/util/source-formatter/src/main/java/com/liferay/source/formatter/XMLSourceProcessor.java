@@ -452,6 +452,11 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		else if (portalSource && fileName.endsWith("/struts-config.xml")) {
 			formatStrutsConfigXML(fileName, newContent);
 		}
+		else if (portalSource &&
+				 fileName.endsWith("/test-ignorable-error-lines.xml")) {
+
+			formatTestIgnorableErrorLinesXml(fileName, newContent);
+		}
 		else if (portalSource && fileName.endsWith("/tiles-defs.xml")) {
 			formatTilesDefsXML(fileName, newContent);
 		}
@@ -1019,6 +1024,31 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		checkOrder(
 			fileName, rootElement.element("action-mappings"), "action", null,
 			new StrutsActionElementComparator("path"));
+	}
+
+	protected void formatTestIgnorableErrorLinesXml(
+			String fileName, String content)
+		throws Exception {
+
+		Document document = readXML(content);
+
+		Element rootElement = document.getRootElement();
+
+		List<Element> javascriptElements = rootElement.elements("javascript");
+
+		for (Element javascriptElement : javascriptElements) {
+			checkOrder(
+				fileName, javascriptElement, "ignore-error", null,
+				new ElementComparator("description"));
+		}
+
+		List<Element> logElements = rootElement.elements("log");
+
+		for (Element logElement : logElements) {
+			checkOrder(
+				fileName, logElement, "ignore-error", null,
+				new ElementComparator("description"));
+		}
 	}
 
 	protected void formatTilesDefsXML(String fileName, String content)

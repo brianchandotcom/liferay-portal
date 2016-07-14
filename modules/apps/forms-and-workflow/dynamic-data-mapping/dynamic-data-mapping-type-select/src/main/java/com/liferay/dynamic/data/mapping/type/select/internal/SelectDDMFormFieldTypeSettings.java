@@ -20,6 +20,7 @@ import com.liferay.dynamic.data.mapping.annotations.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutColumn;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutPage;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutRow;
+import com.liferay.dynamic.data.mapping.annotations.DDMFormRule;
 import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldTypeSettings;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidation;
@@ -27,7 +28,17 @@ import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidation;
 /**
  * @author Marcellus Tavares
  */
-@DDMForm
+@DDMForm(
+	rules = {
+		@DDMFormRule(
+			actions = {
+				"set(fieldAt(\"ddmDataProviderInstanceId\",0),\"visible\",equals(get(fieldAt(\"dataSourceType\",0),\"value\"),\"data-provider\"))",
+				"set(fieldAt(\"options\",0),\"visible\", equals(get(fieldAt(\"dataSourceType\",0),\"value\"),\"manual\"))",
+				"set(fieldAt(\"validation\",0),\"visible\",false)"
+			}
+		)
+	}
+)
 @DDMFormLayout(
 	paginationMode = com.liferay.dynamic.data.mapping.model.DDMFormLayout.SETTINGS_MODE,
 	value = {

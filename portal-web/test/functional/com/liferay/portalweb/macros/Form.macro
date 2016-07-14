@@ -23,6 +23,36 @@
 		<execute function="Click" locator1="Form#PUBLISH_FORM_SWITCHER" />
 	</command>
 
+	<command name="configureEmailNotifications">
+		<execute function="AssertClick" locator1="Form#SETTINGS_TAB_EMAIL_NOTIFICATIONS" value1="Email Notifications" />
+
+		<execute macro="FormFields#enableSwitcher">
+			<var name="fieldName" value="sendEmailNotification" />
+		</execute>
+
+		<execute macro="FormFields#editText">
+			<var name="fieldName" value="emailFromName" />
+			<var name="fieldValue" value="${fromName}" />
+		</execute>
+
+		<execute macro="FormFields#editText">
+			<var name="fieldName" value="emailFromAddress" />
+			<var name="fieldValue" value="${fromAddress}" />
+		</execute>
+
+		<execute macro="FormFields#editText">
+			<var name="fieldName" value="emailToAddress" />
+			<var name="fieldValue" value="${toAddress}" />
+		</execute>
+
+		<execute macro="FormFields#editText">
+			<var name="fieldName" value="emailSubject" />
+			<var name="fieldValue" value="${subject}" />
+		</execute>
+
+		<execute macro="Button#clickDone" />
+	</command>
+
 	<command name="configureRequireCaptcha">
 		<execute macro="FormFields#enableSwitcher">
 			<var name="fieldName" value="requireCaptcha" />

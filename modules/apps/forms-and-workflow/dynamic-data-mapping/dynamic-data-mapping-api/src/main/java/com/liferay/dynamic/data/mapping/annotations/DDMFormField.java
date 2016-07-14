@@ -52,6 +52,7 @@ public @interface DDMFormField {
 
 	public String validationExpression() default StringPool.BLANK;
 
+	@Deprecated
 	public String visibilityExpression() default StringPool.BLANK;
 
 }

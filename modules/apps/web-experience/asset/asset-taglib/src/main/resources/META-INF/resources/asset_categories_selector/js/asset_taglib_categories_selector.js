@@ -36,8 +36,6 @@ AUI.add(
 				ATTRS: {
 					curEntries: {
 						setter: function(value) {
-							var instance = this;
-
 							if (Lang.isString(value)) {
 								value = value.split('_CATEGORY_');
 							}
@@ -49,14 +47,13 @@ AUI.add(
 
 					curEntryIds: {
 						setter: function(value) {
-							var instance = this;
-
 							if (Lang.isString(value)) {
 								value = value.split(',');
 							}
 
 							return value;
 						},
+						validator: '_isValidEntries',
 						value: []
 					},
 
@@ -94,8 +91,6 @@ AUI.add(
 
 					vocabularyGroupIds: {
 						setter: function(value) {
-							var instance = this;
-
 							if (Lang.isString(value) && value) {
 								value = value.split(',');
 							}
@@ -107,8 +102,6 @@ AUI.add(
 
 					vocabularyIds: {
 						setter: function(value) {
-							var instance = this;
-
 							if (Lang.isString(value) && value) {
 								value = value.split(',');
 							}
@@ -145,11 +138,6 @@ AUI.add(
 						var instance = this;
 
 						AssetTaglibCategoriesSelector.superclass.bindUI.apply(instance, arguments);
-
-						var entries = instance.entries;
-
-						entries.after('remove', function(event) {
-						}.bind(this), instance);
 					},
 
 					syncUI: function() {
@@ -194,9 +182,11 @@ AUI.add(
 
 					_bindTagsSelector: EMPTY_FN,
 
-					_isValidString: function(value) {
-						var instance = this;
+					_isValidEntries: function(value) {
+						return (Lang.isString(value) && value !== '') || Lang.isArray(value);
+					},
 
+					_isValidString: function(value) {
 						return Lang.isString(value) && value.length;
 					},
 
@@ -239,7 +229,7 @@ AUI.add(
 
 						event.domEvent.preventDefault();
 
-						instance.set('curEntryIds', instance.entries.keys.join(','));
+						instance.set('curEntryIds', instance.entries.keys);
 
 						var uri = Lang.sub(
 							decodeURIComponent(instance.get('portletURL')),
@@ -260,11 +250,6 @@ AUI.add(
 
 										var selectedEntryIds = instance.get('curEntryIds');
 
-										if (selectedEntryIds.length === 1 && selectedEntryIds[0] === "") {
-											selectedEntryIds = [];
-										}
-
-
 										if (data && data.items) {
 											for (var key in data.items) {
 
@@ -280,7 +265,7 @@ AUI.add(
 															instance.entries.remove(item);
 														}
 													}
-												)
+												);
 
 												data.items[key][0] = key;
 
@@ -291,7 +276,7 @@ AUI.add(
 											}
 										}
 
-										instance.set('curEntryIds', instance.entries.keys.join(','));
+										instance.set('curEntryIds', instance.entries.keys);
 
 										instance._updateInputHidden();
 									}
@@ -312,7 +297,6 @@ AUI.add(
 
 						hiddenInput.val(instance.entries.keys.join(','));
 					}
-
 				}
 			}
 		);

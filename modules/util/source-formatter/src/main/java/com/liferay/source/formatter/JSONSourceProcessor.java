@@ -125,7 +125,7 @@ public class JSONSourceProcessor extends BaseSourceProcessor {
 				String previousProperty = null;
 
 				while (matcher3.find()) {
-					String property = matcher3.group(1);
+					String property = "\n" + matcher3.group(1);
 
 					if (Validator.isNotNull(previousProperty) &&
 						(previousProperty.compareTo(property) > 0)) {

@@ -31,6 +31,7 @@ DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = dlDisplayConte
 	<c:otherwise>
 		<liferay-util:include page="/document_library/view_file_entry.jsp" servletContext="<%= application %>">
 			<liferay-util:param name="addPortletBreadcrumbEntries" value="<%= Boolean.FALSE.toString() %>" />
+			<liferay-util:param name="showHistoryActions" value="<%= Boolean.FALSE.toString() %>" />
 		</liferay-util:include>
 	</c:otherwise>
 </c:choose>

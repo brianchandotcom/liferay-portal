@@ -102,14 +102,16 @@ boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_artic
 
 	<aui:input ignoreRequestValue="<%= changeStructure %>" label="summary" name="description" wrapperCssClass="article-content-description" />
 
-	<liferay-ddm:html
-		checkRequired="<%= classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT %>"
-		classNameId="<%= PortalUtil.getClassNameId(DDMStructure.class) %>"
-		classPK="<%= ddmStructure.getStructureId() %>"
-		ddmFormValues="<%= journalDisplayContext.getDDMFormValues(ddmStructure) %>"
-		ignoreRequestValue="<%= changeStructure %>"
-		requestedLocale="<%= LocaleUtil.fromLanguageId(defaultLanguageId) %>"
-	/>
+	<div class="article-content-content">
+		<liferay-ddm:html
+			checkRequired="<%= classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT %>"
+			classNameId="<%= PortalUtil.getClassNameId(DDMStructure.class) %>"
+			classPK="<%= ddmStructure.getStructureId() %>"
+			ddmFormValues="<%= journalDisplayContext.getDDMFormValues(ddmStructure) %>"
+			ignoreRequestValue="<%= changeStructure %>"
+			requestedLocale="<%= LocaleUtil.fromLanguageId(defaultLanguageId) %>"
+		/>
+	</div>
 
 	<aui:input label="searchable" name="indexable" type="toggle-switch" value="<%= (article != null) ? article.isIndexable() : true %>" />
 </aui:fieldset>

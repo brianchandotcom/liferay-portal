@@ -185,7 +185,6 @@ if (step == 1) {
 				);
 			</aui:script>
 		</c:when>
-
 		<c:when test="<%= step == 2 %>">
 
 			<%

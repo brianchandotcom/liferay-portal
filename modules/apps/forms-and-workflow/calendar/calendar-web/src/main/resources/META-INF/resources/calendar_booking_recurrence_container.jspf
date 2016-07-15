@@ -96,6 +96,7 @@ if (recurrence != null) {
 				</td>
 			</tr>
 		</tbody>
+
 		<tbody class="calendar-portlet-interval-view" id="<portlet:namespace />intervalContainer">
 			<tr>
 				<th class="calendar-portlet-recurrence-title">
@@ -120,6 +121,7 @@ if (recurrence != null) {
 				</td>
 			</tr>
 		</tbody>
+
 		<tbody class="calendar-portlet-interval-view <%= (frequency == Frequency.WEEKLY) ? "" : "hide" %>" id="<portlet:namespace />view<%= Frequency.WEEKLY %>">
 			<tr>
 				<th class="calendar-portlet-recurrence-title">
@@ -150,6 +152,7 @@ if (recurrence != null) {
 				</td>
 			</tr>
 		</tbody>
+
 		<tbody class="calendar-portlet-interval-view <%= ((frequency == Frequency.MONTHLY) || (frequency == Frequency.YEARLY)) ? "" : "hide" %>" id="<portlet:namespace />viewPositionInMonth">
 			<tr>
 				<th class="calendar-portlet-recurrence-title">
@@ -175,6 +178,7 @@ if (recurrence != null) {
 				</td>
 			</tr>
 		</tbody>
+
 		<tbody class="calendar-portlet-interval-view">
 			<tr>
 				<th class="calendar-portlet-recurrence-title">
@@ -218,6 +222,7 @@ if (recurrence != null) {
 				</td>
 			</tr>
 		</tbody>
+
 		<tbody class="calendar-portlet-interval-view">
 			<tr>
 				<th class="calendar-portlet-recurrence-title">

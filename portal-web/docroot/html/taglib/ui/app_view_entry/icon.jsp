@@ -67,7 +67,6 @@
 		<span class="entry-title-text">
 			<%= HtmlUtil.escape(shortTitle) %>
 		</span>
-
 		<span class="entry-result-icon"></span>
 	</span>
 

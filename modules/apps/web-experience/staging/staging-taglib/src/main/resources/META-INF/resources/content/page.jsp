@@ -167,7 +167,6 @@
 							</ul>
 						</div>
 					</li>
-
 					<li class="options">
 						<liferay-staging:portlet-list disableInputs="<%= disableInputs %>" exportImportConfigurationId="<%= exportImportConfigurationId %>" portlets="<%= dataSiteLevelPortlets %>" showAllPortlets="<%= showAllPortlets %>" type="<%= type %>" />
 					</li>

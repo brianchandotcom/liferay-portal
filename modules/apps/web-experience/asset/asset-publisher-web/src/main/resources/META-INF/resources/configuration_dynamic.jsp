@@ -406,7 +406,6 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 							<aui:option label="descending" value="DESC" />
 						</aui:select>
 					</span>
-
 					<span class="field-row">
 
 						<%
@@ -436,7 +435,6 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 							<aui:option label="descending" selected='<%= orderByType2.equals("DESC") %>' value="DESC" />
 						</aui:select>
 					</span>
-
 					<span class="field-row">
 
 						<%

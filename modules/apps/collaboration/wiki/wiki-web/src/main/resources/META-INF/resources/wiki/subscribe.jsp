@@ -75,7 +75,6 @@ else {
 				</c:otherwise>
 			</c:choose>
 		</c:when>
-
 		<c:when test="<%= (wikiPage != null) && WikiPagePermissionChecker.contains(permissionChecker, wikiPage, ActionKeys.SUBSCRIBE) %>">
 			<c:choose>
 				<c:when test="<%= SubscriptionLocalServiceUtil.isSubscribed(user.getCompanyId(), user.getUserId(), WikiPage.class.getName(), wikiPage.getResourcePrimKey()) %>">

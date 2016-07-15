@@ -67,7 +67,6 @@
 						<span class="asset-type">
 							<liferay-ui:message key="<%= workflowTaskDisplayContext.getAssetType(workflowTask) %>" />
 						</span>
-
 						<span class="task-name" id="<%= String.valueOf(workflowTask.getWorkflowTaskId()) %>">
 							<liferay-ui:message key="<%= workflowTaskDisplayContext.getTaskName(workflowTask) %>" />
 						</span>

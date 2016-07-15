@@ -62,7 +62,6 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries) && ListUtil.isEmp
 				<li>
 					<liferay-util:include page="/document_library/subscribe.jsp" servletContext="<%= application %>" />
 				</li>
-
 				<li>
 					<liferay-util:include page="/document_library/folder_action.jsp" servletContext="<%= application %>" />
 				</li>
@@ -101,7 +100,6 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries) && ListUtil.isEmp
 							<dt class="h5">
 								<liferay-ui:message key="created" />
 							</dt>
-
 							<dd>
 								<%= HtmlUtil.escape(folder.getUserName()) %>
 							</dd>
@@ -182,7 +180,6 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries) && ListUtil.isEmp
 						<dt class="h5">
 							<liferay-ui:message key="created" />
 						</dt>
-
 						<dd>
 							<%= HtmlUtil.escape(fileEntry.getUserName()) %>
 						</dd>
@@ -191,7 +188,6 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries) && ListUtil.isEmp
 							<dt class="h5">
 								<liferay-ui:message key="description" />
 							</dt>
-
 							<dd>
 								<%= HtmlUtil.escape(fileEntry.getDescription()) %>
 							</dd>
@@ -200,7 +196,6 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries) && ListUtil.isEmp
 						<dt class="h5">
 							<liferay-ui:message key="size" />
 						</dt>
-
 						<dd>
 							<%= HtmlUtil.escape(TextFormatter.formatStorageSize(fileEntry.getSize(), locale)) %>
 						</dd>
@@ -209,7 +204,6 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries) && ListUtil.isEmp
 							<dt class="h5">
 								<liferay-ui:message key="extension" />
 							</dt>
-
 							<dd>
 								<%= HtmlUtil.escape(fileVersion.getExtension()) %>
 							</dd>
@@ -218,7 +212,6 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries) && ListUtil.isEmp
 						<dt class="h5">
 							<liferay-ui:message key="version" />
 						</dt>
-
 						<dd>
 							<%= HtmlUtil.escape(fileVersion.getVersion()) %>
 						</dd>
@@ -326,7 +319,6 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries) && ListUtil.isEmp
 						<dt class="h5">
 							<liferay-ui:message key="description" />
 						</dt>
-
 						<dd>
 							<%= HtmlUtil.escape(fileEntry.getDescription()) %>
 						</dd>
@@ -345,7 +337,6 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries) && ListUtil.isEmp
 							<dt class="h5">
 								<liferay-ui:message key="target-site" />
 							</dt>
-
 							<dd>
 								<%= HtmlUtil.escape(fileEntrySiteGroup.getName(locale)) %>
 							</dd>
@@ -354,7 +345,6 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries) && ListUtil.isEmp
 						<dt class="h5">
 							<liferay-ui:message key="target-folder" />
 						</dt>
-
 						<dd>
 
 							<%
@@ -377,11 +367,9 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries) && ListUtil.isEmp
 								</c:choose>
 							</a>
 						</dd>
-
 						<dt class="h5">
 							<liferay-ui:message key="size" />
 						</dt>
-
 						<dd>
 							<%= TextFormatter.formatStorageSize(fileEntry.getSize(), locale) %>
 						</dd>
@@ -396,7 +384,6 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries) && ListUtil.isEmp
 							<dt class="h5">
 								<liferay-ui:message key="document-type" />
 							</dt>
-
 							<dd>
 								<%= HtmlUtil.escape(dlFileEntryType.getName(locale)) %>
 							</dd>
@@ -405,7 +392,6 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries) && ListUtil.isEmp
 						<dt class="h5">
 							<liferay-ui:message key="content-type" />
 						</dt>
-
 						<dd>
 							<%= HtmlUtil.escape(fileEntry.getMimeType()) %>
 						</dd>>

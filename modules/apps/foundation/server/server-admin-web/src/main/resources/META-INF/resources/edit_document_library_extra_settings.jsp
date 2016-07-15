@@ -94,6 +94,7 @@ if (!dlFileEntries.isEmpty()) {
 							<aui:option label="text-field-secret" value="PresetTextFieldSecret()" />
 							<aui:option label="text-field-indexed" selected="<%= true %>" value="PresetTextFieldIndexed()" />
 						</optgroup>
+
 						<optgroup label="<liferay-ui:message key="primitives" />">
 
 							<%

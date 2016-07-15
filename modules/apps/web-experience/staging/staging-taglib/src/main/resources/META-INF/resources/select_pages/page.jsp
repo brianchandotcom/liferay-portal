@@ -131,7 +131,6 @@
 				</c:choose>
 			</aui:fieldset>
 		</li>
-
 		<li class="layout-selector-options">
 			<aui:fieldset label="look-and-feel">
 				<aui:input disabled="<%= disableInputs %>" helpMessage="export-import-theme-settings-help" label="theme-settings" name="<%= PortletDataHandlerKeys.THEME_REFERENCE %>" type="checkbox" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.THEME_REFERENCE, ParamUtil.getBoolean(request, PortletDataHandlerKeys.THEME_REFERENCE, true)) %>" />

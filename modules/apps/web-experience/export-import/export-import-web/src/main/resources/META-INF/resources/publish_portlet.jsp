@@ -487,7 +487,6 @@ portletURL.setParameter("tabs3", "current-and-previous");
 						</div>
 					</aui:form>
 				</c:when>
-
 				<c:when test='<%= tabs3.equals("current-and-previous") %>'>
 					<div class="process-list" id="<portlet:namespace />publishProcesses">
 						<liferay-util:include page="/publish_portlet_processes.jsp" servletContext="<%= application %>" />

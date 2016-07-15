@@ -134,7 +134,6 @@ if (groupThreadsUserId > 0) {
 							<span class="h6 text-default">
 								<liferay-ui:message arguments="<%= subcategoriesCount %>" key='<%= subcategoriesCount == 1 ? "x-subcategory" : "x-subcategories" %>' />
 							</span>
-
 							<span class="h6 text-default">
 								<liferay-ui:message arguments="<%= threadsCount %>" key='<%= threadsCount == 1 ? "x-thread" : "x-threads" %>' />
 							</span>
@@ -252,7 +251,6 @@ if (groupThreadsUserId > 0) {
 							<span class="h6 text-default">
 								<liferay-ui:message arguments="<%= messageCount %>" key='<%= messageCount == 1 ? "x-post" : "x-posts" %>' />
 							</span>
-
 							<span class="h6 text-default">
 								<liferay-ui:message arguments="<%= viewCount %>" key='<%= viewCount == 1 ? "x-view" : "x-views" %>' />
 							</span>

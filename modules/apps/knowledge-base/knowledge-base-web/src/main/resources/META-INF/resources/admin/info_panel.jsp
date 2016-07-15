@@ -110,7 +110,6 @@ if (ListUtil.isEmpty(kbFolders) && ListUtil.isEmpty(kbArticles)) {
 				<li>
 					<liferay-util:include page="/admin/subscribe.jsp" servletContext="<%= application %>" />
 				</li>
-
 				<li>
 					<liferay-util:include page="/admin/article_action.jsp" servletContext="<%= application %>" />
 				</li>
@@ -130,55 +129,42 @@ if (ListUtil.isEmpty(kbFolders) && ListUtil.isEmpty(kbArticles)) {
 						<dt class="h5">
 							<liferay-ui:message key="title" />
 						</dt>
-
 						<dd>
 							<%= HtmlUtil.escape(kbArticle.getTitle()) %>
 						</dd>
-
 						<dt class="h5">
 							<liferay-ui:message key="author" />
 						</dt>
-
 						<dd>
 							<%= HtmlUtil.escape(kbArticle.getUserName()) %>
 						</dd>
-
 						<dt class="h5">
 							<liferay-ui:message key="status" />
 						</dt>
-
 						<dd>
 							<span class="text-capitalize"><%= HtmlUtil.escape(KBUtil.getStatusLabel(kbArticle.getStatus())) %></span>
 						</dd>
-
 						<dt class="h5">
 							<liferay-ui:message key="priority" />
 						</dt>
-
 						<dd>
 							<%= kbArticle.getPriority() %>
 						</dd>
-
 						<dt class="h5">
 							<liferay-ui:message key="create-date" />
 						</dt>
-
 						<dd>
 							<%= dateFormatDateTime.format(kbArticle.getCreateDate()) %>
 						</dd>
-
 						<dt class="h5">
 							<liferay-ui:message key="modified-date" />
 						</dt>
-
 						<dd>
 							<%= dateFormatDateTime.format(kbArticle.getModifiedDate()) %>
 						</dd>
-
 						<dt class="h5">
 							<liferay-ui:message key="views" />
 						</dt>
-
 						<dd>
 							<%= kbArticle.getViewCount() %>
 						</dd>

@@ -61,11 +61,9 @@
 						<span class="asset-type">
 							<liferay-ui:message key="<%= workflowInstanceViewDisplayContext.getAssetType(workflowInstance) %>" />
 						</span>
-
 						<span class="status">
 							<liferay-ui:message key="<%= workflowInstanceViewDisplayContext.getStatus(workflowInstance) %>" />
 						</span>
-
 						<span class="definition">
 							<liferay-ui:message key="<%= workflowInstanceViewDisplayContext.getDefinition(workflowInstance) %>" />
 						</span>

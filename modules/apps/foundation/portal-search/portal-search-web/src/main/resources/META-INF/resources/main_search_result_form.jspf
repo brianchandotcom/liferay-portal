@@ -99,6 +99,7 @@ AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(className, classPK
 						</th>
 					</tr>
 				</thead>
+
 				<tbody>
 
 					<%

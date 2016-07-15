@@ -78,7 +78,6 @@ JournalMoveEntriesDisplayContext journalMovesEntriesDisplayContext = new Journal
 							<span class="folder-title">
 								<%= HtmlUtil.escape(folder.getName()) %>
 							</span>
-
 							<span class="error-message">
 								<liferay-ui:message key="you-do-not-have-the-required-permissions" />
 							</span>
@@ -136,7 +135,6 @@ JournalMoveEntriesDisplayContext journalMovesEntriesDisplayContext = new Journal
 							<span class="article-title" title="<%= HtmlUtil.escapeAttribute(invalidMoveArticle.getTitle()) %>">
 								<%= HtmlUtil.escape(invalidMoveArticle.getTitle()) %>
 							</span>
-
 							<span class="error-message">
 								<liferay-ui:message key="you-do-not-have-the-required-permissions" />
 							</span>

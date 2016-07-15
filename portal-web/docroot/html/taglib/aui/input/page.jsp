@@ -96,6 +96,7 @@
 						<span class="toggle-card-off <%= iconOff %>"></span>
 						<span class="toggle-card-on <%= iconOn %>"></span>
 					</div>
+
 					<div class="toggle-card-label">
 						<c:if test="<%= Validator.isNotNull(labelOff) %>">
 							<span class="toggle-card-off"><%= labelOff %></span>

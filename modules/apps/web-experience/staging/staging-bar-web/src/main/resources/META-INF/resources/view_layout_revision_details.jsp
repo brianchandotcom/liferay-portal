@@ -205,7 +205,6 @@ else {
 						<liferay-ui:message key="site-pages-variation" />
 					</a>
 				</li>
-
 				<li>
 					<a href="javascript:;" id="manageLayoutRevisions" onclick="<%= renderResponse.getNamespace() + "openPageVariationsDialog();" %>">
 						<liferay-ui:message key="page-variations" />

@@ -84,11 +84,9 @@ PasswordPolicy passwordPolicy = user.getPasswordPolicy();
 
 							<liferay-ui:message arguments="<%= String.valueOf(upe.minLength) %>" key="that-password-is-too-short" translateArguments="<%= false %>" />
 						</c:when>
-
 						<c:when test="<%= SessionErrors.contains(request, UserPasswordException.MustComplyWithModelListeners.class.getName()) %>">
 							<liferay-ui:message key="that-password-is-invalid-please-enter-a-different-password" />
 						</c:when>
-
 						<c:when test="<%= SessionErrors.contains(request, UserPasswordException.MustComplyWithRegex.class.getName()) %>">
 
 							<%
@@ -97,31 +95,24 @@ PasswordPolicy passwordPolicy = user.getPasswordPolicy();
 
 							<liferay-ui:message arguments="<%= upe.regex %>" key="that-password-does-not-comply-with-the-regular-expression" translateArguments="<%= false %>" />
 						</c:when>
-
 						<c:when test="<%= SessionErrors.contains(request, UserPasswordException.MustMatch.class.getName()) %>">
 							<liferay-ui:message key="the-passwords-you-entered-do-not-match" />
 						</c:when>
-
 						<c:when test="<%= SessionErrors.contains(request, UserPasswordException.MustNotBeEqualToCurrent.class.getName()) %>">
 							<liferay-ui:message key="your-new-password-cannot-be-the-same-as-your-old-password-please-enter-a-different-password" />
 						</c:when>
-
 						<c:when test="<%= SessionErrors.contains(request, UserPasswordException.MustNotBeNull.class.getName()) %>">
 							<liferay-ui:message key="the-password-cannot-be-blank" />
 						</c:when>
-
 						<c:when test="<%= SessionErrors.contains(request, UserPasswordException.MustNotBeRecentlyUsed.class.getName()) %>">
 							<liferay-ui:message key="that-password-has-already-been-used-please-enter-a-different-password" />
 						</c:when>
-
 						<c:when test="<%= SessionErrors.contains(request, UserPasswordException.MustNotBeTrivial.class.getName()) %>">
 							<liferay-ui:message key="that-password-uses-common-words-please-enter-a-password-that-is-harder-to-guess-i-e-contains-a-mix-of-numbers-and-letters" />
 						</c:when>
-
 						<c:when test="<%= SessionErrors.contains(request, UserPasswordException.MustNotContainDictionaryWords.class.getName()) %>">
 							<liferay-ui:message key="that-password-uses-common-dictionary-words" />
 						</c:when>
-
 						<c:otherwise>
 							<liferay-ui:message key="your-request-failed-to-complete" />
 						</c:otherwise>

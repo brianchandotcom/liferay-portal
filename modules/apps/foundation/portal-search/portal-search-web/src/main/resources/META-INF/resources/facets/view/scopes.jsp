@@ -35,6 +35,7 @@ ScopeSearchFacetDisplayContext scopeSearchFacetDisplayContext = new ScopeSearchF
 					<liferay-ui:message key="sites" />
 				</div>
 			</div>
+
 			<div class="panel-body">
 				<div class="<%= cssClass %>" data-facetFieldName="<%= HtmlUtil.escapeAttribute(facet.getFieldId()) %>" id="<%= randomNamespace %>facet">
 					<aui:input autocomplete="off" name="<%= HtmlUtil.escapeAttribute(scopeSearchFacetDisplayContext.getFieldParamInputName()) %>" type="hidden" value="<%= scopeSearchFacetDisplayContext.getFieldParamInputValue() %>" />

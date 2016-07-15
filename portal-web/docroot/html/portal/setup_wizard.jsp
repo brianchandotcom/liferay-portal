@@ -36,7 +36,6 @@
 						<%= PropsValues.COMPANY_DEFAULT_NAME %>
 					</span>
 				</span>
-
 				<span class="configuration-title" title="<liferay-ui:message key="basic-configuration" />">
 					<i class="icon-cog"></i>
 

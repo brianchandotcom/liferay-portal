@@ -67,6 +67,7 @@ if (PropsValues.PORTAL_JAAS_ENABLE && (jUserName != null)) {
 								<font face="Verdana, Tahoma, Arial" size="3">
 									<strong><liferay-ui:message key="processing-login" /></strong>
 								</font>
+
 								<br /><br />
 
 								<script type="text/javascript">

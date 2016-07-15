@@ -91,7 +91,6 @@ PanelCategoryRegistry panelCategoryRegistry = (PanelCategoryRegistry)request.get
 								<i class="icon-caret-down"></i>
 								<i class="icon-caret-right"></i>
 							</span>
-
 							<span><liferay-ui:message key="control-panel" /></span>
 						</div>
 
@@ -120,7 +119,6 @@ PanelCategoryRegistry panelCategoryRegistry = (PanelCategoryRegistry)request.get
 												<i class="icon-caret-down"></i>
 												<i class="icon-caret-right"></i>
 											</span>
-
 											<span><%= panelCategory.getLabel(locale) %></span>
 										</div>
 
@@ -172,7 +170,6 @@ PanelCategoryRegistry panelCategoryRegistry = (PanelCategoryRegistry)request.get
 						<i class="icon-caret-down"></i>
 						<i class="icon-caret-right"></i>
 					</span>
-
 					<span><liferay-ui:message key="site-administration" /></span>
 				</div>
 
@@ -190,7 +187,6 @@ PanelCategoryRegistry panelCategoryRegistry = (PanelCategoryRegistry)request.get
 										<i class="icon-caret-down"></i>
 										<i class="icon-caret-right"></i>
 									</span>
-
 									<span><%= panelCategory.getLabel(locale) %></span>
 								</div>
 
@@ -243,7 +239,6 @@ PanelCategoryRegistry panelCategoryRegistry = (PanelCategoryRegistry)request.get
 								<i class="icon-caret-down"></i>
 								<i class="icon-caret-right"></i>
 							</span>
-
 							<span><liferay-ui:message key="applications" /></span>
 						</div>
 
@@ -292,7 +287,6 @@ PanelCategoryRegistry panelCategoryRegistry = (PanelCategoryRegistry)request.get
 							<i class="icon-caret-down"></i>
 							<i class="icon-caret-right"></i>
 						</span>
-
 						<span><liferay-ui:message key="user" /></span>
 					</div>
 
@@ -310,7 +304,6 @@ PanelCategoryRegistry panelCategoryRegistry = (PanelCategoryRegistry)request.get
 											<i class="icon-caret-down"></i>
 											<i class="icon-caret-right"></i>
 										</span>
-
 										<span><%= panelCategory.getLabel(locale) %></span>
 									</div>
 

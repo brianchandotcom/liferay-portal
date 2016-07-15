@@ -42,11 +42,9 @@ User topUser = UserLocalServiceUtil.fetchUserById(statsUser.getUserId());
 		<span class="h5 text-default">
 			<liferay-ui:message key="posts" />:<%= statsUser.getMessageCount() %>
 		</span>
-
 		<span class="h5 text-default">
 			<liferay-ui:message key="join-date" />: <%= dateFormatDate.format(topUser.getCreateDate()) %>
 		</span>
-
 		<span class="h5 text-default">
 			<liferay-ui:message key="last-post-date" />: <%= dateFormatDate.format(statsUser.getLastPostDate()) %>
 		</span>

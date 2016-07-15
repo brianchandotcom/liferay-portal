@@ -44,7 +44,6 @@ String href = (String)request.getAttribute(WebKeys.SEARCH_ENTRY_HREF);
 	<span class="record-set-id">
 		<liferay-ui:message key="id" />: <%= ddlRecordSet.getRecordSetId() %>
 	</span>
-
 	<span class="record-set-modified-date">
 		<liferay-ui:message key="modified-date" />: <%= dateSearchEntry.getName(request) %>
 	</span>

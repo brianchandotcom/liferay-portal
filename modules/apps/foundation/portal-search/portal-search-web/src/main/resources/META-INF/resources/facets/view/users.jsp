@@ -30,6 +30,7 @@
 				<liferay-ui:message key="users" />
 			</div>
 		</div>
+
 		<div class="panel-body">
 			<div class="<%= cssClass %>" data-facetFieldName="<%= HtmlUtil.escapeAttribute(facet.getFieldId()) %>" id="<%= randomNamespace %>facet">
 				<aui:input autocomplete="off" name="<%= HtmlUtil.escapeAttribute(facet.getFieldId()) %>" type="hidden" value="<%= fieldParam %>" />

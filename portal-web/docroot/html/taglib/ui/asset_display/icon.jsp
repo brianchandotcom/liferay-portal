@@ -41,7 +41,6 @@ AssetRendererFactory assetRendererFactory = (AssetRendererFactory)request.getAtt
 			<span class="lfr-card-title-text truncate-text">
 				<%= HtmlUtil.escape(assetRenderer.getTitle(locale)) %>
 			</span>
-
 			<span class="lfr-card-subtitle-text truncate-text">
 				<%= HtmlUtil.escape(assetRendererFactory.getTypeName(locale)) %>
 			</span>

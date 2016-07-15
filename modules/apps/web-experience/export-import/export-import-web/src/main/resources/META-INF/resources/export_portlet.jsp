@@ -451,7 +451,6 @@ portletURL.setParameter("portletResource", portletResource);
 			</aui:script>
 		</aui:form>
 	</c:when>
-
 	<c:when test='<%= tabs3.equals("current-and-previous") %>'>
 		<div class="process-list" id="<portlet:namespace />exportProcesses">
 			<liferay-util:include page="/export_portlet_processes.jsp" servletContext="<%= application %>" />

@@ -1387,8 +1387,8 @@
 		</execute>
 
 		<execute macro="WebContent#selectTemplateCP">
+			<var name="structureName" value="WC Structure Name" />
 			<var name="templateName" value="WC Template1 Name" />
-			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
 		<execute macro="PortletEntry#publish" />

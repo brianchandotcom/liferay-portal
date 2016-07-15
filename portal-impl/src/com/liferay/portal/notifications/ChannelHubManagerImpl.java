@@ -132,9 +132,11 @@ public class ChannelHubManagerImpl implements ChannelHubManager {
 	public void destroyChannel(long companyId, long userId)
 		throws ChannelException {
 
-		ChannelHub channelHub = getChannelHub(companyId);
+		ChannelHub channelHub = fetchChannelHub(companyId);
 
-		channelHub.destroyChannel(userId);
+		if (channelHub != null) {
+			channelHub.destroyChannel(userId);
+		}
 
 		if (!ClusterInvokeThreadLocal.isEnabled()) {
 			return;
@@ -333,9 +335,11 @@ public class ChannelHubManagerImpl implements ChannelHubManager {
 			long companyId, long userId, NotificationEvent notificationEvent)
 		throws ChannelException {
 
-		ChannelHub channelHub = getChannelHub(companyId);
+		ChannelHub channelHub = fetchChannelHub(companyId);
 
-		channelHub.sendNotificationEvent(userId, notificationEvent);
+		if (channelHub != null) {
+			channelHub.sendNotificationEvent(userId, notificationEvent);
+		}
 
 		if (!ClusterInvokeThreadLocal.isEnabled()) {
 			return;

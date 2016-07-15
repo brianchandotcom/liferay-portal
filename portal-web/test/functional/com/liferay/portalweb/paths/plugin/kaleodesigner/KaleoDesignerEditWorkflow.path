@@ -14,8 +14,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DRAFT_VERSION_HEADER</td>
+	<td>//span[contains(.,'Draft Version')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DRAFT_VERSION</td>
-	<td>//div[@class='control-group field-wrapper' and contains(.,'Draft Version')]/div[contains(.,'${key_draftVersion}')]</td>
+	<td>//span[contains(.,'Draft Version')]/../div[contains(.,'${key_draftVersion}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS_TOGGLE</td>
+	<td>//div[@id='kaleoDesignerSectionPanel']//a/span</td>
 	<td></td>
 </tr>
 <tr>

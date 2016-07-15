@@ -1,4 +1,15 @@
 <definition>
+	<command name="showDetails">
+		<if>
+			<condition function="IsElementNotPresent#isNotVisible" locator1="KaleoDesignerEditWorkflow#DRAFT_VERSION_HEADER" />
+			<then>
+				<execute function="Click" locator1="KaleoDesignerEditWorkflow#DETAILS_TOGGLE" />
+			</then>
+		</if>
+
+		<execute function="AssertVisible" locator1="KaleoDesignerEditWorkflow#DRAFT_VERSION_HEADER" />
+	</command>
+
 	<command name="addConnectorAndNodeViaViewTab">
 		<var method="StringUtil#replace('${nodeType}', '-', '_')" name="key_nodeType" />
 

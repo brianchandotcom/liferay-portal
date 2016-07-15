@@ -1123,6 +1123,8 @@
 
 		<execute macro="KaleoDesigner#saveAsDraftWorkflowDefinitionViaKDCP" />
 
+		<execute macro="KaleoDesigner#showDetails" />
+
 		<execute macro="KaleoDesigner#undoDraft" />
 		<execute macro="KaleoDesigner#undoDraft" />
 		<execute macro="KaleoDesigner#redoDraft" />
@@ -1262,6 +1264,8 @@
 
 		<execute macro="KaleoDesigner#saveAsDraftWorkflowDefinitionViaKDCP" />
 
+		<execute macro="KaleoDesigner#showDetails" />
+
 		<execute macro="KaleoDesigner#undoDraft" />
 
 		<execute macro="KaleoDesigner#viewDraftVersion">
@@ -1295,6 +1299,8 @@
 		<execute macro="KaleoDesigner#editWorkflowDefinitionViaKDCP">
 			<var name="workflowDefinitionTitle" value="New Workflow Definition Title" />
 		</execute>
+
+		<execute macro="KaleoDesigner#showDetails" />
 
 		<execute macro="KaleoDesigner#viewDraftVersion">
 			<var name="draftVersion" value="3" />

@@ -475,6 +475,8 @@
 		<execute function="SelectFrame" value1="relative=top" />
 		<execute function="AssertElementPresent" locator1="MessageBoardsMoveThread#CATEGORY_FIELD" />
 		<execute function="AssertClick" locator1="Button#MOVE_THREAD" value1="Move Thread" />
+
+		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="moveToHomePG">

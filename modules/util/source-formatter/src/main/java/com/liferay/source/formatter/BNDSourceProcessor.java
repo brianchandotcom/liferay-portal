@@ -14,6 +14,9 @@
 
 package com.liferay.source.formatter;
 
+import aQute.bnd.osgi.Constants;
+
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.StringPool;
@@ -24,7 +27,9 @@ import com.liferay.portal.tools.ImportsFormatter;
 import java.io.File;
 
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -203,7 +208,7 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 			content = formatIncludeResource(content);
 		}
 
-		return sortDefinitions(content, new DefinitionComparator());
+		return sortDefinitions(fileName, content, new DefinitionComparator());
 	}
 
 	@Override
@@ -220,6 +225,51 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return content;
+	}
+
+	@Override
+	protected String formatDefinitionKey(
+		String fileName, String content, String definitionKey) {
+
+		Map<String, String> generalDefinitionKeysMap = getDefinitionKeysMap();
+
+		String lowerCaseDefinitionKey = StringUtil.toLowerCase(definitionKey);
+
+		String correctKey = generalDefinitionKeysMap.get(
+			lowerCaseDefinitionKey);
+
+		if (correctKey == null) {
+			int pos = fileName.lastIndexOf(StringPool.SLASH);
+
+			String shortFileName = fileName.substring(pos + 1);
+
+			Map<String, Map<String, String>> fileSpecificDefinitionKeysMap =
+				getFileSpecificDefinitionKeysMap();
+
+			Map<String, String> definitionKeysMap =
+				fileSpecificDefinitionKeysMap.get(shortFileName);
+
+			if (definitionKeysMap != null) {
+				correctKey = definitionKeysMap.get(lowerCaseDefinitionKey);
+			}
+		}
+
+		if (correctKey == null) {
+			processMessage(fileName, "Unknown key \"" + definitionKey + "\"");
+
+			return content;
+		}
+
+		if (correctKey.equals(definitionKey)) {
+			return content;
+		}
+
+		if (content.startsWith(definitionKey)) {
+			return StringUtil.replaceFirst(content, definitionKey, correctKey);
+		}
+
+		return StringUtil.replace(
+			content, "\n" + definitionKey + ":", "\n" + correctKey + ":");
 	}
 
 	protected String formatIncludeResource(String content) {
@@ -276,6 +326,81 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 			content, includeResources, new IncludeResourceComparator());
 	}
 
+	protected Map<String, String> getDefinitionKeysMap() {
+		if (_definitionKeysMap != null) {
+			return _definitionKeysMap;
+		}
+
+		Map<String, String> definitionKeysMap = new HashMap<>();
+
+		definitionKeysMap = populateDefinitionKeysMap(
+			ArrayUtil.append(
+				Constants.BUNDLE_SPECIFIC_HEADERS, Constants.headers,
+				Constants.options));
+
+		_definitionKeysMap = definitionKeysMap;
+
+		return _definitionKeysMap;
+	}
+
+	protected Map<String, Map<String, String>>
+		getFileSpecificDefinitionKeysMap() {
+
+		if (_fileSpecificDefinitionKeysMap != null) {
+			return _fileSpecificDefinitionKeysMap;
+		}
+
+		Map<String, Map<String, String>> fileSpecificDefinitionKeysMap =
+			new HashMap<>();
+
+		fileSpecificDefinitionKeysMap.put(
+			"app.bnd",
+			populateDefinitionKeysMap(
+				"Liferay-Releng-App-Description", "Liferay-Releng-App-Title",
+				"Liferay-Releng-Bundle", "Liferay-Releng-Category",
+				"Liferay-Releng-Demo-Url", "Liferay-Releng-Deprecated",
+				"Liferay-Releng-Labs", "Liferay-Releng-Marketplace",
+				"Liferay-Releng-Portal-Required", "Liferay-Releng-Public",
+				"Liferay-Releng-Restart-Required", "Liferay-Releng-Support-Url",
+				"Liferay-Releng-Supported"));
+		fileSpecificDefinitionKeysMap.put(
+			"bnd.bnd",
+			populateDefinitionKeysMap(
+				"-metatype-inherit", "Can-Redefine-Classes",
+				"Can-Retransform-Classes", "Implementation-Version",
+				"JPM-Command", "Liferay-Export-JS-Submodules",
+				"Liferay-JS-Config", "Liferay-Releng-App-Description",
+				"Liferay-Releng-Module-Group-Description",
+				"Liferay-Releng-Module-Group-Title",
+				"Liferay-Require-SchemaVersion", "Liferay-Service",
+				"Liferay-Theme-Contributor-Type", "Main-Class", "Premain-Class",
+				"Web-ContextPath"));
+		fileSpecificDefinitionKeysMap.put(
+			"common.bnd",
+			populateDefinitionKeysMap(
+				"Git-Descriptor", "Git-SHA", "Javac-Compiler", "Javac-Debug",
+				"Javac-Deprecation", "Javac-Encoding",
+				"Liferay-Portal-Build-Date", "Liferay-Portal-Build-Number",
+				"Liferay-Portal-Build-Time", "Liferay-Portal-Code-Name",
+				"Liferay-Portal-Parent-Build-Number",
+				"Liferay-Portal-Release-Info", "Liferay-Portal-Server-Info",
+				"Liferay-Portal-Version"));
+
+		_fileSpecificDefinitionKeysMap = fileSpecificDefinitionKeysMap;
+
+		return _fileSpecificDefinitionKeysMap;
+	}
+
+	protected Map<String, String> populateDefinitionKeysMap(String... keys) {
+		Map<String, String> definitionKeysMap = new HashMap<>();
+
+		for (String key : keys) {
+			definitionKeysMap.put(StringUtil.toLowerCase(key), key);
+		}
+
+		return definitionKeysMap;
+	}
+
 	protected String sortDefinitionProperties(
 		String content, String properties, Comparator<String> comparator) {
 
@@ -330,9 +455,11 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 		"^Bundle-Name: (.*)\n", Pattern.MULTILINE);
 	private final Pattern _bundleSymbolicNamePattern = Pattern.compile(
 		"^Bundle-SymbolicName: (.*)\n", Pattern.MULTILINE);
+	private Map<String, String> _definitionKeysMap;
 	private final Pattern _exportsPattern = Pattern.compile(
 		"\nExport-Package:(\\\\\n| )(.*?\n|\\Z)[^\t]",
 		Pattern.DOTALL | Pattern.MULTILINE);
+	private Map<String, Map<String, String>> _fileSpecificDefinitionKeysMap;
 	private final Pattern _importsPattern = Pattern.compile(
 		"\nImport-Package:(\\\\\n| )(.*?\n|\\Z)[^\t]",
 		Pattern.DOTALL | Pattern.MULTILINE);

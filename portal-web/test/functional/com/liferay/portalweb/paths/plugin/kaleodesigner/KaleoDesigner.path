@@ -21,27 +21,27 @@
 <!--DEFINITION_TABLE-->
 <tr>
 	<td>DEFINITION_TABLE_NAME</td>
-	<td>//*[contains(@id,'kaleoDraftDefinitionsSearchContainer')]//td[@class='lfr-name-column']</td>
+	<td>//*[contains(@id,'kaleoDraftDefinitionsSearchContainer')]//td[contains(@class,'lfr-name-column')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DEFINITION_TABLE_TITLE</td>
-	<td>//*[contains(@id,'kaleoDraftDefinitionsSearchContainer')]//td[@class='lfr-title-column']</td>
+	<td>//*[contains(@id,'kaleoDraftDefinitionsSearchContainer')]//td[contains(@class,'lfr-title-column')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DEFINITION_TABLE_VERSION</td>
-	<td>//*[contains(@id,'kaleoDraftDefinitionsSearchContainer')]//td[@class='lfr-version-column']</td>
+	<td>//*[contains(@id,'kaleoDraftDefinitionsSearchContainer')]//td[contains(@class,'lfr-version-column')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DEFINITION_TABLE_DRAFT_VERSION</td>
-	<td>//*[contains(@id,'kaleoDraftDefinitionsSearchContainer')]//td[@class='lfr-draft-version-column']</td>
+	<td>//*[contains(@id,'kaleoDraftDefinitionsSearchContainer')]//td[contains(@class,'lfr-draft-version-column')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DEFINITION_TABLE_PUBLISHED</td>
-	<td>//*[contains(@id,'kaleoDraftDefinitionsSearchContainer')]//td[@class='lfr-published-column']</td>
+	<td>//*[contains(@id,'kaleoDraftDefinitionsSearchContainer')]//td[contains(@class,'lfr-published-column')]</td>
 	<td></td>
 </tr>
 </tbody>

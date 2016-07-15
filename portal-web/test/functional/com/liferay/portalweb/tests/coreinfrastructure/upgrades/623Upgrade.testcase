@@ -23,6 +23,12 @@
 		<execute macro="Upgrade#addOrganization" />
 	</command>
 
+	<command name="Publish612StagingArchiveAfterUpgrade" priority="4">
+		<property name="test.assert.warning.exceptions" value="true" />
+
+		<execute macro="Upgrade#publishStagedSite" />
+	</command>
+	
 	<command name="View623CalendarArchive" priority="3">
 		<property name="test.assert.warning.exceptions" value="true" />
 

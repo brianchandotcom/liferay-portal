@@ -97,8 +97,6 @@
 
 					<var name="key_previewEntry" value="${previewEntry}" />
 
-					<execute function="AssertClick" locator1="ContentTargeting#PREVIEW" value1="${previewEntry}" />
-
 					<if>
 						<and>
 							<isset var="entryContentText" />

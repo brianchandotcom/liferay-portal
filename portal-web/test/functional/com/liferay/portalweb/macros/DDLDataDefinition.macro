@@ -23,7 +23,7 @@
 		</if>
 
 		<execute function="Click" locator1="Button#PLUS" />
-		<execute function="Type" locator1="DDMEditStructure#NAME_FIELD" value1="${ddlDataDefinitionName}" />
+		<execute function="Type#clickAtSendKeys" locator1="DDMEditStructure#NAME_FIELD" value1="${ddlDataDefinitionName}" />
 
 		<execute macro="DDLDataDefinition#_showDetails" />
 

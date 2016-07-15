@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Journal Item Selector API
 Bundle-SymbolicName: com.liferay.journal.item.selector.api
-Bundle-Version: 1.0.2
+Bundle-Version: 1.1.0
 Export-Package: com.liferay.journal.item.selector.criterion
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Web Content

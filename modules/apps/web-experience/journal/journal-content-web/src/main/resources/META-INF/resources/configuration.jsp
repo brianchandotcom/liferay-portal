@@ -283,21 +283,7 @@ List<DDMTemplate> ddmTemplates = journalContentDisplayContext.getDDMTemplates();
 					templatePreviewContent.attr('data-template-id', event.ddmtemplateid);
 					templatePreviewContent.attr('data-template-key', event.ddmtemplatekey);
 
-					templatePreviewContent.find('.template-title').html(event.name);
-					templatePreviewContent.find('.template-description').html(event.description);
-
-					var templateImage = templatePreviewContent.find('.template-image');
-
-					if (event.imageurl !== 'null') {
-						templateImage.attr('alt', event.name);
-						templateImage.attr('src', event.imageurl);
-						templateImage.removeClass('hidden');
-					}
-					else {
-						templateImage.attr('alt', '');
-						templateImage.attr('src', '');
-						templateImage.addClass('hidden');
-					}
+					templatePreviewContent.find('.lfr-card-title-text > span').html(event.name);
 
 					form.fm('ddmTemplateKey').val(event.ddmtemplatekey);
 				}

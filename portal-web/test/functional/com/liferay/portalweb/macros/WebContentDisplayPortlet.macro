@@ -1,40 +1,4 @@
 <definition>
-	<command name="changeTemplate">
-		<execute macro="WebContentNavigator#gotoEditPGViaWCD" />
-
-		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Structure and Template" />
-		</execute>
-
-		<execute function="AssertTextEquals" locator1="WCEditWebContent#SELECTED_STRUCTURE" value1="${structureName}" />
-
-		<execute function="AssertClick" locator1="WCEditWebContent#SELECT_TEMPLATE" value1="Select" />
-
-		<execute function="SelectFrame" value1="relative=top" />
-
-		<execute function="SelectFrame" locator1="IFrame#TEMPLATES" />
-
-		<var name="key_ddlTemplateName" value="${templateName}" />
-
-		<execute function="AssertClickNoError" locator1="DDMSelectTemplate#TEMPLATE_TABLE_NAME_LINK" value1="${templateName}" />
-
-		<execute function="Confirm" value1="Selecting a new template deletes all unsaved content. Do you want to proceed?" />
-
-		<execute function="SelectFrame" value1="relative=top" />
-
-		<execute function="SelectFrame" locator1="IFrame#MODAL_IFRAME" />
-
-		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Structure and Template" />
-		</execute>
-
-		<execute function="AssertTextEquals" locator1="WCEditWebContent#SELECTED_TEMPLATE" value1="${templateName}" />
-
-		<execute function="AssertClick#pauseAssertTextClickAt" locator1="Button#PUBLISH" value1="Publish" />
-
-		<execute function="SelectFrame" value1="relative=top" />
-	</command>
-
 	<command name="configureScopePG">
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletName" value="${portletName}" />

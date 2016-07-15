@@ -54,23 +54,6 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 }
 %>
 
-<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" varImpl="editPermissionsResourceURL">
-	<portlet:param name="mvcPath" value="/view_resources.jsp" />
-	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EDIT %>" />
-	<portlet:param name="tabs2" value="roles" />
-	<portlet:param name="redirect" value="<%= backURL %>" />
-	<portlet:param name="roleId" value="<%= String.valueOf(role.getRoleId()) %>" />
-</liferay-portlet:resourceURL>
-
-<liferay-portlet:renderURL copyCurrentRenderParameters="<%= false %>" varImpl="editPermissionsURL">
-	<portlet:param name="mvcPath" value="/view_resources.jsp" />
-	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EDIT %>" />
-	<portlet:param name="tabs2" value="roles" />
-	<portlet:param name="redirect" value="<%= backURL %>" />
-	<portlet:param name="backURL" value="<%= backURL %>" />
-	<portlet:param name="roleId" value="<%= String.valueOf(role.getRoleId()) %>" />
-</liferay-portlet:renderURL>
-
 <liferay-ui:success key="permissionDeleted" message="the-permission-was-deleted" />
 <liferay-ui:success key="permissionsUpdated" message="the-role-permissions-were-updated" />
 

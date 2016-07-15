@@ -109,15 +109,14 @@ trustStorePath=${solr.dir}/server/etc/solr-ssl.keystore.jks</echo>
 			<exec dir="${solr.dir}/server/etc" executable="keytool">
 				<arg value="-genkeypair" />
 				<arg line="-alias solr-ssl" />
+				<arg line="-dname &quot;CN=localhost, OU=Organizational Unit, O=Organization, L=Location, ST=State, C=Country&quot;" />
+				<arg line="-ext SAN=DNS:localhost,IP:${ip.address},IP:127.0.0.1" />
 				<arg line="-keyalg RSA" />
-				<arg line="-keysize 2048" />
 				<arg line="-keypass secret" />
+				<arg line="-keysize 2048" />
+				<arg line="-keystore solr-ssl.keystore.jks" />
 				<arg line="-storepass secret" />
 				<arg line="-validity 9999" />
-				<arg line="-keystore solr-ssl.keystore.jks" />
-				<arg line="-ext SAN=DNS:localhost,IP:${ip.address},IP:127.0.0.1" />
-				<arg value="-dname" />
-				<arg value="CN=localhost, OU=Organizational Unit, O=Organization, L=Location, ST=State, C=Country" />
 			</exec>
 		</sequential>
 	</macrodef>

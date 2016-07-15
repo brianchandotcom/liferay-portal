@@ -16,6 +16,7 @@ package com.liferay.source.formatter;
 
 import java.io.IOException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -50,6 +51,10 @@ public class GroovySourceProcessor extends JavaSourceProcessor {
 
 	@Override
 	protected List<String> doGetFileNames() throws Exception {
+		if (!portalSource) {
+			return new ArrayList<>();
+		}
+
 		return getFileNames(new String[0], getIncludes());
 	}
 

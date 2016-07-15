@@ -26,7 +26,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Michael C. Han
  * @author Brian Wing Shun Chan
  */
-@Component(immediate = true, service = EventRequestSummaryStatistics.class)
+@Component(
+	enabled = false, immediate = true,
+	service = EventRequestSummaryStatistics.class
+)
 public class EventRequestSummaryStatistics implements PortletSummaryStatistics {
 
 	@Override

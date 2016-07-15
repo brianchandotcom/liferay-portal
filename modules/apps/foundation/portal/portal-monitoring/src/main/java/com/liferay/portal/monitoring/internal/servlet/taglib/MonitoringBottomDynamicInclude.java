@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Modified;
  */
 @Component(
 	configurationPid = "com.liferay.portal.monitoring.configuration.MonitoringConfiguration",
-	immediate = true, service = DynamicInclude.class
+	enabled = false, immediate = true, service = DynamicInclude.class
 )
 public class MonitoringBottomDynamicInclude extends BaseDynamicInclude {
 

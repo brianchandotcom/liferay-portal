@@ -41,7 +41,10 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = MonitoringMessagingConfigurator.class)
+@Component(
+	enabled = false, immediate = true,
+	service = MonitoringMessagingConfigurator.class
+)
 public class MonitoringMessagingConfigurator {
 
 	@Activate

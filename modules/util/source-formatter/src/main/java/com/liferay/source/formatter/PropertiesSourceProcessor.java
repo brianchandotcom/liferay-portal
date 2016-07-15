@@ -155,8 +155,6 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 
 		Properties languageProperties1 = _languagePropertiesMap.get(fileName);
 
-		_languagePropertiesMap.remove(fileName);
-
 		if (languageProperties1 == null) {
 			return;
 		}
@@ -165,6 +163,11 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 				_languagePropertiesMap.entrySet()) {
 
 			String fileName2 = propertiesEntry.getKey();
+
+			if (fileName.equals(fileName2)) {
+				continue;
+			}
+
 			Properties languageProperties2 = propertiesEntry.getValue();
 
 			for (Map.Entry<Object, Object> entry :

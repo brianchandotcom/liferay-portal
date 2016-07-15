@@ -125,7 +125,7 @@
 </tr>
 <tr>
 	<td>TAG_AUTOCOMPLETE</td>
-	<td>//div[contains(@class,'autocomplete-results-content')]//li[contains(.,'${key_tagName}')]</td>
+	<td>//div[contains(@class,'autocomplete-results-content')]//li[.='${key_tagName}']</td>
 	<td></td>
 </tr>
 <tr>

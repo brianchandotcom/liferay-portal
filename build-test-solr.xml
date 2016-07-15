@@ -3,7 +3,137 @@
 <project basedir="." name="portal-test-solr" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build-test.xml" />
 
-	<macrodef name="prepare-solr">
+	<macrodef name="configure-app-server-ssl-jvm-arguments">
+		<sequential>
+			<if>
+				<equals arg1="${app.server.type}" arg2="tomcat" />
+				<then>
+					<if>
+						<os family="unix" />
+						<then>
+							<replace file="${app.server.tomcat.bin.dir}/setenv.sh">
+								<replacetoken><![CDATA[-XX:MaxPermSize=384m"]]></replacetoken>
+								<replacevalue expandproperties="true"><![CDATA[-XX:MaxPermSize=384m -Djavax.net.ssl.trustStore=${solr.dir}/server/etc/solr-ssl.keystore.jks -Djavax.net.ssl.trustStorePassword=secret"]]></replacevalue>
+							</replace>
+						</then>
+						<elseif>
+							<os family="windows" />
+							<then>
+								<replace file="${app.server.tomcat.bin.dir}/setenv.bat">
+									<replacetoken><![CDATA[-XX:MaxPermSize=384m"]]></replacetoken>
+									<replacevalue expandproperties="true"><![CDATA[-XX:MaxPermSize=384m -Djavax.net.ssl.trustStore=${solr.dir}/server/etc/solr-ssl.keystore.jks -Djavax.net.ssl.trustStorePassword=secret"]]></replacevalue>
+								</replace>
+							</then>
+						</elseif>
+					</if>
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="configure-liferay-solr-adapter-properties">
+		<sequential>
+			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.solr.configuration.SolrConfiguration.cfg">readURL=http://localhost:8983/solr/liferay
+writeURL=http://localhost:8983/solr/liferay</echo>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="configure-liferay-solr-ssl-adapter-properties">
+		<sequential>
+			<replace file="${liferay.home}/osgi/configs/com.liferay.portal.search.solr.configuration.SolrConfiguration.cfg" value="https://">
+			 	<replacetoken>http://</replacetoken>
+			</replace>
+
+			<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.portal.search.solr.configuration.SolrConfiguration.cfg">
+authenticationMode=CERT</echo>
+
+			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.solr.configuration.SolrSSLSocketFactoryConfiguration.cfg">keyStorePath=${solr.dir}/server/etc/solr-ssl.keystore.jks
+trustStorePath=${solr.dir}/server/etc/solr-ssl.keystore.jks</echo>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="configure-solr-ssl-properties">
+		<sequential>
+			<if>
+				<os family="unix" />
+				<then>
+					<replaceregexp
+						byline="true"
+						file="${solr.dir}/bin/solr.in.sh"
+						match="#(SOLR_SSL_[A-Z]+_STORE)"
+						replace="\1"
+					/>
+				</then>
+				<elseif>
+					<os family="windows" />
+					<then>
+						<replaceregexp
+							byline="true"
+							file="${solr.dir}/bin/solr.in.cmd"
+							match="#(SOLR_SSL_[A-Z]+_STORE)"
+							replace="\1"
+						/>
+					</then>
+				</elseif>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="create-solr-core">
+		<sequential>
+			<if>
+				<os family="unix" />
+				<then>
+					<exec dir="${solr.dir}/bin" executable="/bin/bash">
+						<arg value="-c" />
+						<arg value="./solr create_core -c liferay -d ${solr.dir}/server/solr/liferay/conf" />
+					</exec>
+				</then>
+				<elseif>
+					<os family="windows" />
+					<then>
+						<exec dir="${solr.dir}/bin" executable="cmd" >
+							<arg value="/c" />
+							<arg value="solr create_core -c liferay -d ${solr.dir}/server/solr/liferay/conf" />
+						</exec>
+					</then>
+				</elseif>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="create-solr-ssl-keystore">
+		<sequential>
+			<get-ip-address />
+
+			<exec dir="${solr.dir}/server/etc" executable="keytool">
+				<arg value="-genkeypair" />
+				<arg line="-alias solr-ssl" />
+				<arg line="-keyalg RSA" />
+				<arg line="-keysize 2048" />
+				<arg line="-keypass secret" />
+				<arg line="-storepass secret" />
+				<arg line="-validity 9999" />
+				<arg line="-keystore solr-ssl.keystore.jks" />
+				<arg line="-ext SAN=DNS:localhost,IP:${ip.address},IP:127.0.0.1" />
+				<arg value="-dname" />
+				<arg value="CN=localhost, OU=Organizational Unit, O=Organization, L=Location, ST=State, C=Country" />
+			</exec>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="delete-elasticseach-osgi-bundle">
+		<sequential>
+			<delete failonerror="false">
+				<fileset
+					dir="${liferay.home}/osgi/portal"
+					includes="com.liferay.portal.search.elasticsearch*.jar"
+				/>
+			</delete>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="prepare-solr-configurations">
 		<sequential>
 			<copy overwrite="true" todir="${solr.dir}/server/solr/liferay/conf">
 				<fileset dir="${solr.dir}/server/solr/configsets/data_driven_schema_configs/conf">
@@ -27,7 +157,7 @@
 					<available file="${app.server.parent.dir}/${solr.zip.name}" />
 				</not>
 				<then>
-					<get
+					<mirrors-get
 						dest="${app.server.parent.dir}/${solr.zip.name}"
 						src="${solr.zip.url}"
 						verbose="true"
@@ -42,35 +172,40 @@
 		</sequential>
 	</macrodef>
 
-	<target name="configure-solr-osgi-bundle-properties">
-		<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.solr.configuration.SolrConfiguration.cfg">readURL=http://localhost:8983/solr/liferay
-writeURL=http://localhost:8983/solr/liferay</echo>
-	</target>
-
-	<target name="delete-elasticseach-osgi-bundle">
-		<delete failonerror="false">
-			<fileset
-				dir="${liferay.home}/osgi/portal"
-				includes="com.liferay.portal.search.elasticsearch*.jar"
-			/>
-		</delete>
-	</target>
-
 	<target name="start-solr">
 		<unzip-solr />
 
-		<prepare-solr />
+		<prepare-solr-configurations/>
 
-		<antcall target="delete-elasticseach-osgi-bundle" />
+		<delete-elasticseach-osgi-bundle />
 
 		<gradle-execute dir="modules/apps/portal-search-solr/portal-search-solr" task="deploy">
 			<arg value="clean" />
 		</gradle-execute>
 
-		<antcall target="configure-solr-osgi-bundle-properties" />
+		<configure-liferay-solr-adapter-properties />
 
-		<local name="solr.server.not.started" />
+		<get-testcase-property property.name="solr.ssl.authentication.enabled" />
 
+		<if>
+			<equals arg1="${solr.ssl.authentication.enabled}" arg2="true" />
+			<then>
+				<create-solr-ssl-keystore />
+
+				<configure-solr-ssl-properties />
+
+				<configure-liferay-solr-ssl-adapter-properties />
+
+				<configure-app-server-ssl-jvm-arguments />
+			</then>
+		</if>
+
+		<antcall target="start-solr-core" />
+
+		<create-solr-core />
+	</target>
+
+	<target name="start-solr-core">
 		<if>
 			<os family="unix" />
 			<then>
@@ -80,17 +215,6 @@ writeURL=http://localhost:8983/solr/liferay</echo>
 					<arg value="-c" />
 					<arg value="./solr start -V" />
 				</exec>
-
-				<waitfor maxwait="10" maxwaitunit="second" timeoutproperty="solr.server.not.started">
-					<http url="http://localhost:8983/solr" />
-				</waitfor>
-
-				<fail if="solr.server.not.started" message="Solr server failed to initialize." />
-
-				<exec dir="${solr.dir}/bin" executable="/bin/bash">
-					<arg value="-c" />
-					<arg value="./solr create_core -c liferay -d ${solr.dir}/server/solr/liferay/conf" />
-				</exec>
 			</then>
 			<elseif>
 				<os family="windows" />
@@ -99,19 +223,65 @@ writeURL=http://localhost:8983/solr/liferay</echo>
 						<arg value="/c" />
 						<arg value="solr -V" />
 					</exec>
+				</then>
+			</elseif>
+		</if>
 
-					<waitfor maxwait="10" maxwaitunit="second" timeoutproperty="solr.server.not.started">
-						<http url="http://localhost:8983/solr" />
-					</waitfor>
+		<get-testcase-property property.name="solr.ssl.authentication.enabled" />
 
-					<fail if="solr.server.not.started" message="Solr server failed to initialize." />
+		<if>
+			<not>
+				<equals arg1="${solr.ssl.authentication.enabled}" arg2="true" />
+			</not>
+			<then>
+				<local name="solr.server.not.started" />
 
-					<exec dir="${solr.dir}/bin" executable="cmd" >
+				<waitfor maxwait="10" maxwaitunit="second" timeoutproperty="solr.server.not.started">
+					<http url="http://localhost:8983/solr" />
+				</waitfor>
+
+				<fail if="solr.server.not.started" message="Solr server failed to initialize." />
+			</then>
+		</if>
+	</target>
+
+	<target name="stop-solr-core">
+		<if>
+			<os family="unix" />
+			<then>
+				<exec dir="${solr.dir}/bin" executable="/bin/bash">
+					<arg value="-c" />
+					<arg value="./solr stop -p 8983" />
+				</exec>
+			</then>
+			<elseif>
+				<os family="windows" />
+				<then>
+					<exec dir="${solr.dir}/bin" executable="cmd" spawn="true">
 						<arg value="/c" />
-						<arg value="solr create_core -c liferay -d ${solr.dir}/server/solr/liferay/conf" />
+						<arg value="solr -p 8983" />
 					</exec>
 				</then>
 			</elseif>
+		</if>
+
+		<get-testcase-property property.name="solr.ssl.authentication.enabled" />
+
+		<if>
+			<not>
+				<equals arg1="${solr.ssl.authentication.enabled}" arg2="true" />
+			</not>
+			<then>
+				<local name="solr.server.running" />
+
+				<waitfor maxwait="15" maxwaitunit="second" timeoutproperty="solr.server.running">
+					<not>
+						<http url="http://localhost:8983/solr" />
+					</not>
+				</waitfor>
+
+				<fail if="solr.server.running" message="Solr server failed to stop." />
+			</then>
 		</if>
 	</target>
 </project>

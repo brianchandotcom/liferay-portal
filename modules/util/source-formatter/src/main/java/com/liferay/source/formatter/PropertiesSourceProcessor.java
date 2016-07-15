@@ -236,7 +236,8 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 			checkLanguageProperties(fileName);
 		}
 		else if (fileName.endsWith("liferay-plugin-package.properties")) {
-			newContent = formatPluginPackageProperties(absolutePath, content);
+			newContent = formatPluginPackageProperties(
+				fileName, absolutePath, content);
 		}
 		else if (fileName.endsWith("portlet.properties")) {
 			newContent = formatPortletProperties(fileName, content);
@@ -350,7 +351,7 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected String formatPluginPackageProperties(
-		String absolutePath, String content) {
+		String fileName, String absolutePath, String content) {
 
 		content = StringUtil.replace(content, "\n\n", "\n");
 
@@ -364,7 +365,8 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 				content, matcher.group(1), StringPool.BLANK, matcher.start());
 		}
 
-		content = sortDefinitions(content, new NaturalOrderStringComparator());
+		content = sortDefinitions(
+			fileName, content, new NaturalOrderStringComparator());
 
 		return fixIncorrectLicenses(absolutePath, content);
 	}

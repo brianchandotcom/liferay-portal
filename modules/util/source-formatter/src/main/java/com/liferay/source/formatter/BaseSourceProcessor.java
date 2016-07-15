@@ -1207,6 +1207,12 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 	}
 
+	protected String formatDefinitionKey(
+		String fileName, String content, String definitionKey) {
+
+		return content;
+	}
+
 	protected String formatEmptyArray(String line) {
 		int pos = line.indexOf("[] {}");
 
@@ -2530,13 +2536,20 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	protected String sortDefinitions(
-		String content, Comparator<String> comparator) {
+		String fileName, String content, Comparator<String> comparator) {
 
 		String previousDefinition = null;
 
 		Matcher matcher = _definitionPattern.matcher(content);
 
 		while (matcher.find()) {
+			String newContent = formatDefinitionKey(
+				fileName, content, matcher.group(1));
+
+			if (!newContent.equals(content)) {
+				return newContent;
+			}
+
 			String definition = matcher.group();
 
 			if (Validator.isNotNull(matcher.group(1))) {
@@ -2984,7 +2997,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	private Map<String, String> _compatClassNamesMap;
 	private String _copyright;
 	private final Pattern _definitionPattern = Pattern.compile(
-		"^[A-Za-z-][\\s\\S]*?([^\\\\]\n|\\Z)", Pattern.MULTILINE);
+		"^([A-Za-z-]+?)[:=][\\s\\S]*?([^\\\\]\n|\\Z)", Pattern.MULTILINE);
 	private String[] _excludes;
 	private SourceMismatchException _firstSourceMismatchException;
 	private Set<String> _immutableFieldTypes;

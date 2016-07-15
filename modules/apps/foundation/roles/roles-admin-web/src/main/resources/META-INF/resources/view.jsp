@@ -217,6 +217,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, breadcrumbTitle, currentURL);
 				rowURL.setParameter("mvcPath", "/edit_role_assignments.jsp");
 				rowURL.setParameter("redirect", searchContainer.getIteratorURL().toString());
 				rowURL.setParameter("roleId", String.valueOf(role.getRoleId()));
+				rowURL.setParameter("tabs1", "assign-members");
 			}
 			%>
 

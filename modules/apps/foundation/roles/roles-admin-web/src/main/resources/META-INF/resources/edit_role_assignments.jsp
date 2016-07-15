@@ -44,6 +44,7 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcPath", "/edit_role_assignments.jsp");
+portletURL.setParameter("tabs1", "assign-members");
 portletURL.setParameter("tabs2", tabs2);
 portletURL.setParameter("tabs3", "current");
 portletURL.setParameter("redirect", redirect);
@@ -184,6 +185,7 @@ String[] tabs2Urls = {
 
 <portlet:actionURL name="editRoleAssignments" var="editRoleAssignmentsURL">
 	<portlet:param name="mvcPath" value="/edit_role_assignments.jsp" />
+	<portlet:param name="tabs1" value="assign-members" />
 </portlet:actionURL>
 
 <aui:script use="liferay-item-selector-dialog,liferay-portlet-url">
@@ -259,6 +261,7 @@ PortletURL assignMembersURL = renderResponse.createRenderURL();
 assignMembersURL.setParameter("mvcPath", "/edit_role_assignments.jsp");
 assignMembersURL.setParameter("redirect", redirect);
 assignMembersURL.setParameter("roleId", String.valueOf(role.getRoleId()));
+assignMembersURL.setParameter("tabs1", "assign-members");
 
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "assign-members"), assignMembersURL.toString());
 

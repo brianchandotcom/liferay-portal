@@ -30,6 +30,7 @@ String name = role.getName();
 			<portlet:param name="mvcPath" value="/edit_role.jsp" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="roleId" value="<%= String.valueOf(role.getRoleId()) %>" />
+			<portlet:param name="tabs1" value="edit" />
 		</portlet:renderURL>
 
 		<liferay-ui:icon
@@ -71,6 +72,7 @@ String name = role.getName();
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.VIEW %>" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="roleId" value="<%= String.valueOf(role.getRoleId()) %>" />
+			<portlet:param name="tabs1" value="define-permissions" />
 		</portlet:renderURL>
 
 		<liferay-ui:icon message="define-permissions" url="<%= editRolePermissionsURL %>" />

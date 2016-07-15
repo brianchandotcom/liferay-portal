@@ -112,6 +112,26 @@ public class JournalDisplayContext {
 			_request);
 	}
 
+	public String[] getAddMenuFavItems() {
+		if (_addMenuFavItems != null) {
+			return _addMenuFavItems;
+		}
+
+		PortalPreferences portalPreferences =
+			PortletPreferencesFactoryUtil.getPortalPreferences(_request);
+
+		_addMenuFavItems = portalPreferences.getValues(
+			JournalPortletKeys.JOURNAL, "add-menu-fav-items", new String[0]);
+
+		return _addMenuFavItems;
+	}
+
+	public int getAddMenuFavItemsLength() {
+		String[] addMenuFavItems = getAddMenuFavItems();
+
+		return addMenuFavItems.length;
+	}
+
 	public JournalArticle getArticle() throws PortalException {
 		if (_article != null) {
 			return _article;
@@ -386,6 +406,20 @@ public class JournalDisplayContext {
 
 	public String getManagementBarStatusFilterValue() {
 		return WorkflowConstants.getStatusLabel(getStatus());
+	}
+
+	public int getMaxAddMenuItems() {
+		if (_maxAddMenuItems != null) {
+			return _maxAddMenuItems;
+		}
+
+		JournalWebConfiguration journalWebConfiguration =
+			(JournalWebConfiguration)_request.getAttribute(
+				JournalWebConfiguration.class.getName());
+
+		_maxAddMenuItems = journalWebConfiguration.maxAddMenuItems();
+
+		return _maxAddMenuItems;
 	}
 
 	public String getNavigation() {
@@ -1066,6 +1100,7 @@ public class JournalDisplayContext {
 			portletURL.toString());
 	}
 
+	private String[] _addMenuFavItems;
 	private JournalArticle _article;
 	private DDMFormValues _ddmFormValues;
 	private String _ddmStructureKey;
@@ -1078,6 +1113,7 @@ public class JournalDisplayContext {
 	private String _keywords;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
+	private Integer _maxAddMenuItems;
 	private String _navigation;
 	private String _orderByCol;
 	private String _orderByType;

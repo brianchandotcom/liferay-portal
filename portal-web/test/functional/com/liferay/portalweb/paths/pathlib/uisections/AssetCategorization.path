@@ -124,6 +124,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TAG_AUTOCOMPLETE_CONTAINER</td>
+	<td>//div[contains(@class,'autocomplete-results ') and not(contains(@class,'hidden'))]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TAG_AUTOCOMPLETE</td>
 	<td>//div[contains(@class,'autocomplete-results-content')]//li[.='${key_tagName}']</td>
 	<td></td>

@@ -1854,6 +1854,8 @@ AUI.add(
 
 							modal.render();
 
+							instance._modal = modal;
+
 							instance._initBreadcrumb();
 							instance._initLayoutsList();
 
@@ -1864,8 +1866,6 @@ AUI.add(
 							var listNode = modal.bodyNode.one('.lfr-ddm-pages-container');
 
 							listNode.on('scroll', instance._handleModalScroll, instance);
-
-							instance._modal = modal;
 						}
 						else {
 							var path = instance.get('selectedLayoutPath');

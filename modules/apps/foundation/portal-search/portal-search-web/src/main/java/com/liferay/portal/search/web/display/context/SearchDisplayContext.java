@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.ScopeFacet;
 import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcher;
 import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcherManager;
-import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcherManagerUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -62,6 +61,11 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class SearchDisplayContext {
 
+	/**
+	 * @deprecated As of 7.1.0, replaced by {@link SearchDisplayContextFactoryUtil#create(
+	 * RenderRequest, RenderResponse, PortletPreferences)}
+	 */
+	@Deprecated
 	public SearchDisplayContext(
 			RenderRequest renderRequest, RenderResponse renderResponse,
 			PortletPreferences portletPreferences)
@@ -70,9 +74,8 @@ public class SearchDisplayContext {
 		this(
 			renderRequest, renderResponse, portletPreferences,
 			PortalUtil.getPortal(), HtmlUtil.getHtml(),
-			LanguageUtil.getLanguage(),
-			FacetedSearcherManagerUtil.getFacetedSearcherManager(),
-			new IndexSearchPropsValuesImpl(), new PortletURLFactoryImpl());
+			LanguageUtil.getLanguage(), null, new IndexSearchPropsValuesImpl(),
+			new PortletURLFactoryImpl());
 	}
 
 	public SearchDisplayContext(

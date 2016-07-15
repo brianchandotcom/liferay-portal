@@ -86,6 +86,7 @@ page import="com.liferay.portal.kernel.xml.Element" %><%@
 page import="com.liferay.portal.search.web.constants.SearchPortletKeys" %><%@
 page import="com.liferay.portal.search.web.constants.SearchPortletParameterNames" %><%@
 page import="com.liferay.portal.search.web.display.context.SearchDisplayContext" %><%@
+page import="com.liferay.portal.search.web.display.context.SearchDisplayContextFactoryUtil" %><%@
 page import="com.liferay.portal.search.web.facet.SearchFacet" %><%@
 page import="com.liferay.portal.search.web.facet.util.SearchFacetTracker" %><%@
 page import="com.liferay.portal.search.web.facet.util.comparator.SearchFacetComparator" %><%@
@@ -120,7 +121,7 @@ page import="javax.portlet.WindowState" %>
 <%
 PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(request);
 
-SearchDisplayContext searchDisplayContext = new SearchDisplayContext(renderRequest, renderResponse, portletPreferences);
+SearchDisplayContext searchDisplayContext = SearchDisplayContextFactoryUtil.create(renderRequest, renderResponse, portletPreferences);
 %>
 
 <%@ include file="/init-ext.jsp" %>

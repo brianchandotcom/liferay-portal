@@ -37,6 +37,7 @@ PortletURL editRoleURL = renderResponse.createRenderURL();
 editRoleURL.setParameter("mvcPath", "/edit_role.jsp");
 editRoleURL.setParameter("redirect", backURL);
 editRoleURL.setParameter("roleId", String.valueOf(role.getRoleId()));
+editRoleURL.setParameter("tabs1", "edit");
 
 // Define permissions
 
@@ -46,6 +47,7 @@ definePermissionsURL.setParameter("mvcPath", "/edit_role_permissions.jsp");
 definePermissionsURL.setParameter("redirect", backURL);
 definePermissionsURL.setParameter(Constants.CMD, Constants.VIEW);
 definePermissionsURL.setParameter("roleId", String.valueOf(role.getRoleId()));
+definePermissionsURL.setParameter("tabs1", "define-permissions");
 
 // Assign members
 
@@ -54,6 +56,7 @@ PortletURL assignMembersURL = renderResponse.createRenderURL();
 assignMembersURL.setParameter("mvcPath", "/edit_role_assignments.jsp");
 assignMembersURL.setParameter("redirect", backURL);
 assignMembersURL.setParameter("roleId", String.valueOf(role.getRoleId()));
+assignMembersURL.setParameter("tabs1", "assign-members");
 
 String[] tabs1Names = new String[0];
 String[] tabs1URLs = new String[0];

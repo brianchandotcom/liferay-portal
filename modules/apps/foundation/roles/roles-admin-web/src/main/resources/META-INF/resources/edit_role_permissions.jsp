@@ -36,6 +36,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcPath", "/edit_role_permissions.jsp");
 portletURL.setParameter(Constants.CMD, Constants.VIEW);
+portletURL.setParameter("tabs1", "define-permissions");
 portletURL.setParameter("tabs2", tabs2);
 portletURL.setParameter("tabs3", tabs3);
 portletURL.setParameter("backURL", backURL);

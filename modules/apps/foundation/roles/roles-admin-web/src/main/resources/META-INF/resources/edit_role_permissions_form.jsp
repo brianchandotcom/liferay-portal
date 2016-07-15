@@ -218,6 +218,7 @@ definePermissionsURL.setParameter("mvcPath", "/edit_role_permissions.jsp");
 definePermissionsURL.setParameter(Constants.CMD, Constants.VIEW);
 definePermissionsURL.setParameter("redirect", backURL);
 definePermissionsURL.setParameter("roleId", String.valueOf(role.getRoleId()));
+definePermissionsURL.setParameter("tabs1", "define-permissions");
 
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "define-permissions"), definePermissionsURL.toString());
 
@@ -226,6 +227,7 @@ if (Validator.isNotNull(portletResource)) {
 
 	resourceURL.setParameter("mvcPath", "/edit_role.jsp");
 	resourceURL.setParameter(Constants.CMD, Constants.EDIT);
+	resourceURL.setParameter("tabs1", "edit");
 	resourceURL.setParameter("tabs2", tabs2);
 	resourceURL.setParameter("portletResource", portletResource);
 

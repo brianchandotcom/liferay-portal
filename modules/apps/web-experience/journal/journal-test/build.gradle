@@ -7,9 +7,9 @@ dependencies {
 	provided group: "com.liferay.portal", name: "com.liferay.util.java", version: "2.0.0"
 
 	testCompile group: "com.liferay", name: "com.liferay.dynamic.data.mapping.api", version: "3.0.0"
-	testCompile group: "com.liferay", name: "com.liferay.journal.api", version: "2.1.0"
 	testCompile group: "com.liferay", name: "com.liferay.portal.search", version: "3.1.0"
 	testCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
+	testCompile project(":apps:web-experience:journal:journal-api")
 
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.5"
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.dynamic.data.mapping.io", version: "2.0.0"

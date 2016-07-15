@@ -16,8 +16,6 @@
 
 		<execute argument1="//nav[@id='navigation']" selenium="clickAt" />
 
-		<execute argument1="xPath=(//li[contains(@class,'lfr-nav-deletable')])[1]/a/span" selenium="waitForVisible" />
-
 		<execute selenium="isElementPresent" />
 	</command>
 

@@ -16,7 +16,6 @@ package com.liferay.bookmarks.lar.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.bookmarks.constants.BookmarksPortletKeys;
-import com.liferay.bookmarks.lar.BookmarksPortletDataHandler;
 import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.model.BookmarksFolderConstants;
 import com.liferay.bookmarks.service.BookmarksEntryLocalServiceUtil;
@@ -57,7 +56,7 @@ public class BookmarksExportImportTest extends BasePortletExportImportTestCase {
 
 	@Override
 	public String getNamespace() {
-		return BookmarksPortletDataHandler.NAMESPACE;
+		return "bookmarks";
 	}
 
 	@Override

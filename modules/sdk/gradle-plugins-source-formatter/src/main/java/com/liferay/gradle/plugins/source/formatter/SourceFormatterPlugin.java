@@ -52,22 +52,30 @@ public class SourceFormatterPlugin implements Plugin<Project> {
 
 		configureTasksFormatSource(project, sourceFormatterConfiguration);
 
-		PluginContainer pluginContainer = project.getPlugins();
+		boolean buildLifecycleEnabled =
+			GradleUtil.getProperty(
+				project, "source.formatter.build.lifecyle.enabled", false);
 
-		pluginContainer.withType(
-			LifecycleBasePlugin.class,
-			new Action<LifecycleBasePlugin>() {
+		if (buildLifecycleEnabled) {
+			PluginContainer pluginContainer = project.getPlugins();
 
-				@Override
-				public void execute(LifecycleBasePlugin lifecycleBasePlugin) {
-					Task checkTask = GradleUtil.getTask(
-						checkSourceFormattingTask.getProject(),
-						LifecycleBasePlugin.CHECK_TASK_NAME);
+			pluginContainer.withType(
+				LifecycleBasePlugin.class,
+				new Action<LifecycleBasePlugin>() {
 
-					checkTask.dependsOn(checkSourceFormattingTask);
-				}
+					@Override
+					public void execute(
+						LifecycleBasePlugin lifecycleBasePlugin) {
 
-			});
+						Task checkTask = GradleUtil.getTask(
+							checkSourceFormattingTask.getProject(),
+							LifecycleBasePlugin.CHECK_TASK_NAME);
+
+						checkTask.dependsOn(checkSourceFormattingTask);
+					}
+
+				});
+		}
 	}
 
 	protected FormatSourceTask addTaskCheckSourceFormatting(Project project) {

@@ -1366,7 +1366,7 @@
 			<var name="fieldValue" value="Text Field Value" />
 		</execute>
 
-		<execute macro="FormPortlet#submit" />
+		<execute macro="FormPortlet#submitSuccessfully" />
 
 		<execute macro="MockMock#viewMail">
 			<var name="asset" value="Form Subject" />

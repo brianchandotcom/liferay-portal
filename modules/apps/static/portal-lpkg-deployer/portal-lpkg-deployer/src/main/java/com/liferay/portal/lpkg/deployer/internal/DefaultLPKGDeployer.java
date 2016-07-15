@@ -402,7 +402,11 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 			BundleContext bundleContext)
 		throws IOException {
 
-		File overwrittenWarsPropertiesFile = bundleContext.getDataFile(
+		Bundle bundle = bundleContext.getBundle(0);
+
+		BundleContext systemBundleContext = bundle.getBundleContext();
+
+		File overwrittenWarsPropertiesFile = systemBundleContext.getDataFile(
 			"overwritten-wars.properties");
 
 		Properties overwrittenWarsProperties = new Properties();
@@ -476,7 +480,11 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 			BundleContext bundleContext, Properties properties)
 		throws IOException {
 
-		File overwrittenWarsPropertiesFile = bundleContext.getDataFile(
+		Bundle bundle = bundleContext.getBundle(0);
+
+		BundleContext systemBundleContext = bundle.getBundleContext();
+
+		File overwrittenWarsPropertiesFile = systemBundleContext.getDataFile(
 			"overwritten-wars.properties");
 
 		try (OutputStream outputStream = new FileOutputStream(

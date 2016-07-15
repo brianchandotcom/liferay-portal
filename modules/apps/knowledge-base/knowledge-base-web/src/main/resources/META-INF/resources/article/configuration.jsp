@@ -103,7 +103,7 @@ kbArticlePortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBArtic
 							width: 600
 						},
 						id: '<portlet:namespace />selectKBObject',
-						title: '<liferay-ui:message key="select-parent" />',
+						title: '<liferay-ui:message key="select-article" />',
 
 						<liferay-portlet:renderURL portletName="<%= portletResource %>" var="selectKBObjectURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 							<portlet:param name="mvcPath" value="/article/select_parent.jsp" />

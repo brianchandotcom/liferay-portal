@@ -99,6 +99,20 @@ public class KBFolderServiceSoap {
 		}
 	}
 
+	public static com.liferay.knowledge.base.model.KBFolderSoap fetchKBFolder(
+		long kbFolderId) throws RemoteException {
+		try {
+			com.liferay.knowledge.base.model.KBFolder returnValue = KBFolderServiceUtil.fetchKBFolder(kbFolderId);
+
+			return com.liferay.knowledge.base.model.KBFolderSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.knowledge.base.model.KBFolderSoap fetchKBFolderByUrlTitle(
 		long groupId, long parentKbFolderId, java.lang.String urlTitle)
 		throws RemoteException {

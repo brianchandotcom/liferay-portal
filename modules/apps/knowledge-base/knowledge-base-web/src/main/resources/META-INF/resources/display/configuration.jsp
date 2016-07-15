@@ -132,7 +132,7 @@ kbDisplayPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBDispl
 							width: 600
 						},
 						id: '<portlet:namespace />selectKBObject',
-						title: '<liferay-ui:message key="select-parent" />',
+						title: '<liferay-ui:message key="select-entry" />',
 
 						<liferay-portlet:renderURL portletName="<%= portletResource %>" var="selectKBObjectURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 							<portlet:param name="mvcPath" value="/display/select_parent.jsp" />

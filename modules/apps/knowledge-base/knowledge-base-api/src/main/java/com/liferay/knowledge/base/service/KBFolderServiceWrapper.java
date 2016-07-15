@@ -50,6 +50,13 @@ public class KBFolderServiceWrapper implements KBFolderService,
 	}
 
 	@Override
+	public com.liferay.knowledge.base.model.KBFolder fetchKBFolder(
+		long kbFolderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kbFolderService.fetchKBFolder(kbFolderId);
+	}
+
+	@Override
 	public com.liferay.knowledge.base.model.KBFolder fetchKBFolderByUrlTitle(
 		long groupId, long parentKbFolderId, java.lang.String urlTitle)
 		throws com.liferay.portal.kernel.exception.PortalException {

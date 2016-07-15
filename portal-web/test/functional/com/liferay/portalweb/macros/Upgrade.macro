@@ -351,6 +351,32 @@
 		</execute>
 	</command>
 
+	<command name="publishStagedSite">
+		<execute macro="Navigator#openSiteURL">
+			<var name="siteName" value="Staging Site" />
+		</execute>
+
+		<execute function="AssertElementNotPresent" locator1="Home#PORTLET" />
+
+		<execute macro="Navigator#gotoStagedView" />
+
+		<execute macro="WebContent#viewPGViaWCD">
+			<var name="webContentContent" value="Web Content Content" />
+			<var name="webContentTitle" value="Web Content Title" />
+		</execute>
+
+		<execute macro="Staging#gotoPublishToLive" />
+		
+		<execute macro="Staging#publishToLive" />
+
+		<execute macro="Navigator#gotoLiveView" />
+
+		<execute macro="WebContent#viewPGViaWCD">
+			<var name="webContentContent" value="Web Content Content" />
+			<var name="webContentTitle" value="Web Content Title" />
+		</execute>
+	</command>
+
 	<command name="publishWCDraft">
 		<execute macro="Navigator#openURL" />
 

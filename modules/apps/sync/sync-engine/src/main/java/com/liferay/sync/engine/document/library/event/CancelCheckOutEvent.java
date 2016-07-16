@@ -14,6 +14,7 @@
 
 package com.liferay.sync.engine.document.library.event;
 
+import com.liferay.sync.engine.document.library.event.constants.EventURLPaths;
 import com.liferay.sync.engine.document.library.handler.CheckInCheckOutHandler;
 import com.liferay.sync.engine.document.library.handler.Handler;
 import com.liferay.sync.engine.model.SyncFile;
@@ -29,7 +30,7 @@ public class CancelCheckOutEvent extends BaseEvent {
 	public CancelCheckOutEvent(
 		long syncAccountId, Map<String, Object> parameters) {
 
-		super(syncAccountId, _URL_PATH, parameters);
+		super(syncAccountId, EventURLPaths.CANCEL_CHECK_OUT, parameters);
 
 		_handler = new CheckInCheckOutHandler(this);
 	}
@@ -49,9 +50,6 @@ public class CancelCheckOutEvent extends BaseEvent {
 
 		super.processRequest();
 	}
-
-	private static final String _URL_PATH =
-		"/sync-web.syncdlobject/cancel-check-out";
 
 	private final Handler<Void> _handler;
 

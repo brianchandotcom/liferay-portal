@@ -25,6 +25,7 @@ import com.liferay.sync.engine.service.SyncAccountService;
 import com.liferay.sync.engine.service.SyncFileService;
 import com.liferay.sync.engine.session.Session;
 import com.liferay.sync.engine.session.SessionManager;
+import com.liferay.sync.engine.session.rate.limiter.RateLimitedInputStream;
 import com.liferay.sync.engine.util.FileKeyUtil;
 import com.liferay.sync.engine.util.FileUtil;
 import com.liferay.sync.engine.util.GetterUtil;
@@ -307,7 +308,9 @@ public class DownloadFileHandler extends BaseHandler {
 			handleSiteDeactivatedException();
 		}
 
-		final Session session = SessionManager.getSession(getSyncAccountId());
+		long syncAccountId = getSyncAccountId();
+
+		final Session session = SessionManager.getSession(syncAccountId);
 
 		Header tokenHeader = httpResponse.getFirstHeader("Sync-JWT");
 
@@ -328,7 +331,8 @@ public class DownloadFileHandler extends BaseHandler {
 		try {
 			HttpEntity httpEntity = httpResponse.getEntity();
 
-			inputStream = new CountingInputStream(httpEntity.getContent()) {
+			inputStream = new CountingInputStream(
+				httpEntity.getContent()) {
 
 				@Override
 				protected synchronized void afterRead(int n) {
@@ -338,6 +342,9 @@ public class DownloadFileHandler extends BaseHandler {
 				}
 
 			};
+
+			inputStream = new RateLimitedInputStream(
+				inputStream, syncAccountId);
 
 			if (httpResponse.getFirstHeader("Accept-Ranges") != null) {
 				copyFile(syncFile, filePath, inputStream, true);

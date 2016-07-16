@@ -14,6 +14,7 @@
 
 package com.liferay.sync.engine.document.library.event;
 
+import com.liferay.sync.engine.document.library.event.constants.EventURLPaths;
 import com.liferay.sync.engine.document.library.handler.GetSyncContextHandler;
 import com.liferay.sync.engine.document.library.handler.Handler;
 import com.liferay.sync.engine.session.Session;
@@ -29,7 +30,7 @@ public class GetSyncContextEvent extends BaseEvent {
 	public GetSyncContextEvent(
 		long syncAccountId, Map<String, Object> parameters) {
 
-		super(syncAccountId, _URL_PATH, parameters);
+		super(syncAccountId, EventURLPaths.GET_SYNC_CONTEXT, parameters);
 
 		_handler = new GetSyncContextHandler(this);
 	}
@@ -43,9 +44,6 @@ public class GetSyncContextEvent extends BaseEvent {
 	protected Session getSession() {
 		return SessionManager.getSession(getSyncAccountId(), true);
 	}
-
-	private static final String _URL_PATH =
-		"/sync-web.syncdlobject/get-sync-context";
 
 	private final Handler<Void> _handler;
 

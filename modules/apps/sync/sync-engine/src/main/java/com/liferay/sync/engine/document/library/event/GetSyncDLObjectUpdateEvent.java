@@ -14,6 +14,7 @@
 
 package com.liferay.sync.engine.document.library.event;
 
+import com.liferay.sync.engine.document.library.event.constants.EventURLPaths;
 import com.liferay.sync.engine.document.library.handler.GetSyncDLObjectUpdateHandler;
 import com.liferay.sync.engine.document.library.handler.Handler;
 import com.liferay.sync.engine.model.SyncSite;
@@ -33,7 +34,8 @@ public class GetSyncDLObjectUpdateEvent extends BaseEvent {
 	public GetSyncDLObjectUpdateEvent(
 		long syncAccountId, Map<String, Object> parameters) {
 
-		super(syncAccountId, _URL_PATH, parameters);
+		super(
+			syncAccountId, EventURLPaths.GET_SYNC_DL_OBJECT_UPDATE, parameters);
 
 		_handler = new GetSyncDLObjectUpdateHandler(this);
 	}
@@ -91,9 +93,6 @@ public class GetSyncDLObjectUpdateEvent extends BaseEvent {
 
 		executePost(getURLPath(), parameters);
 	}
-
-	private static final String _URL_PATH =
-		"/sync-web.syncdlobject/get-sync-dl-object-update";
 
 	private static final Logger _logger = LoggerFactory.getLogger(
 		GetSyncDLObjectUpdateEvent.class);

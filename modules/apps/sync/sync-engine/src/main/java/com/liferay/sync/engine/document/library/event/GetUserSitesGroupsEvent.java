@@ -14,6 +14,7 @@
 
 package com.liferay.sync.engine.document.library.event;
 
+import com.liferay.sync.engine.document.library.event.constants.EventURLPaths;
 import com.liferay.sync.engine.document.library.handler.GetUserSitesGroupsHandler;
 import com.liferay.sync.engine.document.library.handler.Handler;
 
@@ -27,7 +28,7 @@ public class GetUserSitesGroupsEvent extends BaseEvent {
 	public GetUserSitesGroupsEvent(
 		long syncAccountId, Map<String, Object> parameters) {
 
-		super(syncAccountId, _URL_PATH, parameters);
+		super(syncAccountId, EventURLPaths.GET_USER_SITES_GROUPS, parameters);
 
 		_handler = new GetUserSitesGroupsHandler(this);
 	}
@@ -36,9 +37,6 @@ public class GetUserSitesGroupsEvent extends BaseEvent {
 	public Handler<Void> getHandler() {
 		return _handler;
 	}
-
-	private static final String _URL_PATH =
-		"/sync-web.syncdlobject/get-user-sites-groups";
 
 	private final Handler<Void> _handler;
 

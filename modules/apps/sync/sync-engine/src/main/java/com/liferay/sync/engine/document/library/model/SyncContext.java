@@ -42,6 +42,12 @@ public class SyncContext {
 	public static final String PREFERENCE_KEY_MAX_CONNECTIONS =
 		"sync.client.max.connections";
 
+	public static final String PREFERENCE_KEY_MAX_DOWNLOAD_RATE =
+		"sync.client.max.download.rate";
+
+	public static final String PREFERENCE_KEY_MAX_UPLOAD_RATE =
+		"sync.client.max.upload.rate";
+
 	public static final String PREFERENCE_KEY_POLL_INTERVAL =
 		"sync.client.poll.interval";
 

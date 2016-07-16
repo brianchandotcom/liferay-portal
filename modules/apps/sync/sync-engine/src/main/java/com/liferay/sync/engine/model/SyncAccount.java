@@ -91,6 +91,14 @@ public class SyncAccount extends StateAwareModel {
 		return maxConnections;
 	}
 
+	public int getMaxDownloadRate() {
+		return maxDownloadRate;
+	}
+
+	public int getMaxUploadRate() {
+		return maxUploadRate;
+	}
+
 	public String getOAuthConsumerKey() {
 		return oAuthConsumerKey;
 	}
@@ -190,6 +198,14 @@ public class SyncAccount extends StateAwareModel {
 		this.maxConnections = maxConnections;
 	}
 
+	public void setMaxDownloadRate(int maxDownloadRate) {
+		this.maxDownloadRate = maxDownloadRate;
+	}
+
+	public void setMaxUploadRate(int maxUploadRate) {
+		this.maxUploadRate = maxUploadRate;
+	}
+
 	public void setOAuthConsumerKey(String oAuthConsumerKey) {
 		this.oAuthConsumerKey = oAuthConsumerKey;
 	}
@@ -259,6 +275,12 @@ public class SyncAccount extends StateAwareModel {
 
 	@DatabaseField(useGetSet = true)
 	protected int maxConnections;
+
+	@DatabaseField(useGetSet = true)
+	protected int maxDownloadRate;
+
+	@DatabaseField(useGetSet = true)
+	protected int maxUploadRate;
 
 	@DatabaseField(useGetSet = true, width = 16777216)
 	protected String oAuthConsumerKey;

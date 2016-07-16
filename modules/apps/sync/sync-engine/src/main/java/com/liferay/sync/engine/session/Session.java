@@ -65,6 +65,9 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.protocol.HttpClientContext;
+import org.apache.http.conn.HttpConnectionFactory;
+import org.apache.http.conn.ManagedHttpClientConnection;
+import org.apache.http.conn.routing.HttpRoute;
 import org.apache.http.conn.routing.HttpRoutePlanner;
 import org.apache.http.conn.ssl.NoopHostnameVerifier;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
@@ -79,6 +82,7 @@ import org.apache.http.impl.client.BasicAuthCache;
 import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.LaxRedirectStrategy;
+import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.impl.conn.SystemDefaultRoutePlanner;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.message.BasicNameValuePair;
@@ -191,6 +195,14 @@ public class Session {
 		HttpClientBuilder httpClientBuilder = createHttpClientBuilder(
 			trustSelfSigned, maxConnections);
 
+		HttpConnectionFactory<HttpRoute, ManagedHttpClientConnection>
+			connectionFactory = new SyncManagedHttpClientConnectionFactory();
+
+		PoolingHttpClientConnectionManager connectionManager =
+			new PoolingHttpClientConnectionManager(connectionFactory);
+
+		httpClientBuilder.setConnectionManager(connectionManager);
+
 		CredentialsProvider credentialsProvider =
 			new BasicCredentialsProvider();
 
@@ -222,6 +234,14 @@ public class Session {
 
 		HttpClientBuilder httpClientBuilder = createHttpClientBuilder(
 			trustSelfSigned, maxConnections);
+
+		HttpConnectionFactory<HttpRoute, ManagedHttpClientConnection>
+			connectionFactory = new SyncManagedHttpClientConnectionFactory();
+
+		PoolingHttpClientConnectionManager connectionManager =
+			new PoolingHttpClientConnectionManager(connectionFactory);
+
+		httpClientBuilder.setConnectionManager(connectionManager);
 
 		_httpClient = httpClientBuilder.build();
 

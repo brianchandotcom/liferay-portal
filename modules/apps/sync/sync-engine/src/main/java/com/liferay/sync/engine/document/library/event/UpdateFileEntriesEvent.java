@@ -14,6 +14,7 @@
 
 package com.liferay.sync.engine.document.library.event;
 
+import com.liferay.sync.engine.document.library.event.constants.EventURLPaths;
 import com.liferay.sync.engine.document.library.handler.Handler;
 import com.liferay.sync.engine.document.library.handler.UpdateFileEntriesHandler;
 
@@ -30,7 +31,7 @@ public class UpdateFileEntriesEvent extends BaseEvent {
 	public UpdateFileEntriesEvent(
 		long syncAccountId, Map<String, Object> parameters) {
 
-		super(syncAccountId, _URL_PATH, parameters);
+		super(syncAccountId, EventURLPaths.UPDATE_FILE_ENTRIES, parameters);
 
 		_handler = new UpdateFileEntriesHandler(this);
 	}
@@ -51,9 +52,6 @@ public class UpdateFileEntriesEvent extends BaseEvent {
 	protected void processRequest() throws Exception {
 		executeAsynchronousPost(getURLPath(), getParameters());
 	}
-
-	private static final String _URL_PATH =
-		"/sync-web.syncdlobject/update-file-entries";
 
 	private static final Logger _logger = LoggerFactory.getLogger(
 		UpdateFileEntriesEvent.class);

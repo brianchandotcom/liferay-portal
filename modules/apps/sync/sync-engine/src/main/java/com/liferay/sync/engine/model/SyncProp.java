@@ -25,6 +25,14 @@ import com.liferay.sync.engine.service.persistence.BasePersistenceImpl;
 @DatabaseTable(daoClass = BasePersistenceImpl.class, tableName = "SyncProp")
 public class SyncProp extends BaseModel {
 
+	public static final String KEY_BUILD_NUMBER = "buildNumber";
+
+	public static final String KEY_GLOBAL_MAX_DOWNLOAD_RATE =
+		"globalMaxDownloadRate";
+
+	public static final String KEY_GLOBAL_MAX_UPLOAD_RATE =
+		"globalMaxUploadRate";
+
 	public String getKey() {
 		return key;
 	}

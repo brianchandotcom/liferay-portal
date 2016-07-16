@@ -14,6 +14,7 @@
 
 package com.liferay.sync.engine.document.library.event;
 
+import com.liferay.sync.engine.document.library.event.constants.EventURLPaths;
 import com.liferay.sync.engine.document.library.handler.Handler;
 import com.liferay.sync.engine.document.library.handler.UpdateFolderHandler;
 import com.liferay.sync.engine.model.SyncFile;
@@ -29,7 +30,7 @@ public class UpdateFolderEvent extends BaseEvent {
 	public UpdateFolderEvent(
 		long syncAccountId, Map<String, Object> parameters) {
 
-		super(syncAccountId, _URL_PATH, parameters);
+		super(syncAccountId, EventURLPaths.UPDATE_FOLDER, parameters);
 
 		_handler = new UpdateFolderHandler(this);
 	}
@@ -49,9 +50,6 @@ public class UpdateFolderEvent extends BaseEvent {
 
 		processAsynchronousRequest();
 	}
-
-	private static final String _URL_PATH =
-		"/sync-web.syncdlobject/update-folder";
 
 	private final Handler<Void> _handler;
 

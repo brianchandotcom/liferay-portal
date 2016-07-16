@@ -126,6 +126,18 @@ public class GetSyncContextHandler extends BaseJSONHandler {
 
 		syncAccount.setMaxConnections(maxConnections);
 
+		int maxDownloadRate = GetterUtil.getInteger(
+			portletPreferencesMap.get(
+				SyncContext.PREFERENCE_KEY_MAX_DOWNLOAD_RATE));
+
+		syncAccount.setMaxDownloadRate(maxDownloadRate);
+
+		int maxUploadRate = GetterUtil.getInteger(
+			portletPreferencesMap.get(
+				SyncContext.PREFERENCE_KEY_MAX_UPLOAD_RATE));
+
+		syncAccount.setMaxUploadRate(maxUploadRate);
+
 		syncAccount.setPluginVersion(syncContext.getPluginVersion());
 
 		int pollInterval = GetterUtil.getInteger(

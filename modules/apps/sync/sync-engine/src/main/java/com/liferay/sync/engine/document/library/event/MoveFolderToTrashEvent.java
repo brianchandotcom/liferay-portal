@@ -14,6 +14,7 @@
 
 package com.liferay.sync.engine.document.library.event;
 
+import com.liferay.sync.engine.document.library.event.constants.EventURLPaths;
 import com.liferay.sync.engine.document.library.handler.Handler;
 import com.liferay.sync.engine.document.library.handler.MoveToTrashHandler;
 import com.liferay.sync.engine.model.SyncFile;
@@ -29,7 +30,7 @@ public class MoveFolderToTrashEvent extends BaseEvent {
 	public MoveFolderToTrashEvent(
 		long syncAccountId, Map<String, Object> parameters) {
 
-		super(syncAccountId, _URL_PATH, parameters);
+		super(syncAccountId, EventURLPaths.MOVE_FOLDER_TO_TRASH, parameters);
 
 		_handler = new MoveToTrashHandler(this);
 	}
@@ -49,9 +50,6 @@ public class MoveFolderToTrashEvent extends BaseEvent {
 
 		processAsynchronousRequest();
 	}
-
-	private static final String _URL_PATH =
-		"/sync-web.syncdlobject/move-folder-to-trash";
 
 	private final Handler<Void> _handler;
 

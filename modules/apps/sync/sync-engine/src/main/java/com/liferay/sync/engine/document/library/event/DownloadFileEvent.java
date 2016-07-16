@@ -14,6 +14,7 @@
 
 package com.liferay.sync.engine.document.library.event;
 
+import com.liferay.sync.engine.document.library.event.constants.EventURLPaths;
 import com.liferay.sync.engine.document.library.handler.DownloadFileHandler;
 import com.liferay.sync.engine.document.library.handler.Handler;
 import com.liferay.sync.engine.document.library.util.BatchDownloadEvent;
@@ -42,7 +43,7 @@ public class DownloadFileEvent extends BaseEvent {
 	public DownloadFileEvent(
 		long syncAccountId, Map<String, Object> parameters) {
 
-		super(syncAccountId, _URL_PATH, parameters);
+		super(syncAccountId, EventURLPaths.DOWNLOAD_FILE, parameters);
 
 		_handler = new DownloadFileHandler(this);
 	}
@@ -120,8 +121,6 @@ public class DownloadFileEvent extends BaseEvent {
 
 		executeAsynchronousGet(httpGet);
 	}
-
-	private static final String _URL_PATH = "/sync-web/download";
 
 	private final Handler<Void> _handler;
 

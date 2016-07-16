@@ -14,6 +14,7 @@
 
 package com.liferay.sync.engine.document.library.event;
 
+import com.liferay.sync.engine.document.library.event.constants.EventURLPaths;
 import com.liferay.sync.engine.document.library.handler.GetAllFolderSyncDLObjectsHandler;
 import com.liferay.sync.engine.document.library.handler.Handler;
 
@@ -27,7 +28,9 @@ public class GetAllFolderSyncDLObjectsEvent extends BaseEvent {
 	public GetAllFolderSyncDLObjectsEvent(
 		long syncAccountId, Map<String, Object> parameters) {
 
-		super(syncAccountId, _URL_PATH, parameters);
+		super(
+			syncAccountId, EventURLPaths.GET_ALL_FOLDER_SYNC_DL_OBJECTS,
+			parameters);
 
 		_handler = new GetAllFolderSyncDLObjectsHandler(this);
 	}
@@ -36,9 +39,6 @@ public class GetAllFolderSyncDLObjectsEvent extends BaseEvent {
 	public Handler<Void> getHandler() {
 		return _handler;
 	}
-
-	private static final String _URL_PATH =
-		"/sync-web.syncdlobject/get-all-folder-sync-dl-objects";
 
 	private final Handler<Void> _handler;
 

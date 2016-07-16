@@ -14,6 +14,7 @@
 
 package com.liferay.sync.engine.document.library.event;
 
+import com.liferay.sync.engine.document.library.event.constants.EventURLPaths;
 import com.liferay.sync.engine.document.library.handler.BaseJSONHandler;
 import com.liferay.sync.engine.document.library.handler.Handler;
 
@@ -27,7 +28,7 @@ public class UnregisterSyncDeviceEvent extends BaseEvent {
 	public UnregisterSyncDeviceEvent(
 		long syncAccountId, Map<String, Object> parameters) {
 
-		super(syncAccountId, _URL_PATH, parameters);
+		super(syncAccountId, EventURLPaths.UNREGISTER_SYNC_DEVICE, parameters);
 
 		_handler = new BaseJSONHandler(this);
 	}
@@ -41,9 +42,6 @@ public class UnregisterSyncDeviceEvent extends BaseEvent {
 	protected void processRequest() throws Exception {
 		executeAsynchronousPost(getURLPath(), getParameters());
 	}
-
-	private static final String _URL_PATH =
-		"/sync-web.syncdevice/unregister-sync-device";
 
 	private final Handler<Void> _handler;
 

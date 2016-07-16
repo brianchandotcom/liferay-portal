@@ -41,6 +41,15 @@ public class SyncServiceConfigurationValues {
 		SyncServiceConfigurationUtil.get(
 			SyncServiceConfigurationKeys.SYNC_CLIENT_MAX_CONNECTIONS));
 
+	public static final int SYNC_CLIENT_MAX_DOWNLOAD_RATE =
+		GetterUtil.getInteger(
+			SyncServiceConfigurationUtil.get(
+				SyncServiceConfigurationKeys.SYNC_CLIENT_MAX_DOWNLOAD_RATE));
+
+	public static final int SYNC_CLIENT_MAX_UPLOAD_RATE = GetterUtil.getInteger(
+		SyncServiceConfigurationUtil.get(
+			SyncServiceConfigurationKeys.SYNC_CLIENT_MAX_UPLOAD_RATE));
+
 	public static final int SYNC_CLIENT_MIN_BUILD_ANDROID =
 		GetterUtil.getInteger(
 			SyncServiceConfigurationUtil.get(

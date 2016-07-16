@@ -14,6 +14,7 @@
 
 package com.liferay.sync.engine.upgrade.util;
 
+import com.liferay.sync.engine.model.SyncProp;
 import com.liferay.sync.engine.service.SyncAccountService;
 import com.liferay.sync.engine.service.SyncFileService;
 import com.liferay.sync.engine.service.SyncPropService;
@@ -35,6 +36,7 @@ import com.liferay.sync.engine.upgrade.v3_0_8.UpgradeProcess_3_0_8;
 import com.liferay.sync.engine.upgrade.v3_0_9.UpgradeProcess_3_0_9;
 import com.liferay.sync.engine.upgrade.v3_1_0.UpgradeProcess_3_1_0;
 import com.liferay.sync.engine.upgrade.v3_2_1.UpgradeProcess_3_2_1;
+import com.liferay.sync.engine.upgrade.v3_2_2.UpgradeProcess_3_2_2;
 import com.liferay.sync.engine.util.LoggerUtil;
 import com.liferay.sync.engine.util.PropsValues;
 import com.liferay.sync.engine.util.ReleaseInfo;
@@ -73,7 +75,7 @@ public class UpgradeUtil {
 	}
 
 	public static void upgrade() throws Exception {
-		int buildNumber = SyncPropService.getInteger("buildNumber");
+		int buildNumber = SyncPropService.getInteger(SyncProp.KEY_BUILD_NUMBER);
 
 		if (buildNumber == 0) {
 			createTables();
@@ -109,6 +111,7 @@ public class UpgradeUtil {
 		upgradeProcesses.add(new UpgradeProcess_3_0_11());
 		upgradeProcesses.add(new UpgradeProcess_3_1_0());
 		upgradeProcesses.add(new UpgradeProcess_3_2_1());
+		upgradeProcesses.add(new UpgradeProcess_3_2_2());
 
 		for (UpgradeProcess upgradeProcess : upgradeProcesses) {
 			if (buildNumber < upgradeProcess.getThreshold()) {
@@ -129,7 +132,7 @@ public class UpgradeUtil {
 		}
 
 		SyncPropService.updateSyncProp(
-			"buildNumber", ReleaseInfo.getBuildNumber());
+			SyncProp.KEY_BUILD_NUMBER, ReleaseInfo.getBuildNumber());
 	}
 
 	protected static void createTables() throws Exception {

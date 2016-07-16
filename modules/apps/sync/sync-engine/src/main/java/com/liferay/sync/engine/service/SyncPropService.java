@@ -14,7 +14,9 @@
 
 package com.liferay.sync.engine.service;
 
+import com.liferay.sync.engine.model.ModelListener;
 import com.liferay.sync.engine.model.SyncProp;
+import com.liferay.sync.engine.model.SyncPropModelListener;
 import com.liferay.sync.engine.service.persistence.SyncPropPersistence;
 
 import java.sql.SQLException;
@@ -62,6 +64,8 @@ public class SyncPropService {
 
 		try {
 			_syncPropPersistence = new SyncPropPersistence();
+
+			registerModelListener(new SyncPropModelListener());
 		}
 		catch (SQLException sqle) {
 			if (_logger.isDebugEnabled()) {
@@ -85,6 +89,12 @@ public class SyncPropService {
 		catch (SQLException sqle) {
 			return null;
 		}
+	}
+
+	public static void registerModelListener(
+		ModelListener<SyncProp> modelListener) {
+
+		_syncPropPersistence.registerModelListener(modelListener);
 	}
 
 	public static SyncProp updateSyncProp(String key, Object value)

@@ -14,6 +14,7 @@
 
 package com.liferay.sync.engine.document.library.event;
 
+import com.liferay.sync.engine.document.library.event.constants.EventURLPaths;
 import com.liferay.sync.engine.document.library.handler.AddFileFolderHandler;
 import com.liferay.sync.engine.document.library.handler.Handler;
 import com.liferay.sync.engine.model.SyncFile;
@@ -27,7 +28,7 @@ import java.util.Map;
 public class AddFolderEvent extends BaseEvent {
 
 	public AddFolderEvent(long syncAccountId, Map<String, Object> parameters) {
-		super(syncAccountId, _URL_PATH, parameters);
+		super(syncAccountId, EventURLPaths.ADD_FOLDER, parameters);
 
 		_handler = new AddFileFolderHandler(this);
 	}
@@ -48,8 +49,6 @@ public class AddFolderEvent extends BaseEvent {
 
 		processAsynchronousRequest();
 	}
-
-	private static final String _URL_PATH = "/sync-web.syncdlobject/add-folder";
 
 	private final Handler<Void> _handler;
 

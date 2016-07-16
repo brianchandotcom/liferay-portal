@@ -943,6 +943,39 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return content;
 	}
 
+	protected String fixMissingEmptyLinesBetweenTags(String content) {
+		Matcher matcher = _emptyLineBetweenTagsPattern.matcher(content);
+
+		while (matcher.find()) {
+			String tabs1 = matcher.group(1);
+			String tabs2 = matcher.group(4);
+
+			if (!tabs1.equals(tabs2)) {
+				continue;
+			}
+
+			String lineBreaks = matcher.group(3);
+			String tagName1 = matcher.group(2);
+			String tagName2 = matcher.group(5);
+
+			if (tagName1.endsWith(":when") ||
+				(tagName1.matches("dd|dt|li|span|td|th|tr") &&
+				 tagName2.matches("dd|dt|li|span|td|th|tr"))) {
+
+				if (lineBreaks.equals("\n\n")) {
+					return StringUtil.replaceFirst(
+						content, "\n\n", "\n", matcher.end(1));
+				}
+			}
+			else if (lineBreaks.equals("\n")) {
+				return StringUtil.replaceFirst(
+					content, "\n", "\n\n", matcher.end(1));
+			}
+		}
+
+		return content;
+	}
+
 	protected String fixSessionKey(
 		String fileName, String content, Pattern pattern) {
 
@@ -3049,6 +3082,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	private String _copyright;
 	private final Pattern _definitionPattern = Pattern.compile(
 		"^([A-Za-z-]+?)[:=][\\s\\S]*?([^\\\\]\n|\\Z)", Pattern.MULTILINE);
+	private final Pattern _emptyLineBetweenTagsPattern = Pattern.compile(
+		"\n(\t*)</([-\\w:]+)>(\n*)(\t*)<([-\\w:]+)[> ]");
 	private final Pattern _emptyLineInNestedTagsPattern1 = Pattern.compile(
 		"\n(\t*)(?:<\\w.*[^/])?>\n\n(\t*)(<.*)\n");
 	private final Pattern _emptyLineInNestedTagsPattern2 = Pattern.compile(

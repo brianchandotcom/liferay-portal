@@ -498,7 +498,6 @@
 		</execute>
 
 		<for list="${permissionInLineCheckLists}" param="permissionsInLineCheckListsCount" >
-
 			<execute macro="Team#definePermissionPG">
 				<var name="permissionDefinitionKey" value="${permissionsInLineCheckListsCount}" />
 				<var name="teamName" value="${teamName}" />
@@ -515,7 +514,6 @@
 		</execute>
 
 		<for list="${permissionInLineUncheckLists1}" param="permissionsInLineUncheckListsCount" >
-
 			<execute macro="Role#removePermissionPG">
 				<var name="permissionDefinitionKey" value="${permissionsInLineUncheckListsCount}" />
 				<var name="roleName" value="Site Member" />
@@ -532,7 +530,6 @@
 		</execute>
 
 		<for list="${permissionInLineUncheckLists2}" param="permissionsInLineUncheckListsCount" >
-
 			<execute macro="Role#removePermissionPG">
 				<var name="permissionDefinitionKey" value="${permissionsInLineUncheckListsCount}" />
 				<var name="roleName" value="Guest" />

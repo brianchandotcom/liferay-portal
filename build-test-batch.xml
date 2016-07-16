@@ -902,7 +902,6 @@ app.server.type=@{app.server.type}]]></echo>
 							<setup-lpkg-test />
 
 							<trycatch>
-
 								<try>
 									<antcall inheritall="false" target="start-app-server" />
 

@@ -305,7 +305,6 @@
 			<isset var="eventCommentList" />
 			<then>
 				<for list="${eventCommentList}" param="eventComment">
-
 					<if>
 						<condition function="IsElementPresent" locator1="Comments#ADD_COMMENT_LINK" />
 						<then>
@@ -1329,7 +1328,6 @@
 		<if>
 			<equals arg1="${frequency}" arg2="Monthly" />
 			<then>
-
 				<execute function="AssertTextEquals#assertPartialText" locator1="CalendarEditEvent#REPEAT_DIALOG_SUMMARY" value1="${frequency}" />
 
 				<var locator="CalendarEditEvent#REPEAT_MONTHLY_CURRENT_DAY" name="currentDay" />

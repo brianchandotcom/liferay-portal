@@ -31,9 +31,11 @@
 			background-color: #E4ECF0;
 		}
 	</style>
+
 	<head>
 		<title>${pageTitle!"Portal Properties"}</title>
 	</head>
+
 	<body>
 		<h1>${pageTitle!"Portal Properties"}</h1>
 

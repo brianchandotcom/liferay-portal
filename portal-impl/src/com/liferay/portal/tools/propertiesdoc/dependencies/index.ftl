@@ -2,6 +2,7 @@
 	<head>
 		<title>Liferay Portal ${releaseInfoVersion} Properties</title>
 	</head>
+
 	<body>
 		<p>
 			<strong>Liferay Portal ${releaseInfoVersion} Properties</strong>

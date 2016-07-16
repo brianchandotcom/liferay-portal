@@ -47,7 +47,7 @@ if (group != null) {
 	group = StagingUtil.getLiveGroup(group.getGroupId());
 }
 
-userGroupParams.put("userGroupsGroups", Long.valueOf(group.getGroupId()));
+userGroupParams.put(UserGroupFinderConstants.PARAM_USER_GROUPS_GROUPS, Long.valueOf(group.getGroupId()));
 
 int userGroupsCount = UserGroupLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), userGroupParams);
 

@@ -943,7 +943,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return content;
 	}
 
-	protected String fixMissingEmptyLinesBetweenTags(String content) {
+	protected String fixEmptyLinesBetweenTags(String content) {
 		Matcher matcher = _emptyLineBetweenTagsPattern.matcher(content);
 
 		while (matcher.find()) {

@@ -294,7 +294,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		newContent = fixEmptyLinesInNestedTags(newContent);
 
-		newContent = fixMissingEmptyLinesBetweenTags(newContent);
+		newContent = fixEmptyLinesBetweenTags(newContent);
 
 		newContent = fixIncorrectClosingTag(newContent);
 

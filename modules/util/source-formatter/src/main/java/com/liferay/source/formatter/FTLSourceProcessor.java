@@ -149,6 +149,8 @@ public class FTLSourceProcessor extends BaseSourceProcessor {
 
 		content = fixEmptyLinesInNestedTags(content);
 
+		content = fixEmptyLinesBetweenTags(content);
+
 		return formatFTL(fileName, content);
 	}
 

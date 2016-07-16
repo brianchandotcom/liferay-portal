@@ -512,39 +512,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		return content;
 	}
 
-	protected String fixMissingEmptyLinesBetweenTags(String content) {
-		Matcher matcher = _emptyLineBetweenTagsPattern.matcher(content);
-
-		while (matcher.find()) {
-			String tabs1 = matcher.group(1);
-			String tabs2 = matcher.group(4);
-
-			if (!tabs1.equals(tabs2)) {
-				continue;
-			}
-
-			String lineBreaks = matcher.group(3);
-			String tagName1 = matcher.group(2);
-			String tagName2 = matcher.group(5);
-
-			if (tagName1.endsWith(":when") ||
-				(tagName1.matches("dd|dt|li|span|td|th|tr") &&
-				 tagName2.matches("dd|dt|li|span|td|th|tr"))) {
-
-				if (lineBreaks.equals("\n\n")) {
-					return StringUtil.replaceFirst(
-						content, "\n\n", "\n", matcher.end(1));
-				}
-			}
-			else if (lineBreaks.equals("\n")) {
-				return StringUtil.replaceFirst(
-					content, "\n", "\n\n", matcher.end(1));
-			}
-		}
-
-		return content;
-	}
-
 	protected String fixRedirectBackURL(String content) {
 		Matcher matcher = _redirectBackURLPattern.matcher(content);
 
@@ -2112,8 +2079,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		"\n\t*(<.*:defineObjects />)(\n|$)");
 	private final Pattern _directiveLinePattern = Pattern.compile("<%@\n?.*%>");
 	private final List<String> _duplicateImportClassNames = new ArrayList<>();
-	private final Pattern _emptyLineBetweenTagsPattern = Pattern.compile(
-		"\n(\t*)</([-\\w:]+)>(\n*)(\t*)<([-\\w:]+)[> ]");
 	private final Pattern _emptyJavaSourceTagPattern = Pattern.compile(
 		"\n\t*<%\n+\t*%>\n");
 	private final Pattern _ifTagPattern = Pattern.compile(

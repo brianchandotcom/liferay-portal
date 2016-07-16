@@ -54,7 +54,7 @@ public class UserGroupLocalServiceTest {
 
 		_companyId = _role.getCompanyId();
 
-		_baseUserGroupCount = UserGroupLocalServiceUtil.searchCount(
+		_count = UserGroupLocalServiceUtil.searchCount(
 			_companyId, null, new LinkedHashMap<String, Object>());
 
 		_userGroup1 = UserGroupTestUtil.addUserGroup();
@@ -72,7 +72,7 @@ public class UserGroupLocalServiceTest {
 	}
 
 	@Test
-	public void testDatabaseSearchWorksWithInvalidParamKey() {
+	public void testDatabaseSearchWithInvalidParamKey() {
 		String keywords = null;
 
 		LinkedHashMap<String, Object> userGroupParams = new LinkedHashMap<>();
@@ -83,8 +83,7 @@ public class UserGroupLocalServiceTest {
 
 		userGroupParams.put("invalidParamKey", "invalidParamValue");
 
-		List<UserGroup> userGroups = _doSearchUserGroups(
-			keywords, userGroupParams);
+		List<UserGroup> userGroups = _search(keywords, userGroupParams);
 
 		Assert.assertEquals(1, userGroups.size());
 	}
@@ -99,8 +98,7 @@ public class UserGroupLocalServiceTest {
 			UserGroupFinderConstants.PARAM_USER_GROUPS_ROLES,
 			Long.valueOf(_role.getRoleId()));
 
-		List<UserGroup> userGroups = _doSearchUserGroups(
-			keywords, userGroupParams);
+		List<UserGroup> userGroups = _search(keywords, userGroupParams);
 
 		Assert.assertEquals(1, userGroups.size());
 	}
@@ -115,8 +113,7 @@ public class UserGroupLocalServiceTest {
 			UserGroupFinderConstants.PARAM_USER_GROUPS_ROLES,
 			Long.valueOf(_role.getRoleId()));
 
-		List<UserGroup> userGroups = _doSearchUserGroups(
-			keywords, userGroupParams);
+		List<UserGroup> userGroups = _search(keywords, userGroupParams);
 
 		Assert.assertEquals(0, userGroups.size());
 	}
@@ -127,9 +124,9 @@ public class UserGroupLocalServiceTest {
 
 		String keywords = null;
 
-		List<UserGroup> userGroups = _doSearchUserGroups(keywords, emptyParams);
+		List<UserGroup> userGroups = _search(keywords, emptyParams);
 
-		Assert.assertEquals(_baseUserGroupCount + 2, userGroups.size());
+		Assert.assertEquals(_count + 2, userGroups.size());
 	}
 
 	@Test
@@ -138,12 +135,12 @@ public class UserGroupLocalServiceTest {
 
 		String keywords = _userGroup1.getName();
 
-		List<UserGroup> userGroups = _doSearchUserGroups(keywords, emptyParams);
+		List<UserGroup> userGroups = _search(keywords, emptyParams);
 
 		Assert.assertEquals(1, userGroups.size());
 	}
 
-	private List<UserGroup> _doSearchUserGroups(
+	private List<UserGroup> _search(
 		String keywords, LinkedHashMap<String, Object> params) {
 
 		return UserGroupLocalServiceUtil.search(
@@ -151,8 +148,8 @@ public class UserGroupLocalServiceTest {
 			UsersAdminUtil.getUserGroupOrderByComparator("name", "asc"));
 	}
 
-	private static int _baseUserGroupCount;
 	private static long _companyId;
+	private static int _count;
 	private static Role _role;
 	private static UserGroup _userGroup1;
 	private static UserGroup _userGroup2;

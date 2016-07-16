@@ -292,10 +292,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		newContent = fixCompatClassImports(absolutePath, newContent);
 
-		newContent = fixEmptyLineInNestedTags(
-			newContent, _emptyLineInNestedTagsPattern1, true);
-		newContent = fixEmptyLineInNestedTags(
-			newContent, _emptyLineInNestedTagsPattern2, false);
+		newContent = fixEmptyLinesInNestedTags(newContent);
 
 		newContent = fixMissingEmptyLinesBetweenTags(newContent);
 
@@ -498,49 +495,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		if (matcher.find()) {
 			return StringUtil.replace(
 				content, matcher.group(), StringPool.BLANK);
-		}
-
-		return content;
-	}
-
-	protected String fixEmptyLineInNestedTags(
-		String content, Pattern pattern, boolean startTag) {
-
-		Matcher matcher = pattern.matcher(content);
-
-		while (matcher.find()) {
-			String tabs2 = null;
-
-			if (startTag) {
-				String secondLine = matcher.group(3);
-
-				if (secondLine.equals("<%") || secondLine.startsWith("<%--") ||
-					secondLine.startsWith("<!--")) {
-
-					continue;
-				}
-
-				tabs2 = matcher.group(2);
-			}
-			else {
-				String firstLine = matcher.group(2);
-
-				if (firstLine.equals("%>")) {
-					continue;
-				}
-
-				tabs2 = matcher.group(3);
-			}
-
-			String tabs1 = matcher.group(1);
-
-			if ((startTag && ((tabs1.length() + 1) == tabs2.length())) ||
-				(!startTag && ((tabs1.length() - 1) == tabs2.length()))) {
-
-				content = StringUtil.replaceFirst(
-					content, StringPool.NEW_LINE, StringPool.BLANK,
-					matcher.end(1));
-			}
 		}
 
 		return content;
@@ -2162,10 +2116,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		"\n(\t*)</([-\\w:]+)>(\n*)(\t*)<([-\\w:]+)[> ]");
 	private final Pattern _emptyJavaSourceTagPattern = Pattern.compile(
 		"\n\t*<%\n+\t*%>\n");
-	private final Pattern _emptyLineInNestedTagsPattern1 = Pattern.compile(
-		"\n(\t*)(?:<\\w.*[^/])?>\n\n(\t*)(<.*)\n");
-	private final Pattern _emptyLineInNestedTagsPattern2 = Pattern.compile(
-		"\n(\t*)(.*>)\n\n(\t*)</.*(\n|$)");
 	private final Pattern _ifTagPattern = Pattern.compile(
 		"^<c:if test=('|\")<%= (.+) %>('|\")>$");
 	private final List<String> _importClassNames = new ArrayList<>();

@@ -849,6 +849,39 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return StringUtil.replace(content, contentCopyrightYear, copyrightYear);
 	}
 
+	protected String fixEmptyLinesBetweenTags(String content) {
+		Matcher matcher = _emptyLineBetweenTagsPattern.matcher(content);
+
+		while (matcher.find()) {
+			String tabs1 = matcher.group(1);
+			String tabs2 = matcher.group(4);
+
+			if (!tabs1.equals(tabs2)) {
+				continue;
+			}
+
+			String lineBreaks = matcher.group(3);
+			String tagName1 = matcher.group(2);
+			String tagName2 = matcher.group(5);
+
+			if (tagName1.endsWith(":when") ||
+				(tagName1.matches("dd|dt|li|span|td|th|tr") &&
+				 tagName2.matches("dd|dt|li|span|td|th|tr"))) {
+
+				if (lineBreaks.equals("\n\n")) {
+					return StringUtil.replaceFirst(
+						content, "\n\n", "\n", matcher.end(1));
+				}
+			}
+			else if (lineBreaks.equals("\n")) {
+				return StringUtil.replaceFirst(
+					content, "\n", "\n\n", matcher.end(1));
+			}
+		}
+
+		return content;
+	}
+
 	protected String fixEmptyLinesInNestedTags(String content) {
 		content = fixEmptyLinesInNestedTags(
 			content, _emptyLineInNestedTagsPattern1, true);
@@ -938,39 +971,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				"(Unicode)LanguageUtil.format/get methods require " +
 					expectedParameter + " parameter instead of " +
 						incorrectParameter);
-		}
-
-		return content;
-	}
-
-	protected String fixEmptyLinesBetweenTags(String content) {
-		Matcher matcher = _emptyLineBetweenTagsPattern.matcher(content);
-
-		while (matcher.find()) {
-			String tabs1 = matcher.group(1);
-			String tabs2 = matcher.group(4);
-
-			if (!tabs1.equals(tabs2)) {
-				continue;
-			}
-
-			String lineBreaks = matcher.group(3);
-			String tagName1 = matcher.group(2);
-			String tagName2 = matcher.group(5);
-
-			if (tagName1.endsWith(":when") ||
-				(tagName1.matches("dd|dt|li|span|td|th|tr") &&
-				 tagName2.matches("dd|dt|li|span|td|th|tr"))) {
-
-				if (lineBreaks.equals("\n\n")) {
-					return StringUtil.replaceFirst(
-						content, "\n\n", "\n", matcher.end(1));
-				}
-			}
-			else if (lineBreaks.equals("\n")) {
-				return StringUtil.replaceFirst(
-					content, "\n", "\n\n", matcher.end(1));
-			}
 		}
 
 		return content;

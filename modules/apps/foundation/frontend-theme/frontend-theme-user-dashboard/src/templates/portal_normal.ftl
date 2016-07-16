@@ -62,7 +62,6 @@
 
 				<#assign VOID = freeMarkerPortletPreferences.reset()>
 			</div>
-
 		</div>
 	</header>
 

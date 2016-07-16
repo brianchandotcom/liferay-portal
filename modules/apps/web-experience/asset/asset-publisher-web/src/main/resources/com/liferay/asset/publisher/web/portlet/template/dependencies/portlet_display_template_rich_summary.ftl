@@ -62,7 +62,6 @@
 			<@getDiscussion />
 		</div>
 	</div>
-
 </#list>
 
 <#macro getDiscussion>

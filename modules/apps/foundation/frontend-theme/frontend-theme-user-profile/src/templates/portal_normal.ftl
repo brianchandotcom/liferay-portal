@@ -56,7 +56,6 @@
 					</#if>
 				</div>
 			</div>
-
 		</div>
 	</header>
 

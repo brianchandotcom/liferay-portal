@@ -12,39 +12,13 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.expression.internal;
+package com.liferay.dynamic.data.mapping.expression;
 
 /**
- * @author Miguel Angelo Caldas Gallindo
+ * @author Leonardo Barros
  */
-public class Variable {
+public interface DDMExpressionFunction {
 
-	public Variable(String name) {
-		_name = name;
-	}
-
-	public String getExpressionString() {
-		return _expressionString;
-	}
-
-	public String getName() {
-		return _name;
-	}
-
-	public Object getValue() {
-		return _value;
-	}
-
-	public void setExpressionString(String expressionString) {
-		_expressionString = expressionString;
-	}
-
-	public void setValue(Object value) {
-		_value = value;
-	}
-
-	private String _expressionString;
-	private final String _name;
-	private Object _value;
+	public Object evaluate(Object... parameters);
 
 }

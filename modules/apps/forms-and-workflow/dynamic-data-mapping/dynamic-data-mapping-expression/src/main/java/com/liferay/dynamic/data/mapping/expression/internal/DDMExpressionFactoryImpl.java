@@ -66,6 +66,14 @@ public class DDMExpressionFactoryImpl implements DDMExpressionFactory {
 	}
 
 	@Override
+	public DDMExpression<Number> createNumberDDMExpression(
+			String expressionString)
+		throws DDMExpressionException {
+
+		return new DDMExpressionImpl<>(expressionString, Number.class);
+	}
+
+	@Override
 	public DDMExpression<String> createStringDDMExpression(
 			String expressionString)
 		throws DDMExpressionException {

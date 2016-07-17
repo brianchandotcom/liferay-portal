@@ -15,6 +15,9 @@
 package com.liferay.dynamic.data.mapping.expression;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.StringUtil;
+
+import java.util.Set;
 
 /**
  * @author Marcellus Tavares
@@ -36,6 +39,10 @@ public class DDMExpressionException extends PortalException {
 		super(cause);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static class FunctionNotAllowed extends DDMExpressionException {
 
 		public FunctionNotAllowed(String functionName) {
@@ -51,6 +58,42 @@ public class DDMExpressionException extends PortalException {
 		}
 
 		private final String _functionName;
+
+	}
+
+	public static class FunctionNotDefined extends DDMExpressionException {
+
+		public FunctionNotDefined(Set<String> undefinedFunctionNames) {
+			super(
+				String.format(
+					"The functions \"%s\" were not defined",
+					StringUtil.merge(undefinedFunctionNames)));
+
+			_undefinedFunctionNames = undefinedFunctionNames;
+		}
+
+		public Set<String> getUndefinedFunctionNames() {
+			return _undefinedFunctionNames;
+		}
+
+		private final Set<String> _undefinedFunctionNames;
+
+	}
+
+	public static class IncompatipleReturnType extends DDMExpressionException {
+
+		public IncompatipleReturnType() {
+			super(
+				"The evaluation return type differs from DDM Expression type");
+		}
+
+	}
+
+	public static class InvalidSyntax extends DDMExpressionException {
+
+		public InvalidSyntax(Throwable cause) {
+			super("The expression syntax is invalid", cause);
+		}
 
 	}
 

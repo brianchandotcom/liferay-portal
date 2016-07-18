@@ -31,9 +31,11 @@ Map<String, Object> data = new HashMap<String, Object>();
 
 data.put("placement", "top");
 data.put("toggle", "tooltip");
+
+String taglibOnClick = "Liferay.fire('previewArticle', {title: '" + HtmlUtil.escapeJS(article.getTitle(locale)) + "', uri: '" + HtmlUtil.escapeJS(href) + "'});";
 %>
 
-<aui:a data="<%= data %>" href="<%= href %>" title="<%= HtmlUtil.escape(article.getTitle(locale)) %>">
+<aui:a data="<%= data %>" href="javascript:;" onClick="<%= taglibOnClick %>" title="<%= HtmlUtil.escape(article.getTitle(locale)) %>">
 	<%= HtmlUtil.escape(article.getTitle(locale)) %>
 </aui:a>
 

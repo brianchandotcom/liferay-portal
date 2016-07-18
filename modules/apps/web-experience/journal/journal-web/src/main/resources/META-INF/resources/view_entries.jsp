@@ -71,20 +71,17 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 				row.setData(rowData);
 
 				row.setPrimaryKey(HtmlUtil.escape(curArticle.getArticleId()));
+				%>
 
-				PortletURL rowURL = null;
+				<liferay-portlet:renderURL plid="<%= JournalUtil.getPreviewPlid(curArticle, themeDisplay) %>" var="previewArticleContentURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+					<portlet:param name="mvcPath" value="/preview_article_content.jsp" />
+					<portlet:param name="groupId" value="<%= String.valueOf(curArticle.getGroupId()) %>" />
+					<portlet:param name="articleId" value="<%= curArticle.getArticleId() %>" />
+					<portlet:param name="version" value="<%= String.valueOf(curArticle.getVersion()) %>" />
+				</liferay-portlet:renderURL>
 
-				if (journalDisplayContext.isShowEditActions() && JournalArticlePermission.contains(permissionChecker, curArticle, ActionKeys.UPDATE)) {
-					rowURL = liferayPortletResponse.createRenderURL();
-
-					rowURL.setParameter("mvcPath", "/edit_article.jsp");
-					rowURL.setParameter("redirect", currentURL);
-					rowURL.setParameter("referringPortletResource", referringPortletResource);
-					rowURL.setParameter("groupId", String.valueOf(curArticle.getGroupId()));
-					rowURL.setParameter("folderId", String.valueOf(curArticle.getFolderId()));
-					rowURL.setParameter("articleId", curArticle.getArticleId());
-					rowURL.setParameter("version", String.valueOf(curArticle.getVersion()));
-				}
+				<%
+				String taglibOnClick = "Liferay.fire('previewArticle', {title: '" + HtmlUtil.escapeJS(curArticle.getTitle(locale)) + "', uri: '" + HtmlUtil.escapeJS(previewArticleContentURL.toString()) + "'});";
 				%>
 
 				<c:choose>
@@ -111,7 +108,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 							</h6>
 
 							<h5>
-								<aui:a href="<%= rowURL != null ? rowURL.toString() : null %>">
+								<aui:a href="javascript:;" onClick="<%= taglibOnClick %>">
 									<%= HtmlUtil.escape(curArticle.getTitle(locale)) %>
 								</aui:a>
 							</h5>
@@ -134,16 +131,8 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 						%>
 
 						<liferay-ui:search-container-column-text>
-							<liferay-portlet:renderURL plid="<%= JournalUtil.getPreviewPlid(curArticle, themeDisplay) %>" var="previewArticleContentURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-								<portlet:param name="mvcPath" value="/preview_article_content.jsp" />
-								<portlet:param name="groupId" value="<%= String.valueOf(curArticle.getGroupId()) %>" />
-								<portlet:param name="articleId" value="<%= curArticle.getArticleId() %>" />
-								<portlet:param name="version" value="<%= String.valueOf(curArticle.getVersion()) %>" />
-							</liferay-portlet:renderURL>
-
 							<%
 							String articleImageURL = curArticle.getArticleImageURL(themeDisplay);
-							String taglibOnClick = "Liferay.fire('previewArticle', {title: '" + HtmlUtil.escapeJS(curArticle.getTitle(locale)) + "', uri: '" + HtmlUtil.escapeJS(previewArticleContentURL.toString()) + "'});";
 							%>
 
 							<c:choose>
@@ -156,7 +145,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 										resultRow="<%= row %>"
 										rowChecker="<%= articleSearchContainer.getRowChecker() %>"
 										title="<%= curArticle.getTitle(locale) %>"
-										url="<%= rowURL != null ? rowURL.toString() : null %>"
+										url="javascript:;"
 									>
 										<%@ include file="/article_vertical_card.jspf" %>
 									</liferay-frontend:vertical-card>
@@ -170,7 +159,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 										resultRow="<%= row %>"
 										rowChecker="<%= articleSearchContainer.getRowChecker() %>"
 										title="<%= curArticle.getTitle(locale) %>"
-										url="<%= rowURL != null ? rowURL.toString() : null %>"
+										url="javascript:;"
 									>
 										<%@ include file="/article_vertical_card.jspf" %>
 									</liferay-frontend:icon-vertical-card>
@@ -181,7 +170,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 					<c:otherwise>
 						<liferay-ui:search-container-column-jsp
 							cssClass="table-cell-content"
-							href="<%= rowURL %>"
+							href="<%= previewArticleContentURL %>"
 							name="title"
 							path="/article_title.jsp"
 						/>

@@ -42,16 +42,21 @@ public class ScreensDDLRecordServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.screens.service.impl.ScreensDDLRecordServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.portal.kernel.json.JSONArray getDDLRecords(
-		long ddlRecordSetId, java.util.Locale locale, int start, int end)
+		long ddlRecordSetId, java.util.Locale locale, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecord> obc)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getDDLRecords(ddlRecordSetId, locale, start, end);
+		return getService()
+				   .getDDLRecords(ddlRecordSetId, locale, start, end, obc);
 	}
 
 	public static com.liferay.portal.kernel.json.JSONArray getDDLRecords(
 		long ddlRecordSetId, long userId, java.util.Locale locale, int start,
-		int end) throws com.liferay.portal.kernel.exception.PortalException {
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecord> obc)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .getDDLRecords(ddlRecordSetId, userId, locale, start, end);
+				   .getDDLRecords(ddlRecordSetId, userId, locale, start, end,
+			obc);
 	}
 
 	public static com.liferay.portal.kernel.json.JSONObject getDDLRecord(

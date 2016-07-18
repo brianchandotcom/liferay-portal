@@ -22,7 +22,9 @@ import javax.servlet.http.HttpServletRequest;
  * @author Alvaro del Castillo
  * @author Eduardo Lundgren
  * @author Jorge Ferrer
+ * @deprecated As of 7.1.0
  */
+@Deprecated
 public class AssetTagsNavigationTag extends IncludeTag {
 
 	public void setClassNameId(long classNameId) {

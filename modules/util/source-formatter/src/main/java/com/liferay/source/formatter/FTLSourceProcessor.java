@@ -143,6 +143,8 @@ public class FTLSourceProcessor extends BaseSourceProcessor {
 			}
 		}
 
+		content = formatAssignTags(content);
+
 		ImportsFormatter importsFormatter = new FTLImportsFormatter();
 
 		content = importsFormatter.format(content, null, null);
@@ -162,6 +164,12 @@ public class FTLSourceProcessor extends BaseSourceProcessor {
 		};
 
 		return getFileNames(excludes, getIncludes());
+	}
+
+	protected String formatAssignTags(String content) {
+		Matcher matcher = _incorrectAssignTagPattern.matcher(content);
+
+		return matcher.replaceAll("$1 />\n");
 	}
 
 	protected String formatFTL(String fileName, String content)
@@ -239,6 +247,8 @@ public class FTLSourceProcessor extends BaseSourceProcessor {
 
 	private static final String[] _INCLUDES = new String[] {"**/*.ftl"};
 
+	private final Pattern _incorrectAssignTagPattern = Pattern.compile(
+		"(<#assign .*[^/])>(\n|$)");
 	private final Pattern _liferayVariablePattern = Pattern.compile(
 		"^\t*<#assign liferay_.*>\n", Pattern.MULTILINE);
 	private final Pattern _liferayVariablesPattern = Pattern.compile(

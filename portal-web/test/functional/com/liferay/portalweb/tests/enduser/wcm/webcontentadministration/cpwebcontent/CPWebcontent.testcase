@@ -806,6 +806,10 @@
 
 		<execute macro="Navigator#openURL" />
 
+		<execute macro="Page#add">
+			<var name="pageName" value="Test Page" />
+		</execute>
+
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Web Content Display" />
 		</execute>
@@ -814,7 +818,9 @@
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
-		<execute macro="Navigator#openURL" />
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Test Page" />
+		</execute>
 
 		<execute macro="WebContentDisplayPortlet#viewImageFieldViaWCD" />
 	</command>

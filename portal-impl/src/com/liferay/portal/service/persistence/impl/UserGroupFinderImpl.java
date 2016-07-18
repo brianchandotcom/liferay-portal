@@ -388,21 +388,29 @@ public class UserGroupFinderImpl
 	protected String getJoin(String key) {
 		String join = StringPool.BLANK;
 
-		if (key.equals(UserGroupFinderConstants.PARAM_USER_GROUP_GROUP_ROLE)) {
+		if (key.equals(
+				UserGroupFinderConstants.PARAM_KEY_USER_GROUP_GROUP_ROLE)) {
+
 			join = CustomSQLUtil.get(JOIN_BY_USER_GROUP_GROUP_ROLE);
 		}
 		else if (key.equals(
-					UserGroupFinderConstants.PARAM_USER_GROUPS_GROUPS)) {
+					UserGroupFinderConstants.PARAM_KEY_USER_GROUPS_GROUPS)) {
 
 			join = CustomSQLUtil.get(JOIN_BY_USER_GROUPS_GROUPS);
 		}
-		else if (key.equals(UserGroupFinderConstants.PARAM_USER_GROUPS_ROLES)) {
+		else if (key.equals(
+					UserGroupFinderConstants.PARAM_KEY_USER_GROUPS_ROLES)) {
+
 			join = CustomSQLUtil.get(JOIN_BY_USER_GROUPS_ROLES);
 		}
-		else if (key.equals(UserGroupFinderConstants.PARAM_USER_GROUPS_TEAMS)) {
+		else if (key.equals(
+					UserGroupFinderConstants.PARAM_KEY_USER_GROUPS_TEAMS)) {
+
 			join = CustomSQLUtil.get(JOIN_BY_USER_GROUPS_TEAMS);
 		}
-		else if (key.equals(UserGroupFinderConstants.PARAM_USER_GROUPS_USERS)) {
+		else if (key.equals(
+					UserGroupFinderConstants.PARAM_KEY_USER_GROUPS_USERS)) {
+
 			join = CustomSQLUtil.get(JOIN_BY_USER_GROUPS_USERS);
 		}
 
@@ -444,11 +452,13 @@ public class UserGroupFinderImpl
 	protected String getWhere(String key, Object value) {
 		String join = StringPool.BLANK;
 
-		if (key.equals(UserGroupFinderConstants.PARAM_USER_GROUP_GROUP_ROLE)) {
+		if (key.equals(
+				UserGroupFinderConstants.PARAM_KEY_USER_GROUP_GROUP_ROLE)) {
+
 			join = CustomSQLUtil.get(JOIN_BY_USER_GROUP_GROUP_ROLE);
 		}
 		else if (key.equals(
-					UserGroupFinderConstants.PARAM_USER_GROUPS_GROUPS)) {
+					UserGroupFinderConstants.PARAM_KEY_USER_GROUPS_GROUPS)) {
 
 			if (value instanceof Long) {
 				join = CustomSQLUtil.get(JOIN_BY_USER_GROUPS_GROUPS);
@@ -479,13 +489,19 @@ public class UserGroupFinderImpl
 				}
 			}
 		}
-		else if (key.equals(UserGroupFinderConstants.PARAM_USER_GROUPS_ROLES)) {
+		else if (key.equals(
+					UserGroupFinderConstants.PARAM_KEY_USER_GROUPS_ROLES)) {
+
 			join = CustomSQLUtil.get(JOIN_BY_USER_GROUPS_ROLES);
 		}
-		else if (key.equals(UserGroupFinderConstants.PARAM_USER_GROUPS_TEAMS)) {
+		else if (key.equals(
+					UserGroupFinderConstants.PARAM_KEY_USER_GROUPS_TEAMS)) {
+
 			join = CustomSQLUtil.get(JOIN_BY_USER_GROUPS_TEAMS);
 		}
-		else if (key.equals(UserGroupFinderConstants.PARAM_USER_GROUPS_USERS)) {
+		else if (key.equals(
+					UserGroupFinderConstants.PARAM_KEY_USER_GROUPS_USERS)) {
+
 			join = CustomSQLUtil.get(JOIN_BY_USER_GROUPS_USERS);
 		}
 
@@ -547,7 +563,7 @@ public class UserGroupFinderImpl
 
 	private boolean _isFinderParam(String key) {
 		return ArrayUtil.contains(
-			UserGroupFinderConstants.PARAMS_USER_GROUP_FINDER, key);
+			UserGroupFinderConstants.PARAM_KEYS_USER_GROUP_FINDER, key);
 	}
 
 }

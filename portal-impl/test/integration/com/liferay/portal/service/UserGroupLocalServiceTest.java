@@ -78,7 +78,7 @@ public class UserGroupLocalServiceTest {
 		LinkedHashMap<String, Object> userGroupParams = new LinkedHashMap<>();
 
 		userGroupParams.put(
-			UserGroupFinderConstants.PARAM_USER_GROUPS_ROLES,
+			UserGroupFinderConstants.PARAM_KEY_USER_GROUPS_ROLES,
 			Long.valueOf(_role.getRoleId()));
 
 		userGroupParams.put("invalidParamKey", "invalidParamValue");
@@ -95,7 +95,7 @@ public class UserGroupLocalServiceTest {
 		LinkedHashMap<String, Object> userGroupParams = new LinkedHashMap<>();
 
 		userGroupParams.put(
-			UserGroupFinderConstants.PARAM_USER_GROUPS_ROLES,
+			UserGroupFinderConstants.PARAM_KEY_USER_GROUPS_ROLES,
 			Long.valueOf(_role.getRoleId()));
 
 		List<UserGroup> userGroups = _search(keywords, userGroupParams);
@@ -110,7 +110,7 @@ public class UserGroupLocalServiceTest {
 		LinkedHashMap<String, Object> userGroupParams = new LinkedHashMap<>();
 
 		userGroupParams.put(
-			UserGroupFinderConstants.PARAM_USER_GROUPS_ROLES,
+			UserGroupFinderConstants.PARAM_KEY_USER_GROUPS_ROLES,
 			Long.valueOf(_role.getRoleId()));
 
 		List<UserGroup> userGroups = _search(keywords, userGroupParams);

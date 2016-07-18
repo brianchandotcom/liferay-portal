@@ -366,7 +366,7 @@
 		</execute>
 
 		<execute macro="Staging#gotoPublishToLive" />
-		
+
 		<execute macro="Staging#publishToLive" />
 
 		<execute macro="Navigator#gotoLiveView" />

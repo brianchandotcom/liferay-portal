@@ -20,4 +20,22 @@ import com.liferay.item.selector.BaseItemSelectorCriterion;
  * @author Eduardo Garcia
  */
 public class JournalItemSelectorCriterion extends BaseItemSelectorCriterion {
+
+	public JournalItemSelectorCriterion() {
+	}
+
+	public JournalItemSelectorCriterion(long resourcePrimKey) {
+		_resourcePrimKey = resourcePrimKey;
+	}
+
+	public long getResourcePrimKey() {
+		return _resourcePrimKey;
+	}
+
+	public void setResourcePrimKey(long resourcePrimKey) {
+		_resourcePrimKey = resourcePrimKey;
+	}
+
+	private long _resourcePrimKey;
+
 }

@@ -1713,6 +1713,40 @@ AUI.add(
 						return instance.getDocumentLibraryURL('com.liferay.journal.item.selector.criterion.JournalItemSelectorCriterion,com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion');
 					},
 
+					getDocumentLibraryURL: function(criteria) {
+						var instance = this;
+
+						var parsedValue = instance.getParsedValue(ImageField.superclass.getValue.apply(instance, arguments));
+
+						var portletNamespace = instance.get('portletNamespace');
+
+						var portletURL = Liferay.PortletURL.createURL(themeDisplay.getURLControlPanel());
+
+						portletURL.setDoAsGroupId(instance.get('doAsGroupId'));
+
+						portletURL.setParameter('criteria', criteria);
+						portletURL.setParameter('itemSelectedEventName', portletNamespace + 'selectDocumentLibrary');
+
+						var journalCriterionJSON = {
+							desiredItemSelectorReturnTypes: 'com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType,com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType',
+							resourcePrimKey: parsedValue.resourcePrimKey
+						};
+
+						portletURL.setParameter('0_json', JSON.stringify(journalCriterionJSON));
+
+						var imageCriterionJSON = {
+							desiredItemSelectorReturnTypes: 'com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType,com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType'
+						};
+
+						portletURL.setParameter('1_json', JSON.stringify(imageCriterionJSON));
+
+						portletURL.setPortletId(Liferay.PortletKeys.ITEM_SELECTOR);
+						portletURL.setPortletMode('view');
+						portletURL.setWindowState('pop_up');
+
+						return portletURL.toString();
+					},
+
 					getValue: function() {
 						var instance = this;
 

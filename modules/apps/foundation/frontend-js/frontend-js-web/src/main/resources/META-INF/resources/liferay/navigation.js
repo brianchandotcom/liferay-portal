@@ -407,16 +407,6 @@ AUI.add(
 						}
 					);
 
-					sortable.plug(A.Plugin.DDConstrained);
-
-					sortable.plug(
-						A.Plugin.DDWinScroll,
-						{
-							horizontal: false,
-							vertical: true
-						}
-					);
-
 					sortable.delegate.on(
 						'drag:end',
 						function(event) {

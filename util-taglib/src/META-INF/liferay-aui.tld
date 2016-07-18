@@ -1440,6 +1440,11 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<name>field</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<description><![CDATA[Whether the component should be the first element of the form. The default value is <code>false</code>.]]></description>
 			<name>first</name>
 			<required>false</required>
@@ -1507,6 +1512,13 @@
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
+		</attribute>
+		<attribute>
+			<description><![CDATA[Sets the class for the bean object.]]></description>
+			<name>model</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.Class</type>
 		</attribute>
 		<attribute>
 			<description><![CDATA[Whether multiple options can be selected. If set to <code>true</code>, the select field expands to allow for multiple selections. The default value is <code>false</code>.]]></description>

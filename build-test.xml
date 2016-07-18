@@ -8372,6 +8372,8 @@ jdbc.default.password=${database.mysql.password}</echo>
 		<if>
 			<equals arg1="${remote.elasticsearch.enabled}" arg2="true" />
 			<then>
+				<print-file file.name="${elasticsearch.dir}/logs/LiferayElasticsearchCluster.log" />
+
 				<ant antfile="build-test-elasticsearch.xml" target="stop-elasticsearch" />
 			</then>
 		</if>

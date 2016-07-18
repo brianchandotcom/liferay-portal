@@ -26,8 +26,6 @@
 	</tear-down>
 
 	<command name="ViewResourceActionsCP" priority="4">
-		<property name="custom.properties" value="audit.message.com.liferay.portal.model.Layout.VIEW=true${line.separator}com.liferay.portal.servlet.filters.audit.AuditFilter=true" />
-
 		<execute macro="TestCase#getSiteName">
 			<return from="siteName" name="siteName" />
 			<var name="siteName" value="${siteName}" />

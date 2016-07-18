@@ -232,10 +232,4 @@ public class SelectTag extends BaseSelectTag {
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;
 
-	/**
-	 * @deprecated As of 7.0.1, with no direct replacement
-	 */
-	@Deprecated
-	private final Map<String, ValidatorTag> _validators = null;
-
 }

@@ -64,11 +64,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>LIVE</td>
-	<td>//ul[contains(@data-qa-id,'header')]//span[contains(.,'Live')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>MANAGE_DISPLAY_TEMPLATES_FOR_LIFERAY</td>
 	<td>//a[contains(.,'Manage Display Templates for Liferay')]</td>
 	<td></td>

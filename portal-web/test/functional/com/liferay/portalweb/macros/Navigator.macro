@@ -33,12 +33,6 @@
 		<execute function="Click" locator1="Icon#BACK" />
 	</command>
 
-	<command name="gotoLiveView">
-		<execute macro="ProductMenuHelper#openProductMenu" />
-
-		<execute function="AssertClick" locator1="Link#LIVE" value1="Live" />
-	</command>
-
 	<command name="gotoNavItem">
 		<var name="key_navItem" value="${navItem}" />
 

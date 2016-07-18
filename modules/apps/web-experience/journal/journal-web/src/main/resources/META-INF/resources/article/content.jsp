@@ -67,12 +67,14 @@ boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_artic
 	String message = nsle.getMessage();
 	%>
 
-	<c:when test="<%= message.equals(JournalArticleConstants.DISPLAY_PAGE) %>">
-		<liferay-ui:message key="please-select-an-existing-display-page" />
-	</c:when>
-	<c:otherwise>
-		<liferay-ui:message key="the-content-references-a-missing-page" />
-	</c:otherwise>
+	<c:choose>
+		<c:when test="<%= Objects.equals(message, JournalArticleConstants.DISPLAY_PAGE) %>">
+			<liferay-ui:message key="please-select-an-existing-display-page" />
+		</c:when>
+		<c:otherwise>
+			<liferay-ui:message key="the-content-references-a-missing-page" />
+		</c:otherwise>
+	</c:choose>
 </liferay-ui:error>
 
 <liferay-ui:error exception="<%= NoSuchStructureException.class %>" message="please-select-an-existing-structure" />

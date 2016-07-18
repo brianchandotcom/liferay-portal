@@ -1246,9 +1246,11 @@ public class BaseTextExportImportContentProcessor
 
 			String groupFriendlyURL = group.getFriendlyURL();
 
-			if (url.equals(groupFriendlyURL) ||
-				url.startsWith(groupFriendlyURL + StringPool.SLASH)) {
+			if (url.equals(groupFriendlyURL)) {
+				continue;
+			}
 
+			if (url.startsWith(groupFriendlyURL + StringPool.SLASH)) {
 				url = url.substring(groupFriendlyURL.length());
 			}
 

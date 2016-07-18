@@ -428,6 +428,11 @@
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Test Page Name" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
 		<execute macro="LAR#configureExportSiteCP" />
 
 		<execute function="AssertClick" locator1="SitePagesExport#EXPORT_BUTTON" value1="Export" />

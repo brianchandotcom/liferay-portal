@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
@@ -39,6 +39,7 @@ import javax.portlet.PortletResponse;
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Roberto Díaz
@@ -56,8 +57,12 @@ public class OpenInMSOfficeFileEntryPortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", getLocale(portletRequest), getClass());
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		ResourceBundle resourceBundle =
+			_resourceBundleLoader.loadResourceBundle(
+				themeDisplay.getLanguageId());
 
 		return LanguageUtil.get(resourceBundle, "open-in-ms-office");
 	}
@@ -116,8 +121,16 @@ public class OpenInMSOfficeFileEntryPortletConfigurationIcon
 			FileVersion fileVersion = ActionUtil.getFileVersion(
 				portletRequest, fileEntry);
 
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)portletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			ResourceBundle resourceBundle =
+				_resourceBundleLoader.loadResourceBundle(
+					themeDisplay.getLanguageId());
+
 			UIItemsBuilder uiItemsBuilder = new UIItemsBuilder(
-				request, fileVersion);
+				request, fileVersion, resourceBundle);
 
 			return uiItemsBuilder.isOpenInMsOfficeActionAvailable();
 		}
@@ -136,5 +149,17 @@ public class OpenInMSOfficeFileEntryPortletConfigurationIcon
 	public boolean isUseDialog() {
 		return true;
 	}
+
+	@Reference(
+		target = "(bundle.symbolic.name=com.liferay.document.library.web)",
+		unbind = "-"
+	)
+	protected void setResourceBundleLoader(
+		ResourceBundleLoader resourceBundleLoader) {
+
+		_resourceBundleLoader = resourceBundleLoader;
+	}
+
+	private ResourceBundleLoader _resourceBundleLoader;
 
 }

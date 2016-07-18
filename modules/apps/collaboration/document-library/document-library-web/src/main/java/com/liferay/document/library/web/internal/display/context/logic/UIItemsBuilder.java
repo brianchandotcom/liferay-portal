@@ -60,6 +60,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.taglib.security.PermissionsURLTag;
 
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
@@ -73,14 +74,21 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class UIItemsBuilder {
 
-	public UIItemsBuilder(HttpServletRequest request, FileShortcut fileShortcut)
+	public UIItemsBuilder(
+			HttpServletRequest request, FileShortcut fileShortcut,
+			ResourceBundle resourceBundle)
 		throws PortalException {
 
-		this(request, fileShortcut.getFileVersion(), fileShortcut);
+		this(
+			request, fileShortcut.getFileVersion(), fileShortcut,
+			resourceBundle);
 	}
 
-	public UIItemsBuilder(HttpServletRequest request, FileVersion fileVersion) {
-		this(request, fileVersion, null);
+	public UIItemsBuilder(
+		HttpServletRequest request, FileVersion fileVersion,
+		ResourceBundle resourceBundle) {
+
+		this(request, fileVersion, null, resourceBundle);
 	}
 
 	public void addCancelCheckoutMenuItem(List<MenuItem> menuItems)
@@ -115,7 +123,7 @@ public class UIItemsBuilder {
 		_addJavaScriptUIItem(
 			new JavaScriptToolbarItem(), toolbarItems,
 			DLUIItemKeys.CANCEL_CHECKOUT,
-			LanguageUtil.get(_request, "cancel-checkout[document]"),
+			LanguageUtil.get(_resourceBundle, "cancel-checkout[document]"),
 			getSubmitFormJavaScript(Constants.CANCEL_CHECKOUT, null));
 	}
 
@@ -144,7 +152,7 @@ public class UIItemsBuilder {
 
 		JavaScriptToolbarItem javaScriptToolbarItem = _addJavaScriptUIItem(
 			new JavaScriptToolbarItem(), toolbarItems, DLUIItemKeys.CHECKIN,
-			LanguageUtil.get(_request, "checkin"),
+			LanguageUtil.get(_resourceBundle, "checkin"),
 			getNamespace() + "showVersionDetailsDialog('" + portletURL + "');");
 
 		String javaScript =
@@ -160,8 +168,13 @@ public class UIItemsBuilder {
 			TemplateConstants.LANG_TYPE_FTL, urlTemplateResource, false);
 
 		template.put(
+			"dialogCancelButtonLabel",
+			LanguageUtil.get(_resourceBundle, "cancel"));
+		template.put(
+			"dialogSaveButtonLabel", LanguageUtil.get(_resourceBundle, "save"));
+		template.put(
 			"dialogTitle",
-			UnicodeLanguageUtil.get(_request, "describe-your-changes"));
+			UnicodeLanguageUtil.get(_resourceBundle, "describe-your-changes"));
 		template.put("namespace", getNamespace());
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
@@ -202,7 +215,7 @@ public class UIItemsBuilder {
 
 		_addJavaScriptUIItem(
 			new JavaScriptToolbarItem(), toolbarItems, DLUIItemKeys.CHECKOUT,
-			LanguageUtil.get(_request, "checkout[document]"),
+			LanguageUtil.get(_resourceBundle, "checkout[document]"),
 			getSubmitFormJavaScript(Constants.CHECKOUT, null));
 	}
 
@@ -282,7 +295,7 @@ public class UIItemsBuilder {
 		sb.append("if (confirm('");
 		sb.append(
 			UnicodeLanguageUtil.get(
-				_request, "are-you-sure-you-want-to-delete-this"));
+				_resourceBundle, "are-you-sure-you-want-to-delete-this"));
 		sb.append("')) {");
 		sb.append(
 			getSubmitFormJavaScript(Constants.DELETE, portletURL.toString()));
@@ -290,7 +303,7 @@ public class UIItemsBuilder {
 
 		_addJavaScriptUIItem(
 			new JavaScriptToolbarItem(), toolbarItems, DLUIItemKeys.DELETE,
-			LanguageUtil.get(_request, "delete"), sb.toString());
+			LanguageUtil.get(_resourceBundle, "delete"), sb.toString());
 	}
 
 	public void addDownloadMenuItem(List<MenuItem> menuItems)
@@ -325,7 +338,7 @@ public class UIItemsBuilder {
 
 		_addURLUIItem(
 			new URLToolbarItem(), toolbarItems, DLUIItemKeys.DOWNLOAD,
-			LanguageUtil.get(_request, "download"),
+			LanguageUtil.get(_resourceBundle, "download"),
 			DLUtil.getDownloadURL(
 				_fileEntry, _fileVersion, _themeDisplay, StringPool.BLANK));
 	}
@@ -365,7 +378,7 @@ public class UIItemsBuilder {
 
 		_addURLUIItem(
 			new URLToolbarItem(), toolbarItems, DLUIItemKeys.EDIT,
-			LanguageUtil.get(_request, "edit"), portletURL.toString());
+			LanguageUtil.get(_resourceBundle, "edit"), portletURL.toString());
 	}
 
 	public void addMoveMenuItem(List<MenuItem> menuItems)
@@ -419,7 +432,7 @@ public class UIItemsBuilder {
 
 		_addURLUIItem(
 			new URLToolbarItem(), toolbarItems, DLUIItemKeys.MOVE,
-			LanguageUtil.get(_request, "move"), portletURL.toString());
+			LanguageUtil.get(_resourceBundle, "move"), portletURL.toString());
 	}
 
 	public void addMoveToTheRecycleBinToolbarItem(
@@ -453,7 +466,7 @@ public class UIItemsBuilder {
 		_addJavaScriptUIItem(
 			new JavaScriptToolbarItem(), toolbarItems,
 			DLUIItemKeys.MOVE_TO_THE_RECYCLE_BIN,
-			LanguageUtil.get(_request, "move-to-the-recycle-bin"),
+			LanguageUtil.get(_resourceBundle, "move-to-the-recycle-bin"),
 			getSubmitFormJavaScript(
 				Constants.MOVE_TO_TRASH, portletURL.toString()));
 	}
@@ -492,7 +505,7 @@ public class UIItemsBuilder {
 		template.put(
 			"errorMessage",
 			UnicodeLanguageUtil.get(
-				_request,
+				_resourceBundle,
 				"cannot-open-the-requested-document-due-to-the-following-" +
 					"reason"));
 		template.put("namespace", getNamespace());
@@ -526,7 +539,8 @@ public class UIItemsBuilder {
 		_addJavaScriptUIItem(
 			new JavaScriptToolbarItem(), toolbarItems,
 			DLUIItemKeys.OPEN_IN_MS_OFFICE,
-			LanguageUtil.get(_request, "open-in-ms-office"), sb.toString());
+			LanguageUtil.get(_resourceBundle, "open-in-ms-office"),
+			sb.toString());
 	}
 
 	public void addPermissionsMenuItem(List<MenuItem> menuItems)
@@ -580,14 +594,14 @@ public class UIItemsBuilder {
 		StringBundler sb = new StringBundler(5);
 
 		sb.append("Liferay.Util.openWindow({title: '");
-		sb.append(UnicodeLanguageUtil.get(_request, "permissions"));
+		sb.append(UnicodeLanguageUtil.get(_resourceBundle, "permissions"));
 		sb.append("', uri: '");
 		sb.append(permissionsURL);
 		sb.append("'});");
 
 		_addJavaScriptUIItem(
 			new JavaScriptToolbarItem(), toolbarItems, DLUIItemKeys.PERMISSIONS,
-			LanguageUtil.get(_request, "permissions"), sb.toString());
+			LanguageUtil.get(_resourceBundle, "permissions"), sb.toString());
 	}
 
 	public void addViewOriginalFileMenuItem(List<MenuItem> menuItems) {
@@ -636,8 +650,13 @@ public class UIItemsBuilder {
 			TemplateConstants.LANG_TYPE_FTL, urlTemplateResource, false);
 
 		template.put(
+			"dialogCancelButtonLabel",
+			LanguageUtil.get(_resourceBundle, "cancel"));
+		template.put(
+			"dialogSaveButtonLabel", LanguageUtil.get(_resourceBundle, "save"));
+		template.put(
 			"dialogTitle",
-			UnicodeLanguageUtil.get(_request, "describe-your-changes"));
+			UnicodeLanguageUtil.get(_resourceBundle, "describe-your-changes"));
 		template.put("namespace", getNamespace());
 		template.put(
 			"randomNamespace", _request.getAttribute("randomNamespace"));
@@ -722,12 +741,13 @@ public class UIItemsBuilder {
 
 	private UIItemsBuilder(
 		HttpServletRequest request, FileVersion fileVersion,
-		FileShortcut fileShortcut) {
+		FileShortcut fileShortcut, ResourceBundle resourceBundle) {
 
 		try {
 			_request = request;
 			_fileVersion = fileVersion;
 			_fileShortcut = fileShortcut;
+			_resourceBundle = resourceBundle;
 
 			FileEntry fileEntry = null;
 
@@ -892,6 +912,7 @@ public class UIItemsBuilder {
 	private final long _folderId;
 	private Boolean _ieOnWin32;
 	private final HttpServletRequest _request;
+	private final ResourceBundle _resourceBundle;
 	private final ThemeDisplay _themeDisplay;
 	private Boolean _trashEnabled;
 

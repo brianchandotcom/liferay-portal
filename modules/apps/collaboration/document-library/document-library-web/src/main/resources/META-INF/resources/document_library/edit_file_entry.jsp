@@ -77,6 +77,10 @@ if (fileEntryTypeId >= 0) {
 	dlFileEntryType = DLFileEntryTypeLocalServiceUtil.getFileEntryType(fileEntryTypeId);
 }
 
+boolean majorVersion = ParamUtil.getBoolean(request, "majorVersion");
+
+boolean updateVersionDetails = ParamUtil.getBoolean(request, "updateVersionDetails");
+
 long assetClassPK = 0;
 
 if ((fileVersion != null) && !fileVersion.isApproved() && Validator.isNotNull(fileVersion.getVersion()) && !fileVersion.getVersion().equals(DLFileEntryConstants.VERSION_DEFAULT)) {
@@ -419,28 +423,31 @@ if (portletTitleBasedNavigation) {
 						%>
 
 					</c:if>
-
-					<c:if test="<%= (fileEntry != null) && !checkedOut %>">
-						<aui:input
-							label="customize-the-version-number-increment-and-describe-my-changes"
-							name="updateVersionDetails"
-							type="checkbox"
-						/>
-
-						<div id="<portlet:namespace />versionDetails" style="display: none">
-							<aui:input label="major-version" name="majorVersion" type="radio" value="<%= true %>" />
-
-							<aui:input checked="<%= true %>" label="minor-version" name="majorVersion" type="radio" value="<%= false %>" />
-
-							<aui:model-context />
-
-							<aui:input label="change-log" name="changeLog" type="textarea" />
-
-							<aui:model-context bean="<%= fileVersion %>" model="<%= DLFileVersion.class %>" />
-						</div>
-					</c:if>
 				</c:if>
 			</aui:fieldset>
+
+			<c:if test="<%= (fileEntry != null) && !checkedOut %>">
+				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="versioning">
+					<aui:input
+						label="customize-the-version-number-increment-and-describe-my-changes"
+						name="updateVersionDetails"
+						type="toggle-switch"
+						value="<%= updateVersionDetails %>"
+					/>
+
+					<div id="<portlet:namespace />versionDetails" style="<%= (updateVersionDetails) ? StringPool.BLANK : "display: none" %>">
+						<aui:input checked="<%= majorVersion %>" label="major-version" name="majorVersion" type="radio" value="<%= true %>" />
+
+						<aui:input checked="<%= !majorVersion %>" label="minor-version" name="majorVersion" type="radio" value="<%= false %>" />
+
+						<aui:model-context />
+
+						<aui:input label="version-notes" name="changeLog" type="textarea" />
+
+						<aui:model-context bean="<%= fileVersion %>" model="<%= DLFileVersion.class %>" />
+					</div>
+				</aui:fieldset>
+			</c:if>
 
 			<c:if test="<%= (folder == null) || folder.isSupportsMetadata() %>">
 				<liferay-ui:custom-attributes-available className="<%= DLFileEntryConstants.getClassName() %>">
@@ -577,19 +584,23 @@ if (portletTitleBasedNavigation) {
 			Liferay.Portlet.DocumentLibrary.Checkin.showDialog(
 				'<portlet:namespace />versionDetails',
 				'<%= UnicodeLanguageUtil.get(request, "describe-your-changes") %>',
-				function(event) {
-					var $ = AUI.$;
+				{
+					label: '<liferay-ui:message key="save" />',
+					callback: function(event) {
+						var $ = AUI.$;
 
-					var majorVersionNode = $("input:radio[name='<portlet:namespace />versionDetailsMajorVersion']:checked");
+						var majorVersionNode = $("input:radio[name='<portlet:namespace />versionDetailsMajorVersion']:checked");
 
-					form.fm('majorVersion').val(majorVersionNode.val());
+						form.fm('majorVersion').val(majorVersionNode.val());
 
-					var changeLogNode = $('#<portlet:namespace />versionDetailsChangeLog');
+						var changeLogNode = $('#<portlet:namespace />versionDetailsChangeLog');
 
-					form.fm('changeLog').val(changeLogNode.val());
+						form.fm('changeLog').val(changeLogNode.val());
 
-					submitForm(form);
-				}
+						submitForm(form);
+					}
+				},
+				'<liferay-ui:message key="cancel" />'
 			);
 		},
 		['document-library-checkin']
@@ -619,7 +630,7 @@ if (portletTitleBasedNavigation) {
 		$('#<portlet:namespace />updateVersionDetails').on(
 			'click',
 			function(event) {
-				$('#<portlet:namespace />versionDetails').show();
+				$('#<portlet:namespace />versionDetails').toggle();
 			}
 		);
 	</aui:script>

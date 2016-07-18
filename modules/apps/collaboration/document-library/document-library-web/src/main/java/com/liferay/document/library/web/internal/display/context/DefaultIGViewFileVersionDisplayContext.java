@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -39,23 +40,18 @@ public class DefaultIGViewFileVersionDisplayContext
 
 	public DefaultIGViewFileVersionDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
-			FileShortcut fileShortcut)
+			FileShortcut fileShortcut, ResourceBundle resourceBundle)
 		throws PortalException {
 
-		this(request, response, fileShortcut.getFileVersion(), fileShortcut);
+		this(
+			request, response, fileShortcut.getFileVersion(), fileShortcut,
+			resourceBundle);
 	}
 
 	public DefaultIGViewFileVersionDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
-			FileVersion fileVersion)
-		throws PortalException {
-
-		this(request, response, fileVersion, null);
-	}
-
-	public DefaultIGViewFileVersionDisplayContext(
-			HttpServletRequest request, HttpServletResponse response,
-			FileVersion fileVersion, FileShortcut fileShortcut)
+			FileVersion fileVersion, FileShortcut fileShortcut,
+			ResourceBundle resourceBundle)
 		throws PortalException {
 
 		_igRequestHelper = new IGRequestHelper(request);
@@ -64,11 +60,21 @@ public class DefaultIGViewFileVersionDisplayContext
 			_igRequestHelper);
 
 		if (fileShortcut == null) {
-			_uiItemsBuilder = new UIItemsBuilder(request, fileVersion);
+			_uiItemsBuilder = new UIItemsBuilder(
+				request, fileVersion, resourceBundle);
 		}
 		else {
-			_uiItemsBuilder = new UIItemsBuilder(request, fileShortcut);
+			_uiItemsBuilder = new UIItemsBuilder(
+				request, fileShortcut, resourceBundle);
 		}
+	}
+
+	public DefaultIGViewFileVersionDisplayContext(
+			HttpServletRequest request, HttpServletResponse response,
+			FileVersion fileVersion, ResourceBundle resourceBundle)
+		throws PortalException {
+
+		this(request, response, fileVersion, null, resourceBundle);
 	}
 
 	@Override

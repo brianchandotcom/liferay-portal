@@ -43,7 +43,6 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.ToolbarItem;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
@@ -69,25 +68,23 @@ public class DefaultDLViewFileVersionDisplayContext
 			HttpServletRequest request, HttpServletResponse response,
 			FileShortcut fileShortcut,
 			DLMimeTypeDisplayContext dlMimeTypeDisplayContext,
-			ResourceBundleLoader resourceBundleLoader,
-			StorageEngine storageEngine)
+			ResourceBundle resourceBundle, StorageEngine storageEngine)
 		throws PortalException {
 
 		this(
 			request, response, fileShortcut.getFileVersion(), fileShortcut,
-			dlMimeTypeDisplayContext, resourceBundleLoader, storageEngine);
+			dlMimeTypeDisplayContext, resourceBundle, storageEngine);
 	}
 
 	public DefaultDLViewFileVersionDisplayContext(
 		HttpServletRequest request, HttpServletResponse response,
 		FileVersion fileVersion,
 		DLMimeTypeDisplayContext dlMimeTypeDisplayContext,
-		ResourceBundleLoader resourceBundleLoader,
-		StorageEngine storageEngine) {
+		ResourceBundle resourceBundle, StorageEngine storageEngine) {
 
 		this(
 			request, response, fileVersion, null, dlMimeTypeDisplayContext,
-			resourceBundleLoader, storageEngine);
+			resourceBundle, storageEngine);
 	}
 
 	@Override
@@ -157,11 +154,7 @@ public class DefaultDLViewFileVersionDisplayContext
 
 	@Override
 	public String getDiscussionLabel(Locale locale) {
-		ResourceBundle resourceBundle =
-			_resourceBundleLoader.loadResourceBundle(
-				LanguageUtil.getLanguageId(locale));
-
-		return LanguageUtil.get(resourceBundle, "comments");
+		return LanguageUtil.get(_resourceBundle, "comments");
 	}
 
 	@Override
@@ -250,13 +243,12 @@ public class DefaultDLViewFileVersionDisplayContext
 		HttpServletRequest request, HttpServletResponse response,
 		FileVersion fileVersion, FileShortcut fileShortcut,
 		DLMimeTypeDisplayContext dlMimeTypeDisplayContext,
-		ResourceBundleLoader resourceBundleLoader,
-		StorageEngine storageEngine) {
+		ResourceBundle resourceBundle, StorageEngine storageEngine) {
 
 		try {
 			_fileVersion = fileVersion;
 			_dlMimeTypeDisplayContext = dlMimeTypeDisplayContext;
-			_resourceBundleLoader = resourceBundleLoader;
+			_resourceBundle = resourceBundle;
 			_storageEngine = storageEngine;
 
 			DLRequestHelper dlRequestHelper = new DLRequestHelper(request);
@@ -272,10 +264,12 @@ public class DefaultDLViewFileVersionDisplayContext
 				new FileVersionDisplayContextHelper(fileVersion);
 
 			if (fileShortcut == null) {
-				_uiItemsBuilder = new UIItemsBuilder(request, fileVersion);
+				_uiItemsBuilder = new UIItemsBuilder(
+					request, fileVersion, _resourceBundle);
 			}
 			else {
-				_uiItemsBuilder = new UIItemsBuilder(request, fileShortcut);
+				_uiItemsBuilder = new UIItemsBuilder(
+					request, fileShortcut, _resourceBundle);
 			}
 		}
 		catch (PortalException pe) {
@@ -335,7 +329,7 @@ public class DefaultDLViewFileVersionDisplayContext
 	private final FileVersion _fileVersion;
 	private final FileVersionDisplayContextHelper
 		_fileVersionDisplayContextHelper;
-	private final ResourceBundleLoader _resourceBundleLoader;
+	private final ResourceBundle _resourceBundle;
 	private final StorageEngine _storageEngine;
 	private final UIItemsBuilder _uiItemsBuilder;
 

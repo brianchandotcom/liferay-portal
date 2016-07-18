@@ -27,6 +27,7 @@ portletURL.setParameter("eventName", eventName);
 %>
 
 <c:if test="<%= journalDisplayContext.getAddMenuFavItemsLength() == 0 %>">
+	<liferay-ui:alert message='<%= LanguageUtil.format(resourceBundle, "you-can-add-as-many-as-x-favorites-in-your-quick-menu", journalWebConfiguration.maxAddMenuItems()) %>' timeout="0" type="info" />
 </c:if>
 
 <liferay-ui:error exception="<%= MaxAddMenuFavItemsException.class %>" message='<%= LanguageUtil.format(resourceBundle, "you-cannot-add-more-than-x-favorites", journalWebConfiguration.maxAddMenuItems()) %>' />

@@ -266,7 +266,7 @@ public class SiteAdminDisplayContext {
 		Company company = themeDisplay.getCompany();
 
 		userGroupParams.put(
-			UserGroupFinderConstants.PARAM_USER_GROUPS_GROUPS,
+			UserGroupFinderConstants.PARAM_KEY_USER_GROUPS_GROUPS,
 			group.getGroupId());
 
 		return UserGroupLocalServiceUtil.searchCount(

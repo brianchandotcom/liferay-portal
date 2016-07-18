@@ -19,9 +19,9 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
-import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.service.persistence.constants.UserGroupFinderConstants;
@@ -31,9 +31,8 @@ import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -48,8 +47,8 @@ public class UserGroupLocalServiceTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@BeforeClass
-	public static void setUpClass() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 		_role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
 		_companyId = _role.getCompanyId();
@@ -62,13 +61,6 @@ public class UserGroupLocalServiceTest {
 
 		GroupLocalServiceUtil.addRoleGroup(
 			_role.getRoleId(), _userGroup1.getGroupId());
-	}
-
-	@AfterClass
-	public static void tearDownClass() throws Exception {
-		RoleLocalServiceUtil.deleteRole(_role);
-		UserGroupLocalServiceUtil.deleteUserGroup(_userGroup1);
-		UserGroupLocalServiceUtil.deleteUserGroup(_userGroup2);
 	}
 
 	@Test
@@ -150,8 +142,14 @@ public class UserGroupLocalServiceTest {
 
 	private static long _companyId;
 	private static int _count;
+
+	@DeleteAfterTestRun
 	private static Role _role;
+
+	@DeleteAfterTestRun
 	private static UserGroup _userGroup1;
+
+	@DeleteAfterTestRun
 	private static UserGroup _userGroup2;
 
 }

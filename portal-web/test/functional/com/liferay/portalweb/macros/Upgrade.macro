@@ -358,7 +358,7 @@
 
 		<execute function="AssertElementNotPresent" locator1="Home#PORTLET" />
 
-		<execute macro="Navigator#gotoStagedView" />
+		<execute macro="ProductMenu#gotoStagingSite" />
 
 		<execute macro="WebContent#viewPGViaWCD">
 			<var name="webContentContent" value="Web Content Content" />
@@ -369,7 +369,7 @@
 
 		<execute macro="Staging#publishToLive" />
 
-		<execute macro="Navigator#gotoLiveView" />
+		<execute macro="ProductMenu#gotoLiveSite" />
 
 		<execute macro="WebContent#viewPGViaWCD">
 			<var name="webContentContent" value="Web Content Content" />

@@ -14,6 +14,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>INFO_MESSAGE</td>
+	<td>//div[contains(@class,'taglib-empty-result-message')]//div[contains(@class,'text-center')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

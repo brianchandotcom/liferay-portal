@@ -169,7 +169,33 @@ public class FTLSourceProcessor extends BaseSourceProcessor {
 	protected String formatAssignTags(String content) {
 		Matcher matcher = _incorrectAssignTagPattern.matcher(content);
 
-		return matcher.replaceAll("$1 />\n");
+		content = matcher.replaceAll("$1 />\n");
+
+		matcher = _assignTagsBlockPattern.matcher(content);
+
+		while (matcher.find()) {
+			String match = matcher.group();
+
+			if (StringUtil.count(match, "<#assign ") == 1) {
+				continue;
+			}
+
+			String tabs = matcher.group(2);
+
+			String replacement = StringUtil.replaceFirst(
+				match, StringPool.SPACE, "\n\t" + tabs);
+
+			replacement = StringUtil.replaceLast(
+				replacement, " />", "\n" + tabs + "/>");
+
+			replacement = StringUtil.replace(
+				replacement, new String[] {" />\n", "\n" + tabs + "<#assign "},
+				new String[] {"\n", "\n\t" + tabs});
+
+			content = StringUtil.replace(content, match, replacement);
+		}
+
+		return content;
 	}
 
 	protected String formatFTL(String fileName, String content)
@@ -247,6 +273,8 @@ public class FTLSourceProcessor extends BaseSourceProcessor {
 
 	private static final String[] _INCLUDES = new String[] {"**/*.ftl"};
 
+	private final Pattern _assignTagsBlockPattern = Pattern.compile(
+		"((\t*)<#assign .* />(\n|$)+)+", Pattern.MULTILINE);
 	private final Pattern _incorrectAssignTagPattern = Pattern.compile(
 		"(<#assign .*[^/])>(\n|$)");
 	private final Pattern _liferayVariablePattern = Pattern.compile(

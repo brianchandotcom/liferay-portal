@@ -217,9 +217,14 @@
 	</command>
 
 	<command name="deleteTableDefinitionDraftViaKDCP">
+		<var name="key_rowEntry" value="${workflowDefinitionTitle}" />
+
 		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+
 		<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
+
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
+
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 

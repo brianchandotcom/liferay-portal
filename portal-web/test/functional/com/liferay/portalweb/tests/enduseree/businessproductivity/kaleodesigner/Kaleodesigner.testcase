@@ -620,7 +620,9 @@
 			<var name="workflowDefinitionTitle" value="New Workflow Definition" />
 		</execute>
 
-		<execute macro="KaleoDesigner#deleteTableDefinitionDraftViaKDCP" />
+		<execute macro="KaleoDesigner#deleteTableDefinitionDraftViaKDCP">
+			<var name="workflowDefinitionTitle" value="New Workflow Definition" />
+		</execute>
 
 		<execute macro="KaleoDesigner#viewNoWorkflowDefinitionsViaKDCP" />
 	</command>

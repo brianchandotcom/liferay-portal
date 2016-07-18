@@ -271,6 +271,17 @@ trustStorePath=${solr.dir}/server/etc/solr-ssl.keystore.jks</echo>
 		<antcall target="start-solr-core" />
 
 		<create-solr-core />
+
+		<get-testcase-property property.name="solr.solrcloud.enabled" />
+
+		<if>
+			<equals arg1="${solr.solrcloud.enabled}" arg2="true" />
+			<then>
+				<antcall target="stop-solr-core" />
+
+				<antcall target="start-solr-solrcloud" />
+			</then>
+		</if>
 	</target>
 
 	<target name="start-solr-core">
@@ -311,6 +322,14 @@ trustStorePath=${solr.dir}/server/etc/solr-ssl.keystore.jks</echo>
 				<fail if="solr.server.not.started" message="Solr server failed to initialize." />
 			</then>
 		</if>
+	</target>
+
+	<target name="start-solr-solrcloud">
+		<prepare-solr-solrcloud-configurations />
+
+		<configure-liferay-solr-solrcloud-properties />
+
+		<start-solr-solrcloud-interactive-startup-no-prompt />
 	</target>
 
 	<target name="stop-solr-core">

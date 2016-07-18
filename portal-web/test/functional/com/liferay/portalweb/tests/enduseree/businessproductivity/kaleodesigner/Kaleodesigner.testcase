@@ -1634,10 +1634,10 @@
 		<description message="This is a use case for LPS-47352 and LPS-48912." />
 
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Kaleo Designer" />
+			<var name="portlet" value="Workflow Definition" />
 		</execute>
 
-		<execute macro="KaleoDesigner#addNewDefinitionViaKDCP">
+		<execute macro="KaleoDesigner#addNewDefinitionViaWorkflowCP">
 			<var name="workflowDefinitionTitle" value="New Workflow Definition Title" />
 		</execute>
 

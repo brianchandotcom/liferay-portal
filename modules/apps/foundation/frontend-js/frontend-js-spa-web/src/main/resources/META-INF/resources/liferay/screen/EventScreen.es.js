@@ -37,21 +37,7 @@ class EventScreen extends HtmlScreen {
 		);
 	}
 
-	addCache(content) {
-		super.addCache(content);
-
-		this.cacheLastModified = (new Date()).getTime();
-	}
-
-	checkRedirectPath(redirectPath) {
-		var app = Liferay.SPA.app;
-
-		if (!globals.capturedFormElement && !app.findRoute(redirectPath)) {
-			window.location.href = redirectPath;
-		}
-	}
-
-	clearRequestTimer_() {
+	_clearRequestTimer() {
 		if (this.requestTimer) {
 			clearTimeout(this.requestTimer);
 		}
@@ -61,7 +47,7 @@ class EventScreen extends HtmlScreen {
 		}
 	}
 
-	createTimeoutNotification_() {
+	_createTimeoutNotification() {
 		var instance = this;
 
 		AUI().use(
@@ -82,6 +68,45 @@ class EventScreen extends HtmlScreen {
 				).render('body');
 			}
 		);
+	}
+
+	_startRequestTimer(path) {
+		if (Liferay.SPA.userNotificationTimeout > 0) {
+			this._clearRequestTimer();
+
+			this.requestTimer = setTimeout(
+				() => {
+					Liferay.fire(
+						'spaRequestTimeout',
+						{
+							path: path
+						}
+					);
+
+					if (!this.timeoutAlert) {
+						this._createTimeoutNotification();
+					}
+					else {
+						this.timeoutAlert.show();
+					}
+				},
+				Liferay.SPA.userNotificationTimeout
+			);
+		}
+	}
+
+	addCache(content) {
+		super.addCache(content);
+
+		this.cacheLastModified = (new Date()).getTime();
+	}
+
+	checkRedirectPath(redirectPath) {
+		var app = Liferay.SPA.app;
+
+		if (!globals.capturedFormElement && !app.findRoute(redirectPath)) {
+			window.location.href = redirectPath;
+		}
 	}
 
 	deactivate() {
@@ -155,12 +180,12 @@ class EventScreen extends HtmlScreen {
 	}
 
 	load(path) {
-		this.startRequestTimer_(path);
+		this._startRequestTimer(path);
 
 		return super.load(path)
 			.then(
 				(content) => {
-					this.clearRequestTimer_();
+					this._clearRequestTimer();
 
 					var redirectPath = this.beforeUpdateHistoryPath(path);
 
@@ -185,31 +210,6 @@ class EventScreen extends HtmlScreen {
 
 		if (onLoad) {
 			onLoad();
-		}
-	}
-
-	startRequestTimer_(path) {
-		if (Liferay.SPA.userNotificationTimeout > 0) {
-			this.clearRequestTimer_();
-
-			this.requestTimer = setTimeout(
-				() => {
-					Liferay.fire(
-						'spaRequestTimeout',
-						{
-							path: path
-						}
-					);
-
-					if (!this.timeoutAlert) {
-						this.createTimeoutNotification_();
-					}
-					else {
-						this.timeoutAlert.show();
-					}
-				},
-				Liferay.SPA.userNotificationTimeout
-			);
 		}
 	}
 }

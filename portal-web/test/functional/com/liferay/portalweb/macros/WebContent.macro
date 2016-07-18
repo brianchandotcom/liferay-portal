@@ -1889,9 +1889,10 @@
 			<var name="displayStyle" value="Descriptive" />
 		</execute>
 
-		<execute function="AssertElementPresent#pauseAssertVisible" locator1="WC#ENTRY_DESCRIPTIVE_THUMBNAIL" />
-
-		<execute function="AssertClick" locator1="WC#ENTRY_DESCRIPTIVE_TITLE" value1="${webContentTitle}" />
+		<execute macro="WebContentNavigator#gotoEditCP">
+			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="webContentTitleEscapeCharacter" value="${webContentTitleEscapeCharacter}" />
+		</execute>
 
 		<execute function="AssertTextEquals" locator1="TextInput#TITLE" value1="${webContentTitle}" />
 

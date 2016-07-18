@@ -262,14 +262,8 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-asset:asset-categories-selector:className", _className);
 		request.setAttribute(
-			"liferay-asset:asset-categories-selector:classPK",
-			String.valueOf(_classPK));
-		request.setAttribute(
 			"liferay-asset:asset-categories-selector:classTypePK",
 			String.valueOf(_classTypePK));
-		request.setAttribute(
-			"liferay-asset:asset-categories-selector:categoryIds",
-			_categoryIds);
 		request.setAttribute(
 			"liferay-asset:asset-categories-selector:eventName",
 			getEventName());
@@ -278,9 +272,6 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-asset:asset-categories-selector:hiddenInput",
 			_hiddenInput);
-		request.setAttribute(
-			"liferay-asset:asset-categories-selector:ignoreRequestValue",
-			_ignoreRequestValue);
 		request.setAttribute(
 			"liferay-asset:asset-categories-selector:portletURL",
 			getPortletURL());

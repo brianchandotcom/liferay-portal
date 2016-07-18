@@ -30,7 +30,7 @@ String kbArticleDisplayStyle = kbSectionPortletInstanceConfiguration.kbArticleDi
 		</liferay-portlet:renderURL>
 
 		<liferay-ui:search-container
-			searchContainer="<%= new KBArticleSearch(renderRequest, iteratorURL) %>"
+			searchContainer="<%= new KBObjectsSearch(renderRequest, iteratorURL) %>"
 			total="<%= KBArticleServiceUtil.getSectionsKBArticlesCount(scopeGroupId, kbArticlesSections, WorkflowConstants.STATUS_APPROVED) %>"
 		>
 			<liferay-ui:search-container-results

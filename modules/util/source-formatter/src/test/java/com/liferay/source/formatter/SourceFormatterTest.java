@@ -31,6 +31,7 @@ public class SourceFormatterTest {
 
 		sourceFormatterArgs.setAutoFix(false);
 		sourceFormatterArgs.setPrintErrors(false);
+		sourceFormatterArgs.setSourceFormatterEnabled(true);
 		sourceFormatterArgs.setThrowException(false);
 		sourceFormatterArgs.setUseProperties(false);
 
@@ -57,6 +58,7 @@ public class SourceFormatterTest {
 		sourceFormatterArgs.setAutoFix(false);
 		sourceFormatterArgs.setBaseDirName("../../../");
 		sourceFormatterArgs.setPrintErrors(false);
+		sourceFormatterArgs.setSourceFormatterEnabled(true);
 		sourceFormatterArgs.setThrowException(true);
 		sourceFormatterArgs.setUseProperties(false);
 

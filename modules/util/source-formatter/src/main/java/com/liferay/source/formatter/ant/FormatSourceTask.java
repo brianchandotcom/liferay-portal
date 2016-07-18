@@ -112,6 +112,10 @@ public class FormatSourceTask extends Task {
 		_sourceFormatterArgs.setProcessorThreadCount(processorThreadCount);
 	}
 
+	public void setSourceFormatterEnabled(boolean sourceFormatterEnabled) {
+		_sourceFormatterArgs.setSourceFormatterEnabled(sourceFormatterEnabled);
+	}
+
 	public void setThrowException(boolean throwException) {
 		_sourceFormatterArgs.setThrowException(throwException);
 	}

@@ -130,6 +130,13 @@ public class SourceFormatter {
 
 			sourceFormatterArgs.setProcessorThreadCount(processorThreadCount);
 
+			boolean sourceFormatterEnabled = ArgumentsUtil.getBoolean(
+				arguments, "source.formatter.enabled",
+				SourceFormatterArgs.SOURCE_FORMATTER_ENABLED);
+
+			sourceFormatterArgs.setSourceFormatterEnabled(
+				sourceFormatterEnabled);
+
 			boolean throwException = ArgumentsUtil.getBoolean(
 				arguments, "source.throw.exception",
 				SourceFormatterArgs.THROW_EXCEPTION);
@@ -162,6 +169,10 @@ public class SourceFormatter {
 	}
 
 	public void format() throws Exception {
+		if (!_sourceFormatterArgs.isSourceFormatterEnabled()) {
+			return;
+		}
+
 		List<SourceProcessor> sourceProcessors = new ArrayList<>();
 
 		sourceProcessors.add(new BNDSourceProcessor());

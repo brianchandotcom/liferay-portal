@@ -5307,11 +5307,13 @@ public class JournalArticleLocalServiceImpl
 
 		// Asset
 
-		updateAsset(
-			userId, article, serviceContext.getAssetCategoryIds(),
-			serviceContext.getAssetTagNames(),
-			serviceContext.getAssetLinkEntryIds(),
-			serviceContext.getAssetPriority());
+		if (hasModifiedLatestApprovedVersion(groupId, articleId, version)) {
+			updateAsset(
+				userId, article, serviceContext.getAssetCategoryIds(),
+				serviceContext.getAssetTagNames(),
+				serviceContext.getAssetLinkEntryIds(),
+				serviceContext.getAssetPriority());
+		}
 
 		// Dynamic data mapping
 

@@ -5,8 +5,6 @@ Export-Package:\
 	com.liferay.portal.bean,\
 	com.liferay.portal.cache.thread.local,\
 	com.liferay.portal.cluster,\
-	com.liferay.portal.convert.database,\
-	com.liferay.portal.convert.util,\
 	com.liferay.portal.dao.jdbc.aop,\
 	com.liferay.portal.dao.orm.hibernate,\
 	com.liferay.portal.deploy.hot,\

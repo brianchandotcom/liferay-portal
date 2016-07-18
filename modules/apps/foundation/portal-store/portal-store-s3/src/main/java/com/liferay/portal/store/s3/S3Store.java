@@ -48,11 +48,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.StreamUtil;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.*;
 import com.liferay.portal.store.s3.configuration.S3StoreConfiguration;
 
 import java.io.File;
@@ -432,6 +428,16 @@ public class S3Store extends BaseStore {
 		AWSCredentialsProvider awsCredentialsProvider) {
 
 		ClientConfiguration clientConfiguration = getClientConfiguration();
+
+		String proxyHost = GetterUtil.getString(
+			SystemProperties.get("http.proxyHost"));
+		int proxyPort = GetterUtil.getInteger(
+			SystemProperties.get("http.proxyPort"));
+
+		if (Validator.isNotNull(proxyHost) && Validator.isNotNull(proxyPort)) {
+			clientConfiguration.setProxyHost(proxyHost);
+			clientConfiguration.setProxyPort(proxyPort);
+		}
 
 		AmazonS3 amazonS3 = new AmazonS3Client(
 			awsCredentialsProvider, clientConfiguration);

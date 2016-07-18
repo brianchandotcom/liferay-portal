@@ -30,6 +30,11 @@
 		<tag-class>com.liferay.asset.taglib.servlet.taglib.AssetCategoriesSelectorTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<name>categoryIds</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>className</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -41,11 +46,6 @@
 		</attribute>
 		<attribute>
 			<name>classTypePK</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>curCategoryIds</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

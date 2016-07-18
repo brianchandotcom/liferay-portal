@@ -81,10 +81,6 @@ public class VerticalCardTag extends CardTag {
 			"liferay-frontend:card:stickerBottom", _stickerBottom);
 		request.setAttribute("liferay-frontend:card:subtitle", _subtitle);
 		request.setAttribute("liferay-frontend:card:title", _title);
-
-		if (Validator.isNotNull(_onClick)) {
-			request.setAttribute("liferay-frontend:card:url", "javascript:;");
-		}
 	}
 
 	private boolean _backgroundImage = true;

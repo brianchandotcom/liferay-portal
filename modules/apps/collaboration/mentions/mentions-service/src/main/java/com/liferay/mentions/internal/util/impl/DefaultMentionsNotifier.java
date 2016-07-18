@@ -88,7 +88,7 @@ public class DefaultMentionsNotifier implements MentionsNotifier {
 		subscriptionSender.setContextAttributes(
 			"[$ASSET_ENTRY_NAME$]",
 			getAssetEntryName(className, serviceContext), "[$USER_ADDRESS$]",
-			messageUserEmailAddress, "[USER_NAME$]", messageUserName,
+			messageUserEmailAddress, "[$USER_NAME$]", messageUserName,
 			"[$CONTENT_URL$]", contentURL);
 		subscriptionSender.setCurrentUserId(userId);
 		subscriptionSender.setEntryTitle(title);

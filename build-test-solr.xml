@@ -191,6 +191,31 @@ trustStorePath=${solr.dir}/server/etc/solr-ssl.keystore.jks</echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="start-solr-solrcloud-interactive-startup-no-prompt">
+		<sequential>
+			<if>
+				<os family="unix" />
+				<then>
+					<chmod file="${solr.dir}/bin/solr" perm="a+x" />
+
+					<exec dir="${solr.dir}/bin" executable="/bin/bash">
+						<arg value="-c" />
+						<arg value="./solr -e cloud -noprompt" />
+					</exec>
+				</then>
+				<elseif>
+					<os family="windows" />
+					<then>
+						<exec dir="${solr.dir}/bin" executable="cmd" spawn="true">
+							<arg value="/c" />
+							<arg value="solr -e cloud -noprompt" />
+						</exec>
+					</then>
+				</elseif>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="unzip-solr">
 		<sequential>
 			<delete dir="${solr.dir}" />

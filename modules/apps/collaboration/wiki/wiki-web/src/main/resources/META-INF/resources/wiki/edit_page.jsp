@@ -258,9 +258,9 @@ if (portletTitleBasedNavigation) {
 					%>
 
 					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="categorization">
-						<aui:input classPK="<%= classPK %>" name="categories" type="assetCategories" />
+						<liferay-asset:asset-categories-selector className="<%= WikiPage.class.getName() %>" classPK="<%= classPK %>" />
 
-						<aui:input classPK="<%= classPK %>" name="tags" type="assetTags" />
+						<liferay-asset:asset-tags-selector className="<%= WikiPage.class.getName() %>" classPK="<%= classPK %>" />
 					</aui:fieldset>
 
 					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="related-assets">

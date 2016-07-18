@@ -29,9 +29,9 @@ User selUser = (User)request.getAttribute("user.selUser");
 <h3><liferay-ui:message key="categorization" /></h3>
 
 <aui:fieldset>
-	<aui:input name="categories" type="assetCategories" />
+	<liferay-asset:asset-categories-selector className="<%= User.class.getName() %>" classPK="<%= (selUser != null) ? selUser.getPrimaryKey() : 0 %>" />
 
-	<aui:input name="tags" type="assetTags" />
+	<liferay-asset:asset-tags-selector className="<%= User.class.getName() %>" classPK="<%= (selUser != null) ? selUser.getPrimaryKey() : 0 %>" />
 </aui:fieldset>
 
 <aui:script>

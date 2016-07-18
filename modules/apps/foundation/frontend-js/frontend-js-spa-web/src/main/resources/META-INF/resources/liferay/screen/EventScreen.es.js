@@ -61,8 +61,8 @@ class EventScreen extends HtmlScreen {
 							show: 0
 						},
 						duration: 500,
-						message: Liferay.Language.get('it-looks-like-this-is-taking-longer-than-expected'),
-						title: Liferay.Language.get('oops'),
+						message: Liferay.SPA.userNotification.message,
+						title: Liferay.SPA.userNotification.title,
 						type: 'warning'
 					}
 				).render('body');
@@ -71,7 +71,7 @@ class EventScreen extends HtmlScreen {
 	}
 
 	_startRequestTimer(path) {
-		if (Liferay.SPA.userNotificationTimeout > 0) {
+		if (Liferay.SPA.userNotification.timeout > 0) {
 			this._clearRequestTimer();
 
 			this.requestTimer = setTimeout(
@@ -90,7 +90,7 @@ class EventScreen extends HtmlScreen {
 						this.timeoutAlert.show();
 					}
 				},
-				Liferay.SPA.userNotificationTimeout
+				Liferay.SPA.userNotification.timeout
 			);
 		}
 	}

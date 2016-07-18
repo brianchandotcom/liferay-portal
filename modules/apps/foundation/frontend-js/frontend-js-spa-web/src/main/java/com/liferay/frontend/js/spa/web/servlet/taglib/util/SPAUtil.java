@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
@@ -37,7 +38,9 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.lang.reflect.Field;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
+import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -81,6 +84,11 @@ public class SPAUtil {
 		}
 
 		return jsonArray.toString();
+	}
+
+	public ResourceBundle getLanguageResourceBundle(Locale locale) {
+		return ResourceBundleUtil.getBundle(
+			"content.Language", locale, getClass());
 	}
 
 	public String getLoginRedirect(HttpServletRequest request) {

@@ -38,6 +38,7 @@ public class DefaultDDMFormValuesFactory {
 	public DDMFormValues create() {
 		DDMFormValues ddmFormValues = new DDMFormValues(_ddmForm);
 
+		ddmFormValues.addAvailableLocale(_locale);
 		ddmFormValues.setDefaultLocale(_locale);
 
 		for (DDMFormField ddmFormField : _ddmForm.getDDMFormFields()) {

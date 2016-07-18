@@ -48,6 +48,10 @@ import javax.servlet.jsp.PageContext;
  */
 public class AssetCategoriesSelectorTag extends IncludeTag {
 
+	public void setCategoryIds(String categoryIds) {
+		_categoryIds = categoryIds;
+	}
+
 	public void setClassName(String className) {
 		_className = className;
 	}
@@ -58,10 +62,6 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 
 	public void setClassTypePK(long classTypePK) {
 		_classTypePK = classTypePK;
-	}
-
-	public void setCurCategoryIds(String curCategoryIds) {
-		_curCategoryIds = curCategoryIds;
 	}
 
 	public void setGroupIds(long[] groupIds) {
@@ -89,10 +89,10 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		_categoryIds = null;
 		_className = null;
 		_classPK = 0;
 		_classTypePK = AssetCategoryConstants.ALL_CLASS_TYPE_PK;
-		_curCategoryIds = null;
 		_groupIds = null;
 		_hiddenInput = "assetCategoryIds";
 		_ignoreRequestValue = false;
@@ -105,23 +105,23 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 
 		List<String[]> categoryIdsTitles = new ArrayList<>();
 
-		String curCategoryIds = StringPool.BLANK;
+		String categoryIds = StringPool.BLANK;
 
-		if (Validator.isNotNull(_curCategoryIds)) {
-			curCategoryIds = _curCategoryIds;
+		if (Validator.isNotNull(_categoryIds)) {
+			categoryIds = _categoryIds;
 		}
 
 		if (Validator.isNull(_className)) {
 			if (!_ignoreRequestValue) {
-				String curCategoryIdsParam = request.getParameter(_hiddenInput);
+				String categoryIdsParam = request.getParameter(_hiddenInput);
 
-				if (curCategoryIdsParam != null) {
-					curCategoryIds = curCategoryIdsParam;
+				if (categoryIdsParam != null) {
+					categoryIds = categoryIdsParam;
 				}
 			}
 
 			String[] categoryIdsTitle = AssetCategoryUtil.getCategoryIdsTitles(
-				curCategoryIds, StringPool.BLANK, 0, themeDisplay);
+				categoryIds, StringPool.BLANK, 0, themeDisplay);
 
 			categoryIdsTitles.add(categoryIdsTitle);
 
@@ -130,32 +130,32 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 
 		try {
 			for (AssetVocabulary vocabulary : getVocabularies()) {
-				String curCategoryNames = StringPool.BLANK;
+				String categoryNames = StringPool.BLANK;
 
 				if (Validator.isNotNull(_className) && (_classPK > 0)) {
 					List<AssetCategory> categories =
 						AssetCategoryServiceUtil.getCategories(
 							_className, _classPK);
 
-					curCategoryIds = ListUtil.toString(
+					categoryIds = ListUtil.toString(
 						categories, AssetCategory.CATEGORY_ID_ACCESSOR);
-					curCategoryNames = ListUtil.toString(
+					categoryNames = ListUtil.toString(
 						categories, AssetCategory.NAME_ACCESSOR);
 				}
 
 				if (!_ignoreRequestValue) {
-					String curCategoryIdsParam = request.getParameter(
+					String categoryIdsParam = request.getParameter(
 						_hiddenInput + StringPool.UNDERLINE +
 							vocabulary.getVocabularyId());
 
-					if (Validator.isNotNull(curCategoryIdsParam)) {
-						curCategoryIds = curCategoryIdsParam;
+					if (Validator.isNotNull(categoryIdsParam)) {
+						categoryIds = categoryIdsParam;
 					}
 				}
 
 				String[] categoryIdsTitle =
 					AssetCategoryUtil.getCategoryIdsTitles(
-						curCategoryIds, curCategoryNames,
+						categoryIds, categoryNames,
 						vocabulary.getVocabularyId(), themeDisplay);
 
 				categoryIdsTitles.add(categoryIdsTitle);
@@ -268,8 +268,8 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 			"liferay-asset:asset-categories-selector:classTypePK",
 			String.valueOf(_classTypePK));
 		request.setAttribute(
-			"liferay-asset:asset-categories-selector:curCategoryIds",
-			_curCategoryIds);
+			"liferay-asset:asset-categories-selector:categoryIds",
+			_categoryIds);
 		request.setAttribute(
 			"liferay-asset:asset-categories-selector:eventName",
 			getEventName());
@@ -294,10 +294,10 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 
 	private static final String _PAGE = "/asset_categories_selector/page.jsp";
 
+	private String _categoryIds;
 	private String _className;
 	private long _classPK;
 	private long _classTypePK = AssetCategoryConstants.ALL_CLASS_TYPE_PK;
-	private String _curCategoryIds;
 	private long[] _groupIds;
 	private String _hiddenInput = "assetCategoryIds";
 	private boolean _ignoreRequestValue;

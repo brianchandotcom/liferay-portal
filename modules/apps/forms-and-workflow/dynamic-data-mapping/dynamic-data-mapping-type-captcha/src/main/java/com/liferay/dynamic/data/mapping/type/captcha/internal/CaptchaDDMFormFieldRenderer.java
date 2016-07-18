@@ -14,6 +14,8 @@
 
 package com.liferay.dynamic.data.mapping.type.captcha.internal;
 
+import java.util.Map;
+
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldRenderer;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
@@ -71,6 +73,13 @@ public class CaptchaDDMFormFieldRenderer implements DDMFormFieldRenderer {
 			ddmFormFieldRenderingContext.getHttpServletRequest();
 		HttpServletResponse httpServletResponse =
 			ddmFormFieldRenderingContext.getHttpServletResponse();
+
+		Map<String, String[]> parameterMap =
+			httpServletRequest.getParameterMap();
+
+		if (!parameterMap.isEmpty()) {
+			parameterMap.remove("captchaText");
+		}
 
 		PageContext pageContext = jspFactory.getPageContext(
 			new JSPSupportServlet(httpServletRequest.getServletContext()),

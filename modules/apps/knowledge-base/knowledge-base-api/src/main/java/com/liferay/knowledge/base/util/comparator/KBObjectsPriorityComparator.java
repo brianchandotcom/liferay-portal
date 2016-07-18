@@ -21,56 +21,53 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 /**
  * @author Roberto Díaz
  */
-public class KBObjectsTitleComparator<T> extends OrderByComparator<T> {
+public class KBObjectsPriorityComparator<T> extends OrderByComparator<T> {
 
-	public static final String ORDER_BY_ASC = "title ASC";
+	public static final String ORDER_BY_ASC =
+		"modelFolder DESC, priority ASC, title ASC";
 
-	public static final String ORDER_BY_DESC = "title DESC";
+	public static final String ORDER_BY_DESC =
+		"modelFolder DESC, priority DESC, title ASC";
 
-	public static final String[] ORDER_BY_FIELDS = {"title"};
+	public static final String[] ORDER_BY_FIELDS = {"priority, title"};
 
-	public static final String ORDER_BY_MODEL_ASC =
-		"modelFolder DESC, title ASC";
-
-	public static final String ORDER_BY_MODEL_DESC =
-		"modelFolder DESC, title DESC";
-
-	public KBObjectsTitleComparator() {
-		this(false, false);
+	public KBObjectsPriorityComparator() {
+		this(false);
 	}
 
-	public KBObjectsTitleComparator(boolean ascending) {
-		this(ascending, false);
-	}
-
-	public KBObjectsTitleComparator(boolean ascending, boolean orderByModel) {
+	public KBObjectsPriorityComparator(boolean ascending) {
 		_ascending = ascending;
-		_orderByModel = orderByModel;
 	}
 
 	@Override
 	public int compare(T t1, T t2) {
 		int value = 0;
 
-		String title1 = getTitle(t1);
-		String title2 = getTitle(t2);
+		double priority1 = getPriority(t1);
+		double priority2 = getPriority(t2);
 
-		if (_orderByModel) {
-			if ((t1 instanceof KBFolder) && (t2 instanceof KBFolder)) {
-				title1.compareToIgnoreCase(title2);
-			}
-			else if (t1 instanceof KBFolder) {
+		String title1 = getTitle(t1);
+		String title2 = getTitle(t1);
+
+		if ((t1 instanceof KBFolder) && (t2 instanceof KBFolder)) {
+			value = title1.compareToIgnoreCase(title2);
+		}
+		else if (t1 instanceof KBFolder) {
+			value = -1;
+		}
+		else if (t2 instanceof KBFolder) {
+			value = 1;
+		}
+		else {
+			if (priority1 < priority2) {
 				value = -1;
 			}
-			else if (t2 instanceof KBFolder) {
+			else if (priority1 > priority2) {
 				value = 1;
 			}
 			else {
-				title1.compareToIgnoreCase(title2);
+				value = title1.compareToIgnoreCase(title2);
 			}
-		}
-		else {
-			value = title1.compareToIgnoreCase(title2);
 		}
 
 		if (_ascending) {
@@ -83,21 +80,11 @@ public class KBObjectsTitleComparator<T> extends OrderByComparator<T> {
 
 	@Override
 	public String getOrderBy() {
-		if (_orderByModel) {
-			if (_ascending) {
-				return ORDER_BY_MODEL_ASC;
-			}
-			else {
-				return ORDER_BY_MODEL_DESC;
-			}
+		if (_ascending) {
+			return ORDER_BY_ASC;
 		}
 		else {
-			if (_ascending) {
-				return ORDER_BY_ASC;
-			}
-			else {
-				return ORDER_BY_DESC;
-			}
+			return ORDER_BY_DESC;
 		}
 	}
 
@@ -109,6 +96,17 @@ public class KBObjectsTitleComparator<T> extends OrderByComparator<T> {
 	@Override
 	public boolean isAscending() {
 		return _ascending;
+	}
+
+	protected double getPriority(Object obj) {
+		if (obj instanceof KBArticle) {
+			KBArticle kbArticle = (KBArticle)obj;
+
+			return kbArticle.getPriority();
+		}
+		else {
+			return 0.0;
+		}
 	}
 
 	protected String getTitle(Object obj) {
@@ -125,6 +123,5 @@ public class KBObjectsTitleComparator<T> extends OrderByComparator<T> {
 	}
 
 	private final boolean _ascending;
-	private final boolean _orderByModel;
 
 }

@@ -72,7 +72,7 @@ public class ScreensDDLRecordServiceImpl
 			getPermissionChecker(), ddlRecordSetId, ActionKeys.VIEW);
 
 		List<DDLRecord> ddlRecords = ddlRecordPersistence.findByRecordSetId(
-			ddlRecordSetId, start, end);
+			ddlRecordSetId, start, end, obc);
 
 		return getDDLRecordsJSONArray(ddlRecords, locale);
 	}
@@ -87,7 +87,7 @@ public class ScreensDDLRecordServiceImpl
 			getPermissionChecker(), ddlRecordSetId, ActionKeys.VIEW);
 
 		List<DDLRecord> ddlRecords = ddlRecordPersistence.findByR_U(
-			ddlRecordSetId, userId, start, end);
+			ddlRecordSetId, userId, start, end, obc);
 
 		return getDDLRecordsJSONArray(ddlRecords, locale);
 	}

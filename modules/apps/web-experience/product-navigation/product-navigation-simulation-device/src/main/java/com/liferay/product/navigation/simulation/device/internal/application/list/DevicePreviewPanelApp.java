@@ -79,7 +79,7 @@ public class DevicePreviewPanelApp extends BaseJSPPanelApp {
 			return false;
 		}
 
-		return super.isShow(permissionChecker, group);
+		return true;
 	}
 
 	@Override

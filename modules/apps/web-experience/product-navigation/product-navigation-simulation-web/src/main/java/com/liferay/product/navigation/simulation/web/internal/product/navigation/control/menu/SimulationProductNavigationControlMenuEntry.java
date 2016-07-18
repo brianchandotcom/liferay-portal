@@ -71,10 +71,6 @@ public class SimulationProductNavigationControlMenuEntry
 			return false;
 		}
 
-		if (!hasUpdateLayoutPermission(themeDisplay)) {
-			return false;
-		}
-
 		List<PanelApp> panelApps = _panelAppRegistry.getPanelApps(
 			SimulationPanelCategory.SIMULATION,
 			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroup());

@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -162,6 +163,10 @@ public class DDMFormTemplateContextFactoryImpl
 
 		templateContext.put(
 			"readOnlyFields", readOnlyFieldsJSONArray.toString());
+
+		if (locale == null) {
+			locale = LocaleThreadLocal.getSiteDefaultLocale();
+		}
 
 		ResourceBundle resourceBundle = getResourceBundle(locale);
 

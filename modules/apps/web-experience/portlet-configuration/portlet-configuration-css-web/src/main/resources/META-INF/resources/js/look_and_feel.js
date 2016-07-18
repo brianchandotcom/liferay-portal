@@ -579,7 +579,7 @@ AUI.add(
 				var customPortletNoteHTML = '<p class="alert alert-info form-hint"></p>';
 				var refreshText = EMPTY;
 
-				var portletId = instance._curPortletWrapperId;
+				var portletId = instance._portletId;
 
 				var portletClasses = instance._getCSSClasses(portletBoundary, portlet);
 

@@ -11,6 +11,7 @@ Bundle-Version: 3.2.2
 	@commons-configuration-[0-9]*.jar,\
 	@commons-io-[0-9]*.jar,\
 	@commons-lang-[0-9]*.jar,\
+	@guava-[0-9]*.jar,\
 	@h2-[0-9]*.jar,\
 	@httpclient-[0-9]*.jar,\
 	@httpcore-[0-9]*.jar,\

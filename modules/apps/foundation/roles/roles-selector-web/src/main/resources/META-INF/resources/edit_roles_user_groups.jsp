@@ -58,11 +58,11 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_roles.jsp-portlet
 	LinkedHashMap<String, Object> userGroupParams = new LinkedHashMap<String, Object>();
 
 	if (group.isSite()) {
-		userGroupParams.put("userGroupsGroups", Long.valueOf(group.getGroupId()));
+		userGroupParams.put(UserGroupFinderConstants.PARAM_KEY_USER_GROUPS_GROUPS, Long.valueOf(group.getGroupId()));
 	}
 
 	if (tabs1.equals("current")) {
-		userGroupParams.put("userGroupGroupRole", new Long[] {Long.valueOf(roleId), Long.valueOf(group.getGroupId())});
+		userGroupParams.put(UserGroupFinderConstants.PARAM_KEY_USER_GROUP_GROUP_ROLE, new Long[] {Long.valueOf(roleId), Long.valueOf(group.getGroupId())});
 	}
 	%>
 

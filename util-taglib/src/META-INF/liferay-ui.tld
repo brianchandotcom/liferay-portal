@@ -5450,7 +5450,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Whether to use the indexer for search. The default value is <![CDATA[<code>true</code>]]>.</description>
+			<description>Deprecated as of 7.0.0, with no direct replacement.</description>
 			<name>useIndexer</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

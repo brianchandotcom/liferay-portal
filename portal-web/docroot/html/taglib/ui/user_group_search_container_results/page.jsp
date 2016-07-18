@@ -18,51 +18,28 @@
 
 <%
 UserGroupDisplayTerms searchTerms = (UserGroupDisplayTerms)request.getAttribute("liferay-ui:user-group-search-container-results:searchTerms");
-boolean useIndexer = GetterUtil.getBoolean(request.getAttribute("liferay-ui:user-group-search-container-results:useIndexer"));
 LinkedHashMap<String, Object> userGroupParams = (LinkedHashMap<String, Object>)request.getAttribute("liferay-ui:user-group-search-container-results:userGroupParams");
 SearchContainer userGroupSearchContainer = (SearchContainer)request.getAttribute("liferay-ui:user-group-search-container-results:searchContainer");
-
-if (Validator.isNotNull(searchTerms.getKeywords())) {
-	useIndexer = true;
-}
-
-Indexer<?> indexer = IndexerRegistryUtil.nullSafeGetIndexer(UserGroup.class);
 %>
 
 <liferay-ui:search-container id="<%= userGroupSearchContainer.getId(request, namespace) %>" searchContainer="<%= userGroupSearchContainer %>">
 	<liferay-ui:search-container-results>
-		<c:choose>
-			<c:when test="<%= useIndexer && indexer.isIndexerEnabled() && PropsValues.USER_GROUPS_SEARCH_WITH_INDEX %>">
 
-				<%
-				BaseModelSearchResult<UserGroup> baseModelSearchResult = null;
+		<%
+		String keywords = searchTerms.getKeywords();
 
-				userGroupParams.put("expandoAttributes", searchTerms.getKeywords());
+		if (Validator.isNotNull(keywords)) {
+			userGroupParams.put("expandoAttributes", keywords);
+		}
 
-				Sort sort = SortFactoryUtil.getSort(UserGroup.class, searchContainer.getOrderByCol(), searchContainer.getOrderByType());
+		total = UserGroupLocalServiceUtil.searchCount(company.getCompanyId(), keywords, userGroupParams);
 
-				baseModelSearchResult = UserGroupLocalServiceUtil.searchUserGroups(company.getCompanyId(), searchTerms.getKeywords(), userGroupParams, searchContainer.getStart(), searchContainer.getEnd(), sort);
+		searchContainer.setTotal(total);
 
-				results = baseModelSearchResult.getBaseModels();
+		results = UserGroupLocalServiceUtil.search(company.getCompanyId(), keywords, userGroupParams, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 
-				searchContainer.setResults(results);
-				searchContainer.setTotal(baseModelSearchResult.getLength());
-				%>
+		searchContainer.setResults(results);
+		%>
 
-			</c:when>
-			<c:otherwise>
-
-				<%
-				total = UserGroupLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), userGroupParams);
-
-				searchContainer.setTotal(total);
-
-				results = UserGroupLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), userGroupParams, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
-
-				searchContainer.setResults(results);
-				%>
-
-			</c:otherwise>
-		</c:choose>
 	</liferay-ui:search-container-results>
 </liferay-ui:search-container>

@@ -53,10 +53,19 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 							}
 							%>
 
-							<aui:a href="<%= viewKBArticleURL.toString() %>"><%= childrenKBArticle.getTitle() %></aui:a>
+							<aui:a href="<%= viewKBArticleURL.toString() %>"><%= HtmlUtil.escape(childrenKBArticle.getTitle()) %></aui:a>
 						</h3>
 
-						<p class="text-default"><%= StringUtil.shorten(HtmlUtil.extractText(childrenKBArticle.getContent()), 200) %></p>
+						<p class="text-default">
+							<c:choose>
+								<c:when test="<%= Validator.isNotNull(childrenKBArticle.getDescription()) %>">
+									<%= HtmlUtil.escape(childrenKBArticle.getDescription()) %>
+								</c:when>
+								<c:otherwise>
+									<%= HtmlUtil.escape(StringUtil.shorten(HtmlUtil.extractText(childrenKBArticle.getContent()), 200)) %>
+								</c:otherwise>
+							</c:choose>
+						</p>
 					</div>
 				</li>
 

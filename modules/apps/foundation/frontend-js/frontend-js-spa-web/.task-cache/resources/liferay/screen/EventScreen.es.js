@@ -78,6 +78,54 @@ define("frontend-js-spa-web@1.0.8/liferay/screen/EventScreen.es", ['exports', 's
 			});
 		};
 
+		EventScreen.prototype._clearRequestTimer = function _clearRequestTimer() {
+			if (this.requestTimer) {
+				clearTimeout(this.requestTimer);
+			}
+
+			if (this.timeoutAlert) {
+				this.timeoutAlert.hide();
+			}
+		};
+
+		EventScreen.prototype._createTimeoutNotification = function _createTimeoutNotification() {
+			var instance = this;
+
+			AUI().use('liferay-notification', function () {
+				instance.timeoutAlert = new Liferay.Notification({
+					closeable: true,
+					delay: {
+						hide: 0,
+						show: 0
+					},
+					duration: 500,
+					message: Liferay.SPA.userNotification.message,
+					title: Liferay.SPA.userNotification.title,
+					type: 'warning'
+				}).render('body');
+			});
+		};
+
+		EventScreen.prototype._startRequestTimer = function _startRequestTimer(path) {
+			var _this2 = this;
+
+			if (Liferay.SPA.userNotification.timeout > 0) {
+				this._clearRequestTimer();
+
+				this.requestTimer = setTimeout(function () {
+					Liferay.fire('spaRequestTimeout', {
+						path: path
+					});
+
+					if (!_this2.timeoutAlert) {
+						_this2._createTimeoutNotification();
+					} else {
+						_this2.timeoutAlert.show();
+					}
+				}, Liferay.SPA.userNotification.timeout);
+			}
+		};
+
 		EventScreen.prototype.addCache = function addCache(content) {
 			_HtmlScreen.prototype.addCache.call(this, content);
 
@@ -90,34 +138,6 @@ define("frontend-js-spa-web@1.0.8/liferay/screen/EventScreen.es", ['exports', 's
 			if (!_globals2.default.capturedFormElement && !app.findRoute(redirectPath)) {
 				window.location.href = redirectPath;
 			}
-		};
-
-		EventScreen.prototype.clearRequestTimer_ = function clearRequestTimer_() {
-			if (this.requestTimer) {
-				clearTimeout(this.requestTimer);
-			}
-
-			if (this.timeoutAlert) {
-				this.timeoutAlert.hide();
-			}
-		};
-
-		EventScreen.prototype.createTimeoutNotification_ = function createTimeoutNotification_() {
-			var instance = this;
-
-			AUI().use('liferay-notification', function () {
-				instance.timeoutAlert = new Liferay.Notification({
-					closeable: true,
-					delay: {
-						hide: 0,
-						show: 0
-					},
-					duration: 500,
-					message: Liferay.Language.get('it-looks-like-this-is-taking-longer-than-expected'),
-					title: Liferay.Language.get('oops'),
-					type: 'warning'
-				}).render('body');
-			});
 		};
 
 		EventScreen.prototype.deactivate = function deactivate() {
@@ -144,16 +164,16 @@ define("frontend-js-spa-web@1.0.8/liferay/screen/EventScreen.es", ['exports', 's
 		};
 
 		EventScreen.prototype.flip = function flip(surfaces) {
-			var _this2 = this;
+			var _this3 = this;
 
 			this.copyBodyAttributes();
 
 			return _Promise.CancellablePromise.resolve(_Utils2.default.resetAllPortlets()).then(_Promise.CancellablePromise.resolve(this.beforeScreenFlip())).then(_HtmlScreen.prototype.flip.call(this, surfaces)).then(function () {
-				_this2.runBodyOnLoad();
+				_this3.runBodyOnLoad();
 
 				Liferay.fire('screenFlip', {
 					app: Liferay.SPA.app,
-					screen: _this2
+					screen: _this3
 				});
 			});
 		};
@@ -179,21 +199,21 @@ define("frontend-js-spa-web@1.0.8/liferay/screen/EventScreen.es", ['exports', 's
 		};
 
 		EventScreen.prototype.load = function load(path) {
-			var _this3 = this;
+			var _this4 = this;
 
-			this.startRequestTimer_(path);
+			this._startRequestTimer(path);
 
 			return _HtmlScreen.prototype.load.call(this, path).then(function (content) {
-				_this3.clearRequestTimer_();
+				_this4._clearRequestTimer();
 
-				var redirectPath = _this3.beforeUpdateHistoryPath(path);
+				var redirectPath = _this4.beforeUpdateHistoryPath(path);
 
-				_this3.checkRedirectPath(redirectPath);
+				_this4.checkRedirectPath(redirectPath);
 
 				Liferay.fire('screenLoad', {
 					app: Liferay.SPA.app,
 					content: content,
-					screen: _this3
+					screen: _this4
 				});
 
 				return content;
@@ -205,26 +225,6 @@ define("frontend-js-spa-web@1.0.8/liferay/screen/EventScreen.es", ['exports', 's
 
 			if (onLoad) {
 				onLoad();
-			}
-		};
-
-		EventScreen.prototype.startRequestTimer_ = function startRequestTimer_(path) {
-			var _this4 = this;
-
-			if (Liferay.SPA.userNotificationTimeout > 0) {
-				this.clearRequestTimer_();
-
-				this.requestTimer = setTimeout(function () {
-					Liferay.fire('spaRequestTimeout', {
-						path: path
-					});
-
-					if (!_this4.timeoutAlert) {
-						_this4.createTimeoutNotification_();
-					} else {
-						_this4.timeoutAlert.show();
-					}
-				}, Liferay.SPA.userNotificationTimeout);
 			}
 		};
 

@@ -687,7 +687,7 @@
 				</execute>
 			</then>
 			<else>
-				<execute function="AssertTextEquals" locator1="Message#INFO" value1="No workflow definitions are defined." />
+				<execute function="AssertTextEquals" locator1="KaleoDesigner#INFO_MESSAGE" value1="No workflow definitions are defined." />
 			</else>
 		</if>
 	</command>

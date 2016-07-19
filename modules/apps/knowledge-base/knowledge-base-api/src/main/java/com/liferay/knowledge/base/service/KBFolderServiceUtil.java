@@ -58,6 +58,12 @@ public class KBFolderServiceUtil {
 		return getService().deleteKBFolder(kbFolderId);
 	}
 
+	public static com.liferay.knowledge.base.model.KBFolder fetchKBFolder(
+		long kbFolderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().fetchKBFolder(kbFolderId);
+	}
+
 	public static com.liferay.knowledge.base.model.KBFolder fetchKBFolderByUrlTitle(
 		long groupId, long parentKbFolderId, java.lang.String urlTitle)
 		throws com.liferay.portal.kernel.exception.PortalException {

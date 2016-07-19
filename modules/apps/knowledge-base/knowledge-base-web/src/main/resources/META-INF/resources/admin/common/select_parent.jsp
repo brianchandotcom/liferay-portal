@@ -32,9 +32,38 @@ long[] selectableClassNameIds = ParamUtil.getLongValues(request, "selectableClas
 
 String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectKBObject");
 
-boolean kbFolderView = (resourceClassNameId == kbFolderClassNameId);
+String parentTitle = LanguageUtil.get(request, "home");
+
+if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+	if (parentResourceClassNameId == kbFolderClassNameId) {
+		KBFolder parentKBFolder = KBFolderLocalServiceUtil.fetchKBFolder(parentResourcePrimKey);
+
+		if ((parentKBFolder == null) || !KBFolderPermission.contains(permissionChecker, parentKBFolder, ActionKeys.VIEW)) {
+			parentResourceClassNameId = kbFolderClassNameId;
+
+			parentResourcePrimKey = KBFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+		}
+		else {
+			parentTitle = parentKBFolder.getName();
+		}
+	}
+	else {
+		KBArticle parentKBArticle = KBArticleLocalServiceUtil.fetchLatestKBArticle(parentResourcePrimKey, status);
+
+		if ((parentKBArticle == null) || !KBArticlePermission.contains(permissionChecker, parentKBArticle, ActionKeys.VIEW)) {
+			parentResourceClassNameId = kbFolderClassNameId;
+
+			parentResourcePrimKey = KBFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+		}
+		else {
+			parentTitle = parentKBArticle.getTitle();
+		}
+	}
+}
 
 SearchContainer kbObjectSearchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, currentURLObj, null, "there-are-no-entries");
+
+boolean kbFolderView = (resourceClassNameId == kbFolderClassNameId);
 
 if (kbFolderView) {
 	kbObjectSearchContainer.setTotal(KBFolderServiceUtil.getKBFoldersCount(scopeGroupId, parentResourcePrimKey));
@@ -43,21 +72,6 @@ if (kbFolderView) {
 else {
 	kbObjectSearchContainer.setTotal(KBFolderServiceUtil.getKBFoldersAndKBArticlesCount(scopeGroupId, parentResourcePrimKey, WorkflowConstants.STATUS_APPROVED));
 	kbObjectSearchContainer.setResults(KBFolderServiceUtil.getKBFoldersAndKBArticles(scopeGroupId, parentResourcePrimKey, WorkflowConstants.STATUS_APPROVED, kbObjectSearchContainer.getStart(), kbObjectSearchContainer.getEnd(), new KBObjectsTitleComparator<Object>()));
-}
-
-String parentTitle = LanguageUtil.get(request, "home");
-
-if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-	if (parentResourceClassNameId == kbFolderClassNameId) {
-		KBFolder parentKBFolder = KBFolderServiceUtil.getKBFolder(parentResourcePrimKey);
-
-		parentTitle = parentKBFolder.getName();
-	}
-	else {
-		KBArticle parentKBArticle = KBArticleServiceUtil.getLatestKBArticle(parentResourcePrimKey, status);
-
-		parentTitle = parentKBArticle.getTitle();
-	}
 }
 %>
 

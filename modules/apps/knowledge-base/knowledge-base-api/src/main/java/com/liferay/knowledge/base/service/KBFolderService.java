@@ -64,6 +64,9 @@ public interface KBFolderService extends BaseService {
 	public KBFolder deleteKBFolder(long kbFolderId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public KBFolder fetchKBFolder(long kbFolderId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KBFolder fetchKBFolderByUrlTitle(long groupId,
 		long parentKbFolderId, java.lang.String urlTitle)
 		throws PortalException;

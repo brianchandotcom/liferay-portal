@@ -136,7 +136,7 @@ public class FilePropagator {
 			}
 			else {
 				commands.add(
-					"rsync -vI " + sourceFileName + " " + targetFileName);
+					"rsync -svI " + sourceFileName + " " + targetFileName);
 			}
 
 			String targetDirName = targetFileName.substring(
@@ -213,8 +213,16 @@ public class FilePropagator {
 		private FilePropagatorTask(
 			String sourceFileName, String targetFileName) {
 
-			_sourceFileName = sourceFileName;
-			_targetFileName = targetFileName;
+			_sourceFileName = _escapeParentheses(sourceFileName);
+			_targetFileName = _escapeParentheses(targetFileName);
+		}
+
+		private String _escapeParentheses(String fileName) {
+			String escaped = fileName.replace(")", "\\)");
+
+			escaped = escaped.replace("(", "\\(");
+
+			return escaped;
 		}
 
 		private final String _sourceFileName;
@@ -239,7 +247,7 @@ public class FilePropagator {
 						filePropagatorTask._targetFileName));
 
 				commands.add(
-					"rsync -vI " + _mirrorSlave + ":" +
+					"rsync -svI " + _mirrorSlave + ":" +
 						filePropagatorTask._targetFileName + " " +
 							filePropagatorTask._targetFileName);
 			}

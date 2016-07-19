@@ -105,6 +105,79 @@
 		</execute>
 	</command>
 
+	<command name="SolrwithSolrCloudSmokeTest" priority="4">
+		<description message="This smoke test is to ensure that Liferay is successfully running on a remote SolrCloud with 2 nodes by asserting console logging for ZooKeeper and performing searches in portal. Note by default, an embedded Elasticsearch is deployed in portal." />
+
+		<property name="solr.solrcloud.enabled" value="true" />
+
+		<execute macro="Solr#viewSolrwithSolrCloudEnabledInConsole" />
+
+		<execute macro="Solr#viewLiferayCloudDashboard">
+			<var name="cloudCollectionName" value="liferay" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Message Boards" />
+		</execute>
+
+		<execute macro="MessageboardsThread#addCP">
+			<var name="threadBody" value="Orange" />
+			<var name="threadSubject" value="Apple" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMDocument#addCP">
+			<var name="dmDocumentDescription" value="Orange" />
+			<var name="dmDocumentFile" value="Document_1.txt" />
+			<var name="dmDocumentTitle" value="Apple" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="Server Administration" />
+		</execute>
+
+		<execute macro="ServerAdministration#executeServerResourcesActions">
+			<var name="actionsDescription" value="Reindex all search indexes." />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Solr Page" />
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchTerm" value="Apple" />
+		</execute>
+
+		<execute macro="Search#viewSearchResultsPG">
+			<var name="searchAssetTitle1" value="Apple" />
+			<var name="searchAssetTitle2" value="Apple" />
+			<var name="searchAssetType1" value="Document" />
+			<var name="searchAssetType2" value="Message Boards Message" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Solr Page" />
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchTerm" value="Orange" />
+		</execute>
+
+		<execute macro="Search#viewSearchResultsPG">
+			<var name="searchAssetTitle1" value="Apple" />
+			<var name="searchAssetTitle2" value="Apple" />
+			<var name="searchAssetType1" value="Document" />
+			<var name="searchAssetType2" value="Message Boards Message" />
+		</execute>
+	</command>
+
 	<command name="SolrWithSSLAuthenticationSmokeTest" priority="4">
 		<description message="This smoke test is to ensure that Liferay is successfully running on a remote Solr with SSL Authentication by asserting console logging for KeyStoreLoaderImpl and performing searches in portal. Note by default, an embedded Elasticsearch is deployed in portal." />
 

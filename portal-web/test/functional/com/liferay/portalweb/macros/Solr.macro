@@ -11,6 +11,18 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="SolrAdminDashboard#VERSIONS_SOLR_IMPL" value1="${solrVersion}" />
 	</command>
 
+	<command name="viewLiferayCloudDashboard">
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="http://localhost:8983/solr/#/~cloud" />
+		</execute>
+
+		<execute function="AssertVisible" locator1="SolrAdminDashboard#MENU_CLOUD" />
+
+		<var name="key_cloudCollectionName" value="${cloudCollectionName}" />
+
+		<execute function="AssertVisible" locator1="SolrAdminDashboard#CLOUD_COLLECTION" />
+	</command>
+
 	<command name="viewLiferayCoreAdminDashboard">
 		<execute macro="Navigator#openSpecificURL">
 			<var name="url" value="http://localhost:8983/solr/#/~cores/liferay" />
@@ -40,6 +52,16 @@
 		<execute function="AssertConsoleTextPresent" value1="description_en_US:${searchTerm}" />
 		<execute function="AssertConsoleTextPresent" value1="title:${searchTerm}" />
 		<execute function="AssertConsoleTextPresent" value1="title_en_US:${searchTerm}" />
+	</command>
+
+	<command name="viewSolrwithSolrCloudEnabledInConsole">
+		<execute function="AssertConsoleTextPresent" value1="Using default ZkCredentialsProvider" />
+		<execute function="AssertConsoleTextPresent" value1="Using default ZkACLProvider" />
+		<execute function="AssertConsoleTextPresent" value1="Waiting for client to connect to ZooKeeper" />
+		<execute function="AssertConsoleTextPresent" value1="Watcher org.apache.solr.common.cloud.ConnectionManager" />
+		<execute function="AssertConsoleTextPresent" value1="ZooKeeperConnection Watcher:localhost:9983" />
+		<execute function="AssertConsoleTextPresent" value1="Client is connected to ZooKeeper" />
+		<execute function="AssertConsoleTextPresent" value1="Updating cluster state from ZooKeeper" />
 	</command>
 
 	<command name="viewSolrwithSSLAuthenticationEnabledInConsole">

@@ -181,6 +181,10 @@
 			<matches></matches>
 		</ignore-error>
 		<ignore-error description="LPS-66910, temporary workaround while Albert Lee investigates it">
+			<contains>BeanLocator is null for servlet context saml-portlet</contains>
+			<matches></matches>
+		</ignore-error>
+		<ignore-error description="LPS-66910, temporary workaround while Albert Lee investigates it">
 			<contains>Error initializing Spring for oauth-portlet</contains>
 			<matches></matches>
 		</ignore-error>

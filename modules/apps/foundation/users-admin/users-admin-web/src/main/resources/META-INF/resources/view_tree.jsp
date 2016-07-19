@@ -23,7 +23,6 @@ Organization organization = (Organization)request.getAttribute("view.jsp-organiz
 long organizationId = GetterUtil.getLong(request.getAttribute("view.jsp-organizationId"));
 long organizationGroupId = GetterUtil.getLong(request.getAttribute("view.jsp-organizationGroupId"));
 PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
-int status = GetterUtil.getInteger(request.getAttribute("view.jsp-status"));
 String toolbarItem = GetterUtil.getString(request.getAttribute("view.jsp-toolbarItem"));
 int usersCount = GetterUtil.getInteger(request.getAttribute("view.jsp-usersCount"));
 String usersListView = GetterUtil.getString(request.getAttribute("view.jsp-usersListView"));
@@ -150,21 +149,6 @@ if (organization != null) {
 			</c:if>
 
 			<%
-			if ((status == WorkflowConstants.STATUS_APPROVED) && (usersCount == 0) && (inactiveUsersCount > 0)) {
-				status = WorkflowConstants.STATUS_INACTIVE;
-			}
-			else if ((status == WorkflowConstants.STATUS_INACTIVE) && (usersCount > 0) && (inactiveUsersCount == 0)) {
-				status = WorkflowConstants.STATUS_APPROVED;
-			}
-
-			if ((organization != null) && !OrganizationPermissionUtil.contains(permissionChecker, organization, ActionKeys.MANAGE_USERS)) {
-				inactiveUsersCount = 0;
-
-				status = WorkflowConstants.STATUS_APPROVED;
-			}
-			%>
-
-			<%
 			SearchContainer organizationSearch = new OrganizationSearch(renderRequest, "cur1", currentURLObj);
 
 			organizationSearch.setOrderByType(orderByType);
@@ -249,6 +233,10 @@ if (organization != null) {
 			>
 
 				<%
+				UserSearchTerms userSearchTerms = (UserSearchTerms)userSearchContainer.getSearchTerms();
+
+				userSearchTerms.setStatus(WorkflowConstants.STATUS_ANY);
+
 				LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
 
 				userParams.put("usersOrgs", Long.valueOf(organizationId));

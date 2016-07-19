@@ -355,7 +355,6 @@
 			<isset var="userSegmentRuleAddList" />
 			<then>
 				<for list="${userSegmentRuleAddList}" param="userSegmentRule">
-
 					<execute macro="ContentTargetingUserSegment#addRuleCmdCP">
 						<var name="userSegmentRule" value="${userSegmentRule}" />
 					</execute>

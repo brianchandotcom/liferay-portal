@@ -70,11 +70,9 @@
 
 					<#if has_navigation>
 						<#include "${full_templates_path}/footer_navigation.ftl" />
-
 					</#if>
 
 					<#include "${full_templates_path}/social_media.ftl" />
-
 				</div>
 
 				<div class="container-fluid-1280">

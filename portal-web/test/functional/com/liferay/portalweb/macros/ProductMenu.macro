@@ -67,7 +67,6 @@
 	</command>
 
 	<command name="gotoLocalizedEditPage" summary="Navigate to Navigate to Product Menu > Sites > ${category} > ${page}">
-
 		<execute macro="ProductMenuHelper#expandPanelSites" />
 
 		<execute macro="ProductMenuHelper#expandCategory">

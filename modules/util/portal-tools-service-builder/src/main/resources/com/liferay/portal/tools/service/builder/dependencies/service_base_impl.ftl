@@ -378,9 +378,11 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 				<#if entity.hasPrimitivePK()>
 					actionableDynamicQuery.setPrimaryKeyPropertyName("${entity.PKVarName}");
 				<#else>
-					<#assign pkList = entity.getPKList() />
+					<#assign
+						pkList = entity.getPKList()
 
-					<#assign pkColumn = pkList?first />
+						pkColumn = pkList?first
+					/>
 
 					actionableDynamicQuery.setPrimaryKeyPropertyName("primaryKey.${pkColumn.name}");
 
@@ -405,9 +407,11 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 				<#if entity.hasPrimitivePK()>
 					indexableActionableDynamicQuery.setPrimaryKeyPropertyName("${entity.PKVarName}");
 				<#else>
-					<#assign pkList = entity.getPKList() />
+					<#assign
+						pkList = entity.getPKList()
 
-					<#assign pkColumn = pkList?first />
+						pkColumn = pkList?first
+					/>
 
 					indexableActionableDynamicQuery.setPrimaryKeyPropertyName("primaryKey.${pkColumn.name}");
 
@@ -429,9 +433,11 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 				<#if entity.hasPrimitivePK()>
 					actionableDynamicQuery.setPrimaryKeyPropertyName("${entity.PKVarName}");
 				<#else>
-					<#assign pkList = entity.getPKList() />
+					<#assign
+						pkList = entity.getPKList()
 
-					<#assign pkColumn = pkList?first />
+						pkColumn = pkList?first
+					/>
 
 					actionableDynamicQuery.setPrimaryKeyPropertyName("primaryKey.${pkColumn.name}");
 
@@ -725,9 +731,11 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 
 		<#list entity.columnList as column>
 			<#if column.isCollection() && column.isMappingManyToMany()>
-				<#assign tempEntity = serviceBuilder.getEntity(column.getEJBName()) />
+				<#assign
+					tempEntity = serviceBuilder.getEntity(column.getEJBName())
 
-				<#assign serviceBaseExceptions = serviceBuilder.getServiceBaseExceptions(methods, "add" + tempEntity.name + entity.name, [tempEntity.PKClassName, entity.PKClassName], []) />
+					serviceBaseExceptions = serviceBuilder.getServiceBaseExceptions(methods, "add" + tempEntity.name + entity.name, [tempEntity.PKClassName, entity.PKClassName], [])
+				/>
 
 				/**
 				<#list serviceBaseExceptions as exception>

@@ -45,8 +45,10 @@ public class ${entity.name}${sessionTypeName}ServiceClp implements ${entity.name
 
 	<#list methods as method>
 		<#if !method.isConstructor() && method.isPublic() && serviceBuilder.isCustomMethod(method)>
-			<#assign returnTypeName = serviceBuilder.getTypeGenericsName(method.returns) />
-			<#assign parameters = method.parameters />
+			<#assign
+				returnTypeName = serviceBuilder.getTypeGenericsName(method.returns)
+				parameters = method.parameters
+			/>
 
 			@Override
 			public

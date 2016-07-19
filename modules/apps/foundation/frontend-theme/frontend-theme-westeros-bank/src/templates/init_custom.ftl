@@ -1,6 +1,8 @@
-<#assign show_global_menu_on = themeDisplay.getThemeSetting("show-global-menu-on") />
-<#assign show_recursive_menu_on = themeDisplay.getThemeSetting("show-recursive-menu-on") />
-<#assign show_main_search = themeDisplay.getThemeSetting("show-main-search") />
+<#assign
+	show_global_menu_on = themeDisplay.getThemeSetting("show-global-menu-on")
+	show_recursive_menu_on = themeDisplay.getThemeSetting("show-recursive-menu-on")
+	show_main_search = themeDisplay.getThemeSetting("show-main-search")
+/>
 
 <#if show_global_menu_on = "all-screens">
 	<#assign global_menu_class = "all-screens" />

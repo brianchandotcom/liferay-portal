@@ -108,9 +108,11 @@ public interface ${entity.name} extends
 		<#if !method.isConstructor() && !method.isStatic() && method.isPublic()>
 			${serviceBuilder.getJavadocComment(method)}
 
-			<#assign parameters = method.parameters />
+			<#assign
+				parameters = method.parameters
 
-			<#assign annotations = method.annotations />
+				annotations = method.annotations
+			/>
 
 			<#list annotations as annotation>
 				<#if annotation.type.javaClass.name != "Override">

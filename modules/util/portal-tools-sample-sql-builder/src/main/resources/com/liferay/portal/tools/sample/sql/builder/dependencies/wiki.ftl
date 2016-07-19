@@ -29,8 +29,10 @@
 			_categoryAndTag = true
 		/>
 
-		<#assign mbRootMessageId = dataFactory.getCounterNext() />
-		<#assign mbThreadId = dataFactory.getCounterNext() />
+		<#assign
+			mbRootMessageId = dataFactory.getCounterNext()
+			mbThreadId = dataFactory.getCounterNext()
+		/>
 
 		<@insertMBDiscussion
 			_classNameId = dataFactory.wikiPageClassNameId

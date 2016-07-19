@@ -3,9 +3,12 @@
 <#assign parentPKColumn = "" />
 
 <#if entity.isHierarchicalTree()>
-	<#assign pkColumn = entity.getPKList()?first />
+	<#assign
+		pkColumn = entity.getPKList()?first
 
-	<#assign parentPKColumn = entity.getColumn("parent" + pkColumn.methodName) />
+		parentPKColumn = entity.getColumn("parent" + pkColumn.methodName)
+	/>
+
 </#if>
 
 package ${packagePath}.model.impl;
@@ -694,9 +697,11 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 	</#list>
 
 	<#list cacheFields as cacheField>
-		<#assign variableName = serviceBuilder.getVariableName(cacheField) />
-		<#assign methodName = serviceBuilder.getCacheFieldMethodName(cacheField) />
-		<#assign typeName = cacheField.getType().getGenericValue() />
+		<#assign
+			variableName = serviceBuilder.getVariableName(cacheField)
+			methodName = serviceBuilder.getCacheFieldMethodName(cacheField)
+			typeName = cacheField.getType().getGenericValue()
+		/>
 
 		<#if methodName != "DefaultLanguageId">
 			public ${typeName} get${methodName}() {
@@ -1303,8 +1308,10 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 		</#list>
 
 		<#list cacheFields as cacheField>
-			<#assign variableName = serviceBuilder.getVariableName(cacheField) />
-			<#assign methodName = serviceBuilder.getCacheFieldMethodName(cacheField) />
+			<#assign
+				variableName = serviceBuilder.getVariableName(cacheField)
+				methodName = serviceBuilder.getCacheFieldMethodName(cacheField)
+			/>
 
 			set${methodName}(null);
 		</#list>

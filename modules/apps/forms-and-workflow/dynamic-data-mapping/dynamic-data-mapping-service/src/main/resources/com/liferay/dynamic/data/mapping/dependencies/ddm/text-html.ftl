@@ -1,11 +1,13 @@
 <#include "../init.ftl">
 
-<#assign cssClass = "" />
-<#assign editorName = propsUtil.get("editor.wysiwyg.portal-impl.portlet.ddm.text_html.ftl") />
+<#assign
+	cssClass = ""
+	editorName = propsUtil.get("editor.wysiwyg.portal-impl.portlet.ddm.text_html.ftl")
 
-<#assign inputEditorName = "${namespacedFieldName}Editor" />
+	inputEditorName = "${namespacedFieldName}Editor"
 
-<#assign fieldValue = paramUtil.getString(request, "${inputEditorName}", fieldValue) />
+	fieldValue = paramUtil.getString(request, "${inputEditorName}", fieldValue)
+/>
 
 <#if editorName?starts_with("alloyeditor")>
 	<#assign cssClass = "form-control" />

@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.lock.exception.DuplicateLockException;
 import com.liferay.portal.lock.model.Lock;
 import com.liferay.portal.lock.service.LockLocalService;
 
@@ -245,41 +246,34 @@ public class MarketplaceStorePortlet extends RemoteMVCPortlet {
 		writeJSON(actionRequest, actionResponse, jsonObject);
 	}
 
-	public void updateAllApps(
+	public void updateApps(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		boolean success = false;
-
-		JSONArray updatedApps = JSONFactoryUtil.createJSONArray();
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-		Lock lock = null;
-
 		if (_lockLocalService.isLocked(
-				MarketplaceStorePortlet.class.getName(), "updateAllApps")) {
+				MarketplaceStorePortlet.class.getName(), StringPool.BLANK)) {
 
-			writeUpdateAppsJSON(
-				actionRequest, actionResponse, jsonObject, success,
-				updatedApps);
-
-			throw new Exception("updateAllApps task is locked");
+			throw new DuplicateLockException(null);
 		}
 
-		lock = _lockLocalService.lock(
-			MarketplaceStorePortlet.class.getName(), "updateAllApps",
+		Lock lock = _lockLocalService.lock(
+			MarketplaceStorePortlet.class.getName(), StringPool.BLANK,
 			StringPool.BLANK);
 
-		String[] appPackageIds = ParamUtil.getParameterValues(
-			actionRequest, "appPackageIds", new String[0]);
-
-		File file = null;
-
 		try {
+			String[] appPackageIds = ParamUtil.getParameterValues(
+				actionRequest, "appPackageIds");
+
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+			jsonObject.put("cmd", "updatedApps");
+			jsonObject.put("message", "success");
+
+			JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
 			for (String appPackage : appPackageIds) {
+				File file = null;
+
 				try {
 					int appPackageId = Integer.valueOf(appPackage);
 
@@ -294,25 +288,20 @@ public class MarketplaceStorePortlet extends RemoteMVCPortlet {
 
 						_appService.installApp(app.getRemoteAppId());
 
-						updatedApps.put(getAppJSONObject(app));
+						jsonArray.put(getAppJSONObject(app));
 					}
 				}
-				catch (NumberFormatException nfe) {
+				finally {
+					if (file != null) {
+						file.delete();
+					}
 				}
 			}
 
-			success = true;
+			writeJSON(actionRequest, actionResponse, jsonObject);
 		}
 		finally {
-			if (file != null) {
-				file.delete();
-			}
-
 			_lockLocalService.unlock(lock.getClassName(), lock.getKey());
-
-			writeUpdateAppsJSON(
-				actionRequest, actionResponse, jsonObject, success,
-				updatedApps);
 		}
 	}
 
@@ -524,17 +513,6 @@ public class MarketplaceStorePortlet extends RemoteMVCPortlet {
 	@Reference(unbind = "-")
 	protected void setOAuthManager(OAuthManager oAuthManager) {
 		super.setOAuthManager(oAuthManager);
-	}
-
-	protected void writeUpdateAppsJSON(
-			ActionRequest actionRequest, ActionResponse actionResponse,
-			JSONObject jsonObject, boolean success, JSONArray updatedApps)
-		throws IOException {
-
-		jsonObject.put("updatedApps", updatedApps);
-		jsonObject.put("success", success);
-
-		writeJSON(actionRequest, actionResponse, jsonObject);
 	}
 
 	private AppLocalService _appLocalService;

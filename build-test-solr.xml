@@ -333,6 +333,8 @@ trustStorePath=${solr.dir}/server/etc/solr-ssl.keystore.jks</echo>
 	</target>
 
 	<target name="stop-solr-core">
+		<get-testcase-property property.name="solr.solrcloud.enabled" />
+
 		<if>
 			<os family="unix" />
 			<then>
@@ -340,6 +342,16 @@ trustStorePath=${solr.dir}/server/etc/solr-ssl.keystore.jks</echo>
 					<arg value="-c" />
 					<arg value="./solr stop -p 8983" />
 				</exec>
+
+				<if>
+					<equals arg1="${solr.solrcloud.enabled}" arg2="true" />
+					<then>
+						<exec dir="${solr.dir}/bin" executable="/bin/bash">
+							<arg value="-c" />
+							<arg value="./solr stop -p 7574" />
+						</exec>
+					</then>
+				</if>
 			</then>
 			<elseif>
 				<os family="windows" />
@@ -348,6 +360,16 @@ trustStorePath=${solr.dir}/server/etc/solr-ssl.keystore.jks</echo>
 						<arg value="/c" />
 						<arg value="solr -p 8983" />
 					</exec>
+
+					<if>
+						<equals arg1="${solr.solrcloud.enabled}" arg2="true" />
+						<then>
+							<exec dir="${solr.dir}/bin" executable="cmd" spawn="true">
+								<arg value="/c" />
+								<arg value="solr -p 7574" />
+							</exec>
+						</then>
+					</if>
 				</then>
 			</elseif>
 		</if>

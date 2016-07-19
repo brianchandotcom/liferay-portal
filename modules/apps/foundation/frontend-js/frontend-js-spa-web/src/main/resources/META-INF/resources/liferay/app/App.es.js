@@ -45,7 +45,7 @@ class LiferayApp extends App {
 	}
 
 	isCacheEnabled() {
-		return this.getCacheExpirationTime() > -1;
+		return this.getCacheExpirationTime() > 0;
 	}
 
 	isInPortletBlacklist(element) {

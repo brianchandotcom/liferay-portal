@@ -95,7 +95,7 @@ define("frontend-js-spa-web@1.0.8/liferay/app/App.es", ['exports', 'senna/src/ap
 		};
 
 		LiferayApp.prototype.isCacheEnabled = function isCacheEnabled() {
-			return this.getCacheExpirationTime() > -1;
+			return this.getCacheExpirationTime() > 0;
 		};
 
 		LiferayApp.prototype.isInPortletBlacklist = function isInPortletBlacklist(element) {

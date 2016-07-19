@@ -1,4 +1,4 @@
-<definition component-name="portal-performance-and-fault-tolerance">
+<definition component-name="portal-performance-and-fault-tolerance-ce">
 	<property name="cluster.enabled" value="true" />
 	<property name="testray.main.component.name" value="Clustering" />
 

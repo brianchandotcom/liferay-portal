@@ -55,10 +55,10 @@ public class BaseIndexerGetFullQueryTest extends PowerMockito {
 
 	@Before
 	public void setUp() throws Exception {
+		setUpIndexerRegistry();
 		setUpJSONFactoryUtil();
 		setUpPropsUtil();
 		setUpRegistryUtil();
-		setUpIndexerRegistry();
 		setUpSearchEngineHelperUtil();
 
 		_indexer = new TestIndexer();

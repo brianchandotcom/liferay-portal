@@ -104,8 +104,8 @@ public class UserGroupSearch extends SearchContainer<UserGroup> {
 
 			setOrderableHeaders(orderableHeaders);
 			setOrderByCol(orderByCol);
-			setOrderByType(orderByType);
-			setOrderByComparator(orderByComparator);
+			setOrderByComparator(orderByType);
+			setOrderByType(orderByComparator);
 		}
 		catch (Exception e) {
 			_log.error(e);

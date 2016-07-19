@@ -145,8 +145,8 @@ public class UserSearch extends SearchContainer<User> {
 
 			setOrderableHeaders(orderableHeaders);
 			setOrderByCol(orderByCol);
-			setOrderByType(orderByType);
-			setOrderByComparator(orderByComparator);
+			setOrderByComparator(orderByType);
+			setOrderByType(orderByComparator);
 		}
 		catch (Exception e) {
 			_log.error(e);

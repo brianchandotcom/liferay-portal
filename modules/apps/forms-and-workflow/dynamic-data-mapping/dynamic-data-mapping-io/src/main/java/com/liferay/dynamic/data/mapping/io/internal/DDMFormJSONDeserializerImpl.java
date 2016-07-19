@@ -66,8 +66,9 @@ public class DDMFormJSONDeserializerImpl implements DDMFormJSONDeserializer {
 			setDDMFormDefaultLocale(
 				jsonObject.getString("defaultLanguageId"), ddmForm);
 			setDDMFormFields(jsonObject.getJSONArray("fields"), ddmForm);
-			setDDMFormRules(jsonObject.getJSONArray("rules"), ddmForm);
-			setDDMFormLocalizedValuesDefaultLocale(ddmForm);
+			setDDMFormLocalizedValuesDefaultLocale(
+				jsonObject.getJSONArray("rules"), ddmForm);
+			setDDMFormRules(ddmForm);
 
 			return ddmForm;
 		}

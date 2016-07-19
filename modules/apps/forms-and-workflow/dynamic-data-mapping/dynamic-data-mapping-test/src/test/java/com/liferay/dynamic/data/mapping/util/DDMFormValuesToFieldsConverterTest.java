@@ -60,8 +60,8 @@ public class DDMFormValuesToFieldsConverterTest extends BaseDDMTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
-		setUpConfigurationFactoryUtil();
 		setUpAvailableLocales();
+		setUpConfigurationFactoryUtil();
 		setUpDDMFormJSONDeserializer();
 		setUpDDMFormJSONSerializer();
 		setUpDDMStructureLocalServiceUtil();

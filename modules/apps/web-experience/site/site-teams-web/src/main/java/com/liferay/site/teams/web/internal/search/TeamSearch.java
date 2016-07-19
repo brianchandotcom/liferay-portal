@@ -61,8 +61,8 @@ public class TeamSearch extends SearchContainer<Team> {
 			orderByCol, orderByType);
 
 		setOrderByCol(orderByCol);
-		setOrderByType(orderByType);
-		setOrderByComparator(orderByComparator);
+		setOrderByComparator(orderByType);
+		setOrderByType(orderByComparator);
 	}
 
 	protected static OrderByComparator<Team> getOrderByComparator(

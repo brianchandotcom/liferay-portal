@@ -57,13 +57,13 @@ public class DDMFormValuesJSONDeserializerImpl
 
 			DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
 
-			setDDMFormValuesAvailableLocales(
-				jsonObject.getJSONArray("availableLanguageIds"), ddmFormValues);
-			setDDMFormValuesDefaultLocale(
-				jsonObject.getString("defaultLanguageId"), ddmFormValues);
 			setDDMFormFieldValues(
+				jsonObject.getJSONArray("availableLanguageIds"), ddmFormValues);
+			setDDMFormLocalizedValuesDefaultLocale(
+				jsonObject.getString("defaultLanguageId"), ddmFormValues);
+			setDDMFormValuesAvailableLocales(
 				jsonObject.getJSONArray("fieldValues"), ddmFormValues);
-			setDDMFormLocalizedValuesDefaultLocale(ddmFormValues);
+			setDDMFormValuesDefaultLocale(ddmFormValues);
 
 			return ddmFormValues;
 		}

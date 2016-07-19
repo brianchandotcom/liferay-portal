@@ -102,8 +102,8 @@ public class PasswordPolicySearch extends SearchContainer<PasswordPolicy> {
 
 			setOrderableHeaders(orderableHeaders);
 			setOrderByCol(orderByCol);
-			setOrderByType(orderByType);
-			setOrderByComparator(orderByComparator);
+			setOrderByComparator(orderByType);
+			setOrderByType(orderByComparator);
 		}
 		catch (Exception e) {
 			_log.error(e);

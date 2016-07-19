@@ -78,8 +78,8 @@ public class KBTemplateSearch extends SearchContainer<KBTemplate> {
 				KBUtil.getKBTemplateOrderByComparator(orderByCol, orderByType);
 
 			setOrderByCol(orderByCol);
-			setOrderByType(orderByType);
-			setOrderByComparator(orderByComparator);
+			setOrderByComparator(orderByType);
+			setOrderByType(orderByComparator);
 		}
 		catch (Exception e) {
 			_log.error(e);

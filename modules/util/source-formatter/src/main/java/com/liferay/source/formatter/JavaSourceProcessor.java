@@ -919,6 +919,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			newContent, jsonObjectPutBlockPattern, jsonObjectPutPattern);
 		newContent = sortPutOrSetCalls(
 			newContent, setAttributeBlockPattern, setAttributePattern);
+		newContent = sortPutOrSetCalls(newContent, setBlockPattern, setPattern);
 
 		newContent = formatStringBundler(fileName, newContent, _maxLineLength);
 

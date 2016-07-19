@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.InstanceFactory;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.wsrp.configuration.WSRPGroupServiceConfiguration;
 
 import java.util.ArrayList;
@@ -90,11 +91,13 @@ public class ConsumerRequestExtensionsHelper {
 		for (String consumerRequestExtensionClassName :
 				consumerRequestExtensionsClassNames) {
 
-			ConsumerRequestExtension consumerRequestExtension =
-				(ConsumerRequestExtension)InstanceFactory.newInstance(
-					consumerRequestExtensionClassName);
+			if (Validator.isNotNull(consumerRequestExtensionClassName)) {
+				ConsumerRequestExtension consumerRequestExtension =
+					(ConsumerRequestExtension)InstanceFactory.newInstance(
+						consumerRequestExtensionClassName);
 
-			_consumerRequestExtensions.add(consumerRequestExtension);
+				_consumerRequestExtensions.add(consumerRequestExtension);
+			}
 		}
 	}
 

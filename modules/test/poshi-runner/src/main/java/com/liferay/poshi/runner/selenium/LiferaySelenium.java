@@ -624,7 +624,13 @@ public interface LiferaySelenium {
 
 	public void waitForElementNotPresent(String locator) throws Exception;
 
+	public void waitForElementNotPresent(String locator, String timeout)
+		throws Exception;
+
 	public void waitForElementPresent(String locator) throws Exception;
+
+	public void waitForElementPresent(String locator, String timeout)
+		throws Exception;
 
 	public void waitForFrameToLoad(String frameAddress, String timeout);
 

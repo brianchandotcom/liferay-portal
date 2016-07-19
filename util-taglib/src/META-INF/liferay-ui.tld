@@ -656,6 +656,7 @@
 		<body-content>JSP</body-content>
 	</tag>
 	<tag>
+		<description>Deprecated as of 7.1.0, replaced by <![CDATA[<code>liferay-asset:asset-categories-selector</code>]]>.</description>
 		<name>asset-categories-selector</name>
 		<tag-class>com.liferay.taglib.ui.AssetCategoriesSelectorTag</tag-class>
 		<body-content>JSP</body-content>
@@ -867,6 +868,7 @@
 		<body-content>JSP</body-content>
 	</tag>
 	<tag>
+		<description>Deprecated as of 7.1.0, replaced by <![CDATA[<code>liferay-asset:asset-tags-selector</code>]]>.</description>
 		<name>asset-tags-navigation</name>
 		<tag-class>com.liferay.taglib.ui.AssetTagsNavigationTag</tag-class>
 		<body-content>JSP</body-content>

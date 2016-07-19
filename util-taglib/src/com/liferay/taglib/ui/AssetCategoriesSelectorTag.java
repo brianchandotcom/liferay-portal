@@ -22,7 +22,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Brian Wing Shun Chan
  * @author Jorge Ferrer
+ * @deprecated As of 7.1.0
  */
+@Deprecated
 public class AssetCategoriesSelectorTag extends IncludeTag {
 
 	public void setClassName(String className) {

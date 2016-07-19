@@ -28,6 +28,6 @@ Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 
 <liferay-ui:asset-tags-error />
 
-<aui:input name="categories" type="assetCategories" />
+<liferay-asset:asset-categories-selector className="<%= Layout.class.getName() %>" classPK="<%= (selLayout != null) ? selLayout.getPrimaryKey() : 0 %>" />
 
-<aui:input name="tags" type="assetTags" />
+<liferay-asset:asset-tags-selector className="<%= Layout.class.getName() %>" classPK="<%= (selLayout != null) ? selLayout.getPrimaryKey() : 0 %>" />

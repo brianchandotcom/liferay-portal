@@ -94,9 +94,9 @@ String code = BeanParamUtil.getString(calendarResource, request, "code");
 			</liferay-ui:panel>
 
 			<liferay-ui:panel defaultState="closed" extended="<%= false %>" id="calendarResourceCategorizationPanel" persistState="<%= true %>" title="categorization">
-				<aui:input classPK="<%= calendarResourceId %>" name="categories" type="assetCategories" />
+				<liferay-asset:asset-categories-selector className="<%= CalendarResource.class.getName() %>" classPK="<%= calendarResourceId %>" />
 
-				<aui:input classPK="<%= calendarResourceId %>" name="tags" type="assetTags" />
+				<liferay-asset:asset-tags-selector className="<%= CalendarResource.class.getName() %>" classPK="<%= calendarResourceId %>" />
 			</liferay-ui:panel>
 		</liferay-ui:panel-container>
 

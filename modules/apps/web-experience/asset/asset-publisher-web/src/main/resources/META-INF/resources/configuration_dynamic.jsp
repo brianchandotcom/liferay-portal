@@ -18,8 +18,6 @@
 
 <%
 List<AssetRendererFactory<?>> classTypesAssetRendererFactories = (List<AssetRendererFactory<?>>)request.getAttribute("configuration.jsp-classTypesAssetRendererFactories");
-PortletURL configurationRenderURL = (PortletURL)request.getAttribute("configuration.jsp-configurationRenderURL");
-String redirect = (String)request.getAttribute("configuration.jsp-redirect");
 String selectScope = (String)request.getAttribute("configuration.jsp-selectScope");
 String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle");
 %>
@@ -506,14 +504,6 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 						</aui:fieldset>
 					</c:if>
 				</aui:fieldset-group>
-			</div>
-		</liferay-ui:section>
-
-		<liferay-ui:section>
-			<div class="container-fluid-1280">
-				<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="display-settings" />
-
-				<%@ include file="/display_settings.jspf" %>
 			</div>
 		</liferay-ui:section>
 	</liferay-ui:tabs>

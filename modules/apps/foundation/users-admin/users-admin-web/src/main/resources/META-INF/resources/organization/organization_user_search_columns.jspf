@@ -27,6 +27,8 @@
 		if (!OrganizationPermissionUtil.contains(permissionChecker, curOrganization, ActionKeys.VIEW)) {
 			rowURL = null;
 		}
+
+		row.setPrimaryKey(HtmlUtil.escape(String.valueOf(curOrganization.getOrganizationId())));
 		%>
 
 		<liferay-ui:search-container-column-text
@@ -58,6 +60,8 @@
 		if (!UserPermissionUtil.contains(permissionChecker, user2.getUserId(), ActionKeys.UPDATE)) {
 			rowURL = null;
 		}
+
+		row.setPrimaryKey(HtmlUtil.escape(String.valueOf(user2.getUserId())));
 		%>
 
 		<liferay-ui:search-container-column-text

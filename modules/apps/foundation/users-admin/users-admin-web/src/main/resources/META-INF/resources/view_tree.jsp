@@ -100,6 +100,10 @@ if (organization != null) {
 					selectedDisplayStyle="<%= displayStyle %>"
 				/>
 			</liferay-frontend:management-bar-buttons>
+
+			<liferay-frontend:management-bar-action-buttons>
+				<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "delete();" %>' icon="trash" id="deleteOrganizations" label="delete" />
+			</liferay-frontend:management-bar-action-buttons>
 		</liferay-frontend:management-bar>
 
 		<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "search();" %>'>
@@ -107,6 +111,8 @@ if (organization != null) {
 			<aui:input name="<%= Constants.CMD %>" type="hidden" />
 			<aui:input name="toolbarItem" type="hidden" value="<%= toolbarItem %>" />
 			<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
+			<aui:input name="deleteOrganizationIds" type="hidden" />
+			<aui:input name="deleteUserIds" type="hidden" />
 
 			<c:if test="<%= organization != null %>">
 
@@ -157,9 +163,6 @@ if (organization != null) {
 				status = WorkflowConstants.STATUS_APPROVED;
 			}
 			%>
-
-			<aui:input disabled="<%= true %>" name="organizationsRedirect" type="hidden" value="<%= backURL %>" />
-			<aui:input name="deleteOrganizationIds" type="hidden" />
 
 			<%
 			SearchContainer organizationSearch = new OrganizationSearch(renderRequest, "cur1", currentURLObj);
@@ -309,6 +312,20 @@ if (organization != null) {
 
 <aui:script>
 	Liferay.Util.toggleSearchContainerButton('#<portlet:namespace />delete', '#<portlet:namespace /><%= searchContainerReference.getId(request, "organizationSearchContainer") %>SearchContainer', document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
+
+	function <portlet:namespace />delete() {
+		<portlet:namespace />deleteOrganizations();
+	}
+
+	<portlet:namespace />doDeleteOrganizations = function(organizationIds) {
+		var form = AUI.$(document.<portlet:namespace />fm);
+
+		form.attr('method', 'post');
+		form.fm('deleteOrganizationIds').val(organizationIds);
+		form.fm('deleteUserIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds', '<portlet:namespace />rowIdsUser'));
+
+		submitForm(form, '<portlet:actionURL name="/users_admin/delete_users_and_organizations" />');
+	};
 </aui:script>
 
 <%!

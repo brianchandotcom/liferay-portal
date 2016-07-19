@@ -15,15 +15,22 @@
 package com.liferay.users.admin.web.search;
 
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
+import com.liferay.portal.kernel.exception.NoSuchOrganizationException;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.OrganizationServiceUtil;
+import com.liferay.portal.kernel.service.UserServiceUtil;
 import com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil;
 import com.liferay.portal.kernel.service.permission.UserPermissionUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringPool;
 
 import javax.portlet.RenderResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Pei-Jung Lan
@@ -68,6 +75,43 @@ public class OrganizationUserChecker extends EmptyOnClickRowChecker {
 		}
 
 		return super.isDisabled(obj);
+	}
+
+	@Override
+	protected String getRowCheckBox(
+		HttpServletRequest request, boolean checked, boolean disabled,
+		String name, String value, String checkBoxRowIds,
+		String checkBoxAllRowIds, String checkBoxPostOnClick) {
+
+		Organization organization = null;
+		User user = null;
+
+		long organizationId = GetterUtil.getLong(value);
+
+		try {
+			organization = OrganizationServiceUtil.getOrganization(
+				organizationId);
+
+			name += Organization.class.getSimpleName();
+		}
+		catch (Exception e1) {
+			if (e1 instanceof NoSuchOrganizationException) {
+				try {
+					long userId = GetterUtil.getLong(value);
+
+					user = UserServiceUtil.getUserById(userId);
+
+					name += User.class.getSimpleName();
+				}
+				catch (Exception e2) {
+					return StringPool.BLANK;
+				}
+			}
+		}
+
+		return super.getRowCheckBox(
+			request, checked, disabled, name, value, checkBoxRowIds,
+			checkBoxAllRowIds, checkBoxPostOnClick);
 	}
 
 }

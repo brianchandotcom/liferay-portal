@@ -414,6 +414,12 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 			_searchPermissionCheckerConfiguration.permissionTermsLimit();
 
 		if (termsCount > permissionTermsLimit) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Skipping pre-search permission checking due to too many " +
+						"roles: " + termsCount + " > " + permissionTermsLimit);
+			}
+
 			return false;
 		}
 
@@ -427,6 +433,13 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 		termsCount += groups.size();
 
 		if (termsCount > permissionTermsLimit) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Skipping pre-search permission checking due to too many " +
+						"roles and groups: " + termsCount + " > " +
+							permissionTermsLimit);
+			}
+
 			return false;
 		}
 
@@ -465,6 +478,13 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 			termsCount += groupRoles.size();
 
 			if (termsCount > permissionTermsLimit) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Skipping pre-search permission checking due to too " +
+							"many roles, groups, and groupRoles: " +
+								termsCount + " > " + permissionTermsLimit);
+				}
+
 				return false;
 			}
 		}

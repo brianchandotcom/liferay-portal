@@ -15,7 +15,14 @@
 package com.liferay.asset.publisher.web.servlet.taglib.ui;
 
 import com.liferay.asset.publisher.web.constants.AssetPublisherConstants;
+import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
+import com.liferay.portal.kernel.model.PortletConstants;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
+import com.liferay.portal.kernel.theme.PortletDisplay;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 import javax.servlet.ServletContext;
 
@@ -40,6 +47,33 @@ public class OrderingAndGroupingFormNavigatorEntry
 	@Override
 	public String getKey() {
 		return "ordering-and-grouping";
+	}
+
+	@Override
+	public boolean isVisible(User user, Object object) {
+		if (!isDynamicAssetSelection()) {
+			return false;
+		}
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		String rootPortletId = PortletConstants.getRootPortletId(
+			portletDisplay.getPortletName());
+
+		if (rootPortletId.equals(
+				AssetPublisherPortletKeys.HIGHEST_RATED_ASSETS) ||
+			rootPortletId.equals(
+				AssetPublisherPortletKeys.MOST_VIEWED_ASSETS)) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	@Override

@@ -520,8 +520,6 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 		<liferay-ui:section>
 			<div class="container-fluid-1280">
 				<aui:fieldset-group markupView="lexicon">
-					<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="subscriptions" />
-
 					<c:if test="<%= PortalUtil.isRSSFeedsEnabled() %>">
 						<aui:fieldset>
 							<liferay-ui:rss-settings
@@ -535,10 +533,6 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 							/>
 						</aui:fieldset>
 					</c:if>
-
-					<aui:fieldset>
-						<%@ include file="/email_subscription_settings.jspf" %>
-					</aui:fieldset>
 				</aui:fieldset-group>
 			</div>
 		</liferay-ui:section>

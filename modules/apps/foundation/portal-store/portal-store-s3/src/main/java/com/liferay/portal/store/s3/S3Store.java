@@ -48,7 +48,14 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.*;
+import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.StreamUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.SystemProperties;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.store.s3.configuration.S3StoreConfiguration;
 
 import java.io.File;
@@ -429,15 +436,7 @@ public class S3Store extends BaseStore {
 
 		ClientConfiguration clientConfiguration = getClientConfiguration();
 
-		String proxyHost = GetterUtil.getString(
-			SystemProperties.get("http.proxyHost"));
-		int proxyPort = GetterUtil.getInteger(
-			SystemProperties.get("http.proxyPort"));
-
-		if (Validator.isNotNull(proxyHost) && Validator.isNotNull(proxyPort)) {
-			clientConfiguration.setProxyHost(proxyHost);
-			clientConfiguration.setProxyPort(proxyPort);
-		}
+		setProxyConfiguration(clientConfiguration);
 
 		AmazonS3 amazonS3 = new AmazonS3Client(
 			awsCredentialsProvider, clientConfiguration);
@@ -638,6 +637,53 @@ public class S3Store extends BaseStore {
 				_bucketName, oldKey);
 
 			_amazonS3.deleteObject(deleteObjectRequest);
+		}
+	}
+
+	protected void setProxyConfiguration(
+		ClientConfiguration clientConfiguration) {
+
+		String proxyHost = GetterUtil.getString(
+			SystemProperties.get("http.proxyHost"));
+		int proxyPort = GetterUtil.getInteger(
+			SystemProperties.get("http.proxyPort"));
+
+		if (Validator.isNull(proxyHost) || Validator.isNull(proxyPort)) {
+			return;
+		}
+
+		clientConfiguration.setProxyHost(proxyHost);
+		clientConfiguration.setProxyPort(proxyPort);
+
+		String proxyAuthType = GetterUtil.getString(
+			PropsUtil.get("com.liferay.portal.util.HttpImpl.proxy.auth.type"));
+
+		String proxyPassword = GetterUtil.getString(
+			PropsUtil.get("com.liferay.portal.util.HttpImpl.proxy.password"));
+		String proxyUsername = GetterUtil.getString(
+			PropsUtil.get("com.liferay.portal.util.HttpImpl.proxy.username"));
+
+		String ntlmProxyDomain = GetterUtil.getString(
+			PropsUtil.get(
+				"com.liferay.portal.util.HttpImpl.proxy.ntlm.domain"));
+		String ntlmProxyHost = GetterUtil.getString(
+			PropsUtil.get("com.liferay.portal.util.HttpImpl.proxy.ntlm.host"));
+
+		if ((proxyAuthType != null) &&
+			proxyAuthType.equals("username-password") &&
+			(proxyPassword != null) && (proxyUsername != null)) {
+
+			clientConfiguration.setProxyPassword(proxyPassword);
+			clientConfiguration.setProxyUsername(proxyUsername);
+		}
+		else if ((proxyAuthType != null) && proxyAuthType.equals("ntlm") &&
+				 (proxyPassword != null) && (proxyUsername != null) &&
+				 (ntlmProxyDomain != null) && (ntlmProxyHost != null)) {
+
+			clientConfiguration.setProxyDomain(ntlmProxyDomain);
+			clientConfiguration.setProxyWorkstation(ntlmProxyHost);
+			clientConfiguration.setProxyPassword(proxyPassword);
+			clientConfiguration.setProxyUsername(proxyUsername);
 		}
 	}
 

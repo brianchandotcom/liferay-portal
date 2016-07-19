@@ -149,7 +149,9 @@ public class FTLSourceProcessor extends BaseSourceProcessor {
 
 		content = importsFormatter.format(content, null, null);
 
-		return formatFTL(fileName, content);
+		content = formatFTL(fileName, content);
+
+		return StringUtil.replace(content, "\n\n\n", "\n\n");
 	}
 
 	@Override

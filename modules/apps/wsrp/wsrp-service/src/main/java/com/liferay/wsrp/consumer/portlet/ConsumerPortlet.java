@@ -993,6 +993,11 @@ public class ConsumerPortlet extends MVCPortlet {
 
 		String wsrpConsumerPortletUuid = portletName;
 
+		if (portletName.startsWith("WSRP_")) {
+			wsrpConsumerPortletUuid = portletName.substring(
+				5, portletName.length());
+		}
+
 		wsrpConsumerPortletUuid = PortalUUIDUtil.fromJsSafeUuid(
 			wsrpConsumerPortletUuid);
 

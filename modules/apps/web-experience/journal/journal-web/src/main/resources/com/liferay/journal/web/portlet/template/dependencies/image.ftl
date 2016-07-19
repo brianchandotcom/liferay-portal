@@ -1,9 +1,9 @@
 <#include "init.ftl">
 
-<#assign variableAltName = name + ".getAttribute(\"alt\")">
+<#assign variableAltName = name + ".getAttribute(\"alt\")" />
 
 <#if repeatable>
-	<#assign variableAltName = "cur_" + variableAltName>
+	<#assign variableAltName = "cur_" + variableAltName />
 </#if>
 
 <#if language == "ftl">

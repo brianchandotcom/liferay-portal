@@ -24,7 +24,7 @@ public class ${entity.name}${sessionTypeName}ServiceClp implements ${entity.name
 
 		<#list methods as method>
 			<#if !method.isConstructor() && method.isPublic() && serviceBuilder.isCustomMethod(method) && (method.name != "invokeMethod")>
-				<#assign parameters = method.parameters>
+				<#assign parameters = method.parameters />
 
 				_methodName${method_index} = "${method.name}";
 
@@ -45,8 +45,10 @@ public class ${entity.name}${sessionTypeName}ServiceClp implements ${entity.name
 
 	<#list methods as method>
 		<#if !method.isConstructor() && method.isPublic() && serviceBuilder.isCustomMethod(method)>
-			<#assign returnTypeName = serviceBuilder.getTypeGenericsName(method.returns)>
-			<#assign parameters = method.parameters>
+			<#assign
+				returnTypeName = serviceBuilder.getTypeGenericsName(method.returns)
+				parameters = method.parameters
+			/>
 
 			@Override
 			public
@@ -99,7 +101,7 @@ public class ${entity.name}${sessionTypeName}ServiceClp implements ${entity.name
 							new Object[] {
 
 							<#list parameters as parameter>
-								<#assign parameterTypeName = serviceBuilder.getTypeGenericsName(parameter.type)>
+								<#assign parameterTypeName = serviceBuilder.getTypeGenericsName(parameter.type) />
 
 								<#if (parameterTypeName == "boolean") || (parameterTypeName == "double") || (parameterTypeName == "float") || (parameterTypeName == "int") || (parameterTypeName == "long") || (parameterTypeName == "short")>
 									${parameter.name}
@@ -158,7 +160,7 @@ public class ${entity.name}${sessionTypeName}ServiceClp implements ${entity.name
 
 	<#list methods as method>
 		<#if !method.isConstructor() && method.isPublic() && serviceBuilder.isCustomMethod(method) && (method.name != "invokeMethod")>
-			<#assign parameters = method.parameters>
+			<#assign parameters = method.parameters />
 
 			private String _methodName${method_index};
 			private String[] _methodParameterTypes${method_index};

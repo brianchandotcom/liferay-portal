@@ -370,7 +370,7 @@ public class ${entity.name}Clp extends BaseModelImpl<${entity.name}> implements 
 			@Override
 			public ${serviceBuilder.getTypeGenericsName(method.returns)} ${method.name} (
 
-			<#assign parameters = method.parameters>
+			<#assign parameters = method.parameters />
 
 			<#list parameters as parameter>
 				${serviceBuilder.getTypeGenericsName(parameter.type)} ${parameter.name}
@@ -417,7 +417,7 @@ public class ${entity.name}Clp extends BaseModelImpl<${entity.name}> implements 
 					};
 
 					<#if serviceBuilder.getTypeGenericsName(method.returns) != "void">
-						<#assign returnTypeObj = serviceBuilder.getPrimitiveObj(serviceBuilder.getTypeGenericsName(method.returns))>
+						<#assign returnTypeObj = serviceBuilder.getPrimitiveObj(serviceBuilder.getTypeGenericsName(method.returns)) />
 
 						${returnTypeObj} returnObj = (${returnTypeObj})
 					</#if>
@@ -436,7 +436,7 @@ public class ${entity.name}Clp extends BaseModelImpl<${entity.name}> implements 
 	</#list>
 
 	<#if entity.isContainerModel()>
-		<#assign hasParentContainerModelId = entity.hasColumn("parentContainerModelId")>
+		<#assign hasParentContainerModelId = entity.hasColumn("parentContainerModelId") />
 
 		<#list entity.columnList as column>
 			<#if column.isContainerModel() && (column.name != "containerModelId")>
@@ -450,7 +450,7 @@ public class ${entity.name}Clp extends BaseModelImpl<${entity.name}> implements 
 			</#if>
 
 			<#if column.isParentContainerModel() && (column.name != "parentContainerModelId")>
-				<#assign hasParentContainerModelId = true>
+				<#assign hasParentContainerModelId = true />
 
 				public long getParentContainerModelId() {
 					return get${column.methodName}();
@@ -620,7 +620,7 @@ public class ${entity.name}Clp extends BaseModelImpl<${entity.name}> implements 
 	</#if>
 
 	<#if entity.isTreeModel()>
-		<#assign pkColumn = entity.getPKList()?first>
+		<#assign pkColumn = entity.getPKList()?first />
 
 		<#if entity.hasColumn("parent" + pkColumn.methodName)>
 			@Override
@@ -895,11 +895,14 @@ public class ${entity.name}Clp extends BaseModelImpl<${entity.name}> implements 
 			<#list entity.order.columns as column>
 				<#if column.isPrimitiveType()>
 					<#if column.type == "boolean">
-						<#assign ltComparator = "==">
-						<#assign gtComparator = "!=">
+						<#assign
+							ltComparator = "=="
+							gtComparator = "!="
+						/>
+
 					<#else>
-						<#assign ltComparator = "<">
-						<#assign gtComparator = ">">
+						<#assign ltComparator = "<" />
+						<#assign gtComparator = ">" />
 					</#if>
 
 					if (get${column.methodName}() ${ltComparator} ${entity.varName}.get${column.methodName}()) {

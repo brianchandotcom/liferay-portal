@@ -11,13 +11,15 @@
 </#if>
 
 <#list entries as entry>
-	<#assign entry = entry />
+	<#assign
+		entry = entry
 
-	<#assign assetRenderer = entry.getAssetRenderer() />
+		assetRenderer = entry.getAssetRenderer()
 
-	<#assign entryTitle = htmlUtil.escape(assetRenderer.getTitle(locale)) />
+		entryTitle = htmlUtil.escape(assetRenderer.getTitle(locale))
 
-	<#assign viewURL = assetPublisherHelper.getAssetViewURL(renderRequest, renderResponse, entry) />
+		viewURL = assetPublisherHelper.getAssetViewURL(renderRequest, renderResponse, entry)
+	/>
 
 	<#if assetLinkBehavior != "showFullContent">
 		<#assign viewURL = assetPublisherHelper.getAssetViewURL(renderRequest, renderResponse, entry, true) />

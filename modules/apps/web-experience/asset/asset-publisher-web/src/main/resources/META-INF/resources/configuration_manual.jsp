@@ -19,7 +19,6 @@
 <%
 PortletURL configurationRenderURL = (PortletURL)request.getAttribute("configuration.jsp-configurationRenderURL");
 String selectScope = (String)request.getAttribute("configuration.jsp-selectScope");
-String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle");
 String eventName = "_" + HtmlUtil.escapeJS(assetPublisherDisplayContext.getPortletResource()) + "_selectAsset";
 %>
 
@@ -34,12 +33,6 @@ String eventName = "_" + HtmlUtil.escapeJS(assetPublisherDisplayContext.getPortl
 		<liferay-ui:section>
 			<div class="container-fluid-1280">
 				<aui:fieldset-group markupView="lexicon">
-					<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="asset-selection" />
-
-					<aui:fieldset>
-						<%= selectStyle %>
-					</aui:fieldset>
-
 					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="scope">
 						<%= selectScope %>
 					</aui:fieldset>

@@ -40,21 +40,6 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList<>
 	<aui:input name="assetEntryOrder" type="hidden" value="-1" />
 	<aui:input name="assetEntryType" type="hidden" />
 
-	<liferay-util:buffer var="selectStyle">
-		<c:choose>
-			<c:when test="<%= !assetPublisherDisplayContext.isSelectionStyleEnabled() %>">
-				<aui:input name="preferences--selectionStyle--" type="hidden" value="dynamic" />
-			</c:when>
-			<c:otherwise>
-				<aui:fieldset markupView="lexicon">
-					<aui:input checked="<%= assetPublisherDisplayContext.isSelectionStyleDynamic() %>" id="selectionStyleDynamic" label="dynamic" name="preferences--selectionStyle--" onChange='<%= renderResponse.getNamespace() + "chooseSelectionStyle();" %>' type="radio" value="dynamic" />
-
-					<aui:input checked="<%= assetPublisherDisplayContext.isSelectionStyleManual() %>" id="selectionStyleManual" label="manual" name="preferences--selectionStyle--" onChange='<%= renderResponse.getNamespace() + "chooseSelectionStyle();" %>' type="radio" value="manual" />
-				</aui:fieldset>
-			</c:otherwise>
-		</c:choose>
-	</liferay-util:buffer>
-
 	<liferay-util:buffer var="selectScope">
 
 		<%
@@ -231,7 +216,6 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList<>
 	request.setAttribute("configuration.jsp-configurationRenderURL", configurationRenderURL);
 	request.setAttribute("configuration.jsp-redirect", redirect);
 	request.setAttribute("configuration.jsp-selectScope", selectScope);
-	request.setAttribute("configuration.jsp-selectStyle", selectStyle);
 	%>
 
 	<c:choose>
@@ -279,14 +263,6 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList<>
 </aui:script>
 
 <aui:script>
-	function <portlet:namespace />chooseSelectionStyle() {
-		var form = AUI.$(document.<portlet:namespace />fm);
-
-		form.fm('<%= Constants.CMD %>').val('selection-style');
-
-		submitForm(form);
-	}
-
 	function <portlet:namespace />moveSelectionDown(assetEntryOrder) {
 		var form = AUI.$(document.<portlet:namespace />fm);
 

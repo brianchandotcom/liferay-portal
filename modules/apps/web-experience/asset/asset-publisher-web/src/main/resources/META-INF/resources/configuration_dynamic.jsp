@@ -19,7 +19,6 @@
 <%
 List<AssetRendererFactory<?>> classTypesAssetRendererFactories = (List<AssetRendererFactory<?>>)request.getAttribute("configuration.jsp-classTypesAssetRendererFactories");
 String selectScope = (String)request.getAttribute("configuration.jsp-selectScope");
-String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle");
 %>
 
 <div class="portlet-configuration-body-content">
@@ -32,11 +31,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 	>
 		<liferay-ui:section>
 			<div class="container-fluid-1280">
-				<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="asset-selection" />
-
 				<aui:fieldset-group markupView="lexicon">
-					<%= selectStyle %>
-
 					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" id="assetPublisherSourcePanel" label="source">
 						<aui:fieldset cssClass='<%= assetPublisherDisplayContext.isShowScopeSelector() ? StringPool.BLANK : "hide" %>' label="scope">
 							<%= selectScope %>

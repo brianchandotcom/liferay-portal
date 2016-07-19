@@ -45,6 +45,13 @@
 			value="<%= LanguageUtil.get(request, curOrganization.getType()) %>"
 		/>
 
+		<liferay-ui:search-container-column-text
+			cssClass="table-cell-content"
+			href="<%= rowURL %>"
+			name="status"
+			value=""
+		/>
+
 		<liferay-ui:search-container-column-jsp
 			path="/organization_action.jsp"
 		/>
@@ -62,6 +69,8 @@
 		}
 
 		row.setPrimaryKey(HtmlUtil.escape(String.valueOf(user2.getUserId())));
+
+		String userStatus = (user2.getStatus() == WorkflowConstants.STATUS_APPROVED) ? "active" : "inactive";
 		%>
 
 		<liferay-ui:search-container-column-text
@@ -78,6 +87,13 @@
 			href="<%= rowURL %>"
 			name="type"
 			value='<%= LanguageUtil.get(request, "user") %>'
+		/>
+
+		<liferay-ui:search-container-column-text
+			cssClass="table-cell-content"
+			href="<%= rowURL %>"
+			name="status"
+			value='<%= LanguageUtil.get(request, userStatus) %>'
 		/>
 
 		<liferay-ui:search-container-column-jsp

@@ -91,12 +91,12 @@ public class BaseLayoutDisplayContext {
 				"privateLayout", String.valueOf(privateLayout));
 		}
 
-		Group liveGroup = getLiveGroup();
+		Group selGroup = getSelGroup();
 
 		editLayoutURL.setParameter(
 			"backURL", PortalUtil.getCurrentURL(liferayPortletRequest));
 		editLayoutURL.setParameter(
-			"groupId", String.valueOf(liveGroup.getGroupId()));
+			"groupId", String.valueOf(selGroup.getGroupId()));
 
 		return editLayoutURL;
 	}

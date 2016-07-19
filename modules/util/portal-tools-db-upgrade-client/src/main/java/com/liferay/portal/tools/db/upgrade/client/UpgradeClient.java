@@ -636,7 +636,7 @@ public class UpgradeClient {
 
 			System.out.println("Please enter your database password: ");
 
-			String password = _consoleReader.readLine();
+			String password = _consoleReader.readLine('*');
 
 			_portalUpgradeDatabaseProperties.setProperty(
 				"jdbc.default.driverClassName", dataSource.getClassName());

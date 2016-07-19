@@ -5,8 +5,8 @@ create table WSRP_WSRPConsumer (
 	createDate DATE null,
 	modifiedDate DATE null,
 	name VARCHAR(75) null,
-	url VARCHAR(75) null,
-	wsdl VARCHAR(75) null,
+	url STRING null,
+	wsdl TEXT null,
 	registrationContextString VARCHAR(75) null,
 	registrationPropertiesString VARCHAR(75) null,
 	forwardCookies VARCHAR(75) null,
@@ -36,6 +36,6 @@ create table WSRP_WSRPProducer (
 	modifiedDate DATE null,
 	name VARCHAR(75) null,
 	version VARCHAR(75) null,
-	portletIds VARCHAR(75) null,
+	portletIds STRING null,
 	lastPublishDate DATE null
 );

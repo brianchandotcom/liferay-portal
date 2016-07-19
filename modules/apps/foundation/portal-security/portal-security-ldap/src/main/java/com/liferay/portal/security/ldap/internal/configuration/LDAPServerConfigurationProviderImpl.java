@@ -59,7 +59,7 @@ public class LDAPServerConfigurationProviderImpl
 	@Override
 	public boolean delete(long companyId) {
 		Map<Long, ObjectValuePair<Configuration, LDAPServerConfiguration>>
-			objectValuePairs = _configurations.get(companyId);
+			objectValuePairs = _configurations.remove(companyId);
 
 		if (MapUtil.isEmpty(objectValuePairs)) {
 			return false;
@@ -91,7 +91,7 @@ public class LDAPServerConfigurationProviderImpl
 		}
 
 		ObjectValuePair<Configuration, LDAPServerConfiguration>
-			objectValuePair = objectValuePairs.get(ldapServerId);
+			objectValuePair = objectValuePairs.remove(ldapServerId);
 
 		if (objectValuePair == null) {
 			return false;

@@ -652,10 +652,10 @@ while (manageableCalendarsIterator.hasNext()) {
 			color: '#F8F8F8',
 			content: '',
 			editingEvent: true,
-			endDate: Liferay.CalendarUtil.toLocalTime(new Date(<%= endTime %>)),
+			endDate: new Date(<%= endTimeYear %>, <%= endTimeMonth %>, <%= endTimeDay %>, <%= endTimeHour %>, <%= endTimeMinute %>),
 			preventDateChange: true,
 			scheduler: scheduler,
-			startDate: Liferay.CalendarUtil.toLocalTime(new Date(<%= startTime %>))
+			startDate: new Date(<%= startTimeYear %>, <%= startTimeMonth %>, <%= startTimeDay %>, <%= startTimeHour %>, <%= startTimeMinute %>)
 		}
 	);
 

@@ -15,11 +15,13 @@
 package com.liferay.asset.publisher.web.servlet.taglib.ui;
 
 import com.liferay.asset.publisher.web.constants.AssetPublisherConstants;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 import javax.servlet.ServletContext;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -39,6 +41,15 @@ public class AssetEntriesFormNavigatorEntry
 	@Override
 	public String getKey() {
 		return "asset-entries";
+	}
+
+	@Override
+	public boolean isVisible(User user, Object object) {
+		if (isDynamicAssetSelection()) {
+			return false;
+		}
+
+		return true;
 	}
 
 	@Override

@@ -23,13 +23,11 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
+
+import javax.servlet.ServletContext;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-
-import javax.portlet.PortletPreferences;
-import javax.servlet.ServletContext;
-import java.util.Objects;
 
 /**
  * @author Eudaldo Alonso
@@ -49,6 +47,29 @@ public class ScopeFormNavigatorEntry
 	@Override
 	public String getKey() {
 		return "scope";
+	}
+
+	@Override
+	public boolean isVisible(User user, Object object) {
+		if (!isDynamicAssetSelection()) {
+			return true;
+		}
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		String rootPortletId = PortletConstants.getRootPortletId(
+			portletDisplay.getPortletName());
+
+		if (rootPortletId.equals(AssetPublisherPortletKeys.RELATED_ASSETS)) {
+			return false;
+		}
+
+		return true;
 	}
 
 	@Override

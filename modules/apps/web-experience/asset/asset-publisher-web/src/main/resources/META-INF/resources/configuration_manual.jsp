@@ -235,18 +235,6 @@ String eventName = "_" + HtmlUtil.escapeJS(assetPublisherDisplayContext.getPortl
 				<%@ include file="/display_settings.jspf" %>
 			</div>
 		</liferay-ui:section>
-
-		<liferay-ui:section>
-			<div class="container-fluid-1280">
-				<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="subscriptions" />
-
-				<aui:fieldset-group markupView="lexicon">
-					<aui:fieldset>
-						<%@ include file="/email_subscription_settings.jspf" %>
-					</aui:fieldset>
-				</aui:fieldset-group>
-			</div>
-		</liferay-ui:section>
 	</liferay-ui:tabs>
 </div>
 

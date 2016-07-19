@@ -2917,6 +2917,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		"(\t*\\w*\\.setAttribute\\(\\s*.*?\\);\n)+", Pattern.DOTALL);
 	protected static Pattern setAttributePattern = Pattern.compile(
 		"\t*\\w*\\.setAttribute\\((.*?)\\);\n", Pattern.DOTALL);
+	protected static Pattern setBlockPattern = Pattern.compile(
+		"(\t+set\\w+\\(\\s*.*?\\);\n)+", Pattern.DOTALL);
+	protected static Pattern setPattern = Pattern.compile(
+		"\t+set(\\w+)\\(.*?\\);\n", Pattern.DOTALL);
 	protected static Pattern singleLengthStringPattern = Pattern.compile(
 		"^(\".\"|StringPool\\.([A-Z_]+))$");
 	protected static Pattern stringUtilReplacePattern = Pattern.compile(

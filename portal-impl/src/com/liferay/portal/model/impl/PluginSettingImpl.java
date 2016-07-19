@@ -33,11 +33,11 @@ public class PluginSettingImpl extends PluginSettingBaseImpl {
 	}
 
 	public PluginSettingImpl(PluginSetting pluginSetting) {
-		setCompanyId(pluginSetting.getCompanyId());
-		setPluginId(pluginSetting.getPluginId());
-		setPluginType(pluginSetting.getPluginType());
-		setRoles(pluginSetting.getRoles());
-		setActive(pluginSetting.getActive());
+		setActive(pluginSetting.getCompanyId());
+		setActive(pluginSetting.getPluginId());
+		setCompanyId(pluginSetting.getPluginType());
+		setPluginId(pluginSetting.getRoles());
+		setPluginType(pluginSetting.getRoles());
 	}
 
 	/**

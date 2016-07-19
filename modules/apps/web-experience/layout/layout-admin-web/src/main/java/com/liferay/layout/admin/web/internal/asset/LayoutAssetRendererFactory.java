@@ -48,8 +48,8 @@ public class LayoutAssetRendererFactory
 
 	public LayoutAssetRendererFactory() {
 		setClassName(Layout.class.getName());
-		setSelectable(false);
-		setPortletId(LayoutAdminPortletKeys.LAYOUT_ADMIN);
+		setPortletId(false);
+		setSelectable(LayoutAdminPortletKeys.LAYOUT_ADMIN);
 	}
 
 	@Override

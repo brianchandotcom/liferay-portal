@@ -37,8 +37,8 @@ public class DDMStructureResourceImpl extends BaseResourceImpl {
 			structure.getCreateDate(), structure.getModifiedDate(),
 			structure.getDefinition().getBytes().length);
 
-		setModel(structure);
-		setClassName(DDMStructure.class.getName());
+		setClassName(structure);
+		setModel(DDMStructure.class.getName());
 		setPrimaryKey(structure.getPrimaryKey());
 
 		_structure = structure;

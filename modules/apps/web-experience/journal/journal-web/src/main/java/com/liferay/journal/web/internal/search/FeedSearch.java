@@ -65,8 +65,8 @@ public class FeedSearch extends SearchContainer<JournalFeed> {
 			getOrganizationOrderByComparator(orderByCol, orderByType);
 
 		setOrderByCol(orderByCol);
-		setOrderByType(orderByType);
-		setOrderByComparator(orderByComparator);
+		setOrderByComparator(orderByType);
+		setOrderByType(orderByComparator);
 	}
 
 	protected OrderByComparator<JournalFeed> getOrganizationOrderByComparator(

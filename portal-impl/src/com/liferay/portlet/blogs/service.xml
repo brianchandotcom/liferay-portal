@@ -111,6 +111,16 @@
 			<finder-column name="userId" />
 			<finder-column comparator="!=" name="status" />
 		</finder>
+		<finder name="G_D_S" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="displayDate" />
+			<finder-column name="status" />
+		</finder>
+		<finder name="G_GtD_S" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column comparator="&gt;" name="displayDate" />
+			<finder-column name="status" />
+		</finder>
 		<finder name="G_LtD_S" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column comparator="&lt;" name="displayDate" />

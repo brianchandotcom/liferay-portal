@@ -389,6 +389,22 @@ public class BlogsEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_D_S() throws Exception {
+		_persistence.countByG_D_S(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextDate(), RandomTestUtil.nextInt());
+
+		_persistence.countByG_D_S(0L, RandomTestUtil.nextDate(), 0);
+	}
+
+	@Test
+	public void testCountByG_GtD_S() throws Exception {
+		_persistence.countByG_GtD_S(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextDate(), RandomTestUtil.nextInt());
+
+		_persistence.countByG_GtD_S(0L, RandomTestUtil.nextDate(), 0);
+	}
+
+	@Test
 	public void testCountByG_LtD_S() throws Exception {
 		_persistence.countByG_LtD_S(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextDate(), RandomTestUtil.nextInt());

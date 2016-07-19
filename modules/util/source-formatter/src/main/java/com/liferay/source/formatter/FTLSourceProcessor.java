@@ -179,7 +179,7 @@ public class FTLSourceProcessor extends BaseSourceProcessor {
 			String tabs = matcher.group(2);
 
 			String replacement = StringUtil.removeSubstrings(
-				match, "<#assign ", "<#assign\n", " />", "\n/>");
+				match, "<#assign ", "<#assign\n", " />", "\n/>", "\t/>");
 
 			replacement = StringUtil.removeChar(replacement, CharPool.TAB);
 

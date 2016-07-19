@@ -263,26 +263,6 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList<>
 </aui:script>
 
 <aui:script>
-	function <portlet:namespace />moveSelectionDown(assetEntryOrder) {
-		var form = AUI.$(document.<portlet:namespace />fm);
-
-		form.fm('<%= Constants.CMD %>').val('move-selection-down');
-		form.fm('redirect').val('<%= HtmlUtil.escapeJS(currentURL) %>');
-		form.fm('assetEntryOrder').val(assetEntryOrder);
-
-		submitForm(form);
-	}
-
-	function <portlet:namespace />moveSelectionUp(assetEntryOrder) {
-		var form = AUI.$(document.<portlet:namespace />fm);
-
-		form.fm('<%= Constants.CMD %>').val('move-selection-up');
-		form.fm('redirect').val('<%= HtmlUtil.escapeJS(currentURL) %>');
-		form.fm('assetEntryOrder').val(assetEntryOrder);
-
-		submitForm(form);
-	}
-
 	function <portlet:namespace />saveSelectBoxes() {
 		var Util = Liferay.Util;
 

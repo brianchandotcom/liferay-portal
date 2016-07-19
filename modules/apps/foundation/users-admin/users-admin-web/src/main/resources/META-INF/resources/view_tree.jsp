@@ -18,15 +18,11 @@
 
 <%
 String backURL = GetterUtil.getString(request.getAttribute("view.jsp-backURL"));
-int inactiveUsersCount = GetterUtil.getInteger(request.getAttribute("view.jsp-inactiveUsersCount"));
 Organization organization = (Organization)request.getAttribute("view.jsp-organization");
 long organizationId = GetterUtil.getLong(request.getAttribute("view.jsp-organizationId"));
-long organizationGroupId = GetterUtil.getLong(request.getAttribute("view.jsp-organizationGroupId"));
 PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 String toolbarItem = GetterUtil.getString(request.getAttribute("view.jsp-toolbarItem"));
-int usersCount = GetterUtil.getInteger(request.getAttribute("view.jsp-usersCount"));
 String usersListView = GetterUtil.getString(request.getAttribute("view.jsp-usersListView"));
-String viewUsersRedirect = GetterUtil.getString(request.getAttribute("view.jsp-viewUsersRedirect"));
 
 portletURL.setParameter("mvcRenderCommandName", "/users_admin/view");
 portletURL.setParameter("organizationId", String.valueOf(organizationId));
@@ -36,10 +32,6 @@ portletURL.setParameter("usersListView", usersListView);
 String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 String keywords = ParamUtil.getString(request, "keywords");
 String orderByType = ParamUtil.getString(request, "orderByType", "asc");
-
-if (organization != null) {
-	organizationGroupId = organization.getGroupId();
-}
 
 List<Organization> organizations = new ArrayList<Organization>();
 
@@ -299,8 +291,6 @@ if (organization != null) {
 <%@ include file="/add_menu.jspf" %>
 
 <aui:script>
-	Liferay.Util.toggleSearchContainerButton('#<portlet:namespace />delete', '#<portlet:namespace /><%= searchContainerReference.getId(request, "organizationSearchContainer") %>SearchContainer', document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
-
 	function <portlet:namespace />delete() {
 		<portlet:namespace />deleteOrganizations();
 	}

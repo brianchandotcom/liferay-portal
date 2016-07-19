@@ -838,36 +838,8 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 			kbArticles = new ArrayList<>();
 		}
 
-		Long[][] params = new Long[][] {new Long[] {resourcePrimKey}};
-
-		while ((params = KnowledgeBaseUtil.getParams(params[0])) != null) {
-			List<KBArticle> curKBArticles = null;
-
-			if (status == WorkflowConstants.STATUS_ANY) {
-				curKBArticles = kbArticlePersistence.filterFindByG_P_L(
-					groupId, ArrayUtil.toArray(params[1]), true);
-			}
-			else if (status == WorkflowConstants.STATUS_APPROVED) {
-				curKBArticles = kbArticlePersistence.filterFindByG_P_M(
-					groupId, ArrayUtil.toArray(params[1]), true);
-			}
-			else {
-				curKBArticles = kbArticlePersistence.filterFindByG_P_S(
-					groupId, ArrayUtil.toArray(params[1]), status);
-			}
-
-			kbArticles.addAll(curKBArticles);
-
-			long[] resourcePrimKeys = StringUtil.split(
-				ListUtil.toString(curKBArticles, "resourcePrimKey"), 0L);
-
-			params[0] = ArrayUtil.append(
-				params[0], ArrayUtil.toArray(resourcePrimKeys));
-		}
-
-		if (orderByComparator != null) {
-			kbArticles = ListUtil.sort(kbArticles, orderByComparator);
-		}
+		_doGetAllDescendantKBArticles(
+			kbArticles, groupId, resourcePrimKey, status, orderByComparator);
 
 		return Collections.unmodifiableList(kbArticles);
 	}
@@ -891,6 +863,37 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 		else {
 			KBArticlePermission.check(
 				getPermissionChecker(), resourcePrimKey, KBActionKeys.UPDATE);
+		}
+	}
+
+	private void _doGetAllDescendantKBArticles(
+		List<KBArticle> kbArticles, long groupId, long resourcePrimKey,
+		int status, OrderByComparator<KBArticle> orderByComparator) {
+
+		List<KBArticle> curKBArticles = null;
+
+		if (status == WorkflowConstants.STATUS_ANY) {
+			curKBArticles = kbArticlePersistence.filterFindByG_P_L(
+				groupId, resourcePrimKey, true, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, orderByComparator);
+		}
+		else if (status == WorkflowConstants.STATUS_APPROVED) {
+			curKBArticles = kbArticlePersistence.findByG_P_M(
+				groupId, resourcePrimKey, true, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, orderByComparator);
+		}
+		else {
+			curKBArticles = kbArticlePersistence.findByG_P_S(
+				groupId, resourcePrimKey, status, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, orderByComparator);
+		}
+
+		for (KBArticle curKBArticle : curKBArticles) {
+			kbArticles.add(curKBArticle);
+
+			_doGetAllDescendantKBArticles(
+				kbArticles, groupId, curKBArticle.getResourcePrimKey(), status,
+				orderByComparator);
 		}
 	}
 

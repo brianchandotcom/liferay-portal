@@ -28,6 +28,7 @@ import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.KBArticleLocalServiceUtil;
 import com.liferay.knowledge.base.service.KBCommentLocalServiceUtil;
 import com.liferay.knowledge.base.service.KBFolderLocalServiceUtil;
+import com.liferay.knowledge.base.util.comparator.KBArticlePriorityComparator;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.User;
@@ -49,6 +50,8 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.ratings.kernel.service.RatingsEntryLocalServiceUtil;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalServiceUtil;
+
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -434,6 +437,167 @@ public class KBArticleLocalServiceTest {
 		Assert.assertNull(
 			RatingsStatsLocalServiceUtil.fetchStats(
 				KBArticleConstants.getClassName(), kbArticle.getClassPK()));
+	}
+
+	@Test
+	public void testGetAllDescendantKBArticles() throws Exception {
+		KBArticle parentKBArticle = KBArticleLocalServiceUtil.addKBArticle(
+			_user.getUserId(), _kbFolderClassNameId,
+			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Parent Article",
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), null, null, null, _serviceContext);
+
+		KBArticle childKBArticle = KBArticleLocalServiceUtil.addKBArticle(
+			_user.getUserId(), _kbArticleClassNameId,
+			parentKBArticle.getResourcePrimKey(), "Child Article",
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), null, null, null, _serviceContext);
+
+		KBArticle grandchildKBArticleA = KBArticleLocalServiceUtil.addKBArticle(
+			_user.getUserId(), _kbArticleClassNameId,
+			childKBArticle.getResourcePrimKey(), "Grandchild Article A",
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), null, null, null, _serviceContext);
+
+		KBArticle greatGrandchildKBArticleA =
+			KBArticleLocalServiceUtil.addKBArticle(
+				_user.getUserId(), _kbArticleClassNameId,
+				grandchildKBArticleA.getResourcePrimKey(),
+				"GreatGrandchild Article A", StringUtil.randomString(),
+				StringUtil.randomString(), StringUtil.randomString(), null,
+				null, null, _serviceContext);
+
+		KBArticle grandchildKBArticleB = KBArticleLocalServiceUtil.addKBArticle(
+			_user.getUserId(), _kbArticleClassNameId,
+			childKBArticle.getResourcePrimKey(), "Grandchild Article B",
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), null, null, null, _serviceContext);
+
+		KBArticle greatGrandchildKBArticleB =
+			KBArticleLocalServiceUtil.addKBArticle(
+				_user.getUserId(), _kbArticleClassNameId,
+				grandchildKBArticleB.getResourcePrimKey(),
+				"GreatGrandchild Article B", StringUtil.randomString(),
+				StringUtil.randomString(), StringUtil.randomString(), null,
+				null, null, _serviceContext);
+
+		List<KBArticle> kbArticleAndAllDescendantKBArticles =
+			KBArticleLocalServiceUtil.getAllDescendantKBArticles(
+				parentKBArticle.getResourcePrimKey(),
+				WorkflowConstants.STATUS_APPROVED,
+				new KBArticlePriorityComparator(true));
+
+		Assert.assertEquals(5, kbArticleAndAllDescendantKBArticles.size());
+
+		KBArticle currentChildKBArticle =
+			kbArticleAndAllDescendantKBArticles.get(0);
+		KBArticle currentGrandchildKBArticleA =
+			kbArticleAndAllDescendantKBArticles.get(1);
+		KBArticle currentGreatGrandchildKBArticleA =
+			kbArticleAndAllDescendantKBArticles.get(2);
+		KBArticle currentGrandchildKBArticleB =
+			kbArticleAndAllDescendantKBArticles.get(3);
+		KBArticle currentGreatGrandchildKBArticleB =
+			kbArticleAndAllDescendantKBArticles.get(4);
+
+		Assert.assertEquals(
+			childKBArticle.getResourcePrimKey(),
+			currentChildKBArticle.getResourcePrimKey());
+		Assert.assertEquals(
+			grandchildKBArticleA.getResourcePrimKey(),
+			currentGrandchildKBArticleA.getResourcePrimKey());
+		Assert.assertEquals(
+			greatGrandchildKBArticleA.getResourcePrimKey(),
+			currentGreatGrandchildKBArticleA.getResourcePrimKey());
+		Assert.assertEquals(
+			grandchildKBArticleB.getResourcePrimKey(),
+			currentGrandchildKBArticleB.getResourcePrimKey());
+		Assert.assertEquals(
+			greatGrandchildKBArticleB.getResourcePrimKey(),
+			currentGreatGrandchildKBArticleB.getResourcePrimKey());
+	}
+
+	@Test
+	public void testGetKBArticleAndAllDescendantKBArticles() throws Exception {
+		KBArticle parentKBArticle = KBArticleLocalServiceUtil.addKBArticle(
+			_user.getUserId(), _kbFolderClassNameId,
+			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Parent Article",
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), null, null, null, _serviceContext);
+
+		KBArticle childKBArticle = KBArticleLocalServiceUtil.addKBArticle(
+			_user.getUserId(), _kbArticleClassNameId,
+			parentKBArticle.getResourcePrimKey(), "Child Article",
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), null, null, null, _serviceContext);
+
+		KBArticle grandchildKBArticleA = KBArticleLocalServiceUtil.addKBArticle(
+			_user.getUserId(), _kbArticleClassNameId,
+			childKBArticle.getResourcePrimKey(), "Grandchild Article A",
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), null, null, null, _serviceContext);
+
+		KBArticle greatGrandchildKBArticleA =
+			KBArticleLocalServiceUtil.addKBArticle(
+				_user.getUserId(), _kbArticleClassNameId,
+				grandchildKBArticleA.getResourcePrimKey(),
+				"GreatGrandchild Article A", StringUtil.randomString(),
+				StringUtil.randomString(), StringUtil.randomString(), null,
+				null, null, _serviceContext);
+
+		KBArticle grandchildKBArticleB = KBArticleLocalServiceUtil.addKBArticle(
+			_user.getUserId(), _kbArticleClassNameId,
+			childKBArticle.getResourcePrimKey(), "Grandchild Article B",
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), null, null, null, _serviceContext);
+
+		KBArticle greatGrandchildKBArticleB =
+			KBArticleLocalServiceUtil.addKBArticle(
+				_user.getUserId(), _kbArticleClassNameId,
+				grandchildKBArticleB.getResourcePrimKey(),
+				"GreatGrandchild Article B", StringUtil.randomString(),
+				StringUtil.randomString(), StringUtil.randomString(), null,
+				null, null, _serviceContext);
+
+		List<KBArticle> kbArticleAndAllDescendantKBArticles =
+			KBArticleLocalServiceUtil.getKBArticleAndAllDescendantKBArticles(
+				parentKBArticle.getResourcePrimKey(),
+				WorkflowConstants.STATUS_APPROVED,
+				new KBArticlePriorityComparator(true));
+
+		Assert.assertEquals(6, kbArticleAndAllDescendantKBArticles.size());
+
+		KBArticle currentParentKBArticle =
+			kbArticleAndAllDescendantKBArticles.get(0);
+		KBArticle currentChildKBArticle =
+			kbArticleAndAllDescendantKBArticles.get(1);
+		KBArticle currentGrandchildKBArticleA =
+			kbArticleAndAllDescendantKBArticles.get(2);
+		KBArticle currentGreatGrandchildKBArticleA =
+			kbArticleAndAllDescendantKBArticles.get(3);
+		KBArticle currentGrandchildKBArticleB =
+			kbArticleAndAllDescendantKBArticles.get(4);
+		KBArticle currentGreatGrandchildKBArticleB =
+			kbArticleAndAllDescendantKBArticles.get(5);
+
+		Assert.assertEquals(
+			parentKBArticle.getResourcePrimKey(),
+			currentParentKBArticle.getResourcePrimKey());
+		Assert.assertEquals(
+			childKBArticle.getResourcePrimKey(),
+			currentChildKBArticle.getResourcePrimKey());
+		Assert.assertEquals(
+			grandchildKBArticleA.getResourcePrimKey(),
+			currentGrandchildKBArticleA.getResourcePrimKey());
+		Assert.assertEquals(
+			greatGrandchildKBArticleA.getResourcePrimKey(),
+			currentGreatGrandchildKBArticleA.getResourcePrimKey());
+		Assert.assertEquals(
+			grandchildKBArticleB.getResourcePrimKey(),
+			currentGrandchildKBArticleB.getResourcePrimKey());
+		Assert.assertEquals(
+			greatGrandchildKBArticleB.getResourcePrimKey(),
+			currentGreatGrandchildKBArticleB.getResourcePrimKey());
 	}
 
 	@Test(expected = KBArticleParentException.class)

@@ -18,7 +18,6 @@
 
 <%
 List<AssetRendererFactory<?>> classTypesAssetRendererFactories = (List<AssetRendererFactory<?>>)request.getAttribute("configuration.jsp-classTypesAssetRendererFactories");
-String selectScope = (String)request.getAttribute("configuration.jsp-selectScope");
 %>
 
 <div class="portlet-configuration-body-content">
@@ -33,10 +32,6 @@ String selectScope = (String)request.getAttribute("configuration.jsp-selectScope
 			<div class="container-fluid-1280">
 				<aui:fieldset-group markupView="lexicon">
 					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" id="assetPublisherSourcePanel" label="source">
-						<aui:fieldset cssClass='<%= assetPublisherDisplayContext.isShowScopeSelector() ? StringPool.BLANK : "hide" %>' label="scope">
-							<%= selectScope %>
-						</aui:fieldset>
-
 						<aui:fieldset label="asset-entry-type">
 
 							<%

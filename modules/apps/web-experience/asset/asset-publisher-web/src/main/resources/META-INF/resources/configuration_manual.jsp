@@ -16,10 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-String selectScope = (String)request.getAttribute("configuration.jsp-selectScope");
-%>
-
 <div class="portlet-configuration-body-content">
 	<liferay-ui:tabs
 		formName="fm"
@@ -27,17 +23,7 @@ String selectScope = (String)request.getAttribute("configuration.jsp-selectScope
 		param="tabs2"
 		refresh="<%= false %>"
 		type="nav-tabs-default tabs"
-	>
-		<liferay-ui:section>
-			<div class="container-fluid-1280">
-				<aui:fieldset-group markupView="lexicon">
-					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="scope">
-						<%= selectScope %>
-					</aui:fieldset>
-				</aui:fieldset-group>
-			</div>
-		</liferay-ui:section>
-	</liferay-ui:tabs>
+	/>
 </div>
 
 <aui:button-row>

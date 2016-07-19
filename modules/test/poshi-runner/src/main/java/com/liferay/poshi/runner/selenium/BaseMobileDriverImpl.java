@@ -1665,7 +1665,7 @@ public abstract class BaseMobileDriverImpl
 	public void waitForElementNotPresent(String locator, String timeout)
 		throws Exception {
 
-		throw new UnsupportedOperationException();
+		LiferaySeleniumHelper.waitForElementNotPresent(this, locator, timeout);
 	}
 
 	@Override
@@ -1677,7 +1677,7 @@ public abstract class BaseMobileDriverImpl
 	public void waitForElementPresent(String locator, String timeout)
 		throws Exception {
 
-		throw new UnsupportedOperationException();
+		LiferaySeleniumHelper.waitForElementPresent(this, locator, timeout);
 	}
 
 	@Override

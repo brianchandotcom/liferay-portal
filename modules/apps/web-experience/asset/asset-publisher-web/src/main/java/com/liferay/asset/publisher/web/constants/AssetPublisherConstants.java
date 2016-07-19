@@ -19,6 +19,13 @@ package com.liferay.asset.publisher.web.constants;
  */
 public class AssetPublisherConstants {
 
+	public static final String CATEGORY_KEY_ASSET_SELECTION = "asset-selection";
+
+	public static final String CATEGORY_KEY_DISPLAY_SETTINGS =
+		"display-settings";
+
+	public static final String CATEGORY_KEY_SUBSCRIPTIONS = "subscriptions";
+
 	public static final String FORM_NAVIGATOR_ID_CONFIGURATION =
 		"asset.publisher.configuration";
 

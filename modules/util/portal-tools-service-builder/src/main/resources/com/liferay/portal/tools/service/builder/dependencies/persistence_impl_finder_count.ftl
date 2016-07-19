@@ -1,4 +1,4 @@
-<#assign finderColsList = finder.getColumns()>
+<#assign finderColsList = finder.getColumns() />
 
 /**
  * Returns the number of ${entity.humanNames} where ${finder.getHumanConditions(false)}.
@@ -250,11 +250,11 @@ public int countBy${finder.name}(
 
 			query.append(_FILTER_SQL_COUNT_${entity.alias?upper_case}_WHERE);
 
-			<#assign sqlQuery = true>
+			<#assign sqlQuery = true />
 
 			<#include "persistence_impl_finder_cols.ftl">
 
-			<#assign sqlQuery = false>
+			<#assign sqlQuery = false />
 
 			String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(), ${entity.name}.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN<#if finder.hasColumn("groupId")>, groupId</#if>);
 
@@ -409,11 +409,11 @@ public int countBy${finder.name}(
 
 				query.append(_FILTER_SQL_COUNT_${entity.alias?upper_case}_WHERE);
 
-				<#assign sqlQuery = true>
+				<#assign sqlQuery = true />
 
 				<#include "persistence_impl_finder_arrayable_cols.ftl">
 
-				<#assign sqlQuery = false>
+				<#assign sqlQuery = false />
 
 				String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(), ${entity.name}.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN
 

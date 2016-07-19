@@ -7,5 +7,5 @@ Autocomplete is also available and can be invoked by typing "${".
 
 Use the following code snippet to retrieve records:
 
-<#assign records = ddlDisplayTemplateHelper.getRecords(reserved_record_set_id)>
+<#assign records = ddlDisplayTemplateHelper.getRecords(reserved_record_set_id) />
 -->

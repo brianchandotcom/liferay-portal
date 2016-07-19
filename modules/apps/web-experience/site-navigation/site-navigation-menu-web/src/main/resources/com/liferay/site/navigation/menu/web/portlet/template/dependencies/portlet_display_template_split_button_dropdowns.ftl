@@ -25,7 +25,7 @@
 				</#if>
 
 				<#if showChildren>
-					<#assign toggle_text>
+					<#assign toggle_text />
 						<@liferay.language key="toggle" />
 					</#assign>
 

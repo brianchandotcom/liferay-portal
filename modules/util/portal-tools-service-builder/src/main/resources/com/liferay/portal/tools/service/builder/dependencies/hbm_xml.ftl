@@ -13,7 +13,7 @@
 		>
 			<#if entity.hasCompoundPK()>
 				<composite-id class="${apiPackagePath}.service.persistence.${entity.name}PK" name="primaryKey">
-					<#assign pkList = entity.getPKList()>
+					<#assign pkList = entity.getPKList() />
 
 					<#list pkList as column>
 						<key-property
@@ -40,7 +40,7 @@
 					</#list>
 				</composite-id>
 			<#else>
-				<#assign column = entity.getPKList()?first>
+				<#assign column = entity.getPKList()?first />
 
 				<id
 					<#if serviceBuilder.isHBMCamelCasePropertyAccessor(column.name)>
@@ -57,13 +57,13 @@
 					>
 
 					<#if column.idType??>
-						<#assign class = serviceBuilder.getGeneratorClass("${column.idType}")>
+						<#assign class = serviceBuilder.getGeneratorClass("${column.idType}") />
 
 						<#if class == "class">
-							<#assign class = column.idParam>
+							<#assign class = column.idParam />
 						</#if>
 					<#else>
-						<#assign class = "assigned">
+						<#assign class = "assigned" />
 					</#if>
 
 					<generator class="${class}"
@@ -83,9 +83,9 @@
 
 			<#list entity.columnList as column>
 				<#if column.EJBName??>
-					<#assign ejbName = true>
+					<#assign ejbName = true />
 				<#else>
-					<#assign ejbName = false>
+					<#assign ejbName = false />
 				</#if>
 
 				<#if !column.isPrimary() && !column.isCollection() && !ejbName && ((column.type != "Blob") || ((column.type == "Blob") && !column.lazy)) && (column.name != "mvccVersion")>
@@ -131,7 +131,7 @@
 
 					lazy="true" name="${apiPackagePath}.model.${entity.name}${blobColumn.methodName}BlobModel" table="${entity.table}"
 				>
-					<#assign column = entity.getPKList()?first>
+					<#assign column = entity.getPKList()?first />
 
 					<id column="${column.DBName}" name="${column.name}">
 						<generator class="foreign">

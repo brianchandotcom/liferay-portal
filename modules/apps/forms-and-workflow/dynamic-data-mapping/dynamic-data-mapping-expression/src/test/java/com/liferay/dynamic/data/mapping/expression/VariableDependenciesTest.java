@@ -29,8 +29,9 @@ public class VariableDependenciesTest {
 
 	@Test
 	public void testVariableDependenciesMap() throws Exception {
-		DDMExpression<Long> ddmExpression =
-			_ddmExpressionFactory.createLongDDMExpression("var1 + var2 + var3");
+		DDMExpression<Number> ddmExpression =
+			_ddmExpressionFactory.createNumberDDMExpression(
+				"var1 + var2 + var3");
 
 		ddmExpression.setLongVariableValue("var1", 5l);
 		ddmExpression.setExpressionStringVariableValue("var2", "var1 + 3");

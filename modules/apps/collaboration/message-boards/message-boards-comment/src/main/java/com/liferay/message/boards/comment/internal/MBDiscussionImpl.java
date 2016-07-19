@@ -24,10 +24,16 @@ public class MBDiscussionImpl implements Discussion {
 
 	public MBDiscussionImpl(
 		DiscussionComment rootDiscussionComment,
-		boolean maxCommentsLimitExceeded) {
+		boolean maxCommentsLimitExceeded, int discussionCommentsCount) {
 
 		_rootDiscussionComment = rootDiscussionComment;
 		_maxCommentsLimitExceeded = maxCommentsLimitExceeded;
+		_discussionCommentsCount = discussionCommentsCount;
+	}
+
+	@Override
+	public int getDiscussionCommentsCount() {
+		return _discussionCommentsCount;
 	}
 
 	@Override
@@ -40,6 +46,7 @@ public class MBDiscussionImpl implements Discussion {
 		return _maxCommentsLimitExceeded;
 	}
 
+	private final int _discussionCommentsCount;
 	private final boolean _maxCommentsLimitExceeded;
 	private final DiscussionComment _rootDiscussionComment;
 

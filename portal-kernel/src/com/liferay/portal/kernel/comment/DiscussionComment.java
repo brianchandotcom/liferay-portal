@@ -28,14 +28,27 @@ import java.util.List;
 @ProviderType
 public interface DiscussionComment extends Comment {
 
+	public List<DiscussionComment> getDescendantComments();
+
+	public int getDescendantCommentsCount();
+
 	public DiscussionComment getParentComment() throws PortalException;
 
 	public RatingsEntry getRatingsEntry();
 
 	public RatingsStats getRatingsStats();
 
+	/**
+	 * @deprecated As of 7.0.2, replaced by {@link #getDescendantComments()}
+	 */
+	@Deprecated
 	public List<DiscussionComment> getThreadComments();
 
+	/**
+	 * @deprecated As of 7.0.2, replaced by {@link
+	 *             #getDescendantCommentsCount()}
+	 */
+	@Deprecated
 	public int getThreadCommentsCount();
 
 	public DiscussionCommentIterator getThreadDiscussionCommentIterator();

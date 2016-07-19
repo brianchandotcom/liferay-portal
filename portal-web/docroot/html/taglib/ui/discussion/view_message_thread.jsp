@@ -299,7 +299,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 		</div>
 
 		<%
-		for (DiscussionComment curDiscussionComment : discussionComment.getThreadComments()) {
+		for (DiscussionComment curDiscussionComment : discussionComment.getDescendantComments()) {
 			request.setAttribute("liferay-ui:discussion:depth", depth + 1);
 			request.setAttribute("liferay-ui:discussion:discussionComment", curDiscussionComment);
 		%>

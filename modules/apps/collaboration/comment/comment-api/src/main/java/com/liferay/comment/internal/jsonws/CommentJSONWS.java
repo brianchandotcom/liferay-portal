@@ -34,7 +34,8 @@ public class CommentJSONWS {
 		setCreateDate(discussionComment.getCreateDate());
 		setModifiedDate(discussionComment.getModifiedDate());
 		setParentCommentId(discussionComment.getParentCommentId());
-		setThreadCommentsCount(discussionComment.getThreadCommentsCount());
+		setDescendantCommentsCount(
+			discussionComment.getDescendantCommentsCount());
 		setUserId(discussionComment.getUserId());
 		setUserName(discussionComment.getUserName());
 	}
@@ -55,6 +56,11 @@ public class CommentJSONWS {
 	}
 
 	@JSON
+	public int getDescendantCommentsCount() {
+		return _descendantCommentsCount;
+	}
+
+	@JSON
 	public Date getModifiedDate() {
 		return _modifiedDate;
 	}
@@ -62,11 +68,6 @@ public class CommentJSONWS {
 	@JSON
 	public long getParentCommentId() {
 		return _parentCommentId;
-	}
-
-	@JSON
-	public int getThreadCommentsCount() {
-		return _threadCommentsCount;
 	}
 
 	@JSON
@@ -91,16 +92,16 @@ public class CommentJSONWS {
 		_createDate = createDate;
 	}
 
+	public void setDescendantCommentsCount(int descendantCommentsCount) {
+		_descendantCommentsCount = descendantCommentsCount;
+	}
+
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
 	}
 
 	public void setParentCommentId(long parentCommentId) {
 		_parentCommentId = parentCommentId;
-	}
-
-	public void setThreadCommentsCount(int threadCommentsCount) {
-		_threadCommentsCount = threadCommentsCount;
 	}
 
 	public void setUserId(long userId) {
@@ -114,9 +115,9 @@ public class CommentJSONWS {
 	private String _body;
 	private long _commentId;
 	private Date _createDate;
+	private int _descendantCommentsCount;
 	private Date _modifiedDate;
 	private long _parentCommentId;
-	private int _threadCommentsCount;
 	private long _userId;
 	private String _userName;
 

@@ -14,10 +14,15 @@
 
 package com.liferay.portal.kernel.comment;
 
+import aQute.bnd.annotation.ProviderType;
+
 /**
  * @author Adolfo Pérez
  */
+@ProviderType
 public interface Discussion {
+
+	public int getDiscussionCommentsCount();
 
 	public DiscussionComment getRootDiscussionComment();
 

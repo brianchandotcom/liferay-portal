@@ -28,6 +28,6 @@ Group liveGroup = (Group)request.getAttribute("site.liveGroup");
 
 <liferay-ui:asset-tags-error />
 
-<aui:input name="categories" type="assetCategories" />
+<liferay-asset:asset-categories-selector className="<%= Group.class.getName() %>" classPK="<%= (liveGroup != null) ? liveGroup.getGroupId() : 0 %>" />
 
-<aui:input name="tags" type="assetTags" />
+<liferay-asset:asset-tags-selector className="<%= Group.class.getName() %>" classPK="<%= (liveGroup != null) ? liveGroup.getGroupId() : 0 %>" />

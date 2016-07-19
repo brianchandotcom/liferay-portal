@@ -81,6 +81,10 @@ public class UserImportMessageListener
 			LDAPImportConfiguration ldapImportConfiguration =
 				_ldapImportConfigurationProvider.getConfiguration(companyId);
 
+			if (!ldapImportConfiguration.importEnabled()) {
+				continue;
+			}
+
 			if (time >= ldapImportConfiguration.importInterval()) {
 				_ldapUserImporter.importUsers(companyId);
 			}

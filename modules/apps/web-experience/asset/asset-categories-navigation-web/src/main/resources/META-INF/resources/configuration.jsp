@@ -24,38 +24,42 @@
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
-	<aui:fieldset-group markupView="lexicon">
-		<aui:fieldset>
-			<div class="display-template">
-				<liferay-ddm:template-selector
-					className="<%= AssetCategory.class.getName() %>"
-					displayStyle="<%= assetCategoriesNavigationPortletInstanceConfiguration.displayStyle() %>"
-					displayStyleGroupId="<%= assetCategoriesNavigationDisplayContext.getDisplayStyleGroupId() %>"
-					refreshURL="<%= configurationRenderURL %>"
-					showEmptyOption="<%= true %>"
-				/>
-			</div>
+	<div class="portlet-configuration-body-content">
+		<div class="container-fluid-1280">
+			<aui:fieldset-group markupView="lexicon">
+				<aui:fieldset>
+					<div class="display-template">
+						<liferay-ddm:template-selector
+							className="<%= AssetCategory.class.getName() %>"
+							displayStyle="<%= assetCategoriesNavigationPortletInstanceConfiguration.displayStyle() %>"
+							displayStyleGroupId="<%= assetCategoriesNavigationDisplayContext.getDisplayStyleGroupId() %>"
+							refreshURL="<%= configurationRenderURL %>"
+							showEmptyOption="<%= true %>"
+						/>
+					</div>
 
-			<aui:select label="vocabularies" name="preferences--allAssetVocabularies--">
-				<aui:option label="all" selected="<%= assetCategoriesNavigationPortletInstanceConfiguration.allAssetVocabularies() %>" value="<%= true %>" />
-				<aui:option label="filter[action]" selected="<%= !assetCategoriesNavigationPortletInstanceConfiguration.allAssetVocabularies() %>" value="<%= false %>" />
-			</aui:select>
+					<aui:select label="vocabularies" name="preferences--allAssetVocabularies--">
+						<aui:option label="all" selected="<%= assetCategoriesNavigationPortletInstanceConfiguration.allAssetVocabularies() %>" value="<%= true %>" />
+						<aui:option label="filter[action]" selected="<%= !assetCategoriesNavigationPortletInstanceConfiguration.allAssetVocabularies() %>" value="<%= false %>" />
+					</aui:select>
 
-			<aui:input name="preferences--assetVocabularyIds--" type="hidden" />
+					<aui:input name="preferences--assetVocabularyIds--" type="hidden" />
 
-			<div class="<%= assetCategoriesNavigationPortletInstanceConfiguration.allAssetVocabularies() ? "hide" : "" %>" id="<portlet:namespace />assetVocabulariesBoxes">
-				<liferay-ui:input-move-boxes
-					leftBoxName="currentAssetVocabularyIds"
-					leftList="<%= assetCategoriesNavigationDisplayContext.getCurrentVocabularyNames() %>"
-					leftReorder="<%= Boolean.TRUE.toString() %>"
-					leftTitle="current"
-					rightBoxName="availableAssetVocabularyIds"
-					rightList="<%= assetCategoriesNavigationDisplayContext.getAvailableVocabularyNames() %>"
-					rightTitle="available"
-				/>
-			</div>
-		</aui:fieldset>
-	</aui:fieldset-group>
+					<div class="<%= assetCategoriesNavigationPortletInstanceConfiguration.allAssetVocabularies() ? "hide" : "" %>" id="<portlet:namespace />assetVocabulariesBoxes">
+						<liferay-ui:input-move-boxes
+							leftBoxName="currentAssetVocabularyIds"
+							leftList="<%= assetCategoriesNavigationDisplayContext.getCurrentVocabularyNames() %>"
+							leftReorder="<%= Boolean.TRUE.toString() %>"
+							leftTitle="current"
+							rightBoxName="availableAssetVocabularyIds"
+							rightList="<%= assetCategoriesNavigationDisplayContext.getAvailableVocabularyNames() %>"
+							rightTitle="available"
+						/>
+					</div>
+				</aui:fieldset>
+			</aui:fieldset-group>
+		</div>
+	</div>
 
 	<aui:button-row>
 		<aui:button cssClass="btn-lg" type="submit" />

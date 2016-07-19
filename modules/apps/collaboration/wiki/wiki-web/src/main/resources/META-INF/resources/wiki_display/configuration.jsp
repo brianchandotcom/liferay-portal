@@ -32,82 +32,86 @@ boolean nodeInGroup = false;
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
-	<liferay-ui:error exception="<%= NoSuchNodeException.class %>" message="the-node-could-not-be-found" />
+	<div class="portlet-configuration-body-content">
+		<div class="container-fluid-1280">
+			<liferay-ui:error exception="<%= NoSuchNodeException.class %>" message="the-node-could-not-be-found" />
 
-	<aui:fieldset-group markupView="lexicon">
-		<aui:fieldset>
-			<c:choose>
-				<c:when test="<%= !nodes.isEmpty() %>">
-					<aui:select label="node" name="preferences--nodeId--">
-						<aui:option value="" />
+			<aui:fieldset-group markupView="lexicon">
+				<aui:fieldset>
+					<c:choose>
+						<c:when test="<%= !nodes.isEmpty() %>">
+							<aui:select label="node" name="preferences--nodeId--">
+								<aui:option value="" />
 
-						<%
-						for (WikiNode node : nodes) {
-							node = node.toEscapedModel();
+								<%
+								for (WikiNode node : nodes) {
+									node = node.toEscapedModel();
 
-							if (nodeId == node.getNodeId()) {
-								nodeInGroup = true;
-							}
-						%>
+									if (nodeId == node.getNodeId()) {
+										nodeInGroup = true;
+									}
+								%>
 
-							<aui:option label="<%= node.getName() %>" selected="<%= nodeId == node.getNodeId() %>" value="<%= node.getNodeId() %>" />
+									<aui:option label="<%= node.getName() %>" selected="<%= nodeId == node.getNodeId() %>" value="<%= node.getNodeId() %>" />
 
-						<%
-						}
-						%>
+								<%
+								}
+								%>
 
-					</aui:select>
-				</c:when>
-				<c:otherwise>
-					<div class="alert alert-info">
-						<liferay-ui:message key="there-are-no-available-nodes-for-selection" />
-					</div>
-				</c:otherwise>
-			</c:choose>
+							</aui:select>
+						</c:when>
+						<c:otherwise>
+							<div class="alert alert-info">
+								<liferay-ui:message key="there-are-no-available-nodes-for-selection" />
+							</div>
+						</c:otherwise>
+					</c:choose>
 
-			<c:choose>
-				<c:when test="<%= nodeInGroup %>">
-					<div id="<portlet:namespace />pageSelectorContainer">
-						<aui:select label="page" name="preferences--title--">
+					<c:choose>
+						<c:when test="<%= nodeInGroup %>">
+							<div id="<portlet:namespace />pageSelectorContainer">
+								<aui:select label="page" name="preferences--title--">
 
-							<%
-							int total = WikiPageLocalServiceUtil.getPagesCount(nodeId, true);
+									<%
+									int total = WikiPageLocalServiceUtil.getPagesCount(nodeId, true);
 
-							List pages = WikiPageLocalServiceUtil.getPages(nodeId, true, 0, total);
+									List pages = WikiPageLocalServiceUtil.getPages(nodeId, true, 0, total);
 
-							for (int i = 0; i < pages.size(); i++) {
-								WikiPage wikiPage = (WikiPage)pages.get(i);
-							%>
+									for (int i = 0; i < pages.size(); i++) {
+										WikiPage wikiPage = (WikiPage)pages.get(i);
+									%>
 
-								<aui:option label="<%= wikiPage.getTitle() %>" selected="<%= wikiPage.getTitle().equals(title) || (Validator.isNull(title) && wikiPage.getTitle().equals(wikiGroupServiceConfiguration.frontPageName())) %>" />
+										<aui:option label="<%= wikiPage.getTitle() %>" selected="<%= wikiPage.getTitle().equals(title) || (Validator.isNull(title) && wikiPage.getTitle().equals(wikiGroupServiceConfiguration.frontPageName())) %>" />
 
-							<%
-							}
-							%>
+									<%
+									}
+									%>
 
-						</aui:select>
-					</div>
+								</aui:select>
+							</div>
 
-					<aui:script sandbox="<%= true %>">
-						var nodeIdSelect = $('#<portlet:namespace/>nodeId');
-						var pageSelectorContainer = $('#<portlet:namespace />pageSelectorContainer');
+							<aui:script sandbox="<%= true %>">
+								var nodeIdSelect = $('#<portlet:namespace/>nodeId');
+								var pageSelectorContainer = $('#<portlet:namespace />pageSelectorContainer');
 
-						var nodeIdValue = nodeIdSelect.val();
+								var nodeIdValue = nodeIdSelect.val();
 
-						nodeIdSelect.on(
-							'change',
-							function() {
-								pageSelectorContainer.toggleClass('hide', nodeIdSelect.val() !== nodeIdValue);
-							}
-						);
-					</aui:script>
-				</c:when>
-				<c:otherwise>
-					<aui:input name="preferences--title--" type="hidden" value="<%= wikiGroupServiceConfiguration.frontPageName() %>" />
-				</c:otherwise>
-			</c:choose>
-		</aui:fieldset>
-	</aui:fieldset-group>
+								nodeIdSelect.on(
+									'change',
+									function() {
+										pageSelectorContainer.toggleClass('hide', nodeIdSelect.val() !== nodeIdValue);
+									}
+								);
+							</aui:script>
+						</c:when>
+						<c:otherwise>
+							<aui:input name="preferences--title--" type="hidden" value="<%= wikiGroupServiceConfiguration.frontPageName() %>" />
+						</c:otherwise>
+					</c:choose>
+				</aui:fieldset>
+			</aui:fieldset-group>
+		</div>
+	</div>
 
 	<aui:button-row>
 		<aui:button cssClass="btn-lg" disabled="<%= nodes.isEmpty() %>" type="submit" />

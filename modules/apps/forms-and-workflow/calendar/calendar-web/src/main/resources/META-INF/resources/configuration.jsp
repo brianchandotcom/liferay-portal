@@ -21,24 +21,28 @@
 <aui:form action="<%= configurationActionURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 
-	<liferay-ui:tabs
-		names='<%= "user-settings,display-settings,rss" %>'
-		param="tabs2"
-		refresh="<%= false %>"
-		type="tabs nav-tabs-default"
-	>
-		<liferay-ui:section>
-			<%@ include file="/configuration/user_settings.jspf" %>
-		</liferay-ui:section>
+	<div class="portlet-configuration-body-content">
+		<div class="container-fluid-1280">
+			<liferay-ui:tabs
+				names='<%= "user-settings,display-settings,rss" %>'
+				param="tabs2"
+				refresh="<%= false %>"
+				type="tabs nav-tabs-default"
+			>
+				<liferay-ui:section>
+					<%@ include file="/configuration/user_settings.jspf" %>
+				</liferay-ui:section>
 
-		<liferay-ui:section>
-			<%@ include file="/configuration/display_settings.jspf" %>
-		</liferay-ui:section>
+				<liferay-ui:section>
+					<%@ include file="/configuration/display_settings.jspf" %>
+				</liferay-ui:section>
 
-		<liferay-ui:section>
-			<%@ include file="/configuration/rss.jspf" %>
-		</liferay-ui:section>
-	</liferay-ui:tabs>
+				<liferay-ui:section>
+					<%@ include file="/configuration/rss.jspf" %>
+				</liferay-ui:section>
+			</liferay-ui:tabs>
+		</div>
+	</div>
 
 	<aui:button-row>
 		<aui:button cssClass="btn-lg" type="submit" />

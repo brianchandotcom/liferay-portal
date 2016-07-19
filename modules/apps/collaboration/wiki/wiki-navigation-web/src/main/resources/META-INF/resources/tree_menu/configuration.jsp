@@ -25,38 +25,42 @@ List<WikiNode> wikiNodes = WikiNodeLocalServiceUtil.getNodes(scopeGroupId);
 <aui:form action="<%= configurationActionURL %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 
-	<liferay-ui:error exception="<%= NoSuchNodeException.class %>" message="the-node-could-not-be-found" />
+	<div class="portlet-configuration-body-content">
+		<div class="container-fluid-1280">
+			<liferay-ui:error exception="<%= NoSuchNodeException.class %>" message="the-node-could-not-be-found" />
 
-	<aui:fieldset>
-		<aui:select label="node" name="preferences--selNodeId--" showEmptyOption="<%= true %>">
+			<aui:fieldset>
+				<aui:select label="node" name="preferences--selNodeId--" showEmptyOption="<%= true %>">
 
-			<%
-			for (WikiNode wikiNode : wikiNodes) {
-			%>
+					<%
+					for (WikiNode wikiNode : wikiNodes) {
+					%>
 
-				<aui:option label="<%= wikiNode.getName() %>" selected="<%= selNodeId == wikiNode.getNodeId() %>" value="<%= wikiNode.getNodeId() %>" />
+						<aui:option label="<%= wikiNode.getName() %>" selected="<%= selNodeId == wikiNode.getNodeId() %>" value="<%= wikiNode.getNodeId() %>" />
 
-			<%
-			}
-			%>
+					<%
+					}
+					%>
 
-		</aui:select>
+				</aui:select>
 
-		<aui:select name="preferences--depth--">
-			<aui:option label="all" selected="<%= depth == WikiNavigationConstants.DEPTH_ALL %>" value="<%= WikiNavigationConstants.DEPTH_ALL %>" />
+				<aui:select name="preferences--depth--">
+					<aui:option label="all" selected="<%= depth == WikiNavigationConstants.DEPTH_ALL %>" value="<%= WikiNavigationConstants.DEPTH_ALL %>" />
 
-			<%
-			for (int i = 1; i < 6; i++) {
-			%>
+					<%
+					for (int i = 1; i < 6; i++) {
+					%>
 
-				<aui:option label="<%= i %>" selected="<%= depth == i %>" />
+						<aui:option label="<%= i %>" selected="<%= depth == i %>" />
 
-			<%
-			}
-			%>
+					<%
+					}
+					%>
 
-		</aui:select>
-	</aui:fieldset>
+				</aui:select>
+			</aui:fieldset>
+		</div>
+	</div>
 
 	<aui:button-row>
 		<aui:button cssClass="btn-lg" type="submit" />

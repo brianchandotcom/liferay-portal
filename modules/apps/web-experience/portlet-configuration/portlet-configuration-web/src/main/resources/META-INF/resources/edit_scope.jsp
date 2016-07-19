@@ -53,10 +53,6 @@ for (Layout scopeGroupLayout : LayoutLocalServiceUtil.getScopeGroupLayouts(layou
 }
 %>
 
-<liferay-util:include page="/tabs1.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="tabs1" value="scope" />
-</liferay-util:include>
-
 <liferay-portlet:actionURL name="editScope" var="setScopeURL">
 	<portlet:param name="mvcPath" value="/edit_scope.jsp" />
 	<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -64,44 +60,54 @@ for (Layout scopeGroupLayout : LayoutLocalServiceUtil.getScopeGroupLayouts(layou
 	<portlet:param name="portletConfiguration" value="<%= Boolean.TRUE.toString() %>" />
 </liferay-portlet:actionURL>
 
-<aui:form action="<%= setScopeURL %>" cssClass="container-fluid-1280">
-	<aui:fieldset-group markupView="lexicon">
-		<aui:fieldset>
-			<aui:select label="scope" name="scope">
+<div class="portlet-configuration-edit-scope">
+	<aui:form action="<%= setScopeURL %>" cssClass="form">
+		<div class="portlet-configuration-body-content">
+			<liferay-util:include page="/tabs1.jsp" servletContext="<%= application %>">
+				<liferay-util:param name="tabs1" value="scope" />
+			</liferay-util:include>
 
-				<%
-				for (Group availableGroup : availableGroups) {
-					String availableGroupScopeType = StringPool.BLANK;
-					String availableGroupScopeLayoutUuid = StringPool.BLANK;
+			<div class="container-fluid-1280">
+				<aui:fieldset-group markupView="lexicon">
+					<aui:fieldset>
+						<aui:select label="scope" name="scope">
 
-					if (availableGroup.isCompany()) {
-						availableGroupScopeType = "company";
-					}
-					else if (availableGroup.isLayout()) {
-						availableGroupScopeType = "layout";
+							<%
+							for (Group availableGroup : availableGroups) {
+								String availableGroupScopeType = StringPool.BLANK;
+								String availableGroupScopeLayoutUuid = StringPool.BLANK;
 
-						Layout availableGroupLayout = LayoutLocalServiceUtil.getLayout(availableGroup.getClassPK());
+								if (availableGroup.isCompany()) {
+									availableGroupScopeType = "company";
+								}
+								else if (availableGroup.isLayout()) {
+									availableGroupScopeType = "layout";
 
-						availableGroupScopeLayoutUuid = availableGroupLayout.getUuid();
-					}
+									Layout availableGroupLayout = LayoutLocalServiceUtil.getLayout(availableGroup.getClassPK());
 
-					String value = availableGroupScopeType + "," + availableGroupScopeLayoutUuid;
-				%>
+									availableGroupScopeLayoutUuid = availableGroupLayout.getUuid();
+								}
 
-					<aui:option label="<%= HtmlUtil.escape(availableGroup.getDescriptiveName(locale)) %>" value="<%= value %>" />
+								String value = availableGroupScopeType + "," + availableGroupScopeLayoutUuid;
+							%>
 
-				<%
-				}
-				%>
+								<aui:option label="<%= HtmlUtil.escape(availableGroup.getDescriptiveName(locale)) %>" value="<%= value %>" />
 
-				<c:if test="<%= !layout.hasScopeGroup() %>">
-					<aui:option label='<%= HtmlUtil.escape(layout.getName(locale)) + " (" + LanguageUtil.get(request, "create-new") + ")" %>' value='<%= "layout," + layout.getUuid() %>' />
-				</c:if>
-			</aui:select>
-		</aui:fieldset>
-	</aui:fieldset-group>
+							<%
+							}
+							%>
 
-	<aui:button-row>
-		<aui:button cssClass="btn-lg" type="submit" />
-	</aui:button-row>
-</aui:form>
+							<c:if test="<%= !layout.hasScopeGroup() %>">
+								<aui:option label='<%= HtmlUtil.escape(layout.getName(locale)) + " (" + LanguageUtil.get(request, "create-new") + ")" %>' value='<%= "layout," + layout.getUuid() %>' />
+							</c:if>
+						</aui:select>
+					</aui:fieldset>
+				</aui:fieldset-group>
+			</div>
+		</div>
+
+		<aui:button-row>
+			<aui:button cssClass="btn-lg" type="submit" />
+		</aui:button-row>
+	</aui:form>
+</div>

@@ -23,225 +23,232 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 String eventName = "_" + HtmlUtil.escapeJS(assetPublisherDisplayContext.getPortletResource()) + "_selectAsset";
 %>
 
-<liferay-ui:tabs
-	formName="fm"
-	names="asset-selection,display-settings,subscriptions"
-	param="tabs2"
-	refresh="<%= false %>"
-	type="tabs nav-tabs-default"
->
-	<liferay-ui:section>
-		<aui:fieldset-group markupView="lexicon">
-			<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="asset-selection" />
+<div class="portlet-configuration-body-content">
+	<liferay-ui:tabs
+		formName="fm"
+		names="asset-selection,display-settings,subscriptions"
+		param="tabs2"
+		refresh="<%= false %>"
+		type="tabs nav-tabs-default"
+	>
+		<liferay-ui:section>
+			<div class="container-fluid-1280">
+				<aui:fieldset-group markupView="lexicon">
+					<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="asset-selection" />
 
-			<aui:fieldset>
-				<%= selectStyle %>
-			</aui:fieldset>
+					<aui:fieldset>
+						<%= selectStyle %>
+					</aui:fieldset>
 
-			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="scope">
-				<%= selectScope %>
-			</aui:fieldset>
+					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="scope">
+						<%= selectScope %>
+					</aui:fieldset>
 
-			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="model.resource.com.liferay.asset">
-
-				<%
-				List<AssetEntry> assetEntries = AssetPublisherUtil.getAssetEntries(renderRequest, portletPreferences, permissionChecker, assetPublisherDisplayContext.getGroupIds(), true, assetPublisherDisplayContext.isEnablePermissions(), true);
-				%>
-
-				<liferay-ui:search-container
-					compactEmptyResultsMessage="<%= true %>"
-					emptyResultsMessage="none"
-					iteratorURL="<%= configurationRenderURL %>"
-					total="<%= assetEntries.size() %>"
-				>
-					<liferay-ui:search-container-results
-						results="<%= assetEntries.subList(searchContainer.getStart(), searchContainer.getResultEnd()) %>"
-					/>
-
-					<liferay-ui:search-container-row
-						className="com.liferay.asset.kernel.model.AssetEntry"
-						escapedModel="<%= true %>"
-						keyProperty="entryId"
-						modelVar="assetEntry"
-					>
+					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="model.resource.com.liferay.asset">
 
 						<%
-						AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(assetEntry.getClassName());
-
-						AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(assetEntry.getClassPK(), AssetRendererFactory.TYPE_LATEST);
+						List<AssetEntry> assetEntries = AssetPublisherUtil.getAssetEntries(renderRequest, portletPreferences, permissionChecker, assetPublisherDisplayContext.getGroupIds(), true, assetPublisherDisplayContext.isEnablePermissions(), true);
 						%>
 
-						<liferay-ui:search-container-column-text
-							name="title"
-							truncate="<%= true %>"
+						<liferay-ui:search-container
+							compactEmptyResultsMessage="<%= true %>"
+							emptyResultsMessage="none"
+							iteratorURL="<%= configurationRenderURL %>"
+							total="<%= assetEntries.size() %>"
 						>
-							<%= HtmlUtil.escape(assetRenderer.getTitle(locale)) %>
+							<liferay-ui:search-container-results
+								results="<%= assetEntries.subList(searchContainer.getStart(), searchContainer.getResultEnd()) %>"
+							/>
 
-							<c:if test="<%= !assetEntry.isVisible() %>">
-								(<aui:workflow-status
-									markupView="lexicon"
-									showIcon="<%= false %>"
-									showLabel="<%= false %>"
-									status="<%= assetRenderer.getStatus() %>"
-									statusMessage='<%= (assetRenderer.getStatus() == 0) ? "not-visible" : WorkflowConstants.getStatusLabel(assetRenderer.getStatus()) %>'
-								/>)
-							</c:if>
-						</liferay-ui:search-container-column-text>
-
-						<liferay-ui:search-container-column-text
-							name="type"
-							value="<%= assetRendererFactory.getTypeName(locale) %>"
-						/>
-
-						<liferay-ui:search-container-column-date
-							name="modified-date"
-							value="<%= assetEntry.getModifiedDate() %>"
-						/>
-
-						<liferay-ui:search-container-column-jsp
-							path="/asset_selection_action.jsp"
-						/>
-
-						<liferay-ui:search-container-column-jsp
-							cssClass="entry-action-column"
-							path="/asset_selection_order_action.jsp"
-						/>
-					</liferay-ui:search-container-row>
-
-					<liferay-ui:search-iterator markupView="lexicon" paginate="<%= total > SearchContainer.DEFAULT_DELTA %>" />
-				</liferay-ui:search-container>
-
-				<c:if test='<%= SessionMessages.contains(renderRequest, "deletedMissingAssetEntries") %>'>
-					<div class="alert alert-info">
-						<liferay-ui:message key="the-selected-assets-have-been-removed-from-the-list-because-they-do-not-belong-in-the-scope-of-this-portlet" />
-					</div>
-				</c:if>
-
-				<%
-				long[] groupIds = assetPublisherDisplayContext.getGroupIds();
-
-				for (long groupId : groupIds) {
-					Group group = GroupLocalServiceUtil.getGroup(groupId);
-				%>
-
-					<div class="select-asset-selector">
-						<div class="edit-controls lfr-meta-actions">
-							<liferay-ui:icon-menu
-								cssClass="select-existing-selector"
-								direction="right"
-								message='<%= LanguageUtil.format(request, (groupIds.length == 1) ? "select" : "select-in-x", HtmlUtil.escape(group.getDescriptiveName(locale)), false) %>'
-								showArrow="<%= false %>"
-								showWhenSingleIcon="<%= true %>"
+							<liferay-ui:search-container-row
+								className="com.liferay.asset.kernel.model.AssetEntry"
+								escapedModel="<%= true %>"
+								keyProperty="entryId"
+								modelVar="assetEntry"
 							>
 
 								<%
-								List<AssetRendererFactory<?>> assetRendererFactories = ListUtil.sort(AssetRendererFactoryRegistryUtil.getAssetRendererFactories(company.getCompanyId()), new AssetRendererFactoryTypeNameComparator(locale));
+								AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(assetEntry.getClassName());
 
-								for (AssetRendererFactory<?> curRendererFactory : assetRendererFactories) {
-									if (!curRendererFactory.isSelectable()) {
-										continue;
-									}
-
-									PortletURL assetBrowserURL = PortletProviderUtil.getPortletURL(request, curRendererFactory.getClassName(), PortletProvider.Action.BROWSE);
-
-									if (assetBrowserURL == null) {
-										continue;
-									}
-
-									assetBrowserURL.setParameter("groupId", String.valueOf(groupId));
-									assetBrowserURL.setParameter("selectedGroupIds", String.valueOf(groupId));
-									assetBrowserURL.setParameter("typeSelection", curRendererFactory.getClassName());
-									assetBrowserURL.setParameter("showNonindexable", String.valueOf(Boolean.TRUE));
-									assetBrowserURL.setParameter("showScheduled", String.valueOf(Boolean.TRUE));
-									assetBrowserURL.setParameter("eventName", eventName);
-									assetBrowserURL.setPortletMode(PortletMode.VIEW);
-									assetBrowserURL.setWindowState(LiferayWindowState.POP_UP);
-
-									Map<String, Object> data = new HashMap<String, Object>();
-
-									data.put("groupid", String.valueOf(groupId));
-
-									if (!curRendererFactory.isSupportsClassTypes()) {
-										data.put("href", assetBrowserURL.toString());
-
-										String type = curRendererFactory.getTypeName(locale);
-
-										data.put("destroyOnHide", true);
-										data.put("title", LanguageUtil.format(request, "select-x", type, false));
-										data.put("type", type);
+								AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(assetEntry.getClassPK(), AssetRendererFactory.TYPE_LATEST);
 								%>
 
-										<liferay-ui:icon
-											cssClass="asset-selector"
-											data="<%= data %>"
-											id="<%= groupId + FriendlyURLNormalizerUtil.normalize(type) %>"
-											message="<%= HtmlUtil.escape(type) %>"
-											url="javascript:;"
-										/>
+								<liferay-ui:search-container-column-text
+									name="title"
+									truncate="<%= true %>"
+								>
+									<%= HtmlUtil.escape(assetRenderer.getTitle(locale)) %>
 
-									<%
-									}
-									else {
-										ClassTypeReader classTypeReader = curRendererFactory.getClassTypeReader();
+									<c:if test="<%= !assetEntry.isVisible() %>">
+										(<aui:workflow-status
+											markupView="lexicon"
+											showIcon="<%= false %>"
+											showLabel="<%= false %>"
+											status="<%= assetRenderer.getStatus() %>"
+											statusMessage='<%= (assetRenderer.getStatus() == 0) ? "not-visible" : WorkflowConstants.getStatusLabel(assetRenderer.getStatus()) %>'
+										/>)
+									</c:if>
+								</liferay-ui:search-container-column-text>
 
-										List<ClassType> assetAvailableClassTypes = classTypeReader.getAvailableClassTypes(PortalUtil.getCurrentAndAncestorSiteGroupIds(groupId), locale);
+								<liferay-ui:search-container-column-text
+									name="type"
+									value="<%= assetRendererFactory.getTypeName(locale) %>"
+								/>
 
-										for (ClassType assetAvailableClassType : assetAvailableClassTypes) {
-											assetBrowserURL.setParameter("subtypeSelectionId", String.valueOf(assetAvailableClassType.getClassTypeId()));
+								<liferay-ui:search-container-column-date
+									name="modified-date"
+									value="<%= assetEntry.getModifiedDate() %>"
+								/>
+
+								<liferay-ui:search-container-column-jsp
+									path="/asset_selection_action.jsp"
+								/>
+
+								<liferay-ui:search-container-column-jsp
+									cssClass="entry-action-column"
+									path="/asset_selection_order_action.jsp"
+								/>
+							</liferay-ui:search-container-row>
+
+							<liferay-ui:search-iterator markupView="lexicon" paginate="<%= total > SearchContainer.DEFAULT_DELTA %>" />
+						</liferay-ui:search-container>
+
+						<c:if test='<%= SessionMessages.contains(renderRequest, "deletedMissingAssetEntries") %>'>
+							<div class="alert alert-info">
+								<liferay-ui:message key="the-selected-assets-have-been-removed-from-the-list-because-they-do-not-belong-in-the-scope-of-this-portlet" />
+							</div>
+						</c:if>
+
+						<%
+						long[] groupIds = assetPublisherDisplayContext.getGroupIds();
+
+						for (long groupId : groupIds) {
+							Group group = GroupLocalServiceUtil.getGroup(groupId);
+						%>
+
+							<div class="select-asset-selector">
+								<div class="edit-controls lfr-meta-actions">
+									<liferay-ui:icon-menu
+										cssClass="select-existing-selector"
+										direction="right"
+										message='<%= LanguageUtil.format(request, (groupIds.length == 1) ? "select" : "select-in-x", HtmlUtil.escape(group.getDescriptiveName(locale)), false) %>'
+										showArrow="<%= false %>"
+										showWhenSingleIcon="<%= true %>"
+									>
+
+										<%
+										List<AssetRendererFactory<?>> assetRendererFactories = ListUtil.sort(AssetRendererFactoryRegistryUtil.getAssetRendererFactories(company.getCompanyId()), new AssetRendererFactoryTypeNameComparator(locale));
+
+										for (AssetRendererFactory<?> curRendererFactory : assetRendererFactories) {
+											if (!curRendererFactory.isSelectable()) {
+												continue;
+											}
+
+											PortletURL assetBrowserURL = PortletProviderUtil.getPortletURL(request, curRendererFactory.getClassName(), PortletProvider.Action.BROWSE);
+
+											if (assetBrowserURL == null) {
+												continue;
+											}
+
+											assetBrowserURL.setParameter("groupId", String.valueOf(groupId));
+											assetBrowserURL.setParameter("selectedGroupIds", String.valueOf(groupId));
+											assetBrowserURL.setParameter("typeSelection", curRendererFactory.getClassName());
 											assetBrowserURL.setParameter("showNonindexable", String.valueOf(Boolean.TRUE));
 											assetBrowserURL.setParameter("showScheduled", String.valueOf(Boolean.TRUE));
+											assetBrowserURL.setParameter("eventName", eventName);
+											assetBrowserURL.setPortletMode(PortletMode.VIEW);
+											assetBrowserURL.setWindowState(LiferayWindowState.POP_UP);
 
-											data.put("href", assetBrowserURL.toString());
+											Map<String, Object> data = new HashMap<String, Object>();
 
-											String type = assetAvailableClassType.getName();
+											data.put("groupid", String.valueOf(groupId));
 
-											data.put("destroyOnHide", true);
-											data.put("title", LanguageUtil.format(request, "select-x", type, false));
-											data.put("type", type);
-									%>
+											if (!curRendererFactory.isSupportsClassTypes()) {
+												data.put("href", assetBrowserURL.toString());
 
-											<liferay-ui:icon
-												cssClass="asset-selector"
-												data="<%= data %>"
-												id="<%= groupId + FriendlyURLNormalizerUtil.normalize(type) %>"
-												message="<%= HtmlUtil.escape(type) %>"
-												url="javascript:;"
-											/>
+												String type = curRendererFactory.getTypeName(locale);
 
-								<%
+												data.put("destroyOnHide", true);
+												data.put("title", LanguageUtil.format(request, "select-x", type, false));
+												data.put("type", type);
+										%>
+
+												<liferay-ui:icon
+													cssClass="asset-selector"
+													data="<%= data %>"
+													id="<%= groupId + FriendlyURLNormalizerUtil.normalize(type) %>"
+													message="<%= HtmlUtil.escape(type) %>"
+													url="javascript:;"
+												/>
+
+										<%
 										}
-									}
-								}
-								%>
+										else {
+											ClassTypeReader classTypeReader = curRendererFactory.getClassTypeReader();
+											List<ClassType> assetAvailableClassTypes = classTypeReader.getAvailableClassTypes(PortalUtil.getCurrentAndAncestorSiteGroupIds(groupId), locale);
 
-							</liferay-ui:icon-menu>
-						</div>
-					</div>
+												for (ClassType assetAvailableClassType : assetAvailableClassTypes) {
+													assetBrowserURL.setParameter("subtypeSelectionId", String.valueOf(assetAvailableClassType.getClassTypeId()));
+													assetBrowserURL.setParameter("showNonindexable", String.valueOf(Boolean.TRUE));
+													assetBrowserURL.setParameter("showScheduled", String.valueOf(Boolean.TRUE));
 
-				<%
-				}
-				%>
+													data.put("href", assetBrowserURL.toString());
 
-			</aui:fieldset>
-		</aui:fieldset-group>
-	</liferay-ui:section>
+													String type = assetAvailableClassType.getName();
 
-	<liferay-ui:section>
-		<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="display-settings" />
+													data.put("destroyOnHide", true);
+													data.put("title", LanguageUtil.format(request, "select-x", type, false));
+													data.put("type", type);
+										%>
 
-		<%@ include file="/display_settings.jspf" %>
-	</liferay-ui:section>
+													<liferay-ui:icon
+														cssClass="asset-selector"
+														data="<%= data %>"
+														id="<%= groupId + FriendlyURLNormalizerUtil.normalize(type) %>"
+														message="<%= HtmlUtil.escape(type) %>"
+														url="javascript:;"
+													/>
 
-	<liferay-ui:section>
-		<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="subscriptions" />
+										<%
+												}
+											}
+										}
+										%>
 
-		<aui:fieldset-group markupView="lexicon">
-			<aui:fieldset>
-				<%@ include file="/email_subscription_settings.jspf" %>
-			</aui:fieldset>
-		</aui:fieldset-group>
-	</liferay-ui:section>
-</liferay-ui:tabs>
+									</liferay-ui:icon-menu>
+								</div>
+							</div>
+
+						<%
+						}
+						%>
+
+					</aui:fieldset>
+				</aui:fieldset-group>
+			</div>
+		</liferay-ui:section>
+
+		<liferay-ui:section>
+			<div class="container-fluid-1280">
+				<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="display-settings" />
+
+				<%@ include file="/display_settings.jspf" %>
+			</div>
+		</liferay-ui:section>
+
+		<liferay-ui:section>
+			<div class="container-fluid-1280">
+				<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="subscriptions" />
+
+				<aui:fieldset-group markupView="lexicon">
+					<aui:fieldset>
+						<%@ include file="/email_subscription_settings.jspf" %>
+					</aui:fieldset>
+				</aui:fieldset-group>
+			</div>
+		</liferay-ui:section>
+	</liferay-ui:tabs>
+</div>
 
 <aui:button-row>
 	<aui:button cssClass="btn-lg" onClick='<%= renderResponse.getNamespace() + "saveSelectBoxes();" %>' type="submit" />

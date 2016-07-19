@@ -22,10 +22,16 @@
 	<aui:form action="<%= configurationActionURL %>" method="post" name="fm">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 
-		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" persistState="<%= true %>" title="display-settings">
-			<aui:input label="display-most-recent-status" name="preferences--showStatus--" type="checkbox" value="<%= showStatus %>" />
-		</liferay-ui:panel>
+		<div class="portlet-configuration-body-content">
+			<div class="container-fluid-1280">
+				<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" persistState="<%= true %>" title="display-settings">
+					<aui:input label="display-most-recent-status" name="preferences--showStatus--" type="checkbox" value="<%= showStatus %>" />
+				</liferay-ui:panel>
+			</div>
+		</div>
 
-		<aui:button type="submit" />
+		<aui:button-row>
+			<aui:button cssClass="btn-lg" type="submit" />
+		</aui:button-row>
 	</aui:form>
 </div>

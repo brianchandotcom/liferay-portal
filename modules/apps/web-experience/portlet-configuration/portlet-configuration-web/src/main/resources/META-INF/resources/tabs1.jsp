@@ -27,7 +27,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "configu
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, tabs1), currentURL);
 %>
 
-<aui:nav-bar markupView="lexicon">
+<aui:nav-bar cssClass="navbar-collapse-absolute" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
 		<c:if test="<%= selPortlet.getConfigurationActionInstance() != null %>">
 			<portlet:renderURL var="configurationURL">

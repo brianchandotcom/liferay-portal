@@ -1,7 +1,12 @@
 .definition-of-terms dt {
 	color: #333;
 	font-weight: normal;
+	width: 100%;
 	word-break: break-word;
+
+	@include sm {
+		width: auto;
+	}
 }
 
 .lfr-code {

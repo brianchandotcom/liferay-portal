@@ -22,7 +22,7 @@
 	</liferay-util:include>
 </c:if>
 
-<div class="container-fluid-1280">
+<div class="portlet-configuration-setup">
 
 	<%
 	ConfigurationAction configurationAction = (ConfigurationAction)request.getAttribute(WebKeys.CONFIGURATION_ACTION);

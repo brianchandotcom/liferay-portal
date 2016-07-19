@@ -16,46 +16,50 @@
 
 <%@ include file="/init.jsp" %>
 
-<aui:row>
-	<aui:col width="<%= 50 %>">
-		<liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />
+<liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />
 
-		<liferay-portlet:renderURL portletConfiguration="<%= true %>" var="configurationRenderURL" />
+<liferay-portlet:renderURL portletConfiguration="<%= true %>" var="configurationRenderURL" />
 
-		<aui:form action="<%= configurationActionURL %>" method="post" name="fm">
-			<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-			<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
+<aui:form action="<%= configurationActionURL %>" method="post" name="fm">
+	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
+	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
-			<aui:fieldset column="<%= true %>">
-				<aui:select name="preferences--sites--" value="<%= sitesDirectoryDisplayContext.getSites() %>">
-					<aui:option label="<%= SitesDirectoryTag.SITES_TOP_LEVEL %>" />
-					<aui:option label="<%= SitesDirectoryTag.SITES_PARENT_LEVEL %>" />
-					<aui:option label="<%= SitesDirectoryTag.SITES_SIBLINGS %>" />
-					<aui:option label="<%= SitesDirectoryTag.SITES_CHILDREN %>" />
-				</aui:select>
+	<div class="portlet-configuration-body-content">
+		<div class="container-fluid-1280">
+			<aui:row>
+				<aui:col width="<%= 50 %>">
+					<aui:fieldset column="<%= true %>">
+						<aui:select name="preferences--sites--" value="<%= sitesDirectoryDisplayContext.getSites() %>">
+							<aui:option label="<%= SitesDirectoryTag.SITES_TOP_LEVEL %>" />
+							<aui:option label="<%= SitesDirectoryTag.SITES_PARENT_LEVEL %>" />
+							<aui:option label="<%= SitesDirectoryTag.SITES_SIBLINGS %>" />
+							<aui:option label="<%= SitesDirectoryTag.SITES_CHILDREN %>" />
+						</aui:select>
 
-				<aui:select name="preferences--displayStyle--" value="<%= sitesDirectoryDisplayContext.getDisplayStyle() %>">
-					<aui:option label="icon" />
-					<aui:option label="descriptive" />
-					<aui:option label="list" />
-					<aui:option label="list-hierarchy" />
-				</aui:select>
-			</aui:fieldset>
+						<aui:select name="preferences--displayStyle--" value="<%= sitesDirectoryDisplayContext.getDisplayStyle() %>">
+							<aui:option label="icon" />
+							<aui:option label="descriptive" />
+							<aui:option label="list" />
+							<aui:option label="list-hierarchy" />
+						</aui:select>
+					</aui:fieldset>
+				</aui:col>
 
-			<aui:button-row>
-				<aui:button cssClass="btn-lg" type="submit" />
-			</aui:button-row>
-		</aui:form>
-	</aui:col>
+				<aui:col width="<%= 50 %>">
+					<liferay-portlet:preview
+						portletName="<%= portletResource %>"
+						queryString="struts_action=/sites_directory/view"
+						showBorders="<%= true %>"
+					/>
+				</aui:col>
+			</aui:row>
+		</div>
+	</div>
 
-	<aui:col width="<%= 50 %>">
-		<liferay-portlet:preview
-			portletName="<%= portletResource %>"
-			queryString="struts_action=/sites_directory/view"
-			showBorders="<%= true %>"
-		/>
-	</aui:col>
-</aui:row>
+	<aui:button-row>
+		<aui:button cssClass="btn-lg" type="submit" />
+	</aui:button-row>
+</aui:form>
 
 <aui:script sandbox="<%= true %>">
 	var form = $('#<portlet:namespace />fm');

@@ -32,40 +32,44 @@ if (scopeGroupId != themeDisplay.getCompanyGroupId()) {
 
 <liferay-portlet:renderURL portletConfiguration="<%= true %>" var="configurationRenderURL" />
 
-<aui:form action="<%= configurationActionURL %>" cssClass="main-content-body" method="post" name="fm">
+<aui:form action="<%= configurationActionURL %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
-	<liferay-ui:error exception="<%= NoSuchQuestionException.class %>" message="the-question-could-not-be-found" />
+	<div class="portlet-configuration-body-content">
+		<div class="container-fluid-1280">
+			<liferay-ui:error exception="<%= NoSuchQuestionException.class %>" message="the-question-could-not-be-found" />
 
-	<c:choose>
-		<c:when test="<%= !questions.isEmpty() %>">
-			<aui:fieldset-group markupView="lexicon">
-				<aui:fieldset>
-					<aui:select label="title" name="preferences--questionId--">
-						<aui:option value="" />
+			<c:choose>
+				<c:when test="<%= !questions.isEmpty() %>">
+					<aui:fieldset-group markupView="lexicon">
+						<aui:fieldset>
+							<aui:select label="title" name="preferences--questionId--">
+								<aui:option value="" />
 
-						<%
-						for (PollsQuestion question : questions) {
-							question = question.toEscapedModel();
-						%>
+								<%
+								for (PollsQuestion question : questions) {
+									question = question.toEscapedModel();
+								%>
 
-							<aui:option label="<%= question.getTitle(locale) %>" selected="<%= questionId == question.getQuestionId() %>" value="<%= question.getQuestionId() %>" />
+									<aui:option label="<%= question.getTitle(locale) %>" selected="<%= questionId == question.getQuestionId() %>" value="<%= question.getQuestionId() %>" />
 
-						<%
-						}
-						%>
+								<%
+								}
+								%>
 
-					</aui:select>
-				</aui:fieldset>
-			</aui:fieldset-group>
-		</c:when>
-		<c:otherwise>
-			<div class="alert alert-info">
-				<liferay-ui:message key="there-are-no-available-questions-for-selection" />
-			</div>
-		</c:otherwise>
-	</c:choose>
+							</aui:select>
+						</aui:fieldset>
+					</aui:fieldset-group>
+				</c:when>
+				<c:otherwise>
+					<div class="alert alert-info">
+						<liferay-ui:message key="there-are-no-available-questions-for-selection" />
+					</div>
+				</c:otherwise>
+			</c:choose>
+		</div>
+	</div>
 
 	<aui:button-row>
 		<aui:button cssClass="btn-lg" disabled="<%= questions.isEmpty() %>" type="submit" />

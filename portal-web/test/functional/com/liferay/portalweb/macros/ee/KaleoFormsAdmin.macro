@@ -435,7 +435,7 @@
 
 		<execute function="Click" locator1="DDLEditRecord#LINK_TO_PAGE_PAGE_RADIO" />
 
-		<execute function="AssertClick" locator1="DDLEditRecord#LINK_TO_PAGE_SELECT_BUTTON" value1="Select" />
+		<execute function="AssertClick" locator1="Button#SELECT" value1="Select" />
 
 		<execute function="AssertTextEquals" locator1="DDLEditRecord#LINK_TO_PAGE_PAGE_SELECT" value1="${ddlRecordFieldData}" />
 	</command>

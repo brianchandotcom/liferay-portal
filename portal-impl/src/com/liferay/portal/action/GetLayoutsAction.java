@@ -49,6 +49,9 @@ public class GetLayoutsAction extends JSONAction {
 		else if (cmd.equals("getAll")) {
 			return LayoutsTreeUtil.getLayoutsJSON(request, groupId, treeId);
 		}
+		else if (cmd.equals("getSiblingLayoutsJSON")) {
+			return getSiblingLayoutsJSON(request, groupId);
+		}
 
 		return null;
 	}
@@ -64,6 +67,18 @@ public class GetLayoutsAction extends JSONAction {
 		return LayoutsTreeUtil.getLayoutsJSON(
 			request, groupId, privateLayout, parentLayoutId, incomplete,
 			treeId);
+	}
+
+	protected String getSiblingLayoutsJSON(
+			HttpServletRequest request, long groupId)
+		throws Exception {
+
+		boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
+		long layoutId = ParamUtil.getLong(request, "layoutId");
+		int max = ParamUtil.getInteger(request, "max");
+
+		return LayoutsTreeUtil.getLayoutsJSON(
+			request, groupId, privateLayout, layoutId, max);
 	}
 
 }

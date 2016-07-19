@@ -365,6 +365,15 @@ public class LayoutPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_P_P_LtP() throws Exception {
+		_persistence.countByG_P_P_LtP(RandomTestUtil.nextLong(),
+			RandomTestUtil.randomBoolean(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
+
+		_persistence.countByG_P_P_LtP(0L, RandomTestUtil.randomBoolean(), 0L, 0);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		Layout newLayout = addLayout();
 

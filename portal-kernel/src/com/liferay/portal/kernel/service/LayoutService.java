@@ -510,6 +510,10 @@ public interface LayoutService extends BaseService {
 	public int getLayoutsCount(long groupId, boolean privateLayout,
 		long parentLayoutId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getLayoutsCount(long groupId, boolean privateLayout,
+		long parentLayoutId, int priority);
+
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link
 	com.liferay.exportimport.kernel.service.ExportImportService#exportLayoutsAsFile(

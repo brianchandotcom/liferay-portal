@@ -166,17 +166,12 @@
 </tr>
 <tr>
 	<td>LINK_TO_PAGE_PAGE_RADIO</td>
-	<td>//label[@name='tree-node-check' and contains(.,'${key_pageName}')]/input[@type='radio']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>LINK_TO_PAGE_SELECT_BUTTON</td>
-	<td>//button[contains(.,'Select')]</td>
+	<td>//a[contains(.,'${key_pageName}')]/../input[@type='radio']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LINK_TO_PAGE_SELECT_PAGE_BUTTON</td>
-	<td>//button[contains(.,'Select')]</td>
+	<td>//div[@data-fieldname='${key_fieldName}']//button[contains(.,'Select')]</td>
 	<td></td>
 </tr>
 <tr>

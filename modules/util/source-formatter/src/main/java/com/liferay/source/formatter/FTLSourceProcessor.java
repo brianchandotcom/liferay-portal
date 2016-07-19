@@ -282,7 +282,7 @@ public class FTLSourceProcessor extends BaseSourceProcessor {
 	private static final String[] _INCLUDES = new String[] {"**/*.ftl"};
 
 	private final Pattern _assignTagsBlockPattern = Pattern.compile(
-		"((\\t*)<#assign[^<#/>]*/>(\\n|$)+){2,}", Pattern.MULTILINE);
+		"((\t*)<#assign[^<#/>]*/>(\n|$)+){2,}", Pattern.MULTILINE);
 	private final Pattern _incorrectAssignTagPattern = Pattern.compile(
 		"(<#assign .*[^/])>(\n|$)");
 	private final Pattern _liferayVariablePattern = Pattern.compile(

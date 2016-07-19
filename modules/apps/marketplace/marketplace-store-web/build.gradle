@@ -2,6 +2,7 @@ dependencies {
 	provided group: "com.liferay", name: "com.liferay.application.list.api", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.marketplace.api", version: "4.0.0"
 	provided group: "com.liferay", name: "com.liferay.marketplace.service", version: "2.0.0"
+	provided group: "com.liferay", name: "com.liferay.portal.lock.api", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "2.0.0"

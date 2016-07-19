@@ -319,7 +319,7 @@
 		</execute>
 
 		<execute macro="Form#editFieldLabel">
-			<var name="fieldValue" value="Text" />
+			<var name="fieldValue" value="Text One" />
 		</execute>
 
 		<execute macro="FormFields#enableAdvancedOptions" />
@@ -351,7 +351,7 @@
 		</execute>
 
 		<execute macro="Form#editFieldLabel">
-			<var name="fieldValue" value="Text2" />
+			<var name="fieldValue" value="Text Two" />
 		</execute>
 
 		<execute macro="FormFields#enableAdvancedOptions" />
@@ -395,9 +395,9 @@
 		</execute>
 
 		<execute macro="FormFields#viewTextFieldNotVisible">
-			<var name="fieldLabel" value="Text" />
-			<var name="fieldName" value="Text" />
-			<var name="fieldValue" value="Text" />
+			<var name="fieldLabel" value="Text One" />
+			<var name="fieldName" value="TextOne" />
+			<var name="fieldValue" value="Text One Input" />
 		</execute>
 
 		<execute macro="FormFields#selectSelectOption">
@@ -406,14 +406,14 @@
 		</execute>
 
 		<execute macro="FormFields#editText">
-			<var name="fieldName" value="Text" />
-			<var name="fieldValue" value="Text" />
+			<var name="fieldName" value="TextOne" />
+			<var name="fieldValue" value="Text One Input" />
 		</execute>
 
 		<execute macro="FormFields#viewTextFieldNotVisible">
-			<var name="fieldLabel" value="Text2" />
-			<var name="fieldName" value="Text2" />
-			<var name="fieldValue" value="Text2" />
+			<var name="fieldLabel" value="Text Two" />
+			<var name="fieldName" value="TextTwo" />
+			<var name="fieldValue" value="Text Two Input" />
 		</execute>
 
 		<execute macro="FormFields#selectRadioOption">
@@ -422,8 +422,8 @@
 		</execute>
 
 		<execute macro="FormFields#editText">
-			<var name="fieldName" value="Text2" />
-			<var name="fieldValue" value="Text2" />
+			<var name="fieldName" value="TextTwo" />
+			<var name="fieldValue" value="Text Two Input" />
 		</execute>
 
 		<execute macro="Button#clickSubmitForPublication" />
@@ -447,7 +447,7 @@
 		</execute>
 
 		<execute macro="Workflow#viewTaskAssignedToMeDetails">
-			<var name="workflowAssetContent" value="Text2" />
+			<var name="workflowAssetContent" value="Text Two" />
 			<var name="workflowAssetTitle" value="Created Form Name" />
 			<var name="workflowTask" value="Review" />
 		</execute>
@@ -461,9 +461,9 @@
 		</execute>
 
 		<execute macro="FormsAdmin#viewTextEntry">
-			<var name="fieldLabel" value="Text" />
-			<var name="fieldName" value="Text" />
-			<var name="fieldValue" value="Text" />
+			<var name="fieldLabel" value="Text One" />
+			<var name="fieldName" value="TextOne" />
+			<var name="fieldValue" value="Text One Input" />
 		</execute>
 
 		<execute macro="FormsAdmin#viewRadioEntry">
@@ -473,9 +473,9 @@
 		</execute>
 
 		<execute macro="FormsAdmin#viewTextEntry">
-			<var name="fieldLabel" value="Text2" />
-			<var name="fieldName" value="Text2" />
-			<var name="fieldValue" value="Text2" />
+			<var name="fieldLabel" value="Text Two" />
+			<var name="fieldName" value="TextTwo" />
+			<var name="fieldValue" value="Text Two Input" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -502,8 +502,8 @@
 		</execute>
 
 		<execute macro="FormsAdmin#viewFormTableEntry">
-			<var name="fieldLabel" value="Text" />
-			<var name="fieldValue" value="Text" />
+			<var name="fieldLabel" value="Text One" />
+			<var name="fieldValue" value="Text One Input" />
 		</execute>
 
 		<execute macro="FormsAdmin#viewFormTableEntry">
@@ -512,8 +512,8 @@
 		</execute>
 
 		<execute macro="FormsAdmin#viewFormTableEntry">
-			<var name="fieldLabel" value="Text" />
-			<var name="fieldValue" value="Text2" />
+			<var name="fieldLabel" value="Text Two" />
+			<var name="fieldValue" value="Text Two Input" />
 		</execute>
 
 		<execute macro="FormsAdminNavigator#gotoView" />
@@ -525,9 +525,9 @@
 		</execute>
 
 		<execute macro="FormsAdmin#viewTextEntry">
-			<var name="fieldLabel" value="Text" />
-			<var name="fieldName" value="Text" />
-			<var name="fieldValue" value="Text" />
+			<var name="fieldLabel" value="Text One" />
+			<var name="fieldName" value="TextOne" />
+			<var name="fieldValue" value="Text One Input" />
 		</execute>
 
 		<execute macro="FormsAdmin#viewRadioEntry">
@@ -537,9 +537,9 @@
 		</execute>
 
 		<execute macro="FormsAdmin#viewTextEntry">
-			<var name="fieldLabel" value="Text2" />
-			<var name="fieldName" value="Text2" />
-			<var name="fieldValue" value="Text2" />
+			<var name="fieldLabel" value="Text Two" />
+			<var name="fieldName" value="TextTwo" />
+			<var name="fieldValue" value="Text Two Input" />
 		</execute>
 	</command>
 </definition>

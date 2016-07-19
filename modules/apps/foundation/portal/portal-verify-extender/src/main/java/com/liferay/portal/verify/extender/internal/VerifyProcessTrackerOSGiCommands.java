@@ -216,7 +216,7 @@ public class VerifyProcessTrackerOSGiCommands {
 
 			if ((release != null) && release.isVerified()) {
 				if (!_serviceRegistrations.containsKey(verifyProcessName)) {
-					registerVerifyProcessCompletionMarker(verifyProcessName);
+					_registerVerifyProcessCompletionMarker(verifyProcessName);
 				}
 
 				return;
@@ -255,7 +255,7 @@ public class VerifyProcessTrackerOSGiCommands {
 
 				_releaseLocalService.updateRelease(release);
 
-				registerVerifyProcessCompletionMarker(verifyProcessName);
+				_registerVerifyProcessCompletionMarker(verifyProcessName);
 			}
 		}
 		finally {
@@ -264,21 +264,6 @@ public class VerifyProcessTrackerOSGiCommands {
 			StagingAdvicesThreadLocal.setEnabled(true);
 			WorkflowThreadLocal.setEnabled(true);
 		}
-	}
-
-	private void registerVerifyProcessCompletionMarker(
-		String verifyProcessName) {
-
-		Dictionary<String, String> dictionary = new HashMapDictionary<>();
-
-		dictionary.put("verify.process.name", verifyProcessName);
-
-		ServiceRegistration<VerifyProcessCompletionMarker> serviceRegistration =
-			_bundleContext.registerService(
-				VerifyProcessCompletionMarker.class,
-				new VerifyProcessCompletionMarker() {}, dictionary);
-
-		_serviceRegistrations.put(verifyProcessName, serviceRegistration);
 	}
 
 	protected void executeVerifyProcesses(
@@ -359,6 +344,21 @@ public class VerifyProcessTrackerOSGiCommands {
 		_releaseLocalService = releaseLocalService;
 	}
 
+	private void _registerVerifyProcessCompletionMarker(
+		String verifyProcessName) {
+
+		Dictionary<String, String> dictionary = new HashMapDictionary<>();
+
+		dictionary.put("verify.process.name", verifyProcessName);
+
+		ServiceRegistration<VerifyProcessCompletionMarker> serviceRegistration =
+			_bundleContext.registerService(
+				VerifyProcessCompletionMarker.class,
+				new VerifyProcessCompletionMarker() {}, dictionary);
+
+		_serviceRegistrations.put(verifyProcessName, serviceRegistration);
+	}
+
 	private void _runAllVerifiersWithFactory(
 		OutputStreamContainerFactory outputStreamContainerFactory) {
 
@@ -381,11 +381,11 @@ public class VerifyProcessTrackerOSGiCommands {
 	private OutputStreamContainerFactoryTracker
 		_outputStreamContainerFactoryTracker;
 	private ReleaseLocalService _releaseLocalService;
+	private Map<String, ServiceRegistration<VerifyProcessCompletionMarker>>
+		_serviceRegistrations;
 	private ServiceTrackerMap<String, List<VerifyProcess>> _verifyProcesses;
 	private VerifyProcessTrackerConfiguration
 		_verifyProcessTrackerConfiguration;
-	private Map<String, ServiceRegistration<VerifyProcessCompletionMarker>>
-		_serviceRegistrations;
 
 	private class AllVerifiersRunnable implements Runnable {
 

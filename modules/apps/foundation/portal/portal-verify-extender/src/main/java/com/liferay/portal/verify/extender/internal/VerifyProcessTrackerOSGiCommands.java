@@ -47,8 +47,10 @@ import java.util.Dictionary;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
@@ -152,6 +154,8 @@ public class VerifyProcessTrackerOSGiCommands {
 				new VerifyServiceTrackerMapListener();
 		}
 
+		_serviceRegistrations = new ConcurrentHashMap<>();
+
 		_verifyProcesses = ServiceTrackerMapFactory.multiValueMap(
 			_bundleContext, VerifyProcess.class, null,
 			new PropertyServiceReferenceMapper<String, VerifyProcess>(
@@ -198,6 +202,10 @@ public class VerifyProcessTrackerOSGiCommands {
 				verifyProcessName);
 
 			if ((release != null) && release.isVerified()) {
+				if (!_serviceRegistrations.containsKey(verifyProcessName)) {
+					registerVerifyProcessCompletionMarker(verifyProcessName);
+				}
+
 				return;
 			}
 
@@ -234,14 +242,7 @@ public class VerifyProcessTrackerOSGiCommands {
 
 				_releaseLocalService.updateRelease(release);
 
-				Dictionary<String, String> dictionary =
-					new HashMapDictionary<>();
-
-				dictionary.put("verify.process.name", verifyProcessName);
-
-				_bundleContext.registerService(
-					VerifyProcessCompletionMarker.class,
-					new VerifyProcessCompletionMarker() {}, dictionary);
+				registerVerifyProcessCompletionMarker(verifyProcessName);
 			}
 		}
 		finally {
@@ -250,6 +251,21 @@ public class VerifyProcessTrackerOSGiCommands {
 			StagingAdvicesThreadLocal.setEnabled(true);
 			WorkflowThreadLocal.setEnabled(true);
 		}
+	}
+
+	private void registerVerifyProcessCompletionMarker(
+		String verifyProcessName) {
+
+		Dictionary<String, String> dictionary = new HashMapDictionary<>();
+
+		dictionary.put("verify.process.name", verifyProcessName);
+
+		ServiceRegistration<VerifyProcessCompletionMarker> serviceRegistration =
+			_bundleContext.registerService(
+				VerifyProcessCompletionMarker.class,
+				new VerifyProcessCompletionMarker() {}, dictionary);
+
+		_serviceRegistrations.put(verifyProcessName, serviceRegistration);
 	}
 
 	protected void executeVerifyProcesses(
@@ -355,6 +371,8 @@ public class VerifyProcessTrackerOSGiCommands {
 	private ServiceTrackerMap<String, List<VerifyProcess>> _verifyProcesses;
 	private VerifyProcessTrackerConfiguration
 		_verifyProcessTrackerConfiguration;
+	private Map<String, ServiceRegistration<VerifyProcessCompletionMarker>>
+		_serviceRegistrations;
 
 	private class AllVerifiersRunnable implements Runnable {
 

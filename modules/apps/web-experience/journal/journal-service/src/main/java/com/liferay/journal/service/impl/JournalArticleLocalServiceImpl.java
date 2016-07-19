@@ -3497,6 +3497,13 @@ public class JournalArticleLocalServiceImpl
 				userId, article, status, null, serviceContext,
 				new HashMap<String, Serializable>());
 
+			// Attachments
+
+			for (FileEntry fileEntry : article.getImagesFileEntries()) {
+				PortletFileRepositoryUtil.restorePortletFileEntryFromTrash(
+					userId, fileEntry.getFileEntryId());
+			}
+
 			// Trash
 
 			if (trashVersion != null) {
@@ -3595,6 +3602,13 @@ public class JournalArticleLocalServiceImpl
 		assetEntryLocalService.updateVisible(
 			JournalArticle.class.getName(), article.getResourcePrimKey(),
 			false);
+
+		// Attachments
+
+		for (FileEntry fileEntry : article.getImagesFileEntries()) {
+			PortletFileRepositoryUtil.movePortletFileEntryToTrash(
+				userId, fileEntry.getFileEntryId());
+		}
 
 		// Comment
 

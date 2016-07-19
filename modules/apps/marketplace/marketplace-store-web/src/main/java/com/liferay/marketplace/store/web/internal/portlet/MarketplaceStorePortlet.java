@@ -246,6 +246,53 @@ public class MarketplaceStorePortlet extends RemoteMVCPortlet {
 		writeJSON(actionRequest, actionResponse, jsonObject);
 	}
 
+	public void updateApp(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		long appPackageId = ParamUtil.getLong(actionRequest, "appPackageId");
+		boolean unlicensed = ParamUtil.getBoolean(actionRequest, "unlicensed");
+		String orderUuid = ParamUtil.getString(actionRequest, "orderUuid");
+		String productEntryName = ParamUtil.getString(
+			actionRequest, "productEntryName");
+
+		File file = null;
+
+		try {
+			file = FileUtil.createTempFile();
+
+			downloadApp(
+				actionRequest, actionResponse, appPackageId, unlicensed, file);
+
+			App app = _appService.updateApp(file);
+
+			if (Validator.isNull(orderUuid) &&
+				Validator.isNotNull(productEntryName)) {
+
+				orderUuid = MarketplaceLicenseUtil.getOrder(productEntryName);
+			}
+
+			if (Validator.isNotNull(orderUuid)) {
+				MarketplaceLicenseUtil.registerOrder(
+					orderUuid, productEntryName);
+			}
+
+			_appService.installApp(app.getRemoteAppId());
+
+			JSONObject jsonObject = getAppJSONObject(app.getRemoteAppId());
+
+			jsonObject.put("cmd", "updateApp");
+			jsonObject.put("message", "success");
+
+			writeJSON(actionRequest, actionResponse, jsonObject);
+		}
+		finally {
+			if (file != null) {
+				file.delete();
+			}
+		}
+	}
+
 	public void updateApps(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -302,53 +349,6 @@ public class MarketplaceStorePortlet extends RemoteMVCPortlet {
 		}
 		finally {
 			_lockLocalService.unlock(lock.getClassName(), lock.getKey());
-		}
-	}
-
-	public void updateApp(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		long appPackageId = ParamUtil.getLong(actionRequest, "appPackageId");
-		boolean unlicensed = ParamUtil.getBoolean(actionRequest, "unlicensed");
-		String orderUuid = ParamUtil.getString(actionRequest, "orderUuid");
-		String productEntryName = ParamUtil.getString(
-			actionRequest, "productEntryName");
-
-		File file = null;
-
-		try {
-			file = FileUtil.createTempFile();
-
-			downloadApp(
-				actionRequest, actionResponse, appPackageId, unlicensed, file);
-
-			App app = _appService.updateApp(file);
-
-			if (Validator.isNull(orderUuid) &&
-				Validator.isNotNull(productEntryName)) {
-
-				orderUuid = MarketplaceLicenseUtil.getOrder(productEntryName);
-			}
-
-			if (Validator.isNotNull(orderUuid)) {
-				MarketplaceLicenseUtil.registerOrder(
-					orderUuid, productEntryName);
-			}
-
-			_appService.installApp(app.getRemoteAppId());
-
-			JSONObject jsonObject = getAppJSONObject(app.getRemoteAppId());
-
-			jsonObject.put("cmd", "updateApp");
-			jsonObject.put("message", "success");
-
-			writeJSON(actionRequest, actionResponse, jsonObject);
-		}
-		finally {
-			if (file != null) {
-				file.delete();
-			}
 		}
 	}
 

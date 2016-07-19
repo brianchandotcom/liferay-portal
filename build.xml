@@ -578,7 +578,6 @@
 			<param name="generated.description" value="" />
 			<param name="module.dir" value="util-slf4j" />
 		</antcall>
-
 	</target>
 
 	<target name="javadoc-cmd">

@@ -16,34 +16,39 @@ package com.liferay.knowledge.base.util.comparator;
 
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBFolder;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.Date;
 
 /**
  * @author Roberto Díaz
  */
-public class KBObjectsTitleComparator<T> extends OrderByComparator<T> {
+public class KBObjectsModifiedDateComparator<T> extends OrderByComparator<T> {
 
-	public static final String ORDER_BY_ASC = "title ASC";
+	public static final String ORDER_BY_ASC = "modifiedDate ASC, title ASC";
 
-	public static final String ORDER_BY_DESC = "title DESC";
+	public static final String ORDER_BY_DESC = "modifiedDate DESC, title ASC";
 
-	public static final String[] ORDER_BY_FIELDS = {"title"};
+	public static final String[] ORDER_BY_FIELDS = {"modifiedDate, title"};
 
 	public static final String ORDER_BY_MODEL_ASC =
-		"modelFolder DESC, title ASC";
+		"modelFolder DESC, modifiedDate ASC, title ASC";
 
 	public static final String ORDER_BY_MODEL_DESC =
-		"modelFolder DESC, title DESC";
+		"modelFolder DESC, modifiedDate DESC, title ASC";
 
-	public KBObjectsTitleComparator() {
+	public KBObjectsModifiedDateComparator() {
 		this(false, false);
 	}
 
-	public KBObjectsTitleComparator(boolean ascending) {
+	public KBObjectsModifiedDateComparator(boolean ascending) {
 		this(ascending, false);
 	}
 
-	public KBObjectsTitleComparator(boolean ascending, boolean orderByModel) {
+	public KBObjectsModifiedDateComparator(
+		boolean ascending, boolean orderByModel) {
+
 		_ascending = ascending;
 		_orderByModel = orderByModel;
 	}
@@ -52,12 +57,19 @@ public class KBObjectsTitleComparator<T> extends OrderByComparator<T> {
 	public int compare(T t1, T t2) {
 		int value = 0;
 
+		Date modifiedDate1 = getModifiedDate(t1);
+		Date modifiedDate2 = getModifiedDate(t2);
+
 		String title1 = getTitle(t1);
 		String title2 = getTitle(t2);
 
 		if (_orderByModel) {
-			if ((t1 instanceof KBFolder) && (t2 instanceof KBFolder)) {
-				title1.compareToIgnoreCase(title2);
+			if (t1 instanceof KBFolder && t2 instanceof KBFolder) {
+				value = DateUtil.compareTo(modifiedDate1, modifiedDate2);
+
+				if (value == 0) {
+					value = title1.compareToIgnoreCase(title2);
+				}
 			}
 			else if (t1 instanceof KBFolder) {
 				value = -1;
@@ -66,11 +78,19 @@ public class KBObjectsTitleComparator<T> extends OrderByComparator<T> {
 				value = 1;
 			}
 			else {
-				title1.compareToIgnoreCase(title2);
+				value = DateUtil.compareTo(modifiedDate1, modifiedDate2);
+
+				if (value == 0) {
+					value = title1.compareToIgnoreCase(title2);
+				}
 			}
 		}
 		else {
-			value = title1.compareToIgnoreCase(title2);
+			value = DateUtil.compareTo(modifiedDate1, modifiedDate2);
+
+			if (value == 0) {
+				value = title1.compareToIgnoreCase(title2);
+			}
 		}
 
 		if (_ascending) {
@@ -109,6 +129,19 @@ public class KBObjectsTitleComparator<T> extends OrderByComparator<T> {
 	@Override
 	public boolean isAscending() {
 		return _ascending;
+	}
+
+	protected Date getModifiedDate(Object obj) {
+		if (obj instanceof KBArticle) {
+			KBArticle kbArticle = (KBArticle)obj;
+
+			return kbArticle.getModifiedDate();
+		}
+		else {
+			KBFolder kbFolder = (KBFolder)obj;
+
+			return kbFolder.getModifiedDate();
+		}
 	}
 
 	protected String getTitle(Object obj) {

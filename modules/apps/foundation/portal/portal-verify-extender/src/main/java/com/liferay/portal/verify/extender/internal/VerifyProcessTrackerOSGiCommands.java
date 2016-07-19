@@ -178,6 +178,19 @@ public class VerifyProcessTrackerOSGiCommands {
 	@Deactivate
 	protected void deactivate() {
 		_verifyProcesses.close();
+
+		for (Map.Entry
+				<String, ServiceRegistration<VerifyProcessCompletionMarker>>
+					serviceRegistrationEntry :
+						_serviceRegistrations.entrySet()) {
+
+			ServiceRegistration<VerifyProcessCompletionMarker>
+				serviceRegistration = serviceRegistrationEntry.getValue();
+
+			serviceRegistration.unregister();
+		}
+
+		_serviceRegistrations = null;
 	}
 
 	protected void executeVerifyProcesses(

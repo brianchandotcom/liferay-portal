@@ -867,16 +867,22 @@
 		</execute>
 
 		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${userGroupName}" />
-		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute function="Click" locator1="Button#SUBMIT" />
+
+		<execute function="Click" locator1="Icon#DISPLAY_STYLE_LIST" />
 
 		<execute function="AssertTextEquals" locator1="SiteMembershipsUserGroups#USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
 		<execute function="Click" locator1="SiteMembershipsUserGroups#USER_GROUP_TABLE_ACTIONS" />
 		<execute function="AssertClick" locator1="MenuItem#ASSIGN_SITE_ROLES" value1="Assign Site Roles" />
 
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
 		<execute function="Uncheck" locator1="Checkbox#SITE_OWNER" />
-		<execute function="Click" locator1="Button#UPDATE_ASSOCIATIONS" />
+
+		<execute function="SelectFrameTop" />
+
+		<execute function="AssertClick" locator1="Button#DONE" value1="Done" />
 		<execute macro="Alert#viewSuccessMessage" />
-		<execute function="AssertNotChecked" locator1="Checkbox#SITE_OWNER" />
 	</command>
 
 	<command name="searchCP">

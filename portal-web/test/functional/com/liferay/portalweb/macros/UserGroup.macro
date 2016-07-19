@@ -124,12 +124,13 @@
 
 		<execute function="AssertClick" locator1="MenuItem#ASSIGN_MEMBERS" value1="Assign Members" />
 
-		<execute function="AssertClick" locator1="Button#ADD_USER" value1="Add Users" />
+		<execute function="Click" locator1="Button#PLUS" />
 
-		<execute function="Check" locator1="Checkbox#SELECT_ALL" />
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
-		<execute function="AssertClick" locator1="Button#UPDATE_ASSOCIATIONS" value1="Update Associations" />
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute function="Check#checkAll" locator1="Checkbox#SELECT_ALL" />
+
+		<execute function="SelectFrameTop" />
 
 		<execute function="AssertClick" locator1="Button#ADD" value1="Add" />
 

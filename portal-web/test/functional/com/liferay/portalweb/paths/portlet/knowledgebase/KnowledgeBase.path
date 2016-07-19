@@ -246,11 +246,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DISPLAY_READ_MORE_LINK</td>
-	<td>//div[@class='kb-article-child']//a[contains(.,'Read More')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>

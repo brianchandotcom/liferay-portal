@@ -14,6 +14,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TITLE_FIELD_LOCALIZED</td>
+	<td>//div[contains(@id,'titleEditor') and contains(@aria-label,'${key_localizedText}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NAME_FIELD</td>
 	<td>//div[contains(@id,'nameEditor') and contains(@aria-label,'Rich Text Editor')]</td>
 	<td></td>
@@ -26,6 +31,11 @@
 <tr>
 	<td>CONTENT_FIELD</td>
 	<td>//div[contains(@class,'alloy-editor-container')]//div[(contains(@data-placeholder,'Write your content here...') or contains(@data-placeholder,'Content')) and contains(@title,'Rich Text Editor')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_FIELD_LOCALIZED</td>
+	<td>//div[contains(@id,'contentEditor') and contains(@title,'${key_localizedText}')]</td>
 	<td></td>
 </tr>
 <tr>

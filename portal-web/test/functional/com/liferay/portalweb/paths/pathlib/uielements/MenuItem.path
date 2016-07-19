@@ -364,6 +364,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EDIT_LOCALIZED</td>
+	<td>//a[contains(@class,'taglib-icon')]/span[contains(.,'${key_editLocalized}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EDIT_WITH_IMAGE_EDITOR</td>
 	<td>//div[contains(@class,'open')]//a[@role='menuitem']//span[contains(.,'Edit With Image Editor')]</td>
 	<td></td>

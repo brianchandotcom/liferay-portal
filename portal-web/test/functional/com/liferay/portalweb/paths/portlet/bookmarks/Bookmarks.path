@@ -27,7 +27,7 @@
 </tr>
 <tr>
 	<td>BOOKMARKS_TABLE_URL</td>
-	<td>//table[contains(@class,'table-list')]//td[3]//span[contains(.,'${key_bookmarkURL}')]</td>
+	<td>//table[contains(@class,'table-list')]//td[3][contains(.,'${key_bookmarkURL}')]</td>
 	<td></td>
 </tr>
 <tr>

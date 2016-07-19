@@ -128,6 +128,11 @@
 	</command>
 
 	<command name="addChild">
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
 		<var name="key_siteName" value="${siteName}" />
 
 		<if>

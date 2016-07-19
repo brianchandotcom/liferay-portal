@@ -15,3 +15,26 @@
 --%>
 
 <%@ include file="/init.jsp" %>
+
+<c:choose>
+	<c:when test="<%= !assetPublisherDisplayContext.isSelectionStyleEnabled() %>">
+		<aui:input name="preferences--selectionStyle--" type="hidden" value="dynamic" />
+	</c:when>
+	<c:otherwise>
+		<aui:fieldset markupView="lexicon">
+			<aui:input checked="<%= assetPublisherDisplayContext.isSelectionStyleDynamic() %>" id="selectionStyleDynamic" label="dynamic" name="preferences--selectionStyle--" onChange='<%= renderResponse.getNamespace() + "chooseSelectionStyle();" %>' type="radio" value="dynamic" />
+
+			<aui:input checked="<%= assetPublisherDisplayContext.isSelectionStyleManual() %>" id="selectionStyleManual" label="manual" name="preferences--selectionStyle--" onChange='<%= renderResponse.getNamespace() + "chooseSelectionStyle();" %>' type="radio" value="manual" />
+		</aui:fieldset>
+	</c:otherwise>
+</c:choose>
+
+<aui:script>
+	function <portlet:namespace />chooseSelectionStyle() {
+		var form = AUI.$(document.<portlet:namespace />fm);
+
+		form.fm('<%= Constants.CMD %>').val('selection-style');
+
+		submitForm(form);
+	}
+</aui:script>

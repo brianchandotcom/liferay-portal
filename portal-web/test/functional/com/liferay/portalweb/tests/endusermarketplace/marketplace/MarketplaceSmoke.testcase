@@ -1,0 +1,55 @@
+<definition component-name="marketplace">
+	<property name="community.app.acceptance" value="true" />
+	<property name="testray.main.component.name" value="Marketplace" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<tear-down>
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Test Page" />
+		</execute>
+
+		<execute macro="CalendarEvent#tearDown" />
+
+		<execute macro="Calendar#tearDown" />
+
+		<execute macro="BlogsEntry#tearDownCP" />
+
+		<execute macro="BookmarksFolder#tearDownCP" />
+
+		<execute macro="Page#tearDownPG" />
+
+		<execute macro="DMDocument#tearDownCP" />
+
+		<execute macro="ProductMenu#gotoSite">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#tearDownCP" />
+
+		<execute macro="WikiPage#tearDownCP" />
+
+		<execute macro="DMFolder#tearDownCP" />
+	</tear-down>
+
+	<command name="MarketplaceSmoke" priority="5">
+		<execute macro="Marketplace#smoke" />
+	</command>
+
+	<command name="MarketplaceSmokeSites">
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Marketplace#smokeSites">
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+	</command>
+</definition>

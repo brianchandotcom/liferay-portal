@@ -157,7 +157,7 @@ public class ClassLoaderTest {
 
 	@Test
 	public void testGet11() throws Exception {
-		PortalRuntimePermission.checkGetClassLoader("pacl-test-portlet");
+		PortalRuntimePermission.checkGetClassLoader("pacl-1-test-portlet");
 	}
 
 	@Test
@@ -222,7 +222,7 @@ public class ClassLoaderTest {
 
 	@Test
 	public void testGet18() throws Exception {
-		PortletClassLoaderUtil.getClassLoader("pacl-test-portlet");
+		PortletClassLoaderUtil.getClassLoader("pacl-1-test-portlet");
 	}
 
 	@Test

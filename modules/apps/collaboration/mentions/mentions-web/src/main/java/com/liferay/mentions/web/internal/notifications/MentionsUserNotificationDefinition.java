@@ -15,7 +15,7 @@
 package com.liferay.mentions.web.internal.notifications;
 
 import com.liferay.mentions.constants.MentionsConstants;
-import com.liferay.mentions.web.internal.constants.MentionsPortletKeys;
+import com.liferay.mentions.web.constants.MentionsPortletKeys;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.notifications.UserNotificationDeliveryType;

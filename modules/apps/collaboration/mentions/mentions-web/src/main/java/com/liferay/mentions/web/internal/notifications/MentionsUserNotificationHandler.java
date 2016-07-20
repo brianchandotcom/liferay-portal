@@ -17,7 +17,7 @@ package com.liferay.mentions.web.internal.notifications;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
-import com.liferay.mentions.web.internal.constants.MentionsPortletKeys;
+import com.liferay.mentions.web.constants.MentionsPortletKeys;
 import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.kernel.service.MBMessageLocalService;
 import com.liferay.portal.kernel.json.JSONObject;

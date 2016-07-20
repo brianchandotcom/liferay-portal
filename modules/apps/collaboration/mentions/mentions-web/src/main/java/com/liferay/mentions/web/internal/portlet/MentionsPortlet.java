@@ -16,7 +16,7 @@ package com.liferay.mentions.web.internal.portlet;
 
 import com.liferay.mentions.util.MentionsUserFinder;
 import com.liferay.mentions.util.MentionsUtil;
-import com.liferay.mentions.web.internal.constants.MentionsPortletKeys;
+import com.liferay.mentions.web.constants.MentionsPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;

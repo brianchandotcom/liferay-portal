@@ -15,13 +15,15 @@
 package com.liferay.wsrp.messaging;
 
 import com.liferay.osgi.util.ServiceTrackerFactory;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.HotDeployMessageListener;
-import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
+import com.liferay.portal.kernel.service.AddressLocalService;
 import com.liferay.wsrp.jmx.WSRPConsumerPortletManager;
+import com.liferay.wsrp.service.WSRPConsumerPortletLocalService;
 import com.liferay.wsrp.service.WSRPConsumerPortletLocalServiceUtil;
 import com.liferay.wsrp.util.ExtensionHelperUtil;
 
@@ -32,6 +34,8 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
@@ -58,20 +62,31 @@ public class WSRPMessageListener extends HotDeployMessageListener {
 			new MBeanServerServiceTrackerCustomizer());
 
 		_serviceTracker.open();
-	}
 
-	@Override
-	protected void onDeploy(Message message) throws Exception {
 		ExtensionHelperUtil.initialize();
 
-		WSRPConsumerPortletLocalServiceUtil.destroyWSRPConsumerPortlets();
+		try {
+			_WSRPConsumerPortletLocalService.destroyWSRPConsumerPortlets();
+		}
+		catch (PortalException pe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to destroy WSRP Consumer Portlets", pe);
+			}
+		}
 
-		WSRPConsumerPortletLocalServiceUtil.initWSRPConsumerPortlets();
+		_WSRPConsumerPortletLocalService.initWSRPConsumerPortlets();
 	}
 
-	@Override
-	protected void onUndeploy(Message message) throws Exception {
-		WSRPConsumerPortletLocalServiceUtil.destroyWSRPConsumerPortlets();
+	@Deactivate
+	protected void deactivate(BundleContext bundleContext) {
+		try {
+			_WSRPConsumerPortletLocalService.destroyWSRPConsumerPortlets();
+		}
+		catch (PortalException pe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to destroy WSRP Consumer Portlets", pe);
+			}
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -120,5 +135,15 @@ public class WSRPMessageListener extends HotDeployMessageListener {
 		}
 
 	}
+	
+	@Reference(unbind = "-")
+	protected void setWSRPConsumerPortletLocalService(
+		WSRPConsumerPortletLocalService wSRPConsumerPortletLocalService) {
+
+		_WSRPConsumerPortletLocalService = wSRPConsumerPortletLocalService;
+	}
+	
+	private static WSRPConsumerPortletLocalService
+		_WSRPConsumerPortletLocalService;
 
 }

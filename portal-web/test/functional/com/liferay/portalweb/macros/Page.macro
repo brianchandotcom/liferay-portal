@@ -202,11 +202,13 @@
 
 		<execute function="Click" locator1="SitePagesEditPage#SELECT_CATEGORY_BUTTON" />
 
-		<execute function="SelectFrame" value1="relative=top" />
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
 		<execute function="Click" locator1="SitePagesEditPage#CATEGORY_TREE_NODE" />
-		<execute function="Click" locator1="Icon#CLOSE" />
 
+		<execute function="SelectFrame" value1="relative=top" />
+
+		<execute function="AssertClick" locator1="Button#DONE" value1="Done" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 	</command>
 

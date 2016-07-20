@@ -11,6 +11,10 @@
 		</if>
 	</command>
 
+	<command name="viewFailedMessage">
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="You cannot delete site templates that are used by a site." />
+	</command>
+
 	<command name="viewRequestFailedToComplete">
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_REQUEST_FAILED_TO_COMPLETE" value1="Your request failed to complete." />
 	</command>

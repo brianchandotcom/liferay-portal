@@ -312,15 +312,24 @@ renderResponse.setTitle(!configuredPublish ? LanguageUtil.get(request, "new-publ
 
 <aui:script>
 	function <portlet:namespace />publishPages() {
-		var form = AUI.$(document.<portlet:namespace />exportPagesFm);
+		var exportImport = Liferay.component('<portlet:namespace />ExportImportComponent');
 
-		var allContentSelected = AUI.$('#<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA_ALL %>').val();
+		var dateChecker = exportImport.getDateRangeChecker();
 
-		if (allContentSelected === 'true') {
-			form.fm('<%= PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT %>').val(true);
+		if (dateChecker.validRange) {
+			var form = AUI.$(document.<portlet:namespace />exportPagesFm);
+
+			var allContentSelected = AUI.$('#<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA_ALL %>').val();
+
+			if (allContentSelected === 'true') {
+				form.fm('<%= PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT %>').val(true);
+			}
+
+			submitForm(form);
 		}
-
-		submitForm(form);
+		else {
+			exportImport.showNotification(dateChecker);
+		}
 	}
 
 	Liferay.Util.toggleRadio('<portlet:namespace />allApplications', '<portlet:namespace />showChangeGlobalConfiguration', ['<portlet:namespace />selectApplications']);
@@ -334,7 +343,7 @@ renderResponse.setTitle(!configuredPublish ? LanguageUtil.get(request, "new-publ
 </aui:script>
 
 <aui:script use="liferay-export-import">
-	new Liferay.ExportImport(
+	var exportImport = new Liferay.ExportImport(
 		{
 			commentsNode: '#<%= PortletDataHandlerKeys.COMMENTS %>',
 			deletionsNode: '#<%= PortletDataHandlerKeys.DELETIONS %>',
@@ -354,6 +363,8 @@ renderResponse.setTitle(!configuredPublish ? LanguageUtil.get(request, "new-publ
 			userPreferencesNode: '#<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES_ALL %>'
 		}
 	);
+
+	Liferay.component('<portlet:namespace />ExportImportComponent', exportImport);
 
 	var clickHandler = function(event) {
 		var dataValue = event.target.ancestor('li').attr('data-value');

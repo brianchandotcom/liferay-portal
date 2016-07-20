@@ -128,7 +128,7 @@ renderResponse.setTitle((exportImportConfiguration == null) ? LanguageUtil.get(r
 </div>
 
 <aui:script use="liferay-export-import">
-	new Liferay.ExportImport(
+	var exportImport = new Liferay.ExportImport(
 		{
 			archivedSetupsNode: '#<%= PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS_ALL %>',
 			commentsNode: '#<%= PortletDataHandlerKeys.COMMENTS %>',
@@ -149,24 +149,33 @@ renderResponse.setTitle((exportImportConfiguration == null) ? LanguageUtil.get(r
 		}
 	);
 
+	Liferay.component('<portlet:namespace />ExportImportComponent', exportImport);
+
 	var form = A.one('#<portlet:namespace />fm1');
 
 	form.on(
 		'submit',
 		function(event) {
-			event.preventDefault();
+			event.halt();
 
-			var A = AUI();
+			var exportImport = Liferay.component('<portlet:namespace />ExportImportComponent');
 
-			var allContentSelected = A.one('#<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA_ALL %>').val();
+			var dateChecker = exportImport.getDateRangeChecker();
 
-			if (allContentSelected === 'true') {
-				var portletDataControlDefault = A.one('#<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT %>');
+			if (dateChecker.validRange) {
+				var allContentSelected = A.one('#<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA_ALL %>').val();
 
-				portletDataControlDefault.val(true);
+				if (allContentSelected === 'true') {
+					var portletDataControlDefault = A.one('#<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT %>');
+
+					portletDataControlDefault.val(true);
+				}
+
+				submitForm(form, form.attr('action'), false);
 			}
-
-			submitForm(form, form.attr('action'), false);
+			else {
+				exportImport.showNotification(dateChecker);
+			}
 		}
 	);
 </aui:script>

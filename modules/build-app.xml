@@ -72,11 +72,6 @@
 		</for>
 
 		<antcall target="index-modules-and-app-lpkgs" />
-
-		<copy
-			file="${modules.dir}${file.separator}apps${file.separator}static${file.separator}portal-lpkg-deployer${file.separator}portal-lpkg-deployer${file.separator}README.markdown"
-			toDir="${osgi.dir}/marketplace/overwritten"
-		/>
 	</target>
 
 	<target name="check-app-version">

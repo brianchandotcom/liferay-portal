@@ -579,6 +579,20 @@
 		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No processes were found." />
 	</command>
 
+	<command name="unassignForm">
+		<execute macro="KaleoFormsAdmin#gotoProgressStep">
+			<var name="kfProgressName" value="Forms" />
+		</execute>
+
+		<var name="key_rowEntry" value="${workflowTask}" />
+
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+
+		<var name="key_workflowTask" value="${workflowTask}" />
+
+		<execute function="AssertClick" locator1="MenuItem#UNASSIGN_FORM" value1="Unassign Form" />
+	</command>
+
 	<command name="viewFormEdit">
 		<var name="key_rowEntry" value="${kfFormNameEdit}" />
 

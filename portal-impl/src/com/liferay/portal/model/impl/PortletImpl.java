@@ -199,13 +199,13 @@ public class PortletImpl extends PortletBaseImpl {
 		Set<PublicRenderParameter> publicRenderParameters,
 		PortletApp portletApp) {
 
-		setPortletId(portletId);
-		setCompanyId(companyId);
-		setRoles(roles);
 		setActive(active);
+		setCompanyId(companyId);
+		setPortletId(portletId);
 		setProcessingEvents(processingEvents);
-		setPublishingEvents(publishingEvents);
 		setPublicRenderParameters(publicRenderParameters);
+		setPublishingEvents(publishingEvents);
+		setRoles(roles);
 
 		_rootPortlet = rootPortlet;
 		_pluginPackage = pluginPackage;

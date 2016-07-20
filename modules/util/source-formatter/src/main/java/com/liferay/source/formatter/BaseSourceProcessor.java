@@ -2671,43 +2671,40 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	protected String sortPutOrSetCalls(
-		String content, Pattern codeBlockPattern, Pattern singleLinePattern) {
+		String content, Pattern codeBlockPattern, Pattern singleLinePattern,
+		boolean sortByParameter) {
 
 		Matcher codeBlockMatcher = codeBlockPattern.matcher(content);
 
-		PutOrSetParameterNameComparator putOrSetParameterNameComparator =
-			new PutOrSetParameterNameComparator();
+		PutOrSetNameComparator putOrSetNameComparator =
+			new PutOrSetNameComparator(sortByParameter);
 
 		while (codeBlockMatcher.find()) {
 			String codeBlock = codeBlockMatcher.group();
 
 			Matcher singleLineMatcher = singleLinePattern.matcher(codeBlock);
 
-			String previousParameters = null;
-			String previousPutOrSetParameterName = null;
+			String previousMatch = null;
+			String previousSortableString = null;
 
 			while (singleLineMatcher.find()) {
-				String parameters = singleLineMatcher.group(1);
+				String match = singleLineMatcher.group();
+				String sortableString = singleLineMatcher.group(1);
 
-				List<String> parametersList = splitParameters(parameters);
-
-				String putOrSetParameterName = parametersList.get(0);
-
-				if ((previousPutOrSetParameterName != null) &&
-					(putOrSetParameterNameComparator.compare(
-						previousPutOrSetParameterName, putOrSetParameterName) >
-							0)) {
+				if ((previousSortableString != null) &&
+					(putOrSetNameComparator.compare(
+						previousSortableString, sortableString) > 0)) {
 
 					String newCodeBlock = StringUtil.replaceFirst(
-						codeBlock, previousParameters, parameters);
+						codeBlock, previousMatch, match);
 					newCodeBlock = StringUtil.replaceLast(
-						newCodeBlock, parameters, previousParameters);
+						newCodeBlock, match, previousMatch);
 
 					return StringUtil.replace(content, codeBlock, newCodeBlock);
 				}
 
-				previousParameters = parameters;
-				previousPutOrSetParameterName = putOrSetParameterName;
+				previousMatch = match;
+				previousSortableString = sortableString;
 			}
 		}
 
@@ -2917,6 +2914,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		"(\t*\\w*\\.setAttribute\\(\\s*.*?\\);\n)+", Pattern.DOTALL);
 	protected static Pattern setAttributePattern = Pattern.compile(
 		"\t*\\w*\\.setAttribute\\((.*?)\\);\n", Pattern.DOTALL);
+	protected static Pattern setBlockPattern = Pattern.compile(
+		"(\t+set[A-Z]\\w+\\(\\s*.*?\\);\n)+", Pattern.DOTALL);
+	protected static Pattern setPattern = Pattern.compile(
+		"\t+set([A-Z]\\w+)\\(.*?\\);\n", Pattern.DOTALL);
 	protected static Pattern singleLengthStringPattern = Pattern.compile(
 		"^(\".\"|StringPool\\.([A-Z_]+))$");
 	protected static Pattern stringUtilReplacePattern = Pattern.compile(
@@ -3108,41 +3109,29 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		_sourceFormatterMessagesMap = new ConcurrentHashMap<>();
 	private boolean _usePortalCompatImport;
 
-	private class PutOrSetParameterNameComparator
-		extends NaturalOrderStringComparator {
+	private class PutOrSetNameComparator extends NaturalOrderStringComparator {
+
+		public PutOrSetNameComparator(boolean sortByParameter) {
+			_sortByParameter = sortByParameter;
+		}
 
 		@Override
-		public int compare(
-			String putOrSetParameterName1, String putOrSetParameterName2) {
+		public int compare(String s1, String s2) {
+			if (!_sortByParameter) {
+				return super.compare(s1, s2);
+			}
 
-			String strippedParameterName1 = stripQuotes(putOrSetParameterName1);
-			String strippedParameterName2 = stripQuotes(putOrSetParameterName2);
+			String sortableParameter1 = _getSortableParameter(s1);
+			String sortableParameter2 = _getSortableParameter(s2);
 
-			if (strippedParameterName1.contains(StringPool.OPEN_PARENTHESIS) ||
-				strippedParameterName2.contains(StringPool.OPEN_PARENTHESIS)) {
-
+			if ((sortableParameter1 == null) || (sortableParameter2 == null)) {
 				return 0;
 			}
 
-			Matcher matcher = _multipleLineParameterNamePattern.matcher(
-				putOrSetParameterName1);
+			int value = super.compare(sortableParameter1, sortableParameter2);
 
-			if (matcher.find()) {
-				putOrSetParameterName1 = matcher.replaceAll(StringPool.BLANK);
-			}
-
-			matcher = _multipleLineParameterNamePattern.matcher(
-				putOrSetParameterName2);
-
-			if (matcher.find()) {
-				putOrSetParameterName2 = matcher.replaceAll(StringPool.BLANK);
-			}
-
-			int value = super.compare(
-				putOrSetParameterName1, putOrSetParameterName2);
-
-			if (putOrSetParameterName1.startsWith(StringPool.QUOTE) ^
-				putOrSetParameterName2.startsWith(StringPool.QUOTE)) {
+			if (sortableParameter1.startsWith(StringPool.QUOTE) ^
+				sortableParameter2.startsWith(StringPool.QUOTE)) {
 
 				return -value;
 			}
@@ -3150,8 +3139,26 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			return value;
 		}
 
+		private String _getSortableParameter(String s) {
+			List<String> parametersList = splitParameters(s);
+
+			String parameterName = parametersList.get(0);
+
+			String strippedParameterName = stripQuotes(parameterName);
+
+			if (strippedParameterName.contains(StringPool.OPEN_PARENTHESIS)) {
+				return null;
+			}
+
+			Matcher matcher = _multipleLineParameterNamePattern.matcher(
+				parameterName);
+
+			return matcher.replaceAll(StringPool.BLANK);
+		}
+
 		private final Pattern _multipleLineParameterNamePattern =
 			Pattern.compile("\" \\+\n\t+\"");
+		private final boolean _sortByParameter;
 
 	}
 

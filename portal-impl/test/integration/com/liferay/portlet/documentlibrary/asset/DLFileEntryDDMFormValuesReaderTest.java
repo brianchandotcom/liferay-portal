@@ -68,8 +68,8 @@ public class DLFileEntryDDMFormValuesReaderTest {
 
 	@Before
 	public void setUp() throws Exception {
-		setUpGroup();
 		setUpFileEntry();
+		setUpGroup();
 	}
 
 	@Test

@@ -81,8 +81,8 @@ public class WorkflowInstanceSearch extends SearchContainer<WorkflowInstance> {
 				orderByCol, orderByType);
 
 		setOrderByCol(orderByCol);
-		setOrderByType(orderByType);
 		setOrderByComparator(orderByComparator);
+		setOrderByType(orderByType);
 	}
 
 }

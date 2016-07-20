@@ -39,8 +39,8 @@ public class DLFileEntryResourceImpl extends BaseResourceImpl {
 			fileEntry.getCreateDate(), fileEntry.getModifiedDate(),
 			fileEntry.getSize());
 
-		setModel(fileEntry);
 		setClassName(DLFileEntry.class.getName());
+		setModel(fileEntry);
 		setPrimaryKey(fileEntry.getPrimaryKey());
 	}
 

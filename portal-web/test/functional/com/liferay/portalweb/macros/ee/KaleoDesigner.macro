@@ -354,7 +354,6 @@
 		<if>
 			<isset var="nodeNotificationsRecipientType" />
 			<then>
-				<execute function="AssertClick" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_EDIT_RECIPIENTS" value1="Edit Recipients" />
 				<execute function="Select" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_TYPE_SELECT" value1="${nodeNotificationsRecipientType}" />
 
 				<if>
@@ -379,9 +378,6 @@
 						<execute function="Click" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_SEARCH_LIST_RESULT" />
 					</then>
 				</if>
-
-				<execute function="Pause" locator1="1000" />
-				<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 			</then>
 		</if>
 
@@ -631,8 +627,6 @@
 		<if>
 			<isset var="nodeNotificationsRecipientType" />
 			<then>
-				<execute function="AssertClick" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_EDIT_RECIPIENTS" value1="Edit Recipients" />
-
 				<if>
 					<equals arg1="${nodeNotificationsRecipientType}" arg2="Role" />
 					<then>

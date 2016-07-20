@@ -17,7 +17,7 @@
 <c:choose>
 	<c:when test='<%= displayStyle.equals("descriptive") %>'>
 		<liferay-ui:search-container-column-icon
-			icon="users"
+			icon="password-policies"
 		/>
 
 		<liferay-ui:search-container-column-text colspan="<%= 2 %>">
@@ -46,7 +46,7 @@
 				actionJsp="/password_policy_action.jsp"
 				actionJspServletContext="<%= application %>"
 				cssClass="entry-display-style"
-				icon="users"
+				icon="password-policies"
 				resultRow="<%= row %>"
 				rowChecker="<%= passwordPolicySearchContainer.getRowChecker() %>"
 				subtitle="<%= passwordPolicy.getDescription() %>"

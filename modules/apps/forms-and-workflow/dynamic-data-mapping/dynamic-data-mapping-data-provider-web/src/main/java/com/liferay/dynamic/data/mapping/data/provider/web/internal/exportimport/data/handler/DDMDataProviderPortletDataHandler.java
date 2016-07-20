@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.data.provider.web.internal.lar;
+package com.liferay.dynamic.data.mapping.data.provider.web.internal.exportimport.data.handler;
 
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
 import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;

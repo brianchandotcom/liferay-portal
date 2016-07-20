@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.web.internal.lar;
+package com.liferay.dynamic.data.mapping.web.internal.exportimport.data.handler;
 
 /**
  * @author Marcellus Tavares

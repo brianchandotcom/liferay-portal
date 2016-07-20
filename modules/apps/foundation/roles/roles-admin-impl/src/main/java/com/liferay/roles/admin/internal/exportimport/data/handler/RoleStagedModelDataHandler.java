@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.roles.admin.internal.lar;
+package com.liferay.roles.admin.internal.exportimport.data.handler;
 
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;

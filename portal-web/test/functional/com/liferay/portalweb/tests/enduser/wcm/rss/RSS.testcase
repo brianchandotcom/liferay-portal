@@ -587,4 +587,134 @@
 			<var name="portletName" value="RSS Publisher" />
 		</execute>
 	</command>
+
+	<command name="UpdateRSSFeedViaAssetpublisher" priority="4">
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="System Settings" />
+		</execute>
+
+		<execute macro="SystemSettings#gotoCategory">
+			<var name="category" value="Web Experience" />
+		</execute>
+
+		<execute macro="SystemSettings#editConfiguration">
+			<var name="configurationName" value="RSS Cache" />
+		</execute>
+
+		<execute macro="RSS#updateFeedTime">
+			<var name="feedTime" value="1" />
+		</execute>
+
+		<execute macro="SitePageNavigator#gotoPages">
+			<var name="page" value="Public Pages" />
+			<var name="site" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#add">
+			<var name="pageName" value="Site Page Name 2" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Site Page Name" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="RSS Publisher" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Site Page Name 2" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Asset Publisher" />
+		</execute>
+
+		<execute macro="WebContent#addPGViaAP">
+			<var name="webContentContent" value="This is the web content test for rss feed" />
+			<var name="webContentTitle" value="Web Content Title" />
+		</execute>
+
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="Asset Publisher" />
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#enableRSSSubscription" />
+
+		<execute macro="Button#clickSave" />
+
+		<execute macro="IFrame#selectTopFrame" />
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Site Page Name 2" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<var attribute="href" locator="//div[@class='subscribe-action']/span/a[contains(@href,'asset_publisher')]" name="rssFeedUrl" />
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Site Page Name" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="RSS Publisher" />
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute macro="RSS#addFeed">
+			<var name="feedRowIndexNumber" value="0" />
+			<var name="feedTitle" value="Web Asset Publisher" />
+			<var name="feedUrlLink" value="${rssFeedUrl}" />
+		</execute>
+
+		<execute macro="PortletEntry#save" />
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Site Page Name" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="RSS#viewDisplayFeedTitle">
+			<var name="feedTitle" value="Web Asset Publisher" />
+		</execute>
+
+		<execute macro="RSS#viewUpdateFeedTitle">
+			<var name="feedHeading" value="Web Content Title" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Site Page Name 2" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="WebContent#editPGViaAP">
+			<var name="assetTitle" value="Web Content Title" />
+			<var name="webContentContentEdit" value="This is the updated version of web content test for rss feed" />
+			<var name="webContentTitleEdit" value="Web Content Title Updated Feed" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Site Page Name" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="RSS#viewDisplayFeedTitle">
+			<var name="feedTitle" value="Web Asset Publisher" />
+		</execute>
+
+		<execute macro="RSS#viewUpdateFeedTitle">
+			<var name="feedHeading" value="Web Content Title Updated Feed" />
+			<var name="pageName" value="Site Page Name" />
+			<var name="updateFeed" value="true" />
+		</execute>
+	</command>
 </definition>

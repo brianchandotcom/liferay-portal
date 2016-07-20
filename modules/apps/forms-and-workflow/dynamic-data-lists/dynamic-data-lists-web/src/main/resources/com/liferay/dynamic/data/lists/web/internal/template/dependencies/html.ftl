@@ -1,5 +1,5 @@
 <#include "init.ftl">
 
-<#assign content = "ddlDisplayTemplateHelper.getHTMLContent(" + fieldValueVariable + ", " + localeVariable + ")">
+<#assign content = "ddlDisplayTemplateHelper.getHTMLContent(" + fieldValueVariable + ", " + localeVariable + ")" />
 
 ${getVariableReferenceCode(content)}

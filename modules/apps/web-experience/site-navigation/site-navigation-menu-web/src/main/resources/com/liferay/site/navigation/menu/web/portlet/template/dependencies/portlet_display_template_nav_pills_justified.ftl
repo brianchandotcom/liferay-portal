@@ -5,9 +5,11 @@
 		</div>
 	</#if>
 <#else>
-	<#assign portletDisplay = themeDisplay.getPortletDisplay() />
+	<#assign
+		portletDisplay = themeDisplay.getPortletDisplay()
 
-	<#assign navbarId = "navbar_" + portletDisplay.getId() />
+		navbarId = "navbar_" + portletDisplay.getId()
+	/>
 
 	<div id="${navbarId}">
 		<ul aria-label="<@liferay.language key="site-pages" />" class="nav nav-justified nav-pills navbar-site" role="menubar">
@@ -19,18 +21,22 @@
 				<#assign showChildren = (displayDepth != 1) && navItem.hasBrowsableChildren() />
 
 				<#if navItem.isBrowsable() || showChildren>
-					<#assign nav_item_attr_has_popup = "" />
-					<#assign nav_item_attr_selected = "" />
-					<#assign nav_item_caret = "" />
-					<#assign nav_item_css_class = "lfr-nav-item" />
-					<#assign nav_item_href_link = "" />
-					<#assign nav_item_link_css_class = "" />
+					<#assign
+						nav_item_attr_has_popup = ""
+						nav_item_attr_selected = ""
+						nav_item_caret = ""
+						nav_item_css_class = "lfr-nav-item"
+						nav_item_href_link = ""
+						nav_item_link_css_class = ""
+					/>
 
 					<#if showChildren>
 						<#assign nav_item_attr_has_popup = "aria-haspopup='true'" />
 						<#assign nav_item_caret = '<span class="lfr-nav-child-toggle"><i class="icon-caret-down"></i></span>' />
-						<#assign nav_item_css_class = "${nav_item_css_class} dropdown" />
-						<#assign nav_item_link_css_class = "dropdown-toggle" />
+						<#assign
+							nav_item_css_class = "${nav_item_css_class} dropdown"
+							nav_item_link_css_class = "dropdown-toggle"
+						/>
 					</#if>
 
 					<#if navItem.isBrowsable()>
@@ -38,8 +44,10 @@
 					</#if>
 
 					<#if navItem.isSelected()>
-						<#assign nav_item_attr_selected = "aria-selected='true'" />
-						<#assign nav_item_css_class = "${nav_item_css_class} selected active" />
+						<#assign
+							nav_item_attr_selected = "aria-selected='true'"
+							nav_item_css_class = "${nav_item_css_class} selected active"
+						/>
 					</#if>
 
 					<li class="${nav_item_css_class}" id="layout_${navItem.getLayoutId()}" ${nav_item_attr_selected} role="presentation">
@@ -50,12 +58,16 @@
 						<#if showChildren>
 							<ul aria-expanded="false" class="child-menu dropdown-menu" role="menu">
 								<#list navItem.getBrowsableChildren() as childNavigationItem>
-									<#assign nav_child_attr_selected = "" />
-									<#assign nav_child_css_class = "" />
+									<#assign
+										nav_child_attr_selected = ""
+										nav_child_css_class = ""
+									/>
 
 									<#if childNavigationItem.isSelected()>
-										<#assign nav_child_attr_selected = "aria-selected='true'" />
-										<#assign nav_child_css_class = "active selected" />
+										<#assign
+											nav_child_attr_selected = "aria-selected='true'"
+											nav_child_css_class = "active selected"
+										/>
 									</#if>
 
 									<li class="${nav_child_css_class}" id="layout_${childNavigationItem.getLayoutId()}" ${nav_child_attr_selected} role="presentation">

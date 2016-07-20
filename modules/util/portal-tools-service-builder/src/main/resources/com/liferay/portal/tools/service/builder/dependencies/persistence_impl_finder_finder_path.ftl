@@ -1,4 +1,4 @@
-<#assign finderColsList = finder.getColumns()>
+<#assign finderColsList = finder.getColumns() />
 
 <#if finder.isCollection()>
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_${finder.name?upper_case} = new FinderPath(
@@ -44,10 +44,10 @@
 				</#list>
 
 				<#if entity.getOrder()??>
-					<#assign orderList = entity.getOrder().getColumns()>
+					<#assign orderList = entity.getOrder().getColumns() />
 
 					<#list orderList as order>
-						<#assign pkList = entity.getPKList()>
+						<#assign pkList = entity.getPKList() />
 
 						<#if !finderColsList?seq_contains(order) && !pkList?seq_contains(order)>
 							| ${entity.name}ModelImpl.${order.name?upper_case}_COLUMN_BITMASK

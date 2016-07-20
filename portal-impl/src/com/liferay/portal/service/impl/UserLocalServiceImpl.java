@@ -1469,26 +1469,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Removes all the users from the organization.
-	 *
-	 * @param organizationId the primary key of the organization
-	 */
-	@Override
-	public void clearOrganizationUsers(long organizationId) {
-		organizationPersistence.clearUsers(organizationId);
-	}
-
-	/**
-	 * Removes all the users from the user group.
-	 *
-	 * @param userGroupId the primary key of the user group
-	 */
-	@Override
-	public void clearUserGroupUsers(long userGroupId) {
-		userGroupPersistence.clearUsers(userGroupId);
-	}
-
-	/**
 	 * Completes the user's registration by generating a password and sending
 	 * the confirmation email.
 	 *

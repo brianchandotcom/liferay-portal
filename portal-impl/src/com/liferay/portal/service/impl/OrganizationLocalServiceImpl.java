@@ -98,17 +98,6 @@ public class OrganizationLocalServiceImpl
 	extends OrganizationLocalServiceBaseImpl {
 
 	/**
-	 * Adds the organizations to the group.
-	 *
-	 * @param groupId the primary key of the group
-	 * @param organizationIds the primary keys of the organizations
-	 */
-	@Override
-	public void addGroupOrganizations(long groupId, long[] organizationIds) {
-		groupPersistence.addOrganizations(groupId, organizationIds);
-	}
-
-	/**
 	 * Adds an organization.
 	 *
 	 * <p>
@@ -1544,18 +1533,6 @@ public class OrganizationLocalServiceImpl
 
 		throw new SearchException(
 			"Unable to fix the search index after 10 attempts");
-	}
-
-	/**
-	 * Sets the organizations in the group, removing and adding organizations to
-	 * the group as necessary.
-	 *
-	 * @param groupId the primary key of the group
-	 * @param organizationIds the primary keys of the organizations
-	 */
-	@Override
-	public void setGroupOrganizations(long groupId, long[] organizationIds) {
-		groupPersistence.setOrganizations(groupId, organizationIds);
 	}
 
 	/**

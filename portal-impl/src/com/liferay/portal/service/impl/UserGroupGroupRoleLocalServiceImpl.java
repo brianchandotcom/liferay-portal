@@ -69,15 +69,6 @@ public class UserGroupGroupRoleLocalServiceImpl
 	}
 
 	@Override
-	public UserGroupGroupRole deleteUserGroupGroupRole(
-		UserGroupGroupRole userGroupGroupRole) {
-
-		userGroupGroupRolePersistence.remove(userGroupGroupRole);
-
-		return userGroupGroupRole;
-	}
-
-	@Override
 	public void deleteUserGroupGroupRoles(long groupId, int roleType) {
 		List<UserGroupGroupRole> userGroupGroupRoles =
 			userGroupGroupRoleFinder.findByGroupRoleType(groupId, roleType);

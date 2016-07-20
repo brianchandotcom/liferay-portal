@@ -82,28 +82,6 @@ import java.util.Set;
 public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 
 	/**
-	 * Adds the user groups to the group.
-	 *
-	 * @param groupId the primary key of the group
-	 * @param userGroupIds the primary keys of the user groups
-	 */
-	@Override
-	public void addGroupUserGroups(long groupId, long[] userGroupIds) {
-		groupPersistence.addUserGroups(groupId, userGroupIds);
-	}
-
-	/**
-	 * Adds the user groups to the team.
-	 *
-	 * @param teamId the primary key of the team
-	 * @param userGroupIds the primary keys of the user groups
-	 */
-	@Override
-	public void addTeamUserGroups(long teamId, long[] userGroupIds) {
-		teamPersistence.addUserGroups(teamId, userGroupIds);
-	}
-
-	/**
 	 * Adds a user group.
 	 *
 	 * <p>
@@ -206,17 +184,6 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		indexer.reindex(userGroup);
 
 		return userGroup;
-	}
-
-	/**
-	 * Clears all associations between the user and its user groups and clears
-	 * the permissions cache.
-	 *
-	 * @param userId the primary key of the user
-	 */
-	@Override
-	public void clearUserUserGroups(long userId) {
-		userPersistence.clearUserGroups(userId);
 	}
 
 	/**

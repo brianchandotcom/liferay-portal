@@ -93,56 +93,6 @@ public class TeamLocalServiceImpl extends TeamLocalServiceBaseImpl {
 	}
 
 	@Override
-	public void addUserGroupTeam(long userGroupId, long teamId) {
-		super.addUserGroupTeam(userGroupId, teamId);
-	}
-
-	@Override
-	public void addUserGroupTeam(long userGroupId, Team team) {
-		super.addUserGroupTeam(userGroupId, team);
-	}
-
-	@Override
-	public void addUserGroupTeams(long userGroupId, List<Team> teams) {
-		super.addUserGroupTeams(userGroupId, teams);
-	}
-
-	@Override
-	public void addUserGroupTeams(long userGroupId, long[] teamIds) {
-		super.addUserGroupTeams(userGroupId, teamIds);
-	}
-
-	@Override
-	public void addUserTeam(long userId, long teamId) {
-		super.addUserTeam(userId, teamId);
-	}
-
-	@Override
-	public void addUserTeam(long userId, Team team) {
-		super.addUserTeam(userId, team);
-	}
-
-	@Override
-	public void addUserTeams(long userId, List<Team> teams) {
-		super.addUserTeams(userId, teams);
-	}
-
-	@Override
-	public void addUserTeams(long userId, long[] teamIds) {
-		super.addUserTeams(userId, teamIds);
-	}
-
-	@Override
-	public void clearUserGroupTeams(long userGroupId) {
-		super.clearUserGroupTeams(userGroupId);
-	}
-
-	@Override
-	public void clearUserTeams(long userId) {
-		super.clearUserTeams(userId);
-	}
-
-	@Override
 	public Team deleteTeam(long teamId) throws PortalException {
 		Team team = teamPersistence.findByPrimaryKey(teamId);
 
@@ -178,46 +128,6 @@ public class TeamLocalServiceImpl extends TeamLocalServiceBaseImpl {
 		for (Team team : teams) {
 			deleteTeam(team.getTeamId());
 		}
-	}
-
-	@Override
-	public void deleteUserGroupTeam(long userGroupId, long teamId) {
-		super.deleteUserGroupTeam(userGroupId, teamId);
-	}
-
-	@Override
-	public void deleteUserGroupTeam(long userGroupId, Team team) {
-		super.deleteUserGroupTeam(userGroupId, team);
-	}
-
-	@Override
-	public void deleteUserGroupTeams(long userGroupId, List<Team> teams) {
-		super.deleteUserGroupTeams(userGroupId, teams);
-	}
-
-	@Override
-	public void deleteUserGroupTeams(long userGroupId, long[] teamIds) {
-		super.deleteUserGroupTeams(userGroupId, teamIds);
-	}
-
-	@Override
-	public void deleteUserTeam(long userId, long teamId) {
-		super.deleteUserTeam(userId, teamId);
-	}
-
-	@Override
-	public void deleteUserTeam(long userId, Team team) {
-		super.deleteUserTeam(userId, team);
-	}
-
-	@Override
-	public void deleteUserTeams(long userId, List<Team> teams) {
-		super.deleteUserTeams(userId, teams);
-	}
-
-	@Override
-	public void deleteUserTeams(long userId, long[] teamIds) {
-		super.deleteUserTeams(userId, teamIds);
 	}
 
 	@Override

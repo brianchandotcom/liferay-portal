@@ -1,6 +1,8 @@
-<#assign wikiPageClassName = "com.liferay.wiki.model.WikiPage" />
+<#assign
+	wikiPageClassName = "com.liferay.wiki.model.WikiPage"
 
-<#assign assetRenderer = assetEntry.getAssetRenderer() />
+	assetRenderer = assetEntry.getAssetRenderer()
+/>
 
 <div class="taglib-header">
 	<h1 class="header-title">${entry.getTitle()}</h1>
@@ -220,8 +222,10 @@
 	${printURL.setParameter("viewMode", "print")}
 	${printURL.setWindowState("pop_up")}
 
-	<#assign title = languageUtil.format(locale, "print-x-x", ["hide-accessible", htmlUtil.escape(assetRenderer.getTitle(locale))], false) />
-	<#assign taglibPrintURL = "javascript:Liferay.Util.openWindow({dialog: {width: 960}, id:'" + renderResponse.getNamespace() + "printAsset', title: '" + title + "', uri: '" + htmlUtil.escapeURL(printURL.toString()) + "'});" />
+	<#assign
+		title = languageUtil.format(locale, "print-x-x", ["hide-accessible", htmlUtil.escape(assetRenderer.getTitle(locale))], false)
+		taglibPrintURL = "javascript:Liferay.Util.openWindow({dialog: {width: 960}, id:'" + renderResponse.getNamespace() + "printAsset', title: '" + title + "', uri: '" + htmlUtil.escapeURL(printURL.toString()) + "'});"
+	/>
 
 	<@liferay_ui["icon"]
 		iconCssClass="icon-print"

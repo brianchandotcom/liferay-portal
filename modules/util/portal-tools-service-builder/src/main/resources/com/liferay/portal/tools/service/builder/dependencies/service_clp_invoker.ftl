@@ -49,8 +49,10 @@ public class ${entity.name}${sessionTypeName}ServiceClpInvoker {
 
 		<#list methods as method>
 			<#if !method.isConstructor() && method.isPublic() && serviceBuilder.isCustomMethod(method) && (method.name != "invokeMethod")>
-				<#assign returnTypeName = serviceBuilder.getTypeGenericsName(method.returns) />
-				<#assign parameters = method.parameters />
+				<#assign
+					returnTypeName = serviceBuilder.getTypeGenericsName(method.returns)
+					parameters = method.parameters
+				/>
 
 				if (_methodName${method_index}.equals(name) && Arrays.deepEquals(_methodParameterTypes${method_index}, parameterTypes)) {
 					<#if returnTypeName != "void">

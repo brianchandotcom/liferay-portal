@@ -56,10 +56,12 @@ public class ${entity.name}ServiceHttp {
 
 	<#list methods as method>
 		<#if !method.isConstructor() && method.isPublic() && serviceBuilder.isCustomMethod(method)>
-			<#assign hasMethods = true />
+			<#assign
+				hasMethods = true
 
-			<#assign returnTypeName = serviceBuilder.getTypeGenericsName(method.returns) />
-			<#assign parameters = method.parameters />
+				returnTypeName = serviceBuilder.getTypeGenericsName(method.returns)
+				parameters = method.parameters
+			/>
 
 			public static ${returnTypeName} ${method.name} (HttpPrincipal httpPrincipal
 

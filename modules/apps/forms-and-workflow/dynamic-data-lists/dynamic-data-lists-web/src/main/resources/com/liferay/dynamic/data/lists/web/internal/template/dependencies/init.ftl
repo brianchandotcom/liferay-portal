@@ -1,13 +1,17 @@
 <#-- Common -->
 
-<#assign localeVariable = "locale" />
+<#assign
+	localeVariable = "locale"
 
-<#assign themeDisplayVariable = "themeDisplay" />
+	themeDisplayVariable = "themeDisplay"
+/>
 
 <#if language == "vm">
-	<#assign localeVariable = "$" + localeVariable />
+	<#assign
+		localeVariable = "$" + localeVariable
 
-	<#assign themeDisplayVariable = "$" + themeDisplayVariable />
+		themeDisplayVariable = "$" + themeDisplayVariable
+	/>
 </#if>
 
 <#-- Field Value -->

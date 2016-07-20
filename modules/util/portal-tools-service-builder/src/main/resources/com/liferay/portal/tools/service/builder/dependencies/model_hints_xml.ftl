@@ -28,9 +28,11 @@
 					<#assign closeField = false />
 
 					<#if modelHintsUtil.getFieldsElement(modelName, column.name)??>
-						<#assign fieldsElement = modelHintsUtil.getFieldsElement(modelName, column.name) />
+						<#assign
+							fieldsElement = modelHintsUtil.getFieldsElement(modelName, column.name)
 
-						<#assign hintElements = fieldsElement.elements() />
+							hintElements = fieldsElement.elements()
+						/>
 
 						<#if hintElements?size gt 0>
 							<#assign closeField = true />
@@ -49,9 +51,11 @@
 						>
 
 						<#if modelHintsUtil.getFieldsElement(modelName, column.name)??>
-							<#assign fieldsElement = modelHintsUtil.getFieldsElement(modelName, column.name) />
+							<#assign
+								fieldsElement = modelHintsUtil.getFieldsElement(modelName, column.name)
 
-							<#assign hintElements = fieldsElement.elements() />
+								hintElements = fieldsElement.elements()
+							/>
 
 							<#list hintElements as hintElement>
 								<#if hintElement.name == "hint">
@@ -63,10 +67,12 @@
 						</#if>
 
 						<#if modelHintsUtil.getSanitizeTuple(modelName, column.name)??>
-							<#assign sanitizeTuple = modelHintsUtil.getSanitizeTuple(modelName, column.name) />
+							<#assign
+								sanitizeTuple = modelHintsUtil.getSanitizeTuple(modelName, column.name)
 
-							<#assign contentType = sanitizeTuple.getObject(1) />
-							<#assign modes = sanitizeTuple.getObject(2) />
+								contentType = sanitizeTuple.getObject(1)
+								modes = sanitizeTuple.getObject(2)
+							/>
 
 							<sanitize content-type="${contentType}" modes="${modes}" />
 						</#if>
@@ -75,9 +81,11 @@
 							<#assign validators = modelHintsUtil.getValidators(modelName, column.name) />
 
 							<#list validators as validator>
-								<#assign validatorName = validator.getObject(1) />
-								<#assign validatorErrorMessage = validator.getObject(2) />
-								<#assign validatorValue = validator.getObject(3) />
+								<#assign
+									validatorName = validator.getObject(1)
+									validatorErrorMessage = validator.getObject(2)
+									validatorValue = validator.getObject(3)
+								/>
 
 								<validator
 

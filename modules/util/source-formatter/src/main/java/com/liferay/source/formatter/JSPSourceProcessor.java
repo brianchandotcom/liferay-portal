@@ -385,9 +385,9 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			fileName, absolutePath, newContent, _taglibLanguageKeyPattern3);
 
 		newContent = sortPutOrSetCalls(
-			newContent, jsonObjectPutBlockPattern, jsonObjectPutPattern);
+			newContent, jsonObjectPutBlockPattern, jsonObjectPutPattern, true);
 		newContent = sortPutOrSetCalls(
-			newContent, setAttributeBlockPattern, setAttributePattern);
+			newContent, setAttributeBlockPattern, setAttributePattern, true);
 
 		newContent = formatStringBundler(fileName, newContent, -1);
 

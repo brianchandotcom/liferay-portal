@@ -113,6 +113,44 @@
 		</execute>
 	</command>
 
+	<command name="DeleteSiteTemplateAssociatedWithASite" priority="4">
+		<property name="portal.acceptance" value="true" />
+
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Site Templates" />
+		</execute>
+
+		<execute macro="SiteTemplates#addCP">
+			<var name="siteTemplateActive" value="Yes" />
+			<var name="siteTemplateName" value="Site Template Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addSiteTemplateCP">
+			<var name="siteName" value="Site Name" />
+			<var name="siteTemplateName" value="Site Template Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Site Templates" />
+		</execute>
+
+		<execute macro="SiteTemplates#deleteCP">
+			<var name="siteTemplateName" value="Site Template Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Site Templates" />
+		</execute>
+
+		<execute macro="SiteTemplates#viewCP">
+			<var name="siteTemplateNameList" value="Site Template Name" />
+		</execute>
+	</command>
+
 	<command name="EditSiteTemplateStatus" priority="5">
 		<property name="portal.acceptance" value="true" />
 

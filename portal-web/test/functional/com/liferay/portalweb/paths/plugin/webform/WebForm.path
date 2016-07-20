@@ -8,16 +8,6 @@
 <tr><td rowspan="1" colspan="3">WebForm</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td>EXTEND_ACTION_PATH</td>
-	<td>BasePortlet</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--FORM_INFORMATION-->
 <tr>
 	<td>FORM_INFORMATION_TITLE</td>

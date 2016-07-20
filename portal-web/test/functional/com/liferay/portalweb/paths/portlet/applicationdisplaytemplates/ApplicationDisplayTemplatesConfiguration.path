@@ -9,16 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>EXTEND_ACTION_PATH</td>
-	<td>BasePortletConfiguration</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>SETUP</td>
 	<td>//a[contains(.,'Setup')]</td>
 	<td></td>

@@ -44,7 +44,7 @@ renderResponse.setTitle((role == null) ? LanguageUtil.get(request, "new-role") :
 </c:if>
 
 <aui:form action="<%= editRoleURL %>" cssClass="container-fluid-1280" method="post" name="fm">
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="roleId" type="hidden" value="<%= roleId %>" />
 
 	<liferay-ui:error exception="<%= DuplicateRoleException.class %>" message="please-enter-a-unique-name" />

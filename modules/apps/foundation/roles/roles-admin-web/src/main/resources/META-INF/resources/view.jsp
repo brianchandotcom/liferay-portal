@@ -71,6 +71,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, breadcrumbTitle, currentURL);
 	<liferay-portlet:renderURL varImpl="addRoleURL">
 		<portlet:param name="mvcPath" value="/edit_role.jsp" />
 		<portlet:param name="redirect" value="<%= portletURLString %>" />
+		<portlet:param name="tabs1" value="edit" />
 		<portlet:param name="type" value="<%= String.valueOf(type) %>" />
 	</liferay-portlet:renderURL>
 

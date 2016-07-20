@@ -31,6 +31,7 @@ portletURL.setParameter("usersListView", usersListView);
 
 String displayStyle = ParamUtil.getString(request, "displayStyle");
 String keywords = ParamUtil.getString(request, "keywords");
+String navigation = ParamUtil.getString(request, "navigation", "all");
 String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 
 if (Validator.isNull(displayStyle)) {
@@ -43,6 +44,16 @@ else {
 }
 
 portletURL.setParameter("displayStyle", displayStyle);
+portletURL.setParameter("navigation", navigation);
+
+int status = WorkflowConstants.STATUS_ANY;
+
+if (navigation.equals("active")) {
+	status = WorkflowConstants.STATUS_APPROVED;
+}
+else if (navigation.equals("inactive")) {
+	status = WorkflowConstants.STATUS_INACTIVE;
+}
 
 List<Organization> organizations = new ArrayList<Organization>();
 
@@ -83,7 +94,7 @@ if (organization != null) {
 		>
 			<liferay-frontend:management-bar-filters>
 				<liferay-frontend:management-bar-navigation
-					navigationKeys='<%= new String[] {"all"} %>'
+					navigationKeys='<%= new String[] {"all", "active", "inactive"} %>'
 					portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
 				/>
 
@@ -157,71 +168,73 @@ if (organization != null) {
 			organizationSearch.setOrderByType(orderByType);
 			%>
 
-			<liferay-ui:search-container
-				id="organizations"
-				searchContainer="<%= organizationSearch %>"
-				var="organizationSearchContainer"
-			>
+			<c:if test='<%= !navigation.equals("inactive") %>'>
+				<liferay-ui:search-container
+					id="organizations"
+					searchContainer="<%= organizationSearch %>"
+					var="organizationSearchContainer"
+				>
 
-				<%
-				OrganizationSearchTerms searchTerms = (OrganizationSearchTerms)organizationSearchContainer.getSearchTerms();
+					<%
+					OrganizationSearchTerms searchTerms = (OrganizationSearchTerms)organizationSearchContainer.getSearchTerms();
 
-				long parentOrganizationId = _getParentOrganizationId(request, organization, filterManageableOrganizations);
+					long parentOrganizationId = _getParentOrganizationId(request, organization, filterManageableOrganizations);
 
-				if (organization != null) {
-					parentOrganizationId = organization.getOrganizationId();
-				}
+					if (organization != null) {
+						parentOrganizationId = organization.getOrganizationId();
+					}
 
-				LinkedHashMap<String, Object> organizationParams = new LinkedHashMap<String, Object>();
+					LinkedHashMap<String, Object> organizationParams = new LinkedHashMap<String, Object>();
 
-				List<Long> excludedOrganizationIds = new ArrayList<Long>();
+					List<Long> excludedOrganizationIds = new ArrayList<Long>();
 
-				excludedOrganizationIds.add(parentOrganizationId);
+					excludedOrganizationIds.add(parentOrganizationId);
 
-				organizationParams.put("excludedOrganizationIds", excludedOrganizationIds);
-				%>
+					organizationParams.put("excludedOrganizationIds", excludedOrganizationIds);
+					%>
 
-				<c:choose>
-					<c:when test="<%= !searchTerms.hasSearchTerms() && (parentOrganizationId <= 0) && (filterManageableOrganizations) %>">
-						<liferay-ui:search-container-results>
+					<c:choose>
+						<c:when test="<%= !searchTerms.hasSearchTerms() && (parentOrganizationId <= 0) && (filterManageableOrganizations) %>">
+							<liferay-ui:search-container-results>
+
+								<%
+								total = organizations.size();
+
+								organizationSearchContainer.setTotal(total);
+
+								results = ListUtil.subList(organizations, organizationSearchContainer.getStart(), organizationSearchContainer.getEnd());
+
+								organizationSearchContainer.setResults(results);
+								%>
+
+							</liferay-ui:search-container-results>
+						</c:when>
+						<c:otherwise>
 
 							<%
-							total = organizations.size();
+							if (searchTerms.hasSearchTerms()) {
+								if (filterManageableOrganizations) {
+									organizationParams.put("organizationsTree", organizations);
+								}
+								else if (parentOrganizationId > 0) {
+									List<Organization> organizationsTree = new ArrayList<Organization>();
 
-							organizationSearchContainer.setTotal(total);
+									Organization parentOrganization = OrganizationLocalServiceUtil.getOrganization(parentOrganizationId);
 
-							results = ListUtil.subList(organizations, organizationSearchContainer.getStart(), organizationSearchContainer.getEnd());
+									organizationsTree.add(parentOrganization);
 
-							organizationSearchContainer.setResults(results);
+									organizationParams.put("organizationsTree", organizationsTree);
+								}
+
+								parentOrganizationId = OrganizationConstants.ANY_PARENT_ORGANIZATION_ID;
+							}
 							%>
 
-						</liferay-ui:search-container-results>
-					</c:when>
-					<c:otherwise>
-
-						<%
-						if (searchTerms.hasSearchTerms()) {
-							if (filterManageableOrganizations) {
-								organizationParams.put("organizationsTree", organizations);
-							}
-							else if (parentOrganizationId > 0) {
-								List<Organization> organizationsTree = new ArrayList<Organization>();
-
-								Organization parentOrganization = OrganizationLocalServiceUtil.getOrganization(parentOrganizationId);
-
-								organizationsTree.add(parentOrganization);
-
-								organizationParams.put("organizationsTree", organizationsTree);
-							}
-
-							parentOrganizationId = OrganizationConstants.ANY_PARENT_ORGANIZATION_ID;
-						}
-						%>
-
-						<liferay-ui:organization-search-container-results organizationParams="<%= organizationParams %>" parentOrganizationId="<%= parentOrganizationId %>" />
-					</c:otherwise>
-				</c:choose>
-			</liferay-ui:search-container>
+							<liferay-ui:organization-search-container-results organizationParams="<%= organizationParams %>" parentOrganizationId="<%= parentOrganizationId %>" />
+						</c:otherwise>
+					</c:choose>
+				</liferay-ui:search-container>
+			</c:if>
 
 			<%
 			SearchContainer userSearch = new UserSearch(renderRequest, "cur2", currentURLObj);
@@ -238,7 +251,7 @@ if (organization != null) {
 				<%
 				UserSearchTerms userSearchTerms = (UserSearchTerms)userSearchContainer.getSearchTerms();
 
-				userSearchTerms.setStatus(WorkflowConstants.STATUS_ANY);
+				userSearchTerms.setStatus(status);
 
 				LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
 

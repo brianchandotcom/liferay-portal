@@ -103,6 +103,13 @@
 					<description/>
 				</parameter>
 				<parameter>
+					<name>sourceFormatterEnabled</name>
+					<type>boolean</type>
+					<required>false</required>
+					<editable>true</editable>
+					<description/>
+				</parameter>
+				<parameter>
 					<name>throwException</name>
 					<type>boolean</type>
 					<required>false</required>

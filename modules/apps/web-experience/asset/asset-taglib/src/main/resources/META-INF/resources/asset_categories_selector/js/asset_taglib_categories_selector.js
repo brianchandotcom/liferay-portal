@@ -117,8 +117,6 @@ AUI.add(
 
 						instance.inputContainer.addClass('hide-accessible');
 
-						var contentBox = instance.get('contentBox');
-
 						instance._applyARIARoles();
 					},
 
@@ -148,6 +146,7 @@ AUI.add(
 								};
 
 								entry.value = LString.unescapeHTML(curEntries[index]);
+
 								instance.add(entry.value);
 							}
 						);
@@ -158,10 +157,11 @@ AUI.add(
 					_applyARIARoles: function() {
 						var instance = this;
 
-						var boundingBox = instance.get(BOUNDING_BOX);
 						var labelNode = instance.get('labelNode');
 
 						if (labelNode) {
+							var boundingBox = instance.get(BOUNDING_BOX);
+
 							boundingBox.attr('aria-labelledby', labelNode.attr(ID));
 
 							labelNode.attr('for', boundingBox.attr(ID));
@@ -233,14 +233,10 @@ AUI.add(
 								eventName: instance.get('eventName'),
 								on: {
 									selectedItemChange: function(event) {
-
 										var data = event.newVal;
-
-										var selectedEntryIds = instance.get('curEntryIds');
 
 										if (data && data.items) {
 											for (var key in data.items) {
-
 												var found = false;
 
 												instance.entries.each(
@@ -260,7 +256,6 @@ AUI.add(
 												if (!found && !data.items[key].unchecked) {
 													instance.entries.add(data.items[key]);
 												}
-
 											}
 										}
 

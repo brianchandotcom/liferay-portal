@@ -91,8 +91,8 @@ if (queryLogicIndex >= 0) {
 	select.on(
 		'change',
 		function(event) {
-			var tagsSelector = row.find('.tags-selector');
 			var categoriesSelector = row.find('.categories-selector');
+			var tagsSelector = row.find('.tags-selector');
 
 			var assetTags = (select.val() == 'assetTags');
 

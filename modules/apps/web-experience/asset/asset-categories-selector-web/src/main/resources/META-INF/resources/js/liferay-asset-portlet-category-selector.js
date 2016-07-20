@@ -15,25 +15,32 @@ AUI.add(
 					boundingBox: {
 						validator: Lang.isString
 					},
+
 					entries: {
 						validator: Lang.isObject
 					},
+
 					entryIds: {
 						validator: Lang.isString
 					},
+
 					eventName: {
 						validator: Lang.isString
 					},
+
 					namespace: {
 						validator: Lang.isString
 					},
+
 					singleSelect: {
 						validator: Lang.isBoolean,
 						value: false
 					},
+
 					url: {
 						validator: Lang.isString
 					},
+
 					vocabularyRootNode: {
 						validator: Lang.isObject
 					}
@@ -43,28 +50,34 @@ AUI.add(
 
 				prototype: {
 					renderUI: function() {
-						this.entryIdsArr = this.get('entryIds').split(',');
+						var instance = this;
 
-						this.treeView = new A.TreeView(
+						instance.entryIdsArr = instance.get('entryIds').split(',');
+
+						instance.treeView = new A.TreeView(
 							{
-								boundingBox: this.get('boundingBox'),
-								children: [this.get('vocabularyRootNode')],
+								boundingBox: instance.get('boundingBox'),
+								children: [instance.get('vocabularyRootNode')],
 								io: {
 									cfg: {
-										data: this.formatRequestData.bind(this)
+										data: instance.formatRequestData.bind(instance)
 									},
-									formatter: this.formatJSONResult.bind(this),
-									url: this.get('url')
+									formatter: instance.formatJSONResult.bind(instance),
+									url: instance.get('url')
 								}
 							}
 						).render();
 					},
 
 					clearEntries: function() {
-						this.set('entries', {});
+						var instance = this;
+
+						instance.set('entries', {});
 					},
 
 					formatJSONResult: function(json) {
+						var instance = this;
+
 						var output = [];
 
 						var type = 'check';
@@ -78,47 +91,48 @@ AUI.add(
 										after: {
 											checkedChange: function(event) {
 												if (event.newVal) {
-													if (this.get('singleSelect')) {
+													if (instance.get('singleSelect')) {
 														type = 'radio';
 													}
 
-													this.onCheckboxCheck(event);
-
+													instance.onCheckboxCheck(event);
 												}
 												else {
-													this.onCheckboxUncheck(event);
+													instance.onCheckboxUncheck(event);
 												}
 
 												Liferay.Util.getOpener().Liferay.fire(
-													this.get('eventName'),
+													instance.get('eventName'),
 													{
 														data: {
-															items: this.get('entries')
+															items: instance.get('entries')
 														}
 													}
 												);
-											}.bind(this)
+											}
 										},
+										categoryId: item.categoryId,
 										checked: false,
 										id: treeId,
 										label: LString.escapeHTML(item.titleCurrentValue),
 										leaf: !item.hasChildren,
-										paginator: this.getPaginatorConfig(item),
+										paginator: instance.getPaginatorConfig(item),
 										parentCategoryIds: item.parentCategoryIds,
-										type: type,
-										categoryId: item.categoryId
+										type: type
 									};
 
-									if (this.entryIdsArr.indexOf(item.categoryId) !== -1) {
-										var entries = this.get('entries');
+									if (instance.entryIdsArr.indexOf(item.categoryId) !== -1) {
+										var entries = instance.get('entries');
+
 										entries[LString.escapeHTML(item.titleCurrentValue)] = item;
+
 										newTreeNode.checked = true;
-										this.set('entries', entries);
+
+										instance.set('entries', entries);
 									}
 
 									output.push(newTreeNode);
-
-								}.bind(this)
+								}
 							);
 						}
 
@@ -126,19 +140,20 @@ AUI.add(
 					},
 
 					formatRequestData: function(treeNode) {
-						var assetId = this.getTreeNodeAssetId(treeNode);
+						var instance = this;
 
-						var assetType = this.getTreeNodeAssetType(treeNode);
+						var assetId = instance.getTreeNodeAssetId(treeNode);
 
-						var url = this.get('url');
+						var assetType = instance.getTreeNodeAssetType(treeNode);
 
 						if (Lang.isValue(assetId) && assetType === 'category') {
-							var urlGetSubCategories = url;
+							var getSubCategoriesURL = instance.get('url');
 
-							urlGetSubCategories = Liferay.Util.addParams(this.get('namespace') + 'categoryId=' + assetId, urlGetSubCategories);
+							getSubCategoriesURL = Liferay.Util.addParams(instance.get('namespace') + 'categoryId=' + assetId, getSubCategoriesURL);
+
 							var io = treeNode.get('io');
 
-							io.url = urlGetSubCategories;
+							io.url = getSubCategoriesURL;
 
 							treeNode.set('io', io);
 						}
@@ -183,62 +198,58 @@ AUI.add(
 					},
 
 					onCheckboxCheck: function(event) {
+						var instance = this;
+
 						var currentTarget = event.currentTarget;
 
 						var assetId;
 
 						var entryMatchKey;
 
-						var entries = this.get('entries');
-
-						var entry;
-
 						if (A.instanceOf(currentTarget, A.Node)) {
 							assetId = currentTarget.attr('data-categoryId');
 
 							entryMatchKey = currentTarget.val();
 						}
 						else {
-							assetId = this.getTreeNodeAssetId(currentTarget);
+							assetId = instance.getTreeNodeAssetId(currentTarget);
 
 							entryMatchKey = currentTarget.get('label');
 						}
 
-						entry = {
-							categoryId: assetId
+						var entry = {
+							categoryId: assetId,
+							value: LString.unescapeHTML(entryMatchKey)
 						};
-
-						entry.value = entryMatchKey;
-
-						entry.value = LString.unescapeHTML(entry.value);
 
 						entry[0] = LString.unescapeHTML(entry.value);
 
+						var entries = instance.get('entries');
+
 						entries[entryMatchKey] = entry;
 
-						this.set('entries', entries);
+						instance.set('entries', entries);
 					},
 
 					onCheckboxUncheck: function(event) {
+						var instance = this;
+
 						var currentTarget = event.currentTarget;
 
 						var entryMatchKey;
 
-						var entries = this.get('entries');
-
 						if (A.instanceOf(currentTarget, A.Node)) {
-							assetId = currentTarget.attr('data-categoryId');
 							entryMatchKey = currentTarget.val();
 						}
 						else {
-							assetId = this.getTreeNodeAssetId(currentTarget);
 							entryMatchKey = currentTarget.get('label');
 						}
 
+						var entries = instance.get('entries');
+
 						entries[entryMatchKey].unchecked = true;
 
-						this.set('entries', entries);
-
+						instance.set('entries', entries);
 					}
 				}
 			}

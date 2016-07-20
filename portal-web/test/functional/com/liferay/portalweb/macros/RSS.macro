@@ -75,6 +75,12 @@
 		<execute function="SelectWindow" locator1="title=Site Page Name 2 - Site Name - ${siteName}" />
 	</command>
 
+	<command name="updateFeedTime">
+		<execute function="Type" locator1="RSSFeed#FEED_TIME" value1="${feedTime}" />
+
+		<execute macro="Button#clickSave" />
+	</command>
+
 	<command name="viewCorruptScript">
 		<execute function="AssertTextPresent" value1="An error occurred while processing the template." />
 		<execute function="AssertTextPresent" value1="Unexpected end of file reached." />
@@ -134,6 +140,23 @@
 
 	<command name="viewPortletConfigurationInfo">
 		<execute function="AssertTextEquals" locator1="Message#INFO" value1="Please configure this portlet and select at least one valid RSS feed." />
+	</command>
+
+	<command name="viewUpdateFeedTitle">
+		<var name="key_feedHeading" value="${feedHeading}" />
+
+		<if>
+			<isset var="updateFeed" />
+			<then>
+				<execute function="Pause" locator1="60000" />
+
+				<execute macro="Navigator#_gotoPage">
+					<var name="pageName" value="${pageName}" />
+				</execute>
+			</then>
+		</if>
+
+		<execute function="AssertTextEquals" locator1="RSSFeed#FEED_PANEL_HEADING" value1="${feedHeading}" />
 	</command>
 
 	<command name="viewWarningMessageDisplay">

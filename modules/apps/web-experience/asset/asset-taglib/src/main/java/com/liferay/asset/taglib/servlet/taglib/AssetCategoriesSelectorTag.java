@@ -225,14 +225,13 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 
 	protected List<AssetVocabulary> getVocabularies() {
 		List<AssetVocabulary> vocabularies =
-			AssetVocabularyServiceUtil.getGroupVocabularies(getGroupIds());
+			AssetVocabularyServiceUtil.getGroupVocabularies(
+				getGroupIds());
 
-		if (Validator.isNull(_className)) {
-			return vocabularies;
+		if (Validator.isNotNull(_className)) {
+			vocabularies = AssetUtil.filterVocabularies(
+				vocabularies, _className, _classTypePK);
 		}
-
-		vocabularies = AssetUtil.filterVocabularies(
-			vocabularies, _className, _classTypePK);
 
 		return ListUtil.filter(
 			vocabularies,

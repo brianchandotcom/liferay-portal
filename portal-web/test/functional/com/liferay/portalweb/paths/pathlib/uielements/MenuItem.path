@@ -904,6 +904,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>UNASSIGN_FORM</td>
+	<td>//tr[contains(.,'${key_workflowTask}')]//a[@role='menuitem' and contains(.,'Unassign Form')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>UNBAN_THIS_USER</td>
+	<td>//a[@role='menuitem' and contains(.,'Unban This User')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>UNLOCK_THREAD</td>
 	<td>//a[@role='menuitem' and contains(.,'Unlock Thread')]</td>
 	<td></td>

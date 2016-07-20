@@ -85,6 +85,10 @@ AUI.add(
 						}
 					},
 
+					matchKey: {
+						value: 'value'
+					},
+
 					portletURL: {
 						validator: Lang.isString
 					},

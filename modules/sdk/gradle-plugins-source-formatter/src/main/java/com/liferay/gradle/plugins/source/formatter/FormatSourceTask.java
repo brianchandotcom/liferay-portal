@@ -114,7 +114,7 @@ public class FormatSourceTask extends JavaExec {
 	}
 
 	public boolean isSourceFormatterEnabled() {
-		return _sourceFormatterArgs.isSourceFormatterEnabled;
+		return _sourceFormatterArgs.isSourceFormatterEnabled();
 	}
 
 	public boolean isThrowException() {

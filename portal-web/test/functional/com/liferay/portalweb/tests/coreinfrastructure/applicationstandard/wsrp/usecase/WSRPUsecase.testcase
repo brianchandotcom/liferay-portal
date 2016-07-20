@@ -2,6 +2,7 @@
 	<property name="portal.release" value="true" />
 	<property name="portlet.plugins.includes" value="wsrp-portlet" />
 	<property name="testray.main.component.name" value="WSRP" />
+	<!--test property - do not merge this change-->
 
 	<set-up>
 		<execute macro="TestCase#setUpPortalInstance" />

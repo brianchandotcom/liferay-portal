@@ -51,7 +51,9 @@
 		<if>
 			<condition function="IsNotVisible" locator1="Wiki#ADD_PAGE_FORMAT_DROPDOWN" />
 			<then>
-				<execute function="AssertClick" locator1="Panel#ENTRY_CONFIGURATION" value1="Configuration" />
+				<execute macro="Panel#expandPanel">
+					<var name="panelHeading" value="Configuration" />
+				</execute>
 
 				<execute function="SelectNoError#pauseSelect" locator1="Wiki#ADD_PAGE_FORMAT_DROPDOWN" value1="${pageFormat}" />
 			</then>

@@ -24,7 +24,7 @@ JSONObject dataJSONObject = searchFacet.getData();
 JSONArray rangesJSONArray = dataJSONObject.getJSONArray("ranges");
 %>
 
-<aui:fieldset id="rangesId">
+<aui:fieldset id='<%= renderResponse.getNamespace() + "rangesId" %>'>
 
 	<%
 	int[] rangesIndexes = new int[rangesJSONArray.length()];

@@ -48,7 +48,7 @@ String portletResource = ParamUtil.getString(request, "portletResource");
 
 					<aui:fieldset-group markupView="lexicon">
 						<div class="tab-pane">
-							<aui:fieldset id="portlet-config">
+							<aui:fieldset id='<%= renderResponse.getNamespace() + "portlet-config" %>'>
 								<aui:input name="use-custom-title" type="toggle-switch" />
 
 								<span class="field-row">
@@ -115,7 +115,7 @@ String portletResource = ParamUtil.getString(request, "portletResource");
 								</span>
 							</aui:fieldset>
 
-							<aui:fieldset id="text-styles">
+							<aui:fieldset id='<%= renderResponse.getNamespace() + "text-styles" %>'>
 								<aui:row>
 									<aui:col width="<%= 33 %>">
 										<aui:select label="font" name="lfr-font-family" showEmptyOption="<%= true %>">
@@ -226,11 +226,11 @@ String portletResource = ParamUtil.getString(request, "portletResource");
 								</aui:row>
 							</aui:fieldset>
 
-							<aui:fieldset id="background-styles">
+							<aui:fieldset id='<%= renderResponse.getNamespace() + "background-styles" %>'>
 								<aui:input label="background-color" name="lfr-bg-color" />
 							</aui:fieldset>
 
-							<aui:fieldset id="border-styles">
+							<aui:fieldset id='<%= renderResponse.getNamespace() + "border-styles" %>'>
 								<aui:row>
 									<aui:col cssClass="lfr-border-width use-for-all-column" width="<%= 33 %>">
 										<aui:fieldset label="border-width">
@@ -435,7 +435,7 @@ String portletResource = ParamUtil.getString(request, "portletResource");
 								</aui:row>
 							</aui:fieldset>
 
-							<aui:fieldset id="css-styling">
+							<aui:fieldset id='<%= renderResponse.getNamespace() + "css-styling" %>'>
 								<aui:input label="enter-your-custom-css-class-names" name="lfr-custom-css-class-name" type="text" />
 
 								<aui:input cssClass="lfr-textarea-container" label="enter-your-custom-css" name="lfr-custom-css" type="textarea" />

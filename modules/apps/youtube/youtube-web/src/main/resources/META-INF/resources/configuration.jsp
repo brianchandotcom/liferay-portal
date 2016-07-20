@@ -21,7 +21,7 @@
 <aui:form action="<%= configurationActionURL %>" method="post" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveConfiguration();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 
-	<aui:fieldset id="controls" label="video-properties">
+	<aui:fieldset id='<%= renderResponse.getNamespace() + "controls" %>' label="video-properties">
 		<aui:input label="video-id" name="preferences--url--" value="<%= url %>" />
 
 		<aui:select inlineField="<%= true %>" label="preset-frame-size" name="preferences--presetSize--" onChange='<%= renderResponse.getNamespace() + "updateFrameSize(this.value);" %>' value="<%= presetSize %>">

@@ -69,7 +69,7 @@ else {
 <liferay-ui:error exception="<%= EmailAddressException.class %>" message="please-enter-a-valid-email-address" />
 <liferay-ui:error key="<%= NoSuchListTypeException.class.getName() + className + ListTypeConstants.EMAIL_ADDRESS %>" message="please-select-a-type" />
 
-<aui:fieldset id="additionalEmailAddresses">
+<aui:fieldset id='<%= renderResponse.getNamespace() + "additionalEmailAddresses" %>'>
 
 	<%
 	for (int i = 0; i < emailAddressesIndexes.length; i++) {

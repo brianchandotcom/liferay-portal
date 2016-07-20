@@ -44,8 +44,8 @@ public abstract class CompanyScopedConfigurationProvider
 
 	@Override
 	public boolean delete(long companyId) {
-		ObjectValuePair<Configuration, T> objectValuePair = _configurations.get(
-			companyId);
+		ObjectValuePair<Configuration, T> objectValuePair =
+			_configurations.remove(companyId);
 
 		if (objectValuePair == null) {
 			return false;

@@ -503,6 +503,11 @@ public class TestGroup implements Group {
 	}
 
 	@Override
+	public boolean isActiveGroup() {
+		return true;
+	}
+
+	@Override
 	public boolean isCachedModel() {
 		return false;
 	}

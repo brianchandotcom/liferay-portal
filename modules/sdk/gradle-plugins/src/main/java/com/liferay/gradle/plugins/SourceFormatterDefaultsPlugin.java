@@ -42,11 +42,10 @@ public class SourceFormatterDefaultsPlugin
 	protected void configureTasksFormatSource(
 		FormatSourceTask formatSourceTask) {
 
-		boolean buildLifecycleEnabled = GradleUtil.getProperty(
+		boolean sourceFormatterEnabled = GradleUtil.getProperty(
 			formatSourceTask.getProject(),
-			"source.formatter.build.lifecyle.enabled", false);
-
-		formatSourceTask.setBuildLifecycleEnabled(buildLifecycleEnabled);
+			"source.formatter.enabled", false);
+		formatSourceTask.setSourceFormatterEnabled(sourceFormatterEnabled);
 
 		String gitWorkingBranchName = GradleUtil.getProperty(
 			formatSourceTask.getProject(), "git.working.branch.name",

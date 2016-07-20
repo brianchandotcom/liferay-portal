@@ -17,8 +17,8 @@ AUI.add(
 		 * OPTIONS
 		 *
 		 * Required
-		 * curEntryIds (string): The ids of the current categories.
-		 * curEntries (string): The names of the current categories.
+		 * categoryIds (string): The ids of the current categories.
+		 * categoryTitles (string): The names of the current categories.
 		 * hiddenInput {string}: The hidden input used to pass in the current categories.
 		 * instanceVar {string}: The instance variable for this class.
 		 * labelNode {String|A.Node}: The node of the label element for this selector.
@@ -33,18 +33,7 @@ AUI.add(
 		var AssetTaglibCategoriesSelector = A.Component.create(
 			{
 				ATTRS: {
-					curEntries: {
-						setter: function(value) {
-							if (Lang.isString(value)) {
-								value = value.split('_CATEGORY_');
-							}
-
-							return value;
-						},
-						value: []
-					},
-
-					curEntryIds: {
+					categoryIds: {
 						setter: function(value) {
 							if (Lang.isString(value)) {
 								value = value.split(',');
@@ -53,6 +42,17 @@ AUI.add(
 							return value;
 						},
 						validator: '_isValidEntries',
+						value: []
+					},
+
+					categoryTitles: {
+						setter: function(value) {
+							if (Lang.isString(value)) {
+								value = value.split('_CATEGORY_');
+							}
+
+							return value;
+						},
 						value: []
 					},
 
@@ -129,17 +129,17 @@ AUI.add(
 							return obj.categoryId;
 						};
 
-						var curEntries = instance.get('curEntries');
+						var categoryTitles = instance.get('categoryTitles');
 
-						var curEntryIds = instance.get('curEntryIds');
+						var categoryIds = instance.get('categoryIds');
 
-						curEntryIds.forEach(
+						categoryIds.forEach(
 							function(item, index) {
 								var entry = {
 									categoryId: item
 								};
 
-								entry.value = LString.unescapeHTML(curEntries[index]);
+								entry.value = LString.unescapeHTML(categoryTitles[index]);
 
 								instance.add(entry.value);
 							}
@@ -209,12 +209,12 @@ AUI.add(
 
 						event.domEvent.preventDefault();
 
-						instance.set('curEntryIds', instance.entries.keys);
+						instance.set('categoryIds', instance.entries.keys);
 
 						var uri = Lang.sub(
 							decodeURIComponent(instance.get('portletURL')),
 							{
-								selectedCategories: instance.get('curEntryIds'),
+								selectedCategories: instance.get('categoryIds'),
 								singleSelect: instance.get('singleSelect'),
 								vocabularyIds: instance.get('vocabularyIds')
 							}
@@ -251,7 +251,7 @@ AUI.add(
 											}
 										}
 
-										instance.set('curEntryIds', instance.entries.keys);
+										instance.set('categoryIds', instance.entries.keys);
 
 										instance._updateInputHidden();
 									}

@@ -71,9 +71,9 @@ int maxEntries = GetterUtil.getInteger(PropsUtil.get(PropsKeys.ASSET_CATEGORIES_
 			<aui:script use="liferay-asset-taglib-categories-selector">
 				new Liferay.AssetTaglibCategoriesSelector(
 					{
+						categoryIds: '<%= categoryIdsTitle[0] %>',
+						categoryTitles: '<%= HtmlUtil.escapeJS(categoryIdsTitle[1]) %>',
 						contentBox: '#<portlet:namespace />assetCategoriesSelector_<%= vocabulary.getVocabularyId() %>',
-						curEntries: '<%= HtmlUtil.escapeJS(categoryIdsTitle[1]) %>',
-						curEntryIds: '<%= categoryIdsTitle[0] %>',
 						eventName: '<%= eventName %>',
 						hiddenInput: '#<portlet:namespace /><%= hiddenInput + StringPool.UNDERLINE + vocabulary.getVocabularyId() %>',
 						instanceVar: '<portlet:namespace />',
@@ -110,9 +110,9 @@ int maxEntries = GetterUtil.getInteger(PropsUtil.get(PropsKeys.ASSET_CATEGORIES_
 		<aui:script use="liferay-asset-taglib-categories-selector">
 			new Liferay.AssetTaglibCategoriesSelector(
 				{
+					categoryIds: '<%= categoryIdsTitle[0] %>',
+					categoryTitles: '<%= HtmlUtil.escapeJS(categoryIdsTitle[1]) %>',
 					contentBox: '#<portlet:namespace />assetCategoriesSelector',
-					curEntries: '<%= HtmlUtil.escapeJS(categoryIdsTitle[1]) %>',
-					curEntryIds: '<%= categoryIdsTitle[0] %>',
 					eventName: '<%= eventName %>',
 					hiddenInput: '#<portlet:namespace /><%= hiddenInput %>',
 					instanceVar: '<portlet:namespace />',

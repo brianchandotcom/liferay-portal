@@ -646,7 +646,7 @@
 	</command>
 
 	<command name="viewAssetTypeNotAvailable">
-		<execute function="SelectFrame" locator1="BasePortletConfiguration#CONFIGURATION_IFRAME" />
+		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 
 		<execute macro="Panel#expandPanel">
 			<var name="panelHeading" value="Source" />

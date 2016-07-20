@@ -15,7 +15,7 @@
 				<equals arg1="${searchScope}" arg2="This Site" />
 			</or>
 			<then>
-				<execute function="SelectFrame" locator1="BasePortletConfiguration#CONFIGURATION_IFRAME" />
+				<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 
 				<execute function="Select" locator1="Select#SCOPE" value1="${searchScope}" />
 			</then>
@@ -59,7 +59,7 @@
 	<command name="removeUserFacetDisplayPG">
 		<execute function="Click#makeVisibleClickAt" locator1="Search#SEARCH_PORTLET_OPTIONS_WRENCH" />
 		<execute function="AssertClick" locator1="MenuItem#CONFIGURATION" value1="Configuration" />
-		<execute function="SelectFrame" locator1="BasePortletConfiguration#CONFIGURATION_IFRAME" />
+		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 		<execute function="Uncheck" locator1="SearchConfiguration#BASIC_DISPLAY_USER_FACET_CHECKBOX" />
 		<execute macro="Button#clickSave" />
 		<execute function="SelectFrame" value1="relative=top" />

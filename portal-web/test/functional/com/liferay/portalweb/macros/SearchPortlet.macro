@@ -5,7 +5,7 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute function="SelectFrame" locator1="BasePortletConfiguration#CONFIGURATION_IFRAME" />
+		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 
 		<execute function="Click" locator1="Radio#ADVANCED" />
 		<execute function="Type" locator1="SearchConfiguration#ADVANCED_SEARCH_CONFIGURATION" value1="${advancedSearchConfiguration}" />
@@ -19,7 +19,7 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute function="SelectFrame" locator1="BasePortletConfiguration#CONFIGURATION_IFRAME" />
+		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 
 		<var name="key_searchAssetType" value="${searchAssetType}" />
 

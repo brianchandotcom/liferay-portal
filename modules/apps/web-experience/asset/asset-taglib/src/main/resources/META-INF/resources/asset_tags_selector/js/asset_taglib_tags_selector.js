@@ -40,8 +40,8 @@ AUI.add(
 		 * OPTIONS
 		 *
 		 * Required
-		 * curEntries (string): The current tags.
 		 * hiddenInput {string}: The hidden input used to pass in the current tags.
+		 * tagNames (string): The current tags.
 		 *
 		 */
 
@@ -54,19 +54,6 @@ AUI.add(
 
 					allowAnyEntry: {
 						value: true
-					},
-
-					curEntries: {
-						setter: function(value) {
-							var instance = this;
-
-							if (Lang.isString(value)) {
-								value = value.split(',');
-							}
-
-							return value;
-						},
-						value: ''
 					},
 
 					dataSource: {
@@ -106,6 +93,19 @@ AUI.add(
 						value: {
 							resultFields: ['text', 'value']
 						}
+					},
+
+					tagNames: {
+						setter: function(value) {
+							var instance = this;
+
+							if (Lang.isString(value)) {
+								value = value.split(',');
+							}
+
+							return value;
+						},
+						value: ''
 					}
 				},
 
@@ -144,9 +144,9 @@ AUI.add(
 
 						AssetTaglibTagsSelector.superclass.syncUI.apply(instance, arguments);
 
-						var curEntries = instance.get('curEntries');
+						var tagNames = instance.get('tagNames');
 
-						curEntries.forEach(instance.add, instance);
+						tagNames.forEach(instance.add, instance);
 					},
 
 					addEntries: function() {

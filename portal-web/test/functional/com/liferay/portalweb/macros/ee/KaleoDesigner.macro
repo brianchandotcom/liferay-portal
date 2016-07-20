@@ -609,7 +609,7 @@
 				<if>
 					<equals arg1="${nodeNotificationsType}" arg2="User Notification" />
 					<then>
-						<execute function="SikuliAssertElementPresent" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_NOTIFICATION_TYPE_USER_NOTIFICATION_PNG" />
+						<execute function="AssertSelectedLabel" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_NOTIFICATION_TYPE_SELECT" value1="User Notification" />
 					</then>
 				</if>
 			</then>
@@ -638,19 +638,19 @@
 				<if>
 					<equals arg1="${nodeNotificationsRecipientType}" arg2="Role Type" />
 					<then>
-						<execute function="SikuliAssertElementPresent" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_RECIPIENT_TYPE_PNG" />
+						<execute function="AssertSelectedLabel" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_TYPE_SELECT" value1="Role Type" />
 
 						<if>
 							<equals arg1="${nodeNotificationsRecipientType}" arg2="Role" />
 							<then>
-								<execute function="SikuliAssertElementPresent" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_ROLE_TYPE_PNG" />
+								<execute function="AssertSelectedLabel" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_ROLE_SEARCH" value1="Regular" />
 							</then>
 						</if>
 
 						<if>
 							<equals arg1="${roleName}" arg2="Administrator" />
 							<then>
-								<execute function="SikuliAssertElementPresent" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_ROLE_NAME_PNG" />
+								<execute function="AssertTextEquals" locator1="KaleoDesignerEditWorkflow#SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_ROLE_NAME_SEARCH" value1="Administrator" />
 							</then>
 						</if>
 					</then>

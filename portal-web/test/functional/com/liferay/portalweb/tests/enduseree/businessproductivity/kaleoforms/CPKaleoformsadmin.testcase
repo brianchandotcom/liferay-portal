@@ -840,17 +840,17 @@
 
 		<execute macro="KaleoFormsAdmin#assignForm">
 			<var name="kfProcessName" value="${kfProcessName}" />
-			<var name="workflowTask" value="review" />
+			<var name="workflowTask" value="created" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#addForm">
-			<var name="kfFormName" value="Review Task Form" />
+			<var name="kfFormName" value="Created Task Form" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#saveForm" />
 
 		<execute macro="KaleoFormsAdmin#chooseForm">
-			<var name="kfFormName" value="Review Task Form" />
+			<var name="kfFormName" value="Created Task Form" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#saveProcess">
@@ -867,7 +867,7 @@
 
 		<execute macro="KaleoFormsAdmin#deleteForm">
 			<var name="kfFieldSetName" value="Inventory" />
-			<var name="kfFormName" value="Review Task Form" />
+			<var name="kfFormName" value="Created Task Form" />
 		</execute>
 	</command>
 

@@ -6679,6 +6679,12 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
+		<execute macro="Workflow#approveTaskByActions">
+			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="Review" />
+		</execute>
+
 		<execute macro="Page#gotoMyAccount">
 			<var name="portletName" value="My Workflow Tasks" />
 		</execute>

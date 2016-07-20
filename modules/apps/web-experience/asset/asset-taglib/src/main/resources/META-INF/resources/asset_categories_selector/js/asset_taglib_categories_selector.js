@@ -24,7 +24,6 @@ AUI.add(
 		 * labelNode {String|A.Node}: The node of the label element for this selector.
 		 * title {String}: The title of the button element for this selector.
 		 * vocabularyIds (string): The ids of the vocabularies.
-		 * vocabularyGroupIds (string): The groupIds of the vocabularies.
 		 *
 		 * Optional
 		 * maxEntries {Number}: The maximum number of entries that will be loaded. The default value is -1, which will load all categories.
@@ -87,17 +86,6 @@ AUI.add(
 					title: {
 						validator: '_isValidString',
 						value: Liferay.Language.get('select-categories')
-					},
-
-					vocabularyGroupIds: {
-						setter: function(value) {
-							if (Lang.isString(value) && value) {
-								value = value.split(',');
-							}
-
-							return value;
-						},
-						value: []
 					},
 
 					vocabularyIds: {

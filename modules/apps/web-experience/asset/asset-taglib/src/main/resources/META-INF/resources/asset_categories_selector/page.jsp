@@ -21,7 +21,6 @@ List<String[]> categoryIdsTitles = (List<String[]>)request.getAttribute("liferay
 String className = (String)request.getAttribute("liferay-asset:asset-categories-selector:className");
 long classTypePK = GetterUtil.getLong((String)request.getAttribute("liferay-asset:asset-categories-selector:classTypePK"));
 String eventName = (String)request.getAttribute("liferay-asset:asset-categories-selector:eventName");
-long[] groupIds = (long[])request.getAttribute("liferay-asset:asset-categories-selector:groupIds");
 String hiddenInput = (String)request.getAttribute("liferay-asset:asset-categories-selector:hiddenInput");
 PortletURL portletURL = (PortletURL)request.getAttribute("liferay-asset:asset-categories-selector:portletURL");
 boolean showRequiredLabel = GetterUtil.getBoolean((String)request.getAttribute("liferay-asset:asset-categories-selector:showRequiredLabel"), true);
@@ -88,7 +87,6 @@ int maxEntries = GetterUtil.getInteger(PropsUtil.get(PropsKeys.ASSET_CATEGORIES_
 
 						singleSelect: <%= !vocabulary.isMultiValued() %>,
 						title: '<liferay-ui:message arguments="<%= vocabulary.getTitle(locale) %>" key="select-x" translateArguments="<%= false %>" />',
-						vocabularyGroupIds: '<%= StringUtil.merge(groupIds) %>',
 						vocabularyIds: '<%= String.valueOf(vocabulary.getVocabularyId()) %>'
 					}
 				).render();
@@ -125,7 +123,6 @@ int maxEntries = GetterUtil.getInteger(PropsUtil.get(PropsKeys.ASSET_CATEGORIES_
 						portletURL: '<%= portletURL.toString() %>',
 					</c:if>
 
-					vocabularyGroupIds: '<%= StringUtil.merge(groupIds) %>',
 					vocabularyIds: '<%= ListUtil.toString(vocabularies, "vocabularyId") %>'
 				}
 			).render();

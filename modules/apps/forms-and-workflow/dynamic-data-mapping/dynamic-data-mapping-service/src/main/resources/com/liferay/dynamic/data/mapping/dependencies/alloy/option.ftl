@@ -1,30 +1,30 @@
 <#include "../init.ftl">
 
 <#if parentFieldStructure.predefinedValue?has_content>
-	<#assign parentFieldRawValue = parentFieldStructure.predefinedValue>
+	<#assign parentFieldRawValue = parentFieldStructure.predefinedValue />
 <#else>
-	<#assign parentFieldRawValue = "[]">
+	<#assign parentFieldRawValue = "[]" />
 </#if>
 
 <#if fields?? && fields.get(parentName)??>
-	<#assign parentValueIndex = getterUtil.getInteger(parentFieldStructure.valueIndex)>
+	<#assign parentValueIndex = getterUtil.getInteger(parentFieldStructure.valueIndex) />
 
-	<#assign field = fields.get(parentName)>
+	<#assign field = fields.get(parentName) />
 
-	<#assign parentFieldRawValue = field.getValue(requestedLocale, parentValueIndex)!"[]">
+	<#assign parentFieldRawValue = field.getValue(requestedLocale, parentValueIndex)!"[]" />
 </#if>
 
-<#assign parentFieldNamespace = "">
+<#assign parentFieldNamespace = "" />
 
 <#if parentFieldStructure.fieldNamespace??>
-	<#assign parentFieldNamespace = "_INSTANCE_" + parentFieldStructure.fieldNamespace>
+	<#assign parentFieldNamespace = "_INSTANCE_" + parentFieldStructure.fieldNamespace />
 </#if>
 
-<#assign namespacedParentFieldName = namespacedParentName + parentFieldNamespace>
+<#assign namespacedParentFieldName = namespacedParentName + parentFieldNamespace />
 
-<#assign parentFieldRawValues = getterUtil.getStringValues(jsonFactoryUtil.looseDeserialize(parentFieldRawValue))>
+<#assign parentFieldRawValues = getterUtil.getStringValues(jsonFactoryUtil.looseDeserialize(parentFieldRawValue)) />
 
-<#assign selected = paramUtil.getParameterValues(request, namespacedParentFieldName, parentFieldRawValues)?seq_contains(fieldStructure.value)>
+<#assign selected = paramUtil.getParameterValues(request, namespacedParentFieldName, parentFieldRawValues)?seq_contains(fieldStructure.value) />
 
 <#if parentType == "select">
 	<@liferay_aui.option

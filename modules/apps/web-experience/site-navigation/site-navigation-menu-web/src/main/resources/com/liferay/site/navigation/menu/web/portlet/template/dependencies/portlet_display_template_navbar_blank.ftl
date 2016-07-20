@@ -29,7 +29,7 @@
 					<#if showChildren>
 						<#assign nav_item_attr_has_popup = "aria-haspopup='true'" />
 
-						<#assign nav_item_caret>
+						<#assign nav_item_caret />
 							<span class="lfr-nav-child-toggle">
 								<@liferay_aui.icon
 									image="angle-down"

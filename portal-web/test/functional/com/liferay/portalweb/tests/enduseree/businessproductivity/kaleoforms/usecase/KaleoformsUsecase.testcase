@@ -6695,6 +6695,10 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
+		<execute macro="Workflow#gotoCompletedTaskAssignedToMePreview">
+			<var name="workflowAssetTitle" value="${kfProcessName}" />
+		</execute>
+
 		<execute macro="WorkflowAsset#previewViewContent">
 			<var name="fieldLabel" value="Description" />
 			<var name="fieldValue" value="Test Description" />
@@ -6731,7 +6735,7 @@
 		</execute>
 
 		<execute macro="DDLTemplate#deleteTemplateCP">
-			<var name="dataDefinitionName" value="Inventory" />
+			<var name="ddlDataDefinitionName" value="Inventory" />
 			<var name="ddlTemplateName" value="Review" />
 		</execute>
 

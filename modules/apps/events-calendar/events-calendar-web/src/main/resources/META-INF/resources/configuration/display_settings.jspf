@@ -19,6 +19,8 @@
 
 	<aui:input label="display-user-events" name="showUserEvents" type="checkbox" value="<%= showUserEvents %>" />
 
+	<aui:input label="display-schedulers-header" name="displaySchedulerHeader" type="checkbox" value="<%= displaySchedulerHeader %>" />
+
 	<aui:fieldset collapsible="<%= true %>" label="enabled-views">
 		<aui:input label="day" name="showDayView" type="checkbox" value="<%= showDayView %>" />
 

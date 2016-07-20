@@ -57,13 +57,13 @@ AUI.add(
 						instance.treeView = new A.TreeView(
 							{
 								boundingBox: instance.get('boundingBox'),
-								children: [instance.get('vocabularyRootNode')],
+								children: instance.get('vocabularyRootNode'),
 								io: {
 									cfg: {
 										data: instance.formatRequestData.bind(instance)
 									},
 									formatter: instance.formatJSONResult.bind(instance),
-									url: instance.get('url')
+									url: instance.getVocabularyURL(instance)
 								}
 							}
 						).render();
@@ -142,21 +142,11 @@ AUI.add(
 					formatRequestData: function(treeNode) {
 						var instance = this;
 
-						var assetId = instance.getTreeNodeAssetId(treeNode);
+						var io = treeNode.get('io');
 
-						var assetType = instance.getTreeNodeAssetType(treeNode);
+						io.url = instance.getVocabularyURL(treeNode);
 
-						if (Lang.isValue(assetId) && assetType === 'category') {
-							var getSubCategoriesURL = instance.get('url');
-
-							getSubCategoriesURL = Liferay.Util.addParams(instance.get('namespace') + 'categoryId=' + assetId, getSubCategoriesURL);
-
-							var io = treeNode.get('io');
-
-							io.url = getSubCategoriesURL;
-
-							treeNode.set('io', io);
-						}
+						treeNode.set('io', io);
 					},
 
 					getPaginatorConfig: function(item) {
@@ -195,6 +185,22 @@ AUI.add(
 						var match = treeId.match(/^(vocabulary|category)/);
 
 						return match ? match[1] : null;
+					},
+
+					getVocabularyURL: function(treeNode) {
+						var instance = this;
+
+						var assetId = instance.getTreeNodeAssetId(treeNode);
+
+						var assetType = instance.getTreeNodeAssetType(treeNode);
+
+						var getSubCategoriesURL = instance.get('url');
+
+						if (Lang.isValue(assetId)) {
+							getSubCategoriesURL = Liferay.Util.addParams(instance.get('namespace') + assetType + 'Id=' + assetId, getSubCategoriesURL);
+						}
+
+						return getSubCategoriesURL;
 					},
 
 					onCheckboxCheck: function(event) {

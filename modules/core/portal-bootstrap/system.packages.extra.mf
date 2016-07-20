@@ -1,11 +1,11 @@
 Manifest-Version: 1.0
-Bnd-LastModified: 1468904359940
+Bnd-LastModified: 1468986964886
 Bundle-ManifestVersion: 2
 Bundle-Name: system.packages.extra
 Bundle-SymbolicName: system.packages.extra
 Bundle-Vendor: Liferay, Inc.
 Bundle-Version: 1.0.0
-Created-By: 1.8.0_92 (Oracle Corporation)
+Created-By: 1.8.0_91 (Oracle Corporation)
 Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  u.impl;version="4.0.1";uses:="com.liferay.ibm.icu.math,com.liferay.ib
  m.icu.text,com.liferay.ibm.icu.util",com.liferay.ibm.icu.impl.coll;ve
@@ -2778,7 +2778,7 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  l.search.filter",com.liferay.portal.kernel.search.facet.collector;ver
  sion="6.3.0",com.liferay.portal.kernel.search.facet.config;version="7
  .0.0";uses:="com.liferay.portal.kernel.json",com.liferay.portal.kerne
- l.search.facet.faceted.searcher;version="1.0.0";uses:="com.liferay.po
+ l.search.facet.faceted.searcher;version="1.1.0";uses:="com.liferay.po
  rtal.kernel.search",com.liferay.portal.kernel.search.facet.util;versi
  on="6.3.0";uses:="com.liferay.portal.kernel.search,com.liferay.portal
  .kernel.search.facet,com.liferay.portal.kernel.search.facet.config",c

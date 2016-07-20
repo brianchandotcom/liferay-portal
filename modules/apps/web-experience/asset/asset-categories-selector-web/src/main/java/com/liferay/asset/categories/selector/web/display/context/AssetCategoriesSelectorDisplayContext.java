@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -69,27 +70,23 @@ public class AssetCategoriesSelectorDisplayContext {
 		return _eventName;
 	}
 
-	public long getVocabularyId() {
-		if (_vocabularyId != null) {
-			return _vocabularyId;
+	public long[] getVocabularyIds() {
+		if (_vocabularyIds != null) {
+			return _vocabularyIds;
 		}
 
-		_vocabularyId = ParamUtil.getLong(_request, "vocabularyId");
+		_vocabularyIds = StringUtil.split(
+			ParamUtil.getString(_request, "vocabularyIds"), 0L);
 
-		return _vocabularyId;
+		return _vocabularyIds;
 	}
 
-	public String getVocabularyTitle() throws PortalException {
-		if (_vocabularyTitle != null) {
-			return _vocabularyTitle;
-		}
-
+	public String getVocabularyTitle(long vocabularyId) throws PortalException {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		AssetVocabulary assetVocabulary =
-			AssetVocabularyLocalServiceUtil.fetchAssetVocabulary(
-				getVocabularyId());
+			AssetVocabularyLocalServiceUtil.fetchAssetVocabulary(vocabularyId);
 
 		StringBundler sb = new StringBundler(4);
 
@@ -111,9 +108,7 @@ public class AssetCategoriesSelectorDisplayContext {
 
 		sb.append(StringPool.CLOSE_PARENTHESIS);
 
-		_vocabularyTitle = sb.toString();
-
-		return _vocabularyTitle;
+		return sb.toString();
 	}
 
 	private long _categoryId;
@@ -121,7 +116,6 @@ public class AssetCategoriesSelectorDisplayContext {
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _request;
-	private Long _vocabularyId;
-	private String _vocabularyTitle;
+	private long[] _vocabularyIds;
 
 }

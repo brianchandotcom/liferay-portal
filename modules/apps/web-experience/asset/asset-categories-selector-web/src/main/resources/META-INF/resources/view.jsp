@@ -25,12 +25,11 @@
 	</aui:fieldset-group>
 </div>
 
-<portlet:resourceURL id="getCategories" var="resourceURL">
-	<portlet:param name="vocabularyId" value="<%= String.valueOf(assetCategoriesSelectorDisplayContext.getVocabularyId()) %>" />
-</portlet:resourceURL>
-
 <aui:script use="liferay-asset-portlet-category-selector">
-	var instanceCategorySelector = new Liferay.AssetPortletCategorySelector(
+
+	<portlet:resourceURL id="getCategories" var="resourceURL" />
+
+	new Liferay.AssetPortletCategorySelector(
 		{
 			boundingBox: '#<portlet:namespace />listCategories',
 			entries: {},
@@ -39,14 +38,33 @@
 			namespace: '<portlet:namespace />',
 			singleSelect: '<%= request.getParameter("singleSelect") %>',
 			url: '<%= resourceURL %>',
-			vocabularyRootNode: {
-				alwaysShowHitArea: true,
-				id: 'vocabulary<%= assetCategoriesSelectorDisplayContext.getVocabularyId() %>',
-				label: '<%= assetCategoriesSelectorDisplayContext.getVocabularyTitle() %>',
-				leaf: false,
-				type: 'io',
-				expanded: true
-			}
+			vocabularyRootNode: [
+
+				<%
+				long vocabularyIds[] = assetCategoriesSelectorDisplayContext.getVocabularyIds();
+
+				for (int i = 0; i < vocabularyIds.length; i++) {
+					long vocabularyId = vocabularyIds[i];
+				%>
+
+					{
+						alwaysShowHitArea: true,
+						expanded: true,
+						id: 'vocabulary<%= vocabularyId %>',
+						label: '<%= assetCategoriesSelectorDisplayContext.getVocabularyTitle(vocabularyId) %>',
+						leaf: false,
+						type: 'io'
+					}
+
+					<c:if test="<%= (i + 1) < vocabularyIds.length %>">
+						,
+					</c:if>
+
+				<%
+				}
+				%>
+
+			]
 		}
 	).render();
 </aui:script>

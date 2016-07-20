@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.password.policies.admin.internal.lar;
+package com.liferay.password.policies.admin.internal.exportimport.data.handler;
 
 import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
 import com.liferay.exportimport.kernel.lar.DataLevel;

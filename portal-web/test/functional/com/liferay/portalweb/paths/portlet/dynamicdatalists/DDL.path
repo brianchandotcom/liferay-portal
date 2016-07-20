@@ -141,6 +141,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>RECORD_TABLE_DISPLAY_FIELD</td>
+	<td>//div[@class='ddl-record' and contains(.,'${key_ddlRecordFieldData}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

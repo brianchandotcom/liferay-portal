@@ -108,7 +108,7 @@
 				<var name="key_contentName" value="${mainContent}" />
 
 				<execute function="Check" locator1="PagesConfiguration#CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX" />
-				<execute function="AssertClick" locator1="BasePortletExport#CONTENT_CHOOSE_CONTENT_CONTENT_CHANGE_LINK" value1="Change" />
+				<execute function="AssertClick" locator1="ExportImport#CONTENT_CHOOSE_CONTENT_CONTENT_CHANGE_LINK" value1="Change" />
 
 				<var name="key_subContent" value="${uncheckSubContent}" />
 
@@ -125,12 +125,12 @@
 				<var name="key_contentName" value="${contentName}" />
 
 				<execute function="Check" locator1="PagesConfiguration#CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX" />
-				<execute function="AssertClick" locator1="BasePortletExport#CONTENT_CHOOSE_CONTENT_CONTENT_CHANGE_LINK" value1="Change" />
+				<execute function="AssertClick" locator1="ExportImport#CONTENT_CHOOSE_CONTENT_CONTENT_CHANGE_LINK" value1="Change" />
 
 				<var name="key_subContent" value="${subContent}" />
 				<var name="key_subSubContent" value="${uncheckSubSubContent}" />
 
-				<execute function="Uncheck" locator1="BasePortletExport#CONTENT_CHOOSE_CONTENT_SUB_SUBCONTENT_CHECKBOX" />
+				<execute function="Uncheck" locator1="ExportImport#CONTENT_CHOOSE_CONTENT_SUB_SUBCONTENT_CHECKBOX" />
 				<execute function="AssertClick" locator1="Button#OK" value1="OK" />
 			</then>
 		</if>
@@ -236,7 +236,7 @@
 		<if>
 			<equals arg1="${importPermissions}" arg2="true" />
 			<then>
-				<execute function="Click" locator1="BasePortletImport#PERMISSIONS_TITLE" />
+				<execute function="Click" locator1="ExportImport#PERMISSIONS_TITLE" />
 
 				<execute function="Check#checkToggleSwitch" locator1="Checkbox#PERMISSIONS" />
 			</then>
@@ -261,7 +261,7 @@
 				<for list="${checkContentNameList}" param="contentName">
 					<var name="key_contentName" value="${contentName}" />
 
-					<execute function="Click" locator1="BasePortletImport#CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX" />
+					<execute function="Click" locator1="SitePagesExport#CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX" />
 				</for>
 			</then>
 		</if>
@@ -312,7 +312,7 @@
 		<if>
 			<equals arg1="${importPermissions}" arg2="true" />
 			<then>
-				<execute function="Click" locator1="BasePortletImport#PERMISSIONS_TITLE" />
+				<execute function="Click" locator1="ExportImport#PERMISSIONS_TITLE" />
 
 				<execute function="Check#checkToggleSwitch" locator1="Checkbox#PERMISSIONS" />
 			</then>
@@ -498,7 +498,7 @@
 	<command name="exportPortlet">
 		<execute macro="LAR#_gotoExportImport" />
 
-		<execute function="AssertElementPresent" locator1="BasePortletExport#EXPORT_IMPORT_IFRAME" />
+		<execute function="AssertElementPresent" locator1="IFrame#DIALOG" />
 
 		<execute macro="LAR#_export">
 			<var name="exportPermissions" value="${exportPermissions}" />

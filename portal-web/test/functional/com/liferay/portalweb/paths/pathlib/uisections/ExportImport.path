@@ -325,6 +325,11 @@
 	<td>//input[contains(@id,'PERMISSIONS')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>PERMISSIONS_TITLE</td>
+	<td>//div[contains(@id,'permissionsTitle')]/a</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

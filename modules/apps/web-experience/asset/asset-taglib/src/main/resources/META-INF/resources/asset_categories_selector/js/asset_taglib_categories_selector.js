@@ -89,14 +89,8 @@ AUI.add(
 					},
 
 					vocabularyIds: {
-						setter: function(value) {
-							if (Lang.isString(value) && value) {
-								value = value.split(',');
-							}
-
-							return value;
-						},
-						value: []
+						validator: '_isValidString',
+						value: null
 					}
 				},
 
@@ -185,8 +179,6 @@ AUI.add(
 
 						var contentBox = instance.get('contentBox');
 
-						var vocabularyId = contentBox.getAttribute('data-vocabulary-id');
-
 						if (instance.get('portletURL')) {
 							instance.icons = new A.Toolbar(
 								{
@@ -196,7 +188,7 @@ AUI.add(
 											on: {
 												click: function(event) {
 													event.data = event.data ? event.data : {};
-													event.data.vocabularyId = vocabularyId;
+
 													instance._showSelectPopup.call(instance, event);
 												}
 											},
@@ -224,7 +216,7 @@ AUI.add(
 							{
 								selectedCategories: instance.get('curEntryIds'),
 								singleSelect: instance.get('singleSelect'),
-								vocabularyId: event.data.vocabularyId
+								vocabularyIds: instance.get('vocabularyIds')
 							}
 						);
 

@@ -59,7 +59,7 @@ int maxEntries = GetterUtil.getInteger(PropsUtil.get(PropsKeys.ASSET_CATEGORIES_
 					</c:if>
 				</label>
 
-				<div class="lfr-tags-selector-content" data-vocabulary-id="<%= vocabulary.getVocabularyId() %>" id="<portlet:namespace />assetCategoriesSelector_<%= vocabulary.getVocabularyId() %>">
+				<div class="lfr-tags-selector-content" id="<portlet:namespace />assetCategoriesSelector_<%= vocabulary.getVocabularyId() %>">
 					<aui:input name="<%= hiddenInput + StringPool.UNDERLINE + vocabulary.getVocabularyId() %>" type="hidden" />
 				</div>
 			</span>

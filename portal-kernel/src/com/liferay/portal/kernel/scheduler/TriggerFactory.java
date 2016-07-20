@@ -14,11 +14,14 @@
 
 package com.liferay.portal.kernel.scheduler;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.util.Date;
 
 /**
  * @author Tina Tian
  */
+@ProviderType
 public interface TriggerFactory {
 
 	public Trigger createTrigger(

@@ -16,7 +16,7 @@ package com.liferay.social.user.statistics.web.internal.portlet;
 
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.social.user.statistics.web.internal.constants.SocialUserStatisticsPortletKeys;
+import com.liferay.social.user.statistics.web.constants.SocialUserStatisticsPortletKeys;
 
 import javax.portlet.Portlet;
 

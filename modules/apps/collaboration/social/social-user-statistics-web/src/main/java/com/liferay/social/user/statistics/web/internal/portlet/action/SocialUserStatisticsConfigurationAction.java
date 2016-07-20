@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.portlet.BaseJSPSettingsConfigurationAction;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.social.user.statistics.web.internal.constants.SocialUserStatisticsPortletKeys;
+import com.liferay.social.user.statistics.web.constants.SocialUserStatisticsPortletKeys;
 
 import java.util.ArrayList;
 import java.util.List;

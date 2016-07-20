@@ -1,6 +1,7 @@
 Bundle-Name: Liferay Social User Statistics Web
 Bundle-SymbolicName: com.liferay.social.user.statistics.web
-Bundle-Version: 2.0.3
+Bundle-Version: 2.1.0
+Export-Package: com.liferay.social.user.statistics.web.constants
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Social
 Web-ContextPath: /social-user-statistics-web

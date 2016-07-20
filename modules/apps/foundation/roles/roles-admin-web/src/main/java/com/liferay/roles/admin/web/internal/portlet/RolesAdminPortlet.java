@@ -223,6 +223,10 @@ public class RolesAdminPortlet extends MVCPortlet {
 
 			actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 
+			SessionMessages.add(actionRequest, "roleCreated");
+
+			actionResponse.sendRedirect(redirect);
+
 			return role;
 		}
 		else {

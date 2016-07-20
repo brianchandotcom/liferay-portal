@@ -223,11 +223,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SETTINGS_CELL_EDITOR_NOTIFICATION_TYPE_USER_NOTIFICATION_PNG</td>
-	<td>portal/screenshots/kaleodesigner/settings_cell_editor_notification_type_user_notification.png</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SETTINGS_CELL_EDITOR_EXECUTION_TYPE_SELECT</td>
 	<td>//select[@name='executionType']</td>
 	<td></td>
@@ -254,11 +249,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_SAVE_BUTTON</td>
-	<td>//div[contains(@class,'assignments-cell-editor')]//button[contains(.,'Save')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_ROLE_SEARCH</td>
 	<td>//input[contains(@name,'role')]</td>
 	<td></td>
@@ -276,21 +266,6 @@
 <tr>
 	<td>SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_ROLE_TYPE_SELECT</td>
 	<td>//select[@name='roleType']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_RECIPIENT_TYPE_PNG</td>
-	<td>portal/screenshots/kaleodesigner/settings_cell_editor_notifications_recipient_recipient_type.png</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_ROLE_TYPE_PNG</td>
-	<td>portal/screenshots/kaleodesigner/settings_cell_editor_notifications_recipient_role_type.png</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_ROLE_NAME_PNG</td>
-	<td>portal/screenshots/kaleodesigner/settings_cell_editor_notifications_recipient_role_name.png</td>
 	<td></td>
 </tr>
 <tr>

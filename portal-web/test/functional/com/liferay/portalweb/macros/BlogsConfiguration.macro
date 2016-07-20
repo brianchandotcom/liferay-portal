@@ -20,7 +20,7 @@
 			</else>
 		</if>
 
-		<execute function="SelectFrame" locator1="BasePortletConfiguration#CONFIGURATION_IFRAME" />
+		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 
 		<execute function="AssertClick" locator1="NavBar#SCOPE" value1="Scope" />
 
@@ -164,7 +164,7 @@
 					<then>
 						<execute function="Click" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" />
 
-						<execute function="SelectFrame" locator1="BasePortletConfiguration#CONFIGURATION_IFRAME" />
+						<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 
 						<execute function="AssertElementNotPresent" locator1="MenuItem#PERMISSIONS" value1="Permissions" />
 					</then>

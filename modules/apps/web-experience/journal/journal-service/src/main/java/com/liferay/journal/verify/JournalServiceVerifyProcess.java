@@ -125,6 +125,16 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 		verifyProcess.verify();
 	}
 
+	protected String getContextFromDLUrl(String url) {
+		int x = url.indexOf("/documents/");
+
+		if (x < 1) {
+			return StringPool.BLANK;
+		}
+
+		return url.substring(0, x);
+	}
+
 	@Reference(unbind = "-")
 	protected void setAssetEntryLocalService(
 		AssetEntryLocalService assetEntryLocalService) {
@@ -294,6 +304,12 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 
 		String path = dynamicContentElement.getStringValue();
 
+		String context = getContextFromDLUrl(path);
+
+		if (!context.isEmpty()) {
+			path = path.replaceFirst(context, StringPool.BLANK);
+		}
+
 		String[] pathArray = StringUtil.split(path, CharPool.SLASH);
 
 		if (pathArray.length != 5) {
@@ -310,7 +326,8 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 
 			Node node = dynamicContentElement.node(0);
 
-			node.setText(path + StringPool.SLASH + fileEntry.getUuid());
+			node.setText(
+				context + path + StringPool.SLASH + fileEntry.getUuid());
 		}
 		catch (PortalException pe) {
 		}

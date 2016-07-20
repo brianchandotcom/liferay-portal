@@ -31,30 +31,77 @@
 		row.setPrimaryKey(HtmlUtil.escape(String.valueOf(curOrganization.getOrganizationId())));
 		%>
 
-		<liferay-ui:search-container-column-text
-			cssClass="table-cell-content"
-			name="name"
-		>
-			<aui:a href="<%= String.valueOf(rowURL) %>"><strong><%= curOrganization.getName() %></strong></aui:a>
-		</liferay-ui:search-container-column-text>
+		<c:choose>
+			<c:when test='<%= displayStyle.equals("descriptive") %>'>
+				<liferay-ui:search-container-column-icon
+					icon="organizations"
+					toggleRowChecker="<%= true %>"
+				/>
 
-		<liferay-ui:search-container-column-text
-			cssClass="table-cell-content"
-			href="<%= rowURL %>"
-			name="type"
-			value="<%= LanguageUtil.get(request, curOrganization.getType()) %>"
-		/>
+				<liferay-ui:search-container-column-text
+					colspan="<%= 2 %>"
+				>
+					<h5>
+						<aui:a href="<%= String.valueOf(rowURL) %>"><%= curOrganization.getName() %></aui:a>
+					</h5>
 
-		<liferay-ui:search-container-column-text
-			cssClass="table-cell-content"
-			href="<%= rowURL %>"
-			name="status"
-			value=""
-		/>
+					<h6 class="text-default">
+						<span><%= LanguageUtil.get(request, curOrganization.getType()) %></span>
+					</h6>
+				</liferay-ui:search-container-column-text>
 
-		<liferay-ui:search-container-column-jsp
-			path="/organization_action.jsp"
-		/>
+				<liferay-ui:search-container-column-jsp
+					cssClass="entry-action-column"
+					path="/organization_action.jsp"
+				/>
+			</c:when>
+			<c:when test='<%= displayStyle.equals("icon") %>'>
+
+				<%
+				row.setCssClass("entry-card lfr-asset-item");
+				%>
+
+				<liferay-ui:search-container-column-text>
+					<liferay-frontend:icon-vertical-card
+						actionJsp="/organization_action.jsp"
+						actionJspServletContext="<%= application %>"
+						cssClass="entry-display-style"
+						icon="organizations"
+						resultRow="<%= row %>"
+						rowChecker="<%= membersSearchContainer.getRowChecker() %>"
+						subtitle="<%= LanguageUtil.get(request, curOrganization.getType()) %>"
+						title="<%= curOrganization.getName() %>"
+						url="<%= String.valueOf(rowURL) %>"
+					/>
+				</liferay-ui:search-container-column-text>
+			</c:when>
+			<c:otherwise>
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-content"
+					name="name"
+				>
+					<aui:a href="<%= String.valueOf(rowURL) %>"><strong><%= curOrganization.getName() %></strong></aui:a>
+				</liferay-ui:search-container-column-text>
+
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-content"
+					href="<%= rowURL %>"
+					name="type"
+					value="<%= LanguageUtil.get(request, curOrganization.getType()) %>"
+				/>
+
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-content"
+					href="<%= rowURL %>"
+					name="status"
+					value=""
+				/>
+
+				<liferay-ui:search-container-column-jsp
+					path="/organization_action.jsp"
+				/>
+			</c:otherwise>
+		</c:choose>
 	</c:when>
 	<c:otherwise>
 		<liferay-portlet:renderURL varImpl="rowURL">
@@ -73,32 +120,85 @@
 		String userStatus = (user2.getStatus() == WorkflowConstants.STATUS_APPROVED) ? "active" : "inactive";
 		%>
 
-		<liferay-ui:search-container-column-text
-			cssClass="table-cell-content"
-			href="<%= rowURL %>"
-			name="name"
-			orderable="<%= true %>"
-		>
-			<aui:a href="<%= String.valueOf(rowURL) %>"><strong><%= user2.getFullName() %></strong></aui:a>
-		</liferay-ui:search-container-column-text>
+		<c:choose>
+			<c:when test='<%= displayStyle.equals("descriptive") %>'>
+				<liferay-ui:search-container-column-text>
+					<liferay-ui:user-portrait
+						cssClass="user-icon-lg"
+						userId="<%= user2.getUserId() %>"
+					/>
+				</liferay-ui:search-container-column-text>
 
-		<liferay-ui:search-container-column-text
-			cssClass="table-cell-content"
-			href="<%= rowURL %>"
-			name="type"
-			value='<%= LanguageUtil.get(request, "user") %>'
-		/>
+				<liferay-ui:search-container-column-text
+					colspan="<%= 2 %>"
+				>
+					<h5>
+						<aui:a href="<%= String.valueOf(rowURL) %>"><%= user2.getFullName() %></aui:a>
+					</h5>
 
-		<liferay-ui:search-container-column-text
-			cssClass="table-cell-content"
-			href="<%= rowURL %>"
-			name="status"
-			value='<%= LanguageUtil.get(request, userStatus) %>'
-		/>
+					<h6 class="text-default">
+						<span><%= LanguageUtil.get(request, "user") %></span>
+					</h6>
 
-		<liferay-ui:search-container-column-jsp
-			cssClass="entry-action-column"
-			path="/user_action.jsp"
-		/>
+					<h6 class="text-default">
+						<span><%= LanguageUtil.get(request, userStatus) %></span>
+					</h6>
+				</liferay-ui:search-container-column-text>
+
+				<liferay-ui:search-container-column-jsp
+					cssClass="entry-action-column"
+					path="/user_action.jsp"
+				/>
+			</c:when>
+			<c:when test='<%= displayStyle.equals("icon") %>'>
+
+				<%
+				row.setCssClass("entry-card lfr-asset-item");
+				%>
+
+				<liferay-ui:search-container-column-text>
+					<liferay-frontend:user-vertical-card
+						actionJsp="/user_action.jsp"
+						actionJspServletContext="<%= application %>"
+						cssClass="entry-display-style"
+						resultRow="<%= row %>"
+						rowChecker="<%= membersSearchContainer.getRowChecker() %>"
+						subtitle='<%= LanguageUtil.get(request, "user") %>'
+						title="<%= user2.getFullName() %>"
+						url="<%= String.valueOf(rowURL) %>"
+						userId="<%= user2.getUserId() %>"
+					/>
+				</liferay-ui:search-container-column-text>
+			</c:when>
+			<c:otherwise>
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-content"
+					href="<%= rowURL %>"
+					name="name"
+					orderable="<%= true %>"
+				>
+					<aui:a href="<%= String.valueOf(rowURL) %>"><strong><%= user2.getFullName() %></strong></aui:a>
+				</liferay-ui:search-container-column-text>
+
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-content"
+					href="<%= rowURL %>"
+					name="type"
+					value='<%= LanguageUtil.get(request, "user") %>'
+				/>
+
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-content"
+					href="<%= rowURL %>"
+					name="status"
+					value="<%= LanguageUtil.get(request, userStatus) %>"
+				/>
+
+				<liferay-ui:search-container-column-jsp
+					cssClass="entry-action-column"
+					path="/user_action.jsp"
+				/>
+			</c:otherwise>
+		</c:choose>
 	</c:otherwise>
 </c:choose>

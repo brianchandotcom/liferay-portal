@@ -82,6 +82,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.Callable;
 
 import org.osgi.service.component.annotations.Component;
@@ -230,7 +231,9 @@ public class LayoutStagedModelDataHandler
 			PortletDataContext portletDataContext, Layout layout)
 		throws Exception {
 
-		if (layout.isTypeSharedPortlet()) {
+		if (Objects.equals(
+				layout.getType(), LayoutConstants.TYPE_SHARED_PORTLET)) {
+
 			return;
 		}
 
@@ -272,7 +275,9 @@ public class LayoutStagedModelDataHandler
 			exportLayoutIconImage(portletDataContext, layout, layoutElement);
 		}
 
-		if (layout.isTypeLinkToLayout()) {
+		if (Objects.equals(
+				layout.getType(), LayoutConstants.TYPE_LINK_TO_LAYOUT)) {
+
 			exportLinkedLayout(portletDataContext, layout, layoutElement);
 		}
 
@@ -579,7 +584,7 @@ public class LayoutStagedModelDataHandler
 			PortletDataHandlerKeys.PORTLETS_MERGE_MODE,
 			PortletDataHandlerKeys.PORTLETS_MERGE_MODE_REPLACE);
 
-		if (layout.isTypePortlet() &&
+		if (Objects.equals(layout.getType(), LayoutConstants.TYPE_PORTLET) &&
 			Validator.isNotNull(layout.getTypeSettings()) &&
 			!portletsMergeMode.equals(
 				PortletDataHandlerKeys.PORTLETS_MERGE_MODE_REPLACE)) {
@@ -587,7 +592,9 @@ public class LayoutStagedModelDataHandler
 			mergePortlets(
 				importedLayout, layout.getTypeSettings(), portletsMergeMode);
 		}
-		else if (layout.isTypeLinkToLayout()) {
+		else if (Objects.equals(
+					layout.getType(), LayoutConstants.TYPE_LINK_TO_LAYOUT)) {
+
 			importLinkedLayout(
 				portletDataContext, layout, importedLayout, layoutElement);
 
@@ -745,7 +752,7 @@ public class LayoutStagedModelDataHandler
 	}
 
 	protected Object[] extractFriendlyURLInfo(Layout layout) {
-		if (!layout.isTypeURL()) {
+		if (!Objects.equals(layout.getType(), LayoutConstants.TYPE_URL)) {
 			return null;
 		}
 
@@ -1060,7 +1067,10 @@ public class LayoutStagedModelDataHandler
 
 		boolean addGuestPermissions = false;
 
-		if (!privateLayout || layout.isTypeControlPanel()) {
+		if (!privateLayout ||
+			Objects.equals(
+				layout.getType(), LayoutConstants.TYPE_CONTROL_PANEL)) {
+
 			addGuestPermissions = true;
 		}
 

@@ -41,7 +41,7 @@
 				<execute function="AssertClick" locator1="DDMEditStructure#DETAILS_PARENT_SELECT_BUTTON" value1="Select" />
 				<execute function="SelectFrame" value1="relative=top" />
 
-				<execute function="SelectFrame" locator1="DDMSelectStructure#DDM_STRUCTURES_IFRAME" />
+				<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
 				<var name="key_ddlDataDefinitionName" value="${parentStructureName}" />
 

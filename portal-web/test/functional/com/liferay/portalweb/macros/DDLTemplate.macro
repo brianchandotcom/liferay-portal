@@ -76,7 +76,7 @@
 	<command name="addDisplayTemplateTemplateViaDDLDisplayPG">
 		<execute function="Click" locator1="DDL#PORTLET_ACTIONS_ADD_DISPLAY_TEMPLATE" />
 
-		<execute function="SelectFrame" locator1="BasePortlet#IFRAME" />
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${ddlDisplayTemplateName}" />
 
@@ -129,7 +129,7 @@
 	<command name="addFormTemplateViaDDLDisplayPG">
 		<execute function="Click" locator1="DDL#PORTLET_ACTIONS_ADD_FORM_TEMPLATE" />
 
-		<execute function="SelectFrame" locator1="BasePortlet#IFRAME" />
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${ddlFormTemplateName}" />
 	</command>
@@ -208,12 +208,12 @@
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
 		<execute function="Pause" locator1="1000" />
-		<execute function="Type" locator1="CPDynamicdatalistsDatadefinitionsManagetemplatesEditdisplay#NAME_FIELD" value1="${ddlDisplayTemplateNameEdit}" />
+		<execute function="Type" locator1="TextInput#NAME" value1="${ddlDisplayTemplateNameEdit}" />
 
 		<execute macro="DDLTemplate#_showDetails" />
 
-		<execute function="Select" locator1="CPDynamicdatalistsDatadefinitionsManagetemplatesEditdisplay#DETAILS_LANGUAGE_SELECT" value1="${ddlDisplayTemplateLanguage}" />
-		<execute function="AssertClick" locator1="CPDynamicdatalistsDatadefinitionsManagetemplatesEditdisplay#DATA_LIST_RECORD_FIELDS_TEXT" value1="${ddlDisplayTemplateTextFieldScriptEdit}" />
+		<execute function="Select" locator1="DDMEditTemplate#DETAILS_LANGUAGE_SELECT" value1="${ddlDisplayTemplateLanguage}" />
+		<execute function="AssertClick" locator1="DDMEditTemplate#DATA_LIST_RECORD_FIELDS_TEXT" value1="${ddlDisplayTemplateTextFieldScriptEdit}" />
 		<execute function="AssertClick" locator1="DDMEditStructure#SAVE_BUTTON" value1="Save" />
 
 		<execute macro="Alert#viewSuccessMessage" />
@@ -232,7 +232,7 @@
 		<execute function="Click" locator1="DDMSelectTemplate#TEMPLATE_TABLE_ELLIPSIS_1" />
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
-		<execute function="Type" locator1="CPDynamicdatalistsDatadefinitionsManagetemplatesEditform#NAME_FIELD" value1="${ddlFormTemplateNameEdit}" />
+		<execute function="Type" locator1="TextInput#NAME" value1="${ddlFormTemplateNameEdit}" />
 	</command>
 
 	<command name="editFormTemplateModeCP">
@@ -362,7 +362,7 @@
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
 		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="${ddlTemplateName} (${ddlDataDefinitionName})" />
-		<execute function="AssertTextEquals" locator1="CPDynamicdatalistsDatadefinitionsManagetemplatesEditdisplay#NAME_FIELD" value1="${ddlTemplateName}" />
+		<execute function="AssertTextEquals" locator1="TextInput#NAME" value1="${ddlTemplateName}" />
 	</command>
 
 	<command name="viewFormTemplateCP">
@@ -376,7 +376,7 @@
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Portlet#HEADER" value1="${ddlTemplateName} (${ddlDataDefinitionName})" />
 
-		<execute function="AssertTextEquals" locator1="CPDynamicdatalistsDatadefinitionsManagetemplatesEditform#NAME_FIELD" value1="${ddlTemplateName}" />
+		<execute function="AssertTextEquals" locator1="TextInput#NAME" value1="${ddlTemplateName}" />
 	</command>
 
 	<command name="viewNoDuplicateTemplateCP">

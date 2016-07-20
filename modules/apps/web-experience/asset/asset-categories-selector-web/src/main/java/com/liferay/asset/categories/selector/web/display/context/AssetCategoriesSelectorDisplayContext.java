@@ -70,6 +70,17 @@ public class AssetCategoriesSelectorDisplayContext {
 		return _eventName;
 	}
 
+	public String getSelectedCategories() {
+		if (_selectedCategories != null) {
+			return _selectedCategories;
+		}
+
+		_selectedCategories = ParamUtil.getString(
+			_request, "selectedCategories");
+
+		return _selectedCategories;
+	}
+
 	public long[] getVocabularyIds() {
 		if (_vocabularyIds != null) {
 			return _vocabularyIds;
@@ -111,11 +122,23 @@ public class AssetCategoriesSelectorDisplayContext {
 		return sb.toString();
 	}
 
+	public boolean isSingleSelect() {
+		if (_singleSelect != null) {
+			return _singleSelect;
+		}
+
+		_singleSelect = ParamUtil.getBoolean(_request, "singleSelect");
+
+		return _singleSelect;
+	}
+
 	private long _categoryId;
 	private String _eventName;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _request;
+	private String _selectedCategories;
+	private Boolean _singleSelect;
 	private long[] _vocabularyIds;
 
 }

@@ -25,6 +25,8 @@ public interface Trigger extends Serializable {
 
 	public Date getEndDate();
 
+	public Date getFireDateAfter(Date date);
+
 	public String getGroupName();
 
 	public String getJobName();

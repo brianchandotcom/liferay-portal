@@ -1849,9 +1849,20 @@
 			<elseif>
 				<equals arg1="${frequency}" arg2="Weekly" />
 				<then>
-					<var method="selenium#getCurrentDayName()" name="today" />
+					<var method="selenium#getCurrentHour()" name="currentHour" />
 
-					<execute function="AssertTextEquals" locator1="CalendarViewEventDetails#REPEAT_OCCURRENCE_SUMMARY" value1="Weekly, on ${today}, ${numberOfOccurrences} Times" />
+					<if>
+						<equals arg1="${currentHour}" arg2="23" />
+						<then>
+							<execute function="AssertTextEquals#assertPartialText" locator1="CalendarViewEventDetails#REPEAT_OCCURRENCE_SUMMARY" value1="Weekly, on " />
+							<execute function="AssertTextEquals#assertPartialText" locator1="CalendarViewEventDetails#REPEAT_OCCURRENCE_SUMMARY" value1=", ${numberOfOccurrences} Times" />
+						</then>
+						<else>
+							<var method="selenium#getCurrentDayName()" name="today" />
+
+							<execute function="AssertTextEquals" locator1="CalendarViewEventDetails#REPEAT_OCCURRENCE_SUMMARY" value1="Weekly, on ${today}, ${numberOfOccurrences} Times" />
+						</else>
+					</if>
 				</then>
 			</elseif>
 			<elseif>

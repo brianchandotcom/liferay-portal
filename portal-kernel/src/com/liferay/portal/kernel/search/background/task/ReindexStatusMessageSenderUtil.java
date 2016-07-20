@@ -25,27 +25,37 @@ import com.liferay.portal.kernel.util.ProxyFactory;
 @ProviderType
 public class ReindexStatusMessageSenderUtil {
 
+	/**
+	 * @deprecated As of 7.1.0, replaced by {@link #_getReindexStatusMessageSender()}
+	 */
+	@Deprecated
 	public static ReindexStatusMessageSender
 		getReindexStatusMessageSender() {
 
-		PortalRuntimePermission.checkGetBeanProperty(
-			ReindexStatusMessageSenderUtil.class);
-
-		return _reindexStatusMessageSender;
+		return _getReindexStatusMessageSender();
 	}
 
 	public static void sendStatusMessage(
 		String className, long count, long total) {
 
-		getReindexStatusMessageSender().sendStatusMessage(
+		_getReindexStatusMessageSender().sendStatusMessage(
 			className, count, total);
 	}
 
 	public static void sendStatusMessage(
 		String phase, long companyId, long[] companyIds) {
 
-		getReindexStatusMessageSender().sendStatusMessage(
+		_getReindexStatusMessageSender().sendStatusMessage(
 			phase, companyId, companyIds);
+	}
+
+	private static ReindexStatusMessageSender
+		_getReindexStatusMessageSender() {
+
+		PortalRuntimePermission.checkGetBeanProperty(
+			ReindexStatusMessageSenderUtil.class);
+
+		return _reindexStatusMessageSender;
 	}
 
 	private static volatile ReindexStatusMessageSender

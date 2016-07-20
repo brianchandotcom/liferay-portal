@@ -21,6 +21,14 @@ import com.liferay.portal.kernel.util.ProxyFactory;
  */
 public class FacetedSearcherManagerUtil {
 
+	public static FacetedSearcher createFacetedSearcher() {
+		return _facetedSearcherManager.createFacetedSearcher();
+	}
+
+	/**
+	 * @deprecated As of 7.1.0, with no direct replacement
+	 */
+	@Deprecated
 	public static FacetedSearcherManager getFacetedSearcherManager() {
 		return _facetedSearcherManager;
 	}

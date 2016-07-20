@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.cluster;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.ProxyFactory;
@@ -30,30 +28,18 @@ public class ClusterLinkUtil {
 		return (Address)message.get(_ADDRESS);
 	}
 
+	/**
+	 * @deprecated As of 7.1.0, replaced by {@link #_getClusterLink()}
+	 */
+	@Deprecated
 	public static ClusterLink getClusterLink() {
-		PortalRuntimePermission.checkGetBeanProperty(ClusterLinkUtil.class);
-
-		if ((_clusterLink == null) || !_clusterLink.isEnabled()) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("ClusterLinkUtil is not initialized");
-			}
-
-			return null;
-		}
-
-		return _clusterLink;
+		return _getClusterLink();
 	}
 
 	public static void sendMulticastMessage(
 		Message message, Priority priority) {
 
-		ClusterLink clusterLink = getClusterLink();
-
-		if (clusterLink == null) {
-			return;
-		}
-
-		clusterLink.sendMulticastMessage(message, priority);
+		_getClusterLink().sendMulticastMessage(message, priority);
 	}
 
 	public static void sendMulticastMessage(Object payload, Priority priority) {
@@ -67,13 +53,7 @@ public class ClusterLinkUtil {
 	public static void sendUnicastMessage(
 		Address address, Message message, Priority priority) {
 
-		ClusterLink clusterLink = getClusterLink();
-
-		if (clusterLink == null) {
-			return;
-		}
-
-		clusterLink.sendUnicastMessage(address, message, priority);
+		_getClusterLink().sendUnicastMessage(address, message, priority);
 	}
 
 	public static Message setAddress(Message message, Address address) {
@@ -82,10 +62,13 @@ public class ClusterLinkUtil {
 		return message;
 	}
 
-	private static final String _ADDRESS = "CLUSTER_ADDRESS";
+	private static ClusterLink _getClusterLink() {
+		PortalRuntimePermission.checkGetBeanProperty(ClusterLinkUtil.class);
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		ClusterLinkUtil.class);
+		return _clusterLink;
+	}
+
+	private static final String _ADDRESS = "CLUSTER_ADDRESS";
 
 	private static volatile ClusterLink _clusterLink =
 		ProxyFactory.newServiceTrackedInstance(

@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
-import com.liferay.portlet.blogs.linkback.LinkbackConsumer;
 import com.liferay.portlet.blogs.linkback.LinkbackConsumerUtil;
 import com.liferay.portlet.blogs.util.LinkbackProducerUtil;
 
@@ -68,7 +67,7 @@ public class LinkbackMessageListener extends BaseSchedulerEntryMessageListener {
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		_linkbackConsumer.verifyNewTrackbacks();
+		LinkbackConsumerUtil.verifyNewTrackbacks();
 
 		LinkbackProducerUtil.sendQueuedPingbacks();
 	}
@@ -90,8 +89,6 @@ public class LinkbackMessageListener extends BaseSchedulerEntryMessageListener {
 	}
 
 	private volatile BlogsConfiguration _blogsConfiguration;
-	private final LinkbackConsumer _linkbackConsumer =
-		LinkbackConsumerUtil.getLinkbackConsumer();
 	private SchedulerEngineHelper _schedulerEngineHelper;
 
 }

@@ -31,72 +31,41 @@ public class ClusterMasterExecutorUtil {
 		ClusterMasterTokenTransitionListener
 			clusterMasterTokenTransitionListener) {
 
-		ClusterMasterExecutor clusterMasterExecutor =
-			getClusterMasterExecutor();
-
-		if (clusterMasterExecutor == null) {
-			return;
-		}
-
-		clusterMasterExecutor.addClusterMasterTokenTransitionListener(
+		_clusterMasterExecutor.addClusterMasterTokenTransitionListener(
 			clusterMasterTokenTransitionListener);
 	}
 
 	public static <T> Future<T> executeOnMaster(MethodHandler methodHandler) {
-		ClusterMasterExecutor clusterMasterExecutor =
-			getClusterMasterExecutor();
-
-		if (clusterMasterExecutor == null) {
-			return null;
-		}
-
-		return clusterMasterExecutor.executeOnMaster(methodHandler);
+		return _clusterMasterExecutor.executeOnMaster(methodHandler);
 	}
 
+	/**
+	 * @deprecated As of 7.1.0, with no direct replacement
+	 */
+	@Deprecated
 	public static ClusterMasterExecutor getClusterMasterExecutor() {
-		return _instance;
+		return _clusterMasterExecutor;
 	}
 
 	public static boolean isEnabled() {
-		ClusterMasterExecutor clusterMasterExecutor =
-			getClusterMasterExecutor();
-
-		if (clusterMasterExecutor == null) {
-			return false;
-		}
-
-		return clusterMasterExecutor.isEnabled();
+		return _clusterMasterExecutor.isEnabled();
 	}
 
 	public static boolean isMaster() {
-		ClusterMasterExecutor clusterMasterExecutor =
-			getClusterMasterExecutor();
-
-		if (clusterMasterExecutor == null) {
-			return false;
-		}
-
-		return clusterMasterExecutor.isMaster();
+		return _clusterMasterExecutor.isMaster();
 	}
 
 	public static void removeClusterMasterTokenTransitionListener(
 		ClusterMasterTokenTransitionListener
 			clusterMasterTokenTransitionListener) {
 
-		ClusterMasterExecutor clusterMasterExecutor =
-			getClusterMasterExecutor();
-
-		if (clusterMasterExecutor == null) {
-			return;
-		}
-
-		clusterMasterExecutor.removeClusterMasterTokenTransitionListener(
+		_clusterMasterExecutor.removeClusterMasterTokenTransitionListener(
 			clusterMasterTokenTransitionListener);
 	}
 
-	private static volatile ClusterMasterExecutor _instance =
+	private static volatile ClusterMasterExecutor _clusterMasterExecutor =
 		ProxyFactory.newServiceTrackedInstance(
 			ClusterMasterExecutor.class, ClusterMasterExecutorUtil.class,
-			"_instance");
+			"_clusterMasterExecutor");
 
 }

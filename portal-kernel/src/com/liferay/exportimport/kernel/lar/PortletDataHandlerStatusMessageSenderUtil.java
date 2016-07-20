@@ -26,13 +26,14 @@ import com.liferay.portal.kernel.util.ProxyFactory;
 @ProviderType
 public class PortletDataHandlerStatusMessageSenderUtil {
 
+	/**
+	 * @deprecated As of 7.1.0, replaced by {@link #_getPortletDataHandlerStatusMessageSender()}
+	 */
+	@Deprecated
 	public static PortletDataHandlerStatusMessageSender
 		getPortletDataHandlerStatusMessageSender() {
 
-		PortalRuntimePermission.checkGetBeanProperty(
-			PortletDataHandlerStatusMessageSenderUtil.class);
-
-		return _dataHandlerStatusMessageSender;
+		return _getPortletDataHandlerStatusMessageSender();
 	}
 
 	/**
@@ -43,14 +44,14 @@ public class PortletDataHandlerStatusMessageSenderUtil {
 	public static void sendStatusMessage(
 		String messageType, ManifestSummary manifestSummary) {
 
-		getPortletDataHandlerStatusMessageSender().sendStatusMessage(
+		_getPortletDataHandlerStatusMessageSender().sendStatusMessage(
 			messageType, manifestSummary);
 	}
 
 	public static void sendStatusMessage(
 		String messageType, String portletId, ManifestSummary manifestSummary) {
 
-		getPortletDataHandlerStatusMessageSender().sendStatusMessage(
+		_getPortletDataHandlerStatusMessageSender().sendStatusMessage(
 			messageType, portletId, manifestSummary);
 	}
 
@@ -58,15 +59,24 @@ public class PortletDataHandlerStatusMessageSenderUtil {
 		String messageType, String[] portletIds,
 		ManifestSummary manifestSummary) {
 
-		getPortletDataHandlerStatusMessageSender().sendStatusMessage(
+		_getPortletDataHandlerStatusMessageSender().sendStatusMessage(
 			messageType, portletIds, manifestSummary);
 	}
 
 	public static <T extends StagedModel> void sendStatusMessage(
 		String messageType, T stagedModel, ManifestSummary manifestSummary) {
 
-		getPortletDataHandlerStatusMessageSender().sendStatusMessage(
+		_getPortletDataHandlerStatusMessageSender().sendStatusMessage(
 			messageType, stagedModel, manifestSummary);
+	}
+
+	private static PortletDataHandlerStatusMessageSender
+		_getPortletDataHandlerStatusMessageSender() {
+
+		PortalRuntimePermission.checkGetBeanProperty(
+			PortletDataHandlerStatusMessageSenderUtil.class);
+
+		return _dataHandlerStatusMessageSender;
 	}
 
 	private static volatile PortletDataHandlerStatusMessageSender

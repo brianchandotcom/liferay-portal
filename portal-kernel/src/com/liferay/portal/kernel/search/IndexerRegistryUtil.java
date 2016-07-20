@@ -24,31 +24,35 @@ import java.util.Set;
 public class IndexerRegistryUtil {
 
 	public static <T> Indexer<T> getIndexer(Class<T> clazz) {
-		return getIndexerRegistry().getIndexer(clazz);
+		return _indexerRegistry.getIndexer(clazz);
 	}
 
 	public static <T> Indexer<T> getIndexer(String className) {
-		return getIndexerRegistry().getIndexer(className);
+		return _indexerRegistry.getIndexer(className);
 	}
 
+	/**
+	 * @deprecated As of 7.1.0, with no direct replacement
+	 */
+	@Deprecated
 	public static IndexerRegistry getIndexerRegistry() {
 		return _indexerRegistry;
 	}
 
 	public static Set<Indexer<?>> getIndexers() {
-		return getIndexerRegistry().getIndexers();
+		return _indexerRegistry.getIndexers();
 	}
 
 	public static <T> Indexer<T> nullSafeGetIndexer(Class<T> clazz) {
-		return getIndexerRegistry().nullSafeGetIndexer(clazz);
+		return _indexerRegistry.nullSafeGetIndexer(clazz);
 	}
 
 	public static <T> Indexer<T> nullSafeGetIndexer(String className) {
-		return getIndexerRegistry().nullSafeGetIndexer(className);
+		return _indexerRegistry.nullSafeGetIndexer(className);
 	}
 
 	public static void register(Indexer<?> indexer) {
-		getIndexerRegistry().register(indexer);
+		_indexerRegistry.register(indexer);
 	}
 
 	/**
@@ -56,15 +60,15 @@ public class IndexerRegistryUtil {
 	 */
 	@Deprecated
 	public static void register(String className, Indexer<?> indexer) {
-		getIndexerRegistry().register(indexer);
+		_indexerRegistry.register(indexer);
 	}
 
 	public static void unregister(Indexer<?> indexer) {
-		getIndexerRegistry().unregister(indexer);
+		_indexerRegistry.unregister(indexer);
 	}
 
 	public static void unregister(String className) {
-		getIndexerRegistry().unregister(className);
+		_indexerRegistry.unregister(className);
 	}
 
 	private static volatile IndexerRegistry _indexerRegistry =

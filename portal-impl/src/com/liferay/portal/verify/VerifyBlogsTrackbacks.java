@@ -100,7 +100,7 @@ public class VerifyBlogsTrackbacks extends VerifyProcess {
 				mbMessage.getCompanyId());
 
 			if (mbMessage.getUserId() == defaultUserId) {
-				_linkbackConsumer.verifyTrackback(
+				LinkbackConsumerUtil.verifyTrackback(
 					mbMessage.getMessageId(), url, entryURL);
 			}
 		}
@@ -108,8 +108,5 @@ public class VerifyBlogsTrackbacks extends VerifyProcess {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		VerifyBlogsTrackbacks.class);
-
-	private final LinkbackConsumer _linkbackConsumer =
-		LinkbackConsumerUtil.getLinkbackConsumer();
 
 }

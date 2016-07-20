@@ -26,17 +26,16 @@
 </div>
 
 <aui:script use="liferay-asset-portlet-category-selector">
-
 	<portlet:resourceURL id="getCategories" var="resourceURL" />
 
 	new Liferay.AssetPortletCategorySelector(
 		{
 			boundingBox: '#<portlet:namespace />listCategories',
 			entries: {},
-			entryIds: '<%= request.getParameter("selectedCategories") %>',
+			entryIds: '<%= assetCategoriesSelectorDisplayContext.getSelectedCategories() %>',
 			eventName: '<%= HtmlUtil.escapeJS(assetCategoriesSelectorDisplayContext.getEventName()) %>',
 			namespace: '<portlet:namespace />',
-			singleSelect: '<%= request.getParameter("singleSelect") %>',
+			singleSelect: '<%= assetCategoriesSelectorDisplayContext.isSingleSelect() %>',
 			url: '<%= resourceURL %>',
 			vocabularyRootNode: [
 

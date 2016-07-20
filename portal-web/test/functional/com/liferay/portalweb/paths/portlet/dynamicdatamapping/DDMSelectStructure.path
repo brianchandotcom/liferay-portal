@@ -8,26 +8,6 @@
 <tr><td rowspan="1" colspan="3">DDMSelectStructure</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td>DDM_STRUCTURES_IFRAME</td>
-	<td>//iframe[@class='dialog-iframe-node ']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DDM_STRUCTURES_IFRAME_1</td>
-	<td>xPath=(//iframe[@class='dialog-iframe-node '])[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DDM_STRUCTURES_IFRAME_2</td>
-	<td>xPath=(//iframe[@class='dialog-iframe-node '])[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--TOOLBAR-->
 <tr>
 	<td>TOOLBAR_VIEW_ALL</td>

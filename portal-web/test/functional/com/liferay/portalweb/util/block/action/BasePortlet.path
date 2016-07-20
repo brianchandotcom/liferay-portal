@@ -89,11 +89,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>IFRAME</td>
-	<td>//iframe[@class='dialog-iframe-node ']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SUCCESS_MESSAGE</td>
 	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
 	<td></td>

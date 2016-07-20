@@ -8,16 +8,6 @@
 <tr><td rowspan="1" colspan="3">ReportsAdminConfiguration</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td>CONFIGURATION_IFRAME</td>
-	<td>//iframe[@class='dialog-iframe-node ']</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--NAVIGATION-->
 <tr>
 	<td>NAVIGATION_EMAIL_FROM</td>

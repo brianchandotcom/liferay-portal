@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>IFRAME</td>
-	<td>//iframe[@class='dialog-iframe-node ']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SEARCH_ADVANCED_MENULIST</td>
 	<td>//a[contains(@id,'searchtoggleAdvanced')]</td>
 	<td></td>

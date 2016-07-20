@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PERMISSIONS_IFRAME</td>
-	<td>//iframe[@class='dialog-iframe-node ']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>PERMISSIONS_TITLE</td>
 	<td>//h3[contains(.,'Permissions')]</td>
 	<td></td>

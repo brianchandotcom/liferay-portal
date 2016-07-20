@@ -9,16 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>IFRAME</td>
-	<td>//iframe[@class='dialog-iframe-node ']</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>VIEWABLE_AS_SELECT</td>
 	<td>//select[contains(@id,'_inputPermissionsViewRole')]</td>
 	<td></td>

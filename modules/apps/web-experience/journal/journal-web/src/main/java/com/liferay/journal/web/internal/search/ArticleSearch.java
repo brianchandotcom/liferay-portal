@@ -151,8 +151,8 @@ public class ArticleSearch extends SearchContainer<JournalArticle> {
 
 			setOrderableHeaders(orderableHeaders);
 			setOrderByCol(orderByCol);
-			setOrderByType(orderByType);
 			setOrderByComparator(orderByComparator);
+			setOrderByType(orderByType);
 		}
 		catch (Exception e) {
 			_log.error(e);

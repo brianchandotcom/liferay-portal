@@ -102,13 +102,13 @@ public class UpgradeDynamicDataMappingTest extends PowerMockito {
 	public void setUp() throws Exception {
 		setUpDDMFormValuesJSONDeserializer();
 		setUpDDMFormValuesJSONSerializer();
+		setUpJSONFactoryUtil();
 		setUpLanguageUtil();
 		setUpLocaleUtil();
 		setUpLocalizationUtil();
 		setUpPropsUtil();
-		setUpSecureXMLFactoryProviderUtil();
 		setUpSAXReaderUtil();
-		setUpJSONFactoryUtil();
+		setUpSecureXMLFactoryProviderUtil();
 
 		_upgradeDynamicDataMapping = new UpgradeDynamicDataMapping(
 			null, null, null, null, null, _ddmFormValuesJSONDeserializer,

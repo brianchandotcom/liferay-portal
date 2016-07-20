@@ -27,9 +27,9 @@ public class SocialActivityFeedEntry {
 	}
 
 	public SocialActivityFeedEntry(String link, String title, String body) {
+		setBody(body);
 		setLink(link);
 		setTitle(title);
-		setBody(body);
 	}
 
 	public String getBody() {

@@ -67,16 +67,16 @@ if (queryLogicIndex >= 0) {
 	</aui:select>
 
 	<div class="field tags-selector <%= Objects.equals(queryName, "assetTags") ? StringPool.BLANK : "hide" %>">
-		<liferay-ui:asset-tags-selector
-			curTags='<%= Objects.equals(queryName, "assetTags") ? queryValues : null %>'
+		<liferay-asset:asset-tags-selector
 			groupIds="<%= categorizableGroupIds %>"
 			hiddenInput='<%= "queryTagNames" + index %>'
+			tagNames='<%= Objects.equals(queryName, "assetTags") ? queryValues : null %>'
 		/>
 	</div>
 
 	<div class="categories-selector field <%= Objects.equals(queryName, "assetCategories") ? StringPool.BLANK : "hide" %>">
-		<liferay-ui:asset-categories-selector
-			curCategoryIds='<%= Objects.equals(queryName, "assetCategories") ? queryValues : null %>'
+		<liferay-asset:asset-categories-selector
+			categoryIds='<%= Objects.equals(queryName, "assetCategories") ? queryValues : null %>'
 			groupIds="<%= categorizableGroupIds %>"
 			hiddenInput='<%= "queryCategoryIds" + index %>'
 		/>

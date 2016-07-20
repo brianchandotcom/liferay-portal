@@ -26,16 +26,19 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleResource;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.model.JournalFolderConstants;
-import com.liferay.journal.service.JournalArticleImageLocalServiceUtil;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.service.JournalArticleResourceLocalServiceUtil;
 import com.liferay.journal.service.JournalArticleServiceUtil;
 import com.liferay.journal.service.JournalFolderServiceUtil;
 import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.WorkflowedModel;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -45,11 +48,16 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
-import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.TempFileEntryUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.xml.Document;
+import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.trash.test.BaseTrashHandlerTestCase;
@@ -73,9 +81,9 @@ import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.trash.kernel.util.TrashUtil;
 
-import java.util.HashMap;
+import java.io.InputStream;
+
 import java.util.List;
-import java.util.Map;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -257,10 +265,6 @@ public class JournalArticleTrashHandlerTest
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
-		int initialArticleImagesCount =
-			JournalArticleImageLocalServiceUtil.getArticleImagesCount(
-				group.getGroupId());
-
 		Class<?> clazz = getClass();
 
 		ClassLoader classLoader = clazz.getClassLoader();
@@ -280,29 +284,62 @@ public class JournalArticleTrashHandlerTest
 			serviceContext.getScopeGroupId(), ddmStructure.getStructureId(),
 			PortalUtil.getClassNameId(JournalArticle.class));
 
+		InputStream inputStream = classLoader.getResourceAsStream(
+			"/com/liferay/journal/dependencies/liferay.png");
+
+		FileEntry tempFileEntry = TempFileEntryUtil.addTempFileEntry(
+			group.getGroupId(), TestPropsValues.getUserId(),
+			JournalArticle.class.getName(), "liferay.png", inputStream,
+			ContentTypes.IMAGE_PNG);
+
 		String content = StringUtil.read(
 			classLoader,
-			"com/liferay/journal/dependencies" +
-				"/test-journal-content-image-field.xml");
+				"com/liferay/journal/dependencies" +
+					"/test-journal-content-image-field.xml");
 
-		Map<String, byte[]> images = new HashMap<>();
+		Document document = SAXReaderUtil.read(content);
 
-		images.put(
-			"uewn_image_1_en_US",
-			FileUtil.getBytes(
-				clazz, "/com/liferay/journal/dependencies/liferay.png"));
+		Element dynamicContent = (Element)document.selectSingleNode(
+			"//dynamic-content");
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		jsonObject.put("groupId", group.getGroupId());
+		jsonObject.put("name", "liferay.png");
+		jsonObject.put("tempFile", Boolean.TRUE.toString());
+		jsonObject.put("title", "liferay.png");
+		jsonObject.put("type", "journal");
+		jsonObject.put("uuid", tempFileEntry.getUuid());
+
+		dynamicContent.setText(jsonObject.toString());
 
 		baseModel = JournalTestUtil.addArticleWithXMLContent(
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, content,
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, document.asXML(),
 			ddmStructure.getStructureKey(), ddmTemplate.getTemplateKey(),
-			images, serviceContext);
+			serviceContext);
+
+		JournalArticle article = (JournalArticle)baseModel;
+
+		long folderId = article.getImagesFolderId();
 
 		Assert.assertEquals(
-			initialArticleImagesCount + 1,
-			JournalArticleImageLocalServiceUtil.getArticleImagesCount(
-				group.getGroupId()));
+			1,
+			PortletFileRepositoryUtil.getPortletFileEntriesCount(
+				group.getGroupId(), folderId));
 
 		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
+
+		Assert.assertEquals(
+			0,
+			PortletFileRepositoryUtil.getPortletFileEntriesCount(
+				group.getGroupId(), folderId,
+				WorkflowConstants.STATUS_APPROVED));
+
+		Assert.assertEquals(
+			1,
+			PortletFileRepositoryUtil.getPortletFileEntriesCount(
+				group.getGroupId(), folderId,
+				WorkflowConstants.STATUS_IN_TRASH));
 
 		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
 			getBaseModelClassName());
@@ -310,9 +347,9 @@ public class JournalArticleTrashHandlerTest
 		trashHandler.deleteTrashEntry(getTrashEntryClassPK(baseModel));
 
 		Assert.assertEquals(
-			initialArticleImagesCount,
-			JournalArticleImageLocalServiceUtil.getArticleImagesCount(
-				group.getGroupId()));
+			0,
+			PortletFileRepositoryUtil.getPortletFileEntriesCount(
+				group.getGroupId(), folderId));
 	}
 
 	@Override

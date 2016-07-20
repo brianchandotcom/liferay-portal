@@ -17,6 +17,9 @@ package com.liferay.journal.item.selector.web.internal.context;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.item.selector.criterion.JournalItemSelectorCriterion;
 import com.liferay.journal.item.selector.web.internal.JournalItemSelectorView;
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.service.JournalArticleLocalServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -54,6 +57,11 @@ public class JournalItemSelectorViewDisplayContext {
 		return _itemSelectedEventName;
 	}
 
+	public JournalArticle getJournalArticle() throws PortalException {
+		return JournalArticleLocalServiceUtil.fetchLatestArticle(
+			_journalItemSelectorCriterion.getResourcePrimKey());
+	}
+
 	public JournalItemSelectorCriterion getJournalItemSelectorCriterion() {
 		return _journalItemSelectorCriterion;
 	}
@@ -66,6 +74,9 @@ public class JournalItemSelectorViewDisplayContext {
 		PortletURL portletURL = PortletURLUtil.clone(
 			_portletURL, liferayPortletResponse);
 
+		portletURL.setParameter(
+			"resourcePrimKey",
+			String.valueOf(_journalItemSelectorCriterion.getResourcePrimKey()));
 		portletURL.setParameter(
 			"selectedTab", String.valueOf(getTitle(request.getLocale())));
 

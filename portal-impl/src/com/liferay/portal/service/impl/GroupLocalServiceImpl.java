@@ -104,7 +104,6 @@ import com.liferay.portal.kernel.util.comparator.GroupNameComparator;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.model.impl.LayoutImpl;
-import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.service.base.GroupLocalServiceBaseImpl;
 import com.liferay.portal.theme.ThemeLoader;
 import com.liferay.portal.theme.ThemeLoaderFactory;
@@ -480,8 +479,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	@Override
 	public void addRoleGroups(long roleId, long[] groupIds) {
 		rolePersistence.addGroups(roleId, groupIds);
-
-		PermissionCacheUtil.clearCache();
 	}
 
 	/**
@@ -493,8 +490,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	@Override
 	public void addUserGroups(long userId, long[] groupIds) {
 		userPersistence.addGroups(userId, groupIds);
-
-		PermissionCacheUtil.clearCache(userId);
 	}
 
 	/**
@@ -893,10 +888,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 				groupPersistence.remove(group);
 			}
-
-			// Permission cache
-
-			PermissionCacheUtil.clearCache();
 
 			return group;
 		}
@@ -3027,8 +3018,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	@Override
 	public void setRoleGroups(long roleId, long[] groupIds) {
 		rolePersistence.setGroups(roleId, groupIds);
-
-		PermissionCacheUtil.clearCache();
 	}
 
 	/**
@@ -3040,8 +3029,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	@Override
 	public void unsetRoleGroups(long roleId, long[] groupIds) {
 		rolePersistence.removeGroups(roleId, groupIds);
-
-		PermissionCacheUtil.clearCache();
 	}
 
 	/**
@@ -3055,8 +3042,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		userGroupRoleLocalService.deleteUserGroupRoles(userId, groupIds);
 
 		userPersistence.removeGroups(userId, groupIds);
-
-		PermissionCacheUtil.clearCache(userId);
 	}
 
 	/**

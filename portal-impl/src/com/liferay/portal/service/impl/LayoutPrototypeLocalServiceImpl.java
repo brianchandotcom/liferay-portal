@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.service.base.LayoutPrototypeLocalServiceBaseImpl;
 
 import java.util.Date;
@@ -163,10 +162,6 @@ public class LayoutPrototypeLocalServiceImpl
 		// Layout Prototype
 
 		layoutPrototypePersistence.remove(layoutPrototype);
-
-		// Permission cache
-
-		PermissionCacheUtil.clearCache();
 
 		return layoutPrototype;
 	}

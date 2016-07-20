@@ -50,7 +50,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.service.impl.ResourcePermissionLocalServiceImpl;
 import com.liferay.portal.util.PortalInstances;
 
@@ -264,8 +263,6 @@ public class VerifyPermission extends VerifyProcess {
 					_log.error(e, e);
 				}
 			}
-
-			PermissionCacheUtil.clearResourceCache();
 		}
 	}
 

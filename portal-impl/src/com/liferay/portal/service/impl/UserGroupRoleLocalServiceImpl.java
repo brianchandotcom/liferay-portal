@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.service.persistence.UserGroupRolePK;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.service.base.UserGroupRoleLocalServiceBaseImpl;
 
 import java.util.ArrayList;
@@ -53,8 +52,6 @@ public class UserGroupRoleLocalServiceImpl
 			groupPersistence.addUser(groupId, userId);
 		}
 
-		PermissionCacheUtil.clearCache(userId);
-
 		return userGroupRoles;
 	}
 
@@ -77,16 +74,12 @@ public class UserGroupRoleLocalServiceImpl
 			groupPersistence.addUsers(groupId, userIds);
 		}
 
-		PermissionCacheUtil.clearCache(userIds);
-
 		return userGroupRoles;
 	}
 
 	@Override
 	public UserGroupRole deleteUserGroupRole(UserGroupRole userGroupRole) {
 		userGroupRolePersistence.remove(userGroupRole);
-
-		PermissionCacheUtil.clearCache(userGroupRole.getUserId());
 
 		return userGroupRole;
 	}
@@ -100,8 +93,6 @@ public class UserGroupRoleLocalServiceImpl
 			userGroupRolePersistence.removeByG_R(
 				groupId, userGroupRole.getRoleId());
 		}
-
-		PermissionCacheUtil.clearCache();
 	}
 
 	@Override
@@ -118,8 +109,6 @@ public class UserGroupRoleLocalServiceImpl
 			catch (NoSuchUserGroupRoleException nsugre) {
 			}
 		}
-
-		PermissionCacheUtil.clearCache(userId);
 	}
 
 	@Override
@@ -127,8 +116,6 @@ public class UserGroupRoleLocalServiceImpl
 		for (long groupId : groupIds) {
 			userGroupRolePersistence.removeByU_G(userId, groupId);
 		}
-
-		PermissionCacheUtil.clearCache(userId);
 	}
 
 	@Override
@@ -136,8 +123,6 @@ public class UserGroupRoleLocalServiceImpl
 		for (long userId : userIds) {
 			userGroupRolePersistence.removeByU_G(userId, groupId);
 		}
-
-		PermissionCacheUtil.clearCache(userIds);
 	}
 
 	@Override
@@ -159,8 +144,6 @@ public class UserGroupRoleLocalServiceImpl
 				}
 			}
 		}
-
-		PermissionCacheUtil.clearCache(userIds);
 	}
 
 	@Override
@@ -176,29 +159,21 @@ public class UserGroupRoleLocalServiceImpl
 			catch (NoSuchUserGroupRoleException nsugre) {
 			}
 		}
-
-		PermissionCacheUtil.clearCache(userIds);
 	}
 
 	@Override
 	public void deleteUserGroupRolesByGroupId(long groupId) {
 		userGroupRolePersistence.removeByGroupId(groupId);
-
-		PermissionCacheUtil.clearCache();
 	}
 
 	@Override
 	public void deleteUserGroupRolesByRoleId(long roleId) {
 		userGroupRolePersistence.removeByRoleId(roleId);
-
-		PermissionCacheUtil.clearCache();
 	}
 
 	@Override
 	public void deleteUserGroupRolesByUserId(long userId) {
 		userGroupRolePersistence.removeByUserId(userId);
-
-		PermissionCacheUtil.clearCache(userId);
 	}
 
 	@Override

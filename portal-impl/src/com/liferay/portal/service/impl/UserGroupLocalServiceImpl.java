@@ -57,7 +57,6 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.service.base.UserGroupLocalServiceBaseImpl;
 import com.liferay.portal.service.persistence.constants.UserGroupFinderConstants;
 import com.liferay.portal.util.PropsValues;
@@ -91,8 +90,6 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	@Override
 	public void addGroupUserGroups(long groupId, long[] userGroupIds) {
 		groupPersistence.addUserGroups(groupId, userGroupIds);
-
-		PermissionCacheUtil.clearCache();
 	}
 
 	/**
@@ -104,8 +101,6 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	@Override
 	public void addTeamUserGroups(long teamId, long[] userGroupIds) {
 		teamPersistence.addUserGroups(teamId, userGroupIds);
-
-		PermissionCacheUtil.clearCache();
 	}
 
 	/**
@@ -222,8 +217,6 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	@Override
 	public void clearUserUserGroups(long userId) {
 		userPersistence.clearUserGroups(userId);
-
-		PermissionCacheUtil.clearCache(userId);
 	}
 
 	/**
@@ -371,10 +364,6 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		// User group
 
 		userGroupPersistence.remove(userGroup);
-
-		// Permission cache
-
-		PermissionCacheUtil.clearCache();
 
 		return userGroup;
 	}
@@ -867,8 +856,6 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		User user = userLocalService.fetchUser(userId);
 
 		indexer.reindex(user);
-
-		PermissionCacheUtil.clearCache(userId);
 	}
 
 	/**
@@ -889,8 +876,6 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 			userGroupIds, groupId);
 
 		groupPersistence.removeUserGroups(groupId, userGroupIds);
-
-		PermissionCacheUtil.clearCache();
 	}
 
 	/**
@@ -902,8 +887,6 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	@Override
 	public void unsetTeamUserGroups(long teamId, long[] userGroupIds) {
 		teamPersistence.removeUserGroups(teamId, userGroupIds);
-
-		PermissionCacheUtil.clearCache();
 	}
 
 	/**

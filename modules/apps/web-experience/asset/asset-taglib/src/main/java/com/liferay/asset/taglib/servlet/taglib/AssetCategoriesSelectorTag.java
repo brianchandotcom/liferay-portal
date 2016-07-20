@@ -268,8 +268,6 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 			"liferay-asset:asset-categories-selector:eventName",
 			getEventName());
 		request.setAttribute(
-			"liferay-asset:asset-categories-selector:groupIds", getGroupIds());
-		request.setAttribute(
 			"liferay-asset:asset-categories-selector:hiddenInput",
 			_hiddenInput);
 		request.setAttribute(

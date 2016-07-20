@@ -125,7 +125,6 @@
 	<td>//input[contains(@id,'feedTime')]</td>
 	<td></td>
 </tr>
-	<tr>
 	<td>FEED_PANEL_HEADING</td>
 	<td>//div[contains(@class,'panel') and contains(@class,'title')]/a[contains(.,'${key_feedHeading}')]</td>
 	<td></td>

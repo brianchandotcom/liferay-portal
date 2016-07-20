@@ -35,7 +35,7 @@
 	<command name="viewDDLTemplateRecordFieldData">
 		<var name="key_ddlRecordFieldData" value="${ddlRecordFieldData}" />
 
-		<execute function="AssertTextEquals" locator1="PGDynamicdatalists#RECORD_TABLE_DISPLAY_FIELD" value1="${key_ddlRecordFieldData}" />
+		<execute function="AssertTextEquals" locator1="DDL#RECORD_TABLE_DISPLAY_FIELD" value1="${key_ddlRecordFieldData}" />
 	</command>
 
 	<command name="viewSpreadsheetContainer">

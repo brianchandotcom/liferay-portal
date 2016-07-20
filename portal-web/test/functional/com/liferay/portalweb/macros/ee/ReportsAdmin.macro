@@ -180,7 +180,7 @@
 		<execute function="Click" locator1="Icon#COG" />
 		<execute function="AssertClick" locator1="ReportsAdmin#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
 
-		<execute function="SelectFrame" locator1="ReportsAdminConfiguration#CONFIGURATION_IFRAME" />
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 	</command>
 
 	<command name="gotoDefinitions">

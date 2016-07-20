@@ -126,7 +126,7 @@
 	<command name="addPollPG">
 		<execute function="AssertClick" locator1="Polls#ADD_NEW_POLL" value1="Add" />
 
-		<execute function="SelectFrame" locator1="BasePortlet#IFRAME" />
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
 		<execute function="Click" locator1="Button#PLUS" />
 
@@ -142,7 +142,7 @@
 	<command name="selectPollPG">
 		<execute function="Click#makeVisibleClickAt" locator1="Polls#SELECT_QUESTION" />
 
-		<execute function="SelectFrame" locator1="BasePortlet#IFRAME" />
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
 		<execute function="Select" locator1="Polls#TITLE_DROPDOWN_SELECT" value1="${pollsQuestionTitle}" />
 		<execute macro="PortletEntry#save" />

@@ -44,7 +44,7 @@
 	</command>
 
 	<command name="selectConfigurationIFrame">
-		<execute function="SelectFrame" locator1="Configuration#CONFIGURATION_IFRAME" />
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 	</command>
 
 	<command name="selectDisplayTemplate">

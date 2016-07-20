@@ -11,7 +11,7 @@
 
 				<execute function="AssertTextEquals" locator1="IFrame#IFRAME_TITLE" value1="Data Definitions" />
 
-				<execute function="SelectFrame" locator1="DDMSelectStructure#DDM_STRUCTURES_IFRAME" />
+				<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
 				<var name="key_assetTitle" value="Data Definitions" />
 
@@ -36,7 +36,7 @@
 	</command>
 
 	<command name="_select">
-		<execute function="SelectFrame" locator1="DDMSelectStructure#DDM_STRUCTURES_IFRAME" />
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
 		<var name="key_ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 
@@ -45,12 +45,12 @@
 
 	<command name="_showDetails">
 		<if>
-			<condition function="IsElementNotPresent#isNotVisible" locator1="CPDynamicdatalistsDatadefinitionsAdd#DETAILS_DESCRIPTION_FIELD" />
+			<condition function="IsElementNotPresent#isNotVisible" locator1="TextInput#DESCRIPTION" />
 			<then>
 				<execute function="Click" locator1="DDMEditStructure#DETAILS_TOGGLE" />
 
 				<if>
-					<condition function="IsElementNotPresent#isNotVisible" locator1="CPDynamicdatalistsDatadefinitionsAdd#DETAILS_DESCRIPTION_FIELD" />
+					<condition function="IsElementNotPresent#isNotVisible" locator1="TextInput#DESCRIPTION" />
 					<then>
 						<execute function="Click" locator1="DDMEditStructure#DETAILS_TOGGLE" />
 					</then>
@@ -58,7 +58,7 @@
 			</then>
 		</if>
 
-		<execute function="AssertVisible" locator1="CPDynamicdatalistsDatadefinitionsAdd#DETAILS_DESCRIPTION_FIELD" />
+		<execute function="AssertVisible" locator1="TextInput#DESCRIPTION" />
 	</command>
 
 	<command name="addCP">
@@ -175,7 +175,7 @@
 	</command>
 
 	<command name="editPermissionsCP">
-		<execute function="SelectFrame" locator1="Permissions#PERMISSIONS_IFRAME" />
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
 		<execute macro="PermissionsInline#addOrRemoveViewPermissionFromAllRoles">
 			<var name="addOrRemoveViewPermission" value="${addOrRemoveViewPermission}" />
@@ -218,7 +218,7 @@
 
 		<execute function="SelectFrameTop" />
 
-		<execute function="SelectFrame" locator1="PGDynamicdatalistsAddlist#IFRAME" />
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
 		<execute function="AssertTextEquals#assertValue" locator1="TextInput#DATA_DEFINITION" value1="${ddlDataDefinitionName}" />
 	</command>

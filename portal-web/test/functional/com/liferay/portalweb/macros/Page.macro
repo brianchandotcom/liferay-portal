@@ -663,14 +663,14 @@
 
 	<command name="viewFriendlyURLLanguageOptionsPG">
 		<for list="${currentLanguageList}" param="languageKey">
-			<execute function="AssertElementPresent" locator1="DockbarEditpanel#${languageKey}" />
+			<execute function="AssertElementPresent" locator1="SitePagesEditPage#${languageKey}" />
 		</for>
 
 		<if>
 			<equals arg1="${assertUnavailableLanguages}" arg2="true" />
 			<then>
 				<for list="${unavailableLanguageList}" param="languageKey">
-					<execute function="AssertElementNotPresent" locator1="DockbarEditpanel#${languageKey}" />
+					<execute function="AssertElementNotPresent" locator1="SitePagesEditPage#${languageKey}" />
 				</for>
 			</then>
 		</if>

@@ -9,16 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>EXTEND_ACTION_PATH</td>
-	<td>BasePortletExport</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>IMPORT_IFRAME</td>
 	<td>//iframe[contains(@id,'importDialog')]</td>
 	<td></td>
@@ -157,6 +147,11 @@
 <tr>
 	<td>CONTENT_CHOOSE_CONTENT_RADIO</td>
 	<td>//input[contains(@id,'chooseContent')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX</td>
+	<td>//ul[@class='portlet-list']//label[contains(.,'${key_contentName}')]/input</td>
 	<td></td>
 </tr>
 <tr>

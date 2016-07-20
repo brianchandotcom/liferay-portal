@@ -40,6 +40,7 @@ public class PortletKeys {
 
 	public static final String CALENDAR = "8";
 
+	@Deprecated
 	public static final String CHAT = "1_WAR_chatportlet";
 
 	public static final String DIRECTORY =

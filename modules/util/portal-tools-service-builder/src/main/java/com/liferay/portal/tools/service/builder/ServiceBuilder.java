@@ -2301,7 +2301,7 @@ public class ServiceBuilder {
 				"<?xml version=\"1.0\"?>\n" +
 				"<!DOCTYPE hibernate-mapping PUBLIC \"-//Hibernate/Hibernate Mapping DTD 3.0//EN\" \"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd\">\n" +
 				"\n" +
-				"<hibernate-mapping default-lazy=\"false\" auto-import=\"false\">\n" +
+				"<hibernate-mapping auto-import=\"false\" default-lazy=\"false\">\n" +
 				"</hibernate-mapping>";
 
 			_write(xmlFile, xml);

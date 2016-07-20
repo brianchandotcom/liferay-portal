@@ -196,7 +196,7 @@ public class ClassLoaderTest {
 	@Test
 	public void testGet15() throws Exception {
 		try {
-			PortletClassLoaderUtil.getClassLoader("1_WAR_chatportlet");
+			PortletClassLoaderUtil.getClassLoader("2_WAR_pacl_testportlet");
 
 			Assert.fail();
 		}
@@ -212,7 +212,7 @@ public class ClassLoaderTest {
 	@Test
 	public void testGet17() throws Exception {
 		try {
-			PortletClassLoaderUtil.getClassLoader("chat-portlet");
+			PortletClassLoaderUtil.getClassLoader("pacl-2-test-portlet");
 
 			Assert.fail();
 		}

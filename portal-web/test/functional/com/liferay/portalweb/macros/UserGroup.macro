@@ -337,34 +337,21 @@
 	</command>
 
 	<command name="viewCP">
-		<if>
-			<or>
-				<equals arg1="${userGroupNameVariation}" arg2="Asterik" />
-				<equals arg1="${userGroupNameVariation}" arg2="Comma" />
-				<equals arg1="${userGroupNameVariation}" arg2="Null" />
-				<equals arg1="${userGroupNameVariation}" arg2="Number" />
-			</or>
-			<then>
-				<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No user groups were found." />
-			</then>
-			<else>
-				<execute function="Type" locator1="TextInput#SEARCH" value1="${userGroupName}" />
+		<execute function="Type" locator1="TextInput#SEARCH" value1="${userGroupName}" />
 
-				<execute function="Click" locator1="Button#SUBMIT" />
+		<execute function="Click" locator1="Button#SUBMIT" />
 
-				<execute function="Pause" locator1="5000" />
+		<execute function="Pause" locator1="5000" />
 
-				<var name="key_userGroupName" value="${userGroupName}" />
+		<var name="key_userGroupName" value="${userGroupName}" />
 
-				<execute function="AssertTextEquals" locator1="UserGroups#USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
-				<execute function="AssertElementPresent" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
-				<execute function="AssertElementPresent" locator1="Checkbox#SELECT_ALL" />
-				<execute function="AssertElementPresent" locator1="UserGroups#USER_GROUP_TABLE_CHECKBOX" />
-				<execute function="AssertElementPresent" locator1="Button#PLUS" />
-				<execute function="AssertElementPresent" locator1="TextInput#SEARCH" />
-				<execute function="AssertElementPresent" locator1="Button#SUBMIT" />
-			</else>
-		</if>
+		<execute function="AssertTextEquals" locator1="UserGroups#USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
+		<execute function="AssertElementPresent" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+		<execute function="AssertElementPresent" locator1="Checkbox#SELECT_ALL" />
+		<execute function="AssertElementPresent" locator1="UserGroups#USER_GROUP_TABLE_CHECKBOX" />
+		<execute function="AssertElementPresent" locator1="Button#PLUS" />
+		<execute function="AssertElementPresent" locator1="TextInput#SEARCH" />
+		<execute function="AssertElementPresent" locator1="Button#SUBMIT" />
 	</command>
 
 	<command name="viewDefault">

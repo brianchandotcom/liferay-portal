@@ -1243,8 +1243,6 @@
 
 		<execute macro="IFrame#selectTopFrame" />
 
-		<execute macro="IFrame#selectEditAssetFrame" />
-
 		<execute macro="Panel#expandPanel">
 			<var name="panelHeading" value="Structure and Template" />
 		</execute>

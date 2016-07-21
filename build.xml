@@ -30,6 +30,7 @@
 
 			<gradle-execute dir="${project.dir}/modules" task="clean">
 				<arg value="-Dportal.build=true" />
+				<arg value="--quiet" />
 			</gradle-execute>
 
 			<delete failonerror="false" includeemptydirs="true">

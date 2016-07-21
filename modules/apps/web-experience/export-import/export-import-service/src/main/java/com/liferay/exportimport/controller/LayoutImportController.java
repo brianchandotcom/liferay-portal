@@ -1278,14 +1278,11 @@ public class LayoutImportController implements ImportController {
 
 		// Export Import bundle compatibility
 
-		String importBundleVersion = GetterUtil.getString(
-			headerElement.attributeValue("bundle-version"));
+		int importBuildNumber = GetterUtil.getInteger(
+			headerElement.attributeValue("build-number"));
 
-		if (Validator.isNull(importBundleVersion)) {
+		if (importBuildNumber < ReleaseInfo.RELEASE_7_0_0_BUILD_NUMBER) {
 			int buildNumber = ReleaseInfo.getBuildNumber();
-
-			int importBuildNumber = GetterUtil.getInteger(
-				headerElement.attributeValue("build-number"));
 
 			if (buildNumber != importBuildNumber) {
 				throw new LayoutImportException(
@@ -1326,6 +1323,9 @@ public class LayoutImportController implements ImportController {
 				LayoutImportController.class);
 
 			String currentBundleVersion = bundle.getVersion().toString();
+
+			String importBundleVersion = GetterUtil.getString(
+				headerElement.attributeValue("bundle-version"), "3.0.0");
 
 			if (!manifestVersionPredicate.test(
 					Version.getInstance(currentBundleVersion),

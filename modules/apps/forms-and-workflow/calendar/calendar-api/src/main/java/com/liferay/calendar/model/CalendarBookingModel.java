@@ -277,6 +277,20 @@ public interface CalendarBookingModel extends BaseModel<CalendarBooking>,
 	public void setParentCalendarBookingId(long parentCalendarBookingId);
 
 	/**
+	 * Returns the recurring calendar booking ID of this calendar booking.
+	 *
+	 * @return the recurring calendar booking ID of this calendar booking
+	 */
+	public long getRecurringCalendarBookingId();
+
+	/**
+	 * Sets the recurring calendar booking ID of this calendar booking.
+	 *
+	 * @param recurringCalendarBookingId the recurring calendar booking ID of this calendar booking
+	 */
+	public void setRecurringCalendarBookingId(long recurringCalendarBookingId);
+
+	/**
 	 * Returns the v event uid of this calendar booking.
 	 *
 	 * @return the v event uid of this calendar booking

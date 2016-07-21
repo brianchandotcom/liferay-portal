@@ -293,6 +293,36 @@ public class MarketplaceStorePortlet extends RemoteMVCPortlet {
 		}
 	}
 
+	public void updateAppLicense(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		String orderUuid = ParamUtil.getString(actionRequest, "orderUuid");
+		String productEntryName = ParamUtil.getString(
+			actionRequest, "productEntryName");
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		jsonObject.put("cmd", "updateAppLicense");
+
+		if (Validator.isNull(orderUuid) &&
+			Validator.isNotNull(productEntryName)) {
+
+			orderUuid = MarketplaceLicenseUtil.getOrder(productEntryName);
+		}
+
+		if (Validator.isNotNull(orderUuid)) {
+			MarketplaceLicenseUtil.registerOrder(orderUuid, productEntryName);
+
+			jsonObject.put("message", "success");
+		}
+		else {
+			jsonObject.put("message", "failed");
+		}
+
+		writeJSON(actionRequest, actionResponse, jsonObject);
+	}
+
 	public void updateApps(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -308,7 +338,7 @@ public class MarketplaceStorePortlet extends RemoteMVCPortlet {
 			StringPool.BLANK);
 
 		try {
-			String[] appPackageIds = ParamUtil.getParameterValues(
+			long[] appPackageIds = ParamUtil.getLongValues(
 				actionRequest, "appPackageIds");
 
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
@@ -318,25 +348,21 @@ public class MarketplaceStorePortlet extends RemoteMVCPortlet {
 
 			JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-			for (String appPackage : appPackageIds) {
+			for (long appPackageId : appPackageIds) {
 				File file = null;
 
 				try {
-					int appPackageId = Integer.valueOf(appPackage);
+					file = FileUtil.createTempFile();
 
-					if (appPackageId > 0) {
-						file = FileUtil.createTempFile();
+					downloadApp(
+						actionRequest, actionResponse, appPackageId, false,
+						file);
 
-						downloadApp(
-							actionRequest, actionResponse, appPackageId, false,
-							file);
+					App app = _appService.updateApp(file);
 
-						App app = _appService.updateApp(file);
+					_appService.installApp(app.getRemoteAppId());
 
-						_appService.installApp(app.getRemoteAppId());
-
-						jsonArray.put(getAppJSONObject(app));
-					}
+					jsonArray.put(getAppJSONObject(app));
 				}
 				finally {
 					if (file != null) {

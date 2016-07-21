@@ -14,26 +14,55 @@
 
 package com.liferay.portal.verify;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.verify.test.BaseVerifyProcessTestCase;
+import com.liferay.registry.Filter;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceTracker;
 
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.runner.RunWith;
 
 /**
  * @author Manuel de la Peña
  */
-public class VerifyBlogsTest extends BaseVerifyProcessTestCase {
+@RunWith(Arquillian.class)
+public class BlogsServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
+	@BeforeClass
+	public static void setUpClass() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		Filter filter = registry.getFilter(
+			"(&(objectClass=" + VerifyProcess.class.getName() +
+			")(verify.process.name=com.liferay.blogs.service))");
+
+		_serviceTracker = registry.trackServices(filter);
+
+		_serviceTracker.open();
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		_serviceTracker.close();
+	}
+
 	@Override
 	protected VerifyProcess getVerifyProcess() {
-		return new VerifyBlogs();
+		return _serviceTracker.getService();
 	}
+
+	private static ServiceTracker<VerifyProcess, VerifyProcess> _serviceTracker;
 
 }

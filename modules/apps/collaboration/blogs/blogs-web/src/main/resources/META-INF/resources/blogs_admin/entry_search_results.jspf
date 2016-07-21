@@ -23,7 +23,7 @@ if ((assetCategoryId != 0) || Validator.isNotNull(assetTagName)) {
 	List<AssetEntry> assetEntries = searchContainerResults.getResults();
 
 	for (AssetEntry assetEntry : assetEntries) {
-		results.add(BlogsEntryLocalServiceUtil.getBlogsEntry(assetEntry.getClassPK()));
+		results.add(BlogsEntryLocalServiceUtil.getEntry(assetEntry.getClassPK()));
 	}
 }
 else if (Validator.isNull(keywords)) {

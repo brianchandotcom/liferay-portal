@@ -25,8 +25,8 @@ import com.liferay.blogs.kernel.exception.EntrySmallImageScaleException;
 import com.liferay.blogs.kernel.exception.EntryTitleException;
 import com.liferay.blogs.kernel.exception.NoSuchEntryException;
 import com.liferay.blogs.kernel.model.BlogsEntry;
-import com.liferay.blogs.kernel.service.BlogsEntryLocalService;
-import com.liferay.blogs.kernel.service.BlogsEntryService;
+import com.liferay.blogs.service.BlogsEntryLocalService;
+import com.liferay.blogs.service.BlogsEntryService;
 import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.document.library.kernel.exception.FileSizeException;
 import com.liferay.portal.kernel.editor.EditorConstants;
@@ -464,7 +464,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		String oldSmallImageURL = StringPool.BLANK;
 
 		if (entryId != 0) {
-			BlogsEntry entry = _blogsEntryLocalService.getBlogsEntry(entryId);
+			BlogsEntry entry = _blogsEntryLocalService.getEntry(entryId);
 
 			oldCoverImageId = entry.getCoverImageFileEntryId();
 			oldCoverImageURL = entry.getCoverImageURL();

@@ -552,7 +552,6 @@
 	<bean class="com.liferay.portlet.asset.util.AssetCategoryIndexer" id="com.liferay.portlet.asset.util.AssetCategoryIndexer" />
 	<bean class="com.liferay.portlet.asset.util.AssetEntryIndexer" id="com.liferay.portlet.asset.util.AssetEntryIndexer" />
 	<bean class="com.liferay.portlet.asset.util.AssetVocabularyIndexer" id="com.liferay.portlet.asset.util.AssetVocabularyIndexer" />
-	<bean class="com.liferay.portlet.blogs.service.permission.BlogsEntryPermission" id="com.liferay.portlet.blogs.service.permission.BlogsEntryPermission" />
 	<bean class="com.liferay.portlet.blogs.service.permission.BlogsPermission" id="com.liferay.portlet.blogs.service.permission.BlogsPermission" />
 	<bean class="com.liferay.portlet.blogs.util.BlogsOpenSearchImpl" id="com.liferay.portlet.blogs.util.BlogsOpenSearchImpl" />
 	<bean class="com.liferay.document.library.kernel.antivirus.AntivirusScannerUtil" id="com.liferay.document.library.kernel.antivirus.AntivirusScannerUtil">

@@ -294,8 +294,8 @@ public class JournalArticleTrashHandlerTest
 
 		String content = StringUtil.read(
 			classLoader,
-			"com/liferay/journal/dependencies" +
-				"/test-journal-content-image-field.xml");
+			"com/liferay/journal/dependencies/test-journal-content-image-" +
+				"field.xml");
 
 		Document document = SAXReaderUtil.read(content);
 

@@ -1545,7 +1545,7 @@ public class CalendarBookingLocalServiceImpl
 		List<String> unchangedList = new ArrayList<>();
 
 		if (calendarId == calendarBooking.getCalendarId()) {
-			unchangedList.add(_CALENDAR_ID);
+			unchangedList.add("calendarId");
 		}
 
 		Map<Locale, String> updatedTitleMap = new HashMap<>();
@@ -1558,7 +1558,7 @@ public class CalendarBookingLocalServiceImpl
 		}
 
 		if (Objects.equals(updatedTitleMap, calendarBooking.getTitleMap())) {
-			unchangedList.add(_TITLE_MAP);
+			unchangedList.add("titleMap");
 		}
 
 		Map<Locale, String> updatedDescriptionMap = new HashMap<>();
@@ -1576,11 +1576,11 @@ public class CalendarBookingLocalServiceImpl
 		if (Objects.equals(
 				updatedDescriptionMap, calendarBooking.getDescriptionMap())) {
 
-			unchangedList.add(_DESCRIPTION_MAP);
+			unchangedList.add("descriptionMap");
 		}
 
 		if (Objects.equals(location, calendarBooking.getLocation())) {
-			unchangedList.add(_LOCATION);
+			unchangedList.add("location");
 		}
 
 		long newStartTime = JCalendarUtil.convertTimeToNewDay(
@@ -1590,31 +1590,31 @@ public class CalendarBookingLocalServiceImpl
 			calendarBooking.getEndTime(), endTime);
 
 		if ((startTime == newStartTime) && (endTime == newEndTime)) {
-			unchangedList.add(_TIME);
+			unchangedList.add("time");
 		}
 
 		if (allDay == calendarBooking.getAllDay()) {
-			unchangedList.add(_ALL_DAY);
+			unchangedList.add("allDay");
 		}
 
 		if (firstReminder == calendarBooking.getFirstReminder()) {
-			unchangedList.add(_FIRST_REMINDER);
+			unchangedList.add("firstReminder");
 		}
 
 		if (Objects.equals(
 				firstReminderType, calendarBooking.getFirstReminderType())) {
 
-			unchangedList.add(_FIRST_REMINDER_TYPE);
+			unchangedList.add("firstReminderType");
 		}
 
 		if (secondReminder == calendarBooking.getSecondReminder()) {
-			unchangedList.add(_SECOND_REMINDER);
+			unchangedList.add("secondReminder");
 		}
 
 		if (Objects.equals(
 				secondReminderType, calendarBooking.getSecondReminderType())) {
 
-			unchangedList.add(_SECOND_REMINDER_TYPE);
+			unchangedList.add("secondReminderType");
 		}
 
 		return unchangedList;
@@ -1771,28 +1771,6 @@ public class CalendarBookingLocalServiceImpl
 			throw new CalendarBookingRecurrenceException();
 		}
 	}
-
-	private static final String _ALL_DAY = "allDay";
-
-	private static final String _CALENDAR_ID = "calendarId";
-
-	private static final String _DESCRIPTION_MAP = "descriptionMap";
-
-	private static final String _FIRST_REMINDER = "firstReminder";
-
-	private static final String _FIRST_REMINDER_TYPE = "firstReminderType";
-
-	private static final String _LOCATION = "location";
-
-	private static final String _MASTER_RECURRENCE = "masterRecurrence";
-
-	private static final String _SECOND_REMINDER = "secondReminder";
-
-	private static final String _SECOND_REMINDER_TYPE = "secondReminderType";
-
-	private static final String _TIME = "time";
-
-	private static final String _TITLE_MAP = "titleMap";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CalendarBookingLocalServiceImpl.class);

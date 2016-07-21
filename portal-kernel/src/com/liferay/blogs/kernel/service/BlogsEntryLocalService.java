@@ -61,8 +61,11 @@ import java.util.Map;
  * @see BlogsEntryLocalServiceUtil
  * @see com.liferay.portlet.blogs.service.base.BlogsEntryLocalServiceBaseImpl
  * @see com.liferay.portlet.blogs.service.impl.BlogsEntryLocalServiceImpl
+ * @deprecated As of 7.0.0, replaced by {@link
+            com.liferay.blogs.service.impl.BlogsEntryLocalServiceImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 @Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
 	PortalException.class, SystemException.class})

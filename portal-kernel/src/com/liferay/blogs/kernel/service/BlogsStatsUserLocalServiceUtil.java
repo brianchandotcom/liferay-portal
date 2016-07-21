@@ -31,8 +31,11 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  * @see BlogsStatsUserLocalService
  * @see com.liferay.portlet.blogs.service.base.BlogsStatsUserLocalServiceBaseImpl
  * @see com.liferay.portlet.blogs.service.impl.BlogsStatsUserLocalServiceImpl
+ * @deprecated As of 7.0.0, replaced by {@link
+com.liferay.blogs.service.impl.BlogsStatsUserLocalServiceImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public class BlogsStatsUserLocalServiceUtil {
 	/*

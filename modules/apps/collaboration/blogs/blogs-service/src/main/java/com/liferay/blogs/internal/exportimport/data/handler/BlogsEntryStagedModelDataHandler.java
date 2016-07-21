@@ -16,7 +16,7 @@ package com.liferay.blogs.internal.exportimport.data.handler;
 
 import com.liferay.blogs.internal.exportimport.content.processor.BlogsEntryExportImportContentProcessor;
 import com.liferay.blogs.kernel.model.BlogsEntry;
-import com.liferay.blogs.kernel.service.BlogsEntryLocalService;
+import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -358,7 +358,7 @@ public class BlogsEntryStagedModelDataHandler
 		}
 
 		if ((coverImageSelector != null) || (smallImageSelector != null)) {
-			importedEntry = _blogsEntryLocalService.getBlogsEntry(
+			importedEntry = _blogsEntryLocalService.getEntry(
 				importedEntry.getEntryId());
 		}
 

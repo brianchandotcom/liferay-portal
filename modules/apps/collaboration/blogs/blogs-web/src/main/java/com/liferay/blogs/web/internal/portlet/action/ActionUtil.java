@@ -16,7 +16,7 @@ package com.liferay.blogs.web.internal.portlet.action;
 
 import com.liferay.blogs.kernel.exception.NoSuchEntryException;
 import com.liferay.blogs.kernel.model.BlogsEntry;
-import com.liferay.blogs.kernel.service.BlogsEntryServiceUtil;
+import com.liferay.blogs.service.BlogsEntryServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ParamUtil;

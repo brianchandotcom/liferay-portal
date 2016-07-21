@@ -12,21 +12,30 @@
  * details.
  */
 
-package com.liferay.portal.verify;
+package com.liferay.blogs.verify;
 
 import com.liferay.blogs.kernel.model.BlogsEntry;
-import com.liferay.blogs.kernel.service.BlogsEntryLocalServiceUtil;
+import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.verify.VerifyProcess;
 
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Raymond Augé
  */
-public class VerifyBlogs extends VerifyProcess {
+@Component(
+	immediate = true,
+	property = {"verify.process.name=com.liferay.blogs.service"},
+	service = VerifyProcess.class
+)
+public class BlogsServiceVerifyProcess extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
@@ -34,10 +43,17 @@ public class VerifyBlogs extends VerifyProcess {
 		verifyStatus();
 	}
 
+	@Reference(unbind = "-")
+	protected void setBlogsEntryLocalService(
+		BlogsEntryLocalService blogsEntryLocalService) {
+
+		_blogsEntryLocalService = blogsEntryLocalService;
+	}
+
 	protected void updateEntryAssets() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			List<BlogsEntry> entries =
-				BlogsEntryLocalServiceUtil.getNoAssetEntries();
+				_blogsEntryLocalService.getNoAssetEntries();
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(
@@ -46,7 +62,7 @@ public class VerifyBlogs extends VerifyProcess {
 
 			for (BlogsEntry entry : entries) {
 				try {
-					BlogsEntryLocalServiceUtil.updateAsset(
+					_blogsEntryLocalService.updateAsset(
 						entry.getUserId(), entry, null, null, null, null);
 				}
 				catch (Exception e) {
@@ -73,6 +89,9 @@ public class VerifyBlogs extends VerifyProcess {
 		}
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(VerifyBlogs.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		BlogsServiceVerifyProcess.class);
+
+	private BlogsEntryLocalService _blogsEntryLocalService;
 
 }

@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.portlet.blogs.service.permission;
+package com.liferay.blogs.service.permission;
 
 import com.liferay.blogs.kernel.model.BlogsEntry;
-import com.liferay.blogs.kernel.service.BlogsEntryLocalServiceUtil;
+import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.exportimport.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.PortletProvider;
@@ -24,14 +24,17 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.workflow.permission.WorkflowPermissionUtil;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
  */
-@OSGiBeanProperties(
-	property = {"model.class.name=com.liferay.blogs.kernel.model.BlogsEntry"}
+@Component(
+	property = {"model.class.name=com.liferay.blogs.kernel.model.BlogsEntry"},
+	service = BaseModelPermissionChecker.class
 )
 public class BlogsEntryPermission implements BaseModelPermissionChecker {
 
@@ -106,7 +109,7 @@ public class BlogsEntryPermission implements BaseModelPermissionChecker {
 			PermissionChecker permissionChecker, long entryId, String actionId)
 		throws PortalException {
 
-		BlogsEntry entry = BlogsEntryLocalServiceUtil.getEntry(entryId);
+		BlogsEntry entry = _blogsEntryLocalService.getEntry(entryId);
 
 		return contains(permissionChecker, entry, actionId);
 	}
@@ -119,5 +122,14 @@ public class BlogsEntryPermission implements BaseModelPermissionChecker {
 
 		check(permissionChecker, primaryKey, actionId);
 	}
+
+	@Reference(unbind = "-")
+	protected void setBlogsEntryLocalService(
+		BlogsEntryLocalService blogsEntryLocalService) {
+
+		_blogsEntryLocalService = blogsEntryLocalService;
+	}
+
+	private static BlogsEntryLocalService _blogsEntryLocalService;
 
 }

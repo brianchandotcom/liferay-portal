@@ -19,11 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.asset.kernel.service.persistence.AssetEntryFinder;
 import com.liferay.asset.kernel.service.persistence.AssetEntryPersistence;
 
-import com.liferay.blogs.kernel.service.persistence.BlogsEntryFinder;
-import com.liferay.blogs.kernel.service.persistence.BlogsEntryPersistence;
-import com.liferay.blogs.kernel.service.persistence.BlogsStatsUserFinder;
-import com.liferay.blogs.kernel.service.persistence.BlogsStatsUserPersistence;
-
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -726,119 +721,6 @@ public abstract class RatingsEntryLocalServiceBaseImpl
 		this.assetEntryFinder = assetEntryFinder;
 	}
 
-	/**
-	 * Returns the blogs entry local service.
-	 *
-	 * @return the blogs entry local service
-	 */
-	public com.liferay.blogs.kernel.service.BlogsEntryLocalService getBlogsEntryLocalService() {
-		return blogsEntryLocalService;
-	}
-
-	/**
-	 * Sets the blogs entry local service.
-	 *
-	 * @param blogsEntryLocalService the blogs entry local service
-	 */
-	public void setBlogsEntryLocalService(
-		com.liferay.blogs.kernel.service.BlogsEntryLocalService blogsEntryLocalService) {
-		this.blogsEntryLocalService = blogsEntryLocalService;
-	}
-
-	/**
-	 * Returns the blogs entry persistence.
-	 *
-	 * @return the blogs entry persistence
-	 */
-	public BlogsEntryPersistence getBlogsEntryPersistence() {
-		return blogsEntryPersistence;
-	}
-
-	/**
-	 * Sets the blogs entry persistence.
-	 *
-	 * @param blogsEntryPersistence the blogs entry persistence
-	 */
-	public void setBlogsEntryPersistence(
-		BlogsEntryPersistence blogsEntryPersistence) {
-		this.blogsEntryPersistence = blogsEntryPersistence;
-	}
-
-	/**
-	 * Returns the blogs entry finder.
-	 *
-	 * @return the blogs entry finder
-	 */
-	public BlogsEntryFinder getBlogsEntryFinder() {
-		return blogsEntryFinder;
-	}
-
-	/**
-	 * Sets the blogs entry finder.
-	 *
-	 * @param blogsEntryFinder the blogs entry finder
-	 */
-	public void setBlogsEntryFinder(BlogsEntryFinder blogsEntryFinder) {
-		this.blogsEntryFinder = blogsEntryFinder;
-	}
-
-	/**
-	 * Returns the blogs stats user local service.
-	 *
-	 * @return the blogs stats user local service
-	 */
-	public com.liferay.blogs.kernel.service.BlogsStatsUserLocalService getBlogsStatsUserLocalService() {
-		return blogsStatsUserLocalService;
-	}
-
-	/**
-	 * Sets the blogs stats user local service.
-	 *
-	 * @param blogsStatsUserLocalService the blogs stats user local service
-	 */
-	public void setBlogsStatsUserLocalService(
-		com.liferay.blogs.kernel.service.BlogsStatsUserLocalService blogsStatsUserLocalService) {
-		this.blogsStatsUserLocalService = blogsStatsUserLocalService;
-	}
-
-	/**
-	 * Returns the blogs stats user persistence.
-	 *
-	 * @return the blogs stats user persistence
-	 */
-	public BlogsStatsUserPersistence getBlogsStatsUserPersistence() {
-		return blogsStatsUserPersistence;
-	}
-
-	/**
-	 * Sets the blogs stats user persistence.
-	 *
-	 * @param blogsStatsUserPersistence the blogs stats user persistence
-	 */
-	public void setBlogsStatsUserPersistence(
-		BlogsStatsUserPersistence blogsStatsUserPersistence) {
-		this.blogsStatsUserPersistence = blogsStatsUserPersistence;
-	}
-
-	/**
-	 * Returns the blogs stats user finder.
-	 *
-	 * @return the blogs stats user finder
-	 */
-	public BlogsStatsUserFinder getBlogsStatsUserFinder() {
-		return blogsStatsUserFinder;
-	}
-
-	/**
-	 * Sets the blogs stats user finder.
-	 *
-	 * @param blogsStatsUserFinder the blogs stats user finder
-	 */
-	public void setBlogsStatsUserFinder(
-		BlogsStatsUserFinder blogsStatsUserFinder) {
-		this.blogsStatsUserFinder = blogsStatsUserFinder;
-	}
-
 	public void afterPropertiesSet() {
 		persistedModelLocalServiceRegistry.register("com.liferay.ratings.kernel.model.RatingsEntry",
 			ratingsEntryLocalService);
@@ -923,18 +805,6 @@ public abstract class RatingsEntryLocalServiceBaseImpl
 	protected AssetEntryPersistence assetEntryPersistence;
 	@BeanReference(type = AssetEntryFinder.class)
 	protected AssetEntryFinder assetEntryFinder;
-	@BeanReference(type = com.liferay.blogs.kernel.service.BlogsEntryLocalService.class)
-	protected com.liferay.blogs.kernel.service.BlogsEntryLocalService blogsEntryLocalService;
-	@BeanReference(type = BlogsEntryPersistence.class)
-	protected BlogsEntryPersistence blogsEntryPersistence;
-	@BeanReference(type = BlogsEntryFinder.class)
-	protected BlogsEntryFinder blogsEntryFinder;
-	@BeanReference(type = com.liferay.blogs.kernel.service.BlogsStatsUserLocalService.class)
-	protected com.liferay.blogs.kernel.service.BlogsStatsUserLocalService blogsStatsUserLocalService;
-	@BeanReference(type = BlogsStatsUserPersistence.class)
-	protected BlogsStatsUserPersistence blogsStatsUserPersistence;
-	@BeanReference(type = BlogsStatsUserFinder.class)
-	protected BlogsStatsUserFinder blogsStatsUserFinder;
 	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
 	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 }

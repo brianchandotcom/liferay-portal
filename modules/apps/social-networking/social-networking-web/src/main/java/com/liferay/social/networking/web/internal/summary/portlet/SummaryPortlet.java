@@ -14,6 +14,7 @@
 
 package com.liferay.social.networking.web.internal.summary.portlet;
 
+import com.liferay.blogs.service.BlogsStatsUserLocalService;
 import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -49,6 +50,9 @@ import com.liferay.social.networking.members.social.MembersRequestKeys;
 import com.liferay.social.networking.service.MeetupsEntryLocalService;
 import com.liferay.social.networking.service.MeetupsRegistrationLocalService;
 import com.liferay.social.networking.service.WallEntryLocalService;
+import com.liferay.social.networking.web.internal.constants.SocialNetworkingWebKeys;
+
+import java.io.IOException;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -56,6 +60,9 @@ import java.util.List;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -262,6 +269,17 @@ public class SummaryPortlet extends MVCPortlet {
 			group.getClassPK(), new long[] {themeDisplay.getUserId()});
 	}
 
+	public void render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		renderRequest.setAttribute(
+			SocialNetworkingWebKeys.BLOGS_STATS_USER_LOCAL_SERVICE,
+			_blogsStatsUserLocalService);
+
+		super.render(renderRequest, renderResponse);
+	}
+
 	public void updateSummary(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -312,6 +330,13 @@ public class SummaryPortlet extends MVCPortlet {
 			"portletId", PortletConstants.getRootPortletId(portletId));
 
 		return extraDataJSONObject;
+	}
+
+	@Reference(unbind = "-")
+	protected void setBlogsStatsUserLocalService(
+		BlogsStatsUserLocalService blogsStatsUserLocalService) {
+
+		_blogsStatsUserLocalService = blogsStatsUserLocalService;
 	}
 
 	@Reference(unbind = "-")
@@ -372,6 +397,7 @@ public class SummaryPortlet extends MVCPortlet {
 		WallEntryLocalService wallEntryLocalService) {
 	}
 
+	private BlogsStatsUserLocalService _blogsStatsUserLocalService;
 	private ExpandoValueLocalService _expandoValueLocalService;
 	private GroupLocalService _groupLocalService;
 	private OrganizationLocalService _organizationLocalService;

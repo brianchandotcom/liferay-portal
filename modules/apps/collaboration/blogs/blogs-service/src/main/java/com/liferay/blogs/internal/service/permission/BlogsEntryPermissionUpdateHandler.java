@@ -15,7 +15,7 @@
 package com.liferay.blogs.internal.service.permission;
 
 import com.liferay.blogs.kernel.model.BlogsEntry;
-import com.liferay.blogs.kernel.service.BlogsEntryLocalService;
+import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.portal.kernel.security.permission.PermissionUpdateHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
 

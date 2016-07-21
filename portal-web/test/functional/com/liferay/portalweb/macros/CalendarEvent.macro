@@ -270,13 +270,13 @@
 				</execute>
 			</then>
 			<elseif>
-			    <equals arg1="${siteURL}" arg2="true" />
-			    <then>
-			        <execute macro="Navigator#gotoSitePage">
-			            <var name="pageName" value="${pageName}" />
-			            <var name="siteName" value="${siteName}" />
-			        </execute>
-			    </then>
+				<equals arg1="${siteURL}" arg2="true" />
+				<then>
+					<execute macro="Navigator#gotoSitePage">
+						<var name="pageName" value="${pageName}" />
+						<var name="siteName" value="${siteName}" />
+					</execute>
+				</then>
 			</elseif>
 			<else>
 				<execute macro="Navigator#gotoPage">
@@ -433,13 +433,13 @@
 				</execute>
 			</then>
 			<elseif>
-			    <equals arg1="${siteURL}" arg2="true" />
-			    <then>
-			        <execute macro="Navigator#gotoSitePage">
-			            <var name="pageName" value="${pageName}" />
-			            <var name="siteName" value="${siteName}" />
-			        </execute>
-			    </then>
+				<equals arg1="${siteURL}" arg2="true" />
+				<then>
+					<execute macro="Navigator#gotoSitePage">
+						<var name="pageName" value="${pageName}" />
+						<var name="siteName" value="${siteName}" />
+					</execute>
+				</then>
 			</elseif>
 			<else>
 				<execute macro="Navigator#gotoPage">

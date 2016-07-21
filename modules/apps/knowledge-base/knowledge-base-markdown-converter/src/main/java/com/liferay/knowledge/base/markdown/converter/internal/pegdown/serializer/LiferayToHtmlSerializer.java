@@ -15,13 +15,11 @@
 package com.liferay.knowledge.base.markdown.converter.internal.pegdown.serializer;
 
 import com.liferay.knowledge.base.markdown.converter.internal.pegdown.ast.PicWithCaptionNode;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.List;
 
 import org.pegdown.LinkRenderer;
 import org.pegdown.ToHtmlSerializer;
-import org.pegdown.ast.HeaderNode;
 import org.pegdown.ast.Node;
 import org.pegdown.ast.ParaNode;
 import org.pegdown.ast.SuperNode;
@@ -37,44 +35,6 @@ public class LiferayToHtmlSerializer extends ToHtmlSerializer {
 
 	public LiferayToHtmlSerializer(LinkRenderer linkRenderer) {
 		super(linkRenderer);
-	}
-
-	@Override
-	public void visit(HeaderNode node) {
-		boolean anchorInserted = false;
-
-		if (node.getLevel() != 1) {
-			List<Node> childNodes = node.getChildren();
-
-			if (!childNodes.isEmpty()) {
-				Node childNode = childNodes.get(0);
-
-				if (childNode instanceof TextNode) {
-					TextNode textNode = (TextNode)childNodes.get(0);
-
-					String text = textNode.getText();
-
-					text = StringUtil.toLowerCase(text);
-
-					text = text.replaceAll("[^a-z0-9 ]", "");
-
-					text = text.trim();
-
-					text = text.replace(' ', '-');
-
-					printer.print(
-						"<a href=\"#" + text + "\" id=\"" + text + "\">");
-
-					anchorInserted = true;
-				}
-			}
-		}
-
-		super.visit(node);
-
-		if (anchorInserted) {
-			printer.print("</a>");
-		}
 	}
 
 	@Override

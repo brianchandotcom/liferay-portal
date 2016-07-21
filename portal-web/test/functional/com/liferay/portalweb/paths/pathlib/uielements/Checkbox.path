@@ -294,11 +294,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SET_AS_THE_DEFAULT_ASSET_PUBLISHER_FOR_THIS_PAGE</td>
-	<td>//label[contains(.,'Set as the Default Asset Publisher for This Page')]/input[@type='checkbox']/../span[2]/span</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SHOW_ACTIONS_CHECKBOX</td>
 	<td>//label[contains(@for,'showActions')]//input[@type='checkbox']</td>
 	<td></td>

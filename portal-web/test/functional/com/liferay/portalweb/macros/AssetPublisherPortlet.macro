@@ -280,13 +280,13 @@
 			</then>
 		</if>
 
-		<execute function="Check#checkHiddenToggleSwitch" locator1="Checkbox#ENABLE_PRINT" />
-		<execute function="Check#checkHiddenToggleSwitch" locator1="Checkbox#ENABLE_FLAGS" />
-		<execute function="Check#checkHiddenToggleSwitch" locator1="Checkbox#ENABLE_RELATED_ASSETS" />
-		<execute function="Check#checkHiddenToggleSwitch" locator1="Checkbox#ENABLE_RATINGS" />
-		<execute function="Check#checkHiddenToggleSwitch" locator1="Checkbox#ENABLE_COMMENTS" />
-		<execute function="Check#checkHiddenToggleSwitch" locator1="Checkbox#ENABLE_COMMENT_RATINGS" />
-		<execute function="Check#checkHiddenToggleSwitch" locator1="Checkbox#ENABLE_SOCIAL_BOOKMARKS" />
+		<execute function="Check#checkHiddenToggleSwitch" locator1="ToggleSwitch#ENABLE_PRINT" />
+		<execute function="Check#checkHiddenToggleSwitch" locator1="ToggleSwitch#ENABLE_FLAGS" />
+		<execute function="Check#checkHiddenToggleSwitch" locator1="ToggleSwitch#ENABLE_RELATED_ASSETS" />
+		<execute function="Check#checkHiddenToggleSwitch" locator1="ToggleSwitch#ENABLE_RATINGS" />
+		<execute function="Check#checkHiddenToggleSwitch" locator1="ToggleSwitch#ENABLE_COMMENTS" />
+		<execute function="Check#checkHiddenToggleSwitch" locator1="ToggleSwitch#ENABLE_COMMENT_RATINGS" />
+		<execute function="Check#checkHiddenToggleSwitch" locator1="ToggleSwitch#ENABLE_SOCIAL_BOOKMARKS" />
 
 		<execute macro="PortletEntry#save" />
 
@@ -301,14 +301,14 @@
 		<if>
 			<equals arg1="${enableRatings}" arg2="true" />
 			<then>
-				<execute function="Check#checkHiddenToggleSwitch" locator1="Checkbox#ENABLE_RATINGS" value1="Enable Ratings" />
+				<execute function="Check#checkHiddenToggleSwitch" locator1="ToggleSwitch#ENABLE_RATINGS" value1="Enable Ratings" />
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${setAsDefaultPage}" arg2="true" />
 			<then>
-				<execute function="Check#checkHiddenToggleSwitch" locator1="Checkbox#SET_AS_THE_DEFAULT_ASSET_PUBLISHER_FOR_THIS_PAGE" value1="Set as the Default Asset Publisher for This Page" />
+				<execute function="Check#checkHiddenToggleSwitch" locator1="ToggleSwitch#SET_AS_THE_DEFAULT_ASSET_PUBLISHER_FOR_THIS_PAGE" value1="Set as the Default Asset Publisher for This Page" />
 			</then>
 		</if>
 
@@ -706,14 +706,14 @@
 		<if>
 			<equals arg1="${enableRatings}" arg2="true" />
 			<then>
-				<execute function="AssertChecked#assertCheckedHiddenToggleSwitch" locator1="Checkbox#ENABLE_RATINGS" value1="Enable Ratings" />
+				<execute function="AssertChecked#assertCheckedHiddenToggleSwitch" locator1="ToggleSwitch#ENABLE_RATINGS" value1="Enable Ratings" />
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${setAsDefaultPage}" arg2="true" />
 			<then>
-				<execute function="AssertChecked#assertCheckedHiddenToggleSwitch" locator1="Checkbox#SET_AS_THE_DEFAULT_ASSET_PUBLISHER_FOR_THIS_PAGE" value1="Set as the Default Asset Publisher for This Page" />
+				<execute function="AssertChecked#assertCheckedHiddenToggleSwitch" locator1="ToggleSwitch#SET_AS_THE_DEFAULT_ASSET_PUBLISHER_FOR_THIS_PAGE" value1="Set as the Default Asset Publisher for This Page" />
 			</then>
 		</if>
 

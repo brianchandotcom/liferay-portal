@@ -258,6 +258,12 @@ MBListDisplayContext mbListDisplayContext = mbDisplayContextProvider.getMbListDi
 			</c:when>
 			<c:when test="<%= mbListDisplayContext.isShowMyPosts() || mbListDisplayContext.isShowRecentPosts() %>">
 				<div class="main-content-body">
+					<c:if test="<%= Validator.isNotNull(redirect) && mbListDisplayContext.isShowRecentPosts() %>">
+						<liferay-ui:header
+							backURL="<%= redirect %>"
+							title="recent-posts"
+						/>
+					</c:if>
 
 					<%
 					if (mbListDisplayContext.isShowMyPosts() && themeDisplay.isSignedIn()) {
@@ -269,7 +275,7 @@ MBListDisplayContext mbListDisplayContext = mbDisplayContextProvider.getMbListDi
 					}
 					%>
 
-					<c:if test="<%= mbListDisplayContext.isShowMyPosts() && (groupThreadsUserId > 0) %>">
+					<c:if test="<%= groupThreadsUserId > 0 %>">
 						<div class="alert alert-info">
 							<liferay-ui:message key="filter-by-user" />: <%= HtmlUtil.escape(PortalUtil.getUserName(groupThreadsUserId, StringPool.BLANK)) %>
 						</div>

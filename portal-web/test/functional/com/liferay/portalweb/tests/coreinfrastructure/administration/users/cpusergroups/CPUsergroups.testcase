@@ -81,46 +81,6 @@
 		</execute>
 	</command>
 
-	<command name="AddUserGroupNameAsterisk" priority="3">
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="User Groups" />
-		</execute>
-
-		<execute macro="UserGroup#addCP">
-			<var name="userGroupName" value="UG UserGroup Name*" />
-			<var name="userGroupNameVariation" value="Asterik" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="User Groups" />
-		</execute>
-
-		<execute macro="UserGroup#viewCP">
-			<var name="userGroupName" value="UG UserGroup Name*" />
-			<var name="userGroupNameVariation" value="Asterik" />
-		</execute>
-	</command>
-
-	<command name="AddUserGroupNameComma" priority="3">
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="User Groups" />
-		</execute>
-
-		<execute macro="UserGroup#addCP">
-			<var name="userGroupName" value="UG UserGroup Name," />
-			<var name="userGroupNameVariation" value="Comma" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="User Groups" />
-		</execute>
-
-		<execute macro="UserGroup#viewCP">
-			<var name="userGroupName" value="UG UserGroup Name," />
-			<var name="userGroupNameVariation" value="Comma" />
-		</execute>
-	</command>
-
 	<command name="AddUserGroupNameDuplicate" priority="3">
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="User Groups" />
@@ -144,7 +104,25 @@
 		</execute>
 	</command>
 
-	<command name="AddUserGroupNameNull" priority="3">
+	<command name="AddUserGroupNameWithInvalidCharacters" priority="3">
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="User Groups" />
+		</execute>
+
+		<execute macro="UserGroup#addCP">
+			<var name="userGroupName" value="UG UserGroup Name*" />
+			<var name="userGroupNameVariation" value="Asterik" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="User Groups" />
+		</execute>
+
+		<execute macro="UserGroup#addCP">
+			<var name="userGroupName" value="UG UserGroup Name," />
+			<var name="userGroupNameVariation" value="Comma" />
+		</execute>
+
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="User Groups" />
 		</execute>
@@ -152,6 +130,33 @@
 		<execute macro="UserGroup#addCP">
 			<var name="userGroupName" value=" " />
 			<var name="userGroupNameVariation" value="Null" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="User Groups" />
+		</execute>
+
+		<execute macro="UserGroup#addCP">
+			<var name="userGroupName" value="1" />
+			<var name="userGroupNameVariation" value="Number" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="User Groups" />
+		</execute>
+
+		<execute macro="UserGroup#viewCP">
+			<var name="userGroupName" value="UG UserGroup Name*" />
+			<var name="userGroupNameVariation" value="Asterik" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="User Groups" />
+		</execute>
+
+		<execute macro="UserGroup#viewCP">
+			<var name="userGroupName" value="UG UserGroup Name," />
+			<var name="userGroupNameVariation" value="Comma" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
@@ -161,17 +166,6 @@
 		<execute macro="UserGroup#viewCP">
 			<var name="userGroupName" value=" " />
 			<var name="userGroupNameVariation" value="Null" />
-		</execute>
-	</command>
-
-	<command name="AddUserGroupNameNumber" priority="3">
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="User Groups" />
-		</execute>
-
-		<execute macro="UserGroup#addCP">
-			<var name="userGroupName" value="1" />
-			<var name="userGroupNameVariation" value="Number" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">

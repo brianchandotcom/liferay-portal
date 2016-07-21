@@ -109,15 +109,86 @@ public class HtmlImpl implements Html {
 		// http://www.owasp.org/index.php/Cross_Site_Scripting
 		// #How_to_Protect_Yourself
 
-		return StringUtil.replace(
-			text,
-			new char[] {
-				'<', '>', '&', '"', '\'', '\u00bb', '\u2013', '\u2014', '\u2028'
-			},
-			new String[] {
-				"&lt;", "&gt;", "&amp;", "&#34;", "&#39;", "&#187;", "&#x2013;",
-				"&#x2014;", "&#x2028;"
-			});
+		StringBundler sb = null;
+
+		int lastReplacementIndex = 0;
+
+		for (int i = 0; i < text.length(); i++) {
+			char c = text.charAt(i);
+
+			String replacement = null;
+
+			switch (c) {
+				case '<':
+					replacement = "&lt;";
+
+					break;
+
+				case '>':
+					replacement = "&gt;";
+
+					break;
+
+				case '&':
+					replacement = "&amp;";
+
+					break;
+
+				case '"':
+					replacement = "&#34;";
+
+					break;
+
+				case '\'':
+					replacement = "&#39;";
+
+					break;
+
+				case '\u00bb':
+					replacement = "&#187;";
+
+					break;
+
+				case '\u2013':
+					replacement = "&#x2013;";
+
+					break;
+
+				case '\u2014':
+					replacement = "&#x2014;";
+
+					break;
+
+				case '\u2028':
+					replacement = "&#x2028;";
+
+					break;
+			}
+
+			if (replacement != null) {
+				if (sb == null) {
+					sb = new StringBundler();
+				}
+
+				if (i > lastReplacementIndex) {
+					sb.append(text.substring(lastReplacementIndex, i));
+				}
+
+				sb.append(replacement);
+
+				lastReplacementIndex = i + 1;
+			}
+		}
+
+		if (sb == null) {
+			return text;
+		}
+
+		if (lastReplacementIndex < text.length()) {
+			sb.append(text.substring(lastReplacementIndex));
+		}
+
+		return sb.toString();
 	}
 
 	/**

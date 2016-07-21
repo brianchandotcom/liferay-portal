@@ -230,10 +230,10 @@
 			<var name="teamName" value="Site Team Name" />
 		</execute>
 
-		<for list="CONTENT_PERMISSIONS_ASSIGN_MEMBERS_CHECKBOX,CONTENT_PERMISSIONS_DELETE_CHECKBOX,CONTENT_PERMISSIONS_PERMISSIONS_CHECKBOX,CONTENT_PERMISSIONS_UPDATE_CHECKBOX,CONTENT_PERMISSIONS_VIEW_CHECKBOX" param="permissionDefinitionKey">
-			<execute macro="Role#definePermissionPG">
+		<for list="ACTION_ASSIGN_MEMBERS,ACTION_DELETE,ACTION_PERMISSIONS,ACTION_UPDATE,ACTION_VIEW" param="permissionDefinitionKey">
+			<execute macro="Team#definePermissionPG">
 				<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
-				<var name="roleName" value="Site Team Name" />
+				<var name="teamName" value="Site Team Name" />
 			</execute>
 		</for>
 

@@ -1163,7 +1163,7 @@ public class CalendarBookingLocalServiceImpl
 			List<CalendarBooking> recurringCalendarBookings =
 				getRecurringCalendarBookings(calendarBooking, startTime);
 
-			List<String> unchangedList = getUnchangedList(
+			List<String> unchangedList = getUnchangedCalendarBookingFieldsList(
 				calendarBooking, calendarId, titleMap, descriptionMap, location,
 				startTime, endTime, allDay, firstReminder, firstReminderType,
 				secondReminder, secondReminderType);
@@ -1238,7 +1238,7 @@ public class CalendarBookingLocalServiceImpl
 		List<CalendarBooking> recurringCalendarBookings =
 			getRecurringCalendarBookings(calendarBooking);
 
-		List<String> unchangedList = getUnchangedList(
+		List<String> unchangedList = getUnchangedCalendarBookingFieldsList(
 			calendarBooking, calendarId, titleMap, descriptionMap, location,
 			startTime, endTime, allDay, firstReminder, firstReminderType,
 			secondReminder, secondReminderType);
@@ -1535,17 +1535,17 @@ public class CalendarBookingLocalServiceImpl
 		return jsonObject.toString();
 	}
 
-	protected List<String> getUnchangedList(
+	protected List<String> getUnchangedCalendarBookingFieldsList(
 		CalendarBooking calendarBooking, long calendarId,
 		Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
 		String location, long startTime, long endTime, boolean allDay,
 		long firstReminder, String firstReminderType, long secondReminder,
 		String secondReminderType) {
 
-		List<String> unchangedList = new ArrayList<>();
+		List<String> fieldsList = new ArrayList<>();
 
 		if (calendarId == calendarBooking.getCalendarId()) {
-			unchangedList.add("calendarId");
+			fieldsList.add("calendarId");
 		}
 
 		Map<Locale, String> updatedTitleMap = new HashMap<>();
@@ -1558,7 +1558,7 @@ public class CalendarBookingLocalServiceImpl
 		}
 
 		if (Objects.equals(updatedTitleMap, calendarBooking.getTitleMap())) {
-			unchangedList.add("titleMap");
+			fieldsList.add("titleMap");
 		}
 
 		Map<Locale, String> updatedDescriptionMap = new HashMap<>();
@@ -1576,11 +1576,11 @@ public class CalendarBookingLocalServiceImpl
 		if (Objects.equals(
 				updatedDescriptionMap, calendarBooking.getDescriptionMap())) {
 
-			unchangedList.add("descriptionMap");
+			fieldsList.add("descriptionMap");
 		}
 
 		if (Objects.equals(location, calendarBooking.getLocation())) {
-			unchangedList.add("location");
+			fieldsList.add("location");
 		}
 
 		long newStartTime = JCalendarUtil.convertTimeToNewDay(
@@ -1590,34 +1590,34 @@ public class CalendarBookingLocalServiceImpl
 			calendarBooking.getEndTime(), endTime);
 
 		if ((startTime == newStartTime) && (endTime == newEndTime)) {
-			unchangedList.add("time");
+			fieldsList.add("time");
 		}
 
 		if (allDay == calendarBooking.getAllDay()) {
-			unchangedList.add("allDay");
+			fieldsList.add("allDay");
 		}
 
 		if (firstReminder == calendarBooking.getFirstReminder()) {
-			unchangedList.add("firstReminder");
+			fieldsList.add("firstReminder");
 		}
 
 		if (Objects.equals(
 				firstReminderType, calendarBooking.getFirstReminderType())) {
 
-			unchangedList.add("firstReminderType");
+			fieldsList.add("firstReminderType");
 		}
 
 		if (secondReminder == calendarBooking.getSecondReminder()) {
-			unchangedList.add("secondReminder");
+			fieldsList.add("secondReminder");
 		}
 
 		if (Objects.equals(
 				secondReminderType, calendarBooking.getSecondReminderType())) {
 
-			unchangedList.add("secondReminderType");
+			fieldsList.add("secondReminderType");
 		}
 
-		return unchangedList;
+		return fieldsList;
 	}
 
 	protected void sendNotification(

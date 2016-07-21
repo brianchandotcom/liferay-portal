@@ -40,7 +40,7 @@
 							</div>
 						</aui:fieldset>
 
-						<aui:fieldset id="checkBoxes">
+						<aui:fieldset id='<%= renderResponse.getNamespace() + "checkBoxes" %>'>
 							<aui:col width="<%= 50 %>">
 								<aui:input data-key='<%= "_" + HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) + "_showCurrentGroup" %>' label="show-current-site" name="preferences--showCurrentGroup--" type="toggle-switch" value="<%= siteNavigationBreadcrumbDisplayContext.isShowCurrentGroup() %>" />
 								<aui:input data-key='<%= "_" + HtmlUtil.escapeJS(siteNavigationBreadcrumbDisplayContext.getPortletResource()) + "_showGuestGroup" %>' label="show-guest-site" name="preferences--showGuestGroup--" type="toggle-switch" value="<%= siteNavigationBreadcrumbDisplayContext.isShowGuestGroup() %>" />

@@ -56,7 +56,7 @@ if (publicLayoutSet.isLayoutSetPrototypeLinkEnabled() || privateLayoutSet.isLayo
 
 <aui:input checked="<%= !inheritLocales %>" disabled="<%= disabledLocaleInput %>" id="customLocales" label="define-a-custom-default-language-and-additional-available-languages-for-this-site" name="TypeSettingsProperties--inheritLocales--" type="radio" value="<%= false %>" />
 
-<aui:fieldset id="customLocalesFieldset">
+<aui:fieldset id='<%= renderResponse.getNamespace() + "customLocalesFieldset" %>'>
 	<aui:fieldset cssClass="default-language">
 		<h4 class="text-muted"><liferay-ui:message key="default-language" /></h4>
 
@@ -90,7 +90,7 @@ if (publicLayoutSet.isLayoutSetPrototypeLinkEnabled() || privateLayoutSet.isLayo
 	</aui:fieldset>
 </aui:fieldset>
 
-<aui:fieldset id="inheritLocalesFieldset">
+<aui:fieldset id='<%= renderResponse.getNamespace() + "inheritLocalesFieldset" %>'>
 	<liferay-ui:error exception="<%= LocaleException.class %>">
 
 		<%

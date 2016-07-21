@@ -37,7 +37,7 @@ String format = ParamUtil.getString(request, SearchPortletParameterNames.FORMAT)
 	<aui:input name="<%= SearchContainer.DEFAULT_CUR_PARAM %>" type="hidden" value="<%= ParamUtil.getInteger(request, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_CUR) %>" />
 	<aui:input name="format" type="hidden" value="<%= format %>" />
 
-	<aui:fieldset id="searchContainer">
+	<aui:fieldset id='<%= renderResponse.getNamespace() + "searchContainer" %>'>
 		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" inlineField="<%= true %>" label="" name="keywords" size="30" title="search" value="<%= HtmlUtil.escape(searchDisplayContext.getKeywords()) %>" />
 		<aui:input name="scope" type="hidden" value="<%= searchDisplayContext.getSearchScopeParameterString() %>" />
 

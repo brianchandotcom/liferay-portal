@@ -128,7 +128,7 @@
 			<then>
 				<execute macro="Alert#viewRequestFailedToComplete" />
 
-				<execute macro="Alert#viewFailedMessage" />
+				<execute macro="Alert#viewFailedSiteTemplateDeletionMessage" />
 			</then>
 			<else>
 				<execute macro="Alert#viewSuccessMessage" />

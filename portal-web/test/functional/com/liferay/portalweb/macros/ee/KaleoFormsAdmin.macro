@@ -519,7 +519,18 @@
 	<command name="saveForm">
 		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
 
-		<execute macro="Button#clickSave" />
+		<if>
+			<or>
+				<equals arg1="${workflowTask}" arg2="review" />
+				<equals arg1="${workflowTask}" arg2="update" />
+			</or>
+			<then>
+				<execute function="AssertClick" locator1="KaleoFormsAdminEditProcessForm#SAVE_BUTTON" value1="Save" />
+			</then>
+			<else>
+				<execute macro="Button#clickSave" />
+			</else>
+		</if>
 
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>

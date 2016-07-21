@@ -154,6 +154,11 @@ public class HtmlImplTest {
 	}
 
 	@Test
+	public void testEscapeUTF8SupplementaryCharacter() {
+		assertUnchangedEscape("\uD83D\uDC31");
+	}
+
+	@Test
 	public void testEscapeWhitespace() {
 		assertUnchangedEscape(" ");
 	}

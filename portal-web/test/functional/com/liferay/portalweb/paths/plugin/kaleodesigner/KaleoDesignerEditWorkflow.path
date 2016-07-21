@@ -14,8 +14,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DRAFT_VERSION_HEADER</td>
+	<td>//span[contains(.,'Draft Version')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DRAFT_VERSION</td>
-	<td>//div[@class='control-group field-wrapper' and contains(.,'Draft Version')]/div[contains(.,'${key_draftVersion}')]</td>
+	<td>//span[contains(.,'Draft Version')]/../div[contains(.,'${key_draftVersion}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS_TOGGLE</td>
+	<td>//div[@id='kaleoDesignerSectionPanel']//a/span</td>
 	<td></td>
 </tr>
 <tr>
@@ -213,11 +223,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SETTINGS_CELL_EDITOR_NOTIFICATION_TYPE_USER_NOTIFICATION_PNG</td>
-	<td>portal/screenshots/kaleodesigner/settings_cell_editor_notification_type_user_notification.png</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SETTINGS_CELL_EDITOR_EXECUTION_TYPE_SELECT</td>
 	<td>//select[@name='executionType']</td>
 	<td></td>
@@ -244,11 +249,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_SAVE_BUTTON</td>
-	<td>//div[contains(@class,'assignments-cell-editor')]//button[contains(.,'Save')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_ROLE_SEARCH</td>
 	<td>//input[contains(@name,'role')]</td>
 	<td></td>
@@ -266,21 +266,6 @@
 <tr>
 	<td>SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_ROLE_TYPE_SELECT</td>
 	<td>//select[@name='roleType']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_RECIPIENT_TYPE_PNG</td>
-	<td>portal/screenshots/kaleodesigner/settings_cell_editor_notifications_recipient_recipient_type.png</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_ROLE_TYPE_PNG</td>
-	<td>portal/screenshots/kaleodesigner/settings_cell_editor_notifications_recipient_role_type.png</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_ROLE_NAME_PNG</td>
-	<td>portal/screenshots/kaleodesigner/settings_cell_editor_notifications_recipient_role_name.png</td>
 	<td></td>
 </tr>
 <tr>
@@ -323,12 +308,12 @@
 <!--VIEW_FORM_CONNECTOR-->
 <tr>
 	<td>VIEW_FORM_CONNECTOR_DEFAULT</td>
-	<td>//span[@class='diagram-builder-connector-name unselectable' and contains(.,'connector')]</td>
+	<td>//span[contains(@class,'diagram-builder-connector-name') and not(contains(@class,'hide')) and contains(.,'connector')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>VIEW_FORM_CONNECTOR</td>
-	<td>//span[@class='diagram-builder-connector-name unselectable' and contains(.,'${key_connectorLabel}')]</td>
+	<td>//span[contains(@class,'diagram-builder-connector-name') and not(contains(@class,'hide')) and contains(.,'${key_connectorLabel}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -339,7 +324,7 @@
 <!--VIEW_FORM_ADD_NEW-->
 <tr>
 	<td>VIEW_FORM_ADD_NEW_NODE</td>
-	<td>//div[contains(@class,'diagram-node-suggest-connector')]//div[@class='diagram-builder-field-label' and contains(.,'${key_newNode}')]</td>
+	<td>//div[@class='property-builder-field-label' and contains(.,'${key_newNode}')]</td>
 	<td></td>
 </tr>
 <tr>

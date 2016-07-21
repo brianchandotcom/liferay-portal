@@ -1,7 +1,7 @@
 <#include "../init.ftl">
 
 <#if !(fields?? && fields.get(fieldName)??)>
-	<#assign fieldValue = "">
+	<#assign fieldValue = "" />
 </#if>
 
 <div class="field-wrapper-content lfr-forms-field-wrapper">

@@ -16,22 +16,17 @@
 		<execute macro="Button#clickSave" />
 
 		<if>
-			<equals arg1="${userGroupNameVariation}" arg2="Asterik" />
+			<or>
+				<equals arg1="${userGroupNameVariation}" arg2="Asterik" />
+				<equals arg1="${userGroupNameVariation}" arg2="Comma" />
+				<equals arg1="${userGroupNameVariation}" arg2="Number" />
+			</or>
 			<then>
 				<execute macro="Alert#viewRequestFailedToComplete" />
 
 				<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="The User Group Name cannot be blank, numeric or a reserved word such as null." />
 				<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="The User Group Name cannot contain the following invalid characters: , *." />
 			</then>
-			<elseif>
-				<equals arg1="${userGroupNameVariation}" arg2="Comma" />
-				<then>
-					<execute macro="Alert#viewRequestFailedToComplete" />
-
-					<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="The User Group Name cannot be blank, numeric or a reserved word such as null." />
-					<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="The User Group Name cannot contain the following invalid characters: , *." />
-				</then>
-			</elseif>
 			<elseif>
 				<equals arg1="${userGroupNameVariation}" arg2="Duplicate" />
 				<then>
@@ -44,15 +39,6 @@
 				<equals arg1="${userGroupNameVariation}" arg2="Null" />
 				<then>
 					<execute function="AssertTextEquals" locator1="UserGroupsEditUserGroup#NAME_FIELD_ALERT" value1="This field is required." />
-				</then>
-			</elseif>
-			<elseif>
-				<equals arg1="${userGroupNameVariation}" arg2="Number" />
-				<then>
-					<execute macro="Alert#viewRequestFailedToComplete" />
-
-					<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="The User Group Name cannot be blank, numeric or a reserved word such as null." />
-					<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="The User Group Name cannot contain the following invalid characters: , *." />
 				</then>
 			</elseif>
 			<else>
@@ -352,28 +338,15 @@
 
 	<command name="viewCP">
 		<if>
-			<equals arg1="${userGroupNameVariation}" arg2="Asterik" />
+			<or>
+				<equals arg1="${userGroupNameVariation}" arg2="Asterik" />
+				<equals arg1="${userGroupNameVariation}" arg2="Comma" />
+				<equals arg1="${userGroupNameVariation}" arg2="Null" />
+				<equals arg1="${userGroupNameVariation}" arg2="Number" />
+			</or>
 			<then>
 				<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No user groups were found." />
 			</then>
-			<elseif>
-				<equals arg1="${userGroupNameVariation}" arg2="Comma" />
-				<then>
-					<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No user groups were found." />
-				</then>
-			</elseif>
-			<elseif>
-				<equals arg1="${userGroupNameVariation}" arg2="Null" />
-				<then>
-					<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No user groups were found." />
-				</then>
-			</elseif>
-			<elseif>
-				<equals arg1="${userGroupNameVariation}" arg2="Number" />
-				<then>
-					<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No user groups were found." />
-				</then>
-			</elseif>
 			<else>
 				<execute function="Type" locator1="TextInput#SEARCH" value1="${userGroupName}" />
 

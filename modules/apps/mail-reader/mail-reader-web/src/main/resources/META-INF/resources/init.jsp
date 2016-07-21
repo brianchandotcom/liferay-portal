@@ -40,7 +40,6 @@ page import="com.liferay.mail.reader.service.FolderLocalServiceUtil" %><%@
 page import="com.liferay.mail.reader.service.MessageLocalServiceUtil" %><%@
 page import="com.liferay.mail.reader.web.util.MailManager" %><%@
 page import="com.liferay.portal.kernel.json.JSONArray" %><%@
-page import="com.liferay.portal.kernel.json.JSONFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.json.JSONObject" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil" %><%@

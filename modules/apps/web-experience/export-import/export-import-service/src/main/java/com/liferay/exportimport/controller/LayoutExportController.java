@@ -104,6 +104,9 @@ import java.util.concurrent.Callable;
 
 import org.apache.commons.lang.time.StopWatch;
 
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.Version;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -244,8 +247,16 @@ public class LayoutExportController implements ExportController {
 			StringUtil.merge(
 				LanguageUtil.getAvailableLocales(
 					portletDataContext.getScopeGroupId())));
+
 		headerElement.addAttribute(
 			"build-number", String.valueOf(ReleaseInfo.getBuildNumber()));
+
+		Bundle bundle = FrameworkUtil.getBundle(LayoutExportController.class);
+
+		Version version = bundle.getVersion();
+
+		headerElement.addAttribute("bundle-version", String.valueOf(version));
+
 		headerElement.addAttribute("export-date", Time.getRFC822());
 
 		if (portletDataContext.hasDateRange()) {

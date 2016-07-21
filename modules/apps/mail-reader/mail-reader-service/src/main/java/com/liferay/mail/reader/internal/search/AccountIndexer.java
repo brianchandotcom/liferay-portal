@@ -17,7 +17,7 @@ package com.liferay.mail.reader.internal.search;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeIndexerUtil;
 import com.liferay.mail.reader.model.Account;
-import com.liferay.mail.reader.service.AccountLocalServiceUtil;
+import com.liferay.mail.reader.service.AccountLocalService;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -46,6 +46,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
@@ -125,7 +126,7 @@ public class AccountIndexer extends BaseIndexer<Account> {
 
 	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
-		Account account = AccountLocalServiceUtil.getAccount(classPK);
+		Account account = _accountLocalService.getAccount(classPK);
 
 		doReindex(account);
 	}
@@ -139,7 +140,7 @@ public class AccountIndexer extends BaseIndexer<Account> {
 
 	protected void reindexMessages(long companyId) throws PortalException {
 		final IndexableActionableDynamicQuery indexableActionableDynamicQuery =
-			AccountLocalServiceUtil.getIndexableActionableDynamicQuery();
+			_accountLocalService.getIndexableActionableDynamicQuery();
 
 		indexableActionableDynamicQuery.setCompanyId(companyId);
 		indexableActionableDynamicQuery.setPerformActionMethod(
@@ -170,6 +171,15 @@ public class AccountIndexer extends BaseIndexer<Account> {
 		indexableActionableDynamicQuery.performActions();
 	}
 
+	@Reference(unbind = "-")
+	protected void setAccountLocalService(
+		AccountLocalService accountLocalService) {
+
+		_accountLocalService = accountLocalService;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(AccountIndexer.class);
+
+	private static AccountLocalService _accountLocalService;
 
 }

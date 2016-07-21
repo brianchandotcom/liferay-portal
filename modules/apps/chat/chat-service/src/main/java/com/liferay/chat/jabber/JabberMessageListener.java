@@ -38,14 +38,7 @@ public class JabberMessageListener implements MessageListener {
 		_companyId = companyId;
 		_userId = userId;
 
-		try {
-			chatGroupServiceConfiguration =
-				ConfigurationProviderUtil.getCompanyConfiguration(
-					ChatGroupServiceConfiguration.class, _companyId);
-		}
-		catch (ConfigurationException ce) {
-			_log.error("Unable to load chat group service configuration", ce);
-		}
+		_chatGroupServiceConfiguration = _getChatGroupServiceConfiguration();
 	}
 
 	@Override
@@ -62,7 +55,8 @@ public class JabberMessageListener implements MessageListener {
 			String resource = JabberUtil.getResource(from);
 
 			if (StringUtil.equalsIgnoreCase(
-					resource, chatGroupServiceConfiguration.jabberResource())) {
+					resource,
+					_chatGroupServiceConfiguration.jabberResource())) {
 
 				return;
 			}
@@ -77,11 +71,22 @@ public class JabberMessageListener implements MessageListener {
 		}
 	}
 
-	protected ChatGroupServiceConfiguration chatGroupServiceConfiguration;
+	private ChatGroupServiceConfiguration _getChatGroupServiceConfiguration() {
+		try {
+			return ConfigurationProviderUtil.getCompanyConfiguration(
+				ChatGroupServiceConfiguration.class, _companyId);
+		}
+		catch (ConfigurationException ce) {
+			_log.error("Unable to load chat group service configuration", ce);
+		}
+
+		return null;
+	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		JabberMessageListener.class);
 
+	private final ChatGroupServiceConfiguration _chatGroupServiceConfiguration;
 	private final long _companyId;
 	private final long _userId;
 

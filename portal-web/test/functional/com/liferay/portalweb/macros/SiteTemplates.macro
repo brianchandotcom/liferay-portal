@@ -124,10 +124,7 @@
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 
 		<if>
-			<and>
-				<condition function="IsElementPresent" locator1="Message#ERROR_REQUEST_FAILED_TO_COMPLETE" />
-				<condition function="IsVisible" locator1="Message#ERROR_2" />
-			</and>
+			<equals arg1="${associatedToSite}" arg2="true" />
 			<then>
 				<execute macro="Alert#viewRequestFailedToComplete" />
 

@@ -139,6 +139,7 @@
 		</execute>
 
 		<execute macro="SiteTemplates#deleteCP">
+			<var name="associatedToSite" value="true" />
 			<var name="siteTemplateName" value="Site Template Name" />
 		</execute>
 

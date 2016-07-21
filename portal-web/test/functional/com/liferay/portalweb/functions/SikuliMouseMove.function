@@ -4,6 +4,8 @@
 
 		<execute selenium="sikuliMouseMove" />
 
+		<execute argument1="1000" selenium="pause" />
+
 		<execute selenium="assertJavaScriptErrors" />
 
 		<execute selenium="assertLiferayErrors" />

@@ -2,6 +2,8 @@
 	<command name="sikuliLeftMouseUp">
 		<execute function="WaitForSPARefresh" />
 
+		<execute argument1="1000" selenium="pause" />
+
 		<execute selenium="sikuliLeftMouseUp" />
 
 		<execute selenium="assertJavaScriptErrors" />

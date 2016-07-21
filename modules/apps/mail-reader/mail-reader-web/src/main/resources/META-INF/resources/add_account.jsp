@@ -19,7 +19,7 @@
 <%
 MailManager mailManager = MailManager.getInstance(request);
 
-JSONObject defaultAccountsJSONObject = JSONFactoryUtil.createJSONObject(mailGroupServiceConfiguration.defaultAccounts());
+JSONObject defaultAccountsJSONObject = mailManager.getDefaultAccounts();
 
 JSONArray accountsJSONArray = defaultAccountsJSONObject.getJSONArray("accounts");
 

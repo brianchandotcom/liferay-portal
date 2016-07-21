@@ -3866,7 +3866,7 @@
 
 		<execute macro="KaleoFormsAdmin#saveAsDraftWorkflow" />
 
-		<execute function="Click" locator1="Icon#BACK" />
+		<execute macro="IFrame#closeFrame" />
 
 		<execute macro="KaleoFormsAdmin#editWorkflowDraft">
 			<var name="workflowDefinitionTitle" value="Workflow Definition Title" />
@@ -3874,7 +3874,7 @@
 
 		<execute macro="KaleoFormsAdmin#saveAsDraftWorkflow" />
 
-		<execute function="Click" locator1="Icon#BACK" />
+		<execute macro="IFrame#closeFrame" />
 
 		<execute macro="KaleoFormsAdmin#deleteWorkflowDraft">
 			<var name="workflowDefinitionTitle" value="Workflow Definition Title" />

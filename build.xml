@@ -3,7 +3,7 @@
 <project basedir="." default="compile" name="portal" xmlns:antelope="antlib:ise.antelope.tasks" xmlns:artifact="antlib:org.apache.maven.artifact.ant">
 	<import file="build-common.xml" />
 
-	<target name="all">
+	<target depends="reset-sdk" name="all">
 		<antcall target="clean" />
 		<antcall target="compile" />
 		<antcall target="deploy" />
@@ -28,15 +28,10 @@
 
 			<ant dir="sql" inheritAll="false" target="clean" />
 
-			<sequential>
-				<delete dir="${sdk.dir}" />
-
-				<setup-sdk />
-
-				<gradle-execute dir="${project.dir}/modules" task="clean">
-					<arg value="-Dportal.build=true" />
-				</gradle-execute>
-			</sequential>
+			<gradle-execute dir="${project.dir}/modules" task="clean">
+				<arg value="-Dportal.build=true" />
+				<arg value="--quiet" />
+			</gradle-execute>
 
 			<delete failonerror="false" includeemptydirs="true">
 				<fileset dir="." includes="*.ear,*.jar,*.war,*.zip" />
@@ -111,8 +106,6 @@
 	</target>
 
 	<target name="compile">
-		<setup-sdk />
-
 		<delete file="javac.output.txt" />
 
 		<gradle-execute dir="modules/core/registry-api" task="classes">
@@ -163,8 +156,6 @@
 	</target>
 
 	<target name="deploy">
-		<setup-sdk />
-
 		<if>
 			<or>
 				<equals arg1="${app.server.type}" arg2="glassfish" />
@@ -736,10 +727,6 @@
 		<copy file="portal-impl/src/system-ext.properties" overwrite="true" tofile="portal-impl/classes/system-ext.properties" />
 	</target>
 
-	<target name="setup-sdk">
-		<setup-sdk />
-	</target>
-
 	<target name="start">
 		<antcall target="compile" />
 
@@ -914,7 +901,7 @@ print AdminControl.invoke(appManager, 'startApplication', 'liferay-portal')
 
 		<delete dir="${basedir}/.gradle" />
 
-		<setup-sdk />
+		<antcall target="reset-sdk" />
 
 		<gradle-execute dir="modules" forcedcacheenabled="false" task="clean">
 			<arg value="-Dmaven.local.ignore=true" />

@@ -973,6 +973,29 @@ Error-Prone was automatically installed. Please rerun your task.
 		</sequential>
 	</macrodef>
 
+	<target name="reset-sdk">
+		<delete dir="${sdk.dir}" />
+
+		<unzip
+			dest="${project.dir}/tools"
+			src="${project.dir}/tools/com.liferay.portal.plugins.sdk-7.0.0.zip"
+		>
+			<mapper
+				type="glob"
+				from="com.liferay.portal.plugins.sdk-7.0.0/*"
+				to="sdk/*"
+			/>
+		</unzip>
+
+		<update-sdk-properties />
+
+		<update-gradle-properties />
+
+		<gradle-execute task="setupPortalTools">
+			<arg value="--build-file=${project.dir}/modules/util.gradle" />
+		</gradle-execute>
+	</target>
+
 	<macrodef name="set-test-type">
 		<sequential>
 			<if>
@@ -1002,41 +1025,6 @@ Error-Prone was automatically installed. Please rerun your task.
 					<fail>Test class ${test.class} cannot be found.</fail>
 				</else>
 			</if>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="setup-sdk">
-		<sequential>
-			<if>
-				<not>
-					<uptodate>
-						<mapper to="${sdk.dir}" type="merge" />
-						<srcfiles dir="${project.dir}/tools" includes="com.liferay.portal.plugins.sdk-7.0.0.zip" />
-					</uptodate>
-				</not>
-				<then>
-					<delete dir="${sdk.dir}" />
-
-					<unzip
-						dest="${project.dir}/tools"
-						src="${project.dir}/tools/com.liferay.portal.plugins.sdk-7.0.0.zip"
-					>
-						<mapper
-							type="glob"
-							from="com.liferay.portal.plugins.sdk-7.0.0/*"
-							to="sdk/*"
-						/>
-					</unzip>
-
-					<update-sdk-properties />
-				</then>
-			</if>
-
-			<update-gradle-properties />
-
-			<gradle-execute task="setupPortalTools">
-				<arg value="--build-file=${project.dir}/modules/util.gradle" />
-			</gradle-execute>
 		</sequential>
 	</macrodef>
 

@@ -527,7 +527,7 @@
 	<command name="saveFormEdit">
 		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
 
-		<execute macro="Button#clickSave" />
+		<execute function="AssertClick" locator1="KaleoFormsAdminEditProcessForm#SAVE_BUTTON" value1="Save" />
 
 		<execute macro="Alert#viewSuccessMessage" />
 

@@ -7954,7 +7954,7 @@ jdbc.default.password=${database.mysql.password}</echo>
 				<available file="tools/sdk" />
 			</not>
 			<then>
-				<antcall inheritAll="false" target="setup-sdk" />
+				<antcall inheritAll="false" target="reset-sdk" />
 			</then>
 		</if>
 

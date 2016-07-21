@@ -632,7 +632,7 @@ app.server.type=@{app.server.type}]]></echo>
 								<param name="test.sql.zip.url" value="@{test.sql.zip.url}" />
 							</antcall>
 
-							<antcall inheritAll="false" target="setup-sdk" />
+							<antcall inheritAll="false" target="reset-sdk" />
 						</then>
 						<elseif>
 							<and>
@@ -1513,7 +1513,7 @@ ${output.content}</echo>
 
 		<echo file="build.${user.name}.properties">sass.compiler.class.name=ruby</echo>
 
-		<antcall inheritAll="false" target="setup-sdk" />
+		<antcall inheritAll="false" target="reset-sdk" />
 
 		<record action="start" name="${project.dir}/sass-compiler-log" />
 

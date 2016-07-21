@@ -105,7 +105,7 @@
 		</execute>
 	</command>
 
-	<command name="SolrwithSolrCloudSmokeTest" priority="4">
+	<command name="SolrWithSolrCloudSmokeTest" priority="4">
 		<description message="This smoke test is to ensure that Liferay is successfully running on a remote SolrCloud with 2 nodes by asserting console logging for ZooKeeper and performing searches in portal. Note by default, an embedded Elasticsearch is deployed in portal." />
 
 		<property name="solr.solrcloud.enabled" value="true" />

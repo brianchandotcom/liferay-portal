@@ -1285,9 +1285,14 @@ public class LayoutImportController implements ImportController {
 			int buildNumber = ReleaseInfo.getBuildNumber();
 
 			if (buildNumber != importBuildNumber) {
-				throw new LayoutImportException(
-					"LAR build number " + importBuildNumber +
-						" does not match portal build number " + buildNumber);
+				StringBundler sb = new StringBundler(4);
+
+				sb.append("LAR build number ");
+				sb.append(importBuildNumber);
+				sb.append(" does not match portal build number ");
+				sb.append(buildNumber);
+
+				throw new LayoutImportException(sb.toString());
 			}
 		}
 		else {
@@ -1331,10 +1336,15 @@ public class LayoutImportController implements ImportController {
 					Version.getInstance(currentBundleVersion),
 					Version.getInstance(importBundleVersion))) {
 
-				throw new LayoutImportException(
-					"LAR bundle version " + importBundleVersion +
-						" does not match deployed export/import bundle" +
-							" version " + bundle.getVersion());
+				StringBundler sb = new StringBundler(4);
+
+				sb.append("LAR bundle version ");
+				sb.append(importBundleVersion);
+				sb.append(
+					" does not match deployed export/import bundle version ");
+				sb.append(currentBundleVersion);
+
+				throw new LayoutImportException(sb.toString());
 			}
 		}
 

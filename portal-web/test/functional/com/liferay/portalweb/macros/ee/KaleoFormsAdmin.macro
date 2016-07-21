@@ -629,7 +629,7 @@
 	<command name="viewInvalidDefinitionMessage">
 		<execute macro="Alert#viewRequestFailedToComplete" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="Please enter a valid XML schema definition." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="Please add at least one field." />
 	</command>
 
 	<command name="viewNewProcessProgressBar">

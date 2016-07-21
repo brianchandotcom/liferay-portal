@@ -836,6 +836,16 @@
 	</command>
 
 	<command name="ViewUserSearchResult" priority="4">
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="Server Administration" />
+		</execute>
+
+		<execute macro="ServerAdministration#executeServerResourcesActions">
+			<var name="actionsDescription" value="Reindex all search indexes." />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="Page#add">
 			<var name="pageName" value="${searchPageName}" />
 		</execute>

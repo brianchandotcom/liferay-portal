@@ -29,7 +29,7 @@ String eventName = "_" + HtmlUtil.escapeJS(assetPublisherDisplayContext.getPortl
 		names="asset-selection,display-settings,subscriptions"
 		param="tabs2"
 		refresh="<%= false %>"
-		type="tabs nav-tabs-default"
+		type="nav-tabs-default tabs"
 	>
 		<liferay-ui:section>
 			<div class="container-fluid-1280">

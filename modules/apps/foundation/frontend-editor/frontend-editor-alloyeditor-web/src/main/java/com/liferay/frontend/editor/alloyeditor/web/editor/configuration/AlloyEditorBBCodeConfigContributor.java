@@ -61,7 +61,8 @@ public class AlloyEditorBBCodeConfigContributor
 			requestBackedPortletURLFactory);
 
 		jsonObject.put("allowedContent", Boolean.TRUE);
-		jsonObject.put("enterMode", 2);
+		jsonObject.put("enterMode", 1);
+		jsonObject.put("forceEnterMode", Boolean.TRUE);
 
 		String extraPlugins = jsonObject.getString("extraPlugins");
 

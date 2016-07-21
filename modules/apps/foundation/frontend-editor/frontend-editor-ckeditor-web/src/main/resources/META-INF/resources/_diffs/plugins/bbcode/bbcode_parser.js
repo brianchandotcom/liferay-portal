@@ -762,7 +762,7 @@
 
 			var cite = token.attribute;
 
-			var result = '<blockquote><p>';
+			var result = '<blockquote>';
 
 			if (cite && cite.length) {
 				cite = BBCodeUtil.escape(cite);
@@ -772,7 +772,7 @@
 
 			instance._result.push(result);
 
-			instance._stack.push('</p></blockquote>');
+			instance._stack.push('</blockquote>');
 		},
 
 		_handleSimpleTag: function(tagName) {

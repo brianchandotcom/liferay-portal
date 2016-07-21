@@ -14,77 +14,18 @@
 
 package com.liferay.portal.lpkg;
 
-import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
-import com.liferay.portal.kernel.util.StringUtil;
-
 import java.io.IOException;
 
-import java.nio.charset.StandardCharsets;
-import java.nio.file.DirectoryStream;
-import java.nio.file.FileSystem;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
-
-import java.util.Arrays;
-import java.util.Properties;
-
-import org.junit.Assert;
 import org.junit.Test;
-
-import org.osgi.framework.Version;
 
 /**
  * @author Matthew Tambara
  */
-public class LPKGUpgradeTest {
+public class LPKGUpgradeTest extends LPKGVersionChangeTestCase {
 
 	@Test
 	public void testUpgradeLPKG() throws IOException {
-		String liferayHome = System.getProperty("liferay.home");
-
-		Assert.assertNotNull(
-			"Missing system property \"liferay.home\"", liferayHome);
-
-		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
-				Paths.get(liferayHome, "/osgi/marketplace"))) {
-
-			for (Path lpkgPath : directoryStream) {
-				try (FileSystem fileSystem = FileSystems.newFileSystem(
-						lpkgPath, null)) {
-
-					Path path = fileSystem.getPath(
-						"liferay-marketplace.properties");
-
-					String propertiesString = new String(
-						Files.readAllBytes(path), StandardCharsets.UTF_8);
-
-					Properties properties = new Properties();
-
-					properties.load(new UnsyncStringReader(propertiesString));
-
-					String versionString = properties.getProperty("version");
-
-					Version version = new Version(versionString);
-
-					version = new Version(
-						version.getMajor(), version.getMinor(),
-						version.getMicro() + 1);
-
-					propertiesString = StringUtil.replace(
-						propertiesString, "version=".concat(versionString),
-						"version=".concat(version.toString()));
-
-					Files.write(
-						path, Arrays.asList(propertiesString),
-						StandardCharsets.UTF_8,
-						StandardOpenOption.TRUNCATE_EXISTING,
-						StandardOpenOption.WRITE);
-				}
-			}
-		}
+		doVersionChange(0, 0, 1);
 	}
 
 }

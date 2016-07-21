@@ -605,7 +605,7 @@
 
 				<execute function="Click" locator1="WC#LINK_TO_PAGE_SELECT_PAGE_RADIO" />
 
-				<execute function="Click" locator1="Button#SELECT" />
+				<execute function="ClickNoError" locator1="Button#SELECT" />
 			</then>
 		</if>
 

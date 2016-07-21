@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>LINK_TO_PAGE_SELECT_PAGE_RADIO</td>
-	<td>//label[contains(.,'${key_pageName}')]//input[@type='radio']</td>
+	<td>//li[contains(.,'${key_pageName}')]/input[@type='radio']</td>
 	<td></td>
 </tr>
 <!--SEARCH-->

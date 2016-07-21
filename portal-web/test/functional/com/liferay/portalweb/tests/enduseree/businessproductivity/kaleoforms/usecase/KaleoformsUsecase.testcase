@@ -411,6 +411,8 @@
 			<var name="workflowTask" value="create" />
 		</execute>
 
+		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
+
 		<execute macro="KaleoFormsAdmin#chooseForm">
 			<var name="kfFormName" value="Created Task Form" />
 		</execute>

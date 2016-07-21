@@ -29,7 +29,7 @@ public class KBObjectsPriorityComparator<T> extends OrderByComparator<T> {
 	public static final String ORDER_BY_DESC =
 		"modelFolder DESC, priority DESC, title ASC";
 
-	public static final String[] ORDER_BY_FIELDS = {"priority, title"};
+	public static final String[] ORDER_BY_FIELDS = {"priority", "title"};
 
 	public KBObjectsPriorityComparator() {
 		this(false);

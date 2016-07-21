@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Mail Web
-Bundle-SymbolicName: com.liferay.mail.web
-Bundle-Version: 1.0.0
-Web-ContextPath: /mail-web

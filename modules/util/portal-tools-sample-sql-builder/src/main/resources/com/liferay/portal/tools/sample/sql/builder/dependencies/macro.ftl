@@ -42,7 +42,6 @@
 	/>
 </#macro>
 
-
 <#macro insertDDMStorageLink
 	_ddmStorageLinkModel
 >

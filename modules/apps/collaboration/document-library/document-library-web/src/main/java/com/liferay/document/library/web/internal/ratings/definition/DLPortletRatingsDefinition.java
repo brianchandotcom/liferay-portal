@@ -14,7 +14,7 @@
 
 package com.liferay.document.library.web.internal.ratings.definition;
 
-import com.liferay.document.library.web.internal.constants.DLPortletKeys;
+import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.ratings.kernel.RatingsType;
 import com.liferay.ratings.kernel.definition.PortletRatingsDefinition;
 

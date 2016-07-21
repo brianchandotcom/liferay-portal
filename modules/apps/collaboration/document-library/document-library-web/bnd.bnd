@@ -1,8 +1,9 @@
 Bundle-Name: Liferay Document Library Web
 Bundle-SymbolicName: com.liferay.document.library.web
-Bundle-Version: 1.0.11
+Bundle-Version: 1.1.0
 Export-Package:\
 	com.liferay.document.library.web.asset,\
+	com.liferay.document.library.web.constants,\
 	com.liferay.document.library.web.lar,\
 	com.liferay.document.library.web.social,\
 	com.liferay.document.library.web.webdav

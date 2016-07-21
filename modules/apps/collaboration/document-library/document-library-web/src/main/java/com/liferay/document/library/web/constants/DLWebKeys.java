@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.web.internal.constants;
+package com.liferay.document.library.web.constants;
 
 /**
  * @author Brian Wing Shun Chan

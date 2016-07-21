@@ -36,7 +36,7 @@ page import="com.liferay.portal.kernel.portlet.PortletURLFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.product.navigation.simulation.application.list.SimulationPanelCategory" %><%@
-page import="com.liferay.product.navigation.simulation.web.internal.constants.ProductNavigationSimulationPortletKeys" %><%@
+page import="com.liferay.product.navigation.simulation.web.constants.ProductNavigationSimulationPortletKeys" %><%@
 page import="com.liferay.taglib.aui.AUIUtil" %>
 
 <%@ page import="javax.portlet.PortletRequest" %><%@

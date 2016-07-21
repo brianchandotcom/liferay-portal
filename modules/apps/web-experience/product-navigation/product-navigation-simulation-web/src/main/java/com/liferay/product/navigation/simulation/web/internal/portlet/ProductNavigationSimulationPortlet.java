@@ -19,7 +19,7 @@ import com.liferay.application.list.PanelAppRegistry;
 import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.product.navigation.simulation.web.internal.constants.ProductNavigationSimulationPortletKeys;
+import com.liferay.product.navigation.simulation.web.constants.ProductNavigationSimulationPortletKeys;
 
 import java.io.IOException;
 

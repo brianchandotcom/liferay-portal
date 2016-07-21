@@ -14,7 +14,7 @@
 
 package com.liferay.document.library.web.internal.upgrade.v1_0_0;
 
-import com.liferay.document.library.web.internal.constants.DLPortletKeys;
+import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.portal.kernel.upgrade.BaseUpgradeAdminPortlets;
 
 /**

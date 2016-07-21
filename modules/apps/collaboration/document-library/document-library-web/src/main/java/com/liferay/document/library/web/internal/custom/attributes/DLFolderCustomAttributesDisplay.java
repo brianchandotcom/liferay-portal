@@ -15,7 +15,7 @@
 package com.liferay.document.library.web.internal.custom.attributes;
 
 import com.liferay.document.library.kernel.model.DLFolder;
-import com.liferay.document.library.web.internal.constants.DLPortletKeys;
+import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.expando.kernel.model.BaseCustomAttributesDisplay;
 import com.liferay.expando.kernel.model.CustomAttributesDisplay;
 

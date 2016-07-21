@@ -12,20 +12,15 @@
  * details.
  */
 
-package com.liferay.document.library.web.internal.constants;
+package com.liferay.calendar.social;
 
 /**
- * @author Sergio González
+ * @author Marcellus Tavares
  */
-public class DLPortletKeys {
+public class CalendarActivityKeys {
 
-	public static final String DOCUMENT_LIBRARY =
-		"com_liferay_document_library_web_portlet_DLPortlet";
+	public static final int ADD_CALENDAR_BOOKING = 1;
 
-	public static final String DOCUMENT_LIBRARY_ADMIN =
-		"com_liferay_document_library_web_portlet_DLAdminPortlet";
-
-	public static final String MEDIA_GALLERY_DISPLAY =
-		"com_liferay_document_library_web_portlet_IGDisplayPortlet";
+	public static final int UPDATE_CALENDAR_BOOKING = 2;
 
 }

@@ -14,7 +14,7 @@
 
 package com.liferay.document.library.web.internal.portlet.action;
 
-import com.liferay.document.library.web.internal.constants.DLPortletKeys;
+import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 
 import javax.servlet.ServletContext;

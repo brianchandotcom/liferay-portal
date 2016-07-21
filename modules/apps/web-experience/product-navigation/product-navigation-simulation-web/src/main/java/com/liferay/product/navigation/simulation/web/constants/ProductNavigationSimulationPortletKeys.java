@@ -12,15 +12,15 @@
  * details.
  */
 
-package com.liferay.calendar.internal.social;
+package com.liferay.product.navigation.simulation.web.constants;
 
 /**
- * @author Marcellus Tavares
+ * @author Eduardo Garcia
  */
-public class CalendarActivityKeys {
+public class ProductNavigationSimulationPortletKeys {
 
-	public static final int ADD_CALENDAR_BOOKING = 1;
-
-	public static final int UPDATE_CALENDAR_BOOKING = 2;
+	public static final String PRODUCT_NAVIGATION_SIMULATION =
+		"com_liferay_product_navigation_simulation_web_portlet_" +
+			"SimulationPortlet";
 
 }

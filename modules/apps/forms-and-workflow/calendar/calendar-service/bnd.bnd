@@ -1,12 +1,13 @@
 Bundle-Name: Liferay Calendar Service
 Bundle-SymbolicName: com.liferay.calendar.service
-Bundle-Version: 2.0.6
+Bundle-Version: 2.1.0
 Export-Package:\
 	com.liferay.calendar.model.impl,\
 	com.liferay.calendar.notification.impl,\
 	com.liferay.calendar.search,\
 	com.liferay.calendar.service.configuration,\
 	com.liferay.calendar.service.permission,\
+	com.liferay.calendar.social,\
 	com.liferay.calendar.upgrade.v1_0_2,\
 	com.liferay.calendar.util,\
 	com.liferay.calendar.workflow

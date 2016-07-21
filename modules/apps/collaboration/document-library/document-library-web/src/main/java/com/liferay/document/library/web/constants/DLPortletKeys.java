@@ -12,15 +12,20 @@
  * details.
  */
 
-package com.liferay.product.navigation.simulation.web.internal.constants;
+package com.liferay.document.library.web.constants;
 
 /**
- * @author Eduardo Garcia
+ * @author Sergio González
  */
-public class ProductNavigationSimulationPortletKeys {
+public class DLPortletKeys {
 
-	public static final String PRODUCT_NAVIGATION_SIMULATION =
-		"com_liferay_product_navigation_simulation_web_portlet_" +
-			"SimulationPortlet";
+	public static final String DOCUMENT_LIBRARY =
+		"com_liferay_document_library_web_portlet_DLPortlet";
+
+	public static final String DOCUMENT_LIBRARY_ADMIN =
+		"com_liferay_document_library_web_portlet_DLAdminPortlet";
+
+	public static final String MEDIA_GALLERY_DISPLAY =
+		"com_liferay_document_library_web_portlet_IGDisplayPortlet";
 
 }

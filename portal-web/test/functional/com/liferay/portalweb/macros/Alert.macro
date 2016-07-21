@@ -11,7 +11,7 @@
 		</if>
 	</command>
 
-	<command name="viewFailedMessage">
+	<command name="viewFailedSiteTemplateDeletionMessage">
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="You cannot delete site templates that are used by a site." />
 	</command>
 

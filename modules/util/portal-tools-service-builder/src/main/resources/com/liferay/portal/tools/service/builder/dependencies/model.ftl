@@ -185,9 +185,11 @@ public interface ${entity.name}Model extends
 			public void setClassName(String className);
 		</#if>
 
-		<#assign autoEscape = true />
+		<#assign
+			autoEscape = true
 
-		<#assign modelName = apiPackagePath + ".model." + entity.name />
+			modelName = apiPackagePath + ".model." + entity.name
+		/>
 
 		<#if modelHintsUtil.getHints(modelName, column.name)??>
 			<#assign hints = modelHintsUtil.getHints(modelName, column.name) />

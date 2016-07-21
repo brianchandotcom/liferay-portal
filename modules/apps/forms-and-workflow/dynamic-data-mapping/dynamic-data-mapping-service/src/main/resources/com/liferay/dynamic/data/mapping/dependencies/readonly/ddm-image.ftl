@@ -3,10 +3,12 @@
 <#assign alt = "" />
 
 <#if fieldRawValue?has_content>
-	<#assign fileJSONObject = getFileJSONObject(fieldRawValue) />
+	<#assign
+		fileJSONObject = getFileJSONObject(fieldRawValue)
 
-	<#assign alt = fileJSONObject.getString("alt") />
-	<#assign src = fileJSONObject.getString("data") />
+		alt = fileJSONObject.getString("alt")
+		src = fileJSONObject.getString("data")
+	/>
 </#if>
 
 <@liferay_aui["field-wrapper"] data=data>

@@ -26,24 +26,28 @@
 
 <#-- Field name -->
 
-<#assign fieldNamespace = "_INSTANCE_" + fieldStructure.fieldNamespace />
+<#assign
+	fieldNamespace = "_INSTANCE_" + fieldStructure.fieldNamespace
 
-<#assign fieldName = fieldStructure.name />
+	fieldName = fieldStructure.name
 
-<#assign parentName = parentFieldStructure.name!"" />
-<#assign parentType = parentFieldStructure.type!"" />
+	parentName = parentFieldStructure.name!""
+	parentType = parentFieldStructure.type!""
 
-<#assign isChildField = parentName?? && (parentName != "") && ((parentType == "radio") || (parentType == "select")) />
+	isChildField = parentName?? && (parentName != "") && ((parentType == "radio") || (parentType == "select"))
+/>
 
 <#if isChildField>
 	<#assign fieldName = parentName />
 </#if>
 
-<#assign namespace = namespace!"" />
+<#assign
+	namespace = namespace!""
 
-<#assign namespacedFieldName = "${namespace}${fieldName}${fieldNamespace}" />
+	namespacedFieldName = "${namespace}${fieldName}${fieldNamespace}"
 
-<#assign namespacedParentName = "${namespace}${parentName}" />
+	namespacedParentName = "${namespace}${parentName}"
+/>
 
 <#-- Data -->
 
@@ -63,17 +67,21 @@
 
 <#-- Field value -->
 
-<#assign fieldValue = predefinedValue />
-<#assign fieldRawValue = "" />
-<#assign hasFieldValue = false />
+<#assign
+	fieldValue = predefinedValue
+	fieldRawValue = ""
+	hasFieldValue = false
+/>
 
 <#if fields?? && fields.get(fieldName)??>
-	<#assign field = fields.get(fieldName) />
+	<#assign
+		field = fields.get(fieldName)
 
-	<#assign valueIndex = getterUtil.getInteger(fieldStructure.valueIndex) />
+		valueIndex = getterUtil.getInteger(fieldStructure.valueIndex)
 
-	<#assign fieldValue = field.getRenderedValue(requestedLocale, valueIndex) />
-	<#assign fieldRawValue = field.getValue(requestedLocale, valueIndex)! />
+		fieldValue = field.getRenderedValue(requestedLocale, valueIndex)
+		fieldRawValue = field.getValue(requestedLocale, valueIndex)!
+	/>
 
 	<#if fieldValue != "">
 		<#assign hasFieldValue = true />

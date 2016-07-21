@@ -4,14 +4,18 @@
 	<#assign fieldRawValue = predefinedValue />
 </#if>
 
-<#assign fieldRawValue = paramUtil.getString(request, "${namespacedFieldName}", fieldRawValue) />
+<#assign
+	fieldRawValue = paramUtil.getString(request, "${namespacedFieldName}", fieldRawValue)
 
-<#assign fileEntryTitle = "" />
+	fileEntryTitle = ""
+/>
 
 <#if fieldRawValue != "">
-	<#assign fileJSONObject = getFileJSONObject(fieldRawValue) />
+	<#assign
+		fileJSONObject = getFileJSONObject(fieldRawValue)
 
-	<#assign fileEntry = getFileEntry(fileJSONObject) />
+		fileEntry = getFileEntry(fileJSONObject)
+	/>
 
 	<#if fileEntry != "">
 		<#assign fileEntryTitle = fileEntry.getTitle() />

@@ -14,9 +14,11 @@ insert into DDMTemplate values ('${ddmTemplateModel.uuid}', ${ddmTemplateModel.t
 	_entry = ddmTemplateModel
 />
 
-<#assign journalArticlePageCounts = dataFactory.getSequence(dataFactory.maxJournalArticlePageCount) />
+<#assign
+	journalArticlePageCounts = dataFactory.getSequence(dataFactory.maxJournalArticlePageCount)
 
-<#assign resourcePermissionModels = dataFactory.newResourcePermissionModels("com.liferay.journal", groupId) />
+	resourcePermissionModels = dataFactory.newResourcePermissionModels("com.liferay.journal", groupId)
+/>
 
 <#list resourcePermissionModels as resourcePermissionModel>
 	<@insertResourcePermission
@@ -25,9 +27,11 @@ insert into DDMTemplate values ('${ddmTemplateModel.uuid}', ${ddmTemplateModel.t
 </#list>
 
 <#list journalArticlePageCounts as journalArticlePageCount>
-	<#assign portletIdPrefix = "com_liferay_journal_content_web_portlet_JournalContentPortlet_INSTANCE_TEST_" + journalArticlePageCount + "_" />
+	<#assign
+		portletIdPrefix = "com_liferay_journal_content_web_portlet_JournalContentPortlet_INSTANCE_TEST_" + journalArticlePageCount + "_"
 
-	<#assign layoutModel = dataFactory.newLayoutModel(groupId, groupId + "_journal_article_" + journalArticlePageCount, "", dataFactory.getJournalArticleLayoutColumn(portletIdPrefix)) />
+		layoutModel = dataFactory.newLayoutModel(groupId, groupId + "_journal_article_" + journalArticlePageCount, "", dataFactory.getJournalArticleLayoutColumn(portletIdPrefix))
+	/>
 
 	${layoutCSVWriter.write(layoutModel.friendlyURL + "\n")}
 

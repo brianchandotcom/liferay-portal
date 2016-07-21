@@ -71,700 +71,1126 @@
 	</command>
 
 	<command name="smoke">
-		<var name="bookmarkDescription1" value="Test Folder Entry 1 Description" />
-		<var name="bookmarkDescription2" value="Test Folder Entry 2 Description" />
-		<var name="bookmarkDescription3" value="Test Folder Entry 3 Description" />
-		<var name="bookmarkFolderDescription" value="Test Folder Description" />
-		<var name="bookmarkFolderName" value="Test Folder" />
-		<var name="bookmarkName1" value="Test Folder Entry 1" />
-		<var name="bookmarkName2" value="Test Folder Entry 2" />
-		<var name="bookmarkName3" value="Test Folder Entry 3" />
-		<var name="bookmarkURL1" value="http://www.liferay.com" />
-		<var name="bookmarkURL2" value="http://www.openqa.org" />
-		<var name="bookmarkURL3" value="http://www.google.com" />
-		<var name="dmDocumentDescription1" value="DM Document Description" />
-		<var name="dmDocumentDescription2" value="DM Folder Image 1 Description" />
-		<var name="dmDocumentDescription3" value="DM Folder Image 2 Description" />
-		<var name="dmDocumentDescription4" value="DM Folder Image 3 Description" />
-		<var name="dmDocumentFile1" value="Document_1.txt" />
-		<var name="dmDocumentFile2" value="Document_1.jpg" />
-		<var name="dmDocumentFile3" value="Document_2.jpg" />
-		<var name="dmDocumentFile4" value="Document_3.jpg" />
-		<var name="dmDocumentSize1" value="0.3k" />
-		<var name="dmDocumentSize2" value="12.9k" />
-		<var name="dmDocumentSize3" value="29.9k" />
-		<var name="dmDocumentSize4" value="16.1k" />
-		<var name="dmDocumentTitle1" value="DM Document Title" />
-		<var name="dmDocumentTitle2" value="DM Folder Image 1 Title" />
-		<var name="dmDocumentTitle3" value="DM Folder Image 2 Title" />
-		<var name="dmDocumentTitle4" value="DM Folder Image 3 Title" />
-		<var name="dmDocumentUploader" value="Test Test" />
-		<var name="dmDocumentVersionNumber" value="1.0" />
-		<var name="dmFolderDescription" value="DM Folder 1 Description" />
-		<var name="dmFolderName" value="DM Folder 1 Name" />
-		<var name="entryAuthorFirstName" value="Test" />
-		<var name="entryAuthorLastName" value="Test" />
-		<var name="entryComment1" value="Blogs Entry 1 Comment" />
-		<var name="entryComment2" value="Blogs Entry 2 Comment" />
-		<var name="entryComment3" value="Blogs Entry 3 Comment" />
-		<var name="entryContent1" value="Blogs Entry 1 Content" />
-		<var name="entryContent2" value="Blogs Entry 2 Content" />
-		<var name="entryContent3" value="Blogs Entry 3 Content" />
-		<var name="entryTitle1" value="Blogs Entry 1 Title" />
-		<var name="entryTitle2" value="Blogs Entry 2 Title" />
-		<var name="entryTitle3" value="Blogs Entry 3 Title" />
-		<var name="eventDescription1" value="Calendar Event Description" />
-		<var name="eventDescription2" value="Weekly Repeating Event Description" />
-		<var name="eventDescription3" value="Monthly Repeating Event Description" />
-		<var name="eventTitle1" value="Calendar Event Title" />
-		<var name="eventTitle2" value="Calendar Event Repeating Title" />
-		<var name="eventTitle3" value="Calendar Event All Day Title" />
-		<var name="eventType1" value="Regular" />
-		<var name="eventType2" value="Repeating" />
-		<var name="eventType3" value="All Day" />
-		<var name="frequency" value="Weekly" />
-		<var name="mbCategoryName" value="MB Category Name" />
-		<var name="mbThreadBody" value="MB Category Thread Message Body" />
-		<var name="mbThreadSubject" value="MB Category Thread Message Subject" />
-		<var name="pageName1" value="Blogs Test Page" />
-		<var name="pageName2" value="Documents and Media Test Page" />
-		<var name="pageName3" value="Message Boards Test Page" />
-		<var name="pageName4" value="Wiki Test Page" />
-		<var name="pageName5" value="Calendar Test Page" />
-		<var name="pageName6" value="Bookmarks Test Page" />
-		<var name="wikiChildPageContent1" value="Wiki Front Page Child Page Content 1" />
-		<var name="wikiChildPageContent2" value="Wiki Front Page Child Page Content 2" />
-		<var name="wikiChildPageContent3" value="Wiki Front Page Child Page Content 3" />
-		<var name="wikiChildPageTitle1" value="Wiki Front Page Child Page Title 1" />
-		<var name="wikiChildPageTitle2" value="Wiki Front Page Child Page Title 2" />
-		<var name="wikiChildPageTitle3" value="Wiki Front Page Child Page Title 3" />
-		<var name="wikiPageContent" value="Wiki FrontPage Content" />
-		<var name="wikiPageTitle" value="FrontPage" />
-
 		<execute macro="Page#add">
-			<var name="defaultURL" value="${defaultURL}" />
-			<var name="nodePort" value="${nodePort}" />
-			<var name="pageName" value="${pageName1}" />
-			<var name="pageTemplateName" value="${pageTemplateName}" />
-			<var name="sitePageType" value="${pageType}" />
+			<var name="pageName" value="Blogs Test Page" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="i" value="${i}" />
-			<var name="pageName" value="${pageName1}" />
+			<var name="pageName" value="Blogs Test Page" />
 			<var name="portletName" value="Blogs" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName1}" />
+			<var name="pageName" value="Blogs Test Page" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
 		<execute macro="Blogs#addEntry">
-			<var name="assetTitle" value="${assetTitle}" />
-			<var name="assetType" value="${assetType}" />
-			<var name="categoryName" value="${categoryName}" />
-			<var name="entryAddCategory" value="${entryAddCategory}" />
-			<var name="entryAddPermissions" value="${entryAddPermissions}" />
-			<var name="entryAddRelatedAsset" value="${entryAddRelatedAsset}" />
-			<var name="entryAddTag" value="${entryAddTag}" />
-			<var name="entryContent" value="${entryContent1}" />
-			<var name="entryInvalidContent" value="${entryInvalidContent}" />
-			<var name="entryInvalidTitle" value="${entryInvalidTitle}" />
-			<var name="entryInvalidTitleLength" value="${entryInvalidTitleLength}" />
-			<var name="entryTitle" value="${entryTitle1}" />
-			<var name="entryValidTitleLength" value="${entryValidTitleLength}" />
-			<var name="tagName" value="${tagName}" />
-			<var name="viewableBy" value="${viewableBy}" />
-			<var name="viewableBySelection" value="${viewableBySelection}" />
-			<var name="vocabularyName" value="${vocabularyName}" />
+			<var name="entryContent" value="Blogs Entry 1 Content" />
+			<var name="entryTitle" value="Blogs Entry 1 Title" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
 		<execute macro="BlogsEntry#viewPG">
-			<var name="entryAuthorFirstName" value="${entryAuthorFirstName}" />
-			<var name="entryAuthorLastName" value="${entryAuthorLastName}" />
-			<var name="entryContent" value="${entryContent1}" />
-			<var name="entrySubtitle" value="${entrySubtitle}" />
-			<var name="entryTitle" value="${entryTitle1}" />
+			<var name="entryAuthorFirstName" value="Test" />
+			<var name="entryAuthorLastName" value="Test" />
+			<var name="entryContent" value="Blogs Entry 1 Content" />
+			<var name="entryTitle" value="Blogs Entry 1 Title" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName1}" />
+			<var name="pageName" value="Blogs Test Page" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
 		<execute macro="BlogsNavigator#gotoEntryPG">
-			<var name="entryContent" value="${entryContent1}" />
-			<var name="entryTitle" value="${entryTitle1}" />
+			<var name="entryContent" value="Blogs Entry 1 Content" />
+			<var name="entryTitle" value="Blogs Entry 1 Title" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
 		<execute macro="BlogsEntryComment#add">
-			<var name="entryComment" value="${entryComment1}" />
+			<var name="entryComment" value="Blogs Entry 1 Comment" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName1}" />
+			<var name="pageName" value="Blogs Test Page" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
 		<execute macro="Blogs#addEntry">
-			<var name="assetTitle" value="${assetTitle}" />
-			<var name="assetType" value="${assetType}" />
-			<var name="categoryName" value="${categoryName}" />
-			<var name="entryAddCategory" value="${entryAddCategory}" />
-			<var name="entryAddPermissions" value="${entryAddPermissions}" />
-			<var name="entryAddRelatedAsset" value="${entryAddRelatedAsset}" />
-			<var name="entryAddTag" value="${entryAddTag}" />
-			<var name="entryContent" value="${entryContent2}" />
-			<var name="entryInvalidContent" value="${entryInvalidContent}" />
-			<var name="entryInvalidTitle" value="${entryInvalidTitle}" />
-			<var name="entryInvalidTitleLength" value="${entryInvalidTitleLength}" />
-			<var name="entryTitle" value="${entryTitle2}" />
-			<var name="entryValidTitleLength" value="${entryValidTitleLength}" />
-			<var name="tagName" value="${tagName}" />
-			<var name="viewableBy" value="${viewableBy}" />
-			<var name="viewableBySelection" value="${viewableBySelection}" />
-			<var name="vocabularyName" value="${vocabularyName}" />
+			<var name="entryContent" value="Blogs Entry 2 Content" />
+			<var name="entryTitle" value="Blogs Entry 2 Title" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
 		<execute macro="BlogsEntry#viewPG">
-			<var name="entryAuthorFirstName" value="${entryAuthorFirstName}" />
-			<var name="entryAuthorLastName" value="${entryAuthorLastName}" />
-			<var name="entryContent" value="${entryContent2}" />
-			<var name="entrySubtitle" value="${entrySubtitle}" />
-			<var name="entryTitle" value="${entryTitle2}" />
+			<var name="entryAuthorFirstName" value="Test" />
+			<var name="entryAuthorLastName" value="Test" />
+			<var name="entryContent" value="Blogs Entry 2 Content" />
+			<var name="entryTitle" value="Blogs Entry 2 Title" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName1}" />
+			<var name="pageName" value="Blogs Test Page" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
 		<execute macro="BlogsNavigator#gotoEntryPG">
-			<var name="entryContent" value="${entryContent2}" />
-			<var name="entryTitle" value="${entryTitle2}" />
+			<var name="entryContent" value="Blogs Entry 2 Content" />
+			<var name="entryTitle" value="Blogs Entry 2 Title" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
 		<execute macro="BlogsEntryComment#add">
-			<var name="entryComment" value="${entryComment2}" />
+			<var name="entryComment" value="Blogs Entry 2 Comment" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName1}" />
+			<var name="pageName" value="Blogs Test Page" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
 		<execute macro="Blogs#addEntry">
-			<var name="assetTitle" value="${assetTitle}" />
-			<var name="assetType" value="${assetType}" />
-			<var name="categoryName" value="${categoryName}" />
-			<var name="entryAddCategory" value="${entryAddCategory}" />
-			<var name="entryAddPermissions" value="${entryAddPermissions}" />
-			<var name="entryAddRelatedAsset" value="${entryAddRelatedAsset}" />
-			<var name="entryAddTag" value="${entryAddTag}" />
-			<var name="entryContent" value="${entryContent3}" />
-			<var name="entryInvalidContent" value="${entryInvalidContent}" />
-			<var name="entryInvalidTitle" value="${entryInvalidTitle}" />
-			<var name="entryInvalidTitleLength" value="${entryInvalidTitleLength}" />
-			<var name="entryTitle" value="${entryTitle3}" />
-			<var name="entryValidTitleLength" value="${entryValidTitleLength}" />
-			<var name="tagName" value="${tagName}" />
-			<var name="viewableBy" value="${viewableBy}" />
-			<var name="viewableBySelection" value="${viewableBySelection}" />
-			<var name="vocabularyName" value="${vocabularyName}" />
+			<var name="entryContent" value="Blogs Entry 3 Content" />
+			<var name="entryTitle" value="Blogs Entry 3 Title" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
 		<execute macro="BlogsEntry#viewPG">
-			<var name="entryAuthorFirstName" value="${entryAuthorFirstName}" />
-			<var name="entryAuthorLastName" value="${entryAuthorLastName}" />
-			<var name="entryContent" value="${entryContent3}" />
-			<var name="entrySubtitle" value="${entrySubtitle}" />
-			<var name="entryTitle" value="${entryTitle3}" />
+			<var name="entryAuthorFirstName" value="Test" />
+			<var name="entryAuthorLastName" value="Test" />
+			<var name="entryContent" value="Blogs Entry 3 Content" />
+			<var name="entryTitle" value="Blogs Entry 3 Title" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName1}" />
+			<var name="pageName" value="Blogs Test Page" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
 		<execute macro="BlogsNavigator#gotoEntryPG">
-			<var name="entryContent" value="${entryContent3}" />
-			<var name="entryTitle" value="${entryTitle3}" />
+			<var name="entryContent" value="Blogs Entry 3 Content" />
+			<var name="entryTitle" value="Blogs Entry 3 Title" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
 		<execute macro="BlogsEntryComment#add">
-			<var name="entryComment" value="${entryComment3}" />
+			<var name="entryComment" value="Blogs Entry 3 Comment" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="defaultURL" value="${defaultURL}" />
-			<var name="nodePort" value="${nodePort}" />
-			<var name="pageName" value="${pageName2}" />
-			<var name="pageTemplateName" value="${pageTemplateName}" />
-			<var name="sitePageType" value="${pageType}" />
+			<var name="pageName" value="Documents and Media Test Page" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="i" value="${i}" />
-			<var name="pageName" value="${pageName2}" />
+			<var name="pageName" value="Documents and Media Test Page" />
 			<var name="portletName" value="Documents and Media" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName2}" />
+			<var name="pageName" value="Documents and Media Test Page" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
 		<execute macro="DMDocument#addPG">
-			<var name="assetTitle" value="${assetTitle}" />
-			<var name="assetType" value="${assetType}" />
-			<var name="categoryName" value="${categoryName}" />
-			<var name="dmDocument" value="${dmDocument}" />
-			<var name="dmDocumentDescription" value="${dmDocumentDescription1}" />
-			<var name="dmDocumentFile" value="${dmDocumentFile1}" />
-			<var name="dmDocumentSize" value="${dmDocumentSize1}" />
-			<var name="dmDocumentTitle" value="${dmDocumentTitle1}" />
-			<var name="dmDocumentTypeName" value="${dmDocumentTypeName}" />
-			<var name="stagingActivated" value="${stagingActivated}" />
-			<var name="tagName" value="${tagName}" />
-			<var name="tagNameList" value="${tagNameList}" />
+			<var name="dmDocumentDescription" value="DM Document Description" />
+			<var name="dmDocumentFile" value="Document_1.txt" />
+			<var name="dmDocumentSize" value="0.3k" />
+			<var name="dmDocumentTitle" value="DM Document Title" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName2}" />
+			<var name="pageName" value="Documents and Media Test Page" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
 		<execute macro="DMFolder#addPG">
-			<var name="dmFolder" value="${dmFolder}" />
-			<var name="dmFolderDescription" value="${dmFolderDescription}" />
-			<var name="dmFolderName" value="${dmFolderName}" />
-			<var name="viewableBy" value="${viewableBy}" />
+			<var name="dmFolderName" value="DM Folder 1 Name" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
 		<execute macro="DMNavigator#gotoFolder">
-			<var name="dmFolderName" value="${dmFolderName}" />
+			<var name="dmFolderName" value="DM Folder 1 Name" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
 		<execute macro="DMDocument#addPG">
-			<var name="assetTitle" value="${assetTitle}" />
-			<var name="assetType" value="${assetType}" />
-			<var name="categoryName" value="${categoryName}" />
-			<var name="dmDocument" value="${dmDocument}" />
-			<var name="dmDocumentDescription" value="${dmDocumentDescription2}" />
-			<var name="dmDocumentFile" value="${dmDocumentFile2}" />
-			<var name="dmDocumentTitle" value="${dmDocumentTitle2}" />
-			<var name="dmDocumentTypeName" value="${dmDocumentTypeName}" />
-			<var name="stagingActivated" value="${stagingActivated}" />
-			<var name="tagName" value="${tagName}" />
-			<var name="tagNameList" value="${tagNameList}" />
+			<var name="dmDocumentDescription" value="DM Folder Image 1 Description" />
+			<var name="dmDocumentFile" value="Document_1.jpg" />
+			<var name="dmDocumentTitle" value="DM Folder Image 1 Title" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
 		<execute macro="DMDocument#viewPG">
-			<var name="categoryName" value="${categoryName}" />
-			<var name="dmDocumentDescription" value="${dmDocumentDescription2}" />
-			<var name="dmDocumentTitle" value="${dmDocumentTitle2}" />
-			<var name="tagName" value="${tagName}" />
-			<var name="tagNameList" value="${tagNameList}" />
+			<var name="dmDocumentDescription" value="DM Folder Image 1 Description" />
+			<var name="dmDocumentTitle" value="DM Folder Image 1 Title" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName2}" />
+			<var name="pageName" value="Documents and Media Test Page" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
 		<execute macro="DMNavigator#gotoFolder">
-			<var name="dmFolderName" value="${dmFolderName}" />
+			<var name="dmFolderName" value="DM Folder 1 Name" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
 		<execute macro="DMDocument#addPG">
-			<var name="assetTitle" value="${assetTitle}" />
-			<var name="assetType" value="${assetType}" />
-			<var name="categoryName" value="${categoryName}" />
-			<var name="dmDocument" value="${dmDocument}" />
-			<var name="dmDocumentDescription" value="${dmDocumentDescription3}" />
-			<var name="dmDocumentFile" value="${dmDocumentFile3}" />
-			<var name="dmDocumentTitle" value="${dmDocumentTitle3}" />
-			<var name="dmDocumentTypeName" value="${dmDocumentTypeName}" />
-			<var name="stagingActivated" value="${stagingActivated}" />
-			<var name="tagName" value="${tagName}" />
-			<var name="tagNameList" value="${tagNameList}" />
+			<var name="dmDocumentDescription" value="DM Folder Image 2 Description" />
+			<var name="dmDocumentFile" value="Document_2.jpg" />
+			<var name="dmDocumentTitle" value="DM Folder Image 2 Title" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
 		<execute macro="DMDocument#viewPG">
-			<var name="categoryName" value="${categoryName}" />
-			<var name="dmDocumentDescription" value="${dmDocumentDescription3}" />
-			<var name="dmDocumentTitle" value="${dmDocumentTitle3}" />
-			<var name="tagName" value="${tagName}" />
-			<var name="tagNameList" value="${tagNameList}" />
+			<var name="dmDocumentDescription" value="DM Folder Image 2 Description" />
+			<var name="dmDocumentTitle" value="DM Folder Image 2 Title" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName2}" />
+			<var name="pageName" value="Documents and Media Test Page" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
 		<execute macro="DMNavigator#gotoFolder">
-			<var name="dmFolderName" value="${dmFolderName}" />
+			<var name="dmFolderName" value="DM Folder 1 Name" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
 		<execute macro="DMDocument#addPG">
-			<var name="assetTitle" value="${assetTitle}" />
-			<var name="assetType" value="${assetType}" />
-			<var name="categoryName" value="${categoryName}" />
-			<var name="dmDocument" value="${dmDocument}" />
-			<var name="dmDocumentDescription" value="${dmDocumentDescription4}" />
-			<var name="dmDocumentFile" value="${dmDocumentFile4}" />
-			<var name="dmDocumentTitle" value="${dmDocumentTitle4}" />
-			<var name="dmDocumentTypeName" value="${dmDocumentTypeName}" />
-			<var name="stagingActivated" value="${stagingActivated}" />
-			<var name="tagName" value="${tagName}" />
-			<var name="tagNameList" value="${tagNameList}" />
+			<var name="dmDocumentDescription" value="DM Folder Image 3 Description" />
+			<var name="dmDocumentFile" value="Document_3.jpg" />
+			<var name="dmDocumentTitle" value="DM Folder Image 3 Title" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
 		<execute macro="DMDocument#viewPG">
-			<var name="categoryName" value="${categoryName}" />
-			<var name="dmDocumentDescription" value="${dmDocumentDescription4}" />
-			<var name="dmDocumentTitle" value="${dmDocumentTitle4}" />
-			<var name="tagName" value="${tagName}" />
-			<var name="tagNameList" value="${tagNameList}" />
+			<var name="dmDocumentDescription" value="DM Folder Image 3 Description" />
+			<var name="dmDocumentTitle" value="DM Folder Image 3 Title" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="defaultURL" value="${defaultURL}" />
-			<var name="nodePort" value="${nodePort}" />
-			<var name="pageName" value="${pageName3}" />
-			<var name="pageTemplateName" value="${pageTemplateName}" />
-			<var name="sitePageType" value="${pageType}" />
+			<var name="pageName" value="Wiki Test Page" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="i" value="${i}" />
-			<var name="pageName" value="${pageName3}" />
-			<var name="portletName" value="Message Boards" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName3}" />
-		</execute>
-
-		<execute macro="MessageboardsCategory#addPG">
-			<var name="categoryDescription" value="${categoryDescription}" />
-			<var name="categoryDescriptionEnabled" value="${categoryDescriptionEnabled}" />
-			<var name="categoryName" value="${mbCategoryName}" />
-			<var name="displayStyle" value="${displayStyle}" />
-		</execute>
-
-		<execute macro="MessageboardsCategory#viewPG">
-			<var name="categoryDescription" value="${categoryDescription}" />
-			<var name="categoryName" value="${mbCategoryName}" />
-			<var name="threadPostCount" value="${threadPostCount}" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName3}" />
-		</execute>
-
-		<execute macro="MessageboardsCategory#gotoPG">
-			<var name="categoryDescription" value="${categoryDescription}" />
-			<var name="categoryDescriptionEnabled" value="${categoryDescriptionEnabled}" />
-			<var name="categoryName" value="${mbCategoryName}" />
-			<var name="subCategoryEnabled" value="${subCategoryEnabled}" />
-			<var name="subCategoryName" value="${subCategoryName}" />
-		</execute>
-
-		<execute macro="MessageboardsThread#addPG">
-			<var name="preview" value="${preview}" />
-			<var name="priority" value="${priority}" />
-			<var name="saveAsDraft" value="${saveAsDraft}" />
-			<var name="source" value="${source}" />
-			<var name="threadBody" value="${mbThreadBody}" />
-			<var name="threadSubject" value="${mbThreadSubject}" />
-			<var name="userName" value="${userName}" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName3}" />
-		</execute>
-
-		<execute macro="MessageboardsCategory#gotoPG">
-			<var name="categoryDescription" value="${categoryDescription}" />
-			<var name="categoryDescriptionEnabled" value="${categoryDescriptionEnabled}" />
-			<var name="categoryName" value="${mbCategoryName}" />
-			<var name="subCategoryEnabled" value="${subCategoryEnabled}" />
-			<var name="subCategoryName" value="${subCategoryName}" />
-		</execute>
-
-		<execute macro="MessageboardsThread#viewPG">
-			<var name="fontSize" value="${fontSize}" />
-			<var name="postCount" value="1" />
-			<var name="threadBody" value="${mbThreadBody}" />
-			<var name="threadBody2" value="${threadBody2}" />
-			<var name="threadSubject" value="${mbThreadSubject}" />
-			<var name="threadSubject2" value="${threadSubject2}" />
-			<var name="userName" value="${userName}" />
-			<var name="workflowTask" value="${workflowTask}" />
-		</execute>
-
-		<execute macro="Page#add">
-			<var name="defaultURL" value="${defaultURL}" />
-			<var name="nodePort" value="${nodePort}" />
-			<var name="pageName" value="${pageName4}" />
-			<var name="pageTemplateName" value="${pageTemplateName}" />
-			<var name="sitePageType" value="${pageType}" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="i" value="${i}" />
-			<var name="pageName" value="${pageName4}" />
+			<var name="pageName" value="Wiki Test Page" />
 			<var name="portletName" value="Wiki" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
 		<execute macro="WikiPage#addFrontPagePG">
-			<var name="creoleSource" value="${creoleSource}" />
-			<var name="htmlSource" value="${htmlSource}" />
-			<var name="pageAddTag" value="${pageAddTag}" />
-			<var name="tagName" value="${tagName}" />
-			<var name="wikiNodeName" value="${wikiNodeName}" />
-			<var name="wikiPageContent" value="${wikiPageContent}" />
-			<var name="wikiPageTitle" value="${wikiPageTitle}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+			<var name="wikiPageContent" value="Wiki FrontPage Content" />
+			<var name="wikiPageTitle" value="FrontPage" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName4}" />
+			<var name="pageName" value="Wiki Test Page" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
 		<execute macro="WikiPage#addChildPagePG">
-			<var name="wikiChildPageContent" value="${wikiChildPageContent1}" />
-			<var name="wikiChildPageTitle" value="${wikiChildPageTitle1}" />
-			<var name="wikiPageContent" value="${wikiPageContent}" />
-			<var name="wikiPageTitle" value="${wikiPageTitle}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+			<var name="wikiChildPageContent" value="Wiki Front Page Child Page Content 1" />
+			<var name="wikiChildPageTitle" value="Wiki Front Page Child Page Title 1" />
+			<var name="wikiPageContent" value="Wiki FrontPage Content" />
+			<var name="wikiPageTitle" value="FrontPage" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName4}" />
+			<var name="pageName" value="Wiki Test Page" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
 		<execute macro="WikiPage#addChildPagePG">
-			<var name="wikiChildPageContent" value="${wikiChildPageContent2}" />
-			<var name="wikiChildPageTitle" value="${wikiChildPageTitle2}" />
-			<var name="wikiPageContent" value="${wikiPageContent}" />
-			<var name="wikiPageTitle" value="${wikiPageTitle}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+			<var name="wikiChildPageContent" value="Wiki Front Page Child Page Content 2" />
+			<var name="wikiChildPageTitle" value="Wiki Front Page Child Page Title 2" />
+			<var name="wikiPageContent" value="Wiki FrontPage Content" />
+			<var name="wikiPageTitle" value="FrontPage" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName4}" />
+			<var name="pageName" value="Wiki Test Page" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
 		<execute macro="WikiPage#addChildPagePG">
-			<var name="wikiChildPageContent" value="${wikiChildPageContent3}" />
-			<var name="wikiChildPageTitle" value="${wikiChildPageTitle3}" />
-			<var name="wikiPageContent" value="${wikiPageContent}" />
-			<var name="wikiPageTitle" value="${wikiPageTitle}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+			<var name="wikiChildPageContent" value="Wiki Front Page Child Page Content 3" />
+			<var name="wikiChildPageTitle" value="Wiki Front Page Child Page Title 3" />
+			<var name="wikiPageContent" value="Wiki FrontPage Content" />
+			<var name="wikiPageTitle" value="FrontPage" />
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="defaultURL" value="${defaultURL}" />
-			<var name="nodePort" value="${nodePort}" />
-			<var name="pageName" value="${pageName5}" />
-			<var name="pageTemplateName" value="${pageTemplateName}" />
-			<var name="sitePageType" value="${pageType}" />
+			<var name="pageName" value="Calendar Test Page" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="i" value="${i}" />
-			<var name="pageName" value="${pageName5}" />
+			<var name="pageName" value="Calendar Test Page" />
 			<var name="portletName" value="Calendar" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName5}" />
+			<var name="pageName" value="Calendar Test Page" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
+
+		<execute macro="CalendarNavigator#gotoAddEvent" />
 
 		<execute macro="CalendarEvent#add">
-			<var name="addRSVPEnabled" value="${addRSVPEnabled}" />
-			<var name="calendarName" value="${calendarName}" />
-			<var name="endDate" value="${endDate}" />
-			<var name="endDateTime" value="${endDateTime}" />
-			<var name="eventComment" value="${eventComment}" />
-			<var name="eventCommentEnabled" value="${eventCommentEnabled}" />
-			<var name="eventTitle" value="${eventTitle1}" />
-			<var name="eventType" value="${eventType1}" />
-			<var name="frequency" value="${frequency}" />
-			<var name="optionSet" value="${optionSet}" />
-			<var name="pageName" value="${pageName5}" />
-			<var name="reminders" value="${reminders}" />
-			<var name="rsvp" value="${rsvp}" />
-			<var name="startDate" value="${startDate}" />
-			<var name="startDateTime" value="${startDateTime}" />
-			<var name="user" value="${user}" />
+			<var name="eventTitle" value="Calendar Event Title" />
+			<var name="eventType" value="Regular" />
+			<var name="frequency" value="Weekly" />
+			<var name="pageName" value="Calendar Test Page" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName5}" />
+			<var name="pageName" value="Calendar Test Page" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
 		<execute macro="CalendarEvent#view">
-			<var name="eventTitle" value="${eventTitle1}" />
+			<var name="eventTitle" value="Calendar Event Title" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName5}" />
+			<var name="pageName" value="Calendar Test Page" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
+
+		<execute macro="CalendarNavigator#gotoAddEvent" />
 
 		<execute macro="CalendarEvent#add">
-			<var name="addRSVPEnabled" value="${addRSVPEnabled}" />
-			<var name="calendarName" value="${calendarName}" />
-			<var name="endDate" value="${endDate}" />
-			<var name="endDateTime" value="${endDateTime}" />
-			<var name="eventComment" value="${eventComment}" />
-			<var name="eventCommentEnabled" value="${eventCommentEnabled}" />
-			<var name="eventTitle" value="${eventTitle2}" />
-			<var name="eventType" value="${eventType2}" />
-			<var name="frequency" value="${frequency}" />
-			<var name="optionSet" value="${optionSet}" />
-			<var name="pageName" value="${pageName5}" />
-			<var name="reminders" value="${reminders}" />
-			<var name="rsvp" value="${rsvp}" />
-			<var name="startDate" value="${startDate}" />
-			<var name="startDateTime" value="${startDateTime}" />
-			<var name="user" value="${user}" />
+			<var name="eventTitle" value="Calendar Event Repeating Title" />
+			<var name="eventType" value="Repeating" />
+			<var name="frequency" value="Weekly" />
+			<var name="numberOfOccurrences" value="1" />
+			<var name="pageName" value="Calendar Test Page" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName5}" />
+			<var name="pageName" value="Calendar Test Page" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
 		<execute macro="CalendarEvent#view">
-			<var name="eventTitle" value="${eventTitle2}" />
+			<var name="eventTitle" value="Calendar Event Repeating Title" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName5}" />
+			<var name="pageName" value="Calendar Test Page" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
+
+		<execute macro="CalendarNavigator#gotoAddEvent" />
 
 		<execute macro="CalendarEvent#add">
-			<var name="addRSVPEnabled" value="${addRSVPEnabled}" />
-			<var name="calendarName" value="${calendarName}" />
-			<var name="endDate" value="${endDate}" />
-			<var name="endDateTime" value="${endDateTime}" />
-			<var name="eventComment" value="${eventComment}" />
-			<var name="eventCommentEnabled" value="${eventCommentEnabled}" />
-			<var name="eventTitle" value="${eventTitle3}" />
-			<var name="eventType" value="${eventType3}" />
-			<var name="frequency" value="${frequency}" />
-			<var name="optionSet" value="${optionSet}" />
-			<var name="pageName" value="${pageName5}" />
-			<var name="reminders" value="${reminders}" />
-			<var name="rsvp" value="${rsvp}" />
-			<var name="startDate" value="${startDate}" />
-			<var name="startDateTime" value="${startDateTime}" />
-			<var name="user" value="${user}" />
+			<var name="eventTitle" value="Calendar Event All Day Title" />
+			<var name="eventType" value="All Day" />
+			<var name="frequency" value="Weekly" />
+			<var name="pageName" value="Calendar Test Page" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName5}" />
+			<var name="pageName" value="Calendar Test Page" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
-		<execute macro="CalendarEvent#view">
-			<var name="eventTitle" value="${eventTitle3}" />
+		<execute macro="CalendarEvent#viewAllDay">
+			<var name="eventTitle" value="Calendar Event All Day Title" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="defaultURL" value="${defaultURL}" />
-			<var name="nodePort" value="${nodePort}" />
-			<var name="pageName" value="${pageName6}" />
-			<var name="pageTemplateName" value="${pageTemplateName}" />
-			<var name="sitePageType" value="${pageType}" />
+			<var name="pageName" value="Bookmarks Test Page" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="i" value="${i}" />
-			<var name="pageName" value="${pageName6}" />
+			<var name="pageName" value="Bookmarks Test Page" />
 			<var name="portletName" value="Bookmarks" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName6}" />
+			<var name="pageName" value="Bookmarks Test Page" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
 		<execute macro="BookmarksFolder#addPG">
-			<var name="folderDescription" value="${bookmarkFolderDescription}" />
-			<var name="folderName" value="${bookmarkFolderName}" />
+			<var name="folderDescription" value="Test Folder Description" />
+			<var name="folderName" value="Test Folder" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName6}" />
+			<var name="pageName" value="Bookmarks Test Page" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
 		<execute macro="BookmarksFolder#gotoPG">
-			<var name="folderName" value="${bookmarkFolderName}" />
+			<var name="folderName" value="Test Folder" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
 		<execute macro="Bookmark#addPG">
-			<var name="bookmarkDescription" value="${bookmarkDescription1}" />
-			<var name="bookmarkName" value="${bookmarkName1}" />
-			<var name="bookmarkURL" value="${bookmarkURL1}" />
-			<var name="bookmarkViewableBy" value="${bookmarkViewableBy}" />
+			<var name="bookmarkDescription" value="Test Folder Entry 1 Description" />
+			<var name="bookmarkName" value="Test Folder Entry 1" />
+			<var name="bookmarkURL" value="https://www.liferay.com" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName6}" />
+			<var name="pageName" value="Bookmarks Test Page" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
 		<execute macro="BookmarksFolder#gotoPG">
-			<var name="folderName" value="${bookmarkFolderName}" />
+			<var name="folderName" value="Test Folder" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
 		<execute macro="Bookmark#viewBookmark">
-			<var name="bookmarkName" value="${bookmarkName1}" />
-			<var name="bookmarkURL" value="${bookmarkURL1}" />
+			<var name="bookmarkName" value="Test Folder Entry 1" />
+			<var name="bookmarkURL" value="https://www.liferay.com" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName6}" />
+			<var name="pageName" value="Bookmarks Test Page" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
 		<execute macro="BookmarksFolder#gotoPG">
-			<var name="folderName" value="${bookmarkFolderName}" />
+			<var name="folderName" value="Test Folder" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
 		<execute macro="Bookmark#addPG">
-			<var name="bookmarkDescription" value="${bookmarkDescription2}" />
-			<var name="bookmarkName" value="${bookmarkName2}" />
-			<var name="bookmarkURL" value="${bookmarkURL2}" />
-			<var name="bookmarkViewableBy" value="${bookmarkViewableBy}" />
+			<var name="bookmarkDescription" value="Test Folder Entry 2 Description" />
+			<var name="bookmarkName" value="Test Folder Entry 2" />
+			<var name="bookmarkURL" value="http://www.openqa.org" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName6}" />
+			<var name="pageName" value="Bookmarks Test Page" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
 		<execute macro="BookmarksFolder#gotoPG">
-			<var name="folderName" value="${bookmarkFolderName}" />
+			<var name="folderName" value="Test Folder" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
 		<execute macro="Bookmark#viewBookmark">
-			<var name="bookmarkName" value="${bookmarkName2}" />
-			<var name="bookmarkURL" value="${bookmarkURL2}" />
+			<var name="bookmarkName" value="Test Folder Entry 2" />
+			<var name="bookmarkURL" value="http://www.openqa.org" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName6}" />
+			<var name="pageName" value="Bookmarks Test Page" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
 		<execute macro="BookmarksFolder#gotoPG">
-			<var name="folderName" value="${bookmarkFolderName}" />
+			<var name="folderName" value="Test Folder" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
 		<execute macro="Bookmark#addPG">
-			<var name="bookmarkDescription" value="${bookmarkDescription3}" />
-			<var name="bookmarkName" value="${bookmarkName3}" />
-			<var name="bookmarkURL" value="${bookmarkURL3}" />
-			<var name="bookmarkViewableBy" value="${bookmarkViewableBy}" />
+			<var name="bookmarkDescription" value="Test Folder Entry 3 Description" />
+			<var name="bookmarkName" value="Test Folder Entry 3" />
+			<var name="bookmarkURL" value="https://www.google.com" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName6}" />
+			<var name="pageName" value="Bookmarks Test Page" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
 		<execute macro="BookmarksFolder#gotoPG">
-			<var name="folderName" value="${bookmarkFolderName}" />
+			<var name="folderName" value="Test Folder" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
 
 		<execute macro="Bookmark#viewBookmark">
-			<var name="bookmarkName" value="${bookmarkName3}" />
-			<var name="bookmarkURL" value="${bookmarkURL3}" />
+			<var name="bookmarkName" value="Test Folder Entry 3" />
+			<var name="bookmarkURL" value="https://www.google.com" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+	</command>
+
+	<command name="smokeSites">
+		<execute macro="Page#add">
+			<var name="pageName" value="Blogs Test Page" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="pageName" value="Blogs Test Page" />
+			<var name="portletName" value="Blogs" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Blogs Test Page" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="Blogs#addEntry">
+			<var name="entryContent" value="Blogs Entry 1 Content" />
+			<var name="entryTitle" value="Blogs Entry 1 Title" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewPG">
+			<var name="entryAuthorFirstName" value="Test" />
+			<var name="entryAuthorLastName" value="Test" />
+			<var name="entryContent" value="Blogs Entry 1 Content" />
+			<var name="entryTitle" value="Blogs Entry 1 Title" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Blogs Test Page" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="BlogsNavigator#gotoEntryPG">
+			<var name="entryContent" value="Blogs Entry 1 Content" />
+			<var name="entryTitle" value="Blogs Entry 1 Title" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="BlogsEntryComment#add">
+			<var name="entryComment" value="Blogs Entry 1 Comment" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Blogs Test Page" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="Blogs#addEntry">
+			<var name="entryContent" value="Blogs Entry 2 Content" />
+			<var name="entryTitle" value="Blogs Entry 2 Title" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewPG">
+			<var name="entryAuthorFirstName" value="Test" />
+			<var name="entryAuthorLastName" value="Test" />
+			<var name="entryContent" value="Blogs Entry 2 Content" />
+			<var name="entryTitle" value="Blogs Entry 2 Title" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Blogs Test Page" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="BlogsNavigator#gotoEntryPG">
+			<var name="entryContent" value="Blogs Entry 2 Content" />
+			<var name="entryTitle" value="Blogs Entry 2 Title" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="BlogsEntryComment#add">
+			<var name="entryComment" value="Blogs Entry 2 Comment" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Blogs Test Page" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="Blogs#addEntry">
+			<var name="entryContent" value="Blogs Entry 3 Content" />
+			<var name="entryTitle" value="Blogs Entry 3 Title" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewPG">
+			<var name="entryAuthorFirstName" value="Test" />
+			<var name="entryAuthorLastName" value="Test" />
+			<var name="entryContent" value="Blogs Entry 3 Content" />
+			<var name="entryTitle" value="Blogs Entry 3 Title" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Blogs Test Page" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="BlogsNavigator#gotoEntryPG">
+			<var name="entryContent" value="Blogs Entry 3 Content" />
+			<var name="entryTitle" value="Blogs Entry 3 Title" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="BlogsEntryComment#add">
+			<var name="entryComment" value="Blogs Entry 3 Comment" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="Page#add">
+			<var name="pageName" value="Documents and Media Test Page" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="pageName" value="Documents and Media Test Page" />
+			<var name="portletName" value="Documents and Media" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Documents and Media Test Page" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="DMDocument#addPG">
+			<var name="dmDocumentDescription" value="DM Document Description" />
+			<var name="dmDocumentFile" value="Document_1.txt" />
+			<var name="dmDocumentSize" value="0.3k" />
+			<var name="dmDocumentTitle" value="DM Document Title" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Documents and Media Test Page" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="DMFolder#addPG">
+			<var name="dmFolderName" value="DM Folder 1 Name" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="DMNavigator#gotoFolder">
+			<var name="dmFolderName" value="DM Folder 1 Name" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="DMDocument#addPG">
+			<var name="dmDocumentDescription" value="DM Folder Image 1 Description" />
+			<var name="dmDocumentFile" value="Document_1.jpg" />
+			<var name="dmDocumentTitle" value="DM Folder Image 1 Title" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="DMDocument#viewPG">
+			<var name="dmDocumentDescription" value="DM Folder Image 1 Description" />
+			<var name="dmDocumentTitle" value="DM Folder Image 1 Title" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Documents and Media Test Page" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="DMNavigator#gotoFolder">
+			<var name="dmFolderName" value="DM Folder 1 Name" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="DMDocument#addPG">
+			<var name="dmDocumentDescription" value="DM Folder Image 2 Description" />
+			<var name="dmDocumentFile" value="Document_2.jpg" />
+			<var name="dmDocumentTitle" value="DM Folder Image 2 Title" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="DMDocument#viewPG">
+			<var name="dmDocumentDescription" value="DM Folder Image 2 Description" />
+			<var name="dmDocumentTitle" value="DM Folder Image 2 Title" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Documents and Media Test Page" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="DMNavigator#gotoFolder">
+			<var name="dmFolderName" value="DM Folder 1 Name" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="DMDocument#addPG">
+			<var name="dmDocumentDescription" value="DM Folder Image 3 Description" />
+			<var name="dmDocumentFile" value="Document_3.jpg" />
+			<var name="dmDocumentTitle" value="DM Folder Image 3 Title" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="DMDocument#viewPG">
+			<var name="dmDocumentDescription" value="DM Folder Image 3 Description" />
+			<var name="dmDocumentTitle" value="DM Folder Image 3 Title" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="Page#add">
+			<var name="pageName" value="Wiki Test Page" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="pageName" value="Wiki Test Page" />
+			<var name="portletName" value="Wiki" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="WikiPage#addFrontPagePG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+			<var name="wikiPageContent" value="Wiki FrontPage Content" />
+			<var name="wikiPageTitle" value="FrontPage" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Wiki Test Page" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="WikiPage#addChildPagePG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+			<var name="wikiChildPageContent" value="Wiki Front Page Child Page Content 1" />
+			<var name="wikiChildPageTitle" value="Wiki Front Page Child Page Title 1" />
+			<var name="wikiPageContent" value="Wiki FrontPage Content" />
+			<var name="wikiPageTitle" value="FrontPage" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Wiki Test Page" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="WikiPage#addChildPagePG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+			<var name="wikiChildPageContent" value="Wiki Front Page Child Page Content 2" />
+			<var name="wikiChildPageTitle" value="Wiki Front Page Child Page Title 2" />
+			<var name="wikiPageContent" value="Wiki FrontPage Content" />
+			<var name="wikiPageTitle" value="FrontPage" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Wiki Test Page" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="WikiPage#addChildPagePG">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+			<var name="wikiChildPageContent" value="Wiki Front Page Child Page Content 3" />
+			<var name="wikiChildPageTitle" value="Wiki Front Page Child Page Title 3" />
+			<var name="wikiPageContent" value="Wiki FrontPage Content" />
+			<var name="wikiPageTitle" value="FrontPage" />
+		</execute>
+
+		<execute macro="Page#add">
+			<var name="pageName" value="Calendar Test Page" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="pageName" value="Calendar Test Page" />
+			<var name="portletName" value="Calendar" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Calendar Test Page" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="CalendarNavigator#gotoAddEvent" />
+
+		<execute macro="CalendarEvent#add">
+			<var name="eventTitle" value="Calendar Event Title" />
+			<var name="eventType" value="Regular" />
+			<var name="frequency" value="Weekly" />
+			<var name="pageName" value="Calendar Test Page" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Calendar Test Page" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="CalendarEvent#view">
+			<var name="eventTitle" value="Calendar Event Title" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Calendar Test Page" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="CalendarNavigator#gotoAddEvent" />
+
+		<execute macro="CalendarEvent#add">
+			<var name="eventTitle" value="Calendar Event Repeating Title" />
+			<var name="eventType" value="Repeating" />
+			<var name="frequency" value="Weekly" />
+			<var name="numberOfOccurrences" value="1" />
+			<var name="pageName" value="Calendar Test Page" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Calendar Test Page" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="CalendarEvent#view">
+			<var name="eventTitle" value="Calendar Event Repeating Title" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Calendar Test Page" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="CalendarNavigator#gotoAddEvent" />
+
+		<execute macro="CalendarEvent#add">
+			<var name="eventTitle" value="Calendar Event All Day Title" />
+			<var name="eventType" value="All Day" />
+			<var name="frequency" value="Weekly" />
+			<var name="pageName" value="Calendar Test Page" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Calendar Test Page" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewAllDay">
+			<var name="eventTitle" value="Calendar Event All Day Title" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="Page#add">
+			<var name="pageName" value="Bookmarks Test Page" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="pageName" value="Bookmarks Test Page" />
+			<var name="portletName" value="Bookmarks" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Bookmarks Test Page" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="BookmarksFolder#addPG">
+			<var name="folderDescription" value="Test Folder Description" />
+			<var name="folderName" value="Test Folder" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Bookmarks Test Page" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="BookmarksFolder#gotoPG">
+			<var name="folderName" value="Test Folder" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="Bookmark#addPG">
+			<var name="bookmarkDescription" value="Test Folder Entry 1 Description" />
+			<var name="bookmarkName" value="Test Folder Entry 1" />
+			<var name="bookmarkURL" value="https://www.liferay.com" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Bookmarks Test Page" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="BookmarksFolder#gotoPG">
+			<var name="folderName" value="Test Folder" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="Bookmark#viewBookmark">
+			<var name="bookmarkName" value="Test Folder Entry 1" />
+			<var name="bookmarkURL" value="https://www.liferay.com" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Bookmarks Test Page" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="BookmarksFolder#gotoPG">
+			<var name="folderName" value="Test Folder" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="Bookmark#addPG">
+			<var name="bookmarkDescription" value="Test Folder Entry 2 Description" />
+			<var name="bookmarkName" value="Test Folder Entry 2" />
+			<var name="bookmarkURL" value="http://www.openqa.org" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Bookmarks Test Page" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="BookmarksFolder#gotoPG">
+			<var name="folderName" value="Test Folder" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="Bookmark#viewBookmark">
+			<var name="bookmarkName" value="Test Folder Entry 2" />
+			<var name="bookmarkURL" value="http://www.openqa.org" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Bookmarks Test Page" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="BookmarksFolder#gotoPG">
+			<var name="folderName" value="Test Folder" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="Bookmark#addPG">
+			<var name="bookmarkDescription" value="Test Folder Entry 3 Description" />
+			<var name="bookmarkName" value="Test Folder Entry 3" />
+			<var name="bookmarkURL" value="https://www.google.com" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Bookmarks Test Page" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="BookmarksFolder#gotoPG">
+			<var name="folderName" value="Test Folder" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
+		</execute>
+
+		<execute macro="Bookmark#viewBookmark">
+			<var name="bookmarkName" value="Test Folder Entry 3" />
+			<var name="bookmarkURL" value="https://www.google.com" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="${siteURL}" />
 		</execute>
 	</command>
 </definition>

@@ -101,9 +101,9 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
+		setUpDDMIndexer();
 		setUpPermissionThreadLocal();
 		setUpPrincipalThreadLocal();
-		setUpDDMIndexer();
 	}
 
 	@After

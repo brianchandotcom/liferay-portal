@@ -1,4 +1,4 @@
-<definition component-name="portal-core-infrastructure-portal-services">
+<definition component-name="portal-core-infrastructure-portal-services-ee">
 	<property name="portal.release" value="true" />
 	<property name="testray.main.component.name" value="Auditing" />
 	<property name="testray.testcase.product.edition" value="EE" />

@@ -238,7 +238,7 @@ public class JavaSourceTabCalculator {
 
 				while (true) {
 					Tuple tuple2 = getFirstOccurenceTuple(
-						s, new String[] {"\tnew ", " new "}, y + 1);
+						s, new String[] {"\tnew ", " new ", " ->"}, y + 1);
 
 					y = (Integer)tuple2.getObject(1);
 

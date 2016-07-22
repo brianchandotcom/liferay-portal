@@ -256,19 +256,12 @@
 	</command>
 
 	<command name="SplitMBThread" priority="3">
-		<var name="threadBody" value="MB Thread Message Body" />
-		<var name="threadReplyBody" value="MB Thread Reply Body" />
-		<var name="threadSplitReplyBody" value="Split Reply Thread Body" />
-		<var name="threadSplitReplySubject" value="Split Reply Thread Subject" />
-		<var name="threadSplitSubject" value="MB Thread Split Subject" />
-		<var name="threadSubject" value="MB Thread Message Subject" />
-
 		<execute macro="Page#add">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="SitePageNavigator#gotoEditPage">
-			<var name="page" value="${pageName}" />
+			<var name="page" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="Page#editPageLayoutColumn">
@@ -276,34 +269,34 @@
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${portletName}" />
+			<var name="portletName" value="Message Boards" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="MessageboardsThread#addPG">
-			<var name="threadBody" value="${threadBody}" />
-			<var name="threadSubject" value="${threadSubject}" />
+			<var name="threadBody" value="MB Thread Message Body" />
+			<var name="threadSubject" value="MB Thread Message Subject" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="MessageboardsThread#replyPG">
-			<var name="threadBody" value="${threadBody}" />
-			<var name="threadReplyBody" value="${threadReplyBody}" />
-			<var name="threadSubject" value="${threadSubject}" />
+			<var name="threadBody" value="MB Thread Message Body" />
+			<var name="threadReplyBody" value="MB Thread Reply Body" />
+			<var name="threadSubject" value="MB Thread Message Subject" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="MessageboardsThread#gotoPG">
@@ -313,28 +306,28 @@
 		</execute>
 
 		<execute macro="MessageboardsThread#splitThreadPG">
-			<var name="threadBody" value="${threadBody}" />
-			<var name="threadReplyBody" value="${threadReplyBody}" />
+			<var name="threadBody" value="MB Thread Message Body" />
+			<var name="threadReplyBody" value="MB Thread Reply Body" />
 			<var name="threadReplySubject" value="${threadReplySubject}" />
-			<var name="threadSplitReplyBody" value="${threadSplitReplyBody}" />
-			<var name="threadSplitReplySubject" value="${threadSplitReplySubject}" />
-			<var name="threadSplitSubject" value="${threadSplitSubject}" />
-			<var name="threadSubject" value="${threadSubject}" />
+			<var name="threadSplitReplyBody" value="Split Reply Thread Body" />
+			<var name="threadSplitReplySubject" value="Split Reply Thread Subject" />
+			<var name="threadSplitSubject" value="MB Thread Split Subject" />
+			<var name="threadSubject" value="MB Thread Message Subject" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="MessageboardsThread#viewSplitThreadPG">
-			<var name="pageName" value="${pageName}" />
-			<var name="threadBody" value="${threadBody}" />
-			<var name="threadReplyBody" value="${threadReplyBody}" />
+			<var name="pageName" value="Message Boards Page" />
+			<var name="threadBody" value="MB Thread Message Body" />
+			<var name="threadReplyBody" value="MB Thread Reply Body" />
 			<var name="threadReplySubject" value="${threadReplySubject}" />
-			<var name="threadSplitReplyBody" value="${threadSplitReplyBody}" />
-			<var name="threadSplitReplySubject" value="${threadSplitReplySubject}" />
-			<var name="threadSplitSubject" value="${threadSplitSubject}" />
-			<var name="threadSubject" value="${threadSubject}" />
+			<var name="threadSplitReplyBody" value="Split Reply Thread Body" />
+			<var name="threadSplitReplySubject" value="Split Reply Thread Subject" />
+			<var name="threadSplitSubject" value="MB Thread Split Subject" />
+			<var name="threadSubject" value="MB Thread Message Subject" />
 		</execute>
 	</command>
 
@@ -1441,7 +1434,7 @@
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="MessageboardsThread#gotoPG">
@@ -1654,11 +1647,11 @@
 
 	<command name="ViewQuestionOnSplitThread" priority="3">
 		<execute macro="Page#add">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="SitePageNavigator#gotoEditPage">
-			<var name="page" value="${pageName}" />
+			<var name="page" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="Page#editPageLayoutColumn">
@@ -1666,15 +1659,15 @@
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${portletName}" />
+			<var name="portletName" value="Message Boards" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="MessageboardsThread#addPGAsQuestion">
@@ -1683,7 +1676,7 @@
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="MessageboardsThread#viewMarkedAsQuestionPG">
@@ -1714,11 +1707,11 @@
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="MessageboardsThread#viewSplitThreadPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 			<var name="threadBody" value="MB Thread Message Body" />
 			<var name="threadReplyBody" value="MB Thread Split Reply Body" />
 			<var name="threadSplitReplyBody" value="Split Reply Thread Body" />
@@ -1728,7 +1721,7 @@
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="MessageboardsThread#viewMarkedAsQuestionPG">

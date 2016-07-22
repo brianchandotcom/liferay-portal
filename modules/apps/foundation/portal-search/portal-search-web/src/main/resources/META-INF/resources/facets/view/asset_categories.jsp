@@ -92,9 +92,9 @@ boolean showAssetCount = dataJSONObject.getBoolean("showAssetCount", true);
 						continue;
 					}
 
-					AssetCategory curAssetCategory = AssetCategoryLocalServiceUtil.getAssetCategory(assetCategoryId);
+					AssetCategory curAssetCategory = AssetCategoryLocalServiceUtil.fetchAssetCategory(assetCategoryId);
 
-					if (AssetCategoryPermission.contains(permissionChecker, curAssetCategory, ActionKeys.VIEW)) {
+					if ((curAssetCategory != null) && AssetCategoryPermission.contains(permissionChecker, curAssetCategory, ActionKeys.VIEW)) {
 
 						int popularity = (int)(1 + ((maxCount - (maxCount - (termCollector.getFrequency() - minCount))) * multiplier));
 

@@ -16,7 +16,7 @@ package com.liferay.social.activities.web.internal.portlet.route;
 
 import com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
-import com.liferay.social.activities.web.internal.constants.SocialActivitiesPortletKeys;
+import com.liferay.social.activities.web.constants.SocialActivitiesPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 

@@ -12,15 +12,14 @@
  * details.
  */
 
-package com.liferay.site.navigation.language.web.internal.constants;
+package com.liferay.social.activities.web.constants;
 
 /**
  * @author Eudaldo Alonso
  */
-public class SiteNavigationLanguagePortletKeys {
+public class SocialActivitiesPortletKeys {
 
-	public static final String SITE_NAVIGATION_LANGUAGE =
-		"com_liferay_site_navigation_language_web_portlet_" +
-			"SiteNavigationLanguagePortlet";
+	public static final String SOCIAL_ACTIVITIES =
+		"com_liferay_social_activities_web_portlet_SocialActivitiesPortlet";
 
 }

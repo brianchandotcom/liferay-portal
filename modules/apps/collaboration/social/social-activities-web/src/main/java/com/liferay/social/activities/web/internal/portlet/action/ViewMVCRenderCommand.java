@@ -15,8 +15,8 @@
 package com.liferay.social.activities.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.social.activities.web.internal.constants.SocialActivitiesPortletKeys;
-import com.liferay.social.activities.web.internal.constants.SocialActivitiesWebKeys;
+import com.liferay.social.activities.web.constants.SocialActivitiesPortletKeys;
+import com.liferay.social.activities.web.constants.SocialActivitiesWebKeys;
 import com.liferay.social.activities.web.internal.util.SocialActivitiesQueryHelper;
 
 import javax.portlet.PortletException;

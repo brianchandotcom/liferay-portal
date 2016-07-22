@@ -17,7 +17,7 @@ package com.liferay.rss.web.internal.portlet;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.rss.web.configuration.RSSWebCacheConfiguration;
-import com.liferay.rss.web.internal.constants.RSSPortletKeys;
+import com.liferay.rss.web.constants.RSSPortletKeys;
 
 import java.io.IOException;
 

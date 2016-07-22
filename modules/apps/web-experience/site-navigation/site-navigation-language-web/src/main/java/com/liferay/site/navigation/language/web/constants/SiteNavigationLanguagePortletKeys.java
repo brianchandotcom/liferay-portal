@@ -12,13 +12,15 @@
  * details.
  */
 
-package com.liferay.rss.web.internal.constants;
+package com.liferay.site.navigation.language.web.constants;
 
 /**
  * @author Eudaldo Alonso
  */
-public class RSSPortletKeys {
+public class SiteNavigationLanguagePortletKeys {
 
-	public static final String RSS = "com_liferay_rss_web_portlet_RSSPortlet";
+	public static final String SITE_NAVIGATION_LANGUAGE =
+		"com_liferay_site_navigation_language_web_portlet_" +
+			"SiteNavigationLanguagePortlet";
 
 }

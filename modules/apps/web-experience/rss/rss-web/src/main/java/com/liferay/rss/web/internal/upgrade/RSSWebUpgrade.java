@@ -17,7 +17,7 @@ package com.liferay.rss.web.internal.upgrade;
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-import com.liferay.rss.web.internal.constants.RSSPortletKeys;
+import com.liferay.rss.web.constants.RSSPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 

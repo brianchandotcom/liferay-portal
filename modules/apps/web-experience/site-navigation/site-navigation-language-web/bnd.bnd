@@ -1,6 +1,7 @@
 Bundle-Name: Liferay Site Navigation Language Web
 Bundle-SymbolicName: com.liferay.site.navigation.language.web
-Bundle-Version: 2.0.2
+Bundle-Version: 2.1.0
+Export-Package: com.liferay.site.navigation.language.web.constants
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Site Navigation
 Web-ContextPath: /site-navigation-language-web

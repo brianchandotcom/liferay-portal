@@ -17,7 +17,7 @@ package com.liferay.site.navigation.language.web.internal.portlet;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
-import com.liferay.site.navigation.language.web.internal.constants.SiteNavigationLanguagePortletKeys;
+import com.liferay.site.navigation.language.web.constants.SiteNavigationLanguagePortletKeys;
 
 import java.io.IOException;
 

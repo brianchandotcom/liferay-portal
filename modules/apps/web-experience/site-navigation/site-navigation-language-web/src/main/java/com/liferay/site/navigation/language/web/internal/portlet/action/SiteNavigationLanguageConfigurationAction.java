@@ -16,7 +16,7 @@ package com.liferay.site.navigation.language.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
-import com.liferay.site.navigation.language.web.internal.constants.SiteNavigationLanguagePortletKeys;
+import com.liferay.site.navigation.language.web.constants.SiteNavigationLanguagePortletKeys;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;

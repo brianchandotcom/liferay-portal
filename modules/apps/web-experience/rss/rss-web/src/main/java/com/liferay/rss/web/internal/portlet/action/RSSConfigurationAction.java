@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.rss.web.internal.constants.RSSPortletKeys;
+import com.liferay.rss.web.constants.RSSPortletKeys;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

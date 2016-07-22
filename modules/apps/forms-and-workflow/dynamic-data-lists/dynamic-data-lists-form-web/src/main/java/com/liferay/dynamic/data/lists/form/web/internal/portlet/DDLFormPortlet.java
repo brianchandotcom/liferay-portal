@@ -39,6 +39,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
+import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -112,6 +113,7 @@ public class DDLFormPortlet extends MVCPortlet {
 			}
 
 			if (isSharedLayout(actionRequest)) {
+				saveParametersInSession(actionRequest);
 			}
 		}
 	}
@@ -140,9 +142,6 @@ public class DDLFormPortlet extends MVCPortlet {
 		}
 
 		super.render(renderRequest, renderResponse);
-
-
-
 	}
 
 	protected Throwable getRootCause(Throwable throwable) {
@@ -167,6 +166,18 @@ public class DDLFormPortlet extends MVCPortlet {
 		String type = layout.getType();
 
 		return type.equals(LayoutConstants.TYPE_SHARED_PORTLET);
+	}
+
+	protected void saveParametersInSession(ActionRequest actionRequest) {
+		String recordSetId = ParamUtil.getString(actionRequest, "recordSetId");
+
+		if (recordSetId != "0") {
+			PortletSession portletSession =
+				actionRequest.getPortletSession(false);
+
+			portletSession.setAttribute("recordSetId", recordSetId);
+			portletSession.setAttribute("shared", true);
+		}
 	}
 
 	protected void setRenderRequestAttributes(

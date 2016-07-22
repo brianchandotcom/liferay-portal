@@ -33,6 +33,7 @@ import com.liferay.mail.reader.service.AttachmentLocalServiceUtil;
 import com.liferay.mail.reader.service.FolderLocalServiceUtil;
 import com.liferay.mail.reader.service.MessageLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -62,6 +63,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Scott Lee
  * @author Ryan Park
+ * @author Peter Fellwock
  */
 public class MailManager {
 
@@ -351,6 +353,53 @@ public class MailManager {
 			_passwordRetriever.getPassword(attachment.getAccountId()));
 
 		return mailbox.getAttachment(attachmentId);
+	}
+
+	public JSONObject getDefaultAccounts() {
+		JSONObject gmailAccount = JSONFactoryUtil.createJSONObject();
+
+		gmailAccount.put("titleLanguageKey", "gmail-account");
+		gmailAccount.put(
+			"descriptionLanguageKey",
+			"please-enable-imap-in-you-gmail-settings-for-mail-to-work");
+		gmailAccount.put("address", "@gmail.com");
+		gmailAccount.put("protocol", "imap");
+		gmailAccount.put("hideSettings", true);
+		gmailAccount.put("incomingHostName", "imap.gmail.com");
+		gmailAccount.put("incomingPort", 993);
+		gmailAccount.put("incomingSecure", true);
+		gmailAccount.put("outgoingHostName", "smtp.gmail.com");
+		gmailAccount.put("outgoingPort", 465);
+		gmailAccount.put("outgoingSecure", true);
+		gmailAccount.put("folderPrefix", "");
+		gmailAccount.put("useLocalPartAsLogin", true);
+
+		JSONObject customAccount = JSONFactoryUtil.createJSONObject();
+
+		customAccount.put("titleLanguageKey", "custom-mail-account");
+		customAccount.put("descriptionLanguageKey", "");
+		customAccount.put("address", "");
+		customAccount.put("protocol", "imap");
+		customAccount.put("hideSettings", false);
+		customAccount.put("incomingHostName", "");
+		customAccount.put("incomingPort", 110);
+		customAccount.put("incomingSecure", false);
+		customAccount.put("outgoingHostName", "");
+		customAccount.put("outgoingPort", 25);
+		customAccount.put("outgoingSecure", false);
+		customAccount.put("folderPrefix", "");
+		customAccount.put("useLocalPartAsLogin", false);
+
+		JSONArray accountsArray = JSONFactoryUtil.createJSONArray();
+
+		accountsArray.put(gmailAccount);
+		accountsArray.put(customAccount);
+
+		JSONObject accountsJson = JSONFactoryUtil.createJSONObject();
+
+		accountsJson.put("accounts", accountsArray);
+
+		return accountsJson;
 	}
 
 	public List<Folder> getFolders(

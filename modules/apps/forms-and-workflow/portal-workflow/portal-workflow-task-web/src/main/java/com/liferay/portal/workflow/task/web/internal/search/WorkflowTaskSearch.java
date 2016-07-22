@@ -95,8 +95,8 @@ public class WorkflowTaskSearch extends SearchContainer<WorkflowTask> {
 
 		setOrderableHeaders(orderableHeaders);
 		setOrderByCol(orderByCol);
-		setOrderByType(orderByType);
 		setOrderByComparator(orderByComparator);
+		setOrderByType(orderByType);
 	}
 
 }

@@ -131,8 +131,8 @@ public class OrganizationSearch extends SearchContainer<Organization> {
 
 			setOrderableHeaders(orderableHeaders);
 			setOrderByCol(orderByCol);
-			setOrderByType(orderByType);
 			setOrderByComparator(orderByComparator);
+			setOrderByType(orderByType);
 		}
 		catch (Exception e) {
 			_log.error(e);

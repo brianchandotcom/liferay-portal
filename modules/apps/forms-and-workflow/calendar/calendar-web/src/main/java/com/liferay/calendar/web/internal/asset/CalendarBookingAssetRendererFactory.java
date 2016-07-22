@@ -58,8 +58,8 @@ public class CalendarBookingAssetRendererFactory
 	public static final String TYPE = "calendar";
 
 	public CalendarBookingAssetRendererFactory() {
-		setLinkable(true);
 		setClassName(CalendarBooking.class.getName());
+		setLinkable(true);
 		setPortletId(CalendarPortletKeys.CALENDAR);
 		setSearchable(true);
 	}

@@ -101,8 +101,8 @@ public class GroupSearch extends SearchContainer<Group> {
 
 			setOrderableHeaders(orderableHeaders);
 			setOrderByCol(orderByCol);
-			setOrderByType(orderByType);
 			setOrderByComparator(orderByComparator);
+			setOrderByType(orderByType);
 		}
 		catch (Exception e) {
 			_log.error(e);

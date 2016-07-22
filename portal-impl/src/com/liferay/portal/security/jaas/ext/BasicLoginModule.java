@@ -92,8 +92,8 @@ public class BasicLoginModule implements LoginModule {
 		}
 
 		if ((credentials != null) && (credentials.length == 2)) {
-			setPrincipal(getPortalPrincipal(credentials[0]));
 			setPassword(credentials[1]);
+			setPrincipal(getPortalPrincipal(credentials[0]));
 
 			return true;
 		}

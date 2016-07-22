@@ -50,12 +50,12 @@ public class DDMFormTemplateSynchonizerTest extends BaseDDMTestCase {
 		super.setUp();
 
 		setUpConfigurationFactoryUtil();
-		setUpDDMFormJSONSerializer();
 		setUpDDMFormJSONDeserializer();
+		setUpDDMFormJSONSerializer();
+		setUpHtmlUtil();
 		setUpJSONFactoryUtil();
 		setUpLanguageUtil();
 		setUpLocaleUtil();
-		setUpHtmlUtil();
 		setUpPropsUtil();
 		setUpSAXReaderUtil();
 	}

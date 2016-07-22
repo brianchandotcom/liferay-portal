@@ -55,7 +55,14 @@ if (fileEntryId != 0) {
 		<div class="drag-drop-label">
 			<c:choose>
 				<c:when test="<%= Validator.isNotNull(itemSelectorEventName) && Validator.isNotNull(itemSelectorURL) %>">
-					<liferay-ui:message arguments="<%= selectFileLink %>" key="drag-and-drop-to-upload-or-x" />
+					<c:choose>
+						<c:when test="<%= BrowserSnifferUtil.isMobile(request) %>">
+							<%= selectFileLink %>
+						</c:when>
+						<c:otherwise>
+							<liferay-ui:message arguments="<%= selectFileLink %>" key="drag-and-drop-to-upload-or-x" />
+						</c:otherwise>
+					</c:choose>
 				</c:when>
 				<c:otherwise>
 					<%= LanguageUtil.get(resourceBundle, "drag-and-drop-to-upload") %>

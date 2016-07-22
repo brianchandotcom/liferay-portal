@@ -19,4 +19,5 @@
 <%@ page import="com.liferay.portal.kernel.model.Image" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletProvider" %><%@
-page import="com.liferay.portal.kernel.portlet.PortletProviderUtil" %>
+page import="com.liferay.portal.kernel.portlet.PortletProviderUtil" %><%@
+page import="com.liferay.portal.kernel.servlet.BrowserSnifferUtil" %>

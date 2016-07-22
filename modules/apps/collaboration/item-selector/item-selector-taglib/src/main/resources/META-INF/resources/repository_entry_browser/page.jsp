@@ -177,7 +177,14 @@ if (Validator.isNotNull(keywords)) {
 		</liferay-util:buffer>
 
 		<div class="drop-enabled drop-zone no-border">
-			<strong><liferay-ui:message arguments="<%= selectFileHTML %>" key="drag-and-drop-to-upload-or-x" /></strong>
+			<c:choose>
+				<c:when test="<%= BrowserSnifferUtil.isMobile(request) %>">
+					<%= selectFileHTML %>
+				</c:when>
+				<c:otherwise>
+					<strong><liferay-ui:message arguments="<%= selectFileHTML %>" key="drag-and-drop-to-upload-or-x" /></strong>
+				</c:otherwise>
+			</c:choose>
 		</div>
 	</c:if>
 

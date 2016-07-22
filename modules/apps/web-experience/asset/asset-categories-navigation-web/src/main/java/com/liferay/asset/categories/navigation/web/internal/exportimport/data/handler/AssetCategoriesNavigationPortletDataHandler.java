@@ -12,15 +12,17 @@
  * details.
  */
 
-package com.liferay.asset.publisher.web.internal.lar;
+package com.liferay.asset.categories.navigation.web.internal.exportimport.data.handler;
 
-import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
+import com.liferay.asset.categories.navigation.web.constants.AssetCategoriesNavigationPortletKeys;
 import com.liferay.exportimport.kernel.lar.DataLevel;
 import com.liferay.exportimport.kernel.lar.DefaultConfigurationPortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
+import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Julio Camarero
@@ -28,11 +30,11 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + AssetPublisherPortletKeys.ASSET_PUBLISHER
+		"javax.portlet.name=" + AssetCategoriesNavigationPortletKeys.ASSET_CATEGORIES_NAVIGATION
 	},
 	service = PortletDataHandler.class
 )
-public class AssetPublisherPortletDataHandler
+public class AssetCategoriesNavigationPortletDataHandler
 	extends DefaultConfigurationPortletDataHandler {
 
 	public static final String SCHEMA_VERSION = "1.0.0";
@@ -46,6 +48,11 @@ public class AssetPublisherPortletDataHandler
 	protected void activate() {
 		setDataLevel(DataLevel.PORTLET_INSTANCE);
 		setPublishToLiveByDefault(true);
+	}
+
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
+	protected void setModuleServiceLifecycle(
+		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
 }

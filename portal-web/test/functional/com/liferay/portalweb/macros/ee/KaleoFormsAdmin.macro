@@ -346,7 +346,7 @@
 	<command name="editWorkflowDraft">
 		<var name="key_workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
 
-		<execute function="AssertTextEquals" locator1="KaleoFormsAdminEditProcess#WORKFLOW_UNPUBLISHED_TABLE_TITLE" value1="${workflowDefinitionTitle}" />
+		<execute function="AssertTextEquals" locator1="KaleoFormsAdminEditProcess#WORKFLOW_TABLE_TITLE" value1="${workflowDefinitionTitle}" />
 
 		<var name="key_rowEntry" value="${workflowDefinitionTitle}" />
 

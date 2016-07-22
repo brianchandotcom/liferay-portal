@@ -439,6 +439,8 @@
 					<var name="subOrgName" value="Suborganization Name ${count}" />
 				</execute>
 
+				<execute macro="IFrame#closeFrame" />
+
 				<var method="MathUtil#sum('${count}', '1')" name="count" />
 			</then>
 		</while>

@@ -727,10 +727,10 @@
 		<if>
 			<equals arg1="${applyNumericalPrefix}" arg2="true" />
 			<then>
-				<execute function="Check" locator1="CPKnowledgebaseadminUploadZipFile#PRIORITIZATION_STRATEGY_CHECKBOX" />
+				<execute function="Check" locator1="Checkbox#PRIORITIZATION_STRATEGY" />
 			</then>
 			<else>
-				<execute function="Uncheck" locator1="CPKnowledgebaseadminUploadZipFile#PRIORITIZATION_STRATEGY_CHECKBOX" />
+				<execute function="Uncheck" locator1="Checkbox#PRIORITIZATION_STRATEGY" />
 			</else>
 		</if>
 
@@ -860,7 +860,7 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="CPKnowledgebaseadminAddarticle#CATEGORIZATION_SELECT_BUTTON" value1="Select" />
+		<execute function="AssertClick" locator1="Button#SELECT_VOCABULARY" value1="Select" />
 		<execute function="AssertClick" locator1="CPKnowledgebaseadminAddarticle#CATEGORIES_CATEGORY_UNSELECTED" value1="${categoryName}" />
 		<execute function="AssertElementPresent" locator1="CPKnowledgebaseadminAddarticle#CATEGORIES_CATEGORY_SELECTED" value1="${categoryName}" />
 		<execute function="Click" locator1="CPKnowledgebaseadminAddarticle#CATEGORIES_CLOSE_BUTTON" />

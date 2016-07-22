@@ -36,8 +36,8 @@ public class DDMTemplateResourceImpl extends BaseResourceImpl {
 			template.getCreateDate(), template.getModifiedDate(),
 			template.getScript().getBytes().length);
 
-		setModel(template);
 		setClassName(DDMTemplate.class.getName());
+		setModel(template);
 		setPrimaryKey(template.getPrimaryKey());
 
 		_template = template;

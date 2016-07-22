@@ -67,8 +67,8 @@ public class RuleGroupSearch extends SearchContainer<MDRRuleGroup> {
 			getOrganizationOrderByComparator(orderByCol, orderByType);
 
 		setOrderByCol(orderByCol);
-		setOrderByType(orderByType);
 		setOrderByComparator(orderByComparator);
+		setOrderByType(orderByType);
 	}
 
 	protected OrderByComparator<MDRRuleGroup> getOrganizationOrderByComparator(

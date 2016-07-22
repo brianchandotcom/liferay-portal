@@ -50,8 +50,8 @@ public class LayoutRevisionAssetRendererFactory
 	public static final String TYPE = "layout_revision";
 
 	public LayoutRevisionAssetRendererFactory() {
-		setClassName(LayoutRevision.class.getName());
 		setCategorizable(false);
+		setClassName(LayoutRevision.class.getName());
 		setPortletId(LayoutAdminPortletKeys.LAYOUT_ADMIN);
 		setSelectable(false);
 	}

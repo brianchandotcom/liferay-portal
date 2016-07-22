@@ -39,10 +39,10 @@ public class DDMFormXSDDeserializerTest
 	public void setUp() throws Exception {
 		super.setUp();
 
+		setUpDDMFormXSDDeserializer();
 		setUpHtmlUtil();
 		setUpPropsUtil();
 		setUpSAXReaderUtil();
-		setUpDDMFormXSDDeserializer();
 	}
 
 	@Override

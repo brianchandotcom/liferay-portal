@@ -112,8 +112,8 @@ public class RecordSearch extends SearchContainer<DDLRecord> {
 
 			setOrderableHeaders(orderableHeaders);
 			setOrderByCol(orderByCol);
-			setOrderByType(orderByType);
 			setOrderByComparator(orderByComparator);
+			setOrderByType(orderByType);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

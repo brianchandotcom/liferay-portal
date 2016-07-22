@@ -1,8 +1,11 @@
+apply plugin: "com.liferay.lang.merger"
+
 dependencies {
 	provided group: "com.liferay", name: "com.liferay.frontend.taglib", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.item.selector.api", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.item.selector.criteria.api", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.item.selector.taglib", version: "1.0.0"
+	provided group: "com.liferay", name: "com.liferay.journal.lang", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.journal.web", version: "1.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"

@@ -35,6 +35,9 @@ public class UpgradeProcess_3_2_2 extends BaseUpgradeProcess {
 		runSQL(
 			"ALTER TABLE SyncAccount ADD COLUMN maxUploadRate " +
 				"VARCHAR(16777216) BEFORE oAuthConsumerKey;");
+		runSQL(
+			"ALTER TABLE SyncAccount ADD COLUMN syncContextModifiedTime LONG " +
+				"BEFORE trustSelfSigned;");
 	}
 
 }

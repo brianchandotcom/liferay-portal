@@ -139,6 +139,10 @@ public class SyncAccount extends StateAwareModel {
 		return syncAccountId;
 	}
 
+	public long getSyncContextModifiedTime() {
+		return syncContextModifiedTime;
+	}
+
 	public boolean getTrustSelfSigned() {
 		return trustSelfSigned;
 	}
@@ -246,6 +250,10 @@ public class SyncAccount extends StateAwareModel {
 		this.syncAccountId = syncAccountId;
 	}
 
+	public void setSyncContextModifiedTime(long syncContextModifiedTime) {
+		this.syncContextModifiedTime = syncContextModifiedTime;
+	}
+
 	public void setTrustSelfSigned(boolean trustSelfSigned) {
 		this.trustSelfSigned = trustSelfSigned;
 	}
@@ -311,6 +319,9 @@ public class SyncAccount extends StateAwareModel {
 
 	@DatabaseField(generatedId = true, useGetSet = true)
 	protected long syncAccountId;
+
+	@DatabaseField(useGetSet = true)
+	protected long syncContextModifiedTime;
 
 	@DatabaseField(useGetSet = true)
 	protected boolean trustSelfSigned;

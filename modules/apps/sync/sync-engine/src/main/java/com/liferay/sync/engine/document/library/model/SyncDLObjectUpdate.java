@@ -20,6 +20,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.liferay.sync.engine.model.SyncFile;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Michael Young
@@ -27,12 +28,19 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SyncDLObjectUpdate {
 
+	public static final String PREFERENCE_KEY_SYNC_CONTEXT_MODIFIED_TIME =
+		"sync.context.modified.time";
+
 	public long getLastAccessTime() {
 		return lastAccessTime;
 	}
 
 	public int getResultsTotal() {
 		return resultsTotal;
+	}
+
+	public Map<String, Long> getSettingsModifiedTimes() {
+		return settingsModifiedTimes;
 	}
 
 	public List<SyncFile> getSyncFiles() {
@@ -53,6 +61,7 @@ public class SyncDLObjectUpdate {
 
 	protected long lastAccessTime;
 	protected int resultsTotal;
+	protected Map<String, Long> settingsModifiedTimes;
 
 	@JsonProperty("syncDLObjects")
 	protected List<SyncFile> syncFiles;

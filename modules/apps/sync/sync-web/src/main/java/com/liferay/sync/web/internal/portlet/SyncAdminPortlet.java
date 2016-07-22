@@ -163,6 +163,10 @@ public class SyncAdminPortlet extends BaseSyncPortlet {
 			SyncServiceConfigurationKeys.SYNC_CLIENT_POLL_INTERVAL,
 			String.valueOf(pollInterval));
 
+		portletPreferences.setValue(
+			SyncConstants.SYNC_CONTEXT_MODIFIED_TIME,
+			String.valueOf(System.currentTimeMillis()));
+
 		portletPreferences.store();
 
 		if (oAuthEnabled) {

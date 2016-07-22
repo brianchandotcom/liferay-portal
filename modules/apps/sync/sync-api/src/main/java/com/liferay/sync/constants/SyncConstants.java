@@ -19,6 +19,9 @@ package com.liferay.sync.constants;
  */
 public class SyncConstants {
 
+	public static final String SYNC_CONTEXT_MODIFIED_TIME =
+		"sync.context.modified.time";
+
 	public static final String SYNC_OAUTH_APPLICATION_ID =
 		"sync.oauth.application.id";
 

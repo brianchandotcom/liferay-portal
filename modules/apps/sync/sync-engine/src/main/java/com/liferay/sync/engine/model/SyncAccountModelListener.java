@@ -62,6 +62,7 @@ public class SyncAccountModelListener implements ModelListener<SyncAccount> {
 		}
 
 		if (originalValues.containsKey("login") ||
+			originalValues.containsKey("maxConnections") ||
 			originalValues.containsKey("oAuthToken") ||
 			originalValues.containsKey("oAuthTokenSecret") ||
 			originalValues.containsKey("password")) {
@@ -78,6 +79,17 @@ public class SyncAccountModelListener implements ModelListener<SyncAccount> {
 
 		if (originalValues.containsKey("maxUploadRate")) {
 			RateLimiterManager.updateUploadRateLimits();
+		}
+
+		if (originalValues.containsKey("pollInterval")) {
+			deactivateSyncAccount(syncAccount);
+
+			activateSyncAccount(syncAccount);
+		}
+
+		if (originalValues.containsKey("syncContextModifiedTime")) {
+			ServerEventUtil.synchronizeSyncAccount(
+				syncAccount.getSyncAccountId());
 		}
 
 		if (originalValues.containsKey("uiEvent")) {

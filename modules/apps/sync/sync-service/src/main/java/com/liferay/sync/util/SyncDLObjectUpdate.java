@@ -19,8 +19,12 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.sync.model.SyncDLObject;
 
+import java.util.Collections;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.lang.StringEscapeUtils;
 
@@ -38,6 +42,17 @@ public class SyncDLObjectUpdate {
 		_syncDLObjects = syncDLObjects;
 		_resultsTotal = resultsTotal;
 		_lastAccessTime = lastAccessTime;
+		_settingsModifiedTimes = Collections.emptyMap();
+	}
+
+	public SyncDLObjectUpdate(
+		List<SyncDLObject> syncDLObjects, int resultsTotal, long lastAccessTime,
+		Map<String, Long> settingsModifiedTimes) {
+
+		_syncDLObjects = syncDLObjects;
+		_resultsTotal = resultsTotal;
+		_lastAccessTime = lastAccessTime;
+		_settingsModifiedTimes = settingsModifiedTimes;
 	}
 
 	public long getLastAccessTime() {
@@ -48,6 +63,10 @@ public class SyncDLObjectUpdate {
 		return _resultsTotal;
 	}
 
+	public Map<String, Long> getSettingsModifiedTimes() {
+		return _settingsModifiedTimes;
+	}
+
 	@JSON
 	public List<SyncDLObject> getSyncDLObjects() {
 		return _syncDLObjects;
@@ -55,13 +74,37 @@ public class SyncDLObjectUpdate {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler((_syncDLObjects.size() * 78) + 5);
+		StringBundler sb = new StringBundler(
+			(_settingsModifiedTimes.size() * 4) + (_syncDLObjects.size() * 78) +
+				5);
 
 		sb.append("{\"lastAccessTime\":");
 		append(sb, _lastAccessTime, false);
 		sb.append(",\"resultsTotal\":");
 		sb.append(_resultsTotal);
-		sb.append(",\"syncDLObjects\":[");
+		sb.append(",\"settingsModifiedTimes\":{");
+
+		Set<Map.Entry<String, Long>> entries =
+			_settingsModifiedTimes.entrySet();
+
+		Iterator<Map.Entry<String, Long>> iterator = entries.iterator();
+
+		while (iterator.hasNext()) {
+			Map.Entry<String, Long> entry = iterator.next();
+
+			String key = entry.getKey();
+			long value = entry.getValue();
+
+			append(sb, key, false);
+			sb.append(StringPool.COLON);
+			append(sb, value, false);
+
+			if (iterator.hasNext()) {
+				sb.append(StringPool.COMMA);
+			}
+		}
+
+		sb.append("},\"syncDLObjects\":[");
 
 		for (int i = 0; i < _syncDLObjects.size(); i++) {
 			SyncDLObject syncDLObject = _syncDLObjects.get(i);
@@ -151,6 +194,7 @@ public class SyncDLObjectUpdate {
 
 	private final long _lastAccessTime;
 	private final int _resultsTotal;
+	private final Map<String, Long> _settingsModifiedTimes;
 	private final List<SyncDLObject> _syncDLObjects;
 
 }

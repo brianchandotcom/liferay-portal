@@ -212,6 +212,26 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 				response, SyncDLObjectUpdate.class);
 		}
 
+		Map<String, Long> settingsModifiedTimes =
+			_syncDLObjectUpdate.getSettingsModifiedTimes();
+
+		for (Map.Entry<String, Long> entry : settingsModifiedTimes.entrySet()) {
+			String setting = entry.getKey();
+			long modifiedTime = entry.getValue();
+
+			if (setting.equals(
+					SyncDLObjectUpdate.
+						PREFERENCE_KEY_SYNC_CONTEXT_MODIFIED_TIME)) {
+
+				SyncAccount syncAccount = SyncAccountService.fetchSyncAccount(
+					getSyncAccountId());
+
+				syncAccount.setSyncContextModifiedTime(modifiedTime);
+
+				SyncAccountService.update(syncAccount);
+			}
+		}
+
 		List<SyncFile> syncFiles = _syncDLObjectUpdate.getSyncFiles();
 
 		if (!syncFiles.isEmpty()) {

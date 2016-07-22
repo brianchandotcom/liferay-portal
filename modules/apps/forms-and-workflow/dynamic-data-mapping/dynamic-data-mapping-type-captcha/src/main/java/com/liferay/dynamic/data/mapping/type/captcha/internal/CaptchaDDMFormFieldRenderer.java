@@ -14,8 +14,6 @@
 
 package com.liferay.dynamic.data.mapping.type.captcha.internal;
 
-import java.util.Map;
-
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldRenderer;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
@@ -26,6 +24,8 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.taglib.servlet.PipingPageContext;
 import com.liferay.taglib.ui.CaptchaTag;
+
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

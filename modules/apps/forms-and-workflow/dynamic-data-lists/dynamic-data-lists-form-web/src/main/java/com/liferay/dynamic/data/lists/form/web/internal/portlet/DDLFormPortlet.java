@@ -171,8 +171,8 @@ public class DDLFormPortlet extends MVCPortlet {
 		String recordSetId = ParamUtil.getString(actionRequest, "recordSetId");
 
 		if (recordSetId != "0") {
-			PortletSession portletSession =
-				actionRequest.getPortletSession(false);
+			PortletSession portletSession = actionRequest.getPortletSession(
+				false);
 
 			portletSession.setAttribute("recordSetId", recordSetId);
 			portletSession.setAttribute("shared", true);

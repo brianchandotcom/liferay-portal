@@ -354,7 +354,9 @@ public class JournalArticleStagedModelDataHandler
 			_journalArticleLocalService.fetchLatestArticle(
 				article.getResourcePrimKey());
 
-		if (latestArticle.getId() == article.getId()) {
+		if ((latestArticle != null) &&
+			(latestArticle.getId() == article.getId())) {
+
 			for (FileEntry fileEntry : article.getImagesFileEntries()) {
 				StagedModelDataHandlerUtil.exportReferenceStagedModel(
 					portletDataContext, article, fileEntry,

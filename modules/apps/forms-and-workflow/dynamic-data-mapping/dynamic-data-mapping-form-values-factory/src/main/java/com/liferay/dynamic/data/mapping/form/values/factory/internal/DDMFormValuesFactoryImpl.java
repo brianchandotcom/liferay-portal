@@ -27,6 +27,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -36,6 +37,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.servlet.SharedSessionServletRequest;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -49,6 +51,7 @@ import java.util.TreeSet;
 
 import javax.portlet.PortletRequest;
 
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.framework.BundleContext;
@@ -65,6 +68,9 @@ public class DDMFormValuesFactoryImpl implements DDMFormValuesFactory {
 	@Override
 	public DDMFormValues create(
 		HttpServletRequest httpServletRequest, DDMForm ddmForm) {
+
+		httpServletRequest = updateHttpServletRequestIfWrapped(
+			httpServletRequest);
 
 		DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
 
@@ -641,6 +647,33 @@ public class DDMFormValuesFactoryImpl implements DDMFormValuesFactory {
 
 			i = parentNestedDDMFormFieldValues.size();
 		}
+	}
+
+	protected HttpServletRequest updateHttpServletRequestIfWrapped(
+		HttpServletRequest httpServletRequest) {
+
+		if (httpServletRequest instanceof DynamicServletRequest) {
+			DynamicServletRequest dynamicServletRequest =
+				(DynamicServletRequest)httpServletRequest;
+
+			ServletRequest wrappedServletRequest =
+				dynamicServletRequest.getRequest();
+
+			if (wrappedServletRequest instanceof SharedSessionServletRequest) {
+				SharedSessionServletRequest sharedSessionServletRequest =
+					(SharedSessionServletRequest)wrappedServletRequest;
+
+				wrappedServletRequest =
+					sharedSessionServletRequest.getRequest();
+
+				if (wrappedServletRequest instanceof HttpServletRequest) {
+					httpServletRequest =
+						(HttpServletRequest)wrappedServletRequest;
+				}
+			}
+		}
+
+		return httpServletRequest;
 	}
 
 	private static final int _DDM_FORM_FIELD_INDEX_INDEX = 2;

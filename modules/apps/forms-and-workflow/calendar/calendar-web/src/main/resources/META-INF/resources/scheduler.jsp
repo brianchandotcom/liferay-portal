@@ -29,6 +29,7 @@ String permissionsCalendarBookingURL = ParamUtil.getString(request, "permissions
 boolean preventPersistence = ParamUtil.getBoolean(request, "preventPersistence");
 boolean readOnly = ParamUtil.getBoolean(request, "readOnly");
 boolean showAddEventBtn = ParamUtil.getBoolean(request, "showAddEventBtn");
+boolean showSchedulerHeader = ParamUtil.getBoolean(request, "showSchedulerHeader", true);
 String viewCalendarBookingURL = ParamUtil.getString(request, "viewCalendarBookingURL");
 %>
 
@@ -122,6 +123,7 @@ String viewCalendarBookingURL = ParamUtil.getString(request, "viewCalendarBookin
 					width: width
 				},
 				portletNamespace: '<portlet:namespace />',
+				showHeader: <%= showSchedulerHeader %>,
 				strings: {
 					'description-hint': '<liferay-ui:message key="description-hint" />'
 				},
@@ -177,6 +179,7 @@ String viewCalendarBookingURL = ParamUtil.getString(request, "viewCalendarBookin
 			preventPersistence: <%= preventPersistence %>,
 			render: true,
 			showAddEventBtn: <%= showAddEventBtn %>,
+			showHeader: <%= showSchedulerHeader %>,
 			strings: {
 				agenda: '<liferay-ui:message key="agenda" />',
 				day: '<liferay-ui:message key="day" />',

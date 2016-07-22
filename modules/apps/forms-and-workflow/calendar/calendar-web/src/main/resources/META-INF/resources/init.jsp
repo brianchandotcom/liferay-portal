@@ -147,13 +147,14 @@ if (usePortalTimeZone) {
 	timeZoneId = user.getTimeZoneId();
 }
 
+boolean displaySchedulerHeader = GetterUtil.getBoolean(portletPreferences.getValue("displaySchedulerHeader", null), true);
 boolean displaySchedulerOnly = GetterUtil.getBoolean(portletPreferences.getValue("displaySchedulerOnly", null));
 boolean showUserEvents = GetterUtil.getBoolean(portletPreferences.getValue("showUserEvents", null), true);
 
 boolean showAgendaView = GetterUtil.getBoolean(portletPreferences.getValue("showAgendaView", null), true);
 boolean showDayView = GetterUtil.getBoolean(portletPreferences.getValue("showDayView", null), true);
-boolean showWeekView = GetterUtil.getBoolean(portletPreferences.getValue("showWeekView", null), true);
 boolean showMonthView = GetterUtil.getBoolean(portletPreferences.getValue("showMonthView", null), true);
+boolean showWeekView = GetterUtil.getBoolean(portletPreferences.getValue("showWeekView", null), true);
 
 boolean enableRSS = !PortalUtil.isRSSFeedsEnabled() ? false : GetterUtil.getBoolean(portletPreferences.getValue("enableRss", null), true);
 int rssDelta = GetterUtil.getInteger(portletPreferences.getValue("rssDelta", StringPool.BLANK), SearchContainer.DEFAULT_DELTA);

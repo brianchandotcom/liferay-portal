@@ -3354,7 +3354,7 @@
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#searchProcessRecords">
-			<var name="kfProcessSearchData" value="Test Test" />
+			<var name="kfProcessSearchData" value="One" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#viewProcessRecordTable">
@@ -3368,17 +3368,17 @@
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#searchProcessRecords">
-			<var name="kfProcessSearchData" value="One" />
+			<var name="kfProcessSearchData" value="Two" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#viewProcessRecordTable">
 			<var name="kfAuthor" value="Test Test" />
-			<var name="kfProcessFieldData" value="One" />
-			<var name="kfStatus" value="Approved" />
+			<var name="kfProcessFieldData" value="Two" />
+			<var name="kfStatus" value="Pending" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#viewProcessRecordTableRecordNotPresent">
-			<var name="kfProcessFieldData" value="Two" />
+			<var name="kfProcessFieldData" value="One" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#searchProcessRecords">

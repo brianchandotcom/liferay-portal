@@ -68,9 +68,9 @@ public class DDMFormValuesFactoryImpl implements DDMFormValuesFactory {
 
 		DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
 
+		setDDMFormFieldValues(httpServletRequest, ddmFormValues);
 		setDDMFormValuesAvailableLocales(httpServletRequest, ddmFormValues);
 		setDDMFormValuesDefaultLocale(httpServletRequest, ddmFormValues);
-		setDDMFormFieldValues(httpServletRequest, ddmFormValues);
 
 		return ddmFormValues;
 	}

@@ -63,8 +63,8 @@ import javax.mail.internet.InternetAddress;
 public class IMAPMailbox extends BaseMailbox {
 
 	public IMAPMailbox(User user, Account account, String password) {
-		setUser(user);
 		setAccount(account);
+		setUser(user);
 
 		if (account != null) {
 			_imapAccessor = new IMAPAccessor(user, account, password);

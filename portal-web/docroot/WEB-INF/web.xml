@@ -639,6 +639,10 @@
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>I18n Servlet</servlet-name>
+		<url-pattern>/th/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>I18n Servlet</servlet-name>
 		<url-pattern>/tr/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
@@ -958,6 +962,7 @@
 			<url-pattern>/sr_RS_latin/c/portal/protected</url-pattern>
 			<url-pattern>/sv/c/portal/protected</url-pattern>
 			<url-pattern>/sv_SE/c/portal/protected</url-pattern>
+			<url-pattern>/th/c/portal/protected</url-pattern>
 			<url-pattern>/tr/c/portal/protected</url-pattern>
 			<url-pattern>/tr_TR/c/portal/protected</url-pattern>
 			<url-pattern>/uk/c/portal/protected</url-pattern>

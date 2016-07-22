@@ -5043,6 +5043,7 @@
 		</execute>
 
 		<execute macro="Workflow#viewTaskAssignedToMeDetails">
+			<var name="workflowAssetContent" value="Test Data" />
 			<var name="workflowAssetTitle" value="${kfProcessName}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
@@ -5096,6 +5097,7 @@
 		</execute>
 
 		<execute macro="Workflow#viewTaskAssignedToMeDetails">
+			<var name="workflowAssetContent" value="Test Data" />
 			<var name="workflowAssetTitle" value="${kfProcessName}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
@@ -7565,6 +7567,7 @@
 		</execute>
 
 		<execute macro="Workflow#viewTaskAssignedToMeDetails">
+			<var name="workflowAssetContent" value="${kfProcessFieldData}" />
  			<var name="workflowAssetTitle" value="${kfProcessName}" />
  			<var name="workflowAssetType" value="${workflowAssetType}" />
  			<var name="workflowTask" value="Update" />

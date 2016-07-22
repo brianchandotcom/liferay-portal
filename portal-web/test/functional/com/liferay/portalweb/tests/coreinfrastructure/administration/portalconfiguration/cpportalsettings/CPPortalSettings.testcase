@@ -489,11 +489,14 @@
 	<command name="ViewContentSharingEnabledAcrossSitesViaAP" priority="4">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
-		<var name="liferaySiteName" value="Liferay" />
 		<var name="page" value="Public Pages" />
 		<var name="pageName" value="AP Test Page" />
 		<var name="portletName" value="Asset Publisher" />
-		<var name="siteName" value="Site Name" />
+
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="Instance Settings" />
@@ -540,7 +543,7 @@
 			<var name="contentSharingAcrossSitesEnabled" value="true" />
 			<var name="globalSiteName" value="Global" />
 			<var name="globalSiteType" value="Global" />
-			<var name="liferaySiteName" value="Liferay" />
+			<var name="liferaySiteName" value="${siteName}" />
 			<var name="liferaySiteType" value="Site" />
 		</execute>
 

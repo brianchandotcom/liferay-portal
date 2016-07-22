@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.asset.categories.navigation.web.internal.lar;
+package com.liferay.asset.categories.navigation.web.internal.exportimport.data.handler;
 
 import com.liferay.asset.categories.navigation.web.constants.AssetCategoriesNavigationPortletKeys;
 import com.liferay.exportimport.kernel.lar.DataLevel;

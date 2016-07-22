@@ -3804,12 +3804,16 @@
 
 		<execute macro="KaleoFormsAdmin#viewNextFieldSetPage" />
 
-		<execute function="AssertTextEquals" locator1="KaleoFormsAdminEditProcess#SELECTED_FIELD_SET" value1="To Do" />
+		<execute macro="KaleoFormsAdmin#viewSelectedFieldSet">
+			<var name="kfFieldSetName" value="To Do" />
+		</execute>
 
 		<execute macro="KaleoFormsAdmin#viewPreviousFieldSetPage" />
 
-		<execute function="AssertTextEquals" locator1="KaleoFormsAdminEditProcess#SELECTED_FIELD_SET" value1="To Do" />
-
+		<execute macro="KaleoFormsAdmin#viewSelectedFieldSet">
+			<var name="kfFieldSetName" value="To Do" />
+		</execute>
+		
 		<execute macro="KaleoFormsAdmin#chooseFieldSet">
 			<var name="kfFieldSetName" value="Inventory" />
 			<var name="kfProcessName" value="${kfProcessName}" />
@@ -3817,7 +3821,9 @@
 
 		<execute macro="KaleoFormsAdmin#viewNextFieldSetPage" />
 
-		<execute function="AssertTextEquals" locator1="KaleoFormsAdminEditProcess#SELECTED_FIELD_SET" value1="Inventory" />
+		<execute macro="KaleoFormsAdmin#viewSelectedFieldSet">
+			<var name="kfFieldSetName" value="Inventory" />
+		</execute>
 
 		<execute macro="KaleoFormsAdmin#chooseFieldSet">
 			<var name="kfFieldSetName" value="Contacts" />
@@ -3826,11 +3832,15 @@
 
 		<execute macro="KaleoFormsAdmin#viewPreviousFieldSetPage" />
 
-		<execute function="AssertTextEquals" locator1="KaleoFormsAdminEditProcess#SELECTED_FIELD_SET" value1="Contacts" />
+		<execute macro="KaleoFormsAdmin#viewSelectedFieldSet">
+			<var name="kfFieldSetName" value="Contacts" />
+		</execute>
 
 		<execute macro="KaleoFormsAdmin#viewNextFieldSetPage" />
 
-		<execute function="AssertTextEquals" locator1="KaleoFormsAdminEditProcess#SELECTED_FIELD_SET" value1="Contacts" />
+		<execute macro="KaleoFormsAdmin#viewSelectedFieldSet">
+			<var name="kfFieldSetName" value="Contacts" />
+		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
 	</command>

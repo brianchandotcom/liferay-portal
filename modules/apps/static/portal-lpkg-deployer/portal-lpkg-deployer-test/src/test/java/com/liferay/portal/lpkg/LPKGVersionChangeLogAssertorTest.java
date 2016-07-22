@@ -35,7 +35,7 @@ import org.junit.Test;
 /**
  * @author Matthew Tambara
  */
-public class LPKGUpgradeLogAssertorTest {
+public class LPKGVersionChangeLogAssertorTest {
 
 	@Test
 	public void testUpgradeLog() throws IOException {

@@ -86,6 +86,12 @@ renderResponse.setTitle(LanguageUtil.format(request, "move-x", category.getTitle
 
 					<div class="asset-category-selector <%= (curVocabulary.getVocabularyId() == vocabularyId) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />assetCategoriesSelector<%= curVocabulary.getVocabularyId() %>"></div>
 
+					<liferay-asset:asset-categories-selector
+						categoryIds='<%= Objects.equals(queryName, "assetCategories") ? queryValues : null %>'
+						groupIds="<%= categorizableGroupIds %>"
+						hiddenInput='<%= "queryCategoryIds" + index %>'
+					/>
+
 					<aui:script use="liferay-asset-categories-selector">
 						new Liferay.AssetCategoriesSelector(
 							{

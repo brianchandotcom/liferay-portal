@@ -152,6 +152,8 @@
 
 		<execute function="AssertClick" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="test" />
 
+		<execute function="Pause" locator1="5000" />
+
 		<var locator="UsersAndOrganizationsEditUser#DETAILS_USER_ID_FIELD" name="userId" />
 
 		<execute macro="Api#apiJsonwsUserView" />

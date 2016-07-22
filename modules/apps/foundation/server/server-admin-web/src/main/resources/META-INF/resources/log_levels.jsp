@@ -38,7 +38,6 @@ serverURL.setParameter("tabs2", tabs2);
 
 			<%
 			for (String tab2Name : tab2Names) {
-
 				serverURL.setParameter("tabs2", tab2Name);
 			%>
 

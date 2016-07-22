@@ -36,7 +36,6 @@ serverURL.setParameter("tabs2", tabs2);
 				String[] tabs1Names = new String[] {"resources", "log-levels", "properties", "captcha", "data-migration", "file-uploads", "mail", "external-services", "script", "shutdown"};
 
 				for (String tabs1Name : tabs1Names) {
-
 					serverURL.setParameter("tabs1", tabs1Name);
 				%>
 

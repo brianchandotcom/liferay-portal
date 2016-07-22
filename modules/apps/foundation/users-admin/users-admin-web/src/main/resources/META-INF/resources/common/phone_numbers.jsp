@@ -36,7 +36,6 @@ if (Validator.isNotNull(phonesIndexesParam)) {
 	}
 }
 else {
-
 	if (classPK > 0) {
 		phones = PhoneServiceUtil.getPhones(className, classPK);
 

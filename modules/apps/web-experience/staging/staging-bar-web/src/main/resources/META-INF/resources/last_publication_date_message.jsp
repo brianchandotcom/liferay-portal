@@ -26,7 +26,6 @@ String lastImportLayoutSetBranchName = null;
 long lastImportLayoutSetBranchId = GetterUtil.getLong(typeSettingsProperties.getProperty("last-import-layout-set-branch-id"));
 
 if (lastImportLayoutSetBranchId > 0) {
-
 	try {
 		LayoutSetBranch lastImportLayoutSetBranch = LayoutSetBranchLocalServiceUtil.getLayoutSetBranch(lastImportLayoutSetBranchId);
 

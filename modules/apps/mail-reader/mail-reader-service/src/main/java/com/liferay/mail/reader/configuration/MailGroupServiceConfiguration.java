@@ -30,12 +30,6 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface MailGroupServiceConfiguration {
 
-	@Meta.AD(
-		deflt = "{\"accounts\": [{\"titleLanguageKey\": \"gmail-account\",\"descriptionLanguageKey\": \"please-enable-imap-in-you-gmail-settings-for-mail-to-work\",\"address\": \"@gmail.com\",\"protocol\": \"imap\",\"hideSettings\": true,\"incomingHostName\": \"imap.gmail.com\",\"incomingPort\": \"993\",\"incomingSecure\": true,\"outgoingHostName\": \"smtp.gmail.com\",\"outgoingPort\": \"465\",\"outgoingSecure\": \"true\",\"folderPrefix\": \"\",\"useLocalPartAsLogin\": true},{\"titleLanguageKey\": \"custom-mail-account\",\"descriptionLanguageKey\": \"\",\"address\": \"\",\"protocol\": \"imap\",\"hideSettings\": false,\"incomingHostName\": \"\",\"incomingPort\": \"110\",\"incomingSecure\": false,\"outgoingHostName\": \"\",\"outgoingPort\": \"25\",\"outgoingSecure\": \"false\",\"folderPrefix\": \"\",\"useLocalPartAsLogin\": false}]}",
-		required = false
-	)
-	public String defaultAccounts();
-
 	@Meta.AD(deflt = "109|110|143|220|993|995|1110|2221", required = false)
 	public String[] incomingPorts();
 

@@ -17,7 +17,7 @@ package com.liferay.mail.reader.internal.search;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeIndexerUtil;
 import com.liferay.mail.reader.model.Folder;
-import com.liferay.mail.reader.service.FolderLocalServiceUtil;
+import com.liferay.mail.reader.service.FolderLocalService;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -46,6 +46,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
@@ -127,7 +128,7 @@ public class FolderIndexer extends BaseIndexer<Folder> {
 
 	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
-		Folder folder = FolderLocalServiceUtil.getFolder(classPK);
+		Folder folder = _folderLocalService.getFolder(classPK);
 
 		doReindex(folder);
 	}
@@ -141,7 +142,7 @@ public class FolderIndexer extends BaseIndexer<Folder> {
 
 	protected void reindexMessages(long companyId) throws PortalException {
 		final IndexableActionableDynamicQuery indexableActionableDynamicQuery =
-			FolderLocalServiceUtil.getIndexableActionableDynamicQuery();
+			_folderLocalService.getIndexableActionableDynamicQuery();
 
 		indexableActionableDynamicQuery.setCompanyId(companyId);
 		indexableActionableDynamicQuery.setPerformActionMethod(
@@ -172,6 +173,15 @@ public class FolderIndexer extends BaseIndexer<Folder> {
 		indexableActionableDynamicQuery.performActions();
 	}
 
+	@Reference(unbind = "-")
+	protected void setFolderLocalService(
+		FolderLocalService folderLocalService) {
+
+		_folderLocalService = folderLocalService;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(FolderIndexer.class);
+
+	private static FolderLocalService _folderLocalService;
 
 }

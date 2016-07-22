@@ -302,7 +302,15 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		newContent = formatMultilineTagAttributes(fileName, newContent);
 
-		Matcher matcher = _directiveLinePattern.matcher(newContent);
+		Matcher matcher = _missingEmptyLinePattern.matcher(newContent);
+
+		if (matcher.find()) {
+			newContent = StringUtil.replaceFirst(
+				newContent, StringPool.NEW_LINE, StringPool.BLANK,
+				matcher.start(1));
+		}
+
+		matcher = _directiveLinePattern.matcher(newContent);
 
 		while (matcher.find()) {
 			String directiveLine = matcher.group();
@@ -2107,6 +2115,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		"Log _log = LogFactoryUtil\\.getLog\\(\"(.*?)\"\\)");
 	private final Pattern _missingEmptyLineBetweenDefineOjbectsPattern =
 		Pattern.compile("<.*:defineObjects />\n<.*:defineObjects />\n");
+	private final Pattern _missingEmptyLinePattern = Pattern.compile(
+		"[\n\t](catch |else |finally |for |if |try |while ).*\\{\n\n\t+\\w");
 	private boolean _moveFrequentlyUsedImportsToCommonInit;
 	private final Pattern _multilineTagPattern = Pattern.compile(
 		"(\\s+)<[-\\w]+:[-\\w]+\n.*?(/?>)(\n|$)", Pattern.DOTALL);

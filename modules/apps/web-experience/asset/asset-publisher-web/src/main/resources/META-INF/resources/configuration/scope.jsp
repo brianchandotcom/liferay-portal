@@ -32,161 +32,156 @@ if (layout.hasScopeGroup()) {
 List<Group> selectedGroups = GroupLocalServiceUtil.getGroups(assetPublisherDisplayContext.getGroupIds());
 %>
 
-<div id="<portlet:namespace />scopesBoxes">
-	<liferay-ui:search-container
-		compactEmptyResultsMessage="<%= true %>"
-		emptyResultsMessage="none"
-		iteratorURL="<%= configurationRenderURL %>"
-		total="<%= selectedGroups.size() %>"
+<liferay-ui:search-container
+	compactEmptyResultsMessage="<%= true %>"
+	emptyResultsMessage="none"
+	iteratorURL="<%= configurationRenderURL %>"
+	total="<%= selectedGroups.size() %>"
+>
+	<liferay-ui:search-container-results
+		results="<%= selectedGroups %>"
+	/>
+
+	<liferay-ui:search-container-row
+		className="com.liferay.portal.kernel.model.Group"
+		modelVar="group"
 	>
-		<liferay-ui:search-container-results
-			results="<%= selectedGroups %>"
+		<liferay-ui:search-container-column-text
+			name="name"
+			truncate="<%= true %>"
+			value="<%= group.getScopeDescriptiveName(themeDisplay) %>"
 		/>
 
-		<liferay-ui:search-container-row
-			className="com.liferay.portal.kernel.model.Group"
-			modelVar="group"
-		>
-			<liferay-ui:search-container-column-text
-				name="name"
-				truncate="<%= true %>"
-				value="<%= group.getScopeDescriptiveName(themeDisplay) %>"
+		<liferay-ui:search-container-column-text
+			name="type"
+			value="<%= LanguageUtil.get(request, group.getScopeLabel(themeDisplay)) %>"
+		/>
+
+		<liferay-ui:search-container-column-text>
+			<liferay-portlet:actionURL portletConfiguration="<%= true %>" var="deleteURL">
+				<portlet:param name="<%= Constants.CMD %>" value="remove-scope" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="scopeId" value="<%= AssetPublisherUtil.getScopeId(group, scopeGroupId) %>" />
+			</liferay-portlet:actionURL>
+
+			<liferay-ui:icon
+				icon="times"
+				markupView="lexicon"
+				url="<%= deleteURL %>"
 			/>
+		</liferay-ui:search-container-column-text>
+	</liferay-ui:search-container-row>
 
-			<liferay-ui:search-container-column-text
-				name="type"
-				value="<%= LanguageUtil.get(request, group.getScopeLabel(themeDisplay)) %>"
-			/>
+	<liferay-ui:search-iterator markupView="lexicon" paginate="<%= false %>" />
+</liferay-ui:search-container>
 
-			<liferay-ui:search-container-column-text>
-				<liferay-portlet:actionURL portletConfiguration="<%= true %>" var="deleteURL">
-					<portlet:param name="<%= Constants.CMD %>" value="remove-scope" />
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-					<portlet:param name="scopeId" value="<%= AssetPublisherUtil.getScopeId(group, scopeGroupId) %>" />
-				</liferay-portlet:actionURL>
+<liferay-ui:icon-menu cssClass="select-existing-selector" direction="right" message="select" showArrow="<%= false %>" showWhenSingleIcon="<%= true %>">
 
-				<liferay-ui:icon
-					icon="times"
-					markupView="lexicon"
-					url="<%= deleteURL %>"
-				/>
-			</liferay-ui:search-container-column-text>
-		</liferay-ui:search-container-row>
+	<%
+	Map<String, Object> data = new HashMap<String, Object>();
 
-		<liferay-ui:search-iterator markupView="lexicon" paginate="<%= false %>" />
-	</liferay-ui:search-container>
+	for (Group group : availableGroups) {
+		if (ArrayUtil.contains(assetPublisherDisplayContext.getGroupIds(), group.getGroupId())) {
+			continue;
+		}
+	%>
 
-	<div class="select-asset-selector">
-		<liferay-ui:icon-menu cssClass="select-existing-selector" direction="right" message="select" showArrow="<%= false %>" showWhenSingleIcon="<%= true %>">
+		<liferay-portlet:actionURL portletConfiguration="<%= true %>" var="addScopeURL">
+			<portlet:param name="<%= Constants.CMD %>" value="add-scope" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
+		</liferay-portlet:actionURL>
 
-			<%
-			Map<String, Object> data = new HashMap<String, Object>();
+		<liferay-ui:icon
+			id='<%= "scope" + group.getGroupId() %>'
+			message="<%= group.getScopeDescriptiveName(themeDisplay) %>"
+			method="post"
+			url="<%= addScopeURL %>"
+		/>
 
-			for (Group group : availableGroups) {
-				if (ArrayUtil.contains(assetPublisherDisplayContext.getGroupIds(), group.getGroupId())) {
-					continue;
-				}
-			%>
+	<%
+	}
 
-				<liferay-portlet:actionURL portletConfiguration="<%= true %>" var="addScopeURL">
-					<portlet:param name="<%= Constants.CMD %>" value="add-scope" />
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-					<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
-				</liferay-portlet:actionURL>
+	PortletURL layoutSiteBrowserURL = PortletProviderUtil.getPortletURL(request, Group.class.getName(), PortletProvider.Action.BROWSE);
+	%>
 
-				<liferay-ui:icon
-					id='<%= "scope" + group.getGroupId() %>'
-					message="<%= group.getScopeDescriptiveName(themeDisplay) %>"
-					method="post"
-					url="<%= addScopeURL %>"
-				/>
+	<c:if test="<%= (GroupLocalServiceUtil.getGroupsCount(company.getCompanyId(), Layout.class.getName(), layout.getGroupId()) > 0) && (layoutSiteBrowserURL != null) %>">
 
-			<%
-			}
+		<%
+		data = new HashMap<String, Object>();
 
-			PortletURL layoutSiteBrowserURL = PortletProviderUtil.getPortletURL(request, Group.class.getName(), PortletProvider.Action.BROWSE);
-			%>
+		layoutSiteBrowserURL.setParameter("groupId", String.valueOf(layout.getGroupId()));
+		layoutSiteBrowserURL.setParameter("selectedGroupIds", StringUtil.merge(assetPublisherDisplayContext.getGroupIds()));
+		layoutSiteBrowserURL.setParameter("privateLayout", String.valueOf(layout.isPrivateLayout()));
+		layoutSiteBrowserURL.setParameter("type", "layoutScopes");
+		layoutSiteBrowserURL.setParameter("eventName", eventName);
+		layoutSiteBrowserURL.setPortletMode(PortletMode.VIEW);
+		layoutSiteBrowserURL.setWindowState(LiferayWindowState.POP_UP);
 
-			<c:if test="<%= (GroupLocalServiceUtil.getGroupsCount(company.getCompanyId(), Layout.class.getName(), layout.getGroupId()) > 0) && (layoutSiteBrowserURL != null) %>">
+		data.put("href", layoutSiteBrowserURL.toString());
 
-				<%
-				data = new HashMap<String, Object>();
+		data.put("title", LanguageUtil.get(request, "pages"));
+		%>
 
-				layoutSiteBrowserURL.setParameter("groupId", String.valueOf(layout.getGroupId()));
-				layoutSiteBrowserURL.setParameter("selectedGroupIds", StringUtil.merge(assetPublisherDisplayContext.getGroupIds()));
-				layoutSiteBrowserURL.setParameter("privateLayout", String.valueOf(layout.isPrivateLayout()));
-				layoutSiteBrowserURL.setParameter("type", "layoutScopes");
-				layoutSiteBrowserURL.setParameter("eventName", eventName);
-				layoutSiteBrowserURL.setPortletMode(PortletMode.VIEW);
-				layoutSiteBrowserURL.setWindowState(LiferayWindowState.POP_UP);
+		<liferay-ui:icon
+			cssClass="highlited scope-selector"
+			data="<%= data %>"
+			id="selectGroup"
+			message='<%= LanguageUtil.get(request, "pages") + StringPool.TRIPLE_PERIOD %>'
+			method="get"
+			url="javascript:;"
+		/>
+	</c:if>
 
-				data.put("href", layoutSiteBrowserURL.toString());
+	<%
+	PortletURL siteBrowserURL = PortletProviderUtil.getPortletURL(renderRequest, Group.class.getName(), PortletProvider.Action.BROWSE);
 
-				data.put("title", LanguageUtil.get(request, "pages"));
-				%>
+	List<String> types = new ArrayList<String>();
 
-				<liferay-ui:icon
-					cssClass="highlited scope-selector"
-					data="<%= data %>"
-					id="selectGroup"
-					message='<%= LanguageUtil.get(request, "pages") + StringPool.TRIPLE_PERIOD %>'
-					method="get"
-					url="javascript:;"
-				/>
-			</c:if>
+	if (PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.SITES_CONTENT_SHARING_THROUGH_ADMINISTRATORS_ENABLED)) {
+		types.add("sites-that-i-administer");
+	}
 
-			<%
-			PortletURL siteBrowserURL = PortletProviderUtil.getPortletURL(renderRequest, Group.class.getName(), PortletProvider.Action.BROWSE);
+	if (GroupLocalServiceUtil.getGroupsCount(company.getCompanyId(), layout.getGroupId(), Boolean.TRUE) > 0) {
+		types.add("child-sites");
+	}
 
-			List<String> types = new ArrayList<String>();
+	Group siteGroup = themeDisplay.getSiteGroup();
 
-			if (PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.SITES_CONTENT_SHARING_THROUGH_ADMINISTRATORS_ENABLED)) {
-				types.add("sites-that-i-administer");
-			}
+	if (!siteGroup.isRoot()) {
+		types.add("parent-sites");
+	}
+	%>
 
-			if (GroupLocalServiceUtil.getGroupsCount(company.getCompanyId(), layout.getGroupId(), Boolean.TRUE) > 0) {
-				types.add("child-sites");
-			}
+	<c:if test="<%= (siteBrowserURL != null) && !types.isEmpty() && !siteGroup.isLayoutPrototype() && !siteGroup.isLayoutSetPrototype() %>">
 
-			Group siteGroup = themeDisplay.getSiteGroup();
+		<%
+		data = new HashMap<String, Object>();
 
-			if (!siteGroup.isRoot()) {
-				types.add("parent-sites");
-			}
-			%>
+		siteBrowserURL.setParameter("groupId", String.valueOf(layout.getGroupId()));
+		siteBrowserURL.setParameter("selectedGroupIds", StringUtil.merge(assetPublisherDisplayContext.getGroupIds()));
+		siteBrowserURL.setParameter("types", StringUtil.merge(types));
+		siteBrowserURL.setParameter("filter", "contentSharingWithChildrenEnabled");
+		siteBrowserURL.setParameter("includeCurrentGroup", Boolean.FALSE.toString());
+		siteBrowserURL.setParameter("eventName", eventName);
+		siteBrowserURL.setPortletMode(PortletMode.VIEW);
+		siteBrowserURL.setWindowState(LiferayWindowState.POP_UP);
 
-			<c:if test="<%= (siteBrowserURL != null) && !types.isEmpty() && !siteGroup.isLayoutPrototype() && !siteGroup.isLayoutSetPrototype() %>">
+		data.put("href", siteBrowserURL.toString());
 
-				<%
-				data = new HashMap<String, Object>();
+		data.put("title", LanguageUtil.get(request, "sites"));
+		%>
 
-				siteBrowserURL.setParameter("groupId", String.valueOf(layout.getGroupId()));
-				siteBrowserURL.setParameter("selectedGroupIds", StringUtil.merge(assetPublisherDisplayContext.getGroupIds()));
-				siteBrowserURL.setParameter("types", StringUtil.merge(types));
-				siteBrowserURL.setParameter("filter", "contentSharingWithChildrenEnabled");
-				siteBrowserURL.setParameter("includeCurrentGroup", Boolean.FALSE.toString());
-				siteBrowserURL.setParameter("eventName", eventName);
-				siteBrowserURL.setPortletMode(PortletMode.VIEW);
-				siteBrowserURL.setWindowState(LiferayWindowState.POP_UP);
-
-				data.put("href", siteBrowserURL.toString());
-
-				data.put("title", LanguageUtil.get(request, "sites"));
-				%>
-
-				<liferay-ui:icon
-					cssClass="highlited scope-selector"
-					data="<%= data %>"
-					id="selectManageableGroup"
-					message='<%= LanguageUtil.get(request, "other-site") + StringPool.TRIPLE_PERIOD %>'
-					method="get"
-					url="javascript:;"
-				/>
-			</c:if>
-		</liferay-ui:icon-menu>
-	</div>
-</div>
-
+		<liferay-ui:icon
+			cssClass="highlited scope-selector"
+			data="<%= data %>"
+			id="selectManageableGroup"
+			message='<%= LanguageUtil.get(request, "other-site") + StringPool.TRIPLE_PERIOD %>'
+			method="get"
+			url="javascript:;"
+		/>
+	</c:if>
+</liferay-ui:icon-menu>
 
 <aui:script sandbox="<%= true %>">
 	var form = document.<portlet:namespace />fm;

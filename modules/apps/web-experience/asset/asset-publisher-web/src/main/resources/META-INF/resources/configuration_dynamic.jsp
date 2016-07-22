@@ -23,33 +23,7 @@
 		param="tabs2"
 		refresh="<%= false %>"
 		type="tabs nav-tabs-default"
-	>
-		<liferay-ui:section>
-			<div class="container-fluid-1280">
-				<aui:fieldset-group markupView="lexicon">
-
-					<%
-					List<AssetEntryQueryProcessor> assetEntryQueryProcessors = AssetPublisherUtil.getAssetEntryQueryProcessors();
-
-					for (AssetEntryQueryProcessor assetEntryQueryProcessor : assetEntryQueryProcessors) {
-					%>
-
-						<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" id='<%= "assetPublisherPanelContainerSection_" + assetEntryQueryProcessor.getKey() %>' label="<%= assetEntryQueryProcessor.getTitle(locale) %>">
-
-							<%
-							assetEntryQueryProcessor.include(request, new PipingServletResponse(pageContext));
-							%>
-
-						</aui:fieldset>
-
-					<%
-					}
-					%>
-
-				</aui:fieldset-group>
-			</div>
-		</liferay-ui:section>
-	</liferay-ui:tabs>
+	/>
 </div>
 
 <aui:button-row>

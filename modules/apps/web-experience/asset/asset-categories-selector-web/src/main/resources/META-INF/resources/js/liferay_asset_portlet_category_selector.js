@@ -145,8 +145,6 @@ AUI.add(
 						var io = treeNode.get('io');
 
 						io.url = instance.getVocabularyURL(treeNode);
-
-						treeNode.set('io', io);
 					},
 
 					getPaginatorConfig: function(item) {

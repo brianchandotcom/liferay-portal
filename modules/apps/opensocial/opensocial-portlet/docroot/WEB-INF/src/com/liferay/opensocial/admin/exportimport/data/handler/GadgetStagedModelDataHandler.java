@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.opensocial.admin.lar;
+package com.liferay.opensocial.admin.exportimport.data.handler;
 
 import com.liferay.exportimport.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;

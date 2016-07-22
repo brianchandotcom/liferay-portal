@@ -100,7 +100,7 @@
 	</javadoc>
 	<javadoc>
 		<name>AdminPortletDataHandler</name>
-		<type>com.liferay.opensocial.admin.lar.AdminPortletDataHandler</type>
+		<type>com.liferay.opensocial.admin.exportimport.data.handler.AdminPortletDataHandler</type>
 		<author><![CDATA[Michael C. Han]]></author>
 		<method>
 			<name>AdminPortletDataHandler</name>
@@ -209,7 +209,7 @@
 	</javadoc>
 	<javadoc>
 		<name>GadgetStagedModelDataHandler</name>
-		<type>com.liferay.opensocial.admin.lar.GadgetStagedModelDataHandler</type>
+		<type>com.liferay.opensocial.admin.exportimport.data.handler.GadgetStagedModelDataHandler</type>
 		<author><![CDATA[Michael C. Han]]></author>
 		<method>
 			<name>deleteStagedModel</name>

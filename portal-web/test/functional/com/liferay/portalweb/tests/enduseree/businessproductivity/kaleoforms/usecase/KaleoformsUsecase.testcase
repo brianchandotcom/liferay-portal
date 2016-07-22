@@ -7567,7 +7567,7 @@
 		<execute macro="Workflow#viewTaskAssignedToMeDetails">
  			<var name="workflowAssetTitle" value="${kfProcessName}" />
  			<var name="workflowAssetType" value="${workflowAssetType}" />
- 			<var name="workflowTask" value="Review" />
+ 			<var name="workflowTask" value="Update" />
  		</execute>
 
 		<execute macro="WorkflowAsset#previewViewContent">

@@ -82,11 +82,11 @@
 	<@liferay_aui.script use="liferay-navigation-interaction">
 		var navigation = A.one('#${navbarId}');
 
+		Liferay.Data.NAV_INTERACTION_LIST_SELECTOR = '.navbar-site';
+		Liferay.Data.NAV_LIST_SELECTOR = '.navbar-site';
+
 		if (navigation) {
 			navigation.plug(Liferay.NavigationInteraction);
 		}
-
-		Liferay.Data.NAV_INTERACTION_LIST_SELECTOR = '.navbar-site';
-		Liferay.Data.NAV_LIST_SELECTOR = '.navbar-site';
 	</@>
 </#if>

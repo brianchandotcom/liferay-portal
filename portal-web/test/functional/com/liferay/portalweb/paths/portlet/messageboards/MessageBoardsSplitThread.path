@@ -45,6 +45,11 @@
 	<td>//label[contains(@for,'addExplanationPost')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>ADD_EXPLANATION_SUBJECT_FIELD</td>
+	<td>//div[contains(@class,'form-group')]//input[contains(@id,'MBPortlet_subject')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

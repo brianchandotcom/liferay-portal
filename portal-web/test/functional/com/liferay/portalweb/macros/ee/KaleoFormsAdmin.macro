@@ -815,6 +815,12 @@
 		<execute function="AssertClick" locator1="KaleoFormsAdminEditProcess#WORKFLOW_NAVIGATION_PUBLISHED_TAB" value1="Published" />
 	</command>
 
+	<command name="viewSelectedFieldSet">
+		<var name="key_kfFieldSetName" value="${kfFieldSetName}" />
+		
+		<execute function="AssertTextEquals" locator1="KaleoFormsAdminEditProcess#SELECTED_FIELD_SET" value1="${kfFieldSetName}" />
+	</command>
+
 	<command name="viewSelectedWorkflow">
 		<if>
 			<equals arg1="${edit}" arg2="true" />

@@ -206,6 +206,11 @@
 </tr>
 <!--DIALOG_BOX-->
 <tr>
+	<td>DIALOG_BOX_TITLE</td>
+	<td>//div[contains(@class,'modal-header')]/h3</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DIALOG_BOX_DUE_DATE</td>
 	<td>//input[contains(@id,'_dueDate')]</td>
 	<td></td>
@@ -218,6 +223,11 @@
 <tr>
 	<td>DIALOG_BOX_COMMENT_FIELD</td>
 	<td>//textarea[contains(@id,'_comment')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DIALOG_BOX_ASSIGN_TO_SELECT</td>
+	<td>//select[contains(@id,'MyWorkflowTaskPortlet_assigneeUserId')]</td>
 	<td></td>
 </tr>
 <tr>

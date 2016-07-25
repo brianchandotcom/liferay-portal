@@ -772,15 +772,15 @@
 			<var name="kfProgressStep" value="4" />
 		</execute>
 
-		<execute function="AssertElementPresent" locator1="Button#SAVE_INACTIVE" />
-
 		<execute macro="KaleoFormsAdmin#assignForm">
 			<var name="kfPendingForm" value="${kfPendingForm}" />
 			<var name="kfProcessName" value="${kfProcessName}" />
 			<var name="workflowTask" value="${workflowTask}" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no results." />
+		<var name="key_kfFormName" value="${kfFormName}" />
+
+		<execute function="AssertElementNotPresent" locator1="KaleoFormsAdminEditProcessForm#FORM_TABLE_NAME_LINK" value1="${kfFormName}" />
 	</command>
 
 	<command name="viewProcessNoRecords">

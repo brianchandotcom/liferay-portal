@@ -28,7 +28,7 @@
 		<execute selenium="mouseOver" />
 
 		<if>
-			<condition selenium="isNotChecked" />
+			<condition argument1="xpath=(${locator1})/../../input" selenium="isNotChecked" />
 			<then>
 				<execute selenium="clickAt" />
 			</then>

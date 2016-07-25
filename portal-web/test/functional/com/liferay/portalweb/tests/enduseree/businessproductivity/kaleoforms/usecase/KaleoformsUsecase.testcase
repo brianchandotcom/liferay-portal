@@ -6749,12 +6749,12 @@
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
-			<var name="portlet" value="Dynamic Data Lists" />
+			<var name="portlet" value="Kaleo Forms Admin" />
 		</execute>
 
-		<execute macro="DDLTemplate#deleteTemplateCP">
-			<var name="ddlDataDefinitionName" value="Inventory" />
-			<var name="ddlTemplateName" value="Review" />
+		<execute macro="KaleoFormsAdmin#deleteForm">
+			<var name="kfFieldSetName" value="Inventory" />
+			<var name="kfFormName" value="Created Task Form" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">

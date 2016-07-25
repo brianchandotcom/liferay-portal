@@ -48,7 +48,9 @@ import java.util.Map;
 
 import javax.servlet.ServletContext;
 
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
@@ -97,23 +99,6 @@ public class ResourcesImporterHotDeployMessageListener
 				}
 
 			});
-
-		if (_destinationFactory != null) {
-			DestinationConfiguration destinationConfiguration =
-				new DestinationConfiguration(
-					DestinationConfiguration.DESTINATION_TYPE_SERIAL,
-					ResourcesImporterDestinationNames.RESOURCES_IMPORTER);
-
-			_destination = _destinationFactory.createDestination(
-				destinationConfiguration);
-
-			Dictionary<String, Object> dictionary = new HashMapDictionary<>();
-
-			dictionary.put("destination.name", _destination.getName());
-
-			_serviceRegistration = bundleContext.registerService(
-				Destination.class, _destination, dictionary);
-		}
 	}
 
 	@Deactivate
@@ -196,7 +181,25 @@ public class ResourcesImporterHotDeployMessageListener
 	protected void setDestinationFactory(
 		DestinationFactory destinationFactory) {
 
-		_destinationFactory = destinationFactory;
+		Bundle bundle = FrameworkUtil.getBundle(
+			ResourcesImporterHotDeployMessageListener.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		DestinationConfiguration destinationConfiguration =
+			new DestinationConfiguration(
+				DestinationConfiguration.DESTINATION_TYPE_SERIAL,
+				ResourcesImporterDestinationNames.RESOURCES_IMPORTER);
+
+		_destination = destinationFactory.createDestination(
+			destinationConfiguration);
+
+		Dictionary<String, Object> dictionary = new HashMapDictionary<>();
+
+		dictionary.put("destination.name", _destination.getName());
+
+		_serviceRegistration = bundleContext.registerService(
+			Destination.class, _destination, dictionary);
 	}
 
 	@Reference(unbind = "-")
@@ -300,7 +303,6 @@ public class ResourcesImporterHotDeployMessageListener
 
 	private CompanyLocalService _companyLocalService;
 	private Destination _destination;
-	private DestinationFactory _destinationFactory;
 	private ImporterFactory _importerFactory;
 	private ServiceRegistration<Destination> _serviceRegistration;
 	private ServiceTrackerMap<String, ServletContext> _serviceTrackerMap;

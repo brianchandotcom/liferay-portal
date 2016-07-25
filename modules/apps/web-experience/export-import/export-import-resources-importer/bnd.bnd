@@ -1,7 +1,9 @@
 Bundle-Name: Liferay Export Import Resources Importer
 Bundle-SymbolicName: com.liferay.exportimport.resources.importer
-Bundle-Version: 1.1.6
-Export-Package: com.liferay.exportimport.resources.importer.portlet.preferences
+Bundle-Version: 1.2.0
+Export-Package:\
+	com.liferay.exportimport.resources.importer.portlet.preferences,\
+	com.liferay.exportimport.resources.importer.provider
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Data Management
 -includeresource: content=../../staging/staging-lang/src/main/resources/content

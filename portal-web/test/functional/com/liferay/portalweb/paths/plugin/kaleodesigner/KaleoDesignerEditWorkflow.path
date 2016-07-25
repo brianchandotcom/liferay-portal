@@ -340,12 +340,12 @@
 </tr>
 <tr>
 	<td>SOURCE_KALEO_XML_CONTENT_SPECIFIC_LINE</td>
-	<td>//div[@class='ace_gutter-cell' and contains(.,'${key_line}')]</td>
+	<td>//div[contains(@class,'ace_gutter-cell') and contains(.,'${key_line}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SOURCE_KALEO_XML_CONTENT_SPECIFIC_LINE_CONTENT</td>
-	<td>xpath=(//div[contains(@id,'portlet_editorWrapper')]//div[contains(@class,'ace_text')]/div[@class='ace_line_group'])[${key_line}]</td>
+	<td>xpath=(//div[contains(@class,'ace_text')]/div[@class='ace_line_group'])[${key_line}]</td>
 	<td></td>
 </tr>
 </tbody>

@@ -89,6 +89,36 @@
 		<execute function="AssertClick" locator1="MenuItem#ASSIGN_FORM" value1="Assign Form" />
 	</command>
 
+	<command name="assignNewForm">
+		<execute macro="KaleoFormsAdmin#editProcess">
+			<var name="kfProcessName" value="${kfProcessName}" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#gotoProgressStep">
+			<var name="kfProgressName" value="Forms" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#unassignForm">
+			<var name="workflowTask" value="${workflowTask}" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#assignForm">
+			<var name="workflowTask" value="${workflowTask}" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#addForm">
+			<var name="kfFormName" value="${kfFormNameNew}" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#saveForm" />
+
+		<execute macro="KaleoFormsAdmin#chooseForm">
+			<var name="kfFormName" value="${kfFormNameNew}" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#saveProcess" />
+	</command>
+
 	<command name="cancelProcessRecordDetailsView">
 		<execute function="AssertClick" locator1="Button#CANCEL" value1="Cancel" />
 	</command>

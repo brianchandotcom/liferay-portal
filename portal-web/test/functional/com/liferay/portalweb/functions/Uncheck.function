@@ -37,6 +37,27 @@
 		<execute function="AssertNotChecked#assertNotChecked" />
 	</command>
 
+	<command name="uncheckHiddenToggleSwitch">
+		<execute function="WaitForSPARefresh" />
+
+		<execute selenium="waitForElementPresent" />
+
+		<execute selenium="mouseOver" />
+
+		<if>
+			<condition argument1="xpath=(${locator1})/../../input" selenium="isChecked" />
+			<then>
+				<execute selenium="clickAt" />
+			</then>
+		</if>
+
+		<execute function="AssertNotChecked#assertNotCheckedHiddenToggleSwitch" />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
+	</command>
+
 	<command name="uncheckToggleSwitch">
 		<execute function="WaitForSPARefresh" />
 

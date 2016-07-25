@@ -31,7 +31,7 @@
 		<if>
 			<equals arg1="${campaignInactive}" arg2="true" />
 			<then>
-				<execute function="Uncheck#uncheckToggleSwitch" locator1="ToggleSwitch#ACTIVE" />
+				<execute function="Uncheck#uncheckHiddenToggleSwitch" locator1="ToggleSwitch#ACTIVE" />
 			</then>
 		</if>
 	</command>

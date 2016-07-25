@@ -52,6 +52,86 @@
 		</execute>
 	</command>
 
+	<command name="AddSiteTemplateApplySiteTemplateChangesToSite" priority="4">
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Site Templates" />
+		</execute>
+
+		<execute macro="SiteTemplates#addCP">
+			<var name="siteTemplateName" value="Site Template Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addCP">
+			<var name="siteName" value="Site Template Site Name" />
+			<var name="siteTemplateName" value="Site Template Name" />
+			<var name="siteType" value="Site Template" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Site Template Site Name" />
+		</execute>
+
+		<execute macro="Portlet#viewNoPortletsPresentPG" />
+
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Site Templates" />
+		</execute>
+
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Manage" />
+			<var name="rowEntry" value="Site Template Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSiteViaLink">
+			<var name="site" value="Site Template Name" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Hello World" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Site Template Site Name" />
+		</execute>
+
+		<execute macro="Portlet#viewPG">
+			<var name="portletName" value="Hello World" />
+		</execute>
+	</command>
+
+	<command name="AddSiteTemplateDisablePageModification" priority="4">
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Site Templates" />
+		</execute>
+
+		<execute macro="SiteTemplates#addCP">
+			<var name="disableChanges" value="true" />
+			<var name="siteTemplateName" value="Site Template Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addCP">
+			<var name="siteName" value="Site Template Site Name" />
+			<var name="siteTemplateName" value="Site Template Name" />
+			<var name="siteType" value="Site Template" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Site Template Site Name" />
+		</execute>
+
+		<execute macro="Page#viewPageLockCheck" />
+
+		<execute function="AssertElementNotPresent" locator1="ControlMenu#ADD" />
+	</command>
+
 	<command name="DeactivateDefaultSiteTemplate" priority="4">
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
@@ -254,6 +334,82 @@
 		<execute macro="SiteTemplates#viewDefaultCP">
 			<var name="siteTemplateNameList" value="Community Site,Intranet Site" />
 		</execute>
+	</command>
+
+	<command name="OnlySiteAdminCanModifyPageAssociatedWithSiteTemplate" priority="4">
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Site Templates" />
+		</execute>
+
+		<execute macro="SiteTemplates#addCP">
+			<var name="siteTemplateName" value="Site Template Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addCP">
+			<var name="siteName" value="Site Template Site Name" />
+			<var name="siteTemplateName" value="Site Template Name" />
+			<var name="siteType" value="Site Template" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Site Template Site Name" />
+		</execute>
+
+		<execute function="AssertElementPresent" locator1="ControlMenu#ADD" />
+
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Site Template Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesMembers">
+			<var name="portlet" value="Site Memberships" />
+		</execute>
+
+		<execute macro="Site#addMemberCP">
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="User#logoutUserPG" />
+
+		<execute macro="User#loginUserPG">
+			<var name="userEmailAddress" value="userea@liferay.com" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Site Template Site Name" />
+		</execute>
+
+		<execute function="AssertElementNotPresent" locator1="ControlMenu#ADD" />
+
+		<execute macro="User#logoutUserPG" />
+
+		<execute macro="User#loginUserPG" />
 	</command>
 
 	<command name="ResetPageChanges" priority="4">

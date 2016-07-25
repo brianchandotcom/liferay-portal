@@ -22,7 +22,6 @@ import com.liferay.message.boards.kernel.model.MBThread;
 import com.liferay.message.boards.kernel.service.MBMessageLocalServiceUtil;
 import com.liferay.message.boards.kernel.service.MBThreadLocalServiceUtil;
 import com.liferay.message.boards.web.constants.MBPortletKeys;
-import com.liferay.message.boards.web.lar.MBPortletDataHandler;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -63,7 +62,7 @@ public class MBExportImportTest extends BasePortletExportImportTestCase {
 
 	@Override
 	public String getNamespace() {
-		return MBPortletDataHandler.NAMESPACE;
+		return "message_boards";
 	}
 
 	@Override

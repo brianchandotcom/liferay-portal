@@ -27,7 +27,6 @@ import com.liferay.message.boards.kernel.service.MBCategoryServiceUtil;
 import com.liferay.message.boards.kernel.service.MBMessageLocalServiceUtil;
 import com.liferay.message.boards.kernel.service.MBThreadFlagLocalServiceUtil;
 import com.liferay.message.boards.web.constants.MBPortletKeys;
-import com.liferay.message.boards.web.lar.MBPortletDataHandler;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
@@ -110,12 +109,10 @@ public class MBPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 
 	@Override
 	protected void addParameters(Map<String, String[]> parameterMap) {
+		addBooleanParameter(parameterMap, "message_boards", "messages", true);
 		addBooleanParameter(
-			parameterMap, MBPortletDataHandler.NAMESPACE, "messages", true);
-		addBooleanParameter(
-			parameterMap, MBPortletDataHandler.NAMESPACE, "thread-flags", true);
-		addBooleanParameter(
-			parameterMap, MBPortletDataHandler.NAMESPACE, "user-bans", true);
+			parameterMap, "message_boards", "thread-flags", true);
+		addBooleanParameter(parameterMap, "message_boards", "user-bans", true);
 	}
 
 	@Override

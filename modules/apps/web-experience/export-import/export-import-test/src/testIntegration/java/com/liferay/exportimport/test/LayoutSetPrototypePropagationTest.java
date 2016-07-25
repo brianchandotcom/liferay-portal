@@ -17,7 +17,6 @@ package com.liferay.exportimport.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
-import com.liferay.journal.content.web.constants.JournalContentPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.test.util.JournalTestUtil;
@@ -260,7 +259,7 @@ public class LayoutSetPrototypePropagationTest
 
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
 			TestPropsValues.getCompanyId(),
-			JournalContentPortletKeys.JOURNAL_CONTENT);
+			"com_liferay_journal_content_web_portlet_JournalContentPortlet");
 
 		boolean preferencesUniquePerLayout =
 			portlet.getPreferencesUniquePerLayout();
@@ -277,15 +276,15 @@ public class LayoutSetPrototypePropagationTest
 
 			String testPortletId1 = LayoutTestUtil.addPortletToLayout(
 				TestPropsValues.getUserId(), _layoutSetPrototypeLayout,
-				JournalContentPortletKeys.JOURNAL_CONTENT, "column-1",
-				preferenceMap);
+				"com_liferay_journal_content_web_portlet_JournalContentPortlet",
+				"column-1", preferenceMap);
 
 			preferenceMap.put("bulletStyle", new String[] {"Arrows"});
 
 			String testPortletId2 = LayoutTestUtil.addPortletToLayout(
 				TestPropsValues.getUserId(), _layoutSetPrototypeLayout,
-				JournalContentPortletKeys.JOURNAL_CONTENT, "column-2",
-				preferenceMap);
+				"com_liferay_journal_content_web_portlet_JournalContentPortlet",
+				"column-2", preferenceMap);
 
 			propagateChanges(group);
 
@@ -296,7 +295,9 @@ public class LayoutSetPrototypePropagationTest
 			PortletPreferences testPortletIdPortletPreferences =
 				PortletPreferencesFactoryUtil.getPortletSetup(
 					group.getGroupId(), layout,
-					JournalContentPortletKeys.JOURNAL_CONTENT, null);
+					"com_liferay_journal_content_web_portlet_JournalContent" +
+						"Portlet",
+					null);
 
 			Assert.assertEquals(
 				"Arrows",

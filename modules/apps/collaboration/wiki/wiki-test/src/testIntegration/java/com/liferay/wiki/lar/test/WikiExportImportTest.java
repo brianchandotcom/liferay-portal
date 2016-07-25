@@ -39,7 +39,6 @@ import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.wiki.service.WikiPageResourceLocalServiceUtil;
 import com.liferay.wiki.util.test.WikiTestUtil;
-import com.liferay.wiki.web.lar.WikiPortletDataHandler;
 
 import java.util.Date;
 import java.util.List;
@@ -67,7 +66,7 @@ public class WikiExportImportTest extends BasePortletExportImportTestCase {
 
 	@Override
 	public String getNamespace() {
-		return WikiPortletDataHandler.NAMESPACE;
+		return "wiki";
 	}
 
 	@Override

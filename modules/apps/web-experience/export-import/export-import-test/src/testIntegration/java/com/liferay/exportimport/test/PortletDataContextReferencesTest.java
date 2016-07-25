@@ -24,7 +24,6 @@ import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataContextFactoryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
-import com.liferay.journal.content.web.constants.JournalContentPortletKeys;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
@@ -110,7 +109,7 @@ public class PortletDataContextReferencesTest {
 	@Test
 	public void testCleanUpMissingReferences() throws Exception {
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			JournalContentPortletKeys.JOURNAL_CONTENT);
+			"com_liferay_journal_content_web_portlet_JournalContentPortlet");
 
 		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
 			_group.getGroupId());
@@ -221,7 +220,7 @@ public class PortletDataContextReferencesTest {
 	@Test
 	public void testMultipleMissingReferences() throws Exception {
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			JournalContentPortletKeys.JOURNAL_CONTENT);
+			"com_liferay_journal_content_web_portlet_JournalContentPortlet");
 
 		_portletDataContext.addReferenceElement(
 			portlet, _portletDataContext.getExportDataRootElement(),

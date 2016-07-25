@@ -16,7 +16,6 @@ package com.liferay.exportimport.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
-import com.liferay.journal.content.web.constants.JournalContentPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -126,8 +125,9 @@ public abstract class BasePrototypePropagationTestCase {
 			"showAvailableLocales", new String[] {Boolean.TRUE.toString()});
 
 		return LayoutTestUtil.addPortletToLayout(
-			userId, layout, JournalContentPortletKeys.JOURNAL_CONTENT, columnId,
-			parameterMap);
+			userId, layout,
+			"com_liferay_journal_content_web_portlet_JournalContentPortlet",
+			columnId, parameterMap);
 	}
 
 	protected abstract void doSetUp() throws Exception;

@@ -16,7 +16,6 @@ package com.liferay.mobile.device.rules.lar.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.mobile.device.rules.constants.MDRPortletKeys;
-import com.liferay.mobile.device.rules.lar.MDRPortletDataHandler;
 import com.liferay.mobile.device.rules.model.MDRRuleGroup;
 import com.liferay.mobile.device.rules.model.MDRRuleGroupInstance;
 import com.liferay.mobile.device.rules.util.test.MDRTestUtil;
@@ -51,9 +50,8 @@ public class MDRPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 	@Override
 	protected void addParameters(Map<String, String[]> parameterMap) {
 		addBooleanParameter(
-			parameterMap, MDRPortletDataHandler.NAMESPACE, "actions", true);
-		addBooleanParameter(
-			parameterMap, MDRPortletDataHandler.NAMESPACE, "rules", true);
+			parameterMap, "mobile_device_rules", "actions", true);
+		addBooleanParameter(parameterMap, "mobile_device_rules", "rules", true);
 	}
 
 	@Override

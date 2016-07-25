@@ -33,12 +33,11 @@
 		<column name="treePath" type="String" />
 		<column accessor="true" name="articleId" type="String" />
 		<column name="version" type="double" />
-		<column localized="true" name="title" type="String" />
 		<column name="urlTitle" type="String" />
-		<column localized="true" name="description" type="String" />
 		<column name="content" type="String" />
 		<column name="DDMStructureKey" type="String" />
 		<column name="DDMTemplateKey" type="String" />
+		<column name="defaultLanguageId" type="String" />
 		<column name="layoutUuid" type="String" />
 		<column name="displayDate" type="Date" />
 		<column name="expirationDate" type="Date" />

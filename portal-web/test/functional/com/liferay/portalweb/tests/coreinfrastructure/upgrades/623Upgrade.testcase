@@ -29,6 +29,12 @@
 		<execute macro="Upgrade#publishStagedSite" />
 	</command>
 
+	<command name="View623AssetPublisherArchive" priority="3">
+		<property name="test.assert.warning.exceptions" value="true" />
+
+		<execute macro="Upgrade#viewAssetPublisher" />
+	</command>
+
 	<command name="View623CalendarArchive" priority="3">
 		<property name="test.assert.warning.exceptions" value="true" />
 
@@ -45,6 +51,12 @@
 		<execute macro="Upgrade#searchForAssetsAfterUpgrade" />
 	</command>
 
+	<command name="View623NestedPortletsArchive" priority="3">
+		<property name="test.assert.warning.exceptions" value="true" />
+
+		<execute macro="Upgrade#viewNestedPortlets" />
+	</command>
+
 	<command name="View623PollsArchive" priority="3">
 		<property name="test.assert.warning.exceptions" value="true" />
 
@@ -57,10 +69,6 @@
 		<execute macro="Upgrade#addWCStructureAndTemplate" />
 
 		<execute macro="Upgrade#publishWCDraft" />
-
-		<execute macro="Upgrade#viewAssetPublisher" />
-
-		<execute macro="Upgrade#viewNestedPortlets" />
 	</command>
 
 	<command name="View623WorkflowArchive" priority="4">

@@ -340,15 +340,15 @@ public class ServicePreAction extends Action {
 			}
 		}
 
-		if (layout != null) {
+		if ((layout != null) &&
+			((layout.isPrivateLayout() &&
+			  !PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_ENABLED) ||
+			 (layout.isPublicLayout() &&
+			  !PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_ENABLED))) {
+
 			Group layoutGroup = layout.getGroup();
 
-			if (layoutGroup.isUser() &&
-				((layout.isPrivateLayout() &&
-				  !PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_ENABLED) ||
-				 (layout.isPublicLayout() &&
-				  !PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_ENABLED))) {
-
+			if (layoutGroup.isUser()) {
 				User layoutUser = UserLocalServiceUtil.getUserById(
 					companyId, layoutGroup.getClassPK());
 

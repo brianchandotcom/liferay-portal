@@ -42,12 +42,12 @@ AUI.add(
 						var startTimePicker = intervalSelector.get('startTimePicker');
 
 						instance.eventHandlers = [
-						    endDatePicker.after('selectionChange', A.bind(instance._updateEndDate, instance)),
-						    endTimePicker.after('selectionChange', A.bind(instance._updateEndDate, instance)),
-						    startDatePicker.after('selectionChange', A.bind(instance._updateStartDate, instance)),
-						    startTimePicker.after('selectionChange', A.bind(instance._updateStartDate, instance)),
-						    schedulerEvent.after('endDateChange', A.bind(instance._updateIntervalSelector, instance)),
-						    schedulerEvent.after('startDateChange', A.bind(instance._updateIntervalSelector, instance))
+							endDatePicker.after('selectionChange', A.bind(instance._updateEndDate, instance)),
+							endTimePicker.after('selectionChange', A.bind(instance._updateEndDate, instance)),
+							startDatePicker.after('selectionChange', A.bind(instance._updateStartDate, instance)),
+							startTimePicker.after('selectionChange', A.bind(instance._updateStartDate, instance)),
+							schedulerEvent.after('endDateChange', A.bind(instance._updateIntervalSelector, instance)),
+							schedulerEvent.after('startDateChange', A.bind(instance._updateIntervalSelector, instance))
 						];
 					},
 
@@ -117,6 +117,22 @@ AUI.add(
 						}
 					},
 
+					_updateSchedulerEvent: function(eventDateType, eventDate) {
+						var instance = this;
+
+						var schedulerEvent = instance.get('schedulerEvent');
+
+						var scheduler = schedulerEvent.get('scheduler');
+
+						instance._intervalSelectorUpdated = true;
+
+						schedulerEvent.set(eventDateType, eventDate);
+
+						instance._intervalSelectorUpdated = false;
+
+						scheduler.syncEventsUI();
+					},
+
 					_updateStartDate: function() {
 						var instance = this;
 
@@ -135,22 +151,6 @@ AUI.add(
 						startDate.setMinutes(startTime.getMinutes());
 
 						instance._updateSchedulerEvent('startDate', startDate);
-					},
-
-					_updateSchedulerEvent: function(eventDateType, eventDate) {
-						var instance = this;
-
-						var schedulerEvent = instance.get('schedulerEvent');
-
-						var scheduler = schedulerEvent.get('scheduler');
-
-						instance._intervalSelectorUpdated = true;
-
-						schedulerEvent.set(eventDateType, eventDate);
-
-						instance._intervalSelectorUpdated = false;
-
-						scheduler.syncEventsUI();
 					}
 				}
 			}

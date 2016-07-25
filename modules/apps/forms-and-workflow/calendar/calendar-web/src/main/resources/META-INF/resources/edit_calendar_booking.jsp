@@ -659,7 +659,7 @@ while (manageableCalendarsIterator.hasNext()) {
 		}
 	);
 
-	var intervalSelectorSchedulerEventLink = new Liferay.IntervalSelectorSchedulerEventLink(
+	new Liferay.IntervalSelectorSchedulerEventLink(
 		{
 			intervalSelector: intervalSelector,
 			schedulerEvent: placeholderSchedulerEvent

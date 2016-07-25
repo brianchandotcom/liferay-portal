@@ -131,7 +131,7 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 		}
 	);
 
-	var data = Liferay.SpreadSheet.buildEmptyRecords(<%= (records.size() < recordSet.getMinDisplayRows()) ? recordSet.getMinDisplayRows() - records.size() : 0 %>, keys);
+	var data = Liferay.SpreadSheet.buildEmptyRecords(<%= Math.max(recordSet.getMinDisplayRows() - records.size(), 0) %>, keys);
 
 	records.forEach(
 		function(item, index) {

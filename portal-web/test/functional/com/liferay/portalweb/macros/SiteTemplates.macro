@@ -33,6 +33,13 @@
 			</then>
 		</if>
 
+		<if>
+			<equals arg1="${disableChanges}" arg2="true" />
+			<then>
+				<execute function="Uncheck#uncheckHiddenToggleSwitch" locator1="ToggleSwitch#ALLOW_SITE_ADMIN_MODIFY_PAGES" />
+			</then>
+		</if>
+
 		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewSuccessMessage" />

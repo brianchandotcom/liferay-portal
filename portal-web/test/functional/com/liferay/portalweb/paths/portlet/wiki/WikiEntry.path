@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>ATTACHMENT_FILE_NAME</td>
-	<td>//div[contains(@class,'clamp-container')]/span/a[contains(@title,'${key_attachmentFileName}')]</td>
+	<td>//span[contains(@class,'lfr-card-title-text')]/a[contains(@title,'${key_attachmentFileName}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -8,52 +8,6 @@
 <tr><td rowspan="1" colspan="3">CPKnowledgebaseadminArticle</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td>BACK_TO_ICON</td>
-	<td>//span[@class='header-back-to']/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>HEADER_TITLE</td>
-	<td>//h3[@class='header-title']/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONTENT</td>
-	<td>//div[@class='kb-article-body']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ARTICLE_CONTENT_IMAGE</td>
-	<td>//p/img</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ARTICLE_CONTENT_IMAGE_CAPTION</td>
-	<td>//p[@class='caption']</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--CHILD_ARTICLE-->
-<tr>
-	<td>CHILD_ARTICLE_TITLE</td>
-	<td>//div[@class='kb-article-child']//h2[@class='kb-element-header']/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CHILD_ARTICLE_CONTENT</td>
-	<td>//div[@class='kb-article-child']//div[@class='kb-element-body']/p</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--CATEGORY-->
 <tr>
 	<td>CATEGORY_HEADER</td>
@@ -63,22 +17,6 @@
 <tr>
 	<td>CATEGORY_LINKS</td>
 	<td>//div[@class='kb-article-assets']/span/a[contains(.,'${key_categoryName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--RELATED_ASSETS-->
-<tr>
-	<td>RELATED_ASSETS_HEADER</td>
-	<td>//h2[contains(@class,'asset-links-title')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>RELATED_ASSETS_LINKS</td>
-	<td>//ul[@class='asset-links-list']/li/span/a[contains(.,'${key_kbArticleRelatedAssetTitle}')]</td>
 	<td></td>
 </tr>
 </tbody>

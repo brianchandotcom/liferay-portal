@@ -277,6 +277,33 @@
 		</execute>
 	</command>
 
+	<command name="AddKBArticleWithHTMLViaKBAdmin" priority="4">
+		<var name="kbArticleContentSource">
+			<![CDATA[<b>Knowledge Base&rsquo;s Article Content</b>]]>
+		</var>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Knowledge Base" />
+		</execute>
+
+		<execute macro="KBArticle#addCP">
+			<var name="kbArticleAddViaSource" value="true" />
+			<var name="kbArticleContentSource" value="${kbArticleContentSource}" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
+		</execute>
+
+		<execute function="Pause" value1="5000" />
+
+		<execute macro="KBArticle#viewCPWithHTML">
+			<var name="kbArticleContent" value="Knowledge Base’s Article Content" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
+		</execute>
+
+		<execute function="AssertElementNotPresent" locator1="KnowledgeBaseArticle#CONTENT" value1="${kbArticleContentSource}" />
+	</command>
+
 	<command name="AddKBArticleWithInvalidAttachmentSize" priority="3">
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="Server Administration" />
@@ -348,33 +375,6 @@
 			<var name="kbMissingRequiredCategory" value="true" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
-	</command>
-
-	<command name="AddKBArticleWithSourceViaKBAdmin" priority="4">
-		<var name="kbArticleContentSource">
-			<![CDATA[<b>Knowledge Base&rsquo;s Article Content</b>]]>
-		</var>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoSitesContent">
-			<var name="portlet" value="Knowledge Base" />
-		</execute>
-
-		<execute macro="KBArticle#addCP">
-			<var name="kbArticleAddViaSource" value="true" />
-			<var name="kbArticleContentSource" value="${kbArticleContentSource}" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-		</execute>
-
-		<execute function="Pause" value1="5000" />
-
-		<execute macro="KBArticle#viewCP">
-			<var name="kbArticleContent" value="Knowledge Base’s Article Content" />
-			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-		</execute>
-
-		<execute function="AssertTextNotEquals" locator1="KnowledgeBaseArticle#CONTENT" value1="${kbArticleContentSource}" />
 	</command>
 
 	<command name="AddKBFolder" priority="4">

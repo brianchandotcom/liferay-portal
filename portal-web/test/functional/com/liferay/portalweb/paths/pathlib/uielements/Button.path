@@ -649,6 +649,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SELECT_VOCABULARY</td>
+	<td>//button[contains(@title,'Select Vocabulary')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECT_WEB_CONTENT</td>
 	<td>//button[contains(.,'Select Web Content')]</td>
 	<td></td>

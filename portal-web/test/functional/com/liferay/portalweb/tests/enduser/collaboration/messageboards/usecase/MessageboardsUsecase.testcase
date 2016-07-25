@@ -61,6 +61,8 @@
 
 		<execute function="AssertClick" locator1="Button#POST_NEW_THREAD" value1="Post New Thread" />
 
+		<execute function="AssertElementPresent" locator1="TextInput#SUBJECT" />
+
 		<execute function="Type" locator1="TextInput#SUBJECT" value1="Message Boards Subject" />
 		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="CKEditor#BODY_FIELD" value1="Message Boards Body" />
 

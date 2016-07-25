@@ -102,8 +102,11 @@
 		<if>
 			<equals arg1="${kbArticleAddViaSource}" arg2="true" />
 			<then>
-				<execute function="AssertClick" locator1="Button#SOURCE" value1="Source" />
-				<execute function="Type" locator1="CKEditor#FIELD_SOURCE_ON" value1="${kbArticleContentSource}" />
+				<execute function="Click" locator1="AlloyEditor#CONTENT_FIELD" />
+
+				<execute function="Click" locator1="Button#EDITOR_SWITCH" />
+
+				<execute function="Type#sendKeysAceEditor" locator1="TextArea#ACE_EDITOR" value1="${kbArticleContentSource}" />
 			</then>
 			<else>
 				<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${kbArticleContent}" />
@@ -758,10 +761,10 @@
 		<if>
 			<equals arg1="${applyNumericalPrefix}" arg2="true" />
 			<then>
-				<execute function="Check" locator1="CPKnowledgebaseadminUploadZipFile#PRIORITIZATION_STRATEGY_CHECKBOX" />
+				<execute function="Check" locator1="Checkbox#PRIORITIZATION_STRATEGY" />
 			</then>
 			<else>
-				<execute function="Uncheck" locator1="CPKnowledgebaseadminUploadZipFile#PRIORITIZATION_STRATEGY_CHECKBOX" />
+				<execute function="Uncheck" locator1="Checkbox#PRIORITIZATION_STRATEGY" />
 			</else>
 		</if>
 
@@ -891,7 +894,7 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="CPKnowledgebaseadminAddarticle#CATEGORIZATION_SELECT_BUTTON" value1="Select" />
+		<execute function="AssertClick" locator1="Button#SELECT_VOCABULARY" value1="Select" />
 		<execute function="AssertClick" locator1="CPKnowledgebaseadminAddarticle#CATEGORIES_CATEGORY_UNSELECTED" value1="${categoryName}" />
 		<execute function="AssertElementPresent" locator1="CPKnowledgebaseadminAddarticle#CATEGORIES_CATEGORY_SELECTED" value1="${categoryName}" />
 		<execute function="Click" locator1="CPKnowledgebaseadminAddarticle#CATEGORIES_CLOSE_BUTTON" />
@@ -1234,6 +1237,15 @@
 				<execute function="AssertAlertNotPresent" locator1="KnowledgeBaseArticle#ATTACHMENTS_SAVED_ATTACHMENTS_CONTAINER" />
 			</then>
 		</if>
+	</command>
+
+	<command name="viewCPWithHTML">
+		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
+
+		<execute function="AssertClick" locator1="KnowledgeBase#DESCRIPTIVE_VIEW_ARTICLE_TITLE" value1="${kbArticleTitle}" />
+
+		<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#TITLE" value1="${kbArticleTitle}" />
+		<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#HTML_BOLD_CONTENT" value1="${kbArticleContent}" />
 	</command>
 
 	<command name="viewDefaultCP">

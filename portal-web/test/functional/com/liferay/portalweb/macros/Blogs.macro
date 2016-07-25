@@ -167,6 +167,15 @@
 	<command name="addEntryWithUploadedCoverImage">
 		<execute macro="BlogsNavigator#gotoAddEntry" />
 
+		<execute function="AssertClick" locator1="BlogsEntry#ENTRY_COVER_IMAGE_SELECT_FILE" value1="Select File" />
+
+		<execute macro="ItemSelector#uploadFile">
+			<var name="navTab" value="${navTab}" />
+			<var name="uploadFileName" value="${uploadFileName}" />
+		</execute>
+
+		<execute function="Pause" locator1="5000" />
+
 		<execute macro="BlogsEntry#addTitle">
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
@@ -176,15 +185,6 @@
 			<var name="entrySubtitle" value="${entrySubtitle}" />
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
-
-		<execute function="AssertClick" locator1="BlogsEntry#ENTRY_COVER_IMAGE_SELECT_FILE" value1="Select File" />
-
-		<execute macro="ItemSelector#uploadFile">
-			<var name="navTab" value="${navTab}" />
-			<var name="uploadFileName" value="${uploadFileName}" />
-		</execute>
-
-		<execute function="Pause" locator1="5000" />
 	</command>
 
 	<command name="addViaAP">

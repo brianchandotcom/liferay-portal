@@ -909,13 +909,13 @@
 		<execute macro="Workflow#_gotoPendingFilter" />
 
 		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
+		<var name="key_workflowTask" value="${workflowTask}" />
 
-		<execute function="AssertTextEquals" locator1="WorkflowSubmissions#PENDING_TABLE_DEFINITION" value1="${workflowDefinition}" />
-		<execute function="AssertTextEquals" locator1="WorkflowSubmissions#PENDING_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />
-		<execute function="AssertTextEquals" locator1="WorkflowSubmissions#PENDING_TABLE_ASSET_TYPE" value1="${workflowAssetType}" />
-		<execute function="AssertTextEquals" locator1="WorkflowSubmissions#PENDING_TABLE_STATUS" value1="${workflowTask}" />
-		<execute function="AssertElementPresent" locator1="WorkflowSubmissions#PENDING_TABLE_LAST_ACTIVITY_DATE" />
-		<execute function="AssertElementPresent" locator1="WorkflowSubmissions#PENDING_TABLE_END_DATE" />
+		<execute function="AssertTextEquals" locator1="MyWorkflowTasks#COMPLETED_TABLE_TASK" value1="${workflowTask}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="MyWorkflowTasks#COMPLETED_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />
+		<execute function="AssertTextEquals" locator1="MyWorkflowTasks#COMPLETED_TABLE_ASSET_TYPE" value1="${workflowAssetType}" />
+		<execute function="AssertElementPresent" locator1="MyWorkflowTasks#COMPLETED_TABLE_LAST_ACTIVITY_DATE" />
+		<execute function="AssertElementPresent" locator1="MyWorkflowTasks#COMPLETED_TABLE_DUE_DATE" />
 	</command>
 
 	<command name="viewPreviewCategories">

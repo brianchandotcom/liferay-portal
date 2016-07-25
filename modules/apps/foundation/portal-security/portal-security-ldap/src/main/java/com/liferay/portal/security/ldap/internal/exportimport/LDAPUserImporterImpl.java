@@ -623,7 +623,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 	}
 
 	protected String escapeValue(String value) {
-		return StringUtil.replace(value, "\\,", "\\\\,");
+		return StringUtil.replace(value, _UNESCAPED_CHARS, _ESCAPED_CHARS);
 	}
 
 	protected User getUser(long companyId, LDAPUser ldapUser) throws Exception {
@@ -1576,9 +1576,17 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 		"prefixId", "skypeSn", "smsSn", "suffixId", "twitterSn"
 	};
 
+	private static final String[] _ESCAPED_CHARS = {
+		"\\\\,", "\\\\#", "\\\\+", "\\\\<", "\\\\>", "\\\\;", "\\\\=", "\\\\ "
+	};
+
 	private static final String _IMPORT_BY_GROUP = "group";
 
 	private static final String _IMPORT_BY_USER = "user";
+
+	private static final String[] _UNESCAPED_CHARS = {
+		"\\,", "\\#", "\\+", "\\<", "\\>", "\\;", "\\=", "\\ "
+	};
 
 	private static final String _USER_PASSWORD_SCREEN_NAME = "screenName";
 

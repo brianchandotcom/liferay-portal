@@ -63,6 +63,7 @@ import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -1215,6 +1216,7 @@ public class DLFileEntryFinderTest {
 		}
 	}
 
+	@Ignore
 	@Test
 	public void testFindByNoAssets() throws Exception {
 		AssetEntryLocalServiceUtil.deleteEntry(

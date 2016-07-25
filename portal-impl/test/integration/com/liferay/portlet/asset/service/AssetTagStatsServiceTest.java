@@ -37,6 +37,7 @@ import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -55,6 +56,7 @@ public class AssetTagStatsServiceTest {
 		_group = GroupTestUtil.addGroup();
 	}
 
+	@Ignore
 	@Test
 	public void testGetTagStats() throws Exception {
 		ServiceContext serviceContext =

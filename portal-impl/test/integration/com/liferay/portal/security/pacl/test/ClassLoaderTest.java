@@ -32,7 +32,6 @@ import java.net.URLClassLoader;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -221,10 +220,15 @@ public class ClassLoaderTest {
 		}
 	}
 
-	@Ignore
 	@Test
 	public void testGet18() throws Exception {
-		PortletClassLoaderUtil.getClassLoader("pacl-1-test-portlet");
+		try {
+			PortletClassLoaderUtil.getClassLoader("pacl-1-test-portlet");
+
+			Assert.fail();
+		}
+		catch (SecurityException se) {
+		}
 	}
 
 	@Test

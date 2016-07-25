@@ -95,6 +95,18 @@ public class QuartzTriggerFactory implements TriggerFactory {
 			CronScheduleBuilder.cronSchedule(cronExpression));
 	}
 
+	@Override
+	public Trigger createTrigger(
+		Trigger trigger, Date startDate, Date endDate) {
+
+		org.quartz.Trigger wrappedTrigger =
+			(org.quartz.Trigger)trigger.getWrappedTrigger();
+
+		return createTrigger(
+			trigger.getJobName(), trigger.getGroupName(), startDate, endDate,
+			wrappedTrigger.getScheduleBuilder());
+	}
+
 	protected Trigger createTrigger(
 		String jobName, String groupName, Date startDate, Date endDate,
 		ScheduleBuilder<?> scheduleBuilder) {

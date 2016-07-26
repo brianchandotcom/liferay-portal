@@ -17,6 +17,7 @@ package com.liferay.portal.service.impl;
 import com.liferay.portal.kernel.exception.ContactBirthdayException;
 import com.liferay.portal.kernel.exception.ContactClassNameException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexable;
@@ -36,6 +37,19 @@ public class ContactLocalServiceImpl extends ContactLocalServiceBaseImpl {
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
+	public Contact addContact(Contact contact) {
+		try {
+			validateBirthday(contact.getBirthday());
+		}
+		catch (ContactBirthdayException cbe) {
+			throw new SystemException(cbe);
+		}
+
+		return super.addContact(contact);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
 	public Contact addContact(
 			long userId, String className, long classPK, String emailAddress,
 			String firstName, String middleName, String lastName, long prefixId,
@@ -48,6 +62,8 @@ public class ContactLocalServiceImpl extends ContactLocalServiceBaseImpl {
 		Date birthday = PortalUtil.getDate(
 			birthdayMonth, birthdayDay, birthdayYear,
 			ContactBirthdayException.class);
+
+		validateBirthday(birthday);
 
 		validate(className, classPK);
 
@@ -143,6 +159,19 @@ public class ContactLocalServiceImpl extends ContactLocalServiceBaseImpl {
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
+	public Contact updateContact(Contact contact) {
+		try {
+			validateBirthday(contact.getBirthday());
+		}
+		catch (ContactBirthdayException cbe) {
+			throw new SystemException(cbe);
+		}
+
+		return super.updateContact(contact);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
 	public Contact updateContact(
 			long contactId, String emailAddress, String firstName,
 			String middleName, String lastName, long prefixId, long suffixId,
@@ -154,6 +183,8 @@ public class ContactLocalServiceImpl extends ContactLocalServiceBaseImpl {
 		Date birthday = PortalUtil.getDate(
 			birthdayMonth, birthdayDay, birthdayYear,
 			ContactBirthdayException.class);
+
+		validateBirthday(birthday);
 
 		Contact contact = contactPersistence.findByPrimaryKey(contactId);
 
@@ -184,6 +215,15 @@ public class ContactLocalServiceImpl extends ContactLocalServiceBaseImpl {
 			className.equals(User.class.getName()) || (classPK <= 0)) {
 
 			throw new ContactClassNameException();
+		}
+	}
+
+	protected void validateBirthday(Date birthday)
+		throws ContactBirthdayException {
+
+		if ((birthday != null) && birthday.after(new Date())) {
+			throw new ContactBirthdayException(
+				"Birthday cannot be set to a date in future.");
 		}
 	}
 

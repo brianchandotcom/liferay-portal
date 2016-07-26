@@ -7,6 +7,7 @@ Export-Package:\
 	com.liferay.asset.publisher.web.display.context,\
 	com.liferay.asset.publisher.web.portlet,\
 	com.liferay.asset.publisher.web.portlet.action,\
+	com.liferay.asset.publisher.web.servlet.taglib.ui,\
 	com.liferay.asset.publisher.web.upgrade.v1_0_0,\
 	com.liferay.asset.publisher.web.util
 Import-Package: com.liferay.portal.kernel.portlet;version="${range;[=,=+)}",*

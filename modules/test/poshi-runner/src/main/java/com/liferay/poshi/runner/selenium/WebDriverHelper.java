@@ -1118,6 +1118,15 @@ public class WebDriverHelper {
 
 			javascriptExecutor.executeScript(
 				"arguments[0].scrollIntoView(false);", webElement);
+
+			scrollBy(webDriver, "0, 50");
+
+			if (isObscured(webDriver, webElement)) {
+				javascriptExecutor.executeScript(
+					"arguments[0].scrollIntoView();", webElement);
+
+				scrollBy(webDriver, "0, -50");
+			}
 		}
 	}
 

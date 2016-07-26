@@ -124,10 +124,6 @@ public class SPAUtil {
 		requestTimeout = GetterUtil.getInteger(
 			spaConfiguration.requestTimeout(), requestTimeout);
 
-		if (requestTimeout > 0) {
-			requestTimeout *= Time.SECOND;
-		}
-
 		return requestTimeout;
 	}
 
@@ -140,10 +136,6 @@ public class SPAUtil {
 		userNotificationTimeout = GetterUtil.getInteger(
 			spaConfiguration.userNotificationTimeout(),
 			userNotificationTimeout);
-
-		if (userNotificationTimeout > 0) {
-			userNotificationTimeout *= Time.SECOND;
-		}
 
 		return userNotificationTimeout;
 	}

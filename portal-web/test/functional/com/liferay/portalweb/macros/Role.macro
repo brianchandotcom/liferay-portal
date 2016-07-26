@@ -630,6 +630,7 @@
 			</if>
 		</for>
 
+		<execute function="ScrollWebElementIntoView" locator1="RolesPermissions#SAVE_BUTTON" />
 		<execute function="AssertClick" locator1="RolesPermissions#SAVE_BUTTON" value1="Save" />
 
 		<execute macro="Alert#viewSuccessMessage" />

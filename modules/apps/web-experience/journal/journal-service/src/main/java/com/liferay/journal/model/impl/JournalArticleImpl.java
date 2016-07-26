@@ -519,9 +519,6 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 		JournalArticleImpl.class);
 
 	@CacheField(propagateToInterface = true)
-	private String _defaultLanguageId;
-
-	@CacheField(propagateToInterface = true)
 	private Document _document;
 
 	private long _imagesFolderId;

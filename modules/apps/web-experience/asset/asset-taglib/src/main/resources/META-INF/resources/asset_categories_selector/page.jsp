@@ -21,7 +21,6 @@ List<String[]> categoryIdsTitles = (List<String[]>)request.getAttribute("liferay
 String className = (String)request.getAttribute("liferay-asset:asset-categories-selector:className");
 long classTypePK = GetterUtil.getLong((String)request.getAttribute("liferay-asset:asset-categories-selector:classTypePK"));
 String eventName = (String)request.getAttribute("liferay-asset:asset-categories-selector:eventName");
-long[] groupIds = (long[])request.getAttribute("liferay-asset:asset-categories-selector:groupIds");
 String hiddenInput = (String)request.getAttribute("liferay-asset:asset-categories-selector:hiddenInput");
 PortletURL portletURL = (PortletURL)request.getAttribute("liferay-asset:asset-categories-selector:portletURL");
 boolean showRequiredLabel = GetterUtil.getBoolean((String)request.getAttribute("liferay-asset:asset-categories-selector:showRequiredLabel"), true);
@@ -60,7 +59,7 @@ int maxEntries = GetterUtil.getInteger(PropsUtil.get(PropsKeys.ASSET_CATEGORIES_
 					</c:if>
 				</label>
 
-				<div class="lfr-tags-selector-content" data-vocabulary-id="<%= vocabulary.getVocabularyId() %>" id="<portlet:namespace />assetCategoriesSelector_<%= vocabulary.getVocabularyId() %>">
+				<div class="lfr-tags-selector-content" id="<portlet:namespace />assetCategoriesSelector_<%= vocabulary.getVocabularyId() %>">
 					<aui:input name="<%= hiddenInput + StringPool.UNDERLINE + vocabulary.getVocabularyId() %>" type="hidden" />
 				</div>
 			</span>
@@ -72,9 +71,9 @@ int maxEntries = GetterUtil.getInteger(PropsUtil.get(PropsKeys.ASSET_CATEGORIES_
 			<aui:script use="liferay-asset-taglib-categories-selector">
 				new Liferay.AssetTaglibCategoriesSelector(
 					{
+						categoryIds: '<%= categoryIdsTitle[0] %>',
+						categoryTitles: '<%= HtmlUtil.escapeJS(categoryIdsTitle[1]) %>',
 						contentBox: '#<portlet:namespace />assetCategoriesSelector_<%= vocabulary.getVocabularyId() %>',
-						curEntries: '<%= HtmlUtil.escapeJS(categoryIdsTitle[1]) %>',
-						curEntryIds: '<%= categoryIdsTitle[0] %>',
 						eventName: '<%= eventName %>',
 						hiddenInput: '#<portlet:namespace /><%= hiddenInput + StringPool.UNDERLINE + vocabulary.getVocabularyId() %>',
 						instanceVar: '<portlet:namespace />',
@@ -88,7 +87,6 @@ int maxEntries = GetterUtil.getInteger(PropsUtil.get(PropsKeys.ASSET_CATEGORIES_
 
 						singleSelect: <%= !vocabulary.isMultiValued() %>,
 						title: '<liferay-ui:message arguments="<%= vocabulary.getTitle(locale) %>" key="select-x" translateArguments="<%= false %>" />',
-						vocabularyGroupIds: '<%= StringUtil.merge(groupIds) %>',
 						vocabularyIds: '<%= String.valueOf(vocabulary.getVocabularyId()) %>'
 					}
 				).render();
@@ -112,9 +110,9 @@ int maxEntries = GetterUtil.getInteger(PropsUtil.get(PropsKeys.ASSET_CATEGORIES_
 		<aui:script use="liferay-asset-taglib-categories-selector">
 			new Liferay.AssetTaglibCategoriesSelector(
 				{
+					categoryIds: '<%= categoryIdsTitle[0] %>',
+					categoryTitles: '<%= HtmlUtil.escapeJS(categoryIdsTitle[1]) %>',
 					contentBox: '#<portlet:namespace />assetCategoriesSelector',
-					curEntries: '<%= HtmlUtil.escapeJS(categoryIdsTitle[1]) %>',
-					curEntryIds: '<%= categoryIdsTitle[0] %>',
 					eventName: '<%= eventName %>',
 					hiddenInput: '#<portlet:namespace /><%= hiddenInput %>',
 					instanceVar: '<portlet:namespace />',
@@ -125,7 +123,6 @@ int maxEntries = GetterUtil.getInteger(PropsUtil.get(PropsKeys.ASSET_CATEGORIES_
 						portletURL: '<%= portletURL.toString() %>',
 					</c:if>
 
-					vocabularyGroupIds: '<%= StringUtil.merge(groupIds) %>',
 					vocabularyIds: '<%= ListUtil.toString(vocabularies, "vocabularyId") %>'
 				}
 			).render();

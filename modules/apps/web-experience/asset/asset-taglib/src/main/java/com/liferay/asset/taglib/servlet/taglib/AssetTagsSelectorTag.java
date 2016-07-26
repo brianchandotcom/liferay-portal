@@ -62,10 +62,6 @@ public class AssetTagsSelectorTag extends IncludeTag {
 		_classPK = classPK;
 	}
 
-	public void setCurTags(String curTags) {
-		_curTags = curTags;
-	}
-
 	public void setGroupIds(long[] groupIds) {
 		_groupIds = groupIds;
 	}
@@ -93,6 +89,10 @@ public class AssetTagsSelectorTag extends IncludeTag {
 		_removeCallback = removeCallback;
 	}
 
+	public void setTagNames(String tagNames) {
+		_tagNames = tagNames;
+	}
+
 	@Override
 	protected void cleanUp() {
 		_addCallback = null;
@@ -100,33 +100,12 @@ public class AssetTagsSelectorTag extends IncludeTag {
 		_autoFocus = false;
 		_className = null;
 		_classPK = 0;
-		_curTags = null;
 		_groupIds = null;
 		_hiddenInput = "assetTagNames";
 		_id = null;
 		_ignoreRequestValue = false;
 		_removeCallback = null;
-	}
-
-	protected String getCurTags() {
-		String curTags = _curTags;
-
-		if (Validator.isNotNull(_className) && (_classPK > 0)) {
-			List<AssetTag> tags = AssetTagServiceUtil.getTags(
-				_className, _classPK);
-
-			curTags = ListUtil.toString(tags, AssetTag.NAME_ACCESSOR);
-		}
-
-		if (!_ignoreRequestValue) {
-			String curTagsParam = request.getParameter(_hiddenInput);
-
-			if (Validator.isNotNull(curTagsParam)) {
-				curTags = curTagsParam;
-			}
-		}
-
-		return curTags;
+		_tagNames = null;
 	}
 
 	protected String getEventName() {
@@ -202,6 +181,27 @@ public class AssetTagsSelectorTag extends IncludeTag {
 		return null;
 	}
 
+	protected String getTagNames() {
+		String tagNames = _tagNames;
+
+		if (Validator.isNotNull(_className) && (_classPK > 0)) {
+			List<AssetTag> tags = AssetTagServiceUtil.getTags(
+				_className, _classPK);
+
+			tagNames = ListUtil.toString(tags, AssetTag.NAME_ACCESSOR);
+		}
+
+		if (!_ignoreRequestValue) {
+			String curTagsParam = request.getParameter(_hiddenInput);
+
+			if (Validator.isNotNull(curTagsParam)) {
+				tagNames = curTagsParam;
+			}
+		}
+
+		return tagNames;
+	}
+
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute(
@@ -214,8 +214,6 @@ public class AssetTagsSelectorTag extends IncludeTag {
 			"liferay-asset:asset-tags-selector:autoFocus",
 			String.valueOf(_autoFocus));
 		request.setAttribute(
-			"liferay-asset:asset-tags-selector:curTags", getCurTags());
-		request.setAttribute(
 			"liferay-asset:asset-tags-selector:eventName", getEventName());
 		request.setAttribute(
 			"liferay-asset:asset-tags-selector:groupIds", getGroupIds());
@@ -227,6 +225,8 @@ public class AssetTagsSelectorTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-asset:asset-tags-selector:removeCallback",
 			String.valueOf(_removeCallback));
+		request.setAttribute(
+			"liferay-asset:asset-tags-selector:tagNames", getTagNames());
 	}
 
 	private static final String _PAGE = "/asset_tags_selector/page.jsp";
@@ -236,11 +236,11 @@ public class AssetTagsSelectorTag extends IncludeTag {
 	private boolean _autoFocus;
 	private String _className;
 	private long _classPK;
-	private String _curTags;
 	private long[] _groupIds;
 	private String _hiddenInput = "assetTagNames";
 	private String _id;
 	private boolean _ignoreRequestValue;
 	private String _removeCallback;
+	private String _tagNames;
 
 }

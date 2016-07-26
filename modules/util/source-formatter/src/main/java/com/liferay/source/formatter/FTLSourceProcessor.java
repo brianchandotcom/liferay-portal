@@ -153,7 +153,9 @@ public class FTLSourceProcessor extends BaseSourceProcessor {
 
 		content = fixEmptyLinesBetweenTags(content);
 
-		return formatFTL(fileName, content);
+		content = formatFTL(fileName, content);
+
+		return StringUtil.replace(content, "\n\n\n", "\n\n");
 	}
 
 	@Override

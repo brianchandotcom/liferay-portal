@@ -26,6 +26,18 @@ import java.util.Map;
  */
 public class DDMFormEvaluationResult {
 
+	public DDMFormFieldEvaluationResult geDDMFormFieldEvaluationResult(
+		String fieldName, String instanceId) {
+
+		String key = _getKey(fieldName, instanceId);
+
+		Map<String, DDMFormFieldEvaluationResult>
+			ddmFormFieldEvaluationResultsMap =
+				getDDMFormFieldEvaluationResultsMap();
+
+		return ddmFormFieldEvaluationResultsMap.get(key);
+	}
+
 	@JSON(name = "fields")
 	public List<DDMFormFieldEvaluationResult>
 		getDDMFormFieldEvaluationResults() {

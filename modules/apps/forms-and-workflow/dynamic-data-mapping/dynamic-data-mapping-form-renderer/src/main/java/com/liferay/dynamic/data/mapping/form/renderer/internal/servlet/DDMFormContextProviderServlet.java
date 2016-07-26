@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.form.evaluator.internal.servlet;
+package com.liferay.dynamic.data.mapping.form.renderer.internal.servlet;
 
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluationResult;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluator;
@@ -46,13 +46,13 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"osgi.http.whiteboard.context.path=/dynamic-data-mapping-form-evaluator",
-		"osgi.http.whiteboard.servlet.name=com.liferay.dynamic.data.mapping.form.evaluator.internal.servlet.DDMFormEvaluatorServlet",
-		"osgi.http.whiteboard.servlet.pattern=/dynamic-data-mapping-form-evaluator/*"
+		"osgi.http.whiteboard.context.path=/dynamic-data-mapping-form-context-provider",
+		"osgi.http.whiteboard.servlet.name=com.liferay.dynamic.data.mapping.form.renderer.internal.servlet.DDMFormContextProviderServlet",
+		"osgi.http.whiteboard.servlet.pattern=/dynamic-data-mapping-form-context-provider/*"
 	},
 	service = Servlet.class
 )
-public class DDMFormEvaluatorServlet extends HttpServlet {
+public class DDMFormContextProviderServlet extends HttpServlet {
 
 	protected DDMFormEvaluationResult doEvaluate(
 		String serializedDDMForm, String serializedDDMFormValues,
@@ -132,7 +132,7 @@ public class DDMFormEvaluatorServlet extends HttpServlet {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DDMFormEvaluatorServlet.class);
+		DDMFormContextProviderServlet.class);
 
 	private static final long serialVersionUID = 1L;
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.lpkg.overwrite;
+package com.liferay.portal.lpkg.override;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -52,16 +52,16 @@ import org.osgi.framework.Version;
 /**
  * @author Matthew Tambara
  */
-public class LPKGOverwriteTest {
+public class LPKGOverrideTest {
 
 	@Test
-	public void testOverwriteLPKG() throws IOException {
+	public void testOverrideLPKG() throws IOException {
 		String liferayHome = System.getProperty("liferay.home");
 
 		Assert.assertNotNull(
 			"Missing system property \"liferay.home\"", liferayHome);
 
-		File file = new File(liferayHome, "/osgi/marketplace/overwritten");
+		File file = new File(liferayHome, "/osgi/marketplace/override");
 
 		if (file.exists()) {
 			String[] files = file.list();
@@ -76,7 +76,7 @@ public class LPKGOverwriteTest {
 			file.mkdir();
 		}
 
-		Map<String, String> overwrites = new HashMap<>();
+		Map<String, String> overrides = new HashMap<>();
 
 		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
 				Paths.get(liferayHome, "/osgi/marketplace"))) {
@@ -84,7 +84,7 @@ public class LPKGOverwriteTest {
 			for (Path lpkgPath : directoryStream) {
 				String lpkgPathString = lpkgPath.toString();
 
-				if (lpkgPathString.endsWith("overwritten")) {
+				if (lpkgPathString.endsWith("override")) {
 					continue;
 				}
 
@@ -114,7 +114,7 @@ public class LPKGOverwriteTest {
 										liferayHome, "/osgi/static/", name),
 									StandardCopyOption.REPLACE_EXISTING);
 
-								overwrites.put(
+								overrides.put(
 									"static.".concat(
 										name.substring(0, name.length() - 4)),
 									null);
@@ -134,15 +134,15 @@ public class LPKGOverwriteTest {
 		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
 				Paths.get(file.toURI()))) {
 
-			for (Path overwritePath : directoryStream) {
-				String overwriteString = overwritePath.toString();
+			for (Path overridePath : directoryStream) {
+				String overrideString = overridePath.toString();
 
-				if (overwriteString.endsWith(".war")) {
-					Path fileName = overwritePath.getFileName();
+				if (overrideString.endsWith(".war")) {
+					Path fileName = overridePath.getFileName();
 
 					String fileNameString = fileName.toString();
 
-					overwrites.put(
+					overrides.put(
 						"war.".concat(
 							fileNameString.substring(
 								0, fileNameString.length() - 4)),
@@ -151,12 +151,12 @@ public class LPKGOverwriteTest {
 					continue;
 				}
 
-				if (!overwriteString.endsWith(".jar")) {
+				if (!overrideString.endsWith(".jar")) {
 					continue;
 				}
 
 				try (FileSystem fileSystem = FileSystems.newFileSystem(
-						overwritePath, null)) {
+						overridePath, null)) {
 
 					Path path = fileSystem.getPath("META-INF/MANIFEST.MF");
 
@@ -181,7 +181,7 @@ public class LPKGOverwriteTest {
 
 						attributes.putValue("Bundle-Version", versionString);
 
-						overwrites.put(
+						overrides.put(
 							attributes.getValue("Bundle-SymbolicName"),
 							versionString);
 
@@ -195,9 +195,9 @@ public class LPKGOverwriteTest {
 				}
 			}
 
-			StringBundler sb = new StringBundler(overwrites.size() * 4);
+			StringBundler sb = new StringBundler(overrides.size() * 4);
 
-			for (Entry<String, String> entry : overwrites.entrySet()) {
+			for (Entry<String, String> entry : overrides.entrySet()) {
 				sb.append(entry.getKey());
 				sb.append(StringPool.COLON);
 				sb.append(entry.getValue());
@@ -207,7 +207,7 @@ public class LPKGOverwriteTest {
 			sb.setIndex(sb.index() - 1);
 
 			Files.write(
-				Paths.get(liferayHome, "/overwrites"),
+				Paths.get(liferayHome, "/overrides"),
 				Arrays.asList(sb.toString()), StandardCharsets.UTF_8,
 				StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING,
 				StandardOpenOption.WRITE);

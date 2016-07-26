@@ -102,11 +102,6 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>curTags</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
 			<name>groupIds</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -129,6 +124,11 @@
 		</attribute>
 		<attribute>
 			<name>removeCallback</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>tagNames</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

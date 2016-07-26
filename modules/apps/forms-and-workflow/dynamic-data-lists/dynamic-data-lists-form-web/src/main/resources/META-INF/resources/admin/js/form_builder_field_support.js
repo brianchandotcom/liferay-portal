@@ -105,7 +105,18 @@ AUI.add(
 						function(context) {
 							var settingsForm = instance._createSettingsForm(context);
 
-							instance._updateSettingsFormValues(settingsForm);
+							var visitor = settingsForm.get('visitor');
+
+							visitor.set(
+								'fieldHandler',
+								function(formFieldContext) {
+									instance._fillSettingsFormField(formFieldContext, settingsForm);
+								}
+							);
+
+							visitor.visit();
+
+							settingsForm.set('context', context);
 
 							return settingsForm;
 						}
@@ -144,6 +155,28 @@ AUI.add(
 						templateNamespace: 'ddm.settings_form'
 					}
 				);
+			},
+
+			_fillSettingsFormField: function(formFieldContext, settingsForm) {
+				var instance = this;
+
+				var instanceContext = instance.get('context');
+
+				var contextKey = RendererUtil.getFieldNameFromQualifiedName(formFieldContext.name);
+
+				if (contextKey === 'name') {
+					var fieldName = instanceContext.fieldName;
+
+					if (!fieldName) {
+						fieldName = settingsForm._generateFieldName();
+					}
+
+					formFieldContext.value = fieldName;
+					instanceContext.fieldName = fieldName;
+				}
+				else if (contextKey in instanceContext) {
+					formFieldContext.value = instanceContext[contextKey];
+				}
 			},
 
 			_renderFormBuilderField: function() {

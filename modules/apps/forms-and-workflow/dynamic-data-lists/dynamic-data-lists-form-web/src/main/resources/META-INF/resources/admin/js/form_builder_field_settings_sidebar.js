@@ -132,6 +132,8 @@ AUI.add(
 
 								instance._configureSideBar();
 
+								field.setAttrs(field.getSettings(settingsForm));
+
 								instance.fire(
 									'fieldSettingsFormLoaded',
 									{

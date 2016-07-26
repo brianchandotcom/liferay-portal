@@ -14,17 +14,49 @@
 
 package com.liferay.asset.kernel.util;
 
+import com.liferay.portal.kernel.util.StringPool;
+
+import java.io.IOException;
+
+import java.util.Locale;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * @author Julio Camarero
+ * @deprecated As of 7.1.0
  */
+@Deprecated
 public abstract class BaseAssetEntryQueryProcessor
 	implements AssetEntryQueryProcessor {
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	@Override
 	public String getKey() {
 		Class<?> clazz = getClass();
 
 		return clazz.getSimpleName();
+	}
+
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
+	public String getTitle(Locale locale) {
+		return StringPool.BLANK;
+	}
+
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
+	public void include(
+			HttpServletRequest request, HttpServletResponse response)
+		throws IOException {
 	}
 
 }

@@ -14,6 +14,8 @@
  */
 --%>
 
+<%@ include file="/init.jsp" %>
+
 <%
 String emailFromName = ParamUtil.getString(request, "preferences--emailFromName--", AssetPublisherUtil.getEmailFromName(portletPreferences, company.getCompanyId()));
 String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAddress--", AssetPublisherUtil.getEmailFromAddress(portletPreferences, company.getCompanyId()));

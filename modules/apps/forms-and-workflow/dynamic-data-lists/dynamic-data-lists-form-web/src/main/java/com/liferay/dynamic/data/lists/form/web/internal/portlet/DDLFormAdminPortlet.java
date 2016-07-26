@@ -315,11 +315,13 @@ public class DDLFormAdminPortlet extends MVCPortlet {
 	}
 
 	@Reference(
-		target = "(osgi.http.whiteboard.servlet.name=com.liferay.dynamic.data.mapping.form.evaluator.internal.servlet.DDMFormEvaluatorServlet)",
+		target = "(osgi.http.whiteboard.servlet.name=com.liferay.dynamic.data.mapping.form.renderer.internal.servlet.DDMFormContextProviderServlet)",
 		unbind = "-"
 	)
-	protected void setDDMFormEvaluatorServlet(Servlet ddmFormEvaluatorServlet) {
-		_ddmFormEvaluatorServlet = ddmFormEvaluatorServlet;
+	protected void setDDMFormContextProviderServlet(
+		Servlet ddmFormContextProviderServlet) {
+
+		_ddmFormContextProviderServlet = ddmFormContextProviderServlet;
 	}
 
 	@Reference(unbind = "-")
@@ -431,7 +433,8 @@ public class DDLFormAdminPortlet extends MVCPortlet {
 				renderRequest, renderResponse,
 				_ddlFormWebConfigurationActivator.getDDLFormWebConfiguration(),
 				_ddlRecordLocalService, _ddlRecordSetService,
-				_ddmDataProviderInstanceLocalService, _ddmFormEvaluatorServlet,
+				_ddmDataProviderInstanceLocalService,
+				_ddmFormContextProviderServlet,
 				_ddmFormFieldTypeServicesTracker,
 				_ddmFormFieldTypesJSONSerializer, _ddmFormJSONSerializer,
 				_ddmFormLayoutJSONSerializer, _ddmFormRenderer,
@@ -484,7 +487,7 @@ public class DDLFormAdminPortlet extends MVCPortlet {
 	private DDLRecordSetService _ddlRecordSetService;
 	private DDMDataProviderInstanceLocalService
 		_ddmDataProviderInstanceLocalService;
-	private Servlet _ddmFormEvaluatorServlet;
+	private Servlet _ddmFormContextProviderServlet;
 	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
 	private DDMFormFieldTypesJSONSerializer _ddmFormFieldTypesJSONSerializer;
 	private DDMFormJSONSerializer _ddmFormJSONSerializer;

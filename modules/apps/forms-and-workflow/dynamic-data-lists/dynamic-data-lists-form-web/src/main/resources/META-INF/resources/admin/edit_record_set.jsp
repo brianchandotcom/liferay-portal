@@ -206,7 +206,7 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 											definition: <%= ddlFormAdminDisplayContext.getSerializedDDMForm() %>,
 											description: '<%= HtmlUtil.escapeJS(description) %>',
 											editForm: event.form,
-											evaluatorURL: '<%= ddlFormAdminDisplayContext.getDDMFormEvaluatorServletURL() %>',
+											evaluatorURL: '<%= ddlFormAdminDisplayContext.getDDMFormContextProviderServletURL() %>',
 											layout: <%= ddlFormAdminDisplayContext.getSerializedDDMFormLayout() %>,
 											name: '<%= HtmlUtil.escapeJS(name) %>',
 											namespace: '<portlet:namespace />',

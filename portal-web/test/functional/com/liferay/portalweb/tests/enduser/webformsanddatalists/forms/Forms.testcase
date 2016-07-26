@@ -1423,6 +1423,21 @@
 
 		<execute macro="Form#save" />
 
+		<execute macro="FormsAdminNavigator#gotoEdit" />
+
+		<execute macro="FormsAdminNavigator#gotoPublish" />
+
+		<execute macro="Form#clickPublishSwitcher" />
+
+		<execute macro="Form#getPublishedFormPublicURL">
+			<return from="publicURL" name="publishedFormPublicURL" />
+			<var name="publishedFormPublicURL" value="${publishedFormPublicURL}" />
+		</execute>
+
+		<execute macro="Button#clickConfirm" />
+
+		<execute macro="Form#save" />
+
 		<execute macro="Page#add">
 			<var name="pageName" value="Form Page" />
 		</execute>
@@ -1442,34 +1457,50 @@
 
 		<execute macro="PortletEntry#save" />
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Form Page" />
-		</execute>
+		<for list="private,public" param="formAccessLevel" >
+			<if>
+				<equals arg1="${formAccessLevel}" arg2="private" />
+				<then>
+					<execute macro="Navigator#gotoPage">
+						<var name="pageName" value="Form Page" />
+					</execute>
+				</then>
+			</if>
 
-		<execute macro="FormFields#viewTextField">
-			<var name="fieldLabel" value="Text Field" />
-			<var name="fieldName" value="TextField" />
-		</execute>
+			<if>
+				<equals arg1="${formAccessLevel}" arg2="public" />
+				<then>
+					<execute macro="Navigator#openSpecificURL">
+						<var name="url" value="${publishedFormPublicURL}" />
+					</execute>
+				</then>
+			</if>
 
-		<execute macro="FormFields#editText">
-			<var name="fieldName" value="TextField" />
-			<var name="fieldValue" value="Text Field Value" />
-		</execute>
+			<execute macro="FormFields#viewTextField">
+				<var name="fieldLabel" value="Text Field" />
+				<var name="fieldName" value="TextField" />
+			</execute>
 
-		<execute macro="FormFields#viewCaptchaField" />
+			<execute macro="FormFields#editText">
+				<var name="fieldName" value="TextField" />
+				<var name="fieldValue" value="Text Field Value" />
+			</execute>
 
-		<execute macro="FormFields#editCaptchaTextVerification">
-			<var name="fieldValue" value="1" />
-		</execute>
+			<execute macro="FormFields#viewCaptchaField" />
 
-		<execute macro="FormPortlet#submitWithError">
-			<var name="errorMessage" value="Text verification failed." />
-		</execute>
+			<execute macro="FormFields#editCaptchaTextVerification">
+				<var name="fieldValue" value="1" />
+			</execute>
 
-		<execute macro="FormFields#viewTextValue">
-			<var name="fieldName" value="TextField" />
-			<var name="fieldValue" value="Text Field Value" />
-		</execute>
+			<execute macro="FormPortlet#submitWithError">
+				<var name="errorMessage" value="Text verification failed." />
+			</execute>
+
+			<execute macro="FormFields#viewTextValue">
+				<var name="fieldName" value="TextField" />
+				<var name="fieldValue" value="Text Field Value" />
+			</execute>
+		</for>
 	</command>
 
 	<command name="SubmitFormWithAllFieldTypesAfterEditingFields" priority="5">

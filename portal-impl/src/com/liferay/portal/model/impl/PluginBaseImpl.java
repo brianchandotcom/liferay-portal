@@ -14,9 +14,9 @@
 
 package com.liferay.portal.model.impl;
 
-import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.model.Plugin;
 import com.liferay.portal.kernel.model.PluginSetting;
+import com.liferay.portal.kernel.plugin.PluginPackage;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,16 +25,6 @@ import java.util.Map;
  * @author Jorge Ferrer
  */
 public abstract class PluginBaseImpl implements Plugin {
-
-	@Override
-	public PluginPackage getPluginPackage() {
-		return _pluginPackage;
-	}
-
-	@Override
-	public void setPluginPackage(PluginPackage pluginPackage) {
-		_pluginPackage = pluginPackage;
-	}
 
 	@Override
 	public PluginSetting getDefaultPluginSetting() {
@@ -57,13 +47,23 @@ public abstract class PluginBaseImpl implements Plugin {
 	}
 
 	@Override
+	public PluginPackage getPluginPackage() {
+		return _pluginPackage;
+	}
+
+	@Override
 	public void setDefaultPluginSetting(PluginSetting pluginSetting) {
 		_defaultPluginSetting = pluginSetting;
 	}
 
-	private PluginPackage _pluginPackage;
+	@Override
+	public void setPluginPackage(PluginPackage pluginPackage) {
+		_pluginPackage = pluginPackage;
+	}
+
 	private PluginSetting _defaultPluginSetting;
-	private Map<Long, PluginSetting> _defaultPluginSettings =
-		new HashMap<Long, PluginSetting>();
+	private final Map<Long, PluginSetting> _defaultPluginSettings =
+		new HashMap<>();
+	private PluginPackage _pluginPackage;
 
 }

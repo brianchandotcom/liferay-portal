@@ -209,7 +209,7 @@ if ((!group.hasStagingGroup() || group.isStagingGroup() || !PropsValues.STAGING_
 	Group checkingStagingGroup = group;
 
 	if (checkingStagingGroup.isControlPanel()) {
-		checkingStagingGroup = GroupLocalServiceUtil.fetchGroup(themeDisplay.getSiteGroupId());
+		checkingStagingGroup = themeDisplay.getSiteGroup();
 	}
 
 	if ((checkingStagingGroup.isStaged() || checkingStagingGroup.isStagedRemotely()) && !checkingStagingGroup.hasLocalOrRemoteStagingGroup() && checkingStagingGroup.isStagedPortlet(portletId)) {
@@ -327,7 +327,7 @@ else {
 
 long previousSiteGroupId = themeDisplay.getSiteGroupId();
 
-Group siteGroup = GroupLocalServiceUtil.getGroup(themeDisplay.getSiteGroupId());
+Group siteGroup = themeDisplay.getSiteGroup();
 
 if (siteGroup.isStagingGroup()) {
 	siteGroup = siteGroup.getLiveGroup();

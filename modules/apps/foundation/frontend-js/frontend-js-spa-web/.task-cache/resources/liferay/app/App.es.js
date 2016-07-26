@@ -95,7 +95,7 @@ define("frontend-js-spa-web@1.0.9/liferay/app/App.es", ['exports', 'senna/src/ap
 		};
 
 		LiferayApp.prototype.isCacheEnabled = function isCacheEnabled() {
-			return this.getCacheExpirationTime() > 0;
+			return this.getCacheExpirationTime() > -1;
 		};
 
 		LiferayApp.prototype.isInPortletBlacklist = function isInPortletBlacklist(element) {
@@ -111,6 +111,10 @@ define("frontend-js-spa-web@1.0.9/liferay/app/App.es", ['exports', 'senna/src/ap
 		};
 
 		LiferayApp.prototype.isScreenCacheExpired = function isScreenCacheExpired(screen) {
+			if (this.getCacheExpirationTime() === 0) {
+				return false;
+			}
+
 			var lastModifiedInterval = new Date().getTime() - screen.getCacheLastModified();
 
 			return lastModifiedInterval > this.getCacheExpirationTime();

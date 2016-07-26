@@ -29,7 +29,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface SPAConfiguration {
 
 	@Meta.AD(
-		deflt = "0", description = "cache.expiration.time.description",
+		deflt = "-1", description = "cache.expiration.time.description",
 		name = "cache.expiration.time.name", required = true
 	)
 	public String cacheExpirationTime();
@@ -42,7 +42,7 @@ public interface SPAConfiguration {
 	public String requestTimeout();
 
 	@Meta.AD(
-		deflt = "30000", description = "user.notification.timeout.description",
+		deflt = "30", description = "user.notification.timeout.description",
 		name = "user.notification.timeout.name", required = true
 	)
 	public String userNotificationTimeout();

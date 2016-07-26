@@ -31,8 +31,8 @@ import org.osgi.service.component.annotations.Modified;
 	configurationPid = "com.liferay.frontend.js.spa.web.configuration.SPAConfiguration",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	property = {
-		"cacheExpirationTime=0", "requestTimeout=0",
-		"userNotificationTimeout=30000"
+		"cacheExpirationTime=-1", "requestTimeout=0",
+		"userNotificationTimeout=30"
 	},
 	service = SPAConfigurationActivator.class
 )

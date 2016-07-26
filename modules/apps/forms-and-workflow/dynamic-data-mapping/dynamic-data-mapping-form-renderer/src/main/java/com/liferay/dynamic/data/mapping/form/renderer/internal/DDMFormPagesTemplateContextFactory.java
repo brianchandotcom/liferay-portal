@@ -80,6 +80,16 @@ public class DDMFormPagesTemplateContextFactory {
 			_ddmFormLayout.getDDMFormLayoutPages());
 	}
 
+	public void setDDMFormEvaluator(DDMFormEvaluator ddmFormEvaluator) {
+		_ddmFormEvaluator = ddmFormEvaluator;
+	}
+
+	public void setDDMFormFieldTypeServicesTracker(
+		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker) {
+
+		_ddmFormFieldTypeServicesTracker = ddmFormFieldTypeServicesTracker;
+	}
+
 	protected boolean containsRequiredField(List<String> ddmFormFieldNames) {
 		for (String ddmFormFieldName : ddmFormFieldNames) {
 			DDMFormField ddmFormField = _ddmFormFieldsMap.get(ddmFormFieldName);
@@ -150,15 +160,13 @@ public class DDMFormPagesTemplateContextFactory {
 	}
 
 	protected List<Object> createFieldTemplateContext(String ddmFormFieldName) {
-		if (_ddmFormFieldEvaluationResultMap == null) {
-			_ddmFormFieldEvaluationResultMap =
-				createDDMFormFieldEvaluationResultsMap();
+		if (_ddmFormEvaluationResult == null) {
+			_ddmFormEvaluationResult = _createDDMFormEvaluationResult();
 		}
 
 		DDMFormFieldTemplateContextFactory ddmFormFieldTemplateContextFactory =
 			new DDMFormFieldTemplateContextFactory(
-				_ddmFormFieldsMap,
-				_ddmFormFieldEvaluationResultMap.get(ddmFormFieldName),
+				_ddmFormFieldsMap, _ddmFormEvaluationResult,
 				_ddmFormFieldValuesMap.get(ddmFormFieldName),
 				_ddmFormRenderingContext);
 
@@ -274,23 +282,24 @@ public class DDMFormPagesTemplateContextFactory {
 		}
 	}
 
-	protected void setDDMFormEvaluator(DDMFormEvaluator ddmFormEvaluator) {
-		_ddmFormEvaluator = ddmFormEvaluator;
-	}
+	private DDMFormEvaluationResult _createDDMFormEvaluationResult() {
+		try {
+			return _ddmFormEvaluator.evaluate(
+				_ddmForm, _ddmFormValues, _locale);
+		}
+		catch (DDMFormEvaluationException ddmfee) {
+			_log.error("Unable to evaluate the form", ddmfee);
+		}
 
-	protected void setDDMFormFieldTypeServicesTracker(
-		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker) {
-
-		_ddmFormFieldTypeServicesTracker = ddmFormFieldTypeServicesTracker;
+		return null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMFormPagesTemplateContextFactory.class);
 
 	private final DDMForm _ddmForm;
+	private DDMFormEvaluationResult _ddmFormEvaluationResult;
 	private DDMFormEvaluator _ddmFormEvaluator;
-	private Map<String, DDMFormFieldEvaluationResult>
-		_ddmFormFieldEvaluationResultMap;
 	private final Map<String, DDMFormField> _ddmFormFieldsMap;
 	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
 	private final Map<String, List<DDMFormFieldValue>> _ddmFormFieldValuesMap;

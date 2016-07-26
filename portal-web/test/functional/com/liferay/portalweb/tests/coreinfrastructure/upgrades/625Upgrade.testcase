@@ -46,8 +46,6 @@
 
 	<command name="View625DataArchive" priority="5">
 		<property name="data.archive.type" value="data-archive-portal" />
-		<property name="portal.acceptance" value="true" />
-		<property name="portal.upgrades" value="true" />
 		<property name="test.assert.warning.exceptions" value="true" />
 
 		<execute macro="Upgrade#viewUpgrade" />

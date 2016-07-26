@@ -18,14 +18,6 @@ AUI.add(
 						value: 'singleline'
 					},
 
-					placeholder: {
-						value: ''
-					},
-
-					tooltip: {
-						value: ''
-					},
-
 					type: {
 						value: 'text'
 					}
@@ -36,23 +28,52 @@ AUI.add(
 				NAME: 'liferay-ddm-form-field-text',
 
 				prototype: {
-					getTemplateContext: function() {
+					initializer: function() {
 						var instance = this;
 
-						return A.merge(
-							TextField.superclass.getTemplateContext.apply(instance, arguments),
-							{
-								displayStyle: instance.get('displayStyle'),
-								placeholder: instance.getLocalizedValue(instance.get('placeholder')),
-								tooltip: instance.getLocalizedValue(instance.get('tooltip'))
-							}
-						);
+						instance.bindInputEvent('focus', instance._onFocusInput);
 					},
 
-					render: function() {
+					destructor: function() {
 						var instance = this;
 
-						TextField.superclass.render.apply(instance, arguments);
+						if (instance.get('displayStyle') === 'multiline') {
+							var textAreaNode = instance.getInputNode();
+
+							if (textAreaNode.autosize) {
+								textAreaNode.autosize.destroy();
+							}
+						}
+					},
+
+					bindInputEvent: function(eventName, callback, volatile) {
+						var instance = this;
+
+						if (eventName === instance.getChangeEventName()) {
+							callback = A.debounce(callback, 300, instance);
+						}
+
+						return TextField.superclass.bindInputEvent.apply(instance, [eventName, callback, volatile]);
+					},
+
+					getChangeEventName: function() {
+						return 'input';
+					},
+
+					showErrorMessage: function() {
+						var instance = this;
+
+						TextField.superclass.showErrorMessage.apply(instance, arguments);
+
+						var container = instance.get('container');
+
+						var inputGroup = container.one('.input-group-container');
+
+						inputGroup.insert(container.one('.help-block'), 'after');
+					},
+
+					_onFocusInput: function() {
+						var instance = this;
 
 						if (instance.get('displayStyle') === 'multiline') {
 							var textAreaNode = instance.getInputNode();
@@ -63,41 +84,6 @@ AUI.add(
 							}
 
 							textAreaNode.autosize._uiAutoSize();
-						}
-
-						return instance;
-					},
-
-					_renderErrorMessage: function() {
-						var instance = this;
-
-						TextField.superclass._renderErrorMessage.apply(instance, arguments);
-
-						var container = instance.get('container');
-
-						var inputGroup = container.one('.input-group-container');
-
-						inputGroup.insert(container.one('.help-block'), 'after');
-					},
-
-					_showFeedback: function() {
-						var instance = this;
-
-						TextField.superclass._showFeedback.apply(instance, arguments);
-
-						var container = instance.get('container');
-
-						var feedBack = container.one('.form-control-feedback');
-
-						var inputGroupAddOn = container.one('.input-group-addon');
-
-						if (inputGroupAddOn) {
-							feedBack.appendTo(inputGroupAddOn);
-						}
-						else {
-							var inputGroupContainer = container.one('.input-group-container');
-
-							inputGroupContainer.placeAfter(feedBack);
 						}
 					}
 				}

@@ -3,7 +3,7 @@ AUI.add(
 	function(A) {
 		var Lang = A.Lang;
 
-		var TPL_ERROR_MESSAGE = '<div class="error-message help-block">{errorMessage}</div>';
+		var TPL_ERROR_MESSAGE = '<div class="help-block">{errorMessage}</div>';
 
 		var TPL_FEEDBACK = '<span aria-hidden="true" class="form-control-feedback"><span class="icon-{icon}"></span></span>';
 
@@ -12,6 +12,7 @@ AUI.add(
 
 		FieldFeedbackSupport.ATTRS = {
 			errorMessage: {
+				repaint: false,
 				value: ''
 			}
 		};
@@ -20,19 +21,12 @@ AUI.add(
 			initializer: function() {
 				var instance = this;
 
+				instance._errorMessageNode = instance._createErrorMessageNode();
+
 				instance._eventHandlers.push(
-					instance.after('blur', instance._afterBlur),
 					instance.after('errorMessageChange', instance._afterErrorMessageChange),
-					instance.after('focus', instance._afterFocus),
-					instance.after(instance._afterRenderFeedbackSupport, instance, 'render')
+					instance.after('visibleChange', instance._afterVisibleChange)
 				);
-			},
-
-			clearErrorMessage: function() {
-				var instance = this;
-
-				instance.set('errorMessage', '');
-				instance.clearValidationStatus();
 			},
 
 			clearValidationStatus: function() {
@@ -41,21 +35,16 @@ AUI.add(
 				var container = instance.get('container');
 
 				container.removeClass('has-error');
-				container.removeClass('has-success');
-			},
 
-			hasErrors: function() {
-				var instance = this;
-
-				return !!instance.get('errorMessage');
+				instance.hideFeedback();
 			},
 
 			hideErrorMessage: function() {
 				var instance = this;
 
-				var container = instance.get('container');
+				instance._errorMessageNode.hide();
 
-				container.all('.error-message').hide();
+				instance.clearValidationStatus();
 			},
 
 			hideFeedback: function() {
@@ -74,22 +63,17 @@ AUI.add(
 				instance._showFeedback('remove');
 			},
 
-			showErrorMessage: function(errorMessage) {
+			showErrorMessage: function() {
 				var instance = this;
 
-				if (!errorMessage) {
-					errorMessage = instance.get('errorMessage');
-				}
-				else {
-					instance.set('errorMessage', errorMessage);
-				}
+				var errorMessage = instance.get('errorMessage');
 
 				var inputNode = instance.getInputNode();
 
-				if (document.activeElement != inputNode.getDOM()) {
-					var container = instance.get('container');
+				if (errorMessage && inputNode) {
+					inputNode.insert(instance._errorMessageNode, 'after');
 
-					container.all('.error-message').show();
+					instance._errorMessageNode.show();
 
 					instance.showValidationStatus();
 				}
@@ -115,63 +99,33 @@ AUI.add(
 				container.toggleClass('has-error', instance.hasErrors());
 			},
 
-			_afterBlur: function() {
+			_afterErrorMessageChange: function(event) {
 				var instance = this;
 
-				if (instance.hasErrors()) {
-					instance.showErrorMessage();
-					instance.showValidationStatus();
-				}
+				instance._errorMessageNode.html(event.newVal);
 			},
 
-			_afterErrorMessageChange: function() {
+			_afterVisibleChange: function(event) {
 				var instance = this;
 
-				instance._renderErrorMessage();
+				var container = instance.get('container');
+
+				container.toggleClass('hide', !event.newVal);
 			},
 
-			_afterFocus: function() {
-				var instance = this;
-
-				instance.clearValidationStatus();
-				instance.hideErrorMessage();
-			},
-
-			_afterRenderFeedbackSupport: function() {
-				var instance = this;
-
-				instance._renderErrorMessage();
-				instance.hideErrorMessage();
-			},
-
-			_renderErrorMessage: function() {
+			_createErrorMessageNode: function() {
 				var instance = this;
 
 				var errorMessage = instance.get('errorMessage');
 
-				var inputNode = instance.getInputNode();
-
-				if (inputNode) {
-					var container = instance.get('container');
-
-					var errorMessageNode = container.one('.error-message');
-
-					if (errorMessageNode) {
-						errorMessageNode.html(errorMessage);
-					}
-					else {
-						errorMessageNode = A.Node.create(
-							Lang.sub(
-								TPL_ERROR_MESSAGE,
-								{
-									errorMessage: errorMessage
-								}
-							)
-						);
-
-						inputNode.insert(errorMessageNode, 'after');
-					}
-				}
+				return A.Node.create(
+					Lang.sub(
+						TPL_ERROR_MESSAGE,
+						{
+							errorMessage: errorMessage
+						}
+					)
+				);
 			},
 
 			_showFeedback: function(icon) {

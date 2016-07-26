@@ -5,6 +5,7 @@ AUI.add(
 			{
 				ATTRS: {
 					enabled: {
+						getter: '_getEnabled',
 						value: true
 					},
 
@@ -22,38 +23,79 @@ AUI.add(
 					initializer: function() {
 						var instance = this;
 
+						instance._cache = new A.Map();
+						instance._queue = new A.Queue();
+
+						instance.publish(
+							{
+								'evaluate': {
+									defaultFn: instance._evaluate
+								},
+								start: {
+									defaultFn: instance._start
+								}
+							}
+						);
+
 						instance.after('evaluationEnded', instance._afterEvaluationEnded);
 					},
 
-					evaluate: function(callback) {
+					destructor: function() {
+						var instance = this;
+
+						instance._cache.destroy();
+					},
+
+					evaluate: function(trigger, callback) {
 						var instance = this;
 
 						var enabled = instance.get('enabled');
 
 						var form = instance.get('form');
 
-						if (instance.isEvaluating()) {
-							instance.stop();
-						}
-
 						if (enabled && form) {
-							instance.fire('evaluationStarted');
+							if (instance.isEvaluating()) {
+								instance.stop();
+							}
 
-							form.disableSubmitButton();
+							instance._evaluating = true;
 
-							instance._evaluate(
-								function(result) {
-									form.enableSubmitButton();
+							instance.fire(
+								'start',
+								{
+									trigger: trigger
+								}
+							);
 
-									instance.fire(
-										'evaluationEnded',
-										{
-											result: result
+							instance._queue.add(trigger);
+
+							instance.fire(
+								'evaluate',
+								{
+									callback: function(result) {
+										instance._evaluating = false;
+
+										var triggers = {};
+
+										while (instance._queue.size() > 0) {
+											var next = instance._queue.next();
+
+											if (!triggers[next.get('name')]) {
+												instance.fire(
+													'evaluationEnded',
+													{
+														result: result,
+														trigger: next
+													}
+												);
+											}
+
+											triggers[next.get('name')] = true;
 										}
-									);
 
-									if (callback) {
-										callback.apply(instance, arguments);
+										if (callback) {
+											callback.apply(instance, arguments);
+										}
 									}
 								}
 							);
@@ -63,15 +105,17 @@ AUI.add(
 					isEvaluating: function() {
 						var instance = this;
 
-						return instance._request !== undefined;
+						return instance._evaluating;
 					},
 
 					stop: function() {
 						var instance = this;
 
-						instance._request.destroy();
+						if (instance._request) {
+							instance._request.destroy();
 
-						delete instance._request;
+							delete instance._request;
+						}
 					},
 
 					_afterEvaluationEnded: function() {
@@ -80,37 +124,71 @@ AUI.add(
 						instance.stop();
 					},
 
-					_evaluate: function(callback) {
+					_evaluate: function(event) {
 						var instance = this;
+
+						var callback = event.callback;
 
 						var form = instance.get('form');
 
-						instance._request = A.io.request(
-							instance.get('evaluatorURL'),
-							{
-								data: {
-									languageId: form.get('locale'),
-									serializedDDMForm: JSON.stringify(form.get('definition')),
-									serializedDDMFormValues: JSON.stringify(form.toJSON())
-								},
-								dataType: 'JSON',
-								method: 'POST',
-								on: {
-									failure: function(event) {
-										if (event.details[1].statusText !== 'abort') {
-											callback.call(instance, null);
+						var payload = form.getEvaluationPayload();
+
+						var cacheKey = JSON.stringify(payload);
+
+						var cached = instance._cache.getValue(cacheKey);
+
+						if (cached) {
+							callback.call(instance, JSON.parse(cached));
+						}
+						else {
+							instance._request = A.io.request(
+								instance.get('evaluatorURL'),
+								{
+									data: payload,
+									method: 'POST',
+									on: {
+										failure: function(event) {
+											if (event.details[1].statusText !== 'abort') {
+												callback.call(instance, null);
+											}
+											else {
+												callback.call(instance, {});
+											}
+										},
+										success: function(event, id, xhr) {
+											var result = xhr.responseText;
+
+											if (instance._cache.size() > 10) {
+												instance._cache.remove(instance._cache.keys()[0]);
+											}
+
+											instance._cache.put(cacheKey, result);
+
+											callback.call(instance, JSON.parse(result));
 										}
-
-										callback.call(instance, {});
-									},
-									success: function() {
-										var result = this.get('responseData');
-
-										callback.call(instance, result);
 									}
 								}
-							}
-						);
+							);
+						}
+					},
+
+					_getEnabled: function(enabled) {
+						var instance = this;
+
+						return enabled && !!instance.get('evaluatorURL');
+					},
+
+					_start: function(event) {
+						var instance = this;
+
+						if (instance.isEvaluating()) {
+							instance.fire(
+								'evaluationStarted',
+								{
+									trigger: event.trigger
+								}
+							);
+						}
 					},
 
 					_valueEvaluatorURL: function() {
@@ -134,6 +212,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-component', 'aui-io-request']
+		requires: ['aui-component', 'aui-io-request', 'aui-map']
 	}
 );

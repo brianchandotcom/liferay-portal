@@ -3,31 +3,17 @@ AUI.add(
 	function(A) {
 		var Lang = A.Lang;
 
-		var Renderer = Liferay.DDM.Renderer;
-
-		var Util = Renderer.Util;
-
 		var FieldValidationSupport = function() {
 		};
 
 		FieldValidationSupport.ATTRS = {
-			enableEvaluations: {
+			required: {
+				value: false
+			},
+
+			valid: {
+				repaint: false,
 				value: true
-			},
-
-			evaluator: {
-				valueFn: '_valueEvaluator'
-			},
-
-			strings: {
-				value: {
-					defaultErrorMessage: Liferay.Language.get('unknown-error'),
-					requestErrorMessage: Liferay.Language.get('there-was-an-error-when-trying-to-validate-your-form')
-				}
-			},
-
-			validation: {
-				value: {}
 			}
 		};
 
@@ -35,79 +21,27 @@ AUI.add(
 			initializer: function() {
 				var instance = this;
 
-				var evaluator = instance.get('evaluator');
-
 				instance._eventHandlers.push(
-					evaluator.after('evaluationEnded', A.bind('_afterValidationEvaluationEnded', instance)),
-					instance.after('parentChange', instance._afterParentChange)
+					instance.after('focus', instance._afterFocus),
+					instance.after('blur', instance._afterBlur),
+					instance.after('validChange', instance._afterValidChange)
 				);
 			},
 
-			hasValidation: function() {
+			hasErrors: function() {
 				var instance = this;
 
-				var required = instance.get('required');
-
-				var validation = instance.get('validation');
-
-				var expression = validation.expression;
-
-				return required || (!!expression && expression !== 'TRUE');
-			},
-
-			processEvaluation: function(result) {
-				var instance = this;
-
-				if (result && Lang.isObject(result)) {
-					instance.processValidation(result);
-				}
-				else {
-					var root = instance.getRoot();
-
-					var strings = instance.get('strings');
-
-					root.showAlert(strings.requestErrorMessage);
-				}
-			},
-
-			processValidation: function(result) {
-				var instance = this;
-
-				var instanceId = instance.get('instanceId');
-
-				var fieldData = Util.getFieldByKey(result, instanceId, 'instanceId');
-
-				if (fieldData) {
-					instance.hideErrorMessage();
-
-					if (fieldData.visible) {
-						var errorMessage = fieldData.errorMessage;
-
-						if (!errorMessage && !fieldData.valid) {
-							var strings = instance.get('strings');
-
-							errorMessage = strings.defaultErrorMessage;
-						}
-
-						if (errorMessage) {
-							instance.showErrorMessage(errorMessage);
-						}
-						else {
-							instance.clearErrorMessage();
-						}
-					}
-				}
+				return instance.get('visible') && !instance.get('valid');
 			},
 
 			validate: function(callback) {
 				var instance = this;
 
-				if (instance.hasValidation() && !instance.get('readOnly')) {
+				if (!instance.get('readOnly')) {
 					var evaluator = instance.get('evaluator');
 
-					instance.showLoadingFeedback();
-
 					evaluator.evaluate(
+						instance,
 						function(result) {
 							if (callback) {
 								var hasErrors = instance.hasErrors();
@@ -126,31 +60,41 @@ AUI.add(
 				}
 			},
 
-			_afterParentChange: function(event) {
+			_afterBlur: function() {
 				var instance = this;
 
 				var evaluator = instance.get('evaluator');
 
-				evaluator.set('form', event.newVal);
+				if (evaluator && evaluator.isEvaluating()) {
+					evaluator.onceAfter(
+						'evaluationEnded',
+						function() {
+							if (!instance.hasFocus()) {
+								instance.showErrorMessage();
+							}
+						}
+					);
+				}
+				else {
+					instance.showErrorMessage();
+				}
 			},
 
-			_afterValidationEvaluationEnded: function(event) {
+			_afterFocus: function() {
 				var instance = this;
 
-				instance.hideFeedback();
-
-				instance.processEvaluation(event.result);
+				instance.hideErrorMessage();
 			},
 
-			_valueEvaluator: function() {
+			_afterValidChange: function(event) {
 				var instance = this;
 
-				return new Renderer.ExpressionsEvaluator(
-					{
-						enabled: instance.get('enableEvaluations'),
-						form: instance.getRoot()
-					}
-				);
+				if (event.newVal) {
+					instance.hideErrorMessage();
+				}
+				else if (!instance.hasFocus()) {
+					instance.showErrorMessage();
+				}
 			}
 		};
 

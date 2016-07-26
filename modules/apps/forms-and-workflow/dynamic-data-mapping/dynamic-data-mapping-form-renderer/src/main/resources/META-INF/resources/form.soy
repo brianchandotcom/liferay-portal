@@ -1,15 +1,10 @@
 {namespace ddm}
 
 /**
- * Prints one field.
- *
- * @param field
+ * Defines the base delegated template for the any field.
  */
-{template .field autoescape="deprecated-contextual"}
-	{if isNonnull($field)}
-		{$field|noAutoescape}
-	{/if}
-{/template}
+{deltemplate ddm.field autoescape="deprecated-contextual"}
+{/deltemplate}
 
 /**
  * Prints a list of fields.
@@ -18,9 +13,11 @@
  */
 {template .fields autoescape="deprecated-contextual"}
 	{foreach $field in $fields}
-		{call ddm.field data="all"}
-			{param field: $field /}
-		{/call}
+		{let $variant: $field.type /}
+
+		<div class="clearfix {if not $field.visible}hide{/if} lfr-ddm-form-field-container">
+			{delcall ddm.field variant="$variant" data="$field" /}
+		</div>
 	{/foreach}
 {/template}
 
@@ -28,20 +25,13 @@
  * Prints the JavaScript form renderer.
  *
  * @param containerId
- * @param dataProviderURL
+ * @param context
  * @param definition
- * @param evaluation
  * @param evaluatorURL
  * @param fieldTypes
  * @param layout
  * @param portletNamespace
  * @param readOnly
- * @param readOnlyFields
- * @param showRequiredFieldsWarning
- * @param showSubmitButton
- * @param submitLabel
- * @param templateNamespace
- * @param values
  */
 {template .form_renderer_js autoescape="deprecated-contextual"}
 	<script type="text/javascript">
@@ -56,23 +46,12 @@
 					new Liferay.DDM.Renderer.Form(
 						{lb}
 							container: '#{$containerId}',
-							dataProviderURL: '{$dataProviderURL|noAutoescape}',
+							context: {$context|noAutoescape},
 							definition: {$definition|noAutoescape},
-							evaluation: {$evaluation|noAutoescape},
-							evaluatorURL: '{$evaluatorURL|noAutoescape}',
-
-							{if $layout}
-								layout: {$layout|noAutoescape},
-							{/if}
-
+							evaluatorURL: '{$evaluatorURL}',
+							layout: {$layout|noAutoescape},
 							portletNamespace: '{$portletNamespace}',
-							readOnly: {$readOnly},
-							readOnlyFields : {$readOnlyFields|noAutoescape},
-							showRequiredFieldsWarning: {$showRequiredFieldsWarning},
-							showSubmitButton: {$showSubmitButton},
-							submitLabel: '{$submitLabel}',
-							templateNamespace: '{$templateNamespace}',
-							values: {$values|noAutoescape}
+							readOnly: {$readOnly}
 						{rb}
 					).render()
 				);
@@ -177,7 +156,7 @@
 				</div>
 			{/if}
 
-			<div class="lfr-ddm-form-pages" autoescape="deprecated-contextual">
+			<div class="lfr-ddm-form-pages">
 				{foreach $page in $pages}
 					<div class="{if isFirst($page)}active{/if} lfr-ddm-form-page">
 						{if $page.title}

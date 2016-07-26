@@ -14,10 +14,22 @@
 
 package com.liferay.wiki.internal.exportimport.content.processor;
 
+import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
+import com.liferay.exportimport.content.processor.base.BaseLayoutExportImportContentProcessor;
+import com.liferay.wiki.model.WikiPage;
+
+import org.osgi.service.component.annotations.Component;
+
 /**
- * @author Gergely Mathe
- * @deprecated As of 7.0.0, with no direct replacement
+ * @author Mate Thurzo
  */
-@Deprecated
-public class WikiPageExportImportContentProcessor {
+@Component(
+	property = {
+		"content.processor.order=2",
+		"model.class.name=com.liferay.wiki.model.WikiPage"
+	},
+	service = {ExportImportContentProcessor.class}
+)
+public class WikiPageLayoutExportImportContentProcessor
+	extends BaseLayoutExportImportContentProcessor<WikiPage> {
 }

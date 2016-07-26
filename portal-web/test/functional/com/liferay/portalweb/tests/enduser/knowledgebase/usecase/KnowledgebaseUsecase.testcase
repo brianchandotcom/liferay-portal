@@ -1151,14 +1151,6 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="SitePageNavigator#gotoEditPage">
-			<var name="page" value="${pageName}" />
-		</execute>
-
-		<execute macro="Page#editPageLayoutColumn">
-			<var name="columnName" value="1 Column" />
-		</execute>
-
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
 		</execute>

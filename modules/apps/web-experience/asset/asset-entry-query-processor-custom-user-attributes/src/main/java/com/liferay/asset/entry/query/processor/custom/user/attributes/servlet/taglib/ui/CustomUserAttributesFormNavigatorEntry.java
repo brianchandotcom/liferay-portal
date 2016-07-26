@@ -18,19 +18,11 @@ import com.liferay.asset.publisher.web.constants.AssetPublisherConstants;
 import com.liferay.asset.publisher.web.servlet.taglib.ui.BaseConfigurationFormNavigatorEntry;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
-import com.liferay.portal.kernel.theme.PortletDisplay;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
-import java.util.Objects;
 import java.util.ResourceBundle;
-
-import javax.portlet.PortletPreferences;
 
 import javax.servlet.ServletContext;
 
@@ -63,6 +55,15 @@ public class CustomUserAttributesFormNavigatorEntry
 			"content.Language", locale, getClass());
 
 		return LanguageUtil.get(resourceBundle, "custom-user-attributes");
+	}
+
+	@Override
+	public boolean isVisible(User user, Object object) {
+		if (isDynamicAssetSelection()) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override

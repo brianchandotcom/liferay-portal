@@ -4143,10 +4143,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		String[] excludes = new String[] {
 			"**/*_IW.java", "**/PropsValues.java", "**/counter/service/**",
-			"**/jsp/*", "**/model/impl/*BaseImpl.java",
-			"**/model/impl/*Model.java", "**/model/impl/*ModelImpl.java",
-			"**/portal/service/**", "**/portal-client/**",
-			"**/portal-web/test/**/*Test.java", "**/portlet/**/service/**",
+			"**/jsp/*", "**/model/impl/*Model.java",
+			"**/model/impl/*ModelImpl.java", "**/portal/service/**",
+			"**/portal-client/**", "**/portal-web/test/**/*Test.java",
 			"**/test/*-generated/**", "**/source/formatter/**"
 		};
 

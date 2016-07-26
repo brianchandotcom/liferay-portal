@@ -30,10 +30,16 @@ import com.liferay.portal.search.elasticsearch.connection.OperationMode;
 )
 public interface ElasticsearchConfiguration {
 
-	@Meta.AD(deflt = "LiferayElasticsearchCluster", required = false)
+	@Meta.AD(
+		deflt = "LiferayElasticsearchCluster",
+		description = "cluster-name-help", required = false
+	)
 	public String clusterName();
 
-	@Meta.AD(deflt = "EMBEDDED", required = false)
+	@Meta.AD(
+		deflt = "EMBEDDED", description = "operation-mode-help",
+		required = false
+	)
 	public OperationMode operationMode();
 
 	@Meta.AD(
@@ -42,7 +48,10 @@ public interface ElasticsearchConfiguration {
 	)
 	public String indexNamePrefix();
 
-	@Meta.AD(deflt = "false", required = false)
+	@Meta.AD(
+		deflt = "false", description = "bootstrap-mlockall-help",
+		required = false
+	)
 	public boolean bootstrapMlockAll();
 
 	@Meta.AD(
@@ -51,43 +60,76 @@ public interface ElasticsearchConfiguration {
 	)
 	public boolean logExceptionsOnly();
 
-	@Meta.AD(deflt = "5", required = false)
+	@Meta.AD(
+		deflt = "5", description = "retry-on-conflict-help", required = false
+	)
 	public int retryOnConflict();
 
-	@Meta.AD(deflt = "9300-9400", required = false)
+	@Meta.AD(
+		deflt = "9300-9400",
+		description = "discovery-zen-ping-unicast-hosts-port-help",
+		required = false
+	)
 	public String discoveryZenPingUnicastHostsPort();
 
-	@Meta.AD(deflt = "", required = false)
+	@Meta.AD(deflt = "", description = "network-host-help", required = false)
 	public String networkHost();
 
-	@Meta.AD(deflt = "", required = false)
+	@Meta.AD(
+		deflt = "", description = "network-bind-host-help", required = false
+	)
 	public String networkBindHost();
 
-	@Meta.AD(deflt = "", required = false)
+	@Meta.AD(
+		deflt = "", description = "network-publish-host-help", required = false
+	)
 	public String networkPublishHost();
 
-	@Meta.AD(deflt = "", required = false)
+	@Meta.AD(
+		deflt = "", description = "transport-tcp-port-help", required = false
+	)
 	public String transportTcpPort();
 
-	@Meta.AD(deflt = "localhost:9300", required = false)
+	@Meta.AD(
+		deflt = "localhost:9300", description = "transport-addresses-help",
+		required = false
+	)
 	public String[] transportAddresses();
 
-	@Meta.AD(deflt = "true", required = false)
+	@Meta.AD(
+		deflt = "true", description = "client-transport-sniff-help",
+		required = false
+	)
 	public boolean clientTransportSniff();
 
-	@Meta.AD(deflt = "false", required = false)
+	@Meta.AD(
+		deflt = "false",
+		description = "client-transport-ignore-cluster-name-help",
+		required = false
+	)
 	public boolean clientTransportIgnoreClusterName();
 
-	@Meta.AD(deflt = "5s", required = false)
+	@Meta.AD(
+		deflt = "5s",
+		description = "client-transport-nodes-sampler-interval-help",
+		required = false
+	)
 	public String clientTransportNodesSamplerInterval();
 
-	@Meta.AD(deflt = "true", required = false)
+	@Meta.AD(
+		deflt = "true", description = "http-enabled-help", required = false
+	)
 	public boolean httpEnabled();
 
-	@Meta.AD(deflt = "true", required = false)
+	@Meta.AD(
+		deflt = "true", description = "http-cors-enabled-help", required = false
+	)
 	public boolean httpCORSEnabled();
 
-	@Meta.AD(deflt = "/https?:\\/\\/localhost(:[0-9]+)?/", required = false)
+	@Meta.AD(
+		deflt = "/https?:\\/\\/localhost(:[0-9]+)?/",
+		description = "http-cors-allow-origin-help", required = false
+	)
 	public String httpCORSAllowOrigin();
 
 	@Meta.AD(description = "%http-cors-configurations-help", required = false)

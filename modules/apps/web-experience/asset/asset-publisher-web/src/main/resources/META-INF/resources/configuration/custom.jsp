@@ -20,16 +20,6 @@
 List<AssetEntryQueryProcessor> assetEntryQueryProcessors = AssetPublisherUtil.getAssetEntryQueryProcessors();
 
 for (AssetEntryQueryProcessor assetEntryQueryProcessor : assetEntryQueryProcessors) {
-%>
-
-	<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" id='<%= "assetPublisherPanelContainerSection_" + assetEntryQueryProcessor.getKey() %>' label="<%= assetEntryQueryProcessor.getTitle(locale) %>">
-
-		<%
-		assetEntryQueryProcessor.include(request, new PipingServletResponse(pageContext));
-		%>
-
-	</aui:fieldset>
-
-<%
+	assetEntryQueryProcessor.include(request, new PipingServletResponse(pageContext));
 }
 %>

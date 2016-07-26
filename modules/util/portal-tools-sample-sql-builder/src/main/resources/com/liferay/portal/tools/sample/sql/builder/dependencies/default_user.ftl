@@ -13,8 +13,10 @@
 	_publicPageCount = 0
 />
 
-<#assign groupIds = [dataFactory.guestGroupModel.groupId] />
-<#assign roleIds = [dataFactory.administratorRoleModel.roleId] />
+<#assign
+	groupIds = [dataFactory.guestGroupModel.groupId]
+	roleIds = [dataFactory.administratorRoleModel.roleId]
+/>
 
 <@insertUser
 	_groupIds = groupIds
@@ -24,13 +26,15 @@
 
 <#-- Sample user -->
 
-<#assign userModel = dataFactory.sampleUserModel />
+<#assign
+	userModel = dataFactory.sampleUserModel
 
-<#assign sampleUserId = userModel.userId />
+	sampleUserId = userModel.userId
 
-<#assign userGroupModel = dataFactory.newGroupModel(userModel) />
+	userGroupModel = dataFactory.newGroupModel(userModel)
 
-<#assign layoutModel = dataFactory.newLayoutModel(userGroupModel.groupId, "home", "", "") />
+	layoutModel = dataFactory.newLayoutModel(userGroupModel.groupId, "home", "", "")
+/>
 
 <@insertLayout
 	_layoutModel = layoutModel
@@ -41,8 +45,10 @@
 	_publicPageCount = 1
 />
 
-<#assign groupIds = dataFactory.getSequence(dataFactory.maxGroupCount) />
-<#assign roleIds = [dataFactory.administratorRoleModel.roleId, dataFactory.powerUserRoleModel.roleId, dataFactory.userRoleModel.roleId] />
+<#assign
+	groupIds = dataFactory.getSequence(dataFactory.maxGroupCount)
+	roleIds = [dataFactory.administratorRoleModel.roleId, dataFactory.powerUserRoleModel.roleId, dataFactory.userRoleModel.roleId]
+/>
 
 <@insertUser
 	_groupIds = groupIds

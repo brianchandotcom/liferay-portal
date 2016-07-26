@@ -1,11 +1,13 @@
-<#assign defaultLatitude = -3.6833 />
-<#assign defaultLongitude = 40.40 />
+<#assign
+	defaultLatitude = -3.6833
+	defaultLongitude = 40.40
 
-<#assign group = themeDisplay.getScopeGroup() />
+	group = themeDisplay.getScopeGroup()
 
-<#assign mapsAPIProvider = group.getLiveParentTypeSettingsProperty("mapsAPIProvider")!"" />
+	mapsAPIProvider = group.getLiveParentTypeSettingsProperty("mapsAPIProvider")!""
 
-<#assign companyPortletPreferences = prefsPropsUtil.getPreferences(companyId) />
+	companyPortletPreferences = prefsPropsUtil.getPreferences(companyId)
+/>
 
 <#if mapsAPIProvider = "">
 	<#assign mapsAPIProvider = companyPortletPreferences.getValue("mapsAPIProvider", "Google") />
@@ -18,20 +20,24 @@
 <#assign featureJSONArray = jsonFactoryUtil.createJSONArray() />
 
 <#list entries as entry>
-	<#assign assetRenderer = entry.getAssetRenderer() />
+	<#assign
+		assetRenderer = entry.getAssetRenderer()
 
-	<#assign ddmFormValuesReader = assetRenderer.getDDMFormValuesReader() />
+		ddmFormValuesReader = assetRenderer.getDDMFormValuesReader()
 
-	<#assign ddmFormFieldValues = ddmFormValuesReader.getDDMFormFieldValues("ddm-geolocation") />
+		ddmFormFieldValues = ddmFormValuesReader.getDDMFormFieldValues("ddm-geolocation")
 
-	<#assign coordinatesJSONObjects = [] />
+		coordinatesJSONObjects = []
+	/>
 
 	<#list ddmFormFieldValues as ddmFormFieldValue>
-		<#assign value = ddmFormFieldValue.getValue() />
+		<#assign
+			value = ddmFormFieldValue.getValue()
 
-		<#assign coordinatesJSONObject = jsonFactoryUtil.createJSONObject(value.getString(locale)) />
+			coordinatesJSONObject = jsonFactoryUtil.createJSONObject(value.getString(locale))
 
-		<#assign coordinatesJSONObjects = coordinatesJSONObjects + [coordinatesJSONObject] />
+			coordinatesJSONObjects = coordinatesJSONObjects + [coordinatesJSONObject]
+		/>
 	</#list>
 
 	<#list coordinatesJSONObjects as coordinatesJSONObject>
@@ -138,18 +144,22 @@
 
 <#macro getAbstract asset>
 	<div class="asset-entry-abstract" id="<@portlet.namespace />assetEntryAbstract">
-		<#assign showEditURL = paramUtil.getBoolean(renderRequest, "showEditURL", true) />
+		<#assign
+			showEditURL = paramUtil.getBoolean(renderRequest, "showEditURL", true)
 
-		<#assign assetRenderer = asset.getAssetRenderer() />
+			assetRenderer = asset.getAssetRenderer()
+		/>
 
 		<#if showEditURL && assetRenderer.hasEditPermission(permissionChecker)>
 			<#assign redirectURL = renderResponse.createLiferayPortletURL(themeDisplay.getPlid(), themeDisplay.getPortletDisplay().getId(), "RENDER_PHASE", false) />
 
 			${redirectURL.setParameter("mvcPath", "/add_asset_redirect.jsp")}
 
-			<#assign editPortletURL = assetRenderer.getURLEdit(renderRequest, renderResponse, windowStateFactory.getWindowState("POP_UP"), redirectURL) />
+			<#assign
+				editPortletURL = assetRenderer.getURLEdit(renderRequest, renderResponse, windowStateFactory.getWindowState("POP_UP"), redirectURL)
 
-			<#assign taglibEditURL = "javascript:Liferay.Util.openWindow({id: '" + renderResponse.getNamespace() + "editAsset', title: '" + htmlUtil.escapeJS(languageUtil.format(locale, "edit-x", htmlUtil.escape(assetRenderer.getTitle(locale)), false)) + "', uri:'" + htmlUtil.escapeJS(editPortletURL.toString()) + "'});" />
+				taglibEditURL = "javascript:Liferay.Util.openWindow({id: '" + renderResponse.getNamespace() + "editAsset', title: '" + htmlUtil.escapeJS(languageUtil.format(locale, "edit-x", htmlUtil.escape(assetRenderer.getTitle(locale)), false)) + "', uri:'" + htmlUtil.escapeJS(editPortletURL.toString()) + "'});"
+			/>
 
 			<@liferay_ui.icon
 				image = "edit"

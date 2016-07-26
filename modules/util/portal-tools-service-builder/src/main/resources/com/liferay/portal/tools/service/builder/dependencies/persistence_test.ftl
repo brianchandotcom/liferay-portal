@@ -7,9 +7,11 @@
 		<#assign scopeColumn = entity.getColumn("companyId") />
 	</#if>
 
-	<#assign pkColumn = entity.getPKList()?first />
+	<#assign
+		pkColumn = entity.getPKList()?first
 
-	<#assign parentPKColumn = entity.getColumn("parent" + pkColumn.methodName) />
+		parentPKColumn = entity.getColumn("parent" + pkColumn.methodName)
+	/>
 </#if>
 
 package ${packagePath}.service.persistence.test;

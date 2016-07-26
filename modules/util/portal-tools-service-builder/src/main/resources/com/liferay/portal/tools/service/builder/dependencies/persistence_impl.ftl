@@ -520,9 +520,11 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 		boolean isNew = ${entity.varName}.isNew();
 
-		<#assign collectionFinderList = entity.getCollectionFinderList() />
+		<#assign
+			collectionFinderList = entity.getCollectionFinderList()
 
-		<#assign castEntityModelImpl = false />
+			castEntityModelImpl = false
+		/>
 
 		<#if entity.isHierarchicalTree()>
 			<#assign castEntityModelImpl = true />
@@ -610,9 +612,11 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 				try {
 					<#list sanitizeTuples as sanitizeTuple>
-						<#assign colMethodName = textFormatter.format(sanitizeTuple.getObject(0), 6) />
+						<#assign
+							colMethodName = textFormatter.format(sanitizeTuple.getObject(0), 6)
 
-						<#assign contentType = "\"" + sanitizeTuple.getObject(1) + "\"" />
+							contentType = "\"" + sanitizeTuple.getObject(1) + "\""
+						/>
 
 						<#if contentType == "\"text/html\"">
 							<#assign contentType = "ContentTypes.TEXT_HTML" />
@@ -1711,11 +1715,13 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 		<#list entity.columnList as column>
 			<#if column.isCollection() && column.isMappingManyToMany()>
-				<#assign tempEntity = serviceBuilder.getEntity(column.getEJBName()) />
+				<#assign
+					tempEntity = serviceBuilder.getEntity(column.getEJBName())
 
-				<#assign entityMapping = serviceBuilder.getEntityMapping(column.mappingTable) />
+					entityMapping = serviceBuilder.getEntityMapping(column.mappingTable)
 
-				<#assign companyEntity = serviceBuilder.getEntity(entityMapping.getEntity(0)) />
+					companyEntity = serviceBuilder.getEntity(entityMapping.getEntity(0))
+				/>
 
 				${entity.varName}To${tempEntity.name}TableMapper = TableMapperFactory.getTableMapper("${column.mappingTable}", "${companyEntity.PKDBName}", "${entity.PKDBName}", "${tempEntity.PKDBName}", this, ${tempEntity.varName}Persistence);
 			</#if>

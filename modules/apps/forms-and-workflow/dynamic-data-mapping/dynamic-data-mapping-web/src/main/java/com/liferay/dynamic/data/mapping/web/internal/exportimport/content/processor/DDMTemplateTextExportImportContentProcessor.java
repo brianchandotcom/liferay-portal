@@ -14,9 +14,22 @@
 
 package com.liferay.dynamic.data.mapping.web.internal.exportimport.content.processor;
 
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
+import com.liferay.exportimport.content.processor.base.BaseTextExportImportContentProcessor;
+
+import org.osgi.service.component.annotations.Component;
+
 /**
- * @author Gergely Mathe
+ * @author Mate Thurzo
  */
-@Deprecated
-public class DDMTemplateExportImportContentProcessor {
+@Component(
+	property = {
+		"content.processor.order=3",
+		"model.class.name=com.liferay.dynamic.data.mapping.model.DDMTemplate"
+	},
+	service = {ExportImportContentProcessor.class}
+)
+public class DDMTemplateTextExportImportContentProcessor
+	extends BaseTextExportImportContentProcessor<DDMTemplate> {
 }

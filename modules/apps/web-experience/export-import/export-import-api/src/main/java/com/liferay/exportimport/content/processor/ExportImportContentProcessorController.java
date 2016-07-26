@@ -66,10 +66,10 @@ public class ExportImportContentProcessorController {
 			ExportImportContentProcessorRegistryUtil.
 				getExportImportContentProcessors(stagedModelClass.getName());
 
-		return exportImportContentProcessors.stream()
-			.map(this::_castExportImportContentProcessor)
-			.filter(Objects::nonNull)
-			.allMatch(eicp -> eicp.validateContentReferences(groupId, content));
+		return exportImportContentProcessors.stream().map(
+			this::_castExportImportContentProcessor).filter(
+				Objects::nonNull).allMatch(
+					eicp -> eicp.validateContentReferences(groupId, content));
 	}
 
 	protected <S extends StagedModel, T extends Serializable> T

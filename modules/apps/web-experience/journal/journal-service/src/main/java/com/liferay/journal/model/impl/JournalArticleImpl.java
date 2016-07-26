@@ -34,6 +34,7 @@ import com.liferay.journal.util.impl.JournalUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Image;
@@ -189,7 +190,13 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 	public String[] getAvailableLanguageIds() {
 		Set<String> availableLanguageIds = new TreeSet<>();
 
-		for (String availableLanguageId : super.getAvailableLanguageIds()) {
+		List<String> articleAvailableTitleAndDescriptionLanguageIds =
+			JournalArticleLocalServiceUtil.getTitleAndDescriptionLanguageIds(
+				getId());
+
+		for (String availableLanguageId :
+				articleAvailableTitleAndDescriptionLanguageIds) {
+
 			availableLanguageIds.add(availableLanguageId);
 		}
 
@@ -240,18 +247,81 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 			getDDMStructureKey(), true);
 	}
 
+	@JSON
 	@Override
-	public String getDefaultLanguageId() {
-		if (_defaultLanguageId == null) {
-			_defaultLanguageId = super.getDefaultLanguageId();
+	public String getDescription() {
+		String description =
+			JournalArticleLocalServiceUtil.getArticleDescription(
+				getId(), getDefaultLanguageId());
 
-			if (Validator.isNull(_defaultLanguageId)) {
-				_defaultLanguageId = LocaleUtil.toLanguageId(
-					LocaleUtil.getSiteDefault());
-			}
+		if (description == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return description;
+		}
+	}
+
+	@Override
+	public String getDescription(Locale locale) {
+		String description =
+			JournalArticleLocalServiceUtil.getArticleDescription(
+				getId(), locale);
+
+		if (description == null) {
+			return getDescription();
+		}
+		else {
+			return description;
+		}
+	}
+
+	@Override
+	public String getDescription(Locale locale, boolean useDefault) {
+		String languageId = LocaleUtil.toLanguageId(locale);
+
+		return getDescription(languageId, useDefault);
+	}
+
+	@Override
+	public String getDescription(String languageId) {
+		Locale locale = LocaleUtil.fromLanguageId(languageId);
+
+		return getDescription(locale);
+	}
+
+	@Override
+	public String getDescription(String languageId, boolean useDefault) {
+		String description =
+			JournalArticleLocalServiceUtil.getArticleDescription(
+				getId(), languageId);
+
+		if (description != null) {
+			return description;
+		}
+		else if (useDefault) {
+			return getDescription();
 		}
 
-		return _defaultLanguageId;
+		return StringPool.BLANK;
+	}
+
+	@Override
+	public Map<Locale, String> getDescriptionMap() {
+		Locale defaultLocale = LocaleThreadLocal.getDefaultLocale();
+
+		try {
+			Locale articleDefaultLocale = LocaleUtil.fromLanguageId(
+				getDefaultLanguageId());
+
+			LocaleThreadLocal.setDefaultLocale(articleDefaultLocale);
+
+			return JournalArticleLocalServiceUtil.getArticleDescriptionMap(
+				getId());
+		}
+		finally {
+			LocaleThreadLocal.setDefaultLocale(defaultLocale);
+		}
 	}
 
 	@Override
@@ -396,6 +466,70 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 		return getDDMTemplateKey();
 	}
 
+	@JSON
+	@Override
+	public String getTitle() {
+		String title = JournalArticleLocalServiceUtil.getArticleTitle(
+			getId(), getDefaultLanguageId());
+
+		if (title == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return title;
+		}
+	}
+
+	@Override
+	public String getTitle(Locale locale) {
+		String title = JournalArticleLocalServiceUtil.getArticleTitle(
+			getId(), locale);
+
+		if (title == null) {
+			return getTitle();
+		}
+		else {
+			return title;
+		}
+	}
+
+	@Override
+	public String getTitle(Locale locale, boolean useDefault) {
+		String languageId = LocaleUtil.toLanguageId(locale);
+
+		return getTitle(languageId, useDefault);
+	}
+
+	@Override
+	public String getTitle(String languageId) {
+		Locale locale = LocaleUtil.fromLanguageId(languageId);
+
+		return getTitle(locale);
+	}
+
+	@Override
+	public String getTitle(String languageId, boolean useDefault) {
+		String title = JournalArticleLocalServiceUtil.getArticleTitle(
+			getId(), languageId);
+
+		if (title != null) {
+			return title;
+		}
+		else if (useDefault) {
+			return getTitle();
+		}
+
+		return StringPool.BLANK;
+	}
+
+	@JSON
+	@Override
+	public String getTitleCurrentValue() {
+		Locale locale = LocaleThreadLocal.getThemeDisplayLocale();
+
+		return getTitle(locale, true);
+	}
+
 	@Override
 	public Map<Locale, String> getTitleMap() {
 		Locale defaultLocale = LocaleThreadLocal.getDefaultLocale();
@@ -406,7 +540,7 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 
 			LocaleThreadLocal.setDefaultLocale(articleDefaultLocale);
 
-			return super.getTitleMap();
+			return JournalArticleLocalServiceUtil.getArticleTitleMap(getId());
 		}
 		finally {
 			LocaleThreadLocal.setDefaultLocale(defaultLocale);
@@ -471,11 +605,6 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 	}
 
 	@Override
-	public void setDefaultLanguageId(String defaultLanguageId) {
-		_defaultLanguageId = defaultLanguageId;
-	}
-
-	@Override
 	public void setDocument(Document document) {
 		_document = document;
 	}
@@ -506,13 +635,6 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 	@Override
 	public void setTemplateId(String ddmTemplateKey) {
 		setDDMTemplateKey(ddmTemplateKey);
-	}
-
-	@Override
-	public void setTitle(String title) {
-		super.setTitle(title);
-
-		_defaultLanguageId = null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

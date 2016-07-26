@@ -8,26 +8,6 @@
 <tr><td rowspan="1" colspan="3">CPKnowledgebaseadminConfiguration</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td>CONFIGURATION_IFRAME</td>
-	<td>//iframe[contains(@id,'knowledgebaseportlet_configuration')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SUCCESS_MESSAGE</td>
-	<td>//div[contains(@class,'alert-success') and contains(.,'You have successfully updated the setup.')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SAVE_BUTTON</td>
-	<td>//button[contains(.,'Save')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--NAVIGATION-->
 <tr>
 	<td>NAVIGATION_EMAIL_FROM_TAB</td>
@@ -52,50 +32,6 @@
 <tr>
 	<td></td>
 	<td></td>
-	<td></td>
-</tr>
-<!--EMAIL_FROM-->
-<tr>
-	<td>EMAIL_FROM_NAME_FIELD</td>
-	<td>//input[contains(@id,'emailFromName')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EMAIL_FROM_ADDRESS_FIELD</td>
-	<td>//input[contains(@id,'emailFromAddress')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--SUGGESTION_RECEIVED_EMAIL-->
-<tr>
-	<td>SUGGESTION_RECEIVED_EMAIL_BODY_FIELD</td>
-	<td>//div/textarea[contains(@id,'emailKBArticleSuggestionReceivedBody')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--SUGGESTION_IN_PROGRESS_EMAIL-->
-<tr>
-	<td>SUGGESTION_IN_PROGRESS_EMAIL_BODY_FIELD</td>
-	<td>//div/textarea[contains(@id,'emailKBArticleSuggestionInProgress')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--SUGGESTION_RESOLVED_EMAIL-->
-<tr>
-	<td>SUGGESTION_RESOLVED_EMAIL_BODY_FIELD</td>
-	<td>//div/textarea[contains(@id,'emailKBArticleSuggestionResolved')]</td>
 	<td></td>
 </tr>
 </tbody>

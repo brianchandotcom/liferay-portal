@@ -57,6 +57,8 @@
 	<command name="addPG">
 		<execute function="AssertClick" locator1="Button#POST_NEW_THREAD" value1="Post New Thread" />
 
+		<execute function="AssertElementPresent" locator1="TextInput#SUBJECT" />
+
 		<execute function="Type" locator1="TextInput#SUBJECT" value1="${threadSubject}" />
 
 		<if>

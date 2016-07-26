@@ -269,6 +269,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PRIORITIZATION_STRATEGY</td>
+	<td>//input[contains(@id,'prioritize') and contains(@type,'checkbox')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>REMEMBER_ME</td>
 	<td>//label[contains(.,'Remember Me')]/input[@type='checkbox']</td>
 	<td></td>

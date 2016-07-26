@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>HTML_BOLD_CONTENT</td>
+	<td>//div[contains(@class,'panel-body')]//b</td>
+	<td></td>
+</tr>
+<tr>
 	<td>HEADER_TITLE</td>
 	<td>//h3[@class='header-title']/span</td>
 	<td></td>

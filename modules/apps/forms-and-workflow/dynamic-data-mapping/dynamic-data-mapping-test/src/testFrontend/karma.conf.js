@@ -1,9 +1,10 @@
 var dependencies = require('./util/dependencies');
 var replacer = require('./util/replacer');
 
-module.exports = function(karmaConfig) {
-	karmaConfig.set(
+module.exports = function(config) {
+	config.set(
 		{
+			browserDisconnectTimeout: 5000,
 			browsers: ['Chrome'],
 			files: dependencies.concat(
 				[
@@ -19,7 +20,7 @@ module.exports = function(karmaConfig) {
 			replacerPreprocessor: {
 				replacer: replacer.replaceModulePath
 			},
-			reporters: ['mocha']
+			reporters: ['mocha', 'progress']
 		}
 	);
 };

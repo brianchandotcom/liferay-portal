@@ -15,10 +15,13 @@
 package com.liferay.dynamic.data.mapping.form.renderer.internal;
 
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluator;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormTemplateContextFactory;
 import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesJSONSerializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormJSONSerializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormLayoutJSONSerializer;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.util.DDM;
@@ -110,7 +113,18 @@ public class DDMFormTemplateContextFactoryImpl
 
 		templateContext.put("containerId", containerId);
 		templateContext.put(
+			"definition", _ddmFormJSONSerializer.serialize(ddmForm));
+		templateContext.put(
 			"evaluatorURL", getDDMFormContextProviderServletURL());
+
+		List<DDMFormFieldType> ddmFormFieldTypes =
+			_ddmFormFieldTypeServicesTracker.getDDMFormFieldTypes();
+
+		templateContext.put(
+			"fieldTypes",
+			_ddmFormFieldTypesJSONSerializer.serialize(ddmFormFieldTypes));
+		templateContext.put(
+			"layout", _ddmFormLayoutJSONSerializer.serialize(ddmFormLayout));
 
 		List<Object> pages = getPages(
 			ddmForm, ddmFormLayout, ddmFormRenderingContext);
@@ -255,5 +269,11 @@ public class DDMFormTemplateContextFactoryImpl
 
 	@Reference
 	private DDMFormFieldTypesJSONSerializer _ddmFormFieldTypesJSONSerializer;
+
+	@Reference
+	private DDMFormJSONSerializer _ddmFormJSONSerializer;
+
+	@Reference
+	private DDMFormLayoutJSONSerializer _ddmFormLayoutJSONSerializer;
 
 }

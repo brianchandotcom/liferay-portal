@@ -76,6 +76,20 @@
 						{rb}
 					).render()
 				);
+
+				var destroyFormHandle = function(event) {lb}
+					var form = Liferay.component('{$containerId}DDMForm');
+
+					var portlet = event.portlet;
+
+					if (portlet && portlet.contains(form.get('container'))) {lb}
+						form.destroy();
+
+						Liferay.detach('destroyPortlet', destroyFormHandle);
+					{rb}
+				{rb};
+
+				Liferay.on('destroyPortlet', destroyFormHandle);
 			{rb}
 		);
 	</script>

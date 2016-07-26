@@ -14,10 +14,22 @@
 
 package com.liferay.blogs.internal.exportimport.content.processor;
 
+import com.liferay.blogs.kernel.model.BlogsEntry;
+import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
+import com.liferay.exportimport.content.processor.base.BaseDocumentLibraryExportImportContentProcessor;
+
+import org.osgi.service.component.annotations.Component;
+
 /**
- * @author Gergely Mathe
- * @deprecated As of 7.0.0, with no direct replacement
+ * @author Mate Thurzo
  */
-@Deprecated
-public class BlogsEntryExportImportContentProcessor {
+@Component(
+	property = {
+		"content.processor.order=1",
+		"model.class.name=com.liferay.blogs.kernel.model.BlogsEntry"
+	},
+	service = {ExportImportContentProcessor.class}
+)
+public class BlogsEntryDocumentLibraryExportImportContentProcessor
+	extends BaseDocumentLibraryExportImportContentProcessor<BlogsEntry> {
 }

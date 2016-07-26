@@ -3314,6 +3314,23 @@ public class JournalArticleLocalServiceImpl
 			groupId, ddmTemplateKey);
 	}
 
+	@Override
+	public List<String> getTitleAndDescriptionLanguageIds(long articleId) {
+		List<JournalArticleLocalization> journalArticleLocalizationList =
+			journalArticleLocalizationPersistence.findByArticlePK(articleId);
+
+		List<String> availableLanguageIds = new ArrayList<>();
+
+		for (JournalArticleLocalization journalArticleLocalization :
+				journalArticleLocalizationList) {
+
+			availableLanguageIds.add(
+				journalArticleLocalization.getLanguageId());
+		}
+
+		return availableLanguageIds;
+	}
+
 	/**
 	 * Returns the web content article's unique URL title.
 	 *

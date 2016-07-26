@@ -1144,7 +1144,6 @@
 	<command name="ViewKBArticleNoHierarchyInFolder" priority="3">
 		<var name="kbArticleContent" value="Test Content" />
 		<var name="kbArticleTitle" value="Article 1 Title" />
-		<var name="kbFolderName" value="Folder 1" />
 		<var name="pageName" value="Knowledge Base Page" />
 
 		<execute macro="Page#add">
@@ -1166,10 +1165,12 @@
 		</execute>
 
 		<execute macro="KBFolder#addCP">
-			<var name="kbFolderName" value="${kbFolderName}" />
+			<var name="kbFolderDescription" value="KB Folder 1 Description" />
+			<var name="kbFolderName" value="Folder 1" />
 		</execute>
 
 		<execute macro="KBFolder#addCP">
+			<var name="kbFolderDescription" value="KB Folder 2 Description" />
 			<var name="kbFolderName" value="Folder 2" />
 		</execute>
 
@@ -1189,7 +1190,7 @@
 		</execute>
 
 		<execute macro="KBFolder#selectParentCP">
-			<var name="kbFolderName" value="${kbFolderName}" />
+			<var name="kbFolderName" value="Folder 1" />
 		</execute>
 
 		<execute macro="KBArticle#moveArticleCP">

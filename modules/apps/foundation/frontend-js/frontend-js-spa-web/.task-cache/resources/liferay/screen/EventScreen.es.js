@@ -56,7 +56,7 @@ define("frontend-js-spa-web@1.0.9/liferay/screen/EventScreen.es", ['exports', 's
 			var _this = _possibleConstructorReturn(this, _HtmlScreen.call(this));
 
 			_this.cacheable = false;
-			_this.timeout = Liferay.SPA.requestTimeout || _Utils2.default.getMaxTimeout();
+			_this.timeout = Math.max(Liferay.SPA.requestTimeout, 0) || _Utils2.default.getMaxTimeout();
 			return _this;
 		}
 

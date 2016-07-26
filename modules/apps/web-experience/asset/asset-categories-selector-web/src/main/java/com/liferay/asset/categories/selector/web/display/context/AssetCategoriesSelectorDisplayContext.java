@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -69,27 +70,34 @@ public class AssetCategoriesSelectorDisplayContext {
 		return _eventName;
 	}
 
-	public long getVocabularyId() {
-		if (_vocabularyId != null) {
-			return _vocabularyId;
+	public String getSelectedCategories() {
+		if (_selectedCategories != null) {
+			return _selectedCategories;
 		}
 
-		_vocabularyId = ParamUtil.getLong(_request, "vocabularyId");
+		_selectedCategories = ParamUtil.getString(
+			_request, "selectedCategories");
 
-		return _vocabularyId;
+		return _selectedCategories;
 	}
 
-	public String getVocabularyTitle() throws PortalException {
-		if (_vocabularyTitle != null) {
-			return _vocabularyTitle;
+	public long[] getVocabularyIds() {
+		if (_vocabularyIds != null) {
+			return _vocabularyIds;
 		}
 
+		_vocabularyIds = StringUtil.split(
+			ParamUtil.getString(_request, "vocabularyIds"), 0L);
+
+		return _vocabularyIds;
+	}
+
+	public String getVocabularyTitle(long vocabularyId) throws PortalException {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		AssetVocabulary assetVocabulary =
-			AssetVocabularyLocalServiceUtil.fetchAssetVocabulary(
-				getVocabularyId());
+			AssetVocabularyLocalServiceUtil.fetchAssetVocabulary(vocabularyId);
 
 		StringBundler sb = new StringBundler(4);
 
@@ -111,9 +119,17 @@ public class AssetCategoriesSelectorDisplayContext {
 
 		sb.append(StringPool.CLOSE_PARENTHESIS);
 
-		_vocabularyTitle = sb.toString();
+		return sb.toString();
+	}
 
-		return _vocabularyTitle;
+	public boolean isSingleSelect() {
+		if (_singleSelect != null) {
+			return _singleSelect;
+		}
+
+		_singleSelect = ParamUtil.getBoolean(_request, "singleSelect");
+
+		return _singleSelect;
 	}
 
 	private long _categoryId;
@@ -121,7 +137,8 @@ public class AssetCategoriesSelectorDisplayContext {
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _request;
-	private Long _vocabularyId;
-	private String _vocabularyTitle;
+	private String _selectedCategories;
+	private Boolean _singleSelect;
+	private long[] _vocabularyIds;
 
 }

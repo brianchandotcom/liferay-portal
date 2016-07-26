@@ -17,14 +17,13 @@ AUI.add(
 		 * OPTIONS
 		 *
 		 * Required
-		 * curEntryIds (string): The ids of the current categories.
-		 * curEntries (string): The names of the current categories.
+		 * categoryIds (string): The ids of the current categories.
+		 * categoryTitles (string): The names of the current categories.
 		 * hiddenInput {string}: The hidden input used to pass in the current categories.
 		 * instanceVar {string}: The instance variable for this class.
 		 * labelNode {String|A.Node}: The node of the label element for this selector.
 		 * title {String}: The title of the button element for this selector.
 		 * vocabularyIds (string): The ids of the vocabularies.
-		 * vocabularyGroupIds (string): The groupIds of the vocabularies.
 		 *
 		 * Optional
 		 * maxEntries {Number}: The maximum number of entries that will be loaded. The default value is -1, which will load all categories.
@@ -34,18 +33,7 @@ AUI.add(
 		var AssetTaglibCategoriesSelector = A.Component.create(
 			{
 				ATTRS: {
-					curEntries: {
-						setter: function(value) {
-							if (Lang.isString(value)) {
-								value = value.split('_CATEGORY_');
-							}
-
-							return value;
-						},
-						value: []
-					},
-
-					curEntryIds: {
+					categoryIds: {
 						setter: function(value) {
 							if (Lang.isString(value)) {
 								value = value.split(',');
@@ -54,6 +42,17 @@ AUI.add(
 							return value;
 						},
 						validator: '_isValidEntries',
+						value: []
+					},
+
+					categoryTitles: {
+						setter: function(value) {
+							if (Lang.isString(value)) {
+								value = value.split('_CATEGORY_');
+							}
+
+							return value;
+						},
 						value: []
 					},
 
@@ -89,26 +88,9 @@ AUI.add(
 						value: Liferay.Language.get('select-categories')
 					},
 
-					vocabularyGroupIds: {
-						setter: function(value) {
-							if (Lang.isString(value) && value) {
-								value = value.split(',');
-							}
-
-							return value;
-						},
-						value: []
-					},
-
 					vocabularyIds: {
-						setter: function(value) {
-							if (Lang.isString(value) && value) {
-								value = value.split(',');
-							}
-
-							return value;
-						},
-						value: []
+						validator: '_isValidString',
+						value: null
 					}
 				},
 
@@ -129,8 +111,6 @@ AUI.add(
 
 						instance.inputContainer.addClass('hide-accessible');
 
-						var contentBox = instance.get('contentBox');
-
 						instance._applyARIARoles();
 					},
 
@@ -149,17 +129,18 @@ AUI.add(
 							return obj.categoryId;
 						};
 
-						var curEntries = instance.get('curEntries');
+						var categoryTitles = instance.get('categoryTitles');
 
-						var curEntryIds = instance.get('curEntryIds');
+						var categoryIds = instance.get('categoryIds');
 
-						curEntryIds.forEach(
+						categoryIds.forEach(
 							function(item, index) {
 								var entry = {
 									categoryId: item
 								};
 
-								entry.value = LString.unescapeHTML(curEntries[index]);
+								entry.value = LString.unescapeHTML(categoryTitles[index]);
+
 								instance.add(entry.value);
 							}
 						);
@@ -170,10 +151,11 @@ AUI.add(
 					_applyARIARoles: function() {
 						var instance = this;
 
-						var boundingBox = instance.get(BOUNDING_BOX);
 						var labelNode = instance.get('labelNode');
 
 						if (labelNode) {
+							var boundingBox = instance.get(BOUNDING_BOX);
+
 							boundingBox.attr('aria-labelledby', labelNode.attr(ID));
 
 							labelNode.attr('for', boundingBox.attr(ID));
@@ -197,8 +179,6 @@ AUI.add(
 
 						var contentBox = instance.get('contentBox');
 
-						var vocabularyId = contentBox.getAttribute('data-vocabulary-id');
-
 						if (instance.get('portletURL')) {
 							instance.icons = new A.Toolbar(
 								{
@@ -208,7 +188,7 @@ AUI.add(
 											on: {
 												click: function(event) {
 													event.data = event.data ? event.data : {};
-													event.data.vocabularyId = vocabularyId;
+
 													instance._showSelectPopup.call(instance, event);
 												}
 											},
@@ -229,14 +209,14 @@ AUI.add(
 
 						event.domEvent.preventDefault();
 
-						instance.set('curEntryIds', instance.entries.keys);
+						instance.set('categoryIds', instance.entries.keys);
 
 						var uri = Lang.sub(
 							decodeURIComponent(instance.get('portletURL')),
 							{
-								selectedCategories: instance.get('curEntryIds'),
+								selectedCategories: instance.get('categoryIds'),
 								singleSelect: instance.get('singleSelect'),
-								vocabularyId: event.data.vocabularyId
+								vocabularyIds: instance.get('vocabularyIds')
 							}
 						);
 
@@ -245,14 +225,10 @@ AUI.add(
 								eventName: instance.get('eventName'),
 								on: {
 									selectedItemChange: function(event) {
-
 										var data = event.newVal;
-
-										var selectedEntryIds = instance.get('curEntryIds');
 
 										if (data && data.items) {
 											for (var key in data.items) {
-
 												var found = false;
 
 												instance.entries.each(
@@ -272,11 +248,10 @@ AUI.add(
 												if (!found && !data.items[key].unchecked) {
 													instance.entries.add(data.items[key]);
 												}
-
 											}
 										}
 
-										instance.set('curEntryIds', instance.entries.keys);
+										instance.set('categoryIds', instance.entries.keys);
 
 										instance._updateInputHidden();
 									}

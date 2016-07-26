@@ -211,7 +211,7 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 			portletURL.setParameter(
 				"selectedCategories", "{selectedCategories}");
 			portletURL.setParameter("singleSelect", "{singleSelect}");
-			portletURL.setParameter("vocabularyId", "{vocabularyId}");
+			portletURL.setParameter("vocabularyIds", "{vocabularyIds}");
 
 			portletURL.setWindowState(LiferayWindowState.POP_UP);
 
@@ -227,12 +227,10 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 		List<AssetVocabulary> vocabularies =
 			AssetVocabularyServiceUtil.getGroupVocabularies(getGroupIds());
 
-		if (Validator.isNull(_className)) {
-			return vocabularies;
+		if (Validator.isNotNull(_className)) {
+			vocabularies = AssetUtil.filterVocabularies(
+				vocabularies, _className, _classTypePK);
 		}
-
-		vocabularies = AssetUtil.filterVocabularies(
-			vocabularies, _className, _classTypePK);
 
 		return ListUtil.filter(
 			vocabularies,
@@ -267,8 +265,6 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-asset:asset-categories-selector:eventName",
 			getEventName());
-		request.setAttribute(
-			"liferay-asset:asset-categories-selector:groupIds", getGroupIds());
 		request.setAttribute(
 			"liferay-asset:asset-categories-selector:hiddenInput",
 			_hiddenInput);

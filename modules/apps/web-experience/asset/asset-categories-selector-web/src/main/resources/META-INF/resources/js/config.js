@@ -7,7 +7,7 @@
 					combine: Liferay.AUI.getCombine(),
 					modules: {
 						'liferay-asset-portlet-category-selector': {
-							path: 'liferay-asset-portlet-category-selector.js',
+							path: 'liferay_asset_portlet_category_selector.js',
 							requires: [
 								'aui-tree-view'
 							]

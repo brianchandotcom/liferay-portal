@@ -20,13 +20,13 @@
 String addCallback = GetterUtil.getString((String)request.getAttribute("liferay-asset:asset-tags-selector:addCallback"));
 boolean allowAddEntry = GetterUtil.getBoolean((String)request.getAttribute("liferay-asset:asset-tags-selector:allowAddEntry"));
 boolean autoFocus = GetterUtil.getBoolean((String)request.getAttribute("liferay-asset:asset-tags-selector:autoFocus"));
-String curTags = GetterUtil.getString((String)request.getAttribute("liferay-asset:asset-tags-selector:curTags"));
 String eventName = (String)request.getAttribute("liferay-asset:asset-tags-selector:eventName");
 long[] groupIds = (long[])request.getAttribute("liferay-asset:asset-tags-selector:groupIds");
 String hiddenInput = (String)request.getAttribute("liferay-asset:asset-tags-selector:hiddenInput");
 String id = GetterUtil.getString((String)request.getAttribute("liferay-asset:asset-tags-selector:id"));
 PortletURL portletURL = (PortletURL)request.getAttribute("liferay-asset:asset-tags-selector:portletURL");
 String removeCallback = GetterUtil.getString((String)request.getAttribute("liferay-asset:asset-tags-selector:removeCallback"));
+String tagNames = GetterUtil.getString((String)request.getAttribute("liferay-asset:asset-tags-selector:tagNames"));
 %>
 
 <div class="lfr-tags-selector-content" id="<portlet:namespace /><%= id %>assetTagsSelector">
@@ -42,7 +42,6 @@ String removeCallback = GetterUtil.getString((String)request.getAttribute("lifer
 		{
 			allowAddEntry: <%= allowAddEntry %>,
 			contentBox: '#<portlet:namespace /><%= id %>assetTagsSelector',
-			curEntries: '<%= HtmlUtil.escapeJS(curTags) %>',
 
 			<c:if test="<%= groupIds != null %>">
 				groupIds: '<%= StringUtil.merge(groupIds) %>',
@@ -59,8 +58,10 @@ String removeCallback = GetterUtil.getString((String)request.getAttribute("lifer
 			</c:if>
 
 			<c:if test="<%= portletURL != null %>">
-				portletURL: '<%= portletURL.toString() %>'
+				portletURL: '<%= portletURL.toString() %>',
 			</c:if>
+
+			tagNames: '<%= HtmlUtil.escapeJS(tagNames) %>'
 		}
 	).render();
 

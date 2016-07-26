@@ -35,22 +35,12 @@
 </tr>
 <tr>
 	<td>FIELD_NAME</td>
-	<td>//div[@class='key-value-editor']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FIELD_NAME_PLACEHOLDER</td>
-	<td>//div[contains(@class,'key-value-editor')]/span[contains(@class, 'output')]</td>
+	<td>//div[contains(@class, 'key-value-editor')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FIELD_NAME_EDIT</td>
 	<td>//div[contains(@class,'key-value-editor')]/input[contains(@class, 'input')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FIELD_NAME_EDIT_DONE</td>
-	<td>//div[contains(@class,'key-value-editor')]/a[contains(@class,'done')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -134,22 +124,12 @@
 </tr>
 <tr>
 	<td>OPTIONS_OPTION_NAME_FIELD</td>
-	<td>//div[@class='options']//div[contains(@class,'form-field-container')][${key_rowNumber}]//div[@class='key-value-editor']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>OPTIONS_OPTION_NAME_FIELD_PLACEHOLDER</td>
-	<td>//div[@class='options']//div[contains(@class,'form-field-container')][${key_rowNumber}]//div[contains(@class,'key-value-editor')]/span[contains(@class, 'output')]</td>
+	<td>//div[@class='options']//div[contains(@class,'form-field-container')][${key_rowNumber}]//div[contains(@class, 'key-value-editor')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>OPTIONS_OPTION_NAME_FIELD_EDIT</td>
 	<td>//div[@class='options']//div[contains(@class,'form-field-container')][${key_rowNumber}]//div[contains(@class,'key-value-editor')]/input[contains(@class, 'input')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>OPTIONS_OPTION_NAME_FIELD_EDIT_DONE</td>
-	<td>//div[@class='options']//div[contains(@class,'form-field-container')][${key_rowNumber}]//div[contains(@class,'key-value-editor')]/a[contains(@class,'done')]</td>
 	<td></td>
 </tr>
 <tr>

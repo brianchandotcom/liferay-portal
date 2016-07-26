@@ -1,6 +1,13 @@
 {namespace ddm}
 
 /**
+ * Defines the delegated template for the validation field.
+ */
+{deltemplate ddm.field autoescape="deprecated-contextual" variant="'validation'"}
+	{call .validation data="all" /}
+{/deltemplate}
+
+/**
  * Prints an option.
  *
  * @param option
@@ -39,21 +46,25 @@
 		<div class="{$enableValidationValue ? '' : 'hide'} row">
 			<div class="col-md-6">
 				<select class="form-control types-select">
-					{foreach $option in $typesOptions}
-						{call ddm.validationOption data="all"}
-							{param option: $option /}
-						{/call}
-					{/foreach}
+					{if $typesOptions}
+						{foreach $option in $typesOptions}
+							{call ddm.validationOption data="all"}
+								{param option: $option /}
+							{/call}
+						{/foreach}
+					{/if}
 				</select>
 			</div>
 
 			<div class="col-md-6">
 				<select class="form-control validations-select">
-					{foreach $option in $validationsOptions}
-						{call ddm.validationOption data="all"}
-							{param option: $option /}
-						{/call}
-					{/foreach}
+					{if $validationsOptions}
+						{foreach $option in $validationsOptions}
+							{call ddm.validationOption data="all"}
+								{param option: $option /}
+							{/call}
+						{/foreach}
+					{/if}
 				</select>
 			</div>
 		</div>

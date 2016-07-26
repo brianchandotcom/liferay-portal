@@ -516,26 +516,6 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 				<%@ include file="/display_settings.jspf" %>
 			</div>
 		</liferay-ui:section>
-
-		<liferay-ui:section>
-			<div class="container-fluid-1280">
-				<aui:fieldset-group markupView="lexicon">
-					<c:if test="<%= PortalUtil.isRSSFeedsEnabled() %>">
-						<aui:fieldset>
-							<liferay-ui:rss-settings
-								delta="<%= assetPublisherDisplayContext.getRSSDelta() %>"
-								displayStyle="<%= assetPublisherDisplayContext.getRSSDisplayStyle() %>"
-								displayStyles="<%= new String[] {RSSUtil.DISPLAY_STYLE_ABSTRACT, RSSUtil.DISPLAY_STYLE_TITLE} %>"
-								enabled="<%= assetPublisherDisplayContext.isEnableRSS() %>"
-								feedType="<%= assetPublisherDisplayContext.getRSSFeedType() %>"
-								name="<%= assetPublisherDisplayContext.getRSSName() %>"
-								nameEnabled="<%= true %>"
-							/>
-						</aui:fieldset>
-					</c:if>
-				</aui:fieldset-group>
-			</div>
-		</liferay-ui:section>
 	</liferay-ui:tabs>
 </div>
 

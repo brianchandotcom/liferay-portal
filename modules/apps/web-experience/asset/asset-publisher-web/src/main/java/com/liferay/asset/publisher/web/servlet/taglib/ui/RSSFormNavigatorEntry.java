@@ -15,11 +15,13 @@
 package com.liferay.asset.publisher.web.servlet.taglib.ui;
 
 import com.liferay.asset.publisher.web.constants.AssetPublisherConstants;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import javax.servlet.ServletContext;
 
+import com.liferay.portal.kernel.util.PortalUtil;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -40,6 +42,19 @@ public class RSSFormNavigatorEntry extends BaseConfigurationFormNavigatorEntry {
 	@Override
 	public String getKey() {
 		return "rss";
+	}
+
+	@Override
+	public boolean isVisible(User user, Object formModelBean) {
+		if (!PortalUtil.isRSSFeedsEnabled()) {
+			return false;
+		}
+
+		if (!isDynamicAssetSelection()) {
+			return false;
+		}
+
+		return true;
 	}
 
 	@Override

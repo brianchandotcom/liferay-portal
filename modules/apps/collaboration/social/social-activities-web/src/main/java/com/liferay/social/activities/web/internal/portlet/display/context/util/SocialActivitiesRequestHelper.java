@@ -56,9 +56,9 @@ public class SocialActivitiesRequestHelper extends BaseRequestHelper {
 			return _max;
 		}
 
-		PortletPreferences preferences = _getPortletPreferences();
+		PortletPreferences portletPreferences = _getPortletPreferences();
 
-		_max = GetterUtil.getInteger(preferences.getValue("max", "10"));
+		_max = GetterUtil.getInteger(portletPreferences.getValue("max", "10"));
 
 		return _max;
 	}
@@ -68,10 +68,10 @@ public class SocialActivitiesRequestHelper extends BaseRequestHelper {
 			return _rssDelta;
 		}
 
-		PortletPreferences preferences = _getPortletPreferences();
+		PortletPreferences portletPreferences = _getPortletPreferences();
 
 		_rssDelta = GetterUtil.getInteger(
-			preferences.getValue("rssDelta", StringPool.BLANK),
+			portletPreferences.getValue("rssDelta", StringPool.BLANK),
 			SearchContainer.DEFAULT_DELTA);
 
 		return _rssDelta;
@@ -82,9 +82,9 @@ public class SocialActivitiesRequestHelper extends BaseRequestHelper {
 			return _rssDisplayStyle;
 		}
 
-		PortletPreferences preferences = _getPortletPreferences();
+		PortletPreferences portletPreferences = _getPortletPreferences();
 
-		_rssDisplayStyle = preferences.getValue(
+		_rssDisplayStyle = portletPreferences.getValue(
 			"rssDisplayStyle", RSSUtil.DISPLAY_STYLE_DEFAULT);
 
 		return _rssDisplayStyle;
@@ -95,9 +95,9 @@ public class SocialActivitiesRequestHelper extends BaseRequestHelper {
 			return _rssFeedType;
 		}
 
-		PortletPreferences preferences = _getPortletPreferences();
+		PortletPreferences portletPreferences = _getPortletPreferences();
 
-		_rssFeedType = preferences.getValue(
+		_rssFeedType = portletPreferences.getValue(
 			"rssFeedType", RSSUtil.FEED_TYPE_DEFAULT);
 
 		return _rssFeedType;
@@ -128,11 +128,11 @@ public class SocialActivitiesRequestHelper extends BaseRequestHelper {
 			return _rssEnabled;
 		}
 
-		PortletPreferences preferences = _getPortletPreferences();
+		PortletPreferences portletPreferences = _getPortletPreferences();
 
 		if (PortalUtil.isRSSFeedsEnabled()) {
 			_rssEnabled = GetterUtil.getBoolean(
-				preferences.getValue("enableRss", null), true);
+				portletPreferences.getValue("enableRss", null), true);
 		}
 		else {
 			_rssEnabled = false;

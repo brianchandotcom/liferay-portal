@@ -1810,6 +1810,7 @@
 		<execute macro="FormsAdminNavigator#gotoView" />
 
 		<execute macro="FormFields#viewParagraphField">
+			<var name="fieldName" value="Paragraph" />
 			<var name="fieldTitle" value="New Paragraph" />
 			<var name="fieldValue" value="New Paragraph body text." />
 		</execute>

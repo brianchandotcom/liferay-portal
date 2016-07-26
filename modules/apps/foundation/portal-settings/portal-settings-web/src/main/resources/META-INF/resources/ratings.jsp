@@ -28,7 +28,7 @@ CompanyPortletRatingsDefinitionDisplayContext companyPortletRatingsDefinitionDis
 
 <p><liferay-ui:message key="select-the-default-ratings-type-for-the-following-applications" /></p>
 
-<aui:fieldset id="ratingsSettingsContainer">
+<aui:fieldset id='<%= renderResponse.getNamespace() + "ratingsSettingsContainer" %>'>
 
 	<%
 	Map<String, Map<String, RatingsType>> companyRatingsTypeMaps = companyPortletRatingsDefinitionDisplayContext.getCompanyRatingsTypeMaps();

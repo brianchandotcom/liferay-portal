@@ -36,13 +36,19 @@ public class DDMFormEvaluationResult {
 	public Map<String, DDMFormFieldEvaluationResult>
 		getDDMFormFieldEvaluationResultsMap() {
 
-		Map<String, DDMFormFieldEvaluationResult>
-			ddmFormFieldEvaluationResultsMap = new HashMap<>();
+		if (_ddmFormFieldEvaluationResultsMap == null) {
+			Map<String, DDMFormFieldEvaluationResult>
+				ddmFormFieldEvaluationResultsMap = new HashMap<>();
 
-		populateDDMFormFieldEvaluationResultsMap(
-			_ddmFormFieldEvaluationResults, ddmFormFieldEvaluationResultsMap);
+			populateDDMFormFieldEvaluationResultsMap(
+				_ddmFormFieldEvaluationResults,
+				ddmFormFieldEvaluationResultsMap);
 
-		return ddmFormFieldEvaluationResultsMap;
+			_ddmFormFieldEvaluationResultsMap =
+				ddmFormFieldEvaluationResultsMap;
+		}
+
+		return _ddmFormFieldEvaluationResultsMap;
 	}
 
 	public void setDDMFormFieldEvaluationResults(
@@ -87,5 +93,7 @@ public class DDMFormEvaluationResult {
 
 	private List<DDMFormFieldEvaluationResult> _ddmFormFieldEvaluationResults =
 		new ArrayList<>();
+	private Map<String, DDMFormFieldEvaluationResult>
+		_ddmFormFieldEvaluationResultsMap;
 
 }

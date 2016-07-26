@@ -783,7 +783,16 @@
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 		<var name="key_rowEntry" value="${kbArticleTitle}" />
 
-		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+		<if>
+			<condition function="IsElementPresent" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+			<then>
+				<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+			</then>
+			<else>
+				<execute function="Click" locator1="Icon#INFO" />
+				<execute function="Click" locator1="Icon#HISTORY_VERTICAL_ELLIPSIS" />
+			</else>
+		</if>
 
 		<execute function="AssertClick" locator1="MenuItem#MOVE" value1="Move" />
 

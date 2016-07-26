@@ -72,7 +72,7 @@ AUI.add(
 					getTemplateContext: function() {
 						var instance = this;
 
-						var value = instance.getContextValue();
+						var value = instance.get('value');
 
 						return A.merge(
 							DateField.superclass.getTemplateContext.apply(instance, arguments),
@@ -99,6 +99,18 @@ AUI.add(
 						var formattedDate = instance.formatDate(isoDate);
 
 						instance.getTriggerNode().val(formattedDate);
+					},
+
+					showErrorMessage: function() {
+						var instance = this;
+
+						DateField.superclass.showErrorMessage.apply(instance, arguments);
+
+						var container = instance.get('container');
+
+						var inputGroup = container.one('.input-group-container');
+
+						inputGroup.insert(container.one('.help-block'), 'after');
 					},
 
 					_afterSelectionChange: function(event) {
@@ -135,18 +147,6 @@ AUI.add(
 						instance.getTriggerNode().focus();
 
 						datePicker.show();
-					},
-
-					_renderErrorMessage: function() {
-						var instance = this;
-
-						DateField.superclass._renderErrorMessage.apply(instance, arguments);
-
-						var container = instance.get('container');
-
-						var inputGroup = container.one('.input-group-container');
-
-						inputGroup.insert(container.one('.help-block'), 'after');
 					}
 				}
 			}

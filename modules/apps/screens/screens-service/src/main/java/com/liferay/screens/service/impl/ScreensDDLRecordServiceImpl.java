@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.screens.service.base.ScreensDDLRecordServiceBaseImpl;
 
@@ -63,28 +64,30 @@ public class ScreensDDLRecordServiceImpl
 
 	@Override
 	public JSONArray getDDLRecords(
-			long ddlRecordSetId, Locale locale, int start, int end)
+			long ddlRecordSetId, Locale locale, int start, int end,
+			OrderByComparator<DDLRecord> obc)
 		throws PortalException {
 
 		DDLRecordSetPermission.check(
 			getPermissionChecker(), ddlRecordSetId, ActionKeys.VIEW);
 
 		List<DDLRecord> ddlRecords = ddlRecordPersistence.findByRecordSetId(
-			ddlRecordSetId, start, end);
+			ddlRecordSetId, start, end, obc);
 
 		return getDDLRecordsJSONArray(ddlRecords, locale);
 	}
 
 	@Override
 	public JSONArray getDDLRecords(
-			long ddlRecordSetId, long userId, Locale locale, int start, int end)
+			long ddlRecordSetId, long userId, Locale locale, int start, int end,
+			OrderByComparator<DDLRecord> obc)
 		throws PortalException {
 
 		DDLRecordSetPermission.check(
 			getPermissionChecker(), ddlRecordSetId, ActionKeys.VIEW);
 
 		List<DDLRecord> ddlRecords = ddlRecordPersistence.findByR_U(
-			ddlRecordSetId, userId, start, end);
+			ddlRecordSetId, userId, start, end, obc);
 
 		return getDDLRecordsJSONArray(ddlRecords, locale);
 	}

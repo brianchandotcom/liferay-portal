@@ -89,14 +89,15 @@ public class ScreensDDLRecordServiceHttp {
 
 	public static com.liferay.portal.kernel.json.JSONArray getDDLRecords(
 		HttpPrincipal httpPrincipal, long ddlRecordSetId,
-		java.util.Locale locale, int start, int end)
+		java.util.Locale locale, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecord> obc)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ScreensDDLRecordServiceUtil.class,
 					"getDDLRecords", _getDDLRecordsParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					ddlRecordSetId, locale, start, end);
+					ddlRecordSetId, locale, start, end, obc);
 
 			Object returnObj = null;
 
@@ -122,14 +123,15 @@ public class ScreensDDLRecordServiceHttp {
 
 	public static com.liferay.portal.kernel.json.JSONArray getDDLRecords(
 		HttpPrincipal httpPrincipal, long ddlRecordSetId, long userId,
-		java.util.Locale locale, int start, int end)
+		java.util.Locale locale, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecord> obc)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ScreensDDLRecordServiceUtil.class,
 					"getDDLRecords", _getDDLRecordsParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					ddlRecordSetId, userId, locale, start, end);
+					ddlRecordSetId, userId, locale, start, end, obc);
 
 			Object returnObj = null;
 
@@ -222,10 +224,12 @@ public class ScreensDDLRecordServiceHttp {
 			long.class, java.util.Locale.class
 		};
 	private static final Class<?>[] _getDDLRecordsParameterTypes1 = new Class[] {
-			long.class, java.util.Locale.class, int.class, int.class
+			long.class, java.util.Locale.class, int.class, int.class,
+			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _getDDLRecordsParameterTypes2 = new Class[] {
-			long.class, long.class, java.util.Locale.class, int.class, int.class
+			long.class, long.class, java.util.Locale.class, int.class, int.class,
+			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _getDDLRecordsCountParameterTypes3 = new Class[] {
 			long.class

@@ -100,10 +100,10 @@ public class DefaultLPKGVerifier implements LPKGVerifier {
 
 				int value = version.compareTo(bundle.getVersion());
 
-				if (value > 0) {
+				if (value != 0) {
 					oldBundles.add(bundle);
 				}
-				else if (value == 0) {
+				else {
 					String path = lpkgFile.getCanonicalPath();
 
 					if (path.equals(bundle.getLocation())) {
@@ -114,11 +114,6 @@ public class DefaultLPKGVerifier implements LPKGVerifier {
 						"Existing LPKG bundle " + bundle + " has the same " +
 							"symbolic name and version as LPKG file " +
 								lpkgFile);
-				}
-				else {
-					throw new LPKGVerifyException(
-						"Existing LPKG bundle " + bundle +
-							" is a newer version of LPKG file " + lpkgFile);
 				}
 			}
 

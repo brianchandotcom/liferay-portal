@@ -21,11 +21,11 @@ import org.junit.Test;
 /**
  * @author Matthew Tambara
  */
-public class LPKGUpgradeTest extends LPKGVersionChangeTestCase {
+public class LPKGDowngradeTest extends LPKGVersionChangeTestCase {
 
 	@Test
-	public void testUpgradeLPKG() throws IOException {
-		doVersionChange(0, 0, 1);
+	public void testDownGradeLPKG() throws IOException {
+		doVersionChange(0, 0, -1);
 	}
 
 }

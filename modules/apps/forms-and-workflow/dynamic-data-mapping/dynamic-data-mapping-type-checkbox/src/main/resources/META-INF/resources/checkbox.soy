@@ -1,6 +1,13 @@
 {namespace ddm}
 
 /**
+ * Defines the delegated template for the checkbox field.
+ */
+{deltemplate ddm.field autoescape="deprecated-contextual" variant="'checkbox'"}
+	{call .checkbox data="all" /}
+{/deltemplate}
+
+/**
  * Prints the DDM form checkbox field.
  *
  * @param? childElementsHTML
@@ -10,11 +17,14 @@
  * @param required
  * @param showAsSwitcher
  * @param showLabel
- * @param status
  * @param tip
+ * @param visible
+ * @param value
  */
 {template .checkbox autoescape="deprecated-contextual"}
-	<div class="form-group liferay-ddm-form-field-checkbox" data-fieldname="{$name}">
+	{let $status: $value ? 'checked' : '' /}
+
+	<div class="form-group{$visible ? '' : ' hide'} liferay-ddm-form-field-checkbox" data-fieldname="{$name}">
 		{if $showAsSwitcher}
 			<label aria-checked="{($status) ? true : false}" for="{$name}" role="checkbox">
 				<input class="toggle-switch" {if $readOnly}disabled{/if} id="{$name}" name="{$name}" type="checkbox" {$status} value="true" />

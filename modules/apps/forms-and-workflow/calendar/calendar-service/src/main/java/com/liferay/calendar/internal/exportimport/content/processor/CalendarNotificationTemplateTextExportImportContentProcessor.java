@@ -14,10 +14,22 @@
 
 package com.liferay.calendar.internal.exportimport.content.processor;
 
+import com.liferay.calendar.model.CalendarNotificationTemplate;
+import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
+import com.liferay.exportimport.content.processor.base.BaseTextExportImportContentProcessor;
+
+import org.osgi.service.component.annotations.Component;
+
 /**
- * @author Gergely Mathe
- * @deprecated As of 7.0.0, with no direct replacement
+ * @author Mate Thurzo
  */
-@Deprecated
-public class CalendarNotificationTemplateExportImportContentProcessor {
+@Component(
+	property = {
+		"content.processor.order=3",
+		"model.class.name=com.liferay.calendar.model.CalendarNotificationTemplate"
+	},
+	service = {ExportImportContentProcessor.class}
+)
+public class CalendarNotificationTemplateTextExportImportContentProcessor
+	extends BaseTextExportImportContentProcessor<CalendarNotificationTemplate> {
 }

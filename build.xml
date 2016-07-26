@@ -333,6 +333,8 @@
 			</then>
 		</if>
 
+		<copy file="tools/lpkg.override.markdown" todir="${liferay.home}/osgi/marketplace/override" />
+
 		<print-current-time />
 	</target>
 

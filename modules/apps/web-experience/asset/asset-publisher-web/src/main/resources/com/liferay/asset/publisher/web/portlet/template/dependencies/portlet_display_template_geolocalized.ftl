@@ -53,7 +53,7 @@
 
 		<@liferay.silently propertiesJSONObject.put("title", assetRenderer.getTitle(locale)) />
 
-		<#assign entryAbstract>
+		<#assign entryAbstract />
 			<@getAbstract asset=entry />
 		</#assign>
 

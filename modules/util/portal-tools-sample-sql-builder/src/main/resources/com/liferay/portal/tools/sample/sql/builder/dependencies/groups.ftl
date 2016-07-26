@@ -1,4 +1,4 @@
-<#assign layoutModel = dataFactory.newLayoutModel(dataFactory.guestGroupModel.groupId, "welcome", "com_liferay_login_web_portlet_LoginPortlet,", "com_liferay_hello_world_web_portlet_HelloWorldPortlet,")>
+<#assign layoutModel = dataFactory.newLayoutModel(dataFactory.guestGroupModel.groupId, "welcome", "com_liferay_login_web_portlet_LoginPortlet,", "com_liferay_hello_world_web_portlet_HelloWorldPortlet,") />
 
 <@insertLayout
 	_layoutModel = layoutModel
@@ -15,7 +15,7 @@
 />
 
 <#list dataFactory.groupModels as groupModel>
-	<#assign groupId = groupModel.groupId>
+	<#assign groupId = groupModel.groupId />
 
 	<#include "asset_publisher.ftl">
 
@@ -38,7 +38,7 @@
 		_parentDLFolderId = 0
 	/>
 
-	<#assign publicLayoutModels = dataFactory.newPublicLayoutModels(groupId)>
+	<#assign publicLayoutModels = dataFactory.newPublicLayoutModels(groupId) />
 
 	<#list publicLayoutModels as publicLayoutModel>
 		<@insertLayout
@@ -46,7 +46,7 @@
 		/>
 	</#list>
 
-	<#assign publicPageCount = publicLayoutModels?size + dataFactory.maxDDLRecordSetCount + dataFactory.maxJournalArticleCount>
+	<#assign publicPageCount = publicLayoutModels?size + dataFactory.maxDDLRecordSetCount + dataFactory.maxJournalArticleCount />
 
 	<@insertGroup
 		_groupModel = groupModel

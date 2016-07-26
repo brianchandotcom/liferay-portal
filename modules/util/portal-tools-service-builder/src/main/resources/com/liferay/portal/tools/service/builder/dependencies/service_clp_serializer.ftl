@@ -1,10 +1,10 @@
 package ${apiPackagePath}.service;
 
-<#assign entitiesHaveColumns = false>
+<#assign entitiesHaveColumns = false />
 
 <#list entities as entity>
 	<#if entity.hasColumns()>
-		<#assign entitiesHaveColumns = true>
+		<#assign entitiesHaveColumns = true />
 
 		import ${apiPackagePath}.model.${entity.name}Clp;
 	</#if>

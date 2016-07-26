@@ -16,9 +16,9 @@
 			/>
 		</#if>
 
-		<#assign fileJSONObject = getFileJSONObject(fieldRawValue)>
+		<#assign fileJSONObject = getFileJSONObject(fieldRawValue) />
 
-		<#assign fileEntry = getFileEntry(fileJSONObject)>
+		<#assign fileEntry = getFileEntry(fileJSONObject) />
 
 		<#if fileEntry != "">
 			<a href="${getFileEntryURL(fileEntry)}">${escape(fileEntry.getTitle())}</a>

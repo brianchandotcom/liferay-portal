@@ -1,33 +1,33 @@
 <#include "../init.ftl">
 
-<#assign DATE = staticUtil["java.util.Calendar"].DATE>
-<#assign MONTH = staticUtil["java.util.Calendar"].MONTH>
-<#assign YEAR = staticUtil["java.util.Calendar"].YEAR>
+<#assign DATE = staticUtil["java.util.Calendar"].DATE />
+<#assign MONTH = staticUtil["java.util.Calendar"].MONTH />
+<#assign YEAR = staticUtil["java.util.Calendar"].YEAR />
 
-<#assign nullable = false>
+<#assign nullable = false />
 
 <#if (hasFieldValue)>
-	<#assign dateValue = fieldRawValue?date["yyyy-MM-dd"]>
+	<#assign dateValue = fieldRawValue?date["yyyy-MM-dd"] />
 
-	<#assign fieldValue = calendarFactory.getCalendar(requestedLocale)>
+	<#assign fieldValue = calendarFactory.getCalendar(requestedLocale) />
 
-	<#assign void = fieldValue.setTimeInMillis(dateValue?long)>
+	<#assign void = fieldValue.setTimeInMillis(dateValue?long) />
 
 <#elseif validator.isNotNull(predefinedValue)>
-	<#assign predefinedDate = dateUtil.parseDate(predefinedValue, requestedLocale)>
+	<#assign predefinedDate = dateUtil.parseDate(predefinedValue, requestedLocale) />
 
-	<#assign fieldValue = calendarFactory.getCalendar(predefinedDate?long)>
+	<#assign fieldValue = calendarFactory.getCalendar(predefinedDate?long) />
 <#else>
-	<#assign calendar = calendarFactory.getCalendar(timeZone)>
+	<#assign calendar = calendarFactory.getCalendar(timeZone) />
 
-	<#assign fieldValue = calendarFactory.getCalendar(calendar.get(YEAR), calendar.get(MONTH), calendar.get(DATE))>
+	<#assign fieldValue = calendarFactory.getCalendar(calendar.get(YEAR), calendar.get(MONTH), calendar.get(DATE)) />
 
-	<#assign nullable = true>
+	<#assign nullable = true />
 </#if>
 
-<#assign dayValue = paramUtil.getInteger(request, "${namespacedFieldName}Day", fieldValue.get(DATE))>
-<#assign monthValue = paramUtil.getInteger(request, "${namespacedFieldName}Month", fieldValue.get(MONTH))>
-<#assign yearValue = paramUtil.getInteger(request, "${namespacedFieldName}Year", fieldValue.get(YEAR))>
+<#assign dayValue = paramUtil.getInteger(request, "${namespacedFieldName}Day", fieldValue.get(DATE)) />
+<#assign monthValue = paramUtil.getInteger(request, "${namespacedFieldName}Month", fieldValue.get(MONTH)) />
+<#assign yearValue = paramUtil.getInteger(request, "${namespacedFieldName}Year", fieldValue.get(YEAR)) />
 
 <@liferay_aui["field-wrapper"] cssClass="form-builder-field" data=data helpMessage=escape(fieldStructure.tip) label=escape(label) name=namespacedFieldName>
 	<div class="form-group">

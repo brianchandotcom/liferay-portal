@@ -155,7 +155,7 @@ public class ${entity.name}CacheModel implements CacheModel<${entity.name}>, Ext
 		${entity.varName}Impl.resetOriginalValues();
 
 		<#list cacheFields as cacheField>
-			<#assign methodName = serviceBuilder.getCacheFieldMethodName(cacheField)>
+			<#assign methodName = serviceBuilder.getCacheFieldMethodName(cacheField) />
 
 			${entity.varName}Impl.set${methodName}(${cacheField.name});
 		</#list>
@@ -165,19 +165,19 @@ public class ${entity.name}CacheModel implements CacheModel<${entity.name}>, Ext
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws
-		<#assign throwsClassNotFoundException = false>
+		<#assign throwsClassNotFoundException = false />
 
 		<#list entity.regularColList as column>
 			<#if column.primitiveType>
 			<#elseif column.type == "Date">
 			<#elseif column.type == "String">
 			<#elseif column.type != "Blob">
-				<#assign throwsClassNotFoundException = true>
+				<#assign throwsClassNotFoundException = true />
 			</#if>
 		</#list>
 
 		<#if (cacheFields?size > 0)>
-			<#assign throwsClassNotFoundException = true>
+			<#assign throwsClassNotFoundException = true />
 		</#if>
 
 		<#if throwsClassNotFoundException>
@@ -188,7 +188,7 @@ public class ${entity.name}CacheModel implements CacheModel<${entity.name}>, Ext
 
 		<#list entity.regularColList as column>
 			<#if column.primitiveType>
-				<#assign columnPrimitiveType = serviceBuilder.getPrimitiveType(column.genericizedType)>
+				<#assign columnPrimitiveType = serviceBuilder.getPrimitiveType(column.genericizedType) />
 
 				${column.name} = objectInput.read${textFormatter.format(columnPrimitiveType, 6)}();
 			<#elseif column.type == "Date">
@@ -223,7 +223,7 @@ public class ${entity.name}CacheModel implements CacheModel<${entity.name}>, Ext
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		<#list entity.regularColList as column>
 			<#if column.primitiveType>
-				<#assign columnPrimitiveType = serviceBuilder.getPrimitiveType(column.genericizedType)>
+				<#assign columnPrimitiveType = serviceBuilder.getPrimitiveType(column.genericizedType) />
 
 				objectOutput.write${textFormatter.format(columnPrimitiveType, 6)}(${column.name});
 			<#elseif column.type == "Date">
@@ -250,7 +250,7 @@ public class ${entity.name}CacheModel implements CacheModel<${entity.name}>, Ext
 			<#if column.type == "Date">
 				public long ${column.name};
 			<#else>
-				<#assign columnPrimitiveType = serviceBuilder.getPrimitiveType(column.genericizedType)>
+				<#assign columnPrimitiveType = serviceBuilder.getPrimitiveType(column.genericizedType) />
 
 				public ${columnPrimitiveType} ${column.name};
 			</#if>

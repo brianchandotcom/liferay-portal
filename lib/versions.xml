@@ -3296,7 +3296,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/xmlsec.jar</file-name>
-				<version>1.4.5</version>
+				<version>1.5.8</version>
 				<project-name>XML Security</project-name>
 				<project-url>http://santuario.apache.org</project-url>
 				<licenses>

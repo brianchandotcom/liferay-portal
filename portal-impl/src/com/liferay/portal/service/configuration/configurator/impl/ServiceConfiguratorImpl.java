@@ -21,22 +21,22 @@ import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.ResourceActionLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceComponentLocalService;
 import com.liferay.portal.kernel.service.configuration.ServiceComponentConfiguration;
 import com.liferay.portal.kernel.service.configuration.configurator.ServiceConfigurator;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceRegistrar;
 
 import java.net.URL;
-import java.util.HashMap;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -45,7 +45,7 @@ import java.util.Properties;
  * @author Miguel Pastor
  */
 public class ServiceConfiguratorImpl implements ServiceConfigurator {
-	
+
 	public void destory() {
 		if (_serviceRegistrar != null) {
 			_serviceRegistrar.destroy();
@@ -148,9 +148,8 @@ public class ServiceConfiguratorImpl implements ServiceConfigurator {
 
 		try {
 			_serviceComponentLocalService.initServiceComponent(
-				serviceComponentConfiguration,
-				classLoader, buildNamespace, buildNumber, buildDate,
-				buildAutoUpgrade);
+				serviceComponentConfiguration, classLoader, buildNamespace,
+				buildNumber, buildDate, buildAutoUpgrade);
 		}
 		catch (PortalException pe) {
 			_log.error("Unable to initialize service component", pe);
@@ -219,7 +218,7 @@ public class ServiceConfiguratorImpl implements ServiceConfigurator {
 
 			return;
 		}
-		
+
 		String singleVMConfigurationLocation = configuration.get(
 			PropsKeys.EHCACHE_SINGLE_VM_CONFIG_LOCATION);
 		String multiVMConfigurationLocation = configuration.get(
@@ -227,10 +226,10 @@ public class ServiceConfiguratorImpl implements ServiceConfigurator {
 
 		if (Validator.isNull(singleVMConfigurationLocation) &&
 			Validator.isNull(multiVMConfigurationLocation)) {
-			
+
 			return;
 		}
-		
+
 		if (_serviceRegistrar == null) {
 			Registry registry = RegistryUtil.getRegistry();
 
@@ -265,7 +264,7 @@ public class ServiceConfiguratorImpl implements ServiceConfigurator {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		ServiceConfiguratorImpl.class);
 
 	private ServiceComponentLocalService _serviceComponentLocalService;

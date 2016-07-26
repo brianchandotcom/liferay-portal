@@ -861,18 +861,6 @@
 		<execute function="AssertTextEquals" locator1="KnowledgeBase#DISPLAY_VOTES" value1="${articleVoteCount}" />
 	</command>
 
-	<command name="removeParentArticleCP">
-		<execute function="SelectFrame" locator1="KnowledgeBaseSelectParent#IFRAME" />
-
-		<execute function="Click" locator1="KnowledgeBaseSelectParent#REMOVE_BUTTON" />
-
-		<execute function="SelectFrame" value1="relative=top" />
-
-		<execute function="Click" locator1="Button#MOVE" />
-
-		<execute macro="Alert#viewSuccessMessage" />
-	</command>
-
 	<command name="searchPGViaKBSearch">
 		<execute function="Type" locator1="KnowledgeBaseSearch#SEARCH_FIELD" value1="${searchTerm}" />
 		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />

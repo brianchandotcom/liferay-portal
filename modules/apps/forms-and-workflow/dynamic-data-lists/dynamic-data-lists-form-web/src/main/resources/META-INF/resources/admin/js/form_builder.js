@@ -188,6 +188,27 @@ AUI.add(
 						return FieldTypes.get(field.get('type'));
 					},
 
+					findFieldByName: function(name) {
+						var instance = this;
+
+						var field;
+
+						var visitor = instance.get('visitor');
+
+						visitor.set(
+							'fieldHandler',
+							function(currentField) {
+								if (currentField.get('context').fieldName === name) {
+									field = currentField;
+								}
+							}
+						);
+
+						visitor.visit();
+
+						return field;
+					},
+
 					getFieldSettingsPanel: function() {
 						var instance = this;
 

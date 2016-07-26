@@ -130,7 +130,7 @@ AUI.add(
 						var existingField;
 
 						if (!key) {
-							key = field.get('type');
+							key = field.get('context').label;
 						}
 
 						var name = key;
@@ -141,7 +141,7 @@ AUI.add(
 									name = key + counter;
 								}
 
-								existingField = builder.getField(name);
+								existingField = builder.findFieldByName(name);
 
 								counter++;
 							}

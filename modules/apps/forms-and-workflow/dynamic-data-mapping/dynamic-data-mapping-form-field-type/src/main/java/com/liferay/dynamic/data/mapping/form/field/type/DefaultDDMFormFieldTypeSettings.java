@@ -74,7 +74,8 @@ public interface DefaultDDMFormFieldTypeSettings
 		optionLabels = {
 			"%not-indexable", "%indexable-keyword", "%indexable-text"
 		},
-		optionValues = {StringPool.BLANK, "keyword", "text"}, type = "select",
+		optionValues = {StringPool.BLANK, "keyword", "text"},
+		predefinedValue = "keyword", type = "select",
 		visibilityExpression = "FALSE"
 	)
 	public String indexType();
@@ -113,7 +114,10 @@ public interface DefaultDDMFormFieldTypeSettings
 	)
 	public boolean required();
 
-	@DDMFormField(label = "%show-label", properties = {"showAsSwitcher=true"})
+	@DDMFormField(
+		label = "%show-label", predefinedValue = "true",
+		properties = {"showAsSwitcher=true"}
+	)
 	public boolean showLabel();
 
 	@DDMFormField(

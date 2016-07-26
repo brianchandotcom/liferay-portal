@@ -271,8 +271,6 @@
 			<var name="categoryName" value="Category Name" />
 			<var name="kbArticleContent" value="Knowledge Base Article Content" />
 			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-			<var name="kbAuthor" value="Test Test" />
-			<var name="kbPriority" value="1.0" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 	</command>
@@ -693,8 +691,6 @@
 		<execute macro="KBArticle#viewCP">
 			<var name="kbArticleContent" value="Knowledge Base Article Content Child" />
 			<var name="kbArticleTitle" value="Knowledge Base Article Title Child" />
-			<var name="kbAuthor" value="Test Test" />
-			<var name="kbPriority" value="1.0" />
 		</execute>
 	</command>
 
@@ -1078,8 +1074,6 @@
 		<execute macro="KBArticle#viewCP">
 			<var name="kbArticleContent" value="${kbArticleContent}" />
 			<var name="kbArticleTitle" value="${kbArticleTitle}" />
-			<var name="kbAuthor" value="Test Test" />
-			<var name="kbPriority" value="1.0" />
 			<var name="kbWorkflowStatus" value="Pending" />
 		</execute>
 	</command>

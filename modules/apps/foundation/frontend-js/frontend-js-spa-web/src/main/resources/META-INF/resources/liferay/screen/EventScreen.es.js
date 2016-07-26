@@ -10,7 +10,7 @@ class EventScreen extends HtmlScreen {
 		super();
 
 		this.cacheable = false;
-		this.timeout = Liferay.SPA.requestTimeout || Utils.getMaxTimeout();
+		this.timeout = Math.max(Liferay.SPA.requestTimeout, 0) || Utils.getMaxTimeout();
 	}
 
 	dispose() {

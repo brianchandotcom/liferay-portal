@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Modified;
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	property = {
 		"cacheExpirationTime=-1", "requestTimeout=0",
-		"userNotificationTimeout=30"
+		"userNotificationTimeout=30000"
 	},
 	service = SPAConfigurationActivator.class
 )

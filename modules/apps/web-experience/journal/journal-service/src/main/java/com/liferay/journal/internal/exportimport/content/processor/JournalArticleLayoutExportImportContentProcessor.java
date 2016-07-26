@@ -14,10 +14,22 @@
 
 package com.liferay.journal.internal.exportimport.content.processor;
 
+import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
+import com.liferay.exportimport.content.processor.base.BaseLayoutExportImportContentProcessor;
+import com.liferay.journal.model.JournalArticle;
+
+import org.osgi.service.component.annotations.Component;
+
 /**
- * @author Gergely Mathe
  * @author Mate Thurzo
  */
-@Deprecated
-public class JournalArticleExportImportContentProcessor {
+@Component(
+	property = {
+		"content.processor.order=2",
+		"model.class.name=com.liferay.journal.model.JournalArticle"
+	},
+	service = {ExportImportContentProcessor.class}
+)
+public class JournalArticleLayoutExportImportContentProcessor
+	extends BaseLayoutExportImportContentProcessor<JournalArticle> {
 }

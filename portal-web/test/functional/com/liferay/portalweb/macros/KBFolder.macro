@@ -78,7 +78,16 @@
 
 		<execute function="SelectFrame" locator1="KnowledgeBaseSelectParent#IFRAME" />
 
-		<execute function="Click" locator1="KnowledgeBaseSelectParent#CHOOSE_BUTTON" value1="Choose" />
+		<if>
+			<equals arg1="${kbFolderName}" arg2="Home" />
+			<then>
+				<execute function="Click" locator1="KnowledgeBaseSelectParent#BREADCRUMB_HOME" />
+				<execute function="AssertClick" locator1="Button#CHOOSE_THIS_FOLDER" value1="Choose This Folder" />
+			</then>
+			<else>
+				<execute function="Click" locator1="KnowledgeBaseSelectParent#CHOOSE_BUTTON" value1="Choose" />
+			</else>
+		</if>
 
 		<execute function="SelectFrame" value1="relative=top" />
 

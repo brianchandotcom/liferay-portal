@@ -30,6 +30,10 @@ AUI.add(
 							{
 								handler: 'removeField',
 								label: Liferay.Language.get('remove-field')
+							},
+							{
+								handler: 'cancelFieldEdition',
+								label: Liferay.Language.get('cancel-field-edition')
 							}
 						]
 					}

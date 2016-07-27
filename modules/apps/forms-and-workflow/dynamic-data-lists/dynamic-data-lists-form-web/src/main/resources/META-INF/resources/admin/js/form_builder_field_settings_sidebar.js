@@ -134,6 +134,8 @@ AUI.add(
 
 								field.setAttrs(field.getSettings(settingsForm));
 
+								instance._saveCurrentContext();
+
 								instance.fire(
 									'fieldSettingsFormLoaded',
 									{
@@ -143,6 +145,18 @@ AUI.add(
 								);
 							}
 						);
+					},
+
+					_saveCurrentContext: function() {
+						var instance = this;
+
+						var field = instance.get('field');
+
+						var fieldContext = field.get('context');
+
+						instance._previousContext = fieldContext;
+
+						instance._previousFormContext = instance.settingsForm.get('context');
 					},
 
 					_setBodyContent: function(content) {

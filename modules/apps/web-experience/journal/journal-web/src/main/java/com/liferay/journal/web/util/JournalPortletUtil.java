@@ -25,6 +25,8 @@ import com.liferay.journal.util.comparator.ArticleModifiedDateComparator;
 import com.liferay.journal.util.comparator.ArticleReviewDateComparator;
 import com.liferay.journal.util.comparator.ArticleTitleComparator;
 import com.liferay.journal.util.comparator.ArticleVersionComparator;
+import com.liferay.journal.util.impl.JournalUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -166,7 +168,8 @@ public class JournalPortletUtil {
 	}
 
 	public static String getAddMenuFavItemKey(
-		PortletRequest portletRequest, PortletResponse portletResponse) {
+			PortletRequest portletRequest, PortletResponse portletResponse)
+		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -176,11 +179,13 @@ public class JournalPortletUtil {
 		String key =
 			"journal-add-menu-fav-items-" + themeDisplay.getScopeGroupId();
 
-		if (folderId > 0) {
-			key += StringPool.DASH + folderId;
+		folderId = getAddMenuFavItemFolderId(folderId);
+
+		if (folderId <= 0) {
+			return key;
 		}
 
-		return key;
+		return key + StringPool.DASH + folderId;
 	}
 
 	public static OrderByComparator<JournalArticle> getArticleOrderByComparator(
@@ -217,6 +222,33 @@ public class JournalPortletUtil {
 		}
 
 		return orderByComparator;
+	}
+
+	protected static long getAddMenuFavItemFolderId(long folderId)
+		throws PortalException {
+
+		if (folderId <= 0) {
+			return 0;
+		}
+
+		JournalFolder folder = JournalFolderLocalServiceUtil.fetchFolder(
+			folderId);
+
+		while (folder != null) {
+			int restrictionType = JournalUtil.getRestrictionType(
+				folder.getFolderId());
+
+			if (restrictionType ==
+					JournalFolderConstants.
+						RESTRICTION_TYPE_DDM_STRUCTURES_AND_WORKFLOW) {
+
+				return folder.getFolderId();
+			}
+
+			folder = folder.getParentFolder();
+		}
+
+		return 0;
 	}
 
 }

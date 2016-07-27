@@ -113,7 +113,7 @@ renderResponse.setTitle(((category == null) ? LanguageUtil.get(request, "add-new
 			<aui:input name="description" placeholder="description" />
 		</aui:fieldset>
 
-		<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" id="categoryPropertiesId" label="properties">
+		<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" id='<%= renderResponse.getNamespace() + "categoryPropertiesId" %>' label="properties">
 			<p class="text-muted">
 				<liferay-ui:message key="properties-are-a-way-to-add-more-detailed-information-to-a-specific-category" />
 			</p>

@@ -112,7 +112,7 @@ public class JournalDisplayContext {
 			_request);
 	}
 
-	public String[] getAddMenuFavItems() {
+	public String[] getAddMenuFavItems() throws PortalException {
 		if (_addMenuFavItems != null) {
 			return _addMenuFavItems;
 		}
@@ -120,13 +120,16 @@ public class JournalDisplayContext {
 		PortalPreferences portalPreferences =
 			PortletPreferencesFactoryUtil.getPortalPreferences(_request);
 
+		String key = JournalPortletUtil.getAddMenuFavItemKey(
+			_liferayPortletRequest, _liferayPortletResponse);
+
 		_addMenuFavItems = portalPreferences.getValues(
-			JournalPortletKeys.JOURNAL, "add-menu-fav-items", new String[0]);
+			JournalPortletKeys.JOURNAL, key, new String[0]);
 
 		return _addMenuFavItems;
 	}
 
-	public int getAddMenuFavItemsLength() {
+	public int getAddMenuFavItemsLength() throws PortalException {
 		String[] addMenuFavItems = getAddMenuFavItems();
 
 		return addMenuFavItems.length;

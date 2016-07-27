@@ -20,6 +20,7 @@
 int menuItemsCount = GetterUtil.getInteger(request.getAttribute("liferay-frontend:add-menu:menuItemsCount"));
 int maxItems = GetterUtil.getInteger(request.getAttribute("liferay-frontend:add-menu:maxItems"));
 List<MenuItemGroup> menuItemGroups = (List<MenuItemGroup>)request.getAttribute("liferay-frontend:add-menu:menuItemGroups");
+int numMenuItems = GetterUtil.getInteger(request.getAttribute("liferay-frontend:add-menu:numMenuItems"));
 String viewMoreURL = (String)request.getAttribute("liferay-frontend:add-menu:viewMoreURL");
 %>
 
@@ -106,7 +107,7 @@ String viewMoreURL = (String)request.getAttribute("liferay-frontend:add-menu:vie
 						<%
 							index++;
 
-							if (index >= maxItems) {
+							if (index >= numMenuItems) {
 								break;
 							}
 						}
@@ -118,7 +119,7 @@ String viewMoreURL = (String)request.getAttribute("liferay-frontend:add-menu:vie
 					</c:if>
 
 				<%
-					if (index >= maxItems) {
+					if (index >= numMenuItems) {
 						break;
 					}
 				}

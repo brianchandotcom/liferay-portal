@@ -25,17 +25,23 @@ import com.liferay.journal.util.comparator.ArticleModifiedDateComparator;
 import com.liferay.journal.util.comparator.ArticleReviewDateComparator;
 import com.liferay.journal.util.comparator.ArticleTitleComparator;
 import com.liferay.journal.util.comparator.ArticleVersionComparator;
+import com.liferay.journal.util.impl.JournalUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -81,7 +87,7 @@ public class JournalPortletUtil {
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			com.liferay.portal.kernel.util.WebKeys.THEME_DISPLAY);
+			WebKeys.THEME_DISPLAY);
 
 		String mvcPath = ParamUtil.getString(request, "mvcPath");
 
@@ -161,6 +167,27 @@ public class JournalPortletUtil {
 		addPortletBreadcrumbEntries(folder, request, portletURL);
 	}
 
+	public static String getAddMenuFavItemKey(
+			PortletRequest portletRequest, PortletResponse portletResponse)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long folderId = ParamUtil.getLong(portletRequest, "folderId");
+
+		String key =
+			"journal-add-menu-fav-items-" + themeDisplay.getScopeGroupId();
+
+		folderId = getAddMenuFavItemFolderId(folderId);
+
+		if (folderId <= 0) {
+			return key;
+		}
+
+		return key + StringPool.DASH + folderId;
+	}
+
 	public static OrderByComparator<JournalArticle> getArticleOrderByComparator(
 		String orderByCol, String orderByType) {
 
@@ -195,6 +222,33 @@ public class JournalPortletUtil {
 		}
 
 		return orderByComparator;
+	}
+
+	protected static long getAddMenuFavItemFolderId(long folderId)
+		throws PortalException {
+
+		if (folderId <= 0) {
+			return 0;
+		}
+
+		JournalFolder folder = JournalFolderLocalServiceUtil.fetchFolder(
+			folderId);
+
+		while (folder != null) {
+			int restrictionType = JournalUtil.getRestrictionType(
+				folder.getFolderId());
+
+			if (restrictionType ==
+					JournalFolderConstants.
+						RESTRICTION_TYPE_DDM_STRUCTURES_AND_WORKFLOW) {
+
+				return folder.getFolderId();
+			}
+
+			folder = folder.getParentFolder();
+		}
+
+		return 0;
 	}
 
 }

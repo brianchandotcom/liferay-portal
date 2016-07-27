@@ -1769,6 +1769,13 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			boolean strict, ServiceContext serviceContext)
 		throws PortalException {
 
+		WikiPage latestWikiPage = fetchLatestPage(
+			nodeId, title, WorkflowConstants.STATUS_ANY, false);
+
+		if ((latestWikiPage != null) && !latestWikiPage.isApproved()) {
+			throw new PageVersionException();
+		}
+
 		wikiPageTitleValidator.validate(newTitle);
 
 		if (StringUtil.equalsIgnoreCase(title, newTitle)) {

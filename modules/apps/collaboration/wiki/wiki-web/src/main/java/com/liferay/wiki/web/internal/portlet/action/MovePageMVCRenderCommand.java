@@ -22,6 +22,7 @@ import com.liferay.wiki.constants.WikiWebKeys;
 import com.liferay.wiki.exception.NoSuchNodeException;
 import com.liferay.wiki.exception.NoSuchPageException;
 import com.liferay.wiki.exception.PageTitleException;
+import com.liferay.wiki.exception.PageVersionException;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 
@@ -58,21 +59,22 @@ public class MovePageMVCRenderCommand implements MVCRenderCommand {
 
 			WikiPage page = ActionUtil.getPage(renderRequest);
 
+			if (!page.isApproved()) {
+				throw new PageVersionException();
+			}
+
 			renderRequest.setAttribute(WikiWebKeys.WIKI_PAGE, page);
 		}
+		catch (NoSuchNodeException | NoSuchPageException |
+				PageTitleException | PageVersionException |
+				PrincipalException e) {
+
+			SessionErrors.add(renderRequest, e.getClass());
+
+			return "/wiki/error.jsp";
+		}
 		catch (Exception e) {
-			if (e instanceof NoSuchNodeException ||
-				e instanceof NoSuchPageException ||
-				e instanceof PageTitleException ||
-				e instanceof PrincipalException) {
-
-				SessionErrors.add(renderRequest, e.getClass());
-
-				return "/wiki/error.jsp";
-			}
-			else {
-				throw new PortletException(e);
-			}
+			throw new PortletException(e);
 		}
 
 		return "/wiki/move_page.jsp";

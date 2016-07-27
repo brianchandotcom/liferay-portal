@@ -55,7 +55,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Bruno Farache
  * @author Daniel Kocsis
  * @author Mate Thurzo
- * @see    com.liferay.journal.lar.JournalCreationStrategy
+ * @see    com.liferay.journal.internal.exportimport.data.handler.JournalCreationStrategy
  * @see    PortletDataHandler
  */
 @Component(

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.site.teams.web.internal.lar;
+package com.liferay.site.teams.web.internal.exportimport.data.handler;
 
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;

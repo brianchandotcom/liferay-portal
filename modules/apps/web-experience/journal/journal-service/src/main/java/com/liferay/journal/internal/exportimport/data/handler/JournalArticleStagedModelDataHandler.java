@@ -28,6 +28,8 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelModifiedDateComparator;
 import com.liferay.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.journal.internal.exportimport.content.processor.JournalArticleExportImportContentProcessor;
+import com.liferay.journal.internal.exportimport.creation.strategy.JournalCreationStrategy;
+import com.liferay.journal.internal.exportimport.creation.strategy.JournalCreationStrategyFactory;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
 import com.liferay.journal.model.JournalArticleResource;

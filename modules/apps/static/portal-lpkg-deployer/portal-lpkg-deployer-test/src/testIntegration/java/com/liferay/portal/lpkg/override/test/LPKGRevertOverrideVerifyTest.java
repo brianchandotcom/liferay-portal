@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.lpkg.overwrite.test;
+package com.liferay.portal.lpkg.override.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.util.Validator;
@@ -44,31 +44,31 @@ import org.osgi.framework.Version;
  * @author Matthew Tambara
  */
 @RunWith(Arquillian.class)
-public class LPKGRevertOverwriteVerifyTest {
+public class LPKGRevertOverrideVerifyTest {
 
 	@Test
 	public void testCleanStartUp() throws Exception {
 		if (Boolean.getBoolean("lpkg.clean.startup")) {
-			_testRevertOverwrittenLPKGs();
+			_testRevertOverriddenLPKGs();
 		}
 	}
 
 	@Test
 	public void testSecondStartup() throws Exception {
 		if (!Boolean.getBoolean("lpkg.clean.startup")) {
-			_testRevertOverwrittenLPKGs();
+			_testRevertOverriddenLPKGs();
 		}
 	}
 
-	private void _testRevertOverwrittenLPKGs() throws Exception {
+	private void _testRevertOverriddenLPKGs() throws Exception {
 		Bundle testBundle = FrameworkUtil.getBundle(
-			LPKGRevertOverwriteVerifyTest.class);
+			LPKGRevertOverrideVerifyTest.class);
 
 		BundleContext bundleContext = testBundle.getBundleContext();
 
 		Properties properties = new Properties();
 
-		Path path = Paths.get(PropsValues.LIFERAY_HOME, "/overwrites");
+		Path path = Paths.get(PropsValues.LIFERAY_HOME, "/overrides");
 
 		Assert.assertTrue(Files.exists(path));
 
@@ -154,7 +154,7 @@ public class LPKGRevertOverwriteVerifyTest {
 			"Static JARs not reverted: " + statics, statics.isEmpty());
 		Assert.assertTrue("WARs not reverted: " + wars, wars.isEmpty());
 
-		Files.delete(Paths.get(PropsValues.LIFERAY_HOME, "/overwrites"));
+		Files.delete(Paths.get(PropsValues.LIFERAY_HOME, "/overrides"));
 	}
 
 }

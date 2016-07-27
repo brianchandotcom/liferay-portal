@@ -50,11 +50,9 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.store.s3.configuration.S3StoreConfiguration;
 
@@ -643,47 +641,37 @@ public class S3Store extends BaseStore {
 	protected void setProxyConfiguration(
 		ClientConfiguration clientConfiguration) {
 
-		String proxyHost = GetterUtil.getString(
-			SystemProperties.get("http.proxyHost"));
+		String proxyHost = _s3StoreConfiguration.proxyHost();
 		int proxyPort = GetterUtil.getInteger(
-			SystemProperties.get("http.proxyPort"));
+			_s3StoreConfiguration.proxyPort(), -1);
 
-		if (Validator.isNull(proxyHost) || Validator.isNull(proxyPort)) {
+		if (Validator.isNull(proxyHost) || proxyPort == -1) {
 			return;
 		}
 
 		clientConfiguration.setProxyHost(proxyHost);
 		clientConfiguration.setProxyPort(proxyPort);
 
-		String proxyAuthType = GetterUtil.getString(
-			PropsUtil.get("com.liferay.portal.util.HttpImpl.proxy.auth.type"));
+		String proxyAuthType = _s3StoreConfiguration.proxyAuthType();
 
-		String proxyPassword = GetterUtil.getString(
-			PropsUtil.get("com.liferay.portal.util.HttpImpl.proxy.password"));
-		String proxyUsername = GetterUtil.getString(
-			PropsUtil.get("com.liferay.portal.util.HttpImpl.proxy.username"));
-
-		String ntlmProxyDomain = GetterUtil.getString(
-			PropsUtil.get(
-				"com.liferay.portal.util.HttpImpl.proxy.ntlm.domain"));
-		String ntlmProxyHost = GetterUtil.getString(
-			PropsUtil.get("com.liferay.portal.util.HttpImpl.proxy.ntlm.host"));
-
-		if ((proxyAuthType != null) &&
-			proxyAuthType.equals("username-password") &&
-			(proxyPassword != null) && (proxyUsername != null)) {
-
-			clientConfiguration.setProxyPassword(proxyPassword);
-			clientConfiguration.setProxyUsername(proxyUsername);
+		if (!proxyAuthType.equals("username-password") &&
+			!proxyAuthType.equals("ntlm")) {
+			return;
 		}
-		else if ((proxyAuthType != null) && proxyAuthType.equals("ntlm") &&
-				 (proxyPassword != null) && (proxyUsername != null) &&
-				 (ntlmProxyDomain != null) && (ntlmProxyHost != null)) {
+
+		String proxyPassword = _s3StoreConfiguration.proxyPassword();
+		String proxyUsername = _s3StoreConfiguration.proxyUsername();
+
+		clientConfiguration.setProxyPassword(proxyPassword);
+		clientConfiguration.setProxyUsername(proxyUsername);
+
+		if (proxyAuthType.equals("ntlm")) {
+			String ntlmProxyDomain = _s3StoreConfiguration.ntlmProxyDomain();
+			String ntlmProxyWorkstation =
+				_s3StoreConfiguration.ntlmProxyWorkstation();
 
 			clientConfiguration.setProxyDomain(ntlmProxyDomain);
-			clientConfiguration.setProxyWorkstation(ntlmProxyHost);
-			clientConfiguration.setProxyPassword(proxyPassword);
-			clientConfiguration.setProxyUsername(proxyUsername);
+			clientConfiguration.setProxyWorkstation(ntlmProxyWorkstation);
 		}
 	}
 

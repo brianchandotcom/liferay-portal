@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>de.undercouch</groupId>
   <artifactId>gradle-download-task</artifactId>
-  <version>3.1.0</version>
+  <version>3.1.1</version>
   <name>gradle-download-task</name>
   <description>Adds a download task to Gradle that displays progress information</description>
   <url>https://github.com/michel-kraemer/gradle-download-task</url>

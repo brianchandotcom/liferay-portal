@@ -14,6 +14,7 @@
 
 package com.liferay.portal.service.persistence.impl;
 
+import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
@@ -23,11 +24,13 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.service.persistence.OrganizationFinder;
 import com.liferay.portal.kernel.service.persistence.OrganizationUtil;
+import com.liferay.portal.kernel.service.persistence.UserUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.impl.OrganizationImpl;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
@@ -73,6 +76,9 @@ public class OrganizationFinderImpl
 
 	public static final String FIND_BY_C_PO_N_L_S_C_Z_R_C =
 		OrganizationFinder.class.getName() + ".findByC_PO_N_L_S_C_Z_R_C";
+
+	public static final String FIND_U_BY_C_S_O =
+		OrganizationFinder.class.getName() + ".findU_ByC_S_O";
 
 	public static final String JOIN_BY_ORGANIZATIONS_GROUPS =
 		OrganizationFinder.class.getName() + ".joinByOrganizationsGroups";
@@ -544,6 +550,15 @@ public class OrganizationFinderImpl
 		}
 	}
 
+	@Override
+	public List<Object> findO_U_ByC_P(
+		long companyId, long parentOrganizationId,
+		QueryDefinition<?> queryDefinition) {
+
+		return doFindO_U_ByC_P(
+			companyId, parentOrganizationId, queryDefinition);
+	}
+
 	protected int countByOrganizationId(
 		Session session, long organizationId,
 		LinkedHashMap<String, Object> params) {
@@ -574,6 +589,94 @@ public class OrganizationFinderImpl
 		}
 
 		return 0;
+	}
+
+	protected List<Object> doFindO_U_ByC_P(
+		long companyId, long parentOrganizationId,
+		QueryDefinition<?> queryDefinition) {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			StringBundler sb = new StringBundler(5);
+
+			sb.append(StringPool.OPEN_PARENTHESIS);
+
+			String sql = CustomSQLUtil.get(FIND_BY_C_P);
+
+			sql = StringUtil.replace(
+				sql, "SELECT organizationId",
+				"SELECT organizationId, 0 AS userId, name");
+			sql = StringUtil.replace(
+				sql, "(organizationId > ?) AND", StringPool.BLANK);
+
+			sb.append(sql);
+			sb.append(") UNION ALL (");
+
+			sql = CustomSQLUtil.get(FIND_U_BY_C_S_O);
+
+			int status = queryDefinition.getStatus();
+
+			if (status == WorkflowConstants.STATUS_ANY) {
+				sql = StringUtil.replace(
+					sql, "(User_.status = ?) AND", StringPool.BLANK);
+			}
+
+			sb.append(sql);
+			sb.append(StringPool.CLOSE_PARENTHESIS);
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sb.toString());
+
+			q.addScalar("organizationId", Type.LONG);
+			q.addScalar("userId", Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(companyId);
+			qPos.add(parentOrganizationId);
+			qPos.add(companyId);
+
+			if (status != WorkflowConstants.STATUS_ANY) {
+				qPos.add(queryDefinition.getStatus());
+			}
+
+			qPos.add(parentOrganizationId);
+
+			List<Object> models = new ArrayList<>();
+
+			Iterator<Object[]> itr = (Iterator<Object[]>)QueryUtil.iterate(
+				q, getDialect(), queryDefinition.getStart(),
+				queryDefinition.getEnd());
+
+			while (itr.hasNext()) {
+				Object[] array = itr.next();
+
+				long organizationId = (Long)array[0];
+
+				Object obj = null;
+
+				if (organizationId > 0) {
+					obj = OrganizationUtil.findByPrimaryKey(organizationId);
+				}
+				else {
+					long userId = (Long)array[1];
+
+					obj = UserUtil.findByPrimaryKey(userId);
+				}
+
+				models.add(obj);
+			}
+
+			return models;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
 	}
 
 	protected String getJoin(LinkedHashMap<String, Object> params) {

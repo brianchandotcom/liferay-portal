@@ -271,32 +271,66 @@ public class KBArticleImporter {
 			_configurationProvider.getGroupConfiguration(
 				KBGroupServiceConfiguration.class, groupId);
 
+		_validateFileEntryNames(zipReader, kbGroupServiceConfiguration);
+
 		Map<String, List<String>> folderNameFileEntryNamesMap =
 			getFolderNameFileEntryNamesMap(
 				zipReader, kbGroupServiceConfiguration);
 
 		Set<String> folderNames = folderNameFileEntryNamesMap.keySet();
 
+		// Map intro files to their folders
+
+		Map<String, String> folderNameIntroFileNameMap = new TreeMap<>();
+
 		for (String folderName : folderNames) {
 			List<String> fileEntryNames = folderNameFileEntryNamesMap.get(
 				folderName);
-
-			String sectionIntroFileEntryName = null;
-
-			List<String> sectionFileEntryNames = new ArrayList<>();
 
 			for (String fileEntryName : fileEntryNames) {
 				if (fileEntryName.endsWith(
 						kbGroupServiceConfiguration.
 							markdownImporterArticleIntro())) {
 
-					sectionIntroFileEntryName = fileEntryName;
-				}
-				else {
-					sectionFileEntryNames.add(fileEntryName);
+					folderNameIntroFileNameMap.put(folderName, fileEntryName);
+
+					break;
 				}
 			}
+		}
 
+		// Map ancestor intro files to folders that have no intro files
+
+		for (String folderName : folderNames) {
+			String introFileName = folderNameIntroFileNameMap.get(folderName);
+
+			if (Validator.isNull(introFileName)) {
+				for (String path : _extractPaths(folderName)) {
+					String parentIntroFileName = folderNameIntroFileNameMap.get(
+						path);
+
+					if (Validator.isNotNull(parentIntroFileName)) {
+						folderNameIntroFileNameMap.put(
+							folderName, parentIntroFileName);
+
+						break;
+					}
+				}
+
+				if (Validator.isNull(
+						folderNameIntroFileNameMap.get(folderName))) {
+
+					folderNameIntroFileNameMap.put(
+						folderName, StringPool.BLANK);
+				}
+			}
+		}
+
+		// Add a KB article for each intro file
+
+		Map<String, KBArticle> introFileNameKBArticleMap = new HashMap<>();
+
+		for (String folderName : folderNames) {
 			long parentResourceClassNameId = PortalUtil.getClassNameId(
 				KBFolderConstants.getClassName());
 			long parentResourcePrimaryKey = parentKBFolderId;
@@ -304,41 +338,97 @@ public class KBArticleImporter {
 			long sectionResourceClassNameId = parentResourceClassNameId;
 			long sectionResourcePrimaryKey = parentResourcePrimaryKey;
 
-			if (Validator.isNotNull(sectionIntroFileEntryName)) {
-				KBArticle sectionIntroKBArticle = addKBArticleMarkdown(
-					userId, groupId, parentKBFolderId,
-					sectionResourceClassNameId, sectionResourcePrimaryKey,
-					zipReader.getEntryAsString(sectionIntroFileEntryName),
-					sectionIntroFileEntryName, zipReader, metadata,
-					prioritizationStrategy, serviceContext);
+			String introFileName = folderNameIntroFileNameMap.get(folderName);
 
-				sectionResourceClassNameId = PortalUtil.getClassNameId(
-					KBArticleConstants.getClassName());
-				sectionResourcePrimaryKey =
-					sectionIntroKBArticle.getResourcePrimKey();
+			if (Validator.isNotNull(introFileName)) {
 
-				importedKBArticlesCount++;
-			}
+				// Check for parent intro file
 
-			for (String sectionFileEntryName : sectionFileEntryNames) {
-				String sectionMarkdown = zipReader.getEntryAsString(
-					sectionFileEntryName);
+				for (String path : _extractPaths(folderName)) {
+					String parentIntroFileName = folderNameIntroFileNameMap.get(
+						path);
 
-				if (Validator.isNull(sectionMarkdown)) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"Missing Markdown in file entry " +
-								sectionFileEntryName);
+					if (Validator.isNotNull(parentIntroFileName)) {
+						KBArticle parentIntroKBArticle =
+							introFileNameKBArticleMap.get(parentIntroFileName);
+
+						sectionResourceClassNameId = PortalUtil.getClassNameId(
+							KBArticleConstants.getClassName());
+						sectionResourcePrimaryKey =
+							parentIntroKBArticle.getResourcePrimKey();
+
+						break;
 					}
 				}
 
-				addKBArticleMarkdown(
-					userId, groupId, parentKBFolderId,
-					sectionResourceClassNameId, sectionResourcePrimaryKey,
-					sectionMarkdown, sectionFileEntryName, zipReader, metadata,
-					prioritizationStrategy, serviceContext);
+				KBArticle introKBArticle = introFileNameKBArticleMap.get(
+					introFileName);
 
-				importedKBArticlesCount++;
+				if (Validator.isNull(introKBArticle)) {
+					introKBArticle = addKBArticleMarkdown(
+						userId, groupId, parentKBFolderId,
+						sectionResourceClassNameId, sectionResourcePrimaryKey,
+						zipReader.getEntryAsString(introFileName),
+						introFileName, zipReader, metadata,
+						prioritizationStrategy, serviceContext);
+
+					importedKBArticlesCount++;
+
+					introFileNameKBArticleMap.put(
+						introFileName, introKBArticle);
+				}
+			}
+		}
+
+		// Add non-intro files as KB articles
+
+		for (String folderName : folderNames) {
+			long parentResourceClassNameId = PortalUtil.getClassNameId(
+				KBFolderConstants.getClassName());
+			long parentResourcePrimaryKey = parentKBFolderId;
+
+			long sectionResourceClassNameId = parentResourceClassNameId;
+			long sectionResourcePrimaryKey = parentResourcePrimaryKey;
+
+			// Lookup section intro article for folder
+
+			String introFileName = folderNameIntroFileNameMap.get(folderName);
+
+			if (Validator.isNotNull(introFileName)) {
+				KBArticle introKBArticle = introFileNameKBArticleMap.get(
+					introFileName);
+
+				sectionResourceClassNameId = PortalUtil.getClassNameId(
+					KBArticleConstants.getClassName());
+				sectionResourcePrimaryKey = introKBArticle.getResourcePrimKey();
+			}
+
+			List<String> fileEntryNames = folderNameFileEntryNamesMap.get(
+				folderName);
+
+			for (String fileEntryName : fileEntryNames) {
+				if (!fileEntryName.endsWith(
+						kbGroupServiceConfiguration.
+							markdownImporterArticleIntro())) {
+
+					String markdown = zipReader.getEntryAsString(fileEntryName);
+
+					if (Validator.isNull(markdown)) {
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"Missing Markdown in file entry " +
+									fileEntryName);
+						}
+					}
+
+					addKBArticleMarkdown(
+						userId, groupId, parentKBFolderId,
+						sectionResourceClassNameId, sectionResourcePrimaryKey,
+						markdown, fileEntryName, zipReader, metadata,
+						prioritizationStrategy, serviceContext);
+
+					importedKBArticlesCount++;
+				}
 			}
 		}
 
@@ -354,6 +444,29 @@ public class KBArticleImporter {
 		_configurationProvider = configurationProvider;
 	}
 
+	private List<String> _extractPaths(String folderName) {
+		List<String> paths = new ArrayList<>();
+
+		int length = folderName.length();
+
+		for (int from = 0; from < length;) {
+			int index = folderName.indexOf('/', from);
+
+			if (index == -1) {
+				break;
+			}
+			else {
+				String path = folderName.substring(0, index);
+
+				paths.add(0, path);
+			}
+
+			from = index + 1;
+		}
+
+		return paths;
+	}
+
 	private List<String> _getEntries(ZipReader zipReader)
 		throws KBArticleImportException {
 
@@ -365,6 +478,50 @@ public class KBArticleImporter {
 		}
 
 		return entries;
+	}
+
+	private void _validateFileEntryNames(
+			ZipReader zipReader,
+			KBGroupServiceConfiguration kbGroupServiceConfiguration)
+		throws KBArticleImportException {
+
+		Map<String, List<String>> folderNameFileEntryNamesMap =
+			getFolderNameFileEntryNamesMap(
+				zipReader, kbGroupServiceConfiguration);
+
+		Set<String> folderNames = folderNameFileEntryNamesMap.keySet();
+
+		for (String folderName : folderNames) {
+			List<String> fileEntryNames = folderNameFileEntryNamesMap.get(
+				folderName);
+
+			String introFileEntryName = null;
+
+			for (String fileEntryName : fileEntryNames) {
+				if (fileEntryName.endsWith(
+						kbGroupServiceConfiguration.
+							markdownImporterArticleIntro())) {
+
+					if (Validator.isNull(introFileEntryName)) {
+						introFileEntryName = fileEntryName;
+					}
+					else {
+						StringBundler sb = new StringBundler(6);
+
+						sb.append("Multiple files with section designator ");
+						sb.append(
+							kbGroupServiceConfiguration.
+								markdownImporterArticleIntro());
+						sb.append(": ");
+						sb.append(introFileEntryName);
+						sb.append(", ");
+						sb.append(fileEntryName);
+
+						throw new KBArticleImportException(sb.toString());
+					}
+				}
+			}
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

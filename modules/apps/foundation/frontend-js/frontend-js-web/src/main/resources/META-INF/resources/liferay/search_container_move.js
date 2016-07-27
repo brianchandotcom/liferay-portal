@@ -45,8 +45,6 @@ AUI.add(
 
 						instance._initDragAndDrop();
 
-						instance._initDragAndDropToggle();
-
 						instance._initDropTargets();
 					},
 
@@ -82,6 +80,10 @@ AUI.add(
 
 						var host = instance.get(STR_HOST);
 
+						var disableDD = A.UA.mobile && A.UA.touchEnabled;
+						var pixelThresh = disableDD ? 100000 : 50;
+						var timeThresh = disableDD ? 150000 : 1000;
+
 						instance._ddHandler = new A.DD.Delegate(
 							{
 								container: host.get(STR_CONTENT_BOX),
@@ -97,6 +99,8 @@ AUI.add(
 
 						var dd = instance._ddHandler.dd;
 
+						dd.set('clickPixelThresh', pixelThresh);
+						dd.set('clickTimeThresh', timeThresh);
 						dd.set('groups', [host.get('id')]);
 						dd.set('offsetNode', false);
 
@@ -107,33 +111,16 @@ AUI.add(
 										moveOnEnd: false
 									},
 									fn: A.Plugin.DDProxy
+								},
+								{
+									cfg: {
+										horizontal: false,
+										scrollDelay: 100,
+										vertical: true
+									},
+									fn: A.Plugin.DDWinScroll
 								}
 							]
-						);
-					},
-
-					_initDragAndDropToggle: function() {
-						var instance = this;
-
-						var host = instance.get(STR_HOST);
-						var container = host.get(STR_CONTENT_BOX);
-						var searchContainerWrapper = container.get('parentNode');
-						var toggle = searchContainerWrapper.one('.search-container-dd-toggle input[type="checkbox"]');
-
-						var checked = toggle ? toggle.get('checked') : false;
-
-						instance._ddHandler.dd.set('lock', !checked);
-
-						searchContainerWrapper.delegate(
-							'change',
-							function(event) {
-								checked = event.currentTarget.get('checked');
-
-								instance._ddHandler.dd.set('lock', !checked);
-
-								Liferay.Store(host.get('id') + '_searchContainerMove', checked ? 'checked' : '');
-							},
-							'.search-container-dd-toggle input[type="checkbox]'
 						);
 					},
 
@@ -310,6 +297,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-component', 'dd-constrain', 'dd-delegate', 'dd-drag', 'dd-drop', 'dd-proxy', 'liferay-store', 'plugin']
+		requires: ['aui-component', 'dd-constrain', 'dd-delegate', 'dd-drag', 'dd-drop', 'dd-proxy', 'plugin']
 	}
 );

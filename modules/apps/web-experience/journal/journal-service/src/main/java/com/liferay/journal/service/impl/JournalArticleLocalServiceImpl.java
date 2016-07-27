@@ -138,6 +138,7 @@ import com.liferay.portal.kernel.util.GroupSubscriptionCheckSubscriptionSender;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.MathUtil;
@@ -403,11 +404,9 @@ public class JournalArticleLocalServiceImpl
 		article.setTreePath(article.buildTreePath());
 		article.setArticleId(articleId);
 		article.setVersion(version);
-		article.setTitleMap(titleMap, locale);
 		article.setUrlTitle(
 			getUniqueUrlTitle(
 				id, groupId, articleId, title, null, serviceContext));
-		article.setDescriptionMap(descriptionMap, locale);
 
 		content = format(user, groupId, article, content);
 
@@ -434,6 +433,11 @@ public class JournalArticleLocalServiceImpl
 		article.setStatusByUserId(userId);
 		article.setStatusDate(serviceContext.getModifiedDate(now));
 		article.setExpandoBridgeAttributes(serviceContext);
+
+		String defaultLanguageId = LocaleUtil.toLanguageId(
+			LocaleThreadLocal.getDefaultLocale());
+
+		article.setDefaultLanguageId(defaultLanguageId);
 
 		journalArticlePersistence.update(article);
 
@@ -807,11 +811,9 @@ public class JournalArticleLocalServiceImpl
 		newArticle.setTreePath(oldArticle.getTreePath());
 		newArticle.setArticleId(newArticleId);
 		newArticle.setVersion(JournalArticleConstants.VERSION_DEFAULT);
-		newArticle.setTitle(oldArticle.getTitle());
 		newArticle.setUrlTitle(
 			getUniqueUrlTitle(
 				id, groupId, newArticleId, oldArticle.getTitleCurrentValue()));
-		newArticle.setDescription(oldArticle.getDescription());
 
 		try {
 			copyArticleImages(oldArticle, newArticle);
@@ -845,6 +847,19 @@ public class JournalArticleLocalServiceImpl
 			oldArticle.getExpandoBridge(), newArticle.getExpandoBridge());
 
 		journalArticlePersistence.update(newArticle);
+
+		// Localization
+
+		Map<Locale, String> descriptionMap =
+			journalArticleLocalService.getArticleDescriptionMap(
+				oldArticle.getId());
+
+		Map<Locale, String> titleMap =
+			journalArticleLocalService.getArticleTitleMap(oldArticle.getId());
+
+		_addArticleLocalizedFields(
+			newArticle.getCompanyId(), newArticle.getId(), titleMap,
+			descriptionMap);
 
 		// Resources
 
@@ -946,6 +961,11 @@ public class JournalArticleLocalServiceImpl
 
 			updatePreviousApprovedArticle(article);
 		}
+
+		// Localization
+
+		journalArticleLocalizationPersistence.removeByArticlePK(
+			article.getId());
 
 		// Email
 
@@ -3801,19 +3821,8 @@ public class JournalArticleLocalServiceImpl
 		JournalArticle article = journalArticlePersistence.findByG_A_V(
 			groupId, articleId, version);
 
-		String title = article.getTitle();
-
-		title = LocalizationUtil.removeLocalization(
-			title, "static-content", languageId, true);
-
-		article.setTitle(title);
-
-		String description = article.getDescription();
-
-		description = LocalizationUtil.removeLocalization(
-			description, "static-content", languageId, true);
-
-		article.setDescription(description);
+		journalArticleLocalizationPersistence.removeByA_L(
+			article.getId(), languageId);
 
 		String content = article.getContent();
 
@@ -5359,6 +5368,15 @@ public class JournalArticleLocalServiceImpl
 			article.setArticleId(articleId);
 			article.setVersion(version);
 			article.setSmallImageId(latestArticle.getSmallImageId());
+
+			_addArticleLocalizedFields(
+				article.getCompanyId(), article.getId(), titleMap,
+				descriptionMap);
+		}
+		else {
+			_updateArticleLocalizedFields(
+				article.getCompanyId(), article.getId(), titleMap,
+				descriptionMap);
 		}
 
 		Locale locale = getArticleDefaultLocale(content);
@@ -5369,12 +5387,10 @@ public class JournalArticleLocalServiceImpl
 
 		article.setFolderId(folderId);
 		article.setTreePath(article.buildTreePath());
-		article.setTitleMap(titleMap, locale);
 		article.setUrlTitle(
 			getUniqueUrlTitle(
 				article.getId(), groupId, article.getArticleId(), title,
 				latestArticle.getUrlTitle(), serviceContext));
-		article.setDescriptionMap(descriptionMap, locale);
 		article.setContent(content);
 		article.setDDMStructureKey(ddmStructureKey);
 		article.setDDMTemplateKey(ddmTemplateKey);
@@ -5600,12 +5616,10 @@ public class JournalArticleLocalServiceImpl
 			article.setClassPK(oldArticle.getClassPK());
 			article.setArticleId(articleId);
 			article.setVersion(newVersion);
-			article.setTitleMap(oldArticle.getTitleMap(), defaultLocale);
 			article.setUrlTitle(
 				getUniqueUrlTitle(
 					id, groupId, articleId, title, oldArticle.getUrlTitle(),
 					serviceContext));
-			article.setDescriptionMap(oldArticle.getDescriptionMap());
 			article.setDDMStructureKey(oldArticle.getDDMStructureKey());
 			article.setDDMTemplateKey(oldArticle.getDDMTemplateKey());
 			article.setLayoutUuid(oldArticle.getLayoutUuid());
@@ -5628,6 +5642,12 @@ public class JournalArticleLocalServiceImpl
 			ExpandoBridgeUtil.copyExpandoBridgeAttributes(
 				oldArticle.getExpandoBridge(), article.getExpandoBridge());
 
+			// Localization columns
+
+			_addArticleLocalizedFields(
+				article.getCompanyId(), article.getId(),
+				oldArticle.getTitleMap(), oldArticle.getDescriptionMap());
+
 			// Dynamic data mapping
 
 			updateDDMLinks(
@@ -5642,13 +5662,12 @@ public class JournalArticleLocalServiceImpl
 
 		titleMap.put(locale, title);
 
-		article.setTitleMap(titleMap, defaultLocale);
-
 		Map<Locale, String> descriptionMap = article.getDescriptionMap();
 
 		descriptionMap.put(locale, description);
 
-		article.setDescriptionMap(descriptionMap);
+		_updateArticleLocalizedFields(
+			article.getCompanyId(), article.getId(), titleMap, descriptionMap);
 
 		content = format(user, groupId, article, content);
 

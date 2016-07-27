@@ -32,7 +32,6 @@ import com.liferay.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.journal.transformer.LocaleTransformerListener;
 import com.liferay.journal.util.impl.JournalUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.log.Log;
@@ -573,28 +572,6 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 	@Override
 	public boolean isTemplateDriven() {
 		return true;
-	}
-
-	/**
-	 * @param defaultImportLocale the default imported locale
-	 */
-	@Override
-	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
-		throws LocaleException {
-
-		super.prepareLocalizedFieldsForImport(defaultImportLocale);
-
-		String content = StringPool.BLANK;
-
-		try {
-			content = JournalUtil.prepareLocalizedContentForImport(
-				getContent(), defaultImportLocale);
-		}
-		catch (Exception e) {
-			throw new LocaleException(LocaleException.TYPE_DEFAULT, e);
-		}
-
-		setContent(content);
 	}
 
 	@Override

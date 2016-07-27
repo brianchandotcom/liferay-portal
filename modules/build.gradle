@@ -131,6 +131,7 @@ gradle.beforeProject {
 			pluginManager.withPlugin("com.liferay.theme.plugin") {
 				npmInstall {
 					nodeModulesCacheDir = new File(System.properties["user.home"], ".liferay/node-modules-cache")
+					removeShrinkwrappedUrls = true
 				}
 			}
 

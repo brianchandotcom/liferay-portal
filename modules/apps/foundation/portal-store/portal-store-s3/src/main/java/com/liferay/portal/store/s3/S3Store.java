@@ -385,6 +385,44 @@ public class S3Store extends BaseStore {
 		}
 	}
 
+	protected void configureProxySettings(
+		ClientConfiguration clientConfiguration) {
+
+		String proxyHost = _s3StoreConfiguration.proxyHost();
+		int proxyPort = GetterUtil.getInteger(
+			_s3StoreConfiguration.proxyPort(), -1);
+
+		if (Validator.isNull(proxyHost) || (proxyPort == -1)) {
+			return;
+		}
+
+		clientConfiguration.setProxyHost(proxyHost);
+		clientConfiguration.setProxyPort(proxyPort);
+
+		String proxyAuthType = _s3StoreConfiguration.proxyAuthType();
+
+		if (!proxyAuthType.equals("username-password") &&
+			!proxyAuthType.equals("ntlm")) {
+
+			return;
+		}
+
+		String proxyPassword = _s3StoreConfiguration.proxyPassword();
+		String proxyUsername = _s3StoreConfiguration.proxyUsername();
+
+		clientConfiguration.setProxyPassword(proxyPassword);
+		clientConfiguration.setProxyUsername(proxyUsername);
+
+		if (proxyAuthType.equals("ntlm")) {
+			String ntlmProxyDomain = _s3StoreConfiguration.ntlmProxyDomain();
+			String ntlmProxyWorkstation =
+				_s3StoreConfiguration.ntlmProxyWorkstation();
+
+			clientConfiguration.setProxyDomain(ntlmProxyDomain);
+			clientConfiguration.setProxyWorkstation(ntlmProxyWorkstation);
+		}
+	}
+
 	@Deactivate
 	protected void deactivate() {
 		_amazonS3 = null;
@@ -469,7 +507,7 @@ public class S3Store extends BaseStore {
 
 		clientConfiguration.setConnectionTimeout(connectionTimeout);
 
-		setProxyConfiguration(clientConfiguration);
+		configureProxySettings(clientConfiguration);
 
 		return clientConfiguration;
 	}
@@ -639,44 +677,6 @@ public class S3Store extends BaseStore {
 				_bucketName, oldKey);
 
 			_amazonS3.deleteObject(deleteObjectRequest);
-		}
-	}
-
-	protected void setProxyConfiguration(
-		ClientConfiguration clientConfiguration) {
-
-		String proxyHost = _s3StoreConfiguration.proxyHost();
-		int proxyPort = GetterUtil.getInteger(
-			_s3StoreConfiguration.proxyPort(), -1);
-
-		if (Validator.isNull(proxyHost) || (proxyPort == -1)) {
-			return;
-		}
-
-		clientConfiguration.setProxyHost(proxyHost);
-		clientConfiguration.setProxyPort(proxyPort);
-
-		String proxyAuthType = _s3StoreConfiguration.proxyAuthType();
-
-		if (!proxyAuthType.equals("username-password") &&
-			!proxyAuthType.equals("ntlm")) {
-			
-			return;
-		}
-
-		String proxyPassword = _s3StoreConfiguration.proxyPassword();
-		String proxyUsername = _s3StoreConfiguration.proxyUsername();
-
-		clientConfiguration.setProxyPassword(proxyPassword);
-		clientConfiguration.setProxyUsername(proxyUsername);
-
-		if (proxyAuthType.equals("ntlm")) {
-			String ntlmProxyDomain = _s3StoreConfiguration.ntlmProxyDomain();
-			String ntlmProxyWorkstation =
-				_s3StoreConfiguration.ntlmProxyWorkstation();
-
-			clientConfiguration.setProxyDomain(ntlmProxyDomain);
-			clientConfiguration.setProxyWorkstation(ntlmProxyWorkstation);
 		}
 	}
 

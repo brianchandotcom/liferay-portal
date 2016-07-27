@@ -26,7 +26,10 @@ AUI.add(
 					initializer: function() {
 						var instance = this;
 
+						var evaluator = instance.get('evaluator');
+
 						instance._eventHandlers.push(
+							evaluator.after('evaluationStarted', A.bind('_saveSettings', instance)),
 							instance.after('render', instance._afterSettingsFormRender),
 							instance.on('*:addOption', instance._afterAddOption),
 							instance.on('*:removeOption', instance.alignModal)
@@ -183,7 +186,7 @@ AUI.add(
 
 						var nameField = instance.getField('name');
 
-						nameField.setValue(event.newVal);
+						nameField.set('value', event.newVal);
 					},
 
 					_onNameChange: function(event) {
@@ -198,6 +201,14 @@ AUI.add(
 						var instance = this;
 
 						event.preventDefault();
+					},
+
+					_saveSettings: function() {
+						var instance = this;
+
+						var field = instance.get('field');
+
+						field.saveSettings(instance);
 					},
 
 					_syncModeToggler: function() {

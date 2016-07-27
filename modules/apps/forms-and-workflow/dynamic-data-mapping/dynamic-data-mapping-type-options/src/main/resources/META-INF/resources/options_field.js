@@ -68,6 +68,8 @@ AUI.add(
 						instance._syncOptionUI(repeatedOption);
 						instance._syncOptionUI(lastOption);
 
+						repeatedOption.addTarget(instance);
+
 						instance.fire('addOption');
 
 						return repeatedOption;
@@ -342,6 +344,8 @@ AUI.add(
 						config.context = A.clone(config);
 
 						instance._mainOption = new Liferay.DDM.Field.KeyValue(config);
+
+						instance._mainOption.addTarget(instance);
 
 						instance._bindOptionUI(instance._mainOption);
 					},

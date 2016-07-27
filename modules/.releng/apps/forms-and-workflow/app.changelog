@@ -628,7 +628,7 @@ app.artifacts-7.0.6=\
 	com.liferay.calendar.web-1.0.8.jar,\
 	com.liferay.dynamic.data.lists.api-2.0.3.jar,\
 	com.liferay.dynamic.data.lists.form.web-1.0.10.jar,\
-	com.liferay.dynamic.data.lists.service-1.1.3.jar,\
+	com.liferay.dynamic.data.lists.service-1.1.4.jar,\
 	com.liferay.dynamic.data.lists.web-1.1.6.jar,\
 	com.liferay.dynamic.data.mapping.api-3.3.0.jar,\
 	com.liferay.dynamic.data.mapping.data.provider-2.0.2.jar,\
@@ -642,7 +642,7 @@ app.artifacts-7.0.6=\
 	com.liferay.dynamic.data.mapping.form.values.query-2.0.3.jar,\
 	com.liferay.dynamic.data.mapping.io-2.0.6.jar,\
 	com.liferay.dynamic.data.mapping.lang-2.0.2.jar,\
-	com.liferay.dynamic.data.mapping.service-2.1.6.jar,\
+	com.liferay.dynamic.data.mapping.service-2.1.7.jar,\
 	com.liferay.dynamic.data.mapping.taglib-2.0.3.jar,\
 	com.liferay.dynamic.data.mapping.type.captcha-2.0.3.jar,\
 	com.liferay.dynamic.data.mapping.type.checkbox-2.0.7.jar,\
@@ -674,8 +674,8 @@ app.artifacts-7.0.6=\
 	com.liferay.portal.workflow.kaleo.runtime.scripting.impl-1.0.1.jar,\
 	com.liferay.portal.workflow.kaleo.service-2.0.6.jar,\
 	com.liferay.portal.workflow.lang-2.0.2.jar,\
-	com.liferay.portal.workflow.task.web-1.0.6.jar
+	com.liferay.portal.workflow.task.web-1.0.7.jar
 
-app.change.log-7.0.6=LPS-61099 LPS-61420 LPS-63382 LPS-63907 LPS-64031 LPS-64282 LPS-64305 LPS-64551 LPS-64610 LPS-64651 LPS-64713 LPS-64863 LPS-64944 LPS-65012 LPS-65036 LPS-65045 LPS-65135 LPS-65168 LPS-65224 LPS-65225 LPS-65270 LPS-65362 LPS-65385 LPS-65427 LPS-65651 LPS-65660 LPS-65683 LPS-65726 LPS-65776 LPS-65810 LPS-65909 LPS-66064 LPS-66069 LPS-66228 LPS-66416 LPS-66420 LPS-66439 LPS-66544 LPS-66561 LPS-66563 LPS-66834 LPS-66853 LPS-66920 LPS-66926 LPS-66927 LPS-66928 LPS-66974 LPS-66997 LPS-68510
+app.change.log-7.0.6=LPS-61099 LPS-61420 LPS-63382 LPS-63813 LPS-63907 LPS-64031 LPS-64282 LPS-64305 LPS-64551 LPS-64610 LPS-64651 LPS-64713 LPS-64863 LPS-64944 LPS-65012 LPS-65036 LPS-65045 LPS-65135 LPS-65168 LPS-65224 LPS-65225 LPS-65270 LPS-65362 LPS-65385 LPS-65427 LPS-65651 LPS-65660 LPS-65683 LPS-65726 LPS-65776 LPS-65810 LPS-65909 LPS-66064 LPS-66228 LPS-66229 LPS-66409 LPS-66416 LPS-66420 LPS-66544 LPS-66561 LPS-66563 LPS-66853 LPS-66920 LPS-66926 LPS-66927 LPS-66928 LPS-66974 LPS-66997 LPS-67308 LPS-68510
 
-app.git.id-7.0.6=61ae2c2b239b7653bbc5525cde76bad5fbbd103e
+app.git.id-7.0.6=3a98c9d63c49e975e6e06442d654a998f9037662

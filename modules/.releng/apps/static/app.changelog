@@ -449,7 +449,7 @@ app.artifacts-7.0.9=\
 	com.liferay.portal.configuration.metatype-2.0.2.jar,\
 	com.liferay.portal.configuration.persistence-2.0.1.jar,\
 	com.liferay.portal.log4j.extender-2.0.2.jar,\
-	com.liferay.portal.lpkg.deployer-2.0.4.jar,\
+	com.liferay.portal.lpkg.deployer-2.0.5.jar,\
 	com.liferay.portal.osgi.web.portlet.tracker-2.0.3.jar,\
 	com.liferay.portal.osgi.web.servlet.context.helper-2.1.1.jar,\
 	com.liferay.portal.osgi.web.servlet.jsp.compiler-2.0.6.jar,\
@@ -484,6 +484,6 @@ app.artifacts-7.0.9=\
 	org.osgi.service.http-3.5.0-20150611.165350-3.LIFERAY-PATCHED-2.jar,\
 	org.osgi.service.metatype-1.3.0.jar
 
-app.change.log-7.0.9=LPS-64186 LPS-66244 LPS-66470 LPS-66530 LPS-66554 LPS-66714 LPS-66801 LPS-66813 LPS-66814 LPS-66827 LPS-66847 LPS-66853 LPS-66881 LPS-66903 LPS-66904 LPS-66908 LPS-66911 LPS-66959 LPS-67018 LPS-67078 LPS-67092 LPS-67139 
+app.change.log-7.0.9=LPS-64186 LPS-66244 LPS-66470 LPS-66530 LPS-66801 LPS-66813 LPS-66814 LPS-66827 LPS-66847 LPS-66853 LPS-66881 LPS-66903 LPS-66904 LPS-66908 LPS-66911 LPS-66959 LPS-67018 LPS-67078 LPS-67092 LPS-67139 LPS-67228 
 
-app.git.id-7.0.9=61ae2c2b239b7653bbc5525cde76bad5fbbd103e
+app.git.id-7.0.9=3a98c9d63c49e975e6e06442d654a998f9037662

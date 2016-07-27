@@ -46,6 +46,9 @@ public interface S3StoreConfiguration {
 	)
 	public String s3StorageClass();
 
+	@Meta.AD(deflt = "10000", required = false)
+	public int connectionTimeout();
+
 	@Meta.AD(deflt = "50", required = false)
 	public int httpClientMaxConnections();
 

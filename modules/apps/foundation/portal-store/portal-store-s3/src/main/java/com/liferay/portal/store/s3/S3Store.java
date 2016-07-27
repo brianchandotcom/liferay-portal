@@ -401,25 +401,20 @@ public class S3Store extends BaseStore {
 
 		String proxyAuthType = _s3StoreConfiguration.proxyAuthType();
 
-		if (!proxyAuthType.equals("username-password") &&
-			!proxyAuthType.equals("ntlm")) {
+		if (proxyAuthType.equals("username-password") ||
+			proxyAuthType.equals("ntlm")) {
 
-			return;
-		}
+			clientConfiguration.setProxyPassword(
+				_s3StoreConfiguration.proxyPassword());
+			clientConfiguration.setProxyUsername(
+				_s3StoreConfiguration.proxyUsername());
 
-		String proxyPassword = _s3StoreConfiguration.proxyPassword();
-		String proxyUsername = _s3StoreConfiguration.proxyUsername();
-
-		clientConfiguration.setProxyPassword(proxyPassword);
-		clientConfiguration.setProxyUsername(proxyUsername);
-
-		if (proxyAuthType.equals("ntlm")) {
-			String ntlmProxyDomain = _s3StoreConfiguration.ntlmProxyDomain();
-			String ntlmProxyWorkstation =
-				_s3StoreConfiguration.ntlmProxyWorkstation();
-
-			clientConfiguration.setProxyDomain(ntlmProxyDomain);
-			clientConfiguration.setProxyWorkstation(ntlmProxyWorkstation);
+			if (proxyAuthType.equals("ntlm")) {
+				clientConfiguration.setProxyDomain(
+					_s3StoreConfiguration.ntlmProxyDomain());
+				clientConfiguration.setProxyWorkstation(
+					_s3StoreConfiguration.ntlmProxyWorkstation());
+			}
 		}
 	}
 

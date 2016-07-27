@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import javax.servlet.ServletContext;
 
-import com.liferay.portal.kernel.util.PortalUtil;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 

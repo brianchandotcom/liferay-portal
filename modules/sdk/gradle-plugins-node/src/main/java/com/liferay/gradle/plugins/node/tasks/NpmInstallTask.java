@@ -20,6 +20,13 @@ import com.liferay.gradle.plugins.node.util.GradleUtil;
 import groovy.json.JsonSlurper;
 
 import java.io.File;
+import java.io.IOException;
+
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
 import java.util.List;
 import java.util.Map;
@@ -74,23 +81,50 @@ public class NpmInstallTask extends ExecuteNpmTask {
 		Logger logger = getLogger();
 		Project project = getProject();
 
-		PluginContainer pluginContainer = project.getPlugins();
+		Path shrinkwrapJsonBackupPath = null;
+		Path shrinkwrapJsonPath = null;
 
-		if (pluginContainer.hasPlugin("com.liferay.cache") ||
-			(getNodeModulesCacheDir() == null)) {
+		File shrinkwrapJsonFile = getShrinkwrapJsonFile();
 
-			if (logger.isInfoEnabled()) {
-				logger.info("Cache for {} is disabled", this);
-			}
+		if (isRemoveShrinkwrappedUrls() && (shrinkwrapJsonFile != null)) {
+			shrinkwrapJsonPath = shrinkwrapJsonFile.toPath();
 
-			_npmInstall();
+			shrinkwrapJsonBackupPath = Paths.get(
+				shrinkwrapJsonPath.toString() + ".backup");
+
+			Files.copy(
+				shrinkwrapJsonPath, shrinkwrapJsonBackupPath,
+				StandardCopyOption.REPLACE_EXISTING);
+
+			removeShrinkwrappedUrls();
 		}
-		else {
-			if (logger.isInfoEnabled()) {
-				logger.info("Cache for {} is enabled", this);
-			}
 
-			_npmInstallCached(this);
+		try {
+			PluginContainer pluginContainer = project.getPlugins();
+
+			if (pluginContainer.hasPlugin("com.liferay.cache") ||
+				(getNodeModulesCacheDir() == null)) {
+
+				if (logger.isInfoEnabled()) {
+					logger.info("Cache for {} is disabled", this);
+				}
+
+				_npmInstall();
+			}
+			else {
+				if (logger.isInfoEnabled()) {
+					logger.info("Cache for {} is enabled", this);
+				}
+
+				_npmInstallCached(this);
+			}
+		}
+		finally {
+			if (shrinkwrapJsonBackupPath != null) {
+				Files.move(
+					shrinkwrapJsonBackupPath, shrinkwrapJsonPath,
+					StandardCopyOption.REPLACE_EXISTING);
+			}
 		}
 	}
 
@@ -130,6 +164,10 @@ public class NpmInstallTask extends ExecuteNpmTask {
 		return _nodeModulesCacheNativeSync;
 	}
 
+	public boolean isRemoveShrinkwrappedUrls() {
+		return _removeShrinkwrappedUrls;
+	}
+
 	public void setNodeModulesCacheDir(Object nodeModulesCacheDir) {
 		_nodeModulesCacheDir = nodeModulesCacheDir;
 	}
@@ -140,6 +178,10 @@ public class NpmInstallTask extends ExecuteNpmTask {
 		_nodeModulesCacheNativeSync = nodeModulesCacheNativeSync;
 	}
 
+	public void setRemoveShrinkwrappedUrls(boolean removeShrinkwrappedUrls) {
+		_removeShrinkwrappedUrls = removeShrinkwrappedUrls;
+	}
+
 	@Override
 	protected List<String> getCompleteArgs() {
 		List<String> completeArgs = super.getCompleteArgs();
@@ -147,6 +189,20 @@ public class NpmInstallTask extends ExecuteNpmTask {
 		completeArgs.add("install");
 
 		return completeArgs;
+	}
+
+	protected void removeShrinkwrappedUrls() throws IOException {
+		File shrinkwrapJsonFile = getShrinkwrapJsonFile();
+
+		Path shrinkwrapJsonPath = shrinkwrapJsonFile.toPath();
+
+		String json = new String(
+			Files.readAllBytes(shrinkwrapJsonPath), StandardCharsets.UTF_8);
+
+		json = json.replaceAll(
+			"\\s+\"(?:from|resolved)\": \"http.+\",*\\r*\\n", "");
+
+		Files.write(shrinkwrapJsonPath, json.getBytes(StandardCharsets.UTF_8));
 	}
 
 	private static String _getNodeModulesCacheDigest(
@@ -223,5 +279,6 @@ public class NpmInstallTask extends ExecuteNpmTask {
 
 	private Object _nodeModulesCacheDir;
 	private boolean _nodeModulesCacheNativeSync = true;
+	private boolean _removeShrinkwrappedUrls;
 
 }

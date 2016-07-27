@@ -434,12 +434,6 @@ public class S3Store extends BaseStore {
 
 		ClientConfiguration clientConfiguration = getClientConfiguration();
 
-		int connectionTimeout = _s3StoreConfiguration.connectionTimeout();
-
-		clientConfiguration.setConnectionTimeout(connectionTimeout);
-
-		setProxyConfiguration(clientConfiguration);
-
 		AmazonS3 amazonS3 = new AmazonS3Client(
 			awsCredentialsProvider, clientConfiguration);
 
@@ -470,6 +464,12 @@ public class S3Store extends BaseStore {
 
 		clientConfiguration.setMaxConnections(
 			_s3StoreConfiguration.httpClientMaxConnections());
+
+		int connectionTimeout = _s3StoreConfiguration.connectionTimeout();
+
+		clientConfiguration.setConnectionTimeout(connectionTimeout);
+
+		setProxyConfiguration(clientConfiguration);
 
 		return clientConfiguration;
 	}
@@ -649,7 +649,7 @@ public class S3Store extends BaseStore {
 		int proxyPort = GetterUtil.getInteger(
 			_s3StoreConfiguration.proxyPort(), -1);
 
-		if (Validator.isNull(proxyHost) || proxyPort == -1) {
+		if (Validator.isNull(proxyHost) || (proxyPort == -1)) {
 			return;
 		}
 
@@ -660,6 +660,7 @@ public class S3Store extends BaseStore {
 
 		if (!proxyAuthType.equals("username-password") &&
 			!proxyAuthType.equals("ntlm")) {
+			
 			return;
 		}
 

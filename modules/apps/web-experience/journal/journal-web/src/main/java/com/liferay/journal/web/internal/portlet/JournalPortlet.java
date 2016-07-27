@@ -65,6 +65,7 @@ import com.liferay.journal.util.impl.JournalUtil;
 import com.liferay.journal.web.asset.JournalArticleAssetRenderer;
 import com.liferay.journal.web.configuration.JournalWebConfiguration;
 import com.liferay.journal.web.internal.portlet.action.ActionUtil;
+import com.liferay.journal.web.util.JournalPortletUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.diff.CompareVersionsException;
 import com.liferay.portal.kernel.exception.LocaleException;
@@ -194,8 +195,11 @@ public class JournalPortlet extends MVCPortlet {
 		PortalPreferences portalPreferences =
 			PortletPreferencesFactoryUtil.getPortalPreferences(actionRequest);
 
+		String key = JournalPortletUtil.getAddMenuFavItemKey(
+			actionRequest, actionResponse);
+
 		String[] addMenuFavItems = portalPreferences.getValues(
-			JournalPortletKeys.JOURNAL, "add-menu-fav-items", new String[0]);
+			JournalPortletKeys.JOURNAL, key, new String[0]);
 
 		if (addMenuFavItems.length >=
 				_journalWebConfiguration.maxAddMenuItems()) {
@@ -206,7 +210,7 @@ public class JournalPortlet extends MVCPortlet {
 		}
 
 		portalPreferences.setValues(
-			JournalPortletKeys.JOURNAL, "add-menu-fav-items",
+			JournalPortletKeys.JOURNAL, key,
 			ArrayUtil.append(addMenuFavItems, ddmStructureKey));
 	}
 
@@ -427,11 +431,14 @@ public class JournalPortlet extends MVCPortlet {
 		PortalPreferences portalPreferences =
 			PortletPreferencesFactoryUtil.getPortalPreferences(actionRequest);
 
+		String key = JournalPortletUtil.getAddMenuFavItemKey(
+			actionRequest, actionResponse);
+
 		String[] addMenuFavItems = portalPreferences.getValues(
-			JournalPortletKeys.JOURNAL, "add-menu-fav-items");
+			JournalPortletKeys.JOURNAL, key);
 
 		portalPreferences.setValues(
-			JournalPortletKeys.JOURNAL, "add-menu-fav-items",
+			JournalPortletKeys.JOURNAL, key,
 			ArrayUtil.remove(addMenuFavItems, ddmStructureKey));
 	}
 

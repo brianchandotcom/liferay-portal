@@ -30,12 +30,16 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -81,7 +85,7 @@ public class JournalPortletUtil {
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			com.liferay.portal.kernel.util.WebKeys.THEME_DISPLAY);
+			WebKeys.THEME_DISPLAY);
 
 		String mvcPath = ParamUtil.getString(request, "mvcPath");
 
@@ -159,6 +163,24 @@ public class JournalPortletUtil {
 			folderId);
 
 		addPortletBreadcrumbEntries(folder, request, portletURL);
+	}
+
+	public static String getAddMenuFavItemKey(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long folderId = ParamUtil.getLong(portletRequest, "folderId");
+
+		String key = "journal-add-menu-fav-items-" +
+			themeDisplay.getScopeGroupId();
+
+		if (folderId > 0) {
+			key += StringPool.DASH + folderId;
+		}
+
+		return key;
 	}
 
 	public static OrderByComparator<JournalArticle> getArticleOrderByComparator(

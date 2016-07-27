@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.journal.content.web.internal.lar;
+package com.liferay.journal.content.web.internal.exportimport.data.handler;
 
 import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
 import com.liferay.exportimport.kernel.lar.DataLevel;
@@ -55,7 +55,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Bruno Farache
  * @author Daniel Kocsis
  * @author Mate Thurzo
- * @see    com.liferay.journal.lar.JournalCreationStrategy
+ * @see    com.liferay.journal.internal.exportimport.creation.strategy.JournalCreationStrategy
  * @see    PortletDataHandler
  */
 @Component(

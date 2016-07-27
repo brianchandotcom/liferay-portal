@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.shopping.lar;
+package com.liferay.shopping.internal.exportimport.data.handler;
 
 import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;

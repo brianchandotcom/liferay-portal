@@ -700,17 +700,18 @@
 			<var name="line" value="3" />
 		</execute>
 
-		<execute macro="KaleoDesigner#publishWorkflowDefinitionViaWorkflowCP" />
+		<execute macro="KaleoDesigner#publishWorkflowDefinitionViaKDCP" />
 
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Workflow Definition" />
+			<var name="portlet" value="Kaleo Designer" />
 		</execute>
 
-		<var name="key_workflowDefinitionName" value="NAME EDIT" />
+		<execute macro="KaleoDesigner#viewTableDefinitionPublishedViaKDCP">
+			<var name="workflowDefinitionName" value="NAME EDIT" />
+			<var name="workflowDefinitionTitle" value="Test Definition" />
+		</execute>
 
-		<execute function="AssertTextEquals" locator1="WorkflowDefinition#DEFINITION_TABLE_NAME" value1="NAME EDIT" />
-
-		<execute macro="KaleoDesigner#editWorkflowDefinitionViaWorkflowCP">
+		<execute macro="KaleoDesigner#editWorkflowDefinitionViaKDCP">
 			<var name="workflowDefinitionTitle" value="Test Definition" />
 		</execute>
 

@@ -53,6 +53,12 @@ public class LPKGVersionChangeTestCase {
 				Paths.get(liferayHome, "/osgi/marketplace"))) {
 
 			for (Path lpkgPath : directoryStream) {
+				String lpkgPathString = lpkgPath.toString();
+
+				if (lpkgPathString.contains("override")) {
+					continue;
+				}
+
 				try (FileSystem fileSystem = FileSystems.newFileSystem(
 						lpkgPath, null)) {
 

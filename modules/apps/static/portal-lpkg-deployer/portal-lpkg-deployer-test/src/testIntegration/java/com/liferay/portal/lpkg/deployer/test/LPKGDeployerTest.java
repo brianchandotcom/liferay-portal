@@ -103,6 +103,10 @@ public class LPKGDeployerTest {
 					String fileName = StringUtil.toLowerCase(
 						fileNamePath.toString());
 
+					if (fileName.endsWith(".markdown")) {
+						return FileVisitResult.CONTINUE;
+					}
+
 					if (!fileName.endsWith(".lpkg")) {
 						Assert.fail(
 							"Unexpected file " + filePath + " in " +

@@ -1096,7 +1096,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 			if (_log.isInfoEnabled()) {
 				_log.info(
-					"Uninstalled orphan overwritten static JAR bundle " +
+					"Uninstalled orphan overridingn static JAR bundle " +
 						location);
 			}
 		}
@@ -1108,7 +1108,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 		refreshBundles.clear();
 
-		Set<String> overwrittenFileNames = new HashSet<>();
+		Set<String> overrideFileNames = new HashSet<>();
 
 		for (Path jarPath : jarPaths) {
 			try (InputStream inputStream = Files.newInputStream(jarPath)) {
@@ -1120,7 +1120,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 				if (bundle != null) {
 					bundles.add(bundle);
 
-					overwrittenFileNames.add(
+					overrideFileNames.add(
 						path.substring(path.lastIndexOf(StringPool.SLASH) + 1));
 				}
 			}
@@ -1176,14 +1176,14 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 							String fileName =
 								matcher.group(1) + matcher.group(4);
 
-							if (overwrittenFileNames.contains(fileName)) {
+							if (overrideFileNames.contains(fileName)) {
 								if (_log.isInfoEnabled()) {
 									StringBundler sb = new StringBundler(7);
 
 									sb.append(zipFile);
 									sb.append(":");
 									sb.append(zipEntry);
-									sb.append(" is overwritten by ");
+									sb.append(" is overridden by ");
 									sb.append(
 										PropsValues.MODULE_FRAMEWORK_BASE_DIR);
 									sb.append("/static/");

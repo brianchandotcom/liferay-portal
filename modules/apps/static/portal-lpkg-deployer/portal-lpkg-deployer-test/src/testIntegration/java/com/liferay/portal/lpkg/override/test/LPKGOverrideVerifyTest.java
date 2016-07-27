@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.lpkg.overwrite.test;
+package com.liferay.portal.lpkg.override.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.util.Validator;
@@ -44,31 +44,31 @@ import org.osgi.framework.Version;
  * @author Matthew Tambara
  */
 @RunWith(Arquillian.class)
-public class LPKGOverwriteVerifyTest {
+public class LPKGOverrideVerifyTest {
 
 	@Test
 	public void testCleanStartUp() throws Exception {
 		if (Boolean.getBoolean("lpkg.clean.startup")) {
-			_testOverWrittenLPKGs();
+			_testOverriddenLPKGs();
 		}
 	}
 
 	@Test
 	public void testSecondStartup() throws Exception {
 		if (!Boolean.getBoolean("lpkg.clean.startup")) {
-			_testOverWrittenLPKGs();
+			_testOverriddenLPKGs();
 		}
 	}
 
-	private void _testOverWrittenLPKGs() throws Exception {
+	private void _testOverriddenLPKGs() throws Exception {
 		Bundle testBundle = FrameworkUtil.getBundle(
-			LPKGOverwriteVerifyTest.class);
+			LPKGOverrideVerifyTest.class);
 
 		BundleContext bundleContext = testBundle.getBundleContext();
 
 		Properties properties = new Properties();
 
-		Path path = Paths.get(PropsValues.LIFERAY_HOME, "/overwrites");
+		Path path = Paths.get(PropsValues.LIFERAY_HOME, "/overrides");
 
 		Assert.assertTrue(Files.exists(path));
 
@@ -101,21 +101,21 @@ public class LPKGOverwriteVerifyTest {
 
 			if (Validator.isNotNull(version)) {
 				Assert.assertEquals(
-					"JAR not sucessfully overwritten: " + symbolicName,
+					"JAR not sucessfully overridden: " + symbolicName,
 					new Version(version), bundle.getVersion());
 			}
 			else if (statics.remove(symbolicName)) {
 				String location = bundle.getLocation();
 
 				Assert.assertTrue(
-					"Static JAR not sucessfully overwritten: " + symbolicName,
+					"Static JAR not sucessfully overridden: " + symbolicName,
 					location.contains("Static-Jar::"));
 			}
 			else if (wars.remove(symbolicName)) {
 				String location = bundle.getLocation();
 
 				Assert.assertTrue(
-					"WAR not sucessfully overwritten: " + symbolicName,
+					"WAR not sucessfully overridden: " + symbolicName,
 					!location.contains("lpkg://"));
 			}
 		}
@@ -144,10 +144,10 @@ public class LPKGOverwriteVerifyTest {
 			});
 
 		Assert.assertTrue(
-			"JARs not overwritten: " + jars.entrySet(), jars.isEmpty());
+			"JARs not overridden: " + jars.entrySet(), jars.isEmpty());
 		Assert.assertTrue(
-			"Static JARs not overwritten: " + statics, statics.isEmpty());
-		Assert.assertTrue("WARs not overwritten: " + wars, wars.isEmpty());
+			"Static JARs not overridden: " + statics, statics.isEmpty());
+		Assert.assertTrue("WARs not overridden: " + wars, wars.isEmpty());
 	}
 
 }

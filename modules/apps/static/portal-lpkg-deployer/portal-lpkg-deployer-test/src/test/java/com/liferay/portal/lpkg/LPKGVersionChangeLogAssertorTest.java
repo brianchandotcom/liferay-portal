@@ -50,6 +50,12 @@ public class LPKGVersionChangeLogAssertorTest {
 				Paths.get(liferayHome, "/osgi/marketplace"))) {
 
 			for (Path lpkgPath : directoryStream) {
+				String lpkgPathString = lpkgPath.toString();
+
+				if (lpkgPathString.contains("override")) {
+					continue;
+				}
+
 				try (ZipFile zipFile = new ZipFile(lpkgPath.toFile());
 					InputStream inputStream = zipFile.getInputStream(
 						new ZipEntry("liferay-marketplace.properties"))) {

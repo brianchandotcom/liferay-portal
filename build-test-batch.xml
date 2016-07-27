@@ -774,7 +774,7 @@ app.server.type=@{app.server.type}]]></echo>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="run-lpkg-overwrite-test">
+	<macrodef name="run-lpkg-override-test">
 		<sequential>
 			<run-batch-test tomcat.gc.log="true">
 				<test-action>
@@ -801,7 +801,7 @@ app.server.type=@{app.server.type}]]></echo>
 							<gradle-execute dir="modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test" task="test">
 								<arg value="test" />
 								<arg value="--tests" />
-								<arg value="*.LPKGOverwriteTest" />
+								<arg value="*.LPKGOverrideTest" />
 								<arg value="-Dliferay.home=${liferay.home}" />
 								<arg value="-Dmodules.only.build=true" />
 							</gradle-execute>
@@ -813,7 +813,7 @@ app.server.type=@{app.server.type}]]></echo>
 									<gradle-execute dir="modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test" task="testIntegration">
 										<arg value="testIntegration" />
 										<arg value="--tests" />
-										<arg value="*.LPKGOverwriteVerifyTest" />
+										<arg value="*.LPKGOverrideVerifyTest" />
 										<arg value="-Dmodules.only.build=true" />
 									</gradle-execute>
 								</try>
@@ -836,7 +836,7 @@ app.server.type=@{app.server.type}]]></echo>
 									<gradle-execute dir="modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test" task="testIntegration">
 										<arg value="testIntegration" />
 										<arg value="--tests" />
-										<arg value="*.LPKGOverwriteVerifyTest" />
+										<arg value="*.LPKGOverrideVerifyTest" />
 										<arg value="-Dlpkg.clean.startup=true" />
 										<arg value="-Dmodules.only.build=true" />
 									</gradle-execute>
@@ -850,7 +850,7 @@ app.server.type=@{app.server.type}]]></echo>
 
 							<antcall inheritall="false" target="stop-app-server" />
 
-							<delete dir="${liferay.home}/osgi/marketplace/overwritten" />
+							<delete dir="${liferay.home}/osgi/marketplace/override" />
 
 							<delete>
 								<fileset dir="${liferay.home}/osgi/static" />
@@ -863,7 +863,7 @@ app.server.type=@{app.server.type}]]></echo>
 									<gradle-execute dir="modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test" task="testIntegration">
 										<arg value="testIntegration" />
 										<arg value="--tests" />
-										<arg value="*.LPKGRevertOverwriteVerifyTest" />
+										<arg value="*.LPKGRevertOverrideVerifyTest" />
 										<arg value="-Dmodules.only.build=true" />
 									</gradle-execute>
 								</try>
@@ -1289,8 +1289,8 @@ app.server.type=@{app.server.type}]]></echo>
 		<run-legacy-database-dump database.type="sybase" />
 	</target>
 
-	<target name="lpkg-overwrite-jdk8">
-		<run-lpkg-overwrite-test />
+	<target name="lpkg-override-jdk8">
+		<run-lpkg-override-test />
 	</target>
 
 	<target name="lpkg-startup-jdk8">

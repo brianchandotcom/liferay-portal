@@ -15,6 +15,7 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.portal.kernel.configuration.Filter;
+import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.DuplicateOrganizationException;
 import com.liferay.portal.kernel.exception.OrganizationNameException;
@@ -605,6 +606,33 @@ public class OrganizationLocalServiceImpl
 		}
 
 		return organizations;
+	}
+
+	/**
+	 * Returns all the organizations and users belonging to the parent organization.
+	 *
+	 * @param  companyId the primary key of the organization and user's company
+	 * @param  parentOrganizationId the primary key of the organization and user's
+	 *         parent organization
+	 * @param  status the user's workflow status
+	 * @param  start the lower bound of the range of organizations and users to return
+	 * @param  end the upper bound of the range of organizations and users to return
+	 *         (not inclusive)
+	 * @param  obc the comparator to order the organizations and users (optionally
+	 *         <code>null</code>)
+	 * @return the organizations and users belonging to the parent organization
+	 */
+	@Override
+	public List<Object> getOrganizationsAndUsers(
+		long companyId, long parentOrganizationId, int status, int start,
+		int end, OrderByComparator<?> obc) {
+
+		QueryDefinition<?> queryDefinition = new QueryDefinition<>(
+			status, false, 0, false, start, end,
+			(OrderByComparator<Object>)obc);
+
+		return organizationFinder.findO_U_ByC_P(
+			companyId, parentOrganizationId, queryDefinition);
 	}
 
 	/**

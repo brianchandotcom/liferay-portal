@@ -27,7 +27,7 @@ public class PortalProductNavigationControlMenuApplicationType {
 	public interface ProductNavigationControlMenu {
 
 		public static final String CLASS_NAME =
-			"com.liferay.portlet.admin.util." +
+			"com.liferay.admin.kernel.util." +
 				"PortalProductNavigationControlMenuApplicationType" +
 					"$ProductNavigationControlMenu";
 

@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
-import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -195,7 +194,9 @@ public class RuntimeTag extends TagSupport {
 			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+			Portlet portlet = getPortlet(
+					themeDisplay.getCompanyId(),
+					portletInstance.getPortletInstanceKey());
 
 			Stack<String> embeddedPortletIds = _embeddedPortletIds.get();
 
@@ -205,9 +206,7 @@ public class RuntimeTag extends TagSupport {
 				_embeddedPortletIds.set(embeddedPortletIds);
 			}
 
-			if (embeddedPortletIds.search(portletDisplay.getId()) >
-					-1) {
-
+			if (embeddedPortletIds.search(portlet.getPortletId()) > -1) {
 				String errorMessage = LanguageUtil.get(
 					request, "the-application-cannot-include-itself");
 
@@ -234,10 +233,6 @@ public class RuntimeTag extends TagSupport {
 			}
 
 			Layout layout = themeDisplay.getLayout();
-
-			Portlet portlet = getPortlet(
-				themeDisplay.getCompanyId(),
-				portletInstance.getPortletInstanceKey());
 
 			request.setAttribute(WebKeys.SETTINGS_SCOPE, settingsScope);
 

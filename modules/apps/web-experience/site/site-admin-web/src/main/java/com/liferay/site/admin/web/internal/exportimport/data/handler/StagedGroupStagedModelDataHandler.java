@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.site.admin.web.internal.lar;
+package com.liferay.site.admin.web.internal.exportimport.data.handler;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;

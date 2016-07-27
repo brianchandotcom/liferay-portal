@@ -44,12 +44,28 @@ Name | Depends On | Type | Description
 `checkSourceFormatting` | \- | [`FormatSourceTask`](#formatsourcetask) | Runs the Liferay Source Formatter to check for source formatting errors.
 `formatSource` | \- | [`FormatSourceTask`](#formatsourcetask) | Runs the Liferay Source Formatter to format the project files.
 
-The plugin also adds the following dependencies to tasks defined by the [`base`](https://docs.gradle.org/current/userguide/standard_plugins.html#N135C1)
-plugin:
+If desired, it is possible to check for source formatting errors while executing
+the [`check`]((https://docs.gradle.org/current/userguide/java_plugin.html#N15056))
+task by adding the following dependency:
 
-Name | Depends On
----- | ----------
-`check` | `checkSourceFormatting`
+```gradle
+check {
+	dependsOn checkSourceFormatting
+}
+```
+
+The same can be achieved by adding the following snippet to the `build.gradle`
+file in the root directory of a [*Liferay Workspace*](https://dev.liferay.com/develop/tutorials/-/knowledge_base/7-0/creating-a-liferay-workspace):
+
+```gradle
+subprojects {
+	afterEvaluate {
+		if (plugins.hasPlugin("base") && plugins.hasPlugin("com.liferay.source.formatter")) {
+			check.dependsOn checkSourceFormatting
+		}
+	}
+}
+```
 
 ### FormatSourceTask
 

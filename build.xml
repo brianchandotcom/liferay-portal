@@ -289,12 +289,28 @@
 					<arg value="-Dportal.build=true" />
 				</gradle-execute>
 
-				<gradle-execute dir="${project.dir}/modules" task="deployTool">
-					<arg value="--parallel" />
-					<arg value="-Dportal.build=true" />
-					<arg value="deployAppServerLib" />
-					<arg value="deployConfigs" />
-				</gradle-execute>
+				<pathconvert property="build.app.server.lib.marker.files" setonempty="false">
+					<fileset dir="${project.dir}/modules" includes="**/.lfrbuild-app-server-lib" />
+				</pathconvert>
+
+				<if>
+					<isset property="build.app.server.lib.marker.files" />
+					<then>
+						<gradle-execute dir="${project.dir}/modules" task="deployTool">
+							<arg value="--parallel" />
+							<arg value="-Dportal.build=true" />
+							<arg value="deployAppServerLib" />
+							<arg value="deployConfigs" />
+						</gradle-execute>
+					</then>
+					<else>
+						<gradle-execute dir="${project.dir}/modules" task="deployTool">
+							<arg value="--parallel" />
+							<arg value="-Dportal.build=true" />
+							<arg value="deployConfigs" />
+						</gradle-execute>
+					</else>
+				</if>
 
 				<if>
 					<equals arg1="${jsp.precompile}" arg2="on" />

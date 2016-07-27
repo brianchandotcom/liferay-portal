@@ -50,6 +50,13 @@ public class ScreensAssetEntryServiceWrapper implements ScreensAssetEntryService
 			portletItemName, locale, max);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.json.JSONObject getAssetEntry(
+		long entryId, java.util.Locale locale)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _screensAssetEntryService.getAssetEntry(entryId, locale);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*

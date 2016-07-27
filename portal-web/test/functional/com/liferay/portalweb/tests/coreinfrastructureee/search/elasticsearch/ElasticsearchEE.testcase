@@ -249,4 +249,36 @@
 			<var name="searchAssetType2" value="Message Boards Message" />
 		</execute>
 	</command>
+
+	<command name="ElasticsearchRemoteMarvelKibanaSmokeTest" priority="5">
+		<property name="kibana.enabled" value="true" />
+		<property name="remote.elasticsearch.enabled" value="true" />
+		<property name="test.name.skip.portal.instance" value="ElasticsearchEE#ElasticsearchRemoteMarvelKibanaSmokeTest" />
+
+		<execute macro="Page#add">
+			<var name="pageName" value="Marvel Page" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Marvel Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Marvel" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Marvel Page" />
+		</execute>
+
+		<execute macro="Marvel#viewPG" />
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Marvel Page" />
+		</execute>
+
+		<execute macro="Marvel#viewAsGuestPG" />
+	</command>
 </definition>

@@ -30,8 +30,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 
-import java.util.Map;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -118,12 +116,9 @@ public class DDMFormEvaluatorTest extends BaseDDMServiceTestCase {
 		DDMFormEvaluationResult ddmFormEvaluationResult =
 			ddmFormEvaluator.evaluate(ddmForm, ddmFormValues, LocaleUtil.US);
 
-		Map<String, DDMFormFieldEvaluationResult>
-			ddmFormFieldEvaluationResultMap =
-				ddmFormEvaluationResult.getDDMFormFieldEvaluationResultsMap();
-
 		DDMFormFieldEvaluationResult checkboxDDMFormFieldEvaluationResult =
-			ddmFormFieldEvaluationResultMap.get("Confirmation");
+			ddmFormEvaluationResult.geDDMFormFieldEvaluationResult(
+				"Confirmation", "hany");
 
 		Assert.assertFalse(checkboxDDMFormFieldEvaluationResult.isVisible());
 	}
@@ -151,12 +146,9 @@ public class DDMFormEvaluatorTest extends BaseDDMServiceTestCase {
 		DDMFormEvaluationResult ddmFormEvaluationResult =
 			ddmFormEvaluator.evaluate(ddmForm, ddmFormValues, LocaleUtil.US);
 
-		Map<String, DDMFormFieldEvaluationResult>
-			ddmFormFieldEvaluationResultMap =
-				ddmFormEvaluationResult.getDDMFormFieldEvaluationResultsMap();
-
 		DDMFormFieldEvaluationResult checkboxDDMFormFieldEvaluationResult =
-			ddmFormFieldEvaluationResultMap.get("Confirmation");
+			ddmFormEvaluationResult.geDDMFormFieldEvaluationResult(
+				"Confirmation", "hany");
 
 		Assert.assertTrue(checkboxDDMFormFieldEvaluationResult.isVisible());
 	}
@@ -184,12 +176,9 @@ public class DDMFormEvaluatorTest extends BaseDDMServiceTestCase {
 		DDMFormEvaluationResult ddmFormEvaluationResult =
 			ddmFormEvaluator.evaluate(ddmForm, ddmFormValues, LocaleUtil.US);
 
-		Map<String, DDMFormFieldEvaluationResult>
-			ddmFormFieldEvaluationResultMap =
-				ddmFormEvaluationResult.getDDMFormFieldEvaluationResultsMap();
-
 		DDMFormFieldEvaluationResult phoneDDMFormFieldEvaluationResult =
-			ddmFormFieldEvaluationResultMap.get("Phone");
+			ddmFormEvaluationResult.geDDMFormFieldEvaluationResult(
+				"Phone", "hany");
 
 		Assert.assertFalse(phoneDDMFormFieldEvaluationResult.isVisible());
 	}
@@ -217,12 +206,9 @@ public class DDMFormEvaluatorTest extends BaseDDMServiceTestCase {
 		DDMFormEvaluationResult ddmFormEvaluationResult =
 			ddmFormEvaluator.evaluate(ddmForm, ddmFormValues, LocaleUtil.US);
 
-		Map<String, DDMFormFieldEvaluationResult>
-			ddmFormFieldEvaluationResultMap =
-				ddmFormEvaluationResult.getDDMFormFieldEvaluationResultsMap();
-
 		DDMFormFieldEvaluationResult phoneDDMFormFieldEvaluationResult =
-			ddmFormFieldEvaluationResultMap.get("Phone");
+			ddmFormEvaluationResult.geDDMFormFieldEvaluationResult(
+				"Phone", "hany");
 
 		Assert.assertTrue(phoneDDMFormFieldEvaluationResult.isVisible());
 	}
@@ -250,12 +236,9 @@ public class DDMFormEvaluatorTest extends BaseDDMServiceTestCase {
 		DDMFormEvaluationResult ddmFormEvaluationResult =
 			ddmFormEvaluator.evaluate(ddmForm, ddmFormValues, LocaleUtil.US);
 
-		Map<String, DDMFormFieldEvaluationResult>
-			ddmFormFieldEvaluationResultMap =
-				ddmFormEvaluationResult.getDDMFormFieldEvaluationResultsMap();
-
 		DDMFormFieldEvaluationResult phoneDDMFormFieldEvaluationResult =
-			ddmFormFieldEvaluationResultMap.get("Phone");
+			ddmFormEvaluationResult.geDDMFormFieldEvaluationResult(
+				"Phone", "hany");
 
 		Assert.assertFalse(phoneDDMFormFieldEvaluationResult.isVisible());
 	}
@@ -283,12 +266,9 @@ public class DDMFormEvaluatorTest extends BaseDDMServiceTestCase {
 		DDMFormEvaluationResult ddmFormEvaluationResult =
 			ddmFormEvaluator.evaluate(ddmForm, ddmFormValues, LocaleUtil.US);
 
-		Map<String, DDMFormFieldEvaluationResult>
-			ddmFormFieldEvaluationResultMap =
-				ddmFormEvaluationResult.getDDMFormFieldEvaluationResultsMap();
-
 		DDMFormFieldEvaluationResult phoneDDMFormFieldEvaluationResult =
-			ddmFormFieldEvaluationResultMap.get("Phone");
+			ddmFormEvaluationResult.geDDMFormFieldEvaluationResult(
+				"Phone", "hany");
 
 		Assert.assertTrue(phoneDDMFormFieldEvaluationResult.isVisible());
 	}

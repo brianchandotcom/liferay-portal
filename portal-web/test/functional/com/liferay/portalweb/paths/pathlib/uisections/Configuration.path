@@ -77,7 +77,7 @@
 </tr>
 <tr>
 	<td>SOURCE_SCOPE_SELECT</td>
-	<td>//div[@class='select-asset-selector']/div/a[@title='Select']/span</td>
+	<td>//div[@id='scopeContent']//a[@title='Select']</td>
 	<td></td>
 </tr>
 <tr>

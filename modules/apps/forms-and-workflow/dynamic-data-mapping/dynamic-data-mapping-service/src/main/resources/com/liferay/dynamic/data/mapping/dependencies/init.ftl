@@ -4,46 +4,50 @@
 
 <#-- CSS class -->
 
-<#assign cssClass = "">
+<#assign cssClass = "" />
 
 <#if fieldStructure.width??>
 	<#if fieldStructure.width == "large">
-		<#assign cssClass = "input-large">
+		<#assign cssClass = "input-large" />
 	<#elseif fieldStructure.width == "medium">
-		<#assign cssClass = "input-medium">
+		<#assign cssClass = "input-medium" />
 	<#elseif fieldStructure.width == "small">
-		<#assign cssClass = "input-small">
+		<#assign cssClass = "input-small" />
 	</#if>
 </#if>
 
 <#-- Repeatable -->
 
-<#assign repeatable = false>
+<#assign repeatable = false />
 
 <#if fieldStructure.repeatable?? && (fieldStructure.repeatable == "true") && (!ignoreRepeatable?? || !ignoreRepeatable)>
-	<#assign repeatable = true>
+	<#assign repeatable = true />
 </#if>
 
 <#-- Field name -->
 
-<#assign fieldNamespace = "_INSTANCE_" + fieldStructure.fieldNamespace>
+<#assign
+	fieldNamespace = "_INSTANCE_" + fieldStructure.fieldNamespace
 
-<#assign fieldName = fieldStructure.name>
+	fieldName = fieldStructure.name
 
-<#assign parentName = parentFieldStructure.name!"">
-<#assign parentType = parentFieldStructure.type!"">
+	parentName = parentFieldStructure.name!""
+	parentType = parentFieldStructure.type!""
 
-<#assign isChildField = parentName?? && (parentName != "") && ((parentType == "radio") || (parentType == "select"))>
+	isChildField = parentName?? && (parentName != "") && ((parentType == "radio") || (parentType == "select"))
+/>
 
 <#if isChildField>
-	<#assign fieldName = parentName>
+	<#assign fieldName = parentName />
 </#if>
 
-<#assign namespace = namespace!"">
+<#assign
+	namespace = namespace!""
 
-<#assign namespacedFieldName = "${namespace}${fieldName}${fieldNamespace}">
+	namespacedFieldName = "${namespace}${fieldName}${fieldNamespace}"
 
-<#assign namespacedParentName = "${namespace}${parentName}">
+	namespacedParentName = "${namespace}${parentName}"
+/>
 
 <#-- Data -->
 
@@ -55,53 +59,57 @@
 
 <#-- Predefined value -->
 
-<#assign predefinedValue = fieldStructure.predefinedValue!"">
+<#assign predefinedValue = fieldStructure.predefinedValue!"" />
 
 <#if isChildField>
-	<#assign predefinedValue = parentFieldStructure.predefinedValue!"">
+	<#assign predefinedValue = parentFieldStructure.predefinedValue!"" />
 </#if>
 
 <#-- Field value -->
 
-<#assign fieldValue = predefinedValue>
-<#assign fieldRawValue = "">
-<#assign hasFieldValue = false>
+<#assign
+	fieldValue = predefinedValue
+	fieldRawValue = ""
+	hasFieldValue = false
+/>
 
 <#if fields?? && fields.get(fieldName)??>
-	<#assign field = fields.get(fieldName)>
+	<#assign
+		field = fields.get(fieldName)
 
-	<#assign valueIndex = getterUtil.getInteger(fieldStructure.valueIndex)>
+		valueIndex = getterUtil.getInteger(fieldStructure.valueIndex)
 
-	<#assign fieldValue = field.getRenderedValue(requestedLocale, valueIndex)>
-	<#assign fieldRawValue = field.getValue(requestedLocale, valueIndex)!>
+		fieldValue = field.getRenderedValue(requestedLocale, valueIndex)
+		fieldRawValue = field.getValue(requestedLocale, valueIndex)!
+	/>
 
 	<#if fieldValue != "">
-		<#assign hasFieldValue = true>
+		<#assign hasFieldValue = true />
 	</#if>
 </#if>
 
 <#-- Disabled -->
 
-<#assign disabled = false>
+<#assign disabled = false />
 
 <#if fieldStructure.disabled?? && (fieldStructure.disabled == "true")>
-	<#assign disabled = true>
+	<#assign disabled = true />
 </#if>
 
 <#-- Label -->
 
-<#assign label = fieldStructure.label!"">
+<#assign label = fieldStructure.label!"" />
 
 <#if fieldStructure.showLabel?? && (fieldStructure.showLabel == "false")>
-	<#assign label = "">
+	<#assign label = "" />
 </#if>
 
 <#-- Required -->
 
-<#assign required = false>
+<#assign required = false />
 
 <#if fieldStructure.required?? && (fieldStructure.required == "true")>
-	<#assign required = true>
+	<#assign required = true />
 </#if>
 
 <#-- Util -->
@@ -138,15 +146,15 @@
 	</#if>
 </#function>
 
-<#assign dlAppServiceUtil = serviceLocator.findService("com.liferay.document.library.kernel.service.DLAppService")>
+<#assign dlAppServiceUtil = serviceLocator.findService("com.liferay.document.library.kernel.service.DLAppService") />
 
 <#function getFileEntry fileJSONObject>
-	<#assign fileEntryUUID = fileJSONObject.getString("uuid")>
+	<#assign fileEntryUUID = fileJSONObject.getString("uuid") />
 
 	<#if fileJSONObject.getLong("groupId") gt 0>
-		<#assign fileEntryGroupId = fileJSONObject.getLong("groupId")>
+		<#assign fileEntryGroupId = fileJSONObject.getLong("groupId") />
 	<#else>
-		<#assign fileEntryGroupId = scopeGroupId>
+		<#assign fileEntryGroupId = scopeGroupId />
 	</#if>
 
 	<#return dlAppServiceUtil.getFileEntryByUuidAndGroupId(fileEntryUUID, fileEntryGroupId)!"">
@@ -160,10 +168,10 @@
 	<#return jsonFactoryUtil.createJSONObject(fieldValue)>
 </#function>
 
-<#assign journalArticleLocalService = serviceLocator.findService("com.liferay.journal.service.JournalArticleLocalService")>
+<#assign journalArticleLocalService = serviceLocator.findService("com.liferay.journal.service.JournalArticleLocalService") />
 
 <#function fetchLatestArticle journalArticleJSONObject>
-	<#assign resourcePrimKey = journalArticleJSONObject.getLong("classPK")>
+	<#assign resourcePrimKey = journalArticleJSONObject.getLong("classPK") />
 
 	<#return journalArticleLocalService.fetchLatestArticle(resourcePrimKey)!"">
 </#function>

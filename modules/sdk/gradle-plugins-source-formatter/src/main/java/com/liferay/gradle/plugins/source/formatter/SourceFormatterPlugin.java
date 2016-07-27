@@ -20,10 +20,8 @@ import com.liferay.gradle.util.Validator;
 import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
-import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.file.FileCollection;
-import org.gradle.api.plugins.PluginContainer;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.language.base.plugins.LifecycleBasePlugin;
 
@@ -45,29 +43,10 @@ public class SourceFormatterPlugin implements Plugin<Project> {
 		Configuration sourceFormatterConfiguration =
 			addConfigurationSourceFormatter(project);
 
-		final FormatSourceTask checkSourceFormattingTask =
-			addTaskCheckSourceFormatting(project);
-
+		addTaskCheckSourceFormatting(project);
 		addTaskFormatSource(project);
 
 		configureTasksFormatSource(project, sourceFormatterConfiguration);
-
-		PluginContainer pluginContainer = project.getPlugins();
-
-		pluginContainer.withType(
-			LifecycleBasePlugin.class,
-			new Action<LifecycleBasePlugin>() {
-
-				@Override
-				public void execute(LifecycleBasePlugin lifecycleBasePlugin) {
-					Task checkTask = GradleUtil.getTask(
-						checkSourceFormattingTask.getProject(),
-						LifecycleBasePlugin.CHECK_TASK_NAME);
-
-					checkTask.dependsOn(checkSourceFormattingTask);
-				}
-
-			});
 	}
 
 	protected FormatSourceTask addTaskCheckSourceFormatting(Project project) {

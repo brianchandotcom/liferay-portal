@@ -675,6 +675,21 @@
 				)
 		]]>
 	</sql>
+	<sql id="com.liferay.portal.kernel.service.persistence.OrganizationFinder.findU_ByC_S_O">
+		<![CDATA[
+			SELECT
+				0 AS organizationId, User_.userId AS userId, User_.lastName AS name
+			FROM
+				User_
+			INNER JOIN
+				Users_Orgs ON
+					(Users_Orgs.userId = User_.userId)
+			WHERE
+				(User_.companyId = ?) AND
+				(User_.status = ?) AND
+				(Users_Orgs.organizationId = ?)
+		]]>
+	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.OrganizationFinder.joinByOrganizationsGroups">
 		<![CDATA[
 			INNER JOIN

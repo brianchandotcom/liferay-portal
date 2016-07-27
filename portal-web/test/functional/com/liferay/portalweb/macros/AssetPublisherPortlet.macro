@@ -6,7 +6,7 @@
 			<var name="panelHeading" value="Source" />
 		</execute>
 
-		<execute function="AssertClick" locator1="Configuration#SOURCE_SCOPE_SELECT" value1="Select" />
+		<execute function="AssertClick" locator1="Configuration#SCOPE_SELECT" value1="Select" />
 
 		<execute function="AssertClick" locator1="MenuItem#OTHER_SITE" value1="Other Site..." />
 
@@ -34,7 +34,7 @@
 		<if>
 			<isset var="globalSite" />
 			<then>
-				<execute function="Click" locator1="Configuration#SOURCE_SCOPE_SELECT" />
+				<execute function="Click" locator1="Configuration#SCOPE_SELECT" />
 
 				<execute function="Click" locator1="MenuItem#GLOBAL" />
 			</then>
@@ -43,7 +43,7 @@
 		<if>
 			<isset var="otherSite" />
 			<then>
-				<execute function="Click" locator1="Configuration#SOURCE_SCOPE_SELECT" />
+				<execute function="Click" locator1="Configuration#SCOPE_SELECT" />
 
 				<execute function="Click" locator1="MenuItem#OTHER_SITE" />
 
@@ -60,7 +60,7 @@
 		<if>
 			<isset var="defaultSite" />
 			<then>
-				<execute function="Click" locator1="Configuration#SOURCE_SCOPE_SELECT" />
+				<execute function="Click" locator1="Configuration#SCOPE_SELECT" />
 
 				<execute function="Click" locator1="APConfiguration#SOURCE_CURRENT_SCOPE_NAME" />
 			</then>
@@ -425,7 +425,7 @@
 			<var name="panelHeading" value="Source" />
 		</execute>
 
-		<execute function="AssertClick" locator1="Configuration#SOURCE_SCOPE_SELECT" value1="Select" />
+		<execute function="AssertClick" locator1="Configuration#SCOPE_SELECT" value1="Select" />
 
 		<if>
 			<equals arg1="${siteName}" arg2="Global" />
@@ -729,7 +729,7 @@
 			<var name="panelHeading" value="Source" />
 		</execute>
 
-		<execute function="AssertClick" locator1="Configuration#SOURCE_SCOPE_SELECT" value1="Select" />
+		<execute function="AssertClick" locator1="Configuration#SCOPE_SELECT" value1="Select" />
 
 		<if>
 			<equals arg1="${contentSharingAcrossSitesEnabled}" arg2="true" />

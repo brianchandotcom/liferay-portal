@@ -173,8 +173,8 @@ public class JournalPortletUtil {
 
 		long folderId = ParamUtil.getLong(portletRequest, "folderId");
 
-		String key = "journal-add-menu-fav-items-" +
-			themeDisplay.getScopeGroupId();
+		String key =
+			"journal-add-menu-fav-items-" + themeDisplay.getScopeGroupId();
 
 		if (folderId > 0) {
 			key += StringPool.DASH + folderId;

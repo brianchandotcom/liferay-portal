@@ -112,6 +112,8 @@
 								'liferay-calendar-recurrence-util',
 								'liferay-calendar-util',
 								'liferay-node',
+								'liferay-scheduler-models',
+								'liferay-scheduler-event-recorder',
 								'liferay-store',
 								'promise',
 								'resize-plugin'
@@ -124,6 +126,15 @@
 								'dd-plugin',
 								'liferay-calendar-util',
 								'liferay-store'
+							]
+						},
+						'liferay-scheduler-event-recorder': {
+							path: 'scheduler_event_recorder.js',
+							requires: [
+								'dd-plugin',
+								'liferay-calendar-util',
+								'liferay-node',
+								'resize-plugin'
 							]
 						}
 					},

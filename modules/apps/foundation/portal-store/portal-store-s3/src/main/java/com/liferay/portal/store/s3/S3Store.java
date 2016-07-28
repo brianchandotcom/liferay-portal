@@ -389,6 +389,7 @@ public class S3Store extends BaseStore {
 		ClientConfiguration clientConfiguration) {
 
 		String proxyHost = _s3StoreConfiguration.proxyHost();
+
 		int proxyPort = GetterUtil.getInteger(
 			_s3StoreConfiguration.proxyPort(), -1);
 
@@ -402,7 +403,7 @@ public class S3Store extends BaseStore {
 		String proxyAuthType = _s3StoreConfiguration.proxyAuthType();
 
 		if (proxyAuthType.equals("username-password") ||
-			proxyAuthType.equals("ntlm")) {
+				proxyAuthType.equals("ntlm")) {
 
 			clientConfiguration.setProxyPassword(
 				_s3StoreConfiguration.proxyPassword());
@@ -498,9 +499,8 @@ public class S3Store extends BaseStore {
 		clientConfiguration.setMaxConnections(
 			_s3StoreConfiguration.httpClientMaxConnections());
 
-		int connectionTimeout = _s3StoreConfiguration.connectionTimeout();
-
-		clientConfiguration.setConnectionTimeout(connectionTimeout);
+		clientConfiguration.setConnectionTimeout(
+			_s3StoreConfiguration.connectionTimeout());
 
 		configureProxySettings(clientConfiguration);
 

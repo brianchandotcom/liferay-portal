@@ -116,6 +116,15 @@
 								'promise',
 								'resize-plugin'
 							]
+						},
+						'liferay-scheduler-models': {
+							path: 'scheduler_models.js',
+							requires: [
+								'aui-datatype',
+								'dd-plugin',
+								'liferay-calendar-util',
+								'liferay-store'
+							]
 						}
 					},
 					root: MODULE_PATH + '/js/'

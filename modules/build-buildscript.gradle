@@ -1,5 +1,5 @@
 dependencies {
-	classpath group: "com.liferay", name: "com.liferay.gradle.plugins", version: "1.0.398"
+	classpath group: "com.liferay", name: "com.liferay.gradle.plugins", version: "1.0.399"
 	classpath group: "com.liferay", name: "com.liferay.gradle.plugins.lang.merger", version: "1.0.3"
 	classpath group: "com.liferay", name: "com.liferay.gradle.plugins.maven.plugin.builder", version: "1.0.11"
 	classpath group: "xalan", name: "xalan", version: "2.7.2"

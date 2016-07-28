@@ -9,8 +9,8 @@
 </thead>
 <tbody>
 <tr>
-	<td>EMBEDDED_SITE_TEXT</td>
-	<td>//body[contains(.,'Yes')]</td>
+	<td>EMBEDDED_IMAGE</td>
+	<td>//span[contains(@class,'nbaLogo')]</td>
 	<td></td>
 </tr>
 </tbody>

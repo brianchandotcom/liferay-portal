@@ -113,7 +113,7 @@ logExceptionsOnly=false</echo>
 			<then>
 				<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash">
 					<arg value="-c" />
-					<arg value="./elasticsearch -Des.insecure.allow.root=true -d -p pid" />
+					<arg value="./elasticsearch -Des.insecure.allow.root=true -d -p pid-elasticsearch" />
 				</exec>
 
 				<waitfor maxwait="10" maxwaitunit="second" timeoutproperty="elasticsearch.server.not.started">
@@ -127,7 +127,7 @@ logExceptionsOnly=false</echo>
 				<then>
 					<exec dir="${elasticsearch.dir}/bin" executable="cmd" spawn="true">
 						<arg value="/c" />
-						<arg value="elasticsearch -d -p pid" />
+						<arg value="elasticsearch -d -p pid-elasticsearch" />
 					</exec>
 
 					<waitfor maxwait="10" maxwaitunit="second" timeoutproperty="elasticsearch.server.not.started">
@@ -144,7 +144,7 @@ logExceptionsOnly=false</echo>
 		<if>
 			<os family="unix" />
 			<then>
-				<loadfile property="pid" srcFile="${elasticsearch.dir}/bin/pid">
+				<loadfile property="pid-elasticsearch" srcFile="${elasticsearch.dir}/bin/pid-elasticsearch">
 					<filterchain>
 						<linecontainsregexp>
 							<regexp pattern="[0-9]*" />
@@ -154,7 +154,7 @@ logExceptionsOnly=false</echo>
 
 				<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash">
 					<arg value="-c" />
-					<arg value="kill ${pid}" />
+					<arg value="kill ${pid-elasticsearch}" />
 				</exec>
 			</then>
 			<elseif>
@@ -162,7 +162,7 @@ logExceptionsOnly=false</echo>
 				<then>
 					<exec dir="${elasticsearch.dir}/bin" executable="cmd" spawn="true">
 						<arg value="/c" />
-						<arg value="for /f %x in (pid) do taskkill /f /pid %x" />
+						<arg value="for /f %x in (pid-elasticsearch) do taskkill /f /pid %x" />
 					</exec>
 				</then>
 			</elseif>

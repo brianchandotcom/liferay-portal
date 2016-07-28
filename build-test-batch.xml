@@ -643,7 +643,7 @@ app.server.type=@{app.server.type}]]></echo>
 								<execute>
 									<![CDATA[
 										git apply --whitespace=nowarn liferay-portal-bundle-${app.server.type}.diff
-										git apply --whitespace=nowarn liferay-portal-source.diff
+										git apply --exclude=.gitignore --whitespace=nowarn liferay-portal-source.diff
 									]]>
 								</execute>
 							</then>

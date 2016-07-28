@@ -1921,7 +1921,7 @@
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#populateFieldTextBox">
-			<var name="fieldName" value="Text_Box" />
+			<var name="fieldName" value="TextBox" />
 			<var name="kfProcessFieldData" value="Test Box Description" />
 		</execute>
 

@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>ACTIVE</td>
-	<td>//label[contains(.,'Active')]//input</td>
+	<td>//label[contains(.,'Active')]//span[contains(@class,'toggle-switch-handle')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -119,11 +119,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PORTLET_CONTENT</td>
-	<td>//div[@class='portlet-content']</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>

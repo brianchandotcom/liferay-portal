@@ -2,6 +2,19 @@
 	<var name="siteMember" value="User" />
 	<var name="siteType" value="Open" />
 
+	<command name="activateInactive">
+		<var name="key_siteName" value="${siteName}" />
+
+		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${siteName}" />
+
+		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Sites#SITE_TABLE_ACTIONS" />
+
+		<execute function="AssertClick" locator1="MenuItem#ACTIVATE" value1="Activate" />
+
+		<execute macro="Alert#viewSuccessMessage" />
+	</command>
+
 	<command name="addAllMembersCP">
 		<execute macro="Navigator#gotoNavItem">
 			<var name="navItem" value="Users" />

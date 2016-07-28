@@ -29,7 +29,14 @@
 		<if>
 			<equals arg1="${siteTemplateActive}" arg2="No" />
 			<then>
-				<execute function="Uncheck#uncheckToggleSwitch" locator1="ToggleSwitch#ACTIVE" />
+				<execute function="Uncheck#uncheckHiddenToggleSwitch" locator1="ToggleSwitch#ACTIVE" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${disableChanges}" arg2="true" />
+			<then>
+				<execute function="Uncheck#uncheckHiddenToggleSwitch" locator1="ToggleSwitch#ALLOW_SITE_ADMIN_MODIFY_PAGES" />
 			</then>
 		</if>
 
@@ -156,7 +163,7 @@
 				<if>
 					<equals arg1="${siteTemplateActiveEdit}" arg2="No" />
 					<then>
-						<execute function="Uncheck#uncheckToggleSwitch" locator1="ToggleSwitch#ACTIVE" />
+						<execute function="Uncheck#uncheckHiddenToggleSwitch" locator1="ToggleSwitch#ACTIVE" />
 					</then>
 				</if>
 			</then>

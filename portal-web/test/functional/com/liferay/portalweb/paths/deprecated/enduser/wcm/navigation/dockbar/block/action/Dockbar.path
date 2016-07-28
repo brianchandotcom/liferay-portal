@@ -49,11 +49,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PAGE_INFO_MESSAGE_ICON</td>
-	<td>//div[contains(@class,'dropdown-menu-no-arrow')]//span/*[name()='svg'][contains(@class,'icon-ellipsis')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>PAGE_INFO_MESSAGE</td>
 	<td>//span[contains(@class,'message-info')]</td>
 	<td></td>

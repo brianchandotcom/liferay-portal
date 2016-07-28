@@ -22,6 +22,8 @@
 	</command>
 
 	<command name="addCategoryPGViaWCD">
+		<execute function="ScrollBy" value1="0, 50" />
+
 		<execute macro="Panel#expandPanel">
 			<var name="panelHeading" value="Metadata" />
 		</execute>
@@ -1223,6 +1225,8 @@
 	</command>
 
 	<command name="selectTemplateCP">
+		<execute function="ScrollBy" value1="0, 50" />
+
 		<execute macro="Panel#expandPanel">
 			<var name="panelHeading" value="Structure and Template" />
 		</execute>

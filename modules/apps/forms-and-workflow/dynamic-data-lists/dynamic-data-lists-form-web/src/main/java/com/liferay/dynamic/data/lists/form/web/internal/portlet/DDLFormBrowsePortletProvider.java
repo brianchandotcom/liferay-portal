@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.dynamic.data.lists.form.web.portlet;
+package com.liferay.dynamic.data.lists.form.web.internal.portlet;
 
-import com.liferay.dynamic.data.lists.form.web.constants.DDLFormPortletKeys;
+import com.liferay.dynamic.data.lists.form.web.internal.constants.DDLFormPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

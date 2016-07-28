@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.dynamic.data.lists.form.web.display.context;
+package com.liferay.dynamic.data.lists.form.web.internal.display.context;
 
-import com.liferay.dynamic.data.lists.form.web.display.context.util.DDLFormWebRequestHelper;
-import com.liferay.dynamic.data.lists.form.web.search.RecordSetSearch;
+import com.liferay.dynamic.data.lists.form.web.internal.display.context.util.DDLFormWebRequestHelper;
+import com.liferay.dynamic.data.lists.form.web.internal.search.RecordSetSearch;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.model.DDLRecordSetConstants;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetService;

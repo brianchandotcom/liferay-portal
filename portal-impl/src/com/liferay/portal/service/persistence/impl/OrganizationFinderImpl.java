@@ -56,11 +56,17 @@ public class OrganizationFinderImpl
 	public static final String COUNT_O_BY_ORGANIZATION_ID =
 		OrganizationFinder.class.getName() + ".countO_ByOrganizationId";
 
+	public static final String COUNT_O_BY_C_PO =
+		OrganizationFinder.class.getName() + ".countO_ByC_PO";
+
 	public static final String COUNT_O_BY_C_PO_N_S_C_Z_R_C =
 		OrganizationFinder.class.getName() + ".countO_ByC_PO_N_S_C_Z_R_C";
 
 	public static final String COUNT_O_BY_C_PO_N_L_S_C_Z_R_C =
 		OrganizationFinder.class.getName() + ".countO_ByC_PO_N_L_S_C_Z_R_C";
+
+	public static final String COUNT_U_BY_C_S_O =
+		OrganizationFinder.class.getName() + ".countU_ByC_S_O";
 
 	public static final String FIND_O_BY_NO_ASSETS =
 		OrganizationFinder.class.getName() + ".findO_ByNoAssets";
@@ -352,6 +358,72 @@ public class OrganizationFinderImpl
 
 			qPos.add(cities, 2);
 			qPos.add(zips, 2);
+
+			int count = 0;
+
+			Iterator<Long> itr = q.iterate();
+
+			while (itr.hasNext()) {
+				Long l = itr.next();
+
+				if (l != null) {
+					count += l.intValue();
+				}
+			}
+
+			return count;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	@Override
+	public int countO_U_ByC_P(
+		long companyId, long parentOrganizationId,
+		QueryDefinition<?> queryDefinition) {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			StringBundler sb = new StringBundler(5);
+
+			sb.append(StringPool.OPEN_PARENTHESIS);
+			sb.append(CustomSQLUtil.get(COUNT_O_BY_C_PO));
+			sb.append(") UNION ALL (");
+
+			String sql = CustomSQLUtil.get(COUNT_U_BY_C_S_O);
+
+			int status = queryDefinition.getStatus();
+
+			if (status == WorkflowConstants.STATUS_ANY) {
+				sql = StringUtil.replace(
+					sql, "(User_.status = ?) AND", StringPool.BLANK);
+			}
+
+			sb.append(sql);
+			sb.append(StringPool.CLOSE_PARENTHESIS);
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sb.toString());
+
+			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(companyId);
+			qPos.add(parentOrganizationId);
+			qPos.add(companyId);
+
+			if (status != WorkflowConstants.STATUS_ANY) {
+				qPos.add(queryDefinition.getStatus());
+			}
+
+			qPos.add(parentOrganizationId);
 
 			int count = 0;
 

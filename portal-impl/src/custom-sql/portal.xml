@@ -513,6 +513,17 @@
 				(Organization_.organizationId = ?)
 		]]>
 	</sql>
+	<sql id="com.liferay.portal.kernel.service.persistence.OrganizationFinder.countO_ByC_PO">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT Organization_.organizationId) AS COUNT_VALUE
+			FROM
+				Organization_
+			WHERE
+				(companyId = ?) AND
+				(parentOrganizationId = ?)
+		]]>
+	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.OrganizationFinder.countO_ByC_PO_N_S_C_Z_R_C">
 		<![CDATA[
 			SELECT
@@ -572,6 +583,21 @@
 					(lower(Address.city) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(lower(Address.zip) LIKE ? [$AND_OR_NULL_CHECK$])
 				)
+		]]>
+	</sql>
+	<sql id="com.liferay.portal.kernel.service.persistence.OrganizationFinder.countU_ByC_S_O">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT User_.userId) AS COUNT_VALUE
+			FROM
+				User_
+			INNER JOIN
+				Users_Orgs ON
+					(Users_Orgs.userId = User_.userId)
+			WHERE
+				(User_.companyId = ?) AND
+				(User_.status = ?) AND
+				(Users_Orgs.organizationId = ?)
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.OrganizationFinder.findO_ByNoAssets">

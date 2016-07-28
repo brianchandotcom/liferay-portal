@@ -45,8 +45,11 @@ import java.util.List;
  * @see BlogsEntryServiceUtil
  * @see com.liferay.portlet.blogs.service.base.BlogsEntryServiceBaseImpl
  * @see com.liferay.portlet.blogs.service.impl.BlogsEntryServiceImpl
+ * @deprecated As of 7.0.0, replaced by {@link
+            com.liferay.blogs.service.impl.BlogsEntryServiceImpl}
  * @generated
  */
+@Deprecated
 @AccessControlled
 @JSONWebService
 @ProviderType

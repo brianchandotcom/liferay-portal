@@ -15,7 +15,6 @@
 package com.liferay.portal.struts;
 
 import com.liferay.blogs.kernel.model.BlogsEntry;
-import com.liferay.blogs.kernel.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -27,14 +26,11 @@ import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -93,7 +89,7 @@ public class FindActionTest {
 		addLayouts(true, false);
 
 		PortletLayoutFinder.Result result = _portletLayoutFinder.find(
-			getThemeDisplay(), _blogsEntry.getGroupId());
+			getThemeDisplay(), _blogsEntryGroupId);
 
 		Assert.assertEquals(_blogLayout.getPlid(), result.getPlid());
 
@@ -110,8 +106,7 @@ public class FindActionTest {
 		addLayouts(false, false);
 
 		try {
-			_portletLayoutFinder.find(
-				getThemeDisplay(), _blogsEntry.getGroupId());
+			_portletLayoutFinder.find(getThemeDisplay(), _blogsEntryGroupId);
 
 			Assert.fail();
 		}
@@ -126,7 +121,7 @@ public class FindActionTest {
 		HttpServletRequest request = getHttpServletRequest();
 
 		BaseFindActionHelper.setTargetLayout(
-			request, _blogsEntry.getGroupId(), _blogLayout.getPlid());
+			request, _blogsEntryGroupId, _blogLayout.getPlid());
 
 		Layout layout = (Layout)request.getAttribute(WebKeys.LAYOUT);
 
@@ -141,7 +136,7 @@ public class FindActionTest {
 		HttpServletRequest request = getHttpServletRequest();
 
 		BaseFindActionHelper.setTargetLayout(
-			request, _blogsEntry.getGroupId(), _blogLayout.getPlid());
+			request, _blogsEntryGroupId, _blogLayout.getPlid());
 
 		Layout layout = (Layout)request.getAttribute(WebKeys.LAYOUT);
 
@@ -183,13 +178,7 @@ public class FindActionTest {
 			group = GroupTestUtil.addGroup();
 		}
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				group.getGroupId(), TestPropsValues.getUserId());
-
-		_blogsEntry = BlogsEntryLocalServiceUtil.addEntry(
-			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), serviceContext);
+		_blogsEntryGroupId = group.getGroupId();
 	}
 
 	protected HttpServletRequest getHttpServletRequest() throws Exception {
@@ -221,7 +210,7 @@ public class FindActionTest {
 
 	private Layout _assetLayout;
 	private Layout _blogLayout;
-	private BlogsEntry _blogsEntry;
+	private long _blogsEntryGroupId;
 
 	@DeleteAfterTestRun
 	private Group _group;

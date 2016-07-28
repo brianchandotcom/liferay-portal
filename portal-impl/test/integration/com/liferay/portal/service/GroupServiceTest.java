@@ -15,8 +15,6 @@
 package com.liferay.portal.service;
 
 import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
-import com.liferay.blogs.kernel.model.BlogsEntry;
-import com.liferay.blogs.kernel.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.GroupParentException;
 import com.liferay.portal.kernel.exception.LocaleException;
@@ -300,22 +298,11 @@ public class GroupServiceTest {
 
 		User user = UserTestUtil.addUser(group.getGroupId());
 
-		BlogsEntry blogsEntry = BlogsEntryLocalServiceUtil.addEntry(
-			user.getUserId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), serviceContext);
-
-		Assert.assertNotNull(
-			BlogsEntryLocalServiceUtil.fetchBlogsEntry(
-				blogsEntry.getEntryId()));
-
 		GroupLocalServiceUtil.deleteGroup(group.getGroupId());
 
 		Assert.assertEquals(
 			initialTagsCount,
 			AssetTagLocalServiceUtil.getGroupTagsCount(group.getGroupId()));
-		Assert.assertNull(
-			BlogsEntryLocalServiceUtil.fetchBlogsEntry(
-				blogsEntry.getEntryId()));
 	}
 
 	@Test

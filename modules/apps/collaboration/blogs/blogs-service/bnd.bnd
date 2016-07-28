@@ -1,6 +1,8 @@
 Bundle-Name: Liferay Blogs Service
 Bundle-SymbolicName: com.liferay.blogs.service
-Bundle-Version: 1.0.5
+Bundle-Version: 1.1.0
+Export-Package: com.liferay.blogs.service.permission
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Blogs
+Liferay-Service: true
 -includeresource: @jericho-html-[0-9]*.jar

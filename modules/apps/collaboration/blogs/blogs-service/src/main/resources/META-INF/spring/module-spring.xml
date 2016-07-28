@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean class="com.liferay.blogs.service.impl.BlogsEntryLocalServiceImpl" id="com.liferay.blogs.service.BlogsEntryLocalService" />
+	<bean class="com.liferay.blogs.service.impl.BlogsEntryServiceImpl" id="com.liferay.blogs.service.BlogsEntryService" />
+	<bean class="com.liferay.blogs.service.impl.BlogsStatsUserLocalServiceImpl" id="com.liferay.blogs.service.BlogsStatsUserLocalService" />
+</beans>

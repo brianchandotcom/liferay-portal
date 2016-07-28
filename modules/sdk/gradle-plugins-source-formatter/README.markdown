@@ -45,7 +45,7 @@ Name | Depends On | Type | Description
 `formatSource` | \- | [`FormatSourceTask`](#formatsourcetask) | Runs the Liferay Source Formatter to format the project files.
 
 If desired, it is possible to check for source formatting errors while executing
-the [`check`]((https://docs.gradle.org/current/userguide/java_plugin.html#N15056))
+the [`check`](https://docs.gradle.org/current/userguide/java_plugin.html#N15056)
 task by adding the following dependency:
 
 ```gradle

@@ -8196,12 +8196,20 @@ jdbc.default.password=${database.mysql.password}</echo>
 			</then>
 		</if>
 
+		<get-testcase-property property.name="kibana.enabled" />
 		<get-testcase-property property.name="remote.elasticsearch.enabled" />
 
 		<if>
 			<equals arg1="${remote.elasticsearch.enabled}" arg2="true" />
 			<then>
 				<ant antfile="build-test-elasticsearch.xml" target="start-elasticsearch" />
+
+				<if>
+					<equals arg1="${kibana.enabled}" arg2="true" />
+					<then>
+						<ant antfile="build-test-elasticsearch.xml" target="start-kibana" />
+					</then>
+				</if>
 			</then>
 		</if>
 
@@ -8372,6 +8380,17 @@ jdbc.default.password=${database.mysql.password}</echo>
 				</antelope:repeat>
 
 				<var name="app.server.bundle.index" unset="true" />
+			</then>
+		</if>
+
+		<get-testcase-property property.name="kibana.enabled" />
+
+		<if>
+			<equals arg1="${kibana.enabled}" arg2="true" />
+			<then>
+				<print-file file.name="${kibana.dir}/bin/kibana.log" />
+
+				<ant antfile="build-test-elasticsearch.xml" target="stop-kibana" />
 			</then>
 		</if>
 

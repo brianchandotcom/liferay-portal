@@ -1,8 +1,9 @@
 Bundle-Name: Liferay Message Boards Web
 Bundle-SymbolicName: com.liferay.message.boards.web
-Bundle-Version: 1.0.10
+Bundle-Version: 1.1.0
 Export-Package:\
 	com.liferay.message.boards.web.constants,\
+	com.liferay.message.boards.web.exportimport.data.handler,\
 	com.liferay.message.boards.web.social,\
 	com.liferay.message.boards.web.trash
 Liferay-Releng-Module-Group-Description:

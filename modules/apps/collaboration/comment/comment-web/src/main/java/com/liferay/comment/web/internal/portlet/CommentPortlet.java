@@ -14,7 +14,7 @@
 
 package com.liferay.comment.web.internal.portlet;
 
-import com.liferay.comment.web.internal.constants.CommentPortletKeys;
+import com.liferay.comment.web.constants.CommentPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 import javax.portlet.Portlet;

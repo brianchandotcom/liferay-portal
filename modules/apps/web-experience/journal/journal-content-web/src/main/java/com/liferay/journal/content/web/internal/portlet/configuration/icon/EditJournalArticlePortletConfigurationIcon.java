@@ -14,7 +14,7 @@
 
 package com.liferay.journal.content.web.internal.portlet.configuration.icon;
 
-import com.liferay.journal.content.web.internal.constants.JournalContentPortletKeys;
+import com.liferay.journal.content.web.constants.JournalContentPortletKeys;
 import com.liferay.journal.content.web.internal.display.context.JournalContentDisplayContext;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;

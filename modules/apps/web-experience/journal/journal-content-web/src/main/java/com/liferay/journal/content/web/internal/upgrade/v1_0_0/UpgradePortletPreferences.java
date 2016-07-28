@@ -14,7 +14,7 @@
 
 package com.liferay.journal.content.web.internal.upgrade.v1_0_0;
 
-import com.liferay.journal.content.web.internal.constants.JournalContentPortletKeys;
+import com.liferay.journal.content.web.constants.JournalContentPortletKeys;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletPreferences;
 import com.liferay.portal.kernel.util.ArrayUtil;

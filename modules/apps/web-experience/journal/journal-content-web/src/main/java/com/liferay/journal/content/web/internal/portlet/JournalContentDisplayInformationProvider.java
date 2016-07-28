@@ -14,7 +14,7 @@
 
 package com.liferay.journal.content.web.internal.portlet;
 
-import com.liferay.journal.content.web.internal.constants.JournalContentPortletKeys;
+import com.liferay.journal.content.web.constants.JournalContentPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.portlet.DisplayInformationProvider;
 import com.liferay.portal.kernel.util.StringPool;

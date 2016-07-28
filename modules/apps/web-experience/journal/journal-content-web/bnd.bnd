@@ -1,6 +1,7 @@
 Bundle-Name: Liferay Journal Content Web
 Bundle-SymbolicName: com.liferay.journal.content.web
-Bundle-Version: 1.0.10
+Bundle-Version: 1.1.0
+Export-Package: com.liferay.journal.content.web.constants
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Web Content
 Web-ContextPath: /journal-content-web

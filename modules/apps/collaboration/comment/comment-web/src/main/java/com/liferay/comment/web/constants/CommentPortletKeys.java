@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.journal.content.web.internal.constants;
+package com.liferay.comment.web.constants;
 
 /**
- * @author Eudaldo Alonso
+ * @author Adolfo Pérez
  */
-public class JournalContentPortletKeys {
+public class CommentPortletKeys {
 
-	public static final String JOURNAL_CONTENT =
-		"com_liferay_journal_content_web_portlet_JournalContentPortlet";
+	public static final String COMMENT =
+		"com_liferay_comment_web_portlet_CommentPortlet";
 
 }

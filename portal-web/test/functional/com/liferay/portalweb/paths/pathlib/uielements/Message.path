@@ -105,7 +105,7 @@
 </tr>
 <tr>
 	<td>ERROR_FORM_FIELD_REQUIRED</td>
-	<td>//div[contains(@class,'has-error')]//div[contains(@class,'error-message')]</td>
+	<td>//div[contains(@class,'has-error')]//div[contains(@class,'help-block')]</td>
 	<td></td>
 </tr>
 <tr>

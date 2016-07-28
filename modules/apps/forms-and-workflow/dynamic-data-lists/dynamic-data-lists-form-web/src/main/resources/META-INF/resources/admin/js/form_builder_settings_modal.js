@@ -1,5 +1,5 @@
 AUI.add(
-	'liferay-ddl-form-builder-field-settings-modal',
+	'liferay-ddl-form-builder-settings-modal',
 	function(A) {
 		var CSS_BTN_LG = A.getClassName('btn', 'lg');
 
@@ -27,16 +27,24 @@ AUI.add(
 
 		var TPL_CONFIRMATION_MESSAGE = '<p class="' + CSS_FIELD_SETTINGS_CONFIRMATION_MESSAGE + ' text-muted">' + Liferay.Language.get('cancel-without-saving') + '</p>';
 
+		var TPL_LOADING = '<div class="loading-animation"></div>';
+
 		var FormBuilderFieldSettingsModal = A.Component.create(
 			{
 				ATTRS: {
+					field: {
+					},
+
 					portletNamespace: {
+					},
+
+					settingsForm: {
 					}
 				},
 
 				EXTENDS: A.FormBuilderSettingsModal,
 
-				NAME: 'liferay-ddl-form-builder-field-settings-modal',
+				NAME: 'liferay-ddl-form-builder-settings-modal',
 
 				prototype: {
 					TPL_FIELD_SETTINGS_HEAD_CONTENT: '<h4 class="' + CSS_MODAL_TITLE + '"></h4>',
@@ -44,7 +52,24 @@ AUI.add(
 					initializer: function() {
 						var instance = this;
 
+						instance._create();
+
+						instance._confirmationMessageNode = A.Node.create(TPL_CONFIRMATION_MESSAGE);
+						instance._loadingNode = A.Node.create(TPL_LOADING);
+
+						var bodyNode = instance._getBodyNode();
+
+						bodyNode.append(instance._confirmationMessageNode);
+						bodyNode.append(instance._loadingNode);
+
 						instance.on('save', instance._onSave);
+					},
+
+					align: function() {
+						var instance = this;
+
+						instance._modal.syncHeight();
+						instance._modal.align();
 					},
 
 					hide: function() {
@@ -55,24 +80,74 @@ AUI.add(
 						instance.fire('hide');
 					},
 
-					show: function() {
+					setTitle: function(title) {
 						var instance = this;
 
-						FormBuilderFieldSettingsModal.superclass.show.apply(instance, arguments);
+						var boundingBox = instance._modal.get('boundingBox');
 
-						instance._getBodyNode().append(A.Node.create(TPL_CONFIRMATION_MESSAGE).toggle(false));
+						boundingBox.one('.' + CSS_MODAL_TITLE).set('text', title);
+					},
 
-						var field = instance._fieldBeingEdited;
+					show: function(field, title) {
+						var instance = this;
 
-						var settingsForm = field.get('settingsForm');
+						instance.set('field', field);
 
-						instance._renderSettingsForm(settingsForm);
+						instance._toggleConfirmationMessage(false);
+						instance._toggleLoadingAnimation(true);
 
-						instance._modal.syncHeight();
+						var footerNode = instance._getFooterNode();
 
-						instance._showFormContainer();
+						footerNode.hide();
 
-						instance._previousSettings = JSON.stringify(field.getSettings());
+						instance._modal.show();
+						instance.align();
+
+						instance.setTitle(title);
+
+						field.loadSettingsForm().then(
+							function(settingsForm) {
+								var container = settingsForm.get('container');
+
+								instance.set('settingsForm', settingsForm);
+
+								container.appendTo(instance._getBodyNode());
+
+								settingsForm.after('render', instance._afterRenderSettingsForm, instance);
+								settingsForm.render();
+
+								var settings = field.getSettings(settingsForm);
+
+								instance._previousSettings = JSON.stringify(settings);
+							}
+						);
+					},
+
+					_afterRenderSettingsForm: function(event) {
+						var instance = this;
+
+						var footerNode = instance._getFooterNode();
+
+						var settingsForm = event.target;
+
+						instance._toggleLoadingAnimation(true);
+						instance._toggleFormContainer(false);
+
+						settingsForm.evaluate(
+							function() {
+								settingsForm.hideErrorMessages();
+
+								instance._showSettingsForm();
+
+								footerNode.show();
+
+								var labelField = settingsForm.getField('label');
+
+								labelField.focus();
+
+								instance.align();
+							}
+						);
 					},
 
 					_create: function() {
@@ -117,7 +192,7 @@ AUI.add(
 											cssClass: [CSS_BTN_LG, CSS_BTN_LINK, CSS_FIELD_SETTINGS_NO].join(' '),
 											labelHTML: Liferay.Language.get('dismiss'),
 											on: {
-												click: A.bind('_showFormContainer', instance)
+												click: A.bind('_showSettingsForm', instance)
 											}
 										}
 									],
@@ -130,7 +205,8 @@ AUI.add(
 											}
 										}
 									]
-								}
+								},
+								visible: false
 							}
 						).render();
 
@@ -154,47 +230,43 @@ AUI.add(
 					_onClickModalSave: function() {
 						var instance = this;
 
-						var field = instance._fieldBeingEdited;
-
-						var settingsForm = field.get('settingsForm');
+						var settingsForm = instance.get('settingsForm');
 
 						settingsForm.clearValidationStatus();
 						settingsForm.hideErrorMessages();
-
 						settingsForm.submit();
 					},
 
 					_onModalVisibleChange: function(event) {
 						var instance = this;
 
-						if (!event.newVal && !instance._confirmationToolbarVisible) {
-							var field = instance._fieldBeingEdited;
+						var settingsForm = instance.get('settingsForm');
 
-							var settings = JSON.stringify(field.getSettings());
+						if (!event.newVal && !instance._confirmationToolbarVisible) {
+							var field = instance.get('field');
+
+							var settings = JSON.stringify(field.getSettings(settingsForm));
 
 							if (instance._previousSettings !== settings) {
-
 								instance._showConfirmationMessage();
 
 								event.preventDefault();
 							}
+							else {
+								settingsForm.destroy();
+							}
+						}
+						else if (!event.newVal) {
+							settingsForm.destroy();
 						}
 					},
 
 					_onSave: function(event) {
 						var instance = this;
 
-						instance._previousSettings = JSON.stringify(event.field.getSettings());
-					},
+						var settingsForm = instance.get('settingsForm');
 
-					_renderSettingsForm: function(settingsForm) {
-						var instance = this;
-
-						var container = settingsForm.get('container');
-
-						container.appendTo(instance._getBodyNode());
-
-						settingsForm.render();
+						instance._previousSettings = JSON.stringify(event.field.getSettings(settingsForm));
 					},
 
 					_showConfirmationMessage: function() {
@@ -203,6 +275,7 @@ AUI.add(
 						instance._showConfirmationToolbar();
 						instance._toggleConfirmationMessage(true);
 						instance._toggleFormContainer(false);
+
 						instance._modal.align();
 					},
 
@@ -216,37 +289,35 @@ AUI.add(
 					_showDefaultToolbar: function() {
 						var instance = this;
 
-						var field = instance._fieldBeingEdited;
-
-						var footerNode = instance._getFooterNode();
+						var field = instance.get('field');
 
 						var label = Liferay.Language.get('save');
 
-						if (field.isNew()) {
+						if (field.isAdding()) {
 							label = Liferay.Language.get('add');
 						}
 
-						footerNode.one('.' + CSS_FIELD_SETTINGS_SAVE).set('innerHTML', label);
+						var footerToolbar = instance._modal.getToolbar('footer');
+
+						footerToolbar.item(0).set('label', label);
 
 						instance._toggleConfirmationToolbar(false);
 						instance._toggleDefaultToolbar(true);
 					},
 
-					_showFormContainer: function() {
+					_showSettingsForm: function() {
 						var instance = this;
 
 						instance._toggleFormContainer(true);
 						instance._toggleConfirmationMessage(false);
+						instance._toggleLoadingAnimation(false);
 						instance._showDefaultToolbar();
-						instance._modal.align();
 					},
 
 					_toggleConfirmationMessage: function(display) {
 						var instance = this;
 
-						var bodyNode = instance._getBodyNode();
-
-						bodyNode.one('.' + CSS_FIELD_SETTINGS_CONFIRMATION_MESSAGE).toggle(display);
+						instance._confirmationMessageNode.toggle(display);
 					},
 
 					_toggleConfirmationToolbar: function(display) {
@@ -279,15 +350,22 @@ AUI.add(
 					_toggleFormContainer: function(display) {
 						var instance = this;
 
-						var field = instance._fieldBeingEdited;
-
-						var settingsForm = field.get('settingsForm');
+						var settingsForm = instance.get('settingsForm');
 
 						var container = settingsForm.get('container');
 
-						container.toggle(display);
+						if (display) {
+							container.setStyle('height', 'auto');
+						}
+						else {
+							container.setStyle('height', '0');
+						}
+					},
 
-						settingsForm.getField('label').focus();
+					_toggleLoadingAnimation: function(display) {
+						var instance = this;
+
+						instance._loadingNode.toggle(display);
 					}
 				}
 			}

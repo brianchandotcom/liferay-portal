@@ -69,7 +69,7 @@ public interface ParagraphDDMFormFieldTypeSettings
 
 	@DDMFormField(
 		label = "%title", properties = {"placeholder=%enter-a-title"},
-		required = true, type = "key-value"
+		required = true, type = "key_value"
 	)
 	@Override
 	public LocalizedValue label();

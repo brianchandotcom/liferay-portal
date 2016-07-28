@@ -63,7 +63,7 @@ AUI.add(
 					_serializeField: function(field) {
 						var instance = this;
 
-						return field.get('name');
+						return field.get('fieldName');
 					},
 
 					_serializePage: function(page, index) {

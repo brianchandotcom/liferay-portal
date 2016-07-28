@@ -1,11 +1,19 @@
 {namespace ddm}
 
 /**
- * Prints the DDM form text field.
+ * Defines the delegated template for the key/value field.
+ */
+{deltemplate ddm.field autoescape="deprecated-contextual" variant="'key_value'"}
+	{call .key_value data="all" /}
+{/deltemplate}
+
+/**
+ * Prints the DDM form key/value field.
  *
  * @param dir
- * @param editing
  * @param key
+ * @param keyInputEnabled
+ * @param keyInputSize
  * @param label
  * @param name
  * @param placeholder
@@ -14,9 +22,10 @@
  * @param strings
  * @param tooltip
  * @param value
+ * @param visible
  */
 {template .key_value}
-	<div class="form-group liferay-ddm-form-field-key-value liferay-ddm-form-field-text" data-fieldname="{$name}">
+	<div class="form-group{$visible ? '' : ' hide'} liferay-ddm-form-field-key-value liferay-ddm-form-field-text" data-fieldname="{$name}">
 		{if $showLabel}
 			<label class="control-label" for="{$name}">
 				{$label}
@@ -39,16 +48,9 @@
 			{/if}
 		</div>
 
-		<div class="{$editing ? 'active ' : ''}key-value-editor">
+		<div class="active key-value-editor">
 			<label class="control-label key-value-label">{$strings.keyLabel}:</label>
-
-			<span class="key-value-output">{$key}</span>
-
-			<input class="key-value-input" placeholder="{$key}" />
-
-			<a class="key-value-done" href="javascript:;">{$strings.done}</a>
-
-			<a class="key-value-cancel" href="javascript:;">{$strings.cancel}</a>
+			<input class="key-value-input" {if not $keyInputEnabled}readonly{/if} size="{$keyInputSize}" tabindex="-1" type="text" value='{$key}' />
 		</div>
 	</div>
 {/template}

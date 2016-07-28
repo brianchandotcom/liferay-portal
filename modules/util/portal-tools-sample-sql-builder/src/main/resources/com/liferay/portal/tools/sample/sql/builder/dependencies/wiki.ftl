@@ -1,4 +1,4 @@
-<#assign wikiNodeModels = dataFactory.newWikiNodeModels(groupId)>
+<#assign wikiNodeModels = dataFactory.newWikiNodeModels(groupId) />
 
 <#list wikiNodeModels as wikiNodeModel>
 	insert into WikiNode values ('${wikiNodeModel.uuid}', ${wikiNodeModel.nodeId}, ${wikiNodeModel.groupId}, ${wikiNodeModel.companyId}, ${wikiNodeModel.userId}, '${wikiNodeModel.userName}', '${dataFactory.getDateString(wikiNodeModel.createDate)}', '${dataFactory.getDateString(wikiNodeModel.modifiedDate)}', '${wikiNodeModel.name}', '${wikiNodeModel.description}', '${dataFactory.getDateString(wikiNodeModel.lastPostDate)}', '${dataFactory.getDateString(wikiNodeModel.lastPublishDate)}', ${wikiNodeModel.status}, ${wikiNodeModel.statusByUserId}, '${wikiNodeModel.statusByUserName}', '${dataFactory.getDateString(wikiNodeModel.statusDate)}');
@@ -7,7 +7,7 @@
 		_entry = wikiNodeModel
 	/>
 
-	<#assign wikiPageModels = dataFactory.newWikiPageModels(wikiNodeModel)>
+	<#assign wikiPageModels = dataFactory.newWikiPageModels(wikiNodeModel) />
 
 	<#list wikiPageModels as wikiPageModel>
 		insert into WikiPage values ('${wikiPageModel.uuid}', ${wikiPageModel.pageId}, ${wikiPageModel.resourcePrimKey}, ${wikiPageModel.groupId}, ${wikiPageModel.companyId}, ${wikiPageModel.userId}, '${wikiPageModel.userName}', '${dataFactory.getDateString(wikiPageModel.createDate)}', '${dataFactory.getDateString(wikiPageModel.modifiedDate)}', ${wikiPageModel.nodeId}, '${wikiPageModel.title}', ${wikiPageModel.version}, ${wikiPageModel.minorEdit?string}, '${wikiPageModel.content}', '${wikiPageModel.summary}', '${wikiPageModel.format}', ${wikiPageModel.head?string}, '${wikiPageModel.parentTitle}', '${wikiPageModel.redirectTitle}', '${dataFactory.getDateString(wikiPageModel.lastPublishDate)}', ${wikiPageModel.status}, ${wikiPageModel.statusByUserId}, '${wikiPageModel.statusByUserName}', ${wikiPageModel.statusDate!'null'});
@@ -20,7 +20,7 @@
 			_entry = wikiPageModel
 		/>
 
-		<#assign wikiPageResourceModel = dataFactory.newWikiPageResourceModel(wikiPageModel)>
+		<#assign wikiPageResourceModel = dataFactory.newWikiPageResourceModel(wikiPageModel) />
 
 		insert into WikiPageResource values ('${wikiPageResourceModel.uuid}', ${wikiPageResourceModel.resourcePrimKey}, ${wikiPageResourceModel.groupId}, '${wikiPageResourceModel.companyId}', ${wikiPageResourceModel.nodeId}, '${wikiPageResourceModel.title}');
 
@@ -29,8 +29,10 @@
 			_categoryAndTag = true
 		/>
 
-		<#assign mbRootMessageId = dataFactory.getCounterNext()>
-		<#assign mbThreadId = dataFactory.getCounterNext()>
+		<#assign
+			mbRootMessageId = dataFactory.getCounterNext()
+			mbThreadId = dataFactory.getCounterNext()
+		/>
 
 		<@insertMBDiscussion
 			_classNameId = dataFactory.wikiPageClassNameId

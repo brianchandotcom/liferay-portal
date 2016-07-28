@@ -1,4 +1,4 @@
-<#assign percentage = backgroundTaskDisplay.getPercentage()>
+<#assign percentage = backgroundTaskDisplay.getPercentage() />
 
 <div class="background-task-status-in-progress">
 	<div class="active progress progress-lg progress-striped reindex-progress">

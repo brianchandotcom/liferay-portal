@@ -384,6 +384,37 @@ public class S3Store extends BaseStore {
 		}
 	}
 
+	protected void configureProxySettings(
+		ClientConfiguration clientConfiguration) {
+
+		String proxyHost = _s3StoreConfiguration.proxyHost();
+
+		if (Validator.isNull(proxyHost)) {
+			return;
+		}
+
+		clientConfiguration.setProxyHost(proxyHost);
+		clientConfiguration.setProxyPort(_s3StoreConfiguration.proxyPort());
+
+		String proxyAuthType = _s3StoreConfiguration.proxyAuthType();
+
+		if (proxyAuthType.equals("username-password") ||
+			proxyAuthType.equals("ntlm")) {
+
+			clientConfiguration.setProxyPassword(
+				_s3StoreConfiguration.proxyPassword());
+			clientConfiguration.setProxyUsername(
+				_s3StoreConfiguration.proxyUsername());
+
+			if (proxyAuthType.equals("ntlm")) {
+				clientConfiguration.setProxyDomain(
+					_s3StoreConfiguration.ntlmProxyDomain());
+				clientConfiguration.setProxyWorkstation(
+					_s3StoreConfiguration.ntlmProxyWorkstation());
+			}
+		}
+	}
+
 	@Deactivate
 	protected void deactivate() {
 		_amazonS3 = null;
@@ -463,6 +494,11 @@ public class S3Store extends BaseStore {
 
 		clientConfiguration.setMaxConnections(
 			_s3StoreConfiguration.httpClientMaxConnections());
+
+		clientConfiguration.setConnectionTimeout(
+			_s3StoreConfiguration.connectionTimeout());
+
+		configureProxySettings(clientConfiguration);
 
 		return clientConfiguration;
 	}

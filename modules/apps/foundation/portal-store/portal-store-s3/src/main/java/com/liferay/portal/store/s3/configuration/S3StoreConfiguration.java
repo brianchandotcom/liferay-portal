@@ -46,6 +46,9 @@ public interface S3StoreConfiguration {
 	)
 	public String s3StorageClass();
 
+	@Meta.AD(deflt = "10000", required = false)
+	public int connectionTimeout();
+
 	@Meta.AD(deflt = "50", required = false)
 	public int httpClientMaxConnections();
 
@@ -54,5 +57,29 @@ public interface S3StoreConfiguration {
 
 	@Meta.AD(deflt = "100", required = false)
 	public int cacheDirCleanUpFrequency();
+
+	@Meta.AD(required = false)
+	public String proxyHost();
+
+	@Meta.AD(deflt = "12345", required = false)
+	public int proxyPort();
+
+	@Meta.AD(
+		deflt = "none", optionValues = {"username-password", "ntlm", "none"},
+		required = false
+	)
+	public String proxyAuthType();
+
+	@Meta.AD(required = false)
+	public String proxyUsername();
+
+	@Meta.AD(required = false)
+	public String proxyPassword();
+
+	@Meta.AD(required = false)
+	public String ntlmProxyDomain();
+
+	@Meta.AD(required = false)
+	public String ntlmProxyWorkstation();
 
 }

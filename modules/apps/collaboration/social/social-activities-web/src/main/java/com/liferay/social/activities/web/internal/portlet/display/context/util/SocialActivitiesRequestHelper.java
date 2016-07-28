@@ -17,18 +17,16 @@ package com.liferay.social.activities.web.internal.portlet.display.context.util;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.display.context.util.BaseRequestHelper;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
-import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.RSSUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.social.activities.web.constants.SocialActivitiesPortletKeys;
 
 import javax.portlet.PortletPreferences;
+import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -142,20 +140,27 @@ public class SocialActivitiesRequestHelper extends BaseRequestHelper {
 	}
 
 	private PortletPreferences _getPortletPreferences() {
-		LiferayPortletRequest liferayPortletRequest =
-			getLiferayPortletRequest();
+		PortletRequest portletRequest = _getPortletRequest();
 
-		ThemeDisplay themeDisplay = getThemeDisplay();
+		return portletRequest.getPreferences();
+	}
 
-		return PortletPreferencesLocalServiceUtil.getPreferences(
-			themeDisplay.getCompanyId(), PortletKeys.PREFS_OWNER_ID_DEFAULT,
-			PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
-			liferayPortletRequest.getPlid(),
-			SocialActivitiesPortletKeys.SOCIAL_ACTIVITIES);
+	private PortletRequest _getPortletRequest() {
+		if (_portletRequest != null) {
+			return _portletRequest;
+		}
+
+		HttpServletRequest request = getRequest();
+
+		_portletRequest = (PortletRequest)request.getAttribute(
+			JavaConstants.JAVAX_PORTLET_REQUEST);
+
+		return _portletRequest;
 	}
 
 	private Integer _end;
 	private Integer _max;
+	private PortletRequest _portletRequest;
 	private Integer _rssDelta;
 	private String _rssDisplayStyle;
 	private Boolean _rssEnabled;

@@ -9,19 +9,6 @@
 
 			<if>
 				<not>
-					<available file="${elasticsearch.dir}/${elasticsearch.license.zip.name}" />
-				</not>
-				<then>
-					<mirrors-get
-						dest="${elasticsearch.dir}/${elasticsearch.license.zip.name}"
-						src="${elasticsearch.license.zip.url}"
-						verbose="true"
-					/>
-				</then>
-			</if>
-
-			<if>
-				<not>
 					<available file="${elasticsearch.dir}/${elasticsearch.analysis-icu.zip.name}" />
 				</not>
 				<then>
@@ -74,6 +61,88 @@
 
 			<if>
 				<not>
+					<available file="${elasticsearch.dir}/${elasticsearch.license.zip.name}" />
+				</not>
+				<then>
+					<mirrors-get
+						dest="${elasticsearch.dir}/${elasticsearch.license.zip.name}"
+						src="${elasticsearch.license.zip.url}"
+						verbose="true"
+					/>
+				</then>
+			</if>
+
+			<if>
+				<os family="unix" />
+				<then>
+					<for list="${elasticsearch.analysis-icu.zip.name},${elasticsearch.analysis-kuromoji.zip.name},${elasticsearch.analysis-smartcn.zip.name},${elasticsearch.analysis-stempel.zip.name},${elasticsearch.license.zip.name}" param="elasticsearch.plugin.name" >
+						<sequential>
+							<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash">
+								<arg value="-c" />
+								<arg value="./plugin install file:///${elasticsearch.dir}/@{elasticsearch.plugin.name}" />
+							</exec>
+						</sequential>
+					</for>
+				</then>
+				<elseif>
+					<os family="windows" />
+					<then>
+						<for list="${elasticsearch.analysis-icu.zip.name},${elasticsearch.analysis-kuromoji.zip.name},${elasticsearch.analysis-smartcn.zip.name},${elasticsearch.analysis-stempel.zip.name},${elasticsearch.license.zip.name}" param="elasticsearch.plugin.name" >
+							<sequential>
+								<exec dir="${elasticsearch.dir}/bin" executable="cmd">
+									<arg value="/c" />
+									<arg value="plugin install file:///${elasticsearch.dir}/@{elasticsearch.plugin.name}" />
+								</exec>
+							</sequential>
+						</for>
+					</then>
+				</elseif>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="prepare-kibana">
+		<sequential>
+			<if>
+				<not>
+					<available file="${elasticsearch.dir}/${marvel.zip.name}" />
+				</not>
+				<then>
+					<mirrors-get
+						dest="${elasticsearch.dir}/${marvel.zip.name}"
+						src="${marvel.zip.url}"
+						verbose="true"
+					/>
+				</then>
+			</if>
+
+			<chmod file="${kibana.dir}/bin/**" perm="a+x" />
+
+			<if>
+				<os family="unix" />
+				<then>
+					<exec dir="${kibana.dir}/bin" executable="/bin/bash">
+						<arg value="-c" />
+						<arg line="./kibana plugin --install marvel file:///${elasticsearch.dir}/${marvel.zip.url}" />
+					</exec>
+				</then>
+				<elseif>
+					<os family="windows" />
+					<then>
+						<exec dir="${kibana.dir}/bin" executable="cmd">
+							<arg value="/c" />
+							<arg line="kibana plugin --install marvel file:///${elasticsearch.dir}/${marvel.zip.url}" />
+						</exec>
+					</then>
+				</elseif>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="prepare-marvel-agent">
+		<sequential>
+			<if>
+				<not>
 					<available file="${elasticsearch.dir}/${marvel-agent.zip.name}" />
 				</not>
 				<then>
@@ -90,32 +159,7 @@
 				<then>
 					<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash">
 						<arg value="-c" />
-						<arg value="./plugin install ${elasticsearch.dir}/${elasticsearch.license.zip.name}" />
-					</exec>
-
-					<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash">
-						<arg value="-c" />
-						<arg value="./plugin install ${elasticsearch.dir}/${elasticsearch.analysis-icu.zip.name}" />
-					</exec>
-
-					<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash">
-						<arg value="-c" />
-						<arg value="./plugin install ${elasticsearch.dir}/${elasticsearch.analysis-kuromoji.zip.name}" />
-					</exec>
-
-					<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash">
-						<arg value="-c" />
-						<arg value="./plugin install ${elasticsearch.dir}/${elasticsearch.analysis-smartcn.zip.name}" />
-					</exec>
-
-					<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash">
-						<arg value="-c" />
-						<arg value="./plugin install ${elasticsearch.dir}/${elasticsearch.analysis-stempel.zip.name}" />
-					</exec>
-
-					<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash">
-						<arg value="-c" />
-						<arg value="./plugin install ${elasticsearch.dir}/${marvel-agent.zip.name}" />
+						<arg value="./plugin install file:///${elasticsearch.dir}/${marvel-agent.zip.name}" />
 					</exec>
 				</then>
 				<elseif>
@@ -123,57 +167,7 @@
 					<then>
 						<exec dir="${elasticsearch.dir}/bin" executable="cmd">
 							<arg value="/c" />
-							<arg value="plugin install ${elasticsearch.dir}/${elasticsearch.license.zip.name}" />
-						</exec>
-
-						<exec dir="${elasticsearch.dir}/bin" executable="cmd">
-							<arg value="/c" />
-							<arg line="plugin install ${elasticsearch.dir}/${elasticsearch.analysis-icu.zip.name}" />
-						</exec>
-
-						<exec dir="${elasticsearch.dir}/bin" executable="cmd">
-							<arg value="/c" />
-							<arg line="plugin install ${elasticsearch.dir}/${elasticsearch.analysis-kuromoji.zip.name}" />
-						</exec>
-
-						<exec dir="${elasticsearch.dir}/bin" executable="cmd">
-							<arg value="/c" />
-							<arg line="plugin install ${elasticsearch.dir}/${elasticsearch.analysis-smartcn.zip.name}" />
-						</exec>
-
-						<exec dir="${elasticsearch.dir}/bin" executable="cmd">
-							<arg value="/c" />
-							<arg line="plugin install ${elasticsearch.dir}/${elasticsearch.analysis-stempel.zip.name}" />
-						</exec>
-
-						<exec dir="${elasticsearch.dir}/bin" executable="cmd">
-							<arg value="/c" />
-							<arg line="plugin install ${elasticsearch.dir}/${marvel-agent.zip.name}" />
-						</exec>
-					</then>
-				</elseif>
-			</if>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="prepare-kibana">
-		<sequential>
-			<chmod file="${kibana.dir}/bin/**" perm="a+x" />
-
-			<if>
-				<os family="unix" />
-				<then>
-					<exec dir="${kibana.dir}/bin" executable="/bin/bash">
-						<arg value="-c" />
-						<arg line="./kibana plugin --install marvel --url ${marvel.zip.url}" />
-					</exec>
-				</then>
-				<elseif>
-					<os family="windows" />
-					<then>
-						<exec dir="${kibana.dir}/bin" executable="cmd">
-							<arg value="/c" />
-							<arg line="kibana plugin --install marvel --url ${marvel.zip.url}" />
+							<arg line="plugin install file:///${elasticsearch.dir}/${marvel-agent.zip.name}" />
 						</exec>
 					</then>
 				</elseif>
@@ -207,11 +201,11 @@
 
 	<macrodef name="unzip-kibana">
 		<sequential>
-			<delete dir="${app.server.parent.dir}/${kibana.tar.name.mac}" />
+			<delete file="${app.server.parent.dir}/${kibana.tar.name.mac}" />
 
-			<delete dir="${app.server.parent.dir}/${kibana.tar.name.linux}" />
+			<delete file="${app.server.parent.dir}/${kibana.tar.name.linux}" />
 
-			<delete dir="${app.server.parent.dir}/${kibana.zip.name.windows}" />
+			<delete file="${app.server.parent.dir}/${kibana.zip.name.windows}" />
 
 			<if>
 				<and>
@@ -321,6 +315,15 @@ logExceptionsOnly=false</echo>
 
 		<prepare-elasticsearch />
 
+		<get-testcase-property property.name="kibana.enabled" />
+
+		<if>
+			<equals arg1="${kibana.enabled}" arg2="true" />
+			<then>
+				<prepare-marvel-agent />
+			</then>
+		</if>
+
 		<replace file="${elasticsearch.dir}/config/elasticsearch.yml">
 			<replacetoken><![CDATA[# cluster.name: my-application]]></replacetoken>
 			<replacevalue><![CDATA[cluster.name: LiferayElasticsearchCluster]]></replacevalue>
@@ -377,12 +380,12 @@ logExceptionsOnly=false</echo>
 			<then>
 				<exec dir="${kibana.dir}/bin" executable="/bin/bash">
 					<arg value="-c" />
-					<arg value="./kibana > kibana.log 2>&amp;1 &amp;" />
+					<arg value="./kibana &gt; kibana.log 2&gt;&amp;1 &amp;" />
 				</exec>
 
 				<exec dir="${kibana.dir}/bin" executable="/bin/bash">
 					<arg value="-c" />
-					<arg value="echo $! > pid-kibana" />
+					<arg value="echo $! &gt; pid-kibana" />
 				</exec>
 			</then>
 			<elseif>

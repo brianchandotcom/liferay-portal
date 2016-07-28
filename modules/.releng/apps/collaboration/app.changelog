@@ -828,16 +828,16 @@ app.artifacts-7.0.5=\
 	com.liferay.blogs.layout.prototype-2.0.3.jar,\
 	com.liferay.blogs.recent.bloggers.web-1.1.0.jar,\
 	com.liferay.blogs.service-1.0.4.jar,\
-	com.liferay.blogs.web-1.0.12.jar,\
+	com.liferay.blogs.web-1.0.13.jar,\
 	com.liferay.bookmarks.api-2.0.1.jar,\
-	com.liferay.bookmarks.service-1.0.8.jar,\
+	com.liferay.bookmarks.service-1.0.9.jar,\
 	com.liferay.bookmarks.web-1.0.10.jar,\
 	com.liferay.comment.api-2.0.1.jar,\
 	com.liferay.comment.editor.configuration-1.0.2.jar,\
 	com.liferay.comment.page.comments.web-1.0.3.jar,\
 	com.liferay.comment.ratings.definition-2.0.2.jar,\
 	com.liferay.comment.sanitizer-2.0.2.jar,\
-	com.liferay.comment.web-1.0.6.jar,\
+	com.liferay.comment.web-1.1.0.jar,\
 	com.liferay.directory.web-1.0.6.jar,\
 	com.liferay.document.library.api-3.0.2.jar,\
 	com.liferay.document.library.item.selector.web-1.0.3.jar,\
@@ -870,9 +870,9 @@ app.artifacts-7.0.5=\
 	com.liferay.message.boards.layout.set.prototype-1.0.6.jar,\
 	com.liferay.message.boards.parser.bbcode-2.0.2.jar,\
 	com.liferay.message.boards.service-1.0.6.jar,\
-	com.liferay.message.boards.web-1.0.9.jar,\
+	com.liferay.message.boards.web-1.1.0.jar,\
 	com.liferay.microblogs.api-2.0.1.jar,\
-	com.liferay.microblogs.service-2.0.4.jar,\
+	com.liferay.microblogs.service-2.0.5.jar,\
 	com.liferay.microblogs.web-2.0.6.jar,\
 	com.liferay.notifications.web-1.0.9.jar,\
 	com.liferay.quick.note.web-2.0.2.jar,\
@@ -897,9 +897,9 @@ app.artifacts-7.0.5=\
 	com.liferay.wiki.engine.text-2.0.2.jar,\
 	com.liferay.wiki.layout.prototype-1.0.5.jar,\
 	com.liferay.wiki.navigation.web-2.0.5.jar,\
-	com.liferay.wiki.service-1.2.0.jar,\
+	com.liferay.wiki.service-1.2.1.jar,\
 	com.liferay.wiki.web-2.1.0.jar
 
-app.change.log-7.0.5=LPS-60033 LPS-60850 LPS-61099 LPS-61420 LPS-62170 LPS-63587 LPS-63907 LPS-64031 LPS-64383 LPS-64551 LPS-64713 LPS-64863 LPS-65012 LPS-65135 LPS-65225 LPS-65362 LPS-65660 LPS-65810 LPS-65909 LPS-66064 LPS-66097 LPS-66129 LPS-66416 LPS-66448 LPS-66586 LPS-66630 LPS-66715 LPS-66791 LPS-66850 LPS-66853 LPS-66894 LPS-66921 LPS-66922 LPS-66923 LPS-66924 LPS-66925 LPS-66974 LPS-66988 LPS-66997 LPS-67049
+app.change.log-7.0.5=LPS-60033 LPS-60850 LPS-61099 LPS-61420 LPS-62170 LPS-63587 LPS-63907 LPS-64031 LPS-64383 LPS-64551 LPS-64713 LPS-64863 LPS-65012 LPS-65135 LPS-65225 LPS-65362 LPS-65660 LPS-65810 LPS-65828 LPS-65909 LPS-66064 LPS-66097 LPS-66129 LPS-66416 LPS-66448 LPS-66586 LPS-66630 LPS-66791 LPS-66853 LPS-66878 LPS-66921 LPS-66922 LPS-66923 LPS-66924 LPS-66974 LPS-66988 LPS-66997 LPS-67049 LPS-67276
 
-app.git.id-7.0.5=3a98c9d63c49e975e6e06442d654a998f9037662
+app.git.id-7.0.5=63ec188ebbe34325f9dd69bcbfc160d43f302b66

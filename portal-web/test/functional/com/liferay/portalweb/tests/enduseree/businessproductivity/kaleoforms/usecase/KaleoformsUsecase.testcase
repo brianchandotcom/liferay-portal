@@ -1301,6 +1301,24 @@
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
+		<execute macro="User#editUserSiteCP">
+			<var name="siteName" value="Liferay" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#assignSiteRoleCP">
+			<var name="siteRoleName" value="Site Content Reviewer" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
 		<execute macro="User#editPasswordCP">
 			<var name="userEmailAddress" value="userea@liferay.com" />
 			<var name="userScreenName" value="usersn" />

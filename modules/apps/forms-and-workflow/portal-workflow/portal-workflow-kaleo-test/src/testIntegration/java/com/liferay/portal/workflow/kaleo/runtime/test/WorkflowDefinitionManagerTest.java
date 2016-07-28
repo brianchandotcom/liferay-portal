@@ -392,12 +392,7 @@ public class WorkflowDefinitionManagerTest {
 	protected void assertValid(InputStream inputStream) throws Exception {
 		byte[] bytes = FileUtil.getBytes(inputStream);
 
-		try {
-			_workflowDefinitionManager.validateWorkflowDefinition(bytes);
-		}
-		catch (WorkflowException we) {
-			Assert.fail(we.getMessage());
-		}
+		_workflowDefinitionManager.validateWorkflowDefinition(bytes);
 	}
 
 	protected InputStream getResource(String name) {

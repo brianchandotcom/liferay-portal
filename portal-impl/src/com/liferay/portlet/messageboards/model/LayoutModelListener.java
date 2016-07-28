@@ -25,6 +25,11 @@ import com.liferay.portal.kernel.model.Layout;
 public class LayoutModelListener extends BaseModelListener<Layout> {
 
 	@Override
+	public void onAfterCreate(Layout layout) throws ModelListenerException {
+		super.onAfterCreate(layout);
+	}
+
+	@Override
 	public void onBeforeRemove(Layout layout) throws ModelListenerException {
 		try {
 			CommentManagerUtil.deleteDiscussion(

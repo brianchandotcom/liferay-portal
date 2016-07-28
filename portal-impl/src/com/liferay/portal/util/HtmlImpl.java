@@ -137,13 +137,13 @@ public class HtmlImpl implements Html {
 				replacement = "&#187;";
 			}
 			else if (c == '\u2013') {
-				replacement = "&#x2013;";
+				replacement = "&#8211;";
 			}
 			else if (c == '\u2014') {
-				replacement = "&#x2014;";
+				replacement = "&#8212;";
 			}
 			else if (c == '\u2028') {
-				replacement = "&#x2028;";
+				replacement = "&#8232;";
 			}
 			else if (!_isValidXmlCharacter(c) ||
 					 _isUnicodeCompatibilityCharacter(c)) {

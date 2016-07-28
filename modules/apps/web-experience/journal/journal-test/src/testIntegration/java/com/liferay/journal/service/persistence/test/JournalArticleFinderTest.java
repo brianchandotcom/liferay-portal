@@ -409,8 +409,6 @@ public class JournalArticleFinderTest {
 		testQueryByG_F(new ArticleModifiedDateComparator(false));
 		testQueryByG_F(new ArticleReviewDateComparator(true));
 		testQueryByG_F(new ArticleReviewDateComparator(false));
-		testQueryByG_F(new ArticleTitleComparator(true));
-		testQueryByG_F(new ArticleTitleComparator(false));
 		testQueryByG_F(new ArticleVersionComparator(true));
 		testQueryByG_F(new ArticleVersionComparator(false));
 	}
@@ -473,7 +471,6 @@ public class JournalArticleFinderTest {
 			article.setModifiedDate(calendar.getTime());
 			article.setArticleId("a" + i);
 			article.setVersion(i);
-			article.setTitle("a" + i);
 			article.setDisplayDate(calendar.getTime());
 			article.setReviewDate(calendar.getTime());
 

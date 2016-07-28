@@ -15,6 +15,7 @@
 package com.liferay.gradle.plugins;
 
 import com.liferay.gradle.plugins.node.NodePlugin;
+import com.liferay.gradle.plugins.node.tasks.ExecuteNpmTask;
 import com.liferay.gradle.plugins.node.tasks.NpmInstallTask;
 import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask;
 import com.liferay.gradle.plugins.util.GradleUtil;
@@ -31,8 +32,18 @@ public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
 
 	@Override
 	protected void configureDefaults(Project project, NodePlugin nodePlugin) {
+		configureTasksExecuteNpm(project);
 		configureTasksNpmInstall(project);
 		configureTasksPublishNodeModule(project);
+	}
+
+	protected void configureTaskExecuteNpm(ExecuteNpmTask executeNpmTask) {
+		String registry = GradleUtil.getProperty(
+			executeNpmTask.getProject(), "nodejs.npm.registry", (String)null);
+
+		if (Validator.isNotNull(registry)) {
+			executeNpmTask.setRegistry(registry);
+		}
 	}
 
 	protected void configureTaskNpmInstall(NpmInstallTask npmInstallTask) {
@@ -99,6 +110,21 @@ public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
 		if (Validator.isNotNull(repository)) {
 			publishNodeModuleTask.setModuleRepository(repository);
 		}
+	}
+
+	protected void configureTasksExecuteNpm(Project project) {
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			ExecuteNpmTask.class,
+			new Action<ExecuteNpmTask>() {
+
+				@Override
+				public void execute(ExecuteNpmTask executeNpmTask) {
+					configureTaskExecuteNpm(executeNpmTask);
+				}
+
+			});
 	}
 
 	protected void configureTasksNpmInstall(Project project) {

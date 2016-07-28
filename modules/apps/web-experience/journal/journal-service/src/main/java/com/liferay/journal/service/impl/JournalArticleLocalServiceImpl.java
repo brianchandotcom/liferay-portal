@@ -8007,6 +8007,17 @@ public class JournalArticleLocalServiceImpl
 			journalArticleLocalization);
 	}
 
+	private List<JournalArticleLocalization> _updateArticleLocalizedFields(
+			long companyId, long articleId, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap)
+		throws PortalException {
+
+		journalArticleLocalizationPersistence.removeByArticlePK(articleId);
+
+		return _addArticleLocalizedFields(
+			companyId, articleId, titleMap, descriptionMap);
+	}
+
 	private static final long _JOURNAL_ARTICLE_CHECK_INTERVAL =
 		JournalServiceConfigurationValues.JOURNAL_ARTICLE_CHECK_INTERVAL
 			* Time.MINUTE;

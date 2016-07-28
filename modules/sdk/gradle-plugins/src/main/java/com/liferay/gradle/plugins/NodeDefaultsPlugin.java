@@ -15,6 +15,7 @@
 package com.liferay.gradle.plugins;
 
 import com.liferay.gradle.plugins.node.NodePlugin;
+import com.liferay.gradle.plugins.node.tasks.NpmInstallTask;
 import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask;
 import com.liferay.gradle.plugins.util.GradleUtil;
 import com.liferay.gradle.util.Validator;
@@ -32,7 +33,19 @@ public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
 	protected void configureDefaults(
 		final Project project, NodePlugin nodePlugin) {
 
+		configureTasksNpmInstall(project);
 		configureTasksPublishNodeModule(project);
+	}
+
+	protected void configureTaskNpmInstall(NpmInstallTask npmInstallTask) {
+		String removeShrinkwrappedUrls = GradleUtil.getProperty(
+			npmInstallTask.getProject(), "nodejs.npm.remove.shrinkwrapped.urls",
+			(String)null);
+
+		if (Validator.isNotNull(removeShrinkwrappedUrls)) {
+			npmInstallTask.setRemoveShrinkwrappedUrls(
+				Boolean.parseBoolean(removeShrinkwrappedUrls));
+		}
 	}
 
 	protected void configureTaskPublishNodeModule(
@@ -88,6 +101,21 @@ public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
 		if (Validator.isNotNull(repository)) {
 			publishNodeModuleTask.setModuleRepository(repository);
 		}
+	}
+
+	protected void configureTasksNpmInstall(Project project) {
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			NpmInstallTask.class,
+			new Action<NpmInstallTask>() {
+
+				@Override
+				public void execute(NpmInstallTask npmInstallTask) {
+					configureTaskNpmInstall(npmInstallTask);
+				}
+
+			});
 	}
 
 	protected void configureTasksPublishNodeModule(Project project) {

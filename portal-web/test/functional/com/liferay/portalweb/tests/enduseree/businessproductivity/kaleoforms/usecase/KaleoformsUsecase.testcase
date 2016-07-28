@@ -216,9 +216,7 @@
 			<var name="workflowTask" value="create" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#viewFormsNotPresent">
-			<var name="workflowTask" value="review" />
-		</execute>
+		<execute macro="KaleoFormsAdmin#viewFormsNotPresent" />
 
 		<execute macro="KaleoFormsAdmin#addForm">
 			<var name="kfFormName" value="Created Task Form" />

@@ -16,6 +16,7 @@ package com.liferay.sync.engine;
 
 import com.j256.ormlite.support.ConnectionSource;
 
+import com.liferay.sync.encryptor.SyncEncryptor;
 import com.liferay.sync.engine.document.library.util.FileEventUtil;
 import com.liferay.sync.engine.document.library.util.ServerEventUtil;
 import com.liferay.sync.engine.file.system.SyncWatchEventProcessor;
@@ -35,7 +36,10 @@ import com.liferay.sync.engine.util.FileKeyUtil;
 import com.liferay.sync.engine.util.FileLockRetryUtil;
 import com.liferay.sync.engine.util.FileUtil;
 import com.liferay.sync.engine.util.LoggerUtil;
+import com.liferay.sync.engine.util.PropsKeys;
+import com.liferay.sync.engine.util.PropsUtil;
 import com.liferay.sync.engine.util.SyncEngineUtil;
+import com.liferay.sync.engine.util.Validator;
 
 import java.io.IOException;
 
@@ -43,6 +47,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -155,6 +160,73 @@ public class SyncEngine {
 		}
 	}
 
+	protected static void configureSyncAccounts() throws Exception {
+		for (int i = 0;; i++) {
+			String postfix = "." + i;
+
+			String filePathName = FileUtil.getFilePathName(
+				PropsUtil.get(PropsKeys.SYNC_ACCOUNT_FILE_PATH_NAME + postfix));
+
+			if (Validator.isBlank(filePathName)) {
+				break;
+			}
+
+			String login = PropsUtil.get(
+				PropsKeys.SYNC_ACCOUNT_LOGIN + postfix);
+			String password = PropsUtil.get(
+				PropsKeys.SYNC_ACCOUNT_PASSWORD + postfix);
+			String url = PropsUtil.get(PropsKeys.SYNC_ACCOUNT_URL + postfix);
+
+			SyncAccount syncAccount =
+				SyncAccountService.fetchSyncAccountByFilePathName(filePathName);
+
+			if (syncAccount != null) {
+				syncAccount.setLogin(login);
+				syncAccount.setPassword(SyncEncryptor.encrypt(password));
+				syncAccount.setUrl(url);
+
+				SyncAccountService.update(syncAccount);
+			}
+			else {
+				syncAccount = SyncAccountService.addSyncAccount(
+					filePathName, login, password, url);
+			}
+
+			syncAccount = ServerEventUtil.synchronizeSyncAccount(
+				syncAccount.getSyncAccountId());
+
+			ServerEventUtil.synchronizeSyncSites(
+				syncAccount.getSyncAccountId());
+
+			String[] sites = PropsUtil.getArray(
+				PropsKeys.SYNC_ACCOUNT_SITES + postfix);
+
+			for (String site : sites) {
+				SyncSite syncSite = SyncSiteService.fetchSyncSite(
+					FileUtil.getFilePathName(
+						syncAccount.getFilePathName(), site),
+					syncAccount.getSyncAccountId());
+
+				if (syncSite == null) {
+					try {
+						syncSite = SyncSiteService.fetchSyncSite(
+							Long.valueOf(site), syncAccount.getSyncAccountId());
+					}
+					catch (NumberFormatException nfe) {
+					}
+				}
+
+				if (syncSite == null) {
+					continue;
+				}
+
+				SyncSiteService.activateSyncSite(
+					syncSite.getSyncSiteId(), Collections.<SyncFile>emptyList(),
+					false);
+			}
+		}
+	}
+
 	protected static void doScheduleSyncAccountTasks(long syncAccountId)
 		throws Exception {
 
@@ -260,6 +332,8 @@ public class SyncEngine {
 		UpgradeUtil.upgrade();
 
 		FileLockRetryUtil.init();
+
+		configureSyncAccounts();
 
 		for (SyncAccount syncAccount : SyncAccountService.findAll()) {
 			scheduleSyncAccountTasks(syncAccount.getSyncAccountId());

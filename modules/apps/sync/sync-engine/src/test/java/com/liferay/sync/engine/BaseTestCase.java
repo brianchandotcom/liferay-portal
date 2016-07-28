@@ -15,8 +15,6 @@
 package com.liferay.sync.engine;
 
 import com.liferay.sync.engine.model.SyncAccount;
-import com.liferay.sync.engine.model.SyncFile;
-import com.liferay.sync.engine.model.SyncSite;
 import com.liferay.sync.engine.service.SyncAccountService;
 import com.liferay.sync.engine.upgrade.util.UpgradeUtil;
 import com.liferay.sync.engine.util.FileUtil;
@@ -33,8 +31,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.concurrent.Executors;
 
 import org.apache.commons.io.FileUtils;
@@ -88,9 +84,7 @@ public abstract class BaseTestCase {
 			System.getProperty("user.home"), "liferay-sync-test");
 
 		syncAccount = SyncAccountService.addSyncAccount(
-			filePathName, "test@liferay.com", 1, "", "", false, "", "", "test",
-			"1.0.0", 5, Collections.<SyncSite, List<SyncFile>>emptyMap(), null,
-			false, "http://localhost:8080");
+			filePathName, "test@liferay.com", "test", "http://localhost:8080");
 
 		syncAccount.setActive(true);
 		syncAccount.setState(SyncAccount.STATE_CONNECTED);

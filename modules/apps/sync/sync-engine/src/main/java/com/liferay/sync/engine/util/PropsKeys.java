@@ -19,6 +19,17 @@ package com.liferay.sync.engine.util;
  */
 public interface PropsKeys {
 
+	public static final String SYNC_ACCOUNT_FILE_PATH_NAME =
+		"sync.account.file.path.name";
+
+	public static final String SYNC_ACCOUNT_LOGIN = "sync.account.login";
+
+	public static final String SYNC_ACCOUNT_PASSWORD = "sync.account.password";
+
+	public static final String SYNC_ACCOUNT_SITES = "sync.account.sites";
+
+	public static final String SYNC_ACCOUNT_URL = "sync.account.url";
+
 	public static final String SYNC_CONFIGURATION_DIRECTORY =
 		"sync.configuration.directory";
 

@@ -177,6 +177,15 @@ public class SyncAccountService {
 		return syncAccount;
 	}
 
+	public static SyncAccount addSyncAccount(
+			String filePathName, String login, String password, String url)
+		throws Exception {
+
+		return SyncAccountService.addSyncAccount(
+			filePathName, login, 1, "", "", false, "", "", password, "1.0.0", 5,
+			Collections.<SyncSite, List<SyncFile>>emptyMap(), null, false, url);
+	}
+
 	public static void deleteSyncAccount(long syncAccountId) {
 		deleteSyncAccount(syncAccountId, true);
 	}
@@ -249,6 +258,21 @@ public class SyncAccountService {
 	public static SyncAccount fetchSyncAccount(String uuid) {
 		try {
 			return _syncAccountPersistence.fetchByUuid(uuid);
+		}
+		catch (SQLException sqle) {
+			if (_logger.isDebugEnabled()) {
+				_logger.debug(sqle.getMessage(), sqle);
+			}
+
+			return null;
+		}
+	}
+
+	public static SyncAccount fetchSyncAccountByFilePathName(
+		String filePathName) {
+
+		try {
+			return _syncAccountPersistence.fetchByFilePathName(filePathName);
 		}
 		catch (SQLException sqle) {
 			if (_logger.isDebugEnabled()) {

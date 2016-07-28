@@ -43,7 +43,10 @@ define(['exports', 'metal/src/metal'], function (exports, _metal) {
 			if (!comps_[i].isDisposed()) {
 				var renderer = comps_[i].getRenderer();
 				if (!renderer.getParent()) {
-					renderer.getOwner().disposeSubComponents([comps_[i].config.key]);
+					// Don't let disposing cause the element to be removed, since it may
+					// be currently being reused by another component.
+					comps_[i].element = null;
+					renderer.getOwner().disposeSubComponents([comps_[i].config.ref]);
 				}
 			}
 		}

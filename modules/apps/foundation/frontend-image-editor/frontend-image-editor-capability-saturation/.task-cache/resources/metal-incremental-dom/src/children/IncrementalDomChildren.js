@@ -114,11 +114,11 @@ define(['exports', 'metal/src/metal', '../IncrementalDomAop', '../utils/Incremen
 				child.args = args;
 			}
 		} else {
-			if (_IncrementalDomUtils2.default.isComponentTag(args[0])) {
-				args[1] = args[1] || renderer_.buildKey();
-			}
 			child.tag = args[0];
 			child.config = _IncrementalDomUtils2.default.buildConfigFromCall(args);
+			if (_IncrementalDomUtils2.default.isComponentTag(child.tag)) {
+				child.config.ref = _metal2.default.isDefAndNotNull(child.config.ref) ? child.config.ref : renderer_.buildRef(args[0]);
+			}
 			child.config.children = [];
 		}
 

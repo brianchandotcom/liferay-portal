@@ -119,10 +119,12 @@ define(['exports', 'metal/src/metal', 'metal-dom/src/all/dom', 'metal-component/
 			return children.length === 0 ? emptyChildren_ : children;
 		};
 
-		IncrementalDomRenderer.prototype.buildKey = function buildKey() {
-			var count = this.generatedKeyCount_[this.currentPrefix_] || 0;
-			this.generatedKeyCount_[this.currentPrefix_] = count + 1;
-			return this.currentPrefix_ + 'sub' + count;
+		IncrementalDomRenderer.prototype.buildRef = function buildRef(tag) {
+			var ctor = _metal.core.isString(tag) ? _component.ComponentRegistry.getConstructor(tag) : tag;
+			var prefix = this.currentPrefix_ + _metal.core.getUid(ctor, true);
+			var count = this.generatedRefCount_[prefix] || 0;
+			this.generatedRefCount_[prefix] = count + 1;
+			return prefix + 'sub' + count;
 		};
 
 		IncrementalDomRenderer.getComponentBeingRendered = function getComponentBeingRendered() {
@@ -130,8 +132,8 @@ define(['exports', 'metal/src/metal', 'metal-dom/src/all/dom', 'metal-component/
 		};
 
 		IncrementalDomRenderer.prototype.getSubComponent_ = function getSubComponent_(tagOrCtor, config) {
-			var prevComp = this.component_.components[config.key];
-			var comp = this.component_.addSubComponent(config.key, tagOrCtor, config, true);
+			var prevComp = this.component_.components[config.ref];
+			var comp = this.component_.addSubComponent(config.ref, tagOrCtor, config, true);
 			if (prevComp && prevComp !== comp) {
 				// If a previous component was replaced, dispose it, but only after making
 				// sure that its element won't be removed (otherwise incremental dom may
@@ -140,6 +142,8 @@ define(['exports', 'metal/src/metal', 'metal-dom/src/all/dom', 'metal-component/
 				prevComp.dispose();
 			}
 			if (comp.wasRendered) {
+				// Reset config, to make sure that new values won't be merged with old ones.
+				comp.config = {};
 				comp.setState(config);
 			}
 			return comp;
@@ -185,6 +189,14 @@ define(['exports', 'metal/src/metal', 'metal-dom/src/all/dom', 'metal-component/
 				// necessarily check/uncheck the element it's set on. See
 				// https://github.com/google/incremental-dom/issues/198 for more details.
 				value = _metal.core.isDefAndNotNull(value) && value !== false;
+			}
+
+			if (name === 'value') {
+				// This is a temporary fix to account for incremental dom setting
+				// "value" as an attribute only, which can cause bugs since that won't
+				// necessarily update the input's content it's set on. See
+				// https://github.com/google/incremental-dom/issues/239 for more details.
+				element[name] = value;
 			}
 
 			if (_metal.core.isBoolean(value)) {
@@ -261,15 +273,15 @@ define(['exports', 'metal/src/metal', 'metal-dom/src/all/dom', 'metal-component/
 			}
 
 			var config = _IncrementalDomUtils2.default.buildConfigFromCall(args);
-			config.key = config.key || this.buildKey();
+			config.ref = _metal.core.isDefAndNotNull(config.ref) ? config.ref : this.buildRef(args[0]);
 			this.componentToRender_ = {
 				config: config,
 				tag: args[0]
 			};
 
 			this.prevPrefix_ = this.currentPrefix_;
-			this.currentPrefix_ = config.key;
-			this.generatedKeyCount_[this.currentPrefix_] = 0;
+			this.currentPrefix_ = config.ref;
+			this.generatedRefCount_[this.currentPrefix_] = 0;
 			_IncrementalDomChildren2.default.capture(this, this.handleChildrenCaptured_);
 		};
 
@@ -304,7 +316,7 @@ define(['exports', 'metal/src/metal', 'metal-dom/src/all/dom', 'metal-component/
 			return this.owner_;
 		};
 
-		IncrementalDomRenderer.render = function render(fnOrCtor, opt_data, opt_parent) {
+		IncrementalDomRenderer.render = function render(fnOrCtor, opt_dataOrElement, opt_parent) {
 			if (!_component.Component.isComponentCtor(fnOrCtor)) {
 				var fn = fnOrCtor;
 
@@ -317,6 +329,12 @@ define(['exports', 'metal/src/metal', 'metal-dom/src/all/dom', 'metal-component/
 						return _possibleConstructorReturn(this, _Component.apply(this, arguments));
 					}
 
+					TempComponent.prototype.created = function created() {
+						if (IncrementalDomRenderer.getComponentBeingRendered()) {
+							this.getRenderer().updateContext_(this);
+						}
+					};
+
 					TempComponent.prototype.render = function render() {
 						fn(this.config);
 					};
@@ -327,7 +345,7 @@ define(['exports', 'metal/src/metal', 'metal-dom/src/all/dom', 'metal-component/
 				TempComponent.RENDERER = IncrementalDomRenderer;
 				fnOrCtor = TempComponent;
 			}
-			return _component.Component.render(fnOrCtor, opt_data, opt_parent);
+			return _component.Component.render(fnOrCtor, opt_dataOrElement, opt_parent);
 		};
 
 		IncrementalDomRenderer.prototype.render = function render() {
@@ -378,20 +396,20 @@ define(['exports', 'metal/src/metal', 'metal-dom/src/all/dom', 'metal-component/
 			this.rootElementReached_ = false;
 			_IncrementalDomUnusedComponents2.default.schedule(this.childComponents_ || []);
 			this.childComponents_ = [];
-			this.generatedKeyCount_ = {};
+			this.generatedRefCount_ = {};
 			this.listenersToAttach_ = [];
 			this.currentPrefix_ = '';
 			this.intercept_();
 			this.renderIncDom();
 			_IncrementalDomAop2.default.stopInterception();
 			this.attachInlineListeners_();
-			IncrementalDomRenderer.finishedRenderingComponent();
 			if (!this.rootElementReached_) {
 				this.component_.element = null;
 			} else {
 				this.component_.addElementClasses();
 			}
 			this.emit('rendered', !this.component_.wasRendered);
+			IncrementalDomRenderer.finishedRenderingComponent();
 		};
 
 		IncrementalDomRenderer.prototype.renderSubComponent_ = function renderSubComponent_(tagOrCtor, config) {

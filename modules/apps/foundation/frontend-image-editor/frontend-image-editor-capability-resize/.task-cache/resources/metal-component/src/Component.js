@@ -314,7 +314,7 @@ define(['exports', 'metal/src/metal', 'metal-dom/src/all/dom', './ComponentRegis
 		};
 
 		Component.isComponentCtor = function isComponentCtor(fn) {
-			return !!fn.prototype[Component.COMPONENT_FLAG];
+			return fn.prototype && fn.prototype[Component.COMPONENT_FLAG];
 		};
 
 		Component.prototype.mergeElementClasses_ = function mergeElementClasses_(values) {
@@ -348,9 +348,15 @@ define(['exports', 'metal/src/metal', 'metal-dom/src/all/dom', './ComponentRegis
 			this.addListenersFromObj_(event.newVal);
 		};
 
-		Component.render = function render(Ctor, opt_config, opt_element) {
-			var instance = new Ctor(opt_config, false);
-			instance.render_(opt_element);
+		Component.render = function render(Ctor, opt_configOrElement, opt_element) {
+			var config = opt_configOrElement;
+			var element = opt_element;
+			if (_metal.core.isElement(opt_configOrElement)) {
+				config = null;
+				element = opt_configOrElement;
+			}
+			var instance = new Ctor(config, false);
+			instance.render_(element);
 			return instance;
 		};
 

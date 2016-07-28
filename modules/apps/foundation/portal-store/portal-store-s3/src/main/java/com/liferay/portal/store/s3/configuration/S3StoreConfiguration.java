@@ -61,8 +61,8 @@ public interface S3StoreConfiguration {
 	@Meta.AD(required = false)
 	public String proxyHost();
 
-	@Meta.AD(required = false)
-	public String proxyPort();
+	@Meta.AD(deflt = "12345", required = false)
+	public int proxyPort();
 
 	@Meta.AD(
 		deflt = "none", optionValues = {"username-password", "ntlm", "none"},

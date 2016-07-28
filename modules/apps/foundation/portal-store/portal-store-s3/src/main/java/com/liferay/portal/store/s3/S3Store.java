@@ -49,7 +49,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -390,20 +389,17 @@ public class S3Store extends BaseStore {
 
 		String proxyHost = _s3StoreConfiguration.proxyHost();
 
-		int proxyPort = GetterUtil.getInteger(
-			_s3StoreConfiguration.proxyPort(), -1);
-
-		if (Validator.isNull(proxyHost) || (proxyPort == -1)) {
+		if (Validator.isNull(proxyHost)) {
 			return;
 		}
 
 		clientConfiguration.setProxyHost(proxyHost);
-		clientConfiguration.setProxyPort(proxyPort);
+		clientConfiguration.setProxyPort(_s3StoreConfiguration.proxyPort());
 
 		String proxyAuthType = _s3StoreConfiguration.proxyAuthType();
 
 		if (proxyAuthType.equals("username-password") ||
-				proxyAuthType.equals("ntlm")) {
+			proxyAuthType.equals("ntlm")) {
 
 			clientConfiguration.setProxyPassword(
 				_s3StoreConfiguration.proxyPassword());

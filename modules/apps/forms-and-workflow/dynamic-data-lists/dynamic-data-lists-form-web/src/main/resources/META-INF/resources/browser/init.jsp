@@ -21,7 +21,7 @@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.dynamic.data.lists.form.web.display.context.DDLFormBrowserDisplayContext" %><%@
+<%@ page import="com.liferay.dynamic.data.lists.form.web.internal.display.context.DDLFormBrowserDisplayContext" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %>
 

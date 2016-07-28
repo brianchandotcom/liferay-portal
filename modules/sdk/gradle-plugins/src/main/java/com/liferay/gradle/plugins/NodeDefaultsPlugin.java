@@ -38,57 +38,52 @@ public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
 	protected void configureTaskPublishNodeModule(
 		PublishNodeModuleTask publishNodeModuleTask) {
 
+		Project project = publishNodeModuleTask.getProject();
+
 		String author = GradleUtil.getProperty(
-			publishNodeModuleTask.getProject(), "nodejs.npm.module.author",
-			(String)null);
+			project, "nodejs.npm.module.author", (String)null);
 
 		if (Validator.isNotNull(author)) {
 			publishNodeModuleTask.setModuleAuthor(author);
 		}
 
 		String bugsUrl = GradleUtil.getProperty(
-			publishNodeModuleTask.getProject(), "nodejs.npm.module.bugs.url",
-			(String)null);
+			project, "nodejs.npm.module.bugs.url", (String)null);
 
 		if (Validator.isNotNull(bugsUrl)) {
 			publishNodeModuleTask.setModuleBugsUrl(bugsUrl);
 		}
 
 		String license = GradleUtil.getProperty(
-			publishNodeModuleTask.getProject(), "nodejs.npm.module.license",
-			(String)null);
+			project, "nodejs.npm.module.license", (String)null);
 
 		if (Validator.isNotNull(license)) {
 			publishNodeModuleTask.setModuleLicense(license);
 		}
 
 		String emailAddress = GradleUtil.getProperty(
-			publishNodeModuleTask.getProject(), "nodejs.npm.email",
-			(String)null);
+			project, "nodejs.npm.email", (String)null);
 
 		if (Validator.isNotNull(emailAddress)) {
 			publishNodeModuleTask.setNpmEmailAddress(emailAddress);
 		}
 
 		String password = GradleUtil.getProperty(
-			publishNodeModuleTask.getProject(), "nodejs.npm.password",
-			(String)null);
+			project, "nodejs.npm.password", (String)null);
 
 		if (Validator.isNotNull(password)) {
 			publishNodeModuleTask.setNpmPassword(password);
 		}
 
 		String userName = GradleUtil.getProperty(
-			publishNodeModuleTask.getProject(), "nodejs.npm.user",
-			(String)null);
+			project, "nodejs.npm.user", (String)null);
 
 		if (Validator.isNotNull(userName)) {
 			publishNodeModuleTask.setNpmUserName(userName);
 		}
 
 		String repository = GradleUtil.getProperty(
-			publishNodeModuleTask.getProject(), "nodejs.npm.module.repository",
-			(String)null);
+			project, "nodejs.npm.module.repository", (String)null);
 
 		if (Validator.isNotNull(repository)) {
 			publishNodeModuleTask.setModuleRepository(repository);

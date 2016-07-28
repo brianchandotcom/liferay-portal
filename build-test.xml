@@ -4344,6 +4344,7 @@ go]]></replacevalue>
 								<var name="osgi.module.dir" unset="true" />
 
 								<dirset dir="${project.dir}/modules" id="osgi.module.dir.id">
+									<exclude name=".releng/**" />
 									<include name="**/@{osgi.module}" />
 								</dirset>
 

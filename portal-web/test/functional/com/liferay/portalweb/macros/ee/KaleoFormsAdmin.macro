@@ -706,7 +706,7 @@
 	</command>
 
 	<command name="viewPreviousFieldSetPage">
-		<execute function="AssertClick" locator1="Pagination#PREVIOUS_LINK" value1="Previous" />
+		<execute function="Click" locator1="Pagination#FIRST_LINK" />
 	</command>
 
 	<command name="viewProcess">

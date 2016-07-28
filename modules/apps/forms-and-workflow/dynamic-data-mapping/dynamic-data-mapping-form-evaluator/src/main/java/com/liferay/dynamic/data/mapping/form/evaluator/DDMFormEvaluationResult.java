@@ -26,6 +26,18 @@ import java.util.Map;
  */
 public class DDMFormEvaluationResult {
 
+	public DDMFormFieldEvaluationResult geDDMFormFieldEvaluationResult(
+		String fieldName, String instanceId) {
+
+		String key = _getKey(fieldName, instanceId);
+
+		Map<String, DDMFormFieldEvaluationResult>
+			ddmFormFieldEvaluationResultsMap =
+				getDDMFormFieldEvaluationResultsMap();
+
+		return ddmFormFieldEvaluationResultsMap.get(key);
+	}
+
 	@JSON(name = "fields")
 	public List<DDMFormFieldEvaluationResult>
 		getDDMFormFieldEvaluationResults() {
@@ -36,13 +48,19 @@ public class DDMFormEvaluationResult {
 	public Map<String, DDMFormFieldEvaluationResult>
 		getDDMFormFieldEvaluationResultsMap() {
 
-		Map<String, DDMFormFieldEvaluationResult>
-			ddmFormFieldEvaluationResultsMap = new HashMap<>();
+		if (_ddmFormFieldEvaluationResultsMap == null) {
+			Map<String, DDMFormFieldEvaluationResult>
+				ddmFormFieldEvaluationResultsMap = new HashMap<>();
 
-		populateDDMFormFieldEvaluationResultsMap(
-			_ddmFormFieldEvaluationResults, ddmFormFieldEvaluationResultsMap);
+			populateDDMFormFieldEvaluationResultsMap(
+				_ddmFormFieldEvaluationResults,
+				ddmFormFieldEvaluationResultsMap);
 
-		return ddmFormFieldEvaluationResultsMap;
+			_ddmFormFieldEvaluationResultsMap =
+				ddmFormFieldEvaluationResultsMap;
+		}
+
+		return _ddmFormFieldEvaluationResultsMap;
 	}
 
 	public void setDDMFormFieldEvaluationResults(
@@ -59,9 +77,12 @@ public class DDMFormEvaluationResult {
 		for (DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult :
 				ddmFormFieldEvaluationResults) {
 
-			ddmFormFieldEvaluationResultsMap.put(
+			String key = _getKey(
 				ddmFormFieldEvaluationResult.getName(),
-				ddmFormFieldEvaluationResult);
+				ddmFormFieldEvaluationResult.getInstanceId());
+
+			ddmFormFieldEvaluationResultsMap.put(
+				key, ddmFormFieldEvaluationResult);
 
 			populateDDMFormFieldEvaluationResultsMap(
 				ddmFormFieldEvaluationResult.
@@ -70,7 +91,21 @@ public class DDMFormEvaluationResult {
 		}
 	}
 
+	private String _getKey(String fieldName, String instanceId) {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(fieldName);
+		sb.append(_INSTANCE_SEPARATOR);
+		sb.append(instanceId);
+
+		return sb.toString();
+	}
+
+	private static final String _INSTANCE_SEPARATOR = "_INSTANCE_";
+
 	private List<DDMFormFieldEvaluationResult> _ddmFormFieldEvaluationResults =
 		new ArrayList<>();
+	private Map<String, DDMFormFieldEvaluationResult>
+		_ddmFormFieldEvaluationResultsMap;
 
 }

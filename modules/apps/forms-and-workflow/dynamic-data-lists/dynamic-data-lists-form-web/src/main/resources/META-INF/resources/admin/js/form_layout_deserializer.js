@@ -80,17 +80,72 @@ AUI.add(
 
 						var definition = instance.get('definition');
 
-						var fieldDefinition = RendererUtil.getFieldByKey(definition, fieldName);
+						var defaultLanguageId = definition.defaultLanguageId;
 
-						fieldDefinition.dataProviders = builder.get('dataProviders');
-						fieldDefinition.evaluatorURL = builder.get('evaluatorURL');
-						fieldDefinition.parent = builder;
-						fieldDefinition.portletNamespace = builder.get('portletNamespace');
-						fieldDefinition.readOnly = true;
+						var context = RendererUtil.getFieldByKey(definition, fieldName);
 
-						var fieldClass = FormBuilderUtil.getFieldClass(fieldDefinition.type);
+						A.each(
+							context,
+							function(value, key) {
+								if (key === 'options') {
+									context[key] = value.map(
+										function(option) {
+											return {
+												label: option.label[defaultLanguageId],
+												value: option.value
+											};
+										}
+									);
+								}
+								else if (Lang.isObject(value) && value[defaultLanguageId] !== undefined) {
+									context[key] = value[defaultLanguageId];
+								}
+							}
+						);
 
-						return new fieldClass(fieldDefinition);
+						instance._deserializeFieldRules(context);
+
+						context.fieldName = context.name;
+						context.portletNamespace = builder.get('portletNamespace');
+						context.readOnly = true;
+						context.visible = true;
+						context.value = '';
+
+						delete context.name;
+
+						var fieldClass = FormBuilderUtil.getFieldClass(context.type, context);
+
+						return new fieldClass(
+							{
+								context: context,
+								evaluatorURL: builder.get('evaluatorURL'),
+								getFieldNameSettingFormContextURL: builder.get('getFieldNameSettingFormContextURL'),
+								getFieldTypeSettingFormContextURL: builder.get('getFieldTypeSettingFormContextURL'),
+								parent: builder
+							}
+						);
+					},
+
+					_deserializeFieldRules: function(context) {
+						var instance = this;
+
+						var rules = context.rules || [];
+
+						rules.forEach(
+							function(rule) {
+								if (rule.type === 'VALIDATION') {
+									context.validation = {
+										errorMessage: rule.errorMessage,
+										expression: rule.expression
+									};
+								}
+								else if (rule.type === 'VISIBILITY') {
+									context.visibilityExpression = rule.expression;
+								}
+							}
+						);
+
+						delete context.rules;
 					},
 
 					_deserializeFields: function(deserializedColumn, fieldNames) {

@@ -38,11 +38,7 @@
 	<command name="editFieldName">
 		<var name="key_fieldValue" value="${fieldValue}" />
 
-		<execute function="Click" locator1="FormFields#FIELD_NAME_PLACEHOLDER" />
-
-		<execute function="Type" locator1="FormFields#FIELD_NAME_EDIT" value1="${fieldValue}" />
-
-		<execute function="Click" locator1="FormFields#FIELD_NAME_EDIT_DONE" />
+		<execute function="Type#clickAtType" locator1="FormFields#FIELD_NAME_EDIT" value1="${fieldValue}" />
 	</command>
 
 	<command name="editOptionsRow">
@@ -56,13 +52,7 @@
 	<command name="editOptionsRowNameField">
 		<var name="key_rowNumber" value="${rowNumber}" />
 
-		<execute function="Click" locator1="FormFields#OPTIONS_OPTION_NAME_FIELD_PLACEHOLDER" />
-
-		<execute function="Type" locator1="FormFields#OPTIONS_OPTION_NAME_FIELD_EDIT" value1="${optionValue}" />
-
-		<execute function="Click" locator1="FormFields#OPTIONS_OPTION_NAME_FIELD_EDIT_DONE" />
-
-		<execute function="AssertTextEquals" locator1="FormFields#OPTIONS_OPTION_NAME_FIELD" value1="Field Name:${optionValue}" />
+		<execute function="Type#clickAtType" locator1="FormFields#OPTIONS_OPTION_NAME_FIELD_EDIT" value1="${optionValue}" />
 	</command>
 
 	<command name="editParagraphBody">
@@ -223,7 +213,7 @@
 	</command>
 
 	<command name="viewFieldName">
-		<execute function="AssertTextEquals" locator1="FormFields#FIELD_NAME" value1="Field Name:${fieldName}" />
+		<execute function="AssertTextEquals" locator1="FormFields#FIELD_NAME_EDIT" value1="${fieldName}" />
 	</command>
 
 	<command name="viewFieldValidationErrorMessage">
@@ -256,12 +246,22 @@
 	<command name="viewOptionsRowFieldName">
 		<var name="key_rowNumber" value="${rowNumber}" />
 
-		<execute function="AssertTextEquals" locator1="FormFields#OPTIONS_OPTION_NAME_FIELD" value1="Field Name:${fieldName}" />
+		<execute function="AssertTextEquals" locator1="FormFields#OPTIONS_OPTION_NAME_FIELD_EDIT" value1="${fieldName}" />
 	</command>
 
 	<command name="viewParagraphField">
-		<var name="key_fieldName" value="${fieldTitle}" />
-		<var method="StringUtil#replace('${fieldTitle}',' ','')" name="key_fieldName" />
+		<if>
+			<not>
+				<isset var="fieldName" />
+			</not>
+			<then>
+				<var name="key_fieldName" value="${fieldTitle}" />
+				<var method="StringUtil#replace('${fieldTitle}',' ','')" name="key_fieldName" />
+			</then>
+			<else>
+				<var name="key_fieldName" value="${fieldName}" />
+			</else>
+		</if>
 
 		<execute function="AssertTextEquals" locator1="FormFields#PARAGRAPH_TITLE" value1="${fieldTitle}" />
 		<execute function="AssertTextEquals" locator1="FormFields#PARAGRAPH_BODY_TEXT_CONTENT" value1="${fieldValue}" />

@@ -1,9 +1,16 @@
 AUI.add(
 	'liferay-ddm-form-field-captcha',
 	function(A) {
+		var Lang = A.Lang;
+
 		var CaptchaField = A.Component.create(
 			{
 				ATTRS: {
+					html: {
+						repaint: false,
+						value: ''
+					},
+
 					type: {
 						value: 'captcha'
 					}
@@ -22,21 +29,29 @@ AUI.add(
 						);
 					},
 
-					getTemplateRenderer: function() {
+					getChangeEventName: function() {
+						return 'input';
+					},
+
+					getInputSelector: function() {
 						var instance = this;
 
-						return A.bind('renderTemplate', instance);
+						var container = instance.get('container');
+
+						return '#' + container.one('input').attr('id');
 					},
 
-					getValue: function() {
-						return '';
-					},
-
-					renderTemplate: function() {
+					hasErrors: function() {
 						var instance = this;
 
-						return instance._valueContainer().html();
+						var hasErrors = CaptchaField.superclass.hasErrors.apply(instance, arguments);
+
+						var inputNode = instance.getInputNode();
+
+						return !inputNode.val() || hasErrors;
 					},
+
+					showErrorMessage: Lang.emptyFn,
 
 					_onClickRefresh: function() {
 						var instance = this;

@@ -1,6 +1,13 @@
 {namespace ddm}
 
 /**
+ * Defines the delegated template for the editor field.
+ */
+{deltemplate ddm.field autoescape="deprecated-contextual" variant="'editor'"}
+	{call .editor data="all" /}
+{/deltemplate}
+
+/**
  * Prints the DDM form editor field.
  *
  * @param? childElementsHTML
@@ -11,9 +18,10 @@
  * @param showLabel
  * @param tip
  * @param value
+ * @param visible
  */
 {template .editor autoescape="deprecated-contextual"}
-	<div class="form-group liferay-ddm-form-field-editor" data-fieldname="{$name}">
+	<div class="form-group{$visible ? '' : ' hide'} liferay-ddm-form-field-editor" data-fieldname="{$name}">
 		{if $showLabel}
 			<label class="control-label" for="{$name}">
 				{$label}

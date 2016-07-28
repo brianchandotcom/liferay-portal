@@ -14,23 +14,20 @@
 
 package com.liferay.dynamic.data.mapping.type.captcha.internal;
 
+import com.liferay.dynamic.data.mapping.form.field.type.BaseDDMFormFieldRenderer;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldRenderer;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
-import com.liferay.portal.kernel.servlet.JSPSupportServlet;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.taglib.servlet.PipingPageContext;
-import com.liferay.taglib.ui.CaptchaTag;
+import com.liferay.portal.kernel.template.Template;
+import com.liferay.portal.kernel.template.TemplateConstants;
+import com.liferay.portal.kernel.template.TemplateResource;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.jsp.JspFactory;
-import javax.servlet.jsp.PageContext;
+import java.util.Map;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marcellus Tavares
@@ -39,60 +36,50 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true, property = "ddm.form.field.type.name=captcha",
 	service = DDMFormFieldRenderer.class
 )
-public class CaptchaDDMFormFieldRenderer implements DDMFormFieldRenderer {
+public class CaptchaDDMFormFieldRenderer extends BaseDDMFormFieldRenderer {
 
 	@Override
-	public String render(
-			DDMFormField ddmFormField,
-			DDMFormFieldRenderingContext ddmFormFieldRenderingContext)
-		throws PortalException {
-
-		try {
-			return renderCaptchaTag(ddmFormField, ddmFormFieldRenderingContext);
-		}
-		catch (Exception e) {
-			throw new PortalException("Unable to render capctha field", e);
-		}
+	public String getTemplateLanguage() {
+		return TemplateConstants.LANG_TYPE_SOY;
 	}
 
-	protected String renderCaptchaTag(
-			DDMFormField ddmFormField,
-			DDMFormFieldRenderingContext ddmFormFieldRenderingContext)
-		throws Exception {
-
-		CaptchaTag captchaTag = new CaptchaTag();
-
-		captchaTag.setUrl(
-			GetterUtil.getString(ddmFormField.getProperty("url")));
-
-		JspFactory jspFactory = JspFactory.getDefaultFactory();
-
-		HttpServletRequest httpServletRequest =
-			ddmFormFieldRenderingContext.getHttpServletRequest();
-		HttpServletResponse httpServletResponse =
-			ddmFormFieldRenderingContext.getHttpServletResponse();
-
-		PageContext pageContext = jspFactory.getPageContext(
-			new JSPSupportServlet(httpServletRequest.getServletContext()),
-			httpServletRequest, httpServletResponse, null, false, 0, false);
-
-		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
-
-		unsyncStringWriter.append(
-			"<div class=\"form-group\" data-fieldname=\"");
-		unsyncStringWriter.append(ddmFormFieldRenderingContext.getName());
-		unsyncStringWriter.append("\">");
-
-		captchaTag.setPageContext(
-			new PipingPageContext(pageContext, unsyncStringWriter));
-
-		captchaTag.runTag();
-
-		unsyncStringWriter.append("</div>");
-
-		StringBundler sb = unsyncStringWriter.getStringBundler();
-
-		return sb.toString();
+	@Override
+	public String getTemplateNamespace() {
+		return "ddm.captcha";
 	}
+
+	@Override
+	public TemplateResource getTemplateResource() {
+		return _templateResource;
+	}
+
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		_templateResource = getTemplateResource(
+			"/META-INF/resources/captcha.soy");
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_templateResource = null;
+	}
+
+	@Override
+	protected void populateOptionalContext(
+		Template template, DDMFormField ddmFormField,
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
+
+		Map<String, Object> parameters =
+			captchaDDMFormFieldTemplateContextContributor.getParameters(
+				ddmFormField, ddmFormFieldRenderingContext);
+
+		template.putAll(parameters);
+	}
+
+	@Reference
+	protected CaptchaDDMFormFieldTemplateContextContributor
+		captchaDDMFormFieldTemplateContextContributor;
+
+	private TemplateResource _templateResource;
 
 }

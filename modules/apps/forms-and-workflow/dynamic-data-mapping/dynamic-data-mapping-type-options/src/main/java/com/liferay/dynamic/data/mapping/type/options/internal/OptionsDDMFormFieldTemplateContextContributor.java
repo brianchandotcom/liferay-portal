@@ -46,23 +46,20 @@ public class OptionsDDMFormFieldTemplateContextContributor
 		Map<String, Object> parameters = new HashMap<>();
 
 		parameters.put(
-			"options", getOptions(ddmFormField, ddmFormFieldRenderingContext));
+			"value", getValue(ddmFormField, ddmFormFieldRenderingContext));
 
 		return parameters;
 	}
 
-	protected List<Object> getOptions(
+	protected List<Object> getValue(
 		DDMFormField ddmFormField,
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
 		OptionsDDMFormFieldContextHelper optionsDDMFormFieldContextHelper =
 			new OptionsDDMFormFieldContextHelper(
-				jsonFactory, ddmFormField.getDDMFormFieldOptions(),
-				ddmFormFieldRenderingContext.getValue(),
-				ddmFormField.getPredefinedValue(),
-				ddmFormFieldRenderingContext.getLocale());
+				jsonFactory, ddmFormFieldRenderingContext.getValue());
 
-		return optionsDDMFormFieldContextHelper.getOptions();
+		return optionsDDMFormFieldContextHelper.getValue();
 	}
 
 	@Reference

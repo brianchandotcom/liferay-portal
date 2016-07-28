@@ -14,6 +14,15 @@
 							requires: [
 								'liferay-ddm-form-renderer-field'
 							]
+						},
+						'liferay-ddm-form-field-captcha-template': {
+							condition: {
+								trigger: 'liferay-ddm-form-renderer'
+							},
+							path: 'captcha.soy.js',
+							requires: [
+								'soyutils'
+							]
 						}
 					},
 					root: MODULE_PATH + '/'

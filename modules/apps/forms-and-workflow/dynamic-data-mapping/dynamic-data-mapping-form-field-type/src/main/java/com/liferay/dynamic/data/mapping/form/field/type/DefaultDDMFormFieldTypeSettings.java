@@ -74,7 +74,8 @@ public interface DefaultDDMFormFieldTypeSettings
 		optionLabels = {
 			"%not-indexable", "%indexable-keyword", "%indexable-text"
 		},
-		optionValues = {StringPool.BLANK, "keyword", "text"}, type = "select",
+		optionValues = {StringPool.BLANK, "keyword", "text"},
+		predefinedValue = "keyword", type = "select",
 		visibilityExpression = "FALSE"
 	)
 	public String indexType();
@@ -85,7 +86,7 @@ public interface DefaultDDMFormFieldTypeSettings
 			"placeholder=%enter-a-field-label",
 			"tooltip=%enter-a-descriptive-field-label-that-guides-users-to-enter-the-information-you-want"
 		},
-		required = true, type = "key-value"
+		required = true, type = "key_value"
 	)
 	public LocalizedValue label();
 
@@ -113,7 +114,10 @@ public interface DefaultDDMFormFieldTypeSettings
 	)
 	public boolean required();
 
-	@DDMFormField(label = "%show-label", properties = {"showAsSwitcher=true"})
+	@DDMFormField(
+		label = "%show-label", predefinedValue = "true",
+		properties = {"showAsSwitcher=true"}
+	)
 	public boolean showLabel();
 
 	@DDMFormField(

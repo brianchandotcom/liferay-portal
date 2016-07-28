@@ -1,8 +1,6 @@
 AUI.add(
 	'liferay-ddl-form-builder-field-support',
 	function(A) {
-		var FieldTypes = Liferay.DDM.Renderer.FieldTypes;
-
 		var CSS_FIELD = A.getClassName('form', 'builder', 'field');
 
 		var CSS_FIELD_CONTENT_TOOLBAR = A.getClassName('form', 'builder', 'field', 'content', 'toolbar');
@@ -12,6 +10,8 @@ AUI.add(
 		var CSS_FIELD_TOOLBAR_CONTAINER = A.getClassName('form', 'builder', 'field', 'toolbar', 'container');
 
 		var CSS_FORM_GROUP = A.getClassName('form', 'group');
+
+		var RendererUtil = Liferay.DDM.Renderer.Util;
 
 		var FormBuilderSettingsSupport = function() {
 		};
@@ -32,11 +32,12 @@ AUI.add(
 				}
 			},
 
-			dataProviders: {
+			getFieldTypeSettingFormContextURL: {
+				value: ''
 			},
 
-			settingsForm: {
-				valueFn: '_valueSettingsForm'
+			settingsRetriever: {
+				valueFn: '_valueSettingsRetriever'
 			}
 		};
 
@@ -49,28 +50,32 @@ AUI.add(
 				);
 			},
 
-			destructor: function() {
-				var instance = this;
-
-				instance.get('settingsForm').destroy();
-			},
-
-			getSettings: function() {
+			getSettings: function(settingsForm) {
 				var instance = this;
 
 				var settings = {};
-
-				var settingsForm = instance.get('settingsForm');
 
 				var fieldSettingsJSON = settingsForm.toJSON();
 
 				fieldSettingsJSON.fieldValues.forEach(
 					function(item) {
-						settings[item.name] = item.value;
+						var name = item.name;
+
+						if (name === 'name') {
+							name = 'fieldName';
+						}
+
+						settings[name] = item.value;
 					}
 				);
 
+				settings.dataType = instance.get('dataType');
+				settings.readOnly = true;
 				settings.type = instance.get('type');
+				settings.value = '';
+				settings.visible = true;
+
+				settings.context = A.clone(settings);
 
 				return settings;
 			},
@@ -85,15 +90,7 @@ AUI.add(
 				return settingsModal;
 			},
 
-			hideSettingsModal: function() {
-				var instance = this;
-
-				var settingsModal = instance.getSettingsModal();
-
-				settingsModal.hide();
-			},
-
-			isNew: function() {
+			isAdding: function() {
 				var instance = this;
 
 				var builder = instance.get('builder');
@@ -101,21 +98,66 @@ AUI.add(
 				return !builder.contains(instance);
 			},
 
-			renderSettingsPanel: function() {
+			isPersisted: function() {
 				var instance = this;
 
-				instance._updateSettingsFormValues();
+				var builder = instance.get('builder');
+
+				var definition = builder.get('definition');
+
+				var searchResults = RendererUtil.searchFieldsByKey(definition, instance.get('fieldName'), 'fieldName');
+
+				return searchResults.length === 0;
 			},
 
-			saveSettings: function() {
+			loadSettingsForm: function() {
 				var instance = this;
 
-				instance.setAttrs(instance.getSettings());
+				var settingsRetriever = instance.get('settingsRetriever');
+
+				return settingsRetriever
+					.getSettingsContext(instance.get('type'))
+					.then(
+						function(context) {
+							var settingsForm = instance._createSettingsForm(context);
+
+							instance._updateSettingsFormValues(settingsForm);
+
+							return settingsForm;
+						}
+					);
+			},
+
+			saveSettings: function(settingsForm) {
+				var instance = this;
+
+				instance.setAttrs(instance.getSettings(settingsForm));
+
+				instance.render();
 
 				instance.fire(
 					'field:saveSettings',
 					{
 						field: instance
+					}
+				);
+			},
+
+			_createSettingsForm: function(context) {
+				var instance = this;
+
+				var builder = instance.get('builder');
+
+				return new Liferay.DDL.FormBuilderSettingsForm(
+					{
+						context: context,
+						definition: JSON.parse(context.definition),
+						editMode: builder.get('recordSetId') === 0 || instance.isPersisted(),
+						evaluatorURL: instance.get('evaluatorURL'),
+						field: instance,
+						layout: JSON.parse(context.layout),
+						portletNamespace: instance.get('portletNamespace'),
+						templateNamespace: 'ddm.settings_form'
 					}
 				);
 			},
@@ -144,32 +186,35 @@ AUI.add(
 				}
 			},
 
-			_updateSettingsFormValues: function() {
+			_updateSettingsFormValues: function(settingsForm) {
 				var instance = this;
 
-				var settingsForm = instance.get('settingsForm');
+				var context = instance.get('context');
 
 				settingsForm.get('fields').forEach(
 					function(item, index) {
-						item.set('value', instance.get(item.get('name')));
+						var name = item.get('fieldName');
+
+						if (name === 'name') {
+							name = 'fieldName';
+						}
+
+						if (context.hasOwnProperty(name)) {
+							item.set('errorMessage', '');
+							item.set('valid', true);
+							item.set('value', context[name]);
+						}
 					}
 				);
 			},
 
-			_valueSettingsForm: function() {
+			_valueSettingsRetriever: function() {
 				var instance = this;
 
-				var fieldType = FieldTypes.get(instance.get('type'));
-
-				return new Liferay.DDL.FormBuilderSettingsForm(
+				return new Liferay.DDL.FormBuilderSettingsRetriever(
 					{
-						dataProviders: instance.get('dataProviders'),
-						definition: fieldType.get('settings'),
-						evaluatorURL: instance.get('evaluatorURL'),
-						field: instance,
-						layout: fieldType.get('settingsLayout'),
-						portletNamespace: instance.get('portletNamespace'),
-						templateNamespace: 'ddm.settings_form'
+						getFieldTypeSettingFormContextURL: instance.get('getFieldTypeSettingFormContextURL'),
+						portletNamespace: instance.get('portletNamespace')
 					}
 				);
 			}
@@ -179,6 +224,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['liferay-ddl-form-builder-settings-form', 'liferay-ddl-form-builder-util']
+		requires: ['liferay-ddl-form-builder-settings-form', 'liferay-ddl-form-builder-settings-retriever', 'liferay-ddl-form-builder-util', 'liferay-ddm-form-renderer-util']
 	}
 );

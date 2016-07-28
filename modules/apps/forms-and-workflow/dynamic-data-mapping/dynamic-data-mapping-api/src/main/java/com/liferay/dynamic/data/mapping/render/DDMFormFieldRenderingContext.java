@@ -16,8 +16,11 @@ package com.liferay.dynamic.data.mapping.render;
 
 import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.dynamic.data.mapping.storage.Fields;
+import com.liferay.portal.kernel.util.MapUtil;
 
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,6 +30,10 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class DDMFormFieldRenderingContext {
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public String getChildElementsHTML() {
 		return _childElementsHTML;
 	}
@@ -44,7 +51,7 @@ public class DDMFormFieldRenderingContext {
 	}
 
 	public String getLabel() {
-		return _label;
+		return MapUtil.getString(_properties, "label");
 	}
 
 	public Locale getLocale() {
@@ -56,7 +63,7 @@ public class DDMFormFieldRenderingContext {
 	}
 
 	public String getName() {
-		return _name;
+		return MapUtil.getString(_properties, "name");
 	}
 
 	public String getNamespace() {
@@ -67,20 +74,28 @@ public class DDMFormFieldRenderingContext {
 		return _portletNamespace;
 	}
 
+	public Map<String, Object> getProperties() {
+		return _properties;
+	}
+
+	public Object getProperty(String name) {
+		return _properties.get(name);
+	}
+
 	public String getTip() {
-		return _tip;
+		return MapUtil.getString(_properties, "tip");
 	}
 
 	public String getValue() {
-		return _value;
+		return MapUtil.getString(_properties, "value");
 	}
 
 	public boolean isReadOnly() {
-		return _readOnly;
+		return MapUtil.getBoolean(_properties, "readOnly");
 	}
 
 	public boolean isRequired() {
-		return _required;
+		return MapUtil.getBoolean(_properties, "required");
 	}
 
 	public boolean isShowEmptyFieldLabel() {
@@ -88,9 +103,12 @@ public class DDMFormFieldRenderingContext {
 	}
 
 	public boolean isVisible() {
-		return _visible;
+		return MapUtil.getBoolean(_properties, "visible");
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
 	public void setChildElementsHTML(String childElementsHTML) {
 		_childElementsHTML = childElementsHTML;
 	}
@@ -118,7 +136,7 @@ public class DDMFormFieldRenderingContext {
 	}
 
 	public void setLabel(String label) {
-		_label = label;
+		_properties.put("label", label);
 	}
 
 	public void setLocale(Locale locale) {
@@ -130,7 +148,7 @@ public class DDMFormFieldRenderingContext {
 	}
 
 	public void setName(String name) {
-		_name = name;
+		_properties.put("name", name);
 	}
 
 	public void setNamespace(String namespace) {
@@ -141,12 +159,20 @@ public class DDMFormFieldRenderingContext {
 		_portletNamespace = portletNamespace;
 	}
 
+	public void setProperties(Map<String, Object> properties) {
+		_properties.putAll(properties);
+	}
+
+	public void setProperty(String name, Object value) {
+		_properties.put(name, value);
+	}
+
 	public void setReadOnly(boolean readOnly) {
-		_readOnly = readOnly;
+		_properties.put("readOnly", readOnly);
 	}
 
 	public void setRequired(boolean required) {
-		_required = required;
+		_properties.put("required", required);
 	}
 
 	public void setShowEmptyFieldLabel(boolean showEmptyFieldLabel) {
@@ -154,32 +180,26 @@ public class DDMFormFieldRenderingContext {
 	}
 
 	public void setTip(String tip) {
-		_tip = tip;
+		_properties.put("tip", tip);
 	}
 
 	public void setValue(String value) {
-		_value = value;
+		_properties.put("value", value);
 	}
 
 	public void setVisible(boolean visible) {
-		_visible = visible;
+		_properties.put("visible", visible);
 	}
 
 	private String _childElementsHTML;
 	private Fields _fields;
 	private HttpServletRequest _httpServletRequest;
 	private HttpServletResponse _httpServletResponse;
-	private String _label;
 	private Locale _locale;
 	private String _mode;
-	private String _name;
 	private String _namespace;
 	private String _portletNamespace;
-	private boolean _readOnly;
-	private boolean _required;
+	private final Map<String, Object> _properties = new HashMap<>();
 	private boolean _showEmptyFieldLabel;
-	private String _tip;
-	private String _value;
-	private boolean _visible;
 
 }

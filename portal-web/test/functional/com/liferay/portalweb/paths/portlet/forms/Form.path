@@ -93,7 +93,7 @@
 <!--ADD_FIELD-->
 <tr>
 	<td>ADD_FIELD</td>
-	<td>//div[contains(@class,'col col-md-${key_columnSize}')]//span[contains(@class,'add-button-plus-icon')]</td>
+	<td>//div[contains(@class,'col col-md-${key_columnSize}')]//button[contains(@class,'add-button-large')]/span</td>
 	<td></td>
 </tr>
 <tr>

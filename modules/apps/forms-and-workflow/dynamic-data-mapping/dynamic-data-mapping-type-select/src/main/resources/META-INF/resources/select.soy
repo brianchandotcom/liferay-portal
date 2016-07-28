@@ -1,6 +1,13 @@
 {namespace ddm}
 
 /**
+ * Defines the delegated template for the select field.
+ */
+{deltemplate ddm.field autoescape="deprecated-contextual" variant="'select'"}
+	{call .select data="all" /}
+{/deltemplate}
+
+/**
  * Prints the DDM form select field.
  *
  * @param? childElementsHTML
@@ -15,9 +22,10 @@
  * @param tip
  * @param strings
  * @param value
+ * @param visible
  */
 {template .select autoescape="deprecated-contextual"}
-	<div class="form-group" data-fieldname="{$name}">
+	<div class="form-group{$visible ? '' : ' hide'}" data-fieldname="{$name}">
 		<div class="input-select-wrapper">
 			{if $showLabel}
 				<label class="control-label" for="{$name}">
@@ -34,17 +42,23 @@
 			{/if}
 
 			<div class="input-group-container">
-				<select class="form-control" dir="{$dir}" {if $readOnly}disabled{/if} id="{$name}" name="{$name}" {$multiple} {if $multiple == 'multiple'}size="{length($options)}"{/if}>
+				<select class="form-control" dir="{$dir}" {if $readOnly}disabled{/if} id="{$name}" name="{$name}" {if $multiple}multiple size="{length($options)}"{/if}>
 					{if not $readOnly}
-						<option dir="{$dir}" disabled {if not $value}selected{/if} value="">
+						<option dir="{$dir}" disabled {if length($value) == 0}selected{/if} value="">
 							{$strings.chooseAnOption}
 						</option>
 					{/if}
 
 					{foreach $option in $options}
-						<option dir="{$dir}" {$option.status} value="{$option.value}">
-							{$option.label}
-						</option>
+						{let $selected}
+							{foreach $currentValue in $value}
+								{if $currentValue == $option.value}
+									selected
+								{/if}
+							{/foreach}
+						{/let}
+
+						<option dir="{$dir}" {$selected} value="{$option.value}">{$option.label}</option>
 					{/foreach}
 				</select>
 			</div>

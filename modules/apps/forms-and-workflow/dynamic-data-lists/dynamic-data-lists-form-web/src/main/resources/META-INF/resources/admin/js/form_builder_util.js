@@ -1,11 +1,11 @@
 AUI.add(
 	'liferay-ddl-form-builder-util',
 	function(A) {
-		var RendererUtil = Liferay.DDM.Renderer.Util;
+		var FieldClassFactory = Liferay.DDM.Renderer.FieldClassFactory;
 
 		var FormBuilderUtil = {
-			getFieldClass: function(type) {
-				var fieldClass = RendererUtil.getFieldClass(type);
+			getFieldClass: function(type, context) {
+				var fieldClass = FieldClassFactory.getFieldClass(type, context);
 
 				return A.Component.create(
 					{

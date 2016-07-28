@@ -12,11 +12,7 @@ describe(
 					function(A) {
 						Liferay.DDM.Renderer.FieldTypes.register(
 							{
-								'icon': 'icon-list',
-								'javaScriptModule': 'liferay-ddm-form-field-text',
 								'name': 'text',
-								'settings': {},
-								'system': 0,
 								'templateNamespace': 'ddm.text'
 							}
 						);
@@ -32,10 +28,12 @@ describe(
 			function(done) {
 				var textField = new Liferay.DDM.Field.Text(
 					{
-						errorMessage: 'error',
-						name: 'textField',
-						required: true,
-						value: 'marcellus'
+						context: {
+							errorMessage: 'error',
+							name: 'textField',
+							required: true,
+							value: 'marcellus'
+						}
 					}
 				).render(document.body);
 

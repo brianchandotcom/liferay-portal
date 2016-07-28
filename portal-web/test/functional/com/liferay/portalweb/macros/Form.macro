@@ -89,7 +89,14 @@
 			<var name="fieldValue" value="${fieldValue}" />
 		</execute>
 
-		<var method="StringUtil#replace('${fieldValue}', ' ', '')" name="fieldName" />
+		<if>
+			<not>
+				<isset var="fieldName" />
+			</not>
+			<then>
+				<var method="StringUtil#replace('${fieldValue}', ' ', '')" name="fieldName" />
+			</then>
+		</if>
 
 		<execute macro="FormFields#viewFieldName">
 			<var name="fieldName" value="${fieldName}" />

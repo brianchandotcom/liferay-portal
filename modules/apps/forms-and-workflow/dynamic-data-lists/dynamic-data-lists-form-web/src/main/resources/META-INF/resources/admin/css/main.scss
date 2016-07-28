@@ -149,53 +149,18 @@ $horizontal-spacing: 35px;
 		}
 
 		.key-value-editor {
-			&.active {
-				.key-value-cancel,
-				.key-value-done,
-				.key-value-input {
-					display: inline-block;
-				}
-
-				.key-value-output {
-					display: none;
-				}
-			}
-
-			.key-value-cancel,
-			.key-value-done,
-			.key-value-input {
-				display: none;
-			}
-
-			.key-value-cancel,
-			.key-value-done {
-				font-weight: bold;
-				margin-left: 25px;
-				text-transform: uppercase;
-			}
-
 			.key-value-label {
 				color: #C4CFD6;
-				margin-right: 5px;
-			}
-
-			.key-value-cancel,
-			.key-value-done,
-			.key-value-input,
-			.key-value-label,
-			.key-value-output {
 				font-size: 11px;
+				margin-right: 5px;
 			}
 
 			.key-value-input {
 				border-width: 0;
+				color: #869CAD;
+				font-size: 11px;
 				margin: 0;
 				outline: none;
-			}
-
-			.key-value-input,
-			.key-value-output {
-				color: #869CAD;
 			}
 		}
 

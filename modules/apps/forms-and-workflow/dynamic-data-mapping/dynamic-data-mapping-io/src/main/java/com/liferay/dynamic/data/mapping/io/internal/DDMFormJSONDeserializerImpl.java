@@ -372,11 +372,14 @@ public class DDMFormJSONDeserializerImpl implements DDMFormJSONDeserializer {
 
 		String settingName = ddmFormFieldTypeSetting.getName();
 
-		Object deserializedDDMFormFieldProperty =
-			deserializeDDMFormFieldProperty(
-				jsonObject.getString(settingName), ddmFormFieldTypeSetting);
+		if (jsonObject.has(settingName)) {
+			Object deserializedDDMFormFieldProperty =
+				deserializeDDMFormFieldProperty(
+					jsonObject.getString(settingName), ddmFormFieldTypeSetting);
 
-		ddmFormField.setProperty(settingName, deserializedDDMFormFieldProperty);
+			ddmFormField.setProperty(
+				settingName, deserializedDDMFormFieldProperty);
+		}
 	}
 
 	protected void setDDMFormFields(JSONArray jsonArray, DDMForm ddmForm)

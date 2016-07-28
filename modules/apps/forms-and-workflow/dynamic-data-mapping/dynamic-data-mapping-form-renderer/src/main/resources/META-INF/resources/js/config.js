@@ -14,7 +14,8 @@
 							requires: [
 								'aui-component',
 								'aui-tabview',
-								'liferay-ddm-form-renderer-definition',
+								'liferay-ddm-form-renderer-context',
+								'liferay-ddm-form-renderer-evaluation',
 								'liferay-ddm-form-renderer-feedback',
 								'liferay-ddm-form-renderer-nested-fields',
 								'liferay-ddm-form-renderer-pagination',
@@ -27,18 +28,25 @@
 								'liferay-ddm-form-soy'
 							]
 						},
-						'liferay-ddm-form-renderer-definition': {
-							path: 'form_definition_support.js',
+						'liferay-ddm-form-renderer-context': {
+							path: 'form_context_support.js',
 							requires: [
+								'liferay-ddm-form-renderer-field-class-factory',
+								'liferay-ddm-form-renderer-layout-visitor',
 								'liferay-ddm-form-renderer-types',
 								'liferay-ddm-form-renderer-util'
 							]
+						},
+						'liferay-ddm-form-renderer-evaluation': {
+							path: 'form_evaluation_support.js',
+							requires: []
 						},
 						'liferay-ddm-form-renderer-expressions-evaluator': {
 							path: 'expressions_evaluator.js',
 							requires: [
 								'aui-component',
-								'aui-io-request'
+								'aui-io-request',
+								'aui-map'
 							]
 						},
 						'liferay-ddm-form-renderer-feedback': {
@@ -53,12 +61,27 @@
 								'aui-datatype',
 								'aui-node',
 								'liferay-ddm-form-renderer',
+								'liferay-ddm-form-renderer-field-evaluation',
 								'liferay-ddm-form-renderer-field-events',
 								'liferay-ddm-form-renderer-field-feedback',
 								'liferay-ddm-form-renderer-field-repetition',
 								'liferay-ddm-form-renderer-field-validation',
 								'liferay-ddm-form-renderer-nested-fields',
 								'liferay-ddm-form-renderer-types',
+								'liferay-ddm-form-renderer-util'
+							]
+						},
+						'liferay-ddm-form-renderer-field-class-factory': {
+							path: 'field_class_factory.js',
+							requires: [
+								'liferay-ddm-form-renderer-types',
+								'liferay-ddm-form-renderer-util'
+							]
+						},
+						'liferay-ddm-form-renderer-field-evaluation': {
+							path: 'field_evaluation_support.js',
+							requires: [
+								'liferay-ddm-form-renderer-expressions-evaluator',
 								'liferay-ddm-form-renderer-util'
 							]
 						},
@@ -86,12 +109,9 @@
 								'liferay-ddm-form-renderer-expressions-evaluator'
 							]
 						},
-						'liferay-ddm-form-renderer-field-visibility': {
-							path: 'field_visibility_support.js',
-							requires: [
-								'liferay-ddm-form-renderer-expressions-evaluator',
-								'liferay-ddm-form-renderer-util'
-							]
+						'liferay-ddm-form-renderer-layout-visitor': {
+							path: 'layout_visitor.js',
+							requires: ['aui-base']
 						},
 						'liferay-ddm-form-renderer-nested-fields': {
 							path: 'nested_fields_support.js',
@@ -137,8 +157,7 @@
 						'liferay-ddm-form-renderer-util': {
 							path: 'util.js',
 							requires: [
-								'liferay-ddm-form-renderer-types',
-								'queue'
+								'liferay-ddm-form-renderer-types'
 							]
 						},
 						'liferay-ddm-form-renderer-validation': {

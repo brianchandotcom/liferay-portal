@@ -14,22 +14,18 @@
 
 package com.liferay.dynamic.data.mapping.type.options.internal;
 
-import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
-import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * @author Marcellus Tavares
@@ -37,69 +33,46 @@ import java.util.Objects;
 public class OptionsDDMFormFieldContextHelper {
 
 	public OptionsDDMFormFieldContextHelper(
-		JSONFactory jsonFactory, DDMFormFieldOptions ddmFormFieldOptions,
-		String value, LocalizedValue predefinedValue, Locale locale) {
+		JSONFactory jsonFactory, String value) {
 
 		_jsonFactory = jsonFactory;
-		_ddmFormFieldOptions = ddmFormFieldOptions;
-		_value = toString(value);
-		_predefinedValue = toString(predefinedValue.getString(locale));
-		_locale = locale;
+		_value = value;
 	}
 
-	public List<Object> getOptions() {
-		List<Object> options = new ArrayList<>();
+	protected List<Object> getValue() {
+		List<Object> list = new ArrayList<>();
 
-		for (String optionValue : _ddmFormFieldOptions.getOptionsValues()) {
-			Map<String, String> optionMap = new HashMap<>();
-
-			LocalizedValue optionLabel = _ddmFormFieldOptions.getOptionLabels(
-				optionValue);
-
-			optionMap.put("label", optionLabel.getString(_locale));
-			optionMap.put(
-				"status",
-				isChecked(optionValue) ? "checked" : StringPool.BLANK);
-			optionMap.put("value", optionValue);
-
-			options.add(optionMap);
-		}
-
-		return options;
-	}
-
-	protected boolean isChecked(String optionValue) {
 		if (Validator.isNull(_value)) {
-			return Objects.equals(_predefinedValue, optionValue);
-		}
-
-		return Objects.equals(_value, optionValue);
-	}
-
-	protected String toString(String value) {
-		if (Validator.isNull(value)) {
-			return StringPool.BLANK;
+			return list;
 		}
 
 		try {
-			JSONArray jsonArray = _jsonFactory.createJSONArray(value);
+			JSONArray jsonArray = _jsonFactory.createJSONArray(_value);
 
-			return jsonArray.getString(0);
+			for (int i = 0; i < jsonArray.length(); i++) {
+				JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+				Map<String, String> optionMap = new HashMap<>();
+
+				optionMap.put("label", jsonObject.getString("label"));
+				optionMap.put("value", jsonObject.getString("value"));
+
+				list.add(optionMap);
+			}
+
+			return list;
 		}
 		catch (JSONException jsone) {
 			_log.error("Unable to parse JSON array", jsone);
 
-			return StringPool.BLANK;
+			return list;
 		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		OptionsDDMFormFieldContextHelper.class);
 
-	private final DDMFormFieldOptions _ddmFormFieldOptions;
 	private final JSONFactory _jsonFactory;
-	private final Locale _locale;
-	private final String _predefinedValue;
 	private final String _value;
 
 }

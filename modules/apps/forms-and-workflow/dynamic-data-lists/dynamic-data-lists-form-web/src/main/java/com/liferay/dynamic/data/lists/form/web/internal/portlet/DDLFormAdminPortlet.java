@@ -34,7 +34,6 @@ import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
-import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.StorageAdapter;
@@ -305,21 +304,14 @@ public class DDLFormAdminPortlet extends MVCPortlet {
 		_ddlRecordSetService = ddlRecordSetService;
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDMDataProviderInstanceLocalService(
-		DDMDataProviderInstanceLocalService
-			ddmDataProviderInstanceLocalService) {
-
-		_ddmDataProviderInstanceLocalService =
-			ddmDataProviderInstanceLocalService;
-	}
-
 	@Reference(
-		target = "(osgi.http.whiteboard.servlet.name=com.liferay.dynamic.data.mapping.form.evaluator.internal.servlet.DDMFormEvaluatorServlet)",
+		target = "(osgi.http.whiteboard.servlet.name=com.liferay.dynamic.data.mapping.form.renderer.internal.servlet.DDMFormContextProviderServlet)",
 		unbind = "-"
 	)
-	protected void setDDMFormEvaluatorServlet(Servlet ddmFormEvaluatorServlet) {
-		_ddmFormEvaluatorServlet = ddmFormEvaluatorServlet;
+	protected void setDDMFormContextProviderServlet(
+		Servlet ddmFormContextProviderServlet) {
+
+		_ddmFormContextProviderServlet = ddmFormContextProviderServlet;
 	}
 
 	@Reference(unbind = "-")
@@ -431,7 +423,7 @@ public class DDLFormAdminPortlet extends MVCPortlet {
 				renderRequest, renderResponse,
 				_ddlFormWebConfigurationActivator.getDDLFormWebConfiguration(),
 				_ddlRecordLocalService, _ddlRecordSetService,
-				_ddmDataProviderInstanceLocalService, _ddmFormEvaluatorServlet,
+				_ddmFormContextProviderServlet,
 				_ddmFormFieldTypeServicesTracker,
 				_ddmFormFieldTypesJSONSerializer, _ddmFormJSONSerializer,
 				_ddmFormLayoutJSONSerializer, _ddmFormRenderer,
@@ -482,9 +474,7 @@ public class DDLFormAdminPortlet extends MVCPortlet {
 	private DDLRecordLocalService _ddlRecordLocalService;
 	private DDLRecordSetLocalService _ddlRecordSetLocalService;
 	private DDLRecordSetService _ddlRecordSetService;
-	private DDMDataProviderInstanceLocalService
-		_ddmDataProviderInstanceLocalService;
-	private Servlet _ddmFormEvaluatorServlet;
+	private Servlet _ddmFormContextProviderServlet;
 	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
 	private DDMFormFieldTypesJSONSerializer _ddmFormFieldTypesJSONSerializer;
 	private DDMFormJSONSerializer _ddmFormJSONSerializer;

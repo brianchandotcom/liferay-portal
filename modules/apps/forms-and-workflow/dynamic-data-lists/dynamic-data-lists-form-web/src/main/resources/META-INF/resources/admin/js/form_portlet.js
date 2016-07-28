@@ -9,9 +9,6 @@ AUI.add(
 		var DDLPortlet = A.Component.create(
 			{
 				ATTRS: {
-					dataProviders: {
-					},
-
 					definition: {
 					},
 
@@ -26,8 +23,16 @@ AUI.add(
 					evaluatorURL: {
 					},
 
+					fieldTypesDefinitions: {
+						value: {}
+					},
+
 					formBuilder: {
 						valueFn: '_valueFormBuilder'
+					},
+
+					getFieldTypeSettingFormContextURL: {
+						value: ''
 					},
 
 					layout: {
@@ -43,6 +48,7 @@ AUI.add(
 					},
 
 					recordSetId: {
+						value: 0
 					}
 				},
 
@@ -70,7 +76,11 @@ AUI.add(
 					initializer: function() {
 						var instance = this;
 
-						instance.definitionSerializer = new DefinitionSerializer();
+						instance.definitionSerializer = new DefinitionSerializer(
+							{
+								fieldTypesDefinitions: instance.get('fieldTypesDefinitions')
+							}
+						);
 
 						instance.layoutSerializer = new LayoutSerializer(
 							{
@@ -460,11 +470,12 @@ AUI.add(
 
 						return new Liferay.DDL.FormBuilder(
 							{
-								dataProviders: instance.get('dataProviders'),
 								definition: instance.get('definition'),
 								evaluatorURL: instance.get('evaluatorURL'),
+								getFieldTypeSettingFormContextURL: instance.get('getFieldTypeSettingFormContextURL'),
 								pagesJSON: layout.pages,
-								portletNamespace: instance.get('namespace')
+								portletNamespace: instance.get('namespace'),
+								recordSetId: instance.get('recordSetId')
 							}
 						);
 					}

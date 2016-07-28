@@ -16,14 +16,11 @@ package com.liferay.dynamic.data.mapping.type.checkbox.internal;
 
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTemplateContextContributor;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
-import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -50,30 +47,11 @@ public class CheckboxDDMFormFieldTemplateContextContributor
 			ddmFormField.getProperty("showAsSwitcher"));
 
 		parameters.put("showAsSwitcher", showAsSwitcher);
-
-		LocalizedValue predefinedValue = ddmFormField.getPredefinedValue();
-
-		String status = getStatus(
-			ddmFormFieldRenderingContext.getValue(),
-			predefinedValue.getString(
-				ddmFormFieldRenderingContext.getLocale()));
-
-		parameters.put("status", status);
+		parameters.put(
+			"value", Boolean.parseBoolean(
+				ddmFormFieldRenderingContext.getValue()));
 
 		return parameters;
-	}
-
-	protected String getStatus(String value, String predefinedValue) {
-		String status = StringPool.BLANK;
-
-		if (Objects.equals(value, "true")) {
-			status = "checked";
-		}
-		else if (Objects.equals(predefinedValue, "true")) {
-			status = "checked";
-		}
-
-		return status;
 	}
 
 }

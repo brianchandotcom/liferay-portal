@@ -8,20 +8,9 @@ AUI.add(
 		var SelectField = A.Component.create(
 			{
 				ATTRS: {
-					dataSourceOptions: {
-						value: []
-					},
-
 					dataSourceType: {
+						getter: '_getDataSourceType',
 						value: 'manual'
-					},
-
-					dataProviderURL: {
-						valueFn: '_valueDataProviderURL'
-					},
-
-					ddmDataProviderInstanceId: {
-						value: 0
 					},
 
 					multiple: {
@@ -29,11 +18,13 @@ AUI.add(
 					},
 
 					options: {
+						getter: '_getOptions',
 						validator: Array.isArray,
 						value: []
 					},
 
 					strings: {
+						repaint: false,
 						value: {
 							chooseAnOption: Liferay.Language.get('choose-an-option'),
 							dynamicallyLoadedData: Liferay.Language.get('dynamically-loaded-data')
@@ -45,7 +36,7 @@ AUI.add(
 					},
 
 					value: {
-						setter: '_setValue',
+						repaint: false,
 						value: []
 					}
 				},
@@ -55,53 +46,53 @@ AUI.add(
 				NAME: 'liferay-ddm-form-field-select',
 
 				prototype: {
-					getContextValue: function() {
-						var instance = this;
-
-						var value = instance._getContextValue();
-
-						return value[0] || '';
-					},
-
-					getOptions: function() {
-						var instance = this;
-
-						var options = instance.get('options');
-
-						if (instance.get('dataSourceType') !== 'manual') {
-							options = instance.get('dataSourceOptions');
-						}
-
-						return A.map(
-							options,
-							function(item) {
-								var label = item.label;
-
-								if (Lang.isObject(label)) {
-									label = label[instance.get('locale')];
-								}
-
-								return {
-									label: label,
-									status: instance._getOptionStatus(item),
-									value: item.value
-								};
-							}
-						);
-					},
-
 					getTemplateContext: function() {
 						var instance = this;
 
 						return A.merge(
 							SelectField.superclass.getTemplateContext.apply(instance, arguments),
 							{
-								multiple: instance.get('multiple') ? 'multiple' : '',
-								options: instance.getOptions(),
-								strings: instance.get('strings'),
-								value: instance.getContextValue()
+								options: instance.get('options'),
+								value: instance.getValueArray()
 							}
 						);
+					},
+
+					getValue: function() {
+						var instance = this;
+
+						var inputNode = instance.getInputNode();
+
+						var value;
+
+						if (instance.get('multiple')) {
+							value = [];
+
+							inputNode.all('option').each(
+								function(optionNode) {
+									if (optionNode.attr('selected')) {
+										value.push(optionNode.val());
+									}
+								}
+							);
+						}
+						else {
+							value = inputNode.val();
+						}
+
+						return value;
+					},
+
+					getValueArray: function() {
+						var instance = this;
+
+						var value = instance.get('value');
+
+						if (!Lang.isArray(value)) {
+							value = [value];
+						}
+
+						return value;
 					},
 
 					render: function() {
@@ -111,99 +102,58 @@ AUI.add(
 
 						SelectField.superclass.render.apply(instance, arguments);
 
-						if (dataSourceType !== 'manual') {
-							if (instance.get('builder')) {
-								var inputNode = instance.getInputNode();
+						if (dataSourceType !== 'manual' && instance.get('builder')) {
+							var inputNode = instance.getInputNode();
 
-								var strings = instance.get('strings');
+							var strings = instance.get('strings');
 
-								inputNode.attr('disabled', true);
+							inputNode.attr('disabled', true);
 
-								inputNode.html(
-									Lang.sub(
-										TPL_OPTION,
-										{
-											label: strings.dynamicallyLoadedData
-										}
-									)
-								);
-							}
-							else {
-								var container = instance.get('container');
-
-								instance._getDataSourceData(
-									function(options) {
-										instance.set('dataSourceOptions', options);
-
-										container.html(instance.getTemplate());
+							inputNode.html(
+								Lang.sub(
+									TPL_OPTION,
+									{
+										label: strings.dynamicallyLoadedData
 									}
-								);
-							}
+								)
+							);
 						}
 
 						return instance;
 					},
 
-					_getContextValue: function() {
+					setValue: function(value) {
 						var instance = this;
 
-						var value = SelectField.superclass.getContextValue.apply(instance, arguments);
+						var inputNode = instance.getInputNode();
 
-						if (!Array.isArray(value)) {
-							try {
-								value = JSON.parse(value);
-							}
-							catch (e) {
-								value = [value];
-							}
-						}
+						if (Lang.isArray(value)) {
+							inputNode.all('option').each(
+								function(optionNode, index) {
+									var selected = value.indexOf(optionNode.val()) > -1;
 
-						return value;
-					},
+									if (index === 0 && value.length === 0) {
+										selected = true;
+									}
 
-					_getDataSourceData: function(callback) {
-						var instance = this;
-
-						A.io.request(
-							instance.get('dataProviderURL'),
-							{
-								data: {
-									ddmDataProviderInstanceId: instance.get('ddmDataProviderInstanceId')
-								},
-								dataType: 'JSON',
-								method: 'GET',
-								on: {
-									failure: function() {
-										callback.call(instance, null);
-									},
-									success: function() {
-										var result = this.get('responseData');
-
-										callback.call(instance, result);
+									if (selected) {
+										optionNode.attr('selected', selected);
+									}
+									else {
+										optionNode.removeAttribute('selected');
 									}
 								}
-							}
-						);
-					},
-
-					_getOptionStatus: function(option) {
-						var instance = this;
-
-						var status = '';
-
-						var value = instance._getContextValue();
-
-						if (value.indexOf(option.value) > -1) {
-							status = 'selected';
+							);
 						}
-
-						return status;
+						else {
+							inputNode.val(value);
+						}
 					},
 
-					_renderErrorMessage: function() {
+					showErrorMessage: function() {
 						var instance = this;
 
-						SelectField.superclass._renderErrorMessage.apply(instance, arguments);
+						SelectField.superclass.showErrorMessage.apply(instance, arguments);
 
 						var container = instance.get('container');
 
@@ -212,22 +162,26 @@ AUI.add(
 						inputGroup.insert(container.one('.help-block'), 'after');
 					},
 
-					_setValue: function(val) {
-						return val || [];
-					},
-
-					_valueDataProviderURL: function() {
-						var instance = this;
-
-						var dataProviderURL;
-
-						var form = instance.getRoot();
-
-						if (form) {
-							dataProviderURL = form.get('dataProviderURL');
+					_getDataSourceType: function(value) {
+						if (Lang.isString(value)) {
+							try {
+								value = JSON.parse(value);
+							}
+							catch (e) {
+							}
 						}
 
-						return dataProviderURL;
+						if (Lang.isArray(value)) {
+							value = value[0];
+						}
+
+						return value;
+					},
+
+					_getOptions: function(options) {
+						var instance = this;
+
+						return options || [];
 					}
 				}
 			}

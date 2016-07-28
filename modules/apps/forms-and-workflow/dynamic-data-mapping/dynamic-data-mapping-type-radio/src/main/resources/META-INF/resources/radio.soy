@@ -1,6 +1,13 @@
 {namespace ddm}
 
 /**
+ * Defines the delegated template for the radio field.
+ */
+{deltemplate ddm.field autoescape="deprecated-contextual" variant="'radio'"}
+	{call .radio data="all" /}
+{/deltemplate}
+
+/**
  * Prints the DDM form radio field.
  *
  * @param? childElementsHTML
@@ -9,13 +16,18 @@
  * @param label
  * @param name
  * @param options
+ * @param predefinedValue
  * @param readOnly
  * @param required
  * @param showLabel
  * @param tip
+ * @param value
+ * @param visible
  */
 {template .radio autoescape="deprecated-contextual"}
-	<div class="form-group" data-fieldname="{$name}">
+	{let $displayValue: $value ? $value : $predefinedValue /}
+
+	<div class="form-group{$visible ? '' : ' hide'}" data-fieldname="{$name}">
 		{if $showLabel}
 			<label class="control-label">
 				{$label}
@@ -37,7 +49,9 @@
 				{/if}
 
 				<label class="{$inline ? ' radio-inline' : ''} radio-option-{$option.value}" for="{$name}_{$option.value}">
-					<input class="field" dir="{$dir or ''}" {if $readOnly}disabled{/if} id="{$name}_{$option.value}" name="{$name}" {$option.status} type="radio" value="{$option.value}" /> {$option.label}
+					{let $checked: $option.value == $displayValue ? 'checked' : '' /}
+
+					<input {$checked} class="field" dir="{$dir or ''}" {if $readOnly}disabled{/if} id="{$name}_{$option.value}" name="{$name}" type="radio" value="{$option.value}" /> {$option.label}
 				</label>
 
 				{if not $inline}

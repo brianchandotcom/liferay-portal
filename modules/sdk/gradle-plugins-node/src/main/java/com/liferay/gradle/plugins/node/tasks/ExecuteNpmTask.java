@@ -83,6 +83,10 @@ public class ExecuteNpmTask extends ExecuteNodeScriptTask {
 		return GradleUtil.toFile(getProject(), _cacheDir);
 	}
 
+	public String getRegistry() {
+		return GradleUtil.toString(_registry);
+	}
+
 	public boolean isInheritProxy() {
 		return _inheritProxy;
 	}
@@ -93,6 +97,10 @@ public class ExecuteNpmTask extends ExecuteNodeScriptTask {
 
 	public void setInheritProxy(boolean inheritProxy) {
 		_inheritProxy = inheritProxy;
+	}
+
+	public void setRegistry(Object registry) {
+		_registry = registry;
 	}
 
 	protected void addProxyArg(List<String> args, String key, String protocol) {
@@ -166,10 +174,18 @@ public class ExecuteNpmTask extends ExecuteNodeScriptTask {
 			addProxyArg(completeArgs, "--https-proxy", "https");
 		}
 
+		String registry = getRegistry();
+
+		if (Validator.isNotNull(registry)) {
+			completeArgs.add("--registry");
+			completeArgs.add(registry);
+		}
+
 		return completeArgs;
 	}
 
 	private Object _cacheDir;
 	private boolean _inheritProxy = true;
+	private Object _registry;
 
 }

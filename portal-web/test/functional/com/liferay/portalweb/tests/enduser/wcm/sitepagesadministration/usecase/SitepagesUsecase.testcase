@@ -1243,7 +1243,7 @@
 
 		<execute macro="Page#add">
 			<var name="pageName" value="Embedded Page" />
-			<var name="pageTypeURL" value="http://iscaliforniaonfire.com/" />
+			<var name="pageTypeURL" value="http://www.nba.com" />
 			<var name="siteName" value="Page Type Test Site Name" />
 			<var name="sitePageType" value="Embedded" />
 		</execute>

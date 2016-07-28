@@ -304,19 +304,9 @@ public class DDLFormDisplayContext {
 	}
 
 	protected long getRecordSetIdFromSession() {
-		PortletSession portletSession = _renderRequest.getPortletSession(false);
-		long recordSetId = 0;
+		PortletSession portletSession = _renderRequest.getPortletSession();
 
-		if (Validator.isNotNull(portletSession)) {
-			String portletSessionValue = (String)portletSession.getAttribute(
-				"recordSetId");
-
-			if (Validator.isNotNull(portletSessionValue)) {
-				recordSetId = GetterUtil.getLong(portletSessionValue);
-			}
-		}
-
-		return recordSetId;
+		return GetterUtil.getLong(portletSession.getAttribute("recordSetId"));
 	}
 
 	protected String getSubmitLabel(DDLRecordSet recordSet) {

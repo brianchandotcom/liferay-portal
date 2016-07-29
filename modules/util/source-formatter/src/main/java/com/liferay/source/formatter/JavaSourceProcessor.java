@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ImportsFormatter;
 import com.liferay.portal.tools.JavaImportsFormatter;
 import com.liferay.portal.tools.ToolsUtil;
+import com.liferay.source.formatter.util.CheckStyleUtil;
 import com.liferay.source.formatter.util.FileUtil;
 
 import com.thoughtworks.qdox.JavaDocBuilder;
@@ -724,6 +725,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		if (hasGeneratedTag(content)) {
 			return content;
 		}
+
+		processCheckStyle(file, fileName);
 
 		String className = file.getName();
 
@@ -4433,7 +4436,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	}
 
 	@Override
-	protected void preFormat() {
+	protected void preFormat() throws Exception {
 		_maxLineLength = sourceFormatterArgs.getMaxLineLength();
 
 		_addMissingDeprecationReleaseVersion = GetterUtil.getBoolean(
@@ -4463,6 +4466,29 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			"upgrade.data.access.connection.excludes");
 		_upgradeServiceUtilExcludes = getPropertyList(
 			"upgrade.service.util.excludes");
+
+		File configurationFile = getFile(
+			"checkstyle.xml", PORTAL_MAX_DIR_LEVEL);
+
+		_checkStyleUtil = new CheckStyleUtil(
+			getAbsolutePath(configurationFile));
+	}
+
+	protected void processCheckStyle(File file, String fileName)
+		throws Exception {
+
+		List<SourceFormatterMessage> sourceFormatterMessages =
+			_checkStyleUtil.process(file, fileName);
+
+		if (sourceFormatterMessages == null) {
+			return;
+		}
+
+		for (SourceFormatterMessage sourceFormatterMessage :
+				sourceFormatterMessages) {
+
+			processMessage(sourceFormatterMessage);
+		}
 	}
 
 	protected void setBNDInheritRequiredValue(
@@ -4559,6 +4585,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		"\n(\t+)catch \\((.+Exception) (.+)\\) \\{\n");
 	private List<String> _checkJavaFieldTypesExcludes;
 	private boolean _checkRegistryInTestClasses;
+	private CheckStyleUtil _checkStyleUtil;
 	private List<String> _checkTabsExcludes;
 	private boolean _checkUnprocessedExceptions;
 	private final Pattern _classPattern = Pattern.compile(

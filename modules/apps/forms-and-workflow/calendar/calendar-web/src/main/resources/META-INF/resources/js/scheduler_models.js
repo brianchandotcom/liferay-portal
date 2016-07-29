@@ -474,9 +474,12 @@ AUI.add(
 
 					var calendarContainer = scheduler.get('calendarContainer');
 
+					var calendarIds = AObject.keys(calendarContainer.get('availableCalendars'));
+
 					CalendarUtil.message(Liferay.Language.get('loading'));
 
 					CalendarUtil.getEvents(
+						calendarIds,
 						instance.getLoadStartDate(activeView),
 						instance.getLoadEndDate(activeView),
 						[CalendarWorkflow.STATUS_APPROVED, CalendarWorkflow.STATUS_DRAFT, CalendarWorkflow.STATUS_MAYBE, CalendarWorkflow.STATUS_PENDING],

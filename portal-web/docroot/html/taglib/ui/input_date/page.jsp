@@ -112,6 +112,10 @@ Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(simpleDateFormatPa
 
 				var form = $(document.forms.<%= namespace + formName %>);
 
+				if (!form.length) {
+					form = $(checkbox.prop('form'));
+				}
+
 				form.fm('<%= HtmlUtil.getAUICompatibleId(name) %>').prop('disabled', checked);
 				form.fm('<%= HtmlUtil.escapeJS(dayParam) %>').prop('disabled', checked);
 				form.fm('<%= HtmlUtil.escapeJS(monthParam) %>').prop('disabled', checked);

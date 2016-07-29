@@ -4467,15 +4467,21 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		_upgradeServiceUtilExcludes = getPropertyList(
 			"upgrade.service.util.excludes");
 
-		File configurationFile = getFile(
-			"checkstyle.xml", PORTAL_MAX_DIR_LEVEL);
+		if (portalSource) {
+			File configurationFile = getFile(
+				"checkstyle.xml", PORTAL_MAX_DIR_LEVEL);
 
-		_checkStyleUtil = new CheckStyleUtil(
-			getAbsolutePath(configurationFile));
+			_checkStyleUtil = new CheckStyleUtil(
+				getAbsolutePath(configurationFile));
+		}
 	}
 
 	protected void processCheckStyle(File file, String fileName)
 		throws Exception {
+
+		if (!portalSource) {
+			return;
+		}
 
 		List<SourceFormatterMessage> sourceFormatterMessages =
 			_checkStyleUtil.process(file, fileName);

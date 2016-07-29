@@ -18,7 +18,6 @@
 
 <%
 String eventName = ParamUtil.getString(request, "eventName", renderResponse.getNamespace() + "selectCategory");
-String redirect = ParamUtil.getString(request, "redirect");
 
 long categoryId = ParamUtil.getLong(request, "categoryId");
 
@@ -28,28 +27,7 @@ AssetCategory parentCategory = category.getParentCategory();
 
 long vocabularyId = ParamUtil.getLong(request, "vocabularyId");
 
-if (Validator.isNull(redirect)) {
-	PortletURL backURL = renderResponse.createRenderURL();
-
-	backURL.setParameter("mvcPath", "/view_categories.jsp");
-
-	if (parentCategory != null) {
-		backURL.setParameter("categoryId", String.valueOf(parentCategory.getCategoryId()));
-	}
-
-	if (vocabularyId > 0) {
-		backURL.setParameter("vocabularyId", String.valueOf(vocabularyId));
-	}
-
-	redirect = backURL.toString();
-}
-
 List<AssetVocabulary> vocabularies = AssetVocabularyServiceUtil.getGroupVocabularies(scopeGroupId);
-
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(redirect);
-
-renderResponse.setTitle(LanguageUtil.format(request, "move-x", category.getTitle(locale)));
 %>
 
 <aui:form cssClass="container-fluid-1280" name="fm">
@@ -113,7 +91,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "move-x", category.getTitle
 	<aui:button-row>
 		<aui:button cssClass="btn-lg btn-primary" id="move" value="move" />
 
-		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
+		<aui:button cssClass="btn-lg" type="cancel" />
 	</aui:button-row>
 </aui:form>
 

@@ -20,16 +20,16 @@ import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
-import com.liferay.portal.kernel.configuration.Configuration;
-import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
-import com.liferay.portal.kernel.configuration.Filter;
+import com.liferay.journal.configuration.JournalServiceConfiguration;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.mobile.device.Device;
 import com.liferay.portal.kernel.mobile.device.UnknownDevice;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.template.StringTemplateResource;
@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.TemplateResource;
-import com.liferay.portal.kernel.template.URLTemplateResource;
 import com.liferay.portal.kernel.templateparser.TemplateNode;
 import com.liferay.portal.kernel.templateparser.TransformException;
 import com.liferay.portal.kernel.templateparser.TransformerListener;
@@ -62,8 +61,6 @@ import com.liferay.portal.xsl.XSLURIResolver;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
 import java.io.IOException;
-
-import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -90,23 +87,6 @@ public class JournalTransformer {
 
 	public JournalTransformer(
 		String errorTemplatePropertyKey, boolean restricted) {
-
-		ClassLoader classLoader = getClassLoader();
-
-		Configuration configuration = ConfigurationFactoryUtil.getConfiguration(
-			classLoader, "portlet");
-
-		Set<String> langTypes = TemplateManagerUtil.getSupportedLanguageTypes(
-			errorTemplatePropertyKey);
-
-		for (String langType : langTypes) {
-			String errorTemplateId = configuration.get(
-				errorTemplatePropertyKey, new Filter(langType));
-
-			if (Validator.isNotNull(errorTemplateId)) {
-				_errorTemplateIds.put(langType, errorTemplateId);
-			}
-		}
 
 		_restricted = restricted;
 
@@ -426,15 +406,28 @@ public class JournalTransformer {
 
 	protected TemplateResource getErrorTemplateResource(String langType) {
 		try {
-			Class<?> clazz = getClass();
+			long companyId = CompanyThreadLocal.getCompanyId();
 
-			ClassLoader classLoader = clazz.getClassLoader();
+			JournalServiceConfiguration journalServiceConfiguration =
+				ConfigurationProviderUtil.getCompanyConfiguration(
+					JournalServiceConfiguration.class, companyId);
 
-			String errorTemplateId = _errorTemplateIds.get(langType);
+			String template = StringPool.BLANK;
 
-			URL url = classLoader.getResource(errorTemplateId);
+			if (langType.equals(TemplateConstants.LANG_TYPE_FTL)) {
+				template = journalServiceConfiguration.errorTemplateFTL();
+			}
+			else if (langType.equals(TemplateConstants.LANG_TYPE_VM)) {
+				template = journalServiceConfiguration.errorTemplateVM();
+			}
+			else if (langType.equals(TemplateConstants.LANG_TYPE_XSL)) {
+				template = journalServiceConfiguration.errorTemplateXSL();
+			}
+			else {
+				return null;
+			}
 
-			return new URLTemplateResource(errorTemplateId, url);
+			return new StringTemplateResource(langType, template);
 		}
 		catch (Exception e) {
 		}

@@ -31,7 +31,7 @@ import java.sql.ResultSet;
  */
 public class UpgradeMessageBoards extends UpgradeProcess {
 
-	protected void cleanMBDiscussion() throws Exception {
+	protected void deleteEmptyMBDiscussion() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			long classNameId = PortalUtil.getClassNameId(
 				MBDiscussion.class.getName());
@@ -41,8 +41,8 @@ public class UpgradeMessageBoards extends UpgradeProcess {
 					"select messageId from MBMessage where threadId in (" +
 						"select threadId from MBThread where categoryId = " +
 							MBCategoryConstants.DISCUSSION_CATEGORY_ID +
-							" and messagecount = 1 )) and classNameId = " +
-								classNameId);
+								" and messagecount = 1)) and classNameId = " +
+									classNameId);
 
 			runSQL(
 				"delete from MBMessage where threadId in (" +
@@ -68,11 +68,11 @@ public class UpgradeMessageBoards extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		cleanMBDiscussion();
-		fillMBDiscussionGroupId();
+		deleteEmptyMBDiscussion();
+		populateMBDiscussionGroupId();
 	}
 
-	protected void fillMBDiscussionGroupId() throws Exception {
+	protected void populateMBDiscussionGroupId() throws Exception {
 		StringBundler sb = new StringBundler();
 
 		sb.append("select MBThread.groupId, MBDiscussion.discussionId from ");

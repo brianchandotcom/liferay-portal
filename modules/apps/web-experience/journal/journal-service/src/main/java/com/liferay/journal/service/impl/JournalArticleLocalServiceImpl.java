@@ -3737,7 +3737,7 @@ public class JournalArticleLocalServiceImpl
 
 		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
 
-		extraDataJSONObject.put("title", article.getTitle());
+		extraDataJSONObject.put("title", article.getTitleMapAsXML());
 
 		SocialActivityManagerUtil.addActivity(
 			userId, article, SocialActivityConstants.TYPE_MOVE_TO_TRASH,
@@ -3940,7 +3940,7 @@ public class JournalArticleLocalServiceImpl
 
 		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
 
-		extraDataJSONObject.put("title", article.getTitle());
+		extraDataJSONObject.put("title", article.getTitleMapAsXML());
 
 		SocialActivityManagerUtil.addActivity(
 			userId, article, SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
@@ -5746,6 +5746,9 @@ public class JournalArticleLocalServiceImpl
 
 		AssetEntry assetEntry = null;
 
+		String title = article.getTitleMapAsXML();
+		String description = article.getDescriptionMapAsXML();
+
 		if (addDraftAssetEntry) {
 			assetEntry = assetEntryLocalService.updateEntry(
 				userId, article.getGroupId(), article.getCreateDate(),
@@ -5753,8 +5756,7 @@ public class JournalArticleLocalServiceImpl
 				article.getPrimaryKey(), article.getUuid(),
 				getClassTypeId(article), assetCategoryIds, assetTagNames,
 				isListable(article), false, null, null, null, null,
-				ContentTypes.TEXT_HTML, article.getTitle(),
-				article.getDescription(), article.getDescription(), null,
+				ContentTypes.TEXT_HTML, title, description, description, null,
 				article.getLayoutUuid(), 0, 0, priority);
 		}
 		else {
@@ -5768,9 +5770,8 @@ public class JournalArticleLocalServiceImpl
 				journalArticleResource.getResourcePrimKey(),
 				journalArticleResource.getUuid(), getClassTypeId(article),
 				assetCategoryIds, assetTagNames, isListable(article), visible,
-				null, null, null, null, ContentTypes.TEXT_HTML,
-				article.getTitle(), article.getDescription(),
-				article.getDescription(), null, article.getLayoutUuid(), 0, 0,
+				null, null, null, null, ContentTypes.TEXT_HTML, title,
+				description, description, null, article.getLayoutUuid(), 0, 0,
 				priority);
 		}
 
@@ -5925,6 +5926,9 @@ public class JournalArticleLocalServiceImpl
 
 				// Asset
 
+				String title = article.getTitleMapAsXML();
+				String description = article.getDescriptionMapAsXML();
+
 				if ((oldStatus != WorkflowConstants.STATUS_APPROVED) &&
 					(article.getVersion() !=
 						JournalArticleConstants.VERSION_DEFAULT)) {
@@ -5956,9 +5960,8 @@ public class JournalArticleLocalServiceImpl
 								article.getResourcePrimKey(), article.getUuid(),
 								getClassTypeId(article), assetCategoryIds,
 								assetTagNames, isListable(article), false, null,
-								null, null, null, ContentTypes.TEXT_HTML,
-								article.getTitle(), article.getDescription(),
-								article.getDescription(), null,
+								null, null, null, ContentTypes.TEXT_HTML, title,
+								description, description, null,
 								article.getLayoutUuid(), 0, 0,
 								draftAssetEntry.getPriority());
 
@@ -5984,7 +5987,7 @@ public class JournalArticleLocalServiceImpl
 				JSONObject extraDataJSONObject =
 					JSONFactoryUtil.createJSONObject();
 
-				extraDataJSONObject.put("title", article.getTitle());
+				extraDataJSONObject.put("title", title);
 
 				if (serviceContext.isCommandUpdate()) {
 					SocialActivityManagerUtil.addActivity(
@@ -7716,7 +7719,7 @@ public class JournalArticleLocalServiceImpl
 
 			assetEntry.setModifiedDate(
 				previousApprovedArticle.getModifiedDate());
-			assetEntry.setTitle(previousApprovedArticle.getTitle());
+			assetEntry.setTitle(previousApprovedArticle.getTitleMapAsXML());
 
 			assetEntryPersistence.update(assetEntry);
 		}

@@ -181,7 +181,7 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 			calendarLists.push(window.<portlet:namespace />siteCalendarList);
 		</c:if>
 
-		Liferay.CalendarUtil.syncCalendarsMap(calendarLists);
+		window.<portlet:namespace />calendarContainer.syncCalendarsMap(calendarLists);
 	};
 
 	window.<portlet:namespace />syncCalendarsMap = syncCalendarsMap;

@@ -9331,8 +9331,9 @@
 			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsAllComments">
-			<var name="commentList" value="${commentList}" />
+		<execute macro="Workflow#_viewActivities">
+			<var name="workflowActivityComment" value="${commentList}" />
+			<var name="workflowAssetTitle" value="${kfProcessName}" />
 		</execute>
 	</command>
 

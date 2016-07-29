@@ -87,6 +87,7 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.autopropagated-parameters=scopeTitle",
 		"com.liferay.portlet.autopropagated-parameters=showAncestorScopes",
 		"com.liferay.portlet.autopropagated-parameters=showBackURL",
+		"com.liferay.portlet.autopropagated-parameters=showCacheableInput",
 		"com.liferay.portlet.autopropagated-parameters=showHeader",
 		"com.liferay.portlet.autopropagated-parameters=showManageTemplates",
 		"com.liferay.portlet.css-class-wrapper=portlet-dynamic-data-mapping",

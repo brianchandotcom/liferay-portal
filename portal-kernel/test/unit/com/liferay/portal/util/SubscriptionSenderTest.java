@@ -67,13 +67,13 @@ public class SubscriptionSenderTest extends PowerMockito {
 		);
 
 		when(
-			company.getPortalURL(Mockito.eq(0l))
+			company.getPortalURL(Mockito.eq(0L))
 		).thenReturn(
 			"http://www.portal.com"
 		);
 
 		when(
-			company.getPortalURL(Mockito.eq(100l))
+			company.getPortalURL(Mockito.eq(100L))
 		).thenReturn(
 			"http://www.virtual.com"
 		);
@@ -84,7 +84,7 @@ public class SubscriptionSenderTest extends PowerMockito {
 		Group group = mock(Group.class);
 
 		when(
-			groupLocalService.getGroup(Mockito.eq(100l))
+			groupLocalService.getGroup(Mockito.eq(100L))
 		).thenReturn(
 			group
 		);
@@ -168,7 +168,7 @@ public class SubscriptionSenderTest extends PowerMockito {
 
 		ServiceContext serviceContext = new ServiceContext();
 
-		serviceContext.setScopeGroupId(100l);
+		serviceContext.setScopeGroupId(100L);
 
 		subscriptionSender.setServiceContext(serviceContext);
 

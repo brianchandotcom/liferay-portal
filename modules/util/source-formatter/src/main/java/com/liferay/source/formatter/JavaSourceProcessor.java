@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ImportsFormatter;
 import com.liferay.portal.tools.JavaImportsFormatter;
 import com.liferay.portal.tools.ToolsUtil;
+import com.liferay.source.formatter.util.CheckStyleUtil;
 import com.liferay.source.formatter.util.FileUtil;
 
 import com.thoughtworks.qdox.JavaDocBuilder;
@@ -42,6 +43,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -724,6 +726,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		if (hasGeneratedTag(content)) {
 			return content;
 		}
+
+		_ungeneratedFiles.add(file);
 
 		String className = file.getName();
 
@@ -4430,6 +4434,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	@Override
 	protected void postFormat() throws Exception {
 		checkBndInheritAnnotationOption();
+		processCheckStyle();
 	}
 
 	@Override
@@ -4463,6 +4468,29 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			"upgrade.data.access.connection.excludes");
 		_upgradeServiceUtilExcludes = getPropertyList(
 			"upgrade.service.util.excludes");
+	}
+
+	protected void processCheckStyle() throws Exception {
+		if (!portalSource) {
+			return;
+		}
+
+		File baseDirFile = new File(sourceFormatterArgs.getBaseDirName());
+		File configurationFile = getFile(
+			"checkstyle.xml", PORTAL_MAX_DIR_LEVEL);
+
+		List<SourceFormatterMessage> sourceFormatterMessages =
+			CheckStyleUtil.process(
+				getAbsolutePath(configurationFile), _ungeneratedFiles,
+				getAbsolutePath(baseDirFile));
+
+		for (SourceFormatterMessage sourceFormatterMessage :
+				sourceFormatterMessages) {
+
+			printError(
+				sourceFormatterMessage.getFileName(),
+				sourceFormatterMessage.toString());
+		}
 	}
 
 	protected void setBNDInheritRequiredValue(
@@ -4659,6 +4687,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private List<String> _testAnnotationsExcludes;
 	private final Pattern _throwsSystemExceptionPattern = Pattern.compile(
 		"(\n\t+.*)throws(.*) SystemException(.*)( \\{|;\n)");
+	private final List<File> _ungeneratedFiles = new CopyOnWriteArrayList<>();
 	private final Pattern _upgradeClassNamePattern = Pattern.compile(
 		"new .*?(\\w+)\\(", Pattern.DOTALL);
 	private List<String> _upgradeDataAccessConnectionExcludes;

@@ -327,7 +327,7 @@ public class DLFileEntryLocalServiceTest {
 
 			dlFileVersion = dlFileEntry.getFileVersion();
 
-			dlFileVersion.setFileEntryId(12345l);
+			dlFileVersion.setFileEntryId(12345L);
 
 			DLFileVersionLocalServiceUtil.updateDLFileVersion(dlFileVersion);
 
@@ -425,7 +425,7 @@ public class DLFileEntryLocalServiceTest {
 			dlFileEntry = DLFileEntryLocalServiceUtil.getFileEntry(
 				fileEntry.getFileEntryId());
 
-			dlFileEntry.setGroupId(10000l);
+			dlFileEntry.setGroupId(10000L);
 
 			DLFileEntryLocalServiceUtil.updateDLFileEntry(dlFileEntry);
 

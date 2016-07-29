@@ -2561,7 +2561,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	protected void printError(String fileName, String message) {
-		_sourceFormatterHelper.printError(fileName, message);
+		if (sourceFormatterArgs.isPrintErrors()) {
+			_sourceFormatterHelper.printError(fileName, message);
+		}
 	}
 
 	protected void processFormattedFile(

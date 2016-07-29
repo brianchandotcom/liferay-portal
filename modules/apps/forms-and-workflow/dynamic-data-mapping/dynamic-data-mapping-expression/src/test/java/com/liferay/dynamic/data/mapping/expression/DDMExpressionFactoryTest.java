@@ -61,7 +61,7 @@ public class DDMExpressionFactoryTest {
 		DDMExpression<Long> ddmExpression =
 			_ddmExpressionFactory.createLongDDMExpression("10000000000");
 
-		Assert.assertEquals(10000000000l, (long)ddmExpression.evaluate());
+		Assert.assertEquals(10000000000L, (long)ddmExpression.evaluate());
 	}
 
 	@Test

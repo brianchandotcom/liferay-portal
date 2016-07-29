@@ -29,9 +29,9 @@ public class MultiDataCenterCounterFinderImplTest {
 			new MultiDataCenterCounterFinderImpl(2, 0);
 
 		Assert.assertEquals(
-			0l, multiDataCenterCounterFinderImpl.getMultiClusterSafeValue(0));
+			0L, multiDataCenterCounterFinderImpl.getMultiClusterSafeValue(0));
 		Assert.assertEquals(
-			4611686018427387903l,
+			4611686018427387903L,
 			multiDataCenterCounterFinderImpl.getMultiClusterSafeValue(
 				Long.MAX_VALUE));
 
@@ -39,10 +39,10 @@ public class MultiDataCenterCounterFinderImplTest {
 			2, 1);
 
 		Assert.assertEquals(
-			4611686018427387904l,
+			4611686018427387904L,
 			multiDataCenterCounterFinderImpl.getMultiClusterSafeValue(0));
 		Assert.assertEquals(
-			9223372036854775807l,
+			9223372036854775807L,
 			multiDataCenterCounterFinderImpl.getMultiClusterSafeValue(
 				Long.MAX_VALUE));
 	}
@@ -53,9 +53,9 @@ public class MultiDataCenterCounterFinderImplTest {
 			new MultiDataCenterCounterFinderImpl(5, 0);
 
 		Assert.assertEquals(
-			0l, multiDataCenterCounterFinderImpl.getMultiClusterSafeValue(0));
+			0L, multiDataCenterCounterFinderImpl.getMultiClusterSafeValue(0));
 		Assert.assertEquals(
-			1152921504606846975l,
+			1152921504606846975L,
 			multiDataCenterCounterFinderImpl.getMultiClusterSafeValue(
 				Long.MAX_VALUE));
 
@@ -63,10 +63,10 @@ public class MultiDataCenterCounterFinderImplTest {
 			5, 1);
 
 		Assert.assertEquals(
-			1152921504606846976l,
+			1152921504606846976L,
 			multiDataCenterCounterFinderImpl.getMultiClusterSafeValue(0));
 		Assert.assertEquals(
-			2305843009213693951l,
+			2305843009213693951L,
 			multiDataCenterCounterFinderImpl.getMultiClusterSafeValue(
 				Long.MAX_VALUE));
 
@@ -74,10 +74,10 @@ public class MultiDataCenterCounterFinderImplTest {
 			5, 2);
 
 		Assert.assertEquals(
-			2305843009213693952l,
+			2305843009213693952L,
 			multiDataCenterCounterFinderImpl.getMultiClusterSafeValue(0));
 		Assert.assertEquals(
-			3458764513820540927l,
+			3458764513820540927L,
 			multiDataCenterCounterFinderImpl.getMultiClusterSafeValue(
 				Long.MAX_VALUE));
 
@@ -85,10 +85,10 @@ public class MultiDataCenterCounterFinderImplTest {
 			5, 3);
 
 		Assert.assertEquals(
-			3458764513820540928l,
+			3458764513820540928L,
 			multiDataCenterCounterFinderImpl.getMultiClusterSafeValue(0));
 		Assert.assertEquals(
-			4611686018427387903l,
+			4611686018427387903L,
 			multiDataCenterCounterFinderImpl.getMultiClusterSafeValue(
 				Long.MAX_VALUE));
 
@@ -96,10 +96,10 @@ public class MultiDataCenterCounterFinderImplTest {
 			5, 4);
 
 		Assert.assertEquals(
-			4611686018427387904l,
+			4611686018427387904L,
 			multiDataCenterCounterFinderImpl.getMultiClusterSafeValue(0));
 		Assert.assertEquals(
-			5764607523034234879l,
+			5764607523034234879L,
 			multiDataCenterCounterFinderImpl.getMultiClusterSafeValue(
 				Long.MAX_VALUE));
 	}

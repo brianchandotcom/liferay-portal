@@ -282,7 +282,7 @@ public class MapUtilTest {
 
 			Assert.assertEquals(1, map.size());
 			Assert.assertTrue(map.containsKey("one"));
-			Assert.assertTrue(map.containsValue(1l));
+			Assert.assertTrue(map.containsValue(1L));
 			Assert.assertTrue(map.get("one") instanceof Long);
 
 			map = MapUtil.toLinkedHashMap(
@@ -290,7 +290,7 @@ public class MapUtilTest {
 
 			Assert.assertEquals(1, map.size());
 			Assert.assertTrue(map.containsKey("one"));
-			Assert.assertTrue(map.containsValue(1l));
+			Assert.assertTrue(map.containsValue(1L));
 			Assert.assertTrue(map.get("one") instanceof Long);
 		}
 

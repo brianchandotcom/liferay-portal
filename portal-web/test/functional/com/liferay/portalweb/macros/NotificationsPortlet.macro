@@ -16,7 +16,9 @@
 		<if>
 			<equals arg1="${notificationType}" arg2="Website" />
 			<then>
-				<execute function="Click" locator1="Notifications#NOTIFICATIONS_CONFIGURATION_WEBSITE_SWITCH" />
+				<execute function="ScrollWebElementIntoView" locator1="Notifications#NOTIFICATIONS_CONFIGURATION_WEBSITE_SWITCH" />
+
+				<execute function="Check#toggleSwitch" locator1="Notifications#NOTIFICATIONS_CONFIGURATION_WEBSITE_SWITCH" />
 			</then>
 		</if>
 

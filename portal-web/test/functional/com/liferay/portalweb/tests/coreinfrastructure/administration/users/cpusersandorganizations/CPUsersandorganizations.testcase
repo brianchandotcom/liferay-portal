@@ -1197,6 +1197,8 @@
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="User#logoutPG" />
 
 		<execute macro="User#loginUserInvalidPG">

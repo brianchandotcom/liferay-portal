@@ -113,6 +113,10 @@ public class FormatSourceTask extends JavaExec {
 		return _sourceFormatterArgs.isPrintErrors();
 	}
 
+	public boolean isSourceFormatterEnabled() {
+		return _sourceFormatterArgs.isSourceFormatterEnabled();
+	}
+
 	public boolean isThrowException() {
 		return _sourceFormatterArgs.isThrowException();
 	}
@@ -170,6 +174,10 @@ public class FormatSourceTask extends JavaExec {
 		_sourceFormatterArgs.setProcessorThreadCount(processorThreadCount);
 	}
 
+	public void setSourceFormatterEnabled(boolean sourceFormatterEnabled) {
+		_sourceFormatterArgs.setSourceFormatterEnabled(sourceFormatterEnabled);
+	}
+
 	public void setThrowException(boolean throwException) {
 		_sourceFormatterArgs.setThrowException(throwException);
 	}
@@ -191,6 +199,7 @@ public class FormatSourceTask extends JavaExec {
 		args.add(
 			"source.copyright.file=" +
 				FileUtil.relativize(getCopyrightFile(), getWorkingDir()));
+		args.add("source.formatter.enabled=" + isSourceFormatterEnabled());
 		args.add("source.print.errors=" + isPrintErrors());
 		args.add("source.throw.exception=" + isThrowException());
 		args.add("source.use.properties=" + isUseProperties());

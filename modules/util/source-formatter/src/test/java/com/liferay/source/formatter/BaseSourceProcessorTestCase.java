@@ -69,6 +69,7 @@ public class BaseSourceProcessorTestCase {
 
 		sourceFormatterArgs.setAutoFix(true);
 		sourceFormatterArgs.setPrintErrors(false);
+		sourceFormatterArgs.setSourceFormatterEnabled(true);
 		sourceFormatterArgs.setThrowException(false);
 		sourceFormatterArgs.setUseProperties(false);
 

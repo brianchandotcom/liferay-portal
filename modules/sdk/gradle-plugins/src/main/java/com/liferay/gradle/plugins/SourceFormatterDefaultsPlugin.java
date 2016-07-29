@@ -42,6 +42,10 @@ public class SourceFormatterDefaultsPlugin
 	protected void configureTasksFormatSource(
 		FormatSourceTask formatSourceTask) {
 
+		boolean sourceFormatterEnabled = GradleUtil.getProperty(
+			formatSourceTask.getProject(), "source.formatter.enabled", false);
+		formatSourceTask.setSourceFormatterEnabled(sourceFormatterEnabled);
+
 		String gitWorkingBranchName = GradleUtil.getProperty(
 			formatSourceTask.getProject(), "git.working.branch.name",
 			(String)null);

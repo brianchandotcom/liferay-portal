@@ -135,6 +135,13 @@ public class FormatSourceMojo extends AbstractMojo {
 	/**
 	 * @parameter
 	 */
+	public void setSourceFormatterEnabled(boolean sourceFormatterEnabled) {
+		_sourceFormatterArgs.setSourceFormatterEnabled(sourceFormatterEnabled);
+	}
+
+	/**
+	 * @parameter
+	 */
 	public void setThrowException(boolean throwException) {
 		_sourceFormatterArgs.setThrowException(throwException);
 	}

@@ -44,6 +44,8 @@ public class SourceFormatterArgs {
 
 	public static final int PROCESSOR_THREAD_COUNT = 5;
 
+	public static final boolean SOURCE_FORMATTER_ENABLED = false;
+
 	public static final boolean THROW_EXCEPTION = false;
 
 	public static final boolean USE_PROPERTIES = false;
@@ -94,6 +96,10 @@ public class SourceFormatterArgs {
 
 	public boolean isPrintErrors() {
 		return _printErrors;
+	}
+
+	public boolean isSourceFormatterEnabled() {
+		return _sourceFormatterEnabled;
 	}
 
 	public boolean isThrowException() {
@@ -169,6 +175,10 @@ public class SourceFormatterArgs {
 		_recentChangesFileNames = recentChangesFileNames;
 	}
 
+	public void setSourceFormatterEnabled(boolean sourceFormatterEnabled) {
+		_sourceFormatterEnabled = sourceFormatterEnabled;
+	}
+
 	public void setThrowException(boolean throwException) {
 		_throwException = throwException;
 	}
@@ -189,6 +199,7 @@ public class SourceFormatterArgs {
 	private boolean _printErrors = PRINT_ERRORS;
 	private int _processorThreadCount = PROCESSOR_THREAD_COUNT;
 	private List<String> _recentChangesFileNames;
+	private boolean _sourceFormatterEnabled = SOURCE_FORMATTER_ENABLED;
 	private boolean _throwException = THROW_EXCEPTION;
 	private boolean _useProperties = USE_PROPERTIES;
 

@@ -632,8 +632,10 @@ AUI.add(
 				var oldCalendarId = schedulerEvent.get('calendarId');
 
 				if (scheduler) {
-					var newCalendar = instance.availableCalendars[newCalendarId];
-					var oldCalendar = instance.availableCalendars[oldCalendarId];
+					var calendarContainer = scheduler.get('calendarContainer');
+
+					var newCalendar = calendarContainer.getCalendar(newCalendarId);
+					var oldCalendar = calendarContainer.getCalendar(oldCalendarId);
 
 					if (oldCalendar !== newCalendar) {
 						oldCalendar.remove(schedulerEvent);

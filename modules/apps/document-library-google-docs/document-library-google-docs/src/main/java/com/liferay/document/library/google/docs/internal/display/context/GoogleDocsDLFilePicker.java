@@ -56,8 +56,8 @@ public class GoogleDocsDLFilePicker implements DLFilePicker {
 	public String getJavaScript() throws PortalException {
 		try {
 			FreeMarkerRenderer freeMarkerRenderer = new FreeMarkerRenderer(
-				"com/liferay/document/library/google/docs/display/context/" +
-					"dependencies/google_file_picker.ftl");
+				"com/liferay/document/library/google/docs/internal/display/" +
+					"context/dependencies/google_file_picker.ftl");
 
 			freeMarkerRenderer.setAttribute(
 				"googleAppsAPIKey",

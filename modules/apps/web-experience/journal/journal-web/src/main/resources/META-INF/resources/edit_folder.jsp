@@ -21,6 +21,8 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 JournalFolder folder = journalDisplayContext.getFolder();
 
+String[] charBlacklist = journalDisplayContext.getCharactersBlacklist();
+
 long folderId = BeanParamUtil.getLong(folder, request, "folderId");
 
 long parentFolderId = BeanParamUtil.getLong(folder, request, "parentFolderId", JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
@@ -82,7 +84,7 @@ renderResponse.setTitle(title);
 		</p>
 
 		<p>
-			<liferay-ui:message arguments="<%= new String[] {JournalFolderConstants.NAME_LABEL, JournalFolderConstants.getNameInvalidCharacters(JournalServiceConfigurationValues.CHAR_BLACKLIST)} %>" key="the-x-cannot-contain-the-following-invalid-characters-x" />
+			<liferay-ui:message arguments="<%= new String[] {JournalFolderConstants.NAME_LABEL, JournalFolderConstants.getNameInvalidCharacters(charBlacklist)} %>" key="the-x-cannot-contain-the-following-invalid-characters-x" />
 		</p>
 	</liferay-ui:error>
 

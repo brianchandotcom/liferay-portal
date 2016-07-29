@@ -435,10 +435,8 @@ AUI.add(
 				);
 			},
 
-			getEvents: function(startDate, endDate, status, callback) {
+			getEvents: function(calendarIds, startDate, endDate, status, callback) {
 				var instance = this;
-
-				var calendarIds = AObject.keys(instance.availableCalendars);
 
 				instance.invokeResourceURL(
 					{

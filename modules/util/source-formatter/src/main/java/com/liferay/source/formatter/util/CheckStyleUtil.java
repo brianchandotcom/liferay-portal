@@ -39,17 +39,21 @@ import java.util.List;
 public class CheckStyleUtil {
 
 	public static List<SourceFormatterMessage> process(
-			String configurationFileName, List<File> files)
+			String configurationFileName, List<File> files,
+			String baseDirAbsolutePath)
 		throws Exception {
 
-		Checker checker = _getChecker(configurationFileName);
+		Checker checker = _getChecker(
+			configurationFileName, baseDirAbsolutePath);
 
 		checker.process(files);
 
 		return _sourceFormatterMessages;
 	}
 
-	private static Checker _getChecker(String configurationFileName) {
+	private static Checker _getChecker(
+		String configurationFileName, String baseDirAbsolutePath) {
+
 		try {
 			Checker checker = new Checker();
 
@@ -62,7 +66,7 @@ public class CheckStyleUtil {
 			checker.configure(configuration);
 
 			AuditListener listener = new SourceFormatterLogger(
-				new UnsyncByteArrayOutputStream(), true);
+				new UnsyncByteArrayOutputStream(), true, baseDirAbsolutePath);
 
 			checker.addListener(listener);
 
@@ -76,9 +80,12 @@ public class CheckStyleUtil {
 	private static class SourceFormatterLogger extends DefaultLogger {
 
 		public SourceFormatterLogger(
-			OutputStream outputStream, boolean closeStreamsAfterUse) {
+			OutputStream outputStream, boolean closeStreamsAfterUse,
+			String baseDirAbsolutePath) {
 
 			super(outputStream, closeStreamsAfterUse);
+
+			_baseDirAbsolutePath = baseDirAbsolutePath;
 		}
 
 		@Override
@@ -87,12 +94,19 @@ public class CheckStyleUtil {
 				auditEvent.getFileName(), StringPool.BACK_SLASH,
 				StringPool.SLASH);
 
+			if (fileName.startsWith(_baseDirAbsolutePath + "/")) {
+				fileName = StringUtil.replaceFirst(
+					fileName, _baseDirAbsolutePath + "/", StringPool.BLANK);
+			}
+
 			_sourceFormatterMessages.add(
 				new SourceFormatterMessage(
 					fileName, auditEvent.getMessage(), auditEvent.getLine()));
 
 			super.addError(auditEvent);
 		}
+
+		private final String _baseDirAbsolutePath;
 
 	}
 

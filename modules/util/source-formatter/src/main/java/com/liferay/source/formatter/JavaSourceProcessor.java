@@ -4474,12 +4474,14 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			return;
 		}
 
+		File baseDirFile = new File(sourceFormatterArgs.getBaseDirName());
 		File configurationFile = getFile(
 			"checkstyle.xml", PORTAL_MAX_DIR_LEVEL);
 
 		List<SourceFormatterMessage> sourceFormatterMessages =
 			CheckStyleUtil.process(
-				getAbsolutePath(configurationFile), _ungeneratedFiles);
+				getAbsolutePath(configurationFile), _ungeneratedFiles,
+				getAbsolutePath(baseDirFile));
 
 		for (SourceFormatterMessage sourceFormatterMessage :
 				sourceFormatterMessages) {

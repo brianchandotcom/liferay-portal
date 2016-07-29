@@ -663,51 +663,6 @@ AUI.add(
 				}
 			},
 
-			syncCalendarsMap: function(calendarLists) {
-				var instance = this;
-
-				var availableCalendars = instance.availableCalendars = {};
-				var visibleCalendars = instance.visibleCalendars = {};
-
-				calendarLists.forEach(
-					function(calendarList) {
-						var calendars = calendarList.get('calendars');
-
-						var defaultCalendarId = CalendarUtil.DEFAULT_USER_CALENDAR_ID;
-
-						A.each(
-							calendars,
-							function(item, index) {
-								var calendarId = item.get('calendarId');
-
-								availableCalendars[calendarId] = item;
-
-								if (item.get('visible')) {
-									visibleCalendars[calendarId] = item;
-								}
-
-								if (item.get('defaultCalendar')) {
-									var calendarResourceId = item.get('calendarResourceId');
-
-									if (calendarResourceId == Liferay.CalendarUtil.GROUP_CALENDAR_RESOURCE_ID && item.get('permissions').MANAGE_BOOKINGS) {
-										defaultCalendarId = calendarId;
-									}
-									else if (calendarResourceId == Liferay.CalendarUtil.USER_CALENDAR_RESOURCE_ID && defaultCalendarId == null) {
-										defaultCalendarId = calendarId;
-									}
-								}
-							}
-						);
-
-						if (defaultCalendarId != null) {
-							CalendarUtil.DEFAULT_USER_CALENDAR_ID = defaultCalendarId;
-						}
-					}
-				);
-
-				return availableCalendars;
-			},
-
 			toLocalTime: function(utc) {
 				var instance = this;
 

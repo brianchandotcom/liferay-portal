@@ -512,7 +512,7 @@ while (manageableCalendarsIterator.hasNext()) {
 	);
 
 	var syncCalendarsMap = function() {
-		Liferay.CalendarUtil.syncCalendarsMap(
+		window.<portlet:namespace />calendarContainer.syncCalendarsMap(
 			[
 				window.<portlet:namespace />calendarListAccepted,
 

@@ -43,6 +43,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -726,7 +727,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			return content;
 		}
 
-		processCheckStyle(file, fileName);
+		_ungeneratedFiles.add(file);
 
 		String className = file.getName();
 
@@ -4436,7 +4437,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	}
 
 	@Override
-	protected void preFormat() throws Exception {
+	protected void preFormat() {
 		_maxLineLength = sourceFormatterArgs.getMaxLineLength();
 
 		_addMissingDeprecationReleaseVersion = GetterUtil.getBoolean(
@@ -4466,34 +4467,26 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			"upgrade.data.access.connection.excludes");
 		_upgradeServiceUtilExcludes = getPropertyList(
 			"upgrade.service.util.excludes");
-
-		if (portalSource) {
-			File configurationFile = getFile(
-				"checkstyle.xml", PORTAL_MAX_DIR_LEVEL);
-
-			_checkStyleUtil = new CheckStyleUtil(
-				getAbsolutePath(configurationFile));
-		}
 	}
 
-	protected void processCheckStyle(File file, String fileName)
-		throws Exception {
-
+	protected void processCheckStyle() throws Exception {
 		if (!portalSource) {
 			return;
 		}
 
-		List<SourceFormatterMessage> sourceFormatterMessages =
-			_checkStyleUtil.process(file, fileName);
+		File configurationFile = getFile(
+			"checkstyle.xml", PORTAL_MAX_DIR_LEVEL);
 
-		if (sourceFormatterMessages == null) {
-			return;
-		}
+		List<SourceFormatterMessage> sourceFormatterMessages =
+			CheckStyleUtil.process(
+				getAbsolutePath(configurationFile), _ungeneratedFiles);
 
 		for (SourceFormatterMessage sourceFormatterMessage :
 				sourceFormatterMessages) {
 
-			processMessage(sourceFormatterMessage);
+			printError(
+				sourceFormatterMessage.getFileName(),
+				sourceFormatterMessage.toString());
 		}
 	}
 
@@ -4591,7 +4584,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		"\n(\t+)catch \\((.+Exception) (.+)\\) \\{\n");
 	private List<String> _checkJavaFieldTypesExcludes;
 	private boolean _checkRegistryInTestClasses;
-	private CheckStyleUtil _checkStyleUtil;
 	private List<String> _checkTabsExcludes;
 	private boolean _checkUnprocessedExceptions;
 	private final Pattern _classPattern = Pattern.compile(
@@ -4692,6 +4684,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private List<String> _testAnnotationsExcludes;
 	private final Pattern _throwsSystemExceptionPattern = Pattern.compile(
 		"(\n\t+.*)throws(.*) SystemException(.*)( \\{|;\n)");
+	private final List<File> _ungeneratedFiles = new CopyOnWriteArrayList<>();
 	private final Pattern _upgradeClassNamePattern = Pattern.compile(
 		"new .*?(\\w+)\\(", Pattern.DOTALL);
 	private List<String> _upgradeDataAccessConnectionExcludes;

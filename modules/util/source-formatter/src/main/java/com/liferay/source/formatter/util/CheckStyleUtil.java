@@ -31,29 +31,25 @@ import java.io.File;
 import java.io.OutputStream;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Hugo Huijser
  */
 public class CheckStyleUtil {
 
-	public CheckStyleUtil(String configurationFileName) {
-		_checker = _getChecker(configurationFileName);
-	}
-
-	public List<SourceFormatterMessage> process(File file, String fileName)
+	public static List<SourceFormatterMessage> process(
+			String configurationFileName, List<File> files)
 		throws Exception {
 
-		_checker.process(Arrays.asList(file));
+		Checker checker = _getChecker(configurationFileName);
 
-		return _sourceFormatterMessagesMap.get(fileName);
+		checker.process(files);
+
+		return _sourceFormatterMessages;
 	}
 
-	private Checker _getChecker(String configurationFileName) {
+	private static Checker _getChecker(String configurationFileName) {
 		try {
 			Checker checker = new Checker();
 
@@ -77,7 +73,7 @@ public class CheckStyleUtil {
 		}
 	}
 
-	private class SourceFormatterLogger extends DefaultLogger {
+	private static class SourceFormatterLogger extends DefaultLogger {
 
 		public SourceFormatterLogger(
 			OutputStream outputStream, boolean closeStreamsAfterUse) {
@@ -91,26 +87,16 @@ public class CheckStyleUtil {
 				auditEvent.getFileName(), StringPool.BACK_SLASH,
 				StringPool.SLASH);
 
-			List<SourceFormatterMessage> sourceFormatterMessages =
-				_sourceFormatterMessagesMap.get(fileName);
-
-			if (sourceFormatterMessages == null) {
-				sourceFormatterMessages = new ArrayList<>();
-			}
-
-			sourceFormatterMessages.add(
+			_sourceFormatterMessages.add(
 				new SourceFormatterMessage(
 					fileName, auditEvent.getMessage(), auditEvent.getLine()));
-
-			_sourceFormatterMessagesMap.put(fileName, sourceFormatterMessages);
 
 			super.addError(auditEvent);
 		}
 
 	}
 
-	private final Checker _checker;
-	private Map<String, List<SourceFormatterMessage>>
-		_sourceFormatterMessagesMap = new ConcurrentHashMap<>();
+	private static List<SourceFormatterMessage> _sourceFormatterMessages =
+		new ArrayList<>();
 
 }

@@ -36,13 +36,16 @@ public class UpgradeMessageBoards extends UpgradeProcess {
 			long classNameId = PortalUtil.getClassNameId(
 				MBDiscussion.class.getName());
 
-			runSQL(
-				"delete from AssetEntry where classPK in (" +
-					"select messageId from MBMessage where threadId in (" +
-						"select threadId from MBThread where categoryId = " +
-							MBCategoryConstants.DISCUSSION_CATEGORY_ID +
-								" and messagecount = 1)) and classNameId = " +
-									classNameId);
+			StringBundler sb = new StringBundler(6);
+
+			sb.append("delete from AssetEntry where classPK in (");
+			sb.append("select messageId from MBMessage where threadId in (");
+			sb.append("select threadId from MBThread where categoryId = ");
+			sb.append(MBCategoryConstants.DISCUSSION_CATEGORY_ID);
+			sb.append(" and messagecount = 1)) and classNameId = ");
+			sb.append(classNameId);
+
+			runSQL(sb.toString());
 
 			runSQL(
 				"delete from MBMessage where threadId in (" +

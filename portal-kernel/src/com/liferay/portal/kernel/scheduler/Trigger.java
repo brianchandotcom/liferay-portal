@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.scheduler;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.io.Serializable;
 
 import java.util.Date;
@@ -21,9 +23,12 @@ import java.util.Date;
 /**
  * @author Shuyang Zhou
  */
+@ProviderType
 public interface Trigger extends Serializable {
 
 	public Date getEndDate();
+
+	public Date getFireDateAfter(Date date);
 
 	public String getGroupName();
 

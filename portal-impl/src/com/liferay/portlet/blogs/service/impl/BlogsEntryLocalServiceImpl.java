@@ -295,10 +295,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			serviceContext.getAssetLinkEntryIds(),
 			serviceContext.getAssetPriority());
 
-		// Comment
-
-		addDiscussion(entry, userId, groupId);
-
 		// Images
 
 		long coverImageFileEntryId = 0;
@@ -1479,6 +1475,10 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		return doAddFolder(userId, groupId, _COVER_IMAGE_FOLDER_NAME);
 	}
 
+	/**
+	 * @deprecated As of 7.0.2, with no direct replacement
+	 */
+	@Deprecated
 	protected void addDiscussion(BlogsEntry entry, long userId, long groupId)
 		throws PortalException {
 

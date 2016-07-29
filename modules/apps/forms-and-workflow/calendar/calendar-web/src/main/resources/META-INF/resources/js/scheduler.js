@@ -9,6 +9,7 @@ AUI.add(
 
 		var isBoolean = Lang.isBoolean;
 		var isFunction = Lang.isFunction;
+		var isObject  = Lang.isObject;
 		var isValue = Lang.isValue;
 
 		var CONTROLS_NODE = 'controlsNode';
@@ -50,6 +51,11 @@ AUI.add(
 		var Scheduler = A.Component.create(
 			{
 				ATTRS: {
+					calendarContainer: {
+						validator: isObject,
+						value: null
+					},
+
 					currentTimeFn: {
 						value: A.bind(CalendarUtil.getCurrentTime, CalendarUtil)
 					},
@@ -182,8 +188,10 @@ AUI.add(
 
 						instance.resetEvents(events);
 
+						var calendarContainer = instance.get('calendarContainer');
+
 						A.each(
-							Liferay.CalendarUtil.availableCalendars,
+							calendarContainer.get('availableCalendars'),
 							function(item, index) {
 								item.reset(
 									calendarEvents[index],
@@ -364,9 +372,11 @@ AUI.add(
 
 						var activeViewName = instance.get('activeView').get('name');
 
-						var defaultUserCalendar = CalendarUtil.getDefaultUserCalendar();
+						var calendarContainer = instance.get('calendarContainer');
 
-						var calendarId = defaultUserCalendar.get('calendarId');
+						var defaultCalendar = calendarContainer.get('defaultCalendar');
+
+						var calendarId = defaultCalendar.get('calendarId');
 
 						var editCalendarBookingURL = decodeURIComponent(recorder.get('editCalendarBookingURL'));
 
@@ -474,7 +484,9 @@ AUI.add(
 					_updateSchedulerEvent: function(schedulerEvent, changedAttributes) {
 						var instance = this;
 
-						var calendar = Liferay.CalendarUtil.availableCalendars[schedulerEvent.get('calendarId')];
+						var calendarContainer = instance.get('calendarContainer');
+
+						var calendar = calendarContainer.getCalendar(schedulerEvent.get('calendarId'));
 
 						Liferay.CalendarMessageUtil.promptSchedulerEventUpdate(
 							{

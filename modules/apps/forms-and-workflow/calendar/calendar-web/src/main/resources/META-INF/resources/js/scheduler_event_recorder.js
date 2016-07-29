@@ -7,6 +7,7 @@ AUI.add(
 
 		var CalendarWorkflow = Liferay.CalendarWorkflow;
 
+		var isObject = Lang.isObject;
 		var isValue = Lang.isValue;
 
 		var toInt = function(value) {
@@ -22,6 +23,11 @@ AUI.add(
 		var SchedulerEventRecorder = A.Component.create(
 			{
 				ATTRS: {
+					calendarContainer: {
+						validator: isObject,
+						value: null
+					},
+
 					calendarId: {
 						setter: toInt,
 						value: 0
@@ -89,9 +95,9 @@ AUI.add(
 							schedulerEvent = instance;
 						}
 
-						var availableCalendars = CalendarUtil.availableCalendars;
+						var calendarContainer = instance.get('calendarContainer');
 
-						var calendar = availableCalendars[schedulerEvent.get('calendarId')];
+						var calendar = calendarContainer.getCalendar(schedulerEvent.get('calendarId'));
 
 						var permissions = calendar.get('permissions');
 
@@ -102,9 +108,9 @@ AUI.add(
 							{
 								acceptLinkEnabled: instance._hasWorkflowStatusPermission(schedulerEvent, CalendarWorkflow.STATUS_APPROVED),
 								allDay: schedulerEvent.get('allDay'),
-								availableCalendars: availableCalendars,
+								availableCalendars: calendarContainer.get('availableCalendars'),
 								calendar: calendar,
-								calendarIds: AObject.keys(availableCalendars),
+								calendarIds: AObject.keys(calendarContainer.get('availableCalendars')),
 								declineLinkEnabled: instance._hasWorkflowStatusPermission(schedulerEvent, CalendarWorkflow.STATUS_DENIED),
 								editing: editing,
 								endTime: templateData.endDate,
@@ -129,7 +135,9 @@ AUI.add(
 						var event = instance.get('event');
 
 						if (event) {
-							var calendar = CalendarUtil.availableCalendars[event.get('calendarId')];
+							var calendarContainer = instance.get('calendarContainer');
+
+							var calendar = calendarContainer.getCalendar(event.get('calendarId'));
 
 							if (calendar) {
 								attrMap.color = calendar.get('color');
@@ -199,7 +207,11 @@ AUI.add(
 						var editGroup = [];
 						var respondGroup = [];
 
-						var calendar = CalendarUtil.availableCalendars[schedulerEvent.get('calendarId')];
+						var calendarContainer = instance.get('calendarContainer');
+
+
+
+						var calendar = calendarContainer.getCalendar(schedulerEvent.get('calendarId'));;
 						var status = schedulerEvent.get('status');
 
 						if (calendar) {
@@ -399,7 +411,11 @@ AUI.add(
 						if (schedulerEvent) {
 							var calendarId = schedulerEvent.get('calendarId');
 
-							var calendar = CalendarUtil.availableCalendars[calendarId];
+							var calendarContainer = instance.get('calendarContainer');
+
+
+
+							var calendar = calendarContainer.getCalendar(calendarId);;
 
 							var permissions = calendar.get('permissions');
 
@@ -425,7 +441,11 @@ AUI.add(
 
 								var calendarId = toInt(event.currentTarget.val());
 
-								var selectedCalendar = CalendarUtil.availableCalendars[calendarId];
+								var calendarContainer = instance.get('calendarContainer');
+
+
+
+								var selectedCalendar = calendarContainer.getCalendar(calendarId);;
 
 								if (selectedCalendar) {
 									schedulerEvent.set(
@@ -450,17 +470,19 @@ AUI.add(
 
 						popoverBB.toggleClass('calendar-portlet-event-recorder-editing', !!schedulerEvent);
 
-						var defaultUserCalendar = CalendarUtil.getDefaultUserCalendar();
+						var calendarContainer = instance.get('calendarContainer');
 
-						var calendarId = defaultUserCalendar.get('calendarId');
-						var color = defaultUserCalendar.get('color');
+						var defaultCalendar = calendarContainer.get('defaultCalendar');
+
+						var calendarId = defaultCalendar.get('calendarId');
+						var color = defaultCalendar.get('color');
 
 						var eventInstance = instance;
 
 						if (schedulerEvent) {
 							calendarId = schedulerEvent.get('calendarId');
 
-							var calendar = CalendarUtil.availableCalendars[calendarId];
+							var calendar = calendarContainer.getCalendar(calendarId);;
 
 							if (calendar) {
 								color = calendar.get('color');
@@ -494,7 +516,9 @@ AUI.add(
 						var schedulerEvent = instance.get('event');
 
 						if (schedulerEvent) {
-							var calendar = CalendarUtil.availableCalendars[schedulerEvent.get('calendarId')];
+							var calendarContainer = instance.get('calendarContainer');
+
+							var calendar = calendarContainer.getCalendar(schedulerEvent.get('calendarId'));;
 
 							if (calendar) {
 								var permissions = calendar.get('permissions');

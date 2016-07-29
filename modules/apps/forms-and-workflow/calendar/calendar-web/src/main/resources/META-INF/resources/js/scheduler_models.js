@@ -472,6 +472,8 @@ AUI.add(
 					var activeView = scheduler.get('activeView');
 					var filterCalendarBookings = scheduler.get('filterCalendarBookings');
 
+					var calendarContainer = scheduler.get('calendarContainer');
+
 					CalendarUtil.message(Liferay.Language.get('loading'));
 
 					CalendarUtil.getEvents(

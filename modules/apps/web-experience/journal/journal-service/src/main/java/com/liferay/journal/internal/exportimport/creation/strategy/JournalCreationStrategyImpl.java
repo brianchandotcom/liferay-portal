@@ -17,6 +17,8 @@ package com.liferay.journal.internal.exportimport.creation.strategy;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.journal.model.JournalArticle;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * Provides the strategy for creating new content when new Journal content is
  * imported into a layout set from a LAR. The default strategy implemented by
@@ -32,6 +34,7 @@ import com.liferay.journal.model.JournalArticle;
  *
  * @author Joel Kozikowski
  */
+@Component(immediate = true, service = JournalCreationStrategy.class)
 public class JournalCreationStrategyImpl implements JournalCreationStrategy {
 
 	@Override

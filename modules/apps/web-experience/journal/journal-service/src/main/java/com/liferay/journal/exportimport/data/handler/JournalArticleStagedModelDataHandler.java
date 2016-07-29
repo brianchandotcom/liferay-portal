@@ -445,10 +445,7 @@ public class JournalArticleStagedModelDataHandler
 
 		long userId = portletDataContext.getUserId(article.getUserUuid());
 
-		JournalCreationStrategy creationStrategy =
-			JournalCreationStrategyFactory.getInstance();
-
-		long authorId = creationStrategy.getAuthorUserId(
+		long authorId = _journalCreationStrategy.getAuthorUserId(
 			portletDataContext, article);
 
 		if (authorId != JournalCreationStrategy.USE_DEFAULT_USER_ID_STRATEGY) {
@@ -500,7 +497,7 @@ public class JournalArticleStagedModelDataHandler
 
 		article.setContent(content);
 
-		String newContent = creationStrategy.getTransformedContent(
+		String newContent = _journalCreationStrategy.getTransformedContent(
 			portletDataContext, article);
 
 		if (newContent != JournalCreationStrategy.ARTICLE_CONTENT_UNCHANGED) {
@@ -709,10 +706,12 @@ public class JournalArticleStagedModelDataHandler
 
 			String articleURL = null;
 
-			boolean addGroupPermissions = creationStrategy.addGroupPermissions(
-				portletDataContext, article);
-			boolean addGuestPermissions = creationStrategy.addGuestPermissions(
-				portletDataContext, article);
+			boolean addGroupPermissions =
+				_journalCreationStrategy.addGroupPermissions(
+					portletDataContext, article);
+			boolean addGuestPermissions =
+				_journalCreationStrategy.addGuestPermissions(
+					portletDataContext, article);
 
 			ServiceContext serviceContext =
 				portletDataContext.createServiceContext(article);
@@ -1007,6 +1006,13 @@ public class JournalArticleStagedModelDataHandler
 	}
 
 	@Reference(unbind = "-")
+	protected void setJournalCreationStrategy(
+		JournalCreationStrategy journalCreationStrategy) {
+
+		_journalCreationStrategy = journalCreationStrategy;
+	}
+
+	@Reference(unbind = "-")
 	protected void setUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
 	}
@@ -1022,6 +1028,7 @@ public class JournalArticleStagedModelDataHandler
 	private JournalArticleLocalService _journalArticleLocalService;
 	private JournalArticleResourceLocalService
 		_journalArticleResourceLocalService;
+	private JournalCreationStrategy _journalCreationStrategy;
 	private UserLocalService _userLocalService;
 
 }

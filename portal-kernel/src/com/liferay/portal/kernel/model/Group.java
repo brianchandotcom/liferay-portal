@@ -162,6 +162,8 @@ public interface Group extends GroupModel, PersistedModel, TreeModel {
 
 	public boolean hasStagingGroup();
 
+	public boolean isActiveGroup();
+
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #hasAncestor}
 	*/

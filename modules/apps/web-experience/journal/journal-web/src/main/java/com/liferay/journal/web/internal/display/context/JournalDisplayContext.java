@@ -19,6 +19,7 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.frontend.taglib.servlet.taglib.ManagementBarFilterItem;
+import com.liferay.journal.configuration.JournalServiceConfiguration;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.constants.JournalWebKeys;
 import com.liferay.journal.model.JournalArticle;
@@ -46,6 +47,7 @@ import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
@@ -144,6 +146,17 @@ public class JournalDisplayContext {
 		_article = ActionUtil.getArticle(_request);
 
 		return _article;
+	}
+
+	public String[] getCharactersBlacklist() throws PortalException {
+		ThemeDisplay themeDisplay = (ThemeDisplay) _request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		JournalServiceConfiguration journalServiceConfiguration =
+			ConfigurationProviderUtil.getCompanyConfiguration(
+				JournalServiceConfiguration.class, themeDisplay.getCompanyId());
+
+		return journalServiceConfiguration.charactersblacklist();
 	}
 
 	public SearchContainer<MBMessage> getCommentsSearchContainer()

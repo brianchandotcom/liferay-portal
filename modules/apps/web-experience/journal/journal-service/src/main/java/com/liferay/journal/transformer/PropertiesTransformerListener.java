@@ -14,10 +14,12 @@
 
 package com.liferay.journal.transformer;
 
+import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.util.impl.JournalUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.templateparser.BaseTransformerListener;
+import com.liferay.portal.kernel.templateparser.TransformerListener;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
@@ -29,9 +31,16 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Brian Wing Shun Chan
  */
+@Component(
+	immediate = true,
+	property = {"javax.portlet.name=" + JournalPortletKeys.JOURNAL},
+	service = TransformerListener.class
+)
 public class PropertiesTransformerListener extends BaseTransformerListener {
 
 	@Override

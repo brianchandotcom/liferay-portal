@@ -203,7 +203,7 @@
 			<var name="pageName" value="Knowledge Base Display Page" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="KnowledgeBase#LINK_THERE_ARE_SUGGESTIONS" value1="There are 3 suggestions. (3 Pending)" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="KnowledgeBase#LINK_THERE_ARE_SUGGESTIONS" value1="There are 3 suggestions. (3 Pending)" />
 
 		<for list="${kbSuggestionCounterList}" param="suggestionCount" >
 			<execute macro="KBArticleSuggestion#viewPG">
@@ -1125,6 +1125,7 @@
 			<var name="kbArticleContent" value="Knowledge Base Article Content" />
 			<var name="kbArticleFriendlyURL" value="Title" />
 			<var name="kbArticleTitle"><![CDATA[><img onerror="alert('xss')" src="xx" /><]]></var>
+			<var name="specialCharacters" value="true" />
 		</execute>
 
 		<execute macro="Navigator#openURL" />

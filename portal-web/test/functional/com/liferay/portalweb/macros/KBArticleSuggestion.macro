@@ -101,7 +101,7 @@
 	<command name="viewNoDuplicatePG">
 		<var name="key_kbSuggestionBody" value="${kbSuggestionBody}" />
 
-		<execute function="AssertTextEquals" locator1="KnowledgeBase#LINK_THERE_ARE_SUGGESTIONS" value1="${kbThereAreSuggestionsLink}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="KnowledgeBase#LINK_THERE_ARE_SUGGESTIONS" value1="${kbThereAreSuggestionsLink}" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="KnowledgeBaseSuggestions#USER_NAME" value1="${kbSuggestionUserName}" />
 		<execute function="AssertTextEquals" locator1="KnowledgeBaseSuggestions#CONTENT" value1="${kbSuggestionBody}" />
 		<execute function="AssertTextEquals" locator1="KnowledgeBaseSuggestions#STATUS" value1="${status}" />

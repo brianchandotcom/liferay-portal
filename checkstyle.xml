@@ -3,6 +3,7 @@
 
 <module name="Checker">
 	<module name="TreeWalker">
+		<property name="tabWidth" value="4" />
 		<module name="UpperEll" />
 	</module>
 </module>

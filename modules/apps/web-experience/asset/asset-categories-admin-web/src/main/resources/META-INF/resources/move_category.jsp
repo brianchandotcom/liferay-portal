@@ -17,6 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String eventName = ParamUtil.getString(request, "eventName", renderResponse.getNamespace() + "selectCategory");
 String redirect = ParamUtil.getString(request, "redirect");
 
 long categoryId = ParamUtil.getLong(request, "categoryId");
@@ -51,12 +52,7 @@ portletDisplay.setURLBack(redirect);
 renderResponse.setTitle(LanguageUtil.format(request, "move-x", category.getTitle(locale)));
 %>
 
-<portlet:actionURL name="moveCategory" var="moveCategoryURL">
-	<portlet:param name="redirect" value="<%= redirect %>" />
-	<portlet:param name="mvcPath" value="/move_category.jsp" />
-</portlet:actionURL>
-
-<aui:form action="<%= moveCategoryURL %>" cssClass="container-fluid-1280" name="fm" onSubmit="event.preventDefault();">
+<aui:form cssClass="container-fluid-1280" name="fm">
 	<aui:input name="categoryId" type="hidden" value="<%= categoryId %>" />
 
 	<aui:fieldset-group markupView="lexicon">
@@ -115,7 +111,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "move-x", category.getTitle
 	</aui:fieldset-group>
 
 	<aui:button-row>
-		<aui:button cssClass="btn-lg" type="submit" value="move" />
+		<aui:button cssClass="btn-lg btn-primary" id="move" value="move" />
 
 		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
 	</aui:button-row>
@@ -141,11 +137,22 @@ renderResponse.setTitle(LanguageUtil.format(request, "move-x", category.getTitle
 		}
 	);
 
-	A.one('#<portlet:namespace />fm').on(
-		'submit',
+	A.one('#<portlet:namespace />move').on(
+		'click',
 		function(event) {
 			if (parentCategoryId.val() != document.<portlet:namespace />fm.<portlet:namespace />categoryId.value) {
-				submitForm(document.<portlet:namespace />fm);
+				Liferay.Util.getOpener().Liferay.fire(
+					'<%= HtmlUtil.escapeJS(eventName) %>',
+					{
+						data: {
+							categoryId: <%= categoryId %>,
+							parentCategoryId: parentCategoryId.val(),
+							vocabularyId: A.one('#<portlet:namespace />vocabularyId').val()
+						}
+					}
+				);
+
+				Liferay.Util.getWindow().hide();
 			}
 			else {
 				alert('<liferay-ui:message arguments="<%= category.getTitle(locale) %>" key="the-category-x-and-parent-category-should-not-be-the-same" />');

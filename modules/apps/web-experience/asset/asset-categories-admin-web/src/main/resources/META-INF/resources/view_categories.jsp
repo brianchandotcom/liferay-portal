@@ -208,6 +208,17 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(assetCategoriesDisplayContext.getVoc
 	</liferay-frontend:add-menu>
 </c:if>
 
+<portlet:actionURL name="moveCategory" var="moveCategoryURL">
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+	<portlet:param name="mvcPath" value="/view_categories.jsp" />
+</portlet:actionURL>
+
+<aui:form action="<%= moveCategoryURL %>" name="moveCategoryFm">
+	<aui:input name="categoryId" type="hidden" />
+	<aui:input name="parentCategoryId" type="hidden" />
+	<aui:input name="vocabularyId" type="hidden" />
+</aui:form>
+
 <aui:script sandbox="<%= true %>">
 	$('#<portlet:namespace />deleteSelectedCategories').on(
 		'click',
@@ -215,6 +226,19 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(assetCategoriesDisplayContext.getVoc
 			if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
 				submitForm($(document.<portlet:namespace />fm));
 			}
+		}
+	);
+
+	Liferay.on(
+		'selectCategory',
+		function (event) {
+			var data = event.data;
+
+			document.<portlet:namespace />moveCategoryFm.<portlet:namespace />categoryId.value = data.categoryId;
+			document.<portlet:namespace />moveCategoryFm.<portlet:namespace />parentCategoryId.value = data.parentCategoryId;
+			document.<portlet:namespace />moveCategoryFm.<portlet:namespace />vocabularyId.value = data.vocabularyId;
+
+			submitForm($(document.<portlet:namespace />moveCategoryFm));
 		}
 	);
 </aui:script>

@@ -50,8 +50,9 @@ AssetCategory category = (AssetCategory)row.getObject();
 	</c:if>
 
 	<c:if test="<%= AssetCategoryPermission.contains(permissionChecker, category, ActionKeys.UPDATE) %>">
-		<portlet:renderURL var="moveCategoryURL">
+		<portlet:renderURL var="moveCategoryURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 			<portlet:param name="mvcPath" value="/move_category.jsp" />
+			<portlet:param name="eventName" value="selectCategory" />
 			<portlet:param name="categoryId" value="<%= String.valueOf(category.getCategoryId()) %>" />
 			<portlet:param name="vocabularyId" value="<%= String.valueOf(category.getVocabularyId()) %>" />
 		</portlet:renderURL>
@@ -59,6 +60,7 @@ AssetCategory category = (AssetCategory)row.getObject();
 		<liferay-ui:icon
 			message="move"
 			url="<%= moveCategoryURL %>"
+			useDialog="<%= true %>"
 		/>
 	</c:if>
 

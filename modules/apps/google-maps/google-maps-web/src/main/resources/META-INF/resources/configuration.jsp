@@ -25,19 +25,19 @@
 		<aui:fieldset>
 			<aui:input name="preferences--mapAddress--" type="text" value="<%= mapAddress %>" wrapperCssClass="lfr-input-text-container" />
 
-			<aui:input label="allow-map-address-to-be-edited" name="preferences--mapInputEnabled--" type="checkbox" value="<%= mapInputEnabled %>" />
+			<aui:input label="allow-map-address-to-be-edited" name="preferences--mapInputEnabled--" type="toggle-switch" value="<%= mapInputEnabled %>" />
 
 			<aui:input name="preferences--directionsAddress--" type="text" value="<%= directionsAddress %>" wrapperCssClass="lfr-input-text-container" />
 
-			<aui:input label="allow-directions-address-to-be-edited" name="preferences--directionsInputEnabled--" type="checkbox" value="<%= directionsInputEnabled %>" />
+			<aui:input label="allow-directions-address-to-be-edited" name="preferences--directionsInputEnabled--" type="toggle-switch" value="<%= directionsInputEnabled %>" />
 
-			<aui:input name="preferences--showDirectionSteps--" type="checkbox" value="<%= showDirectionSteps %>" />
+			<aui:input name="preferences--showDirectionSteps--" type="toggle-switch" value="<%= showDirectionSteps %>" />
 
-			<aui:input name="preferences--enableChangingTravelingMode--" type="checkbox" value="<%= enableChangingTravelingMode %>" />
+			<aui:input name="preferences--enableChangingTravelingMode--" type="toggle-switch" value="<%= enableChangingTravelingMode %>" />
 
 			<aui:input name="preferences--height--" size="4" suffix="px" type="text" value="<%= height %>" />
 
-			<aui:input name="preferences--showGoogleMapsLink--" type="checkbox" value="<%= showGoogleMapsLink %>" />
+			<aui:input name="preferences--showGoogleMapsLink--" type="toggle-switch" value="<%= showGoogleMapsLink %>" />
 		</aui:fieldset>
 	</aui:fieldset-group>
 

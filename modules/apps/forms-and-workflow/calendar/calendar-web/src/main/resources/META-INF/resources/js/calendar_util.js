@@ -65,9 +65,6 @@ AUI.add(
 			PORTLET_NAMESPACE: STR_BLANK,
 			USER_TIME_ZONE: 'UTC',
 
-			availableCalendars: {},
-			visibleCalendars: {},
-
 			adjustSchedulerEventDisplayTime: function(schedulerEvent) {
 				var instance = this;
 
@@ -420,12 +417,6 @@ AUI.add(
 				}
 
 				return output;
-			},
-
-			getDefaultUserCalendar: function() {
-				var instance = this;
-
-				return instance.availableCalendars[CalendarUtil.DEFAULT_USER_CALENDAR_ID];
 			},
 
 			getEvent: function(calendarBookingId, success, failure) {

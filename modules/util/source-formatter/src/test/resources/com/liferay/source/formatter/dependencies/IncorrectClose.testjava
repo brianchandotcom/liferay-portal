@@ -19,7 +19,7 @@ package com.liferay.source.formatter.dependencies;
  */
 public class IncorrectClose {
 
-	protected class InnerClass() {
+	protected class InnerClass {
 
 		public void method() {
 		}

@@ -533,7 +533,7 @@ while (manageableCalendarsIterator.hasNext()) {
 		);
 	};
 
-	var calendarsMenu = Liferay.CalendarUtil.getCalendarsMenu(
+	var calendarsMenu = window.<portlet:namespace />calendarContainer.getCalendarsMenu(
 		{
 			content: '#<portlet:namespace />schedulerContainer',
 			defaultCalendarId: defaultCalendarId,

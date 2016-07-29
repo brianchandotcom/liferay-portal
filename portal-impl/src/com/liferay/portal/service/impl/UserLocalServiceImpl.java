@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheMapSynchronizeUtil;
 import com.liferay.portal.kernel.cache.PortalCacheMapSynchronizeUtil.Synchronizer;
-import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.CompanyMaxUsersException;
@@ -141,6 +141,10 @@ import com.liferay.portal.security.pwd.RegExpToolkit;
 import com.liferay.portal.service.base.UserLocalServiceBaseImpl;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.dependency.ServiceDependencyListener;
+import com.liferay.registry.dependency.ServiceDependencyManager;
 import com.liferay.social.kernel.model.SocialRelation;
 import com.liferay.social.kernel.model.SocialRelationConstants;
 import com.liferay.users.admin.kernel.util.UsersAdminUtil;
@@ -955,30 +959,52 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	public void afterPropertiesSet() {
 		super.afterPropertiesSet();
 
-		PortalCache<Serializable, Serializable> portalCache =
-			EntityCacheUtil.getPortalCache(UserImpl.class);
+		ServiceDependencyManager serviceDependencyManager =
+			new ServiceDependencyManager();
 
-		PortalCacheMapSynchronizeUtil.synchronize(
-			portalCache, _defaultUsers,
-			new Synchronizer<Serializable, Serializable>() {
+		serviceDependencyManager.addServiceDependencyListener(
+			new ServiceDependencyListener() {
 
 				@Override
-				public void onSynchronize(
-					Map<? extends Serializable, ? extends Serializable> map,
-					Serializable key, Serializable value, int timeToLive) {
+				public void dependenciesFulfilled() {
+					Registry registry = RegistryUtil.getRegistry();
 
-					if (!(value instanceof UserCacheModel)) {
-						return;
-					}
+					EntityCache entityCache = registry.getService(
+						EntityCache.class);
 
-					UserCacheModel userCacheModel = (UserCacheModel)value;
+					PortalCache<Serializable, Serializable> portalCache =
+						entityCache.getPortalCache(UserImpl.class);
 
-					if (userCacheModel.defaultUser) {
-						_defaultUsers.remove(userCacheModel.companyId);
-					}
+					PortalCacheMapSynchronizeUtil.synchronize(
+						portalCache, _defaultUsers,
+						new Synchronizer<Serializable, Serializable>() {
+
+							@Override
+							public void onSynchronize(
+								Map<? extends Serializable, ? extends Serializable> map,
+								Serializable key, Serializable value, int timeToLive) {
+
+								if (!(value instanceof UserCacheModel)) {
+									return;
+								}
+
+								UserCacheModel userCacheModel = (UserCacheModel)value;
+
+								if (userCacheModel.defaultUser) {
+									_defaultUsers.remove(userCacheModel.companyId);
+								}
+							}
+
+						});
 				}
 
+			@Override
+			public void destroy() {
+			}
+
 			});
+
+		serviceDependencyManager.registerDependencies(EntityCache.class);
 	}
 
 	/**

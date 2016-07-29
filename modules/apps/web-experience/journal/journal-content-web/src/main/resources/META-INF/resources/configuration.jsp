@@ -280,6 +280,7 @@ List<DDMTemplate> ddmTemplates = journalContentDisplayContext.getDDMTemplates();
 					refererPortletName: '<%= JournalPortletKeys.JOURNAL %>',
 					resourceClassNameId: $('.template-preview-content').attr('data-structure-id'),
 					showAncestorScopes: true,
+					showCacheableInput: true,
 					templateId: $('.template-preview-content').attr('data-template-id'),
 					title: '<liferay-ui:message key="templates" />'
 				},

@@ -163,7 +163,7 @@ public class DDMExpressionImplTest {
 
 		long result = (long)ddmExpression.toRetunType(1.2);
 
-		Assert.assertEquals(1l, result);
+		Assert.assertEquals(1L, result);
 	}
 
 	@Test(expected = DDMExpressionException.IncompatipleReturnType.class)

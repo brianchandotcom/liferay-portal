@@ -21,19 +21,15 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelModifiedDateComparator;
 import com.liferay.exportimport.lar.BaseStagedModelDataHandler;
-import com.liferay.message.boards.kernel.exception.NoSuchDiscussionException;
 import com.liferay.message.boards.kernel.model.MBDiscussion;
 import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.kernel.model.MBThread;
 import com.liferay.message.boards.kernel.service.MBDiscussionLocalService;
 import com.liferay.message.boards.kernel.service.MBMessageLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.util.PropsValues;
 
 import java.util.List;
 import java.util.Map;
@@ -135,29 +131,13 @@ public class MBDiscussionStagedModelDataHandler
 				discussion.getClassName(), newClassPK);
 
 		if (existingDiscussion == null) {
-			if (className.equals(Layout.class.getName()) &&
-				PropsValues.LAYOUT_COMMENTS_ENABLED) {
+			MBMessage rootMessage = _mbMessageLocalService.addDiscussionMessage(
+				userId, discussion.getUserName(),
+				portletDataContext.getScopeGroupId(), className, newClassPK,
+				WorkflowConstants.ACTION_PUBLISH);
 
-				MBMessage rootMessage =
-					_mbMessageLocalService.addDiscussionMessage(
-						userId, discussion.getUserName(),
-						portletDataContext.getScopeGroupId(), className,
-						newClassPK, WorkflowConstants.ACTION_PUBLISH);
-
-				existingDiscussion =
-					_mbDiscussionLocalService.getThreadDiscussion(
-						rootMessage.getThreadId());
-			}
-			else {
-				StringBundler sb = new StringBundler(4);
-
-				sb.append("No discussion exists for class name ");
-				sb.append(discussion.getClassName());
-				sb.append(" and class PK ");
-				sb.append(newClassPK);
-
-				throw new NoSuchDiscussionException(sb.toString());
-			}
+			existingDiscussion = _mbDiscussionLocalService.getThreadDiscussion(
+				rootMessage.getThreadId());
 		}
 
 		Map<Long, Long> discussionIds =

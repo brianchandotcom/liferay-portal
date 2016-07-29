@@ -464,16 +464,6 @@ public class JournalArticleLocalServiceImpl
 			serviceContext.getAssetLinkEntryIds(),
 			serviceContext.getAssetPriority());
 
-		// Comment
-
-		if (JournalServiceConfigurationValues.
-				JOURNAL_ARTICLE_COMMENTS_ENABLED) {
-
-			CommentManagerUtil.addDiscussion(
-				userId, groupId, JournalArticle.class.getName(),
-				resourcePrimKey, article.getUserName());
-		}
-
 		// Dynamic data mapping
 
 		if (classNameLocalService.getClassNameId(DDMStructure.class) ==

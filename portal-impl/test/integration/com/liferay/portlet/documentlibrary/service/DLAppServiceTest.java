@@ -145,19 +145,6 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 			}
 		}
 
-		@Test
-		public void shouldCreateDiscussion() throws Exception {
-			FileEntry fileEntry = addFileEntry(
-				group.getGroupId(), parentFolder.getFolderId());
-
-			boolean hasDiscussion = CommentManagerUtil.hasDiscussion(
-				DLFileEntryConstants.getClassName(),
-				fileEntry.getFileEntryId());
-
-			Assert.assertEquals(
-				PropsValues.DL_FILE_ENTRY_COMMENTS_ENABLED, hasDiscussion);
-		}
-
 		@Test(expected = DuplicateFileEntryException.class)
 		public void shouldFailIfDuplicateNameAndExtensionInFolder1()
 			throws Exception {

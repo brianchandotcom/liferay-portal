@@ -14,8 +14,7 @@
 
 package com.liferay.portal.search.test;
 
-import com.liferay.message.boards.kernel.model.MBMessage;
-import com.liferay.message.boards.kernel.service.MBMessageLocalServiceUtil;
+import com.liferay.portal.kernel.comment.CommentManagerUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.model.Group;
@@ -29,6 +28,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.IdentityServiceContextFunction;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.IdempotentRetryAssert;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -47,7 +47,6 @@ import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.test.randomizerbumpers.BBCodeRandomizerBumper;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.Callable;
@@ -248,17 +247,10 @@ public abstract class BaseSearchTestCase {
 
 		User user = TestPropsValues.getUser();
 
-		List<MBMessage> messages = MBMessageLocalServiceUtil.getMessages(
-			getBaseModelClassName(), getBaseModelClassPK(classedModel),
-			WorkflowConstants.STATUS_ANY);
-
-		MBMessage message = messages.get(0);
-
-		MBMessageLocalServiceUtil.addDiscussionMessage(
-			user.getUserId(), user.getFullName(),
-			serviceContext.getScopeGroupId(), getBaseModelClassName(),
-			getBaseModelClassPK(classedModel), message.getThreadId(),
-			message.getMessageId(), message.getSubject(), body, serviceContext);
+		CommentManagerUtil.addComment(
+			user.getUserId(), serviceContext.getScopeGroupId(),
+			getBaseModelClassName(), getBaseModelClassPK(classedModel), body,
+			new IdentityServiceContextFunction(serviceContext));
 	}
 
 	protected void assertBaseModelsCount(

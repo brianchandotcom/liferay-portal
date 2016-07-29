@@ -574,7 +574,7 @@ String backURL = PortalUtil.getCurrentURL(request);
 		miniCalendarEndDate.setHours(23, 59, 59, 999);
 
 		Liferay.CalendarUtil.getCalendarRenderingRules(
-			A.Object.keys(Liferay.CalendarUtil.visibleCalendars),
+			A.Object.keys(window.<portlet:namespace />calendarContainer.get('visibleCalendars')),
 			Liferay.CalendarUtil.toUTC(miniCalendarStartDate),
 			Liferay.CalendarUtil.toUTC(miniCalendarEndDate),
 			'busy',

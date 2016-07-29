@@ -113,6 +113,7 @@ String viewCalendarBookingURL = ParamUtil.getString(request, "viewCalendarBookin
 		window.<portlet:namespace />eventRecorder = new Liferay.SchedulerEventRecorder(
 			{
 				bodyTemplate: new A.Template(A.one('#<portlet:namespace />eventRecorderBodyTpl').html()),
+				calendarContainer: window.<portlet:namespace />calendarContainer,
 				calendarId: <%= defaultCalendar.getCalendarId() %>,
 				color: '<%= ColorUtil.toHexString(defaultCalendar.getColor()) %>',
 				duration: <%= defaultDuration %>,
@@ -154,6 +155,7 @@ String viewCalendarBookingURL = ParamUtil.getString(request, "viewCalendarBookin
 		{
 			activeView: window['<portlet:namespace /><%= HtmlUtil.escapeJS(activeView) %>View'],
 			boundingBox: '#<portlet:namespace />scheduler',
+			calendarContainer: window.<portlet:namespace />calendarContainer,
 
 			<%
 			java.util.Calendar dateJCalendar = CalendarFactoryUtil.getCalendar(userTimeZone);
@@ -174,7 +176,7 @@ String viewCalendarBookingURL = ParamUtil.getString(request, "viewCalendarBookin
 			eventRecorder: window.<portlet:namespace />eventRecorder,
 			filterCalendarBookings: window['<%= HtmlUtil.escapeJS(filterCalendarBookings) %>'],
 			firstDayOfWeek: <%= weekStartsOn %>,
-			items: A.Object.values(Liferay.CalendarUtil.availableCalendars),
+			items: A.Object.values(window.<portlet:namespace />calendarContainer.get('availableCalendars')),
 			portletNamespace: '<portlet:namespace />',
 			preventPersistence: <%= preventPersistence %>,
 			render: true,

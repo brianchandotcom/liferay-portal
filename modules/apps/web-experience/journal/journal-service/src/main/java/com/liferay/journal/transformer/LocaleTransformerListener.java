@@ -15,11 +15,13 @@
 package com.liferay.journal.transformer;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.templateparser.BaseTransformerListener;
+import com.liferay.portal.kernel.templateparser.TransformerListener;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -32,9 +34,17 @@ import com.liferay.portal.kernel.xml.Element;
 import java.util.List;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Raymond Augé
  */
+@Component(
+	immediate = true,
+	property = {"javax.portlet.name=" + JournalPortletKeys.JOURNAL},
+	service = TransformerListener.class
+)
 public class LocaleTransformerListener extends BaseTransformerListener {
 
 	@Override
@@ -156,7 +166,7 @@ public class LocaleTransformerListener extends BaseTransformerListener {
 				tokens.get("ddm_structure_id"));
 
 			DDMStructure ddmStructure =
-				DDMStructureLocalServiceUtil.fetchDDMStructure(ddmStructureId);
+				_ddmStructureLocalService.fetchDDMStructure(ddmStructureId);
 
 			if (ddmStructure == null) {
 				if (_log.isWarnEnabled()) {
@@ -206,7 +216,16 @@ public class LocaleTransformerListener extends BaseTransformerListener {
 		}
 	}
 
+	@Reference(unbind = "-")
+	protected void setDDMStructureLocalService(
+		DDMStructureLocalService ddmStructureLocalService) {
+
+		_ddmStructureLocalService = ddmStructureLocalService;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		LocaleTransformerListener.class);
+
+	private DDMStructureLocalService _ddmStructureLocalService;
 
 }

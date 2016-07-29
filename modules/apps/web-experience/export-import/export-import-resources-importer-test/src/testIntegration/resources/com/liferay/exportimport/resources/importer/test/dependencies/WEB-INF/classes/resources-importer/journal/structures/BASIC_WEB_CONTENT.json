@@ -8,7 +8,7 @@
 			"label":{"en_US":"Content"},
 			"type":"ddm-text-html",
 			"fieldNamespace":"ddm",
-			"indexType":"keyword",
+			"indexType":"text",
 			"dataType":"html",
 			"readOnly":false,
 			"visibilityExpression":"",

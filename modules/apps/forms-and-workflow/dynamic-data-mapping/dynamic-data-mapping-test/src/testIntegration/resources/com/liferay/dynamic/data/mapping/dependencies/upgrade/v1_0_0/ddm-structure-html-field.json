@@ -5,7 +5,7 @@
 		{
 			"dataType": "html",
 			"fieldNamespace": "ddm",
-			"indexType": "keyword",
+			"indexType": "text",
 			"label": {
 				"en_US": "HTML Label"
 			},

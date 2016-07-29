@@ -36,6 +36,50 @@ AUI.add(
 				NAME: 'calendar-container',
 
 				prototype: {
+					createCalendarsAutoComplete: function(resourceURL, input, afterSelectFn) {
+						var instance = this;
+
+						input.plug(
+							A.Plugin.AutoComplete,
+							{
+								activateFirstItem: true,
+								after: {
+									select: afterSelectFn
+								},
+								maxResults: 20,
+								requestTemplate: '&' + instance.get('namespace') + 'keywords={query}',
+								resultFilters: function(query, results) {
+									return results.filter(
+										function(item, index) {
+											return !instance.getCalendar(item.raw.calendarId);
+										}
+									);
+								},
+								resultFormatter: function(query, results) {
+									return results.map(
+										function(result) {
+											var calendar = result.raw;
+											var calendarResourceName = calendar.calendarResourceName;
+											var name = calendar.name;
+
+											if (name !== calendarResourceName) {
+												name = [calendarResourceName, STR_DASH, name].join(STR_SPACE);
+											}
+
+											return A.Highlight.words(name, query);
+										}
+									);
+								},
+								resultHighlighter: 'wordMatch',
+								resultTextLocator: 'calendarResourceName',
+								source: resourceURL,
+								width: 'auto'
+							}
+						);
+
+						input.ac.get('boundingBox').setStyle('min-width', input.outerWidth());
+					},
+
 					getCalendar: function(calendarId) {
 						var instance = this;
 

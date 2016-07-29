@@ -504,7 +504,7 @@ String backURL = PortalUtil.getCurrentURL(request);
 
 		<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="calendarResources" var="calendarResourcesURL" />
 
-		Liferay.CalendarUtil.createCalendarsAutoComplete(
+		window.<portlet:namespace />calendarContainer.createCalendarsAutoComplete(
 			'<%= calendarResourcesURL %>',
 			addOtherCalendarInput,
 			function(event) {

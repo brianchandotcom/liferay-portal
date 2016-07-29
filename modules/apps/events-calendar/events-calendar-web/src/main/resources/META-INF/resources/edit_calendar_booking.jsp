@@ -733,7 +733,7 @@ while (manageableCalendarsIterator.hasNext()) {
 
 		<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="calendarResources" var="calendarResourcesURL"></liferay-portlet:resourceURL>
 
-		Liferay.CalendarUtil.createCalendarsAutoComplete(
+		window.<portlet:namespace />calendarContainer.createCalendarsAutoComplete(
 			'<%= calendarResourcesURL %>',
 			inviteResourcesInput,
 			function(event) {

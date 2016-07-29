@@ -31,8 +31,6 @@ public interface SourceProcessor {
 
 	public List<SourceFormatterMessage> getSourceFormatterMessages();
 
-	public void processMessage(SourceFormatterMessage sourceFormatterMessage);
-
 	public void processMessage(String fileName, String message);
 
 	public void processMessage(String fileName, String message, int lineCount);

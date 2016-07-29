@@ -166,30 +166,23 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	@Override
-	public void processMessage(SourceFormatterMessage sourceFormatterMessage) {
-		List<SourceFormatterMessage> sourceFormatterMessages =
-			_sourceFormatterMessagesMap.get(
-				sourceFormatterMessage.getFileName());
-
-		if (sourceFormatterMessages == null) {
-			sourceFormatterMessages = new ArrayList<>();
-		}
-
-		sourceFormatterMessages.add(sourceFormatterMessage);
-
-		_sourceFormatterMessagesMap.put(
-			sourceFormatterMessage.getFileName(), sourceFormatterMessages);
-	}
-
-	@Override
 	public void processMessage(String fileName, String message) {
 		processMessage(fileName, message, -1);
 	}
 
 	@Override
 	public void processMessage(String fileName, String message, int lineCount) {
-		processMessage(
+		List<SourceFormatterMessage> sourceFormatterMessages =
+			_sourceFormatterMessagesMap.get(fileName);
+
+		if (sourceFormatterMessages == null) {
+			sourceFormatterMessages = new ArrayList<>();
+		}
+
+		sourceFormatterMessages.add(
 			new SourceFormatterMessage(fileName, message, lineCount));
+
+		_sourceFormatterMessagesMap.put(fileName, sourceFormatterMessages);
 	}
 
 	@Override

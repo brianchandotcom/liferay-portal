@@ -37,6 +37,8 @@ import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import javax.net.ssl.SSLException;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.NoHttpResponseException;
@@ -123,6 +125,7 @@ public class BaseHandler implements Handler<Void> {
 			(e instanceof NoHttpResponseException) ||
 			(e instanceof SocketException) ||
 			(e instanceof SocketTimeoutException) ||
+			(e instanceof SSLException) ||
 			(e instanceof UnknownHostException)) {
 
 			retryServerConnection(SyncAccount.UI_EVENT_CONNECTION_EXCEPTION);

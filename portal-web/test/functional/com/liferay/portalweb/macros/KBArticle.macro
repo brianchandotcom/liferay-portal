@@ -790,6 +790,7 @@
 			</then>
 			<else>
 				<execute function="Click" locator1="Icon#INFO" />
+
 				<execute function="Click" locator1="Icon#HISTORY_VERTICAL_ELLIPSIS" />
 			</else>
 		</if>

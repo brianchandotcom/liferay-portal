@@ -82,6 +82,7 @@
 			<equals arg1="${kbFolderName}" arg2="Home" />
 			<then>
 				<execute function="Click" locator1="KnowledgeBaseSelectParent#BREADCRUMB_HOME" />
+
 				<execute function="AssertClick" locator1="Button#CHOOSE_THIS_FOLDER" value1="Choose This Folder" />
 			</then>
 			<else>

@@ -684,13 +684,13 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			oldTemplateScriptSB.append(".\\s*getLong\\s*\\(\\s*");
 			oldTemplateScriptSB.append(dateFieldName);
 			oldTemplateScriptSB.append(".\\s*getData\\s*\\(\\s*\\)");
-			oldTemplateScriptSB.append("\\s*\\)\\s*>");
+			oldTemplateScriptSB.append("\\s*\\)\\s*/?>");
 
 			newTemplateScriptSB.append("<#assign ");
 			newTemplateScriptSB.append(dateFieldName);
 			newTemplateScriptSB.append("_Data = getterUtil.getString(");
 			newTemplateScriptSB.append(dateFieldName);
-			newTemplateScriptSB.append(".getData())>");
+			newTemplateScriptSB.append(".getData()) />");
 		}
 		else if (language.equals("vm")) {
 			dateFieldName =
@@ -828,14 +828,14 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			oldTemplateScriptSB.append("_DateObj\\s*=\\s*dateUtil\\s*");
 			oldTemplateScriptSB.append(".\\s*newDate\\(\\s*");
 			oldTemplateScriptSB.append(dateFieldName);
-			oldTemplateScriptSB.append("_Data\\s*\\)\\s*>");
+			oldTemplateScriptSB.append("_Data\\s*\\)\\s*/?>");
 
 			newTemplateScriptSB.append("<#assign ");
 			newTemplateScriptSB.append(dateFieldName);
 			newTemplateScriptSB.append(
 				"_DateObj = dateUtil.parseDate(\"yyyy-MM-dd\", ");
 			newTemplateScriptSB.append(dateFieldName);
-			newTemplateScriptSB.append("_Data, locale)>");
+			newTemplateScriptSB.append("_Data, locale) />");
 		}
 		else if (language.equals("vm")) {
 			dateFieldName =

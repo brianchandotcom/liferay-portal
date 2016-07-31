@@ -18,7 +18,7 @@
 
 <@liferay_util["include"] page=body_top_include />
 
-<#assign scope_group = theme_display.getScopeGroup()>
+<#assign scope_group = theme_display.getScopeGroup() />
 
 <div id="wrapper">
 	<div id="content-wrapper">

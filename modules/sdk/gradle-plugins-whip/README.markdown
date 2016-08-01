@@ -1,7 +1,7 @@
 # Whip Gradle Plugin
 
 The Whip Gradle plugin allows you to use the [Liferay Whip](https://github.com/liferay/liferay-portal/tree/master/modules/test/whip)
-library in order to ensure that unit tests fully cover your project code. See
+library in order to ensure that unit tests fully cover your project's code. See
 [here](https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-whip/samples)
 for a usage sample.
 
@@ -37,8 +37,9 @@ repositories {
 }
 ```
 
-By default, Whip is automatically applied to all the tasks of type [`Test`](https://docs.gradle.org/current/javadoc/org/gradle/api/tasks/testing/Test.html).
-If a task has Whip applied and it is [enabled](#enabled), then Whip is configured as a Java Agent.
+By default, Whip is automatically applied to all tasks of type [`Test`](https://docs.gradle.org/current/javadoc/org/gradle/api/tasks/testing/Test.html).
+If a task has Whip applied and is [enabled](#enabled), then Whip is configured
+as a Java Agent.
 
 ## Project Extension
 
@@ -64,10 +65,10 @@ Property Name | Type | Default Value | Description
 ------------- | ---- | ------------- | -----------
 `dataFile` | `File` | `test-coverage/whip.dat` |
 <a name="enabled"></a>`enabled` | `boolean` | `true` | Whether to configure Whip as a Java Agent.
-`excludes` | `List<String>` | `[]` | The exclude patterns for the class names to check for full coverage. A good value could be `['.*Test', '.*Test\\$.*', '.*\\$Proxy.*', 'com/liferay/whip/.*']`.
+`excludes` | `List<String>` | `[]` | The exclude patterns for the class names to check for full coverage. For example, a value could be `['.*Test', '.*Test\\$.*', '.*\\$Proxy.*', 'com/liferay/whip/.*']`.
 `includes` | `List<String>` | `[]` | The include patterns for the class names to check for full coverage.
 `instrumentDump` | `boolean` | `false` |
-<a name="whipjarfile"></a>`whipJarFile` | `File` | The first file in the `whip` configuration whose name starts with `com.liferay.whip-` | The Whip JAR file.
+<a name="whipjarfile"></a>`whipJarFile` | `File` | The first file in the `whip` configuration whose name starts with `com.liferay.whip-`. | The Whip JAR file.
 
 The same extension exposes the following methods:
 

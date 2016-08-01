@@ -1930,9 +1930,20 @@
 			<var name="kfProcessFieldData" value="option 2" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="//div[contains(@class,'control-group field-wrapper')][1]/label" value1="Text" />
-		<execute function="AssertTextEquals" locator1="//div[contains(@class,'control-group field-wrapper')][2]/label" value1="Text Box" />
-		<execute function="AssertTextEquals" locator1="//div[contains(@class,'control-group field-wrapper')][3]/div/label" value1="Select" />
+		<execute macro="FormFields#viewTextLabel">
+			<var name="fieldLabel" value="Text" />
+			<var name="fieldName" value="Text" />
+		</execute>
+
+		<execute macro="FormFields#viewTextMultilineLabel">
+			<var name="fieldLabel" value="Text Box" />
+			<var name="fieldName" value="TextBox" />
+		</execute>
+
+		<execute macro="FormFields#viewSelectLabel">
+			<var name="fieldLabel" value="Select" />
+			<var name="fieldName" value="Select" />
+		</execute>
 
 		<execute macro="KaleoFormsAdmin#saveProcessRecord" />
 
@@ -2014,9 +2025,20 @@
 			<var name="fieldValue" value="option 2" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="//div[contains(@class,'field-wrapper-content')][1]/label" value1="Text" />
-		<execute function="AssertTextEquals" locator1="//div[contains(@class,'field-wrapper-content')][2]/label" value1="Text Box" />
-		<execute function="AssertTextEquals" locator1="//div[contains(@class,'field-wrapper-content')][3]/label" value1="Select" />
+		<execute macro="FormFields#viewTextLabel">
+			<var name="fieldLabel" value="Text" />
+			<var name="fieldName" value="Text" />
+		</execute>
+
+		<execute macro="FormFields#viewTextMultilineLabel">
+			<var name="fieldLabel" value="Text Box" />
+			<var name="fieldName" value="TextBox" />
+		</execute>
+
+		<execute macro="FormFields#viewSelectLabel">
+			<var name="fieldLabel" value="Select" />
+			<var name="fieldName" value="Select" />
+		</execute>
 	</command>
 
 	<command name="CompleteProcessAndViewEmailNotifications" priority="4">

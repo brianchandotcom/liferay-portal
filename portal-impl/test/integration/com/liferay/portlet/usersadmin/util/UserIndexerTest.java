@@ -128,12 +128,9 @@ public class UserIndexerTest {
 		addUserNameFields(firstName, lastName, middleName);
 
 		assertHits("firstName", "\"Mary Watson\"", 0);
+		assertHits("firstName", "\"Mary Jane\" Missingword", 0);
 
 		User user = assertSearchOneUser("firstName", "Mary \"Jane Watson\"");
-
-		Assert.assertEquals(firstName, user.getFirstName());
-
-		user = assertSearchOneUser("firstName", "\"Mary Jane\" Trial");
 
 		Assert.assertEquals(firstName, user.getFirstName());
 	}
@@ -237,28 +234,18 @@ public class UserIndexerTest {
 	}
 
 	@Test
-	public void testScreenNamePrefix() throws Exception {
-		addUserScreenName("Open4Life");
-
-		User user = assertSearchOneUser("OPE");
-
-		Assert.assertEquals("open4life", user.getScreenName());
-	}
-
-	@Test
 	public void testScreenNameSubstring() throws Exception {
 		addUserScreenName("Open4Life");
 
-		User user = assertSearchOneUser("4lif");
+		User user = assertSearchOneUser("open lite");
 
 		Assert.assertEquals("open4life", user.getScreenName());
-	}
 
-	@Test
-	public void testScreenNameTwoWords() throws Exception {
-		addUserScreenName("Open4Life");
+		user = assertSearchOneUser("OPE");
 
-		User user = assertSearchOneUser("screenName", "open lite");
+		Assert.assertEquals("open4life", user.getScreenName());
+
+		user = assertSearchOneUser("4lif");
 
 		Assert.assertEquals("open4life", user.getScreenName());
 	}

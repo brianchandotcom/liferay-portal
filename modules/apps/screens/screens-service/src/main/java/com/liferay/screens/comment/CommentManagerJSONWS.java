@@ -70,9 +70,11 @@ public class CommentManagerJSONWS extends BaseServiceImpl {
 		discussionPermission.checkAddPermission(
 			companyId, groupId, className, classPK);
 
-		return _commentManager.addComment(
-			getUserId(), groupId, className, classPK, body,
-			createServiceContextFunction(companyId));
+		long commentId = _commentManager.addComment(
+			getUserId(), groupId, className, classPK, getUserName(),
+			StringPool.BLANK, body, createServiceContextFunction());
+
+		return getComment(groupId, commentId);
 	}
 
 	public void deleteComment(long commentId) throws PortalException {

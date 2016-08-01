@@ -1485,7 +1485,7 @@
 		</execute>
 	</command>
 
-	<command name="setTomorrowAsEndDate">
+	<command name="setEndDateTomorrow">
 		<execute function="Click" locator1="CalendarEditEvent#END_DATE" />
 
 		<var locator="CalendarEditEvent#MINI_CALENDAR_DAY_SELECTED" name="daySelected" />

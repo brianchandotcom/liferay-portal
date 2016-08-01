@@ -112,7 +112,7 @@ public class JournalDisplayContext {
 			_request);
 	}
 
-	public String[] getAddMenuFavItems() {
+	public String[] getAddMenuFavItems() throws PortalException {
 		if (_addMenuFavItems != null) {
 			return _addMenuFavItems;
 		}
@@ -129,7 +129,7 @@ public class JournalDisplayContext {
 		return _addMenuFavItems;
 	}
 
-	public int getAddMenuFavItemsLength() {
+	public int getAddMenuFavItemsLength() throws PortalException {
 		String[] addMenuFavItems = getAddMenuFavItems();
 
 		return addMenuFavItems.length;

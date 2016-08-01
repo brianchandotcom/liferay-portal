@@ -1282,14 +1282,6 @@
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
-	<command name="viewResourcesAvailability">
-		<execute macro="CalendarEvent#_expandPanel">
-			<var name="panelName" value="Resources Availability" />
-		</execute>
-
-		<execute function="AssertElementPresent" locator1="CalendarEditEvent#RESOURCES_AVAILABILITY_SCHEDULER_EVENT_GENERIC" />
-	</command>
-
 	<command name="saveEventUserInvite">
 		<execute function="AssertElementPresent" locator1="CalendarEditEvent#ARE_YOU_SURE_DIALOG_BOX_HEADER" value1="Are you sure?" />
 		<execute function="AssertTextEquals" locator1="CalendarEditEvent#ARE_YOU_SURE_DIALOG_BOX_BODY" value1="Invited users will be notified." />
@@ -1983,6 +1975,14 @@
 
 	<command name="viewRepeatWeekStartDay">
 		<execute function="AssertTextEquals" locator1="CalendarEditEvent#REPEAT_REPEAT_ON_DAY_OF_THE_WEEK_WEEKDAY_WEEK_START_DAY" value1="${weekStartDay}" />
+	</command>
+
+	<command name="viewResourcesAvailability">
+		<execute macro="CalendarEvent#_expandPanel">
+			<var name="panelName" value="Resources Availability" />
+		</execute>
+
+		<execute function="AssertElementPresent" locator1="CalendarEditEvent#RESOURCES_AVAILABILITY_SCHEDULER_EVENT_GENERIC" />
 	</command>
 
 	<command name="viewRSVPAccepted">

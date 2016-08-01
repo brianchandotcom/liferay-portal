@@ -87,19 +87,6 @@ AssetCategory category = (AssetCategory)row.getObject();
 </liferay-ui:icon-menu>
 
 <c:if test="<%= AssetCategoryPermission.contains(permissionChecker, category, ActionKeys.UPDATE) %>">
-
-	<%
-	List<AssetVocabulary> vocabularies = AssetVocabularyServiceUtil.getGroupVocabularies(scopeGroupId);
-
-	PortletURL selectCategoryURL = PortletProviderUtil.getPortletURL(request, AssetCategory.class.getName(), PortletProvider.Action.BROWSE);
-
-	selectCategoryURL.setParameter("eventName", renderResponse.getNamespace() + "selectCategory");
-	selectCategoryURL.setParameter("singleSelect", Boolean.TRUE.toString());
-	selectCategoryURL.setParameter("vocabularyIds", ListUtil.toString(vocabularies, AssetVocabulary.VOCABULARY_ID_ACCESSOR));
-
-	selectCategoryURL.setWindowState(LiferayWindowState.POP_UP);
-	%>
-
 	<aui:script use="liferay-item-selector-dialog">
 		$('#<portlet:namespace /><%= row.getRowId() %>moveCategory').on(
 			'click',
@@ -138,7 +125,7 @@ AssetCategory category = (AssetCategory)row.getObject();
 						},
 						'strings.add': '<liferay-ui:message key="done" />',
 						title: '<liferay-ui:message arguments="<%= category.getTitle(locale) %>" key="move-x" />',
-						url: '<%= selectCategoryURL.toString() %>'
+						url: '<%= assetCategoriesDisplayContext.getSelectCategoryURL() %>'
 					}
 				);
 

@@ -32,13 +32,17 @@ import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -359,6 +363,37 @@ public class AssetCategoriesDisplayContext {
 		return _orderByType;
 	}
 
+	public String getSelectCategoryURL() throws Exception {
+		if (_selectCategoryURL != null) {
+			return _selectCategoryURL;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		List<AssetVocabulary> vocabularies =
+			AssetVocabularyServiceUtil.getGroupVocabularies(
+				themeDisplay.getScopeGroupId());
+
+		PortletURL selectCategoryURL = PortletProviderUtil.getPortletURL(
+			_request, AssetCategory.class.getName(),
+			PortletProvider.Action.BROWSE);
+
+		selectCategoryURL.setParameter(
+			"eventName", _renderResponse.getNamespace() + "selectCategory");
+		selectCategoryURL.setParameter("singleSelect", Boolean.TRUE.toString());
+		selectCategoryURL.setParameter(
+			"vocabularyIds",
+			ListUtil.toString(
+				vocabularies, AssetVocabulary.VOCABULARY_ID_ACCESSOR));
+
+		selectCategoryURL.setWindowState(LiferayWindowState.POP_UP);
+
+		_selectCategoryURL = selectCategoryURL.toString();
+
+		return _selectCategoryURL;
+	}
+
 	public SearchContainer getVocabulariesSearchContainer()
 		throws PortalException {
 
@@ -585,6 +620,7 @@ public class AssetCategoriesDisplayContext {
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _request;
+	private String _selectCategoryURL;
 	private SearchContainer _vocabulariesSearchContainer;
 	private AssetVocabulary _vocabulary;
 	private Long _vocabularyId;

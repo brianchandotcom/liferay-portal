@@ -1282,7 +1282,7 @@
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
-	<command name="resourcesAvailability">
+	<command name="viewResourcesAvailability">
 		<execute macro="CalendarEvent#_expandPanel">
 			<var name="panelName" value="Resources Availability" />
 		</execute>

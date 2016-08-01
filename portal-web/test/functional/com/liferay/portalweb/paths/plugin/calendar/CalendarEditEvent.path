@@ -40,6 +40,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>START_DATE_TIME_OPTION</td>
+	<td>//div[contains(@class,'timepicker-popover') and contains(@style,'display: block')]//li[contains(.,'${key_startDateTime}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -61,14 +66,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--TIME_PICKER-->
-<tr>
-	<td>TIME_SPECIFIC_IN_TIME_PICKER</td>
-	<td>//div[contains(@class,'timepicker-popover') and contains(@style,'display: block')]//li[contains(.,'${key_timeSpecific}')]</td>
+	<td>END_DATE_TIME_OPTION</td>
+	<td>//div[contains(@class,'timepicker-popover') and contains(@style,'display: block')]//li[contains(.,'${key_endDateTime}')]</td>
 	<td></td>
 </tr>
 <tr>

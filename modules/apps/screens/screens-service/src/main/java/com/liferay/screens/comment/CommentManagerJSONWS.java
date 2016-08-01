@@ -118,9 +118,9 @@ public class CommentManagerJSONWS extends BaseServiceImpl {
 		return _commentManager.getCommentsCount(className, classPK);
 	}
 
-	public long updateComment(
-		String className, long classPK, long commentId, String subject,
-		String body)
+	public CommentJSONWS updateComment(
+			long groupId, String className, long classPK, long commentId,
+			String body)
 		throws PortalException {
 
 		DiscussionPermission discussionPermission =

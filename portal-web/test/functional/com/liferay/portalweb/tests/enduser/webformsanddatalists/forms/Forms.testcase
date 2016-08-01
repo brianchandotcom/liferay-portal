@@ -1465,15 +1465,14 @@
 						<var name="pageName" value="Form Page" />
 					</execute>
 				</then>
-			</if>
-
-			<if>
-				<equals arg1="${formAccessLevel}" arg2="public" />
-				<then>
-					<execute macro="Navigator#openSpecificURL">
-						<var name="url" value="${publishedFormPublicURL}" />
-					</execute>
-				</then>
+				<elseif>
+					<equals arg1="${formAccessLevel}" arg2="public" />
+					<then>
+						<execute macro="Navigator#openSpecificURL">
+							<var name="url" value="${publishedFormPublicURL}" />
+						</execute>
+					</then>
+				</elseif>
 			</if>
 
 			<execute macro="FormFields#viewTextField">

@@ -27,8 +27,22 @@ import java.util.List;
 public class AppServer {
 
 	public static AppServer getJBossEAPAppServer() {
+		StringBuilder sb = new StringBuilder();
+
+		String extraLibDirPrefix = "/modules/system/layers/base/";
+
+		sb.append(extraLibDirPrefix);
+		sb.append("javax/mail,");
+		sb.append(extraLibDirPrefix);
+		sb.append("javax/persistence,");
+		sb.append(extraLibDirPrefix);
+		sb.append("javax/servlet,");
+		sb.append(extraLibDirPrefix);
+		sb.append("javax/transaction");
+
 		return new AppServer(
-			"../../jboss-eap-6.4.0", "", "/modules/com/liferay/portal/main",
+			"../../jboss-eap-6.4.0", sb.toString(),
+			"/modules/com/liferay/portal/main",
 			"/standalone/deployments/ROOT.war", "jboss");
 	}
 

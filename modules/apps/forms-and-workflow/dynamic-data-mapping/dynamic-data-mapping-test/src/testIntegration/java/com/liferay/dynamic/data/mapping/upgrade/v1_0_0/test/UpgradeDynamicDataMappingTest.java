@@ -861,7 +861,7 @@ public class UpgradeDynamicDataMappingTest {
 			sb.append(dateFieldName);
 			sb.append("_Data = getterUtil.getString(");
 			sb.append(dateFieldName);
-			sb.append(".getData())>");
+			sb.append(".getData()) />");
 
 			Assert.assertTrue(actualDefinition.contains(sb.toString()));
 
@@ -883,7 +883,7 @@ public class UpgradeDynamicDataMappingTest {
 			sb.append(dateFieldName);
 			sb.append("_DateObj = dateUtil.parseDate(\"yyyy-MM-dd\", ");
 			sb.append(dateFieldName);
-			sb.append("_Data, locale)>");
+			sb.append("_Data, locale) />");
 
 			Assert.assertTrue(actualDefinition.contains(sb.toString()));
 		}

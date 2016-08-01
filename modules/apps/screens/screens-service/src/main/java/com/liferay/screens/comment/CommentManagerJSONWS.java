@@ -116,43 +116,6 @@ public class CommentManagerJSONWS extends BaseServiceImpl {
 		return _commentManager.getCommentsCount(className, classPK);
 	}
 
-	public boolean hasDiscussion(long groupId, String className, long classPK)
-		throws PortalException {
-
-		BaseModelPermissionCheckerUtil.containsBaseModelPermission(
-			getPermissionChecker(), groupId, className, classPK,
-			ActionKeys.VIEW);
-
-		return _commentManager.hasDiscussion(className, classPK);
-	}
-
-	public void subscribeDiscussion(
-		long groupId, String className, long classPK)
-		throws PortalException {
-
-		DiscussionPermission discussionPermission =
-			_commentManager.getDiscussionPermission(getPermissionChecker());
-
-		discussionPermission.checkSubscribePermission(
-			getCompanyId(groupId), groupId, className, classPK);
-
-		_commentManager.subscribeDiscussion(
-			getUserId(), groupId, className, classPK);
-	}
-
-	public void unsubscribeDiscussion(
-		long groupId, String className, long classPK)
-		throws PortalException {
-
-		DiscussionPermission discussionPermission =
-			_commentManager.getDiscussionPermission(getPermissionChecker());
-
-		discussionPermission.checkSubscribePermission(
-			getCompanyId(groupId), groupId, className, classPK);
-
-		_commentManager.unsubscribeDiscussion(getUserId(), className, classPK);
-	}
-
 	public long updateComment(
 		String className, long classPK, long commentId, String subject,
 		String body)
@@ -189,23 +152,6 @@ public class CommentManagerJSONWS extends BaseServiceImpl {
 				ServiceContext serviceContext = new ServiceContext();
 
 				serviceContext.setWorkflowAction(workflowAction);
-
-				return serviceContext;
-			}
-
-		};
-	}
-
-	protected Function<String, ServiceContext> createServiceContextFunction(
-		final long companyId) {
-
-		return new Function<String, ServiceContext>() {
-
-			@Override
-			public ServiceContext apply(String className) {
-				ServiceContext serviceContext = new ServiceContext();
-
-				serviceContext.setCompanyId(companyId);
 
 				return serviceContext;
 			}

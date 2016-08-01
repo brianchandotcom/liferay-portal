@@ -1,9 +1,23 @@
 <definition>
+	<command name="_editCP">
+		<execute function="Type" locator1="TextInput#NAME" value1="${teamName}" />
+
+		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${teamDescription}" />
+	</command>
+
+	<command name="_searchCP">
+		<execute function="Type" locator1="TextInput#SEARCH" value1="${searchTerm}" />
+		<execute function="KeyPress" locator1="TextInput#SEARCH" value1="\RETURN" />
+	</command>
+
 	<command name="addCP">
 		<execute macro="LexiconEntry#gotoAdd" />
 
-		<execute function="Type" locator1="TextInput#NAME" value1="${teamName}" />
-		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${teamDescription}" />
+		<execute macro="Team#_editCP">
+			<var name="teamDescription" value="${teamDescription}" />
+			<var name="teamName" value="${teamName}" />
+		</execute>
+
 		<execute macro="PortletEntry#save" />
 	</command>
 
@@ -11,8 +25,9 @@
 		<var name="key_teamName" value="${teamName}" />
 		<var name="key_userScreenName" value="${userScreenName}" />
 
-		<execute function="Type" locator1="TextInput#SEARCH" value1="${teamName}" />
-		<execute function="KeyPress" locator1="TextInput#SEARCH" value1="\RETURN" />
+		<execute macro="Team#_searchCP">
+			<var name="searchTerm" value="${teamName}" />
+		</execute>
 
 		<execute macro="Portlet#changeDisplayStyle">
 			<var name="displayStyle" value="List" />
@@ -30,9 +45,9 @@
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
-		<execute function="Type" locator1="TextInput#SEARCH" value1="${userScreenName}" />
-
-		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
+		<execute macro="Team#_searchCP">
+			<var name="searchTerm" value="${userScreenName}" />
+		</execute>
 
 		<if>
 			<equals arg1="${userNameIsNotFound}" arg2="true" />
@@ -66,9 +81,9 @@
 	<command name="assignUserGroups">
 		<var name="key_teamName" value="${teamName}" />
 
-		<execute function="Type" locator1="TextInput#SEARCH" value1="${teamName}" />
-
-		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
+		<execute macro="Team#_searchCP">
+			<var name="searchTerm" value="${teamName}" />
+		</execute>
 
 		<execute macro="Portlet#changeDisplayStyle">
 			<var name="displayStyle" value="List" />
@@ -88,9 +103,9 @@
 
 		<var name="key_cardText" value="${userGroupName}" />
 
-		<execute function="Type" locator1="TextInput#SEARCH" value1="${userGroupName}" />
-
-		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
+		<execute macro="Team#_searchCP">
+			<var name="searchTerm" value="${userGroupName}" />
+		</execute>
 
 		<if>
 			<equals arg1="${userGroupsNameIsNotAvailable}" arg2="true" />
@@ -145,8 +160,11 @@
 			<var name="rowEntry" value="${teamName}" />
 		</execute>
 
-		<execute function="Type" locator1="TextInput#NAME" value1="${teamNameEdit}" />
-		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${teamDescriptionEdit}" />
+		<execute macro="Team#_editCP">
+			<var name="teamDescription" value="${teamDescription}" />
+			<var name="teamName" value="${teamName}" />
+		</execute>
+
 		<execute macro="PortletEntry#save" />
 	</command>
 

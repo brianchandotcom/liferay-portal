@@ -324,6 +324,13 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 	}
 
 	@Override
+	public String getDescriptionMapAsXML() {
+		return LocalizationUtil.updateLocalization(
+			getDescriptionMap(), StringPool.BLANK, "Description",
+			getDefaultLanguageId());
+	}
+
+	@Override
 	public Document getDocument() {
 		if (_document == null) {
 			try {
@@ -544,6 +551,12 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 		finally {
 			LocaleThreadLocal.setDefaultLocale(defaultLocale);
 		}
+	}
+
+	@Override
+	public String getTitleMapAsXML() {
+		return LocalizationUtil.updateLocalization(
+			getTitleMap(), StringPool.BLANK, "Title", getDefaultLanguageId());
 	}
 
 	@Override

@@ -227,7 +227,7 @@ if (Validator.isNotNull(portletResource)) {
 
 	resourceURL.setParameter("mvcPath", "/edit_role.jsp");
 	resourceURL.setParameter(Constants.CMD, Constants.EDIT);
-	resourceURL.setParameter("tabs1", "edit");
+	resourceURL.setParameter("tabs1", "details");
 	resourceURL.setParameter("tabs2", tabs2);
 	resourceURL.setParameter("portletResource", portletResource);
 

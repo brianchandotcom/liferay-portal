@@ -30,7 +30,7 @@ String name = role.getName();
 			<portlet:param name="mvcPath" value="/edit_role.jsp" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="roleId" value="<%= String.valueOf(role.getRoleId()) %>" />
-			<portlet:param name="tabs1" value="edit" />
+			<portlet:param name="tabs1" value="details" />
 		</portlet:renderURL>
 
 		<liferay-ui:icon

@@ -162,5 +162,5 @@ renderResponse.setTitle((role == null) ? LanguageUtil.get(request, "new-role") :
 </aui:form>
 
 <%
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, ((role == null) ? "add-role" : "edit")), currentURL);
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, ((role == null) ? "add-role" : "details")), currentURL);
 %>

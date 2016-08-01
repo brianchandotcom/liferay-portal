@@ -42,7 +42,7 @@ if (role != null) {
 	editRoleURL.setParameter("mvcPath", "/edit_role.jsp");
 	editRoleURL.setParameter("redirect", backURL);
 	editRoleURL.setParameter("roleId", String.valueOf(role.getRoleId()));
-	editRoleURL.setParameter("tabs1", "edit");
+	editRoleURL.setParameter("tabs1", "details");
 
 	// Define permissions
 
@@ -64,7 +64,7 @@ if (role != null) {
 	assignMembersURL.setParameter("tabs1", "assign-members");
 
 	if (RolePermissionUtil.contains(permissionChecker, role.getRoleId(), ActionKeys.UPDATE)) {
-		tabs1Names = ArrayUtil.append(tabs1Names, "edit");
+		tabs1Names = ArrayUtil.append(tabs1Names, "details");
 
 		tabs1URLs = ArrayUtil.append(tabs1URLs, editRoleURL.toString());
 	}
@@ -116,7 +116,7 @@ if (role != null) {
 
 			</c:when>
 			<c:otherwise>
-				<aui:nav-item href="<%= currentURL %>" label="edit" selected="<%= true %>" />
+				<aui:nav-item href="<%= currentURL %>" label="details" selected="<%= true %>" />
 				<aui:nav-item cssClass="disabled" label="define-permissions" selected="<%= false %>" />
 
 				<%

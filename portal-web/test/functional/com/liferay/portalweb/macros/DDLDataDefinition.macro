@@ -298,4 +298,16 @@
 
 		<execute function="AssertTextEquals" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME" value1="${ddlDataDefinitionName}" />
 	</command>
+
+	<command name="viewParentStuctureHeader">
+		<execute function="Click" locator1="DDMEditStructure#DETAILS_TOGGLE" />
+
+		<execute function="AssertClick" locator1="DDMEditStructure#DETAILS_PARENT_SELECT_BUTTON" value1="Select" />
+
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
+		<var name="key_assetTitle" value="${assetTitle}" />
+
+		<execute function="AssertTextEquals" locator1="NavBar#ASSET_TITLE" value1="${assetTitle}" />
+	</command>
 </definition>

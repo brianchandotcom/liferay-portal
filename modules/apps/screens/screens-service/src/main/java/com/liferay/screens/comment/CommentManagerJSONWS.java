@@ -84,23 +84,6 @@ public class CommentManagerJSONWS extends BaseServiceImpl {
 		_commentManager.deleteComment(commentId);
 	}
 
-	public List<CommentJSONWS> getComments(long commentId, int start, int end)
-		throws PortalException {
-
-		DiscussionComment discussionComment =
-			_commentManager.fetchDiscussionComment(getUserId(), commentId);
-
-		DiscussionPermission discussionPermission =
-			_commentManager.getDiscussionPermission(getPermissionChecker());
-
-		discussionPermission.checkViewPermission(
-			getCompanyId(discussionComment.getGroupId()),
-			discussionComment.getGroupId(), discussionComment.getClassName(),
-			discussionComment.getClassPK());
-
-		return getComments(discussionComment, start, end);
-	}
-
 	public List<CommentJSONWS> getComments(
 		long groupId, String className, long classPK, int start, int end)
 		throws PortalException {

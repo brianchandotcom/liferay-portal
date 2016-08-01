@@ -89,6 +89,26 @@ public class CommentManagerJSONWS extends BaseServiceImpl {
 	public CommentJSONWS getComment(
 			long groupId, long commentId)
 		throws PortalException {
+		Comment comment = _commentManager.fetchComment(commentId);
+
+		Discussion discussion = _commentManager.getDiscussion(
+			getUserId(), groupId, comment.getClassName(), comment.getClassPK(),
+			createServiceContextFunction());
+		DiscussionComment rootDiscussionComment =
+			discussion.getRootDiscussionComment();
+		DiscussionCommentIterator threadDiscussionCommentIterator =
+			rootDiscussionComment.getThreadDiscussionCommentIterator(0);
+
+		while (threadDiscussionCommentIterator.hasNext()) {
+			DiscussionComment discussionComment =
+				threadDiscussionCommentIterator.next();
+
+			if (discussionComment.getCommentId() == commentId) {
+				return new CommentJSONWS(discussionComment);
+			}
+		}
+
+		throw new NoSuchMessageException();
 	}
 
 	public List<CommentJSONWS> getComments(

@@ -59,6 +59,12 @@ public class TextDDMFormFieldTemplateContextContributor
 
 		parameters.put("placeholder", getValueString(placeholder, locale));
 
+		LocalizedValue predefinedLocalizedValue =
+			ddmFormField.getPredefinedValue();
+
+		parameters.put(
+			"predefinedValue", predefinedLocalizedValue.getString(locale));
+
 		LocalizedValue tooltip = (LocalizedValue)ddmFormField.getProperty(
 			"tooltip");
 

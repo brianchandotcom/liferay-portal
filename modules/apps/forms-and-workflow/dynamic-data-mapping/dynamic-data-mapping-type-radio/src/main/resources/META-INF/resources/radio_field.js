@@ -23,23 +23,6 @@ AUI.add(
 				NAME: 'liferay-ddm-form-field-radio',
 
 				prototype: {
-					getContextValue: function() {
-						var instance = this;
-
-						var value = RadioField.superclass.getContextValue.apply(instance, arguments);
-
-						if (!Array.isArray(value)) {
-							try {
-								value = JSON.parse(value);
-							}
-							catch (e) {
-								value = [value];
-							}
-						}
-
-						return value[0];
-					},
-
 					getInputNode: function() {
 						var instance = this;
 
@@ -54,23 +37,6 @@ AUI.add(
 						return inputNode;
 					},
 
-					getOptions: function() {
-						var instance = this;
-
-						var value = instance.getContextValue();
-
-						return A.map(
-							instance.get('options'),
-							function(item) {
-								return {
-									label: item.label[instance.get('locale')],
-									status: value === item.value ? 'checked' : '',
-									value: item.value
-								};
-							}
-						);
-					},
-
 					getTemplateContext: function() {
 						var instance = this;
 
@@ -78,7 +44,7 @@ AUI.add(
 							RadioField.superclass.getTemplateContext.apply(instance, arguments),
 							{
 								inline: instance.get('inline'),
-								options: instance.getOptions()
+								options: instance.get('options')
 							}
 						);
 					},
@@ -88,13 +54,7 @@ AUI.add(
 
 						var inputNode = instance.getInputNode();
 
-						var value = '';
-
-						if (inputNode.attr('checked')) {
-							value = inputNode.val();
-						}
-
-						return value;
+						return inputNode.val();
 					},
 
 					setValue: function(value) {
@@ -114,37 +74,17 @@ AUI.add(
 
 						if (radioToCheck) {
 							radioToCheck.attr('checked', true);
-
-							instance.fire(
-								'valueChanged',
-								{
-									field: instance,
-									value: value
-								}
-							);
 						}
 					},
 
-					_renderErrorMessage: function() {
+					showErrorMessage: function() {
 						var instance = this;
 
 						var container = instance.get('container');
 
-						RadioField.superclass._renderErrorMessage.apply(instance, arguments);
+						RadioField.superclass.showErrorMessage.apply(instance, arguments);
 
 						container.all('.help-block').appendTo(container.one('.form-group'));
-					},
-
-					_showFeedback: function() {
-						var instance = this;
-
-						RadioField.superclass._showFeedback.apply(instance, arguments);
-
-						var container = instance.get('container');
-
-						var feedBack = container.one('.form-control-feedback');
-
-						feedBack.appendTo(container);
 					}
 				}
 			}

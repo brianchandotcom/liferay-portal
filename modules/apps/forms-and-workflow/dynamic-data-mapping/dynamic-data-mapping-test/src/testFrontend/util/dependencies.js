@@ -11,6 +11,8 @@ var frontendTmpSrcDir = path.join(frontendDir, 'tmp', 'META-INF', 'resources');
 var soyDir = path.join(portalDir, 'modules', 'apps', 'foundation', 'frontend-js', 'frontend-js-soyutils-web');
 var soyJSDir = path.join(osgi.resourcesClassesPath(soyDir));
 
+var ddmKeyValueResourcesDir = osgi.ddmBundleResourcesPath('dynamic-data-mapping-type-key-value');
+var ddmOptionsResourcesDir = osgi.ddmBundleResourcesPath('dynamic-data-mapping-type-options');
 var ddmRendererResourcesDir = osgi.ddmBundleResourcesPath('dynamic-data-mapping-form-renderer');
 var ddmTextResourcesDir = osgi.ddmBundleResourcesPath('dynamic-data-mapping-type-text');
 
@@ -26,8 +28,25 @@ module.exports = [
 		served: true
 	},
 	ddmRendererResourcesDir + '/js/*.js',
-	ddmRendererResourcesDir + '/*.js',
-	ddmTextResourcesDir + '/*.js',
+	{
+		included: false,
+		pattern: ddmRendererResourcesDir + '/*.soy.js'
+	},
+	ddmKeyValueResourcesDir + '/!(*.soy).js',
+	{
+		included: false,
+		pattern: ddmKeyValueResourcesDir + '/*.soy.js',
+	},
+	ddmOptionsResourcesDir + '/!(*.soy).js',
+	{
+		included: false,
+		pattern: ddmOptionsResourcesDir + '/*.soy.js',
+	},
+	ddmTextResourcesDir + '/!(*.soy).js',
+	{
+		included: false,
+		pattern: ddmTextResourcesDir + '/*.soy.js',
+	},
 	{
 		included: false,
 		pattern: frontendTmpSrcDir + '/aui/**/*.css',

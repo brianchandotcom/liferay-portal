@@ -11,7 +11,6 @@ dependencies {
 	provided group: "org.skyscreamer", name: "jsonassert", version: "1.2.3"
 
 	testCompile group: "com.liferay", name: "com.liferay.dynamic.data.mapping.data.provider", version: "2.0.0"
-	testCompile group: "com.liferay", name: "com.liferay.dynamic.data.mapping.form.evaluator", version: "2.0.0"
 	testCompile group: "com.liferay", name: "com.liferay.dynamic.data.mapping.form.field.type", version: "2.0.0"
 	testCompile group: "com.liferay", name: "com.liferay.dynamic.data.mapping.io", version: "2.0.0"
 	testCompile group: "com.liferay", name: "com.liferay.dynamic.data.mapping.service", version: "2.1.0"
@@ -25,6 +24,7 @@ dependencies {
 	testCompile group: "com.liferay", name: "com.liferay.dynamic.data.mapping.type.text", version: "2.0.0"
 	testCompile group: "com.liferay", name: "com.liferay.dynamic.data.mapping.validator", version: "2.1.0"
 	testCompile project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-api")
+	testCompile project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-form-evaluator")
 
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.5"
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.portal.upgrade", version: "2.0.0"

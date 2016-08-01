@@ -14,6 +14,8 @@
 
 package com.liferay.dynamic.data.mapping.form.renderer.internal;
 
+import com.liferay.dynamic.data.mapping.form.field.type.BaseDDMFormFieldRenderer;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldRenderer;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingException;
@@ -23,6 +25,8 @@ import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateException;
@@ -35,11 +39,16 @@ import java.io.Writer;
 
 import java.net.URL;
 
+import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Marcellus Tavares
@@ -88,7 +97,27 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 	protected void activate(Map<String, Object> properties) {
 		String templatePath = MapUtil.getString(properties, "templatePath");
 
-		_templateResource = getTemplateResource(templatePath);
+		TemplateResource formTemplateResource = getFormTemplateResource(
+			templatePath);
+
+		_templateResources.add(formTemplateResource);
+	}
+
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		unbind = "removeDDMFormFieldRenderer"
+	)
+	protected void addDDMFormFieldRenderer(
+		DDMFormFieldRenderer ddmFormFieldRenderer) {
+
+		TemplateResource templateResource = getTemplateResource(
+			ddmFormFieldRenderer);
+
+		if (templateResource != null) {
+			_templateResources.add(templateResource);
+		}
 	}
 
 	protected String doRender(
@@ -97,7 +126,7 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 		throws PortalException {
 
 		Template template = TemplateManagerUtil.getTemplate(
-			TemplateConstants.LANG_TYPE_SOY, _templateResource, false);
+			TemplateConstants.LANG_TYPE_SOY, _templateResources, false);
 
 		populateCommonContext(
 			template, ddmForm, ddmFormLayout, ddmFormRenderingContext);
@@ -109,6 +138,29 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 		String javaScript = render(template, "ddm.form_renderer_js");
 
 		return html.concat(javaScript);
+	}
+
+	protected TemplateResource getFormTemplateResource(String templatePath) {
+		Class<?> clazz = getClass();
+
+		ClassLoader classLoader = clazz.getClassLoader();
+
+		URL templateURL = classLoader.getResource(templatePath);
+
+		return new URLTemplateResource(templateURL.getPath(), templateURL);
+	}
+
+	protected TemplateResource getTemplateResource(
+		DDMFormFieldRenderer ddmFormFieldRenderer) {
+
+		if (ddmFormFieldRenderer instanceof BaseDDMFormFieldRenderer) {
+			BaseDDMFormFieldRenderer baseDDMFormFieldRenderer =
+				(BaseDDMFormFieldRenderer)ddmFormFieldRenderer;
+
+			return baseDDMFormFieldRenderer.getTemplateResource();
+		}
+
+		return null;
 	}
 
 	protected TemplateResource getTemplateResource(String templatePath) {
@@ -131,6 +183,24 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 				ddmForm, ddmFormLayout, ddmFormRenderingContext);
 
 		template.putAll(ddmFormTemplateContext);
+
+		ddmFormTemplateContext.remove("fieldTypes");
+
+		JSONSerializer jsonSerializer = _jsonFactory.createJSONSerializer();
+
+		template.put(
+			"context", jsonSerializer.serializeDeep(ddmFormTemplateContext));
+	}
+
+	protected void removeDDMFormFieldRenderer(
+		DDMFormFieldRenderer ddmFormFieldRenderer) {
+
+		TemplateResource templateResource = getTemplateResource(
+			ddmFormFieldRenderer);
+
+		if (templateResource != null) {
+			_templateResources.remove(templateResource);
+		}
 	}
 
 	protected String render(Template template, String namespace)
@@ -146,17 +216,16 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 		return writer.toString();
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDM(DDM ddm) {
-		_ddm = ddm;
-	}
-
 	@Reference
 	private DDM _ddm;
 
 	@Reference
 	private DDMFormTemplateContextFactory _ddmFormTemplateContextFactory;
 
-	private TemplateResource _templateResource;
+	@Reference
+	private JSONFactory _jsonFactory;
+
+	private final List<TemplateResource> _templateResources =
+		new CopyOnWriteArrayList<>();
 
 }

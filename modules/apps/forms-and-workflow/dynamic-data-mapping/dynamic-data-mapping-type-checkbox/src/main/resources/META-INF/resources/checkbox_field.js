@@ -16,10 +16,6 @@ AUI.add(
 
 					type: {
 						value: 'checkbox'
-					},
-
-					value: {
-						setter: '_setValue'
 					}
 				},
 
@@ -31,13 +27,10 @@ AUI.add(
 					getTemplateContext: function() {
 						var instance = this;
 
-						var value = instance.getContextValue();
-
 						return A.merge(
 							CheckboxField.superclass.getTemplateContext.apply(instance, arguments),
 							{
-								showAsSwitcher: instance.get('showAsSwitcher'),
-								status: DataTypeBoolean.parse(value) ? 'checked' : ''
+								showAsSwitcher: instance.get('showAsSwitcher')
 							}
 						);
 					},
@@ -58,39 +51,14 @@ AUI.add(
 						inputNode.attr('checked', DataTypeBoolean.parse(value));
 					},
 
-					_renderErrorMessage: function() {
+					showErrorMessage: function() {
 						var instance = this;
 
 						var container = instance.get('container');
 
-						CheckboxField.superclass._renderErrorMessage.apply(instance, arguments);
+						CheckboxField.superclass.showErrorMessage.apply(instance, arguments);
 
 						container.all('.help-block').appendTo(container);
-					},
-
-					_setValue: function(value) {
-						var instance = this;
-
-						if (instance.get('localizable')) {
-							for (var locale in value) {
-								value[locale] = DataTypeBoolean.parse(value[locale]);
-							}
-						}
-						else {
-							value = DataTypeBoolean.parse(value);
-						}
-
-						return value;
-					},
-
-					_showFeedback: function() {
-						var instance = this;
-
-						var container = instance.get('container');
-
-						CheckboxField.superclass._showFeedback.apply(instance, arguments);
-
-						container.all('.form-control-feedback').appendTo(container);
 					}
 				}
 			}

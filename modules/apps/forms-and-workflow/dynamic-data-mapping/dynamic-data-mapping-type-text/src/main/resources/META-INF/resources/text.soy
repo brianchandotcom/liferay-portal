@@ -1,6 +1,13 @@
 {namespace ddm}
 
 /**
+ * Defines the delegated template for the text field.
+ */
+{deltemplate ddm.field autoescape="deprecated-contextual" variant="'text'"}
+	{call .text data="all" /}
+{/deltemplate}
+
+/**
  * Prints the DDM form text field.
  *
  * @param? childElementsHTML
@@ -9,15 +16,19 @@
  * @param label
  * @param name
  * @param placeholder
+ * @param predefinedValue
  * @param readOnly
  * @param required
  * @param showLabel
  * @param tip
  * @param tooltip
  * @param value
+ * @param visible
  */
 {template .text autoescape="deprecated-contextual"}
-	<div class="form-group liferay-ddm-form-field-text {$tip ? 'liferay-ddm-form-field-has-tip' : ''}" data-fieldname="{$name}">
+	{let $displayValue: $value ? $value : $predefinedValue ? $predefinedValue : '' /}
+
+	<div class="form-group{$visible ? '' : ' hide'} liferay-ddm-form-field-text {$tip ? 'liferay-ddm-form-field-has-tip' : ''}" data-fieldname="{$name}">
 		{if $showLabel}
 			<label class="control-label" for="{$name}">
 				{$label}
@@ -35,10 +46,10 @@
 		<div class="input-group-container {if $tooltip}input-group-default{/if}">
 			{if $displayStyle == 'multiline'}
 				<textarea class="field form-control" dir="{$dir}" id="{$name}" name="{$name}" placeholder="{$placeholder}" {if $readOnly}readonly{/if} >
-					{$value}
+					{$displayValue}
 				</textarea>
 			{else}
-				<input class="field form-control" dir="{$dir}" id="{$name}" name="{$name}" placeholder="{$placeholder}" {if $readOnly}readonly{/if} type="text" value="{$value}">
+				<input class="field form-control" dir="{$dir}" id="{$name}" name="{$name}" placeholder="{$placeholder}" {if $readOnly}readonly{/if} type="text" value="{$displayValue}">
 			{/if}
 
 			{if $tooltip}

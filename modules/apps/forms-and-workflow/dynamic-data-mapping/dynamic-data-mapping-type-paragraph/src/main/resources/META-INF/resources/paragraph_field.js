@@ -37,6 +37,12 @@ AUI.add(
 				NAME: 'liferay-ddm-form-field-paragraph',
 
 				prototype: {
+					focus: function() {
+						var instance = this;
+
+						instance.get('container').focus();
+					},
+
 					getTemplateContext: function() {
 						var instance = this;
 
@@ -46,6 +52,12 @@ AUI.add(
 								text: instance.get('text')
 							}
 						);
+					},
+
+					setValue: function(value) {
+						var instance = this;
+
+						instance.set('text', value || '');
 					},
 
 					getValue: function() {

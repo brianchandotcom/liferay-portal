@@ -5144,7 +5144,7 @@
 
 		<execute macro="CalendarEvent#compareEventDateAndTimeToResourcesAvailabilityDateAndTime" />
 
-		<execute macro="CalendarEvent#setTomorrowAsEndDate" />
+		<execute macro="CalendarEvent#setEndDateTomorrow" />
 
 		<execute macro="CalendarEvent#selectTimes" >
 			<var name="endDateTime" value="07:00 AM" />

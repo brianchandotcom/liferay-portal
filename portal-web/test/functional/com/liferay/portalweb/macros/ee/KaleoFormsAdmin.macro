@@ -1,19 +1,31 @@
 <definition>
 	<command name="addFieldSet">
-		<execute macro="KaleoFormsAdmin#viewNewProcessProgressBar">
-			<var name="kfProgressName" value="Fields" />
-			<var name="kfProgressStep" value="2" />
-		</execute>
+		<if>
+			<condition function="IsElementPresent" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
+			<then>
+				<execute macro="KaleoFormsNavigator#gotoManageFieldSets" />
 
-		<execute function="AssertClick" locator1="KaleoFormsAdminEditProcess#ADD_FIELD_SET_BUTTON" value1="Add Field Set" />
+				<execute function="Click" locator1="Button#PLUS" />
 
-		<var name="key_iframeTitle" value="Field Set" />
+				<execute function="Type" locator1="DDMEditStructure#NAME_FIELD" value1="${kfFieldSetName}" />
+			</then>
+			<else>
+				<execute macro="KaleoFormsAdmin#viewNewProcessProgressBar">
+					<var name="kfProgressName" value="Fields" />
+					<var name="kfProgressStep" value="2" />
+				</execute>
 
-		<execute function="AssertTextEquals" locator1="IFrame#IFRAME_TITLE" value1="New Field Set" />
+				<execute function="AssertClick" locator1="KaleoFormsAdminEditProcess#ADD_FIELD_SET_BUTTON" value1="Add Field Set" />
 
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+				<var name="key_iframeTitle" value="Field Set" />
 
-		<execute function="Type" locator1="DDMEditStructure#NAME_FIELD" value1="${kfFieldSetName}" />
+				<execute function="AssertTextEquals" locator1="IFrame#IFRAME_TITLE" value1="New Field Set" />
+
+				<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
+				<execute function="Type" locator1="DDMEditStructure#NAME_FIELD" value1="${kfFieldSetName}" />
+			</else>
+		</if>
 	</command>
 
 	<command name="addForm">
@@ -543,7 +555,12 @@
 
 		<execute function="SelectFrame" value1="relative=top" />
 
-		<execute function="Click" locator1="Icon#CLOSE" />
+		<if>
+			<condition function="IsElementPresent" locator1="IFrame#DIALOG" />
+			<then>
+				<execute function="Click" locator1="Icon#CLOSE" />
+			</then>
+		</if>
 	</command>
 
 	<command name="saveForm">

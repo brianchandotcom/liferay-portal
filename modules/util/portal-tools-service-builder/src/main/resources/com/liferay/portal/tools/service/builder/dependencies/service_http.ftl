@@ -52,14 +52,16 @@ import com.liferay.portal.kernel.util.MethodKey;
 @ProviderType
 public class ${entity.name}ServiceHttp {
 
-	<#assign hasMethods = false>
+	<#assign hasMethods = false />
 
 	<#list methods as method>
 		<#if !method.isConstructor() && method.isPublic() && serviceBuilder.isCustomMethod(method)>
-			<#assign hasMethods = true>
+			<#assign
+				hasMethods = true
 
-			<#assign returnTypeName = serviceBuilder.getTypeGenericsName(method.returns)>
-			<#assign parameters = method.parameters>
+				returnTypeName = serviceBuilder.getTypeGenericsName(method.returns)
+				parameters = method.parameters
+			/>
 
 			public static ${returnTypeName} ${method.name} (HttpPrincipal httpPrincipal
 
@@ -149,7 +151,7 @@ public class ${entity.name}ServiceHttp {
 
 	<#list methods as method>
 		<#if !method.isConstructor() && method.isPublic() && serviceBuilder.isCustomMethod(method)>
-			<#assign parameters = method.parameters>
+			<#assign parameters = method.parameters />
 
 			private static final Class<?>[] _${method.name}ParameterTypes${method_index} = new Class[] {
 

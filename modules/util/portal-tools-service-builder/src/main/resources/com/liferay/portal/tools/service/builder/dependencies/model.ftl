@@ -62,18 +62,18 @@ import java.util.Map;
 
 @ProviderType
 public interface ${entity.name}Model extends
-	<#assign overrideColumnNames = []>
+	<#assign overrideColumnNames = [] />
 
 	<#if entity.isAttachedModel()>
 		AttachedModel,
 
-		<#assign overrideColumnNames = overrideColumnNames + ["className", "classNameId", "classPK"]>
+		<#assign overrideColumnNames = overrideColumnNames + ["className", "classNameId", "classPK"] />
 	</#if>
 
 	<#if entity.isAuditedModel() && !entity.isGroupedModel() && !entity.isStagedAuditedModel()>
 		AuditedModel,
 
-		<#assign overrideColumnNames = overrideColumnNames + ["companyId", "createDate", "modifiedDate", "userId", "userName", "userUuid"]>
+		<#assign overrideColumnNames = overrideColumnNames + ["companyId", "createDate", "modifiedDate", "userId", "userName", "userUuid"] />
 	</#if>
 
 	BaseModel<${entity.name}>
@@ -85,7 +85,7 @@ public interface ${entity.name}Model extends
 	<#if entity.isGroupedModel() && !entity.isStagedGroupedModel()>
 		, GroupedModel
 
-		<#assign overrideColumnNames = overrideColumnNames + ["companyId", "createDate", "groupId", "modifiedDate", "userId", "userName", "userUuid"]>
+		<#assign overrideColumnNames = overrideColumnNames + ["companyId", "createDate", "groupId", "modifiedDate", "userId", "userName", "userUuid"] />
 	</#if>
 
 	<#if entity.isLocalizedModel()>
@@ -95,55 +95,55 @@ public interface ${entity.name}Model extends
 	<#if entity.isMvccEnabled()>
 		, MVCCModel
 
-		<#assign overrideColumnNames = overrideColumnNames + ["mvccVersion"]>
+		<#assign overrideColumnNames = overrideColumnNames + ["mvccVersion"] />
 	</#if>
 
 	<#if entity.isResourcedModel()>
 		, ResourcedModel
 
-		<#assign overrideColumnNames = overrideColumnNames + ["resourcePrimKey"]>
+		<#assign overrideColumnNames = overrideColumnNames + ["resourcePrimKey"] />
 	</#if>
 
 	<#if entity.isShardedModel()>
 		, ShardedModel
 
-		<#assign overrideColumnNames = overrideColumnNames + ["companyId"]>
+		<#assign overrideColumnNames = overrideColumnNames + ["companyId"] />
 	</#if>
 
 	<#if entity.isStagedGroupedModel()>
 		, StagedGroupedModel
 
-		<#assign overrideColumnNames = overrideColumnNames + ["companyId", "createDate", "groupId", "lastPublishDate", "modifiedDate", "stagedModelType", "userId", "userName", "userUuid", "uuid"]>
+		<#assign overrideColumnNames = overrideColumnNames + ["companyId", "createDate", "groupId", "lastPublishDate", "modifiedDate", "stagedModelType", "userId", "userName", "userUuid", "uuid"] />
 	</#if>
 
 	<#if entity.isStagedAuditedModel() && !entity.isStagedGroupedModel()>
 		, StagedAuditedModel
 
-		<#assign overrideColumnNames = overrideColumnNames + ["companyId", "createDate", "modifiedDate", "stagedModelType", "userId", "userName", "userUuid", "uuid"]>
+		<#assign overrideColumnNames = overrideColumnNames + ["companyId", "createDate", "modifiedDate", "stagedModelType", "userId", "userName", "userUuid", "uuid"] />
 	</#if>
 
 	<#if !entity.isStagedAuditedModel() && !entity.isStagedGroupedModel() && entity.isStagedModel()>
 		, StagedModel
 
-		<#assign overrideColumnNames = overrideColumnNames + ["companyId", "createDate", "modifiedDate", "stagedModelType", "uuid"]>
+		<#assign overrideColumnNames = overrideColumnNames + ["companyId", "createDate", "modifiedDate", "stagedModelType", "uuid"] />
 	</#if>
 
 	<#if entity.isTrashEnabled()>
 		, TrashedModel
 
-		<#assign overrideColumnNames = overrideColumnNames + ["status"]>
+		<#assign overrideColumnNames = overrideColumnNames + ["status"] />
 	</#if>
 
 	<#if entity.isTypedModel() && !entity.isAttachedModel()>
 		, TypedModel
 
-		<#assign overrideColumnNames = overrideColumnNames + ["className", "classNameId"]>
+		<#assign overrideColumnNames = overrideColumnNames + ["className", "classNameId"] />
 	</#if>
 
 	<#if entity.isWorkflowEnabled()>
 		, WorkflowedModel
 
-		<#assign overrideColumnNames = overrideColumnNames + ["status", "statusByUserId", "statusByUserName", "statusByUserUuid", "statusDate"]>
+		<#assign overrideColumnNames = overrideColumnNames + ["status", "statusByUserId", "statusByUserName", "statusByUserUuid", "statusDate"] />
 	</#if>
 
 	{
@@ -185,18 +185,20 @@ public interface ${entity.name}Model extends
 			public void setClassName(String className);
 		</#if>
 
-		<#assign autoEscape = true>
+		<#assign
+			autoEscape = true
 
-		<#assign modelName = apiPackagePath + ".model." + entity.name>
+			modelName = apiPackagePath + ".model." + entity.name
+		/>
 
 		<#if modelHintsUtil.getHints(modelName, column.name)??>
-			<#assign hints = modelHintsUtil.getHints(modelName, column.name)>
+			<#assign hints = modelHintsUtil.getHints(modelName, column.name) />
 
 			<#if hints["auto-escape"]??>
-				<#assign autoEscapeHintValue = hints["auto-escape"]>
+				<#assign autoEscapeHintValue = hints["auto-escape"] />
 
 				<#if autoEscapeHintValue == "false">
-					<#assign autoEscape = false>
+					<#assign autoEscape = false />
 				</#if>
 			</#if>
 		</#if>

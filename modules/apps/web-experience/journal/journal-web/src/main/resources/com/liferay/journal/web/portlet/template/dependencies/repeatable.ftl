@@ -1,6 +1,8 @@
-<#assign itemName = "cur_" + name>
+<#assign
+	itemName = "cur_" + name
 
-<#assign variableName = name + ".getSiblings()">
+	variableName = name + ".getSiblings()"
+/>
 
 <#if language == "ftl">
 ${r"<#if"} ${variableName}?has_content>

@@ -18,7 +18,9 @@ import com.liferay.marketplace.model.App;
 import com.liferay.marketplace.store.web.constants.MarketplaceStorePortletKeys;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.MimeResponse;
 import javax.portlet.PortletRequest;
@@ -72,9 +74,12 @@ public class MarketplaceAppDisplay extends BaseAppDisplay {
 	@Override
 	public String getStoreURL(HttpServletRequest request) {
 		try {
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
 			PortletURL portletURL = PortletURLFactoryUtil.create(
 				request, MarketplaceStorePortletKeys.MARKETPLACE_STORE,
-				PortletRequest.RENDER_PHASE);
+				themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
 
 			portletURL.setParameter(
 				"appEntryId", String.valueOf(_app.getRemoteAppId()));

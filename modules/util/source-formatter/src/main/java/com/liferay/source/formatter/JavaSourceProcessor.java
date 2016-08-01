@@ -1151,9 +1151,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					newContent, matcher.start() + 1);
 
 				newContent = formatJavaTerms(
-					className, packagePath, file, fileName, absolutePath,
-					newContent, javaClassContent, javaClassLineCount,
-					matcher.group(1), _checkJavaFieldTypesExcludes,
+					StringPool.BLANK, StringPool.BLANK, file, fileName,
+					absolutePath, newContent, javaClassContent,
+					javaClassLineCount, matcher.group(1),
+					_checkJavaFieldTypesExcludes,
 					_javaTermAccessLevelModifierExcludes, _javaTermSortExcludes,
 					_testAnnotationsExcludes);
 

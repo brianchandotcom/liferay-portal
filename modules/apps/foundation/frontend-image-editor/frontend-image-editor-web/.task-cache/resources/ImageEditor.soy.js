@@ -91,6 +91,7 @@ define("frontend-image-editor-web@1.0.2/ImageEditor.soy", ['exports', 'metal-com
      */
     function $render(opt_data, opt_ignored, opt_ijData) {
       ie_open('div', null, null, 'id', opt_data.id);
+      ie_open('div', null, null, 'class', 'dialog-body');
       ie_open('div', null, null, 'class', 'lfr-image-editor-image-container', 'id', opt_data.id + 'ImageContainer');
       ie_open('img', null, null, 'class', 'hide img-responsive', 'src', opt_data.image);
       ie_close('img');
@@ -117,6 +118,7 @@ define("frontend-image-editor-web@1.0.2/ImageEditor.soy", ['exports', 'metal-com
       ie_void('use', null, null, 'xlink:href', opt_data.pathThemeImages + '/lexicon/icons.svg#angle-right');
       ie_close('svg');
       ie_close('a');
+      ie_close('div');
       ie_close('div');
       ie_close('div');
       ie_open('div', null, null, 'class', 'button-holder dialog-footer');

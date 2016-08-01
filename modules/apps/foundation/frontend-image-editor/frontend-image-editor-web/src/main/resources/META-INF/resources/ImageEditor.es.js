@@ -413,7 +413,15 @@ class ImageEditor extends Component {
 
 		let boundingBox = dom.closest(this.element, '.portlet-layout');
 		let availableWidth = boundingBox.offsetWidth;
-		let availableHeight = boundingBox.offsetHeight - 142 - 40;
+
+		let dialogFooterHeight = 0;
+		let dialogFooter = this.element.querySelector('.dialog-footer');
+
+		if (dialogFooter) {
+			dialogFooterHeight = dialogFooter.offsetHeight;
+		}
+
+		let availableHeight = boundingBox.offsetHeight - 142 - 40 - dialogFooterHeight;
 		let availableAspectRatio = availableWidth / availableHeight;
 
 		if (availableAspectRatio > 1) {

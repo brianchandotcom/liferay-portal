@@ -361,7 +361,15 @@ define("frontend-image-editor-web@1.0.2/ImageEditor.es", ['exports', 'metal-comp
 
 			var boundingBox = _dom2.default.closest(this.element, '.portlet-layout');
 			var availableWidth = boundingBox.offsetWidth;
-			var availableHeight = boundingBox.offsetHeight - 142 - 40;
+
+			var dialogFooterHeight = 0;
+			var dialogFooter = this.element.querySelector('.dialog-footer');
+
+			if (dialogFooter) {
+				dialogFooterHeight = dialogFooter.offsetHeight;
+			}
+
+			var availableHeight = boundingBox.offsetHeight - 142 - 40 - dialogFooterHeight;
 			var availableAspectRatio = availableWidth / availableHeight;
 
 			if (availableAspectRatio > 1) {

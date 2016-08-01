@@ -22,43 +22,45 @@
  */
 {template .render}
 	<div id="{$id}">
-		<div class="lfr-image-editor-image-container" id="{$id}ImageContainer">
-			<img class="hide img-responsive" src="{$image}">
-			<canvas class="fade {$imageEditorReady ? 'in' : ''} image-preview"></canvas>
+		<div class="dialog-body">
+			<div class="lfr-image-editor-image-container" id="{$id}ImageContainer">
+				<img class="hide img-responsive" src="{$image}">
+				<canvas class="fade {$imageEditorReady ? 'in' : ''} image-preview"></canvas>
 
-			{call ImageEditorLoading.render data="all"}
-				{param key: 'loading' /}
-			{/call}
-		</div>
+				{call ImageEditorLoading.render data="all"}
+					{param key: 'loading' /}
+				{/call}
+			</div>
 
-		<div class="fade {$imageEditorReady ? 'in' : ''} lfr-image-editor-tools-container">
-			{call .tools data="all"}
-				{param getImageEditorCanvas: $getImageEditorCanvas /}
-				{param getImageEditorImageData: $getImageEditorImageData /}
-				{param requestImageEditorEdit: $requestImageEditorEdit /}
-				{param requestImageEditorPreview: $requestImageEditorPreview /}
-			{/call}
-		</div>
+			<div class="fade {$imageEditorReady ? 'in' : ''} lfr-image-editor-tools-container">
+				{call .tools data="all"}
+					{param getImageEditorCanvas: $getImageEditorCanvas /}
+					{param getImageEditorImageData: $getImageEditorImageData /}
+					{param requestImageEditorEdit: $requestImageEditorEdit /}
+					{param requestImageEditorPreview: $requestImageEditorPreview /}
+				{/call}
+			</div>
 
-		<div class="fade {$imageEditorReady and not $selectedTool ? 'in' : ''} lfr-image-editor-history-container">
-			<div class="btn-group" role="group">
-				<a class="btn btn-link {$history and $history.canUndo ? '' : 'disabled'} icon-monospaced" data-onclick="undo" href="javascript:;">
-					<svg class="lexicon-icon">
-						<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#angle-left"></use>
-					</svg>
-				</a>
+			<div class="fade {$imageEditorReady and not $selectedTool ? 'in' : ''} lfr-image-editor-history-container">
+				<div class="btn-group" role="group">
+					<a class="btn btn-link {$history and $history.canUndo ? '' : 'disabled'} icon-monospaced" data-onclick="undo" href="javascript:;">
+						<svg class="lexicon-icon">
+							<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#angle-left"></use>
+						</svg>
+					</a>
 
-				<a class="btn btn-link {$history and $history.canReset ? '' : 'disabled'} icon-monospaced" data-onclick="reset" href="javascript:;">
-					<svg class="lexicon-icon">
-						<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#restore"></use>
-					</svg>
-				</a>
+					<a class="btn btn-link {$history and $history.canReset ? '' : 'disabled'} icon-monospaced" data-onclick="reset" href="javascript:;">
+						<svg class="lexicon-icon">
+							<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#restore"></use>
+						</svg>
+					</a>
 
-				<a class="btn btn-link {$history and $history.canRedo ? '' : 'disabled'} icon-monospaced" data-onclick="redo" href="javascript:;">
-					<svg class="lexicon-icon">
-						<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#angle-right"></use>
-					</svg>
-				</a>
+					<a class="btn btn-link {$history and $history.canRedo ? '' : 'disabled'} icon-monospaced" data-onclick="redo" href="javascript:;">
+						<svg class="lexicon-icon">
+							<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#angle-right"></use>
+						</svg>
+					</a>
+				</div>
 			</div>
 		</div>
 

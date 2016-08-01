@@ -105,33 +105,33 @@
 		<sequential>
 			<if>
 				<not>
-					<available file="${elasticsearch.dir}/${marvel.zip.name}" />
+					<available file="${elasticsearch.dir}/${elastic.marvel.zip.name}" />
 				</not>
 				<then>
 					<mirrors-get
-						dest="${elasticsearch.dir}/${marvel.zip.name}"
-						src="${marvel.zip.url}"
+						dest="${elasticsearch.dir}/${elastic.marvel.zip.name}"
+						src="${elastic.marvel.zip.url}"
 						verbose="true"
 					/>
 				</then>
 			</if>
 
-			<chmod file="${kibana.dir}/bin/**" perm="a+x" />
+			<chmod file="${elastic.kibana.dir}/bin/**" perm="a+x" />
 
 			<if>
 				<os family="unix" />
 				<then>
-					<exec dir="${kibana.dir}/bin" executable="/bin/bash">
+					<exec dir="${elastic.kibana.dir}/bin" executable="/bin/bash">
 						<arg value="-c" />
-						<arg line="./kibana plugin --install marvel file:///${elasticsearch.dir}/${marvel.zip.url}" />
+						<arg line="./kibana plugin --install marvel file:///${elasticsearch.dir}/${elastic.marvel.zip.url}" />
 					</exec>
 				</then>
 				<elseif>
 					<os family="windows" />
 					<then>
-						<exec dir="${kibana.dir}/bin" executable="cmd">
+						<exec dir="${elastic.kibana.dir}/bin" executable="cmd">
 							<arg value="/c" />
-							<arg line="kibana plugin --install marvel file:///${elasticsearch.dir}/${marvel.zip.url}" />
+							<arg line="kibana plugin --install marvel file:///${elasticsearch.dir}/${elastic.marvel.zip.url}" />
 						</exec>
 					</then>
 				</elseif>
@@ -143,12 +143,12 @@
 		<sequential>
 			<if>
 				<not>
-					<available file="${elasticsearch.dir}/${marvel-agent.zip.name}" />
+					<available file="${elasticsearch.dir}/${elasticsearch.marvel-agent.zip.name}" />
 				</not>
 				<then>
 					<mirrors-get
-						dest="${elasticsearch.dir}/${marvel-agent.zip.name}"
-						src="${marvel-agent.zip.url}"
+						dest="${elasticsearch.dir}/${elasticsearch.marvel-agent.zip.name}"
+						src="${elasticsearch.marvel-agent.zip.url}"
 						verbose="true"
 					/>
 				</then>
@@ -159,7 +159,7 @@
 				<then>
 					<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash">
 						<arg value="-c" />
-						<arg value="./plugin install file:///${elasticsearch.dir}/${marvel-agent.zip.name}" />
+						<arg value="./plugin install file:///${elasticsearch.dir}/${elasticsearch.marvel-agent.zip.name}" />
 					</exec>
 				</then>
 				<elseif>
@@ -167,7 +167,7 @@
 					<then>
 						<exec dir="${elasticsearch.dir}/bin" executable="cmd">
 							<arg value="/c" />
-							<arg line="plugin install file:///${elasticsearch.dir}/${marvel-agent.zip.name}" />
+							<arg line="plugin install file:///${elasticsearch.dir}/${elasticsearch.marvel-agent.zip.name}" />
 						</exec>
 					</then>
 				</elseif>
@@ -201,104 +201,104 @@
 
 	<macrodef name="unzip-kibana">
 		<sequential>
-			<delete file="${app.server.parent.dir}/${kibana.tar.name.mac}" />
+			<delete file="${app.server.parent.dir}/${elastic.kibana.tar.name.mac}" />
 
-			<delete file="${app.server.parent.dir}/${kibana.tar.name.linux}" />
+			<delete file="${app.server.parent.dir}/${elastic.kibana.tar.name.linux}" />
 
-			<delete file="${app.server.parent.dir}/${kibana.zip.name.windows}" />
+			<delete file="${app.server.parent.dir}/${elastic.kibana.zip.name.windows}" />
 
 			<if>
 				<and>
 					<not>
-						<available file="${app.server.parent.dir}/${kibana.tar.name.mac}" />
+						<available file="${app.server.parent.dir}/${elastic.kibana.tar.name.mac}" />
 					</not>
 					<os family="mac" />
 				</and>
 				<then>
 					<mirrors-get
-						dest="${app.server.parent.dir}/${kibana.tar.name.mac}"
-						src="${kibana.tar.url.mac}"
+						dest="${app.server.parent.dir}/${elastic.kibana.tar.name.mac}"
+						src="${elastic.kibana.tar.url.mac}"
 						verbose="true"
 					/>
 
 					<untar
 						compression="gzip"
 						dest="${app.server.parent.dir}"
-						src="${app.server.parent.dir}/${kibana.tar.name.mac}"
+						src="${app.server.parent.dir}/${elastic.kibana.tar.name.mac}"
 					/>
 				</then>
 				<elseif>
 					<and>
 						<not>
-							<available file="${app.server.parent.dir}/${kibana.tar.name.linux}" />
+							<available file="${app.server.parent.dir}/${elastic.kibana.tar.name.linux}" />
 						</not>
 						<os family="unix" />
 					</and>
 					<then>
 						<mirrors-get
-							dest="${app.server.parent.dir}/${kibana.tar.name.linux}"
-							src="${kibana.tar.url.linux}"
+							dest="${app.server.parent.dir}/${elastic.kibana.tar.name.linux}"
+							src="${elastic.kibana.tar.url.linux}"
 							verbose="true"
 						/>
 
 						<untar
 							compression="gzip"
 							dest="${app.server.parent.dir}"
-							src="${app.server.parent.dir}/${kibana.tar.name.linux}"
+							src="${app.server.parent.dir}/${elastic.kibana.tar.name.linux}"
 						/>
 					</then>
 				</elseif>
 				<elseif>
 					<and>
 						<not>
-							<available file="${app.server.parent.dir}/${kibana.zip.name}" />
+							<available file="${app.server.parent.dir}/${elastic.kibana.zip.name}" />
 						</not>
 						<os family="windows" />
 					</and>
 					<then>
 						<mirrors-get
-							dest="${app.server.parent.dir}/${kibana.zip.name.windows}"
-							src="${kibana.zip.url.windows}"
+							dest="${app.server.parent.dir}/${elastic.kibana.zip.name.windows}"
+							src="${elastic.kibana.zip.url.windows}"
 							verbose="true"
 						/>
 
 						<unzip
 							dest="${app.server.parent.dir}"
-							src="${app.server.parent.dir}/${kibana.zip.name.windows}"
+							src="${app.server.parent.dir}/${elastic.kibana.zip.name.windows}"
 						/>
 					</then>
 				</elseif>
 			</if>
 
-			<delete dir="${kibana.dir}" />
+			<delete dir="${elastic.kibana.dir}" />
 
 			<if>
 				<os family="mac" />
 				<then>
-					<copy todir="${kibana.dir}">
-					   <fileset dir="${app.server.parent.dir}/kibana-${kibana.version}-darwin-x64" />
+					<copy todir="${elastic.kibana.dir}">
+					   <fileset dir="${app.server.parent.dir}/kibana-${elastic.kibana.version}-darwin-x64" />
 					</copy>
 
-					<delete dir="${app.server.parent.dir}/kibana-${kibana.version}-darwin-x64" />
+					<delete dir="${app.server.parent.dir}/kibana-${elastic.kibana.version}-darwin-x64" />
 				</then>
 				<elseif>
 					<os family="unix" />
 					<then>
-						<copy todir="${kibana.dir}">
-						   <fileset dir="${app.server.parent.dir}/kibana-${kibana.version}-linux-x64" />
+						<copy todir="${elastic.kibana.dir}">
+						   <fileset dir="${app.server.parent.dir}/kibana-${elastic.kibana.version}-linux-x64" />
 						</copy>
 
-						<delete dir="${app.server.parent.dir}/kibana-${kibana.version}-linux-x64" />
+						<delete dir="${app.server.parent.dir}/kibana-${elastic.kibana.version}-linux-x64" />
 					</then>
 				</elseif>
 				<elseif>
 					<os family="windows" />
 					<then>
-						<copy todir="${kibana.dir}">
-						   <fileset dir="${app.server.parent.dir}/kibana-${kibana.version}-windows" />
+						<copy todir="${elastic.kibana.dir}">
+						   <fileset dir="${app.server.parent.dir}/kibana-${elastic.kibana.version}-windows" />
 						</copy>
 
-						 <delete dir="${app.server.parent.dir}/kibana-${kibana.version}-windows" />
+						 <delete dir="${app.server.parent.dir}/kibana-${elastic.kibana.version}-windows" />
 					</then>
 				</elseif>
 			</if>
@@ -368,7 +368,7 @@ logExceptionsOnly=false</echo>
 	<target name="start-kibana">
 		<unzip-kibana />
 
-		<replace file="${kibana.dir}/config/kibana.yml">
+		<replace file="${elastic.kibana.dir}/config/kibana.yml">
 			<replacetoken><![CDATA[# server.basePath: ""]]></replacetoken>
 			<replacevalue><![CDATA[server.basePath: "/o/portal-search-elasticsearch-marvel-web/marvel-proxy"]]></replacevalue>
 		</replace>
@@ -378,12 +378,12 @@ logExceptionsOnly=false</echo>
 		<if>
 			<os family="unix" />
 			<then>
-				<exec dir="${kibana.dir}/bin" executable="/bin/bash">
+				<exec dir="${elastic.kibana.dir}/bin" executable="/bin/bash">
 					<arg value="-c" />
 					<arg value="./kibana &gt; kibana.log 2&gt;&amp;1 &amp;" />
 				</exec>
 
-				<exec dir="${kibana.dir}/bin" executable="/bin/bash">
+				<exec dir="${elastic.kibana.dir}/bin" executable="/bin/bash">
 					<arg value="-c" />
 					<arg value="echo $! &gt; pid-kibana" />
 				</exec>
@@ -391,7 +391,7 @@ logExceptionsOnly=false</echo>
 			<elseif>
 				<os family="windows" />
 				<then>
-					<exec dir="${kibana.dir}/bin" executable="cmd">
+					<exec dir="${elastic.kibana.dir}/bin" executable="cmd">
 						<arg value="/c" />
 						<arg value="kibana" />
 					</exec>
@@ -433,7 +433,7 @@ logExceptionsOnly=false</echo>
 		<if>
 			<os family="unix" />
 			<then>
-				<loadfile property="pid-kibana" srcFile="${kibana.dir}/bin/pid-kibana">
+				<loadfile property="pid-kibana" srcFile="${elastic.kibana.dir}/bin/pid-kibana">
 					<filterchain>
 						<linecontainsregexp>
 							<regexp pattern="[0-9]*" />
@@ -441,7 +441,7 @@ logExceptionsOnly=false</echo>
 					</filterchain>
 				</loadfile>
 
-				<exec dir="${kibana.dir}/bin" executable="/bin/bash">
+				<exec dir="${elastic.kibana.dir}/bin" executable="/bin/bash">
 					<arg value="-c" />
 					<arg value="kill ${pid-kibana}" />
 				</exec>

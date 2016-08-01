@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.journal.lar;
+package com.liferay.journal.exportimport.data.handler;
 
 import com.liferay.journal.configuration.JournalServiceConfigurationValues;
 import com.liferay.portal.kernel.log.Log;

@@ -4,7 +4,7 @@ Bundle-Version: 4.0.0
 Export-Package:\
 	com.liferay.journal.atom,\
 	com.liferay.journal.configuration,\
-	com.liferay.journal.lar,\
+	com.liferay.journal.exportimport.data.handler,\
 	com.liferay.journal.model.impl,\
 	com.liferay.journal.model.listener,\
 	com.liferay.journal.search,\

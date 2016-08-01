@@ -14,7 +14,7 @@
 
 package com.liferay.portal.background.task.upgrade;
 
-import com.liferay.portal.background.task.upgrade.v1_0_0.UpgradeBackgroundTask;
+import com.liferay.portal.background.task.internal.upgrade.v1_0_0.UpgradeBackgroundTask;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;

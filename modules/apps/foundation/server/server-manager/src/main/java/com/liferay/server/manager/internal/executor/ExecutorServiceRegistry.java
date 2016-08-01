@@ -16,7 +16,6 @@ package com.liferay.server.manager.internal.executor;
 
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.server.manager.executor.Executor;
 
 import java.util.Collections;
 import java.util.HashMap;

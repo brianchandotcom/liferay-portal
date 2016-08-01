@@ -68,7 +68,7 @@ renderResponse.setTitle(factoryConfigurationModelName);
 		/>
 
 		<liferay-ui:search-container-row
-			className="com.liferay.configuration.admin.web.model.ConfigurationModel"
+			className="com.liferay.configuration.admin.web.internal.model.ConfigurationModel"
 			keyProperty="ID"
 			modelVar="configurationModel"
 		>

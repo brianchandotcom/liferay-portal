@@ -1,10 +1,10 @@
-Bundle-Activator: com.liferay.portal.remote.soap.extender.test.activator.JaxWsApiBundleActivator
+Bundle-Activator: com.liferay.portal.remote.soap.extender.test.internal.activator.JaxWsApiBundleActivator
 Bundle-Name: Liferay Portal Remote SOAP Extender Test API
 Bundle-SymbolicName: com.liferay.portal.remote.soap.extender.test.api
 Bundle-Version: 1.0.0
 Private-Package:\
-	com.liferay.portal.remote.soap.extender.test.activator,\
-	com.liferay.portal.remote.soap.extender.test.activator.configuration,\
-	com.liferay.portal.remote.soap.extender.test.handler,\
-	com.liferay.portal.remote.soap.extender.test.service,\
-	com.liferay.portal.remote.soap.extender.test.util
+	com.liferay.portal.remote.soap.extender.test.internal.activator,\
+	com.liferay.portal.remote.soap.extender.test.internal.activator.configuration,\
+	com.liferay.portal.remote.soap.extender.test.internal.handler,\
+	com.liferay.portal.remote.soap.extender.test.internal.service,\
+	com.liferay.portal.remote.soap.extender.test.internal.util

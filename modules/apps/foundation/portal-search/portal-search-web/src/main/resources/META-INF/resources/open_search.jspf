@@ -28,7 +28,7 @@ else {
 	primarySearch = portalPreferences.getValue(SearchPortletKeys.SEARCH, "primary-search", StringPool.BLANK);
 }
 
-List<OpenSearch> openSearchInstances = com.liferay.portal.search.web.util.SearchUtil.getOpenSearchInstances(primarySearch);
+List<OpenSearch> openSearchInstances = com.liferay.portal.search.web.internal.util.SearchUtil.getOpenSearchInstances(primarySearch);
 
 List<String> modelResources = new ArrayList<String>();
 
@@ -70,7 +70,7 @@ for (int i = 0; i < openSearchInstances.size(); i++) {
 
 	int inactiveGroupsCount = GroupLocalServiceUtil.searchCount(themeDisplay.getCompanyId(), null, null, groupParams);
 
-	Tuple tuple = com.liferay.portal.search.web.util.SearchUtil.getElements(xml, openSearch.getClassName(), inactiveGroupsCount);
+	Tuple tuple = com.liferay.portal.search.web.internal.util.SearchUtil.getElements(xml, openSearch.getClassName(), inactiveGroupsCount);
 
 	List<Element> resultRows = (List<Element>)tuple.getObject(0);
 	int totalRows = (Integer)tuple.getObject(1);
@@ -132,7 +132,7 @@ for (int i = 0; i < openSearchInstances.size(); i++) {
 					String[] queryTerms = StringUtil.split(element.elementText("queryTerms"), StringPool.COMMA_AND_SPACE);
 					%>
 
-					<a class="entry-title" href="<%= com.liferay.portal.search.web.util.SearchUtil.getSearchResultViewURL(renderRequest, renderResponse, entryClassName, entryClassPK, searchDisplayContext.isViewInContext(), currentURL) %>">
+					<a class="entry-title" href="<%= com.liferay.portal.search.web.internal.util.SearchUtil.getSearchResultViewURL(renderRequest, renderResponse, entryClassName, entryClassPK, searchDisplayContext.isViewInContext(), currentURL) %>">
 						<%= HighlightUtil.highlight(HtmlUtil.escape(entryTitle), queryTerms) %>
 					</a>
 

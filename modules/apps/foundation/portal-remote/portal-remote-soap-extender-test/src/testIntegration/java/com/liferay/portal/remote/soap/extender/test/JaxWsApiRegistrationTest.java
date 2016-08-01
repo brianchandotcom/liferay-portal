@@ -15,7 +15,7 @@
 package com.liferay.portal.remote.soap.extender.test;
 
 import com.liferay.arquillian.deploymentscenario.annotations.BndFile;
-import com.liferay.portal.remote.soap.extender.test.service.Greeter;
+import com.liferay.portal.remote.soap.extender.test.internal.service.Greeter;
 
 import java.net.URL;
 
@@ -43,7 +43,8 @@ public class JaxWsApiRegistrationTest {
 		URL url = new URL(_url, "/o/soap-test/greeterApi?wsdl");
 
 		QName qName = new QName(
-			"http://service.test.extender.soap.remote.portal.liferay.com/",
+			"http://service.internal.test.extender.soap.remote.portal.liferay" +
+				".com/",
 			"GreeterImplService");
 
 		Service service = Service.create(url, qName);

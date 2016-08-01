@@ -16,9 +16,6 @@ package com.liferay.portal.security.sso.ntlm.internal;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.security.sso.ntlm.NetlogonConnectionManager;
-import com.liferay.portal.security.sso.ntlm.NtlmLogonException;
-import com.liferay.portal.security.sso.ntlm.NtlmServiceAccount;
 import com.liferay.portal.security.sso.ntlm.internal.msrpc.NetlogonAuthenticator;
 import com.liferay.portal.security.sso.ntlm.internal.msrpc.NetlogonIdentityInfo;
 import com.liferay.portal.security.sso.ntlm.internal.msrpc.NetlogonNetworkInfo;

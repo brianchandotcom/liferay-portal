@@ -15,7 +15,7 @@
 package com.liferay.map.taglib.servlet.taglib;
 
 import com.liferay.map.MapProvider;
-import com.liferay.map.taglib.servlet.ServletContextUtil;
+import com.liferay.map.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.map.util.MapProviderHelper;
 import com.liferay.map.util.MapProviderTracker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;

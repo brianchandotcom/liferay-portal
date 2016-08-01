@@ -14,8 +14,8 @@
 
 package com.liferay.gradle.plugins.node.tasks;
 
+import com.liferay.gradle.plugins.node.util.FileUtil;
 import com.liferay.gradle.plugins.node.util.GradleUtil;
-import com.liferay.gradle.util.FileUtil;
 
 import java.io.File;
 

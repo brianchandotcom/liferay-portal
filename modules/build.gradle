@@ -1,3 +1,5 @@
+import com.liferay.gradle.plugins.node.tasks.DownloadNodeTask
+import com.liferay.gradle.plugins.node.tasks.ExecuteNpmTask
 import com.liferay.gradle.util.FileUtil
 import com.liferay.gradle.util.GradleUtil
 
@@ -126,12 +128,23 @@ gradle.beforeProject {
 		}
 
 		if (System.getenv("JENKINS_HOME")) {
-			pluginManager.withPlugin("com.liferay.node") {
-				downloadNode {
-					doFirst {
+			pluginManager.withPlugin("com.liferay.theme.plugin") {
+				npmInstall {
+					nodeModulesCacheDir = new File(System.properties["user.home"], ".liferay/node-modules-cache")
+					removeShrinkwrappedUrls = true
+				}
+			}
+
+			tasks.withType(DownloadNodeTask) {
+				doFirst {
+					if (plugins.hasPlugin("com.liferay.cache")) {
 						throw new GradleException("Unable to use Node.js on CI, please configure com.liferay.cache or update the cache")
 					}
 				}
+			}
+
+			tasks.withType(ExecuteNpmTask) {
+				registry = "http://lrdcom-vm-110.lax.liferay.com:4873"
 			}
 		}
 	}

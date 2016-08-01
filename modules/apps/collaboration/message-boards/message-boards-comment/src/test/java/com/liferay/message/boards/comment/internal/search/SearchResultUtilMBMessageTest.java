@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.message.boards.comment.search;
+package com.liferay.message.boards.comment.internal.search;
 
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.message.boards.kernel.model.MBMessage;

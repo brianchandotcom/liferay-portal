@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.message.boards.comment;
+package com.liferay.message.boards.comment.internal;
 
 import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.kernel.model.MBMessageDisplay;

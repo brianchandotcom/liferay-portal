@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.search;
+package com.liferay.document.library.internal.search;
 
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRendererFactory;

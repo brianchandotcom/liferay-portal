@@ -100,13 +100,13 @@
 		<execute function="AssertElementPresent#assertVisible" locator1="CalendarEditEvent#END_DATE_TIME" />
 	</command>
 
-	<command name="_viewRegularEventDateAndTime">
+	<command name="_viewResourcesAvailabilityEvent">
 		<var name="key_endDate" value="${endDate}" />
 		<var name="key_endDateTime" value="${endDateTime}" />
 		<var name="key_startDate" value="${startDate}" />
 		<var name="key_startDateTime" value="${startDateTime}" />
 
-		<execute function="AssertElementPresent" locator1="Calendar#SCHEDULER_EVENT_REGULAR" />
+		<execute function="AssertElementPresent" locator1="CalendarEditEvent#RESOURCES_AVAILABILITY_SCHEDULER_EVENT_REGULAR" />
 	</command>
 
 	<command name="add">
@@ -729,13 +729,13 @@
 		<execute function="AssertClick" locator1="Button#SUBMIT" value1="Publish" />
 	</command>
 
-	<command name="compareEventDateAndTimeToSchedulerDateAndTime">
+	<command name="compareEventDateAndTimeToResourcesAvailabilityDateAndTime">
 		<var locator="CalendarEditEvent#END_DATE" name="endDate" />
 		<var locator="CalendarEditEvent#END_DATE_TIME" name="endDateTime" />
 		<var locator="CalendarEditEvent#START_DATE" name="startDate" />
 		<var locator="CalendarEditEvent#START_DATE_TIME" name="startDateTime" />
 
-		<execute macro="CalendarScheduler#_viewRegularEventDateAndTime">
+		<execute macro="CalendarScheduler#_viewResourcesAvailabilityEvent">
 			<var name="endDate" value="${endDate}" />
 			<var name="endDateTime" value="${endDateTime}" />
 			<var name="startDate" value="${startDate}" />

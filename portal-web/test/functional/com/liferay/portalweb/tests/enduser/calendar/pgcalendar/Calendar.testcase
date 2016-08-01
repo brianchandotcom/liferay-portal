@@ -5225,14 +5225,14 @@
 
 		<execute macro="CalendarEvent#resourcesAvailability" />
 
-		<execute macro="CalendarEvent#compareEventDateAndTimeToSchedulerDateAndTime" />
+		<execute macro="CalendarEvent#compareEventDateAndTimeToResourcesAvailabilityDateAndTime" />
 
 		<execute macro="CalendarEvent#setTimes" >
 			<var name="endDateTime" value="11:00 AM" />
 			<var name="startDateTime" value="08:00 AM" />
 		</execute>
 
-		<execute macro="CalendarEvent#compareEventDateAndTimeToSchedulerDateAndTime" />
+		<execute macro="CalendarEvent#compareEventDateAndTimeToResourcesAvailabilityDateAndTime" />
 
 		<execute macro="CalendarEvent#setTomorrowAsEndDate" />
 
@@ -5241,7 +5241,7 @@
 			<var name="startDateTime" value="08:00 AM" />
 		</execute>
 
-		<execute macro="CalendarEvent#compareEventDateAndTimeToSchedulerDateAndTime" />
+		<execute macro="CalendarEvent#compareEventDateAndTimeToResourcesAvailabilityDateAndTime" />
 	</command>
 
 	<command name="ViewEventDetailsAllDayWithModifiedUserTimeZone" priority="4">

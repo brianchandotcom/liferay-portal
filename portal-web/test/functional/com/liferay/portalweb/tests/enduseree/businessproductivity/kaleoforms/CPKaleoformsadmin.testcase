@@ -975,6 +975,16 @@
 
 		<execute macro="KaleoFormsAdmin#saveFieldSet" />
 
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Kaleo Forms Admin" />
+		</execute>
+
+		<execute macro="KaleoFormsNavigator#gotoManageFieldSets" />
+
+		<execute macro="DDLDataDefinition#viewName">
+			<var name="ddlDataDefinitionName" value="${kfFieldSetName}" />
+		</execute>
+
 		<execute macro="DDLDataDefinition#tearDownCP">
 			<var name="kfProcessExists" value="true" />
 		</execute>

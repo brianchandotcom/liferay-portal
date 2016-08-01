@@ -658,7 +658,7 @@ public class AssetUtil {
 	}
 
 	public static boolean isValidWord(String word) {
-		if (Validator.isNull(word)) {
+		if (Validator.isBlank(word)) {
 			return false;
 		}
 

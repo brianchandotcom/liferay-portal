@@ -23,6 +23,7 @@ import com.liferay.gradle.plugins.node.util.GradleUtil;
 
 import java.io.File;
 
+import java.util.Set;
 import java.util.concurrent.Callable;
 
 import org.gradle.api.Action;
@@ -49,7 +50,9 @@ public class NodePlugin implements Plugin<Project> {
 		final NodeExtension nodeExtension = GradleUtil.addExtension(
 			project, EXTENSION_NAME, NodeExtension.class);
 
-		addTaskDownloadNode(project, nodeExtension);
+		final DownloadNodeTask downloadNodeTask = addTaskDownloadNode(
+			project, nodeExtension);
+
 		addTaskNpmInstall(project, nodeExtension);
 
 		configureTasksExecuteNode(project, nodeExtension);
@@ -60,6 +63,8 @@ public class NodePlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(Project project) {
+					configureTaskDownloadNodeGlobal(
+						downloadNodeTask, nodeExtension);
 					configureTasksExecuteNpm(project, nodeExtension);
 				}
 
@@ -69,8 +74,15 @@ public class NodePlugin implements Plugin<Project> {
 	protected DownloadNodeTask addTaskDownloadNode(
 		Project project, final NodeExtension nodeExtension) {
 
+		return addTaskDownloadNode(
+			project, DOWNLOAD_NODE_TASK_NAME, nodeExtension);
+	}
+
+	protected DownloadNodeTask addTaskDownloadNode(
+		Project project, String taskName, final NodeExtension nodeExtension) {
+
 		DownloadNodeTask downloadNodeTask = GradleUtil.addTask(
-			project, DOWNLOAD_NODE_TASK_NAME, DownloadNodeTask.class);
+			project, taskName, DownloadNodeTask.class);
 
 		downloadNodeTask.setNodeDir(
 			new Callable<File>() {
@@ -128,6 +140,54 @@ public class NodePlugin implements Plugin<Project> {
 			"Install Node packages from package.json.");
 
 		return npmInstallTask;
+	}
+
+	protected void configureTaskDownloadNodeGlobal(
+		DownloadNodeTask downloadNodeTask, NodeExtension nodeExtension) {
+
+		if (!nodeExtension.isDownload() || !nodeExtension.isGlobal()) {
+			return;
+		}
+
+		Project project = downloadNodeTask.getProject();
+
+		Project rootProject = project.getRootProject();
+
+		DownloadNodeTask rootDownloadNodeTask = null;
+
+		TaskContainer taskContainer = rootProject.getTasks();
+
+		Set<DownloadNodeTask> rootDownloadNodeTasks = taskContainer.withType(
+			DownloadNodeTask.class);
+
+		File nodeDir = downloadNodeTask.getNodeDir();
+		String nodeExeUrl = downloadNodeTask.getNodeExeUrl();
+		String nodeUrl = downloadNodeTask.getNodeUrl();
+
+		for (DownloadNodeTask curRootDownloadNodeTask : rootDownloadNodeTasks) {
+			if (nodeDir.equals(curRootDownloadNodeTask.getNodeDir()) &&
+				nodeExeUrl.equals(curRootDownloadNodeTask.getNodeExeUrl()) &&
+				nodeUrl.equals(curRootDownloadNodeTask.getNodeUrl())) {
+
+				rootDownloadNodeTask = curRootDownloadNodeTask;
+
+				break;
+			}
+		}
+
+		if (rootDownloadNodeTask == null) {
+			String taskName = DOWNLOAD_NODE_TASK_NAME;
+
+			if (!rootDownloadNodeTasks.isEmpty()) {
+				taskName += rootDownloadNodeTasks.size();
+			}
+
+			rootDownloadNodeTask = addTaskDownloadNode(
+				rootProject, taskName, nodeExtension);
+		}
+
+		downloadNodeTask.deleteAllActions();
+		downloadNodeTask.dependsOn(rootDownloadNodeTask);
 	}
 
 	protected void configureTaskExecuteNode(

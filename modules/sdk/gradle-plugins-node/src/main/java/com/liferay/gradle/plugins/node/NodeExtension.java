@@ -40,7 +40,13 @@ public class NodeExtension {
 
 			@Override
 			public File call() throws Exception {
-				return new File(project.getBuildDir(), "node");
+				Project curProject = project;
+
+				if (isGlobal()) {
+					curProject = curProject.getRootProject();
+				}
+
+				return new File(curProject.getBuildDir(), "node");
 			}
 
 		};
@@ -150,6 +156,10 @@ public class NodeExtension {
 		return _download;
 	}
 
+	public boolean isGlobal() {
+		return _global;
+	}
+
 	public NodeExtension npmArgs(Iterable<?> npmArgs) {
 		GUtil.addToCollection(_npmArgs, npmArgs);
 
@@ -162,6 +172,10 @@ public class NodeExtension {
 
 	public void setDownload(boolean download) {
 		_download = download;
+	}
+
+	public void setGlobal(boolean global) {
+		_global = global;
 	}
 
 	public void setNodeDir(Object nodeDir) {
@@ -191,6 +205,7 @@ public class NodeExtension {
 	}
 
 	private boolean _download;
+	private boolean _global;
 	private Object _nodeDir;
 	private Object _nodeExeUrl;
 	private Object _nodeUrl;

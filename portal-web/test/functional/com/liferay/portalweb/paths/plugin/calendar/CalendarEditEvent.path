@@ -75,27 +75,6 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--DATE_PICKER-->
-<tr>
-	<td>DATE_PICKER_NEXT_MONTH_BUTTON</td>
-	<td>//div[contains(@class,'datepicker-popover') and contains(@style,'display: block')]//div[contains(@class,'calendar-header')]/a[contains(@class,'calendarnav-nextmonth')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DAY_SELECTED_IN_DATE_PICKER</td>
-	<td>//div[contains(@class,'datepicker-popover') and contains(@style,'display: block')]//table[contains(@class,'calendar-grid')]//tr//td[contains(@class,'calendar-day-selected')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DAY_SPECIFIC_IN_DATE_PICKER</td>
-	<td>//div[contains(@class,'datepicker-popover') and contains(@style,'display: block')]//table[contains(@class,'calendar-grid')]//tr//td[contains(@class,'calendar-day') and not(contains(@class,'calendar-column-hidden')) and contains(.,'${key_daySpecific}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <tr>
 	<td>ALL_DAY_CHECKBOX</td>
 	<td>//input[contains(@id,'CalendarPortlet_allDay')]</td>
@@ -481,6 +460,21 @@
 <tr>
 	<td>MINI_CALENDAR_WEEK_START_DAY_END_DATE</td>
 	<td>xpath=(//div[@class='yui3-widget-bd popover-content']//tr[@class='yui3-calendar-weekdayrow']/th[1])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MINI_CALENDAR_NEXT_MONTH_BUTTON</td>
+	<td>//div[contains(@class,'datepicker-popover') and contains(@style,'display: block')]//div[contains(@class,'calendar-header')]/a[contains(@class,'calendarnav-nextmonth')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MINI_CALENDAR_DAY_SELECTED</td>
+	<td>//div[contains(@class,'datepicker-popover') and contains(@style,'display: block')]//table[contains(@class,'calendar-grid')]//tr//td[contains(@class,'calendar-day-selected')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MINI_CALENDAR_DAY_SPECIFIC</td>
+	<td>//div[contains(@class,'datepicker-popover') and contains(@style,'display: block')]//table[contains(@class,'calendar-grid')]//tr//td[contains(@class,'calendar-day') and not(contains(@class,'calendar-column-hidden')) and contains(.,'${key_daySpecific}')]</td>
 	<td></td>
 </tr>
 <tr>

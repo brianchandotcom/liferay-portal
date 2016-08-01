@@ -104,9 +104,7 @@ AUI.add(
 												Liferay.Util.getOpener().Liferay.fire(
 													instance.get('eventName'),
 													{
-														data: {
-															items: instance.get('entries')
-														}
+														data: A.Object.isEmpty(instance.get('entries')) ? '' : instance.get('entries')
 													}
 												);
 											}
@@ -249,11 +247,16 @@ AUI.add(
 							entryMatchKey = currentTarget.get('label');
 						}
 
-						var entries = instance.get('entries');
+						if (!instance.get('singleSelect')) {
+							var entries = instance.get('entries');
 
-						entries[entryMatchKey].unchecked = true;
+							entries[entryMatchKey].unchecked = true;
 
-						instance.set('entries', entries);
+							instance.set('entries', entries);
+						}
+						else {
+							instance.clearEntries();
+						}
 					}
 				}
 			}

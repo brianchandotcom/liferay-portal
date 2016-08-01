@@ -98,12 +98,12 @@ AssetCategory category = (AssetCategory)row.getObject();
 							selectedItemChange: function(event) {
 								var selectedItem = event.newVal;
 
-								if (selectedItem && selectedItem.items) {
+								if (selectedItem) {
 									var parentCategoryId = 0;
 									var vocabularyId = 0;
 
-									for (var key in selectedItem.items) {
-										var item = selectedItem.items[key];
+									for (var key in selectedItem) {
+										var item = selectedItem[key];
 
 										if (!item.unchecked) {
 											parentCategoryId = item.categoryId || 0;

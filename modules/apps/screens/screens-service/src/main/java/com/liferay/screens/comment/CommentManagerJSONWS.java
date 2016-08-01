@@ -86,6 +86,11 @@ public class CommentManagerJSONWS extends BaseServiceImpl {
 		_commentManager.deleteComment(commentId);
 	}
 
+	public CommentJSONWS getComment(
+			long groupId, long commentId)
+		throws PortalException {
+	}
+
 	public List<CommentJSONWS> getComments(
 		long groupId, String className, long classPK, int start, int end)
 		throws PortalException {

@@ -151,7 +151,7 @@ public class ServerDetector {
 	}
 
 	/**
-	 * @deprecated As of 7.3.0, with no direct replacement
+	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
 	@Deprecated
 	public static void setSupportsHotDeploy(boolean supportsHotDeploy) {

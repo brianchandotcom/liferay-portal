@@ -7241,7 +7241,7 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of 7.0.1, replaced by {@link #notifySubscribers(long,
+	 * @deprecated As of 7.0.0, replaced by {@link #notifySubscribers(long,
 	 *             JournalArticle, String, ServiceContext)}
 	 */
 	@Deprecated

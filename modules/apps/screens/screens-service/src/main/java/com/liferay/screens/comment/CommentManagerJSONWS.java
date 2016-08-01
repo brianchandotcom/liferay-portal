@@ -128,9 +128,11 @@ public class CommentManagerJSONWS extends BaseServiceImpl {
 
 		discussionPermission.checkUpdatePermission(commentId);
 
-		return _commentManager.updateComment(
-			getUserId(), className, classPK, commentId, subject, body,
+		_commentManager.updateComment(
+			getUserId(), className, classPK, commentId, StringPool.BLANK, body,
 			createServiceContextFunction(WorkflowConstants.ACTION_PUBLISH));
+
+		return getComment(groupId, commentId);
 	}
 
 	protected Function<String, ServiceContext> createServiceContextFunction() {

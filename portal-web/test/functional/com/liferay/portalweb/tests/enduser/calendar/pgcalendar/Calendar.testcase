@@ -5223,7 +5223,7 @@
 
 		<execute macro="CalendarEvent#gotoConfigureInvitations" />
 
-		<execute macro="CalendarEvent#resourcesAvailability" />
+		<execute macro="CalendarEvent#viewResourcesAvailability" />
 
 		<execute macro="CalendarEvent#compareEventDateAndTimeToResourcesAvailabilityDateAndTime" />
 

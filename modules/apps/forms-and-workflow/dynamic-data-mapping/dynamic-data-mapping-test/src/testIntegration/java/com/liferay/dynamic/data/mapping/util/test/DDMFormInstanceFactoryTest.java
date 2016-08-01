@@ -109,7 +109,7 @@ public class DDMFormInstanceFactoryTest {
 			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
 				"integer", Integer.toString(expectedIntegerValue)));
 
-		long expectedLongValue = 1000l;
+		long expectedLongValue = 1000L;
 
 		ddmFormValues.addDDMFormFieldValue(
 			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(

@@ -77,14 +77,14 @@ public abstract class BaseBackgroundTaskTestCase {
 		backgroundTaskThreadLocalManagerImpl.setUserLocalService(
 			userLocalService);
 
-		_companyId = 1234l;
+		_companyId = 1234L;
 		_clusterInvokeEnabled = true;
 		_defaultLocale = Locale.US;
-		_groupId = 1234l;
+		_groupId = 1234L;
 		_siteDefaultLocale = Locale.CANADA;
 		_themeDisplayLocale = Locale.FRANCE;
 
-		_principalName = String.valueOf(1234l);
+		_principalName = String.valueOf(1234L);
 	}
 
 	@After

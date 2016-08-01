@@ -466,7 +466,7 @@ public class OSGiBeanPropertiesTest {
 		Long[] values = (Long[])value;
 		Assert.assertEquals(Long.MAX_VALUE, (long)values[0]);
 		Assert.assertEquals(Long.MIN_VALUE, (long)values[1]);
-		Assert.assertEquals(12l, (long)values[2]);
+		Assert.assertEquals(12L, (long)values[2]);
 		Assert.assertEquals(3, values.length);
 	}
 

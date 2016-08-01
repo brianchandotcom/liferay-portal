@@ -32,6 +32,7 @@ create table CalendarBooking (
 	calendarId LONG,
 	calendarResourceId LONG,
 	parentCalendarBookingId LONG,
+	recurringCalendarBookingId LONG,
 	vEventUid VARCHAR(255) null,
 	title STRING null,
 	description TEXT null,

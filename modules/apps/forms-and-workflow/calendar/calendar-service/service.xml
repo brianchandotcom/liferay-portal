@@ -87,6 +87,7 @@
 		<column name="calendarId" type="long" />
 		<column name="calendarResourceId" type="long" />
 		<column name="parentCalendarBookingId" type="long" />
+		<column name="recurringCalendarBookingId" type="long" />
 		<column name="vEventUid" type="String" />
 		<column localized="true" name="title" type="String" />
 		<column localized="true" name="description" type="String" />
@@ -122,6 +123,9 @@
 		</finder>
 		<finder name="ParentCalendarBookingId" return-type="Collection">
 			<finder-column name="parentCalendarBookingId" />
+		</finder>
+		<finder name="RecurringCalendarBookingId" return-type="Collection">
+			<finder-column name="recurringCalendarBookingId" />
 		</finder>
 		<finder name="C_P" return-type="CalendarBooking" unique="true">
 			<finder-column name="calendarId" />

@@ -58,8 +58,8 @@ import org.osgi.service.component.annotations.Reference;
 @JSONWebService
 public class CommentManagerJSONWS extends BaseServiceImpl {
 
-	public long addComment(
-		long groupId, String className, long classPK, String body)
+	public CommentJSONWS addComment(
+			long groupId, String className, long classPK, String body)
 		throws PortalException {
 
 		DiscussionPermission discussionPermission =

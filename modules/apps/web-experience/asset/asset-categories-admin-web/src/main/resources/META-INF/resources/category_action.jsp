@@ -50,17 +50,10 @@ AssetCategory category = (AssetCategory)row.getObject();
 	</c:if>
 
 	<c:if test="<%= AssetCategoryPermission.contains(permissionChecker, category, ActionKeys.UPDATE) %>">
-		<portlet:renderURL var="moveCategoryURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-			<portlet:param name="mvcPath" value="/move_category.jsp" />
-			<portlet:param name="eventName" value="selectCategory" />
-			<portlet:param name="categoryId" value="<%= String.valueOf(category.getCategoryId()) %>" />
-			<portlet:param name="vocabularyId" value="<%= String.valueOf(category.getVocabularyId()) %>" />
-		</portlet:renderURL>
-
 		<liferay-ui:icon
+			id='<%= row.getRowId() + "moveCategory" %>'
 			message="move"
-			url="<%= moveCategoryURL %>"
-			useDialog="<%= true %>"
+			url="javascript:;"
 		/>
 	</c:if>
 
@@ -92,3 +85,65 @@ AssetCategory category = (AssetCategory)row.getObject();
 		/>
 	</c:if>
 </liferay-ui:icon-menu>
+
+<c:if test="<%= AssetCategoryPermission.contains(permissionChecker, category, ActionKeys.UPDATE) %>">
+
+	<%
+	List<AssetVocabulary> vocabularies = AssetVocabularyServiceUtil.getGroupVocabularies(scopeGroupId);
+
+	PortletURL selectCategoryURL = PortletProviderUtil.getPortletURL(request, AssetCategory.class.getName(), PortletProvider.Action.BROWSE);
+
+	selectCategoryURL.setParameter("eventName", renderResponse.getNamespace() + "selectCategory");
+	selectCategoryURL.setParameter("singleSelect", Boolean.TRUE.toString());
+	selectCategoryURL.setParameter("vocabularyIds", ListUtil.toString(vocabularies, AssetVocabulary.VOCABULARY_ID_ACCESSOR));
+
+	selectCategoryURL.setWindowState(LiferayWindowState.POP_UP);
+	%>
+
+	<aui:script use="liferay-item-selector-dialog">
+		$('#<portlet:namespace /><%= row.getRowId() %>moveCategory').on(
+			'click',
+			function(event) {
+				var itemSelectorDialog = new A.LiferayItemSelectorDialog(
+					{
+						eventName: '<portlet:namespace />selectCategory',
+						on: {
+							selectedItemChange: function(event) {
+								var selectedItem = event.newVal;
+
+								if (selectedItem && selectedItem.items) {
+									var parentCategoryId = 0;
+									var vocabularyId = 0;
+
+									for (var key in selectedItem.items) {
+										var item = selectedItem.items[key];
+
+										if (!item.unchecked) {
+											parentCategoryId = item.categoryId || 0;
+											vocabularyId = item.vocabularyId || 0;
+
+											break;
+										}
+									}
+
+									if ((vocabularyId > 0) || (parentCategoryId > 0)) {
+										document.<portlet:namespace />moveCategoryFm.<portlet:namespace />categoryId.value = '<%= category.getCategoryId() %>';
+										document.<portlet:namespace />moveCategoryFm.<portlet:namespace />parentCategoryId.value = parentCategoryId;
+										document.<portlet:namespace />moveCategoryFm.<portlet:namespace />vocabularyId.value = vocabularyId;
+
+										submitForm($(document.<portlet:namespace />moveCategoryFm));
+									}
+								}
+							}
+						},
+						'strings.add': '<liferay-ui:message key="done" />',
+						title: '<liferay-ui:message arguments="<%= category.getTitle(locale) %>" key="move-x" />',
+						url: '<%= selectCategoryURL.toString() %>'
+					}
+				);
+
+				itemSelectorDialog.open();
+			}
+		);
+	</aui:script>
+</c:if>

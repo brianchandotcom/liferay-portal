@@ -228,17 +228,4 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(assetCategoriesDisplayContext.getVoc
 			}
 		}
 	);
-
-	Liferay.on(
-		'selectCategory',
-		function (event) {
-			var data = event.data;
-
-			document.<portlet:namespace />moveCategoryFm.<portlet:namespace />categoryId.value = data.categoryId;
-			document.<portlet:namespace />moveCategoryFm.<portlet:namespace />parentCategoryId.value = data.parentCategoryId;
-			document.<portlet:namespace />moveCategoryFm.<portlet:namespace />vocabularyId.value = data.vocabularyId;
-
-			submitForm($(document.<portlet:namespace />moveCategoryFm));
-		}
-	);
 </aui:script>

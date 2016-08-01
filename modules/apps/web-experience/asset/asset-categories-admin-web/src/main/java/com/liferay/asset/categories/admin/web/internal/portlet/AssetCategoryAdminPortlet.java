@@ -219,6 +219,17 @@ public class AssetCategoryAdminPortlet extends MVCPortlet {
 			actionRequest, "parentCategoryId");
 		long vocabularyId = ParamUtil.getLong(actionRequest, "vocabularyId");
 
+		if ((vocabularyId <= 0) && (parentCategoryId <= 0)) {
+			throw new NoSuchVocabularyException();
+		}
+
+		if (vocabularyId <= 0) {
+			AssetCategory parentCategory = _assetCategoryService.fetchCategory(
+				parentCategoryId);
+
+			vocabularyId = parentCategory.getVocabularyId();
+		}
+
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			AssetCategory.class.getName(), actionRequest);
 

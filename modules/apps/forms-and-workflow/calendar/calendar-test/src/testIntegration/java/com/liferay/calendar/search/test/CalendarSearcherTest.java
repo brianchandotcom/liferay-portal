@@ -124,16 +124,16 @@ public class CalendarSearcherTest {
 			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 
 		assertSearch("\"Two Three\" Five", 1);
-		assertSearch("\"Two Three\" Nine", 1);
-		assertSearch("\"Two  Four\" Five", 1);
+		assertSearch("\"Two Three\" Nine", 0);
+		assertSearch("\"Two  Four\" Five", 0);
 		assertSearch("\"Two  Four\" Nine", 0);
 		assertSearch("Three \"Five Six\"", 1);
-		assertSearch("Zero  \"Five Six\"", 1);
-		assertSearch("Three \"Four Six\"", 1);
+		assertSearch("Zero  \"Five Six\"", 0);
+		assertSearch("Three \"Four Six\"", 0);
 		assertSearch("Zero  \"Four Six\"", 0);
 		assertSearch("One  \"Three Four\" Six ", 1);
-		assertSearch("Zero \"Three Four\" Nine", 1);
-		assertSearch("One  \"Three Five\" Six ", 1);
+		assertSearch("Zero \"Three Four\" Nine", 0);
+		assertSearch("One  \"Three Five\" Six ", 0);
 		assertSearch("Zero \"Three Five\" Nine", 0);
 	}
 

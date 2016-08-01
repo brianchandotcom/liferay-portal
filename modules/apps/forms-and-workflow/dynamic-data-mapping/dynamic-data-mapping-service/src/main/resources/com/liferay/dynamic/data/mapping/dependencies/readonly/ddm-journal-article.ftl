@@ -16,9 +16,11 @@
 			/>
 		</#if>
 
-		<#assign jsonObject = getFileJSONObject(fieldRawValue)>
+		<#assign
+			jsonObject = getFileJSONObject(fieldRawValue)
 
-		<#assign journalArticle = fetchLatestArticle(jsonObject)>
+			journalArticle = fetchLatestArticle(jsonObject)
+		/>
 
 		<#if journalArticle != "">
 			${escape(journalArticle.getTitle(requestedLocale))}

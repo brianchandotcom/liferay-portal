@@ -61,7 +61,7 @@ if (role != null) {
 	assignMembersURL.setParameter("mvcPath", "/edit_role_assignments.jsp");
 	assignMembersURL.setParameter("redirect", backURL);
 	assignMembersURL.setParameter("roleId", String.valueOf(role.getRoleId()));
-	assignMembersURL.setParameter("tabs1", "assign-members");
+	assignMembersURL.setParameter("tabs1", "assignees");
 
 	if (RolePermissionUtil.contains(permissionChecker, role.getRoleId(), ActionKeys.UPDATE)) {
 		tabs1Names = ArrayUtil.append(tabs1Names, "details");
@@ -84,7 +84,7 @@ if (role != null) {
 	}
 
 	if (!unassignableRole && (role.getType() == RoleConstants.TYPE_REGULAR) && RolePermissionUtil.contains(permissionChecker, role.getRoleId(), ActionKeys.ASSIGN_MEMBERS)) {
-		tabs1Names = ArrayUtil.append(tabs1Names, "assign-members");
+		tabs1Names = ArrayUtil.append(tabs1Names, "assignees");
 
 		tabs1URLs = ArrayUtil.append(tabs1URLs, assignMembersURL.toString());
 	}
@@ -124,13 +124,13 @@ if (role != null) {
 				%>
 
 				<c:if test="<%= type == RoleConstants.TYPE_REGULAR %>">
-					<aui:nav-item cssClass="disabled" label="assign-members" selected="<%= false %>" />
+					<aui:nav-item cssClass="disabled" label="assignees" selected="<%= false %>" />
 				</c:if>
 			</c:otherwise>
 		</c:choose>
 	</aui:nav>
 
-	<c:if test='<%= tabs1.equals("assign-members") %>'>
+	<c:if test='<%= tabs1.equals("assignees") %>'>
 		<aui:nav-bar-search>
 			<aui:form action="<%= portletURL %>" name="searchFm">
 				<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" markupView="lexicon" />

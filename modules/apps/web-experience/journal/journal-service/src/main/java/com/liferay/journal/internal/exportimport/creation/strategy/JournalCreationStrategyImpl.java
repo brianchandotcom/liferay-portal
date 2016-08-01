@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.journal.exportimport.data.handler;
+package com.liferay.journal.internal.exportimport.creation.strategy;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.journal.model.JournalArticle;

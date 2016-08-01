@@ -6468,11 +6468,6 @@
 			<var name="kfProcessFieldData" value="3.99" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#populateFieldText">
-			<var name="fieldName" value="quantity" />
-			<var name="kfProcessFieldData" value="4" />
-		</execute>
-
 		<execute macro="KaleoFormsAdmin#saveProcessRecord" />
 
 		<execute macro="Page#gotoMyAccount">
@@ -6525,11 +6520,6 @@
 			<var name="fieldValue" value="3.99" />
 		</execute>
 
-		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="Quantity" />
-			<var name="fieldValue" value="4.0" />
-		</execute>
-
 		<execute macro="Page#gotoMyAccount">
 			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
@@ -6577,11 +6567,6 @@
 		<execute macro="WorkflowAsset#previewViewContent">
 			<var name="fieldLabel" value="Purchase Price" />
 			<var name="fieldValue" value="3.99" />
-		</execute>
-
-		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="Quantity" />
-			<var name="fieldValue" value="4.0" />
 		</execute>
 	</command>
 

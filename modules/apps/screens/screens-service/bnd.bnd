@@ -3,4 +3,5 @@ Bundle-SymbolicName: com.liferay.screens.service
 Bundle-Version: 1.0.8
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
+Liferay-Require-SchemaVersion: 1.0.8
 Liferay-Service: true

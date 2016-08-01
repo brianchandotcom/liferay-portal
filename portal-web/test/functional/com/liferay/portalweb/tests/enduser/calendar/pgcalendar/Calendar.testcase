@@ -5152,6 +5152,8 @@
 		</execute>
 
 		<execute macro="CalendarEvent#compareEventDateAndTimeToResourcesAvailabilityDateAndTime" />
+
+		<execute macro="CalendarEvent#publish" />
 	</command>
 
 	<command name="ViewEventDetailsAllDayWithModifiedUserTimeZone" priority="4">

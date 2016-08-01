@@ -5126,6 +5126,36 @@
 		</execute>
 	</command>
 
+	<command name="ViewEventDateAndTimeInResourcesAvailability" priority="4">
+		<description message="This is a use case for LPS-62410." />
+
+		<execute macro="CalendarNavigator#gotoAddEvent" />
+
+		<execute macro="CalendarEvent#gotoConfigureInvitations" />
+
+		<execute macro="CalendarEvent#viewResourcesAvailability" />
+
+		<execute macro="CalendarEvent#compareEventDateAndTimeToResourcesAvailabilityDateAndTime" />
+
+		<execute macro="CalendarEvent#selectTimes" >
+			<var name="endDateTime" value="11:00 AM" />
+			<var name="startDateTime" value="08:00 AM" />
+		</execute>
+
+		<execute macro="CalendarEvent#compareEventDateAndTimeToResourcesAvailabilityDateAndTime" />
+
+		<execute macro="CalendarEvent#setEndDateTomorrow" />
+
+		<execute macro="CalendarEvent#selectTimes" >
+			<var name="endDateTime" value="07:00 AM" />
+			<var name="startDateTime" value="08:00 AM" />
+		</execute>
+
+		<execute macro="CalendarEvent#compareEventDateAndTimeToResourcesAvailabilityDateAndTime" />
+
+		<execute macro="CalendarEvent#publish" />
+	</command>
+
 	<command name="ViewEventDetailsAllDayWithModifiedUserTimeZone" priority="4">
 		<description message="This is a use case for LPS-51783." />
 
@@ -5347,7 +5377,7 @@
 	</command>
 
 	<command name="ViewShowMoreLocalization" priority="3">
-		<description message="This is a use case LPS-54786." />
+		<description message="This is a use case for LPS-54786." />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />

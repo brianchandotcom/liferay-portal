@@ -7,14 +7,15 @@
 					combine: Liferay.AUI.getCombine(),
 					filter: Liferay.AUI.getFilterConfig(),
 					modules: {
-						'liferay-calendar-date-picker-util': {
-							path: 'date_picker_util.js',
-							requires: [
-								'aui-base'
-							]
-						},
 						'liferay-calendar-interval-selector': {
 							path: 'interval_selector.js',
+							requires: [
+								'aui-base',
+								'liferay-portlet-base'
+							]
+						},
+						'liferay-calendar-interval-selector-scheduler-event-link': {
+							path: 'interval_selector_scheduler_event_link.js',
 							requires: [
 								'aui-base',
 								'liferay-portlet-base'

@@ -35,7 +35,7 @@
 			entryIds: '<%= assetCategoriesSelectorDisplayContext.getSelectedCategories() %>',
 			eventName: '<%= HtmlUtil.escapeJS(assetCategoriesSelectorDisplayContext.getEventName()) %>',
 			namespace: '<portlet:namespace />',
-			singleSelect: '<%= assetCategoriesSelectorDisplayContext.isSingleSelect() %>',
+			singleSelect: <%= assetCategoriesSelectorDisplayContext.isSingleSelect() %>,
 			url: '<%= resourceURL %>',
 			vocabularyRootNode: [
 

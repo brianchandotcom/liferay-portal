@@ -82,6 +82,10 @@ AUI.add(
 
 						var type = 'check';
 
+						if (instance.get('singleSelect')) {
+							type = 'radio';
+						}
+
 						if (json.length) {
 							json.forEach(
 								function(item, index) {
@@ -91,10 +95,6 @@ AUI.add(
 										after: {
 											checkedChange: function(event) {
 												if (event.newVal) {
-													if (instance.get('singleSelect')) {
-														type = 'radio';
-													}
-
 													instance.onCheckboxCheck(event);
 												}
 												else {

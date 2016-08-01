@@ -1354,6 +1354,30 @@
 		<execute function="Type" locator1="CalendarEditEvent#END_DATE" value1="${endDate}" />
 	</command>
 
+	<command name="setEndDateTomorrow">
+		<execute function="Click" locator1="CalendarEditEvent#END_DATE" />
+
+		<var locator="CalendarEditEvent#MINI_CALENDAR_DAY_SELECTED" name="daySelected" />
+
+		<var method="MathUtil#sum('${daySelected}', '1')" name="tomorrow" />
+
+		<var name="key_daySpecific" value="${tomorrow}" />
+
+		<if>
+			<condition function="IsElementPresent" locator1="CalendarEditEvent#MINI_CALENDAR_DAY_SPECIFIC" />
+			<then>
+				<execute function="Click" locator1="CalendarEditEvent#MINI_CALENDAR_DAY_SPECIFIC" />
+			</then>
+			<else>
+				<execute function="Click" locator1="CalendarEditEvent#MINI_CALENDAR_NEXT_MONTH_BUTTON" />
+
+				<var name="key_daySpecific" value="1" />
+
+				<execute function="Click" locator1="CalendarEditEvent#MINI_CALENDAR_DAY_SPECIFIC" />
+			</else>
+		</if>
+	</command>
+
 	<command name="setRepeating">
 		<execute macro="CalendarEvent#gotoRepeatConfiguration" />
 
@@ -1483,30 +1507,6 @@
 			<var name="endDateTime" value="${endDateTime}" />
 			<var name="startDateTime" value="${startDateTime}" />
 		</execute>
-	</command>
-
-	<command name="setEndDateTomorrow">
-		<execute function="Click" locator1="CalendarEditEvent#END_DATE" />
-
-		<var locator="CalendarEditEvent#MINI_CALENDAR_DAY_SELECTED" name="daySelected" />
-
-		<var method="MathUtil#sum('${daySelected}', '1')" name="tomorrow" />
-
-		<var name="key_daySpecific" value="${tomorrow}" />
-
-		<if>
-			<condition function="IsElementPresent" locator1="CalendarEditEvent#MINI_CALENDAR_DAY_SPECIFIC" />
-			<then>
-				<execute function="Click" locator1="CalendarEditEvent#MINI_CALENDAR_DAY_SPECIFIC" />
-			</then>
-			<else>
-				<execute function="Click" locator1="CalendarEditEvent#MINI_CALENDAR_NEXT_MONTH_BUTTON" />
-
-				<var name="key_daySpecific" value="1" />
-
-				<execute function="Click" locator1="CalendarEditEvent#MINI_CALENDAR_DAY_SPECIFIC" />
-			</else>
-		</if>
 	</command>
 
 	<command name="tag">

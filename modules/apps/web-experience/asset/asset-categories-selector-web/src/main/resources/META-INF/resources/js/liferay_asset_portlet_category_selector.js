@@ -67,6 +67,8 @@ AUI.add(
 								}
 							}
 						).render();
+
+						instance.treeView.getChildren()[0].get('contentBox').addClass('hide');
 					},
 
 					clearEntries: function() {

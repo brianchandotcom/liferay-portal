@@ -389,11 +389,6 @@
 </tr>
 <tr>
 	<td>RESOURCES_AVAILABILITY_SCHEDULER_EVENT_REGULAR</td>
-	<td>//div[@class='calendar-portlet-availability']//div[contains(@class,'scheduler-event scheduler-event-past calendar-portlet-event-pending scheduler-event-disabled')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>RESOURCES_AVAILABILITY_SCHEDULER_EVENT_REGULAR_TITLE</td>
 	<td>//div[@class='calendar-portlet-availability']//div[contains(@class,'calendar-portlet-event') and contains(@data-startdate,'${key_startDate}') and contains(@data-starttime,'${key_startDateTime}') and contains(@data-enddate,'${key_endDate}') and contains(@data-endtime,'${key_endDateTime}')]/div[@class='scheduler-event-content']</td>
 	<td></td>
 </tr>

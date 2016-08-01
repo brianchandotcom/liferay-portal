@@ -123,15 +123,15 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--SITE_ADMIN_USERS-->
+<!--SITE_ADMIN_MEMBERS-->
 <tr>
-	<td>SITE_ADMIN_USERS_SITE_MEMBERSHIPS</td>
-	<td>//div[contains(.,'Users') and contains(@class,'permission-navigation-item-header')]/following-sibling::ul//span[contains(@class,'permission-navigation-item')]/a[contains(.,'Site Memberships')]</td>
+	<td>SITE_ADMIN_MEMBERS_SITE_MEMBERSHIPS</td>
+	<td>//div[contains(.,'Members') and contains(@class,'permission-navigation-item-header')]/following-sibling::ul//span[contains(@class,'permission-navigation-item')]/a[contains(.,'Site Memberships')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>SITE_ADMIN_USERS_SITE_TEAMS</td>
-	<td>//div[contains(.,'Users') and contains(@class,'permission-navigation-item-header')]/following-sibling::ul//span[contains(@class,'permission-navigation-item')]/a[contains(.,'Site Teams')]</td>
+	<td>SITE_ADMIN_MEMBERS_SITE_TEAMS</td>
+	<td>//div[contains(.,'Members') and contains(@class,'permission-navigation-item-header')]/following-sibling::ul//span[contains(@class,'permission-navigation-item')]/a[contains(.,'Site Teams')]</td>
 	<td></td>
 </tr>
 <tr>

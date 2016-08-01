@@ -23,6 +23,7 @@ import java.io.File;
 import java.util.List;
 import java.util.concurrent.Callable;
 
+import org.gradle.api.Project;
 import org.gradle.api.logging.Logger;
 
 /**
@@ -77,6 +78,20 @@ public class ExecuteNpmTask extends ExecuteNodeScriptTask {
 				}
 
 			});
+	}
+
+	@Override
+	public void executeNode() throws Exception {
+		Project project = getProject();
+
+		if (FileUtil.isChild(getCacheDir(), project.getProjectDir())) {
+			super.executeNode();
+		}
+		else {
+			synchronized(ExecuteNpmTask.class) {
+				super.executeNode();
+			}
+		}
 	}
 
 	public File getCacheDir() {

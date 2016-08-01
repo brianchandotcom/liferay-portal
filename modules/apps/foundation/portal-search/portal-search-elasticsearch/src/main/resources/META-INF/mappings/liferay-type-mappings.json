@@ -809,6 +809,11 @@
 				"store": "yes",
 				"type": "string"
 			},
+			"screenName": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "string"
+			},
 			"size": {
 				"index": "not_analyzed",
 				"store": "yes",

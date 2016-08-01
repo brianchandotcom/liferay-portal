@@ -15,11 +15,13 @@
 package com.liferay.portal.search.internal.analysis;
 
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.analysis.KeywordTokenizer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -65,6 +67,14 @@ public class SimpleKeywordTokenizer implements KeywordTokenizer {
 		return tokens;
 	}
 
+	protected String[] split(String keyword) {
+		if (Objects.equals(keyword, StringPool.NULL)) {
+			return new String[] {keyword};
+		}
+
+		return StringUtil.split(keyword, CharPool.SPACE);
+	}
+
 	protected void tokenize(
 		String keyword, List<String> tokens, int start, int end) {
 
@@ -106,7 +116,7 @@ public class SimpleKeywordTokenizer implements KeywordTokenizer {
 			return;
 		}
 
-		start = keyword.indexOf(CharPool.QUOTE, end + 1);
+		start = keyword.indexOf(CharPool.QUOTE);
 
 		end = keyword.indexOf(CharPool.QUOTE, start + 1);
 
@@ -114,7 +124,7 @@ public class SimpleKeywordTokenizer implements KeywordTokenizer {
 	}
 
 	protected void tokenizeBySpace(String keyword, List<String> tokens) {
-		String[] keywordTokens = StringUtil.split(keyword, CharPool.SPACE);
+		String[] keywordTokens = split(keyword);
 
 		for (String keywordToken : keywordTokens) {
 			keyword = keywordToken.trim();

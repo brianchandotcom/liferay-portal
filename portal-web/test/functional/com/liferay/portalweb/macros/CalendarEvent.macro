@@ -100,6 +100,15 @@
 		<execute function="AssertElementPresent#assertVisible" locator1="CalendarEditEvent#END_DATE_TIME" />
 	</command>
 
+	<command name="_viewRegularEventDateAndTime">
+		<var name="key_endDate" value="${endDate}" />
+		<var name="key_endDateTime" value="${endDateTime}" />
+		<var name="key_startDate" value="${startDate}" />
+		<var name="key_startDateTime" value="${startDateTime}" />
+
+		<execute function="AssertElementPresent" locator1="Calendar#SCHEDULER_EVENT_REGULAR" />
+	</command>
+
 	<command name="add">
 		<execute macro="TestCase#getSiteName">
 			<return from="siteName" name="siteName" />

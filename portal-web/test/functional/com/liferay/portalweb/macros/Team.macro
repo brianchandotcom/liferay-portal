@@ -1,9 +1,6 @@
 <definition>
 	<command name="addCP">
-		<var name="key_teamName" value="${teamName}" />
-
-		<execute function="Click" locator1="Button#PLUS" />
-		<execute function="Pause" locator1="3000" />
+		<execute macro="LexiconEntry#gotoAdd" />
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${teamName}" />
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${teamDescription}" />
@@ -17,17 +14,19 @@
 		<execute function="Type" locator1="TextInput#SEARCH" value1="${teamName}" />
 		<execute function="KeyPress" locator1="TextInput#SEARCH" value1="\RETURN" />
 
-		<execute function="Pause" locator1="5000" />
-
-		<execute function="Click" locator1="Icon#DISPLAY_STYLE_LIST" />
+		<execute macro="Portlet#changeDisplayStyle">
+			<var name="displayStyle" value="List" />
+		</execute>
 
 		<execute function="AssertTextEquals" locator1="SiteTeams#TEAM_TABLE_NAME" value1="${teamName}" />
 
 		<execute function="AssertClick" locator1="SiteTeams#TEAM_TABLE_NAME" value1="${teamName}" />
 
-		<execute function="AssertVisible" locator1="NavBar#USERS" />
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Users" />
+		</execute>
 
-		<execute function="Click" locator1="Button#PLUS" />
+		<execute macro="LexiconEntry#gotoAdd" />
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
@@ -71,7 +70,9 @@
 
 		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
 
-		<execute function="Click" locator1="Icon#DISPLAY_STYLE_LIST" />
+		<execute macro="Portlet#changeDisplayStyle">
+			<var name="displayStyle" value="List" />
+		</execute>
 
 		<execute function="AssertTextEquals" locator1="SiteTeams#TEAM_TABLE_NAME" value1="${teamName}" />
 
@@ -81,9 +82,7 @@
 			<var name="navItem" value="User Groups" />
 		</execute>
 
-		<execute function="Pause" locator1="5000" />
-
-		<execute function="Click" locator1="Button#PLUS" />
+		<execute macro="LexiconEntry#gotoAdd" />
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
@@ -137,13 +136,14 @@
 	</command>
 
 	<command name="editCP">
-		<var name="key_teamName" value="${teamName}" />
+		<execute macro="Portlet#changeDisplayStyle">
+			<var name="displayStyle" value="List" />
+		</execute>
 
-		<execute function="Click" locator1="Icon#DISPLAY_STYLE_LIST" />
-
-		<execute function="AssertTextEquals" locator1="SiteTeams#TEAM_TABLE_NAME" value1="${teamName}" />
-		<execute function="Click" locator1="SiteTeams#TEAM_TABLE_ACTIONS" />
-		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Edit" />
+			<var name="rowEntry" value="${teamName}" />
+		</execute>
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${teamNameEdit}" />
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${teamDescriptionEdit}" />
@@ -175,7 +175,9 @@
 	<command name="viewCP">
 		<var name="key_teamName" value="${teamName}" />
 
-		<execute function="Click" locator1="Icon#DISPLAY_STYLE_LIST" />
+		<execute macro="Portlet#changeDisplayStyle">
+			<var name="displayStyle" value="List" />
+		</execute>
 
 		<execute function="AssertTextEquals" locator1="SiteTeams#TEAM_TABLE_NAME" value1="${teamName}" />
 		<execute function="AssertTextEquals" locator1="SiteTeams#TEAM_TABLE_DESCRIPTION" value1="${teamDescription}" />

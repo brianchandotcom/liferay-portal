@@ -47,6 +47,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.maven.artifact.versioning.ComparableVersion;
+
 /**
  * @author Hugo Huijser
  */
@@ -2372,9 +2374,13 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					_addMissingDeprecationReleaseVersion) {
 
 					if (!trimmedLine.startsWith("* @deprecated As of ")) {
+						ComparableVersion mainReleaseComparableVersion =
+							getMainReleaseComparableVersion();
+
 						line = StringUtil.replace(
 							line, "* @deprecated",
-							"* @deprecated As of " + getMainReleaseVersion());
+							"* @deprecated As of " +
+								mainReleaseComparableVersion.toString());
 					}
 					else {
 						String version = trimmedLine.substring(20);

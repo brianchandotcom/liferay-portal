@@ -125,6 +125,12 @@
 		<execute function="Type" locator1="Form#PAGE_TITLE_FIELD" value1="${formPageName}" />
 	</command>
 
+	<command name="getPublishedFormPublicURL" returns="publicURL">
+		<var locator="Form#PUBLISH_FORM_PUBLIC_URL" name="publicURL" />
+
+		<return name="publicURL" value="${publicURL}" />
+	</command>
+
 	<command name="gotoAddField">
 		<var name="key_columnSize" value="${columnSize}" />
 

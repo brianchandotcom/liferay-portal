@@ -79,7 +79,7 @@
 		<if>
 			<equals arg1="${optionSetValue}" arg2="resourcesAvailability" />
 			<then>
-				<execute macro="CalendarEvent#resourcesAvailability" />
+				<execute macro="CalendarEvent#viewResourcesAvailability" />
 			</then>
 		</if>
 
@@ -400,7 +400,7 @@
 		<if>
 			<equals arg1="${resourcesAvailability}" arg2="true" />
 			<then>
-				<execute macro="CalendarEvent#resourcesAvailability" />
+				<execute macro="CalendarEvent#viewResourcesAvailability" />
 			</then>
 		</if>
 
@@ -735,7 +735,7 @@
 		<var locator="CalendarEditEvent#START_DATE" name="startDate" />
 		<var locator="CalendarEditEvent#START_DATE_TIME" name="startDateTime" />
 
-		<execute macro="CalendarScheduler#_viewResourcesAvailabilityEvent">
+		<execute macro="CalendarEvent#_viewResourcesAvailabilityEvent">
 			<var name="endDate" value="${endDate}" />
 			<var name="endDateTime" value="${endDateTime}" />
 			<var name="startDate" value="${startDate}" />

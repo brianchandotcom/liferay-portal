@@ -2373,10 +2373,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				if (trimmedLine.startsWith("* @deprecated") &&
 					_addMissingDeprecationReleaseVersion) {
 
-					if (!trimmedLine.startsWith("* @deprecated As of ")) {
-						ComparableVersion mainReleaseComparableVersion =
-							getMainReleaseComparableVersion();
+					ComparableVersion mainReleaseComparableVersion =
+						getMainReleaseComparableVersion();
 
+					if (!trimmedLine.startsWith("* @deprecated As of ")) {
 						line = StringUtil.replace(
 							line, "* @deprecated",
 							"* @deprecated As of " +
@@ -2391,7 +2391,19 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 						version = StringUtil.replace(
 							version, StringPool.COMMA, StringPool.BLANK);
 
-						if (StringUtil.count(version, CharPool.PERIOD) == 1) {
+						ComparableVersion comparableVersion =
+							new ComparableVersion(version);
+
+						if (comparableVersion.compareTo(
+								mainReleaseComparableVersion) > 0) {
+
+							line = StringUtil.replaceFirst(
+								line, version,
+								mainReleaseComparableVersion.toString());
+						}
+						else if (StringUtil.count(
+									version, CharPool.PERIOD) == 1) {
+
 							line = StringUtil.replaceFirst(
 								line, version, version + ".0");
 						}

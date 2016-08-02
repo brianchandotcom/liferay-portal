@@ -10,6 +10,7 @@
 		<module name="AvoidStarImport" />
 		<module name="DefaultComesLast" />
 		<module name="GenericWhitespace" />
+		<module name="MethodParamPad" />
 		<module name="UpperEll" />
 	</module>
 </module>

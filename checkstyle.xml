@@ -7,6 +7,7 @@
 		<module name="AnnotationUseStyle" />
 		<module name="ArrayTypeStyle" />
 		<module name="AvoidNestedBlocks" />
+		<module name="AvoidStarImport" />
 		<module name="UpperEll" />
 	</module>
 </module>

@@ -99,12 +99,20 @@ public class CommentManagerJSONWS extends BaseServiceImpl {
 		DiscussionCommentIterator threadDiscussionCommentIterator =
 			rootDiscussionComment.getThreadDiscussionCommentIterator(0);
 
+		DiscussionPermission discussionPermission =
+			_commentManager.getDiscussionPermission(getPermissionChecker());
+
 		while (threadDiscussionCommentIterator.hasNext()) {
 			DiscussionComment discussionComment =
 				threadDiscussionCommentIterator.next();
 
-			if (discussionComment.getCommentId() == commentId) {
-				return new CommentJSONWS(discussionComment);
+			long discussionCommentId = discussionComment.getCommentId();
+			if (discussionCommentId == commentId) {
+				return new CommentJSONWS(discussionComment,
+					discussionPermission.hasUpdatePermission(
+						discussionCommentId),
+					discussionPermission.hasDeletePermission(
+						discussionCommentId));
 			}
 		}
 
@@ -189,13 +197,23 @@ public class CommentManagerJSONWS extends BaseServiceImpl {
 	}
 
 	protected List<CommentJSONWS> getAllComments(
-		DiscussionCommentIterator threadDiscussionCommentIterator) {
+		DiscussionCommentIterator threadDiscussionCommentIterator)
+		throws PortalException {
 
 		List<CommentJSONWS> commentJSONWSs = new ArrayList<>();
 
+		DiscussionPermission discussionPermission =
+			_commentManager.getDiscussionPermission(getPermissionChecker());
+
 		while (threadDiscussionCommentIterator.hasNext()) {
+			DiscussionComment discussionComment =
+				threadDiscussionCommentIterator.next();
 			CommentJSONWS commentJSONWS = new CommentJSONWS(
-				threadDiscussionCommentIterator.next());
+				discussionComment,
+				discussionPermission.hasUpdatePermission(
+					discussionComment.getCommentId()),
+				discussionPermission.hasDeletePermission(
+					discussionComment.getCommentId()));
 
 			commentJSONWSs.add(commentJSONWS);
 		}
@@ -204,7 +222,8 @@ public class CommentManagerJSONWS extends BaseServiceImpl {
 	}
 
 	protected List<CommentJSONWS> getComments(
-		DiscussionComment discussionComment, int start, int end) {
+		DiscussionComment discussionComment, int start, int end)
+		throws PortalException {
 
 		if (start == QueryUtil.ALL_POS) {
 			start = 0;
@@ -225,11 +244,20 @@ public class CommentManagerJSONWS extends BaseServiceImpl {
 
 		List<CommentJSONWS> commentJSONWSs = new ArrayList<>(commentsCount);
 
+		DiscussionPermission discussionPermission =
+			_commentManager.getDiscussionPermission(getPermissionChecker());
+
 		while (threadDiscussionCommentIterator.hasNext() &&
 			   (commentsCount > 0)) {
 
+			DiscussionComment comment =
+				threadDiscussionCommentIterator.next();
 			CommentJSONWS commentJSONWS = new CommentJSONWS(
-				threadDiscussionCommentIterator.next());
+				comment,
+				discussionPermission.hasUpdatePermission(
+					comment.getCommentId()),
+				discussionPermission.hasDeletePermission(
+					comment.getCommentId()));
 
 			commentJSONWSs.add(commentJSONWS);
 

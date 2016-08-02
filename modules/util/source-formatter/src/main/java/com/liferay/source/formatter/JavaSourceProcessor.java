@@ -2278,10 +2278,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				}
 
 				if (line.startsWith("import ")) {
-					if (line.endsWith(".*;")) {
-						processMessage(fileName, "import", lineCount);
-					}
-
 					int pos = line.lastIndexOf(CharPool.PERIOD);
 
 					if (pos != -1) {

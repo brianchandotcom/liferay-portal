@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wsrp.axis;
+package com.liferay.wsrp.internal.axis;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

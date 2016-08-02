@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wsrp.consumer.messaging;
+package com.liferay.wsrp.internal.consumer.messaging;
 
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;

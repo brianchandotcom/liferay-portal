@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wsrp.upgrade.v1_0_0;
+package com.liferay.wsrp.internal.upgrade.v1_0_0;
 
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
-import com.liferay.wsrp.consumer.portlet.ConsumerPortlet;
+import com.liferay.wsrp.internal.consumer.portlet.ConsumerPortlet;
 import com.liferay.wsrp.model.WSRPConsumerPortlet;
 import com.liferay.wsrp.service.WSRPConsumerPortletLocalServiceUtil;
 

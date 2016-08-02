@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wsrp.proxy;
+package com.liferay.wsrp.internal.proxy;
 
 import java.net.URL;
 

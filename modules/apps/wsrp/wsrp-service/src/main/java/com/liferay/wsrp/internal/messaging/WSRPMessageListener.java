@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wsrp.messaging;
+package com.liferay.wsrp.internal.messaging;
 
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.HotDeployMessageListener;
 import com.liferay.portal.kernel.messaging.MessageListener;
-import com.liferay.wsrp.jmx.WSRPConsumerPortletManager;
+import com.liferay.wsrp.internal.jmx.WSRPConsumerPortletManager;
 import com.liferay.wsrp.service.WSRPConsumerPortletLocalService;
 import com.liferay.wsrp.util.ExtensionHelperUtil;
 

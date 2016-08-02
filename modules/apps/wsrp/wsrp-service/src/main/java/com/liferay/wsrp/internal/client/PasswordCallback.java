@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wsrp.client;
+package com.liferay.wsrp.internal.client;
 
 import javax.security.auth.callback.Callback;
 import javax.security.auth.callback.CallbackHandler;

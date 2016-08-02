@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wsrp.upgrade.v1_0_0;
+package com.liferay.wsrp.internal.upgrade.v1_0_0;
 
 import com.liferay.portal.kernel.upgrade.BaseUpgradeLastPublishDate;
 

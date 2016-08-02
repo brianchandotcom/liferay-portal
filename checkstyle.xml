@@ -11,6 +11,7 @@
 		<module name="DefaultComesLast" />
 		<module name="GenericWhitespace" />
 		<module name="MethodParamPad" />
+		<module name="ModifierOrder" />
 		<module name="UpperEll" />
 	</module>
 </module>

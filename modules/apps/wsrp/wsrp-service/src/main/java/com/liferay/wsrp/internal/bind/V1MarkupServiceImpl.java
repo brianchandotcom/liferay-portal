@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.wsrp.bind;
+package com.liferay.wsrp.internal.bind;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.wsrp.proxy.TypeConvertorUtil;
+import com.liferay.wsrp.internal.proxy.TypeConvertorUtil;
 
 import java.rmi.RemoteException;
 

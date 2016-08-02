@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wsrp.servlet;
+package com.liferay.wsrp.internal.servlet;
 
 import oasis.names.tc.wsrp.v2.intf.WSRP_v2_Markup_PortType;
 import oasis.names.tc.wsrp.v2.types.RegistrationContext;

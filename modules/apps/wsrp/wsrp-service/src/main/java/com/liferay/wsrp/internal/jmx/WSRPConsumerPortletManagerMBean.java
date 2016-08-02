@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wsrp.jmx;
+package com.liferay.wsrp.internal.jmx;
 
 /**
  * @author Michael C. Han

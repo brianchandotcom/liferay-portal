@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wsrp.consumer.portlet;
+package com.liferay.wsrp.internal.consumer.portlet;
 
 import com.liferay.petra.encryptor.Encryptor;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -54,15 +54,15 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TransientValue;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
-import com.liferay.wsrp.axis.WSRPHTTPSender;
+import com.liferay.wsrp.internal.axis.WSRPHTTPSender;
 import com.liferay.wsrp.configuration.WSRPGroupServiceConfiguration;
 import com.liferay.wsrp.constants.WSRPPortletKeys;
 import com.liferay.wsrp.model.WSRPConsumer;
 import com.liferay.wsrp.model.WSRPConsumerPortlet;
-import com.liferay.wsrp.proxy.Stub;
+import com.liferay.wsrp.internal.proxy.Stub;
 import com.liferay.wsrp.service.WSRPConsumerLocalServiceUtil;
 import com.liferay.wsrp.service.WSRPConsumerPortletLocalServiceUtil;
-import com.liferay.wsrp.servlet.ServiceHolder;
+import com.liferay.wsrp.internal.servlet.ServiceHolder;
 import com.liferay.wsrp.util.ConsumerRequestExtensionsHelper;
 import com.liferay.wsrp.util.ExtensionHelperUtil;
 import com.liferay.wsrp.util.MarkupCharacterSetsUtil;

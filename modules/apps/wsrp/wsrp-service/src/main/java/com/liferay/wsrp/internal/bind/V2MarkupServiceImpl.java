@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wsrp.bind;
+package com.liferay.wsrp.internal.bind;
 
 import com.liferay.petra.encryptor.Encryptor;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;

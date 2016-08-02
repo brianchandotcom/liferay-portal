@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wsrp.servlet;
+package com.liferay.wsrp.internal.servlet;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

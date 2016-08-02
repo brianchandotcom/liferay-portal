@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wsrp.servlet.filters;
+package com.liferay.wsrp.internal.servlet.filters;
 
 import com.liferay.util.axis.AxisCleanUpFilter;
 

@@ -12,17 +12,17 @@
  * details.
  */
 
-package com.liferay.wsrp.upgrade;
+package com.liferay.wsrp.internal.upgrade;
 
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.release.BaseUpgradeWebModuleRelease;
-import com.liferay.wsrp.upgrade.v1_0_0.UpgradeLastPublishDate;
-import com.liferay.wsrp.upgrade.v1_0_0.UpgradePortletId;
-import com.liferay.wsrp.upgrade.v1_0_0.UpgradeUuid;
-import com.liferay.wsrp.upgrade.v1_0_0.WSRPUpgradeStep;
+import com.liferay.wsrp.internal.upgrade.v1_0_0.UpgradeLastPublishDate;
+import com.liferay.wsrp.internal.upgrade.v1_0_0.UpgradePortletId;
+import com.liferay.wsrp.internal.upgrade.v1_0_0.UpgradeUuid;
+import com.liferay.wsrp.internal.upgrade.v1_0_0.WSRPUpgradeStep;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;

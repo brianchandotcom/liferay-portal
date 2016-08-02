@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.wsrp.servlet.filters;
+package com.liferay.wsrp.internal.servlet.filters;
 
 import com.liferay.portal.kernel.servlet.PortalClassLoaderFilter;
-import com.liferay.wsrp.axis.WSRPHTTPSender;
+import com.liferay.wsrp.internal.axis.WSRPHTTPSender;
 import com.liferay.wsrp.util.WSRPConsumerManagerFactory;
 
 import java.io.IOException;

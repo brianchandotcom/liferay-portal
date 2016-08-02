@@ -260,17 +260,18 @@ public class NpmInstallTask extends ExecuteNpmTask {
 			FileUtil.syncDir(
 				project, nodeModulesCacheDir, nodeModulesDir, nativeSync);
 		}
+		else {
+			npmInstallTask._npmInstall();
 
-		npmInstallTask._npmInstall();
+			if (logger.isLifecycleEnabled()) {
+				logger.lifecycle(
+					"Caching node_modules of {} in {}", project,
+					nodeModulesCacheDir);
+			}
 
-		if (logger.isLifecycleEnabled()) {
-			logger.lifecycle(
-				"Caching node_modules of {} in {}", project,
-				nodeModulesCacheDir);
+			FileUtil.syncDir(
+				project, nodeModulesDir, nodeModulesCacheDir, nativeSync);
 		}
-
-		FileUtil.syncDir(
-			project, nodeModulesDir, nodeModulesCacheDir, nativeSync);
 	}
 
 	private void _npmInstall() throws Exception {

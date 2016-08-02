@@ -61,9 +61,9 @@ app.git.id-4.0.3=ed3baf2bb3796f6230a62da935430b7479db7374
 app.artifacts-4.0.4=\
 	com.liferay.sync.api-2.0.0.jar,\
 	com.liferay.sync.security-2.0.3.jar,\
-	com.liferay.sync.service-1.1.0.jar,\
+	com.liferay.sync.service-1.1.1.jar,\
 	com.liferay.sync.web-1.0.3.jar
 
-app.change.log-4.0.4=LPS-65012 LPS-66662 LPS-66853 SYNC-1569 SYNC-1607 SYNC-1617 SYNC-1625 SYNC-1626 SYNC-1638 SYNC-1643
+app.change.log-4.0.4=LPS-66662 LPS-66853 SYNC-1569 SYNC-1607 SYNC-1638 SYNC-1643
 
-app.git.id-4.0.4=3a98c9d63c49e975e6e06442d654a998f9037662
+app.git.id-4.0.4=7482cd66e0fa06968ef9ef67045866e4c223c5ff

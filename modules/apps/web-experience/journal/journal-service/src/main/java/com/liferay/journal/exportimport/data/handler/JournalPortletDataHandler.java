@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.journal.lar;
+package com.liferay.journal.exportimport.data.handler;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
@@ -90,7 +90,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Daniel Kocsis
  * @author László Csontos
  * @author Mate Thurzo
- * @see    JournalCreationStrategy
+ * @see    com.liferay.journal.internal.exportimport.creation.strategy.JournalCreationStrategy
  * @see    PortletDataHandler
  */
 @Component(

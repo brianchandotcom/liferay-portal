@@ -1046,11 +1046,11 @@ public class JournalArticleFinderImpl
 			}
 
 			sql = CustomSQLUtil.replaceKeywords(
-				sql, "lower(JournalArticle.title)", StringPool.LIKE, false,
-				titles);
+				sql, "lower(JournalArticleLocalization.title)", StringPool.LIKE,
+				false, titles);
 			sql = CustomSQLUtil.replaceKeywords(
-				sql, "JournalArticle.description", StringPool.LIKE, false,
-				descriptions);
+				sql, "JournalArticleLocalization.description", StringPool.LIKE,
+				false, descriptions);
 			sql = CustomSQLUtil.replaceKeywords(
 				sql, "JournalArticle.content", StringPool.LIKE, false,
 				contents);
@@ -1387,11 +1387,11 @@ public class JournalArticleFinderImpl
 			}
 
 			sql = CustomSQLUtil.replaceKeywords(
-				sql, "lower(JournalArticle.title)", StringPool.LIKE, false,
-				titles);
+				sql, "lower(JournalArticleLocalization.title)", StringPool.LIKE,
+				false, titles);
 			sql = CustomSQLUtil.replaceKeywords(
-				sql, "JournalArticle.description", StringPool.LIKE, false,
-				descriptions);
+				sql, "JournalArticleLocalization.description", StringPool.LIKE,
+				false, descriptions);
 			sql = CustomSQLUtil.replaceKeywords(
 				sql, "JournalArticle.content", StringPool.LIKE, false,
 				contents);

@@ -69,6 +69,9 @@
 				(JournalArticle.groupId = tempJournalArticle.groupId) AND
 				(JournalArticle.articleId = tempJournalArticle.articleId) AND
 				(JournalArticle.version < tempJournalArticle.version)
+			LEFT JOIN JournalArticleLocalization ON
+				(JournalArticle.companyId = JournalArticleLocalization.companyId) AND
+				(JournalArticle.id_ = JournalArticleLocalization.articlePK)
 			WHERE
 				(JournalArticle.companyId = ?) AND
 				(JournalArticle.groupId = ?) AND
@@ -80,8 +83,8 @@
 				(
 					(JournalArticle.articleId LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(JournalArticle.version = ?) [$AND_OR_CONNECTOR$]
-					(lower(JournalArticle.title) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(JournalArticle.description LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(lower(JournalArticleLocalization.title) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(JournalArticleLocalization.description LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(JournalArticle.content LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(JournalArticle.displayDate >= ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(JournalArticle.displayDate <= ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
@@ -229,7 +232,7 @@
 	<sql id="com.liferay.journal.service.persistence.JournalArticleFinder.findByC_G_F_C_A_V_T_D_C_S_T_D_R">
 		<![CDATA[
 			SELECT
-				JournalArticle.*
+				DISTINCT JournalArticle.*
 			FROM
 				JournalArticle
 			LEFT JOIN JournalArticle tempJournalArticle ON
@@ -237,6 +240,9 @@
 				(JournalArticle.groupId = tempJournalArticle.groupId) AND
 				(JournalArticle.articleId = tempJournalArticle.articleId) AND
 				(JournalArticle.version < tempJournalArticle.version)
+			LEFT JOIN JournalArticleLocalization ON
+				(JournalArticle.companyId = JournalArticleLocalization.companyId) AND
+				(JournalArticle.id_ = JournalArticleLocalization.articlePK)
 			WHERE
 				(JournalArticle.companyId = ?) AND
 				(JournalArticle.groupId = ?) AND
@@ -248,8 +254,8 @@
 				(
 					(JournalArticle.articleId LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(JournalArticle.version = ?) [$AND_OR_CONNECTOR$]
-					(lower(JournalArticle.title) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(JournalArticle.description LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(lower(JournalArticleLocalization.title) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(JournalArticleLocalization.description LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(JournalArticle.content LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(JournalArticle.displayDate >= ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(JournalArticle.displayDate <= ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]

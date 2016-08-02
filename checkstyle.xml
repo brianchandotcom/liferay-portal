@@ -9,6 +9,7 @@
 		<module name="AvoidNestedBlocks" />
 		<module name="AvoidStarImport" />
 		<module name="DefaultComesLast" />
+		<module name="GenericWhitespace" />
 		<module name="UpperEll" />
 	</module>
 </module>

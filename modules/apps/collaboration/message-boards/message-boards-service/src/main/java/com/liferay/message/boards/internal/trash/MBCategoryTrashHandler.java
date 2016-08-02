@@ -99,7 +99,7 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 			category.getGroupId(), parentContainerModelId,
 			WorkflowConstants.STATUS_APPROVED, start, end);
 
-		List<ContainerModel> containerModels = new ArrayList<ContainerModel>();
+		List<ContainerModel> containerModels = new ArrayList<>();
 
 		for (MBCategory curCategory : categories) {
 			containerModels.add(curCategory);

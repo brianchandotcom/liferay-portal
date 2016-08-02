@@ -127,9 +127,8 @@ public class ManifestSummary implements Serializable {
 	public Object clone() {
 		ManifestSummary manifestSummary = new ManifestSummary();
 
-		manifestSummary._configurationPortletOptions =
-			new HashMap<String, String[]>(
-				manifestSummary._configurationPortletOptions);
+		manifestSummary._configurationPortletOptions = new HashMap<>(
+			manifestSummary._configurationPortletOptions);
 		manifestSummary._dataPortlets = new ArrayList<>(_dataPortlets);
 		manifestSummary._layoutPortlets = new ArrayList<>(_layoutPortlets);
 

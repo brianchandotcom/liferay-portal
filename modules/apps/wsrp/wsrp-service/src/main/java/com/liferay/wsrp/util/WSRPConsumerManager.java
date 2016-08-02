@@ -47,6 +47,8 @@ import oasis.names.tc.wsrp.v2.types.RegistrationContext;
 import oasis.names.tc.wsrp.v2.types.ServiceDescription;
 import oasis.names.tc.wsrp.v2.wsdl.WSRP_v2_Service;
 
+import org.apache.axis.attachments.AttachmentsImpl;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -174,8 +176,23 @@ public class WSRPConsumerManager {
 			getServiceDescription.setRegistrationContext(registrationContext);
 		}
 
-		_serviceDescription = _serviceDescriptionService.getServiceDescription(
-			getServiceDescription);
+		Thread currentThread = Thread.currentThread();
+
+		try {
+			currentThread.setContextClassLoader(
+				AttachmentsImpl.class.getClassLoader());
+
+			_serviceDescription =
+				_serviceDescriptionService.getServiceDescription(
+					getServiceDescription);
+		}
+		catch (Exception e) {
+			throw e;
+		}
+		finally {
+			currentThread.setContextClassLoader(
+				WSRPConsumerManager.class.getClassLoader());
+		}
 
 		_portletDescriptions = new HashMap<>();
 

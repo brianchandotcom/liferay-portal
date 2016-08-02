@@ -259,28 +259,31 @@ public class DefaultWikiListPagesDisplayContext
 			results = new ArrayList<>(results.size());
 
 			for (WikiPage curPage : pages) {
-				WikiPage lastPage = null;
+				WikiPage resultPage = curPage;
 
-				try {
-					lastPage = WikiPageLocalServiceUtil.getPage(
-						curPage.getResourcePrimKey(), false);
-				}
-				catch (PortalException pe) {
-				}
-
-				if ((lastPage != null) &&
-					(curPage.getVersion() < lastPage.getVersion()) &&
-					(permissionChecker.isContentReviewer(
+				if (permissionChecker.isContentReviewer(
 						_wikiRequestHelper.getCompanyId(),
 						_wikiRequestHelper.getScopeGroupId()) ||
-					 WikiPagePermissionChecker.contains(
-						 permissionChecker, curPage, ActionKeys.UPDATE))) {
+					WikiPagePermissionChecker.contains(
+						permissionChecker, curPage, ActionKeys.UPDATE)) {
 
-					results.add(lastPage);
+					WikiPage lastPage = null;
+
+					try {
+						lastPage = WikiPageLocalServiceUtil.getPage(
+							curPage.getResourcePrimKey(), false);
+					}
+					catch (PortalException pe) {
+					}
+
+					if ((lastPage != null) &&
+						(curPage.getVersion() < lastPage.getVersion())) {
+
+						resultPage = lastPage;
+					}
 				}
-				else {
-					results.add(curPage);
-				}
+
+				results.add(resultPage);
 			}
 		}
 		else if (navigation.equals("categorized-pages") ||

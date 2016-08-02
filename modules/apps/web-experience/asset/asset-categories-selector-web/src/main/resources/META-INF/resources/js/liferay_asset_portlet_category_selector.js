@@ -54,10 +54,22 @@ AUI.add(
 
 						instance.entryIdsArr = instance.get('entryIds').split(',');
 
+						var rootNode = instance.get('vocabularyRootNode');
+
+						rootNode[0].children.map(
+							function(item) {
+								item.after = {
+									checkedChange: A.bind('onCheckedChange', instance)
+								};
+
+								return item;
+							}
+						);
+
 						instance.treeView = new A.TreeView(
 							{
 								boundingBox: instance.get('boundingBox'),
-								children: instance.get('vocabularyRootNode'),
+								children: rootNode,
 								io: {
 									cfg: {
 										data: instance.formatRequestData.bind(instance)
@@ -95,21 +107,7 @@ AUI.add(
 
 									var newTreeNode = {
 										after: {
-											checkedChange: function(event) {
-												if (event.newVal) {
-													instance.onCheckboxCheck(event);
-												}
-												else {
-													instance.onCheckboxUncheck(event);
-												}
-
-												Liferay.Util.getOpener().Liferay.fire(
-													instance.get('eventName'),
-													{
-														data: A.Object.isEmpty(instance.get('entries')) ? '' : instance.get('entries')
-													}
-												);
-											}
+											checkedChange: A.bind('onCheckedChange', instance)
 										},
 										categoryId: item.categoryId,
 										checked: false,
@@ -206,25 +204,17 @@ AUI.add(
 
 						var currentTarget = event.currentTarget;
 
-						var assetId;
+						var assetId = instance.getTreeNodeAssetId(currentTarget);
 
-						var entryMatchKey;
+						var assetType = instance.getTreeNodeAssetType(currentTarget);
 
-						if (A.instanceOf(currentTarget, A.Node)) {
-							assetId = currentTarget.attr('data-categoryId');
-
-							entryMatchKey = currentTarget.val();
-						}
-						else {
-							assetId = instance.getTreeNodeAssetId(currentTarget);
-
-							entryMatchKey = currentTarget.get('label');
-						}
+						var entryMatchKey = currentTarget.get('label');
 
 						var entry = {
-							categoryId: assetId,
 							value: LString.unescapeHTML(entryMatchKey)
 						};
+
+						entry[assetType + 'Id'] = assetId;
 
 						entry[0] = LString.unescapeHTML(entry.value);
 
@@ -238,18 +228,11 @@ AUI.add(
 					onCheckboxUncheck: function(event) {
 						var instance = this;
 
-						var currentTarget = event.currentTarget;
-
-						var entryMatchKey;
-
-						if (A.instanceOf(currentTarget, A.Node)) {
-							entryMatchKey = currentTarget.val();
-						}
-						else {
-							entryMatchKey = currentTarget.get('label');
-						}
-
 						if (!instance.get('singleSelect')) {
+							var currentTarget = event.currentTarget;
+
+							var entryMatchKey = currentTarget.get('label');
+
 							var entries = instance.get('entries');
 
 							entries[entryMatchKey].unchecked = true;
@@ -259,6 +242,24 @@ AUI.add(
 						else {
 							instance.clearEntries();
 						}
+					},
+
+					onCheckedChange: function(event) {
+						var instance = this;
+
+						if (event.newVal) {
+							instance.onCheckboxCheck(event);
+						}
+						else {
+							instance.onCheckboxUncheck(event);
+						}
+
+						Liferay.Util.getOpener().Liferay.fire(
+							instance.get('eventName'),
+							{
+								data: A.Object.isEmpty(instance.get('entries')) ? '' : instance.get('entries')
+							}
+						);
 					}
 				}
 			}

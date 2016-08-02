@@ -98,6 +98,17 @@ public abstract class Baseline {
 
 			BundleInfo bundleInfo = baseline.getBundleInfo();
 
+			if (hasPackageDelta(infos, Delta.REMOVED)) {
+				bundleInfo.suggestedVersion = new Version(
+					bundleInfo.olderVersion.getMajor() + 1, 0, 0);
+
+				if (bundleInfo.suggestedVersion.compareTo(
+						bundleInfo.newerVersion.getWithoutQualifier()) > 0) {
+
+					bundleInfo.mismatch = true;
+				}
+			}
+
 			if (bundleInfo.mismatch) {
 				match = false;
 
@@ -412,6 +423,16 @@ public abstract class Baseline {
 		String deltaString = delta.toString();
 
 		return String.valueOf(deltaString.charAt(0));
+	}
+
+	protected boolean hasPackageDelta(Iterable<Info> infos, Delta delta) {
+		for (Info info : infos) {
+			if (info.packageDiff.getDelta() == delta) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	protected abstract void log(Reporter reporter);

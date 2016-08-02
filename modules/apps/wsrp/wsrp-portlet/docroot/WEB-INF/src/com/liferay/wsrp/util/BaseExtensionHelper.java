@@ -32,7 +32,7 @@ public abstract class BaseExtensionHelper implements ExtensionHelper {
 		// Wrap the extension in an extension to be compatible with Oracle's
 		// producer
 
-		for (int i = 0; i < messageElements.size(); i ++) {
+		for (int i = 0; i < messageElements.size(); i++) {
 			MessageElement messageElement = messageElements.get(i);
 
 			extensions[i] = new Extension(

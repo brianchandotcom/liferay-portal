@@ -196,7 +196,7 @@ public class SolrQuerySuggester extends BaseQuerySuggester {
 
 		StringBundler sb = new StringBundler(6 * values.length - 2);
 
-		for (int i = 0; i < values.length; i ++) {
+		for (int i = 0; i < values.length; i++) {
 			sb.append(field);
 			sb.append(StringPool.COLON);
 			sb.append(values[i]);

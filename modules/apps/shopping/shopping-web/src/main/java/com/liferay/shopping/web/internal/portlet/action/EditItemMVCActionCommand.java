@@ -158,7 +158,7 @@ public class EditItemMVCActionCommand extends BaseMVCActionCommand {
 
 		List<ShoppingItemField> itemFields = new ArrayList<>();
 
-		for (int i = 0; i < fieldsCount; i ++) {
+		for (int i = 0; i < fieldsCount; i++) {
 			String fieldName = ParamUtil.getString(
 				uploadPortletRequest, "fieldName" + i);
 			String fieldValues = ParamUtil.getString(
@@ -183,7 +183,7 @@ public class EditItemMVCActionCommand extends BaseMVCActionCommand {
 
 		List<ShoppingItemPrice> itemPrices = new ArrayList<>();
 
-		for (int i = 0; i < pricesCount; i ++) {
+		for (int i = 0; i < pricesCount; i++) {
 			int minQuantity = ParamUtil.getInteger(
 				uploadPortletRequest, "minQuantity" + i);
 			int maxQuantity = ParamUtil.getInteger(

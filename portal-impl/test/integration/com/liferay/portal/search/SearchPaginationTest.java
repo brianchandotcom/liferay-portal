@@ -75,7 +75,7 @@ public class SearchPaginationTest {
 		}
 		while (initialUsersCount > 0);
 
-		for (int i = 0; i < _USERS_COUNT; i ++) {
+		for (int i = 0; i < _USERS_COUNT; i++) {
 			User user = UserTestUtil.addUser(
 				RandomTestUtil.randomString(
 					NumericStringRandomizerBumper.INSTANCE),

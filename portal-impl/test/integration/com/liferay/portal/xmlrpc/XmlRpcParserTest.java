@@ -145,8 +145,7 @@ public class XmlRpcParserTest {
 		"</struct>" +
 		"</value>" +
 		"</fault>" +
-		"</methodResponse>"
-		,
+		"</methodResponse>",
 		"<?xml version=\"1.0\"?>" +
 		"<methodResponse>" +
 		"<fault>" +
@@ -172,8 +171,7 @@ public class XmlRpcParserTest {
 		"<methodName>noParams</methodName>" +
 		"<params>" +
 		"</params>" +
-		"</methodCall>"
-		,
+		"</methodCall>",
 		"<?xml version=\"1.0\"?>" +
 		"<methodCall>" +
 		"<methodName>noParams</methodName>" +
@@ -199,8 +197,7 @@ public class XmlRpcParserTest {
 		"<value><string>South Dakota</string></value>" +
 		"</param>" +
 		"</params>" +
-		"</methodResponse>"
-		,
+		"</methodResponse>",
 		"<?xml version=\"1.0\"?>" +
 		"<methodResponse>" +
 		"<params>" +

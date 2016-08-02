@@ -12,6 +12,7 @@
 		<module name="GenericWhitespace" />
 		<module name="MethodParamPad" />
 		<module name="ModifierOrder" />
+		<module name="MultipleVariableDeclarations" />
 		<module name="UpperEll" />
 	</module>
 </module>

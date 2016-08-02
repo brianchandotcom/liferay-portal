@@ -16,6 +16,7 @@ package com.liferay.blogs.item.selector.web.internal;
 
 import com.liferay.blogs.item.selector.criterion.BlogsItemSelectorCriterion;
 import com.liferay.blogs.item.selector.web.internal.display.context.BlogsItemSelectorViewDisplayContext;
+import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
@@ -91,7 +92,7 @@ public class BlogsItemSelectorView
 			blogsItemSelectorViewDisplayContext =
 				new BlogsItemSelectorViewDisplayContext(
 					blogsItemSelectorCriterion, this, itemSelectedEventName,
-					search, portletURL);
+					search, portletURL, _blogsEntryLocalService);
 
 		request.setAttribute(
 			BLOGS_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT,
@@ -113,6 +114,13 @@ public class BlogsItemSelectorView
 		_servletContext = servletContext;
 	}
 
+	@Reference(unbind = "-")
+	protected void setBlogsEntryLocalService(
+		BlogsEntryLocalService blogsEntryLocalService) {
+
+		_blogsEntryLocalService = blogsEntryLocalService;
+	}
+
 	private static final List<ItemSelectorReturnType>
 		_supportedItemSelectorReturnTypes = Collections.unmodifiableList(
 			ListUtil.fromArray(
@@ -121,6 +129,7 @@ public class BlogsItemSelectorView
 					new URLItemSelectorReturnType()
 				}));
 
+	private BlogsEntryLocalService _blogsEntryLocalService;
 	private ServletContext _servletContext;
 
 }

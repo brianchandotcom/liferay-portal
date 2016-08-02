@@ -99,8 +99,11 @@ import javax.sql.DataSource;
  * @author Brian Wing Shun Chan
  * @see com.liferay.portlet.blogs.service.impl.BlogsEntryLocalServiceImpl
  * @see com.liferay.blogs.kernel.service.BlogsEntryLocalServiceUtil
+ * @deprecated As of 7.0.0, replaced by {@link
+            com.liferay.blogs.service.impl.BlogsEntryLocalServiceImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public abstract class BlogsEntryLocalServiceBaseImpl
 	extends BaseLocalServiceImpl implements BlogsEntryLocalService,

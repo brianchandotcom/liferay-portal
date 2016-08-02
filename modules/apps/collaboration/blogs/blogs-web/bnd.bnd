@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Blogs Web
 Bundle-SymbolicName: com.liferay.blogs.web
-Bundle-Version: 1.0.14
+Bundle-Version: 2.0.0
 Export-Package:\
 	com.liferay.blogs.web.asset,\
 	com.liferay.blogs.web.constants,\

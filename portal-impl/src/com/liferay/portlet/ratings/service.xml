@@ -43,8 +43,6 @@
 		<!-- References -->
 
 		<reference entity="AssetEntry" package-path="com.liferay.portlet.asset" />
-		<reference entity="BlogsEntry" package-path="com.liferay.portlet.blogs" />
-		<reference entity="BlogsStatsUser" package-path="com.liferay.portlet.blogs" />
 	</entity>
 	<entity local-service="true" name="RatingsStats" remote-service="false">
 

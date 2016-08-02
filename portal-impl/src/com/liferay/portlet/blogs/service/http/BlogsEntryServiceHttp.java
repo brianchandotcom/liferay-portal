@@ -51,8 +51,11 @@ import com.liferay.portal.kernel.util.MethodKey;
  * @see BlogsEntryServiceSoap
  * @see HttpPrincipal
  * @see BlogsEntryServiceUtil
+ * @deprecated As of 7.0.0, replaced by {@link
+            com.liferay.blogs.service.impl.BlogsEntryServiceImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public class BlogsEntryServiceHttp {
 	public static com.liferay.blogs.kernel.model.BlogsEntry addEntry(

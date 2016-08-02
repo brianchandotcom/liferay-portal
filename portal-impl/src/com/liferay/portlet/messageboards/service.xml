@@ -407,7 +407,6 @@
 		<reference entity="AssetEntry" package-path="com.liferay.portlet.asset" />
 		<reference entity="AssetLink" package-path="com.liferay.portlet.asset" />
 		<reference entity="AssetTag" package-path="com.liferay.portlet.asset" />
-		<reference entity="BlogsEntry" package-path="com.liferay.portlet.blogs" />
 		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 		<reference entity="MBCategory" package-path="com.liferay.portlet.messageboards" />
 		<reference entity="MBDiscussion" package-path="com.liferay.portlet.messageboards" />

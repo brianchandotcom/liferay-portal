@@ -61,8 +61,11 @@ import java.rmi.RemoteException;
  * @see BlogsEntryServiceHttp
  * @see com.liferay.blogs.kernel.model.BlogsEntrySoap
  * @see BlogsEntryServiceUtil
+ * @deprecated As of 7.0.0, replaced by {@link
+            com.liferay.blogs.service.impl.BlogsEntryServiceImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public class BlogsEntryServiceSoap {
 	public static com.liferay.blogs.kernel.model.BlogsEntrySoap addEntry(

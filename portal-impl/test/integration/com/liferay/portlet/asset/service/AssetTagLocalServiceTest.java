@@ -18,11 +18,13 @@ import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.model.AssetTagStats;
 import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetTagStatsLocalServiceUtil;
-import com.liferay.blogs.kernel.model.BlogsEntry;
-import com.liferay.blogs.kernel.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.ListTypeConstants;
+import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -57,12 +59,16 @@ public class AssetTagLocalServiceTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		_blogsEntryIndexer = IndexerRegistryUtil.getIndexer(BlogsEntry.class);
+		_organizationIndexer = IndexerRegistryUtil.getIndexer(
+			Organization.class);
+
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		IndexerRegistryUtil.register(_blogsEntryIndexer);
+		if (_organizationIndexer != null) {
+			IndexerRegistryUtil.register(_organizationIndexer);
+		}
 	}
 
 	@Test
@@ -77,14 +83,23 @@ public class AssetTagLocalServiceTest {
 
 		serviceContext.setAssetTagNames(new String[] {assetTag.getName()});
 
-		BlogsEntry blogsEntry = BlogsEntryLocalServiceUtil.addEntry(
-			TestPropsValues.getUserId(), "Test", RandomTestUtil.randomString(),
-			serviceContext);
+		_organization = OrganizationLocalServiceUtil.addOrganization(
+			TestPropsValues.getUserId(),
+			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
+			RandomTestUtil.randomString(),
+			OrganizationConstants.TYPE_ORGANIZATION, 0, 0,
+			ListTypeConstants.ORGANIZATION_STATUS_DEFAULT,
+			RandomTestUtil.randomString(), true, serviceContext);
 
 		TestAssetIndexer testAssetIndexer = new TestAssetIndexer();
 
 		testAssetIndexer.setExpectedValues(
-			BlogsEntry.class.getName(), blogsEntry.getEntryId());
+			Organization.class.getName(), _organization.getOrganizationId());
+
+		if (_organizationIndexer == null) {
+			_organizationIndexer = IndexerRegistryUtil.getIndexer(
+				Organization.class);
+		}
 
 		IndexerRegistryUtil.register(testAssetIndexer);
 
@@ -93,7 +108,7 @@ public class AssetTagLocalServiceTest {
 		Assert.assertNull(
 			AssetTagLocalServiceUtil.fetchAssetTag(assetTag.getTagId()));
 
-		long classNameId = PortalUtil.getClassNameId(BlogsEntry.class);
+		long classNameId = PortalUtil.getClassNameId(Organization.class);
 
 		AssetTagStats assetTagStats = AssetTagStatsLocalServiceUtil.getTagStats(
 			assetTag.getTagId(), classNameId);
@@ -101,9 +116,12 @@ public class AssetTagLocalServiceTest {
 		Assert.assertEquals(0, assetTagStats.getAssetCount());
 	}
 
-	private Indexer<BlogsEntry> _blogsEntryIndexer;
+	private Indexer<Organization> _organizationIndexer;
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@DeleteAfterTestRun
+	private Organization _organization;
 
 }

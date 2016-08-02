@@ -16,7 +16,7 @@ package com.liferay.blogs.item.selector.web.internal.display.context;
 
 import com.liferay.blogs.item.selector.criterion.BlogsItemSelectorCriterion;
 import com.liferay.blogs.item.selector.web.internal.BlogsItemSelectorView;
-import com.liferay.blogs.kernel.service.BlogsEntryLocalServiceUtil;
+import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -38,18 +38,19 @@ public class BlogsItemSelectorViewDisplayContext {
 	public BlogsItemSelectorViewDisplayContext(
 		BlogsItemSelectorCriterion blogsItemSelectorCriterion,
 		BlogsItemSelectorView blogsItemSelectorView,
-		String itemSelectedEventName, boolean search, PortletURL portletURL) {
+		String itemSelectedEventName, boolean search, PortletURL portletURL,
+		BlogsEntryLocalService blogsEntryLocalService) {
 
 		_blogsItemSelectorCriterion = blogsItemSelectorCriterion;
 		_blogsItemSelectorView = blogsItemSelectorView;
 		_itemSelectedEventName = itemSelectedEventName;
 		_search = search;
 		_portletURL = portletURL;
+		_blogsEntryLocalService = blogsEntryLocalService;
 	}
 
 	public Folder fetchAttachmentsFolder(long userId, long groupId) {
-		return BlogsEntryLocalServiceUtil.fetchAttachmentsFolder(
-			userId, groupId);
+		return _blogsEntryLocalService.fetchAttachmentsFolder(userId, groupId);
 	}
 
 	public BlogsItemSelectorCriterion getBlogsItemSelectorCriterion() {
@@ -94,6 +95,7 @@ public class BlogsItemSelectorViewDisplayContext {
 		return _search;
 	}
 
+	private final BlogsEntryLocalService _blogsEntryLocalService;
 	private final BlogsItemSelectorCriterion _blogsItemSelectorCriterion;
 	private final BlogsItemSelectorView _blogsItemSelectorView;
 	private final String _itemSelectedEventName;

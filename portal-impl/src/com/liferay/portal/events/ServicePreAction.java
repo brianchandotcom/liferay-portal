@@ -931,15 +931,6 @@ public class ServicePreAction extends Action {
 				themeDisplay.setShowPageSettingsIcon(true);
 			}
 
-			Group scopeGroup = GroupLocalServiceUtil.getGroup(scopeGroupId);
-
-			boolean hasManageStagingPermission = GroupPermissionUtil.contains(
-				permissionChecker, scopeGroup, ActionKeys.MANAGE_STAGING);
-			boolean hasPublishStagingPermission = GroupPermissionUtil.contains(
-				permissionChecker, scopeGroup, ActionKeys.PUBLISH_STAGING);
-			boolean hasViewStagingPermission = GroupPermissionUtil.contains(
-				permissionChecker, scopeGroup, ActionKeys.VIEW_STAGING);
-
 			if (group.hasStagingGroup() && !group.isStagingGroup()) {
 				themeDisplay.setShowLayoutTemplatesIcon(false);
 				themeDisplay.setURLPublishToLive(null);
@@ -953,6 +944,19 @@ public class ServicePreAction extends Action {
 			// LEP-4987
 
 			if (group.isStaged() || group.isStagingGroup()) {
+				Group scopeGroup = GroupLocalServiceUtil.getGroup(scopeGroupId);
+
+				boolean hasManageStagingPermission =
+					GroupPermissionUtil.contains(
+						permissionChecker, scopeGroup,
+						ActionKeys.MANAGE_STAGING);
+				boolean hasPublishStagingPermission =
+					GroupPermissionUtil.contains(
+						permissionChecker, scopeGroup,
+						ActionKeys.PUBLISH_STAGING);
+				boolean hasViewStagingPermission = GroupPermissionUtil.contains(
+					permissionChecker, scopeGroup, ActionKeys.VIEW_STAGING);
+
 				if (hasManageStagingPermission || hasPublishStagingPermission ||
 					hasUpdateLayoutPermission || hasViewStagingPermission) {
 

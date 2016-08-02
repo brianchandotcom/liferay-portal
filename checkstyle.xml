@@ -4,6 +4,7 @@
 <module name="Checker">
 	<module name="TreeWalker">
 		<property name="tabWidth" value="4" />
+		<module name="AnnotationUseStyle" />
 		<module name="UpperEll" />
 	</module>
 </module>

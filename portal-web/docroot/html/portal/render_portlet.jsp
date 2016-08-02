@@ -230,18 +230,14 @@ if (group.isLayoutPrototype()) {
 	showStagingIcon = false;
 }
 
-if (portlet.hasPortletMode(responseContentType, PortletMode.EDIT)) {
-	if (PortletPermissionUtil.contains(permissionChecker, layout, portletId, ActionKeys.PREFERENCES)) {
-		showEditIcon = true;
+if (portlet.hasPortletMode(responseContentType, PortletMode.EDIT) && PortletPermissionUtil.contains(permissionChecker, layout, portletId, ActionKeys.PREFERENCES)) {
+	showEditIcon = true;
+
+	if (portlet.hasPortletMode(responseContentType, LiferayPortletMode.EDIT_DEFAULTS)) {
+		showEditDefaultsIcon = true;
 	}
-}
 
-if (portlet.hasPortletMode(responseContentType, LiferayPortletMode.EDIT_DEFAULTS) && showEditIcon) {
-	showEditDefaultsIcon = true;
-}
-
-if (portlet.hasPortletMode(responseContentType, LiferayPortletMode.EDIT_GUEST)) {
-	if (showEditIcon && !layout.isPrivateLayout()) {
+	if (portlet.hasPortletMode(responseContentType, LiferayPortletMode.EDIT_GUEST) && !layout.isPrivateLayout()) {
 		showEditGuestIcon = true;
 	}
 }

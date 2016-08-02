@@ -28,12 +28,15 @@ public class CommentJSONWS {
 	public CommentJSONWS() {
 	}
 
-	public CommentJSONWS(DiscussionComment discussionComment) {
+	public CommentJSONWS(DiscussionComment discussionComment,
+		boolean updatePermission, boolean deletePermission) {
 		setBody(discussionComment.getBody());
 		setCommentId(discussionComment.getCommentId());
 		setCreateDate(discussionComment.getCreateDate());
+		setDeletePermission(deletePermission);
 		setModifiedDate(discussionComment.getModifiedDate());
 		setParentCommentId(discussionComment.getParentCommentId());
+		setUpdatePermission(updatePermission);
 		setUserId(discussionComment.getUserId());
 		setUserName(discussionComment.getUserName());
 	}
@@ -54,6 +57,11 @@ public class CommentJSONWS {
 	}
 
 	@JSON
+	public boolean getDeletePermission() {
+		return _deletePermission;
+	}
+
+	@JSON
 	public Date getModifiedDate() {
 		return _modifiedDate;
 	}
@@ -61,6 +69,11 @@ public class CommentJSONWS {
 	@JSON
 	public long getParentCommentId() {
 		return _parentCommentId;
+	}
+
+	@JSON
+	public boolean getUpdatePermission() {
+		return _updatePermission;
 	}
 
 	@JSON
@@ -85,12 +98,20 @@ public class CommentJSONWS {
 		_createDate = createDate;
 	}
 
+	public void setDeletePermission(boolean deletePermission) {
+		_deletePermission = deletePermission;
+	}
+
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
 	}
 
 	public void setParentCommentId(long parentCommentId) {
 		_parentCommentId = parentCommentId;
+	}
+
+	public void setUpdatePermission(boolean updatePermission) {
+		_updatePermission = updatePermission;
 	}
 
 	public void setUserId(long userId) {
@@ -104,8 +125,10 @@ public class CommentJSONWS {
 	private String _body;
 	private long _commentId;
 	private Date _createDate;
+	private boolean _deletePermission;
 	private Date _modifiedDate;
 	private long _parentCommentId;
+	private boolean _updatePermission;
 	private long _userId;
 	private String _userName;
 

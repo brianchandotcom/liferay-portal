@@ -680,7 +680,7 @@ public class PortalSecurityManagerImpl
 			final boolean addContextClassLoader) {
 
 			return AccessController.doPrivileged(
-				new PrivilegedAction<ClassLoader> () {
+				new PrivilegedAction<ClassLoader>() {
 
 					@Override
 					public ClassLoader run() {
@@ -722,7 +722,7 @@ public class PortalSecurityManagerImpl
 			final String servletContextName) {
 
 			return AccessController.doPrivileged(
-				new PrivilegedAction<ClassLoader> () {
+				new PrivilegedAction<ClassLoader>() {
 
 					@Override
 					public ClassLoader run() {
@@ -1353,7 +1353,7 @@ public class PortalSecurityManagerImpl
 
 			try {
 				return AccessController.doPrivileged(
-					new PrivilegedExceptionAction<ReferenceEntry> () {
+					new PrivilegedExceptionAction<ReferenceEntry>() {
 
 						@Override
 						public ReferenceEntry run() throws Exception {

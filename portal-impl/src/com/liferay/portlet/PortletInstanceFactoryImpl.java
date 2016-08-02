@@ -113,7 +113,7 @@ public class PortletInstanceFactoryImpl implements PortletInstanceFactory {
 	public InvokerPortlet create(Portlet portlet, ServletContext servletContext)
 		throws PortletException {
 
-		return create (portlet, servletContext, false);
+		return create(portlet, servletContext, false);
 	}
 
 	@Override

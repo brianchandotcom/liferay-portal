@@ -59,7 +59,7 @@ public class FilterServiceDependencyVerifierTest {
 				"FilterServiceDependencyVerifierTest$TestInstance1)");
 
 		FilterServiceDependencyVerifier filterServiceDependencyVerifier1 =
-			new FilterServiceDependencyVerifier (filter1);
+			new FilterServiceDependencyVerifier(filter1);
 
 		Assert.assertTrue(
 			filterServiceDependencyVerifier1.verify(serviceReference));

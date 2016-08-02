@@ -149,7 +149,7 @@ public class DDMFormJSONSerializerTest extends BaseDDMFormSerializerTestCase {
 	}
 
 	protected void setUpDefaultDDMFormFieldType() {
-		when (
+		when(
 			_defaultDDMFormFieldType.getDDMFormFieldTypeSettings()
 		).then(
 			new Answer<Class<? extends DDMFormFieldTypeSettings>>() {

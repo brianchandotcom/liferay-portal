@@ -326,7 +326,7 @@ public interface Http {
 			String charSet) {
 
 			if (_body != null) {
-				throw new IllegalArgumentException (
+				throw new IllegalArgumentException(
 					"File part cannot be added because a body has already " +
 						"been set");
 			}

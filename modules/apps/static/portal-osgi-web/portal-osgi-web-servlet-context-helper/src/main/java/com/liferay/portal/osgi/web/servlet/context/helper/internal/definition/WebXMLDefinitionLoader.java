@@ -634,7 +634,7 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 
 						// Servlet 3 spec 8.2.3
 
-						throw new Exception (
+						throw new Exception(
 							"Init paramter name " + initParameterName +
 								" conflicts with filter name " + filterName);
 					}
@@ -759,7 +759,7 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 
 						// Servlet 3 spec 8.2.3
 
-						throw new Exception (
+						throw new Exception(
 							"Init paramter name " + initParameterName +
 								" conflicts with servlet name " + servletName);
 					}

@@ -1,7 +1,7 @@
 Bundle-Name: Liferay Layout Set Prototype Implementation
 Bundle-SymbolicName: com.liferay.layout.set.prototype.impl
 Bundle-Version: 1.0.4
-Export-Package: com.liferay.layout.set.prototype.lar
+Export-Package: com.liferay.layout.set.prototype.exportimport.data.handler
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Site Management
 -dsannotations-options: inherit

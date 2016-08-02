@@ -16,7 +16,7 @@ package com.liferay.layout.set.prototype.lar.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
-import com.liferay.layout.set.prototype.lar.LayoutSetPrototypeStagedModelDataHandler;
+import com.liferay.layout.set.prototype.exportimport.data.handler.LayoutSetPrototypeStagedModelDataHandler;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;

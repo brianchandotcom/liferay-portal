@@ -26,7 +26,7 @@ String url = (String)request.getAttribute("liferay-ui:captcha:url");
 
 		<liferay-ui:icon cssClass="refresh" iconCssClass="icon-refresh" id="refreshCaptcha" label="<%= false %>" localizeMessage="<%= true %>" message="refresh-captcha" url="javascript:;" />
 
-		<aui:input label="text-verification" name="captchaText" size="10" type="text" value="">
+		<aui:input ignoreRequestValue="<%= true %>" label="text-verification" name="captchaText" size="10" type="text" value="">
 			<aui:validator name="required" />
 		</aui:input>
 	</div>

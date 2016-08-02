@@ -23,7 +23,6 @@ import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationExcepti
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -32,7 +31,6 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
@@ -41,6 +39,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
+import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -63,7 +62,6 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.instanceable=true",
 		"com.liferay.portlet.preferences-owned-by-group=true",
 		"com.liferay.portlet.private-request-attributes=false",
-		"com.liferay.portlet.private-session-attributes=false",
 		"com.liferay.portlet.render-weight=50",
 		"com.liferay.portlet.scopeable=true",
 		"com.liferay.portlet.use-default-template=true",
@@ -114,10 +112,7 @@ public class DDLFormPortlet extends MVCPortlet {
 			}
 
 			if (isSharedLayout(actionRequest)) {
-				actionRequest.setAttribute(
-					WebKeys.REDIRECT, getPublishedFormURL(actionRequest));
-
-				sendRedirect(actionRequest, actionResponse);
+				saveParametersInSession(actionRequest);
 			}
 		}
 	}
@@ -148,24 +143,6 @@ public class DDLFormPortlet extends MVCPortlet {
 		super.render(renderRequest, renderResponse);
 	}
 
-	protected String getPublishedFormURL(ActionRequest actionRequest) {
-		String recordSetId = ParamUtil.getString(actionRequest, "recordSetId");
-
-		StringBundler sb = new StringBundler(4);
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		Group group = themeDisplay.getSiteGroup();
-
-		sb.append(themeDisplay.getPortalURL());
-		sb.append(group.getPathFriendlyURL(false, themeDisplay));
-		sb.append("/forms/shared/-/form/");
-		sb.append(recordSetId);
-
-		return sb.toString();
-	}
-
 	protected Throwable getRootCause(Throwable throwable) {
 		while (throwable.getCause() != null) {
 			throwable = throwable.getCause();
@@ -188,6 +165,17 @@ public class DDLFormPortlet extends MVCPortlet {
 		String type = layout.getType();
 
 		return type.equals(LayoutConstants.TYPE_SHARED_PORTLET);
+	}
+
+	protected void saveParametersInSession(ActionRequest actionRequest) {
+		long recordSetId = ParamUtil.getLong(actionRequest, "recordSetId");
+
+		if (recordSetId > 0) {
+			PortletSession portletSession = actionRequest.getPortletSession();
+
+			portletSession.setAttribute("recordSetId", recordSetId);
+			portletSession.setAttribute("shared", true);
+		}
 	}
 
 	protected void setRenderRequestAttributes(

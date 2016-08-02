@@ -41,7 +41,7 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 /**
  * @author Marcellus Tavares
  */
-@PrepareForTest({LocaleUtil.class})
+@PrepareForTest(LocaleUtil.class)
 public class DDMFormTemplateSynchonizerTest extends BaseDDMTestCase {
 
 	@Before

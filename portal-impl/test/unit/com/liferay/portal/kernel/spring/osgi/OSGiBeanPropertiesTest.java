@@ -39,7 +39,7 @@ public class OSGiBeanPropertiesTest {
 
 	@Test
 	public void testAnnotatedClass() {
-		@OSGiBeanProperties()
+		@OSGiBeanProperties
 		class C {
 		}
 
@@ -146,7 +146,7 @@ public class OSGiBeanPropertiesTest {
 
 	@Test
 	public void testServicesAnnotatedNoneSet() {
-		@OSGiBeanProperties()
+		@OSGiBeanProperties
 		class C {
 		}
 
@@ -161,7 +161,7 @@ public class OSGiBeanPropertiesTest {
 		class B implements Serializable {
 		}
 
-		@OSGiBeanProperties()
+		@OSGiBeanProperties
 		class C extends B {
 		}
 
@@ -176,7 +176,7 @@ public class OSGiBeanPropertiesTest {
 		class B implements EventListener, Serializable {
 		}
 
-		@OSGiBeanProperties()
+		@OSGiBeanProperties
 		class C extends B {
 		}
 
@@ -188,7 +188,7 @@ public class OSGiBeanPropertiesTest {
 
 	@Test
 	public void testServicesAnnotatedNoneSetButImplements() {
-		@OSGiBeanProperties()
+		@OSGiBeanProperties
 		class C implements Serializable {
 		}
 
@@ -200,7 +200,7 @@ public class OSGiBeanPropertiesTest {
 
 	@Test
 	public void testServicesAnnotatedNoneSetButImplementsMultiple() {
-		@OSGiBeanProperties()
+		@OSGiBeanProperties
 		class C implements EventListener, Serializable {
 		}
 

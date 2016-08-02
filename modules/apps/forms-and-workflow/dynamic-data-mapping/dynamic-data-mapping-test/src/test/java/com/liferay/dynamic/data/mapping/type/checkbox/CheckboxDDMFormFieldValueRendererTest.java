@@ -38,7 +38,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 /**
  * @author Renato Rego
  */
-@PrepareForTest({LanguageUtil.class})
+@PrepareForTest(LanguageUtil.class)
 @RunWith(PowerMockRunner.class)
 public class CheckboxDDMFormFieldValueRendererTest extends PowerMockito {
 

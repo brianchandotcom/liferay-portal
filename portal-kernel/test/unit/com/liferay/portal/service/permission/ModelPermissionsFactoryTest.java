@@ -40,7 +40,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 /**
  * @author Jorge Ferrer
  */
-@PrepareForTest({RoleLocalServiceUtil.class})
+@PrepareForTest(RoleLocalServiceUtil.class)
 @RunWith(PowerMockRunner.class)
 public class ModelPermissionsFactoryTest extends PowerMockito {
 

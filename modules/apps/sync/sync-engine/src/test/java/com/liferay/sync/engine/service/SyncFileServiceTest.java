@@ -43,7 +43,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 /**
  * @author Shinn Lok
  */
-@PrepareForTest({FileEventUtil.class})
+@PrepareForTest(FileEventUtil.class)
 @RunWith(PowerMockRunner.class)
 public class SyncFileServiceTest extends BaseTestCase {
 

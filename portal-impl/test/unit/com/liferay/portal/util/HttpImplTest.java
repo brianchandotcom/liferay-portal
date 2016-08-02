@@ -39,7 +39,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
  * @author Miguel Pastor
  */
 @PowerMockIgnore("javax.xml.datatype.*")
-@PrepareForTest({PortalUtil.class})
+@PrepareForTest(PortalUtil.class)
 @RunWith(PowerMockRunner.class)
 public class HttpImplTest extends PowerMockito {
 

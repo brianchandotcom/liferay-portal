@@ -41,7 +41,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 /**
  * @author Sergio González
  */
-@PrepareForTest({PortletFileRepositoryUtil.class})
+@PrepareForTest(PortletFileRepositoryUtil.class)
 @RunWith(PowerMockRunner.class)
 public class BlogsEntryAttachmentFileEntryHelperUpdateContentTest
 	extends PowerMockito {

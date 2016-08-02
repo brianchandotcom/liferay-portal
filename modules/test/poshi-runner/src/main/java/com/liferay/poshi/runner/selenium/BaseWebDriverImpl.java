@@ -2341,7 +2341,7 @@ public abstract class BaseWebDriverImpl
 	public void waitForElementNotPresent(String locator, String timeout)
 		throws Exception {
 
-		LiferaySeleniumHelper.waitForElementNotPresent(this, locator, timeout);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -2353,7 +2353,7 @@ public abstract class BaseWebDriverImpl
 	public void waitForElementPresent(String locator, String timeout)
 		throws Exception {
 
-		LiferaySeleniumHelper.waitForElementPresent(this, locator, timeout);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override

@@ -315,10 +315,10 @@ logExceptionsOnly=false</echo>
 
 		<prepare-elasticsearch />
 
-		<get-testcase-property property.name="kibana.enabled" />
+		<get-testcase-property property.name="elastic.kibana.enabled" />
 
 		<if>
-			<equals arg1="${kibana.enabled}" arg2="true" />
+			<equals arg1="${elastic.kibana.enabled}" arg2="true" />
 			<then>
 				<prepare-marvel-agent />
 			</then>

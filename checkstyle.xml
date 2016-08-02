@@ -5,6 +5,7 @@
 	<module name="TreeWalker">
 		<property name="tabWidth" value="4" />
 		<module name="AnnotationUseStyle" />
+		<module name="ArrayTypeStyle" />
 		<module name="UpperEll" />
 	</module>
 </module>

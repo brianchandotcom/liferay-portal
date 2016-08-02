@@ -1290,7 +1290,7 @@ app.artifacts-7.0.6=\
 	com.liferay.journal.item.selector.web-1.0.3.jar,\
 	com.liferay.journal.lang-2.0.2.jar,\
 	com.liferay.journal.ratings.definition-2.0.2.jar,\
-	com.liferay.journal.service-3.0.1.jar,\
+	com.liferay.journal.service-3.0.2.jar,\
 	com.liferay.journal.terms.of.use-2.0.8.jar,\
 	com.liferay.journal.web-1.2.3.jar,\
 	com.liferay.layout.admin.web-1.0.11.jar,\
@@ -1330,7 +1330,7 @@ app.artifacts-7.0.6=\
 	com.liferay.product.navigation.control.menu.web-2.0.5.jar,\
 	com.liferay.product.navigation.control.panel-2.0.2.jar,\
 	com.liferay.product.navigation.product.menu.theme.contributor-2.0.4.jar,\
-	com.liferay.product.navigation.product.menu.web-2.0.3.jar,\
+	com.liferay.product.navigation.product.menu.web-2.0.4.jar,\
 	com.liferay.product.navigation.simulation-2.0.1.jar,\
 	com.liferay.product.navigation.simulation.device-2.0.3.jar,\
 	com.liferay.product.navigation.simulation.theme.contributor-2.0.2.jar,\
@@ -1367,6 +1367,6 @@ app.artifacts-7.0.6=\
 	com.liferay.trash.web-1.0.7.jar,\
 	com.liferay.xsl.content.web-2.0.3.jar
 
-app.change.log-7.0.6=LPS-61099 LPS-61420 LPS-63907 LPS-64031 LPS-64551 LPS-64557 LPS-64792 LPS-64834 LPS-64849 LPS-64981 LPS-65012 LPS-65135 LPS-65225 LPS-65240 LPS-65362 LPS-65432 LPS-65435 LPS-65439 LPS-65535 LPS-65537 LPS-65660 LPS-65671 LPS-65726 LPS-65810 LPS-65828 LPS-66064 LPS-66216 LPS-66416 LPS-66462 LPS-66504 LPS-66524 LPS-66644 LPS-66667 LPS-66732 LPS-66748 LPS-66840 LPS-66853 LPS-66883 LPS-66935 LPS-66969 LPS-66974 LPS-66997 LPS-67007 LPS-67049
+app.change.log-7.0.6=LPS-61099 LPS-61420 LPS-63907 LPS-64031 LPS-64551 LPS-64557 LPS-64792 LPS-64834 LPS-64849 LPS-64981 LPS-65012 LPS-65135 LPS-65225 LPS-65240 LPS-65362 LPS-65432 LPS-65435 LPS-65439 LPS-65535 LPS-65537 LPS-65660 LPS-65671 LPS-65726 LPS-65810 LPS-66064 LPS-66216 LPS-66416 LPS-66462 LPS-66504 LPS-66524 LPS-66644 LPS-66667 LPS-66732 LPS-66748 LPS-66840 LPS-66853 LPS-66864 LPS-66883 LPS-66935 LPS-66969 LPS-66974 LPS-66997 LPS-67007 LPS-67049 LPS-67352
 
-app.git.id-7.0.6=63ec188ebbe34325f9dd69bcbfc160d43f302b66
+app.git.id-7.0.6=7482cd66e0fa06968ef9ef67045866e4c223c5ff

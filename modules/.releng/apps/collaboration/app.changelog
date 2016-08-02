@@ -845,13 +845,13 @@ app.artifacts-7.0.5=\
 	com.liferay.document.library.repository.cmis.api-1.0.3.jar,\
 	com.liferay.document.library.repository.cmis.impl-2.0.3.jar,\
 	com.liferay.document.library.repository.search-2.0.1.jar,\
-	com.liferay.document.library.service-1.1.3.jar,\
+	com.liferay.document.library.service-1.1.4.jar,\
 	com.liferay.document.library.web-1.1.0.jar,\
 	com.liferay.flags.api-2.0.1.jar,\
 	com.liferay.flags.service-2.0.4.jar,\
 	com.liferay.flags.taglib-2.0.3.jar,\
 	com.liferay.flags.web-2.0.3.jar,\
-	com.liferay.image.uploader.web-1.0.5.jar,\
+	com.liferay.image.uploader.web-1.0.6.jar,\
 	com.liferay.invitation.invite.members.api-2.1.0.jar,\
 	com.liferay.invitation.invite.members.service-2.0.5.jar,\
 	com.liferay.invitation.invite.members.web-1.0.9.jar,\
@@ -863,10 +863,10 @@ app.artifacts-7.0.5=\
 	com.liferay.item.selector.url.web-2.0.2.jar,\
 	com.liferay.item.selector.web-2.0.3.jar,\
 	com.liferay.mentions.api-2.0.2.jar,\
-	com.liferay.mentions.service-2.0.2.jar,\
+	com.liferay.mentions.service-2.0.3.jar,\
 	com.liferay.mentions.web-1.1.0.jar,\
 	com.liferay.message.boards.api-3.0.1.jar,\
-	com.liferay.message.boards.comment-2.0.3.jar,\
+	com.liferay.message.boards.comment-2.0.4.jar,\
 	com.liferay.message.boards.layout.set.prototype-1.0.6.jar,\
 	com.liferay.message.boards.parser.bbcode-2.0.2.jar,\
 	com.liferay.message.boards.service-1.0.6.jar,\
@@ -900,6 +900,6 @@ app.artifacts-7.0.5=\
 	com.liferay.wiki.service-1.2.1.jar,\
 	com.liferay.wiki.web-2.1.0.jar
 
-app.change.log-7.0.5=LPS-60033 LPS-60850 LPS-61099 LPS-61420 LPS-62170 LPS-63587 LPS-63907 LPS-64031 LPS-64383 LPS-64551 LPS-64713 LPS-64863 LPS-65012 LPS-65135 LPS-65225 LPS-65362 LPS-65660 LPS-65810 LPS-65828 LPS-65909 LPS-66064 LPS-66097 LPS-66129 LPS-66416 LPS-66448 LPS-66586 LPS-66630 LPS-66791 LPS-66853 LPS-66878 LPS-66921 LPS-66922 LPS-66923 LPS-66924 LPS-66974 LPS-66988 LPS-66997 LPS-67049 LPS-67276
+app.change.log-7.0.5=LPS-60033 LPS-60850 LPS-61099 LPS-61420 LPS-62170 LPS-63587 LPS-63907 LPS-64031 LPS-64383 LPS-64551 LPS-64713 LPS-64863 LPS-65012 LPS-65135 LPS-65225 LPS-65362 LPS-65660 LPS-65810 LPS-65828 LPS-65909 LPS-66064 LPS-66097 LPS-66129 LPS-66416 LPS-66448 LPS-66586 LPS-66630 LPS-66791 LPS-66853 LPS-66878 LPS-66922 LPS-66923 LPS-66924 LPS-66974 LPS-66988 LPS-66997 LPS-67049 LPS-67268 LPS-67276
 
-app.git.id-7.0.5=63ec188ebbe34325f9dd69bcbfc160d43f302b66
+app.git.id-7.0.5=7482cd66e0fa06968ef9ef67045866e4c223c5ff

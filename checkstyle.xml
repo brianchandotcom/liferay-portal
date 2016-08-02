@@ -20,6 +20,7 @@
 		<module name="PackageName" />
 		<module name="ParameterName" />
 		<module name="RequireThis" />
+		<module name="StringLiteralEquality" />
 		<module name="UpperEll" />
 	</module>
 </module>

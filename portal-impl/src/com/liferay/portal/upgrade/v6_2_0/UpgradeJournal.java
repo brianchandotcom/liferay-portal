@@ -57,7 +57,7 @@ import javax.portlet.PortletPreferences;
 public class UpgradeJournal extends BaseUpgradePortletPreferences {
 
 	protected void addDDMStructure(
-			String uuid_, long ddmStructureId, long groupId, long companyId,
+			String uuid, long ddmStructureId, long groupId, long companyId,
 			long userId, String userName, Timestamp createDate,
 			Timestamp modifiedDate, long parentDDMStructureId, long classNameId,
 			String ddmStructureKey, String name, String description, String xsd,
@@ -75,7 +75,7 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 		String sql = sb.toString();
 
 		try (PreparedStatement ps = connection.prepareStatement(sql)) {
-			ps.setString(1, uuid_);
+			ps.setString(1, uuid);
 			ps.setLong(2, ddmStructureId);
 			ps.setLong(3, groupId);
 			ps.setLong(4, companyId);
@@ -97,14 +97,14 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 		catch (Exception e) {
 			_log.error(
 				"Unable to upgrade dynamic data mapping structure with UUID " +
-					uuid_);
+					uuid);
 
 			throw e;
 		}
 	}
 
 	protected void addDDMStructure(
-			String uuid_, long ddmStructureId, long groupId, long companyId,
+			String uuid, long ddmStructureId, long groupId, long companyId,
 			long userId, String userName, Timestamp createDate,
 			Timestamp modifiedDate, String parentStructureId,
 			String ddmStructureKey, String name, String description, String xsd)
@@ -121,7 +121,7 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 
 		if (insertedDDMStructureId == 0) {
 			addDDMStructure(
-				uuid_, ddmStructureId, groupId, companyId, userId, userName,
+				uuid, ddmStructureId, groupId, companyId, userId, userName,
 				createDate, modifiedDate, parentDDMStructureId,
 				PortalUtil.getClassNameId(
 					"com.liferay.portlet.journal.model.JournalArticle"),
@@ -131,7 +131,7 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 	}
 
 	protected void addDDMTemplate(
-			String uuid_, long ddmTemplateId, long groupId, long companyId,
+			String uuid, long ddmTemplateId, long groupId, long companyId,
 			long userId, String userName, Timestamp createDate,
 			Timestamp modifiedDate, long classNameId, long classPK,
 			String templateKey, String name, String description, String type,
@@ -151,7 +151,7 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 		String sql = sb.toString();
 
 		try (PreparedStatement ps = connection.prepareStatement(sql)) {
-			ps.setString(1, uuid_);
+			ps.setString(1, uuid);
 			ps.setLong(2, ddmTemplateId);
 			ps.setLong(3, groupId);
 			ps.setLong(4, companyId);
@@ -178,7 +178,7 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 		catch (Exception e) {
 			_log.error(
 				"Unable to upgrade dynamic data mapping template with UUID " +
-					uuid_);
+					uuid);
 
 			throw e;
 		}

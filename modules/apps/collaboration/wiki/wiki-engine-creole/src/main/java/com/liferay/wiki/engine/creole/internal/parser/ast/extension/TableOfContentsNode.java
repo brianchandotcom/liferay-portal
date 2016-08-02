@@ -31,6 +31,7 @@ public class TableOfContentsNode extends ASTNode {
 
 	public TableOfContentsNode(int token, String title) {
 		super(token);
+
 		_title = title;
 	}
 
@@ -43,8 +44,8 @@ public class TableOfContentsNode extends ASTNode {
 		return _title;
 	}
 
-	public void setTitle(String _title) {
-		this._title = _title;
+	public void setTitle(String title) {
+		_title = title;
 	}
 
 	private String _title;

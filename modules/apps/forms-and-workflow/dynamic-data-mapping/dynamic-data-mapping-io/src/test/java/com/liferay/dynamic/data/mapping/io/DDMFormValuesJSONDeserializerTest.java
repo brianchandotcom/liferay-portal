@@ -362,15 +362,15 @@ public class DDMFormValuesJSONDeserializerTest extends BaseDDMTestCase {
 	}
 
 	protected void testTextDDMFormFieldValue(
-		DDMFormFieldValue ddmFormFieldValue, String expected_en_US,
-		String expected_pt_BR) {
+		DDMFormFieldValue ddmFormFieldValue, String expectedEnUS,
+		String expectedPtBR) {
 
 		Assert.assertNotNull(ddmFormFieldValue);
 
 		Value value = ddmFormFieldValue.getValue();
 
-		Assert.assertEquals(expected_en_US, value.getString(LocaleUtil.US));
-		Assert.assertEquals(expected_pt_BR, value.getString(LocaleUtil.BRAZIL));
+		Assert.assertEquals(expectedEnUS, value.getString(LocaleUtil.US));
+		Assert.assertEquals(expectedPtBR, value.getString(LocaleUtil.BRAZIL));
 	}
 
 	private final DDMFormValuesJSONDeserializer _ddmFormValuesJSONDeserializer =

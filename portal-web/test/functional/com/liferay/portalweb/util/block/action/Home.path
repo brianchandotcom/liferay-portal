@@ -622,7 +622,7 @@
 </tr>
 <tr>
 	<td>SITE_ADMINISTRATION_MEMBERS_SITE_TEAMS</td>
-	<td>//ul[contains(@class,'category-portlets')]/li[contains(.,'Site Teams')]/span/a/span</td>
+	<td>//ul[contains(@class,'nav-equal-height')]/li[contains(.,'Site Teams')]/a</td>
 	<td></td>
 </tr>
 <tr>

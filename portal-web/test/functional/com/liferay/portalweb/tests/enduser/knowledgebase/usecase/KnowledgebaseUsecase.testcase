@@ -1143,20 +1143,16 @@
 
 	<command name="ViewKBArticleNoHierarchyInFolder" priority="3">
 		<var name="kbArticleContent" value="Test Content" />
-		<var name="kbArticleTitle" value="Article 1 Title" />
-		<var name="kbFolderName" value="Folder 1" />
+		<var name="kbArticleTitle1" value="Article 1 Title" />
+		<var name="kbArticleTitle2" value="Article 2 Title" />
+		<var name="kbFolderDescription1" value="KB Folder 1 Description" />
+		<var name="kbFolderDescription2" value="KB Folder 2 Description" />
+		<var name="kbFolderName1" value="Folder 1" />
+		<var name="kbFolderName2" value="Folder 2" />
 		<var name="pageName" value="Knowledge Base Page" />
 
 		<execute macro="Page#add">
 			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="SitePageNavigator#gotoEditPage">
-			<var name="page" value="${pageName}" />
-		</execute>
-
-		<execute macro="Page#editPageLayoutColumn">
-			<var name="columnName" value="1 Column" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -1174,39 +1170,41 @@
 		</execute>
 
 		<execute macro="KBFolder#addCP">
-			<var name="kbFolderName" value="${kbFolderName}" />
+			<var name="kbFolderDescription" value="${kbFolderDescription1}" />
+			<var name="kbFolderName" value="${kbFolderName1}" />
 		</execute>
 
 		<execute macro="KBFolder#addCP">
-			<var name="kbFolderName" value="Folder 2" />
+			<var name="kbFolderDescription" value="${kbFolderDescription2}" />
+			<var name="kbFolderName" value="${kbFolderName2}" />
 		</execute>
 
 		<execute macro="KBArticle#addCP">
 			<var name="kbArticleContent" value="${kbArticleContent}" />
-			<var name="kbArticleTitle" value="${kbArticleTitle}" />
+			<var name="kbArticleTitle" value="${kbArticleTitle1}" />
 		</execute>
 
 		<execute macro="KBArticle#addCP">
 			<var name="kbArticleContent" value="${kbArticleContent}" />
-			<var name="kbArticleTitle" value="Article 2 Title" />
+			<var name="kbArticleTitle" value="${kbArticleTitle2}" />
 		</execute>
 
 		<execute macro="KBArticle#moveArticleCP">
 			<var name="kbArticleCurrentParent" value="Home" />
-			<var name="kbArticleTitle" value="${kbArticleTitle}" />
+			<var name="kbArticleTitle" value="${kbArticleTitle1}" />
 		</execute>
 
 		<execute macro="KBFolder#selectParentCP">
-			<var name="kbFolderName" value="${kbFolderName}" />
+			<var name="kbFolderName" value="${kbFolderName1}" />
 		</execute>
 
 		<execute macro="KBArticle#moveArticleCP">
 			<var name="kbArticleCurrentParent" value="Home" />
-			<var name="kbArticleTitle" value="Article 2 Title" />
+			<var name="kbArticleTitle" value="${kbArticleTitle2}" />
 		</execute>
 
 		<execute macro="KBFolder#selectParentCP">
-			<var name="kbFolderName" value="Folder 2" />
+			<var name="kbFolderName" value="${kbFolderName2}" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -1214,7 +1212,7 @@
 		</execute>
 
 		<execute macro="KBArticle#viewNoHierarchyPG">
-			<var name="kbArticleTitle" value="${kbArticleTitle}" />
+			<var name="kbArticleTitle" value="${kbArticleTitle1}" />
 		</execute>
 	</command>
 

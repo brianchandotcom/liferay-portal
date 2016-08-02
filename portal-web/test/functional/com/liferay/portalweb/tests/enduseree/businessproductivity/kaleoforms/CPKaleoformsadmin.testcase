@@ -857,7 +857,7 @@
 
 		<execute macro="KaleoFormsAdmin#deleteForm">
 			<var name="kfFieldSetName" value="${ddlDataDefinitionName} Edit" />
-			<var name="kfFormName" value="Created Task Form" />
+			<var name="kfFormName" value="${ddlDataDefinitionName} Edit" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSitesContent">

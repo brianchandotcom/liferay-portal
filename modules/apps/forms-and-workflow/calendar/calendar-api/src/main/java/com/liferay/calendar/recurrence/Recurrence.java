@@ -25,7 +25,12 @@ import java.util.TimeZone;
  */
 public class Recurrence {
 
+	@Deprecated
 	public void addExceptionDate(Calendar calendar) {
+		_exceptionJCalendars.add(calendar);
+	}
+
+	public void addExceptionJCalendar(Calendar calendar) {
 		_exceptionJCalendars.add(calendar);
 	}
 
@@ -101,6 +106,10 @@ public class Recurrence {
 		}
 
 		return weekdays;
+	}
+
+	public void removeExceptionJCalendar(Calendar calendar) {
+		_exceptionJCalendars.remove(calendar);
 	}
 
 	public void setCount(int count) {

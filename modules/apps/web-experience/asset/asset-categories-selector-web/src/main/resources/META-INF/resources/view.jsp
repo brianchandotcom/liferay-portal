@@ -52,7 +52,7 @@
 						id: 'vocabulary<%= vocabularyId %>',
 						label: '<%= assetCategoriesSelectorDisplayContext.getVocabularyTitle(vocabularyId) %>',
 						leaf: false,
-						type: 'io'
+						type: '<%= assetCategoriesSelectorDisplayContext.getType() %>'
 					}
 
 					<c:if test="<%= (i + 1) < vocabularyIds.length %>">

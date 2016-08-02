@@ -81,6 +81,26 @@ public class AssetCategoriesSelectorDisplayContext {
 		return _selectedCategories;
 	}
 
+	public String getType() {
+		if (_type != null) {
+			return _type;
+		}
+
+		if (!isAllowedSelectVocabularies()) {
+			_type = "io";
+
+			return _type;
+		}
+
+		_type = "check";
+
+		if (isSingleSelect()) {
+			_type = "radio";
+		}
+
+		return _type;
+	}
+
 	public long[] getVocabularyIds() {
 		if (_vocabularyIds != null) {
 			return _vocabularyIds;
@@ -151,6 +171,7 @@ public class AssetCategoriesSelectorDisplayContext {
 	private final HttpServletRequest _request;
 	private String _selectedCategories;
 	private Boolean _singleSelect;
+	private String _type;
 	private long[] _vocabularyIds;
 
 }

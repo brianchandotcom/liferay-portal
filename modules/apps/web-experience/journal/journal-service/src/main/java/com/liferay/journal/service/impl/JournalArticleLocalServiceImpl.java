@@ -832,6 +832,7 @@ public class JournalArticleLocalServiceImpl
 		newArticle.setSmallImage(oldArticle.isSmallImage());
 		newArticle.setSmallImageId(counterLocalService.increment());
 		newArticle.setSmallImageURL(oldArticle.getSmallImageURL());
+		newArticle.setDefaultLanguageId(oldArticle.getDefaultLanguageId());
 
 		if (oldArticle.isPending() ||
 			workflowDefinitionLinkLocalService.hasWorkflowDefinitionLink(
@@ -5369,6 +5370,11 @@ public class JournalArticleLocalServiceImpl
 			article.setVersion(version);
 			article.setSmallImageId(latestArticle.getSmallImageId());
 
+			String defaultLanguageId = LocaleUtil.toLanguageId(
+				LocaleThreadLocal.getDefaultLocale());
+
+			article.setDefaultLanguageId(defaultLanguageId);
+
 			_addArticleLocalizedFields(
 				article.getCompanyId(), article.getId(), titleMap,
 				descriptionMap);
@@ -5638,6 +5644,11 @@ public class JournalArticleLocalServiceImpl
 
 			article.setStatus(WorkflowConstants.STATUS_DRAFT);
 			article.setStatusDate(new Date());
+
+			String defaultLanguageId = LocaleUtil.toLanguageId(
+				LocaleThreadLocal.getDefaultLocale());
+
+			article.setDefaultLanguageId(defaultLanguageId);
 
 			ExpandoBridgeUtil.copyExpandoBridgeAttributes(
 				oldArticle.getExpandoBridge(), article.getExpandoBridge());
@@ -8081,14 +8092,21 @@ public class JournalArticleLocalServiceImpl
 		Set<Locale> localeSet = new HashSet<>();
 
 		localeSet.addAll(titleMap.keySet());
-		localeSet.addAll(descriptionMap.keySet());
+
+		if (descriptionMap != null) {
+			localeSet.addAll(descriptionMap.keySet());
+		}
 
 		List<JournalArticleLocalization> journalArticleLocalizations =
 			new ArrayList<>();
 
 		for (Locale locale : localeSet) {
 			String title = titleMap.get(locale);
-			String description = descriptionMap.get(locale);
+			String description = null;
+
+			if (descriptionMap != null) {
+				description = descriptionMap.get(locale);
+			}
 
 			if (Validator.isNull(title) && Validator.isNull(description)) {
 				continue;

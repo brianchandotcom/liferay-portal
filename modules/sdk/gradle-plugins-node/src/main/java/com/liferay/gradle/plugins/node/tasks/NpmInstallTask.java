@@ -79,7 +79,6 @@ public class NpmInstallTask extends ExecuteNpmTask {
 	@Override
 	public void executeNode() throws Exception {
 		Logger logger = getLogger();
-		Project project = getProject();
 
 		Path shrinkwrapJsonBackupPath = null;
 		Path shrinkwrapJsonPath = null;
@@ -100,23 +99,19 @@ public class NpmInstallTask extends ExecuteNpmTask {
 		}
 
 		try {
-			PluginContainer pluginContainer = project.getPlugins();
-
-			if (pluginContainer.hasPlugin("com.liferay.cache") ||
-				(getNodeModulesCacheDir() == null)) {
-
-				if (logger.isInfoEnabled()) {
-					logger.info("Cache for {} is disabled", this);
-				}
-
-				_npmInstall();
-			}
-			else {
+			if (isCacheEnabled()) {
 				if (logger.isInfoEnabled()) {
 					logger.info("Cache for {} is enabled", this);
 				}
 
 				_npmInstallCached(this);
+			}
+			else {
+				if (logger.isInfoEnabled()) {
+					logger.info("Cache for {} is disabled", this);
+				}
+
+				_npmInstall();
 			}
 		}
 		finally {
@@ -191,6 +186,20 @@ public class NpmInstallTask extends ExecuteNpmTask {
 		return completeArgs;
 	}
 
+	protected boolean isCacheEnabled() {
+		Project project = getProject();
+
+		PluginContainer pluginContainer = project.getPlugins();
+
+		if (!pluginContainer.hasPlugin("com.liferay.cache") &&
+			(getNodeModulesCacheDir() != null)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	protected void removeShrinkwrappedUrls() throws IOException {
 		File shrinkwrapJsonFile = getShrinkwrapJsonFile();
 
@@ -260,17 +269,18 @@ public class NpmInstallTask extends ExecuteNpmTask {
 			FileUtil.syncDir(
 				project, nodeModulesCacheDir, nodeModulesDir, nativeSync);
 		}
+		else {
+			npmInstallTask._npmInstall();
 
-		npmInstallTask._npmInstall();
+			if (logger.isLifecycleEnabled()) {
+				logger.lifecycle(
+					"Caching node_modules of {} in {}", project,
+					nodeModulesCacheDir);
+			}
 
-		if (logger.isLifecycleEnabled()) {
-			logger.lifecycle(
-				"Caching node_modules of {} in {}", project,
-				nodeModulesCacheDir);
+			FileUtil.syncDir(
+				project, nodeModulesDir, nodeModulesCacheDir, nativeSync);
 		}
-
-		FileUtil.syncDir(
-			project, nodeModulesDir, nodeModulesCacheDir, nativeSync);
 	}
 
 	private void _npmInstall() throws Exception {

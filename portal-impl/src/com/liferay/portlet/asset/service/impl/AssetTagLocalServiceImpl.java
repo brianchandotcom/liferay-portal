@@ -677,7 +677,7 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 		return tag;
 	}
 
-	protected String[] getTagNames(List<AssetTag>tags) {
+	protected String[] getTagNames(List<AssetTag> tags) {
 		return ListUtil.toArray(tags, AssetTag.NAME_ACCESSOR);
 	}
 

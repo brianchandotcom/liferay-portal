@@ -164,7 +164,7 @@ public class GetFieldSettingsDDMFormContextMVCResourceCommand
 		DDMForm ddmFormFieldTypeSettingsDDMForm = DDMFormFactory.create(
 			ddmFormFieldTypeSettings);
 
-		Map<String, DDMFormField>ddmFormFieldTypeSettingsDDMFormFieldsMap =
+		Map<String, DDMFormField> ddmFormFieldTypeSettingsDDMFormFieldsMap =
 			ddmFormFieldTypeSettingsDDMForm.getDDMFormFieldsMap(false);
 
 		DDMFormField ddmFormField =

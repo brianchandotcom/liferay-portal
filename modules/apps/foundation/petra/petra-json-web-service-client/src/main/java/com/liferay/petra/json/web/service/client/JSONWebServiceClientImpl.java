@@ -543,7 +543,7 @@ public class JSONWebServiceClientImpl implements JSONWebServiceClient {
 
 	protected Registry<ConnectionSocketFactory> getSocketFactoryRegistry() {
 		RegistryBuilder<ConnectionSocketFactory> registryBuilder =
-			RegistryBuilder.<ConnectionSocketFactory> create();
+			RegistryBuilder.<ConnectionSocketFactory>create();
 
 		registryBuilder.register("http", new PlainConnectionSocketFactory());
 		registryBuilder.register("https", getSSLConnectionSocketFactory());

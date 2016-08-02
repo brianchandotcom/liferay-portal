@@ -596,7 +596,7 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 
 	private static final PACL _pacl = new NoPACL();
 
-	private ServiceTracker <MBeanServer, MBeanServer> _serviceTracker;
+	private ServiceTracker<MBeanServer, MBeanServer> _serviceTracker;
 
 	private static class MBeanServerServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer<MBeanServer, MBeanServer> {

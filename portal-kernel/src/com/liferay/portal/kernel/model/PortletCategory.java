@@ -124,7 +124,7 @@ public class PortletCategory implements Serializable {
 			portletCategory.separate(portletIds);
 		}
 
-		Iterator<String>itr = _portletIds.iterator();
+		Iterator<String> itr = _portletIds.iterator();
 
 		while (itr.hasNext()) {
 			String portletId = itr.next();

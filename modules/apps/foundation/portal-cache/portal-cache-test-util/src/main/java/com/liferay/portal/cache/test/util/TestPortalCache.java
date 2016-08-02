@@ -27,7 +27,7 @@ import java.util.concurrent.ConcurrentMap;
 /**
  * @author Tina Tian
  */
-public class TestPortalCache <K extends Serializable, V>
+public class TestPortalCache<K extends Serializable, V>
 	extends BasePortalCache<K, V> {
 
 	public TestPortalCache(

@@ -136,7 +136,7 @@ public class JspServlet extends HttpServlet {
 				TreeNode treeNode = parserUtils.parseXMLDocument(
 					url.getPath(), inputStream, false);
 
-				Iterator<TreeNode>iterator = treeNode.findChildren("listener");
+				Iterator<TreeNode> iterator = treeNode.findChildren("listener");
 
 				while (iterator.hasNext()) {
 					TreeNode listenerTreeNode = iterator.next();

@@ -118,7 +118,7 @@ public class LayoutTypeControllerTracker {
 		_defaultLayoutTypeControllers = new ConcurrentHashMap<>();
 	private final ConcurrentMap<String, LayoutTypeController>
 		_layoutTypeControllers = new ConcurrentHashMap<>();
-	private final ServiceTracker <LayoutTypeController, LayoutTypeController>
+	private final ServiceTracker<LayoutTypeController, LayoutTypeController>
 		_serviceTracker;
 
 	private class LayoutTypeControllerServiceTrackerCustomizer

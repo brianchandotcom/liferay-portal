@@ -113,7 +113,7 @@ public class TypeConvertorUtil {
 			destination = StateChange.fromValue(stateChange.getValue());
 		}
 		else {
-			Class <?> destinationClass = Class.forName(
+			Class<?> destinationClass = Class.forName(
 				destinationPackage + sourceClassName);
 
 			destination = destinationClass.newInstance();

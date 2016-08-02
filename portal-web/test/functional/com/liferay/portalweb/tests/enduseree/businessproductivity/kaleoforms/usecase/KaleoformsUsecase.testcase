@@ -9138,7 +9138,7 @@
 	</command>
 
 	<command name="ViewProcessWithComments" priority="4">
-		<var name="commentList" value="Assigned initial task.,Updating the due date on a process assigned to my roles.,Assign process to Test Test.,Updating the due date on a process assigned to me.,Please make changes and resubmit.,Assigned initial task.,Resubmitting.,Assigned initial task.,Assign process to Test Test again.,Process is approved." />
+		<var name="commentList" value="Test Test completed the task review. Process is approved." />
 		<var name="ddlDataDefinitionDescription" value="Data Definition Description" />
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="field" value="Text" />

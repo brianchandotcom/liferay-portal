@@ -21,10 +21,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.HotDeployMessageListener;
 import com.liferay.portal.kernel.messaging.MessageListener;
-import com.liferay.portal.kernel.service.AddressLocalService;
 import com.liferay.wsrp.jmx.WSRPConsumerPortletManager;
 import com.liferay.wsrp.service.WSRPConsumerPortletLocalService;
-import com.liferay.wsrp.service.WSRPConsumerPortletLocalServiceUtil;
 import com.liferay.wsrp.util.ExtensionHelperUtil;
 
 import javax.management.MBeanServer;
@@ -89,8 +87,18 @@ public class WSRPMessageListener extends HotDeployMessageListener {
 		}
 	}
 
+	@Reference(unbind = "-")
+	protected void setWSRPConsumerPortletLocalService(
+		WSRPConsumerPortletLocalService wSRPConsumerPortletLocalService) {
+
+		_WSRPConsumerPortletLocalService = wSRPConsumerPortletLocalService;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		WSRPMessageListener.class);
+
+	private static WSRPConsumerPortletLocalService
+		_WSRPConsumerPortletLocalService;
 
 	private BundleContext _bundleContext;
 	private ServiceTracker<MBeanServer, MBeanServer> _serviceTracker;
@@ -135,15 +143,5 @@ public class WSRPMessageListener extends HotDeployMessageListener {
 		}
 
 	}
-	
-	@Reference(unbind = "-")
-	protected void setWSRPConsumerPortletLocalService(
-		WSRPConsumerPortletLocalService wSRPConsumerPortletLocalService) {
-
-		_WSRPConsumerPortletLocalService = wSRPConsumerPortletLocalService;
-	}
-	
-	private static WSRPConsumerPortletLocalService
-		_WSRPConsumerPortletLocalService;
 
 }

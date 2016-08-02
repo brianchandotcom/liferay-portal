@@ -37,7 +37,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 /**
  * @author Tomas Polesovsky
  */
-@PowerMockIgnore({"javax.crypto.*"})
+@PowerMockIgnore("javax.crypto.*")
 @PrepareForTest(PropsUtil.class)
 @RunWith(PowerMockRunner.class)
 public class CompositePasswordEncryptorTest extends PowerMockito {

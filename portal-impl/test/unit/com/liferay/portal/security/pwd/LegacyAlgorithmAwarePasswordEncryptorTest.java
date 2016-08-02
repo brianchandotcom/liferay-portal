@@ -39,7 +39,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 /**
  * @author Michael C. Han
  */
-@PowerMockIgnore({"javax.crypto.*"})
+@PowerMockIgnore("javax.crypto.*")
 @PrepareForTest(PropsUtil.class)
 @RunWith(PowerMockRunner.class)
 public class LegacyAlgorithmAwarePasswordEncryptorTest {

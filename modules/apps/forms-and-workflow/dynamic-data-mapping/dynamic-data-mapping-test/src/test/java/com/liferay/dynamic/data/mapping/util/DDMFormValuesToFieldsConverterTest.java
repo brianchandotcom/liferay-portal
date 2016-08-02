@@ -49,7 +49,7 @@ import org.powermock.core.classloader.annotations.SuppressStaticInitializationFo
 /**
  * @author Marcellus Tavares
  */
-@PrepareForTest({DDMStructureLocalServiceUtil.class})
+@PrepareForTest(DDMStructureLocalServiceUtil.class)
 @SuppressStaticInitializationFor(
 	"com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil"
 )

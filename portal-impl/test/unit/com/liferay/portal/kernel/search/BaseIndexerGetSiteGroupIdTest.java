@@ -45,7 +45,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
  * @author Miguel Angelo Caldas Gallindo
  * @author André de Oliveira
  */
-@PrepareOnlyThisForTest({GroupLocalServiceUtil.class})
+@PrepareOnlyThisForTest(GroupLocalServiceUtil.class)
 @RunWith(PowerMockRunner.class)
 public class BaseIndexerGetSiteGroupIdTest extends PowerMockito {
 

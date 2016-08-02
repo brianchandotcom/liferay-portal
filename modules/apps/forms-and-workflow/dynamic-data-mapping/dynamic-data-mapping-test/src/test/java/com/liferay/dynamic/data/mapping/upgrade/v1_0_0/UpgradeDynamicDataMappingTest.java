@@ -94,7 +94,7 @@ import org.skyscreamer.jsonassert.JSONAssert;
  * @author Marcellus Tavares
  */
 @PowerMockIgnore("javax.xml.stream.*")
-@PrepareForTest({LocaleUtil.class})
+@PrepareForTest(LocaleUtil.class)
 @RunWith(PowerMockRunner.class)
 public class UpgradeDynamicDataMappingTest extends PowerMockito {
 

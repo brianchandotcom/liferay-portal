@@ -60,7 +60,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 /**
  * @author André de Oliveira
  */
-@PrepareForTest({ActionUtil.class})
+@PrepareForTest(ActionUtil.class)
 @RunWith(PowerMockRunner.class)
 public class TrackbackMVCActionCommandTest extends PowerMockito {
 

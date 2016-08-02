@@ -36,7 +36,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 /**
  * @author Eduardo Garcia
  */
-@PrepareForTest({LanguageUtil.class})
+@PrepareForTest(LanguageUtil.class)
 @RunWith(PowerMockRunner.class)
 public class PortletCategoryComparatorTest extends PowerMockito {
 

@@ -138,7 +138,7 @@ public class FutureConverterTest {
 	public void testCovertResult() throws Exception {
 		Object result = new Object();
 
-		FutureTask<Object>futureTask = new FutureTask<Object>(
+		FutureTask<Object> futureTask = new FutureTask<Object>(
 			new Runnable() {
 
 				@Override

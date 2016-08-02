@@ -382,7 +382,7 @@ public class LocalizationImplTest {
 
 	@Test
 	public void testUpdateLocalization() {
-		Map<Locale, String>localizationMap = new HashMap<>();
+		Map<Locale, String> localizationMap = new HashMap<>();
 
 		localizationMap.put(LocaleUtil.US, _ENGLISH_HELLO);
 

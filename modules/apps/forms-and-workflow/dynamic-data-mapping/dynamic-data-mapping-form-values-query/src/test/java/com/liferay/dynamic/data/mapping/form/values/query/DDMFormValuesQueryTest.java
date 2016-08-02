@@ -42,7 +42,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 /**
  * @author Marcellus Tavares
  */
-@PrepareForTest({LocaleUtil.class})
+@PrepareForTest(LocaleUtil.class)
 @RunWith(PowerMockRunner.class)
 public class DDMFormValuesQueryTest extends PowerMockito {
 

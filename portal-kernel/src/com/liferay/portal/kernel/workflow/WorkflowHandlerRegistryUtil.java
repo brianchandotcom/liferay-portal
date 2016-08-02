@@ -330,7 +330,7 @@ public class WorkflowHandlerRegistryUtil {
 
 	private class WorkflowHandlerServiceTrackerCustomizer
 		implements
-			ServiceTrackerCustomizer <WorkflowHandler<?>, WorkflowHandler<?>> {
+			ServiceTrackerCustomizer<WorkflowHandler<?>, WorkflowHandler<?>> {
 
 		@Override
 		public WorkflowHandler<?> addingService(

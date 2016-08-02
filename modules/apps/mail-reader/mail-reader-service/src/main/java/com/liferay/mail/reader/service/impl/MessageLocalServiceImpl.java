@@ -325,7 +325,7 @@ public class MessageLocalServiceImpl extends MessageLocalServiceBaseImpl {
 	}
 
 	protected String encode(String subject) {
-		byte bytes[] = subject.getBytes(StandardCharsets.ISO_8859_1);
+		byte[] bytes = subject.getBytes(StandardCharsets.ISO_8859_1);
 
 		return new String(bytes, StandardCharsets.UTF_8);
 	}

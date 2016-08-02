@@ -35,7 +35,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 /**
  * @author Wesley Gong
  */
-@PrepareForTest({LanguageUtil.class})
+@PrepareForTest(LanguageUtil.class)
 @RunWith(PowerMockRunner.class)
 public class LocaleUtilTest extends PowerMockito {
 

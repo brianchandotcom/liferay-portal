@@ -177,7 +177,7 @@ public class DoPrivilegedFactory
 		DoPrivilegedFactory.class.getClassLoader();
 	private static final Set<String> _earlyBeanReferenceNames = new HashSet<>();
 
-	private static class BeanPrivilegedAction <T>
+	private static class BeanPrivilegedAction<T>
 		implements PrivilegedAction<T> {
 
 		public BeanPrivilegedAction(T bean, Class<?>[] interfaces) {

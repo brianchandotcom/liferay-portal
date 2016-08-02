@@ -46,10 +46,10 @@ import org.powermock.modules.junit4.PowerMockRunner;
 /**
  * @author Adam Brandizzi
  */
-@PrepareForTest({WorkflowHandlerRegistryUtil.class})
+@PrepareForTest(WorkflowHandlerRegistryUtil.class)
 @RunWith(PowerMockRunner.class)
 @SuppressStaticInitializationFor(
-	{"com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil"}
+	"com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil"
 )
 public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 

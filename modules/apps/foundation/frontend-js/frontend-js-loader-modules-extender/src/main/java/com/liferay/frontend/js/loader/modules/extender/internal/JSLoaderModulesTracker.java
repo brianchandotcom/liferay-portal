@@ -112,7 +112,7 @@ public class JSLoaderModulesTracker
 	}
 
 	private volatile Details _details;
-	private final Map<ServiceReference <ServletContext>, JSLoaderModule>
+	private final Map<ServiceReference<ServletContext>, JSLoaderModule>
 		_jsLoaderModules = new ConcurrentSkipListMap<>();
 	private ServiceTracker<ServletContext, ServiceReference<ServletContext>>
 		_serviceTracker;

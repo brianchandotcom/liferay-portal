@@ -25,7 +25,7 @@ import java.lang.annotation.Target;
  * @author Iván Zaera
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.TYPE})
+@Target(ElementType.TYPE)
 @XMLAttribute(
 	embedIn = "*", namespace = ExtendedObjectClassDefinition.XML_NAMESPACE,
 	prefix = ExtendedObjectClassDefinition.XML_ATTRIBUTE_PREFIX

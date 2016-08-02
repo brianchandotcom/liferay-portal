@@ -13,6 +13,7 @@
 		<module name="MethodParamPad" />
 		<module name="ModifierOrder" />
 		<module name="MultipleVariableDeclarations" />
+		<module name="NoLineWrap" />
 		<module name="UpperEll" />
 	</module>
 </module>

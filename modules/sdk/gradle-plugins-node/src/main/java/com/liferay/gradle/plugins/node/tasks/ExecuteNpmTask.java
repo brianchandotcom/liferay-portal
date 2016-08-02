@@ -23,6 +23,7 @@ import java.io.File;
 import java.util.List;
 import java.util.concurrent.Callable;
 
+import org.gradle.api.Project;
 import org.gradle.api.logging.Logger;
 
 /**
@@ -79,6 +80,20 @@ public class ExecuteNpmTask extends ExecuteNodeScriptTask {
 			});
 	}
 
+	@Override
+	public void executeNode() throws Exception {
+		Project project = getProject();
+
+		if (FileUtil.isChild(getCacheDir(), project.getProjectDir())) {
+			super.executeNode();
+		}
+		else {
+			synchronized(ExecuteNpmTask.class) {
+				super.executeNode();
+			}
+		}
+	}
+
 	public File getCacheDir() {
 		return GradleUtil.toFile(getProject(), _cacheDir);
 	}
@@ -91,12 +106,20 @@ public class ExecuteNpmTask extends ExecuteNodeScriptTask {
 		return _inheritProxy;
 	}
 
+	public boolean isProgress() {
+		return _progress;
+	}
+
 	public void setCacheDir(Object cacheDir) {
 		_cacheDir = cacheDir;
 	}
 
 	public void setInheritProxy(boolean inheritProxy) {
 		_inheritProxy = inheritProxy;
+	}
+
+	public void setProgress(boolean progress) {
+		_progress = progress;
 	}
 
 	public void setRegistry(Object registry) {
@@ -169,6 +192,9 @@ public class ExecuteNpmTask extends ExecuteNodeScriptTask {
 			completeArgs.add(logLevel);
 		}
 
+		completeArgs.add("--progress");
+		completeArgs.add(Boolean.toString(isProgress()));
+
 		if (isInheritProxy()) {
 			addProxyArg(completeArgs, "--proxy", "http");
 			addProxyArg(completeArgs, "--https-proxy", "https");
@@ -186,6 +212,7 @@ public class ExecuteNpmTask extends ExecuteNodeScriptTask {
 
 	private Object _cacheDir;
 	private boolean _inheritProxy = true;
+	private boolean _progress = true;
 	private Object _registry;
 
 }

@@ -30,7 +30,6 @@ long messageId = message.getMessageId();
 long categoryId = message.getCategoryId();
 
 MBMessage curParentMessage = null;
-String parentAuthor = null;
 
 String body = StringPool.BLANK;
 boolean quote = false;

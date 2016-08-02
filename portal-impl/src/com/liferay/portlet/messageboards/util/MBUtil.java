@@ -23,6 +23,7 @@ import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.kernel.model.MBMessageConstants;
 import com.liferay.message.boards.kernel.model.MBStatsUser;
 import com.liferay.message.boards.kernel.model.MBThread;
+import com.liferay.message.boards.kernel.model.MBThreadConstants;
 import com.liferay.message.boards.kernel.service.MBCategoryLocalServiceUtil;
 import com.liferay.message.boards.kernel.service.MBMessageLocalServiceUtil;
 import com.liferay.message.boards.kernel.service.MBThreadLocalServiceUtil;
@@ -67,6 +68,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -219,6 +221,46 @@ public class MBUtil {
 			BBCodeTranslatorUtil.getHTML(msgBody),
 			ThemeConstants.TOKEN_THEME_IMAGES_PATH + EMOTICONS,
 			pathThemeImages + EMOTICONS);
+	}
+
+	public static String getBBCodeQuoteBody(
+		HttpServletRequest request, MBMessage parentMessage) {
+
+		String parentAuthor = null;
+
+		if (parentMessage.isAnonymous()) {
+			parentAuthor = LanguageUtil.get(request, "anonymous");
+		}
+		else {
+			parentAuthor = HtmlUtil.escape(
+				PortalUtil.getUserName(parentMessage));
+		}
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("[quote=");
+		sb.append(
+			StringUtil.replace(
+				parentAuthor, new String[] {"[", "]", "(", ")"},
+				new String[] {"&#91;", "&#93;", "&#40;", "&#41;"}));
+		sb.append("]\n");
+		sb.append(parentMessage.getBody(false));
+		sb.append("[/quote]\n\n\n");
+
+		return sb.toString();
+	}
+
+	public static String getBBCodeSplitThreadBody(HttpServletRequest request) {
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("[url=");
+		sb.append(MBThreadConstants.NEW_THREAD_URL);
+		sb.append("]");
+		sb.append(MBThreadConstants.NEW_THREAD_URL);
+		sb.append("[/url]");
+
+		return LanguageUtil.format(
+			request, "the-new-thread-can-be-found-at-x", sb.toString(), false);
 	}
 
 	public static long getCategoryId(
@@ -489,6 +531,45 @@ public class MBUtil {
 		}
 
 		return entries;
+	}
+
+	public static String getHtmlQuoteBody(
+		HttpServletRequest request, MBMessage parentMessage) {
+
+		String parentAuthor = null;
+
+		if (parentMessage.isAnonymous()) {
+			parentAuthor = LanguageUtil.get(request, "anonymous");
+		}
+		else {
+			parentAuthor = HtmlUtil.escape(
+				PortalUtil.getUserName(parentMessage));
+		}
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("<blockquote><div class=\"quote-title\">");
+		sb.append(parentAuthor);
+		sb.append(
+			": </div><div class=\"quote\"><div class=\"quote-content\">");
+		sb.append(parentMessage.getBody(false));
+		sb.append("</div></blockquote><br /><br /><br />");
+
+		return sb.toString();
+	}
+
+	public static String getHtmlSplitThreadBody(HttpServletRequest request) {
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("<a href=");
+		sb.append(MBThreadConstants.NEW_THREAD_URL);
+		sb.append(">");
+		sb.append(MBThreadConstants.NEW_THREAD_URL);
+		sb.append("</a>");
+
+		return LanguageUtil.format(
+			request, "the-new-thread-can-be-found-at-x", sb.toString(),
+			false);
 	}
 
 	public static long getMessageId(String messageIdString) {

@@ -30,7 +30,6 @@ category = category.toEscapedModel();
 MBThread thread = message.getThread();
 
 MBMessage curParentMessage = null;
-String parentAuthor = null;
 
 String body = StringPool.BLANK;
 boolean quote = false;

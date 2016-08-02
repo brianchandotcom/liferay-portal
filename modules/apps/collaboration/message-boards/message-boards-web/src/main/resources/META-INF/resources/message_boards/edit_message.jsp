@@ -34,7 +34,6 @@ String subject = BeanParamUtil.getString(message, request, "subject");
 MBThread thread = null;
 
 MBMessage curParentMessage = null;
-String parentAuthor = null;
 
 if (threadId > 0) {
 	try {
@@ -48,8 +47,6 @@ if (threadId > 0) {
 				subject = "RE: " + curParentMessage.getSubject();
 			}
 		}
-
-		parentAuthor = curParentMessage.isAnonymous() ? LanguageUtil.get(request, "anonymous") : HtmlUtil.escape(PortalUtil.getUserName(curParentMessage));
 	}
 	catch (Exception e) {
 	}

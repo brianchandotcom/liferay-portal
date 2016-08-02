@@ -15,27 +15,13 @@
 --%>
 
 <%
-if (quote && Validator.isNull(body) && (curParentMessage != null)) {
-	StringBundler sb = new StringBundler(5);
-
-	sb.append("[quote=");
-	sb.append(StringUtil.replace(parentAuthor, new String[] {"[", "]", "(", ")"}, new String[] {"&#91;", "&#93;", "&#40;", "&#41;"}));
-	sb.append("]");
-	sb.append(curParentMessage.getBody(false));
-	sb.append("[/quote]\n\n\n");
-
-	body = sb.toString();
-}
-else if (splitThread && Validator.isNull(body)) {
-	StringBundler sb = new StringBundler(5);
-
-	sb.append("[url=");
-	sb.append(MBThreadConstants.NEW_THREAD_URL);
-	sb.append("]");
-	sb.append(MBThreadConstants.NEW_THREAD_URL);
-	sb.append("[/url]");
-
-	body = LanguageUtil.format(request, "the-new-thread-can-be-found-at-x", sb.toString(), false);
+if (Validator.isNull(body)) {
+	if (quote && (curParentMessage != null)) {
+		body = MBUtil.getBBCodeQuoteBody(request, curParentMessage);
+	}
+	else if (splitThread) {
+		body = MBUtil.getBBCodeSplitThreadBody(request);
+	}
 }
 
 String bbcodeEditorName = PropsUtil.get(MBUtil.BB_CODE_EDITOR_WYSIWYG_IMPL_KEY);

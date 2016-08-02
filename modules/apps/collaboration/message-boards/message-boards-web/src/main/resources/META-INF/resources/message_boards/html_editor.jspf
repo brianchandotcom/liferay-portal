@@ -17,26 +17,10 @@
 <%
 if (Validator.isNull(body)) {
 	if (quote && (curParentMessage != null)) {
-		StringBundler sb = new StringBundler(5);
-
-		sb.append("<blockquote><div class=\"quote-title\">");
-		sb.append(parentAuthor);
-		sb.append(": </div><div class=\"quote\"><div class=\"quote-content\">");
-		sb.append(curParentMessage.getBody(false));
-		sb.append("</div></blockquote><br /><br /><br />");
-
-		body = sb.toString();
+		body = MBUtil.getHtmlQuoteBody(request, curParentMessage);
 	}
 	else if (splitThread) {
-		StringBundler sb = new StringBundler(5);
-
-		sb.append("<a href=");
-		sb.append(MBThreadConstants.NEW_THREAD_URL);
-		sb.append(">");
-		sb.append(MBThreadConstants.NEW_THREAD_URL);
-		sb.append("</a>");
-
-		body = LanguageUtil.format(request, "the-new-thread-can-be-found-at-x", sb.toString(), false);
+		body = MBUtil.getHtmlSplitThreadBody(request);
 	}
 }
 

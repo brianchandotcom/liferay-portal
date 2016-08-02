@@ -51,6 +51,11 @@ AUI.add(
 					textMode: {
 						validator: Lang.isBoolean,
 						value: {}
+					},
+
+					useCustomDataProcessor: {
+						validator: Lang.isBoolean,
+						value: false
 					}
 				},
 
@@ -102,6 +107,10 @@ AUI.add(
 							nativeEditor.on('focus', instance._onFocus, instance);
 						}
 
+						if (instance.get('useCustomDataProcessor')) {
+							nativeEditor.on('customDataProcessorLoaded', instance._onCustomDataProcessorLoaded, instance);
+						}
+
 						var editorConfig = instance.get('editorConfig');
 
 						if (editorConfig.disallowedContent && editorConfig.disallowedContent.indexOf('br') !== -1) {
@@ -128,7 +137,12 @@ AUI.add(
 					focus: function() {
 						var instance = this;
 
-						instance.getNativeEditor().focus();
+						if (instance.instanceReady) {
+							instance.getNativeEditor().focus();
+						}
+						else {
+							instance.pendingFocus = true;
+						}
 					},
 
 					getCkData: function() {
@@ -180,7 +194,12 @@ AUI.add(
 					setHTML: function(value) {
 						var instance = this;
 
-						instance.getNativeEditor().setData(value);
+						if (instance.instanceReady) {
+							instance.getNativeEditor().setData(value);
+						}
+						else {
+							instance.set('contents', value);
+						}
 					},
 
 					_afterGet: function(attrName) {
@@ -202,6 +221,28 @@ AUI.add(
 						}
 					},
 
+					_initializeData: function() {
+						var instance = this;
+
+						var contents = instance.get('contents');
+
+						if (contents) {
+							instance.getNativeEditor().setData(contents);
+						}
+
+						var onInitFn = instance.get('onInitMethod');
+
+						if (onInitFn) {
+							onInitFn();
+						}
+
+						if (instance.pendingFocus) {
+							instance.pendingFocus = false;
+
+							instance.focus();
+						}
+					},
+
 					_onBlur: function(event) {
 						var instance = this;
 
@@ -218,6 +259,16 @@ AUI.add(
 						changeFn(instance.getText());
 					},
 
+					_onCustomDataProcessorLoaded: function() {
+						var instance = this;
+
+						instance.customDataProcessorLoaded = true;
+
+						if (instance.instanceReady) {
+							instance._initializeData();
+						}
+					},
+
 					_onFocus: function(event) {
 						var instance = this;
 
@@ -229,21 +280,13 @@ AUI.add(
 					_onInstanceReady: function() {
 						var instance = this;
 
-						var contents = instance.get('contents');
-
-						if (contents) {
-							instance.getNativeEditor().setData(contents);
-						}
-
-						var onInitFn = instance.get('onInitMethod');
-
-						if (onInitFn) {
-							onInitFn();
-						}
-
 						instance.instanceReady = true;
 
 						window[instance.get('namespace')].instanceReady = true;
+
+						if (instance.customDataProcessorLoaded || !instance.get('useCustomDataProcessor')) {
+							instance._initializeData();
+						}
 					},
 
 					_onKey: function(event) {

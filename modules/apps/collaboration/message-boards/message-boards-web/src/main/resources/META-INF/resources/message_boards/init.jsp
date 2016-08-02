@@ -71,7 +71,6 @@ page import="com.liferay.message.boards.kernel.model.MBMessageDisplay" %><%@
 page import="com.liferay.message.boards.kernel.model.MBMessageIterator" %><%@
 page import="com.liferay.message.boards.kernel.model.MBStatsUser" %><%@
 page import="com.liferay.message.boards.kernel.model.MBThread" %><%@
-page import="com.liferay.message.boards.kernel.model.MBThreadConstants" %><%@
 page import="com.liferay.message.boards.kernel.model.MBThreadFlag" %><%@
 page import="com.liferay.message.boards.kernel.model.MBTreeWalker" %><%@
 page import="com.liferay.message.boards.kernel.service.MBBanLocalServiceUtil" %><%@

@@ -212,17 +212,17 @@ public class JenkinsPerformanceDataUtil {
 		}
 
 		private void _setAxis(JSONObject childJSONObject) throws Exception {
-			String _url = childJSONObject.getString("url");
+			String url = childJSONObject.getString("url");
 
-			_url = URLDecoder.decode(_url, "UTF-8");
+			url = URLDecoder.decode(url, "UTF-8");
 
-			int x = _url.indexOf("AXIS_VARIABLE");
+			int x = url.indexOf("AXIS_VARIABLE");
 
-			_url = _url.substring(x);
+			url = url.substring(x);
 
-			int y = _url.indexOf(",");
+			int y = url.indexOf(",");
 
-			_axis = _url.substring(0, y);
+			_axis = url.substring(0, y);
 		}
 
 		private void _setUrl(JSONObject childJSONObject) throws Exception {

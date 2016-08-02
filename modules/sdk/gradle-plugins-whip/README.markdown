@@ -65,8 +65,8 @@ Property Name | Type | Default Value | Description
 ------------- | ---- | ------------- | -----------
 `dataFile` | `File` | `test-coverage/whip.dat` |
 <a name="enabled"></a>`enabled` | `boolean` | `true` | Whether to configure Whip as a Java Agent.
-`excludes` | `List<String>` | `[]` | The exclude patterns for the class names to check for full coverage. For example, a value could be `['.*Test', '.*Test\\$.*', '.*\\$Proxy.*', 'com/liferay/whip/.*']`.
-`includes` | `List<String>` | `[]` | The include patterns for the class names to check for full coverage.
+`excludes` | `List<String>` | `[]` | The class name patterns to exclude when checking for unit test code coverage. For example, a value could be `['.*Test', '.*Test\\$.*', '.*\\$Proxy.*', 'com/liferay/whip/.*']`.
+`includes` | `List<String>` | `[]` | The class name patterns to include when checking for unit test code coverage.
 `instrumentDump` | `boolean` | `false` |
 <a name="whipjarfile"></a>`whipJarFile` | `File` | The first file in the `whip` configuration whose name starts with `com.liferay.whip-`. | The Whip JAR file.
 
@@ -74,10 +74,10 @@ The same extension exposes the following methods:
 
 Method | Description
 ------ | -----------
-`WhipTaskExtension excludes(Iterable<Object> excludes)` | Adds exclude patterns for the class names to check for full coverage.
-`WhipTaskExtension excludes(Object... excludes)` | Adds exclude patterns for the class names to check for full coverage.
-`WhipTaskExtension includes(Iterable<Object> includes)` | Adds include patterns for the class names to check for full coverage.
-`WhipTaskExtension includes(Object... includes)` | Adds include patterns for the class names to check for full coverage.
+`WhipTaskExtension excludes(Iterable<Object> excludes)` | Adds class name patterns to exclude when checking for unit test coverage.
+`WhipTaskExtension excludes(Object... excludes)` | Adds class name patterns to exclude when checking for unit test coverage.
+`WhipTaskExtension includes(Iterable<Object> includes)` | Adds class name patterns to include when checking for unit test coverage.
+`WhipTaskExtension includes(Object... includes)` | Adds class name patterns to include when checking for unit test coverage.
 
 ## Additional Configuration
 

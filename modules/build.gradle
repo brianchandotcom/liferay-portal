@@ -143,8 +143,12 @@ gradle.beforeProject {
 				}
 			}
 
-			tasks.withType(ExecuteNpmTask) {
-				registry = "http://lrdcom-vm-110.lax.liferay.com:4873"
+			String ciRegistry = project.properties["nodejs.npm.ci.registry"]
+
+			if (ciRegistry) {
+				tasks.withType(ExecuteNpmTask) {
+					registry = ciRegistry
+				}
 			}
 		}
 	}

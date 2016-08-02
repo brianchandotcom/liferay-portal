@@ -165,7 +165,7 @@ public abstract class BaseEhcachePortalCacheManagerConfigurator {
 
 			Properties properties = parseProperties(
 				cacheEventListenerFactoryConfiguration.getProperties(),
-				cacheEventListenerFactoryConfiguration. getPropertySeparator());
+				cacheEventListenerFactoryConfiguration.getPropertySeparator());
 
 			String factoryClassName =
 				cacheEventListenerFactoryConfiguration.

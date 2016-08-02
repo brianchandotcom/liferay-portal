@@ -265,7 +265,7 @@ public class SanitizerLogWrapper extends LogWrapper {
 
 		boolean sanitized = false;
 
-		for (int i = throwables.size() - 1; i > - 1; i--) {
+		for (int i = throwables.size() - 1; i > -1; i--) {
 			Throwable curThrowable = throwables.get(i);
 
 			String message = curThrowable.toString();

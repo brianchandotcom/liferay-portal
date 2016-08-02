@@ -69,6 +69,9 @@
 				(JournalArticle.groupId = tempJournalArticle.groupId) AND
 				(JournalArticle.articleId = tempJournalArticle.articleId) AND
 				(JournalArticle.version < tempJournalArticle.version)
+			LEFT JOIN JournalArticleLocalization ON
+				(JournalArticle.companyId = JournalArticleLocalization.companyId) AND
+				(JournalArticle.id_ = JournalArticleLocalization.articlePK)
 			WHERE
 				(JournalArticle.companyId = ?) AND
 				(JournalArticle.groupId = ?) AND
@@ -80,8 +83,8 @@
 				(
 					(JournalArticle.articleId LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(JournalArticle.version = ?) [$AND_OR_CONNECTOR$]
-					(lower(JournalArticle.title) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(JournalArticle.description LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(lower(JournalArticleLocalization.title) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(JournalArticleLocalization.description LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(JournalArticle.content LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(JournalArticle.displayDate >= ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(JournalArticle.displayDate <= ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
@@ -237,6 +240,18 @@
 				(JournalArticle.groupId = tempJournalArticle.groupId) AND
 				(JournalArticle.articleId = tempJournalArticle.articleId) AND
 				(JournalArticle.version < tempJournalArticle.version)
+			LEFT JOIN
+				(SELECT DISTINCT
+					JournalArticleLocalization.companyId, JournalArticleLocalization.articlePK
+				FROM
+					JournalArticleLocalization
+				WHERE
+					(JournalArticleLocalization.title LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(JournalArticleLocalization.description LIKE ? [$AND_OR_NULL_CHECK$])
+				) tempJournalArticleLocalization
+				ON
+					(JournalArticle.companyId = tempJournalArticleLocalization.companyId) AND
+					(JournalArticle.id_ = tempJournalArticleLocalization.articlePK)
 			WHERE
 				(JournalArticle.companyId = ?) AND
 				(JournalArticle.groupId = ?) AND
@@ -248,8 +263,6 @@
 				(
 					(JournalArticle.articleId LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(JournalArticle.version = ?) [$AND_OR_CONNECTOR$]
-					(lower(JournalArticle.title) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(JournalArticle.description LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(JournalArticle.content LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(JournalArticle.displayDate >= ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(JournalArticle.displayDate <= ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
@@ -398,7 +411,7 @@
 	<sql id="com.liferay.journal.service.persistence.JournalFolderFinder.findF_ByG_F_L">
 		<![CDATA[
 			SELECT
-				DISTINCT folderId AS modelFolderId, '' AS articleId, name AS title, 0 AS version, 1 AS modelFolder, JournalFolder.createDate as displayDate, JournalFolder.modifiedDate as modifiedDate
+				DISTINCT folderId AS modelFolderId, '' AS articleId, JournalFolder.name AS title, 0 AS version, 1 AS modelFolder, JournalFolder.createDate as displayDate, JournalFolder.modifiedDate as modifiedDate
 			FROM
 				JournalFolder
 			WHERE

@@ -55,10 +55,6 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="Page#assertNodePortPG">
-			<var name="nodePort" value="8080" />
-		</execute>
-
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Global" />
 		</execute>
@@ -80,10 +76,6 @@
 			<var name="nodePort" value="9080" />
 			<var name="password" value="test" />
 			<var name="userEmailAddress" value="test@liferay.com" />
-		</execute>
-
-		<execute macro="Page#assertNodePortPG">
-			<var name="nodePort" value="9080" />
 		</execute>
 
 		<execute macro="Navigator#openSpecificURL">
@@ -149,10 +141,6 @@
 		<execute macro="User#loginUserPG">
 			<var name="password" value="test" />
 			<var name="userEmailAddress" value="userea@liferay.com" />
-		</execute>
-
-		<execute macro="Page#assertNodePortPG">
-			<var name="nodePort" value="8080" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSite">

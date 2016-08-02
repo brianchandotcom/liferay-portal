@@ -18,6 +18,7 @@ import com.liferay.gradle.util.OSDetector;
 import com.liferay.gradle.util.Validator;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -69,7 +70,13 @@ public class NodeExecutor {
 
 		Process process = processBuilder.start();
 
-		process.waitFor();
+		int exitValue = process.waitFor();
+
+		if (exitValue != 0) {
+			throw new IOException(
+				"Process '" + processBuilder.command() +
+					"' finished with non-zero exit value " + exitValue);
+		}
 	}
 
 	public List<String> getArgs() {

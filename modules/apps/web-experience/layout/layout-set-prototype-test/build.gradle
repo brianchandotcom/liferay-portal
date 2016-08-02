@@ -2,6 +2,6 @@ dependencies {
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.5"
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.exportimport.service", version: "3.0.0"
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.layout.set.prototype.api", version: "1.0.0"
-	testIntegrationCompile group: "com.liferay", name: "com.liferay.layout.set.prototype.impl", version: "1.0.0"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
+	testIntegrationCompile project(":apps:web-experience:layout:layout-set-prototype-impl")
 }

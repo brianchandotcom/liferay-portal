@@ -12,22 +12,18 @@
  * details.
  */
 
-package com.liferay.layout.set.prototype.lar;
+package com.liferay.site.teams.web.internal.exportimport.data.handler;
 
 import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
-import com.liferay.exportimport.kernel.lar.DataLevel;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerBoolean;
-import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
-import com.liferay.exportimport.kernel.lar.StagedModelType;
-import com.liferay.layout.set.prototype.constants.LayoutSetPrototypePortletKeys;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.model.LayoutSetPrototype;
-import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
+import com.liferay.portal.kernel.model.Team;
+import com.liferay.portal.kernel.service.TeamLocalService;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.site.teams.web.internal.constants.SiteTeamsPortletKeys;
 
 import java.util.List;
 
@@ -38,19 +34,15 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Daniela Zapata Riesco
+ * @author Akos Thurzo
  */
 @Component(
-	immediate = true,
-	property = {
-		"javax.portlet.name=" + LayoutSetPrototypePortletKeys.LAYOUT_SET_PROTOTYPE
-	},
+	property = {"javax.portlet.name=" + SiteTeamsPortletKeys.SITE_TEAMS},
 	service = PortletDataHandler.class
 )
-public class LayoutSetPrototypePortletDataHandler
-	extends BasePortletDataHandler {
+public class SiteTeamsPortletDataHandler extends BasePortletDataHandler {
 
-	public static final String NAMESPACE = "layout_set_prototypes";
+	public static final String NAMESPACE = "site_teams";
 
 	public static final String SCHEMA_VERSION = "1.0.0";
 
@@ -61,17 +53,13 @@ public class LayoutSetPrototypePortletDataHandler
 
 	@Activate
 	protected void activate() {
-		setDataLevel(DataLevel.PORTAL);
-		setDeletionSystemEventStagedModelTypes(
-			new StagedModelType(LayoutSetPrototype.class));
+		setDataAlwaysStaged(true);
 		setExportControls(
 			new PortletDataHandlerBoolean(
-				NAMESPACE, "site-templates", true, true,
-				new PortletDataHandlerControl[] {
-					new PortletDataHandlerBoolean(
-						NAMESPACE, "page-templates", true, false)
-				},
-				LayoutSetPrototype.class.getName()));
+				NAMESPACE, "site-teams", true, true, null,
+				Team.class.getName()));
+		setPublishToLiveByDefault(true);
+		setRank(80);
 	}
 
 	@Override
@@ -81,13 +69,12 @@ public class LayoutSetPrototypePortletDataHandler
 		throws Exception {
 
 		if (portletDataContext.addPrimaryKey(
-				LayoutSetPrototypePortletDataHandler.class, "deleteData")) {
+				SiteTeamsPortletDataHandler.class, "deleteData")) {
 
 			return portletPreferences;
 		}
 
-		layoutSetPrototypeLocalService.deleteNondefaultLayoutSetPrototypes(
-			portletDataContext.getCompanyId());
+		_teamLocalService.deleteTeams(portletDataContext.getScopeGroupId());
 
 		return portletPreferences;
 	}
@@ -98,15 +85,13 @@ public class LayoutSetPrototypePortletDataHandler
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		portletDataContext.addPortalPermissions();
-
 		Element rootElement = addExportDataRootElement(portletDataContext);
 
 		rootElement.addAttribute(
 			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
 
 		ActionableDynamicQuery actionableDynamicQuery =
-			layoutSetPrototypeLocalService.getExportActionableDynamicQuery(
+			_teamLocalService.getExportActionableDynamicQuery(
 				portletDataContext);
 
 		actionableDynamicQuery.performActions();
@@ -120,21 +105,17 @@ public class LayoutSetPrototypePortletDataHandler
 			PortletPreferences portletPreferences, String data)
 		throws Exception {
 
-		portletDataContext.importPortalPermissions();
+		Element teamsElement = portletDataContext.getImportDataGroupElement(
+			Team.class);
 
-		Element layoutSetPrototypesElement =
-			portletDataContext.getImportDataGroupElement(
-				LayoutSetPrototype.class);
+		List<Element> teamElements = teamsElement.elements();
 
-		List<Element> layoutSetPrototypeElements =
-			layoutSetPrototypesElement.elements();
-
-		for (Element layoutSetPrototypeElement : layoutSetPrototypeElements) {
+		for (Element teamElement : teamElements) {
 			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, layoutSetPrototypeElement);
+				portletDataContext, teamElement);
 		}
 
-		return null;
+		return portletPreferences;
 	}
 
 	@Override
@@ -143,25 +124,18 @@ public class LayoutSetPrototypePortletDataHandler
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		ActionableDynamicQuery layoutSetPrototypeExportActionableDynamicQuery =
-			layoutSetPrototypeLocalService.getExportActionableDynamicQuery(
+		ActionableDynamicQuery actionableDynamicQuery =
+			_teamLocalService.getExportActionableDynamicQuery(
 				portletDataContext);
 
-		layoutSetPrototypeExportActionableDynamicQuery.performCount();
+		actionableDynamicQuery.performCount();
 	}
 
 	@Reference(unbind = "-")
-	protected void setLayoutSetPrototypeLocalService(
-		LayoutSetPrototypeLocalService layoutSetPrototypeLocalService) {
-
-		this.layoutSetPrototypeLocalService = layoutSetPrototypeLocalService;
+	protected void setTeamLocalService(TeamLocalService teamLocalService) {
+		_teamLocalService = teamLocalService;
 	}
 
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
-	}
-
-	protected LayoutSetPrototypeLocalService layoutSetPrototypeLocalService;
+	private TeamLocalService _teamLocalService;
 
 }

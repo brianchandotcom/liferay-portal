@@ -66,6 +66,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.io.FilenameUtils;
+import org.apache.maven.artifact.versioning.ComparableVersion;
 import org.apache.tools.ant.types.selectors.SelectorUtils;
 
 import org.dom4j.Document;
@@ -2078,18 +2079,22 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return x + 1;
 	}
 
-	protected String getMainReleaseVersion() {
-		if (_mainReleaseVersion != null) {
-			return _mainReleaseVersion;
+	protected ComparableVersion getMainReleaseComparableVersion() {
+		if (_mainReleaseComparableVersion != null) {
+			return _mainReleaseComparableVersion;
 		}
 
 		String releaseVersion = ReleaseInfo.getVersion();
 
 		int pos = releaseVersion.lastIndexOf(CharPool.PERIOD);
 
-		_mainReleaseVersion = releaseVersion.substring(0, pos) + ".0";
+		String mainReleaseVersion =
+			releaseVersion.substring(0, pos) + ".0";
 
-		return _mainReleaseVersion;
+		_mainReleaseComparableVersion = new ComparableVersion(
+			mainReleaseVersion);
+
+		return _mainReleaseComparableVersion;
 	}
 
 	protected List<String> getModuleLangDirNames(
@@ -3093,7 +3098,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	private String[] _excludes;
 	private SourceMismatchException _firstSourceMismatchException;
 	private Set<String> _immutableFieldTypes;
-	private String _mainReleaseVersion;
+	private ComparableVersion _mainReleaseComparableVersion;
 	private final List<String> _modifiedFileNames =
 		new CopyOnWriteArrayList<>();
 	private final Map<String, Properties> _moduleLangLanguageProperties =

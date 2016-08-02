@@ -114,7 +114,7 @@ public class ResourceBundleUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.1, replaced by {@link #getString(ResourceBundle,
+	 * @deprecated As of 7.0.0, replaced by {@link #getString(ResourceBundle,
 	 *             String, Object...)}
 	 */
 	@Deprecated

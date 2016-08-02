@@ -1262,10 +1262,6 @@ rerun your task.
 					<propertyref name="liferay.releng.supported" />
 					<propertyref name="microsoft.translator.client.id" />
 					<propertyref name="microsoft.translator.client.secret" />
-					<propertyref name="nodejs.npm.ci.registry" />
-					<propertyref name="nodejs.npm.email" />
-					<propertyref name="nodejs.npm.password" />
-					<propertyref name="nodejs.npm.user" />
 					<propertyref name="sass.compiler.class.name" />
 					<propertyref name="sass.generate.source.map" />
 					<propertyref name="sass.precision" />
@@ -1273,6 +1269,7 @@ rerun your task.
 					<propertyref name="source.formatter.processor.thread.count" />
 					<propertyref name="timeout.app.server.wait" />
 					<propertyref prefix="ivy.pom." />
+					<propertyref prefix="nodejs.npm." />
 					<propertyref prefix="sonatype." />
 					<propertyref regex="^\s*app\.server\.(?:glassfish|jboss|jetty|jonas|resin|tcat|tcserver|tomcat|weblogic|websphere|wildfly).*" />
 				</propertyset>

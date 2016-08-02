@@ -1,6 +1,6 @@
 dependencies {
 	compile gradleApi()
-	compile group: "com.liferay", name: "com.liferay.gradle.plugins", version: "1.0.401"
+	compile group: "com.liferay", name: "com.liferay.gradle.plugins", version: "1.0.402"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.poshi.runner", version: "1.0.11"
 	compile group: "de.undercouch", name: "gradle-download-task", version: "3.1.1"
 }

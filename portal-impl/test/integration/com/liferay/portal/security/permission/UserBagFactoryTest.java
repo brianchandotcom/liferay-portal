@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.security.permission.UserBag;
 import com.liferay.portal.kernel.security.permission.UserBagFactoryUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
@@ -29,6 +30,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
+import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -68,6 +70,8 @@ public class UserBagFactoryTest {
 			_parentOrganization.getOrganizationId(),
 			RandomTestUtil.randomString(), true);
 
+		_userGroup = UserGroupTestUtil.addUserGroup(_childGroup.getGroupId());
+
 		_user = UserTestUtil.addUser();
 	}
 
@@ -79,9 +83,11 @@ public class UserBagFactoryTest {
 
 		Collection<Group> userGroups = getUserGroups();
 		Collection<Group> userOrgGroups = getUserOrgGroups();
+		Collection<Group> userUserGroupGroups = getUserUserGroupGroups();
 
 		Assert.assertTrue(groups.containsAll(userGroups));
 		Assert.assertTrue(groups.containsAll(userOrgGroups));
+		Assert.assertTrue(groups.containsAll(userUserGroupGroups));
 	}
 
 	@Test
@@ -141,6 +147,13 @@ public class UserBagFactoryTest {
 		Assert.assertTrue(organizations.contains(_parentOrganization));
 	}
 
+	@Test
+	public void testGetUserUserGroupGroups() throws Exception {
+		Collection<Group> groups = getUserUserGroupGroups();
+
+		Assert.assertTrue(groups.contains(_userGroup.getGroup()));
+	}
+
 	protected UserBag getUserBag() throws Exception {
 		return UserBagFactoryUtil.create(_user.getUserId());
 	}
@@ -171,6 +184,15 @@ public class UserBagFactoryTest {
 		return userBag.getUserOrgs();
 	}
 
+	protected Collection<Group> getUserUserGroupGroups() throws Exception {
+		UserLocalServiceUtil.addUserGroupUser(
+			_userGroup.getUserGroupId(), _user.getUserId());
+
+		UserBag userBag = getUserBag();
+
+		return userBag.getUserUserGroupGroups();
+	}
+
 	@DeleteAfterTestRun
 	private Group _childGroup;
 
@@ -185,5 +207,8 @@ public class UserBagFactoryTest {
 
 	@DeleteAfterTestRun
 	private User _user;
+
+	@DeleteAfterTestRun
+	private UserGroup _userGroup;
 
 }

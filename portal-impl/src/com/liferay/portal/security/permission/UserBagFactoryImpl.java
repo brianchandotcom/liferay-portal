@@ -18,11 +18,13 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.security.permission.UserBag;
 import com.liferay.portal.kernel.security.permission.UserBagFactory;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PropsValues;
 
@@ -58,19 +60,27 @@ public class UserBagFactoryImpl implements UserBagFactory {
 				userOrgGroups.add(organization.getGroup());
 			}
 
+			List<UserGroup> userUserGroups =
+				UserGroupLocalServiceUtil.getUserUserGroups(userId);
+
+			List<Group> userUserGroupGroups =
+				GroupLocalServiceUtil.getUserGroupsGroups(userUserGroups);
+
 			if (userGroups.isEmpty()) {
 				long[] userRoleIds = UserLocalServiceUtil.getRolePrimaryKeys(
 					userId);
 
 				userBag = new UserBagImpl(
-					userId, userGroups, userOrgs, userOrgGroups, userRoleIds);
+					userId, userGroups, userOrgs, userOrgGroups,
+					userUserGroupGroups, userRoleIds);
 			}
 			else {
 				List<Role> userRoles = RoleLocalServiceUtil.getUserRelatedRoles(
 					userId, userGroups);
 
 				userBag = new UserBagImpl(
-					userId, userGroups, userOrgs, userOrgGroups, userRoles);
+					userId, userGroups, userOrgs, userOrgGroups,
+					userUserGroupGroups, userRoles);
 			}
 
 			PermissionCacheUtil.putUserBag(userId, userBag);

@@ -1262,6 +1262,7 @@ rerun your task.
 					<propertyref name="liferay.releng.supported" />
 					<propertyref name="microsoft.translator.client.id" />
 					<propertyref name="microsoft.translator.client.secret" />
+					<propertyref name="nodejs.npm.ci.registry" />
 					<propertyref name="nodejs.npm.email" />
 					<propertyref name="nodejs.npm.password" />
 					<propertyref name="nodejs.npm.user" />

@@ -141,16 +141,24 @@ renderResponse.setTitle((role == null) ? LanguageUtil.get(request, "new-role") :
 				</c:if>
 			</c:if>
 
-			<aui:fieldset-group markupView="lexicon">
-				<aui:fieldset>
-					<liferay-ui:custom-attribute-list
-						className="<%= Role.class.getName() %>"
-						classPK="<%= (role != null) ? role.getRoleId() : 0 %>"
-						editable="<%= true %>"
-						label="<%= true %>"
-					/>
-				</aui:fieldset>
-			</aui:fieldset-group>
+			<%
+			ExpandoBridge roleExpandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.getCompanyId(), Role.class.getName(), (role != null) ? role.getRoleId() : 0);
+
+			Map<String, Serializable> roleCustomAttributes = roleExpandoBridge.getAttributes();
+			%>
+
+			<c:if test="<%= roleCustomAttributes.size() > 0 %>">
+				<aui:fieldset-group markupView="lexicon">
+					<aui:fieldset>
+						<liferay-ui:custom-attribute-list
+							className="<%= Role.class.getName() %>"
+							classPK="<%= (role != null) ? role.getRoleId() : 0 %>"
+							editable="<%= true %>"
+							label="<%= true %>"
+						/>
+					</aui:fieldset>
+				</aui:fieldset-group>
+			</c:if>
 
 			<aui:button-row>
 				<aui:button cssClass="btn-lg" type="submit" />

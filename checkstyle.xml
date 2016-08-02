@@ -19,6 +19,7 @@
 		<module name="OneStatementPerLine" />
 		<module name="PackageName" />
 		<module name="ParameterName" />
+		<module name="RequireThis" />
 		<module name="UpperEll" />
 	</module>
 </module>

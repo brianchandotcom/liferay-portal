@@ -136,12 +136,11 @@ AUI.add(
 						categoryIds.forEach(
 							function(item, index) {
 								var entry = {
-									categoryId: item
+									categoryId: item,
+									value: LString.unescapeHTML(categoryTitles[index])
 								};
 
-								entry.value = LString.unescapeHTML(categoryTitles[index]);
-
-								instance.add(entry.value);
+								instance.entries.add(entry);
 							}
 						);
 					},

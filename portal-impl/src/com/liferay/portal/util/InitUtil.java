@@ -173,7 +173,7 @@ public class InitUtil {
 		_initialized = true;
 	}
 
-	public synchronized static void initWithSpring(
+	public static synchronized void initWithSpring(
 		boolean initModuleFramework, boolean registerContext) {
 
 		List<String> configLocations = ListUtil.fromArray(
@@ -183,7 +183,7 @@ public class InitUtil {
 		initWithSpring(configLocations, initModuleFramework, registerContext);
 	}
 
-	public synchronized static void initWithSpring(
+	public static synchronized void initWithSpring(
 		List<String> configLocations, boolean initModuleFramework,
 		boolean registerContext) {
 
@@ -282,7 +282,7 @@ public class InitUtil {
 			PortalLifecycle.METHOD_DESTROY);
 	}
 
-	public synchronized static void stopModuleFramework() {
+	public static synchronized void stopModuleFramework() {
 		try {
 			ModuleFrameworkUtilAdapter.stopFramework(0);
 		}
@@ -291,7 +291,7 @@ public class InitUtil {
 		}
 	}
 
-	public synchronized static void stopRuntime() {
+	public static synchronized void stopRuntime() {
 		try {
 			ModuleFrameworkUtilAdapter.stopRuntime();
 		}

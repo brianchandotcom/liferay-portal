@@ -107,7 +107,7 @@ public interface PortletResourceAccessor
 
 	public boolean isPortalResource();
 
-	public static abstract class DefaultPortletResourceAccessor
+	public abstract static class DefaultPortletResourceAccessor
 		implements PortletResourceAccessor {
 
 		@Override
@@ -128,7 +128,7 @@ public interface PortletResourceAccessor
 
 	}
 
-	public static abstract class PortalPortletResourceAccessor
+	public abstract static class PortalPortletResourceAccessor
 		implements PortletResourceAccessor {
 
 		@Override

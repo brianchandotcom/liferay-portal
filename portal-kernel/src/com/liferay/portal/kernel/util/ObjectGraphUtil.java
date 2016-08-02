@@ -90,7 +90,7 @@ public class ObjectGraphUtil {
 		}
 	}
 
-	public static abstract class AnnotatedFieldMappingVisitor
+	public abstract static class AnnotatedFieldMappingVisitor
 		implements Visitor {
 
 		public AnnotatedFieldMappingVisitor(

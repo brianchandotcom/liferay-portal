@@ -136,7 +136,7 @@ public class BaseTestRule<C, M>
 		_handleBeforeClassThreadLocal.set(enable);
 	}
 
-	public static abstract class StatementWrapper extends Statement {
+	public abstract static class StatementWrapper extends Statement {
 
 		public StatementWrapper(Statement statement) {
 			this.statement = statement;

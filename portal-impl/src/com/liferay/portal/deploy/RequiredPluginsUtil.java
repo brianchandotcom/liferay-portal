@@ -69,7 +69,7 @@ public class RequiredPluginsUtil {
 		_unschedule(true);
 	}
 
-	protected synchronized static void checkRequiredPlugins() {
+	protected static synchronized void checkRequiredPlugins() {
 		List<String[]> levelsRequiredDeploymentContexts =
 			DeployManagerUtil.getLevelsRequiredDeploymentContexts();
 		List<String[]> levelsRequiredDeploymentWARFileNames =

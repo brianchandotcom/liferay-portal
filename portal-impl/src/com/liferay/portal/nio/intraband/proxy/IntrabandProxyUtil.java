@@ -817,7 +817,7 @@ public class IntrabandProxyUtil {
 
 	}
 
-	protected static abstract class TemplateSkeleton
+	protected abstract static class TemplateSkeleton
 		implements IntrabandProxySkeleton {
 
 		public static final String[] PROXY_METHOD_SIGNATURES =

@@ -275,7 +275,7 @@ public class TransactionalPortalCacheHelper {
 					"._portalCacheMapsThreadLocal",
 				new ArrayList<PortalCacheMap>());
 
-	private volatile static Boolean _transactionalCacheEnabled;
+	private static volatile Boolean _transactionalCacheEnabled;
 
 	private static class UncommittedBuffer {
 

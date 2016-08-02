@@ -2552,7 +2552,7 @@ public class IntrabandProxyUtilTest {
 
 	}
 
-	private static abstract class TestExtractMethodsClass5 {
+	private abstract static class TestExtractMethodsClass5 {
 
 		@Proxy
 		public void doStuff1() {
@@ -2580,11 +2580,11 @@ public class IntrabandProxyUtilTest {
 
 	}
 
-	private static abstract class TestGenerateClass1
+	private abstract static class TestGenerateClass1
 		extends TestProxyMethodsClass implements TestGenerateInterface1 {
 	}
 
-	private static abstract class TestGenerateClass2
+	private abstract static class TestGenerateClass2
 		extends TestProxyMethodsClass implements TestGenerateInterface2 {
 	}
 
@@ -2610,7 +2610,7 @@ public class IntrabandProxyUtilTest {
 
 	}
 
-	private static abstract class TestGenerateStubFunction2
+	private abstract static class TestGenerateStubFunction2
 		extends TestProxyMethodsClass
 		implements TestEmptyMethodsInterface, TestIdMethodsInterface {
 
@@ -2702,7 +2702,7 @@ public class IntrabandProxyUtilTest {
 
 	}
 
-	private static abstract class TestProxyMethodsClass
+	private abstract static class TestProxyMethodsClass
 		implements TestProxyMethodsInterface {
 
 		@Proxy

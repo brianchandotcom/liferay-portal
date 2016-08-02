@@ -2527,10 +2527,10 @@ public class PortletDataContextImpl implements PortletDataContext {
 	private transient Element _exportDataRootElement;
 	private long _groupId;
 	private transient Element _importDataRootElement;
-	private transient final LockManager _lockManager;
-	private transient final Map<String, Lock> _locksMap = new HashMap<>();
+	private final transient LockManager _lockManager;
+	private final transient Map<String, Lock> _locksMap = new HashMap<>();
 	private transient ManifestSummary _manifestSummary = new ManifestSummary();
-	private transient final Set<String> _missingReferences = new HashSet<>();
+	private final transient Set<String> _missingReferences = new HashSet<>();
 	private transient Element _missingReferencesElement;
 	private transient List<Layout> _newLayouts;
 	private final Map<String, Map<?, ?>> _newPrimaryKeysMaps = new HashMap<>();

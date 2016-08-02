@@ -35,34 +35,40 @@
 			entryIds: '<%= assetCategoriesSelectorDisplayContext.getSelectedCategories() %>',
 			eventName: '<%= HtmlUtil.escapeJS(assetCategoriesSelectorDisplayContext.getEventName()) %>',
 			namespace: '<portlet:namespace />',
-			singleSelect: '<%= assetCategoriesSelectorDisplayContext.isSingleSelect() %>',
+			singleSelect: <%= assetCategoriesSelectorDisplayContext.isSingleSelect() %>,
 			url: '<%= resourceURL %>',
 			vocabularyRootNode: [
+				{
+					expanded: true,
+					children: [
 
-				<%
-				long vocabularyIds[] = assetCategoriesSelectorDisplayContext.getVocabularyIds();
+						<%
+						long vocabularyIds[] = assetCategoriesSelectorDisplayContext.getVocabularyIds();
 
-				for (int i = 0; i < vocabularyIds.length; i++) {
-					long vocabularyId = vocabularyIds[i];
-				%>
+						for (int i = 0; i < vocabularyIds.length; i++) {
+							long vocabularyId = vocabularyIds[i];
+						%>
 
-					{
-						alwaysShowHitArea: true,
-						expanded: true,
-						id: 'vocabulary<%= vocabularyId %>',
-						label: '<%= assetCategoriesSelectorDisplayContext.getVocabularyTitle(vocabularyId) %>',
-						leaf: false,
-						type: 'io'
-					}
+							{
+								alwaysShowHitArea: true,
+								expanded: true,
+								id: 'vocabulary<%= vocabularyId %>',
+								label: '<%= assetCategoriesSelectorDisplayContext.getVocabularyTitle(vocabularyId) %>',
+								leaf: false,
+								type: '<%= assetCategoriesSelectorDisplayContext.getType() %>'
+							}
 
-					<c:if test="<%= (i + 1) < vocabularyIds.length %>">
-						,
-					</c:if>
+							<c:if test="<%= (i + 1) < vocabularyIds.length %>">
+								,
+							</c:if>
 
-				<%
+						<%
+						}
+						%>
+
+					],
+					label: '<liferay-ui:message key="vocabularies" />'
 				}
-				%>
-
 			]
 		}
 	).render();

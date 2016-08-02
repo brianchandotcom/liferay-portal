@@ -208,6 +208,17 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(assetCategoriesDisplayContext.getVoc
 	</liferay-frontend:add-menu>
 </c:if>
 
+<portlet:actionURL name="moveCategory" var="moveCategoryURL">
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+	<portlet:param name="mvcPath" value="/view_categories.jsp" />
+</portlet:actionURL>
+
+<aui:form action="<%= moveCategoryURL %>" name="moveCategoryFm">
+	<aui:input name="categoryId" type="hidden" />
+	<aui:input name="parentCategoryId" type="hidden" />
+	<aui:input name="vocabularyId" type="hidden" />
+</aui:form>
+
 <aui:script sandbox="<%= true %>">
 	$('#<portlet:namespace />deleteSelectedCategories').on(
 		'click',

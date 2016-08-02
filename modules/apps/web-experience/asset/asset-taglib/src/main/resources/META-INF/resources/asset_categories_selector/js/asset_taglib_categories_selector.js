@@ -136,12 +136,11 @@ AUI.add(
 						categoryIds.forEach(
 							function(item, index) {
 								var entry = {
-									categoryId: item
+									categoryId: item,
+									value: LString.unescapeHTML(categoryTitles[index])
 								};
 
-								entry.value = LString.unescapeHTML(categoryTitles[index]);
-
-								instance.add(entry.value);
+								instance.entries.add(entry);
 							}
 						);
 					},
@@ -227,8 +226,8 @@ AUI.add(
 									selectedItemChange: function(event) {
 										var data = event.newVal;
 
-										if (data && data.items) {
-											for (var key in data.items) {
+										if (data) {
+											for (var key in data) {
 												var found = false;
 
 												instance.entries.each(
@@ -237,16 +236,16 @@ AUI.add(
 															found = true;
 														}
 
-														if (key === item[0] && data.items[key].unchecked) {
+														if (key === item[0] && data[key].unchecked) {
 															instance.entries.remove(item);
 														}
 													}
 												);
 
-												data.items[key][0] = key;
+												data[key][0] = key;
 
-												if (!found && !data.items[key].unchecked) {
-													instance.entries.add(data.items[key]);
+												if (!found && !data[key].unchecked) {
+													instance.entries.add(data[key]);
 												}
 											}
 										}

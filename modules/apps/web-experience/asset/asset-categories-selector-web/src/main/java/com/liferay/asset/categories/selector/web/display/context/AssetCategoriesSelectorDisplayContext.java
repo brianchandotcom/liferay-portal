@@ -81,6 +81,26 @@ public class AssetCategoriesSelectorDisplayContext {
 		return _selectedCategories;
 	}
 
+	public String getType() {
+		if (_type != null) {
+			return _type;
+		}
+
+		if (!isAllowedSelectVocabularies()) {
+			_type = "io";
+
+			return _type;
+		}
+
+		_type = "check";
+
+		if (isSingleSelect()) {
+			_type = "radio";
+		}
+
+		return _type;
+	}
+
 	public long[] getVocabularyIds() {
 		if (_vocabularyIds != null) {
 			return _vocabularyIds;
@@ -122,6 +142,17 @@ public class AssetCategoriesSelectorDisplayContext {
 		return sb.toString();
 	}
 
+	public boolean isAllowedSelectVocabularies() {
+		if (_allowedSelectVocabularies != null) {
+			return _allowedSelectVocabularies;
+		}
+
+		_allowedSelectVocabularies = ParamUtil.getBoolean(
+			_request, "allowedSelectVocabularies");
+
+		return _allowedSelectVocabularies;
+	}
+
 	public boolean isSingleSelect() {
 		if (_singleSelect != null) {
 			return _singleSelect;
@@ -132,6 +163,7 @@ public class AssetCategoriesSelectorDisplayContext {
 		return _singleSelect;
 	}
 
+	private Boolean _allowedSelectVocabularies;
 	private long _categoryId;
 	private String _eventName;
 	private final RenderRequest _renderRequest;
@@ -139,6 +171,7 @@ public class AssetCategoriesSelectorDisplayContext {
 	private final HttpServletRequest _request;
 	private String _selectedCategories;
 	private Boolean _singleSelect;
+	private String _type;
 	private long[] _vocabularyIds;
 
 }

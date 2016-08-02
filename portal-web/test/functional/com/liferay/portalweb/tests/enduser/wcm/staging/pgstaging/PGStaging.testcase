@@ -374,6 +374,31 @@
 		<execute macro="Staging#viewPageVariationPG">
 			<var name="pageVariationName" value="Page Variation Name" />
 		</execute>
+
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="SitePageNavigator#gotoEditPage">
+			<var name="page" value="Staging Test Page" />
+		</execute>
+
+		<execute macro="Page#addFriendlyURLLocalizedPG">
+			<var name="friendlyUrlLocalized" value="de_DE" />
+			<var name="localizedFriendlyURL" value="/german" />
+		</execute>
+
+		<execute macro="Page#hideFromNavigationMenu" />
+
+		<execute macro="SitePageNavigator#gotoEditPage">
+			<var name="page" value="Staging Test Page" />
+		</execute>
+
+		<execute macro="Page#viewPageFriendlyURLPG">
+			<var name="friendlyUrlLocalized" value="de_DE" />
+			<var name="pageName" value="german" />
+		</execute>
 	</command>
 
 	<command name="AddPageWithPageVersioningEnabled" priority="5">

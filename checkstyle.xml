@@ -15,6 +15,7 @@
 		<module name="MultipleVariableDeclarations" />
 		<module name="NoLineWrap" />
 		<module name="NoWhitespaceAfter" />
+		<module name="NoWhitespaceBefore" />
 		<module name="UpperEll" />
 	</module>
 </module>

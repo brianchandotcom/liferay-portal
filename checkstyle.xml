@@ -16,6 +16,7 @@
 		<module name="NoLineWrap" />
 		<module name="NoWhitespaceAfter" />
 		<module name="NoWhitespaceBefore" />
+		<module name="OneStatementPerLine" />
 		<module name="UpperEll" />
 	</module>
 </module>

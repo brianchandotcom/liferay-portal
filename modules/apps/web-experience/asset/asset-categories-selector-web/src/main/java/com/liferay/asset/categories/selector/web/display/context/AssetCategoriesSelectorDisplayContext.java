@@ -122,6 +122,17 @@ public class AssetCategoriesSelectorDisplayContext {
 		return sb.toString();
 	}
 
+	public boolean isAllowedSelectVocabularies() {
+		if (_allowedSelectVocabularies != null) {
+			return _allowedSelectVocabularies;
+		}
+
+		_allowedSelectVocabularies = ParamUtil.getBoolean(
+			_request, "allowedSelectVocabularies");
+
+		return _allowedSelectVocabularies;
+	}
+
 	public boolean isSingleSelect() {
 		if (_singleSelect != null) {
 			return _singleSelect;
@@ -132,6 +143,7 @@ public class AssetCategoriesSelectorDisplayContext {
 		return _singleSelect;
 	}
 
+	private Boolean _allowedSelectVocabularies;
 	private long _categoryId;
 	private String _eventName;
 	private final RenderRequest _renderRequest;

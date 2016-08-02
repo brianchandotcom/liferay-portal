@@ -381,6 +381,8 @@ public class AssetCategoriesDisplayContext {
 
 		selectCategoryURL.setParameter(
 			"eventName", _renderResponse.getNamespace() + "selectCategory");
+		selectCategoryURL.setParameter(
+			"allowedSelectVocabularies", Boolean.TRUE.toString());
 		selectCategoryURL.setParameter("singleSelect", Boolean.TRUE.toString());
 		selectCategoryURL.setParameter(
 			"vocabularyIds",

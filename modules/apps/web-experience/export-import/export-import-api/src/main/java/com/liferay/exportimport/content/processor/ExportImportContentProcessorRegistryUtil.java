@@ -17,6 +17,7 @@ package com.liferay.exportimport.content.processor;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.osgi.util.ServiceTrackerFactory;
+import com.liferay.osgi.util.StringPlus;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.ArrayList;
@@ -105,33 +106,35 @@ public class ExportImportContentProcessorRegistryUtil {
 			ExportImportContentProcessor exportImportContentProcessor =
 				_bundleContext.getService(serviceReference);
 
-			String modelClassName = GetterUtil.getString(
+			List<String> modelClassNames = StringPlus.asList(
 				serviceReference.getProperty("model.class.name"));
 
-			int order = GetterUtil.getInteger(
-				serviceReference.getProperty("content.processor.order"), 1);
+			for (String modelClassName : modelClassNames) {
+				int order = GetterUtil.getInteger(
+					serviceReference.getProperty("content.processor.order"), 1);
 
-			ArrayList<ExportImportContentProcessor<?, ?>>
-				exportImportContentProcessorList =
-					_exportImportContentProcessors.get(modelClassName);
+				ArrayList<ExportImportContentProcessor<?, ?>>
+					exportImportContentProcessorList =
+						_exportImportContentProcessors.get(modelClassName);
 
-			if (exportImportContentProcessorList == null) {
-				exportImportContentProcessorList = new ArrayList<>();
+				if (exportImportContentProcessorList == null) {
+					exportImportContentProcessorList = new ArrayList<>();
+				}
+
+				int capacity = exportImportContentProcessorList.size() + 1;
+
+				exportImportContentProcessorList.ensureCapacity(capacity);
+
+				order = Math.max(0, order);
+
+				order = Math.min(capacity, order) - 1;
+
+				exportImportContentProcessorList.add(
+					order, exportImportContentProcessor);
+
+				_exportImportContentProcessors.put(
+					modelClassName, exportImportContentProcessorList);
 			}
-
-			int capacity = exportImportContentProcessorList.size() + 1;
-
-			exportImportContentProcessorList.ensureCapacity(capacity);
-
-			order = Math.max(0, order);
-
-			order = Math.min(capacity, order) - 1;
-
-			exportImportContentProcessorList.add(
-				order, exportImportContentProcessor);
-
-			_exportImportContentProcessors.put(
-				modelClassName, exportImportContentProcessorList);
 
 			return exportImportContentProcessor;
 		}
@@ -153,18 +156,20 @@ public class ExportImportContentProcessorRegistryUtil {
 
 			_bundleContext.ungetService(serviceReference);
 
-			String modelClassName = GetterUtil.getString(
+			List<String> modelClassNames = StringPlus.asList(
 				serviceReference.getProperty("model.class.name"));
 
-			List<ExportImportContentProcessor<?, ?>>
-				exportImportContentProcessorList =
-					_exportImportContentProcessors.get(modelClassName);
+			for (String modelClassName : modelClassNames) {
+				List<ExportImportContentProcessor<?, ?>>
+					exportImportContentProcessorList =
+						_exportImportContentProcessors.get(modelClassName);
 
-			exportImportContentProcessorList.remove(
-				exportImportContentProcessor);
+				exportImportContentProcessorList.remove(
+					exportImportContentProcessor);
 
-			if (exportImportContentProcessorList.isEmpty()) {
-				_exportImportContentProcessors.remove(modelClassName);
+				if (exportImportContentProcessorList.isEmpty()) {
+					_exportImportContentProcessors.remove(modelClassName);
+				}
 			}
 		}
 

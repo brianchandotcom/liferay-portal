@@ -24,8 +24,6 @@ import com.liferay.portal.kernel.util.StringPool;
 public class PhraseQueryBuilder {
 
 	public Query build(String field, String value) {
-		MatchQuery matchQuery = new MatchQuery(field, value);
-
 		MatchQuery.Type type = MatchQuery.Type.PHRASE;
 
 		if (_prefix) {
@@ -37,6 +35,8 @@ public class PhraseQueryBuilder {
 
 			type = MatchQuery.Type.PHRASE_PREFIX;
 		}
+
+		MatchQuery matchQuery = new MatchQuery(field, value);
 
 		matchQuery.setType(type);
 

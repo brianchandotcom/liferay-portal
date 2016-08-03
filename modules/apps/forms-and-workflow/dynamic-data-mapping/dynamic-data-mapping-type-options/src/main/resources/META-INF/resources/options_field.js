@@ -49,6 +49,7 @@ AUI.add(
 						var sortableList = instance.get('sortableList');
 
 						instance._eventHandlers.push(
+							instance.after('*:valueChanged', A.bind('_afterOptionValueChanged', instance)),
 							sortableList.after('drag:end', A.bind('_afterSortableListDragEnd', instance)),
 							sortableList.after('drag:start', A.bind('_afterSortableListDragStart', instance))
 						);
@@ -240,6 +241,12 @@ AUI.add(
 						var mainOption = instance._mainOption;
 
 						mainOption.set('errorMessage', event.newVal);
+					},
+
+					_afterOptionValueChanged: function() {
+						var instance = this;
+
+						instance.evaluate();
 					},
 
 					_afterRender: function(option) {

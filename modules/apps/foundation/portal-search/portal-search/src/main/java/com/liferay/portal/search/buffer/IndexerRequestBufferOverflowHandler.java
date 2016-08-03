@@ -14,9 +14,12 @@
 
 package com.liferay.portal.search.buffer;
 
+import aQute.bnd.annotation.ProviderType;
+
 /**
  * @author Michael C. Han
  */
+@ProviderType
 public interface IndexerRequestBufferOverflowHandler {
 
 	public void bufferOverflowed(

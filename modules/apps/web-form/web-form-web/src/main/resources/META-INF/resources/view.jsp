@@ -178,7 +178,7 @@ String successURL = portletPreferences.getValue("successURL", StringPool.BLANK);
 					keys[<%= i %>] = fieldKey;
 
 					fieldLabels[fieldKey] = '<%= HtmlUtil.escape(fieldLabel) %>';
-					fieldValidationErrorMessages[fieldKey] = '<%= fieldValidationErrorMessage %>';
+					fieldValidationErrorMessages[fieldKey] = '<%= HtmlUtil.escapeJS(fieldValidationErrorMessage) %>';
 
 					function fieldValidationFunction<%= i %>(currentFieldValue, fieldsMap) {
 						<c:choose>

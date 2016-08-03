@@ -1232,7 +1232,8 @@ public class HttpImpl implements Http {
 			options.getLocation(), options.getMethod(),
 			options.getHeaders(), options.getCookies(), options.getAuth(),
 			options.getBody(), options.getFileParts(), options.getParts(),
-			options.getResponse(), options.isFollowRedirects());
+			options.getResponse(), options.isFollowRedirects(),
+			options.getTimeout());
 	}
 
 	@Override
@@ -1264,7 +1265,8 @@ public class HttpImpl implements Http {
 			options.getLocation(), options.getMethod(),
 			options.getHeaders(), options.getCookies(), options.getAuth(),
 			options.getBody(), options.getFileParts(), options.getParts(),
-			options.getResponse(), options.isFollowRedirects());
+			options.getResponse(), options.isFollowRedirects(),
+			options.getTimeout());
 	}
 
 	@Override
@@ -1390,7 +1392,8 @@ public class HttpImpl implements Http {
 		return _httpClient;
 	}
 
-	protected RequestConfig.Builder getRequestConfigBuilder(URI uri)
+	protected RequestConfig.Builder getRequestConfigBuilder(
+			URI uri, int timeout)
 		throws IOException {
 
 		if (_log.isDebugEnabled()) {
@@ -1425,10 +1428,12 @@ public class HttpImpl implements Http {
 				httpRoute, maxConnectionsPerHost);
 		}
 
-		int timeout = GetterUtil.getInteger(
-			PropsUtil.get(
-				HttpImpl.class.getName() + ".timeout",
-				new Filter(uri.getHost())));
+		if (timeout == 0) {
+			timeout = GetterUtil.getInteger(
+				PropsUtil.get(
+					HttpImpl.class.getName() + ".timeout",
+					new Filter(uri.getHost())));
+		}
 
 		if (timeout > 0) {
 			requestConfigBuilder = requestConfigBuilder.setConnectTimeout(
@@ -1671,9 +1676,21 @@ public class HttpImpl implements Http {
 			Http.Response response, boolean followRedirects)
 		throws IOException {
 
+		return URLtoByteArray(
+			location, method, headers, cookies, auth, body, fileParts, parts,
+			response, followRedirects, 0);
+	}
+
+	protected byte[] URLtoByteArray(
+			String location, Http.Method method, Map<String, String> headers,
+			Cookie[] cookies, Http.Auth auth, Http.Body body,
+			List<Http.FilePart> fileParts, Map<String, String> parts,
+			Http.Response response, boolean followRedirects, int timeout)
+		throws IOException {
+
 		InputStream inputStream = URLtoInputStream(
 			location, method, headers, cookies, auth, body, fileParts, parts,
-			response, followRedirects);
+			response, followRedirects, timeout);
 
 		if (inputStream == null) {
 			return null;
@@ -1709,6 +1726,18 @@ public class HttpImpl implements Http {
 			Http.Response response, boolean followRedirects)
 		throws IOException {
 
+		return URLtoInputStream(
+			location, method, headers, cookies, auth, body, fileParts, parts,
+			response, followRedirects, 0);
+	}
+
+	protected InputStream URLtoInputStream(
+			String location, Http.Method method, Map<String, String> headers,
+			Cookie[] cookies, Http.Auth auth, Http.Body body,
+			List<Http.FilePart> fileParts, Map<String, String> parts,
+			Http.Response response, boolean followRedirects, int timeout)
+		throws IOException {
+
 		URI uri = null;
 
 		try {
@@ -1735,7 +1764,7 @@ public class HttpImpl implements Http {
 			HttpHost targetHost = new HttpHost(uri.getHost(), uri.getPort());
 
 			RequestConfig.Builder requestConfigBuilder =
-				getRequestConfigBuilder(uri);
+				getRequestConfigBuilder(uri, timeout);
 
 			RequestConfig requestConfig = requestConfigBuilder.build();
 
@@ -1863,7 +1892,7 @@ public class HttpImpl implements Http {
 
 					return URLtoInputStream(
 						redirect, Http.Method.GET, headers, cookies, auth, body,
-						fileParts, parts, response, followRedirects);
+						fileParts, parts, response, followRedirects, timeout);
 				}
 				else {
 					response.setRedirect(redirect);

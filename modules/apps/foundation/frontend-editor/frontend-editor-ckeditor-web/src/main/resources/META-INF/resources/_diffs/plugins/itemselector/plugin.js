@@ -359,16 +359,16 @@
 				if (selectedItem) {
 					var eventName = editor.name + 'selectItem';
 
-					var imageSrc = instance._getItemSrc(editor, selectedItem);
-
 					Liferay.Util.getWindow(eventName).onceAfter(
 						'destroy',
 						function() {
-							if (imageSrc) {
-								if (callback) {
-									callback(imageSrc);
-								}
-								else {
+							if (callback) {
+								callback(selectedItem);
+							}
+							else {
+								var imageSrc = instance._getItemSrc(editor, selectedItem);
+
+								if (imageSrc) {
 									var el = CKEDITOR.dom.element.createFromHtml('<img src="' + imageSrc + '">');
 
 									editor.insertElement(el);

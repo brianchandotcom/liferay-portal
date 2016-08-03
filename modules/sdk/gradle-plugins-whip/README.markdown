@@ -38,8 +38,8 @@ repositories {
 ```
 
 By default, Whip is automatically applied to all tasks of type [`Test`](https://docs.gradle.org/current/javadoc/org/gradle/api/tasks/testing/Test.html).
-If a task has Whip applied and is [enabled](#enabled), then Whip is configured
-as a Java Agent.
+If a task has Whip applied and Whip is [enabled](#enabled), then Whip is
+configured as a Java Agent.
 
 ## Project Extension
 

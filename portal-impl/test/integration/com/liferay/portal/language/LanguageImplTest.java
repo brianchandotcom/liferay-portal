@@ -61,12 +61,10 @@ public class LanguageImplTest {
 			Locale nullableLocale = null;
 
 			try {
-				String expectedValue = _languageImpl.format(
-					defaultLocale, _LANG_KEY_WITH_ARGUMENT, "31");
-				String actualValue = _languageImpl.format(
-					nullableLocale, _LANG_KEY_WITH_ARGUMENT, "31");
-
-				Assert.assertEquals(expectedValue, actualValue);
+				Assert.assertEquals(
+					_LANG_KEY_WITH_ARGUMENT,
+					_languageImpl.format(
+						nullableLocale, _LANG_KEY_WITH_ARGUMENT, "31"));
 			}
 			finally {
 				LocaleThreadLocal.setDefaultLocale(defaultLocale);

@@ -16,12 +16,12 @@ package com.liferay.portal.search.internal.query;
 
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.query.FieldQueryFactory;
+import com.liferay.portal.search.analysis.FieldQueryBuilder;
 import com.liferay.portal.search.analysis.FieldQueryBuilderFactory;
-import com.liferay.portal.search.analysis.QueryBuilder;
-import com.liferay.portal.search.internal.analysis.TitleQueryBuilder;
 
 import java.util.HashSet;
 
+import com.liferay.portal.search.internal.analysis.TitleFieldQueryBuilder;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
@@ -38,9 +38,9 @@ public class FieldQueryFactoryImpl implements FieldQueryFactory {
 		String fieldName, String keywords, boolean like,
 		boolean splitKeywords) {
 
-		QueryBuilder queryBuilder = getQueryBuilder(fieldName);
+		FieldQueryBuilder fieldQueryBuilder = getQueryBuilder(fieldName);
 
-		return queryBuilder.build(fieldName, keywords);
+		return fieldQueryBuilder.build(fieldName, keywords);
 	}
 
 	@Reference(
@@ -53,19 +53,19 @@ public class FieldQueryFactoryImpl implements FieldQueryFactory {
 		_fieldQueryBuilderFactories.add(fieldQueryBuilderFactory);
 	}
 
-	protected QueryBuilder getDefaultQueryBuilder() {
+	protected FieldQueryBuilder getDefaultQueryBuilder() {
 		return titleQueryBuilder;
 	}
 
-	protected QueryBuilder getQueryBuilder(String fieldName) {
+	protected FieldQueryBuilder getQueryBuilder(String fieldName) {
 		for (FieldQueryBuilderFactory fieldQueryBuilderFactory :
 				_fieldQueryBuilderFactories) {
 
-			QueryBuilder queryBuilder =
+			FieldQueryBuilder fieldQueryBuilder =
 				fieldQueryBuilderFactory.getQueryBuilder(fieldName);
 
-			if (queryBuilder != null) {
-				return queryBuilder;
+			if (fieldQueryBuilder != null) {
+				return fieldQueryBuilder;
 			}
 		}
 
@@ -79,7 +79,7 @@ public class FieldQueryFactoryImpl implements FieldQueryFactory {
 	}
 
 	@Reference
-	protected TitleQueryBuilder titleQueryBuilder;
+	protected TitleFieldQueryBuilder titleQueryBuilder;
 
 	private final HashSet<FieldQueryBuilderFactory>
 		_fieldQueryBuilderFactories = new HashSet<>();

@@ -828,9 +828,9 @@ app.artifacts-7.0.5=\
 	com.liferay.blogs.layout.prototype-2.0.3.jar,\
 	com.liferay.blogs.recent.bloggers.web-1.1.0.jar,\
 	com.liferay.blogs.service-1.0.4.jar,\
-	com.liferay.blogs.web-1.0.13.jar,\
+	com.liferay.blogs.web-1.0.14.jar,\
 	com.liferay.bookmarks.api-2.0.1.jar,\
-	com.liferay.bookmarks.service-1.0.9.jar,\
+	com.liferay.bookmarks.service-1.0.10.jar,\
 	com.liferay.bookmarks.web-1.0.10.jar,\
 	com.liferay.comment.api-2.0.1.jar,\
 	com.liferay.comment.editor.configuration-1.0.2.jar,\
@@ -869,10 +869,10 @@ app.artifacts-7.0.5=\
 	com.liferay.message.boards.comment-2.0.4.jar,\
 	com.liferay.message.boards.layout.set.prototype-1.0.6.jar,\
 	com.liferay.message.boards.parser.bbcode-2.0.2.jar,\
-	com.liferay.message.boards.service-1.0.6.jar,\
+	com.liferay.message.boards.service-1.0.7.jar,\
 	com.liferay.message.boards.web-1.1.0.jar,\
 	com.liferay.microblogs.api-2.0.1.jar,\
-	com.liferay.microblogs.service-2.0.5.jar,\
+	com.liferay.microblogs.service-2.0.6.jar,\
 	com.liferay.microblogs.web-2.0.6.jar,\
 	com.liferay.notifications.web-1.0.9.jar,\
 	com.liferay.quick.note.web-2.0.2.jar,\
@@ -880,7 +880,7 @@ app.artifacts-7.0.5=\
 	com.liferay.ratings.page.ratings.web-2.0.3.jar,\
 	com.liferay.ratings.service-1.0.4.jar,\
 	com.liferay.recent.documents.web-2.0.3.jar,\
-	com.liferay.social.activities.web-1.1.0.jar,\
+	com.liferay.social.activities.web-1.1.1.jar,\
 	com.liferay.social.activity.api-1.0.1.jar,\
 	com.liferay.social.activity.web-2.0.3.jar,\
 	com.liferay.social.group.statistics.web-2.0.2.jar,\
@@ -891,15 +891,15 @@ app.artifacts-7.0.5=\
 	com.liferay.social.user.statistics.web-2.1.0.jar,\
 	com.liferay.wiki.api-2.2.0.jar,\
 	com.liferay.wiki.editor.configuration-1.0.3.jar,\
-	com.liferay.wiki.engine.creole-2.0.2.jar,\
+	com.liferay.wiki.engine.creole-2.0.3.jar,\
 	com.liferay.wiki.engine.html-2.0.2.jar,\
 	com.liferay.wiki.engine.input.editor.common-2.0.2.jar,\
 	com.liferay.wiki.engine.text-2.0.2.jar,\
 	com.liferay.wiki.layout.prototype-1.0.5.jar,\
 	com.liferay.wiki.navigation.web-2.0.5.jar,\
-	com.liferay.wiki.service-1.2.1.jar,\
+	com.liferay.wiki.service-1.2.2.jar,\
 	com.liferay.wiki.web-2.1.0.jar
 
-app.change.log-7.0.5=LPS-60033 LPS-60850 LPS-61099 LPS-61420 LPS-62170 LPS-63587 LPS-63907 LPS-64031 LPS-64383 LPS-64551 LPS-64713 LPS-64863 LPS-65012 LPS-65135 LPS-65225 LPS-65362 LPS-65660 LPS-65810 LPS-65828 LPS-65909 LPS-66064 LPS-66097 LPS-66129 LPS-66416 LPS-66448 LPS-66586 LPS-66630 LPS-66791 LPS-66853 LPS-66878 LPS-66922 LPS-66923 LPS-66924 LPS-66974 LPS-66988 LPS-66997 LPS-67049 LPS-67268 LPS-67276
+app.change.log-7.0.5=LPS-60033 LPS-60850 LPS-61099 LPS-61420 LPS-62170 LPS-63587 LPS-63907 LPS-64031 LPS-64383 LPS-64551 LPS-64713 LPS-64863 LPS-65012 LPS-65135 LPS-65225 LPS-65362 LPS-65660 LPS-65810 LPS-65828 LPS-65909 LPS-66064 LPS-66097 LPS-66129 LPS-66416 LPS-66448 LPS-66586 LPS-66630 LPS-66791 LPS-66853 LPS-66922 LPS-66923 LPS-66924 LPS-66974 LPS-66988 LPS-66997 LPS-67049 LPS-67197 LPS-67268 LPS-67352
 
-app.git.id-7.0.5=7482cd66e0fa06968ef9ef67045866e4c223c5ff
+app.git.id-7.0.5=7fbfe7b91d3abed700598210f551155528b8e9db

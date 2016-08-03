@@ -142,7 +142,7 @@ public class JavaClass {
 
 			// LPS-67111
 
-			if (_fileName.endsWith("ServiceImpl.java")) {
+			if (_name.endsWith("ServiceImpl")) {
 				checkServiceImpl(javaTerm);
 			}
 

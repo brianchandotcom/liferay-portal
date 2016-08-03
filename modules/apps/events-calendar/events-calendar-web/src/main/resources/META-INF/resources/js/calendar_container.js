@@ -3,7 +3,6 @@ AUI.add(
 	function(A) {
 		var Lang = A.Lang;
 
-		var isArray = Lang.isArray;
 		var isObject = Lang.isObject;
 
 		var STR_DASH = '-';
@@ -18,15 +17,15 @@ AUI.add(
 						value: {}
 					},
 
-					visibleCalendars: {
-						validator: isObject,
-						value: {}
-					},
-
 					defaultCalendar: {
 						validator: isObject,
 						value: null
 					},
+
+					visibleCalendars: {
+						validator: isObject,
+						value: {}
+					}
 				},
 
 				AUGMENTS: [Liferay.PortletBase],

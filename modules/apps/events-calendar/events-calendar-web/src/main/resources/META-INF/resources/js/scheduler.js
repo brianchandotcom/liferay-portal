@@ -9,7 +9,7 @@ AUI.add(
 
 		var isBoolean = Lang.isBoolean;
 		var isFunction = Lang.isFunction;
-		var isObject  = Lang.isObject;
+		var isObject = Lang.isObject;
 		var isValue = Lang.isValue;
 
 		var CONTROLS_NODE = 'controlsNode';
@@ -19,8 +19,6 @@ AUI.add(
 		var ICON_ADD_EVENT_NODE = 'iconAddEventNode';
 
 		var STR_BLANK = '';
-
-		var STR_COMMA_SPACE = ', ';
 
 		var TPL_ICON_ADD_EVENT_NODE = '<div class="btn-group">' +
 				'<button class="btn btn-primary calendar-add-event-btn" type="button">' +

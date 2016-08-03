@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.search.Query;
 /**
  * @author Rodrigo Paulino
  */
-public interface QueryBuilder {
+public interface FieldQueryBuilder {
 
 	public Query build(String fieldName, String keywords);
 

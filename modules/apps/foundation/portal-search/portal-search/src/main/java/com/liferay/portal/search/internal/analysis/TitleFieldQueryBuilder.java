@@ -17,7 +17,7 @@ package com.liferay.portal.search.internal.analysis;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.search.analysis.KeywordTokenizer;
-import com.liferay.portal.search.analysis.QueryBuilder;
+import com.liferay.portal.search.analysis.FieldQueryBuilder;
 
 import java.util.Map;
 
@@ -32,9 +32,9 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true, property = {"exact.match.boost=2.0"},
-	service = TitleQueryBuilder.class
+	service = TitleFieldQueryBuilder.class
 )
-public class TitleQueryBuilder implements QueryBuilder {
+public class TitleFieldQueryBuilder implements FieldQueryBuilder {
 
 	@Override
 	public Query build(String field, String keywords) {

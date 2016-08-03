@@ -1272,8 +1272,8 @@ app.artifacts-7.0.6=\
 	com.liferay.asset.web-2.0.2.jar,\
 	com.liferay.exportimport.api-2.1.0.jar,\
 	com.liferay.exportimport.resources.importer-1.2.0.jar,\
-	com.liferay.exportimport.service-3.0.2.jar,\
-	com.liferay.exportimport.web-1.0.10.jar,\
+	com.liferay.exportimport.service-3.0.3.jar,\
+	com.liferay.exportimport.web-1.0.11.jar,\
 	com.liferay.iframe.web-1.0.5.jar,\
 	com.liferay.journal.api-2.1.1.jar,\
 	com.liferay.journal.content.asset.addon.entry.comments-1.0.4.jar,\
@@ -1284,24 +1284,24 @@ app.artifacts-7.0.6=\
 	com.liferay.journal.content.asset.addon.entry.ratings-2.0.2.jar,\
 	com.liferay.journal.content.asset.addon.entry.related.assets-2.0.2.jar,\
 	com.liferay.journal.content.search.web-1.0.4.jar,\
-	com.liferay.journal.content.web-1.1.0.jar,\
+	com.liferay.journal.content.web-1.1.1.jar,\
 	com.liferay.journal.editor.configuration-1.0.2.jar,\
 	com.liferay.journal.item.selector.api-1.0.2.jar,\
 	com.liferay.journal.item.selector.web-1.0.3.jar,\
 	com.liferay.journal.lang-2.0.2.jar,\
 	com.liferay.journal.ratings.definition-2.0.2.jar,\
-	com.liferay.journal.service-3.0.2.jar,\
+	com.liferay.journal.service-3.1.0.jar,\
 	com.liferay.journal.terms.of.use-2.0.8.jar,\
 	com.liferay.journal.web-1.2.3.jar,\
-	com.liferay.layout.admin.web-1.0.11.jar,\
+	com.liferay.layout.admin.web-1.0.12.jar,\
 	com.liferay.layout.impl-2.0.2.jar,\
 	com.liferay.layout.item.selector.api-1.0.2.jar,\
 	com.liferay.layout.item.selector.web-1.1.1.jar,\
 	com.liferay.layout.prototype.api-1.0.1.jar,\
-	com.liferay.layout.prototype.impl-1.0.2.jar,\
+	com.liferay.layout.prototype.impl-1.0.3.jar,\
 	com.liferay.layout.prototype.web-1.0.7.jar,\
 	com.liferay.layout.set.prototype.api-1.0.2.jar,\
-	com.liferay.layout.set.prototype.impl-1.0.3.jar,\
+	com.liferay.layout.set.prototype.impl-1.1.0.jar,\
 	com.liferay.layout.set.prototype.web-1.0.8.jar,\
 	com.liferay.layout.taglib-2.0.5.jar,\
 	com.liferay.layout.type.controller.control.panel-2.0.2.jar,\
@@ -1324,7 +1324,7 @@ app.artifacts-7.0.6=\
 	com.liferay.portlet.configuration.toolbar.contributor.locator.api-2.0.2.jar,\
 	com.liferay.portlet.configuration.web-1.0.7.jar,\
 	com.liferay.portlet.display.template-2.0.2.jar,\
-	com.liferay.portlet.display.template.web-2.0.3.jar,\
+	com.liferay.portlet.display.template.web-2.0.4.jar,\
 	com.liferay.product.navigation.control.menu.api-3.0.0.jar,\
 	com.liferay.product.navigation.control.menu.theme.contributor-2.0.3.jar,\
 	com.liferay.product.navigation.control.menu.web-2.0.5.jar,\
@@ -1341,7 +1341,7 @@ app.artifacts-7.0.6=\
 	com.liferay.product.navigation.user.personal.bar.web-2.0.2.jar,\
 	com.liferay.rss.util-1.0.3.jar,\
 	com.liferay.rss.web-2.1.0.jar,\
-	com.liferay.site.admin.web-1.0.10.jar,\
+	com.liferay.site.admin.web-1.0.11.jar,\
 	com.liferay.site.api-2.0.3.jar,\
 	com.liferay.site.browser.web-2.0.6.jar,\
 	com.liferay.site.item.selector.api-1.0.2.jar,\
@@ -1354,7 +1354,7 @@ app.artifacts-7.0.6=\
 	com.liferay.site.navigation.menu.web-2.0.3.jar,\
 	com.liferay.site.navigation.site.map.web-2.0.2.jar,\
 	com.liferay.site.navigation.taglib-2.0.4.jar,\
-	com.liferay.site.teams.web-1.0.9.jar,\
+	com.liferay.site.teams.web-1.0.10.jar,\
 	com.liferay.staging.api-2.0.1.jar,\
 	com.liferay.staging.bar.web-1.0.5.jar,\
 	com.liferay.staging.configuration.web-1.0.5.jar,\
@@ -1362,11 +1362,11 @@ app.artifacts-7.0.6=\
 	com.liferay.staging.portlet.data.handler-2.0.1.jar,\
 	com.liferay.staging.processes.web-1.0.6.jar,\
 	com.liferay.staging.security-2.0.5.jar,\
-	com.liferay.staging.taglib-3.1.4.jar,\
+	com.liferay.staging.taglib-3.1.5.jar,\
 	com.liferay.trash.taglib-2.0.3.jar,\
 	com.liferay.trash.web-1.0.7.jar,\
 	com.liferay.xsl.content.web-2.0.3.jar
 
-app.change.log-7.0.6=LPS-61099 LPS-61420 LPS-63907 LPS-64031 LPS-64551 LPS-64557 LPS-64792 LPS-64834 LPS-64849 LPS-64981 LPS-65012 LPS-65135 LPS-65225 LPS-65240 LPS-65362 LPS-65432 LPS-65435 LPS-65439 LPS-65535 LPS-65537 LPS-65660 LPS-65671 LPS-65726 LPS-65810 LPS-66064 LPS-66216 LPS-66416 LPS-66462 LPS-66504 LPS-66524 LPS-66644 LPS-66667 LPS-66732 LPS-66748 LPS-66840 LPS-66853 LPS-66864 LPS-66883 LPS-66935 LPS-66969 LPS-66974 LPS-66997 LPS-67007 LPS-67049 LPS-67352
+app.change.log-7.0.6=LPS-61099 LPS-61420 LPS-63907 LPS-64031 LPS-64551 LPS-64557 LPS-64792 LPS-64834 LPS-64849 LPS-64981 LPS-65012 LPS-65135 LPS-65225 LPS-65240 LPS-65362 LPS-65432 LPS-65435 LPS-65439 LPS-65535 LPS-65537 LPS-65660 LPS-65726 LPS-65810 LPS-66064 LPS-66216 LPS-66416 LPS-66462 LPS-66504 LPS-66524 LPS-66644 LPS-66732 LPS-66748 LPS-66840 LPS-66853 LPS-66864 LPS-66883 LPS-66935 LPS-66937 LPS-66938 LPS-66939 LPS-66974 LPS-66997 LPS-67007 LPS-67222 LPS-67352
 
-app.git.id-7.0.6=7482cd66e0fa06968ef9ef67045866e4c223c5ff
+app.git.id-7.0.6=7fbfe7b91d3abed700598210f551155528b8e9db

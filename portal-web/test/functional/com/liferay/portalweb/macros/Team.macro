@@ -168,8 +168,8 @@
 		</execute>
 
 		<execute macro="Team#_editCP">
-			<var name="teamDescription" value="${teamDescription}" />
-			<var name="teamName" value="${teamName}" />
+			<var name="teamDescription" value="${teamDescriptionEdit}" />
+			<var name="teamName" value="${teamNameEdit}" />
 		</execute>
 
 		<execute macro="PortletEntry#save" />

@@ -126,9 +126,9 @@ app.artifacts-6=\
 	com.liferay.marketplace.api-4.1.0.jar,\
 	com.liferay.marketplace.app.manager.web-1.0.9.jar,\
 	com.liferay.marketplace.deployer-2.0.6.jar,\
-	com.liferay.marketplace.service-2.1.8.jar,\
+	com.liferay.marketplace.service-2.1.9.jar,\
 	com.liferay.marketplace.store.web-2.0.4.jar
 
 app.change.log-6=LPS-65012 LPS-65828 LPS-66445 LPS-67300 LPS-67392
 
-app.git.id-6=7482cd66e0fa06968ef9ef67045866e4c223c5ff
+app.git.id-6=7fbfe7b91d3abed700598210f551155528b8e9db

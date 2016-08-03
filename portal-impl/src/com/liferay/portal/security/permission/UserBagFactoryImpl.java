@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PropsValues;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -66,7 +67,13 @@ public class UserBagFactoryImpl implements UserBagFactory {
 			List<Group> userUserGroupGroups =
 				GroupLocalServiceUtil.getUserGroupsGroups(userUserGroups);
 
-			if (userGroups.isEmpty()) {
+			List<Group> allUserGroups = new ArrayList<>();
+
+			allUserGroups.addAll(userGroups);
+			allUserGroups.addAll(userOrgGroups);
+			allUserGroups.addAll(userUserGroupGroups);
+
+			if (allUserGroups.isEmpty()) {
 				long[] userRoleIds = UserLocalServiceUtil.getRolePrimaryKeys(
 					userId);
 
@@ -76,7 +83,7 @@ public class UserBagFactoryImpl implements UserBagFactory {
 			}
 			else {
 				List<Role> userRoles = RoleLocalServiceUtil.getUserRelatedRoles(
-					userId, userGroups);
+					userId, allUserGroups);
 
 				userBag = new UserBagImpl(
 					userId, userGroups, userOrgs, userOrgGroups,

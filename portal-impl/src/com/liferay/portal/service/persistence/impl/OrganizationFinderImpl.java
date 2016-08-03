@@ -807,7 +807,11 @@ public class OrganizationFinderImpl
 			sb.append(sql);
 			sb.append(StringPool.CLOSE_PARENTHESIS);
 
-			SQLQuery q = session.createSynchronizedSQLQuery(sb.toString());
+			sql = sb.toString();
+			sql = CustomSQLUtil.replaceOrderBy(
+				sql, queryDefinition.getOrderByComparator());
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar("organizationId", Type.LONG);
 			q.addScalar("userId", Type.LONG);

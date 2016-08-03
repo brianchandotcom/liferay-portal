@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.ResourceAction;
-import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.security.permission.RolePermissions;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourceActionLocalServiceUtil;
@@ -1398,15 +1397,6 @@ public class GroupFinderImpl
 		return _joinMap;
 	}
 
-	private long _getUserGroupClassNameId() {
-		if (_userGroupClassNameId == null) {
-			_userGroupClassNameId = ClassNameLocalServiceUtil.getClassNameId(
-				UserGroup.class);
-		}
-
-		return _userGroupClassNameId;
-	}
-
 	private Map<String, String> _getWhereMap() {
 		if (_whereMap != null) {
 			return _whereMap;
@@ -1467,7 +1457,7 @@ public class GroupFinderImpl
 			return true;
 		}
 
-		if (classNameIds.length > 3) {
+		if (classNameIds.length > 2) {
 			return false;
 		}
 
@@ -1477,12 +1467,9 @@ public class GroupFinderImpl
 		long groupClassNameId = groupOrganizationClassNameIds[0];
 		long organizationClassNameId = groupOrganizationClassNameIds[1];
 
-		long userGroupClassNameId = _getUserGroupClassNameId();
-
 		for (long classNameId : classNameIds) {
 			if ((classNameId != groupClassNameId) &&
-				(classNameId != organizationClassNameId) &&
-				(classNameId != userGroupClassNameId)) {
+				(classNameId != organizationClassNameId)) {
 
 				return false;
 			}
@@ -1510,13 +1497,12 @@ public class GroupFinderImpl
 
 		long groupClassNameId = groupOrganizationClassNameIds[0];
 		long organizationClassNameId = groupOrganizationClassNameIds[1];
-		long userGroupClassNameId = _getUserGroupClassNameId();
 
 		if (classNameIds == null) {
 			params1.put("classNameIds", groupOrganizationClassNameIds);
 			params2.put("classNameIds", organizationClassNameId);
 			params3.put("classNameIds", groupClassNameId);
-			params4.put("classNameIds", userGroupClassNameId);
+			params4.put("classNameIds", groupClassNameId);
 		}
 		else {
 			params1.put("classNameIds", classNameIds);
@@ -1529,8 +1515,8 @@ public class GroupFinderImpl
 				params3.put("classNameIds", groupClassNameId);
 			}
 
-			if (ArrayUtil.contains(classNameIds, userGroupClassNameId)) {
-				params4.put("classNameIds", userGroupClassNameId);
+			if (ArrayUtil.contains(classNameIds, groupClassNameId)) {
+				params4.put("classNameIds", groupClassNameId);
 			}
 		}
 	}

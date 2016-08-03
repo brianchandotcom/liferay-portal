@@ -15,7 +15,6 @@
 package com.liferay.wiki.social.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -26,9 +25,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.social.test.BaseSocialActivityInterpreterTestCase;
 import com.liferay.social.kernel.model.SocialActivityConstants;
 import com.liferay.social.kernel.model.SocialActivityInterpreter;
-import com.liferay.trash.kernel.model.TrashEntry;
-import com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil;
-import com.liferay.trash.kernel.util.TrashUtil;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
@@ -98,11 +94,6 @@ public class WikiActivityInterpreterTest
 			WikiPageLocalServiceUtil.movePageAttachmentToTrash(
 				TestPropsValues.getUserId(), _page.getNodeId(),
 				_page.getTitle(), _attachmentFileName);
-
-		TrashEntry trashEntry = TrashEntryLocalServiceUtil.getEntry(
-			DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId());
-
-		_attachmentFileName = TrashUtil.getTrashTitle(trashEntry.getEntryId());
 
 		WikiPageLocalServiceUtil.movePageToTrash(
 			TestPropsValues.getUserId(), _page);

@@ -11,7 +11,7 @@ buildscript {
 
 Set<File> bndPrintJarFiles = null
 
-if (System.getenv("JENKINS_HOME")) {
+if (Boolean.getBoolean("build.bnd.print.enabled") && System.getenv("JENKINS_HOME")) {
 	configurations {
 		bnd
 	}

@@ -14,9 +14,12 @@
 
 package com.liferay.portal.search.analysis;
 
+import aQute.bnd.annotation.ProviderType;
+
 /**
  * @author Rodrigo Paulino
  */
+@ProviderType
 public interface FieldQueryBuilderFactory {
 
 	public FieldQueryBuilder getQueryBuilder(String fieldName);

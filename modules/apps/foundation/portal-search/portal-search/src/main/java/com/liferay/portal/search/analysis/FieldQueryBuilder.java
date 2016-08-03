@@ -14,11 +14,14 @@
 
 package com.liferay.portal.search.analysis;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.search.Query;
 
 /**
  * @author Rodrigo Paulino
  */
+@ProviderType
 public interface FieldQueryBuilder {
 
 	public Query build(String fieldName, String keywords);

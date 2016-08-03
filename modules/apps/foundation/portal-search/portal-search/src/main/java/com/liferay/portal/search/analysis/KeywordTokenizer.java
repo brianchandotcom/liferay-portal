@@ -14,11 +14,14 @@
 
 package com.liferay.portal.search.analysis;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.util.List;
 
 /**
  * @author Michael C. Han
  */
+@ProviderType
 public interface KeywordTokenizer {
 
 	public boolean requiresTokenization(String keyword);

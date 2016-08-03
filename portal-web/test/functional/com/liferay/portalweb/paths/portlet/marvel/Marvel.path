@@ -1,0 +1,119 @@
+<html>
+<head>
+<title>Marvel</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Marvel</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>DIRECT_URL</td>
+	<td>//body/pre</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--HOME-->
+<tr>
+	<td>CLUSTER_NAME</td>
+	<td>//tbody//a[contains(.,'LiferayElasticsearchCluster')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>HOME_HEADER</td>
+	<td>//div[@class='marvel-home']//following-sibling::h1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WELCOME_MESSAGE</td>
+	<td>//marvel-welcome-message//h3</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--NAVBAR-->
+<tr>
+	<td>CLUSTERS</td>
+	<td>//ul[@role='navigation']//a[contains(.,'Clusters')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INDICES</td>
+	<td>//ul[@role='navigation']//a[contains(.,'Indices')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NODES</td>
+	<td>//ul[@role='navigation']//a[contains(.,'Nodes')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OVERVIEW</td>
+	<td>//ul[@role='navigation']//a[contains(.,'Overview')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--CLUSTER_STATUS-->
+<tr>
+	<td>STATUS_CLUSTER_NAME</td>
+	<td>//marvel-cluster-status//div[contains(@class,'clusters')]/strong</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STATUS_CONTAINER</td>
+	<td>//marvel-cluster-status//div[contains(@class,'stats')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--MARVEL_CHART-->
+<tr>
+	<td>INDEXING_LATENCY</td>
+	<td>//marvel-chart//h1[contains(.,'Indexing Latency')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INDEXING_RATE</td>
+	<td>//marvel-chart//h1[contains(.,'Indexing Rate')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_LATENCY</td>
+	<td>//marvel-chart//h1[contains(.,'Search Latency')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_RATE</td>
+	<td>//marvel-chart//h1[contains(.,'Search Rate')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SHARD_ACTIVITY-->
+<tr>
+	<td>SHARD_ACTIVITY_HEADER</td>
+	<td>//marvel-shard-activity//h1[contains(.,'Shard Activity')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

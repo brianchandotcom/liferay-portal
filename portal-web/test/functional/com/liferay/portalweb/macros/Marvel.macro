@@ -1,0 +1,42 @@
+<definition>
+	<command name="viewAsGuestPG">
+		<execute function="AssertElementNotPresent" locator1="IFrame#MARVEL" />
+
+		<if>
+			<equals arg1="${shieldEnabled}" arg2="true" />
+			<then>
+				<execute macro="Navigator#openSpecificURL">
+					<var name="url" value="https://localhost:5601/o/portal-search-elasticsearch-marvel-web/marvel-proxy/app/kibana" />
+				</execute>
+			</then>
+			<else>
+				<execute macro="Navigator#openSpecificURL">
+					<var name="url" value="http://localhost:5601/o/portal-search-elasticsearch-marvel-web/marvel-proxy/app/kibana" />
+				</execute>
+			</else>
+		</if>
+
+		<execute function="AssertTextPresent" locator1="Marvel#DIRECT_URL" value1="{&quot;statusCode&quot;:404,&quot;error&quot;:&quot;Not Found&quot;}" />
+	</command>
+
+	<command name="viewPG">
+		<execute function="SelectFrame" locator1="IFrame#MARVEL" />
+
+		<execute function="AssertElementPresent" locator1="Marvel#HOME_HEADER" />
+		<execute function="AssertElementPresent" locator1="Marvel#WELCOME_MESSAGE" />
+
+		<execute function="AssertClick" locator1="Marvel#CLUSTER_NAME" value1="LiferayElasticsearchCluster" />
+
+		<execute function="AssertElementPresent" locator1="Marvel#CLUSTERS" />
+		<execute function="AssertElementPresent" locator1="Marvel#INDICES" />
+		<execute function="AssertElementPresent" locator1="Marvel#NODES" />
+		<execute function="AssertElementPresent" locator1="Marvel#OVERVIEW" />
+		<execute function="AssertElementPresent" locator1="Marvel#STATUS_CLUSTER_NAME" value1="LiferayElasticsearchCluster" />
+		<execute function="AssertElementPresent" locator1="Marvel#STATUS_CONTAINER" />
+		<execute function="AssertElementPresent" locator1="Marvel#INDEXING_LATENCY" />
+		<execute function="AssertElementPresent" locator1="Marvel#INDEXING_RATE" />
+		<execute function="AssertElementPresent" locator1="Marvel#SEARCH_LATENCY" />
+		<execute function="AssertElementPresent" locator1="Marvel#SEARCH_RATE" />
+		<execute function="AssertElementPresent" locator1="Marvel#SHARD_ACTIVITY_HEADER" />
+	</command>
+</definition>

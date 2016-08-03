@@ -503,6 +503,12 @@
 		</execute>
 	</command>
 
+	<command name="hideFromNavigationMenu">
+		<execute function="Check#checkToggleSwitch" locator1="Checkbox#HIDE_FROM_NAVIGATION_MENU" />
+
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+	</command>
+
 	<command name="localizedPG">
 		<var name="key_pageLocale" value="${pageLocale}" />
 
@@ -731,6 +737,15 @@
 	</command>
 
 	<command name="viewPageFriendlyURLPG">
+		<if>
+			<isset var="friendlyUrlLocalized" />
+			<then>
+				<var name="key_friendlyUrlLocalized" value="${friendlyUrlLocalized}" />
+
+				<execute function="Click" locator1="SitePagesEditPage#FRIENDLY_URL_LOCALIZED" />
+			</then>
+		</if>
+
 		<execute function="AssertTextEquals" locator1="SitePagesEditPage#FRIENDLY_URL_FIELD" value1="/${pageName}" />
 	</command>
 

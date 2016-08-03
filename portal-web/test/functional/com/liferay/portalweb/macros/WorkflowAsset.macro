@@ -24,6 +24,8 @@
 	</command>
 
 	<command name="viewDetails">
+		<execute function="Click" locator1="Icon#INFO" />
+
 		<execute function="AssertTextEquals" locator1="NavBar#DETAILS" value1="Details" />
 		<execute function="AssertTextEquals" locator1="AssetWorkflow#DETAILS_WORKFLOW_STATUS" value1="${workflowStatus}" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="AssetWorkflow#DETAILS_WORKFLOW_CREATED_BY" value1="${userName}" />

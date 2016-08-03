@@ -78,49 +78,7 @@ public class NpmInstallTask extends ExecuteNpmTask {
 
 	@Override
 	public void executeNode() throws Exception {
-		Logger logger = getLogger();
-
-		Path shrinkwrapJsonBackupPath = null;
-		Path shrinkwrapJsonPath = null;
-
-		File shrinkwrapJsonFile = getShrinkwrapJsonFile();
-
-		if (isRemoveShrinkwrappedUrls() && (shrinkwrapJsonFile != null)) {
-			shrinkwrapJsonPath = shrinkwrapJsonFile.toPath();
-
-			shrinkwrapJsonBackupPath = Paths.get(
-				shrinkwrapJsonPath.toString() + ".backup");
-
-			Files.copy(
-				shrinkwrapJsonPath, shrinkwrapJsonBackupPath,
-				StandardCopyOption.REPLACE_EXISTING);
-
-			removeShrinkwrappedUrls();
-		}
-
-		try {
-			if (isCacheEnabled()) {
-				if (logger.isInfoEnabled()) {
-					logger.info("Cache for {} is enabled", this);
-				}
-
-				_npmInstallCached(this);
-			}
-			else {
-				if (logger.isInfoEnabled()) {
-					logger.info("Cache for {} is disabled", this);
-				}
-
-				_npmInstall();
-			}
-		}
-		finally {
-			if (shrinkwrapJsonBackupPath != null) {
-				Files.move(
-					shrinkwrapJsonBackupPath, shrinkwrapJsonPath,
-					StandardCopyOption.REPLACE_EXISTING);
-			}
-		}
+		executeNpmInstall(false);
 	}
 
 	public File getNodeModulesCacheDir() {
@@ -175,6 +133,52 @@ public class NpmInstallTask extends ExecuteNpmTask {
 
 	public void setRemoveShrinkwrappedUrls(boolean removeShrinkwrappedUrls) {
 		_removeShrinkwrappedUrls = removeShrinkwrappedUrls;
+	}
+
+	protected void executeNpmInstall(boolean reset) throws Exception {
+		Logger logger = getLogger();
+
+		Path shrinkwrapJsonBackupPath = null;
+		Path shrinkwrapJsonPath = null;
+
+		File shrinkwrapJsonFile = getShrinkwrapJsonFile();
+
+		if (isRemoveShrinkwrappedUrls() && (shrinkwrapJsonFile != null)) {
+			shrinkwrapJsonPath = shrinkwrapJsonFile.toPath();
+
+			shrinkwrapJsonBackupPath = Paths.get(
+				shrinkwrapJsonPath.toString() + ".backup");
+
+			Files.copy(
+				shrinkwrapJsonPath, shrinkwrapJsonBackupPath,
+				StandardCopyOption.REPLACE_EXISTING);
+
+			removeShrinkwrappedUrls();
+		}
+
+		try {
+			if (isCacheEnabled()) {
+				if (logger.isInfoEnabled()) {
+					logger.info("Cache for {} is enabled", this);
+				}
+
+				_npmInstallCached(this, reset);
+			}
+			else {
+				if (logger.isInfoEnabled()) {
+					logger.info("Cache for {} is disabled", this);
+				}
+
+				_npmInstall(reset);
+			}
+		}
+		finally {
+			if (shrinkwrapJsonBackupPath != null) {
+				Files.move(
+					shrinkwrapJsonBackupPath, shrinkwrapJsonPath,
+					StandardCopyOption.REPLACE_EXISTING);
+			}
+		}
 	}
 
 	@Override
@@ -244,7 +248,7 @@ public class NpmInstallTask extends ExecuteNpmTask {
 	}
 
 	private static synchronized void _npmInstallCached(
-			NpmInstallTask npmInstallTask)
+			NpmInstallTask npmInstallTask, boolean reset)
 		throws Exception {
 
 		Logger logger = npmInstallTask.getLogger();
@@ -259,6 +263,10 @@ public class NpmInstallTask extends ExecuteNpmTask {
 
 		boolean nativeSync = npmInstallTask.isNodeModulesCacheNativeSync();
 
+		if (reset) {
+			project.delete(nodeModulesCacheDir);
+		}
+
 		if (nodeModulesCacheDir.exists()) {
 			if (logger.isLifecycleEnabled()) {
 				logger.lifecycle(
@@ -270,7 +278,7 @@ public class NpmInstallTask extends ExecuteNpmTask {
 				project, nodeModulesCacheDir, nodeModulesDir, nativeSync);
 		}
 		else {
-			npmInstallTask._npmInstall();
+			npmInstallTask._npmInstall(reset);
 
 			if (logger.isLifecycleEnabled()) {
 				logger.lifecycle(
@@ -283,7 +291,13 @@ public class NpmInstallTask extends ExecuteNpmTask {
 		}
 	}
 
-	private void _npmInstall() throws Exception {
+	private void _npmInstall(boolean reset) throws Exception {
+		if (reset) {
+			Project project = getProject();
+
+			project.delete(getNodeModulesDir());
+		}
+
 		super.executeNode();
 	}
 

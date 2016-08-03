@@ -17,11 +17,27 @@ package com.liferay.gradle.plugins.node.util;
 import java.io.File;
 
 import org.gradle.api.Project;
+import org.gradle.api.Task;
+import org.gradle.api.tasks.TaskContainer;
 
 /**
  * @author Andrea Di Giorgi
  */
 public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
+
+	public static <T extends Task> T fetchTask(
+		Project project, String taskName, Class<T> clazz) {
+
+		TaskContainer taskContainer = project.getTasks();
+
+		Task task = (Task)taskContainer.findByName(taskName);
+
+		if (clazz.isInstance(task)) {
+			return (T)task;
+		}
+
+		return null;
+	}
 
 	public static File toFile(Project project, Object object) {
 		object = toObject(object);

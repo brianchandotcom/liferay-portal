@@ -626,10 +626,10 @@ public class HtmlImpl implements Html {
 			// Look for text enclosed by <abc></abc>
 
 			if (isTag(_TAG_SCRIPT, text, y + 1)) {
-				y = stripTag(_TAG_SCRIPT, text, y);
+				y = getLastClosingTagPosition(_TAG_SCRIPT, text, y);
 			}
 			else if (isTag(_TAG_STYLE, text, y + 1)) {
-				y = stripTag(_TAG_STYLE, text, y);
+				y = getLastClosingTagPosition(_TAG_STYLE, text, y);
 			}
 
 			x = text.indexOf(">", y);
@@ -759,30 +759,7 @@ public class HtmlImpl implements Html {
 		return sb.toString();
 	}
 
-	protected boolean isTag(char[] tag, String text, int pos) {
-		if ((pos + tag.length + 1) <= text.length()) {
-			char item = '\0';
-
-			for (int i = 0; i < tag.length; i++) {
-				item = text.charAt(pos++);
-
-				if (Character.toLowerCase(item) != tag[i]) {
-					return false;
-				}
-			}
-
-			item = text.charAt(pos);
-
-			// Check that char after tag is not a letter (i.e. another tag)
-
-			return !Character.isLetter(item);
-		}
-		else {
-			return false;
-		}
-	}
-
-	protected int stripTag(char[] tag, String text, int pos) {
+	protected int getLastClosingTagPosition(char[] tag, String text, int pos) {
 		int x = pos + tag.length;
 
 		// Find end of the tag
@@ -823,6 +800,29 @@ public class HtmlImpl implements Html {
 		}
 
 		return pos;
+	}
+
+	protected boolean isTag(char[] tag, String text, int pos) {
+		if ((pos + tag.length + 1) <= text.length()) {
+			char item = '\0';
+
+			for (int i = 0; i < tag.length; i++) {
+				item = text.charAt(pos++);
+
+				if (Character.toLowerCase(item) != tag[i]) {
+					return false;
+				}
+			}
+
+			item = text.charAt(pos);
+
+			// Check that char after tag is not a letter (i.e. another tag)
+
+			return !Character.isLetter(item);
+		}
+		else {
+			return false;
+		}
 	}
 
 	private boolean _isUnicodeCompatibilityCharacter(char c) {

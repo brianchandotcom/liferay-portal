@@ -181,7 +181,7 @@ public class FilePropagator {
 		sb.append(targetSlave);
 		sb.append(" '");
 
-		if (_cleanupCommand != null && !_cleanupCommand.isEmpty()) {
+		if ((_cleanupCommand != null) && !_cleanupCommand.isEmpty()) {
 			sb.append(_cleanupCommand);
 			sb.append("; ");
 		}
@@ -246,11 +246,12 @@ public class FilePropagator {
 		public void run() {
 			long start = System.currentTimeMillis();
 
-			List<String> commands = new ArrayList<>(
-				_filePropagator._filePropagatorTasks.size());
+			List<FilePropagatorTask> filePropagatorTasks =
+				_filePropagator._filePropagatorTasks;
 
-			for (FilePropagatorTask filePropagatorTask :
-					_filePropagator._filePropagatorTasks) {
+			List<String> commands = new ArrayList<>(filePropagatorTasks.size());
+
+			for (FilePropagatorTask filePropagatorTask : filePropagatorTasks) {
 				commands.add(
 					_filePropagator._getMkdirCommand(
 						filePropagatorTask._targetFileName));

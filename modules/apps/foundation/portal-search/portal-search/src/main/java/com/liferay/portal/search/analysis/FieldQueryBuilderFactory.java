@@ -19,6 +19,6 @@ package com.liferay.portal.search.analysis;
  */
 public interface FieldQueryBuilderFactory {
 
-	public QueryBuilder getQueryBuilder(String fieldName);
+	public FieldQueryBuilder getQueryBuilder(String fieldName);
 
 }

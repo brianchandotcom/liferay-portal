@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.knowledge.base.internal.lar;
+package com.liferay.knowledge.base.internal.exportimport.data.handler;
 
 import com.liferay.exportimport.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;

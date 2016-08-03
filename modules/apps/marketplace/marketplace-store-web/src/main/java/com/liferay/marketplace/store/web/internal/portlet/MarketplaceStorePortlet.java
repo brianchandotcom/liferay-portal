@@ -328,7 +328,8 @@ public class MarketplaceStorePortlet extends RemoteMVCPortlet {
 		throws Exception {
 
 		if (_lockLocalService.isLocked(
-				MarketplaceStorePortlet.class.getName(), StringPool.BLANK)) {
+				MarketplaceStorePortlet.class.getName(),
+				MarketplaceStorePortlet.class.getName() + ":updateApps")) {
 
 			throw new DuplicateLockException(null);
 		}
@@ -343,7 +344,7 @@ public class MarketplaceStorePortlet extends RemoteMVCPortlet {
 
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-			jsonObject.put("cmd", "updatedApps");
+			jsonObject.put("cmd", "updateApps");
 			jsonObject.put("message", "success");
 
 			JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
@@ -364,12 +365,17 @@ public class MarketplaceStorePortlet extends RemoteMVCPortlet {
 
 					jsonArray.put(getAppJSONObject(app));
 				}
+				catch (Exception e) {
+					jsonObject.put("message", "failed");
+				}
 				finally {
 					if (file != null) {
 						file.delete();
 					}
 				}
 			}
+
+			jsonObject.put("updatedApps", jsonArray);
 
 			writeJSON(actionRequest, actionResponse, jsonObject);
 		}

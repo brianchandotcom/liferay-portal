@@ -219,6 +219,21 @@ public class HtmlImplTest {
 	}
 
 	@Test
+	public void testGetLastClosingTagPosition() {
+		char[] tag = {'t', 'a', 'g'};
+
+		Assert.assertEquals(
+			17,
+			_htmlImpl.getLastClosingTagPosition(
+				tag, "<tag>Hello World!</tag>", 0));
+
+		Assert.assertEquals(
+			0,
+			_htmlImpl.getLastClosingTagPosition(
+				tag, "<gat>Hello World!</gat>", 0));
+	}
+
+	@Test
 	public void testNewLineConversion() {
 		Assert.assertEquals(
 			"one<br />two<br />three<br /><br />five",

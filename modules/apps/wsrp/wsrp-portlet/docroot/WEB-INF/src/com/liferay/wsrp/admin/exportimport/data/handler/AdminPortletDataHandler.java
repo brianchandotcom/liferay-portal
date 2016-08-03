@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wsrp.admin.lar;
+package com.liferay.wsrp.admin.exportimport.data.handler;
 
 import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
 import com.liferay.exportimport.kernel.lar.DataLevel;

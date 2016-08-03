@@ -14,6 +14,8 @@
 
 package com.liferay.portal.util;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncFilterInputStream;
@@ -43,22 +45,21 @@ import java.io.InputStream;
 import java.lang.ref.Reference;
 
 import java.net.InetAddress;
-import java.net.InetSocketAddress;
-import java.net.Socket;
-import java.net.SocketAddress;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.net.UnknownHostException;
+
+import java.nio.charset.Charset;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import javax.net.SocketFactory;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.RenderRequest;
@@ -67,40 +68,34 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.httpclient.ConnectTimeoutException;
-import org.apache.commons.httpclient.Credentials;
-import org.apache.commons.httpclient.Header;
-import org.apache.commons.httpclient.HostConfiguration;
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpConnectionManager;
-import org.apache.commons.httpclient.HttpMethod;
-import org.apache.commons.httpclient.HttpState;
-import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
-import org.apache.commons.httpclient.NTCredentials;
-import org.apache.commons.httpclient.URI;
-import org.apache.commons.httpclient.UsernamePasswordCredentials;
-import org.apache.commons.httpclient.auth.AuthPolicy;
-import org.apache.commons.httpclient.auth.AuthScope;
-import org.apache.commons.httpclient.cookie.CookiePolicy;
-import org.apache.commons.httpclient.methods.DeleteMethod;
-import org.apache.commons.httpclient.methods.EntityEnclosingMethod;
-import org.apache.commons.httpclient.methods.GetMethod;
-import org.apache.commons.httpclient.methods.HeadMethod;
-import org.apache.commons.httpclient.methods.PostMethod;
-import org.apache.commons.httpclient.methods.PutMethod;
-import org.apache.commons.httpclient.methods.RequestEntity;
-import org.apache.commons.httpclient.methods.StringRequestEntity;
-import org.apache.commons.httpclient.methods.multipart.ByteArrayPartSource;
-import org.apache.commons.httpclient.methods.multipart.MultipartRequestEntity;
-import org.apache.commons.httpclient.methods.multipart.Part;
-import org.apache.commons.httpclient.methods.multipart.StringPart;
-import org.apache.commons.httpclient.params.HostParams;
-import org.apache.commons.httpclient.params.HttpClientParams;
-import org.apache.commons.httpclient.params.HttpConnectionManagerParams;
-import org.apache.commons.httpclient.params.HttpConnectionParams;
-import org.apache.commons.httpclient.params.HttpMethodParams;
-import org.apache.commons.httpclient.protocol.DefaultProtocolSocketFactory;
-import org.apache.commons.httpclient.protocol.Protocol;
+import org.apache.http.Header;
+import org.apache.http.HttpHost;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.Credentials;
+import org.apache.http.auth.NTCredentials;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.CredentialsProvider;
+import org.apache.http.client.config.AuthSchemes;
+import org.apache.http.client.config.CookieSpecs;
+import org.apache.http.client.config.RequestConfig;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.RequestBuilder;
+import org.apache.http.client.protocol.HttpClientContext;
+import org.apache.http.config.ConnectionConfig;
+import org.apache.http.conn.routing.HttpRoute;
+import org.apache.http.cookie.ClientCookie;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.entity.mime.content.ByteArrayBody;
+import org.apache.http.entity.mime.content.StringBody;
+import org.apache.http.impl.client.BasicCookieStore;
+import org.apache.http.impl.client.BasicCredentialsProvider;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
+import org.apache.http.impl.cookie.BasicClientCookie;
+import org.apache.http.pool.PoolStats;
 
 /**
  * @author Brian Wing Shun Chan
@@ -108,19 +103,10 @@ import org.apache.commons.httpclient.protocol.Protocol;
  * @author Shuyang Zhou
  */
 @DoPrivileged
+@ProviderType
 public class HttpImpl implements Http {
 
 	public HttpImpl() {
-
-		// Override the default protocol socket factory because it uses
-		// reflection for JDK 1.4 compatibility, which we do not need. It also
-		// attemps to create a new socket in a different thread so that we
-		// cannot track which class loader initiated the call.
-
-		Protocol protocol = new Protocol(
-			"http", new FastProtocolSocketFactory(), 80);
-
-		Protocol.registerProtocol("http", protocol);
 
 		// Mimic behavior found in
 		// http://java.sun.com/j2se/1.5.0/docs/guide/net/properties.html
@@ -140,55 +126,72 @@ public class HttpImpl implements Http {
 			_nonProxyHostsPattern = null;
 		}
 
-		MultiThreadedHttpConnectionManager httpConnectionManager =
-			new MultiThreadedHttpConnectionManager();
+		_poolingHttpClientConnectionManager =
+			new PoolingHttpClientConnectionManager();
 
-		HttpConnectionManagerParams httpConnectionManagerParams =
-			httpConnectionManager.getParams();
+		_poolingHttpClientConnectionManager.setDefaultMaxPerRoute(
+			_MAX_CONNECTIONS_PER_HOST);
+		_poolingHttpClientConnectionManager.setMaxTotal(_MAX_TOTAL_CONNECTIONS);
 
-		httpConnectionManagerParams.setConnectionTimeout(_TIMEOUT);
-		httpConnectionManagerParams.setDefaultMaxConnectionsPerHost(
-			Integer.valueOf(_MAX_CONNECTIONS_PER_HOST));
-		httpConnectionManagerParams.setMaxTotalConnections(
-			Integer.valueOf(_MAX_TOTAL_CONNECTIONS));
-		httpConnectionManagerParams.setSoTimeout(_TIMEOUT);
+		RequestConfig.Builder requestConfigBuilder = RequestConfig.custom();
 
-		_httpClient.setHttpConnectionManager(httpConnectionManager);
-		_proxyHttpClient.setHttpConnectionManager(httpConnectionManager);
+		requestConfigBuilder = requestConfigBuilder.setConnectTimeout(_TIMEOUT);
+		requestConfigBuilder = requestConfigBuilder.setConnectionRequestTimeout(
+			_TIMEOUT);
+
+		RequestConfig requestConfig = requestConfigBuilder.build();
+
+		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
+
+		httpClientBuilder.setConnectionManager(
+			_poolingHttpClientConnectionManager);
+
+		httpClientBuilder.setDefaultRequestConfig(requestConfig);
+
+		_httpClient = httpClientBuilder.build();
 
 		if (!hasProxyConfig() || Validator.isNull(_PROXY_USERNAME)) {
 			_proxyCredentials = null;
 
+			_proxyHttpClient = _httpClient;
+
 			return;
 		}
 
-		List<String> authPrefs = new ArrayList<>();
+		_proxyAuthPrefs.add(AuthSchemes.BASIC);
+		_proxyAuthPrefs.add(AuthSchemes.DIGEST);
 
 		if (_PROXY_AUTH_TYPE.equals("username-password")) {
 			_proxyCredentials = new UsernamePasswordCredentials(
 				_PROXY_USERNAME, _PROXY_PASSWORD);
 
-			authPrefs.add(AuthPolicy.BASIC);
-			authPrefs.add(AuthPolicy.DIGEST);
-			authPrefs.add(AuthPolicy.NTLM);
+			_proxyAuthPrefs.add(AuthSchemes.NTLM);
 		}
 		else if (_PROXY_AUTH_TYPE.equals("ntlm")) {
 			_proxyCredentials = new NTCredentials(
 				_PROXY_USERNAME, _PROXY_PASSWORD, _PROXY_NTLM_HOST,
 				_PROXY_NTLM_DOMAIN);
 
-			authPrefs.add(AuthPolicy.NTLM);
-			authPrefs.add(AuthPolicy.BASIC);
-			authPrefs.add(AuthPolicy.DIGEST);
+			_proxyAuthPrefs.add(0, AuthSchemes.NTLM);
 		}
 		else {
 			_proxyCredentials = null;
 		}
 
-		HttpClientParams httpClientParams = _proxyHttpClient.getParams();
+		HttpClientBuilder proxyHttpClientBuilder = HttpClientBuilder.create();
 
-		httpClientParams.setParameter(
-			AuthPolicy.AUTH_SCHEME_PRIORITY, authPrefs);
+		proxyHttpClientBuilder.setConnectionManager(
+			_poolingHttpClientConnectionManager);
+
+		requestConfigBuilder.setProxy(new HttpHost(_PROXY_HOST, _PROXY_PORT));
+
+		requestConfigBuilder.setProxyPreferredAuthSchemes(_proxyAuthPrefs);
+
+		RequestConfig proxyRequestConfig = requestConfigBuilder.build();
+
+		proxyHttpClientBuilder.setDefaultRequestConfig(proxyRequestConfig);
+
+		_proxyHttpClient = proxyHttpClientBuilder.build();
 	}
 
 	@Override
@@ -294,7 +297,37 @@ public class HttpImpl implements Http {
 	}
 
 	public void destroy() {
-		MultiThreadedHttpConnectionManager.shutdownAll();
+		int retry = 0;
+
+		while (retry < 10) {
+			PoolStats poolStats =
+				_poolingHttpClientConnectionManager.getTotalStats();
+
+			int availableConnections = poolStats.getAvailable();
+
+			if (availableConnections <= 0) {
+				break;
+			}
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					toString() + " is waiting on " + availableConnections +
+						" connections");
+			}
+
+			_poolingHttpClientConnectionManager.closeIdleConnections(
+				200, TimeUnit.MILLISECONDS);
+
+			try {
+				Thread.sleep(500);
+			}
+			catch (InterruptedException ie) {
+			}
+
+			retry++;
+		}
+
+		_poolingHttpClientConnectionManager.shutdown();
 	}
 
 	@Override
@@ -392,12 +425,14 @@ public class HttpImpl implements Http {
 		return path;
 	}
 
-	public HttpClient getClient(HostConfiguration hostConfiguration) {
-		if (isProxyHost(hostConfiguration.getHost())) {
-			return _proxyHttpClient;
-		}
+	/**
+	 * @deprecated As of 7.0.0, no replacement
+	 */
+	@Deprecated
+	public org.apache.commons.httpclient.HttpClient getClient(
+		org.apache.commons.httpclient.HostConfiguration hostConfiguration) {
 
-		return _httpClient;
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -466,58 +501,15 @@ public class HttpImpl implements Http {
 		return url;
 	}
 
-	public HostConfiguration getHostConfiguration(String location)
+	/**
+	 * @deprecated As of 7.0.0, no replacement
+	 */
+	@Deprecated
+	public org.apache.commons.httpclient.HostConfiguration getHostConfiguration(
+			String location)
 		throws IOException {
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Location is " + location);
-		}
-
-		HostConfiguration hostConfiguration = new HostConfiguration();
-
-		hostConfiguration.setHost(new URI(location, false));
-
-		if (isProxyHost(hostConfiguration.getHost())) {
-			hostConfiguration.setProxy(_PROXY_HOST, _PROXY_PORT);
-		}
-
-		HttpConnectionManager httpConnectionManager =
-			_httpClient.getHttpConnectionManager();
-
-		HttpConnectionManagerParams httpConnectionManagerParams =
-			httpConnectionManager.getParams();
-
-		int defaultMaxConnectionsPerHost =
-			httpConnectionManagerParams.getMaxConnectionsPerHost(
-				hostConfiguration);
-
-		int maxConnectionsPerHost = GetterUtil.getInteger(
-			PropsUtil.get(
-				HttpImpl.class.getName() + ".max.connections.per.host",
-				new Filter(hostConfiguration.getHost())));
-
-		if ((maxConnectionsPerHost > 0) &&
-			(maxConnectionsPerHost != defaultMaxConnectionsPerHost)) {
-
-			httpConnectionManagerParams.setMaxConnectionsPerHost(
-				hostConfiguration, maxConnectionsPerHost);
-		}
-
-		int timeout = GetterUtil.getInteger(
-			PropsUtil.get(
-				HttpImpl.class.getName() + ".timeout",
-				new Filter(hostConfiguration.getHost())));
-
-		if (timeout > 0) {
-			HostParams hostParams = hostConfiguration.getParams();
-
-			hostParams.setIntParameter(
-				HttpConnectionParams.CONNECTION_TIMEOUT, timeout);
-			hostParams.setIntParameter(
-				HttpConnectionParams.SO_TIMEOUT, timeout);
-		}
-
-		return hostConfiguration;
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -945,19 +937,16 @@ public class HttpImpl implements Http {
 		return protocolize(url, renderRequest.isSecure());
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, no replacement
+	 */
+	@Deprecated
 	public void proxifyState(
-		HttpState httpState, HostConfiguration hostConfiguration) {
+		org.apache.commons.httpclient.HttpState httpState,
+		org.apache.commons.httpclient.HostConfiguration hostConfiguration) {
 
-		Credentials proxyCredentials = _proxyCredentials;
-
-		String host = hostConfiguration.getHost();
-
-		if (isProxyHost(host) && (proxyCredentials != null)) {
-			AuthScope scope = new AuthScope(_PROXY_HOST, _PROXY_PORT, null);
-
-			httpState.setProxyCredentials(scope, proxyCredentials);
-		}
 	}
+
 
 	@Override
 	public String removeDomain(String url) {
@@ -1240,10 +1229,10 @@ public class HttpImpl implements Http {
 	@Override
 	public byte[] URLtoByteArray(Http.Options options) throws IOException {
 		return URLtoByteArray(
-			options.getLocation(), options.getMethod(), options.getHeaders(),
-			options.getCookies(), options.getAuth(), options.getBody(),
-			options.getFileParts(), options.getParts(), options.getResponse(),
-			options.isFollowRedirects());
+			options.getLocation(), options.getMethod(),
+			options.getHeaders(), options.getCookies(), options.getAuth(),
+			options.getBody(), options.getFileParts(), options.getParts(),
+			options.getResponse(), options.isFollowRedirects());
 	}
 
 	@Override
@@ -1272,10 +1261,10 @@ public class HttpImpl implements Http {
 		throws IOException {
 
 		return URLtoInputStream(
-			options.getLocation(), options.getMethod(), options.getHeaders(),
-			options.getCookies(), options.getAuth(), options.getBody(),
-			options.getFileParts(), options.getParts(), options.getResponse(),
-			options.isFollowRedirects());
+			options.getLocation(), options.getMethod(),
+			options.getHeaders(), options.getCookies(), options.getAuth(),
+			options.getBody(), options.getFileParts(), options.getParts(),
+			options.getResponse(), options.isFollowRedirects());
 	}
 
 	@Override
@@ -1371,8 +1360,101 @@ public class HttpImpl implements Http {
 		return xml;
 	}
 
-	protected boolean hasRequestHeader(HttpMethod httpMethod, String name) {
-		Header[] headers = httpMethod.getRequestHeaders(name);
+	protected void addProxyCredentials(
+		URI uri, HttpClientContext httpClientContext) {
+
+		String host = uri.getHost();
+
+		if (!isProxyHost(host) || (_proxyCredentials == null)) {
+			return;
+		}
+
+		CredentialsProvider credentialsProvider =
+			httpClientContext.getCredentialsProvider();
+
+		if (credentialsProvider == null) {
+			credentialsProvider = new BasicCredentialsProvider();
+
+			httpClientContext.setCredentialsProvider(credentialsProvider);
+		}
+
+		credentialsProvider.setCredentials(
+			new AuthScope(_PROXY_HOST, _PROXY_PORT), _proxyCredentials);
+	}
+
+	protected CloseableHttpClient getClient(HttpHost proxyHost) {
+		if (proxyHost != null) {
+			return _proxyHttpClient;
+		}
+
+		return _httpClient;
+	}
+
+	protected RequestConfig.Builder getRequestConfigBuilder(URI uri)
+		throws IOException {
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Location is " + uri.toString());
+		}
+
+		RequestConfig.Builder requestConfigBuilder = RequestConfig.custom();
+
+		if (isProxyHost(uri.getHost())) {
+			HttpHost proxy = new HttpHost(_PROXY_HOST, _PROXY_PORT);
+
+			requestConfigBuilder.setProxy(proxy);
+
+			if (_proxyCredentials != null) {
+				requestConfigBuilder.setProxyPreferredAuthSchemes(
+					_proxyAuthPrefs);
+			}
+		}
+
+		int maxConnectionsPerHost = GetterUtil.getInteger(
+			PropsUtil.get(
+				HttpImpl.class.getName() + ".max.connections.per.host",
+				new Filter(uri.getHost())));
+
+		if ((maxConnectionsPerHost > 0) &&
+			(maxConnectionsPerHost != _MAX_CONNECTIONS_PER_HOST)) {
+
+			HttpRoute httpRoute = new HttpRoute(
+				new HttpHost(uri.getHost(), uri.getPort()));
+
+			_poolingHttpClientConnectionManager.setMaxPerRoute(
+				httpRoute, maxConnectionsPerHost);
+		}
+
+		int timeout = GetterUtil.getInteger(
+			PropsUtil.get(
+				HttpImpl.class.getName() + ".timeout",
+				new Filter(uri.getHost())));
+
+		if (timeout > 0) {
+			requestConfigBuilder = requestConfigBuilder.setConnectTimeout(
+				timeout);
+
+			requestConfigBuilder =
+				requestConfigBuilder.setConnectionRequestTimeout(timeout);
+		}
+
+		return requestConfigBuilder;
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, no replacement
+	 */
+	@Deprecated
+	protected boolean hasRequestHeader(
+		org.apache.commons.httpclient.HttpMethod httpMethod, String name) {
+
+		throw new UnsupportedOperationException();
+	}
+
+	protected boolean hasRequestHeader(
+		RequestBuilder requestBuilder, String name) {
+
+		Header[] headers = requestBuilder.getHeaders(name);
 
 		if (headers.length == 0) {
 			return false;
@@ -1381,8 +1463,19 @@ public class HttpImpl implements Http {
 		return true;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, no replacement
+	 */
+	@Deprecated
 	protected void processPostMethod(
-		PostMethod postMethod, List<Http.FilePart> fileParts,
+		org.apache.commons.httpclient.methods.PostMethod postMethod,
+		List<Http.FilePart> fileParts, Map<String, String> parts) {
+
+		throw new UnsupportedOperationException();
+	}
+
+	protected void processPostMethod(
+		RequestBuilder requestBuilder, List<Http.FilePart> fileParts,
 		Map<String, String> parts) {
 
 		if ((fileParts == null) || fileParts.isEmpty()) {
@@ -1391,95 +1484,146 @@ public class HttpImpl implements Http {
 					String value = entry.getValue();
 
 					if (value != null) {
-						postMethod.addParameter(entry.getKey(), value);
+						requestBuilder.addParameter(entry.getKey(), value);
 					}
 				}
 			}
 		}
 		else {
-			List<Part> partsList = new ArrayList<>();
+			MultipartEntityBuilder multipartEntityBuilder =
+				MultipartEntityBuilder.create();
 
 			if (parts != null) {
 				for (Map.Entry<String, String> entry : parts.entrySet()) {
 					String value = entry.getValue();
 
 					if (value != null) {
-						StringPart stringPart = new StringPart(
-							entry.getKey(), value);
-
-						partsList.add(stringPart);
+						multipartEntityBuilder.addPart(
+							entry.getKey(),
+							new StringBody(
+								value,
+								ContentType.create(
+									"text/plain", StringPool.UTF8)));
 					}
 				}
 			}
 
 			for (Http.FilePart filePart : fileParts) {
-				partsList.add(toCommonsFilePart(filePart));
+				ByteArrayBody byteArrayBody = new ByteArrayBody(
+					filePart.getValue(), ContentType.DEFAULT_BINARY,
+					filePart.getFileName());
+
+				multipartEntityBuilder.addPart(
+					filePart.getName(), byteArrayBody);
 			}
 
-			MultipartRequestEntity multipartRequestEntity =
-				new MultipartRequestEntity(
-					partsList.toArray(new Part[partsList.size()]),
-					postMethod.getParams());
-
-			postMethod.setRequestEntity(multipartRequestEntity);
+			requestBuilder.setEntity(multipartEntityBuilder.build());
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, no replacement
+	 */
+	@Deprecated
 	protected org.apache.commons.httpclient.Cookie toCommonsCookie(
 		Cookie cookie) {
 
-		org.apache.commons.httpclient.Cookie commonsCookie =
-			new org.apache.commons.httpclient.Cookie(
-				cookie.getDomain(), cookie.getName(), cookie.getValue(),
-				cookie.getPath(), cookie.getMaxAge(), cookie.getSecure());
-
-		commonsCookie.setVersion(cookie.getVersion());
-
-		return commonsCookie;
+		throw new UnsupportedOperationException();
 	}
 
+	protected org.apache.http.cookie.Cookie toHttpCookie(Cookie cookie) {
+		BasicClientCookie basicClientCookie = new BasicClientCookie(
+			cookie.getName(), cookie.getValue());
+
+		basicClientCookie.setDomain(cookie.getDomain());
+
+		int maxAge = cookie.getMaxAge();
+
+		if (maxAge > 0) {
+			Date expire = new Date(System.currentTimeMillis() + maxAge * 1000L);
+
+			basicClientCookie.setExpiryDate(expire);
+
+			basicClientCookie.setAttribute(
+				ClientCookie.MAX_AGE_ATTR, Integer.toString(maxAge));
+		}
+
+		basicClientCookie.setPath(cookie.getPath());
+		basicClientCookie.setSecure(cookie.getSecure());
+		basicClientCookie.setVersion(cookie.getVersion());
+
+		return basicClientCookie;
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, no replacement
+	 */
+	@Deprecated
 	protected org.apache.commons.httpclient.Cookie[] toCommonsCookies(
+		Cookie[] cookie) {
+
+		throw new UnsupportedOperationException();
+	}
+
+	protected org.apache.http.cookie.Cookie[] toHttpCookies(
 		Cookie[] cookies) {
 
 		if (cookies == null) {
 			return null;
 		}
 
-		org.apache.commons.httpclient.Cookie[] commonCookies =
-			new org.apache.commons.httpclient.Cookie[cookies.length];
+		org.apache.http.cookie.Cookie[] httpCookies =
+			new org.apache.http.cookie.Cookie[cookies.length];
 
 		for (int i = 0; i < cookies.length; i++) {
-			commonCookies[i] = toCommonsCookie(cookies[i]);
+			httpCookies[i] = toHttpCookie(cookies[i]);
 		}
 
-		return commonCookies;
+		return httpCookies;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, no replacement
+	 */
+	@Deprecated
 	protected org.apache.commons.httpclient.methods.multipart.FilePart
-		toCommonsFilePart(Http.FilePart filePart) {
+	toCommonsFilePart(Http.FilePart filePart) {
 
-		return new org.apache.commons.httpclient.methods.multipart.FilePart(
-			filePart.getName(),
-			new ByteArrayPartSource(
-				filePart.getFileName(), filePart.getValue()),
-			filePart.getContentType(), filePart.getCharSet());
+		throw new UnsupportedOperationException();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, no replacement
+	 */
+	@Deprecated
 	protected Cookie toServletCookie(
 		org.apache.commons.httpclient.Cookie commonsCookie) {
 
-		Cookie cookie = new Cookie(
-			commonsCookie.getName(), commonsCookie.getValue());
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, no replacement
+	 */
+	@Deprecated
+	protected Cookie[] toServletCookies(
+		org.apache.commons.httpclient.Cookie[] commonsCookies) {
+
+		throw new UnsupportedOperationException();
+	}
+
+	protected Cookie toServletCookie(org.apache.http.cookie.Cookie httpCookie) {
+		Cookie cookie = new Cookie(httpCookie.getName(), httpCookie.getValue());
 
 		if (!PropsValues.SESSION_COOKIE_USE_FULL_HOSTNAME) {
-			String domain = commonsCookie.getDomain();
+			String domain = httpCookie.getDomain();
 
 			if (Validator.isNotNull(domain)) {
 				cookie.setDomain(domain);
 			}
 		}
 
-		Date expiryDate = commonsCookie.getExpiryDate();
+		Date expiryDate = httpCookie.getExpiryDate();
 
 		if (expiryDate != null) {
 			int maxAge =
@@ -1492,29 +1636,29 @@ public class HttpImpl implements Http {
 			}
 		}
 
-		String path = commonsCookie.getPath();
+		String path = httpCookie.getPath();
 
 		if (Validator.isNotNull(path)) {
 			cookie.setPath(path);
 		}
 
-		cookie.setSecure(commonsCookie.getSecure());
-		cookie.setVersion(commonsCookie.getVersion());
+		cookie.setSecure(httpCookie.isSecure());
+		cookie.setVersion(httpCookie.getVersion());
 
 		return cookie;
 	}
 
 	protected Cookie[] toServletCookies(
-		org.apache.commons.httpclient.Cookie[] commonsCookies) {
+		List<org.apache.http.cookie.Cookie> httpCookies) {
 
-		if (commonsCookies == null) {
+		if (httpCookies == null) {
 			return null;
 		}
 
-		Cookie[] cookies = new Cookie[commonsCookies.length];
+		Cookie[] cookies = new Cookie[httpCookies.size()];
 
-		for (int i = 0; i < commonsCookies.length; i++) {
-			cookies[i] = toServletCookie(commonsCookies[i]);
+		for (int i = 0; i < httpCookies.size(); i++) {
+			cookies[i] = toServletCookie(httpCookies.get(i));
 		}
 
 		return cookies;
@@ -1565,8 +1709,16 @@ public class HttpImpl implements Http {
 			Http.Response response, boolean followRedirects)
 		throws IOException {
 
-		HttpMethod httpMethod = null;
-		HttpState httpState = null;
+		URI uri = null;
+
+		try {
+			uri = new URI(location);
+		}
+		catch (URISyntaxException e) {
+			throw new IOException("Invalid URI: " + location, e);
+		}
+
+		BasicCookieStore cookieStore = null;
 
 		try {
 			_cookies.set(null);
@@ -1580,61 +1732,68 @@ public class HttpImpl implements Http {
 				location = Http.HTTP_WITH_SLASH + location;
 			}
 
-			HostConfiguration hostConfiguration = getHostConfiguration(
-				location);
+			HttpHost targetHost = new HttpHost(uri.getHost(), uri.getPort());
 
-			HttpClient httpClient = getClient(hostConfiguration);
+			RequestConfig.Builder requestConfigBuilder =
+				getRequestConfigBuilder(uri);
+
+			RequestConfig requestConfig = requestConfigBuilder.build();
+
+			CloseableHttpClient httpClient = getClient(
+				requestConfig.getProxy());
+
+			HttpClientContext httpClientContext = HttpClientContext.create();
+
+			RequestBuilder requestBuilder = null;
 
 			if (method.equals(Http.Method.POST) ||
 				method.equals(Http.Method.PUT)) {
 
 				if (method.equals(Http.Method.POST)) {
-					httpMethod = new PostMethod(location);
+					requestBuilder = RequestBuilder.post(location);
 				}
 				else {
-					httpMethod = new PutMethod(location);
+					requestBuilder = RequestBuilder.put(location);
 				}
 
 				if (body != null) {
-					RequestEntity requestEntity = new StringRequestEntity(
-						body.getContent(), body.getContentType(),
-						body.getCharset());
+					StringEntity stringEntity = new StringEntity(
+						body.getContent(), body.getCharset());
 
-					EntityEnclosingMethod entityEnclosingMethod =
-						(EntityEnclosingMethod)httpMethod;
+					stringEntity.setContentType(body.getContentType());
 
-					entityEnclosingMethod.setRequestEntity(requestEntity);
+					requestBuilder.setEntity(stringEntity);
 				}
 				else if (method.equals(Http.Method.POST)) {
-					PostMethod postMethod = (PostMethod)httpMethod;
-
 					if (!hasRequestHeader(
-							postMethod, HttpHeaders.CONTENT_TYPE)) {
+							requestBuilder, HttpHeaders.CONTENT_TYPE)) {
 
-						HttpClientParams httpClientParams =
-							httpClient.getParams();
+						ConnectionConfig.Builder connectionConfigBuilder =
+							ConnectionConfig.custom();
 
-						httpClientParams.setParameter(
-							HttpMethodParams.HTTP_CONTENT_CHARSET,
-							StringPool.UTF8);
+						connectionConfigBuilder.setCharset(
+							Charset.forName(StringPool.UTF8));
+
+						_poolingHttpClientConnectionManager.setConnectionConfig(
+							targetHost, connectionConfigBuilder.build());
 					}
 
-					processPostMethod(postMethod, fileParts, parts);
+					processPostMethod(requestBuilder, fileParts, parts);
 				}
 			}
 			else if (method.equals(Http.Method.DELETE)) {
-				httpMethod = new DeleteMethod(location);
+				requestBuilder = RequestBuilder.delete(location);
 			}
 			else if (method.equals(Http.Method.HEAD)) {
-				httpMethod = new HeadMethod(location);
+				requestBuilder = RequestBuilder.head(location);
 			}
 			else {
-				httpMethod = new GetMethod(location);
+				requestBuilder = RequestBuilder.get(location);
 			}
 
 			if (headers != null) {
 				for (Map.Entry<String, String> header : headers.entrySet()) {
-					httpMethod.addRequestHeader(
+					requestBuilder.addHeader(
 						header.getKey(), header.getValue());
 				}
 			}
@@ -1644,56 +1803,63 @@ public class HttpImpl implements Http {
 				((body != null) ||
 				 ((fileParts != null) && !fileParts.isEmpty()) ||
 				 ((parts != null) && !parts.isEmpty())) &&
-				!hasRequestHeader(httpMethod, HttpHeaders.CONTENT_TYPE)) {
+				!hasRequestHeader(requestBuilder, HttpHeaders.CONTENT_TYPE)) {
 
-				httpMethod.addRequestHeader(
+				requestBuilder.addHeader(
 					HttpHeaders.CONTENT_TYPE,
 					ContentTypes.APPLICATION_X_WWW_FORM_URLENCODED_UTF8);
 			}
 
-			if (!hasRequestHeader(httpMethod, HttpHeaders.USER_AGENT)) {
-				httpMethod.addRequestHeader(
+			if (!hasRequestHeader(requestBuilder, HttpHeaders.USER_AGENT)) {
+				requestBuilder.addHeader(
 					HttpHeaders.USER_AGENT, _DEFAULT_USER_AGENT);
 			}
 
-			httpState = new HttpState();
-
 			if (ArrayUtil.isNotEmpty(cookies)) {
-				org.apache.commons.httpclient.Cookie[] commonsCookies =
-					toCommonsCookies(cookies);
+				cookieStore = new BasicCookieStore();
 
-				httpState.addCookies(commonsCookies);
+				org.apache.http.cookie.Cookie[] httpCookies = toHttpCookies(
+					cookies);
 
-				HttpMethodParams httpMethodParams = httpMethod.getParams();
+				cookieStore.addCookies(httpCookies);
 
-				httpMethodParams.setCookiePolicy(
-					CookiePolicy.BROWSER_COMPATIBILITY);
+				httpClientContext.setCookieStore(cookieStore);
+
+				requestConfigBuilder.setCookieSpec(CookieSpecs.DEFAULT);
 			}
 
 			if (auth != null) {
-				httpMethod.setDoAuthentication(true);
+				requestConfigBuilder.setAuthenticationEnabled(true);
 
-				httpState.setCredentials(
+				CredentialsProvider credentialProvider =
+					new BasicCredentialsProvider();
+
+				httpClientContext.setCredentialsProvider(credentialProvider);
+
+				credentialProvider.setCredentials(
 					new AuthScope(
 						auth.getHost(), auth.getPort(), auth.getRealm()),
 					new UsernamePasswordCredentials(
 						auth.getUsername(), auth.getPassword()));
 			}
 
-			proxifyState(httpState, hostConfiguration);
+			addProxyCredentials(uri, httpClientContext);
 
-			int responseCode = httpClient.executeMethod(
-				hostConfiguration, httpMethod, httpState);
+			requestBuilder.setConfig(requestConfigBuilder.build());
 
-			response.setResponseCode(responseCode);
+			CloseableHttpResponse httpResponse = httpClient.execute(
+				targetHost, requestBuilder.build(), httpClientContext);
 
-			Header locationHeader = httpMethod.getResponseHeader("location");
+			response.setResponseCode(
+				httpResponse.getStatusLine().getStatusCode());
+
+			Header locationHeader = httpResponse.getFirstHeader("location");
 
 			if ((locationHeader != null) && !locationHeader.equals(location)) {
 				String redirect = locationHeader.getValue();
 
 				if (followRedirects) {
-					httpMethod.releaseConnection();
+					httpResponse.close();
 
 					return URLtoInputStream(
 						redirect, Http.Method.GET, headers, cookies, auth, body,
@@ -1706,7 +1872,7 @@ public class HttpImpl implements Http {
 
 			long contentLengthLong = 0;
 
-			Header contentLengthHeader = httpMethod.getResponseHeader(
+			Header contentLengthHeader = httpResponse.getFirstHeader(
 				HttpHeaders.CONTENT_LENGTH);
 
 			if (contentLengthHeader != null) {
@@ -1725,20 +1891,20 @@ public class HttpImpl implements Http {
 				}
 			}
 
-			Header contentType = httpMethod.getResponseHeader(
+			Header contentType = httpResponse.getFirstHeader(
 				HttpHeaders.CONTENT_TYPE);
 
 			if (contentType != null) {
 				response.setContentType(contentType.getValue());
 			}
 
-			for (Header header : httpMethod.getResponseHeaders()) {
+			for (Header header : httpResponse.getAllHeaders()) {
 				response.addHeader(header.getName(), header.getValue());
 			}
 
-			InputStream inputStream = httpMethod.getResponseBodyAsStream();
+			InputStream inputStream = httpResponse.getEntity().getContent();
 
-			final HttpMethod referenceHttpMethod = httpMethod;
+			final CloseableHttpResponse referenceHttpResponse = httpResponse;
 
 			final Reference<InputStream> reference = FinalizeManager.register(
 				inputStream,
@@ -1746,7 +1912,14 @@ public class HttpImpl implements Http {
 
 					@Override
 					public void doFinalize(Reference<?> reference) {
-						referenceHttpMethod.releaseConnection();
+						try {
+							referenceHttpResponse.close();
+						}
+						catch (IOException ioe) {
+							if (_log.isDebugEnabled()) {
+								_log.debug("Error closing response", ioe);
+							}
+						}
 					}
 
 				},
@@ -1758,7 +1931,7 @@ public class HttpImpl implements Http {
 				public void close() throws IOException {
 					super.close();
 
-					referenceHttpMethod.releaseConnection();
+					referenceHttpResponse.close();
 
 					reference.clear();
 				}
@@ -1767,8 +1940,8 @@ public class HttpImpl implements Http {
 		}
 		finally {
 			try {
-				if (httpState != null) {
-					_cookies.set(toServletCookies(httpState.getCookies()));
+				if (cookieStore != null) {
+					_cookies.set(toServletCookies(cookieStore.getCookies()));
 				}
 			}
 			catch (Exception e) {
@@ -1824,48 +1997,16 @@ public class HttpImpl implements Http {
 
 	private final Pattern _absoluteURLPattern = Pattern.compile(
 		"^[a-zA-Z0-9]+://");
-	private final HttpClient _httpClient = new HttpClient();
+	private final CloseableHttpClient _httpClient;
 	private final Pattern _nonProxyHostsPattern;
+	private final PoolingHttpClientConnectionManager
+		_poolingHttpClientConnectionManager;
 	private final Pattern _protocolRelativeURLPattern = Pattern.compile(
 		"^[\\s\\\\/]+");
+	private final List<String> _proxyAuthPrefs = new ArrayList<>();
 	private final Credentials _proxyCredentials;
-	private final HttpClient _proxyHttpClient = new HttpClient();
+	private final CloseableHttpClient _proxyHttpClient;
 	private final Pattern _relativeURLPattern = Pattern.compile(
 		"^\\s*/[a-zA-Z0-9]+");
-
-	private static class FastProtocolSocketFactory
-		extends DefaultProtocolSocketFactory {
-
-		@Override
-		public Socket createSocket(
-				final String host, final int port,
-				final InetAddress localInetAddress, final int localPort,
-				final HttpConnectionParams httpConnectionParams)
-			throws ConnectTimeoutException, IOException, UnknownHostException {
-
-			int connectionTimeout = httpConnectionParams.getConnectionTimeout();
-
-			if (connectionTimeout == 0) {
-				return createSocket(host, port, localInetAddress, localPort);
-			}
-
-			SocketFactory socketFactory = SocketFactory.getDefault();
-
-			Socket socket = socketFactory.createSocket();
-
-			SocketAddress localSocketAddress = new InetSocketAddress(
-				localInetAddress, localPort);
-
-			SocketAddress remoteSocketAddress = new InetSocketAddress(
-				host, port);
-
-			socket.bind(localSocketAddress);
-
-			socket.connect(remoteSocketAddress, connectionTimeout);
-
-			return socket;
-		}
-
-	}
 
 }

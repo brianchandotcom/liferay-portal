@@ -27,7 +27,6 @@ import com.liferay.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.journal.exception.FeedTargetLayoutFriendlyUrlException;
 import com.liferay.journal.internal.exportimport.content.processor.JournalFeedExportImportContentProcessor;
 import com.liferay.journal.internal.exportimport.creation.strategy.JournalCreationStrategy;
-import com.liferay.journal.internal.exportimport.creation.strategy.JournalCreationStrategyFactory;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFeed;
 import com.liferay.journal.service.JournalFeedLocalService;

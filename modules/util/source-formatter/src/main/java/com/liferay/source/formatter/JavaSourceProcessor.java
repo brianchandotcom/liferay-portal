@@ -4340,7 +4340,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			else {
 				x = line.lastIndexOf(StringPool.SPACE);
 
-				if (x != -1) {
+				if ((x != -1) && !ToolsUtil.isInsideQuotes(line, x)) {
 					String firstLine = line.substring(0, x);
 					String secondLine =
 						indent + StringPool.TAB + line.substring(x + 1);

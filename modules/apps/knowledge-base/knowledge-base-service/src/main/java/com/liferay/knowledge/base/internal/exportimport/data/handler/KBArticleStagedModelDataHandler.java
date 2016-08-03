@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.knowledge.base.internal.lar;
+package com.liferay.knowledge.base.internal.exportimport.data.handler;
 
 import com.liferay.document.library.kernel.exception.DuplicateFileException;
 import com.liferay.document.library.kernel.model.DLFileEntry;

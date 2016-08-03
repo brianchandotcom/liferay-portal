@@ -1,7 +1,6 @@
 AUI.add(
 	'liferay-calendar-util',
 	function(A) {
-		var AObject = A.Object;
 		var DateMath = A.DataType.DateMath;
 		var Lang = A.Lang;
 		var LString = Lang.String;

@@ -209,9 +209,7 @@ AUI.add(
 
 						var calendarContainer = instance.get('calendarContainer');
 
-
-
-						var calendar = calendarContainer.getCalendar(schedulerEvent.get('calendarId'));;
+						var calendar = calendarContainer.getCalendar(schedulerEvent.get('calendarId'));
 						var status = schedulerEvent.get('status');
 
 						if (calendar) {
@@ -413,9 +411,7 @@ AUI.add(
 
 							var calendarContainer = instance.get('calendarContainer');
 
-
-
-							var calendar = calendarContainer.getCalendar(calendarId);;
+							var calendar = calendarContainer.getCalendar(calendarId);
 
 							var permissions = calendar.get('permissions');
 
@@ -443,9 +439,7 @@ AUI.add(
 
 								var calendarContainer = instance.get('calendarContainer');
 
-
-
-								var selectedCalendar = calendarContainer.getCalendar(calendarId);;
+								var selectedCalendar = calendarContainer.getCalendar(calendarId);
 
 								if (selectedCalendar) {
 									schedulerEvent.set(
@@ -482,7 +476,7 @@ AUI.add(
 						if (schedulerEvent) {
 							calendarId = schedulerEvent.get('calendarId');
 
-							var calendar = calendarContainer.getCalendar(calendarId);;
+							var calendar = calendarContainer.getCalendar(calendarId);
 
 							if (calendar) {
 								color = calendar.get('color');
@@ -518,7 +512,7 @@ AUI.add(
 						if (schedulerEvent) {
 							var calendarContainer = instance.get('calendarContainer');
 
-							var calendar = calendarContainer.getCalendar(schedulerEvent.get('calendarId'));;
+							var calendar = calendarContainer.getCalendar(schedulerEvent.get('calendarId'));
 
 							if (calendar) {
 								var permissions = calendar.get('permissions');

@@ -43,6 +43,7 @@ public class FileEntryReturnTypeResolver
 		return FileEntryItemSelectorReturnType.class;
 	}
 
+	@Override
 	public Class<FileEntry> getModelClass() {
 		return FileEntry.class;
 	}

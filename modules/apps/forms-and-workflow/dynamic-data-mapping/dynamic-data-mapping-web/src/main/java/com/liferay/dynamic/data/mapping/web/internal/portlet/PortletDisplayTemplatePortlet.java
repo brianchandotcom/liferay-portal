@@ -37,7 +37,6 @@ import org.osgi.service.component.annotations.Modified;
 		"com.liferay.portlet.add-default-resource=true",
 		"com.liferay.portlet.autopropagated-parameters=scopeTitle",
 		"com.liferay.portlet.autopropagated-parameters=showAncestorScopes",
-		"com.liferay.portlet.autopropagated-parameters=showCacheableInput",
 		"com.liferay.portlet.autopropagated-parameters=showManageTemplates",
 		"com.liferay.portlet.css-class-wrapper=portlet-dynamic-data-mapping",
 		"com.liferay.portlet.display-category=category.hidden",

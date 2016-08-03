@@ -136,6 +136,7 @@
 
 	<command name="definePermissionPG">
 		<execute function="Check" locator1="//tr[contains(.,'${teamName}')]/td/input[contains(@id,'${permissionDefinitionKey}')]" />
+
 		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewSuccessMessage" />
@@ -176,6 +177,7 @@
 
 	<command name="removePermissionPG">
 		<execute function="Uncheck" locator1="//tr[contains(.,'${teamName}')]/td/input[contains(@id,'${permissionDefinitionKey}')]" />
+
 		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewSuccessMessage" />

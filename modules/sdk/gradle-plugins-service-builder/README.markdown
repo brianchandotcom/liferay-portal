@@ -53,10 +53,10 @@ plugin is applied, or whether the [`osgiModule`](#osgimodule) property is `true`
 
 Property Name | Default Value
 ------------- | -------------
-[`apiDir`](#apidir) | <p>**If the `war` plugin is applied:** `${project.webAppDir}/WEB-INF/service`<p></p>**Otherwise:** `null`</p>
+[`apiDir`](#apidir) | <p>**If the `war` plugin is applied:** `${project.webAppDir}/WEB-INF/service`</p><p>**Otherwise:** `null`</p>
 [`hbmFile`](#hbmfile) | <p>**If `osgiModule` is `true`:** `${buildService.resourcesDir}/META-INF/module-hbm.xml`</p><p>**Otherwise:** `${buildService.resourcesDir}/META-INF/module-hbm.xml`</p>
 [`implDir`](#impldir) | The first `java` directory of the `main` source set (by default: `src/main/java`).
-[`inputFile`](#inputfile) | <p>**If the `war` plugin is applied:** `${project.webAppDir}/WEB-INF/service.xml`<p></p>**Otherwise:** `${project.projectDir}/service.xml`</p>
+[`inputFile`](#inputfile) | <p>**If the `war` plugin is applied:** `${project.webAppDir}/WEB-INF/service.xml`</p><p>**Otherwise:** `${project.projectDir}/service.xml`</p>
 [`modelHintsFile`](#modelhintsfile) | The file `META-INF/portlet-model-hints.xml` in the first `resources` directory of the `main` source set (by default: `src/main/resources/META-INF/portlet-model-hints.xml`).
 [`pluginName`](#pluginname) | <p>**If `osgiModule` is `true`:** `""`</p><p>**Otherwise:** `project.name`</p>
 [`propsUtil`](#pluginname) | <p>**If `osgiModule` is `true`:** `"${bundleSymbolicName}.util.ServiceProps"`<br />The `bundleSymbolicName` of the project is inferred via the [`OsgiHelper`](https://github.com/gradle/gradle/blob/master/subprojects/osgi/src/main/java/org/gradle/api/internal/plugins/osgi/OsgiHelper.java) class.</p><p>**Otherwise:** `"com.liferay.util.service.ServiceProps"`</p>

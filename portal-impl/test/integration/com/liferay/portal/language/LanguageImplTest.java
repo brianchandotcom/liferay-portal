@@ -55,6 +55,14 @@ public class LanguageImplTest {
 		}
 
 		@Test
+		public void testFormatWithKeyNull() {
+			Assert.assertEquals(
+				null,
+				_languageImpl.format(
+					LocaleThreadLocal.getDefaultLocale(), null, "31"));
+		}
+
+		@Test
 		public void testFormatWithLocaleNull() {
 			Locale defaultLocale = LocaleThreadLocal.getDefaultLocale();
 

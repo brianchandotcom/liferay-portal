@@ -62,7 +62,7 @@ public class LanguageImplTest {
 
 			try {
 				String expectedValue = _languageImpl.format(
-					nullableLocale, _LANG_KEY_WITH_ARGUMENT, "31");
+					defaultLocale, _LANG_KEY_WITH_ARGUMENT, "31");
 				String actualValue = _languageImpl.format(
 					nullableLocale, _LANG_KEY_WITH_ARGUMENT, "31");
 

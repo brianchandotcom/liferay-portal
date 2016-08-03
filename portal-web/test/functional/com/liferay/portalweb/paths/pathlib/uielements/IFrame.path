@@ -69,6 +69,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MARVEL</td>
+	<td>//iframe[contains(@id,'elasticsearch_marvel_web_portlet')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>METADATA_SETS_IFRAME</td>
 	<td>//iframe[contains(@class,'dialog-iframe-node ')]</td>
 	<td></td>

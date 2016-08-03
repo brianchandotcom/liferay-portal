@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.analysis.FieldQueryBuilderFactory;
-import com.liferay.portal.search.analysis.QueryBuilder;
+import com.liferay.portal.search.analysis.FieldQueryBuilder;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -29,6 +29,7 @@ import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -43,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
 public class FieldQueryBuilderFactoryImpl implements FieldQueryBuilderFactory {
 
 	@Override
-	public QueryBuilder getQueryBuilder(String field) {
+	public FieldQueryBuilder getQueryBuilder(String field) {
 		if (queryPreProcessConfiguration.isSubstringSearchAlways(field)) {
 			return substringQueryBuilder;
 		}
@@ -60,6 +61,7 @@ public class FieldQueryBuilderFactoryImpl implements FieldQueryBuilderFactory {
 	}
 
 	@Activate
+	@Modified
 	protected void activate(Map<String, Object> properties) {
 		_descriptionFields = getFields(properties, "description.fields");
 		_titleFields = getFields(properties, "title.fields");
@@ -75,16 +77,16 @@ public class FieldQueryBuilderFactoryImpl implements FieldQueryBuilderFactory {
 	}
 
 	@Reference
-	protected DescriptionQueryBuilder descriptionQueryBuilder;
+	protected DescriptionFieldQueryBuilder descriptionQueryBuilder;
 
 	@Reference
 	protected QueryPreProcessConfiguration queryPreProcessConfiguration;
 
 	@Reference
-	protected SubstringQueryBuilder substringQueryBuilder;
+	protected SubstringFieldQueryBuilder substringQueryBuilder;
 
 	@Reference
-	protected TitleQueryBuilder titleQueryBuilder;
+	protected TitleFieldQueryBuilder titleQueryBuilder;
 
 	private volatile Collection<String> _descriptionFields =
 		Collections.singleton("description");

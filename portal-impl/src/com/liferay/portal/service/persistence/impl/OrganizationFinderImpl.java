@@ -691,6 +691,7 @@ public class OrganizationFinderImpl
 				"SELECT organizationId, 0 AS userId, name");
 			sql = StringUtil.replace(
 				sql, "(organizationId > ?) AND", StringPool.BLANK);
+			sql = CustomSQLUtil.removeOrderBy(sql);
 
 			sb.append(sql);
 			sb.append(") UNION ALL (");
@@ -707,7 +708,11 @@ public class OrganizationFinderImpl
 			sb.append(sql);
 			sb.append(StringPool.CLOSE_PARENTHESIS);
 
-			SQLQuery q = session.createSynchronizedSQLQuery(sb.toString());
+			sql = sb.toString();
+			sql = CustomSQLUtil.replaceOrderBy(
+				sql, queryDefinition.getOrderByComparator());
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar("organizationId", Type.LONG);
 			q.addScalar("userId", Type.LONG);

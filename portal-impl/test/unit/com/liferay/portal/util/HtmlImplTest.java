@@ -314,6 +314,30 @@ public class HtmlImplTest {
 	}
 
 	@Test
+	public void testStripHtml() {
+		Assert.assertEquals(
+			"Hello World!",
+			_htmlImpl.stripHtml(
+				"<html><body><h1>Hello World!</h1></body></html>"));
+	}
+
+	@Test
+	public void testStripHtmlWithScripTag() {
+		Assert.assertEquals(
+			"Hello World!",
+			_htmlImpl.stripHtml(
+				"<body>Hello<script>alert('xss');</script> World!</body>"));
+	}
+
+	@Test
+	public void testStripHtmlWithStyleTag() {
+		Assert.assertEquals(
+			"Hello World!",
+			_htmlImpl.stripHtml(
+				"<body>Hello<style>p{color:#000000}</style> World!</body>"));
+	}
+
+	@Test
 	public void testStripMultipleComments() {
 		Assert.assertEquals(
 			"test",

@@ -269,28 +269,20 @@
 					<fileset dir="${project.dir}/modules" includes="**/.lfrbuild-app-server-lib" />
 				</pathconvert>
 
-				<if>
+				<condition else="deployConfigs,deployTool" property="gradle.deploy.extra.tasks" value="deployAppServerLib,deployConfigs,deployTool">
 					<isset property="build.app.server.lib.marker.files" />
-					<then>
-						<gradle-execute-build tasks="deployAppServerLib,deployConfigs,deployTool" />
-					</then>
-					<else>
-						<gradle-execute-build tasks="deployConfigs,deployTool" />
-					</else>
-				</if>
+				</condition>
+
+				<gradle-execute-build tasks="${gradle.deploy.extra.tasks}" />
 
 				<if>
 					<equals arg1="${jsp.precompile}" arg2="on" />
 					<then>
-						<if>
+						<condtion else="false" property="gradle.jsp.precompile.parallel" value="true">
 							<equals arg1="${jsp.precompile.parallel}" arg2="on" />
-							<then>
-								<gradle-execute-build task="compileJSP" />
-							</then>
-							<else>
-								<gradle-execute-build parallel="false" task="compileJSP" />
-							</else>
-						</if>
+						</condtion>
+
+						<gradle-execute-build parallel="${gradle.jsp.precompile.parallel}" task="compileJSP" />
 					</then>
 				</if>
 			</else>

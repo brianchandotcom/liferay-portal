@@ -1,7 +1,7 @@
 # CSS Builder Gradle Plugin
 
 The CSS Builder Gradle plugin allows you to run the Liferay CSS Builder tool
-in order to compile the [Sass](http://sass-lang.com/) files in the project.
+in order to compile [Sass](http://sass-lang.com/) files in your project.
 
 ## Usage
 
@@ -85,9 +85,9 @@ Property Name | Type | Default Value | Description
 `outputDirs` | `FileCollection` | \- | The directories where the SCSS files are compiled to. Usually, these directories are ignored by the Version Control System. *(Read-only)*
 <a name="portalcommondir"></a>`portalCommonDir` | `File` | `null` | The `META-INF/resources` directory of the [Liferay Frontend Common CSS](https://github.com/liferay/liferay-portal/tree/master/modules/apps/foundation/frontend-css/frontend-css-common) artifact. This is required in order to make [Bourbon](http://bourbon.io) and other CSS libraries available to the compilation.
 `portalCommonFile` | `File` | [`configurations.portalCommonCSS.singleFile`](#liferay-frontend-common-css-dependency) | The Liferay Frontend Common CSS JAR file. If [`portalCommonDir`](#portalcommondir) is set, this property has no effect.
-`portalCommonPath` | `File` | \- | The value of the `portalCommonDir` property if set, or `portalCommonFile` otherwise. *(Read-only)*
+`portalCommonPath` | `File` | \- | The value of the `portalCommonDir` property if set; otherwise `portalCommonFile`. *(Read-only)*
 `precision` | `int` | `5` | The numeric precision of numbers in Sass.
-`rtlExcludedPathRegexps` | `List<String>` | `[]` | The exclude patterns for the SCSS files to convert for right-to-left (RTL) support.
+`rtlExcludedPathRegexps` | `List<String>` | `[]` | The SCSS file patterns to exclude when converting for right-to-left (RTL) support.
 `sassCompilerClassName` | `String` | `null` | The type of Sass compiler to use. Supported values are `"jni"` and `"ruby"`. If not set, defaults to `"jni"`.
 
 The properties of type `File` support any type that can be resolved by [`project.file`](https://docs.gradle.org/current/dsl/org.gradle.api.Project.html#org.gradle.api.Project:file(java.css.Object)).
@@ -98,10 +98,10 @@ and `String` properties, to defer evaluation until task execution.
 
 Method | Description
 ------ | -----------
-`BuildCSSTask dirNames(Iterable<Object> dirNames)` | Add sub-directory names, relative to [`docrootDir`](#docrootdir), which contain the SCSS files to compile.
-`BuildCSSTask dirNames(Object... dirNames)` | Add sub-directory names, relative to [`docrootDir`](#docrootdir), which contain the SCSS files to compile.
-`BuildCSSTask rtlExcludedPathRegexps(Iterable<Object> rtlExcludedPathRegexps)` | Adds exclude patterns for the SCSS files to convert for right-to-left (RTL) support.
-`BuildCSSTask rtlExcludedPathRegexps(Object... rtlExcludedPathRegexps)` | Adds exclude patterns for the SCSS files to convert for right-to-left (RTL) support.
+`BuildCSSTask dirNames(Iterable<Object> dirNames)` | Adds sub-directory names, relative to [`docrootDir`](#docrootdir), which contain the SCSS files to compile.
+`BuildCSSTask dirNames(Object... dirNames)` | Adds sub-directory names, relative to [`docrootDir`](#docrootdir), which contain the SCSS files to compile.
+`BuildCSSTask rtlExcludedPathRegexps(Iterable<Object> rtlExcludedPathRegexps)` | Adds SCSS file patterns to exclude when converting for right-to-left (RTL) support.
+`BuildCSSTask rtlExcludedPathRegexps(Object... rtlExcludedPathRegexps)` | Adds SCSS file patterns to exclude when converting for right-to-left (RTL) support.
 
 ## Additional Configuration
 

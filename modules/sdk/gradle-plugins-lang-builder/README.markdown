@@ -73,14 +73,15 @@ Property Name | Default Value
 Property Name | Type | Default Value | Description
 ------------- | ---- | ------------- | -----------
 <a name="langdir"></a>`langDir` | `File` | `null` | The directory where the language properties files are saved.
-`langFileName` | `String` | `"Language"` | The file name prefix of the language properties files (eg. `Language_it.properties`).
+`langFileName` | `String` | `"Language"` | The file name prefix of the language properties files (e.g., `Language_it.properties`).
 `plugin` | `boolean` | `true` | Whether to check for duplicate language keys between the project and the portal. If `portalLanguagePropertiesFile` is not set, this property has no effect.
 `portalLanguagePropertiesFile` | `File` | `null` | The `Language.properties` file of the portal.
 `translate` | `boolean` | `true` | Whether to translate the language keys and generate a language properties file for each locale that's supported by Liferay.
-`translateClientId` | `String` | `null` | The client ID that you specified when you registered with Azure DataMarket.
-`translateClientSecret` | `String` | `null` | The client secret value that you obtained when you registered with Azure DataMarket.
+`translateClientId` | `String` | `null` | The client ID that was specified when registering with Azure DataMarket.
+`translateClientSecret` | `String` | `null` | The client secret value that was obtained when registering with Azure DataMarket.
 
-The properties of type `File` support any type that can be resolved by [`project.file`](https://docs.gradle.org/current/dsl/org.gradle.api.Project.html#org.gradle.api.Project:file(java.lang.Object)).
+The properties of type `File` support any type that can be resolved by
+[`project.file`](https://docs.gradle.org/current/dsl/org.gradle.api.Project.html#org.gradle.api.Project:file(java.lang.Object)).
 Moreover, it is possible to use Closures and Callables as values for the
 `String` properties, to defer evaluation until task execution.
 

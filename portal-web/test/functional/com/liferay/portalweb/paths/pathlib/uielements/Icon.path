@@ -260,6 +260,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGE__CUSTOMIZATION_ELLIPSIS</td>
+	<td>//*[@data-qa-id='controlMenu']//div[contains(@class,'icon-menu')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ROW_VERTICAL_ELLIPSIS</td>
 	<td>//*[@data-qa-id='row' and contains(.,'${key_rowEntry}')]//span/*[name()='svg'][contains(@class,'icon-ellipsis')]</td>
 	<td></td>

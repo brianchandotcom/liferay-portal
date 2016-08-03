@@ -783,7 +783,7 @@ public class HtmlImpl implements Html {
 	}
 
 	protected int stripTag(char[] tag, String text, int pos) {
-		int x = pos + _TAG_SCRIPT.length;
+		int x = pos + tag.length;
 
 		// Find end of the tag
 

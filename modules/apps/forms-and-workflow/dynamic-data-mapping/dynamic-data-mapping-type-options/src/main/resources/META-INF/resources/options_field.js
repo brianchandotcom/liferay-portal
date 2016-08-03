@@ -276,6 +276,8 @@ AUI.add(
 							);
 
 							instance.moveOption(option, dragStartIndex, dragEndIndex);
+
+							instance.evaluate();
 						}
 					},
 

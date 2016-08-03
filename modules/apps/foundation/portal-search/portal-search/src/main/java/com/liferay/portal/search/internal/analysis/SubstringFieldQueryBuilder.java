@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.analysis.KeywordTokenizer;
-import com.liferay.portal.search.analysis.QueryBuilder;
+import com.liferay.portal.search.analysis.FieldQueryBuilder;
 
 import java.util.List;
 
@@ -34,8 +34,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author André de Oliveira
  * @author Rodrigo Paulino
  */
-@Component(immediate = true, service = SubstringQueryBuilder.class)
-public class SubstringQueryBuilder implements QueryBuilder {
+@Component(immediate = true, service = SubstringFieldQueryBuilder.class)
+public class SubstringFieldQueryBuilder implements FieldQueryBuilder {
 
 	@Override
 	public Query build(String field, String keywords) {

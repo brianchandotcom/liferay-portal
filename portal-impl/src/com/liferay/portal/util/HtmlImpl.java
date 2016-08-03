@@ -621,7 +621,6 @@ public class HtmlImpl implements Html {
 
 		while (y != -1) {
 			sb.append(text.substring(x, y));
-			sb.append(StringPool.SPACE);
 
 			// Look for text enclosed by <abc></abc>
 

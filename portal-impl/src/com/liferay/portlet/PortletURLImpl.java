@@ -1012,13 +1012,15 @@ public class PortletURLImpl
 			sb.append(StringPool.AMPERSAND);
 		}
 
+		Map<String, String[]> renderParams = _params;
+
 		if (_copyCurrentRenderParameters) {
-			mergeRenderParameters();
+			renderParams = _mergeWithRenderParameters(renderParams);
 		}
 
 		int previousSbIndex = sb.index();
 
-		for (Map.Entry<String, String[]> entry : _params.entrySet()) {
+		for (Map.Entry<String, String[]> entry : renderParams.entrySet()) {
 			String name = entry.getKey();
 			String[] values = entry.getValue();
 
@@ -1181,15 +1183,17 @@ public class PortletURLImpl
 			}
 		}
 
+		Map<String, String[]> renderParams = _params;
+
 		if (_copyCurrentRenderParameters) {
-			mergeRenderParameters();
+			renderParams = _mergeWithRenderParameters(renderParams);
 		}
 
 		StringBundler parameterSb = new StringBundler();
 
 		int previousSbIndex = sb.index();
 
-		for (Map.Entry<String, String[]> entry : _params.entrySet()) {
+		for (Map.Entry<String, String[]> entry : renderParams.entrySet()) {
 			String name = entry.getKey();
 			String[] values = entry.getValue();
 
@@ -1275,47 +1279,9 @@ public class PortletURLImpl
 		}
 	}
 
+	@Deprecated
 	protected void mergeRenderParameters() {
-		String namespace = getNamespace();
-
-		Layout layout = getLayout();
-
-		Map<String, String[]> renderParameters = RenderParametersPool.get(
-			_request, layout.getPlid(), getPortlet().getPortletId());
-
-		if (renderParameters == null) {
-			return;
-		}
-
-		for (Map.Entry<String, String[]> entry : renderParameters.entrySet()) {
-			String name = entry.getKey();
-
-			if (name.contains(namespace)) {
-				name = name.substring(namespace.length());
-			}
-
-			if (!_lifecycle.equals(PortletRequest.RESOURCE_PHASE) &&
-				(_removedParameterNames != null) &&
-				_removedParameterNames.contains(name)) {
-
-				continue;
-			}
-
-			String[] oldValues = entry.getValue();
-			String[] newValues = _params.get(name);
-
-			if (newValues == null) {
-				_params.put(name, oldValues);
-			}
-			else if (isBlankValue(newValues)) {
-				_params.remove(name);
-			}
-			else {
-				newValues = ArrayUtil.append(newValues, oldValues);
-
-				_params.put(name, newValues);
-			}
-		}
+		_params = _mergeWithRenderParameters(_params);
 	}
 
 	protected String prependNamespace(String name) {
@@ -1356,6 +1322,56 @@ public class PortletURLImpl
 		if (_params.containsKey(name)) {
 			_params.remove(name);
 		}
+	}
+
+	private Map<String, String[]> _mergeWithRenderParameters(
+		Map<String, String[]> portletURLParams) {
+
+		String namespace = getNamespace();
+
+		Layout layout = getLayout();
+
+		Map<String, String[]> renderParameters = RenderParametersPool.get(
+			_request, layout.getPlid(), getPortlet().getPortletId());
+
+		if (renderParameters == null) {
+			return portletURLParams;
+		}
+
+		Map<String, String[]> mergedRenderParams = new LinkedHashMap<>(
+			portletURLParams);
+
+		for (Map.Entry<String, String[]> entry : renderParameters.entrySet()) {
+			String name = entry.getKey();
+
+			if (name.contains(namespace)) {
+				name = name.substring(namespace.length());
+			}
+
+			if (!_lifecycle.equals(PortletRequest.RESOURCE_PHASE) &&
+				(_removedParameterNames != null) &&
+				_removedParameterNames.contains(name)) {
+
+				continue;
+			}
+
+			String[] oldValues = entry.getValue();
+			String[] newValues = _params.get(name);
+
+			if (newValues == null) {
+				mergedRenderParams.put(name, oldValues);
+			}
+			else if (isBlankValue(newValues)) {
+				mergedRenderParams.remove(name);
+			}
+			else {
+				newValues = ArrayUtil.append(newValues, oldValues);
+
+				mergedRenderParams.put(name, newValues);
+			}
+		}
+
+		return mergedRenderParams;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(PortletURLImpl.class);

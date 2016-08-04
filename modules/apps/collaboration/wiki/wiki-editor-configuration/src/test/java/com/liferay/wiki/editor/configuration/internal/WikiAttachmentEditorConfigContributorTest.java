@@ -106,12 +106,12 @@ public class WikiAttachmentEditorConfigContributorTest extends PowerMockito {
 			originalJSONObject.toJSONString());
 
 		WikiAttachmentEditorConfigContributor
-			WikiAttachmentEditorConfigContributor =
+			wikiAttachmentEditorConfigContributor =
 				new WikiAttachmentEditorConfigContributor();
 
-		WikiAttachmentEditorConfigContributor.setItemSelector(_itemSelector);
+		wikiAttachmentEditorConfigContributor.setItemSelector(_itemSelector);
 
-		WikiAttachmentEditorConfigContributor.populateConfigJSONObject(
+		wikiAttachmentEditorConfigContributor.populateConfigJSONObject(
 			jsonObject, _inputEditorTaglibAttributes, _themeDisplay,
 			_requestBackedPortletURLFactory);
 
@@ -129,12 +129,12 @@ public class WikiAttachmentEditorConfigContributorTest extends PowerMockito {
 		JSONObject jsonObject = getJSONObjectWithDefaultItemSelectorURL();
 
 		WikiAttachmentEditorConfigContributor
-			WikiAttachmentEditorConfigContributor =
+			wikiAttachmentEditorConfigContributor =
 				new WikiAttachmentEditorConfigContributor();
 
-		WikiAttachmentEditorConfigContributor.setItemSelector(_itemSelector);
+		wikiAttachmentEditorConfigContributor.setItemSelector(_itemSelector);
 
-		WikiAttachmentEditorConfigContributor.populateConfigJSONObject(
+		wikiAttachmentEditorConfigContributor.populateConfigJSONObject(
 			jsonObject, _inputEditorTaglibAttributes, _themeDisplay,
 			_requestBackedPortletURLFactory);
 
@@ -165,12 +165,12 @@ public class WikiAttachmentEditorConfigContributorTest extends PowerMockito {
 			originalJSONObject.toJSONString());
 
 		WikiAttachmentEditorConfigContributor
-			WikiAttachmentEditorConfigContributor =
+			wikiAttachmentEditorConfigContributor =
 				new WikiAttachmentEditorConfigContributor();
 
-		WikiAttachmentEditorConfigContributor.setItemSelector(_itemSelector);
+		wikiAttachmentEditorConfigContributor.setItemSelector(_itemSelector);
 
-		WikiAttachmentEditorConfigContributor.populateConfigJSONObject(
+		wikiAttachmentEditorConfigContributor.populateConfigJSONObject(
 			jsonObject, _inputEditorTaglibAttributes, _themeDisplay,
 			_requestBackedPortletURLFactory);
 
@@ -192,12 +192,12 @@ public class WikiAttachmentEditorConfigContributorTest extends PowerMockito {
 			originalJSONObject.toJSONString());
 
 		WikiAttachmentEditorConfigContributor
-			WikiAttachmentEditorConfigContributor =
+			wikiAttachmentEditorConfigContributor =
 				new WikiAttachmentEditorConfigContributor();
 
-		WikiAttachmentEditorConfigContributor.setItemSelector(_itemSelector);
+		wikiAttachmentEditorConfigContributor.setItemSelector(_itemSelector);
 
-		WikiAttachmentEditorConfigContributor.populateConfigJSONObject(
+		wikiAttachmentEditorConfigContributor.populateConfigJSONObject(
 			jsonObject, _inputEditorTaglibAttributes, _themeDisplay,
 			_requestBackedPortletURLFactory);
 

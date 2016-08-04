@@ -4160,3 +4160,28 @@ This change removes outdated code no longer being used in the platform. In
 addition, this change avoids future security issues from outdated flash movies.
 
 ---------------------------------------
+
+### Journal portlet properties moved to OSGi configuration
+- **Date:** 2016-Jul-29
+- **JIRA Ticket:** LPS-58672
+
+#### What changed?
+
+All Journal portlet properties were moved to an OSGI configuration
+
+#### Who is affected?
+
+This affects anyone who is overriding Journal portlet properties file since
+they are not used anymore.
+
+#### How should I update my code?
+
+Instead of overriding portlet properties of Journal portlet you can change all
+the properties from Portal configuration administrator.
+
+#### Why was this change made?
+
+This change was made as part of modularization efforts to ease portlet
+configuration changes.
+
+---------------------------------------

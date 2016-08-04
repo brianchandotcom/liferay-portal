@@ -17,7 +17,7 @@ package com.liferay.journal.web.asset;
 import com.liferay.asset.kernel.model.BaseJSPAssetRenderer;
 import com.liferay.asset.kernel.model.DDMFormValuesReader;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
-import com.liferay.journal.configuration.JournalServiceConfigurationValues;
+import com.liferay.journal.configuration.JournalServiceConfiguration;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
@@ -29,8 +29,11 @@ import com.liferay.journal.util.JournalContent;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
@@ -90,6 +93,8 @@ public class JournalArticleAssetRenderer
 
 	public JournalArticleAssetRenderer(JournalArticle article) {
 		_article = article;
+
+		setJournalServiceConfiguration();
 	}
 
 	public JournalArticle getArticle() {
@@ -131,9 +136,7 @@ public class JournalArticleAssetRenderer
 
 	@Override
 	public String getDiscussionPath() {
-		if (JournalServiceConfigurationValues.
-				JOURNAL_ARTICLE_COMMENTS_ENABLED) {
-
+		if (_journalServiceConfiguration.articleCommentsEnabled()) {
 			return "edit_article_discussion";
 		}
 		else {
@@ -545,9 +548,24 @@ public class JournalArticleAssetRenderer
 		return new PortletRequestModel(portletRequest, portletResponse);
 	}
 
+	protected void setJournalServiceConfiguration() {
+		try {
+			_journalServiceConfiguration =
+				ConfigurationProviderUtil.getCompanyConfiguration(
+					JournalServiceConfiguration.class, _article.getCompanyId());
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		JournalArticleAssetRenderer.class);
+
 	private final JournalArticle _article;
 	private FieldsToDDMFormValuesConverter _fieldsToDDMFormValuesConverter;
 	private JournalContent _journalContent;
 	private JournalConverter _journalConverter;
+	private JournalServiceConfiguration _journalServiceConfiguration;
 
 }

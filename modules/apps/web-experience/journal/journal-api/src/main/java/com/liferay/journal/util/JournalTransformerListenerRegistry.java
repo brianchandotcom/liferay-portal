@@ -12,15 +12,17 @@
  * details.
  */
 
-package com.liferay.journal.configuration;
+package com.liferay.journal.util;
+
+import com.liferay.portal.kernel.templateparser.TransformerListener;
+
+import java.util.List;
 
 /**
- * @author Eduardo Garcia
+ * @author Pavel Savinov
  */
-public class JournalServiceConfigurationKeys {
+public interface JournalTransformerListenerRegistry {
 
-	public static final String ERROR_TEMPLATE = "error.template";
-
-	public static final String TRANSFORMER_LISTENER = "transformer.listener";
+	public List<TransformerListener> getTransformerListeners();
 
 }

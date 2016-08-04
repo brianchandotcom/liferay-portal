@@ -68,7 +68,7 @@
 						cssClass="entry-display-style"
 						icon="organizations"
 						resultRow="<%= row %>"
-						rowChecker="<%= membersSearchContainer.getRowChecker() %>"
+						rowChecker="<%= searchContainer.getRowChecker() %>"
 						subtitle="<%= LanguageUtil.get(request, curOrganization.getType()) %>"
 						title="<%= curOrganization.getName() %>"
 						url="<%= String.valueOf(rowURL) %>"
@@ -162,7 +162,7 @@
 						actionJspServletContext="<%= application %>"
 						cssClass="entry-display-style"
 						resultRow="<%= row %>"
-						rowChecker="<%= membersSearchContainer.getRowChecker() %>"
+						rowChecker="<%= searchContainer.getRowChecker() %>"
 						subtitle='<%= LanguageUtil.get(request, "user") %>'
 						title="<%= user2.getFullName() %>"
 						url="<%= String.valueOf(rowURL) %>"

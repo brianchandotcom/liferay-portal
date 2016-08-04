@@ -36,6 +36,11 @@
 		<module name="PackageName" />
 		<module name="ParameterName" />
 		<module name="RequireThis" />
+		<module name="StaticVariableName">
+			<property name="applyToPackage" value="false" />
+			<property name="applyToPrivate" value="false" />
+			<property name="format" value="^[a-z0-9][_a-zA-Z0-9]*$" />
+		</module>
 		<module name="StringLiteralEquality" />
 		<module name="UpperEll" />
 	</module>

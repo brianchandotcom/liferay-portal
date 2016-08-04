@@ -134,6 +134,32 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 			});*/
 	}
 
+	protected static Properties getArtifactProperties(
+		WritePropertiesTask recordArtifactTask) {
+
+		try {
+			return FileUtil.readProperties(recordArtifactTask.getOutputFile());
+		}
+		catch (IOException ioe) {
+			throw new GradleException(
+				"Unable to read artifact properties", ioe);
+		}
+	}
+
+	protected static File getRelengDir(Project project) {
+		File rootDir = GradleUtil.getRootDir(
+			project.getRootProject(), ".releng");
+
+		if (rootDir == null) {
+			return null;
+		}
+
+		File relengDir = new File(rootDir, ".releng");
+
+		return new File(
+			relengDir, FileUtil.relativize(project.getProjectDir(), rootDir));
+	}
+
 	protected PrintArtifactPublishCommandsTask
 		addTaskPrintArtifactPublishCommands(
 			Project project, final WritePropertiesTask recordArtifactTask) {
@@ -569,18 +595,6 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 		configureTaskEnabledIfRelease(recordArtifactTask);
 	}
 
-	protected Properties getArtifactProperties(
-		WritePropertiesTask recordArtifactTask) {
-
-		try {
-			return FileUtil.readProperties(recordArtifactTask.getOutputFile());
-		}
-		catch (IOException ioe) {
-			throw new GradleException(
-				"Unable to read artifact properties", ioe);
-		}
-	}
-
 	protected StringBuilder getArtifactRemoteBaseURL(
 			Project project, boolean cdn)
 		throws Exception {
@@ -679,20 +693,6 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 		String result = byteArrayOutputStream.toString();
 
 		return result.trim();
-	}
-
-	protected File getRelengDir(Project project) {
-		File rootDir = GradleUtil.getRootDir(
-			project.getRootProject(), ".releng");
-
-		if (rootDir == null) {
-			return null;
-		}
-
-		File relengDir = new File(rootDir, ".releng");
-
-		return new File(
-			relengDir, FileUtil.relativize(project.getProjectDir(), rootDir));
 	}
 
 	protected boolean isStale(

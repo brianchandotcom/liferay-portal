@@ -108,16 +108,16 @@ public class UnmodifiableList<E> implements List<E>, Serializable {
 	public Iterator<E> iterator() {
 		return new Iterator<E>() {
 
-			Iterator<? extends E> itr = _list.iterator();
+			private Iterator<? extends E> _itr = _list.iterator();
 
 			@Override
 			public boolean hasNext() {
-				return itr.hasNext();
+				return _itr.hasNext();
 			}
 
 			@Override
 			public E next() {
-				return itr.next();
+				return _itr.next();
 			}
 
 			@Override
@@ -142,7 +142,7 @@ public class UnmodifiableList<E> implements List<E>, Serializable {
 	public ListIterator<E> listIterator(final int index) {
 		return new ListIterator<E>() {
 
-			ListIterator<? extends E> itr = _list.listIterator(index);
+			private ListIterator<? extends E> _itr = _list.listIterator(index);
 
 			@Override
 			public void add(E element) {
@@ -151,32 +151,32 @@ public class UnmodifiableList<E> implements List<E>, Serializable {
 
 			@Override
 			public boolean hasNext() {
-				return itr.hasNext();
+				return _itr.hasNext();
 			}
 
 			@Override
 			public E next() {
-				return itr.next();
+				return _itr.next();
 			}
 
 			@Override
 			public boolean hasPrevious() {
-				return itr.hasPrevious();
+				return _itr.hasPrevious();
 			}
 
 			@Override
 			public E previous() {
-				return itr.previous();
+				return _itr.previous();
 			}
 
 			@Override
 			public int nextIndex() {
-				return itr.nextIndex();
+				return _itr.nextIndex();
 			}
 
 			@Override
 			public int previousIndex() {
-				return itr.previousIndex();
+				return _itr.previousIndex();
 			}
 
 			@Override

@@ -28,9 +28,9 @@ import org.osgi.service.component.annotations.Component;
 )
 public class TestMethod implements Method {
 
-	public static String METHOD_NAME = "METHOD_NAME";
+	public static final String METHOD_NAME = "METHOD_NAME";
 
-	public static String TOKEN = "TOKEN";
+	public static final String TOKEN = "TOKEN";
 
 	@Override
 	public Response execute(long companyId) {

@@ -56,7 +56,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class LanguageResources {
 
-	public static ResourceBundleLoader RESOURCE_BUNDLE_LOADER =
+	public static final ResourceBundleLoader RESOURCE_BUNDLE_LOADER =
 		new ResourceBundleLoader() {
 
 			@Override

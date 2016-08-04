@@ -32,7 +32,8 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class TestServicePreAction extends ServicePreAction {
 
-	public static TestServicePreAction INSTANCE = new TestServicePreAction();
+	public static final TestServicePreAction INSTANCE =
+		new TestServicePreAction();
 
 	@Override
 	public void addDefaultLayoutsByLAR(

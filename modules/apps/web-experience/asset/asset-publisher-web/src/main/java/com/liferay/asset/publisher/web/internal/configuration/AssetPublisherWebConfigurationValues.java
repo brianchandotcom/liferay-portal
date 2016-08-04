@@ -27,7 +27,7 @@ public class AssetPublisherWebConfigurationValues {
 	public static final String DISPLAY_STYLE_DEFAULT = GetterUtil.getString(
 		AssetPublisherWebConfigurationUtil.get("display.style.default"));
 
-	public static String[] DISPLAY_STYLES =
+	public static final String[] DISPLAY_STYLES =
 		AssetPublisherWebConfigurationUtil.getArray("display.styles");
 
 	public static final String DISPLAY_TEMPLATES_CONFIG = GetterUtil.getString(
@@ -71,7 +71,7 @@ public class AssetPublisherWebConfigurationValues {
 			AssetPublisherWebConfigurationUtil.get(
 				"permission.checking.configurable"));
 
-	public static String[] QUERY_FORM_CONFIGURATION =
+	public static final String[] QUERY_FORM_CONFIGURATION =
 		AssetPublisherWebConfigurationUtil.getArray("query.form.configuration");
 
 	public static final boolean SEARCH_WITH_INDEX = GetterUtil.getBoolean(

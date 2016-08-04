@@ -49,10 +49,10 @@ public class SanitizerLogWrapper extends LogWrapper {
 			return;
 		}
 
-		_LOG_SANITIZER_ESCAPE_HTML_ENABLED = GetterUtil.getBoolean(
+		_logSanitizerEscapeHTMLEnabled = GetterUtil.getBoolean(
 			SystemProperties.get(PropsKeys.LOG_SANITIZER_ESCAPE_HTML_ENABLED));
 
-		_LOG_SANITIZER_REPLACEMENT_CHARACTER = (char)GetterUtil.getInteger(
+		_logSanitizerReplacementCharacter = (char)GetterUtil.getInteger(
 			SystemProperties.get(
 				PropsKeys.LOG_SANITIZER_REPLACEMENT_CHARACTER));
 
@@ -213,7 +213,7 @@ public class SanitizerLogWrapper extends LogWrapper {
 			if ((c >= 0) && (c < _whitelistCharacters.length) &&
 				(_whitelistCharacters[c] != 0)) {
 
-				chars[i] = _LOG_SANITIZER_REPLACEMENT_CHARACTER;
+				chars[i] = _logSanitizerReplacementCharacter;
 				sanitized = true;
 			}
 
@@ -224,7 +224,7 @@ public class SanitizerLogWrapper extends LogWrapper {
 
 		boolean escapeHTML = false;
 
-		if (_LOG_SANITIZER_ESCAPE_HTML_ENABLED && hasLessThanCharacter) {
+		if (_logSanitizerEscapeHTMLEnabled && hasLessThanCharacter) {
 			escapeHTML = true;
 		}
 
@@ -301,9 +301,9 @@ public class SanitizerLogWrapper extends LogWrapper {
 	private static final boolean _LOG_SANITIZER_ENABLED = GetterUtil.getBoolean(
 		SystemProperties.get(PropsKeys.LOG_SANITIZER_ENABLED));
 
-	private static boolean _LOG_SANITIZER_ESCAPE_HTML_ENABLED;
+	private static boolean _logSanitizerEscapeHTMLEnabled;
 
-	private static char _LOG_SANITIZER_REPLACEMENT_CHARACTER =
+	private static char _logSanitizerReplacementCharacter =
 		CharPool.UNDERLINE;
 
 	private static final String _SANITIZED = " [Sanitized]";

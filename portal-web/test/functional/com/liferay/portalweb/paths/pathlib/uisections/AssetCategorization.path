@@ -105,7 +105,7 @@
 </tr>
 <tr>
 	<td>TAG</td>
-	<td>//div[contains(@class,'lfr-tags-selector-content')]//span[contains(.,'${key_tagName}')]</td>
+	<td>//div[contains(@class,'lfr-tags-selector-content')]//span[contains(@class,'textboxlistentry-text') and contains(.,'${key_tagName}')]</td>
 	<td></td>
 </tr>
 <tr>

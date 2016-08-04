@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.liferay</groupId>
   <artifactId>com.liferay.screens.api</artifactId>
-  <version>3.0.0</version>
+  <version>3.1.0</version>
   <licenses>
     <license>
       <name>LGPL 2.1</name>

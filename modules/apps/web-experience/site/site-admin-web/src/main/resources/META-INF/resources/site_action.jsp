@@ -57,18 +57,6 @@ boolean hasUpdatePermission = GroupPermissionUtil.contains(permissionChecker, gr
 		url="<%= editURL %>"
 	/>
 
-	<%
-	PortletURL siteAdministrationURL = siteAdminDisplayContext.getSiteAdministrationPortletURL(group);
-	%>
-
-	<c:if test="<%= siteAdministrationURL != null %>">
-		<liferay-ui:icon
-			message="site-administration"
-			method="get"
-			url="<%= siteAdministrationURL.toString() %>"
-		/>
-	</c:if>
-
 	<c:if test="<%= hasUpdatePermission %>">
 
 		<%

@@ -57,14 +57,9 @@ siteChecker.setRememberCheckBoxStateURLRegex("^(?!.*" + liferayPortletResponse.g
 			viewSubsitesURL.setParameter("groupId", String.valueOf(curGroup.getGroupId()));
 		}
 
-		String viewSiteURL = StringPool.BLANK;
+		GroupURLProvider groupURLProvider = (GroupURLProvider)request.getAttribute(SiteWebKeys.GROUP_URL_PROVIDER);
 
-		if (curGroup.getPublicLayoutsPageCount() > 0) {
-			viewSiteURL = curGroup.getDisplayURL(themeDisplay, false);
-		}
-		else if (curGroup.getPrivateLayoutsPageCount() > 0) {
-			viewSiteURL = curGroup.getDisplayURL(themeDisplay, true);
-		}
+		String viewSiteURL = groupURLProvider.getGroupURL(curGroup, liferayPortletRequest);
 		%>
 
 		<c:choose>

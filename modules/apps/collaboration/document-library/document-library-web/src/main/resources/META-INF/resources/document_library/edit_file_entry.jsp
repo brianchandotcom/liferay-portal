@@ -208,288 +208,290 @@ if (portletTitleBasedNavigation) {
 
 		<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(WorkflowConstants.ACTION_PUBLISH) %>" />
 
-		<liferay-ui:error exception="<%= AntivirusScannerException.class %>">
-
-			<%
-			AntivirusScannerException ase = (AntivirusScannerException)errorException;
-			%>
-
-			<liferay-ui:message key="<%= ase.getMessageKey() %>" />
-		</liferay-ui:error>
-
-		<liferay-ui:error exception="<%= DuplicateFileEntryException.class %>" message="please-enter-a-unique-document-name" />
-		<liferay-ui:error exception="<%= DuplicateFolderNameException.class %>" message="please-enter-a-unique-document-name" />
-
-		<liferay-ui:error exception="<%= LiferayFileItemException.class %>">
-			<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(LiferayFileItem.THRESHOLD_SIZE, locale) %>" key="please-enter-valid-content-with-valid-content-size-no-larger-than-x" translateArguments="<%= false %>" />
-		</liferay-ui:error>
-
-		<liferay-ui:error exception="<%= FileExtensionException.class %>">
-			<liferay-ui:message key="document-names-must-end-with-one-of-the-following-extensions" /> <%= StringUtil.merge(PrefsPropsUtil.getStringArray(PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA), StringPool.COMMA_AND_SPACE) %>.
-		</liferay-ui:error>
-
-		<liferay-ui:error exception="<%= FileMimeTypeException.class %>">
-			<liferay-ui:message key="media-files-must-be-one-of-the-following-formats" /> <%= StringUtil.merge(dlPortletInstanceSettings.getMimeTypes(), StringPool.COMMA_AND_SPACE) %>.
-		</liferay-ui:error>
-
-		<liferay-ui:error exception="<%= FileNameException.class %>" message="please-enter-a-file-with-a-valid-file-name" />
-		<liferay-ui:error exception="<%= NoSuchFolderException.class %>" message="please-enter-a-valid-folder" />
-
-		<liferay-ui:error exception="<%= SourceFileNameException.class %>">
-			<liferay-ui:message key="the-source-file-does-not-have-the-same-extension-as-the-original-file" />
-		</liferay-ui:error>
-
-		<%
-		long fileMaxSize = dlEditFileEntryDisplayContext.getMaximumUploadSize();
-		%>
-
-		<liferay-ui:error exception="<%= FileSizeException.class %>">
-			<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(fileMaxSize, locale) %>" key="please-enter-a-file-with-a-valid-file-size-no-larger-than-x" translateArguments="<%= false %>" />
-		</liferay-ui:error>
-
-		<liferay-ui:error exception="<%= UploadRequestSizeException.class %>">
-			<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(dlEditFileEntryDisplayContext.getMaximumUploadRequestSize(), locale) %>" key="request-is-larger-than-x-and-could-not-be-processed" translateArguments="<%= false %>" />
-		</liferay-ui:error>
-
-		<liferay-ui:asset-categories-error />
-
-		<liferay-ui:asset-tags-error />
-
-		<aui:model-context bean="<%= fileVersion %>" model="<%= DLFileVersion.class %>" />
-
-		<aui:fieldset-group markupView="lexicon">
-			<aui:fieldset>
-				<c:if test="<%= fileMaxSize != 0 %>">
-					<div class="alert alert-info">
-						<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(fileMaxSize, locale) %>" key="upload-documents-no-larger-than-x" translateArguments="<%= false %>" />
-					</div>
-				</c:if>
+		<div class="lfr-form-content">
+			<liferay-ui:error exception="<%= AntivirusScannerException.class %>">
 
 				<%
-				String folderName = StringPool.BLANK;
-
-				if (folderId > 0) {
-					folder = DLAppLocalServiceUtil.getFolder(folderId);
-
-					folder = folder.toEscapedModel();
-
-					folderId = folder.getFolderId();
-					folderName = folder.getName();
-				}
-				else {
-					folderName = LanguageUtil.get(request, "home");
-				}
+				AntivirusScannerException ase = (AntivirusScannerException)errorException;
 				%>
 
-				<div class="form-group">
-					<c:if test="<%= dlEditFileEntryDisplayContext.isFolderSelectionVisible() %>">
-						<aui:input label="folder" name="folderName" type="resource" value="<%= folderName %>" />
+				<liferay-ui:message key="<%= ase.getMessageKey() %>" />
+			</liferay-ui:error>
 
-						<aui:button name="selectFolderButton" value="select" />
+			<liferay-ui:error exception="<%= DuplicateFileEntryException.class %>" message="please-enter-a-unique-document-name" />
+			<liferay-ui:error exception="<%= DuplicateFolderNameException.class %>" message="please-enter-a-unique-document-name" />
 
-						<%
-						String taglibRemoveFolder = "Liferay.Util.removeEntitySelection('folderId', 'folderName', this, '" + renderResponse.getNamespace() + "');";
-						%>
+			<liferay-ui:error exception="<%= LiferayFileItemException.class %>">
+				<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(LiferayFileItem.THRESHOLD_SIZE, locale) %>" key="please-enter-valid-content-with-valid-content-size-no-larger-than-x" translateArguments="<%= false %>" />
+			</liferay-ui:error>
 
-						<aui:button disabled="<%= folderId <= 0 %>" name="removeFolderButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
+			<liferay-ui:error exception="<%= FileExtensionException.class %>">
+				<liferay-ui:message key="document-names-must-end-with-one-of-the-following-extensions" /> <%= StringUtil.merge(PrefsPropsUtil.getStringArray(PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA), StringPool.COMMA_AND_SPACE) %>.
+			</liferay-ui:error>
 
-						<aui:script>
-							AUI.$('#<portlet:namespace />selectFolderButton').on(
-								'click',
-								function(event) {
-									Liferay.Util.selectEntity(
-										{
-											dialog: {
-												constrain: true,
-												destroyOnHide: true,
-												modal: true,
-												width: 680
-											},
-											id: '<portlet:namespace />selectFolder',
-											title: '<liferay-ui:message arguments="folder" key="select-x" />',
+			<liferay-ui:error exception="<%= FileMimeTypeException.class %>">
+				<liferay-ui:message key="media-files-must-be-one-of-the-following-formats" /> <%= StringUtil.merge(dlPortletInstanceSettings.getMimeTypes(), StringPool.COMMA_AND_SPACE) %>.
+			</liferay-ui:error>
 
-											<liferay-portlet:renderURL var="selectFolderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-												<portlet:param name="mvcRenderCommandName" value='<%= "/document_library/select_folder" %>' />
-											</liferay-portlet:renderURL>
+			<liferay-ui:error exception="<%= FileNameException.class %>" message="please-enter-a-file-with-a-valid-file-name" />
+			<liferay-ui:error exception="<%= NoSuchFolderException.class %>" message="please-enter-a-valid-folder" />
 
-											uri: '<%= selectFolderURL.toString() %>'
-										},
-										function(event) {
-											var folderData = {
-												idString: 'folderId',
-												idValue: event.folderid,
-												nameString: 'folderName',
-												nameValue: event.foldername
-											};
+			<liferay-ui:error exception="<%= SourceFileNameException.class %>">
+				<liferay-ui:message key="the-source-file-does-not-have-the-same-extension-as-the-original-file" />
+			</liferay-ui:error>
 
-											Liferay.Util.selectFolder(folderData, '<portlet:namespace />');
-										}
-									);
-								}
-							);
-						</aui:script>
+			<%
+			long fileMaxSize = dlEditFileEntryDisplayContext.getMaximumUploadSize();
+			%>
+
+			<liferay-ui:error exception="<%= FileSizeException.class %>">
+				<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(fileMaxSize, locale) %>" key="please-enter-a-file-with-a-valid-file-size-no-larger-than-x" translateArguments="<%= false %>" />
+			</liferay-ui:error>
+
+			<liferay-ui:error exception="<%= UploadRequestSizeException.class %>">
+				<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(dlEditFileEntryDisplayContext.getMaximumUploadRequestSize(), locale) %>" key="request-is-larger-than-x-and-could-not-be-processed" translateArguments="<%= false %>" />
+			</liferay-ui:error>
+
+			<liferay-ui:asset-categories-error />
+
+			<liferay-ui:asset-tags-error />
+
+			<aui:model-context bean="<%= fileVersion %>" model="<%= DLFileVersion.class %>" />
+
+			<aui:fieldset-group markupView="lexicon">
+				<aui:fieldset>
+					<c:if test="<%= fileMaxSize != 0 %>">
+						<div class="alert alert-info">
+							<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(fileMaxSize, locale) %>" key="upload-documents-no-larger-than-x" translateArguments="<%= false %>" />
+						</div>
 					</c:if>
-				</div>
 
-				<%@ include file="/document_library/edit_file_entry_picker.jspf" %>
+					<%
+					String folderName = StringPool.BLANK;
 
-				<aui:input name="title" />
+					if (folderId > 0) {
+						folder = DLAppLocalServiceUtil.getFolder(folderId);
+
+						folder = folder.toEscapedModel();
+
+						folderId = folder.getFolderId();
+						folderName = folder.getName();
+					}
+					else {
+						folderName = LanguageUtil.get(request, "home");
+					}
+					%>
+
+					<div class="form-group">
+						<c:if test="<%= dlEditFileEntryDisplayContext.isFolderSelectionVisible() %>">
+							<aui:input label="folder" name="folderName" type="resource" value="<%= folderName %>" />
+
+							<aui:button name="selectFolderButton" value="select" />
+
+							<%
+							String taglibRemoveFolder = "Liferay.Util.removeEntitySelection('folderId', 'folderName', this, '" + renderResponse.getNamespace() + "');";
+							%>
+
+							<aui:button disabled="<%= folderId <= 0 %>" name="removeFolderButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
+
+							<aui:script>
+								AUI.$('#<portlet:namespace />selectFolderButton').on(
+									'click',
+									function(event) {
+										Liferay.Util.selectEntity(
+											{
+												dialog: {
+													constrain: true,
+													destroyOnHide: true,
+													modal: true,
+													width: 680
+												},
+												id: '<portlet:namespace />selectFolder',
+												title: '<liferay-ui:message arguments="folder" key="select-x" />',
+
+												<liferay-portlet:renderURL var="selectFolderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+													<portlet:param name="mvcRenderCommandName" value='<%= "/document_library/select_folder" %>' />
+												</liferay-portlet:renderURL>
+
+												uri: '<%= selectFolderURL.toString() %>'
+											},
+											function(event) {
+												var folderData = {
+													idString: 'folderId',
+													idValue: event.folderid,
+													nameString: 'folderName',
+													nameValue: event.foldername
+												};
+
+												Liferay.Util.selectFolder(folderData, '<portlet:namespace />');
+											}
+										);
+									}
+								);
+							</aui:script>
+						</c:if>
+					</div>
+
+					<%@ include file="/document_library/edit_file_entry_picker.jspf" %>
+
+					<aui:input name="title" />
+
+					<c:if test="<%= (folder == null) || folder.isSupportsMetadata() %>">
+						<aui:input name="description" />
+
+						<c:if test="<%= (folder == null) || (folder.getModel() instanceof DLFolder) %>">
+
+							<%
+							boolean inherited = false;
+
+							if (folder != null) {
+								DLFolder dlFolder = (DLFolder)folder.getModel();
+
+								if (dlFolder.getRestrictionType() == DLFolderConstants.RESTRICTION_TYPE_INHERIT) {
+									inherited = true;
+								}
+							}
+
+							List<DLFileEntryType> dlFileEntryTypes = DLFileEntryTypeLocalServiceUtil.getFolderFileEntryTypes(PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId), folderId, inherited);
+							%>
+
+							<c:choose>
+								<c:when test="<%= !cmd.equals(Constants.ADD) && (dlFileEntryTypes.size() > 1) %>">
+									<aui:select changesContext="<%= true %>" label="document-type" name="fileEntryTypeId" onChange='<%= renderResponse.getNamespace() + "changeFileEntryType();" %>'>
+
+										<%
+										for (DLFileEntryType curDLFileEntryType : dlFileEntryTypes) {
+											if ((curDLFileEntryType.getFileEntryTypeId() == DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT) || (fileEntryTypeId == curDLFileEntryType.getFileEntryTypeId()) || DLFileEntryTypePermission.contains(permissionChecker, curDLFileEntryType, ActionKeys.VIEW)) {
+										%>
+
+											<aui:option label="<%= HtmlUtil.escape(curDLFileEntryType.getName(locale)) %>" selected="<%= (fileEntryTypeId == curDLFileEntryType.getPrimaryKey()) %>" value="<%= curDLFileEntryType.getPrimaryKey() %>" />
+
+										<%
+											}
+										}
+										%>
+
+									</aui:select>
+								</c:when>
+								<c:otherwise>
+									<aui:input name="fileEntryTypeId" type="hidden" value="<%= fileEntryTypeId %>" />
+								</c:otherwise>
+							</c:choose>
+
+							<aui:input name="defaultLanguageId" type="hidden" value="<%= themeDisplay.getLanguageId() %>" />
+
+							<%
+							if (fileEntryTypeId > 0) {
+								try {
+									List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
+
+									for (DDMStructure ddmStructure : ddmStructures) {
+										com.liferay.dynamic.data.mapping.storage.DDMFormValues ddmFormValues = null;
+
+										try {
+											DLFileEntryMetadata fileEntryMetadata = DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadata(ddmStructure.getStructureId(), fileVersionId);
+
+											ddmFormValues = dlEditFileEntryDisplayContext.getDDMFormValues(fileEntryMetadata.getDDMStorageId());
+										}
+										catch (Exception e) {
+										}
+							%>
+
+										<c:if test="<%= !dlEditFileEntryDisplayContext.isDDMStructureVisible(ddmStructure) %>">
+											<div class="hide">
+										</c:if>
+
+										<liferay-ddm:html
+											classNameId="<%= PortalUtil.getClassNameId(com.liferay.dynamic.data.mapping.model.DDMStructure.class) %>"
+											classPK="<%= ddmStructure.getPrimaryKey() %>"
+											ddmFormValues="<%= ddmFormValues %>"
+											fieldsNamespace="<%= String.valueOf(ddmStructure.getPrimaryKey()) %>"
+											requestedLocale="<%= locale %>"
+										/>
+
+										<c:if test="<%= !dlEditFileEntryDisplayContext.isDDMStructureVisible(ddmStructure) %>">
+											</div>
+										</c:if>
+
+							<%
+									}
+								}
+								catch (Exception e) {
+									_log.error(e, e);
+								}
+							}
+							%>
+
+						</c:if>
+					</c:if>
+				</aui:fieldset>
+
+				<c:if test="<%= (fileEntry != null) && !checkedOut %>">
+					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="versioning">
+						<aui:input
+							label="customize-the-version-number-increment-and-describe-my-changes"
+							name="updateVersionDetails"
+							type="toggle-switch"
+							value="<%= updateVersionDetails %>"
+						/>
+
+						<div id="<portlet:namespace />versionDetails" style="<%= (updateVersionDetails) ? StringPool.BLANK : "display: none" %>">
+							<aui:input checked="<%= majorVersion %>" label="major-version" name="majorVersion" type="radio" value="<%= true %>" />
+
+							<aui:input checked="<%= !majorVersion %>" label="minor-version" name="majorVersion" type="radio" value="<%= false %>" />
+
+							<aui:model-context />
+
+							<aui:input label="version-notes" name="changeLog" type="textarea" />
+
+							<aui:model-context bean="<%= fileVersion %>" model="<%= DLFileVersion.class %>" />
+						</div>
+					</aui:fieldset>
+				</c:if>
 
 				<c:if test="<%= (folder == null) || folder.isSupportsMetadata() %>">
-					<aui:input name="description" />
-
-					<c:if test="<%= (folder == null) || (folder.getModel() instanceof DLFolder) %>">
-
-						<%
-						boolean inherited = false;
-
-						if (folder != null) {
-							DLFolder dlFolder = (DLFolder)folder.getModel();
-
-							if (dlFolder.getRestrictionType() == DLFolderConstants.RESTRICTION_TYPE_INHERIT) {
-								inherited = true;
-							}
-						}
-
-						List<DLFileEntryType> dlFileEntryTypes = DLFileEntryTypeLocalServiceUtil.getFolderFileEntryTypes(PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId), folderId, inherited);
-						%>
-
-						<c:choose>
-							<c:when test="<%= !cmd.equals(Constants.ADD) && (dlFileEntryTypes.size() > 1) %>">
-								<aui:select changesContext="<%= true %>" label="document-type" name="fileEntryTypeId" onChange='<%= renderResponse.getNamespace() + "changeFileEntryType();" %>'>
-
-									<%
-									for (DLFileEntryType curDLFileEntryType : dlFileEntryTypes) {
-										if ((curDLFileEntryType.getFileEntryTypeId() == DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT) || (fileEntryTypeId == curDLFileEntryType.getFileEntryTypeId()) || DLFileEntryTypePermission.contains(permissionChecker, curDLFileEntryType, ActionKeys.VIEW)) {
-									%>
-
-										<aui:option label="<%= HtmlUtil.escape(curDLFileEntryType.getName(locale)) %>" selected="<%= (fileEntryTypeId == curDLFileEntryType.getPrimaryKey()) %>" value="<%= curDLFileEntryType.getPrimaryKey() %>" />
-
-									<%
-										}
-									}
-									%>
-
-								</aui:select>
-							</c:when>
-							<c:otherwise>
-								<aui:input name="fileEntryTypeId" type="hidden" value="<%= fileEntryTypeId %>" />
-							</c:otherwise>
-						</c:choose>
-
-						<aui:input name="defaultLanguageId" type="hidden" value="<%= themeDisplay.getLanguageId() %>" />
-
-						<%
-						if (fileEntryTypeId > 0) {
-							try {
-								List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
-
-								for (DDMStructure ddmStructure : ddmStructures) {
-									com.liferay.dynamic.data.mapping.storage.DDMFormValues ddmFormValues = null;
-
-									try {
-										DLFileEntryMetadata fileEntryMetadata = DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadata(ddmStructure.getStructureId(), fileVersionId);
-
-										ddmFormValues = dlEditFileEntryDisplayContext.getDDMFormValues(fileEntryMetadata.getDDMStorageId());
-									}
-									catch (Exception e) {
-									}
-						%>
-
-									<c:if test="<%= !dlEditFileEntryDisplayContext.isDDMStructureVisible(ddmStructure) %>">
-										<div class="hide">
-									</c:if>
-
-									<liferay-ddm:html
-										classNameId="<%= PortalUtil.getClassNameId(com.liferay.dynamic.data.mapping.model.DDMStructure.class) %>"
-										classPK="<%= ddmStructure.getPrimaryKey() %>"
-										ddmFormValues="<%= ddmFormValues %>"
-										fieldsNamespace="<%= String.valueOf(ddmStructure.getPrimaryKey()) %>"
-										requestedLocale="<%= locale %>"
-									/>
-
-									<c:if test="<%= !dlEditFileEntryDisplayContext.isDDMStructureVisible(ddmStructure) %>">
-										</div>
-									</c:if>
-
-						<%
-								}
-							}
-							catch (Exception e) {
-								_log.error(e, e);
-							}
-						}
-						%>
-
-					</c:if>
+					<liferay-ui:custom-attributes-available className="<%= DLFileEntryConstants.getClassName() %>">
+						<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="custom-fields">
+							<liferay-ui:custom-attribute-list
+								className="<%= DLFileEntryConstants.getClassName() %>"
+								classPK="<%= fileVersionId %>"
+								editable="<%= true %>"
+								label="<%= true %>"
+							/>
+						</aui:fieldset>
+					</liferay-ui:custom-attributes-available>
 				</c:if>
-			</aui:fieldset>
 
-			<c:if test="<%= (fileEntry != null) && !checkedOut %>">
-				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="versioning">
-					<aui:input
-						label="customize-the-version-number-increment-and-describe-my-changes"
-						name="updateVersionDetails"
-						type="toggle-switch"
-						value="<%= updateVersionDetails %>"
-					/>
+				<c:if test="<%= (folder == null) || folder.isSupportsSocial() %>">
+					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="categorization">
+						<liferay-asset:asset-categories-selector className="<%= DLFileEntry.class.getName() %>" classPK="<%= assetClassPK %>" classTypePK="<%= fileEntryTypeId %>" />
 
-					<div id="<portlet:namespace />versionDetails" style="<%= (updateVersionDetails) ? StringPool.BLANK : "display: none" %>">
-						<aui:input checked="<%= majorVersion %>" label="major-version" name="majorVersion" type="radio" value="<%= true %>" />
+						<liferay-asset:asset-tags-selector className="<%= DLFileEntry.class.getName() %>" classPK="<%= assetClassPK %>" />
+					</aui:fieldset>
 
-						<aui:input checked="<%= !majorVersion %>" label="minor-version" name="majorVersion" type="radio" value="<%= false %>" />
-
-						<aui:model-context />
-
-						<aui:input label="version-notes" name="changeLog" type="textarea" />
-
-						<aui:model-context bean="<%= fileVersion %>" model="<%= DLFileVersion.class %>" />
-					</div>
-				</aui:fieldset>
-			</c:if>
-
-			<c:if test="<%= (folder == null) || folder.isSupportsMetadata() %>">
-				<liferay-ui:custom-attributes-available className="<%= DLFileEntryConstants.getClassName() %>">
-					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="custom-fields">
-						<liferay-ui:custom-attribute-list
-							className="<%= DLFileEntryConstants.getClassName() %>"
-							classPK="<%= fileVersionId %>"
-							editable="<%= true %>"
-							label="<%= true %>"
+					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="related-assets">
+						<liferay-ui:input-asset-links
+							className="<%= DLFileEntry.class.getName() %>"
+							classPK="<%= assetClassPK %>"
 						/>
 					</aui:fieldset>
-				</liferay-ui:custom-attributes-available>
-			</c:if>
+				</c:if>
 
-			<c:if test="<%= (folder == null) || folder.isSupportsSocial() %>">
-				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="categorization">
-					<liferay-asset:asset-categories-selector className="<%= DLFileEntry.class.getName() %>" classPK="<%= assetClassPK %>" classTypePK="<%= fileEntryTypeId %>" />
+				<c:if test="<%= fileEntry == null %>">
+					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
+						<liferay-ui:input-permissions
+							modelName="<%= DLFileEntryConstants.getClassName() %>"
+						/>
+					</aui:fieldset>
+				</c:if>
 
-					<liferay-asset:asset-tags-selector className="<%= DLFileEntry.class.getName() %>" classPK="<%= assetClassPK %>" />
-				</aui:fieldset>
-
-				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="related-assets">
-					<liferay-ui:input-asset-links
-						className="<%= DLFileEntry.class.getName() %>"
-						classPK="<%= assetClassPK %>"
-					/>
-				</aui:fieldset>
-			</c:if>
-
-			<c:if test="<%= fileEntry == null %>">
-				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
-					<liferay-ui:input-permissions
-						modelName="<%= DLFileEntryConstants.getClassName() %>"
-					/>
-				</aui:fieldset>
-			</c:if>
-
-			<c:if test="<%= pending %>">
-				<div class="alert alert-info">
-					<liferay-ui:message key="there-is-a-publication-workflow-in-process" />
-				</div>
-			</c:if>
-		</aui:fieldset-group>
+				<c:if test="<%= pending %>">
+					<div class="alert alert-info">
+						<liferay-ui:message key="there-is-a-publication-workflow-in-process" />
+					</div>
+				</c:if>
+			</aui:fieldset-group>
+		</div>
 
 		<aui:button-row>
 			<c:if test="<%= dlEditFileEntryDisplayContext.isSaveButtonVisible() %>">

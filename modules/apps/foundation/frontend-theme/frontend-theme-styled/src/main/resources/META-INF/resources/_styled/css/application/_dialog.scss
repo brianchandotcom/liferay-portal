@@ -12,6 +12,10 @@
 		position: static;
 	}
 
+	.lfr-form-content {
+		padding: 15px;
+	}
+
 	.portlet-body,
 	.portlet-column,
 	.portlet-configuration,
@@ -25,6 +29,7 @@
 	}
 
 	.dialog-body,
+	.lfr-form-content,
 	.portlet-configuration-body-content,
 	.export-dialog-tree,
 	.lfr-dynamic-uploader,
@@ -39,6 +44,7 @@
 	}
 
 	.dialog-body,
+	.lfr-form-content,
 	.portlet-configuration-body-content {
 		bottom: 0;
 		left: 0;
@@ -122,9 +128,21 @@
 		}
 	}
 
+	.blog-article-button-row,
+	.journal-article-button-row,
+	.kb-submit-buttons {
+		.btn-lg {
+			@include media-query(null, $screen-xs-max) {
+				padding-left: 16px;
+				padding-right: 16px;
+			}
+		}
+	}
+
 	.dialog-body,
 	.export-dialog-tree,
 	.lfr-dynamic-uploader,
+	.lfr-form-content,
 	.portlet-configuration-body-content {
 		bottom: $dialog-footer-height;
 

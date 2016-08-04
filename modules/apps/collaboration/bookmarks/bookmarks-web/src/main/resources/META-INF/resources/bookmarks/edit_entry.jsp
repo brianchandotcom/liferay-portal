@@ -80,113 +80,115 @@ if (portletTitleBasedNavigation) {
 			/>
 		</c:if>
 
-		<liferay-ui:error exception="<%= EntryURLException.class %>" message="please-enter-a-valid-url" />
-		<liferay-ui:error exception="<%= NoSuchFolderException.class %>" message="please-enter-a-valid-folder" />
+		<div class="lfr-form-content">
+			<liferay-ui:error exception="<%= EntryURLException.class %>" message="please-enter-a-valid-url" />
+			<liferay-ui:error exception="<%= NoSuchFolderException.class %>" message="please-enter-a-valid-folder" />
 
-		<liferay-ui:asset-categories-error />
+			<liferay-ui:asset-categories-error />
 
-		<liferay-ui:asset-tags-error />
+			<liferay-ui:asset-tags-error />
 
-		<aui:model-context bean="<%= entry %>" model="<%= BookmarksEntry.class %>" />
+			<aui:model-context bean="<%= entry %>" model="<%= BookmarksEntry.class %>" />
 
-		<aui:fieldset-group markupView="lexicon">
-			<aui:fieldset>
-				<c:if test="<%= showFolderSelector %>">
-
-					<%
-					String folderName = StringPool.BLANK;
-
-					if (folderId > 0) {
-						BookmarksFolder folder = BookmarksFolderServiceUtil.getFolder(folderId);
-
-						folderId = folder.getFolderId();
-						folderName = folder.getName();
-					}
-					%>
-
-					<div class="form-group">
-						<aui:input label="folder" name="folderName" type="resource" value="<%= folderName %>" />
-
-						<aui:button name="selectFolderButton" value="select" />
-
-						<aui:script>
-							AUI.$('#<portlet:namespace />selectFolderButton').on(
-								'click',
-								function(event) {
-									Liferay.Util.selectEntity(
-										{
-											dialog: {
-												constrain: true,
-												destroyOnHide: true,
-												modal: true,
-												width: 680
-											},
-											id: '<portlet:namespace />selectFolder',
-											title: '<liferay-ui:message arguments="folder" key="select-x" />',
-											uri: '<liferay-portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcRenderCommandName" value="/bookmarks/select_folder" /></liferay-portlet:renderURL>'
-										},
-										function(event) {
-											var folderData = {
-												idString: 'folderId',
-												idValue: event.folderid,
-												nameString: 'folderName',
-												nameValue: event.name
-											};
-
-											Liferay.Util.selectFolder(folderData, '<portlet:namespace />');
-										}
-									);
-								}
-							);
-						</aui:script>
+			<aui:fieldset-group markupView="lexicon">
+				<aui:fieldset>
+					<c:if test="<%= showFolderSelector %>">
 
 						<%
-						String taglibRemoveFolder = "Liferay.Util.removeEntitySelection('folderId', 'folderName', this, '" + renderResponse.getNamespace() + "');";
+						String folderName = StringPool.BLANK;
+
+						if (folderId > 0) {
+							BookmarksFolder folder = BookmarksFolderServiceUtil.getFolder(folderId);
+
+							folderId = folder.getFolderId();
+							folderName = folder.getName();
+						}
 						%>
 
-						<aui:button disabled="<%= (folderId <= 0) %>" name="removeFolderButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
-					</div>
-				</c:if>
+						<div class="form-group">
+							<aui:input label="folder" name="folderName" type="resource" value="<%= folderName %>" />
 
-				<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) || windowState.equals(LiferayWindowState.POP_UP) %>" name="name" />
+							<aui:button name="selectFolderButton" value="select" />
 
-				<aui:input name="url" />
+							<aui:script>
+								AUI.$('#<portlet:namespace />selectFolderButton').on(
+									'click',
+									function(event) {
+										Liferay.Util.selectEntity(
+											{
+												dialog: {
+													constrain: true,
+													destroyOnHide: true,
+													modal: true,
+													width: 680
+												},
+												id: '<portlet:namespace />selectFolder',
+												title: '<liferay-ui:message arguments="folder" key="select-x" />',
+												uri: '<liferay-portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcRenderCommandName" value="/bookmarks/select_folder" /></liferay-portlet:renderURL>'
+											},
+											function(event) {
+												var folderData = {
+													idString: 'folderId',
+													idValue: event.folderid,
+													nameString: 'folderName',
+													nameValue: event.name
+												};
 
-				<aui:input name="description" />
-			</aui:fieldset>
+												Liferay.Util.selectFolder(folderData, '<portlet:namespace />');
+											}
+										);
+									}
+								);
+							</aui:script>
 
-			<liferay-ui:custom-attributes-available className="<%= BookmarksEntry.class.getName() %>">
-				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="custom-fields">
-					<liferay-ui:custom-attribute-list
+							<%
+							String taglibRemoveFolder = "Liferay.Util.removeEntitySelection('folderId', 'folderName', this, '" + renderResponse.getNamespace() + "');";
+							%>
+
+							<aui:button disabled="<%= (folderId <= 0) %>" name="removeFolderButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
+						</div>
+					</c:if>
+
+					<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) || windowState.equals(LiferayWindowState.POP_UP) %>" name="name" />
+
+					<aui:input name="url" />
+
+					<aui:input name="description" />
+				</aui:fieldset>
+
+				<liferay-ui:custom-attributes-available className="<%= BookmarksEntry.class.getName() %>">
+					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="custom-fields">
+						<liferay-ui:custom-attribute-list
+							className="<%= BookmarksEntry.class.getName() %>"
+							classPK="<%= entryId %>"
+							editable="<%= true %>"
+							label="<%= true %>"
+						/>
+					</aui:fieldset>
+				</liferay-ui:custom-attributes-available>
+
+				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="categorization">
+					<liferay-asset:asset-categories-selector className="<%= BookmarksEntry.class.getName() %>" classPK="<%= entryId %>" />
+
+					<liferay-asset:asset-tags-selector className="<%= BookmarksEntry.class.getName() %>" classPK="<%= entryId %>" />
+				</aui:fieldset>
+
+				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="related-assets">
+					<liferay-ui:input-asset-links
 						className="<%= BookmarksEntry.class.getName() %>"
 						classPK="<%= entryId %>"
-						editable="<%= true %>"
-						label="<%= true %>"
 					/>
 				</aui:fieldset>
-			</liferay-ui:custom-attributes-available>
 
-			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="categorization">
-				<liferay-asset:asset-categories-selector className="<%= BookmarksEntry.class.getName() %>" classPK="<%= entryId %>" />
-
-				<liferay-asset:asset-tags-selector className="<%= BookmarksEntry.class.getName() %>" classPK="<%= entryId %>" />
-			</aui:fieldset>
-
-			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="related-assets">
-				<liferay-ui:input-asset-links
-					className="<%= BookmarksEntry.class.getName() %>"
-					classPK="<%= entryId %>"
-				/>
-			</aui:fieldset>
-
-			<c:if test="<%= entry == null %>">
-				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
-					<liferay-ui:input-permissions
-						modelName="<%= BookmarksEntry.class.getName() %>"
-					/>
-				</aui:fieldset>
-			</c:if>
-		</aui:fieldset-group>
+				<c:if test="<%= entry == null %>">
+					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
+						<liferay-ui:input-permissions
+							modelName="<%= BookmarksEntry.class.getName() %>"
+						/>
+					</aui:fieldset>
+				</c:if>
+			</aui:fieldset-group>
+		</div>
 
 		<aui:button-row>
 			<aui:button cssClass="btn-lg" type="submit" />

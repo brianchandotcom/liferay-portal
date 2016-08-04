@@ -24,17 +24,17 @@
 		@content;
 	}
 	@else if $maxWidth <= 0 {
-		@media only screen and (min-width: $minWidth) {
+		@media (min-width: $minWidth) {
 			@content;
 		}
 	}
 	@else if $minWidth <= 0 {
-		@media only screen and (max-width: $maxWidth) {
+		@media (max-width: $maxWidth) {
 			@content;
 		}
 	}
 	@else {
-		@media only screen and (min-width: $minWidth) and (max-width: $maxWidth) {
+		@media (min-width: $minWidth) and (max-width: $maxWidth) {
 			@content;
 		}
 	}

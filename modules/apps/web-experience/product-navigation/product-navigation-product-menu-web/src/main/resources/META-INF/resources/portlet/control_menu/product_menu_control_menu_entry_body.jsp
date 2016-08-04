@@ -32,7 +32,7 @@ String productMenuState = SessionClicks.get(request, ProductNavigationProductMen
 %>
 
 <liferay-util:body-bottom outputKey="productMenu">
-	<div class="<%= productMenuState %> lfr-product-menu-panel sidenav-fixed sidenav-menu-slider" id="<%= portletNamespace %>sidenavSliderId">
+	<div class="<%= productMenuState %> hidden-print lfr-product-menu-panel sidenav-fixed sidenav-menu-slider" id="<%= portletNamespace %>sidenavSliderId">
 		<div class="product-menu sidebar sidenav-menu">
 			<liferay-portlet:runtime portletName="<%= ProductNavigationProductMenuPortletKeys.PRODUCT_NAVIGATION_PRODUCT_MENU %>" />
 		</div>

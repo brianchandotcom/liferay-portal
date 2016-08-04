@@ -25,7 +25,6 @@ import com.liferay.asset.kernel.service.AssetTagStatsLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyService;
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
-import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfigurationValues;
 import com.liferay.asset.publisher.web.util.AssetPublisherHelper;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
@@ -143,7 +142,8 @@ public class AssetPublisherPortletDisplayTemplateHandler
 
 	@Override
 	protected String getTemplatesConfigPath() {
-		return AssetPublisherWebConfigurationValues.DISPLAY_TEMPLATES_CONFIG;
+		return "com/liferay/asset/publisher/web/portlet/template/" +
+			"dependencies/portlet-display-templates.xml";
 	}
 
 }

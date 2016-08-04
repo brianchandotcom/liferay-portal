@@ -19,7 +19,6 @@ import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.kernel.service.AssetTagService;
 import com.liferay.asset.kernel.service.AssetTagStatsLocalService;
 import com.liferay.asset.tags.navigation.web.constants.AssetTagsNavigationPortletKeys;
-import com.liferay.asset.tags.navigation.web.internal.configuration.AssetTagsNavigationWebConfigurationValues;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandler;
@@ -109,8 +108,8 @@ public class AssetTagsNavigationPortletDisplayTemplateHandler
 
 	@Override
 	protected String getTemplatesConfigPath() {
-		return
-			AssetTagsNavigationWebConfigurationValues.DISPLAY_TEMPLATES_CONFIG;
+		return "com/liferay/asset/tags/navigation/web/portlet/template/" +
+			"dependencies/portlet-display-templates.xml";
 	}
 
 }

@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portlet.display.template.PortletDisplayTemplateConstants;
-import com.liferay.rss.web.configuration.RSSWebConfigurationValues;
 import com.liferay.rss.web.constants.RSSPortletKeys;
 import com.liferay.rss.web.internal.display.context.RSSDisplayContext;
 import com.liferay.rss.web.internal.util.RSSFeed;
@@ -91,7 +90,8 @@ public class RSSPortletDisplayTemplateHandler
 
 	@Override
 	protected String getTemplatesConfigPath() {
-		return RSSWebConfigurationValues.DISPLAY_TEMPLATES_CONFIG;
+		return "com/liferay/rss/web/portlet/template/dependencies/" +
+			"portlet-display-templates.xml";
 	}
 
 }

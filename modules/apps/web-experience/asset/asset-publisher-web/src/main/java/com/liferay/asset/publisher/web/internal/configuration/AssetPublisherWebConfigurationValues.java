@@ -30,9 +30,6 @@ public class AssetPublisherWebConfigurationValues {
 	public static String[] DISPLAY_STYLES =
 		AssetPublisherWebConfigurationUtil.getArray("display.styles");
 
-	public static final String DISPLAY_TEMPLATES_CONFIG = GetterUtil.getString(
-		AssetPublisherWebConfigurationUtil.get("display.templates.config"));
-
 	public static final boolean DYNAMIC_EXPORT_ENABLED = GetterUtil.getBoolean(
 		AssetPublisherWebConfigurationUtil.get("dynamic.export.enabled"));
 

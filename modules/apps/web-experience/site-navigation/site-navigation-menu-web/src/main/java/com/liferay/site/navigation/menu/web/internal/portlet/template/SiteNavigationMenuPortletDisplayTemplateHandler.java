@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portlet.display.template.PortletDisplayTemplateConstants;
-import com.liferay.site.navigation.menu.web.configuration.SiteNavigationMenuConfigurationValues;
 import com.liferay.site.navigation.menu.web.configuration.SiteNavigationMenuWebTemplateConfiguration;
 import com.liferay.site.navigation.menu.web.internal.constants.SiteNavigationMenuPortletKeys;
 
@@ -134,7 +133,8 @@ public class SiteNavigationMenuPortletDisplayTemplateHandler
 
 	@Override
 	protected String getTemplatesConfigPath() {
-		return SiteNavigationMenuConfigurationValues.DISPLAY_TEMPLATES_CONFIG;
+		return "com/liferay/site/navigation/menu/web/portlet/template/" +
+			"dependencies/portlet-display-templates.xml";
 	}
 
 	protected TemplateVariableGroup getUtilTemplateVariableGroup() {

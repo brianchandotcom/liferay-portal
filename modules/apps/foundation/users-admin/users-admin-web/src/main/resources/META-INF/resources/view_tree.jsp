@@ -44,6 +44,7 @@ else {
 }
 
 portletURL.setParameter("displayStyle", displayStyle);
+portletURL.setParameter("keywords", keywords);
 portletURL.setParameter("navigation", navigation);
 
 int status = WorkflowConstants.STATUS_ANY;
@@ -162,124 +163,52 @@ if (organization != null) {
 				</div>
 			</c:if>
 
-			<%
-			SearchContainer organizationSearch = new OrganizationSearch(renderRequest, "cur1", currentURLObj);
-
-			organizationSearch.setOrderByType(orderByType);
-			%>
-
-			<c:if test='<%= !navigation.equals("inactive") %>'>
-				<liferay-ui:search-container
-					id="organizations"
-					searchContainer="<%= organizationSearch %>"
-					var="organizationSearchContainer"
-				>
-
-					<%
-					OrganizationSearchTerms searchTerms = (OrganizationSearchTerms)organizationSearchContainer.getSearchTerms();
-
-					long parentOrganizationId = _getParentOrganizationId(request, organization, filterManageableOrganizations);
-
-					if (organization != null) {
-						parentOrganizationId = organization.getOrganizationId();
-					}
-
-					LinkedHashMap<String, Object> organizationParams = new LinkedHashMap<String, Object>();
-
-					List<Long> excludedOrganizationIds = new ArrayList<Long>();
-
-					excludedOrganizationIds.add(parentOrganizationId);
-
-					organizationParams.put("excludedOrganizationIds", excludedOrganizationIds);
-					%>
-
-					<c:choose>
-						<c:when test="<%= !searchTerms.hasSearchTerms() && (parentOrganizationId <= 0) && (filterManageableOrganizations) %>">
-							<liferay-ui:search-container-results>
-
-								<%
-								total = organizations.size();
-
-								organizationSearchContainer.setTotal(total);
-
-								results = ListUtil.subList(organizations, organizationSearchContainer.getStart(), organizationSearchContainer.getEnd());
-
-								organizationSearchContainer.setResults(results);
-								%>
-
-							</liferay-ui:search-container-results>
-						</c:when>
-						<c:otherwise>
-
-							<%
-							if (searchTerms.hasSearchTerms()) {
-								if (filterManageableOrganizations) {
-									organizationParams.put("organizationsTree", organizations);
-								}
-								else if (parentOrganizationId > 0) {
-									List<Organization> organizationsTree = new ArrayList<Organization>();
-
-									Organization parentOrganization = OrganizationLocalServiceUtil.getOrganization(parentOrganizationId);
-
-									organizationsTree.add(parentOrganization);
-
-									organizationParams.put("organizationsTree", organizationsTree);
-								}
-
-								parentOrganizationId = OrganizationConstants.ANY_PARENT_ORGANIZATION_ID;
-							}
-							%>
-
-							<liferay-ui:organization-search-container-results organizationParams="<%= organizationParams %>" parentOrganizationId="<%= parentOrganizationId %>" />
-						</c:otherwise>
-					</c:choose>
-				</liferay-ui:search-container>
-			</c:if>
-
-			<%
-			SearchContainer userSearch = new UserSearch(renderRequest, "cur2", currentURLObj);
-
-			userSearch.setOrderByType(orderByType);
-			%>
-
-			<liferay-ui:search-container
-				id="users"
-				searchContainer="<%= userSearch %>"
-				var="userSearchContainer"
-			>
-
-				<%
-				UserSearchTerms userSearchTerms = (UserSearchTerms)userSearchContainer.getSearchTerms();
-
-				userSearchTerms.setStatus(status);
-
-				LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
-
-				userParams.put("usersOrgs", Long.valueOf(organizationId));
-				%>
-
-				<liferay-ui:user-search-container-results userParams="<%= userParams %>" />
-			</liferay-ui:search-container>
-
 			<liferay-ui:search-container
 				emptyResultsMessage="no-results-were-found"
 				emptyResultsMessageCssClass="taglib-empty-result-message-header-has-plus-btn"
 				headerNames="name,type,status"
 				id="organizationUsers"
 				iteratorURL="<%= currentURLObj %>"
+				orderByComparator='<%= new OrganizationUserNameComparator(orderByType.equals("asc")) %>'
+				orderByType="<%= orderByType %>"
 				rowChecker="<%= new OrganizationUserChecker(renderResponse) %>"
-				total="<%= organizationSearch.getTotal() + userSearch.getTotal() %>"
-				var="membersSearchContainer"
 			>
+				<liferay-ui:search-container-results>
 
-				<%
-				List<Object> results = new ArrayList<>();
+					<%
+					if (Validator.isNotNull(keywords)) {
+						total = OrganizationLocalServiceUtil.searchOrganizationsAndUsersCount(company.getCompanyId(), organizationId, keywords, status, null);
 
-				results.addAll(organizationSearch.getResults());
-				results.addAll(userSearch.getResults());
+						Sort[] sorts = new Sort[] {new Sort("name", orderByType.equals("desc")), new Sort("lastName", orderByType.equals("desc"))};
 
-				membersSearchContainer.setResults(ListUtil.subList(results, membersSearchContainer.getStart(), membersSearchContainer.getEnd()));
-				%>
+						Hits hits = OrganizationLocalServiceUtil.searchOrganizationsAndUsers(company.getCompanyId(), organizationId, keywords, status, null, searchContainer.getStart(), searchContainer.getEnd(), sorts);
+
+						results = new ArrayList<>(hits.getLength());
+
+						List<SearchResult> searchResults = SearchResultUtil.getSearchResults(hits, locale);
+
+						for (SearchResult searchResult : searchResults) {
+							String className = searchResult.getClassName();
+
+							if (className.equals(Organization.class.getName())) {
+								results.add(OrganizationLocalServiceUtil.fetchOrganization(searchResult.getClassPK()));
+							}
+							else if (className.equals(User.class.getName())) {
+								results.add(UserLocalServiceUtil.fetchUser(searchResult.getClassPK()));
+							}
+						}
+					}
+					else {
+						total = OrganizationLocalServiceUtil.getOrganizationsAndUsersCount(company.getCompanyId(), organizationId, status);
+
+						results = OrganizationLocalServiceUtil.getOrganizationsAndUsers(company.getCompanyId(), organizationId, status, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+					}
+
+					searchContainer.setTotal(total);
+					searchContainer.setResults(results);
+					%>
+
+				</liferay-ui:search-container-results>
 
 				<liferay-ui:search-container-row
 					className="Object"
@@ -301,7 +230,7 @@ if (organization != null) {
 					<%@ include file="/organization/organization_user_search_columns.jspf" %>
 				</liferay-ui:search-container-row>
 
-				<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" resultRowSplitter="<%= new OrganizationResultRowSplitter() %>" searchContainer="<%= membersSearchContainer %>" />
+				<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" resultRowSplitter="<%= new OrganizationResultRowSplitter() %>" searchContainer="<%= searchContainer %>" />
 			</liferay-ui:search-container>
 		</aui:form>
 	</c:when>

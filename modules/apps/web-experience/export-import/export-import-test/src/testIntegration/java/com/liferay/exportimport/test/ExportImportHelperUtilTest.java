@@ -321,7 +321,7 @@ public class ExportImportHelperUtilTest {
 
 		portalUtil.setPortal(portalImpl);
 
-		_OLD_LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING =
+		_oldLayoutFriendlyURLPrivateUserServletMapping =
 			PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING;
 
 		setFinalStaticField(
@@ -353,7 +353,7 @@ public class ExportImportHelperUtilTest {
 		setFinalStaticField(
 			PropsValues.class.getDeclaredField(
 				"LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING"),
-			_OLD_LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING);
+			_oldLayoutFriendlyURLPrivateUserServletMapping);
 
 		setFinalStaticField(
 			ExportImportHelperImpl.class.getDeclaredField(
@@ -367,7 +367,7 @@ public class ExportImportHelperUtilTest {
 	@Ignore
 	@Test
 	public void testExportLayoutReferencesWithoutContext() throws Exception {
-		_OLD_LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING =
+		_oldLayoutFriendlyURLPrivateUserServletMapping =
 			PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING;
 
 		setFinalStaticField(
@@ -398,7 +398,7 @@ public class ExportImportHelperUtilTest {
 		setFinalStaticField(
 			PropsValues.class.getDeclaredField(
 				"LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING"),
-			_OLD_LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING);
+			_oldLayoutFriendlyURLPrivateUserServletMapping);
 
 		setFinalStaticField(
 			ExportImportHelperImpl.class.getDeclaredField(
@@ -900,7 +900,7 @@ public class ExportImportHelperUtilTest {
 		field.set(null, newValue);
 	}
 
-	private static String _OLD_LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING;
+	private static String _oldLayoutFriendlyURLPrivateUserServletMapping;
 
 	private FileEntry _fileEntry;
 

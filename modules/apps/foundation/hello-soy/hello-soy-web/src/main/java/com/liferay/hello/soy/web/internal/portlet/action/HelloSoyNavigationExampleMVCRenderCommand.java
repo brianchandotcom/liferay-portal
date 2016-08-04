@@ -15,7 +15,10 @@
 package com.liferay.hello.soy.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.template.Template;
+import com.liferay.portal.kernel.util.WebKeys;
 
+import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -28,17 +31,27 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"javax.portlet.name=hello_soy_portlet",
-		"mvc.command.name=hello_soy_description"
+		"mvc.command.name=hello_soy_navigation"
 	},
 	service = MVCRenderCommand.class
 )
-public class HelloSoyDescriptionMVCRenderCommand implements MVCRenderCommand {
+public class HelloSoyNavigationExampleMVCRenderCommand
+	implements MVCRenderCommand {
 
 	@Override
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		return "hello_soy_description";
+		Template template = (Template)renderRequest.getAttribute(
+			WebKeys.TEMPLATE);
+
+		PortletURL navigationURL = renderResponse.createRenderURL();
+
+		navigationURL.setParameter("mvcRenderCommandName", "hello_soy_view");
+
+		template.put("navigationURL", navigationURL.toString());
+
+		return "hello_soy_navigation";
 	}
 
 }

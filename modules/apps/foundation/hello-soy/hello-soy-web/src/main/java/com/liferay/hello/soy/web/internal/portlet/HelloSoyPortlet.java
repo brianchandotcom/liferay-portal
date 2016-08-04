@@ -14,14 +14,16 @@
 
 package com.liferay.hello.soy.web.internal.portlet;
 
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.portlet.bridge.soy.SoyPortlet;
 
 import java.io.IOException;
 
-import java.util.Objects;
+import java.util.List;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
@@ -30,6 +32,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Bruno Basto
@@ -67,22 +70,12 @@ public class HelloSoyPortlet extends SoyPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		PortletURL portletURL = renderResponse.createRenderURL();
+		PortletURL navigationURL = renderResponse.createRenderURL();
 
-		portletURL.setParameter("mvcPath", "hello_soy_description");
+		navigationURL.setParameter(
+			"mvcRenderCommandName", "hello_soy_navigation");
 
-		template.put("descriptionURL", portletURL.toString());
-
-		String path = getPath(renderRequest, renderResponse);
-
-		if (Objects.equals(path, "hello_soy_edit")) {
-			portletURL.setParameter("mvcPath", "hello_soy_view");
-		}
-		else {
-			portletURL.setParameter("mvcPath", "hello_soy_edit");
-		}
-
-		template.put("portletURL", portletURL.toString());
+		template.put("navigationURL", navigationURL.toString());
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -91,7 +84,17 @@ public class HelloSoyPortlet extends SoyPortlet {
 
 		template.put("userName", user.getFirstName());
 
+		Layout layout = themeDisplay.getLayout();
+
+		List<Layout> layouts = layoutService.getLayouts(
+			themeDisplay.getScopeGroupId(), layout.isPrivateLayout());
+
+		template.put("layouts", layouts);
+
 		super.render(renderRequest, renderResponse);
 	}
+
+	@Reference
+	protected LayoutService layoutService;
 
 }

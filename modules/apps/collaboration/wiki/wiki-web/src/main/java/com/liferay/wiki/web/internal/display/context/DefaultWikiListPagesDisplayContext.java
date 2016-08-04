@@ -247,11 +247,44 @@ public class DefaultWikiListPagesDisplayContext
 					searchContainer.getOrderByCol(),
 					searchContainer.getOrderByType());
 
-			results = WikiPageServiceUtil.getPages(
+			List<WikiPage> pages = WikiPageServiceUtil.getPages(
 				themeDisplay.getScopeGroupId(), _wikiNode.getNodeId(), true,
 				themeDisplay.getUserId(), true,
 				WorkflowConstants.STATUS_APPROVED, searchContainer.getStart(),
 				searchContainer.getEnd(), obc);
+
+			PermissionChecker permissionChecker =
+				_wikiRequestHelper.getPermissionChecker();
+
+			results = new ArrayList<>(results.size());
+
+			for (WikiPage curPage : pages) {
+				WikiPage resultPage = curPage;
+
+				if (permissionChecker.isContentReviewer(
+						_wikiRequestHelper.getCompanyId(),
+						_wikiRequestHelper.getScopeGroupId()) ||
+					WikiPagePermissionChecker.contains(
+						permissionChecker, curPage, ActionKeys.UPDATE)) {
+
+					WikiPage lastPage = null;
+
+					try {
+						lastPage = WikiPageLocalServiceUtil.getPage(
+							curPage.getResourcePrimKey(), false);
+					}
+					catch (PortalException pe) {
+					}
+
+					if ((lastPage != null) &&
+						(curPage.getVersion() < lastPage.getVersion())) {
+
+						resultPage = lastPage;
+					}
+				}
+
+				results.add(resultPage);
+			}
 		}
 		else if (navigation.equals("categorized-pages") ||
 				 navigation.equals("tagged-pages")) {

@@ -10,6 +10,9 @@
 		<module name="AvoidStarImport" />
 		<module name="DefaultComesLast" />
 		<module name="GenericWhitespace" />
+		<module name="LocalFinalVariableName">
+			<property name="format" value="^[a-z0-9][_a-zA-Z0-9]*$" />
+		</module>
 		<module name="LocalVariableName">
 			<property name="format" value="^[a-z0-9][_a-zA-Z0-9]*$" />
 		</module>

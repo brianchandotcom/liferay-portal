@@ -113,7 +113,7 @@ public class VelocityTemplateTest {
 
 	@Before
 	public void setUp() throws Exception {
-		VelocityEngineConfiguration _velocityEngineConfiguration =
+		VelocityEngineConfiguration velocityEngineConfiguration =
 			ConfigurableUtil.createConfigurable(
 				VelocityEngineConfiguration.class, Collections.emptyMap());
 
@@ -128,17 +128,17 @@ public class VelocityTemplateTest {
 		extendedProperties.setProperty(
 			VelocityEngine.DIRECTIVE_IF_TOSTRING_NULLCHECK,
 			String.valueOf(
-				_velocityEngineConfiguration.directiveIfToStringNullCheck()));
+				velocityEngineConfiguration.directiveIfToStringNullCheck()));
 		extendedProperties.setProperty(
 			VelocityEngine.EVENTHANDLER_METHODEXCEPTION,
 			LiferayMethodExceptionEventHandler.class.getName());
 		extendedProperties.setProperty(
 			RuntimeConstants.INTROSPECTOR_RESTRICT_CLASSES,
-			StringUtil.merge(_velocityEngineConfiguration.restrictedClasses()));
+			StringUtil.merge(velocityEngineConfiguration.restrictedClasses()));
 		extendedProperties.setProperty(
 			RuntimeConstants.INTROSPECTOR_RESTRICT_PACKAGES,
 			StringUtil.merge(
-				_velocityEngineConfiguration.restrictedPackages()));
+				velocityEngineConfiguration.restrictedPackages()));
 		extendedProperties.setProperty(
 			VelocityEngine.RESOURCE_LOADER, "liferay");
 		extendedProperties.setProperty(
@@ -147,7 +147,7 @@ public class VelocityTemplateTest {
 		extendedProperties.setProperty(
 			"liferay." + VelocityEngine.RESOURCE_LOADER +
 				".resourceModificationCheckInterval",
-			_velocityEngineConfiguration.resourceModificationCheckInterval() +
+			velocityEngineConfiguration.resourceModificationCheckInterval() +
 				"");
 		extendedProperties.setProperty(
 			"liferay." + VelocityEngine.RESOURCE_LOADER + ".class",
@@ -158,24 +158,24 @@ public class VelocityTemplateTest {
 		extendedProperties.setProperty(
 			"liferay." + VelocityEngine.RESOURCE_MANAGER_CLASS +
 				".resourceModificationCheckInterval",
-			_velocityEngineConfiguration.resourceModificationCheckInterval() +
+			velocityEngineConfiguration.resourceModificationCheckInterval() +
 				"");
 		extendedProperties.setProperty(
 			VelocityTemplateResourceLoader.class.getName(),
 			_templateResourceLoader);
 		extendedProperties.setProperty(
 			VelocityEngine.RUNTIME_LOG_LOGSYSTEM_CLASS,
-			_velocityEngineConfiguration.logger());
+			velocityEngineConfiguration.logger());
 		extendedProperties.setProperty(
 			VelocityEngine.RUNTIME_LOG_LOGSYSTEM + ".log4j.category",
-			_velocityEngineConfiguration.loggerCategory());
+			velocityEngineConfiguration.loggerCategory());
 		extendedProperties.setProperty(
 			RuntimeConstants.UBERSPECT_CLASSNAME,
 			SecureUberspector.class.getName());
 		extendedProperties.setProperty(
 			VelocityEngine.VM_LIBRARY,
 			StringUtil.merge(
-				_velocityEngineConfiguration.velocimacroLibrary()));
+				velocityEngineConfiguration.velocimacroLibrary()));
 		extendedProperties.setProperty(
 			VelocityEngine.VM_LIBRARY_AUTORELOAD,
 			String.valueOf(!cacheEnabled));

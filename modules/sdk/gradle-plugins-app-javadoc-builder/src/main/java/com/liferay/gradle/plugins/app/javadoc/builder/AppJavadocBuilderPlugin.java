@@ -44,6 +44,7 @@ import org.gradle.api.plugins.ReportingBasePlugin;
 import org.gradle.api.reporting.ReportingExtension;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.TaskContainer;
+import org.gradle.api.tasks.bundling.Jar;
 import org.gradle.api.tasks.javadoc.Javadoc;
 import org.gradle.external.javadoc.CoreJavadocOptions;
 import org.gradle.external.javadoc.StandardJavadocDocletOptions;
@@ -54,6 +55,8 @@ import org.gradle.external.javadoc.StandardJavadocDocletOptions;
 public class AppJavadocBuilderPlugin implements Plugin<Project> {
 
 	public static final String APP_JAVADOC_TASK_NAME = "appJavadoc";
+
+	public static final String JAR_APP_JAVADOC_TASK_NAME = "jarAppJavadoc";
 
 	public static final String PLUGIN_NAME = "appJavadocBuilder";
 
@@ -71,6 +74,8 @@ public class AppJavadocBuilderPlugin implements Plugin<Project> {
 
 		final Javadoc appJavadocTask = addTaskAppJavadoc(
 			project, reportingExtension);
+
+		addTaskJarAppJavadoc(appJavadocTask);
 
 		for (Project subproject : project.getSubprojects()) {
 			subproject.afterEvaluate(
@@ -145,6 +150,20 @@ public class AppJavadocBuilderPlugin implements Plugin<Project> {
 			new TreeMap<String, List<String>>());
 
 		return javadoc;
+	}
+
+	protected Jar addTaskJarAppJavadoc(Javadoc javadoc) {
+		Jar jar = GradleUtil.addTask(
+			javadoc.getProject(), JAR_APP_JAVADOC_TASK_NAME, Jar.class);
+
+		jar.from(javadoc);
+		jar.setClassifier("javadoc");
+		jar.setDescription(
+			"Assembles a jar archive containing the Javadoc files for this " +
+				"app.");
+		jar.setGroup(BasePlugin.BUILD_GROUP);
+
+		return jar;
 	}
 
 	protected void configureTaskAppJavadoc(

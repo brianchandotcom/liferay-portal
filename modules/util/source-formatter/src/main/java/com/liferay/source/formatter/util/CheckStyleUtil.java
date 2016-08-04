@@ -26,9 +26,13 @@ import com.puppycrawl.tools.checkstyle.PropertiesExpander;
 import com.puppycrawl.tools.checkstyle.api.AuditEvent;
 import com.puppycrawl.tools.checkstyle.api.AuditListener;
 import com.puppycrawl.tools.checkstyle.api.Configuration;
+import com.puppycrawl.tools.checkstyle.api.FilterSet;
+import com.puppycrawl.tools.checkstyle.filters.SuppressionsLoader;
 
 import java.io.File;
 import java.io.OutputStream;
+
+import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,8 +64,13 @@ public class CheckStyleUtil {
 
 		checker.setModuleClassLoader(classLoader);
 
+		FilterSet filterSet = _getSuppressions(classLoader);
+
+		checker.addFilter(filterSet);
+
 		Configuration configuration = ConfigurationLoader.loadConfiguration(
-			new InputSource(classLoader.getResourceAsStream("checkstyle.xml")),
+			new InputSource(
+				classLoader.getResourceAsStream("checkstyle.xml")),
 			new PropertiesExpander(System.getProperties()), false);
 
 		checker.configure(configuration);
@@ -72,6 +81,22 @@ public class CheckStyleUtil {
 		checker.addListener(listener);
 
 		return checker;
+	}
+
+	private static FilterSet _getSuppressions(ClassLoader classLoader)
+		throws Exception {
+
+		URL url = classLoader.getResource("checkstyle-suppressions.xml");
+
+		String path = url.getPath();
+
+		File file = new File(path.substring(1));
+
+		if (!file.exists()) {
+			return null;
+		}
+
+		return SuppressionsLoader.loadSuppressions(file.getAbsolutePath());
 	}
 
 	private static class SourceFormatterLogger extends DefaultLogger {

@@ -241,7 +241,7 @@ public class PortletInstance {
 
 	private static final String _USER_SEPARATOR = "_USER_";
 
-	private final String[] _PORTLET_NAME_KEYWORDS =
+	private static final String[] _PORTLET_NAME_KEYWORDS =
 		{_INSTANCE_SEPARATOR, _USER_SEPARATOR};
 
 	private final String _instanceId;

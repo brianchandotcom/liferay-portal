@@ -300,7 +300,7 @@ public class DLDirectoryNameAndFileNameTest {
 			serviceContext);
 	}
 
-	private final String[] _DL_CHAR_LAST_BLACKLIST =
+	private static final String[] _DL_CHAR_LAST_BLACKLIST =
 		{StringPool.SPACE, StringPool.PERIOD};
 
 	@DeleteAfterTestRun

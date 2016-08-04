@@ -40,7 +40,7 @@ renderResponse.setTitle(LanguageUtil.get(resourceBundle, "import"));
 			KBArticleImportException kbaie = (KBArticleImportException)errorException;
 			%>
 
-			<%= LanguageUtil.format(locale, "an-unexpected-error-occurred-while-importing-articles-x", kbaie.getLocalizedMessage()) %>
+			<%= LanguageUtil.format(request, "an-unexpected-error-occurred-while-importing-articles-x", kbaie.getLocalizedMessage()) %>
 		</liferay-ui:error>
 
 		<liferay-ui:error exception="<%= UploadRequestSizeException.class %>">

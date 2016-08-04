@@ -48,7 +48,7 @@ public class UserGroupModelListener extends BaseModelListener<UserGroup> {
 			}
 		}
 		catch (Exception e) {
-			throw new ModelListenerException(e);
+			_log.error(e, e);
 		}
 	}
 
@@ -66,7 +66,7 @@ public class UserGroupModelListener extends BaseModelListener<UserGroup> {
 			}
 		}
 		catch (Exception e) {
-			throw new ModelListenerException(e);
+			_log.error(e, e);
 		}
 	}
 

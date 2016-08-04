@@ -58,6 +58,12 @@ public class ScreensAssetEntryServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.json.JSONObject getAssetEntry(
+		java.lang.String className, long classPK, java.util.Locale locale)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getAssetEntry(className, classPK, locale);
+	}
+
+	public static com.liferay.portal.kernel.json.JSONObject getAssetEntry(
 		long entryId, java.util.Locale locale)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getAssetEntry(entryId, locale);

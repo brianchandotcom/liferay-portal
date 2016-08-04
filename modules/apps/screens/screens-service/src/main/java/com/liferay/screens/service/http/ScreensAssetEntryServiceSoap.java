@@ -103,5 +103,20 @@ public class ScreensAssetEntryServiceSoap {
 		}
 	}
 
+	public static java.lang.String getAssetEntry(java.lang.String className,
+		long classPK, String locale) throws RemoteException {
+		try {
+			com.liferay.portal.kernel.json.JSONObject returnValue = ScreensAssetEntryServiceUtil.getAssetEntry(className,
+					classPK, LocaleUtil.fromLanguageId(locale));
+
+			return returnValue.toString();
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(ScreensAssetEntryServiceSoap.class);
 }

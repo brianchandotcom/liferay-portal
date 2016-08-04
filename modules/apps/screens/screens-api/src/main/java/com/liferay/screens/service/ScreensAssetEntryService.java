@@ -66,6 +66,10 @@ public interface ScreensAssetEntryService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public JSONObject getAssetEntry(java.lang.String className, long classPK,
+		Locale locale) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public JSONObject getAssetEntry(long entryId, Locale locale)
 		throws PortalException;
 

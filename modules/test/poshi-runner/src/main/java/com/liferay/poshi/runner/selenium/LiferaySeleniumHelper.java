@@ -1539,21 +1539,8 @@ public class LiferaySeleniumHelper {
 			LiferaySelenium liferaySelenium, String locator)
 		throws Exception {
 
-		liferaySelenium.waitForElementNotPresent(locator, null);
-	}
-
-	public static void waitForElementNotPresent(
-			LiferaySelenium liferaySelenium, String locator, String timeout)
-		throws Exception {
-
-		int wait = PropsValues.TIMEOUT_EXPLICIT_WAIT;
-
-		if (Validator.isNotNull(timeout)) {
-			wait = GetterUtil.getInteger(timeout);
-		}
-
 		for (int second = 0;; second++) {
-			if (second >= wait) {
+			if (second >= PropsValues.TIMEOUT_EXPLICIT_WAIT) {
 				liferaySelenium.assertElementNotPresent(locator);
 			}
 
@@ -1573,21 +1560,8 @@ public class LiferaySeleniumHelper {
 			LiferaySelenium liferaySelenium, String locator)
 		throws Exception {
 
-		liferaySelenium.waitForElementPresent(locator, null);
-	}
-
-	public static void waitForElementPresent(
-			LiferaySelenium liferaySelenium, String locator, String timeout)
-		throws Exception {
-
-		int wait = PropsValues.TIMEOUT_EXPLICIT_WAIT;
-
-		if (Validator.isNotNull(timeout)) {
-			wait = GetterUtil.getInteger(timeout);
-		}
-
 		for (int second = 0;; second++) {
-			if (second >= wait) {
+			if (second >= PropsValues.TIMEOUT_EXPLICIT_WAIT) {
 				liferaySelenium.assertElementPresent(locator);
 			}
 

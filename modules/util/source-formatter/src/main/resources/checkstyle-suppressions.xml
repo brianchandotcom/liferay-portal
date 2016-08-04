@@ -3,4 +3,5 @@
 
 <suppressions>
 	<suppress checks="MemberName" files="ConstantsBeanFactoryImplTest\.java|IntrabandProxyUtilTest\.java|.*ContextContributor\.java" />
+	<suppress checks="StaticVariableName" files="ConstantsBeanFactoryImplTest\.java|PasswordEncryptorUtil\.java|SPIClassPathContextListener\.java" />
 </suppressions>

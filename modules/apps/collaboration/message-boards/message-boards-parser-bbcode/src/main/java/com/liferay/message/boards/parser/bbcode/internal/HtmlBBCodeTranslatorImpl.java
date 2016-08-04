@@ -720,7 +720,7 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 	private static final Log _log = LogFactoryUtil.getLog(
 		HtmlBBCodeTranslatorImpl.class);
 
-	private final String[][] _EMOTICONS = {
+	private static final String[][] _EMOTICONS = {
 		{"happy.gif", ":)", "happy"}, {"smile.gif", ":D", "smile"},
 		{"cool.gif", "B)", "cool"}, {"sad.gif", ":(", "sad"},
 		{"tongue.gif", ":P", "tongue"}, {"laugh.gif", ":lol:", "laugh"},

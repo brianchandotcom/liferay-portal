@@ -484,6 +484,8 @@ app.server.type=@{app.server.type}]]></echo>
 					git apply --exclude=.gitignore --whitespace=nowarn liferay-portal-source.diff
 
 					unzip liferay-portal-bundle-@{app.server.type}.zip
+
+					chmod -R a+x bundles
 				]]>
 			</execute>
 
@@ -647,6 +649,8 @@ app.server.type=@{app.server.type}]]></echo>
 										git apply --exclude=.gitignore --whitespace=nowarn liferay-portal-source.diff
 
 										unzip liferay-portal-bundle-@{app.server.type}.zip
+
+										chmod -R a+x bundles
 									]]>
 								</execute>
 							</then>

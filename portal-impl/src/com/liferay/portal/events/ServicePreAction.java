@@ -279,7 +279,9 @@ public class ServicePreAction extends Action {
 
 		long refererPlid = ParamUtil.getLong(request, "refererPlid");
 
-		if (LayoutLocalServiceUtil.fetchLayout(refererPlid) == null) {
+		if ((refererPlid != 0) &&
+			(LayoutLocalServiceUtil.fetchLayout(refererPlid) == null)) {
+
 			refererPlid = 0;
 		}
 

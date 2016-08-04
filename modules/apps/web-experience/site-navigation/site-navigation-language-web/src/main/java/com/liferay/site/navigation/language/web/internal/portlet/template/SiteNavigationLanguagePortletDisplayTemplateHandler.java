@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portlet.display.template.PortletDisplayTemplateConstants;
-import com.liferay.site.navigation.language.web.configuration.SiteNavigationLanguageWebConfigurationValues;
 import com.liferay.site.navigation.language.web.configuration.SiteNavigationLanguageWebTemplateConfiguration;
 import com.liferay.site.navigation.language.web.constants.SiteNavigationLanguagePortletKeys;
 
@@ -109,8 +108,8 @@ public class SiteNavigationLanguagePortletDisplayTemplateHandler
 
 	@Override
 	protected String getTemplatesConfigPath() {
-		return SiteNavigationLanguageWebConfigurationValues.
-			DISPLAY_TEMPLATES_CONFIG;
+		return "com/liferay/site/navigation/language/web/portlet/template/" +
+			"dependencies/portlet-display-templates.xml";
 	}
 
 	private volatile SiteNavigationLanguageWebTemplateConfiguration

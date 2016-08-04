@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portlet.display.template.PortletDisplayTemplateConstants;
-import com.liferay.site.navigation.breadcrumb.web.configuration.SiteNavigationBreadcrumbConfigurationValues;
 import com.liferay.site.navigation.breadcrumb.web.configuration.SiteNavigationBreadcrumbWebTemplateConfiguration;
 import com.liferay.site.navigation.breadcrumb.web.constants.SiteNavigationBreadcrumbPortletKeys;
 
@@ -134,8 +133,8 @@ public class SiteNavigationBreadcrumbPortletDisplayTemplateHandler
 
 	@Override
 	protected String getTemplatesConfigPath() {
-		return SiteNavigationBreadcrumbConfigurationValues.
-			DISPLAY_TEMPLATES_CONFIG;
+		return "com/liferay/site/navigation/breadcrumb/web/portlet/template/" +
+			"dependencies/portlet-display-templates.xml";
 	}
 
 	private volatile SiteNavigationBreadcrumbWebTemplateConfiguration

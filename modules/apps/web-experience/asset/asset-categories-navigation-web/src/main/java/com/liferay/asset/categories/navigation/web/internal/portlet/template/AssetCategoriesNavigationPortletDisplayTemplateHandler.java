@@ -14,7 +14,6 @@
 
 package com.liferay.asset.categories.navigation.web.internal.portlet.template;
 
-import com.liferay.asset.categories.navigation.web.configuration.AssetCategoriesNavigationWebConfigurationValues;
 import com.liferay.asset.categories.navigation.web.constants.AssetCategoriesNavigationPortletKeys;
 import com.liferay.asset.categories.navigation.web.internal.display.context.AssetCategoriesNavigationDisplayContext;
 import com.liferay.asset.kernel.model.AssetCategory;
@@ -116,8 +115,8 @@ public class AssetCategoriesNavigationPortletDisplayTemplateHandler
 
 	@Override
 	protected String getTemplatesConfigPath() {
-		return AssetCategoriesNavigationWebConfigurationValues.
-			DISPLAY_TEMPLATES_CONFIG;
+		return "com/liferay/asset/categories/navigation/web/portlet/template/" +
+			"dependencies/portlet-display-templates.xml";
 	}
 
 }

@@ -111,6 +111,8 @@ page import="com.liferay.ratings.kernel.transformer.RatingsDataTransformerUtil" 
 page import="com.liferay.site.admin.web.internal.constants.SiteAdminPortletKeys" %><%@
 page import="com.liferay.site.admin.web.internal.constants.SiteAdminWebKeys" %><%@
 page import="com.liferay.site.admin.web.internal.display.context.SiteAdminDisplayContext" %><%@
+page import="com.liferay.site.constants.SiteWebKeys" %><%@
+page import="com.liferay.site.util.GroupURLProvider" %><%@
 page import="com.liferay.sites.kernel.util.Sites" %><%@
 page import="com.liferay.sites.kernel.util.SitesUtil" %>
 

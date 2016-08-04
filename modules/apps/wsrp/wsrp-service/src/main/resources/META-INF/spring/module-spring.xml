@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean class="com.liferay.wsrp.service.impl.WSRPConsumerLocalServiceImpl" id="com.liferay.wsrp.service.WSRPConsumerLocalService" />
+	<bean class="com.liferay.wsrp.service.persistence.impl.WSRPConsumerPersistenceImpl" id="com.liferay.wsrp.service.persistence.WSRPConsumerPersistence" parent="basePersistence" />
+	<bean class="com.liferay.wsrp.service.impl.WSRPConsumerPortletLocalServiceImpl" id="com.liferay.wsrp.service.WSRPConsumerPortletLocalService" />
+	<bean class="com.liferay.wsrp.service.persistence.impl.WSRPConsumerPortletPersistenceImpl" id="com.liferay.wsrp.service.persistence.WSRPConsumerPortletPersistence" parent="basePersistence" />
+	<bean class="com.liferay.wsrp.service.impl.WSRPProducerLocalServiceImpl" id="com.liferay.wsrp.service.WSRPProducerLocalService" />
+	<bean class="com.liferay.wsrp.service.persistence.impl.WSRPProducerPersistenceImpl" id="com.liferay.wsrp.service.persistence.WSRPProducerPersistence" parent="basePersistence" />
+</beans>

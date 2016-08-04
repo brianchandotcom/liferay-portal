@@ -7706,9 +7706,9 @@ public class JournalArticleLocalServiceImpl
 
 		boolean validSmallImageExtension = false;
 
-		for (String _imageExtension : imageExtensions) {
-			if (StringPool.STAR.equals(_imageExtension) ||
-				StringUtil.endsWith(smallImageName, _imageExtension)) {
+		for (String imageExtension : imageExtensions) {
+			if (StringPool.STAR.equals(imageExtension) ||
+				StringUtil.endsWith(smallImageName, imageExtension)) {
 
 				validSmallImageExtension = true;
 

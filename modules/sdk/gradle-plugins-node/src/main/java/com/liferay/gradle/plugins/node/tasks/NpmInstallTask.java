@@ -78,54 +78,7 @@ public class NpmInstallTask extends ExecuteNpmTask {
 
 	@Override
 	public void executeNode() throws Exception {
-		Logger logger = getLogger();
-		Project project = getProject();
-
-		Path shrinkwrapJsonBackupPath = null;
-		Path shrinkwrapJsonPath = null;
-
-		File shrinkwrapJsonFile = getShrinkwrapJsonFile();
-
-		if (isRemoveShrinkwrappedUrls() && (shrinkwrapJsonFile != null)) {
-			shrinkwrapJsonPath = shrinkwrapJsonFile.toPath();
-
-			shrinkwrapJsonBackupPath = Paths.get(
-				shrinkwrapJsonPath.toString() + ".backup");
-
-			Files.copy(
-				shrinkwrapJsonPath, shrinkwrapJsonBackupPath,
-				StandardCopyOption.REPLACE_EXISTING);
-
-			removeShrinkwrappedUrls();
-		}
-
-		try {
-			PluginContainer pluginContainer = project.getPlugins();
-
-			if (pluginContainer.hasPlugin("com.liferay.cache") ||
-				(getNodeModulesCacheDir() == null)) {
-
-				if (logger.isInfoEnabled()) {
-					logger.info("Cache for {} is disabled", this);
-				}
-
-				_npmInstall();
-			}
-			else {
-				if (logger.isInfoEnabled()) {
-					logger.info("Cache for {} is enabled", this);
-				}
-
-				_npmInstallCached(this);
-			}
-		}
-		finally {
-			if (shrinkwrapJsonBackupPath != null) {
-				Files.move(
-					shrinkwrapJsonBackupPath, shrinkwrapJsonPath,
-					StandardCopyOption.REPLACE_EXISTING);
-			}
-		}
+		executeNpmInstall(false);
 	}
 
 	public File getNodeModulesCacheDir() {
@@ -182,6 +135,52 @@ public class NpmInstallTask extends ExecuteNpmTask {
 		_removeShrinkwrappedUrls = removeShrinkwrappedUrls;
 	}
 
+	protected void executeNpmInstall(boolean reset) throws Exception {
+		Logger logger = getLogger();
+
+		Path shrinkwrapJsonBackupPath = null;
+		Path shrinkwrapJsonPath = null;
+
+		File shrinkwrapJsonFile = getShrinkwrapJsonFile();
+
+		if (isRemoveShrinkwrappedUrls() && (shrinkwrapJsonFile != null)) {
+			shrinkwrapJsonPath = shrinkwrapJsonFile.toPath();
+
+			shrinkwrapJsonBackupPath = Paths.get(
+				shrinkwrapJsonPath.toString() + ".backup");
+
+			Files.copy(
+				shrinkwrapJsonPath, shrinkwrapJsonBackupPath,
+				StandardCopyOption.REPLACE_EXISTING);
+
+			removeShrinkwrappedUrls();
+		}
+
+		try {
+			if (isCacheEnabled()) {
+				if (logger.isInfoEnabled()) {
+					logger.info("Cache for {} is enabled", this);
+				}
+
+				_npmInstallCached(this, reset);
+			}
+			else {
+				if (logger.isInfoEnabled()) {
+					logger.info("Cache for {} is disabled", this);
+				}
+
+				_npmInstall(reset);
+			}
+		}
+		finally {
+			if (shrinkwrapJsonBackupPath != null) {
+				Files.move(
+					shrinkwrapJsonBackupPath, shrinkwrapJsonPath,
+					StandardCopyOption.REPLACE_EXISTING);
+			}
+		}
+	}
+
 	@Override
 	protected List<String> getCompleteArgs() {
 		List<String> completeArgs = super.getCompleteArgs();
@@ -189,6 +188,20 @@ public class NpmInstallTask extends ExecuteNpmTask {
 		completeArgs.add("install");
 
 		return completeArgs;
+	}
+
+	protected boolean isCacheEnabled() {
+		Project project = getProject();
+
+		PluginContainer pluginContainer = project.getPlugins();
+
+		if (!pluginContainer.hasPlugin("com.liferay.cache") &&
+			(getNodeModulesCacheDir() != null)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	protected void removeShrinkwrappedUrls() throws IOException {
@@ -235,7 +248,7 @@ public class NpmInstallTask extends ExecuteNpmTask {
 	}
 
 	private static synchronized void _npmInstallCached(
-			NpmInstallTask npmInstallTask)
+			NpmInstallTask npmInstallTask, boolean reset)
 		throws Exception {
 
 		Logger logger = npmInstallTask.getLogger();
@@ -250,6 +263,10 @@ public class NpmInstallTask extends ExecuteNpmTask {
 
 		boolean nativeSync = npmInstallTask.isNodeModulesCacheNativeSync();
 
+		if (reset) {
+			project.delete(nodeModulesCacheDir);
+		}
+
 		if (nodeModulesCacheDir.exists()) {
 			if (logger.isLifecycleEnabled()) {
 				logger.lifecycle(
@@ -260,20 +277,27 @@ public class NpmInstallTask extends ExecuteNpmTask {
 			FileUtil.syncDir(
 				project, nodeModulesCacheDir, nodeModulesDir, nativeSync);
 		}
+		else {
+			npmInstallTask._npmInstall(reset);
 
-		npmInstallTask._npmInstall();
+			if (logger.isLifecycleEnabled()) {
+				logger.lifecycle(
+					"Caching node_modules of {} in {}", project,
+					nodeModulesCacheDir);
+			}
 
-		if (logger.isLifecycleEnabled()) {
-			logger.lifecycle(
-				"Caching node_modules of {} in {}", project,
-				nodeModulesCacheDir);
+			FileUtil.syncDir(
+				project, nodeModulesDir, nodeModulesCacheDir, nativeSync);
 		}
-
-		FileUtil.syncDir(
-			project, nodeModulesDir, nodeModulesCacheDir, nativeSync);
 	}
 
-	private void _npmInstall() throws Exception {
+	private void _npmInstall(boolean reset) throws Exception {
+		if (reset) {
+			Project project = getProject();
+
+			project.delete(getNodeModulesDir());
+		}
+
 		super.executeNode();
 	}
 

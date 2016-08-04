@@ -232,10 +232,9 @@ public class RPCRequestTest {
 
 		private static final long serialVersionUID = 1L;
 
-		private final String _result;
-
 		private final Throwable _asyncThrowable;
 		private final boolean _cancel;
+		private final String _result;
 		private final Throwable _syncThrowable;
 
 	}

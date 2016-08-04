@@ -33,48 +33,45 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.xml.sax.InputSource;
+
 /**
  * @author Hugo Huijser
  */
 public class CheckStyleUtil {
 
 	public static List<SourceFormatterMessage> process(
-			String configurationFileName, List<File> files,
-			String baseDirAbsolutePath)
+			List<File> files, String baseDirAbsolutePath)
 		throws Exception {
 
-		Checker checker = _getChecker(
-			configurationFileName, baseDirAbsolutePath);
+		Checker checker = _getChecker(baseDirAbsolutePath);
 
 		checker.process(files);
 
 		return _sourceFormatterMessages;
 	}
 
-	private static Checker _getChecker(
-		String configurationFileName, String baseDirAbsolutePath) {
+	private static Checker _getChecker(String baseDirAbsolutePath)
+		throws Exception {
 
-		try {
-			Checker checker = new Checker();
+		Checker checker = new Checker();
 
-			checker.setModuleClassLoader(CheckStyleUtil.class.getClassLoader());
+		ClassLoader classLoader = CheckStyleUtil.class.getClassLoader();
 
-			Configuration configuration = ConfigurationLoader.loadConfiguration(
-				configurationFileName,
-				new PropertiesExpander(System.getProperties()), false);
+		checker.setModuleClassLoader(classLoader);
 
-			checker.configure(configuration);
+		Configuration configuration = ConfigurationLoader.loadConfiguration(
+			new InputSource(classLoader.getResourceAsStream("checkstyle.xml")),
+			new PropertiesExpander(System.getProperties()), false);
 
-			AuditListener listener = new SourceFormatterLogger(
-				new UnsyncByteArrayOutputStream(), true, baseDirAbsolutePath);
+		checker.configure(configuration);
 
-			checker.addListener(listener);
+		AuditListener listener = new SourceFormatterLogger(
+			new UnsyncByteArrayOutputStream(), true, baseDirAbsolutePath);
 
-			return checker;
-		}
-		catch (Exception e) {
-			return null;
-		}
+		checker.addListener(listener);
+
+		return checker;
 	}
 
 	private static class SourceFormatterLogger extends DefaultLogger {

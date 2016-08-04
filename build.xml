@@ -248,7 +248,7 @@
 						<if>
 							<equals arg1="${jsp.precompile.parallel}" arg2="on" />
 							<then>
-								<gradle-execute-build task="compileJSP,deploy" />
+								<gradle-execute-build tasks="compileJSP,deploy" />
 							</then>
 							<else>
 								<gradle-execute-build task="deploy" />
@@ -286,7 +286,7 @@
 					</then>
 				</if>
 			</else>
-		</if>
+		</if><fail />
 
 		<stopwatch action="elapsed" name="modules.stopwatch" />
 

@@ -25,10 +25,11 @@ public enum LicenseManagerMessageType {
 
 	LCS_AVAILABLE, SUBSCRIPTION_VALID, VALIDATE_LCS, VALIDATE_SUBSCRIPTION;
 
-	public static String MESSAGE_BUS_DESTINATION_REQUEST =
+	public static final String MESSAGE_BUS_DESTINATION_REQUEST =
 		"liferay/lcs_request";
 
-	public static String MESSAGE_BUS_DESTINATION_STATUS = "liferay/lcs_status";
+	public static final String MESSAGE_BUS_DESTINATION_STATUS =
+		"liferay/lcs_status";
 
 	public static JSONObject getMessagePayload(Message message) {
 		return getMessagePayload(message.getPayload());

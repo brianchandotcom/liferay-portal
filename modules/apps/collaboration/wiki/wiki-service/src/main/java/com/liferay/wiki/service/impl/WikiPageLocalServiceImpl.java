@@ -461,10 +461,10 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		Bundle bundle = FrameworkUtil.getBundle(WikiPageLocalServiceImpl.class);
 
-		BundleContext _bundleContext = bundle.getBundleContext();
+		BundleContext bundleContext = bundle.getBundleContext();
 
 		_serviceTrackerMap = ServiceTrackerMapFactory.singleValueMap(
-			_bundleContext, WikiPageRenameContentProcessor.class,
+			bundleContext, WikiPageRenameContentProcessor.class,
 			"wiki.format.name");
 
 		_serviceTrackerMap.open();

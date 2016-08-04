@@ -24,9 +24,9 @@ import com.liferay.push.notifications.model.PushNotificationsDevice;
 public class PushNotificationsDevicePlatformComparator
 	extends OrderByComparator<PushNotificationsDevice> {
 
-	public static String ORDER_BY_ASC = "platform ASC";
+	public static final String ORDER_BY_ASC = "platform ASC";
 
-	public static String ORDER_BY_DESC = "platform DESC";
+	public static final String ORDER_BY_DESC = "platform DESC";
 
 	public static final String[] ORDER_BY_FIELDS = {"platform"};
 

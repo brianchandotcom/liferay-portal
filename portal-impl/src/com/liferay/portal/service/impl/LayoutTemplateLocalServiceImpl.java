@@ -157,12 +157,10 @@ public class LayoutTemplateLocalServiceImpl
 
 	@Override
 	public List<LayoutTemplate> getLayoutTemplates(String themeId) {
-		Map<String, LayoutTemplate> _themesCustom = _getThemesCustom(themeId);
+		Map<String, LayoutTemplate> themesCustom = _getThemesCustom(themeId);
 
-		List<LayoutTemplate> customLayoutTemplates =
-			new ArrayList<LayoutTemplate>(
-				_portalCustom.size() + _warCustom.size() +
-					_themesCustom.size());
+		List<LayoutTemplate> customLayoutTemplates = new ArrayList<>(
+			_portalCustom.size() + _warCustom.size() + themesCustom.size());
 
 		for (Map.Entry<String, LayoutTemplate> entry :
 				_portalCustom.entrySet()) {
@@ -170,7 +168,7 @@ public class LayoutTemplateLocalServiceImpl
 			String layoutTemplateId = entry.getKey();
 			LayoutTemplate layoutTemplate = entry.getValue();
 
-			LayoutTemplate themeCustomLayoutTemplate = _themesCustom.get(
+			LayoutTemplate themeCustomLayoutTemplate = themesCustom.get(
 				layoutTemplateId);
 
 			if (themeCustomLayoutTemplate != null) {
@@ -193,21 +191,21 @@ public class LayoutTemplateLocalServiceImpl
 			String layoutTemplateId = entry.getKey();
 
 			if (!_portalCustom.containsKey(layoutTemplateId) &&
-				!_themesCustom.containsKey(layoutTemplateId)) {
+				!themesCustom.containsKey(layoutTemplateId)) {
 
 				customLayoutTemplates.add(_warCustom.get(layoutTemplateId));
 			}
 		}
 
 		for (Map.Entry<String, LayoutTemplate> entry :
-				_themesCustom.entrySet()) {
+				themesCustom.entrySet()) {
 
 			String layoutTemplateId = entry.getKey();
 
 			if (!_portalCustom.containsKey(layoutTemplateId) &&
 				!_warCustom.containsKey(layoutTemplateId)) {
 
-				customLayoutTemplates.add(_themesCustom.get(layoutTemplateId));
+				customLayoutTemplates.add(themesCustom.get(layoutTemplateId));
 			}
 		}
 
@@ -418,11 +416,11 @@ public class LayoutTemplateLocalServiceImpl
 
 	@Override
 	public void uninstallLayoutTemplates(String themeId) {
-		Map<String, LayoutTemplate> _themesStandard = _getThemesStandard(
+		Map<String, LayoutTemplate> themesStandard = _getThemesStandard(
 			themeId);
 
 		for (Map.Entry<String, LayoutTemplate> entry :
-				_themesStandard.entrySet()) {
+				themesStandard.entrySet()) {
 
 			LayoutTemplate layoutTemplate = entry.getValue();
 
@@ -442,12 +440,12 @@ public class LayoutTemplateLocalServiceImpl
 			}
 		}
 
-		_themesStandard.clear();
+		themesStandard.clear();
 
-		Map<String, LayoutTemplate> _themesCustom = _getThemesCustom(themeId);
+		Map<String, LayoutTemplate> themesCustom = _getThemesCustom(themeId);
 
 		for (Map.Entry<String, LayoutTemplate> entry :
-				_themesCustom.entrySet()) {
+				themesCustom.entrySet()) {
 
 			LayoutTemplate layoutTemplate = entry.getValue();
 
@@ -467,7 +465,7 @@ public class LayoutTemplateLocalServiceImpl
 			}
 		}
 
-		_themesCustom.clear();
+		themesCustom.clear();
 	}
 
 	private List<String> _getColumns(

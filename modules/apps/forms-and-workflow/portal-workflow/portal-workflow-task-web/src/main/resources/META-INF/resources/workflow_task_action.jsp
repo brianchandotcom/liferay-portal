@@ -87,9 +87,9 @@ redirectURL.setParameter("mvcPath", "/view.jsp");
 	</c:if>
 
 	<c:if test="<%= workflowTaskDisplayContext.hasOtherAssignees(workflowTask) %>">
-		<liferay-portlet:actionURL portletName="<%= PortletKeys.MY_WORKFLOW_TASK %>" var="renderURL">
+		<liferay-portlet:renderURL portletName="<%= PortletKeys.MY_WORKFLOW_TASK %>" var="renderURL">
 			<portlet:param name="mvcPath" value="/view.jsp" />
-		</liferay-portlet:actionURL>
+		</liferay-portlet:renderURL>
 
 		<liferay-portlet:actionURL name="assignWorkflowTask" portletName="<%= PortletKeys.MY_WORKFLOW_TASK %>" var="assignURL">
 			<portlet:param name="mvcPath" value="/edit_workflow_task.jsp" />

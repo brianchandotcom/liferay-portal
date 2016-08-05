@@ -16,6 +16,7 @@ package com.liferay.wiki.internal.exportimport.data.handler;
 
 import com.liferay.document.library.kernel.exception.NoSuchFileException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.exportimport.content.processor.ExportImportContentProcessorController;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
@@ -120,7 +121,7 @@ public class WikiPageStagedModelDataHandler
 			PortletDataContext.REFERENCE_TYPE_PARENT);
 
 		String content =
-			_wikiPageExportImportContentProcessor.
+			_exportImportContentProcessorController.
 				replaceExportContentReferences(
 					portletDataContext, page, page.getContent(),
 					portletDataContext.getBooleanParameter(
@@ -177,7 +178,7 @@ public class WikiPageStagedModelDataHandler
 			portletDataContext.getImportDataStagedModelElement(page);
 
 		String content =
-			_wikiPageExportImportContentProcessor.
+			_exportImportContentProcessorController.
 				replaceImportContentReferences(
 					portletDataContext, page, page.getContent());
 
@@ -329,13 +330,10 @@ public class WikiPageStagedModelDataHandler
 		}
 	}
 
-	@Reference(unbind = "-")
+	@Deprecated
 	protected void setWikiPageExportImportContentProcessor(
 		WikiPageExportImportContentProcessor
 			wikiPageExportImportContentProcessor) {
-
-		_wikiPageExportImportContentProcessor =
-			wikiPageExportImportContentProcessor;
 	}
 
 	@Reference(unbind = "-")
@@ -355,8 +353,10 @@ public class WikiPageStagedModelDataHandler
 	private static final Log _log = LogFactoryUtil.getLog(
 		WikiPageStagedModelDataHandler.class);
 
-	private WikiPageExportImportContentProcessor
-		_wikiPageExportImportContentProcessor;
+	@Reference
+	private ExportImportContentProcessorController
+		_exportImportContentProcessorController;
+
 	private WikiPageLocalService _wikiPageLocalService;
 	private WikiPageResourceLocalService _wikiPageResourceLocalService;
 

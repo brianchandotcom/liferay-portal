@@ -14,27 +14,10 @@
 
 package com.liferay.wiki.internal.exportimport.content.processor;
 
-import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
-import com.liferay.exportimport.content.processor.base.BaseTextExportImportContentProcessor;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Gergely Mathe
+ * @deprecated As of 7.0.0, with no direct replacement
  */
-@Component(
-	property = {"model.class.name=com.liferay.wiki.model.WikiPage"},
-	service = {
-		ExportImportContentProcessor.class,
-		WikiPageExportImportContentProcessor.class
-	}
-)
-public class WikiPageExportImportContentProcessor
-	extends BaseTextExportImportContentProcessor {
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		WikiPageExportImportContentProcessor.class);
-
+@Deprecated
+public class WikiPageExportImportContentProcessor {
 }

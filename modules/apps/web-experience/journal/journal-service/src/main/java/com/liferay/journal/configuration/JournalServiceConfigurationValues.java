@@ -18,7 +18,9 @@ import com.liferay.portal.kernel.util.GetterUtil;
 
 /**
  * @author Eduardo Garcia
+ * @deprecated As of 7.0.0, see {@link JournalServiceConfiguration}
  */
+@Deprecated
 public class JournalServiceConfigurationValues {
 
 	public static final String[] CHAR_BLACKLIST =

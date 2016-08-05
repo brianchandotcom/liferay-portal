@@ -1771,13 +1771,13 @@ public class ServiceBuilder {
 	private static void _move(File sourceFile, File destinationFile)
 		throws IOException {
 
-		Path destinationPath = destinationFile.toPath();
+		Path destinationPath = destinationFile.getParentFile().toPath();
 
 		if (!Files.exists(destinationPath)) {
 			Files.createDirectories(destinationPath);
 		}
 
-		Files.move(sourceFile.toPath(), destinationPath);
+		Files.move(sourceFile.toPath(), destinationFile.toPath());
 	}
 
 	private static String _normalize(String fileName) {

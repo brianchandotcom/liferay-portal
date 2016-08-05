@@ -99,6 +99,7 @@ AUI.add(
 						(new A.EventHandle(instance._fieldEventHandlers)).detach();
 
 						instance._fieldEventHandlers.push(
+							labelField.bindContainerEvent('keyup', A.bind('_onKeyUpKeyValueInput', instance, labelField), '.key-value-input'),
 							labelField.on('keyChange', A.bind('_onLabelFieldKeyChange', instance)),
 							labelField.after(A.bind('_afterLabelFieldNormalizeKey', instance), labelField, 'normalizeKey')
 						);
@@ -183,6 +184,12 @@ AUI.add(
 						advancedSettingsNode.toggleClass('active');
 
 						instance._syncModeToggler();
+					},
+
+					_onKeyUpKeyValueInput: function() {
+						var instance = this;
+
+						instance._saveSettings();
 					},
 
 					_onLabelFieldKeyChange: function(event) {

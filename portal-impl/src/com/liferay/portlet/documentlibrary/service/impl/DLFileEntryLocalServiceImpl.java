@@ -2443,6 +2443,8 @@ public class DLFileEntryLocalServiceImpl
 
 		for (DLFileVersion dlFileVersion : dlFileVersions) {
 			dlFileVersion.setFolderId(newFolderId);
+			dlFileVersion.setStatusByUserId(userId);
+			dlFileVersion.setStatusByUserName(user.getFullName());
 			dlFileVersion.setTreePath(dlFileVersion.buildTreePath());
 
 			dlFileVersionPersistence.update(dlFileVersion);

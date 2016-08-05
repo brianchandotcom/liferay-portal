@@ -665,7 +665,7 @@ Error-Prone was automatically installed. Please rerun your task.
 		<attribute default="false" name="maven.local.ignore" />
 		<attribute default="true" name="parallel" />
 		<attribute default="true" name="portal.build" />
-		<attribute default="true" name="quiet" />
+		<attribute default="false" name="quiet" />
 		<attribute default="null" name="task" />
 		<attribute default="null" name="tasks" />
 

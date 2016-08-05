@@ -37,6 +37,9 @@
 			<property name="format" value="^_[a-z0-9][_a-zA-Z0-9]*$" />
 		</module>
 		<module name="StringLiteralEquality" />
+		<module name="TypeName">
+			<property name="format" value="^[A-Z][_a-zA-Z0-9]*" />
+		</module>
 		<module name="UpperEll" />
 	</module>
 </module>

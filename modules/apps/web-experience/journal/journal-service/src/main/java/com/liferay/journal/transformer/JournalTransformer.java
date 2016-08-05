@@ -20,6 +20,10 @@ import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
+import com.liferay.portal.kernel.configuration.Configuration;
+import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
+import com.liferay.portal.kernel.configuration.Filter;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -35,6 +39,7 @@ import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.TemplateResource;
+import com.liferay.portal.kernel.template.URLTemplateResource;
 import com.liferay.portal.kernel.templateparser.TemplateNode;
 import com.liferay.portal.kernel.templateparser.TransformException;
 import com.liferay.portal.kernel.templateparser.TransformerListener;
@@ -59,6 +64,7 @@ import com.liferay.taglib.servlet.PipingServletResponse;
 
 import java.io.IOException;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -103,13 +109,6 @@ public class JournalTransformer {
 		}
 
 		_restricted = restricted;
-	}
-
-	public JournalTransformer(
-		String transformerListenerPropertyKey, String errorTemplatePropertyKey,
-		boolean restricted) {
-
-		this(errorTemplatePropertyKey, restricted);
 
 		for (TransformerListener transformerListener :
 				JournalTransformerListenerRegistryUtil.
@@ -117,6 +116,17 @@ public class JournalTransformer {
 
 			_transformerListeners.add(transformerListener);
 		}
+	}
+
+	/**
+	 * @deprecated As of 7.1.0, replaced by {@link #JournalTransformer(String, boolean)}
+	 */
+	@Deprecated
+	public JournalTransformer(
+		String transformerListenerPropertyKey, String errorTemplatePropertyKey,
+		boolean restricted) {
+
+		this(errorTemplatePropertyKey, restricted);
 	}
 
 	public String transform(

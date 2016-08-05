@@ -353,7 +353,7 @@
 
 	<command name="publishStagedSite">
 		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Staging Site" />
+			<var name="siteName" value="Staging Site Staging" />
 		</execute>
 
 		<execute function="AssertElementNotPresent" locator1="Home#PORTLET" />

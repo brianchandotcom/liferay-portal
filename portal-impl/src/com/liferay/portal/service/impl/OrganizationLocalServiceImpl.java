@@ -636,6 +636,28 @@ public class OrganizationLocalServiceImpl
 	}
 
 	/**
+	 * Returns the number of organizations and users belonging to the parent
+	 * organization.
+	 *
+	 * @param  companyId the primary key of the organization and user's company
+	 * @param  parentOrganizationId the primary key of the organization and user's
+	 *         parent organization
+	 * @param  status the user's workflow status
+	 * @return the number of organizations and users belonging to the parent organization
+	 */
+	@Override
+	public int getOrganizationsAndUsersCount(
+		long companyId, long parentOrganizationId, int status) {
+
+		QueryDefinition<?> queryDefinition = new QueryDefinition<>(
+			status, false, 0, false, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
+
+		return organizationFinder.countO_U_ByC_P(
+			companyId, parentOrganizationId, queryDefinition);
+	}
+
+	/**
 	 * Returns the number of organizations belonging to the parent organization.
 	 *
 	 * @param  companyId the primary key of the organization's company

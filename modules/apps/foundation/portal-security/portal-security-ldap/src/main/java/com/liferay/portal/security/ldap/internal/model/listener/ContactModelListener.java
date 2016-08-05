@@ -14,7 +14,6 @@
 
 package com.liferay.portal.security.ldap.internal.model.listener;
 
-import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
@@ -43,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 public class ContactModelListener extends BaseModelListener<Contact> {
 
 	@Override
-	public void onAfterCreate(Contact contact) throws ModelListenerException {
+	public void onAfterCreate(Contact contact) {
 		try {
 			exportToLDAP(contact);
 		}
@@ -53,7 +52,7 @@ public class ContactModelListener extends BaseModelListener<Contact> {
 	}
 
 	@Override
-	public void onAfterUpdate(Contact contact) throws ModelListenerException {
+	public void onAfterUpdate(Contact contact) {
 		try {
 			exportToLDAP(contact);
 		}

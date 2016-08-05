@@ -1,8 +1,5 @@
 package _package_;
 
-public class _CLASS_ {
+public interface _CLASS_ {
 
-	public _CLASS_() {
-		super();
-	}
 }

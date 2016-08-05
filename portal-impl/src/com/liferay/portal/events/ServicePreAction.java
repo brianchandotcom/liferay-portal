@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.exception.LayoutPermissionException;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.interval.IntervalActionProcessor;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -215,15 +214,8 @@ public class ServicePreAction extends Action {
 		int companyLogoHeight = 0;
 		int companyLogoWidth = 0;
 
-		Image companyLogoImage = null;
-
-		if (company.getLogoId() > 0) {
-			companyLogoImage = ImageLocalServiceUtil.getCompanyLogo(
-				company.getLogoId());
-		}
-		else {
-			companyLogoImage = ImageToolUtil.getDefaultCompanyLogo();
-		}
+		Image companyLogoImage = ImageLocalServiceUtil.getCompanyLogo(
+			company.getLogoId());
 
 		if (companyLogoImage != null) {
 			companyLogoHeight = companyLogoImage.getHeight();
@@ -278,7 +270,9 @@ public class ServicePreAction extends Action {
 
 		long refererPlid = ParamUtil.getLong(request, "refererPlid");
 
-		if (LayoutLocalServiceUtil.fetchLayout(refererPlid) == null) {
+		if ((refererPlid != 0) &&
+			(LayoutLocalServiceUtil.fetchLayout(refererPlid) == null)) {
+
 			refererPlid = 0;
 		}
 
@@ -337,15 +331,15 @@ public class ServicePreAction extends Action {
 			}
 		}
 
-		if (layout != null) {
+		if ((layout != null) &&
+			((layout.isPrivateLayout() &&
+			  !PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_ENABLED) ||
+			 (layout.isPublicLayout() &&
+			  !PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_ENABLED))) {
+
 			Group layoutGroup = layout.getGroup();
 
-			if (layoutGroup.isUser() &&
-				((layout.isPrivateLayout() &&
-				  !PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_ENABLED) ||
-				 (layout.isPublicLayout() &&
-				  !PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_ENABLED))) {
-
+			if (layoutGroup.isUser()) {
 				User layoutUser = UserLocalServiceUtil.getUserById(
 					companyId, layoutGroup.getClassPK());
 
@@ -930,15 +924,6 @@ public class ServicePreAction extends Action {
 				themeDisplay.setShowPageSettingsIcon(true);
 			}
 
-			Group scopeGroup = GroupLocalServiceUtil.getGroup(scopeGroupId);
-
-			boolean hasManageStagingPermission = GroupPermissionUtil.contains(
-				permissionChecker, scopeGroup, ActionKeys.MANAGE_STAGING);
-			boolean hasPublishStagingPermission = GroupPermissionUtil.contains(
-				permissionChecker, scopeGroup, ActionKeys.PUBLISH_STAGING);
-			boolean hasViewStagingPermission = GroupPermissionUtil.contains(
-				permissionChecker, scopeGroup, ActionKeys.VIEW_STAGING);
-
 			if (group.hasStagingGroup() && !group.isStagingGroup()) {
 				themeDisplay.setShowLayoutTemplatesIcon(false);
 				themeDisplay.setURLPublishToLive(null);
@@ -952,6 +937,19 @@ public class ServicePreAction extends Action {
 			// LEP-4987
 
 			if (group.isStaged() || group.isStagingGroup()) {
+				Group scopeGroup = GroupLocalServiceUtil.getGroup(scopeGroupId);
+
+				boolean hasManageStagingPermission =
+					GroupPermissionUtil.contains(
+						permissionChecker, scopeGroup,
+						ActionKeys.MANAGE_STAGING);
+				boolean hasPublishStagingPermission =
+					GroupPermissionUtil.contains(
+						permissionChecker, scopeGroup,
+						ActionKeys.PUBLISH_STAGING);
+				boolean hasViewStagingPermission = GroupPermissionUtil.contains(
+					permissionChecker, scopeGroup, ActionKeys.VIEW_STAGING);
+
 				if (hasManageStagingPermission || hasPublishStagingPermission ||
 					hasUpdateLayoutPermission || hasViewStagingPermission) {
 

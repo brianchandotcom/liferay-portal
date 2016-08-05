@@ -190,7 +190,7 @@ if ((portletParallelRender != null) && (portletParallelRender.booleanValue() == 
 
 Layout curLayout = PortletConfigurationLayoutUtil.getLayout(themeDisplay);
 
-if ((!group.hasStagingGroup() || group.isStagingGroup() || !PropsValues.STAGING_LIVE_GROUP_LOCKING_ENABLED) &&
+if ((!group.hasStagingGroup() || !PropsValues.STAGING_LIVE_GROUP_LOCKING_ENABLED) &&
 	(PortletPermissionUtil.contains(permissionChecker, themeDisplay.getScopeGroupId(), curLayout, portlet, ActionKeys.CONFIGURATION))) {
 
 	showConfigurationIcon = true;
@@ -209,7 +209,7 @@ if ((!group.hasStagingGroup() || group.isStagingGroup() || !PropsValues.STAGING_
 	Group checkingStagingGroup = group;
 
 	if (checkingStagingGroup.isControlPanel()) {
-		checkingStagingGroup = GroupLocalServiceUtil.fetchGroup(themeDisplay.getSiteGroupId());
+		checkingStagingGroup = themeDisplay.getSiteGroup();
 	}
 
 	if ((checkingStagingGroup.isStaged() || checkingStagingGroup.isStagedRemotely()) && !checkingStagingGroup.hasLocalOrRemoteStagingGroup() && checkingStagingGroup.isStagedPortlet(portletId)) {
@@ -230,18 +230,14 @@ if (group.isLayoutPrototype()) {
 	showStagingIcon = false;
 }
 
-if (portlet.hasPortletMode(responseContentType, PortletMode.EDIT)) {
-	if (PortletPermissionUtil.contains(permissionChecker, layout, portletId, ActionKeys.PREFERENCES)) {
-		showEditIcon = true;
+if (portlet.hasPortletMode(responseContentType, PortletMode.EDIT) && PortletPermissionUtil.contains(permissionChecker, layout, portletId, ActionKeys.PREFERENCES)) {
+	showEditIcon = true;
+
+	if (portlet.hasPortletMode(responseContentType, LiferayPortletMode.EDIT_DEFAULTS)) {
+		showEditDefaultsIcon = true;
 	}
-}
 
-if (portlet.hasPortletMode(responseContentType, LiferayPortletMode.EDIT_DEFAULTS) && showEditIcon) {
-	showEditDefaultsIcon = true;
-}
-
-if (portlet.hasPortletMode(responseContentType, LiferayPortletMode.EDIT_GUEST)) {
-	if (showEditIcon && !layout.isPrivateLayout()) {
+	if (portlet.hasPortletMode(responseContentType, LiferayPortletMode.EDIT_GUEST) && !layout.isPrivateLayout()) {
 		showEditGuestIcon = true;
 	}
 }
@@ -262,7 +258,7 @@ if (responseContentType.equals(ContentTypes.XHTML_MP) && portlet.hasMultipleMime
 // staging is activated, only staging layouts can be updated.
 
 if ((!themeDisplay.isSignedIn()) ||
-	(group.hasStagingGroup() && !group.isStagingGroup() && PropsValues.STAGING_LIVE_GROUP_LOCKING_ENABLED) ||
+	(group.hasStagingGroup() && PropsValues.STAGING_LIVE_GROUP_LOCKING_ENABLED) ||
 	(!LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.UPDATE))) {
 
 	if (!(!columnDisabled && customizable && LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.CUSTOMIZE))) {
@@ -327,7 +323,7 @@ else {
 
 long previousSiteGroupId = themeDisplay.getSiteGroupId();
 
-Group siteGroup = GroupLocalServiceUtil.getGroup(themeDisplay.getSiteGroupId());
+Group siteGroup = themeDisplay.getSiteGroup();
 
 if (siteGroup.isStagingGroup()) {
 	siteGroup = siteGroup.getLiveGroup();
@@ -805,12 +801,6 @@ if (group.isControlPanel()) {
 	}
 }
 
-// Portlet decorator
-
-String portletDecoratorId = portletSetup.getValue("portletSetupPortletDecoratorId", StringPool.BLANK);
-
-PortletDecorator portletDecorator = ThemeLocalServiceUtil.getPortletDecorator(company.getCompanyId(), theme.getThemeId(), portletDecoratorId);
-
 // Make sure the Tiles context is reset for the next portlet
 
 if ((invokerPortlet != null) && (invokerPortlet.isStrutsPortlet() || invokerPortlet.isStrutsBridgePortlet())) {
@@ -920,6 +910,12 @@ Boolean renderPortletBoundary = GetterUtil.getBoolean(request.getAttribute(WebKe
 			cssClasses += " portlet-static portlet-static-end";
 		}
 	}
+
+	// Portlet decorator
+
+	String portletDecoratorId = portletSetup.getValue("portletSetupPortletDecoratorId", StringPool.BLANK);
+
+	PortletDecorator portletDecorator = ThemeLocalServiceUtil.getPortletDecorator(company.getCompanyId(), theme.getThemeId(), portletDecoratorId);
 
 	if ((portletDecorator != null) && portletDisplay.isPortletDecorate()) {
 		portletDisplay.setPortletDecoratorId(portletDecorator.getPortletDecoratorId());

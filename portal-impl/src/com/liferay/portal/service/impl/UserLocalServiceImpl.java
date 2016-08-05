@@ -6678,6 +6678,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 			@Override
 			public void destroy() {
+				super.destroy();
 			}
 
 		};

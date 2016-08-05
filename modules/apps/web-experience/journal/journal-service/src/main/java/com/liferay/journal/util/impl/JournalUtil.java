@@ -20,6 +20,7 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.journal.configuration.JournalGroupServiceConfiguration;
 import com.liferay.journal.configuration.JournalServiceConfigurationKeys;
+import com.liferay.journal.configuration.JournalServiceConfigurationValues;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleDisplay;
 import com.liferay.journal.model.JournalFolder;
@@ -33,6 +34,7 @@ import com.liferay.journal.transformer.JournalTransformerListenerRegistryUtil;
 import com.liferay.journal.util.comparator.ArticleVersionComparator;
 import com.liferay.petra.collection.stack.FiniteUniqueStack;
 import com.liferay.petra.xml.XMLUtil;
+import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.diff.CompareVersionsException;
 import com.liferay.portal.kernel.diff.DiffHtmlUtil;
@@ -93,6 +95,7 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.XPath;
+import com.liferay.portal.util.PropsUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -1615,7 +1618,6 @@ public class JournalUtil {
 	private static Map<String, String> _customTokens;
 	private static final JournalTransformer _journalTransformer =
 		new JournalTransformer(
-			JournalServiceConfigurationKeys.TRANSFORMER_LISTENER,
 			JournalServiceConfigurationKeys.ERROR_TEMPLATE, true);
 
 }

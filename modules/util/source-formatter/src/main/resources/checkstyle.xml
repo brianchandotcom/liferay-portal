@@ -16,6 +16,11 @@
 		<module name="LocalVariableName">
 			<property name="format" value="^[a-z0-9][_a-zA-Z0-9]*$" />
 		</module>
+		<module name="MemberName">
+			<property name="applyToProtected" value="false" />
+			<property name="applyToPublic" value="false" />
+			<property name="format" value="^_[a-z0-9][_a-zA-Z0-9]*$" />
+		</module>
 		<module name="MethodParamPad" />
 		<module name="ModifierOrder" />
 		<module name="MultipleVariableDeclarations" />

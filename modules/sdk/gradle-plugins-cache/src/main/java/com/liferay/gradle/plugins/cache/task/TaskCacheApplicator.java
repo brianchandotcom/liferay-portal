@@ -27,7 +27,6 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 
 import java.util.Set;
-import java.util.SortedSet;
 
 import org.gradle.api.Action;
 import org.gradle.api.GradleException;
@@ -37,7 +36,6 @@ import org.gradle.api.logging.Logger;
 import org.gradle.api.logging.Logging;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.tasks.Copy;
-import org.gradle.util.Clock;
 
 /**
  * @author Andrea Di Giorgi
@@ -207,53 +205,9 @@ public class TaskCacheApplicator {
 	}
 
 	protected String getCurrentDigest(TaskCache taskCache) {
-		Clock clock = null;
-
-		if (_logger.isInfoEnabled()) {
-			clock = new Clock();
-		}
-
-		StringBuilder sb = new StringBuilder();
-
-		SortedSet<File> testFiles = null;
-
-		try {
-			testFiles = FileUtil.flattenAndSort(taskCache.getTestFiles());
-		}
-		catch (IOException ioe) {
-			throw new GradleException("Unable to flatten test files", ioe);
-		}
-
-		if (taskCache.isExcludeIgnoredTestFiles()) {
-			FileUtil.removeIgnoredFiles(taskCache.getProject(), testFiles);
-		}
-
-		for (File testFile : testFiles) {
-			if (!testFile.exists()) {
-				continue;
-			}
-
-			if (".DS_Store".equals(testFile.getName())) {
-				continue;
-			}
-
-			sb.append(FileUtil.getDigest(testFile));
-			sb.append(_DIGEST_SEPARATOR);
-		}
-
-		if (sb.length() == 0) {
-			throw new GradleException("At least one test file is required");
-		}
-
-		sb.setLength(sb.length() - 1);
-
-		if (_logger.isInfoEnabled() && (clock != null)) {
-			_logger.info(
-				"Getting the current digest took " + clock.getTimeInMs() +
-					" ms");
-		}
-
-		return sb.toString();
+		return FileUtil.getDigest(
+			taskCache.getProject(), taskCache.getTestFiles(),
+			taskCache.isExcludeIgnoredTestFiles());
 	}
 
 	protected void removeSkippedTaskDependencies(
@@ -313,8 +267,6 @@ public class TaskCacheApplicator {
 			throw new GradleException("Unable to write digest file", ioe);
 		}
 	}
-
-	private static final char _DIGEST_SEPARATOR = '-';
 
 	private static final Logger _logger = Logging.getLogger(
 		TaskCacheApplicator.class);

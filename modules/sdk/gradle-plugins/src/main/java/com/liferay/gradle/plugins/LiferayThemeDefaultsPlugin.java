@@ -208,7 +208,7 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 		return upload;
 	}
 
-	protected ReplaceRegexTask addTaskUpdateVersion(final Project project) {
+	protected ReplaceRegexTask addTaskUpdateVersion(Project project) {
 		ReplaceRegexTask replaceRegexTask = GradleUtil.addTask(
 			project, LiferayRelengPlugin.UPDATE_VERSION_TASK_NAME,
 			ReplaceRegexTask.class);

@@ -3,4 +3,5 @@
 
 <suppressions>
 	<suppress checks="MemberName" files="IntrabandProxyUtilTest\.java|.*ContextContributor\.java" />
+	<suppress checks="StaticVariableName" files="IntrabandProxyUtilTest\.java" />
 </suppressions>

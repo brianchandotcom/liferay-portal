@@ -1771,10 +1771,12 @@ public class ServiceBuilder {
 	private static void _move(File sourceFile, File destinationFile)
 		throws IOException {
 
-		Path destinationPath = destinationFile.getParentFile().toPath();
+		File parentFile = destinationFile.getParentFile();
 
-		if (!Files.exists(destinationPath)) {
-			Files.createDirectories(destinationPath);
+		Path parentPath = parentFile.toPath();
+
+		if (!Files.exists(parentPath)) {
+			Files.createDirectories(parentPath);
 		}
 
 		Files.move(sourceFile.toPath(), destinationFile.toPath());

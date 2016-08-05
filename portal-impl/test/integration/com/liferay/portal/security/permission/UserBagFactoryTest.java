@@ -181,8 +181,6 @@ public class UserBagFactoryTest {
 	}
 
 	protected UserBag getUserBag() throws Exception {
-		PermissionCacheUtil.removeUserBag(_user.getUserId());
-
 		return UserBagFactoryUtil.create(_user.getUserId());
 	}
 

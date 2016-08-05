@@ -29,11 +29,11 @@ import com.liferay.dynamic.data.mapping.annotations.DDMFormRule;
 	rules = {
 		@DDMFormRule(
 			actions = {
-				"set(fieldAt(\"emailFromAddress\",0),\"visible\",equals(get(fieldAt(\"sendEmailNotification\",0),\"value\"),true))",
-				"set(fieldAt(\"emailFromName\",0),\"visible\",equals(get(fieldAt(\"sendEmailNotification\",0),\"value\"),true))",
-				"set(fieldAt(\"emailSubject\",0),\"visible\",equals(get(fieldAt(\"sendEmailNotification\",0),\"value\"),true))",
-				"set(fieldAt(\"emailToAddress\",0),\"visible\",equals(get(fieldAt(\"sendEmailNotification\",0),\"value\"),true))",
-				"set(fieldAt(\"published\",0),\"visible\",false)"
+				"set(fieldAt(\"emailFromAddress\", 0), \"visible\", equals(get(fieldAt(\"sendEmailNotification\", 0), \"value\"), true))",
+				"set(fieldAt(\"emailFromName\", 0), \"visible\", equals(get(fieldAt(\"sendEmailNotification\", 0), \"value\"), true))",
+				"set(fieldAt(\"emailSubject\", 0), \"visible\", equals(get(fieldAt(\"sendEmailNotification\", 0), \"value\"), true))",
+				"set(fieldAt(\"emailToAddress\", 0), \"visible\", equals(get(fieldAt(\"sendEmailNotification\", 0), \"value\"), true))",
+				"set(fieldAt(\"published\", 0), \"visible\", false)"
 			}
 		)
 	}

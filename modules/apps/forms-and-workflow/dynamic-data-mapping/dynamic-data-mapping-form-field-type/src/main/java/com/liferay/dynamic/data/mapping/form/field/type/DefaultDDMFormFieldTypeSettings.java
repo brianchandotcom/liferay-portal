@@ -32,10 +32,10 @@ import com.liferay.portal.kernel.util.StringPool;
 	rules = {
 		@DDMFormRule(
 			actions = {
-				"set(fieldAt(\"fieldNamespace\",0),\"visible\",false)",
-				"set(fieldAt(\"indexType\",0),\"visible\",false)",
-				"set(fieldAt(\"localizable\",0),\"visible\",false)",
-				"set(fieldAt(\"readOnly\",0),\"visible\",false)"
+				"set(fieldAt(\"fieldNamespace\", 0), \"visible\", false)",
+				"set(fieldAt(\"indexType\", 0), \"visible\", false)",
+				"set(fieldAt(\"localizable\", 0), \"visible\", false)",
+				"set(fieldAt(\"readOnly\", 0), \"visible\", false)"
 			}
 		)
 	}

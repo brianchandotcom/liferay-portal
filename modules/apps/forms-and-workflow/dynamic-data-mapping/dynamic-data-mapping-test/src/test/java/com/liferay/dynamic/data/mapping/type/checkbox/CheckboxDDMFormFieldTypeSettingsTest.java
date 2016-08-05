@@ -57,8 +57,8 @@ public class CheckboxDDMFormFieldTypeSettingsTest
 
 		Assert.assertArrayEquals(
 			new String[] {
-				"set(fieldAt(\"repeatable\",0),\"visible\",false)",
-				"set(fieldAt(\"validation\",0),\"visible\",false)"
+				"set(fieldAt(\"repeatable\", 0), \"visible\", false)",
+				"set(fieldAt(\"validation\", 0), \"visible\", false)"
 			},
 			ddmFormRuleActions.toArray());
 

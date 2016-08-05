@@ -89,7 +89,7 @@ public class PatchTask extends DefaultTask {
 
 		};
 
-		args("--binary", "--strip=1", "--no-backup-if-mismatch");
+		args("--no-backup-if-mismatch", "--strip=1");
 	}
 
 	public PatchTask args(Iterable<Object> args) {
@@ -226,41 +226,11 @@ public class PatchTask extends DefaultTask {
 	@TaskAction
 	public void patch() throws Exception {
 		final Project project = getProject();
-		final File temporaryDir = getTemporaryDir();
 
-		project.delete(temporaryDir);
+		File patchesTemporaryDir = fixPatchFiles();
+		final File srcTemporaryDir = fixSrcFiles();
 
-		temporaryDir.mkdir();
-
-		project.copy(
-			new Action<CopySpec>() {
-
-				@Override
-				public void execute(CopySpec copySpec) {
-					String originalLibSrcDirName = getOriginalLibSrcDirName();
-
-					if (!originalLibSrcDirName.equals(".")) {
-						Map<Object, Object> leadingPathReplacementsMap =
-							new HashMap<>();
-
-						leadingPathReplacementsMap.put(
-							originalLibSrcDirName, "");
-
-						copySpec.eachFile(
-							new ReplaceLeadingPathAction(
-								leadingPathReplacementsMap));
-					}
-
-					copySpec.filter(FixCrLfFilter.class);
-					copySpec.from(project.zipTree(getOriginalLibSrcFile()));
-					copySpec.include(getFileNames());
-					copySpec.into(temporaryDir);
-					copySpec.setIncludeEmptyDirs(false);
-				}
-
-			});
-
-		for (final File patchFile : getSortedPatchFiles()) {
+		for (final File patchFile : getSortedFiles(patchesTemporaryDir)) {
 			final ByteArrayOutputStream byteArrayOutputStream =
 				new ByteArrayOutputStream();
 
@@ -269,17 +239,17 @@ public class PatchTask extends DefaultTask {
 
 					@Override
 					public void execute(ExecSpec execSpec) {
-						execSpec.setExecutable("patch");
-						execSpec.setIgnoreExitValue(true);
-						execSpec.setWorkingDir(temporaryDir);
-
 						execSpec.args(getArgs());
 
 						execSpec.args(
 							"--input=" +
-								FileUtil.relativize(patchFile, temporaryDir));
+								FileUtil.relativize(
+									patchFile, srcTemporaryDir));
 
+						execSpec.setExecutable("patch");
+						execSpec.setIgnoreExitValue(true);
 						execSpec.setStandardOutput(byteArrayOutputStream);
+						execSpec.setWorkingDir(srcTemporaryDir);
 					}
 
 				});
@@ -291,7 +261,7 @@ public class PatchTask extends DefaultTask {
 			execResult.assertNormalExitValue();
 		}
 
-		FileTree fileTree = project.fileTree(temporaryDir);
+		FileTree fileTree = project.fileTree(srcTemporaryDir);
 
 		for (File file : fileTree) {
 			File patchedSrcDir = getPatchedSrcDir(file.getName());
@@ -302,7 +272,7 @@ public class PatchTask extends DefaultTask {
 
 			Path patchedSrcDirPath = patchedSrcDir.toPath();
 
-			String relativePath = FileUtil.relativize(file, temporaryDir);
+			String relativePath = FileUtil.relativize(file, srcTemporaryDir);
 
 			patchedSrcDirPath = patchedSrcDirPath.resolve(relativePath);
 
@@ -392,6 +362,67 @@ public class PatchTask extends DefaultTask {
 		_patchFiles.clear();
 
 		patchFiles(patchFiles);
+	}
+
+	protected File fixPatchFiles() {
+		final Project project = getProject();
+
+		final File temporaryDir = new File(getTemporaryDir(), "patches");
+
+		project.delete(temporaryDir);
+
+		project.copy(
+			new Action<CopySpec>() {
+
+				@Override
+				public void execute(CopySpec copySpec) {
+					copySpec.filter(_fixCrLfArgs, FixCrLfFilter.class);
+					copySpec.from(getPatchFiles());
+					copySpec.into(temporaryDir);
+					copySpec.setIncludeEmptyDirs(false);
+				}
+
+			});
+
+		return temporaryDir;
+	}
+
+	protected File fixSrcFiles() {
+		final Project project = getProject();
+
+		final File temporaryDir = new File(getTemporaryDir(), "src");
+
+		project.delete(temporaryDir);
+
+		project.copy(
+			new Action<CopySpec>() {
+
+				@Override
+				public void execute(CopySpec copySpec) {
+					String originalLibSrcDirName = getOriginalLibSrcDirName();
+
+					if (!originalLibSrcDirName.equals(".")) {
+						Map<Object, Object> leadingPathReplacementsMap =
+							new HashMap<>();
+
+						leadingPathReplacementsMap.put(
+							originalLibSrcDirName, "");
+
+						copySpec.eachFile(
+							new ReplaceLeadingPathAction(
+								leadingPathReplacementsMap));
+					}
+
+					copySpec.filter(_fixCrLfArgs, FixCrLfFilter.class);
+					copySpec.from(project.zipTree(getOriginalLibSrcFile()));
+					copySpec.include(getFileNames());
+					copySpec.into(temporaryDir);
+					copySpec.setIncludeEmptyDirs(false);
+				}
+
+			});
+
+		return temporaryDir;
 	}
 
 	protected Dependency getOriginalLibDependency() {
@@ -504,18 +535,31 @@ public class PatchTask extends DefaultTask {
 		return GradleUtil.toFile(getProject(), patchedSrcDir);
 	}
 
-	protected List<File> getSortedPatchFiles() {
-		List<File> sortedPatchFiles = new ArrayList<>();
+	protected List<File> getSortedFiles(File dir) {
+		List<File> sortedFiles = new ArrayList<>();
 
-		GUtil.addToCollection(sortedPatchFiles, getPatchFiles());
+		Project project = getProject();
 
-		Collections.sort(sortedPatchFiles);
+		FileTree fileTree = project.fileTree(dir);
 
-		return sortedPatchFiles;
+		GUtil.addToCollection(sortedFiles, fileTree);
+
+		Collections.sort(sortedFiles);
+
+		return sortedFiles;
 	}
 
 	private static final String _BASE_URL =
 		"http://repo.maven.apache.org/maven2/";
+
+	private static final Map<String, Object> _fixCrLfArgs = new HashMap<>();
+
+	static {
+		_fixCrLfArgs.put(
+			"eof", FixCrLfFilter.AddAsisRemove.newInstance("remove"));
+		_fixCrLfArgs.put("eol", FixCrLfFilter.CrLf.newInstance("lf"));
+		_fixCrLfArgs.put("fixlast", false);
+	}
 
 	private final List<Object> _args = new ArrayList<>();
 	private boolean _copyOriginalLibClasses = true;

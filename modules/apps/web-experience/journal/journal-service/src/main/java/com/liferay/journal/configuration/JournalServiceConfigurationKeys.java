@@ -56,8 +56,6 @@ public class JournalServiceConfigurationKeys {
 	public static final String JOURNAL_FOLDER_ICON_CHECK_COUNT =
 		"journal.folder.icon.check.count";
 
-	public static final String LAR_CREATION_STRATEGY = "lar.creation.strategy";
-
 	public static final String PUBLISH_TO_LIVE_BY_DEFAULT =
 		"publish.to.live.by.default";
 
@@ -72,7 +70,5 @@ public class JournalServiceConfigurationKeys {
 
 	public static final String TERMS_OF_USE_JOURNAL_ARTICLE_ID =
 		"terms.of.use.journal.article.id";
-
-	public static final String TRANSFORMER_LISTENER = "transformer.listener";
 
 }

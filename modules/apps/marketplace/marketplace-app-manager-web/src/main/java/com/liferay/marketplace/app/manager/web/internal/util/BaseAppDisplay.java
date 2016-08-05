@@ -59,15 +59,15 @@ public abstract class BaseAppDisplay implements AppDisplay {
 
 	@Override
 	public int getState() {
-		List<Bundle> _bundles = getBundles();
+		List<Bundle> bundles = getBundles();
 
-		if (_bundles.isEmpty()) {
+		if (bundles.isEmpty()) {
 			return Bundle.UNINSTALLED;
 		}
 
 		int state = Bundle.ACTIVE;
 
-		for (Bundle bundle : _bundles) {
+		for (Bundle bundle : bundles) {
 			if (BundleUtil.isFragment(bundle)) {
 				continue;
 			}
@@ -107,7 +107,7 @@ public abstract class BaseAppDisplay implements AppDisplay {
 		}
 	}
 
-	private List<Bundle> _bundles = new ArrayList<>();
+	private final List<Bundle> _bundles = new ArrayList<>();
 	private List<ModuleGroupDisplay> _moduleGroupDisplays;
 
 }

@@ -185,7 +185,7 @@ public class DefaultNoticeableFutureTest {
 	public void testConstructor() throws Exception {
 		final AtomicBoolean flag = new AtomicBoolean();
 
-		DefaultNoticeableFuture<?> _defaultNoticeableFuture =
+		DefaultNoticeableFuture<?> defaultNoticeableFuture =
 			new DefaultNoticeableFuture<Object>(
 				new Callable<Object>() {
 
@@ -198,12 +198,12 @@ public class DefaultNoticeableFutureTest {
 
 				});
 
-		_defaultNoticeableFuture.run();
+		defaultNoticeableFuture.run();
 
-		Assert.assertSame(flag, _defaultNoticeableFuture.get());
+		Assert.assertSame(flag, defaultNoticeableFuture.get());
 		Assert.assertTrue(flag.get());
 
-		_defaultNoticeableFuture = new DefaultNoticeableFuture<Object>(
+		defaultNoticeableFuture = new DefaultNoticeableFuture<Object>(
 			new Runnable() {
 
 				@Override
@@ -214,9 +214,9 @@ public class DefaultNoticeableFutureTest {
 			},
 			flag);
 
-		_defaultNoticeableFuture.run();
+		defaultNoticeableFuture.run();
 
-		Assert.assertSame(flag, _defaultNoticeableFuture.get());
+		Assert.assertSame(flag, defaultNoticeableFuture.get());
 		Assert.assertFalse(flag.get());
 	}
 

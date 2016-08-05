@@ -214,10 +214,8 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 			ReplaceRegexTask.class);
 
 		replaceRegexTask.match("\\n\\t\"version\": \"(.+)\"", "package.json");
-
 		replaceRegexTask.setDescription(
 			"Updates the project version in the package.json file.");
-
 		replaceRegexTask.setReplacement(
 			IncrementVersionClosure.MICRO_INCREMENT);
 

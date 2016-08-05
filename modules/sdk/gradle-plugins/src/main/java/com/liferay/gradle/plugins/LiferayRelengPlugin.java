@@ -16,6 +16,7 @@ package com.liferay.gradle.plugins;
 
 import com.liferay.gradle.plugins.cache.CacheExtension;
 import com.liferay.gradle.plugins.cache.CachePlugin;
+import com.liferay.gradle.plugins.cache.WriteDigestTask;
 import com.liferay.gradle.plugins.cache.task.TaskCache;
 import com.liferay.gradle.plugins.cache.task.TaskCacheApplicator;
 import com.liferay.gradle.plugins.change.log.builder.BuildChangeLogTask;
@@ -36,6 +37,7 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.concurrent.Callable;
 
@@ -726,6 +728,27 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 			if (!line.contains(
 					PrintArtifactPublishCommandsTask.IGNORED_MESSAGE_PATTERN)) {
 
+				return true;
+			}
+		}
+
+		if (GradleUtil.hasPlugin(project, LiferayThemeDefaultsPlugin.class)) {
+			WriteDigestTask writeDigestTask =
+				(WriteDigestTask)GradleUtil.getTask(
+					project,
+					LiferayThemeDefaultsPlugin.
+						WRITE_PARENT_THEMES_DIGEST_TASK_NAME);
+
+			String digest = writeDigestTask.getDigest();
+			String oldDigest = writeDigestTask.getOldDigest();
+
+			if (_logger.isInfoEnabled()) {
+				_logger.info(
+					"Digest for {} is {}, old digest is {}", writeDigestTask,
+					digest, oldDigest);
+			}
+
+			if (!Objects.equals(digest, oldDigest)) {
 				return true;
 			}
 		}

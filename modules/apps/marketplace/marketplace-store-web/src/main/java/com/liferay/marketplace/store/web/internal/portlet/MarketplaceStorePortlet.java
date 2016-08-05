@@ -327,6 +327,7 @@ public class MarketplaceStorePortlet extends RemoteMVCPortlet {
 		if (_updatingApps) {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
+			jsonObject.put("cmd", "updateApps");
 			jsonObject.put("message", "failed");
 
 			writeJSON(actionRequest, actionResponse, jsonObject);
@@ -543,6 +544,6 @@ public class MarketplaceStorePortlet extends RemoteMVCPortlet {
 
 	private AppLocalService _appLocalService;
 	private AppService _appService;
-	private boolean _updatingApps;
+	private boolean _updatingApps = false;
 
 }

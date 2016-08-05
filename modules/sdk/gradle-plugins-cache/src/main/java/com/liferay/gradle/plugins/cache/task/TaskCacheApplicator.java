@@ -33,7 +33,6 @@ import org.gradle.api.GradleException;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.logging.Logger;
-import org.gradle.api.logging.Logging;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.tasks.Copy;
 
@@ -47,12 +46,14 @@ public class TaskCacheApplicator {
 	public void apply(CacheExtension cacheExtension, TaskCache taskCache) {
 		Task task = taskCache.getTask();
 
+		Logger logger = task.getLogger();
+
 		boolean upToDate = false;
 
 		String currentDigest = getCurrentDigest(taskCache);
 
-		if (_logger.isInfoEnabled()) {
-			_logger.info("Current digest is " + currentDigest);
+		if (logger.isInfoEnabled()) {
+			logger.info("Current digest is " + currentDigest);
 		}
 
 		if (cacheExtension.isForcedCache()) {
@@ -65,19 +66,19 @@ public class TaskCacheApplicator {
 			upToDate = true;
 		}
 		else if (taskCache.isDisabled()) {
-			if (_logger.isLifecycleEnabled()) {
-				_logger.lifecycle("Cache for " + task + " is disabled");
+			if (logger.isLifecycleEnabled()) {
+				logger.lifecycle("Cache for " + task + " is disabled");
 			}
 		}
 		else {
 			String cachedDigest = getCachedDigest(taskCache);
 
-			if (_logger.isInfoEnabled()) {
+			if (logger.isInfoEnabled()) {
 				if (Validator.isNull(cachedDigest)) {
-					_logger.info("No cached digest has been found");
+					logger.info("No cached digest has been found");
 				}
 				else {
-					_logger.info("Cached digest is " + cachedDigest);
+					logger.info("Cached digest is " + cachedDigest);
 				}
 			}
 
@@ -99,8 +100,10 @@ public class TaskCacheApplicator {
 	protected void applyOutOfDate(
 		final TaskCache taskCache, Task task, final String currentDigest) {
 
-		if (_logger.isInfoEnabled()) {
-			_logger.info(task + " is out-of-date");
+		Logger logger = task.getLogger();
+
+		if (logger.isInfoEnabled()) {
+			logger.info(task + " is out-of-date");
 		}
 
 		Copy copy = createSaveCacheTask(taskCache);
@@ -119,8 +122,10 @@ public class TaskCacheApplicator {
 	}
 
 	protected void applyUpToDate(TaskCache taskCache, Task task) {
-		if (_logger.isInfoEnabled()) {
-			_logger.info(task + " is up-to-date");
+		Logger logger = task.getLogger();
+
+		if (logger.isInfoEnabled()) {
+			logger.info(task + " is up-to-date");
 		}
 
 		removeSkippedTaskDependencies(taskCache, task);
@@ -213,6 +218,8 @@ public class TaskCacheApplicator {
 	protected void removeSkippedTaskDependencies(
 		TaskCache taskCache, Task task) {
 
+		Logger logger = task.getLogger();
+
 		Set<Object> taskDependencies = task.getDependsOn();
 
 		Set<Object> skippedTaskDependencies =
@@ -221,8 +228,8 @@ public class TaskCacheApplicator {
 		if (skippedTaskDependencies.isEmpty()) {
 			taskDependencies.clear();
 
-			if (_logger.isInfoEnabled()) {
-				_logger.info("Removed all dependencies from " + task);
+			if (logger.isInfoEnabled()) {
+				logger.info("Removed all dependencies from " + task);
 			}
 		}
 		else {
@@ -237,14 +244,14 @@ public class TaskCacheApplicator {
 				}
 
 				if (removed) {
-					if (_logger.isInfoEnabled()) {
-						_logger.info(
+					if (logger.isInfoEnabled()) {
+						logger.info(
 							"Removed dependency " + taskDependency + " from " +
 								task);
 					}
 				}
-				else if (_logger.isWarnEnabled()) {
-					_logger.warn(
+				else if (logger.isWarnEnabled()) {
+					logger.warn(
 						"Unable to remove skipped task dependency " +
 							taskDependency);
 				}
@@ -253,22 +260,23 @@ public class TaskCacheApplicator {
 	}
 
 	protected void writeDigestFile(TaskCache taskCache, String digest) {
+		Task task = taskCache.getTask();
+
+		Logger logger = task.getLogger();
+
 		File digestFile = new File(taskCache.getCacheDir(), DIGEST_FILE_NAME);
 
 		try {
 			Files.write(
 				digestFile.toPath(), digest.getBytes(StandardCharsets.UTF_8));
 
-			if (_logger.isInfoEnabled()) {
-				_logger.info("Updated digest file to " + digest);
+			if (logger.isInfoEnabled()) {
+				logger.info("Updated digest file to " + digest);
 			}
 		}
 		catch (IOException ioe) {
 			throw new GradleException("Unable to write digest file", ioe);
 		}
 	}
-
-	private static final Logger _logger = Logging.getLogger(
-		TaskCacheApplicator.class);
 
 }

@@ -60,7 +60,7 @@ public class Database {
 	public static Database getSQLServerDatabase() {
 		return new Database(
 			"com.microsoft.sqlserver.jdbc.SQLServerDriver", "jdbc:sqlserver://",
-			"localhost", 0, "/lportal", "");
+			"localhost", 0, ";databaseName=lportal", "");
 	}
 
 	public static Database getSybaseDatabase() {

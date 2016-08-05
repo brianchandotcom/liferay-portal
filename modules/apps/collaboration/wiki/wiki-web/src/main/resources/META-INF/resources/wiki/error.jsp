@@ -47,6 +47,7 @@ if (portletTitleBasedNavigation) {
 </c:if>
 
 <liferay-ui:error exception="<%= NoSuchNodeException.class %>" message="please-enter-a-valid-page-title" />
+<liferay-ui:error exception="<%= PageVersionException.class %>" message="another-user-made-changes-that-are-pending-publication" />
 
 <c:if test="<%= SessionErrors.contains(renderRequest, NoSuchPageException.class.getName()) %>">
 

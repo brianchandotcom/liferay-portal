@@ -1253,7 +1253,7 @@ app.git.id-7.0.5=392cd8169cccedb464092022b1803b9ba5f66f04
 #
 
 app.artifacts-7.0.6=\
-	com.liferay.application.list.api-2.1.1.jar,\
+	com.liferay.application.list.api-2.1.2.jar,\
 	com.liferay.application.list.taglib-2.0.5.jar,\
 	com.liferay.application.list.user.personal.site.permissions-2.0.3.jar,\
 	com.liferay.asset.browser.web-1.0.7.jar,\
@@ -1351,7 +1351,7 @@ app.artifacts-7.0.6=\
 	com.liferay.site.navigation.breadcrumb.web-2.0.3.jar,\
 	com.liferay.site.navigation.directory.web-2.0.3.jar,\
 	com.liferay.site.navigation.language.web-2.1.0.jar,\
-	com.liferay.site.navigation.menu.web-2.0.3.jar,\
+	com.liferay.site.navigation.menu.web-2.0.4.jar,\
 	com.liferay.site.navigation.site.map.web-2.0.2.jar,\
 	com.liferay.site.navigation.taglib-2.0.4.jar,\
 	com.liferay.site.teams.web-1.0.10.jar,\
@@ -1367,6 +1367,6 @@ app.artifacts-7.0.6=\
 	com.liferay.trash.web-1.0.7.jar,\
 	com.liferay.xsl.content.web-2.0.3.jar
 
-app.change.log-7.0.6=LPS-61099 LPS-61420 LPS-63907 LPS-64031 LPS-64551 LPS-64557 LPS-64792 LPS-64834 LPS-64849 LPS-64981 LPS-65012 LPS-65135 LPS-65225 LPS-65240 LPS-65362 LPS-65432 LPS-65435 LPS-65439 LPS-65535 LPS-65537 LPS-65660 LPS-65726 LPS-65810 LPS-66064 LPS-66216 LPS-66416 LPS-66462 LPS-66504 LPS-66524 LPS-66644 LPS-66732 LPS-66748 LPS-66840 LPS-66853 LPS-66864 LPS-66883 LPS-66935 LPS-66937 LPS-66938 LPS-66939 LPS-66974 LPS-66997 LPS-67007 LPS-67222 LPS-67352
+app.change.log-7.0.6=LPS-61099 LPS-61420 LPS-63907 LPS-64031 LPS-64551 LPS-64557 LPS-64792 LPS-64834 LPS-64849 LPS-64981 LPS-65012 LPS-65135 LPS-65225 LPS-65240 LPS-65362 LPS-65432 LPS-65435 LPS-65439 LPS-65535 LPS-65537 LPS-65660 LPS-65726 LPS-65810 LPS-66064 LPS-66216 LPS-66416 LPS-66462 LPS-66504 LPS-66524 LPS-66644 LPS-66732 LPS-66748 LPS-66758 LPS-66840 LPS-66853 LPS-66864 LPS-66883 LPS-66935 LPS-66937 LPS-66938 LPS-66939 LPS-66974 LPS-66997 LPS-67007 LPS-67191 LPS-67222 LPS-67352
 
-app.git.id-7.0.6=7fbfe7b91d3abed700598210f551155528b8e9db
+app.git.id-7.0.6=4ac46bb7f53bc6348ada1bf082c90f44fec900e5

@@ -20,5 +20,5 @@
 	"main": "package.json",
 	"name": "westeros-bank-theme",
 	"repository": "liferay/liferay-portal",
-	"version": "1.0.8"
+	"version": "1.0.9"
 }

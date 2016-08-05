@@ -20,5 +20,5 @@
 	"main": "package.json",
 	"name": "classic-theme",
 	"repository": "liferay/liferay-portal",
-	"version": "1.0.9"
+	"version": "1.0.10"
 }

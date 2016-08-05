@@ -170,76 +170,62 @@ public class LiferaySyncCapability
 	private final RepositoryEventListener
 		<RepositoryEventType.Add, Folder> _addFolderEventListener =
 			new SyncFolderRepositoryEventListener<>(DLSyncConstants.EVENT_ADD);
-
 	private final RepositoryEventListener
 		<RepositoryEventType.Delete, FileEntry>
 			_deleteFileEntryEventListener =
 				new SyncFileEntryRepositoryEventListener<>(
 					DLSyncConstants.EVENT_DELETE);
-
 	private final RepositoryEventListener
 		<RepositoryEventType.Delete, Folder> _deleteFolderEventListener =
 			new SyncFolderRepositoryEventListener<>(
 				DLSyncConstants.EVENT_DELETE);
-
+	private final DLSyncEventLocalService _dlSyncEventLocalService;
+	private final GroupServiceAdapter _groupServiceAdapter;
 	private final RepositoryEventListener
 		<RepositoryEventType.Move, FileEntry> _moveFileEntryEventListener =
 			new SyncFileEntryRepositoryEventListener<>(
 				DLSyncConstants.EVENT_MOVE);
-
 	private final RepositoryEventListener
 		<RepositoryEventType.Move, Folder> _moveFolderEventListener =
 			new SyncFolderRepositoryEventListener<>(DLSyncConstants.EVENT_MOVE);
-
 	private final RepositoryEventListener
 		<TrashRepositoryEventType.EntryRestored, FileEntry>
 			_restoreFileEntryEventListener =
 				new SyncFileEntryRepositoryEventListener<>(
 					DLSyncConstants.EVENT_RESTORE);
-
 	private final RepositoryEventListener
 		<TrashRepositoryEventType.EntryRestored, Folder>
 			_restoreFolderEventListener =
 				new SyncFolderRepositoryEventListener<>(
 					DLSyncConstants.EVENT_RESTORE);
-
 	private final RepositoryEventListener
 		<TrashRepositoryEventType.EntryTrashed, FileEntry>
 			_trashFileEntryEventListener =
 				new SyncFileEntryRepositoryEventListener<>(
 					DLSyncConstants.EVENT_TRASH);
-
 	private final RepositoryEventListener
 		<TrashRepositoryEventType.EntryTrashed, Folder>
-			_trashFolderEventListener =
-				new SyncFolderRepositoryEventListener<>(
-					DLSyncConstants.EVENT_TRASH);
-
+			_trashFolderEventListener = new SyncFolderRepositoryEventListener<>(
+				DLSyncConstants.EVENT_TRASH);
 	private final RepositoryEventListener
 		<RepositoryEventType.Update, FileEntry>
 			_updateFileEntryEventListener =
 				new SyncFileEntryRepositoryEventListener<>(
 					DLSyncConstants.EVENT_UPDATE);
-
 	private final RepositoryEventListener
 		<RepositoryEventType.Update, Folder> _updateFolderEventListener =
 			new SyncFolderRepositoryEventListener<>(
 				DLSyncConstants.EVENT_UPDATE);
-
 	private final RepositoryEventListener
 		<WorkflowRepositoryEventType.Add, FileEntry>
 			_workflowAddFileEntryEventListener =
 				new SyncFileEntryRepositoryEventListener<>(
 					DLSyncConstants.EVENT_ADD);
-
 	private final RepositoryEventListener
 		<WorkflowRepositoryEventType.Update, FileEntry>
 			_workflowUpdateFileEntryEventListener =
 				new SyncFileEntryRepositoryEventListener<>(
 					DLSyncConstants.EVENT_UPDATE);
-
-	private final DLSyncEventLocalService _dlSyncEventLocalService;
-	private final GroupServiceAdapter _groupServiceAdapter;
 
 	private class SyncFileEntryRepositoryEventListener
 		<S extends RepositoryEventType>

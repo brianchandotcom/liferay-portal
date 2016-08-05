@@ -742,6 +742,8 @@
 			<var name="fieldValue" value="" />
 		</execute>
 
+		<execute macro="Button#clickSave" />
+
 		<execute macro="FormFields#viewFieldValidationErrorMessage">
 			<var name="fieldName" value="ds.lock.timeout.milliseconds" />
 			<var name="fieldValidationErrorMessage" value="This field is required." />

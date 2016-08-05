@@ -12,14 +12,17 @@
 		<module name="GenericWhitespace" />
 		<module name="LocalFinalVariableName">
 			<property name="format" value="^[a-z0-9][_a-zA-Z0-9]*$" />
+			<message key="name.invalidPattern" value="Local final variable ''{0}'' must match pattern ''{1}''" />
 		</module>
 		<module name="LocalVariableName">
 			<property name="format" value="^[a-z0-9][_a-zA-Z0-9]*$" />
+			<message key="name.invalidPattern" value="Local non-final variable ''{0}'' must match pattern ''{1}''" />
 		</module>
 		<module name="MemberName">
 			<property name="applyToProtected" value="false" />
 			<property name="applyToPublic" value="false" />
 			<property name="format" value="^_[a-z0-9][_a-zA-Z0-9]*$" />
+			<message key="name.invalidPattern" value="Private non-static field ''{0}'' must match pattern ''{1}''" />
 		</module>
 		<module name="MethodParamPad" />
 		<module name="ModifierOrder" />
@@ -35,10 +38,12 @@
 			<property name="applyToProtected" value="false" />
 			<property name="applyToPublic" value="false" />
 			<property name="format" value="^_[a-z0-9][_a-zA-Z0-9]*$" />
+			<message key="name.invalidPattern" value="Private static non-final field ''{0}'' must match pattern ''{1}''" />
 		</module>
 		<module name="StringLiteralEquality" />
 		<module name="TypeName">
 			<property name="format" value="^[A-Z][_a-zA-Z0-9]*" />
+			<message key="name.invalidPattern" value="Class, interface, enum or annotation ''{0}'' must match pattern ''{1}''" />
 		</module>
 		<module name="UpperEll" />
 	</module>

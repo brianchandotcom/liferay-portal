@@ -89,7 +89,7 @@ public class PatchTask extends DefaultTask {
 
 		};
 
-		args("--binary", "--strip=1", "--no-backup-if-mismatch");
+		args("--strip=1", "--no-backup-if-mismatch");
 	}
 
 	public PatchTask args(Iterable<Object> args) {

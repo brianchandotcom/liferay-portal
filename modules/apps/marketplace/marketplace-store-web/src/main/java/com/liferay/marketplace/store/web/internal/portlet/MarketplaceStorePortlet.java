@@ -36,9 +36,6 @@ import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.lock.exception.DuplicateLockException;
-import com.liferay.portal.lock.model.Lock;
-import com.liferay.portal.lock.service.LockLocalService;
 
 import java.io.File;
 import java.io.IOException;
@@ -327,16 +324,18 @@ public class MarketplaceStorePortlet extends RemoteMVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		if (_lockLocalService.isLocked(
-				MarketplaceStorePortlet.class.getName(),
-				MarketplaceStorePortlet.class.getName() + ":updateApps")) {
+		if (_updatingApps) {
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-			throw new DuplicateLockException(null);
+			jsonObject.put("message", "failed");
+
+			writeJSON(actionRequest, actionResponse, jsonObject);
+
+			return;
 		}
-
-		Lock lock = _lockLocalService.lock(
-			MarketplaceStorePortlet.class.getName(), StringPool.BLANK,
-			StringPool.BLANK);
+		else {
+			_updatingApps = true;
+		}
 
 		try {
 			long[] appPackageIds = ParamUtil.getLongValues(
@@ -380,7 +379,7 @@ public class MarketplaceStorePortlet extends RemoteMVCPortlet {
 			writeJSON(actionRequest, actionResponse, jsonObject);
 		}
 		finally {
-			_lockLocalService.unlock(lock.getClassName(), lock.getKey());
+			_updatingApps = false;
 		}
 	}
 
@@ -536,11 +535,6 @@ public class MarketplaceStorePortlet extends RemoteMVCPortlet {
 		_appService = appService;
 	}
 
-	@Reference(unbind = "-")
-	protected void setLockLocalService(LockLocalService lockLocalService) {
-		_lockLocalService = lockLocalService;
-	}
-
 	@Override
 	@Reference(unbind = "-")
 	protected void setOAuthManager(OAuthManager oAuthManager) {
@@ -549,6 +543,6 @@ public class MarketplaceStorePortlet extends RemoteMVCPortlet {
 
 	private AppLocalService _appLocalService;
 	private AppService _appService;
-	private LockLocalService _lockLocalService;
+	private boolean _updatingApps;
 
 }

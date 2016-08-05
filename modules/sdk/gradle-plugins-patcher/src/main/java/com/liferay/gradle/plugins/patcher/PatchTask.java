@@ -239,10 +239,6 @@ public class PatchTask extends DefaultTask {
 
 					@Override
 					public void execute(ExecSpec execSpec) {
-						execSpec.setExecutable("patch");
-						execSpec.setIgnoreExitValue(true);
-						execSpec.setWorkingDir(srcTemporaryDir);
-
 						execSpec.args(getArgs());
 
 						execSpec.args(
@@ -250,7 +246,10 @@ public class PatchTask extends DefaultTask {
 								FileUtil.relativize(
 									patchFile, srcTemporaryDir));
 
+						execSpec.setExecutable("patch");
+						execSpec.setIgnoreExitValue(true);
 						execSpec.setStandardOutput(byteArrayOutputStream);
+						execSpec.setWorkingDir(srcTemporaryDir);
 					}
 
 				});

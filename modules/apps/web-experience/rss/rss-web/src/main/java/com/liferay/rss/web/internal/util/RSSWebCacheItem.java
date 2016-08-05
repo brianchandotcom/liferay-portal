@@ -43,7 +43,7 @@ public class RSSWebCacheItem implements WebCacheItem {
 
 	@Override
 	public Object convert(String key) throws WebCacheException {
-		InputStream inputstream =null;
+		InputStream inputstream = null;
 
 		SyndFeed feed = null;
 

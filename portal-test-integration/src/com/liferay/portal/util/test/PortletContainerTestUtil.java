@@ -38,8 +38,8 @@ import com.liferay.portal.upload.UploadServletRequestImpl;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-
 import java.io.StringWriter;
+
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
@@ -66,6 +66,7 @@ import org.apache.http.entity.mime.content.ByteArrayBody;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicHeader;
+
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpSession;
 import org.springframework.mock.web.MockMultipartFile;
@@ -238,11 +239,9 @@ public class PortletContainerTestUtil {
 				MultipartEntityBuilder.create();
 
 			ByteArrayBody byteArrayBody = new ByteArrayBody(
-				bytes, ContentType.DEFAULT_BINARY,
-				fileNameParameter);
+				bytes, ContentType.DEFAULT_BINARY, fileNameParameter);
 
-			multipartEntityBuilder.addPart(
-				fileNameParameter, byteArrayBody);
+			multipartEntityBuilder.addPart(fileNameParameter, byteArrayBody);
 
 			requestBuilder.setEntity(multipartEntityBuilder.build());
 
@@ -266,13 +265,13 @@ public class PortletContainerTestUtil {
 			stringWriter.close();
 
 			return new Response(
-				statusLine.getStatusCode(), stringWriter.toString(),
-				null);
+				statusLine.getStatusCode(), stringWriter.toString(), null);
 		}
 		finally {
 			if (httpResponse != null) {
 				httpResponse.close();
 			}
+
 			if (httpClient != null) {
 				httpClient.close();
 			}

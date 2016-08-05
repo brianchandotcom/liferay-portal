@@ -1760,6 +1760,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			javadoc.getProject(), Constants.EXPORT_PACKAGE);
 
 		if (Validator.isNull(exportPackage)) {
+			javadoc.exclude("**/");
+
 			return;
 		}
 

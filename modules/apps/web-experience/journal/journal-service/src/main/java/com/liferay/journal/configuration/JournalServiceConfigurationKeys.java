@@ -16,7 +16,10 @@ package com.liferay.journal.configuration;
 
 /**
  * @author Eduardo Garcia
+ * @deprecated As of 7.0.0, see {@link JournalServiceConfiguration}
+ *
  */
+@Deprecated
 public class JournalServiceConfigurationKeys {
 
 	public static final String CHAR_BLACKLIST = "char.blacklist";

@@ -23,6 +23,7 @@ import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleCon
 import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.PROCESS_FLAG_LAYOUT_IMPORT_IN_PROCESS;
 import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.PROCESS_FLAG_LAYOUT_STAGING_IN_PROCESS;
 
+import com.liferay.exportimport.constants.ExportImportConstants;
 import com.liferay.exportimport.kernel.controller.ExportImportController;
 import com.liferay.exportimport.kernel.controller.ImportController;
 import com.liferay.exportimport.kernel.exception.LARFileException;
@@ -111,8 +112,6 @@ import java.util.function.BiPredicate;
 
 import org.apache.commons.lang.time.StopWatch;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -1327,25 +1326,21 @@ public class LayoutImportController implements ImportController {
 						currentVersion, importVersion);
 				};
 
-			Bundle bundle = FrameworkUtil.getBundle(
-				LayoutImportController.class);
-
-			String currentBundleVersion = String.valueOf(bundle.getVersion());
-
-			String importBundleVersion = GetterUtil.getString(
-				headerElement.attributeValue("bundle-version"), "3.0.0");
+			String importSchemaVersion = GetterUtil.getString(
+				headerElement.attributeValue("schema-version"), "1.0.0");
 
 			if (!manifestVersionBiPredicate.test(
-					Version.getInstance(currentBundleVersion),
-					Version.getInstance(importBundleVersion))) {
+					Version.getInstance(
+						ExportImportConstants.EXPORT_IMPORT_SCHEMA_VERSION),
+					Version.getInstance(importSchemaVersion))) {
 
 				StringBundler sb = new StringBundler(4);
 
-				sb.append("LAR bundle version ");
-				sb.append(importBundleVersion);
+				sb.append("LAR schema version ");
+				sb.append(importSchemaVersion);
 				sb.append(
-					" does not match deployed export/import bundle version ");
-				sb.append(currentBundleVersion);
+					" does not match deployed export/import schema version ");
+				sb.append(ExportImportConstants.EXPORT_IMPORT_SCHEMA_VERSION);
 
 				throw new LayoutImportException(sb.toString());
 			}

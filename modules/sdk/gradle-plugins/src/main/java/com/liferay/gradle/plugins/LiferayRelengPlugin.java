@@ -242,6 +242,19 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 									TaskCacheApplicator.DIGEST_FILE_NAME));
 						}
 					}
+
+					if (GradleUtil.hasPlugin(
+							project, LiferayThemeDefaultsPlugin.class)) {
+
+						WriteDigestTask writeDigestTask =
+							(WriteDigestTask)GradleUtil.getTask(
+								project,
+								LiferayThemeDefaultsPlugin.
+									WRITE_PARENT_THEMES_DIGEST_TASK_NAME);
+
+						printArtifactPublishCommandsTask.prepNextFiles(
+							writeDigestTask.getDigestFile());
+					}
 				}
 
 			});

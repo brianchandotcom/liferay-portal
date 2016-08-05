@@ -80,21 +80,21 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 		Configuration frontendCSSCommonConfiguration =
 			addConfigurationFrontendCSSCommon(project);
 
-		Copy expandFrontendCSSCommonTask = addTaskExpandFrontendCSSCommon(
-			project, frontendCSSCommonConfiguration);
-		final ReplaceRegexTask updateVersionTask = addTaskUpdateVersion(
-			project);
-
-		configureDeployDir(project);
-		configureProject(project);
-
 		Project frontendThemeStyledProject = getThemeProject(
 			project, "frontend-theme-styled");
 		Project frontendThemeUnstyledProject = getThemeProject(
 			project, "frontend-theme-unstyled");
 
-		addTaskWriteParentThemesDigest(
+		WriteDigestTask writeDigestTask = addTaskWriteParentThemesDigest(
 			project, frontendThemeStyledProject, frontendThemeUnstyledProject);
+
+		Copy expandFrontendCSSCommonTask = addTaskExpandFrontendCSSCommon(
+			project, frontendCSSCommonConfiguration);
+		final ReplaceRegexTask updateVersionTask = addTaskUpdateVersion(
+			project, writeDigestTask);
+
+		configureDeployDir(project);
+		configureProject(project);
 
 		configureTasksExecuteGulp(
 			project, expandFrontendCSSCommonTask, frontendThemeStyledProject,
@@ -208,11 +208,14 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 		return upload;
 	}
 
-	protected ReplaceRegexTask addTaskUpdateVersion(Project project) {
+	protected ReplaceRegexTask addTaskUpdateVersion(
+		Project project, WriteDigestTask writeParentThemesDigestTask) {
+
 		ReplaceRegexTask replaceRegexTask = GradleUtil.addTask(
 			project, LiferayRelengPlugin.UPDATE_VERSION_TASK_NAME,
 			ReplaceRegexTask.class);
 
+		replaceRegexTask.finalizedBy(writeParentThemesDigestTask);
 		replaceRegexTask.match("\\n\\t\"version\": \"(.+)\"", "package.json");
 		replaceRegexTask.setDescription(
 			"Updates the project version in the package.json file.");

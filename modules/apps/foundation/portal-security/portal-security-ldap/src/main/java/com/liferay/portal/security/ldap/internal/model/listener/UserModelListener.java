@@ -65,7 +65,7 @@ public class UserModelListener extends BaseModelListener<User> {
 			}
 		}
 		catch (Exception e) {
-			_log.error(e, e);
+			throw new ModelListenerException(e);
 		}
 	}
 

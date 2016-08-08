@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetLinkConstants;
+import com.liferay.blogs.exception.EntryUrlTitleException;
 import com.liferay.blogs.kernel.exception.EntryContentException;
 import com.liferay.blogs.kernel.exception.EntryCoverImageCropException;
 import com.liferay.blogs.kernel.exception.EntryDisplayDateException;
@@ -279,7 +280,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		long entryId = counterLocalService.increment();
 
-		validate(title, content);
+		validate(title, urlTitle, content);
 
 		BlogsEntry entry = blogsEntryPersistence.create(entryId);
 
@@ -290,6 +291,11 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		entry.setUserName(user.getFullName());
 		entry.setTitle(title);
 		entry.setSubtitle(subtitle);
+
+		if (Validator.isNotNull(urlTitle)) {
+			entry.setUrlTitle(getUniqueUrlTitle(entryId, groupId, urlTitle));
+		}
+
 		entry.setDescription(description);
 		entry.setContent(content);
 		entry.setDisplayDate(displayDate);
@@ -1196,7 +1202,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		BlogsEntry entry = blogsEntryPersistence.findByPrimaryKey(entryId);
 
-		validate(title, content);
+		validate(title, StringPool.BLANK, content);
 
 		String oldUrlTitle = entry.getUrlTitle();
 
@@ -2154,7 +2160,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		}
 	}
 
-	protected void validate(String title, String content)
+	protected void validate(String title, String urlTitle, String content)
 		throws PortalException {
 
 		if (Validator.isNull(title)) {
@@ -2167,6 +2173,17 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		if (title.length() > titleMaxLength) {
 			throw new EntryTitleException(
 				"Title has more than " + titleMaxLength + " characters");
+		}
+
+		if (Validator.isNotNull(urlTitle)) {
+			int urlTitleMaxLength = ModelHintsUtil.getMaxLength(
+				BlogsEntry.class.getName(), "urlTitle");
+
+			if (urlTitle.length() > urlTitleMaxLength) {
+				throw new EntryUrlTitleException(
+					"URL title has more than " + urlTitleMaxLength +
+						" characters");
+			}
 		}
 
 		if (Validator.isNull(content)) {

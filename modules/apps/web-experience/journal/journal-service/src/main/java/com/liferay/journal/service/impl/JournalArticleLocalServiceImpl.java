@@ -138,7 +138,6 @@ import com.liferay.portal.kernel.util.GroupSubscriptionCheckSubscriptionSender;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.MathUtil;
@@ -2259,6 +2258,23 @@ public class JournalArticleLocalServiceImpl
 			groupId, articleId, null, viewMode, languageId, themeDisplay);
 	}
 
+	@Override
+	public List<String> getArticleLocalizationLanguageIds(long articlePK) {
+		List<JournalArticleLocalization> journalArticleLocalizationList =
+			journalArticleLocalizationPersistence.findByArticlePK(articlePK);
+
+		List<String> availableLanguageIds = new ArrayList<>();
+
+		for (JournalArticleLocalization journalArticleLocalization :
+				journalArticleLocalizationList) {
+
+			availableLanguageIds.add(
+				journalArticleLocalization.getLanguageId());
+		}
+
+		return availableLanguageIds;
+	}
+
 	/**
 	 * Returns all the web content articles present in the system.
 	 *
@@ -3322,23 +3338,6 @@ public class JournalArticleLocalServiceImpl
 	public int getTemplateArticlesCount(long groupId, String ddmTemplateKey) {
 		return journalArticlePersistence.countByG_DDMTK(
 			groupId, ddmTemplateKey);
-	}
-
-	@Override
-	public List<String> getTitleAndDescriptionLanguageIds(long articleId) {
-		List<JournalArticleLocalization> journalArticleLocalizationList =
-			journalArticleLocalizationPersistence.findByArticlePK(articleId);
-
-		List<String> availableLanguageIds = new ArrayList<>();
-
-		for (JournalArticleLocalization journalArticleLocalization :
-				journalArticleLocalizationList) {
-
-			availableLanguageIds.add(
-				journalArticleLocalization.getLanguageId());
-		}
-
-		return availableLanguageIds;
 	}
 
 	/**

@@ -14,6 +14,10 @@
 
 package com.liferay.knowledge.base.item.selector.web.internal.display.context;
 
+import com.liferay.item.selector.ItemSelectorReturnType;
+import com.liferay.item.selector.ItemSelectorReturnTypeResolver;
+import com.liferay.item.selector.ItemSelectorReturnTypeResolverHandler;
+import com.liferay.item.selector.ItemSelectorReturnTypeUtil;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.item.selector.criterion.KBAttachmentItemSelectorCriterion;
 import com.liferay.knowledge.base.item.selector.web.internal.KBAttachmentItemSelectorView;
@@ -22,8 +26,10 @@ import com.liferay.knowledge.base.service.KBArticleLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.ActionRequest;
@@ -59,6 +65,28 @@ public class KBAttachmentItemSelectorViewDisplayContext {
 
 	public String getItemSelectedEventName() {
 		return _itemSelectedEventName;
+	}
+
+	public ItemSelectorReturnTypeResolver getItemSelectorReturnTypeResolver() {
+		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
+			_kbAttachmentItemSelectorCriterion.
+				getDesiredItemSelectorReturnTypes();
+
+		ItemSelectorReturnType itemSelectorReturnType =
+			ItemSelectorReturnTypeUtil.
+				getFirstAvailableItemSelectorReturnType(
+					desiredItemSelectorReturnTypes,
+					_kbAttachmentItemSelectorView.
+						getSupportedItemSelectorReturnTypes());
+
+		ItemSelectorReturnTypeResolverHandler
+			itemSelectorReturnTypeResolverHandler =
+				_kbAttachmentItemSelectorView.
+					getItemSelectorReturnTypeResolverHandler();
+
+		return itemSelectorReturnTypeResolverHandler.
+			getItemSelectorReturnTypeResolver(
+				itemSelectorReturnType.getClass(), FileEntry.class);
 	}
 
 	public KBAttachmentItemSelectorCriterion

@@ -67,11 +67,6 @@ public class UserGroupModelListener extends BaseModelListener<UserGroup> {
 		}
 	}
 
-	@Reference(unbind = "-")
-	public void setUserExporter(UserExporter userExporter) {
-		_userExporter = userExporter;
-	}
-
 	protected void exportToLDAP(
 			long userId, long userGroupId, UserOperation userOperation)
 		throws Exception {
@@ -95,6 +90,7 @@ public class UserGroupModelListener extends BaseModelListener<UserGroup> {
 	private static final Log _log = LogFactoryUtil.getLog(
 		UserGroupModelListener.class);
 
+	@Reference
 	private UserExporter _userExporter;
 
 }

@@ -61,16 +61,6 @@ public class ContactModelListener extends BaseModelListener<Contact> {
 		}
 	}
 
-	@Reference(unbind = "-")
-	public void setUserExporter(UserExporter userExporter) {
-		_userExporter = userExporter;
-	}
-
-	@Reference(unbind = "-")
-	public void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
-	}
-
 	protected void exportToLDAP(Contact contact) throws Exception {
 		if (UserImportTransactionThreadLocal.isOriginatesFromImport()) {
 			return;
@@ -98,7 +88,10 @@ public class ContactModelListener extends BaseModelListener<Contact> {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ContactModelListener.class);
 
+	@Reference
 	private UserExporter _userExporter;
+
+	@Reference
 	private UserLocalService _userLocalService;
 
 }

@@ -95,23 +95,6 @@ public class UserModelListener extends BaseModelListener<User> {
 			user.getOriginalEmailAddress());
 	}
 
-	@Reference(unbind = "-")
-	public void setMembershipRequestLocalService(
-		MembershipRequestLocalService membershipRequestLocalService) {
-
-		_membershipRequestLocalService = membershipRequestLocalService;
-	}
-
-	@Reference(unbind = "-")
-	public void setUserExporter(UserExporter userExporter) {
-		_userExporter = userExporter;
-	}
-
-	@Reference(unbind = "-")
-	public void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
-	}
-
 	protected void exportToLDAP(User user) throws Exception {
 		if (user.isDefaultUser() ||
 			UserImportTransactionThreadLocal.isOriginatesFromImport()) {
@@ -157,8 +140,13 @@ public class UserModelListener extends BaseModelListener<User> {
 	private static final Log _log = LogFactoryUtil.getLog(
 		UserModelListener.class);
 
+	@Reference
 	private MembershipRequestLocalService _membershipRequestLocalService;
+
+	@Reference
 	private UserExporter _userExporter;
+
+	@Reference
 	private UserLocalService _userLocalService;
 
 }

@@ -108,7 +108,7 @@
 		<attribute>
 			<description>An Object that contains the item selector return type custom logic</description>
 			<name>itemSelectorReturnTypeResolver</name>
-			<required>false</required>
+			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>

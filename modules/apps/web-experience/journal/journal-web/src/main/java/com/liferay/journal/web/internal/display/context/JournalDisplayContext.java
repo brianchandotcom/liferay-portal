@@ -675,23 +675,23 @@ public class JournalDisplayContext {
 					JournalWebConfiguration.class.getName());
 
 			if (journalWebConfiguration.journalArticlesSearchWithIndex()) {
-				boolean reverse = true;
+				boolean orderByAsc = false;
 
 				if (Objects.equals(getOrderByType(), "asc")) {
-					reverse = false;
+					orderByAsc = true;
 				}
 
 				Sort sort = null;
 
 				if (Objects.equals(getOrderByCol(), "display-date")) {
-					sort = new Sort("displayDate", Sort.LONG_TYPE, reverse);
+					sort = new Sort("displayDate", Sort.LONG_TYPE, orderByAsc);
 				}
 				else if (Objects.equals(getOrderByCol(), "modified-date")) {
 					sort = new Sort(
-						Field.MODIFIED_DATE, Sort.LONG_TYPE, reverse);
+						Field.MODIFIED_DATE, Sort.LONG_TYPE, orderByAsc);
 				}
 				else if (Objects.equals(getOrderByCol(), "title")) {
-					sort = new Sort("title", Sort.STRING_TYPE, reverse);
+					sort = new Sort("title", Sort.STRING_TYPE, !orderByAsc);
 				}
 
 				LinkedHashMap<String, Object> params = new LinkedHashMap<>();

@@ -1,0 +1,3 @@
+Bundle-Name: Liferay Core Post Upgrade Fix - UpgradeMessageBoardsStagingFix
+Bundle-SymbolicName: com.liferay.portal.message.boards.staging.post.upgrade.fix
+Bundle-Version: 1.0.0

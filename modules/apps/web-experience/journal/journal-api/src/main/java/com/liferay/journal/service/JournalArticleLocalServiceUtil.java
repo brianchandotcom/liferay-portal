@@ -2554,6 +2554,26 @@ public class JournalArticleLocalServiceUtil {
 			themeDisplay);
 	}
 
+	public static java.lang.String getArticleDescription(long articleId,
+		java.lang.String languageId) {
+		return getService().getArticleDescription(articleId, languageId);
+	}
+
+	public static java.lang.String getArticleDescription(long articleId,
+		java.util.Locale locale) {
+		return getService().getArticleDescription(articleId, locale);
+	}
+
+	public static java.lang.String getArticleTitle(long articleId,
+		java.lang.String languageId) {
+		return getService().getArticleTitle(articleId, languageId);
+	}
+
+	public static java.lang.String getArticleTitle(long articleId,
+		java.util.Locale locale) {
+		return getService().getArticleTitle(articleId, locale);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -3100,6 +3120,11 @@ public class JournalArticleLocalServiceUtil {
 				   .getTemplateArticles(groupId, ddmTemplateKey, start, end, obc);
 	}
 
+	public static java.util.List<java.lang.String> getTitleAndDescriptionLanguageIds(
+		long articleId) {
+		return getService().getTitleAndDescriptionLanguageIds(articleId);
+	}
+
 	/**
 	* Returns an ordered range of all the web content articles matching the
 	* parameters without using the indexer, including keyword parameters for
@@ -3394,6 +3419,16 @@ public class JournalArticleLocalServiceUtil {
 	public static java.util.List<com.liferay.journal.model.JournalArticle> search(
 		long groupId, long folderId, int status, int start, int end) {
 		return getService().search(groupId, folderId, status, start, end);
+	}
+
+	public static java.util.Map<java.util.Locale, java.lang.String> getArticleDescriptionMap(
+		long articleId) {
+		return getService().getArticleDescriptionMap(articleId);
+	}
+
+	public static java.util.Map<java.util.Locale, java.lang.String> getArticleTitleMap(
+		long articleId) {
+		return getService().getArticleTitleMap(articleId);
 	}
 
 	/**

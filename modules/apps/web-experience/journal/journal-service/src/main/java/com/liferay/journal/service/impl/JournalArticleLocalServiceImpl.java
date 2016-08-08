@@ -5651,16 +5651,9 @@ public class JournalArticleLocalServiceImpl
 			article = oldArticle;
 		}
 
-		Map<Locale, String> titleMap = article.getTitleMap();
-
-		titleMap.put(locale, title);
-
-		Map<Locale, String> descriptionMap = article.getDescriptionMap();
-
-		descriptionMap.put(locale, description);
-
 		_updateArticleLocalizedFields(
-			article.getCompanyId(), article.getId(), titleMap, descriptionMap);
+			article.getCompanyId(), article.getId(), title, description,
+			LocaleUtil.toLanguageId(locale));
 
 		content = format(user, groupId, article, content);
 
@@ -8135,6 +8128,27 @@ public class JournalArticleLocalServiceImpl
 
 		return _addArticleLocalizedFields(
 			companyId, articleId, titleMap, descriptionMap);
+	}
+
+	private JournalArticleLocalization _updateArticleLocalizedFields(
+			long companyId, long articleId, String title, String description,
+			String languageId)
+		throws PortalException {
+
+		JournalArticleLocalization journalArticleLocalization =
+			journalArticleLocalizationPersistence.fetchByA_L(
+				articleId, languageId);
+
+		if (journalArticleLocalization == null) {
+			return _addArticleLocalizedFields(
+				companyId, articleId, title, description, languageId);
+		}
+
+		journalArticleLocalization.setTitle(title);
+		journalArticleLocalization.setDescription(description);
+
+		return journalArticleLocalizationPersistence.update(
+			journalArticleLocalization);
 	}
 
 	private static final long _JOURNAL_ARTICLE_CHECK_INTERVAL =

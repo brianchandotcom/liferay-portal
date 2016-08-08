@@ -1,4 +1,4 @@
-package _package_;
+package _package_.api;
 
 public interface _CLASS_ {
 

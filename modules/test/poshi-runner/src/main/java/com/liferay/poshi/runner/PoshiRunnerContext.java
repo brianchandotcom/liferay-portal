@@ -1064,43 +1064,45 @@ public class PoshiRunnerContext {
 	private static void _writeTestCaseMethodNamesProperties() throws Exception {
 		StringBuilder sb = new StringBuilder();
 
-		for (String componentName : _componentNames) {
-			String componentNameKey = componentName + "_TEST_CASE_METHOD_NAMES";
-
-			componentNameKey = StringUtil.upperCase(
-				componentNameKey.replace("-", "_"));
-
-			sb.append(componentNameKey);
-			sb.append("=");
-
-			Set<String> classCommandNames = _componentClassCommandNames.get(
-				componentName);
-
-			if (Validator.isNotNull(classCommandNames) &&
-				!classCommandNames.isEmpty()) {
-
-				Iterator<String> iterator = classCommandNames.iterator();
-
-				while (iterator.hasNext()) {
-					sb.append(iterator.next());
-
-					if (iterator.hasNext()) {
-						sb.append(" ");
-					}
-				}
-			}
-			else {
-				sb.append(PropsValues.TEST_NAME);
-			}
-
-			sb.append("\n");
-		}
-
 		if ((PropsValues.TEST_BATCH_MAX_GROUP_SIZE > 0) &&
 			(PropsValues.TEST_BATCH_PROPERTY_NAMES != null) &&
 			(PropsValues.TEST_BATCH_PROPERTY_VALUES != null)) {
 
 			sb.append(_getTestBatchGroups());
+		}
+		else {
+			for (String componentName : _componentNames) {
+				String componentNameKey =
+					componentName + "_TEST_CASE_METHOD_NAMES";
+
+				componentNameKey = StringUtil.upperCase(
+					componentNameKey.replace("-", "_"));
+
+				sb.append(componentNameKey);
+				sb.append("=");
+
+				Set<String> classCommandNames = _componentClassCommandNames.get(
+					componentName);
+
+				if (Validator.isNotNull(classCommandNames) &&
+					!classCommandNames.isEmpty()) {
+
+					Iterator<String> iterator = classCommandNames.iterator();
+
+					while (iterator.hasNext()) {
+						sb.append(iterator.next());
+
+						if (iterator.hasNext()) {
+							sb.append(" ");
+						}
+					}
+				}
+				else {
+					sb.append(PropsValues.TEST_NAME);
+				}
+
+				sb.append("\n");
+			}
 		}
 
 		FileUtil.write("test.case.method.names.properties", sb.toString());

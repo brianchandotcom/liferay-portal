@@ -36,22 +36,22 @@ module.exports = [
 	ddmKeyValueResourcesDir + '/!(*.soy).js',
 	{
 		included: false,
-		pattern: ddmKeyValueResourcesDir + '/*.soy.js',
+		pattern: ddmKeyValueResourcesDir + '/*.soy.js'
 	},
 	ddmOptionsResourcesDir + '/!(*.soy).js',
 	{
 		included: false,
-		pattern: ddmOptionsResourcesDir + '/*.soy.js',
+		pattern: ddmOptionsResourcesDir + '/*.soy.js'
 	},
 	ddmRadioResourcesDir + '/!(*.soy).js',
 	{
 		included: false,
-		pattern: ddmRadioResourcesDir + '/*.soy.js',
+		pattern: ddmRadioResourcesDir + '/*.soy.js'
 	},
 	ddmTextResourcesDir + '/!(*.soy).js',
 	{
 		included: false,
-		pattern: ddmTextResourcesDir + '/*.soy.js',
+		pattern: ddmTextResourcesDir + '/*.soy.js'
 	},
 	{
 		included: false,

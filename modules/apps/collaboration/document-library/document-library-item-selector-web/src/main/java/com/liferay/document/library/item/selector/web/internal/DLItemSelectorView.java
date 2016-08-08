@@ -15,6 +15,7 @@
 package com.liferay.document.library.item.selector.web.internal;
 
 import com.liferay.item.selector.ItemSelectorCriterion;
+import com.liferay.item.selector.ItemSelectorReturnTypeResolverHandler;
 import com.liferay.item.selector.ItemSelectorView;
 
 /**
@@ -25,6 +26,9 @@ public interface DLItemSelectorView<T extends ItemSelectorCriterion>
 
 	public static final String DL_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT =
 		"DL_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT";
+
+	public ItemSelectorReturnTypeResolverHandler
+		getItemSelectorReturnTypeResolverHandler();
 
 	public String[] getMimeTypes();
 

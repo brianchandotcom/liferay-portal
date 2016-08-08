@@ -31,15 +31,15 @@ public class _CLASS_PortletConfigurationIcon
 	}
 
 	@Override
-	public double getWeight() {
-		return 150.0;
-	}
-
-	@Override
 	public String getURL(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
 		return "https://www.liferay.com";
+	}
+
+	@Override
+	public double getWeight() {
+		return 150.0;
 	}
 
 	@Override

@@ -1334,7 +1334,7 @@ public class JavadocFormatter {
 		File metaInfDir = new File(srcDirName, "META-INF");
 
 		if (!metaInfDir.exists()) {
-			metaInfDir.mkdir();
+			metaInfDir.mkdirs();
 		}
 
 		File javadocsXmlFile = new File(

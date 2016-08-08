@@ -149,6 +149,16 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 	}
 
 	@Override
+	public Object clone() {
+		JournalArticleImpl journalArticle = (JournalArticleImpl)super.clone();
+
+		journalArticle.setDescriptionMap(getDescriptionMap());
+		journalArticle.setTitleMap(getTitleMap());
+
+		return journalArticle;
+	}
+
+	@Override
 	public long getArticleImageId(
 		String elInstanceId, String elName, String languageId) {
 
@@ -307,6 +317,10 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 
 	@Override
 	public Map<Locale, String> getDescriptionMap() {
+		if (_descriptionMap != null) {
+			return _descriptionMap;
+		}
+
 		Locale defaultLocale = LocaleThreadLocal.getDefaultLocale();
 
 		try {
@@ -315,8 +329,11 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 
 			LocaleThreadLocal.setDefaultLocale(articleDefaultLocale);
 
-			return JournalArticleLocalServiceUtil.getArticleDescriptionMap(
-				getId());
+			_descriptionMap =
+				JournalArticleLocalServiceUtil.getArticleDescriptionMap(
+					getId());
+
+			return _descriptionMap;
 		}
 		finally {
 			LocaleThreadLocal.setDefaultLocale(defaultLocale);
@@ -538,6 +555,10 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 
 	@Override
 	public Map<Locale, String> getTitleMap() {
+		if (_titleMap != null) {
+			return _titleMap;
+		}
+
 		Locale defaultLocale = LocaleThreadLocal.getDefaultLocale();
 
 		try {
@@ -546,7 +567,10 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 
 			LocaleThreadLocal.setDefaultLocale(articleDefaultLocale);
 
-			return JournalArticleLocalServiceUtil.getArticleTitleMap(getId());
+			_titleMap = JournalArticleLocalServiceUtil.getArticleTitleMap(
+				getId());
+
+			return _titleMap;
 		}
 		finally {
 			LocaleThreadLocal.setDefaultLocale(defaultLocale);
@@ -594,6 +618,10 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 		_document = null;
 	}
 
+	public void setDescriptionMap(Map<Locale, String> descriptionMap) {
+		_descriptionMap = descriptionMap;
+	}
+
 	@Override
 	public void setDocument(Document document) {
 		_document = document;
@@ -627,13 +655,20 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 		setDDMTemplateKey(ddmTemplateKey);
 	}
 
+	public void setTitleMap(Map<Locale, String> titleMap) {
+		_titleMap = titleMap;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalArticleImpl.class);
+
+	private Map<Locale, String> _descriptionMap;
 
 	@CacheField(propagateToInterface = true)
 	private Document _document;
 
 	private long _imagesFolderId;
 	private String _smallImageType;
+	private Map<Locale, String> _titleMap;
 
 }

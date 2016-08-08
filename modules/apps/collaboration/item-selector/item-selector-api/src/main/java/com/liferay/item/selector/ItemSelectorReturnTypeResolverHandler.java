@@ -14,13 +14,10 @@
 
 package com.liferay.item.selector;
 
-import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.util.StringPool;
-
-import java.util.Collections;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;

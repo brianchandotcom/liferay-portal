@@ -23,7 +23,6 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 <%@ page import="com.liferay.blogs.item.selector.web.internal.BlogsItemSelectorView" %><%@
 page import="com.liferay.blogs.item.selector.web.internal.display.context.BlogsItemSelectorViewDisplayContext" %><%@
 page import="com.liferay.document.library.kernel.util.DLUtil" %><%@
-page import="com.liferay.item.selector.ItemSelectorReturnTypeResolver" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchPaginationUtil" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@

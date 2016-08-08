@@ -70,10 +70,9 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 			_itemSelectorCriterion.getDesiredItemSelectorReturnTypes();
 
 		ItemSelectorReturnType itemSelectorReturnType =
-			ItemSelectorReturnTypeUtil.
-				getFirstAvailableItemSelectorReturnType(
-					desiredItemSelectorReturnTypes,
-					_dlItemSelectorView.getSupportedItemSelectorReturnTypes());
+			ItemSelectorReturnTypeUtil.getFirstAvailableItemSelectorReturnType(
+				desiredItemSelectorReturnTypes,
+				_dlItemSelectorView.getSupportedItemSelectorReturnTypes());
 
 		ItemSelectorReturnTypeResolverHandler
 			itemSelectorReturnTypeResolverHandler =

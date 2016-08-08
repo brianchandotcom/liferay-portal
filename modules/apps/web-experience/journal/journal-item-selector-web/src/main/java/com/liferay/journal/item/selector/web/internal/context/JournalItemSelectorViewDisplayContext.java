@@ -68,11 +68,9 @@ public class JournalItemSelectorViewDisplayContext {
 			_journalItemSelectorCriterion.getDesiredItemSelectorReturnTypes();
 
 		ItemSelectorReturnType itemSelectorReturnType =
-			ItemSelectorReturnTypeUtil.
-				getFirstAvailableItemSelectorReturnType(
-					desiredItemSelectorReturnTypes,
-					_journalItemSelectorView.
-						getSupportedItemSelectorReturnTypes());
+			ItemSelectorReturnTypeUtil.getFirstAvailableItemSelectorReturnType(
+				desiredItemSelectorReturnTypes,
+				_journalItemSelectorView.getSupportedItemSelectorReturnTypes());
 
 		ItemSelectorReturnTypeResolverHandler
 			itemSelectorReturnTypeResolverHandler =

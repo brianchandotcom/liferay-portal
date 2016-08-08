@@ -199,15 +199,9 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 	public String[] getAvailableLanguageIds() {
 		Set<String> availableLanguageIds = new TreeSet<>();
 
-		List<String> articleAvailableTitleAndDescriptionLanguageIds =
+		availableLanguageIds.addAll(
 			JournalArticleLocalServiceUtil.getTitleAndDescriptionLanguageIds(
-				getId());
-
-		for (String availableLanguageId :
-				articleAvailableTitleAndDescriptionLanguageIds) {
-
-			availableLanguageIds.add(availableLanguageId);
-		}
+				getId()));
 
 		Document document = getDocument();
 

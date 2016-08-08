@@ -40,6 +40,17 @@ public class PQLEntityTest extends TestCase {
 			PQLEntity.fixPQL(" ( (( test ( test ))) "), "( (( test ( test )))");
 	}
 
+	@Test
+	public void testRemoveModifierFromPQL() throws Exception {
+		_compareString(PQLEntity.removeModifierFromPQL("test"), "test");
+		_compareString(PQLEntity.removeModifierFromPQL("NOT test"), "test");
+		_compareString(PQLEntity.removeModifierFromPQL(" NOT test"), "test");
+		_compareString(
+			PQLEntity.removeModifierFromPQL(" test NOT"), "test NOT");
+		_compareString(PQLEntity.removeModifierFromPQL("OR test"), "OR test");
+		_compareString(PQLEntity.removeModifierFromPQL(" OR test"), "OR test");
+	}
+
 	private void _compareString(String actualString, String expectedString)
 		throws Exception {
 

@@ -166,6 +166,30 @@ public class PQLEntityFactoryTest extends TestCase {
 	}
 
 	@Test
+	public void testPQLQueryGetPQLResultModifier() throws Exception {
+		Properties properties = new Properties();
+
+		properties.setProperty("portal.smoke", "true");
+
+		_validateGetPQLResult(
+			"NOT portal.smoke == true", Boolean.valueOf(false), properties);
+		_validateGetPQLResult(
+			"NOT portal.smoke == false", Boolean.valueOf(true), properties);
+	}
+
+	@Test
+	public void testPQLQueryGetPQLResultModifierError() throws Exception {
+		_validateGetPQLResultError(
+			"portal.smoke == true NOT", "Invalid value: true NOT");
+		_validateGetPQLResultError(
+			"portal.smoke == false NOT", "Invalid value: false NOT");
+		_validateGetPQLResultError(
+			"portal.smoke == true NOT AND true", "Invalid value: true NOT");
+		_validateGetPQLResultError(
+			"portal.smoke == false NOT AND true", "Invalid value: false NOT");
+	}
+
+	@Test
 	public void testPQLQueryGetPQLResultParenthesis() throws Exception {
 		Properties properties = new Properties();
 
@@ -231,6 +255,25 @@ public class PQLEntityFactoryTest extends TestCase {
 	}
 
 	@Test
+	public void testPQLValueGetPQLResultModifier() throws Exception {
+		_validateGetPQLResult("NOT true", Boolean.valueOf(false));
+		_validateGetPQLResult("NOT false", Boolean.valueOf(true));
+	}
+
+	@Test
+	public void testPQLValueGetPQLResultModifierError() throws Exception {
+		_validateGetPQLResultError(
+			"NOT 3.2", "Modifier must be used with a boolean value: NOT");
+		_validateGetPQLResultError(
+			"NOT 2016", "Modifier must be used with a boolean value: NOT");
+		_validateGetPQLResultError(
+			"NOT test", "Modifier must be used with a boolean value: NOT");
+		_validateGetPQLResultError(
+			"NOT 'test test'",
+			"Modifier must be used with a boolean value: NOT");
+	}
+
+	@Test
 	public void testPQLVariableGetPQLResult() throws Exception {
 		_validateGetPQLResultFromVariable("false", Boolean.FALSE);
 		_validateGetPQLResultFromVariable("'false'", Boolean.FALSE);
@@ -285,6 +328,13 @@ public class PQLEntityFactoryTest extends TestCase {
 
 			throw new Exception(sb.toString());
 		}
+	}
+
+	private static void _validateGetPQLResultError(
+			String pql, String expectedError)
+		throws Exception {
+
+		_validateGetPQLResultError(pql, expectedError, new Properties());
 	}
 
 	private static void _validateGetPQLResultError(

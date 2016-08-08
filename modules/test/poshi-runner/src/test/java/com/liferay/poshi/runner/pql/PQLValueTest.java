@@ -69,6 +69,25 @@ public class PQLValueTest extends TestCase {
 	}
 
 	@Test
+	public void testGetPQLResultModifier() throws Exception {
+		_validateGetPQLResult("NOT true", Boolean.valueOf(false));
+		_validateGetPQLResult("NOT false", Boolean.valueOf(true));
+	}
+
+	@Test
+	public void testGetPQLResultModifierError() throws Exception {
+		_validateGetPQLResultError(
+			"NOT 3.2", "Modifier must be used with a boolean value: NOT");
+		_validateGetPQLResultError(
+			"NOT 2016", "Modifier must be used with a boolean value: NOT");
+		_validateGetPQLResultError(
+			"NOT test", "Modifier must be used with a boolean value: NOT");
+		_validateGetPQLResultError(
+			"NOT 'test test'",
+			"Modifier must be used with a boolean value: NOT");
+	}
+
+	@Test
 	public void testGetPQLResultNull() throws Exception {
 		_validateGetPQLResultNull(null);
 		_validateGetPQLResultNull("'null'");

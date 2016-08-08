@@ -2660,29 +2660,29 @@ public class JournalArticleLocalServiceWrapper
 	}
 
 	@Override
-	public java.lang.String getArticleDescription(long articleId,
+	public java.lang.String getArticleDescription(long articlePK,
 		java.lang.String languageId) {
-		return _journalArticleLocalService.getArticleDescription(articleId,
+		return _journalArticleLocalService.getArticleDescription(articlePK,
 			languageId);
 	}
 
 	@Override
-	public java.lang.String getArticleDescription(long articleId,
+	public java.lang.String getArticleDescription(long articlePK,
 		java.util.Locale locale) {
-		return _journalArticleLocalService.getArticleDescription(articleId,
+		return _journalArticleLocalService.getArticleDescription(articlePK,
 			locale);
 	}
 
 	@Override
-	public java.lang.String getArticleTitle(long articleId,
+	public java.lang.String getArticleTitle(long articlePK,
 		java.lang.String languageId) {
-		return _journalArticleLocalService.getArticleTitle(articleId, languageId);
+		return _journalArticleLocalService.getArticleTitle(articlePK, languageId);
 	}
 
 	@Override
-	public java.lang.String getArticleTitle(long articleId,
+	public java.lang.String getArticleTitle(long articlePK,
 		java.util.Locale locale) {
-		return _journalArticleLocalService.getArticleTitle(articleId, locale);
+		return _journalArticleLocalService.getArticleTitle(articlePK, locale);
 	}
 
 	/**
@@ -2762,6 +2762,12 @@ public class JournalArticleLocalServiceWrapper
 		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		return _journalArticleLocalService.dynamicQuery(dynamicQuery, start,
 			end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<java.lang.String> getArticleLocalizationLanguageIds(
+		long articlePK) {
+		return _journalArticleLocalService.getArticleLocalizationLanguageIds(articlePK);
 	}
 
 	/**
@@ -3264,12 +3270,6 @@ public class JournalArticleLocalServiceWrapper
 			ddmTemplateKey, start, end, obc);
 	}
 
-	@Override
-	public java.util.List<java.lang.String> getTitleAndDescriptionLanguageIds(
-		long articleId) {
-		return _journalArticleLocalService.getTitleAndDescriptionLanguageIds(articleId);
-	}
-
 	/**
 	* Returns an ordered range of all the web content articles matching the
 	* parameters without using the indexer, including keyword parameters for
@@ -3573,14 +3573,14 @@ public class JournalArticleLocalServiceWrapper
 
 	@Override
 	public java.util.Map<java.util.Locale, java.lang.String> getArticleDescriptionMap(
-		long articleId) {
-		return _journalArticleLocalService.getArticleDescriptionMap(articleId);
+		long articlePK) {
+		return _journalArticleLocalService.getArticleDescriptionMap(articlePK);
 	}
 
 	@Override
 	public java.util.Map<java.util.Locale, java.lang.String> getArticleTitleMap(
-		long articleId) {
-		return _journalArticleLocalService.getArticleTitleMap(articleId);
+		long articlePK) {
+		return _journalArticleLocalService.getArticleTitleMap(articlePK);
 	}
 
 	/**

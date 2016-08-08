@@ -2554,24 +2554,24 @@ public class JournalArticleLocalServiceUtil {
 			themeDisplay);
 	}
 
-	public static java.lang.String getArticleDescription(long articleId,
+	public static java.lang.String getArticleDescription(long articlePK,
 		java.lang.String languageId) {
-		return getService().getArticleDescription(articleId, languageId);
+		return getService().getArticleDescription(articlePK, languageId);
 	}
 
-	public static java.lang.String getArticleDescription(long articleId,
+	public static java.lang.String getArticleDescription(long articlePK,
 		java.util.Locale locale) {
-		return getService().getArticleDescription(articleId, locale);
+		return getService().getArticleDescription(articlePK, locale);
 	}
 
-	public static java.lang.String getArticleTitle(long articleId,
+	public static java.lang.String getArticleTitle(long articlePK,
 		java.lang.String languageId) {
-		return getService().getArticleTitle(articleId, languageId);
+		return getService().getArticleTitle(articlePK, languageId);
 	}
 
-	public static java.lang.String getArticleTitle(long articleId,
+	public static java.lang.String getArticleTitle(long articlePK,
 		java.util.Locale locale) {
-		return getService().getArticleTitle(articleId, locale);
+		return getService().getArticleTitle(articlePK, locale);
 	}
 
 	/**
@@ -2645,6 +2645,11 @@ public class JournalArticleLocalServiceUtil {
 		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		return getService()
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
+	}
+
+	public static java.util.List<java.lang.String> getArticleLocalizationLanguageIds(
+		long articlePK) {
+		return getService().getArticleLocalizationLanguageIds(articlePK);
 	}
 
 	/**
@@ -3120,11 +3125,6 @@ public class JournalArticleLocalServiceUtil {
 				   .getTemplateArticles(groupId, ddmTemplateKey, start, end, obc);
 	}
 
-	public static java.util.List<java.lang.String> getTitleAndDescriptionLanguageIds(
-		long articleId) {
-		return getService().getTitleAndDescriptionLanguageIds(articleId);
-	}
-
 	/**
 	* Returns an ordered range of all the web content articles matching the
 	* parameters without using the indexer, including keyword parameters for
@@ -3422,13 +3422,13 @@ public class JournalArticleLocalServiceUtil {
 	}
 
 	public static java.util.Map<java.util.Locale, java.lang.String> getArticleDescriptionMap(
-		long articleId) {
-		return getService().getArticleDescriptionMap(articleId);
+		long articlePK) {
+		return getService().getArticleDescriptionMap(articlePK);
 	}
 
 	public static java.util.Map<java.util.Locale, java.lang.String> getArticleTitleMap(
-		long articleId) {
-		return getService().getArticleTitleMap(articleId);
+		long articlePK) {
+		return getService().getArticleTitleMap(articlePK);
 	}
 
 	/**

@@ -15,6 +15,7 @@
 package com.liferay.journal.item.selector.web.internal;
 
 import com.liferay.item.selector.ItemSelectorReturnType;
+import com.liferay.item.selector.ItemSelectorReturnTypeResolverHandler;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
@@ -57,6 +58,12 @@ public class JournalItemSelectorView
 	@Override
 	public Class<JournalItemSelectorCriterion> getItemSelectorCriterionClass() {
 		return JournalItemSelectorCriterion.class;
+	}
+
+	public ItemSelectorReturnTypeResolverHandler
+		getItemSelectorReturnTypeResolverHandler() {
+
+		return _itemSelectorReturnTypeResolverHandler;
 	}
 
 	public ServletContext getServletContext() {
@@ -108,6 +115,15 @@ public class JournalItemSelectorView
 		requestDispatcher.include(request, response);
 	}
 
+	@Reference(unbind = "-")
+	public void setItemSelectorReturnTypeResolverHandler(
+		ItemSelectorReturnTypeResolverHandler
+			itemSelectorReturnTypeResolverHandler) {
+
+		_itemSelectorReturnTypeResolverHandler =
+			itemSelectorReturnTypeResolverHandler;
+	}
+
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.journal.item.selector.web)",
 		unbind = "-"
@@ -124,6 +140,8 @@ public class JournalItemSelectorView
 					new URLItemSelectorReturnType()
 				}));
 
+	private ItemSelectorReturnTypeResolverHandler
+		_itemSelectorReturnTypeResolverHandler;
 	private ServletContext _servletContext;
 
 }

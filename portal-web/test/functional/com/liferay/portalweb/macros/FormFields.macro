@@ -263,7 +263,16 @@
 			</else>
 		</if>
 
-		<execute function="AssertTextEquals" locator1="FormFields#PARAGRAPH_TITLE" value1="${fieldTitle}" />
+		<if>
+			<equals arg1="${fieldTitle}" arg2="" />
+			<then>
+				<execute function="AssertElementNotPresent" locator1="FormFields#PARAGRAPH_TITLE" />
+			</then>
+			<else>
+				<execute function="AssertTextEquals" locator1="FormFields#PARAGRAPH_TITLE" value1="${fieldTitle}" />
+			</else>
+		</if>
+
 		<execute function="AssertTextEquals" locator1="FormFields#PARAGRAPH_BODY_TEXT_CONTENT" value1="${fieldValue}" />
 	</command>
 

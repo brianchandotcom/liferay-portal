@@ -327,13 +327,13 @@ public class MarketplaceStorePortlet extends RemoteMVCPortlet {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
+		jsonObject.put("cmd", "updateApps");
+		jsonObject.put("message", "success");
+
 		if (_lock.tryLock()) {
 			try {
 				long[] appPackageIds = ParamUtil.getLongValues(
 					actionRequest, "appPackageIds");
-
-				jsonObject.put("cmd", "updateApps");
-				jsonObject.put("message", "success");
 
 				JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
@@ -364,8 +364,6 @@ public class MarketplaceStorePortlet extends RemoteMVCPortlet {
 				}
 
 				jsonObject.put("updatedApps", jsonArray);
-
-				writeJSON(actionRequest, actionResponse, jsonObject);
 			}
 			finally {
 				_lock.unlock();
@@ -373,9 +371,9 @@ public class MarketplaceStorePortlet extends RemoteMVCPortlet {
 		}
 		else {
 			jsonObject.put("message", "failed");
-
-			writeJSON(actionRequest, actionResponse, jsonObject);
 		}
+
+		writeJSON(actionRequest, actionResponse, jsonObject);
 	}
 
 	@Override

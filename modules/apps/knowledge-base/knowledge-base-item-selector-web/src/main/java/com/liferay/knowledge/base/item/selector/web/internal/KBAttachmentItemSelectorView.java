@@ -15,6 +15,7 @@
 package com.liferay.knowledge.base.item.selector.web.internal;
 
 import com.liferay.item.selector.ItemSelectorReturnType;
+import com.liferay.item.selector.ItemSelectorReturnTypeResolverHandler;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
@@ -62,6 +63,12 @@ public class KBAttachmentItemSelectorView
 		getItemSelectorCriterionClass() {
 
 		return KBAttachmentItemSelectorCriterion.class;
+	}
+
+	public ItemSelectorReturnTypeResolverHandler
+		getItemSelectorReturnTypeResolverHandler() {
+
+		return _itemSelectorReturnTypeResolverHandler;
 	}
 
 	public ServletContext getServletContext() {
@@ -117,6 +124,15 @@ public class KBAttachmentItemSelectorView
 		requestDispatcher.include(request, response);
 	}
 
+	@Reference(unbind = "-")
+	public void setItemSelectorReturnTypeResolverHandler(
+		ItemSelectorReturnTypeResolverHandler
+			itemSelectorReturnTypeResolverHandler) {
+
+		_itemSelectorReturnTypeResolverHandler =
+			itemSelectorReturnTypeResolverHandler;
+	}
+
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.knowledge.base.item.selector.web)",
 		unbind = "-"
@@ -144,6 +160,8 @@ public class KBAttachmentItemSelectorView
 					new URLItemSelectorReturnType()
 				}));
 
+	private ItemSelectorReturnTypeResolverHandler
+		_itemSelectorReturnTypeResolverHandler;
 	private ResourceBundleLoader _resourceBundleLoader;
 	private ServletContext _servletContext;
 

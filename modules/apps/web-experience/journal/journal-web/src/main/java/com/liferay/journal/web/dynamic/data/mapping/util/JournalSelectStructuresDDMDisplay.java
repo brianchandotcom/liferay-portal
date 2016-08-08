@@ -14,6 +14,7 @@
 
 package com.liferay.journal.web.dynamic.data.mapping.util;
 
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.util.DDMDisplay;
 import com.liferay.journal.constants.JournalPortletKeys;
 
@@ -31,6 +32,15 @@ public class JournalSelectStructuresDDMDisplay extends JournalDDMDisplay {
 	@Override
 	public String getPortletId() {
 		return JournalPortletKeys.JOURNAL + ".selectStructure";
+	}
+
+	@Override
+	public boolean isEnableSelectStructureLink(DDMStructure structure, long classPK) {
+		if (structure.getStructureId() == classPK) {
+			return false;
+		}
+
+		return true;
 	}
 
 	@Override

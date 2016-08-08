@@ -114,6 +114,9 @@ public interface DDMDisplay {
 
 	public String getViewTemplatesTitle(DDMStructure structure, Locale locale);
 
+	public boolean isEnableSelectStructureLink(
+		DDMStructure structure, long classPK);
+
 	public boolean isShowAddStructureButton();
 
 	public boolean isShowBackURLInTitleBar();

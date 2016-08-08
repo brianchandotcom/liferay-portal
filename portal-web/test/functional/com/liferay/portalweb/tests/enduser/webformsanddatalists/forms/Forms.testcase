@@ -2459,7 +2459,7 @@
 	</command>
 
 	<command name="SubmitFormWithParagraphField" priority="4">
-		<description message="This is a use case for LPS-61450 and LPS-61252." />
+		<description message="This is a use case for LPS-61450 and LPS-61252 and LPS-64710." />
 
 		<execute macro="Navigator#openURL" />
 
@@ -2475,10 +2475,6 @@
 
 		<execute macro="Form#gotoAddField">
 			<var name="fieldType" value="Form Text" />
-		</execute>
-
-		<execute macro="Form#editFieldLabel">
-			<var name="fieldValue" value="Paragraph Field" />
 		</execute>
 
 		<execute macro="FormFields#editParagraphBody">
@@ -2509,7 +2505,8 @@
 		</execute>
 
 		<execute macro="FormFields#viewParagraphField">
-			<var name="fieldTitle" value="Paragraph Field" />
+			<var name="fieldName" value="paragraph" />
+			<var name="fieldTitle" value="" />
 			<var name="fieldValue" value="Paragraph field body text." />
 		</execute>
 
@@ -2531,8 +2528,69 @@
 		<execute macro="FormsAdminNavigator#gotoView" />
 
 		<execute macro="FormsAdmin#viewParagraphEntry">
-			<var name="fieldTitle" value="Paragraph Field" />
+			<var name="fieldName" value="paragraph" />
+			<var name="fieldTitle" value="" />
 			<var name="fieldValue" value="Paragraph field body text." />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Forms" />
+		</execute>
+
+		<execute macro="FormsAdminNavigator#gotoEdit">
+			<var name="formName" value="Created Form Name" />
+		</execute>
+
+		<execute macro="FormsAdminNavigator#gotoEditFieldParagraph">
+			<var name="fieldName" value="paragraph" />
+		</execute>
+
+		<execute macro="Form#editFieldLabel">
+			<var name="fieldName" value="ParagraphFieldTitle" />
+			<var name="fieldValue" value="Paragraph Field Title" />
+		</execute>
+
+		<execute macro="FormFields#editParagraphBody">
+			<var name="fieldValue" value="New Paragraph body text." />
+		</execute>
+
+		<execute macro="FormFields#saveEdit" />
+
+		<execute macro="Form#save" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Form Page" />
+		</execute>
+
+		<execute macro="FormFields#viewParagraphField">
+			<var name="fieldName" value="ParagraphFieldTitle" />
+			<var name="fieldTitle" value="Paragraph Field Title" />
+			<var name="fieldValue" value="New Paragraph body text." />
+		</execute>
+
+		<execute macro="FormPortlet#submit" />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Forms" />
+		</execute>
+
+		<execute macro="FormsAdminNavigator#gotoViewEntries" />
+
+		<execute macro="FormsAdmin#viewFormTableEntry">
+			<var name="fieldLabel" value="Status" />
+			<var name="fieldValue" value="Approved" />
+		</execute>
+
+		<execute macro="FormsAdminNavigator#gotoView" />
+
+		<execute macro="FormsAdmin#viewParagraphEntry">
+			<var name="fieldName" value="ParagraphFieldTitle" />
+			<var name="fieldTitle" value="Paragraph Field Title" />
+			<var name="fieldValue" value="New Paragraph body text." />
 		</execute>
 	</command>
 

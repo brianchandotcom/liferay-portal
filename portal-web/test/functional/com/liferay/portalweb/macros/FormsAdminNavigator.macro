@@ -45,6 +45,16 @@
 		<execute function="Click" locator1="Form#FIELD_EDIT_BUTTON" />
 	</command>
 
+	<command name="gotoEditFieldParagraph">
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute function="MouseOver" locator1="Form#FIELD_PARAGRAPH" />
+
+		<execute function="Click" locator1="Form#FIELD_ELLIPSIS" />
+
+		<execute function="Click" locator1="Form#FIELD_EDIT_BUTTON" />
+	</command>
+
 	<command name="gotoEditFormByName">
 		<var name="key_formName" value="${formName}" />
 

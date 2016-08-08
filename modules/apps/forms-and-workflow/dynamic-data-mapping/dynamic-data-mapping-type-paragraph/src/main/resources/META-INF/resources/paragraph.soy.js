@@ -20,7 +20,7 @@ soy.$$registerDelegateFn(soy.$$getDelTemplateId('ddm.field'), 'paragraph', 0, dd
 
 
 ddm.paragraph = function(opt_data, opt_ignored) {
-  return '<div class="form-group' + soy.$$escapeHtmlAttribute(opt_data.visible ? '' : ' hide') + ' liferay-ddm-form-field-paragraph" data-fieldname="' + soy.$$escapeHtmlAttribute(opt_data.name) + '"><label class="control-label" for="' + soy.$$escapeHtmlAttribute(opt_data.name) + '">' + soy.$$escapeHtml(opt_data.label) + '</label><div>' + soy.$$filterNoAutoescape(opt_data.text) + '</div></div>';
+  return '<div class="form-group' + soy.$$escapeHtmlAttribute(opt_data.visible ? '' : ' hide') + ' liferay-ddm-form-field-paragraph" data-fieldname="' + soy.$$escapeHtmlAttribute(opt_data.name) + '">' + ((opt_data.label) ? '<label class="control-label" for="' + soy.$$escapeHtmlAttribute(opt_data.name) + '">' + soy.$$escapeHtml(opt_data.label) + '</label>' : '') + '<div>' + soy.$$filterNoAutoescape(opt_data.text) + '</div></div>';
 };
 if (goog.DEBUG) {
   ddm.paragraph.soyTemplateName = 'ddm.paragraph';

@@ -1313,6 +1313,15 @@ public class JavadocFormatter {
 		}
 
 		if (srcDirName == null) {
+			pos = absolutePath.indexOf("/src/main/java/");
+
+			if (pos != -1) {
+				srcDirName =
+					absolutePath.substring(0, pos) + "/src/main/resources";
+			}
+		}
+
+		if (srcDirName == null) {
 			return null;
 		}
 

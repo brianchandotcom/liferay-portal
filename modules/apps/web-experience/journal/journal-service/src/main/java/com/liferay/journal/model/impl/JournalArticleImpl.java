@@ -315,23 +315,10 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 			return _descriptionMap;
 		}
 
-		Locale defaultLocale = LocaleThreadLocal.getDefaultLocale();
+		_descriptionMap =
+			JournalArticleLocalServiceUtil.getArticleDescriptionMap(getId());
 
-		try {
-			Locale articleDefaultLocale = LocaleUtil.fromLanguageId(
-				getDefaultLanguageId());
-
-			LocaleThreadLocal.setDefaultLocale(articleDefaultLocale);
-
-			_descriptionMap =
-				JournalArticleLocalServiceUtil.getArticleDescriptionMap(
-					getId());
-
-			return _descriptionMap;
-		}
-		finally {
-			LocaleThreadLocal.setDefaultLocale(defaultLocale);
-		}
+		return _descriptionMap;
 	}
 
 	@Override
@@ -553,22 +540,9 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 			return _titleMap;
 		}
 
-		Locale defaultLocale = LocaleThreadLocal.getDefaultLocale();
+		_titleMap = JournalArticleLocalServiceUtil.getArticleTitleMap(getId());
 
-		try {
-			Locale articleDefaultLocale = LocaleUtil.fromLanguageId(
-				getDefaultLanguageId());
-
-			LocaleThreadLocal.setDefaultLocale(articleDefaultLocale);
-
-			_titleMap = JournalArticleLocalServiceUtil.getArticleTitleMap(
-				getId());
-
-			return _titleMap;
-		}
-		finally {
-			LocaleThreadLocal.setDefaultLocale(defaultLocale);
-		}
+		return _titleMap;
 	}
 
 	@Override

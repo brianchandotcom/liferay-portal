@@ -2659,6 +2659,32 @@ public class JournalArticleLocalServiceWrapper
 			articleId, viewMode, languageId, themeDisplay);
 	}
 
+	@Override
+	public java.lang.String getArticleDescription(long articleId,
+		java.lang.String languageId) {
+		return _journalArticleLocalService.getArticleDescription(articleId,
+			languageId);
+	}
+
+	@Override
+	public java.lang.String getArticleDescription(long articleId,
+		java.util.Locale locale) {
+		return _journalArticleLocalService.getArticleDescription(articleId,
+			locale);
+	}
+
+	@Override
+	public java.lang.String getArticleTitle(long articleId,
+		java.lang.String languageId) {
+		return _journalArticleLocalService.getArticleTitle(articleId, languageId);
+	}
+
+	@Override
+	public java.lang.String getArticleTitle(long articleId,
+		java.util.Locale locale) {
+		return _journalArticleLocalService.getArticleTitle(articleId, locale);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -2736,6 +2762,12 @@ public class JournalArticleLocalServiceWrapper
 		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		return _journalArticleLocalService.dynamicQuery(dynamicQuery, start,
 			end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<java.lang.String> getArticleLocalizationLanguageIds(
+		long articleId) {
+		return _journalArticleLocalService.getArticleLocalizationLanguageIds(articleId);
 	}
 
 	/**
@@ -3537,6 +3569,18 @@ public class JournalArticleLocalServiceWrapper
 		long groupId, long folderId, int status, int start, int end) {
 		return _journalArticleLocalService.search(groupId, folderId, status,
 			start, end);
+	}
+
+	@Override
+	public java.util.Map<java.util.Locale, java.lang.String> getArticleDescriptionMap(
+		long articleId) {
+		return _journalArticleLocalService.getArticleDescriptionMap(articleId);
+	}
+
+	@Override
+	public java.util.Map<java.util.Locale, java.lang.String> getArticleTitleMap(
+		long articleId) {
+		return _journalArticleLocalService.getArticleTitleMap(articleId);
 	}
 
 	/**

@@ -2258,6 +2258,20 @@ public interface JournalArticleLocalService extends BaseLocalService,
 		java.lang.String languageId, ThemeDisplay themeDisplay)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.lang.String getArticleDescription(long articleId,
+		java.lang.String languageId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.lang.String getArticleDescription(long articleId, Locale locale);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.lang.String getArticleTitle(long articleId,
+		java.lang.String languageId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.lang.String getArticleTitle(long articleId, Locale locale);
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -2316,6 +2330,10 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	*/
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<java.lang.String> getArticleLocalizationLanguageIds(
+		long articleId);
 
 	/**
 	* Returns all the web content articles present in the system.
@@ -3010,6 +3028,13 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<JournalArticle> search(long groupId, long folderId, int status,
 		int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Map<Locale, java.lang.String> getArticleDescriptionMap(
+		long articleId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Map<Locale, java.lang.String> getArticleTitleMap(long articleId);
 
 	/**
 	* Returns the number of rows matching the dynamic query.

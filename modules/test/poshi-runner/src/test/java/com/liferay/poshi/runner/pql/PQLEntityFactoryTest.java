@@ -55,6 +55,34 @@ public class PQLEntityFactoryTest extends TestCase {
 		_validateQueryResult("\"test test\"", "test test");
 	}
 
+	@Test
+	public void testPQLVariableGetValue() throws Exception {
+		_validateVariableResult("false", Boolean.valueOf(false));
+		_validateVariableResult("'false'", Boolean.valueOf(false));
+		_validateVariableResult("\"false\"", Boolean.valueOf(false));
+		_validateVariableResult("true", Boolean.valueOf(true));
+		_validateVariableResult("'true'", Boolean.valueOf(true));
+		_validateVariableResult("\"true\"", Boolean.valueOf(true));
+
+		_validateVariableResult("3.2", Double.valueOf(3.2));
+		_validateVariableResult("'3.2'", Double.valueOf(3.2));
+		_validateVariableResult("\"3.2\"", Double.valueOf(3.2));
+		_validateVariableResult("2016.0", Double.valueOf(2016));
+		_validateVariableResult("'2016.0'", Double.valueOf(2016));
+		_validateVariableResult("\"2016.0\"", Double.valueOf(2016));
+
+		_validateVariableResult("2016", Integer.valueOf(2016));
+		_validateVariableResult("'2016'", Integer.valueOf(2016));
+		_validateVariableResult("\"2016\"", Integer.valueOf(2016));
+
+		_validateVariableResult("test", "test");
+		_validateVariableResult("'test'", "test");
+		_validateVariableResult("\"test\"", "test");
+
+		_validateVariableResult("'test test'", "test test");
+		_validateVariableResult("\"test test\"", "test test");
+	}
+
 	private static void _validateQueryResult(String query, Object expected)
 		throws Exception {
 
@@ -82,6 +110,16 @@ public class PQLEntityFactoryTest extends TestCase {
 
 			throw new Exception(sb.toString());
 		}
+	}
+
+	private static void _validateVariableResult(String query, Object expected)
+		throws Exception {
+
+		Properties properties = new Properties();
+
+		properties.put("portal.smoke", query);
+
+		_validateQueryResult("portal.smoke", expected, properties);
 	}
 
 }

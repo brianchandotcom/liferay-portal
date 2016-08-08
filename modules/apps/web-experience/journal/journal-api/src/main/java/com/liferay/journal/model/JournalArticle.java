@@ -142,6 +142,20 @@ public interface JournalArticle extends JournalArticleModel, PersistedModel,
 
 	public com.liferay.portal.kernel.model.Layout getLayout();
 
+	/**
+	* @deprecated As of 7.0.0, only used for backwards compatibility when
+	importing LARs from themes
+	*/
+	@java.lang.Deprecated()
+	public java.lang.String getLegacyDescription();
+
+	/**
+	* @deprecated As of 7.0.0, only used for backwards compatibility when
+	importing LARs from themes
+	*/
+	@java.lang.Deprecated()
+	public java.lang.String getLegacyTitle();
+
 	public java.lang.String getSmallImageType()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
@@ -184,6 +198,12 @@ public interface JournalArticle extends JournalArticleModel, PersistedModel,
 	@java.lang.Deprecated()
 	public boolean isTemplateDriven();
 
+	/**
+	* @deprecated As of 7.0.0, only used for backwards compatibility
+	*/
+	@java.lang.Deprecated()
+	public void setDescription(java.lang.String description);
+
 	public void setDescriptionMap(
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap);
 
@@ -204,6 +224,12 @@ public interface JournalArticle extends JournalArticleModel, PersistedModel,
 	*/
 	@java.lang.Deprecated()
 	public void setTemplateId(java.lang.String ddmTemplateKey);
+
+	/**
+	* @deprecated As of 7.0.0, only used for backwards compatibility
+	*/
+	@java.lang.Deprecated()
+	public void setTitle(java.lang.String title);
 
 	public void setTitleMap(
 		java.util.Map<java.util.Locale, java.lang.String> titleMap);

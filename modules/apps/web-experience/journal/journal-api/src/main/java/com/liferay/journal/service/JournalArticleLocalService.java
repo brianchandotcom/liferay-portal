@@ -2259,18 +2259,18 @@ public interface JournalArticleLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String getArticleDescription(long articleId,
+	public java.lang.String getArticleDescription(long articlePK,
 		java.lang.String languageId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String getArticleDescription(long articleId, Locale locale);
+	public java.lang.String getArticleDescription(long articlePK, Locale locale);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String getArticleTitle(long articleId,
+	public java.lang.String getArticleTitle(long articlePK,
 		java.lang.String languageId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String getArticleTitle(long articleId, Locale locale);
+	public java.lang.String getArticleTitle(long articlePK, Locale locale);
 
 	/**
 	* Returns the OSGi service identifier.
@@ -2330,6 +2330,10 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	*/
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<java.lang.String> getArticleLocalizationLanguageIds(
+		long articlePK);
 
 	/**
 	* Returns all the web content articles present in the system.
@@ -2749,10 +2753,6 @@ public interface JournalArticleLocalService extends BaseLocalService,
 		java.lang.String ddmTemplateKey, int start, int end,
 		OrderByComparator<JournalArticle> obc);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<java.lang.String> getTitleAndDescriptionLanguageIds(
-		long articleId);
-
 	/**
 	* Returns an ordered range of all the web content articles matching the
 	* parameters without using the indexer, including keyword parameters for
@@ -3031,10 +3031,10 @@ public interface JournalArticleLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Map<Locale, java.lang.String> getArticleDescriptionMap(
-		long articleId);
+		long articlePK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Map<Locale, java.lang.String> getArticleTitleMap(long articleId);
+	public Map<Locale, java.lang.String> getArticleTitleMap(long articlePK);
 
 	/**
 	* Returns the number of rows matching the dynamic query.

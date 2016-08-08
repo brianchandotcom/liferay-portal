@@ -734,6 +734,26 @@ public class JournalArticleWrapper implements JournalArticle,
 		return _journalArticle.getLayoutUuid();
 	}
 
+	/**
+	* @deprecated As of 7.0.0, only used for backwards compatibility when
+	importing LARs from themes
+	*/
+	@Deprecated
+	@Override
+	public java.lang.String getLegacyDescription() {
+		return _journalArticle.getLegacyDescription();
+	}
+
+	/**
+	* @deprecated As of 7.0.0, only used for backwards compatibility when
+	importing LARs from themes
+	*/
+	@Deprecated
+	@Override
+	public java.lang.String getLegacyTitle() {
+		return _journalArticle.getLegacyTitle();
+	}
+
 	@Override
 	public java.lang.String getSmallImageType()
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -1226,6 +1246,15 @@ public class JournalArticleWrapper implements JournalArticle,
 		_journalArticle.setDefaultLanguageId(defaultLanguageId);
 	}
 
+	/**
+	* @deprecated As of 7.0.0, only used for backwards compatibility
+	*/
+	@Deprecated
+	@Override
+	public void setDescription(java.lang.String description) {
+		_journalArticle.setDescription(description);
+	}
+
 	@Override
 	public void setDescriptionMap(
 		Map<java.util.Locale, java.lang.String> descriptionMap) {
@@ -1489,6 +1518,15 @@ public class JournalArticleWrapper implements JournalArticle,
 	@Override
 	public void setTemplateId(java.lang.String ddmTemplateKey) {
 		_journalArticle.setTemplateId(ddmTemplateKey);
+	}
+
+	/**
+	* @deprecated As of 7.0.0, only used for backwards compatibility
+	*/
+	@Deprecated
+	@Override
+	public void setTitle(java.lang.String title) {
+		_journalArticle.setTitle(title);
 	}
 
 	@Override

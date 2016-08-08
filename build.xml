@@ -286,7 +286,7 @@
 					</then>
 				</if>
 			</else>
-		</if><fail />
+		</if>
 
 		<stopwatch action="elapsed" name="modules.stopwatch" />
 

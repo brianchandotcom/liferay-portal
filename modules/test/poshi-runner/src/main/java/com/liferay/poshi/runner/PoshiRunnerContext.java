@@ -44,7 +44,6 @@ import java.util.TreeSet;
 
 import org.apache.tools.ant.DirectoryScanner;
 
-import org.dom4j.Attribute;
 import org.dom4j.Element;
 
 /**
@@ -1109,56 +1108,25 @@ public class PoshiRunnerContext {
 	private static void _writeTestGeneratedProperties() throws Exception {
 		StringBuilder sb = new StringBuilder();
 
-		for (String className : _testCaseClassNames) {
-			List<String> classProperties = _getTestCaseClassProperties(
-				className);
+		for (String testCaseClassCommandName : _testCaseClassCommandNames) {
+			Properties properties = _classCommandNamePropertiesMap.get(
+				testCaseClassCommandName);
+			String testClassName =
+				PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
+					testCaseClassCommandName);
+			String testCommandName =
+				PoshiRunnerGetterUtil.getCommandNameFromClassCommandName(
+					testCaseClassCommandName);
 
-			for (String classProperty : classProperties) {
-				sb.append(className);
-				sb.append("TestCase.all.");
-				sb.append(classProperty);
+			for (String propertyName : properties.stringPropertyNames()) {
+				sb.append(testClassName);
+				sb.append("TestCase.test");
+				sb.append(testCommandName);
+				sb.append(".");
+				sb.append(propertyName);
+				sb.append("=");
+				sb.append(properties.getProperty(propertyName));
 				sb.append("\n");
-			}
-
-			Set<String> commandNames = _getTestCaseCommandNames(className);
-
-			for (String commandName : commandNames) {
-				List<String> commandProperties = _getTestCaseCommandProperties(
-					className, commandName);
-
-				for (String commandProperty : commandProperties) {
-					sb.append(className);
-					sb.append("TestCase.test");
-					sb.append(commandName);
-					sb.append(".");
-					sb.append(commandProperty);
-					sb.append("\n");
-				}
-
-				Element commandElement = getTestCaseCommandElement(
-					className, commandName);
-
-				List<Attribute> commandAttributes = commandElement.attributes();
-
-				for (Attribute commandAttribute : commandAttributes) {
-					String commandAttributeName = StringUtil.replace(
-						commandAttribute.getName(), "-", ".");
-
-					if (commandAttributeName.equals("line.number") ||
-						commandAttributeName.equals("name")) {
-
-						continue;
-					}
-
-					sb.append(className);
-					sb.append("TestCase.test");
-					sb.append(commandName);
-					sb.append(".");
-					sb.append(commandAttributeName);
-					sb.append("=");
-					sb.append(commandAttribute.getValue());
-					sb.append("\n");
-				}
 			}
 		}
 

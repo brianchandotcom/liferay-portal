@@ -14,15 +14,21 @@
 
 package com.liferay.wiki.web.internal.item.selector.view.display.context;
 
+import com.liferay.item.selector.ItemSelectorReturnType;
+import com.liferay.item.selector.ItemSelectorReturnTypeResolver;
+import com.liferay.item.selector.ItemSelectorReturnTypeResolverHandler;
+import com.liferay.item.selector.ItemSelectorReturnTypeUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.item.selector.criterion.WikiAttachmentItemSelectorCriterion;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.wiki.web.internal.item.selector.view.WikiAttachmentItemSelectorView;
 
+import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.ActionRequest;
@@ -52,6 +58,28 @@ public class WikiAttachmentItemSelectorViewDisplayContext {
 
 	public String getItemSelectedEventName() {
 		return _itemSelectedEventName;
+	}
+
+	public ItemSelectorReturnTypeResolver getItemSelectorReturnTypeResolver() {
+		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
+			_wikiAttachmentItemSelectorCriterion.
+				getDesiredItemSelectorReturnTypes();
+
+		ItemSelectorReturnType itemSelectorReturnType =
+			ItemSelectorReturnTypeUtil.
+				getFirstAvailableItemSelectorReturnType(
+					desiredItemSelectorReturnTypes,
+					_wikiAttachmentItemSelectorView.
+						getSupportedItemSelectorReturnTypes());
+
+		ItemSelectorReturnTypeResolverHandler
+			itemSelectorReturnTypeResolverHandler =
+				_wikiAttachmentItemSelectorView.
+					getItemSelectorReturnTypeResolverHandler();
+
+		return itemSelectorReturnTypeResolverHandler.
+			getItemSelectorReturnTypeResolver(
+				itemSelectorReturnType.getClass(), FileEntry.class);
 	}
 
 	public PortletURL getPortletURL(

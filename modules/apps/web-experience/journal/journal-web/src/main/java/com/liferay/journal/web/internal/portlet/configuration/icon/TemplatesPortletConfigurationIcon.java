@@ -93,6 +93,7 @@ public class TemplatesPortletConfigurationIcon
 		portletURL.setParameter(
 			"refererWebDAVToken", WebDAVUtil.getStorageToken(portlet));
 		portletURL.setParameter("showAncestorScopes", Boolean.TRUE.toString());
+		portletURL.setParameter("showCacheableInput", Boolean.TRUE.toString());
 		portletURL.setParameter("showHeader", Boolean.TRUE.toString());
 
 		return portletURL.toString();

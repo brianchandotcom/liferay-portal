@@ -1347,6 +1347,10 @@
 				ddmURL.setParameter('showBackURL', config.showBackURL);
 			}
 
+			if ('showCacheableInput' in config) {
+				ddmURL.setParameter('showCacheableInput', config.showCacheableInput);
+			}
+
 			if ('showHeader' in config) {
 				ddmURL.setParameter('showHeader', config.showHeader);
 			}

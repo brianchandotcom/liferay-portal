@@ -31,7 +31,7 @@ public class _CLASS_SimulationPanelApp extends BaseJSPPanelApp {
 
 	@Override
 	public String getJspPath() {
-		return "/simulation_sample.jsp";
+		return "/simulation_panel.jsp";
 	}
 
 	@Override

@@ -137,8 +137,7 @@ public class VelocityTemplateTest {
 			StringUtil.merge(velocityEngineConfiguration.restrictedClasses()));
 		extendedProperties.setProperty(
 			RuntimeConstants.INTROSPECTOR_RESTRICT_PACKAGES,
-			StringUtil.merge(
-				velocityEngineConfiguration.restrictedPackages()));
+			StringUtil.merge(velocityEngineConfiguration.restrictedPackages()));
 		extendedProperties.setProperty(
 			VelocityEngine.RESOURCE_LOADER, "liferay");
 		extendedProperties.setProperty(
@@ -174,8 +173,7 @@ public class VelocityTemplateTest {
 			SecureUberspector.class.getName());
 		extendedProperties.setProperty(
 			VelocityEngine.VM_LIBRARY,
-			StringUtil.merge(
-				velocityEngineConfiguration.velocimacroLibrary()));
+			StringUtil.merge(velocityEngineConfiguration.velocimacroLibrary()));
 		extendedProperties.setProperty(
 			VelocityEngine.VM_LIBRARY_AUTORELOAD,
 			String.valueOf(!cacheEnabled));

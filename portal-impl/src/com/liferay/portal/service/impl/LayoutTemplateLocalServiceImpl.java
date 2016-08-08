@@ -159,10 +159,8 @@ public class LayoutTemplateLocalServiceImpl
 	public List<LayoutTemplate> getLayoutTemplates(String themeId) {
 		Map<String, LayoutTemplate> themesCustom = _getThemesCustom(themeId);
 
-		List<LayoutTemplate> customLayoutTemplates =
-			new ArrayList<LayoutTemplate>(
-				_portalCustom.size() + _warCustom.size() +
-					themesCustom.size());
+		List<LayoutTemplate> customLayoutTemplates = new ArrayList<>(
+			_portalCustom.size() + _warCustom.size() + themesCustom.size());
 
 		for (Map.Entry<String, LayoutTemplate> entry :
 				_portalCustom.entrySet()) {

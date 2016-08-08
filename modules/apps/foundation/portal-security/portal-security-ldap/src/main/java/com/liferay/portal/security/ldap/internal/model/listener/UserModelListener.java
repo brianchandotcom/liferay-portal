@@ -75,7 +75,10 @@ public class UserModelListener extends BaseModelListener<User> {
 			exportToLDAP(user);
 		}
 		catch (Exception e) {
-			_log.error(e, e);
+			_log.error(
+				"Error exporting user to LDAP for userId = " +
+					user.getUserId(),
+				e);
 		}
 	}
 
@@ -85,7 +88,10 @@ public class UserModelListener extends BaseModelListener<User> {
 			exportToLDAP(user);
 		}
 		catch (Exception e) {
-			_log.error(e, e);
+			_log.error(
+				"Error exporting user to LDAP for userId = " +
+					user.getUserId(),
+				e);
 		}
 	}
 

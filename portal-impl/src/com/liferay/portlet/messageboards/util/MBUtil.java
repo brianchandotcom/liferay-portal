@@ -550,8 +550,7 @@ public class MBUtil {
 
 		sb.append("<blockquote><div class=\"quote-title\">");
 		sb.append(parentAuthor);
-		sb.append(
-			": </div><div class=\"quote\"><div class=\"quote-content\">");
+		sb.append(": </div><div class=\"quote\"><div class=\"quote-content\">");
 		sb.append(parentMessage.getBody(false));
 		sb.append("</div></blockquote><br /><br /><br />");
 
@@ -568,8 +567,7 @@ public class MBUtil {
 		sb.append("</a>");
 
 		return LanguageUtil.format(
-			request, "the-new-thread-can-be-found-at-x", sb.toString(),
-			false);
+			request, "the-new-thread-can-be-found-at-x", sb.toString(), false);
 	}
 
 	public static long getMessageId(String messageIdString) {

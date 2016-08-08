@@ -1,4 +1,4 @@
-package _package_.control.menu;
+package _package_.theme.contributor;
 
 import com.liferay.portal.kernel.template.TemplateContextContributor;
 

@@ -1070,6 +1070,10 @@ public class GroupImpl extends GroupBaseImpl {
 				Portlet stagedPortlet = PortletLocalServiceUtil.getPortletById(
 					stagedPortletId);
 
+				if (stagedPortlet == null) {
+					continue;
+				}
+
 				if (portletDataHandler.equals(
 						stagedPortlet.getPortletDataHandlerInstance())) {
 
@@ -1078,6 +1082,9 @@ public class GroupImpl extends GroupBaseImpl {
 			}
 		}
 		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
 		}
 
 		return true;

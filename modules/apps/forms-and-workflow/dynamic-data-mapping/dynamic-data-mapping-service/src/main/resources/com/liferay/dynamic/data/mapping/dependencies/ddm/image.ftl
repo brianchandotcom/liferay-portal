@@ -1,21 +1,25 @@
 <#include "../init.ftl">
 
 <#if !(fields?? && fields.get(fieldName)??) && (fieldRawValue == "")>
-	<#assign fieldRawValue = predefinedValue>
+	<#assign fieldRawValue = predefinedValue />
 </#if>
 
-<#assign fieldRawValue = paramUtil.getString(request, "${namespacedFieldName}", fieldRawValue)>
+<#assign
+	fieldRawValue = paramUtil.getString(request, "${namespacedFieldName}", fieldRawValue)
 
-<#assign alt = "">
-<#assign imageData = "">
-<#assign name = languageUtil.get(locale, "drag-file-here")>
+	alt = ""
+	imageData = ""
+	name = languageUtil.get(locale, "drag-file-here")
+/>
 
 <#if fieldRawValue?has_content>
-	<#assign fileJSONObject = getFileJSONObject(fieldRawValue)>
+	<#assign
+		fileJSONObject = getFileJSONObject(fieldRawValue)
 
-	<#assign alt = fileJSONObject.getString("alt")>
-	<#assign imageData = fileJSONObject.getString("data")>
-	<#assign name = fileJSONObject.getString("name")>
+		alt = fileJSONObject.getString("alt")
+		imageData = fileJSONObject.getString("data")
+		name = fileJSONObject.getString("name")
+	/>
 </#if>
 
 <@liferay_aui["field-wrapper"] cssClass="form-builder-field" data=data>

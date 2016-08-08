@@ -13,6 +13,7 @@ var soyJSDir = path.join(osgi.resourcesClassesPath(soyDir));
 
 var ddmKeyValueResourcesDir = osgi.ddmBundleResourcesPath('dynamic-data-mapping-type-key-value');
 var ddmOptionsResourcesDir = osgi.ddmBundleResourcesPath('dynamic-data-mapping-type-options');
+var ddmRadioResourcesDir = osgi.ddmBundleResourcesPath('dynamic-data-mapping-type-radio');
 var ddmRendererResourcesDir = osgi.ddmBundleResourcesPath('dynamic-data-mapping-form-renderer');
 var ddmTextResourcesDir = osgi.ddmBundleResourcesPath('dynamic-data-mapping-type-text');
 
@@ -41,6 +42,11 @@ module.exports = [
 	{
 		included: false,
 		pattern: ddmOptionsResourcesDir + '/*.soy.js',
+	},
+	ddmRadioResourcesDir + '/!(*.soy).js',
+	{
+		included: false,
+		pattern: ddmRadioResourcesDir + '/*.soy.js',
 	},
 	ddmTextResourcesDir + '/!(*.soy).js',
 	{

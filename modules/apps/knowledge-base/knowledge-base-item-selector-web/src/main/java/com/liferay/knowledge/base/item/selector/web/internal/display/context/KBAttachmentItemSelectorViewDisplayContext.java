@@ -73,11 +73,10 @@ public class KBAttachmentItemSelectorViewDisplayContext {
 				getDesiredItemSelectorReturnTypes();
 
 		ItemSelectorReturnType itemSelectorReturnType =
-			ItemSelectorReturnTypeUtil.
-				getFirstAvailableItemSelectorReturnType(
-					desiredItemSelectorReturnTypes,
-					_kbAttachmentItemSelectorView.
-						getSupportedItemSelectorReturnTypes());
+			ItemSelectorReturnTypeUtil.getFirstAvailableItemSelectorReturnType(
+				desiredItemSelectorReturnTypes,
+				_kbAttachmentItemSelectorView.
+					getSupportedItemSelectorReturnTypes());
 
 		ItemSelectorReturnTypeResolverHandler
 			itemSelectorReturnTypeResolverHandler =

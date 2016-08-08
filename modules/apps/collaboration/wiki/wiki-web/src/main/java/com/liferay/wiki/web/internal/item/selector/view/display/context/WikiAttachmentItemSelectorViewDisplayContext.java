@@ -66,11 +66,10 @@ public class WikiAttachmentItemSelectorViewDisplayContext {
 				getDesiredItemSelectorReturnTypes();
 
 		ItemSelectorReturnType itemSelectorReturnType =
-			ItemSelectorReturnTypeUtil.
-				getFirstAvailableItemSelectorReturnType(
-					desiredItemSelectorReturnTypes,
-					_wikiAttachmentItemSelectorView.
-						getSupportedItemSelectorReturnTypes());
+			ItemSelectorReturnTypeUtil.getFirstAvailableItemSelectorReturnType(
+				desiredItemSelectorReturnTypes,
+				_wikiAttachmentItemSelectorView.
+					getSupportedItemSelectorReturnTypes());
 
 		ItemSelectorReturnTypeResolverHandler
 			itemSelectorReturnTypeResolverHandler =

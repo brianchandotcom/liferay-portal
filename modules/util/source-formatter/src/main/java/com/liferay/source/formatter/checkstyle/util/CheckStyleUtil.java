@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.source.formatter.util;
+package com.liferay.source.formatter.checkstyle.util;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.util.StringPool;

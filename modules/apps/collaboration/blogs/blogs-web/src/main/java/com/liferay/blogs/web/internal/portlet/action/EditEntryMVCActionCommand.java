@@ -416,6 +416,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		String title = ParamUtil.getString(actionRequest, "title");
 		String subtitle = ParamUtil.getString(actionRequest, "subtitle");
+		String urlTitle = ParamUtil.getString(actionRequest, "urlTitle");
 
 		String description = StringPool.BLANK;
 
@@ -513,7 +514,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 			// Add entry
 
 			entry = _blogsEntryService.addEntry(
-				title, subtitle, description, content, displayDateMonth,
+				title, subtitle, urlTitle, description, content, displayDateMonth,
 				displayDateDay, displayDateYear, displayDateHour,
 				displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
 				coverImageCaption, coverImageImageSelector,

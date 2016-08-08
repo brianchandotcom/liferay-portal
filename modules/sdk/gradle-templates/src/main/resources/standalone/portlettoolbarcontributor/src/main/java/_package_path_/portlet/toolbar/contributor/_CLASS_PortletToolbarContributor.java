@@ -5,6 +5,9 @@ import com.liferay.portal.kernel.portlet.toolbar.contributor.PortletToolbarContr
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,9 +17,6 @@ import java.util.ResourceBundle;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 import org.osgi.service.component.annotations.Component;
 
 @Component(
@@ -25,9 +25,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.name=" + "com_liferay_hello_world_web_portlet_HelloWorldPortlet",
 		"mvc.path=-"
 	},
-	service = {
-		PortletToolbarContributor.class
-	}
+	service = PortletToolbarContributor.class
 )
 public class _CLASS_PortletToolbarContributor
 	implements PortletToolbarContributor {

@@ -150,6 +150,26 @@
 		</execute>
 	</command>
 
+	<command name="assignByDetails">
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+
+		<execute function="AssertClick" locator1="MyWorkflowTasksTask#MENU_ASSIGN" value1="Assign to..." />
+
+		<execute function="AssertTextEquals" locator1="MyWorkflowTasks#DIALOG_BOX_TITLE" value1="Assign to..." />
+		<execute function="Select" locator1="MyWorkflowTasks#DIALOG_BOX_ASSIGN_TO_SELECT" value1="${user}" />
+
+		<if>
+			<isset var="comment" />
+			<then>
+				<execute function="Type" locator1="MyWorkflowTasks#DIALOG_BOX_COMMENT_FIELD" value1="${comment}" />
+			</then>
+		</if>
+
+		<execute macro="Button#clickDone" />
+
+		<execute macro="Alert#viewSuccessMessage" />
+	</command>
+
 	<command name="assignToMeTaskByActions">
 		<execute macro="Workflow#viewTaskAssignedToMyRoles">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />

@@ -7,6 +7,8 @@
 			</and>
 			<then>
 				<execute function="Click" locator1="Icon#CLOSE" />
+
+				<execute function="Pause" locator1="2000" />
 			</then>
 		</if>
 	</command>

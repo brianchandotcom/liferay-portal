@@ -79,7 +79,7 @@ public class PQLValue extends PQLEntity {
 			return;
 		}
 
-		value = value.trim();
+		value = removeModifierFromPQL(value);
 
 		if ((value.startsWith("'") && value.endsWith("'")) ||
 			(value.startsWith("\"") && value.endsWith("\""))) {

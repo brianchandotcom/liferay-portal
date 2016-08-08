@@ -30,6 +30,8 @@ public class PQLQuery extends PQLEntity {
 			return false;
 		}
 
+		pql = removeModifierFromPQL(pql);
+
 		String[] queryTokens = _getQueryTokens(pql);
 
 		if (queryTokens == null) {

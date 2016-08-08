@@ -21,21 +21,15 @@
 			<hint name="upper-case">true</hint>
 		</field>
 		<field name="version" type="double" />
-		<field localized="true" name="title" type="String">
-			<hint name="max-length">4000</hint>
-		</field>
 		<field name="urlTitle" type="String">
 			<hint name="max-length">150</hint>
-		</field>
-		<field localized="true" name="description" type="String">
-			<hint-collection name="CLOB" />
-			<hint name="display-height">40</hint>
 		</field>
 		<field name="content" type="String">
 			<hint-collection name="CLOB" />
 		</field>
 		<field name="DDMStructureKey" type="String" />
 		<field name="DDMTemplateKey" type="String" />
+		<field name="defaultLanguageId" type="String" />
 		<field name="layoutUuid" type="String" />
 		<field name="displayDate" type="Date" />
 		<field name="expirationDate" type="Date">
@@ -68,6 +62,14 @@
 		<field name="elName" type="String" />
 		<field name="languageId" type="String" />
 		<field name="tempImage" type="boolean" />
+	</model>
+	<model name="com.liferay.journal.model.JournalArticleLocalization">
+		<field name="articleLocalizationId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="articlePK" type="long" />
+		<field name="title" type="String" />
+		<field name="description" type="String" />
+		<field name="languageId" type="String" />
 	</model>
 	<model name="com.liferay.journal.model.JournalArticleResource">
 		<field name="uuid" type="String" />

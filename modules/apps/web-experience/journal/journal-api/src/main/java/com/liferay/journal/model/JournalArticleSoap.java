@@ -49,12 +49,11 @@ public class JournalArticleSoap implements Serializable {
 		soapModel.setTreePath(model.getTreePath());
 		soapModel.setArticleId(model.getArticleId());
 		soapModel.setVersion(model.getVersion());
-		soapModel.setTitle(model.getTitle());
 		soapModel.setUrlTitle(model.getUrlTitle());
-		soapModel.setDescription(model.getDescription());
 		soapModel.setContent(model.getContent());
 		soapModel.setDDMStructureKey(model.getDDMStructureKey());
 		soapModel.setDDMTemplateKey(model.getDDMTemplateKey());
+		soapModel.setDefaultLanguageId(model.getDefaultLanguageId());
 		soapModel.setLayoutUuid(model.getLayoutUuid());
 		soapModel.setDisplayDate(model.getDisplayDate());
 		soapModel.setExpirationDate(model.getExpirationDate());
@@ -240,28 +239,12 @@ public class JournalArticleSoap implements Serializable {
 		_version = version;
 	}
 
-	public String getTitle() {
-		return _title;
-	}
-
-	public void setTitle(String title) {
-		_title = title;
-	}
-
 	public String getUrlTitle() {
 		return _urlTitle;
 	}
 
 	public void setUrlTitle(String urlTitle) {
 		_urlTitle = urlTitle;
-	}
-
-	public String getDescription() {
-		return _description;
-	}
-
-	public void setDescription(String description) {
-		_description = description;
 	}
 
 	public String getContent() {
@@ -286,6 +269,14 @@ public class JournalArticleSoap implements Serializable {
 
 	public void setDDMTemplateKey(String DDMTemplateKey) {
 		_DDMTemplateKey = DDMTemplateKey;
+	}
+
+	public String getDefaultLanguageId() {
+		return _defaultLanguageId;
+	}
+
+	public void setDefaultLanguageId(String defaultLanguageId) {
+		_defaultLanguageId = defaultLanguageId;
 	}
 
 	public String getLayoutUuid() {
@@ -415,12 +406,11 @@ public class JournalArticleSoap implements Serializable {
 	private String _treePath;
 	private String _articleId;
 	private double _version;
-	private String _title;
 	private String _urlTitle;
-	private String _description;
 	private String _content;
 	private String _DDMStructureKey;
 	private String _DDMTemplateKey;
+	private String _defaultLanguageId;
 	private String _layoutUuid;
 	private Date _displayDate;
 	private Date _expirationDate;

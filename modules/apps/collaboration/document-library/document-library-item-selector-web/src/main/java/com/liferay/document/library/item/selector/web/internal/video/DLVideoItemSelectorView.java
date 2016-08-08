@@ -16,6 +16,7 @@ package com.liferay.document.library.item.selector.web.internal.video;
 
 import com.liferay.document.library.item.selector.web.internal.BaseDLItemSelectorView;
 import com.liferay.item.selector.ItemSelectorReturnType;
+import com.liferay.item.selector.ItemSelectorReturnTypeResolverHandler;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
@@ -54,6 +55,16 @@ public class DLVideoItemSelectorView
 	@Override
 	public List<ItemSelectorReturnType> getSupportedItemSelectorReturnTypes() {
 		return _supportedItemSelectorReturnTypes;
+	}
+
+	@Override
+	@Reference(unbind = "-")
+	public void setItemSelectorReturnTypeResolverHandler(
+		ItemSelectorReturnTypeResolverHandler
+			itemSelectorReturnTypeResolverHandler) {
+
+		super.setItemSelectorReturnTypeResolverHandler(
+			itemSelectorReturnTypeResolverHandler);
 	}
 
 	@Override

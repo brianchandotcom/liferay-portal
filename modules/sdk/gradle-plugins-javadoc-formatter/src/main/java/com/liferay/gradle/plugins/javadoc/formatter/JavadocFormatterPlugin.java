@@ -144,7 +144,7 @@ public class JavadocFormatterPlugin implements Plugin<Project> {
 	}
 
 	protected void configureTasksFormatJavadoc(
-		Project project, final Configuration javadocFormatterConfiguration) {
+		Project project, final FileCollection classpath) {
 
 		TaskContainer taskContainer = project.getTasks();
 
@@ -154,8 +154,7 @@ public class JavadocFormatterPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(FormatJavadocTask formatJavadoc) {
-					configureTaskFormatJavadoc(
-						formatJavadoc, javadocFormatterConfiguration);
+					configureTaskFormatJavadoc(formatJavadoc, classpath);
 				}
 
 			});

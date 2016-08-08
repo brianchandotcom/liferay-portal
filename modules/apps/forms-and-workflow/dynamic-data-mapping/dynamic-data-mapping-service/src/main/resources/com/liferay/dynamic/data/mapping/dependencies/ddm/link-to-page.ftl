@@ -1,28 +1,36 @@
 <#include "../init.ftl">
 
-<#assign layoutLocalService = serviceLocator.findService("com.liferay.portal.kernel.service.LayoutLocalService")>
-<#assign layoutService = serviceLocator.findService("com.liferay.portal.kernel.service.LayoutService")>
+<#assign
+	layoutLocalService = serviceLocator.findService("com.liferay.portal.kernel.service.LayoutLocalService")
+	layoutService = serviceLocator.findService("com.liferay.portal.kernel.service.LayoutService")
+/>
 
 <@liferay_aui["field-wrapper"] cssClass="form-builder-field" data=data>
-	<#assign selectedLayoutName = "">
+	<#assign
+		selectedLayoutName = ""
 
-	<#assign fieldRawValue = paramUtil.getString(request, "${namespacedFieldName}", fieldRawValue)>
+		fieldRawValue = paramUtil.getString(request, "${namespacedFieldName}", fieldRawValue)
+	/>
 
 	<#if validator.isNotNull(fieldRawValue)>
-		<#assign fieldLayoutJSONObject = jsonFactoryUtil.createJSONObject(fieldRawValue)>
+		<#assign
+			fieldLayoutJSONObject = jsonFactoryUtil.createJSONObject(fieldRawValue)
 
-		<#assign selectedLayoutGroupId = getterUtil.getLong(fieldLayoutJSONObject.get("groupId"))>
+			selectedLayoutGroupId = getterUtil.getLong(fieldLayoutJSONObject.get("groupId"))
+		/>
 
 		<#if selectedLayoutGroupId <= 0>
-			<#assign selectedLayoutGroupId = scopeGroupId>
+			<#assign selectedLayoutGroupId = scopeGroupId />
 		</#if>
 
-		<#assign selectedLayoutLayoutId = getterUtil.getLong(fieldLayoutJSONObject.get("layoutId"))>
+		<#assign
+			selectedLayoutLayoutId = getterUtil.getLong(fieldLayoutJSONObject.get("layoutId"))
 
-		<#assign selectedLayout = layoutLocalService.fetchLayout(selectedLayoutGroupId, fieldLayoutJSONObject.getBoolean("privateLayout"), selectedLayoutLayoutId)!"">
+			selectedLayout = layoutLocalService.fetchLayout(selectedLayoutGroupId, fieldLayoutJSONObject.getBoolean("privateLayout"), selectedLayoutLayoutId)!""
+		/>
 
 		<#if validator.isNotNull(selectedLayout)>
-			<#assign selectedLayoutName = selectedLayout.getName(requestedLocale)>
+			<#assign selectedLayoutName = selectedLayout.getName(requestedLocale) />
 		</#if>
 	</#if>
 

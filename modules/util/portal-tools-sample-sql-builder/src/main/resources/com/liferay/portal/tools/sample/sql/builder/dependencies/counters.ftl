@@ -1,4 +1,4 @@
-<#assign counterModels = dataFactory.newCounterModels()>
+<#assign counterModels = dataFactory.newCounterModels() />
 
 <#list counterModels as counterModel>
 	<#if '${counterModel.name}' == 'com.liferay.counter.kernel.model.Counter'>

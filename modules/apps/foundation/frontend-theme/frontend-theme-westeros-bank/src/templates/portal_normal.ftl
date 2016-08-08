@@ -24,12 +24,14 @@
 						<div class="container-fluid-1280" id="headerTopBar">
 							<#if main_recursive_menu_class != "no-screen">
 								<div class="${main_recursive_menu_class} nav navbar-nav">
-									<#assign VOID = freeMarkerPortletPreferences.setValue("displayDepth", "1")>
-									<#assign VOID = freeMarkerPortletPreferences.setValue("portletSetupPortletDecoratorId", "barebone")>
+									<#assign
+										VOID = freeMarkerPortletPreferences.setValue("displayDepth", "1")
+										VOID = freeMarkerPortletPreferences.setValue("portletSetupPortletDecoratorId", "barebone")
+									/>
 
 									<@liferay.navigation_menu default_preferences="${freeMarkerPortletPreferences}" />
 
-									<#assign VOID = freeMarkerPortletPreferences.reset()>
+									<#assign VOID = freeMarkerPortletPreferences.reset() />
 								</div>
 							</#if>
 

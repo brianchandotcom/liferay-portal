@@ -17,7 +17,7 @@ public class ${entity.name}${column.methodName}BlobModel {
 	public ${entity.name}${column.methodName}BlobModel() {
 	}
 
-	<#assign pkColumn = entity.getPKList()?first>
+	<#assign pkColumn = entity.getPKList()?first />
 
 	public ${entity.name}${column.methodName}BlobModel(
 		${pkColumn.type} ${pkColumn.name}) {

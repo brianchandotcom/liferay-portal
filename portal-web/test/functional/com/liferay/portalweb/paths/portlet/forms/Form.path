@@ -145,6 +145,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FIELD_PARAGRAPH</td>
+	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//p</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FIELD_ELLIPSIS</td>
 	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//div[contains(@class,'toolbar')]//button[contains(@class,'toggle')]</td>
 	<td></td>

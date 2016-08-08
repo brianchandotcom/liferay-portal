@@ -22,7 +22,7 @@ ProductNavigationControlMenuEntryRegistry productNavigationControlMenuEntryRegis
 %>
 
 <c:if test="<%= !productNavigationControlMenuCategories.isEmpty() %>">
-	<div class="control-menu control-menu-level-1" data-qa-id="controlMenu" id="<portlet:namespace/>ControlMenu">
+	<div class="control-menu control-menu-level-1 hidden-print" data-qa-id="controlMenu" id="<portlet:namespace/>ControlMenu">
 		<div class="container-fluid-1280">
 			<ul class="control-menu-level-1-nav control-menu-nav" data-namespace="<portlet:namespace />" data-qa-id="header" id="<portlet:namespace />controlMenu">
 

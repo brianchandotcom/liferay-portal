@@ -38,6 +38,7 @@ page import="com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil" %><%@
 page import="com.liferay.asset.kernel.service.AssetEntryServiceUtil" %><%@
 page import="com.liferay.asset.kernel.service.AssetTagLocalServiceUtil" %><%@
 page import="com.liferay.blogs.configuration.BlogsGroupServiceOverriddenConfiguration" %><%@
+page import="com.liferay.blogs.exception.EntryUrlTitleException" %><%@
 page import="com.liferay.blogs.kernel.exception.EntryContentException" %><%@
 page import="com.liferay.blogs.kernel.exception.EntryCoverImageCropException" %><%@
 page import="com.liferay.blogs.kernel.exception.EntryDescriptionException" %><%@

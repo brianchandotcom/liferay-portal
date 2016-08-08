@@ -91,6 +91,7 @@ renderResponse.setTitle((entry != null) ? entry.getTitle() : LanguageUtil.get(re
 			<liferay-ui:error exception="<%= EntryCoverImageCropException.class %>" message="an-error-occurred-while-cropping-the-cover-image" />
 			<liferay-ui:error exception="<%= EntryDescriptionException.class %>" message="please-enter-a-valid-abstract" />
 			<liferay-ui:error exception="<%= EntryTitleException.class %>" message="please-enter-a-valid-title" />
+			<liferay-ui:error exception="<%= EntryUrlTitleException.class %>" message="please-enter-a-valid-url-title" />
 
 			<liferay-ui:error exception="<%= LiferayFileItemException.class %>">
 				<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(LiferayFileItem.THRESHOLD_SIZE, locale) %>" key="please-enter-valid-content-with-valid-content-size-no-larger-than-x" translateArguments="<%= false %>" />
@@ -431,7 +432,7 @@ renderResponse.setTitle((entry != null) ? entry.getTitle() : LanguageUtil.get(re
 
 		var urlTitleInput = form.one('#<portlet:namespace />urlTitle');
 
-		urltitleInput.on(
+		urlTitleInput.on(
 			'input',
 			function(event) {
 				event.currentTarget.setAttribute('data-customUrl', urlTitleInput.val() != '');

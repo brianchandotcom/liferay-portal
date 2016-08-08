@@ -16,6 +16,7 @@ package com.liferay.blogs.web.internal.portlet.action;
 
 import com.liferay.asset.kernel.exception.AssetCategoryException;
 import com.liferay.asset.kernel.exception.AssetTagException;
+import com.liferay.blogs.exception.EntryUrlTitleException;
 import com.liferay.blogs.kernel.exception.EntryContentException;
 import com.liferay.blogs.kernel.exception.EntryCoverImageCropException;
 import com.liferay.blogs.kernel.exception.EntryDescriptionException;
@@ -313,9 +314,9 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		catch (EntryContentException | EntryCoverImageCropException |
 			   EntryDescriptionException | EntryDisplayDateException |
 			   EntrySmallImageNameException | EntrySmallImageScaleException |
-			   EntryTitleException | FileSizeException |
-			   LiferayFileItemException | SanitizerException |
-			   UploadRequestSizeException e) {
+			   EntryTitleException | EntryUrlTitleException |
+			   FileSizeException | LiferayFileItemException |
+			   SanitizerException | UploadRequestSizeException e) {
 
 			SessionErrors.add(actionRequest, e.getClass());
 
@@ -514,11 +515,12 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 			// Add entry
 
 			entry = _blogsEntryService.addEntry(
-				title, subtitle, urlTitle, description, content, displayDateMonth,
-				displayDateDay, displayDateYear, displayDateHour,
-				displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
-				coverImageCaption, coverImageImageSelector,
-				smallImageImageSelector, serviceContext);
+				title, subtitle, urlTitle, description, content,
+				displayDateMonth, displayDateDay, displayDateYear,
+				displayDateHour, displayDateMinute, allowPingbacks,
+				allowTrackbacks, trackbacks, coverImageCaption,
+				coverImageImageSelector, smallImageImageSelector,
+				serviceContext);
 
 			BlogsEntryAttachmentFileEntryHelper
 				blogsEntryAttachmentFileEntryHelper =

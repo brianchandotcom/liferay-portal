@@ -15,10 +15,9 @@
 package com.liferay.item.selector;
 
 import com.liferay.portal.kernel.util.ClassUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 
-import java.util.Iterator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author Roberto Díaz
@@ -30,15 +29,11 @@ public class ItemSelectorReturnTypeUtil {
 			List<ItemSelectorReturnType> desiredItemSelectorReturnTypes,
 			List<ItemSelectorReturnType> supportedItemSelectorReturnTypes) {
 
-		Iterator<ItemSelectorReturnType> iterator =
-			desiredItemSelectorReturnTypes.iterator();
+		List<String> supportedItemSelectorReturnTypeNames = ListUtil.toList(
+			supportedItemSelectorReturnTypes, ClassUtil::getClassName);
 
-		List<String> supportedItemSelectorReturnTypeNames =
-			supportedItemSelectorReturnTypes.stream().map(
-				ClassUtil::getClassName).collect(Collectors.toList());
-
-		while (iterator.hasNext()) {
-			ItemSelectorReturnType itemSelectorReturnType = iterator.next();
+		for (ItemSelectorReturnType itemSelectorReturnType :
+				desiredItemSelectorReturnTypes) {
 
 			String className = ClassUtil.getClassName(itemSelectorReturnType);
 

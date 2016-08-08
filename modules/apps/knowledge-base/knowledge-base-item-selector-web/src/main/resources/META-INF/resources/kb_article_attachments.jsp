@@ -19,8 +19,6 @@
 <%
 KBAttachmentItemSelectorViewDisplayContext kbAttachmentItemSelectorViewDisplayContext = (KBAttachmentItemSelectorViewDisplayContext)request.getAttribute(KBAttachmentItemSelectorView.KB_ATTACHMENT_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT);
 
-KBAttachmentItemSelectorCriterion kbAttachmentItemSelectorCriterion = kbAttachmentItemSelectorViewDisplayContext.getKBAttachmentItemSelectorCriterion();
-
 int cur = ParamUtil.getInteger(request, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_CUR);
 int delta = ParamUtil.getInteger(request, SearchContainer.DEFAULT_DELTA_PARAM, SearchContainer.DEFAULT_DELTA);
 
@@ -82,9 +80,9 @@ else {
 %>
 
 <liferay-item-selector:repository-entry-browser
-	desiredItemSelectorReturnTypes="<%= kbAttachmentItemSelectorCriterion.getDesiredItemSelectorReturnTypes() %>"
 	emptyResultsMessage='<%= LanguageUtil.get(resourceBundle, "there-are-no-attachments") %>'
 	itemSelectedEventName="<%= kbAttachmentItemSelectorViewDisplayContext.getItemSelectedEventName() %>"
+	itemSelectorReturnTypeResolver="<%= kbAttachmentItemSelectorViewDisplayContext.getItemSelectorReturnTypeResolver() %>"
 	portletURL="<%= kbAttachmentItemSelectorViewDisplayContext.getPortletURL(request, liferayPortletResponse) %>"
 	repositoryEntries="<%= portletFileEntries %>"
 	repositoryEntriesCount="<%= portletFileEntriesCount %>"

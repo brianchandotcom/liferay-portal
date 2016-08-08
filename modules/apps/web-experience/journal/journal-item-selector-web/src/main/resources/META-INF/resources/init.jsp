@@ -23,7 +23,6 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.document.library.kernel.util.DLUtil" %><%@
-page import="com.liferay.journal.item.selector.criterion.JournalItemSelectorCriterion" %><%@
 page import="com.liferay.journal.item.selector.web.internal.JournalItemSelectorView" %><%@
 page import="com.liferay.journal.item.selector.web.internal.context.JournalItemSelectorViewDisplayContext" %><%@
 page import="com.liferay.journal.model.JournalArticle" %><%@

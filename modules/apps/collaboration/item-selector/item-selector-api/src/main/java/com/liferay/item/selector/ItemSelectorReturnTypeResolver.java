@@ -12,24 +12,20 @@
  * details.
  */
 
-package com.liferay.document.library.item.selector.web.internal;
+package com.liferay.item.selector;
 
-import com.liferay.item.selector.ItemSelectorCriterion;
-import com.liferay.item.selector.ItemSelectorReturnTypeResolverHandler;
-import com.liferay.item.selector.ItemSelectorView;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 /**
  * @author Roberto Díaz
  */
-public interface DLItemSelectorView<T extends ItemSelectorCriterion>
-	extends ItemSelectorView<T> {
+public interface ItemSelectorReturnTypeResolver
+	<T extends ItemSelectorReturnType, S> {
 
-	public static final String DL_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT =
-		"DL_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT";
+	public Class<T> getItemSelectorReturnTypeClass();
 
-	public ItemSelectorReturnTypeResolverHandler
-		getItemSelectorReturnTypeResolverHandler();
+	public Class<S> getModelClass();
 
-	public String[] getMimeTypes();
+	public String getValue(S s, ThemeDisplay themeDisplay) throws Exception;
 
 }

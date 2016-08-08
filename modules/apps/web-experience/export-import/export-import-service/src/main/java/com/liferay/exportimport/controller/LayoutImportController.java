@@ -51,7 +51,6 @@ import com.liferay.exportimport.lar.PermissionImporter;
 import com.liferay.exportimport.lar.ThemeImporter;
 import com.liferay.exportimport.portlet.data.handler.provider.PortletDataHandlerProvider;
 import com.liferay.layout.set.model.adapter.StagedLayoutSet;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
 import com.liferay.portal.kernel.exception.LayoutPrototypeException;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;

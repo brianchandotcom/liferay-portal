@@ -1991,17 +1991,17 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	@Override
-	public String getArticleDescription(long articleId, Locale locale) {
+	public String getArticleDescription(long articlePK, Locale locale) {
 		String languageId = LocaleUtil.toLanguageId(locale);
 
-		return getArticleDescription(articleId, languageId);
+		return getArticleDescription(articlePK, languageId);
 	}
 
 	@Override
-	public String getArticleDescription(long articleId, String languageId) {
+	public String getArticleDescription(long articlePK, String languageId) {
 		JournalArticleLocalization journalArticleLocalization =
 			journalArticleLocalizationPersistence.fetchByA_L(
-				articleId, languageId);
+				articlePK, languageId);
 
 		if (journalArticleLocalization == null) {
 			return null;
@@ -2011,12 +2011,12 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	@Override
-	public Map<Locale, String> getArticleDescriptionMap(long articleId) {
+	public Map<Locale, String> getArticleDescriptionMap(long articlePK) {
 		Map<Locale, String> journalArticleLocalizationDescriptionMap =
 			new HashMap<>();
 
 		List<JournalArticleLocalization> journalArticleLocalizationList =
-			journalArticleLocalizationPersistence.findByArticlePK(articleId);
+			journalArticleLocalizationPersistence.findByArticlePK(articlePK);
 
 		for (JournalArticleLocalization journalArticleLocalization :
 				journalArticleLocalizationList) {
@@ -2584,17 +2584,17 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	@Override
-	public String getArticleTitle(long articleId, Locale locale) {
+	public String getArticleTitle(long articlePK, Locale locale) {
 		String languageId = LocaleUtil.toLanguageId(locale);
 
-		return getArticleTitle(articleId, languageId);
+		return getArticleTitle(articlePK, languageId);
 	}
 
 	@Override
-	public String getArticleTitle(long articleId, String languageId) {
+	public String getArticleTitle(long articlePK, String languageId) {
 		JournalArticleLocalization journalArticleLocalization =
 			journalArticleLocalizationPersistence.fetchByA_L(
-				articleId, languageId);
+				articlePK, languageId);
 
 		if (journalArticleLocalization == null) {
 			return null;
@@ -2604,12 +2604,12 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	@Override
-	public Map<Locale, String> getArticleTitleMap(long articleId) {
+	public Map<Locale, String> getArticleTitleMap(long articlePK) {
 		Map<Locale, String> journalArticleLocalizationTitleMap =
 			new HashMap<>();
 
 		List<JournalArticleLocalization> journalArticleLocalizationList =
-			journalArticleLocalizationPersistence.findByArticlePK(articleId);
+			journalArticleLocalizationPersistence.findByArticlePK(articlePK);
 
 		for (JournalArticleLocalization journalArticleLocalization :
 				journalArticleLocalizationList) {
@@ -8059,7 +8059,7 @@ public class JournalArticleLocalServiceImpl
 	protected JournalConverter journalConverter;
 
 	private List<JournalArticleLocalization> _addArticleLocalizedFields(
-			long companyId, long articleId, Map<Locale, String> titleMap,
+			long companyId, long articlePK, Map<Locale, String> titleMap,
 			Map<Locale, String> descriptionMap)
 		throws PortalException {
 
@@ -8088,7 +8088,7 @@ public class JournalArticleLocalServiceImpl
 
 			JournalArticleLocalization journalArticleLocalization =
 				_addArticleLocalizedFields(
-					companyId, articleId, title, description,
+					companyId, articlePK, title, description,
 					LocaleUtil.toLanguageId(locale));
 
 			journalArticleLocalizations.add(journalArticleLocalization);
@@ -8098,7 +8098,7 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	private JournalArticleLocalization _addArticleLocalizedFields(
-			long companyId, long articleId, String title, String description,
+			long companyId, long articlePK, String title, String description,
 			String languageId)
 		throws PortalException {
 
@@ -8109,7 +8109,7 @@ public class JournalArticleLocalServiceImpl
 				journalArticleLocalizationId);
 
 		journalArticleLocalization.setCompanyId(companyId);
-		journalArticleLocalization.setArticlePK(articleId);
+		journalArticleLocalization.setArticlePK(articlePK);
 		journalArticleLocalization.setTitle(title);
 		journalArticleLocalization.setDescription(description);
 		journalArticleLocalization.setLanguageId(languageId);

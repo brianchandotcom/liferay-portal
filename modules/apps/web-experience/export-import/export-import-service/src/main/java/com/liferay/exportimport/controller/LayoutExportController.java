@@ -23,6 +23,7 @@ import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleCon
 import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.PROCESS_FLAG_LAYOUT_EXPORT_IN_PROCESS;
 import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.PROCESS_FLAG_LAYOUT_STAGING_IN_PROCESS;
 
+import com.liferay.exportimport.constants.ExportImportConstants;
 import com.liferay.exportimport.kernel.controller.ExportController;
 import com.liferay.exportimport.kernel.controller.ExportImportController;
 import com.liferay.exportimport.kernel.lar.ExportImportDateUtil;
@@ -104,9 +105,6 @@ import java.util.concurrent.Callable;
 
 import org.apache.commons.lang.time.StopWatch;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.Version;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -251,11 +249,9 @@ public class LayoutExportController implements ExportController {
 		headerElement.addAttribute(
 			"build-number", String.valueOf(ReleaseInfo.getBuildNumber()));
 
-		Bundle bundle = FrameworkUtil.getBundle(LayoutExportController.class);
-
-		Version version = bundle.getVersion();
-
-		headerElement.addAttribute("bundle-version", String.valueOf(version));
+		headerElement.addAttribute(
+			"schema-version",
+			ExportImportConstants.EXPORT_IMPORT_SCHEMA_VERSION);
 
 		headerElement.addAttribute("export-date", Time.getRFC822());
 

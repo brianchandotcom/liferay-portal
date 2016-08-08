@@ -20,6 +20,7 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.web.internal.exportimport.content.processor.DDMTemplateExportImportContentProcessor;
+import com.liferay.exportimport.content.processor.ExportImportContentProcessorController;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
@@ -197,7 +198,7 @@ public class DDMTemplateStagedModelDataHandler
 		if (template.isSmallImage()) {
 			if (Validator.isNotNull(template.getSmallImageURL())) {
 				String smallImageURL =
-					_ddmTemplateExportImportContentProcessor.
+					_exportImportContentProcessorController.
 						replaceExportContentReferences(
 							portletDataContext, template,
 							template.getSmallImageURL() + StringPool.SPACE,
@@ -242,7 +243,7 @@ public class DDMTemplateStagedModelDataHandler
 		}
 
 		String script =
-			_ddmTemplateExportImportContentProcessor.
+			_exportImportContentProcessorController.
 				replaceExportContentReferences(
 					portletDataContext, template, template.getScript(),
 					portletDataContext.getBooleanParameter(
@@ -343,7 +344,7 @@ public class DDMTemplateStagedModelDataHandler
 
 				if (Validator.isNotNull(template.getSmallImageURL())) {
 					String smallImageURL =
-						_ddmTemplateExportImportContentProcessor.
+						_exportImportContentProcessorController.
 							replaceImportContentReferences(
 								portletDataContext, template,
 								template.getSmallImageURL());
@@ -364,7 +365,7 @@ public class DDMTemplateStagedModelDataHandler
 			}
 
 			String script =
-				_ddmTemplateExportImportContentProcessor.
+				_exportImportContentProcessorController.
 					replaceImportContentReferences(
 						portletDataContext, template, template.getScript());
 
@@ -482,13 +483,10 @@ public class DDMTemplateStagedModelDataHandler
 		_ddmStructureLocalService = ddmStructureLocalService;
 	}
 
-	@Reference(unbind = "-")
+	@Deprecated
 	protected void setDDMTemplateExportImportContentProcessor(
 		DDMTemplateExportImportContentProcessor
 			ddmTemplateExportImportContentProcessor) {
-
-		_ddmTemplateExportImportContentProcessor =
-			ddmTemplateExportImportContentProcessor;
 	}
 
 	@Reference(unbind = "-")
@@ -512,9 +510,12 @@ public class DDMTemplateStagedModelDataHandler
 		DDMTemplateStagedModelDataHandler.class);
 
 	private DDMStructureLocalService _ddmStructureLocalService;
-	private DDMTemplateExportImportContentProcessor
-		_ddmTemplateExportImportContentProcessor;
 	private DDMTemplateLocalService _ddmTemplateLocalService;
+
+	@Reference
+	private ExportImportContentProcessorController
+		_exportImportContentProcessorController;
+
 	private ImageLocalService _imageLocalService;
 	private UserLocalService _userLocalService;
 

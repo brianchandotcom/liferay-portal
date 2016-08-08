@@ -50,17 +50,14 @@ import org.osgi.service.component.annotations.Reference;
  * @author Daniel Kocsis
  */
 @Component(
-	property = {"model.class.name=com.liferay.dynamic.data.mapping.storage.DDMFormValues"},
-	service = {
-		DDMFormValuesExportImportContentProcessor.class,
-		ExportImportContentProcessor.class
-	}
+	immediate = true, service = DDMFormValuesExportImportContentProcessor.class
 )
-public class DDMFormValuesExportImportContentProcessor
-	implements ExportImportContentProcessor<DDMFormValues> {
+public class DDMFormValuesExportImportContentProcessor<S extends StagedModel>
+	implements ExportImportContentProcessor<S, DDMFormValues> {
 
+	@Override
 	public DDMFormValues replaceExportContentReferences(
-			PortletDataContext portletDataContext, StagedModel stagedModel,
+			PortletDataContext portletDataContext, S stagedModel,
 			DDMFormValues ddmFormValues, boolean exportReferencedContent,
 			boolean escapeContent)
 		throws Exception {
@@ -80,8 +77,9 @@ public class DDMFormValuesExportImportContentProcessor
 		return ddmFormValues;
 	}
 
+	@Override
 	public DDMFormValues replaceImportContentReferences(
-			PortletDataContext portletDataContext, StagedModel stagedModel,
+			PortletDataContext portletDataContext, S stagedModel,
 			DDMFormValues ddmFormValues)
 		throws Exception {
 
@@ -100,9 +98,10 @@ public class DDMFormValuesExportImportContentProcessor
 	}
 
 	@Override
-	public void validateContentReferences(
-			long groupId, DDMFormValues ddmFormValues)
-		throws PortalException {
+	public boolean validateContentReferences(
+		long groupId, DDMFormValues ddmFormValues) {
+
+		return true;
 	}
 
 	@Reference(unbind = "-")

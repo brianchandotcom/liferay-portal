@@ -18,6 +18,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
+import com.liferay.exportimport.content.processor.ExportImportContentProcessorController;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
@@ -161,7 +162,7 @@ public class JournalFeedStagedModelDataHandler
 			}
 		}
 
-		_journalFeedExportImportContentProcessor.replaceExportContentReferences(
+		_exportImportContentProcessorController.replaceExportContentReferences(
 			portletDataContext, feed, StringPool.BLANK, true, true);
 
 		portletDataContext.addClassedModel(
@@ -185,7 +186,7 @@ public class JournalFeedStagedModelDataHandler
 			userId = authorId;
 		}
 
-		_journalFeedExportImportContentProcessor.replaceImportContentReferences(
+		_exportImportContentProcessorController.replaceImportContentReferences(
 			portletDataContext, feed, StringPool.BLANK);
 
 		String feedId = feed.getFeedId();
@@ -325,13 +326,10 @@ public class JournalFeedStagedModelDataHandler
 		_ddmTemplateLocalService = ddmTemplateLocalService;
 	}
 
-	@Reference(unbind = "-")
+	@Deprecated
 	protected void setJournalFeedExportImportContentProcessor(
 		JournalFeedExportImportContentProcessor
 			journalFeedExportImportContentProcessor) {
-
-		_journalFeedExportImportContentProcessor =
-			journalFeedExportImportContentProcessor;
 	}
 
 	@Reference(unbind = "-")
@@ -346,8 +344,11 @@ public class JournalFeedStagedModelDataHandler
 
 	private DDMStructureLocalService _ddmStructureLocalService;
 	private DDMTemplateLocalService _ddmTemplateLocalService;
-	private JournalFeedExportImportContentProcessor
-		_journalFeedExportImportContentProcessor;
+
+	@Reference
+	private ExportImportContentProcessorController
+		_exportImportContentProcessorController;
+
 	private JournalFeedLocalService _journalFeedLocalService;
 
 }

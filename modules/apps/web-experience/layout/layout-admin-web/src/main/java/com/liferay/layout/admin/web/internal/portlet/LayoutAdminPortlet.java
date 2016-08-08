@@ -67,6 +67,7 @@ import com.liferay.portal.kernel.service.LayoutSetBranchLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.LayoutSetService;
 import com.liferay.portal.kernel.service.PortletLocalService;
+import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -82,6 +83,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
@@ -449,6 +451,8 @@ public class LayoutAdminPortlet extends MVCPortlet {
 		Layout layout = layoutLocalService.getLayout(
 			groupId, privateLayout, layoutId);
 
+		String currentType = layout.getType();
+
 		layout = layoutService.updateLayout(
 			groupId, privateLayout, layoutId, layout.getParentLayoutId(),
 			nameMap, titleMap, descriptionMap, keywordsMap, robotsMap, type,
@@ -486,6 +490,11 @@ public class LayoutAdminPortlet extends MVCPortlet {
 			layout = layoutService.updateLayout(
 				groupId, privateLayout, layoutId,
 				layoutTypeSettingsProperties.toString());
+
+			if (!currentType.equals(LayoutConstants.TYPE_PORTLET)) {
+				portletPreferencesLocalService.deletePortletPreferences(
+					0, PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid());
+			}
 		}
 		else {
 			layout.setTypeSettingsProperties(formTypeSettingsProperties);
@@ -1101,6 +1110,13 @@ public class LayoutAdminPortlet extends MVCPortlet {
 	}
 
 	@Reference(unbind = "-")
+	protected void setPortletPreferencesLocalService(
+		PortletPreferencesLocalService portletPreferencesLocalService) {
+
+		this.portletPreferencesLocalService = portletPreferencesLocalService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setThemeLocalService(ThemeLocalService themeLocalService) {
 		this.themeLocalService = themeLocalService;
 	}
@@ -1370,6 +1386,7 @@ public class LayoutAdminPortlet extends MVCPortlet {
 	protected MDRRuleGroupInstanceLocalService mdrRuleGroupInstanceLocalService;
 	protected MDRRuleGroupInstanceService mdrRuleGroupInstanceService;
 	protected PortletLocalService portletLocalService;
+	protected PortletPreferencesLocalService portletPreferencesLocalService;
 	protected ThemeLocalService themeLocalService;
 
 	private static final Log _log = LogFactoryUtil.getLog(

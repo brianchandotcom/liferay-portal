@@ -34,11 +34,11 @@
 
 				<nav class="user-personal-bar">
 					<ul class="nav navbar-nav pull-right">
-						<#assign VOID = freeMarkerPortletPreferences.setValue("portletSetupPortletDecoratorId", "barebone")>
+						<#assign VOID = freeMarkerPortletPreferences.setValue("portletSetupPortletDecoratorId", "barebone") />
 
 						<@liferay.user_personal_bar />
 
-						<#assign VOID = freeMarkerPortletPreferences.reset()>
+						<#assign VOID = freeMarkerPortletPreferences.reset() />
 					</ul>
 				<nav>
 

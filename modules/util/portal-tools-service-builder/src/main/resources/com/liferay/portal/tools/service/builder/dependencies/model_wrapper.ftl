@@ -88,11 +88,11 @@ public class ${entity.name}Wrapper implements ${entity.name}, ModelWrapper<${ent
 	}
 
 	<#list methods as method>
-		<#assign parameters = method.parameters>
+		<#assign parameters = method.parameters />
 
 		<#if !method.isConstructor() && !method.isStatic() && method.isPublic() && !(method.name == "equals" && (parameters?size == 1))>
 			<#if method.name == "getStagedModelType">
-				<#assign hasGetStagedModelTypeMethod = true>
+				<#assign hasGetStagedModelTypeMethod = true />
 			</#if>
 
 			${serviceBuilder.getJavadocComment(method)}

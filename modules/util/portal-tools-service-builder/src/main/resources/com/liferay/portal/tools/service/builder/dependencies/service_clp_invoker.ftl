@@ -24,7 +24,7 @@ public class ${entity.name}${sessionTypeName}ServiceClpInvoker {
 	public ${entity.name}${sessionTypeName}ServiceClpInvoker() {
 		<#list methods as method>
 			<#if !method.isConstructor() && method.isPublic() && serviceBuilder.isCustomMethod(method) && (method.name != "invokeMethod")>
-				<#assign parameters = method.parameters>
+				<#assign parameters = method.parameters />
 
 				_methodName${method_index} = "${method.name}";
 
@@ -49,8 +49,10 @@ public class ${entity.name}${sessionTypeName}ServiceClpInvoker {
 
 		<#list methods as method>
 			<#if !method.isConstructor() && method.isPublic() && serviceBuilder.isCustomMethod(method) && (method.name != "invokeMethod")>
-				<#assign returnTypeName = serviceBuilder.getTypeGenericsName(method.returns)>
-				<#assign parameters = method.parameters>
+				<#assign
+					returnTypeName = serviceBuilder.getTypeGenericsName(method.returns)
+					parameters = method.parameters
+				/>
 
 				if (_methodName${method_index}.equals(name) && Arrays.deepEquals(_methodParameterTypes${method_index}, parameterTypes)) {
 					<#if returnTypeName != "void">
@@ -60,7 +62,7 @@ public class ${entity.name}${sessionTypeName}ServiceClpInvoker {
 					${entity.name}${sessionTypeName}ServiceUtil.${method.name}(
 
 					<#list parameters as parameter>
-						<#assign parameterTypeName = serviceBuilder.getTypeGenericsName(parameter.type)>
+						<#assign parameterTypeName = serviceBuilder.getTypeGenericsName(parameter.type) />
 
 						<#if (parameterTypeName == "boolean") || (parameterTypeName == "double") || (parameterTypeName == "float") || (parameterTypeName == "int") || (parameterTypeName == "long") || (parameterTypeName == "short")>
 							((${serviceBuilder.getPrimitiveObj(parameter.type)})arguments[${parameter_index}])${serviceBuilder.getPrimitiveObjValue(serviceBuilder.getPrimitiveObj(parameter.type))}
@@ -90,7 +92,7 @@ public class ${entity.name}${sessionTypeName}ServiceClpInvoker {
 
 	<#list methods as method>
 		<#if !method.isConstructor() && method.isPublic() && serviceBuilder.isCustomMethod(method) && (method.name != "invokeMethod")>
-			<#assign parameters = method.parameters>
+			<#assign parameters = method.parameters />
 
 			private String _methodName${method_index};
 			private String[] _methodParameterTypes${method_index};

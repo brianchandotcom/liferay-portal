@@ -1,9 +1,9 @@
 <#-- Common -->
 
-<#assign variableName = name + ".getData()">
+<#assign variableName = name + ".getData()" />
 
 <#if repeatable>
-	<#assign variableName = "cur_" + variableName>
+	<#assign variableName = "cur_" + variableName />
 </#if>
 
 <#-- Util -->

@@ -76,12 +76,12 @@ import ${import};
 public interface ${entity.name}${sessionTypeName}Service
 	extends Base${sessionTypeName}Service
 
-	<#assign overrideMethodNames = []>
+	<#assign overrideMethodNames = [] />
 
 	<#if pluginName != "">
 		, Invokable${sessionTypeName}Service
 
-		<#assign overrideMethodNames = overrideMethodNames + ["invokeMethod"]>
+		<#assign overrideMethodNames = overrideMethodNames + ["invokeMethod"] />
 	</#if>
 
 	<#if (sessionTypeName == "Local") && entity.hasColumns()>
@@ -91,7 +91,7 @@ public interface ${entity.name}${sessionTypeName}Service
 			, PersistedModelLocalService
 		</#if>
 
-		<#assign overrideMethodNames = overrideMethodNames + ["deletePersistedModel", "getPersistedModel"]>
+		<#assign overrideMethodNames = overrideMethodNames + ["deletePersistedModel", "getPersistedModel"] />
 	</#if>
 
 	{

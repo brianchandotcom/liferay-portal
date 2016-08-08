@@ -52,17 +52,17 @@ public class FileEntryReturnTypeResolver
 	public String getValue(FileEntry fileEntry, ThemeDisplay themeDisplay)
 		throws Exception {
 
+		String previewURL = DLUtil.getPreviewURL(
+			fileEntry, fileEntry.getFileVersion(), themeDisplay,
+			StringPool.BLANK, false, false);
+
 		JSONObject fileEntryJSONObject = JSONFactoryUtil.createJSONObject();
 
 		fileEntryJSONObject.put("fileEntryId", fileEntry.getFileEntryId());
 		fileEntryJSONObject.put("groupId", fileEntry.getGroupId());
 		fileEntryJSONObject.put("title", fileEntry.getTitle());
 		fileEntryJSONObject.put("type", "document");
-		fileEntryJSONObject.put(
-			"url",
-			DLUtil.getPreviewURL(
-				fileEntry, fileEntry.getFileVersion(), themeDisplay,
-				StringPool.BLANK, false, false));
+		fileEntryJSONObject.put("url", previewURL);
 		fileEntryJSONObject.put("uuid", fileEntry.getUuid());
 
 		return fileEntryJSONObject.toString();

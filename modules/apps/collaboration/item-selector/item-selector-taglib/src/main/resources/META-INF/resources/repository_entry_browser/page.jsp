@@ -233,10 +233,10 @@ if (Validator.isNotNull(keywords)) {
 							<liferay-ui:search-container-column-text name="title">
 
 								<%
-								String itemSelectorReturnTypeClassName = itemSelectorReturnTypeResolver.getItemSelectorReturnTypeClass();
+								Class itemSelectorReturnTypeClass = itemSelectorReturnTypeResolver.getItemSelectorReturnTypeClass();
 								%>
 
-								<a class="item-preview" data-metadata="<%= HtmlUtil.escapeAttribute(itemMedatadaJSONObject.toString()) %>" data-returnType="<%= HtmlUtil.escapeAttribute(itemSelectorReturnTypeClassName.getName()) %>" data-url="<%= HtmlUtil.escapeAttribute(DLUtil.getPreviewURL(fileEntry, latestFileVersion, themeDisplay, StringPool.BLANK)) %>" data-value="<%= HtmlUtil.escapeAttribute(itemSelectorReturnTypeResolver.getValue(fileEntry, themeDisplay)) %>" href="<%= HtmlUtil.escapeHREF(DLUtil.getImagePreviewURL(fileEntry, themeDisplay)) %>" title="<%= HtmlUtil.escapeAttribute(title) %>">
+								<a class="item-preview" data-metadata="<%= HtmlUtil.escapeAttribute(itemMedatadaJSONObject.toString()) %>" data-returnType="<%= HtmlUtil.escapeAttribute(itemSelectorReturnTypeClass.getName()) %>" data-url="<%= HtmlUtil.escapeAttribute(DLUtil.getPreviewURL(fileEntry, latestFileVersion, themeDisplay, StringPool.BLANK)) %>" data-value="<%= HtmlUtil.escapeAttribute(itemSelectorReturnTypeResolver.getValue(fileEntry, themeDisplay)) %>" href="<%= HtmlUtil.escapeHREF(DLUtil.getImagePreviewURL(fileEntry, themeDisplay)) %>" title="<%= HtmlUtil.escapeAttribute(title) %>">
 
 									<%
 									String iconCssClass = DLUtil.getFileIconCssClass(fileEntry.getExtension());
@@ -343,7 +343,7 @@ if (Validator.isNotNull(keywords)) {
 								if (fileEntry != null) {
 									FileVersion latestFileVersion = fileEntry.getLatestFileVersion();
 
-									String itemSelectorReturnTypeClassName = itemSelectorReturnTypeResolver.getItemSelectorReturnTypeClass();
+									Class itemSelectorReturnTypeClass = itemSelectorReturnTypeResolver.getItemSelectorReturnTypeClass();
 									String title = DLUtil.getTitleWithExtension(fileEntry);
 
 									JSONObject itemMedatadaJSONObject = ItemSelectorRepositoryEntryBrowserUtil.getItemMetadataJSONObject(fileEntry, locale);
@@ -352,7 +352,7 @@ if (Validator.isNotNull(keywords)) {
 
 									data.put("href", DLUtil.getImagePreviewURL(fileEntry, themeDisplay));
 									data.put("metadata", itemMedatadaJSONObject.toString());
-									data.put("returnType", itemSelectorReturnTypeClassName.getName());
+									data.put("returnType", itemSelectorReturnTypeClass.getName());
 									data.put("title", title);
 									data.put("url", DLUtil.getPreviewURL(fileEntry, latestFileVersion, themeDisplay, StringPool.BLANK));
 									data.put("value", itemSelectorReturnTypeResolver.getValue(fileEntry, themeDisplay));
@@ -439,10 +439,10 @@ if (Validator.isNotNull(keywords)) {
 									<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 
 										<%
-										String itemSelectorReturnTypeClassName = itemSelectorReturnTypeResolver.getItemSelectorReturnTypeClass();
+										Class itemSelectorReturnTypeClass = itemSelectorReturnTypeResolver.getItemSelectorReturnTypeClass();
 										%>
 
-										<div class="item-preview" data-href="<%= HtmlUtil.escapeHREF(DLUtil.getImagePreviewURL(fileEntry, themeDisplay)) %>" data-metadata="<%= HtmlUtil.escapeAttribute(itemMedatadaJSONObject.toString()) %>" data-returnType="<%= HtmlUtil.escapeAttribute(itemSelectorReturnTypeClassName.getName()) %>" data-title="<%= HtmlUtil.escapeAttribute(title) %>" data-url="<%= HtmlUtil.escapeAttribute(DLUtil.getPreviewURL(fileEntry, latestFileVersion, themeDisplay, StringPool.BLANK)) %>" data-value="<%= HtmlUtil.escapeAttribute(itemSelectorReturnTypeResolver.getValue(fileEntry, themeDisplay)) %>">
+										<div class="item-preview" data-href="<%= HtmlUtil.escapeHREF(DLUtil.getImagePreviewURL(fileEntry, themeDisplay)) %>" data-metadata="<%= HtmlUtil.escapeAttribute(itemMedatadaJSONObject.toString()) %>" data-returnType="<%= HtmlUtil.escapeAttribute(itemSelectorReturnTypeClass.getName()) %>" data-title="<%= HtmlUtil.escapeAttribute(title) %>" data-url="<%= HtmlUtil.escapeAttribute(DLUtil.getPreviewURL(fileEntry, latestFileVersion, themeDisplay, StringPool.BLANK)) %>" data-value="<%= HtmlUtil.escapeAttribute(itemSelectorReturnTypeResolver.getValue(fileEntry, themeDisplay)) %>">
 											<liferay-ui:app-view-entry
 												assetCategoryClassName="<%= DLFileEntry.class.getName() %>"
 												assetCategoryClassPK="<%= fileEntry.getFileEntryId() %>"
@@ -513,10 +513,10 @@ if (Validator.isNotNull(keywords)) {
 			<c:if test="<%= uploadURL != null %>">
 
 				<%
-				String itemSelectorReturnTypeClassName = itemSelectorReturnTypeResolver.getItemSelectorReturnTypeClass();
+				Class itemSelectorReturnTypeClass = itemSelectorReturnTypeResolver.getItemSelectorReturnTypeClass();
 				%>
 
-				, uploadItemReturnType: '<%= itemSelectorReturnTypeClassName.getName() %>',
+				, uploadItemReturnType: '<%= itemSelectorReturnTypeClass.getName() %>',
 				uploadItemURL: '<%= uploadURL.toString() %>'
 			</c:if>
 		}

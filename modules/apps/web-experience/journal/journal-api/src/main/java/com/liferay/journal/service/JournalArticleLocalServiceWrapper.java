@@ -2764,6 +2764,12 @@ public class JournalArticleLocalServiceWrapper
 			end, orderByComparator);
 	}
 
+	@Override
+	public java.util.List<java.lang.String> getArticleLocalizationLanguageIds(
+		long articleId) {
+		return _journalArticleLocalService.getArticleLocalizationLanguageIds(articleId);
+	}
+
 	/**
 	* Returns all the web content articles present in the system.
 	*
@@ -3262,12 +3268,6 @@ public class JournalArticleLocalServiceWrapper
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.journal.model.JournalArticle> obc) {
 		return _journalArticleLocalService.getTemplateArticles(groupId,
 			ddmTemplateKey, start, end, obc);
-	}
-
-	@Override
-	public java.util.List<java.lang.String> getTitleAndDescriptionLanguageIds(
-		long articleId) {
-		return _journalArticleLocalService.getTitleAndDescriptionLanguageIds(articleId);
 	}
 
 	/**

@@ -2331,6 +2331,10 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<java.lang.String> getArticleLocalizationLanguageIds(
+		long articleId);
+
 	/**
 	* Returns all the web content articles present in the system.
 	*
@@ -2748,10 +2752,6 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	public List<JournalArticle> getTemplateArticles(long groupId,
 		java.lang.String ddmTemplateKey, int start, int end,
 		OrderByComparator<JournalArticle> obc);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<java.lang.String> getTitleAndDescriptionLanguageIds(
-		long articleId);
 
 	/**
 	* Returns an ordered range of all the web content articles matching the

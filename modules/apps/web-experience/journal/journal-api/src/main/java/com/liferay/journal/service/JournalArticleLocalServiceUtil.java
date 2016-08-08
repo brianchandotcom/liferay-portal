@@ -2647,6 +2647,11 @@ public class JournalArticleLocalServiceUtil {
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
 
+	public static java.util.List<java.lang.String> getArticleLocalizationLanguageIds(
+		long articleId) {
+		return getService().getArticleLocalizationLanguageIds(articleId);
+	}
+
 	/**
 	* Returns all the web content articles present in the system.
 	*
@@ -3118,11 +3123,6 @@ public class JournalArticleLocalServiceUtil {
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.journal.model.JournalArticle> obc) {
 		return getService()
 				   .getTemplateArticles(groupId, ddmTemplateKey, start, end, obc);
-	}
-
-	public static java.util.List<java.lang.String> getTitleAndDescriptionLanguageIds(
-		long articleId) {
-		return getService().getTitleAndDescriptionLanguageIds(articleId);
 	}
 
 	/**

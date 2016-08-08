@@ -47,8 +47,9 @@
 		</if>
 	</command>
 
-	<command name="viewPlatformSettingCP">
+	<command name="viewDefaultConfigurationCP">
 		<var name="key_rowEntry" value="${configurationName}" />
+		<var name="rowEntryList" value="AntiSamy Sanitizer, Audit, Plugin Repositories" />
 
 		<while>
 			<condition function="IsElementNotPresent" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
@@ -59,16 +60,35 @@
 
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#VIEW" value1="View" />
+		<execute function="AssertElementNotPresent" locator1="MenuItem#RESET_DEFAULT_VALUES" />
+
+		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
 		<if>
-			<equals arg1="${LDAPEnabled}" arg2="true" />
+			<condition function="IsElementPresent" locator1="Message#INFO_1" />
 			<then>
-				<execute function="AssertElementPresent" locator1="SystemSettings#LDAP_ENTRY" />
+				<execute function="AssertTextEquals" locator1="Message#INFO_1" value1="This configuration was not saved yet. The values shown are the default." />
+			</then>
+		</if>
+
+		<if>
+			<and>
+				<condition function="IsElementPresent" locator1="SystemSettings#ENABLED_CHECKBOX" />
+				<contains string="${rowEntryList}" substring="${key_rowEntry}" />
+			</and>
+			<then>
+				<execute function="AssertChecked" locator1="SystemSettings#ENABLED_CHECKBOX" />
 			</then>
 			<else>
-				<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No configurations were found." />
+				<execute function="AssertNotChecked" locator1="SystemSettings#ENABLED_CHECKBOX" />
 			</else>
+		</if>
+
+		<if>
+			<condition function="IsElementPresent" locator1="Button#SAVE" />
+			<then>
+				<execute function="AssertElementPresent" locator1="Button#SAVE" />
+			</then>
 		</if>
 	</command>
 </definition>

@@ -30,7 +30,6 @@ import com.liferay.journal.util.comparator.ArticleDisplayDateComparator;
 import com.liferay.journal.util.comparator.ArticleIDComparator;
 import com.liferay.journal.util.comparator.ArticleModifiedDateComparator;
 import com.liferay.journal.util.comparator.ArticleReviewDateComparator;
-import com.liferay.journal.util.comparator.ArticleTitleComparator;
 import com.liferay.journal.util.comparator.ArticleVersionComparator;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.model.Group;

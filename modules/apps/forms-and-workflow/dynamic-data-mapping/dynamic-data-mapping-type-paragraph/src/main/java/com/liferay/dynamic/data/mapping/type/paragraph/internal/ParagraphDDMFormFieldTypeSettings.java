@@ -92,8 +92,7 @@ public interface ParagraphDDMFormFieldTypeSettings
 
 	@DDMFormField(
 		dataType = "string", label = "%body-text",
-		properties = {"placeholder=%enter-body-text"},
-		type = "editor"
+		properties = {"placeholder=%enter-body-text"}, type = "editor"
 	)
 	public String text();
 

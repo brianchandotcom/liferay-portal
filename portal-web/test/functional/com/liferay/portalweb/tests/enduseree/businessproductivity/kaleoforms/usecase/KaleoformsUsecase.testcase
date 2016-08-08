@@ -1985,8 +1985,15 @@
 			<var name="fieldLabel" value="Text Box" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="//div[contains(@class,'control-group field-wrapper')][1]/label" value1="Text" />
-		<execute function="AssertTextEquals" locator1="//div[contains(@class,'control-group field-wrapper')][2]/div/label" value1="Select" />
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Text" />
+			<var name="fieldValue" value="Test Description" />
+		</execute>
+
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="Select" />
+			<var name="fieldValue" value="option 2" />
+		</execute>
 
 		<execute macro="KaleoFormsAdmin#saveProcessRecord" />
 

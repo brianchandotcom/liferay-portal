@@ -1337,9 +1337,9 @@ AUI.add(
 						valueFn: function() {
 							var instance = this;
 
-							var value = instance.getValue();
+							var layoutValue = instance.getParsedValue(instance.getValue());
 
-							var privateLayout = !!(value && value.privateLayout);
+							var privateLayout = !!(layoutValue && layoutValue.privateLayout);
 
 							var layoutsRoot = {
 								groupId: themeDisplay.getScopeGroupId(),

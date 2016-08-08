@@ -20,6 +20,7 @@ import com.liferay.dynamic.data.mapping.annotations.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutColumn;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutPage;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutRow;
+import com.liferay.dynamic.data.mapping.annotations.DDMFormRule;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidation;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.portal.kernel.util.StringPool;
@@ -27,7 +28,18 @@ import com.liferay.portal.kernel.util.StringPool;
 /**
  * @author Marcellus Tavares
  */
-@DDMForm
+@DDMForm(
+	rules = {
+		@DDMFormRule(
+			actions = {
+				"set(fieldAt(\"fieldNamespace\",0),\"visible\",false)",
+				"set(fieldAt(\"indexType\",0),\"visible\",false)",
+				"set(fieldAt(\"localizable\",0),\"visible\",false)",
+				"set(fieldAt(\"readOnly\",0),\"visible\",false)"
+			}
+		)
+	}
+)
 @DDMFormLayout(
 	{
 		@DDMFormLayoutPage(
@@ -142,6 +154,7 @@ public interface DefaultDDMFormFieldTypeSettings
 			"tooltip=%write-a-conditional-expression-to-control-whether-this-field-is-displayed"
 		}
 	)
+	@Deprecated
 	public String visibilityExpression();
 
 }

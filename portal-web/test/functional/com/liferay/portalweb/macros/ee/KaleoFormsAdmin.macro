@@ -253,7 +253,6 @@
 			</then>
 			<else>
 				<execute function="AssertTextNotPresent" locator1="KaleoFormsAdmin#PROCESS_TABLE_NAME" value1="${kfProcessName}" />
-				<execute function="AssertElementNotPresent" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 			</else>
 		</if>
 	</command>

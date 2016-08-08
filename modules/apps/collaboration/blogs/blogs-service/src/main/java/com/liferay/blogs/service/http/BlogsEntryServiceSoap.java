@@ -82,6 +82,34 @@ public class BlogsEntryServiceSoap {
 		}
 	}
 
+	public static com.liferay.blogs.kernel.model.BlogsEntry addEntry(
+		java.lang.String title, java.lang.String subtitle,
+		java.lang.String urlTitle, java.lang.String description,
+		java.lang.String content, int displayDateMonth, int displayDateDay,
+		int displayDateYear, int displayDateHour, int displayDateMinute,
+		boolean allowPingbacks, boolean allowTrackbacks,
+		java.lang.String[] trackbacks, java.lang.String coverImageCaption,
+		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector coverImageImageSelector,
+		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector smallImageImageSelector,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.blogs.kernel.model.BlogsEntry returnValue = BlogsEntryServiceUtil.addEntry(title,
+					subtitle, urlTitle, description, content, displayDateMonth,
+					displayDateDay, displayDateYear, displayDateHour,
+					displayDateMinute, allowPingbacks, allowTrackbacks,
+					trackbacks, coverImageCaption, coverImageImageSelector,
+					smallImageImageSelector, serviceContext);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static void deleteEntry(long entryId) throws RemoteException {
 		try {
 			BlogsEntryServiceUtil.deleteEntry(entryId);
@@ -418,6 +446,35 @@ public class BlogsEntryServiceSoap {
 					displayDateMinute, allowPingbacks, allowTrackbacks,
 					trackbacks, coverImageCaption, coverImageImageSelector,
 					smallImageImageSelector, serviceContext);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.blogs.kernel.model.BlogsEntry updateEntry(
+		long entryId, java.lang.String title, java.lang.String subtitle,
+		java.lang.String urlTitle, java.lang.String description,
+		java.lang.String content, int displayDateMonth, int displayDateDay,
+		int displayDateYear, int displayDateHour, int displayDateMinute,
+		boolean allowPingbacks, boolean allowTrackbacks,
+		java.lang.String[] trackbacks, java.lang.String coverImageCaption,
+		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector coverImageImageSelector,
+		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector smallImageImageSelector,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.blogs.kernel.model.BlogsEntry returnValue = BlogsEntryServiceUtil.updateEntry(entryId,
+					title, subtitle, urlTitle, description, content,
+					displayDateMonth, displayDateDay, displayDateYear,
+					displayDateHour, displayDateMinute, allowPingbacks,
+					allowTrackbacks, trackbacks, coverImageCaption,
+					coverImageImageSelector, smallImageImageSelector,
+					serviceContext);
 
 			return returnValue;
 		}

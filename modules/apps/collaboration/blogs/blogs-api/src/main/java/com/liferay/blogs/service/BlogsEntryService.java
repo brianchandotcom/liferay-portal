@@ -88,6 +88,17 @@ public interface BlogsEntryService extends BaseService {
 		ImageSelector smallImageImageSelector, ServiceContext serviceContext)
 		throws PortalException;
 
+	public BlogsEntry addEntry(java.lang.String title,
+		java.lang.String subtitle, java.lang.String urlTitle,
+		java.lang.String description, java.lang.String content,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, boolean allowPingbacks,
+		boolean allowTrackbacks, java.lang.String[] trackbacks,
+		java.lang.String coverImageCaption,
+		ImageSelector coverImageImageSelector,
+		ImageSelector smallImageImageSelector, ServiceContext serviceContext)
+		throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BlogsEntry getEntry(long entryId) throws PortalException;
 
@@ -119,6 +130,17 @@ public interface BlogsEntryService extends BaseService {
 		int displayDateYear, int displayDateHour, int displayDateMinute,
 		boolean allowPingbacks, boolean allowTrackbacks,
 		java.lang.String[] trackbacks, java.lang.String coverImageCaption,
+		ImageSelector coverImageImageSelector,
+		ImageSelector smallImageImageSelector, ServiceContext serviceContext)
+		throws PortalException;
+
+	public BlogsEntry updateEntry(long entryId, java.lang.String title,
+		java.lang.String subtitle, java.lang.String urlTitle,
+		java.lang.String description, java.lang.String content,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, boolean allowPingbacks,
+		boolean allowTrackbacks, java.lang.String[] trackbacks,
+		java.lang.String coverImageCaption,
 		ImageSelector coverImageImageSelector,
 		ImageSelector smallImageImageSelector, ServiceContext serviceContext)
 		throws PortalException;

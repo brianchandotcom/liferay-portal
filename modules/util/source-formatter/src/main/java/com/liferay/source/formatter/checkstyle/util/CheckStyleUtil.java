@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.SourceFormatterMessage;
+import com.liferay.source.formatter.checkstyle.SuppressionsLoader;
 
 import com.puppycrawl.tools.checkstyle.Checker;
 import com.puppycrawl.tools.checkstyle.ConfigurationLoader;
@@ -27,12 +28,9 @@ import com.puppycrawl.tools.checkstyle.api.AuditEvent;
 import com.puppycrawl.tools.checkstyle.api.AuditListener;
 import com.puppycrawl.tools.checkstyle.api.Configuration;
 import com.puppycrawl.tools.checkstyle.api.FilterSet;
-import com.puppycrawl.tools.checkstyle.filters.SuppressionsLoader;
 
 import java.io.File;
 import java.io.OutputStream;
-
-import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,7 +62,10 @@ public class CheckStyleUtil {
 
 		checker.setModuleClassLoader(classLoader);
 
-		FilterSet filterSet = _getSuppressions(classLoader);
+		FilterSet filterSet = SuppressionsLoader.loadSuppressions(
+			new InputSource(
+				classLoader.getResourceAsStream(
+					"checkstyle-suppressions.xml")));
 
 		checker.addFilter(filterSet);
 
@@ -81,22 +82,6 @@ public class CheckStyleUtil {
 		checker.addListener(listener);
 
 		return checker;
-	}
-
-	private static FilterSet _getSuppressions(ClassLoader classLoader)
-		throws Exception {
-
-		URL url = classLoader.getResource("checkstyle-suppressions.xml");
-
-		String path = url.getPath();
-
-		File file = new File(path.substring(1));
-
-		if (!file.exists()) {
-			return null;
-		}
-
-		return SuppressionsLoader.loadSuppressions(file.getAbsolutePath());
 	}
 
 	private static class SourceFormatterLogger extends DefaultLogger {

@@ -16,6 +16,7 @@ package com.liferay.portal.service;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.ListTypeConstants;
@@ -31,6 +32,7 @@ import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.ArrayList;
@@ -310,6 +312,84 @@ public class OrganizationLocalServiceTest {
 	}
 
 	@Test
+	public void testGetOrganizationsAndUsers() throws Exception {
+		Organization organization = OrganizationTestUtil.addOrganization();
+
+		Organization subOrganization = OrganizationTestUtil.addOrganization(
+			organization.getOrganizationId(), RandomTestUtil.randomString(),
+			false);
+
+		_organizations.add(subOrganization);
+
+		_organizations.add(organization);
+
+		UserLocalServiceUtil.addOrganizationUser(
+			organization.getOrganizationId(), TestPropsValues.getUserId());
+
+		Assert.assertEquals(2, getOrganizationsAndUsersCount(organization));
+
+		List<Object> results = getOrganizationsAndUsers(organization);
+
+		Assert.assertEquals(2, results.size());
+		Assert.assertTrue(results.contains(subOrganization));
+		Assert.assertTrue(results.contains(TestPropsValues.getUser()));
+	}
+
+	@Test
+	public void testGetOrganizationsAndUsersWithNoSuborganizations()
+		throws Exception {
+
+		Organization organization = OrganizationTestUtil.addOrganization();
+
+		_organizations.add(organization);
+
+		UserLocalServiceUtil.addOrganizationUser(
+			organization.getOrganizationId(), TestPropsValues.getUserId());
+
+		Assert.assertEquals(1, getOrganizationsAndUsersCount(organization));
+
+		List<Object> results = getOrganizationsAndUsers(organization);
+
+		Assert.assertEquals(1, results.size());
+		Assert.assertTrue(results.contains(TestPropsValues.getUser()));
+	}
+
+	@Test
+	public void testGetOrganizationsAndUsersWithNoUsers() throws Exception {
+		Organization organization = OrganizationTestUtil.addOrganization();
+
+		Organization subOrganization = OrganizationTestUtil.addOrganization(
+			organization.getOrganizationId(), RandomTestUtil.randomString(),
+			false);
+
+		_organizations.add(subOrganization);
+
+		_organizations.add(organization);
+
+		Assert.assertEquals(1, getOrganizationsAndUsersCount(organization));
+
+		List<Object> results = getOrganizationsAndUsers(organization);
+
+		Assert.assertEquals(1, results.size());
+		Assert.assertTrue(results.contains(subOrganization));
+	}
+
+	@Test
+	public void testGetOrganizationsAndUsersWithRootOrganization()
+		throws Exception {
+
+		Organization organization = OrganizationTestUtil.addOrganization();
+
+		_organizations.add(organization);
+
+		Assert.assertEquals(0, getOrganizationsAndUsersCount(organization));
+
+		List<Object> results = getOrganizationsAndUsers(organization);
+
+		Assert.assertTrue(results.isEmpty());
+	}
+
+	@Test
 	public void testHasUserOrganization1() throws Exception {
 		Organization organizationA = OrganizationTestUtil.addOrganization(
 			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
@@ -507,6 +587,19 @@ public class OrganizationLocalServiceTest {
 
 		Assert.assertEquals(
 			organizationB.getGroupId(), groupAA.getParentGroupId());
+	}
+
+	protected List<Object> getOrganizationsAndUsers(Organization organization) {
+		return OrganizationLocalServiceUtil.getOrganizationsAndUsers(
+				organization.getCompanyId(), organization.getOrganizationId(),
+				WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
+	}
+
+	protected int getOrganizationsAndUsersCount(Organization organization) {
+		return OrganizationLocalServiceUtil.getOrganizationsAndUsersCount(
+			organization.getCompanyId(), organization.getOrganizationId(),
+			WorkflowConstants.STATUS_ANY);
 	}
 
 	@DeleteAfterTestRun

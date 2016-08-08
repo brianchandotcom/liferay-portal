@@ -414,6 +414,7 @@ public class JournalArticleLocalServiceImpl
 
 		article.setDDMStructureKey(ddmStructureKey);
 		article.setDDMTemplateKey(ddmTemplateKey);
+		article.setDefaultLanguageId(LocaleUtil.toLanguageId(locale));
 		article.setLayoutUuid(layoutUuid);
 		article.setDisplayDate(displayDate);
 		article.setExpirationDate(expirationDate);
@@ -433,11 +434,6 @@ public class JournalArticleLocalServiceImpl
 		article.setStatusByUserId(userId);
 		article.setStatusDate(serviceContext.getModifiedDate(now));
 		article.setExpandoBridgeAttributes(serviceContext);
-
-		String defaultLanguageId = LocaleUtil.toLanguageId(
-			LocaleThreadLocal.getDefaultLocale());
-
-		article.setDefaultLanguageId(defaultLanguageId);
 
 		journalArticlePersistence.update(article);
 
@@ -824,6 +820,7 @@ public class JournalArticleLocalServiceImpl
 
 		newArticle.setDDMStructureKey(oldArticle.getDDMStructureKey());
 		newArticle.setDDMTemplateKey(oldArticle.getDDMTemplateKey());
+		newArticle.setDefaultLanguageId(oldArticle.getDefaultLanguageId());
 		newArticle.setLayoutUuid(oldArticle.getLayoutUuid());
 		newArticle.setDisplayDate(oldArticle.getDisplayDate());
 		newArticle.setExpirationDate(oldArticle.getExpirationDate());
@@ -832,7 +829,6 @@ public class JournalArticleLocalServiceImpl
 		newArticle.setSmallImage(oldArticle.isSmallImage());
 		newArticle.setSmallImageId(counterLocalService.increment());
 		newArticle.setSmallImageURL(oldArticle.getSmallImageURL());
-		newArticle.setDefaultLanguageId(oldArticle.getDefaultLanguageId());
 
 		if (oldArticle.isPending() ||
 			workflowDefinitionLinkLocalService.hasWorkflowDefinitionLink(
@@ -851,16 +847,9 @@ public class JournalArticleLocalServiceImpl
 
 		// Localization
 
-		Map<Locale, String> descriptionMap =
-			journalArticleLocalService.getArticleDescriptionMap(
-				oldArticle.getId());
-
-		Map<Locale, String> titleMap =
-			journalArticleLocalService.getArticleTitleMap(oldArticle.getId());
-
 		_addArticleLocalizedFields(
-			newArticle.getCompanyId(), newArticle.getId(), titleMap,
-			descriptionMap);
+			newArticle.getCompanyId(), newArticle.getId(),
+			oldArticle.getTitleMap(), oldArticle.getDescriptionMap());
 
 		// Resources
 
@@ -5370,11 +5359,6 @@ public class JournalArticleLocalServiceImpl
 			article.setVersion(version);
 			article.setSmallImageId(latestArticle.getSmallImageId());
 
-			String defaultLanguageId = LocaleUtil.toLanguageId(
-				LocaleThreadLocal.getDefaultLocale());
-
-			article.setDefaultLanguageId(defaultLanguageId);
-
 			_addArticleLocalizedFields(
 				article.getCompanyId(), article.getId(), titleMap,
 				descriptionMap);
@@ -5400,6 +5384,7 @@ public class JournalArticleLocalServiceImpl
 		article.setContent(content);
 		article.setDDMStructureKey(ddmStructureKey);
 		article.setDDMTemplateKey(ddmTemplateKey);
+		article.setDefaultLanguageId(LocaleUtil.toLanguageId(locale));
 		article.setLayoutUuid(layoutUuid);
 		article.setDisplayDate(displayDate);
 		article.setExpirationDate(expirationDate);
@@ -5628,6 +5613,8 @@ public class JournalArticleLocalServiceImpl
 					serviceContext));
 			article.setDDMStructureKey(oldArticle.getDDMStructureKey());
 			article.setDDMTemplateKey(oldArticle.getDDMTemplateKey());
+			article.setDefaultLanguageId(
+				LocaleUtil.toLanguageId(defaultLocale));
 			article.setLayoutUuid(oldArticle.getLayoutUuid());
 			article.setDisplayDate(oldArticle.getDisplayDate());
 			article.setExpirationDate(oldArticle.getExpirationDate());
@@ -5644,11 +5631,6 @@ public class JournalArticleLocalServiceImpl
 
 			article.setStatus(WorkflowConstants.STATUS_DRAFT);
 			article.setStatusDate(new Date());
-
-			String defaultLanguageId = LocaleUtil.toLanguageId(
-				LocaleThreadLocal.getDefaultLocale());
-
-			article.setDefaultLanguageId(defaultLanguageId);
 
 			ExpandoBridgeUtil.copyExpandoBridgeAttributes(
 				oldArticle.getExpandoBridge(), article.getExpandoBridge());

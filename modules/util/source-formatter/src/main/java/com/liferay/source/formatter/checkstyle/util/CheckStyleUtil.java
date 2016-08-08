@@ -12,12 +12,13 @@
  * details.
  */
 
-package com.liferay.source.formatter.util;
+package com.liferay.source.formatter.checkstyle.util;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.SourceFormatterMessage;
+import com.liferay.source.formatter.checkstyle.SuppressionsLoader;
 
 import com.puppycrawl.tools.checkstyle.Checker;
 import com.puppycrawl.tools.checkstyle.ConfigurationLoader;
@@ -26,6 +27,7 @@ import com.puppycrawl.tools.checkstyle.PropertiesExpander;
 import com.puppycrawl.tools.checkstyle.api.AuditEvent;
 import com.puppycrawl.tools.checkstyle.api.AuditListener;
 import com.puppycrawl.tools.checkstyle.api.Configuration;
+import com.puppycrawl.tools.checkstyle.api.FilterSet;
 
 import java.io.File;
 import java.io.OutputStream;
@@ -33,48 +35,53 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.xml.sax.InputSource;
+
 /**
  * @author Hugo Huijser
  */
 public class CheckStyleUtil {
 
 	public static List<SourceFormatterMessage> process(
-			String configurationFileName, List<File> files,
-			String baseDirAbsolutePath)
+			List<File> files, String baseDirAbsolutePath)
 		throws Exception {
 
-		Checker checker = _getChecker(
-			configurationFileName, baseDirAbsolutePath);
+		Checker checker = _getChecker(baseDirAbsolutePath);
 
 		checker.process(files);
 
 		return _sourceFormatterMessages;
 	}
 
-	private static Checker _getChecker(
-		String configurationFileName, String baseDirAbsolutePath) {
+	private static Checker _getChecker(String baseDirAbsolutePath)
+		throws Exception {
 
-		try {
-			Checker checker = new Checker();
+		Checker checker = new Checker();
 
-			checker.setModuleClassLoader(CheckStyleUtil.class.getClassLoader());
+		ClassLoader classLoader = CheckStyleUtil.class.getClassLoader();
 
-			Configuration configuration = ConfigurationLoader.loadConfiguration(
-				configurationFileName,
-				new PropertiesExpander(System.getProperties()), false);
+		checker.setModuleClassLoader(classLoader);
 
-			checker.configure(configuration);
+		FilterSet filterSet = SuppressionsLoader.loadSuppressions(
+			new InputSource(
+				classLoader.getResourceAsStream(
+					"checkstyle-suppressions.xml")));
 
-			AuditListener listener = new SourceFormatterLogger(
-				new UnsyncByteArrayOutputStream(), true, baseDirAbsolutePath);
+		checker.addFilter(filterSet);
 
-			checker.addListener(listener);
+		Configuration configuration = ConfigurationLoader.loadConfiguration(
+			new InputSource(
+				classLoader.getResourceAsStream("checkstyle.xml")),
+			new PropertiesExpander(System.getProperties()), false);
 
-			return checker;
-		}
-		catch (Exception e) {
-			return null;
-		}
+		checker.configure(configuration);
+
+		AuditListener listener = new SourceFormatterLogger(
+			new UnsyncByteArrayOutputStream(), true, baseDirAbsolutePath);
+
+		checker.addListener(listener);
+
+		return checker;
 	}
 
 	private static class SourceFormatterLogger extends DefaultLogger {

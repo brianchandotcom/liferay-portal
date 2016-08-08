@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ImportsFormatter;
 import com.liferay.portal.tools.JavaImportsFormatter;
 import com.liferay.portal.tools.ToolsUtil;
-import com.liferay.source.formatter.util.CheckStyleUtil;
+import com.liferay.source.formatter.checkstyle.util.CheckStyleUtil;
 import com.liferay.source.formatter.util.FileUtil;
 
 import com.thoughtworks.qdox.JavaDocBuilder;
@@ -4491,13 +4491,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 
 		File baseDirFile = new File(sourceFormatterArgs.getBaseDirName());
-		File configurationFile = getFile(
-			"checkstyle.xml", PORTAL_MAX_DIR_LEVEL);
 
 		List<SourceFormatterMessage> sourceFormatterMessages =
 			CheckStyleUtil.process(
-				getAbsolutePath(configurationFile), _ungeneratedFiles,
-				getAbsolutePath(baseDirFile));
+				_ungeneratedFiles, getAbsolutePath(baseDirFile));
 
 		for (SourceFormatterMessage sourceFormatterMessage :
 				sourceFormatterMessages) {

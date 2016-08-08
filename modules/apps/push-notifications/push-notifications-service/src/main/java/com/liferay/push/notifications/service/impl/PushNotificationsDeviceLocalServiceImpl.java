@@ -72,10 +72,10 @@ public class PushNotificationsDeviceLocalServiceImpl
 		Bundle bundle = FrameworkUtil.getBundle(
 			PushNotificationsDeviceLocalServiceImpl.class);
 
-		BundleContext _bundleContext = bundle.getBundleContext();
+		BundleContext bundleContext = bundle.getBundleContext();
 
 		_serviceTrackerMap = ServiceTrackerMapFactory.singleValueMap(
-			_bundleContext, PushNotificationsSender.class, "platform");
+			bundleContext, PushNotificationsSender.class, "platform");
 
 		_serviceTrackerMap.open();
 	}

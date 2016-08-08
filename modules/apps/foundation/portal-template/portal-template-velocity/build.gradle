@@ -3,7 +3,6 @@ dependencies {
 	provided group: "com.liferay", name: "com.liferay.osgi.service.tracker.collections", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.osgi.util", version: "3.0.0"
 	provided group: "com.liferay", name: "com.liferay.portal.configuration.metatype", version: "2.0.0"
-	provided group: "com.liferay", name: "com.liferay.registry.api", version: "1.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.2.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "2.0.0"

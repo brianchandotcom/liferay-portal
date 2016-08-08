@@ -168,6 +168,9 @@ public interface DDMStructureLinkLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getDDMStructureLinksCount();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getStructureLinksCount(long classNameId, long classPK);
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -236,8 +239,16 @@ public interface DDMStructureLinkLocalService extends BaseLocalService,
 		long classPK) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<DDMStructure> getStructureLinkStructures(long classNameId,
+		long classPK, int start, int end) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DDMStructureLink> getStructureLinks(long classNameId,
 		long classPK);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<DDMStructureLink> getStructureLinks(long classNameId,
+		long classPK, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DDMStructureLink> getStructureLinks(long structureId);

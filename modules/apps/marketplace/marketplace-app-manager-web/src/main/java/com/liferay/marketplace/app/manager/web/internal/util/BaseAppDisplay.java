@@ -107,7 +107,7 @@ public abstract class BaseAppDisplay implements AppDisplay {
 		}
 	}
 
-	private List<Bundle> _bundles = new ArrayList<>();
+	private final List<Bundle> _bundles = new ArrayList<>();
 	private List<ModuleGroupDisplay> _moduleGroupDisplays;
 
 }

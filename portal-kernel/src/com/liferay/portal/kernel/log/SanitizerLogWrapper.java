@@ -301,13 +301,10 @@ public class SanitizerLogWrapper extends LogWrapper {
 	private static final boolean _LOG_SANITIZER_ENABLED = GetterUtil.getBoolean(
 		SystemProperties.get(PropsKeys.LOG_SANITIZER_ENABLED));
 
-	private static boolean _logSanitizerEscapeHTMLEnabled;
-
-	private static char _logSanitizerReplacementCharacter =
-		CharPool.UNDERLINE;
-
 	private static final String _SANITIZED = " [Sanitized]";
 
+	private static boolean _logSanitizerEscapeHTMLEnabled;
+	private static char _logSanitizerReplacementCharacter = CharPool.UNDERLINE;
 	private static final int[] _whitelistCharacters = new int[128];
 
 	private boolean _allowCRLF;

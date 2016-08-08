@@ -738,7 +738,6 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 	}
 
 	private static long _classNameId;
-
 	private static Locale _enLocale;
 	private static Locale _ptLocale;
 

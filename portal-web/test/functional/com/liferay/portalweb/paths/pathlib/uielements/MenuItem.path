@@ -409,6 +409,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FOUNDATION</td>
+	<td>//a[@role='menuitem' and contains(.,'Foundation')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>GLOBAL</td>
 	<td>//a[@role='menuitem' and contains(.,'Global')]</td>
 	<td></td>
@@ -631,11 +636,6 @@
 <tr>
 	<td>PERMISSIONS_LEXICON</td>
 	<td>//div[contains(@class,'open')]//a[@role='menuitem' and contains(.,'Permissions')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PLATFORM</td>
-	<td>//a[@role='menuitem' and contains(.,'Platform')]</td>
 	<td></td>
 </tr>
 <tr>

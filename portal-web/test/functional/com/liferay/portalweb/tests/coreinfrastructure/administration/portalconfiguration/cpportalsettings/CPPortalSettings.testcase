@@ -639,10 +639,13 @@
 			<var name="portlet" value="System Settings" />
 		</execute>
 
-		<execute macro="SystemSettingsNavigator#gotoFoundationCP" />
+		<execute macro="SystemSettings#gotoCategory">
+			<var name="category" value="Foundation" />
+		</execute>
 
-		<execute macro="SystemSettings#viewDefaultConfigurationCP">
+		<execute macro="SystemSettings#viewConfiguration">
 			<var name="configurationName" value="LDAP Auth" />
+			<var name="enableLDAP" value="false" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
@@ -655,10 +658,13 @@
 			<var name="portlet" value="System Settings" />
 		</execute>
 
-		<execute macro="SystemSettingsNavigator#gotoFoundationCP" />
+		<execute macro="SystemSettings#gotoCategory">
+			<var name="category" value="Foundation" />
+		</execute>
 
-		<execute macro="SystemSettings#viewDefaultConfigurationCP">
+		<execute macro="SystemSettings#viewConfiguration">
 			<var name="configurationName" value="LDAP Auth" />
+			<var name="enableLDAP" value="false" />
 		</execute>
 	</command>
 

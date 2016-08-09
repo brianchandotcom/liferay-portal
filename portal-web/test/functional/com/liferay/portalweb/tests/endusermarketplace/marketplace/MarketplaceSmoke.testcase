@@ -38,7 +38,7 @@
 		<execute macro="Marketplace#smoke" />
 	</command>
 
-	<command name="MarketplaceSmokeSites">
+	<command name="MarketplaceSmokeSites" priority="5">
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>

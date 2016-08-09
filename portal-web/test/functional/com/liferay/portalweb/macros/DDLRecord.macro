@@ -284,9 +284,12 @@
 
 		<execute macro="DDLRecord#selectLinkToPageRadio">
 			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
+			<var name="parentPage" value="${parentPage}" />
 		</execute>
 
 		<execute function="AssertClick" locator1="Button#SELECT" value1="Select" />
+
+		<var name="key_fieldName" value="${fieldName}" />
 
 		<execute function="AssertTextEquals" locator1="DDLEditRecord#LINK_TO_PAGE_PAGE_SELECT" value1="${ddlRecordFieldData}" />
 	</command>

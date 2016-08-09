@@ -32,6 +32,7 @@ import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Stian Sigvartsen
+ * @author Carlos Sierra Andrés
  */
 @Component(
 	configurationPid = "com.liferay.portal.security.service.access.quota.configuration.SAQConfiguration",

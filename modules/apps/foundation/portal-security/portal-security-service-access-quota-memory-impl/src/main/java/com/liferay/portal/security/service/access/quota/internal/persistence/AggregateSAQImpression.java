@@ -22,6 +22,7 @@ import java.util.Map;
 
 /**
  * @author Stian Sigvartsen
+ * @author Carlos Sierra Andrés
  */
 public class AggregateSAQImpression implements SAQImpression, Serializable {
 

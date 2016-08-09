@@ -38,6 +38,7 @@ import java.util.Set;
 
 /**
  * @author Stian Sigvartsen
+ * @author Carlos Sierra Andrés
  */
 public class SAQContextImpl implements SAQContextMatcher, SAQContext {
 

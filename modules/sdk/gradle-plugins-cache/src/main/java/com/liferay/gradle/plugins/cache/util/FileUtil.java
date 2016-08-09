@@ -36,6 +36,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import org.gradle.api.Action;
+import org.gradle.api.GradleException;
 import org.gradle.api.Project;
 import org.gradle.api.UncheckedIOException;
 import org.gradle.api.logging.Logger;
@@ -44,6 +45,7 @@ import org.gradle.internal.hash.HashUtil;
 import org.gradle.internal.hash.HashValue;
 import org.gradle.process.ExecSpec;
 import org.gradle.process.internal.ExecException;
+import org.gradle.util.Clock;
 
 /**
  * @author Andrea Di Giorgi
@@ -112,6 +114,57 @@ public class FileUtil extends com.liferay.gradle.util.FileUtil {
 		}
 
 		return digest;
+	}
+
+	public static String getDigest(
+		Project project, Iterable<File> files, boolean excludeIgnoredFiles) {
+
+		Clock clock = null;
+
+		if (_logger.isInfoEnabled()) {
+			clock = new Clock();
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		SortedSet<File> sortedFiles = null;
+
+		try {
+			sortedFiles = flattenAndSort(files);
+		}
+		catch (IOException ioe) {
+			throw new GradleException("Unable to flatten files", ioe);
+		}
+
+		if (excludeIgnoredFiles) {
+			removeIgnoredFiles(project, sortedFiles);
+		}
+
+		for (File file : sortedFiles) {
+			if (!file.exists()) {
+				continue;
+			}
+
+			if (".DS_Store".equals(file.getName())) {
+				continue;
+			}
+
+			sb.append(getDigest(file));
+			sb.append(_DIGEST_SEPARATOR);
+		}
+
+		if (sb.length() == 0) {
+			throw new GradleException("At least one file is required");
+		}
+
+		sb.setLength(sb.length() - 1);
+
+		if (_logger.isInfoEnabled() && (clock != null)) {
+			_logger.info(
+				"Getting the digest took " + clock.getTimeInMs() + " ms");
+		}
+
+		return sb.toString();
 	}
 
 	public static boolean removeIgnoredFiles(
@@ -217,6 +270,8 @@ public class FileUtil extends com.liferay.gradle.util.FileUtil {
 
 		return byteArrayOutputStream.toString();
 	}
+
+	private static final char _DIGEST_SEPARATOR = '-';
 
 	private static final Logger _logger = Logging.getLogger(FileUtil.class);
 

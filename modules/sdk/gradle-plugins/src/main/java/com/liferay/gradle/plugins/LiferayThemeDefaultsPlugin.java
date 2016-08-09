@@ -14,6 +14,7 @@
 
 package com.liferay.gradle.plugins;
 
+import com.liferay.gradle.plugins.cache.WriteDigestTask;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.gulp.ExecuteGulpTask;
 import com.liferay.gradle.plugins.tasks.ReplaceRegexTask;
@@ -59,6 +60,9 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 	public static final String FRONTEND_CSS_COMMON_CONFIGURATION_NAME =
 		"frontendCSSCommon";
 
+	public static final String WRITE_PARENT_THEMES_DIGEST_TASK_NAME =
+		"writeParentThemesDigest";
+
 	@Override
 	public void apply(Project project) {
 		GradleUtil.applyPlugin(project, LiferayThemePlugin.class);
@@ -76,18 +80,21 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 		Configuration frontendCSSCommonConfiguration =
 			addConfigurationFrontendCSSCommon(project);
 
-		Copy expandFrontendCSSCommonTask = addTaskExpandFrontendCSSCommon(
-			project, frontendCSSCommonConfiguration);
-		final ReplaceRegexTask updateVersionTask = addTaskUpdateVersion(
-			project);
-
-		configureDeployDir(project);
-		configureProject(project);
-
 		Project frontendThemeStyledProject = getThemeProject(
 			project, "frontend-theme-styled");
 		Project frontendThemeUnstyledProject = getThemeProject(
 			project, "frontend-theme-unstyled");
+
+		WriteDigestTask writeDigestTask = addTaskWriteParentThemesDigest(
+			project, frontendThemeStyledProject, frontendThemeUnstyledProject);
+
+		Copy expandFrontendCSSCommonTask = addTaskExpandFrontendCSSCommon(
+			project, frontendCSSCommonConfiguration);
+		final ReplaceRegexTask updateVersionTask = addTaskUpdateVersion(
+			project, writeDigestTask);
+
+		configureDeployDir(project);
+		configureProject(project);
 
 		configureTasksExecuteGulp(
 			project, expandFrontendCSSCommonTask, frontendThemeStyledProject,
@@ -201,20 +208,50 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 		return upload;
 	}
 
-	protected ReplaceRegexTask addTaskUpdateVersion(final Project project) {
+	protected ReplaceRegexTask addTaskUpdateVersion(
+		Project project, WriteDigestTask writeParentThemesDigestTask) {
+
 		ReplaceRegexTask replaceRegexTask = GradleUtil.addTask(
 			project, LiferayRelengPlugin.UPDATE_VERSION_TASK_NAME,
 			ReplaceRegexTask.class);
 
+		replaceRegexTask.finalizedBy(writeParentThemesDigestTask);
 		replaceRegexTask.match("\\n\\t\"version\": \"(.+)\"", "package.json");
-
 		replaceRegexTask.setDescription(
 			"Updates the project version in the package.json file.");
-
 		replaceRegexTask.setReplacement(
 			IncrementVersionClosure.MICRO_INCREMENT);
 
 		return replaceRegexTask;
+	}
+
+	protected WriteDigestTask addTaskWriteParentThemesDigest(
+		Project project, Project... parentThemeProjects) {
+
+		WriteDigestTask writeDigestTask = GradleUtil.addTask(
+			project, WRITE_PARENT_THEMES_DIGEST_TASK_NAME,
+			WriteDigestTask.class);
+
+		writeDigestTask.setDescription(
+			"Writes a digest file to keep track of the parent themes used by " +
+				"this project.");
+
+		for (Project parentThemeProject : parentThemeProjects) {
+			if (parentThemeProject == null) {
+				continue;
+			}
+
+			writeDigestTask.dependsOn(
+				parentThemeProject.getPath() + ":" +
+					JavaPlugin.CLASSES_TASK_NAME);
+
+			File dir = parentThemeProject.file(
+				"src/main/resources/META-INF/resources");
+
+			writeDigestTask.source(dir);
+		}
+
+		return writeDigestTask;
 	}
 
 	protected void applyConfigScripts(Project project) {

@@ -3,7 +3,7 @@
 		<execute macro="AssetPublisherPortlet#gotoConfigurationPG" />
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Source" />
+			<var name="panelHeading" value="Scope" />
 		</execute>
 
 		<execute function="AssertClick" locator1="Configuration#SCOPE_SELECT" value1="Select" />
@@ -422,7 +422,7 @@
 		<execute macro="AssetPublisherPortlet#gotoConfigurationPG" />
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Source" />
+			<var name="panelHeading" value="Scope" />
 		</execute>
 
 		<execute function="AssertClick" locator1="Configuration#SCOPE_SELECT" value1="Select" />
@@ -452,24 +452,12 @@
 			</else>
 		</if>
 
-		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Source" />
-		</execute>
-
 		<execute function="AssertTextEquals#assertPartialText" locator1="APConfiguration#SOURCE_SCOPE_NAME" value1="${siteName}" />
 		<execute function="AssertTextEquals" locator1="APConfiguration#SOURCE_SCOPE_TYPE" value1="${siteScopeType}" />
 
 		<execute macro="Button#clickSave" />
 
-		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Source" />
-		</execute>
-
 		<execute macro="Alert#viewSuccessMessage" />
-
-		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Source" />
-		</execute>
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="APConfiguration#SOURCE_SCOPE_NAME" value1="${siteName}" />
 		<execute function="AssertTextEquals" locator1="APConfiguration#SOURCE_SCOPE_TYPE" value1="${siteScopeType}" />
@@ -489,7 +477,7 @@
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Source" />
+			<var name="panelHeading" value="Scope" />
 		</execute>
 
 		<var name="key_siteName" value="${siteName}" />
@@ -726,7 +714,7 @@
 		<execute macro="AssetPublisherPortlet#gotoConfigurationPG" />
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Source" />
+			<var name="panelHeading" value="Scope" />
 		</execute>
 
 		<execute function="AssertClick" locator1="Configuration#SCOPE_SELECT" value1="Select" />

@@ -24,7 +24,7 @@ describe(
 		);
 
 		it(
-			'should return a empty string if any option was selected',
+			'should return a empty string if no option is selected',
 			function(done) {
 				var radioField = new Liferay.DDM.Field.Radio(
 					{
@@ -33,53 +33,49 @@ describe(
 						},
 						options: [
 							{
-								label: 'Liferay',
-								value: 'portal'
+								label: 'First Option',
+								value: 'first_option'
 							}
 						]
 					}
 				).render(document.body);
 
-				var value = radioField.getValue();
-
-				assert.equal(value, '');
+				assert.equal('', radioField.getValue());
 
 				done();
 			}
 		);
 
 		it(
-			'should the selected input value to be equal of its respective option value',
+			'should have the getValue() method return the value of the selected option',
 			function(done) {
+				var options = [
+					{
+						label: 'First Option',
+						value: 'first_option'
+					},
+					{
+						label: 'Second Option',
+						value: 'second_option'
+					}
+				];
+
 				var radioField = new Liferay.DDM.Field.Radio(
 					{
 						context: {
 							name: 'radioField'
 						},
-						options: [
-							{
-								label: 'Liferay',
-								value: 'portal'
-							},
-							{
-								label: 'Latin',
-								value: 'America'
-							}
-						]
+						options: options
 					}
 				).render(document.body);
 
 				var container = radioField.get('container');
 
-				var firstField = container.one('.field');
+				var firstOption = container.one('.field');
 
-				firstField.set('checked', 'checked');
+				firstOption.set('checked', 'checked');
 
-				var firstFieldValue = radioField.getValue();
-
-				var options = radioField.get('options');
-
-				assert.equal(options[0].value, firstFieldValue);
+				assert.equal(options[0].value, radioField.getValue());
 
 				done();
 			}

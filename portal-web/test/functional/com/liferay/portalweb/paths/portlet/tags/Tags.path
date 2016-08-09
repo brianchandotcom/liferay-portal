@@ -55,6 +55,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>VIEW_TAGS_VIA_MY_SITES</td>
+	<td>//*[@data-qa-id='row']//span[contains(@class,'asset-tag')]/span[contains(.,'${key_tagName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TAG_ENTRY_TABLE_ACTIONS_ARROW</td>
 	<td>//tr[contains(.,'${key_tagName}')]//a[contains(@class,'dropdown-toggle')]</td>
 	<td></td>

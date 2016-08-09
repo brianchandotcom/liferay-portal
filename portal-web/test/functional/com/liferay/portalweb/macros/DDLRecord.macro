@@ -770,6 +770,18 @@
 		<execute function="AssertElementPresent" locator1="DDL#RECORD_TABLE_PREVIEW_INVALID_IMG" />
 	</command>
 
+	<command name="viewLinkToPageBreadcrumbCount">
+		<var name="key_number" value="${count}" />
+
+		<execute function="AssertElementPresent" locator1="DDLEditRecord#LINK_TO_PAGE_BREADCRUMB" />
+
+		<var method="MathUtil#sum('${count}', '1')" name="count" />
+
+		<var name="key_number" value="${count}" />
+
+		<execute function="AssertElementNotPresent" locator1="DDLEditRecord#LINK_TO_PAGE_BREADCRUMB" />
+	</command>
+
 	<command name="viewLinkToPageLink">
 		<var name="key_pageName" value="${ddlRecordFieldData}" />
 

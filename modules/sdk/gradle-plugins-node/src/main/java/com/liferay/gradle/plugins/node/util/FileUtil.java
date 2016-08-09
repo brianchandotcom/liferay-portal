@@ -17,6 +17,13 @@ package com.liferay.gradle.plugins.node.util;
 import com.liferay.gradle.util.OSDetector;
 
 import java.io.File;
+import java.io.IOException;
+
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
 
 import org.gradle.api.Action;
 import org.gradle.api.Project;
@@ -28,6 +35,33 @@ import org.gradle.process.ExecSpec;
  * @author Andrea Di Giorgi
  */
 public class FileUtil extends com.liferay.gradle.util.FileUtil {
+
+	public static void removeDirs(
+			final Project project, File rootDir, final String dirName)
+		throws IOException {
+
+		Files.walkFileTree(
+			rootDir.toPath(),
+			new SimpleFileVisitor<Path>() {
+
+				@Override
+				public FileVisitResult preVisitDirectory(
+						Path dirPath, BasicFileAttributes basicFileAttributes)
+					throws IOException {
+
+					Path dirNamePath = dirPath.getFileName();
+
+					if (!dirName.equals(dirNamePath.toString())) {
+						return FileVisitResult.CONTINUE;
+					}
+
+					project.delete(dirPath.toFile());
+
+					return FileVisitResult.SKIP_SUBTREE;
+				}
+
+			});
+	}
 
 	public static void syncDir(
 		Project project, final File sourceDir, final File targetDir,

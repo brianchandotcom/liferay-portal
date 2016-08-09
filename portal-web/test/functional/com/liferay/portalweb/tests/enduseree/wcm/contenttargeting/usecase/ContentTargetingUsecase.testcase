@@ -1403,7 +1403,7 @@
 		</execute>
 
 		<execute macro="PortletEntry#publish" />
-	
+
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>
@@ -1490,7 +1490,7 @@
 
 		<execute macro="ContentTargetingUserSegment#viewContentVisitedRuleEmpty">
 			<var name="userSegmentName" value="User Segment Name" />
-		</execute>		
+		</execute>
 	</command>
 
 	<command name="CTValidationStaging" priority="4">
@@ -1576,7 +1576,6 @@
 			<var name="userSegmentName" value="User Segment Name" />
 		</execute>
 	</command>
-
 
 	<command name="ExportImportDeletions" priority="4">
 		<property name="content.targeting.release" value="true" />

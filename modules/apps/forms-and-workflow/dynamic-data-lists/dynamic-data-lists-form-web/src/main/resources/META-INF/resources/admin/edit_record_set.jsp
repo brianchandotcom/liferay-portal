@@ -43,14 +43,14 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 	<portlet:param name="mvcPath" value="/admin/edit_record_set.jsp" />
 </portlet:actionURL>
 
-<liferay-frontend:management-bar>
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-button id="showForm" label="Form" href="javascript:;" />
-		<liferay-frontend:management-bar-button id="showRules" label="Label" href="javascript:;" />
-	</liferay-frontend:management-bar-buttons>
-</liferay-frontend:management-bar>
-
 <div class="hide portlet-forms" id="<portlet:namespace />formContainer">
+	<aui:nav-bar cssClass="collapse-basic-search" id="toolbar" markupView="lexicon">
+		<aui:nav cssClass="navbar-nav">
+			<aui:nav-item id="showForm" label="Build" selected="<%= true %>" />
+			<aui:nav-item id="showRules" label="Rules" />
+		</aui:nav>
+	</aui:nav-bar>
+
 	<aui:form action="<%= (recordSet == null) ? addRecordSetURL : updateRecordSetURL %>" cssClass="ddl-form-builder-form" method="post" name="editForm">
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 		<aui:input name="recordSetId" type="hidden" value="<%= recordSetId %>" />

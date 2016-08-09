@@ -657,6 +657,93 @@ Error-Prone was automatically installed. Please rerun your task.
 		</sequential>
 	</macrodef>
 
+	<macrodef name="gradle-execute-build">
+		<attribute default="default" name="build.file" />
+		<attribute default="${project.dir}/modules" name="dir" />
+		<attribute default="true" name="failonerror" />
+		<attribute default="true" name="forcedcacheenabled" />
+		<attribute default="false" name="maven.local.ignore" />
+		<attribute default="true" name="parallel" />
+		<attribute default="true" name="portal.build" />
+		<attribute default="false" name="quiet" />
+		<attribute default="null" name="task" />
+		<attribute default="null" name="tasks" />
+
+		<sequential>
+			<fail message="[gradle-execute-build] This macrodef requires either the &quot;task&quot; or &quot;tasks&quot; attribute to be set (not both).">
+				<condition>
+					<not>
+						<xor>
+							<equals arg1="@{task}" arg2="null" />
+							<equals arg1="@{tasks}" arg2="null" />
+						</xor>
+					</not>
+				</condition>
+			</fail>
+
+			<local name="gradle.execute.additional.tasks.arg" />
+			<local name="gradle.execute.build.file.arg" />
+			<local name="gradle.execute.parallel.arg" />
+			<local name="gradle.execute.quiet.arg" />
+			<local name="gradle.execute.task" />
+			<local name="gradle.execute.task.attribute" />
+
+			<condition else="--build-file=@{build.file}" property="gradle.execute.build.file.arg" value="">
+				<equals arg1="@{build.file}" arg2="default" />
+			</condition>
+
+			<condition else="" property="gradle.execute.parallel.arg" value="--parallel">
+				<istrue value="@{parallel}" />
+			</condition>
+
+			<condition else="" property="gradle.execute.quiet.arg" value="--quiet">
+				<istrue value="@{quiet}" />
+			</condition>
+
+			<condition else="@{task}" property="gradle.execute.task.attribute" value="@{tasks}">
+				<equals arg1="@{task}" arg2="null" />
+			</condition>
+
+			<condition property="gradle.execute.task" value="@{task}">
+				<equals arg1="@{tasks}" arg2="null" />
+			</condition>
+
+			<loadfile property="gradle.execute.task">
+				<filterchain>
+					<tokenfilter>
+						<replaceregex pattern="(.+?)(?:,.+)" replace="\1" />
+					</tokenfilter>
+				</filterchain>
+				<propertyresource name="gradle.execute.task.attribute" />
+			</loadfile>
+
+			<condition property="gradle.execute.additional.tasks.arg" value="">
+				<equals arg1="@{tasks}" arg2="null" />
+			</condition>
+
+			<loadfile property="gradle.execute.additional.tasks.arg">
+				<filterchain>
+					<tokenfilter>
+						<replaceregex pattern=".+?,(.+)" replace="\1" />
+
+						<replacestring from="," to=" " />
+					</tokenfilter>
+				</filterchain>
+				<propertyresource name="gradle.execute.task.attribute" />
+			</loadfile>
+
+			<gradle-execute dir="@{dir}" failonerror="@{failonerror}" forcedcacheenabled="@{forcedcacheenabled}" task="${gradle.execute.task}">
+				<arg line="${gradle.execute.additional.tasks.arg}" />
+				<arg value="${gradle.execute.build.file.arg}" />
+				<arg value="${gradle.execute.parallel.arg}" />
+				<arg value="${gradle.execute.quiet.arg}" />
+				<arg value="-Dmaven.local.ignore=@{maven.local.ignore}" />
+				<arg value="-Dportal.build=@{portal.build}" />
+				<env key="WAS_HOME" value="${app.server.websphere.dir}" />
+			</gradle-execute>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="install-portal-artifact">
 		<attribute default="jar" name="packaging" />
 		<attribute default="false" name="snapshot" />
@@ -1034,9 +1121,7 @@ Error-Prone was automatically installed. Please rerun your task.
 
 			<update-gradle-properties />
 
-			<gradle-execute task="setupPortalTools">
-				<arg value="--build-file=${project.dir}/modules/util.gradle" />
-			</gradle-execute>
+			<gradle-execute-build build.file="${project.dir}/modules/util.gradle" task="setupPortalTools" />
 		</sequential>
 	</macrodef>
 

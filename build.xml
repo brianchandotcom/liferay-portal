@@ -33,9 +33,7 @@
 
 				<setup-sdk />
 
-				<gradle-execute dir="${project.dir}/modules" task="clean">
-					<arg value="-Dportal.build=true" />
-				</gradle-execute>
+				<gradle-execute-build task="clean" />
 			</sequential>
 
 			<delete failonerror="false" includeemptydirs="true">
@@ -115,9 +113,7 @@
 
 		<delete file="javac.output.txt" />
 
-		<gradle-execute dir="modules/core/registry-api" task="classes">
-			<arg value="--parallel" />
-		</gradle-execute>
+		<gradle-execute-build dir="modules/core/registry-api" tasks="classes" />
 
 		<ant dir="portal-kernel" inheritAll="false" target="compile" />
 
@@ -244,9 +240,7 @@
 		<if>
 			<equals arg1="${build.marketplace.apps.enabled}" arg2="true" />
 			<then>
-				<gradle-execute dir="${project.dir}/modules/core/registry-api" task="deploy">
-					<arg value="--parallel" />
-				</gradle-execute>
+				<gradle-execute-build dir="${project.dir}/modules/core/registry-api" portal.build="false" task="deploy" />
 
 				<if>
 					<equals arg1="${jsp.precompile}" arg2="on" />
@@ -254,81 +248,41 @@
 						<if>
 							<equals arg1="${jsp.precompile.parallel}" arg2="on" />
 							<then>
-								<gradle-execute dir="${project.dir}/modules" task="compileJSP">
-									<arg value="deploy" />
-									<arg value="--parallel" />
-									<arg value="-Dportal.build=true" />
-									<env key="WAS_HOME" value="${app.server.websphere.dir}" />
-								</gradle-execute>
+								<gradle-execute-build tasks="compileJSP,deploy" />
 							</then>
 							<else>
-								<gradle-execute dir="${project.dir}/modules" task="deploy">
-									<arg value="--parallel" />
-									<arg value="-Dportal.build=true" />
-									<env key="WAS_HOME" value="${app.server.websphere.dir}" />
-								</gradle-execute>
+								<gradle-execute-build task="deploy" />
 
-								<gradle-execute dir="${project.dir}/modules" task="compileJSP">
-									<arg value="-Dportal.build=true" />
-								</gradle-execute>
+								<gradle-execute-build parallel="false" task="compileJSP" />
 							</else>
 						</if>
 					</then>
 					<else>
-						<gradle-execute dir="${project.dir}/modules" task="deploy">
-							<arg value="--parallel" />
-							<arg value="-Dportal.build=true" />
-							<env key="WAS_HOME" value="${app.server.websphere.dir}" />
-						</gradle-execute>
+						<gradle-execute-build tasks="deploy" />
 					</else>
 				</if>
 			</then>
 			<else>
-				<gradle-execute dir="${project.dir}/modules/core" task="deploy">
-					<arg value="--parallel" />
-					<arg value="-Dportal.build=true" />
-				</gradle-execute>
+				<gradle-execute-build dir="${project.dir}/modules/core" tasks="deploy" />
 
 				<pathconvert property="build.app.server.lib.marker.files" setonempty="false">
 					<fileset dir="${project.dir}/modules" includes="**/.lfrbuild-app-server-lib" />
 				</pathconvert>
 
-				<if>
+				<condition else="deployConfigs,deployTool" property="gradle.deploy.extra.tasks" value="deployAppServerLib,deployConfigs,deployTool">
 					<isset property="build.app.server.lib.marker.files" />
-					<then>
-						<gradle-execute dir="${project.dir}/modules" task="deployTool">
-							<arg value="--parallel" />
-							<arg value="-Dportal.build=true" />
-							<arg value="deployAppServerLib" />
-							<arg value="deployConfigs" />
-						</gradle-execute>
-					</then>
-					<else>
-						<gradle-execute dir="${project.dir}/modules" task="deployTool">
-							<arg value="--parallel" />
-							<arg value="-Dportal.build=true" />
-							<arg value="deployConfigs" />
-						</gradle-execute>
-					</else>
-				</if>
+				</condition>
+
+				<gradle-execute-build tasks="${gradle.deploy.extra.tasks}" />
 
 				<if>
 					<equals arg1="${jsp.precompile}" arg2="on" />
 					<then>
-						<if>
+						<condtion else="false" property="gradle.jsp.precompile.parallel" value="true">
 							<equals arg1="${jsp.precompile.parallel}" arg2="on" />
-							<then>
-								<gradle-execute dir="${project.dir}/modules" task="compileJSP">
-									<arg value="--parallel" />
-									<arg value="-Dportal.build=true" />
-								</gradle-execute>
-							</then>
-							<else>
-								<gradle-execute dir="${project.dir}/modules" task="compileJSP">
-									<arg value="-Dportal.build=true" />
-								</gradle-execute>
-							</else>
-						</if>
+						</condtion>
+
+						<gradle-execute-build parallel="${gradle.jsp.precompile.parallel}" task="compileJSP" />
 					</then>
 				</if>
 			</else>
@@ -934,23 +888,13 @@ print AdminControl.invoke(appManager, 'startApplication', 'liferay-portal')
 
 		<setup-sdk />
 
-		<gradle-execute dir="modules" forcedcacheenabled="false" task="clean">
-			<arg value="-Dmaven.local.ignore=true" />
-		</gradle-execute>
+		<gradle-execute-build forcedcacheenabled="false" maven.local.ignore="true" task="clean" />
 
-		<gradle-execute dir="modules/core/registry-api" forcedcacheenabled="false" task="deploy">
-			<arg value="-Dmaven.local.ignore=true" />
-		</gradle-execute>
+		<gradle-execute-build dir="modules/core/registry-api" forcedcacheenabled="false" maven.local.ignore="true" task="deploy" />
 
-		<gradle-execute dir="modules" forcedcacheenabled="false" task="classes">
-			<arg value="-Dmaven.local.ignore=true" />
-			<arg value="testClasses" />
-			<arg value="testIntegrationClasses" />
-		</gradle-execute>
+		<gradle-execute-build forcedcacheenabled="false" maven.local.ignore="true" tasks="classes,testClasses,testIntegrationClasses" />
 
-		<gradle-execute dir="modules/sdk/gradle-util" failonerror="false" forcedcacheenabled="false" task="findbugsMain">
-			<arg value="-Dmaven.local.ignore=true" />
-		</gradle-execute>
+		<gradle-execute-build dir="modules/sdk/gradle-util" failonerror="false" forcedcacheenabled="false" maven.local.ignore="true" task="findbugsMain" />
 
 		<ant dir="portal-web" inheritAll="false" target="update-gradle-cache" />
 	</target>

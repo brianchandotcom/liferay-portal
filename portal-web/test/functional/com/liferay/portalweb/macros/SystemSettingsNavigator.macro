@@ -1,5 +1,0 @@
-<definition>
-	<command name="gotoFoundationCP">
-		<execute function="AssertClick" locator1="MenuItem#FOUNDATION" value1="Foundation" />
-	</command>
-</definition>

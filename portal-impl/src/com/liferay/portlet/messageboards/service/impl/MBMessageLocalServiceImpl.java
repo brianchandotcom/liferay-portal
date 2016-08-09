@@ -185,7 +185,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 					subject = subjectWithoutHtml;
 				}
 				else {
-					subject = subjectWithoutHtml.substring(0, 50);
+					subject = subjectWithoutHtml.substring(0, 50) + "...";
 				}
 			}
 			else {

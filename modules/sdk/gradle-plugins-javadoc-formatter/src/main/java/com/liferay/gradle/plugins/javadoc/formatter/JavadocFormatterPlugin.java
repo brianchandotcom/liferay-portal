@@ -21,6 +21,7 @@ import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.Configuration;
+import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.PluginContainer;
@@ -51,20 +52,19 @@ public class JavadocFormatterPlugin implements Plugin<Project> {
 		final Configuration configuration = GradleUtil.addConfiguration(
 			project, CONFIGURATION_NAME);
 
-		configuration.setDescription(
-			"Configures Liferay Javadoc Formatter for this project.");
-		configuration.setVisible(false);
-
-		GradleUtil.executeIfEmpty(
-			configuration,
-			new Action<Configuration>() {
+		configuration.defaultDependencies(
+			new Action<DependencySet>() {
 
 				@Override
-				public void execute(Configuration configuration) {
+				public void execute(DependencySet dependencySet) {
 					addDependenciesJavadocFormatter(project);
 				}
 
 			});
+
+		configuration.setDescription(
+			"Configures Liferay Javadoc Formatter for this project.");
+		configuration.setVisible(false);
 
 		PluginContainer pluginContainer = project.getPlugins();
 
@@ -144,7 +144,7 @@ public class JavadocFormatterPlugin implements Plugin<Project> {
 	}
 
 	protected void configureTasksFormatJavadoc(
-		Project project, final Configuration javadocFormatterConfiguration) {
+		Project project, final FileCollection classpath) {
 
 		TaskContainer taskContainer = project.getTasks();
 
@@ -154,8 +154,7 @@ public class JavadocFormatterPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(FormatJavadocTask formatJavadoc) {
-					configureTaskFormatJavadoc(
-						formatJavadoc, javadocFormatterConfiguration);
+					configureTaskFormatJavadoc(formatJavadoc, classpath);
 				}
 
 			});

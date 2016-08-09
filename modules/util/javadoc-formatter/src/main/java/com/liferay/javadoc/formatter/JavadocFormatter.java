@@ -1313,6 +1313,15 @@ public class JavadocFormatter {
 		}
 
 		if (srcDirName == null) {
+			pos = absolutePath.indexOf("/src/main/java/");
+
+			if (pos != -1) {
+				srcDirName =
+					absolutePath.substring(0, pos) + "/src/main/resources";
+			}
+		}
+
+		if (srcDirName == null) {
 			return null;
 		}
 
@@ -1325,7 +1334,7 @@ public class JavadocFormatter {
 		File metaInfDir = new File(srcDirName, "META-INF");
 
 		if (!metaInfDir.exists()) {
-			metaInfDir.mkdir();
+			metaInfDir.mkdirs();
 		}
 
 		File javadocsXmlFile = new File(

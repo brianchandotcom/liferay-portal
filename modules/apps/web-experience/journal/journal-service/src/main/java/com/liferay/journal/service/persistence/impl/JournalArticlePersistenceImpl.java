@@ -32589,12 +32589,11 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		journalArticleImpl.setTreePath(journalArticle.getTreePath());
 		journalArticleImpl.setArticleId(journalArticle.getArticleId());
 		journalArticleImpl.setVersion(journalArticle.getVersion());
-		journalArticleImpl.setTitle(journalArticle.getTitle());
 		journalArticleImpl.setUrlTitle(journalArticle.getUrlTitle());
-		journalArticleImpl.setDescription(journalArticle.getDescription());
 		journalArticleImpl.setContent(journalArticle.getContent());
 		journalArticleImpl.setDDMStructureKey(journalArticle.getDDMStructureKey());
 		journalArticleImpl.setDDMTemplateKey(journalArticle.getDDMTemplateKey());
+		journalArticleImpl.setDefaultLanguageId(journalArticle.getDefaultLanguageId());
 		journalArticleImpl.setLayoutUuid(journalArticle.getLayoutUuid());
 		journalArticleImpl.setDisplayDate(journalArticle.getDisplayDate());
 		journalArticleImpl.setExpirationDate(journalArticle.getExpirationDate());

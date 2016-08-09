@@ -1046,11 +1046,11 @@ public class JournalArticleFinderImpl
 			}
 
 			sql = CustomSQLUtil.replaceKeywords(
-				sql, "lower(JournalArticle.title)", StringPool.LIKE, false,
-				titles);
+				sql, "lower(JournalArticleLocalization.title)", StringPool.LIKE,
+				false, titles);
 			sql = CustomSQLUtil.replaceKeywords(
-				sql, "JournalArticle.description", StringPool.LIKE, false,
-				descriptions);
+				sql, "JournalArticleLocalization.description", StringPool.LIKE,
+				false, descriptions);
 			sql = CustomSQLUtil.replaceKeywords(
 				sql, "JournalArticle.content", StringPool.LIKE, false,
 				contents);
@@ -1387,11 +1387,11 @@ public class JournalArticleFinderImpl
 			}
 
 			sql = CustomSQLUtil.replaceKeywords(
-				sql, "lower(JournalArticle.title)", StringPool.LIKE, false,
+				sql, "JournalArticleLocalization.title", StringPool.LIKE, false,
 				titles);
 			sql = CustomSQLUtil.replaceKeywords(
-				sql, "JournalArticle.description", StringPool.LIKE, false,
-				descriptions);
+				sql, "JournalArticleLocalization.description", StringPool.LIKE,
+				false, descriptions);
 			sql = CustomSQLUtil.replaceKeywords(
 				sql, "JournalArticle.content", StringPool.LIKE, false,
 				contents);
@@ -1431,6 +1431,9 @@ public class JournalArticleFinderImpl
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
+			qPos.add(titles, 2);
+			qPos.add(descriptions, 2);
+
 			qPos.add(companyId);
 
 			if (groupId > 0) {
@@ -1458,8 +1461,6 @@ public class JournalArticleFinderImpl
 				qPos.add(version);
 			}
 
-			qPos.add(titles, 2);
-			qPos.add(descriptions, 2);
 			qPos.add(contents, 2);
 			qPos.add(displayDateGT_TS);
 			qPos.add(displayDateGT_TS);

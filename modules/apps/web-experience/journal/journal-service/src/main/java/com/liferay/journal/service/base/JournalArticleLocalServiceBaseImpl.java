@@ -35,6 +35,7 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.persistence.JournalArticleFinder;
 import com.liferay.journal.service.persistence.JournalArticleImagePersistence;
+import com.liferay.journal.service.persistence.JournalArticleLocalizationPersistence;
 import com.liferay.journal.service.persistence.JournalArticlePersistence;
 import com.liferay.journal.service.persistence.JournalArticleResourcePersistence;
 import com.liferay.journal.service.persistence.JournalContentSearchPersistence;
@@ -1346,6 +1347,25 @@ public abstract class JournalArticleLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the journal article localization persistence.
+	 *
+	 * @return the journal article localization persistence
+	 */
+	public JournalArticleLocalizationPersistence getJournalArticleLocalizationPersistence() {
+		return journalArticleLocalizationPersistence;
+	}
+
+	/**
+	 * Sets the journal article localization persistence.
+	 *
+	 * @param journalArticleLocalizationPersistence the journal article localization persistence
+	 */
+	public void setJournalArticleLocalizationPersistence(
+		JournalArticleLocalizationPersistence journalArticleLocalizationPersistence) {
+		this.journalArticleLocalizationPersistence = journalArticleLocalizationPersistence;
+	}
+
+	/**
 	 * Returns the journal article resource local service.
 	 *
 	 * @return the journal article resource local service
@@ -1617,6 +1637,8 @@ public abstract class JournalArticleLocalServiceBaseImpl
 	protected com.liferay.journal.service.JournalArticleImageLocalService journalArticleImageLocalService;
 	@BeanReference(type = JournalArticleImagePersistence.class)
 	protected JournalArticleImagePersistence journalArticleImagePersistence;
+	@BeanReference(type = JournalArticleLocalizationPersistence.class)
+	protected JournalArticleLocalizationPersistence journalArticleLocalizationPersistence;
 	@BeanReference(type = com.liferay.journal.service.JournalArticleResourceLocalService.class)
 	protected com.liferay.journal.service.JournalArticleResourceLocalService journalArticleResourceLocalService;
 	@BeanReference(type = JournalArticleResourcePersistence.class)

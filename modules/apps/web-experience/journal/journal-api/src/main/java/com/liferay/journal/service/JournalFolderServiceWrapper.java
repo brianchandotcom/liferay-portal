@@ -223,6 +223,15 @@ public class JournalFolderServiceWrapper implements JournalFolderService,
 	}
 
 	@Override
+	public java.util.List<java.lang.Object> getFoldersAndArticles(
+		long groupId, long userId, long folderId, int status,
+		java.util.Locale locale, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<?> obc) {
+		return _journalFolderService.getFoldersAndArticles(groupId, userId,
+			folderId, status, locale, start, end, obc);
+	}
+
+	@Override
 	public java.util.List<java.lang.Long> getSubfolderIds(long groupId,
 		long folderId, boolean recurse) {
 		return _journalFolderService.getSubfolderIds(groupId, folderId, recurse);

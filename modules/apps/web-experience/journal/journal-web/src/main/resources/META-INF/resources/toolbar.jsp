@@ -87,7 +87,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 		<liferay-frontend:management-bar-sort
 			orderByCol="<%= journalDisplayContext.getOrderByCol() %>"
 			orderByType="<%= journalDisplayContext.getOrderByType() %>"
-			orderColumns='<%= new String[] {"display-date", "modified-date"} %>'
+			orderColumns='<%= new String[] {"display-date", "modified-date", "title"} %>'
 			portletURL="<%= journalDisplayContext.getPortletURL() %>"
 		/>
 	</liferay-frontend:management-bar-filters>

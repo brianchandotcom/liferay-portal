@@ -141,6 +141,12 @@
 		<execute function="AssertElementPresent" locator1="DDLRecord#INFO_SIDEBAR_EXPANDED" />
 	</command>
 
+	<command name="gotoLinkToPageNavItem">
+		<var name="key_navItem" value="${pagePrivacy} Pages" />
+
+		<execute function="AssertClick" locator1="DDLEditRecord#LINK_TO_PAGE_NAV_ITEM" value1="${pagePrivacy} Pages" />
+	</command>
+
 	<command name="gotoRecordPreview">
 		<execute function="AssertClick" locator1="DDL#RECORD_TABLE_COLUMN_ONE_PREVIEW_1" value1="(Preview)" />
 	</command>
@@ -261,9 +267,9 @@
 
 		<execute function="AssertClick" locator1="DDLEditRecord#LINK_TO_PAGE_SELECT_PAGE_BUTTON" value1="Select" />
 
-		<var name="key_navItem" value="${pagePrivacy} Pages" />
-
-		<execute function="AssertClick" locator1="DDLEditRecord#LINK_TO_PAGE_NAV_ITEM" value1="${pagePrivacy} Pages" />
+		<execute macro="DDLRecord#gotoLinkToPageNavItem">
+			<var name="pagePrivacy" value="${pagePrivacy}" />
+		</execute>
 
 		<var name="key_pageName" value="${ddlRecordFieldData}" />
 

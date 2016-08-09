@@ -268,7 +268,12 @@ else {
 								editAssignmentURL.setParameter('addUserIds', data.selected);
 								editAssignmentURL.setParameter('removeUserIds', data.unselected);
 								editAssignmentURL.setParameter('organizationId', organizationId);
-								editAssignmentURL.setParameter('assignmentsRedirect', '<%= currentURL %>');
+
+								var assignmentsRedirectURL = Liferay.PortletURL.createURL('<portlet:renderURL><portlet:param name="mvcRenderCommandName" value="/users_admin/view" /><portlet:param name="toolbarItem" value="view-all-organizations" /><portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_TREE %>" /></portlet:renderURL>');
+
+								assignmentsRedirectURL.setParameter('organizationId', organizationId);
+
+								editAssignmentURL.setParameter('assignmentsRedirect', assignmentsRedirectURL.toString());
 
 								submitForm(form, editAssignmentURL.toString());
 							}

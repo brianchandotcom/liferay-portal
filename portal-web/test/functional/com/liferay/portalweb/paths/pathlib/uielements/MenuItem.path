@@ -409,11 +409,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FOUNDATION</td>
-	<td>//a[@role='menuitem' and contains(.,'Foundation')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>GLOBAL</td>
 	<td>//a[@role='menuitem' and contains(.,'Global')]</td>
 	<td></td>

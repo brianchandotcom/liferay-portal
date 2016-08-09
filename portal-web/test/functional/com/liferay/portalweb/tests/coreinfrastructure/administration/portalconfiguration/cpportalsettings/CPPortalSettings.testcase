@@ -421,6 +421,7 @@
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewConfigureSiteScopeContentSharingPG">
+			<var name="childSite" value="true" />
 			<var name="contentSharingAcrossSitesEnabled" value="false" />
 			<var name="globalSiteName" value="Global" />
 			<var name="globalSiteType" value="Global" />
@@ -467,6 +468,7 @@
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewConfigureSiteScopeContentSharingPG">
+			<var name="childSite" value="true" />
 			<var name="contentSharingAcrossSitesEnabled" value="false" />
 			<var name="globalSiteName" value="Global" />
 			<var name="globalSiteType" value="Global" />

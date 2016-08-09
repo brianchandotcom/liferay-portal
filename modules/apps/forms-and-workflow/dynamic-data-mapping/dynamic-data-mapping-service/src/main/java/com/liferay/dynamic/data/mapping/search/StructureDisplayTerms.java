@@ -28,6 +28,8 @@ public class StructureDisplayTerms extends DisplayTerms {
 
 	public static final String NAME = "name";
 
+	public static final String SEARCH_RESTRICTION = "searchRestriction";
+
 	public static final String STORAGE_TYPE = "storageType";
 
 	public StructureDisplayTerms(PortletRequest portletRequest) {
@@ -35,6 +37,8 @@ public class StructureDisplayTerms extends DisplayTerms {
 
 		description = ParamUtil.getString(portletRequest, DESCRIPTION);
 		name = ParamUtil.getString(portletRequest, NAME);
+		searchRestriction = ParamUtil.getBoolean(
+			portletRequest, SEARCH_RESTRICTION);
 		storageType = ParamUtil.getString(portletRequest, STORAGE_TYPE);
 	}
 
@@ -50,8 +54,13 @@ public class StructureDisplayTerms extends DisplayTerms {
 		return storageType;
 	}
 
+	public Boolean isSearchRestriction() {
+		return searchRestriction;
+	}
+
 	protected String description;
 	protected String name;
+	protected Boolean searchRestriction;
 	protected String storageType;
 
 }

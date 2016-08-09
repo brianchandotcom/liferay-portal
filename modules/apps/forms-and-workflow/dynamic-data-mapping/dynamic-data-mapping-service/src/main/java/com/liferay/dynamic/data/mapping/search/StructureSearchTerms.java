@@ -29,6 +29,8 @@ public class StructureSearchTerms extends StructureDisplayTerms {
 
 		description = DAOParamUtil.getString(portletRequest, DESCRIPTION);
 		name = DAOParamUtil.getString(portletRequest, NAME);
+		searchRestriction = DAOParamUtil.getBoolean(
+			portletRequest, SEARCH_RESTRICTION);
 		storageType = DAOParamUtil.getString(portletRequest, STORAGE_TYPE);
 	}
 

@@ -1339,6 +1339,12 @@
 
 			ddmURL.setParameter('scopeTitle', config.title);
 
+			if ('searchRestriction' in config) {
+				ddmURL.setParameter('searchRestriction', config.searchRestriction);
+				ddmURL.setParameter('searchRestrictionClassNameId', config.searchRestrictionClassNameId);
+				ddmURL.setParameter('searchRestrictionClassPK', config.searchRestrictionClassPK);
+			}
+
 			if ('showAncestorScopes' in config) {
 				ddmURL.setParameter('showAncestorScopes', config.showAncestorScopes);
 			}

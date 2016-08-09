@@ -131,6 +131,19 @@ public class DDMStructureLinkLocalServiceImpl
 	}
 
 	@Override
+	public List<DDMStructureLink> getStructureLinks(
+		long classNameId, long classPK, int start, int end) {
+
+		return ddmStructureLinkPersistence.findByC_C(
+			classNameId, classPK, start, end);
+	}
+
+	@Override
+	public int getStructureLinksCount(long classNameId, long classPK) {
+		return ddmStructureLinkPersistence.countByC_C(classNameId, classPK);
+	}
+
+	@Override
 	public List<DDMStructure> getStructureLinkStructures(
 			long classNameId, long classPK)
 		throws PortalException {
@@ -139,6 +152,23 @@ public class DDMStructureLinkLocalServiceImpl
 
 		List<DDMStructureLink> structureLinks = getStructureLinks(
 			classNameId, classPK);
+
+		for (DDMStructureLink structureLink : structureLinks) {
+			structures.add(structureLink.getStructure());
+		}
+
+		return structures;
+	}
+
+	@Override
+	public List<DDMStructure> getStructureLinkStructures(
+			long classNameId, long classPK, int start, int end)
+		throws PortalException {
+
+		List<DDMStructure> structures = new ArrayList<>();
+
+		List<DDMStructureLink> structureLinks = getStructureLinks(
+			classNameId, classPK, start, end);
 
 		for (DDMStructureLink structureLink : structureLinks) {
 			structures.add(structureLink.getStructure());

@@ -654,6 +654,11 @@ public class DLAppHelperLocalServiceImpl
 
 		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
 
+		if (!dlFileEntry.isInTrash()) {
+			throw new RestoreEntryException(
+				RestoreEntryException.INVALID_STATUS);
+		}
+
 		FileVersion fileVersion = fileEntry.getFileVersion();
 
 		if (!DLAppHelperThreadLocal.isEnabled()) {
@@ -663,11 +668,6 @@ public class DLAppHelperLocalServiceImpl
 				new HashMap<String, Serializable>());
 
 			return;
-		}
-
-		if (!dlFileEntry.isInTrash()) {
-			throw new RestoreEntryException(
-				RestoreEntryException.INVALID_STATUS);
 		}
 
 		dlFileEntry.setFileName(

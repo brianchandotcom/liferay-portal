@@ -498,25 +498,19 @@ public class PoshiRunnerContext {
 			List<String> classCommandNames)
 		throws Exception {
 
-		Multimap<Set<String>, String> multimap = HashMultimap.create();
+		Multimap<Properties, String> multimap = HashMultimap.create();
 
 		for (String classCommandName : classCommandNames) {
-			String className =
-				PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
-					classCommandName);
+			Properties properties = _classCommandNamePropertiesMap.get(
+				classCommandName);
 
-			Set<String> properties = new TreeSet<>();
+			Set<String> propertyNames = properties.stringPropertyNames();
 
-			properties.addAll(_getTestCaseClassProperties(className));
-			properties.addAll(_getTestCaseCommandProperties(classCommandName));
+			for (String propertyName : propertyNames) {
+				if (propertyName.matches(
+						PropsValues.TEST_BATCH_GROUP_IGNORE_REGEX)) {
 
-			for (Iterator<String> iterator = properties.iterator();
-				iterator.hasNext();) {
-
-				String next = iterator.next();
-
-				if (next.matches(PropsValues.TEST_BATCH_GROUP_IGNORE_REGEX)) {
-					iterator.remove();
+					properties.remove(propertyName);
 				}
 			}
 
@@ -525,7 +519,7 @@ public class PoshiRunnerContext {
 
 		Map<Integer, List<String>> classCommandNameGroups = new HashMap<>();
 		int classCommandNameIndex = 0;
-		Map<Set<String>, Collection<String>> map = multimap.asMap();
+		Map<Properties, Collection<String>> map = multimap.asMap();
 
 		for (Collection<String> value : map.values()) {
 			List<String> classCommandNameGroup = new ArrayList(value);

@@ -35,7 +35,9 @@ public class JournalSelectStructuresDDMDisplay extends JournalDDMDisplay {
 	}
 
 	@Override
-	public boolean isEnableSelectStructureLink(DDMStructure structure, long classPK) {
+	public boolean isEnableSelectStructureLink(
+		DDMStructure structure, long classPK) {
+
 		if (structure.getStructureId() == classPK) {
 			return false;
 		}

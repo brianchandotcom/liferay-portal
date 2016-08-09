@@ -153,6 +153,12 @@
 		<execute function="AssertClick" locator1="DDLEditRecord#LINK_TO_PAGE_NAV_ITEM" value1="${pagePrivacy} Pages" />
 	</command>
 
+	<command name="gotoLinkToPageSelect">
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute function="AssertClick" locator1="DDLEditRecord#LINK_TO_PAGE_SELECT_PAGE_BUTTON" value1="Select" />
+	</command>
+
 	<command name="gotoRecordPreview">
 		<execute function="AssertClick" locator1="DDL#RECORD_TABLE_COLUMN_ONE_PREVIEW_1" value1="(Preview)" />
 	</command>
@@ -268,10 +274,9 @@
 	</command>
 
 	<command name="populateFieldLinkToPage">
-		<var name="key_ddlRecordFieldData" value="${ddlRecordFieldData}" />
-		<var name="key_fieldName" value="${fieldName}" />
-
-		<execute function="AssertClick" locator1="DDLEditRecord#LINK_TO_PAGE_SELECT_PAGE_BUTTON" value1="Select" />
+		<execute macro="DDLRecord#gotoLinkToPageSelect">
+			<var name="fieldName" value="${fieldName}" />
+		</execute>
 
 		<execute macro="DDLRecord#gotoLinkToPageNavItem">
 			<var name="pagePrivacy" value="${pagePrivacy}" />
@@ -846,9 +851,9 @@
 	</command>
 
 	<command name="viewSelectedLinkToPage">
-		<var name="key_fieldName" value="${fieldName}" />
-
-		<execute function="AssertClick" locator1="DDLEditRecord#LINK_TO_PAGE_SELECT_PAGE_BUTTON" value1="Select" />
+		<execute macro="DDLRecord#gotoLinkToPageSelect">
+			<var name="fieldName" value="${fieldName}" />
+		</execute>
 
 		<var name="key_pageName" value="${ddlRecordFieldData}" />
 

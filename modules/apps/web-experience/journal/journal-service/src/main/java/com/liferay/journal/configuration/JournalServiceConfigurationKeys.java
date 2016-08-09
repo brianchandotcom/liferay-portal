@@ -57,7 +57,7 @@ public class JournalServiceConfigurationKeys {
 		"journal.folder.icon.check.count";
 
 	/**
-	 * @deprecated As of 7.0.0 with no direct replacement
+	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
 	@Deprecated
 	public static final String LAR_CREATION_STRATEGY = "lar.creation.strategy";

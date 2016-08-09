@@ -170,6 +170,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LINK_TO_PAGE_PAGE_CARET</td>
+	<td>//a[contains(.,'${key_pageName}')]/../input[@type='radio']/../a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LINK_TO_PAGE_SELECT_PAGE_BUTTON</td>
 	<td>//div[@data-fieldname='${key_fieldName}']//button[contains(.,'Select')]</td>
 	<td></td>

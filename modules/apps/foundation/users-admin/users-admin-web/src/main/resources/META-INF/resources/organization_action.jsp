@@ -121,15 +121,15 @@ if (row == null) {
 	</c:if>
 
 	<c:if test="<%= OrganizationPermissionUtil.contains(permissionChecker, organization, ActionKeys.ASSIGN_MEMBERS) %>">
-		<portlet:renderURL var="assignMembersURL">
-			<portlet:param name="mvcRenderCommandName" value="/users_admin/edit_organization_assignments" />
-			<portlet:param name="redirect" value="<%= redirect %>" />
-			<portlet:param name="organizationId" value="<%= String.valueOf(organizationId) %>" />
-		</portlet:renderURL>
+
+		<%
+		String openSelectUsersDialog = renderResponse.getNamespace() + "openSelectUsersDialog('" + organizationId + "');";
+		%>
 
 		<liferay-ui:icon
 			message="assign-users"
-			url="<%= assignMembersURL %>"
+			onClick="<%= openSelectUsersDialog %>"
+			url="javascript:;"
 		/>
 	</c:if>
 

@@ -20,6 +20,7 @@ import java.util.Map;
 
 /**
  * @author Stian Sigvartsen
+ * @author Carlos Sierra Andrés
  */
 @ProviderType
 public interface SAQImpression {

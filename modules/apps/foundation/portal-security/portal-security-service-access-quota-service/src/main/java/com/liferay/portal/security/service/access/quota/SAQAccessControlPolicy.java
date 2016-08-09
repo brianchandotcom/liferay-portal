@@ -43,6 +43,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Stian Sigvartsen
+ * @author Carlos Sierra Andrés
  */
 @Component(service = AccessControlPolicy.class)
 public class SAQAccessControlPolicy extends BaseAccessControlPolicy {

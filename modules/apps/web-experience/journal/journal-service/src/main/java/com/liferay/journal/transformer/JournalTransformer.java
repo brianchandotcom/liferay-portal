@@ -119,7 +119,7 @@ public class JournalTransformer {
 	}
 
 	/**
-	 * @deprecated As of 7.1.0, replaced by {@link #JournalTransformer(String, boolean)}
+	 * @deprecated As of 7.0.0, replaced by {@link #JournalTransformer(String, boolean)}
 	 */
 	@Deprecated
 	public JournalTransformer(

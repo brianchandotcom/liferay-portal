@@ -239,4 +239,48 @@ else {
 
 		location.href = Liferay.Util.addParams('<portlet:namespace />status=' + status.value, '<%= HtmlUtil.escapeJS(showUsersURL.toString()) %>');
 	}
+
+	Liferay.provide(
+		window,
+		'<portlet:namespace />openSelectUsersDialog',
+		function(organizationId) {
+			var A = AUI();
+			var form = AUI.$(document.<portlet:namespace />fm);
+
+			<portlet:renderURL var="selectUsersURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+				<portlet:param name="mvcPath" value="/select_organization_users.jsp" />
+			</portlet:renderURL>
+
+			var selectUsersURL = Liferay.PortletURL.createURL('<%= selectUsersURL.toString() %>');
+
+			selectUsersURL.setParameter('organizationId', organizationId);
+
+			var itemSelectorDialog = new A.LiferayItemSelectorDialog(
+				{
+					eventName: '<portlet:namespace />selectUsers',
+					on: {
+						selectedItemChange: function(event) {
+							var data = event.newVal;
+
+							if (data) {
+								var editAssignmentURL = Liferay.PortletURL.createURL('<portlet:actionURL name="/users_admin/edit_organization_assignments" />');
+
+								editAssignmentURL.setParameter('addUserIds', data.selected);
+								editAssignmentURL.setParameter('removeUserIds', data.unselected);
+								editAssignmentURL.setParameter('organizationId', organizationId);
+								editAssignmentURL.setParameter('assignmentsRedirect', '<%= currentURL %>');
+
+								submitForm(form, editAssignmentURL.toString());
+							}
+						}
+					},
+					title: '<liferay-ui:message key="assign-users" />',
+					url: selectUsersURL.toString()
+				}
+			);
+
+			itemSelectorDialog.open();
+		},
+		['liferay-item-selector-dialog', 'liferay-portlet-url']
+	);
 </aui:script>

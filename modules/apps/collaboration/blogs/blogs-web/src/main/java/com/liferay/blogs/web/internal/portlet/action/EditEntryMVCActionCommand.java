@@ -597,7 +597,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 			}
 
 			entry = _blogsEntryService.updateEntry(
-				entryId, title, subtitle, description, content,
+				entryId, title, subtitle, urlTitle, description, content,
 				displayDateMonth, displayDateDay, displayDateYear,
 				displayDateHour, displayDateMinute, allowPingbacks,
 				allowTrackbacks, trackbacks, coverImageCaption,

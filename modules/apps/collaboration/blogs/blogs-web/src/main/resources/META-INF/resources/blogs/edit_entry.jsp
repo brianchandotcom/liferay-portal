@@ -193,7 +193,7 @@ renderResponse.setTitle((entry != null) ? entry.getTitle() : LanguageUtil.get(re
 					String friendlyURLPrefix = StringUtil.shorten("/-/" + portlet.getFriendlyURLMapping(), 40) + StringPool.SLASH;
 					%>
 
-					<aui:input cssClass="input-medium" data-customUrl="<%= false %>" disabled="<%= entry != null %>" helpMessage='<%= LanguageUtil.format(resourceBundle, "for-example-x", "<em>one-day-in-the-life-of-marion-cotillard</em>") %>' ignoreRequestValue="<%= true %>" label="blog-entry-url" name="urlTitle" prefix="<%= friendlyURLPrefix %>" type="text" value="<%= urlTitle %>" />
+					<aui:input cssClass="input-medium" data-customUrl="<%= false %>" helpMessage='<%= LanguageUtil.format(resourceBundle, "for-example-x", "<em>one-day-in-the-life-of-marion-cotillard</em>") %>' ignoreRequestValue="<%= true %>" label="blog-entry-url" name="urlTitle" prefix="<%= friendlyURLPrefix %>" type="text" value="<%= urlTitle %>" />
 
 					<div class="clearfix form-group">
 						<label><liferay-ui:message key="abstract" /> <liferay-ui:icon-help message="an-abstract-is-a-brief-summary-of-a-blog-entry" /></label>
@@ -427,18 +427,16 @@ renderResponse.setTitle((entry != null) ? entry.getTitle() : LanguageUtil.get(re
 		configurationContentHeader.on('show.bs.collapse', createAbstractEditor);
 	}
 
-	<c:if test="<%= entry == null %>">
-		var form = A.one('#<portlet:namespace />fm');
+	var form = A.one('#<portlet:namespace />fm');
 
-		var urlTitleInput = form.one('#<portlet:namespace />urlTitle');
+	var urlTitleInput = form.one('#<portlet:namespace />urlTitle');
 
-		urlTitleInput.on(
-			'input',
-			function(event) {
-				event.currentTarget.setAttribute('data-customUrl', urlTitleInput.val() != '');
-			}
-		);
-	</c:if>
+	urlTitleInput.on(
+		'input',
+		function(event) {
+			event.currentTarget.setAttribute('data-customUrl', urlTitleInput.val() != '');
+		}
+	);
 
 	Liferay.on('destroyPortlet', clearSaveDraftHandle);
 </aui:script>

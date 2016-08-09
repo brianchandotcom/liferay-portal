@@ -1198,16 +1198,41 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		return updateEntry(
+			userId, entryId, title, subtitle, StringPool.BLANK, description,
+			content, displayDate, allowPingbacks, allowTrackbacks, trackbacks,
+			coverImageCaption, coverImageImageSelector, smallImageImageSelector,
+			serviceContext);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public BlogsEntry updateEntry(
+			long userId, long entryId, String title, String subtitle,
+			String urlTitle, String description, String content,
+			Date displayDate, boolean allowPingbacks, boolean allowTrackbacks,
+			String[] trackbacks, String coverImageCaption,
+			ImageSelector coverImageImageSelector,
+			ImageSelector smallImageImageSelector,
+			ServiceContext serviceContext)
+		throws PortalException {
+
 		// Entry
 
 		BlogsEntry entry = blogsEntryPersistence.findByPrimaryKey(entryId);
 
-		validate(title, StringPool.BLANK, content);
+		validate(title, urlTitle, content);
 
 		String oldUrlTitle = entry.getUrlTitle();
 
 		entry.setTitle(title);
 		entry.setSubtitle(subtitle);
+
+		if (Validator.isNotNull(urlTitle)) {
+			entry.setUrlTitle(
+				getUniqueUrlTitle(entryId, entry.getGroupId(), urlTitle));
+		}
+
 		entry.setDescription(description);
 		entry.setContent(content);
 		entry.setDisplayDate(displayDate);
@@ -1338,6 +1363,26 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		return updateEntry(
+			userId, entryId, title, subtitle, StringPool.BLANK, description,
+			content, displayDateMonth, displayDateDay, displayDateYear,
+			displayDateHour, displayDateMinute, allowPingbacks, allowTrackbacks,
+			trackbacks, coverImageCaption, coverImageImageSelector,
+			smallImageImageSelector, serviceContext);
+	}
+
+	@Override
+	public BlogsEntry updateEntry(
+			long userId, long entryId, String title, String subtitle,
+			String urlTitle, String description, String content,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, boolean allowPingbacks,
+			boolean allowTrackbacks, String[] trackbacks,
+			String coverImageCaption, ImageSelector coverImageImageSelector,
+			ImageSelector smallImageImageSelector,
+			ServiceContext serviceContext)
+		throws PortalException {
+
 		User user = userPersistence.findByPrimaryKey(userId);
 
 		Date displayDate = PortalUtil.getDate(
@@ -1346,9 +1391,10 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			EntryDisplayDateException.class);
 
 		return updateEntry(
-			userId, entryId, title, subtitle, description, content, displayDate,
-			allowPingbacks, allowTrackbacks, trackbacks, coverImageCaption,
-			coverImageImageSelector, smallImageImageSelector, serviceContext);
+			userId, entryId, title, subtitle, urlTitle, description, content,
+			displayDate, allowPingbacks, allowTrackbacks, trackbacks,
+			coverImageCaption, coverImageImageSelector, smallImageImageSelector,
+			serviceContext);
 	}
 
 	@Override

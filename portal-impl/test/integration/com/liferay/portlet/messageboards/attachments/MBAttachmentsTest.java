@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.messageboards.attachments;
 
-import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLFolderLocalServiceUtil;
 import com.liferay.message.boards.kernel.model.MBCategory;
@@ -38,7 +37,6 @@ import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.messageboards.util.test.MBTestUtil;
-import com.liferay.trash.kernel.service.TrashEntryServiceUtil;
 
 import java.io.InputStream;
 
@@ -441,8 +439,8 @@ public class MBAttachmentsTest {
 			_message.getDeletedAttachmentsFileEntriesCount());
 
 		if (restore) {
-			TrashEntryServiceUtil.restoreEntry(
-				DLFileEntryConstants.getClassName(), fileEntryId);
+			MBMessageLocalServiceUtil.restoreMessageAttachmentFromTrash(
+				TestPropsValues.getUserId(), _message.getMessageId(), fileName);
 
 			Assert.assertEquals(
 				initialNotInTrashCount + 1,

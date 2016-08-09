@@ -15,7 +15,6 @@
 package com.liferay.wiki.attachments.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLFolderLocalServiceUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -30,7 +29,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.trash.kernel.service.TrashEntryServiceUtil;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
@@ -348,9 +346,9 @@ public class WikiAttachmentsTest {
 			_page.getDeletedAttachmentsFileEntriesCount());
 
 		if (restore) {
-			TrashEntryServiceUtil.restoreEntry(
-				DLFileEntryConstants.getClassName(),
-				fileEntry.getFileEntryId());
+			WikiPageLocalServiceUtil.restorePageAttachmentFromTrash(
+				TestPropsValues.getUserId(), _page.getNodeId(),
+				_page.getTitle(), fileName);
 
 			Assert.assertEquals(
 				initialNotInTrashCount + 1,

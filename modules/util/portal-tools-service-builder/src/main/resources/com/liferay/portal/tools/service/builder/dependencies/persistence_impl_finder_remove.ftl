@@ -1,4 +1,4 @@
-<#assign finderColsList = finder.getColumns()>
+<#assign finderColsList = finder.getColumns() />
 
 <#-- Case 3: finder.isCollection() && !finder.isUnique() -->
 

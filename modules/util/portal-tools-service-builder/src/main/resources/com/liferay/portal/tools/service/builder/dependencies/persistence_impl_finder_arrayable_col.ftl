@@ -1,7 +1,7 @@
-<#assign hasConjunction = false>
+<#assign hasConjunction = false />
 
 <#if finderCol_has_next || (finder.where?? && validator.isNotNull(finder.getWhere()))>
-	<#assign hasConjunction = true>
+	<#assign hasConjunction = true />
 </#if>
 
 if (${finderCol.name} == null) {

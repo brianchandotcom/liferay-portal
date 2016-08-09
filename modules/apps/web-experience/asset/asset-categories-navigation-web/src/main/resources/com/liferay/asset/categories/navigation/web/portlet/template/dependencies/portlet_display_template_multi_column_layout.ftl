@@ -8,7 +8,7 @@
 					</h3>
 				</div>
 
-				<#assign categories = entry.getCategories()>
+				<#assign categories = entry.getCategories() />
 
 				<@displayCategories categories=categories />
 			</@liferay_aui.col>
@@ -23,7 +23,7 @@
 		<ul class="categories">
 			<#list categories as category>
 				<li>
-					<#assign categoryURL = renderResponse.createRenderURL()>
+					<#assign categoryURL = renderResponse.createRenderURL() />
 
 					${categoryURL.setParameter("resetCur", "true")}
 					${categoryURL.setParameter("categoryId", category.getCategoryId()?string)}
@@ -31,9 +31,11 @@
 					<a href="${categoryURL}">${category.getName()}</a>
 
 					<#if serviceLocator??>
-						<#assign assetCategoryService = serviceLocator.findService("com.liferay.asset.kernel.service.AssetCategoryService")>
+						<#assign
+							assetCategoryService = serviceLocator.findService("com.liferay.asset.kernel.service.AssetCategoryService")
 
-						<#assign childCategories = assetCategoryService.getChildCategories(category.getCategoryId())>
+							childCategories = assetCategoryService.getChildCategories(category.getCategoryId())
+						/>
 
 						<@displayCategories categories=childCategories />
 					</#if>

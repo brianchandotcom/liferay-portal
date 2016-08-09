@@ -143,6 +143,8 @@ public class FTLSourceProcessor extends BaseSourceProcessor {
 			}
 		}
 
+		content = formatAssignTags(content);
+
 		ImportsFormatter importsFormatter = new FTLImportsFormatter();
 
 		content = importsFormatter.format(content, null, null);
@@ -151,7 +153,9 @@ public class FTLSourceProcessor extends BaseSourceProcessor {
 
 		content = fixEmptyLinesBetweenTags(content);
 
-		return formatFTL(fileName, content);
+		content = formatFTL(fileName, content);
+
+		return StringUtil.replace(content, "\n\n\n", "\n\n");
 	}
 
 	@Override
@@ -162,6 +166,46 @@ public class FTLSourceProcessor extends BaseSourceProcessor {
 		};
 
 		return getFileNames(excludes, getIncludes());
+	}
+
+	protected String formatAssignTags(String content) {
+		Matcher matcher = _incorrectAssignTagPattern.matcher(content);
+
+		content = matcher.replaceAll("$1 />\n");
+
+		matcher = _assignTagsBlockPattern.matcher(content);
+
+		while (matcher.find()) {
+			String match = matcher.group();
+
+			String tabs = matcher.group(2);
+
+			String replacement = StringUtil.removeSubstrings(
+				match, "<#assign ", "<#assign\n", " />", "\n/>", "\t/>");
+
+			replacement = StringUtil.removeChar(replacement, CharPool.TAB);
+
+			String[] lines = StringUtil.splitLines(replacement);
+
+			StringBundler sb = new StringBundler((3 * lines.length) + 5);
+
+			sb.append(tabs);
+			sb.append("<#assign");
+
+			for (String line : lines) {
+				sb.append("\n\t");
+				sb.append(tabs);
+				sb.append(line);
+			}
+
+			sb.append(StringPool.NEW_LINE);
+			sb.append(tabs);
+			sb.append("/>\n\n");
+
+			content = StringUtil.replace(content, match, sb.toString());
+		}
+
+		return content;
 	}
 
 	protected String formatFTL(String fileName, String content)
@@ -239,6 +283,10 @@ public class FTLSourceProcessor extends BaseSourceProcessor {
 
 	private static final String[] _INCLUDES = new String[] {"**/*.ftl"};
 
+	private final Pattern _assignTagsBlockPattern = Pattern.compile(
+		"((\t*)<#assign[^<#/>]*=[^<#/>]*/>(\n|$)+){2,}", Pattern.MULTILINE);
+	private final Pattern _incorrectAssignTagPattern = Pattern.compile(
+		"(<#assign .*=.*[^/])>(\n|$)");
 	private final Pattern _liferayVariablePattern = Pattern.compile(
 		"^\t*<#assign liferay_.*>\n", Pattern.MULTILINE);
 	private final Pattern _liferayVariablesPattern = Pattern.compile(

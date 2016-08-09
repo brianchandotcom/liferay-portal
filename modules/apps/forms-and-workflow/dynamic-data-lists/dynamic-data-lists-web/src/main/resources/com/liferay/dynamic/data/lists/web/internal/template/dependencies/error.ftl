@@ -10,7 +10,7 @@
 			<#assign lines = stringUtil.split(script, "\n") />
 
 			<#list lines as curLine>
-				<#assign css = ''>
+				<#assign css = '' />
 
 				<#if line?exists && line == (curLine_index + 1)>
 					<#assign css = ' class="error-line"' />

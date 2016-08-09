@@ -9,16 +9,20 @@
 	<#if navItems?has_content && ((displayDepth == 0) || (navItemLevel <= displayDepth))>
 		<ul class="${cssClass} level-${navItemLevel}">
 			<#list navItems as navItem>
-				<#assign nav_item_attr_selected = "" />
-				<#assign nav_item_css_class = "lfr-nav-item" />
+				<#assign
+					nav_item_attr_selected = ""
+					nav_item_css_class = "lfr-nav-item"
+				/>
 
 				<#if includeAllChildNavItems || navItem.isInNavigation(branchNavItems)>
 					<#assign nav_item_css_class = "${nav_item_css_class} open" />
 				</#if>
 
 				<#if navItem.isSelected()>
-					<#assign nav_item_attr_selected = "aria-selected='true'" />
-					<#assign nav_item_css_class = "${nav_item_css_class} selected active" />
+					<#assign
+						nav_item_attr_selected = "aria-selected='true'"
+						nav_item_css_class = "${nav_item_css_class} selected active"
+					/>
 				</#if>
 
 				<li class="${nav_item_css_class}" ${nav_item_attr_selected}>

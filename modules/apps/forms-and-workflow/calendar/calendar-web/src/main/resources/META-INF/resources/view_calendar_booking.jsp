@@ -49,13 +49,13 @@ AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.getEntry(CalendarBookin
 		<aui:fieldset markupView="lexicon">
 			<dl class="property-list">
 				<dt>
-					<liferay-ui:message key="start-date" />:
+					<liferay-ui:message key="starts" />:
 				</dt>
 				<dd>
 					<%= dateFormatLongDate.format(startTimeJCalendar.getTime()) + ", " + dateFormatTime.format(startTimeJCalendar.getTime()) %>
 				</dd>
 				<dt>
-					<liferay-ui:message key="end-date" />:
+					<liferay-ui:message key="ends" />:
 				</dt>
 				<dd>
 					<%= dateFormatLongDate.format(endTimeJCalendar.getTime()) + ", " + dateFormatTime.format(endTimeJCalendar.getTime()) %>

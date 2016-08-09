@@ -141,6 +141,12 @@
 		<execute function="AssertElementPresent" locator1="DDLRecord#INFO_SIDEBAR_EXPANDED" />
 	</command>
 
+	<command name="gotoLinkToPageChildPages">
+		<var name="key_pageName" value="${parentPage}" />
+
+		<execute function="Click" locator1="DDLEditRecord#LINK_TO_PAGE_PAGE_CARET" />
+	</command>
+
 	<command name="gotoLinkToPageNavItem">
 		<var name="key_navItem" value="${pagePrivacy} Pages" />
 
@@ -420,6 +426,15 @@
 	</command>
 
 	<command name="selectLinkToPageRadio">
+		<if>
+			<isset var="parentPage" />
+			<then>
+				<execute macro="DDLRecord#gotoLinkToPageChildPages">
+					<var name="parentPage" value="${parentPage}" />
+				</execute>
+			</then>
+		</if>
+
 		<var name="key_pageName" value="${ddlRecordFieldData}" />
 
 		<execute function="Click" locator1="DDLEditRecord#LINK_TO_PAGE_PAGE_RADIO" />

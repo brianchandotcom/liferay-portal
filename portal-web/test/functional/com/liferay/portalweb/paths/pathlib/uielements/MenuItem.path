@@ -444,6 +444,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>VIEW_MENU_LIST</td>
+	<td>//div[contains(@class,'open')]//a[@role='menuitem' and contains(.,'${key_itemName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>JOIN</td>
 	<td>//div[contains(@class,'open')]//a[@role='menuitem' and contains(.,'Join')]</td>
 	<td></td>

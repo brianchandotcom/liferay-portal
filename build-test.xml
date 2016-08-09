@@ -4905,24 +4905,26 @@ go]]></replacevalue>
 	<target name="merge-test-results">
 		<mkdir dir="test-results" />
 
-		<junitreport todir="test-results">
-			<fileset dir="modules" erroronmissingdir="false">
-				<include name="**/TEST-*.xml" />
-			</fileset>
-			<fileset dir="portal-impl/test-results" erroronmissingdir="false">
-				<include name="**/TEST-*.xml" />
-			</fileset>
-			<fileset dir="portal-kernel/test-results" erroronmissingdir="false">
-				<include name="**/TEST-*.xml" />
-			</fileset>
-			<fileset dir="portal-web/test-results" erroronmissingdir="false">
-				<include name="**/TEST-*.xml" />
-			</fileset>
-			<fileset dir="util-java/test-results" erroronmissingdir="false">
-				<include name="**/TEST-*.xml" />
-			</fileset>
-			<report format="frames" todir="test-results/html" />
-		</junitreport>
+		<parallel timeout="1800000">
+			<junitreport todir="test-results">
+				<fileset dir="modules" erroronmissingdir="false">
+					<include name="**/TEST-*.xml" />
+				</fileset>
+				<fileset dir="portal-impl/test-results" erroronmissingdir="false">
+					<include name="**/TEST-*.xml" />
+				</fileset>
+				<fileset dir="portal-kernel/test-results" erroronmissingdir="false">
+					<include name="**/TEST-*.xml" />
+				</fileset>
+				<fileset dir="portal-web/test-results" erroronmissingdir="false">
+					<include name="**/TEST-*.xml" />
+				</fileset>
+				<fileset dir="util-java/test-results" erroronmissingdir="false">
+					<include name="**/TEST-*.xml" />
+				</fileset>
+				<report format="frames" todir="test-results/html" />
+			</junitreport>
+		</parallel>
 
 		<replaceregexp
 			file="test-results/TESTS-TestSuites.xml"

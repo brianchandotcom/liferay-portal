@@ -20,6 +20,7 @@ import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.kernel.model.MBMessageConstants;
 import com.liferay.petra.content.ContentUtil;
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -341,7 +342,11 @@ public class UserThreadLocalServiceImpl extends UserThreadLocalServiceBaseImpl {
 			sendEmail(mbMessage.getMessageId(), themeDisplay);
 		}
 		catch (Exception e) {
-			throw new SystemException(e);
+			if (e instanceof NoSuchLayoutException) {
+				throw new NoSuchLayoutException(e);
+			} else {
+				throw new SystemException(e);
+			}
 		}
 
 		// Notifications
@@ -383,7 +388,11 @@ public class UserThreadLocalServiceImpl extends UserThreadLocalServiceBaseImpl {
 			group.getGroupId(), true,
 			PrivateMessagingPortletKeys.PRIVATE_MESSAGING);
 
-		Layout layout = layoutLocalService.getLayout(plid);
+		Layout layout = layoutLocalService.fetchLayout(plid);
+
+		if (layout == null) {
+			throw new NoSuchLayoutException();
+		}
 
 		String privateMessageURL = PortalUtil.getLayoutFullURL(
 			layout, themeDisplay, false);

@@ -16,6 +16,8 @@ package com.liferay.portal.security.ldap.internal.model.listener;
 
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.MembershipRequest;
@@ -68,22 +70,28 @@ public class UserModelListener extends BaseModelListener<User> {
 	}
 
 	@Override
-	public void onAfterCreate(User user) throws ModelListenerException {
+	public void onAfterCreate(User user) {
 		try {
 			exportToLDAP(user);
 		}
 		catch (Exception e) {
-			throw new ModelListenerException(e);
+			_log.error(
+				"Error exporting user to LDAP for userId = " +
+					user.getUserId(),
+				e);
 		}
 	}
 
 	@Override
-	public void onAfterUpdate(User user) throws ModelListenerException {
+	public void onAfterUpdate(User user) {
 		try {
 			exportToLDAP(user);
 		}
 		catch (Exception e) {
-			throw new ModelListenerException(e);
+			_log.error(
+				"Error exporting user to LDAP for userId = " +
+					user.getUserId(),
+				e);
 		}
 	}
 
@@ -91,23 +99,6 @@ public class UserModelListener extends BaseModelListener<User> {
 	public void onBeforeUpdate(User user) {
 		UserImportTransactionThreadLocal.setOriginalEmailAddress(
 			user.getOriginalEmailAddress());
-	}
-
-	@Reference(unbind = "-")
-	public void setMembershipRequestLocalService(
-		MembershipRequestLocalService membershipRequestLocalService) {
-
-		_membershipRequestLocalService = membershipRequestLocalService;
-	}
-
-	@Reference(unbind = "-")
-	public void setUserExporter(UserExporter userExporter) {
-		_userExporter = userExporter;
-	}
-
-	@Reference(unbind = "-")
-	public void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
 	}
 
 	protected void exportToLDAP(User user) throws Exception {
@@ -152,8 +143,16 @@ public class UserModelListener extends BaseModelListener<User> {
 		}
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		UserModelListener.class);
+
+	@Reference
 	private MembershipRequestLocalService _membershipRequestLocalService;
+
+	@Reference
 	private UserExporter _userExporter;
+
+	@Reference
 	private UserLocalService _userLocalService;
 
 }

@@ -19,6 +19,7 @@ dependencies {
 	antlr group: "org.antlr", name: "antlr4", version: "4.3"
 
 	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
+	provided group: "com.liferay", name: "com.liferay.osgi.service.tracker.collections", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
 	provided group: "org.abego.treelayout", name: "org.abego.treelayout.core", version: "1.0.1"

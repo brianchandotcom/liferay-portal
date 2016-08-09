@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Dynamic Data Mapping Form Evaluator Functions
+Bundle-SymbolicName: com.liferay.dynamic.data.mapping.form.evaluator.functions
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Dynamic Data Mapping

@@ -20,11 +20,22 @@ import com.liferay.dynamic.data.mapping.annotations.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutColumn;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutPage;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutRow;
+import com.liferay.dynamic.data.mapping.annotations.DDMFormRule;
 
 /**
  * @author Marcellus Tavares
  */
-@DDMForm
+@DDMForm(
+	rules = {
+		@DDMFormRule(
+			actions = {
+				"set(fieldAt(\"dataType\", 0), \"visible\", false)",
+				"set(fieldAt(\"name\", 0), \"visible\", false)",
+				"set(fieldAt(\"type\", 0), \"visible\", false)"
+			}
+		)
+	}
+)
 @DDMFormLayout(
 	{
 		@DDMFormLayoutPage(

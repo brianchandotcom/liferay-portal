@@ -1,0 +1,62 @@
+
+<definition>
+	<command name="addMultipleSites">
+		<for list="${siteName}" param="siteName">
+			<execute macro="ProductMenu#gotoControlPanelSites">
+				<var name="portlet" value="Sites" />
+			</execute>
+
+			<execute function="Click" locator1="Button#PLUS" />
+
+			<execute function="AssertClick" locator1="MenuItem#BLANK_SITE" value1="Blank Site" />
+
+			<execute function="Type" locator1="TextInput#NAME" value1="${siteName}" />
+
+			<execute macro="Button#clickSave" />
+		</for>
+	</command>
+
+	<command name="gotoPagesPG">
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS">
+			<var name="key_rowEntry" value="${siteName}" />
+		</execute>
+
+		<execute function="AssertClick" locator1="MenuItem#VIEW_MENU_LIST" value1="${itemName}">
+			<var name="key_itemName" value="${itemName}" />
+		</execute>
+
+		<execute macro="Navigator#_gotoPage">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+	</command>
+
+	<command name="viewNoOptions">
+		<if>
+			<isset var="navItem" />
+			<then>
+				<execute macro="Navigator#gotoNavItem">
+					<var name="navItem" value="${navItem}" />
+				</execute>
+
+				<execute function="AssertElementNotPresent" locator1="Icon#ROW_VERTICAL_ELLIPSIS">
+					<var name="key_rowEntry" value="${siteName}" />
+				</execute>
+			</then>
+			<else>
+				<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS">
+					<var name="key_rowEntry" value="${siteName}" />
+				</execute>
+
+				<execute function="AssertTextNotPresent" locator1="MenuItem#VIEW_MENU_LIST" value1="${itemName}">
+					<var name="key_itemName" value="${itemName}" />
+				</execute>
+			</else>
+		</if>
+	</command>
+
+	<command name="viewTags">
+		<var name="key_tagName" value="${tagName}" />
+
+		<execute function="AssertTextEquals" locator1="Tags#VIEW_TAGS_VIA_MY_SITES" value1="${tagName}" />
+	</command>
+</definition>

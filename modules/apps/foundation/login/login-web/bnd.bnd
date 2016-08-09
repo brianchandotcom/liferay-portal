@@ -1,6 +1,7 @@
 Bundle-Name: Liferay Login Web
 Bundle-SymbolicName: com.liferay.login.web
-Bundle-Version: 1.0.8
+Bundle-Version: 1.1.0
+Export-Package: com.liferay.login.web.constants
 Import-Package:\
 	javax.net.ssl,\
 	*

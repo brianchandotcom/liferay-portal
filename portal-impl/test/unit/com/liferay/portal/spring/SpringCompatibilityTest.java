@@ -30,16 +30,16 @@ public class SpringCompatibilityTest {
 
 	@Test
 	public void testAbstractAutowireCapableBeanFactory() throws Exception {
-		Class<?> AbstractAutowireCapableBeanFactoryClass = null;
+		Class<?> abstractAutowireCapableBeanFactoryClass = null;
 
-		AbstractAutowireCapableBeanFactoryClass = Class.forName(
+		abstractAutowireCapableBeanFactoryClass = Class.forName(
 			"org.springframework.beans.factory.support." +
 				"AbstractAutowireCapableBeanFactory");
 
 		Field filteredPropertyDescriptorsCacheField = null;
 
 		filteredPropertyDescriptorsCacheField =
-			AbstractAutowireCapableBeanFactoryClass.getDeclaredField(
+			abstractAutowireCapableBeanFactoryClass.getDeclaredField(
 				"filteredPropertyDescriptorsCache");
 
 		Class<?> filteredPropertyDescriptorsCacheClass =

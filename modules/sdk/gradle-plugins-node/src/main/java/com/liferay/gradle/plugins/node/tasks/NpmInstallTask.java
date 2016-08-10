@@ -117,6 +117,10 @@ public class NpmInstallTask extends ExecuteNpmTask {
 		return _nodeModulesCacheNativeSync;
 	}
 
+	public boolean isNodeModulesCacheRemoveBinDirs() {
+		return _nodeModulesCacheRemoveBinDirs;
+	}
+
 	public boolean isRemoveShrinkwrappedUrls() {
 		return _removeShrinkwrappedUrls;
 	}
@@ -129,6 +133,12 @@ public class NpmInstallTask extends ExecuteNpmTask {
 		boolean nodeModulesCacheNativeSync) {
 
 		_nodeModulesCacheNativeSync = nodeModulesCacheNativeSync;
+	}
+
+	public void setNodeModulesCacheRemoveBinDirs(
+		boolean nodeModulesCacheRemoveBinDirs) {
+
+		_nodeModulesCacheRemoveBinDirs = nodeModulesCacheRemoveBinDirs;
 	}
 
 	public void setRemoveShrinkwrappedUrls(boolean removeShrinkwrappedUrls) {
@@ -262,6 +272,8 @@ public class NpmInstallTask extends ExecuteNpmTask {
 		File nodeModulesDir = npmInstallTask.getNodeModulesDir();
 
 		boolean nativeSync = npmInstallTask.isNodeModulesCacheNativeSync();
+		boolean removeBinDirs =
+			npmInstallTask.isNodeModulesCacheRemoveBinDirs();
 
 		if (reset) {
 			project.delete(nodeModulesCacheDir);
@@ -276,9 +288,19 @@ public class NpmInstallTask extends ExecuteNpmTask {
 
 			FileUtil.syncDir(
 				project, nodeModulesCacheDir, nodeModulesDir, nativeSync);
+
+			if (removeBinDirs) {
+				FileUtil.removeDirs(
+					project, nodeModulesDir, _NODE_MODULES_BIN_DIR_NAME);
+			}
 		}
 		else {
 			npmInstallTask._npmInstall(reset);
+
+			if (removeBinDirs) {
+				FileUtil.removeDirs(
+					project, nodeModulesDir, _NODE_MODULES_BIN_DIR_NAME);
+			}
 
 			if (logger.isLifecycleEnabled()) {
 				logger.lifecycle(
@@ -301,8 +323,11 @@ public class NpmInstallTask extends ExecuteNpmTask {
 		super.executeNode();
 	}
 
+	private static final String _NODE_MODULES_BIN_DIR_NAME = ".bin";
+
 	private Object _nodeModulesCacheDir;
 	private boolean _nodeModulesCacheNativeSync = true;
+	private boolean _nodeModulesCacheRemoveBinDirs = true;
 	private boolean _removeShrinkwrappedUrls;
 
 }

@@ -24,6 +24,7 @@ import com.liferay.gradle.plugins.WhipDefaultsPlugin;
 import com.liferay.gradle.plugins.cache.CacheExtension;
 import com.liferay.gradle.plugins.cache.CachePlugin;
 import com.liferay.gradle.plugins.cache.task.TaskCache;
+import com.liferay.gradle.plugins.defaults.internal.LiferayRelengPlugin;
 import com.liferay.gradle.plugins.defaults.internal.util.FileUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.IncrementVersionClosure;
@@ -194,6 +195,16 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 	public static final String UPDATE_FILE_VERSIONS_TASK_NAME =
 		"updateFileVersions";
+
+	public static boolean isTestProject(Project project) {
+		String projectName = project.getName();
+
+		if (projectName.endsWith("-test")) {
+			return true;
+		}
+
+		return false;
+	}
 
 	@Override
 	public void apply(final Project project) {
@@ -446,16 +457,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 				});
 		}
-	}
-
-	protected static boolean isTestProject(Project project) {
-		String projectName = project.getName();
-
-		if (projectName.endsWith("-test")) {
-			return true;
-		}
-
-		return false;
 	}
 
 	protected Configuration addConfigurationBaseline(final Project project) {

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.gradle.plugins.defaults;
+package com.liferay.gradle.plugins.defaults.internal;
 
 import com.liferay.gradle.plugins.LiferayBasePlugin;
 import com.liferay.gradle.plugins.cache.CacheExtension;
@@ -22,6 +22,8 @@ import com.liferay.gradle.plugins.cache.task.TaskCache;
 import com.liferay.gradle.plugins.cache.task.TaskCacheApplicator;
 import com.liferay.gradle.plugins.change.log.builder.BuildChangeLogTask;
 import com.liferay.gradle.plugins.change.log.builder.ChangeLogBuilderPlugin;
+import com.liferay.gradle.plugins.defaults.LiferayOSGiDefaultsPlugin;
+import com.liferay.gradle.plugins.defaults.LiferayThemeDefaultsPlugin;
 import com.liferay.gradle.plugins.defaults.internal.util.FileUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.defaults.tasks.PrintArtifactPublishCommandsTask;
@@ -86,6 +88,32 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 
 	public static final String UPDATE_VERSION_TASK_NAME = "updateVersion";
 
+	public static Properties getArtifactProperties(
+		WritePropertiesTask recordArtifactTask) {
+
+		try {
+			return FileUtil.readProperties(recordArtifactTask.getOutputFile());
+		}
+		catch (IOException ioe) {
+			throw new GradleException(
+				"Unable to read artifact properties", ioe);
+		}
+	}
+
+	public static File getRelengDir(Project project) {
+		File rootDir = GradleUtil.getRootDir(
+			project.getRootProject(), ".releng");
+
+		if (rootDir == null) {
+			return null;
+		}
+
+		File relengDir = new File(rootDir, ".releng");
+
+		return new File(
+			relengDir, FileUtil.relativize(project.getProjectDir(), rootDir));
+	}
+
 	@Override
 	public void apply(final Project project) {
 		File relengDir = getRelengDir(project);
@@ -135,32 +163,6 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 				}
 
 			});*/
-	}
-
-	protected static Properties getArtifactProperties(
-		WritePropertiesTask recordArtifactTask) {
-
-		try {
-			return FileUtil.readProperties(recordArtifactTask.getOutputFile());
-		}
-		catch (IOException ioe) {
-			throw new GradleException(
-				"Unable to read artifact properties", ioe);
-		}
-	}
-
-	protected static File getRelengDir(Project project) {
-		File rootDir = GradleUtil.getRootDir(
-			project.getRootProject(), ".releng");
-
-		if (rootDir == null) {
-			return null;
-		}
-
-		File relengDir = new File(rootDir, ".releng");
-
-		return new File(
-			relengDir, FileUtil.relativize(project.getProjectDir(), rootDir));
 	}
 
 	protected PrintArtifactPublishCommandsTask

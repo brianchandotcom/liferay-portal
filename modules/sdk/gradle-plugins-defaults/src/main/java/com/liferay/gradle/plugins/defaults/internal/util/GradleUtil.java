@@ -15,8 +15,6 @@
 package com.liferay.gradle.plugins.defaults.internal.util;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -25,7 +23,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Set;
 
 import org.gradle.StartParameter;
@@ -72,16 +69,6 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 		return basePluginConvention.getArchivesBaseName();
 	}
 
-	public static String getPortalToolVersion(
-		Project project, String portalToolName) {
-
-		String portalToolVersion = _portalToolVersions.getProperty(
-			portalToolName);
-
-		return GradleUtil.getProperty(
-			project, portalToolName + ".version", portalToolVersion);
-	}
-
 	public static Project getProject(Project rootProject, String name) {
 		for (Project project : rootProject.getAllprojects()) {
 			if (name.equals(project.getName())) {
@@ -120,47 +107,12 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 		return iterator.next();
 	}
 
-	/**
-	 * Copied from <code>com.liferay.portal.kernel.util.ThreadUtil</code>.
-	 */
-	public static Thread[] getThreads() {
-		Thread currentThread = Thread.currentThread();
-
-		ThreadGroup threadGroup = currentThread.getThreadGroup();
-
-		while (threadGroup.getParent() != null) {
-			threadGroup = threadGroup.getParent();
-		}
-
-		int threadCountGuess = threadGroup.activeCount();
-
-		Thread[] threads = new Thread[threadCountGuess];
-
-		int threadCountActual = threadGroup.enumerate(threads);
-
-		while (threadCountActual == threadCountGuess) {
-			threadCountGuess *= 2;
-
-			threads = new Thread[threadCountGuess];
-
-			threadCountActual = threadGroup.enumerate(threads);
-		}
-
-		return threads;
-	}
-
 	public static boolean hasPlugin(
 		Project project, Class<? extends Plugin<?>> pluginClass) {
 
 		PluginContainer pluginContainer = project.getPlugins();
 
 		return pluginContainer.hasPlugin(pluginClass);
-	}
-
-	public static boolean hasPlugin(Project project, String pluginId) {
-		PluginContainer pluginContainer = project.getPlugins();
-
-		return pluginContainer.hasPlugin(pluginId);
 	}
 
 	public static boolean hasStartParameterTask(
@@ -196,22 +148,6 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 
 		if (FileUtil.isChild(file, repositoryPath.toFile())) {
 			return true;
-		}
-
-		return false;
-	}
-
-	public static boolean isRunningInsideDaemon() {
-		for (Thread thread : getThreads()) {
-			if (thread == null) {
-				continue;
-			}
-
-			String name = thread.getName();
-
-			if (name.startsWith("Daemon worker")) {
-				return true;
-			}
 		}
 
 		return false;
@@ -273,19 +209,6 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 		}
 	}
 
-	public static Map<String, String> toStringMap(Map<String, ?> map) {
-		Map<String, String> stringMap = new HashMap<>();
-
-		for (Map.Entry<String, ?> entry : map.entrySet()) {
-			String key = entry.getKey();
-			String value = toString(entry.getValue());
-
-			stringMap.put(key, value);
-		}
-
-		return stringMap;
-	}
-
 	public static <P extends Plugin<? extends Project>> void withPlugin(
 		Project project, Class<P> pluginClass, Action<P> action) {
 
@@ -295,21 +218,5 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 	}
 
 	private static final String _SNAPSHOT_VERSION_SUFFIX = "-SNAPSHOT";
-
-	private static final Properties _portalToolVersions = new Properties();
-
-	static {
-		ClassLoader classLoader = GradleUtil.class.getClassLoader();
-
-		try (InputStream inputStream = classLoader.getResourceAsStream(
-				"com/liferay/gradle/plugins/dependencies" +
-					"/portal-tools.properties")) {
-
-			_portalToolVersions.load(inputStream);
-		}
-		catch (IOException ioe) {
-			throw new ExceptionInInitializerError(ioe);
-		}
-	}
 
 }

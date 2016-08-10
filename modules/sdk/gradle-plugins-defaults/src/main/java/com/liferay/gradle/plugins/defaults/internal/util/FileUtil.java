@@ -16,8 +16,6 @@ package com.liferay.gradle.plugins.defaults.internal.util;
 
 import com.liferay.gradle.util.ArrayUtil;
 
-import groovy.lang.Closure;
-
 import java.io.File;
 import java.io.FileFilter;
 
@@ -25,13 +23,10 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.gradle.api.AntBuilder;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileTree;
-import org.gradle.api.logging.Logger;
-import org.gradle.api.logging.Logging;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.TaskInputs;
 
@@ -107,55 +102,5 @@ public class FileUtil extends com.liferay.gradle.util.FileUtil {
 
 		return joinedFileCollection;
 	}
-
-	public static void touchFile(File file, long time) {
-		boolean success = file.setLastModified(time);
-
-		if (!success) {
-			_logger.error("Unable to touch " + file);
-		}
-	}
-
-	public static void touchFiles(
-		Project project, File dir, long time, String... includes) {
-
-		Map<String, Object> args = new HashMap<>();
-
-		args.put("dir", dir);
-		args.put("includes", Arrays.asList(includes));
-
-		FileTree fileTree = project.fileTree(args);
-
-		for (File file : fileTree) {
-			touchFile(file, time);
-		}
-	}
-
-	public static void unzip(
-		Project project, final File file, final File destinationDir) {
-
-		project.ant(
-			new Closure<Void>(project) {
-
-				@SuppressWarnings("unused")
-				public void doCall(AntBuilder antBuilder) {
-					_invokeAntMethodUnzip(antBuilder, file, destinationDir);
-				}
-
-			});
-	}
-
-	private static void _invokeAntMethodUnzip(
-		AntBuilder antBuilder, File file, File destinationDir) {
-
-		Map<String, Object> args = new HashMap<>();
-
-		args.put("dest", destinationDir);
-		args.put("src", file);
-
-		antBuilder.invokeMethod("unzip", args);
-	}
-
-	private static final Logger _logger = Logging.getLogger(FileUtil.class);
 
 }

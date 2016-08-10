@@ -683,13 +683,13 @@ public class AnnotationLocatorTest {
 		return new Mix() {
 
 			@Override
-			public int value() {
-				return value;
+			public Class<? extends Annotation> annotationType() {
+				return Mix.class;
 			}
 
 			@Override
-			public Class<? extends Annotation> annotationType() {
-				return Mix.class;
+			public int value() {
+				return value;
 			}
 
 		};
@@ -699,13 +699,13 @@ public class AnnotationLocatorTest {
 		return new Type() {
 
 			@Override
-			public int value() {
-				return value;
+			public Class<? extends Annotation> annotationType() {
+				return Type.class;
 			}
 
 			@Override
-			public Class<? extends Annotation> annotationType() {
-				return Type.class;
+			public int value() {
+				return value;
 			}
 
 		};

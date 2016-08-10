@@ -71,21 +71,6 @@ public class HttpAdapter {
 		ServletConfig servletConfig = new ServletConfig() {
 
 			@Override
-			public String getServletName() {
-				return "Module Framework Servlet";
-			}
-
-			@Override
-			public ServletContext getServletContext() {
-				return _servletContext;
-			}
-
-			@Override
-			public Enumeration<String> getInitParameterNames() {
-				return _servletContext.getInitParameterNames();
-			}
-
-			@Override
 			public String getInitParameter(String name) {
 				if (name.equals(
 						HttpServiceRuntimeConstants.HTTP_SERVICE_ENDPOINT)) {
@@ -95,6 +80,21 @@ public class HttpAdapter {
 				}
 
 				return _servletContext.getInitParameter(name);
+			}
+
+			@Override
+			public Enumeration<String> getInitParameterNames() {
+				return _servletContext.getInitParameterNames();
+			}
+
+			@Override
+			public ServletContext getServletContext() {
+				return _servletContext;
+			}
+
+			@Override
+			public String getServletName() {
+				return "Module Framework Servlet";
 			}
 
 		};

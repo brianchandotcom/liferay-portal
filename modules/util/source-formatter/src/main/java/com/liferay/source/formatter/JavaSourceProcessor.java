@@ -4588,7 +4588,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private final Pattern _annotationMetaTypePattern = Pattern.compile(
 		"\\s(name|description) = \"%");
 	private final Pattern _anonymousClassPattern = Pattern.compile(
-		"\n(\t+)new .*\\) \\{\n\n");
+		"\n(\t+)(\\S.* )?new .*\\) \\{\n\n");
 	private final Pattern _arrayPattern = Pattern.compile(
 		"(\n\t*.* =) (new \\w*\\[\\] \\{)\n(\t*)(.+)\n\t*(\\};)\n");
 	private final Pattern _assertEqualsPattern = Pattern.compile(

@@ -37,21 +37,21 @@ public class DynamicPolicyHelper {
 		DynamicPolicy dynamicPolicy = new DynamicPolicy() {
 
 			@Override
-			public ProtectionDomain getProtectionDomain(CodeSource codeSource) {
-				if (originalDynamicPolicy == null) {
-					return null;
-				}
-
-				return originalDynamicPolicy.getProtectionDomain(codeSource);
-			}
-
-			@Override
 			public PermissionCollection getPermissions(
 				CodeSource codeSource, Map map) {
 
 				Policy policy = Policy.getPolicy();
 
 				return policy.getPermissions(codeSource);
+			}
+
+			@Override
+			public ProtectionDomain getProtectionDomain(CodeSource codeSource) {
+				if (originalDynamicPolicy == null) {
+					return null;
+				}
+
+				return originalDynamicPolicy.getProtectionDomain(codeSource);
 			}
 
 			@Override

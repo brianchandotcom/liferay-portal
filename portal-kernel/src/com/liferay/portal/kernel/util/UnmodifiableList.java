@@ -108,8 +108,6 @@ public class UnmodifiableList<E> implements List<E>, Serializable {
 	public Iterator<E> iterator() {
 		return new Iterator<E>() {
 
-			private Iterator<? extends E> _itr = _list.iterator();
-
 			@Override
 			public boolean hasNext() {
 				return _itr.hasNext();
@@ -124,6 +122,8 @@ public class UnmodifiableList<E> implements List<E>, Serializable {
 			public void remove() {
 				throw new UnsupportedOperationException(_MESSAGE);
 			}
+
+			private final Iterator<? extends E> _itr = _list.iterator();
 
 		};
 	}
@@ -142,8 +142,6 @@ public class UnmodifiableList<E> implements List<E>, Serializable {
 	public ListIterator<E> listIterator(final int index) {
 		return new ListIterator<E>() {
 
-			private ListIterator<? extends E> _itr = _list.listIterator(index);
-
 			@Override
 			public void add(E element) {
 				throw new UnsupportedOperationException(_MESSAGE);
@@ -155,23 +153,23 @@ public class UnmodifiableList<E> implements List<E>, Serializable {
 			}
 
 			@Override
-			public E next() {
-				return _itr.next();
-			}
-
-			@Override
 			public boolean hasPrevious() {
 				return _itr.hasPrevious();
 			}
 
 			@Override
-			public E previous() {
-				return _itr.previous();
+			public E next() {
+				return _itr.next();
 			}
 
 			@Override
 			public int nextIndex() {
 				return _itr.nextIndex();
+			}
+
+			@Override
+			public E previous() {
+				return _itr.previous();
 			}
 
 			@Override
@@ -188,6 +186,9 @@ public class UnmodifiableList<E> implements List<E>, Serializable {
 			public void set(E element) {
 				throw new UnsupportedOperationException(_MESSAGE);
 			}
+
+			private final ListIterator<? extends E> _itr = _list.listIterator(
+				index);
 
 		};
 	}

@@ -117,13 +117,23 @@ public class ServiceContextAdviceTest {
 		return new MethodInvocation() {
 
 			@Override
+			public Object[] getArguments() {
+				return arguments;
+			}
+
+			@Override
 			public Method getMethod() {
 				return method;
 			}
 
 			@Override
-			public Object[] getArguments() {
-				return arguments;
+			public AccessibleObject getStaticPart() {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public Object getThis() {
+				throw new UnsupportedOperationException();
 			}
 
 			@Override
@@ -136,16 +146,6 @@ public class ServiceContextAdviceTest {
 					_serviceContext == serviceContext);
 
 				return null;
-			}
-
-			@Override
-			public Object getThis() {
-				throw new UnsupportedOperationException();
-			}
-
-			@Override
-			public AccessibleObject getStaticPart() {
-				throw new UnsupportedOperationException();
 			}
 
 		};

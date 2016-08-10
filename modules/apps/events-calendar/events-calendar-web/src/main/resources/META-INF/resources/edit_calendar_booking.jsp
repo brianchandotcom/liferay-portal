@@ -217,6 +217,17 @@ while (manageableCalendarsIterator.hasNext()) {
 				}
 			);
 
+			var destroyInstance = function(event) {
+				if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {
+					calendarContainer.destroy();
+
+					Liferay.component('<portlet:namespace />calendarContainer', null);
+					Liferay.detach('destroyPortlet', destroyInstance);
+				}
+			};
+
+			Liferay.on('destroyPortlet', destroyInstance);
+
 			return calendarContainer;
 		}
 	);

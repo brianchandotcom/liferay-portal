@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.cache.key.CacheKeyGeneratorUtil;
 import com.liferay.portal.kernel.increment.BufferedIncrement;
 import com.liferay.portal.kernel.increment.Increment;
 import com.liferay.portal.kernel.increment.IncrementFactory;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.aop.AnnotationChainableMethodAdvice;
@@ -100,27 +102,35 @@ public class BufferedIncrementAdvice
 
 		Serializable batchKey = cacheKeyGenerator.finish();
 
-		Increment<?> increment = IncrementFactory.createIncrement(
-			bufferedIncrement.incrementClass(), value);
+		try {
+			Increment<?> increment = IncrementFactory.createIncrement(
+				bufferedIncrement.incrementClass(), value);
 
-		final BufferedIncrementProcessor callbackBufferedIncrementProcessor =
-			bufferedIncrementProcessor;
+			final BufferedIncrementProcessor
+				callbackBufferedIncrementProcessor = bufferedIncrementProcessor;
 
-		final BufferedIncreasableEntry bufferedIncreasableEntry =
-			new BufferedIncreasableEntry(methodInvocation, batchKey, increment);
+			final BufferedIncreasableEntry bufferedIncreasableEntry =
+				new BufferedIncreasableEntry(
+					methodInvocation, batchKey, increment);
 
-		TransactionCommitCallbackUtil.registerCallback(
-			new Callable<Void>() {
+			TransactionCommitCallbackUtil.registerCallback(
+				new Callable<Void>() {
 
-				@Override
-				public Void call() throws Exception {
-					callbackBufferedIncrementProcessor.process(
-						bufferedIncreasableEntry);
+					@Override
+					public Void call() throws Exception {
+						callbackBufferedIncrementProcessor.process(
+							bufferedIncreasableEntry);
 
-					return null;
-				}
+						return null;
+					}
 
-			});
+				});
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Error incrementing", e);
+			}
+		}
 
 		return nullResult;
 	}
@@ -137,6 +147,9 @@ public class BufferedIncrementAdvice
 	public BufferedIncrement getNullAnnotation() {
 		return _nullBufferedIncrement;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		BufferedIncrementAdvice.class);
 
 	private static final BufferedIncrement _nullBufferedIncrement =
 		new BufferedIncrement() {

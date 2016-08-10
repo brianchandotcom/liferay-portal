@@ -34,10 +34,26 @@ public class IncrementFactory {
 		}
 
 		try {
-			Constructor<? extends Increment<?>> constructor =
-				counterClass.getConstructor(value.getClass());
+			Class valueClass = value.getClass();
 
-			return constructor.newInstance(value);
+			do {
+				try {
+					Constructor<? extends Increment<?>> constructor =
+						counterClass.getConstructor(valueClass);
+
+					return constructor.newInstance(value);
+				}
+				catch (NoSuchMethodException nsme) {
+					valueClass = valueClass.getSuperclass();
+
+					if (valueClass.equals(Object.class)) {
+						throw new SystemException(
+							"Invalid Increment provided: " + counterClass +
+								" cannot increment type " + value.getClass());
+					}
+				}
+			}
+			while (true);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

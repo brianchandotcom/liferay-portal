@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
+import com.liferay.portal.kernel.model.adapter.ModelAdapterUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ImageLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -63,6 +64,7 @@ import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.zip.ZipWriter;
+import com.liferay.site.model.adapter.StagedGroup;
 
 import java.io.File;
 import java.io.Serializable;
@@ -259,6 +261,16 @@ public class LayoutExportController implements ExportController {
 
 		portletDataContext.setMissingReferencesElement(
 			missingReferencesElement);
+
+		// Export the group
+
+		StagedGroup stagedGroup = ModelAdapterUtil.adapt(
+			group, Group.class, StagedGroup.class);
+
+		StagedModelDataHandlerUtil.exportStagedModel(
+			portletDataContext, stagedGroup);
+
+		// Export other things
 
 		_portletExportController.exportAssetLinks(portletDataContext);
 		_portletExportController.exportExpandoTables(portletDataContext);

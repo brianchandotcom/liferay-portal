@@ -435,6 +435,24 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 		return JournalUtil.getArticleLayout(layoutUuid, getGroupId());
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, only used for backwards compatibility when
+	 *             importing LARs from themes
+	 */
+	@Deprecated
+	public String getLegacyDescription() {
+		return _description;
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, only used for backwards compatibility when
+	 *             importing LARs from themes
+	 */
+	@Deprecated
+	public String getLegacyTitle() {
+		return _title;
+	}
+
 	@Override
 	public String getSmallImageType() throws PortalException {
 		if ((_smallImageType == null) && isSmallImage()) {
@@ -586,6 +604,14 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 		_document = null;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, only used for backwards compatibility
+	 */
+	@Deprecated
+	public void setDescription(String description) {
+		_description = description;
+	}
+
 	public void setDescriptionMap(Map<Locale, String> descriptionMap) {
 		_descriptionMap = descriptionMap;
 	}
@@ -623,12 +649,26 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 		setDDMTemplateKey(ddmTemplateKey);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, only used for backwards compatibility
+	 */
+	@Deprecated
+	public void setTitle(String title) {
+		_title = title;
+	}
+
 	public void setTitleMap(Map<Locale, String> titleMap) {
 		_titleMap = titleMap;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalArticleImpl.class);
+
+	/**
+	 * @deprecated As of 7.0.0, only used for backwards compatibility
+	 */
+	@Deprecated
+	private String _description;
 
 	private Map<Locale, String> _descriptionMap;
 
@@ -637,6 +677,13 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 
 	private long _imagesFolderId;
 	private String _smallImageType;
+
+	/**
+	 * @deprecated As of 7.0.0, only used for backwards compatibility
+	 */
+	@Deprecated
+	private String _title;
+
 	private Map<Locale, String> _titleMap;
 
 }

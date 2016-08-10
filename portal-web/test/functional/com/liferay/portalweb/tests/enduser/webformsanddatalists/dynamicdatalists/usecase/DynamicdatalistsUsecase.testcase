@@ -2861,6 +2861,119 @@
 		</execute>
 	</command>
 
+	<command name="ViewLinkToPageBreadcrumb" priority="3">
+		<description message="This is a use case for LPS-67478 ." />
+
+		<execute macro="Page#add">
+			<var name="pageName" value="Parent Page Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="Page#addChild">
+			<var name="page" value="Public Pages" />
+			<var name="pageName" value="Parent Page Name" />
+			<var name="siteChildPageName" value="Child Page Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#addCP">
+			<var name="ddlDataDefinitionName" value="Data Definition" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Link to Page" />
+			<var name="fieldFieldLabel" value="Link to Page" />
+			<var name="fieldName" value="LinkToPage" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#save" />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#viewCP">
+			<var name="ddlDataDefinitionName" value="Data Definition" />
+			<var name="fieldFieldLabel" value="Link to Page" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#viewField">
+			<var name="field" value="Link to Page" />
+			<var name="fieldFieldLabel" value="Link to Page" />
+			<var name="fieldName" value="LinkToPage" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLList#addCP">
+			<var name="ddlListName" value="List Name" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#selectCP">
+			<var name="ddlDataDefinitionName" value="Data Definition" />
+		</execute>
+
+		<execute macro="DDLList#save" />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLRecord#addCP">
+			<var name="ddlDataDefinitionName" value="Data Definition" />
+			<var name="ddlListName" value="List Name" />
+		</execute>
+
+		<execute macro="DDLRecord#populateFieldLinkToPage">
+			<var name="ddlRecordFieldData" value="Child Page Name" />
+			<var name="fieldName" value="LinkToPage" />
+			<var name="pagePrivacy" value="Public" />
+			<var name="parentPage" value="Parent Page Name" />
+		</execute>
+
+		<execute macro="DDLRecord#gotoLinkToPageSelect">
+			<var name="fieldName" value="LinkToPage" />
+		</execute>
+
+		<execute macro="DDLRecord#viewLinkToPageBreadcrumbCount">
+			<var name="count" value="2" />
+		</execute>
+
+		<execute macro="DDLRecord#gotoLinkToPageNavItem">
+			<var name="pagePrivacy" value="Private" />
+		</execute>
+
+		<execute macro="DDLRecord#gotoLinkToPageNavItem">
+			<var name="pagePrivacy" value="Public" />
+		</execute>
+
+		<execute macro="DDLRecord#gotoLinkToPageChildPages">
+			<var name="parentPage" value="Parent Page Name" />
+		</execute>
+
+		<execute macro="DDLRecord#selectLinkToPageRadio">
+			<var name="ddlRecordFieldData" value="Child Page Name" />
+		</execute>
+
+		<execute macro="DDLRecord#viewLinkToPageBreadcrumbCount">
+			<var name="count" value="2" />
+		</execute>
+	</command>
+
 	<command name="ViewMultipleDDLRecordsInAssetPublisherAndSortByModifiedDate" priority="3">
 		<description message="This is a use case for LPS-57993" />
 

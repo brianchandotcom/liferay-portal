@@ -4297,7 +4297,7 @@ go]]></replacevalue>
 
 	<target name="deploy-lcs-environment-token">
 		<copy todir="${liferay.home}/data">
-			<fileset dir="${selenium.output.dir.name}" includes="lcs-cluster-entry-token-*.txt" />
+			<fileset dir="${selenium.output.dir.name}" includes="lcs-aatf-*.aatf" />
 		</copy>
 	</target>
 

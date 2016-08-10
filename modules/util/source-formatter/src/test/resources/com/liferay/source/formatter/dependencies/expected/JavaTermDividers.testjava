@@ -141,6 +141,7 @@ public class JavaTermDividers {
 	}
 
 	private JavaTermDividers(String s) {
+		String test = s;
 	}
 
 	private void _methodPrivate1() {

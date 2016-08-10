@@ -22,6 +22,7 @@ import com.liferay.gradle.plugins.cache.CachePlugin;
 import com.liferay.gradle.plugins.cache.task.TaskCache;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.extensions.LiferayOSGiExtension;
+import com.liferay.gradle.plugins.jasper.jspc.JspCPlugin;
 import com.liferay.gradle.plugins.js.module.config.generator.ConfigJSModulesTask;
 import com.liferay.gradle.plugins.js.module.config.generator.JSModuleConfigGeneratorPlugin;
 import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask;
@@ -30,6 +31,7 @@ import com.liferay.gradle.plugins.service.builder.ServiceBuilderPlugin;
 import com.liferay.gradle.plugins.tasks.BaselineTask;
 import com.liferay.gradle.plugins.tasks.InstallCacheTask;
 import com.liferay.gradle.plugins.tasks.ReplaceRegexTask;
+import com.liferay.gradle.plugins.tasks.WritePropertiesTask;
 import com.liferay.gradle.plugins.test.integration.TestIntegrationBasePlugin;
 import com.liferay.gradle.plugins.tlddoc.builder.TLDDocBuilderPlugin;
 import com.liferay.gradle.plugins.tlddoc.builder.tasks.TLDDocTask;
@@ -53,6 +55,7 @@ import groovy.lang.Closure;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
 
 import java.nio.charset.StandardCharsets;
 
@@ -63,6 +66,7 @@ import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
@@ -80,6 +84,7 @@ import org.gradle.api.JavaVersion;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
+import org.gradle.api.UncheckedIOException;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.artifacts.Dependency;
@@ -329,6 +334,10 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 					if (GradleUtil.hasPlugin(project, CachePlugin.class)) {
 						configureTaskUpdateVersionForCachePlugin(
 							updateVersionTask);
+					}
+
+					if (GradleUtil.hasPlugin(project, JspCPlugin.class)) {
+						configureTaskCompileJSP(project);
 					}
 
 					// setProjectSnapshotVersion must be called before
@@ -1629,6 +1638,61 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			project, "baseline.jar.report.only.dirty.packages", true);
 
 		baselineTask.setReportOnlyDirtyPackages(reportOnlyDirtyPackages);
+	}
+
+	protected void configureTaskCompileJSP(Project project) {
+		boolean jspPrecompileEnabled = GradleUtil.getProperty(
+			project, "jsp.precompile.enabled", false);
+
+		if (!jspPrecompileEnabled) {
+			return;
+		}
+
+		JavaCompile javaCompile = (JavaCompile)GradleUtil.getTask(
+			project, JspCPlugin.COMPILE_JSP_TASK_NAME);
+
+		String dirName = null;
+
+		TaskContainer taskContainer = project.getTasks();
+
+		WritePropertiesTask recordArtifactTask =
+			(WritePropertiesTask)taskContainer.findByName(
+				LiferayRelengPlugin.RECORD_ARTIFACT_TASK_NAME);
+
+		if (recordArtifactTask != null) {
+			Properties artifactProperties;
+
+			try {
+				artifactProperties = FileUtil.readProperties(
+					recordArtifactTask.getOutputFile());
+			}
+			catch (IOException ioe) {
+				throw new UncheckedIOException(ioe);
+			}
+
+			String artifactURL = artifactProperties.getProperty("artifact.url");
+
+			if (Validator.isNotNull(artifactURL)) {
+				int index = artifactURL.lastIndexOf('/');
+
+				dirName = artifactURL.substring(
+					index + 1, artifactURL.length() - 4);
+			}
+		}
+
+		if (Validator.isNull(dirName)) {
+			dirName =
+				GradleUtil.getArchivesBaseName(project) + "-" +
+					project.getVersion();
+		}
+
+		LiferayExtension liferayExtension = GradleUtil.getExtension(
+			project, LiferayExtension.class);
+
+		File dir = new File(
+			liferayExtension.getLiferayHome(), "work/" + dirName);
+
+		javaCompile.setDestinationDir(dir);
 	}
 
 	protected void configureTaskFindBugs(FindBugs findBugs) {

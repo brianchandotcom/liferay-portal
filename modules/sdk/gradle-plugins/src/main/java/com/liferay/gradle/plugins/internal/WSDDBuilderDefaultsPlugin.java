@@ -12,24 +12,25 @@
  * details.
  */
 
-package com.liferay.gradle.plugins;
+package com.liferay.gradle.plugins.internal;
 
-import com.liferay.gradle.plugins.javadoc.formatter.JavadocFormatterPlugin;
+import com.liferay.gradle.plugins.BasePortalToolDefaultsPlugin;
+import com.liferay.gradle.plugins.wsdd.builder.WSDDBuilderPlugin;
 
 /**
  * @author Andrea Di Giorgi
  */
-public class JavadocFormatterDefaultsPlugin
-	extends BasePortalToolDefaultsPlugin<JavadocFormatterPlugin> {
+public class WSDDBuilderDefaultsPlugin
+	extends BasePortalToolDefaultsPlugin<WSDDBuilderPlugin> {
 
 	@Override
-	protected Class<JavadocFormatterPlugin> getPluginClass() {
-		return JavadocFormatterPlugin.class;
+	protected Class<WSDDBuilderPlugin> getPluginClass() {
+		return WSDDBuilderPlugin.class;
 	}
 
 	@Override
 	protected String getPortalToolConfigurationName() {
-		return JavadocFormatterPlugin.CONFIGURATION_NAME;
+		return WSDDBuilderPlugin.CONFIGURATION_NAME;
 	}
 
 	@Override
@@ -38,6 +39,6 @@ public class JavadocFormatterDefaultsPlugin
 	}
 
 	private static final String _PORTAL_TOOL_NAME =
-		"com.liferay.javadoc.formatter";
+		"com.liferay.portal.tools.wsdd.builder";
 
 }

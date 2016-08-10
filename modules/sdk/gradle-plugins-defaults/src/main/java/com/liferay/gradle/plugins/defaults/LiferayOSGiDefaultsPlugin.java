@@ -19,12 +19,11 @@ import aQute.bnd.version.Version;
 
 import com.liferay.gradle.plugins.LiferayBasePlugin;
 import com.liferay.gradle.plugins.LiferayOSGiPlugin;
-import com.liferay.gradle.plugins.ServiceBuilderDefaultsPlugin;
-import com.liferay.gradle.plugins.WhipDefaultsPlugin;
 import com.liferay.gradle.plugins.cache.CacheExtension;
 import com.liferay.gradle.plugins.cache.CachePlugin;
 import com.liferay.gradle.plugins.cache.task.TaskCache;
 import com.liferay.gradle.plugins.defaults.internal.LiferayRelengPlugin;
+import com.liferay.gradle.plugins.defaults.internal.WhipDefaultsPlugin;
 import com.liferay.gradle.plugins.defaults.internal.util.FileUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.IncrementVersionClosure;
@@ -327,7 +326,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 					configureLocalPortalTool(
 						project, portalRootDir,
 						ServiceBuilderPlugin.CONFIGURATION_NAME,
-						ServiceBuilderDefaultsPlugin.PORTAL_TOOL_NAME);
+						_SERVICE_BUILDER_PORTAL_TOOL_NAME);
 				}
 
 			});
@@ -2404,6 +2403,9 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 	private static final String _REPOSITORY_URL = System.getProperty(
 		"repository.url", DEFAULT_REPOSITORY_URL);
+
+	private static final String _SERVICE_BUILDER_PORTAL_TOOL_NAME =
+		"com.liferay.portal.tools.service.builder";
 
 	private static final Logger _logger = Logging.getLogger(
 		LiferayOSGiDefaultsPlugin.class);

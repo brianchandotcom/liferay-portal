@@ -12,8 +12,10 @@
  * details.
  */
 
-package com.liferay.gradle.plugins;
+package com.liferay.gradle.plugins.internal;
 
+import com.liferay.gradle.plugins.BasePortalToolDefaultsPlugin;
+import com.liferay.gradle.plugins.LiferayBasePlugin;
 import com.liferay.gradle.plugins.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.service.builder.BuildServiceTask;
 import com.liferay.gradle.plugins.service.builder.ServiceBuilderPlugin;
@@ -39,9 +41,6 @@ public class ServiceBuilderDefaultsPlugin
 	extends BasePortalToolDefaultsPlugin<ServiceBuilderPlugin> {
 
 	public static final String BUILD_DB_TASK_NAME = "buildDB";
-
-	public static final String PORTAL_TOOL_NAME =
-		"com.liferay.portal.tools.service.builder";
 
 	protected BuildDBTask addTaskBuildDB(final Project project) {
 		BuildDBTask buildDBTask = GradleUtil.addTask(
@@ -163,7 +162,10 @@ public class ServiceBuilderDefaultsPlugin
 
 	@Override
 	protected String getPortalToolName() {
-		return PORTAL_TOOL_NAME;
+		return _PORTAL_TOOL_NAME;
 	}
+
+	private static final String _PORTAL_TOOL_NAME =
+		"com.liferay.portal.tools.service.builder";
 
 }

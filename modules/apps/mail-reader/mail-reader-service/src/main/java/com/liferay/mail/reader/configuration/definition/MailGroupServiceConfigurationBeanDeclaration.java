@@ -12,9 +12,10 @@
  * details.
  */
 
-package com.liferay.mail.reader.configuration;
+package com.liferay.mail.reader.configuration.definition;
 
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
+import com.liferay.mail.reader.configuration.MailGroupServiceConfiguration;
 
 import org.osgi.service.component.annotations.Component;
 

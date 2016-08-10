@@ -12,9 +12,10 @@
  * details.
  */
 
-package com.liferay.gradle.plugins;
+package com.liferay.gradle.plugins.defaults;
 
-import com.liferay.gradle.plugins.internal.util.GradleUtil;
+import com.liferay.gradle.plugins.LiferayPlugin;
+import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
 
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;

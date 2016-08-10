@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.gradle.plugins;
+package com.liferay.gradle.plugins.defaults;
 
 import com.liferay.gradle.plugins.app.javadoc.builder.AppJavadocBuilderExtension;
 import com.liferay.gradle.plugins.app.javadoc.builder.AppJavadocBuilderPlugin;
-import com.liferay.gradle.plugins.internal.util.FileUtil;
-import com.liferay.gradle.plugins.internal.util.GradleUtil;
-import com.liferay.gradle.plugins.tasks.WritePropertiesTask;
+import com.liferay.gradle.plugins.defaults.internal.util.FileUtil;
+import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
+import com.liferay.gradle.plugins.defaults.tasks.WritePropertiesTask;
 import com.liferay.gradle.util.Validator;
 
 import groovy.lang.Closure;

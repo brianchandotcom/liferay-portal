@@ -12,15 +12,16 @@
  * details.
  */
 
-package com.liferay.gradle.plugins;
+package com.liferay.gradle.plugins.defaults;
 
+import com.liferay.gradle.plugins.LiferayThemePlugin;
 import com.liferay.gradle.plugins.cache.WriteDigestTask;
+import com.liferay.gradle.plugins.defaults.internal.util.FileUtil;
+import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
+import com.liferay.gradle.plugins.defaults.internal.util.IncrementVersionClosure;
+import com.liferay.gradle.plugins.defaults.tasks.ReplaceRegexTask;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.gulp.ExecuteGulpTask;
-import com.liferay.gradle.plugins.internal.util.FileUtil;
-import com.liferay.gradle.plugins.internal.util.GradleUtil;
-import com.liferay.gradle.plugins.internal.util.IncrementVersionClosure;
-import com.liferay.gradle.plugins.tasks.ReplaceRegexTask;
 import com.liferay.gradle.plugins.util.PortalTools;
 import com.liferay.gradle.util.copy.StripPathSegmentsAction;
 
@@ -145,11 +146,11 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 
 	protected void addDependenciesFrontendCSSCommon(Project project) {
 		String version = PortalTools.getVersion(
-			project, CSSBuilderDefaultsPlugin.FRONTEND_COMMON_CSS_NAME);
+			project, _FRONTEND_COMMON_CSS_NAME);
 
 		GradleUtil.addDependency(
 			project, FRONTEND_CSS_COMMON_CONFIGURATION_NAME, "com.liferay",
-			CSSBuilderDefaultsPlugin.FRONTEND_COMMON_CSS_NAME, version, false);
+			_FRONTEND_COMMON_CSS_NAME, version, false);
 	}
 
 	protected Copy addTaskExpandFrontendCSSCommon(
@@ -409,6 +410,9 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 
 		return themeProject;
 	}
+
+	private static final String _FRONTEND_COMMON_CSS_NAME =
+		"com.liferay.frontend.css.common";
 
 	private static final String _GROUP = "com.liferay.plugins";
 

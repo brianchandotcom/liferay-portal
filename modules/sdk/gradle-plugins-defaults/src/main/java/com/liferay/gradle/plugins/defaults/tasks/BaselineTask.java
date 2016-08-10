@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.gradle.plugins.tasks;
+package com.liferay.gradle.plugins.defaults.tasks;
 
 import aQute.service.reporter.Reporter;
 
 import com.liferay.ant.bnd.Baseline;
-import com.liferay.gradle.plugins.internal.util.GradleUtil;
+import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
 import com.liferay.gradle.util.Validator;
 
 import java.io.File;

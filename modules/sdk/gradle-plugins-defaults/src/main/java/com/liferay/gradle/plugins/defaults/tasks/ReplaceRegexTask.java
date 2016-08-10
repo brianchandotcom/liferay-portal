@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.gradle.plugins.tasks;
+package com.liferay.gradle.plugins.defaults.tasks;
 
-import com.liferay.gradle.plugins.internal.util.GradleUtil;
+import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
 
 import groovy.lang.Closure;
 

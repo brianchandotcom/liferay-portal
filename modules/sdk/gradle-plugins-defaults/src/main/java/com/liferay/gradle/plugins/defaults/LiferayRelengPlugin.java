@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.gradle.plugins;
+package com.liferay.gradle.plugins.defaults;
 
+import com.liferay.gradle.plugins.LiferayBasePlugin;
 import com.liferay.gradle.plugins.cache.CacheExtension;
 import com.liferay.gradle.plugins.cache.CachePlugin;
 import com.liferay.gradle.plugins.cache.WriteDigestTask;
@@ -21,11 +22,11 @@ import com.liferay.gradle.plugins.cache.task.TaskCache;
 import com.liferay.gradle.plugins.cache.task.TaskCacheApplicator;
 import com.liferay.gradle.plugins.change.log.builder.BuildChangeLogTask;
 import com.liferay.gradle.plugins.change.log.builder.ChangeLogBuilderPlugin;
-import com.liferay.gradle.plugins.internal.util.FileUtil;
-import com.liferay.gradle.plugins.internal.util.GradleUtil;
-import com.liferay.gradle.plugins.tasks.PrintArtifactPublishCommandsTask;
-import com.liferay.gradle.plugins.tasks.ReplaceRegexTask;
-import com.liferay.gradle.plugins.tasks.WritePropertiesTask;
+import com.liferay.gradle.plugins.defaults.internal.util.FileUtil;
+import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
+import com.liferay.gradle.plugins.defaults.tasks.PrintArtifactPublishCommandsTask;
+import com.liferay.gradle.plugins.defaults.tasks.ReplaceRegexTask;
+import com.liferay.gradle.plugins.defaults.tasks.WritePropertiesTask;
 import com.liferay.gradle.util.Validator;
 
 import groovy.lang.Closure;

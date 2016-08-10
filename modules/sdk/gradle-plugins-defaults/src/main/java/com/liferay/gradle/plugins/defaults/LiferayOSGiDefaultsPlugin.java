@@ -12,29 +12,33 @@
  * details.
  */
 
-package com.liferay.gradle.plugins;
+package com.liferay.gradle.plugins.defaults;
 
 import aQute.bnd.osgi.Constants;
 import aQute.bnd.version.Version;
 
+import com.liferay.gradle.plugins.LiferayBasePlugin;
+import com.liferay.gradle.plugins.LiferayOSGiPlugin;
+import com.liferay.gradle.plugins.ServiceBuilderDefaultsPlugin;
+import com.liferay.gradle.plugins.WhipDefaultsPlugin;
 import com.liferay.gradle.plugins.cache.CacheExtension;
 import com.liferay.gradle.plugins.cache.CachePlugin;
 import com.liferay.gradle.plugins.cache.task.TaskCache;
+import com.liferay.gradle.plugins.defaults.internal.util.FileUtil;
+import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
+import com.liferay.gradle.plugins.defaults.internal.util.IncrementVersionClosure;
+import com.liferay.gradle.plugins.defaults.tasks.BaselineTask;
+import com.liferay.gradle.plugins.defaults.tasks.InstallCacheTask;
+import com.liferay.gradle.plugins.defaults.tasks.ReplaceRegexTask;
+import com.liferay.gradle.plugins.defaults.tasks.WritePropertiesTask;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.extensions.LiferayOSGiExtension;
-import com.liferay.gradle.plugins.internal.util.FileUtil;
-import com.liferay.gradle.plugins.internal.util.GradleUtil;
-import com.liferay.gradle.plugins.internal.util.IncrementVersionClosure;
 import com.liferay.gradle.plugins.jasper.jspc.JspCPlugin;
 import com.liferay.gradle.plugins.js.module.config.generator.ConfigJSModulesTask;
 import com.liferay.gradle.plugins.js.module.config.generator.JSModuleConfigGeneratorPlugin;
 import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask;
 import com.liferay.gradle.plugins.patcher.PatchTask;
 import com.liferay.gradle.plugins.service.builder.ServiceBuilderPlugin;
-import com.liferay.gradle.plugins.tasks.BaselineTask;
-import com.liferay.gradle.plugins.tasks.InstallCacheTask;
-import com.liferay.gradle.plugins.tasks.ReplaceRegexTask;
-import com.liferay.gradle.plugins.tasks.WritePropertiesTask;
 import com.liferay.gradle.plugins.test.integration.TestIntegrationBasePlugin;
 import com.liferay.gradle.plugins.tlddoc.builder.TLDDocBuilderPlugin;
 import com.liferay.gradle.plugins.tlddoc.builder.tasks.TLDDocTask;

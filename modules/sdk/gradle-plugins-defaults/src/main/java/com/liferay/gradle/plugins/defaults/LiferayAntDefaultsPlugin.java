@@ -12,10 +12,11 @@
  * details.
  */
 
-package com.liferay.gradle.plugins;
+package com.liferay.gradle.plugins.defaults;
 
-import com.liferay.gradle.plugins.internal.util.GradleUtil;
-import com.liferay.gradle.plugins.tasks.ReplaceRegexTask;
+import com.liferay.gradle.plugins.LiferayAntPlugin;
+import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
+import com.liferay.gradle.plugins.defaults.tasks.ReplaceRegexTask;
 
 import groovy.lang.Closure;
 

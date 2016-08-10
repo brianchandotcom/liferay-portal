@@ -115,11 +115,10 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 	@Override
 	public boolean isPublishToLiveByDefault() {
 		try {
-			long companyId = CompanyThreadLocal.getCompanyId();
-
 			JournalServiceConfiguration journalServiceConfiguration =
 				ConfigurationProviderUtil.getCompanyConfiguration(
-					JournalServiceConfiguration.class, companyId);
+					JournalServiceConfiguration.class,
+					CompanyThreadLocal.getCompanyId());
 
 			return journalServiceConfiguration.publishToLiveByDefaultEnabled();
 		}

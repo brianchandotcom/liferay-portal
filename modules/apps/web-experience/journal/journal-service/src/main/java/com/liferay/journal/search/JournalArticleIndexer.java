@@ -765,12 +765,11 @@ public class JournalArticleIndexer
 	protected boolean isIndexAllArticleVersions() {
 		JournalServiceConfiguration journalServiceConfiguration = null;
 
-		long companyId = CompanyThreadLocal.getCompanyId();
-
 		try {
 			journalServiceConfiguration =
 				_configurationProvider.getCompanyConfiguration(
-					JournalServiceConfiguration.class, companyId);
+					JournalServiceConfiguration.class,
+					CompanyThreadLocal.getCompanyId());
 
 			return journalServiceConfiguration.indexAllArticleVersionsEnabled();
 		}

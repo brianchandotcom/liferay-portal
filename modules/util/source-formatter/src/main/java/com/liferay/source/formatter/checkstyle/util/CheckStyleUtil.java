@@ -46,6 +46,8 @@ public class CheckStyleUtil {
 			List<File> files, String baseDirAbsolutePath)
 		throws Exception {
 
+		_sourceFormatterMessages.clear();
+
 		Checker checker = _getChecker(baseDirAbsolutePath);
 
 		checker.process(files);

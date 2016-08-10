@@ -112,8 +112,6 @@ public class JavaClass {
 				checkConstructor(javaTerm);
 			}
 
-			checkUnusedParameters(javaTerm);
-
 			_formatBooleanStatements(javaTerm);
 			_formatReturnStatements(javaTerm);
 
@@ -785,20 +783,6 @@ public class JavaClass {
 			JavaTerm.TYPE_METHOD_PUBLIC_STATIC);
 		checkAnnotationForMethod(
 			javaTerm, "Test", "^.*test", JavaTerm.TYPE_METHOD_PUBLIC);
-	}
-
-	protected void checkUnusedParameters(JavaTerm javaTerm) {
-		if (!javaTerm.isPrivate() || !javaTerm.isMethod()) {
-			return;
-		}
-
-		for (String parameterName : javaTerm.getParameterNames()) {
-			if (StringUtil.count(javaTerm.getContent(), parameterName) == 1) {
-				_javaSourceProcessor.processMessage(
-					_fileName, "Unused parameter " + parameterName,
-					javaTerm.getLineCount());
-			}
-		}
 	}
 
 	protected void checkValidatorIsNull(JavaTerm javaTerm) {

@@ -72,7 +72,7 @@ public class DefaultDLViewFileVersionDisplayContext
 		throws PortalException {
 
 		this(
-			request, response, fileShortcut.getFileVersion(), fileShortcut,
+			request, fileShortcut.getFileVersion(), fileShortcut,
 			dlMimeTypeDisplayContext, resourceBundle, storageEngine);
 	}
 
@@ -83,7 +83,7 @@ public class DefaultDLViewFileVersionDisplayContext
 		ResourceBundle resourceBundle, StorageEngine storageEngine) {
 
 		this(
-			request, response, fileVersion, null, dlMimeTypeDisplayContext,
+			request, fileVersion, null, dlMimeTypeDisplayContext,
 			resourceBundle, storageEngine);
 	}
 
@@ -240,8 +240,8 @@ public class DefaultDLViewFileVersionDisplayContext
 	}
 
 	private DefaultDLViewFileVersionDisplayContext(
-		HttpServletRequest request, HttpServletResponse response,
-		FileVersion fileVersion, FileShortcut fileShortcut,
+		HttpServletRequest request, FileVersion fileVersion,
+		FileShortcut fileShortcut,
 		DLMimeTypeDisplayContext dlMimeTypeDisplayContext,
 		ResourceBundle resourceBundle, StorageEngine storageEngine) {
 

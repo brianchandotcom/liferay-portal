@@ -4499,6 +4499,11 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		for (SourceFormatterMessage sourceFormatterMessage :
 				sourceFormatterMessages) {
 
+			processMessage(
+				sourceFormatterMessage.getFileName(),
+				sourceFormatterMessage.getMessage(),
+				sourceFormatterMessage.getLineCount());
+
 			printError(
 				sourceFormatterMessage.getFileName(),
 				sourceFormatterMessage.toString());

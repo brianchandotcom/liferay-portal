@@ -567,7 +567,7 @@
 
 		<antcall inheritAll="false" target="update-sdk-properties" />
 
-		<antcall target="unzip-weblogic" />
+		<antcall target="unzip-weblogic-custom" />
 
 		<delete dir="${project.dir}/portal-web/classes" />
 

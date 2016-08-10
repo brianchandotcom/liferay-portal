@@ -641,7 +641,7 @@ public abstract class BaseMobileDriverImpl
 
 	@Override
 	public int getElementWidth(String locator) {
-		throw new UnsupportedOperationException();
+		return WebDriverHelper.getElementWidth(this, locator);
 	}
 
 	@Override

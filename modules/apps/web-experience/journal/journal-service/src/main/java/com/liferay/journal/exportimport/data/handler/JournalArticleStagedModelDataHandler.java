@@ -57,6 +57,7 @@ import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
@@ -736,6 +737,10 @@ public class JournalArticleStagedModelDataHandler
 			String articleResourceUuid = articleElement.attributeValue(
 				"article-resource-uuid");
 
+			// Used when importing LARs with journal schemas under 1.1.0
+
+			_setLegacyValues(article);
+
 			if (portletDataContext.isDataStrategyMirror()) {
 				serviceContext.setUuid(article.getUuid());
 				serviceContext.setAttribute(
@@ -1009,6 +1014,28 @@ public class JournalArticleStagedModelDataHandler
 	@Reference(unbind = "-")
 	protected void setUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, only used for backwards compatibility with
+	 *             LARs that use journal schema under 1.1.0
+	 */
+	@Deprecated
+	private void _setLegacyValues(JournalArticle article) {
+		if (MapUtil.isEmpty(article.getTitleMap()) &&
+			Validator.isNotNull(article.getLegacyTitle())) {
+
+			article.setTitleMap(
+				LocalizationUtil.getLocalizationMap(article.getLegacyTitle()));
+		}
+
+		if (MapUtil.isEmpty(article.getDescriptionMap()) &&
+			Validator.isNotNull(article.getLegacyDescription())) {
+
+			article.setDescriptionMap(
+				LocalizationUtil.getLocalizationMap(
+					article.getLegacyDescription()));
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

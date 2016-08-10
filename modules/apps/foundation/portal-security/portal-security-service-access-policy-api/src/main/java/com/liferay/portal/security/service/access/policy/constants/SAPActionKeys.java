@@ -19,6 +19,6 @@ package com.liferay.portal.security.service.access.policy.constants;
  */
 public class SAPActionKeys {
 
-	public static String ACTION_ADD_SAP_ENTRY = "ADD_SAP_ENTRY";
+	public static final String ACTION_ADD_SAP_ENTRY = "ADD_SAP_ENTRY";
 
 }

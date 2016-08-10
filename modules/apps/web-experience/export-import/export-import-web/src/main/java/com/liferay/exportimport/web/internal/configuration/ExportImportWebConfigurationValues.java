@@ -26,7 +26,7 @@ public class ExportImportWebConfigurationValues {
 			ExportImportWebConfigurationUtil.get(
 				"draft.export.import.configuration.check.interval"));
 
-	public static int DRAFT_EXPORT_IMPORT_CONFIGURATION_CLEAN_UP_COUNT =
+	public static final int DRAFT_EXPORT_IMPORT_CONFIGURATION_CLEAN_UP_COUNT =
 		GetterUtil.getInteger(
 			ExportImportWebConfigurationUtil.get(
 				"draft.export.import.configuration.clean.up.count"));

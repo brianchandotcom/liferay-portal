@@ -46,5 +46,11 @@
 			<message key="name.invalidPattern" value="Class, interface, enum or annotation ''{0}'' must match pattern ''{1}''" />
 		</module>
 		<module name="UpperEll" />
+
+		<!-- Custom checks -->
+
+		<module name="com.liferay.source.formatter.checkstyle.checks.UnusedParameterCheck">
+			<message key="parameter.unused" value="Parameter ''{0}'' is unused" />
+		</module>
 	</module>
 </module>

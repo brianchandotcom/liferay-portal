@@ -1343,9 +1343,9 @@ AUI.add(
 						valueFn: function() {
 							var instance = this;
 
-							var value = instance.getValue();
+							var layoutValue = instance.getParsedValue(instance.getValue());
 
-							var privateLayout = !!(value && value.privateLayout);
+							var privateLayout = !!(layoutValue && layoutValue.privateLayout);
 
 							var layoutsRoot = {
 								groupId: themeDisplay.getScopeGroupId(),
@@ -1797,7 +1797,10 @@ AUI.add(
 
 						instance._cleanSelectedLayout();
 
-						instance._renderLayoutsList(currentTarget.test('.private'));
+						var privateLayout = currentTarget.test('.private');
+
+						instance._resetBreadcrumb(privateLayout);
+						instance._renderLayoutsList(privateLayout);
 					},
 
 					_handleSelectButtonClick: function() {
@@ -2156,6 +2159,16 @@ AUI.add(
 								}
 							);
 						}
+					},
+
+					_resetBreadcrumb: function(privateLayout) {
+						var instance = this;
+
+						var selectedLayoutRoot = instance.get('selectedLayoutPath')[0];
+
+						selectedLayoutRoot.privateLayout = privateLayout;
+
+						instance.set('selectedLayoutPath', [selectedLayoutRoot]);
 					},
 
 					_setSelectedLayoutPath: function(groupId, privateLayout, response) {

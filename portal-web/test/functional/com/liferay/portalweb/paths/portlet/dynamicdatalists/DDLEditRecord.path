@@ -165,8 +165,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LINK_TO_PAGE_BREADCRUMB</td>
+	<td>//ul[contains(@class,'breadcrumb')]/li[${key_number}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LINK_TO_PAGE_PAGE_RADIO</td>
 	<td>//a[contains(.,'${key_pageName}')]/../input[@type='radio']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LINK_TO_PAGE_PAGE_CARET</td>
+	<td>//a[contains(.,'${key_pageName}')]/../input[@type='radio']/../a</td>
 	<td></td>
 </tr>
 <tr>

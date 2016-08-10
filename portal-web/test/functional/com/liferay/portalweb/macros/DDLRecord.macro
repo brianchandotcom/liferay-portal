@@ -141,6 +141,24 @@
 		<execute function="AssertElementPresent" locator1="DDLRecord#INFO_SIDEBAR_EXPANDED" />
 	</command>
 
+	<command name="gotoLinkToPageChildPages">
+		<var name="key_pageName" value="${parentPage}" />
+
+		<execute function="Click" locator1="DDLEditRecord#LINK_TO_PAGE_PAGE_CARET" />
+	</command>
+
+	<command name="gotoLinkToPageNavItem">
+		<var name="key_navItem" value="${pagePrivacy} Pages" />
+
+		<execute function="AssertClick" locator1="DDLEditRecord#LINK_TO_PAGE_NAV_ITEM" value1="${pagePrivacy} Pages" />
+	</command>
+
+	<command name="gotoLinkToPageSelect">
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute function="AssertClick" locator1="DDLEditRecord#LINK_TO_PAGE_SELECT_PAGE_BUTTON" value1="Select" />
+	</command>
+
 	<command name="gotoRecordPreview">
 		<execute function="AssertClick" locator1="DDL#RECORD_TABLE_COLUMN_ONE_PREVIEW_1" value1="(Preview)" />
 	</command>
@@ -256,20 +274,22 @@
 	</command>
 
 	<command name="populateFieldLinkToPage">
-		<var name="key_ddlRecordFieldData" value="${ddlRecordFieldData}" />
-		<var name="key_fieldName" value="${fieldName}" />
+		<execute macro="DDLRecord#gotoLinkToPageSelect">
+			<var name="fieldName" value="${fieldName}" />
+		</execute>
 
-		<execute function="AssertClick" locator1="DDLEditRecord#LINK_TO_PAGE_SELECT_PAGE_BUTTON" value1="Select" />
+		<execute macro="DDLRecord#gotoLinkToPageNavItem">
+			<var name="pagePrivacy" value="${pagePrivacy}" />
+		</execute>
 
-		<var name="key_navItem" value="${pagePrivacy} Pages" />
-
-		<execute function="AssertClick" locator1="DDLEditRecord#LINK_TO_PAGE_NAV_ITEM" value1="${pagePrivacy} Pages" />
-
-		<var name="key_pageName" value="${ddlRecordFieldData}" />
-
-		<execute function="Click" locator1="DDLEditRecord#LINK_TO_PAGE_PAGE_RADIO" />
+		<execute macro="DDLRecord#selectLinkToPageRadio">
+			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
+			<var name="parentPage" value="${parentPage}" />
+		</execute>
 
 		<execute function="AssertClick" locator1="Button#SELECT" value1="Select" />
+
+		<var name="key_fieldName" value="${fieldName}" />
 
 		<execute function="AssertTextEquals" locator1="DDLEditRecord#LINK_TO_PAGE_PAGE_SELECT" value1="${ddlRecordFieldData}" />
 	</command>
@@ -411,6 +431,21 @@
 		<execute function="AssertClick" locator1="Button#SAVE_AS_DRAFT" value1="Save as Draft" />
 
 		<execute macro="Alert#viewSuccessMessage" />
+	</command>
+
+	<command name="selectLinkToPageRadio">
+		<if>
+			<isset var="parentPage" />
+			<then>
+				<execute macro="DDLRecord#gotoLinkToPageChildPages">
+					<var name="parentPage" value="${parentPage}" />
+				</execute>
+			</then>
+		</if>
+
+		<var name="key_pageName" value="${ddlRecordFieldData}" />
+
+		<execute function="Click" locator1="DDLEditRecord#LINK_TO_PAGE_PAGE_RADIO" />
 	</command>
 
 	<command name="submitForPublication">
@@ -738,6 +773,18 @@
 		<execute function="AssertElementPresent" locator1="DDL#RECORD_TABLE_PREVIEW_INVALID_IMG" />
 	</command>
 
+	<command name="viewLinkToPageBreadcrumbCount">
+		<var name="key_number" value="${count}" />
+
+		<execute function="AssertElementPresent" locator1="DDLEditRecord#LINK_TO_PAGE_BREADCRUMB" />
+
+		<var method="MathUtil#sum('${count}', '1')" name="count" />
+
+		<var name="key_number" value="${count}" />
+
+		<execute function="AssertElementNotPresent" locator1="DDLEditRecord#LINK_TO_PAGE_BREADCRUMB" />
+	</command>
+
 	<command name="viewLinkToPageLink">
 		<var name="key_pageName" value="${ddlRecordFieldData}" />
 
@@ -819,9 +866,9 @@
 	</command>
 
 	<command name="viewSelectedLinkToPage">
-		<var name="key_fieldName" value="${fieldName}" />
-
-		<execute function="AssertClick" locator1="DDLEditRecord#LINK_TO_PAGE_SELECT_PAGE_BUTTON" value1="Select" />
+		<execute macro="DDLRecord#gotoLinkToPageSelect">
+			<var name="fieldName" value="${fieldName}" />
+		</execute>
 
 		<var name="key_pageName" value="${ddlRecordFieldData}" />
 

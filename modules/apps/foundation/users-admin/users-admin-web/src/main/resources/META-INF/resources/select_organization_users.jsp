@@ -48,6 +48,18 @@ renderResponse.setTitle(organization.getName());
 
 <liferay-ui:membership-policy-error />
 
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+	<aui:nav cssClass="navbar-nav">
+		<aui:nav-item label="users" selected="<%= true %>" />
+	</aui:nav>
+
+	<aui:nav-bar-search>
+		<aui:form action="<%= portletURL.toString() %>" name="searchFm">
+			<liferay-ui:input-search markupView="lexicon" />
+		</aui:form>
+	</aui:nav-bar-search>
+</aui:nav-bar>
+
 <aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="tabs1" type="hidden" value="<%= tabs1 %>" />
@@ -70,8 +82,6 @@ renderResponse.setTitle(organization.getName());
 		searchContainer="<%= new UserSearch(renderRequest, portletURL) %>"
 		var="userSearchContainer"
 	>
-		<liferay-ui:user-search-form />
-
 		<%
 		UserSearchTerms searchTerms = (UserSearchTerms)userSearchContainer.getSearchTerms();
 

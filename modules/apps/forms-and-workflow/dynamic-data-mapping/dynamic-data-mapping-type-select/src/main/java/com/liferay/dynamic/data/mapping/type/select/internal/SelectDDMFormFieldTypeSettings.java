@@ -90,8 +90,7 @@ public interface SelectDDMFormFieldTypeSettings
 	public String dataSourceType();
 
 	@DDMFormField(
-		label = "%choose-a-data-provider", required = true, type = "select",
-		visibilityExpression = "equals(dataSourceType, \"data-provider\")"
+		label = "%choose-a-data-provider", required = true, type = "select"
 	)
 	public long ddmDataProviderInstanceId();
 
@@ -100,12 +99,11 @@ public interface SelectDDMFormFieldTypeSettings
 
 	@DDMFormField(
 		dataType = "ddm-options", label = "%options",
-		properties = {"showLabel=false"}, required = true, type = "options",
-		visibilityExpression = "equals(dataSourceType, \"manual\")"
+		properties = {"showLabel=false"}, required = true, type = "options"
 	)
 	public DDMFormFieldOptions options();
 
-	@DDMFormField(visibilityExpression = "FALSE")
+	@DDMFormField
 	@Override
 	public DDMFormFieldValidation validation();
 

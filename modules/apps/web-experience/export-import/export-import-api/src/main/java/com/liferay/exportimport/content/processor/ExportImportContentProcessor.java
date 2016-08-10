@@ -15,27 +15,26 @@
 package com.liferay.exportimport.content.processor;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.StagedModel;
 
 import java.io.Serializable;
 
 /**
  * @author Gergely Mathe
+ * @author Mate Thurzo
  */
-public interface ExportImportContentProcessor<T extends Serializable> {
+public interface ExportImportContentProcessor
+	<S extends StagedModel, T extends Serializable> {
 
 	public T replaceExportContentReferences(
-			PortletDataContext portletDataContext, StagedModel stagedModel,
-			T content, boolean exportReferencedContent, boolean escapeContent)
+			PortletDataContext portletDataContext, S stagedModel, T content,
+			boolean exportReferencedContent, boolean escapeContent)
 		throws Exception;
 
 	public T replaceImportContentReferences(
-			PortletDataContext portletDataContext, StagedModel stagedModel,
-			T content)
+			PortletDataContext portletDataContext, S stagedModel, T content)
 		throws Exception;
 
-	public void validateContentReferences(long groupId, T content)
-		throws PortalException;
+	public boolean validateContentReferences(long groupId, T content);
 
 }

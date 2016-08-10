@@ -661,7 +661,7 @@ public class TrashImpl implements Trash {
 		return false;
 	}
 
-	protected final String TRASH_PREFIX = StringPool.SLASH;
+	protected static final String TRASH_PREFIX = StringPool.SLASH;
 
 	private static final Log _log = LogFactoryUtil.getLog(TrashImpl.class);
 

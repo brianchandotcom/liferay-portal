@@ -101,13 +101,13 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 		return PortletPreferencesFactoryUtil.toXML(portletPreferences);
 	}
 
-	protected final int LIST_ICON = 0;
+	protected static final int LIST_ICON = 0;
 
-	protected final int LIST_LONG_TEXT = 1;
+	protected static final int LIST_LONG_TEXT = 1;
 
-	protected final int LIST_SHORT_TEXT = 2;
+	protected static final int LIST_SHORT_TEXT = 2;
 
-	protected final int SELECT_BOX = 3;
+	protected static final int SELECT_BOX = 3;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		UpgradePortletPreferences.class);

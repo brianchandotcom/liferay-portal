@@ -207,10 +207,17 @@ while (manageableCalendarsIterator.hasNext()) {
 }
 %>
 
-<aui:script use="liferay-calendar-container">
-	window.<portlet:namespace />calendarContainer = new Liferay.CalendarContainer(
-		{
-			namespace: '<portlet:namespace />'
+<aui:script use="liferay-calendar-container,liferay-component">
+	Liferay.component(
+		'<portlet:namespace />calendarContainer',
+		function() {
+			var calendarContainer = new Liferay.CalendarContainer(
+				{
+					namespace: '<portlet:namespace />'
+				}
+			);
+
+			return calendarContainer;
 		}
 	);
 </aui:script>
@@ -460,7 +467,8 @@ while (manageableCalendarsIterator.hasNext()) {
 
 			<c:if test="<%= invitable %>">
 				var calendarId = A.one('#<portlet:namespace />calendarId').val();
-				var childCalendarIds = A.Object.keys(window.<portlet:namespace />calendarContainer.get('availableCalendars'));
+				var calendarContainer = Liferay.component('<portlet:namespace />calendarContainer');
+				var childCalendarIds = A.Object.keys(calendarContainer.get('availableCalendars'));
 
 				A.Array.remove(childCalendarIds, A.Array.indexOf(childCalendarIds, calendarId));
 
@@ -493,6 +501,8 @@ while (manageableCalendarsIterator.hasNext()) {
 </aui:script>
 
 <aui:script use="json,liferay-calendar-interval-selector,liferay-calendar-interval-selector-scheduler-event-link,liferay-calendar-list,liferay-calendar-recurrence-util,liferay-calendar-reminders,liferay-calendar-simple-menu,liferay-calendar-util">
+	var calendarContainer = Liferay.component('<portlet:namespace />calendarContainer');
+
 	var defaultCalendarId = <%= calendarId %>;
 
 	var scheduler = window.<portlet:namespace />scheduler;
@@ -512,7 +522,7 @@ while (manageableCalendarsIterator.hasNext()) {
 	);
 
 	var syncCalendarsMap = function() {
-		window.<portlet:namespace />calendarContainer.syncCalendarsMap(
+		calendarContainer.syncCalendarsMap(
 			[
 				window.<portlet:namespace />calendarListAccepted,
 
@@ -526,14 +536,14 @@ while (manageableCalendarsIterator.hasNext()) {
 		);
 
 		A.each(
-			window.<portlet:namespace />calendarContainer.get('availableCalendars'),
+			calendarContainer.get('availableCalendars'),
 			function(item, index) {
 				item.set('disabled', true);
 			}
 		);
 	};
 
-	var calendarsMenu = window.<portlet:namespace />calendarContainer.getCalendarsMenu(
+	var calendarsMenu = calendarContainer.getCalendarsMenu(
 		{
 			content: '#<portlet:namespace />schedulerContainer',
 			defaultCalendarId: defaultCalendarId,
@@ -733,7 +743,7 @@ while (manageableCalendarsIterator.hasNext()) {
 
 		<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="calendarResources" var="calendarResourcesURL"></liferay-portlet:resourceURL>
 
-		window.<portlet:namespace />calendarContainer.createCalendarsAutoComplete(
+		calendarContainer.createCalendarsAutoComplete(
 			'<%= calendarResourcesURL %>',
 			inviteResourcesInput,
 			function(event) {

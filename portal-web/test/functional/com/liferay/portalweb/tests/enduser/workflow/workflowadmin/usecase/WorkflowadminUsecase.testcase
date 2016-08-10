@@ -1520,23 +1520,6 @@
 		<execute macro="Workflow#deleteWorkflowDefinition" />
 	</command>
 
-	<command name="UploadDefinition" priority="4">
-		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Workflow Definition" />
-		</execute>
-
-		<execute macro="Workflow#uploadDefinition">
-			<var name="workflowDefinitionFile" value="workflow_definition_1.xml" />
-			<var name="workflowDefinitionTitle" value="New Uploaded Definition" />
-		</execute>
-
-		<execute macro="Workflow#viewDefinition">
-			<var name="workflowDefinitionName" value="Uploaded Definition" />
-			<var name="workflowDefinitionTitle" value="New Uploaded Definition" />
-			<var name="workflowDefinitionVersionNumber" value="1" />
-		</execute>
-	</command>
-
 	<command name="ViewBlogsEntryWorkflowViaNotifications" priority="3">
 		<execute macro="Navigator#openURL" />
 

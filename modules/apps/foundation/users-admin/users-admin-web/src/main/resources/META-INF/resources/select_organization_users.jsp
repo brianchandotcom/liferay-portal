@@ -18,7 +18,6 @@
 
 <%
 String tabs1 = ParamUtil.getString(request, "tabs1");
-String tabs2 = ParamUtil.getString(request, "tabs2", "current");
 
 int cur = ParamUtil.getInteger(request, SearchContainer.DEFAULT_CUR_PARAM);
 
@@ -32,7 +31,6 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcRenderCommandName", "/users_admin/edit_organization_assignments");
 portletURL.setParameter("tabs1", tabs1);
-portletURL.setParameter("tabs2", tabs2);
 portletURL.setParameter("redirect", redirect);
 portletURL.setParameter("organizationId", String.valueOf(organization.getOrganizationId()));
 
@@ -63,16 +61,9 @@ renderResponse.setTitle(organization.getName());
 <aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="tabs1" type="hidden" value="<%= tabs1 %>" />
-	<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="assignmentsRedirect" type="hidden" />
 	<aui:input name="organizationId" type="hidden" value="<%= organization.getOrganizationId() %>" />
-
-	<liferay-ui:tabs
-		names="current,available"
-		param="tabs2"
-		url="<%= portletURL.toString() %>"
-	/>
 
 	<aui:input name="addUserIds" type="hidden" />
 	<aui:input name="removeUserIds" type="hidden" />
@@ -87,12 +78,7 @@ renderResponse.setTitle(organization.getName());
 
 		LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
 
-		if (tabs2.equals("current")) {
-			userParams.put("usersOrgs", Long.valueOf(organization.getOrganizationId()));
-		}
-		else if (PropsValues.ORGANIZATIONS_ASSIGNMENT_STRICT && !permissionChecker.isCompanyAdmin() && !permissionChecker.hasPermission(scopeGroupId, User.class.getName(), User.class.getName(), ActionKeys.VIEW)) {
-			userParams.put("usersOrgsTree", user.getOrganizations(true));
-		}
+		userParams.put("usersOrgsTree", user.getOrganizations(true));
 		%>
 
 		<liferay-ui:user-search-container-results userParams="<%= userParams %>" />

@@ -935,8 +935,10 @@ public class WebDriverHelper {
 
 		WebDriver.Timeouts timeouts = options.timeouts();
 
-		timeouts.implicitlyWait(
-			GetterUtil.getInteger(timeout), TimeUnit.MILLISECONDS);
+		if (!PropsValues.BROWSER_TYPE.equals("safari")) {
+			timeouts.implicitlyWait(
+				GetterUtil.getInteger(timeout), TimeUnit.MILLISECONDS);
+		}
 	}
 
 	public static void type(WebDriver webDriver, String locator, String value) {

@@ -279,6 +279,10 @@ else {
 							}
 						}
 					},
+					strings: {
+						add: '<liferay-ui:message key="done" />',
+						cancel: '<liferay-ui:message key="cancel" />'
+					},
 					title: '<liferay-ui:message key="assign-users" />',
 					url: selectUsersURL.toString()
 				}

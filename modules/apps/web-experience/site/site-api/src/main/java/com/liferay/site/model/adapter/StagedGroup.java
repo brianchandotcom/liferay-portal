@@ -12,14 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.kernel.model.adapter;
+package com.liferay.site.model.adapter;
 
-import com.liferay.portal.kernel.model.GroupModel;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.StagedModel;
 
 /**
  * @author Daniel Kocsis
  */
-@Deprecated
-public interface StagedGroup extends GroupModel, StagedModel {
+public interface StagedGroup extends Group, StagedModel {
 }

@@ -3,6 +3,7 @@ Bundle-SymbolicName: com.liferay.site.api
 Bundle-Version: 2.1.0
 Export-Package:\
 	com.liferay.site.constants,\
+	com.liferay.site.model.adapter,\
 	com.liferay.site.util
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Site Management

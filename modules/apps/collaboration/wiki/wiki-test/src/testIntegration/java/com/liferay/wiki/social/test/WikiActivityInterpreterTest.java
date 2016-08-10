@@ -105,12 +105,12 @@ public class WikiActivityInterpreterTest
 
 	@Override
 	protected void restoreModelsFromTrash() throws Exception {
-		WikiPageLocalServiceUtil.restorePageFromTrash(
-			TestPropsValues.getUserId(), _page);
-
 		WikiPageLocalServiceUtil.restorePageAttachmentFromTrash(
 			TestPropsValues.getUserId(), _page.getNodeId(), _page.getTitle(),
 			_attachmentFileName);
+
+		WikiPageLocalServiceUtil.restorePageFromTrash(
+			TestPropsValues.getUserId(), _page);
 	}
 
 	private String _attachmentFileName;

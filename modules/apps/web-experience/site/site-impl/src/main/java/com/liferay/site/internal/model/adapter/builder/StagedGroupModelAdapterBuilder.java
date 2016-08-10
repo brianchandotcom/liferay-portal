@@ -12,17 +12,16 @@
  * details.
  */
 
-package com.liferay.portal.model.adapter.builder;
+package com.liferay.site.internal.model.adapter.builder;
 
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.adapter.StagedGroup;
 import com.liferay.portal.kernel.model.adapter.builder.ModelAdapterBuilder;
-import com.liferay.portal.model.adapter.impl.StagedGroupImpl;
+import com.liferay.site.internal.model.adapter.impl.StagedGroupImpl;
+import com.liferay.site.model.adapter.StagedGroup;
 
 /**
  * @author Mate Thurzo
  */
-@Deprecated
 public class StagedGroupModelAdapterBuilder
 	implements ModelAdapterBuilder<Group, StagedGroup> {
 

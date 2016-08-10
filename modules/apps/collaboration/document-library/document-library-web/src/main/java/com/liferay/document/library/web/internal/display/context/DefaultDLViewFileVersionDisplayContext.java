@@ -72,7 +72,7 @@ public class DefaultDLViewFileVersionDisplayContext
 		throws PortalException {
 
 		this(
-			request,fileShortcut.getFileVersion(), fileShortcut,
+			request, fileShortcut.getFileVersion(), fileShortcut,
 			dlMimeTypeDisplayContext, resourceBundle, storageEngine);
 	}
 

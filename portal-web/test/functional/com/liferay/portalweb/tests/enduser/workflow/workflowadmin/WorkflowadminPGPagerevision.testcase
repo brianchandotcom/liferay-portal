@@ -76,112 +76,6 @@
 		</if>
 	</tear-down>
 
-	<command name="ApprovePageRevisionPG" priority="5">
-		<property name="portal.acceptance" value="false" />
-
-		<var name="pageName" value="Page Revision Page" />
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Site Page Name" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Page#add">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="Staging#submitForPublicationPageRevision" />
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="Page#viewWithWorkflowPG">
-			<var name="pageName" value="${pageName}" />
-			<var name="workflowStatus" value="Pending (Review)" />
-		</execute>
-
-		<execute macro="Page#gotoMyAccount">
-			<var name="portletName" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#assignToMeTaskByActions">
-			<var name="workflowAssetTitle" value="${pageName}" />
-			<var name="workflowAssetType" value="${workflowAssetType}" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="Page#viewWithWorkflowPG">
-			<var name="pageName" value="${pageName}" />
-			<var name="workflowStatus" value="Pending (Review)" />
-		</execute>
-
-		<execute macro="Page#gotoMyAccount">
-			<var name="portletName" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#approveTaskByActions">
-			<var name="workflowAssetTitle" value="${pageName}" />
-			<var name="workflowAssetType" value="${workflowAssetType}" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="Page#viewWithWorkflowPG">
-			<var name="pageName" value="${pageName}" />
-			<var name="workflowStatus" value="Ready for Publication" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="Staging#gotoPublishToLive" />
-
-		<execute macro="Staging#publishToLive" />
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="Page#view">
-			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
-		</execute>
-
-		<execute macro="Page#gotoMyAccount">
-			<var name="portletName" value="My Submissions" />
-		</execute>
-
-		<execute macro="Workflow#gotoViewCompletedAssetViaMySubmissions">
-			<var name="workflowAssetTitle" value="${pageName}" />
-		</execute>
-
-		<execute macro="Page#view">
-			<var name="pageName" value="${pageName}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
-		</execute>
-	</command>
-
 	<command name="RejectPageRevisionPG" priority="4">
 		<property name="portal.acceptance" value="false" />
 
@@ -282,7 +176,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewApprovedPageAfterStagingDeactivated" priority="4">
+	<command name="ViewApprovedPageAfterStagingDeactivated" priority="5">
 		<description message="This is a use case for LPS-65319." />
 
 		<var name="pageName" value="New Site Page Name" />

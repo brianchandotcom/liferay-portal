@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.util;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -34,6 +36,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author Brian Wing Shun Chan
  * @author Hugo Huijser
  */
+@ProviderType
 public interface Http {
 
 	public static final String HTTP = "http";
@@ -398,6 +401,10 @@ public interface Http {
 			return _response;
 		}
 
+		public int getTimeout() {
+			return _timeout;
+		}
+
 		public boolean isDelete() {
 			if (_method == Method.DELETE) {
 				return true;
@@ -540,6 +547,10 @@ public interface Http {
 			_response = response;
 		}
 
+		public void setTimeout(int timeout) {
+			_timeout = timeout;
+		}
+
 		private Auth _auth;
 		private Body _body;
 		private Cookie[] _cookies;
@@ -550,6 +561,7 @@ public interface Http {
 		private Method _method = Method.GET;
 		private Map<String, String> _parts;
 		private Response _response = new Response();
+		private int _timeout;
 
 	}
 

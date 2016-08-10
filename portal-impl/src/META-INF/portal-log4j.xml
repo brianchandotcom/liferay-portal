@@ -1156,10 +1156,6 @@
 		<priority value="ERROR" />
 	</category>
 
-	<category name="org.apache.commons.httpclient">
-		<priority value="ERROR" />
-	</category>
-
 	<category name="org.apache.commons.validator">
 		<priority value="ERROR" />
 	</category>

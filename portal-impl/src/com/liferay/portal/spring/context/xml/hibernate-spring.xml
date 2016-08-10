@@ -14,6 +14,11 @@
 		<constructor-arg>
 			<ref bean="liferayDataSource" />
 		</constructor-arg>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="javax.persistence.validation.mode">none</prop>
+			</props>
+		</property>
 	</bean>
 	<bean class="com.liferay.portal.dao.orm.hibernate.PortletSessionFactoryImpl" id="liferaySessionFactory">
 		<property name="dataSource" ref="liferayDataSource" />

@@ -14,10 +14,6 @@
 		<priority value="INFO" />
 	</category>
 
-	<category name="com.liferay.journal.transformer.PropertiesTransformerListener">
-		<priority value="WARN" />
-	</category>
-
 	<category name="com.liferay.journal.transformer.RegexTransformerUtil">
 		<priority value="INFO" />
 	</category>

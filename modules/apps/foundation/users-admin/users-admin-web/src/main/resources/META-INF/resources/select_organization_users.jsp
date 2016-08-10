@@ -27,6 +27,8 @@ long organizationId = ParamUtil.getLong(request, "organizationId");
 
 Organization organization = OrganizationServiceUtil.fetchOrganization(organizationId);
 
+String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
+
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcRenderCommandName", "/users_admin/edit_organization_assignments");
@@ -42,6 +44,8 @@ portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
 renderResponse.setTitle(organization.getName());
+
+SearchContainer userSearchContainer = new UserSearch(renderRequest, portletURL);
 %>
 
 <liferay-ui:membership-policy-error />
@@ -58,6 +62,33 @@ renderResponse.setTitle(organization.getName());
 	</aui:nav-bar-search>
 </aui:nav-bar>
 
+<liferay-frontend:management-bar
+	includeCheckBox="<%= true %>"
+	searchContainerId="users"
+>
+	<liferay-frontend:management-bar-buttons>
+		<liferay-frontend:management-bar-display-buttons
+			displayViews='<%= new String[] {"list"} %>'
+			portletURL="<%= portletURL %>"
+			selectedDisplayStyle="<%= displayStyle %>"
+		/>
+	</liferay-frontend:management-bar-buttons>
+
+	<liferay-frontend:management-bar-filters>
+		<liferay-frontend:management-bar-navigation
+			navigationKeys='<%= new String[] {"all"} %>'
+			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
+		/>
+
+		<liferay-frontend:management-bar-sort
+			orderByCol="<%= userSearchContainer.getOrderByCol() %>"
+			orderByType="<%= userSearchContainer.getOrderByType() %>"
+			orderColumns='<%= new String[] {"first-name", "last-name", "screen-name"} %>'
+			portletURL="<%= portletURL %>"
+		/>
+	</liferay-frontend:management-bar-filters>
+</liferay-frontend:management-bar>
+
 <aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="tabs1" type="hidden" value="<%= tabs1 %>" />
@@ -69,9 +100,9 @@ renderResponse.setTitle(organization.getName());
 	<aui:input name="removeUserIds" type="hidden" />
 
 	<liferay-ui:search-container
+		id="users"
 		rowChecker="<%= new UserOrganizationChecker(renderResponse, organization) %>"
-		searchContainer="<%= new UserSearch(renderRequest, portletURL) %>"
-		var="userSearchContainer"
+		searchContainer="<%= userSearchContainer %>"
 	>
 		<%
 		UserSearchTerms searchTerms = (UserSearchTerms)userSearchContainer.getSearchTerms();

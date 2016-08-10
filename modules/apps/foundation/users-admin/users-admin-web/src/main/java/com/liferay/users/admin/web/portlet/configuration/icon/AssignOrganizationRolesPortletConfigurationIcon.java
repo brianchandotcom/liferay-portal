@@ -92,7 +92,7 @@ public class AssignOrganizationRolesPortletConfigurationIcon
 
 	@Override
 	public double getWeight() {
-		return 104;
+		return 103;
 	}
 
 	@Override

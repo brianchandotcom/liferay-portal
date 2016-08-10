@@ -53,6 +53,7 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
 import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
@@ -65,6 +66,7 @@ import org.springframework.mock.web.MockServletContext;
  * @author Carlos Sierra Andrés
  * @author Raymond Augé
  */
+@PowerMockIgnore("javax.net.ssl.*")
 @PrepareForTest({PortletLocalServiceUtil.class, PrefsPropsUtil.class})
 @RunWith(PowerMockRunner.class)
 public class ComboServletTest extends PowerMockito {

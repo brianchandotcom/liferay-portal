@@ -20,6 +20,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
+import com.liferay.exportimport.content.processor.ExportImportContentProcessorController;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
@@ -310,7 +311,7 @@ public class JournalArticleStagedModelDataHandler
 		if (article.isSmallImage()) {
 			if (Validator.isNotNull(article.getSmallImageURL())) {
 				String smallImageURL =
-					_journalArticleExportImportContentProcessor.
+					_exportImportContentProcessorController.
 						replaceExportContentReferences(
 							portletDataContext, article,
 							article.getSmallImageURL() + StringPool.SPACE, true,
@@ -371,7 +372,7 @@ public class JournalArticleStagedModelDataHandler
 		article.setStatusByUserUuid(article.getStatusByUserUuid());
 
 		String content =
-			_journalArticleExportImportContentProcessor.
+			_exportImportContentProcessorController.
 				replaceExportContentReferences(
 					portletDataContext, article, article.getContent(),
 					portletDataContext.getBooleanParameter(
@@ -494,7 +495,7 @@ public class JournalArticleStagedModelDataHandler
 		String content = article.getContent();
 
 		content =
-			_journalArticleExportImportContentProcessor.
+			_exportImportContentProcessorController.
 				replaceImportContentReferences(
 					portletDataContext, article, content);
 
@@ -624,7 +625,7 @@ public class JournalArticleStagedModelDataHandler
 
 				if (Validator.isNotNull(article.getSmallImageURL())) {
 					String smallImageURL =
-						_journalArticleExportImportContentProcessor.
+						_exportImportContentProcessorController.
 							replaceImportContentReferences(
 								portletDataContext, article,
 								article.getSmallImageURL());
@@ -973,13 +974,10 @@ public class JournalArticleStagedModelDataHandler
 		_imageLocalService = imageLocalService;
 	}
 
-	@Reference(unbind = "-")
+	@Deprecated
 	protected void setJournalArticleExportImportContentProcessor(
 		JournalArticleExportImportContentProcessor
 			journalArticleExportImportContentProcessor) {
-
-		_journalArticleExportImportContentProcessor =
-			journalArticleExportImportContentProcessor;
 	}
 
 	/**
@@ -1016,9 +1014,12 @@ public class JournalArticleStagedModelDataHandler
 
 	private DDMStructureLocalService _ddmStructureLocalService;
 	private DDMTemplateLocalService _ddmTemplateLocalService;
+
+	@Reference
+	private ExportImportContentProcessorController
+		_exportImportContentProcessorController;
+
 	private ImageLocalService _imageLocalService;
-	private JournalArticleExportImportContentProcessor
-		_journalArticleExportImportContentProcessor;
 	private JournalArticleLocalService _journalArticleLocalService;
 	private JournalArticleResourceLocalService
 		_journalArticleResourceLocalService;

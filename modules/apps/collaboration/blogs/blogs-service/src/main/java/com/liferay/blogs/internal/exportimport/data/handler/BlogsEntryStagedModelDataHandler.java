@@ -14,10 +14,11 @@
 
 package com.liferay.blogs.internal.exportimport.data.handler;
 
-import com.liferay.blogs.internal.exportimport.content.processor.BlogsEntryExportImportContentProcessor;
+import com.liferay.blogs.internal.exportimport.content.processor.BlogsEntryDocumentLibraryExportImportContentProcessor;
 import com.liferay.blogs.kernel.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.exportimport.content.processor.ExportImportContentProcessorController;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
@@ -173,7 +174,7 @@ public class BlogsEntryStagedModelDataHandler
 		}
 
 		String content =
-			_blogsEntryExportImportContentProcessor.
+			_exportImportContentProcessorController.
 				replaceExportContentReferences(
 					portletDataContext, entry, entry.getContent(),
 					portletDataContext.getBooleanParameter(
@@ -216,7 +217,7 @@ public class BlogsEntryStagedModelDataHandler
 			portletDataContext.getImportDataStagedModelElement(entry);
 
 		String content =
-			_blogsEntryExportImportContentProcessor.
+			_exportImportContentProcessorController.
 				replaceImportContentReferences(
 					portletDataContext, entry, entry.getContent());
 
@@ -422,13 +423,10 @@ public class BlogsEntryStagedModelDataHandler
 		return inputStream;
 	}
 
-	@Reference(unbind = "-")
+	@Deprecated
 	protected void setBlogsEntryExportImportContentProcessor(
-		BlogsEntryExportImportContentProcessor
+		BlogsEntryDocumentLibraryExportImportContentProcessor
 			blogsEntryExportImportContentProcessor) {
-
-		_blogsEntryExportImportContentProcessor =
-			blogsEntryExportImportContentProcessor;
 	}
 
 	@Reference(unbind = "-")
@@ -474,9 +472,12 @@ public class BlogsEntryStagedModelDataHandler
 	private static final Log _log = LogFactoryUtil.getLog(
 		BlogsEntryStagedModelDataHandler.class);
 
-	private BlogsEntryExportImportContentProcessor
-		_blogsEntryExportImportContentProcessor;
 	private BlogsEntryLocalService _blogsEntryLocalService;
+
+	@Reference
+	private ExportImportContentProcessorController
+		_exportImportContentProcessorController;
+
 	private ImageLocalService _imageLocalService;
 
 }

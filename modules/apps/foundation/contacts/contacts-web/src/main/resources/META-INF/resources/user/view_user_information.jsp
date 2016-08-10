@@ -42,7 +42,7 @@ if (Validator.isNull(user2.getComments())) {
 
 		<ul class="property-list">
 			<li>
-				<span class="property"><%= user2.getComments() %></span>
+				<span class="property"><%= HtmlUtil.replaceNewLine(user2.getComments()) %></span>
 			</li>
 		</ul>
 	</div>

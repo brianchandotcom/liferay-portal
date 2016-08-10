@@ -159,12 +159,12 @@ public class ThreadTest {
 			Thread thread = new Thread() {
 
 				@Override
-				public void setContextClassLoader(ClassLoader cl) {
-					super.setContextClassLoader(cl);
+				public void run() {
 				}
 
 				@Override
-				public void run() {
+				public void setContextClassLoader(ClassLoader cl) {
+					super.setContextClassLoader(cl);
 				}
 
 			};

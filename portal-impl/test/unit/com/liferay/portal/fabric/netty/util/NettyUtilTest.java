@@ -319,6 +319,18 @@ public class NettyUtilTest {
 			return new SingleThreadEventLoop(this, threadFactory, true) {
 
 				@Override
+				public ScheduledFuture<?> schedule(
+					Runnable command, long delay, TimeUnit unit) {
+
+					ScheduledFuture<?> scheduledFuture = super.schedule(
+						command, delay, unit);
+
+					_reference.set(scheduledFuture);
+
+					return scheduledFuture;
+				}
+
+				@Override
 				protected void run() {
 					while (!confirmShutdown()) {
 						Runnable task = takeTask();
@@ -329,18 +341,6 @@ public class NettyUtilTest {
 							updateLastExecutionTime();
 						}
 					}
-				}
-
-				@Override
-				public ScheduledFuture<?> schedule(
-					Runnable command, long delay, TimeUnit unit) {
-
-					ScheduledFuture<?> scheduledFuture = super.schedule(
-						command, delay, unit);
-
-					_reference.set(scheduledFuture);
-
-					return scheduledFuture;
 				}
 
 			};

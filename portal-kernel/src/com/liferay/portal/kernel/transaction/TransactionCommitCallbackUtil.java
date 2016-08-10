@@ -32,14 +32,6 @@ public class TransactionCommitCallbackUtil {
 		TRANSACTION_LIFECYCLE_LISTENER = new NewTransactionLifecycleListener() {
 
 			@Override
-			protected void doCreated(
-				TransactionAttribute transactionAttribute,
-				TransactionStatus transactionStatus) {
-
-				pushCallbackList();
-			}
-
-			@Override
 			protected void doCommitted(
 				TransactionAttribute transactionAttribute,
 				TransactionStatus transactionStatus) {
@@ -55,6 +47,14 @@ public class TransactionCommitCallbackUtil {
 							"Unable to execute transaction commit callback", e);
 					}
 				}
+			}
+
+			@Override
+			protected void doCreated(
+				TransactionAttribute transactionAttribute,
+				TransactionStatus transactionStatus) {
+
+				pushCallbackList();
 			}
 
 			@Override

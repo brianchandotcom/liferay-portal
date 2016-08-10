@@ -32,20 +32,20 @@ public class TransactionLifecycleNotifier {
 		TRANSACTION_LIFECYCLE_LISTENER = new NewTransactionLifecycleListener() {
 
 			@Override
-			protected void doCreated(
-				TransactionAttribute transactionAttribute,
-				TransactionStatus transactionStatus) {
-
-				fireTransactionCreatedEvent(
-					transactionAttribute, transactionStatus);
-			}
-
-			@Override
 			protected void doCommitted(
 				TransactionAttribute transactionAttribute,
 				TransactionStatus transactionStatus) {
 
 				fireTransactionCommittedEvent(
+					transactionAttribute, transactionStatus);
+			}
+
+			@Override
+			protected void doCreated(
+				TransactionAttribute transactionAttribute,
+				TransactionStatus transactionStatus) {
+
+				fireTransactionCreatedEvent(
 					transactionAttribute, transactionStatus);
 			}
 

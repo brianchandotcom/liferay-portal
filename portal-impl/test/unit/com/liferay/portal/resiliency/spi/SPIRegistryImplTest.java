@@ -134,17 +134,17 @@ public class SPIRegistryImplTest {
 		MockSPI mockSPI = new MockSPI() {
 
 			@Override
+			public boolean equals(Object object) {
+				return super.equals(object);
+			}
+
+			@Override
 			public int hashCode() {
 				if (throwException.get()) {
 					throw new RuntimeException();
 				}
 
 				return super.hashCode();
-			}
-
-			@Override
-			public boolean equals(Object object) {
-				return super.equals(object);
 			}
 
 		};

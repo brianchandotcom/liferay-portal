@@ -333,13 +333,13 @@ public class SystemEventAdvice
 	private static final SystemEvent _nullSystemEvent = new SystemEvent() {
 
 		@Override
-		public Class<? extends Annotation> annotationType() {
-			return SystemEvent.class;
+		public int action() {
+			return SystemEventConstants.ACTION_NONE;
 		}
 
 		@Override
-		public int action() {
-			return SystemEventConstants.ACTION_NONE;
+		public Class<? extends Annotation> annotationType() {
+			return SystemEvent.class;
 		}
 
 		@Override

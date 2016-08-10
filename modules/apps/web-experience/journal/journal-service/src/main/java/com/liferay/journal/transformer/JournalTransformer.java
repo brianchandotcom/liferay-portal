@@ -64,12 +64,10 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -90,7 +88,7 @@ public class JournalTransformer {
 	}
 
 	/**
-	 * @deprecated As of 7.1.0, replaced by {@link #JournalTransformer(boolean)}
+	 * @deprecated As of 7.0.0, replaced by {@link #JournalTransformer(boolean)}
 	 */
 	@Deprecated
 	public JournalTransformer(
@@ -175,8 +173,7 @@ public class JournalTransformer {
 		}
 
 		List<TransformerListener> transformerListeners =
-			JournalTransformerListenerRegistryUtil.
-				getTransformerListeners();
+			JournalTransformerListenerRegistryUtil.getTransformerListeners();
 
 		for (TransformerListener transformerListener : transformerListeners) {
 

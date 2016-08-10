@@ -14,10 +14,12 @@
 
 package com.liferay.taglib.aui;
 
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Map;
@@ -191,6 +193,11 @@ public class AUIUtil {
 		return false;
 	}
 
+	public static boolean isValidInputType(String type) {
+		return ArrayUtil.contains(
+			_validInputTypes, StringUtil.toLowerCase(type));
+	}
+
 	public static String normalizeId(String name) {
 		Matcher matcher = _friendlyURLPattern.matcher(name);
 
@@ -199,5 +206,8 @@ public class AUIUtil {
 
 	private static final Pattern _friendlyURLPattern = Pattern.compile(
 		"[^A-Za-z0-9/_-]");
+	private static final String[] _validInputTypes = new String[] {
+		"color", "email", "number", "range", "tel", "text", "textarea"
+	};
 
 }

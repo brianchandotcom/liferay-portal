@@ -292,7 +292,7 @@ boolean choiceField = checkboxField || radioField;
 		if (type.equals("hidden") && (value == null)) {
 			valueString = BeanPropertiesUtil.getStringSilent(bean, name);
 		}
-		else if (!ignoreRequestValue && (Validator.isNull(type) || Arrays.asList("color", "email", "number", "range", "tel", "text", "textarea").contains(type))) {
+		else if (!ignoreRequestValue && (Validator.isNull(type) || AUIUtil.isValidInputType(type))) {
 			valueString = BeanParamUtil.getStringSilent(bean, request, name, valueString);
 
 			if (Validator.isNotNull(fieldParam)) {

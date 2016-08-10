@@ -49,7 +49,6 @@
 
 	<command name="viewConfiguration">
 		<var name="key_rowEntry" value="${configurationName}" />
-		<var name="enableLDAP" value="${enableLDAP}" />
 
 		<while>
 			<condition function="IsElementNotPresent" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />

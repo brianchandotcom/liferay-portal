@@ -131,6 +131,10 @@
 		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATIONS_CONTENT" value1="${contentBody}" />
 	</command>
 
+	<command name="viewNoLongerAppliedNotification">
+		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATIONS_TITLE" value1="Notification no longer applies." />
+	</command>
+
 	<command name="viewNoNotifications">
 		<if>
 			<equals arg1="${activePanel}" arg2="Profile" />

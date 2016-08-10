@@ -65,6 +65,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MENU_ASSIGN</td>
+	<td>//a[contains(@id,'taskAssignLink')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MENU_APPROVE</td>
 	<td>//a[contains(@id,'approvetaskChangeStatusLink')]</td>
 	<td></td>

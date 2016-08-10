@@ -15,6 +15,9 @@
 package com.liferay.portal.util.test;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.io.WriterOutputStream;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -37,8 +40,10 @@ import com.liferay.portal.upload.UploadServletRequestImpl;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.StringWriter;
 
 import java.net.HttpURLConnection;
+import java.net.URI;
 import java.net.URL;
 
 import java.util.ArrayList;
@@ -52,14 +57,17 @@ import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.httpclient.Header;
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.StatusLine;
-import org.apache.commons.httpclient.methods.PostMethod;
-import org.apache.commons.httpclient.methods.multipart.ByteArrayPartSource;
-import org.apache.commons.httpclient.methods.multipart.FilePart;
-import org.apache.commons.httpclient.methods.multipart.MultipartRequestEntity;
-import org.apache.commons.httpclient.methods.multipart.Part;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpHost;
+import org.apache.http.StatusLine;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.RequestBuilder;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.entity.mime.content.ByteArrayBody;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.message.BasicHeader;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpSession;
@@ -212,35 +220,63 @@ public class PortletContainerTestUtil {
 			throw new IllegalStateException("Cookie is null");
 		}
 
-		HttpClient httpClient = new HttpClient();
+		CloseableHttpResponse httpResponse = null;
 
-		PostMethod postMethod = new PostMethod(url);
+		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
 
-		for (String cookie : cookies) {
-			postMethod.addRequestHeader(new Header("Cookie", cookie));
+		try (CloseableHttpClient httpClient = httpClientBuilder.build();
+			StringWriter stringWriter = new StringWriter();
+			WriterOutputStream writerOutputStream = new WriterOutputStream(
+				stringWriter)) {
+
+			RequestBuilder requestBuilder = RequestBuilder.post(url);
+
+			for (String cookie : cookies) {
+				requestBuilder.addHeader(new BasicHeader("Cookie", cookie));
+			}
+
+			byte[] bytes = FileUtil.getBytes(
+				mockMultipartHttpServletRequest.getInputStream());
+
+			MultipartEntityBuilder multipartEntityBuilder =
+				MultipartEntityBuilder.create();
+
+			ByteArrayBody byteArrayBody = new ByteArrayBody(
+				bytes, ContentType.DEFAULT_BINARY, fileNameParameter);
+
+			multipartEntityBuilder.addPart(fileNameParameter, byteArrayBody);
+
+			requestBuilder.setEntity(multipartEntityBuilder.build());
+
+			URI uri = requestBuilder.getUri();
+
+			httpResponse = httpClient.execute(
+				new HttpHost(uri.getHost(), uri.getPort()),
+				requestBuilder.build());
+
+			StatusLine statusLine = httpResponse.getStatusLine();
+
+			HttpEntity httpEntity = httpResponse.getEntity();
+
+			httpEntity.writeTo(writerOutputStream);
+
+			writerOutputStream.flush();
+
+			return new Response(
+				statusLine.getStatusCode(), stringWriter.toString(), null);
 		}
-
-		byte[] bytes = FileUtil.getBytes(
-			mockMultipartHttpServletRequest.getInputStream());
-
-		Part[] parts = {
-			new FilePart(
-				fileNameParameter,
-				new ByteArrayPartSource(fileNameParameter, bytes))
-		};
-
-		MultipartRequestEntity multipartRequestEntity =
-			new MultipartRequestEntity(parts, postMethod.getParams());
-
-		postMethod.setRequestEntity(multipartRequestEntity);
-
-		httpClient.executeMethod(postMethod);
-
-		StatusLine statusLine = postMethod.getStatusLine();
-
-		return new Response(
-			statusLine.getStatusCode(), postMethod.getResponseBodyAsString(),
-			null);
+		finally {
+			try {
+				if (httpResponse != null) {
+					httpResponse.close();
+				}
+			}
+			catch (IOException ioe) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(ioe, ioe);
+				}
+			}
+		}
 	}
 
 	public static Response request(String url) throws IOException {
@@ -322,5 +358,8 @@ public class PortletContainerTestUtil {
 		private final List<String> _cookies;
 
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		PortletContainerTestUtil.class);
 
 }

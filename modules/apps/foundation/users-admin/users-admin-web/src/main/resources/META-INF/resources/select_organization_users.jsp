@@ -103,14 +103,6 @@ renderResponse.setTitle(organization.getName());
 			/>
 		</liferay-ui:search-container-row>
 
-		<div class="separator"><!-- --></div>
-
-		<%
-		String taglibOnClick = renderResponse.getNamespace() + "updateOrganizationUsers('" + portletURL.toString() + StringPool.AMPERSAND + renderResponse.getNamespace() + "cur=" + cur + "');";
-		%>
-
-		<aui:button onClick="<%= taglibOnClick %>" value="update-associations" />
-
 		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>

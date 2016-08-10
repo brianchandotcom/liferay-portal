@@ -14,6 +14,8 @@
 
 package com.liferay.gradle.plugins.util;
 
+import com.liferay.gradle.plugins.internal.util.GradleUtil;
+
 import java.io.IOException;
 import java.io.InputStream;
 

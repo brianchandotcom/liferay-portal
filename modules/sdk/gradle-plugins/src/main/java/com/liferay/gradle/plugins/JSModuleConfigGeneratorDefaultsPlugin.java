@@ -14,10 +14,10 @@
 
 package com.liferay.gradle.plugins;
 
+import com.liferay.gradle.plugins.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.js.module.config.generator.ConfigJSModulesTask;
 import com.liferay.gradle.plugins.js.module.config.generator.JSModuleConfigGeneratorExtension;
 import com.liferay.gradle.plugins.js.module.config.generator.JSModuleConfigGeneratorPlugin;
-import com.liferay.gradle.plugins.util.GradleUtil;
 
 import org.gradle.api.Project;
 

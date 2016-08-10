@@ -14,10 +14,10 @@
 
 package com.liferay.gradle.plugins;
 
+import com.liferay.gradle.plugins.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.service.builder.BuildServiceTask;
 import com.liferay.gradle.plugins.service.builder.ServiceBuilderPlugin;
 import com.liferay.gradle.plugins.tasks.BuildDBTask;
-import com.liferay.gradle.plugins.util.GradleUtil;
 
 import java.io.File;
 

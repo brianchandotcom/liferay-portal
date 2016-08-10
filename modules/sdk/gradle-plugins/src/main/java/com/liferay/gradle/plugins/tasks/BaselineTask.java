@@ -17,7 +17,7 @@ package com.liferay.gradle.plugins.tasks;
 import aQute.service.reporter.Reporter;
 
 import com.liferay.ant.bnd.Baseline;
-import com.liferay.gradle.plugins.util.GradleUtil;
+import com.liferay.gradle.plugins.internal.util.GradleUtil;
 import com.liferay.gradle.util.Validator;
 
 import java.io.File;

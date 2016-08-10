@@ -14,7 +14,7 @@
 
 package com.liferay.gradle.plugins.tasks;
 
-import com.liferay.gradle.plugins.util.GradleUtil;
+import com.liferay.gradle.plugins.internal.util.GradleUtil;
 
 import java.io.BufferedWriter;
 import java.io.File;

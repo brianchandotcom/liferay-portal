@@ -14,8 +14,8 @@
 
 package com.liferay.gradle.plugins;
 
+import com.liferay.gradle.plugins.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.tasks.ReplaceRegexTask;
-import com.liferay.gradle.plugins.util.GradleUtil;
 
 import groovy.lang.Closure;
 

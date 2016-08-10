@@ -78,9 +78,12 @@ import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
+import com.liferay.journal.model.JournalArticleLocalizationModel;
 import com.liferay.journal.model.JournalArticleModel;
 import com.liferay.journal.model.JournalArticleResourceModel;
 import com.liferay.journal.model.JournalContentSearchModel;
+import com.liferay.journal.model.impl.JournalArticleImpl;
+import com.liferay.journal.model.impl.JournalArticleLocalizationModelImpl;
 import com.liferay.journal.model.impl.JournalArticleModelImpl;
 import com.liferay.journal.model.impl.JournalArticleResourceModelImpl;
 import com.liferay.journal.model.impl.JournalContentSearchModelImpl;
@@ -100,6 +103,7 @@ import com.liferay.message.boards.kernel.model.MBThread;
 import com.liferay.message.boards.kernel.model.MBThreadFlagModel;
 import com.liferay.message.boards.kernel.model.MBThreadModel;
 import com.liferay.message.boards.web.constants.MBPortletKeys;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.metadata.RawMetadataProcessor;
 import com.liferay.portal.kernel.model.AccountModel;
@@ -143,6 +147,8 @@ import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.IntegerWrapper;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -220,6 +226,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 import java.util.TimeZone;
@@ -1123,18 +1130,20 @@ public class DataFactory {
 	public AssetEntryModel newAssetEntryModel(
 		JournalArticleModel journalArticleModel) {
 
-		long resourcePrimKey = journalArticleModel.getResourcePrimKey();
+		JournalArticleImpl journalArticle =
+			(JournalArticleImpl)journalArticleModel;
+
+		long resourcePrimKey = journalArticle.getResourcePrimKey();
 
 		String resourceUuid = _journalArticleResourceUUIDs.get(resourcePrimKey);
 
 		return newAssetEntryModel(
-			journalArticleModel.getGroupId(),
-			journalArticleModel.getCreateDate(),
-			journalArticleModel.getModifiedDate(),
+			journalArticle.getGroupId(), journalArticle.getCreateDate(),
+			journalArticle.getModifiedDate(),
 			getClassNameId(JournalArticle.class), resourcePrimKey, resourceUuid,
 			_defaultJournalDDMStructureModel.getStructureId(),
-			journalArticleModel.isIndexable(), true, ContentTypes.TEXT_HTML,
-			journalArticleModel.getTitle());
+			journalArticle.isIndexable(), true, ContentTypes.TEXT_HTML,
+			journalArticle.getTitle());
 	}
 
 	public AssetEntryModel newAssetEntryModel(MBMessageModel mbMessageModel) {
@@ -1677,9 +1686,35 @@ public class DataFactory {
 		return new IntegerWrapper();
 	}
 
+	public JournalArticleLocalizationModel newJournalArticleLocalizationModel(
+		JournalArticleModel journalArticleModel, int articleIndex,
+		int versionIndex) {
+
+		JournalArticleLocalizationModel journalArticleLocalizationModel =
+			new JournalArticleLocalizationModelImpl();
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append("TestJournalArticle_");
+		sb.append(articleIndex);
+		sb.append(StringPool.UNDERLINE);
+		sb.append(versionIndex);
+
+		journalArticleLocalizationModel.setArticleLocalizationId(
+			_counter.get());
+		journalArticleLocalizationModel.setCompanyId(
+			journalArticleModel.getCompanyId());
+		journalArticleLocalizationModel.setTitle(sb.toString());
+		journalArticleLocalizationModel.setLanguageId(
+			journalArticleModel.getDefaultLanguageId());
+
+		return journalArticleLocalizationModel;
+	}
+
 	public JournalArticleModel newJournalArticleModel(
-		JournalArticleResourceModel journalArticleResourceModel,
-		int articleIndex, int versionIndex) {
+			JournalArticleResourceModel journalArticleResourceModel,
+			int articleIndex, int versionIndex)
+		throws PortalException {
 
 		JournalArticleModel journalArticleModel = new JournalArticleModelImpl();
 
@@ -1709,19 +1744,10 @@ public class DataFactory {
 
 		String urlTitle = sb.toString();
 
-		sb = new StringBundler(4);
-
-		sb.append("<?xml version=\"1.0\"?><root available-locales=\"en_US\" ");
-		sb.append("default-locale=\"en_US\"><Title language-id=\"en_US\">");
-		sb.append(urlTitle);
-		sb.append("</Title></root>");
-
-		String title = sb.toString();
-
-		journalArticleModel.setTitle(title);
 		journalArticleModel.setUrlTitle(urlTitle);
 
 		journalArticleModel.setContent(_journalArticleContent);
+		journalArticleModel.setDefaultLanguageId("en_US");
 		journalArticleModel.setDDMStructureKey(
 			_defaultJournalDDMStructureModel.getStructureKey());
 		journalArticleModel.setDDMTemplateKey(

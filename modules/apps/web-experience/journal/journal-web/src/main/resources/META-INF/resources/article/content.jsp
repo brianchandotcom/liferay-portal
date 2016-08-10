@@ -96,7 +96,7 @@ if (!searchRestriction) {
 <liferay-ui:error exception="<%= StorageFieldRequiredException.class %>" message="please-fill-out-all-required-fields" />
 
 <aui:fieldset>
-	<aui:input autoFocus="<%= true %>" ignoreRequestValue="<%= changeStructure %>" name="title" wrapperCssClass="article-content-title">
+	<aui:input autoFocus="<%= true %>" ignoreRequestValue="<%= changeStructure %>" label="title" localized="<%= true %>" name="titleMapAsXML" type="text" wrapperCssClass="article-content-title">
 		<c:if test="<%= classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT %>">
 			<aui:validator name="required" />
 		</c:if>
@@ -116,7 +116,7 @@ if (!searchRestriction) {
 		</c:choose>
 	</c:if>
 
-	<aui:input ignoreRequestValue="<%= changeStructure %>" label="summary" name="description" wrapperCssClass="article-content-description" />
+	<aui:input ignoreRequestValue="<%= changeStructure %>" label="summary" localized="<%= true %>" name="descriptionMapAsXML" type="text" wrapperCssClass="article-content-description" />
 
 	<div class="article-content-content">
 		<liferay-ddm:html
@@ -168,7 +168,7 @@ if (!searchRestriction) {
 			'ddm.searchRestriction': <%= searchRestriction %>,
 			'ddm.searchRestrictionClassNameId': <%= ClassNameLocalServiceUtil.getClassNameId(JournalFolder.class) %>,
 			'ddm.searchRestrictionClassPK': <%= folderId %>,
-			descriptionInputLocalized: Liferay.component('<portlet:namespace />description'),
+			descriptionInputLocalized: Liferay.component('<portlet:namespace />descriptionMapAsXML'),
 			editStructure: '#<portlet:namespace />editDDMStructure',
 			editTemplate: '#<portlet:namespace />editDDMTemplate',
 			namespace: '<portlet:namespace />',
@@ -177,7 +177,7 @@ if (!searchRestriction) {
 			'strings.draft': '<liferay-ui:message key="draft" />',
 			'strings.editStructure': '<liferay-ui:message key="editing-the-current-structure-deletes-all-unsaved-content" />',
 			'strings.editTemplate': '<liferay-ui:message key="editing-the-current-template-deletes-all-unsaved-content" />',
-			titleInputLocalized: Liferay.component('<portlet:namespace />title'),
+			titleInputLocalized: Liferay.component('<portlet:namespace />titleMapAsXML'),
 			translationManager: Liferay.component('<portlet:namespace />translationManager'),
 			'urls.editStructure': '<%= editStructureURL %>',
 			'urls.editTemplate': '<%= editTemplateURL %>'

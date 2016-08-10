@@ -21,7 +21,7 @@ import java.io.Serializable;
  */
 public class BackgroundTaskResult implements Serializable {
 
-	public static BackgroundTaskResult SUCCESS = new BackgroundTaskResult(
+	public static final BackgroundTaskResult SUCCESS = new BackgroundTaskResult(
 		BackgroundTaskConstants.STATUS_SUCCESSFUL);
 
 	public BackgroundTaskResult() {

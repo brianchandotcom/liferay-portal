@@ -358,7 +358,7 @@ public class LoadBalancerUtil {
 		executorService.shutdown();
 	}
 
-	protected static long RECENT_BATCH_AGE = 120 * 1000;
+	protected static final long RECENT_BATCH_AGE = 120 * 1000;
 
 	private static final Pattern _masterPattern =
 		Pattern.compile(".*/(?<master>[^/]+)/?");

@@ -67,6 +67,11 @@ public class ServiceAccessQuotaMetricConfigImpl
 		return _pattern;
 	}
 
+	@Override
+	public int hashCode() {
+		return toString().hashCode();
+	}
+
 	public void setName(String name) {
 		_name = name;
 	}

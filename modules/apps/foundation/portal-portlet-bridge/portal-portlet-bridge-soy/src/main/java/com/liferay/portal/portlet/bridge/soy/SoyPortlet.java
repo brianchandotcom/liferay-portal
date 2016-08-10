@@ -33,6 +33,7 @@ import java.io.Writer;
 
 import java.util.Collections;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import javax.portlet.MimeResponse;
@@ -80,6 +81,10 @@ public class SoyPortlet extends MVCPortlet {
 		super.render(renderRequest, renderResponse);
 	}
 
+	protected Object deserializeTemplateContextValue(Object value) {
+		return _soyPortletHelper.deserializeValue(value);
+	}
+
 	protected Set<String> getJavaScriptRequiredModules(String path) {
 		return Collections.emptySet();
 	}
@@ -118,6 +123,8 @@ public class SoyPortlet extends MVCPortlet {
 
 			populateJavaScriptTemplateContext(
 				template, portletResponse.getNamespace());
+
+			_deserializeTemplateContextValues();
 
 			template.processTemplate(writer);
 
@@ -165,6 +172,14 @@ public class SoyPortlet extends MVCPortlet {
 
 	protected boolean propagateRequestParameters;
 	protected Template template;
+
+	private void _deserializeTemplateContextValues() {
+		for (Entry<String, Object> entry : template.entrySet()) {
+			template.put(
+				entry.getKey(),
+				deserializeTemplateContextValue(entry.getValue()));
+		}
+	}
 
 	private Template _getTemplate() throws TemplateException {
 		SoyTemplateResourcesCollector soyTemplateResourcesCollector =

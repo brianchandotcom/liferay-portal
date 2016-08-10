@@ -3,12 +3,29 @@
 /**
  * Prints the Hello Soy portlet view page.
  *
- * @param descriptionURL
- * @param portletURL
+ * @param layouts
+ * @param navigationURL
  * @param userName
  */
 {template .render}
-	Hello, {$userName}! <a href="{$portletURL}">Go to the edit page.</a><br />
+	<p>
+		Hello, {$userName}! This is an example of a <cite>Soy Portlet</cite>.
+		Here you'll find how easy it is to do things like:
+	</p>
 
-	<a href="{$descriptionURL}">Read the description.</a>
+	<h3>Listing pages</h3>
+
+	<div class="list-group">
+		<div class="list-group-heading">Navigate to</div>
+
+		{foreach $layout in $layouts}
+			<a class="list-group-item" href="{$layout.friendlyURL}">{$layout.nameCurrentValue}</a>
+		{/foreach}
+	</div>
+
+	<h3>Navigating between views</h3>
+
+	<a href="{$navigationURL}">Click here to navigate to another view.</a>
+
+	{call hello_soy_common.footer /}
 {/template}

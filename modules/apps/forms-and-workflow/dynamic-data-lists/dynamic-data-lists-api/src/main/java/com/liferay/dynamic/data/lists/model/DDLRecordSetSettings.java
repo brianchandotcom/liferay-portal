@@ -20,11 +20,24 @@ import com.liferay.dynamic.data.mapping.annotations.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutColumn;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutPage;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutRow;
+import com.liferay.dynamic.data.mapping.annotations.DDMFormRule;
 
 /**
  * @author Bruno Basto
  */
-@DDMForm
+@DDMForm(
+	rules = {
+		@DDMFormRule(
+			actions = {
+				"set(fieldAt(\"emailFromAddress\", 0), \"visible\", equals(get(fieldAt(\"sendEmailNotification\", 0), \"value\"), true))",
+				"set(fieldAt(\"emailFromName\", 0), \"visible\", equals(get(fieldAt(\"sendEmailNotification\", 0), \"value\"), true))",
+				"set(fieldAt(\"emailSubject\", 0), \"visible\", equals(get(fieldAt(\"sendEmailNotification\", 0), \"value\"), true))",
+				"set(fieldAt(\"emailToAddress\", 0), \"visible\", equals(get(fieldAt(\"sendEmailNotification\", 0), \"value\"), true))",
+				"set(fieldAt(\"published\", 0), \"visible\", false)"
+			}
+		)
+	}
+)
 @DDMFormLayout(
 	{
 		@DDMFormLayoutPage(

@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.chat.configuration;
+package com.liferay.chat.configuration.definition;
 
+import com.liferay.chat.configuration.definition.ChatGroupServiceConfiguration;
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
 
 import org.osgi.service.component.annotations.Component;

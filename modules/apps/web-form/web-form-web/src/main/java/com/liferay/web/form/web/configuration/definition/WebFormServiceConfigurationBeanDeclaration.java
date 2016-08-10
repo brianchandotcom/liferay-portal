@@ -12,9 +12,10 @@
  * details.
  */
 
-package com.liferay.web.form.web.configuration;
+package com.liferay.web.form.web.configuration.definition;
 
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
+import com.liferay.web.form.web.configuration.WebFormGroupServiceConfiguration;
 
 import org.osgi.service.component.annotations.Component;
 

@@ -90,6 +90,9 @@ public class ModulesStructureTest {
 							dirPath, gitRepoBuildGradleTemplate,
 							gitRepoSettingsGradleTemplate);
 					}
+					else if (Files.exists(dirPath.resolve("app.bnd"))) {
+						_testAppBuildScripts(dirPath);
+					}
 					else if (Files.exists(dirPath.resolve("bnd.bnd"))) {
 						if (Files.notExists(buildGradlePath)) {
 							Assert.fail("Missing " + buildGradlePath);
@@ -216,6 +219,12 @@ public class ModulesStructureTest {
 			Path dirPath, String buildGradleTemplate)
 		throws IOException {
 
+		if (Files.notExists(dirPath.resolve("app.bnd"))) {
+			buildGradleTemplate = StringUtil.removeSubstring(
+				buildGradleTemplate,
+				_APP_BUILD_GRADLE + StringPool.NEW_LINE + StringPool.NEW_LINE);
+		}
+
 		final Set<String> pluginNames = new TreeSet<>();
 
 		pluginNames.add("com.liferay.gradle.plugins");
@@ -277,6 +286,18 @@ public class ModulesStructureTest {
 			s, System.lineSeparator(), StringPool.NEW_LINE);
 	}
 
+	private void _testAppBuildScripts(Path dirPath) throws IOException {
+		Path buildGradlePath = dirPath.resolve("build.gradle");
+
+		Assert.assertTrue(
+			"Missing " + buildGradlePath, Files.exists(buildGradlePath));
+
+		String buildGradle = _read(buildGradlePath);
+
+		Assert.assertEquals(
+			"Incorrect " + buildGradlePath, _APP_BUILD_GRADLE, buildGradle);
+	}
+
 	private void _testGitRepoBuildScripts(
 			Path dirPath, String buildGradleTemplate,
 			String settingsGradleTemplate)
@@ -322,5 +343,8 @@ public class ModulesStructureTest {
 			Assert.fail("Missing " + gulpfileJsPath);
 		}
 	}
+
+	private static final String _APP_BUILD_GRADLE =
+		"apply plugin: \"com.liferay.app.defaults.plugin\"";
 
 }

@@ -33,6 +33,7 @@ import java.util.concurrent.Callable;
 import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
+import org.gradle.api.Task;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.file.SourceDirectorySet;
@@ -184,12 +185,13 @@ public class AppJavadocBuilderPlugin implements Plugin<Project> {
 
 		TaskContainer taskContainer = subproject.getTasks();
 
-		Javadoc subprojectJavadoc = (Javadoc)taskContainer.findByName(
-			JavaPlugin.JAVADOC_TASK_NAME);
+		Task task = taskContainer.findByName(JavaPlugin.JAVADOC_TASK_NAME);
 
-		if (subprojectJavadoc == null) {
+		if (!(task instanceof Javadoc)) {
 			return;
 		}
+
+		Javadoc subprojectJavadoc = (Javadoc)task;
 
 		javadoc.dependsOn(subprojectJavadoc);
 

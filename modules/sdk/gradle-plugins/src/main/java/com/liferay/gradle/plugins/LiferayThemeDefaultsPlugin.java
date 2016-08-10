@@ -21,6 +21,7 @@ import com.liferay.gradle.plugins.tasks.ReplaceRegexTask;
 import com.liferay.gradle.plugins.util.FileUtil;
 import com.liferay.gradle.plugins.util.GradleUtil;
 import com.liferay.gradle.plugins.util.IncrementVersionClosure;
+import com.liferay.gradle.plugins.util.PortalTools;
 import com.liferay.gradle.util.copy.StripPathSegmentsAction;
 
 import groovy.lang.Closure;
@@ -143,7 +144,7 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 	}
 
 	protected void addDependenciesFrontendCSSCommon(Project project) {
-		String version = GradleUtil.getPortalToolVersion(
+		String version = PortalTools.getVersion(
 			project, CSSBuilderDefaultsPlugin.FRONTEND_COMMON_CSS_NAME);
 
 		GradleUtil.addDependency(

@@ -15,6 +15,7 @@
 package com.liferay.gradle.plugins;
 
 import com.liferay.gradle.plugins.util.GradleUtil;
+import com.liferay.gradle.plugins.util.PortalTools;
 import com.liferay.gradle.plugins.whip.WhipExtension;
 import com.liferay.gradle.plugins.whip.WhipPlugin;
 import com.liferay.gradle.plugins.whip.WhipTaskExtension;
@@ -36,8 +37,7 @@ public class WhipDefaultsPlugin
 		WhipExtension whipExtension = GradleUtil.getExtension(
 			project, WhipExtension.class);
 
-		String version = GradleUtil.getPortalToolVersion(
-			project, getPortalToolName());
+		String version = PortalTools.getVersion(project, getPortalToolName());
 
 		if (Validator.isNotNull(version)) {
 			whipExtension.setVersion(version);

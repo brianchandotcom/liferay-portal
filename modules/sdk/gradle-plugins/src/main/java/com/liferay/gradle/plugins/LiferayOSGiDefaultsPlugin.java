@@ -39,6 +39,7 @@ import com.liferay.gradle.plugins.upgrade.table.builder.UpgradeTableBuilderPlugi
 import com.liferay.gradle.plugins.util.FileUtil;
 import com.liferay.gradle.plugins.util.GradleUtil;
 import com.liferay.gradle.plugins.util.IncrementVersionClosure;
+import com.liferay.gradle.plugins.util.PortalTools;
 import com.liferay.gradle.plugins.whip.WhipPlugin;
 import com.liferay.gradle.plugins.wsdd.builder.WSDDBuilderPlugin;
 import com.liferay.gradle.plugins.wsdl.builder.WSDLBuilderPlugin;
@@ -502,13 +503,12 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	}
 
 	protected void addDependenciesPmd(Project project) {
-		String version = GradleUtil.getPortalToolVersion(
-			project, _PMD_PORTAL_TOOL_NAME);
+		String version = PortalTools.getVersion(project, _PMD_PORTAL_TOOL_NAME);
 
 		if (Validator.isNotNull(version)) {
 			GradleUtil.addDependency(
-				project, "pmd", GradleUtil.PORTAL_TOOL_GROUP,
-				_PMD_PORTAL_TOOL_NAME, version);
+				project, "pmd", PortalTools.GROUP, _PMD_PORTAL_TOOL_NAME,
+				version);
 		}
 	}
 
@@ -1474,7 +1474,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		Map<String, String> args = new HashMap<>();
 
-		args.put("group", GradleUtil.PORTAL_TOOL_GROUP);
+		args.put("group", PortalTools.GROUP);
 		args.put("module", portalToolName);
 
 		configuration.exclude(args);

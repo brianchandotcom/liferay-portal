@@ -14,11 +14,7 @@
 
 package com.liferay.gradle.plugins.util;
 
-import com.liferay.gradle.plugins.BasePortalToolDefaultsPlugin;
-
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -27,7 +23,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Set;
 
 import org.gradle.StartParameter;
@@ -52,8 +47,6 @@ import org.gradle.api.plugins.PluginContainer;
  */
 public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 
-	public static final String PORTAL_TOOL_GROUP = "com.liferay";
-
 	public static final String SNAPSHOT_PROPERTY_NAME = "snapshot";
 
 	public static <T extends Task> T addTask(
@@ -72,16 +65,6 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 			project, BasePluginConvention.class);
 
 		return basePluginConvention.getArchivesBaseName();
-	}
-
-	public static String getPortalToolVersion(
-		Project project, String portalToolName) {
-
-		String portalToolVersion = _portalToolVersions.getProperty(
-			portalToolName);
-
-		return GradleUtil.getProperty(
-			project, portalToolName + ".version", portalToolVersion);
 	}
 
 	public static Project getProject(Project rootProject, String name) {
@@ -297,22 +280,5 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 	}
 
 	private static final String _SNAPSHOT_VERSION_SUFFIX = "-SNAPSHOT";
-
-	private static final Properties _portalToolVersions = new Properties();
-
-	static {
-		ClassLoader classLoader =
-			BasePortalToolDefaultsPlugin.class.getClassLoader();
-
-		try (InputStream inputStream = classLoader.getResourceAsStream(
-				"com/liferay/gradle/plugins/dependencies" +
-					"/portal-tools.properties")) {
-
-			_portalToolVersions.load(inputStream);
-		}
-		catch (IOException ioe) {
-			throw new ExceptionInInitializerError(ioe);
-		}
-	}
 
 }

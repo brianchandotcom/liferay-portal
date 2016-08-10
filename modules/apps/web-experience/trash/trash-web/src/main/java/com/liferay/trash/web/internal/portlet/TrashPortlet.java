@@ -62,6 +62,7 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.preferences-owned-by-group=true",
 		"com.liferay.portlet.private-request-attributes=false",
 		"com.liferay.portlet.private-session-attributes=false",
+		"com.liferay.portlet.scopeable=true",
 		"com.liferay.portlet.use-default-template=true",
 		"javax.portlet.display-name=Trash",
 		"javax.portlet.init-param.template-path=/",

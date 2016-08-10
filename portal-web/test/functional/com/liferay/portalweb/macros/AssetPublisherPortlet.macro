@@ -760,14 +760,14 @@
 			<elseif>
 				<equals arg1="${contentSharingAcrossSitesEnabled}" arg2="false" />
 				<then>
+					<execute function="AssertTextEquals" locator1="MenuItem#GLOBAL" value1="Global" />
+
 					<if>
 						<equals arg1="${childSite}" arg2="true" />
 						<then>
-							<execute function="AssertTextEquals" locator1="MenuItem#GLOBAL" value1="Global" />
 							<execute function="AssertTextEquals" locator1="MenuItem#OTHER_SITE" value1="Other Site..." />
 						</then>
 						<else>
-							<execute function="AssertTextEquals" locator1="MenuItem#GLOBAL" value1="Global" />
 							<execute function="AssertElementNotPresent" locator1="MenuItem#OTHER_SITE" />
 						</else>
 					</if>

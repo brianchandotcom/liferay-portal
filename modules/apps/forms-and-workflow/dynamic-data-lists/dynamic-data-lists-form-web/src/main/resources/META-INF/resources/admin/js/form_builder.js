@@ -164,12 +164,14 @@ AUI.add(
 
 						field.render();
 
-						fieldSettingsPanel.settingsForm.set('context', fieldSettingsPanel._previousFormContext);
+						var settingForm = fieldSettingsPanel.settingsForm;
 
-						fieldSettingsPanel.settingsForm.render();
+						settingForm.set('context', fieldSettingsPanel._previousFormContext);
+
+						settingForm.render();
 					},
 
-					confirmCancelFieldChangesDiolog: function(afterConfirm) {
+					confirmCancelFieldChangesDiolog: function(confirmFn) {
 						var instance = this;
 
 						Liferay.Util.openWindow(
@@ -187,7 +189,7 @@ AUI.add(
 												labelHTML: Liferay.Language.get('yes-cancel'),
 												on: {
 													click: function(event) {
-														afterConfirm();
+														confirmFn.apply(instance, arguments);
 
 														Liferay.Util.getWindow('cancelFieldChangesDialog').hide();
 													}
@@ -266,7 +268,7 @@ AUI.add(
 						instance.showFieldSettingsPanel(field);
 					},
 
-					findFieldByName: function(name) {
+					findField: function(name) {
 						var instance = this;
 
 						var field;
@@ -276,7 +278,7 @@ AUI.add(
 						visitor.set(
 							'fieldHandler',
 							function(currentField) {
-								if (currentField.get('context').fieldName === name) {
+								if (currentField.get('context.fieldName') === name) {
 									field = currentField;
 								}
 							}
@@ -652,7 +654,7 @@ AUI.add(
 							function(field) {
 								var fieldVisible = boundingBox.contains(field.get('container'));
 
-								if (fieldVisible && field.get('context').required) {
+								if (fieldVisible && field.get('context.required')) {
 									hasRequiredField = true;
 								}
 							}

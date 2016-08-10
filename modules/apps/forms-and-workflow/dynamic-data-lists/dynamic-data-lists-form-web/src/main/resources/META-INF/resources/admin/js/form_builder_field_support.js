@@ -109,8 +109,8 @@ AUI.add(
 
 							visitor.set(
 								'fieldHandler',
-								function(formFieldContext) {
-									instance._fillSettingsFormField(formFieldContext, settingsForm);
+								function(fieldContext) {
+									instance._fillSettingsFormField(fieldContext, settingsForm);
 								}
 							);
 
@@ -157,25 +157,26 @@ AUI.add(
 				);
 			},
 
-			_fillSettingsFormField: function(formFieldContext, settingsForm) {
+			_fillSettingsFormField: function(fieldContext, settingsForm) {
 				var instance = this;
 
-				var instanceContext = instance.get('context');
+				var context = instance.get('context');
 
-				var contextKey = RendererUtil.getFieldNameFromQualifiedName(formFieldContext.name);
+				var contextKey = RendererUtil.getFieldNameFromQualifiedName(fieldContext.name);
 
 				if (contextKey === 'name') {
-					var fieldName = instanceContext.fieldName;
+					var fieldName = context.fieldName;
 
 					if (!fieldName) {
-						fieldName = settingsForm._generateFieldName();
+						fieldName = settingsForm.generateFieldName(context.type);
 					}
 
-					formFieldContext.value = fieldName;
-					instanceContext.fieldName = fieldName;
+					fieldContext.value = fieldName;
+
+					context.fieldName = fieldName;
 				}
-				else if (contextKey in instanceContext) {
-					formFieldContext.value = instanceContext[contextKey];
+				else if (contextKey in context) {
+					fieldContext.value = context[contextKey];
 				}
 			},
 

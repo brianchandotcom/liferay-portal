@@ -31,7 +31,7 @@ public class UnusedParameterCheck extends AbstractCheck {
 
 	@Override
 	public int[] getDefaultTokens() {
-		return new int[] {TokenTypes.METHOD_DEF};
+		return new int[] {TokenTypes.CTOR_DEF, TokenTypes.METHOD_DEF};
 	}
 
 	@Override

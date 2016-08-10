@@ -489,12 +489,6 @@
 	</command>
 
 	<command name="ViewContentSharingEnabledAcrossSitesViaAP" priority="4">
-		<var name="entryContent" value="Blogs Entry Content" />
-		<var name="entryTitle" value="Blogs Entry Title" />
-		<var name="page" value="Public Pages" />
-		<var name="pageName" value="AP Test Page" />
-		<var name="portletName" value="Asset Publisher" />
-
 		<execute macro="TestCase#getSiteName">
 			<return from="siteName" name="siteName" />
 			<var name="siteName" value="${siteName}" />

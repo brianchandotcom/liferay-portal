@@ -79,6 +79,10 @@ public class JournalServiceConfigurationValues {
 				JournalServiceConfigurationKeys.
 					JOURNAL_FOLDER_ICON_CHECK_COUNT));
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static final String LAR_CREATION_STRATEGY =
 		JournalServiceConfigurationUtil.get(
 			JournalServiceConfigurationKeys.LAR_CREATION_STRATEGY);

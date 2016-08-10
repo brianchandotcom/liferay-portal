@@ -30,6 +30,7 @@ import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.service.JournalArticleServiceUtil;
 import com.liferay.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.journal.transformer.JournalTransformer;
+import com.liferay.journal.transformer.JournalTransformerListenerRegistryUtil;
 import com.liferay.journal.util.comparator.ArticleVersionComparator;
 import com.liferay.petra.collection.stack.FiniteUniqueStack;
 import com.liferay.petra.xml.XMLUtil;
@@ -78,7 +79,6 @@ import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
-import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -703,24 +703,9 @@ public class JournalUtil {
 			return script;
 		}
 
-		String[] transformerListenerClassNames = PropsUtil.getArray(
-			JournalServiceConfigurationKeys.TRANSFORMER_LISTENER);
-
-		for (String transformerListenerClassName :
-				transformerListenerClassNames) {
-
-			TransformerListener transformerListener = null;
-
-			try {
-				transformerListener =
-					(TransformerListener)InstanceFactory.newInstance(
-						transformerListenerClassName);
-
-				continue;
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
+		for (TransformerListener transformerListener :
+				JournalTransformerListenerRegistryUtil.
+					getTransformerListeners()) {
 
 			script = transformerListener.onScript(
 				script, (Document)null, languageId, tokens);
@@ -1633,7 +1618,6 @@ public class JournalUtil {
 	private static Map<String, String> _customTokens;
 	private static final JournalTransformer _journalTransformer =
 		new JournalTransformer(
-			JournalServiceConfigurationKeys.TRANSFORMER_LISTENER,
 			JournalServiceConfigurationKeys.ERROR_TEMPLATE, true);
 
 }

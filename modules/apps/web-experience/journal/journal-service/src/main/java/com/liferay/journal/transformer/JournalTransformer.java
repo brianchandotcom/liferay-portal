@@ -45,11 +45,9 @@ import com.liferay.portal.kernel.templateparser.TransformerListener;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -111,42 +109,24 @@ public class JournalTransformer {
 		}
 
 		_restricted = restricted;
+
+		for (TransformerListener transformerListener :
+				JournalTransformerListenerRegistryUtil.
+					getTransformerListeners()) {
+
+			_transformerListeners.add(transformerListener);
+		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #JournalTransformer(String, boolean)}
+	 */
+	@Deprecated
 	public JournalTransformer(
 		String transformerListenerPropertyKey, String errorTemplatePropertyKey,
 		boolean restricted) {
 
 		this(errorTemplatePropertyKey, restricted);
-
-		ClassLoader classLoader = getClassLoader();
-
-		Configuration configuration = ConfigurationFactoryUtil.getConfiguration(
-			classLoader, "portlet");
-
-		Set<String> transformerListenerClassNames = SetUtil.fromArray(
-			configuration.getArray(transformerListenerPropertyKey));
-
-		for (String transformerListenerClassName :
-				transformerListenerClassNames) {
-
-			try {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Instantiating transformer listener " +
-							transformerListenerClassName);
-				}
-
-				TransformerListener transformerListener =
-					(TransformerListener)InstanceFactory.newInstance(
-						classLoader, transformerListenerClassName);
-
-				_transformerListeners.add(transformerListener);
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
-		}
 	}
 
 	public String transform(

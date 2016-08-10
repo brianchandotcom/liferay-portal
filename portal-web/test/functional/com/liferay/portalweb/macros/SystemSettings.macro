@@ -47,7 +47,7 @@
 		</if>
 	</command>
 
-	<command name="viewPlatformSettingCP">
+	<command name="viewConfiguration">
 		<var name="key_rowEntry" value="${configurationName}" />
 
 		<while>
@@ -59,16 +59,21 @@
 
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#VIEW" value1="View" />
+		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
 		<if>
-			<equals arg1="${LDAPEnabled}" arg2="true" />
+			<equals arg1="${configurationName}" arg2="LDAP Auth" />
 			<then>
-				<execute function="AssertElementPresent" locator1="SystemSettings#LDAP_ENTRY" />
+				<if>
+					<equals arg1="${enableLDAP}" arg2="true" />
+					<then>
+						<execute function="AssertChecked" locator1="SystemSettings#ENABLED_CHECKBOX" />
+					</then>
+					<else>
+						<execute function="AssertNotChecked" locator1="SystemSettings#ENABLED_CHECKBOX" />
+					</else>
+				</if>
 			</then>
-			<else>
-				<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No configurations were found." />
-			</else>
 		</if>
 	</command>
 </definition>

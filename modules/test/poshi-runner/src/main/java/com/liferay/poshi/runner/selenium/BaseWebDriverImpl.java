@@ -914,7 +914,7 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
-	public Number getElementWidth(String locator) {
+	public int getElementWidth(String locator) {
 		throw new UnsupportedOperationException();
 	}
 

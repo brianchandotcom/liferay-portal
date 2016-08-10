@@ -640,7 +640,7 @@ public abstract class BaseMobileDriverImpl
 	}
 
 	@Override
-	public Number getElementWidth(String locator) {
+	public int getElementWidth(String locator) {
 		throw new UnsupportedOperationException();
 	}
 

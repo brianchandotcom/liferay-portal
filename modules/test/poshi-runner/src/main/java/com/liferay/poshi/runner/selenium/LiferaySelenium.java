@@ -248,7 +248,7 @@ public interface LiferaySelenium {
 
 	public String getElementValue(String locator) throws Exception;
 
-	public Number getElementWidth(String locator);
+	public int getElementWidth(String locator);
 
 	public String getEmailBody(String index) throws Exception;
 

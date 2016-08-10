@@ -1320,7 +1320,7 @@
 		<execute macro="Workflow#viewTaskAssignedToMeDetails">
 			<var name="workflowAssetContent" value="Blogs Entry Content" />
 			<var name="workflowAssetTitle" value="Blogs Entry Title" />
-			<var name="workflowAssignedTo" value="Test Test" />
+			<var name="workflowAssignedTo" value="userfn userln" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 

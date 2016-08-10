@@ -28,6 +28,7 @@ public class IfClauseWhitespace {
 	public void method() {
 		String s = "test";
 		String testString = "test";
+		long testLong = 12345678901234;
 
 		if ((s != null) &&
 				(StringUtil.isLowerCase(s) || StringUtil.isUpperCase(s))) {
@@ -35,12 +36,12 @@ public class IfClauseWhitespace {
 			return;
 		}
 		else if (Validator.isNotNull(testString) &&
-				(testString == "testString")) {
+				(testLong == 12345678901234)) {
 
 			return;
 		}
 		else if (Validator.isNotNull(testString) &&
-			(testString == "testString2")) {
+			(testLong == 12345678901234)) {
 
 			return;
 		}
@@ -72,8 +73,8 @@ public class IfClauseWhitespace {
 		}
 
 		while ((testString != null) &&
-			   (StringUtil.toLowerCase(testString) !=
-					"this is a medium long string")) {
+			   (StringUtil.count("hello", "world") !=
+					StringUtil.count("hello", "w"))) {
 
 			testString = testString + "test";
 		}

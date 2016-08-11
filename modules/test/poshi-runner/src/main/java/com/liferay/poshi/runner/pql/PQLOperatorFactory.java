@@ -38,16 +38,16 @@ public class PQLOperatorFactory {
 
 					if ((value1 == null) || (value2 == null)) {
 						throw new Exception(
-							"'" + operator + "' operators must be " +
-								"surrounded by 2 boolean values");
+							"Operators must be surrounded by 2 boolean " +
+								"values: " + operator);
 					}
 
 					if (!(value1 instanceof Boolean) ||
 						!(value2 instanceof Boolean)) {
 
 						throw new Exception(
-							"'" + operator + "' operators must be " +
-								"surrounded by 2 boolean values");
+							"Operators must be surrounded by 2 boolean " +
+								"values: " + operator);
 					}
 
 					Boolean booleanValue1 = (Boolean)value1;
@@ -60,8 +60,7 @@ public class PQLOperatorFactory {
 						return (booleanValue1 || booleanValue2);
 					}
 
-					throw new Exception(
-						"Unsupported '" + operator + "' operator");
+					throw new Exception("Unsupported operator: " + operator);
 				}
 
 			};
@@ -86,8 +85,8 @@ public class PQLOperatorFactory {
 						!(value2 instanceof String)) {
 
 						throw new Exception(
-							"The '" + operator + "' operator only works " +
-								"for string values");
+							"Operator only works for string values: " +
+								operator);
 					}
 
 					String stringValue1 = (String)value1;
@@ -100,8 +99,7 @@ public class PQLOperatorFactory {
 						return !stringValue1.contains(stringValue2);
 					}
 
-					throw new Exception(
-						"Unsupported '" + operator + "' operator");
+					throw new Exception("Unsupported operator: " + operator);
 				}
 
 			};
@@ -129,8 +127,7 @@ public class PQLOperatorFactory {
 						return !value1.equals(value2);
 					}
 
-					throw new Exception(
-						"Unsupported '" + operator + "' operator");
+					throw new Exception("Unsupported operator: " + operator);
 				}
 
 			};
@@ -151,8 +148,8 @@ public class PQLOperatorFactory {
 
 					if ((value1 == null) || (value2 == null)) {
 						throw new Exception(
-							"The '" + operator + "' operator only works " +
-								"for number values");
+							"Operator only works for number values: " +
+								operator);
 					}
 
 					if ((value1 instanceof Double ||
@@ -195,18 +192,17 @@ public class PQLOperatorFactory {
 						}
 
 						throw new Exception(
-							"Unsupported '" + operator + "' operator");
+							"Unsupported operator: " + operator);
 					}
 
 					throw new Exception(
-						"The '" + operator + "' operator only works for " +
-							"number values");
+						"Operator only works for number values: " + operator);
 				}
 
 			};
 		}
 
-		throw new Exception("Unsupported '" + operator + "' operator");
+		throw new Exception("Unsupported operator: " + operator);
 	}
 
 }

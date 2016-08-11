@@ -69,9 +69,7 @@ public class PQLVariable extends PQLValue {
 		variable.trim();
 
 		if (!isVariable(variable)) {
-			throw new Exception(
-				"Property not found in 'test.case.available.property.names': " +
-					variable);
+			throw new Exception("Invalid testcase property: " + variable);
 		}
 	}
 

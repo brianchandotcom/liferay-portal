@@ -56,9 +56,7 @@ public class PQLVariableTest extends TestCase {
 	@Test
 	public void testVariableError() throws Exception {
 		_validateVariableError(
-			"invalid.property",
-			"Property not found in 'test.case.available.property.names': " +
-				"invalid.property");
+			"invalid.property", "Invalid testcase property: invalid.property");
 		_validateVariableError(null, "Invalid variable: null");
 		_validateVariableError("test == test", "Invalid value: test == test");
 		_validateVariableError("test OR test", "Invalid value: test OR test");
@@ -80,11 +78,10 @@ public class PQLVariableTest extends TestCase {
 
 				sb.append("Mismatched error within the following PQL:\n");
 				sb.append(pql);
-				sb.append("\n\n* Actual:   \"");
+				sb.append("\n* Actual:   ");
 				sb.append(actualError);
-				sb.append("\"\n* Expected: \"");
+				sb.append("\n* Expected: ");
 				sb.append(expectedError);
-				sb.append("\"");
 
 				throw new Exception(sb.toString(), e);
 			}
@@ -111,8 +108,7 @@ public class PQLVariableTest extends TestCase {
 		Object actualObject = pqlVariable.getValue(properties);
 
 		if (!clazz.isInstance(actualObject)) {
-			throw new Exception(
-				pql + " should be of type '" + clazz.getName() + "'");
+			throw new Exception(pql + " should be of type: " + clazz.getName());
 		}
 
 		if (!actualObject.equals(expectedObject)) {
@@ -120,11 +116,10 @@ public class PQLVariableTest extends TestCase {
 
 			sb.append("Mismatched result within the following PQL:\n");
 			sb.append(pql);
-			sb.append("\n\n* Actual:   \"");
+			sb.append("\n* Actual:   ");
 			sb.append(actualObject);
-			sb.append("\"\n* Expected: \"");
+			sb.append("\n* Expected: ");
 			sb.append(expectedObject);
-			sb.append("\"");
 
 			throw new Exception(sb.toString());
 		}

@@ -652,8 +652,9 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 						if (logger.isLifecycleEnabled()) {
 							logger.lifecycle(
-								"Unable to baseline, " + project +
-									" has never been released.");
+								"Unable to baseline, {} has never been " +
+									"released.",
+								project);
 						}
 					}
 

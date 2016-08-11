@@ -61,7 +61,7 @@ public class FileUtil extends com.liferay.gradle.util.FileUtil {
 		boolean success = file.setLastModified(time);
 
 		if (!success) {
-			_logger.error("Unable to touch " + file);
+			_logger.error("Unable to touch {}", file);
 		}
 	}
 

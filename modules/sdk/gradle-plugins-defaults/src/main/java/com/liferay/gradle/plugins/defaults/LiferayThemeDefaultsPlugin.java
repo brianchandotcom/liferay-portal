@@ -339,7 +339,7 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 			Logger logger = project.getLogger();
 
 			if (logger.isWarnEnabled()) {
-				logger.warn("Unable to configure " + name + " parent theme");
+				logger.warn("Unable to configure {} parent theme", name);
 			}
 
 			return;

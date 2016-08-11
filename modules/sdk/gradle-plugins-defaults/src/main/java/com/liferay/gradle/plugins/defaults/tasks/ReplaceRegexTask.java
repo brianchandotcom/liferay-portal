@@ -212,8 +212,8 @@ public class ReplaceRegexTask extends DefaultTask {
 			}
 			else if (logger.isInfoEnabled()) {
 				logger.info(
-					"Skipped replacement of " + group + " to " + replacement +
-						" in " + file);
+					"Skipped replacement of {} to {} in {}", group, replacement,
+					file);
 			}
 		}
 
@@ -223,7 +223,7 @@ public class ReplaceRegexTask extends DefaultTask {
 			if (logger.isLifecycleEnabled()) {
 				Project project = getProject();
 
-				logger.lifecycle("Updated " + project.relativePath(file));
+				logger.lifecycle("Updated {}", project.relativePath(file));
 			}
 		}
 	}

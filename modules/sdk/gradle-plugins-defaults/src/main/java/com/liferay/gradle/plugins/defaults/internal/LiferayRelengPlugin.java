@@ -404,7 +404,7 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 		if (isStale(project, artifactProperties)) {
 			if (logger.isDebugEnabled()) {
 				logger.debug(
-					"Unable to download artifact, " + project + " is stale");
+					"Unable to download artifact, {} is stale", project);
 			}
 
 			return;
@@ -416,8 +416,8 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 		if (Validator.isNull(artifactURL)) {
 			if (logger.isWarnEnabled()) {
 				logger.warn(
-					"Unable to find artifact.url in " +
-						recordArtifactTask.getOutputFile());
+					"Unable to find artifact.url in {}",
+					recordArtifactTask.getOutputFile());
 			}
 
 			return;
@@ -437,7 +437,7 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 			});
 
 		if (replaced && logger.isLifecycleEnabled()) {
-			logger.lifecycle("Downloading artifact from " + artifactURL);
+			logger.lifecycle("Downloading artifact from {}", artifactURL);
 		}
 	}
 
@@ -724,7 +724,7 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 
 		if (Validator.isNull(artifactGitId)) {
 			if (logger.isInfoEnabled()) {
-				logger.info(project + " has never been published");
+				logger.info("{} has never been published", project);
 			}
 
 			return true;

@@ -54,7 +54,11 @@ public class FileUtil extends com.liferay.gradle.util.FileUtil {
 	public static String getRelativePath(Project project, File file) {
 		String relativePath = project.relativePath(file);
 
-		return relativePath.replace('\\', '/');
+		if (File.separatorChar != '/') {
+			relativePath = relativePath.replace(File.separatorChar, '/');
+		}
+
+		return relativePath;
 	}
 
 	public static void touchFile(File file, long time) {

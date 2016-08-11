@@ -127,33 +127,6 @@
 		</if>
 	</command>
 
-	<command name="editFieldSettingCP">
-		<if>
-			<equals arg1="${localizable}" arg2="false" />
-			<then>
-				<for list="${structureFieldNames}" param="structureFieldName">
-					<execute macro="DynamicDataMapping#editFieldLocalizable">
-						<var name="fieldFieldLabel" value="${structureFieldName}" />
-					</execute>
-				</for>
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${width}" arg2="true" />
-			<then>
-				<for list="${structureFieldNames}" param="structureFieldName">
-					<execute macro="DynamicDataMapping#editFieldWidth">
-						<var name="fieldFieldLabel" value="${structureFieldName}" />
-						<var name="widthSize" value="${widthSize}" />
-					</execute>
-				</for>
-			</then>
-		</if>
-
-		<execute macro="WebContentStructures#saveCP" />
-	</command>
-
 	<command name="editSubstructureDefaultValuesCP">
 		<var name="key_ddlDataDefinitionName" value="${substructureName}" />
 

@@ -1044,6 +1044,8 @@
 			</execute>
 		</for>
 
+		<execute macro="WebContentStructures#saveCP" />
+
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Asset Publisher Page" />
 		</execute>

@@ -1,8 +1,10 @@
 <definition>
 	<command name="addCP">
-		<execute function="Click" locator1="Button#PLUS" />
+		<execute macro="LexiconEntry#gotoAdd" />
 
-		<execute function="Type#clickAtSendKeys" locator1="TextInput#NAME" value1="${structureName}" />
+		<execute macro="WebContentStructures#addNameCP">
+			<var name="structureName" value="${structureName}" />
+		</execute>
 
 		<if>
 			<isset var="localization1NameKey" />
@@ -56,8 +58,12 @@
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
+	<command name="addNameCP">
+		<execute function="Type#clickAtSendKeys" locator1="TextInput#NAME" value1="${structureName}" />
+	</command>
+
 	<command name="addNullCP">
-		<execute function="Click" locator1="Button#PLUS" />
+		<execute macro="LexiconEntry#gotoAdd" />
 
 		<execute function="AssertElementNotPresent" locator1="TextInput#REQUIRED_ALERT" />
 		<execute macro="Button#clickSave" />

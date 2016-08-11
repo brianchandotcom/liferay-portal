@@ -1,4 +1,4 @@
-import com.liferay.gradle.plugins.tasks.ReplaceRegexTask
+import com.liferay.gradle.plugins.defaults.tasks.ReplaceRegexTask
 
 task updateReadme(type: ReplaceRegexTask)
 

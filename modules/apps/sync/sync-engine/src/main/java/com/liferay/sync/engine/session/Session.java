@@ -65,10 +65,14 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.protocol.HttpClientContext;
+import org.apache.http.config.Registry;
+import org.apache.http.config.RegistryBuilder;
+import org.apache.http.conn.HttpClientConnectionManager;
 import org.apache.http.conn.HttpConnectionFactory;
 import org.apache.http.conn.ManagedHttpClientConnection;
 import org.apache.http.conn.routing.HttpRoute;
 import org.apache.http.conn.routing.HttpRoutePlanner;
+import org.apache.http.conn.socket.ConnectionSocketFactory;
 import org.apache.http.conn.ssl.NoopHostnameVerifier;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.conn.ssl.TrustStrategy;
@@ -195,13 +199,8 @@ public class Session {
 		HttpClientBuilder httpClientBuilder = createHttpClientBuilder(
 			trustSelfSigned, maxConnections);
 
-		HttpConnectionFactory<HttpRoute, ManagedHttpClientConnection>
-			connectionFactory = new SyncManagedHttpClientConnectionFactory();
-
-		PoolingHttpClientConnectionManager connectionManager =
-			new PoolingHttpClientConnectionManager(connectionFactory);
-
-		httpClientBuilder.setConnectionManager(connectionManager);
+		httpClientBuilder.setConnectionManager(
+			_getHttpClientConnectionManager(trustSelfSigned));
 
 		CredentialsProvider credentialsProvider =
 			new BasicCredentialsProvider();
@@ -235,13 +234,8 @@ public class Session {
 		HttpClientBuilder httpClientBuilder = createHttpClientBuilder(
 			trustSelfSigned, maxConnections);
 
-		HttpConnectionFactory<HttpRoute, ManagedHttpClientConnection>
-			connectionFactory = new SyncManagedHttpClientConnectionFactory();
-
-		PoolingHttpClientConnectionManager connectionManager =
-			new PoolingHttpClientConnectionManager(connectionFactory);
-
-		httpClientBuilder.setConnectionManager(connectionManager);
+		httpClientBuilder.setConnectionManager(
+			_getHttpClientConnectionManager(trustSelfSigned));
 
 		_httpClient = httpClientBuilder.build();
 
@@ -536,6 +530,34 @@ public class Session {
 			}
 
 		};
+	}
+
+	private HttpClientConnectionManager _getHttpClientConnectionManager(
+		boolean trustSelfSigned) {
+
+		HttpConnectionFactory<HttpRoute, ManagedHttpClientConnection>
+			connectionFactory = new SyncManagedHttpClientConnectionFactory();
+
+		if (trustSelfSigned) {
+			try {
+				RegistryBuilder<ConnectionSocketFactory> registryBuilder =
+					RegistryBuilder.create();
+
+				registryBuilder.register(
+					"https", _getTrustingSSLSocketFactory());
+
+				Registry<ConnectionSocketFactory> registry =
+					registryBuilder.build();
+
+				return new PoolingHttpClientConnectionManager(
+					registry, connectionFactory);
+			}
+			catch (Exception e) {
+				_logger.error(e.getMessage(), e);
+			}
+		}
+
+		return new PoolingHttpClientConnectionManager(connectionFactory);
 	}
 
 	private MultipartEntityBuilder _getMultipartEntityBuilder(

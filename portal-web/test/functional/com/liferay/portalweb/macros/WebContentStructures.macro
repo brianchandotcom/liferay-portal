@@ -128,12 +128,6 @@
 	</command>
 
 	<command name="editFieldSettingCP">
-		<var name="key_ddlDataDefinitionName" value="${structureName}" />
-
-		<execute function="AssertClick" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_LINK" value1="${structureName}" />
-
-		<execute function="SelectFrame" value1="relative=top" />
-
 		<if>
 			<equals arg1="${indexable}" arg2="false" />
 			<then>

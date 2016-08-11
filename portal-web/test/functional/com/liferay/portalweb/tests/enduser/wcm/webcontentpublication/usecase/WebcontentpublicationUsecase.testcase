@@ -1034,6 +1034,10 @@
 
 		<execute macro="WebContentNavigator#gotoManageStructures" />
 
+		<execute macro="WebContentNavigator#gotoEditStructure">
+			<var name="structureName" value="WC Structure Name" />
+		</execute>
+
 		<execute macro="WebContentStructures#editFieldSettingCP">
 			<var name="indexable" value="false" />
 			<var name="structureFieldNames" value="Boolean,Date,Decimal,Documents and Media,HTML,Image,Integer,Link to Page,Number,Radio,Select,Text,Text Box" />

@@ -92,6 +92,14 @@
 		<execute function="AssertVisible" locator1="TextInput#TITLE" />
 	</command>
 
+	<command name="gotoEditStructure">
+		<var name="key_ddlDataDefinitionName" value="${structureName}" />
+
+		<execute function="AssertClick" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_LINK" value1="${structureName}" />
+
+		<execute function="SelectFrame" value1="relative=top" />
+	</command>
+
 	<command name="gotoLocalizedEditPGViaWCD">
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletName" value="${localizedPortletName}" />

@@ -1822,6 +1822,13 @@ information. Make sure to commit in all build services results.
 		<gradle-execute dir="${subrepository.dir}" task="compileJava" />
 	</target>
 
+	<target name="subrepository-pmd-jdk8">
+		<gradle-execute dir="${subrepository.dir}" task="pmdMain">
+			<arg value="pmdTest" />
+			<arg value="pmdTestIntegration" />
+		</gradle-execute>
+	</target>
+
 	<target name="sybase-service-start">
 		<local name="database.type" />
 

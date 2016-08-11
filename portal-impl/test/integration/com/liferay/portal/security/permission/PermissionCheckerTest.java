@@ -940,8 +940,6 @@ public class PermissionCheckerTest {
 	private PermissionChecker _getPermissionChecker(User user)
 		throws Exception {
 
-		PermissionCacheUtil.clearCache(user.getUserId());
-
 		return PermissionCheckerFactoryUtil.create(user);
 	}
 

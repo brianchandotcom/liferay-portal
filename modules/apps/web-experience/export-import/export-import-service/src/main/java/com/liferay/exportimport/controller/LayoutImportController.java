@@ -36,6 +36,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataContextFactoryUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.exportimport.kernel.lar.UserIdStrategy;
 import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleManager;
@@ -82,6 +83,7 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
+import com.liferay.site.model.adapter.StagedGroup;
 
 import java.io.File;
 import java.io.Serializable;
@@ -511,7 +513,7 @@ public class LayoutImportController implements ImportController {
 				headerElement.attributeValue("type-uuid"));
 		}
 
-		Element portletsElement = rootElement.element("portlets");
+		Element portletsElement = rootElement.element("site-portlets");
 
 		List<Element> portletElements = portletsElement.elements("portlet");
 
@@ -538,6 +540,16 @@ public class LayoutImportController implements ImportController {
 		}
 
 		_portletImportController.readLocks(portletDataContext);
+
+		// Import the group
+
+		Element groupsElement = portletDataContext.getImportDataGroupElement(
+			StagedGroup.class);
+
+		for (Element groupElement : groupsElement.elements()) {
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, groupElement);
+		}
 
 		// Asset links
 
@@ -615,7 +627,7 @@ public class LayoutImportController implements ImportController {
 
 		Element rootElement = portletDataContext.getImportDataRootElement();
 
-		Element portletsElement = rootElement.element("portlets");
+		Element portletsElement = rootElement.element("site-portlets");
 
 		List<Element> portletElements = portletsElement.elements("portlet");
 
@@ -884,7 +896,7 @@ public class LayoutImportController implements ImportController {
 
 		// Portlets compatibility
 
-		Element portletsElement = rootElement.element("portlets");
+		Element portletsElement = rootElement.element("site-portlets");
 
 		List<Element> portletElements = portletsElement.elements("portlet");
 

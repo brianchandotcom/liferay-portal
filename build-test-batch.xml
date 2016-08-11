@@ -1877,6 +1877,10 @@ information. Make sure to commit in all build services results.
 		<echo>Check for baseline log files completed.</echo>
 	</target>
 
+	<target name="subrepository-source-format-jdk8">
+		<gradle-execute dir="${subrepository.dir}" task="checkSourceFormatting" />
+	</target>
+
 	<target name="sybase-service-start">
 		<local name="database.type" />
 

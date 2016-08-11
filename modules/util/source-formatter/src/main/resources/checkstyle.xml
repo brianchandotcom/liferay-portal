@@ -61,6 +61,12 @@
 
 		<!-- Custom checks -->
 
+		<module name="com.liferay.source.formatter.checkstyle.checks.MethodNameCheck">
+			<property name="applyToProtected" value="false" />
+			<property name="applyToPublic" value="false" />
+			<property name="format" value="^_[a-z0-9][_a-zA-Z0-9]*$|readObject|writeObject" />
+			<message key="name.invalidPattern" value="Private method ''{0}'' must match pattern ''{1}''" />
+		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.UnusedParameterCheck">
 			<message key="parameter.unused" value="Parameter ''{0}'' is unused" />
 		</module>

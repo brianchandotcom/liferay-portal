@@ -2,10 +2,41 @@
 <!DOCTYPE suppressions PUBLIC "-//Puppy Crawl//DTD Check Suppressions 1.1//EN" "http://www.puppycrawl.com/dtds/suppressions_1_1.dtd">
 
 <suppressions>
-	<suppress checks="MemberName" files="BaseSearchTestCase\.java|ConstantsBeanFactoryImplTest\.java|IntrabandProxyUtilTest\.java|TrashImpl\.java|UpgradePortletPreferences\.java|.*ContextContributor\.java" />
-	<suppress checks="StaticVariableName" files="AssetPublisherWebConfigurationValues\.java|BackgroundTaskResult\.java|ConstantsBeanFactoryImplTest\.java|ExportImportWebConfigurationValues\.java|IntrabandProxyUtilTest\.java|JournalServiceConfigurationValues\.java|LanguageResources\.java|LicenseManagerMessageType\.java|LoadBalancerUtil\.java|PasswordEncryptorUtil\.java|PushNotificationsDevicePlatformComparator\.java|SAPActionKeys\.java|SPIClassPathContextListener\.java|StaticLoggerBinder\.java|TestMethod\.java|TestServicePreAction\.java|TestToolkit\.java" />
+	<suppress checks="MemberName" files=".*ContextContributor\.java" />
+	<suppress checks="MemberName" files="BaseSearchTestCase\.java" />
+	<suppress checks="MemberName" files="ConstantsBeanFactoryImplTest\.java" />
+	<suppress checks="MemberName" files="IntrabandProxyUtilTest\.java" />
+	<suppress checks="MemberName" files="TrashImpl\.java" />
+	<suppress checks="MemberName" files="UpgradePortletPreferences\.java" />
+	<suppress checks="StaticVariableName" files="AssetPublisherWebConfigurationValues\.java" />
+	<suppress checks="StaticVariableName" files="BackgroundTaskResult\.java" />
+	<suppress checks="StaticVariableName" files="ConstantsBeanFactoryImplTest\.java" />
+	<suppress checks="StaticVariableName" files="ExportImportWebConfigurationValues\.java" />
+	<suppress checks="StaticVariableName" files="IntrabandProxyUtilTest\.java" />
+	<suppress checks="StaticVariableName" files="JournalServiceConfigurationValues\.java" />
+	<suppress checks="StaticVariableName" files="LanguageResources\.java" />
+	<suppress checks="StaticVariableName" files="LicenseManagerMessageType\.java" />
+	<suppress checks="StaticVariableName" files="LoadBalancerUtil\.java" />
+	<suppress checks="StaticVariableName" files="PasswordEncryptorUtil\.java" />
+	<suppress checks="StaticVariableName" files="PushNotificationsDevicePlatformComparator\.java" />
+	<suppress checks="StaticVariableName" files="SAPActionKeys\.java" />
+	<suppress checks="StaticVariableName" files="SPIClassPathContextListener\.java" />
+	<suppress checks="StaticVariableName" files="StaticLoggerBinder\.java" />
+	<suppress checks="StaticVariableName" files="TestMethod\.java" />
+	<suppress checks="StaticVariableName" files="TestServicePreAction\.java" />
+	<suppress checks="StaticVariableName" files="TestToolkit\.java" />
 
 	<!-- Custom checks -->
 
-	<suppress checks="MethodNameCheck" files="AbstractTemplate\.java|AnnotationLocatorTest\.java|CancelingPortalExecutorManagerUtilAdvice\.java|EventsProcessorUtil\.java|Http\.java|HttpImpl\.java|HttpUtil\.java|IntrabandProxyUtilTest\.java|LiferayParser\.java|PortalExecutorManagerUtilAdvice\.java|Stub\.java" />
+	<suppress checks="MethodNameCheck" files="AbstractTemplate\.java" />
+	<suppress checks="MethodNameCheck" files="AnnotationLocatorTest\.java" />
+	<suppress checks="MethodNameCheck" files="CancelingPortalExecutorManagerUtilAdvice\.java" />
+	<suppress checks="MethodNameCheck" files="EventsProcessorUtil\.java" />
+	<suppress checks="MethodNameCheck" files="Http\.java" />
+	<suppress checks="MethodNameCheck" files="HttpImpl\.java" />
+	<suppress checks="MethodNameCheck" files="HttpUtil\.java" />
+	<suppress checks="MethodNameCheck" files="IntrabandProxyUtilTest\.java" />
+	<suppress checks="MethodNameCheck" files="LiferayParser\.java" />
+	<suppress checks="MethodNameCheck" files="PortalExecutorManagerUtilAdvice\.java" />
+	<suppress checks="MethodNameCheck" files="Stub\.java" />
 </suppressions>

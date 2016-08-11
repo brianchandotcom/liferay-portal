@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.mail.reader.configuration;
+package com.liferay.flags.configuration.definition;
 
+import com.liferay.flags.configuration.FlagsGroupServiceConfiguration;
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
 
 import org.osgi.service.component.annotations.Component;
@@ -22,12 +23,12 @@ import org.osgi.service.component.annotations.Component;
  * @author Peter Fellwock
  */
 @Component
-public class MailGroupServiceConfigurationBeanDeclaration
+public class FlagsGroupServiceConfigurationBeanDeclaration
 	implements ConfigurationBeanDeclaration {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
-		return MailGroupServiceConfiguration.class;
+		return FlagsGroupServiceConfiguration.class;
 	}
 
 }

@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.flags.configuration;
+package com.liferay.chat.configuration.definition;
 
+import com.liferay.chat.configuration.definition.ChatGroupServiceConfiguration;
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
 
 import org.osgi.service.component.annotations.Component;
@@ -22,12 +23,12 @@ import org.osgi.service.component.annotations.Component;
  * @author Peter Fellwock
  */
 @Component
-public class FlagsGroupServiceConfigurationBeanDeclaration
+public class ChatGroupServiceConfigurationBeanDeclaration
 	implements ConfigurationBeanDeclaration {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
-		return FlagsGroupServiceConfiguration.class;
+		return ChatGroupServiceConfiguration.class;
 	}
 
 }

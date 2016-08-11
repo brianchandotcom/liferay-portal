@@ -118,7 +118,14 @@ public class KBSuggestionListDisplayContext {
 		portletURL.setParameter("expanded", Boolean.TRUE.toString());
 
 		if (_kbArticle == null) {
-			portletURL.setParameter("mvcPath", "/admin/view_suggestions.jsp");
+			if (portletId.equals(KBPortletKeys.KNOWLEDGE_BASE_ADMIN)) {
+				portletURL.setParameter(
+					"mvcPath", _templatePath + "view_suggestions.jsp");
+			}
+			else {
+				portletURL.setParameter(
+					"mvcPath", _templatePath + "view_suggestion.jsp");
+			}
 		}
 		else if (Validator.isNull(_kbArticle.getUrlTitle()) ||
 				 portletId.equals(KBPortletKeys.KNOWLEDGE_BASE_ADMIN)) {

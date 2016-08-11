@@ -46,7 +46,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.settings.web.internal.constants.PortalSettingsPortletKeys;
+import com.liferay.portal.settings.web.constants.PortalSettingsPortletKeys;
 import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
 import java.util.List;

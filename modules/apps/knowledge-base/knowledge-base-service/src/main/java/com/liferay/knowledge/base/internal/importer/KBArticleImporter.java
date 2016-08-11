@@ -14,7 +14,6 @@
 
 package com.liferay.knowledge.base.internal.importer;
 
-import com.liferay.knowledge.base.configuration.KBGroupServiceConfiguration;
 import com.liferay.knowledge.base.constants.KBArticleConstants;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.exception.KBArticleImportException;
@@ -24,16 +23,11 @@ import com.liferay.knowledge.base.service.KBArticleLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.zip.ZipReader;
@@ -42,14 +36,10 @@ import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
 import java.io.IOException;
 import java.io.InputStream;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import java.util.Set;
-import java.util.TreeMap;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -178,46 +168,6 @@ public class KBArticleImporter {
 		}
 	}
 
-	protected Map<String, List<String>> getFolderNameFileEntryNamesMap(
-			ZipReader zipReader,
-			KBGroupServiceConfiguration kbGroupServiceConfiguration)
-		throws KBArticleImportException {
-
-		Map<String, List<String>> folderNameFileEntryNamesMap = new TreeMap<>();
-
-		for (String zipEntry : _getEntries(zipReader)) {
-			String extension = FileUtil.getExtension(zipEntry);
-
-			if (!ArrayUtil.contains(
-					kbGroupServiceConfiguration.
-						markdownImporterArticleExtensions(),
-					StringPool.PERIOD.concat(extension))) {
-
-				continue;
-			}
-
-			String folderName = StringPool.SLASH;
-
-			if (zipEntry.indexOf(CharPool.SLASH) != -1) {
-				folderName = zipEntry.substring(
-					0, zipEntry.lastIndexOf(StringPool.SLASH));
-			}
-
-			List<String> fileEntryNames = folderNameFileEntryNamesMap.get(
-				folderName);
-
-			if (fileEntryNames == null) {
-				fileEntryNames = new ArrayList<>();
-			}
-
-			fileEntryNames.add(zipEntry);
-
-			folderNameFileEntryNamesMap.put(folderName, fileEntryNames);
-		}
-
-		return folderNameFileEntryNamesMap;
-	}
-
 	protected Map<String, String> getMetadata(ZipReader zipReader)
 		throws KBArticleImportException {
 
@@ -267,75 +217,67 @@ public class KBArticleImporter {
 			PrioritizationStrategy.create(
 				groupId, parentKBFolderId, prioritizeByNumericalPrefix);
 
-		KBGroupServiceConfiguration kbGroupServiceConfiguration =
-			_configurationProvider.getGroupConfiguration(
-				KBGroupServiceConfiguration.class, groupId);
+		KBArchive kbArchive = _kbArchiveFactory.createKBArchive(
+			groupId, zipReader);
 
-		Map<String, List<String>> folderNameFileEntryNamesMap =
-			getFolderNameFileEntryNamesMap(
-				zipReader, kbGroupServiceConfiguration);
+		Map<KBArchive.File, KBArticle> introFileNameKBArticleMap =
+			new HashMap<>();
 
-		Set<String> folderNames = folderNameFileEntryNamesMap.keySet();
+		for (KBArchive.Folder folder : kbArchive.getFolders()) {
+			KBArchive.File introFile = folder.getIntroFile();
 
-		for (String folderName : folderNames) {
-			List<String> fileEntryNames = folderNameFileEntryNamesMap.get(
-				folderName);
+			KBArticle introKBArticle = introFileNameKBArticleMap.get(introFile);
 
-			String sectionIntroFileEntryName = null;
+			if ((introFile != null) && (introKBArticle == null)) {
+				long sectionResourceClassNameId = PortalUtil.getClassNameId(
+					KBFolderConstants.getClassName());
+				long sectionResourcePrimaryKey = parentKBFolderId;
 
-			List<String> sectionFileEntryNames = new ArrayList<>();
+				KBArticle parentIntroKBArticle = introFileNameKBArticleMap.get(
+					folder.getParentFolderIntroFile());
 
-			for (String fileEntryName : fileEntryNames) {
-				if (fileEntryName.endsWith(
-						kbGroupServiceConfiguration.
-							markdownImporterArticleIntro())) {
-
-					sectionIntroFileEntryName = fileEntryName;
+				if (parentIntroKBArticle != null) {
+					sectionResourceClassNameId = PortalUtil.getClassNameId(
+						KBArticleConstants.getClassName());
+					sectionResourcePrimaryKey =
+						parentIntroKBArticle.getResourcePrimKey();
 				}
-				else {
-					sectionFileEntryNames.add(fileEntryName);
-				}
-			}
 
-			long parentResourceClassNameId = PortalUtil.getClassNameId(
-				KBFolderConstants.getClassName());
-			long parentResourcePrimaryKey = parentKBFolderId;
-
-			long sectionResourceClassNameId = parentResourceClassNameId;
-			long sectionResourcePrimaryKey = parentResourcePrimaryKey;
-
-			if (Validator.isNotNull(sectionIntroFileEntryName)) {
-				KBArticle sectionIntroKBArticle = addKBArticleMarkdown(
+				introKBArticle = addKBArticleMarkdown(
 					userId, groupId, parentKBFolderId,
 					sectionResourceClassNameId, sectionResourcePrimaryKey,
-					zipReader.getEntryAsString(sectionIntroFileEntryName),
-					sectionIntroFileEntryName, zipReader, metadata,
-					prioritizationStrategy, serviceContext);
-
-				sectionResourceClassNameId = PortalUtil.getClassNameId(
-					KBArticleConstants.getClassName());
-				sectionResourcePrimaryKey =
-					sectionIntroKBArticle.getResourcePrimKey();
+					introFile.getContent(), introFile.getName(), zipReader,
+					metadata, prioritizationStrategy, serviceContext);
 
 				importedKBArticlesCount++;
+
+				introFileNameKBArticleMap.put(introFile, introKBArticle);
 			}
 
-			for (String sectionFileEntryName : sectionFileEntryNames) {
-				String sectionMarkdown = zipReader.getEntryAsString(
-					sectionFileEntryName);
+			long sectionResourceClassNameId = PortalUtil.getClassNameId(
+				KBFolderConstants.getClassName());
+			long sectionResourcePrimaryKey = parentKBFolderId;
 
-				if (Validator.isNull(sectionMarkdown)) {
+			if (introKBArticle != null) {
+				sectionResourceClassNameId = PortalUtil.getClassNameId(
+					KBArticleConstants.getClassName());
+				sectionResourcePrimaryKey = introKBArticle.getResourcePrimKey();
+			}
+
+			for (KBArchive.File file : folder.getFiles()) {
+				String markdown = file.getContent();
+
+				if (Validator.isNull(markdown)) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
-							"Missing Markdown in file entry " +
-								sectionFileEntryName);
+							"Missing Markdown in file entry " + file.getName());
 					}
 				}
 
 				addKBArticleMarkdown(
 					userId, groupId, parentKBFolderId,
 					sectionResourceClassNameId, sectionResourcePrimaryKey,
-					sectionMarkdown, sectionFileEntryName, zipReader, metadata,
+					markdown, file.getName(), zipReader, metadata,
 					prioritizationStrategy, serviceContext);
 
 				importedKBArticlesCount++;
@@ -348,28 +290,13 @@ public class KBArticleImporter {
 	}
 
 	@Reference(unbind = "-")
-	protected void setConfigurationProvider(
-		ConfigurationProvider configurationProvider) {
-
-		_configurationProvider = configurationProvider;
-	}
-
-	private List<String> _getEntries(ZipReader zipReader)
-		throws KBArticleImportException {
-
-		List<String> entries = zipReader.getEntries();
-
-		if (entries == null) {
-			throw new KBArticleImportException(
-				"The uploaded file is not a ZIP archive or it is corrupted");
-		}
-
-		return entries;
+	protected void setKBArchiveFactory(KBArchiveFactory kbArchiveFactory) {
+		_kbArchiveFactory = kbArchiveFactory;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		KBArticleImporter.class);
 
-	private ConfigurationProvider _configurationProvider;
+	private KBArchiveFactory _kbArchiveFactory;
 
 }

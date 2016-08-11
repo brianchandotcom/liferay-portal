@@ -129,17 +129,6 @@
 
 	<command name="editFieldSettingCP">
 		<if>
-			<equals arg1="${indexable}" arg2="false" />
-			<then>
-				<for list="${structureFieldNames}" param="structureFieldName">
-					<execute macro="DynamicDataMapping#editFieldIndexable">
-						<var name="fieldFieldLabel" value="${structureFieldName}" />
-					</execute>
-				</for>
-			</then>
-		</if>
-
-		<if>
 			<equals arg1="${localizable}" arg2="false" />
 			<then>
 				<for list="${structureFieldNames}" param="structureFieldName">

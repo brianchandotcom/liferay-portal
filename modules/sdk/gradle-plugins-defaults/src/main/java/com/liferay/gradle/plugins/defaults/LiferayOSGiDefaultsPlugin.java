@@ -60,7 +60,6 @@ import groovy.lang.Closure;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.IOException;
 
 import java.nio.charset.StandardCharsets;
 
@@ -89,7 +88,6 @@ import org.gradle.api.JavaVersion;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
-import org.gradle.api.UncheckedIOException;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.artifacts.Dependency;
@@ -1668,15 +1666,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				LiferayRelengPlugin.RECORD_ARTIFACT_TASK_NAME);
 
 		if (recordArtifactTask != null) {
-			Properties artifactProperties;
-
-			try {
-				artifactProperties = FileUtil.readProperties(
-					recordArtifactTask.getOutputFile());
-			}
-			catch (IOException ioe) {
-				throw new UncheckedIOException(ioe);
-			}
+			Properties artifactProperties =
+				LiferayRelengPlugin.getArtifactProperties(recordArtifactTask);
 
 			String artifactURL = artifactProperties.getProperty("artifact.url");
 

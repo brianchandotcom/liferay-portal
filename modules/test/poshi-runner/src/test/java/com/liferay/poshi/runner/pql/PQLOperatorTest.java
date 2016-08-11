@@ -49,32 +49,32 @@ public class PQLOperatorTest extends TestCase {
 		}
 	}
 
-	private void _validateOperatorError(String operator, String expected)
+	private void _validateOperatorError(String operator, String expectedError)
 		throws Exception {
 
-		String actual = null;
+		String actualError = null;
 
 		try {
 			PQLOperator.validateOperator(operator);
 		}
 		catch (Exception e) {
-			actual = e.getMessage();
+			actualError = e.getMessage();
 
-			if (!actual.equals(expected)) {
+			if (!actualError.equals(expectedError)) {
 				StringBuilder sb = new StringBuilder();
 
 				sb.append("Mismatched error for PQLOperator declaration:\n");
 				sb.append("\n\n* Actual:   \"");
-				sb.append(actual);
+				sb.append(actualError);
 				sb.append("\"\n* Expected: \"");
-				sb.append(expected);
+				sb.append(expectedError);
 				sb.append("\"");
 
 				throw new Exception(sb.toString(), e);
 			}
 		}
 		finally {
-			if (actual == null) {
+			if (actualError == null) {
 				throw new Exception("No error thrown for invalid PQLOperator");
 			}
 		}

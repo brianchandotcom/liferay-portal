@@ -64,66 +64,66 @@ public class PQLVariableTest extends TestCase {
 		_validateVariableError("test OR test", "Invalid value: test OR test");
 	}
 
-	private void _validateVariableError(String pql, String expected)
+	private void _validateVariableError(String pql, String expectedError)
 		throws Exception {
 
-		String actual = null;
+		String actualError = null;
 
 		try {
 			PQLVariable pqlVariable = new PQLVariable(pql);
 		}
 		catch (Exception e) {
-			actual = e.getMessage();
+			actualError = e.getMessage();
 
-			if (!actual.equals(expected)) {
+			if (!actualError.equals(expectedError)) {
 				StringBuilder sb = new StringBuilder();
 
 				sb.append("Mismatched error within the following PQL:\n");
 				sb.append(pql);
 				sb.append("\n\n* Actual:   \"");
-				sb.append(actual);
+				sb.append(actualError);
 				sb.append("\"\n* Expected: \"");
-				sb.append(expected);
+				sb.append(expectedError);
 				sb.append("\"");
 
 				throw new Exception(sb.toString(), e);
 			}
 		}
 		finally {
-			if (actual == null) {
+			if (actualError == null) {
 				throw new Exception(
 					"No error thrown for the following PQL:\n" + pql);
 			}
 		}
 	}
 
-	private void _validateVariableResult(String pql, Object expected)
+	private void _validateVariableResult(String pql, Object expectedObject)
 		throws Exception {
 
 		Properties properties = new Properties();
 
 		properties.put("portal.smoke", pql);
 
-		Class clazz = expected.getClass();
+		Class clazz = expectedObject.getClass();
 
 		PQLVariable pqlVariable = new PQLVariable("portal.smoke");
 
-		Object actual = pqlVariable.getValue(properties);
+		Object actualObject = pqlVariable.getValue(properties);
 
-		if (!clazz.isInstance(actual)) {
+		if (!clazz.isInstance(actualObject)) {
 			throw new Exception(
 				pql + " should be of type '" + clazz.getName() + "'");
 		}
 
-		if (!actual.equals(expected)) {
+		if (!actualObject.equals(expectedObject)) {
 			StringBuilder sb = new StringBuilder();
 
 			sb.append("Mismatched result within the following PQL:\n");
 			sb.append(pql);
 			sb.append("\n\n* Actual:   \"");
-			sb.append(actual);
+			sb.append(actualObject);
 			sb.append("\"\n* Expected: \"");
-			sb.append(expected);
+			sb.append(expectedObject);
 			sb.append("\"");
 
 			throw new Exception(sb.toString());

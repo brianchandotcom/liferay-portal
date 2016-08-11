@@ -39,10 +39,12 @@ public class PQLEntityTest extends TestCase {
 			PQLEntity.fixPQL(" ( (( test ( test ))) "), "( (( test ( test )))");
 	}
 
-	private void _compare(String actual, String expected) throws Exception {
-		if (!actual.equals(expected)) {
+	private void _compare(String actualString, String expectedString)
+		throws Exception {
+
+		if (!actualString.equals(expectedString)) {
 			throw new Exception(
-				"'" + expected + "' should equal '" + actual + "'");
+				"'" + expectedString + "' should equal '" + actualString + "'");
 		}
 	}
 

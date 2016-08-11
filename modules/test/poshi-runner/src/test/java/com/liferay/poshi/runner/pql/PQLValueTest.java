@@ -75,10 +75,10 @@ public class PQLValueTest extends TestCase {
 		}
 	}
 
-	private void _validateValueError(String pql, String expected)
+	private void _validateValueError(String pql, String expectedError)
 		throws Exception {
 
-		String actual = null;
+		String actualError = null;
 
 		try {
 			PQLValue pqlValue = new PQLValue(pql);
@@ -86,55 +86,55 @@ public class PQLValueTest extends TestCase {
 			Object valueObject = pqlValue.getValue(new Properties());
 		}
 		catch (Exception e) {
-			actual = e.getMessage();
+			actualError = e.getMessage();
 
-			if (!actual.equals(expected)) {
+			if (!actualError.equals(expectedError)) {
 				StringBuilder sb = new StringBuilder();
 
 				sb.append("Mismatched error within the following PQL:\n");
 				sb.append(pql);
 				sb.append("\n\n* Actual:   \"");
-				sb.append(actual);
+				sb.append(actualError);
 				sb.append("\"\n* Expected: \"");
-				sb.append(expected);
+				sb.append(expectedError);
 				sb.append("\"");
 
 				throw new Exception(sb.toString(), e);
 			}
 		}
 		finally {
-			if (actual == null) {
+			if (actualError == null) {
 				throw new Exception(
 					"No error thrown for the following PQL:\n" + pql);
 			}
 		}
 	}
 
-	private void _validateValueResult(String pql, Object expected)
+	private void _validateValueResult(String pql, Object expectedObject)
 		throws Exception {
 
 		Properties properties = new Properties();
 
-		Class clazz = expected.getClass();
+		Class clazz = expectedObject.getClass();
 
 		PQLValue pqlValue = new PQLValue(pql);
 
-		Object actual = pqlValue.getValue(properties);
+		Object actualObject = pqlValue.getValue(properties);
 
-		if (!clazz.isInstance(actual)) {
+		if (!clazz.isInstance(actualObject)) {
 			throw new Exception(
 				pql + " should be of type '" + clazz.getName() + "'");
 		}
 
-		if (!actual.equals(expected)) {
+		if (!actualObject.equals(expectedObject)) {
 			StringBuilder sb = new StringBuilder();
 
 			sb.append("Mismatched value within the following PQL:\n");
 			sb.append(pql);
 			sb.append("\n\n* Actual:   \"");
-			sb.append(actual);
+			sb.append(actualObject);
 			sb.append("\"\n* Expected: \"");
-			sb.append(expected);
+			sb.append(expectedObject);
 			sb.append("\"");
 
 			throw new Exception(sb.toString());
@@ -146,18 +146,18 @@ public class PQLValueTest extends TestCase {
 
 		PQLValue pqlValue = new PQLValue(pql);
 
-		Object actual = pqlValue.getValue(properties);
-		Object expected = null;
+		Object actualObject = pqlValue.getValue(properties);
+		Object expectedObject = null;
 
-		if (actual != null) {
+		if (actualObject != null) {
 			StringBuilder sb = new StringBuilder();
 
 			sb.append("Mismatched value within the following PQL:\n");
 			sb.append(pql);
 			sb.append("\n\n* Actual:   \"");
-			sb.append(actual);
+			sb.append(actualObject);
 			sb.append("\"\n* Expected: \"");
-			sb.append(expected);
+			sb.append(expectedObject);
 			sb.append("\"");
 
 			throw new Exception(sb.toString());

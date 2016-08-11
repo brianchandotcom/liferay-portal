@@ -7596,55 +7596,52 @@ if (ppstate.equals("normal")) {
 	</target>
 
 	<target name="record-testray-logs">
-		<antcall target="record-testray-logs-jenkins-console" />
-
-		<antcall target="record-testray-logs-poshi-report" />
-
-		<execute>
-			gzip -r testray-logs/
-		</execute>
-
-		<for list="production" param="testray.base.dir.name">
-			<sequential>
-				<rsync rsync.dest="testray-results/@{testray.base.dir.name}/logs" rsync.src="testray-logs/." />
-			</sequential>
-		</for>
-	</target>
-
-	<target name="record-testray-logs-jenkins-console">
 		<if>
 			<isset property="jenkins.testray.results.dir" />
 			<then>
-				<get-testray-logs-dir-name />
+				<antcall target="record-testray-logs-jenkins-console" />
 
-				<mkdir dir="testray-logs/${testray.logs.dir.name}" />
+				<antcall target="record-testray-logs-poshi-report" />
 
-				<propertyregex
-					input="${env.BUILD_URL}"
-					property="jenkins.build.url"
-					regexp="https:\/\/([^\.]+)\.[^\/]+"
-					replace="http://\1"
-				/>
+				<execute>
+					gzip -r testray-logs/
+				</execute>
 
-				<propertyregex
-					input="${jenkins.build.url}"
-					override="true"
-					property="jenkins.build.url"
-					regexp="http:\/\/([^\/]+)\/(\d+)"
-					replace="http://\1-\2/\2"
-				/>
-
-				<get dest="testray-logs/${testray.logs.dir.name}/jenkins-console.txt" ignoreerrors="true" src="${jenkins.build.url}/consoleText" />
+				<for list="production" param="testray.base.dir.name">
+					<sequential>
+						<rsync rsync.dest="testray-results/@{testray.base.dir.name}/logs" rsync.src="testray-logs/." />
+					</sequential>
+				</for>
 			</then>
 		</if>
 	</target>
 
+	<target name="record-testray-logs-jenkins-console">
+		<get-testray-logs-dir-name />
+
+		<mkdir dir="testray-logs/${testray.logs.dir.name}" />
+
+		<propertyregex
+			input="${env.BUILD_URL}"
+			property="jenkins.build.url"
+			regexp="https:\/\/([^\.]+)\.[^\/]+"
+			replace="http://\1"
+		/>
+
+		<propertyregex
+			input="${jenkins.build.url}"
+			override="true"
+			property="jenkins.build.url"
+			regexp="http:\/\/([^\/]+)\/(\d+)"
+			replace="http://\1-\2/\2"
+		/>
+
+		<get dest="testray-logs/${testray.logs.dir.name}/jenkins-console.txt" ignoreerrors="true" src="${jenkins.build.url}/consoleText" />
+	</target>
+
 	<target name="record-testray-logs-poshi-report">
 		<if>
-			<and>
-				<isset property="jenkins.testray.results.dir" />
-				<isset property="test.class" />
-			</and>
+			<isset property="test.class" />
 			<then>
 				<get-poshi-dir-name />
 

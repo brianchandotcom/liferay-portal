@@ -3240,12 +3240,12 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 			<if>
 				<os family="unix" />
 				<then>
-					<execute>
+					<execute failonerror="false">
 						killall chromedriver
 					</execute>
 				</then>
 				<else>
-					<execute>
+					<execute failonerror="false">
 						taskkill.exe /F /IM chromedriver.exe
 					</execute>
 				</else>

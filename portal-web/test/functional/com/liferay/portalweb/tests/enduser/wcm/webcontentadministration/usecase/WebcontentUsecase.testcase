@@ -1872,6 +1872,14 @@
 			<var name="structureName" value="WC Structure Name" />
 		</execute>
 
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Details" />
+		</execute>
+
+		<execute macro="WebContentStructures#addDescription">
+			<var name="structureDescription" value="WC Structure Description" />
+		</execute>
+
 		<execute macro="WebContentStructures#addLocalization">
 			<var name="localization1Name" value="nom de la structure de wc" />
 			<var name="localization1NameKey" value="fr_FR" />

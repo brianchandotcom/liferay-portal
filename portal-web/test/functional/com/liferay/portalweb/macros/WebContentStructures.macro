@@ -2,7 +2,7 @@
 	<command name="addCP">
 		<execute macro="LexiconEntry#gotoAdd" />
 
-		<execute macro="WebContentStructures#addNameCP">
+		<execute macro="WebContentStructures#addName">
 			<var name="structureName" value="${structureName}" />
 		</execute>
 
@@ -13,11 +13,17 @@
 		<if>
 			<isset var="structureDescription" />
 			<then>
-				<execute function="Type" locator1="TextInput#DESCRIPTION" value1="${structureDescription}" />
+				<execute macro="WebContentStructures#addDescription">
+					<var name="structureDescription" value="${structureDescription}" />
+				</execute>
 			</then>
 		</if>
 
 		<execute function="SelectFrame" value1="relative=top" />
+	</command>
+
+	<command name="addDescription">
+		<execute function="Type" locator1="TextInput#DESCRIPTION" value1="${structureDescription}" />
 	</command>
 
 	<command name="addLocalization">
@@ -25,7 +31,7 @@
 
 		<execute function="Click" locator1="Translation#LOCALIZATION_NAME" />
 
-		<execute macro="WebContentStructures#addNameCP">
+		<execute macro="WebContentStructures#addName">
 			<var name="structureName" value="${localization1Name}" />
 		</execute>
 
@@ -36,7 +42,7 @@
 
 				<execute function="Click" locator1="Translation#LOCALIZATION_NAME" />
 
-				<execute macro="WebContentStructures#addNameCP">
+				<execute macro="WebContentStructures#addName">
 					<var name="structureName" value="${localization2Name}" />
 				</execute>
 			</then>
@@ -88,7 +94,9 @@
 		<if>
 			<isset var="structureDescription" />
 			<then>
-				<execute function="Type" locator1="TextInput#DESCRIPTION" value1="${structureDescription}" />
+				<execute macro="WebContentStructures#addDescription">
+					<var name="structureDescription" value="${structureDescription}" />
+				</execute>
 			</then>
 		</if>
 

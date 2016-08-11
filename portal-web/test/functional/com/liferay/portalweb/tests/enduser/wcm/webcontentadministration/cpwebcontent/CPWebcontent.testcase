@@ -1146,6 +1146,14 @@
 			<var name="structureName" value="2" />
 		</execute>
 
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Details" />
+		</execute>
+
+		<execute macro="WebContentStructures#addDescription">
+			<var name="structureDescription" value="WC Structure Description" />
+		</execute>
+
 		<execute macro="WebContentStructures#addSubstructure">
 			<var name="parentStructureName" value="WC Structure Name1" />
 			<var name="structureName" value="2" />

@@ -841,7 +841,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 
 		if (portalSource && !_allowUseServiceUtilInServiceImpl &&
-			!fileName.contains("/wsrp/bind/") &&
+			!fileName.contains("/wsrp/internal/bind/") &&
 			!className.equals("BaseServiceImpl") &&
 			className.endsWith("ServiceImpl") &&
 			newContent.contains("ServiceUtil.")) {

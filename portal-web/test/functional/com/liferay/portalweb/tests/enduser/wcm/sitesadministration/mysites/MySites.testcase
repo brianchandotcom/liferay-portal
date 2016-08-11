@@ -64,10 +64,6 @@
 	</command>
 
 	<command name="SearchSite" priority="4">
-		<execute macro="ProductMenu#gotoControlPanelSites">
-			<var name="portlet" value="Sites" />
-		</execute>
-
 		<execute macro="Page#add">
 			<var name="pageName" value="Test Page" />
 			<var name="siteName" value="Liferay" />
@@ -79,10 +75,6 @@
 
 		<execute macro="Site#addBlankCP">
 			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoControlPanelSites">
-			<var name="portlet" value="Sites" />
 		</execute>
 
 		<execute macro="Page#add">
@@ -219,10 +211,6 @@
 
 		<execute macro="Site#inactivateCP">
 			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoControlPanelSites">
-			<var name="portlet" value="Sites" />
 		</execute>
 
 		<execute macro="Page#add">
@@ -375,10 +363,6 @@
 	</command>
 
 	<command name="ViewSitePages" priority="3">
-		<execute macro="ProductMenu#gotoControlPanelSites">
-			<var name="portlet" value="Sites" />
-		</execute>
-
 		<execute macro="Page#add">
 			<var name="pageName" value="Test Page" />
 			<var name="siteName" value="Liferay" />
@@ -390,10 +374,6 @@
 
 		<execute macro="Site#addBlankCP">
 			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoControlPanelSites">
-			<var name="portlet" value="Sites" />
 		</execute>
 
 		<execute macro="Page#add">
@@ -462,10 +442,6 @@
 				<var name="tagName" value="${tagName}" />
 			</execute>
 		</for>
-
-		<execute macro="ProductMenu#gotoControlPanelSites">
-			<var name="portlet" value="Sites" />
-		</execute>
 
 		<execute macro="Page#add">
 			<var name="pageName" value="Test Page" />

@@ -118,9 +118,7 @@ public class JavaClass {
 			if (javaTerm.isMethod() || javaTerm.isConstructor()) {
 				checkChaining(javaTerm);
 				checkLineBreak(javaTerm);
-				checkParameterNames(javaTerm);
 				checkValidatorIsNull(javaTerm);
-				checkVariableNames(javaTerm);
 			}
 
 			// LPS-65690
@@ -473,39 +471,16 @@ public class JavaClass {
 			_classContent, javaTermContent, newJavaTermContent);
 	}
 
-	protected void checkImmutableFieldType(String javaTermName) {
-		if (javaTermName.equals("serialVersionUID")) {
-			return;
-		}
-
-		Matcher matcher = _camelCasePattern.matcher(javaTermName);
-
-		String newName = matcher.replaceAll("$1_$2");
-
-		newName = StringUtil.toUpperCase(newName);
-
-		_classContent = _classContent.replaceAll(
-			"(?<=[\\W&&[^.\"]])(" + javaTermName + ")\\b", newName);
-	}
-
 	protected void checkJavaFieldType(
 			Set<JavaTerm> javaTerms, JavaTerm javaTerm,
 			Set<String> annotationsExclusions, Set<String> immutableFieldTypes)
 		throws Exception {
 
-		if (!_javaSourceProcessor.portalSource ||
-			(!javaTerm.isVariable() && !javaTerm.isMethod())) {
-
+		if (!_javaSourceProcessor.portalSource || !javaTerm.isVariable()) {
 			return;
 		}
 
 		String javaTermName = javaTerm.getName();
-
-		if (javaTerm.isMethod() &&
-			_underscoreNotAllowedMethodNames.contains(javaTermName)) {
-
-			return;
-		}
 
 		Pattern pattern = Pattern.compile(
 			"\t(private|protected|public)\\s+" +
@@ -517,38 +492,6 @@ public class JavaClass {
 		Matcher matcher = pattern.matcher(javaTermContent);
 
 		if (!matcher.find()) {
-			return;
-		}
-
-		if ((javaTerm.isPrivate() && !javaTermName.equals("serialVersionUID")) ^
-			(javaTermName.charAt(0) == CharPool.UNDERLINE)) {
-
-			if (javaTerm.isPrivate()) {
-				if (!javaTermContent.contains("@Reference")) {
-					if (getJavaTermCount(javaTerms, javaTermName) > 1) {
-						_javaSourceProcessor.processMessage(
-							_fileName,
-							"Private method or variable should start with " +
-								"underscore",
-							javaTerm.getLineCount());
-					}
-					else {
-						_classContent = _classContent.replaceAll(
-							"(?<=[\\W&&[^.\"]])(" + javaTermName + ")\\b",
-							StringPool.UNDERLINE.concat(javaTermName));
-					}
-				}
-			}
-			else {
-				_javaSourceProcessor.processMessage(
-					_fileName,
-					"Only private method or variable should start with " +
-						"underscore",
-					javaTerm.getLineCount());
-			}
-		}
-
-		if (!javaTerm.isVariable()) {
 			return;
 		}
 
@@ -601,13 +544,8 @@ public class JavaClass {
 		}
 
 		if (isFinal) {
-			if (immutableFieldTypes.contains(javaFieldType)) {
-				if (isStatic) {
-					checkImmutableFieldType(javaTerm.getName());
-				}
-				else {
-					checkStaticableFieldType(javaTerm.getContent());
-				}
+			if (!isStatic && immutableFieldTypes.contains(javaFieldType)) {
+				checkStaticableFieldType(javaTerm.getContent());
 			}
 		}
 		else if (!modifierDefinition.contains("volatile")) {
@@ -708,20 +646,6 @@ public class JavaClass {
 		}
 	}
 
-	protected void checkParameterNames(JavaTerm javaTerm) {
-		for (String parameterName : javaTerm.getParameterNames()) {
-			if (Validator.isVariableName(parameterName) &&
-				parameterName.matches("_?[A-Z].+")) {
-
-				_javaSourceProcessor.processMessage(
-					_fileName,
-					"Parameter " + parameterName +
-						" should not start with uppercase",
-					javaTerm.getLineCount());
-			}
-		}
-	}
-
 	protected void checkServiceImpl(JavaTerm javaTerm) {
 		String javaTermName = javaTerm.getName();
 
@@ -807,24 +731,6 @@ public class JavaClass {
 				_javaSourceProcessor.processMessage(
 					_fileName, "avoid using Validator.IsNull(long)", lineCount);
 			}
-		}
-	}
-
-	protected void checkVariableNames(JavaTerm javaTerm) {
-		Matcher matcher = _variableNameStartingWithUpperCasePattern.matcher(
-			javaTerm.getContent());
-
-		while (matcher.find()) {
-			int lineCount =
-				javaTerm.getLineCount() +
-					_javaSourceProcessor.getLineCount(
-						javaTerm.getContent(), matcher.start(1)) - 1;
-
-			_javaSourceProcessor.processMessage(
-				_fileName,
-				"Variable " + matcher.group(1) +
-					" should not start with uppercase",
-				lineCount);
 		}
 	}
 
@@ -1957,9 +1863,6 @@ public class JavaClass {
 				"boolean", "false", "char", "'\\\\0'", "byte", "0", "double",
 				"0\\.0", "float", "0\\.0", "int", "0", "long", "0", "short", "0"
 			});
-	private static final List<String> _underscoreNotAllowedMethodNames =
-		ListUtil.fromArray(new String[] {"readObject", "writeObject"});
-
 	private final String _absolutePath;
 	private final Pattern _booleanPattern = Pattern.compile(
 		"\n(\t+)boolean (\\w+) =(.*?);\n", Pattern.DOTALL);

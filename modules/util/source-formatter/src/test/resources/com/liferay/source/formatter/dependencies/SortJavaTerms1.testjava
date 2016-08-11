@@ -35,7 +35,7 @@ public class SortJavaTerms1 {
 
 	protected static String var1;
 
-	private static String _var2;
+	private static final String _VAR_2;
 
 	protected void method2() {
 	}
@@ -76,7 +76,7 @@ public class SortJavaTerms1 {
 
 	}
 
-	private static final String _variableName6 = "test";
+	private static final String _VARIABLE_NAME_6 = "test";
 
 	protected String var7;
 
@@ -109,9 +109,9 @@ public class SortJavaTerms1 {
 	private static void _method6() {
 	}
 
-	private final String _var10 = "hello";
+	private static final String _VAR_10 = "hello";
 
-	private final int _var11 = 10;
+	private static final int _VAR_11 = 10;
 
 	private final String _var12;
 

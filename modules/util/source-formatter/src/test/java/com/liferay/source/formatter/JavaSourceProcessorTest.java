@@ -169,18 +169,18 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 		test("IncorrectLineBreaks2.testjava");
 	}
 
-	/*
 	@Test
 	public void testIncorrectParameterNames() throws Exception {
 		test(
 			"IncorrectParameterNames.testjava",
 			new String[] {
-				"Parameter StringMap should not start with uppercase",
-				"Parameter TestString should not start with uppercase"
+				"Parameter 'StringMap' must match pattern " +
+					"'^[a-z][a-zA-Z0-9]*$'",
+				"Parameter 'TestString' must match pattern " +
+					"'^[a-z][a-zA-Z0-9]*$'"
 			},
 			new Integer[] {24, 28});
 	}
-	*/
 
 	@Test
 	public void testIncorrectTabs() throws Exception {
@@ -193,27 +193,24 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 			new Integer[] {27, 31, 37});
 	}
 
-	/*
 	@Test
 	public void testIncorrectVariableNames() throws Exception {
 		test(
 			"IncorrectVariableNames1.testjava",
-			new String[] {
-				"Only private method or variable should start with underscore",
-				"Only private method or variable should start with underscore"
-			},
-			new Integer[] {22, 28});
-		test("IncorrectVariableNames2.testjava");
+			"Protected or public non-static field '_test2' must match " +
+				"pattern '^[a-z0-9][_a-zA-Z0-9]*$'",
+			28);
+		//test("IncorrectVariableNames2.testjava");
 		test(
 			"IncorrectVariableNames3.testjava",
 			new String[] {
-				"Variable TestMapWithARatherLongName should not start with " +
-					"uppercase",
-				"Variable TestString should not start with uppercase"
+				"Local non-final variable 'TestMapWithARatherLongName' must " +
+					"match pattern '^[a-z0-9][_a-zA-Z0-9]*$'",
+				"Local non-final variable 'TestString' must match pattern " +
+					"'^[a-z0-9][_a-zA-Z0-9]*$'"
 			},
 			new Integer[] {26, 29});
 	}
-	*/
 
 	@Test
 	public void testIncorrectWhitespace() throws Exception {

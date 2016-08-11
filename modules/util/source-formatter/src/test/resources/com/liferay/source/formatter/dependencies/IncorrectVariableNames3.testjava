@@ -22,7 +22,7 @@ import java.util.Map;
  */
 public class IncorrectVariableNames3 {
 
-	private void method(Map<String, String> stringMap) {
+	public void method(Map<String, String> stringMap) {
 		Map<String, Map<String, String>> TestMapWithARatherLongName =
 			new HashMap<>();
 

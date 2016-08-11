@@ -12,7 +12,11 @@
  * details.
  */
 
-package com.liferay.gradle.plugins.extensions;
+package com.liferay.gradle.plugins.internal.extensions;
+
+import com.liferay.gradle.plugins.extensions.AppServer;
+import com.liferay.gradle.plugins.extensions.JOnASAppServer;
+import com.liferay.gradle.plugins.extensions.TomcatAppServer;
 
 import org.gradle.api.NamedDomainObjectFactory;
 import org.gradle.api.Project;
@@ -20,7 +24,7 @@ import org.gradle.api.Project;
 /**
  * @author Andrea Di Giorgi
  */
-class AppServerFactory implements NamedDomainObjectFactory<AppServer> {
+public class AppServerFactory implements NamedDomainObjectFactory<AppServer> {
 
 	public AppServerFactory(Project project) {
 		_project = project;

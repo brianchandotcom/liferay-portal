@@ -140,28 +140,34 @@
 </tr>
 <!--FIELD-->
 <tr>
+	<td>FIELD_BODY</td>
+	<td>//div[contains(@data-fieldname,'${key_fieldName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FIELD_LABEL</td>
 	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//label</td>
 	<td></td>
 </tr>
 <tr>
-	<td>FIELD_PARAGRAPH</td>
-	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//p</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FIELD_ELLIPSIS</td>
-	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//div[contains(@class,'toolbar')]//button[contains(@class,'toggle')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>FIELD_DELETE_BUTTON</td>
-	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//div[contains(@class,'toolbar')]//button[contains(@class,'item')][3]</td>
+	<td>//div[contains(@data-fieldname,'${key_fieldName}')] // FIX THIS</td>
+	<td></td>
+</tr>
+<!--SIDEBAR -->
+<tr>
+	<td>ADVANCED_TAB</td>
+	<td>//a[contains(@class,'tab') and .='advanced']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>FIELD_EDIT_BUTTON</td>
-	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//div[contains(@class,'toolbar')]//button[contains(@class,'item')][1]</td>
+	<td>BASIC_TAB</td>
+	<td>//a[contains(@class,'tab') and .='basic']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CLOSE_SIDEBAR</td>
+	<td>//div[contains(@class,'sidebar-header')]//a[contains(@class,'close')]</td>
 	<td></td>
 </tr>
 </tbody>

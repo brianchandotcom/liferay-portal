@@ -17,24 +17,6 @@
 			</then>
 		</if>
 
-		<if>
-			<equals arg1="${substructure}" arg2="true" />
-			<then>
-				<execute function="AssertClick" locator1="DDMEditStructure#DETAILS_PARENT_SELECT_BUTTON" value1="Select" />
-				<execute function="SelectFrame" value1="relative=top" />
-
-				<execute function="SelectFrame" locator1="IFrame#DIALOG" />
-
-				<var name="key_ddlDataDefinitionName" value="${parentStructureName}" />
-
-				<execute function="AssertClickNoError" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_LINK" value1="${parentStructureName}" />
-
-				<execute function="Confirm#assertConfirmationNoWait" value1="Selecting a new structure changes the available input fields and available templates. Do you want to proceed?" />
-
-				<execute function="SelectFrame" value1="relative=top" />
-			</then>
-		</if>
-
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
@@ -61,7 +43,7 @@
 		</if>
 	</command>
 
-	<command name="addNameCP">
+	<command name="addName">
 		<execute function="Type#clickAtSendKeys" locator1="TextInput#NAME" value1="${structureName}" />
 	</command>
 
@@ -71,6 +53,21 @@
 		<execute function="AssertElementNotPresent" locator1="TextInput#REQUIRED_ALERT" />
 		<execute macro="Button#clickSave" />
 		<execute function="AssertTextEquals" locator1="Message#ERROR_FIELD_REQUIRED" value1="This field is required." />
+
+		<execute function="SelectFrame" value1="relative=top" />
+	</command>
+
+	<command name="addSubstructure">
+		<execute function="AssertClick" locator1="DDMEditStructure#DETAILS_PARENT_SELECT_BUTTON" value1="Select" />
+		<execute function="SelectFrame" value1="relative=top" />
+
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
+		<var name="key_ddlDataDefinitionName" value="${parentStructureName}" />
+
+		<execute function="AssertClickNoError" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_LINK" value1="${parentStructureName}" />
+
+		<execute function="Confirm#assertConfirmationNoWait" value1="Selecting a new structure changes the available input fields and available templates. Do you want to proceed?" />
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>

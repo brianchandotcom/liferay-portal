@@ -1140,11 +1140,15 @@
 
 		<execute macro="WebContentNavigator#gotoManageStructures" />
 
-		<execute macro="WebContentStructures#addCP">
-			<var name="parentStructureName" value="WC Structure Name1" />
-			<var name="structureDescription" value="WC Structure Description" />
+		<execute macro="LexiconEntry#gotoAdd" />
+
+		<execute macro="WebContentStructures#addName">
 			<var name="structureName" value="2" />
-			<var name="substructure" value="true" />
+		</execute>
+
+		<execute macro="WebContentStructures#addSubstructure">
+			<var name="parentStructureName" value="WC Structure Name1" />
+			<var name="structureName" value="2" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#addField">

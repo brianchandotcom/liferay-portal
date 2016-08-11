@@ -1868,7 +1868,7 @@
 
 		<execute macro="LexiconEntry#gotoAdd" />
 
-		<execute macro="WebContentStructures#addNameCP">
+		<execute macro="WebContentStructures#addName">
 			<var name="structureName" value="WC Structure Name" />
 		</execute>
 

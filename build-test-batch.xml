@@ -1818,6 +1818,10 @@ information. Make sure to commit in all build services results.
 		</run-batch-test>
 	</target>
 
+	<target name="subrepository-compile-jdk8">
+		<gradle-execute dir="${subrepository.dir}" task="compileJava" />
+	</target>
+
 	<target name="sybase-service-start">
 		<local name="database.type" />
 

@@ -34,6 +34,10 @@ public class _CLASS_PortletToolbarContributor
 	public List<Menu> getPortletTitleMenus(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
+		List<Menu> menus = new ArrayList<>();
+
+		Menu menu = new Menu();
+
 		List<MenuItem> menuItems = new ArrayList<>();
 
 		URLMenuItem urlMenuItem = new URLMenuItem();
@@ -42,10 +46,6 @@ public class _CLASS_PortletToolbarContributor
 		urlMenuItem.setURL("http://www.liferay.com");
 
 		menuItems.add(urlMenuItem);
-
-		List<Menu> menus = new ArrayList<>();
-
-		Menu menu = new Menu();
 
 		menu.setDirection("right");
 		menu.setExtended(false);

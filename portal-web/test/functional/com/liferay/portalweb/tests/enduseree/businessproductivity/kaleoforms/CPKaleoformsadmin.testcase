@@ -3541,8 +3541,6 @@
 			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#viewHeaderTitle" />
-
 		<execute macro="DynamicDataMapping#addField">
 			<var name="field" value="Text" />
 			<var name="fieldFieldLabel" value="Text" />
@@ -3555,10 +3553,6 @@
 			<var name="kfFieldSetName" value="Field Set Data Definition" />
 			<var name="kfFieldSetNameEdit" value="Field Set Data Definition Edit" />
 			<var name="kfProcessName" value="${kfProcessName}" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#viewHeaderTitle">
-			<var name="kfFieldSetName" value="Field Set Data Definition" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#saveFieldSet" />

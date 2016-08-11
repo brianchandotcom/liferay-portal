@@ -1179,6 +1179,8 @@ public class PoshiRunnerContext {
 					StringUtil.split(testCaseAvailablePropertyNames)));
 		}
 
+		_testCaseAvailablePropertyNames.add("priority");
+
 		String testCaseRequiredPropertyNames =
 			PropsValues.TEST_CASE_REQUIRED_PROPERTY_NAMES;
 

@@ -38,7 +38,9 @@
 		<module name="NoWhitespaceBefore" />
 		<module name="OneStatementPerLine" />
 		<module name="PackageName" />
-		<module name="ParameterName" />
+		<module name="ParameterName">
+			<message key="name.invalidPattern" value="Parameter ''{0}'' must match pattern ''{1}''" />
+		</module>
 		<module name="RequireThis" />
 		<module name="StaticVariableName">
 			<property name="applyToPackage" value="false" />

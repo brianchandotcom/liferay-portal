@@ -7,5 +7,5 @@
 
 	<!-- Custom checks -->
 
-	<suppress checks="MethodNameCheck" files="AnnotationLocatorTest\.java|IntrabandProxyUtilTest\.java" />
+	<suppress checks="MethodNameCheck" files="AbstractTemplate\.java|AnnotationLocatorTest\.java|CancelingPortalExecutorManagerUtilAdvice\.java|EventsProcessorUtil\.java|Http\.java|HttpImpl\.java|HttpUtil\.java|IntrabandProxyUtilTest\.java|LiferayParser\.java|PortalExecutorManagerUtilAdvice\.java|Stub\.java" />
 </suppressions>

@@ -4,4 +4,8 @@
 <suppressions>
 	<suppress checks="MemberName" files="BaseSearchTestCase\.java|ConstantsBeanFactoryImplTest\.java|IntrabandProxyUtilTest\.java|TrashImpl\.java|UpgradePortletPreferences\.java|.*ContextContributor\.java" />
 	<suppress checks="StaticVariableName" files="AssetPublisherWebConfigurationValues\.java|BackgroundTaskResult\.java|ConstantsBeanFactoryImplTest\.java|ExportImportWebConfigurationValues\.java|IntrabandProxyUtilTest\.java|JournalServiceConfigurationValues\.java|LanguageResources\.java|LicenseManagerMessageType\.java|LoadBalancerUtil\.java|PasswordEncryptorUtil\.java|PushNotificationsDevicePlatformComparator\.java|SAPActionKeys\.java|SPIClassPathContextListener\.java|StaticLoggerBinder\.java|TestMethod\.java|TestServicePreAction\.java|TestToolkit\.java" />
+
+	<!-- Custom checks -->
+
+	<suppress checks="MethodNameCheck" files="AnnotationLocatorTest\.java|IntrabandProxyUtilTest\.java" />
 </suppressions>

@@ -179,13 +179,10 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		if (Validator.isNull(subject)) {
 			if (Validator.isNotNull(body)) {
-				String subjectWithoutHtml = HtmlUtil.extractText(body);
+				subject = HtmlUtil.extractText(body);
 
-				if (subjectWithoutHtml.length() <= 50) {
-					subject = subjectWithoutHtml;
-				}
-				else {
-					subject = subjectWithoutHtml.substring(0, 50) + "...";
+				if (subject.length() > 50) {
+					subject = subject.substring(0, 50) + "...";
 				}
 			}
 			else {

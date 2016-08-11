@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -38,12 +37,10 @@ public class CheckboxMultipleDDMFormFieldContextHelper {
 
 	public CheckboxMultipleDDMFormFieldContextHelper(
 		JSONFactory jsonFactory, DDMFormFieldOptions ddmFormFieldOptions,
-		String value, LocalizedValue predefinedValue, Locale locale) {
+		Locale locale) {
 
 		_jsonFactory = jsonFactory;
 		_ddmFormFieldOptions = ddmFormFieldOptions;
-		_values = toStringArray(value);
-		_predefinedValues = toStringArray(predefinedValue.getString(locale));
 		_locale = locale;
 	}
 
@@ -57,27 +54,12 @@ public class CheckboxMultipleDDMFormFieldContextHelper {
 				optionValue);
 
 			optionMap.put("label", optionLabel.getString(_locale));
-			optionMap.put(
-				"status",
-				isChecked(optionValue) ? "checked" : StringPool.BLANK);
 			optionMap.put("value", optionValue);
 
 			options.add(optionMap);
 		}
 
 		return options;
-	}
-
-	protected boolean isChecked(String optionValue) {
-		if (ArrayUtil.isEmpty(_values)) {
-			return ArrayUtil.contains(_predefinedValues, optionValue);
-		}
-
-		if (ArrayUtil.contains(_values, optionValue)) {
-			return true;
-		}
-
-		return false;
 	}
 
 	protected String[] toStringArray(String value) {
@@ -98,7 +80,5 @@ public class CheckboxMultipleDDMFormFieldContextHelper {
 	private final DDMFormFieldOptions _ddmFormFieldOptions;
 	private final JSONFactory _jsonFactory;
 	private final Locale _locale;
-	private final String[] _predefinedValues;
-	private final String[] _values;
 
 }

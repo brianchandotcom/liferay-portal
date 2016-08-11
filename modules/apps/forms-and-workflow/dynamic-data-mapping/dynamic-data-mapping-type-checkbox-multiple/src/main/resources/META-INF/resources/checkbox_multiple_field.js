@@ -32,6 +32,7 @@ AUI.add(
 					},
 
 					options: {
+						getter: '_getOptions',
 						validator: Array.isArray,
 						value: []
 					}
@@ -49,28 +50,17 @@ AUI.add(
 						return A.merge(
 							CheckboxMultipleField.superclass.getTemplateContext.apply(instance, arguments),
 							{
-								showAsSwitcher: instance.get('showAsSwitcher'),
 								inline: instance.get('inline'),
-								options: instance.getOptions()
+								options: instance.get('options'),
+								showAsSwitcher: instance.get('showAsSwitcher')
 							}
 						);
 					},
 
-					getOptions: function() {
+					_getOptions: function(options) {
 						var instance = this;
 
-						var value = instance.getContextValue();
-
-						return A.map(
-							instance.get('options'),
-							function(item) {
-								return {
-									label: item.label[instance.get('locale')],
-									status: value.indexOf(item.value) > -1 ? 'checked' : '',
-									value: item.value
-								};
-							}
-						);
+						return options || [];
 					},
 
 					getValue: function() {
@@ -104,36 +94,18 @@ AUI.add(
 							if (value.includes(checkboxNodeList[i].val())) {
 								var node = checkboxNodeList[i];
 								node.attr('checked', true);
-
-								instance.fire(
-									'valueChanged',
-									{
-										field: instance,
-										value: value
-									}
-								);
 							}
 						}
 					},
 
-					_renderErrorMessage: function() {
+					showErrorMessage: function() {
 						var instance = this;
 
 						var container = instance.get('container');
 
-						CheckboxMultipleField.superclass._renderErrorMessage.apply(instance, arguments);
+						CheckboxMultipleField.superclass.showErrorMessage.apply(instance, arguments);
 
 						container.all('.help-block').appendTo(container);
-					},
-
-					_showFeedback: function() {
-						var instance = this;
-
-						var container = instance.get('container');
-
-						CheckboxMultipleField.superclass._showFeedback.apply(instance, arguments);
-
-						container.all('.form-control-feedback').appendTo(container);
 					}
 				}
 			}

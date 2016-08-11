@@ -54,7 +54,13 @@ AUI.add(
 
 						var inputNode = instance.getInputNode();
 
-						return inputNode.val();
+						var value = '';
+
+						if (inputNode.attr('checked')) {
+							value = inputNode.val();
+						}
+
+						return value;
 					},
 
 					setValue: function(value) {

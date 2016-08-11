@@ -457,7 +457,7 @@
 			<var name="portlet" value="Site Settings" />
 		</execute>
 
-		<for list="Banana,Apple,Mango" param="tagName" >
+		<for list="apple,banana,mango" param="tagName" >
 			<execute macro="Tag#addViaSiteCP">
 				<var name="tagName" value="${tagName}" />
 			</execute>
@@ -485,7 +485,7 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<for list="banana,apple,mango" param="tagName" >
+		<for list="apple,banana,mango" param="tagName" >
 			<execute macro="MySites#viewTags">
 				<var name="tagName" value="${tagName}" />
 			</execute>

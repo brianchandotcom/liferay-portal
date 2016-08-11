@@ -17,10 +17,10 @@ package com.liferay.gradle.plugins;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.gulp.ExecuteGulpTask;
 import com.liferay.gradle.plugins.gulp.GulpPlugin;
+import com.liferay.gradle.plugins.internal.util.FileUtil;
+import com.liferay.gradle.plugins.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.node.NodePlugin;
 import com.liferay.gradle.plugins.source.formatter.SourceFormatterPlugin;
-import com.liferay.gradle.plugins.util.FileUtil;
-import com.liferay.gradle.plugins.util.GradleUtil;
 import com.liferay.gradle.util.Validator;
 
 import groovy.json.JsonOutput;

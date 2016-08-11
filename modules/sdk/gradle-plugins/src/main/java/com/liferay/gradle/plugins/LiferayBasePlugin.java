@@ -16,9 +16,11 @@ package com.liferay.gradle.plugins;
 
 import com.liferay.gradle.plugins.extensions.AppServer;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
+import com.liferay.gradle.plugins.internal.NodeDefaultsPlugin;
+import com.liferay.gradle.plugins.internal.SourceFormatterDefaultsPlugin;
+import com.liferay.gradle.plugins.internal.util.FileUtil;
+import com.liferay.gradle.plugins.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.tasks.DirectDeployTask;
-import com.liferay.gradle.plugins.util.FileUtil;
-import com.liferay.gradle.plugins.util.GradleUtil;
 
 import java.io.File;
 

@@ -14,7 +14,8 @@
 
 package com.liferay.gradle.plugins.extensions;
 
-import com.liferay.gradle.plugins.util.GradleUtil;
+import com.liferay.gradle.plugins.internal.extensions.AppServerFactory;
+import com.liferay.gradle.plugins.internal.util.GradleUtil;
 import com.liferay.gradle.util.Validator;
 
 import groovy.lang.Closure;

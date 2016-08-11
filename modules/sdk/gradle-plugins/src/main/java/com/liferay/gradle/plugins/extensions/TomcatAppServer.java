@@ -14,7 +14,7 @@
 
 package com.liferay.gradle.plugins.extensions;
 
-import com.liferay.gradle.plugins.util.GradleUtil;
+import com.liferay.gradle.plugins.internal.util.GradleUtil;
 
 import org.gradle.api.Project;
 

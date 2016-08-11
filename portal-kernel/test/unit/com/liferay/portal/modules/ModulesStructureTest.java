@@ -227,7 +227,7 @@ public class ModulesStructureTest {
 
 		final Set<String> pluginNames = new TreeSet<>();
 
-		pluginNames.add("com.liferay.gradle.plugins");
+		pluginNames.add("com.liferay.gradle.plugins.defaults");
 
 		Files.walkFileTree(
 			dirPath,

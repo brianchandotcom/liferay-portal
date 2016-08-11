@@ -25,7 +25,7 @@ import com.liferay.ant.bnd.sass.SassAnalyzerPlugin;
 import com.liferay.ant.bnd.service.ServiceAnalyzerPlugin;
 import com.liferay.ant.bnd.social.SocialAnalyzerPlugin;
 import com.liferay.ant.bnd.spring.SpringDependencyAnalyzerPlugin;
-import com.liferay.gradle.plugins.util.GradleUtil;
+import com.liferay.gradle.plugins.internal.util.GradleUtil;
 import com.liferay.gradle.util.StringUtil;
 import com.liferay.gradle.util.Validator;
 

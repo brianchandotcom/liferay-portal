@@ -14,7 +14,8 @@
 
 package com.liferay.gradle.plugins;
 
-import com.liferay.gradle.plugins.util.GradleUtil;
+import com.liferay.gradle.plugins.internal.util.GradleUtil;
+import com.liferay.gradle.plugins.util.PortalTools;
 import com.liferay.gradle.util.Validator;
 
 import org.gradle.api.Plugin;
@@ -35,13 +36,13 @@ public abstract class BasePortalToolDefaultsPlugin
 	protected void addPortalToolDependencies(
 		Project project, String configurationName, String portalToolName) {
 
-		String portalToolVersion = GradleUtil.getPortalToolVersion(
+		String portalToolVersion = PortalTools.getVersion(
 			project, portalToolName);
 
 		if (Validator.isNotNull(portalToolVersion)) {
 			GradleUtil.addDependency(
-				project, configurationName, GradleUtil.PORTAL_TOOL_GROUP,
-				portalToolName, portalToolVersion);
+				project, configurationName, PortalTools.GROUP, portalToolName,
+				portalToolVersion);
 		}
 	}
 

@@ -118,6 +118,42 @@ public class BlogsEntryLocalServiceUtil {
 			smallImageImageSelector, serviceContext);
 	}
 
+	public static com.liferay.blogs.kernel.model.BlogsEntry addEntry(
+		long userId, java.lang.String title, java.lang.String subtitle,
+		java.lang.String urlTitle, java.lang.String description,
+		java.lang.String content, int displayDateMonth, int displayDateDay,
+		int displayDateYear, int displayDateHour, int displayDateMinute,
+		boolean allowPingbacks, boolean allowTrackbacks,
+		java.lang.String[] trackbacks, java.lang.String coverImageCaption,
+		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector coverImageImageSelector,
+		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector smallImageImageSelector,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addEntry(userId, title, subtitle, urlTitle, description,
+			content, displayDateMonth, displayDateDay, displayDateYear,
+			displayDateHour, displayDateMinute, allowPingbacks,
+			allowTrackbacks, trackbacks, coverImageCaption,
+			coverImageImageSelector, smallImageImageSelector, serviceContext);
+	}
+
+	public static com.liferay.blogs.kernel.model.BlogsEntry addEntry(
+		long userId, java.lang.String title, java.lang.String subtitle,
+		java.lang.String urlTitle, java.lang.String description,
+		java.lang.String content, java.util.Date displayDate,
+		boolean allowPingbacks, boolean allowTrackbacks,
+		java.lang.String[] trackbacks, java.lang.String coverImageCaption,
+		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector coverImageImageSelector,
+		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector smallImageImageSelector,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addEntry(userId, title, subtitle, urlTitle, description,
+			content, displayDate, allowPingbacks, allowTrackbacks, trackbacks,
+			coverImageCaption, coverImageImageSelector,
+			smallImageImageSelector, serviceContext);
+	}
+
 	public static com.liferay.blogs.kernel.model.BlogsEntry deleteEntry(
 		com.liferay.blogs.kernel.model.BlogsEntry entry)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -266,6 +302,44 @@ public class BlogsEntryLocalServiceUtil {
 				   .updateEntry(userId, entryId, title, subtitle, description,
 			content, displayDate, allowPingbacks, allowTrackbacks, trackbacks,
 			coverImageCaption, coverImageImageSelector,
+			smallImageImageSelector, serviceContext);
+	}
+
+	public static com.liferay.blogs.kernel.model.BlogsEntry updateEntry(
+		long userId, long entryId, java.lang.String title,
+		java.lang.String subtitle, java.lang.String urlTitle,
+		java.lang.String description, java.lang.String content,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, boolean allowPingbacks,
+		boolean allowTrackbacks, java.lang.String[] trackbacks,
+		java.lang.String coverImageCaption,
+		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector coverImageImageSelector,
+		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector smallImageImageSelector,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateEntry(userId, entryId, title, subtitle, urlTitle,
+			description, content, displayDateMonth, displayDateDay,
+			displayDateYear, displayDateHour, displayDateMinute,
+			allowPingbacks, allowTrackbacks, trackbacks, coverImageCaption,
+			coverImageImageSelector, smallImageImageSelector, serviceContext);
+	}
+
+	public static com.liferay.blogs.kernel.model.BlogsEntry updateEntry(
+		long userId, long entryId, java.lang.String title,
+		java.lang.String subtitle, java.lang.String urlTitle,
+		java.lang.String description, java.lang.String content,
+		java.util.Date displayDate, boolean allowPingbacks,
+		boolean allowTrackbacks, java.lang.String[] trackbacks,
+		java.lang.String coverImageCaption,
+		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector coverImageImageSelector,
+		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector smallImageImageSelector,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateEntry(userId, entryId, title, subtitle, urlTitle,
+			description, content, displayDate, allowPingbacks, allowTrackbacks,
+			trackbacks, coverImageCaption, coverImageImageSelector,
 			smallImageImageSelector, serviceContext);
 	}
 

@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetLinkConstants;
+import com.liferay.blogs.exception.EntryUrlTitleException;
 import com.liferay.blogs.kernel.exception.EntryContentException;
 import com.liferay.blogs.kernel.exception.EntryCoverImageCropException;
 import com.liferay.blogs.kernel.exception.EntryDisplayDateException;
@@ -254,6 +255,24 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		return addEntry(
+			userId, title, subtitle, StringPool.BLANK, description, content,
+			displayDate, allowPingbacks, allowTrackbacks, trackbacks,
+			coverImageCaption, coverImageImageSelector, smallImageImageSelector,
+			serviceContext);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public BlogsEntry addEntry(
+			long userId, String title, String subtitle, String urlTitle,
+			String description, String content, Date displayDate,
+			boolean allowPingbacks, boolean allowTrackbacks,
+			String[] trackbacks, String coverImageCaption,
+			ImageSelector coverImageImageSelector,
+			ImageSelector smallImageImageSelector, ServiceContext serviceContext)
+		throws PortalException {
+
 		// Entry
 
 		User user = userPersistence.findByPrimaryKey(userId);
@@ -261,7 +280,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		long entryId = counterLocalService.increment();
 
-		validate(title, content);
+		validate(title, urlTitle, content);
 
 		BlogsEntry entry = blogsEntryPersistence.create(entryId);
 
@@ -272,6 +291,11 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		entry.setUserName(user.getFullName());
 		entry.setTitle(title);
 		entry.setSubtitle(subtitle);
+
+		if (Validator.isNotNull(urlTitle)) {
+			entry.setUrlTitle(getUniqueUrlTitle(entryId, groupId, urlTitle));
+		}
+
 		entry.setDescription(description);
 		entry.setContent(content);
 		entry.setDisplayDate(displayDate);
@@ -362,12 +386,12 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 	@Override
 	public BlogsEntry addEntry(
-			long userId, String title, String subtitle, String description,
-			String content, int displayDateMonth, int displayDateDay,
-			int displayDateYear, int displayDateHour, int displayDateMinute,
-			boolean allowPingbacks, boolean allowTrackbacks,
-			String[] trackbacks, String coverImageCaption,
-			ImageSelector coverImageImageSelector,
+			long userId, String title, String subtitle, String urlTitle,
+			String description, String content, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, boolean allowPingbacks,
+			boolean allowTrackbacks, String[] trackbacks,
+			String coverImageCaption, ImageSelector coverImageImageSelector,
 			ImageSelector smallImageImageSelector,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -380,9 +404,30 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			EntryDisplayDateException.class);
 
 		return addEntry(
-			userId, title, subtitle, description, content, displayDate,
-			allowPingbacks, allowTrackbacks, trackbacks, coverImageCaption,
-			coverImageImageSelector, smallImageImageSelector, serviceContext);
+			userId, title, subtitle, urlTitle, description, content,
+			displayDate, allowPingbacks, allowTrackbacks, trackbacks,
+			coverImageCaption, coverImageImageSelector, smallImageImageSelector,
+			serviceContext);
+	}
+
+	@Override
+	public BlogsEntry addEntry(
+			long userId, String title, String subtitle, String description,
+			String content, int displayDateMonth, int displayDateDay,
+			int displayDateYear, int displayDateHour, int displayDateMinute,
+			boolean allowPingbacks, boolean allowTrackbacks,
+			String[] trackbacks, String coverImageCaption,
+			ImageSelector coverImageImageSelector,
+			ImageSelector smallImageImageSelector,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return addEntry(
+			userId, title, subtitle, StringPool.BLANK, description, content,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
+			coverImageCaption, coverImageImageSelector, smallImageImageSelector,
+			serviceContext);
 	}
 
 	@Override
@@ -1153,16 +1198,41 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		return updateEntry(
+			userId, entryId, title, subtitle, StringPool.BLANK, description,
+			content, displayDate, allowPingbacks, allowTrackbacks, trackbacks,
+			coverImageCaption, coverImageImageSelector, smallImageImageSelector,
+			serviceContext);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public BlogsEntry updateEntry(
+			long userId, long entryId, String title, String subtitle,
+			String urlTitle, String description, String content,
+			Date displayDate, boolean allowPingbacks, boolean allowTrackbacks,
+			String[] trackbacks, String coverImageCaption,
+			ImageSelector coverImageImageSelector,
+			ImageSelector smallImageImageSelector,
+			ServiceContext serviceContext)
+		throws PortalException {
+
 		// Entry
 
 		BlogsEntry entry = blogsEntryPersistence.findByPrimaryKey(entryId);
 
-		validate(title, content);
+		validate(title, urlTitle, content);
 
 		String oldUrlTitle = entry.getUrlTitle();
 
 		entry.setTitle(title);
 		entry.setSubtitle(subtitle);
+
+		if (Validator.isNotNull(urlTitle)) {
+			entry.setUrlTitle(
+				getUniqueUrlTitle(entryId, entry.getGroupId(), urlTitle));
+		}
+
 		entry.setDescription(description);
 		entry.setContent(content);
 		entry.setDisplayDate(displayDate);
@@ -1293,6 +1363,26 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		return updateEntry(
+			userId, entryId, title, subtitle, StringPool.BLANK, description,
+			content, displayDateMonth, displayDateDay, displayDateYear,
+			displayDateHour, displayDateMinute, allowPingbacks, allowTrackbacks,
+			trackbacks, coverImageCaption, coverImageImageSelector,
+			smallImageImageSelector, serviceContext);
+	}
+
+	@Override
+	public BlogsEntry updateEntry(
+			long userId, long entryId, String title, String subtitle,
+			String urlTitle, String description, String content,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, boolean allowPingbacks,
+			boolean allowTrackbacks, String[] trackbacks,
+			String coverImageCaption, ImageSelector coverImageImageSelector,
+			ImageSelector smallImageImageSelector,
+			ServiceContext serviceContext)
+		throws PortalException {
+
 		User user = userPersistence.findByPrimaryKey(userId);
 
 		Date displayDate = PortalUtil.getDate(
@@ -1301,9 +1391,10 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			EntryDisplayDateException.class);
 
 		return updateEntry(
-			userId, entryId, title, subtitle, description, content, displayDate,
-			allowPingbacks, allowTrackbacks, trackbacks, coverImageCaption,
-			coverImageImageSelector, smallImageImageSelector, serviceContext);
+			userId, entryId, title, subtitle, urlTitle, description, content,
+			displayDate, allowPingbacks, allowTrackbacks, trackbacks,
+			coverImageCaption, coverImageImageSelector, smallImageImageSelector,
+			serviceContext);
 	}
 
 	@Override
@@ -2115,7 +2206,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		}
 	}
 
-	protected void validate(String title, String content)
+	protected void validate(String title, String urlTitle, String content)
 		throws PortalException {
 
 		if (Validator.isNull(title)) {
@@ -2128,6 +2219,17 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		if (title.length() > titleMaxLength) {
 			throw new EntryTitleException(
 				"Title has more than " + titleMaxLength + " characters");
+		}
+
+		if (Validator.isNotNull(urlTitle)) {
+			int urlTitleMaxLength = ModelHintsUtil.getMaxLength(
+				BlogsEntry.class.getName(), "urlTitle");
+
+			if (urlTitle.length() > urlTitleMaxLength) {
+				throw new EntryUrlTitleException(
+					"URL title has more than " + urlTitleMaxLength +
+						" characters");
+			}
 		}
 
 		if (Validator.isNull(content)) {

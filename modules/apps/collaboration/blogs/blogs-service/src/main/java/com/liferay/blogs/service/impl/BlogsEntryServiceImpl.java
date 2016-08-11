@@ -152,6 +152,30 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 	}
 
 	@Override
+	public BlogsEntry addEntry(
+			String title, String subtitle, String urlTitle, String description,
+			String content, int displayDateMonth, int displayDateDay,
+			int displayDateYear, int displayDateHour, int displayDateMinute,
+			boolean allowPingbacks, boolean allowTrackbacks,
+			String[] trackbacks, String coverImageCaption,
+			ImageSelector coverImageImageSelector,
+			ImageSelector smallImageImageSelector,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		BlogsPermission.check(
+			getPermissionChecker(), serviceContext.getScopeGroupId(),
+			ActionKeys.ADD_ENTRY);
+
+		return blogsEntryLocalService.addEntry(
+			getUserId(), title, subtitle, urlTitle, description, content,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
+			coverImageCaption, coverImageImageSelector, smallImageImageSelector,
+			serviceContext);
+	}
+
+	@Override
 	public void deleteEntry(long entryId) throws PortalException {
 		BlogsEntryPermission.check(
 			getPermissionChecker(), entryId, ActionKeys.DELETE);
@@ -587,15 +611,35 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		BlogsEntryPermission.check(
-			getPermissionChecker(), entryId, ActionKeys.UPDATE);
-
-		return blogsEntryLocalService.updateEntry(
-			getUserId(), entryId, title, subtitle, description, content,
+		return updateEntry(
+			entryId, title, subtitle, StringPool.BLANK, description, content,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
 			coverImageCaption, coverImageImageSelector, smallImageImageSelector,
 			serviceContext);
+	}
+
+	@Override
+	public BlogsEntry updateEntry(
+			long entryId, String title, String subtitle, String urlTitle,
+			String description, String content, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, boolean allowPingbacks,
+			boolean allowTrackbacks, String[] trackbacks,
+			String coverImageCaption, ImageSelector coverImageImageSelector,
+			ImageSelector smallImageImageSelector,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		BlogsEntryPermission.check(
+			getPermissionChecker(), entryId, ActionKeys.UPDATE);
+
+		return blogsEntryLocalService.updateEntry(
+			getUserId(), entryId, title, subtitle, urlTitle, description,
+			content, displayDateMonth, displayDateDay, displayDateYear,
+			displayDateHour, displayDateMinute, allowPingbacks, allowTrackbacks,
+			trackbacks, coverImageCaption, coverImageImageSelector,
+			smallImageImageSelector, serviceContext);
 	}
 
 	protected String exportToRSS(

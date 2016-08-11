@@ -28,6 +28,7 @@ long entryId = BeanParamUtil.getLong(entry, request, "entryId");
 String title = BeanParamUtil.getString(entry, request, "title");
 String subtitle = BeanParamUtil.getString(entry, request, "subtitle");
 String content = BeanParamUtil.getString(entry, request, "content");
+String urlTitle = BeanParamUtil.getString(entry, request, "urlTitle");
 
 String description = BeanParamUtil.getString(entry, request, "description");
 
@@ -90,6 +91,7 @@ renderResponse.setTitle((entry != null) ? entry.getTitle() : LanguageUtil.get(re
 			<liferay-ui:error exception="<%= EntryCoverImageCropException.class %>" message="an-error-occurred-while-cropping-the-cover-image" />
 			<liferay-ui:error exception="<%= EntryDescriptionException.class %>" message="please-enter-a-valid-abstract" />
 			<liferay-ui:error exception="<%= EntryTitleException.class %>" message="please-enter-a-valid-title" />
+			<liferay-ui:error exception="<%= EntryUrlTitleException.class %>" message="please-enter-a-valid-url-title" />
 
 			<liferay-ui:error exception="<%= LiferayFileItemException.class %>">
 				<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(LiferayFileItem.THRESHOLD_SIZE, locale) %>" key="please-enter-valid-content-with-valid-content-size-no-larger-than-x" translateArguments="<%= false %>" />
@@ -184,6 +186,15 @@ renderResponse.setTitle((entry != null) ? entry.getTitle() : LanguageUtil.get(re
 				</aui:fieldset>
 
 				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="configuration">
+
+					<%
+					Portlet portlet = PortletLocalServiceUtil.getPortletById(BlogsPortletKeys.BLOGS);
+
+					String friendlyURLPrefix = StringUtil.shorten("/-/" + portlet.getFriendlyURLMapping(), 40) + StringPool.SLASH;
+					%>
+
+					<aui:input cssClass="input-medium" data-customUrl="<%= false %>" helpMessage='<%= LanguageUtil.format(resourceBundle, "for-example-x", "<em>one-day-in-the-life-of-marion-cotillard</em>") %>' ignoreRequestValue="<%= true %>" label="blog-entry-url" name="urlTitle" prefix="<%= friendlyURLPrefix %>" type="text" value="<%= urlTitle %>" />
+
 					<div class="clearfix form-group">
 						<label><liferay-ui:message key="abstract" /> <liferay-ui:icon-help message="an-abstract-is-a-brief-summary-of-a-blog-entry" /></label>
 
@@ -415,6 +426,17 @@ renderResponse.setTitle((entry != null) ? entry.getTitle() : LanguageUtil.get(re
 	else {
 		configurationContentHeader.on('show.bs.collapse', createAbstractEditor);
 	}
+
+	var form = A.one('#<portlet:namespace />fm');
+
+	var urlTitleInput = form.one('#<portlet:namespace />urlTitle');
+
+	urlTitleInput.on(
+		'input',
+		function(event) {
+			event.currentTarget.setAttribute('data-customUrl', urlTitleInput.val() != '');
+		}
+	);
 
 	Liferay.on('destroyPortlet', clearSaveDraftHandle);
 </aui:script>

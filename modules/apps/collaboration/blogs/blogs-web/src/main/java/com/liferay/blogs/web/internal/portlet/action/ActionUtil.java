@@ -17,8 +17,10 @@ package com.liferay.blogs.web.internal.portlet.action;
 import com.liferay.blogs.kernel.exception.NoSuchEntryException;
 import com.liferay.blogs.kernel.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryServiceUtil;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -35,19 +37,30 @@ import javax.servlet.http.HttpServletRequest;
 public class ActionUtil {
 
 	public static void getEntry(HttpServletRequest request) throws Exception {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
+			JavaConstants.JAVAX_PORTLET_REQUEST);
+
+		getEntry(portletRequest);
+	}
+
+	public static void getEntry(PortletRequest portletRequest)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long entryId = ParamUtil.getLong(request, "entryId");
+		long entryId = ParamUtil.getLong(portletRequest, "entryId");
 
-		String urlTitle = ParamUtil.getString(request, "urlTitle");
+		String urlTitle = ParamUtil.getString(portletRequest, "urlTitle");
 
 		BlogsEntry entry = null;
 
 		if (entryId > 0) {
 			entry = BlogsEntryServiceUtil.getEntry(entryId);
 		}
-		else if (Validator.isNotNull(urlTitle)) {
+		else if (Validator.isNotNull(urlTitle) &&
+				 SessionErrors.isEmpty(portletRequest)) {
+
 			try {
 				entry = BlogsEntryServiceUtil.getEntry(
 					themeDisplay.getScopeGroupId(), urlTitle);
@@ -74,16 +87,10 @@ public class ActionUtil {
 			throw new NoSuchEntryException("{entryId=" + entryId + "}");
 		}
 
-		request.setAttribute(WebKeys.BLOGS_ENTRY, entry);
-	}
-
-	public static void getEntry(PortletRequest portletRequest)
-		throws Exception {
-
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			portletRequest);
 
-		getEntry(request);
+		request.setAttribute(WebKeys.BLOGS_ENTRY, entry);
 	}
 
 }

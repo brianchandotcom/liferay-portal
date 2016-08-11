@@ -1,4 +1,5 @@
 import com.liferay.gradle.plugins.change.log.builder.BuildChangeLogTask
+import com.liferay.gradle.plugins.util.PortalTools
 import com.liferay.gradle.util.FileUtil
 import com.liferay.gradle.util.StringUtil
 import com.liferay.gradle.util.copy.RenameDependencyClosure
@@ -93,8 +94,6 @@ _createSetUpTasks()
 private void _createSetUpTasks() {
 	FileTree ivyXmlFileTree = fileTree(dir: "../tools/sdk", includes: ["ivy.xml", "dependencies/*/ivy.xml"])
 
-	Properties portalToolVersions = _getPortalToolVersions()
-
 	XmlSlurper xmlSlurper = new XmlSlurper()
 
 	ivyXmlFileTree.each {
@@ -105,7 +104,7 @@ private void _createSetUpTasks() {
 		String portalToolName = portalToolDir.name
 
 		String portalToolSuffix = _getPortalToolSuffix(portalToolName)
-		String portalToolVersion = portalToolVersions[portalToolName]
+		String portalToolVersion = PortalTools.getVersion(project, portalToolName)
 
 		Configuration portalToolConfiguration = configurations.create("portalTools" + portalToolSuffix)
 
@@ -152,24 +151,4 @@ private String _getPortalToolSuffix(String name) {
 	}
 
 	return StringUtil.capitalize(suffix)
-}
-
-private Properties _getPortalToolVersions() {
-	Properties properties = new Properties()
-
-	InputStream inputStream = buildscript.classLoader.getResourceAsStream("com/liferay/gradle/plugins/dependencies/portal-tools.properties")
-
-	inputStream.withCloseable {
-		properties.load it
-	}
-
-	for (String name in properties.stringPropertyNames()) {
-		String version = project.properties[name + ".version"]
-
-		if (version) {
-			properties.setProperty name, version
-		}
-	}
-
-	return properties
 }

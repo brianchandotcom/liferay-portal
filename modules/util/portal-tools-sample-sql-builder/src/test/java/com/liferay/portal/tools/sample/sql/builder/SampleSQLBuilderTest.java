@@ -38,11 +38,13 @@ import java.util.Enumeration;
 import java.util.Properties;
 
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
  * @author Tina Tian
  */
+@Ignore
 public class SampleSQLBuilderTest {
 
 	@ClassRule

@@ -1866,13 +1866,25 @@
 
 		<execute macro="WebContentNavigator#gotoManageStructures" />
 
-		<execute macro="WebContentStructures#addCP">
+		<execute macro="LexiconEntry#gotoAdd" />
+
+		<execute macro="WebContentStructures#addName">
+			<var name="structureName" value="WC Structure Name" />
+		</execute>
+
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Details" />
+		</execute>
+
+		<execute macro="WebContentStructures#addDescription">
+			<var name="structureDescription" value="WC Structure Description" />
+		</execute>
+
+		<execute macro="WebContentStructures#addLocalization">
 			<var name="localization1Name" value="nom de la structure de wc" />
 			<var name="localization1NameKey" value="fr_FR" />
 			<var name="localization2Name" value="wc 结构名称" />
 			<var name="localization2NameKey" value="zh_CN" />
-			<var name="structureDescription" value="WC Structure Description" />
-			<var name="structureName" value="WC Structure Name" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#addField">

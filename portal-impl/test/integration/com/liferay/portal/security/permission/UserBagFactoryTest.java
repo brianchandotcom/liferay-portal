@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.security.permission.UserBag;
 import com.liferay.portal.kernel.security.permission.UserBagFactoryUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
@@ -29,6 +30,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
+import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -36,6 +38,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 
 import org.junit.Assert;
@@ -68,20 +71,39 @@ public class UserBagFactoryTest {
 			_parentOrganization.getOrganizationId(),
 			RandomTestUtil.randomString(), true);
 
+		_userGroup = UserGroupTestUtil.addUserGroup(_childGroup.getGroupId());
+
 		_user = UserTestUtil.addUser();
 	}
 
 	@Test
 	public void testGetGroups() throws Exception {
-		UserBag userBag = getUserBag();
+		Collection<Group> groups = getGroups();
 
-		Collection<Group> groups = userBag.getGroups();
+		Assert.assertEquals(1, groups.size());
 
 		Collection<Group> userGroups = getUserGroups();
-		Collection<Group> userOrgGroups = getUserOrgGroups();
 
-		Assert.assertTrue(groups.containsAll(userGroups));
-		Assert.assertTrue(groups.containsAll(userOrgGroups));
+		Assert.assertTrue(userGroups.containsAll(groups));
+
+		Collection<Group> userOrgGroups = getUserOrgGroups();
+		Collection<Group> userUserGroupGroups = getUserUserGroupGroups();
+
+		groups = getGroups();
+
+		Assert.assertEquals(5, groups.size());
+		Assert.assertEquals(2, userGroups.size());
+		Assert.assertEquals(2, userOrgGroups.size());
+		Assert.assertEquals(1, userUserGroupGroups.size());
+
+		groups = new HashSet<>(groups);
+		userGroups = new HashSet<>(userGroups);
+		userOrgGroups = new HashSet<>(userOrgGroups);
+
+		Assert.assertEquals(5, groups.size());
+		Assert.assertEquals(2, userGroups.size());
+		Assert.assertEquals(2, userOrgGroups.size());
+		Assert.assertEquals(1, userUserGroupGroups.size());
 	}
 
 	@Test
@@ -105,6 +127,7 @@ public class UserBagFactoryTest {
 
 		long[] roleIds = ListUtil.toLongArray(roles, Role.ROLE_ID_ACCESSOR);
 
+		Assert.assertEquals(4, roleIds.length);
 		Assert.assertTrue(ArrayUtil.contains(roleIds, regularRole.getRoleId()));
 		Assert.assertTrue(ArrayUtil.contains(roleIds, groupRoleId));
 		Assert.assertTrue(ArrayUtil.contains(roleIds, organizationRoleId));
@@ -114,6 +137,7 @@ public class UserBagFactoryTest {
 	public void testGetUserGroups() throws Exception {
 		Collection<Group> userGroups = getUserGroups();
 
+		Assert.assertEquals(2, userGroups.size());
 		Assert.assertTrue(userGroups.contains(_childGroup));
 		Assert.assertFalse(userGroups.contains(_parentGroup));
 	}
@@ -129,6 +153,7 @@ public class UserBagFactoryTest {
 	public void testGetUserOrgGroups() throws Exception {
 		Collection<Group> groups = getUserOrgGroups();
 
+		Assert.assertEquals(2, groups.size());
 		Assert.assertTrue(groups.contains(_childOrganization.getGroup()));
 		Assert.assertTrue(groups.contains(_parentOrganization.getGroup()));
 	}
@@ -137,11 +162,27 @@ public class UserBagFactoryTest {
 	public void testGetUserOrgs() throws Exception {
 		Collection<Organization> organizations = getUserOrgs();
 
+		Assert.assertEquals(2, organizations.size());
 		Assert.assertTrue(organizations.contains(_childOrganization));
 		Assert.assertTrue(organizations.contains(_parentOrganization));
 	}
 
+	@Test
+	public void testGetUserUserGroupGroups() throws Exception {
+		Collection<Group> groups = getUserUserGroupGroups();
+
+		Assert.assertTrue(groups.contains(_userGroup.getGroup()));
+	}
+
+	protected Collection<Group> getGroups() throws Exception {
+		UserBag userBag = getUserBag();
+
+		return userBag.getGroups();
+	}
+
 	protected UserBag getUserBag() throws Exception {
+		PermissionCacheUtil.removeUserBag(_user.getUserId());
+
 		return UserBagFactoryUtil.create(_user.getUserId());
 	}
 
@@ -171,6 +212,15 @@ public class UserBagFactoryTest {
 		return userBag.getUserOrgs();
 	}
 
+	protected Collection<Group> getUserUserGroupGroups() throws Exception {
+		UserLocalServiceUtil.addUserGroupUser(
+			_userGroup.getUserGroupId(), _user.getUserId());
+
+		UserBag userBag = getUserBag();
+
+		return userBag.getUserUserGroupGroups();
+	}
+
 	@DeleteAfterTestRun
 	private Group _childGroup;
 
@@ -185,5 +235,8 @@ public class UserBagFactoryTest {
 
 	@DeleteAfterTestRun
 	private User _user;
+
+	@DeleteAfterTestRun
+	private UserGroup _userGroup;
 
 }

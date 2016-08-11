@@ -39,24 +39,26 @@ public class UserBagImpl implements UserBag {
 	public UserBagImpl(
 		long userId, Collection<Group> userGroups,
 		Collection<Organization> userOrgs, Collection<Group> userOrgGroups,
-		Collection<Role> userRoles) {
+		Collection<Group> userUserGroupGroups, Collection<Role> userRoles) {
 
 		_userId = userId;
 		_userGroupIds = _toSortedLongArray(userGroups);
 		_userOrgIds = _toSortedLongArray(userOrgs);
 		_userOrgGroupIds = _toSortedLongArray(userOrgGroups);
 		_userRoleIds = _toSortedLongArray(userRoles);
+		_userUserGroupGroupsIds = _toSortedLongArray(userUserGroupGroups);
 	}
 
 	public UserBagImpl(
 		long userId, Collection<Group> userGroups,
 		Collection<Organization> userOrgs, Collection<Group> userOrgGroups,
-		long[] userRoleIds) {
+		Collection<Group> userUserGroupGroups, long[] userRoleIds) {
 
 		_userId = userId;
 		_userGroupIds = _toSortedLongArray(userGroups);
 		_userOrgIds = _toSortedLongArray(userOrgs);
 		_userOrgGroupIds = _toSortedLongArray(userOrgGroups);
+		_userUserGroupGroupsIds = _toSortedLongArray(userUserGroupGroups);
 
 		Arrays.sort(userRoleIds);
 
@@ -68,6 +70,7 @@ public class UserBagImpl implements UserBag {
 		Set<Group> groups = new HashSet<>(getUserGroups());
 
 		groups.addAll(getUserOrgGroups());
+		groups.addAll(getUserUserGroupGroups());
 
 		return groups;
 	}
@@ -115,6 +118,11 @@ public class UserBagImpl implements UserBag {
 	@Override
 	public List<Organization> getUserOrgs() throws PortalException {
 		return OrganizationLocalServiceUtil.getOrganizations(_userOrgIds);
+	}
+
+	@Override
+	public List<Group> getUserUserGroupGroups() throws PortalException {
+		return GroupLocalServiceUtil.getGroups(_userUserGroupGroupsIds);
 	}
 
 	@Override
@@ -170,5 +178,6 @@ public class UserBagImpl implements UserBag {
 	private final long[] _userOrgGroupIds;
 	private final long[] _userOrgIds;
 	private final long[] _userRoleIds;
+	private final long[] _userUserGroupGroupsIds;
 
 }

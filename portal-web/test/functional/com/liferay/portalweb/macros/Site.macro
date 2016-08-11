@@ -177,7 +177,7 @@
 	<command name="addMemberCP">
 		<var name="key_cardText" value="${userScreenName}" />
 
-		<execute function="Click" locator1="Button#PLUS" />
+		<execute macro="LexiconEntry#gotoAdd" />
 
 		<execute function="AssertVisible" locator1="Button#DONE" />
 
@@ -199,7 +199,7 @@
 
 		<execute function="SelectFrameTop" />
 
-		<execute function="AssertClick" locator1="Button#DONE" value1="Done" />
+		<execute macro="Button#clickDone" />
 
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
@@ -221,7 +221,7 @@
 
 		<execute function="SelectFrameTop" />
 
-		<execute function="Click" locator1="Button#DONE" />
+		<execute macro="Button#clickDone" />
 
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
@@ -235,7 +235,7 @@
 
 		<execute function="Pause" locator1="5000" />
 
-		<execute function="Click" locator1="Button#PLUS" />
+		<execute macro="LexiconEntry#gotoAdd" />
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
@@ -245,7 +245,7 @@
 
 		<execute function="SelectFrameTop" />
 
-		<execute function="Click" locator1="Button#DONE" />
+		<execute macro="Button#clickDone" />
 
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>

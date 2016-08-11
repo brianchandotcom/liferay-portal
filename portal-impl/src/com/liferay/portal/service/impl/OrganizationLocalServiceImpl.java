@@ -65,7 +65,6 @@ import com.liferay.portal.kernel.util.comparator.OrganizationIdComparator;
 import com.liferay.portal.kernel.util.comparator.OrganizationNameComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.impl.OrganizationImpl;
-import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.service.base.OrganizationLocalServiceBaseImpl;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsUtil;
@@ -97,19 +96,6 @@ import java.util.Set;
  */
 public class OrganizationLocalServiceImpl
 	extends OrganizationLocalServiceBaseImpl {
-
-	/**
-	 * Adds the organizations to the group.
-	 *
-	 * @param groupId the primary key of the group
-	 * @param organizationIds the primary keys of the organizations
-	 */
-	@Override
-	public void addGroupOrganizations(long groupId, long[] organizationIds) {
-		groupPersistence.addOrganizations(groupId, organizationIds);
-
-		PermissionCacheUtil.clearCache();
-	}
 
 	/**
 	 * Adds an organization.
@@ -415,10 +401,6 @@ public class OrganizationLocalServiceImpl
 		// Organization
 
 		organizationPersistence.remove(organization);
-
-		// Permission cache
-
-		PermissionCacheUtil.clearCache();
 
 		return organization;
 	}
@@ -1554,20 +1536,6 @@ public class OrganizationLocalServiceImpl
 	}
 
 	/**
-	 * Sets the organizations in the group, removing and adding organizations to
-	 * the group as necessary.
-	 *
-	 * @param groupId the primary key of the group
-	 * @param organizationIds the primary keys of the organizations
-	 */
-	@Override
-	public void setGroupOrganizations(long groupId, long[] organizationIds) {
-		groupPersistence.setOrganizations(groupId, organizationIds);
-
-		PermissionCacheUtil.clearCache();
-	}
-
-	/**
 	 * Removes the organizations from the group.
 	 *
 	 * @param groupId the primary key of the group
@@ -1576,8 +1544,6 @@ public class OrganizationLocalServiceImpl
 	@Override
 	public void unsetGroupOrganizations(long groupId, long[] organizationIds) {
 		groupPersistence.removeOrganizations(groupId, organizationIds);
-
-		PermissionCacheUtil.clearCache();
 	}
 
 	/**

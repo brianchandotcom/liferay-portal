@@ -1034,11 +1034,17 @@
 
 		<execute macro="WebContentNavigator#gotoManageStructures" />
 
-		<execute macro="WebContentStructures#editFieldSettingCP">
-			<var name="indexable" value="false" />
-			<var name="structureFieldNames" value="Boolean,Date,Decimal,Documents and Media,HTML,Image,Integer,Link to Page,Number,Radio,Select,Text,Text Box" />
+		<execute macro="WebContentNavigator#gotoEditStructure">
 			<var name="structureName" value="WC Structure Name" />
 		</execute>
+
+		<for list="Boolean,Date,Decimal,Documents and Media,HTML,Image,Integer,Link to Page,Number,Radio,Select,Text,Text Box" param="structureFieldName">
+			<execute macro="DynamicDataMapping#editFieldIndexable">
+				<var name="fieldFieldLabel" value="${structureFieldName}" />
+			</execute>
+		</for>
+
+		<execute macro="WebContentStructures#saveCP" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Asset Publisher Page" />

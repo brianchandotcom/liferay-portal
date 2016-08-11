@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignment;
+import com.liferay.portal.workflow.kaleo.model.KaleoTaskForm;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
 import com.liferay.portal.workflow.kaleo.runtime.util.WorkflowContextUtil;
 import com.liferay.portal.workflow.kaleo.service.base.KaleoTaskInstanceTokenLocalServiceBaseImpl;
@@ -145,6 +146,27 @@ public class KaleoTaskInstanceTokenLocalServiceImpl
 		return kaleoTaskInstanceToken;
 	}
 
+	public boolean hasPendingKaleoTaskForms(long kaleoTaskInstanceTokenId)
+		throws PortalException {
+
+		KaleoTaskInstanceToken kaleoTaskInstanceToken =
+			kaleoTaskInstanceTokenPersistence.findByPrimaryKey(
+				kaleoTaskInstanceTokenId);
+
+		int kaleoTaskFormsCount = kaleoTaskFormPersistence.countByKaleoTaskId(
+			kaleoTaskInstanceToken.getKaleoTaskId());
+
+		int kaleoTaskFormInstanceCount =
+			kaleoTaskFormInstancePersistence.countByKaleoTaskInstanceTokenId(
+				kaleoTaskInstanceTokenId);
+
+		if (kaleoTaskFormsCount > kaleoTaskFormInstanceCount) {
+			return true;
+		}
+
+		return false;
+	}
+
 	@Override
 	public KaleoTaskInstanceToken completeKaleoTaskInstanceToken(
 			long kaleoTaskInstanceTokenId, ServiceContext serviceContext)
@@ -186,6 +208,11 @@ public class KaleoTaskInstanceTokenLocalServiceImpl
 
 		kaleoTaskAssignmentInstanceLocalService.
 			deleteCompanyKaleoTaskAssignmentInstances(companyId);
+
+		// Kaleo task assignment instances
+
+		kaleoTaskFormInstanceLocalService.deleteCompanyKaleoTaskFormInstances(
+			companyId);
 	}
 
 	@Override
@@ -202,6 +229,11 @@ public class KaleoTaskInstanceTokenLocalServiceImpl
 		kaleoTaskAssignmentInstanceLocalService.
 			deleteKaleoDefinitionKaleoTaskAssignmentInstances(
 				kaleoDefinitionId);
+
+		// Kaleo task assignment instances
+
+		kaleoTaskFormInstanceLocalService.
+			deleteKaleoDefinitionKaleoTaskFormInstances(kaleoDefinitionId);
 	}
 
 	@Override
@@ -217,6 +249,11 @@ public class KaleoTaskInstanceTokenLocalServiceImpl
 
 		kaleoTaskAssignmentInstanceLocalService.
 			deleteKaleoInstanceKaleoTaskAssignmentInstances(kaleoInstanceId);
+
+		// Kaleo task assignment instances
+
+		kaleoTaskFormInstanceLocalService.
+			deleteKaleoInstanceKaleoTaskFormInstances(kaleoInstanceId);
 	}
 
 	@Override

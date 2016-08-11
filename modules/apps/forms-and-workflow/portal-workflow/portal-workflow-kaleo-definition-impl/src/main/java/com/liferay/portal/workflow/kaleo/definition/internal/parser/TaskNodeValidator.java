@@ -14,10 +14,13 @@
 
 package com.liferay.portal.workflow.kaleo.definition.internal.parser;
 
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.workflow.kaleo.definition.Assignment;
 import com.liferay.portal.workflow.kaleo.definition.Definition;
 import com.liferay.portal.workflow.kaleo.definition.Task;
+import com.liferay.portal.workflow.kaleo.definition.TaskForm;
+import com.liferay.portal.workflow.kaleo.definition.TaskFormReference;
 import com.liferay.portal.workflow.kaleo.definition.parser.NodeValidator;
 
 import java.util.Set;
@@ -53,6 +56,24 @@ public class TaskNodeValidator extends BaseNodeValidator<Task> {
 		if ((assignments == null) || assignments.isEmpty()) {
 			throw new WorkflowException(
 				"No assignments for task " + task.getName());
+		}
+
+		Set<TaskForm> taskForms = task.getTaskForms();
+
+		for (TaskForm taskForm : taskForms) {
+			String formDefinition = taskForm.getFormDefinition();
+
+			TaskFormReference taskFormReference =
+				taskForm.getTaskFormReference();
+
+			if (Validator.isNull(formDefinition) ||
+				(taskFormReference == null)) {
+
+				throw new WorkflowException(
+					"Task form must specify either the form reference or " +
+						"form definition for task: " + task.getName() +
+							" form: " + taskForm.getName());
+			}
 		}
 	}
 

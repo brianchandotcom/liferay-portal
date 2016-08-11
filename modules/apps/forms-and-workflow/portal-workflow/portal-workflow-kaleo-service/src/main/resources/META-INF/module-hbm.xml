@@ -14,6 +14,8 @@
 	<import class="com.liferay.portal.workflow.kaleo.model.KaleoTask" />
 	<import class="com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignment" />
 	<import class="com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignmentInstance" />
+	<import class="com.liferay.portal.workflow.kaleo.model.KaleoTaskForm" />
+	<import class="com.liferay.portal.workflow.kaleo.model.KaleoTaskFormInstance" />
 	<import class="com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken" />
 	<import class="com.liferay.portal.workflow.kaleo.model.KaleoTimer" />
 	<import class="com.liferay.portal.workflow.kaleo.model.KaleoTimerInstanceToken" />
@@ -264,6 +266,51 @@
 		<property name="assigneeClassPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="completed" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="completionDate" type="org.hibernate.type.TimestampType" />
+	</class>
+	<class name="com.liferay.portal.workflow.kaleo.model.impl.KaleoTaskFormImpl" table="KaleoTaskForm">
+		<id name="kaleoTaskFormId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="kaleoDefinitionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="kaleoNodeId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="kaleoTaskId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="kaleoTaskName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="formCompanyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="formDefinition" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="formGroupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="formId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="formUuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="metadata" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="priority" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+	</class>
+	<class name="com.liferay.portal.workflow.kaleo.model.impl.KaleoTaskFormInstanceImpl" table="KaleoTaskFormInstance">
+		<id name="kaleoTaskFormInstanceId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="kaleoDefinitionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="kaleoInstanceId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="kaleoTaskId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="kaleoTaskInstanceTokenId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="kaleoTaskFormId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="formValues" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="formValueEntryGroupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="formValueEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="formValueEntryUuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="metadata" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.portal.workflow.kaleo.model.impl.KaleoTaskInstanceTokenImpl" table="KaleoTaskInstanceToken">
 		<id name="kaleoTaskInstanceTokenId" type="long">

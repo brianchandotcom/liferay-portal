@@ -14,7 +14,6 @@
 
 package com.liferay.gradle.plugins.defaults.internal;
 
-import com.liferay.gradle.plugins.LiferayBasePlugin;
 import com.liferay.gradle.plugins.cache.CacheExtension;
 import com.liferay.gradle.plugins.cache.CachePlugin;
 import com.liferay.gradle.plugins.cache.WriteDigestTask;
@@ -147,21 +146,6 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 				}
 
 			});
-
-		/*GradleUtil.withPlugin(
-			project, LiferayOSGiPlugin.class,
-			new Action<LiferayOSGiPlugin>() {
-
-				@Override
-				public void execute(LiferayOSGiPlugin liferayOSGiPlugin) {
-					if (GradleUtil.hasStartParameterTask(
-							project, LiferayBasePlugin.DEPLOY_TASK_NAME)) {
-
-						configureTaskDeploy(project, recordArtifactTask);
-					}
-				}
-
-			});*/
 	}
 
 	protected PrintArtifactPublishCommandsTask
@@ -389,77 +373,6 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 
 		buildChangeLogTask.setChangeLogFile(
 			new File(destinationDir, "liferay-releng.changelog"));
-	}
-
-	protected void configureTaskDeploy(
-		Copy copy, WritePropertiesTask recordArtifactTask) {
-
-		final Project project = copy.getProject();
-
-		Logger logger = project.getLogger();
-
-		Properties artifactProperties = getArtifactProperties(
-			recordArtifactTask);
-
-		if (isStale(project, artifactProperties)) {
-			if (logger.isDebugEnabled()) {
-				logger.debug(
-					"Unable to download artifact, {} is stale", project);
-			}
-
-			return;
-		}
-
-		final String artifactURL = artifactProperties.getProperty(
-			"artifact.url");
-
-		if (Validator.isNull(artifactURL)) {
-			if (logger.isWarnEnabled()) {
-				logger.warn(
-					"Unable to find artifact.url in {}",
-					recordArtifactTask.getOutputFile());
-			}
-
-			return;
-		}
-
-		Task jarTask = GradleUtil.getTask(project, JavaPlugin.JAR_TASK_NAME);
-
-		boolean replaced = GradleUtil.replaceCopySpecSourcePath(
-			copy.getRootSpec(), jarTask,
-			new Callable<File>() {
-
-				@Override
-				public File call() throws Exception {
-					return FileUtil.get(project, artifactURL);
-				}
-
-			});
-
-		if (replaced && logger.isLifecycleEnabled()) {
-			logger.lifecycle("Downloading artifact from {}", artifactURL);
-		}
-	}
-
-	protected void configureTaskDeploy(
-		Project project, final WritePropertiesTask recordArtifactTask) {
-
-		TaskContainer taskContainer = project.getTasks();
-
-		taskContainer.withType(
-			Copy.class,
-			new Action<Copy>() {
-
-				@Override
-				public void execute(Copy copy) {
-					String taskName = copy.getName();
-
-					if (taskName.equals(LiferayBasePlugin.DEPLOY_TASK_NAME)) {
-						configureTaskDeploy(copy, recordArtifactTask);
-					}
-				}
-
-			});
 	}
 
 	protected void configureTaskEnabledIfLeaf(Task task) {

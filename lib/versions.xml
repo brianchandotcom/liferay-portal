@@ -1067,7 +1067,7 @@
 					</license>
 				</licenses>
 				<comments>
-					See the Ant target "build-axis-jar" in portal-impl/build.xml.
+					See modules/third-party/org-apache-axis/patches.
 				</comments>
 			</library>
 			<library>

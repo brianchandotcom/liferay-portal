@@ -131,8 +131,8 @@ public class UpgradeCheckboxFieldToCheckboxMultipleField
 
 		while (languageKeys.hasNext()) {
 			String languageKey = languageKeys.next();
-			String predefinedValue =
-				oldPredefinedValueJSONObject.getString(languageKey);
+			String predefinedValue = oldPredefinedValueJSONObject.getString(
+				languageKey);
 
 			if (Objects.equals(predefinedValue, "true")) {
 				predefinedValue = checkboxFieldJSONObject.getString("name");
@@ -158,7 +158,7 @@ public class UpgradeCheckboxFieldToCheckboxMultipleField
 		checkboxFieldJSONObject.put(
 			"predefinedValue", getPredefinedValue(checkboxFieldJSONObject));
 
-		checkboxFieldJSONObject.put("type", "checkbox-multiple");
+		checkboxFieldJSONObject.put("type", "checkbox_multiple");
 	}
 
 	protected void transformCheckboxDDMFormFieldValues(

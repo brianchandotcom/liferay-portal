@@ -24,7 +24,7 @@ AUI.add(
 					},
 
 					type: {
-						value: 'checkbox-multiple'
+						value: 'checkbox_multiple'
 					},
 
 					inline: {

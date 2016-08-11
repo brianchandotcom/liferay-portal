@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Component;
 		"ddm.form.field.type.js.class.name=Liferay.DDM.Field.CheckboxMultiple",
 		"ddm.form.field.type.js.module=liferay-ddm-form-field-checkbox-multiple",
 		"ddm.form.field.type.label=checkbox-multiple-field-type-label",
-		"ddm.form.field.type.name=checkbox-multiple"
+		"ddm.form.field.type.name=checkbox_multiple"
 	},
 	service = DDMFormFieldType.class
 )
@@ -46,7 +46,7 @@ public class CheckboxMultipleDDMFormFieldType extends BaseDDMFormFieldType {
 
 	@Override
 	public String getName() {
-		return "checkbox-multiple";
+		return "checkbox_multiple";
 	}
 
 }

@@ -15,7 +15,6 @@
 package com.liferay.source.formatter;
 
 import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -165,8 +164,8 @@ public class BaseSourceProcessorTestCase {
 
 				if (lineCount > -1) {
 					Assert.assertEquals(
-						GetterUtil.getString(lineNumbers[i]),
-						GetterUtil.getString(lineCount));
+						String.valueOf(lineNumbers[i]),
+						String.valueOf(lineCount));
 				}
 
 				String absolutePath = StringUtil.replace(

@@ -22,8 +22,6 @@
 
 		<execute function="MouseOver" locator1="Form#FIELD_LABEL" />
 
-		<execute function="Click" locator1="Form#FIELD_ELLIPSIS" />
-
 		<execute function="Click" locator1="Form#FIELD_DELETE_BUTTON" />
 	</command>
 
@@ -38,21 +36,7 @@
 	<command name="gotoEditField">
 		<var name="key_fieldName" value="${fieldName}" />
 
-		<execute function="MouseOver" locator1="Form#FIELD_LABEL" />
-
-		<execute function="Click" locator1="Form#FIELD_ELLIPSIS" />
-
-		<execute function="Click" locator1="Form#FIELD_EDIT_BUTTON" />
-	</command>
-
-	<command name="gotoEditFieldParagraph">
-		<var name="key_fieldName" value="${fieldName}" />
-
-		<execute function="MouseOver" locator1="Form#FIELD_PARAGRAPH" />
-
-		<execute function="Click" locator1="Form#FIELD_ELLIPSIS" />
-
-		<execute function="Click" locator1="Form#FIELD_EDIT_BUTTON" />
+		<execute function="Click" locator1="Form#FIELD_BODY" />
 	</command>
 
 	<command name="gotoEditFormByName">

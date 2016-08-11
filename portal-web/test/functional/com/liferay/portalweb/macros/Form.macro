@@ -23,6 +23,10 @@
 		<execute function="Click" locator1="Form#PUBLISH_FORM_SWITCHER" />
 	</command>
 
+	<command name="closeSidebar">
+		<execute function="Click" locator1="Form#CLOSE_SIDEBAR" />
+	</command>
+
 	<command name="configureEmailNotifications">
 		<execute function="AssertClick" locator1="Form#SETTINGS_TAB_EMAIL_NOTIFICATIONS" value1="Email Notifications" />
 
@@ -101,6 +105,9 @@
 		<execute macro="FormFields#viewFieldName">
 			<var name="fieldName" value="${fieldName}" />
 		</execute>
+
+		<var name="key_fieldName" value="${fieldName}" />
+		<execute function="AssertTextEquals" locator1="Form#FIELD_LABEL" value1="${fieldValue}" />
 	</command>
 
 	<command name="editName">
@@ -139,6 +146,14 @@
 		<var name="key_fieldType" value="${fieldType}" />
 
 		<execute function="AssertClick" locator1="Form#ADD_FIELD_TYPE" value1="${fieldType}" />
+	</command>
+
+	<command name="goToAdvancedTab">
+		<execute function="AssertClick" locator1="Form#ADVANCED_TAB" value1="Advanced" />
+	</command>
+
+	<command name="goToBasicTab">
+		<execute function="AssertClick" locator1="Form#BASIC_TAB" value1="Basic" />
 	</command>
 
 	<command name="previewForm">

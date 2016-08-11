@@ -52,11 +52,15 @@ public class ExecuteNodeTask extends DefaultTask {
 
 	@TaskAction
 	public void executeNode() throws Exception {
+		int npmInstallRetries = getNpmInstallRetries();
+
 		NpmInstallTask npmInstallTask = GradleUtil.fetchTask(
 			getProject(), NodePlugin.NPM_INSTALL_TASK_NAME,
 			NpmInstallTask.class);
 
-		if ((this instanceof ExecuteNpmTask) || (npmInstallTask == null)) {
+		if ((this instanceof ExecuteNpmTask) || (npmInstallRetries <= 0) ||
+			(npmInstallTask == null)) {
+
 			_nodeExecutor.execute();
 
 			return;
@@ -64,7 +68,7 @@ public class ExecuteNodeTask extends DefaultTask {
 
 		Logger logger = getLogger();
 
-		for (int i = 0; i < _NPM_INSTALL_RETRIES; i++) {
+		for (int i = 0; i < npmInstallRetries; i++) {
 			try {
 				_nodeExecutor.execute();
 			}
@@ -91,6 +95,10 @@ public class ExecuteNodeTask extends DefaultTask {
 		return _nodeExecutor.getNodeDir();
 	}
 
+	public int getNpmInstallRetries() {
+		return _npmInstallRetries;
+	}
+
 	public File getWorkingDir() {
 		return _nodeExecutor.getWorkingDir();
 	}
@@ -111,12 +119,15 @@ public class ExecuteNodeTask extends DefaultTask {
 		_nodeExecutor.setNodeDir(nodeDir);
 	}
 
+	public void setNpmInstallRetries(int npmInstallRetries) {
+		_npmInstallRetries = npmInstallRetries;
+	}
+
 	public void setWorkingDir(Object workingDir) {
 		_nodeExecutor.setWorkingDir(workingDir);
 	}
 
-	private static final int _NPM_INSTALL_RETRIES = 3;
-
 	private final NodeExecutor _nodeExecutor;
+	private int _npmInstallRetries;
 
 }

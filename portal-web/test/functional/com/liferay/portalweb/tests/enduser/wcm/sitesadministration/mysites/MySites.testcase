@@ -25,9 +25,15 @@
 	</tear-down>
 
 	<command name="DisplayMySitesPagination" priority="3">
-		<execute macro="MySites#addMultipleSites">
-			<var name="siteName" value="Site01 Name,Site02 Name,Site03 Name,Site04 Name,Site05 Name,Site06 Name,Site07 Name,Site08 Name,Site09 Name,Site10 Name,Site11 Name,Site12 Name,Site13 Name,Site14 Name,Site15 Name,Site16 Name,Site17 Name,Site18 Name,Site19 Name,Site20 Name,Site21 Name,Site22 Name,Site23 Name,Site24 Name," />
-		</execute>
+		<for list="01,02,03,04,05,06,07,08,09,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24" param="number">
+			<execute macro="ProductMenu#gotoControlPanelSites">
+				<var name="portlet" value="Sites" />
+			</execute>
+
+			<execute macro="Site#addBlankCP">
+				<var name="siteName" value="Site Name ${number}" />
+			</execute>
+		</for>
 
 		<execute macro="Navigator#openURL" />
 
@@ -40,9 +46,8 @@
 			<var name="portletName" value="My Sites" />
 		</execute>
 
-		<execute macro="Navigator#gotoSitePage">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Test Page" />
-			<var name="siteName" value="guest" />
 		</execute>
 
 		<execute macro="Pagination#viewResults">
@@ -85,9 +90,8 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="Navigator#gotoSitePage">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Test Page" />
-			<var name="siteName" value="guest" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -182,9 +186,8 @@
 			<var name="userEmailAddress" value="userea@liferay.com" />
 		</execute>
 
-		<execute macro="Navigator#gotoSitePage">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Test Page" />
-			<var name="siteName" value="guest" />
 		</execute>
 
 		<execute macro="Site#viewMySitesViaMySitesPG">
@@ -227,9 +230,8 @@
 			<var name="siteName" value="Liferay" />
 		</execute>
 
-		<execute macro="Navigator#gotoSitePage">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Test Page" />
-			<var name="siteName" value="guest" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -319,9 +321,8 @@
 			<var name="userEmailAddress" value="userea@liferay.com" />
 		</execute>
 
-		<execute macro="Navigator#gotoSitePage">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Test Page" />
-			<var name="siteName" value="guest" />
 		</execute>
 
 		<execute macro="MySites#viewNoOptions">
@@ -355,9 +356,8 @@
 			<var name="siteName" value="Liferay" />
 		</execute>
 
-		<execute macro="Navigator#gotoSitePage">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Test Page" />
-			<var name="siteName" value="guest" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -411,9 +411,8 @@
 			<var name="sitePagePrivacy" value="Private" />
 		</execute>
 
-		<execute macro="Navigator#gotoSitePage">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Test Page" />
-			<var name="siteName" value="guest" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -426,9 +425,8 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="Navigator#gotoSitePage">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Test Page" />
-			<var name="siteName" value="guest" />
 		</execute>
 
 		<execute macro="MySites#gotoPagesPG">
@@ -474,9 +472,8 @@
 			<var name="siteName" value="Liferay" />
 		</execute>
 
-		<execute macro="Navigator#gotoSitePage">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Test Page" />
-			<var name="siteName" value="guest" />
 		</execute>
 
 		<execute macro="Portlet#addPG">

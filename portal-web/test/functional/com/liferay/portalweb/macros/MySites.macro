@@ -1,27 +1,8 @@
 <definition>
-	<command name="addMultipleSites">
-		<for list="${siteName}" param="siteName">
-			<execute macro="ProductMenu#gotoControlPanelSites">
-				<var name="portlet" value="Sites" />
-			</execute>
-
-			<execute function="Click" locator1="Button#PLUS" />
-
-			<execute function="AssertClick" locator1="MenuItem#BLANK_SITE" value1="Blank Site" />
-
-			<execute function="Type" locator1="TextInput#NAME" value1="${siteName}" />
-
-			<execute macro="Button#clickSave" />
-		</for>
-	</command>
-
 	<command name="gotoPagesPG">
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS">
-			<var name="key_rowEntry" value="${siteName}" />
-		</execute>
-
-		<execute function="AssertClick" locator1="MenuItem#VIEW_MENU_LIST" value1="${itemName}">
-			<var name="key_itemName" value="${itemName}" />
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="${menuItem}" />
+			<var name="rowEntry" value="${siteName}" />
 		</execute>
 
 		<execute macro="Navigator#_gotoPage">

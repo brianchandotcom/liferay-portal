@@ -72,4 +72,5 @@ public class _CLASS_PortletToolbarContributor
 
 		return themeDisplay.getLocale();
 	}
+
 }

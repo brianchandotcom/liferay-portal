@@ -116,8 +116,10 @@ public class FileUtil extends com.liferay.gradle.util.FileUtil {
 
 				});
 		}
-		catch (Exception e) {
+		catch (RuntimeException re) {
 			project.delete(targetDir);
+
+			throw re;
 		}
 	}
 

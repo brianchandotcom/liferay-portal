@@ -1,0 +1,21 @@
+Bundle-Name: Liferay WSRP Service
+Bundle-SymbolicName: com.liferay.wsrp.service
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.wsrp.model.impl,\
+	com.liferay.wsrp.util
+Import-Package:\
+	!junit.framework.*,\
+	\
+	!junit.textui.*,\
+	*
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:
+Liferay-Service: true
+Web-ContextPath: /wsrp-consumer
+-includeresource:\
+	@bcprov-jdk16-1.46.jar,\
+	@com.liferay.util.java-*.jar!/com/liferay/util/axis/*.class,\
+	@com.liferay.util.java-*.jar!/com/liferay/util/portlet/PortletProps.class,\
+	@opensaml-1.1.jar,\
+	@wss4j-1.5.12.jar

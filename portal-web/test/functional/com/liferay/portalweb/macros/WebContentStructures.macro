@@ -6,26 +6,6 @@
 			<var name="structureName" value="${structureName}" />
 		</execute>
 
-		<if>
-			<isset var="localization1NameKey" />
-			<then>
-				<var name="key_localizationName" value="${localization1NameKey}" />
-
-				<execute function="Click" locator1="Translation#LOCALIZATION_NAME" />
-				<execute function="Type#clickAtSendKeys" locator1="TextInput#NAME" value1="${localization1Name}" />
-
-				<if>
-					<isset var="localization2NameKey" />
-					<then>
-						<var name="key_localizationName" value="${localization2NameKey}" />
-
-						<execute function="Click" locator1="Translation#LOCALIZATION_NAME" />
-						<execute function="Type#clickAtSendKeys" locator1="TextInput#NAME" value1="${localization2Name}" />
-					</then>
-				</if>
-			</then>
-		</if>
-
 		<execute macro="Panel#expandPanel">
 			<var name="panelHeading" value="Details" />
 		</execute>
@@ -56,6 +36,29 @@
 		</if>
 
 		<execute function="SelectFrame" value1="relative=top" />
+	</command>
+
+	<command name="addLocalization">
+		<var name="key_localizationName" value="${localization1NameKey}" />
+
+		<execute function="Click" locator1="Translation#LOCALIZATION_NAME" />
+
+		<execute macro="WebContentStructures#addNameCP">
+			<var name="structureName" value="${localization1Name}" />
+		</execute>
+
+		<if>
+			<isset var="localization2NameKey" />
+			<then>
+				<var name="key_localizationName" value="${localization2NameKey}" />
+
+				<execute function="Click" locator1="Translation#LOCALIZATION_NAME" />
+
+				<execute macro="WebContentStructures#addNameCP">
+					<var name="structureName" value="${localization2Name}" />
+				</execute>
+			</then>
+		</if>
 	</command>
 
 	<command name="addNameCP">

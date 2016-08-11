@@ -60,7 +60,6 @@ import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.internal.artifacts.publish.ArchivePublishArtifact;
 import org.gradle.api.logging.Logger;
-import org.gradle.api.logging.Logging;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaBasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
@@ -397,12 +396,14 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 
 		final Project project = copy.getProject();
 
+		Logger logger = project.getLogger();
+
 		Properties artifactProperties = getArtifactProperties(
 			recordArtifactTask);
 
 		if (isStale(project, artifactProperties)) {
-			if (_logger.isDebugEnabled()) {
-				_logger.debug(
+			if (logger.isDebugEnabled()) {
+				logger.debug(
 					"Unable to download artifact, " + project + " is stale");
 			}
 
@@ -413,8 +414,8 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 			"artifact.url");
 
 		if (Validator.isNull(artifactURL)) {
-			if (_logger.isWarnEnabled()) {
-				_logger.warn(
+			if (logger.isWarnEnabled()) {
+				logger.warn(
 					"Unable to find artifact.url in " +
 						recordArtifactTask.getOutputFile());
 			}
@@ -435,8 +436,8 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 
 			});
 
-		if (replaced && _logger.isLifecycleEnabled()) {
-			_logger.lifecycle("Downloading artifact from " + artifactURL);
+		if (replaced && logger.isLifecycleEnabled()) {
+			logger.lifecycle("Downloading artifact from " + artifactURL);
 		}
 	}
 
@@ -716,12 +717,14 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 	protected boolean isStale(
 		final Project project, Properties artifactProperties) {
 
+		Logger logger = project.getLogger();
+
 		final String artifactGitId = artifactProperties.getProperty(
 			"artifact.git.id");
 
 		if (Validator.isNull(artifactGitId)) {
-			if (_logger.isInfoEnabled()) {
-				_logger.info(project + " has never been published");
+			if (logger.isInfoEnabled()) {
+				logger.info(project + " has never been published");
 			}
 
 			return true;
@@ -733,8 +736,8 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 		String[] lines = result.split("\\r?\\n");
 
 		for (String line : lines) {
-			if (_logger.isInfoEnabled()) {
-				_logger.info(line);
+			if (logger.isInfoEnabled()) {
+				logger.info(line);
 			}
 
 			if (Validator.isNull(line)) {
@@ -758,8 +761,8 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 			String digest = writeDigestTask.getDigest();
 			String oldDigest = writeDigestTask.getOldDigest();
 
-			if (_logger.isInfoEnabled()) {
-				_logger.info(
+			if (logger.isInfoEnabled()) {
+				logger.info(
 					"Digest for {} is {}, old digest is {}", writeDigestTask,
 					digest, oldDigest);
 			}
@@ -771,8 +774,5 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 
 		return false;
 	}
-
-	private static final Logger _logger = Logging.getLogger(
-		LiferayRelengPlugin.class);
 
 }

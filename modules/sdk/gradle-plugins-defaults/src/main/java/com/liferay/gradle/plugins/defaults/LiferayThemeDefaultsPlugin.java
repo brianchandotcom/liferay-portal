@@ -44,7 +44,6 @@ import org.gradle.api.artifacts.Dependency;
 import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.logging.Logger;
-import org.gradle.api.logging.Logging;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.MavenPlugin;
@@ -335,8 +334,12 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 		ExecuteGulpTask executeGulpTask, Project themeProject, String name) {
 
 		if (themeProject == null) {
-			if (_logger.isWarnEnabled()) {
-				_logger.warn("Unable to configure " + name + " parent theme");
+			Project project = executeGulpTask.getProject();
+
+			Logger logger = project.getLogger();
+
+			if (logger.isWarnEnabled()) {
+				logger.warn("Unable to configure " + name + " parent theme");
 			}
 
 			return;
@@ -417,8 +420,5 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 		"com.liferay.frontend.css.common";
 
 	private static final String _GROUP = "com.liferay.plugins";
-
-	private static final Logger _logger = Logging.getLogger(
-		LiferayThemeDefaultsPlugin.class);
 
 }

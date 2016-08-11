@@ -114,7 +114,6 @@ import org.gradle.api.internal.GradleInternal;
 import org.gradle.api.internal.project.ProjectInternal;
 import org.gradle.api.invocation.Gradle;
 import org.gradle.api.logging.Logger;
-import org.gradle.api.logging.Logging;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.BasePluginConvention;
 import org.gradle.api.plugins.JavaBasePlugin;
@@ -649,8 +648,10 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 					@Override
 					public void execute(Task task) {
-						if (_logger.isLifecycleEnabled()) {
-							_logger.lifecycle(
+						Logger logger = task.getLogger();
+
+						if (logger.isLifecycleEnabled()) {
+							logger.lifecycle(
 								"Unable to baseline, " + project +
 									" has never been released.");
 						}
@@ -698,12 +699,13 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 						oldCachedVersionDir = cachedVersionDirs[1];
 					}
 
+					Logger logger = task.getLogger();
 					Project project = task.getProject();
 
 					boolean deleted = project.delete(oldCachedVersionDir);
 
-					if (!deleted && _logger.isWarnEnabled()) {
-						_logger.warn(
+					if (!deleted && logger.isWarnEnabled()) {
+						logger.warn(
 							"Unable to delete old cached version in " +
 								oldCachedVersionDir);
 					}
@@ -2317,10 +2319,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			return Version.parseVersion(String.valueOf(version));
 		}
 		catch (IllegalArgumentException iae) {
-			if (_logger.isDebugEnabled()) {
-				_logger.debug("Unable to parse " + version, iae);
-			}
-
 			return null;
 		}
 	}
@@ -2406,8 +2404,5 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 	private static final String _SERVICE_BUILDER_PORTAL_TOOL_NAME =
 		"com.liferay.portal.tools.service.builder";
-
-	private static final Logger _logger = Logging.getLogger(
-		LiferayOSGiDefaultsPlugin.class);
 
 }

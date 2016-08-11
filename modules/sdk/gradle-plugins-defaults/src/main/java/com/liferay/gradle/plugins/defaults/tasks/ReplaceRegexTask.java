@@ -37,7 +37,6 @@ import org.gradle.api.DefaultTask;
 import org.gradle.api.Project;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.logging.Logger;
-import org.gradle.api.logging.Logging;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.SkipWhenEmpty;
 import org.gradle.api.tasks.TaskAction;
@@ -161,6 +160,8 @@ public class ReplaceRegexTask extends DefaultTask {
 	}
 
 	protected void replaceRegex(File file, Pattern pattern) throws IOException {
+		Logger logger = getLogger();
+
 		Path path = file.toPath();
 
 		String content = new String(
@@ -209,8 +210,8 @@ public class ReplaceRegexTask extends DefaultTask {
 						replacement +
 							newContent.substring(matcher.end(groupCount));
 			}
-			else if (_logger.isInfoEnabled()) {
-				_logger.info(
+			else if (logger.isInfoEnabled()) {
+				logger.info(
 					"Skipped replacement of " + group + " to " + replacement +
 						" in " + file);
 			}
@@ -219,16 +220,13 @@ public class ReplaceRegexTask extends DefaultTask {
 		if (!content.equals(newContent)) {
 			Files.write(path, newContent.getBytes(StandardCharsets.UTF_8));
 
-			if (_logger.isLifecycleEnabled()) {
+			if (logger.isLifecycleEnabled()) {
 				Project project = getProject();
 
-				_logger.lifecycle("Updated " + project.relativePath(file));
+				logger.lifecycle("Updated " + project.relativePath(file));
 			}
 		}
 	}
-
-	private static final Logger _logger = Logging.getLogger(
-		ReplaceRegexTask.class);
 
 	private final Map<String, FileCollection> _matches = new LinkedHashMap<>();
 	private final List<Closure<String>> _preClosures = new ArrayList<>();

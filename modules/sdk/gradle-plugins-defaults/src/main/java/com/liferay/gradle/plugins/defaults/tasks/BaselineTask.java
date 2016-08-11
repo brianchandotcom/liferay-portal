@@ -25,7 +25,6 @@ import java.io.File;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.GradleException;
 import org.gradle.api.logging.Logger;
-import org.gradle.api.logging.Logging;
 import org.gradle.api.reporting.ReportingExtension;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputFile;
@@ -44,27 +43,29 @@ public class BaselineTask extends DefaultTask implements VerificationTask {
 
 	@TaskAction
 	public void baseline() throws Exception {
+		final Logger logger = getLogger();
+
 		Baseline baseline = new Baseline() {
 
 			@Override
 			protected void log(Reporter reporter) {
-				if (_logger.isErrorEnabled()) {
+				if (logger.isErrorEnabled()) {
 					for (String message : reporter.getErrors()) {
-						_logger.error(message);
+						logger.error(message);
 					}
 				}
 
-				if (_logger.isWarnEnabled()) {
+				if (logger.isWarnEnabled()) {
 					for (String message : reporter.getWarnings()) {
-						_logger.warn(message);
+						logger.warn(message);
 					}
 				}
 			}
 
 			@Override
 			protected void log(String output) {
-				if (_logger.isLifecycleEnabled()) {
-					_logger.lifecycle(output);
+				if (logger.isLifecycleEnabled()) {
+					logger.lifecycle(output);
 				}
 			}
 
@@ -85,8 +86,8 @@ public class BaselineTask extends DefaultTask implements VerificationTask {
 			String message = "Semantic versioning is incorrect";
 
 			if (getIgnoreFailures()) {
-				if (_logger.isWarnEnabled()) {
-					_logger.warn(message);
+				if (logger.isWarnEnabled()) {
+					logger.warn(message);
 				}
 			}
 			else {
@@ -177,8 +178,6 @@ public class BaselineTask extends DefaultTask implements VerificationTask {
 	public void setSourceDir(Object sourceDir) {
 		_sourceDir = sourceDir;
 	}
-
-	private static final Logger _logger = Logging.getLogger(BaselineTask.class);
 
 	private Object _bndFile;
 	private boolean _ignoreFailures;

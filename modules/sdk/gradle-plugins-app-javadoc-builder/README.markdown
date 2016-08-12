@@ -1,8 +1,9 @@
 # App Javadoc Builder Gradle Plugin
 
-The App Javadoc Builder Gradle plugin allows you to generate a combined HTML API
-documentation for an application that spans different subprojects, each one
-representing a different component of the same application.
+The App Javadoc Builder Gradle plugin lets you generate API documentation as a
+single, combined HTML document for an application that spans different
+subprojects, each one representing a different component of the same
+application.
 
 ## Usage
 
@@ -25,7 +26,7 @@ apply plugin: "com.liferay.app.javadoc.builder"
 ```
 
 The App Javadoc Builder plugin automatically applies the [`base`](https://docs.gradle.org/current/userguide/standard_plugins.html#N135C1)
-and the `reporting-base` plugins.
+and `reporting-base` plugins.
 
 ## Project Extension
 
@@ -36,7 +37,7 @@ Property Name | Type | Default Value | Description
 ------------- | ---- | ------------- | -----------
 `copyTags` | `boolean` | `true` | Whether to copy the custom block tags configuration from the subprojects. It sets the Javadoc [`-tag`](http://docs.oracle.com/javase/8/docs/technotes/tools/windows/javadoc.html#tag) argument for the [`appJavadoc`](#appjavadoc) task.
 `doclintDisabled` | `boolean` | `true` on JDK8+, `false` otherwise. | Whether to ignore Javadoc errors. It sets the Javadoc [`-Xdoclint`](docs.oracle.com/javase/8/docs/technotes/tools/windows/javadoc.html#BEJEFABE) and [`-quiet`](http://docs.oracle.com/javase/8/docs/technotes/tools/windows/javadoc.html#CHDGFHAA) arguments for the [`appJavadoc`](#appjavadoc) task.
-`groupNameClosure` | `Closure<String>` | Closure which returns the subproject description, or the name if the description is empty. | The closure invoked in order to get the group heading for a subproject. The given closure is passed a [`Project`](https://docs.gradle.org/current/javadoc/org/gradle/api/Project.html) as its parameter. If `groupPackages` is `false`, this property is not used.
+`groupNameClosure` | `Closure<String>` | The subproject's description, or the subproject's name if the description is empty. | The closure invoked in order to get the group heading for a subproject. The given closure is passed a [`Project`](https://docs.gradle.org/current/javadoc/org/gradle/api/Project.html) as its parameter. If `groupPackages` is `false`, this property is not used.
 `groupPackages` | `boolean` | `true` | Whether to separate packages on the overview page based on the subprojects they belong to. It sets the [`-group`](docs.oracle.com/javase/8/docs/technotes/tools/unix/javadoc.html#CHDIGGII) argument for the [`appJavadoc`](#appjavadoc) task.
 
 ## Tasks

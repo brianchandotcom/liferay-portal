@@ -54,10 +54,6 @@ AUI.add(
 						value: null
 					},
 
-					currentTimeFn: {
-						value: A.bind(CalendarUtil.getCurrentTime, CalendarUtil)
-					},
-
 					filterCalendarBookings: {
 						validator: isFunction
 					},

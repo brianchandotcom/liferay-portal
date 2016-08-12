@@ -172,6 +172,7 @@ String viewCalendarBookingURL = ParamUtil.getString(request, "viewCalendarBookin
 			int dateDay = dateJCalendar.get(java.util.Calendar.DAY_OF_MONTH);
 			%>
 
+			currentTimeFn: A.bind(remoteServices.getCurrentTime, remoteServices),
 			date: new Date(<%= dateYear %>, <%= dateMonth %>, <%= dateDay %>),
 
 			<c:if test="<%= !themeDisplay.isSignedIn() %>">

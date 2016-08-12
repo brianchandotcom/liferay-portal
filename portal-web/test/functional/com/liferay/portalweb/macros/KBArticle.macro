@@ -628,8 +628,6 @@
 			</elseif>
 			<else>
 				<execute macro="PortletEntry#publish" />
-
-				<execute macro="Alert#viewSuccessMessage" />
 			</else>
 		</if>
 	</command>

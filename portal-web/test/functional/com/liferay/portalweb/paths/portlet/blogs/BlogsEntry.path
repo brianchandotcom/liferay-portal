@@ -190,7 +190,7 @@
 </tr>
 <tr>
 	<td>WORKFLOW_STATUS</td>
-	<td>//h3[contains(.,'Pending Approval')]</td>
+	<td>//span[contains(@class,'workflow-status')]</td>
 	<td></td>
 </tr>
 <!--SPECIFIC_ENTRY_YOUR_RATING-->

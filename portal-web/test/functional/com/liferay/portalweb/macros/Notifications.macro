@@ -61,6 +61,8 @@
 			<var name="portlet" value="Notifications" />
 		</execute>
 
+		<var name="key_contentBody" value="${contentBody}" />
+
 		<if>
 			<condition function="IsElementPresent" locator1="Notifications#NOTIFICATIONS_CONTENT" />
 			<then>
@@ -164,6 +166,8 @@
 	</command>
 
 	<command name="viewNotification">
+		<var name="key_contentBody" value="${contentBody}" />
+
 		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATIONS_CONTENT" value1="${notificationContent}" />
 	</command>
 

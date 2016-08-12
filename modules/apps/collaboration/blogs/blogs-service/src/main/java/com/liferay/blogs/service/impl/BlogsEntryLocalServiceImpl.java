@@ -33,6 +33,7 @@ import com.liferay.blogs.kernel.util.comparator.EntryIdComparator;
 import com.liferay.blogs.service.base.BlogsEntryLocalServiceBaseImpl;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.friendly.url.service.FriendlyURLLocalService;
 import com.liferay.portal.kernel.comment.CommentManagerUtil;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
@@ -283,6 +284,11 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		long entryId = counterLocalService.increment();
 
+		if (Validator.isNotNull(urlTitle)) {
+			friendlyURLLocalService.validate(
+				user.getCompanyId(), groupId, BlogsEntry.class, urlTitle);
+		}
+
 		BlogsEntry entry = blogsEntryPersistence.create(entryId);
 
 		entry.setUuid(serviceContext.getUuid());
@@ -294,7 +300,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		entry.setSubtitle(subtitle);
 
 		if (Validator.isNotNull(urlTitle)) {
-			entry.setUrlTitle(getUniqueUrlTitle(entryId, groupId, urlTitle));
+			entry.setUrlTitle(urlTitle);
 		}
 
 		entry.setDescription(description);
@@ -1230,14 +1236,19 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		validate(title, urlTitle, content, status);
 
+		if (Validator.isNotNull(urlTitle)) {
+			friendlyURLLocalService.validate(
+				entry.getCompanyId(), entry.getGroupId(), BlogsEntry.class,
+				urlTitle);
+		}
+
 		String oldUrlTitle = entry.getUrlTitle();
 
 		entry.setTitle(title);
 		entry.setSubtitle(subtitle);
 
 		if (Validator.isNotNull(urlTitle)) {
-			entry.setUrlTitle(
-				getUniqueUrlTitle(entryId, entry.getGroupId(), urlTitle));
+			entry.setUrlTitle(urlTitle);
 		}
 
 		entry.setDescription(description);
@@ -2264,6 +2275,9 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 				"Content has more than " + contentMaxLength + " characters");
 		}
 	}
+
+	@ServiceReference(type = FriendlyURLLocalService.class)
+	protected FriendlyURLLocalService friendlyURLLocalService;
 
 	@ServiceReference(type = BlogsEntryFinder.class)
 	protected BlogsEntryFinder blogsEntryFinder;

@@ -318,6 +318,19 @@ AUI.add(
 					);
 				},
 
+				updateCalendarColor: function(calendarId, color) {
+					var instance = this;
+
+					instance.invokeService(
+						{
+							'/calendar.calendar/update-color': {
+								calendarId: calendarId,
+								color: parseInt(color.substr(1), 16)
+							}
+						}
+					);
+				},
+
 				updateEvent: function(schedulerEvent, updateInstance, allFollowing, success) {
 					var instance = this;
 

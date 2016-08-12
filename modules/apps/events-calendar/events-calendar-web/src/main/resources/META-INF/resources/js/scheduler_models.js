@@ -406,14 +406,7 @@ AUI.add(
 
 							var remoteServices = scheduler.get('remoteServices');
 
-							remoteServices.invokeService(
-								{
-									'/calendar.calendar/update-color': {
-										calendarId: calendarId,
-										color: parseInt(color.substr(1), 16)
-									}
-								}
-							);
+							remoteServices.updateCalendarColor(calendarId, parseInt(color.substr(1), 16));
 						}
 						else {
 							Liferay.Store('com.liferay.calendar.web_calendar' + calendarId + 'Color', color);

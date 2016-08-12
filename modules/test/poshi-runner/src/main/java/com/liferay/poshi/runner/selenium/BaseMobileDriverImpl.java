@@ -42,10 +42,6 @@ public abstract class BaseMobileDriverImpl
 		super(browserURL, webDriver);
 
 		_mobileDriver = (MobileDriver)webDriver;
-
-		WebDriverHelper.setDefaultWindowHandle(webDriver.getWindowHandle());
-
-		System.setProperty("java.awt.headless", "false");
 	}
 
 	@Override

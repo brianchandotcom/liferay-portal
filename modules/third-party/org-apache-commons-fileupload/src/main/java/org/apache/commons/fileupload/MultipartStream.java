@@ -325,10 +325,6 @@ public class MultipartStream {
             byte[] boundary,
             int bufSize,
             ProgressNotifier pNotifier) {
-        this.input = input;
-        this.bufSize = bufSize;
-        this.buffer = new byte[bufSize];
-        this.notifier = pNotifier;
 
         // We prepend CR/LF to the boundary to chop trailng CR/LF from
         // body-data tokens.
@@ -337,6 +333,12 @@ public class MultipartStream {
             throw new IllegalArgumentException(
                     "The buffer size specified for the MultipartStream is too small");
         }
+
+        this.input = input;
+        this.bufSize = Math.max(bufSize, boundaryLength * 2);
+        this.buffer = new byte[this.bufSize];
+        this.notifier = pNotifier;
+
         this.boundary = new byte[this.boundaryLength];
         this.keepRegion = this.boundary.length;
 

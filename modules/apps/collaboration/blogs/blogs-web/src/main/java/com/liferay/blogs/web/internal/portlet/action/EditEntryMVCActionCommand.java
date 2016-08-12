@@ -30,6 +30,7 @@ import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.blogs.service.BlogsEntryService;
 import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.document.library.kernel.exception.FileSizeException;
+import com.liferay.friendly.url.exception.DuplicateFriendlyURLException;
 import com.liferay.portal.kernel.editor.EditorConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -310,12 +311,13 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 
 			hideDefaultSuccessMessage(actionRequest);
 		}
-		catch (EntryContentException | EntryCoverImageCropException |
-			   EntryDescriptionException | EntryDisplayDateException |
-			   EntrySmallImageNameException | EntrySmallImageScaleException |
-			   EntryTitleException | EntryUrlTitleException |
-			   FileSizeException | LiferayFileItemException |
-			   SanitizerException | UploadRequestSizeException e) {
+		catch (DuplicateFriendlyURLException |EntryContentException |
+			   EntryCoverImageCropException | EntryDescriptionException |
+			   EntryDisplayDateException | EntrySmallImageNameException |
+			   EntrySmallImageScaleException | EntryTitleException |
+			   EntryUrlTitleException | FileSizeException |
+			   LiferayFileItemException | SanitizerException |
+			   UploadRequestSizeException e) {
 
 			SessionErrors.add(actionRequest, e.getClass());
 

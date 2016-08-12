@@ -36,7 +36,7 @@ public abstract class PQLOperator {
 
 	public static void validateOperator(String operator) throws Exception {
 		if ((operator == null) || !_availableOperators.contains(operator)) {
-			throw new Exception("Invalid '" + operator + "' operator");
+			throw new Exception("Invalid operator: " + operator);
 		}
 	}
 

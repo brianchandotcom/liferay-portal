@@ -44,38 +44,37 @@ public class PQLOperatorTest extends TestCase {
 		operators.add("bad value");
 
 		for (String operator : operators) {
-			_validateOperatorError(
-				operator, "Invalid '" + operator + "' operator");
+			_validateOperatorError(operator, "Invalid operator: " + operator);
 		}
 	}
 
-	private void _validateOperatorError(String operator, String expected)
+	private void _validateOperatorError(String operator, String expectedError)
 		throws Exception {
 
-		String actual = null;
+		String actualError = null;
 
 		try {
 			PQLOperator.validateOperator(operator);
 		}
 		catch (Exception e) {
-			actual = e.getMessage();
+			actualError = e.getMessage();
 
-			if (!actual.equals(expected)) {
+			if (!actualError.equals(expectedError)) {
 				StringBuilder sb = new StringBuilder();
 
-				sb.append("Mismatched error for PQLOperator declaration:\n");
-				sb.append("\n\n* Actual:   \"");
-				sb.append(actual);
-				sb.append("\"\n* Expected: \"");
-				sb.append(expected);
-				sb.append("\"");
+				sb.append("Mismatched error for PQLOperator validation:");
+				sb.append("\n* Actual:   ");
+				sb.append(actualError);
+				sb.append("\n* Expected: ");
+				sb.append(expectedError);
 
 				throw new Exception(sb.toString(), e);
 			}
 		}
 		finally {
-			if (actual == null) {
-				throw new Exception("No error thrown for invalid PQLOperator");
+			if (actualError == null) {
+				throw new Exception(
+					"No error thrown for PQLOperator validation");
 			}
 		}
 	}

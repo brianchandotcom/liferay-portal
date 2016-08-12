@@ -84,5 +84,8 @@
 		<module name="com.liferay.source.formatter.checkstyle.checks.UnusedParameterCheck">
 			<message key="parameter.unused" value="Parameter ''{0}'' is unused" />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.checks.ValidatorIsNullCheck">
+			<message key="method.invalidName" value="Avoid using method ''{0}''" />
+		</module>
 	</module>
 </module>

@@ -14,7 +14,9 @@
 
 package com.liferay.exportimport.staging;
 
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.staging.LayoutStaging;
+import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -24,8 +26,10 @@ import com.liferay.portal.kernel.model.LayoutSetBranch;
 import com.liferay.portal.kernel.model.LayoutSetStagingHandler;
 import com.liferay.portal.kernel.model.LayoutStagingHandler;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
+import com.liferay.portal.kernel.service.LayoutRevisionLocalService;
 import com.liferay.portal.kernel.service.LayoutSetBranchLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 
@@ -165,12 +169,48 @@ public class LayoutStagingImpl implements LayoutStaging {
 		}
 	}
 
+	public boolean prepareLayoutStagingHandler(
+		PortletDataContext portletDataContext, Layout layout) {
+
+		boolean exportLAR = MapUtil.getBoolean(
+			portletDataContext.getParameterMap(), "exportLAR");
+
+		if (exportLAR || !LayoutStagingUtil.isBranchingLayout(layout)) {
+			return true;
+		}
+
+		long layoutSetBranchId = MapUtil.getLong(
+			portletDataContext.getParameterMap(), "layoutSetBranchId");
+
+		if (layoutSetBranchId <= 0) {
+			return false;
+		}
+
+		LayoutRevision layoutRevision =
+			_layoutRevisionLocalService.fetchLayoutRevision(
+				layoutSetBranchId, true, layout.getPlid());
+
+		if (layoutRevision == null) {
+			return false;
+		}
+
+		LayoutStagingHandler layoutStagingHandler =
+			LayoutStagingUtil.getLayoutStagingHandler(layout);
+
+		layoutStagingHandler.setLayoutRevision(layoutRevision);
+
+		return true;
+	}
+
 	@Reference(unbind = "-")
 	protected void setLayoutSetBranchLocalService(
 		LayoutSetBranchLocalService layoutSetBranchLocalService) {
 
 		_layoutSetBranchLocalService = layoutSetBranchLocalService;
 	}
+
+	@Reference
+	private LayoutRevisionLocalService _layoutRevisionLocalService;
 
 	private LayoutSetBranchLocalService _layoutSetBranchLocalService;
 

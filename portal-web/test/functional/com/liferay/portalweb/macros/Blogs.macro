@@ -139,7 +139,7 @@
 			<var name="tagName" value="${tagName}" />
 		</execute>
 
-		<execute macro="PortletEntry#publish" />
+		<execute macro="BlogsEntry#publish" />
 	</command>
 
 	<command name="addEntryWithTags">
@@ -161,7 +161,7 @@
 			</execute>
 		</for>
 
-		<execute macro="PortletEntry#publish" />
+		<execute macro="BlogsEntry#publish" />
 	</command>
 
 	<command name="addEntryWithUploadedCoverImage">

@@ -207,7 +207,7 @@ while (manageableCalendarsIterator.hasNext()) {
 }
 %>
 
-<aui:script use="liferay-calendar-container,liferay-component">
+<aui:script use="liferay-calendar-container,liferay-calendar-remote-services,liferay-component">
 	Liferay.component(
 		'<portlet:namespace />calendarContainer',
 		function() {
@@ -229,6 +229,32 @@ while (manageableCalendarsIterator.hasNext()) {
 			Liferay.on('destroyPortlet', destroyInstance);
 
 			return calendarContainer;
+		}
+	);
+
+	Liferay.component(
+		'<portlet:namespace />remoteServices',
+		function() {
+			var remoteServices = new Liferay.CalendarRemoteServices(
+				{
+					invokerURL: themeDisplay.getPathContext() + '/api/jsonws/invoke',
+					namespace: '<portlet:namespace />'
+				}
+			);
+
+			var destroyInstance = function(event) {
+				if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {
+					remoteServices.destroy();
+
+					Liferay.component('<portlet:namespace />remoteServices', null);
+
+					Liferay.detach('destroyPortlet', destroyInstance);
+				}
+			};
+
+			Liferay.on('destroyPortlet', destroyInstance);
+
+			return remoteServices;
 		}
 	);
 </aui:script>

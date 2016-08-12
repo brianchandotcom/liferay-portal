@@ -27,7 +27,7 @@ JSONArray otherCalendarsJSONArray = CalendarUtil.toCalendarsJSONArray(themeDispl
 boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, "com.liferay.calendar.web_columnOptionsVisible", "true"));
 %>
 
-<aui:script use="liferay-calendar-container,liferay-component">
+<aui:script use="liferay-calendar-container,liferay-calendar-remote-services,liferay-component">
 	Liferay.component(
 		'<portlet:namespace />calendarContainer',
 		function() {
@@ -50,6 +50,33 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 			Liferay.on('destroyPortlet', destroyInstance);
 
 			return calendarContainer;
+		}
+	);
+
+	Liferay.component(
+		'<portlet:namespace />remoteServices',
+		function() {
+			var remoteServices = new Liferay.CalendarRemoteServices(
+				{
+					invokerURL: themeDisplay.getPathContext() + '/api/jsonws/invoke',
+					namespace: '<portlet:namespace />',
+					userId: themeDisplay.getUserId()
+				}
+			);
+
+			var destroyInstance = function(event) {
+				if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {
+					remoteServices.destroy();
+
+					Liferay.component('<portlet:namespace />remoteServices', null);
+
+					Liferay.detach('destroyPortlet', destroyInstance);
+				}
+			};
+
+			Liferay.on('destroyPortlet', destroyInstance);
+
+			return remoteServices;
 		}
 	);
 </aui:script>

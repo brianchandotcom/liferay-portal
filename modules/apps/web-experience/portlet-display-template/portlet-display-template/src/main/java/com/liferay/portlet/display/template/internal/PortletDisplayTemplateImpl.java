@@ -375,8 +375,6 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 		contextObjects.put(
 			PortletDisplayTemplateConstants.LOCALE, request.getLocale());
 
-		contextObjects.put(PortletDisplayTemplateConstants.REQUEST, request);
-
 		RenderRequest renderRequest = (RenderRequest)request.getAttribute(
 			JavaConstants.JAVAX_PORTLET_REQUEST);
 

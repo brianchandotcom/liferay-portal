@@ -25,10 +25,87 @@ import java.util.List;
  */
 public class DetailASTUtil {
 
+	public static DetailAST findTypeAST(DetailAST methodAST, String name) {
+		List<DetailAST> localVariableDefASTList =
+			DetailASTUtil.getAllChildTokens(
+				methodAST, TokenTypes.VARIABLE_DEF, true);
+
+		DetailAST typeAST = _findTypeAST(localVariableDefASTList, name);
+
+		if (typeAST != null) {
+			return typeAST;
+		}
+
+		List<DetailAST> parameterDefASTList = DetailASTUtil.getParameterDefs(
+			methodAST);
+
+		typeAST = _findTypeAST(parameterDefASTList, name);
+
+		if (typeAST != null) {
+			return typeAST;
+		}
+
+		DetailAST classAST = methodAST.getParent();
+
+		while (classAST != null) {
+			List<DetailAST> globalVariableDefASTList =
+				DetailASTUtil.getAllChildTokens(
+					classAST, TokenTypes.VARIABLE_DEF, false);
+
+			typeAST = _findTypeAST(globalVariableDefASTList, name);
+
+			if (typeAST != null) {
+				return typeAST;
+			}
+
+			classAST = classAST.getParent();
+		}
+
+		return null;
+	}
+
 	public static List<DetailAST> getAllChildTokens(
 		DetailAST detailAST, int tokenType, boolean recursive) {
 
 		return _getAllChildTokens(detailAST, tokenType, recursive, null);
+	}
+
+	public static List<DetailAST> getMethodCalls(
+		DetailAST detailAST, String className, String methodName) {
+
+		List<DetailAST> list = new ArrayList<>();
+
+		List<DetailAST> methodCallASTList = getAllChildTokens(
+			detailAST, TokenTypes.METHOD_CALL, true);
+
+		for (DetailAST methodCallAST : methodCallASTList) {
+			DetailAST dotAST = methodCallAST.findFirstToken(TokenTypes.DOT);
+
+			if (dotAST == null) {
+				continue;
+			}
+
+			List<DetailAST> nameASTList = getAllChildTokens(
+				dotAST, TokenTypes.IDENT, false);
+
+			if (nameASTList.size() != 2) {
+				continue;
+			}
+
+			DetailAST classNameAST = nameASTList.get(0);
+			DetailAST methodNameAST = nameASTList.get(1);
+
+			String methodCallClassName = classNameAST.getText();
+			String methodCallMethodName = methodNameAST.getText();
+
+			if (methodCallClassName.equals(className) &&
+				methodCallMethodName.equals(methodName)) {
+
+				list.add(methodCallAST);
+			}
+		}
+
+		return list;
 	}
 
 	public static List<DetailAST> getParameterDefs(DetailAST detailAST) {
@@ -83,6 +160,22 @@ public class DetailASTUtil {
 		}
 
 		return false;
+	}
+
+	private static DetailAST _findTypeAST(
+		List<DetailAST> defASTList, String name) {
+
+		for (DetailAST defAST : defASTList) {
+			DetailAST nameAST = defAST.findFirstToken(TokenTypes.IDENT);
+
+			String curName = nameAST.getText();
+
+			if (curName.equals(name)) {
+				return defAST.findFirstToken(TokenTypes.TYPE);
+			}
+		}
+
+		return null;
 	}
 
 	private static List<DetailAST> _getAllChildTokens(

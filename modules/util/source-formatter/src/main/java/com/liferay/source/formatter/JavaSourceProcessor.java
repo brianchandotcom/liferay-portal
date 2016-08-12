@@ -2320,16 +2320,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					line = formatWhitespace(line, trimmedLine, true);
 				}
 
-				// LPS-42924
-
-				if (line.contains("PortalUtil.getClassNameId(") &&
-					fileName.endsWith("ServiceImpl.java")) {
-
-					processMessage(
-						fileName, "Use classNameLocalService.getClassNameId",
-						lineCount);
-				}
-
 				// LPS-42599
 
 				if (!isExcludedPath(_hibernateSQLQueryExcludes, absolutePath) &&

@@ -25,6 +25,8 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.FieldConstants;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
+import com.liferay.portal.json.JSONFactoryImpl;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
@@ -107,7 +109,8 @@ public class DDMFormRuleEvaluatorHelperTest extends PowerMockito {
 
 		DDMFormRuleEvaluatorHelper ddmFormRuleEvaluatorHelper =
 			new DDMFormRuleEvaluatorHelper(
-				_ddmExpressionFactory, ddmForm, ddmFormValues, LocaleUtil.US);
+				null, _ddmExpressionFactory, ddmForm, ddmFormValues, null,
+				_jsonFactory, LocaleUtil.US);
 
 		List<DDMFormFieldEvaluationResult> ddmFormFieldEvaluationResults =
 			ddmFormRuleEvaluatorHelper.evaluate();
@@ -210,7 +213,8 @@ public class DDMFormRuleEvaluatorHelperTest extends PowerMockito {
 
 		DDMFormRuleEvaluatorHelper ddmFormRuleEvaluatorHelper =
 			new DDMFormRuleEvaluatorHelper(
-				_ddmExpressionFactory, ddmForm, ddmFormValues, LocaleUtil.US);
+				null, _ddmExpressionFactory, ddmForm, ddmFormValues, null,
+				_jsonFactory, LocaleUtil.US);
 
 		List<DDMFormFieldEvaluationResult> ddmFormFieldEvaluationResults =
 			ddmFormRuleEvaluatorHelper.evaluate();
@@ -255,5 +259,6 @@ public class DDMFormRuleEvaluatorHelperTest extends PowerMockito {
 
 	private final DDMExpressionFactory _ddmExpressionFactory =
 		new DDMExpressionFactoryImpl();
+	private final JSONFactory _jsonFactory = new JSONFactoryImpl();
 
 }

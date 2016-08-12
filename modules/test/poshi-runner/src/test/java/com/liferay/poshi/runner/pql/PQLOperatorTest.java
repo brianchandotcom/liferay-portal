@@ -74,7 +74,7 @@ public class PQLOperatorTest extends TestCase {
 		finally {
 			if (actualError == null) {
 				throw new Exception(
-					"No error thrown for PQLOperator validation");
+					"No error thrown for PQLOperator validation: " + operator);
 			}
 		}
 	}

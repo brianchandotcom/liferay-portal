@@ -27,37 +27,41 @@ public class PQLOperatorFactory {
 		if (operator.equals("AND") || operator.equals("OR")) {
 			return new PQLOperator(operator) {
 
-				public Object getValue(
+				public Object getPQLResult(
 						PQLEntity pqlEntity1, PQLEntity pqlEntity2,
 						Properties properties)
 					throws Exception {
 
 					String operator = getOperator();
-					Object objectValue1 = pqlEntity1.getValue(properties);
-					Object objectValue2 = pqlEntity2.getValue(properties);
+					Object pqlResultObject1 = pqlEntity1.getPQLResult(
+						properties);
+					Object pqlResultObject2 = pqlEntity2.getPQLResult(
+						properties);
 
-					if ((objectValue1 == null) || (objectValue2 == null)) {
-						throw new Exception(
-							"Operators must be surrounded by 2 boolean " +
-								"values: " + operator);
-					}
-
-					if (!(objectValue1 instanceof Boolean) ||
-						!(objectValue2 instanceof Boolean)) {
+					if ((pqlResultObject1 == null) ||
+						(pqlResultObject2 == null)) {
 
 						throw new Exception(
 							"Operators must be surrounded by 2 boolean " +
 								"values: " + operator);
 					}
 
-					Boolean booleanValue1 = (Boolean)objectValue1;
-					Boolean booleanValue2 = (Boolean)objectValue2;
+					if (!(pqlResultObject1 instanceof Boolean) ||
+						!(pqlResultObject2 instanceof Boolean)) {
+
+						throw new Exception(
+							"Operators must be surrounded by 2 boolean " +
+								"values: " + operator);
+					}
+
+					Boolean pqlResultBoolean1 = (Boolean)pqlResultObject1;
+					Boolean pqlResultBoolean2 = (Boolean)pqlResultObject2;
 
 					if (operator.equals("AND")) {
-						return (booleanValue1 && booleanValue2);
+						return (pqlResultBoolean1 && pqlResultBoolean2);
 					}
 					else if (operator.equals("OR")) {
-						return (booleanValue1 || booleanValue2);
+						return (pqlResultBoolean1 || pqlResultBoolean2);
 					}
 
 					throw new Exception("Unsupported operator: " + operator);
@@ -68,35 +72,39 @@ public class PQLOperatorFactory {
 		else if (operator.equals("~") || operator.equals("!~")) {
 			return new PQLOperator(operator) {
 
-				public Object getValue(
+				public Object getPQLResult(
 						PQLEntity pqlEntity1, PQLEntity pqlEntity2,
 						Properties properties)
 					throws Exception {
 
 					String operator = getOperator();
-					Object objectValue1 = pqlEntity1.getValue(properties);
-					Object objectValue2 = pqlEntity2.getValue(properties);
+					Object pqlResultObject1 = pqlEntity1.getPQLResult(
+						properties);
+					Object pqlResultObject2 = pqlEntity2.getPQLResult(
+						properties);
 
-					if ((objectValue1 == null) || (objectValue2 == null)) {
+					if ((pqlResultObject1 == null) ||
+						(pqlResultObject2 == null)) {
+
 						return false;
 					}
 
-					if (!(objectValue1 instanceof String) ||
-						!(objectValue2 instanceof String)) {
+					if (!(pqlResultObject1 instanceof String) ||
+						!(pqlResultObject2 instanceof String)) {
 
 						throw new Exception(
 							"Operator only works for string values: " +
 								operator);
 					}
 
-					String stringValue1 = (String)objectValue1;
-					String stringValue2 = (String)objectValue2;
+					String pqlResultString1 = (String)pqlResultObject1;
+					String pqlResultString2 = (String)pqlResultObject2;
 
 					if (operator.equals("~")) {
-						return stringValue1.contains(stringValue2);
+						return pqlResultString1.contains(pqlResultString2);
 					}
 					else if (operator.equals("!~")) {
-						return !stringValue1.contains(stringValue2);
+						return !pqlResultString1.contains(pqlResultString2);
 					}
 
 					throw new Exception("Unsupported operator: " + operator);
@@ -107,24 +115,28 @@ public class PQLOperatorFactory {
 		else if (operator.equals("==") || operator.equals("!=")) {
 			return new PQLOperator(operator) {
 
-				public Object getValue(
+				public Object getPQLResult(
 						PQLEntity pqlEntity1, PQLEntity pqlEntity2,
 						Properties properties)
 					throws Exception {
 
 					String operator = getOperator();
-					Object objectValue1 = pqlEntity1.getValue(properties);
-					Object objectValue2 = pqlEntity2.getValue(properties);
+					Object pqlResultObject1 = pqlEntity1.getPQLResult(
+						properties);
+					Object pqlResultObject2 = pqlEntity2.getPQLResult(
+						properties);
 
-					if ((objectValue1 == null) || (objectValue2 == null)) {
+					if ((pqlResultObject1 == null) ||
+						(pqlResultObject2 == null)) {
+
 						return false;
 					}
 
 					if (operator.equals("==")) {
-						return objectValue1.equals(objectValue2);
+						return pqlResultObject1.equals(pqlResultObject2);
 					}
 					else if (operator.equals("!=")) {
-						return !objectValue1.equals(objectValue2);
+						return !pqlResultObject1.equals(pqlResultObject2);
 					}
 
 					throw new Exception("Unsupported operator: " + operator);
@@ -137,58 +149,64 @@ public class PQLOperatorFactory {
 
 			return new PQLOperator(operator) {
 
-				public Object getValue(
+				public Object getPQLResult(
 						PQLEntity pqlEntity1, PQLEntity pqlEntity2,
 						Properties properties)
 					throws Exception {
 
 					String operator = getOperator();
-					Object objectValue1 = pqlEntity1.getValue(properties);
-					Object objectValue2 = pqlEntity2.getValue(properties);
+					Object pqlResultObject1 = pqlEntity1.getPQLResult(
+						properties);
+					Object pqlResultObject2 = pqlEntity2.getPQLResult(
+						properties);
 
-					if ((objectValue1 == null) || (objectValue2 == null)) {
+					if ((pqlResultObject1 == null) ||
+						(pqlResultObject2 == null)) {
+
 						throw new Exception(
 							"Operator only works for number values: " +
 								operator);
 					}
 
-					if ((objectValue1 instanceof Double ||
-						 objectValue1 instanceof Integer) &&
-						(objectValue2 instanceof Double ||
-						 objectValue2 instanceof Integer)) {
+					if ((pqlResultObject1 instanceof Double ||
+						 pqlResultObject1 instanceof Integer) &&
+						(pqlResultObject2 instanceof Double ||
+						 pqlResultObject2 instanceof Integer)) {
 
-						Double doubleValue1 = null;
-						Double doubleValue2 = null;
+						Double pqlResultDouble1 = null;
+						Double pqlResultDouble2 = null;
 
-						if (objectValue1 instanceof Integer) {
-							Integer integerValue1 = (Integer)objectValue1;
+						if (pqlResultObject1 instanceof Integer) {
+							Integer pqlResultInteger1 =
+								(Integer)pqlResultObject1;
 
-							doubleValue1 = integerValue1.doubleValue();
+							pqlResultDouble1 = pqlResultInteger1.doubleValue();
 						}
 						else {
-							doubleValue1 = (Double)objectValue1;
+							pqlResultDouble1 = (Double)pqlResultObject1;
 						}
 
-						if (objectValue2 instanceof Integer) {
-							Integer integerValue2 = (Integer)objectValue2;
+						if (pqlResultObject2 instanceof Integer) {
+							Integer pqlResultInteger2 =
+								(Integer)pqlResultObject2;
 
-							doubleValue2 = integerValue2.doubleValue();
+							pqlResultDouble2 = pqlResultInteger2.doubleValue();
 						}
 						else {
-							doubleValue2 = (Double)objectValue2;
+							pqlResultDouble2 = (Double)pqlResultObject2;
 						}
 
 						if (operator.equals("<")) {
-							return (doubleValue1 < doubleValue2);
+							return (pqlResultDouble1 < pqlResultDouble2);
 						}
 						else if (operator.equals("<=")) {
-							return (doubleValue1 <= doubleValue2);
+							return (pqlResultDouble1 <= pqlResultDouble2);
 						}
 						else if (operator.equals(">")) {
-							return (doubleValue1 > doubleValue2);
+							return (pqlResultDouble1 > pqlResultDouble2);
 						}
 						else if (operator.equals(">=")) {
-							return (doubleValue1 >= doubleValue2);
+							return (pqlResultDouble1 >= pqlResultDouble2);
 						}
 
 						throw new Exception(

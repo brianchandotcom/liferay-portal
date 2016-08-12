@@ -26,99 +26,99 @@ import org.junit.Test;
 public class PQLEntityFactoryTest extends TestCase {
 
 	@Test
-	public void testPQLValueGetValue() throws Exception {
-		_validateQueryResult("false", Boolean.valueOf(false));
-		_validateQueryResult("'false'", Boolean.valueOf(false));
-		_validateQueryResult("\"false\"", Boolean.valueOf(false));
-		_validateQueryResult("true", Boolean.valueOf(true));
-		_validateQueryResult("'true'", Boolean.valueOf(true));
-		_validateQueryResult("\"true\"", Boolean.valueOf(true));
+	public void testPQLValueGetPQLResult() throws Exception {
+		_validateGetPQLResult("false", Boolean.valueOf(false));
+		_validateGetPQLResult("'false'", Boolean.valueOf(false));
+		_validateGetPQLResult("\"false\"", Boolean.valueOf(false));
+		_validateGetPQLResult("true", Boolean.valueOf(true));
+		_validateGetPQLResult("'true'", Boolean.valueOf(true));
+		_validateGetPQLResult("\"true\"", Boolean.valueOf(true));
 
-		_validateQueryResult("3.2", Double.valueOf(3.2));
-		_validateQueryResult("'3.2'", Double.valueOf(3.2));
-		_validateQueryResult("\"3.2\"", Double.valueOf(3.2));
-		_validateQueryResult("2016.0", Double.valueOf(2016));
-		_validateQueryResult("'2016.0'", Double.valueOf(2016));
-		_validateQueryResult("\"2016.0\"", Double.valueOf(2016));
+		_validateGetPQLResult("3.2", Double.valueOf(3.2));
+		_validateGetPQLResult("'3.2'", Double.valueOf(3.2));
+		_validateGetPQLResult("\"3.2\"", Double.valueOf(3.2));
+		_validateGetPQLResult("2016.0", Double.valueOf(2016));
+		_validateGetPQLResult("'2016.0'", Double.valueOf(2016));
+		_validateGetPQLResult("\"2016.0\"", Double.valueOf(2016));
 
-		_validateQueryResult("2016", Integer.valueOf(2016));
-		_validateQueryResult("'2016'", Integer.valueOf(2016));
-		_validateQueryResult("\"2016\"", Integer.valueOf(2016));
+		_validateGetPQLResult("2016", Integer.valueOf(2016));
+		_validateGetPQLResult("'2016'", Integer.valueOf(2016));
+		_validateGetPQLResult("\"2016\"", Integer.valueOf(2016));
 
-		_validateQueryResult("test", "test");
-		_validateQueryResult("'test'", "test");
-		_validateQueryResult("\"test\"", "test");
+		_validateGetPQLResult("test", "test");
+		_validateGetPQLResult("'test'", "test");
+		_validateGetPQLResult("\"test\"", "test");
 
-		_validateQueryResult("'test test'", "test test");
-		_validateQueryResult("\"test test\"", "test test");
+		_validateGetPQLResult("'test test'", "test test");
+		_validateGetPQLResult("\"test test\"", "test test");
 	}
 
 	@Test
-	public void testPQLVariableGetValue() throws Exception {
-		_validateVariableResult("false", Boolean.valueOf(false));
-		_validateVariableResult("'false'", Boolean.valueOf(false));
-		_validateVariableResult("\"false\"", Boolean.valueOf(false));
-		_validateVariableResult("true", Boolean.valueOf(true));
-		_validateVariableResult("'true'", Boolean.valueOf(true));
-		_validateVariableResult("\"true\"", Boolean.valueOf(true));
+	public void testPQLVariableGetPQLResult() throws Exception {
+		_validateGetPQLResultFromVariable("false", Boolean.valueOf(false));
+		_validateGetPQLResultFromVariable("'false'", Boolean.valueOf(false));
+		_validateGetPQLResultFromVariable("\"false\"", Boolean.valueOf(false));
+		_validateGetPQLResultFromVariable("true", Boolean.valueOf(true));
+		_validateGetPQLResultFromVariable("'true'", Boolean.valueOf(true));
+		_validateGetPQLResultFromVariable("\"true\"", Boolean.valueOf(true));
 
-		_validateVariableResult("3.2", Double.valueOf(3.2));
-		_validateVariableResult("'3.2'", Double.valueOf(3.2));
-		_validateVariableResult("\"3.2\"", Double.valueOf(3.2));
-		_validateVariableResult("2016.0", Double.valueOf(2016));
-		_validateVariableResult("'2016.0'", Double.valueOf(2016));
-		_validateVariableResult("\"2016.0\"", Double.valueOf(2016));
+		_validateGetPQLResultFromVariable("3.2", Double.valueOf(3.2));
+		_validateGetPQLResultFromVariable("'3.2'", Double.valueOf(3.2));
+		_validateGetPQLResultFromVariable("\"3.2\"", Double.valueOf(3.2));
+		_validateGetPQLResultFromVariable("2016.0", Double.valueOf(2016));
+		_validateGetPQLResultFromVariable("'2016.0'", Double.valueOf(2016));
+		_validateGetPQLResultFromVariable("\"2016.0\"", Double.valueOf(2016));
 
-		_validateVariableResult("2016", Integer.valueOf(2016));
-		_validateVariableResult("'2016'", Integer.valueOf(2016));
-		_validateVariableResult("\"2016\"", Integer.valueOf(2016));
+		_validateGetPQLResultFromVariable("2016", Integer.valueOf(2016));
+		_validateGetPQLResultFromVariable("'2016'", Integer.valueOf(2016));
+		_validateGetPQLResultFromVariable("\"2016\"", Integer.valueOf(2016));
 
-		_validateVariableResult("test", "test");
-		_validateVariableResult("'test'", "test");
-		_validateVariableResult("\"test\"", "test");
+		_validateGetPQLResultFromVariable("test", "test");
+		_validateGetPQLResultFromVariable("'test'", "test");
+		_validateGetPQLResultFromVariable("\"test\"", "test");
 
-		_validateVariableResult("'test test'", "test test");
-		_validateVariableResult("\"test test\"", "test test");
+		_validateGetPQLResultFromVariable("'test test'", "test test");
+		_validateGetPQLResultFromVariable("\"test test\"", "test test");
 	}
 
-	private static void _validateQueryResult(
-			String query, Object expectedResult)
+	private static void _validateGetPQLResult(
+			String pql, Object expectedPQLResult)
 		throws Exception {
 
-		_validateQueryResult(query, expectedResult, new Properties());
+		_validateGetPQLResult(pql, expectedPQLResult, new Properties());
 	}
 
-	private static void _validateQueryResult(
-			String query, Object expectedResult, Properties properties)
+	private static void _validateGetPQLResult(
+			String pql, Object expectedPQLResult, Properties properties)
 		throws Exception {
 
-		PQLEntity pqlEntity = PQLEntityFactory.newPQLEntity(query);
+		PQLEntity pqlEntity = PQLEntityFactory.newPQLEntity(pql);
 
-		Object actualResult = pqlEntity.getValue(properties);
+		Object actualPQLResult = pqlEntity.getPQLResult(properties);
 
-		if (!actualResult.equals(expectedResult)) {
+		if (!actualPQLResult.equals(expectedPQLResult)) {
 			StringBuilder sb = new StringBuilder();
 
-			sb.append("Mismatched result within the following query:\n");
-			sb.append(query);
+			sb.append("Mismatched PQLResult within the following PQL:\n");
+			sb.append(pql);
 			sb.append("\n* Actual:   ");
-			sb.append(actualResult);
+			sb.append(actualPQLResult);
 			sb.append("\n* Expected: ");
-			sb.append(expectedResult);
+			sb.append(expectedPQLResult);
 
 			throw new Exception(sb.toString());
 		}
 	}
 
-	private static void _validateVariableResult(
-			String query, Object expectedResult)
+	private static void _validateGetPQLResultFromVariable(
+			String pql, Object expectedPQLResult)
 		throws Exception {
 
 		Properties properties = new Properties();
 
-		properties.put("portal.smoke", query);
+		properties.put("portal.smoke", pql);
 
-		_validateQueryResult("portal.smoke", expectedResult, properties);
+		_validateGetPQLResult("portal.smoke", expectedPQLResult, properties);
 	}
 
 }

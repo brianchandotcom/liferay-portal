@@ -67,7 +67,7 @@ public abstract class PQLEntity {
 		_pql = pql;
 	}
 
-	public abstract Object getValue(Properties properties) throws Exception;
+	public abstract Object getPQLResult(Properties properties) throws Exception;
 
 	protected String getPQL() {
 		return _pql;

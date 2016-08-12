@@ -268,8 +268,6 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 		).render();
 
 		<c:if test="<%= userCalendarResource != null %>">
-			Liferay.CalendarUtil.USER_CALENDAR_RESOURCE_ID = <%= userCalendarResource.getCalendarResourceId() %>;
-
 			window.<portlet:namespace />calendarLists['<%= userCalendarResource.getCalendarResourceId() %>'] = window.<portlet:namespace />myCalendarList;
 		</c:if>
 	</c:if>
@@ -330,8 +328,6 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 				visible: <%= !displaySchedulerOnly %>
 			}
 		).render();
-
-		Liferay.CalendarUtil.GROUP_CALENDAR_RESOURCE_ID = <%= groupCalendarResource.getCalendarResourceId() %>;
 
 		window.<portlet:namespace />calendarLists['<%= groupCalendarResource.getCalendarResourceId() %>'] = window.<portlet:namespace />siteCalendarList;
 	</c:if>

@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Layout API
+Bundle-SymbolicName: com.liferay.layout.api
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.layout.set.model.adapter
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Site Management

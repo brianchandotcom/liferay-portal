@@ -281,12 +281,11 @@ public class PQLOperatorTest extends TestCase {
 		if (!actualString.equals(expectedString)) {
 			StringBuilder sb = new StringBuilder();
 
-			sb.append("Mismatched string values:\n");
-			sb.append("\n\n* Actual:   \"");
+			sb.append("Mismatched string values:");
+			sb.append("\n* Actual:   ");
 			sb.append(actualString);
-			sb.append("\"\n* Expected: \"");
+			sb.append("\n* Expected: ");
 			sb.append(expectedString);
-			sb.append("\"");
 
 			throw new Exception(sb.toString());
 		}
@@ -296,6 +295,8 @@ public class PQLOperatorTest extends TestCase {
 			String value1, String operator, String value2,
 			Object expectedPQLResult)
 		throws Exception {
+
+		String pql = value1 + " " + operator + " " + value2;
 
 		PQLEntity pqlEntity1 = PQLEntityFactory.newPQLEntity(value1);
 		PQLOperator pqlOperator = PQLOperatorFactory.newPQLOperator(operator);
@@ -307,12 +308,8 @@ public class PQLOperatorTest extends TestCase {
 		if (!actualPQLResult.equals(expectedPQLResult)) {
 			StringBuilder sb = new StringBuilder();
 
-			sb.append("Mismatched PQLResult within the following PQL:\n");
-			sb.append(value1);
-			sb.append(" ");
-			sb.append(operator);
-			sb.append(" ");
-			sb.append(value2);
+			sb.append("Mismatched PQL result within the following PQL:\n");
+			sb.append(pql);
 			sb.append("\n* Actual:   ");
 			sb.append(actualPQLResult);
 			sb.append("\n* Expected: ");

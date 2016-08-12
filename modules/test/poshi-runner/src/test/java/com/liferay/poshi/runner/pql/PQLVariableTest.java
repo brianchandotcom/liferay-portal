@@ -84,7 +84,7 @@ public class PQLVariableTest extends TestCase {
 		if (!actualPQLResult.equals(expectedPQLResult)) {
 			StringBuilder sb = new StringBuilder();
 
-			sb.append("Mismatched PQLResult within the following PQL:\n");
+			sb.append("Mismatched PQL result within the following PQL:\n");
 			sb.append(pql);
 			sb.append("\n* Actual:   ");
 			sb.append(actualPQLResult);

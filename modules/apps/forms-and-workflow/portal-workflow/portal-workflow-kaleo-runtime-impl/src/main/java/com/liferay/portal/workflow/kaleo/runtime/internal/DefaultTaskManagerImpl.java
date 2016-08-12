@@ -124,10 +124,9 @@ public class DefaultTaskManagerImpl
 				kaleoTaskInstanceTokenLocalService.getKaleoTaskInstanceToken(
 					workflowTaskInstanceId);
 
-			KaleoTaskFormInstance kaleoTaskFormInstance =
-				kaleoTaskFormInstanceLocalService.addKaleoTaskFormInstance(
-					kaleoTaskInstanceToken.getGroupId(), workflowTaskFormId,
-					formValues, kaleoTaskInstanceToken, serviceContext);
+			kaleoTaskFormInstanceLocalService.addKaleoTaskFormInstance(
+				kaleoTaskInstanceToken.getGroupId(), workflowTaskFormId,
+				formValues, kaleoTaskInstanceToken, serviceContext);
 
 			if (kaleoTaskInstanceTokenLocalService.hasPendingKaleoTaskForms(
 					workflowTaskInstanceId)) {

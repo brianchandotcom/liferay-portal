@@ -79,6 +79,11 @@ AUI.add(
 						value: false
 					},
 
+					remoteServices: {
+						validator: isObject,
+						value: null
+					},
+
 					showAddEventBtn: {
 						validator: isBoolean,
 						value: true
@@ -402,6 +407,8 @@ AUI.add(
 
 						var schedulerEvent = event.schedulerEvent;
 
+						var remoteServices = instance.get('remoteServices');
+
 						var success = function() {
 							instance.load();
 							instance.get('eventRecorder').hidePopover();
@@ -411,18 +418,18 @@ AUI.add(
 							RecurrenceUtil.openConfirmationPanel(
 								'delete',
 								function() {
-									CalendarUtil.deleteEventInstance(schedulerEvent, false, success);
+									remoteServices.deleteEventInstance(schedulerEvent, false, success);
 								},
 								function() {
-									CalendarUtil.deleteEventInstance(schedulerEvent, true, success);
+									remoteServices.deleteEventInstance(schedulerEvent, true, success);
 								},
 								function() {
-									CalendarUtil.deleteEvent(schedulerEvent, success);
+									remoteServices.deleteEvent(schedulerEvent, success);
 								}
 							);
 						}
 						else if (schedulerEvent.isMasterBooking() && confirm(Liferay.Language.get('deleting-this-event-will-cancel-the-meeting-with-your-guests-would-you-like-to-delete'))) {
-							CalendarUtil.deleteEvent(schedulerEvent, success);
+							remoteServices.deleteEvent(schedulerEvent, success);
 						}
 
 						event.preventDefault();
@@ -437,7 +444,9 @@ AUI.add(
 					_onSaveEvent: function(event) {
 						var instance = this;
 
-						CalendarUtil.updateEvent(
+						var remoteServices = instance.get('remoteServices');
+
+						remoteServices.updateEvent(
 							event.newSchedulerEvent,
 							false,
 							false,
@@ -465,7 +474,9 @@ AUI.add(
 							A.soon(showNextQuestion);
 						}
 						else {
-							CalendarUtil.updateEvent(schedulerEvent, !!answers.updateInstance, !!answers.allFollowing, showNextQuestion);
+							var remoteServices = instance.get('remoteServices');
+
+							remoteServices.updateEvent(schedulerEvent, !!answers.updateInstance, !!answers.allFollowing, showNextQuestion);
 						}
 					},
 

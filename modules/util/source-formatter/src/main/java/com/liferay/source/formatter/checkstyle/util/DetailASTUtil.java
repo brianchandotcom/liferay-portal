@@ -60,6 +60,31 @@ public class DetailASTUtil {
 		return parameterNames;
 	}
 
+	public static boolean isCollection(DetailAST detailAST) {
+		if (detailAST.getType() != TokenTypes.VARIABLE_DEF) {
+			return false;
+		}
+
+		DetailAST typeAST = detailAST.findFirstToken(TokenTypes.TYPE);
+
+		DetailAST typeArgumentsAST = typeAST.findFirstToken(
+			TokenTypes.TYPE_ARGUMENTS);
+
+		if (typeArgumentsAST == null) {
+			return false;
+		}
+
+		DetailAST nameAST = typeAST.findFirstToken(TokenTypes.IDENT);
+
+		String name = nameAST.getText();
+
+		if (name.matches(".*(Collection|List|Map|Set)")) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private static List<DetailAST> _getAllChildTokens(
 		DetailAST detailAST, int tokenType, boolean recursive,
 		List<DetailAST> list) {

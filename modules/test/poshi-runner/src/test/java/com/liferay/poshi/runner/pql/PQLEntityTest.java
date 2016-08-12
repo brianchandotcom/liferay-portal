@@ -25,26 +25,35 @@ public class PQLEntityTest extends TestCase {
 
 	@Test
 	public void testFixPQL() throws Exception {
-		_compare(PQLEntity.fixPQL("(((test)))"), "test");
-		_compare(PQLEntity.fixPQL(" (((test)) )"), "test");
-		_compare(PQLEntity.fixPQL(" ((( test test ))) "), "test test");
-		_compare(PQLEntity.fixPQL(")test("), ")test(");
-		_compare(PQLEntity.fixPQL(" )test( "), ")test(");
-		_compare(PQLEntity.fixPQL(" ) test"), ") test");
-		_compare(PQLEntity.fixPQL(" ( test"), "( test");
-		_compare(PQLEntity.fixPQL("test ) "), "test )");
-		_compare(PQLEntity.fixPQL("test ( "), "test (");
-		_compare(PQLEntity.fixPQL("( (test) OR (test))"), "(test) OR (test)");
-		_compare(
+		_compareString(PQLEntity.fixPQL("(((test)))"), "test");
+		_compareString(PQLEntity.fixPQL(" (((test)) )"), "test");
+		_compareString(PQLEntity.fixPQL(" ((( test test ))) "), "test test");
+		_compareString(PQLEntity.fixPQL(")test("), ")test(");
+		_compareString(PQLEntity.fixPQL(" )test( "), ")test(");
+		_compareString(PQLEntity.fixPQL(" ) test"), ") test");
+		_compareString(PQLEntity.fixPQL(" ( test"), "( test");
+		_compareString(PQLEntity.fixPQL("test ) "), "test )");
+		_compareString(PQLEntity.fixPQL("test ( "), "test (");
+		_compareString(
+			PQLEntity.fixPQL("( (test) OR (test))"), "(test) OR (test)");
+		_compareString(
 			PQLEntity.fixPQL(" ( (( test ( test ))) "), "( (( test ( test )))");
 	}
 
-	private void _compare(String actualString, String expectedString)
+	private void _compareString(String actualString, String expectedString)
 		throws Exception {
 
 		if (!actualString.equals(expectedString)) {
-			throw new Exception(
-				"'" + expectedString + "' should equal '" + actualString + "'");
+			StringBuilder sb = new StringBuilder();
+
+			sb.append("Mismatched string values:\n");
+			sb.append("\n\n* Actual:   \"");
+			sb.append(actualString);
+			sb.append("\"\n* Expected: \"");
+			sb.append(expectedString);
+			sb.append("\"");
+
+			throw new Exception(sb.toString());
 		}
 	}
 

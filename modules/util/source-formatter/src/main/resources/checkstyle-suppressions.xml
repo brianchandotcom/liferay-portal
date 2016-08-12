@@ -40,4 +40,5 @@
 	<suppress checks="MethodNameCheck" files="LiferayParser\.java" />
 	<suppress checks="MethodNameCheck" files="PortalExecutorManagerUtilAdvice\.java" />
 	<suppress checks="MethodNameCheck" files="Stub\.java" />
+	<suppress checks="ValidatorIsNullCheck" files="UserFinderImpl\.java" />
 </suppressions>

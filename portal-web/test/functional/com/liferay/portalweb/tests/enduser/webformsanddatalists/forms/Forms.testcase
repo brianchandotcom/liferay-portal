@@ -2238,7 +2238,7 @@
 
 		<execute macro="FormFields#editText">
 			<var name="fieldName" value="Text" />
-			<var name="fieldValue" value="Test" />
+			<var name="fieldValue" value="test" />
 		</execute>
 
 		<execute macro="FormPortlet#submit" />
@@ -2255,7 +2255,7 @@
 
 		<execute macro="FormsAdmin#viewFormTableEntry">
 			<var name="fieldLabel" value="Text" />
-			<var name="fieldValue" value="Test" />
+			<var name="fieldValue" value="test" />
 		</execute>
 	</command>
 

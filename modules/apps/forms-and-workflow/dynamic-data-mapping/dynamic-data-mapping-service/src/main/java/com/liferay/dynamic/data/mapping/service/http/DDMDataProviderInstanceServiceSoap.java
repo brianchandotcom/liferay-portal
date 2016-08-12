@@ -124,6 +124,21 @@ public class DDMDataProviderInstanceServiceSoap {
 		}
 	}
 
+	public static com.liferay.dynamic.data.mapping.model.DDMDataProviderInstanceSoap findByUuid(
+		java.lang.String uuid) throws RemoteException {
+		try {
+			com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance returnValue =
+				DDMDataProviderInstanceServiceUtil.findByUuid(uuid);
+
+			return com.liferay.dynamic.data.mapping.model.DDMDataProviderInstanceSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.dynamic.data.mapping.model.DDMDataProviderInstanceSoap getDataProviderInstance(
 		long dataProviderInstanceId) throws RemoteException {
 		try {

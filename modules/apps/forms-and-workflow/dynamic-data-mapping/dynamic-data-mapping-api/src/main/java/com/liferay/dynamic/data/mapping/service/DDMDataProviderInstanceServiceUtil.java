@@ -60,6 +60,12 @@ public class DDMDataProviderInstanceServiceUtil {
 		return getService().fetchDataProviderInstance(dataProviderInstanceId);
 	}
 
+	public static com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance findByUuid(
+		java.lang.String uuid)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().findByUuid(uuid);
+	}
+
 	public static com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance getDataProviderInstance(
 		long dataProviderInstanceId)
 		throws com.liferay.portal.kernel.exception.PortalException {

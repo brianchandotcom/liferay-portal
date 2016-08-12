@@ -69,6 +69,9 @@
 			<message key="name.collectionPrivatePattern" value="Private collection ''{0}'' must match pattern ''{1}''" />
 			<message key="name.collectionProtectedPublicPattern" value="Protected or public collection ''{0}'' must match pattern ''{1}''" />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.checks.LPS42924Check">
+			<message key="lps42924" value="Use ''classNameLocalService.getClassNameId'' instead of ''PortalUtil.getClassName''" />
+		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.MethodNameCheck">
 			<property name="applyToPackage" value="false" />
 			<property name="applyToPrivate" value="false" />

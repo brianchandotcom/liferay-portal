@@ -59,7 +59,6 @@ AUI.add(
 		Liferay.Time = Time;
 
 		var CalendarUtil = {
-			INVOKER_URL: themeDisplay.getPathContext() + '/api/jsonws/invoke',
 			NOTIFICATION_DEFAULT_TYPE: 'email',
 			PORTLET_NAMESPACE: STR_BLANK,
 			USER_TIME_ZONE: 'UTC',
@@ -347,93 +346,6 @@ AUI.add(
 				);
 			},
 
-			invokeActionURL: function(params) {
-				var instance = this;
-
-				var url = Liferay.PortletURL.createActionURL();
-
-				url.setName(params.actionName);
-				url.setParameters(params.queryParameters);
-				url.setPortletId('com_liferay_calendar_web_portlet_CalendarPortlet');
-
-				var payload;
-
-				if (params.payload) {
-					payload = Liferay.Util.ns(instance.PORTLET_NAMESPACE, params.payload);
-				}
-
-				A.io.request(
-					url.toString(),
-					{
-						data: payload,
-						dataType: 'JSON',
-						on: {
-							success: function() {
-								params.callback(this.get('responseData'));
-							}
-						}
-					}
-				);
-			},
-
-			invokeResourceURL: function(params) {
-				var instance = this;
-
-				var url = Liferay.PortletURL.createResourceURL();
-
-				url.setParameters(params.queryParameters);
-				url.setPortletId('com_liferay_calendar_web_portlet_CalendarPortlet');
-				url.setResourceId(params.resourceId);
-
-				var payload;
-
-				if (params.payload) {
-					payload = Liferay.Util.ns(instance.PORTLET_NAMESPACE, params.payload);
-				}
-
-				A.io.request(
-					url.toString(),
-					{
-						data: payload,
-						dataType: 'JSON',
-						on: {
-							success: function() {
-								params.callback(this.get('responseData'));
-							}
-						}
-					}
-				);
-			},
-
-			invokeService: function(payload, callback) {
-				var instance = this;
-
-				callback = callback || {};
-
-				A.io.request(
-					instance.INVOKER_URL,
-					{
-						cache: false,
-						data: {
-							cmd: JSON.stringify(payload),
-							p_auth: Liferay.authToken
-						},
-						dataType: 'JSON',
-						on: {
-							failure: callback.failure,
-							start: callback.start,
-							success: function(event) {
-								if (callback.success) {
-									var data = this.get('responseData');
-
-									callback.success.apply(this, [data, event]);
-								}
-							}
-						}
-					}
-				);
-			},
-
 			invokeTransition: function(schedulerEvent, status) {
 				var instance = this;
 
@@ -634,6 +546,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-datatype', 'aui-io', 'aui-scheduler', 'aui-toolbar', 'autocomplete', 'autocomplete-highlighters', 'liferay-portlet-url']
+		requires: ['aui-datatype', 'aui-scheduler', 'aui-toolbar', 'autocomplete', 'autocomplete-highlighters', 'liferay-portlet-url']
 	}
 );

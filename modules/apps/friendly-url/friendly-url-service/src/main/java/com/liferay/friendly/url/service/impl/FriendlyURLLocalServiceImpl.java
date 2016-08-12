@@ -77,6 +77,16 @@ public class FriendlyURLLocalServiceImpl
 	}
 
 	@Override
+	public void deleteFriendlyURL(
+		long companyId, long groupId, Class<?> clazz, long classPK) {
+
+		long classNameId = classNameLocalService.getClassNameId(clazz);
+
+		friendlyURLPersistence.removeByC_G_C_C(
+			companyId, groupId, classNameId, classPK);
+	}
+
+	@Override
 	public void validate(
 			long companyId, long groupId, Class<?> clazz, String urlTitle)
 		throws PortalException {

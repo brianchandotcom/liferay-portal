@@ -28,6 +28,8 @@
 	<command name="addViaDDLDisplayPG">
 		<execute function="Click" locator1="DDL#PORTLET_ACTIONS_ADD_LIST" value1="Add List" />
 
+		<execute function="AssertTextEquals" locator1="Portlet#H3_MODAL_TITLE" value1="Add List" />
+
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${ddlListName}" />

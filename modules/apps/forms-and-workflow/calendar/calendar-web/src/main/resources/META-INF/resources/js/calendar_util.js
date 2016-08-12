@@ -171,12 +171,6 @@ AUI.add(
 				return JSON.stringify(map);
 			},
 
-			message: function(msg) {
-				var instance = this;
-
-				A.oneNS(instance.PORTLET_NAMESPACE, '#message').html(msg);
-			},
-
 			setEventAttrs: function(schedulerEvent, data) {
 				var instance = this;
 

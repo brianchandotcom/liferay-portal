@@ -14,11 +14,13 @@
 
 package com.liferay.dynamic.data.mapping.form.evaluator.internal.rules;
 
+import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderConsumerTracker;
 import com.liferay.dynamic.data.mapping.expression.DDMExpression;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
 import com.liferay.dynamic.data.mapping.expression.VariableDependencies;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluationException;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormFieldEvaluationResult;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidation;
@@ -51,9 +53,13 @@ import java.util.Map;
 public class DDMFormRuleEvaluatorHelper {
 
 	public DDMFormRuleEvaluatorHelper(
+		DDMDataProviderConsumerTracker ddmDataProviderConsumerTracker,
 		DDMExpressionFactory ddmExpressionFactory, DDMForm ddmForm,
-		DDMFormValues ddmFormValues, JSONFactory jsonFactory, Locale locale) {
+		DDMFormValues ddmFormValues,
+		DDMFormValuesJSONDeserializer ddmFormValuesJSONDeserializer,
+		JSONFactory jsonFactory, Locale locale) {
 
+		_ddmDataProviderConsumerTracker = ddmDataProviderConsumerTracker;
 		_ddmExpressionFactory = ddmExpressionFactory;
 		_ddmForm = ddmForm;
 
@@ -63,6 +69,7 @@ public class DDMFormRuleEvaluatorHelper {
 
 		createDDMFormFieldValuesMap(ddmFormValues);
 
+		_ddmFormValuesJSONDeserializer = ddmFormValuesJSONDeserializer;
 		_jsonFactory = jsonFactory;
 		_locale = locale;
 	}
@@ -298,8 +305,9 @@ public class DDMFormRuleEvaluatorHelper {
 		throws DDMFormEvaluationException {
 
 		DDMFormRuleEvaluator ddmFormRuleEvaluator = new DDMFormRuleEvaluator(
-			_ddmExpressionFactory, _ddmFormFieldEvaluationResults,
-			ddmFormRule.getCondition());
+			_ddmDataProviderConsumerTracker, _ddmExpressionFactory,
+			_ddmFormFieldEvaluationResults, _ddmFormValuesJSONDeserializer,
+			ddmFormRule.getCondition(), _jsonFactory);
 
 		return ddmFormRuleEvaluator.evaluate();
 	}
@@ -310,8 +318,9 @@ public class DDMFormRuleEvaluatorHelper {
 		for (String action : actions) {
 			DDMFormRuleEvaluator ddmFormRuleEvaluator =
 				new DDMFormRuleEvaluator(
-					_ddmExpressionFactory, _ddmFormFieldEvaluationResults,
-					action);
+					_ddmDataProviderConsumerTracker, _ddmExpressionFactory,
+					_ddmFormFieldEvaluationResults,
+					_ddmFormValuesJSONDeserializer, action, _jsonFactory);
 
 			ddmFormRuleEvaluator.execute();
 		}
@@ -427,11 +436,14 @@ public class DDMFormRuleEvaluatorHelper {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMFormRuleEvaluatorHelper.class);
 
+	private final DDMDataProviderConsumerTracker
+		_ddmDataProviderConsumerTracker;
 	private final DDMExpressionFactory _ddmExpressionFactory;
 	private final DDMForm _ddmForm;
 	private final Map<String, List<DDMFormFieldEvaluationResult>>
 		_ddmFormFieldEvaluationResults = new HashMap<>();
 	private Map<String, List<DDMFormFieldValue>> _ddmFormFieldValuesMap;
+	private final DDMFormValuesJSONDeserializer _ddmFormValuesJSONDeserializer;
 	private final JSONFactory _jsonFactory;
 	private final Locale _locale;
 

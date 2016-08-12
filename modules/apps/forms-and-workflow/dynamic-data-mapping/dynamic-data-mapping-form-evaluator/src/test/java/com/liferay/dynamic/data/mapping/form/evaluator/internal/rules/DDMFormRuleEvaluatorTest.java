@@ -18,6 +18,8 @@ import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
 import com.liferay.dynamic.data.mapping.expression.internal.DDMExpressionFactoryImpl;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormFieldEvaluationResult;
+import com.liferay.portal.json.JSONFactoryImpl;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.ArrayList;
@@ -72,9 +74,10 @@ public class DDMFormRuleEvaluatorTest extends PowerMockito {
 			"field2", ddmFormField2InstanceEvaluationResults);
 
 		DDMFormRuleEvaluator ddmFormRuleEvaluator = new DDMFormRuleEvaluator(
-			_ddmExpressionFactory, ddmFormFieldEvaluationResultsMap,
+			null, _ddmExpressionFactory, ddmFormFieldEvaluationResultsMap, null,
 			"sum(get(fieldAt(\"field1\", 0), \"value\"), " +
-				"get(fieldAt(\"field2\", 0), \"value\")) > 25");
+				"get(fieldAt(\"field2\", 0), \"value\")) > 25",
+			_jsonFactory);
 
 		Map<String, DDMExpressionFunction> functionMap =
 			(Map<String, DDMExpressionFunction>)field(
@@ -120,8 +123,8 @@ public class DDMFormRuleEvaluatorTest extends PowerMockito {
 			"field1", ddmFormFieldInstanceEvaluationResults);
 
 		DDMFormRuleEvaluator ddmFormRuleEvaluator = new DDMFormRuleEvaluator(
-			_ddmExpressionFactory, ddmFormFieldEvaluationResultsMap,
-			"set(fieldAt(\"field1\", 0), \"readOnly\", true)");
+			null, _ddmExpressionFactory, ddmFormFieldEvaluationResultsMap, null,
+			"set(fieldAt(\"field1\", 0), \"readOnly\", true)", _jsonFactory);
 
 		ddmFormRuleEvaluator.execute();
 
@@ -145,8 +148,8 @@ public class DDMFormRuleEvaluatorTest extends PowerMockito {
 			"field1", ddmFormFieldInstanceEvaluationResults);
 
 		DDMFormRuleEvaluator ddmFormRuleEvaluator = new DDMFormRuleEvaluator(
-			_ddmExpressionFactory, ddmFormFieldEvaluationResults,
-			"set(fieldAt(\"field1\", 0), \"visible\", true)");
+			null, _ddmExpressionFactory, ddmFormFieldEvaluationResults, null,
+			"set(fieldAt(\"field1\", 0), \"visible\", true)", _jsonFactory);
 
 		ddmFormRuleEvaluator.execute();
 
@@ -170,8 +173,9 @@ public class DDMFormRuleEvaluatorTest extends PowerMockito {
 			"field1", ddmFormFieldInstanceEvaluationResults);
 
 		DDMFormRuleEvaluator ddmFormRuleEvaluator = new DDMFormRuleEvaluator(
-			_ddmExpressionFactory, ddmFormFieldEvaluationResults,
-			"set(fieldAt(\"field1\", 0), \"valid\", false, \"error\")");
+			null, _ddmExpressionFactory, ddmFormFieldEvaluationResults, null,
+			"set(fieldAt(\"field1\", 0), \"valid\", false, \"error\")",
+			_jsonFactory);
 
 		ddmFormRuleEvaluator.execute();
 
@@ -197,8 +201,8 @@ public class DDMFormRuleEvaluatorTest extends PowerMockito {
 			"field1", ddmFormFieldInstanceEvaluationResults);
 
 		DDMFormRuleEvaluator ddmFormRuleEvaluator = new DDMFormRuleEvaluator(
-			_ddmExpressionFactory, ddmFormFieldEvaluationResults,
-			"set(fieldAt(\"field1\",0),\"value\",2.7)");
+			null, _ddmExpressionFactory, ddmFormFieldEvaluationResults, null,
+			"set(fieldAt(\"field1\",0),\"value\",2.7)", _jsonFactory);
 
 		ddmFormRuleEvaluator.execute();
 
@@ -221,5 +225,6 @@ public class DDMFormRuleEvaluatorTest extends PowerMockito {
 
 	private final DDMExpressionFactory _ddmExpressionFactory =
 		new DDMExpressionFactoryImpl();
+	private final JSONFactory _jsonFactory = new JSONFactoryImpl();
 
 }

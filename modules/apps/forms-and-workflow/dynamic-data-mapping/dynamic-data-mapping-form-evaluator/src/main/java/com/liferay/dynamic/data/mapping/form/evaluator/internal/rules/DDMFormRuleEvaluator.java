@@ -14,14 +14,18 @@
 
 package com.liferay.dynamic.data.mapping.form.evaluator.internal.rules;
 
+import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderConsumerTracker;
 import com.liferay.dynamic.data.mapping.expression.DDMExpression;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionException;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluationException;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormFieldEvaluationResult;
+import com.liferay.dynamic.data.mapping.form.evaluator.internal.rules.functions.CallFunction;
 import com.liferay.dynamic.data.mapping.form.evaluator.internal.rules.functions.FieldAtFunction;
 import com.liferay.dynamic.data.mapping.form.evaluator.internal.rules.functions.PropertyGetFunction;
 import com.liferay.dynamic.data.mapping.form.evaluator.internal.rules.functions.PropertySetFunction;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
+import com.liferay.portal.kernel.json.JSONFactory;
 
 import java.util.List;
 import java.util.Map;
@@ -32,13 +36,19 @@ import java.util.Map;
 public class DDMFormRuleEvaluator {
 
 	public DDMFormRuleEvaluator(
+		DDMDataProviderConsumerTracker ddmDataProviderConsumerTracker,
 		DDMExpressionFactory ddmExpressionFactory,
 		Map<String, List<DDMFormFieldEvaluationResult>>
-			ddmFormFieldEvaluationResults, String expression) {
+			ddmFormFieldEvaluationResults,
+		DDMFormValuesJSONDeserializer ddmFormValuesJSONDeserializer,
+		String expression, JSONFactory jsonFactory) {
 
+		_ddmDataProviderConsumerTracker = ddmDataProviderConsumerTracker;
 		_ddmExpressionFactory = ddmExpressionFactory;
 		_ddmFormFieldEvaluationResults = ddmFormFieldEvaluationResults;
+		_ddmFormValuesJSONDeserializer = ddmFormValuesJSONDeserializer;
 		_expression = expression;
+		_jsonFactory = jsonFactory;
 	}
 
 	public boolean evaluate() throws DDMFormEvaluationException {
@@ -71,6 +81,10 @@ public class DDMFormRuleEvaluator {
 
 	protected void setFunctions(DDMExpression<?> ddmExpression) {
 		ddmExpression.setDDMExpressionFunction(
+			"call", new CallFunction(
+				_ddmDataProviderConsumerTracker, _ddmFormFieldEvaluationResults,
+				_ddmFormValuesJSONDeserializer, _jsonFactory));
+		ddmExpression.setDDMExpressionFunction(
 			"fieldAt", new FieldAtFunction());
 		ddmExpression.setDDMExpressionFunction(
 			"get", new PropertyGetFunction(_ddmFormFieldEvaluationResults));
@@ -78,9 +92,13 @@ public class DDMFormRuleEvaluator {
 			"set", new PropertySetFunction(_ddmFormFieldEvaluationResults));
 	}
 
+	private final DDMDataProviderConsumerTracker
+		_ddmDataProviderConsumerTracker;
 	private final DDMExpressionFactory _ddmExpressionFactory;
 	private final Map<String, List<DDMFormFieldEvaluationResult>>
 		_ddmFormFieldEvaluationResults;
+	private final DDMFormValuesJSONDeserializer _ddmFormValuesJSONDeserializer;
 	private final String _expression;
+	private final JSONFactory _jsonFactory;
 
 }

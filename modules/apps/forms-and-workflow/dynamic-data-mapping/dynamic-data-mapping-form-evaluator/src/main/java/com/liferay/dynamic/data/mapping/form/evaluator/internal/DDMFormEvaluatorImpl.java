@@ -14,12 +14,14 @@
 
 package com.liferay.dynamic.data.mapping.form.evaluator.internal;
 
+import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderConsumerTracker;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluationException;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluationResult;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluator;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormFieldEvaluationResult;
 import com.liferay.dynamic.data.mapping.form.evaluator.internal.rules.DDMFormRuleEvaluatorHelper;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
@@ -49,8 +51,9 @@ public class DDMFormEvaluatorImpl implements DDMFormEvaluator {
 		try {
 			DDMFormRuleEvaluatorHelper ddmFormRuleEvaluatorHelper =
 				new DDMFormRuleEvaluatorHelper(
-					_ddmExpressionFactory, ddmForm, ddmFormValues, _jsonFactory,
-					locale);
+					_ddmDataProviderConsumerTracker, _ddmExpressionFactory,
+					ddmForm, ddmFormValues, _ddmFormValuesJSONDeserializer,
+					_jsonFactory, locale);
 
 			List<DDMFormFieldEvaluationResult> ddmFormFieldEvaluationResults =
 				ddmFormRuleEvaluatorHelper.evaluate();
@@ -131,7 +134,13 @@ public class DDMFormEvaluatorImpl implements DDMFormEvaluator {
 	}
 
 	@Reference
+	private DDMDataProviderConsumerTracker _ddmDataProviderConsumerTracker;
+
+	@Reference
 	private DDMExpressionFactory _ddmExpressionFactory;
+
+	@Reference
+	private DDMFormValuesJSONDeserializer _ddmFormValuesJSONDeserializer;
 
 	@Reference
 	private JSONFactory _jsonFactory;

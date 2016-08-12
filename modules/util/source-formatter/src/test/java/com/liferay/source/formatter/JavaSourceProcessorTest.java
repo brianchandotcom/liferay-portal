@@ -197,10 +197,17 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	public void testIncorrectVariableNames() throws Exception {
 		test(
 			"IncorrectVariableNames1.testjava",
-			"Protected or public non-static field '_test2' must match " +
-				"pattern '^[a-z0-9][_a-zA-Z0-9]*$'",
-			28);
-		//test("IncorrectVariableNames2.testjava");
+			new String[] {
+				"Protected or public constant '_TEST_1' must match " +
+					"pattern '^[a-zA-Z0-9][_a-zA-Z0-9]*$'",
+				"Protected or public non-static field '_test2' must match " +
+					"pattern '^[a-z0-9][_a-zA-Z0-9]*$'"
+			},
+			new Integer[] {22, 28});
+		test(
+			"IncorrectVariableNames2.testjava",
+			"Private constant 'STRING_1' must match pattern '^_[_a-zA-Z0-9]*$'",
+			26);
 		test(
 			"IncorrectVariableNames3.testjava",
 			new String[] {

@@ -3,7 +3,6 @@ AUI.add(
 	function(A) {
 		var DateMath = A.DataType.DateMath;
 		var Lang = A.Lang;
-		var LString = Lang.String;
 
 		var Workflow = Liferay.Workflow;
 
@@ -18,8 +17,6 @@ AUI.add(
 		var STR_DASH = '-';
 
 		var STR_SPACE = ' ';
-
-		var USER_ID = toInt(themeDisplay.getUserId());
 
 		var Time = {
 			DAY: 86400000,
@@ -120,63 +117,6 @@ AUI.add(
 				return schedulerEvent;
 			},
 
-			deleteCalendar: function(calendarId, callback) {
-				var instance = this;
-
-				instance.invokeService(
-					{
-						'/calendar.calendar/delete-calendar': {
-							calendarId: calendarId
-						}
-					},
-					{
-						success: function() {
-							callback(this.get('responseData'));
-						}
-					}
-				);
-			},
-
-			deleteEvent: function(schedulerEvent, success) {
-				var instance = this;
-
-				instance.invokeService(
-					{
-						'/calendar.calendarbooking/move-calendar-booking-to-trash': {
-							calendarBookingId: schedulerEvent.get('calendarBookingId')
-						}
-					},
-					{
-						success: function(data) {
-							if (success) {
-								success.call(instance, data);
-							}
-						}
-					}
-				);
-			},
-
-			deleteEventInstance: function(schedulerEvent, allFollowing, success) {
-				var instance = this;
-
-				instance.invokeService(
-					{
-						'/calendar.calendarbooking/delete-calendar-booking-instance': {
-							allFollowing: allFollowing,
-							calendarBookingId: schedulerEvent.get('calendarBookingId'),
-							instanceIndex: schedulerEvent.get('instanceIndex')
-						}
-					},
-					{
-						success: function(data) {
-							if (success) {
-								success.call(instance, data);
-							}
-						}
-					}
-				);
-			},
-
 			destroyEvent: function(schedulerEvent) {
 				var instance = this;
 
@@ -187,34 +127,6 @@ AUI.add(
 				scheduler.syncEventsUI();
 			},
 
-			getCalendar: function(calendarId, callback) {
-				var instance = this;
-
-				instance.invokeResourceURL(
-					{
-						callback: callback,
-						queryParameters: {
-							calendarId: calendarId
-						},
-						resourceId: 'calendar'
-					}
-				);
-			},
-
-			getCalendarBookingInvitees: function(calendarBookingId, callback) {
-				var instance = this;
-
-				instance.invokeResourceURL(
-					{
-						callback: callback,
-						queryParameters: {
-							parentCalendarBookingId: calendarBookingId
-						},
-						resourceId: 'calendarBookingInvitees'
-					}
-				);
-			},
-
 			getCalendarName: function(name, calendarResourceName) {
 				var instance = this;
 
@@ -223,36 +135,6 @@ AUI.add(
 				}
 
 				return name;
-			},
-
-			getCalendarRenderingRules: function(calendarIds, startDate, endDate, ruleName, callback) {
-				var instance = this;
-
-				instance.invokeResourceURL(
-					{
-						callback: callback,
-						queryParameters: {
-							calendarIds: calendarIds.join(),
-							endTime: endDate.getTime(),
-							ruleName: ruleName,
-							startTime: startDate.getTime()
-						},
-						resourceId: 'calendarRenderingRules'
-					}
-				);
-			},
-
-			getCurrentTime: function(callback) {
-				var instance = this;
-
-				instance.invokeResourceURL(
-					{
-						callback: function(dateObj) {
-							callback(instance.getDateFromObject(dateObj));
-						},
-						resourceId: 'currentTime'
-					}
-				);
 			},
 
 			getDateFromObject: function(object) {
@@ -281,47 +163,6 @@ AUI.add(
 				return output;
 			},
 
-			getEvent: function(calendarBookingId, success, failure) {
-				var instance = this;
-
-				instance.invokeService(
-					{
-						'/calendar.calendarbooking/get-calendar-booking': {
-							calendarBookingId: calendarBookingId
-						}
-					},
-					{
-						failure: failure,
-						success: success
-					}
-				);
-			},
-
-			getEvents: function(calendarIds, startDate, endDate, status, callback) {
-				var instance = this;
-
-				instance.invokeResourceURL(
-					{
-						callback: callback,
-						queryParameters: {
-							calendarIds: calendarIds.join(','),
-							endTimeDay: endDate.getDate(),
-							endTimeHour: endDate.getHours(),
-							endTimeMinute: endDate.getMinutes(),
-							endTimeMonth: endDate.getMonth(),
-							endTimeYear: endDate.getFullYear(),
-							startTimeDay: startDate.getDate(),
-							startTimeHour: startDate.getHours(),
-							startTimeMinute: startDate.getMinutes(),
-							startTimeMonth: startDate.getMonth(),
-							startTimeYear: startDate.getFullYear(),
-							statuses: status.join(',')
-						},
-						resourceId: 'calendarBookings'
-					}
-				);
-			},
-
 			getLocalizationMap: function(value) {
 				var instance = this;
 
@@ -330,65 +171,6 @@ AUI.add(
 				map[themeDisplay.getLanguageId()] = value;
 
 				return JSON.stringify(map);
-			},
-
-			getResourceCalendars: function(calendarResourceId, callback) {
-				var instance = this;
-
-				instance.invokeResourceURL(
-					{
-						callback: callback,
-						queryParameters: {
-							calendarResourceId: calendarResourceId
-						},
-						resourceId: 'resourceCalendars'
-					}
-				);
-			},
-
-			invokeTransition: function(schedulerEvent, status) {
-				var instance = this;
-
-				var scheduler = schedulerEvent.get('scheduler');
-
-				instance.invokeService(
-					{
-						'/calendar.calendarbooking/invoke-transition': {
-							calendarBookingId: schedulerEvent.get('calendarBookingId'),
-							status: status,
-							userId: USER_ID
-						}
-					},
-					{
-						start: function() {
-							schedulerEvent.set(
-								'loading',
-								true,
-								{
-									silent: true
-								}
-							);
-						},
-
-						success: function(data) {
-							schedulerEvent.set(
-								'loading',
-								false,
-								{
-									silent: true
-								}
-							);
-
-							if (data && !data.exception && scheduler) {
-								var eventRecorder = scheduler.get('eventRecorder');
-
-								eventRecorder.hidePopover();
-
-								scheduler.load();
-							}
-						}
-					}
-				);
 			},
 
 			message: function(msg) {
@@ -456,61 +238,6 @@ AUI.add(
 				}
 
 				return DateMath.subtract(date, DateMath.MINUTES, date.getTimezoneOffset());
-			},
-
-			updateEvent: function(schedulerEvent, updateInstance, allFollowing, success) {
-				var instance = this;
-
-				var endDate = schedulerEvent.get('endDate');
-				var startDate = schedulerEvent.get('startDate');
-
-				instance.invokeActionURL(
-					{
-						actionName: 'updateSchedulerCalendarBooking',
-						callback: function(data) {
-							schedulerEvent.set(
-								'loading',
-								false,
-								{
-									silent: true
-								}
-							);
-
-							if (data) {
-								if (data.exception) {
-									instance.destroyEvent(schedulerEvent);
-								}
-								else {
-									instance.setEventAttrs(schedulerEvent, data);
-
-									if (success) {
-										success.call(instance, data);
-									}
-								}
-							}
-						},
-						payload: {
-							allDay: schedulerEvent.get('allDay'),
-							allFollowing: allFollowing,
-							calendarBookingId: schedulerEvent.get('calendarBookingId'),
-							calendarId: schedulerEvent.get('calendarId'),
-							endTimeDay: endDate.getDate(),
-							endTimeHour: endDate.getHours(),
-							endTimeMinute: endDate.getMinutes(),
-							endTimeMonth: endDate.getMonth(),
-							endTimeYear: endDate.getFullYear(),
-							instanceIndex: schedulerEvent.get('instanceIndex'),
-							recurrence: schedulerEvent.get('recurrence'),
-							startTimeDay: startDate.getDate(),
-							startTimeHour: startDate.getHours(),
-							startTimeMinute: startDate.getMinutes(),
-							startTimeMonth: startDate.getMonth(),
-							startTimeYear: startDate.getFullYear(),
-							title: LString.unescapeHTML(schedulerEvent.get('content')),
-							updateInstance: updateInstance
-						}
-					}
-				);
 			},
 
 			updateSchedulerEvents: function(schedulerEvents, calendarBooking) {

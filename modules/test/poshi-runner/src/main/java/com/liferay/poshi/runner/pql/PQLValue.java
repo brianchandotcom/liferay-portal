@@ -27,7 +27,7 @@ public class PQLValue extends PQLEntity {
 		_validateValue(value);
 	}
 
-	public Object getValue(Properties properties) throws Exception {
+	public Object getPQLResult(Properties properties) throws Exception {
 		return getObjectValue(getPQL());
 	}
 

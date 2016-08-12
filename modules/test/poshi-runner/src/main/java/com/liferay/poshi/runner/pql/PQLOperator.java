@@ -50,7 +50,7 @@ public abstract class PQLOperator {
 		return _operator;
 	}
 
-	public abstract Object getValue(
+	public abstract Object getPQLResult(
 			PQLEntity pqlEntity1, PQLEntity pqlEntity2, Properties properties)
 		throws Exception;
 

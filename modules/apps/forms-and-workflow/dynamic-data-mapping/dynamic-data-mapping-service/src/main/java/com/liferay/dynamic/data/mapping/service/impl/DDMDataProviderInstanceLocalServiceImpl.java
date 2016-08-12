@@ -182,6 +182,11 @@ public class DDMDataProviderInstanceLocalServiceImpl
 	}
 
 	@Override
+	public List<DDMDataProviderInstance> findByUuid(String uuid) {
+		return ddmDataProviderInstancePersistence.findByUuid(uuid);
+	}
+
+	@Override
 	public DDMDataProviderInstance getDataProviderInstance(
 			long dataProviderInstanceId)
 		throws PortalException {

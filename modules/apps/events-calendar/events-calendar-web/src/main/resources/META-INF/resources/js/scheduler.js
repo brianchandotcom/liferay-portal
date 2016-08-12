@@ -204,8 +204,6 @@ AUI.add(
 						if (instance.get('rendered')) {
 							instance.syncEventsUI();
 						}
-
-						CalendarUtil.message(STR_BLANK);
 					},
 
 					sync: function() {

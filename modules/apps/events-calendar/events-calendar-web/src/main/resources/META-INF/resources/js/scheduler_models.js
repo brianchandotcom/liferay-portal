@@ -486,8 +486,6 @@ AUI.add(
 
 					var remoteServices = scheduler.get('remoteServices');
 
-					CalendarUtil.message(Liferay.Language.get('loading'));
-
 					remoteServices.getEvents(
 						calendarIds,
 						instance.getLoadStartDate(activeView),

@@ -1435,7 +1435,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/commons-io.jar</file-name>
-				<version>2.1.0</version>
+				<version>2.2.0</version>
 				<project-name>Commons IO</project-name>
 				<project-url>http://commons.apache.org/io</project-url>
 				<licenses>

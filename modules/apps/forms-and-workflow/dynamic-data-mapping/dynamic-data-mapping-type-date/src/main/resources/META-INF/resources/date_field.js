@@ -88,7 +88,16 @@ AUI.add(
 
 						var container = instance.get('container');
 
-						return container.one('.trigger');
+						var triggerNode;
+
+						if (instance.get('readOnly')) {
+							triggerNode = container.one('.trigger-readonly');
+						}
+						else {
+							triggerNode = container.one('.trigger');
+						}
+
+						return triggerNode;
 					},
 
 					setValue: function(isoDate) {

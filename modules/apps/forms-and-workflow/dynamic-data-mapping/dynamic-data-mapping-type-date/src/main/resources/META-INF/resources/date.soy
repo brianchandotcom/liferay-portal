@@ -38,7 +38,7 @@
 		{/if}
 
 		<div class="input-group input-group-container">
-			<input aria-label="{$label}" class="form-control trigger" {if $readOnly}disabled{/if} type="text" value="{$displayValue}" />
+			<input aria-label="{$label}" class="form-control trigger{if $readOnly}-readonly{/if}" {if $readOnly}readonly{/if} type="text" value="{$displayValue}" />
 
 			<input name="{$name}" type="hidden" value="{$value}" />
 

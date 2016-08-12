@@ -262,6 +262,8 @@ public interface DDMDataProviderInstanceLocalService extends BaseLocalService,
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
 
+	public List<DDMDataProviderInstance> findByUuid(java.lang.String uuid);
+
 	/**
 	* Returns a range of all the d d m data provider instances.
 	*

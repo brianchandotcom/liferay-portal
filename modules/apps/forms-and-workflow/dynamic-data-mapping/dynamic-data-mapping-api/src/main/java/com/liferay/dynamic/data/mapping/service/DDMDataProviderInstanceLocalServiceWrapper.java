@@ -312,6 +312,12 @@ public class DDMDataProviderInstanceLocalServiceWrapper
 			start, end, orderByComparator);
 	}
 
+	@Override
+	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance> findByUuid(
+		java.lang.String uuid) {
+		return _ddmDataProviderInstanceLocalService.findByUuid(uuid);
+	}
+
 	/**
 	* Returns a range of all the d d m data provider instances.
 	*

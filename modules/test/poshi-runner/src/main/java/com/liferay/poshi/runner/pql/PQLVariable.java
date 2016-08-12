@@ -42,7 +42,7 @@ public class PQLVariable extends PQLValue {
 		_validateVariable(getPQL());
 	}
 
-	public Object getValue(Properties properties) throws Exception {
+	public Object getPQLResult(Properties properties) throws Exception {
 		String pql = getPQL();
 
 		if (!properties.containsKey(pql)) {

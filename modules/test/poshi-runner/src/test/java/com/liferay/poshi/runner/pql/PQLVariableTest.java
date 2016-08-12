@@ -26,49 +26,53 @@ import org.junit.Test;
 public class PQLVariableTest extends TestCase {
 
 	@Test
-	public void testGetValue() throws Exception {
-		_validateVariableResult("false", Boolean.valueOf(false));
-		_validateVariableResult("'false'", Boolean.valueOf(false));
-		_validateVariableResult("\"false\"", Boolean.valueOf(false));
-		_validateVariableResult("true", Boolean.valueOf(true));
-		_validateVariableResult("'true'", Boolean.valueOf(true));
-		_validateVariableResult("\"true\"", Boolean.valueOf(true));
+	public void testGetPQLResult() throws Exception {
+		_validateGetPQLResult("false", Boolean.valueOf(false));
+		_validateGetPQLResult("'false'", Boolean.valueOf(false));
+		_validateGetPQLResult("\"false\"", Boolean.valueOf(false));
+		_validateGetPQLResult("true", Boolean.valueOf(true));
+		_validateGetPQLResult("'true'", Boolean.valueOf(true));
+		_validateGetPQLResult("\"true\"", Boolean.valueOf(true));
 
-		_validateVariableResult("3.2", Double.valueOf(3.2));
-		_validateVariableResult("'3.2'", Double.valueOf(3.2));
-		_validateVariableResult("\"3.2\"", Double.valueOf(3.2));
-		_validateVariableResult("2016.0", Double.valueOf(2016));
-		_validateVariableResult("'2016.0'", Double.valueOf(2016));
-		_validateVariableResult("\"2016.0\"", Double.valueOf(2016));
+		_validateGetPQLResult("3.2", Double.valueOf(3.2));
+		_validateGetPQLResult("'3.2'", Double.valueOf(3.2));
+		_validateGetPQLResult("\"3.2\"", Double.valueOf(3.2));
+		_validateGetPQLResult("2016.0", Double.valueOf(2016));
+		_validateGetPQLResult("'2016.0'", Double.valueOf(2016));
+		_validateGetPQLResult("\"2016.0\"", Double.valueOf(2016));
 
-		_validateVariableResult("2016", Integer.valueOf(2016));
-		_validateVariableResult("'2016'", Integer.valueOf(2016));
-		_validateVariableResult("\"2016\"", Integer.valueOf(2016));
+		_validateGetPQLResult("2016", Integer.valueOf(2016));
+		_validateGetPQLResult("'2016'", Integer.valueOf(2016));
+		_validateGetPQLResult("\"2016\"", Integer.valueOf(2016));
 
-		_validateVariableResult("test", "test");
-		_validateVariableResult("'test'", "test");
-		_validateVariableResult("\"test\"", "test");
+		_validateGetPQLResult("test", "test");
+		_validateGetPQLResult("'test'", "test");
+		_validateGetPQLResult("\"test\"", "test");
 
-		_validateVariableResult("'test test'", "test test");
-		_validateVariableResult("\"test test\"", "test test");
+		_validateGetPQLResult("'test test'", "test test");
+		_validateGetPQLResult("\"test test\"", "test test");
 	}
 
 	@Test
-	public void testVariableError() throws Exception {
-		_validateVariableError(
+	public void testGetPQLResultError() throws Exception {
+		_validateGetPQLResultError(
 			"invalid.property", "Invalid testcase property: invalid.property");
-		_validateVariableError(null, "Invalid variable: null");
-		_validateVariableError("test == test", "Invalid value: test == test");
-		_validateVariableError("test OR test", "Invalid value: test OR test");
+		_validateGetPQLResultError(null, "Invalid variable: null");
+		_validateGetPQLResultError(
+			"test == test", "Invalid value: test == test");
+		_validateGetPQLResultError(
+			"test OR test", "Invalid value: test OR test");
 	}
 
-	private void _validateVariableError(String pql, String expectedError)
+	private void _validateGetPQLResultError(String pql, String expectedError)
 		throws Exception {
 
 		String actualError = null;
 
 		try {
 			PQLVariable pqlVariable = new PQLVariable(pql);
+
+			Object pqlResult = pqlVariable.getPQLResult(new Properties());
 		}
 		catch (Exception e) {
 			actualError = e.getMessage();
@@ -89,37 +93,38 @@ public class PQLVariableTest extends TestCase {
 		finally {
 			if (actualError == null) {
 				throw new Exception(
-					"No error thrown for the following PQL:\n" + pql);
+					"No error thrown for the following PQL: " + pql);
 			}
 		}
 	}
 
-	private void _validateVariableResult(String pql, Object expectedResult)
+	private void _validateGetPQLResult(
+			String pql, Object expectedPQLResult)
 		throws Exception {
 
 		Properties properties = new Properties();
 
 		properties.put("portal.smoke", pql);
 
-		Class clazz = expectedResult.getClass();
+		Class clazz = expectedPQLResult.getClass();
 
 		PQLVariable pqlVariable = new PQLVariable("portal.smoke");
 
-		Object actualResult = pqlVariable.getValue(properties);
+		Object actualPQLResult = pqlVariable.getPQLResult(properties);
 
-		if (!clazz.isInstance(actualResult)) {
+		if (!clazz.isInstance(actualPQLResult)) {
 			throw new Exception(pql + " should be of type: " + clazz.getName());
 		}
 
-		if (!actualResult.equals(expectedResult)) {
+		if (!actualPQLResult.equals(expectedPQLResult)) {
 			StringBuilder sb = new StringBuilder();
 
-			sb.append("Mismatched result within the following PQL:\n");
+			sb.append("Mismatched PQLResult within the following PQL:\n");
 			sb.append(pql);
 			sb.append("\n* Actual:   ");
-			sb.append(actualResult);
+			sb.append(actualPQLResult);
 			sb.append("\n* Expected: ");
-			sb.append(expectedResult);
+			sb.append(expectedPQLResult);
 
 			throw new Exception(sb.toString());
 		}

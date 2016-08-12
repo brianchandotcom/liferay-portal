@@ -64,6 +64,37 @@ public class PQLVariableTest extends TestCase {
 			"test OR test", "Invalid value: test OR test");
 	}
 
+	private void _validateGetPQLResult(String pql, Object expectedPQLResult)
+		throws Exception {
+
+		Properties properties = new Properties();
+
+		properties.put("portal.smoke", pql);
+
+		Class clazz = expectedPQLResult.getClass();
+
+		PQLVariable pqlVariable = new PQLVariable("portal.smoke");
+
+		Object actualPQLResult = pqlVariable.getPQLResult(properties);
+
+		if (!clazz.isInstance(actualPQLResult)) {
+			throw new Exception(pql + " should be of type: " + clazz.getName());
+		}
+
+		if (!actualPQLResult.equals(expectedPQLResult)) {
+			StringBuilder sb = new StringBuilder();
+
+			sb.append("Mismatched PQLResult within the following PQL:\n");
+			sb.append(pql);
+			sb.append("\n* Actual:   ");
+			sb.append(actualPQLResult);
+			sb.append("\n* Expected: ");
+			sb.append(expectedPQLResult);
+
+			throw new Exception(sb.toString());
+		}
+	}
+
 	private void _validateGetPQLResultError(String pql, String expectedError)
 		throws Exception {
 
@@ -95,38 +126,6 @@ public class PQLVariableTest extends TestCase {
 				throw new Exception(
 					"No error thrown for the following PQL: " + pql);
 			}
-		}
-	}
-
-	private void _validateGetPQLResult(
-			String pql, Object expectedPQLResult)
-		throws Exception {
-
-		Properties properties = new Properties();
-
-		properties.put("portal.smoke", pql);
-
-		Class clazz = expectedPQLResult.getClass();
-
-		PQLVariable pqlVariable = new PQLVariable("portal.smoke");
-
-		Object actualPQLResult = pqlVariable.getPQLResult(properties);
-
-		if (!clazz.isInstance(actualPQLResult)) {
-			throw new Exception(pql + " should be of type: " + clazz.getName());
-		}
-
-		if (!actualPQLResult.equals(expectedPQLResult)) {
-			StringBuilder sb = new StringBuilder();
-
-			sb.append("Mismatched PQLResult within the following PQL:\n");
-			sb.append(pql);
-			sb.append("\n* Actual:   ");
-			sb.append(actualPQLResult);
-			sb.append("\n* Expected: ");
-			sb.append(expectedPQLResult);
-
-			throw new Exception(sb.toString());
 		}
 	}
 

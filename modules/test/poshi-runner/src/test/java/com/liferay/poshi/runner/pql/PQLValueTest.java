@@ -56,13 +56,6 @@ public class PQLValueTest extends TestCase {
 	}
 
 	@Test
-	public void testGetPQLResultNull() throws Exception {
-		_validateGetPQLResultNull(null);
-		_validateGetPQLResultNull("'null'");
-		_validateGetPQLResultNull("\"null\"");
-	}
-
-	@Test
 	public void testGetPQLResultError() throws Exception {
 		Set<String> pqls = new HashSet<>();
 
@@ -72,6 +65,42 @@ public class PQLValueTest extends TestCase {
 
 		for (String pql : pqls) {
 			_validateGetPQLResultError(pql, "Invalid value: " + pql);
+		}
+	}
+
+	@Test
+	public void testGetPQLResultNull() throws Exception {
+		_validateGetPQLResultNull(null);
+		_validateGetPQLResultNull("'null'");
+		_validateGetPQLResultNull("\"null\"");
+	}
+
+	private void _validateGetPQLResult(String pql, Object expectedResult)
+		throws Exception {
+
+		Properties properties = new Properties();
+
+		Class clazz = expectedResult.getClass();
+
+		PQLValue pqlValue = new PQLValue(pql);
+
+		Object actualResult = pqlValue.getPQLResult(properties);
+
+		if (!clazz.isInstance(actualResult)) {
+			throw new Exception(pql + " should be of type: " + clazz.getName());
+		}
+
+		if (!actualResult.equals(expectedResult)) {
+			StringBuilder sb = new StringBuilder();
+
+			sb.append("Mismatched PQLResult within the following PQL:\n");
+			sb.append(pql);
+			sb.append("\n* Actual:   ");
+			sb.append(actualResult);
+			sb.append("\n* Expected: ");
+			sb.append(expectedResult);
+
+			throw new Exception(sb.toString());
 		}
 	}
 
@@ -106,35 +135,6 @@ public class PQLValueTest extends TestCase {
 				throw new Exception(
 					"No error thrown for the following PQL: " + pql);
 			}
-		}
-	}
-
-	private void _validateGetPQLResult(String pql, Object expectedResult)
-		throws Exception {
-
-		Properties properties = new Properties();
-
-		Class clazz = expectedResult.getClass();
-
-		PQLValue pqlValue = new PQLValue(pql);
-
-		Object actualResult = pqlValue.getPQLResult(properties);
-
-		if (!clazz.isInstance(actualResult)) {
-			throw new Exception(pql + " should be of type: " + clazz.getName());
-		}
-
-		if (!actualResult.equals(expectedResult)) {
-			StringBuilder sb = new StringBuilder();
-
-			sb.append("Mismatched PQLResult within the following PQL:\n");
-			sb.append(pql);
-			sb.append("\n* Actual:   ");
-			sb.append(actualResult);
-			sb.append("\n* Expected: ");
-			sb.append(expectedResult);
-
-			throw new Exception(sb.toString());
 		}
 	}
 

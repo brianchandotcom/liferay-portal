@@ -101,24 +101,38 @@ public class GradleTemplatesTest {
 		return false;
 	}
 
-	private boolean _isTextFile(Path path) {
-		Path fileNamePath = path.getFileName();
-
-		String fileName = fileNamePath.toString();
-
-		if (fileName.equals("gitignore")) {
-			return true;
-		}
-
+	private String _getExtension(String fileName) {
 		int pos = fileName.indexOf('.');
 
 		if (pos == -1) {
-			return false;
+			return "";
 		}
 
-		String extension = fileName.substring(pos + 1);
+		return fileName.substring(pos + 1);
+	}
 
-		if (_textFileExtensions.contains(extension)) {
+	private boolean _isInJavaSrcDir(Path path) throws IOException {
+		path = path.toRealPath();
+
+		String pathString = path.toString();
+
+		if (File.separatorChar != '/') {
+			pathString = pathString.replace(File.separatorChar, '/');
+		}
+
+		for (String sourceSetName : _SOURCESET_NAMES) {
+			if (pathString.contains("/src/" + sourceSetName + "/java/")) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private boolean _isTextFile(String fileName, String extension) {
+		if (fileName.equals("gitignore") ||
+			_textFileExtensions.contains(extension)) {
+
 			return true;
 		}
 
@@ -181,20 +195,28 @@ public class GradleTemplatesTest {
 						Path path, BasicFileAttributes basicFileAttributes)
 					throws IOException {
 
-					if (!_isTextFile(path)) {
-						return FileVisitResult.CONTINUE;
-					}
-
-					_testTextFileLines(path);
-
 					Path fileNamePath = path.getFileName();
 
-					if (!_trailingEmptyLineAllowedFileNames.contains(
-							fileNamePath.toString())) {
+					String fileName = fileNamePath.toString();
 
-						Assert.assertFalse(
-							"Trailing empty line in " + path,
-							_endsWithEmptyLine(path));
+					String extension = _getExtension(fileName);
+
+					if (!fileName.equals(".gitkeep") &&
+						(_isInJavaSrcDir(path) != extension.equals("java"))) {
+
+						Assert.fail("Wrong source directory " + path);
+					}
+
+					if (_isTextFile(fileName, extension)) {
+						_testTextFileLines(path);
+
+						if (!_trailingEmptyLineAllowedFileNames.contains(
+								fileName)) {
+
+							Assert.assertFalse(
+								"Trailing empty line in " + path,
+								_endsWithEmptyLine(path));
+						}
 					}
 
 					return FileVisitResult.CONTINUE;
@@ -293,6 +315,10 @@ public class GradleTemplatesTest {
 			}
 		}
 	}
+
+	private static final String[] _SOURCESET_NAMES = {
+		"main", "test", "testIntegration"
+	};
 
 	private static Path _standaloneDirPath;
 	private static final Set<String> _textFileExtensions = new HashSet<>(

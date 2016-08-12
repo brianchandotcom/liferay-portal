@@ -4,8 +4,6 @@
 	DATE = staticUtil["java.util.Calendar"].DATE
 	MONTH = staticUtil["java.util.Calendar"].MONTH
 	YEAR = staticUtil["java.util.Calendar"].YEAR
-
-	nullable = false
 />
 
 <#if (hasFieldValue)>
@@ -16,21 +14,17 @@
 
 		void = fieldValue.setTimeInMillis(dateValue?long)
 	/>
-
 <#elseif validator.isNotNull(predefinedValue)>
 	<#assign
 		predefinedDate = dateUtil.parseDate(predefinedValue, requestedLocale)
 
 		fieldValue = calendarFactory.getCalendar(predefinedDate?long)
 	/>
-
 <#else>
 	<#assign
 		calendar = calendarFactory.getCalendar(timeZone)
 
 		fieldValue = calendarFactory.getCalendar(calendar.get(YEAR), calendar.get(MONTH), calendar.get(DATE))
-
-		nullable = true
 	/>
 </#if>
 
@@ -50,7 +44,7 @@
 			monthParam="${namespacedFieldName}Month"
 			monthValue=monthValue
 			name="${namespacedFieldName}"
-			nullable=nullable
+			nullable=true
 			required=required
 			yearParam="${namespacedFieldName}Year"
 			yearValue=yearValue

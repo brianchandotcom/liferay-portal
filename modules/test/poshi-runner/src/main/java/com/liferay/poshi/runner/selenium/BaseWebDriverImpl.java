@@ -874,8 +874,8 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
-	public Number getElementHeight(String locator) {
-		throw new UnsupportedOperationException();
+	public int getElementHeight(String locator) {
+		return WebDriverHelper.getElementHeight(this, locator);
 	}
 
 	@Override

@@ -238,7 +238,7 @@ public interface LiferaySelenium {
 
 	public Number getCursorPosition(String locator);
 
-	public Number getElementHeight(String locator);
+	public int getElementHeight(String locator);
 
 	public Number getElementIndex(String locator);
 

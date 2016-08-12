@@ -22,6 +22,7 @@ import com.liferay.friendly.url.model.FriendlyURL;
 import com.liferay.friendly.url.service.base.FriendlyURLLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 
 /**
  * @author Adolfo Pérez
@@ -29,6 +30,42 @@ import com.liferay.portal.kernel.model.ModelHintsUtil;
 @ProviderType
 public class FriendlyURLLocalServiceImpl
 	extends FriendlyURLLocalServiceBaseImpl {
+
+	@Override
+	public FriendlyURL addFriendlyURL(
+			long companyId, long groupId, Class<?> clazz, long classPK,
+			String urlTitle)
+		throws PortalException {
+
+		String normalizedUrlTitle = FriendlyURLNormalizerUtil.normalize(
+			urlTitle);
+
+		validate(companyId, groupId, clazz, normalizedUrlTitle);
+
+		long classNameId = classNameLocalService.getClassNameId(clazz);
+
+		FriendlyURL mainFriendlyURL = friendlyURLPersistence.fetchByC_G_C_C_M(
+			companyId, groupId, classNameId, classPK, true);
+
+		if (mainFriendlyURL != null) {
+			mainFriendlyURL.setMain(false);
+
+			friendlyURLPersistence.update(mainFriendlyURL);
+		}
+
+		long friendlyURLId = counterLocalService.increment();
+
+		FriendlyURL friendlyURL = createFriendlyURL(friendlyURLId);
+
+		friendlyURL.setCompanyId(companyId);
+		friendlyURL.setGroupId(groupId);
+		friendlyURL.setClassNameId(classNameId);
+		friendlyURL.setClassPK(classPK);
+		friendlyURL.setUrlTitle(normalizedUrlTitle);
+		friendlyURL.setMain(true);
+
+		return friendlyURLPersistence.update(friendlyURL);
+	}
 
 	@Override
 	public void validate(
@@ -44,8 +81,11 @@ public class FriendlyURLLocalServiceImpl
 
 		long classNameId = classNameLocalService.getClassNameId(clazz);
 
+		String normalizedUrlTitle = FriendlyURLNormalizerUtil.normalize(
+			urlTitle);
+
 		int count = friendlyURLPersistence.countByC_G_C_U(
-			companyId, groupId, classNameId, urlTitle);
+			companyId, groupId, classNameId, normalizedUrlTitle);
 
 		if (count > 0) {
 			throw new DuplicateFriendlyURLException();

@@ -33,6 +33,7 @@ import com.liferay.blogs.kernel.util.comparator.EntryIdComparator;
 import com.liferay.blogs.service.base.BlogsEntryLocalServiceBaseImpl;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.friendly.url.model.FriendlyURL;
 import com.liferay.friendly.url.service.FriendlyURLLocalService;
 import com.liferay.portal.kernel.comment.CommentManagerUtil;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
@@ -300,7 +301,11 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		entry.setSubtitle(subtitle);
 
 		if (Validator.isNotNull(urlTitle)) {
-			entry.setUrlTitle(urlTitle);
+			FriendlyURL friendlyURL = friendlyURLLocalService.addFriendlyURL(
+				user.getCompanyId(), groupId, BlogsEntry.class, entryId,
+				urlTitle);
+
+			entry.setUrlTitle(friendlyURL.getUrlTitle());
 		}
 
 		entry.setDescription(description);
@@ -1248,7 +1253,11 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		entry.setSubtitle(subtitle);
 
 		if (Validator.isNotNull(urlTitle)) {
-			entry.setUrlTitle(urlTitle);
+			FriendlyURL friendlyURL = friendlyURLLocalService.addFriendlyURL(
+				entry.getCompanyId(), entry.getGroupId(), BlogsEntry.class,
+				entry.getEntryId(), urlTitle);
+
+			entry.setUrlTitle(friendlyURL.getUrlTitle());
 		}
 
 		entry.setDescription(description);
@@ -1482,9 +1491,14 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		if ((status == WorkflowConstants.STATUS_APPROVED) &&
 			Validator.isNull(entry.getUrlTitle())) {
 
-			entry.setUrlTitle(
-				getUniqueUrlTitle(
-					entryId, entry.getGroupId(), entry.getTitle()));
+			String uniqueUrlTitle = getUniqueUrlTitle(
+				entryId, entry.getGroupId(), entry.getTitle());
+
+			FriendlyURL friendlyURL = friendlyURLLocalService.addFriendlyURL(
+				entry.getCompanyId(), entry.getGroupId(), BlogsEntry.class,
+				entry.getEntryId(), uniqueUrlTitle);
+
+			entry.setUrlTitle(friendlyURL.getUrlTitle());
 		}
 
 		blogsEntryPersistence.update(entry);

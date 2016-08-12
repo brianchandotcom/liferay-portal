@@ -499,12 +499,7 @@ public class JavaClass {
 			javaTermContent.substring(matcher.start(1), matcher.start(6)));
 
 		boolean isFinal = modifierDefinition.contains("final");
-		boolean isStatic = modifierDefinition.contains("static");
 		String javaFieldType = StringUtil.trim(matcher.group(6));
-
-		if (isFinal && isStatic) {
-			checkMutableFieldType(javaTerm, javaFieldType);
-		}
 
 		if (!isFinal && !javaTerm.isPublic() &&
 			!_fileName.endsWith("ObjectGraphUtilTest.java")) {
@@ -544,7 +539,9 @@ public class JavaClass {
 		}
 
 		if (isFinal) {
-			if (!isStatic && immutableFieldTypes.contains(javaFieldType)) {
+			if (!modifierDefinition.contains("static") &&
+				immutableFieldTypes.contains(javaFieldType)) {
+
 				checkStaticableFieldType(javaTerm.getContent());
 			}
 		}
@@ -592,57 +589,6 @@ public class JavaClass {
 				_fileName,
 				"LPS-65690 Use Collator for locale-sensitive String " +
 					"comparison");
-		}
-	}
-
-	protected void checkMutableFieldType(
-		JavaTerm javaTerm, String javaFieldType) {
-
-		if (!javaFieldType.startsWith("List<") &&
-			!javaFieldType.startsWith("Map<") &&
-			!javaFieldType.startsWith("Set<")) {
-
-			return;
-		}
-
-		String javaTermName = javaTerm.getName();
-
-		if (!StringUtil.isUpperCase(javaTermName)) {
-			return;
-		}
-
-		StringBuilder sb = new StringBuilder(javaTermName.length());
-
-		for (int i = 0; i < javaTermName.length(); i++) {
-			char c = javaTermName.charAt(i);
-
-			if (i > 1) {
-				if (c == CharPool.UNDERLINE) {
-					continue;
-				}
-
-				if (javaTermName.charAt(i - 1) == CharPool.UNDERLINE) {
-					sb.append(c);
-
-					continue;
-				}
-			}
-
-			sb.append(Character.toLowerCase(c));
-		}
-
-		String newName = sb.toString();
-
-		if (!newName.equals(javaTermName)) {
-			if (javaTerm.isPrivate()) {
-				_classContent = _classContent.replaceAll(
-					"(?<=[\\W&&[^.\"]])(" + javaTermName + ")\\b", newName);
-			}
-			else {
-				_javaSourceProcessor.processMessage(
-					_fileName, "Rename " + javaTermName + " to " + newName,
-					javaTerm.getLineCount());
-			}
 		}
 	}
 

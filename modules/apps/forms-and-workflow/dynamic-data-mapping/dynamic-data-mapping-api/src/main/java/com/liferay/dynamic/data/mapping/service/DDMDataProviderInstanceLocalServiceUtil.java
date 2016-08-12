@@ -295,6 +295,11 @@ public class DDMDataProviderInstanceLocalServiceUtil {
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
 
+	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance> findByUuid(
+		java.lang.String uuid) {
+		return getService().findByUuid(uuid);
+	}
+
 	/**
 	* Returns a range of all the d d m data provider instances.
 	*

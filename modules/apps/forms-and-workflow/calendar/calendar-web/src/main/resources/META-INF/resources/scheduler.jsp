@@ -43,6 +43,8 @@ String viewCalendarBookingURL = ParamUtil.getString(request, "viewCalendarBookin
 
 	var calendarContainer = Liferay.component('<portlet:namespace />calendarContainer');
 
+	var remoteServices = Liferay.component('<portlet:namespace />remoteServices');
+
 	var showMoreStrings = {
 		close: '<liferay-ui:message key="close" />',
 		more: '<%= StringUtil.toLowerCase(LanguageUtil.get(request, "more")) %>',
@@ -126,6 +128,7 @@ String viewCalendarBookingURL = ParamUtil.getString(request, "viewCalendarBookin
 					width: width
 				},
 				portletNamespace: '<portlet:namespace />',
+				remoteServices: remoteServices,
 				showHeader: <%= showSchedulerHeader %>,
 				strings: {
 					'description-hint': '<liferay-ui:message key="description-hint" />'
@@ -181,6 +184,7 @@ String viewCalendarBookingURL = ParamUtil.getString(request, "viewCalendarBookin
 			items: A.Object.values(calendarContainer.get('availableCalendars')),
 			portletNamespace: '<portlet:namespace />',
 			preventPersistence: <%= preventPersistence %>,
+			remoteServices: remoteServices,
 			render: true,
 			showAddEventBtn: <%= showAddEventBtn %>,
 			showHeader: <%= showSchedulerHeader %>,

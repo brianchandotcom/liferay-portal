@@ -19,7 +19,7 @@ AUI.add(
 				deleteCalendar: function(calendarId, callback) {
 					var instance = this;
 
-					instance.invokeService(
+					instance._invokeService(
 						{
 							'/calendar.calendar/delete-calendar': {
 								calendarId: calendarId
@@ -36,7 +36,7 @@ AUI.add(
 				deleteEvent: function(schedulerEvent, success) {
 					var instance = this;
 
-					instance.invokeService(
+					instance._invokeService(
 						{
 							'/calendar.calendarbooking/move-calendar-booking-to-trash': {
 								calendarBookingId: schedulerEvent.get('calendarBookingId')
@@ -55,7 +55,7 @@ AUI.add(
 				deleteEventInstance: function(schedulerEvent, allFollowing, success) {
 					var instance = this;
 
-					instance.invokeService(
+					instance._invokeService(
 						{
 							'/calendar.calendarbooking/delete-calendar-booking-instance': {
 								allFollowing: allFollowing,
@@ -76,7 +76,7 @@ AUI.add(
 				getCalendar: function(calendarId, callback) {
 					var instance = this;
 
-					instance.invokeResourceURL(
+					instance._invokeResourceURL(
 						{
 							callback: callback,
 							queryParameters: {
@@ -90,7 +90,7 @@ AUI.add(
 				getCalendarBookingInvitees: function(calendarBookingId, callback) {
 					var instance = this;
 
-					instance.invokeResourceURL(
+					instance._invokeResourceURL(
 						{
 							callback: callback,
 							queryParameters: {
@@ -104,7 +104,7 @@ AUI.add(
 				getCalendarRenderingRules: function(calendarIds, startDate, endDate, ruleName, callback) {
 					var instance = this;
 
-					instance.invokeResourceURL(
+					instance._invokeResourceURL(
 						{
 							callback: callback,
 							queryParameters: {
@@ -121,7 +121,7 @@ AUI.add(
 				getCurrentTime: function(callback) {
 					var instance = this;
 
-					instance.invokeResourceURL(
+					instance._invokeResourceURL(
 						{
 							callback: function(dateObj) {
 								callback(CalendarUtil.getDateFromObject(dateObj));
@@ -134,7 +134,7 @@ AUI.add(
 				getEvent: function(calendarBookingId, success, failure) {
 					var instance = this;
 
-					instance.invokeService(
+					instance._invokeService(
 						{
 							'/calendar.calendarbooking/get-calendar-booking': {
 								calendarBookingId: calendarBookingId
@@ -150,7 +150,7 @@ AUI.add(
 				getEvents: function(calendarIds, startDate, endDate, status, callback) {
 					var instance = this;
 
-					instance.invokeResourceURL(
+					instance._invokeResourceURL(
 						{
 							callback: callback,
 							queryParameters: {
@@ -175,7 +175,7 @@ AUI.add(
 				getResourceCalendars: function(calendarResourceId, callback) {
 					var instance = this;
 
-					instance.invokeResourceURL(
+					instance._invokeResourceURL(
 						{
 							callback: callback,
 							queryParameters: {
@@ -186,99 +186,12 @@ AUI.add(
 					);
 				},
 
-				invokeActionURL: function(params) {
-					var instance = this;
-
-					var url = Liferay.PortletURL.createActionURL();
-
-					url.setName(params.actionName);
-					url.setParameters(params.queryParameters);
-					url.setPortletId('com_liferay_calendar_web_portlet_CalendarPortlet');
-
-					var payload;
-
-					if (params.payload) {
-						payload = Liferay.Util.ns(instance.get('namespace'), params.payload);
-					}
-
-					A.io.request(
-						url.toString(),
-						{
-							data: payload,
-							dataType: 'JSON',
-							on: {
-								success: function() {
-									params.callback(this.get('responseData'));
-								}
-							}
-						}
-					);
-				},
-
-				invokeResourceURL: function(params) {
-					var instance = this;
-
-					var url = Liferay.PortletURL.createResourceURL();
-
-					url.setParameters(params.queryParameters);
-					url.setPortletId('com_liferay_calendar_web_portlet_CalendarPortlet');
-					url.setResourceId(params.resourceId);
-
-					var payload;
-
-					if (params.payload) {
-						payload = Liferay.Util.ns(instance.get('namespace'), params.payload);
-					}
-
-					A.io.request(
-						url.toString(),
-						{
-							data: payload,
-							dataType: 'JSON',
-							on: {
-								success: function() {
-									params.callback(this.get('responseData'));
-								}
-							}
-						}
-					);
-				},
-
-				invokeService: function(payload, callback) {
-					var instance = this;
-
-					callback = callback || {};
-
-					A.io.request(
-						instance.get('invokerURL'),
-						{
-							cache: false,
-							data: {
-								cmd: JSON.stringify(payload),
-								p_auth: Liferay.authToken
-							},
-							dataType: 'JSON',
-							on: {
-								failure: callback.failure,
-								start: callback.start,
-								success: function(event) {
-									if (callback.success) {
-										var data = this.get('responseData');
-
-										callback.success.apply(this, [data, event]);
-									}
-								}
-							}
-						}
-					);
-				},
-
 				invokeTransition: function(schedulerEvent, status) {
 					var instance = this;
 
 					var scheduler = schedulerEvent.get('scheduler');
 
-					instance.invokeService(
+					instance._invokeService(
 						{
 							'/calendar.calendarbooking/invoke-transition': {
 								calendarBookingId: schedulerEvent.get('calendarBookingId'),
@@ -321,7 +234,7 @@ AUI.add(
 				updateCalendarColor: function(calendarId, color) {
 					var instance = this;
 
-					instance.invokeService(
+					instance._invokeService(
 						{
 							'/calendar.calendar/update-color': {
 								calendarId: calendarId,
@@ -337,7 +250,7 @@ AUI.add(
 					var endDate = schedulerEvent.get('endDate');
 					var startDate = schedulerEvent.get('startDate');
 
-					instance.invokeActionURL(
+					instance._invokeActionURL(
 						{
 							actionName: 'updateSchedulerCalendarBooking',
 							callback: function(data) {
@@ -381,6 +294,93 @@ AUI.add(
 								startTimeYear: startDate.getFullYear(),
 								title: LString.unescapeHTML(schedulerEvent.get('content')),
 								updateInstance: updateInstance
+							}
+						}
+					);
+				},
+
+				_invokeActionURL: function(params) {
+					var instance = this;
+
+					var url = Liferay.PortletURL.createActionURL();
+
+					url.setName(params.actionName);
+					url.setParameters(params.queryParameters);
+					url.setPortletId('com_liferay_calendar_web_portlet_CalendarPortlet');
+
+					var payload;
+
+					if (params.payload) {
+						payload = Liferay.Util.ns(instance.get('namespace'), params.payload);
+					}
+
+					A.io.request(
+						url.toString(),
+						{
+							data: payload,
+							dataType: 'JSON',
+							on: {
+								success: function() {
+									params.callback(this.get('responseData'));
+								}
+							}
+						}
+					);
+				},
+
+				_invokeResourceURL: function(params) {
+					var instance = this;
+
+					var url = Liferay.PortletURL.createResourceURL();
+
+					url.setParameters(params.queryParameters);
+					url.setPortletId('com_liferay_calendar_web_portlet_CalendarPortlet');
+					url.setResourceId(params.resourceId);
+
+					var payload;
+
+					if (params.payload) {
+						payload = Liferay.Util.ns(instance.get('namespace'), params.payload);
+					}
+
+					A.io.request(
+						url.toString(),
+						{
+							data: payload,
+							dataType: 'JSON',
+							on: {
+								success: function() {
+									params.callback(this.get('responseData'));
+								}
+							}
+						}
+					);
+				},
+
+				_invokeService: function(payload, callback) {
+					var instance = this;
+
+					callback = callback || {};
+
+					A.io.request(
+						instance.get('invokerURL'),
+						{
+							cache: false,
+							data: {
+								cmd: JSON.stringify(payload),
+								p_auth: Liferay.authToken
+							},
+							dataType: 'JSON',
+							on: {
+								failure: callback.failure,
+								start: callback.start,
+								success: function(event) {
+									if (callback.success) {
+										var data = this.get('responseData');
+
+										callback.success.apply(this, [data, event]);
+									}
+								}
 							}
 						}
 					);

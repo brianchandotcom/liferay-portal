@@ -28,42 +28,42 @@ import org.junit.Test;
 public class PQLValueTest extends TestCase {
 
 	@Test
-	public void testGetValue() throws Exception {
-		_validateValueResult("false", Boolean.valueOf(false));
-		_validateValueResult("'false'", Boolean.valueOf(false));
-		_validateValueResult("\"false\"", Boolean.valueOf(false));
-		_validateValueResult("true", Boolean.valueOf(true));
-		_validateValueResult("'true'", Boolean.valueOf(true));
-		_validateValueResult("\"true\"", Boolean.valueOf(true));
+	public void testGetPQLResult() throws Exception {
+		_validateGetPQLResult("false", Boolean.valueOf(false));
+		_validateGetPQLResult("'false'", Boolean.valueOf(false));
+		_validateGetPQLResult("\"false\"", Boolean.valueOf(false));
+		_validateGetPQLResult("true", Boolean.valueOf(true));
+		_validateGetPQLResult("'true'", Boolean.valueOf(true));
+		_validateGetPQLResult("\"true\"", Boolean.valueOf(true));
 
-		_validateValueResult("3.2", Double.valueOf(3.2));
-		_validateValueResult("'3.2'", Double.valueOf(3.2));
-		_validateValueResult("\"3.2\"", Double.valueOf(3.2));
-		_validateValueResult("2016.0", Double.valueOf(2016));
-		_validateValueResult("'2016.0'", Double.valueOf(2016));
-		_validateValueResult("\"2016.0\"", Double.valueOf(2016));
+		_validateGetPQLResult("3.2", Double.valueOf(3.2));
+		_validateGetPQLResult("'3.2'", Double.valueOf(3.2));
+		_validateGetPQLResult("\"3.2\"", Double.valueOf(3.2));
+		_validateGetPQLResult("2016.0", Double.valueOf(2016));
+		_validateGetPQLResult("'2016.0'", Double.valueOf(2016));
+		_validateGetPQLResult("\"2016.0\"", Double.valueOf(2016));
 
-		_validateValueResult("2016", Integer.valueOf(2016));
-		_validateValueResult("'2016'", Integer.valueOf(2016));
-		_validateValueResult("\"2016\"", Integer.valueOf(2016));
+		_validateGetPQLResult("2016", Integer.valueOf(2016));
+		_validateGetPQLResult("'2016'", Integer.valueOf(2016));
+		_validateGetPQLResult("\"2016\"", Integer.valueOf(2016));
 
-		_validateValueResult("test", "test");
-		_validateValueResult("'test'", "test");
-		_validateValueResult("\"test\"", "test");
+		_validateGetPQLResult("test", "test");
+		_validateGetPQLResult("'test'", "test");
+		_validateGetPQLResult("\"test\"", "test");
 
-		_validateValueResult("'test test'", "test test");
-		_validateValueResult("\"test test\"", "test test");
+		_validateGetPQLResult("'test test'", "test test");
+		_validateGetPQLResult("\"test test\"", "test test");
 	}
 
 	@Test
-	public void testGetValueNull() throws Exception {
-		_validateValueResultNull(null);
-		_validateValueResultNull("'null'");
-		_validateValueResultNull("\"null\"");
+	public void testGetPQLResultNull() throws Exception {
+		_validateGetPQLResultNull(null);
+		_validateGetPQLResultNull("'null'");
+		_validateGetPQLResultNull("\"null\"");
 	}
 
 	@Test
-	public void testValueError() throws Exception {
+	public void testGetPQLResultError() throws Exception {
 		Set<String> pqls = new HashSet<>();
 
 		pqls.add("test test");
@@ -71,11 +71,11 @@ public class PQLValueTest extends TestCase {
 		pqls.add("test == test");
 
 		for (String pql : pqls) {
-			_validateValueError(pql, "Invalid value: " + pql);
+			_validateGetPQLResultError(pql, "Invalid value: " + pql);
 		}
 	}
 
-	private void _validateValueError(String pql, String expectedError)
+	private void _validateGetPQLResultError(String pql, String expectedError)
 		throws Exception {
 
 		String actualError = null;
@@ -83,7 +83,7 @@ public class PQLValueTest extends TestCase {
 		try {
 			PQLValue pqlValue = new PQLValue(pql);
 
-			Object valueObject = pqlValue.getValue(new Properties());
+			Object valueObject = pqlValue.getPQLResult(new Properties());
 		}
 		catch (Exception e) {
 			actualError = e.getMessage();
@@ -104,12 +104,12 @@ public class PQLValueTest extends TestCase {
 		finally {
 			if (actualError == null) {
 				throw new Exception(
-					"No error thrown for the following PQL:\n" + pql);
+					"No error thrown for the following PQL: " + pql);
 			}
 		}
 	}
 
-	private void _validateValueResult(String pql, Object expectedResult)
+	private void _validateGetPQLResult(String pql, Object expectedResult)
 		throws Exception {
 
 		Properties properties = new Properties();
@@ -118,7 +118,7 @@ public class PQLValueTest extends TestCase {
 
 		PQLValue pqlValue = new PQLValue(pql);
 
-		Object actualResult = pqlValue.getValue(properties);
+		Object actualResult = pqlValue.getPQLResult(properties);
 
 		if (!clazz.isInstance(actualResult)) {
 			throw new Exception(pql + " should be of type: " + clazz.getName());
@@ -127,7 +127,7 @@ public class PQLValueTest extends TestCase {
 		if (!actualResult.equals(expectedResult)) {
 			StringBuilder sb = new StringBuilder();
 
-			sb.append("Mismatched result within the following PQL:\n");
+			sb.append("Mismatched PQLResult within the following PQL:\n");
 			sb.append(pql);
 			sb.append("\n* Actual:   ");
 			sb.append(actualResult);
@@ -138,18 +138,18 @@ public class PQLValueTest extends TestCase {
 		}
 	}
 
-	private void _validateValueResultNull(String pql) throws Exception {
+	private void _validateGetPQLResultNull(String pql) throws Exception {
 		Properties properties = new Properties();
 
 		PQLValue pqlValue = new PQLValue(pql);
 
-		Object actualResult = pqlValue.getValue(properties);
+		Object actualResult = pqlValue.getPQLResult(properties);
 		Object expectedResult = null;
 
 		if (actualResult != null) {
 			StringBuilder sb = new StringBuilder();
 
-			sb.append("Mismatched result within the following PQL:\n");
+			sb.append("Mismatched PQLResult within the following PQL:\n");
 			sb.append(pql);
 			sb.append("\n* Actual:   ");
 			sb.append(actualResult);

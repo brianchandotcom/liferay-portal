@@ -12,9 +12,10 @@
  * details.
  */
 
-package com.liferay.social.privatemessaging.configuration;
+package com.liferay.web.form.web.configuration.definition;
 
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
+import com.liferay.web.form.web.configuration.WebFormGroupServiceConfiguration;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -22,12 +23,12 @@ import org.osgi.service.component.annotations.Component;
  * @author Peter Fellwock
  */
 @Component
-public class PrivateMessagingConfigurationBeanDeclaration
+public class WebFormServiceConfigurationBeanDeclaration
 	implements ConfigurationBeanDeclaration {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
-		return PrivateMessagingConfiguration.class;
+		return WebFormGroupServiceConfiguration.class;
 	}
 
 }

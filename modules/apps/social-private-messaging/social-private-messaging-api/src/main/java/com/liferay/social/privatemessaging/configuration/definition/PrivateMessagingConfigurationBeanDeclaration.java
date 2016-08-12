@@ -12,9 +12,10 @@
  * details.
  */
 
-package com.liferay.chat.configuration;
+package com.liferay.social.privatemessaging.configuration.definition;
 
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
+import com.liferay.social.privatemessaging.configuration.PrivateMessagingConfiguration;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -22,12 +23,12 @@ import org.osgi.service.component.annotations.Component;
  * @author Peter Fellwock
  */
 @Component
-public class ChatGroupServiceConfigurationBeanDeclaration
+public class PrivateMessagingConfigurationBeanDeclaration
 	implements ConfigurationBeanDeclaration {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
-		return ChatGroupServiceConfiguration.class;
+		return PrivateMessagingConfiguration.class;
 	}
 
 }

@@ -49,7 +49,7 @@ public class AssetCategoriesSelectorDisplayContext {
 	}
 
 	public long getCategoryId() {
-		if (Validator.isNotNull(_categoryId)) {
+		if (_categoryId != 0) {
 			return _categoryId;
 		}
 

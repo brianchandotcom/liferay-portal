@@ -28,6 +28,7 @@
 
 	<!-- Custom checks -->
 
+	<suppress checks="ConstantNameCheck" files="BaseIntraband\.java" />
 	<suppress checks="MethodNameCheck" files="AbstractTemplate\.java" />
 	<suppress checks="MethodNameCheck" files="AnnotationLocatorTest\.java" />
 	<suppress checks="MethodNameCheck" files="CancelingPortalExecutorManagerUtilAdvice\.java" />

@@ -118,7 +118,6 @@ public class JavaClass {
 			if (javaTerm.isMethod() || javaTerm.isConstructor()) {
 				checkChaining(javaTerm);
 				checkLineBreak(javaTerm);
-				checkValidatorIsNull(javaTerm);
 			}
 
 			// LPS-65690
@@ -499,12 +498,7 @@ public class JavaClass {
 			javaTermContent.substring(matcher.start(1), matcher.start(6)));
 
 		boolean isFinal = modifierDefinition.contains("final");
-		boolean isStatic = modifierDefinition.contains("static");
 		String javaFieldType = StringUtil.trim(matcher.group(6));
-
-		if (isFinal && isStatic) {
-			checkMutableFieldType(javaTerm, javaFieldType);
-		}
 
 		if (!isFinal && !javaTerm.isPublic() &&
 			!_fileName.endsWith("ObjectGraphUtilTest.java")) {
@@ -544,7 +538,9 @@ public class JavaClass {
 		}
 
 		if (isFinal) {
-			if (!isStatic && immutableFieldTypes.contains(javaFieldType)) {
+			if (!modifierDefinition.contains("static") &&
+				immutableFieldTypes.contains(javaFieldType)) {
+
 				checkStaticableFieldType(javaTerm.getContent());
 			}
 		}
@@ -592,57 +588,6 @@ public class JavaClass {
 				_fileName,
 				"LPS-65690 Use Collator for locale-sensitive String " +
 					"comparison");
-		}
-	}
-
-	protected void checkMutableFieldType(
-		JavaTerm javaTerm, String javaFieldType) {
-
-		if (!javaFieldType.startsWith("List<") &&
-			!javaFieldType.startsWith("Map<") &&
-			!javaFieldType.startsWith("Set<")) {
-
-			return;
-		}
-
-		String javaTermName = javaTerm.getName();
-
-		if (!StringUtil.isUpperCase(javaTermName)) {
-			return;
-		}
-
-		StringBuilder sb = new StringBuilder(javaTermName.length());
-
-		for (int i = 0; i < javaTermName.length(); i++) {
-			char c = javaTermName.charAt(i);
-
-			if (i > 1) {
-				if (c == CharPool.UNDERLINE) {
-					continue;
-				}
-
-				if (javaTermName.charAt(i - 1) == CharPool.UNDERLINE) {
-					sb.append(c);
-
-					continue;
-				}
-			}
-
-			sb.append(Character.toLowerCase(c));
-		}
-
-		String newName = sb.toString();
-
-		if (!newName.equals(javaTermName)) {
-			if (javaTerm.isPrivate()) {
-				_classContent = _classContent.replaceAll(
-					"(?<=[\\W&&[^.\"]])(" + javaTermName + ")\\b", newName);
-			}
-			else {
-				_javaSourceProcessor.processMessage(
-					_fileName, "Rename " + javaTermName + " to " + newName,
-					javaTerm.getLineCount());
-			}
 		}
 	}
 
@@ -707,31 +652,6 @@ public class JavaClass {
 			JavaTerm.TYPE_METHOD_PUBLIC_STATIC);
 		checkAnnotationForMethod(
 			javaTerm, "Test", "^.*test", JavaTerm.TYPE_METHOD_PUBLIC);
-	}
-
-	protected void checkValidatorIsNull(JavaTerm javaTerm) {
-		String javaTermContent = javaTerm.getContent();
-
-		Matcher matcher = _validatorIsNullPattern.matcher(javaTermContent);
-
-		while (matcher.find()) {
-			String variableName = matcher.group(2);
-
-			Pattern pattern2 = Pattern.compile(
-				"[\t,]long " + variableName + "( =|,[ \n]|\\))");
-
-			Matcher matcher2 = pattern2.matcher(javaTermContent);
-
-			if (matcher2.find()) {
-				int lineCount =
-					javaTerm.getLineCount() +
-						_javaSourceProcessor.getLineCount(
-							javaTerm.getContent(), matcher.start()) - 1;
-
-				_javaSourceProcessor.processMessage(
-					_fileName, "avoid using Validator.IsNull(long)", lineCount);
-			}
-		}
 	}
 
 	protected void fixJavaTermsDividers(
@@ -1896,9 +1816,5 @@ public class JavaClass {
 		".* (==|!=|<|>|>=|<=)[ \n].*");
 	private final Pattern _returnPattern = Pattern.compile(
 		"\n(\t+)return (.*?);\n", Pattern.DOTALL);
-	private final Pattern _validatorIsNullPattern = Pattern.compile(
-		"Validator\\.is(Not)?Null\\((\\w+)\\)");
-	private final Pattern _variableNameStartingWithUpperCasePattern =
-		Pattern.compile("\t[\\w\\s<>,]+ ([A-Z]\\w+) =");
 
 }

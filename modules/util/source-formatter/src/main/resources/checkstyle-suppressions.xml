@@ -28,6 +28,8 @@
 
 	<!-- Custom checks -->
 
+	<suppress checks="ConstantNameCheck" files="BaseIntraband\.java" />
+	<suppress checks="LPS42924Check" files="^(?!.*ServiceImpl\.java$).*$" />
 	<suppress checks="MethodNameCheck" files="AbstractTemplate\.java" />
 	<suppress checks="MethodNameCheck" files="AnnotationLocatorTest\.java" />
 	<suppress checks="MethodNameCheck" files="CancelingPortalExecutorManagerUtilAdvice\.java" />
@@ -39,4 +41,5 @@
 	<suppress checks="MethodNameCheck" files="LiferayParser\.java" />
 	<suppress checks="MethodNameCheck" files="PortalExecutorManagerUtilAdvice\.java" />
 	<suppress checks="MethodNameCheck" files="Stub\.java" />
+	<suppress checks="ValidatorIsNullCheck" files="UserFinderImpl\.java" />
 </suppressions>

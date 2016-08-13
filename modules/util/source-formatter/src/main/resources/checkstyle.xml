@@ -63,6 +63,15 @@
 
 		<!-- Custom checks -->
 
+		<module name="com.liferay.source.formatter.checkstyle.checks.ConstantName">
+			<message key="name.invalidPrivatePattern" value="Private constant ''{0}'' must match pattern ''{1}''" />
+			<message key="name.invalidProtectedPublicPattern" value="Protected or public constant ''{0}'' must match pattern ''{1}''" />
+			<message key="name.collectionPrivatePattern" value="Private collection ''{0}'' must match pattern ''{1}''" />
+			<message key="name.collectionProtectedPublicPattern" value="Protected or public collection ''{0}'' must match pattern ''{1}''" />
+		</module>
+		<module name="com.liferay.source.formatter.checkstyle.checks.LPS42924Check">
+			<message key="lps42924" value="Use ''classNameLocalService.getClassNameId'' instead of ''PortalUtil.getClassName''" />
+		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.MethodNameCheck">
 			<property name="applyToPackage" value="false" />
 			<property name="applyToPrivate" value="false" />
@@ -77,6 +86,9 @@
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.UnusedParameterCheck">
 			<message key="parameter.unused" value="Parameter ''{0}'' is unused" />
+		</module>
+		<module name="com.liferay.source.formatter.checkstyle.checks.ValidatorIsNullCheck">
+			<message key="method.invalidName" value="Avoid using method ''{0}''" />
 		</module>
 	</module>
 </module>

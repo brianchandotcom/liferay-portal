@@ -516,26 +516,6 @@ public abstract class BaseMobileDriverImpl
 	}
 
 	@Override
-	public void saveScreenshot() throws Exception {
-		if (!PropsValues.SAVE_SCREENSHOT) {
-			return;
-		}
-
-		LiferaySeleniumHelper.saveScreenshot(this);
-	}
-
-	@Override
-	public void saveScreenshotBeforeAction(boolean actionFailed)
-		throws Exception {
-
-		if (!PropsValues.SAVE_SCREENSHOT) {
-			return;
-		}
-
-		LiferaySeleniumHelper.saveScreenshotBeforeAction(this, actionFailed);
-	}
-
-	@Override
 	public void scrollBy(String coordString) {
 		throw new UnsupportedOperationException();
 	}
@@ -561,13 +541,6 @@ public abstract class BaseMobileDriverImpl
 	@Override
 	public void selectPopUp(String windowID) {
 		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void sendEmail(String to, String subject, String body)
-		throws Exception {
-
-		LiferaySeleniumHelper.sendEmail(this, to, subject, body);
 	}
 
 	@Override

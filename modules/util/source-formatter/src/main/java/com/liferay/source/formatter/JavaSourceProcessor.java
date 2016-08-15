@@ -444,37 +444,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
-	protected void checkRegexPattern(
-		String regexPattern, String fileName, int lineCount) {
-
-		int i = regexPattern.indexOf("Pattern.compile(");
-
-		if (i == -1) {
-			return;
-		}
-
-		regexPattern = regexPattern.substring(i + 16);
-
-		regexPattern = stripQuotes(regexPattern, CharPool.QUOTE);
-
-		i = regexPattern.indexOf(CharPool.COMMA);
-
-		if (i != -1) {
-			regexPattern = regexPattern.substring(0, i);
-		}
-		else {
-			regexPattern = StringUtil.replaceLast(
-				regexPattern, ");", StringPool.BLANK);
-		}
-
-		regexPattern = StringUtil.replace(
-			regexPattern, StringPool.PLUS, StringPool.BLANK);
-
-		if (Validator.isNull(regexPattern)) {
-			processMessage(fileName, "create pattern as global var", lineCount);
-		}
-	}
-
 	protected void checkSystemEventAnnotations(String content, String fileName)
 		throws Exception {
 
@@ -2273,7 +2242,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 			String ifClause = StringPool.BLANK;
 			String packageName = StringPool.BLANK;
-			String regexPattern = StringPool.BLANK;
 
 			while ((line = unsyncBufferedReader.readLine()) != null) {
 				lineCount++;
@@ -2435,21 +2403,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				}
 
 				line = sortExceptions(line);
-
-				if (trimmedLine.startsWith("Pattern ") ||
-					Validator.isNotNull(regexPattern)) {
-
-					regexPattern = regexPattern + trimmedLine;
-
-					if (trimmedLine.endsWith(");")) {
-
-						// LPS-41084
-
-						checkRegexPattern(regexPattern, fileName, lineCount);
-
-						regexPattern = StringPool.BLANK;
-					}
-				}
 
 				int lineLeadingTabCount = getLeadingTabCount(line);
 				int previousLineLeadingTabCount = getLeadingTabCount(

@@ -289,7 +289,8 @@
 	</command>
 
 	<command name="RejectDynamicdatalistCP" priority="5">
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="false" />
+		<property name="portal.acceptance.quarantine" value="true" />
 
 		<var name="ddlDataDefinitionName" value="DDL Definition" />
 		<var name="ddlListName" value="DDL List" />

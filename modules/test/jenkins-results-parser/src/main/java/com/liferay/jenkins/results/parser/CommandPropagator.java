@@ -15,6 +15,7 @@
 package com.liferay.jenkins.results.parser;
 
 import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -30,6 +31,12 @@ public class CommandPropagator {
 		_commands.add(command);
 	}
 
+	public void addErrorSlave(String errorSlave) {
+		_targetSlaves.remove(errorSlave);
+
+		_errorSlaves.add(errorSlave);
+	}
+
 	public long getAverageThreadDuration() {
 		if (_threadsCompletedCount == 0) {
 			return 0;
@@ -37,18 +44,12 @@ public class CommandPropagator {
 
 		return _threadsDurationTotal / _threadsCompletedCount;
 	}
-	
-	public void addErrorSlave(String errorSlave) {
-		_targetSlaves.remove(errorSlave);
-		
-		_errorSlaves.add(errorSlave);
-	}
 
 	public void start(int threadCount, List<String> targetSlaves) {
 		_targetSlaves.clear();
-		
+
 		_targetSlaves.addAll(targetSlaves);
-		
+
 		ExecutorService executorService = Executors.newFixedThreadPool(
 			threadCount);
 
@@ -57,13 +58,15 @@ public class CommandPropagator {
 
 		try {
 			long start = System.currentTimeMillis();
-			
+
 			for (String targetSlave : _targetSlaves) {
 				executorService.execute(
 					new CommandPropagatorThread(this, targetSlave));
 			}
 
-			while (_finishedSlaves.size() + _errorSlaves.size() < _targetSlaves.size()) {
+			while ((_finishedSlaves.size() + _errorSlaves.size()) <
+						_targetSlaves.size()) {
+
 				StringBuffer sb = new StringBuffer();
 
 				sb.append("Average thread duration: ");
@@ -98,17 +101,20 @@ public class CommandPropagator {
 		}
 	}
 
+	private final List<String> _busySlaves = Collections.synchronizedList(
+		new ArrayList<String>());
 	private final List<String> _commands = new ArrayList<>();
-	private final List<String> _busySlaves = Collections.synchronizedList(new ArrayList<String>());
-	private final List<String> _errorSlaves = Collections.synchronizedList(new ArrayList<String>());
-	private final List<String> _finishedSlaves = Collections.synchronizedList(new ArrayList<String>());
-	private final List<String> _targetSlaves = Collections.synchronizedList(new ArrayList<String>());
+	private final List<String> _errorSlaves = Collections.synchronizedList(
+		new ArrayList<String>());
+	private final List<String> _finishedSlaves = Collections.synchronizedList(
+		new ArrayList<String>());
+	private final List<String> _targetSlaves = Collections.synchronizedList(
+		new ArrayList<String>());
 	private int _threadsCompletedCount;
 	private long _threadsDurationTotal;
 
-
 	private static class CommandPropagatorThread implements Runnable {
-		
+
 		@Override
 		public void run() {
 			List<String> busySlaves = _commandPropagator._busySlaves;
@@ -124,8 +130,9 @@ public class CommandPropagator {
 
 				if (returnCode == 0) {
 					_successful = true;
-					
-					List<String> finishedSlaves = _commandPropagator._finishedSlaves;
+
+					List<String> finishedSlaves =
+						_commandPropagator._finishedSlaves;
 
 					finishedSlaves.add(_targetSlave);
 				}
@@ -138,11 +145,21 @@ public class CommandPropagator {
 			}
 			finally {
 				busySlaves.remove(_targetSlave);
+
 				synchronized(_commandPropagator) {
 					_commandPropagator._threadsCompletedCount++;
+
 					_commandPropagator._threadsDurationTotal += _duration;
 				}
 			}
+		}
+
+		private CommandPropagatorThread(
+			CommandPropagator commandPropagator, String targetSlave) {
+
+			_commandPropagator = commandPropagator;
+
+			_targetSlave = targetSlave;
 		}
 
 		private int _executeBashCommands()
@@ -152,7 +169,7 @@ public class CommandPropagator {
 
 			sb.append(_targetSlave);
 			sb.append(" '");
-			
+
 			List<String> commands = _commandPropagator._commands;
 
 			for (int i = 0; i < commands.size(); i++) {
@@ -173,26 +190,22 @@ public class CommandPropagator {
 
 		private void _handleError(String errorMessage) {
 			_successful = false;
-			
+
 			List<String> errorSlaves = _commandPropagator._errorSlaves;
 
 			errorSlaves.add(_targetSlave);
-			
-			System.out.println("Command execution failed on target slave: " + _targetSlave + ".\n");
-			
-			if (errorMessage != null && !errorMessage.isEmpty()) {
+
+			System.out.println(
+				"Command execution failed on target slave: " + _targetSlave +
+					".\n");
+
+			if ((errorMessage != null) && !errorMessage.isEmpty()) {
 				System.out.println(errorMessage);
 			}
 		}
 
-		private CommandPropagatorThread(CommandPropagator commandPropagator, String targetSlave) {
-			_commandPropagator = commandPropagator;
-
-			_targetSlave = targetSlave;
-		}
-
-		private long _duration;
 		private final CommandPropagator _commandPropagator;
+		private long _duration;
 		private boolean _successful;
 		private final String _targetSlave;
 

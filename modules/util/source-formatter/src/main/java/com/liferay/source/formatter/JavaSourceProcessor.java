@@ -36,6 +36,8 @@ import com.thoughtworks.qdox.model.JavaSource;
 import java.io.File;
 import java.io.IOException;
 
+import java.net.UnknownHostException;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -439,37 +441,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				"package " + packagePath + StringPool.SEMICOLON)) {
 
 			processMessage(fileName, "Incorrect package path");
-		}
-	}
-
-	protected void checkRegexPattern(
-		String regexPattern, String fileName, int lineCount) {
-
-		int i = regexPattern.indexOf("Pattern.compile(");
-
-		if (i == -1) {
-			return;
-		}
-
-		regexPattern = regexPattern.substring(i + 16);
-
-		regexPattern = stripQuotes(regexPattern, CharPool.QUOTE);
-
-		i = regexPattern.indexOf(CharPool.COMMA);
-
-		if (i != -1) {
-			regexPattern = regexPattern.substring(0, i);
-		}
-		else {
-			regexPattern = StringUtil.replaceLast(
-				regexPattern, ");", StringPool.BLANK);
-		}
-
-		regexPattern = StringUtil.replace(
-			regexPattern, StringPool.PLUS, StringPool.BLANK);
-
-		if (Validator.isNull(regexPattern)) {
-			processMessage(fileName, "create pattern as global var", lineCount);
 		}
 	}
 
@@ -1124,8 +1095,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				className, packagePath, file, fileName, absolutePath,
 				newContent, javaClassContent, javaClassLineCount,
 				StringPool.BLANK, _checkJavaFieldTypesExcludes,
-				_javaTermAccessLevelModifierExcludes, _javaTermSortExcludes,
-				_testAnnotationsExcludes);
+				_javaTermSortExcludes, _testAnnotationsExcludes);
 		}
 
 		matcher = _anonymousClassPattern.matcher(newContent);
@@ -1154,8 +1124,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					StringPool.BLANK, StringPool.BLANK, file, fileName,
 					absolutePath, newContent, javaClassContent,
 					javaClassLineCount, matcher.group(1),
-					_checkJavaFieldTypesExcludes,
-					_javaTermAccessLevelModifierExcludes, _javaTermSortExcludes,
+					_checkJavaFieldTypesExcludes, _javaTermSortExcludes,
 					_testAnnotationsExcludes);
 
 				break;
@@ -2271,7 +2240,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 			String ifClause = StringPool.BLANK;
 			String packageName = StringPool.BLANK;
-			String regexPattern = StringPool.BLANK;
 
 			while ((line = unsyncBufferedReader.readLine()) != null) {
 				lineCount++;
@@ -2318,16 +2286,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					line = formatIncorrectSyntax(line, ",}", "}", false);
 
 					line = formatWhitespace(line, trimmedLine, true);
-				}
-
-				// LPS-42924
-
-				if (line.contains("PortalUtil.getClassNameId(") &&
-					fileName.endsWith("ServiceImpl.java")) {
-
-					processMessage(
-						fileName, "Use classNameLocalService.getClassNameId",
-						lineCount);
 				}
 
 				// LPS-42599
@@ -2443,21 +2401,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				}
 
 				line = sortExceptions(line);
-
-				if (trimmedLine.startsWith("Pattern ") ||
-					Validator.isNotNull(regexPattern)) {
-
-					regexPattern = regexPattern + trimmedLine;
-
-					if (trimmedLine.endsWith(");")) {
-
-						// LPS-41084
-
-						checkRegexPattern(regexPattern, fileName, lineCount);
-
-						regexPattern = StringPool.BLANK;
-					}
-				}
 
 				int lineLeadingTabCount = getLeadingTabCount(line);
 				int previousLineLeadingTabCount = getLeadingTabCount(
@@ -4449,7 +4392,15 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	@Override
 	protected void postFormat() throws Exception {
 		checkBndInheritAnnotationOption();
-		processCheckStyle();
+
+		try {
+			processCheckStyle();
+		}
+		catch (UnknownHostException uhe) {
+			System.out.println(
+				"Could not perform Checkstyle checks. Please check your " +
+					"network connection.");
+		}
 	}
 
 	@Override
@@ -4468,8 +4419,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			"fit.on.single.line.excludes");
 		_hibernateSQLQueryExcludes = getPropertyList(
 			"hibernate.sql.query.excludes");
-		_javaTermAccessLevelModifierExcludes = getPropertyList(
-			"javaterm.access.level.modifier.excludes");
 		_javaTermSortExcludes = getPropertyList("javaterm.sort.excludes");
 		_lineLengthExcludes = getPropertyList("line.length.excludes");
 		_proxyExcludes = getPropertyList("proxy.excludes");
@@ -4654,7 +4603,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			Pattern.compile(
 				".*(extends [a-z\\.\\s]*ObjectInputStream).*", Pattern.DOTALL)
 	};
-	private List<String> _javaTermAccessLevelModifierExcludes;
 	private List<String> _javaTermSortExcludes;
 	private List<String> _lineLengthExcludes;
 	private final Pattern _lineStartingWithOpenParenthesisPattern =

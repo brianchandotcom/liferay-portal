@@ -122,36 +122,21 @@ public class LayoutsLocalPublisherMessageListener
 	protected void setDestination(Destination destination) {
 	}
 
-	@Reference(unbind = "-")
-	protected void setExportImportConfigurationLocalService(
-		ExportImportConfigurationLocalService
-			exportImportConfigurationLocalService) {
-
-		_exportImportConfigurationLocalService =
-			exportImportConfigurationLocalService;
-	}
-
 	@Reference(
 		target = "(&(release.bundle.symbolic.name=com.liferay.exportimport.service)(release.schema.version=1.0.0))",
 		unbind = "-"
 	)
 	protected void setRelease(Release release) {
 	}
-
-	@Reference(unbind = "-")
-	protected void setSingleDestinationMessageSenderFactory(
-		SingleDestinationMessageSenderFactory
-			singleDestinationMessageSenderFactory) {
-
-		_singleDestinationMessageSenderFactory =
-			singleDestinationMessageSenderFactory;
-	}
-
+	
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutsLocalPublisherMessageListener.class);
 
+	@Reference
 	private ExportImportConfigurationLocalService
 		_exportImportConfigurationLocalService;
+
+	@Reference
 	private SingleDestinationMessageSenderFactory
 		_singleDestinationMessageSenderFactory;
 

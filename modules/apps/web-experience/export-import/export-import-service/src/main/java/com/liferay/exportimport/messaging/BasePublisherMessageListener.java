@@ -63,6 +63,12 @@ public abstract class BasePublisherMessageListener
 		SingleDestinationMessageSenderFactory
 			singleDestinationMessageSenderFactory) {
 
+		if (singleDestinationMessageSenderFactory == null) {
+			throw new IllegalArgumentException(
+				"SingleDestinationMessageSenderFactory reference cannot be " +
+					"null");
+		}
+
 		BundleContext bundleContext = componentContext.getBundleContext();
 
 		Dictionary<String, Object> properties =

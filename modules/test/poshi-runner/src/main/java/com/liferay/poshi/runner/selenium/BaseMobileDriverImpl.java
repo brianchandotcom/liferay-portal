@@ -63,29 +63,10 @@ public abstract class BaseMobileDriverImpl
 		}
 	}
 
-	@Override
-	public void clickAndWait(String locator) {
-		click(locator);
-
-		waitForPageToLoad("30000");
-	}
-
-	@Override
-	public void clickAt(String locator, String coordString) {
-		clickAt(locator, coordString, true);
-	}
-
 	public void clickAt(
 		String locator, String coordString, boolean scrollIntoView) {
 
 		click(locator);
-	}
-
-	@Override
-	public void clickAtAndWait(String locator, String coordString) {
-		clickAt(locator, coordString);
-
-		waitForPageToLoad("30000");
 	}
 
 	@Override
@@ -207,11 +188,6 @@ public abstract class BaseMobileDriverImpl
 		return WebDriverHelper.getElementHeight(this, locator);
 	}
 
-	@Override
-	public String getElementValue(String locator) throws Exception {
-		return getElementValue(locator, null);
-	}
-
 	public String getElementValue(String locator, String timeout)
 		throws Exception {
 
@@ -276,11 +252,6 @@ public abstract class BaseMobileDriverImpl
 	}
 
 	@Override
-	public String getSelectedLabel(String selectLocator) {
-		return getSelectedLabel(selectLocator, null);
-	}
-
-	@Override
 	public String getSikuliImagesDirName() {
 		return _SIKULI_IMAGES_DIR_NAME;
 	}
@@ -312,18 +283,6 @@ public abstract class BaseMobileDriverImpl
 		text = text.trim();
 
 		return text.replace("\n", " ");
-	}
-
-	@Override
-	public String getTitle() {
-		return super.getTitle();
-	}
-
-	@Override
-	public void goBackAndWait() {
-		goBack();
-
-		waitForPageToLoad("30000");
 	}
 
 	public void hideKeyboard() {
@@ -388,18 +347,8 @@ public abstract class BaseMobileDriverImpl
 	}
 
 	@Override
-	public boolean isText(String locator, String value) throws Exception {
-		return value.equals(getText(locator, "1"));
-	}
-
-	@Override
 	public boolean isTextPresent(String pattern) {
 		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public boolean isValue(String locator, String value) throws Exception {
-		return value.equals(getElementValue(locator, "1"));
 	}
 
 	@Override
@@ -513,11 +462,6 @@ public abstract class BaseMobileDriverImpl
 	}
 
 	@Override
-	public void openWindow(String url, String windowID) {
-		open(url);
-	}
-
-	@Override
 	public void paste(String locator) {
 		throw new UnsupportedOperationException();
 	}
@@ -572,21 +516,12 @@ public abstract class BaseMobileDriverImpl
 	}
 
 	@Override
-	public void runScript(String script) {
-		getEval(script);
-	}
-
-	@Override
 	public void saveScreenshot() throws Exception {
 		if (!PropsValues.SAVE_SCREENSHOT) {
 			return;
 		}
 
 		LiferaySeleniumHelper.saveScreenshot(this);
-	}
-
-	@Override
-	public void saveScreenshotAndSource() throws Exception {
 	}
 
 	@Override
@@ -619,13 +554,6 @@ public abstract class BaseMobileDriverImpl
 	}
 
 	@Override
-	public void selectAndWait(String selectLocator, String optionLocator) {
-		select(selectLocator, optionLocator);
-
-		waitForPageToLoad("30000");
-	}
-
-	@Override
 	public void selectFieldText() {
 		throw new UnsupportedOperationException();
 	}
@@ -633,15 +561,6 @@ public abstract class BaseMobileDriverImpl
 	@Override
 	public void selectPopUp(String windowID) {
 		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void sendActionDescriptionLogger(String description) {
-	}
-
-	@Override
-	public boolean sendActionLogger(String command, String[] params) {
-		return true;
 	}
 
 	@Override
@@ -654,22 +573,6 @@ public abstract class BaseMobileDriverImpl
 	@Override
 	public void sendKeysAceEditor(String locator, String value) {
 		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void sendLogger(String id, String status) {
-	}
-
-	@Override
-	public void sendMacroDescriptionLogger(String description) {
-	}
-
-	@Override
-	public void sendTestCaseCommandLogger(String command) {
-	}
-
-	@Override
-	public void sendTestCaseHeaderLogger(String command) {
 	}
 
 	@Override
@@ -698,19 +601,6 @@ public abstract class BaseMobileDriverImpl
 	@Override
 	public void setWindowSize(String coordString) {
 		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void startLogger() {
-	}
-
-	@Override
-	public void stop() {
-		quit();
-	}
-
-	@Override
-	public void stopLogger() {
 	}
 
 	public void swipe(

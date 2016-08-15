@@ -18,10 +18,10 @@ import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.query.FieldQueryFactory;
 import com.liferay.portal.search.analysis.FieldQueryBuilder;
 import com.liferay.portal.search.analysis.FieldQueryBuilderFactory;
+import com.liferay.portal.search.internal.analysis.TitleFieldQueryBuilder;
 
 import java.util.HashSet;
 
-import com.liferay.portal.search.internal.analysis.TitleFieldQueryBuilder;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;

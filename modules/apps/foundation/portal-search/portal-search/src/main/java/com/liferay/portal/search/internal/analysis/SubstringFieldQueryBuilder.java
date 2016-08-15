@@ -22,8 +22,8 @@ import com.liferay.portal.kernel.search.generic.WildcardQueryImpl;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.search.analysis.KeywordTokenizer;
 import com.liferay.portal.search.analysis.FieldQueryBuilder;
+import com.liferay.portal.search.analysis.KeywordTokenizer;
 
 import java.util.List;
 

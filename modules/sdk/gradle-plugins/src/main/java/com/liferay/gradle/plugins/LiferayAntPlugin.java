@@ -47,20 +47,9 @@ public class LiferayAntPlugin implements Plugin<Project> {
 
 		configureArchivesBaseName(project, antBuilder);
 		configureArtifacts(project, antBuilder);
-		configureAntTask(project, BasePlugin.CLEAN_TASK_NAME);
 		configureVersion(project, antBuilder);
-	}
 
-	protected void configureAntTask(Project project, String targetName) {
-		String antTaskName = _antTaskNamer.transform(targetName);
-
-		if (targetName.equals(antTaskName)) {
-			return;
-		}
-
-		Task task = GradleUtil.getTask(project, targetName);
-
-		task.dependsOn(antTaskName);
+		_configureAntTask(project, BasePlugin.CLEAN_TASK_NAME);
 	}
 
 	protected void configureArchivesBaseName(
@@ -101,6 +90,18 @@ public class LiferayAntPlugin implements Plugin<Project> {
 
 	protected void configureVersion(Project project, AntBuilder antBuilder) {
 		project.setVersion(antBuilder.getProperty("plugin.full.version"));
+	}
+
+	private void _configureAntTask(Project project, String targetName) {
+		String antTaskName = _antTaskNamer.transform(targetName);
+
+		if (targetName.equals(antTaskName)) {
+			return;
+		}
+
+		Task task = GradleUtil.getTask(project, targetName);
+
+		task.dependsOn(antTaskName);
 	}
 
 	private static final String _WAR_TASK_NAME = "war";

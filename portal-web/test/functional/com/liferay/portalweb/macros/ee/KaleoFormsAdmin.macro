@@ -220,6 +220,10 @@
 			<var name="kfFieldSetName" value="${kfFieldSetName}" />
 		</execute>
 
+		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${kfFormName}" />
+		
+		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
+
 		<var name="key_rowEntry" value="${kfFormName}" />
 
 		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />

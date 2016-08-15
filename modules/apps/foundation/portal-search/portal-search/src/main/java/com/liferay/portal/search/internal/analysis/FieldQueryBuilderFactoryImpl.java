@@ -18,8 +18,8 @@ import com.liferay.portal.kernel.search.query.QueryPreProcessConfiguration;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.search.analysis.FieldQueryBuilderFactory;
 import com.liferay.portal.search.analysis.FieldQueryBuilder;
+import com.liferay.portal.search.analysis.FieldQueryBuilderFactory;
 
 import java.util.Arrays;
 import java.util.Collection;

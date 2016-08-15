@@ -16,8 +16,8 @@ package com.liferay.portal.search.internal.analysis;
 
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.search.analysis.KeywordTokenizer;
 import com.liferay.portal.search.analysis.FieldQueryBuilder;
+import com.liferay.portal.search.analysis.KeywordTokenizer;
 
 import java.util.Map;
 

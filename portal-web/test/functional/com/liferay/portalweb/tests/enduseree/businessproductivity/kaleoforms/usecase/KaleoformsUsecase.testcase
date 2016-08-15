@@ -1837,10 +1837,6 @@
 			<var name="portlet" value="Kaleo Forms Admin" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoSitesContent">
-			<var name="portlet" value="Kaleo Forms Admin" />
-		</execute>
-
 		<execute macro="KaleoFormsAdmin#editProcess">
 			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
@@ -1962,16 +1958,6 @@
 
 		<execute macro="WorkflowAsset#previewViewContentFieldNotPresent">
 			<var name="fieldLabel" value="Text Box" />
-		</execute>
-
-		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="Text" />
-			<var name="fieldValue" value="Test Description" />
-		</execute>
-
-		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="Select" />
-			<var name="fieldValue" value="option 2" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#saveProcessRecord" />
@@ -8664,7 +8650,7 @@
 
 		<execute macro="KaleoFormsAdmin#saveAndContinueForm" />
 		<execute macro="KaleoFormsAdmin#saveAndContinueForm" />
-		<execute macro="KaleoFormsAdmin#saveAndContinueForm" />
+
 		<execute macro="KaleoFormsAdmin#saveForm" />
 
 		<var name="key_kfFormName" value="Created Task Form" />

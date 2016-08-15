@@ -1786,8 +1786,6 @@ public class JavaClass {
 	private final String _absolutePath;
 	private final Pattern _booleanPattern = Pattern.compile(
 		"\n(\t+)boolean (\\w+) =(.*?);\n", Pattern.DOTALL);
-	private final Pattern _camelCasePattern = Pattern.compile(
-		"([a-z])([A-Z0-9])");
 	private final Pattern _chainingPattern = Pattern.compile(
 		"^((?!this\\().)*\\WgetClass\\(\\)\\..", Pattern.DOTALL);
 	private String _classContent;

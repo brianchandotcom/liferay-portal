@@ -40,7 +40,7 @@ public abstract class BaseAssetAddonEntry implements AssetAddonEntry {
 
 		String key = assetAddonEntry.getKey();
 
-		if (getKey() == key) {
+		if (key.equals(getKey())) {
 			return true;
 		}
 		else {

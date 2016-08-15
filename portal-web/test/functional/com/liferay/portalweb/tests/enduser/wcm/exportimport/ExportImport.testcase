@@ -717,7 +717,8 @@
 	</command>
 
 	<command name="ExportImportSampleLARPortlet" priority="5">
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="false" />
+		<property name="portal.acceptance.quarantine" value="true" />
 		<property name="portlet.plugins.includes" value="sample-lar-portlet" />
 
 		<execute macro="Page#add">
@@ -789,7 +790,8 @@
 	</command>
 
 	<command name="ExportImportSiteWithChangedSiteDefaultLanguage" priority="5">
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="false" />
+		<property name="portal.acceptance.quarantine" value="true" />
 		<property name="test.name.skip.portal.instance" value="ExportImport#ExportImportSiteWithChangedSiteDefaultLanguage" />
 
 		<execute macro="Navigator#openSiteURL">

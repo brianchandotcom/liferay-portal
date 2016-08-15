@@ -160,7 +160,8 @@
 
 	<command name="ViewDateAssetDetails" priority="5">
 		<description message="This is a use case LPS-61197." />
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="false" />
+		<property name="portal.acceptance.quarantine" value="true" />
 
 		<execute macro="Navigator#openURL" />
 

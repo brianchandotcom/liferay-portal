@@ -50,7 +50,7 @@
 		/>
 
 		<%
-		String producerURL = producer.getURL(themeDisplay.getPortalURL() + "/o/wsrp-consumer");
+		String producerURL = producer.getURL(themeDisplay.getPortalURL() + "/o/wsrp-service");
 		%>
 
 		<liferay-ui:search-container-column-text

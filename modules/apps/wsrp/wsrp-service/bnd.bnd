@@ -12,7 +12,7 @@ Import-Package:\
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
 Liferay-Service: true
-Web-ContextPath: /wsrp-consumer
+Web-ContextPath: /wsrp-service
 -includeresource:\
 	@bcprov-jdk16-1.46.jar,\
 	@com.liferay.util.java-*.jar!/com/liferay/util/axis/*.class,\

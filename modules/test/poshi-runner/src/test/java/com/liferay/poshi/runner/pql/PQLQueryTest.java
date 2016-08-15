@@ -25,10 +25,10 @@ import org.junit.Test;
 /**
  * @author Michael Hashimoto
  */
-public class PQLEntityFactoryTest extends TestCase {
+public class PQLQueryTest extends TestCase {
 
 	@Test
-	public void testPQLQueryGetPQLResultComparativeOperator() throws Exception {
+	public void testGetPQLResultComparativeOperator() throws Exception {
 		Properties properties = new Properties();
 
 		properties.setProperty("component.names", "Blogs,Message Boards,WEM");
@@ -80,9 +80,7 @@ public class PQLEntityFactoryTest extends TestCase {
 	}
 
 	@Test
-	public void testPQLQueryGetPQLResultComparativeOperatorError()
-		throws Exception {
-
+	public void testGetPQLResultComparativeOperatorError() throws Exception {
 		Properties properties = new Properties();
 
 		properties.setProperty("component.names", "Blogs,Message Boards,WEM");
@@ -90,17 +88,17 @@ public class PQLEntityFactoryTest extends TestCase {
 		properties.setProperty("priority", "5");
 
 		_validateGetPQLResultError(
-			"true ==", "Invalid value: true ==", properties);
+			"true ==", "Invalid query: true ==", properties);
 		_validateGetPQLResultError(
-			"false ==", "Invalid value: false ==", properties);
+			"false ==", "Invalid query: false ==", properties);
 		_validateGetPQLResultError(
-			"== true", "Invalid value: == true", properties);
+			"== true", "Invalid query: == true", properties);
 		_validateGetPQLResultError(
-			"== false", "Invalid value: == false", properties);
+			"== false", "Invalid query: == false", properties);
 	}
 
 	@Test
-	public void testPQLQueryGetPQLResultConditionalOperator() throws Exception {
+	public void testGetPQLResultConditionalOperator() throws Exception {
 		Properties properties = new Properties();
 
 		properties.setProperty("component.names", "Blogs,Message Boards,WEM");
@@ -137,9 +135,7 @@ public class PQLEntityFactoryTest extends TestCase {
 	}
 
 	@Test
-	public void testPQLQueryGetPQLResultConditionalOperatorError()
-		throws Exception {
-
+	public void testGetPQLResultConditionalOperatorError() throws Exception {
 		Properties properties = new Properties();
 
 		properties.setProperty("component.names", "Blogs,Message Boards,WEM");
@@ -147,26 +143,26 @@ public class PQLEntityFactoryTest extends TestCase {
 		properties.setProperty("priority", "5");
 
 		_validateGetPQLResultError(
-			"AND true == true", "Invalid value: AND true == true", properties);
+			"AND true == true", "Invalid query: AND true == true", properties);
 		_validateGetPQLResultError(
-			"true == true AND", "Invalid value: true == true AND", properties);
+			"true == true AND", "Invalid query: true == true AND", properties);
 		_validateGetPQLResultError(
-			"OR true == true", "Invalid value: OR true == true", properties);
+			"OR true == true", "Invalid query: OR true == true", properties);
 		_validateGetPQLResultError(
-			"true == true OR", "Invalid value: true == true OR", properties);
+			"true == true OR", "Invalid query: true == true OR", properties);
 		_validateGetPQLResultError(
 			"true == true AND AND false == false",
 			"Invalid value: AND false == false", properties);
 		_validateGetPQLResultError(
-			"(true == true) AND", "Invalid value: (true == true) AND",
+			"(true == true) AND", "Invalid query: (true == true) AND",
 			properties);
 		_validateGetPQLResultError(
-			"(true == true) OR", "Invalid value: (true == true) OR",
+			"(true == true) OR", "Invalid query: (true == true) OR",
 			properties);
 	}
 
 	@Test
-	public void testPQLQueryGetPQLResultParenthesis() throws Exception {
+	public void testGetPQLResultParenthesis() throws Exception {
 		Properties properties = new Properties();
 
 		properties.setProperty("component.names", "Blogs,Message Boards,WEM");
@@ -202,76 +198,13 @@ public class PQLEntityFactoryTest extends TestCase {
 		}
 	}
 
-	@Test
-	public void testPQLValueGetPQLResult() throws Exception {
-		_validateGetPQLResult("false", Boolean.valueOf(false));
-		_validateGetPQLResult("'false'", Boolean.valueOf(false));
-		_validateGetPQLResult("\"false\"", Boolean.valueOf(false));
-		_validateGetPQLResult("true", Boolean.valueOf(true));
-		_validateGetPQLResult("'true'", Boolean.valueOf(true));
-		_validateGetPQLResult("\"true\"", Boolean.valueOf(true));
-
-		_validateGetPQLResult("3.2", Double.valueOf(3.2));
-		_validateGetPQLResult("'3.2'", Double.valueOf(3.2));
-		_validateGetPQLResult("\"3.2\"", Double.valueOf(3.2));
-		_validateGetPQLResult("2016.0", Double.valueOf(2016));
-		_validateGetPQLResult("'2016.0'", Double.valueOf(2016));
-		_validateGetPQLResult("\"2016.0\"", Double.valueOf(2016));
-
-		_validateGetPQLResult("2016", Integer.valueOf(2016));
-		_validateGetPQLResult("'2016'", Integer.valueOf(2016));
-		_validateGetPQLResult("\"2016\"", Integer.valueOf(2016));
-
-		_validateGetPQLResult("test", "test");
-		_validateGetPQLResult("'test'", "test");
-		_validateGetPQLResult("\"test\"", "test");
-
-		_validateGetPQLResult("'test test'", "test test");
-		_validateGetPQLResult("\"test test\"", "test test");
-	}
-
-	@Test
-	public void testPQLVariableGetPQLResult() throws Exception {
-		_validateGetPQLResultFromVariable("false", Boolean.valueOf(false));
-		_validateGetPQLResultFromVariable("'false'", Boolean.valueOf(false));
-		_validateGetPQLResultFromVariable("\"false\"", Boolean.valueOf(false));
-		_validateGetPQLResultFromVariable("true", Boolean.valueOf(true));
-		_validateGetPQLResultFromVariable("'true'", Boolean.valueOf(true));
-		_validateGetPQLResultFromVariable("\"true\"", Boolean.valueOf(true));
-
-		_validateGetPQLResultFromVariable("3.2", Double.valueOf(3.2));
-		_validateGetPQLResultFromVariable("'3.2'", Double.valueOf(3.2));
-		_validateGetPQLResultFromVariable("\"3.2\"", Double.valueOf(3.2));
-		_validateGetPQLResultFromVariable("2016.0", Double.valueOf(2016));
-		_validateGetPQLResultFromVariable("'2016.0'", Double.valueOf(2016));
-		_validateGetPQLResultFromVariable("\"2016.0\"", Double.valueOf(2016));
-
-		_validateGetPQLResultFromVariable("2016", Integer.valueOf(2016));
-		_validateGetPQLResultFromVariable("'2016'", Integer.valueOf(2016));
-		_validateGetPQLResultFromVariable("\"2016\"", Integer.valueOf(2016));
-
-		_validateGetPQLResultFromVariable("test", "test");
-		_validateGetPQLResultFromVariable("'test'", "test");
-		_validateGetPQLResultFromVariable("\"test\"", "test");
-
-		_validateGetPQLResultFromVariable("'test test'", "test test");
-		_validateGetPQLResultFromVariable("\"test test\"", "test test");
-	}
-
-	private static void _validateGetPQLResult(
-			String pql, Object expectedPQLResult)
-		throws Exception {
-
-		_validateGetPQLResult(pql, expectedPQLResult, new Properties());
-	}
-
 	private static void _validateGetPQLResult(
 			String pql, Object expectedPQLResult, Properties properties)
 		throws Exception {
 
-		PQLEntity pqlEntity = PQLEntityFactory.newPQLEntity(pql);
+		PQLQuery pqlQuery = new PQLQuery(pql);
 
-		Object actualPQLResult = pqlEntity.getPQLResult(properties);
+		Object actualPQLResult = pqlQuery.getPQLResult(properties);
 
 		if (!actualPQLResult.equals(expectedPQLResult)) {
 			StringBuilder sb = new StringBuilder();
@@ -294,9 +227,9 @@ public class PQLEntityFactoryTest extends TestCase {
 		String actualError = null;
 
 		try {
-			PQLEntity pqlEntity = PQLEntityFactory.newPQLEntity(pql);
+			PQLQuery pqlQuery = new PQLQuery(pql);
 
-			Object objectValue = pqlEntity.getPQLResult(properties);
+			Object result = pqlQuery.getPQLResult(properties);
 		}
 		catch (Exception e) {
 			actualError = e.getMessage();
@@ -320,17 +253,6 @@ public class PQLEntityFactoryTest extends TestCase {
 					"No error thrown for the following PQL: " + pql);
 			}
 		}
-	}
-
-	private static void _validateGetPQLResultFromVariable(
-			String pql, Object expectedPQLResult)
-		throws Exception {
-
-		Properties properties = new Properties();
-
-		properties.put("portal.smoke", pql);
-
-		_validateGetPQLResult("portal.smoke", expectedPQLResult, properties);
 	}
 
 }

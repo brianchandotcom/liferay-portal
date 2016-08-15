@@ -93,7 +93,7 @@ public class PQLValueTest extends TestCase {
 		if (!actualResult.equals(expectedResult)) {
 			StringBuilder sb = new StringBuilder();
 
-			sb.append("Mismatched PQLResult within the following PQL:\n");
+			sb.append("Mismatched PQL result within the following PQL:\n");
 			sb.append(pql);
 			sb.append("\n* Actual:   ");
 			sb.append(actualResult);
@@ -149,7 +149,7 @@ public class PQLValueTest extends TestCase {
 		if (actualResult != null) {
 			StringBuilder sb = new StringBuilder();
 
-			sb.append("Mismatched PQLResult within the following PQL:\n");
+			sb.append("Mismatched PQL result within the following PQL:\n");
 			sb.append(pql);
 			sb.append("\n* Actual:   ");
 			sb.append(actualResult);

@@ -46,12 +46,11 @@ public class PQLEntityTest extends TestCase {
 		if (!actualString.equals(expectedString)) {
 			StringBuilder sb = new StringBuilder();
 
-			sb.append("Mismatched string values:\n");
-			sb.append("\n\n* Actual:   \"");
+			sb.append("Mismatched string values:");
+			sb.append("\n* Actual:   ");
 			sb.append(actualString);
-			sb.append("\"\n* Expected: \"");
+			sb.append("\n* Expected: ");
 			sb.append(expectedString);
-			sb.append("\"");
 
 			throw new Exception(sb.toString());
 		}

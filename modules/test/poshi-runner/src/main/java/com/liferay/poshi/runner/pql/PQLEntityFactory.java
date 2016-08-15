@@ -23,6 +23,9 @@ public class PQLEntityFactory {
 		if (PQLVariable.isVariable(pql)) {
 			return new PQLVariable(pql);
 		}
+		else if (PQLQuery.isQuery(pql)) {
+			return new PQLQuery(pql);
+		}
 
 		return new PQLValue(pql);
 	}

@@ -15,8 +15,8 @@
 package com.liferay.jenkins.results.parser;
 
 import java.io.IOException;
-
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -26,11 +26,8 @@ import java.util.concurrent.Executors;
  */
 public class CommandPropagator {
 
-	public CommandPropagator(
-		String[] fileNames, String sourceDirName, String targetDirName,
-		List<String> targetSlaves) {
-
-		_targetSlaves.addAll(targetSlaves);
+	public void addCommand(String command) {
+		_commands.add(command);
 	}
 
 	public long getAverageThreadDuration() {
@@ -40,8 +37,18 @@ public class CommandPropagator {
 
 		return _threadsDurationTotal / _threadsCompletedCount;
 	}
+	
+	public void addErrorSlave(String errorSlave) {
+		_targetSlaves.remove(errorSlave);
+		
+		_errorSlaves.add(errorSlave);
+	}
 
-	public void start(int threadCount) {
+	public void start(int threadCount, List<String> targetSlaves) {
+		_targetSlaves.clear();
+		
+		_targetSlaves.addAll(targetSlaves);
+		
 		ExecutorService executorService = Executors.newFixedThreadPool(
 			threadCount);
 
@@ -50,27 +57,13 @@ public class CommandPropagator {
 
 		try {
 			long start = System.currentTimeMillis();
+			
+			for (String targetSlave : _targetSlaves) {
+				executorService.execute(
+					new CommandPropagatorThread(this, targetSlave));
+			}
 
-			while (!_targetSlaves.isEmpty() || !_busySlaves.isEmpty()) {
-				synchronized(this) {
-					for (String mirrorSlave : _mirrorSlaves) {
-						if (_targetSlaves.isEmpty()) {
-							break;
-						}
-
-						String targetSlave = _targetSlaves.remove(0);
-
-						executorService.execute(
-							new CommandPropagatorThread(
-								this, mirrorSlave, targetSlave));
-
-						_busySlaves.add(mirrorSlave);
-						_busySlaves.add(targetSlave);
-					}
-
-					_mirrorSlaves.removeAll(_busySlaves);
-				}
-
+			while (_finishedSlaves.size() + _errorSlaves.size() < _targetSlaves.size()) {
 				StringBuffer sb = new StringBuffer();
 
 				sb.append("Average thread duration: ");
@@ -78,7 +71,7 @@ public class CommandPropagator {
 				sb.append("ms\nBusy slaves:");
 				sb.append(_busySlaves.size());
 				sb.append("\nMirror slaves:");
-				sb.append(_mirrorSlaves.size());
+				sb.append(_finishedSlaves.size());
 				sb.append("\nTarget slaves:");
 				sb.append(_targetSlaves.size());
 				sb.append("\nTotal duration: ");
@@ -105,75 +98,101 @@ public class CommandPropagator {
 		}
 	}
 
-	private int _executeBashCommands(List<String> commands, String targetSlave)
-		throws InterruptedException, IOException {
-
-		StringBuffer sb = new StringBuffer("ssh ");
-
-		sb.append(targetSlave);
-		sb.append(" '");
-
-		for (int i = 0; i < commands.size(); i++) {
-			sb.append(commands.get(i));
-
-			if (i < (commands.size() -1)) {
-				sb.append(" && ");
-			}
-		}
-
-		sb.append("'");
-
-		Process process = JenkinsResultsParserUtil.executeBashCommands(
-			sb.toString());
-
-		return process.exitValue();
-	}
-
-	private final List<String> _busySlaves = new ArrayList<>();
-	private final List<String> _errorSlaves = new ArrayList<>();
-	private final List<String> _mirrorSlaves = new ArrayList<>();
-	private final List<String> _targetSlaves = new ArrayList<>();
+	private final List<String> _commands = new ArrayList<>();
+	private final List<String> _busySlaves = Collections.synchronizedList(new ArrayList<String>());
+	private final List<String> _errorSlaves = Collections.synchronizedList(new ArrayList<String>());
+	private final List<String> _finishedSlaves = Collections.synchronizedList(new ArrayList<String>());
+	private final List<String> _targetSlaves = Collections.synchronizedList(new ArrayList<String>());
 	private int _threadsCompletedCount;
 	private long _threadsDurationTotal;
 
 
 	private static class CommandPropagatorThread implements Runnable {
-
+		
 		@Override
 		public void run() {
+			List<String> busySlaves = _commandPropagator._busySlaves;
+
+			busySlaves.add(_targetSlave);
+
 			long start = System.currentTimeMillis();
 
-			_duration = System.currentTimeMillis() - start;
+			try {
+				int returnCode = _executeBashCommands();
 
-			synchronized(_commandPropagator) {
-				_commandPropagator._busySlaves.remove(_mirrorSlave);
-				_commandPropagator._busySlaves.remove(_targetSlave);
-				_commandPropagator._mirrorSlaves.add(_mirrorSlave);
-				_commandPropagator._threadsCompletedCount++;
-				_commandPropagator._threadsDurationTotal += _duration;
+				_duration = System.currentTimeMillis() - start;
 
-				if (!_successful) {
-					_commandPropagator._errorSlaves.add(_targetSlave);
+				if (returnCode == 0) {
+					_successful = true;
+					
+					List<String> finishedSlaves = _commandPropagator._finishedSlaves;
 
-					return;
+					finishedSlaves.add(_targetSlave);
 				}
-
-				_commandPropagator._mirrorSlaves.add(_targetSlave);
+				else {
+					_handleError(null);
+				}
+			}
+			catch (Exception ioe) {
+				_handleError(ioe.getMessage());
+			}
+			finally {
+				busySlaves.remove(_targetSlave);
+				synchronized(_commandPropagator) {
+					_commandPropagator._threadsCompletedCount++;
+					_commandPropagator._threadsDurationTotal += _duration;
+				}
 			}
 		}
 
-		private CommandPropagatorThread(
-			CommandPropagator commandPropagator, String mirrorSlave,
-			String targetSlave) {
+		private int _executeBashCommands()
+			throws InterruptedException, IOException {
 
+			StringBuffer sb = new StringBuffer("ssh ");
+
+			sb.append(_targetSlave);
+			sb.append(" '");
+			
+			List<String> commands = _commandPropagator._commands;
+
+			for (int i = 0; i < commands.size(); i++) {
+				sb.append(commands.get(i));
+
+				if (i < (commands.size() -1)) {
+					sb.append(" ; ");
+				}
+			}
+
+			sb.append("'");
+
+			Process process = JenkinsResultsParserUtil.executeBashCommands(
+				sb.toString());
+
+			return process.exitValue();
+		}
+
+		private void _handleError(String errorMessage) {
+			_successful = false;
+			
+			List<String> errorSlaves = _commandPropagator._errorSlaves;
+
+			errorSlaves.add(_targetSlave);
+			
+			System.out.println("Command execution failed on target slave: " + _targetSlave + ".\n");
+			
+			if (errorMessage != null && !errorMessage.isEmpty()) {
+				System.out.println(errorMessage);
+			}
+		}
+
+		private CommandPropagatorThread(CommandPropagator commandPropagator, String targetSlave) {
 			_commandPropagator = commandPropagator;
-			_mirrorSlave = mirrorSlave;
+
 			_targetSlave = targetSlave;
 		}
 
 		private long _duration;
 		private final CommandPropagator _commandPropagator;
-		private final String _mirrorSlave;
 		private boolean _successful;
 		private final String _targetSlave;
 

@@ -47,11 +47,12 @@ public class LiferayAntPlugin implements Plugin<Project> {
 
 		configureArchivesBaseName(project, antBuilder);
 		configureArtifacts(project, antBuilder);
-		configureAntTask(project, BasePlugin.CLEAN_TASK_NAME);
 		configureVersion(project, antBuilder);
+
+		_configureAntTask(project, BasePlugin.CLEAN_TASK_NAME);
 	}
 
-	protected void configureAntTask(Project project, String targetName) {
+	private void _configureAntTask(Project project, String targetName) {
 		String antTaskName = _antTaskNamer.transform(targetName);
 
 		if (targetName.equals(antTaskName)) {

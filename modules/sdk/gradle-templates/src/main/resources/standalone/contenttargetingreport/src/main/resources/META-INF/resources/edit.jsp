@@ -25,10 +25,10 @@ Map<String, Object> context = (Map<String, Object>)request.getAttribute("context
 
 <liferay-ui:message key="these-are-custom-settings-for-users-configuring-your-report" />
 
-<aui:select name="setting1" value="<%= GetterUtil.getString(context.get("setting1")) %>">
+<aui:select name="setting1" value='<%= GetterUtil.getString(context.get("setting1")) %>'>
 	<aui:option label="A" value="A" />
 	<aui:option label="B" value="B" />
 	<aui:option label="C" value="C" />
 </aui:select>
 
-<aui:input name="setting2" value="<%= GetterUtil.getString(context.get("setting2")) %>" />
+<aui:input name="setting2" value='<%= GetterUtil.getString(context.get("setting2")) %>' />

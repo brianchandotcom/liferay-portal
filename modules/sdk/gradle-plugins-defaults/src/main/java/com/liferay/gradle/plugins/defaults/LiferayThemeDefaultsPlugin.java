@@ -50,6 +50,7 @@ import org.gradle.api.plugins.MavenPlugin;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.Upload;
+import org.gradle.api.tasks.bundling.Zip;
 
 /**
  * @author Andrea Di Giorgi
@@ -64,6 +65,9 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 
 	public static final String WRITE_PARENT_THEMES_DIGEST_TASK_NAME =
 		"writeParentThemesDigest";
+
+	public static final String ZIP_RESOURCES_IMPORTER_ARCHIVES_TASK_NAME =
+		"zipResourcesImporterArchives";
 
 	@Override
 	public void apply(Project project) {
@@ -95,11 +99,22 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 		final ReplaceRegexTask updateVersionTask = addTaskUpdateVersion(
 			project, writeDigestTask);
 
+		File resourcesImporterArchivesDir = project.file(
+			"src/WEB-INF/src/resources-importer");
+		File resourcesImporterExpandedArchivesDir = project.file(
+			"resources-importer");
+
+		Task zipResourcesImporterArchivesTask = addTaskZipDirectories(
+			project, ZIP_RESOURCES_IMPORTER_ARCHIVES_TASK_NAME,
+			resourcesImporterExpandedArchivesDir, resourcesImporterArchivesDir,
+			"lar");
+
 		configureDeployDir(project);
 		configureProject(project);
 
 		configureTasksExecuteGulp(
-			project, expandFrontendCSSCommonTask, frontendThemeStyledProject,
+			project, expandFrontendCSSCommonTask,
+			zipResourcesImporterArchivesTask, frontendThemeStyledProject,
 			frontendThemeUnstyledProject);
 
 		project.afterEvaluate(
@@ -256,6 +271,57 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 		return writeDigestTask;
 	}
 
+	protected Task addTaskZipDirectories(
+		Project project, String taskName, File rootDir, File destinationDir,
+		String extension) {
+
+		Task task = project.task(taskName);
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("Assembles ");
+		sb.append(extension.toUpperCase());
+		sb.append(" files in ");
+		sb.append(project.relativePath(destinationDir));
+		sb.append(" from the subdirectories of ");
+		sb.append(project.relativePath(rootDir));
+		sb.append('.');
+
+		task.setDescription(sb.toString());
+
+		File[] dirs = FileUtil.getDirectories(rootDir);
+
+		if (dirs != null) {
+			for (File dir : dirs) {
+				Zip zip = addTaskZipDirectory(
+					project, GradleUtil.getTaskName(taskName, dir), dir,
+					destinationDir, extension);
+
+				task.dependsOn(zip);
+			}
+		}
+
+		return task;
+	}
+
+	protected Zip addTaskZipDirectory(
+		Project project, String taskName, File dir, File destinationDir,
+		String extension) {
+
+		Zip zip = GradleUtil.addTask(project, taskName, Zip.class);
+
+		zip.from(dir);
+		zip.setArchiveName(dir.getName() + "." + extension);
+		zip.setDestinationDir(destinationDir);
+
+		zip.setDescription(
+			"Assembles " + project.relativePath(zip.getArchivePath()) +
+				" with the contents of the " + project.relativePath(dir) +
+					" directory.");
+
+		return zip;
+	}
+
 	protected void applyConfigScripts(Project project) {
 		GradleUtil.applyScript(
 			project,
@@ -307,7 +373,7 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 
 	protected void configureTaskExecuteGulp(
 		ExecuteGulpTask executeGulpTask, final Copy expandFrontendCSSCommonTask,
-		Project frontendThemeStyledProject,
+		Task zipResourcesImporterLARsTask, Project frontendThemeStyledProject,
 		Project frontendThemeUnstyledProject) {
 
 		executeGulpTask.args(
@@ -322,7 +388,8 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 
 			});
 
-		executeGulpTask.dependsOn(expandFrontendCSSCommonTask);
+		executeGulpTask.dependsOn(
+			expandFrontendCSSCommonTask, zipResourcesImporterLARsTask);
 
 		configureTaskExecuteGulpParentTheme(
 			executeGulpTask, frontendThemeStyledProject, "styled");
@@ -357,6 +424,7 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 
 	protected void configureTasksExecuteGulp(
 		Project project, final Copy expandFrontendCSSCommonTask,
+		final Task assembleResourcesImporterArchivesTask,
 		final Project frontendThemeStyledProject,
 		final Project frontendThemeUnstyledProject) {
 
@@ -370,6 +438,7 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 				public void execute(ExecuteGulpTask executeGulpTask) {
 					configureTaskExecuteGulp(
 						executeGulpTask, expandFrontendCSSCommonTask,
+						assembleResourcesImporterArchivesTask,
 						frontendThemeStyledProject,
 						frontendThemeUnstyledProject);
 				}

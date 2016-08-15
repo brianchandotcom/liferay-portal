@@ -123,7 +123,7 @@
 				<then>
 					<exec dir="${elastic.kibana.dir}/bin" executable="/bin/bash">
 						<arg value="-c" />
-						<arg line="./kibana plugin --install marvel file:///${elasticsearch.dir}/${elastic.marvel.zip.url}" />
+						<arg value="./kibana plugin --install marvel --url file:///${elasticsearch.dir}/${elastic.marvel.zip.name}" />
 					</exec>
 				</then>
 				<elseif>
@@ -131,7 +131,7 @@
 					<then>
 						<exec dir="${elastic.kibana.dir}/bin" executable="cmd">
 							<arg value="/c" />
-							<arg line="kibana plugin --install marvel file:///${elasticsearch.dir}/${elastic.marvel.zip.url}" />
+							<arg value="kibana plugin --install marvel --url file:///${elasticsearch.dir}/${elastic.marvel.zip.name}" />
 						</exec>
 					</then>
 				</elseif>

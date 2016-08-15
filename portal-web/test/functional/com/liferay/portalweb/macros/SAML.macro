@@ -21,6 +21,12 @@
 			<var name="samlEntityID" value="samlidp" />
 		</execute>
 
+		<!-- Navigate away from SAML portlet after enabling SAML in order to avoid LPS-65869 -->
+
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="SAML Admin" />
+		</execute>
+
 		<execute macro="SAMLNavigation#gotoIdentityProvider" />
 
 		<execute macro="SAMLPortlet#configureIdentityProvider" />

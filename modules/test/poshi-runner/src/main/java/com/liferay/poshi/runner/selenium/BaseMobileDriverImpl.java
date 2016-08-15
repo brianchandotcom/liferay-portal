@@ -598,8 +598,8 @@ public abstract class BaseMobileDriverImpl
 	}
 
 	@Override
-	public Number getElementHeight(String locator) {
-		throw new UnsupportedOperationException();
+	public int getElementHeight(String locator) {
+		return WebDriverHelper.getElementHeight(this, locator);
 	}
 
 	@Override
@@ -640,8 +640,8 @@ public abstract class BaseMobileDriverImpl
 	}
 
 	@Override
-	public Number getElementWidth(String locator) {
-		throw new UnsupportedOperationException();
+	public int getElementWidth(String locator) {
+		return WebDriverHelper.getElementWidth(this, locator);
 	}
 
 	@Override

@@ -74,7 +74,10 @@ public class ServiceWrapperRegistry {
 				return _getServiceBag(serviceWrapper);
 			}
 			catch (Throwable t) {
-				_log.error(t, t);
+				_log.error(
+					"Error obtaining service bag for : " +
+						serviceWrapper.getClass(),
+					t);
 			}
 			finally {
 				ServiceBeanAopCacheManagerUtil.reset();

@@ -232,26 +232,6 @@ public abstract class BaseMobileDriverImpl
 	}
 
 	@Override
-	public String getOutputDirName() {
-		return _OUTPUT_DIR_NAME;
-	}
-
-	@Override
-	public String getPrimaryTestSuiteName() {
-		return _primaryTestSuiteName;
-	}
-
-	@Override
-	public String getSikuliImagesDirName() {
-		return _SIKULI_IMAGES_DIR_NAME;
-	}
-
-	@Override
-	public String getTestDependenciesDirName() {
-		return _TEST_DEPENDENCIES_DIR_NAME;
-	}
-
-	@Override
 	public String getText(String locator) throws Exception {
 		return getText(locator, null);
 	}
@@ -547,11 +527,6 @@ public abstract class BaseMobileDriverImpl
 	}
 
 	@Override
-	public void setPrimaryTestSuiteName(String primaryTestSuiteName) {
-		_primaryTestSuiteName = primaryTestSuiteName;
-	}
-
-	@Override
 	public void setTimeout(String timeout) {
 		throw new UnsupportedOperationException();
 	}
@@ -643,15 +618,6 @@ public abstract class BaseMobileDriverImpl
 	protected void tap(String locator) {
 	}
 
-	private static final String _OUTPUT_DIR_NAME = PropsValues.OUTPUT_DIR_NAME;
-
-	private static final String _SIKULI_IMAGES_DIR_NAME =
-		PropsValues.TEST_DEPENDENCIES_DIR_NAME + "//sikuli//linux//";
-
-	private static final String _TEST_DEPENDENCIES_DIR_NAME =
-		PropsValues.TEST_DEPENDENCIES_DIR_NAME;
-
 	private final MobileDriver _mobileDriver;
-	private String _primaryTestSuiteName;
 
 }

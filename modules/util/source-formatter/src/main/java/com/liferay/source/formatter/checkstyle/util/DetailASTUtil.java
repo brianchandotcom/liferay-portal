@@ -25,6 +25,8 @@ import java.util.List;
  */
 public class DetailASTUtil {
 
+	public static final int ALL_TYPES = -1;
+
 	public static DetailAST findTypeAST(DetailAST methodAST, String name) {
 		List<DetailAST> localVariableDefASTList =
 			DetailASTUtil.getAllChildTokens(
@@ -189,7 +191,7 @@ public class DetailASTUtil {
 		DetailAST childAST = detailAST.getFirstChild();
 
 		while (childAST != null) {
-			if (childAST.getType() == tokenType) {
+			if ((tokenType == childAST.getType()) || (tokenType == ALL_TYPES)) {
 				list.add(childAST);
 			}
 

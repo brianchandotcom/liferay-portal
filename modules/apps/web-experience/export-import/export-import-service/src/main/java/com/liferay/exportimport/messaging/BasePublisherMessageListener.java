@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.messaging.BaseMessageStatusMessageListener;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.messaging.sender.SingleDestinationMessageSender;
-import com.liferay.portal.kernel.messaging.sender.SingleDestinationMessageSenderFactoryUtil;
+import com.liferay.portal.kernel.messaging.sender.SingleDestinationMessageSenderFactory;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerEventMessageListenerWrapper;
@@ -50,7 +50,25 @@ import org.osgi.service.component.ComponentContext;
 public abstract class BasePublisherMessageListener
 	extends BaseMessageStatusMessageListener {
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *  #initialize(ComponentContext, SingleDestinationMessageSenderFactory))}
+	 */
 	protected void initialize(ComponentContext componentContext) {
+		initialize(componentContext, null);
+	}
+
+	protected void initialize(
+		ComponentContext componentContext,
+		SingleDestinationMessageSenderFactory
+			singleDestinationMessageSenderFactory) {
+
+		if (singleDestinationMessageSenderFactory == null) {
+			throw new IllegalArgumentException(
+				"SingleDestinationMessageSenderFactory reference cannot be " +
+					"null");
+		}
+
 		BundleContext bundleContext = componentContext.getBundleContext();
 
 		Dictionary<String, Object> properties =
@@ -60,7 +78,7 @@ public abstract class BasePublisherMessageListener
 			"message.status.destination.name");
 
 		SingleDestinationMessageSender singleDestinationMessageSender =
-			SingleDestinationMessageSenderFactoryUtil.
+			singleDestinationMessageSenderFactory.
 				createSingleDestinationMessageSender(
 					messageStatusDestinationName);
 

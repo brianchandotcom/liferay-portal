@@ -73,7 +73,7 @@ public class CommandPropagator {
 				sb.append(getAverageThreadDuration());
 				sb.append("ms\nBusy slaves:");
 				sb.append(_busySlaves.size());
-				sb.append("\nMirror slaves:");
+				sb.append("\nFinished slaves:");
 				sb.append(_finishedSlaves.size());
 				sb.append("\nTarget slaves:");
 				sb.append(_targetSlaves.size());

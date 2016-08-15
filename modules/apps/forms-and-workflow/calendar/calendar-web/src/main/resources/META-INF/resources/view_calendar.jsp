@@ -27,6 +27,33 @@ JSONArray otherCalendarsJSONArray = CalendarUtil.toCalendarsJSONArray(themeDispl
 boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, "com.liferay.calendar.web_columnOptionsVisible", "true"));
 %>
 
+<aui:script use="liferay-calendar-container,liferay-component">
+	Liferay.component(
+		'<portlet:namespace />calendarContainer',
+		function() {
+			var calendarContainer = new Liferay.CalendarContainer(
+				{
+					namespace: '<portlet:namespace />'
+				}
+			);
+
+			var destroyInstance = function(event) {
+				if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {
+					calendarContainer.destroy();
+
+					Liferay.component('<portlet:namespace />calendarContainer', null);
+
+					Liferay.detach('destroyPortlet', destroyInstance);
+				}
+			};
+
+			Liferay.on('destroyPortlet', destroyInstance);
+
+			return calendarContainer;
+		}
+	);
+</aui:script>
+
 <aui:container cssClass="calendar-portlet-column-parent">
 	<aui:row>
 		<c:if test="<%= !displaySchedulerOnly %>">
@@ -158,7 +185,7 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 <aui:script use="liferay-calendar-list,liferay-scheduler,liferay-store,liferay-calendar-util">
 	Liferay.CalendarUtil.USER_CLASS_NAME_ID = <%= PortalUtil.getClassNameId(User.class) %>;
 
-	Liferay.CalendarUtil.DEFAULT_USER_CALENDAR_ID = <%= (defaultCalendar != null) ? defaultCalendar.getCalendarId() : 0 %>;
+	var calendarContainer = Liferay.component('<portlet:namespace />calendarContainer');
 
 	var syncCalendarsMap = function() {
 		var calendarLists = [];
@@ -175,7 +202,7 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 			calendarLists.push(window.<portlet:namespace />siteCalendarList);
 		</c:if>
 
-		Liferay.CalendarUtil.syncCalendarsMap(calendarLists);
+		calendarContainer.syncCalendarsMap(calendarLists);
 	};
 
 	window.<portlet:namespace />syncCalendarsMap = syncCalendarsMap;
@@ -279,7 +306,7 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 	syncCalendarsMap();
 
 	A.each(
-		Liferay.CalendarUtil.availableCalendars,
+		calendarContainer.get('availableCalendars'),
 		function(item, index) {
 			item.on(
 				{
@@ -310,9 +337,11 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 
 	<portlet:namespace />scheduler.load();
 
+	var calendarContainer = Liferay.component('<portlet:namespace />calendarContainer');
+
 	new Liferay.CalendarSessionListener(
 		{
-			calendars: Liferay.CalendarUtil.availableCalendars,
+			calendars: calendarContainer.get('availableCalendars'),
 			scheduler: <portlet:namespace />scheduler
 		}
 	);

@@ -207,6 +207,32 @@ while (manageableCalendarsIterator.hasNext()) {
 }
 %>
 
+<aui:script use="liferay-calendar-container,liferay-component">
+	Liferay.component(
+		'<portlet:namespace />calendarContainer',
+		function() {
+			var calendarContainer = new Liferay.CalendarContainer(
+				{
+					namespace: '<portlet:namespace />'
+				}
+			);
+
+			var destroyInstance = function(event) {
+				if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {
+					calendarContainer.destroy();
+
+					Liferay.component('<portlet:namespace />calendarContainer', null);
+					Liferay.detach('destroyPortlet', destroyInstance);
+				}
+			};
+
+			Liferay.on('destroyPortlet', destroyInstance);
+
+			return calendarContainer;
+		}
+	);
+</aui:script>
+
 <liferay-portlet:actionURL name="updateFormCalendarBooking" var="updateFormCalendarBookingURL" />
 
 <aui:form action="<%= updateFormCalendarBookingURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "updateCalendarBooking();" %>'>
@@ -452,7 +478,8 @@ while (manageableCalendarsIterator.hasNext()) {
 
 			<c:if test="<%= invitable %>">
 				var calendarId = A.one('#<portlet:namespace />calendarId').val();
-				var childCalendarIds = A.Object.keys(Liferay.CalendarUtil.availableCalendars);
+				var calendarContainer = Liferay.component('<portlet:namespace />calendarContainer');
+				var childCalendarIds = A.Object.keys(calendarContainer.get('availableCalendars'));
 
 				A.Array.remove(childCalendarIds, A.Array.indexOf(childCalendarIds, calendarId));
 
@@ -485,6 +512,8 @@ while (manageableCalendarsIterator.hasNext()) {
 </aui:script>
 
 <aui:script use="json,liferay-calendar-interval-selector,liferay-calendar-interval-selector-scheduler-event-link,liferay-calendar-list,liferay-calendar-recurrence-util,liferay-calendar-reminders,liferay-calendar-simple-menu,liferay-calendar-util">
+	var calendarContainer = Liferay.component('<portlet:namespace />calendarContainer');
+
 	var defaultCalendarId = <%= calendarId %>;
 
 	var scheduler = window.<portlet:namespace />scheduler;
@@ -504,7 +533,7 @@ while (manageableCalendarsIterator.hasNext()) {
 	);
 
 	var syncCalendarsMap = function() {
-		Liferay.CalendarUtil.syncCalendarsMap(
+		calendarContainer.syncCalendarsMap(
 			[
 				window.<portlet:namespace />calendarListAccepted,
 
@@ -518,14 +547,14 @@ while (manageableCalendarsIterator.hasNext()) {
 		);
 
 		A.each(
-			Liferay.CalendarUtil.availableCalendars,
+			calendarContainer.get('availableCalendars'),
 			function(item, index) {
 				item.set('disabled', true);
 			}
 		);
 	};
 
-	var calendarsMenu = Liferay.CalendarUtil.getCalendarsMenu(
+	var calendarsMenu = calendarContainer.getCalendarsMenu(
 		{
 			content: '#<portlet:namespace />schedulerContainer',
 			defaultCalendarId: defaultCalendarId,
@@ -725,7 +754,7 @@ while (manageableCalendarsIterator.hasNext()) {
 
 		<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="calendarResources" var="calendarResourcesURL"></liferay-portlet:resourceURL>
 
-		Liferay.CalendarUtil.createCalendarsAutoComplete(
+		calendarContainer.createCalendarsAutoComplete(
 			'<%= calendarResourcesURL %>',
 			inviteResourcesInput,
 			function(event) {

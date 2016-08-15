@@ -1,7 +1,6 @@
 AUI.add(
 	'liferay-calendar-util',
 	function(A) {
-		var AObject = A.Object;
 		var DateMath = A.DataType.DateMath;
 		var Lang = A.Lang;
 		var LString = Lang.String;
@@ -65,9 +64,6 @@ AUI.add(
 			PORTLET_NAMESPACE: STR_BLANK,
 			USER_TIME_ZONE: 'UTC',
 
-			availableCalendars: {},
-			visibleCalendars: {},
-
 			adjustSchedulerEventDisplayTime: function(schedulerEvent) {
 				var instance = this;
 
@@ -91,50 +87,6 @@ AUI.add(
 						silent: true
 					}
 				);
-			},
-
-			createCalendarsAutoComplete: function(resourceURL, input, afterSelectFn) {
-				var instance = this;
-
-				input.plug(
-					A.Plugin.AutoComplete,
-					{
-						activateFirstItem: true,
-						after: {
-							select: afterSelectFn
-						},
-						maxResults: 20,
-						requestTemplate: '&' + instance.PORTLET_NAMESPACE + 'keywords={query}',
-						resultFilters: function(query, results) {
-							return results.filter(
-								function(item, index) {
-									return !instance.availableCalendars[item.raw.calendarId];
-								}
-							);
-						},
-						resultFormatter: function(query, results) {
-							return results.map(
-								function(result) {
-									var calendar = result.raw;
-									var calendarResourceName = calendar.calendarResourceName;
-									var name = calendar.name;
-
-									if (name !== calendarResourceName) {
-										name = [calendarResourceName, STR_DASH, name].join(STR_SPACE);
-									}
-
-									return A.Highlight.words(name, query);
-								}
-							);
-						},
-						resultHighlighter: 'wordMatch',
-						resultTextLocator: 'calendarResourceName',
-						source: resourceURL,
-						width: 'auto'
-					}
-				);
-
-				input.ac.get('boundingBox').setStyle('min-width', input.outerWidth());
 			},
 
 			createSchedulerEvent: function(calendarBooking) {
@@ -291,98 +243,6 @@ AUI.add(
 				);
 			},
 
-			getCalendarsMenu: function(config) {
-				var instance = this;
-
-				var toggler = new A.Toggler(
-					{
-						after: {
-							expandedChange: function(event) {
-								if (event.newVal) {
-									var activeView = config.scheduler.get('activeView');
-
-									activeView._fillHeight();
-								}
-							}
-						},
-						animated: true,
-						content: config.content,
-						expanded: false,
-						header: config.header
-					}
-				);
-
-				var items = [
-					{
-						caption: Liferay.Language.get('check-availability'),
-						fn: function(event) {
-							var instance = this;
-
-							A.each(
-								CalendarUtil.availableCalendars,
-								function(item, index) {
-									item.set('visible', false);
-								}
-							);
-
-							var calendarList = instance.get('host');
-
-							calendarList.activeItem.set('visible', true);
-
-							toggler.expand();
-							instance.hide();
-
-							return false;
-						},
-						id: 'check-availability'
-					}
-				];
-
-				var calendarsMenu = {
-					items: items
-				};
-
-				if (config.invitable) {
-					items.push(
-						{
-							caption: Liferay.Language.get('remove'),
-							fn: function(event) {
-								var instance = this;
-
-								var calendarList = instance.get('host');
-
-								calendarList.remove(calendarList.activeItem);
-
-								instance.hide();
-							},
-							id: 'remove'
-						}
-					);
-
-					calendarsMenu.on = {
-						visibleChange: function(event) {
-							var instance = this;
-
-							if (event.newVal) {
-								var calendarList = instance.get('host');
-
-								var calendar = calendarList.activeItem;
-
-								var hiddenItems = [];
-
-								if (calendar.get('calendarId') === config.defaultCalendarId) {
-									hiddenItems.push('remove');
-								}
-
-								instance.set('hiddenItems', hiddenItems);
-							}
-						}
-					};
-				}
-
-				return calendarsMenu;
-			},
-
 			getCurrentTime: function(callback) {
 				var instance = this;
 
@@ -422,12 +282,6 @@ AUI.add(
 				return output;
 			},
 
-			getDefaultUserCalendar: function() {
-				var instance = this;
-
-				return instance.availableCalendars[CalendarUtil.DEFAULT_USER_CALENDAR_ID];
-			},
-
 			getEvent: function(calendarBookingId, success, failure) {
 				var instance = this;
 
@@ -444,10 +298,8 @@ AUI.add(
 				);
 			},
 
-			getEvents: function(startDate, endDate, status, callback) {
+			getEvents: function(calendarIds, startDate, endDate, status, callback) {
 				var instance = this;
-
-				var calendarIds = AObject.keys(instance.availableCalendars);
 
 				instance.invokeResourceURL(
 					{
@@ -643,8 +495,10 @@ AUI.add(
 				var oldCalendarId = schedulerEvent.get('calendarId');
 
 				if (scheduler) {
-					var newCalendar = instance.availableCalendars[newCalendarId];
-					var oldCalendar = instance.availableCalendars[oldCalendarId];
+					var calendarContainer = scheduler.get('calendarContainer');
+
+					var newCalendar = calendarContainer.getCalendar(newCalendarId);
+					var oldCalendar = calendarContainer.getCalendar(oldCalendarId);
 
 					if (oldCalendar !== newCalendar) {
 						oldCalendar.remove(schedulerEvent);
@@ -670,51 +524,6 @@ AUI.add(
 
 					scheduler.syncEventsUI();
 				}
-			},
-
-			syncCalendarsMap: function(calendarLists) {
-				var instance = this;
-
-				var availableCalendars = instance.availableCalendars = {};
-				var visibleCalendars = instance.visibleCalendars = {};
-
-				calendarLists.forEach(
-					function(calendarList) {
-						var calendars = calendarList.get('calendars');
-
-						var defaultCalendarId = CalendarUtil.DEFAULT_USER_CALENDAR_ID;
-
-						A.each(
-							calendars,
-							function(item, index) {
-								var calendarId = item.get('calendarId');
-
-								availableCalendars[calendarId] = item;
-
-								if (item.get('visible')) {
-									visibleCalendars[calendarId] = item;
-								}
-
-								if (item.get('defaultCalendar')) {
-									var calendarResourceId = item.get('calendarResourceId');
-
-									if (calendarResourceId == Liferay.CalendarUtil.GROUP_CALENDAR_RESOURCE_ID && item.get('permissions').MANAGE_BOOKINGS) {
-										defaultCalendarId = calendarId;
-									}
-									else if (calendarResourceId == Liferay.CalendarUtil.USER_CALENDAR_RESOURCE_ID && defaultCalendarId == null) {
-										defaultCalendarId = calendarId;
-									}
-								}
-							}
-						);
-
-						if (defaultCalendarId != null) {
-							CalendarUtil.DEFAULT_USER_CALENDAR_ID = defaultCalendarId;
-						}
-					}
-				);
-
-				return availableCalendars;
 			},
 
 			toLocalTime: function(utc) {

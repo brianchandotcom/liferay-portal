@@ -1628,7 +1628,7 @@
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewPG">
-			<var name="assetContent" value="Start Date" />
+			<var name="assetContent" value="Starts" />
 			<var name="assetTitle" value="Calendar Event Title" />
 			<var name="relatedAssetTitle" value="Blogs Entry Title" />
 		</execute>

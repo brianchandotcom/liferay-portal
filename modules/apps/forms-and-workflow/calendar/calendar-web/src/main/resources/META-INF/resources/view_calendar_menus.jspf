@@ -19,6 +19,8 @@ String backURL = PortalUtil.getCurrentURL(request);
 %>
 
 <aui:script use="aui-toggler,calendar,liferay-calendar-simple-menu,liferay-calendar-simple-color-picker,liferay-calendar-util,liferay-store">
+	var calendarContainer = Liferay.component('<portlet:namespace />calendarContainer');
+
 	window.<portlet:namespace />calendarListsMenu = new Liferay.SimpleMenu(
 		{
 			align: {
@@ -504,7 +506,7 @@ String backURL = PortalUtil.getCurrentURL(request);
 
 		<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="calendarResources" var="calendarResourcesURL" />
 
-		Liferay.CalendarUtil.createCalendarsAutoComplete(
+		calendarContainer.createCalendarsAutoComplete(
 			'<%= calendarResourcesURL %>',
 			addOtherCalendarInput,
 			function(event) {
@@ -574,7 +576,7 @@ String backURL = PortalUtil.getCurrentURL(request);
 		miniCalendarEndDate.setHours(23, 59, 59, 999);
 
 		Liferay.CalendarUtil.getCalendarRenderingRules(
-			A.Object.keys(Liferay.CalendarUtil.visibleCalendars),
+			A.Object.keys(calendarContainer.get('visibleCalendars')),
 			Liferay.CalendarUtil.toUTC(miniCalendarStartDate),
 			Liferay.CalendarUtil.toUTC(miniCalendarEndDate),
 			'busy',

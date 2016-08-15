@@ -340,12 +340,6 @@ logExceptionsOnly=false</echo>
 					<arg value="-c" />
 					<arg value="./elasticsearch -Des.insecure.allow.root=true -d -p pid-elasticsearch" />
 				</exec>
-
-				<waitfor maxwait="10" maxwaitunit="second" timeoutproperty="elasticsearch.server.not.started">
-					<http url="http://localhost:9200/" />
-				</waitfor>
-
-				<fail if="elasticsearch.server.not.started" message="Elasticsearch server failed to initialize." />
 			</then>
 			<elseif>
 				<os family="windows" />
@@ -354,15 +348,22 @@ logExceptionsOnly=false</echo>
 						<arg value="/c" />
 						<arg value="elasticsearch -d -p pid-elasticsearch" />
 					</exec>
-
-					<waitfor maxwait="10" maxwaitunit="second" timeoutproperty="elasticsearch.server.not.started">
-						<http url="http://localhost:9200/" />
-					</waitfor>
-
-					<fail if="elasticsearch.server.not.started" message="Elasticsearch server failed to initialize." />
 				</then>
 			</elseif>
 		</if>
+
+        <if>
+        	<not>
+            	<equals arg1="${elasticsearch.shield.enabled}" arg2="true" />
+            </not>
+            <then>
+            	<waitfor maxwait="10" maxwaitunit="second" timeoutproperty="elasticsearch.server.not.started">
+            		<http url="http://localhost:9200/" />
+            	</waitfor>
+
+            	<fail if="elasticsearch.server.not.started" message="Elasticsearch server failed to initialize." />
+            </then>
+        </if>
 	</target>
 
 	<target name="start-kibana">

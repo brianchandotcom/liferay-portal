@@ -62,6 +62,9 @@ define("frontend-js-spa-web@1.0.11/liferay/app/App.es", ['exports', 'senna/src/a
 			_this.portletsBlacklist = {};
 			_this.validStatusCodes = [];
 
+			_this.timeout = Math.max(Liferay.SPA.requestTimeout, 0) || _Utils2.default.getMaxTimeout();
+			_this.timeoutAlert = null;
+
 			var exceptionsSelector = ':not([target="_blank"]):not([data-senna-off]):not([data-resource-href])';
 
 			_this.setFormSelector('form' + exceptionsSelector);
@@ -154,6 +157,11 @@ define("frontend-js-spa-web@1.0.11/liferay/app/App.es", ['exports', 'senna/src/a
 				path: event.path
 			});
 
+			if (!this.pendingNavigate) {
+				this._clearRequestTimer();
+				this._hideTimeoutAlert();
+			}
+
 			if (event.error) {
 				if (event.error.invalidStatus || event.error.requestError || event.error.timeout) {
 					if (event.form) {
@@ -180,6 +188,8 @@ define("frontend-js-spa-web@1.0.11/liferay/app/App.es", ['exports', 'senna/src/a
 				app: this,
 				path: event.path
 			});
+
+			this._startRequestTimer(event.path);
 		};
 
 		LiferayApp.prototype.setPortletsBlacklist = function setPortletsBlacklist(portletsBlacklist) {
@@ -188,6 +198,56 @@ define("frontend-js-spa-web@1.0.11/liferay/app/App.es", ['exports', 'senna/src/a
 
 		LiferayApp.prototype.setValidStatusCodes = function setValidStatusCodes(validStatusCodes) {
 			this.validStatusCodes = validStatusCodes;
+		};
+
+		LiferayApp.prototype._clearRequestTimer = function _clearRequestTimer() {
+			if (this.requestTimer) {
+				clearTimeout(this.requestTimer);
+			}
+		};
+
+		LiferayApp.prototype._createTimeoutNotification = function _createTimeoutNotification() {
+			var instance = this;
+
+			AUI().use('liferay-notification', function () {
+				instance.timeoutAlert = new Liferay.Notification({
+					closeable: true,
+					delay: {
+						hide: 0,
+						show: 0
+					},
+					duration: 500,
+					message: Liferay.SPA.userNotification.message,
+					title: Liferay.SPA.userNotification.title,
+					type: 'warning'
+				}).render('body');
+			});
+		};
+
+		LiferayApp.prototype._hideTimeoutAlert = function _hideTimeoutAlert() {
+			if (this.timeoutAlert) {
+				this.timeoutAlert.hide();
+			}
+		};
+
+		LiferayApp.prototype._startRequestTimer = function _startRequestTimer(path) {
+			var _this2 = this;
+
+			this._clearRequestTimer();
+
+			if (Liferay.SPA.userNotification.timeout > 0) {
+				this.requestTimer = setTimeout(function () {
+					Liferay.fire('spaRequestTimeout', {
+						path: path
+					});
+
+					if (!_this2.timeoutAlert) {
+						_this2._createTimeoutNotification();
+					} else {
+						_this2.timeoutAlert.show();
+					}
+				}, Liferay.SPA.userNotification.timeout);
+			}
 		};
 
 		return LiferayApp;

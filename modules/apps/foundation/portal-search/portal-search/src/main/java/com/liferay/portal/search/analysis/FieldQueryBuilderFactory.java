@@ -12,17 +12,16 @@
  * details.
  */
 
-package com.liferay.portal.search.buffer;
+package com.liferay.portal.search.analysis;
 
 import aQute.bnd.annotation.ProviderType;
 
 /**
- * @author Michael C. Han
+ * @author Rodrigo Paulino
  */
 @ProviderType
-public interface IndexerRequestBufferOverflowHandler {
+public interface FieldQueryBuilderFactory {
 
-	public void bufferOverflowed(
-		IndexerRequestBuffer indexerRequestBuffer, int maxBufferSize);
+	public FieldQueryBuilder getQueryBuilder(String fieldName);
 
 }

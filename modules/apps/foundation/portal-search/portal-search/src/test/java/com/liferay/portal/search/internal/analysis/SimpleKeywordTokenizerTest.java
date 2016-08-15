@@ -14,6 +14,8 @@
 
 package com.liferay.portal.search.internal.analysis;
 
+import com.liferay.portal.kernel.util.StringPool;
+
 import java.util.List;
 
 import org.junit.Assert;
@@ -26,86 +28,76 @@ public class SimpleKeywordTokenizerTest {
 
 	@Test
 	public void testRequiresTokenization() {
-		SimpleKeywordTokenizer simpleKeywordTokenizer =
-			new SimpleKeywordTokenizer();
-
-		Assert.assertTrue(
-			simpleKeywordTokenizer.requiresTokenization(
-				"This is a simple test"));
-		Assert.assertTrue(
-			simpleKeywordTokenizer.requiresTokenization(
-				"This \"is a simple\" test"));
-		Assert.assertFalse(
-			simpleKeywordTokenizer.requiresTokenization("\"is a simple\""));
+		Assert.assertTrue(requiresTokenization("This is a simple test"));
+		Assert.assertTrue(requiresTokenization("This \"is a simple\" test"));
+		Assert.assertFalse(requiresTokenization("\"is a simple\""));
 	}
 
 	@Test
 	public void testTokenize() {
-		SimpleKeywordTokenizer simpleKeywordTokenizer =
-			new SimpleKeywordTokenizer();
+		assertTokenize(
+			"This is a simple token test",
+			"[This, is, a, simple, token, test]");
+	}
 
-		List<String> tokens = simpleKeywordTokenizer.tokenize(
-			"This is a simple token test");
+	@Test(expected = NullPointerException.class)
+	public void testTokenizeNull() {
+		simpleKeywordTokenizer.tokenize(null);
+	}
 
-		Assert.assertEquals(6, tokens.size());
-		Assert.assertEquals("This", tokens.get(0));
-		Assert.assertEquals("is", tokens.get(1));
-		Assert.assertEquals("a", tokens.get(2));
-		Assert.assertEquals("simple", tokens.get(3));
-		Assert.assertEquals("token", tokens.get(4));
-		Assert.assertEquals("test", tokens.get(5));
+	@Test
+	public void testTokenizeStringBlank() {
+		assertTokenize(StringPool.BLANK, "[]");
+	}
+
+	@Test
+	public void testTokenizeStringNull() {
+		assertTokenize(StringPool.NULL, "[null]");
 	}
 
 	@Test
 	public void testTokenizeWithQuote() {
-		SimpleKeywordTokenizer simpleKeywordTokenizer =
-			new SimpleKeywordTokenizer();
+		assertTokenize(
+			"This is a \"simple token\" test",
+			"[This, is, a, \"simple token\", test]");
 
-		List<String> tokens = simpleKeywordTokenizer.tokenize(
-			"This is a \"simple token\" test");
+		assertTokenize(
+			"This \"is a\" simple token test",
+			"[This, \"is a\", simple, token, test]");
 
-		Assert.assertEquals(5, tokens.size());
-		Assert.assertEquals("This", tokens.get(0));
-		Assert.assertEquals("is", tokens.get(1));
-		Assert.assertEquals("a", tokens.get(2));
-		Assert.assertEquals("\"simple token\"", tokens.get(3));
-		Assert.assertEquals("test", tokens.get(4));
-
-		List<String> tokens2 = simpleKeywordTokenizer.tokenize(
-			"This \"is a\" simple token test");
-
-		Assert.assertEquals(5, tokens.size());
-		Assert.assertEquals("This", tokens2.get(0));
-		Assert.assertEquals("\"is a\"", tokens2.get(1));
-		Assert.assertEquals("simple", tokens2.get(2));
-		Assert.assertEquals("token", tokens2.get(3));
-		Assert.assertEquals("test", tokens2.get(4));
+		assertTokenize(
+			"\"This is a token test\"", "[\"This is a token test\"]");
 	}
 
 	@Test
 	public void testTokenizeWithQuoteAndMixedSpace() {
-		SimpleKeywordTokenizer simpleKeywordTokenizer =
-			new SimpleKeywordTokenizer();
+		assertTokenize(
+			"This   is  a \"simple token\"   test",
+			"[This, is, a, \"simple token\", test]");
 
-		List<String> tokens = simpleKeywordTokenizer.tokenize(
-			"This   is  a \"simple token\"   test");
-
-		Assert.assertEquals(5, tokens.size());
-		Assert.assertEquals("This", tokens.get(0));
-		Assert.assertEquals("is", tokens.get(1));
-		Assert.assertEquals("a", tokens.get(2));
-		Assert.assertEquals("\"simple token\"", tokens.get(3));
-		Assert.assertEquals("test", tokens.get(4));
-
-		List<String> tokens2 = simpleKeywordTokenizer.tokenize(
-			"This  is a \"simple   token\"  test");
-
-		Assert.assertEquals(5, tokens2.size());
-		Assert.assertEquals("This", tokens2.get(0));
-		Assert.assertEquals("is", tokens2.get(1));
-		Assert.assertEquals("a", tokens2.get(2));
-		Assert.assertEquals("\"simple   token\"", tokens2.get(3));
-		Assert.assertEquals("test", tokens2.get(4));
+		assertTokenize(
+			"This  is a \"simple   token\"  test",
+			"[This, is, a, \"simple   token\", test]");
 	}
+
+	@Test
+	public void testTokenizeWithSeveralQuotes() {
+		assertTokenize(
+			"\"   This is   \"   a   \"   token test   \"",
+			"[\"   This is   \", a, \"   token test   \"]");
+	}
+
+	protected void assertTokenize(String string, String expected) {
+		List<String> tokens = simpleKeywordTokenizer.tokenize(string);
+
+		Assert.assertEquals(expected, tokens.toString());
+	}
+
+	protected boolean requiresTokenization(String string) {
+		return simpleKeywordTokenizer.requiresTokenization(string);
+	}
+
+	protected final SimpleKeywordTokenizer simpleKeywordTokenizer =
+		new SimpleKeywordTokenizer();
 
 }

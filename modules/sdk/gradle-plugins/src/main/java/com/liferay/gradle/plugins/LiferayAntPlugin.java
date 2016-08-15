@@ -15,6 +15,7 @@
 package com.liferay.gradle.plugins;
 
 import com.liferay.gradle.plugins.internal.util.GradleUtil;
+import com.liferay.gradle.util.StringUtil;
 
 import groovy.lang.Closure;
 
@@ -24,6 +25,7 @@ import org.gradle.api.AntBuilder;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
+import org.gradle.api.Transformer;
 import org.gradle.api.artifacts.ConfigurablePublishArtifact;
 import org.gradle.api.artifacts.Dependency;
 import org.gradle.api.artifacts.dsl.ArtifactHandler;
@@ -41,11 +43,24 @@ public class LiferayAntPlugin implements Plugin<Project> {
 
 		AntBuilder antBuilder = project.getAnt();
 
-		antBuilder.importBuild("build.xml");
+		antBuilder.importBuild("build.xml", _antTaskNamer);
 
 		configureArchivesBaseName(project, antBuilder);
 		configureArtifacts(project, antBuilder);
+		configureAntTask(project, BasePlugin.CLEAN_TASK_NAME);
 		configureVersion(project, antBuilder);
+	}
+
+	protected void configureAntTask(Project project, String targetName) {
+		String antTaskName = _antTaskNamer.transform(targetName);
+
+		if (targetName.equals(antTaskName)) {
+			return;
+		}
+
+		Task task = GradleUtil.getTask(project, targetName);
+
+		task.dependsOn(antTaskName);
 	}
 
 	protected void configureArchivesBaseName(
@@ -89,5 +104,19 @@ public class LiferayAntPlugin implements Plugin<Project> {
 	}
 
 	private static final String _WAR_TASK_NAME = "war";
+
+	private static final Transformer<String, String> _antTaskNamer =
+		new Transformer<String, String>() {
+
+			@Override
+			public String transform(String targetName) {
+				if (targetName.equals(BasePlugin.CLEAN_TASK_NAME)) {
+					targetName = "ant" + StringUtil.capitalize(targetName);
+				}
+
+				return targetName;
+			}
+
+		};
 
 }

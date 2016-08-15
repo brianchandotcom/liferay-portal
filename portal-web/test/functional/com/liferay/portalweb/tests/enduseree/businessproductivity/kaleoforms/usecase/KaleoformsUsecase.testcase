@@ -4640,8 +4640,8 @@
 		</execute>
 
 		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="Separator" />
-			<var name="fieldValue" value="Separator" />
+			<var name="fieldLabel" value="Fieldset" />
+			<var name="fieldValue" value="Fieldset" />
 		</execute>
 
 		<execute macro="Navigator#openURL" />

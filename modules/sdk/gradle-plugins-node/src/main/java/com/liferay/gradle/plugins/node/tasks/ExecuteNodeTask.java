@@ -71,6 +71,8 @@ public class ExecuteNodeTask extends DefaultTask {
 		for (int i = 0; i < npmInstallRetries; i++) {
 			try {
 				_nodeExecutor.execute();
+
+				break;
 			}
 			catch (IOException ioe) {
 				if (logger.isWarnEnabled()) {

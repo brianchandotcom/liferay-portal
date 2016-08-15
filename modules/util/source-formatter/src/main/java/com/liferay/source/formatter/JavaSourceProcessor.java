@@ -36,6 +36,8 @@ import com.thoughtworks.qdox.model.JavaSource;
 import java.io.File;
 import java.io.IOException;
 
+import java.net.UnknownHostException;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -4439,7 +4441,15 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	@Override
 	protected void postFormat() throws Exception {
 		checkBndInheritAnnotationOption();
-		processCheckStyle();
+
+		try {
+			processCheckStyle();
+		}
+		catch (UnknownHostException uhe) {
+			System.out.println(
+				"Could not perform Checkstyle checks. Please check your " +
+					"network connection.");
+		}
 	}
 
 	@Override

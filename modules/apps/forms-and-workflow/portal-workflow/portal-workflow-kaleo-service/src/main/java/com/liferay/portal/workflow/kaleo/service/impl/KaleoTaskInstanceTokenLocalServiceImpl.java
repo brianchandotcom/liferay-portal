@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignment;
-import com.liferay.portal.workflow.kaleo.model.KaleoTaskForm;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
 import com.liferay.portal.workflow.kaleo.runtime.util.WorkflowContextUtil;
 import com.liferay.portal.workflow.kaleo.service.base.KaleoTaskInstanceTokenLocalServiceBaseImpl;
@@ -144,27 +143,6 @@ public class KaleoTaskInstanceTokenLocalServiceImpl
 				serviceContext);
 
 		return kaleoTaskInstanceToken;
-	}
-
-	public boolean hasPendingKaleoTaskForms(long kaleoTaskInstanceTokenId)
-		throws PortalException {
-
-		KaleoTaskInstanceToken kaleoTaskInstanceToken =
-			kaleoTaskInstanceTokenPersistence.findByPrimaryKey(
-				kaleoTaskInstanceTokenId);
-
-		int kaleoTaskFormsCount = kaleoTaskFormPersistence.countByKaleoTaskId(
-			kaleoTaskInstanceToken.getKaleoTaskId());
-
-		int kaleoTaskFormInstanceCount =
-			kaleoTaskFormInstancePersistence.countByKaleoTaskInstanceTokenId(
-				kaleoTaskInstanceTokenId);
-
-		if (kaleoTaskFormsCount > kaleoTaskFormInstanceCount) {
-			return true;
-		}
-
-		return false;
 	}
 
 	@Override
@@ -474,6 +452,27 @@ public class KaleoTaskInstanceTokenLocalServiceImpl
 		addCompletedCriterion(dynamicQuery, completed);
 
 		return (int)dynamicQueryCount(dynamicQuery);
+	}
+
+	public boolean hasPendingKaleoTaskForms(long kaleoTaskInstanceTokenId)
+		throws PortalException {
+
+		KaleoTaskInstanceToken kaleoTaskInstanceToken =
+			kaleoTaskInstanceTokenPersistence.findByPrimaryKey(
+				kaleoTaskInstanceTokenId);
+
+		int kaleoTaskFormsCount = kaleoTaskFormPersistence.countByKaleoTaskId(
+			kaleoTaskInstanceToken.getKaleoTaskId());
+
+		int kaleoTaskFormInstanceCount =
+			kaleoTaskFormInstancePersistence.countByKaleoTaskInstanceTokenId(
+				kaleoTaskInstanceTokenId);
+
+		if (kaleoTaskFormsCount > kaleoTaskFormInstanceCount) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override

@@ -36,7 +36,6 @@ import com.liferay.portal.workflow.kaleo.model.KaleoNode;
 import com.liferay.portal.workflow.kaleo.model.KaleoTask;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignmentInstance;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskForm;
-import com.liferay.portal.workflow.kaleo.model.KaleoTaskFormInstance;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.KaleoTransition;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;

@@ -97,8 +97,8 @@ public class TaskNodeExporter extends BaseNodeExporter implements NodeExporter {
 				addTextElement(
 					formReferenceElement, "group-id",
 					String.valueOf(taskFormReference.getGroupId()));
-
 			}
+
 			addCDataElement(
 				taskFormElement, "metadata", taskForm.getMetadata());
 			addTextElement(

@@ -103,7 +103,7 @@ public class PQLVariableTest extends TestCase {
 		try {
 			PQLVariable pqlVariable = new PQLVariable(pql);
 
-			Object pqlResult = pqlVariable.getPQLResult(new Properties());
+			pqlVariable.getPQLResult(new Properties());
 		}
 		catch (Exception e) {
 			actualError = e.getMessage();

@@ -24,15 +24,15 @@ import java.util.concurrent.Executors;
 /**
  * @author Peter Yoo
  */
-public class FilePropagator {
+public class CommandPropagator {
 
-	public FilePropagator(
+	public CommandPropagator(
 		String[] fileNames, String sourceDirName, String targetDirName,
 		List<String> targetSlaves) {
 
 		for (String fileName : fileNames) {
-			_filePropagatorTasks.add(
-				new FilePropagatorTask(
+			_commandPropagatorTasks.add(
+				new CommandPropagatorTask(
 					sourceDirName + "/" + fileName,
 					targetDirName + "/" + fileName));
 		}
@@ -59,7 +59,7 @@ public class FilePropagator {
 			threadCount);
 
 		System.out.println(
-			"File propagation starting with " + threadCount + " threads.");
+			"Command propagation starting with " + threadCount + " threads.");
 
 		try {
 			long start = System.currentTimeMillis();
@@ -74,7 +74,7 @@ public class FilePropagator {
 						String targetSlave = _targetSlaves.remove(0);
 
 						executorService.execute(
-							new FilePropagatorThread(
+							new CommandPropagatorThread(
 								this, mirrorSlave, targetSlave));
 
 						_busySlaves.add(mirrorSlave);
@@ -104,7 +104,7 @@ public class FilePropagator {
 			}
 
 			System.out.println(
-				"File propagation completed in " +
+				"Command propagation completed in " +
 					(System.currentTimeMillis() - start) + "ms.");
 
 			if (!_errorSlaves.isEmpty()) {
@@ -123,14 +123,14 @@ public class FilePropagator {
 
 		String targetSlave = null;
 
-		for (FilePropagatorTask filePropagatorTask : _filePropagatorTasks) {
+		for (CommandPropagatorTask commandPropagatorTask : _commandPropagatorTasks) {
 			targetSlave = _targetSlaves.get(0);
 
-			String sourceFileName = filePropagatorTask._sourceFileName;
+			String sourceFileName = commandPropagatorTask._sourceFileName;
 
 			System.out.println("Copying from source " + sourceFileName);
 
-			String targetFileName = filePropagatorTask._targetFileName;
+			String targetFileName = commandPropagatorTask._targetFileName;
 
 			commands.add(_getMkdirCommand(targetFileName));
 
@@ -211,16 +211,16 @@ public class FilePropagator {
 	private final List<String> _busySlaves = new ArrayList<>();
 	private String _cleanUpCommand;
 	private final List<String> _errorSlaves = new ArrayList<>();
-	private final List<FilePropagatorTask> _filePropagatorTasks =
+	private final List<CommandPropagatorTask> _commandPropagatorTasks =
 		new ArrayList<>();
 	private final List<String> _mirrorSlaves = new ArrayList<>();
 	private final List<String> _targetSlaves = new ArrayList<>();
 	private int _threadsCompletedCount;
 	private long _threadsDurationTotal;
 
-	private static class FilePropagatorTask {
+	private static class CommandPropagatorTask {
 
-		private FilePropagatorTask(
+		private CommandPropagatorTask(
 			String sourceFileName, String targetFileName) {
 
 			_sourceFileName = _escapeParentheses(sourceFileName);
@@ -239,30 +239,30 @@ public class FilePropagator {
 
 	}
 
-	private static class FilePropagatorThread implements Runnable {
+	private static class CommandPropagatorThread implements Runnable {
 
 		@Override
 		public void run() {
 			long start = System.currentTimeMillis();
 
-			List<FilePropagatorTask> filePropagatorTasks =
-				_filePropagator._filePropagatorTasks;
+			List<CommandPropagatorTask> commandPropagatorTasks =
+				_commandPropagator._commandPropagatorTasks;
 
-			List<String> commands = new ArrayList<>(filePropagatorTasks.size());
+			List<String> commands = new ArrayList<>(commandPropagatorTasks.size());
 
-			for (FilePropagatorTask filePropagatorTask : filePropagatorTasks) {
+			for (CommandPropagatorTask commandPropagatorTask : commandPropagatorTasks) {
 				commands.add(
-					_filePropagator._getMkdirCommand(
-						filePropagatorTask._targetFileName));
+					_commandPropagator._getMkdirCommand(
+						commandPropagatorTask._targetFileName));
 
 				commands.add(
 					"rsync -svI " + _mirrorSlave + ":" +
-						filePropagatorTask._targetFileName + " " +
-							filePropagatorTask._targetFileName);
+						commandPropagatorTask._targetFileName + " " +
+							commandPropagatorTask._targetFileName);
 			}
 
 			try {
-				_successful = _filePropagator._executeBashCommands(
+				_successful = _commandPropagator._executeBashCommands(
 					commands, _targetSlave) == 0;
 			}
 			catch (Exception e) {
@@ -271,34 +271,34 @@ public class FilePropagator {
 
 			_duration = System.currentTimeMillis() - start;
 
-			synchronized(_filePropagator) {
-				_filePropagator._busySlaves.remove(_mirrorSlave);
-				_filePropagator._busySlaves.remove(_targetSlave);
-				_filePropagator._mirrorSlaves.add(_mirrorSlave);
-				_filePropagator._threadsCompletedCount++;
-				_filePropagator._threadsDurationTotal += _duration;
+			synchronized(_commandPropagator) {
+				_commandPropagator._busySlaves.remove(_mirrorSlave);
+				_commandPropagator._busySlaves.remove(_targetSlave);
+				_commandPropagator._mirrorSlaves.add(_mirrorSlave);
+				_commandPropagator._threadsCompletedCount++;
+				_commandPropagator._threadsDurationTotal += _duration;
 
 				if (!_successful) {
-					_filePropagator._errorSlaves.add(_targetSlave);
+					_commandPropagator._errorSlaves.add(_targetSlave);
 
 					return;
 				}
 
-				_filePropagator._mirrorSlaves.add(_targetSlave);
+				_commandPropagator._mirrorSlaves.add(_targetSlave);
 			}
 		}
 
-		private FilePropagatorThread(
-			FilePropagator filePropagator, String mirrorSlave,
+		private CommandPropagatorThread(
+			CommandPropagator commandPropagator, String mirrorSlave,
 			String targetSlave) {
 
-			_filePropagator = filePropagator;
+			_commandPropagator = commandPropagator;
 			_mirrorSlave = mirrorSlave;
 			_targetSlave = targetSlave;
 		}
 
 		private long _duration;
-		private final FilePropagator _filePropagator;
+		private final CommandPropagator _commandPropagator;
 		private final String _mirrorSlave;
 		private boolean _successful;
 		private final String _targetSlave;

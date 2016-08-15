@@ -82,7 +82,6 @@ import com.liferay.journal.model.JournalArticleLocalizationModel;
 import com.liferay.journal.model.JournalArticleModel;
 import com.liferay.journal.model.JournalArticleResourceModel;
 import com.liferay.journal.model.JournalContentSearchModel;
-import com.liferay.journal.model.impl.JournalArticleImpl;
 import com.liferay.journal.model.impl.JournalArticleLocalizationModelImpl;
 import com.liferay.journal.model.impl.JournalArticleModelImpl;
 import com.liferay.journal.model.impl.JournalArticleResourceModelImpl;
@@ -147,6 +146,7 @@ import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.IntegerWrapper;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -1124,25 +1124,6 @@ public class DataFactory {
 			null, dLFolderModel.getName());
 	}
 
-	public AssetEntryModel newAssetEntryModel(
-		JournalArticleModel journalArticleModel) {
-
-		JournalArticleImpl journalArticle =
-			(JournalArticleImpl)journalArticleModel;
-
-		long resourcePrimKey = journalArticle.getResourcePrimKey();
-
-		String resourceUuid = _journalArticleResourceUUIDs.get(resourcePrimKey);
-
-		return newAssetEntryModel(
-			journalArticle.getGroupId(), journalArticle.getCreateDate(),
-			journalArticle.getModifiedDate(),
-			getClassNameId(JournalArticle.class), resourcePrimKey, resourceUuid,
-			_defaultJournalDDMStructureModel.getStructureId(),
-			journalArticle.isIndexable(), true, ContentTypes.TEXT_HTML,
-			journalArticle.getTitle());
-	}
-
 	public AssetEntryModel newAssetEntryModel(MBMessageModel mbMessageModel) {
 		long classNameId = 0;
 		boolean visible = false;
@@ -1171,6 +1152,28 @@ public class DataFactory {
 			mbThreadModel.getThreadId(), mbThreadModel.getUuid(), 0, true,
 			false, StringPool.BLANK,
 			String.valueOf(mbThreadModel.getRootMessageId()));
+	}
+
+	public AssetEntryModel newAssetEntryModel(
+		ObjectValuePair<JournalArticleModel, JournalArticleLocalizationModel>
+			objectValuePair) {
+
+		JournalArticleModel journalArticleModel = objectValuePair.getKey();
+		JournalArticleLocalizationModel journalArticleLocalizationModel =
+			objectValuePair.getValue();
+
+		long resourcePrimKey = journalArticleModel.getResourcePrimKey();
+
+		String resourceUuid = _journalArticleResourceUUIDs.get(resourcePrimKey);
+
+		return newAssetEntryModel(
+			journalArticleModel.getGroupId(),
+			journalArticleModel.getCreateDate(),
+			journalArticleModel.getModifiedDate(),
+			getClassNameId(JournalArticle.class), resourcePrimKey, resourceUuid,
+			_defaultJournalDDMStructureModel.getStructureId(),
+			journalArticleModel.isIndexable(), true, ContentTypes.TEXT_HTML,
+			journalArticleLocalizationModel.getTitle());
 	}
 
 	public AssetEntryModel newAssetEntryModel(WikiPageModel wikiPageModel) {
@@ -1701,6 +1704,8 @@ public class DataFactory {
 			_counter.get());
 		journalArticleLocalizationModel.setCompanyId(
 			journalArticleModel.getCompanyId());
+		journalArticleLocalizationModel.setArticlePK(
+			journalArticleModel.getId());
 		journalArticleLocalizationModel.setTitle(sb.toString());
 		journalArticleLocalizationModel.setLanguageId(
 			journalArticleModel.getDefaultLanguageId());
@@ -2064,6 +2069,10 @@ public class DataFactory {
 		}
 
 		return mbThreadModels;
+	}
+
+	public <K, V> ObjectValuePair<K, V> newObjectValuePair(K key, V value) {
+		return new ObjectValuePair<>(key, value);
 	}
 
 	public PortletPreferencesModel newPortletPreferencesModel(

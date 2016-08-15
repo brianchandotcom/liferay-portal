@@ -37,6 +37,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Properties;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
@@ -272,6 +273,40 @@ public class PoshiRunnerContext {
 			testCount, PropsValues.TEST_BATCH_MAX_GROUP_SIZE, true);
 
 		return MathUtil.quotient(testCount, groupCount, true);
+	}
+
+	private static Properties _getClassCommandNameProperties(
+			Element rootElement, Element commandElement)
+		throws Exception {
+
+		Properties properties = new Properties();
+
+		List<Element> rootPropertyElements = rootElement.elements("property");
+
+		for (Element propertyElement : rootPropertyElements) {
+			String propertyName = propertyElement.attributeValue("name");
+			String propertyValue = propertyElement.attributeValue("value");
+
+			properties.setProperty(propertyName, propertyValue);
+		}
+
+		List<Element> commandPropertyElements = commandElement.elements(
+			"property");
+
+		for (Element propertyElement : commandPropertyElements) {
+			String propertyName = propertyElement.attributeValue("name");
+			String propertyValue = propertyElement.attributeValue("value");
+
+			properties.setProperty(propertyName, propertyValue);
+		}
+
+		if (Validator.isNotNull(commandElement.attributeValue("priority"))) {
+			String priority = commandElement.attributeValue("priority");
+
+			properties.setProperty("priority", priority);
+		}
+
+		return properties;
 	}
 
 	private static List<String> _getCommandReturns(Element commandElement) {
@@ -918,13 +953,20 @@ public class PoshiRunnerContext {
 					classType + "#" + classCommandName,
 					_getCommandReturns(commandElement));
 
-				if (Objects.equals(classType, "test-case") &&
-					Validator.isNotNull(
-						commandElement.attributeValue("description"))) {
+				if (classType.equals("test-case")) {
+					Properties properties = _getClassCommandNameProperties(
+						rootElement, commandElement);
 
-					_testCaseDescriptions.put(
-						classCommandName,
-						commandElement.attributeValue("description"));
+					_classCommandNamePropertiesMap.put(
+						classCommandName, properties);
+
+					if (Validator.isNotNull(
+							commandElement.attributeValue("description"))) {
+
+						_testCaseDescriptions.put(
+							classCommandName,
+							commandElement.attributeValue("description"));
+					}
 				}
 			}
 
@@ -1128,6 +1170,8 @@ public class PoshiRunnerContext {
 
 	private static final Map<String, String> _actionExtendClassName =
 		new HashMap<>();
+	private static final Map<String, Properties>
+		_classCommandNamePropertiesMap = new HashMap<>();
 	private static final Map<String, Element> _commandElements =
 		new HashMap<>();
 	private static final Map<String, List<String>> _commandReturns =

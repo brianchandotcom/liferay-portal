@@ -183,11 +183,6 @@ public abstract class BaseMobileDriverImpl
 		throw new UnsupportedOperationException();
 	}
 
-	@Override
-	public int getElementHeight(String locator) {
-		return WebDriverHelper.getElementHeight(this, locator);
-	}
-
 	public String getElementValue(String locator, String timeout)
 		throws Exception {
 
@@ -203,11 +198,6 @@ public abstract class BaseMobileDriverImpl
 		}
 
 		return webElement.getAttribute("value");
-	}
-
-	@Override
-	public int getElementWidth(String locator) {
-		return WebDriverHelper.getElementWidth(this, locator);
 	}
 
 	@Override

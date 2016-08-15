@@ -1095,8 +1095,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				className, packagePath, file, fileName, absolutePath,
 				newContent, javaClassContent, javaClassLineCount,
 				StringPool.BLANK, _checkJavaFieldTypesExcludes,
-				_javaTermAccessLevelModifierExcludes, _javaTermSortExcludes,
-				_testAnnotationsExcludes);
+				_javaTermSortExcludes, _testAnnotationsExcludes);
 		}
 
 		matcher = _anonymousClassPattern.matcher(newContent);
@@ -1125,8 +1124,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					StringPool.BLANK, StringPool.BLANK, file, fileName,
 					absolutePath, newContent, javaClassContent,
 					javaClassLineCount, matcher.group(1),
-					_checkJavaFieldTypesExcludes,
-					_javaTermAccessLevelModifierExcludes, _javaTermSortExcludes,
+					_checkJavaFieldTypesExcludes, _javaTermSortExcludes,
 					_testAnnotationsExcludes);
 
 				break;
@@ -4421,8 +4419,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			"fit.on.single.line.excludes");
 		_hibernateSQLQueryExcludes = getPropertyList(
 			"hibernate.sql.query.excludes");
-		_javaTermAccessLevelModifierExcludes = getPropertyList(
-			"javaterm.access.level.modifier.excludes");
 		_javaTermSortExcludes = getPropertyList("javaterm.sort.excludes");
 		_lineLengthExcludes = getPropertyList("line.length.excludes");
 		_proxyExcludes = getPropertyList("proxy.excludes");
@@ -4607,7 +4603,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			Pattern.compile(
 				".*(extends [a-z\\.\\s]*ObjectInputStream).*", Pattern.DOTALL)
 	};
-	private List<String> _javaTermAccessLevelModifierExcludes;
 	private List<String> _javaTermSortExcludes;
 	private List<String> _lineLengthExcludes;
 	private final Pattern _lineStartingWithOpenParenthesisPattern =

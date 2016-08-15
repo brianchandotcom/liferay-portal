@@ -51,7 +51,6 @@ public class JavaClass {
 			String name, String packagePath, File file, String fileName,
 			String absolutePath, String content, String classContent,
 			int lineCount, String indent, JavaClass outerClass,
-			List<String> javaTermAccessLevelModifierExcludes,
 			JavaSourceProcessor javaSourceProcessor)
 		throws Exception {
 
@@ -65,8 +64,6 @@ public class JavaClass {
 		_lineCount = lineCount;
 		_indent = indent;
 		_outerClass = outerClass;
-		_javaTermAccessLevelModifierExcludes =
-			javaTermAccessLevelModifierExcludes;
 		_javaSourceProcessor = javaSourceProcessor;
 	}
 
@@ -84,8 +81,6 @@ public class JavaClass {
 		}
 		catch (InvalidJavaTermException ijte) {
 			if (!_javaSourceProcessor.isExcludedPath(
-					_javaTermAccessLevelModifierExcludes, _absolutePath) &&
-				!_javaSourceProcessor.isExcludedPath(
 					javaTermSortExcludes, _absolutePath)) {
 
 				_javaSourceProcessor.processMessage(
@@ -1027,7 +1022,7 @@ public class JavaClass {
 		JavaClass innerClass = new JavaClass(
 			name, _packagePath, _file, _fileName, _absolutePath, _content,
 			javaTermContent, lineCount, _indent + StringPool.TAB, this,
-			_javaTermAccessLevelModifierExcludes, _javaSourceProcessor);
+			_javaSourceProcessor);
 
 		_innerClasses.add(innerClass);
 
@@ -1133,9 +1128,7 @@ public class JavaClass {
 			else if (!line.startsWith(_indent + StringPool.CLOSE_CURLY_BRACE) &&
 					 !line.startsWith(_indent + StringPool.CLOSE_PARENTHESIS) &&
 					 !line.startsWith(_indent + "extends") &&
-					 !line.startsWith(_indent + "implements") &&
-					 !_javaSourceProcessor.isExcludedPath(
-						 _javaTermAccessLevelModifierExcludes, _absolutePath)) {
+					 !line.startsWith(_indent + "implements")) {
 
 				Matcher matcher = _classPattern.matcher(_classContent);
 
@@ -1145,14 +1138,7 @@ public class JavaClass {
 					if (insideClass.contains(line) &&
 						!isEnumType(line, matcher.group(4))) {
 
-						int lineCount =
-							_lineCount +
-								_javaSourceProcessor.getLineCount(
-									_classContent, index) - 1;
-
-						_javaSourceProcessor.processMessage(
-							_fileName, "Missing access level modifier",
-							lineCount);
+						return Collections.emptySet();
 					}
 				}
 			}
@@ -1802,7 +1788,6 @@ public class JavaClass {
 	private final String _indent;
 	private final List<JavaClass> _innerClasses = new ArrayList<>();
 	private final JavaSourceProcessor _javaSourceProcessor;
-	private final List<String> _javaTermAccessLevelModifierExcludes;
 	private Set<JavaTerm> _javaTerms;
 	private final Pattern _lineBreakPattern = Pattern.compile(
 		"\n(.*)\\(\n((.+,\n)*.*\\)) \\+\n");

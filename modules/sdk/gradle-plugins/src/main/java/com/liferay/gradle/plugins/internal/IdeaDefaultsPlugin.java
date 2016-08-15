@@ -50,7 +50,7 @@ public class IdeaDefaultsPlugin extends BaseDefaultsPlugin<IdeaPlugin> {
 		Project project, final IdeaPlugin ideaPlugin) {
 
 		_configureIdeaModuleIml(project, ideaPlugin);
-		_configureTaskIdea(project, ideaPlugin);
+		_configureTaskIdea(ideaPlugin);
 
 		project.afterEvaluate(
 			new Action<Project>() {
@@ -173,23 +173,10 @@ public class IdeaDefaultsPlugin extends BaseDefaultsPlugin<IdeaPlugin> {
 		ideaModuleIml.withXml(closure);
 	}
 
-	private void _configureTaskIdea(Project project, IdeaPlugin ideaPlugin) {
+	private void _configureTaskIdea(IdeaPlugin ideaPlugin) {
 		Task task = ideaPlugin.getLifecycleTask();
 
 		task.dependsOn(ideaPlugin.getCleanTask());
-	}
-
-	private File _getClassesDir(Project project) {
-		if (!GradleUtil.hasPlugin(project, JavaPlugin.class)) {
-			return null;
-		}
-
-		SourceSet sourceSet = GradleUtil.getSourceSet(
-			project, SourceSet.MAIN_SOURCE_SET_NAME);
-
-		SourceSetOutput sourceSetOutput = sourceSet.getOutput();
-
-		return sourceSetOutput.getClassesDir();
 	}
 
 	private IdeaModule _getIdeaModule(IdeaPlugin ideaPlugin) {

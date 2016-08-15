@@ -42,7 +42,7 @@ public class EclipseDefaultsPlugin extends BaseDefaultsPlugin<EclipsePlugin> {
 		Project project, EclipsePlugin eclipsePlugin) {
 
 		_configureEclipseClasspathFile(project);
-		_configureTaskEclipse(project, eclipsePlugin);
+		_configureTaskEclipse(eclipsePlugin);
 	}
 
 	@Override
@@ -90,9 +90,7 @@ public class EclipseDefaultsPlugin extends BaseDefaultsPlugin<EclipsePlugin> {
 		fileContentMerger.whenMerged(closure);
 	}
 
-	private void _configureTaskEclipse(
-		Project project, EclipsePlugin eclipsePlugin) {
-
+	private void _configureTaskEclipse(EclipsePlugin eclipsePlugin) {
 		Task task = eclipsePlugin.getLifecycleTask();
 
 		task.dependsOn(eclipsePlugin.getCleanTask());

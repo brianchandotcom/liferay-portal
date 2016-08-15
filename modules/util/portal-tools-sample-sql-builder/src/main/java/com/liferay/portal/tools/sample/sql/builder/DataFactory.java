@@ -1124,28 +1124,6 @@ public class DataFactory {
 			null, dLFolderModel.getName());
 	}
 
-	public AssetEntryModel newAssetEntryModel(
-		ObjectValuePair<JournalArticleModel, JournalArticleLocalizationModel>
-			objectValuePair) {
-
-		JournalArticleModel journalArticleModel = objectValuePair.getKey();
-		JournalArticleLocalizationModel journalArticleLocalizationModel =
-			objectValuePair.getValue();
-
-		long resourcePrimKey = journalArticleModel.getResourcePrimKey();
-
-		String resourceUuid = _journalArticleResourceUUIDs.get(resourcePrimKey);
-
-		return newAssetEntryModel(
-			journalArticleModel.getGroupId(),
-			journalArticleModel.getCreateDate(),
-			journalArticleModel.getModifiedDate(),
-			getClassNameId(JournalArticle.class), resourcePrimKey, resourceUuid,
-			_defaultJournalDDMStructureModel.getStructureId(),
-			journalArticleModel.isIndexable(), true, ContentTypes.TEXT_HTML,
-			journalArticleLocalizationModel.getTitle());
-	}
-
 	public AssetEntryModel newAssetEntryModel(MBMessageModel mbMessageModel) {
 		long classNameId = 0;
 		boolean visible = false;
@@ -1174,6 +1152,28 @@ public class DataFactory {
 			mbThreadModel.getThreadId(), mbThreadModel.getUuid(), 0, true,
 			false, StringPool.BLANK,
 			String.valueOf(mbThreadModel.getRootMessageId()));
+	}
+
+	public AssetEntryModel newAssetEntryModel(
+		ObjectValuePair<JournalArticleModel, JournalArticleLocalizationModel>
+			objectValuePair) {
+
+		JournalArticleModel journalArticleModel = objectValuePair.getKey();
+		JournalArticleLocalizationModel journalArticleLocalizationModel =
+			objectValuePair.getValue();
+
+		long resourcePrimKey = journalArticleModel.getResourcePrimKey();
+
+		String resourceUuid = _journalArticleResourceUUIDs.get(resourcePrimKey);
+
+		return newAssetEntryModel(
+			journalArticleModel.getGroupId(),
+			journalArticleModel.getCreateDate(),
+			journalArticleModel.getModifiedDate(),
+			getClassNameId(JournalArticle.class), resourcePrimKey, resourceUuid,
+			_defaultJournalDDMStructureModel.getStructureId(),
+			journalArticleModel.isIndexable(), true, ContentTypes.TEXT_HTML,
+			journalArticleLocalizationModel.getTitle());
 	}
 
 	public AssetEntryModel newAssetEntryModel(WikiPageModel wikiPageModel) {

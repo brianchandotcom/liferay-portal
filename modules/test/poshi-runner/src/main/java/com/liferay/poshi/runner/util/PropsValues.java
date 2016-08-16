@@ -193,6 +193,9 @@ public class PropsValues {
 	public static final String[] TEST_BATCH_PROPERTY_NAMES = StringUtil.split(
 		PropsUtil.get("test.batch.property.names"));
 
+	public static final String TEST_BATCH_PROPERTY_QUERY = PropsUtil.get(
+		"test.batch.property.query");
+
 	public static final String[] TEST_BATCH_PROPERTY_VALUES = StringUtil.split(
 		PropsUtil.get("test.batch.property.values"));
 

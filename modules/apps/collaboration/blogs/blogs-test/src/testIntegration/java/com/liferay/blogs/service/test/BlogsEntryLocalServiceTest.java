@@ -401,6 +401,29 @@ public class BlogsEntryLocalServiceTest {
 	}
 
 	@Test
+	public void testGetEntryByGroupAndOldUrlTitle() throws Exception {
+		BlogsEntry expectedEntry = addEntry(false);
+
+		String urlTitle = "new-friendly-url";
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group, _user.getUserId());
+
+		BlogsEntryLocalServiceUtil.updateEntry(
+			expectedEntry.getUserId(), expectedEntry.getEntryId(),
+			expectedEntry.getTitle(), expectedEntry.getSubtitle(), urlTitle,
+			expectedEntry.getDescription(), expectedEntry.getContent(),
+			expectedEntry.getDisplayDate(), expectedEntry.isAllowPingbacks(),
+			expectedEntry.isAllowTrackbacks(), new String[0],
+			expectedEntry.getCoverImageCaption(), null, null, serviceContext);
+
+		BlogsEntry actualEntry = BlogsEntryLocalServiceUtil.getEntry(
+			expectedEntry.getGroupId(), urlTitle);
+
+		BlogsTestUtil.assertEquals(expectedEntry, actualEntry);
+	}
+
+	@Test
 	public void testGetEntryByGroupAndUrlTitle() throws Exception {
 		BlogsEntry expectedEntry = addEntry(false);
 

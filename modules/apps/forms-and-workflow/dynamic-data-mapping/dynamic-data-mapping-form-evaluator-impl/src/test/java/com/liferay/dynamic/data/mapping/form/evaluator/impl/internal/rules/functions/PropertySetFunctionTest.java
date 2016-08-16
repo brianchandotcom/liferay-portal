@@ -15,7 +15,6 @@
 package com.liferay.dynamic.data.mapping.form.evaluator.impl.internal.rules.functions;
 
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormFieldEvaluationResult;
-import com.liferay.dynamic.data.mapping.form.evaluator.impl.internal.rules.functions.PropertySetFunction;
 
 import java.util.ArrayList;
 import java.util.HashMap;

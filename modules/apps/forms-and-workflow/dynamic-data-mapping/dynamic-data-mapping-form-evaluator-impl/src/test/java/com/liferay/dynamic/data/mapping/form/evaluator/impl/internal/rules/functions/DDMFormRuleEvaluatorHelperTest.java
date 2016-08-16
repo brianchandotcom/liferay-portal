@@ -110,7 +110,7 @@ public class DDMFormRuleEvaluatorHelperTest extends PowerMockito {
 
 		DDMFormRuleEvaluatorHelper ddmFormRuleEvaluatorHelper =
 			new DDMFormRuleEvaluatorHelper(
-				null, _ddmExpressionFactory, ddmForm, ddmFormValues, null,
+				null, null, _ddmExpressionFactory, ddmForm, ddmFormValues, null,
 				_jsonFactory, LocaleUtil.US);
 
 		List<DDMFormFieldEvaluationResult> ddmFormFieldEvaluationResults =
@@ -214,7 +214,7 @@ public class DDMFormRuleEvaluatorHelperTest extends PowerMockito {
 
 		DDMFormRuleEvaluatorHelper ddmFormRuleEvaluatorHelper =
 			new DDMFormRuleEvaluatorHelper(
-				null, _ddmExpressionFactory, ddmForm, ddmFormValues, null,
+				null, null, _ddmExpressionFactory, ddmForm, ddmFormValues, null,
 				_jsonFactory, LocaleUtil.US);
 
 		List<DDMFormFieldEvaluationResult> ddmFormFieldEvaluationResults =

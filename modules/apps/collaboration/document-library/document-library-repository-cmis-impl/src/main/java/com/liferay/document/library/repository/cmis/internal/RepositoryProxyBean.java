@@ -85,6 +85,9 @@ public class RepositoryProxyBean
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	@Override
 	public FileEntry addFileEntry(
@@ -104,6 +107,9 @@ public class RepositoryProxyBean
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	@Override
 	public FileEntry addFileEntry(
@@ -155,6 +161,9 @@ public class RepositoryProxyBean
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	@Override
 	public Folder addFolder(
@@ -183,6 +192,9 @@ public class RepositoryProxyBean
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	@Override
 	public void checkInFileEntry(
@@ -226,6 +238,9 @@ public class RepositoryProxyBean
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	@Override
 	public void checkInFileEntry(
@@ -286,6 +301,9 @@ public class RepositoryProxyBean
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	@Override
 	public FileEntry copyFileEntry(
@@ -920,6 +938,9 @@ public class RepositoryProxyBean
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	@Override
 	public FileEntry moveFileEntry(
@@ -951,6 +972,9 @@ public class RepositoryProxyBean
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	@Override
 	public Folder moveFolder(
@@ -1008,6 +1032,9 @@ public class RepositoryProxyBean
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	@Override
 	public void revertFileEntry(
@@ -1125,6 +1152,9 @@ public class RepositoryProxyBean
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	@Override
 	public FileEntry updateFileEntry(
@@ -1144,6 +1174,9 @@ public class RepositoryProxyBean
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	@Override
 	public FileEntry updateFileEntry(

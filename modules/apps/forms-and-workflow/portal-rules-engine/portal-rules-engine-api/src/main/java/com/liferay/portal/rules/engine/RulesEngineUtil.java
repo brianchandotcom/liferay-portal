@@ -26,6 +26,7 @@ import org.osgi.util.tracker.ServiceTracker;
  * @author Raymond Augé
  * @deprecated As of 7.0.0
  */
+@Deprecated
 public class RulesEngineUtil {
 
 	public static void add(

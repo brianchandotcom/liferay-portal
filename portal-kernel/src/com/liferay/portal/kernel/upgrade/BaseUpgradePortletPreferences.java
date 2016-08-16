@@ -359,6 +359,9 @@ public abstract class BaseUpgradePortletPreferences extends UpgradeProcess {
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	protected void updatePortletPreferences(
 			long portletPreferencesId, String preferences)

@@ -423,6 +423,9 @@ public class BlogsEntryStagedModelDataHandler
 		return inputStream;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	protected void setBlogsEntryExportImportContentProcessor(
 		BlogsEntryDocumentLibraryExportImportContentProcessor

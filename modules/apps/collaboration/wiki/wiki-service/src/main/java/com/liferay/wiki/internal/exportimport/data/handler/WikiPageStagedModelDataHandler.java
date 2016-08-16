@@ -330,6 +330,9 @@ public class WikiPageStagedModelDataHandler
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	protected void setWikiPageExportImportContentProcessor(
 		WikiPageExportImportContentProcessor

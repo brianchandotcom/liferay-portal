@@ -109,12 +109,18 @@ public class MBDiscussionCommentImpl
 		return RatingsStatsUtil.create(0);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	@Override
 	public List<DiscussionComment> getThreadComments() {
 		return getDescendantComments();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	@Override
 	public int getThreadCommentsCount() {

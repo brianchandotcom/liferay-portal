@@ -92,6 +92,9 @@ public class ResourceBundleUtil {
 		return map;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	public static Map<Locale, String> getLocalizationMap(
 		String baseName, Class<?> clazz, String key) {

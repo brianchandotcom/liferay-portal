@@ -49,6 +49,9 @@ public class PortletDisplayTemplateUtil {
 		return getPortletDisplayTemplate().getDDMTemplateKey(displayStyle);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	@SuppressWarnings("deprecation")
 	public static String getDDMTemplateUuid(String displayStyle) {
@@ -88,6 +91,9 @@ public class PortletDisplayTemplateUtil {
 			groupId, classNameId, displayStyle, useDefault);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	@SuppressWarnings("deprecation")
 	public static long getPortletDisplayTemplateDDMTemplateId(

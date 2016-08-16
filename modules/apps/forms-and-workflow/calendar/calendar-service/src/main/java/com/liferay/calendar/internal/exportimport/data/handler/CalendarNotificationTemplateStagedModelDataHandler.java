@@ -222,6 +222,9 @@ public class CalendarNotificationTemplateStagedModelDataHandler
 		_calendarLocalService = calendarLocalService;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	protected void setCalendarNotificationTemplateExportImportContentProcessor(
 		CalendarNotificationTemplateExportImportContentProcessor

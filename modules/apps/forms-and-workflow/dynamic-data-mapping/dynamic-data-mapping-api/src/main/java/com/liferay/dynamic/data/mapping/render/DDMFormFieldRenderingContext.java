@@ -109,6 +109,7 @@ public class DDMFormFieldRenderingContext {
 	/**
 	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
+	@Deprecated
 	public void setChildElementsHTML(String childElementsHTML) {
 		_childElementsHTML = childElementsHTML;
 	}

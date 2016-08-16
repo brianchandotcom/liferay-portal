@@ -89,6 +89,9 @@ public abstract class BaseAssetRendererFactory<T>
 		return PortalUtil.getClassNameId(getClassName());
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	@Override
 	public Tuple getClassTypeFieldName(
@@ -110,6 +113,9 @@ public abstract class BaseAssetRendererFactory<T>
 		return null;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	@Override
 	public List<Tuple> getClassTypeFieldNames(
@@ -132,6 +138,9 @@ public abstract class BaseAssetRendererFactory<T>
 		return tuples;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	@Override
 	public int getClassTypeFieldNamesCount(long classTypeId, Locale locale)
@@ -149,6 +158,9 @@ public abstract class BaseAssetRendererFactory<T>
 		return new NullClassTypeReader();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	@Override
 	public Map<Long, String> getClassTypes(long[] groupIds, Locale locale)
@@ -211,6 +223,9 @@ public abstract class BaseAssetRendererFactory<T>
 		return getTypeName(locale);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	@Override
 	public PortletURL getURLAdd(
@@ -249,6 +264,9 @@ public abstract class BaseAssetRendererFactory<T>
 		return false;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	@Override
 	public boolean hasClassTypeFieldNames(long classTypeId, Locale locale)

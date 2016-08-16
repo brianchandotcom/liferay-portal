@@ -59,6 +59,9 @@ public class TestTrashHandler implements TrashHandler {
 		long classPK, long containerModelId, String newName) {
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	@Override
 	public void checkDuplicateTrashEntry(
@@ -137,6 +140,9 @@ public class TestTrashHandler implements TrashHandler {
 		return null;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	@Override
 	public Query getExcludeQuery(SearchContext searchContext) {

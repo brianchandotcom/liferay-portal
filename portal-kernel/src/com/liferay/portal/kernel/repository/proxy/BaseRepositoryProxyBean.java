@@ -667,12 +667,18 @@ public class BaseRepositoryProxyBean
 		return _baseRepository.getSubfolderIds(folderId, recurse);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	@Override
 	public String[] getSupportedConfigurations() {
 		return _baseRepository.getSupportedConfigurations();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	@Override
 	public String[][] getSupportedParameters() {

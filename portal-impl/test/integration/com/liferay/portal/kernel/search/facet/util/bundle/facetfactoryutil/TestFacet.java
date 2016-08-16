@@ -30,6 +30,9 @@ public class TestFacet implements Facet {
 
 	public static final String FIELD_NAME = "FIELD_NAME";
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	@Override
 	public BooleanClause<Query> getFacetClause() {

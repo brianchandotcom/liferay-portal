@@ -44,6 +44,9 @@ public class TestMultipleIndexerPostProcessor implements IndexerPostProcessor {
 		throws Exception {
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	@Override
 	public void postProcessContextQuery(
@@ -69,6 +72,9 @@ public class TestMultipleIndexerPostProcessor implements IndexerPostProcessor {
 		throws Exception {
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	@Override
 	public void postProcessSearchQuery(

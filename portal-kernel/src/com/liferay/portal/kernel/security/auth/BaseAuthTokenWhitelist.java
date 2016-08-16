@@ -43,30 +43,45 @@ import javax.servlet.http.HttpServletRequest;
  */
 public abstract class BaseAuthTokenWhitelist implements AuthTokenWhitelist {
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	@Override
 	public Set<String> getOriginCSRFWhitelist() {
 		return Collections.emptySet();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	@Override
 	public Set<String> getPortletCSRFWhitelist() {
 		return Collections.emptySet();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	@Override
 	public Set<String> getPortletCSRFWhitelistActions() {
 		return Collections.emptySet();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	@Override
 	public Set<String> getPortletInvocationWhitelist() {
 		return Collections.emptySet();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	@Override
 	public Set<String> getPortletInvocationWhitelistActions() {
@@ -85,6 +100,9 @@ public abstract class BaseAuthTokenWhitelist implements AuthTokenWhitelist {
 		return false;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	@Override
 	public boolean isPortletCSRFWhitelisted(
@@ -100,6 +118,9 @@ public abstract class BaseAuthTokenWhitelist implements AuthTokenWhitelist {
 		return false;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	@Override
 	public boolean isPortletInvocationWhitelisted(
@@ -127,24 +148,36 @@ public abstract class BaseAuthTokenWhitelist implements AuthTokenWhitelist {
 		return false;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	@Override
 	public Set<String> resetOriginCSRFWhitelist() {
 		return Collections.emptySet();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	@Override
 	public Set<String> resetPortletCSRFWhitelist() {
 		return Collections.emptySet();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	@Override
 	public Set<String> resetPortletInvocationWhitelist() {
 		return Collections.emptySet();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	@Override
 	public Set<String> resetPortletInvocationWhitelistActions() {

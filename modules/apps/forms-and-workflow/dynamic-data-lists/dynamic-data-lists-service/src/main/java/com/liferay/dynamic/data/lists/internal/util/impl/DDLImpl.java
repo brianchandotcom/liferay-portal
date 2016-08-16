@@ -64,6 +64,9 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true)
 public class DDLImpl implements DDL {
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	@Override
 	@SuppressWarnings("deprecation")
@@ -209,6 +212,9 @@ public class DDLImpl implements DDL {
 		return jsonArray;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	@Override
 	@SuppressWarnings("deprecation")
@@ -220,6 +226,9 @@ public class DDLImpl implements DDL {
 		return getRecordsJSONArray(recordSet.getRecords(), false, locale);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	@Override
 	@SuppressWarnings("deprecation")
@@ -332,6 +341,9 @@ public class DDLImpl implements DDL {
 		return record;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	@Override
 	@SuppressWarnings("deprecation")

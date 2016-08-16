@@ -33,6 +33,12 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 		function() {
 			var calendarContainer = new Liferay.CalendarContainer(
 				{
+					groupCalendarResourceId: <%= groupCalendarResource.getCalendarResourceId() %>,
+
+					<c:if test="<%= userCalendarResource != null %>">
+						userCalendarResourceId: <%= userCalendarResource.getCalendarResourceId() %>,
+					</c:if>
+
 					namespace: '<portlet:namespace />'
 				}
 			);

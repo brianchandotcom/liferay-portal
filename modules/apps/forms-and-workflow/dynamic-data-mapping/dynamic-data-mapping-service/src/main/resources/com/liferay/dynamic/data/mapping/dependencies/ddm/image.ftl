@@ -22,10 +22,10 @@
 	/>
 </#if>
 
-<#assign authToken = authTokenUtil.getToken(request, themeDisplay.getPlid(), "com_liferay_item_selector_web_portlet_ItemSelectorPortlet") />
+<#assign assetBrowserAuthToken = authTokenUtil.getToken(request, themeDisplay.getPlid(), "com_liferay_item_selector_web_portlet_ItemSelectorPortlet") />
 
 <#assign data = data + {
-	"authToken": authToken
+	"assetBrowserAuthToken": assetBrowserAuthToken
 }>
 
 <@liferay_aui["field-wrapper"] cssClass="form-builder-field" data=data>

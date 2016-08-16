@@ -1020,7 +1020,7 @@ AUI.add(
 						portletURL.setDoAsGroupId(instance.get('doAsGroupId'));
 						portletURL.setParameter('criteria', criteria);
 						portletURL.setParameter('itemSelectedEventName', portletNamespace + 'selectDocumentLibrary');
-						portletURL.setParameter('p_p_auth', container.getData('authtoken'));
+						portletURL.setParameter('p_p_auth', container.getData('assetBrowserAuthToken'));
 
 						var criterionJSON = {
 							desiredItemSelectorReturnTypes: 'com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType,com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType'
@@ -1205,7 +1205,7 @@ AUI.add(
 
 						url.setParameter('eventName', 'selectContent');
 						url.setParameter('groupId', themeDisplay.getScopeGroupId());
-						url.setParameter('p_p_auth', container.getData('authtoken'));
+						url.setParameter('p_p_auth', container.getData('assetBrowserAuthToken'));
 						url.setParameter('selectedGroupIds', themeDisplay.getScopeGroupId());
 						url.setParameter('showNonindexable', true);
 						url.setParameter('showScheduled', true);
@@ -2344,7 +2344,7 @@ AUI.add(
 						portletURL.setDoAsGroupId(instance.get('doAsGroupId'));
 						portletURL.setParameter('criteria', criteria);
 						portletURL.setParameter('itemSelectedEventName', portletNamespace + 'selectDocumentLibrary');
-						portletURL.setParameter('p_p_auth', container.getData('authtoken'));
+						portletURL.setParameter('p_p_auth', container.getData('assetBrowserAuthToken'));
 
 						var journalCriterionJSON = {
 							desiredItemSelectorReturnTypes: 'com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType,com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType',

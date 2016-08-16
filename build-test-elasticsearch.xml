@@ -105,12 +105,12 @@
 		<sequential>
 			<if>
 				<not>
-					<available file="${elasticsearch.dir}/${elastic.marvel.zip.name}" />
+					<available file="${elasticsearch.dir}/${elastic.marvel.tar.name}" />
 				</not>
 				<then>
 					<mirrors-get
-						dest="${elasticsearch.dir}/${elastic.marvel.zip.name}"
-						src="${elastic.marvel.zip.url}"
+						dest="${elasticsearch.dir}/${elastic.marvel.tar.name}"
+						src="${elastic.marvel.tar.url}"
 						verbose="true"
 					/>
 				</then>
@@ -123,7 +123,7 @@
 				<then>
 					<exec dir="${elastic.kibana.dir}/bin" executable="/bin/bash">
 						<arg value="-c" />
-						<arg line="./kibana plugin --install marvel file:///${elasticsearch.dir}/${elastic.marvel.zip.url}" />
+						<arg value="./kibana plugin --install marvel --url file:///${elasticsearch.dir}/${elastic.marvel.tar.name}" />
 					</exec>
 				</then>
 				<elseif>
@@ -131,7 +131,7 @@
 					<then>
 						<exec dir="${elastic.kibana.dir}/bin" executable="cmd">
 							<arg value="/c" />
-							<arg line="kibana plugin --install marvel file:///${elasticsearch.dir}/${elastic.marvel.zip.url}" />
+							<arg value="kibana plugin --install marvel --url file:///${elasticsearch.dir}/${elastic.marvel.tar.name}" />
 						</exec>
 					</then>
 				</elseif>
@@ -340,12 +340,6 @@ logExceptionsOnly=false</echo>
 					<arg value="-c" />
 					<arg value="./elasticsearch -Des.insecure.allow.root=true -d -p pid-elasticsearch" />
 				</exec>
-
-				<waitfor maxwait="10" maxwaitunit="second" timeoutproperty="elasticsearch.server.not.started">
-					<http url="http://localhost:9200/" />
-				</waitfor>
-
-				<fail if="elasticsearch.server.not.started" message="Elasticsearch server failed to initialize." />
 			</then>
 			<elseif>
 				<os family="windows" />
@@ -354,15 +348,22 @@ logExceptionsOnly=false</echo>
 						<arg value="/c" />
 						<arg value="elasticsearch -d -p pid-elasticsearch" />
 					</exec>
-
-					<waitfor maxwait="10" maxwaitunit="second" timeoutproperty="elasticsearch.server.not.started">
-						<http url="http://localhost:9200/" />
-					</waitfor>
-
-					<fail if="elasticsearch.server.not.started" message="Elasticsearch server failed to initialize." />
 				</then>
 			</elseif>
 		</if>
+
+        <if>
+        	<not>
+            	<equals arg1="${elasticsearch.shield.enabled}" arg2="true" />
+            </not>
+            <then>
+            	<waitfor maxwait="10" maxwaitunit="second" timeoutproperty="elasticsearch.server.not.started">
+            		<http url="http://localhost:9200/" />
+            	</waitfor>
+
+            	<fail if="elasticsearch.server.not.started" message="Elasticsearch server failed to initialize." />
+            </then>
+        </if>
 	</target>
 
 	<target name="start-kibana">

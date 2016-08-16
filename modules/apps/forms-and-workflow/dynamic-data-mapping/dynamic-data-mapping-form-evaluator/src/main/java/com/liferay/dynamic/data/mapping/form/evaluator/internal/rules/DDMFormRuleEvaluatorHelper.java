@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -182,16 +183,16 @@ public class DDMFormRuleEvaluatorHelper {
 	protected void createDDMFormFieldRuleEvaluationResult(
 		DDMFormField ddmFormField) {
 
-		List<DDMFormFieldEvaluationResult>
-			ddmFormFieldEvaluationResultInstances = new ArrayList<>();
+		List<DDMFormFieldEvaluationResult> ddmFormFieldEvaluationResults =
+			new ArrayList<>();
 
 		_ddmFormFieldEvaluationResults.put(
-			ddmFormField.getName(), ddmFormFieldEvaluationResultInstances);
+			ddmFormField.getName(), ddmFormFieldEvaluationResults);
 
 		List<DDMFormFieldValue> ddmFormFieldValues = _ddmFormFieldValues.get(
 			ddmFormField.getName());
 
-		if (ddmFormFieldValues == null) {
+		if (ListUtil.isEmpty(ddmFormFieldValues)) {
 			return;
 		}
 
@@ -200,8 +201,7 @@ public class DDMFormRuleEvaluatorHelper {
 				createDDMFormFieldEvaluationResult(
 					ddmFormField, ddmFormFieldValue);
 
-			ddmFormFieldEvaluationResultInstances.add(
-				ddmFormFieldEvaluationResult);
+			ddmFormFieldEvaluationResults.add(ddmFormFieldEvaluationResult);
 
 			List<DDMFormFieldEvaluationResult>
 				nestedDDMFormFieldEvaluationResults =

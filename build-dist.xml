@@ -567,7 +567,15 @@
 
 		<antcall inheritAll="false" target="update-sdk-properties" />
 
-		<antcall target="unzip-weblogic-custom" />
+		<if>
+			<equals arg1="${app.server.weblogic.version}" arg2="12.2.1" />
+			<then>
+				<antcall target="unzip-weblogic-custom" />
+			</then>
+			<else>
+				<antcall target="unzip-weblogic" />
+			</else>
+		</if>
 
 		<delete dir="${project.dir}/portal-web/classes" />
 

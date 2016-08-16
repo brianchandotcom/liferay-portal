@@ -119,7 +119,7 @@ public class DetailASTUtil {
 			return list;
 		}
 
-		DetailAST parametersAST= detailAST.findFirstToken(
+		DetailAST parametersAST = detailAST.findFirstToken(
 			TokenTypes.PARAMETERS);
 
 		return getAllChildTokens(

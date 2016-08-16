@@ -606,7 +606,7 @@ public class JavaClass {
 
 		String newJavaTermContent = StringUtil.replaceFirst(
 			javaTermContent, "{\n",
-			"{\n" + javaTerm.getIndent() + "\t" + superMethodCall  + "\n\n");
+			"{\n" + javaTerm.getIndent() + "\t" + superMethodCall + "\n\n");
 
 		_classContent = StringUtil.replace(
 			_classContent, javaTermContent, newJavaTermContent);
@@ -1769,6 +1769,7 @@ public class JavaClass {
 				"boolean", "false", "char", "'\\\\0'", "byte", "0", "double",
 				"0\\.0", "float", "0\\.0", "int", "0", "long", "0", "short", "0"
 			});
+
 	private final String _absolutePath;
 	private final Pattern _booleanPattern = Pattern.compile(
 		"\n(\t+)boolean (\\w+) =(.*?);\n", Pattern.DOTALL);

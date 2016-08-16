@@ -32,12 +32,6 @@ import org.xml.sax.SAXException;
  */
 public class SuppressionsLoader extends AbstractLoader {
 
-	public SuppressionsLoader()
-		throws ParserConfigurationException, SAXException {
-
-		super(_createIdToResourceNameMap());
-	}
-
 	public static FilterSet loadSuppressions(InputSource inputSource)
 		throws Exception {
 
@@ -46,6 +40,12 @@ public class SuppressionsLoader extends AbstractLoader {
 		suppressionsLoader.parseInputSource(inputSource);
 
 		return suppressionsLoader.getFilterChain();
+	}
+
+	public SuppressionsLoader()
+		throws ParserConfigurationException, SAXException {
+
+		super(_createIdToResourceNameMap());
 	}
 
 	public FilterSet getFilterChain() {

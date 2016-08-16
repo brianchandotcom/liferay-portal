@@ -247,16 +247,16 @@ public class SourceFormatter {
 		}
 	}
 
-	public List<SourceFormatterMessage> getSourceFormatterMessages() {
-		return new ArrayList<>(_sourceFormatterMessages);
-	}
-
 	public List<String> getModifiedFileNames() {
 		return _modifiedFileNames;
 	}
 
 	public SourceFormatterArgs getSourceFormatterArgs() {
 		return _sourceFormatterArgs;
+	}
+
+	public List<SourceFormatterMessage> getSourceFormatterMessages() {
+		return new ArrayList<>(_sourceFormatterMessages);
 	}
 
 	public SourceMismatchException getSourceMismatchException() {

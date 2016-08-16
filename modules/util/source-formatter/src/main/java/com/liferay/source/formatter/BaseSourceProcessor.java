@@ -2087,8 +2087,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		int pos = releaseVersion.lastIndexOf(CharPool.PERIOD);
 
-		String mainReleaseVersion =
-			releaseVersion.substring(0, pos) + ".0";
+		String mainReleaseVersion = releaseVersion.substring(0, pos) + ".0";
 
 		_mainReleaseComparableVersion = new ComparableVersion(
 			mainReleaseVersion);

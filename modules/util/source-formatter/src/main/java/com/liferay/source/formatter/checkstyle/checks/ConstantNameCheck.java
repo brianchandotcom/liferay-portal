@@ -62,7 +62,7 @@ public class ConstantNameCheck
 			}
 		}
 		else if (modifiersAST.branchContains(TokenTypes.LITERAL_PROTECTED) ||
-			modifiersAST.branchContains(TokenTypes.LITERAL_PUBLIC)) {
+				 modifiersAST.branchContains(TokenTypes.LITERAL_PUBLIC)) {
 
 			if (DetailASTUtil.isCollection(detailAST)) {
 				message = MSG_PROTECTED_PUBLIC_COLLECTION;

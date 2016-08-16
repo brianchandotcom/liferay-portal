@@ -26,15 +26,14 @@ import java.util.concurrent.Executors;
  */
 public class RemoteExecutor {
 
-	public void addCommand(String command) {
-		_commands.add(command);
-	}
+	public int execute(
+		int threadCount, String[] targetSlaves, String[] commands) {
 
-	public void start(int threadCount, List<String> targetSlaves) {
-		_targetSlaves.clear();
-
-		_targetSlaves.addAll(targetSlaves);
-
+		_busySlaves.clear();
+		_commands = commands;
+		_errorSlaves.clear();
+		_finishedSlaves.clear();
+		_targetSlaves = targetSlaves;
 		_threadsDurationTotal = 0;
 
 		ExecutorService executorService = Executors.newFixedThreadPool(
@@ -52,7 +51,7 @@ public class RemoteExecutor {
 			}
 
 			while ((_finishedSlaves.size() + _errorSlaves.size()) <
-						_targetSlaves.size()) {
+						_targetSlaves.length) {
 
 				JenkinsResultsParserUtil.sleep(1000);
 			}
@@ -62,6 +61,8 @@ public class RemoteExecutor {
 					_errorSlaves.size() + " slaves failed to respond:\n" +
 						_errorSlaves);
 			}
+
+			return _errorSlaves.size();
 		}
 		finally {
 			executorService.shutdown();
@@ -102,7 +103,7 @@ public class RemoteExecutor {
 		sb.append("\nFinished slaves:");
 		sb.append(_finishedSlaves.size());
 		sb.append("\nTarget slaves:");
-		sb.append(_targetSlaves.size());
+		sb.append(_targetSlaves.length);
 		sb.append("\nTotal duration: ");
 		sb.append(System.currentTimeMillis() - _start);
 		sb.append("\n");
@@ -110,7 +111,7 @@ public class RemoteExecutor {
 		System.out.println(sb.toString());
 
 		if ((_finishedSlaves.size() + _errorSlaves.size()) ==
-				_targetSlaves.size()) {
+				_targetSlaves.length) {
 
 			System.out.println(
 				"Remote execution completed in " +
@@ -125,11 +126,11 @@ public class RemoteExecutor {
 	}
 
 	private final List<String> _busySlaves = new ArrayList<>();
-	private final List<String> _commands = new ArrayList<>();
+	private String[] _commands;
 	private final List<String> _errorSlaves = new ArrayList<>();
 	private final List<String> _finishedSlaves = new ArrayList<>();
 	private long _start;
-	private final List<String> _targetSlaves = new ArrayList<>();
+	private String[] _targetSlaves;
 	private long _threadsDurationTotal;
 
 	private static class RemoteExecutorThread implements Runnable {
@@ -175,12 +176,12 @@ public class RemoteExecutor {
 			sb.append(_targetSlave);
 			sb.append(" '");
 
-			List<String> commands = _remoteExecutor._commands;
+			String[] commands = _remoteExecutor._commands;
 
-			for (int i = 0; i < commands.size(); i++) {
-				sb.append(commands.get(i));
+			for (int i = 0; i < commands.length; i++) {
+				sb.append(commands[i]);
 
-				if (i < (commands.size() -1)) {
+				if (i < (commands.length -1)) {
 					sb.append(" ; ");
 				}
 			}

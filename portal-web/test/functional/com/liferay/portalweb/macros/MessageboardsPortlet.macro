@@ -6,7 +6,7 @@
 			<var name="portlet" value="Message Boards" />
 		</execute>
 
-		<execute function="Click" locator1="BasePortlet#OPTIONS_ICON" />
+		<execute function="Click" locator1="Portlet#OPTIONS_ICON" />
 
 		<execute function="AssertClick" locator1="MenuItem#CONFIGURATION" value1="Configuration" />
 
@@ -38,7 +38,7 @@
 			<var name="portlet" value="Message Boards" />
 		</execute>
 
-		<execute function="Click" locator1="BasePortlet#OPTIONS_ICON" />
+		<execute function="Click" locator1="Portlet#OPTIONS_ICON" />
 
 		<execute function="AssertClick" locator1="MenuItem#CONFIGURATION" value1="Configuration" />
 
@@ -63,7 +63,7 @@
 			<var name="portlet" value="Message Boards" />
 		</execute>
 
-		<execute function="Click" locator1="BasePortlet#OPTIONS_ICON" />
+		<execute function="Click" locator1="Portlet#OPTIONS_ICON" />
 
 		<execute function="AssertClick" locator1="MenuItem#CONFIGURATION" value1="Configuration" />
 
@@ -91,7 +91,7 @@
 			<var name="portlet" value="Message Boards" />
 		</execute>
 
-		<execute function="Click" locator1="BasePortlet#OPTIONS_ICON" />
+		<execute function="Click" locator1="Portlet#OPTIONS_ICON" />
 
 		<execute function="AssertClick" locator1="MenuItem#CONFIGURATION" value1="Configuration" />
 
@@ -123,7 +123,7 @@
 			<var name="portlet" value="Message Boards" />
 		</execute>
 
-		<execute function="Click" locator1="BasePortlet#OPTIONS_ICON" />
+		<execute function="Click" locator1="Portlet#OPTIONS_ICON" />
 
 		<execute function="AssertClick" locator1="MenuItem#CONFIGURATION" value1="Configuration" />
 
@@ -187,7 +187,7 @@
 			<var name="portlet" value="Message Boards" />
 		</execute>
 
-		<execute function="Click" locator1="BasePortlet#OPTIONS_ICON" />
+		<execute function="Click" locator1="Portlet#OPTIONS_ICON" />
 		<execute function="AssertClick" locator1="MenuItem#CONFIGURATION" value1="Configuration" />
 
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
@@ -210,7 +210,7 @@
 			<var name="portlet" value="Message Boards" />
 		</execute>
 
-		<execute function="Click" locator1="BasePortlet#OPTIONS_ICON" />
+		<execute function="Click" locator1="Portlet#OPTIONS_ICON" />
 		<execute function="AssertClick" locator1="MenuItem#CONFIGURATION" value1="Configuration" />
 
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
@@ -291,7 +291,7 @@
 			<var name="portlet" value="Message Boards" />
 		</execute>
 
-		<execute function="Click" locator1="BasePortlet#OPTIONS_ICON" />
+		<execute function="Click" locator1="Portlet#OPTIONS_ICON" />
 
 		<execute function="AssertClick" locator1="MenuItem#CONFIGURATION" value1="Configuration" />
 

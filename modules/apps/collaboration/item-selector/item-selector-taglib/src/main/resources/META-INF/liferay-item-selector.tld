@@ -88,12 +88,6 @@
 		<tag-class>com.liferay.item.selector.taglib.servlet.taglib.RepositoryEntryBrowserTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description>A list of the <![CDATA[<code>ItemSelectorReturnType</code>]]> objects that the client of the taglib can handle.</description>
-			<name>desiredItemSelectorReturnTypes</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
 			<description>The style of the element list. The icon style is used by default.</description>
 			<name>displayStyle</name>
 			<required>false</required>
@@ -108,6 +102,12 @@
 		<attribute>
 			<description>The name of the event to be thrown once an image is selected.</description>
 			<name>itemSelectedEventName</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>An Object that contains the item selector return type custom logic</description>
+			<name>itemSelectorReturnTypeResolver</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

@@ -61,11 +61,12 @@ if (!resultRowSplitterEntries.isEmpty()) {
 
 						if (i < normalizedHeaderNames.size()) {
 							normalizedHeaderName = normalizedHeaderNames.get(i);
-
-							cssClass = (normalizedHeaderName.equals("rowChecker")) ? "lfr-checkbox-column" : "lfr-" + normalizedHeaderName + "-column";
 						}
 
-						if (Validator.isNull(normalizedHeaderName)) {
+						if (Validator.isNotNull(normalizedHeaderName)) {
+							cssClass = (normalizedHeaderName.equals("rowChecker")) ? "lfr-checkbox-column" : "lfr-" + normalizedHeaderName + "-column";
+						}
+						else {
 							normalizedHeaderName = String.valueOf(i +1);
 
 							cssClass = "lfr-entry-action-column";

@@ -17,7 +17,7 @@
 
 		<execute function="Click" locator1="SORss#RSS_OPTIONS" />
 
-		<execute function="Click" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" />
+		<execute function="Click" locator1="MenuItem#CONFIGURATION" />
 
 		<execute function="SelectFrame" locator1="SORssConfiguration#CONFIGURATION_IFRAME" />
 		<execute function="Click" locator1="SORssConfiguration#FEEDS_ADD_ROW_BUTTON" />
@@ -78,7 +78,7 @@
 
 		<execute function="Click" locator1="SORss#RSS_OPTIONS" />
 
-		<execute function="Click" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" />
+		<execute function="Click" locator1="MenuItem#CONFIGURATION" />
 
 		<execute function="SelectFrame" locator1="SORssConfiguration#CONFIGURATION_IFRAME" />
 
@@ -127,7 +127,7 @@
 
 		<execute function="Click" locator1="SORss#RSS_OPTIONS" />
 
-		<execute function="Click" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" />
+		<execute function="Click" locator1="MenuItem#CONFIGURATION" />
 
 		<execute function="SelectFrame" locator1="SORssConfiguration#CONFIGURATION_IFRAME" />
 
@@ -235,7 +235,7 @@
 
 		<execute function="Click" locator1="SORss#RSS_OPTIONS" />
 
-		<execute function="Click" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" />
+		<execute function="Click" locator1="MenuItem#CONFIGURATION" />
 
 		<execute function="SelectFrame" locator1="SORssConfiguration#CONFIGURATION_IFRAME" />
 		<execute function="AssertChecked" locator1="SORssConfiguration#DISPLAY_SETTINGS_SHOW_FEED_TITLE_CHECKBOX" />

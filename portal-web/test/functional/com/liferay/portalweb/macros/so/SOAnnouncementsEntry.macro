@@ -120,7 +120,7 @@
 
 		<execute function="Click" locator1="SOAnnouncements#ANNOUNCEMENTS_OPTIONS" />
 
-		<execute function="Click" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" />
+		<execute function="Click" locator1="MenuItem#CONFIGURATION" />
 
 		<execute function="SelectFrame" locator1="SOAnnouncementsConfiguration#CONFIGURATION_IFRAME" />
 		<execute function="Select" locator1="SOAnnouncementsConfiguration#DISPLAY_SETTINGS_ENTRIES_TO_DISPLAY_PER_PAGE_SELECT" value1="${entriesPerPage}" />
@@ -147,7 +147,7 @@
 
 		<execute function="Click" locator1="SOAnnouncements#ANNOUNCEMENTS_OPTIONS" />
 
-		<execute function="Click" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" />
+		<execute function="Click" locator1="MenuItem#CONFIGURATION" />
 
 		<execute function="SelectFrame" locator1="SOAnnouncementsConfiguration#CONFIGURATION_IFRAME" />
 		<execute function="Check" locator1="SOAnnouncementsConfiguration#ANNOUNCEMENTS_DISPLAYED_CUSTOMIZE_ANNOUNCEMENTS_DISPLAYED_CHECKBOX" />
@@ -467,7 +467,7 @@
 
 		<execute function="Click" locator1="SOAnnouncements#ANNOUNCEMENTS_OPTIONS" />
 
-		<execute function="Click" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" />
+		<execute function="Click" locator1="MenuItem#CONFIGURATION" />
 
 		<execute function="SelectFrame" locator1="SOAnnouncementsConfiguration#CONFIGURATION_IFRAME" />
 		<execute function="Check" locator1="SOAnnouncementsConfiguration#ANNOUNCEMENTS_DISPLAYED_CUSTOMIZE_ANNOUNCEMENTS_DISPLAYED_CHECKBOX" />

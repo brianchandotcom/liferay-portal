@@ -337,6 +337,8 @@
 
 		<execute function="AssertClick" locator1="SitePagesEditPage#COPY_APPLICATIONS_COPY_BUTTON" value1="Copy" />
 
+		<var name="key_portletName" value="Blogs" />
+
 		<execute function="AssertTextNotPresent" locator1="Portlet#TITLE" value1="Blogs" />
 	</command>
 

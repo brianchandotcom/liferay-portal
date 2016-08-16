@@ -18,32 +18,32 @@
 				</then>
 			</elseif>
 			<elseif>
-				<condition function="IsElementPresent" locator1="BasePortlet#SPECIFIC_PORTLET_BORDERLESS_BAR" />
+				<condition function="IsElementPresent" locator1="Portlet#SPECIFIC_BORDERLESS_BAR" />
 				<then>
-					<execute function="MakeVisible" locator1="BasePortlet#SPECIFIC_PORTLET_BORDERLESS_BAR" />
-					<execute function="Click" locator1="BasePortlet#SPECIFIC_PORTLET_BORDERLESS_ELLIPSIS_ICON" />
+					<execute function="MakeVisible" locator1="Portlet#SPECIFIC_BORDERLESS_BAR" />
+					<execute function="Click" locator1="Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON" />
 				</then>
 			</elseif>
 			<else>
-				<execute function="AssertClick" locator1="BasePortlet#SPECIFIC_PORTLET_ELLIPSIS_ICON" value1="Options" />
+				<execute function="AssertClick" locator1="Portlet#SPECIFIC_ELLIPSIS_ICON" value1="Options" />
 			</else>
 		</if>
 
 		<if>
 			<equals arg1="${portletOption}" arg2="Look and Feel Configuration" />
 			<then>
-				<execute function="AssertClick" locator1="BasePortlet#OPTIONS_MENULIST_LOOK_AND_FEEL" value1="Look and Feel Configuration" />
+				<execute function="AssertClick" locator1="MenuItem#LOOK_AND_FEEL" value1="Look and Feel Configuration" />
 			</then>
 			<elseif>
 				<equals arg1="${portletOption}" arg2="Configuration" />
 				<then>
-					<execute function="AssertClick" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
+					<execute function="AssertClick" locator1="MenuItem#CONFIGURATION" value1="Configuration" />
 				</then>
 			</elseif>
 			<elseif>
 				<equals arg1="${portletOption}" arg2="Export / Import" />
 				<then>
-					<execute function="AssertClick" locator1="BasePortlet#OPTIONS_MENULIST_EXPORT_IMPORT" value1="Export / Import" />
+					<execute function="AssertClick" locator1="MenuItem#EXPORT_IMPORT" value1="Export / Import" />
 				</then>
 			</elseif>
 			<else>

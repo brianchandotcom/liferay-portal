@@ -372,7 +372,7 @@
 
 		<var name="key_portletName" value="${portletName}" />
 
-		<execute function="AssertTextEquals" locator1="BasePortlet#TITLE" value1="${portletName}" />
+		<execute function="AssertTextEquals" locator1="Portlet#TITLE" value1="${portletName}" />
 
 		<execute function="Close" locator1="home - ${userGroupName} - ${siteName}" />
 	</command>

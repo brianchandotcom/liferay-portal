@@ -269,7 +269,7 @@
 			<var name="portletName" value="Polls Display" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="BasePortlet#INFO_MESSAGE" value1="Please sign in to vote." />
+		<execute function="AssertTextEquals" locator1="Message#INFO" value1="Please sign in to vote." />
 
 		<execute function="AssertElementPresent" locator1="Search#SEARCH_FIELD" />
 

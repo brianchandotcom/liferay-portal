@@ -25,7 +25,7 @@ import java.util.concurrent.Executors;
 /**
  * @author Peter Yoo
  */
-public class CommandPropagator {
+public class RemoteExecutor {
 
 	public void addCommand(String command) {
 		_commands.add(command);
@@ -54,14 +54,14 @@ public class CommandPropagator {
 			threadCount);
 
 		System.out.println(
-			"Command propagation starting with " + threadCount + " threads.");
+			"Remote execution starting with " + threadCount + " threads.");
 
 		try {
 			long start = System.currentTimeMillis();
 
 			for (String targetSlave : _targetSlaves) {
 				executorService.execute(
-					new CommandPropagatorThread(this, targetSlave));
+					new RemoteExecutorThread(this, targetSlave));
 			}
 
 			while ((_finishedSlaves.size() + _errorSlaves.size()) <
@@ -87,7 +87,7 @@ public class CommandPropagator {
 			}
 
 			System.out.println(
-				"Command propagation completed in " +
+				"Remote execution completed in " +
 					(System.currentTimeMillis() - start) + "ms.");
 
 			if (!_errorSlaves.isEmpty()) {
@@ -113,11 +113,11 @@ public class CommandPropagator {
 	private int _threadsCompletedCount;
 	private long _threadsDurationTotal;
 
-	private static class CommandPropagatorThread implements Runnable {
+	private static class RemoteExecutorThread implements Runnable {
 
 		@Override
 		public void run() {
-			List<String> busySlaves = _commandPropagator._busySlaves;
+			List<String> busySlaves = _remoteExecutor._busySlaves;
 
 			busySlaves.add(_targetSlave);
 
@@ -132,7 +132,7 @@ public class CommandPropagator {
 					_successful = true;
 
 					List<String> finishedSlaves =
-						_commandPropagator._finishedSlaves;
+						_remoteExecutor._finishedSlaves;
 
 					finishedSlaves.add(_targetSlave);
 				}
@@ -146,18 +146,18 @@ public class CommandPropagator {
 			finally {
 				busySlaves.remove(_targetSlave);
 
-				synchronized(_commandPropagator) {
-					_commandPropagator._threadsCompletedCount++;
+				synchronized(_remoteExecutor) {
+					_remoteExecutor._threadsCompletedCount++;
 
-					_commandPropagator._threadsDurationTotal += _duration;
+					_remoteExecutor._threadsDurationTotal += _duration;
 				}
 			}
 		}
 
-		private CommandPropagatorThread(
-			CommandPropagator commandPropagator, String targetSlave) {
+		private RemoteExecutorThread(
+			RemoteExecutor remoteExecutor, String targetSlave) {
 
-			_commandPropagator = commandPropagator;
+			_remoteExecutor = remoteExecutor;
 
 			_targetSlave = targetSlave;
 		}
@@ -170,7 +170,7 @@ public class CommandPropagator {
 			sb.append(_targetSlave);
 			sb.append(" '");
 
-			List<String> commands = _commandPropagator._commands;
+			List<String> commands = _remoteExecutor._commands;
 
 			for (int i = 0; i < commands.size(); i++) {
 				sb.append(commands.get(i));
@@ -196,7 +196,7 @@ public class CommandPropagator {
 			errorSlaves.add(_targetSlave);
 
 			System.out.println(
-				"Command execution failed on target slave: " + _targetSlave +
+				"Remote execution failed on target slave: " + _targetSlave +
 					".\n");
 
 			if ((errorMessage != null) && !errorMessage.isEmpty()) {
@@ -204,8 +204,8 @@ public class CommandPropagator {
 			}
 		}
 
-		private final CommandPropagator _commandPropagator;
 		private long _duration;
+		private final RemoteExecutor _remoteExecutor;
 		private boolean _successful;
 		private final String _targetSlave;
 

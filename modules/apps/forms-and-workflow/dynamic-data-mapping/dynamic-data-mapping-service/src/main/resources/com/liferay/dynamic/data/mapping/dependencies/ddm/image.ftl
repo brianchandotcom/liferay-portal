@@ -22,6 +22,12 @@
 	/>
 </#if>
 
+<#assign itemSelectorAuthToken = authTokenUtil.getToken(request, themeDisplay.getPlid(), "com_liferay_item_selector_web_portlet_ItemSelectorPortlet") />
+
+<#assign data = data + {
+	"itemSelectorAuthToken": itemSelectorAuthToken
+}>
+
 <@liferay_aui["field-wrapper"] cssClass="form-builder-field" data=data>
 	<div class="form-group">
 		<div class="hide" id="${portletNamespace}${namespacedFieldName}UploadContainer"></div>

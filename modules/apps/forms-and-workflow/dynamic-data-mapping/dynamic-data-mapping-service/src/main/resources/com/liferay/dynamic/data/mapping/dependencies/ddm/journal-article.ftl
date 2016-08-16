@@ -22,6 +22,12 @@
 	</#if>
 </#if>
 
+<#assign assetBrowserAuthToken = authTokenUtil.getToken(request, themeDisplay.getPlid(), "com_liferay_asset_browser_web_portlet_AssetBrowserPortlet") />
+
+<#assign data = data + {
+	"assetBrowserAuthToken": assetBrowserAuthToken
+}>
+
 <@liferay_aui["field-wrapper"] cssClass="form-builder-field" data=data required=required>
 	<div class="form-group">
 		<div class="hide" id="${portletNamespace}${namespacedFieldName}SelectContainer"></div>

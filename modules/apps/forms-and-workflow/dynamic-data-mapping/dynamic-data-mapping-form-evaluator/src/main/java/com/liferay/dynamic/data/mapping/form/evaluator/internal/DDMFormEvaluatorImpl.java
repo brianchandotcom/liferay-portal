@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Pablo Carvalho
  */
-@Component(immediate = true)
+@Component(immediate = true, service = DDMFormEvaluator.class)
 public class DDMFormEvaluatorImpl implements DDMFormEvaluator {
 
 	@Override

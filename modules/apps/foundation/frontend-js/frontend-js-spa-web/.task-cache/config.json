@@ -44,14 +44,14 @@
     "frontend-js-spa-web@1.0.11/metal-useragent/src/UA": {
         "dependencies": ["exports"]
     },
+    "frontend-js-spa-web@1.0.11/metal-uri/src/Uri": {
+        "dependencies": ["exports", "metal/src/metal", "./parse", "metal-multimap/src/MultiMap"]
+    },
     "frontend-js-spa-web@1.0.11/metal-uri/src/parse": {
         "dependencies": ["exports", "metal/src/metal", "./parseFromAnchor"]
     },
     "frontend-js-spa-web@1.0.11/metal-uri/src/parseFromAnchor": {
         "dependencies": ["exports"]
-    },
-    "frontend-js-spa-web@1.0.11/metal-uri/src/Uri": {
-        "dependencies": ["exports", "metal/src/metal", "./parse", "metal-multimap/src/MultiMap"]
     },
     "frontend-js-spa-web@1.0.11/metal-promise/src/promise/Promise": {
         "dependencies": ["exports", "metal/src/metal"]
@@ -74,14 +74,14 @@
     "frontend-js-spa-web@1.0.11/metal-events/src/events": {
         "dependencies": ["exports", "./EventEmitter", "./EventEmitterProxy", "./EventHandle", "./EventHandler"]
     },
-    "frontend-js-spa-web@1.0.11/metal-dom/src/dom": {
-        "dependencies": ["exports", "metal/src/metal", "./DomEventHandle"]
-    },
     "frontend-js-spa-web@1.0.11/metal-dom/src/DomEventEmitterProxy": {
         "dependencies": ["exports", "./dom", "metal-events/src/events"]
     },
     "frontend-js-spa-web@1.0.11/metal-dom/src/DomEventHandle": {
         "dependencies": ["exports", "metal-events/src/events"]
+    },
+    "frontend-js-spa-web@1.0.11/metal-dom/src/dom": {
+        "dependencies": ["exports", "metal/src/metal", "./DomEventHandle"]
     },
     "frontend-js-spa-web@1.0.11/metal-dom/src/events": {
         "dependencies": ["./dom", "./features"]

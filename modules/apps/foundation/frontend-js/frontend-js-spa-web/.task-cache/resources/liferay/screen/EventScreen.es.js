@@ -56,7 +56,6 @@ define("frontend-js-spa-web@1.0.11/liferay/screen/EventScreen.es", ['exports', '
 			var _this = _possibleConstructorReturn(this, _HtmlScreen.call(this));
 
 			_this.cacheable = false;
-			_this.timeout = Math.max(Liferay.SPA.requestTimeout, 0) || _Utils2.default.getMaxTimeout();
 			return _this;
 		}
 
@@ -76,54 +75,6 @@ define("frontend-js-spa-web@1.0.11/liferay/screen/EventScreen.es", ['exports', '
 				app: Liferay.SPA.app,
 				screen: this
 			});
-		};
-
-		EventScreen.prototype._clearRequestTimer = function _clearRequestTimer() {
-			if (this.requestTimer) {
-				clearTimeout(this.requestTimer);
-			}
-
-			if (this.timeoutAlert) {
-				this.timeoutAlert.hide();
-			}
-		};
-
-		EventScreen.prototype._createTimeoutNotification = function _createTimeoutNotification() {
-			var instance = this;
-
-			AUI().use('liferay-notification', function () {
-				instance.timeoutAlert = new Liferay.Notification({
-					closeable: true,
-					delay: {
-						hide: 0,
-						show: 0
-					},
-					duration: 500,
-					message: Liferay.SPA.userNotification.message,
-					title: Liferay.SPA.userNotification.title,
-					type: 'warning'
-				}).render('body');
-			});
-		};
-
-		EventScreen.prototype._startRequestTimer = function _startRequestTimer(path) {
-			var _this2 = this;
-
-			if (Liferay.SPA.userNotification.timeout > 0) {
-				this._clearRequestTimer();
-
-				this.requestTimer = setTimeout(function () {
-					Liferay.fire('spaRequestTimeout', {
-						path: path
-					});
-
-					if (!_this2.timeoutAlert) {
-						_this2._createTimeoutNotification();
-					} else {
-						_this2.timeoutAlert.show();
-					}
-				}, Liferay.SPA.userNotification.timeout);
-			}
 		};
 
 		EventScreen.prototype.addCache = function addCache(content) {
@@ -164,16 +115,16 @@ define("frontend-js-spa-web@1.0.11/liferay/screen/EventScreen.es", ['exports', '
 		};
 
 		EventScreen.prototype.flip = function flip(surfaces) {
-			var _this3 = this;
+			var _this2 = this;
 
 			this.copyBodyAttributes();
 
 			return _Promise.CancellablePromise.resolve(_Utils2.default.resetAllPortlets()).then(_Promise.CancellablePromise.resolve(this.beforeScreenFlip())).then(_HtmlScreen.prototype.flip.call(this, surfaces)).then(function () {
-				_this3.runBodyOnLoad();
+				_this2.runBodyOnLoad();
 
 				Liferay.fire('screenFlip', {
 					app: Liferay.SPA.app,
-					screen: _this3
+					screen: _this2
 				});
 			});
 		};
@@ -199,21 +150,17 @@ define("frontend-js-spa-web@1.0.11/liferay/screen/EventScreen.es", ['exports', '
 		};
 
 		EventScreen.prototype.load = function load(path) {
-			var _this4 = this;
-
-			this._startRequestTimer(path);
+			var _this3 = this;
 
 			return _HtmlScreen.prototype.load.call(this, path).then(function (content) {
-				_this4._clearRequestTimer();
+				var redirectPath = _this3.beforeUpdateHistoryPath(path);
 
-				var redirectPath = _this4.beforeUpdateHistoryPath(path);
-
-				_this4.checkRedirectPath(redirectPath);
+				_this3.checkRedirectPath(redirectPath);
 
 				Liferay.fire('screenLoad', {
 					app: Liferay.SPA.app,
 					content: content,
-					screen: _this4
+					screen: _this3
 				});
 
 				return content;

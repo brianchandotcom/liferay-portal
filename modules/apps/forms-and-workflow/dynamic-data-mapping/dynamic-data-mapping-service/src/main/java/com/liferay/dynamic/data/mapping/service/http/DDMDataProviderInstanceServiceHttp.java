@@ -155,12 +155,13 @@ public class DDMDataProviderInstanceServiceHttp {
 		}
 	}
 
-	public static com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance findByUuid(
+	public static com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance fetchDataProviderInstanceByUuid(
 		HttpPrincipal httpPrincipal, java.lang.String uuid)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(DDMDataProviderInstanceServiceUtil.class,
-					"findByUuid", _findByUuidParameterTypes3);
+					"fetchDataProviderInstanceByUuid",
+					_fetchDataProviderInstanceByUuidParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, uuid);
 
@@ -219,13 +220,45 @@ public class DDMDataProviderInstanceServiceHttp {
 		}
 	}
 
+	public static com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance getDataProviderInstanceByUuid(
+		HttpPrincipal httpPrincipal, java.lang.String uuid)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(DDMDataProviderInstanceServiceUtil.class,
+					"getDataProviderInstanceByUuid",
+					_getDataProviderInstanceByUuidParameterTypes5);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, uuid);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance> search(
 		HttpPrincipal httpPrincipal, long companyId, long[] groupIds,
 		java.lang.String keywords, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance> orderByComparator) {
 		try {
 			MethodKey methodKey = new MethodKey(DDMDataProviderInstanceServiceUtil.class,
-					"search", _searchParameterTypes5);
+					"search", _searchParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					companyId, groupIds, keywords, start, end, orderByComparator);
@@ -255,7 +288,7 @@ public class DDMDataProviderInstanceServiceHttp {
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance> orderByComparator) {
 		try {
 			MethodKey methodKey = new MethodKey(DDMDataProviderInstanceServiceUtil.class,
-					"search", _searchParameterTypes6);
+					"search", _searchParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					companyId, groupIds, name, description, andOperator, start,
@@ -283,7 +316,7 @@ public class DDMDataProviderInstanceServiceHttp {
 		long[] groupIds, java.lang.String keywords) {
 		try {
 			MethodKey methodKey = new MethodKey(DDMDataProviderInstanceServiceUtil.class,
-					"searchCount", _searchCountParameterTypes7);
+					"searchCount", _searchCountParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					companyId, groupIds, keywords);
@@ -311,7 +344,7 @@ public class DDMDataProviderInstanceServiceHttp {
 		boolean andOperator) {
 		try {
 			MethodKey methodKey = new MethodKey(DDMDataProviderInstanceServiceUtil.class,
-					"searchCount", _searchCountParameterTypes8);
+					"searchCount", _searchCountParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					companyId, groupIds, name, description, andOperator);
@@ -344,7 +377,7 @@ public class DDMDataProviderInstanceServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(DDMDataProviderInstanceServiceUtil.class,
 					"updateDataProviderInstance",
-					_updateDataProviderInstanceParameterTypes9);
+					_updateDataProviderInstanceParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					dataProviderInstanceId, nameMap, descriptionMap,
@@ -385,29 +418,30 @@ public class DDMDataProviderInstanceServiceHttp {
 	private static final Class<?>[] _fetchDataProviderInstanceParameterTypes2 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _findByUuidParameterTypes3 = new Class[] {
-			java.lang.String.class
-		};
+	private static final Class<?>[] _fetchDataProviderInstanceByUuidParameterTypes3 =
+		new Class[] { java.lang.String.class };
 	private static final Class<?>[] _getDataProviderInstanceParameterTypes4 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _searchParameterTypes5 = new Class[] {
+	private static final Class<?>[] _getDataProviderInstanceByUuidParameterTypes5 =
+		new Class[] { java.lang.String.class };
+	private static final Class<?>[] _searchParameterTypes6 = new Class[] {
 			long.class, long[].class, java.lang.String.class, int.class,
 			int.class, com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _searchParameterTypes6 = new Class[] {
+	private static final Class<?>[] _searchParameterTypes7 = new Class[] {
 			long.class, long[].class, java.lang.String.class,
 			java.lang.String.class, boolean.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _searchCountParameterTypes7 = new Class[] {
+	private static final Class<?>[] _searchCountParameterTypes8 = new Class[] {
 			long.class, long[].class, java.lang.String.class
 		};
-	private static final Class<?>[] _searchCountParameterTypes8 = new Class[] {
+	private static final Class<?>[] _searchCountParameterTypes9 = new Class[] {
 			long.class, long[].class, java.lang.String.class,
 			java.lang.String.class, boolean.class
 		};
-	private static final Class<?>[] _updateDataProviderInstanceParameterTypes9 = new Class[] {
+	private static final Class<?>[] _updateDataProviderInstanceParameterTypes10 = new Class[] {
 			long.class, java.util.Map.class, java.util.Map.class,
 			com.liferay.dynamic.data.mapping.storage.DDMFormValues.class,
 			com.liferay.portal.kernel.service.ServiceContext.class

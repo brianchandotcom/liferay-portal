@@ -69,12 +69,17 @@ public interface DDMDataProviderInstanceService extends BaseService {
 	public DDMDataProviderInstance fetchDataProviderInstance(
 		long dataProviderInstanceId) throws PortalException;
 
-	public DDMDataProviderInstance findByUuid(java.lang.String uuid)
-		throws PortalException;
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DDMDataProviderInstance fetchDataProviderInstanceByUuid(
+		java.lang.String uuid) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDMDataProviderInstance getDataProviderInstance(
 		long dataProviderInstanceId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DDMDataProviderInstance getDataProviderInstanceByUuid(
+		java.lang.String uuid) throws PortalException;
 
 	public DDMDataProviderInstance updateDataProviderInstance(
 		long dataProviderInstanceId, Map<Locale, java.lang.String> nameMap,

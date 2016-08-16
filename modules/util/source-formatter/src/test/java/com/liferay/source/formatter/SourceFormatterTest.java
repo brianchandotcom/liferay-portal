@@ -78,7 +78,7 @@ public class SourceFormatterTest {
 				if (message.length() >= _MAX_MESSAGE_SIZE) {
 					message =
 						"Truncated message :\n" +
-						message.substring(0, _MAX_MESSAGE_SIZE);
+							message.substring(0, _MAX_MESSAGE_SIZE);
 
 					throw new AssertionError(message, ae.getCause());
 				}

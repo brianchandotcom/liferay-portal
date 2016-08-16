@@ -98,15 +98,15 @@ public class SuppressionsLoader extends AbstractLoader {
 	private static Map<String, String> _createIdToResourceNameMap() {
 		Map<String, String> map = new HashMap<>();
 
-		map.put(DTD_PUBLIC_ID_1_1, DTD_RESOURCE_NAME_1_1);
+		map.put(_DTD_PUBLIC_ID_1_1, _DTD_RESOURCE_NAME_1_1);
 
 		return map;
 	}
 
-	private static final String DTD_PUBLIC_ID_1_1 =
+	private static final String _DTD_PUBLIC_ID_1_1 =
 		"-//Puppy Crawl//DTD Suppressions 1.1//EN";
 
-	private static final String DTD_RESOURCE_NAME_1_1 =
+	private static final String _DTD_RESOURCE_NAME_1_1 =
 		"com/puppycrawl/tools/checkstyle/suppressions_1_1.dtd";
 
 	private final FilterSet _filterChain = new FilterSet();

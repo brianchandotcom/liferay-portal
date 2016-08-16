@@ -304,7 +304,8 @@ public class JavaClass {
 
 		if (!setVariableCommand.contains(" =")) {
 			setVariableCommand = StringUtil.replaceLast(
-				setVariableCommand, ";", " = " + defaultValue + ";");
+				setVariableCommand, CharPool.SEMICOLON,
+				" = " + defaultValue + ";");
 		}
 
 		setVariableCommand = StringUtil.replace(
@@ -768,7 +769,7 @@ public class JavaClass {
 		while (leadingTabCount != expectedTabCount) {
 			if (leadingTabCount > expectedTabCount) {
 				newLine = StringUtil.replaceFirst(
-					newLine, StringPool.TAB, StringPool.BLANK);
+					newLine, CharPool.TAB, StringPool.BLANK);
 
 				leadingTabCount--;
 			}

@@ -104,7 +104,7 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 
 		for (String translationFileName : translationFileNames) {
 			translationFileName = StringUtil.replace(
-				translationFileName, StringPool.BACK_SLASH, StringPool.SLASH);
+				translationFileName, CharPool.BACK_SLASH, CharPool.SLASH);
 
 			File translationFile = new File(translationFileName);
 

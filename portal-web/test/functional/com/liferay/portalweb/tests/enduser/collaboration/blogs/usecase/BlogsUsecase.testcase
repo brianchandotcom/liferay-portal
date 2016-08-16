@@ -2036,6 +2036,8 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
+		<var name="key_portletName" value="Blogs Aggregator" />
+
 		<execute function="AssertTextPresent" locator1="Portlet#TITLE" value1="Blogs Aggregator" />
 
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />

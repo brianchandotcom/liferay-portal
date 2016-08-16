@@ -30,68 +30,6 @@ public class RemoteExecutor {
 		_commands.add(command);
 	}
 
-	public void addErrorSlave(String errorSlave) {
-		_targetSlaves.remove(errorSlave);
-
-		_errorSlaves.add(errorSlave);
-	}
-
-	public long getAverageThreadDuration() {
-		int threadsCompletedCount =
-			_finishedSlaves.size() + _errorSlaves.size();
-
-		if (threadsCompletedCount == 0) {
-			return 0;
-		}
-
-		return _threadsDurationTotal / threadsCompletedCount;
-	}
-
-	private synchronized void _onThreadComplete(
-		RemoteExecutorThread remoteExecutorThread) {
-
-		_busySlaves.remove(remoteExecutorThread._targetSlave);
-
-		if (!remoteExecutorThread._error) {
-			_finishedSlaves.add(remoteExecutorThread._targetSlave);
-		}
-		else {
-			_errorSlaves.add(remoteExecutorThread._targetSlave);
-		}
-
-		_threadsDurationTotal += remoteExecutorThread._duration;
-
-		StringBuffer sb = new StringBuffer();
-
-		sb.append("Average thread duration: ");
-		sb.append(getAverageThreadDuration());
-		sb.append("ms\nBusy slaves:");
-		sb.append(_busySlaves.size());
-		sb.append("\nFinished slaves:");
-		sb.append(_finishedSlaves.size());
-		sb.append("\nTarget slaves:");
-		sb.append(_targetSlaves.size());
-		sb.append("\nTotal duration: ");
-		sb.append(System.currentTimeMillis() - _start);
-		sb.append("\n");
-
-		System.out.println(sb.toString());
-
-		if ((_finishedSlaves.size() + _errorSlaves.size()) ==
-				_targetSlaves.size()) {
-
-			System.out.println(
-				"Remote execution completed in " +
-					(System.currentTimeMillis() - _start) + "ms.");
-		}
-	}
-
-	public synchronized void onThreadStart(
-		RemoteExecutorThread remoteExecutorThread) {
-
-		_busySlaves.add(remoteExecutorThread._targetSlave);
-	}
-
 	public void start(int threadCount, List<String> targetSlaves) {
 		_targetSlaves.clear();
 
@@ -130,6 +68,62 @@ public class RemoteExecutor {
 		}
 	}
 
+	private long _getAverageThreadDuration() {
+		int threadsCompletedCount =
+			_finishedSlaves.size() + _errorSlaves.size();
+
+		if (threadsCompletedCount == 0) {
+			return 0;
+		}
+
+		return _threadsDurationTotal / threadsCompletedCount;
+	}
+
+	private synchronized void _onThreadComplete(
+		RemoteExecutorThread remoteExecutorThread) {
+
+		_busySlaves.remove(remoteExecutorThread._targetSlave);
+
+		if (!remoteExecutorThread._error) {
+			_finishedSlaves.add(remoteExecutorThread._targetSlave);
+		}
+		else {
+			_errorSlaves.add(remoteExecutorThread._targetSlave);
+		}
+
+		_threadsDurationTotal += remoteExecutorThread._duration;
+
+		StringBuffer sb = new StringBuffer();
+
+		sb.append("Average thread duration: ");
+		sb.append(_getAverageThreadDuration());
+		sb.append("ms\nBusy slaves:");
+		sb.append(_busySlaves.size());
+		sb.append("\nFinished slaves:");
+		sb.append(_finishedSlaves.size());
+		sb.append("\nTarget slaves:");
+		sb.append(_targetSlaves.size());
+		sb.append("\nTotal duration: ");
+		sb.append(System.currentTimeMillis() - _start);
+		sb.append("\n");
+
+		System.out.println(sb.toString());
+
+		if ((_finishedSlaves.size() + _errorSlaves.size()) ==
+				_targetSlaves.size()) {
+
+			System.out.println(
+				"Remote execution completed in " +
+					(System.currentTimeMillis() - _start) + "ms.");
+		}
+	}
+
+	private synchronized void _onThreadStart(
+		RemoteExecutorThread remoteExecutorThread) {
+
+		_busySlaves.add(remoteExecutorThread._targetSlave);
+	}
+
 	private final List<String> _busySlaves = new ArrayList<>();
 	private final List<String> _commands = new ArrayList<>();
 	private final List<String> _errorSlaves = new ArrayList<>();
@@ -142,7 +136,7 @@ public class RemoteExecutor {
 
 		@Override
 		public void run() {
-			_remoteExecutor.onThreadStart(this);
+			_remoteExecutor._onThreadStart(this);
 
 			_error = false;
 

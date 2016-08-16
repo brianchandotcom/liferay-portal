@@ -49,7 +49,8 @@ public class DDMFormEvaluatorImpl implements DDMFormEvaluator {
 		try {
 			DDMFormRuleEvaluatorHelper ddmFormRuleEvaluatorHelper =
 				new DDMFormRuleEvaluatorHelper(
-					_ddmExpressionFactory, ddmForm, ddmFormValues, locale);
+					_ddmExpressionFactory, ddmForm, ddmFormValues, _jsonFactory,
+					locale);
 
 			List<DDMFormFieldEvaluationResult> ddmFormFieldEvaluationResults =
 				ddmFormRuleEvaluatorHelper.evaluate();

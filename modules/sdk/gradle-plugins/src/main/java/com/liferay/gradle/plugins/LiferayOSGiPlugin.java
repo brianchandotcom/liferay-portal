@@ -109,7 +109,6 @@ import org.gradle.api.tasks.compile.JavaCompile;
 import org.gradle.api.tasks.javadoc.Javadoc;
 import org.gradle.api.tasks.testing.Test;
 import org.gradle.internal.Factory;
-import org.gradle.plugins.ide.eclipse.EclipsePlugin;
 
 /**
  * @author Andrea Di Giorgi
@@ -741,10 +740,8 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 					String taskName = task.getName();
 
 					if (taskName.equals(LiferayBasePlugin.DEPLOY_TASK_NAME) ||
-						taskName.equals(
-							EclipsePlugin.getECLIPSE_CP_TASK_NAME()) ||
-						taskName.equals(
-							EclipsePlugin.getECLIPSE_PROJECT_TASK_NAME()) ||
+						taskName.equals("eclipseClasspath") ||
+						taskName.equals("eclipseProject") ||
 						taskName.equals("ideaModule") ||
 						(task instanceof BuildSoyTask)) {
 

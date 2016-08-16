@@ -364,9 +364,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 			});
 
-		if (taskNames.contains(EclipsePlugin.getECLIPSE_TASK_NAME()) ||
-			taskNames.contains("idea")) {
-
+		if (taskNames.contains("eclipse") || taskNames.contains("idea")) {
 			forceProjectDependenciesEvaluation(project);
 		}
 

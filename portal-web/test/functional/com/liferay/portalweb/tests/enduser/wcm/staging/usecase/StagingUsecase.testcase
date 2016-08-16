@@ -2470,7 +2470,7 @@
 			<var name="siteName" value="Community Site Name" />
 		</execute>
 
-		<execute function="AssertElementNotPresent" locator1="BasePortlet#TITLE">
+		<execute function="AssertElementNotPresent" locator1="Portlet#TITLE">
 			<var name="key_portletName" value="Web Content Display" />
 		</execute>
 

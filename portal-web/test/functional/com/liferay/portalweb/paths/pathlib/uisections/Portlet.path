@@ -80,7 +80,7 @@
 </tr>
 <tr>
 	<td>TITLE</td>
-	<td>//span[contains(@class,'header-toolbar-title')]</td>
+	<td>//h2[contains(@class,'portlet-title') and contains(.,'${key_portletName}')]</td>
 	<td></td>
 </tr>
 <tr>

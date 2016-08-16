@@ -17,7 +17,7 @@
 		<if>
 			<condition function="IsElementNotPresent" locator1="ContentTargeting#PREVIEW_BUTTON_EXPANDED" />
 			<then>
-				<execute function="Click#makeVisibleClickAt" locator1="BasePortlet#SPECIFIC_PORTLET_BORDERLESS_BAR" />
+				<execute function="Click#makeVisibleClickAt" locator1="Portlet#SPECIFIC_BORDERLESS_BAR" />
 
 				<execute function="Click" locator1="ContentTargeting#PREVIEW_BUTTON" />
 

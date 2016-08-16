@@ -1488,7 +1488,7 @@
 
 		<var name="key_portletName" value="Web Content Display" />
 
-		<execute function="Click#makeVisibleClickAt" locator1="BasePortlet#SPECIFIC_PORTLET_BORDERLESS_ELLIPSIS_ICON" />
+		<execute function="Click#makeVisibleClickAt" locator1="Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON" />
 
 		<var name="key_menuItem" value="Edit Web Content" />
 
@@ -1568,7 +1568,7 @@
 		<var name="key_portletName" value="Web Content Display" />
 
 		<execute function="AssertTextNotPresent" locator1="Message#ERROR" value1="The selected web content no longer exists." />
-		<execute function="AssertElementNotPresent" locator1="BasePortlet#PORTLET_BODY" />
+		<execute function="AssertElementNotPresent" locator1="Portlet#BODY" />
 	</command>
 
 	<command name="viewNoContentPGViaWCD">
@@ -1599,7 +1599,7 @@
 
 		<var name="key_portletName" value="Web Content Display" />
 
-		<execute function="AssertElementNotPresent" locator1="BasePortlet#SPECIFIC_PORTLET_BORDERLESS_ELLIPSIS_ICON" />
+		<execute function="AssertElementNotPresent" locator1="Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON" />
 	</command>
 
 	<command name="viewNoPermissionCP">

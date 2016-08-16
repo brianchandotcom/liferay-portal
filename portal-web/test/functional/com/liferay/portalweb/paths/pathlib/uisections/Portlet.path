@@ -14,6 +14,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BORDER_WIDTH_TOP_INPUT</td>
+	<td>//div[contains(@class,'form-group') and contains(.,'Top')]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIGURATION_CUSTOM_TITLE_FIELD</td>
+	<td>//div/input[contains(@id,'custom-title')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LAYOUT_2_COLUMNS</td>
 	<td>//input[contains(@id,'layoutTemplateId_1')]</td>
 	<td></td>
@@ -64,13 +74,58 @@
 	<td></td>
 </tr>
 <tr>
+	<td>OPTIONS_ICON</td>
+	<td>//div[@id='main-content']//div[contains(@class,'portlet-options')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OPTIONS_MENULIST_PERMISSIONS</td>
+	<td>//a[contains(@id,'_menu_permissions')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PORTLET_CONTENT</td>
 	<td>//section[@id='content']//div[contains(@class,'portlet-content')]</td>
 	<td></td>
 </tr>
 <tr>
+	<td>SIGN_IN_CUSTOM_LOOK_AND_FEEL</td>
+	<td>portal/screenshots/home/sign_in_custom_look_and_feel.png</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SPECIFIC_BORDERLESS_BAR</td>
+	<td>//div[contains(@class,'portlet-title-default')]/span[contains(.,'${key_portletName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SPECIFIC_BORDERLESS_ELLIPSIS_ICON</td>
+	<td>//header[@class='portlet-topper' and contains(.,'${key_portletName}')]//div[contains(@class,'portlet-options')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SPECIFIC_ELLIPSIS_ICON</td>
+	<td>//div[@id='main-content']//h2[contains(.,'${key_portletName}')]/../../header/menu/div[contains(@class,'portlet-options')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SPECIFIC_TITLE</td>
+	<td>//div[@id='main-content']//h2[contains(@class,'portlet-title') and (.='${key_portletTitleName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEXT_FONT_SELECT</td>
+	<td>//div[contains(@class,'form-group') and contains(.,'Font')]//select</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEXT_FONT_SIZE_SELECT</td>
+	<td>//div[contains(@class,'form-group') and contains(.,'Size')]//select</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TITLE</td>
-	<td>//span[contains(@class,'header-toolbar-title')]</td>
+	<td>//h2[contains(@class,'portlet-title') and contains(.,'${key_portletName}')]</td>
 	<td></td>
 </tr>
 <tr>

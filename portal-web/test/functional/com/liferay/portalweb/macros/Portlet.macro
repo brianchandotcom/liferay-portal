@@ -159,35 +159,35 @@
 			<var name="tab" value="Text Styles" />
 		</execute>
 
-		<execute function="Select" locator1="BasePortlet#TEXT_FONT_SELECT" value1="Verdana" />
+		<execute function="Select" locator1="Portlet#TEXT_FONT_SELECT" value1="Verdana" />
 
-		<execute function="Select" locator1="BasePortlet#TEXT_FONT_SIZE_SELECT" value1="2em" />
+		<execute function="Select" locator1="Portlet#TEXT_FONT_SIZE_SELECT" value1="2em" />
 
 		<execute macro="Navigator#gotoTab">
 			<var name="tab" value="Border Styles" />
 		</execute>
 
-		<execute function="Type" locator1="BasePortlet#BORDER_WIDTH_TOP_INPUT" value1="20" />
+		<execute function="Type" locator1="Portlet#BORDER_WIDTH_TOP_INPUT" value1="20" />
 
-		<execute function="AssertClick" locator1="BasePortlet#PORTLET_CONFIGURATION_SAVE_BUTTON" value1="Save" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 	</command>
 
 	<command name="configureCustomTitleViaLookandfeelPG">
-		<execute function="Check#checkToggleSwitch" locator1="BasePortlet#PORTLET_CONFIGURATION_USE_CUSTOM_TITLE_CHECKBOX" />
+		<execute function="Check#checkToggleSwitch" locator1="ToggleSwitch#USE_CUSTOM_TITLE" />
 
-		<execute function="Type" locator1="BasePortlet#PORTLET_CONFIGURATION_CUSTOM_TITLE_FIELD" value1="${portletName} Custom" />
+		<execute function="Type" locator1="Portlet#CONFIGURATION_CUSTOM_TITLE_FIELD" value1="${portletName} Custom" />
 
-		<execute function="AssertClick" locator1="BasePortlet#PORTLET_CONFIGURATION_SAVE_BUTTON" value1="Save" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="BasePortlet#PORTLET_CONFIGURATION_SUCCESS_MESSAGE" value1="Your request processed successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request processed successfully." />
 	</command>
 
 	<command name="deletePG">
 		<var name="key_portletName" value="${portletName}" />
 
-		<execute function="Click#makeVisibleClickAt" locator1="BasePortlet#SPECIFIC_PORTLET_ELLIPSIS_ICON" />
+		<execute function="Click#makeVisibleClickAt" locator1="Portlet#SPECIFIC_ELLIPSIS_ICON" />
 
-		<execute function="AssertClickNoError" locator1="BasePortlet#REMOVE" value1="Remove" />
+		<execute function="AssertClickNoError" locator1="MenuItem#REMOVE" value1="Remove" />
 
 		<execute function="Confirm" value1="Are you sure you want to remove this component?" />
 	</command>
@@ -207,10 +207,10 @@
 			<then>
 				<var name="key_portletName" value="${portletName}" />
 
-				<execute function="Click#makeVisibleClickAt" locator1="BasePortlet#SPECIFIC_PORTLET_BORDERLESS_ELLIPSIS_ICON" />
+				<execute function="Click#makeVisibleClickAt" locator1="Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON" />
 			</then>
 			<else>
-				<execute function="Click#makeVisibleClickAt" locator1="BasePortlet#OPTIONS_ICON" />
+				<execute function="Click#makeVisibleClickAt" locator1="Portlet#OPTIONS_ICON" />
 			</else>
 		</if>
 
@@ -222,12 +222,6 @@
 				<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" />
 			</then>
 		</if>
-	</command>
-
-	<command name="maximize">
-		<execute function="Click#makeVisibleClickAt" locator1="BasePortlet#OPTIONS_ICON" />
-
-		<execute function="AssertClick" locator1="BasePortlet#MAXIMIZE" value1="Maximize" />
 	</command>
 
 	<command name="openAdminURL">
@@ -285,7 +279,7 @@
 	<command name="viewBody" summary="Assert that the ${portletName} portlet body has the text '${portletBody}'">
 		<var name="key_portletName" value="${portletName}" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="BasePortlet#PORTLET_BODY" value1="${portletBody}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Portlet#BODY" value1="${portletBody}" />
 	</command>
 
 	<command name="viewCannotAddPG">
@@ -328,7 +322,7 @@
 	</command>
 
 	<command name="viewCustomStylesViaLookandfeelPG">
-		<execute function="SikuliClick" locator1="BasePortlet#SIGN_IN_CUSTOM_LOOK_AND_FEEL" />
+		<execute function="SikuliClick" locator1="Portlet#SIGN_IN_CUSTOM_LOOK_AND_FEEL" />
 	</command>
 
 	<command name="viewDefaultDisplayStyle">
@@ -379,7 +373,7 @@
 	<command name="viewNoSpecificPG">
 		<var name="key_portletTitleName" value="${portletName}" />
 
-		<execute function="AssertElementNotPresent" locator1="BasePortlet#SPECIFIC_TITLE" value1="${portletName}" />
+		<execute function="AssertElementNotPresent" locator1="Portlet#SPECIFIC_TITLE" value1="${portletName}" />
 	</command>
 
 	<command name="viewPG">
@@ -403,11 +397,11 @@
 
 		<var method="StringUtil#upperCase('${portletName}')" name="portletNameUppercase" />
 
-		<execute function="AssertTextEquals" locator1="BasePortlet#TITLE" value1="${portletNameUppercase}" />
+		<execute function="AssertTextEquals" locator1="Portlet#TITLE" value1="${portletNameUppercase}" />
 	</command>
 
 	<command name="viewPortletOptionsMenulist">
-		<execute function="Click#makeVisibleClickAt" locator1="BasePortlet#OPTIONS_ICON" />
+		<execute function="Click#makeVisibleClickAt" locator1="Portlet#OPTIONS_ICON" />
 
 		<execute function="AssertTextEquals" locator1="MenuItem#LOOK_AND_FEEL" value1="Look and Feel Configuration" />
 		<execute function="AssertTextEquals" locator1="MenuItem#CONFIGURATION_PORTLET_OPTION" value1="Configuration" />
@@ -420,12 +414,12 @@
 	<command name="viewSpecificPG">
 		<var name="key_portletTitleName" value="${portletName}" />
 
-		<execute function="AssertTextEquals" locator1="BasePortlet#SPECIFIC_TITLE" value1="${portletName}" />
+		<execute function="AssertTextEquals" locator1="Portlet#SPECIFIC_TITLE" value1="${portletName}" />
 	</command>
 
 	<command name="viewTitle" summary="Assert that the ${portletName} portlet title has the text '${portletName}'">
 		<var name="key_portletName" value="${portletName}" />
 
-		<execute function="AssertTextEquals" locator1="BasePortlet#TITLE" value1="${portletName}" />
+		<execute function="AssertTextEquals" locator1="Portlet#TITLE" value1="${portletName}" />
 	</command>
 </definition>

@@ -17,7 +17,7 @@
 
 		<execute function="Click" locator1="SOBlogs#RECENT_BLOGS_OPTIONS" />
 
-		<execute function="Click" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" />
+		<execute function="Click" locator1="MenuItem#CONFIGURATION" />
 
 		<execute function="SelectFrame" locator1="SOBlogsRecentBlogsConfiguration#CONFIGURATION_IFRAME" />
 		<execute function="Select" locator1="SOBlogsRecentBlogsConfiguration#SETUP_SELECTION_METHOD_SELECT" value1="${selectionMethod}" />

@@ -134,7 +134,7 @@
 
 	<command name="tearDownADTviaPortletPG">
 		<if>
-			<condition function="IsElementPresent" locator1="BasePortlet#OPTIONS_ICON" />
+			<condition function="IsElementPresent" locator1="Portlet#OPTIONS_ICON" />
 			<then>
 				<execute macro="Portlet#gotoPortletOptions">
 					<var name="portletName" value="${portletName}" />
@@ -200,7 +200,7 @@
 
 	<command name="viewADTviaPortletPG">
 		<if>
-			<condition function="IsElementPresent" locator1="BasePortlet#OPTIONS_ICON" />
+			<condition function="IsElementPresent" locator1="Portlet#OPTIONS_ICON" />
 			<then>
 				<execute macro="Portlet#gotoPortletOptions">
 					<var name="portletName" value="${portletName}" />

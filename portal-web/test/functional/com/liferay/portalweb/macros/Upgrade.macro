@@ -495,7 +495,7 @@
 
 		<var name="key_portletName" value="Asset Publisher" />
 
-		<execute function="AssertTextEquals" locator1="BasePortlet#TITLE" value1="Asset Publisher" />
+		<execute function="AssertTextEquals" locator1="Portlet#TITLE" value1="Asset Publisher" />
 
 		<execute macro="WebContent#viewPGViaAP">
 			<var name="webContentContent" value="Web Content Content" />
@@ -558,7 +558,7 @@
 
 		<var name="key_portletName" value="Nested Portlets" />
 
-		<execute function="AssertTextEquals" locator1="BasePortlet#TITLE" value1="Nested Portlets" />
+		<execute function="AssertTextEquals" locator1="Portlet#TITLE" value1="Nested Portlets" />
 
 		<execute function="AssertTextNotEquals" locator1="Message#INFO" value1="Drag portlets below to nest them." />
 

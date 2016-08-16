@@ -18,11 +18,15 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.friendly.url.exception.DuplicateFriendlyURLException;
 import com.liferay.friendly.url.exception.FriendlyURLLengthException;
+import com.liferay.friendly.url.exception.NoSuchFriendlyURLException;
 import com.liferay.friendly.url.model.FriendlyURL;
 import com.liferay.friendly.url.service.base.FriendlyURLLocalServiceBaseImpl;
+import com.liferay.friendly.url.util.comparator.FriendlyURLCreateDateComparator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
+
+import java.util.List;
 
 /**
  * @author Adolfo Pérez
@@ -84,6 +88,30 @@ public class FriendlyURLLocalServiceImpl
 
 		friendlyURLPersistence.removeByC_G_C_C(
 			companyId, groupId, classNameId, classPK);
+	}
+
+	@Override
+	public void deleteFriendlyURL(
+			long companyId, long groupId, Class<?> clazz, long classPK,
+			String urlTitle)
+		throws NoSuchFriendlyURLException {
+
+		long classNameId = classNameLocalService.getClassNameId(clazz);
+
+		friendlyURLPersistence.removeByC_G_C_C_U(
+			companyId, groupId, classNameId, classPK, urlTitle);
+
+		List<FriendlyURL> friendlyURLs = friendlyURLPersistence.findByC_G_C_C(
+			companyId, groupId, classNameId, classPK, 0, 1,
+			new FriendlyURLCreateDateComparator());
+
+		if (!friendlyURLs.isEmpty()) {
+			FriendlyURL friendlyURL = friendlyURLs.get(0);
+
+			friendlyURL.setMain(true);
+
+			friendlyURLPersistence.update(friendlyURL);
+		}
 	}
 
 	@Override

@@ -203,6 +203,7 @@
 
 		<!-- References -->
 
+		<reference entity="DDMDataProviderInstance" package-path="com.liferay.dynamic.data.mapping" />
 		<reference entity="DDMDataProviderInstanceLink" package-path="com.liferay.dynamic.data.mapping" />
 		<reference entity="DDMStructureLayout" package-path="com.liferay.dynamic.data.mapping" />
 		<reference entity="DDMStructureLink" package-path="com.liferay.dynamic.data.mapping" />

@@ -25,10 +25,12 @@ import com.liferay.dynamic.data.mapping.exception.StructureNameException;
 import com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormJSONSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializer;
+import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstanceLink;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
+import com.liferay.dynamic.data.mapping.model.DDMFormRule;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
@@ -61,6 +63,8 @@ import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.GroupThreadLocal;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -80,6 +84,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Callable;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Provides the local service for accessing, adding, deleting, and updating
@@ -184,7 +190,7 @@ public class DDMStructureLocalServiceImpl
 
 		// Data provider instance links
 
-		addDataProviderInstanceLinks(structureId, ddmForm);
+		addDataProviderInstanceLinks(groupId, structureId, ddmForm);
 
 		return structure;
 	}
@@ -1444,9 +1450,10 @@ public class DDMStructureLocalServiceImpl
 	}
 
 	protected void addDataProviderInstanceLinks(
-		long structureId, DDMForm ddmForm) {
+		long groupId, long structureId, DDMForm ddmForm) {
 
-		Set<Long> dataProviderInstanceIds = getDataProviderInstanceIds(ddmForm);
+		Set<Long> dataProviderInstanceIds = getDataProviderInstanceIds(
+			groupId, ddmForm);
 
 		for (Long dataProviderInstanceId : dataProviderInstanceIds) {
 			ddmDataProviderInstanceLinkLocalService.addDataProviderInstanceLink(
@@ -1492,8 +1499,44 @@ public class DDMStructureLocalServiceImpl
 		return structureVersion;
 	}
 
+	protected Set<Long> collectDataProviderInstanceIds(
+		long groupId, DDMFormRule ddmFormRule) {
+
+		List<String> actions = ddmFormRule.getActions();
+
+		if (ListUtil.isEmpty(actions)) {
+			return Collections.emptySet();
+		}
+
+		Set<Long> dataProviderInstanceIds = new HashSet<>(actions.size());
+
+		for (String action : actions) {
+			Matcher matcher = _callFunctionPattern.matcher(action);
+
+			while (matcher.find()) {
+				String dataProviderUuid = matcher.group(1);
+
+				DDMDataProviderInstance dataProviderInstance =
+					ddmDataProviderInstanceLocalService.
+						fetchDDMDataProviderInstanceByUuidAndGroupId(
+							dataProviderUuid, groupId);
+
+				if (dataProviderInstance != null) {
+					dataProviderInstanceIds.add(
+						dataProviderInstance.getDataProviderInstanceId());
+				}
+			}
+		}
+
+		return dataProviderInstanceIds;
+	}
+
 	protected Set<Long> deleteStructures(List<DDMStructure> structures)
 		throws PortalException {
+
+		if (ListUtil.isEmpty(structures)) {
+			return Collections.emptySet();
+		}
 
 		Set<Long> deletedStructureIds = new HashSet<>();
 
@@ -1577,7 +1620,8 @@ public class DDMStructureLocalServiceImpl
 
 		// Data provider instance links
 
-		updateDataProviderInstanceLinks(structure.getStructureId(), ddmForm);
+		updateDataProviderInstanceLinks(
+			structure.getGroupId(), structure.getStructureId(), ddmForm);
 
 		// Indexer
 
@@ -1586,7 +1630,9 @@ public class DDMStructureLocalServiceImpl
 		return structure;
 	}
 
-	protected Set<Long> getDataProviderInstanceIds(DDMForm ddmForm) {
+	protected Set<Long> getDataProviderInstanceIds(
+		long groupId, DDMForm ddmForm) {
+
 		Set<Long> dataProviderInstanceIds = new HashSet<>();
 
 		Map<String, DDMFormField> ddmFormFieldsMap =
@@ -1601,12 +1647,23 @@ public class DDMStructureLocalServiceImpl
 			}
 		}
 
+		for (DDMFormRule ddmFormRule : ddmForm.getDDMFormRules()) {
+			Set<Long> ddmFormDataProviderInstanceIds =
+				collectDataProviderInstanceIds(groupId, ddmFormRule);
+
+			dataProviderInstanceIds.addAll(ddmFormDataProviderInstanceIds);
+		}
+
 		return dataProviderInstanceIds;
 	}
 
 	protected Set<String> getDDMFormFieldsNames(DDMForm ddmForm) {
 		Map<String, DDMFormField> ddmFormFieldsMap =
 			ddmForm.getDDMFormFieldsMap(true);
+
+		if (MapUtil.isEmpty(ddmFormFieldsMap)) {
+			return Collections.emptySet();
+		}
 
 		Set<String> ddmFormFieldsNames = new HashSet<>(ddmFormFieldsMap.size());
 
@@ -1713,16 +1770,17 @@ public class DDMStructureLocalServiceImpl
 	}
 
 	protected void updateDataProviderInstanceLinks(
-		long structureId, DDMForm ddmForm) {
+		long groupId, long structureId, DDMForm ddmForm) {
 
-		Set<Long> dataProviderInstanceIds = getDataProviderInstanceIds(ddmForm);
+		Set<Long> dataProviderInstanceIds = getDataProviderInstanceIds(
+			groupId, ddmForm);
 
-		List<DDMDataProviderInstanceLink> dataProviderInstaceLinks =
+		List<DDMDataProviderInstanceLink> dataProviderInstanceLinks =
 			ddmDataProviderInstanceLinkLocalService.
 				getDataProviderInstanceLinks(structureId);
 
 		for (DDMDataProviderInstanceLink dataProviderInstanceLink :
-				dataProviderInstaceLinks) {
+				dataProviderInstanceLinks) {
 
 			long dataProviderInstanceId =
 				dataProviderInstanceLink.getDataProviderInstanceId();
@@ -1864,5 +1922,9 @@ public class DDMStructureLocalServiceImpl
 
 	@ServiceReference(type = DDMXML.class)
 	protected DDMXML ddmXML;
+
+	private final Pattern _callFunctionPattern = Pattern.compile(
+		"call\\(\\s*([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-" +
+			"[0-9a-f]{12})");
 
 }

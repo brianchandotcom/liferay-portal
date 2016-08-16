@@ -225,11 +225,18 @@ public class DefaultMessageBus implements MessageBus {
 
 		Destination destination = _destinations.get(destinationName);
 
-		if (destination == null) {
+		if (destination != null) {
+			return destination.unregister(messageListener);
+		}
+
+		List<MessageListener> queuedMessageListeners =
+			_queuedMessageListeners.get(destinationName);
+
+		if (ListUtil.isEmpty(queuedMessageListeners)) {
 			return false;
 		}
 
-		return destination.unregister(messageListener);
+		return queuedMessageListeners.remove(messageListener);
 	}
 
 	@Deactivate

@@ -55,10 +55,10 @@ public class DDMDataProviderInstanceServiceWrapper
 	}
 
 	@Override
-	public com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance findByUuid(
+	public com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance fetchDataProviderInstanceByUuid(
 		java.lang.String uuid)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddmDataProviderInstanceService.findByUuid(uuid);
+		return _ddmDataProviderInstanceService.fetchDataProviderInstanceByUuid(uuid);
 	}
 
 	@Override
@@ -66,6 +66,13 @@ public class DDMDataProviderInstanceServiceWrapper
 		long dataProviderInstanceId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmDataProviderInstanceService.getDataProviderInstance(dataProviderInstanceId);
+	}
+
+	@Override
+	public com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance getDataProviderInstanceByUuid(
+		java.lang.String uuid)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddmDataProviderInstanceService.getDataProviderInstanceByUuid(uuid);
 	}
 
 	@Override

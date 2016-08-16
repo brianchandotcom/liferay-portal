@@ -277,7 +277,7 @@
 	</command>
 
 	<command name="configureEmailCP">
-		<execute function="Click" locator1="BasePortlet#OPTIONS_ICON" />
+		<execute function="Click" locator1="Portlet#OPTIONS_ICON" />
 
 		<execute function="AssertClick" locator1="MenuItem#CONFIGURATION" value1="Configuration" />
 

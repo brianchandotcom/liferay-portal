@@ -64,8 +64,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>OPTIONS_ICON</td>
+	<td>//div[@id='main-content']//div[contains(@class,'portlet-options')]/a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PORTLET_CONTENT</td>
 	<td>//section[@id='content']//div[contains(@class,'portlet-content')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SPECIFIC_TITLE</td>
+	<td>//div[@id='main-content']//h2[contains(@class,'portlet-title') and (.='${key_portletTitleName}')]</td>
 	<td></td>
 </tr>
 <tr>

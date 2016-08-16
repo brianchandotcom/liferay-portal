@@ -48,7 +48,10 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marcellus Tavares
  */
-@Component(immediate = true, property = "ddm.data.provider.type=rest")
+@Component(
+	immediate = true, property = "ddm.data.provider.type=rest",
+	service = {DDMDataProvider.class, DDMDataProviderConsumer.class}
+)
 public class DDMRESTDataProvider
 	implements DDMDataProvider, DDMDataProviderConsumer {
 
@@ -78,17 +81,17 @@ public class DDMRESTDataProvider
 
 			HttpResponse httpResponse = httpRequest.send();
 
-			String body = httpResponse.body();
+			String httpResponseBody = httpResponse.body();
 
 			JSONArray jsonArray = null;
 
 			try {
-				jsonArray = _jsonFactory.createJSONArray(body);
+				jsonArray = _jsonFactory.createJSONArray(httpResponseBody);
 			}
 			catch (JSONException jsone) {
 				jsonArray = _jsonFactory.createJSONArray();
 
-				jsonArray.put(_jsonFactory.createJSONObject(body));
+				jsonArray.put(_jsonFactory.createJSONObject(httpResponseBody));
 			}
 
 			return createDDMDataProviderConsumerResponse(jsonArray);
@@ -124,13 +127,14 @@ public class DDMRESTDataProvider
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-			Iterator<String> keyIterator = jsonObject.keys();
+			Iterator<String> keysIterator = jsonObject.keys();
 
 			Map<Object, Object> map = new HashMap<>();
 			data.add(map);
 
-			while (keyIterator.hasNext()) {
-				String key = keyIterator.next();
+			while (keysIterator.hasNext()) {
+				String key = keysIterator.next();
+
 				map.put(key, getJSONObjectValue(jsonObject, key));
 			}
 		}
@@ -209,7 +213,7 @@ public class DDMRESTDataProvider
 		if (jsonObject.getJSONArray(key) != null) {
 			return jsonObject.getJSONArray(key);
 		}
-		else if(jsonObject.getJSONObject(key) != null) {
+		else if (jsonObject.getJSONObject(key) != null) {
 			return jsonObject.getJSONObject(key);
 		}
 

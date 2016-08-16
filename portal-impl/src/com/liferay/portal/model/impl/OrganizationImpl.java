@@ -27,15 +27,18 @@ import com.liferay.portal.kernel.service.AddressLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortalPreferencesLocalServiceUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
@@ -202,6 +205,23 @@ public class OrganizationImpl extends OrganizationBaseImpl {
 		Group group = getGroup();
 
 		return group.getGroupId();
+	}
+
+	@Override
+	public String getLogoURL(ThemeDisplay themeDisplay) throws PortalException {
+		if (getLogoId() == 0) {
+			return null;
+		}
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append(themeDisplay.getPathImage());
+		sb.append("/organization_logo?img_id=");
+		sb.append(getLogoId());
+		sb.append("&t=");
+		sb.append(WebServerServletTokenUtil.getToken(getLogoId()));
+
+		return sb.toString();
 	}
 
 	@Override

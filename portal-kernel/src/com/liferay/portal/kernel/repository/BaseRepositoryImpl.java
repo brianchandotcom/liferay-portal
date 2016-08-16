@@ -412,12 +412,18 @@ public abstract class BaseRepositoryImpl
 		return _repositoryId;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	@Override
 	public String[] getSupportedConfigurations() {
 		return _SUPPORTED_CONFIGURATIONS;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	@Override
 	public String[][] getSupportedParameters() {

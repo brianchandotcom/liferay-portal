@@ -157,6 +157,9 @@ public class DDMExpressionImpl<T> implements DDMExpression<T> {
 		setVariableValue(variableName, variableValue.doubleValue());
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	@Override
 	public void setMathContext(MathContext mathContext) {

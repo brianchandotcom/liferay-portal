@@ -31,12 +31,12 @@ import org.gradle.language.base.plugins.LifecycleBasePlugin;
  */
 public class SourceFormatterPlugin implements Plugin<Project> {
 
+	public static final String CHECK_SOURCE_FORMATTING_TASK_NAME =
+		"checkSourceFormatting";
+
 	public static final String CONFIGURATION_NAME = "sourceFormatter";
 
 	public static final String FORMAT_SOURCE_TASK_NAME = "formatSource";
-
-	public static final String CHECK_SOURCE_FORMATTING_TASK_NAME =
-		"checkSourceFormatting";
 
 	@Override
 	public void apply(Project project) {
@@ -47,21 +47,6 @@ public class SourceFormatterPlugin implements Plugin<Project> {
 		addTaskFormatSource(project);
 
 		configureTasksFormatSource(project, sourceFormatterConfiguration);
-	}
-
-	protected FormatSourceTask addTaskCheckSourceFormatting(Project project) {
-		FormatSourceTask formatSourceTask = GradleUtil.addTask(
-			project, CHECK_SOURCE_FORMATTING_TASK_NAME, FormatSourceTask.class);
-
-		formatSourceTask.setAutoFix(false);
-		formatSourceTask.setDescription(
-			"Checks the source formatting of this project.");
-		formatSourceTask.setGroup(LifecycleBasePlugin.VERIFICATION_GROUP);
-		formatSourceTask.setPrintErrors(true);
-		formatSourceTask.setThrowException(true);
-		formatSourceTask.setUseProperties(false);
-
-		return formatSourceTask;
 	}
 
 	protected Configuration addConfigurationSourceFormatter(
@@ -92,6 +77,21 @@ public class SourceFormatterPlugin implements Plugin<Project> {
 		GradleUtil.addDependency(
 			project, CONFIGURATION_NAME, "com.liferay",
 			"com.liferay.source.formatter", "latest.release");
+	}
+
+	protected FormatSourceTask addTaskCheckSourceFormatting(Project project) {
+		FormatSourceTask formatSourceTask = GradleUtil.addTask(
+			project, CHECK_SOURCE_FORMATTING_TASK_NAME, FormatSourceTask.class);
+
+		formatSourceTask.setAutoFix(false);
+		formatSourceTask.setDescription(
+			"Checks the source formatting of this project.");
+		formatSourceTask.setGroup(LifecycleBasePlugin.VERIFICATION_GROUP);
+		formatSourceTask.setPrintErrors(true);
+		formatSourceTask.setThrowException(true);
+		formatSourceTask.setUseProperties(false);
+
+		return formatSourceTask;
 	}
 
 	protected FormatSourceTask addTaskFormatSource(Project project) {

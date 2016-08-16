@@ -104,7 +104,7 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 
 		for (String translationFileName : translationFileNames) {
 			translationFileName = StringUtil.replace(
-				translationFileName, StringPool.BACK_SLASH, StringPool.SLASH);
+				translationFileName, CharPool.BACK_SLASH, CharPool.SLASH);
 
 			File translationFile = new File(translationFileName);
 
@@ -285,34 +285,6 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 		return StringUtil.replace(
 			content, "licenses=" + licenses, "licenses=" + expectedLicenses,
 			matcher.start());
-	}
-
-	protected String getTranslatedKey(String content, String key) {
-		if (content.startsWith(key + "=")) {
-			int x = content.indexOf("\n");
-
-			if (x == -1) {
-				return content.substring(key.length() + 1);
-			}
-
-			return content.substring(key.length() + 1, x);
-		}
-
-		int x = content.indexOf("\n" + key + "=");
-
-		if (x == -1) {
-			return null;
-		}
-
-		int y = x + key.length() + 2;
-
-		int z = content.indexOf("\n", y);
-
-		if (z == -1) {
-			return content.substring(y);
-		}
-
-		return content.substring(y, z);
 	}
 
 	protected void formatDuplicateLanguageKeys() throws Exception {
@@ -656,6 +628,34 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 		return _portalPortalPropertiesContent;
 	}
 
+	protected String getTranslatedKey(String content, String key) {
+		if (content.startsWith(key + "=")) {
+			int x = content.indexOf("\n");
+
+			if (x == -1) {
+				return content.substring(key.length() + 1);
+			}
+
+			return content.substring(key.length() + 1, x);
+		}
+
+		int x = content.indexOf("\n" + key + "=");
+
+		if (x == -1) {
+			return null;
+		}
+
+		int y = x + key.length() + 2;
+
+		int z = content.indexOf("\n", y);
+
+		if (z == -1) {
+			return content.substring(y);
+		}
+
+		return content.substring(y, z);
+	}
+
 	protected void populateLanguagePropertiesMap() throws Exception {
 		Map<String, Properties> languagePropertiesMap =
 			new ConcurrentHashMap<>();
@@ -748,8 +748,9 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 		StringBundler sb = new StringBundler();
 
 		if (processMessage) {
-			sb.append("The following language keys were used in multiple modules ");
-			sb.append("and have been consolidated, or they already existed in ");
+			sb.append("The following language keys were used in multiple ");
+			sb.append("modules and have been consolidated, or they already ");
+			sb.append("existed in ");
 			sb.append("portal-impl\\src\\content\\Language.properties:");
 			sb.append("\n");
 		}
@@ -786,12 +787,10 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 		processFormattedFile(
 			languagePropertiesFile, "portal-impl/src/content/" + fileName,
 			languagePropertiesContent, newLanguagePropertiesContent);
-
 	}
 
 	private final Map<String, Map<String, String>>
-		_duplicateFileLanguageKeysMap =
-			new ConcurrentHashMap<>();
+		_duplicateFileLanguageKeysMap = new ConcurrentHashMap<>();
 	private Map<String, Properties> _languagePropertiesMap;
 	private final Pattern _licensesPattern = Pattern.compile(
 		"\nlicenses=(\\w+)\n");

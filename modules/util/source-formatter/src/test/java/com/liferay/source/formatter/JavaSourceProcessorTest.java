@@ -307,9 +307,11 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 		test(
 			"SortAnnotationParameters.testjava",
 			new String[] {
-				"sort: @Component#immediate",
-				"sort: method#@Transactional#propagation"
-			});
+				"Annotation parameter 'immediate' is not sorted alphabetically",
+				"Annotation parameter 'propagation' is not sorted " +
+					"alphabetically"
+			},
+			new Integer[] {24, 27});
 	}
 
 	@Test

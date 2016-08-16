@@ -49,6 +49,9 @@ public class DDLRecordSetStagedModelDataHandler
 
 	public static final String[] CLASS_NAMES = {DDLRecordSet.class.getName()};
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	@Override
 	public void deleteStagedModel(DDLRecordSet recordSet)
@@ -57,6 +60,9 @@ public class DDLRecordSetStagedModelDataHandler
 		super.deleteStagedModel(recordSet);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	@Override
 	public void deleteStagedModel(
@@ -66,6 +72,9 @@ public class DDLRecordSetStagedModelDataHandler
 		super.deleteStagedModel(uuid, groupId, className, extraData);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	@Override
 	public DDLRecordSet fetchStagedModelByUuidAndGroupId(
@@ -74,6 +83,9 @@ public class DDLRecordSetStagedModelDataHandler
 		return super.fetchStagedModelByUuidAndGroupId(uuid, groupId);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	@Override
 	public List<DDLRecordSet> fetchStagedModelsByUuidAndCompanyId(

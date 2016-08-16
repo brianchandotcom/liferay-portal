@@ -29,10 +29,16 @@ import java.util.Map;
 @Deprecated
 public class SearchEngineUtil extends SearchEngineHelperUtil {
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	public static final String GENERIC_ENGINE_ID =
 		SearchEngineHelper.GENERIC_ENGINE_ID;
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	public static final String SYSTEM_ENGINE_ID =
 		SearchEngineHelper.SYSTEM_ENGINE_ID;

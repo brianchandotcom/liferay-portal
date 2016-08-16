@@ -1299,6 +1299,9 @@ public class AssetPublisherUtil {
 		subscriptionSender.flushNotificationsAsync();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	public static void notifySubscribers(
 			PortletPreferences portletPreferences, long plid, String portletId,

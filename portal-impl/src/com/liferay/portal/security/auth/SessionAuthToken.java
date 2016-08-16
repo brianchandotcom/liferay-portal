@@ -233,6 +233,9 @@ public class SessionAuthToken implements AuthToken {
 		return false;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	@Override
 	public boolean isValidPortletInvocationToken(

@@ -661,6 +661,9 @@ public class FileEntryStagedModelDataHandler
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	protected DDMFormValues getImportDDMFormValues(
 			PortletDataContext portletDataContext,
@@ -748,6 +751,9 @@ public class FileEntryStagedModelDataHandler
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	protected void setDDMFormValuesExportImportContentProcessor(
 		DDMFormValuesExportImportContentProcessor

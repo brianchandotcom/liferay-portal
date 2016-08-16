@@ -75,6 +75,9 @@ public class TableMapperFactory {
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	protected static final Set<String> cacheMappingTableNames = null;
 

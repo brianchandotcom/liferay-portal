@@ -28,11 +28,6 @@ import java.util.SortedSet;
 public class Checker extends com.puppycrawl.tools.checkstyle.Checker {
 
 	@Override
-	public void fireFileStarted(String fileName) {
-		super.fireFileStarted(_normalizeFileName(fileName));
-	}
-
-	@Override
 	public void fireErrors(
 		String fileName, SortedSet<LocalizedMessage> errors) {
 
@@ -42,6 +37,11 @@ public class Checker extends com.puppycrawl.tools.checkstyle.Checker {
 	@Override
 	public void fireFileFinished(String fileName) {
 		super.fireFileFinished(_normalizeFileName(fileName));
+	}
+
+	@Override
+	public void fireFileStarted(String fileName) {
+		super.fireFileStarted(_normalizeFileName(fileName));
 	}
 
 	private String _normalizeFileName(String fileName) {

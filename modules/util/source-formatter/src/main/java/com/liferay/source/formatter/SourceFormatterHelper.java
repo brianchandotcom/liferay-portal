@@ -14,6 +14,7 @@
 
 package com.liferay.source.formatter;
 
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -131,7 +132,7 @@ public class SourceFormatterHelper {
 	public void printError(String fileName, String message) {
 		if (_useProperties) {
 			String encodedFileName = StringUtil.replace(
-				fileName, StringPool.BACK_SLASH, StringPool.SLASH);
+				fileName, CharPool.BACK_SLASH, CharPool.SLASH);
 
 			_properties.remove(encodedFileName);
 		}
@@ -204,7 +205,7 @@ public class SourceFormatterHelper {
 			for (PathMatcher pathMatcher : includeFilePathMatchers) {
 				if (pathMatcher.matches(filePath)) {
 					fileName = StringUtil.replace(
-						fileName, StringPool.SLASH, StringPool.BACK_SLASH);
+						fileName, CharPool.SLASH, CharPool.BACK_SLASH);
 
 					fileNames.add(fileName);
 
@@ -293,7 +294,7 @@ public class SourceFormatterHelper {
 		File file = new File(fileName);
 
 		String encodedFileName = StringUtil.replace(
-			fileName, StringPool.BACK_SLASH, StringPool.SLASH);
+			fileName, CharPool.BACK_SLASH, CharPool.SLASH);
 
 		long timestamp = GetterUtil.getLong(
 			_properties.getProperty(encodedFileName));

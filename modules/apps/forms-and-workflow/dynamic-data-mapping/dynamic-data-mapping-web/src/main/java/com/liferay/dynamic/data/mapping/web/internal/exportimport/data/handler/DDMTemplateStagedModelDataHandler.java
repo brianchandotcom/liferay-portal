@@ -483,6 +483,9 @@ public class DDMTemplateStagedModelDataHandler
 		_ddmStructureLocalService = ddmStructureLocalService;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	protected void setDDMTemplateExportImportContentProcessor(
 		DDMTemplateExportImportContentProcessor

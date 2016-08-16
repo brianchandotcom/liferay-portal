@@ -55,7 +55,7 @@ public class BaseSourceProcessorTestCase {
 
 		sb.append(_DIR_NAME);
 
-		_temporaryFolder = new File (sb.toString());
+		_temporaryFolder = new File(sb.toString());
 	}
 
 	@AfterClass

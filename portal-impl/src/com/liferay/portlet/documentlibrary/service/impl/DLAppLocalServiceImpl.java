@@ -1163,7 +1163,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Deprecated as of 7.0.0, replaced by {@link #updateFileShortcuts(long,
+	 * @deprecated As of 7.0.0, replaced by {@link #updateFileShortcuts(long,
 	 * long)}
 	 */
 	@Deprecated

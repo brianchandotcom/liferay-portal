@@ -73,6 +73,9 @@ public class AuthTokenWhitelistImpl extends BaseAuthTokenWhitelist {
 		return _portletCSRFWhitelist;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	@Override
 	public Set<String> getPortletInvocationWhitelist() {

@@ -196,85 +196,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return content;
 	}
 
-	protected void checkAnnotationParameters(
-		String fileName, String javaTermName, String annotation) {
-
-		int x = annotation.indexOf(CharPool.OPEN_PARENTHESIS);
-
-		String annotationParameters = stripQuotes(
-			annotation.substring(x + 1), CharPool.QUOTE);
-
-		x = -1;
-		int y = -1;
-
-		String previousParameterName = StringPool.BLANK;
-
-		while (true) {
-			x = annotationParameters.indexOf(CharPool.EQUAL, x + 1);
-
-			if (x == -1) {
-				return;
-			}
-
-			String s = annotationParameters.substring(0, x);
-
-			if ((getLevel(s, "(", ")") != 0) || (getLevel(s, "{", "}") != 0)) {
-				continue;
-			}
-
-			if (Validator.isNotNull(previousParameterName)) {
-				y = annotationParameters.lastIndexOf(CharPool.COMMA, x);
-
-				if (y == -1) {
-					return;
-				}
-			}
-
-			String parameterName = StringUtil.trim(
-				annotationParameters.substring(y + 1, x));
-
-			if (parameterName.startsWith(StringPool.OPEN_CURLY_BRACE)) {
-				break;
-			}
-
-			if (Validator.isNull(previousParameterName) ||
-				(previousParameterName.compareToIgnoreCase(parameterName) <=
-					0)) {
-
-				previousParameterName = parameterName;
-
-				continue;
-			}
-
-			x = annotation.indexOf(CharPool.AT);
-			y = annotation.indexOf(CharPool.OPEN_PARENTHESIS);
-
-			if ((x == -1) || (x > y)) {
-				return;
-			}
-
-			StringBundler sb = new StringBundler(6);
-
-			sb.append("sort: ");
-
-			if (Validator.isNotNull(javaTermName)) {
-				sb.append(javaTermName);
-				sb.append(StringPool.POUND);
-			}
-
-			String annotationName = annotation.substring(x, y);
-
-			sb.append(annotationName);
-
-			sb.append(StringPool.POUND);
-			sb.append(parameterName);
-
-			processMessage(fileName, sb.toString());
-
-			return;
-		}
-	}
-
 	protected void checkBndInheritAnnotationOption() {
 		for (Map.Entry<String, Tuple> entry :
 				_bndInheritRequiredTupleMap.entrySet()) {
@@ -1668,9 +1589,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 						return StringUtil.replace(
 							content, annotation, newAnnotation);
 					}
-
-					checkAnnotationParameters(
-						fileName, javaTermName, annotation);
 				}
 
 				if (sortAnnotations &&
@@ -4108,7 +4026,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			"**/jsp/*", "**/model/impl/*Model.java",
 			"**/model/impl/*ModelImpl.java", "**/portal/service/**",
 			"**/portal-client/**", "**/portal-web/test/**/*Test.java",
-			"**/test/*-generated/**", "**/source/formatter/**"
+			"**/test/*-generated/**"
 		};
 
 		for (String directoryName : getPluginsInsideModulesDirectoryNames()) {
@@ -4122,7 +4040,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		excludes = new String[] {
 			"**/portal-client/**", "**/tools/ext_tmpl/**", "**/*_IW.java",
-			"**/test/**/*PersistenceTest.java", "**/source/formatter/**"
+			"**/test/**/*PersistenceTest.java"
 		};
 		includes = new String[] {
 			"**/com/liferay/portal/kernel/service/ServiceContext*.java",

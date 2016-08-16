@@ -20,12 +20,21 @@ package com.liferay.portal.kernel.exception;
  */
 public class RequiredGroupException extends PortalException {
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	public static final int CURRENT_GROUP = 3;
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	public static final int PARENT_GROUP = 2;
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	public static final int SYSTEM_GROUP = 1;
 

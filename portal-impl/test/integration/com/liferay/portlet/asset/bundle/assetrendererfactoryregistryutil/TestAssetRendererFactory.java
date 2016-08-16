@@ -85,6 +85,9 @@ public class TestAssetRendererFactory
 		return 1234567890;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	@Override
 	public Tuple getClassTypeFieldName(
@@ -93,6 +96,9 @@ public class TestAssetRendererFactory
 		return null;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	@Override
 	public List<Tuple> getClassTypeFieldNames(
@@ -101,6 +107,9 @@ public class TestAssetRendererFactory
 		return null;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	@Override
 	public int getClassTypeFieldNamesCount(long classTypeId, Locale locale) {
@@ -112,6 +121,9 @@ public class TestAssetRendererFactory
 		return null;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	@Override
 	public Map<Long, String> getClassTypes(long[] groupIds, Locale locale) {
@@ -152,6 +164,9 @@ public class TestAssetRendererFactory
 		return null;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	@Override
 	public String getTypeName(Locale locale, boolean hasSubtypes) {
@@ -163,6 +178,9 @@ public class TestAssetRendererFactory
 		return null;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	@Override
 	public PortletURL getURLAdd(
@@ -195,6 +213,9 @@ public class TestAssetRendererFactory
 		return false;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	@Override
 	public boolean hasClassTypeFieldNames(long classTypeId, Locale locale) {

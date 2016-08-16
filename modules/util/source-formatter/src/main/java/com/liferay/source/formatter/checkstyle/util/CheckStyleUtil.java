@@ -72,8 +72,7 @@ public class CheckStyleUtil {
 		checker.addFilter(filterSet);
 
 		Configuration configuration = ConfigurationLoader.loadConfiguration(
-			new InputSource(
-				classLoader.getResourceAsStream("checkstyle.xml")),
+			new InputSource(classLoader.getResourceAsStream("checkstyle.xml")),
 			new PropertiesExpander(System.getProperties()), false);
 
 		checker.configure(configuration);
@@ -85,6 +84,9 @@ public class CheckStyleUtil {
 
 		return checker;
 	}
+
+	private static final List<SourceFormatterMessage> _sourceFormatterMessages =
+		new ArrayList<>();
 
 	private static class SourceFormatterLogger extends DefaultLogger {
 
@@ -116,8 +118,5 @@ public class CheckStyleUtil {
 		private final String _baseDirAbsolutePath;
 
 	}
-
-	private static List<SourceFormatterMessage> _sourceFormatterMessages =
-		new ArrayList<>();
 
 }

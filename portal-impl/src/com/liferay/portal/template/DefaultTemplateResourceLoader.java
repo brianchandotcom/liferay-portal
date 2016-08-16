@@ -89,6 +89,9 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 			cacheListener, PortalCacheListenerScope.ALL);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	public DefaultTemplateResourceLoader(
 		String name, String[] templateResourceParserClassNames,

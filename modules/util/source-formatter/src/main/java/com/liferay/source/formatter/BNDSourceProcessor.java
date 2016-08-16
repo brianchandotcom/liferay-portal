@@ -82,7 +82,9 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 			String expectedBundleName =
 				"liferay" + StringUtil.removeChars(dirName, CharPool.DASH);
 
-			if (!strippedBundleName.equalsIgnoreCase(expectedBundleName)) {
+			if (!StringUtil.equalsIgnoreCase(
+					strippedBundleName, expectedBundleName)) {
+
 				processMessage(fileName, "Bundle-Name");
 			}
 		}
@@ -98,11 +100,10 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 
 			String expectedBundleSymbolicName =
 				"com.liferay." +
-					StringUtil.replace(
-						dirName, StringPool.DASH, StringPool.PERIOD);
+					StringUtil.replace(dirName, CharPool.DASH, CharPool.PERIOD);
 
-			if (!bundleSymbolicName.equalsIgnoreCase(
-					expectedBundleSymbolicName)) {
+			if (!StringUtil.equalsIgnoreCase(
+					bundleSymbolicName, expectedBundleSymbolicName)) {
 
 				processMessage(fileName, "Bundle-SymbolicName");
 			}

@@ -162,9 +162,9 @@
 				<execute function="AssertElementNotPresent" locator1="MenuItem#PERMISSIONS" value1="Permissions" />
 
 				<if>
-					<condition function="IsElementPresent" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" />
+					<condition function="IsElementPresent" locator1="MenuItem#CONFIGURATION" />
 					<then>
-						<execute function="Click" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" />
+						<execute function="Click" locator1="MenuItem#CONFIGURATION" />
 
 						<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 

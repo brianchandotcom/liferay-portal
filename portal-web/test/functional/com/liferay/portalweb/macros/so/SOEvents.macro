@@ -17,7 +17,7 @@
 
 		<execute function="Click" locator1="SOEvents#EVENTS_DISPLAY_OPTIONS" />
 
-		<execute function="Click" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" />
+		<execute function="Click" locator1="MenuItem#CONFIGURATION" />
 
 		<execute function="SelectFrame" locator1="SOEventsConfiguration#CONFIGURATION_IFRAME" />
 		<execute function="Select" locator1="SOEventsConfiguration#DISPLAY_SETTINGS_MAX_DAYS_DISPLAYED_SELECT" value1="${maxDisplayDays}" />
@@ -44,7 +44,7 @@
 
 		<execute function="Click" locator1="SOEvents#EVENTS_DISPLAY_OPTIONS" />
 
-		<execute function="Click" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" />
+		<execute function="Click" locator1="MenuItem#CONFIGURATION" />
 
 		<execute function="SelectFrame" locator1="SOEventsConfiguration#CONFIGURATION_IFRAME" />
 		<execute function="Select" locator1="SOEventsConfiguration#DISPLAY_SETTINGS_MAX_EVENTS_TO_DISPLAY_SELECT" value1="${maxDisplayEvents}" />

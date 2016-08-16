@@ -24,6 +24,7 @@ import com.liferay.dynamic.data.mapping.form.evaluator.internal.rules.DDMFormRul
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -51,7 +52,8 @@ public class DDMFormEvaluatorImpl implements DDMFormEvaluator {
 		try {
 			DDMFormRuleEvaluatorHelper ddmFormRuleEvaluatorHelper =
 				new DDMFormRuleEvaluatorHelper(
-					_ddmDataProviderConsumerTracker, _ddmExpressionFactory,
+					_ddmDataProviderConsumerTracker,
+					_ddmDataProviderInstanceService, _ddmExpressionFactory,
 					ddmForm, ddmFormValues, _ddmFormValuesJSONDeserializer,
 					_jsonFactory, locale);
 
@@ -135,6 +137,9 @@ public class DDMFormEvaluatorImpl implements DDMFormEvaluator {
 
 	@Reference
 	private DDMDataProviderConsumerTracker _ddmDataProviderConsumerTracker;
+
+	@Reference
+	private DDMDataProviderInstanceService _ddmDataProviderInstanceService;
 
 	@Reference
 	private DDMExpressionFactory _ddmExpressionFactory;

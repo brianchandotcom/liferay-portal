@@ -27,23 +27,23 @@ public class PQLVariableTest extends TestCase {
 
 	@Test
 	public void testGetPQLResult() throws Exception {
-		_validateGetPQLResult("false", Boolean.valueOf(false));
-		_validateGetPQLResult("'false'", Boolean.valueOf(false));
-		_validateGetPQLResult("\"false\"", Boolean.valueOf(false));
-		_validateGetPQLResult("true", Boolean.valueOf(true));
-		_validateGetPQLResult("'true'", Boolean.valueOf(true));
-		_validateGetPQLResult("\"true\"", Boolean.valueOf(true));
+		_validateGetPQLResult("false", Boolean.FALSE);
+		_validateGetPQLResult("'false'", Boolean.FALSE);
+		_validateGetPQLResult("\"false\"", Boolean.FALSE);
+		_validateGetPQLResult("true", Boolean.TRUE);
+		_validateGetPQLResult("'true'", Boolean.TRUE);
+		_validateGetPQLResult("\"true\"", Boolean.TRUE);
 
-		_validateGetPQLResult("3.2", Double.valueOf(3.2));
-		_validateGetPQLResult("'3.2'", Double.valueOf(3.2));
-		_validateGetPQLResult("\"3.2\"", Double.valueOf(3.2));
-		_validateGetPQLResult("2016.0", Double.valueOf(2016));
-		_validateGetPQLResult("'2016.0'", Double.valueOf(2016));
-		_validateGetPQLResult("\"2016.0\"", Double.valueOf(2016));
+		_validateGetPQLResult("3.2", 3.2D);
+		_validateGetPQLResult("'3.2'", 3.2D);
+		_validateGetPQLResult("\"3.2\"", 3.2D);
+		_validateGetPQLResult("2016.0", 2016D);
+		_validateGetPQLResult("'2016.0'", 2016D);
+		_validateGetPQLResult("\"2016.0\"", 2016D);
 
-		_validateGetPQLResult("2016", Integer.valueOf(2016));
-		_validateGetPQLResult("'2016'", Integer.valueOf(2016));
-		_validateGetPQLResult("\"2016\"", Integer.valueOf(2016));
+		_validateGetPQLResult("2016", 2016);
+		_validateGetPQLResult("'2016'", 2016);
+		_validateGetPQLResult("\"2016\"", 2016);
 
 		_validateGetPQLResult("test", "test");
 		_validateGetPQLResult("'test'", "test");
@@ -71,7 +71,7 @@ public class PQLVariableTest extends TestCase {
 
 		properties.put("portal.smoke", pql);
 
-		Class clazz = expectedPQLResult.getClass();
+		Class<?> clazz = expectedPQLResult.getClass();
 
 		PQLVariable pqlVariable = new PQLVariable("portal.smoke");
 

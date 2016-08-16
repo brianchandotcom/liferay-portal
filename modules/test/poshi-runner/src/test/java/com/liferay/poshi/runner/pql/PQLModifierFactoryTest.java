@@ -31,7 +31,7 @@ public class PQLModifierFactoryTest extends TestCase {
 		Set<String> availableModifiers = PQLModifier.getAvailableModifiers();
 
 		for (String modifier : availableModifiers) {
-			PQLModifier pqlModifier = PQLModifierFactory.newPQLModifier(
+			PQLModifierFactory.newPQLModifier(
 				modifier);
 		}
 	}
@@ -58,7 +58,7 @@ public class PQLModifierFactoryTest extends TestCase {
 		String actualError = null;
 
 		try {
-			PQLModifier pqlModifier = PQLModifierFactory.newPQLModifier(
+			PQLModifierFactory.newPQLModifier(
 				modifier);
 		}
 		catch (Exception e) {

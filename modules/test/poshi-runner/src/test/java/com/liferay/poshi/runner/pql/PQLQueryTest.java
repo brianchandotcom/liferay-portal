@@ -54,7 +54,7 @@ public class PQLQueryTest extends TestCase {
 		queries.add("priority <= 5.1");
 
 		for (String query : queries) {
-			_validateGetPQLResult(query, Boolean.valueOf(true), properties);
+			_validateGetPQLResult(query, Boolean.TRUE, properties);
 		}
 
 		queries = new TreeSet<>();
@@ -75,7 +75,7 @@ public class PQLQueryTest extends TestCase {
 		queries.add("priority >= 5.1");
 
 		for (String query : queries) {
-			_validateGetPQLResult(query, Boolean.valueOf(false), properties);
+			_validateGetPQLResult(query, Boolean.FALSE, properties);
 		}
 	}
 
@@ -116,7 +116,7 @@ public class PQLQueryTest extends TestCase {
 		queries.add("true OR false");
 
 		for (String query : queries) {
-			_validateGetPQLResult(query, Boolean.valueOf(true), properties);
+			_validateGetPQLResult(query, Boolean.TRUE, properties);
 		}
 
 		queries = new TreeSet<>();
@@ -130,7 +130,7 @@ public class PQLQueryTest extends TestCase {
 		queries.add("false OR false");
 
 		for (String query : queries) {
-			_validateGetPQLResult(query, Boolean.valueOf(false), properties);
+			_validateGetPQLResult(query, Boolean.FALSE, properties);
 		}
 	}
 
@@ -180,7 +180,7 @@ public class PQLQueryTest extends TestCase {
 		queries.add("(true AND true) OR false");
 
 		for (String query : queries) {
-			_validateGetPQLResult(query, Boolean.valueOf(true), properties);
+			_validateGetPQLResult(query, Boolean.TRUE, properties);
 		}
 
 		queries = new TreeSet<>();
@@ -194,7 +194,7 @@ public class PQLQueryTest extends TestCase {
 		queries.add("(false AND true) OR false");
 
 		for (String query : queries) {
-			_validateGetPQLResult(query, Boolean.valueOf(false), properties);
+			_validateGetPQLResult(query, Boolean.FALSE, properties);
 		}
 	}
 
@@ -229,7 +229,7 @@ public class PQLQueryTest extends TestCase {
 		try {
 			PQLQuery pqlQuery = new PQLQuery(pql);
 
-			Object result = pqlQuery.getPQLResult(properties);
+			pqlQuery.getPQLResult(properties);
 		}
 		catch (Exception e) {
 			actualError = e.getMessage();

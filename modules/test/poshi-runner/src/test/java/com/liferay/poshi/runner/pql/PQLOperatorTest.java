@@ -41,9 +41,9 @@ public class PQLOperatorTest extends TestCase {
 
 	@Test
 	public void testGetPQLResultConditionalOperatorAND() throws Exception {
-		_validateGetPQLResult("true", "AND", "true", Boolean.valueOf(true));
-		_validateGetPQLResult("true", "AND", "false", Boolean.valueOf(false));
-		_validateGetPQLResult("false", "AND", "false", Boolean.valueOf(false));
+		_validateGetPQLResult("true", "AND", "true", Boolean.TRUE);
+		_validateGetPQLResult("true", "AND", "false", Boolean.FALSE);
+		_validateGetPQLResult("false", "AND", "false", Boolean.FALSE);
 	}
 
 	@Test
@@ -78,27 +78,27 @@ public class PQLOperatorTest extends TestCase {
 
 	@Test
 	public void testGetPQLResultConditionalOperatorOR() throws Exception {
-		_validateGetPQLResult("true", "OR", "true", Boolean.valueOf(true));
-		_validateGetPQLResult("true", "OR", "false", Boolean.valueOf(true));
-		_validateGetPQLResult("false", "OR", "false", Boolean.valueOf(false));
+		_validateGetPQLResult("true", "OR", "true", Boolean.TRUE);
+		_validateGetPQLResult("true", "OR", "false", Boolean.TRUE);
+		_validateGetPQLResult("false", "OR", "false", Boolean.FALSE);
 	}
 
 	@Test
 	public void testGetPQLResultEqualityOperatorEquals() throws Exception {
-		_validateGetPQLResult("test", "==", "test", Boolean.valueOf(true));
-		_validateGetPQLResult(null, "==", "test", Boolean.valueOf(false));
-		_validateGetPQLResult("test", "==", null, Boolean.valueOf(false));
-		_validateGetPQLResult(null, "==", null, Boolean.valueOf(false));
-		_validateGetPQLResult("test1", "==", "test2", Boolean.valueOf(false));
+		_validateGetPQLResult("test", "==", "test", Boolean.TRUE);
+		_validateGetPQLResult(null, "==", "test", Boolean.FALSE);
+		_validateGetPQLResult("test", "==", null, Boolean.FALSE);
+		_validateGetPQLResult(null, "==", null, Boolean.FALSE);
+		_validateGetPQLResult("test1", "==", "test2", Boolean.FALSE);
 	}
 
 	@Test
 	public void testGetPQLResultEqualityOperatorNotEquals() throws Exception {
-		_validateGetPQLResult("test", "!=", "test", Boolean.valueOf(false));
-		_validateGetPQLResult(null, "!=", "test", Boolean.valueOf(false));
-		_validateGetPQLResult("test", "!=", null, Boolean.valueOf(false));
-		_validateGetPQLResult(null, "!=", null, Boolean.valueOf(false));
-		_validateGetPQLResult("test1", "!=", "test2", Boolean.valueOf(true));
+		_validateGetPQLResult("test", "!=", "test", Boolean.FALSE);
+		_validateGetPQLResult(null, "!=", "test", Boolean.FALSE);
+		_validateGetPQLResult("test", "!=", null, Boolean.FALSE);
+		_validateGetPQLResult(null, "!=", null, Boolean.FALSE);
+		_validateGetPQLResult("test1", "!=", "test2", Boolean.TRUE);
 	}
 
 	@Test
@@ -140,80 +140,80 @@ public class PQLOperatorTest extends TestCase {
 	public void testGetPQLResultRelationalOperatorGreaterThan()
 		throws Exception {
 
-		_validateGetPQLResult("2", ">", "1", Boolean.valueOf(true));
-		_validateGetPQLResult("2.1", ">", "1", Boolean.valueOf(true));
-		_validateGetPQLResult("2", ">", "1.1", Boolean.valueOf(true));
-		_validateGetPQLResult("2.1", ">", "1.1", Boolean.valueOf(true));
+		_validateGetPQLResult("2", ">", "1", Boolean.TRUE);
+		_validateGetPQLResult("2.1", ">", "1", Boolean.TRUE);
+		_validateGetPQLResult("2", ">", "1.1", Boolean.TRUE);
+		_validateGetPQLResult("2.1", ">", "1.1", Boolean.TRUE);
 
-		_validateGetPQLResult("2", ">", "2", Boolean.valueOf(false));
-		_validateGetPQLResult("2.1", ">", "2.1", Boolean.valueOf(false));
+		_validateGetPQLResult("2", ">", "2", Boolean.FALSE);
+		_validateGetPQLResult("2.1", ">", "2.1", Boolean.FALSE);
 
-		_validateGetPQLResult("1", ">", "2", Boolean.valueOf(false));
-		_validateGetPQLResult("1.1", ">", "2", Boolean.valueOf(false));
-		_validateGetPQLResult("1", ">", "2.1", Boolean.valueOf(false));
-		_validateGetPQLResult("1.1", ">", "2.1", Boolean.valueOf(false));
+		_validateGetPQLResult("1", ">", "2", Boolean.FALSE);
+		_validateGetPQLResult("1.1", ">", "2", Boolean.FALSE);
+		_validateGetPQLResult("1", ">", "2.1", Boolean.FALSE);
+		_validateGetPQLResult("1.1", ">", "2.1", Boolean.FALSE);
 	}
 
 	@Test
 	public void testGetPQLResultRelationalOperatorGreaterThanEquals()
 		throws Exception {
 
-		_validateGetPQLResult("2", ">=", "1", Boolean.valueOf(true));
-		_validateGetPQLResult("2.1", ">=", "1", Boolean.valueOf(true));
-		_validateGetPQLResult("2", ">=", "1.1", Boolean.valueOf(true));
-		_validateGetPQLResult("2.1", ">=", "1.1", Boolean.valueOf(true));
+		_validateGetPQLResult("2", ">=", "1", Boolean.TRUE);
+		_validateGetPQLResult("2.1", ">=", "1", Boolean.TRUE);
+		_validateGetPQLResult("2", ">=", "1.1", Boolean.TRUE);
+		_validateGetPQLResult("2.1", ">=", "1.1", Boolean.TRUE);
 
-		_validateGetPQLResult("2", ">=", "2", Boolean.valueOf(true));
-		_validateGetPQLResult("2.1", ">=", "2.1", Boolean.valueOf(true));
+		_validateGetPQLResult("2", ">=", "2", Boolean.TRUE);
+		_validateGetPQLResult("2.1", ">=", "2.1", Boolean.TRUE);
 
-		_validateGetPQLResult("1", ">=", "2", Boolean.valueOf(false));
-		_validateGetPQLResult("1.1", ">=", "2", Boolean.valueOf(false));
-		_validateGetPQLResult("1", ">=", "2.1", Boolean.valueOf(false));
-		_validateGetPQLResult("1.1", ">=", "2.1", Boolean.valueOf(false));
+		_validateGetPQLResult("1", ">=", "2", Boolean.FALSE);
+		_validateGetPQLResult("1.1", ">=", "2", Boolean.FALSE);
+		_validateGetPQLResult("1", ">=", "2.1", Boolean.FALSE);
+		_validateGetPQLResult("1.1", ">=", "2.1", Boolean.FALSE);
 	}
 
 	@Test
 	public void testGetPQLResultRelationalOperatorLessThan() throws Exception {
-		_validateGetPQLResult("2", "<", "1", Boolean.valueOf(false));
-		_validateGetPQLResult("2.1", "<", "1", Boolean.valueOf(false));
-		_validateGetPQLResult("2", "<", "1.1", Boolean.valueOf(false));
-		_validateGetPQLResult("2.1", "<", "1.1", Boolean.valueOf(false));
+		_validateGetPQLResult("2", "<", "1", Boolean.FALSE);
+		_validateGetPQLResult("2.1", "<", "1", Boolean.FALSE);
+		_validateGetPQLResult("2", "<", "1.1", Boolean.FALSE);
+		_validateGetPQLResult("2.1", "<", "1.1", Boolean.FALSE);
 
-		_validateGetPQLResult("2", "<", "2", Boolean.valueOf(false));
-		_validateGetPQLResult("2.1", "<", "2.1", Boolean.valueOf(false));
+		_validateGetPQLResult("2", "<", "2", Boolean.FALSE);
+		_validateGetPQLResult("2.1", "<", "2.1", Boolean.FALSE);
 
-		_validateGetPQLResult("1", "<", "2", Boolean.valueOf(true));
-		_validateGetPQLResult("1.1", "<", "2", Boolean.valueOf(true));
-		_validateGetPQLResult("1", "<", "2.1", Boolean.valueOf(true));
-		_validateGetPQLResult("1.1", "<", "2.1", Boolean.valueOf(true));
+		_validateGetPQLResult("1", "<", "2", Boolean.TRUE);
+		_validateGetPQLResult("1.1", "<", "2", Boolean.TRUE);
+		_validateGetPQLResult("1", "<", "2.1", Boolean.TRUE);
+		_validateGetPQLResult("1.1", "<", "2.1", Boolean.TRUE);
 	}
 
 	@Test
 	public void testGetPQLResultRelationalOperatorLessThanEquals()
 		throws Exception {
 
-		_validateGetPQLResult("2", "<=", "1", Boolean.valueOf(false));
-		_validateGetPQLResult("2.1", "<=", "1", Boolean.valueOf(false));
-		_validateGetPQLResult("2", "<=", "1.1", Boolean.valueOf(false));
-		_validateGetPQLResult("2.1", "<=", "1.1", Boolean.valueOf(false));
+		_validateGetPQLResult("2", "<=", "1", Boolean.FALSE);
+		_validateGetPQLResult("2.1", "<=", "1", Boolean.FALSE);
+		_validateGetPQLResult("2", "<=", "1.1", Boolean.FALSE);
+		_validateGetPQLResult("2.1", "<=", "1.1", Boolean.FALSE);
 
-		_validateGetPQLResult("2", "<=", "2", Boolean.valueOf(true));
-		_validateGetPQLResult("2.1", "<=", "2.1", Boolean.valueOf(true));
+		_validateGetPQLResult("2", "<=", "2", Boolean.TRUE);
+		_validateGetPQLResult("2.1", "<=", "2.1", Boolean.TRUE);
 
-		_validateGetPQLResult("1", "<=", "2", Boolean.valueOf(true));
-		_validateGetPQLResult("1.1", "<=", "2", Boolean.valueOf(true));
-		_validateGetPQLResult("1", "<=", "2.1", Boolean.valueOf(true));
-		_validateGetPQLResult("1.1", "<=", "1.1", Boolean.valueOf(true));
+		_validateGetPQLResult("1", "<=", "2", Boolean.TRUE);
+		_validateGetPQLResult("1.1", "<=", "2", Boolean.TRUE);
+		_validateGetPQLResult("1", "<=", "2.1", Boolean.TRUE);
+		_validateGetPQLResult("1.1", "<=", "1.1", Boolean.TRUE);
 	}
 
 	@Test
 	public void testGetPQLResultStringOperatorContains() throws Exception {
-		_validateGetPQLResult("test", "~", "test", Boolean.valueOf(true));
-		_validateGetPQLResult("test1", "~", "test", Boolean.valueOf(true));
-		_validateGetPQLResult(null, "~", "test", Boolean.valueOf(false));
-		_validateGetPQLResult("test", "~", null, Boolean.valueOf(false));
-		_validateGetPQLResult(null, "~", null, Boolean.valueOf(false));
-		_validateGetPQLResult("test1", "~", "test2", Boolean.valueOf(false));
+		_validateGetPQLResult("test", "~", "test", Boolean.TRUE);
+		_validateGetPQLResult("test1", "~", "test", Boolean.TRUE);
+		_validateGetPQLResult(null, "~", "test", Boolean.FALSE);
+		_validateGetPQLResult("test", "~", null, Boolean.FALSE);
+		_validateGetPQLResult(null, "~", null, Boolean.FALSE);
+		_validateGetPQLResult("test1", "~", "test2", Boolean.FALSE);
 	}
 
 	@Test
@@ -244,12 +244,12 @@ public class PQLOperatorTest extends TestCase {
 
 	@Test
 	public void testGetPQLResultStringOperatorNotContains() throws Exception {
-		_validateGetPQLResult("test", "!~", "test", Boolean.valueOf(false));
-		_validateGetPQLResult("test1", "!~", "test", Boolean.valueOf(false));
-		_validateGetPQLResult(null, "!~", "test", Boolean.valueOf(false));
-		_validateGetPQLResult("test", "!~", null, Boolean.valueOf(false));
-		_validateGetPQLResult(null, "!~", null, Boolean.valueOf(false));
-		_validateGetPQLResult("test1", "!~", "test2", Boolean.valueOf(true));
+		_validateGetPQLResult("test", "!~", "test", Boolean.FALSE);
+		_validateGetPQLResult("test1", "!~", "test", Boolean.FALSE);
+		_validateGetPQLResult(null, "!~", "test", Boolean.FALSE);
+		_validateGetPQLResult("test", "!~", null, Boolean.FALSE);
+		_validateGetPQLResult(null, "!~", null, Boolean.FALSE);
+		_validateGetPQLResult("test1", "!~", "test2", Boolean.TRUE);
 	}
 
 	@Test
@@ -332,7 +332,7 @@ public class PQLOperatorTest extends TestCase {
 		String actualError = null;
 
 		try {
-			Object pqlResult = pqlOperator.getPQLResult(
+			pqlOperator.getPQLResult(
 				pqlEntity1, pqlEntity2, new Properties());
 		}
 		catch (Exception e) {

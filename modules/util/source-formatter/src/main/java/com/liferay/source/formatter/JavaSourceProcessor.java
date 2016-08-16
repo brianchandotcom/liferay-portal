@@ -4026,7 +4026,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			"**/jsp/*", "**/model/impl/*Model.java",
 			"**/model/impl/*ModelImpl.java", "**/portal/service/**",
 			"**/portal-client/**", "**/portal-web/test/**/*Test.java",
-			"**/test/*-generated/**", "**/source/formatter/**"
+			"**/test/*-generated/**"
 		};
 
 		for (String directoryName : getPluginsInsideModulesDirectoryNames()) {
@@ -4040,7 +4040,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		excludes = new String[] {
 			"**/portal-client/**", "**/tools/ext_tmpl/**", "**/*_IW.java",
-			"**/test/**/*PersistenceTest.java", "**/source/formatter/**"
+			"**/test/**/*PersistenceTest.java"
 		};
 		includes = new String[] {
 			"**/com/liferay/portal/kernel/service/ServiceContext*.java",

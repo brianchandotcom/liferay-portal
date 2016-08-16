@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Microblogs Service
 Bundle-SymbolicName: com.liferay.microblogs.service
-Bundle-Version: 2.0.8
+Bundle-Version: 2.1.0
 Export-Package:\
 	com.liferay.microblogs.service.permission,\
 	com.liferay.microblogs.util,\

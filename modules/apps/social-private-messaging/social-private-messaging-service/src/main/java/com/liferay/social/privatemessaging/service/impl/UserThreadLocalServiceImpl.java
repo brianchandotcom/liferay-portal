@@ -344,7 +344,8 @@ public class UserThreadLocalServiceImpl extends UserThreadLocalServiceBaseImpl {
 		catch (Exception e) {
 			if (e instanceof NoSuchLayoutException) {
 				throw new NoSuchLayoutException(e);
-			} else {
+			}
+			else {
 				throw new SystemException(e);
 			}
 		}

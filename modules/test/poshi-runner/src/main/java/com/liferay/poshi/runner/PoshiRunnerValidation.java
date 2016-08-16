@@ -135,7 +135,7 @@ public class PoshiRunnerValidation {
 
 		List<String> possibleElementNames = Arrays.asList(
 			"description", "echo", "execute", "fail", "for", "if", "property",
-			"return", "take-screenshot", "task", "var", "while");
+			"return", "take-screenshot", "task", "toggle", "var", "while");
 
 		if (Validator.isNotNull(filePath) && filePath.endsWith(".function")) {
 			possibleElementNames = Arrays.asList("execute", "if");
@@ -176,6 +176,9 @@ public class PoshiRunnerValidation {
 			}
 			else if (elementName.equals("task")) {
 				validateTaskElement(childElement, filePath);
+			}
+			else if (elementName.equals("toggle")) {
+				validateToggleElement(childElement, filePath);
 			}
 			else if (elementName.equals("var")) {
 				validateVarElement(childElement, filePath);
@@ -1127,6 +1130,46 @@ public class PoshiRunnerValidation {
 		}
 	}
 
+	protected static void validateOffElement(Element element, String filePath) {
+		List<Element> offElements = element.elements("off");
+
+		if (offElements.size() > 1) {
+			_exceptions.add(
+				new Exception(
+					"Too many off elements\n" + filePath + ":" +
+						element.attributeValue("line-number")));
+		}
+
+		if (!offElements.isEmpty()) {
+			Element offElement = offElements.get(0);
+
+			validateHasChildElements(offElement, filePath);
+			validateHasNoAttributes(offElement, filePath);
+
+			parseElements(offElement, filePath);
+		}
+	}
+
+	protected static void validateOnElement(Element element, String filePath) {
+		List<Element> onElements = element.elements("on");
+
+		if (onElements.size() > 1) {
+			_exceptions.add(
+				new Exception(
+					"Too many on elements\n" + filePath + ":" +
+						element.attributeValue("line-number")));
+		}
+
+		if (!onElements.isEmpty()) {
+			Element onElement = onElements.get(0);
+
+			validateHasChildElements(onElement, filePath);
+			validateHasNoAttributes(onElement, filePath);
+
+			parseElements(onElement, filePath);
+		}
+	}
+
 	protected static void validatePathFile(Element element, String filePath) {
 		String className = PoshiRunnerGetterUtil.getClassNameFromFilePath(
 			filePath);
@@ -1519,6 +1562,19 @@ public class PoshiRunnerValidation {
 					"Too many then elements\n" + filePath + ":" +
 						element.attributeValue("line-number")));
 		}
+	}
+
+	protected static void validateToggleElement(
+		Element element, String filePath) {
+
+		List<String> attributeNames = Arrays.asList("line-number", "name");
+
+		validateHasChildElements(element, filePath);
+		validatePossibleAttributeNames(element, attributeNames, filePath);
+		validateRequiredAttributeNames(element, attributeNames, filePath);
+
+		validateOffElement(element, filePath);
+		validateOnElement(element, filePath);
 	}
 
 	protected static void validateVarElement(Element element, String filePath) {

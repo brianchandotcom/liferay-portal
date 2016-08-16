@@ -545,13 +545,13 @@
 	</command>
 
 	<command name="viewNoPermissionCP">
-		<execute function="AssertTextEquals" locator1="BasePortlet#CONTROL_PANEL_TITLE" value1="Blogs" />
+		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="Blogs" />
 		<execute function="AssertElementPresent" locator1="NavBar#CONTAINER" />
 		<execute function="AssertTextEquals" locator1="Message#INFO" value1="No entries were found." />
 	</command>
 
 	<command name="viewNoPermissionPG">
-		<execute function="AssertTextEquals" locator1="BasePortlet#CONTROL_PANEL_TITLE" value1="Blogs" />
+		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="Blogs" />
 		<execute function="AssertElementNotPresent" locator1="Blogs#ADD_BLOGS_ENTRY" value1="Add Blog Entry" />
 		<execute function="AssertElementNotPresent" locator1="MenuItem#PERMISSIONS" value1="Permissions" />
 		<execute function="AssertElementNotPresent" locator1="Link#SUBSCRIBE" />

@@ -86,7 +86,7 @@
 				<execute function="MakeVisible" locator1="SOStatusUpdate#STATUS_UPDATE_OPTIONS" />
 				<execute function="Click" locator1="SOStatusUpdate#STATUS_UPDATE_OPTIONS_LINK" />
 
-				<execute function="Click" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" />
+				<execute function="Click" locator1="MenuItem#CONFIGURATION" />
 
 				<execute function="SelectFrame" locator1="SOStatusUpdateConfiguration#CONFIGURATION_IFRAME" />
 				<execute function="Check" locator1="SOStatusUpdateConfiguration#DISPLAY_SETTINGS_DISPLAY_MOST_RECENT_STATUS_CHECKBOX" />

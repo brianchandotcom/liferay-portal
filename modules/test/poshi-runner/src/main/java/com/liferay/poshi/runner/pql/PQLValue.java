@@ -65,6 +65,12 @@ public class PQLValue extends PQLEntity {
 			objectValue = value;
 		}
 
+		PQLModifier pqlModifier = getPQLModifier();
+
+		if (pqlModifier != null) {
+			objectValue = pqlModifier.getPQLResult(objectValue);
+		}
+
 		return objectValue;
 	}
 
@@ -73,7 +79,7 @@ public class PQLValue extends PQLEntity {
 			return;
 		}
 
-		value = value.trim();
+		value = removeModifierFromPQL(value);
 
 		if ((value.startsWith("'") && value.endsWith("'")) ||
 			(value.startsWith("\"") && value.endsWith("\""))) {

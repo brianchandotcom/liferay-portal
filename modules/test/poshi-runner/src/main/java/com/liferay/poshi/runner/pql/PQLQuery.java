@@ -30,6 +30,8 @@ public class PQLQuery extends PQLEntity {
 			return false;
 		}
 
+		pql = removeModifierFromPQL(pql);
+
 		String[] queryTokens = _getQueryTokens(pql);
 
 		if (queryTokens == null) {
@@ -57,6 +59,12 @@ public class PQLQuery extends PQLEntity {
 
 		if (!(pqlResultObject instanceof Boolean)) {
 			throw new Exception("Unable to evaluate " + getPQL());
+		}
+
+		PQLModifier pqlModifier = getPQLModifier();
+
+		if (pqlModifier != null) {
+			pqlResultObject = pqlModifier.getPQLResult(pqlResultObject);
 		}
 
 		return pqlResultObject;

@@ -31,8 +31,7 @@ public class PQLOperatorFactoryTest extends TestCase {
 		Set<String> availableOperators = PQLOperator.getAvailableOperators();
 
 		for (String operator : availableOperators) {
-			PQLOperatorFactory.newPQLOperator(
-				operator);
+			PQLOperatorFactory.newPQLOperator(operator);
 		}
 	}
 
@@ -58,8 +57,7 @@ public class PQLOperatorFactoryTest extends TestCase {
 		String actualError = null;
 
 		try {
-			PQLOperatorFactory.newPQLOperator(
-				operator);
+			PQLOperatorFactory.newPQLOperator(operator);
 		}
 		catch (Exception e) {
 			actualError = e.getMessage();

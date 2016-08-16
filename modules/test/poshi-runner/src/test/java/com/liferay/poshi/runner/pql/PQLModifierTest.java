@@ -40,10 +40,8 @@ public class PQLModifierTest extends TestCase {
 
 	@Test
 	public void testGetPQLResult() throws Exception {
-		_validateGetPQLResult(
-			"NOT", Boolean.TRUE, Boolean.FALSE);
-		_validateGetPQLResult(
-			"NOT", Boolean.FALSE, Boolean.TRUE);
+		_validateGetPQLResult("NOT", Boolean.TRUE, Boolean.FALSE);
+		_validateGetPQLResult("NOT", Boolean.FALSE, Boolean.TRUE);
 	}
 
 	@Test
@@ -53,11 +51,9 @@ public class PQLModifierTest extends TestCase {
 		_validateGetPQLResultError(
 			"NOT", "test", "Modifier must be used with a boolean value: NOT");
 		_validateGetPQLResultError(
-			"NOT", 10.0D,
-			"Modifier must be used with a boolean value: NOT");
+			"NOT", 10.0D, "Modifier must be used with a boolean value: NOT");
 		_validateGetPQLResultError(
-			"NOT", 10,
-			"Modifier must be used with a boolean value: NOT");
+			"NOT", 10, "Modifier must be used with a boolean value: NOT");
 	}
 
 	@Test

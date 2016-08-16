@@ -172,9 +172,9 @@ public class PQLEntityFactoryTest extends TestCase {
 		properties.setProperty("portal.smoke", "true");
 
 		_validateGetPQLResult(
-			"NOT portal.smoke == true", Boolean.valueOf(false), properties);
+			"NOT portal.smoke == true", Boolean.FALSE, properties);
 		_validateGetPQLResult(
-			"NOT portal.smoke == false", Boolean.valueOf(true), properties);
+			"NOT portal.smoke == false", Boolean.TRUE, properties);
 	}
 
 	@Test
@@ -256,8 +256,8 @@ public class PQLEntityFactoryTest extends TestCase {
 
 	@Test
 	public void testPQLValueGetPQLResultModifier() throws Exception {
-		_validateGetPQLResult("NOT true", Boolean.valueOf(false));
-		_validateGetPQLResult("NOT false", Boolean.valueOf(true));
+		_validateGetPQLResult("NOT true", Boolean.FALSE);
+		_validateGetPQLResult("NOT false", Boolean.TRUE);
 	}
 
 	@Test

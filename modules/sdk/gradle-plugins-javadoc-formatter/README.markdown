@@ -1,11 +1,15 @@
 # Javadoc Formatter Gradle Plugin
 
-The Javadoc Formatter Gradle plugin allows you to format project Javadoc
-comments using the Liferay Javadoc Formatter tool. The tool allows you to:
-- add a default [`@author`](http://www.oracle.com/technetwork/java/javase/documentation/index-137868.html#@author) tag to all classes
-- add comment stubs to classes, fields, and methods
-- add missing [`@Override`](https://docs.oracle.com/javase/8/docs/api/java/lang/Override.html) annotations
-- generate a XML representation of the Javadoc comments, which can be used by tools in order to index the Javadocs of the project
+The Javadoc Formatter Gradle plugin lets you format project Javadoc comments
+using the Liferay Javadoc Formatter tool. The tool lets you generate:
+
+- Default [`@author`](http://www.oracle.com/technetwork/java/javase/documentation/index-137868.html#@author)
+  tags to all classes.
+- Comment stubs to classes, fields, and methods.
+- Missing [`@Override`](https://docs.oracle.com/javase/8/docs/api/java/lang/Override.html)
+  annotations.
+- An XML representation of the Javadoc comments, which can be used by tools in
+  order to index the Javadocs of the project.
 
 ## Usage
 
@@ -27,7 +31,7 @@ buildscript {
 apply plugin: "com.liferay.javadoc.formatter"
 ```
 
-Since the plugin automatically resolves the Liferay Javadic Formatter library as
+Since the plugin automatically resolves the Liferay Javadoc Formatter library as
 a dependency, you have to configure a repository that hosts the library and its
 transitive dependencies. The Liferay CDN repository hosts them all:
 
@@ -45,13 +49,13 @@ The plugin adds one task to your project:
 
 Name | Depends On | Type | Description
 ---- | ---------- | ---- | -----------
-`formatJavadoc` | \- | [`FormatJavadocTask`](#formatjavadoctask) | Runs Liferay Javadoc Formatter to format files.
+`formatJavadoc` | \- | [`FormatJavadocTask`](#formatjavadoctask) | Runs the Liferay Javadoc Formatter to format files.
 
 ### FormatJavadocTask
 
 Tasks of type `FormatJavadocTask` extend [`JavaExec`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.JavaExec.html),
 so all its properties and methods, like [`args`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.JavaExec.html#org.gradle.api.tasks.JavaExec:args(java.lang.Iterable))
-and [`maxHeapSize`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.JavaExec.html#org.gradle.api.tasks.JavaExec:maxHeapSize)
+and [`maxHeapSize`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.JavaExec.html#org.gradle.api.tasks.JavaExec:maxHeapSize),
 are available. They also have the following properties set by default:
 
 Property Name | Default Value
@@ -66,10 +70,10 @@ Property Name | Type | Default Value | Description
 ------------- | ---- | ------------- | -----------
 `author` | `String` | `"Brian Wing Shun Chan"` | The value of the `@author` tag to add at class level if missing.
 `generateXML` | `boolean` | `false` | Whether to generate a XML representation of the Javadoc comments. The XML files are generated in the `src/main/resources` directory only if the Java files are contained in `src/main/java`.
-`initializeMissingJavadocs` | `boolean` | `false` | Whether to add comment stubs at class, field and method level. If `false`, only the class-level `@author` will be added.
-`limits` | `List<String>` | `[]` | The Java file name patterns, relative to [`workingDir`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.JavaExec.html#org.gradle.api.tasks.JavaExec:workingDir), to include when formatting Javadoc comments. The patterns must be specified without the `.java` file type suffix. If empty, all Java files will be formatted.
-`lowestSupportedJavaVersion` | `double` | `1.7` | If a method is annotated with the [`@SinceJava`](https://github.com/Ithildir/liferay-portal/blob/master/modules/util/javadoc-formatter/src/main/java/com/liferay/javadoc/formatter/SinceJava.java) annotation and its `value` argument is greater than the value specified for the `lowestSupportedJavaVersion` property, then the `@Override` annotation is not automatically added, even if it is missing. See [LPS-37353](https://issues.liferay.com/browse/LPS-37353).
-`outputFilePrefix` | `String` | `"javadocs"` | The file name prefix of the XML representation of the Javadoc comments. If `generateXML` is `false`, is property is not used.
+`initializeMissingJavadocs` | `boolean` | `false` | Whether to add comment stubs at the class, field, and method levels. If `false`, only the class-level `@author` is added.
+`limits` | `List<String>` | `[]` | The Java file name patterns, relative to [`workingDir`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.JavaExec.html#org.gradle.api.tasks.JavaExec:workingDir), to include when formatting Javadoc comments. The patterns must be specified without the `.java` file type suffix. If empty, all Java files are formatted.
+`lowestSupportedJavaVersion` | `double` | `1.7` | If a method is annotated with the [`@SinceJava`](https://github.com/liferay/liferay-portal/blob/master/modules/util/javadoc-formatter/src/main/java/com/liferay/javadoc/formatter/SinceJava.java) annotation and its `value` argument is greater than the value specified for the `lowestSupportedJavaVersion` property, then the `@Override` annotation is not automatically added, even if it is missing. See [LPS-37353](https://issues.liferay.com/browse/LPS-37353).
+`outputFilePrefix` | `String` | `"javadocs"` | The file name prefix of the XML representation of the Javadoc comments. If `generateXML` is `false`, this property is not used.
 `updateJavadocs` | `boolean` | `false` | Whether to fix existing comment blocks by adding missing tags.
 
 It is possible to use Closures and Callables as values for the `String`

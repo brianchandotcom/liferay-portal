@@ -102,7 +102,7 @@ public class DefaultElasticsearchDocumentFactory
 			List<String> valuesList = new ArrayList<>(values.length);
 
 			for (String value : values) {
-				if (Validator.isNull(value)) {
+				if (value == null) {
 					continue;
 				}
 

@@ -3,7 +3,11 @@ AUI.add(
 	function(A) {
 		var CSS_FIELD = A.getClassName('form', 'builder', 'field');
 
+		var CSS_FIELD_CONTENT_TARGET = A.getClassName('form', 'builder', 'field', 'content', 'target');
+
 		var CSS_FIELD_REPEATABLE_TOOLBAR = A.getClassName('lfr', 'ddm', 'form', 'field', 'repeatable', 'toolbar');
+
+		var CSS_FORM_GROUP = A.getClassName('form', 'group');
 
 		var RendererUtil = Liferay.DDM.Renderer.Util;
 
@@ -188,6 +192,10 @@ AUI.add(
 				container.addClass(CSS_FIELD);
 
 				container.setData('field-instance', instance);
+
+				var wrapper = container.one('.' + CSS_FORM_GROUP);
+
+				wrapper.append('<div class="' + CSS_FIELD_CONTENT_TARGET + '"></div>');
 
 				if (instance.get('repeatable')) {
 					var toolbar = container.one('.' + CSS_FIELD_REPEATABLE_TOOLBAR);

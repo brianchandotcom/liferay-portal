@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
@@ -49,6 +50,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -185,6 +187,12 @@ public class DDMFormContextProviderServlet extends HttpServlet {
 
 	private void _prepareThreadLocal(HttpServletRequest request, Locale locale)
 		throws Exception, PortalException {
+
+		HttpSession session = request.getSession();
+
+		if (PortalSessionThreadLocal.getHttpSession() == null) {
+			PortalSessionThreadLocal.setHttpSession(session);
+		}
 
 		User user = PortalUtil.getUser(request);
 

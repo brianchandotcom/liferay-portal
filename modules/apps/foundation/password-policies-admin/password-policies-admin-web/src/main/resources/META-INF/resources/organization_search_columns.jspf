@@ -30,12 +30,7 @@
 	<%
 	PasswordPolicyRel passwordPolicyRel = PasswordPolicyRelLocalServiceUtil.fetchPasswordPolicyRel(Organization.class.getName(), organization.getOrganizationId());
 
-	String imageURL = StringPool.BLANK;
-	long logoId = organization.getLogoId();
-
-	if (logoId > 0) {
-		imageURL = themeDisplay.getPathImage() + "/organization_logo?img_id=" + logoId + "&t=" + WebServerServletTokenUtil.getToken(logoId);
-	}
+	String imageURL = organization.getLogoURL(themeDisplay);
 	%>
 
 	<liferay-util:buffer var="name">

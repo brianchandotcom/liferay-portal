@@ -75,7 +75,8 @@ public class DDMFormRuleEvaluatorTest extends PowerMockito {
 			"field2", ddmFormField2InstanceEvaluationResults);
 
 		DDMFormRuleEvaluator ddmFormRuleEvaluator = new DDMFormRuleEvaluator(
-			null, _ddmExpressionFactory, ddmFormFieldEvaluationResultsMap, null,
+			null, null, _ddmExpressionFactory, ddmFormFieldEvaluationResultsMap,
+			null,
 			"sum(get(fieldAt(\"field1\", 0), \"value\"), " +
 				"get(fieldAt(\"field2\", 0), \"value\")) > 25",
 			_jsonFactory);
@@ -124,8 +125,9 @@ public class DDMFormRuleEvaluatorTest extends PowerMockito {
 			"field1", ddmFormFieldInstanceEvaluationResults);
 
 		DDMFormRuleEvaluator ddmFormRuleEvaluator = new DDMFormRuleEvaluator(
-			null, _ddmExpressionFactory, ddmFormFieldEvaluationResultsMap, null,
-			"set(fieldAt(\"field1\", 0), \"readOnly\", true)", _jsonFactory);
+			null, null, _ddmExpressionFactory, ddmFormFieldEvaluationResultsMap,
+			null, "set(fieldAt(\"field1\", 0), \"readOnly\", true)",
+			_jsonFactory);
 
 		ddmFormRuleEvaluator.execute();
 
@@ -149,8 +151,9 @@ public class DDMFormRuleEvaluatorTest extends PowerMockito {
 			"field1", ddmFormFieldInstanceEvaluationResults);
 
 		DDMFormRuleEvaluator ddmFormRuleEvaluator = new DDMFormRuleEvaluator(
-			null, _ddmExpressionFactory, ddmFormFieldEvaluationResults, null,
-			"set(fieldAt(\"field1\", 0), \"visible\", true)", _jsonFactory);
+			null, null, _ddmExpressionFactory, ddmFormFieldEvaluationResults,
+			null, "set(fieldAt(\"field1\", 0), \"visible\", true)",
+			_jsonFactory);
 
 		ddmFormRuleEvaluator.execute();
 
@@ -174,8 +177,8 @@ public class DDMFormRuleEvaluatorTest extends PowerMockito {
 			"field1", ddmFormFieldInstanceEvaluationResults);
 
 		DDMFormRuleEvaluator ddmFormRuleEvaluator = new DDMFormRuleEvaluator(
-			null, _ddmExpressionFactory, ddmFormFieldEvaluationResults, null,
-			"set(fieldAt(\"field1\", 0), \"valid\", false, \"error\")",
+			null, null, _ddmExpressionFactory, ddmFormFieldEvaluationResults,
+			null, "set(fieldAt(\"field1\", 0), \"valid\", false, \"error\")",
 			_jsonFactory);
 
 		ddmFormRuleEvaluator.execute();
@@ -202,8 +205,8 @@ public class DDMFormRuleEvaluatorTest extends PowerMockito {
 			"field1", ddmFormFieldInstanceEvaluationResults);
 
 		DDMFormRuleEvaluator ddmFormRuleEvaluator = new DDMFormRuleEvaluator(
-			null, _ddmExpressionFactory, ddmFormFieldEvaluationResults, null,
-			"set(fieldAt(\"field1\",0),\"value\",2.7)", _jsonFactory);
+			null, null, _ddmExpressionFactory, ddmFormFieldEvaluationResults,
+			null, "set(fieldAt(\"field1\",0),\"value\",2.7)", _jsonFactory);
 
 		ddmFormRuleEvaluator.execute();
 

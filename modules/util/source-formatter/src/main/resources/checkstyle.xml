@@ -31,6 +31,7 @@
 			<message key="name.invalidPattern" value="Private non-static field ''{0}'' must match pattern ''{1}''" />
 		</module>
 		<module name="MethodParamPad" />
+		<module name="MissingDeprecated" />
 		<module name="ModifierOrder" />
 		<module name="MultipleVariableDeclarations" />
 		<module name="NoLineWrap" />

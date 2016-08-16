@@ -65,6 +65,10 @@ public interface KaleoTaskInstanceTokenLocalService extends BaseLocalService,
 	 * Never modify or reference this interface directly. Always use {@link KaleoTaskInstanceTokenLocalServiceUtil} to access the kaleo task instance token local service. Add custom service methods to {@link com.liferay.portal.workflow.kaleo.service.impl.KaleoTaskInstanceTokenLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasPendingKaleoTaskForms(long kaleoTaskInstanceTokenId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	public DynamicQuery dynamicQuery();

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.workflow.kaleo.runtime;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
@@ -30,6 +32,7 @@ import java.util.Map;
  * @author Michael C. Han
  * @author Marcellus Tavares
  */
+@ProviderType
 public interface WorkflowEngine {
 
 	public void deleteWorkflowDefinition(

@@ -52,6 +52,18 @@ create index IX_C851011 on KaleoTaskAssignmentInstance (kaleoDefinitionId);
 create index IX_67A9EE93 on KaleoTaskAssignmentInstance (kaleoInstanceId);
 create index IX_D4C2235B on KaleoTaskAssignmentInstance (kaleoTaskInstanceTokenId);
 
+create index IX_EFDA7E59 on KaleoTaskForm (companyId);
+create index IX_60D1964F on KaleoTaskForm (kaleoDefinitionId);
+create index IX_945326BE on KaleoTaskForm (kaleoNodeId);
+create index IX_E38A5954 on KaleoTaskForm (kaleoTaskId, formUuid[$COLUMN_LENGTH:75$]);
+
+create index IX_77B26CC4 on KaleoTaskFormInstance (companyId);
+create index IX_B975E9BA on KaleoTaskFormInstance (kaleoDefinitionId);
+create index IX_FF271E7C on KaleoTaskFormInstance (kaleoInstanceId);
+create index IX_E7F42BD0 on KaleoTaskFormInstance (kaleoTaskFormId);
+create index IX_2A86346C on KaleoTaskFormInstance (kaleoTaskId);
+create index IX_2C81C992 on KaleoTaskFormInstance (kaleoTaskInstanceTokenId);
+
 create index IX_A3271995 on KaleoTaskInstanceToken (className[$COLUMN_LENGTH:200$], classPK);
 create index IX_997FE723 on KaleoTaskInstanceToken (companyId);
 create index IX_608E9519 on KaleoTaskInstanceToken (kaleoDefinitionId);

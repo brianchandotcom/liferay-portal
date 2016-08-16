@@ -28,6 +28,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormRule;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
+import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.FieldConstants;
@@ -57,12 +58,14 @@ public class DDMFormRuleEvaluatorHelper {
 
 	public DDMFormRuleEvaluatorHelper(
 		DDMDataProviderConsumerTracker ddmDataProviderConsumerTracker,
+		DDMDataProviderInstanceService ddmDataProviderInstanceService,
 		DDMExpressionFactory ddmExpressionFactory, DDMForm ddmForm,
 		DDMFormValues ddmFormValues,
 		DDMFormValuesJSONDeserializer ddmFormValuesJSONDeserializer,
 		JSONFactory jsonFactory, Locale locale) {
 
 		_ddmDataProviderConsumerTracker = ddmDataProviderConsumerTracker;
+		_ddmDataProviderInstanceService = ddmDataProviderInstanceService;
 		_ddmExpressionFactory = ddmExpressionFactory;
 		_ddmForm = ddmForm;
 
@@ -334,9 +337,10 @@ public class DDMFormRuleEvaluatorHelper {
 		throws DDMFormEvaluationException {
 
 		DDMFormRuleEvaluator ddmFormRuleEvaluator = new DDMFormRuleEvaluator(
-			_ddmDataProviderConsumerTracker, _ddmExpressionFactory,
-			_ddmFormFieldEvaluationResults, _ddmFormValuesJSONDeserializer,
-			ddmFormRule.getCondition(), _jsonFactory);
+			_ddmDataProviderConsumerTracker, _ddmDataProviderInstanceService,
+			_ddmExpressionFactory, _ddmFormFieldEvaluationResults,
+			_ddmFormValuesJSONDeserializer, ddmFormRule.getCondition(),
+			_jsonFactory);
 
 		return ddmFormRuleEvaluator.evaluate();
 	}
@@ -347,7 +351,8 @@ public class DDMFormRuleEvaluatorHelper {
 		for (String action : actions) {
 			DDMFormRuleEvaluator ddmFormRuleEvaluator =
 				new DDMFormRuleEvaluator(
-					_ddmDataProviderConsumerTracker, _ddmExpressionFactory,
+					_ddmDataProviderConsumerTracker,
+					_ddmDataProviderInstanceService, _ddmExpressionFactory,
 					_ddmFormFieldEvaluationResults,
 					_ddmFormValuesJSONDeserializer, action, _jsonFactory);
 
@@ -443,6 +448,8 @@ public class DDMFormRuleEvaluatorHelper {
 
 	private final DDMDataProviderConsumerTracker
 		_ddmDataProviderConsumerTracker;
+	private final DDMDataProviderInstanceService
+		_ddmDataProviderInstanceService;
 	private final DDMExpressionFactory _ddmExpressionFactory;
 	private final DDMForm _ddmForm;
 	private final Map<String, List<DDMFormFieldEvaluationResult>>

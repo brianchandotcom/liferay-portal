@@ -25,6 +25,7 @@ import com.liferay.dynamic.data.mapping.form.evaluator.internal.rules.functions.
 import com.liferay.dynamic.data.mapping.form.evaluator.internal.rules.functions.PropertyGetFunction;
 import com.liferay.dynamic.data.mapping.form.evaluator.internal.rules.functions.PropertySetFunction;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
+import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceService;
 import com.liferay.portal.kernel.json.JSONFactory;
 
 import java.util.List;
@@ -37,6 +38,7 @@ public class DDMFormRuleEvaluator {
 
 	public DDMFormRuleEvaluator(
 		DDMDataProviderConsumerTracker ddmDataProviderConsumerTracker,
+		DDMDataProviderInstanceService ddmDataProviderInstanceService,
 		DDMExpressionFactory ddmExpressionFactory,
 		Map<String, List<DDMFormFieldEvaluationResult>>
 			ddmFormFieldEvaluationResults,
@@ -44,6 +46,7 @@ public class DDMFormRuleEvaluator {
 		String expression, JSONFactory jsonFactory) {
 
 		_ddmDataProviderConsumerTracker = ddmDataProviderConsumerTracker;
+		_ddmDataProviderInstanceService = ddmDataProviderInstanceService;
 		_ddmExpressionFactory = ddmExpressionFactory;
 		_ddmFormFieldEvaluationResults = ddmFormFieldEvaluationResults;
 		_ddmFormValuesJSONDeserializer = ddmFormValuesJSONDeserializer;
@@ -82,7 +85,8 @@ public class DDMFormRuleEvaluator {
 	protected void setFunctions(DDMExpression<?> ddmExpression) {
 		ddmExpression.setDDMExpressionFunction(
 			"call", new CallFunction(
-				_ddmDataProviderConsumerTracker, _ddmFormFieldEvaluationResults,
+				_ddmDataProviderConsumerTracker,
+				_ddmDataProviderInstanceService, _ddmFormFieldEvaluationResults,
 				_ddmFormValuesJSONDeserializer, _jsonFactory));
 		ddmExpression.setDDMExpressionFunction(
 			"fieldAt", new FieldAtFunction());
@@ -94,6 +98,8 @@ public class DDMFormRuleEvaluator {
 
 	private final DDMDataProviderConsumerTracker
 		_ddmDataProviderConsumerTracker;
+	private final DDMDataProviderInstanceService
+		_ddmDataProviderInstanceService;
 	private final DDMExpressionFactory _ddmExpressionFactory;
 	private final Map<String, List<DDMFormFieldEvaluationResult>>
 		_ddmFormFieldEvaluationResults;

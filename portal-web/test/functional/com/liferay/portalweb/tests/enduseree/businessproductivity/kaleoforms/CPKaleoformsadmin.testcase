@@ -985,9 +985,7 @@
 			<var name="ddlDataDefinitionName" value="${kfFieldSetName}" />
 		</execute>
 
-		<execute macro="DDLDataDefinition#tearDownCP">
-			<var name="kfProcessExists" value="true" />
-		</execute>
+		<execute macro="DDLDataDefinition#tearDownCP" />
 	</command>
 
 	<command name="DeleteForm" priority="4">

@@ -33,7 +33,7 @@
 		<finder name="CompanyId" return-type="Collection">
 			<finder-column name="companyId" />
 		</finder>
-		<finder name="C_U" return-type="Gadget" unique="true">
+		<finder db-index="false" name="C_U" return-type="Gadget" unique="true">
 			<finder-column name="companyId" />
 			<finder-column name="url" />
 		</finder>

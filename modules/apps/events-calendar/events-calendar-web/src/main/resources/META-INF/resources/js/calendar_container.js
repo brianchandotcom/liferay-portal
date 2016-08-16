@@ -5,6 +5,8 @@ AUI.add(
 
 		var isObject = Lang.isObject;
 
+		var toInt = Lang.toInt;
+
 		var STR_DASH = '-';
 
 		var STR_SPACE = ' ';
@@ -20,6 +22,16 @@ AUI.add(
 					defaultCalendar: {
 						validator: isObject,
 						value: null
+					},
+
+					groupCalendarResourceId: {
+						setter: toInt,
+						value: 0
+					},
+
+					userCalendarResourceId: {
+						setter: toInt,
+						value: 0
 					},
 
 					visibleCalendars: {
@@ -208,10 +220,10 @@ AUI.add(
 										if (item.get('defaultCalendar')) {
 											var calendarResourceId = item.get('calendarResourceId');
 
-											if (calendarResourceId == Liferay.CalendarUtil.GROUP_CALENDAR_RESOURCE_ID && item.get('permissions').MANAGE_BOOKINGS) {
+											if (calendarResourceId == instance.get('groupCalendarResourceId') && item.get('permissions').MANAGE_BOOKINGS) {
 												defaultCalendar = item;
 											}
-											else if (calendarResourceId == Liferay.CalendarUtil.USER_CALENDAR_RESOURCE_ID && defaultCalendar == null) {
+											else if (calendarResourceId == instance.get('userCalendarResourceId') && defaultCalendar == null) {
 												defaultCalendar = item;
 											}
 										}

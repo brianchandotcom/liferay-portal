@@ -35,6 +35,11 @@ public class QuartzTrigger implements Trigger {
 	}
 
 	@Override
+	public Date getFireDateAfter(Date date) {
+		return _trigger.getFireTimeAfter(date);
+	}
+
+	@Override
 	public String getGroupName() {
 		JobKey jobKey = _trigger.getJobKey();
 

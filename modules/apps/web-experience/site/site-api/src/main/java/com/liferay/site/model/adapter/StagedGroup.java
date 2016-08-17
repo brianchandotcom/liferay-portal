@@ -12,23 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.model.adapter.builder;
+package com.liferay.site.model.adapter;
 
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.adapter.StagedGroup;
-import com.liferay.portal.kernel.model.adapter.builder.ModelAdapterBuilder;
-import com.liferay.portal.model.adapter.impl.StagedGroupImpl;
+import com.liferay.portal.kernel.model.StagedModel;
 
 /**
- * @author Mate Thurzo
+ * @author Daniel Kocsis
  */
-@Deprecated
-public class StagedGroupModelAdapterBuilder
-	implements ModelAdapterBuilder<Group, StagedGroup> {
-
-	@Override
-	public StagedGroup build(Group group) {
-		return new StagedGroupImpl(group);
-	}
-
+public interface StagedGroup extends Group, StagedModel {
 }

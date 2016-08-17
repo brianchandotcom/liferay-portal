@@ -91,7 +91,7 @@ public class SubrepositoryGitHubMessageUtil {
 				sb.append("</a></strong> ");
 				sb.append("- ");
 
-				SubrepositoryTask subRepositoryTask = _getSubrepositoryTask(
+				SubrepositoryTask subrepositoryTask = _getSubrepositoryTask(
 					buildURL, consoleSnippet);
 
 				sb.append(_getResult(subrepositoryTask));

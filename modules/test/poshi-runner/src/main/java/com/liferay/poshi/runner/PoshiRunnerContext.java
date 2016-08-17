@@ -415,70 +415,6 @@ public class PoshiRunnerContext {
 		return relatedClassCommandNames;
 	}
 
-	private static Set<String> _getRunTestCaseCommandNames(
-			String propertyName, String propertyValue)
-		throws Exception {
-
-		Set<String> runTestClassCommandNames = new TreeSet<>();
-
-		for (String testCaseClassCommandName : _testCaseClassCommandNames) {
-			String className =
-				PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
-					testCaseClassCommandName);
-
-			Element rootElement = getTestCaseRootElement(className);
-
-			List<Element> rootPropertyElements = rootElement.elements(
-				"property");
-
-			String runAttributeValue = null;
-
-			for (Element rootPropertyElement : rootPropertyElements) {
-				String attributeName = rootPropertyElement.attributeValue(
-					"name");
-
-				if (attributeName.equals(propertyName)) {
-					runAttributeValue = rootPropertyElement.attributeValue(
-						"value");
-
-					break;
-				}
-			}
-
-			Element commandElement = getTestCaseCommandElement(
-				testCaseClassCommandName);
-
-			if (Validator.isNotNull(
-					commandElement.attributeValue(propertyName))) {
-
-				runAttributeValue = commandElement.attributeValue(propertyName);
-			}
-
-			List<Element> commandPropertyElements = commandElement.elements(
-				"property");
-
-			for (Element commandPropertyElement : commandPropertyElements) {
-				String attributeName = commandPropertyElement.attributeValue(
-					"name");
-
-				if (attributeName.equals(propertyName)) {
-					runAttributeValue = commandPropertyElement.attributeValue(
-						"value");
-
-					break;
-				}
-			}
-
-			if ((runAttributeValue != null) &&
-				runAttributeValue.equals(propertyValue)) {
-
-				runTestClassCommandNames.add(testCaseClassCommandName);
-			}
-		}
-
-		return runTestClassCommandNames;
-	}
-
 	private static String _getTestBatchGroups() throws Exception {
 		String propertyQuery = PropsValues.TEST_BATCH_PROPERTY_QUERY;
 
@@ -700,27 +636,6 @@ public class PoshiRunnerContext {
 		return sb.toString();
 	}
 
-	private static List<String> _getTestCaseClassProperties(String className)
-		throws Exception {
-
-		List<String> classProperties = new ArrayList<>();
-		Element rootElement = getTestCaseRootElement(className);
-
-		List<Element> rootPropertyElements = rootElement.elements("property");
-
-		for (Element rootPropertyElement : rootPropertyElements) {
-			StringBuilder sb = new StringBuilder(3);
-
-			sb.append(rootPropertyElement.attributeValue("name"));
-			sb.append("=");
-			sb.append(rootPropertyElement.attributeValue("value"));
-
-			classProperties.add(sb.toString());
-		}
-
-		return classProperties;
-	}
-
 	private static Set<String> _getTestCaseCommandNames(String className)
 		throws Exception {
 
@@ -736,39 +651,6 @@ public class PoshiRunnerContext {
 		}
 
 		return commandNames;
-	}
-
-	private static List<String> _getTestCaseCommandProperties(
-			String classCommandName)
-		throws Exception {
-
-		Element commandElement = getTestCaseCommandElement(classCommandName);
-		List<String> commandProperties = new ArrayList<>();
-
-		List<Element> commandPropertyElements = commandElement.elements(
-			"property");
-
-		for (Element commandPropertyElement : commandPropertyElements) {
-			StringBuilder sb = new StringBuilder(3);
-
-			sb.append(commandPropertyElement.attributeValue("name"));
-			sb.append("=");
-			sb.append(commandPropertyElement.attributeValue("value"));
-
-			commandProperties.add(sb.toString());
-		}
-
-		return commandProperties;
-	}
-
-	private static List<String> _getTestCaseCommandProperties(
-			String className, String commandName)
-		throws Exception {
-
-		String classCommandName = PoshiRunnerGetterUtil.getClassCommandName(
-			className, commandName);
-
-		return _getTestCaseCommandProperties(classCommandName);
 	}
 
 	private static void _initComponentCommandNamesMap() {

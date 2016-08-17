@@ -635,7 +635,13 @@ public class LayoutImportController implements ImportController {
 			_permissionImporter.readPortletDataPermissions(portletDataContext);
 		}
 
-		_portletImportController.readExpandoTables(portletDataContext);
+		if (!layoutsImportMode.equals(
+				PortletDataHandlerKeys.
+					LAYOUTS_IMPORT_MODE_CREATED_FROM_PROTOTYPE)) {
+
+			_portletImportController.readExpandoTables(portletDataContext);
+		}
+
 		_portletImportController.readLocks(portletDataContext);
 
 		// Layouts

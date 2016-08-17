@@ -534,7 +534,16 @@ public class PortletImportController implements ImportController {
 			_permissionImporter.readPortletDataPermissions(portletDataContext);
 		}
 
-		readExpandoTables(portletDataContext);
+		String layoutsImportMode = MapUtil.getString(
+			parameterMap, PortletDataHandlerKeys.LAYOUTS_IMPORT_MODE);
+
+		if (!layoutsImportMode.equals(
+				PortletDataHandlerKeys.
+					LAYOUTS_IMPORT_MODE_CREATED_FROM_PROTOTYPE)) {
+
+			readExpandoTables(portletDataContext);
+		}
+
 		readLocks(portletDataContext);
 
 		Element portletDataElement = portletElement.element("portlet-data");

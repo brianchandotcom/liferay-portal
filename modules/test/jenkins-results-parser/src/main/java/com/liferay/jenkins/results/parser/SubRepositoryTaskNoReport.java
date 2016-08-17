@@ -20,9 +20,9 @@ import java.util.regex.Pattern;
 /**
  * @author Leslie Wong
  */
-public class SubRepositoryTaskNoReport extends SubRepositoryTask {
+public class SubrepositoryTaskNoReport extends SubrepositoryTask {
 
-	public SubRepositoryTaskNoReport(String console, String name)
+	public SubrepositoryTaskNoReport(String console, String name)
 		throws Exception {
 
 		this.console = console;

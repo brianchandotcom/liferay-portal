@@ -19,9 +19,9 @@ import org.json.JSONObject;
 /**
  * @author Leslie Wong
  */
-public class SubRepositoryTaskReport extends SubRepositoryTask {
+public class SubrepositoryTaskReport extends SubrepositoryTask {
 
-	public SubRepositoryTaskReport(String buildURL, String name)
+	public SubrepositoryTaskReport(String buildURL, String name)
 		throws Exception {
 
 		this.buildURL = buildURL;

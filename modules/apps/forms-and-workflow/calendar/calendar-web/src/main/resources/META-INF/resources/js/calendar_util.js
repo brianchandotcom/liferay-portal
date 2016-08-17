@@ -12,8 +12,6 @@ AUI.add(
 			return Lang.toInt(value, 10, 0);
 		};
 
-		var STR_BLANK = '';
-
 		var STR_DASH = '-';
 
 		var STR_SPACE = ' ';

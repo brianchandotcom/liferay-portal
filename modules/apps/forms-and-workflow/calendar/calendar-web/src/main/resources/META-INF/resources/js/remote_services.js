@@ -9,8 +9,6 @@ AUI.add(
 
 		var CalendarUtil = Liferay.CalendarUtil;
 
-		var USER_ID = toInt(themeDisplay.getUserId());
-
 		var CalendarRemoteServices = A.Base.create(
 			'calendar-remote-services',
 			A.Base,

@@ -46,7 +46,7 @@
 							requires: ['liferay-ddl-form-builder-field-options-toolbar-template']
 						},
 						'liferay-ddl-form-builder-field-options-toolbar-template': {
-							path: '../templates/field-options-toolbar.soy.js',
+							path: '../templates/field_options_toolbar.soy.js',
 							requires: [
 								'soyutils'
 							]

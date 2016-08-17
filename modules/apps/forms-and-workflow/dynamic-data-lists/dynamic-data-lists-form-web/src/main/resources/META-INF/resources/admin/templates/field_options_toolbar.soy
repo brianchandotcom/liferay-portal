@@ -7,7 +7,7 @@
  */
 {template .field_settings_toolbar autoescape="deprecated-contextual"}
     <div class="dropdown open">
-        <a href="#" class="dropdown-toggle icon-monospaced form-builder-field-toolbar-toggle" data-toggle="dropdown">{$toolbarButtonIcon|noAutoescape}</a>
+        <a class="dropdown-toggle form-builder-field-toolbar-toggle icon-monospaced" data-toggle="dropdown" href="javascript:;">{$toolbarButtonIcon|noAutoescape}</a>
 
         {call ddl.field_settings_toolbar_list}
             {param options: $toolbarTemplateContext.options /}
@@ -35,6 +35,6 @@
  */
 {template .field_settings_toolbar_item autoescape="deprecated-contextual"}
     <li>
-        <a href="#" title="{$option.label}" class="{$option.buttonClass or ''}" data-handler="{$option.handler}">{$option.label}</a>
+        <a class="{$option.buttonClass or ''}" data-handler="{$option.handler}" href="javascript:;" title="{$option.label}">{$option.label}</a>
     </li>
 {/template}

@@ -1726,12 +1726,10 @@
 		</execute>
 
 		<execute macro="FormFields#editOptionsRow">
-			<var name="optionName" value="Select1" />
 			<var name="optionValue" value="New Select 1" />
 		</execute>
 
 		<execute macro="FormFields#editOptionsRow">
-			<var name="optionName" value="Select2" />
 			<var name="optionValue" value="New Select 2" />
 			<var name="rowNumber" value="2" />
 		</execute>
@@ -1748,12 +1746,10 @@
 		</execute>
 
 		<execute macro="FormFields#editOptionsRow">
-			<var name="optionName" value="Option1" />
 			<var name="optionValue" value="New Option 1" />
 		</execute>
 
 		<execute macro="FormFields#editOptionsRow">
-			<var name="optionName" value="Option2" />
 			<var name="optionValue" value="New Option 2" />
 			<var name="rowNumber" value="2" />
 		</execute>

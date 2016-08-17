@@ -19,8 +19,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.apache.tools.ant.Project;
 
@@ -72,38 +70,18 @@ public class SubrepositoryGitHubMessageUtil {
 				buildURL + "/logText/progressiveText"),
 			false);
 
-		Matcher matcher = _taskNameConsolePattern.matcher(progressiveText);
+		String[] consoleSnippets = progressiveText.split(
+			"Executing subrepository task ");
 
-		List<Integer> indexes = new ArrayList<>();
-
-		while (matcher.find()) {
-			indexes.add(matcher.start());
-		}
-
-		ListIterator<Integer> listIterator = indexes.listIterator();
-
-		while (listIterator.hasNext()) {
+		for (int i = 1; i < consoleSnippets.length; i++) {
 			sb.append("<li><strong><a href=\"");
 			sb.append(project.getProperty("top.level.shared.dir.url"));
 			sb.append("/");
 
-			int x = listIterator.next();
+			String consoleSnippet = consoleSnippets[i];
 
-			String consoleSnippet;
-
-			if (!listIterator.hasNext()) {
-				consoleSnippet = progressiveText.substring(x);
-			}
-			else {
-				consoleSnippet = progressiveText.substring(
-					x, indexes.get(listIterator.nextIndex()));
-			}
-
-			matcher = _taskNameConsolePattern.matcher(consoleSnippet);
-
-			matcher.find();
-
-			String taskName = matcher.group(1);
+			String taskName = consoleSnippet.substring(
+				0, consoleSnippet.indexOf("\n"));
 
 			JenkinsResultsParserUtil.write(
 				new File(
@@ -163,8 +141,5 @@ public class SubrepositoryGitHubMessageUtil {
 			return new SubrepositoryTaskNoReport(console);
 		}
 	}
-
-	private static final Pattern _taskNameConsolePattern = Pattern.compile(
-		"Executing task ([\\w-]+)");
 
 }

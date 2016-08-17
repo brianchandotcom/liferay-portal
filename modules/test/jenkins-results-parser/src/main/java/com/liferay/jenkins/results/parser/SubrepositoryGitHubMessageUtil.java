@@ -99,7 +99,7 @@ public class SubrepositoryGitHubMessageUtil {
 					x, indexes.get(listIterator.nextIndex()));
 			}
 
-			matcher = _taskConsolePattern.matcher(consoleSnippet);
+			matcher = _taskNameConsolePattern.matcher(consoleSnippet);
 
 			matcher.find();
 

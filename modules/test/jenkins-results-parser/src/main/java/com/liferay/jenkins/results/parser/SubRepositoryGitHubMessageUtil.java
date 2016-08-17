@@ -89,31 +89,27 @@ public class SubrepositoryGitHubMessageUtil {
 
 			int x = listIterator.next();
 
-			String console;
+			String consoleSnippet;
 
 			if (!listIterator.hasNext()) {
-				console = progressiveText.substring(x);
+				consoleSnippet = progressiveText.substring(x);
 			}
 			else {
-				console = progressiveText.substring(
+				consoleSnippet = progressiveText.substring(
 					x, indexes.get(listIterator.nextIndex()));
 			}
 
-			matcher = _taskNameConsolePattern.matcher(console);
+			matcher = _taskConsolePattern.matcher(consoleSnippet);
 
 			matcher.find();
 
-			String taskName = "";
-
-			if (matcher.find()) {
-				taskName = matcher.group(1);
-			}
+			String taskName = matcher.group(1);
 
 			JenkinsResultsParserUtil.write(
 				new File(
 					project.getProperty("top.level.shared.dir") + "/" +
 						taskName + ".log"),
-				console);
+					consoleSnippet);
 
 			sb.append(taskName);
 			sb.append(".log");
@@ -122,19 +118,8 @@ public class SubrepositoryGitHubMessageUtil {
 			sb.append("</a></strong> ");
 			sb.append("- ");
 
-			SubrepositoryTask subRepositoryTask;
-
-			if (console.contains(
-					"A report with all the test results can be found at " +
-						"test-results/html/index.html")) {
-
-				subRepositoryTask = new SubrepositoryTaskReport(
-					buildURL, taskName);
-			}
-			else {
-				subRepositoryTask = new SubrepositoryTaskNoReport(
-					console, taskName);
-			}
+			SubrepositoryTask subRepositoryTask = _getSubrepositoryTask(
+				buildURL, consoleSnippet);
 
 			String result = subRepositoryTask.getResult();
 
@@ -162,6 +147,21 @@ public class SubrepositoryGitHubMessageUtil {
 		sb.append("\">here</a>.</h5>");
 
 		project.setProperty("report.html.content", sb.toString());
+	}
+
+	private static SubrepositoryTask _getSubrepositoryTask(
+			String buildURL, String console)
+		throws Exception {
+
+		if (console.contains(
+				"A report with all the test results can be found at " +
+					"test-results/html/index.html")) {
+
+			return new SubrepositoryTaskReport(buildURL);
+		}
+		else {
+			return new SubrepositoryTaskNoReport(console);
+		}
 	}
 
 	private static final Pattern _taskNameConsolePattern = Pattern.compile(

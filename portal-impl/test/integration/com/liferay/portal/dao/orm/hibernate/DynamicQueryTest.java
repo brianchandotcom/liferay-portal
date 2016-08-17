@@ -16,12 +16,16 @@ package com.liferay.portal.dao.orm.hibernate;
 
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.Assert;
@@ -45,6 +49,24 @@ public class DynamicQueryTest {
 	public void setUp() {
 		_allClassNames = ClassNameLocalServiceUtil.getClassNames(
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+	}
+
+	@Test
+	public void testCriterion() {
+		DynamicQuery dynamicQuery = ClassNameLocalServiceUtil.dynamicQuery();
+
+		Property classNameIdProperty = PropertyFactoryUtil.forName(
+			"classNameId");
+
+		ClassName className = _allClassNames.get(10);
+
+		dynamicQuery.add(classNameIdProperty.eq(className.getClassNameId()));
+
+		List<ClassName> classNames = ClassNameLocalServiceUtil.dynamicQuery(
+			dynamicQuery);
+
+		Assert.assertEquals(1, classNames.size());
+		Assert.assertEquals(className, classNames.get(0));
 	}
 
 	@Test
@@ -133,6 +155,22 @@ public class DynamicQueryTest {
 			ClassNameLocalServiceUtil.dynamicQuery(dynamicQuery);
 
 		Assert.assertTrue(dynamicQueryClassNames.isEmpty());
+	}
+
+	@Test
+	public void testOrderBy() {
+		DynamicQuery dynamicQuery = ClassNameLocalServiceUtil.dynamicQuery();
+
+		dynamicQuery.addOrder(OrderFactoryUtil.desc("classNameId"));
+		dynamicQuery.setLimit(QueryUtil.ALL_POS, _allClassNames.size());
+
+		_allClassNames = new ArrayList<>(_allClassNames);
+
+		Collections.reverse(_allClassNames);
+
+		Assert.assertEquals(
+			_allClassNames,
+			ClassNameLocalServiceUtil.<ClassName>dynamicQuery(dynamicQuery));
 	}
 
 	@Test

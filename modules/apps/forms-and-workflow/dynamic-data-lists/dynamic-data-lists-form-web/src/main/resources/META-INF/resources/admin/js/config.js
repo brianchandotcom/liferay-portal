@@ -54,8 +54,15 @@
 						'liferay-ddl-form-builder-field-settings-form': {
 							path: 'form_builder_field_settings_form.js',
 							requires: [
+								'liferay-ddl-form-builder-autocomplete-template',
 								'liferay-ddm-form-renderer',
 								'liferay-form'
+							]
+						},
+						'liferay-ddl-form-builder-autocomplete-template': {
+							path: '../templates/autocomplete.soy.js',
+							requires: [
+								'soyutils'
 							]
 						},
 						'liferay-ddl-form-builder-field-settings-sidebar': {

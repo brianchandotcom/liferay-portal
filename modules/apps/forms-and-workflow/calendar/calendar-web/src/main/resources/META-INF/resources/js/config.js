@@ -68,6 +68,17 @@
 								'aui-base'
 							]
 						},
+						'liferay-calendar-remote-services': {
+							path: 'remote_services.js',
+							requires: [
+								'aui-base',
+								'aui-component',
+								'aui-io',
+								'liferay-calendar-util',
+								'liferay-portlet-base',
+								'liferay-portlet-url'
+							]
+						},
 						'liferay-calendar-session-listener': {
 							path: 'session_listener.js',
 							requires: [

@@ -38,10 +38,9 @@ String viewCalendarBookingURL = ParamUtil.getString(request, "viewCalendarBookin
 <%@ include file="/event_recorder.jspf" %>
 
 <aui:script use="aui-toggler,liferay-calendar-list,liferay-scheduler,liferay-store,json">
-	Liferay.CalendarUtil.PORTLET_NAMESPACE = '<portlet:namespace />';
-	Liferay.CalendarUtil.USER_TIME_ZONE = '<%= HtmlUtil.escapeJS(userTimeZone.getID()) %>';
-
 	var calendarContainer = Liferay.component('<portlet:namespace />calendarContainer');
+
+	var remoteServices = Liferay.component('<portlet:namespace />remoteServices');
 
 	var showMoreStrings = {
 		close: '<liferay-ui:message key="close" />',
@@ -126,6 +125,7 @@ String viewCalendarBookingURL = ParamUtil.getString(request, "viewCalendarBookin
 					width: width
 				},
 				portletNamespace: '<portlet:namespace />',
+				remoteServices: remoteServices,
 				showHeader: <%= showSchedulerHeader %>,
 				strings: {
 					'description-hint': '<liferay-ui:message key="description-hint" />'
@@ -169,6 +169,7 @@ String viewCalendarBookingURL = ParamUtil.getString(request, "viewCalendarBookin
 			int dateDay = dateJCalendar.get(java.util.Calendar.DAY_OF_MONTH);
 			%>
 
+			currentTimeFn: A.bind(remoteServices.getCurrentTime, remoteServices),
 			date: new Date(<%= dateYear %>, <%= dateMonth %>, <%= dateDay %>),
 
 			<c:if test="<%= !themeDisplay.isSignedIn() %>">
@@ -181,6 +182,7 @@ String viewCalendarBookingURL = ParamUtil.getString(request, "viewCalendarBookin
 			items: A.Object.values(calendarContainer.get('availableCalendars')),
 			portletNamespace: '<portlet:namespace />',
 			preventPersistence: <%= preventPersistence %>,
+			remoteServices: remoteServices,
 			render: true,
 			showAddEventBtn: <%= showAddEventBtn %>,
 			showHeader: <%= showSchedulerHeader %>,

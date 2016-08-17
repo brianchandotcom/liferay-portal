@@ -21,6 +21,8 @@ String backURL = PortalUtil.getCurrentURL(request);
 <aui:script use="aui-toggler,calendar,liferay-calendar-simple-menu,liferay-calendar-simple-color-picker,liferay-calendar-util,liferay-store">
 	var calendarContainer = Liferay.component('<portlet:namespace />calendarContainer');
 
+	var remoteServices = Liferay.component('<portlet:namespace />remoteServices');
+
 	window.<portlet:namespace />calendarListsMenu = new Liferay.SimpleMenu(
 		{
 			align: {
@@ -41,7 +43,7 @@ String backURL = PortalUtil.getCurrentURL(request);
 									dialog: {
 										after: {
 											destroy: function(event) {
-												Liferay.CalendarUtil.getResourceCalendars(
+												remoteServices.getResourceCalendars(
 													calendarResourceId,
 													function(calendars) {
 														var calendarList = window.<portlet:namespace />calendarLists[calendarResourceId];
@@ -224,7 +226,7 @@ String backURL = PortalUtil.getCurrentURL(request);
 							dialog: {
 								after: {
 									destroy: function(event) {
-										Liferay.CalendarUtil.getCalendar(
+										remoteServices.getCalendar(
 											activeCalendar.get('calendarId'),
 											function(calendar) {
 												var activeCalendarId = activeCalendar.get('calendarId');
@@ -328,10 +330,12 @@ String backURL = PortalUtil.getCurrentURL(request);
 					var activeCalendar = calendarList.activeItem;
 
 					if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
-						Liferay.CalendarUtil.deleteCalendar(
+						var remoteServices = Liferay.component('<portlet:namespace />remoteServices');
+
+						remoteServices.deleteCalendar(
 							activeCalendar.get('calendarId'),
 							function() {
-								Liferay.CalendarUtil.getResourceCalendars(
+								remoteServices.getResourceCalendars(
 									activeCalendar.get('calendarResourceId'),
 									function(calendars) {
 										calendarList.set('calendars', calendars);
@@ -575,7 +579,7 @@ String backURL = PortalUtil.getCurrentURL(request);
 
 		miniCalendarEndDate.setHours(23, 59, 59, 999);
 
-		Liferay.CalendarUtil.getCalendarRenderingRules(
+		remoteServices.getCalendarRenderingRules(
 			A.Object.keys(calendarContainer.get('visibleCalendars')),
 			Liferay.CalendarUtil.toUTC(miniCalendarStartDate),
 			Liferay.CalendarUtil.toUTC(miniCalendarEndDate),

@@ -236,10 +236,14 @@ AUI.add(
 						var instance = this;
 
 						var calendarBookingId = instance.get('calendarBookingId');
+
 						var scheduler = instance.get('scheduler');
+
 						var schedulerEvents = scheduler.getEventsByCalendarBookingId(calendarBookingId);
 
-						CalendarUtil.getEvent(
+						var remoteServices = scheduler.get('remoteServices');
+
+						remoteServices.getEvent(
 							calendarBookingId,
 							A.bind(CalendarUtil.updateSchedulerEvents, CalendarUtil, schedulerEvents)
 						);
@@ -398,14 +402,11 @@ AUI.add(
 						var color = event.newVal;
 
 						if (instance.get('permissions.UPDATE')) {
-							CalendarUtil.invokeService(
-								{
-									'/calendar.calendar/update-color': {
-										calendarId: calendarId,
-										color: parseInt(color.substr(1), 16)
-									}
-								}
-							);
+							var scheduler = instance.get('scheduler');
+
+							var remoteServices = scheduler.get('remoteServices');
+
+							remoteServices.updateCalendarColor(calendarId, parseInt(color.substr(1), 16));
 						}
 						else {
 							Liferay.Store('com.liferay.calendar.web_calendar' + calendarId + 'Color', color);
@@ -476,9 +477,9 @@ AUI.add(
 
 					var calendarIds = AObject.keys(calendarContainer.get('availableCalendars'));
 
-					CalendarUtil.message(Liferay.Language.get('loading'));
+					var remoteServices = scheduler.get('remoteServices');
 
-					CalendarUtil.getEvents(
+					remoteServices.getEvents(
 						calendarIds,
 						instance.getLoadStartDate(activeView),
 						instance.getLoadEndDate(activeView),

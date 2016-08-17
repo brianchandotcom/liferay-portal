@@ -51,6 +51,11 @@ AUI.add(
 						value: STR_BLANK
 					},
 
+					remoteServices: {
+						validator: isObject,
+						value: null
+					},
+
 					status: {
 						setter: toInt,
 						value: CalendarWorkflow.STATUS_DRAFT
@@ -354,7 +359,9 @@ AUI.add(
 						var statusData = toInt(currentTarget.getData('status'));
 
 						if (schedulerEvent && linkEnabled) {
-							CalendarUtil.invokeTransition(schedulerEvent, statusData);
+							var remoteServices = instance.get('remoteServices');
+
+							remoteServices.invokeTransition(schedulerEvent, statusData);
 						}
 					},
 
@@ -519,9 +526,12 @@ AUI.add(
 
 								if (permissions.VIEW_BOOKING_DETAILS) {
 									var parentCalendarBookingId = schedulerEvent.get('parentCalendarBookingId');
+
 									var portletNamespace = instance.get('portletNamespace');
 
-									CalendarUtil.getCalendarBookingInvitees(
+									var remoteServices = instance.get('remoteServices');
+
+									remoteServices.getCalendarBookingInvitees(
 										parentCalendarBookingId,
 										function(data) {
 											var results = AArray.partition(

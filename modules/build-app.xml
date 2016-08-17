@@ -74,16 +74,6 @@
 		<antcall target="index-modules-and-app-lpkgs" />
 	</target>
 
-	<target name="check-app-version">
-		<fail message="Please provide a value for the property &quot;app.version&quot; when running this target.">
-			<condition>
-				<not>
-					<isset property="app.version" />
-				</not>
-			</condition>
-		</fail>
-	</target>
-
 	<target name="check-current-branch">
 		<exec executable="git" outputproperty="liferay.releng.branch">
 			<arg value="rev-parse" />
@@ -98,7 +88,7 @@
 		</condition>
 	</target>
 
-	<target depends="check-app-version,init-build-app" name="check-stale-artifacts" unless="check.stale.artifacts.skip">
+	<target depends="get-app-version,init-build-app" name="check-stale-artifacts" unless="check.stale.artifacts.skip">
 		<property location="${gradle.wrapper.path}" name="gradle.wrapper.path.absolute" />
 
 		<exec dir="${app.dir}" executable="${gradle.wrapper.path.absolute}" outputproperty="stale.artifacts.output">
@@ -173,7 +163,7 @@
 		</subant>
 	</target>
 
-	<target depends="init-build-app" name="get-app-artifacts">
+	<target depends="init-build-app,get-app-version" name="get-app-artifacts">
 		<pathconvert pathsep=",\${line.separator}&#x0009;" property="module.versions.list">
 			<flattenmapper />
 
@@ -185,7 +175,7 @@
 		<property name="app.artifacts" value="app.artifacts-${app.version}=\${line.separator}&#x0009;${module.versions.list}" />
 	</target>
 
-	<target depends="init-build-app" name="get-app-change-log">
+	<target depends="init-build-app,get-app-version" name="get-app-change-log">
 		<loadfile failonerror="false" property="app.ticket.list" srcfile="${dist.dir}/ticket.list.tmp">
 			<filterchain>
 				<tokenfilter>
@@ -216,7 +206,7 @@
 		<property name="app.change.log.header" value="${app.change.log.version.separator}#${line.separator}# Liferay App Version ${app.version}${line.separator}#" />
 	</target>
 
-	<target name="get-app-git-id">
+	<target depends="get-app-version" name="get-app-git-id">
 		<exec executable="git" outputproperty="git.rev.parse.output">
 			<arg value="rev-parse" />
 			<arg value="head" />
@@ -225,27 +215,35 @@
 		<property name="app.git.id" value="app.git.id-${app.version}=${git.rev.parse.output}" />
 	</target>
 
-	<target depends="init-build-app" name="get-app-version-previous-release">
-		<loadfile failonerror="false" property="app.version.previous.release" srcfile="${releng.app.dir}/app.changelog">
-			<filterchain>
-				<linecontains>
-					<contains value="# " />
-				</linecontains>
+	<target depends="init-build-app" name="get-app-properties">
+		<property file="${releng.app.dir}/app.properties" />
 
-				<striplinebreaks />
-
-				<tailfilter lines="1" />
-
-				<tokenfilter>
-					<replaceregex pattern="^.*?(\d[\d.]+\d)$" replace="\1" />
-				</tokenfilter>
-			</filterchain>
-		</loadfile>
-
-		<property name="app.version.previous" value="0.0.0" />
+		<property name="app.version.previous.release" value="${app.marketplace.version}" />
 	</target>
 
-	<target depends="get-app-version-previous-release" name="get-artifact-versions-previous-release">
+	<target depends="get-app-properties" name="get-app-version">
+		<loadfile property="app.major.minor.version.previous.release">
+			<filterchain>
+				<replaceregex pattern="(\d{1,2}\.\d{1,2})\.\d{1,2}" replace="\1" />
+
+				<striplinebreaks />
+			</filterchain>
+			<propertyresource name="app.version.previous.release" />
+		</loadfile>
+
+		<loadfile property="app.bug.fix.version.previous.release">
+			<filterchain>
+				<replaceregex pattern="\d{1,2}\.\d{1,2}\.(\d{1,2})" replace="\1" />
+			</filterchain>
+			<propertyresource name="app.version.previous.release" />
+		</loadfile>
+
+		<math datatype="int" operand1="${app.bug.fix.version.previous.release}" operand2="1" operation="+" result="app.bug.fix.version" />
+
+		<property name="app.version" value="${app.major.minor.version.previous.release}.${app.bug.fix.version}" />
+	</target>
+
+	<target depends="get-app-properties" name="get-artifact-versions-previous-release">
 		<property file="${releng.app.dir}/app.changelog" />
 
 		<set-artifact-versions-previous-release app.version.previous.release="${app.version.previous.release}" />

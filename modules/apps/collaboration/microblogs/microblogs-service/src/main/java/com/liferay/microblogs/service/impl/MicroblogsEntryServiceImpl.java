@@ -19,6 +19,7 @@ import com.liferay.microblogs.service.base.MicroblogsEntryServiceBaseImpl;
 import com.liferay.microblogs.service.permission.MicroblogsEntryPermission;
 import com.liferay.microblogs.service.permission.MicroblogsPermission;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
 
@@ -59,8 +60,10 @@ public class MicroblogsEntryServiceImpl extends MicroblogsEntryServiceBaseImpl {
 	public List<MicroblogsEntry> getMicroblogsEntries(int start, int end)
 		throws PortalException {
 
-		return microblogsEntryFinder.findByUserId(
-			getGuestOrUserId(), start, end);
+		User user = getGuestOrUser();
+
+		return microblogsEntryFinder.findByC_U(
+			user.getCompanyId(), user.getUserId(), start, end);
 	}
 
 	@Override
@@ -68,21 +71,28 @@ public class MicroblogsEntryServiceImpl extends MicroblogsEntryServiceBaseImpl {
 			String assetTagName, int start, int end)
 		throws PortalException {
 
-		return microblogsEntryFinder.findByU_ATN(
-			getGuestOrUserId(), assetTagName, start, end);
+		User user = getGuestOrUser();
+
+		return microblogsEntryFinder.findByC_U_ATN(
+			user.getCompanyId(), user.getUserId(), assetTagName, start, end);
 	}
 
 	@Override
 	public int getMicroblogsEntriesCount() throws PortalException {
-		return microblogsEntryFinder.countByUserId(getGuestOrUserId());
+		User user = getGuestOrUser();
+
+		return microblogsEntryFinder.countByC_U(
+			user.getCompanyId(), user.getUserId());
 	}
 
 	@Override
 	public int getMicroblogsEntriesCount(String assetTagName)
 		throws PortalException {
 
-		return microblogsEntryFinder.countByU_ATN(
-			getGuestOrUserId(), assetTagName);
+		User user = getGuestOrUser();
+
+		return microblogsEntryFinder.countByC_U_ATN(
+			user.getCompanyId(), user.getUserId(), assetTagName);
 	}
 
 	@Override

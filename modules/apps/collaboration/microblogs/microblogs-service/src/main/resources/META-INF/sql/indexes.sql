@@ -1,4 +1,5 @@
-create index IX_837C013D on MicroblogsEntry (companyId);
+create index IX_1D8CE137 on MicroblogsEntry (companyId, creatorClassNameId, creatorClassPK, type_);
+create index IX_CA299EF2 on MicroblogsEntry (companyId, creatorClassNameId, type_);
 create index IX_14ACFA9 on MicroblogsEntry (creatorClassNameId, creatorClassPK, type_);
 create index IX_6AA6B164 on MicroblogsEntry (creatorClassNameId, type_);
 create index IX_6BD29B9C on MicroblogsEntry (type_, parentMicroblogsEntryId);

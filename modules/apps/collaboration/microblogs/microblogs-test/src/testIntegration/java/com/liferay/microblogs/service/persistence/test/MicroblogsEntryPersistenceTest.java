@@ -228,6 +228,29 @@ public class MicroblogsEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_CCNI_CCPK() throws Exception {
+		_persistence.countByC_CCNI_CCPK(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+
+		_persistence.countByC_CCNI_CCPK(0L, 0L, 0L);
+	}
+
+	@Test
+	public void testCountByC_CCNI_CCPKArrayable() throws Exception {
+		_persistence.countByC_CCNI_CCPK(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(),
+			new long[] { RandomTestUtil.nextLong(), 0L });
+	}
+
+	@Test
+	public void testCountByC_CCNI_T() throws Exception {
+		_persistence.countByC_CCNI_T(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+
+		_persistence.countByC_CCNI_T(0L, 0L, 0);
+	}
+
+	@Test
 	public void testCountByCCNI_CCPK_T() throws Exception {
 		_persistence.countByCCNI_CCPK_T(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
@@ -238,6 +261,23 @@ public class MicroblogsEntryPersistenceTest {
 	@Test
 	public void testCountByCCNI_CCPK_TArrayable() throws Exception {
 		_persistence.countByCCNI_CCPK_T(RandomTestUtil.nextLong(),
+			new long[] { RandomTestUtil.nextLong(), 0L },
+			RandomTestUtil.nextInt());
+	}
+
+	@Test
+	public void testCountByC_CCNI_CCPK_T() throws Exception {
+		_persistence.countByC_CCNI_CCPK_T(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
+
+		_persistence.countByC_CCNI_CCPK_T(0L, 0L, 0L, 0);
+	}
+
+	@Test
+	public void testCountByC_CCNI_CCPK_TArrayable() throws Exception {
+		_persistence.countByC_CCNI_CCPK_T(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(),
 			new long[] { RandomTestUtil.nextLong(), 0L },
 			RandomTestUtil.nextInt());
 	}

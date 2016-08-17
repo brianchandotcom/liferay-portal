@@ -543,8 +543,6 @@
 		<execute function="AssertClick" locator1="Button#SAVE_AND_CONTINUE" value1="Save and Continue" />
 
 		<execute macro="Alert#viewSuccessMessage" />
-
-		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="saveAsDraftWorkflow">

@@ -21,9 +21,7 @@ import org.json.JSONObject;
  */
 public class SubrepositoryTaskReport extends SubrepositoryTask {
 
-	public SubrepositoryTaskReport(String buildURL, String name)
-		throws Exception {
-
+	public SubrepositoryTaskReport(String buildURL) throws Exception {
 		this.buildURL = buildURL;
 
 		testReportJSONObject = JenkinsResultsParserUtil.toJSONObject(
@@ -47,7 +45,8 @@ public class SubrepositoryTaskReport extends SubrepositoryTask {
 		return sb.toString();
 	}
 
-	protected String buildURL;
 	protected static JSONObject testReportJSONObject;
+
+	protected String buildURL;
 
 }

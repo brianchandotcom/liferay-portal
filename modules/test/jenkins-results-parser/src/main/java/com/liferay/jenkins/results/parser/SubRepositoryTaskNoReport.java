@@ -22,9 +22,7 @@ import java.util.regex.Pattern;
  */
 public class SubrepositoryTaskNoReport extends SubrepositoryTask {
 
-	public SubrepositoryTaskNoReport(String console, String name)
-		throws Exception {
-
+	public SubrepositoryTaskNoReport(String console) throws Exception {
 		this.console = console;
 
 		Matcher matcher = pattern.matcher(console);
@@ -68,8 +66,9 @@ public class SubrepositoryTaskNoReport extends SubrepositoryTask {
 		return sb.toString();
 	}
 
-	protected String console;
 	protected static final Pattern pattern = Pattern.compile(
 		"Task (SUCCESSFUL|FAILED)(.*)");
+
+	protected String console;
 
 }

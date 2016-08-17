@@ -1,0 +1,30 @@
+<html>
+<head>
+<title>UserStatisticsConfiguration</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">UserStatisticsConfiguration</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>CONFIGURATION_IFRAME</td>
+	<td>//div[contains(@id,'SocialUserStatisticsPortlet')]//iframe</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SETUP_COUNTERS-->
+<tr>
+	<td>SETUP_COUNTERS_DISPLAY_ACTIVITY_COUNTER_NAME_DROPDOWN</td>
+	<td>//select[contains(@id,'displayActivityCounterName0')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

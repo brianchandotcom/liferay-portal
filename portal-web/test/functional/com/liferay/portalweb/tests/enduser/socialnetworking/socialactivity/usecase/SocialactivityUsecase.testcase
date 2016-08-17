@@ -358,4 +358,102 @@
 
 		<execute function="AssertSelectedLabel" locator1="MyAccount#LANGUAGE_SELECT" value1="English (United States)" />
 	</command>
+
+	<command name="SaveGroupStatisticsConfiguration" priority="4">
+		<var name="siteStatistics" value="Votes by Users" />
+
+		<execute macro="Page#add">
+			<var name="pageName" value="Group Statistics Page" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Group Statistics Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Group Statistics" />
+		</execute>
+
+		<var name="key_portletName" value="Group Statistics" />
+
+		<execute function="AssertTextEquals" locator1="Portlet#BODY" value1="Please configure this portlet and select at least one activity counter." />
+
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="Group Statistics" />
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute function="SelectFrame" locator1="GroupStatisticsConfiguration#CONFIGURATION_IFRAME" />
+
+		<execute function="Select" locator1="GroupStatisticsConfiguration#SETUP_COUNTERS_DISPLAY_ACTIVITY_COUNTER_NAME_DROPDOWN" value1="votes by This site's users" />
+		<execute function="Select" locator1="GroupStatisticsConfiguration#SETUP_COUNTERS_CHART_TYPE_DROPDOWN" value1="column diagram" />
+		<execute function="Select" locator1="GroupStatisticsConfiguration#SETUP_COUNTERS_CHART_WIDTH_DROPDOWN" value1="55%" />
+		<execute function="Select" locator1="GroupStatisticsConfiguration#SETUP_COUNTERS_DATA_RANGE_DROPDOWN" value1="last 12 months" />
+
+		<execute macro="PortletEntry#save" />
+
+		<execute function="SelectFrameTop" value1="relative=top" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Group Statistics Page" />
+		</execute>
+
+		<var name="key_siteStatistics" value="${siteStatistics}" />
+
+		<execute function="AssertTextEquals" locator1="GroupStatistics#SITE_STATISTICS_PANEL" value1="Site Statistics: ${siteStatistics}" />
+	</command>
+
+	<command name="SaveUserStatisticsConfiguration" priority="4">
+		<execute macro="Page#add">
+			<var name="pageName" value="User Statistics Page" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="User Statistics Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="User Statistics" />
+		</execute>
+
+		<var name="key_portletName" value="User Statistics" />
+
+		<execute function="AssertTextEquals" locator1="Portlet#BODY" value1="There are no active users for this period." />
+
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="User Statistics" />
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute function="SelectFrame" locator1="UserStatisticsConfiguration#CONFIGURATION_IFRAME" />
+
+		<execute function="Uncheck" locator1="Checkbox#RANK_BY_CONTRIBUTION" />
+		<execute function="Uncheck" locator1="Checkbox#RANK_BY_PARTICIPATION" />
+		<execute function="Uncheck" locator1="Checkbox#SHOW_HEADER_TEXT" />
+		<execute function="Uncheck" locator1="Checkbox#SHOW_TOTALS" />
+		<execute function="Uncheck" locator1="Checkbox#DISPLAY_ADDITIONAL_ACTIVITY_COUNTERS" />
+
+		<execute macro="PortletEntry#save" />
+
+		<execute function="SelectFrameTop" value1="relative=top" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="User Statistics Page" />
+		</execute>
+
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="User Statistics" />
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
+		<execute function="AssertNotChecked" locator1="Checkbox#RANK_BY_CONTRIBUTION" />
+		<execute function="AssertNotChecked" locator1="Checkbox#RANK_BY_PARTICIPATION" />
+		<execute function="AssertNotChecked" locator1="Checkbox#SHOW_HEADER_TEXT" />
+		<execute function="AssertNotChecked" locator1="Checkbox#SHOW_TOTALS" />
+		<execute function="AssertNotChecked" locator1="Checkbox#DISPLAY_ADDITIONAL_ACTIVITY_COUNTERS" />
+
+		<execute function="SelectFrameTop" value1="relative=top" />
+	</command>
 </definition>

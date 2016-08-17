@@ -109,8 +109,7 @@ public class LiferaySeleniumHelper {
 			LiferaySelenium liferaySelenium, String fileName, String target)
 		throws Exception {
 
-		AntCommands antCommands = new AntCommands(
-			liferaySelenium, fileName, target);
+		AntCommands antCommands = new AntCommands(fileName, target);
 
 		ExecutorService executorService = Executors.newCachedThreadPool();
 

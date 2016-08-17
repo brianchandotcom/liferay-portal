@@ -14,6 +14,8 @@
 
 package com.liferay.journal.item.selector.web.internal.context;
 
+import com.liferay.item.selector.ItemSelectorReturnTypeResolver;
+import com.liferay.item.selector.ItemSelectorReturnTypeResolverHandler;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.item.selector.criterion.JournalItemSelectorCriterion;
 import com.liferay.journal.item.selector.web.internal.JournalItemSelectorView;
@@ -22,6 +24,7 @@ import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 
 import java.util.Locale;
@@ -40,10 +43,14 @@ public class JournalItemSelectorViewDisplayContext {
 	public JournalItemSelectorViewDisplayContext(
 		JournalItemSelectorCriterion journalItemSelectorCriterion,
 		JournalItemSelectorView journalItemSelectorView,
+		ItemSelectorReturnTypeResolverHandler
+			itemSelectorReturnTypeResolverHandler,
 		String itemSelectedEventName, boolean search, PortletURL portletURL) {
 
 		_journalItemSelectorCriterion = journalItemSelectorCriterion;
 		_journalItemSelectorView = journalItemSelectorView;
+		_itemSelectorReturnTypeResolverHandler =
+			itemSelectorReturnTypeResolverHandler;
 		_itemSelectedEventName = itemSelectedEventName;
 		_search = search;
 		_portletURL = portletURL;
@@ -55,6 +62,13 @@ public class JournalItemSelectorViewDisplayContext {
 
 	public String getItemSelectedEventName() {
 		return _itemSelectedEventName;
+	}
+
+	public ItemSelectorReturnTypeResolver getItemSelectorReturnTypeResolver() {
+		return _itemSelectorReturnTypeResolverHandler.
+			getItemSelectorReturnTypeResolver(
+				_journalItemSelectorCriterion, _journalItemSelectorView,
+				FileEntry.class);
 	}
 
 	public JournalArticle getJournalArticle() throws PortalException {
@@ -104,6 +118,8 @@ public class JournalItemSelectorViewDisplayContext {
 	}
 
 	private final String _itemSelectedEventName;
+	private final ItemSelectorReturnTypeResolverHandler
+		_itemSelectorReturnTypeResolverHandler;
 	private final JournalItemSelectorCriterion _journalItemSelectorCriterion;
 	private final JournalItemSelectorView _journalItemSelectorView;
 	private final PortletURL _portletURL;

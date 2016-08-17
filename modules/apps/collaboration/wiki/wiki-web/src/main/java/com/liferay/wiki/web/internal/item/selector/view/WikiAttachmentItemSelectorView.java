@@ -15,6 +15,7 @@
 package com.liferay.wiki.web.internal.item.selector.view;
 
 import com.liferay.item.selector.ItemSelectorReturnType;
+import com.liferay.item.selector.ItemSelectorReturnTypeResolverHandler;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -94,6 +95,7 @@ public class WikiAttachmentItemSelectorView
 			wikiAttachmentItemSelectorViewDisplayContext =
 				new WikiAttachmentItemSelectorViewDisplayContext(
 					wikiAttachmentItemSelectorCriterion, this,
+					_itemSelectorReturnTypeResolverHandler,
 					itemSelectedEventName, search, portletURL);
 
 		request.setAttribute(
@@ -107,6 +109,15 @@ public class WikiAttachmentItemSelectorView
 				"/item/selector/wiki_page_attachments.jsp");
 
 		requestDispatcher.include(request, response);
+	}
+
+	@Reference(unbind = "-")
+	public void setItemSelectorReturnTypeResolverHandler(
+		ItemSelectorReturnTypeResolverHandler
+			itemSelectorReturnTypeResolverHandler) {
+
+		_itemSelectorReturnTypeResolverHandler =
+			itemSelectorReturnTypeResolverHandler;
 	}
 
 	@Reference(
@@ -123,6 +134,8 @@ public class WikiAttachmentItemSelectorView
 					new FileEntryItemSelectorReturnType()
 				}));
 
+	private ItemSelectorReturnTypeResolverHandler
+		_itemSelectorReturnTypeResolverHandler;
 	private ServletContext _servletContext;
 
 }

@@ -15,6 +15,7 @@
 package com.liferay.journal.item.selector.web.internal;
 
 import com.liferay.item.selector.ItemSelectorReturnType;
+import com.liferay.item.selector.ItemSelectorReturnTypeResolverHandler;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
@@ -93,8 +94,9 @@ public class JournalItemSelectorView
 		JournalItemSelectorViewDisplayContext
 			journalItemSelectorViewDisplayContext =
 				new JournalItemSelectorViewDisplayContext(
-					journalItemSelectorCriterion, this, itemSelectedEventName,
-					search, portletURL);
+					journalItemSelectorCriterion, this,
+					_itemSelectorReturnTypeResolverHandler,
+					itemSelectedEventName, search, portletURL);
 
 		request.setAttribute(
 			JOURNAL_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT,
@@ -106,6 +108,15 @@ public class JournalItemSelectorView
 			servletContext.getRequestDispatcher("/journal_images.jsp");
 
 		requestDispatcher.include(request, response);
+	}
+
+	@Reference(unbind = "-")
+	public void setItemSelectorReturnTypeResolverHandler(
+		ItemSelectorReturnTypeResolverHandler
+			itemSelectorReturnTypeResolverHandler) {
+
+		_itemSelectorReturnTypeResolverHandler =
+			itemSelectorReturnTypeResolverHandler;
 	}
 
 	@Reference(
@@ -124,6 +135,8 @@ public class JournalItemSelectorView
 					new URLItemSelectorReturnType()
 				}));
 
+	private ItemSelectorReturnTypeResolverHandler
+		_itemSelectorReturnTypeResolverHandler;
 	private ServletContext _servletContext;
 
 }

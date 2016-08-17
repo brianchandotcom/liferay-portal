@@ -4,3 +4,4 @@ Bundle-Version: 1.0.4
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Document Library
 Web-ContextPath: /document-library-item-selector-web
+-dsannotations-options: inherit

@@ -14,9 +14,12 @@
 
 package com.liferay.wiki.web.internal.item.selector.view.display.context;
 
+import com.liferay.item.selector.ItemSelectorReturnTypeResolver;
+import com.liferay.item.selector.ItemSelectorReturnTypeResolverHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.item.selector.criterion.WikiAttachmentItemSelectorCriterion;
 import com.liferay.wiki.model.WikiPage;
@@ -40,11 +43,15 @@ public class WikiAttachmentItemSelectorViewDisplayContext {
 		WikiAttachmentItemSelectorCriterion wikiAttachmentItemSelectorCriterion,
 		WikiAttachmentItemSelectorView
 			wikiAttachmentItemSelectorView,
+		ItemSelectorReturnTypeResolverHandler
+			itemSelectorReturnTypeResolverHandler,
 		String itemSelectedEventName, boolean search, PortletURL portletURL) {
 
 		_wikiAttachmentItemSelectorCriterion =
 			wikiAttachmentItemSelectorCriterion;
 		_wikiAttachmentItemSelectorView = wikiAttachmentItemSelectorView;
+		_itemSelectorReturnTypeResolverHandler =
+			itemSelectorReturnTypeResolverHandler;
 		_itemSelectedEventName = itemSelectedEventName;
 		_search = search;
 		_portletURL = portletURL;
@@ -52,6 +59,13 @@ public class WikiAttachmentItemSelectorViewDisplayContext {
 
 	public String getItemSelectedEventName() {
 		return _itemSelectedEventName;
+	}
+
+	public ItemSelectorReturnTypeResolver getItemSelectorReturnTypeResolver() {
+		return _itemSelectorReturnTypeResolverHandler.
+			getItemSelectorReturnTypeResolver(
+				_wikiAttachmentItemSelectorCriterion,
+				_wikiAttachmentItemSelectorView, FileEntry.class);
 	}
 
 	public PortletURL getPortletURL(
@@ -104,6 +118,8 @@ public class WikiAttachmentItemSelectorViewDisplayContext {
 	}
 
 	private final String _itemSelectedEventName;
+	private final ItemSelectorReturnTypeResolverHandler
+		_itemSelectorReturnTypeResolverHandler;
 	private final PortletURL _portletURL;
 	private final boolean _search;
 	private final WikiAttachmentItemSelectorCriterion

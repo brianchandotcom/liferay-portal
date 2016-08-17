@@ -17,8 +17,11 @@ package com.liferay.document.library.item.selector.web.internal.display.context;
 import com.liferay.document.library.item.selector.web.internal.DLItemSelectorView;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.item.selector.ItemSelectorCriterion;
+import com.liferay.item.selector.ItemSelectorReturnTypeResolver;
+import com.liferay.item.selector.ItemSelectorReturnTypeResolverHandler;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 
@@ -37,10 +40,14 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 
 	public DLItemSelectorViewDisplayContext(
 		T itemSelectorCriterion, DLItemSelectorView<T> dlItemSelectorView,
+		ItemSelectorReturnTypeResolverHandler
+			itemSelectorReturnTypeResolverHandler,
 		String itemSelectedEventName, boolean search, PortletURL portletURL) {
 
 		_itemSelectorCriterion = itemSelectorCriterion;
 		_dlItemSelectorView = dlItemSelectorView;
+		_itemSelectorReturnTypeResolverHandler =
+			itemSelectorReturnTypeResolverHandler;
 		_itemSelectedEventName = itemSelectedEventName;
 		_search = search;
 		_portletURL = portletURL;
@@ -57,6 +64,12 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 
 	public T getItemSelectorCriterion() {
 		return _itemSelectorCriterion;
+	}
+
+	public ItemSelectorReturnTypeResolver getItemSelectorReturnTypeResolver() {
+		return _itemSelectorReturnTypeResolverHandler.
+			getItemSelectorReturnTypeResolver(
+				_itemSelectorCriterion, _dlItemSelectorView, FileEntry.class);
 	}
 
 	public String[] getMimeTypes() {
@@ -105,6 +118,8 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 	private final DLItemSelectorView<T> _dlItemSelectorView;
 	private final String _itemSelectedEventName;
 	private final T _itemSelectorCriterion;
+	private final ItemSelectorReturnTypeResolverHandler
+		_itemSelectorReturnTypeResolverHandler;
 	private final PortletURL _portletURL;
 	private final boolean _search;
 

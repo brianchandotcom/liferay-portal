@@ -16,10 +16,6 @@ package com.liferay.jenkins.results.parser;
 
 import java.io.File;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ListIterator;
-
 import org.apache.tools.ant.Project;
 
 /**
@@ -60,9 +56,6 @@ public class SubrepositoryGitHubMessageUtil {
 			sb.append("</a></p>");
 		}
 
-		sb.append("<h4>Task Summary:</h4>");
-		sb.append("<ul>");
-
 		String buildURL = project.getProperty("build.url");
 
 		String progressiveText = JenkinsResultsParserUtil.toString(
@@ -73,54 +66,64 @@ public class SubrepositoryGitHubMessageUtil {
 		String[] consoleSnippets = progressiveText.split(
 			"Executing subrepository task ");
 
-		for (int i = 1; i < consoleSnippets.length; i++) {
-			sb.append("<li><strong><a href=\"");
-			sb.append(project.getProperty("top.level.shared.dir.url"));
-			sb.append("/");
+		if (consoleSnippets.length > 1) {
+			sb.append("<h4>Task Summary:</h4>");
+			sb.append("<ul>");
 
-			String consoleSnippet = consoleSnippets[i];
+			for (int i = 1; i < consoleSnippets.length; i++) {
+				sb.append("<li><strong><a href=\"");
+				sb.append(project.getProperty("top.level.shared.dir.url"));
+				sb.append("/");
 
-			String taskName = consoleSnippet.substring(
-				0, consoleSnippet.indexOf("\n"));
+				String consoleSnippet = consoleSnippets[i];
 
-			JenkinsResultsParserUtil.write(
-				new File(
-					project.getProperty("top.level.shared.dir") + "/" +
-						taskName + ".log"),
+				String taskName = consoleSnippet.substring(
+					0, consoleSnippet.indexOf("\n"));
+
+				JenkinsResultsParserUtil.write(
+					new File(
+						project.getProperty("top.level.shared.dir") + "/" +
+							taskName + ".log"),
 					consoleSnippet);
 
-			sb.append(taskName);
-			sb.append(".log");
-			sb.append("\">");
-			sb.append(taskName);
-			sb.append("</a></strong> ");
-			sb.append("- ");
+				sb.append(taskName);
+				sb.append(".log");
+				sb.append("\">");
+				sb.append(taskName);
+				sb.append("</a></strong> ");
+				sb.append("- ");
 
-			SubrepositoryTask subRepositoryTask = _getSubrepositoryTask(
-				buildURL, consoleSnippet);
+				SubrepositoryTask subRepositoryTask = _getSubrepositoryTask(
+					buildURL, consoleSnippet);
 
-			String result = subRepositoryTask.getResult();
+				String result = subRepositoryTask.getResult();
 
-			sb.append(result);
+				sb.append(result);
 
-			if (result.equals("SUCCESS")) {
-				sb.append(" :white_check_mark:");
-			}
-			else {
-				if (result.equals("ABORTED")) {
-					sb.append(" :no_entry:");
+				if (result.equals("SUCCESS")) {
+					sb.append(" :white_check_mark:");
 				}
-				else if (result.equals("FAILURE")) {
-					sb.append(" :x:");
+				else {
+					if (result.equals("ABORTED")) {
+						sb.append(" :no_entry:");
+					}
+					else if (result.equals("FAILURE")) {
+						sb.append(" :x:");
+					}
+
+					sb.append(subRepositoryTask.getGitHubMessage());
 				}
 
-				sb.append(subRepositoryTask.getGitHubMessage());
+				sb.append("</li>");
 			}
 
-			sb.append("</li>");
+			sb.append("</ul>");
+		}
+		else {
+			sb.append(FailureMessageUtil.getFailureMessage(project, buildURL));
 		}
 
-		sb.append("</ul><h5>For more details click <a href=\"");
+		sb.append("<h5>For more details click <a href=\"");
 		sb.append(buildURL);
 		sb.append("\">here</a>.</h5>");
 

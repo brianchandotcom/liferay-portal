@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal Scheduler Quartz
 Bundle-SymbolicName: com.liferay.portal.scheduler.quartz
-Bundle-Version: 2.0.5
+Bundle-Version: 2.1.0
 Export-Package:\
 	com.liferay.portal.scheduler.quartz,\
 	\

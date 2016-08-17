@@ -20,7 +20,6 @@ import com.liferay.document.library.kernel.exception.FileSizeException;
 import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.kernel.service.MBMessageLocalService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.UserScreenNameException;
@@ -364,10 +363,6 @@ public class PrivateMessagingPortlet extends MVCPortlet {
 				portletRequest, "the-following-users-were-not-found");
 
 			message += CharPool.SPACE + key.getMessage();
-		}
-		else if (key instanceof NoSuchLayoutException) {
-			message = translate(
-				portletRequest, "requires-private-messaging-portlet");
 		}
 		else {
 			message = translate(

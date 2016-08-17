@@ -31,7 +31,7 @@
 
 		<property name="app.server.bundles.size" value="1" />
 		<property name="cluster.enabled" value="true" />
-		<property name="custom.properties" value="dl.store.impl=com.liferay.portal.store.db.DBStore" />
+		<property name="custom.properties" value="cluster.link.autodetect.address=${line.separator}dl.store.impl=com.liferay.portal.store.db.DBStore" />
 		<property name="test.name.skip.portal.instance" value="ElasticsearchEE#ElasticsearchClusterSmokeTest" />
 
 		<!-- Verify the total number of Elasticsearch replicas is two as there are two nodes/bundles running -->

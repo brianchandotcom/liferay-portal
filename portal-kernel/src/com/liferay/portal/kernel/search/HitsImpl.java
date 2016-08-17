@@ -221,8 +221,10 @@ public class HitsImpl implements Hits {
 		return subset;
 	}
 
+	private static final Document[] _EMPTY_DOCUMENTS = new Document[0];
+
 	private String _collatedSpellCheckResult;
-	private Document[] _docs;
+	private Document[] _docs = _EMPTY_DOCUMENTS;
 	private final Map<String, Hits> _groupedHits = new HashMap<>();
 	private int _length;
 	private Query _query;

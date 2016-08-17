@@ -5833,6 +5833,33 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 				</echo>
 			</else>
 		</if>
+
+		<var name="test.toggle.file.names" unset="true" />
+
+		<pathconvert property="test.toggle.file.names" pathsep=",">
+			<fileset dir="${project.dir}">
+				<include name="modules/**/poshi.toggle"/>
+				<include name="portal-web/poshi.toggle"/>
+			</fileset>
+		</pathconvert>
+
+		<antelope:stringutil property="test.toggle.file.names" string="${test.toggle.file.names}">
+			<antelope:replace regex="\\" replacement="/" />
+		</antelope:stringutil>
+
+		<if>
+			<isset property="test.base.dir.name" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					test.toggle.file.names=${test.toggle.file.names},${test.base.dir.name}/poshi.toggle
+				</echo>
+			</then>
+			<else>
+				<echo append="true" file="${test.ext.properties.file}">
+					test.toggle.file.names=${test.toggle.file.names}
+				</echo>
+			</else>
+		</if>
 	</target>
 
 	<target name="prepare-selenium">

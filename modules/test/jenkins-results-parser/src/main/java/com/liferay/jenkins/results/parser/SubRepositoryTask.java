@@ -24,15 +24,10 @@ public abstract class SubrepositoryTask {
 
 	public abstract String getGitHubMessage() throws Exception;
 
-	public String getName() {
-		return name;
-	}
-
 	public String getResult() {
 		return result;
 	}
 
-	protected static String name;
 	protected static String result;
 
 }

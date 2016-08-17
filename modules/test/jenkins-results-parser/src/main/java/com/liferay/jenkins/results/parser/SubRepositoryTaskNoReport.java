@@ -26,7 +26,6 @@ public class SubrepositoryTaskNoReport extends SubrepositoryTask {
 		throws Exception {
 
 		this.console = console;
-		this.name = name;
 
 		Matcher matcher = pattern.matcher(console);
 
@@ -69,7 +68,7 @@ public class SubrepositoryTaskNoReport extends SubrepositoryTask {
 		return sb.toString();
 	}
 
-	protected static String console;
+	protected String console;
 	protected static final Pattern pattern = Pattern.compile(
 		"Task (SUCCESSFUL|FAILED)(.*)");
 

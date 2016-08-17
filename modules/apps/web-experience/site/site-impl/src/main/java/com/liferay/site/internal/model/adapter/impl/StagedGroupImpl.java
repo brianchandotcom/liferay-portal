@@ -28,6 +28,9 @@ import java.util.Date;
  */
 public class StagedGroupImpl extends GroupImpl implements StagedGroup {
 
+	public StagedGroupImpl() {
+	}
+
 	public StagedGroupImpl(Group group) {
 		_group = group;
 	}
@@ -72,6 +75,10 @@ public class StagedGroupImpl extends GroupImpl implements StagedGroup {
 		throw new UnsupportedOperationException();
 	}
 
+	public void setGroup(Group group) {
+		_group = group;
+	}
+
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		throw new UnsupportedOperationException();
@@ -87,6 +94,6 @@ public class StagedGroupImpl extends GroupImpl implements StagedGroup {
 		throw new UnsupportedOperationException();
 	}
 
-	private final Group _group;
+	private Group _group;
 
 }

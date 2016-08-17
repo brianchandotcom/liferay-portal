@@ -168,9 +168,9 @@ public class PQLQueryTest extends TestCase {
 		properties.setProperty("portal.smoke", "true");
 
 		_validateGetPQLResult(
-			"NOT portal.smoke == true", Boolean.valueOf(false), properties);
+			"NOT portal.smoke == true", Boolean.FALSE, properties);
 		_validateGetPQLResult(
-			"NOT portal.smoke == false", Boolean.valueOf(true), properties);
+			"NOT portal.smoke == false", Boolean.TRUE, properties);
 	}
 
 	@Test

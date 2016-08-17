@@ -70,8 +70,8 @@ public class PQLValueTest extends TestCase {
 
 	@Test
 	public void testGetPQLResultModifier() throws Exception {
-		_validateGetPQLResult("NOT true", Boolean.valueOf(false));
-		_validateGetPQLResult("NOT false", Boolean.valueOf(true));
+		_validateGetPQLResult("NOT true", Boolean.FALSE);
+		_validateGetPQLResult("NOT false", Boolean.TRUE);
 	}
 
 	@Test

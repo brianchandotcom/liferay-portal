@@ -17,9 +17,9 @@ package com.liferay.jenkins.results.parser;
 /**
  * @author Leslie Wong
  */
-public abstract class SubRepositoryTask {
+public abstract class SubrepositoryTask {
 
-	public SubRepositoryTask() throws Exception {
+	public SubrepositoryTask() throws Exception {
 	}
 
 	public abstract String getGitHubMessage() throws Exception;

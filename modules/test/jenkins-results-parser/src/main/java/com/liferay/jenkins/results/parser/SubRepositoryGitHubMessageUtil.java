@@ -27,7 +27,7 @@ import org.apache.tools.ant.Project;
 /**
  * @author Leslie Wong
  */
-public class SubRepositoryGitHubMessageUtil {
+public class SubrepositoryGitHubMessageUtil {
 
 	public static void getGitHubMessage(Project project) throws Exception {
 		StringBuilder sb = new StringBuilder();
@@ -120,17 +120,17 @@ public class SubRepositoryGitHubMessageUtil {
 			sb.append("</a></strong> ");
 			sb.append("- ");
 
-			SubRepositoryTask subRepositoryTask;
+			SubrepositoryTask subRepositoryTask;
 
 			if (console.contains(
 					"A report with all the test results can be found at " +
 						"test-results/html/index.html")) {
 
-				subRepositoryTask = new SubRepositoryTaskReport(
+				subRepositoryTask = new SubrepositoryTaskReport(
 					buildURL, taskName);
 			}
 			else {
-				subRepositoryTask = new SubRepositoryTaskNoReport(
+				subRepositoryTask = new SubrepositoryTaskNoReport(
 					console, taskName);
 			}
 

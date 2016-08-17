@@ -202,4 +202,18 @@
 
 		<execute macro="NotificationsPortlet#viewDefaultNotificationDeliveries" />
 	</command>
+
+	<command name="ViewNoNotification" priority="5">
+		<execute macro="Notifications#viewNoNotifications">
+			<var name="activePanel" value="Profile" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoUserMyAccount">
+			<var name="portlet" value="Notifications" />
+		</execute>
+
+		<execute macro="Notifications#viewNoRequest" />
+
+		<execute macro="Notifications#viewNoNotificationEntry" />
+	</command>
 </definition>

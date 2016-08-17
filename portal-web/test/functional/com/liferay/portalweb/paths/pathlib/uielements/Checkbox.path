@@ -59,6 +59,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DISPLAY_ADDITIONAL_ACTIVITY_COUNTERS</td>
+	<td>//label[contains(.,'Display Additional Activity Counters')]/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DISPLAY_FACET</td>
 	<td>//div[@style='']//label[contains(.,'Display Facet')]/input[@type='checkbox']</td>
 	<td></td>
@@ -274,6 +279,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>RANK_BY_CONTRIBUTION</td>
+	<td>//label[contains(.,'Rank by Contribution')]/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RANK_BY_PARTICIPATION</td>
+	<td>//label[contains(.,'Rank by Participation')]/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>REMEMBER_ME</td>
 	<td>//label[contains(.,'Remember Me')]/input[@type='checkbox']</td>
 	<td></td>
@@ -319,6 +334,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SHOW_HEADER_TEXT</td>
+	<td>//label[contains(.,'Show Header Text')]/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SHOW_NAVIGATION_LINKS_CHECKBOX</td>
 	<td>//label[contains(@for,'showTabs')]//input[@type='checkbox']</td>
 	<td></td>
@@ -326,6 +346,11 @@
 <tr>
 	<td>SHOW_SEARCH_CHECKBOX</td>
 	<td>//input[contains(@id,'showFoldersSearch')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SHOW_TOTALS</td>
+	<td>//label[contains(.,'Show Totals')]/input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>

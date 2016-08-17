@@ -1,0 +1,19 @@
+<html>
+<head>
+<title>GroupStatistics</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">GroupStatistics</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>SITE_STATISTICS_PANEL</td>
+	<td>//div[contains(@class,'panel-heading')]/div/span[contains(.,'Site Statistics: ${key_siteStatistics}')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

@@ -60,6 +60,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NOTIFICATIONS_CONTENT_GENERIC</td>
+	<td>//div[@class='body-container']//div[@class='body']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

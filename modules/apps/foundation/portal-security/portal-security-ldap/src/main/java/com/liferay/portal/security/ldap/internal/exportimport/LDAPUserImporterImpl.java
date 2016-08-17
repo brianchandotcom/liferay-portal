@@ -637,7 +637,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 			ServiceContext serviceContext = ldapUser.getServiceContext();
 
 			return _userLocalService.fetchUserByUuidAndCompanyId(
-				serviceContext.getUuid(), companyId);
+				serviceContext.getUuidWithoutReset(), companyId);
 		}
 
 		String authType = PrefsPropsUtil.getString(

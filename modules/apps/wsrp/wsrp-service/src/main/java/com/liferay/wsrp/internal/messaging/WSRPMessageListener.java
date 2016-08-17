@@ -75,18 +75,6 @@ public class WSRPMessageListener extends HotDeployMessageListener {
 		_wSRPConsumerPortletLocalService.initWSRPConsumerPortlets();
 	}
 
-	@Deactivate
-	protected void deactivate(BundleContext bundleContext) {
-		try {
-			_wSRPConsumerPortletLocalService.destroyWSRPConsumerPortlets();
-		}
-		catch (PortalException pe) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to destroy WSRP consumer portlets", pe);
-			}
-		}
-	}
-
 	@Reference(unbind = "-")
 	protected void setWSRPConsumerPortletLocalService(
 		WSRPConsumerPortletLocalService wSRPConsumerPortletLocalService) {

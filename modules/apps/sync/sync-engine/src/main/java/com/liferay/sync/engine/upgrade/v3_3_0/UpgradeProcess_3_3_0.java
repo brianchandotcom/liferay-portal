@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.sync.engine.upgrade.v3_2_2;
+package com.liferay.sync.engine.upgrade.v3_3_0;
 
 import com.liferay.sync.engine.upgrade.BaseUpgradeProcess;
 
@@ -20,11 +20,11 @@ import com.liferay.sync.engine.upgrade.BaseUpgradeProcess;
  * @author Dennis Ju
  * @author Shinn Lok
  */
-public class UpgradeProcess_3_2_2 extends BaseUpgradeProcess {
+public class UpgradeProcess_3_3_0 extends BaseUpgradeProcess {
 
 	@Override
 	public int getThreshold() {
-		return 3202;
+		return 3300;
 	}
 
 	@Override

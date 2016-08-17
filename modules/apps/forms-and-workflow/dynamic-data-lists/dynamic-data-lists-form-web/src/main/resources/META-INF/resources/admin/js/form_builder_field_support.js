@@ -5,8 +5,6 @@ AUI.add(
 
 		var CSS_FIELD_CONTENT_TARGET = A.getClassName('form', 'builder', 'field', 'content', 'target');
 
-		var CSS_FIELD_REPEATABLE_TOOLBAR = A.getClassName('lfr', 'ddm', 'form', 'field', 'repeatable', 'toolbar');
-
 		var CSS_FORM_GROUP = A.getClassName('form', 'group');
 
 		var RendererUtil = Liferay.DDM.Renderer.Util;
@@ -196,14 +194,6 @@ AUI.add(
 				var wrapper = container.one('.' + CSS_FORM_GROUP);
 
 				wrapper.append('<div class="' + CSS_FIELD_CONTENT_TARGET + '"></div>');
-
-				if (instance.get('repeatable')) {
-					var toolbar = container.one('.' + CSS_FIELD_REPEATABLE_TOOLBAR);
-
-					if (toolbar) {
-						toolbar.hide();
-					}
-				}
 			},
 
 			_updateSettingsFormValues: function(settingsForm) {

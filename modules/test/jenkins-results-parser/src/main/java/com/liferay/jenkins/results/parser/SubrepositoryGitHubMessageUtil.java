@@ -70,12 +70,10 @@ public class SubrepositoryGitHubMessageUtil {
 			sb.append("<h4>Task Summary:</h4>");
 			sb.append("<ul>");
 
-			for (int i = 1; i < consoleSnippets.length; i++) {
+			for (String consoleSnippet : consoleSnippets) {
 				sb.append("<li><strong><a href=\"");
 				sb.append(project.getProperty("top.level.shared.dir.url"));
 				sb.append("/");
-
-				String consoleSnippet = consoleSnippets[i];
 
 				String taskName = consoleSnippet.substring(
 					0, consoleSnippet.indexOf("\n"));
@@ -96,24 +94,7 @@ public class SubrepositoryGitHubMessageUtil {
 				SubrepositoryTask subRepositoryTask = _getSubrepositoryTask(
 					buildURL, consoleSnippet);
 
-				String result = subRepositoryTask.getResult();
-
-				sb.append(result);
-
-				if (result.equals("SUCCESS")) {
-					sb.append(" :white_check_mark:");
-				}
-				else {
-					if (result.equals("ABORTED")) {
-						sb.append(" :no_entry:");
-					}
-					else if (result.equals("FAILURE")) {
-						sb.append(" :x:");
-					}
-
-					sb.append(subRepositoryTask.getGitHubMessage());
-				}
-
+				sb.append(_getResult(subrepositoryTask));
 				sb.append("</li>");
 			}
 
@@ -130,6 +111,26 @@ public class SubrepositoryGitHubMessageUtil {
 		project.setProperty("report.html.content", sb.toString());
 	}
 
+	private static String _getResult(SubrepositoryTask subrepositoryTask)
+		throws Exception {
+
+		String result = subrepositoryTask.getResult();
+
+		if (result.equals("SUCCESS")) {
+			return " :white_check_mark:";
+		}
+
+		if (result.equals("ABORTED")) {
+			return " :no_entry:" + subrepositoryTask.getGitHubMessage();
+		}
+
+		if (result.equals("FAILURE")) {
+			return " :x:"  + subrepositoryTask.getGitHubMessage();
+		}
+
+		return "";
+	}
+	
 	private static SubrepositoryTask _getSubrepositoryTask(
 			String buildURL, String console)
 		throws Exception {

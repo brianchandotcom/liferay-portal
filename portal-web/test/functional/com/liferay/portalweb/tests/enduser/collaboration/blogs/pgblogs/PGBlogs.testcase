@@ -119,7 +119,6 @@
 
 	<command name="AddBlogsEntryComment" priority="5">
 		<property name="portal.acceptance" value="true" />
-		<property name="portal.acceptance.quarantine" value="false" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
@@ -695,7 +694,6 @@
 
 	<command name="EditBlogsEntryComment" priority="5">
 		<property name="portal.acceptance" value="true" />
-		<property name="portal.acceptance.quarantine" value="false" />
 
 		<var name="entryComment" value="Blogs Entry Comment" />
 		<var name="entryCommentEdit" value="Blogs Entry Comment Edit" />

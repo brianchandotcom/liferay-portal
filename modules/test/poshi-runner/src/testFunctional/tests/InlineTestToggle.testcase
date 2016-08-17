@@ -1,0 +1,94 @@
+<definition component-name="portal-tools">
+	<property name="poshi.runner.acceptance" value="true" />
+	<property name="testray.main.component.name" value="Smoke" />
+
+	<command name="InlineToggleOffOneOption" priority="5">
+		<toggle name="LRQA-INVALID">
+			<off>
+				<var name="varName" value="PASS" />
+			</off>
+		</toggle>
+
+		<execute macro="ExternalMethod#validateMatch">
+			<var name="actual" value="${varName}" />
+			<var name="expected" value="PASS" />
+		</execute>
+	</command>
+
+	<command name="InlineToggleOffSkip" priority="5">
+		<var name="varName" value="PASS" />
+
+		<toggle name="LRQA-INVALID">
+			<on>
+				<var name="varName" value="FAIL" />
+			</on>
+		</toggle>
+
+		<execute macro="ExternalMethod#validateMatch">
+			<var name="actual" value="${varName}" />
+			<var name="expected" value="PASS" />
+		</execute>
+	</command>
+
+	<command name="InlineToggleOffTwoOptions" priority="5">
+		<toggle name="LRQA-INVALID">
+			<on>
+				<var name="varName" value="FAIL" />
+			</on>
+
+			<off>
+				<var name="varName" value="PASS" />
+			</off>
+		</toggle>
+
+		<execute macro="ExternalMethod#validateMatch">
+			<var name="actual" value="${varName}" />
+			<var name="expected" value="PASS" />
+		</execute>
+	</command>
+
+	<command name="InlineToggleOnOneOption" priority="5">
+		<toggle name="LRQA-TOGGLE">
+			<on>
+				<var name="varName" value="PASS" />
+			</on>
+		</toggle>
+
+		<execute macro="ExternalMethod#validateMatch">
+			<var name="actual" value="${varName}" />
+			<var name="expected" value="PASS" />
+		</execute>
+	</command>
+
+	<command name="InlineToggleOnSkip" priority="5">
+		<var name="varName" value="PASS" />
+
+		<toggle name="LRQA-TOGGLE">
+			<off>
+				<var name="varName" value="FAIL" />
+			</off>
+		</toggle>
+
+		<execute macro="ExternalMethod#validateMatch">
+			<var name="actual" value="${varName}" />
+			<var name="expected" value="PASS" />
+		</execute>
+	</command>
+
+	<command name="InlineToggleOnTwoOptions" priority="5">
+		<toggle name="LRQA-TOGGLE">
+			<on>
+				<var name="varName" value="PASS" />
+			</on>
+
+			<off>
+				<var name="varName" value="FAIL" />
+			</off>
+		</toggle>
+
+		<execute macro="ExternalMethod#validateMatch">
+			<var name="actual" value="${varName}" />
+			<var name="expected" value="PASS" />
+		</execute>
+	</command>
+</definition>

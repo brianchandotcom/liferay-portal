@@ -1,0 +1,7 @@
+<toggles>
+	<toggle name="LRQA-TOGGLE">
+		<date>2016-08-09</date>
+		<description>Testing toggles in the 'InlineTestToggle' test case.</description>
+		<owner>Michael Hashimoto</owner>
+	</toggle>
+</toggles>

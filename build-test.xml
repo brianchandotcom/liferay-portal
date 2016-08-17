@@ -607,6 +607,42 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="get-module-base-dir-from-subrepository-name">
+		<attribute name="subrepository.name" />
+
+		<sequential>
+			<var name="module.base.dir" unset="true" />
+
+			<get-portal-dir />
+
+			<antelope:stringutil property="subrepository.name" string="@{subrepository.name}">
+				<antelope:replace regex="(.+)-private" replacement="$1" />
+			</antelope:stringutil>
+
+			<for param="gitrepo.file">
+				<fileset dir="${portal.dir}/modules" erroronmissingdir="false" id="fileset.id">
+					<include name="**/.gitrepo" />
+				</fileset>
+				<sequential>
+					<if>
+						<resourcecontains resource="@{gitrepo.file}" substring="git@github.com:liferay/${subrepository.name}.git" />
+						<then>
+							<antelope:stringutil property="module.base.dir" string="@{gitrepo.file}">
+								<antelope:replace regex="\\" replacement="/" />
+							</antelope:stringutil>
+
+							<antelope:stringutil property="module.base.dir" string="${module.base.dir}">
+								<antelope:replace regex="(.+)\/\.gitrepo" replacement="$1" />
+							</antelope:stringutil>
+						</then>
+					</if>
+				</sequential>
+			</for>
+
+			<fail message="No module base directory found for '@{subrepository.name}'." unless="module.base.dir" />
+		</sequential>
+	</macrodef>
+
 	<macrodef name="get-test-class">
 		<sequential>
 			<fail message="Please set the property ${test.class}." unless="test.class" />

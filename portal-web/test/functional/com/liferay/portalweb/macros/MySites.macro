@@ -1,0 +1,42 @@
+<definition>
+	<command name="gotoPagesPG">
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="${menuItem}" />
+			<var name="rowEntry" value="${siteName}" />
+		</execute>
+
+		<execute macro="Navigator#_gotoPage">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+	</command>
+
+	<command name="viewNoOptions">
+		<if>
+			<isset var="navItem" />
+			<then>
+				<execute macro="Navigator#gotoNavItem">
+					<var name="navItem" value="${navItem}" />
+				</execute>
+
+				<execute function="AssertElementNotPresent" locator1="Icon#ROW_VERTICAL_ELLIPSIS">
+					<var name="key_rowEntry" value="${siteName}" />
+				</execute>
+			</then>
+			<else>
+				<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS">
+					<var name="key_rowEntry" value="${siteName}" />
+				</execute>
+
+				<execute function="AssertElementNotPresent" locator1="MenuItem#ANY_MENU_ITEM" value1="${menuItem}">
+					<var name="key_menuItem" value="${menuItem}" />
+				</execute>
+			</else>
+		</if>
+	</command>
+
+	<command name="viewTags">
+		<execute function="AssertTextEquals" locator1="Tags#VIEW_TAGS_VIA_MY_SITES" value1="${tagName}">
+			<var name="key_tagName" value="${tagName}" />
+		</execute>
+	</command>
+</definition>

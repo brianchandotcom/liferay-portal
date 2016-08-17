@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -94,6 +95,11 @@ public class JournalArticleServiceTest {
 	@Before
 	public void setUp() throws Exception {
 		setUpDDMFormXSDDeserializer();
+
+		CompanyThreadLocal.setCompanyId(TestPropsValues.getCompanyId());
+
+		ServiceContextTestUtil.getServiceContext().setCompanyId(
+			TestPropsValues.getCompanyId());
 
 		_group = GroupTestUtil.addGroup();
 

@@ -19,8 +19,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.journal.configuration.JournalGroupServiceConfiguration;
-import com.liferay.journal.configuration.JournalServiceConfigurationKeys;
-import com.liferay.journal.configuration.JournalServiceConfigurationValues;
+import com.liferay.journal.configuration.JournalServiceConfiguration;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleDisplay;
 import com.liferay.journal.model.JournalFolder;
@@ -30,10 +29,10 @@ import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.service.JournalArticleServiceUtil;
 import com.liferay.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.journal.transformer.JournalTransformer;
+import com.liferay.journal.transformer.JournalTransformerListenerRegistryUtil;
 import com.liferay.journal.util.comparator.ArticleVersionComparator;
 import com.liferay.petra.collection.stack.FiniteUniqueStack;
 import com.liferay.petra.xml.XMLUtil;
-import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.diff.CompareVersionsException;
 import com.liferay.portal.kernel.diff.DiffHtmlUtil;
@@ -52,6 +51,7 @@ import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
@@ -78,7 +78,6 @@ import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
-import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -95,7 +94,6 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.XPath;
-import com.liferay.portal.util.PropsUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -703,24 +701,9 @@ public class JournalUtil {
 			return script;
 		}
 
-		String[] transformerListenerClassNames = PropsUtil.getArray(
-			JournalServiceConfigurationKeys.TRANSFORMER_LISTENER);
-
-		for (String transformerListenerClassName :
-				transformerListenerClassNames) {
-
-			TransformerListener transformerListener = null;
-
-			try {
-				transformerListener =
-					(TransformerListener)InstanceFactory.newInstance(
-						transformerListenerClassName);
-
-				continue;
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
+		for (TransformerListener transformerListener :
+				JournalTransformerListenerRegistryUtil.
+					getTransformerListeners()) {
 
 			script = transformerListener.onScript(
 				script, (Document)null, languageId, tokens);
@@ -1193,6 +1176,27 @@ public class JournalUtil {
 		}
 	}
 
+	private static String _getCustomTokenValue(
+		String tokenName,
+		JournalServiceConfiguration journalServiceConfiguration) {
+
+		for (String tokenValue :
+				journalServiceConfiguration.customTokenValues()) {
+
+			String[] tokenValueParts = tokenValue.split("\\=");
+
+			if (tokenValueParts.length != 2) {
+				continue;
+			}
+
+			if (tokenValueParts[0].equals(tokenName)) {
+				return tokenValueParts[1];
+			}
+		}
+
+		return null;
+	}
+
 	private static Element _getElementByInstanceId(
 		Document document, String instanceId) {
 
@@ -1403,20 +1407,39 @@ public class JournalUtil {
 		}
 	}
 
-	private static void _populateCustomTokens(Map<String, String> tokens) {
+	private static void _populateCustomTokens(
+		Map<String, String> tokens, long companyId) {
+
+		JournalServiceConfiguration journalServiceConfiguration = null;
+
+		try {
+			journalServiceConfiguration =
+				ConfigurationProviderUtil.getCompanyConfiguration(
+					JournalServiceConfiguration.class, companyId);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		if (journalServiceConfiguration == null) {
+			return;
+		}
+
 		if (_customTokens == null) {
 			synchronized (JournalUtil.class) {
 				_customTokens = new HashMap<>();
 
-				for (String customToken : JournalServiceConfigurationValues.
-						JOURNAL_ARTICLE_CUSTOM_TOKENS) {
+				for (String tokenName :
+						journalServiceConfiguration.customTokenNames()) {
 
-					String value = PropsUtil.get(
-						JournalServiceConfigurationKeys.
-							JOURNAL_ARTICLE_CUSTOM_TOKEN_VALUE,
-						new Filter(customToken));
+					String tokenValue = _getCustomTokenValue(
+						tokenName, journalServiceConfiguration);
 
-					_customTokens.put(customToken, value);
+					if (Validator.isNull(tokenValue)) {
+						continue;
+					}
+
+					_customTokens.put(tokenName, tokenValue);
 				}
 			}
 		}
@@ -1487,7 +1510,7 @@ public class JournalUtil {
 			"scope_group_id", String.valueOf(themeDisplay.getScopeGroupId()));
 		tokens.put("theme_image_path", themeDisplay.getPathThemeImages());
 
-		_populateCustomTokens(tokens);
+		_populateCustomTokens(tokens, themeDisplay.getCompanyId());
 
 		// Deprecated tokens
 
@@ -1565,7 +1588,7 @@ public class JournalUtil {
 			String.valueOf(themeDisplayModel.getScopeGroupId()));
 		tokens.put("theme_image_path", themeDisplayModel.getPathThemeImages());
 
-		_populateCustomTokens(tokens);
+		_populateCustomTokens(tokens, themeDisplayModel.getCompanyId());
 
 		// Deprecated tokens
 
@@ -1632,8 +1655,6 @@ public class JournalUtil {
 
 	private static Map<String, String> _customTokens;
 	private static final JournalTransformer _journalTransformer =
-		new JournalTransformer(
-			JournalServiceConfigurationKeys.TRANSFORMER_LISTENER,
-			JournalServiceConfigurationKeys.ERROR_TEMPLATE, true);
+		new JournalTransformer(true);
 
 }

@@ -25,7 +25,6 @@ public class SubrepositoryTaskReport extends SubrepositoryTask {
 		throws Exception {
 
 		this.buildURL = buildURL;
-		this.name = name;
 
 		testReportJSONObject = JenkinsResultsParserUtil.toJSONObject(
 			JenkinsResultsParserUtil.getLocalURL(
@@ -48,7 +47,7 @@ public class SubrepositoryTaskReport extends SubrepositoryTask {
 		return sb.toString();
 	}
 
-	protected static String buildURL;
+	protected String buildURL;
 	protected static JSONObject testReportJSONObject;
 
 }

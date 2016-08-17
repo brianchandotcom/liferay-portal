@@ -20,16 +20,16 @@ import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
-import com.liferay.portal.kernel.configuration.Configuration;
-import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
-import com.liferay.portal.kernel.configuration.Filter;
+import com.liferay.journal.configuration.JournalServiceConfiguration;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.mobile.device.Device;
 import com.liferay.portal.kernel.mobile.device.UnknownDevice;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.template.StringTemplateResource;
@@ -38,18 +38,15 @@ import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.TemplateResource;
-import com.liferay.portal.kernel.template.URLTemplateResource;
 import com.liferay.portal.kernel.templateparser.TemplateNode;
 import com.liferay.portal.kernel.templateparser.TransformException;
 import com.liferay.portal.kernel.templateparser.TransformerListener;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -65,16 +62,12 @@ import com.liferay.taglib.servlet.PipingServletResponse;
 
 import java.io.IOException;
 
-import java.net.URL;
-
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -90,63 +83,29 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class JournalTransformer {
 
-	public JournalTransformer(
-		String errorTemplatePropertyKey, boolean restricted) {
-
-		ClassLoader classLoader = getClassLoader();
-
-		Configuration configuration = ConfigurationFactoryUtil.getConfiguration(
-			classLoader, "portlet");
-
-		Set<String> langTypes = TemplateManagerUtil.getSupportedLanguageTypes(
-			errorTemplatePropertyKey);
-
-		for (String langType : langTypes) {
-			String errorTemplateId = configuration.get(
-				errorTemplatePropertyKey, new Filter(langType));
-
-			if (Validator.isNotNull(errorTemplateId)) {
-				_errorTemplateIds.put(langType, errorTemplateId);
-			}
-		}
-
+	public JournalTransformer(boolean restricted) {
 		_restricted = restricted;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #JournalTransformer(boolean)}
+	 */
+	@Deprecated
+	public JournalTransformer(
+		String errorTemplatePropertyKey, boolean restricted) {
+
+		this(restricted);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #JournalTransformer(boolean)}
+	 */
+	@Deprecated
 	public JournalTransformer(
 		String transformerListenerPropertyKey, String errorTemplatePropertyKey,
 		boolean restricted) {
 
-		this(errorTemplatePropertyKey, restricted);
-
-		ClassLoader classLoader = getClassLoader();
-
-		Configuration configuration = ConfigurationFactoryUtil.getConfiguration(
-			classLoader, "portlet");
-
-		Set<String> transformerListenerClassNames = SetUtil.fromArray(
-			configuration.getArray(transformerListenerPropertyKey));
-
-		for (String transformerListenerClassName :
-				transformerListenerClassNames) {
-
-			try {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Instantiating transformer listener " +
-							transformerListenerClassName);
-				}
-
-				TransformerListener transformerListener =
-					(TransformerListener)InstanceFactory.newInstance(
-						classLoader, transformerListenerClassName);
-
-				_transformerListeners.add(transformerListener);
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
-		}
+		this(restricted);
 	}
 
 	public String transform(
@@ -213,7 +172,10 @@ public class JournalTransformer {
 			_logTransformBefore.debug(document);
 		}
 
-		for (TransformerListener transformerListener : _transformerListeners) {
+		List<TransformerListener> transformerListeners =
+			JournalTransformerListenerRegistryUtil.getTransformerListeners();
+
+		for (TransformerListener transformerListener : transformerListeners) {
 
 			// Modify XML
 
@@ -398,7 +360,7 @@ public class JournalTransformer {
 
 		// Postprocess output
 
-		for (TransformerListener transformerListener : _transformerListeners) {
+		for (TransformerListener transformerListener : transformerListeners) {
 
 			// Modify output
 
@@ -446,15 +408,28 @@ public class JournalTransformer {
 
 	protected TemplateResource getErrorTemplateResource(String langType) {
 		try {
-			Class<?> clazz = getClass();
+			long companyId = CompanyThreadLocal.getCompanyId();
 
-			ClassLoader classLoader = clazz.getClassLoader();
+			JournalServiceConfiguration journalServiceConfiguration =
+				ConfigurationProviderUtil.getCompanyConfiguration(
+					JournalServiceConfiguration.class, companyId);
 
-			String errorTemplateId = _errorTemplateIds.get(langType);
+			String template = StringPool.BLANK;
 
-			URL url = classLoader.getResource(errorTemplateId);
+			if (langType.equals(TemplateConstants.LANG_TYPE_FTL)) {
+				template = journalServiceConfiguration.errorTemplateFTL();
+			}
+			else if (langType.equals(TemplateConstants.LANG_TYPE_VM)) {
+				template = journalServiceConfiguration.errorTemplateVM();
+			}
+			else if (langType.equals(TemplateConstants.LANG_TYPE_XSL)) {
+				template = journalServiceConfiguration.errorTemplateXSL();
+			}
+			else {
+				return null;
+			}
 
-			return new URLTemplateResource(errorTemplateId, url);
+			return new StringTemplateResource(langType, template);
 		}
 		catch (Exception e) {
 		}
@@ -719,7 +694,5 @@ public class JournalTransformer {
 
 	private final Map<String, String> _errorTemplateIds = new HashMap<>();
 	private final boolean _restricted;
-	private final Set<TransformerListener> _transformerListeners =
-		new HashSet<>();
 
 }

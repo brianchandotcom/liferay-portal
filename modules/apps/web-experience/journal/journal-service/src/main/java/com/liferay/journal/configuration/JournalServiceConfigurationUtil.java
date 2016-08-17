@@ -21,7 +21,9 @@ import com.liferay.portal.kernel.configuration.Filter;
 
 /**
  * @author Eduardo Garcia
+ * @deprecated As of 7.0.0, see {@link JournalServiceConfiguration}
  */
+@Deprecated
 public class JournalServiceConfigurationUtil {
 
 	public static String get(String key) {

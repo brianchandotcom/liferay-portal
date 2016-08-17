@@ -82,7 +82,7 @@ renderResponse.setTitle(title);
 		</p>
 
 		<p>
-			<liferay-ui:message arguments="<%= new String[] {JournalFolderConstants.NAME_LABEL, JournalFolderConstants.getNameInvalidCharacters(JournalServiceConfigurationValues.CHAR_BLACKLIST)} %>" key="the-x-cannot-contain-the-following-invalid-characters-x" />
+			<liferay-ui:message arguments="<%= new String[] {JournalFolderConstants.NAME_LABEL, JournalFolderConstants.getNameInvalidCharacters(journalDisplayContext.getCharactersBlacklist())} %>" key="the-x-cannot-contain-the-following-invalid-characters-x" />
 		</p>
 	</liferay-ui:error>
 

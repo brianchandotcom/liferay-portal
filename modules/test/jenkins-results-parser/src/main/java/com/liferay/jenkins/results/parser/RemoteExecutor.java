@@ -80,9 +80,7 @@ public class RemoteExecutor {
 		return _threadsDurationTotal / threadsCompletedCount;
 	}
 
-	private synchronized void _onThreadComplete(
-		RemoteExecutorThread remoteExecutorThread) {
-
+	private void _onThreadComplete(RemoteExecutorThread remoteExecutorThread) {
 		_busySlaves.remove(remoteExecutorThread._targetSlave);
 
 		if (!remoteExecutorThread._error) {
@@ -119,9 +117,7 @@ public class RemoteExecutor {
 		}
 	}
 
-	private synchronized void _onThreadStart(
-		RemoteExecutorThread remoteExecutorThread) {
-
+	private void _onThreadStart(RemoteExecutorThread remoteExecutorThread) {
 		_busySlaves.add(remoteExecutorThread._targetSlave);
 	}
 
@@ -137,7 +133,9 @@ public class RemoteExecutor {
 
 		@Override
 		public void run() {
-			_remoteExecutor._onThreadStart(this);
+			synchronized(_remoteExecutor) {
+				_remoteExecutor._onThreadStart(this);
+			}
 
 			_error = false;
 
@@ -156,7 +154,9 @@ public class RemoteExecutor {
 				_handleError(e.getMessage());
 			}
 			finally {
-				_remoteExecutor._onThreadComplete(this);
+				synchronized(_remoteExecutor) {
+					_remoteExecutor._onThreadComplete(this);
+				}
 			}
 		}
 
@@ -209,7 +209,6 @@ public class RemoteExecutor {
 		private long _duration;
 		private boolean _error;
 		private final RemoteExecutor _remoteExecutor;
-		private boolean _successful;
 		private final String _targetSlave;
 
 	}

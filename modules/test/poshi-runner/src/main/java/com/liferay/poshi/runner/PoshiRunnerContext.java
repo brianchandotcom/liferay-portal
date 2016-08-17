@@ -984,8 +984,6 @@ public class PoshiRunnerContext {
 	}
 
 	private static void _readTestToggleFiles() throws Exception {
-		System.out.println("Active Toggles:");
-
 		for (String testToggleFileName : PropsValues.TEST_TOGGLE_FILE_NAMES) {
 			if (!FileUtil.exists(testToggleFileName)) {
 				continue;
@@ -1006,8 +1004,6 @@ public class PoshiRunnerContext {
 
 			for (Element toggleElement : toggleElements) {
 				String toggleName = toggleElement.attributeValue("name");
-
-				System.out.println("* " + toggleName);
 
 				Element dateElement = toggleElement.element("date");
 
@@ -1057,6 +1053,14 @@ public class PoshiRunnerContext {
 				_testToggleNames.add(toggleName);
 			}
 		}
+
+		System.out.println("Active Toggles:");
+
+		for (String testToggleName : _testToggleNames) {
+				System.out.println("* " + testToggleName);
+		}
+
+		System.out.println();
 	}
 
 	private static void _writeTestCaseMethodNamesProperties() throws Exception {

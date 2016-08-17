@@ -22,15 +22,15 @@ import java.util.regex.Pattern;
  */
 public class SubrepositoryTaskNoReport extends SubrepositoryTask {
 
-	public SubrepositoryTaskNoReport(String console) throws Exception {
-		this.console = console;
+	public SubrepositoryTaskNoReport(String consoleSnippet) throws Exception {
+		this.consoleSnippet = consoleSnippet;
 
-		Matcher matcher = pattern.matcher(console);
+		Matcher matcher = consoleResultPattern.matcher(consoleSnippet);
 
 		if (matcher.find()) {
-			String taskStatus = matcher.group(1);
+			String consoleResult = matcher.group(1);
 
-			if (taskStatus.equals("SUCCESSFUL")) {
+			if (consoleResult.equals("SUCCESSFUL")) {
 				result = "SUCCESS";
 			}
 			else {
@@ -59,16 +59,17 @@ public class SubrepositoryTaskNoReport extends SubrepositoryTask {
 		sb.append("<pre><code>");
 
 		sb.append(
-			genericFailureMessageGenerator.getMessage(null, console, null));
+			genericFailureMessageGenerator.getMessage(
+				null, consoleSnippet, null));
 
 		sb.append("</code></pre>");
 
 		return sb.toString();
 	}
 
-	protected static final Pattern pattern = Pattern.compile(
+	protected static final Pattern consoleResultPattern = Pattern.compile(
 		"Subrepository task (SUCCESSFUL|FAILED)(.*)");
 
-	protected String console;
+	protected String consoleSnippet;
 
 }

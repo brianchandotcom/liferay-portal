@@ -152,8 +152,8 @@ public class RemoteExecutor {
 					_handleError(null);
 				}
 			}
-			catch (Exception ioe) {
-				_handleError(ioe.getMessage());
+			catch (Exception e) {
+				_handleError(e.getMessage());
 			}
 			finally {
 				_remoteExecutor._onThreadComplete(this);

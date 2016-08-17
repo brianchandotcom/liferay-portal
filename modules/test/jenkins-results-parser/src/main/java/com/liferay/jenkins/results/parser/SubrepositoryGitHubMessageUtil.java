@@ -125,12 +125,12 @@ public class SubrepositoryGitHubMessageUtil {
 		}
 
 		if (result.equals("FAILURE")) {
-			return " :x:"  + subrepositoryTask.getGitHubMessage();
+			return " :x:" + subrepositoryTask.getGitHubMessage();
 		}
 
 		return "";
 	}
-	
+
 	private static SubrepositoryTask _getSubrepositoryTask(
 			String buildURL, String console)
 		throws Exception {

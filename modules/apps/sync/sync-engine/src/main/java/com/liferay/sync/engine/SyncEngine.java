@@ -25,9 +25,11 @@ import com.liferay.sync.engine.file.system.util.WatcherManager;
 import com.liferay.sync.engine.model.SyncAccount;
 import com.liferay.sync.engine.model.SyncFile;
 import com.liferay.sync.engine.model.SyncSite;
+import com.liferay.sync.engine.model.SyncUser;
 import com.liferay.sync.engine.service.SyncAccountService;
 import com.liferay.sync.engine.service.SyncFileService;
 import com.liferay.sync.engine.service.SyncSiteService;
+import com.liferay.sync.engine.service.SyncUserService;
 import com.liferay.sync.engine.service.SyncWatchEventService;
 import com.liferay.sync.engine.service.persistence.SyncAccountPersistence;
 import com.liferay.sync.engine.upgrade.util.UpgradeUtil;
@@ -175,6 +177,8 @@ public class SyncEngine {
 				PropsKeys.SYNC_ACCOUNT_LOGIN + postfix);
 			String password = PropsUtil.get(
 				PropsKeys.SYNC_ACCOUNT_PASSWORD + postfix);
+			String pluginVersion = PropsUtil.get(
+				PropsKeys.SYNC_ACCOUNT_PLUGIN_VERSION + postfix);
 			String url = PropsUtil.get(PropsKeys.SYNC_ACCOUNT_URL + postfix);
 
 			SyncAccount syncAccount =
@@ -183,13 +187,20 @@ public class SyncEngine {
 			if (syncAccount != null) {
 				syncAccount.setLogin(login);
 				syncAccount.setPassword(SyncEncryptor.encrypt(password));
+				syncAccount.setPluginVersion(pluginVersion);
 				syncAccount.setUrl(url);
 
 				SyncAccountService.update(syncAccount);
 			}
 			else {
 				syncAccount = SyncAccountService.addSyncAccount(
-					filePathName, login, password, url);
+					filePathName, login, password, pluginVersion, url);
+
+				SyncUser syncUser = new SyncUser();
+
+				syncUser.setSyncAccountId(syncAccount.getSyncAccountId());
+
+				SyncUserService.update(syncUser);
 			}
 
 			syncAccount = ServerEventUtil.synchronizeSyncAccount(

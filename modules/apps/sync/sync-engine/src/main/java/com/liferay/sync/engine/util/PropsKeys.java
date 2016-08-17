@@ -26,6 +26,9 @@ public interface PropsKeys {
 
 	public static final String SYNC_ACCOUNT_PASSWORD = "sync.account.password";
 
+	public static final String SYNC_ACCOUNT_PLUGIN_VERSION =
+		"sync.account.plugin.version";
+
 	public static final String SYNC_ACCOUNT_SITES = "sync.account.sites";
 
 	public static final String SYNC_ACCOUNT_URL = "sync.account.url";

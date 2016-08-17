@@ -178,12 +178,14 @@ public class SyncAccountService {
 	}
 
 	public static SyncAccount addSyncAccount(
-			String filePathName, String login, String password, String url)
+			String filePathName, String login, String password,
+			String pluginVersion, String url)
 		throws Exception {
 
 		return SyncAccountService.addSyncAccount(
-			filePathName, login, 1, "", "", false, "", "", password, "1.0.0", 5,
-			Collections.<SyncSite, List<SyncFile>>emptyMap(), null, false, url);
+			filePathName, login, 1, "", "", false, "", "", password,
+			pluginVersion, 5, Collections.<SyncSite, List<SyncFile>>emptyMap(),
+			null, false, url);
 	}
 
 	public static void deleteSyncAccount(long syncAccountId) {

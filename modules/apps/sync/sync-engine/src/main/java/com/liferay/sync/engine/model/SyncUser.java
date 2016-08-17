@@ -20,6 +20,7 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 import com.liferay.sync.engine.service.persistence.BasePersistenceImpl;
+import com.liferay.sync.engine.util.Validator;
 
 /**
  * @author Dennis Ju
@@ -37,7 +38,7 @@ public class SyncUser extends BaseModel {
 	}
 
 	public String getFullName() {
-		if (lastName.isEmpty()) {
+		if (Validator.isBlank(lastName)) {
 			return firstName;
 		}
 

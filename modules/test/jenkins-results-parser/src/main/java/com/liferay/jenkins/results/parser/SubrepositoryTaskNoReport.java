@@ -67,7 +67,7 @@ public class SubrepositoryTaskNoReport extends SubrepositoryTask {
 	}
 
 	protected static final Pattern pattern = Pattern.compile(
-		"Task (SUCCESSFUL|FAILED)(.*)");
+		"Subrepository task (SUCCESSFUL|FAILED)(.*)");
 
 	protected String console;
 

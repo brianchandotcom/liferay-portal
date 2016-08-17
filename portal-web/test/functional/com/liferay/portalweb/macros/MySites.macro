@@ -35,8 +35,8 @@
 	</command>
 
 	<command name="viewTags">
-		<var name="key_tagName" value="${tagName}" />
-
-		<execute function="AssertTextEquals" locator1="Tags#VIEW_TAGS_VIA_MY_SITES" value1="${tagName}" />
+		<execute function="AssertTextEquals" locator1="Tags#VIEW_TAGS_VIA_MY_SITES" value1="${tagName}">
+			<var name="key_tagName" value="${tagName}" />
+		</execute>
 	</command>
 </definition>

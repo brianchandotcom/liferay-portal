@@ -613,14 +613,12 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 		<sequential>
 			<var name="module.base.dir" unset="true" />
 
-			<get-portal-dir />
-
 			<antelope:stringutil property="subrepository.name" string="@{subrepository.name}">
 				<antelope:replace regex="(.+)-private" replacement="$1" />
 			</antelope:stringutil>
 
 			<for param="gitrepo.file">
-				<fileset dir="${portal.dir}/modules" erroronmissingdir="false" id="fileset.id">
+				<fileset dir="${project.dir}/modules" erroronmissingdir="false" id="fileset.id">
 					<include name="**/.gitrepo" />
 				</fileset>
 				<sequential>

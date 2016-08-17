@@ -4622,11 +4622,6 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="Text" />
-			<var name="fieldValue" value="Test Data" />
-		</execute>
-
 		<execute macro="WorkflowAsset#viewFormTemplateLabel">
 			<var name="workflowFormsTemplateLabel" value="Fieldset" />
 		</execute>
@@ -4673,11 +4668,6 @@
 			<var name="workflowAssetTitle" value="${kfProcessName}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="Text" />
-			<var name="fieldValue" value="Test Data" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -7128,11 +7118,6 @@
 			<var name="workflowAssetTitle" value="${kfProcessName}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Update" />
-		</execute>
-
-		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="${fieldName}" />
-			<var name="fieldValue" value="${kfProcessFieldData}" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">

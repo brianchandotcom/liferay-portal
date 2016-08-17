@@ -1,3 +1,6 @@
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+
 dependencies {
 	provided group: "com.liferay", name: "com.liferay.document.library.api", version: "3.0.0"
 	provided group: "com.liferay", name: "com.liferay.document.library.service", version: "1.0.0"

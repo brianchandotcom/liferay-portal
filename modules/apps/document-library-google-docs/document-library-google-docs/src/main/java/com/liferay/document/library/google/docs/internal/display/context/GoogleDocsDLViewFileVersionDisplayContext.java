@@ -23,6 +23,7 @@ import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
+import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.ToolbarItem;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -85,7 +86,12 @@ public class GoogleDocsDLViewFileVersionDisplayContext
 	public Menu getMenu() throws PortalException {
 		Menu menu = super.getMenu();
 
-		_googleDocsUIItemsProcessor.processMenuItems(menu.getMenuItems());
+		List<MenuItem> menuItems = menu.getMenuItems();
+
+		menuItems.removeIf(
+			menuItem -> menuItem.getKey().equals("#edit-with-image-editor"));
+
+		_googleDocsUIItemsProcessor.processMenuItems(menuItems);
 
 		return menu;
 	}

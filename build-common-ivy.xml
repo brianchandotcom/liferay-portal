@@ -107,11 +107,10 @@
 										</then>
 										<else>
 											<echo>MD5 checksum failure for ${mirrors.cache.artifact.dir}/${mirrors.cache.artifact.file.name}</echo>
-											
+
 											<fail message="MD5 checksum failure for ${mirrors.cache.artifact.dir}/${mirrors.cache.artifact.file.name}" />
 										</else>
 									</if>
-
 								</then>
 							</if>
 						</sequential>

@@ -1,4 +1,4 @@
-// This file was automatically generated from field-options-toolbar.soy.
+// This file was automatically generated from field_options_toolbar.soy.
 // Please don't edit this file by hand.
 
 /**
@@ -10,7 +10,7 @@ if (typeof ddl == 'undefined') { var ddl = {}; }
 
 
 ddl.field_settings_toolbar = function(opt_data, opt_ignored) {
-  return '<div class="dropdown open"><a href="#" class="dropdown-toggle icon-monospaced form-builder-field-toolbar-toggle" data-toggle="dropdown">' + soy.$$filterNoAutoescape(opt_data.toolbarButtonIcon) + '</a>' + ddl.field_settings_toolbar_list({options: opt_data.toolbarTemplateContext.options}) + '</div>';
+  return '<div class="dropdown open"><a class="dropdown-toggle icon-monospaced" data-toggle="dropdown" href="javascript:;">' + soy.$$filterNoAutoescape(opt_data.toolbarButtonIcon) + '</a>' + ddl.field_settings_toolbar_list({options: opt_data.toolbarTemplateContext.options}) + '</div>';
 };
 if (goog.DEBUG) {
   ddl.field_settings_toolbar.soyTemplateName = 'ddl.field_settings_toolbar';
@@ -34,7 +34,7 @@ if (goog.DEBUG) {
 
 
 ddl.field_settings_toolbar_item = function(opt_data, opt_ignored) {
-  return '<li><a href="#" title="' + soy.$$escapeHtmlAttribute(opt_data.option.label) + '" class="' + soy.$$escapeHtmlAttribute(opt_data.option.buttonClass || '') + '" data-handler="' + soy.$$escapeHtmlAttribute(opt_data.option.handler) + '">' + soy.$$escapeHtml(opt_data.option.label) + '</a></li>';
+  return '<li><a class="' + soy.$$escapeHtmlAttribute(opt_data.option.buttonClass || '') + '" data-handler="' + soy.$$escapeHtmlAttribute(opt_data.option.handler) + '" href="javascript:;" title="' + soy.$$escapeHtmlAttribute(opt_data.option.label) + '">' + soy.$$escapeHtml(opt_data.option.label) + '</a></li>';
 };
 if (goog.DEBUG) {
   ddl.field_settings_toolbar_item.soyTemplateName = 'ddl.field_settings_toolbar_item';

@@ -7,7 +7,7 @@
  */
 {template .field_settings_toolbar autoescape="deprecated-contextual"}
     <div class="dropdown open">
-        <a class="dropdown-toggle form-builder-field-toolbar-toggle icon-monospaced" data-toggle="dropdown" href="javascript:;">{$toolbarButtonIcon|noAutoescape}</a>
+        <a class="dropdown-toggle icon-monospaced" data-toggle="dropdown" href="javascript:;">{$toolbarButtonIcon|noAutoescape}</a>
 
         {call ddl.field_settings_toolbar_list}
             {param options: $toolbarTemplateContext.options /}

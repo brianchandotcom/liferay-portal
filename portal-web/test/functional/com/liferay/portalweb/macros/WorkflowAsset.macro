@@ -49,4 +49,8 @@
 
 		<execute function="AssertTextEquals" locator1="FormsAdmin#FORM_ENTRY_WORKFLOW_STATUS" value1="${workflowStatus}" />
 	</command>
+
+	<command name="viewFormTemplateLabel">
+		<execute function="AssertTextEquals#assertPartialText" locator1="MyWorkflowTasksTask#PREVIEW_CONTENT" value1="${workflowFormsTemplateLabel}" />
+	</command>
 </definition>

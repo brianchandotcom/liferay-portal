@@ -4627,9 +4627,8 @@
 			<var name="fieldValue" value="Test Data" />
 		</execute>
 
-		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="Fieldset" />
-			<var name="fieldValue" value="Fieldset" />
+		<execute macro="WorkflowAsset#viewFormTemplateLabel">
+			<var name="workflowFormsTemplateLabel" value="Fieldset" />
 		</execute>
 
 		<execute macro="Navigator#openURL" />
@@ -7126,10 +7125,10 @@
 
 		<execute macro="Workflow#viewTaskAssignedToMeDetails">
 			<var name="workflowAssetContent" value="${kfProcessFieldData}" />
- 			<var name="workflowAssetTitle" value="${kfProcessName}" />
- 			<var name="workflowAssetType" value="${workflowAssetType}" />
- 			<var name="workflowTask" value="Update" />
- 		</execute>
+			<var name="workflowAssetTitle" value="${kfProcessName}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="Update" />
+		</execute>
 
 		<execute macro="WorkflowAsset#previewViewContent">
 			<var name="fieldLabel" value="${fieldName}" />

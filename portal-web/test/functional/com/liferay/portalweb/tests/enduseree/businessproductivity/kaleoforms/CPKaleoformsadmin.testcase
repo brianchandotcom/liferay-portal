@@ -590,7 +590,7 @@
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Kaleo Forms Admin" />
 		</execute>
-		
+
 		<execute macro="KaleoFormsAdmin#assignNewForm">
 			<var name="kfFormName" value="Created Task Form" />
 			<var name="kfFormNameNew" value="New Assigned Form" />
@@ -701,7 +701,7 @@
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Kaleo Forms Admin" />
 		</execute>
-		
+
 		<execute macro="KaleoFormsAdmin#assignNewForm">
 			<var name="kfFormName" value="Created Task Form" />
 			<var name="kfFormNameNew" value="New Assigned Form" />
@@ -820,7 +820,7 @@
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Kaleo Forms Admin" />
 		</execute>
-		
+
 		<execute macro="KaleoFormsAdmin#assignNewForm">
 			<var name="kfFormName" value="Created Task Form" />
 			<var name="kfFormNameNew" value="New Assigned Form" />
@@ -933,7 +933,7 @@
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Kaleo Forms Admin" />
 		</execute>
-		
+
 		<execute macro="KaleoFormsAdmin#assignNewForm">
 			<var name="kfFormName" value="Created Task Form" />
 			<var name="kfFormNameNew" value="New Assigned Form" />
@@ -3833,7 +3833,7 @@
 		<execute macro="KaleoFormsAdmin#viewSelectedFieldSet">
 			<var name="kfFieldSetName" value="To Do" />
 		</execute>
-		
+
 		<execute macro="KaleoFormsAdmin#chooseFieldSet">
 			<var name="kfFieldSetName" value="Inventory" />
 			<var name="kfProcessName" value="${kfProcessName}" />

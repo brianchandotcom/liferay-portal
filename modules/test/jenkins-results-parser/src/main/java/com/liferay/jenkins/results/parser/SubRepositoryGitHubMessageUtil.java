@@ -72,7 +72,7 @@ public class SubrepositoryGitHubMessageUtil {
 				buildURL + "/logText/progressiveText"),
 			false);
 
-		Matcher matcher = _pattern.matcher(progressiveText);
+		Matcher matcher = _taskNameConsolePattern.matcher(progressiveText);
 
 		List<Integer> indexes = new ArrayList<>();
 
@@ -99,7 +99,9 @@ public class SubrepositoryGitHubMessageUtil {
 					x, indexes.get(listIterator.nextIndex()));
 			}
 
-			matcher = _pattern.matcher(console);
+			matcher = _taskNameConsolePattern.matcher(console);
+
+			matcher.find();
 
 			String taskName = "";
 
@@ -162,7 +164,7 @@ public class SubrepositoryGitHubMessageUtil {
 		project.setProperty("report.html.content", sb.toString());
 	}
 
-	private static final Pattern _pattern = Pattern.compile(
+	private static final Pattern _taskNameConsolePattern = Pattern.compile(
 		"Executing task ([\\w-]+)");
 
 }

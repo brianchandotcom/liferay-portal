@@ -47,45 +47,74 @@
 				<then>
 					<mkdir dir="${mirrors.cache.artifact.dir}" />
 
-					<propertyregex
-						input="${src}"
-						override="true"
-						property="mirrors.src"
-						regexp="http://"
-						replace="http://mirrors.lax.liferay.com/"
+					<get
+						dest="${mirrors.cache.artifact.dir}/${mirrors.cache.artifact.file.name}.md5"
+						ignoreerrors="true"
+						retries="1"
+						src="${src}.md5"
 					/>
 
-					<if>
-						<equals arg1="@{trylocalnetwork}" arg2="true" />
-						<then>
-							<trycatch>
-								<try>
-									<get
-										dest="${mirrors.cache.artifact.dir}"
-										ignoreerrors="@{ignoreerrors}"
-										src="${mirrors.src}"
-										verbose="@{verbose}"
-									/>
-								</try>
-								<catch>
+					<retry retrycount="3" retrydelay="5000">
+						<sequential>
+							<propertyregex
+								input="${src}"
+								override="true"
+								property="mirrors.src"
+								regexp="http://"
+								replace="http://mirrors.lax.liferay.com/"
+							/>
+
+							<if>
+								<equals arg1="@{trylocalnetwork}" arg2="true" />
+								<then>
+									<trycatch>
+										<try>
+											<get
+												dest="${mirrors.cache.artifact.dir}"
+												ignoreerrors="@{ignoreerrors}"
+												src="${mirrors.src}"
+												verbose="@{verbose}"
+											/>
+										</try>
+										<catch>
+											<get
+												dest="${mirrors.cache.artifact.dir}"
+												ignoreerrors="@{ignoreerrors}"
+												src="${src}"
+												verbose="@{verbose}"
+											/>
+										</catch>
+									</trycatch>
+								</then>
+								<else>
 									<get
 										dest="${mirrors.cache.artifact.dir}"
 										ignoreerrors="@{ignoreerrors}"
 										src="${src}"
 										verbose="@{verbose}"
 									/>
-								</catch>
-							</trycatch>
-						</then>
-						<else>
-							<get
-								dest="${mirrors.cache.artifact.dir}"
-								ignoreerrors="@{ignoreerrors}"
-								src="${src}"
-								verbose="@{verbose}"
-							/>
-						</else>
-					</if>
+								</else>
+							</if>
+
+
+							<if>
+								<available file="${mirrors.cache.artifact.dir}/${mirrors.cache.artifact.file.name}.md5" />
+								<then>
+									<if>
+										<checksum file="${mirrors.cache.artifact.dir}/${mirrors.cache.artifact.file.name}" fileext=".md5" verifyproperty="valid.checksum" />
+										<then>
+											<delete file="${mirrors.cache.artifact.dir}/${mirrors.cache.artifact.file.name}.md5" />
+										</then>
+										<else>
+											<echo>MD5 checksum failure for ${mirrors.cache.artifact.dir}/${mirrors.cache.artifact.file.name}</echo>
+
+											<fail message="MD5 checksum failure for ${mirrors.cache.artifact.dir}/${mirrors.cache.artifact.file.name}" />
+										</else>
+									</if>
+								</then>
+							</if>
+						</sequential>
+					</retry>
 				</then>
 			</if>
 

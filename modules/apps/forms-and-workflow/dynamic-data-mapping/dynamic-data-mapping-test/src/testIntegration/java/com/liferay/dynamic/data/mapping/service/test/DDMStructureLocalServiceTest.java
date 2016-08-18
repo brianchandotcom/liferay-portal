@@ -578,6 +578,43 @@ public class DDMStructureLocalServiceTest extends BaseDDMServiceTestCase {
 	}
 
 	@Test
+	public void testUpdateStructureWithCycles() throws Exception {
+		DDMStructure structureNode1 = addStructure(
+			_classNameId, "Test Structure1");
+		DDMStructure structureNode2 = addStructure(
+			_classNameId, "Test Structure2");
+		DDMStructure structureNode3 = addStructure(
+			_classNameId, "Test Structure3");
+
+		structureNode2.setParentStructureId(structureNode1.getStructureId());
+		structureNode2.setDDMForm(
+			createDDMFormWithOneField("FieldNode2", "select", "string"));
+		updateStructure(structureNode2);
+
+		structureNode3.setParentStructureId(structureNode2.getStructureId());
+		structureNode3.setDDMForm(
+			createDDMFormWithOneField("FieldNode3", "select", "string"));
+		updateStructure(structureNode3);
+
+		structureNode1.setParentStructureId(structureNode3.getStructureId());
+		structureNode1.setDDMForm(
+			createDDMFormWithOneField("FieldNode1", "select", "string"));
+
+		Exception expectedException = null;
+
+		try {
+			updateStructure(structureNode1);
+		} catch(Exception e) {
+			expectedException = e;
+		}
+
+		Assert.assertNotNull(expectedException);
+		Assert.assertEquals(
+			expectedException.getClass(), StructureDefinitionException.class);
+		Assert.assertTrue(expectedException.getMessage().contains("cycle"));
+	}
+
+	@Test
 	public void testUpdateStructureWithReferencedDataProviderInstance()
 		throws Exception {
 
@@ -734,6 +771,29 @@ public class DDMStructureLocalServiceTest extends BaseDDMServiceTestCase {
 		return DDMDataProviderInstanceLocalServiceUtil.addDataProviderInstance(
 			TestPropsValues.getUserId(), group.getGroupId(), nameMap, nameMap,
 			ddmFormValues, "rest", serviceContext);
+	}
+
+	protected DDMForm createDDMFormWithOneField(
+		String name, String type, String dataType) {
+
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
+
+		List<DDMFormField> ddmFormFields = new ArrayList<>();
+
+		DDMFormField ddmFormField1 = new DDMFormField(name, type);
+
+		ddmFormField1.setDataType(dataType);
+
+		long ddmDataProviderInstanceId1 = RandomTestUtil.randomLong();
+
+		ddmFormField1.setProperty(
+			"ddmDataProviderInstanceId", ddmDataProviderInstanceId1);
+
+		ddmFormFields.add(ddmFormField1);
+
+		ddmForm.setDDMFormFields(ddmFormFields);
+
+		return ddmForm;
 	}
 
 	protected String getStructureName(DDMStructure structure) {

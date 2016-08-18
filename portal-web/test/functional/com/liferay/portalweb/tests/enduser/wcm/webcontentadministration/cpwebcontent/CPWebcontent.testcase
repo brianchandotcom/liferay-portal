@@ -1936,4 +1936,29 @@
 			<var name="webContentContent" value="WC WebContent Content" />
 		</execute>
 	</command>
+
+	<command name="ViewDisplayStyleCP" priority="5">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="PortletEntry#publish" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#viewCPDisplayStyle">
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+	</command>
 </definition>

@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+
+<project basedir="." name="portal-test-apacheds" xmlns:antelope="antlib:ise.antelope.tasks">
+	<import file="build-test.xml" />
+
+	<macrodef name="prepare-apacheds">
+		<sequential>
+			<if>
+				<not>
+					<available file="${apacheds.dir}/instances/${apacheds.instance.zip.name}" />
+				</not>
+				<then>
+					<mirrors-get
+						dest="${apacheds.dir}/instances/${apacheds.instance.zip.name}"
+						src="${apacheds.instance.zip.url}"
+						verbose="true"
+					/>
+				</then>
+			</if>
+
+			<unzip
+				dest="${apacheds.dir}/instances"
+				src="${apacheds.dir}/instances/${apacheds.instance.zip.name}"
+			/>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="unzip-apacheds">
+		<sequential>
+			<delete dir="${apacheds.dir}" />
+
+			<if>
+				<not>
+					<available file="${app.server.parent.dir}/${apacheds.zip.name}" />
+				</not>
+				<then>
+					<mirrors-get
+						dest="${app.server.parent.dir}/${apacheds.zip.name}"
+						src="${apacheds.zip.url}"
+						verbose="true"
+					/>
+				</then>
+			</if>
+
+			<unzip
+				dest="${app.server.parent.dir}"
+				src="${app.server.parent.dir}/${apacheds.zip.name}"
+			/>
+		</sequential>
+	</macrodef>
+
+	<target name="start-apacheds">
+		<unzip-apacheds />
+
+		<prepare-apacheds />
+
+		<if>
+			<os family="unix" />
+			<then>
+				<chmod file="${apacheds.dir}/bin/**" perm="a+x" />
+				
+				<exec dir="${apacheds.dir}/bin" executable="/bin/bash">
+					<arg value="-c" />
+					<arg value="./apacheds.sh liferay start" />
+				</exec>
+			</then>
+			<elseif>
+				<os family="windows" />
+				<then>
+					<exec dir="${apacheds.dir}/bin" executable="cmd" spawn="true">
+						<arg value="/c" />
+						<arg value="apacheds.bat liferay" />
+					</exec>
+				</then>
+			</elseif>
+		</if>
+	</target>
+
+	<target name="stop-apacheds">
+		<if>
+			<os family="unix" />
+			<then>
+				<exec dir="${apacheds.dir}/bin" executable="/bin/bash">
+					<arg value="-c" />
+					<arg value="./apacheds.sh liferay stop" />
+				</exec>
+			</then>
+		</if>
+	</target>
+</project>

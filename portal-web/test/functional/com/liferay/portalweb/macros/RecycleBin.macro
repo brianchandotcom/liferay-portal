@@ -129,7 +129,9 @@
 
 		<execute function="AssertClick" locator1="MenuItem#RESTORE" value1="Restore" />
 
-		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="An entry with name ${assetName} already exists." />
+		<execute macro="Alert#viewErrorMessage">
+			<var name="errorMessage" value="An entry with name ${assetName} already exists." />
+		</execute>
 
 		<execute function="Click" locator1="RecycleBin#RECYCLE_BIN_WARNING_OVERWRITE_RADIO" />
 

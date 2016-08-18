@@ -32,6 +32,24 @@ if (Boolean.getBoolean("build.bnd.print.enabled") && System.getenv("JENKINS_HOME
 
 buildDir = new File(rootDir.parentFile, "build")
 
+for (String gradleVersion in ["2.5", "2.14.1"]) {
+	String gradleDistributionURL = "https://services.gradle.org/distributions/gradle-${gradleVersion}-bin.zip"
+	String suffix = gradleVersion.replace('.', '')
+
+	tasks.create(name: "extractGradleApi${suffix}", type: Copy) {
+		description = "Extracts the Gradle ${gradleVersion} JAR files into a temporary directory."
+
+		from {
+			zipTree(FileUtil.get(project, gradleDistributionURL))
+		}
+
+		include "gradle-${gradleVersion}/lib/**/*.jar"
+
+		includeEmptyDirs = false
+		into buildDir
+	}
+}
+
 gradle.beforeProject {
 	Project project ->
 

@@ -1345,6 +1345,26 @@ public class WebServerServlet extends HttpServlet {
 		return user;
 	}
 
+	private boolean _processCompanyInactiveRequest(
+			HttpServletRequest request, HttpServletResponse response,
+			long companyId)
+		throws IOException {
+
+		if (PortalInstances.isCompanyActive(companyId)) {
+			return false;
+		}
+
+		_inactiveRequestHandler.processInactiveRequest(
+			request, response,
+			"this-instance-is-inactive-please-contact-the-administrator");
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Processed company inactive request");
+		}
+
+		return true;
+	}
+
 	private static final boolean _WEB_SERVER_SERVLET_VERSION_VERBOSITY_DEFAULT =
 		StringUtil.equalsIgnoreCase(
 			PropsValues.WEB_SERVER_SERVLET_VERSION_VERBOSITY,

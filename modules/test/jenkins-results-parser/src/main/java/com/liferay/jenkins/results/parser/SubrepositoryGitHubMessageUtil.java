@@ -58,12 +58,12 @@ public class SubrepositoryGitHubMessageUtil {
 
 		String buildURL = project.getProperty("build.url");
 
-		String progressiveText = JenkinsResultsParserUtil.toString(
+		String console = JenkinsResultsParserUtil.toString(
 			JenkinsResultsParserUtil.getLocalURL(
 				buildURL + "/logText/progressiveText"),
 			false);
 
-		String[] consoleSnippets = progressiveText.split(
+		String[] consoleSnippets = console.split(
 			"Executing subrepository task ");
 
 		if (consoleSnippets.length > 1) {

@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Image;
 import com.liferay.portal.kernel.model.ImageConstants;
@@ -63,6 +64,7 @@ import com.liferay.portal.kernel.service.ImageServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
+import com.liferay.portal.kernel.servlet.InactiveRequestHandlerUtil;
 import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.template.Template;
@@ -93,6 +95,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.webdav.WebDAVUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.impl.ImageImpl;
+import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.util.DocumentConversionUtil;
 import com.liferay.trash.kernel.model.TrashEntry;
@@ -1344,6 +1347,28 @@ public class WebServerServlet extends HttpServlet {
 		}
 
 		return user;
+	}
+
+	private boolean _processCompanyInactiveRequest(
+			HttpServletRequest request, HttpServletResponse response,
+			long companyId)
+		throws IOException {
+
+		if ((companyId == CompanyConstants.SYSTEM) ||
+			PortalInstances.isCompanyActive(companyId)) {
+
+			return false;
+		}
+
+		InactiveRequestHandlerUtil.processInactiveRequest(
+			request, response,
+			"this-instance-is-inactive-please-contact-the-administrator");
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Processed company inactive request");
+		}
+
+		return true;
 	}
 
 	private static final boolean _WEB_SERVER_SERVLET_VERSION_VERBOSITY_DEFAULT =

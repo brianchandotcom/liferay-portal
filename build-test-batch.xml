@@ -452,6 +452,10 @@ app.server.type=@{app.server.type}]]></echo>
 
 					git diff --binary --cached --name-only | grep -v '^bundles/' | xargs git diff --binary --cached -- > liferay-portal-source.diff
 
+					zip liferay-portal-source.zip liferay-portal-source.diff
+
+					rm liferay-portal-source.diff
+
 					zip -r liferay-portal-bundle-@{app.server.type}.zip bundles/*
 				]]>
 			</execute>
@@ -481,6 +485,10 @@ app.server.type=@{app.server.type}]]></echo>
 		<sequential>
 			<execute>
 				<![CDATA[
+					unzip -o liferay-portal-source.zip
+
+					rm liferay-portal-source.zip
+
 					git apply --exclude=.gitignore --whitespace=nowarn liferay-portal-source.diff
 
 					unzip -o liferay-portal-bundle-@{app.server.type}.zip
@@ -659,11 +667,15 @@ app.server.type=@{app.server.type}]]></echo>
 						<elseif>
 							<and>
 								<available file="liferay-portal-bundle-${app.server.type}.zip" />
-								<available file="liferay-portal-source.diff" />
+								<available file="liferay-portal-source.zip" />
 							</and>
 							<then>
 								<execute>
 									<![CDATA[
+										unzip -o liferay-portal-source.zip
+
+										rm liferay-portal-source.zip
+
 										git apply --exclude=.gitignore --whitespace=nowarn liferay-portal-source.diff
 
 										unzip -o liferay-portal-bundle-@{app.server.type}.zip

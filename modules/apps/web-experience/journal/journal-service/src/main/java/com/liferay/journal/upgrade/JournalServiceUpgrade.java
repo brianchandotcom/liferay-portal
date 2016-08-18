@@ -31,6 +31,7 @@ import com.liferay.journal.internal.upgrade.v0_0_5.UpgradeJournalDisplayPreferen
 import com.liferay.journal.internal.upgrade.v0_0_5.UpgradeLastPublishDate;
 import com.liferay.journal.internal.upgrade.v0_0_5.UpgradePortletSettings;
 import com.liferay.journal.internal.upgrade.v1_0_0.UpgradeJournalArticleImage;
+import com.liferay.journal.internal.upgrade.v1_1_0.UpgradeImageTypeContent;
 import com.liferay.journal.internal.upgrade.v1_1_0.UpgradeJournalArticleLocalizedValues;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -40,6 +41,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.ImageLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -115,6 +117,7 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"com.liferay.journal.service", "1.0.0", "1.1.0",
+			new UpgradeImageTypeContent(_imageLocalService),
 			new UpgradeJournalArticleLocalizedValues());
 	}
 
@@ -194,6 +197,11 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 	}
 
 	@Reference(unbind = "-")
+	protected void setImageLocalService(ImageLocalService imageLocalService) {
+		_imageLocalService = imageLocalService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setLayoutLocalService(
 		LayoutLocalService layoutLocalService) {
 
@@ -234,6 +242,7 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 	private DDMTemplateLinkLocalService _ddmTemplateLinkLocalService;
 	private DefaultDDMStructureHelper _defaultDDMStructureHelper;
 	private GroupLocalService _groupLocalService;
+	private ImageLocalService _imageLocalService;
 	private LayoutLocalService _layoutLocalService;
 	private ResourceActionLocalService _resourceActionLocalService;
 	private ResourceActions _resourceActions;

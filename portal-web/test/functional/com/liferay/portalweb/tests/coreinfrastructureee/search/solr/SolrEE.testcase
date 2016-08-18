@@ -32,7 +32,8 @@
 	</tear-down>
 
 	<command name="SolrSmokeTest" priority="4">
-		<description message="This smoke test is to ensure that Liferay is successfully running on a remote Solr by asserting the Solr administration dashboard and performing searches in portal. Note by default, an embedded Elasticsearch is deployed in portal." />
+
+		<!-- <description message="This smoke test is to ensure that Liferay is successfully running on a remote Solr by asserting the Solr administration dashboard and performing searches in portal. Note by default, an embedded Elasticsearch is deployed in portal." />
 
 		<execute macro="Solr#viewAdminDashboard">
 			<var name="solrVersion" value="5.2.1" />
@@ -42,7 +43,7 @@
 			<var name="coreName" value="liferay" />
 			<var name="solrVersion" value="5.2.1" />
 		</execute>
-
+-->
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
@@ -83,10 +84,13 @@
 		</execute>
 
 		<execute macro="Search#viewSearchResultsPG">
-			<var name="searchAssetTitle1" value="Apple" />
-			<var name="searchAssetTitle2" value="Apple" />
-			<var name="searchAssetType1" value="Document" />
-			<var name="searchAssetType2" value="Message Boards Message" />
+			<var name="searchAssetTitle" value="Apple" />
+			<var name="searchAssetType" value="Document" />
+		</execute>
+
+		<execute macro="Search#viewSearchResultsPG">
+			<var name="searchAssetTitle" value="Apple" />
+			<var name="searchAssetType" value="Message Boards Message" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -98,10 +102,13 @@
 		</execute>
 
 		<execute macro="Search#viewSearchResultsPG">
-			<var name="searchAssetTitle1" value="Apple" />
-			<var name="searchAssetTitle2" value="Apple" />
-			<var name="searchAssetType1" value="Document" />
-			<var name="searchAssetType2" value="Message Boards Message" />
+			<var name="searchAssetTitle" value="Apple" />
+			<var name="searchAssetType" value="Document" />
+		</execute>
+
+		<execute macro="Search#viewSearchResultsPG">
+			<var name="searchAssetTitle" value="Apple" />
+			<var name="searchAssetType" value="Message Boards Message" />
 		</execute>
 	</command>
 
@@ -156,10 +163,13 @@
 		</execute>
 
 		<execute macro="Search#viewSearchResultsPG">
-			<var name="searchAssetTitle1" value="Apple" />
-			<var name="searchAssetTitle2" value="Apple" />
-			<var name="searchAssetType1" value="Document" />
-			<var name="searchAssetType2" value="Message Boards Message" />
+			<var name="searchAssetTitle" value="Apple" />
+			<var name="searchAssetType" value="Document" />
+		</execute>
+
+		<execute macro="Search#viewSearchResultsPG">
+			<var name="searchAssetTitle" value="Apple" />
+			<var name="searchAssetType" value="Message Boards Message" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -171,10 +181,13 @@
 		</execute>
 
 		<execute macro="Search#viewSearchResultsPG">
-			<var name="searchAssetTitle1" value="Apple" />
-			<var name="searchAssetTitle2" value="Apple" />
-			<var name="searchAssetType1" value="Document" />
-			<var name="searchAssetType2" value="Message Boards Message" />
+			<var name="searchAssetTitle" value="Apple" />
+			<var name="searchAssetType" value="Document" />
+		</execute>
+
+		<execute macro="Search#viewSearchResultsPG">
+			<var name="searchAssetTitle" value="Apple" />
+			<var name="searchAssetType" value="Message Boards Message" />
 		</execute>
 	</command>
 
@@ -225,10 +238,13 @@
 		</execute>
 
 		<execute macro="Search#viewSearchResultsPG">
-			<var name="searchAssetTitle1" value="Apple" />
-			<var name="searchAssetTitle2" value="Apple" />
-			<var name="searchAssetType1" value="Document" />
-			<var name="searchAssetType2" value="Message Boards Message" />
+			<var name="searchAssetTitle" value="Apple" />
+			<var name="searchAssetType" value="Document" />
+		</execute>
+
+		<execute macro="Search#viewSearchResultsPG">
+			<var name="searchAssetTitle" value="Apple" />
+			<var name="searchAssetType" value="Message Boards Message" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -240,10 +256,13 @@
 		</execute>
 
 		<execute macro="Search#viewSearchResultsPG">
-			<var name="searchAssetTitle1" value="Apple" />
-			<var name="searchAssetTitle2" value="Apple" />
-			<var name="searchAssetType1" value="Document" />
-			<var name="searchAssetType2" value="Message Boards Message" />
+			<var name="searchAssetTitle" value="Apple" />
+			<var name="searchAssetType" value="Document" />
+		</execute>
+
+		<execute macro="Search#viewSearchResultsPG">
+			<var name="searchAssetTitle" value="Apple" />
+			<var name="searchAssetType" value="Message Boards Message" />
 		</execute>
 	</command>
 </definition>

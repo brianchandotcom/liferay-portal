@@ -103,13 +103,28 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ASSET_ENTRY_TABLE_TITLE_SPECIFIC</td>
+	<td>//li[@data-qa-id='row' and contains(.,'${key_searchAssetTitle}')]//h6[contains(.,'${key_searchAssetType}')]/..//a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ASSET_ENTRY_TABLE_TYPE</td>
 	<td>//li[@data-qa-id='row' and contains(.,'${key_searchAssetTitle}')]//h6[1]</td>
 	<td></td>
 </tr>
 <tr>
+	<td>ASSET_ENTRY_TABLE_TYPE_SPECIFIC</td>
+	<td>//li[@data-qa-id='row' and contains(.,'${key_searchAssetTitle}')]//h6[contains(.,'${key_searchAssetType}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ASSET_ENTRY_TABLE_SUMMARY</td>
 	<td>xpath=(//li[@data-qa-id='row' and contains(.,'${key_searchAssetTitle}')]//h6)[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_ENTRY_TABLE_SUMMARY_SPECIFIC</td>
+	<td>//li[@data-qa-id='row' and contains(.,'${key_searchAssetTitle}')]//h6[contains(.,'${key_searchAssetType}')]/../h6[2]</td>
 	<td></td>
 </tr>
 <tr>

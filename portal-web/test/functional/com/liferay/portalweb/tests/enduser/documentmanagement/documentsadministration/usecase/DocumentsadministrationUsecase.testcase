@@ -538,6 +538,8 @@
 
 		<execute macro="Portlet#shutdownServer" />
 
+		<execute function="Pause" locator1="30000" />
+
 		<execute macro="Portlet#startServer" />
 
 		<execute macro="Navigator#openURL" />

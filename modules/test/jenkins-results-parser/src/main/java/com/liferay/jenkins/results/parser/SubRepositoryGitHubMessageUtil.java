@@ -70,10 +70,12 @@ public class SubrepositoryGitHubMessageUtil {
 			sb.append("<h4>Task Summary:</h4>");
 			sb.append("<ul>");
 
-			for (String consoleSnippet : consoleSnippets) {
+			for (int i = 1; i < consoleSnippets.length; i++) {
 				sb.append("<li><strong><a href=\"");
 				sb.append(project.getProperty("top.level.shared.dir.url"));
 				sb.append("/");
+
+				String consoleSnippet = consoleSnippets[i];
 
 				String taskName = consoleSnippet.substring(
 					0, consoleSnippet.indexOf("\n"));

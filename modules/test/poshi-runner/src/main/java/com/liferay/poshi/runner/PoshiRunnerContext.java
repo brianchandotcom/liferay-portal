@@ -1057,7 +1057,7 @@ public class PoshiRunnerContext {
 		System.out.println("Active Toggles:");
 
 		for (String testToggleName : _testToggleNames) {
-				System.out.println("* " + testToggleName);
+			System.out.println("* " + testToggleName);
 		}
 
 		System.out.println();

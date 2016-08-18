@@ -1444,6 +1444,28 @@
 		</if>
 	</command>
 
+	<command name="viewCPDisplayStyle">
+		<var name="key_webContentTitle" value="${webContentTitle}" />
+
+		<execute macro="Portlet#changeDisplayStyle">
+			<var name="displayStyle" value="Icon" />
+		</execute>
+
+		<execute function="AssertElementPresent#pauseAssertVisible" locator1="WC#ENTRY_ICON_THUMBNAIL" />
+
+		<execute macro="Portlet#changeDisplayStyle">
+			<var name="displayStyle" value="Descriptive" />
+		</execute>
+
+		<execute function="AssertElementPresent#pauseAssertVisible" locator1="WC#ENTRY_DESCRIPTIVE_THUMBNAIL" />
+
+		<execute macro="Portlet#changeDisplayStyle">
+			<var name="displayStyle" value="List" />
+		</execute>
+
+		<execute function="AssertElementPresent" locator1="WC#ENTRY_LIST_TITLE" />
+	</command>
+
 	<command name="viewDefaultCP">
 		<var name="key_webContentTitle" value="${webContentTitle}" />
 

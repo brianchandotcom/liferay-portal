@@ -149,6 +149,15 @@ AUI.add(
 						}
 					},
 
+					_afterTabViewSelectionChange: function() {
+						var instance = this;
+
+						if (instance.get('container').one('.tab-pane.active')) {
+							instance._showLastActivatedPage();
+							instance._hideAutoCompletePage();
+						}
+					},
+
 					_createAutocompleteButton: function() {
 						var instance = this;
 
@@ -185,6 +194,7 @@ AUI.add(
 						sidebarBody.one('.autocomplete-body').append(optionsContainer);
 
 						sidebarBody.one('.autocomplete-header-back').on('click', A.bind('_onClickAutocompleteHeaderBack', instance));
+						tabView.after('selectionChange', A.bind('_afterTabViewSelectionChange', instance));
 					},
 
 					_createModeToggler: function() {
@@ -241,10 +251,22 @@ AUI.add(
 						return hasErrors;
 					},
 
-					_onClickAutocompleteButton: function() {
+					_hideActivatedPage: function() {
 						var instance = this;
 
 						instance.get('container').one('.tab-pane.active').hide();
+					},
+
+					_hideAutoCompletePage: function() {
+						var instance = this;
+
+						A.one('.sidebar-body').one('.autocomplete-container').ancestor().removeClass('active');
+					},
+
+					_onClickAutocompleteButton: function() {
+						var instance = this;
+
+						instance._hideActivatedPage();
 
 						A.one('.sidebar-body').one('.autocomplete-container').ancestor().addClass('active');
 					},
@@ -252,9 +274,9 @@ AUI.add(
 					_onClickAutocompleteHeaderBack: function() {
 						var instance = this;
 
-						instance.get('container').one('.tab-pane.active').show();
+						instance._showLastActivatedPage();
 
-						A.one('.sidebar-body').one('.autocomplete-container').ancestor().removeClass('active');
+						instance._hideAutoCompletePage();
 					},
 
 					_onClickModeToggler: function(event) {
@@ -301,6 +323,12 @@ AUI.add(
 						var field = instance.get('field');
 
 						field.saveSettings(instance);
+					},
+
+					_showLastActivatedPage: function() {
+						var instance = this;
+
+						instance.get('container').one('.tab-pane.active').show();
 					},
 
 					_syncModeToggler: function() {

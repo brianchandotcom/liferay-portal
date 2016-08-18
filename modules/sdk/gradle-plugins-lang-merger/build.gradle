@@ -1,4 +1,4 @@
 dependencies {
-	compile gradleApi()
+	compile fileTree(builtBy: [rootProject.tasks.extractGradleApi25], dir: new File(rootProject.buildDir, "gradle-2.5"))
 	compile group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.26"
 }

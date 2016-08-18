@@ -87,27 +87,11 @@ public class TextDDMFormFieldTemplateContextContributor
 
 		List<Object> options = getOptions(
 			ddmFormField, ddmFormFieldRenderingContext);
-		
+
 		parameters.put("options", options);
 		parameters.put("autocomplete", !options.isEmpty());
 
 		return parameters;
-	}
-
-	protected List<Object> getOptions(
-		DDMFormField ddmFormField,
-		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
-
-		TextDDMFormFieldContextHelper selectDDMFormFieldContextHelper =
-			new TextDDMFormFieldContextHelper(
-				jsonFactory,
-				getDDMFormFieldOptions(
-					ddmFormField, ddmFormFieldRenderingContext),
-				ddmFormFieldRenderingContext.getValue(),
-				ddmFormField.getPredefinedValue(),
-				ddmFormFieldRenderingContext.getLocale());
-
-		return selectDDMFormFieldContextHelper.getOptions();
 	}
 
 	protected void addDDMDataProviderContextParameters(
@@ -215,6 +199,22 @@ public class TextDDMFormFieldTemplateContextContributor
 		return new DDMFormFieldOptions();
 	}
 
+	protected List<Object> getOptions(
+		DDMFormField ddmFormField,
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
+
+		TextDDMFormFieldContextHelper selectDDMFormFieldContextHelper =
+			new TextDDMFormFieldContextHelper(
+				jsonFactory,
+				getDDMFormFieldOptions(
+					ddmFormField, ddmFormFieldRenderingContext),
+				ddmFormFieldRenderingContext.getValue(),
+				ddmFormField.getPredefinedValue(),
+				ddmFormFieldRenderingContext.getLocale());
+
+		return selectDDMFormFieldContextHelper.getOptions();
+	}
+
 	protected String getValueString(Value value, Locale locale) {
 		if (value != null) {
 			return value.getString(locale);
@@ -226,14 +226,14 @@ public class TextDDMFormFieldTemplateContextContributor
 	@Reference
 	protected DDMDataProviderInstanceService ddmDataProviderInstanceService;
 
+	@Reference
+	protected JSONFactory jsonFactory;
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		TextDDMFormFieldTemplateContextContributor.class);
 
 	@Reference
 	private DDMDataProviderTracker ddmDataProviderTracker;
-
-	@Reference
-	protected JSONFactory jsonFactory;
 
 	@Reference
 	private DDMFormValuesJSONDeserializer ddmFormValuesJSONDeserializer;

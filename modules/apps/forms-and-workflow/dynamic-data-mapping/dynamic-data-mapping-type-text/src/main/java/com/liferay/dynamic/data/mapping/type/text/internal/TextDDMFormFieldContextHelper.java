@@ -1,11 +1,5 @@
 package com.liferay.dynamic.data.mapping.type.text.internal;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -16,11 +10,16 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 public class TextDDMFormFieldContextHelper {
 
 	public TextDDMFormFieldContextHelper(
-			JSONFactory jsonFactory, DDMFormFieldOptions ddmFormFieldOptions,
-			String value, LocalizedValue predefinedValue, Locale locale) {
+		JSONFactory jsonFactory, DDMFormFieldOptions ddmFormFieldOptions,
+		String value, LocalizedValue predefinedValue, Locale locale) {
 
 			_jsonFactory = jsonFactory;
 			_ddmFormFieldOptions = ddmFormFieldOptions;
@@ -33,8 +32,8 @@ public class TextDDMFormFieldContextHelper {
 			for (String optionValue : _ddmFormFieldOptions.getOptionsValues()) {
 				Map<String, String> optionMap = new HashMap<>();
 
-				LocalizedValue optionLabel = _ddmFormFieldOptions.getOptionLabels(
-					optionValue);
+				LocalizedValue optionLabel =
+					_ddmFormFieldOptions.getOptionLabels(optionValue);
 
 				optionMap.put("label", optionLabel.getString(_locale));
 				optionMap.put("value", optionValue);
@@ -63,4 +62,5 @@ public class TextDDMFormFieldContextHelper {
 		private final DDMFormFieldOptions _ddmFormFieldOptions;
 		private final JSONFactory _jsonFactory;
 		private final Locale _locale;
+
 }

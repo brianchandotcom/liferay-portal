@@ -60,11 +60,11 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 							size = 12,
 							value = {
 								"predefinedValue", "dataSourceType",
-								 "ddmDataProviderInstanceId", "options", "placeholder",
-								"visibilityExpression", "validation",
-								"fieldNamespace", "indexType", "localizable",
-								"readOnly", "dataType", "type", "name",
-								"showLabel", "repeatable", "tooltip"
+								"ddmDataProviderInstanceId", "options",
+								"placeholder", "visibilityExpression",
+								"validation", "fieldNamespace", "indexType",
+								"localizable", "readOnly", "dataType", "type",
+								"name", "showLabel", "repeatable", "tooltip"
 							}
 						)
 					}
@@ -77,20 +77,20 @@ public interface TextDDMFormFieldTypeSettings
 	extends DefaultDDMFormFieldTypeSettings {
 
 	@DDMFormField(
- 		label = "%create-list",
- 		optionLabels = {"%manually", "%from-data-provider"},
+		label = "%create-list",
+		optionLabels = {"%manually", "%from-data-provider"},
 		optionValues = {"manual", "data-provider"}, predefinedValue = "manual",
- 		properties = {"showLabel=false"}, type = "radio",
- 		visibilityExpression = "TRUE"
- 	)
- 	public String dataSourceType();
- 
- 	@DDMFormField(
- 		label = "%choose-a-data-provider", type = "select",
- 		visibilityExpression = "equals(dataSourceType, \"data-provider\")"
- 	)
- 	public long ddmDataProviderInstanceId();
-			 
+		properties = {"showLabel=false"}, type = "radio",
+		visibilityExpression = "TRUE"
+	)
+	public String dataSourceType();
+
+	@DDMFormField(
+		label = "%choose-a-data-provider", type = "select",
+		visibilityExpression = "equals(dataSourceType, \"data-provider\")"
+	)
+	public long ddmDataProviderInstanceId();
+
 	@DDMFormField(
 		label = "%my-text-field-has",
 		optionLabels = {"%a-single-line", "%multiple-lines"},

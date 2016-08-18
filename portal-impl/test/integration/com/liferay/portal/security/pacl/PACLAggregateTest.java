@@ -225,7 +225,7 @@ public class PACLAggregateTest extends AutoBalanceTestCase {
 					uri.getHost() + StringPool.COLON + uri.getPort())) {
 
 				return Collections.singletonList(
-					new Proxy(Type.SOCKS, new InetSocketAddress(0)));
+					new Proxy(Type.HTTP, new InetSocketAddress(0)));
 			}
 
 			return Collections.singletonList(Proxy.NO_PROXY);

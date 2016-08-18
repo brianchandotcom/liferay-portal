@@ -2790,8 +2790,6 @@
 			<var name="fieldName" value="required" />
 		</execute>
 
-		<execute macro="Form#goToAdvancedTab" />
-
 		<execute macro="FormFields#editOptionsRow">
 			<var name="optionName" value="Option1" />
 			<var name="optionValue" value="Option 1" />

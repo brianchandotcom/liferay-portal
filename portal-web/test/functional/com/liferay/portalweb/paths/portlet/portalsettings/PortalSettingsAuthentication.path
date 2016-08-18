@@ -174,7 +174,12 @@
 <!--LDAP_SERVER-->
 <tr>
 	<td>LDAP_SERVER_SERVER_NAME</td>
-	<td>//input[contains(@id,'ldap-server-name-0')]</td>
+	<td>//input[contains(@name,'ldap--serverName')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LDAP_SERVER_DEFAULT_VALUES_APACHE_DIRECTORY_SERVER_RADIO</td>
+	<td>//input[@value='apache']</td>
 	<td></td>
 </tr>
 <tr>

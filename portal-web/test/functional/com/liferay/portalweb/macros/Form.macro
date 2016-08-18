@@ -107,6 +107,7 @@
 		</execute>
 
 		<var name="key_fieldName" value="${fieldName}" />
+
 		<execute function="AssertTextEquals" locator1="Form#FIELD_LABEL" value1="${fieldValue}" />
 	</command>
 

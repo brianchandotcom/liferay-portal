@@ -1624,7 +1624,7 @@
 
 		<execute macro="FormPortletConfiguration#selectForm" />
 
-		<execute macro="PortletEntry#save" /> 
+		<execute macro="PortletEntry#save" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Form Page" />

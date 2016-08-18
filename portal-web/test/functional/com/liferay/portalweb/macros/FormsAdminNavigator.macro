@@ -18,11 +18,15 @@
 	</command>
 
 	<command name="gotoDeleteField">
+		<execute macro="FormsAdminNavigator#gotoEditField">
+			<var name="fieldName" value="${fieldName}" />
+		</execute>
+
 		<var name="key_fieldName" value="${fieldName}" />
 
-		<execute function="MouseOver" locator1="Form#FIELD_LABEL" />
+		<execute function="Click" locator1="Form#SIDEBAR_ELLIPSIS" />
 
-		<execute function="Click" locator1="Form#FIELD_DELETE_BUTTON" />
+		<execute function="Click" locator1="Form#SIDEBAR_MENUITEM_REMOVE_FIELD" />
 	</command>
 
 	<command name="gotoEdit">

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.v7_0_2;
+package com.liferay.portal.upgrade.v7_0_3;
 
 import com.liferay.message.boards.kernel.model.MBCategoryConstants;
 import com.liferay.message.boards.kernel.model.MBDiscussion;

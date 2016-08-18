@@ -16,16 +16,16 @@ package com.liferay.portal.upgrade;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ReleaseInfo;
-import com.liferay.portal.upgrade.v7_0_2.UpgradeMessageBoards;
+import com.liferay.portal.upgrade.v7_0_3.UpgradeMessageBoards;
 
 /**
  * @author Adolfo Pérez
  */
-public class UpgradeProcess_7_0_2 extends UpgradeProcess {
+public class UpgradeProcess_7_0_3 extends UpgradeProcess {
 
 	@Override
 	public int getThreshold() {
-		return ReleaseInfo.RELEASE_7_0_2_BUILD_NUMBER;
+		return ReleaseInfo.RELEASE_7_0_3_BUILD_NUMBER;
 	}
 
 	@Override

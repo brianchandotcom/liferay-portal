@@ -26,7 +26,7 @@ public class SubrepositoryTaskReport extends SubrepositoryTask {
 
 		testReportJSONObject = JenkinsResultsParserUtil.toJSONObject(
 			JenkinsResultsParserUtil.getLocalURL(
-				buildURL + "testReport/api/json"));
+				buildURL + "testReport/api/json?tree=failCount"));
 
 		if (testReportJSONObject.getInt("failCount") > 0) {
 			result = "FAILURE";

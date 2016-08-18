@@ -12,4 +12,10 @@ repositories {
 
 runGradleTest {
 	dependsOn buildXSD
+
+	doLast {
+		File xbeanJarFile = file("lib/${project.name}-xbean.jar")
+
+		assert xbeanJarFile.exists()
+	}
 }

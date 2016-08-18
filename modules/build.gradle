@@ -32,7 +32,7 @@ if (Boolean.getBoolean("build.bnd.print.enabled") && System.getenv("JENKINS_HOME
 
 buildDir = new File(rootDir.parentFile, "build")
 
-for (String gradleVersion in ["2.5", "2.14.1"]) {
+for (String gradleVersion in ["2.5", "2.14"]) {
 	String gradleDistributionURL = "https://services.gradle.org/distributions/gradle-${gradleVersion}-bin.zip"
 	String suffix = gradleVersion.replace('.', '')
 

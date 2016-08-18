@@ -115,7 +115,6 @@ public class SocketTest {
 		}
 	}
 
-	@Ignore
 	@Test
 	public void testConnect1() throws IOException, SecurityException {
 		try {

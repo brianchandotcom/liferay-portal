@@ -5721,9 +5721,14 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 				<isset property="test.batch.property.query" />
 			</and>
 			<then>
-				<antelope:stringutil property="test.batch.property.query" string="${test.batch.property.query}">
-					<antelope:replace regex="&quot;" replacement="\\\\\&quot;" />
-				</antelope:stringutil>
+				<if>
+					<os family="windows" />
+					<then>
+						<antelope:stringutil property="test.batch.property.query" string="${test.batch.property.query}">
+							<antelope:replace regex="&quot;" replacement="\\\\\&quot;" />
+						</antelope:stringutil>
+					</then>
+				</if>
 
 				<echo append="true" file="${test.ext.properties.file}">
 					test.batch.property.query=${test.batch.property.query}

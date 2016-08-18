@@ -18,6 +18,11 @@
 
 <%
 Group group = layoutsAdminDisplayContext.getGroup();
+
+LayoutSet layoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
+
+Theme rootTheme = layoutSet.getTheme();
+
 Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 
 String rootNodeName = layoutsAdminDisplayContext.getRootNodeName();
@@ -60,7 +65,9 @@ else {
 <c:if test="<%= !group.isLayoutPrototype() %>">
 	<div class="lfr-inherit-theme-options" id="<portlet:namespace />inheritThemeOptions">
 		<liferay-util:include page="/look_and_feel_themes.jsp" servletContext="<%= application %>">
+			<liferay-util:param name="companyId" value="<%= String.valueOf(group.getCompanyId()) %>" />
 			<liferay-util:param name="editable" value="<%= Boolean.FALSE.toString() %>" />
+			<liferay-util:param name="themeId" value="<%= rootTheme.getThemeId() %>" />
 		</liferay-util:include>
 	</div>
 </c:if>

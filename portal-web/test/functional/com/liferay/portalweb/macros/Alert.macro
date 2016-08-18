@@ -1,16 +1,23 @@
 <definition>
-	<command name="closePortalLocalizationWarning">
+	<command name="_closeMessage">
 		<if>
 			<and>
-				<condition function="IsVisible" locator1="Home#PORTAL_LOCALIZATION_INFO_MESSAGE" />
+				<condition function="IsElementPresent" locator1="Message#${messageType}" />
+				<condition function="IsVisible" locator1="Message#${messageType}" />
 				<condition function="IsVisible" locator1="Icon#CLOSE" />
 			</and>
 			<then>
 				<execute function="Click" locator1="Icon#CLOSE" />
-
-				<execute function="Pause" locator1="2000" />
 			</then>
 		</if>
+	</command>
+
+	<command name="closePortalLocalizationWarning">
+		<execute macro="Alert#_closeMessage">
+			<var name="messageType" value="PORTAL_LOCALIZATION_INFO_MESSAGE" />
+		</execute>
+
+		<execute function="Pause" locator1="2000" />
 	</command>
 
 	<command name="viewFailedSiteTemplateDeletionMessage">
@@ -32,15 +39,9 @@
 
 		<execute function="Pause" locator1="10000" />
 
-		<if>
-			<and>
-				<condition function="IsVisible" locator1="Message#SUCCESS" />
-				<condition function="IsVisible" locator1="Icon#CLOSE" />
-			</and>
-			<then>
-				<execute function="Click" locator1="Icon#CLOSE" />
-			</then>
-		</if>
+		<execute macro="Alert#_closeMessage">
+			<var name="messageType" value="SUCCESS" />
+		</execute>
 	</command>
 
 	<command name="viewSuccessMessageText">

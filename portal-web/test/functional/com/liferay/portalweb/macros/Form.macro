@@ -24,7 +24,7 @@
 	</command>
 
 	<command name="closeSidebar">
-		<execute function="Click" locator1="Form#CLOSE_SIDEBAR" />
+		<execute function="Click" locator1="Form#SIDEBAR_CLOSE" />
 	</command>
 
 	<command name="configureEmailNotifications">
@@ -149,11 +149,11 @@
 	</command>
 
 	<command name="goToAdvancedTab">
-		<execute function="AssertClick" locator1="Form#ADVANCED_TAB" value1="Advanced" />
+		<execute function="AssertClick" locator1="Form#SIDEBAR_ADVANCED_TAB" value1="Advanced" />
 	</command>
 
 	<command name="goToBasicTab">
-		<execute function="AssertClick" locator1="Form#BASIC_TAB" value1="Basic" />
+		<execute function="AssertClick" locator1="Form#SIDEBAR_BASIC_TAB" value1="Basic" />
 	</command>
 
 	<command name="previewForm">

@@ -156,17 +156,17 @@
 </tr>
 <!--SIDEBAR -->
 <tr>
-	<td>ADVANCED_TAB</td>
+	<td>SIDEBAR_ADVANCED_TAB</td>
 	<td>//a[contains(@class,'tab') and .='advanced']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>BASIC_TAB</td>
+	<td>SIDEBAR_BASIC_TAB</td>
 	<td>//a[contains(@class,'tab') and .='basic']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CLOSE_SIDEBAR</td>
+	<td>SIDEBAR_CLOSE</td>
 	<td>//div[contains(@class,'sidebar-header')]//a[contains(@class,'close')]</td>
 	<td></td>
 </tr>

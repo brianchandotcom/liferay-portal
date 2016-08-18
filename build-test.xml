@@ -8378,6 +8378,15 @@ jdbc.default.password=${database.mysql.password}</echo>
 			</then>
 		</if>
 
+		<get-testcase-property property.name="apacheds.enabled" />
+
+		<if>
+			<equals arg1="${apacheds.enabled}" arg2="true" />
+			<then>
+				<ant antfile="build-test-apacheds.xml" target="start-apacheds" />
+			</then>
+		</if>
+
 		<get-testcase-property property.name="remote.elasticsearch.enabled" />
 
 		<if>
@@ -8563,6 +8572,15 @@ jdbc.default.password=${database.mysql.password}</echo>
 				</antelope:repeat>
 
 				<var name="app.server.bundle.index" unset="true" />
+			</then>
+		</if>
+
+		<get-testcase-property property.name="apacheds.enabled" />
+
+		<if>
+			<equals arg1="${apacheds.enabled}" arg2="true" />
+			<then>
+				<ant antfile="build-test-apacheds.xml" target="stop-apacheds" />
 			</then>
 		</if>
 

@@ -97,9 +97,13 @@ AUI.add(
 
 						TextField.superclass.render.apply(instance, arguments);
 
-						var autoComplete = instance.getAutoComplete();
+						var options = instance.get('options');
 
-						autoComplete.set('source', instance.get('options'));
+						if (options.length) {
+							var autoComplete = instance.getAutoComplete();
+
+							autoComplete.set('source', instance.get('options'));
+						}
 
 						return instance;
 					},

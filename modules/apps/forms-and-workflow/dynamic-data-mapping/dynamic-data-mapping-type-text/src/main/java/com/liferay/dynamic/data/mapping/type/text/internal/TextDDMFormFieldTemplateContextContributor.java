@@ -205,11 +205,8 @@ public class TextDDMFormFieldTemplateContextContributor
 
 		TextDDMFormFieldContextHelper selectDDMFormFieldContextHelper =
 			new TextDDMFormFieldContextHelper(
-				jsonFactory,
 				getDDMFormFieldOptions(
 					ddmFormField, ddmFormFieldRenderingContext),
-				ddmFormFieldRenderingContext.getValue(),
-				ddmFormField.getPredefinedValue(),
 				ddmFormFieldRenderingContext.getLocale());
 
 		return selectDDMFormFieldContextHelper.getOptions();

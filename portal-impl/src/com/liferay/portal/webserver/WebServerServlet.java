@@ -93,6 +93,8 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.webdav.WebDAVUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.impl.ImageImpl;
+import com.liferay.portal.servlet.InactiveRequestHandler;
+import com.liferay.portal.servlet.InactiveRequestHandlerImpl;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.util.DocumentConversionUtil;
 import com.liferay.trash.kernel.model.TrashEntry;
@@ -1360,6 +1362,8 @@ public class WebServerServlet extends HttpServlet {
 
 	private final Format _dateFormat =
 		FastDateFormatFactoryUtil.getSimpleDateFormat("d MMM yyyy HH:mm z");
+	private final InactiveRequestHandler _inactiveRequestHandler =
+		new InactiveRequestHandlerImpl();
 	private boolean _lastModified = true;
 	private TemplateResource _templateResource;
 

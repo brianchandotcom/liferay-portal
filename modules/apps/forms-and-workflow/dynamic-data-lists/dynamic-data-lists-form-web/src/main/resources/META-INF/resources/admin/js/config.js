@@ -61,6 +61,7 @@
 							path: 'form_builder_field_settings_form.js',
 							requires: [
 								'liferay-ddl-form-builder-autocomplete-template',
+								'liferay-ddl-soy-template-util',
 								'liferay-ddm-form-renderer',
 								'liferay-form'
 							]
@@ -161,6 +162,10 @@
 								'liferay-portlet-base',
 								'liferay-util-window'
 							]
+						},
+						'liferay-ddl-soy-template-util': {
+							path: 'soy_template_util.js',
+							requires: []
 						}
 					},
 					root: MODULE_PATH + '/admin/js/'

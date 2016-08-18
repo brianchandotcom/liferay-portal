@@ -155,6 +155,76 @@ public class DDMFormRuleEvaluatorHelperTest extends PowerMockito {
 	}
 
 	@Test
+	public void testMissingDDMFormFieldValues() throws Exception {
+		DDMForm ddmForm = new DDMForm();
+
+		DDMFormField fieldDDMFormField0 = new DDMFormField("field0", "text");
+
+		fieldDDMFormField0.setDataType(FieldConstants.NUMBER);
+
+		ddmForm.addDDMFormField(fieldDDMFormField0);
+
+		DDMFormField fieldDDMFormField1 = new DDMFormField("field1", "text");
+
+		fieldDDMFormField1.setDataType(FieldConstants.NUMBER);
+
+		ddmForm.addDDMFormField(fieldDDMFormField1);
+
+		DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
+
+		DDMFormFieldValue fieldDDMFormFieldValue0 =
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"field0_instanceId", "field0", new UnlocalizedValue("30"));
+
+		List<DDMFormFieldValue> ddmFormFieldValues = new ArrayList<>();
+
+		ddmFormFieldValues.add(fieldDDMFormFieldValue0);
+
+		ddmFormValues.setDDMFormFieldValues(ddmFormFieldValues);
+
+		List<String> actions = ListUtil.fromArray(
+			new String[] {"set(fieldAt(\"field1\", 0), \"visible\", false)"});
+
+		DDMFormRule ddmFormRule = new DDMFormRule("TRUE", actions);
+
+		ddmForm.addDDMFormRule(ddmFormRule);
+
+		DDMFormRuleEvaluatorHelper ddmFormRuleEvaluatorHelper =
+			new DDMFormRuleEvaluatorHelper(
+				null, null, _ddmExpressionFactory, ddmForm, ddmFormValues, null,
+				_jsonFactory, LocaleUtil.US);
+
+		List<DDMFormFieldEvaluationResult> ddmFormFieldEvaluationResults =
+			ddmFormRuleEvaluatorHelper.evaluate();
+
+		Assert.assertEquals(2, ddmFormFieldEvaluationResults.size());
+
+		for (DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult :
+				ddmFormFieldEvaluationResults) {
+
+			if (ddmFormFieldEvaluationResult.getName().equals("field0")) {
+				Assert.assertEquals(
+					true, ddmFormFieldEvaluationResult.isVisible());
+				Assert.assertEquals(
+					false, ddmFormFieldEvaluationResult.isReadOnly());
+				Assert.assertEquals(
+					true, ddmFormFieldEvaluationResult.isValid());
+				Assert.assertEquals(
+					30.0, ddmFormFieldEvaluationResult.getValue());
+			}
+			else if(ddmFormFieldEvaluationResult.getName().equals("field1")) {
+				Assert.assertEquals(
+					false, ddmFormFieldEvaluationResult.isVisible());
+				Assert.assertEquals(
+					false, ddmFormFieldEvaluationResult.isReadOnly());
+				Assert.assertEquals(
+					true, ddmFormFieldEvaluationResult.isValid());
+				Assert.assertNull(ddmFormFieldEvaluationResult.getValue());
+			}
+		}
+	}
+
+	@Test
 	public void testVisibleAndReadOnly() throws Exception {
 		DDMForm ddmForm = new DDMForm();
 

@@ -57,14 +57,14 @@ public class LiferaySettingsPlugin implements Plugin<Settings> {
 		}
 
 		try {
-			includeProjects(settings, rootDirPath, projectPathRootDirPath);
+			_includeProjects(settings, rootDirPath, projectPathRootDirPath);
 		}
 		catch (IOException ioe) {
 			throw new UncheckedIOException(ioe);
 		}
 	}
 
-	protected Set<Path> getDirPaths(String key, Path rootDirPath) {
+	private Set<Path> _getDirPaths(String key, Path rootDirPath) {
 		String dirNamesString = System.getProperty(key);
 
 		if (Validator.isNull(dirNamesString)) {
@@ -80,7 +80,7 @@ public class LiferaySettingsPlugin implements Plugin<Settings> {
 		return dirPaths;
 	}
 
-	protected void includeProject(
+	private void _includeProject(
 		Settings settings, Path projectDirPath, Path projectPathRootDirPath) {
 
 		Path relativePath = projectPathRootDirPath.relativize(projectDirPath);
@@ -96,12 +96,12 @@ public class LiferaySettingsPlugin implements Plugin<Settings> {
 		projectDescriptor.setProjectDir(projectDirPath.toFile());
 	}
 
-	protected void includeProjects(
+	private void _includeProjects(
 			final Settings settings, final Path rootDirPath,
 			final Path projectPathRootDirPath)
 		throws IOException {
 
-		final Set<Path> excludedDirPaths = getDirPaths(
+		final Set<Path> excludedDirPaths = _getDirPaths(
 			"build.exclude.dirs", rootDirPath);
 		final boolean modulesOnlyBuild = Boolean.getBoolean(
 			"modules.only.build");
@@ -148,7 +148,7 @@ public class LiferaySettingsPlugin implements Plugin<Settings> {
 					}
 
 					if (moduleProjectDir || !modulesOnlyBuild) {
-						includeProject(
+						_includeProject(
 							settings, dirPath, projectPathRootDirPath);
 					}
 

@@ -39,16 +39,6 @@ public class JspCDefaultsPlugin
 
 	public static final String UNZIP_JAR_TASK_NAME = "unzipJar";
 
-	protected void addDependenciesJspC(Project project) {
-		ConfigurableFileCollection configurableFileCollection = project.files(
-			getUnzippedJarDir(project));
-
-		configurableFileCollection.builtBy(UNZIP_JAR_TASK_NAME);
-
-		GradleUtil.addDependency(
-			project, JspCPlugin.CONFIGURATION_NAME, configurableFileCollection);
-	}
-
 	@Override
 	protected void addPortalToolDependencies(Project project) {
 		super.addPortalToolDependencies(project);
@@ -58,7 +48,55 @@ public class JspCDefaultsPlugin
 			"1.9.4");
 	}
 
-	protected Task addTaskUnzipJar(final Project project) {
+	@Override
+	protected void configureDefaults(Project project, JspCPlugin jspCPlugin) {
+		super.configureDefaults(project, jspCPlugin);
+
+		_addTaskUnzipJar(project);
+
+		_configureTaskGenerateJSPJava(project);
+
+		project.afterEvaluate(
+			new Action<Project>() {
+
+				@Override
+				public void execute(Project project) {
+					_addDependenciesJspC(project);
+				}
+
+			});
+	}
+
+	@Override
+	protected Class<JspCPlugin> getPluginClass() {
+		return JspCPlugin.class;
+	}
+
+	@Override
+	protected String getPortalToolConfigurationName() {
+		return JspCPlugin.TOOL_CONFIGURATION_NAME;
+	}
+
+	@Override
+	protected String getPortalToolName() {
+		return _PORTAL_TOOL_NAME;
+	}
+
+	protected File getUnzippedJarDir(Project project) {
+		return new File(project.getBuildDir(), "unzipped-jar");
+	}
+
+	private void _addDependenciesJspC(Project project) {
+		ConfigurableFileCollection configurableFileCollection = project.files(
+			getUnzippedJarDir(project));
+
+		configurableFileCollection.builtBy(UNZIP_JAR_TASK_NAME);
+
+		GradleUtil.addDependency(
+			project, JspCPlugin.CONFIGURATION_NAME, configurableFileCollection);
+	}
+
+	private Task _addTaskUnzipJar(final Project project) {
 		Task task = project.task(UNZIP_JAR_TASK_NAME);
 
 		final Jar jar = (Jar)GradleUtil.getTask(
@@ -83,26 +121,7 @@ public class JspCDefaultsPlugin
 		return task;
 	}
 
-	@Override
-	protected void configureDefaults(Project project, JspCPlugin jspCPlugin) {
-		super.configureDefaults(project, jspCPlugin);
-
-		addTaskUnzipJar(project);
-
-		configureTaskGenerateJSPJava(project);
-
-		project.afterEvaluate(
-			new Action<Project>() {
-
-				@Override
-				public void execute(Project project) {
-					addDependenciesJspC(project);
-				}
-
-			});
-	}
-
-	protected void configureTaskGenerateJSPJava(final Project project) {
+	private void _configureTaskGenerateJSPJava(final Project project) {
 		CompileJSPTask compileJSPTask = (CompileJSPTask)GradleUtil.getTask(
 			project, JspCPlugin.GENERATE_JSP_JAVA_TASK_NAME);
 
@@ -124,25 +143,6 @@ public class JspCDefaultsPlugin
 				}
 
 			});
-	}
-
-	@Override
-	protected Class<JspCPlugin> getPluginClass() {
-		return JspCPlugin.class;
-	}
-
-	@Override
-	protected String getPortalToolConfigurationName() {
-		return JspCPlugin.TOOL_CONFIGURATION_NAME;
-	}
-
-	@Override
-	protected String getPortalToolName() {
-		return _PORTAL_TOOL_NAME;
-	}
-
-	protected File getUnzippedJarDir(Project project) {
-		return new File(project.getBuildDir(), "unzipped-jar");
 	}
 
 	private static final String _PORTAL_TOOL_NAME = "com.liferay.jasper.jspc";

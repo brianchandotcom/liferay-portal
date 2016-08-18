@@ -32,19 +32,19 @@ import org.gradle.api.artifacts.Configuration;
 public class DirectDeployTask extends BasePortalToolsTask {
 
 	public File getAppServerDeployDir() {
-		return GradleUtil.toFile(project, _appServerDeployDir);
+		return GradleUtil.toFile(getProject(), _appServerDeployDir);
 	}
 
 	public File getAppServerDir() {
-		return GradleUtil.toFile(project, _appServerDir);
+		return GradleUtil.toFile(getProject(), _appServerDir);
 	}
 
 	public File getAppServerLibGlobalDir() {
-		return GradleUtil.toFile(project, _appServerLibGlobalDir);
+		return GradleUtil.toFile(getProject(), _appServerLibGlobalDir);
 	}
 
 	public File getAppServerPortalDir() {
-		return GradleUtil.toFile(project, _appServerPortalDir);
+		return GradleUtil.toFile(getProject(), _appServerPortalDir);
 	}
 
 	public String getAppServerType() {
@@ -55,7 +55,7 @@ public class DirectDeployTask extends BasePortalToolsTask {
 	public List<String> getArgs() {
 		List<String> args = new ArrayList<>(3);
 
-		File appServerLibPortalDir = getAppServerLibPortalDir();
+		File appServerLibPortalDir = _getAppServerLibPortalDir();
 
 		String path = appServerLibPortalDir.getAbsolutePath();
 
@@ -86,7 +86,7 @@ public class DirectDeployTask extends BasePortalToolsTask {
 				"portal-tools.properties");
 		jvmArgs.add(
 			"-Dliferay.lib.portal.dir=" +
-				FileUtil.getAbsolutePath(getAppServerLibPortalDir()));
+				FileUtil.getAbsolutePath(_getAppServerLibPortalDir()));
 
 		String webAppType = getWebAppType();
 
@@ -144,7 +144,7 @@ public class DirectDeployTask extends BasePortalToolsTask {
 	}
 
 	public File getWebAppFile() {
-		return GradleUtil.toFile(project, _webAppFile);
+		return GradleUtil.toFile(getProject(), _webAppFile);
 	}
 
 	public String getWebAppType() {
@@ -198,21 +198,21 @@ public class DirectDeployTask extends BasePortalToolsTask {
 	@Override
 	protected void addDependencies() {
 		Configuration configuration = GradleUtil.getConfiguration(
-			project, getConfigurationName());
+			getProject(), getConfigurationName());
 
 		Configuration portalConfiguration = GradleUtil.getConfiguration(
-			project, LiferayBasePlugin.PORTAL_CONFIGURATION_NAME);
+			getProject(), LiferayBasePlugin.PORTAL_CONFIGURATION_NAME);
 
 		configuration.extendsFrom(portalConfiguration);
-	}
-
-	protected File getAppServerLibPortalDir() {
-		return new File(getAppServerPortalDir(), "WEB-INF/lib");
 	}
 
 	@Override
 	protected String getToolName() {
 		return "Deployer";
+	}
+
+	private File _getAppServerLibPortalDir() {
+		return new File(getAppServerPortalDir(), "WEB-INF/lib");
 	}
 
 	private Object _appServerDeployDir;

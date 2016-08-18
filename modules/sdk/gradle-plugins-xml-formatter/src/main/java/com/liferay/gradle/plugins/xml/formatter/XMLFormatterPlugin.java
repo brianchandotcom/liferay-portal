@@ -44,17 +44,15 @@ public class XMLFormatterPlugin implements Plugin<Project> {
 
 	@Override
 	public void apply(Project project) {
-		Configuration xmlFormatterConfiguration = addConfigurationXMLFormatter(
+		Configuration xmlFormatterConfiguration = _addConfigurationXMLFormatter(
 			project);
 
-		addTaskFormatXML(project);
+		_addTaskFormatXML(project);
 
-		configureTasksFormatXML(project, xmlFormatterConfiguration);
+		_configureTasksFormatXML(project, xmlFormatterConfiguration);
 	}
 
-	protected Configuration addConfigurationXMLFormatter(
-		final Project project) {
-
+	private Configuration _addConfigurationXMLFormatter(final Project project) {
 		Configuration configuration = GradleUtil.addConfiguration(
 			project, CONFIGURATION_NAME);
 
@@ -63,7 +61,7 @@ public class XMLFormatterPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(DependencySet dependencySet) {
-					addDependenciesXMLFormatter(project);
+					_addDependenciesXMLFormatter(project);
 				}
 
 			});
@@ -75,13 +73,13 @@ public class XMLFormatterPlugin implements Plugin<Project> {
 		return configuration;
 	}
 
-	protected void addDependenciesXMLFormatter(Project project) {
+	private void _addDependenciesXMLFormatter(Project project) {
 		GradleUtil.addDependency(
 			project, CONFIGURATION_NAME, "com.liferay",
 			"com.liferay.xml.formatter", "latest.release");
 	}
 
-	protected FormatXMLTask addTaskFormatXML(Project project) {
+	private FormatXMLTask _addTaskFormatXML(Project project) {
 		final FormatXMLTask formatXMLTask = GradleUtil.addTask(
 			project, FORMAT_XML_TASK_NAME, FormatXMLTask.class);
 
@@ -96,7 +94,7 @@ public class XMLFormatterPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(JavaPlugin javaPlugin) {
-					configureTaskFormatXMLForJavaPlugin(formatXMLTask);
+					_configureTaskFormatXMLForJavaPlugin(formatXMLTask);
 				}
 
 			});
@@ -104,13 +102,13 @@ public class XMLFormatterPlugin implements Plugin<Project> {
 		return formatXMLTask;
 	}
 
-	protected void configureTaskFormatXML(
+	private void _configureTaskFormatXML(
 		FormatXMLTask formatXMLTask, FileCollection classpath) {
 
 		formatXMLTask.setClasspath(classpath);
 	}
 
-	protected void configureTaskFormatXMLForJavaPlugin(
+	private void _configureTaskFormatXMLForJavaPlugin(
 		FormatXMLTask formatXMLTask) {
 
 		formatXMLTask.setIncludes(Collections.singleton("**/*.xml"));
@@ -132,7 +130,7 @@ public class XMLFormatterPlugin implements Plugin<Project> {
 			});
 	}
 
-	protected void configureTasksFormatXML(
+	private void _configureTasksFormatXML(
 		Project project, final FileCollection classpath) {
 
 		TaskContainer taskContainer = project.getTasks();
@@ -143,7 +141,7 @@ public class XMLFormatterPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(FormatXMLTask formatXMLTask) {
-					configureTaskFormatXML(formatXMLTask, classpath);
+					_configureTaskFormatXML(formatXMLTask, classpath);
 				}
 
 			});

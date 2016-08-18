@@ -14,8 +14,8 @@
 
 package com.liferay.gradle.plugins.change.log.builder;
 
-import com.liferay.gradle.plugins.change.log.builder.util.GitUtil;
-import com.liferay.gradle.plugins.change.log.builder.util.NaturalOrderStringComparator;
+import com.liferay.gradle.plugins.change.log.builder.internal.util.GitUtil;
+import com.liferay.gradle.plugins.change.log.builder.internal.util.NaturalOrderStringComparator;
 import com.liferay.gradle.util.GradleUtil;
 import com.liferay.gradle.util.Validator;
 
@@ -85,10 +85,10 @@ public class BuildChangeLogTask extends DefaultTask {
 			}
 
 			if (Validator.isNull(rangeStart)) {
-				rangeStart = getRangeStart(changeLogContent, repository);
+				rangeStart = _getRangeStart(changeLogContent, repository);
 			}
 
-			ticketIds = getTicketIds(rangeStart, rangeEnd, repository);
+			ticketIds = _getTicketIds(rangeStart, rangeEnd, repository);
 		}
 
 		String range = rangeStart + ".." + rangeEnd;
@@ -240,7 +240,7 @@ public class BuildChangeLogTask extends DefaultTask {
 		return ticketIdPrefixes(Arrays.asList(ticketIdPrefixes));
 	}
 
-	protected String getRangeStart(
+	private String _getRangeStart(
 			String changeLogContent, Repository repository)
 		throws Exception {
 
@@ -266,7 +266,7 @@ public class BuildChangeLogTask extends DefaultTask {
 		return rangeStart + "^";
 	}
 
-	protected Set<String> getTicketIds(
+	private Set<String> _getTicketIds(
 			String rangeStart, String rangeEnd, Repository repository)
 		throws Exception {
 

@@ -42,7 +42,7 @@ public class FormatXMLTask extends SourceTask {
 		FileTree fileTree = getSource();
 
 		for (File file : fileTree) {
-			formatXML(file);
+			_formatXML(file);
 		}
 	}
 
@@ -73,7 +73,7 @@ public class FormatXMLTask extends SourceTask {
 		_stripComments = stripComments;
 	}
 
-	protected void formatXML(final File file) {
+	private void _formatXML(final File file) {
 		Project project = getProject();
 
 		project.javaexec(
@@ -83,13 +83,14 @@ public class FormatXMLTask extends SourceTask {
 				public void execute(JavaExecSpec javaExecSpec) {
 					javaExecSpec.setClasspath(getClasspath());
 					javaExecSpec.setMain(getMainClassName());
-					javaExecSpec.setSystemProperties(getSystemProperties(file));
+					javaExecSpec.setSystemProperties(
+						_getSystemProperties(file));
 				}
 
 			});
 	}
 
-	protected Map<String, Object> getSystemProperties(File file) {
+	private Map<String, Object> _getSystemProperties(File file) {
 		Map<String, Object> systemProperties = new HashMap<>();
 
 		systemProperties.put(

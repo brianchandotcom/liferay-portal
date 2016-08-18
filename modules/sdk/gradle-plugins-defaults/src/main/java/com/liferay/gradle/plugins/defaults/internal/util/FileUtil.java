@@ -67,12 +67,6 @@ public class FileUtil extends com.liferay.gradle.util.FileUtil {
 		return project.fileTree(args);
 	}
 
-	public static String getRelativePath(Project project, File file) {
-		String relativePath = project.relativePath(file);
-
-		return relativePath.replace('\\', '/');
-	}
-
 	public static boolean hasSourceFiles(Task task, Spec<File> spec) {
 		TaskInputs taskInputs = task.getInputs();
 

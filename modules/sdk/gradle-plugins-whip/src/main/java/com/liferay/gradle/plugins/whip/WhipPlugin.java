@@ -20,6 +20,7 @@ import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.Configuration;
+import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.testing.Test;
@@ -35,47 +36,46 @@ public class WhipPlugin implements Plugin<Project> {
 
 	@Override
 	public void apply(Project project) {
-		addWhipConfiguration(project);
+		_addWhipConfiguration(project);
 
 		GradleUtil.addExtension(project, EXTENSION_NAME, WhipExtension.class);
 
-		applyToDefaultTasks(project);
+		_applyToDefaultTasks(project);
 
 		project.afterEvaluate(
 			new Action<Project>() {
 
 				@Override
 				public void execute(Project project) {
-					addWhipDependencies(
+					_addWhipDependencies(
 						project, JavaPlugin.TEST_RUNTIME_CONFIGURATION_NAME);
 				}
 
 			});
 	}
 
-	protected Configuration addWhipConfiguration(final Project project) {
-		Configuration configuration = GradleUtil.addConfiguration(
+	private Configuration _addWhipConfiguration(final Project project) {
+		final Configuration configuration = GradleUtil.addConfiguration(
 			project, CONFIGURATION_NAME);
+
+		configuration.defaultDependencies(
+			new Action<DependencySet>() {
+
+				@Override
+				public void execute(DependencySet dependencySet) {
+					_addWhipDependencies(project, configuration.getName());
+				}
+
+			});
 
 		configuration.setDescription(
 			"Configures Liferay Whip for this project.");
 		configuration.setVisible(false);
 
-		GradleUtil.executeIfEmpty(
-			configuration,
-			new Action<Configuration>() {
-
-				@Override
-				public void execute(Configuration configuration) {
-					addWhipDependencies(project, configuration.getName());
-				}
-
-			});
-
 		return configuration;
 	}
 
-	protected void addWhipDependencies(
+	private void _addWhipDependencies(
 		Project project, String configurationName) {
 
 		WhipExtension whipExtension = GradleUtil.getExtension(
@@ -86,7 +86,7 @@ public class WhipPlugin implements Plugin<Project> {
 			whipExtension.getVersion());
 	}
 
-	protected void applyToDefaultTasks(Project project) {
+	private void _applyToDefaultTasks(Project project) {
 		TaskContainer taskContainer = project.getTasks();
 
 		taskContainer.withType(

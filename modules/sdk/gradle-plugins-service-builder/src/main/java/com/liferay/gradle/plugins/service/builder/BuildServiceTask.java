@@ -55,7 +55,7 @@ public class BuildServiceTask extends JavaExec {
 
 	@Override
 	public void exec() {
-		setArgs(getCompleteArgs());
+		setArgs(_getCompleteArgs());
 
 		super.exec();
 	}
@@ -365,7 +365,7 @@ public class BuildServiceTask extends JavaExec {
 		return springNamespaces(Arrays.asList(springNamespaces));
 	}
 
-	protected List<String> getCompleteArgs() {
+	private List<String> _getCompleteArgs() {
 		List<String> args = new ArrayList<>(getArgs());
 
 		args.add("service.api.dir=" + _relativize(getApiDir()));
@@ -381,7 +381,7 @@ public class BuildServiceTask extends JavaExec {
 		args.add("service.input.file=" + _relativize(getInputFile()));
 		args.add(
 			"service.model.hints.configs=" +
-				CollectionUtils.join(",", getCompleteModelHintsConfigs()));
+				CollectionUtils.join(",", _getCompleteModelHintsConfigs()));
 		args.add(
 			"service.model.hints.file=" + _relativize(getModelHintsFile()));
 		args.add("service.osgi.module=" + isOsgiModule());
@@ -420,7 +420,7 @@ public class BuildServiceTask extends JavaExec {
 		return args;
 	}
 
-	protected List<String> getCompleteModelHintsConfigs() {
+	private List<String> _getCompleteModelHintsConfigs() {
 		List<String> modelHintsConfigs = getModelHintsConfigs();
 
 		File modelHintsFile = getModelHintsFile();
@@ -450,9 +450,7 @@ public class BuildServiceTask extends JavaExec {
 	}
 
 	private String _relativize(File file) {
-		String relativePath = FileUtil.relativize(file, getWorkingDir());
-
-		return relativePath.replace('\\', '/');
+		return FileUtil.getRelativePath(file, getWorkingDir());
 	}
 
 	private Object _apiDir;

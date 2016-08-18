@@ -31,7 +31,7 @@ public class FormatTLDTask extends JavaExec {
 
 	@Override
 	public void exec() {
-		setArgs(getCompleteArgs());
+		setArgs(_getCompleteArgs());
 
 		super.exec();
 	}
@@ -45,7 +45,7 @@ public class FormatTLDTask extends JavaExec {
 		_plugin = plugin;
 	}
 
-	protected List<String> getCompleteArgs() {
+	private List<String> _getCompleteArgs() {
 		List<String> args = new ArrayList<>(getArgs());
 
 		args.add("tld.plugin=" + isPlugin());

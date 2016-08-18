@@ -22,8 +22,6 @@ import com.liferay.gradle.util.GradleUtil;
 import java.io.File;
 
 import java.util.Collections;
-import java.util.Iterator;
-import java.util.Set;
 import java.util.concurrent.Callable;
 
 import org.gradle.api.Action;
@@ -31,7 +29,6 @@ import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.file.FileCollection;
-import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.PluginContainer;
@@ -66,18 +63,18 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 			project, EXTENSION_NAME, JSTranspilerExtension.class);
 
 		final DownloadNodeModuleTask downloadLfrAmdLoaderTask =
-			addTaskDownloadLfrAmdLoader(project, jsTranspilerExtension);
+			_addTaskDownloadLfrAmdLoader(project, jsTranspilerExtension);
 		final DownloadNodeModuleTask downloadMetalCliTask =
-			addTaskDownloadMetalCli(project, jsTranspilerExtension);
+			_addTaskDownloadMetalCli(project, jsTranspilerExtension);
 
-		addTaskTranspileJS(project);
+		_addTaskTranspileJS(project);
 
 		project.afterEvaluate(
 			new Action<Project>() {
 
 				@Override
 				public void execute(Project project) {
-					configureTasksTranspileJS(
+					_configureTasksTranspileJS(
 						project, downloadLfrAmdLoaderTask, downloadMetalCliTask,
 						npmInstallTask);
 				}
@@ -85,7 +82,7 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 			});
 	}
 
-	protected DownloadNodeModuleTask addTaskDownloadLfrAmdLoader(
+	private DownloadNodeModuleTask _addTaskDownloadLfrAmdLoader(
 		Project project, final JSTranspilerExtension jsTranspilerExtension) {
 
 		DownloadNodeModuleTask downloadNodeModuleTask = GradleUtil.addTask(
@@ -107,7 +104,7 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 		return downloadNodeModuleTask;
 	}
 
-	protected DownloadNodeModuleTask addTaskDownloadMetalCli(
+	private DownloadNodeModuleTask _addTaskDownloadMetalCli(
 		Project project, final JSTranspilerExtension jsTranspilerExtension) {
 
 		DownloadNodeModuleTask downloadNodeModuleTask = GradleUtil.addTask(
@@ -129,7 +126,7 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 		return downloadNodeModuleTask;
 	}
 
-	protected TranspileJSTask addTaskTranspileJS(Project project) {
+	private TranspileJSTask _addTaskTranspileJS(Project project) {
 		final TranspileJSTask transpileJSTask = GradleUtil.addTask(
 			project, TRANSPILE_JS_TASK_NAME, TranspileJSTask.class);
 
@@ -144,7 +141,7 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(JavaPlugin javaPlugin) {
-					configureTaskTranspileJSForJavaPlugin(transpileJSTask);
+					_configureTaskTranspileJSForJavaPlugin(transpileJSTask);
 				}
 
 			});
@@ -152,7 +149,7 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 		return transpileJSTask;
 	}
 
-	protected void configureTasksTranspileJS(
+	private void _configureTasksTranspileJS(
 		Project project, final DownloadNodeModuleTask downloadLfrAmdLoaderTask,
 		final DownloadNodeModuleTask downloadMetalCliTask,
 		final ExecuteNpmTask npmInstallTask) {
@@ -165,7 +162,7 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(TranspileJSTask transpileJSTask) {
-					configureTaskTranspileJS(
+					_configureTaskTranspileJS(
 						transpileJSTask, downloadLfrAmdLoaderTask,
 						downloadMetalCliTask, npmInstallTask);
 				}
@@ -173,7 +170,7 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 			});
 	}
 
-	protected void configureTaskTranspileJS(
+	private void _configureTaskTranspileJS(
 		TranspileJSTask transpileJSTask,
 		final DownloadNodeModuleTask downloadLfrAmdLoaderTask,
 		final DownloadNodeModuleTask downloadMetalCliTask,
@@ -214,7 +211,7 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 			});
 	}
 
-	protected void configureTaskTranspileJSForJavaPlugin(
+	private void _configureTaskTranspileJSForJavaPlugin(
 		TranspileJSTask transpileJSTask) {
 
 		transpileJSTask.mustRunAfter(JavaPlugin.PROCESS_RESOURCES_TASK_NAME);
@@ -229,7 +226,8 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 
 				@Override
 				public File call() throws Exception {
-					File resourcesDir = getSrcDir(sourceSet.getResources());
+					File resourcesDir = GradleUtil.getSrcDir(
+						sourceSet.getResources());
 
 					return new File(resourcesDir, "META-INF/resources");
 				}
@@ -254,14 +252,6 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 			project, JavaPlugin.CLASSES_TASK_NAME);
 
 		classesTask.dependsOn(transpileJSTask);
-	}
-
-	protected File getSrcDir(SourceDirectorySet sourceDirectorySet) {
-		Set<File> srcDirs = sourceDirectorySet.getSrcDirs();
-
-		Iterator<File> iterator = srcDirs.iterator();
-
-		return iterator.next();
 	}
 
 }

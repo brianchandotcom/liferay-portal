@@ -19,8 +19,6 @@ import com.liferay.gradle.util.StringUtil;
 
 import java.io.File;
 
-import java.util.Iterator;
-import java.util.Set;
 import java.util.concurrent.Callable;
 
 import org.gradle.api.Action;
@@ -29,11 +27,9 @@ import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileCopyDetails;
-import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Copy;
-import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.TaskOutputs;
 import org.gradle.api.tasks.compile.JavaCompile;
@@ -55,7 +51,7 @@ public class PatcherPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(PatchTask patchTask) {
-					configureTaskPatchPatchedSrcDirMappings(patchTask);
+					_configureTaskPatchPatchedSrcDirMappings(patchTask);
 
 					Project project = patchTask.getProject();
 
@@ -64,7 +60,7 @@ public class PatcherPlugin implements Plugin<Project> {
 
 					javaCompile.dependsOn(patchTask);
 
-					Copy copy = addTaskCopyOriginalLibClasses(patchTask);
+					Copy copy = _addTaskCopyOriginalLibClasses(patchTask);
 
 					Task classesTask = GradleUtil.getTask(
 						project, JavaPlugin.CLASSES_TASK_NAME);
@@ -75,7 +71,7 @@ public class PatcherPlugin implements Plugin<Project> {
 			});
 	}
 
-	protected Copy addTaskCopyOriginalLibClasses(final PatchTask patchTask) {
+	private Copy _addTaskCopyOriginalLibClasses(final PatchTask patchTask) {
 		String taskName =
 			"copy" + StringUtil.capitalize(patchTask.getName()) +
 				"OriginalLibClasses";
@@ -153,11 +149,8 @@ public class PatcherPlugin implements Plugin<Project> {
 		return copy;
 	}
 
-	protected void configureTaskPatchPatchedSrcDirMappings(
-		PatchTask patchTask) {
-
-		final SourceSet sourceSet = GradleUtil.getSourceSet(
-			patchTask.getProject(), SourceSet.MAIN_SOURCE_SET_NAME);
+	private void _configureTaskPatchPatchedSrcDirMappings(
+		final PatchTask patchTask) {
 
 		patchTask.patchedSrcDirMapping(
 			"java",
@@ -165,7 +158,7 @@ public class PatcherPlugin implements Plugin<Project> {
 
 				@Override
 				public File call() throws Exception {
-					return getSrcDir(sourceSet.getJava());
+					return GradleUtil.getMainJavaDir(patchTask.getProject());
 				}
 
 			});
@@ -176,18 +169,11 @@ public class PatcherPlugin implements Plugin<Project> {
 
 				@Override
 				public File call() throws Exception {
-					return getSrcDir(sourceSet.getResources());
+					return GradleUtil.getMainResourcesDir(
+						patchTask.getProject());
 				}
 
 			});
-	}
-
-	protected File getSrcDir(SourceDirectorySet sourceDirectorySet) {
-		Set<File> srcDirs = sourceDirectorySet.getSrcDirs();
-
-		Iterator<File> iterator = srcDirs.iterator();
-
-		return iterator.next();
 	}
 
 }

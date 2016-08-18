@@ -14,8 +14,8 @@
 
 package com.liferay.gradle.plugins.node.tasks;
 
-import com.liferay.gradle.plugins.node.util.FileUtil;
-import com.liferay.gradle.plugins.node.util.GradleUtil;
+import com.liferay.gradle.plugins.node.internal.util.FileUtil;
+import com.liferay.gradle.plugins.node.internal.util.GradleUtil;
 import com.liferay.gradle.util.Validator;
 
 import java.io.File;
@@ -126,36 +126,6 @@ public class ExecuteNpmTask extends ExecuteNodeScriptTask {
 		_registry = registry;
 	}
 
-	protected void addProxyArg(List<String> args, String key, String protocol) {
-		Logger logger = getLogger();
-
-		if (args.contains(key)) {
-			if (logger.isInfoEnabled()) {
-				logger.info(
-					"{} proxy on {} is already set", protocol.toUpperCase(),
-					this);
-			}
-
-			return;
-		}
-
-		String host = System.getProperty(protocol + ".proxyHost");
-		String port = System.getProperty(protocol + ".proxyPort");
-
-		if (Validator.isNotNull(host) && Validator.isNotNull(port)) {
-			String url = protocol + "://" + host + ":" + port;
-
-			args.add(key);
-			args.add(url);
-
-			if (logger.isInfoEnabled()) {
-				logger.info(
-					"{} proxy on {} set to {}", protocol.toUpperCase(), this,
-					url);
-			}
-		}
-	}
-
 	@Override
 	protected List<String> getCompleteArgs() {
 		List<String> completeArgs = super.getCompleteArgs();
@@ -196,8 +166,8 @@ public class ExecuteNpmTask extends ExecuteNodeScriptTask {
 		completeArgs.add(Boolean.toString(isProgress()));
 
 		if (isInheritProxy()) {
-			addProxyArg(completeArgs, "--proxy", "http");
-			addProxyArg(completeArgs, "--https-proxy", "https");
+			_addProxyArg(completeArgs, "--proxy", "http");
+			_addProxyArg(completeArgs, "--https-proxy", "https");
 		}
 
 		String registry = getRegistry();
@@ -208,6 +178,36 @@ public class ExecuteNpmTask extends ExecuteNodeScriptTask {
 		}
 
 		return completeArgs;
+	}
+
+	private void _addProxyArg(List<String> args, String key, String protocol) {
+		Logger logger = getLogger();
+
+		if (args.contains(key)) {
+			if (logger.isInfoEnabled()) {
+				logger.info(
+					"{} proxy on {} is already set", protocol.toUpperCase(),
+					this);
+			}
+
+			return;
+		}
+
+		String host = System.getProperty(protocol + ".proxyHost");
+		String port = System.getProperty(protocol + ".proxyPort");
+
+		if (Validator.isNotNull(host) && Validator.isNotNull(port)) {
+			String url = protocol + "://" + host + ":" + port;
+
+			args.add(key);
+			args.add(url);
+
+			if (logger.isInfoEnabled()) {
+				logger.info(
+					"{} proxy on {} set to {}", protocol.toUpperCase(), this,
+					url);
+			}
+		}
 	}
 
 	private Object _cacheDir;

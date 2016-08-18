@@ -14,8 +14,8 @@
 
 package com.liferay.gradle.plugins.cache;
 
+import com.liferay.gradle.plugins.cache.internal.task.TaskCacheApplicator;
 import com.liferay.gradle.plugins.cache.task.TaskCache;
-import com.liferay.gradle.plugins.cache.task.TaskCacheApplicator;
 import com.liferay.gradle.util.GradleUtil;
 
 import org.gradle.api.Action;
@@ -39,13 +39,13 @@ public class CachePlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(Project project) {
-					applyTaskCaches(cacheExtension);
+					_applyTaskCaches(cacheExtension);
 				}
 
 			});
 	}
 
-	protected void applyTaskCaches(CacheExtension cacheExtension) {
+	private void _applyTaskCaches(CacheExtension cacheExtension) {
 		for (TaskCache taskCache : cacheExtension.getTasks()) {
 			_taskCacheApplicator.apply(cacheExtension, taskCache);
 		}

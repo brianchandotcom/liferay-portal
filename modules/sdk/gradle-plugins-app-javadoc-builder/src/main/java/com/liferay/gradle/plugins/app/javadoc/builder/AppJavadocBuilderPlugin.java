@@ -73,10 +73,10 @@ public class AppJavadocBuilderPlugin implements Plugin<Project> {
 		ReportingExtension reportingExtension = GradleUtil.getExtension(
 			project, ReportingExtension.class);
 
-		final Javadoc appJavadocTask = addTaskAppJavadoc(
+		final Javadoc appJavadocTask = _addTaskAppJavadoc(
 			project, reportingExtension);
 
-		addTaskJarAppJavadoc(appJavadocTask);
+		_addTaskJarAppJavadoc(appJavadocTask);
 
 		for (Project subproject : project.getSubprojects()) {
 			subproject.afterEvaluate(
@@ -84,7 +84,7 @@ public class AppJavadocBuilderPlugin implements Plugin<Project> {
 
 					@Override
 					public void execute(Project subproject) {
-						configureTaskAppJavadoc(
+						_configureTaskAppJavadoc(
 							appJavadocTask, appJavadocBuilderExtension,
 							subproject);
 					}
@@ -97,14 +97,14 @@ public class AppJavadocBuilderPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(Project project) {
-					configureTaskAppJavadoc(
+					_configureTaskAppJavadoc(
 						appJavadocTask, appJavadocBuilderExtension);
 				}
 
 			});
 	}
 
-	protected Javadoc addTaskAppJavadoc(
+	private Javadoc _addTaskAppJavadoc(
 		Project project, final ReportingExtension reportingExtension) {
 
 		final Javadoc javadoc = GradleUtil.addTask(
@@ -153,7 +153,7 @@ public class AppJavadocBuilderPlugin implements Plugin<Project> {
 		return javadoc;
 	}
 
-	protected Jar addTaskJarAppJavadoc(Javadoc javadoc) {
+	private Jar _addTaskJarAppJavadoc(Javadoc javadoc) {
 		Jar jar = GradleUtil.addTask(
 			javadoc.getProject(), JAR_APP_JAVADOC_TASK_NAME, Jar.class);
 
@@ -167,7 +167,7 @@ public class AppJavadocBuilderPlugin implements Plugin<Project> {
 		return jar;
 	}
 
-	protected void configureTaskAppJavadoc(
+	private void _configureTaskAppJavadoc(
 		Javadoc javadoc,
 		AppJavadocBuilderExtension appJavadocBuilderExtension) {
 
@@ -179,7 +179,7 @@ public class AppJavadocBuilderPlugin implements Plugin<Project> {
 		}
 	}
 
-	protected void configureTaskAppJavadoc(
+	private void _configureTaskAppJavadoc(
 		Javadoc javadoc, AppJavadocBuilderExtension appJavadocBuilderExtension,
 		Project subproject) {
 
@@ -227,7 +227,7 @@ public class AppJavadocBuilderPlugin implements Plugin<Project> {
 
 			String groupName = closure.call(subproject);
 
-			Set<String> packageNames = getPackageNames(
+			Set<String> packageNames = _getPackageNames(
 				subprojectSource, sourceDirectorySet.getSrcDirs());
 
 			if (Validator.isNotNull(groupName) && !packageNames.isEmpty()) {
@@ -238,7 +238,7 @@ public class AppJavadocBuilderPlugin implements Plugin<Project> {
 		}
 	}
 
-	protected String getPackageName(File file, Set<File> srcDirs) {
+	private String _getPackageName(File file, Set<File> srcDirs) {
 		File dir = null;
 
 		for (File srcDir : srcDirs) {
@@ -261,13 +261,13 @@ public class AppJavadocBuilderPlugin implements Plugin<Project> {
 		return relativePath.replace(File.separatorChar, '.');
 	}
 
-	protected Set<String> getPackageNames(
+	private Set<String> _getPackageNames(
 		Iterable<File> files, Set<File> srcDirs) {
 
 		Set<String> packageNames = new HashSet<>();
 
 		for (File file : files) {
-			String packageName = getPackageName(file, srcDirs);
+			String packageName = _getPackageName(file, srcDirs);
 
 			if (Validator.isNotNull(packageName)) {
 				packageNames.add(packageName);

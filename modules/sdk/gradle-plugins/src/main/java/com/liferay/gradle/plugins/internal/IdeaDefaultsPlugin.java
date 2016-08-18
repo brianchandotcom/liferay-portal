@@ -49,28 +49,33 @@ public class IdeaDefaultsPlugin extends BaseDefaultsPlugin<IdeaPlugin> {
 	protected void configureDefaults(
 		Project project, final IdeaPlugin ideaPlugin) {
 
-		configureIdeaModuleIml(project, ideaPlugin);
-		configureTaskIdea(project, ideaPlugin);
+		_configureIdeaModuleIml(project, ideaPlugin);
+		_configureTaskIdea(ideaPlugin);
 
 		project.afterEvaluate(
 			new Action<Project>() {
 
 				@Override
 				public void execute(Project project) {
-					configureIdeaModuleExcludeDirs(project, ideaPlugin);
+					_configureIdeaModuleExcludeDirs(project, ideaPlugin);
 				}
 
 			});
 	}
 
-	protected void configureIdeaModuleExcludeDirs(
+	@Override
+	protected Class<IdeaPlugin> getPluginClass() {
+		return IdeaPlugin.class;
+	}
+
+	private void _configureIdeaModuleExcludeDirs(
 		Project project, IdeaPlugin ideaPlugin) {
 
 		if (!GradleUtil.hasPlugin(project, JavaPlugin.class)) {
 			return;
 		}
 
-		IdeaModule ideaModule = getIdeaModule(ideaPlugin);
+		IdeaModule ideaModule = _getIdeaModule(ideaPlugin);
 
 		Set<File> excludeDirs = ideaModule.getExcludeDirs();
 
@@ -94,10 +99,10 @@ public class IdeaDefaultsPlugin extends BaseDefaultsPlugin<IdeaPlugin> {
 		ideaModule.setExcludeDirs(excludeDirs);
 	}
 
-	protected void configureIdeaModuleIml(
+	private void _configureIdeaModuleIml(
 		final Project project, IdeaPlugin ideaPlugin) {
 
-		IdeaModule ideaModule = getIdeaModule(ideaPlugin);
+		IdeaModule ideaModule = _getIdeaModule(ideaPlugin);
 
 		IdeaModuleIml ideaModuleIml = ideaModule.getIml();
 
@@ -155,10 +160,9 @@ public class IdeaDefaultsPlugin extends BaseDefaultsPlugin<IdeaPlugin> {
 
 				rootElement.setAttribute("relative", "/");
 
-				String url = project.relativePath(resourcesDir);
+				String url = FileUtil.getRelativePath(project, resourcesDir);
 
-				rootElement.setAttribute(
-					"url", "file://$MODULE_DIR$/" + url.replace('\\', '/'));
+				rootElement.setAttribute("url", "file://$MODULE_DIR$/" + url);
 
 				webrootsElement.appendChild(rootElement);
 			}
@@ -168,35 +172,17 @@ public class IdeaDefaultsPlugin extends BaseDefaultsPlugin<IdeaPlugin> {
 		ideaModuleIml.withXml(closure);
 	}
 
-	protected void configureTaskIdea(Project project, IdeaPlugin ideaPlugin) {
+	private void _configureTaskIdea(IdeaPlugin ideaPlugin) {
 		Task task = ideaPlugin.getLifecycleTask();
 
 		task.dependsOn(ideaPlugin.getCleanTask());
 	}
 
-	protected File getClassesDir(Project project) {
-		if (!GradleUtil.hasPlugin(project, JavaPlugin.class)) {
-			return null;
-		}
-
-		SourceSet sourceSet = GradleUtil.getSourceSet(
-			project, SourceSet.MAIN_SOURCE_SET_NAME);
-
-		SourceSetOutput sourceSetOutput = sourceSet.getOutput();
-
-		return sourceSetOutput.getClassesDir();
-	}
-
-	protected IdeaModule getIdeaModule(IdeaPlugin ideaPlugin) {
+	private IdeaModule _getIdeaModule(IdeaPlugin ideaPlugin) {
 		IdeaModel ideaModel = ideaPlugin.getModel();
 
 		IdeaModule ideaModule = ideaModel.getModule();
 		return ideaModule;
-	}
-
-	@Override
-	protected Class<IdeaPlugin> getPluginClass() {
-		return IdeaPlugin.class;
 	}
 
 }

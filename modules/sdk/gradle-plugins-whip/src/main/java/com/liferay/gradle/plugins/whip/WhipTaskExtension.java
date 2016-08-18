@@ -112,7 +112,7 @@ public class WhipTaskExtension {
 	protected Iterable<Object> getAsJvmArgs() {
 		List<Object> jvmArgs = new ArrayList<>(1);
 
-		jvmArgs.add(getWhipAgent());
+		jvmArgs.add(_getWhipAgent());
 
 		return jvmArgs;
 	}
@@ -120,7 +120,7 @@ public class WhipTaskExtension {
 	protected Map<String, Object> getAsSystemProperties() {
 		Map<String, Object> systemProperties = new HashMap<>();
 
-		systemProperties.put("whip.agent", getWhipAgent());
+		systemProperties.put("whip.agent", _getWhipAgent());
 		systemProperties.put(
 			"whip.datafile", FileUtil.getAbsolutePath(getDataFile()));
 		systemProperties.put("whip.instrument.dump", isInstrumentDump());
@@ -128,7 +128,7 @@ public class WhipTaskExtension {
 		return systemProperties;
 	}
 
-	protected String getWhipAgent() {
+	private String _getWhipAgent() {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("-javaagent:");

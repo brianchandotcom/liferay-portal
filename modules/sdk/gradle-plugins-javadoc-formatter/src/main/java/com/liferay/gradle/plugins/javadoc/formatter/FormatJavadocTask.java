@@ -39,7 +39,7 @@ public class FormatJavadocTask extends JavaExec {
 
 	@Override
 	public void exec() {
-		setArgs(getCompleteArgs());
+		setArgs(_getCompleteArgs());
 
 		super.exec();
 	}
@@ -127,7 +127,7 @@ public class FormatJavadocTask extends JavaExec {
 		_updateJavadocs = updateJavadocs;
 	}
 
-	protected List<String> getCompleteArgs() {
+	private List<String> _getCompleteArgs() {
 		List<String> args = new ArrayList<>(getArgs());
 
 		args.add("javadoc.author=" + getAuthor());

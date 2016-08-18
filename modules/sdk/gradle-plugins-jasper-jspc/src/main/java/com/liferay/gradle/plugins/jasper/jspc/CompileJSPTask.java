@@ -30,9 +30,9 @@ import java.util.Map;
 
 import org.gradle.api.GradleException;
 import org.gradle.api.Project;
+import org.gradle.api.UncheckedIOException;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.logging.Logger;
-import org.gradle.api.logging.Logging;
 import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.JavaExec;
 import org.gradle.api.tasks.OutputDirectory;
@@ -49,7 +49,9 @@ public class CompileJSPTask extends JavaExec {
 
 	@Override
 	public void exec() {
-		setArgs(getCompleteArgs());
+		Logger logger = getLogger();
+
+		setArgs(_getCompleteArgs());
 
 		FileCollection jspCClasspath = getJspCClasspath();
 
@@ -72,12 +74,12 @@ public class CompileJSPTask extends JavaExec {
 			String output = byteArrayOutputStream.toString();
 
 			if (output.contains("JasperException")) {
-				_logger.error(output);
+				logger.error(output);
 
 				throw new GradleException("Unable to compile JSPs");
 			}
-			else if (_logger.isInfoEnabled()) {
-				_logger.info(output);
+			else if (logger.isInfoEnabled()) {
+				logger.info(output);
 			}
 		}
 		finally {
@@ -85,7 +87,7 @@ public class CompileJSPTask extends JavaExec {
 				byteArrayOutputStream.writeTo(taskErrorOutput);
 			}
 			catch (IOException ioe) {
-				throw new GradleException(ioe.getMessage(), ioe);
+				throw new UncheckedIOException(ioe);
 			}
 
 			setErrorOutput(taskErrorOutput);
@@ -144,7 +146,7 @@ public class CompileJSPTask extends JavaExec {
 		_webAppDir = webAppDir;
 	}
 
-	protected List<String> getCompleteArgs() {
+	private List<String> _getCompleteArgs() {
 		List<String> completeArgs = new ArrayList<>(getArgs());
 
 		completeArgs.add("-d");
@@ -156,9 +158,6 @@ public class CompileJSPTask extends JavaExec {
 
 		return completeArgs;
 	}
-
-	private static final Logger _logger = Logging.getLogger(
-		CompileJSPTask.class);
 
 	private Object _destinationDir;
 	private FileCollection _jspCClasspath;

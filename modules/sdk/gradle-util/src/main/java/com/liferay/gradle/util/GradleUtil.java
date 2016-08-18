@@ -38,15 +38,17 @@ import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.artifacts.Dependency;
-import org.gradle.api.artifacts.ResolvableDependencies;
+import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.artifacts.dsl.DependencyHandler;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileTree;
+import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.plugins.Convention;
 import org.gradle.api.plugins.ExtensionAware;
 import org.gradle.api.plugins.ExtensionContainer;
 import org.gradle.api.plugins.ExtraPropertiesExtension;
 import org.gradle.api.plugins.JavaPluginConvention;
+import org.gradle.api.plugins.WarPluginConvention;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.SourceSetContainer;
 import org.gradle.api.tasks.TaskContainer;
@@ -175,29 +177,19 @@ public class GradleUtil {
 		project.apply(args);
 	}
 
+	/**
+	 * @deprecated As of 1.1.0
+	 */
+	@Deprecated
 	public static void executeIfEmpty(
 		final Configuration configuration, final Action<Configuration> action) {
 
-		ResolvableDependencies resolvableDependencies =
-			configuration.getIncoming();
-
-		resolvableDependencies.beforeResolve(
-			new Action<ResolvableDependencies>() {
+		configuration.defaultDependencies(
+			new Action<DependencySet>() {
 
 				@Override
-				public void execute(
-					ResolvableDependencies resolvableDependencies) {
-
-					Set<Dependency> dependencies =
-						configuration.getDependencies();
-					Set<Configuration> parentConfigurations =
-						configuration.getExtendsFrom();
-
-					if (dependencies.isEmpty() &&
-						parentConfigurations.isEmpty()) {
-
-						action.execute(configuration);
-					}
+				public void execute(DependencySet dependencySet) {
+					action.execute(configuration);
 				}
 
 			});
@@ -238,6 +230,20 @@ public class GradleUtil {
 		}
 
 		return fileTree.matching(patternFilterable);
+	}
+
+	public static File getMainJavaDir(Project project) {
+		SourceSet sourceSet = GradleUtil.getSourceSet(
+			project, SourceSet.MAIN_SOURCE_SET_NAME);
+
+		return getSrcDir(sourceSet.getJava());
+	}
+
+	public static File getMainResourcesDir(Project project) {
+		SourceSet sourceSet = GradleUtil.getSourceSet(
+			project, SourceSet.MAIN_SOURCE_SET_NAME);
+
+		return getSrcDir(sourceSet.getResources());
 	}
 
 	public static Project getProject(Project rootProject, File projectDir) {
@@ -321,6 +327,14 @@ public class GradleUtil {
 		return sourceSetContainer.getByName(name);
 	}
 
+	public static File getSrcDir(SourceDirectorySet sourceDirectorySet) {
+		Set<File> srcDirs = sourceDirectorySet.getSrcDirs();
+
+		Iterator<File> iterator = srcDirs.iterator();
+
+		return iterator.next();
+	}
+
 	public static Task getTask(Project project, String name) {
 		TaskContainer taskContainer = project.getTasks();
 
@@ -345,6 +359,13 @@ public class GradleUtil {
 		}
 
 		return value;
+	}
+
+	public static File getWebAppDir(Project project) {
+		WarPluginConvention warPluginConvention = GradleUtil.getConvention(
+			project, WarPluginConvention.class);
+
+		return warPluginConvention.getWebAppDir();
 	}
 
 	public static void removeDependencies(
@@ -381,6 +402,8 @@ public class GradleUtil {
 	}
 
 	public static File toFile(Project project, Object object) {
+		object = toObject(object);
+
 		if (object == null) {
 			return null;
 		}

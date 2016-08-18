@@ -17,16 +17,13 @@ package com.liferay.gradle.plugins.defaults;
 import com.liferay.gradle.plugins.app.javadoc.builder.AppJavadocBuilderExtension;
 import com.liferay.gradle.plugins.app.javadoc.builder.AppJavadocBuilderPlugin;
 import com.liferay.gradle.plugins.defaults.internal.LiferayRelengPlugin;
-import com.liferay.gradle.plugins.defaults.internal.util.FileUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
-import com.liferay.gradle.plugins.defaults.tasks.WritePropertiesTask;
 import com.liferay.gradle.util.Validator;
+import com.liferay.gradle.util.tasks.WritePropertiesTask;
 
 import groovy.lang.Closure;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.UncheckedIOException;
 
 import java.util.Properties;
 
@@ -34,6 +31,7 @@ import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.javadoc.Javadoc;
+import org.gradle.util.GUtil;
 
 /**
  * @author Andrea Di Giorgi
@@ -46,38 +44,36 @@ public class LiferayAppDefaultsPlugin implements Plugin<Project> {
 		String appTitle = null;
 		String appVersion = null;
 
-		try {
-			Properties appBndProperties = FileUtil.readProperties(
-				project, "app.bnd");
+		File appBndFile = project.file("app.bnd");
 
-			appDescription = appBndProperties.getProperty(
+		if (appBndFile.exists()) {
+			Properties properties = GUtil.loadProperties(appBndFile);
+
+			appDescription = properties.getProperty(
 				"Liferay-Releng-App-Description");
-
-			File relengDir = LiferayRelengPlugin.getRelengDir(project);
-
-			if (relengDir != null) {
-				File appPropertiesFile = new File(relengDir, "app.properties");
-
-				Properties appProperties = FileUtil.readProperties(
-					appPropertiesFile);
-
-				appTitle = appProperties.getProperty("app.marketplace.title");
-				appVersion = appProperties.getProperty(
-					"app.marketplace.version");
-			}
 		}
-		catch (IOException ioe) {
-			throw new UncheckedIOException(ioe);
+
+		File relengDir = LiferayRelengPlugin.getRelengDir(project);
+
+		if (relengDir != null) {
+			File appPropertiesFile = new File(relengDir, "app.properties");
+
+			if (appPropertiesFile.exists()) {
+				Properties properties = GUtil.loadProperties(appPropertiesFile);
+
+				appTitle = properties.getProperty("app.marketplace.title");
+				appVersion = properties.getProperty("app.marketplace.version");
+			}
 		}
 
 		GradleUtil.applyPlugin(project, AppJavadocBuilderPlugin.class);
 
-		configureAppJavadocBuilder(project);
-		configureProject(project, appDescription, appVersion);
-		configureTaskAppJavadoc(project, appTitle, appVersion);
+		_configureAppJavadocBuilder(project);
+		_configureProject(project, appDescription, appVersion);
+		_configureTaskAppJavadoc(project, appTitle, appVersion);
 	}
 
-	protected void configureAppJavadocBuilder(Project project) {
+	private void _configureAppJavadocBuilder(Project project) {
 		AppJavadocBuilderExtension appJavadocBuilderExtension =
 			GradleUtil.getExtension(project, AppJavadocBuilderExtension.class);
 
@@ -86,13 +82,13 @@ public class LiferayAppDefaultsPlugin implements Plugin<Project> {
 
 				@SuppressWarnings("unused")
 				public String doCall(Project subproject) {
-					return getAppJavadocGroupName(subproject);
+					return _getAppJavadocGroupName(subproject);
 				}
 
 			});
 	}
 
-	protected void configureProject(
+	private void _configureProject(
 		Project project, String description, String version) {
 
 		if (Validator.isNotNull(description)) {
@@ -104,7 +100,7 @@ public class LiferayAppDefaultsPlugin implements Plugin<Project> {
 		}
 	}
 
-	protected void configureTaskAppJavadoc(
+	private void _configureTaskAppJavadoc(
 		Project project, String appTitle, String appVersion) {
 
 		if (Validator.isNull(appTitle) || Validator.isNull(appVersion)) {
@@ -119,7 +115,7 @@ public class LiferayAppDefaultsPlugin implements Plugin<Project> {
 		javadoc.setTitle(title);
 	}
 
-	protected String getAppJavadocGroupName(Project project) {
+	private String _getAppJavadocGroupName(Project project) {
 		String groupName = project.getDescription();
 
 		if (Validator.isNull(groupName)) {
@@ -133,10 +129,17 @@ public class LiferayAppDefaultsPlugin implements Plugin<Project> {
 				LiferayRelengPlugin.RECORD_ARTIFACT_TASK_NAME);
 
 		if (recordArtifactTask != null) {
-			Properties artifactProperties =
-				LiferayRelengPlugin.getArtifactProperties(recordArtifactTask);
+			String artifactURL = null;
 
-			String artifactURL = artifactProperties.getProperty("artifact.url");
+			File artifactPropertiesFile =
+				recordArtifactTask.getPropertiesFile();
+
+			if (artifactPropertiesFile.exists()) {
+				Properties properties = GUtil.loadProperties(
+					artifactPropertiesFile);
+
+				artifactURL = properties.getProperty("artifact.url");
+			}
 
 			if (Validator.isNotNull(artifactURL)) {
 				int start = artifactURL.lastIndexOf('/') + 1;

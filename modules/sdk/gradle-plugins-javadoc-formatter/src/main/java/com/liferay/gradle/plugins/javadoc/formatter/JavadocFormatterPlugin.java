@@ -39,14 +39,14 @@ public class JavadocFormatterPlugin implements Plugin<Project> {
 	@Override
 	public void apply(Project project) {
 		Configuration javadocFormatterConfiguration =
-			addConfigurationJavadocFormatter(project);
+			_addConfigurationJavadocFormatter(project);
 
-		addTaskFormatJavadoc(project);
+		_addTaskFormatJavadoc(project);
 
-		configureTasksFormatJavadoc(project, javadocFormatterConfiguration);
+		_configureTasksFormatJavadoc(project, javadocFormatterConfiguration);
 	}
 
-	protected Configuration addConfigurationJavadocFormatter(
+	private Configuration _addConfigurationJavadocFormatter(
 		final Project project) {
 
 		final Configuration configuration = GradleUtil.addConfiguration(
@@ -57,7 +57,7 @@ public class JavadocFormatterPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(DependencySet dependencySet) {
-					addDependenciesJavadocFormatter(project);
+					_addDependenciesJavadocFormatter(project);
 				}
 
 			});
@@ -74,7 +74,7 @@ public class JavadocFormatterPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(JavaPlugin javaPlugin) {
-					configureConfigurationJavadocFormatterForJavaPlugin(
+					_configureConfigurationJavadocFormatterForJavaPlugin(
 						project, configuration);
 				}
 
@@ -83,13 +83,13 @@ public class JavadocFormatterPlugin implements Plugin<Project> {
 		return configuration;
 	}
 
-	protected void addDependenciesJavadocFormatter(Project project) {
+	private void _addDependenciesJavadocFormatter(Project project) {
 		GradleUtil.addDependency(
 			project, CONFIGURATION_NAME, "com.liferay",
 			"com.liferay.javadoc.formatter", "latest.release");
 	}
 
-	protected FormatJavadocTask addTaskFormatJavadoc(Project project) {
+	private FormatJavadocTask _addTaskFormatJavadoc(Project project) {
 		FormatJavadocTask formatJavadocTask = GradleUtil.addTask(
 			project, FORMAT_JAVADOC_TASK_NAME, FormatJavadocTask.class);
 
@@ -99,7 +99,7 @@ public class JavadocFormatterPlugin implements Plugin<Project> {
 		return formatJavadocTask;
 	}
 
-	protected void configureConfigurationJavadocFormatterForJavaPlugin(
+	private void _configureConfigurationJavadocFormatterForJavaPlugin(
 		Project project, Configuration configuration) {
 
 		Configuration compileConfiguration = GradleUtil.getConfiguration(
@@ -108,7 +108,7 @@ public class JavadocFormatterPlugin implements Plugin<Project> {
 		configuration.extendsFrom(compileConfiguration);
 	}
 
-	protected void configureTaskFormatJavadoc(
+	private void _configureTaskFormatJavadoc(
 		FormatJavadocTask formatJavadocTask, FileCollection classpath) {
 
 		formatJavadocTask.setClasspath(classpath);
@@ -143,7 +143,7 @@ public class JavadocFormatterPlugin implements Plugin<Project> {
 		}
 	}
 
-	protected void configureTasksFormatJavadoc(
+	private void _configureTasksFormatJavadoc(
 		Project project, final FileCollection classpath) {
 
 		TaskContainer taskContainer = project.getTasks();
@@ -154,7 +154,7 @@ public class JavadocFormatterPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(FormatJavadocTask formatJavadoc) {
-					configureTaskFormatJavadoc(formatJavadoc, classpath);
+					_configureTaskFormatJavadoc(formatJavadoc, classpath);
 				}
 
 			});

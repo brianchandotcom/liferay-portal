@@ -140,45 +140,45 @@ public class PrintArtifactPublishCommandsTask extends DefaultTask {
 
 		// Publish if the artifact has never been published
 
-		if (!isPublished()) {
-			addPublishCommands(commands, true);
+		if (!_isPublished()) {
+			_addPublishCommands(commands, true);
 		}
 
 		// Change log
 
-		BuildChangeLogTask buildChangeLogTask = (BuildChangeLogTask)getTask(
+		BuildChangeLogTask buildChangeLogTask = (BuildChangeLogTask)_getTask(
 			ChangeLogBuilderPlugin.BUILD_CHANGE_LOG_TASK_NAME);
 
 		if (buildChangeLogTask != null) {
-			commands.add(getGradleCommand(buildChangeLogTask));
+			commands.add(_getGradleCommand(buildChangeLogTask));
 
 			commands.add(
 				"git add " +
-					getRelativePath(buildChangeLogTask.getChangeLogFile()));
+					_getRelativePath(buildChangeLogTask.getChangeLogFile()));
 
-			commands.add(getGitCommitCommand("change log", false, true, true));
+			commands.add(_getGitCommitCommand("change log", false, true, true));
 		}
 
 		// Baseline
 
-		Task baselineTask = getTask(
+		Task baselineTask = _getTask(
 			LiferayOSGiDefaultsPlugin.BASELINE_TASK_NAME);
 
 		if (baselineTask != null) {
-			commands.add(getGradleCommand(baselineTask));
+			commands.add(_getGradleCommand(baselineTask));
 
 			commands.add(
-				"git add --all " + getRelativePath(project.getProjectDir()));
+				"git add --all " + _getRelativePath(project.getProjectDir()));
 
 			commands.add(
-				getGitCommitCommand("packageinfo", false, false, true));
+				_getGitCommitCommand("packageinfo", false, false, true));
 		}
 
 		// Publish the artifact since there will either be change log or
 		// baseline changes
 
 		if ((baselineTask != null) || (buildChangeLogTask != null)) {
-			addPublishCommands(commands, false);
+			_addPublishCommands(commands, false);
 		}
 
 		System.out.println();
@@ -233,13 +233,13 @@ public class PrintArtifactPublishCommandsTask extends DefaultTask {
 		setPrepNextFiles(Arrays.asList(prepNextFiles));
 	}
 
-	protected void addPublishCommands(
+	private void _addPublishCommands(
 		List<String> commands, boolean firstPublish) {
 
 		// Publish snapshot
 
 		commands.add(
-			getGradleCommand(
+			_getGradleCommand(
 				BasePlugin.UPLOAD_ARCHIVES_TASK_NAME,
 				"-P" + GradleUtil.SNAPSHOT_PROPERTY_NAME));
 
@@ -248,7 +248,7 @@ public class PrintArtifactPublishCommandsTask extends DefaultTask {
 		String[] arguments = new String[0];
 
 		if (firstPublish) {
-			Task task = getTask(getFirstPublishExcludedTaskName());
+			Task task = _getTask(getFirstPublishExcludedTaskName());
 
 			if (task != null) {
 				arguments = new String[] {"-x", task.getPath()};
@@ -256,7 +256,7 @@ public class PrintArtifactPublishCommandsTask extends DefaultTask {
 		}
 
 		commands.add(
-			getGradleCommand(BasePlugin.UPLOAD_ARCHIVES_TASK_NAME, arguments));
+			_getGradleCommand(BasePlugin.UPLOAD_ARCHIVES_TASK_NAME, arguments));
 
 		// Commit "prep next"
 
@@ -269,11 +269,11 @@ public class PrintArtifactPublishCommandsTask extends DefaultTask {
 
 			prepNext = true;
 
-			commands.add("git add " + getRelativePath(file));
+			commands.add("git add " + _getRelativePath(file));
 		}
 
 		if (prepNext) {
-			commands.add(getGitCommitCommand("prep next", false, true, false));
+			commands.add(_getGitCommitCommand("prep next", false, true, false));
 		}
 
 		// Commit "artifact properties"
@@ -281,18 +281,19 @@ public class PrintArtifactPublishCommandsTask extends DefaultTask {
 		File artifactPropertiesFile = getArtifactPropertiesFile();
 
 		if (artifactPropertiesFile != null) {
-			commands.add("git add " + getRelativePath(artifactPropertiesFile));
+			commands.add("git add " + _getRelativePath(artifactPropertiesFile));
 
 			commands.add(
-				getGitCommitCommand("artifact properties", false, true, false));
+				_getGitCommitCommand(
+					"artifact properties", false, true, false));
 		}
 
 		// Commit other changed files
 
-		commands.add(getGitCommitCommand("apply", true, false, true));
+		commands.add(_getGitCommitCommand("apply", true, false, true));
 	}
 
-	protected String getGitCommitCommand(
+	private String _getGitCommitCommand(
 		String message, boolean all, boolean ignored, boolean quiet) {
 
 		StringBuilder sb = new StringBuilder();
@@ -331,16 +332,16 @@ public class PrintArtifactPublishCommandsTask extends DefaultTask {
 		return sb.toString();
 	}
 
-	protected String getGradleCommand(String taskName, String... arguments) {
+	private String _getGradleCommand(String taskName, String... arguments) {
 		Task task = GradleUtil.getTask(getProject(), taskName);
 
-		return getGradleCommand(task, arguments);
+		return _getGradleCommand(task, arguments);
 	}
 
-	protected String getGradleCommand(Task task, String... arguments) {
+	private String _getGradleCommand(Task task, String... arguments) {
 		StringBuilder sb = new StringBuilder();
 
-		sb.append(getGradleRelativePath());
+		sb.append(_getGradleRelativePath());
 		sb.append(' ');
 		sb.append(task.getPath());
 
@@ -363,15 +364,15 @@ public class PrintArtifactPublishCommandsTask extends DefaultTask {
 		return sb.toString();
 	}
 
-	protected File getGradleFile() {
+	private File _getGradleFile() {
 		return new File(getGradleDir(), "gradlew");
 	}
 
-	protected String getGradleRelativePath() {
-		return getRelativePath(getGradleFile());
+	private String _getGradleRelativePath() {
+		return _getRelativePath(_getGradleFile());
 	}
 
-	protected String getRelativePath(Object object) {
+	private String _getRelativePath(Object object) {
 		Project project = getProject();
 
 		File file = project.file(object);
@@ -381,7 +382,7 @@ public class PrintArtifactPublishCommandsTask extends DefaultTask {
 		return rootProject.relativePath(file);
 	}
 
-	protected Task getTask(String name) {
+	private Task _getTask(String name) {
 		if (Validator.isNull(name)) {
 			return null;
 		}
@@ -393,7 +394,7 @@ public class PrintArtifactPublishCommandsTask extends DefaultTask {
 		return taskContainer.findByName(name);
 	}
 
-	protected boolean isPublished() {
+	private boolean _isPublished() {
 		Project project = getProject();
 
 		String version = String.valueOf(project.getVersion());

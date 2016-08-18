@@ -48,7 +48,7 @@ public class LiferayExtension {
 	public void defaultDependencyNotation(
 		String group, String name, Object version) {
 
-		String dependencyNotation = getDependencyNotation(group, name);
+		String dependencyNotation = _getDependencyNotation(group, name);
 
 		_defaultVersions.put(dependencyNotation, version);
 	}
@@ -111,7 +111,7 @@ public class LiferayExtension {
 	public String getDefaultVersion(
 		String group, String name, String defaultVersion) {
 
-		String dependencyNotation = getDependencyNotation(group, name);
+		String dependencyNotation = _getDependencyNotation(group, name);
 
 		String version = GradleUtil.toString(
 			_defaultVersions.get(dependencyNotation));
@@ -169,11 +169,11 @@ public class LiferayExtension {
 		_liferayHome = liferayHome;
 	}
 
-	protected String getDependencyNotation(String group, String name) {
+	protected final Project project;
+
+	private String _getDependencyNotation(String group, String name) {
 		return group + ":" + name;
 	}
-
-	protected final Project project;
 
 	private Object _appServerParentDir;
 	private final NamedDomainObjectContainer<AppServer> _appServers;

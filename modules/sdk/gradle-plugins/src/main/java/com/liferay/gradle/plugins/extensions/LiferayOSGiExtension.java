@@ -26,7 +26,6 @@ import com.liferay.ant.bnd.service.ServiceAnalyzerPlugin;
 import com.liferay.ant.bnd.social.SocialAnalyzerPlugin;
 import com.liferay.ant.bnd.spring.SpringDependencyAnalyzerPlugin;
 import com.liferay.gradle.plugins.internal.util.GradleUtil;
-import com.liferay.gradle.util.StringUtil;
 import com.liferay.gradle.util.Validator;
 
 import java.util.HashMap;
@@ -37,6 +36,7 @@ import org.gradle.api.Project;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.tasks.compile.CompileOptions;
 import org.gradle.api.tasks.compile.JavaCompile;
+import org.gradle.util.CollectionUtils;
 
 /**
  * @author Andrea Di Giorgi
@@ -55,7 +55,8 @@ public class LiferayOSGiExtension {
 		_bundleDefaultInstructions.put(Constants.DSANNOTATIONS, "*");
 		_bundleDefaultInstructions.put(Constants.METATYPE, "*");
 		_bundleDefaultInstructions.put(
-			Constants.PLUGIN, StringUtil.merge(_BND_PLUGIN_CLASS_NAMES, ","));
+			Constants.PLUGIN,
+			CollectionUtils.join(",", _BND_PLUGIN_CLASS_NAMES));
 
 		_bundleDefaultInstructions.put(
 			"Javac-Debug",

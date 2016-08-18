@@ -14,17 +14,12 @@
 
 package com.liferay.gradle.plugins.internal.util;
 
-import java.io.File;
-
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
 
 import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
-import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.plugins.BasePluginConvention;
 import org.gradle.api.plugins.PluginContainer;
 
@@ -38,14 +33,6 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 			project, BasePluginConvention.class);
 
 		return basePluginConvention.getArchivesBaseName();
-	}
-
-	public static File getSrcDir(SourceDirectorySet sourceDirectorySet) {
-		Set<File> srcDirs = sourceDirectorySet.getSrcDirs();
-
-		Iterator<File> iterator = srcDirs.iterator();
-
-		return iterator.next();
 	}
 
 	/**

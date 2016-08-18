@@ -47,15 +47,15 @@ public class DeploymentHelperPlugin implements Plugin<Project> {
 	@Override
 	public void apply(Project project) {
 		Configuration deploymentHelperConfiguration =
-			addConfigurationDeploymentHelper(project);
+			_addConfigurationDeploymentHelper(project);
 
-		addTaskBuildDeploymentHelper(project);
+		_addTaskBuildDeploymentHelper(project);
 
-		configureTasksBuildDeploymentHelper(
+		_configureTasksBuildDeploymentHelper(
 			project, deploymentHelperConfiguration);
 	}
 
-	protected Configuration addConfigurationDeploymentHelper(
+	private Configuration _addConfigurationDeploymentHelper(
 		final Project project) {
 
 		Configuration configuration = GradleUtil.addConfiguration(
@@ -66,7 +66,7 @@ public class DeploymentHelperPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(DependencySet dependencySet) {
-					addDependenciesDeploymentHelper(project);
+					_addDependenciesDeploymentHelper(project);
 				}
 
 			});
@@ -78,13 +78,13 @@ public class DeploymentHelperPlugin implements Plugin<Project> {
 		return configuration;
 	}
 
-	protected void addDependenciesDeploymentHelper(Project project) {
+	private void _addDependenciesDeploymentHelper(Project project) {
 		GradleUtil.addDependency(
 			project, CONFIGURATION_NAME, "com.liferay",
 			"com.liferay.deployment.helper", "latest.release");
 	}
 
-	protected BuildDeploymentHelperTask addTaskBuildDeploymentHelper(
+	private BuildDeploymentHelperTask _addTaskBuildDeploymentHelper(
 		final Project project) {
 
 		BuildDeploymentHelperTask buildDeploymentHelperTask =
@@ -133,14 +133,14 @@ public class DeploymentHelperPlugin implements Plugin<Project> {
 		return buildDeploymentHelperTask;
 	}
 
-	protected void configureTaskBuildDeploymentHelperClasspath(
+	private void _configureTaskBuildDeploymentHelperClasspath(
 		BuildDeploymentHelperTask buildDeploymentHelperTask,
 		FileCollection classpath) {
 
 		buildDeploymentHelperTask.setClasspath(classpath);
 	}
 
-	protected void configureTasksBuildDeploymentHelper(
+	private void _configureTasksBuildDeploymentHelper(
 		Project project, final Configuration deploymentHelperConfiguration) {
 
 		TaskContainer taskContainer = project.getTasks();
@@ -153,7 +153,7 @@ public class DeploymentHelperPlugin implements Plugin<Project> {
 				public void execute(
 					BuildDeploymentHelperTask buildDeploymentHelperTask) {
 
-					configureTaskBuildDeploymentHelperClasspath(
+					_configureTaskBuildDeploymentHelperClasspath(
 						buildDeploymentHelperTask,
 						deploymentHelperConfiguration);
 				}

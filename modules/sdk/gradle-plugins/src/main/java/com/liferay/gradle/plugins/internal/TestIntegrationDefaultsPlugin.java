@@ -48,15 +48,20 @@ public class TestIntegrationDefaultsPlugin
 		TomcatAppServer tomcatAppServer =
 			(TomcatAppServer)liferayExtension.getAppServer("tomcat");
 
-		configureTestIntegrationTomcat(
+		_configureTestIntegrationTomcat(
 			project, liferayExtension, tomcatAppServer);
 
-		configureTaskSetUpTestableTomcat(project, tomcatAppServer);
-		configureTaskStartTestableTomcat(project, tomcatAppServer);
-		configureTaskStopTestableTomcat(project, tomcatAppServer);
+		_configureTaskSetUpTestableTomcat(project, tomcatAppServer);
+		_configureTaskStartTestableTomcat(project, tomcatAppServer);
+		_configureTaskStopTestableTomcat(project, tomcatAppServer);
 	}
 
-	protected void configureTaskSetUpTestableTomcat(
+	@Override
+	protected Class<TestIntegrationPlugin> getPluginClass() {
+		return TestIntegrationPlugin.class;
+	}
+
+	private void _configureTaskSetUpTestableTomcat(
 		Project project, final TomcatAppServer tomcatAppServer) {
 
 		SetUpTestableTomcatTask setUpTestableTomcatTask =
@@ -87,7 +92,7 @@ public class TestIntegrationDefaultsPlugin
 			});
 	}
 
-	protected void configureTaskStartTestableTomcat(
+	private void _configureTaskStartTestableTomcat(
 		Project project, final TomcatAppServer tomcatAppServer) {
 
 		StartTestableTomcatTask startTestableTomcatTask =
@@ -123,7 +128,7 @@ public class TestIntegrationDefaultsPlugin
 			});
 	}
 
-	protected void configureTaskStopTestableTomcat(
+	private void _configureTaskStopTestableTomcat(
 		Project project, final TomcatAppServer tomcatAppServer) {
 
 		StopAppServerTask stopAppServerTask =
@@ -151,7 +156,7 @@ public class TestIntegrationDefaultsPlugin
 			});
 	}
 
-	protected void configureTestIntegrationTomcat(
+	private void _configureTestIntegrationTomcat(
 		Project project, final LiferayExtension liferayExtension,
 		final TomcatAppServer tomcatAppServer) {
 
@@ -228,11 +233,6 @@ public class TestIntegrationDefaultsPlugin
 				}
 
 			});
-	}
-
-	@Override
-	protected Class<TestIntegrationPlugin> getPluginClass() {
-		return TestIntegrationPlugin.class;
 	}
 
 }

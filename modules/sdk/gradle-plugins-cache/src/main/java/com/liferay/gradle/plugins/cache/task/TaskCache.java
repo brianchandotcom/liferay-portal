@@ -14,7 +14,7 @@
 
 package com.liferay.gradle.plugins.cache.task;
 
-import com.liferay.gradle.plugins.cache.util.StringUtil;
+import com.liferay.gradle.plugins.cache.internal.util.StringUtil;
 import com.liferay.gradle.util.GradleUtil;
 
 import groovy.lang.Closure;

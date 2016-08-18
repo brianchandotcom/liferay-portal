@@ -81,7 +81,7 @@ public class TLDDocTask extends JavaExec implements PatternFilterable {
 
 	@Override
 	public void exec() {
-		setArgs(getCompleteArgs());
+		setArgs(_getCompleteArgs());
 
 		super.exec();
 	}
@@ -185,7 +185,7 @@ public class TLDDocTask extends JavaExec implements PatternFilterable {
 		return this;
 	}
 
-	protected List<String> getCompleteArgs() {
+	private List<String> _getCompleteArgs() {
 		List<String> args = new ArrayList<>(getArgs());
 
 		args.add("-d");

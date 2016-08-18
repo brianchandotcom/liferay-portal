@@ -18,17 +18,13 @@ import com.liferay.gradle.util.GradleUtil;
 
 import java.io.File;
 
-import java.util.Iterator;
-import java.util.Set;
 import java.util.concurrent.Callable;
 
 import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
-import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.PluginContainer;
-import org.gradle.api.tasks.SourceSet;
 
 /**
  * @author Andrea Di Giorgi
@@ -39,10 +35,10 @@ public class ChangeLogBuilderPlugin implements Plugin<Project> {
 
 	@Override
 	public void apply(Project project) {
-		addTaskBuildChangeLog(project);
+		_addTaskBuildChangeLog(project);
 	}
 
-	protected BuildChangeLogTask addTaskBuildChangeLog(Project project) {
+	private BuildChangeLogTask _addTaskBuildChangeLog(Project project) {
 		final BuildChangeLogTask buildChangeLogTask = GradleUtil.addTask(
 			project, BUILD_CHANGE_LOG_TASK_NAME, BuildChangeLogTask.class);
 
@@ -71,7 +67,7 @@ public class ChangeLogBuilderPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(JavaPlugin javaPlugin) {
-					configureTaskBuildChangeLogForJavaPlugin(
+					_configureTaskBuildChangeLogForJavaPlugin(
 						buildChangeLogTask);
 				}
 
@@ -80,7 +76,7 @@ public class ChangeLogBuilderPlugin implements Plugin<Project> {
 		return buildChangeLogTask;
 	}
 
-	protected void configureTaskBuildChangeLogForJavaPlugin(
+	private void _configureTaskBuildChangeLogForJavaPlugin(
 		final BuildChangeLogTask buildChangeLogTask) {
 
 		buildChangeLogTask.setChangeLogFile(
@@ -88,7 +84,7 @@ public class ChangeLogBuilderPlugin implements Plugin<Project> {
 
 				@Override
 				public File call() throws Exception {
-					File resourcesDir = getResourcesDir(
+					File resourcesDir = GradleUtil.getMainResourcesDir(
 						buildChangeLogTask.getProject());
 
 					return new File(
@@ -96,21 +92,6 @@ public class ChangeLogBuilderPlugin implements Plugin<Project> {
 				}
 
 			});
-	}
-
-	protected File getResourcesDir(Project project) {
-		SourceSet sourceSet = GradleUtil.getSourceSet(
-			project, SourceSet.MAIN_SOURCE_SET_NAME);
-
-		return getSrcDir(sourceSet.getResources());
-	}
-
-	protected File getSrcDir(SourceDirectorySet sourceDirectorySet) {
-		Set<File> srcDirs = sourceDirectorySet.getSrcDirs();
-
-		Iterator<File> iterator = srcDirs.iterator();
-
-		return iterator.next();
 	}
 
 	private static final String _CHANGE_LOG_FILE_NAME =

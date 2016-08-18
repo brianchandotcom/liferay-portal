@@ -40,7 +40,32 @@ public class XMLFormatterDefaultsPlugin
 
 	public static final String FORMAT_XSD_TASK_NAME = "formatXSD";
 
-	protected FormatXMLTask addTaskFormatWSDL(
+	@Override
+	protected void configureDefaults(
+		Project project, XMLFormatterPlugin xmlFormatterPlugin) {
+
+		super.configureDefaults(project, xmlFormatterPlugin);
+
+		_addTaskFormatWSDL(project);
+		_addTaskFormatXSD(project);
+	}
+
+	@Override
+	protected Class<XMLFormatterPlugin> getPluginClass() {
+		return XMLFormatterPlugin.class;
+	}
+
+	@Override
+	protected String getPortalToolConfigurationName() {
+		return XMLFormatterPlugin.CONFIGURATION_NAME;
+	}
+
+	@Override
+	protected String getPortalToolName() {
+		return _PORTAL_TOOL_NAME;
+	}
+
+	private FormatXMLTask _addTaskFormatWSDL(
 		final BuildWSDLTask buildWSDLTask) {
 
 		Project project = buildWSDLTask.getProject();
@@ -67,7 +92,7 @@ public class XMLFormatterDefaultsPlugin
 		return formatXMLTask;
 	}
 
-	protected void addTaskFormatWSDL(Project project) {
+	private void _addTaskFormatWSDL(Project project) {
 		TaskContainer taskContainer = project.getTasks();
 
 		taskContainer.withType(
@@ -76,13 +101,13 @@ public class XMLFormatterDefaultsPlugin
 
 				@Override
 				public void execute(BuildWSDLTask buildWSDLTask) {
-					addTaskFormatWSDL(buildWSDLTask);
+					_addTaskFormatWSDL(buildWSDLTask);
 				}
 
 			});
 	}
 
-	protected FormatXMLTask addTaskFormatXSD(final BuildXSDTask buildXSDTask) {
+	private FormatXMLTask _addTaskFormatXSD(final BuildXSDTask buildXSDTask) {
 		Project project = buildXSDTask.getProject();
 
 		TaskContainer taskContainer = project.getTasks();
@@ -107,7 +132,7 @@ public class XMLFormatterDefaultsPlugin
 		return formatXMLTask;
 	}
 
-	protected void addTaskFormatXSD(Project project) {
+	private void _addTaskFormatXSD(Project project) {
 		TaskContainer taskContainer = project.getTasks();
 
 		taskContainer.withType(
@@ -116,35 +141,10 @@ public class XMLFormatterDefaultsPlugin
 
 				@Override
 				public void execute(BuildXSDTask buildXSDTask) {
-					addTaskFormatXSD(buildXSDTask);
+					_addTaskFormatXSD(buildXSDTask);
 				}
 
 			});
-	}
-
-	@Override
-	protected void configureDefaults(
-		Project project, XMLFormatterPlugin xmlFormatterPlugin) {
-
-		super.configureDefaults(project, xmlFormatterPlugin);
-
-		addTaskFormatWSDL(project);
-		addTaskFormatXSD(project);
-	}
-
-	@Override
-	protected Class<XMLFormatterPlugin> getPluginClass() {
-		return XMLFormatterPlugin.class;
-	}
-
-	@Override
-	protected String getPortalToolConfigurationName() {
-		return XMLFormatterPlugin.CONFIGURATION_NAME;
-	}
-
-	@Override
-	protected String getPortalToolName() {
-		return _PORTAL_TOOL_NAME;
 	}
 
 	private static final String _PORTAL_TOOL_NAME = "com.liferay.xml.formatter";

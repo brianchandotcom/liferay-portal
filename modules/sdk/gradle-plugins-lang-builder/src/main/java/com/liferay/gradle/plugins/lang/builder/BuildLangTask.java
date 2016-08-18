@@ -25,7 +25,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.gradle.api.logging.Logger;
-import org.gradle.api.logging.Logging;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputFile;
 import org.gradle.api.tasks.JavaExec;
@@ -42,7 +41,7 @@ public class BuildLangTask extends JavaExec {
 
 	@Override
 	public void exec() {
-		setArgs(getCompleteArgs());
+		setArgs(_getCompleteArgs());
 
 		super.exec();
 	}
@@ -115,7 +114,7 @@ public class BuildLangTask extends JavaExec {
 		_translateClientSecret = translateClientSecret;
 	}
 
-	protected List<String> getCompleteArgs() {
+	private List<String> _getCompleteArgs() {
 		List<String> args = new ArrayList<>(getArgs());
 
 		args.add(
@@ -141,8 +140,10 @@ public class BuildLangTask extends JavaExec {
 			if (Validator.isNull(translateClientId) ||
 				Validator.isNull(translateClientSecret)) {
 
-				if (_logger.isWarnEnabled()) {
-					_logger.warn(
+				Logger logger = getLogger();
+
+				if (logger.isWarnEnabled()) {
+					logger.warn(
 						"Translation is disabled because credentials are not " +
 							"specified");
 				}
@@ -160,9 +161,6 @@ public class BuildLangTask extends JavaExec {
 
 		return args;
 	}
-
-	private static final Logger _logger = Logging.getLogger(
-		BuildLangTask.class);
 
 	private Object _langDir;
 	private Object _langFileName = LangBuilderArgs.LANG_FILE_NAME;

@@ -14,7 +14,7 @@
 
 package com.liferay.gradle.plugins.cache;
 
-import com.liferay.gradle.plugins.cache.util.FileUtil;
+import com.liferay.gradle.plugins.cache.internal.util.FileUtil;
 import com.liferay.gradle.util.GradleUtil;
 
 import java.io.File;

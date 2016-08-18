@@ -20,10 +20,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.gradle.StartParameter;
 import org.gradle.api.Action;
@@ -34,7 +32,6 @@ import org.gradle.api.artifacts.ArtifactRepositoryContainer;
 import org.gradle.api.artifacts.dsl.RepositoryHandler;
 import org.gradle.api.artifacts.repositories.ArtifactRepository;
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository;
-import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.invocation.Gradle;
 import org.gradle.api.plugins.BasePluginConvention;
 import org.gradle.api.plugins.PluginContainer;
@@ -94,14 +91,6 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 
 	public static File getRootDir(Project project, String markerFileName) {
 		return getRootDir(project.getProjectDir(), markerFileName);
-	}
-
-	public static File getSrcDir(SourceDirectorySet sourceDirectorySet) {
-		Set<File> srcDirs = sourceDirectorySet.getSrcDirs();
-
-		Iterator<File> iterator = srcDirs.iterator();
-
-		return iterator.next();
 	}
 
 	public static boolean hasPlugin(

@@ -16,6 +16,8 @@ package com.liferay.gradle.util;
 
 import java.util.Arrays;
 
+import org.gradle.util.CollectionUtils;
+
 /**
  * @author Andrea Di Giorgi
  */
@@ -31,18 +33,12 @@ public class StringUtil {
 		return s;
 	}
 
+	/**
+	 * @deprecated As of 1.1.0
+	 */
+	@Deprecated
 	public static String merge(String[] array, String separator) {
-		StringBuilder sb = new StringBuilder();
-
-		for (int i = 0; i < array.length; i++) {
-			sb.append(array[i]);
-
-			if ((i + 1) < array.length) {
-				sb.append(separator);
-			}
-		}
-
-		return sb.toString();
+		return CollectionUtils.join(separator, array);
 	}
 
 	public static String[] prepend(String[] array, String prefix) {

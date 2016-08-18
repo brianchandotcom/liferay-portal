@@ -42,10 +42,25 @@ public class CSSBuilderDefaultsPlugin
 			project, CSSBuilderPlugin.PORTAL_COMMON_CSS_CONFIGURATION_NAME,
 			_FRONTEND_COMMON_CSS_NAME);
 
-		configureTasksBuildCSS(project);
+		_configureTasksBuildCSS(project);
 	}
 
-	protected void configureTaskBuildCSS(BuildCSSTask buildCSSTask) {
+	@Override
+	protected Class<CSSBuilderPlugin> getPluginClass() {
+		return CSSBuilderPlugin.class;
+	}
+
+	@Override
+	protected String getPortalToolConfigurationName() {
+		return CSSBuilderPlugin.CSS_BUILDER_CONFIGURATION_NAME;
+	}
+
+	@Override
+	protected String getPortalToolName() {
+		return _PORTAL_TOOL_NAME;
+	}
+
+	private void _configureTaskBuildCSS(BuildCSSTask buildCSSTask) {
 		Project project = buildCSSTask.getProject();
 
 		File docrootDir = project.file("docroot");
@@ -75,7 +90,7 @@ public class CSSBuilderDefaultsPlugin
 		buildCSSTask.setSassCompilerClassName(sassCompilerClassName);
 	}
 
-	protected void configureTasksBuildCSS(Project project) {
+	private void _configureTasksBuildCSS(Project project) {
 		TaskContainer taskContainer = project.getTasks();
 
 		taskContainer.withType(
@@ -84,25 +99,10 @@ public class CSSBuilderDefaultsPlugin
 
 				@Override
 				public void execute(BuildCSSTask buildCSSTask) {
-					configureTaskBuildCSS(buildCSSTask);
+					_configureTaskBuildCSS(buildCSSTask);
 				}
 
 			});
-	}
-
-	@Override
-	protected Class<CSSBuilderPlugin> getPluginClass() {
-		return CSSBuilderPlugin.class;
-	}
-
-	@Override
-	protected String getPortalToolConfigurationName() {
-		return CSSBuilderPlugin.CSS_BUILDER_CONFIGURATION_NAME;
-	}
-
-	@Override
-	protected String getPortalToolName() {
-		return _PORTAL_TOOL_NAME;
 	}
 
 	private static final String _FRONTEND_COMMON_CSS_NAME =

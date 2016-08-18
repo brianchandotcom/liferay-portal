@@ -75,7 +75,7 @@ public class PatchTask extends DefaultTask {
 
 			@Override
 			public File call() throws Exception {
-				return getOriginalLibModuleFile();
+				return _getOriginalLibModuleFile();
 			}
 
 		};
@@ -84,7 +84,7 @@ public class PatchTask extends DefaultTask {
 
 			@Override
 			public File call() throws Exception {
-				return FileUtil.get(getProject(), getOriginalLibSrcUrl());
+				return FileUtil.get(getProject(), _getOriginalLibSrcUrl());
 			}
 
 		};
@@ -131,7 +131,7 @@ public class PatchTask extends DefaultTask {
 	}
 
 	public String getOriginalLibModuleGroup() {
-		Dependency dependency = getOriginalLibDependency();
+		Dependency dependency = _getOriginalLibDependency();
 
 		return dependency.getGroup();
 	}
@@ -141,7 +141,7 @@ public class PatchTask extends DefaultTask {
 	}
 
 	public String getOriginalLibModuleVersion() {
-		Dependency dependency = getOriginalLibDependency();
+		Dependency dependency = _getOriginalLibDependency();
 
 		return dependency.getVersion();
 	}
@@ -182,7 +182,7 @@ public class PatchTask extends DefaultTask {
 		Map<File, ConfigurableFileTree> patchedSrcFileTreeMap = new HashMap<>();
 
 		for (String fileName : getFileNames()) {
-			File patchedDir = getPatchedSrcDir(fileName);
+			File patchedDir = _getPatchedSrcDir(fileName);
 
 			ConfigurableFileTree configurableFileTree =
 				patchedSrcFileTreeMap.get(patchedDir);
@@ -227,10 +227,10 @@ public class PatchTask extends DefaultTask {
 	public void patch() throws Exception {
 		final Project project = getProject();
 
-		File patchesTemporaryDir = fixPatchFiles();
-		final File srcTemporaryDir = fixSrcFiles();
+		File patchesTemporaryDir = _fixPatchFiles();
+		final File srcTemporaryDir = _fixSrcFiles();
 
-		for (final File patchFile : getSortedFiles(patchesTemporaryDir)) {
+		for (final File patchFile : _getSortedFiles(patchesTemporaryDir)) {
 			final ByteArrayOutputStream byteArrayOutputStream =
 				new ByteArrayOutputStream();
 
@@ -264,7 +264,7 @@ public class PatchTask extends DefaultTask {
 		FileTree fileTree = project.fileTree(srcTemporaryDir);
 
 		for (File file : fileTree) {
-			File patchedSrcDir = getPatchedSrcDir(file.getName());
+			File patchedSrcDir = _getPatchedSrcDir(file.getName());
 
 			if (patchedSrcDir == null) {
 				continue;
@@ -364,7 +364,7 @@ public class PatchTask extends DefaultTask {
 		patchFiles(patchFiles);
 	}
 
-	protected File fixPatchFiles() {
+	private File _fixPatchFiles() {
 		final Project project = getProject();
 
 		final File temporaryDir = new File(getTemporaryDir(), "patches");
@@ -387,7 +387,7 @@ public class PatchTask extends DefaultTask {
 		return temporaryDir;
 	}
 
-	protected File fixSrcFiles() {
+	private File _fixSrcFiles() {
 		final Project project = getProject();
 
 		final File temporaryDir = new File(getTemporaryDir(), "src");
@@ -425,7 +425,7 @@ public class PatchTask extends DefaultTask {
 		return temporaryDir;
 	}
 
-	protected Dependency getOriginalLibDependency() {
+	private Dependency _getOriginalLibDependency() {
 		Configuration configuration = GradleUtil.getConfiguration(
 			getProject(), getOriginalLibConfigurationName());
 
@@ -443,7 +443,7 @@ public class PatchTask extends DefaultTask {
 		throw new GradleException("Unable to find original lib " + moduleName);
 	}
 
-	protected File getOriginalLibModuleFile() {
+	private File _getOriginalLibModuleFile() {
 		String configurationName = getOriginalLibConfigurationName();
 		String moduleGroup = getOriginalLibModuleGroup();
 		String moduleName = getOriginalLibModuleName();
@@ -483,7 +483,7 @@ public class PatchTask extends DefaultTask {
 		return null;
 	}
 
-	protected String getOriginalLibSrcUrl() {
+	private String _getOriginalLibSrcUrl() {
 		StringBuilder sb = new StringBuilder();
 
 		String baseUrl = getOriginalLibSrcBaseUrl();
@@ -516,7 +516,7 @@ public class PatchTask extends DefaultTask {
 		return sb.toString();
 	}
 
-	protected File getPatchedSrcDir(String fileName) {
+	private File _getPatchedSrcDir(String fileName) {
 		String extension = PATCHED_SRC_DIR_MAPPING_DEFAULT_EXTENSION;
 
 		int pos = fileName.indexOf('.');
@@ -535,7 +535,7 @@ public class PatchTask extends DefaultTask {
 		return GradleUtil.toFile(getProject(), patchedSrcDir);
 	}
 
-	protected List<File> getSortedFiles(File dir) {
+	private List<File> _getSortedFiles(File dir) {
 		List<File> sortedFiles = new ArrayList<>();
 
 		Project project = getProject();

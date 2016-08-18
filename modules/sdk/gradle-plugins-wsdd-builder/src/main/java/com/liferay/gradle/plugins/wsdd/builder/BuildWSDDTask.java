@@ -38,7 +38,7 @@ public class BuildWSDDTask extends JavaExec {
 
 	@Override
 	public void exec() {
-		setArgs(getCompleteArgs());
+		setArgs(_getCompleteArgs());
 
 		super.exec();
 	}
@@ -88,7 +88,7 @@ public class BuildWSDDTask extends JavaExec {
 		_serviceNamespace = serviceNamespace;
 	}
 
-	protected List<String> getCompleteArgs() {
+	private List<String> _getCompleteArgs() {
 		List<String> args = new ArrayList<>(getArgs());
 
 		args.add("wsdd.class.path=" + getBuilderClasspath());

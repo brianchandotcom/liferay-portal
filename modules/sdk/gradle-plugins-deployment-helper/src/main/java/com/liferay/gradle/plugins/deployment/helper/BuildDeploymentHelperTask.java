@@ -61,7 +61,7 @@ public class BuildDeploymentHelperTask extends JavaExec {
 
 	@Override
 	public void exec() {
-		setArgs(getCompleteArgs());
+		setArgs(_getCompleteArgs());
 
 		super.exec();
 	}
@@ -81,7 +81,7 @@ public class BuildDeploymentHelperTask extends JavaExec {
 
 		for (File deploymentFile : getDeploymentFiles()) {
 			if (deploymentFile.isDirectory()) {
-				FileTree fileTree = getJarsFileTree(deploymentFile);
+				FileTree fileTree = _getJarsFileTree(deploymentFile);
 
 				inputFiles.add(fileTree);
 			}
@@ -122,12 +122,12 @@ public class BuildDeploymentHelperTask extends JavaExec {
 		_outputFile = outputFile;
 	}
 
-	protected List<String> getCompleteArgs() {
+	private List<String> _getCompleteArgs() {
 		List<String> completeArgs = new ArrayList<>();
 
 		GUtil.addToCollection(completeArgs, getArgs());
 
-		completeArgs.add("--fileNames=" + getDeploymentFileNames());
+		completeArgs.add("--fileNames=" + _getDeploymentFileNames());
 		completeArgs.add(
 			"--outputFile=" + FileUtil.getAbsolutePath(getOutputFile()));
 
@@ -141,7 +141,7 @@ public class BuildDeploymentHelperTask extends JavaExec {
 		return completeArgs;
 	}
 
-	protected String getDeploymentFileNames() {
+	private String _getDeploymentFileNames() {
 		StringBuilder sb = new StringBuilder();
 
 		for (File file : getDeploymentFiles()) {
@@ -154,7 +154,7 @@ public class BuildDeploymentHelperTask extends JavaExec {
 		return sb.toString();
 	}
 
-	protected FileTree getJarsFileTree(File dir) {
+	private FileTree _getJarsFileTree(File dir) {
 		Project project = getProject();
 
 		Map<String, Object> args = new HashMap<>();

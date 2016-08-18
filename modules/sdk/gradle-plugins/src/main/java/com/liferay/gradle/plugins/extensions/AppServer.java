@@ -59,6 +59,15 @@ public class AppServer {
 		return GradleUtil.toFile(project, _dir);
 	}
 
+	public String getFileSuffixBat() {
+		if (OSDetector.isWindows()) {
+			return ".bat";
+		}
+		else {
+			return ".sh";
+		}
+	}
+
 	public File getLibGlobalDir() {
 		return GradleUtil.toFile(project, _libGlobalDir);
 	}
@@ -175,15 +184,6 @@ public class AppServer {
 
 	public void setZipUrl(Object zipUrl) {
 		_zipUrl = zipUrl;
-	}
-
-	protected String getFileSuffixBat() {
-		if (OSDetector.isWindows()) {
-			return ".bat";
-		}
-		else {
-			return ".sh";
-		}
 	}
 
 	protected final Project project;

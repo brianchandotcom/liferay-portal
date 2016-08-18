@@ -40,6 +40,7 @@ public class ExecuteGulpTask extends ExecuteNodeScriptTask {
 		_gulpCommand = gulpCommand;
 	}
 
+	@Override
 	protected List<String> getCompleteArgs() {
 		List<String> completeArgs = super.getCompleteArgs();
 

@@ -31,10 +31,15 @@ public class JSTranspilerDefaultsPlugin
 	protected void configureDefaults(
 		Project project, JSTranspilerPlugin jsTranspilerPlugin) {
 
-		configureJSTranspiler(project);
+		_configureJSTranspiler(project);
 	}
 
-	protected void configureJSTranspiler(Project project) {
+	@Override
+	protected Class<JSTranspilerPlugin> getPluginClass() {
+		return JSTranspilerPlugin.class;
+	}
+
+	private void _configureJSTranspiler(Project project) {
 		JSTranspilerExtension jsTranspilerExtension = GradleUtil.getExtension(
 			project, JSTranspilerExtension.class);
 
@@ -47,11 +52,6 @@ public class JSTranspilerDefaultsPlugin
 			project, "nodejs.metal.cli.version", _METAL_CLI_VERSION);
 
 		jsTranspilerExtension.setMetalCliVersion(metalCliVersion);
-	}
-
-	@Override
-	protected Class<JSTranspilerPlugin> getPluginClass() {
-		return JSTranspilerPlugin.class;
 	}
 
 	private static final String _LFR_AMD_LOADER_VERSION = "1.3.5";

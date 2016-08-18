@@ -37,7 +37,6 @@ import org.gradle.api.DefaultTask;
 import org.gradle.api.Project;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.logging.Logger;
-import org.gradle.api.logging.Logging;
 import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.OutputFiles;
 import org.gradle.api.tasks.SkipWhenEmpty;
@@ -62,7 +61,7 @@ public abstract class BaseMergeTask extends DefaultTask {
 		Project project = getProject();
 
 		for (File sourceDir : getSourceDirs()) {
-			for (File sourceFile : getSourceFiles(sourceDir)) {
+			for (File sourceFile : _getSourceFiles(sourceDir)) {
 				String fileName = FileUtil.relativize(sourceFile, sourceDir);
 
 				File destinationFile = new File(destinationDir, fileName);
@@ -90,7 +89,7 @@ public abstract class BaseMergeTask extends DefaultTask {
 		Project project = getProject();
 
 		for (File sourceDir : getSourceDirs()) {
-			FileCollection fileCollection = getSourceFiles(sourceDir);
+			FileCollection fileCollection = _getSourceFiles(sourceDir);
 
 			fileCollections.add(fileCollection);
 		}
@@ -100,6 +99,8 @@ public abstract class BaseMergeTask extends DefaultTask {
 
 	@TaskAction
 	public void merge() throws IOException {
+		Logger logger = getLogger();
+
 		File destinationDir = getDestinationDir();
 		FileCollection sourceDirs = getSourceDirs();
 
@@ -130,18 +131,19 @@ public abstract class BaseMergeTask extends DefaultTask {
 					sourceFile.toPath(), destinationFile.toPath(),
 					StandardCopyOption.REPLACE_EXISTING);
 
-				if (_logger.isInfoEnabled()) {
-					_logger.info(
-						"Copied " + sourceFile + " into " + destinationFile);
+				if (logger.isInfoEnabled()) {
+					logger.info(
+						"Copied {} into {}", sourceFile, destinationFile);
 				}
 			}
 			else {
 				merge(sourceFiles, destinationFile);
 
-				if (_logger.isInfoEnabled()) {
-					_logger.info(
-						"Merged " + CollectionUtils.join(", ", sourceFiles) +
-							" into " + destinationFile);
+				if (logger.isInfoEnabled()) {
+					logger.info(
+						"Merged {} into {}",
+						CollectionUtils.join(", ", sourceFiles),
+						destinationFile);
 				}
 			}
 		}
@@ -171,7 +173,10 @@ public abstract class BaseMergeTask extends DefaultTask {
 		return sourceDirs(Arrays.asList(sourceDirs));
 	}
 
-	protected FileCollection getSourceFiles(File sourceDir) {
+	protected abstract void merge(Set<File> sourceFiles, File destinationFile)
+		throws IOException;
+
+	private FileCollection _getSourceFiles(File sourceDir) {
 		Project project = getProject();
 
 		Map<String, Object> args = new HashMap<>();
@@ -181,12 +186,6 @@ public abstract class BaseMergeTask extends DefaultTask {
 
 		return project.fileTree(args);
 	}
-
-	protected abstract void merge(Set<File> sourceFiles, File destinationFile)
-		throws IOException;
-
-	private static final Logger _logger = Logging.getLogger(
-		BaseMergeTask.class);
 
 	private Object _destinationDir;
 	private final Set<Object> _sourceDirs = new LinkedHashSet<>();

@@ -54,9 +54,9 @@ public class CompileThemeTask extends DefaultTask {
 
 	@TaskAction
 	public void compileTheme() throws Exception {
-		copyThemeParent();
+		_copyThemeParent();
 
-		copyDiffs();
+		_copyDiffs();
 	}
 
 	@InputDirectory
@@ -167,7 +167,7 @@ public class CompileThemeTask extends DefaultTask {
 		return themeTypes(Arrays.asList(themeTypes));
 	}
 
-	protected void copyDiffs() {
+	private void _copyDiffs() {
 		final File diffsDir = getDiffsDir();
 
 		if ((diffsDir == null) || !diffsDir.exists()) {
@@ -186,14 +186,14 @@ public class CompileThemeTask extends DefaultTask {
 			});
 	}
 
-	protected void copyPortalThemeDir(
+	private void _copyPortalThemeDir(
 			String theme, String[] excludes, String include)
 		throws Exception {
 
-		copyPortalThemeDir(theme, excludes, new String[] {include});
+		_copyPortalThemeDir(theme, excludes, new String[] {include});
 	}
 
-	protected void copyPortalThemeDir(
+	private void _copyPortalThemeDir(
 			String theme, final String[] excludes, final String[] includes)
 		throws Exception {
 
@@ -222,7 +222,7 @@ public class CompileThemeTask extends DefaultTask {
 		else {
 			String jarPrefix = "META-INF/resources/" + prefix;
 
-			final File frontendThemeFile = getFrontendThemeFile(theme);
+			final File frontendThemeFile = _getFrontendThemeFile(theme);
 			final String[] prefixedExcludes = StringUtil.prepend(
 				excludes, jarPrefix);
 			final String[] prefixedIncludes = StringUtil.prepend(
@@ -249,7 +249,7 @@ public class CompileThemeTask extends DefaultTask {
 		}
 	}
 
-	protected void copyThemeParent() throws Exception {
+	private void _copyThemeParent() throws Exception {
 		String themeParent = getThemeParent();
 
 		if (Validator.isNull(themeParent)) {
@@ -257,21 +257,21 @@ public class CompileThemeTask extends DefaultTask {
 		}
 
 		if (themeParent.equals("_styled") || themeParent.equals("_unstyled")) {
-			copyThemeParentUnstyled();
+			_copyThemeParentUnstyled();
 		}
 
 		if (themeParent.equals("_styled")) {
-			copyThemeParentStyled();
+			_copyThemeParentStyled();
 		}
 		else if (themeParent.equals("admin") || themeParent.equals("classic")) {
-			copyThemeParentPortal();
+			_copyThemeParentPortal();
 		}
 	}
 
-	protected void copyThemeParentPortal() throws Exception {
+	private void _copyThemeParentPortal() throws Exception {
 		String themeParent = getThemeParent();
 
-		copyPortalThemeDir(
+		_copyPortalThemeDir(
 			themeParent,
 			new String[] {"**/.sass-cache/**", "_diffs/**", "templates/**"},
 			"**");
@@ -281,17 +281,17 @@ public class CompileThemeTask extends DefaultTask {
 		String[] includes = StringUtil.prepend(
 			themeTypes.toArray(new String[themeTypes.size()]), "templates/*.");
 
-		copyPortalThemeDir(themeParent, null, includes);
+		_copyPortalThemeDir(themeParent, null, includes);
 	}
 
-	protected void copyThemeParentStyled() throws Exception {
-		copyPortalThemeDir(
+	private void _copyThemeParentStyled() throws Exception {
+		_copyPortalThemeDir(
 			"_styled",
 			new String[] {"**/*.css", "npm-debug.log", "package.json"}, "**");
 	}
 
-	protected void copyThemeParentUnstyled() throws Exception {
-		copyPortalThemeDir(
+	private void _copyThemeParentUnstyled() throws Exception {
+		_copyPortalThemeDir(
 			"_unstyled",
 			new String[] {
 				"**/*.css", "npm-debug.log", "package.json", "templates/**"
@@ -312,10 +312,10 @@ public class CompileThemeTask extends DefaultTask {
 		String[] includes = StringUtil.prepend(
 			themeTypesArray, "templates/**/*.");
 
-		copyPortalThemeDir("_unstyled", excludes, includes);
+		_copyPortalThemeDir("_unstyled", excludes, includes);
 	}
 
-	protected File getFrontendThemeFile(String theme) throws Exception {
+	private File _getFrontendThemeFile(String theme) throws Exception {
 		for (File file : getFrontendThemeFiles()) {
 			try (JarFile jarFile = new JarFile(file)) {
 				JarEntry jarEntry = jarFile.getJarEntry(

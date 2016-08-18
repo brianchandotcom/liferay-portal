@@ -14,7 +14,7 @@
 
 package com.liferay.gradle.plugins.test.integration;
 
-import com.liferay.gradle.plugins.test.integration.util.GradleUtil;
+import com.liferay.gradle.util.GradleUtil;
 
 import java.io.File;
 
@@ -59,18 +59,18 @@ public class TestIntegrationBasePlugin implements Plugin<Project> {
 	public void apply(Project project) {
 		GradleUtil.applyPlugin(project, JavaPlugin.class);
 
-		SourceSet testIntegrationSourceSet = addSourceSetTestIntegration(
+		SourceSet testIntegrationSourceSet = _addSourceSetTestIntegration(
 			project);
 
-		Test testIntegrationTask = addTaskTestIntegration(
+		Test testIntegrationTask = _addTaskTestIntegration(
 			project, testIntegrationSourceSet);
 
-		configureEclipse(project, testIntegrationSourceSet);
-		configureIdea(project, testIntegrationSourceSet);
-		configureTaskCheck(testIntegrationTask);
+		_configureEclipse(project, testIntegrationSourceSet);
+		_configureIdea(project, testIntegrationSourceSet);
+		_configureTaskCheck(testIntegrationTask);
 	}
 
-	protected SourceSet addSourceSetTestIntegration(Project project) {
+	private SourceSet _addSourceSetTestIntegration(Project project) {
 		SourceSet testIntegrationSourceSet = GradleUtil.addSourceSet(
 			project, TEST_INTEGRATION_SOURCE_SET_NAME);
 
@@ -114,7 +114,7 @@ public class TestIntegrationBasePlugin implements Plugin<Project> {
 		return testIntegrationSourceSet;
 	}
 
-	protected Test addTaskTestIntegration(
+	private Test _addTaskTestIntegration(
 		Project project, final SourceSet testIntegrationSourceSet) {
 
 		final Test test = GradleUtil.addTask(
@@ -171,7 +171,7 @@ public class TestIntegrationBasePlugin implements Plugin<Project> {
 		return test;
 	}
 
-	protected void configureEclipse(
+	private void _configureEclipse(
 		final Project project, final SourceSet testIntegrationSourceSet) {
 
 		PluginContainer pluginContainer = project.getPlugins();
@@ -182,14 +182,14 @@ public class TestIntegrationBasePlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(EclipsePlugin eclipsePlugin) {
-					configureEclipseClasspath(
+					_configureEclipseClasspath(
 						project, testIntegrationSourceSet);
 				}
 
 			});
 	}
 
-	protected void configureEclipseClasspath(
+	private void _configureEclipseClasspath(
 		Project project, SourceSet testIntegrationSourceSet) {
 
 		EclipseModel eclipseModel = GradleUtil.getExtension(
@@ -206,7 +206,7 @@ public class TestIntegrationBasePlugin implements Plugin<Project> {
 		plusConfigurations.add(configuration);
 	}
 
-	protected void configureIdea(
+	private void _configureIdea(
 		final Project project, final SourceSet testIntegrationSourceSet) {
 
 		PluginContainer pluginContainer = project.getPlugins();
@@ -217,13 +217,13 @@ public class TestIntegrationBasePlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(IdeaPlugin ideaPlugin) {
-					configureIdeaModule(project, testIntegrationSourceSet);
+					_configureIdeaModule(project, testIntegrationSourceSet);
 				}
 
 			});
 	}
 
-	protected void configureIdeaModule(
+	private void _configureIdeaModule(
 		Project project, SourceSet testIntegrationSourceSet) {
 
 		IdeaModel ideaModel = GradleUtil.getExtension(project, IdeaModel.class);
@@ -243,7 +243,7 @@ public class TestIntegrationBasePlugin implements Plugin<Project> {
 		plusConfigurations.add(configuration);
 	}
 
-	protected void configureTaskCheck(Test test) {
+	private void _configureTaskCheck(Test test) {
 		Project project = test.getProject();
 
 		Task task = GradleUtil.getTask(

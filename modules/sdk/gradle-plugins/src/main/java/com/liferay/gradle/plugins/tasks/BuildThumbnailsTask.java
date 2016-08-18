@@ -27,6 +27,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.gradle.api.Project;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.tasks.Input;
@@ -55,7 +56,7 @@ public class BuildThumbnailsTask extends BasePortalToolsTask {
 			super.setErrorOutput(SafeStreams.systemErr());
 			super.setStandardOutput(SafeStreams.systemOut());
 
-			doExec(getArgs(file));
+			doExec(_getArgs(file));
 		}
 	}
 
@@ -76,6 +77,8 @@ public class BuildThumbnailsTask extends BasePortalToolsTask {
 	}
 
 	public FileCollection getImageDirs() {
+		Project project = getProject();
+
 		return project.files(_imageDirs);
 	}
 
@@ -88,6 +91,8 @@ public class BuildThumbnailsTask extends BasePortalToolsTask {
 	@SkipWhenEmpty
 	public FileCollection getScreenshotFiles() {
 		List<FileTree> fileTrees = new ArrayList<>();
+
+		Project project = getProject();
 
 		for (File imagesDir : getImageDirs()) {
 			Map<String, Object> args = new HashMap<>();
@@ -106,6 +111,8 @@ public class BuildThumbnailsTask extends BasePortalToolsTask {
 	@OutputFiles
 	public FileCollection getThumbnailFiles() {
 		List<File> thumbnailFiles = new ArrayList<>();
+
+		Project project = getProject();
 
 		for (File screenshotFile : getScreenshotFiles()) {
 			File thumbnailFile = new File(
@@ -172,7 +179,12 @@ public class BuildThumbnailsTask extends BasePortalToolsTask {
 		addDependency("com.liferay", "org.monte", "0.7.7");
 	}
 
-	protected List<String> getArgs(File screenshotFile) {
+	@Override
+	protected String getToolName() {
+		return "ThumbnailBuilder";
+	}
+
+	private List<String> _getArgs(File screenshotFile) {
 		List<String> args = getArgs();
 
 		args.add(
@@ -187,11 +199,6 @@ public class BuildThumbnailsTask extends BasePortalToolsTask {
 				FileUtil.getAbsolutePath(thumbnailFile));
 
 		return args;
-	}
-
-	@Override
-	protected String getToolName() {
-		return "ThumbnailBuilder";
 	}
 
 	private int _height = 120;

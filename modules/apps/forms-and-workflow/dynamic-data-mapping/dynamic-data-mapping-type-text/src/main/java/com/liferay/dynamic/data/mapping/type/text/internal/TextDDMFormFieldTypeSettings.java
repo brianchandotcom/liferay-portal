@@ -100,13 +100,13 @@ public interface TextDDMFormFieldTypeSettings
 	)
 	public String displayStyle();
 
-  	@DDMFormField(
- 		dataType = "ddm-options", label = "%options",
- 		properties = {"showLabel=false"}, required = true, type = "options",
- 		visibilityExpression = "equals(dataSourceType, \"manual\")"
- 	)
- 	public DDMFormFieldOptions options();
- 
+	@DDMFormField(
+		dataType = "ddm-options", label = "%options",
+		properties = {"showLabel=false"}, required = false, type = "options",
+		visibilityExpression = "equals(dataSourceType, \"manual\")"
+	)
+	public DDMFormFieldOptions options();
+
 	@DDMFormField(
 		dataType = "string", label = "%placeholder-text",
 		properties = {

@@ -1,0 +1,16 @@
+apply plugin: "com.liferay.xml.formatter"
+apply plugin: "java"
+
+task runGradleTest
+
+repositories {
+	mavenLocal()
+
+	maven {
+		url "https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public"
+	}
+}
+
+runGradleTest {
+	dependsOn formatXML
+}

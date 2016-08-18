@@ -20,6 +20,8 @@
 String redirect = ParamUtil.getString(request, "redirect");
 String returnToFullPageURL = ParamUtil.getString(request, "returnToFullPageURL");
 
+String xFrameOptionsHeader = StringUtil.toUpperCase(SystemProperties.get("http.header.secure.x.frame.options.255"));
+
 Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), portletResource);
 
 PortletURL portletURL = renderResponse.createRenderURL();
@@ -60,6 +62,12 @@ String widgetURL = PortalUtil.getWidgetURL(portlet, themeDisplay);
 						<div class="alert alert-info">
 							<liferay-ui:message key="share-this-application-on-any-website" />
 						</div>
+
+						<c:if test='<%= Validator.isNull(xFrameOptionsHeader) || (xFrameOptionsHeader.indexOf("ALLOW-FROM") == -1) %>'>
+							<div class="alert alert-warning">
+								<liferay-ui:message key="your-server-may-not-be-setup-to-share-this-application" />
+							</div>
+						</c:if>
 
 						<liferay-util:buffer var="textAreaContent">
 			<script src="<%= themeDisplay.getPortalURL() %><%= PortalWebResourcesUtil.getContextPath(PortalWebResourceConstants.RESOURCE_TYPE_JS) %>/liferay/widget.js" type="text/javascript"></script>

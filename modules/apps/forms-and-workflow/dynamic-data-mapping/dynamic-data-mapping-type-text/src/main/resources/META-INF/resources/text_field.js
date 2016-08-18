@@ -57,10 +57,6 @@ AUI.add(
 						return TextField.superclass.bindInputEvent.apply(instance, [eventName, callback, volatile]);
 					},
 
-					getChangeEventName: function() {
-						return 'input';
-					},
-
 					getAutoComplete: function() {
 						var instance = this;
 
@@ -90,6 +86,10 @@ AUI.add(
 						}
 
 						return autoComplete;
+					},
+
+					getChangeEventName: function() {
+						return 'input';
 					},
 
 					render: function() {

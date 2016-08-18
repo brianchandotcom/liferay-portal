@@ -28,6 +28,12 @@
 								'liferay-ddm-form-renderer'
 							]
 						},
+						'liferay-ddl-form-builder-autocomplete-template': {
+							path: '../templates/autocomplete.soy.js',
+							requires: [
+								'soyutils'
+							]
+						},
 						'liferay-ddl-form-builder-definition-serializer': {
 							path: 'form_definition_serializer.js',
 							requires: [
@@ -57,12 +63,6 @@
 								'liferay-ddl-form-builder-autocomplete-template',
 								'liferay-ddm-form-renderer',
 								'liferay-form'
-							]
-						},
-						'liferay-ddl-form-builder-autocomplete-template': {
-							path: '../templates/autocomplete.soy.js',
-							requires: [
-								'soyutils'
 							]
 						},
 						'liferay-ddl-form-builder-field-settings-sidebar': {

@@ -234,10 +234,6 @@ AUI.add(
 					_onClickAutocompleteButton: function() {
 						var instance = this;
 
-						var dataSourceType = instance.getField('dataSourceType');
-						var ddmDataProviderInstanceId = instance.getField('ddmDataProviderInstanceId');
-						var options = instance.getField('options');
-
 						instance.get('container').hide();
 
 						A.one('.sidebar-body').one('.autocomplete-container').show();
@@ -245,10 +241,6 @@ AUI.add(
 
 					_onClickAutocompleteHeaderBack: function() {
 						var instance = this;
-
-						var dataSourceType = instance.getField('dataSourceType');
-						var ddmDataProviderInstanceId = instance.getField('ddmDataProviderInstanceId');
-						var options = instance.getField('options');
 
 						instance.get('container').show();
 

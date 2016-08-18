@@ -1056,7 +1056,7 @@ public class MainServlet extends ActionServlet {
 			return false;
 		}
 
-		processInactiveRequest(
+		_inactiveRequestHandler.processInactiveRequest(
 			request, response,
 			"this-instance-is-inactive-please-contact-the-administrator");
 
@@ -1094,7 +1094,7 @@ public class MainServlet extends ActionServlet {
 			return false;
 		}
 
-		processInactiveRequest(
+		_inactiveRequestHandler.processInactiveRequest(
 			request, response,
 			"this-site-is-inactive-please-contact-the-administrator");
 
@@ -1255,7 +1255,8 @@ public class MainServlet extends ActionServlet {
 			messageKey = "the-system-is-shutdown-please-try-again-later";
 		}
 
-		processInactiveRequest(request, response, messageKey);
+		_inactiveRequestHandler.processInactiveRequest(
+			request, response, messageKey);
 
 		return true;
 	}
@@ -1325,6 +1326,8 @@ public class MainServlet extends ActionServlet {
 
 	private static final Log _log = LogFactoryUtil.getLog(MainServlet.class);
 
+	private final InactiveRequestHandler _inactiveRequestHandler =
+		new InactiveRequestHandlerImpl();
 	private ServiceRegistration<ModuleServiceLifecycle>
 		_moduleServiceLifecycleServiceRegistration;
 	private ServiceRegistration<ServletContext>

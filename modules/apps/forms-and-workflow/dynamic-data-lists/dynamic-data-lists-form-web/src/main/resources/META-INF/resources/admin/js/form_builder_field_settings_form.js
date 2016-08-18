@@ -7,6 +7,8 @@ AUI.add(
 
 		var RendererUtil = Liferay.DDM.Renderer.Util;
 
+		var SoyTemplateUtil = Liferay.DDL.SoyTemplateUtil;
+
 		var FormBuilderSettingsForm = A.Component.create(
 			{
 				ATTRS: {
@@ -160,6 +162,10 @@ AUI.add(
 					_createAutocompleteContainer: function() {
 						var instance = this;
 
+						var emptyPageRenderer = SoyTemplateUtil.getTemplateRenderer('ddm.tabbed_form_frame');
+
+						var emptyPageNode = A.Node.create(emptyPageRenderer());
+
 						var sidebarBody = A.one('.sidebar-body');
 
 						var dataSourceTypeContainer = instance.getField('dataSourceType').get('container');
@@ -168,7 +174,11 @@ AUI.add(
 
 						var optionsContainer = instance.getField('options').get('container');
 
-						sidebarBody.append(instance._getAutocompleteContainerTemplate());
+						var tabView = instance.getTabView();
+
+						emptyPageNode.setHTML(instance._getAutocompleteContainerTemplate());
+
+						tabView.get('panelNode').append(emptyPageNode);
 
 						sidebarBody.one('.autocomplete-body').append(dataSourceTypeContainer);
 						sidebarBody.one('.autocomplete-body').append(ddmDataProviderInstanceIdContainer);
@@ -196,17 +206,17 @@ AUI.add(
 
 						var autocompleteButtonContainer;
 
-						autocompleteButtonContainer = ddl.autocomplete.button();
+						autocompleteButtonContainer = SoyTemplateUtil.getTemplateRenderer('ddl.autocomplete.button');
 
-						return autocompleteButtonContainer;
+						return autocompleteButtonContainer();
 					},
 
 					_getAutocompleteContainerTemplate: function() {
 						var instance = this;
 
-						var autocompleteContainer;
+						var autocompleteContainerRenderer = SoyTemplateUtil.getTemplateRenderer('ddl.autocomplete.container');
 
-						autocompleteContainer = ddl.autocomplete.container({backButton: Liferay.Util.getLexiconIconTpl('angle-left', 'icon-monospaced')});
+						var autocompleteContainer = autocompleteContainerRenderer({backButton: Liferay.Util.getLexiconIconTpl('angle-left', 'icon-monospaced')});
 
 						return autocompleteContainer;
 					},
@@ -234,17 +244,17 @@ AUI.add(
 					_onClickAutocompleteButton: function() {
 						var instance = this;
 
-						instance.get('container').hide();
+						instance.get('container').one('.tab-pane.active').hide();
 
-						A.one('.sidebar-body').one('.autocomplete-container').show();
+						A.one('.sidebar-body').one('.autocomplete-container').ancestor().addClass('active');
 					},
 
 					_onClickAutocompleteHeaderBack: function() {
 						var instance = this;
 
-						instance.get('container').show();
+						instance.get('container').one('.tab-pane.active').show();
 
-						A.one('.sidebar-body').one('.autocomplete-container').hide();
+						A.one('.sidebar-body').one('.autocomplete-container').ancestor().removeClass('active');
 					},
 
 					_onClickModeToggler: function(event) {
@@ -330,6 +340,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['liferay-ddm-form-renderer', 'liferay-ddm-form-renderer-util', 'liferay-form']
+		requires: ['liferay-ddl-soy-template-util', 'liferay-ddm-form-renderer', 'liferay-ddm-form-renderer-util', 'liferay-form']
 	}
 );

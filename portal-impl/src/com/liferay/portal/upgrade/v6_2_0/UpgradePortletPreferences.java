@@ -48,10 +48,10 @@ public class UpgradePortletPreferences extends UpgradeProcess {
 				"delete from PortletPreferences where portletPreferencesId = ?";
 
 			try (PreparedStatement ps1 = connection.prepareStatement(selectSQL);
-				ResultSet rs = ps1.executeQuery();
 				PreparedStatement ps2 =
 					AutoBatchPreparedStatementUtil.autoBatch(
-						connection.prepareStatement(deleteSQL))) {
+						connection.prepareStatement(deleteSQL));
+				ResultSet rs = ps1.executeQuery()) {
 
 				while (rs.next()) {
 					long portletPreferencesId = rs.getLong(

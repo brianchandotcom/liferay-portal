@@ -151,7 +151,7 @@
 </tr>
 <tr>
 	<td>FIELD_DELETE_BUTTON</td>
-	<td>//div[contains(@data-fieldname,'${key_fieldName}')] // FIX THIS</td>
+	<td>//div[contains(@data-fieldname,'${key_fieldName}')]</td>
 	<td></td>
 </tr>
 <!--SIDEBAR -->

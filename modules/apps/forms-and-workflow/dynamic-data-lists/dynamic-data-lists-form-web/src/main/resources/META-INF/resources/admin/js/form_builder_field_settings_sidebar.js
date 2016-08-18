@@ -97,6 +97,8 @@ AUI.add(
 
 						var settingsFormContainer = settingsForm.get('container');
 
+						settingsFormContainer.hide();
+
 						instance.set('bodyContent', settingsFormContainer);
 
 						settingsForm.after(
@@ -132,6 +134,13 @@ AUI.add(
 
 								instance._configureSideBar();
 
+								settingsForm.evaluate(
+									function() {
+										instance.settingsForm.get('container').show();
+										instance._removeLoading();
+									}
+								);
+
 								field.setAttrs(field.getSettings(settingsForm));
 
 								instance._saveCurrentContext();
@@ -145,6 +154,14 @@ AUI.add(
 								);
 							}
 						);
+					},
+
+					_removeLoading: function() {
+						var instance = this;
+
+						var boundingBox = instance.get('boundingBox');
+
+						boundingBox.one('.loading-icon').remove();
 					},
 
 					_saveCurrentContext: function() {
@@ -170,13 +187,13 @@ AUI.add(
 					_showLoading: function() {
 						var instance = this;
 
-						var bodyContent = instance.get('bodyContent');
+						var contentBox = instance.get('contentBox');
 
 						instance.set('description', '');
 						instance.set('title', '');
 
-						if (bodyContent !== TPL_LOADING) {
-							instance.set('bodyContent', TPL_LOADING);
+						if (!contentBox.one('.loading-icon')) {
+							contentBox.append(TPL_LOADING);
 						}
 					}
 				}

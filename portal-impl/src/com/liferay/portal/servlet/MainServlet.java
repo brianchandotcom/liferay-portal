@@ -54,6 +54,7 @@ import com.liferay.portal.kernel.service.ResourceActionLocalServiceUtil;
 import com.liferay.portal.kernel.service.ThemeLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
+import com.liferay.portal.kernel.servlet.InactiveRequestHandlerUtil;
 import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateManager;
@@ -1061,7 +1062,7 @@ public class MainServlet extends ActionServlet {
 			return false;
 		}
 
-		processInactiveRequest(
+		InactiveRequestHandlerUtil.processInactiveRequest(
 			request, response,
 			"this-instance-is-inactive-please-contact-the-administrator");
 
@@ -1099,7 +1100,7 @@ public class MainServlet extends ActionServlet {
 			return false;
 		}
 
-		processInactiveRequest(
+		InactiveRequestHandlerUtil.processInactiveRequest(
 			request, response,
 			"this-site-is-inactive-please-contact-the-administrator");
 
@@ -1260,7 +1261,8 @@ public class MainServlet extends ActionServlet {
 			messageKey = "the-system-is-shutdown-please-try-again-later";
 		}
 
-		processInactiveRequest(request, response, messageKey);
+		InactiveRequestHandlerUtil.processInactiveRequest(
+			request, response, messageKey);
 
 		return true;
 	}

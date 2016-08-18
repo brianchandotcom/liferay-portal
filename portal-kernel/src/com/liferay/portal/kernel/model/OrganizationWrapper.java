@@ -344,6 +344,13 @@ public class OrganizationWrapper implements Organization,
 		return _organization.getComments();
 	}
 
+	@Override
+	public java.lang.String getLogoURL(
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _organization.getLogoURL(themeDisplay);
+	}
+
 	/**
 	* Returns the name of this organization.
 	*

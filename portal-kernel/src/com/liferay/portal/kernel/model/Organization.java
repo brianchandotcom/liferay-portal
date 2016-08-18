@@ -89,6 +89,10 @@ public interface Organization extends OrganizationModel, PersistedModel,
 
 	public long getGroupId();
 
+	public java.lang.String getLogoURL(
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 	public Organization getParentOrganization()
 		throws com.liferay.portal.kernel.exception.PortalException;
 

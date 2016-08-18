@@ -123,9 +123,9 @@
 	</command>
 
 	<command name="restoreOverwriteCP">
-		<var name="key_assetName" value="${assetName}" />
-
-		<execute function="Click" locator1="RecycleBin#RECYCLE_BIN_TABLE_ACTIONS" />
+		<execute function="Click" locator1="RecycleBin#RECYCLE_BIN_TABLE_ACTIONS">
+			<var name="key_assetName" value="${assetName}" />
+		</execute>
 
 		<execute function="AssertClick" locator1="MenuItem#RESTORE" value1="Restore" />
 

@@ -20,6 +20,14 @@
 		<execute function="Pause" locator1="2000" />
 	</command>
 
+	<command name="viewErrorMessage">
+		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="${errorMessage}" />
+
+		<execute macro="Alert#_closeMessage">
+			<var name="messageType" value="ERROR" />
+		</execute>
+	</command>
+
 	<command name="viewFailedSiteTemplateDeletionMessage">
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="You cannot delete site templates that are used by a site." />
 	</command>

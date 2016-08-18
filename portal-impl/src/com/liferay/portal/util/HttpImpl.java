@@ -45,6 +45,7 @@ import java.io.InputStream;
 import java.lang.ref.Reference;
 
 import java.net.InetAddress;
+import java.net.ProxySelector;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -95,6 +96,7 @@ import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
+import org.apache.http.impl.conn.SystemDefaultRoutePlanner;
 import org.apache.http.impl.cookie.BasicClientCookie;
 import org.apache.http.pool.PoolStats;
 import org.apache.http.util.EntityUtils;
@@ -150,6 +152,11 @@ public class HttpImpl implements Http {
 
 		httpClientBuilder.setDefaultRequestConfig(requestConfig);
 
+		SystemDefaultRoutePlanner systemDefaultRoutePlanner =
+			new SystemDefaultRoutePlanner(ProxySelector.getDefault());
+
+		httpClientBuilder.setRoutePlanner(systemDefaultRoutePlanner);
+
 		_closeableHttpClient = httpClientBuilder.build();
 
 		if (!hasProxyConfig() || Validator.isNull(_PROXY_USERNAME)) {
@@ -181,6 +188,8 @@ public class HttpImpl implements Http {
 		}
 
 		HttpClientBuilder proxyHttpClientBuilder = HttpClientBuilder.create();
+
+		proxyHttpClientBuilder.setRoutePlanner(systemDefaultRoutePlanner);
 
 		proxyHttpClientBuilder.setConnectionManager(
 			_poolingHttpClientConnectionManager);

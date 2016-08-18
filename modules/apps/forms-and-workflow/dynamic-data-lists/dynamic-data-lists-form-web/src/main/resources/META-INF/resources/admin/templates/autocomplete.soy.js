@@ -19,7 +19,7 @@ if (goog.DEBUG) {
 
 
 ddl.autocomplete.container = function(opt_data, opt_ignored) {
-  return '<div class="autocomplete-container hide"><header class="header-toolbar"><div class="toolbar-group"><div class="toolbar-group-content"><a class="autocomplete-header-back" href="javascript:;">' + soy.$$filterNoAutoescape(opt_data.backButton) + '</a></div></div><div class="toolbar-group-expand-text"><span title="Autocomplete">Autocomplete</span></div></header><div class="autocomplete-body"></div></div>';
+  return '<div class="autocomplete-container"><header class="header-toolbar"><div class="toolbar-group"><div class="toolbar-group-content"><a class="autocomplete-header-back" href="javascript:;">' + soy.$$filterNoAutoescape(opt_data.backButton) + '</a></div></div><div class="toolbar-group-expand-text"><span title="Autocomplete">Autocomplete</span></div></header><div class="autocomplete-body"></div></div>';
 };
 if (goog.DEBUG) {
   ddl.autocomplete.container.soyTemplateName = 'ddl.autocomplete.container';

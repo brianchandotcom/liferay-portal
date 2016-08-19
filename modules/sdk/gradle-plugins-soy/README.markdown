@@ -1,7 +1,7 @@
 # Soy Gradle Plugin
 
-The Soy Gradle plugin allows you to compile [Closure Templates](https://developers.google.com/closure/templates/)
-into Javascript functions.
+The Soy Gradle plugin lets you compile [Closure Templates](https://developers.google.com/closure/templates/)
+into JavaScript functions.
 
 ## Usage
 
@@ -50,7 +50,7 @@ plugin is applied:
 Property Name | Default Value
 ------------- | -------------
 [`includes`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.SourceTask.html#org.gradle.api.tasks.SourceTask:includes) | `["**/*.soy"]`
-[`source`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.SourceTask.html#org.gradle.api.tasks.SourceTask:source) | <p>**If the `java` plugin is applied:** The first `resources` directory of the `main` source set (by default: `src/main/resources`).</p><p>**Otherwise:** `[]`</p>
+[`source`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.SourceTask.html#org.gradle.api.tasks.SourceTask:source) | <p>**If the `java` plugin is applied:** The first `resources` directory of the `main` source set (by default, `src/main/resources`).</p><p>**Otherwise:** `[]`</p>
 
 ### BuildSoyTask
 

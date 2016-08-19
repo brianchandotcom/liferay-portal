@@ -97,7 +97,7 @@ AUI.add(
 
 						var settingsFormContainer = settingsForm.get('container');
 
-						settingsFormContainer.hide();
+						settingsFormContainer.addClass('invisible');
 
 						instance.set('bodyContent', settingsFormContainer);
 
@@ -145,7 +145,7 @@ AUI.add(
 
 								settingsForm.evaluate(
 									function() {
-										instance.settingsForm.get('container').show();
+										instance.settingsForm.get('container').removeClass('invisible');
 										instance._removeLoading();
 									}
 								);

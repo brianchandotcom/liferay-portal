@@ -1162,10 +1162,14 @@ app.server.type=@{app.server.type}]]></echo>
 								<else>
 									<get-module-base-dir-from-subrepository-name subrepository.name="@{subrepository.name}" />
 
+									<move file="${module.base.dir}/settings.gradle" tofile="${module.base.dir}/settings.gradle.temp" />
+
 									<gradle-execute dir="${module.base.dir}" task="testIntegration">
 										<arg value="-Ddatabase.type=@{database.type}" />
 										<arg value="-Dmodules.only.build=true" />
 									</gradle-execute>
+
+									<move file="${module.base.dir}/settings.gradle.temp" tofile="${module.base.dir}/settings.gradle" />
 								</else>
 							</if>
 
@@ -1852,7 +1856,11 @@ information. Make sure to commit in all build services results.
 	</target>
 
 	<target name="subrepository-compile-jdk8">
+		<move file="${subrepository.dir}/settings.gradle" tofile="${subrepository.dir}/settings.gradle.temp" />
+
 		<gradle-execute dir="${subrepository.dir}" task="compileJava" />
+
+		<move file="${subrepository.dir}/settings.gradle.temp" tofile="${subrepository.dir}/settings.gradle" />
 	</target>
 
 	<target name="subrepository-functional-tomcat8-mysql56-jdk8">
@@ -1866,10 +1874,14 @@ information. Make sure to commit in all build services results.
 	</target>
 
 	<target name="subrepository-pmd-jdk8">
+		<move file="${subrepository.dir}/settings.gradle" tofile="${subrepository.dir}/settings.gradle.temp" />
+
 		<gradle-execute dir="${subrepository.dir}" task="pmdMain">
 			<arg value="pmdTest" />
 			<arg value="pmdTestIntegration" />
 		</gradle-execute>
+
+		<move file="${subrepository.dir}/settings.gradle.temp" tofile="${subrepository.dir}/settings.gradle" />
 	</target>
 
 	<target name="subrepository-semantic-versioning-jdk8">
@@ -1886,7 +1898,11 @@ information. Make sure to commit in all build services results.
 
 		<echo>Executing baseline on ${subrepository.dir}.</echo>
 
+		<move file="${subrepository.dir}/settings.gradle" tofile="${subrepository.dir}/settings.gradle.temp" />
+
 		<gradle-execute dir="${subrepository.dir}" forcedcacheenabled="false" task="baseline" />
+
+		<move file="${subrepository.dir}/settings.gradle.temp" tofile="${subrepository.dir}/settings.gradle" />
 
 		<echo>Checking for baseline log files.</echo>
 
@@ -1918,11 +1934,19 @@ information. Make sure to commit in all build services results.
 	</target>
 
 	<target name="subrepository-source-format-jdk8">
+		<move file="${subrepository.dir}/settings.gradle" tofile="${subrepository.dir}/settings.gradle.temp" />
+
 		<gradle-execute dir="${subrepository.dir}" task="checkSourceFormatting" />
+
+		<move file="${subrepository.dir}/settings.gradle.temp" tofile="${subrepository.dir}/settings.gradle" />
 	</target>
 
 	<target name="subrepository-unit-jdk8">
+		<move file="${subrepository.dir}/settings.gradle" tofile="${subrepository.dir}/settings.gradle.temp" />
+
 		<gradle-execute dir="${subrepository.dir}" task="test" />
+
+		<move file="${subrepository.dir}/settings.gradle.temp" tofile="${subrepository.dir}/settings.gradle" />
 	</target>
 
 	<target name="sybase-service-start">

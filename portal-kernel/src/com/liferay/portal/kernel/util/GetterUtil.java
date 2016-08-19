@@ -73,7 +73,7 @@ public class GetterUtil {
 	public static final String[] DEFAULT_STRING_VALUES = new String[0];
 
 	/**
-	 * Returns the value as a boolean. If the value is <code>null</code> or not
+	 * Returns the Object value as a boolean. If the value is <code>null</code> or not
 	 * convertible to a boolean, the default value is returned. If the value
 	 * does not match a {@link #BOOLEANS} value, <code>false</code> is returned.
 	 *
@@ -94,7 +94,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a Date. If the value is <code>null</code> or not
+	 * Returns the Object value as a Date. If the value is <code>null</code> or not
 	 * convertible to a Date, the default value is returned.
 	 *
 	 * @param  value the value to convert
@@ -117,7 +117,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a double. If the value is <code>null</code> or not
+	 * Returns the Object value as a double. If the value is <code>null</code> or not
 	 * convertible to a double, the default value is returned.
 	 *
 	 * @param  value the value to convert
@@ -143,7 +143,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a float. If the value is <code>null</code> or not
+	 * Returns the Object value as a float. If the value is <code>null</code> or not
 	 * convertible to a float, the default value is returned.
 	 *
 	 * @param  value the value to convert
@@ -169,7 +169,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as an integer. If the value is <code>null</code> or not
+	 * Returns the Object value as an integer. If the value is <code>null</code> or not
 	 * convertible to an integer, the default value is returned.
 	 *
 	 * @param  value the value to convert
@@ -195,7 +195,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a long. If the value is <code>null</code> or not
+	 * Returns the Object value as a long. If the value is <code>null</code> or not
 	 * convertible to a long, the default value is returned.
 	 *
 	 * @param  value the value to convert
@@ -221,7 +221,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a Number. If the value is <code>null</code> or not
+	 * Returns the Object value as a Number. If the value is <code>null</code> or not
 	 * convertible to a Number, the default value is returned.
 	 *
 	 * @param  value the value to convert
@@ -276,7 +276,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a short. If the value is <code>null</code> or not
+	 * Returns the Object value as a short. If the value is <code>null</code> or not
 	 * convertible to a short, the default value is returned.
 	 *
 	 * @param  value the value to convert
@@ -302,7 +302,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a String. If the value is <code>null</code> or not
+	 * Returns the Object value as a String. If the value is <code>null</code> or not
 	 * convertible to a String, the default value is returned.
 	 *
 	 * @param  value the value to convert
@@ -318,7 +318,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a boolean. If the value is <code>null</code>, the
+	 * Returns the String value as a boolean. If the value is <code>null</code>, the
 	 * default value is returned. If the value does not match a {@link
 	 * #BOOLEANS} value, <code>false</code> is returned.
 	 *
@@ -347,7 +347,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a Date. If the value is <code>null</code> or not
+	 * Returns the String value as a Date. If the value is <code>null</code> or not
 	 * convertible to a Date, the default value is returned.
 	 *
 	 * @param  value the value to convert
@@ -376,7 +376,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a double. If the value is <code>null</code> or not
+	 * Returns the String value as a double. If the value is <code>null</code> or not
 	 * convertible to a double, the default value is returned.
 	 *
 	 * @param  value the value to convert
@@ -388,7 +388,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a double. If the value is <code>null</code> or not
+	 * Returns the String value as a double. If the value is <code>null</code> or not
 	 * convertible to a double, the default value is returned.
 	 *
 	 * @param  value the value to convert
@@ -430,7 +430,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a float. If the value is <code>null</code> or not
+	 * Returns the String value as a float. If the value is <code>null</code> or not
 	 * convertible to a float, the default value is returned.
 	 *
 	 * @param  value the value to convert
@@ -452,7 +452,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as an integer. If the value is <code>null</code> or not
+	 * Returns the String value as an integer. If the value is <code>null</code> or not
 	 * convertible to an integer, the default value is returned.
 	 *
 	 * @param  value the value to convert
@@ -468,7 +468,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a long. If the value is <code>null</code> or not
+	 * Returns the String value as a long. If the value is <code>null</code> or not
 	 * convertible to a long, the default value is returned.
 	 *
 	 * @param  value the value to convert
@@ -484,7 +484,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a short. If the value is <code>null</code> or not
+	 * Returns the String value as a short. If the value is <code>null</code> or not
 	 * convertible to a short, the default value is returned.
 	 *
 	 * @param  value the value to convert
@@ -500,7 +500,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a String. If the value is <code>null</code> or not
+	 * Returns the String value as a String. If the value is <code>null</code> or not
 	 * convertible to a String, the default value is returned.
 	 *
 	 * @param  value the value to convert
@@ -523,7 +523,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a boolean. If the value is <code>null</code> or does
+	 * Returns the Object value as a boolean. If the value is <code>null</code> or does
 	 * not match a {@link #BOOLEANS} value, <code>false</code> is returned.
 	 *
 	 * @param  value the value to convert
@@ -534,7 +534,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a boolean. If the value is <code>null</code>, the
+	 * Returns the Object value as a boolean. If the value is <code>null</code>, the
 	 * default value is returned. If the value does not match a {@link
 	 * #BOOLEANS} value, <code>false</code> is returned.
 	 *
@@ -547,7 +547,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a boolean. If the value is <code>null</code> or does
+	 * Returns the String value as a boolean. If the value is <code>null</code> or does
 	 * not match a {@link #BOOLEANS} value, <code>false</code> is returned.
 	 *
 	 * @param  value the value to convert
@@ -558,7 +558,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a boolean. If the value is <code>null</code>, the
+	 * Returns the String value as a boolean. If the value is <code>null</code>, the
 	 * default value is returned. If the value does not match a {@link
 	 * #BOOLEANS} value, <code>false</code> is returned.
 	 *
@@ -571,7 +571,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a boolean array. In the returned array, each value
+	 * Returns the Object value as a boolean array. In the returned array, each value
 	 * element that is <code>null</code> or does not match a {@link #BOOLEANS}
 	 * value is replaced by <code>false</code>.
 	 *
@@ -583,7 +583,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a boolean array. In the returned array, each value
+	 * Returns the Object value as a boolean array. In the returned array, each value
 	 * element that is <code>null</code> is replaced by the default value. If
 	 * the value element does not match a {@link #BOOLEANS} value,
 	 * <code>false</code> is returned.
@@ -607,7 +607,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a boolean array. In the returned array, each value
+	 * Returns the String values as a boolean array. In the returned array, each value
 	 * element that is <code>null</code> or does not match a {@link #BOOLEANS}
 	 * value is replaced by <code>false</code>.
 	 *
@@ -619,7 +619,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a boolean array. In the returned array, each value
+	 * Returns the String values as a boolean array. In the returned array, each value
 	 * element that is <code>null</code> is replaced by the default value. If
 	 * the value element does not match a {@link #BOOLEANS} value,
 	 * <code>false</code> is returned.
@@ -645,7 +645,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a Date. If the value is <code>null</code> or not
+	 * Returns the Object value as a Date. If the value is <code>null</code> or not
 	 * convertible to a Date, the current date is returned.
 	 *
 	 * @param  value the value to convert
@@ -657,7 +657,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a Date. If the value is <code>null</code> or not
+	 * Returns the Object value as a Date. If the value is <code>null</code> or not
 	 * convertible to a Date, the default value is returned.
 	 *
 	 * @param  value the value to convert
@@ -672,7 +672,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a Date. If the value is <code>null</code> or not
+	 * Returns the String value as a Date. If the value is <code>null</code> or not
 	 * convertible to a Date, the current date is returned.
 	 *
 	 * @param  value the value to convert
@@ -684,7 +684,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a Date. If the value is <code>null</code> or not
+	 * Returns the String value as a Date. If the value is <code>null</code> or not
 	 * convertible to a Date, the default value is returned.
 	 *
 	 * @param  value the value to convert
@@ -699,7 +699,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a Date array. In the returned array, each value
+	 * Returns the Object value as a Date array. In the returned array, each value
 	 * element not convertible to a Date is replaced by the current date.
 	 *
 	 * @param  value the value to convert
@@ -711,7 +711,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a Date array. In the returned array, each value
+	 * Returns the Object value as a Date array. In the returned array, each value
 	 * element not convertible to a Date is replaced by the default value.
 	 *
 	 * @param  value the value to convert
@@ -734,7 +734,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a Date array. In the returned array, each value
+	 * Returns the String values as a Date array. In the returned array, each value
 	 * element not convertible to a Date is replaced by the current date.
 	 *
 	 * @param  values the values to convert
@@ -746,7 +746,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a Date array. In the returned array, each value
+	 * Returns the String values as a Date array. In the returned array, each value
 	 * element not convertible to a Date is replaced by the default value.
 	 *
 	 * @param  values the values to convert
@@ -771,7 +771,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a double. If the value is <code>null</code> or not
+	 * Returns the Object value as a double. If the value is <code>null</code> or not
 	 * convertible to a double, <code>0</code> is returned.
 	 *
 	 * @param  value the value to convert
@@ -782,7 +782,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a double. If the value is <code>null</code> or not
+	 * Returns the Object value as a double. If the value is <code>null</code> or not
 	 * convertible to a double, the default value is returned.
 	 *
 	 * @param  value the value to convert
@@ -794,7 +794,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a double. If the value is <code>null</code> or not
+	 * Returns the String value as a double. If the value is <code>null</code> or not
 	 * convertible to a double, <code>0</code> is returned.
 	 *
 	 * @param  value the value to convert
@@ -805,7 +805,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a double. If the value is <code>null</code> or not
+	 * Returns the String value as a double. If the value is <code>null</code> or not
 	 * convertible to a double, the default value is returned.
 	 *
 	 * @param  value the value to convert
@@ -817,7 +817,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a double. If the value is <code>null</code> or not
+	 * Returns the String value as a double. If the value is <code>null</code> or not
 	 * convertible to a double, <code>0</code> is returned.
 	 *
 	 * @param  value the value to convert
@@ -829,7 +829,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a double array. In the returned array, each value
+	 * Returns the Object value as a double array. In the returned array, each value
 	 * element not convertible to a double is replaced by <code>0</code>.
 	 *
 	 * @param  value the value to convert
@@ -840,7 +840,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a double array. In the returned array, each value
+	 * Returns the Object values as a double array. In the returned array, each value
 	 * element not convertible to a double is replaced by the default value.
 	 *
 	 * @param  values the values to convert
@@ -849,14 +849,6 @@ public class GetterUtil {
 	public static double[] getDoubleValues(
 		Object value, double[] defaultValue) {
 
-	/**
-	 * Returns the value as a double array. In the returned array, each value
-	 * element not convertible to a double is replaced by the default value.
-	 *
-	 * @param  value the value to convert
-	 * @param  defaultValue a default value
-	 * @return the value as a double array
-	 */
 		if (value instanceof String[]) {
 			return getDoubleValues((String[])value, defaultValue);
 		}
@@ -869,7 +861,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a double array. In the returned array, each value
+	 * Returns the String values as a double array. In the returned array, each value
 	 * element not convertible to a double is replaced by <code>0</code>.
 	 *
 	 * @param  values the values to convert
@@ -880,7 +872,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a double array. In the returned array, each value
+	 * Returns the String values as a double array. In the returned array, each value
 	 * element not convertible to a double is replaced by the default value.
 	 *
 	 * @param  values the values to convert
@@ -904,7 +896,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a float. If the value is <code>null</code> or not
+	 * Returns the Object value as a float. If the value is <code>null</code> or not
 	 * convertible to a float, <code>0</code> is returned.
 	 *
 	 * @param  value the value to convert
@@ -915,7 +907,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a float. If the value is <code>null</code> or not
+	 * Returns the Object value as a float. If the value is <code>null</code> or not
 	 * convertible to a float, the default value is returned.
 	 *
 	 * @param  value the value to convert
@@ -927,7 +919,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a float. If the value is <code>null</code> or not
+	 * Returns the String value as a float. If the value is <code>null</code> or not
 	 * convertible to a float, <code>0</code> is returned.
 	 *
 	 * @param  value the value to convert
@@ -938,7 +930,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a float. If the value is <code>null</code> or not
+	 * Returns the String value as a float. If the value is <code>null</code> or not
 	 * convertible to a float, the default value is returned.
 	 *
 	 * @param  value the value to convert
@@ -950,7 +942,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a float array. In the returned array, each value
+	 * Returns the Object value as a float array. In the returned array, each value
 	 * element not convertible to a float is replaced by <code>0</code>.
 	 *
 	 * @param  value the value to convert
@@ -961,7 +953,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a float array. In the returned array, each value
+	 * Returns the Object value as a float array. In the returned array, each value
 	 * element not convertible to a float is replaced by the default value.
 	 *
 	 * @param  value the value to convert
@@ -981,7 +973,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a float array. In the returned array, each value
+	 * Returns the String values as a float array. In the returned array, each value
 	 * element not convertible to a float is replaced by <code>0</code>.
 	 *
 	 * @param  values the values to convert
@@ -992,7 +984,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a float array. In the returned array, each value
+	 * Returns the String values as a float array. In the returned array, each value
 	 * element not convertible to a float is replaced by the default value.
 	 *
 	 * @param  values the values to convert
@@ -1016,7 +1008,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as an integer. If the value is <code>null</code> or not
+	 * Returns the Object value as an integer. If the value is <code>null</code> or not
 	 * convertible to an integer, <code>0</code> is returned.
 	 *
 	 * @param  value the value to convert
@@ -1027,7 +1019,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as an integer. If the value is <code>null</code> or not
+	 * Returns the Object value as an integer. If the value is <code>null</code> or not
 	 * convertible to an integer, the default value is returned.
 	 *
 	 * @param  value the value to convert
@@ -1039,7 +1031,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as an integer. If the value is <code>null</code> or not
+	 * Returns the String value as an integer. If the value is <code>null</code> or not
 	 * convertible to an integer, <code>0</code> is returned.
 	 *
 	 * @param  value the value to convert
@@ -1050,7 +1042,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as an integer. If the value is <code>null</code> or not
+	 * Returns the String value as an integer. If the value is <code>null</code> or not
 	 * convertible to an integer, the default value is returned.
 	 *
 	 * @param  value the value to convert
@@ -1062,7 +1054,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as an integer. If the value is <code>null</code> or not
+	 * Returns the String value as an integer. If the value is <code>null</code> or not
 	 * convertible to an integer, a <code>NumberFormatException</code> is
 	 * thrown.
 	 *
@@ -1133,7 +1125,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as an integer array. In the returned array, each value
+	 * Returns the Object value as an integer array. In the returned array, each value
 	 * element not convertible to an integer is replaced by <code>0</code>.
 	 *
 	 * @param  value the value to convert
@@ -1144,7 +1136,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as an integer array. In the returned array, each value
+	 * Returns the Object value as an integer array. In the returned array, each value
 	 * element not convertible to an integer is replaced by the default value.
 	 *
 	 * @param  value the value to convert
@@ -1164,7 +1156,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as an integer array. In the returned array, each value
+	 * Returns the String values as an integer array. In the returned array, each value
 	 * element not convertible to an integer is replaced by the default value.
 	 *
 	 * @param  values the values to convert
@@ -1175,7 +1167,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as an integer array. In the returned array, each value
+	 * Returns the String values as an integer array. In the returned array, each value
 	 * element not convertible to an integer is replaced by the default value.
 	 *
 	 * @param  values the values to convert
@@ -1197,7 +1189,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a long. If the value is <code>null</code> or not
+	 * Returns the Object value as a long. If the value is <code>null</code> or not
 	 * convertible to a long, <code>0</code> is returned.
 	 *
 	 * @param  value the value to convert
@@ -1208,7 +1200,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a long. If the value is <code>null</code> or not
+	 * Returns the Object value as a long. If the value is <code>null</code> or not
 	 * convertible to a long, the default value is returned.
 	 *
 	 * @param  value the value to convert
@@ -1220,7 +1212,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a long. If the value is <code>null</code> or not
+	 * Returns the String value as a long. If the value is <code>null</code> or not
 	 * convertible to a long, <code>0</code> is returned.
 	 *
 	 * @param  value the value to convert
@@ -1231,7 +1223,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a long. If the value is <code>null</code> or not
+	 * Returns the String value as a long. If the value is <code>null</code> or not
 	 * convertible to a long, the default value is returned.
 	 *
 	 * @param  value the value to convert
@@ -1243,7 +1235,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a long. If the value is <code>null</code> or not
+	 * Returns the String value as a long. If the value is <code>null</code> or not
 	 * convertible to a long, a <code>NumberFormatException</code> is
 	 * thrown.
 	 *
@@ -1314,7 +1306,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a long array. In the returned array, each value
+	 * Returns the Object value as a long array. In the returned array, each value
 	 * element not convertible to a long is replaced by <code>0</code>.
 	 *
 	 * @param  value the value to convert
@@ -1325,7 +1317,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a long array. In the returned array, each value
+	 * Returns the Object value as a long array. In the returned array, each value
 	 * element not convertible to a long is replaced by the default value.
 	 *
 	 * @param  value the value to convert
@@ -1357,7 +1349,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a long array. In the returned array, each value
+	 * Returns the String values as a long array. In the returned array, each value
 	 * element not convertible to a long is replaced by <code>0</code>.
 	 *
 	 * @param  values the values to convert
@@ -1368,7 +1360,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a long array. In the returned array, each value
+	 * Returns the String values as a long array. In the returned array, each value
 	 * element not convertible to a long is replaced by the default value.
 	 *
 	 * @param  values the values to convert
@@ -1390,7 +1382,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a Number. If the value is <code>null</code> or not
+	 * Returns the Object value as a Number. If the value is <code>null</code> or not
 	 * convertible to a Number, <code>0</code> is returned.
 	 *
 	 * @param  value the value to convert
@@ -1401,7 +1393,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a Number. If the value is <code>null</code> or not
+	 * Returns the Object value as a Number. If the value is <code>null</code> or not
 	 * convertible to a Number, the default value is returned.
 	 *
 	 * @param  value the value to convert
@@ -1413,7 +1405,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a Number. If the value is <code>null</code> or not
+	 * Returns the String value as a Number. If the value is <code>null</code> or not
 	 * convertible to a Number, <code>0</code> is returned.
 	 *
 	 * @param  value the value to convert
@@ -1424,7 +1416,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a Number. If the value is <code>null</code> or not
+	 * Returns the String value as a Number. If the value is <code>null</code> or not
 	 * convertible to a Number, the default value is returned.
 	 *
 	 * @param  value the value to convert
@@ -1436,7 +1428,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a Number array. In the returned array, each value
+	 * Returns the Object value as a Number array. In the returned array, each value
 	 * element not convertible to a Number is replaced by <code>0</code>.
 	 *
 	 * @param  value the value to convert
@@ -1447,7 +1439,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a Number array. In the returned array, each value
+	 * Returns the Object value as a Number array. In the returned array, each value
 	 * element not convertible to a Number is replaced by the default value.
 	 *
 	 * @param  value the value to convert
@@ -1469,7 +1461,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a Number array. In the returned array, each value
+	 * Returns the String values as a Number array. In the returned array, each value
 	 * element not convertible to a Number is replaced by <code>0</code>.
 	 *
 	 * @param  values the values to convert
@@ -1480,7 +1472,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a Number array. In the returned array, each value
+	 * Returns the String values as a Number array. In the returned array, each value
 	 * element not convertible to a Number is replaced by the default value.
 	 *
 	 * @param  values the values to convert
@@ -1504,7 +1496,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value.
+	 * Returns the Object value.
 	 *
 	 * @param  value the value
 	 * @return the value
@@ -1514,7 +1506,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value. If the value is <code>null</code>, the default value
+	 * Returns the Object value. If the value is <code>null</code>, the default value
 	 * is returned.
 	 *
 	 * @param  value the value
@@ -1530,7 +1522,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a short. If the value is <code>null</code> or not
+	 * Returns the Object value as a short. If the value is <code>null</code> or not
 	 * convertible to a short, <code>0</code> is returned.
 	 *
 	 * @param  value the value to convert
@@ -1541,7 +1533,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a short. If the value is <code>null</code> or not
+	 * Returns the Object value as a short. If the value is <code>null</code> or not
 	 * convertible to a short, the default value is returned.
 	 *
 	 * @param  value the value to convert
@@ -1553,7 +1545,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a short. If the value is <code>null</code> or not
+	 * Returns the String value as a short. If the value is <code>null</code> or not
 	 * convertible to a short, <code>0</code> is returned.
 	 *
 	 * @param  value the value to convert
@@ -1564,7 +1556,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a short. If the value is <code>null</code> or not
+	 * Returns the String value as a short. If the value is <code>null</code> or not
 	 * convertible to a short, the default value is returned.
 	 *
 	 * @param  value the value to convert
@@ -1576,7 +1568,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a short. If the value is <code>null</code> or not
+	 * Returns the String value as a short. If the value is <code>null</code> or not
 	 * convertible to a short, a <code>NumberFormatException</code> is thrown.
 	 *
 	 * @param  value the value to convert
@@ -1593,7 +1585,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a short array. In the returned array, each value
+	 * Returns the Object value as a short array. In the returned array, each value
 	 * element not convertible to a short is replaced by <code>0</code>.
 	 *
 	 * @param  value the value to convert
@@ -1604,7 +1596,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a short array. In the returned array, each value
+	 * Returns the Object value as a short array. In the returned array, each value
 	 * element not convertible to a short is replaced by the default value.
 	 *
 	 * @param  value the value to convert
@@ -1624,7 +1616,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a short array. In the returned array, each value
+	 * Returns the String values as a short array. In the returned array, each value
 	 * element not convertible to a short is replaced by <code>0</code>.
 	 *
 	 * @param  values the values to convert
@@ -1635,7 +1627,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a short array. In the returned array, each value
+	 * Returns the String values as a short array. In the returned array, each value
 	 * element not convertible to a short is replaced by the default value.
 	 *
 	 * @param  values the values to convert
@@ -1659,7 +1651,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a String. If the value is <code>null</code>, a blank
+	 * Returns the Object value as a String. If the value is <code>null</code>, a blank
 	 * String is returned.
 	 *
 	 * @param  value the value to convert
@@ -1670,7 +1662,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a String. If the value is <code>null</code>, the
+	 * Returns the Object value as a String. If the value is <code>null</code>, the
 	 * default value is returned.
 	 *
 	 * @param  value the value to convert
@@ -1682,7 +1674,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value. If the value is <code>null</code>, a blank String is
+	 * Returns the String value. If the value is <code>null</code>, a blank String is
 	 * returned.
 	 *
 	 * @param  value the value
@@ -1693,7 +1685,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value. If the value is <code>null</code>, the default value
+	 * Returns the String value. If the value is <code>null</code>, the default value
 	 * is returned.
 	 *
 	 * @param  value the value to convert
@@ -1705,7 +1697,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a String array. In the returned array, each value
+	 * Returns the Object value as a String array. In the returned array, each value
 	 * element that is <code>null</code> is replaced by a blank String.
 	 *
 	 * @param  value the value to convert
@@ -1716,7 +1708,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a String array. In the returned array, each value
+	 * Returns the Object value as a String array. In the returned array, each value
 	 * element that is <code>null</code> is replaced by the default value.
 	 *
 	 * @param  value the value to convert
@@ -1734,7 +1726,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a String array. In the returned array, each value
+	 * Returns the Object values as a String array. In the returned array, each value
 	 * element that is <code>null</code> is replaced by the default value.
 	 *
 	 * @param  values the values to convert
@@ -1758,7 +1750,7 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the value as a String array. In the returned array, each value
+	 * Returns the String values as a String array. In the returned array, each value
 	 * element that is <code>null</code> is replaced by a blank String.
 	 *
 	 * @param  values the values to convert

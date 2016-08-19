@@ -9,7 +9,7 @@
 		</content>
 		<orderEntry type="inheritedJdk" />
 		<orderEntry type="sourceFolder" forTests="false" />
-		<orderEntry type="library" name="portal" level="project" />
 		<orderEntry type="module" module-name="portal-kernel" scope="PROVIDED" />
+		<orderEntry type="library" name="portal" level="project" />
 	</component>
 </module>

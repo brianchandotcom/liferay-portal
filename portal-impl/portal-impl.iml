@@ -14,14 +14,15 @@
 		</content>
 		<orderEntry type="inheritedJdk" />
 		<orderEntry type="sourceFolder" forTests="false" />
-		<orderEntry type="library" scope="PROVIDED" name="development" level="project" />
-		<orderEntry type="library" name="portal" level="project" />
-		<orderEntry type="library" scope="PROVIDED" name="global" level="project" />
 		<orderEntry type="module" module-name="util-bridges" />
 		<orderEntry type="module" module-name="util-java" />
 		<orderEntry type="module" module-name="util-taglib" />
-		<orderEntry type="module" module-name="portal-test" scope="TEST" />
 		<orderEntry type="module" module-name="portal-kernel" scope="PROVIDED" />
+		<orderEntry type="module" module-name="portal-test" scope="TEST" />
+		<orderEntry type="module" module-name="portal-test-integration" scope="TEST" />
 		<orderEntry type="module" module-name="registry-api" />
+		<orderEntry type="library" scope="PROVIDED" name="development" level="project" />
+		<orderEntry type="library" name="portal" level="project" />
+		<orderEntry type="library" scope="PROVIDED" name="global" level="project" />
 	</component>
 </module>

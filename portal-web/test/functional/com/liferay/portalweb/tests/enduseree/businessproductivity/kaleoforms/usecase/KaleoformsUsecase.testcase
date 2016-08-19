@@ -1829,21 +1829,7 @@
 			<var name="kfFormName" value="Created Task Form" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#saveProcess">
-			<var name="kfProcessName" value="${kfProcessName}" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSitesContent">
-			<var name="portlet" value="Kaleo Forms Admin" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#editProcess">
-			<var name="kfProcessName" value="${kfProcessName}" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#gotoProgressStep">
-			<var name="kfProgressName" value="Forms" />
-		</execute>
+		<execute function="Refresh" />
 
 		<execute macro="KaleoFormsAdmin#assignForm">
 			<var name="kfProcessName" value="${kfProcessName}" />
@@ -4530,21 +4516,7 @@
 			<var name="kfFormName" value="Created Task Form" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#saveProcess">
-			<var name="kfProcessName" value="${kfProcessName}" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSitesContent">
-			<var name="portlet" value="Kaleo Forms Admin" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#editProcess">
-			<var name="kfProcessName" value="${kfProcessName}" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#gotoProgressStep">
-			<var name="kfProgressName" value="Forms" />
-		</execute>
+		<execute function="Refresh" />
 
 		<execute macro="KaleoFormsAdmin#assignForm">
 			<var name="kfProcessName" value="${kfProcessName}" />
@@ -5906,21 +5878,7 @@
 			<var name="kfFormName" value="Created Task Form" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#saveProcess">
-			<var name="kfProcessName" value="${kfProcessName}" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSitesContent">
-			<var name="portlet" value="Kaleo Forms Admin" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#editProcess">
-			<var name="kfProcessName" value="${kfProcessName}" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#gotoProgressStep">
-			<var name="kfProgressName" value="Forms" />
-		</execute>
+		<execute function="Refresh" />
 
 		<execute macro="KaleoFormsAdmin#assignForm">
 			<var name="kfProcessName" value="${kfProcessName}" />
@@ -6141,21 +6099,7 @@
 			<var name="kfFormName" value="Created Task Form" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#saveProcess">
-			<var name="kfProcessName" value="${kfProcessName}" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSitesContent">
-			<var name="portlet" value="Kaleo Forms Admin" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#editProcess">
-			<var name="kfProcessName" value="${kfProcessName}" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#gotoProgressStep">
-			<var name="kfProgressName" value="Forms" />
-		</execute>
+		<execute function="Refresh" />
 
 		<execute macro="KaleoFormsAdmin#assignForm">
 			<var name="kfProcessName" value="${kfProcessName}" />
@@ -6606,21 +6550,7 @@
 			<var name="kfFormName" value="Created Task Form" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#saveProcess">
-			<var name="kfProcessName" value="${kfProcessName}" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSitesContent">
-			<var name="portlet" value="Kaleo Forms Admin" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#editProcess">
-			<var name="kfProcessName" value="${kfProcessName}" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#gotoProgressStep">
-			<var name="kfProgressName" value="Forms" />
-		</execute>
+		<execute function="Refresh" />
 
 		<execute macro="KaleoFormsAdmin#assignForm">
 			<var name="kfProcessName" value="${kfProcessName}" />

@@ -331,7 +331,7 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public void assertHTMLSourceTextNotPresent(String value) throws Exception {
-		if (isHTMLSourceTextPresent(liferaySelenium, value)) {
+		if (isHTMLSourceTextPresent(value)) {
 			throw new Exception(
 				"Pattern \"" + value + "\" does exists in the HTML source");
 		}
@@ -339,7 +339,7 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public void assertHTMLSourceTextPresent(String value) throws Exception {
-		if (!isHTMLSourceTextPresent(liferaySelenium, value)) {
+		if (!isHTMLSourceTextPresent(value)) {
 			throw new Exception(
 				"Pattern \"" + value + "\" does not exists in the HTML source");
 		}
@@ -1561,7 +1561,7 @@ public abstract class BaseWebDriverImpl
 	public boolean isSikuliImagePresent(String image) throws Exception {
 		ScreenRegion screenRegion = new DesktopScreenRegion();
 
-		ImageTarget imageTarget = getImageTarget(liferaySelenium, image);
+		ImageTarget imageTarget = getImageTarget(image);
 
 		if (screenRegion.find(imageTarget) != null) {
 			return true;
@@ -2309,7 +2309,7 @@ public abstract class BaseWebDriverImpl
 	public void sikuliAssertElementNotPresent(String image) throws Exception {
 		ScreenRegion screenRegion = new DesktopScreenRegion();
 
-		ImageTarget imageTarget = getImageTarget(liferaySelenium, image);
+		ImageTarget imageTarget = getImageTarget(image);
 
 		if (screenRegion.wait(imageTarget, 5000) != null) {
 			throw new Exception("Element is present");
@@ -2320,7 +2320,7 @@ public abstract class BaseWebDriverImpl
 	public void sikuliAssertElementPresent(String image) throws Exception {
 		ScreenRegion screenRegion = new DesktopScreenRegion();
 
-		ImageTarget imageTarget = getImageTarget(liferaySelenium, image);
+		ImageTarget imageTarget = getImageTarget(image);
 
 		screenRegion = screenRegion.wait(imageTarget, 5000);
 
@@ -2345,7 +2345,7 @@ public abstract class BaseWebDriverImpl
 
 		ScreenRegion screenRegion = new DesktopScreenRegion();
 
-		ImageTarget imageTarget = getImageTarget(liferaySelenium, image);
+		ImageTarget imageTarget = getImageTarget(image);
 
 		ScreenRegion imageTargetScreenRegion = screenRegion.find(imageTarget);
 
@@ -2362,7 +2362,7 @@ public abstract class BaseWebDriverImpl
 
 		ScreenRegion screenRegion = new DesktopScreenRegion();
 
-		ImageTarget imageTarget = getImageTarget(liferaySelenium, image);
+		ImageTarget imageTarget = getImageTarget(image);
 
 		List<ScreenRegion> imageTargetScreenRegions = screenRegion.findAll(
 			imageTarget);
@@ -2381,7 +2381,7 @@ public abstract class BaseWebDriverImpl
 
 		ScreenRegion screenRegion = new DesktopScreenRegion();
 
-		ImageTarget imageTarget = getImageTarget(liferaySelenium, image);
+		ImageTarget imageTarget = getImageTarget(image);
 
 		screenRegion = screenRegion.find(imageTarget);
 
@@ -2433,7 +2433,7 @@ public abstract class BaseWebDriverImpl
 	public void sikuliMouseMove(String image) throws Exception {
 		ScreenRegion screenRegion = new DesktopScreenRegion();
 
-		ImageTarget imageTarget = getImageTarget(liferaySelenium, image);
+		ImageTarget imageTarget = getImageTarget(image);
 
 		screenRegion = screenRegion.find(imageTarget);
 
@@ -2462,7 +2462,7 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public void sikuliType(String image, String value) throws Exception {
-		sikuliClick(liferaySelenium, image);
+		sikuliClick(image);
 
 		pause("1000");
 
@@ -2492,7 +2492,7 @@ public abstract class BaseWebDriverImpl
 	public void sikuliUploadCommonFile(String image, String value)
 		throws Exception {
 
-		sikuliClick(liferaySelenium, image);
+		sikuliClick(image);
 
 		Keyboard keyboard = new DesktopKeyboard();
 
@@ -2512,7 +2512,7 @@ public abstract class BaseWebDriverImpl
 			filePath = StringUtil.replace(filePath, "/", "\\");
 		}
 
-		sikuliType(liferaySelenium, image, filePath);
+		sikuliType(image, filePath);
 
 		keyboard.type(Key.ENTER);
 	}
@@ -2527,7 +2527,7 @@ public abstract class BaseWebDriverImpl
 			fileName = StringUtil.replace(fileName, "/", "\\");
 		}
 
-		sikuliType(liferaySelenium, image, fileName);
+		sikuliType(image, fileName);
 
 		Keyboard keyboard = new DesktopKeyboard();
 
@@ -2538,7 +2538,7 @@ public abstract class BaseWebDriverImpl
 	public void sikuliUploadTempFile(String image, String value)
 		throws Exception {
 
-		sikuliClick(liferaySelenium, image);
+		sikuliClick(image);
 
 		Keyboard keyboard = new DesktopKeyboard();
 
@@ -2554,7 +2554,7 @@ public abstract class BaseWebDriverImpl
 			fileName = StringUtil.replace(fileName, "/", "\\");
 		}
 
-		sikuliType(liferaySelenium, image, fileName);
+		sikuliType(image, fileName);
 
 		keyboard.type(Key.ENTER);
 	}
@@ -2753,11 +2753,11 @@ public abstract class BaseWebDriverImpl
 
 		for (int second = 0;; second++) {
 			if (second >= timeout) {
-				assertConfirmation(liferaySelenium, pattern);
+				assertConfirmation(pattern);
 			}
 
 			try {
-				if (isConfirmation(liferaySelenium, pattern)) {
+				if (isConfirmation(pattern)) {
 					break;
 				}
 			}

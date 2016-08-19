@@ -744,6 +744,24 @@
 		<execute function="AssertElementNotPresent" locator1="Home#PAGE" value1="${pageName}" />
 	</command>
 
+	<command name="viewNoSelectCategory">
+		<execute macro="SitePageNavigator#gotoAddPage">
+			<var name="sitePagePrivacy" value="${sitePagePrivacy}" />
+		</execute>
+
+		<execute macro-mobile="MobileNavigator#clickRemoveIcon" />
+
+		<execute function="Type#typeClickAt" locator1="TextInput#NAME" value1="${pageName}" />
+
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Categorization" />
+		</execute>
+
+		<execute function="AssertElementNotPresent" locator1="AssetCategorization#CATEGORY_SELECT">
+			<var name="key_vocabularyName" value="${vocabularyName}" />
+		</execute>
+	</command>
+
 	<command name="viewOnlyAddOptionViaSiteAdmin">
 		<execute function="Click" locator1="ControlMenu#ADD" />
 

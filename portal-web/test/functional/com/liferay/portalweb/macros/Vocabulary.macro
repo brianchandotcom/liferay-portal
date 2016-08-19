@@ -1,23 +1,4 @@
 <definition>
-	<command name="addAssociatedAssetTypeViaVocabularyCP">
-		<var name="key_vocabularyName" value="${vocabularyName}" />
-
-		<execute function="AssertTextEquals" locator1="Categories#VOCABULARY_ENTRY" value1="${vocabularyName}" />
-
-		<var name="key_rowEntry" value="${vocabularyName}" />
-
-		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" value1="${vocabularyName}" />
-		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
-
-		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Associated Asset Types" />
-		</execute>
-
-		<execute function="Click" locator1="CategoriesEditVocabulary#ASSOCIATED_ASSET_TYPES_ADD_BUTTON" />
-		<execute function="Select" locator1="CategoriesEditVocabulary#ASSOCIATED_ASSET_TYPES_SELECT_2" value1="${vocabularyAssociatedAssetType2}" />
-		<execute macro="PortletEntry#save" />
-	</command>
-
 	<command name="addCP" summary="Add a vocabulary named '${vocabularyName}'">
 		<execute function="Click" locator1="Button#PLUS" />
 		<execute function="Type" locator1="TextInput#NAME" value1="${vocabularyName}" />
@@ -93,6 +74,15 @@
 		</execute>
 
 		<execute function="Select" locator1="CategoriesEditVocabulary#ASSOCIATED_ASSET_TYPES_SELECT" value1="${vocabularyAssociatedAssetType}" />
+
+		<if>
+			<isset var="vocabularyAssociatedAssetType2" />
+			<then>
+				<execute function="Click" locator1="Button#ADD_ROW" />
+
+				<execute function="Select" locator1="CategoriesEditVocabulary#ASSOCIATED_ASSET_TYPES_SELECT_2" value1="${vocabularyAssociatedAssetType2}" />
+			</then>
+		</if>
 
 		<if>
 			<equals arg1="${required}" arg2="true" />

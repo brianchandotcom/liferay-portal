@@ -1,0 +1,20 @@
+<html>
+<head>
+<title>KaleoFormsAdminSelectStructure</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">KaleoFormsAdminSelectStructure</td></tr>
+</thead>
+<tbody>
+<!--KALEO_FORMS_STRUCTURE_TABLE-->
+<tr>
+	<td>KALEO_FORMS_STRUCTURE_ELLIPSIS</td>
+	<td>//tr[contains(.,'${key_kfFieldSetName}')]//td[contains(@class,'entry-action')]//span/*[name()='svg'][contains(@class,'icon-ellipsis-v')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

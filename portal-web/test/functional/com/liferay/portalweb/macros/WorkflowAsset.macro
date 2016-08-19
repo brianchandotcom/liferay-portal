@@ -23,6 +23,12 @@
 		<execute function="AssertTextEquals" locator1="AssetWorkflow#CONTENT_PREVIEW_VIEW" value1="${fieldLabel} ${fieldValue}" />
 	</command>
 
+	<command name="previewViewContentFieldNotPresent">
+		<var name="key_fieldLabel" value="${fieldLabel}" />
+
+		<execute function="AssertElementNotPresent" locator1="AssetWorkflow#CONTENT_FIELD_PREVIEW_VIEW" value1="${fieldLabel}" />
+	</command>
+
 	<command name="viewDetails">
 		<execute function="Click" locator1="Icon#INFO" />
 
@@ -42,5 +48,9 @@
 		<var name="key_workflowStatus" value="${workflowStatus}" />
 
 		<execute function="AssertTextEquals" locator1="FormsAdmin#FORM_ENTRY_WORKFLOW_STATUS" value1="${workflowStatus}" />
+	</command>
+
+	<command name="viewFormTemplateLabel">
+		<execute function="AssertTextEquals#assertPartialText" locator1="MyWorkflowTasksTask#PREVIEW_CONTENT" value1="${workflowFormsTemplateLabel}" />
 	</command>
 </definition>

@@ -115,7 +115,7 @@
 <!--FIELD_SET_PAGINATION-->
 <tr>
 	<td>FIELD_SET_PAGINATION_SELECTOR_BUTTON</td>
-	<td>//div[@class='lfr-pagination-delta-selector']/div/a/span</td>
+	<td>//div[@class='dropdown pagination-items-per-page']//a[@type='button']</td>
 	<td></td>
 </tr>
 <tr>
@@ -190,12 +190,12 @@
 <!--WORKFLOW_NAVIGATION-->
 <tr>
 	<td>WORKFLOW_NAVIGATION_PUBLISHED_TAB</td>
-	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Published')]</td>
+	<td>//a[@title='Published']/span</td>
 	<td></td>
 </tr>
 <tr>
 	<td>WORKFLOW_NAVIGATION_UNPUBLISHED_TAB</td>
-	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Unpublished')]</td>
+	<td>//a[@title='Unpublished']/span</td>
 	<td></td>
 </tr>
 <tr>

@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONTENT_FIELD_PREVIEW_VIEW</td>
+	<td>//div[@class='lfr-ddm-container']//div[contains(.,'${key_fieldLabel}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>WORKFLOW_STATUS</td>
 	<td>//span[@class='workflow-status']/span</td>
 	<td></td>

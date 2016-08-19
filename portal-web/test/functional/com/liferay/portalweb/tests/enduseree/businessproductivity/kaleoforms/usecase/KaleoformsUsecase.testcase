@@ -1513,7 +1513,7 @@
 	</command>
 
 	<command name="CompleteFormWithMultipleAssignedProcessRecordsAndViewChanges" priority="3">
-		<description message="This is a use case for LPS-43482." />
+		<description message="This is a use case for LPS-52709." />
 
 		<var name="kfFieldSetName" value="Field Set Data Definition" />
 		<var name="kfProcessDescription" value="Kaleo Forms Process Description" />

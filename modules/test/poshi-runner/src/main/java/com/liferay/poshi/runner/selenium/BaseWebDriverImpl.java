@@ -3150,6 +3150,19 @@ public abstract class BaseWebDriverImpl
 		alert.accept();
 	}
 
+	protected ImageTarget getImageTarget(
+			LiferaySelenium liferaySelenium, String image)
+		throws Exception {
+
+		String filePath =
+			FileUtil.getSeparator() + liferaySelenium.getSikuliImagesDirName() +
+				image;
+
+		File file = new File(getSourceDirFilePath(filePath));
+
+		return new ImageTarget(file);
+	}
+	
 	protected Set<Integer> getSpecialCharIndexes(String value) {
 		Set<Integer> specialCharIndexes = new TreeSet<>();
 

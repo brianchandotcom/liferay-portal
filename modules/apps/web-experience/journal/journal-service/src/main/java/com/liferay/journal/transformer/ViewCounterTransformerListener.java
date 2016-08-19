@@ -14,18 +14,27 @@
 
 package com.liferay.journal.transformer;
 
+import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.templateparser.BaseTransformerListener;
+import com.liferay.portal.kernel.templateparser.TransformerListener;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Raymond Augé
  */
+@Component(
+	immediate = true,
+	property = {"javax.portlet.name=" + JournalPortletKeys.JOURNAL},
+	service = TransformerListener.class
+)
 public class ViewCounterTransformerListener extends BaseTransformerListener {
 
 	@Override

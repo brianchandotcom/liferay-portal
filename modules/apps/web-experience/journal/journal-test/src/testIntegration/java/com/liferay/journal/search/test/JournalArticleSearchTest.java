@@ -25,7 +25,7 @@ import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.search.TestOrderHelper;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.dynamic.data.mapping.util.DDMUtil;
-import com.liferay.journal.configuration.JournalServiceConfigurationValues;
+import com.liferay.journal.configuration.JournalServiceConfiguration;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
 import com.liferay.journal.model.JournalFolder;
@@ -38,11 +38,16 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
+import com.liferay.portal.kernel.portlet.PortalPreferences;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.IndexSearcherHelperUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.PortalPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.IdempotentRetryAssert;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -54,6 +59,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.test.BaseSearchTestCase;
 import com.liferay.portal.service.test.ServiceTestUtil;
@@ -68,6 +74,7 @@ import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -98,7 +105,37 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 
 		super.setUp();
 
+		CompanyThreadLocal.setCompanyId(TestPropsValues.getCompanyId());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		serviceContext.setCompanyId(TestPropsValues.getCompanyId());
+
+		PortalPreferences portalPreferenceces =
+			PortletPreferencesFactoryUtil.getPortalPreferences(
+				TestPropsValues.getUserId(), true);
+
+		portalPreferenceces.setValue("", "articleCommentsEnabled", "true");
+
+		_portalPreferences =
+			PortalPreferencesLocalServiceUtil.addPortalPreferences(
+				TestPropsValues.getCompanyId(),
+				PortletKeys.PREFS_OWNER_TYPE_COMPANY,
+				PortletPreferencesFactoryUtil.toXML(portalPreferenceces));
+
+		_journalServiceConfiguration =
+			ConfigurationProviderUtil.getCompanyConfiguration(
+				JournalServiceConfiguration.class,
+				TestPropsValues.getCompanyId());
+
 		setUpDDMIndexer();
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		PortalPreferencesLocalServiceUtil.deletePortalPreferences(
+			_portalPreferences);
 	}
 
 	@Test
@@ -425,14 +462,13 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 
 	@Override
 	protected boolean isCheckBaseModelPermission() {
-		return JournalServiceConfigurationValues.
-			JOURNAL_ARTICLE_VIEW_PERMISSION_CHECK_ENABLED;
+		return
+			_journalServiceConfiguration.articleViewPermissionsCheckEnabled();
 	}
 
 	@Override
 	protected boolean isExpirableAllVersions() {
-		return JournalServiceConfigurationValues.
-			JOURNAL_ARTICLE_EXPIRE_ALL_VERSIONS;
+		return _journalServiceConfiguration.expireAllArticleVersionsEnabled();
 	}
 
 	@Override
@@ -574,5 +610,8 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 
 	private DDMIndexer _ddmIndexer;
 	private DDMStructure _ddmStructure;
+	private JournalServiceConfiguration _journalServiceConfiguration;
+	private com.liferay.portal.kernel.model.PortalPreferences
+		_portalPreferences;
 
 }

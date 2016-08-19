@@ -14,9 +14,11 @@
 
 package com.liferay.journal.transformer;
 
+import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.templateparser.BaseTransformerListener;
+import com.liferay.portal.kernel.templateparser.TransformerListener;
 import com.liferay.portal.kernel.xml.Document;
 
 import java.util.List;
@@ -24,9 +26,16 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Brian Wing Shun Chan
  */
+@Component(
+	immediate = true,
+	property = {"javax.portlet.name=" + JournalPortletKeys.JOURNAL},
+	service = TransformerListener.class
+)
 public class RegexTransformerListener extends BaseTransformerListener {
 
 	@Override

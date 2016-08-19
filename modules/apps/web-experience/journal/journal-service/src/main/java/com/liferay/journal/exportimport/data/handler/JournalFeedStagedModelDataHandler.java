@@ -28,7 +28,6 @@ import com.liferay.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.journal.exception.FeedTargetLayoutFriendlyUrlException;
 import com.liferay.journal.internal.exportimport.content.processor.JournalFeedExportImportContentProcessor;
 import com.liferay.journal.internal.exportimport.creation.strategy.JournalCreationStrategy;
-import com.liferay.journal.internal.exportimport.creation.strategy.JournalCreationStrategyFactory;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFeed;
 import com.liferay.journal.service.JournalFeedLocalService;
@@ -176,10 +175,7 @@ public class JournalFeedStagedModelDataHandler
 
 		long userId = portletDataContext.getUserId(feed.getUserUuid());
 
-		JournalCreationStrategy creationStrategy =
-			JournalCreationStrategyFactory.getInstance();
-
-		long authorId = creationStrategy.getAuthorUserId(
+		long authorId = _journalCreationStrategy.getAuthorUserId(
 			portletDataContext, feed);
 
 		if (authorId != JournalCreationStrategy.USE_DEFAULT_USER_ID_STRATEGY) {
@@ -222,13 +218,15 @@ public class JournalFeedStagedModelDataHandler
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			feed);
 
-		boolean addGroupPermissions = creationStrategy.addGroupPermissions(
-			portletDataContext, feed);
+		boolean addGroupPermissions =
+			_journalCreationStrategy.addGroupPermissions(
+				portletDataContext, feed);
 
 		serviceContext.setAddGroupPermissions(addGroupPermissions);
 
-		boolean addGuestPermissions = creationStrategy.addGuestPermissions(
-			portletDataContext, feed);
+		boolean addGuestPermissions =
+			_journalCreationStrategy.addGuestPermissions(
+				portletDataContext, feed);
 
 		serviceContext.setAddGuestPermissions(addGuestPermissions);
 
@@ -326,6 +324,13 @@ public class JournalFeedStagedModelDataHandler
 		_ddmTemplateLocalService = ddmTemplateLocalService;
 	}
 
+	@Reference(unbind = "-")
+	protected void setJournalCreationStrategy(
+		JournalCreationStrategy journalCreationStrategy) {
+
+		_journalCreationStrategy = journalCreationStrategy;
+	}
+
 	/**
 	 * @deprecated As of 7.0.0
 	 */
@@ -352,6 +357,9 @@ public class JournalFeedStagedModelDataHandler
 	private ExportImportContentProcessorController
 		_exportImportContentProcessorController;
 
+	private JournalCreationStrategy _journalCreationStrategy;
+	private final JournalFeedExportImportContentProcessor
+		_journalFeedExportImportContentProcessor = null;
 	private JournalFeedLocalService _journalFeedLocalService;
 
 }

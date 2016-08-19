@@ -51,11 +51,11 @@ public class PropsValues {
 		Integer.parseInt(
 			PropsUtil.get(PropsKeys.SYNC_FILE_PATCHING_THRESHOLD_SIZE_RATIO));
 
-	public static final int SYNC_HTTP_CONNECTION_TIMEOUT =
-		Integer.parseInt(PropsUtil.get(PropsKeys.SYNC_HTTP_CONNECTION_TIMEOUT));
+	public static final int SYNC_HTTP_CONNECTION_TIMEOUT = Integer.parseInt(
+		PropsUtil.get(PropsKeys.SYNC_HTTP_CONNECTION_TIMEOUT));
 
-	public static final int SYNC_HTTP_SOCKET_TIMEOUT =
-		Integer.parseInt(PropsUtil.get(PropsKeys.SYNC_HTTP_SOCKET_TIMEOUT));
+	public static final int SYNC_HTTP_SOCKET_TIMEOUT = Integer.parseInt(
+		PropsUtil.get(PropsKeys.SYNC_HTTP_SOCKET_TIMEOUT));
 
 	public static final String SYNC_LOGGER_CONFIGURATION_FILE = PropsUtil.get(
 		PropsKeys.SYNC_LOGGER_CONFIGURATION_FILE);

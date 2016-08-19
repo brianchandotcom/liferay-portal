@@ -240,21 +240,21 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public void assertAlert(String pattern) throws Exception {
-		TestCase.assertEquals(pattern, liferaySelenium.getAlert());
+		TestCase.assertEquals(pattern, getAlert());
 	}
 
 	@Override
 	public void assertAlertNotPresent() throws Exception {
-		if (liferaySelenium.isAlertPresent()) {
+		if (isAlertPresent()) {
 			throw new Exception("Alert is present");
 		}
 	}
 
 	@Override
 	public void assertChecked(String locator) throws Exception {
-		liferaySelenium.assertElementPresent(locator);
+		assertElementPresent(locator);
 
-		if (liferaySelenium.isNotChecked(locator)) {
+		if (isNotChecked(locator)) {
 			throw new Exception(
 				"Element is not checked at \"" + locator + "\"");
 		}
@@ -262,7 +262,7 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public void assertConfirmation(String pattern) throws Exception {
-		String confirmation = liferaySelenium.getConfirmation();
+		String confirmation = getConfirmation();
 
 		if (!pattern.equals(confirmation)) {
 			throw new Exception(
@@ -296,7 +296,7 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public void assertEditable(String locator) throws Exception {
-		if (liferaySelenium.isNotEditable(locator)) {
+		if (isNotEditable(locator)) {
 			throw new Exception(
 				"Element is not editable at \"" + locator + "\"");
 		}
@@ -304,14 +304,14 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public void assertElementNotPresent(String locator) throws Exception {
-		if (liferaySelenium.isElementPresent(locator)) {
+		if (isElementPresent(locator)) {
 			throw new Exception("Element is present at \"" + locator + "\"");
 		}
 	}
 
 	@Override
 	public void assertElementPresent(String locator) throws Exception {
-		if (liferaySelenium.isElementNotPresent(locator)) {
+		if (isElementNotPresent(locator)) {
 			throw new Exception(
 				"Element is not present at \"" + locator + "\"");
 		}
@@ -319,14 +319,14 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public void assertEmailBody(String index, String body) throws Exception {
-		TestCase.assertEquals(body, liferaySelenium.getEmailBody(index));
+		TestCase.assertEquals(body, getEmailBody(index));
 	}
 
 	@Override
 	public void assertEmailSubject(String index, String subject)
 		throws Exception {
 
-		TestCase.assertEquals(subject, liferaySelenium.getEmailSubject(index));
+		TestCase.assertEquals(subject, getEmailSubject(index));
 	}
 
 	@Override
@@ -359,7 +359,7 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public void assertLocation(String pattern) throws Exception {
-		TestCase.assertEquals(pattern, liferaySelenium.getLocation());
+		TestCase.assertEquals(pattern, getLocation());
 	}
 
 	@Override
@@ -375,21 +375,21 @@ public abstract class BaseWebDriverImpl
 	@Override
 	public void assertNotAlert(String pattern) {
 		TestCase.assertTrue(
-				Objects.equals(pattern, liferaySelenium.getAlert()));
+				Objects.equals(pattern, getAlert()));
 	}
 
 	@Override
 	public void assertNotChecked(String locator) throws Exception {
-		liferaySelenium.assertElementPresent(locator);
+		assertElementPresent(locator);
 
-		if (liferaySelenium.isChecked(locator)) {
+		if (isChecked(locator)) {
 			throw new Exception("Element is checked at \"" + locator + "\"");
 		}
 	}
 
 	@Override
 	public void assertNotEditable(String locator) throws Exception {
-		if (liferaySelenium.isEditable(locator)) {
+		if (isEditable(locator)) {
 			throw new Exception("Element is editable at \"" + locator + "\"");
 		}
 	}
@@ -397,17 +397,17 @@ public abstract class BaseWebDriverImpl
 	@Override
 	public void assertNotLocation(String pattern) throws Exception {
 		TestCase.assertTrue(
-				Objects.equals(pattern, liferaySelenium.getLocation()));
+				Objects.equals(pattern, getLocation()));
 	}
 
 	@Override
 	public void assertNotPartialText(String locator, String pattern)
 		throws Exception {
 
-		liferaySelenium.assertElementPresent(locator);
+		assertElementPresent(locator);
 
-		if (liferaySelenium.isPartialText(locator, pattern)) {
-			String text = liferaySelenium.getText(locator);
+		if (isPartialText(locator, pattern)) {
+			String text = getText(locator);
 
 			throw new Exception(
 				"\"" + text + "\" contains \"" + pattern + "\" at \"" +
@@ -419,10 +419,10 @@ public abstract class BaseWebDriverImpl
 	public void assertNotSelectedLabel(String selectLocator, String pattern)
 		throws Exception {
 
-		liferaySelenium.assertElementPresent(selectLocator);
+		assertElementPresent(selectLocator);
 
-		if (liferaySelenium.isSelectedLabel(selectLocator, pattern)) {
-			String text = liferaySelenium.getSelectedLabel(selectLocator);
+		if (isSelectedLabel(selectLocator, pattern)) {
+			String text = getSelectedLabel(selectLocator);
 
 			throw new Exception(
 				"Pattern \"" + pattern + "\" matches \"" + text + "\" at \"" +
@@ -432,10 +432,10 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public void assertNotText(String locator, String pattern) throws Exception {
-		liferaySelenium.assertElementPresent(locator);
+		assertElementPresent(locator);
 
-		if (liferaySelenium.isText(locator, pattern)) {
-			String text = liferaySelenium.getText(locator);
+		if (isText(locator, pattern)) {
+			String text = getText(locator);
 
 			throw new Exception(
 				"Pattern \"" + pattern + "\" matches \"" + text + "\" at \"" +
@@ -447,10 +447,10 @@ public abstract class BaseWebDriverImpl
 	public void assertNotValue(String locator, String pattern)
 		throws Exception {
 
-		liferaySelenium.assertElementPresent(locator);
+		assertElementPresent(locator);
 
-		if (liferaySelenium.isValue(locator, pattern)) {
-			String value = liferaySelenium.getElementValue(locator);
+		if (isValue(locator, pattern)) {
+			String value = getElementValue(locator);
 
 			throw new Exception(
 				"Pattern \"" + pattern + "\" matches \"" + value + "\" at \"" +
@@ -460,16 +460,16 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public void assertNotVisible(String locator) throws Exception {
-		liferaySelenium.assertElementPresent(locator);
+		assertElementPresent(locator);
 
-		if (liferaySelenium.isVisible(locator)) {
+		if (isVisible(locator)) {
 			throw new Exception("Element is visible at \"" + locator + "\"");
 		}
 	}
 
 	@Override
 	public void assertPartialConfirmation(String pattern) throws Exception {
-		String confirmation = liferaySelenium.getConfirmation();
+		String confirmation = getConfirmation();
 
 		if (!confirmation.contains(pattern)) {
 			throw new Exception(
@@ -482,10 +482,10 @@ public abstract class BaseWebDriverImpl
 	public void assertPartialText(String locator, String pattern)
 		throws Exception {
 
-		liferaySelenium.assertElementPresent(locator);
+		assertElementPresent(locator);
 
-		if (liferaySelenium.isNotPartialText(locator, pattern)) {
-			String text = liferaySelenium.getText(locator);
+		if (isNotPartialText(locator, pattern)) {
+			String text = getText(locator);
 
 			throw new Exception(
 				"\"" + text + "\" does not contain \"" + pattern + "\" at \"" +
@@ -497,10 +497,10 @@ public abstract class BaseWebDriverImpl
 	public void assertSelectedLabel(String selectLocator, String pattern)
 		throws Exception {
 
-		liferaySelenium.assertElementPresent(selectLocator);
+		assertElementPresent(selectLocator);
 
-		if (liferaySelenium.isNotSelectedLabel(selectLocator, pattern)) {
-			String text = liferaySelenium.getSelectedLabel(selectLocator);
+		if (isNotSelectedLabel(selectLocator, pattern)) {
+			String text = getSelectedLabel(selectLocator);
 
 			throw new Exception(
 				"Expected text \"" + pattern +
@@ -511,10 +511,10 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public void assertText(String locator, String pattern) throws Exception {
-		liferaySelenium.assertElementPresent(locator);
+		assertElementPresent(locator);
 
-		if (liferaySelenium.isNotText(locator, pattern)) {
-			String text = liferaySelenium.getText(locator);
+		if (isNotText(locator, pattern)) {
+			String text = getText(locator);
 
 			throw new Exception(
 				"Expected text \"" + pattern +
@@ -525,24 +525,24 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public void assertTextNotPresent(String pattern) throws Exception {
-		if (liferaySelenium.isTextPresent(pattern)) {
+		if (isTextPresent(pattern)) {
 			throw new Exception("\"" + pattern + "\" is present");
 		}
 	}
 
 	@Override
 	public void assertTextPresent(String pattern) throws Exception {
-		if (liferaySelenium.isTextNotPresent(pattern)) {
+		if (isTextNotPresent(pattern)) {
 			throw new Exception("\"" + pattern + "\" is not present");
 		}
 	}
 
 	@Override
 	public void assertValue(String locator, String pattern) throws Exception {
-		liferaySelenium.assertElementPresent(locator);
+		assertElementPresent(locator);
 
-		if (liferaySelenium.isNotValue(locator, pattern)) {
-			String value = liferaySelenium.getElementValue(locator);
+		if (isNotValue(locator, pattern)) {
+			String value = getElementValue(locator);
 
 			throw new Exception(
 				"Expected text \"" + pattern +
@@ -553,9 +553,9 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public void assertVisible(String locator) throws Exception {
-		liferaySelenium.assertElementPresent(locator);
+		assertElementPresent(locator);
 
-		if (liferaySelenium.isNotVisible(locator)) {
+		if (isNotVisible(locator)) {
 			throw new Exception(
 				"Element is not visible at \"" + locator + "\"");
 		}
@@ -1425,7 +1425,7 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public boolean isConfirmation(String pattern) {
-		String confirmation = liferaySelenium.getConfirmation();
+		String confirmation = getConfirmation();
 
 		return pattern.equals(confirmation);
 	}
@@ -1461,22 +1461,22 @@ public abstract class BaseWebDriverImpl
 	public boolean isElementPresentAfterWait(String locator) throws Exception {
 		for (int second = 0;; second++) {
 			if (second >= PropsValues.TIMEOUT_EXPLICIT_WAIT) {
-				return liferaySelenium.isElementPresent(locator);
+				return isElementPresent(locator);
 			}
 
-			if (liferaySelenium.isElementPresent(locator)) {
+			if (isElementPresent(locator)) {
 				break;
 			}
 
 			Thread.sleep(1000);
 		}
 
-		return liferaySelenium.isElementPresent(locator);
+		return isElementPresent(locator);
 	}
 
 	@Override
 	public boolean isHTMLSourceTextPresent(String value) throws Exception {
-		URL url = new URL(liferaySelenium.getLocation());
+		URL url = new URL(getLocation());
 
 		InputStream inputStream = url.openStream();
 
@@ -1504,7 +1504,7 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public boolean isNotChecked(String locator) {
-		return !liferaySelenium.isChecked(locator);
+		return !isChecked(locator);
 	}
 
 	@Override
@@ -1514,7 +1514,7 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public boolean isNotPartialText(String locator, String value) {
-		return !liferaySelenium.isPartialText(locator, value);
+		return !isPartialText(locator, value);
 	}
 
 	@Override
@@ -1524,17 +1524,17 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public boolean isNotText(String locator, String value) throws Exception {
-		return !liferaySelenium.isText(locator, value);
+		return !isText(locator, value);
 	}
 
 	@Override
 	public boolean isNotValue(String locator, String value) throws Exception {
-		return !liferaySelenium.isValue(locator, value);
+		return !isValue(locator, value);
 	}
 
 	@Override
 	public boolean isNotVisible(String locator) {
-		return !liferaySelenium.isVisible(locator);
+		return !isVisible(locator);
 	}
 
 	@Override
@@ -1596,7 +1596,7 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public boolean isTextNotPresent(String pattern) {
-		return !liferaySelenium.isTextPresent(pattern);
+		return !isTextPresent(pattern);
 	}
 
 	@Override
@@ -2047,7 +2047,7 @@ public abstract class BaseWebDriverImpl
 	public void replyToEmail(String to, String body) throws Exception {
 		EmailCommands.replyToEmail(to, body);
 
-		liferaySelenium.pause("3000");
+		pause("3000");
 	}
 
 	@Override
@@ -2174,7 +2174,7 @@ public abstract class BaseWebDriverImpl
 
 		EmailCommands.sendEmail(to, subject, body);
 
-		liferaySelenium.pause("3000");
+		pause("3000");
 	}
 
 	@Override
@@ -2413,7 +2413,7 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public void sikuliLeftMouseDown() throws Exception {
-		liferaySelenium.pause("1000");
+		pause("1000");
 
 		Mouse mouse = new DesktopMouse();
 
@@ -2422,7 +2422,7 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public void sikuliLeftMouseUp() throws Exception {
-		liferaySelenium.pause("1000");
+		pause("1000");
 
 		Mouse mouse = new DesktopMouse();
 
@@ -2444,7 +2444,7 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public void sikuliRightMouseDown() throws Exception {
-		liferaySelenium.pause("1000");
+		pause("1000");
 
 		Mouse mouse = new DesktopMouse();
 
@@ -2453,7 +2453,7 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public void sikuliRightMouseUp() throws Exception {
-		liferaySelenium.pause("1000");
+		pause("1000");
 
 		Mouse mouse = new DesktopMouse();
 
@@ -2464,7 +2464,7 @@ public abstract class BaseWebDriverImpl
 	public void sikuliType(String image, String value) throws Exception {
 		sikuliClick(liferaySelenium, image);
 
-		liferaySelenium.pause("1000");
+		pause("1000");
 
 		Keyboard keyboard = new DesktopKeyboard();
 
@@ -2548,7 +2548,7 @@ public abstract class BaseWebDriverImpl
 
 		keyboard.keyUp(Key.CTRL);
 
-		String fileName = liferaySelenium.getOutputDirName() + "/" + value;
+		String fileName = getOutputDirName() + "/" + value;
 
 		if (OSDetector.isWindows()) {
 			fileName = StringUtil.replace(fileName, "/", "\\");
@@ -2627,7 +2627,7 @@ public abstract class BaseWebDriverImpl
 	public void typeCKEditor(String locator, String value) {
 		StringBuilder sb = new StringBuilder();
 
-		String idAttribute = liferaySelenium.getAttribute(locator + "@id");
+		String idAttribute = getAttribute(locator + "@id");
 
 		int x = idAttribute.indexOf("cke__");
 		int y = idAttribute.indexOf("cke__", x + 1);
@@ -2642,7 +2642,7 @@ public abstract class BaseWebDriverImpl
 		sb.append(HtmlUtil.escapeJS(value.replace("\\", "\\\\")));
 		sb.append("\")");
 
-		liferaySelenium.runScript(sb.toString());
+		runScript(sb.toString());
 	}
 
 	@Override
@@ -2770,11 +2770,11 @@ public abstract class BaseWebDriverImpl
 	public void waitForElementNotPresent(String locator) throws Exception {
 		for (int second = 0;; second++) {
 			if (second >= PropsValues.TIMEOUT_EXPLICIT_WAIT) {
-				liferaySelenium.assertElementNotPresent(locator);
+				assertElementNotPresent(locator);
 			}
 
 			try {
-				if (liferaySelenium.isElementNotPresent(locator)) {
+				if (isElementNotPresent(locator)) {
 					break;
 				}
 			}
@@ -2789,11 +2789,11 @@ public abstract class BaseWebDriverImpl
 	public void waitForElementPresent(String locator) throws Exception {
 		for (int second = 0;; second++) {
 			if (second >= PropsValues.TIMEOUT_EXPLICIT_WAIT) {
-				liferaySelenium.assertElementPresent(locator);
+				assertElementPresent(locator);
 			}
 
 			try {
-				if (liferaySelenium.isElementPresent(locator)) {
+				if (isElementPresent(locator)) {
 					break;
 				}
 			}
@@ -2817,11 +2817,11 @@ public abstract class BaseWebDriverImpl
 
 		for (int second = 0;; second++) {
 			if (second >= PropsValues.TIMEOUT_EXPLICIT_WAIT) {
-				liferaySelenium.assertNotPartialText(locator, value);
+				assertNotPartialText(locator, value);
 			}
 
 			try {
-				if (liferaySelenium.isNotPartialText(locator, value)) {
+				if (isNotPartialText(locator, value)) {
 					break;
 				}
 			}
@@ -2838,11 +2838,11 @@ public abstract class BaseWebDriverImpl
 
 		for (int second = 0;; second++) {
 			if (second >= PropsValues.TIMEOUT_EXPLICIT_WAIT) {
-				liferaySelenium.assertNotSelectedLabel(selectLocator, pattern);
+				assertNotSelectedLabel(selectLocator, pattern);
 			}
 
 			try {
-				if (liferaySelenium.isNotSelectedLabel(
+				if (isNotSelectedLabel(
 						selectLocator, pattern)) {
 
 					break;
@@ -2861,11 +2861,11 @@ public abstract class BaseWebDriverImpl
 
 		for (int second = 0;; second++) {
 			if (second >= PropsValues.TIMEOUT_EXPLICIT_WAIT) {
-				liferaySelenium.assertNotText(locator, value);
+				assertNotText(locator, value);
 			}
 
 			try {
-				if (liferaySelenium.isNotText(locator, value)) {
+				if (isNotText(locator, value)) {
 					break;
 				}
 			}
@@ -2882,11 +2882,11 @@ public abstract class BaseWebDriverImpl
 
 		for (int second = 0;; second++) {
 			if (second >= PropsValues.TIMEOUT_EXPLICIT_WAIT) {
-				liferaySelenium.assertNotValue(locator, value);
+				assertNotValue(locator, value);
 			}
 
 			try {
-				if (liferaySelenium.isNotValue(locator, value)) {
+				if (isNotValue(locator, value)) {
 					break;
 				}
 			}
@@ -2901,11 +2901,11 @@ public abstract class BaseWebDriverImpl
 	public void waitForNotVisible(String locator) throws Exception {
 		for (int second = 0;; second++) {
 			if (second >= PropsValues.TIMEOUT_EXPLICIT_WAIT) {
-				liferaySelenium.assertNotVisible(locator);
+				assertNotVisible(locator);
 			}
 
 			try {
-				if (liferaySelenium.isNotVisible(locator)) {
+				if (isNotVisible(locator)) {
 					break;
 				}
 			}
@@ -2928,11 +2928,11 @@ public abstract class BaseWebDriverImpl
 
 		for (int second = 0;; second++) {
 			if (second >= PropsValues.TIMEOUT_EXPLICIT_WAIT) {
-				liferaySelenium.assertPartialText(locator, value);
+				assertPartialText(locator, value);
 			}
 
 			try {
-				if (liferaySelenium.isPartialText(locator, value)) {
+				if (isPartialText(locator, value)) {
 					break;
 				}
 			}
@@ -3007,11 +3007,11 @@ public abstract class BaseWebDriverImpl
 
 		for (int second = 0;; second++) {
 			if (second >= PropsValues.TIMEOUT_EXPLICIT_WAIT) {
-				liferaySelenium.assertSelectedLabel(selectLocator, pattern);
+				assertSelectedLabel(selectLocator, pattern);
 			}
 
 			try {
-				if (liferaySelenium.isSelectedLabel(selectLocator, pattern)) {
+				if (isSelectedLabel(selectLocator, pattern)) {
 					break;
 				}
 			}
@@ -3028,11 +3028,11 @@ public abstract class BaseWebDriverImpl
 
 		for (int second = 0;; second++) {
 			if (second >= PropsValues.TIMEOUT_EXPLICIT_WAIT) {
-				liferaySelenium.assertText(locator, value);
+				assertText(locator, value);
 			}
 
 			try {
-				if (liferaySelenium.isText(locator, value)) {
+				if (isText(locator, value)) {
 					break;
 				}
 			}
@@ -3049,11 +3049,11 @@ public abstract class BaseWebDriverImpl
 
 		for (int second = 0;; second++) {
 			if (second >= PropsValues.TIMEOUT_EXPLICIT_WAIT) {
-				liferaySelenium.assertTextNotPresent(value);
+				assertTextNotPresent(value);
 			}
 
 			try {
-				if (liferaySelenium.isTextNotPresent(value)) {
+				if (isTextNotPresent(value)) {
 					break;
 				}
 			}
@@ -3070,11 +3070,11 @@ public abstract class BaseWebDriverImpl
 
 		for (int second = 0;; second++) {
 			if (second >= PropsValues.TIMEOUT_EXPLICIT_WAIT) {
-				liferaySelenium.assertTextPresent(value);
+				assertTextPresent(value);
 			}
 
 			try {
-				if (liferaySelenium.isTextPresent(value)) {
+				if (isTextPresent(value)) {
 					break;
 				}
 			}
@@ -3091,11 +3091,11 @@ public abstract class BaseWebDriverImpl
 
 		for (int second = 0;; second++) {
 			if (second >= PropsValues.TIMEOUT_EXPLICIT_WAIT) {
-				liferaySelenium.assertValue(locator, value);
+				assertValue(locator, value);
 			}
 
 			try {
-				if (liferaySelenium.isValue(locator, value)) {
+				if (isValue(locator, value)) {
 					break;
 				}
 			}
@@ -3110,11 +3110,11 @@ public abstract class BaseWebDriverImpl
 	public void waitForVisible(String locator) throws Exception {
 		for (int second = 0;; second++) {
 			if (second >= PropsValues.TIMEOUT_EXPLICIT_WAIT) {
-				liferaySelenium.assertVisible(locator);
+				assertVisible(locator);
 			}
 
 			try {
-				if (liferaySelenium.isVisible(locator)) {
+				if (isVisible(locator)) {
 					break;
 				}
 			}

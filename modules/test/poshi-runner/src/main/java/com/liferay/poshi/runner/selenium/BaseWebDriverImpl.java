@@ -16,6 +16,7 @@ package com.liferay.poshi.runner.selenium;
 
 import com.deque.axe.AXE;
 import com.liferay.poshi.runner.PoshiRunnerContext;
+import com.liferay.poshi.runner.PoshiRunnerGetterUtil;
 import com.liferay.poshi.runner.exception.PoshiRunnerWarningException;
 import com.liferay.poshi.runner.util.AntCommands;
 import com.liferay.poshi.runner.util.EmailCommands;
@@ -3221,6 +3222,9 @@ public abstract class BaseWebDriverImpl
 	protected void selectByRegexpValue(String selectLocator, String regexp) {
 		WebDriverHelper.selectByRegexpValue(this, selectLocator, regexp);
 	}
+	
+	private static final String _CURRENT_DIR_NAME =
+		PoshiRunnerGetterUtil.getCanonicalPath(".");
 
 	private static final String _OUTPUT_DIR_NAME = PropsValues.OUTPUT_DIR_NAME;
 
@@ -3231,6 +3235,8 @@ public abstract class BaseWebDriverImpl
 	private final Map<String, String> _keysSpecialChars = new HashMap<>();
 	private final String _outputDirName;
 	private String _primaryTestSuiteName;
+	private int _screenshotCount;
+	private int _screenshotErrorCount;
 	private final String _sikuliImagesDirName;
 	private final String _testDependenciesDirName;
 

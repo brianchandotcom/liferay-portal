@@ -155,88 +155,99 @@ app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.42</echo>
 
 		<for list="${plugins.includes}" param="plugin">
 			<sequential>
-				<get-plugin-path
-					plugin="@{plugin}"
-					plugin.types="${plugin.types}"
-				/>
-
-				<get-testcase-property property.name="portlet.properties.@{plugin}" />
-
 				<if>
-					<isset property="portlet.properties.@{plugin}" />
+					<matches pattern="http" string="@{plugin}" />
 					<then>
-						<propertycopy
-							from="portlet.properties.@{plugin}"
-							name="portlet.properties"
-							override="true"
+						<mirrors-get
+							dest="${auto.deploy.dir}"
+							src="@{plugin}"
+						/>
+					</then>
+					<else>
+						<get-plugin-path
+							plugin="@{plugin}"
+							plugin.types="${plugin.types}"
 						/>
 
+						<get-testcase-property property.name="portlet.properties.@{plugin}" />
+
 						<if>
-							<available file="${plugin.path}/docroot/WEB-INF/src" />
+							<isset property="portlet.properties.@{plugin}" />
 							<then>
-								<echo append="true" file="${plugin.path}/docroot/WEB-INF/src/portlet-ext.properties">${portlet.properties}</echo>
+								<propertycopy
+									from="portlet.properties.@{plugin}"
+									name="portlet.properties"
+									override="true"
+								/>
+
+								<if>
+									<available file="${plugin.path}/docroot/WEB-INF/src" />
+									<then>
+										<echo append="true" file="${plugin.path}/docroot/WEB-INF/src/portlet-ext.properties">${portlet.properties}</echo>
+									</then>
+									<else>
+										<echo append="true" file="${plugin.path}/WEB-INF/classes/portlet-ext.properties">${portlet.properties}</echo>
+									</else>
+								</if>
 							</then>
 							<else>
-								<echo append="true" file="${plugin.path}/WEB-INF/classes/portlet-ext.properties">${portlet.properties}</echo>
+								<delete file="${plugin.path}/docroot/WEB-INF/src/portlet-ext.properties" />
 							</else>
 						</if>
-					</then>
-					<else>
-						<delete file="${plugin.path}/docroot/WEB-INF/src/portlet-ext.properties" />
-					</else>
-				</if>
 
-				<if>
-					<equals arg1="@{plugin}" arg2="so-portlet" />
-					<then>
-						<echo file="${plugin.path}/overwrite/META-INF/custom_jsps/html/portlet/dockbar/license_warning.jsp" />
-					</then>
-				</if>
-
-				<if>
-					<equals arg1="${java.security}" arg2="true" />
-					<then>
 						<if>
-							<not>
-								<resourcecontains
-									resource="${plugin.path}/docroot/WEB-INF/liferay-plugin-package.properties"
-									substring="security-manager-enabled=true"
-								/>
-							</not>
+							<equals arg1="@{plugin}" arg2="so-portlet" />
 							<then>
-								<echo append="true" file="${plugin.path}/docroot/WEB-INF/liferay-plugin-package.properties">
-
-		security-manager-enabled=true</echo>
+								<echo file="${plugin.path}/overwrite/META-INF/custom_jsps/html/portlet/dockbar/license_warning.jsp" />
 							</then>
 						</if>
-					</then>
-				</if>
 
-				<if>
-					<isset property="plugin.war" />
-					<then>
-						<zip
-							basedir="${plugin.path}"
-							destfile="${plugin.war}"
-							update="yes"
-						/>
+						<if>
+							<equals arg1="${java.security}" arg2="true" />
+							<then>
+								<if>
+									<not>
+										<resourcecontains
+											resource="${plugin.path}/docroot/WEB-INF/liferay-plugin-package.properties"
+											substring="security-manager-enabled=true"
+										/>
+									</not>
+									<then>
+										<echo append="true" file="${plugin.path}/docroot/WEB-INF/liferay-plugin-package.properties">
 
-						<get-auto-deploy-dir />
+				security-manager-enabled=true</echo>
+									</then>
+								</if>
+							</then>
+						</if>
 
-						<copy file="${plugin.war}" todir="${auto.deploy.dir}" />
+						<if>
+							<isset property="plugin.war" />
+							<then>
+								<zip
+									basedir="${plugin.path}"
+									destfile="${plugin.war}"
+									update="yes"
+								/>
 
-						<var name="plugin.war" unset="true" />
-					</then>
-					<elseif>
-						<contains string="${plugin.path}" substring="${project.dir}/modules/" />
-						<then>
-							<gradle-execute dir="${plugin.path}" task="deploy" />
-						</then>
-					</elseif>
-					<else>
-						<ant dir="${plugin.path}" inheritAll="false" target="clean" />
+								<get-auto-deploy-dir />
 
-						<ant dir="${plugin.path}" inheritAll="false" target="deploy" />
+								<copy file="${plugin.war}" todir="${auto.deploy.dir}" />
+
+								<var name="plugin.war" unset="true" />
+							</then>
+							<elseif>
+								<contains string="${plugin.path}" substring="${project.dir}/modules/" />
+								<then>
+									<gradle-execute dir="${plugin.path}" task="deploy" />
+								</then>
+							</elseif>
+							<else>
+								<ant dir="${plugin.path}" inheritAll="false" target="clean" />
+
+								<ant dir="${plugin.path}" inheritAll="false" target="deploy" />
+							</else>
+						</if>
 					</else>
 				</if>
 			</sequential>

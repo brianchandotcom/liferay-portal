@@ -49,7 +49,7 @@ public class SyncAccountServiceTest extends BaseTestCase {
 			System.getProperty("user.home"), "liferay-sync-test3");
 
 		SyncAccount syncAccount2 = SyncAccountService.addSyncAccount(
-			targetFilePathName, "test3@liferay.com", "test",
+			targetFilePathName, "test3@liferay.com", "test", "1.0.0",
 			"http://localhost:8080");
 
 		syncAccount2 = SyncAccountService.fetchSyncAccount(

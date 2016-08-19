@@ -181,7 +181,7 @@ public class EngineConfigurationFactoryFinder
                                                   paramTypes);
     
             if (method == null) {
-                log.warn(Messages.getMessage("engineConfigMissingNewFactory",
+                log.debug(Messages.getMessage("engineConfigMissingNewFactory",
                                               service.getName(),
                                               requiredMethod));
             } else {
@@ -192,12 +192,12 @@ public class EngineConfigurationFactoryFinder
                         log.debug(Messages.getMessage("engineConfigLoadFactory",
                                                       service.getName()));
                     } else {
-                        log.warn(Messages.getMessage("engineConfigInvokeNewFactory",
+                        log.debug(Messages.getMessage("engineConfigInvokeNewFactory",
                                                       service.getName(),
                                                       requiredMethod), e);
                     }
                 } catch (Exception e) {
-                    log.warn(Messages.getMessage("engineConfigInvokeNewFactory",
+                    log.debug(Messages.getMessage("engineConfigInvokeNewFactory",
                                                   service.getName(),
                                                   requiredMethod), e);
                 }
@@ -209,4 +209,4 @@ public class EngineConfigurationFactoryFinder
 
         return null;
     }
-}
+}/* @generated */

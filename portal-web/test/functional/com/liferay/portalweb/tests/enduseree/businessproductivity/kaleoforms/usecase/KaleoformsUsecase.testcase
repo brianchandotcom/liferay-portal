@@ -2598,8 +2598,7 @@
 		</execute>
 
 		<execute macro="Notifications#viewNotification">
-			<var name="notificationContent" value="Test Test sent you a Kaleo Forms Process for review in the workflow." />
-			<var name="notificationCount" value="1" />
+			<var name="bodyContent" value="Test Test sent you a Kaleo Forms Process for review in the workflow." />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -2617,8 +2616,7 @@
 		</execute>
 
 		<execute macro="Notifications#viewNotification">
-			<var name="notificationContent" value="Test Test sent you a Kaleo Forms Process for review in the workflow." />
-			<var name="notificationCount" value="2" />
+			<var name="bodyContent" value="Test Test sent you a Kaleo Forms Process for review in the workflow." />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -6997,8 +6995,7 @@
 		</execute>
 
 		<execute macro="Notifications#viewNotification">
-			<var name="notificationContent" value="Test Test sent you a Kaleo Forms Process for review in the workflow." />
-			<var name="notificationCount" value="1" />
+			<var name="contentBody" value="Test Test sent you a Kaleo Forms Process for review in the workflow." />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -7016,8 +7013,7 @@
 		</execute>
 
 		<execute macro="Notifications#viewNotification">
-			<var name="notificationContent" value="Test Test sent you a Kaleo Forms Process for review in the workflow." />
-			<var name="notificationCount" value="2" />
+			<var name="contentBody" value="Test Test sent you a Kaleo Forms Process for review in the workflow." />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -7035,8 +7031,7 @@
 		</execute>
 
 		<execute macro="Notifications#viewNotification">
-			<var name="notificationContent" value="Your submission was rejected by Test Test, please modify and resubmit." />
-			<var name="notificationCount" value="3" />
+			<var name="bodyContent" value="Your submission was rejected by Test Test, please modify and resubmit." />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -7065,8 +7060,7 @@
 		</execute>
 
 		<execute macro="Notifications#viewNotification">
-			<var name="notificationContent" value="Test Test sent you a Kaleo Forms Process for review in the workflow." />
-			<var name="notificationCount" value="4" />
+			<var name="bodyContent" value="Test Test sent you a Kaleo Forms Process for review in the workflow." />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -7364,8 +7358,7 @@
 		</execute>
 
 		<execute macro="Notifications#viewNotification">
-			<var name="notificationContent" value="Submission reviewed. The reviewer left the following: ${comment}." />
-			<var name="notificationCount" value="1" />
+			<var name="bodyContent" value="Submission reviewed. The reviewer left the following: ${comment}." />
 		</execute>
 	</command>
 
@@ -8289,8 +8282,7 @@
 		</execute>
 
 		<execute macro="Notifications#viewNotification">
-			<var name="notificationContent" value="Test Test sent you a Kaleo Forms Process for review in the workflow." />
-			<var name="notificationCount" value="1" />
+			<var name="bodyContent" value="Test Test sent you a Kaleo Forms Process for review in the workflow." />
 		</execute>
 
 		<execute macro="Notifications#navigateToContent">
@@ -8317,8 +8309,7 @@
 		</execute>
 
 		<execute macro="Notifications#viewNotification">
-			<var name="notificationContent" value="Test Test sent you a Kaleo Forms Process for review in the workflow." />
-			<var name="notificationCount" value="1" />
+			<var name="bodyContent" value="Test Test sent you a Kaleo Forms Process for review in the workflow." />
 		</execute>
 
 		<execute macro="Notifications#navigateToContent">

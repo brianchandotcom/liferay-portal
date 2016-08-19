@@ -2187,7 +2187,7 @@ public abstract class BaseWebDriverImpl
 
 		webElement.sendKeys(Keys.chord(Keys.CONTROL, Keys.END));
 
-		liferaySelenium.typeKeys(locator, "");
+		typeKeys(locator, "");
 
 		Keyboard keyboard = new DesktopKeyboard();
 
@@ -2208,8 +2208,8 @@ public abstract class BaseWebDriverImpl
 				keyboard.type("(");
 			}
 			else if (specialCharacter.equals("${line.separator}")) {
-				liferaySelenium.keyPress(locator, "\\SPACE");
-				liferaySelenium.keyPress(locator, "\\RETURN");
+				keyPress(locator, "\\SPACE");
+				keyPress(locator, "\\RETURN");
 			}
 
 			x = y + specialCharacter.length();
@@ -2640,7 +2640,7 @@ public abstract class BaseWebDriverImpl
 
 		webElement.sendKeys(Keys.chord(Keys.CONTROL, "a"));
 
-		liferaySelenium.typeKeys(locator, "");
+		typeKeys(locator, "");
 
 		Keyboard keyboard = new DesktopKeyboard();
 
@@ -2661,8 +2661,8 @@ public abstract class BaseWebDriverImpl
 				keyboard.type("(");
 			}
 			else if (specialCharacter.equals("${line.separator}")) {
-				liferaySelenium.keyPress(locator, "\\SPACE");
-				liferaySelenium.keyPress(locator, "\\RETURN");
+				keyPress(locator, "\\SPACE");
+				keyPress(locator, "\\RETURN");
 			}
 
 			x = y + specialCharacter.length();

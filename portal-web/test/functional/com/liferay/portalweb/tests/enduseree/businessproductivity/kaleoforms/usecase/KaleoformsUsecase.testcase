@@ -1829,8 +1829,6 @@
 			<var name="kfFormName" value="Created Task Form" />
 		</execute>
 
-		<execute function="Refresh" />
-
 		<execute macro="KaleoFormsAdmin#assignForm">
 			<var name="kfProcessName" value="${kfProcessName}" />
 			<var name="workflowTask" value="review" />
@@ -4514,8 +4512,6 @@
 			<var name="kfFormName" value="Created Task Form" />
 		</execute>
 
-		<execute function="Refresh" />
-
 		<execute macro="KaleoFormsAdmin#assignForm">
 			<var name="kfProcessName" value="${kfProcessName}" />
 			<var name="workflowTask" value="review" />
@@ -5876,8 +5872,6 @@
 			<var name="kfFormName" value="Created Task Form" />
 		</execute>
 
-		<execute function="Refresh" />
-
 		<execute macro="KaleoFormsAdmin#assignForm">
 			<var name="kfProcessName" value="${kfProcessName}" />
 			<var name="workflowTask" value="review" />
@@ -6096,8 +6090,6 @@
 		<execute macro="KaleoFormsAdmin#chooseForm">
 			<var name="kfFormName" value="Created Task Form" />
 		</execute>
-
-		<execute function="Refresh" />
 
 		<execute macro="KaleoFormsAdmin#assignForm">
 			<var name="kfProcessName" value="${kfProcessName}" />
@@ -6547,8 +6539,6 @@
 		<execute macro="KaleoFormsAdmin#chooseForm">
 			<var name="kfFormName" value="Created Task Form" />
 		</execute>
-
-		<execute function="Refresh" />
 
 		<execute macro="KaleoFormsAdmin#assignForm">
 			<var name="kfProcessName" value="${kfProcessName}" />

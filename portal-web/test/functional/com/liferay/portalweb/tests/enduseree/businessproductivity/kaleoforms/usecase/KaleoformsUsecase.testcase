@@ -1518,6 +1518,7 @@
 		<var name="kfFieldSetName" value="Field Set Data Definition" />
 		<var name="kfProcessDescription" value="Kaleo Forms Process Description" />
 		<var name="kfProcessName" value="Kaleo Forms Process" />
+		<var name="workflowTask" value="Review" />
 
 		<execute macro="Navigator#openURL" />
 

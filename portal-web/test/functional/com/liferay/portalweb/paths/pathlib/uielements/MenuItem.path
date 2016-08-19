@@ -140,7 +140,7 @@
 </tr>
 <tr>
 	<td>ASSIGN_FORM</td>
-	<td>//a[@role='menuitem' and contains(.,'Assign Form')]</td>
+	<td>//a[@role='menuitem' and contains(.,'Assign Form') and contains(@onclick,'${key_workflowTask}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -501,6 +501,16 @@
 <tr>
 	<td>MANAGE_DATA_DEFINTIONS</td>
 	<td>//a[@role='menuitem']//span[contains(.,'Manage Data Definitions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MANAGE_FIELD_SETS</td>
+	<td>//a[@role='menuitem']//span[contains(.,'Manage Field Sets')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MANAGE_FORMS</td>
+	<td>//div[contains(@class,'open')]//a[@role='menuitem' and contains(.,'Manage Forms')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -891,6 +901,16 @@
 <tr>
 	<td>TRANSFORM_RESIZE</td>
 	<td>//div[@class=&quot;dropdown dropup open&quot;]//a[contains(.,'Resize')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>UNASSIGN_FORM</td>
+	<td>//tr[contains(.,'${key_workflowTask}')]//a[@role='menuitem' and contains(.,'Unassign Form')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>UNBAN_THIS_USER</td>
+	<td>//a[@role='menuitem' and contains(.,'Unban This User')]</td>
 	<td></td>
 </tr>
 <tr>

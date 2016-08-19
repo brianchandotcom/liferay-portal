@@ -630,6 +630,11 @@
 </tr>
 <!--SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN_GENERAL_PERMISSIONS-->
 <tr>
+	<td>SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION</td>
+	<td>//input[contains(@value,'KaleoFormsAdminPortletACCESS_IN_CONTROL_PANEL')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN_GENERAL_PERMISSIONS_ACTION_CHECKBOX</td>
 	<td>//input[contains(@name,'allRowIds')]</td>
 	<td></td>

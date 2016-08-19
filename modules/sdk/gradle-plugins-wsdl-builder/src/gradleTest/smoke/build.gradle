@@ -1,0 +1,21 @@
+apply plugin: "com.liferay.wsdl.builder"
+
+task runGradleTest
+
+repositories {
+	mavenLocal()
+
+	maven {
+		url "https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public"
+	}
+}
+
+runGradleTest {
+	dependsOn buildWSDL
+
+	doLast {
+		File wsJarFile = file("lib/sample-ws.jar")
+
+		assert wsJarFile.exists()
+	}
+}

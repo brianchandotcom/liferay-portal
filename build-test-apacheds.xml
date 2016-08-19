@@ -3,28 +3,6 @@
 <project basedir="." name="portal-test-apacheds" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build-test.xml" />
 
-	<macrodef name="prepare-apacheds">
-		<sequential>
-			<if>
-				<not>
-					<available file="${apacheds.dir}/instances/${apacheds.instance.zip.name}" />
-				</not>
-				<then>
-					<mirrors-get
-						dest="${apacheds.dir}/instances/${apacheds.instance.zip.name}"
-						src="${apacheds.instance.zip.url}"
-						verbose="true"
-					/>
-				</then>
-			</if>
-
-			<unzip
-				dest="${apacheds.dir}/instances"
-				src="${apacheds.dir}/instances/${apacheds.instance.zip.name}"
-			/>
-		</sequential>
-	</macrodef>
-
 	<macrodef name="unzip-apacheds">
 		<sequential>
 			<delete dir="${apacheds.dir}" />
@@ -49,16 +27,38 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="unzip-apacheds-instance-custom">
+		<sequential>
+			<if>
+				<not>
+					<available file="${apacheds.dir}/instances/${apacheds.instance.custom.zip.name}" />
+				</not>
+				<then>
+					<mirrors-get
+						dest="${apacheds.dir}/instances/${apacheds.instance.custom.zip.name}"
+						src="http://files.liferay.com/private/apps/apache/apacheds/${apacheds.instance.custom.zip.name}"
+						verbose="true"
+					/>
+				</then>
+			</if>
+
+			<unzip
+				dest="${apacheds.dir}/instances"
+				src="${apacheds.dir}/instances/${apacheds.instance.custom.zip.name}"
+			/>
+		</sequential>
+	</macrodef>
+
 	<target name="start-apacheds">
 		<unzip-apacheds />
 
-		<prepare-apacheds />
+		<unzip-apacheds-instance-custom />
 
 		<if>
 			<os family="unix" />
 			<then>
 				<chmod file="${apacheds.dir}/bin/**" perm="a+x" />
-				
+
 				<exec dir="${apacheds.dir}/bin" executable="/bin/bash">
 					<arg value="-c" />
 					<arg value="./apacheds.sh liferay start" />

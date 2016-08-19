@@ -70,7 +70,7 @@ public class StagedLayoutSetImpl implements StagedLayoutSet {
 	}
 
 	public Object clone() {
-		return _layoutSet.clone();
+		return new StagedLayoutSetImpl((LayoutSet)_layoutSet.clone());
 	}
 
 	public int compareTo(LayoutSet layoutSet) {

@@ -549,24 +549,42 @@ public abstract class BaseDB implements DB {
 	protected String applyMaxStringIndexLengthLimitation(Matcher matcher) {
 		DBType dbType = getDBType();
 
+		boolean sybase = false;
+
+		if (dbType.equals(DBType.SYBASE)) {
+			sybase = true;
+		}
+
 		int stringIndexMaxLength = GetterUtil.getInteger(
 			PropsUtil.get(
 				PropsKeys.DATABASE_STRING_INDEX_MAX_LENGTH,
 				new Filter(dbType.getName())),
 			-1);
 
+		String replacement = "\\(" + stringIndexMaxLength + "\\)";
+
 		if (stringIndexMaxLength < 0) {
-			return matcher.replaceAll(StringPool.BLANK);
+			if (sybase) {
+				replacement = StringPool.BLANK;
+			}
+			else {
+				return matcher.replaceAll(StringPool.BLANK);
+			}
 		}
 
 		StringBuffer sb = new StringBuffer();
 
-		String replacement = "\\(" + stringIndexMaxLength + "\\)";
+		boolean remove = false;
 
 		while (matcher.find()) {
 			int length = Integer.valueOf(matcher.group(1));
 
-			if (length > stringIndexMaxLength) {
+			if (sybase && (length > 1250)) {
+				matcher.appendReplacement(sb, "%%REMOVE%%");
+
+				remove = true;
+			}
+			else if (length > stringIndexMaxLength) {
 				matcher.appendReplacement(sb, replacement);
 			}
 			else {
@@ -576,7 +594,21 @@ public abstract class BaseDB implements DB {
 
 		matcher.appendTail(sb);
 
-		return sb.toString();
+		String string = sb.toString();
+
+		if (sybase && remove) {
+			String[] strings = StringUtil.split(string, StringPool.NEW_LINE);
+
+			for (int i = 0; i < strings.length; i++) {
+				if (strings[i].contains("%%REMOVE%%")) {
+					strings[i] = StringPool.BLANK;
+				}
+			}
+
+			return StringUtil.merge(strings, StringPool.NEW_LINE);
+		}
+
+		return string;
 	}
 
 	protected String[] buildColumnNameTokens(String line) {

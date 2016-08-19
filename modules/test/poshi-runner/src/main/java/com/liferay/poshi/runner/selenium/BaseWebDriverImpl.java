@@ -2074,7 +2074,7 @@ public abstract class BaseWebDriverImpl
 
 		_screenshotCount++;
 
-		captureScreen(
+		LiferaySeleniumHelper.captureScreen(
 			_CURRENT_DIR_NAME + "test-results/functional/screenshots/" +
 				_screenshotCount + ".jpg");
 	}
@@ -2095,7 +2095,7 @@ public abstract class BaseWebDriverImpl
 			_screenshotErrorCount++;
 		}
 
-		captureScreen(
+		LiferaySeleniumHelper.captureScreen(
 			_CURRENT_DIR_NAME + "test-results/functional/screenshots/" +
 				"ScreenshotBeforeAction" + _screenshotErrorCount + ".jpg");
 	}
@@ -2507,7 +2507,7 @@ public abstract class BaseWebDriverImpl
 			FileUtil.getSeparator() + _TEST_DEPENDENCIES_DIR_NAME +
 				FileUtil.getSeparator() + value;
 
-		filePath = getSourceDirFilePath(filePath);
+		filePath = LiferaySeleniumHelper.getSourceDirFilePath(filePath);
 
 		if (OSDetector.isWindows()) {
 			filePath = StringUtil.replace(filePath, "/", "\\");
@@ -3156,7 +3156,8 @@ public abstract class BaseWebDriverImpl
 		String filePath =
 			FileUtil.getSeparator() + getSikuliImagesDirName() + image;
 
-		File file = new File(getSourceDirFilePath(filePath));
+		File file = new File(
+			LiferaySeleniumHelper.getSourceDirFilePath(filePath));
 
 		return new ImageTarget(file);
 	}

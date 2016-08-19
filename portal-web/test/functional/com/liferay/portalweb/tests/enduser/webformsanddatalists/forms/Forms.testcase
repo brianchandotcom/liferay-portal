@@ -2544,7 +2544,7 @@
 		</execute>
 
 		<execute macro="Form#editFieldLabel">
-			<var name="fieldName" value="ParagraphFieldTitle" />
+			<var name="fieldName" value="paragraph" />
 			<var name="fieldValue" value="Paragraph Field Title" />
 		</execute>
 
@@ -2561,7 +2561,7 @@
 		</execute>
 
 		<execute macro="FormFields#viewParagraphField">
-			<var name="fieldName" value="ParagraphFieldTitle" />
+			<var name="fieldName" value="paragraph" />
 			<var name="fieldTitle" value="Paragraph Field Title" />
 			<var name="fieldValue" value="New Paragraph body text." />
 		</execute>
@@ -2584,7 +2584,7 @@
 		<execute macro="FormsAdminNavigator#gotoView" />
 
 		<execute macro="FormsAdmin#viewParagraphEntry">
-			<var name="fieldName" value="ParagraphFieldTitle" />
+			<var name="fieldName" value="paragraph" />
 			<var name="fieldTitle" value="Paragraph Field Title" />
 			<var name="fieldValue" value="New Paragraph body text." />
 		</execute>

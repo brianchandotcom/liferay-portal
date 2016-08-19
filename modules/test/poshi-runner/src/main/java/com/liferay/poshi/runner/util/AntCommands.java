@@ -15,7 +15,6 @@
 package com.liferay.poshi.runner.util;
 
 import com.liferay.poshi.runner.PoshiRunnerGetterUtil;
-import com.liferay.poshi.runner.selenium.LiferaySelenium;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -29,10 +28,7 @@ import java.util.concurrent.Callable;
  */
 public class AntCommands implements Callable<Void> {
 
-	public AntCommands(
-		LiferaySelenium liferaySelenium, String fileName, String target) {
-
-		_liferaySelenium = liferaySelenium;
+	public AntCommands(String fileName, String target) {
 		_fileName = fileName;
 		_target = target;
 	}
@@ -97,7 +93,6 @@ public class AntCommands implements Callable<Void> {
 	}
 
 	private final String _fileName;
-	private final LiferaySelenium _liferaySelenium;
 	private final String _target;
 
 }

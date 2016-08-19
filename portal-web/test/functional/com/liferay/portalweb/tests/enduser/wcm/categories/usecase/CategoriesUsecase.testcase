@@ -417,8 +417,7 @@
 
 		<execute macro="Vocabulary#addWithAssociatedAssetTypeCP">
 			<var name="required" value="true" />
-			<var name="vocabularyAssociatedAssetType" value="Blogs Entry" />
-			<var name="vocabularyAssociatedAssetType2" value="Web Content Article" />
+			<var name="vocabularyAssociatedAssetTypeList" value="Blogs Entry,Web Content Article" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 

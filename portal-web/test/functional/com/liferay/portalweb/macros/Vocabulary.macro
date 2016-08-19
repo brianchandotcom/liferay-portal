@@ -73,16 +73,28 @@
 			<var name="panelHeading" value="Associated Asset Types" />
 		</execute>
 
-		<execute function="Select" locator1="CategoriesEditVocabulary#ASSOCIATED_ASSET_TYPES_SELECT" value1="${vocabularyAssociatedAssetType}" />
+		<var name="rowIndexNumber" value="1" />
+		<var method="StringUtil#count(',', '${vocabularyAssociatedAssetTypeList}')" name="size" />
+		<var method="MathUtil#sum('${size}', '1')" name="size" />
 
-		<if>
-			<isset var="vocabularyAssociatedAssetType2" />
-			<then>
-				<execute function="Click" locator1="Button#ADD_ROW" />
+		<for list="${vocabularyAssociatedAssetTypeList}" param="vocabularyAssociatedAssetType">
+			<execute function="Select" locator1="CategoriesEditVocabulary#ASSOCIATED_ASSET_TYPES_SELECT_N" value1="${vocabularyAssociatedAssetType}">
+				<var name="key_rowIndexNumber" value="${rowIndexNumber}" />
+			</execute>
 
-				<execute function="Select" locator1="CategoriesEditVocabulary#ASSOCIATED_ASSET_TYPES_SELECT_2" value1="${vocabularyAssociatedAssetType2}" />
-			</then>
-		</if>
+			<if>
+				<not>
+					<equals arg1="${rowIndexNumber}" arg2="${size}" />
+				</not>
+				<then>
+					<execute function="Click" locator1="Button#ADD_ROW_N">
+						<var name="key_rowIndexNumber" value="${rowIndexNumber}" />
+					</execute>
+				</then>
+			</if>
+
+			<var method="MathUtil#sum('${rowIndexNumber}', '1')" name="rowIndexNumber" />
+		</for>
 
 		<if>
 			<equals arg1="${required}" arg2="true" />

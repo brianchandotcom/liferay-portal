@@ -14,7 +14,9 @@
 
 package com.liferay.bookmarks.internal.exportimport.staged.model.repository;
 
+import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.model.BookmarksFolder;
+import com.liferay.bookmarks.service.BookmarksEntryLocalService;
 import com.liferay.bookmarks.service.BookmarksFolderLocalService;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
@@ -24,10 +26,14 @@ import com.liferay.exportimport.staged.model.repository.base.BaseStagedModelRepo
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.trash.TrashHandler;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -91,6 +97,30 @@ public class BookmarksFolderStagedModelRepository
 
 		_bookmarksFolderLocalService.deleteFolders(
 			portletDataContext.getScopeGroupId());
+	}
+
+	@Override
+	public List<StagedModel> fetchChildrenStagedModels(
+		PortletDataContext portletDataContext,
+		BookmarksFolder bookmarksFolder) {
+
+		List<BookmarksEntry> folderEntries =
+			_bookmarksEntryLocalService.getEntries(
+				bookmarksFolder.getGroupId(), bookmarksFolder.getFolderId(),
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		Stream<StagedModel> mappedStream = folderEntries.stream().map(
+			(bookmarksEntry) -> (StagedModel)bookmarksEntry);
+
+		return mappedStream.collect(Collectors.toList());
+	}
+
+	@Override
+	public List<StagedModel> fetchDependencyStagedModels(
+		PortletDataContext portletDataContext,
+		BookmarksFolder bookmarksFolder) {
+
+		return Collections.emptyList();
 	}
 
 	@Override
@@ -180,6 +210,9 @@ public class BookmarksFolderStagedModelRepository
 
 		_bookmarksFolderLocalService = bookmarksFolderLocalService;
 	}
+
+	@Reference
+	private BookmarksEntryLocalService _bookmarksEntryLocalService;
 
 	private BookmarksFolderLocalService _bookmarksFolderLocalService;
 

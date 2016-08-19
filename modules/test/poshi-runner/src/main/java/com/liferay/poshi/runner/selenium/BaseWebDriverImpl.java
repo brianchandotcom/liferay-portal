@@ -3297,6 +3297,8 @@ public abstract class BaseWebDriverImpl
 	private static final String _TEST_DEPENDENCIES_DIR_NAME =
 		PropsValues.TEST_DEPENDENCIES_DIR_NAME;
 
+	private final Pattern _aceEditorPattern = Pattern.compile(
+		"\\(|\\$\\{line\\.separator\\}");
 	private String _clipBoard = "";
 	private final Map<String, String> _keysSpecialChars = new HashMap<>();
 	private final String _outputDirName;

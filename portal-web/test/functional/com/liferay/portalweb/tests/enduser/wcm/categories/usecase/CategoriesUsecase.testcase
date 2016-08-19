@@ -408,6 +408,52 @@
 		</execute>
 	</command>
 
+	<command name="AddVocabularyWithMultipleAssetTypes" priority="4">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Categories" />
+		</execute>
+
+		<execute macro="Vocabulary#addWithAssociatedAssetTypeCP">
+			<var name="required" value="true" />
+			<var name="vocabularyAssociatedAssetType" value="Blogs Entry" />
+			<var name="vocabularyAssociatedAssetType2" value="Web Content Article" />
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Categories" />
+		</execute>
+
+		<execute macro="Category#addCP">
+			<var name="categoryName" value="Category Name" />
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
+		<execute macro="WebContent#addWithCategoryCP">
+			<var name="categoryName" value="Category Name" />
+			<var name="vocabularyName" value="Vocabulary Name" />
+			<var name="webContentContent" value="Web Content Content" />
+			<var name="webContentTitle" value="Web Content Title" />
+		</execute>
+
+		<execute macro="Page#viewNoSelectCategory">
+			<var name="pageName" value="page Name" />
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+	</command>
+
 	<command name="AddWCFailWithRequiredVocabularyAssetType" priority="3">
 		<execute macro="Navigator#openURL" />
 

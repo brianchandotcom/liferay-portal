@@ -28,8 +28,10 @@ public class CommentJSONWS {
 	public CommentJSONWS() {
 	}
 
-	public CommentJSONWS(DiscussionComment discussionComment,
-		boolean updatePermission, boolean deletePermission) {
+	public CommentJSONWS(
+		DiscussionComment discussionComment, boolean updatePermission,
+		boolean deletePermission) {
+
 		setBody(discussionComment.getBody());
 		setCommentId(discussionComment.getCommentId());
 		setCreateDate(discussionComment.getCreateDate());

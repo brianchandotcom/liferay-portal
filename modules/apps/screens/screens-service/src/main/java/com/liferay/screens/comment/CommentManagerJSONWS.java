@@ -27,8 +27,6 @@ import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.BaseModelPermissionCheckerUtil;
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -86,16 +84,18 @@ public class CommentManagerJSONWS extends BaseServiceImpl {
 		_commentManager.deleteComment(commentId);
 	}
 
-	public CommentJSONWS getComment(
-			long groupId, long commentId)
+	public CommentJSONWS getComment(long groupId, long commentId)
 		throws PortalException {
+
 		Comment comment = _commentManager.fetchComment(commentId);
 
 		Discussion discussion = _commentManager.getDiscussion(
 			getUserId(), groupId, comment.getClassName(), comment.getClassPK(),
 			createServiceContextFunction());
+
 		DiscussionComment rootDiscussionComment =
 			discussion.getRootDiscussionComment();
+
 		DiscussionCommentIterator threadDiscussionCommentIterator =
 			rootDiscussionComment.getThreadDiscussionCommentIterator(0);
 
@@ -107,9 +107,10 @@ public class CommentManagerJSONWS extends BaseServiceImpl {
 				threadDiscussionCommentIterator.next();
 
 			long discussionCommentId = discussionComment.getCommentId();
+
 			if (discussionCommentId == commentId) {
-				return new CommentJSONWS(discussionComment,
-					discussionPermission.hasUpdatePermission(
+				return new CommentJSONWS(
+					discussionComment, discussionPermission.hasUpdatePermission(
 						discussionCommentId),
 					discussionPermission.hasDeletePermission(
 						discussionCommentId));
@@ -120,7 +121,7 @@ public class CommentManagerJSONWS extends BaseServiceImpl {
 	}
 
 	public List<CommentJSONWS> getComments(
-		long groupId, String className, long classPK, int start, int end)
+			long groupId, String className, long classPK, int start, int end)
 		throws PortalException {
 
 		DiscussionPermission discussionPermission =
@@ -197,7 +198,7 @@ public class CommentManagerJSONWS extends BaseServiceImpl {
 	}
 
 	protected List<CommentJSONWS> getAllComments(
-		DiscussionCommentIterator threadDiscussionCommentIterator)
+			DiscussionCommentIterator threadDiscussionCommentIterator)
 		throws PortalException {
 
 		List<CommentJSONWS> commentJSONWSs = new ArrayList<>();
@@ -208,6 +209,7 @@ public class CommentManagerJSONWS extends BaseServiceImpl {
 		while (threadDiscussionCommentIterator.hasNext()) {
 			DiscussionComment discussionComment =
 				threadDiscussionCommentIterator.next();
+
 			CommentJSONWS commentJSONWS = new CommentJSONWS(
 				discussionComment,
 				discussionPermission.hasUpdatePermission(
@@ -222,7 +224,7 @@ public class CommentManagerJSONWS extends BaseServiceImpl {
 	}
 
 	protected List<CommentJSONWS> getComments(
-		DiscussionComment discussionComment, int start, int end)
+			DiscussionComment discussionComment, int start, int end)
 		throws PortalException {
 
 		if (start == QueryUtil.ALL_POS) {
@@ -250,8 +252,8 @@ public class CommentManagerJSONWS extends BaseServiceImpl {
 		while (threadDiscussionCommentIterator.hasNext() &&
 			   (commentsCount > 0)) {
 
-			DiscussionComment comment =
-				threadDiscussionCommentIterator.next();
+			DiscussionComment comment = threadDiscussionCommentIterator.next();
+
 			CommentJSONWS commentJSONWS = new CommentJSONWS(
 				comment,
 				discussionPermission.hasUpdatePermission(

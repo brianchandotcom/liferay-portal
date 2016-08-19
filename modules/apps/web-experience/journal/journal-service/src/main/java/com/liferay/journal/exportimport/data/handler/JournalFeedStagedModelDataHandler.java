@@ -335,7 +335,6 @@ public class JournalFeedStagedModelDataHandler
 	 * @deprecated As of 7.0.0
 	 */
 	@Deprecated
-	@Reference(unbind = "-")
 	protected void setJournalFeedExportImportContentProcessor(
 		JournalFeedExportImportContentProcessor
 			journalFeedExportImportContentProcessor) {
@@ -359,9 +358,8 @@ public class JournalFeedStagedModelDataHandler
 		_exportImportContentProcessorController;
 
 	private JournalCreationStrategy _journalCreationStrategy;
-	private JournalFeedExportImportContentProcessor
-		_journalFeedExportImportContentProcessor;
-
+	private final JournalFeedExportImportContentProcessor
+		_journalFeedExportImportContentProcessor = null;
 	private JournalFeedLocalService _journalFeedLocalService;
 
 }

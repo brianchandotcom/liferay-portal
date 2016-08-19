@@ -27,7 +27,11 @@ import com.liferay.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.portlet.PortalPreferences;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.PortalPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
@@ -35,6 +39,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.lar.test.BasePortletDataHandlerTestCase;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.test.LayoutTestUtil;
@@ -42,7 +47,9 @@ import com.liferay.portal.util.test.LayoutTestUtil;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -62,6 +69,46 @@ public class JournalPortletDataHandlerTest
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			SynchronousDestinationTestRule.INSTANCE);
+
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+
+		CompanyThreadLocal.setCompanyId(TestPropsValues.getCompanyId());
+
+		PortalPreferences portalPreferenceces =
+			PortletPreferencesFactoryUtil.getPortalPreferences(
+				TestPropsValues.getUserId(), true);
+
+		portalPreferenceces.setValue(
+			"", "publishToLiveByDefaultEnabled", "true");
+		portalPreferenceces.setValue(
+			"", "versionHistoryByDefaultEnabled", "true");
+		portalPreferenceces.setValue("", "articleCommentsEnabled", "true");
+		portalPreferenceces.setValue(
+			"", "expireAllArticleVersionsEnabled", "true");
+		portalPreferenceces.setValue("", "folderIconCheckCountEnabled", "true");
+		portalPreferenceces.setValue(
+			"", "indexAllArticleVersionsEnabled", "true");
+		portalPreferenceces.setValue(
+			"", "databaseContentKeywordSearchEnabled", "true");
+		portalPreferenceces.setValue("", "journalArticleStorageType", "json");
+		portalPreferenceces.setValue(
+			"", "journalArticlePageBreakToken", "@page_break@");
+
+		_portalPreferences =
+			PortalPreferencesLocalServiceUtil.addPortalPreferences(
+				TestPropsValues.getCompanyId(),
+				PortletKeys.PREFS_OWNER_TYPE_COMPANY,
+				PortletPreferencesFactoryUtil.toXML(portalPreferenceces));
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		PortalPreferencesLocalServiceUtil.deletePortalPreferences(
+			_portalPreferences);
+	}
 
 	@Test
 	public void testDeleteAllFolders() throws Exception {
@@ -139,5 +186,8 @@ public class JournalPortletDataHandlerTest
 	protected String getPortletId() {
 		return JournalPortletKeys.JOURNAL;
 	}
+
+	private com.liferay.portal.kernel.model.PortalPreferences
+		_portalPreferences;
 
 }

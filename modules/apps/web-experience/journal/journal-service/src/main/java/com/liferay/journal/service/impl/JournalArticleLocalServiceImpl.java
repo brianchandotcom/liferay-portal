@@ -8165,6 +8165,16 @@ public class JournalArticleLocalServiceImpl
 			journalArticleLocalization);
 	}
 
+	private long _getArticleCheckInterval() throws PortalException {
+		long companyId = CompanyThreadLocal.getCompanyId();
+
+		JournalServiceConfiguration journalServiceConfiguration =
+			configurationProvider.getCompanyConfiguration(
+				JournalServiceConfiguration.class, companyId);
+
+		return journalServiceConfiguration.checkInterval();
+	}
+
 	private List<JournalArticleLocalization> _updateArticleLocalizedFields(
 			long companyId, long articleId, Map<Locale, String> titleMap,
 			Map<Locale, String> descriptionMap)
@@ -8195,16 +8205,6 @@ public class JournalArticleLocalServiceImpl
 
 		return journalArticleLocalizationPersistence.update(
 			journalArticleLocalization);
-	}
-
-	private long _getArticleCheckInterval() throws PortalException {
-		long companyId = CompanyThreadLocal.getCompanyId();
-
-		JournalServiceConfiguration journalServiceConfiguration =
-			configurationProvider.getCompanyConfiguration(
-				JournalServiceConfiguration.class, companyId);
-
-		return journalServiceConfiguration.checkInterval();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

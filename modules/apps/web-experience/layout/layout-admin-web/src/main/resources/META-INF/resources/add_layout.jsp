@@ -24,19 +24,28 @@ boolean privateLayout = layoutsAdminDisplayContext.isPrivateLayout();
 long parentPlid = LayoutConstants.DEFAULT_PLID;
 long parentLayoutId = LayoutConstants.DEFAULT_PARENT_LAYOUT_ID;
 
+Theme selTheme = null;
+
 if (layout.isTypeControlPanel()) {
 	if (layoutsAdminDisplayContext.getSelPlid() != 0) {
 		selLayout = LayoutLocalServiceUtil.getLayout(layoutsAdminDisplayContext.getSelPlid());
+
+		selTheme = selLayout.getTheme();
 
 		privateLayout = selLayout.isPrivateLayout();
 		parentPlid = selLayout.getPlid();
 		parentLayoutId = selLayout.getLayoutId();
 	}
+	else {
+		selTheme = selLayoutSet.getTheme();
+	}
 }
 else {
 	selLayout = layout;
 
-	privateLayout = selLayout.isPrivateLayout();
+	selTheme = layout.getTheme();
+
+	privateLayout = layout.isPrivateLayout();
 	parentPlid = layout.getParentPlid();
 	parentLayoutId = layout.getParentLayoutId();
 }

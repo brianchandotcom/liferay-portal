@@ -35,6 +35,8 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class SystemProperties {
 
+	public static final String HTTP_HEADER_SECURE_X_FRAME_OPTIONS_255 = "http.header.secure.x.frame.options.255";
+
 	public static final String SYSTEM_PROPERTIES_QUIET =
 		"system.properties.quiet";
 

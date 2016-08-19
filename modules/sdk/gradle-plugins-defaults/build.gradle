@@ -1,5 +1,4 @@
 dependencies {
-	compile fileTree(builtBy: [rootProject.tasks.extractGradleApi214], dir: new File(rootProject.buildDir, "gradle-2.14"))
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins", version: "2.0.9"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.app.javadoc.builder", version: "1.0.1"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.cache", version: "1.0.12"
@@ -7,4 +6,6 @@ dependencies {
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.patcher", version: "1.0.12"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.whip", version: "1.0.4"
 	compile group: "com.netflix.nebula", name: "gradle-extra-configurations-plugin", version: "3.0.3"
+
+	compileOnly fileTree(builtBy: [rootProject.tasks.extractGradleApi214], dir: new File(rootProject.buildDir, "gradle-2.14"))
 }

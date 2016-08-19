@@ -1,6 +1,7 @@
 dependencies {
-	compile fileTree(builtBy: [rootProject.tasks.extractGradleApi25], dir: new File(rootProject.buildDir, "gradle-2.5"))
 	compile group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.26"
+
+	compileOnly fileTree(builtBy: [rootProject.tasks.extractGradleApi25], dir: new File(rootProject.buildDir, "gradle-2.5"))
 
 	provided group: "com.liferay", name: "com.liferay.css.builder", version: "1.0.18"
 }

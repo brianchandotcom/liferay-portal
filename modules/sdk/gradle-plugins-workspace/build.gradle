@@ -1,8 +1,9 @@
 dependencies {
-	compile fileTree(builtBy: [rootProject.tasks.extractGradleApi214], dir: new File(rootProject.buildDir, "gradle-2.14"))
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins", version: "2.0.9"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.poshi.runner", version: "1.0.11"
 	compile group: "de.undercouch", name: "gradle-download-task", version: "3.1.1"
+
+	compileOnly fileTree(builtBy: [rootProject.tasks.extractGradleApi214], dir: new File(rootProject.buildDir, "gradle-2.14"))
 }
 
 jarSources {

@@ -15,9 +15,9 @@
 package com.liferay.poshi.runner.selenium;
 
 import com.deque.axe.AXE;
+
 import com.liferay.poshi.runner.PoshiRunnerContext;
 import com.liferay.poshi.runner.PoshiRunnerGetterUtil;
-import com.liferay.poshi.runner.exception.PoshiRunnerWarningException;
 import com.liferay.poshi.runner.util.AntCommands;
 import com.liferay.poshi.runner.util.EmailCommands;
 import com.liferay.poshi.runner.util.FileUtil;
@@ -33,8 +33,8 @@ import com.liferay.poshi.runner.util.Validator;
 import java.awt.Robot;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
+
 import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -42,7 +42,7 @@ import java.io.StringReader;
 
 import java.net.URI;
 import java.net.URL;
-import java.util.ArrayList;
+
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -69,8 +69,6 @@ import javax.xml.xpath.XPathFactory;
 
 import junit.framework.TestCase;
 
-import org.dom4j.Element;
-import org.dom4j.io.SAXReader;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -86,6 +84,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.internal.WrapsDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
 import org.sikuli.api.DesktopScreenRegion;
 import org.sikuli.api.ImageTarget;
 import org.sikuli.api.Location;
@@ -96,9 +95,10 @@ import org.sikuli.api.robot.Mouse;
 import org.sikuli.api.robot.desktop.DesktopKeyboard;
 import org.sikuli.api.robot.desktop.DesktopMouse;
 import org.sikuli.api.visual.Canvas;
-import org.sikuli.api.visual.DesktopCanvas;
 import org.sikuli.api.visual.CanvasBuilder.ElementAdder;
 import org.sikuli.api.visual.CanvasBuilder.ElementAreaSetter;
+import org.sikuli.api.visual.DesktopCanvas;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -375,8 +375,7 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public void assertNotAlert(String pattern) {
-		TestCase.assertTrue(
-				Objects.equals(pattern, getAlert()));
+		TestCase.assertTrue(Objects.equals(pattern, getAlert()));
 	}
 
 	@Override
@@ -397,8 +396,7 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public void assertNotLocation(String pattern) throws Exception {
-		TestCase.assertTrue(
-				Objects.equals(pattern, getLocation()));
+		TestCase.assertTrue(Objects.equals(pattern, getLocation()));
 	}
 
 	@Override
@@ -2189,7 +2187,37 @@ public abstract class BaseWebDriverImpl
 
 		webElement.sendKeys(Keys.chord(Keys.CONTROL, Keys.END));
 
-		LiferaySeleniumHelper.typeAceEditor(this, locator, value);
+		liferaySelenium.typeKeys(locator, "");
+
+		Keyboard keyboard = new DesktopKeyboard();
+
+		Matcher matcher = _aceEditorPattern.matcher(value);
+
+		int x = 0;
+
+		while (matcher.find()) {
+			int y = matcher.start();
+
+			String line = value.substring(x, y);
+
+			keyboard.type(line.trim());
+
+			String specialCharacter = matcher.group();
+
+			if (specialCharacter.equals("(")) {
+				keyboard.type("(");
+			}
+			else if (specialCharacter.equals("${line.separator}")) {
+				liferaySelenium.keyPress(locator, "\\SPACE");
+				liferaySelenium.keyPress(locator, "\\RETURN");
+			}
+
+			x = y + specialCharacter.length();
+		}
+
+		String line = value.substring(x);
+
+		keyboard.type(line.trim());
 	}
 
 	@Override
@@ -2612,7 +2640,37 @@ public abstract class BaseWebDriverImpl
 
 		webElement.sendKeys(Keys.chord(Keys.CONTROL, "a"));
 
-		LiferaySeleniumHelper.typeAceEditor(this, locator, value);
+		liferaySelenium.typeKeys(locator, "");
+
+		Keyboard keyboard = new DesktopKeyboard();
+
+		Matcher matcher = _aceEditorPattern.matcher(value);
+
+		int x = 0;
+
+		while (matcher.find()) {
+			int y = matcher.start();
+
+			String line = value.substring(x, y);
+
+			keyboard.type(line.trim());
+
+			String specialCharacter = matcher.group();
+
+			if (specialCharacter.equals("(")) {
+				keyboard.type("(");
+			}
+			else if (specialCharacter.equals("${line.separator}")) {
+				liferaySelenium.keyPress(locator, "\\SPACE");
+				liferaySelenium.keyPress(locator, "\\RETURN");
+			}
+
+			x = y + specialCharacter.length();
+		}
+
+		String line = value.substring(x);
+
+		keyboard.type(line.trim());
 
 		webElement.sendKeys(Keys.chord(Keys.CONTROL, Keys.SHIFT, Keys.END));
 
@@ -2749,8 +2807,8 @@ public abstract class BaseWebDriverImpl
 	@Override
 	public void waitForConfirmation(String pattern) throws Exception {
 		int timeout =
-				PropsValues.TIMEOUT_EXPLICIT_WAIT /
-					PropsValues.TIMEOUT_IMPLICIT_WAIT;
+			PropsValues.TIMEOUT_EXPLICIT_WAIT /
+				PropsValues.TIMEOUT_IMPLICIT_WAIT;
 
 		for (int second = 0;; second++) {
 			if (second >= timeout) {
@@ -2843,9 +2901,7 @@ public abstract class BaseWebDriverImpl
 			}
 
 			try {
-				if (isNotSelectedLabel(
-						selectLocator, pattern)) {
-
+				if (isNotSelectedLabel(selectLocator, pattern)) {
 					break;
 				}
 			}
@@ -3150,9 +3206,7 @@ public abstract class BaseWebDriverImpl
 		alert.accept();
 	}
 
-	protected ImageTarget getImageTarget(String image)
-		throws Exception {
-
+	protected ImageTarget getImageTarget(String image) throws Exception {
 		String filePath =
 			FileUtil.getSeparator() + getSikuliImagesDirName() + image;
 
@@ -3161,7 +3215,7 @@ public abstract class BaseWebDriverImpl
 
 		return new ImageTarget(file);
 	}
-	
+
 	protected Set<Integer> getSpecialCharIndexes(String value) {
 		Set<Integer> specialCharIndexes = new TreeSet<>();
 
@@ -3234,7 +3288,7 @@ public abstract class BaseWebDriverImpl
 	protected void selectByRegexpValue(String selectLocator, String regexp) {
 		WebDriverHelper.selectByRegexpValue(this, selectLocator, regexp);
 	}
-	
+
 	private static final String _CURRENT_DIR_NAME =
 		PoshiRunnerGetterUtil.getCanonicalPath(".");
 

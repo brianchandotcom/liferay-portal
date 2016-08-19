@@ -3150,13 +3150,11 @@ public abstract class BaseWebDriverImpl
 		alert.accept();
 	}
 
-	protected ImageTarget getImageTarget(
-			LiferaySelenium liferaySelenium, String image)
+	protected ImageTarget getImageTarget(String image)
 		throws Exception {
 
 		String filePath =
-			FileUtil.getSeparator() + liferaySelenium.getSikuliImagesDirName() +
-				image;
+			FileUtil.getSeparator() + getSikuliImagesDirName() + image;
 
 		File file = new File(getSourceDirFilePath(filePath));
 

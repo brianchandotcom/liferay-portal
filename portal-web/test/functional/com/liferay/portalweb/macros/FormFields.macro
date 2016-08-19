@@ -1,10 +1,6 @@
 <definition>
 	<var name="rowNumber" value="1" />
 
-	<command name="addOptionsRow">
-		<execute function="Click" locator1="FormFields#OPTIONS_ADD_ROW_BUTTON" />
-	</command>
-
 	<command name="addRepeatableField">
 		<var name="key_fieldName" value="${fieldName}" />
 		<var name="key_repeatableFieldNumber" value="${repeatableFieldNumber}" />
@@ -94,10 +90,6 @@
 		<execute function="Type" locator1="FormFields#VALIDATION_ERROR_MESSAGE" value1="${validationErrorMessage}" />
 	</command>
 
-	<command name="enableAdvancedOptions">
-		<execute function="AssertClick" locator1="FormFields#ADVANCED_FIELD_SETTINGS_TOGGLE" value1="Show More Options" />
-	</command>
-
 	<command name="enableCheckbox">
 		<var name="key_fieldName" value="${fieldName}" />
 
@@ -114,18 +106,6 @@
 		<execute function="Click" locator1="FormFields#FIELD_REMOVE" />
 	</command>
 
-	<command name="save">
-		<execute function="Click" locator1="FormFields#FIELD_NAME" />
-
-		<execute function="AssertClick" locator1="Button#ADD" value1="Add" />
-	</command>
-
-	<command name="saveEdit">
-		<execute function="Click" locator1="FormFields#FIELD_NAME" />
-
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-	</command>
-
 	<command name="selectRadioOption">
 		<var name="key_fieldName" value="${fieldName}" />
 		<var name="key_radioOption" value="${radioOption}" />
@@ -137,8 +117,6 @@
 		<var name="key_fieldName" value="${fieldName}" />
 
 		<execute function="Select" locator1="FormFields#SELECT_FIELD" value1="${selectOption}" />
-
-		<execute function="Click" locator1="FormPortlet#FORM_CONTAINER" />
 	</command>
 
 	<command name="selectTextFieldLineOption">

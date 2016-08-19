@@ -344,7 +344,7 @@
 			<var name="fieldValue" value="Text Field" />
 		</execute>
 
-		<execute macro="FormFields#save" />
+		<execute macro="Form#closeSidebar" />
 
 		<execute macro="Form#save" />
 

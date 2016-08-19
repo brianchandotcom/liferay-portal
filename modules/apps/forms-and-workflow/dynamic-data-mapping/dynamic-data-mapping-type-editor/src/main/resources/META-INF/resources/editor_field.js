@@ -120,7 +120,7 @@ AUI.add(
 
 						var inputNode = instance.getInputNode();
 
-						if (inputNode && Util.compare(value, inputNode.val())) {
+						if (inputNode && !Util.compare(value, inputNode.val())) {
 							inputNode.val(value);
 
 							instance.fire(

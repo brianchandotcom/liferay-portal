@@ -49,6 +49,7 @@ AUI.add(
 						var sortableList = instance.get('sortableList');
 
 						instance._eventHandlers.push(
+							instance.after('*:valueChanged', A.bind('_afterOptionValueChanged', instance)),
 							sortableList.after('drag:end', A.bind('_afterSortableListDragEnd', instance)),
 							sortableList.after('drag:start', A.bind('_afterSortableListDragStart', instance))
 						);
@@ -67,6 +68,8 @@ AUI.add(
 						instance._renderOptionUI(repeatedOption);
 						instance._syncOptionUI(repeatedOption);
 						instance._syncOptionUI(lastOption);
+
+						repeatedOption.addTarget(instance);
 
 						instance.fire('addOption');
 
@@ -240,6 +243,12 @@ AUI.add(
 						mainOption.set('errorMessage', event.newVal);
 					},
 
+					_afterOptionValueChanged: function() {
+						var instance = this;
+
+						instance.evaluate();
+					},
+
 					_afterRender: function(option) {
 						var instance = this;
 
@@ -267,6 +276,8 @@ AUI.add(
 							);
 
 							instance.moveOption(option, dragStartIndex, dragEndIndex);
+
+							instance.evaluate();
 						}
 					},
 
@@ -342,6 +353,8 @@ AUI.add(
 						config.context = A.clone(config);
 
 						instance._mainOption = new Liferay.DDM.Field.KeyValue(config);
+
+						instance._mainOption.addTarget(instance);
 
 						instance._bindOptionUI(instance._mainOption);
 					},

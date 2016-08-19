@@ -9,11 +9,6 @@ AUI.add(
 				valueFn: '_valueCentered'
 			},
 
-			dynamicContentHeight: {
-				value: false,
-				writeOnce: true
-			},
-
 			portletNamespace: {
 			},
 
@@ -31,40 +26,10 @@ AUI.add(
 				);
 			},
 
-			syncHeight: function() {
-				var instance = this;
-
-				var bodyNode = instance.getStdModNode(A.WidgetStdMod.BODY);
-
-				bodyNode.setStyle('max-height', A.DOM.winHeight(A.config.doc) - instance._getModalOffset());
-			},
-
-			_afterModalRender: function() {
-				var instance = this;
-
-				if (instance.get('dynamicContentHeight')) {
-					instance._configModalDynamicHeight();
-
-					instance.syncHeight();
-				}
-			},
-
-			_afterModalVisibleChange: function(event) {
-				var instance = this;
-
-				if (event.newVal && instance.get('dynamicContentHeight')) {
-					instance.syncHeight();
-				}
-			},
-
 			_afterWindowResize: function() {
 				var instance = this;
 
 				if (instance.get('visible')) {
-					if (instance.get('dynamicContentHeight')) {
-						instance.syncHeight();
-					}
-
 					if (instance.get('centered')) {
 						instance.align();
 					}
@@ -75,8 +40,6 @@ AUI.add(
 				var instance = this;
 
 				instance._eventHandles.push(
-					instance.after('render', instance._afterModalRender),
-					instance.after('visibleChange', instance._afterModalVisibleChange),
 					instance.on('xyChange', instance._onModalXYChange)
 				);
 			},
@@ -89,26 +52,6 @@ AUI.add(
 				xy[1] = (A.config.win.pageYOffset - contentBox.outerHeight(true) / 2) + (A.config.win.innerHeight / 2);
 
 				return xy;
-			},
-
-			_configModalDynamicHeight: function() {
-				var instance = this;
-
-				instance.get('boundingBox').addClass('dynamic-content-height');
-			},
-
-			_getModalOffset: function() {
-				var instance = this;
-
-				var bodyNode = instance.getStdModNode(A.WidgetStdMod.BODY);
-
-				var bodyHeight = bodyNode.height();
-
-				var boundingBox = instance.get('boundingBox');
-
-				var outerHeight = boundingBox.outerHeight(true);
-
-				return Math.max(bodyHeight, outerHeight) - Math.min(bodyHeight, outerHeight);
 			},
 
 			_onModalXYChange: function(event) {

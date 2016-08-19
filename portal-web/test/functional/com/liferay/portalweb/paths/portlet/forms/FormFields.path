@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ADVANCED_FIELD_SETTINGS_TOGGLE</td>
-	<td>//button[contains(@class,'settings-toggler')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>FIELD_ADD</td>
 	<td>//div[contains(@class,'form-field-repeatable-toolbar')]//a[contains(@class,'add-button')]</td>
 	<td></td>

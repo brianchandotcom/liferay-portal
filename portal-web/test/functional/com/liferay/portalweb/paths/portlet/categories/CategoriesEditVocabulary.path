@@ -65,8 +65,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ASSOCIATED_ASSET_TYPES_SELECT_2</td>
-	<td>xpath=(//select[contains(@id,'AssetCategoriesAdminPortlet_classNameId2')])</td>
+	<td>ASSOCIATED_ASSET_TYPES_SELECT_N</td>
+	<td>xpath=(//select[contains(@id,'AssetCategoriesAdminPortlet_classNameId')])[${key_rowIndexNumber}]</td>
 	<td></td>
 </tr>
 <tr>

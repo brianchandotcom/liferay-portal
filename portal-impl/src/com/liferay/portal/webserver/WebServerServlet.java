@@ -93,6 +93,9 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.webdav.WebDAVUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.impl.ImageImpl;
+import com.liferay.portal.servlet.InactiveRequestHandler;
+import com.liferay.portal.servlet.InactiveRequestHandlerImpl;
+import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.util.DocumentConversionUtil;
 import com.liferay.trash.kernel.model.TrashEntry;
@@ -232,6 +235,14 @@ public class WebServerServlet extends HttpServlet {
 		try {
 			user = _getUser(request);
 
+			long userCompanyId = user.getCompanyId();
+
+			if (_processCompanyInactiveRequest(
+					request, response, userCompanyId)) {
+
+				return;
+			}
+
 			PrincipalThreadLocal.setName(user.getUserId());
 			PrincipalThreadLocal.setPassword(
 				PortalUtil.getUserPassword(request));
@@ -286,6 +297,15 @@ public class WebServerServlet extends HttpServlet {
 					}
 
 					Image image = getImage(request, true);
+
+					long imageCompanyId = image.getCompanyId();
+
+					if ((imageCompanyId != userCompanyId) &&
+						_processCompanyInactiveRequest(
+							request, response, imageCompanyId)) {
+
+						return;
+					}
 
 					if (image != null) {
 						writeImage(image, request, response);
@@ -881,6 +901,14 @@ public class WebServerServlet extends HttpServlet {
 			throw new NoSuchFileEntryException();
 		}
 
+		long fileEntryCompanyId = fileEntry.getCompanyId();
+
+		if (_processCompanyInactiveRequest(
+				request, response, fileEntryCompanyId)) {
+
+			return;
+		}
+
 		String version = ParamUtil.getString(request, "version");
 
 		if (Validator.isNull(version)) {
@@ -1184,6 +1212,14 @@ public class WebServerServlet extends HttpServlet {
 			return;
 		}
 
+		long fileEntryCompanyId = fileEntry.getCompanyId();
+
+		if (_processCompanyInactiveRequest(
+				request, response, fileEntryCompanyId)) {
+
+			return;
+		}
+
 		String fileName = HttpUtil.decodeURL(HtmlUtil.escape(pathArray[2]));
 
 		if (fileEntry.isInTrash()) {
@@ -1343,6 +1379,26 @@ public class WebServerServlet extends HttpServlet {
 		return user;
 	}
 
+	private boolean _processCompanyInactiveRequest(
+			HttpServletRequest request, HttpServletResponse response,
+			long companyId)
+		throws IOException {
+
+		if (PortalInstances.isCompanyActive(companyId)) {
+			return false;
+		}
+
+		_inactiveRequestHandler.processInactiveRequest(
+			request, response,
+			"this-instance-is-inactive-please-contact-the-administrator");
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Processed company inactive request");
+		}
+
+		return true;
+	}
+
 	private static final boolean _WEB_SERVER_SERVLET_VERSION_VERBOSITY_DEFAULT =
 		StringUtil.equalsIgnoreCase(
 			PropsValues.WEB_SERVER_SERVLET_VERSION_VERBOSITY,
@@ -1360,6 +1416,8 @@ public class WebServerServlet extends HttpServlet {
 
 	private final Format _dateFormat =
 		FastDateFormatFactoryUtil.getSimpleDateFormat("d MMM yyyy HH:mm z");
+	private final InactiveRequestHandler _inactiveRequestHandler =
+		new InactiveRequestHandlerImpl();
 	private boolean _lastModified = true;
 	private TemplateResource _templateResource;
 

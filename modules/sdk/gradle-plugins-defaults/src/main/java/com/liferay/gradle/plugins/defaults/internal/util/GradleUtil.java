@@ -60,7 +60,7 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 	}
 
 	public static String getArchivesBaseName(Project project) {
-		BasePluginConvention basePluginConvention = GradleUtil.getConvention(
+		BasePluginConvention basePluginConvention = getConvention(
 			project, BasePluginConvention.class);
 
 		return basePluginConvention.getArchivesBaseName();
@@ -160,12 +160,25 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 		return false;
 	}
 
-	public static void setProjectSnapshotVersion(Project project) {
+	public static void setProjectSnapshotVersion(
+		Project project, String... propertyNames) {
+
 		boolean snapshot = false;
 
 		if (project.hasProperty(SNAPSHOT_PROPERTY_NAME)) {
-			snapshot = GradleUtil.getProperty(
-				project, SNAPSHOT_PROPERTY_NAME, true);
+			snapshot = getProperty(project, SNAPSHOT_PROPERTY_NAME, true);
+		}
+
+		if (!snapshot) {
+			for (String propertyName : propertyNames) {
+				if (project.hasProperty(propertyName) &&
+					getProperty(project, propertyName, true)) {
+
+					snapshot = true;
+
+					break;
+				}
+			}
 		}
 
 		String version = String.valueOf(project.getVersion());

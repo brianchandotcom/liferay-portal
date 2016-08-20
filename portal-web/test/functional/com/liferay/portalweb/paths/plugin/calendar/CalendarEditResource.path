@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>NAME_FIELD</td>
-	<td>//input[contains(@name,'CalendarPortlet_name')]</td>
+	<td>//input[contains(@name,'_name')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -36,12 +36,12 @@
 </tr>
 <tr>
 	<td>DETAILS_PANEL_DESCRIPTION_FIELD</td>
-	<td>//textarea[contains(@id,'_CalendarPortlet_description')]</td>
+	<td>//textarea[contains(@id,'_description')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DETAILS_PANEL_ACTIVE_CHECKBOX</td>
-	<td>//input[contains(@id,'_CalendarPortlet_active')]</td>
+	<td>//input[contains(@id,'_active')]</td>
 	<td></td>
 </tr>
 </tbody>

@@ -574,6 +574,23 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 		return roleLocalService.loadFetchRole(companyId, name);
 	}
 
+	@Override
+	public int getAssigneesCount(long roleId) throws PortalException {
+		Role role = getRole(roleId);
+
+		int roleType = role.getType();
+
+		if (roleType == RoleConstants.TYPE_REGULAR) {
+			return roleFinder.countUsersGroupsByRoleId(roleId);
+		}
+
+		if (roleType == RoleConstants.TYPE_SITE) {
+			return roleFinder.countUsersUserGroupsByRoleId(role.getRoleId());
+		}
+
+		return userGroupRoleLocalService.getUserGroupRolesCount(roleId);
+	}
+
 	/**
 	 * Returns the default role for the group with the primary key.
 	 *

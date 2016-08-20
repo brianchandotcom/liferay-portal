@@ -186,6 +186,11 @@ public class UserGroupRoleLocalServiceWrapper
 	}
 
 	@Override
+	public int getUserGroupRolesCount(long roleId) {
+		return _userGroupRoleLocalService.getUserGroupRolesCount(roleId);
+	}
+
+	@Override
 	public int getUserGroupRolesCount(long userId, long groupId) {
 		return _userGroupRoleLocalService.getUserGroupRolesCount(userId, groupId);
 	}

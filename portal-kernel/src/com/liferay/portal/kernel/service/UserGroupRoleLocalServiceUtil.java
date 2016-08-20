@@ -173,6 +173,10 @@ public class UserGroupRoleLocalServiceUtil {
 		return getService().getUserGroupRolesCount();
 	}
 
+	public static int getUserGroupRolesCount(long roleId) {
+		return getService().getUserGroupRolesCount(roleId);
+	}
+
 	public static int getUserGroupRolesCount(long userId, long groupId) {
 		return getService().getUserGroupRolesCount(userId, groupId);
 	}

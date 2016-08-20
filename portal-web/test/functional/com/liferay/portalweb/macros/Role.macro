@@ -876,9 +876,9 @@
 		<execute function="Click" locator1="Roles#ROLE_SEARCH_BUTTON" />
 
 		<while>
-			<condition function="IsElementPresent#pauseIsElementPresent" locator1="Roles#ROLE_TABLE_ACTIONS_1" />
+			<condition function="IsElementPresent#pauseIsElementPresent" locator1="Roles#ROLE_TABLE_ACTIONS_DEFAULT" />
 			<then>
-				<execute function="Click" locator1="Roles#ROLE_TABLE_ACTIONS_1" />
+				<execute function="Click" locator1="Roles#ROLE_TABLE_ACTIONS_DEFAULT" />
 
 				<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
 

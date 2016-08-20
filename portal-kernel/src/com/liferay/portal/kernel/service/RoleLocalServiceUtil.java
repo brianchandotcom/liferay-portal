@@ -377,6 +377,11 @@ public class RoleLocalServiceUtil {
 			serviceContext);
 	}
 
+	public static int getAssigneesCount(long roleId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getAssigneesCount(roleId);
+	}
+
 	public static int getGroupRolesCount(long groupId) {
 		return getService().getGroupRolesCount(groupId);
 	}

@@ -229,4 +229,28 @@ private boolean _isShowScope(HttpServletRequest request, Role role, String curMo
 
 	return showScope;
 }
+
+private boolean _isImpliedRole(Role role) {
+	String[] impliedRoles = {
+		RoleConstants.GUEST, RoleConstants.ORGANIZATION_USER,
+		RoleConstants.OWNER, RoleConstants.SITE_MEMBER, RoleConstants.USER
+	};
+
+	return ArrayUtil.contains(impliedRoles, role.getName());
+}
+
+private String _getAssigneesMessage(HttpServletRequest request, Role role) throws Exception {
+
+	if (_isImpliedRole(role)) {
+		return LanguageUtil.get(request, "this-role-is-auto-assigned");
+	}
+
+	int count = RoleLocalServiceUtil.getAssigneesCount(role.getRoleId());
+
+	if (count == 1) {
+		return LanguageUtil.get(request, "one-assignee");
+	}
+
+	return LanguageUtil.format(request, "x-assignees", count);
+}
 %>

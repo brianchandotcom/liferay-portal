@@ -1056,6 +1056,52 @@
 				[$TYPE$]
 		]]>
 	</sql>
+	<sql id="com.liferay.portal.kernel.service.persistence.RoleFinder.countU_GByRoleId">
+		<![CDATA[
+			SELECT SUM(TEMP_TABLE) AS COUNT_VALUE
+			FROM
+				(
+					SELECT
+						COUNT(Users_Roles.userId) AS TEMP_TABLE
+					FROM
+						Users_Roles
+					WHERE
+						Users_Roles.roleId = ?
+
+					UNION ALL
+
+					SELECT
+						COUNT(Groups_Roles.groupId) AS TEMP_TABLE
+					FROM
+						Groups_Roles
+					WHERE
+						Groups_Roles.roleId = ?
+				) TEMP_TABLE
+		]]>
+	</sql>
+	<sql id="com.liferay.portal.kernel.service.persistence.RoleFinder.countU_UGByRoleId">
+		<![CDATA[
+			SELECT SUM(TEMP_TABLE) AS COUNT_VALUE
+			FROM
+				(
+					SELECT
+						COUNT(DISTINCT UserGroupRole.userId) AS TEMP_TABLE
+					FROM
+						UserGroupRole
+					WHERE
+						UserGroupRole.roleId = ?
+
+					UNION ALL
+
+					SELECT
+						COUNT(DISTINCT UserGroupGroupRole.userGroupId) AS TEMP_TABLE
+					FROM
+						UserGroupGroupRole
+					WHERE
+						UserGroupGroupRole.roleId = ?
+				) TEMP_TABLE
+		]]>
+	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.RoleFinder.findBySystem">
 		<![CDATA[
 			(

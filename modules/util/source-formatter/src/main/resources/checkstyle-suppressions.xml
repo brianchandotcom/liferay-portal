@@ -15,6 +15,7 @@
 	<suppress checks="StaticVariableName" files="modules/apps/web-experience/journal/journal-service/src/main/java/com/liferay/journal/configuration/JournalServiceConfigurationValues\.java" />
 	<suppress checks="StaticVariableName" files="modules/test/jenkins-results-parser/src/main/java/com/liferay/jenkins/results/parser/LoadBalancerUtil\.java" />
 	<suppress checks="StaticVariableName" files="portal-impl/src/com/liferay/portal/language/LanguageResources\.java" />
+	<suppress checks="StaticVariableName" files="portal-impl/src/com/liferay/portal/util/PropsValues\.java" />
 	<suppress checks="StaticVariableName" files="portal-impl/test/integration/com/liferay/portal/security/pwd/bundle/pwdtoolkitutil/TestToolkit\.java" />
 	<suppress checks="StaticVariableName" files="portal-impl/test/integration/com/liferay/portal/xmlrpc/bundle/xmlrpcmethodutil/TestMethod\.java" />
 	<suppress checks="StaticVariableName" files="portal-impl/test/unit/com/liferay/portal/bean/ConstantsBeanFactoryImplTest\.java" />

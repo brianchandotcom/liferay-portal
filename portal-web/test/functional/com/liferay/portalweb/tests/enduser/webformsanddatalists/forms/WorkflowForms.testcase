@@ -60,7 +60,7 @@
 			<var name="fieldValue" value="Text Field" />
 		</execute>
 
-		<execute macro="FormFields#save" />
+		<execute macro="Form#closeSidebar" />
 
 		<execute macro="FormsAdminNavigator#gotoSettings" />
 
@@ -182,7 +182,7 @@
 			<var name="fieldValue" value="Date" />
 		</execute>
 
-		<execute macro="FormFields#save" />
+		<execute macro="Form#closeSidebar" />
 
 		<execute macro="Form#save" />
 
@@ -312,7 +312,7 @@
 			<var name="optionValue" value="Select 1" />
 		</execute>
 
-		<execute macro="FormFields#save" />
+		<execute macro="Form#closeSidebar" />
 
 		<execute macro="Form#gotoAddField">
 			<var name="fieldType" value="Text Field" />
@@ -322,14 +322,14 @@
 			<var name="fieldValue" value="Text One" />
 		</execute>
 
-		<execute macro="FormFields#enableAdvancedOptions" />
+		<execute macro="Form#goToAdvancedTab" />
 
 		<execute macro="FormFields#editText">
 			<var name="fieldName" value="visibility" />
 			<var name="fieldValue" value="equals(Select, &quot;Select1&quot;)" />
 		</execute>
 
-		<execute macro="FormFields#save" />
+		<execute macro="Form#closeSidebar" />
 
 		<execute macro="Form#gotoAddField">
 			<var name="fieldType" value="Single Selection" />
@@ -344,7 +344,7 @@
 			<var name="optionValue" value="Option 1" />
 		</execute>
 
-		<execute macro="FormFields#save" />
+		<execute macro="Form#closeSidebar" />
 
 		<execute macro="Form#gotoAddField">
 			<var name="fieldType" value="Text Field" />
@@ -354,14 +354,14 @@
 			<var name="fieldValue" value="Text Two" />
 		</execute>
 
-		<execute macro="FormFields#enableAdvancedOptions" />
+		<execute macro="Form#goToAdvancedTab" />
 
 		<execute macro="FormFields#editText">
 			<var name="fieldName" value="visibility" />
 			<var name="fieldValue" value="equals(Radio, &quot;Option1&quot;)" />
 		</execute>
 
-		<execute macro="FormFields#save" />
+		<execute macro="Form#closeSidebar" />
 
 		<execute macro="FormsAdminNavigator#gotoSettings" />
 

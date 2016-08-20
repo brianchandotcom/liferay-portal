@@ -1,0 +1,61 @@
+{namespace ddl.sidebar}
+
+/**
+ * Prints the DDL sidebar.
+ *  @param title
+ *  @param? bodyContent
+ *  @param closeButtonIcon
+ *  @param description
+ *  @param toolbarButtonIcon
+ *  @param toolbarTemplateContext
+ */
+{template .render autoescape="deprecated-contextual"}
+    {call ddl.sidebar.header data="all" /}
+    {call ddl.sidebar.body}
+        {param bodyContent: $bodyContent /}
+    {/call}
+{/template}
+
+/**
+ * Prints the DDL sidebar body.
+ *  @param? bodyContent
+ */
+{template .body autoescape="deprecated-contextual"}
+    <div class="sidebar-body">{$bodyContent|noAutoescape}</div>
+{/template}
+
+/**
+ * Prints the field options.
+ *  @param toolbarButtonIcon
+ *  @param toolbarTemplateContext
+ */
+{template .field_options_toolbar autoescape="deprecated-contextual"}
+    {call ddl.field_settings_toolbar data="all" /}
+{/template}
+
+/**
+ * Prints the DDL sidebar header.
+ *  @param title
+ *  @param closeButtonIcon
+ *  @param description
+ *  @param toolbarButtonIcon
+ *  @param toolbarTemplateContext
+ */
+{template .header autoescape="deprecated-contextual"}
+    <div class="sidebar-header">
+        <ul class="sidebar-header-actions">
+            {if $toolbarTemplateContext}
+            <li>
+                {call ddl.sidebar.field_options_toolbar data="all" /}
+            </li>
+            {/if}
+
+            <li>
+                <a class="form-builder-sidebar-close" href="javascript:;">{$closeButtonIcon|noAutoescape}</a>
+            </li>
+        </ul>
+
+        <h4 class="form-builder-sidebar-title">{$title}</h4>
+        <h5 class="form-builder-sidebar-description">{$description}</h5>
+    </div>
+{/template}

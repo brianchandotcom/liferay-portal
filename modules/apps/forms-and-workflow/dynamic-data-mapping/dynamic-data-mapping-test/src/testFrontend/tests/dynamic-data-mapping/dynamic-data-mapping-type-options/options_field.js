@@ -162,7 +162,6 @@ describe(
 						value: 'FourthOption'
 					}
 				);
-
 				optionsField.setValue(newValue);
 
 				var count = 0;

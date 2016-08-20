@@ -26,18 +26,16 @@ AUI.add(
 
 				var tabView = instance._tabView;
 
-				if (!tabView) {
+				if (!tabView || (tabView && tabView.get('destroyed'))) {
 					var tabs = instance.get('container').one('.lfr-ddm-form-tabs');
 
-					if (tabs) {
-						tabView = new A.TabView(
-							{
-								srcNode: tabs
-							}
-						);
+					tabView = new A.TabView(
+						{
+							srcNode: tabs
+						}
+					);
 
-						instance._tabView = tabView;
-					}
+					instance._tabView = tabView;
 				}
 
 				return tabView;
@@ -45,6 +43,10 @@ AUI.add(
 
 			_afterTabsRender: function() {
 				var instance = this;
+
+				if (instance._tabView) {
+					instance._tabView.destroy();
+				}
 
 				var tabView = instance.getTabView();
 

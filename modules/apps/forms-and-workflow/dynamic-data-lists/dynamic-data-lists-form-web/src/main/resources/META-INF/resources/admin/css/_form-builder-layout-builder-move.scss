@@ -44,6 +44,10 @@
 	}
 }
 
+.layout-builder-move-cut-col-button {
+	position: static;
+}
+
 .layout-builder-moving:hover .layout-builder-move-cut-row-button.layout-builder-move-cancel {
 	display: none;
 }

@@ -230,7 +230,7 @@
 {template .tabbed_form autoescape="deprecated-contextual"}
 	<div class="lfr-ddm-form-container" id="{$containerId}">
 		<div class="lfr-ddm-form-tabs">
-			<ul class="nav nav-tabs nav-tabs-default">
+			<ul class="nav navbar-nav">
 				{foreach $page in $pages}
 					<li>
 						<a href="javascript:;">{$page.title}</a>
@@ -240,12 +240,12 @@
 
 			<div class="tab-content">
 				{foreach $page in $pages}
-					{call ddm.required_warning_message data="all"}
-						{param showRequiredFieldsWarning: $page.showRequiredFieldsWarning /}
-						{param requiredFieldsWarningMessageHTML: $requiredFieldsWarningMessageHTML /}
-					{/call}
+					<div class="lfr-ddm-form-page tab-pane {if isFirst($page)}active{/if}">
+						{call ddm.required_warning_message data="all"}
+							{param showRequiredFieldsWarning: $page.showRequiredFieldsWarning /}
+							{param requiredFieldsWarningMessageHTML: $requiredFieldsWarningMessageHTML /}
+						{/call}
 
-					<div class="tab-pane {if isFirst($page)}active{/if}">
 						{call ddm.form_rows data="all"}
 							{param rows: $page.rows /}
 						{/call}

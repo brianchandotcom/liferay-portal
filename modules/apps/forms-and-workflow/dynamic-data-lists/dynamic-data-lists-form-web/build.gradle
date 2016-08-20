@@ -40,18 +40,7 @@ mergeLang {
 	]
 }
 
-transpileJS {
-	soySrcIncludes = ""
-	srcIncludes = "**/*.es.js"
-}
-
-task wrapSoyTemplates
-
-classes {
-	dependsOn wrapSoyTemplates
-}
-
-wrapSoyTemplates {
+processResources {
 	doLast {
 		FileTree soyJsFileTree = fileTree(dir: "classes", include: "**/*.soy.js")
 
@@ -66,4 +55,9 @@ wrapSoyTemplates {
 			it.text = soyJsWrapperHeader + it.text.replace("(typeof ddl == 'undefined') { var ddl = {}; }", "(typeof ddl == 'undefined') { window.ddl = {}; }") + soyJsWrapperFooter
 		}
 	}
+}
+
+transpileJS {
+	soySrcIncludes = ""
+	srcIncludes = "**/*.es.js"
 }

@@ -1197,9 +1197,9 @@
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="User#logoutPG" />
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="http://localhost:8080/c/portal/logout" />
+		</execute>
 
 		<execute macro="User#loginUserInvalidPG">
 			<var name="password" value="test" />

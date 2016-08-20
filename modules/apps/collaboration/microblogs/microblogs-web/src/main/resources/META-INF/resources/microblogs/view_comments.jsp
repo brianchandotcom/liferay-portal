@@ -43,10 +43,13 @@ request.setAttribute(WebKeys.MICROBLOGS_ENTRIES_URL, microblogsEntriesURL);
 		<liferay-util:include page="/microblogs/view_microblogs_entries.jsp" servletContext="<%= application %>" />
 	</c:if>
 
-	<%
-	request.setAttribute("view_comments.jsp-comment", "true");
-	request.setAttribute("view_comments.jsp-parentMicroblogsEntryId", parentMicroblogsEntryId);
-	%>
+	<c:if test="<%= MicroblogsPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_ENTRY) %>">
 
-	<liferay-util:include page="/microblogs/edit_microblogs_entry.jsp" servletContext="<%= application %>" />
+		<%
+		request.setAttribute("view_comments.jsp-comment", "true");
+		request.setAttribute("view_comments.jsp-parentMicroblogsEntryId", parentMicroblogsEntryId);
+		%>
+
+		<liferay-util:include page="/microblogs/edit_microblogs_entry.jsp" servletContext="<%= application %>" />
+	</c:if>
 </div>

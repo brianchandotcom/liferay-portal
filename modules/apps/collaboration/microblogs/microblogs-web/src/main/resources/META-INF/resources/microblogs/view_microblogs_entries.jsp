@@ -100,7 +100,7 @@ if (microblogsEntries != null) {
 						<%= dateFormatDateTime.format(microblogsEntry.getModifiedDate()) %>
 					</span>
 					<span class="action-container">
-						<c:if test="<%= (microblogsEntry.getType() != MicroblogsEntryConstants.TYPE_REPLY) && MicroblogsPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_ENTRY) %>">
+						<c:if test="<%= microblogsEntry.getType() != MicroblogsEntryConstants.TYPE_REPLY %>">
 
 							<%
 							int replyCount = MicroblogsEntryLocalServiceUtil.getParentMicroblogsEntryMicroblogsEntriesCount(MicroblogsEntryConstants.TYPE_REPLY, microblogsEntry.getMicroblogsEntryId());

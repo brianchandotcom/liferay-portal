@@ -40,24 +40,34 @@ import org.gradle.api.initialization.Settings;
  */
 public class LiferaySettingsPlugin implements Plugin<Settings> {
 
+	public static final String PROJECT_PATH_PREFIX_PROPERTY_NAME =
+		"project.path.prefix";
+
 	@Override
 	public void apply(Settings settings) {
 		File rootDir = settings.getRootDir();
 
 		Path rootDirPath = rootDir.toPath();
 
-		Path projectPathRootDirPath = rootDirPath;
+		String projectPathPrefix = GradleUtil.getProperty(
+			settings, PROJECT_PATH_PREFIX_PROPERTY_NAME, "");
 
-		File portalRootDir = GradleUtil.getRootDir(rootDir, "portal-impl");
+		if (Validator.isNotNull(projectPathPrefix)) {
+			if (projectPathPrefix.charAt(0) != ':') {
+				projectPathPrefix = ":" + projectPathPrefix;
+			}
 
-		if (portalRootDir != null) {
-			projectPathRootDirPath = portalRootDir.toPath();
+			if (projectPathPrefix.charAt(projectPathPrefix.length() - 1) ==
+					':') {
 
-			projectPathRootDirPath = projectPathRootDirPath.resolve("modules");
+				projectPathPrefix = projectPathPrefix.substring(
+					0, projectPathPrefix.length() - 1);
+			}
 		}
 
 		try {
-			includeProjects(settings, rootDirPath, projectPathRootDirPath);
+			_includeProjects(
+				settings, rootDirPath, rootDirPath, projectPathPrefix);
 		}
 		catch (IOException ioe) {
 			throw new UncheckedIOException(ioe);
@@ -80,14 +90,39 @@ public class LiferaySettingsPlugin implements Plugin<Settings> {
 		return dirPaths;
 	}
 
+	/**
+	 * @deprecated As of 1.1.0
+	 */
+	@Deprecated
 	protected void includeProject(
 		Settings settings, Path projectDirPath, Path projectPathRootDirPath) {
+
+		_includeProject(settings, projectDirPath, projectPathRootDirPath, "");
+	}
+
+	/**
+	 * @deprecated As of 1.1.0
+	 */
+	@Deprecated
+	protected void includeProjects(
+			final Settings settings, final Path rootDirPath,
+			final Path projectPathRootDirPath)
+		throws IOException {
+
+		_includeProjects(settings, rootDirPath, projectPathRootDirPath, "");
+	}
+
+	private void _includeProject(
+		Settings settings, Path projectDirPath, Path projectPathRootDirPath,
+		String projectPathPrefix) {
 
 		Path relativePath = projectPathRootDirPath.relativize(projectDirPath);
 
 		String projectPath = relativePath.toString();
 
-		projectPath = ":" + projectPath.replace(File.separatorChar, ':');
+		projectPath =
+			projectPathPrefix + ":" +
+				projectPath.replace(File.separatorChar, ':');
 
 		settings.include(new String[] {projectPath});
 
@@ -96,9 +131,9 @@ public class LiferaySettingsPlugin implements Plugin<Settings> {
 		projectDescriptor.setProjectDir(projectDirPath.toFile());
 	}
 
-	protected void includeProjects(
+	private void _includeProjects(
 			final Settings settings, final Path rootDirPath,
-			final Path projectPathRootDirPath)
+			final Path projectPathRootDirPath, final String projectPathPrefix)
 		throws IOException {
 
 		final Set<Path> excludedDirPaths = getDirPaths(
@@ -148,8 +183,9 @@ public class LiferaySettingsPlugin implements Plugin<Settings> {
 					}
 
 					if (moduleProjectDir || !modulesOnlyBuild) {
-						includeProject(
-							settings, dirPath, projectPathRootDirPath);
+						_includeProject(
+							settings, dirPath, projectPathRootDirPath,
+							projectPathPrefix);
 					}
 
 					return FileVisitResult.SKIP_SUBTREE;

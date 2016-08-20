@@ -1,0 +1,26 @@
+apply plugin: "com.liferay.xml.formatter"
+apply plugin: "java"
+
+task runGradleTest
+
+repositories {
+	mavenLocal()
+
+	maven {
+		url "https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public"
+	}
+}
+
+runGradleTest {
+	dependsOn formatXML
+
+	doLast {
+		File sampleXml = file("src/main/resources/sample.xml")
+
+		assert sampleXml.text == '''<?xml version="1.0"?>
+
+<foo id="abc">
+	<bar>123</bar>
+</foo>'''
+	}
+}

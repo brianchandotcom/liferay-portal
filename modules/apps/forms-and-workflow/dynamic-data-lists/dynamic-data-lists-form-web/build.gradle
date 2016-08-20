@@ -42,7 +42,7 @@ mergeLang {
 
 processResources {
 	doLast {
-		FileTree soyJsFileTree = fileTree(dir: "classes", include: "**/*.soy.js")
+		FileTree soyJsFileTree = fileTree(dir: destinationDir, include: "**/*.soy.js")
 
 		soyJsFileTree.each {
 			String fileName = it.name.replace(".soy.js", "")

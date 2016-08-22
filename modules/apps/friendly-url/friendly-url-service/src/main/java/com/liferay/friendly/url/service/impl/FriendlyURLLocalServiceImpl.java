@@ -41,12 +41,22 @@ public class FriendlyURLLocalServiceImpl
 			String urlTitle)
 		throws PortalException {
 
+		long classNameId = classNameLocalService.getClassNameId(clazz);
+
+		return addFriendlyURL(
+			companyId, groupId, classNameId, classPK, urlTitle);
+	}
+
+	@Override
+	public FriendlyURL addFriendlyURL(
+			long companyId, long groupId, long classNameId, long classPK,
+			String urlTitle)
+		throws PortalException {
+
 		String normalizedUrlTitle = FriendlyURLNormalizerUtil.normalize(
 			urlTitle);
 
-		validate(companyId, groupId, clazz, normalizedUrlTitle);
-
-		long classNameId = classNameLocalService.getClassNameId(clazz);
+		validate(companyId, groupId, classNameId, normalizedUrlTitle);
 
 		FriendlyURL mainFriendlyURL = friendlyURLPersistence.fetchByC_G_C_C_M(
 			companyId, groupId, classNameId, classPK, true);
@@ -126,7 +136,7 @@ public class FriendlyURLLocalServiceImpl
 
 	@Override
 	public void validate(
-			long companyId, long groupId, Class<?> clazz, String urlTitle)
+			long companyId, long groupId, long classNameId, String urlTitle)
 		throws PortalException {
 
 		int maxLength = ModelHintsUtil.getMaxLength(
@@ -135,8 +145,6 @@ public class FriendlyURLLocalServiceImpl
 		if (urlTitle.length() > maxLength) {
 			throw new FriendlyURLLengthException();
 		}
-
-		long classNameId = classNameLocalService.getClassNameId(clazz);
 
 		String normalizedUrlTitle = FriendlyURLNormalizerUtil.normalize(
 			urlTitle);

@@ -37,10 +37,10 @@ public interface FacebookConnectConfiguration {
 	)
 	public boolean verifiedAccountRequired();
 
-	@Meta.AD(name = "%application-id", required = false)
+	@Meta.AD(name = "application-id", required = false)
 	public String appId();
 
-	@Meta.AD(name = "%application-secret", required = false)
+	@Meta.AD(name = "application-secret", required = false)
 	public String appSecret();
 
 	@Meta.AD(deflt = "https://graph.facebook.com", required = false)

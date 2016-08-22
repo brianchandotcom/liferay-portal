@@ -422,6 +422,8 @@ public interface PortletDataContext extends Serializable {
 
 	public Date getStartDate();
 
+	public String getType();
+
 	public long getUserId(String userUuid);
 
 	public UserIdStrategy getUserIdStrategy();
@@ -600,6 +602,8 @@ public interface PortletDataContext extends Serializable {
 		long sourceUserPersonalSiteGroupId);
 
 	public void setStartDate(Date startDate);
+
+	public void setType(String type);
 
 	public void setUserIdStrategy(UserIdStrategy userIdStrategy);
 

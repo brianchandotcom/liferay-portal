@@ -98,10 +98,7 @@ public class LiferayPortlet extends GenericPortlet {
 				return;
 			}
 
-			boolean emptySessionMessages = isEmptySessionMessages(
-				actionRequest);
-
-			if (emptySessionMessages) {
+			if (_isAddSuccessMessage(actionRequest)) {
 				addSuccessMessage(actionRequest, actionResponse);
 			}
 
@@ -110,7 +107,9 @@ public class LiferayPortlet extends GenericPortlet {
 					PortalUtil.getPortletId(actionRequest) +
 						SessionMessages.KEY_SUFFIX_FORCE_SEND_REDIRECT)) {
 
-				if (emptySessionMessages || isAlwaysSendRedirect()) {
+				if (isEmptySessionMessages(actionRequest) ||
+					isAlwaysSendRedirect()) {
+
 					sendRedirect(actionRequest, actionResponse);
 				}
 			}
@@ -628,6 +627,19 @@ public class LiferayPortlet extends GenericPortlet {
 	protected boolean addProcessActionSuccessMessage;
 	protected boolean alwaysSendRedirect;
 	protected Set<String> validPaths;
+
+	private boolean _isAddSuccessMessage(ActionRequest actionRequest) {
+		String portletId = PortalUtil.getPortletId(actionRequest);
+
+		if (SessionMessages.contains(
+				actionRequest, portletId +
+					SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_SUCCESS_MESSAGE)) {
+
+			return false;
+		}
+
+		return isEmptySessionMessages(actionRequest);
+	}
 
 	private static final String[] _IGNORED_SESSION_MESSAGE_SUFFIXES = {
 		SessionMessages.KEY_SUFFIX_DELETE_SUCCESS_DATA,

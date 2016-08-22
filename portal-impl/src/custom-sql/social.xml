@@ -59,23 +59,6 @@
 				currentValue DESC
 		]]>
 	</sql>
-	<sql id="com.liferay.social.kernel.service.persistence.SocialActivityCounterFinder.findAC_By_G_C_C_N_S_E">
-		<![CDATA[
-			SELECT
-				{SocialActivityCounter.*}
-			FROM
-				SocialActivityCounter
-			WHERE
-				(groupId = ?) AND
-				(classNameId = ?) AND
-				(classPK IN ([$CLASS_PK$])) AND
-				(name IN ([$NAME$])) AND
-				(endPeriod = -1) AND
-				(active_ = [$TRUE$])
-			ORDER BY
-				classPK
-		]]>
-	</sql>
 	<sql id="com.liferay.social.kernel.service.persistence.SocialActivityCounterFinder.findU_ByG_C_N_S_E">
 		<![CDATA[
 			SELECT
@@ -98,6 +81,23 @@
 				classPK
 			ORDER BY
 				SUM(currentValue) DESC
+		]]>
+	</sql>
+	<sql id="com.liferay.social.kernel.service.persistence.SocialActivityCounterFinder.findAC_By_G_C_C_N_S_E">
+		<![CDATA[
+			SELECT
+				{SocialActivityCounter.*}
+			FROM
+				SocialActivityCounter
+			WHERE
+				(groupId = ?) AND
+				(classNameId = ?) AND
+				(classPK IN ([$CLASS_PK$])) AND
+				(name IN ([$NAME$])) AND
+				(endPeriod = -1) AND
+				(active_ = [$TRUE$])
+			ORDER BY
+				classPK
 		]]>
 	</sql>
 	<sql id="com.liferay.social.kernel.service.persistence.SocialActivityFinder.countByGroupId">

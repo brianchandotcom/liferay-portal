@@ -312,6 +312,18 @@
 				(DLFileEntry.folderId = ?)
 		]]>
 	</sql>
+	<sql id="com.liferay.document.library.kernel.service.persistence.DLFolderFinder.countFE_ByG_F">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT DLFileVersion.fileEntryId) AS COUNT_VALUE
+			FROM
+				DLFileVersion
+			WHERE
+				(DLFileVersion.groupId = ?) AND
+				([$STATUS$] [$OWNER_USER_ID_AND_OR_CONNECTOR$] [$OWNER_USER_ID$]) AND
+				[$FILE_VERSION_FOLDER_ID$]
+		]]>
+	</sql>
 	<sql id="com.liferay.document.library.kernel.service.persistence.DLFolderFinder.countF_ByG_M_F">
 		<![CDATA[
 			SELECT
@@ -323,18 +335,6 @@
 				([$HIDDEN$]) AND
 				([$STATUS$]) AND
 				[$FOLDER_PARENT_FOLDER_ID$]
-		]]>
-	</sql>
-	<sql id="com.liferay.document.library.kernel.service.persistence.DLFolderFinder.countFE_ByG_F">
-		<![CDATA[
-			SELECT
-				COUNT(DISTINCT DLFileVersion.fileEntryId) AS COUNT_VALUE
-			FROM
-				DLFileVersion
-			WHERE
-				(DLFileVersion.groupId = ?) AND
-				([$STATUS$] [$OWNER_USER_ID_AND_OR_CONNECTOR$] [$OWNER_USER_ID$]) AND
-				[$FILE_VERSION_FOLDER_ID$]
 		]]>
 	</sql>
 	<sql id="com.liferay.document.library.kernel.service.persistence.DLFolderFinder.countFS_ByG_F_A">
@@ -364,19 +364,6 @@
 				(AssetEntry.classPK IS NULL)
 		]]>
 	</sql>
-	<sql id="com.liferay.document.library.kernel.service.persistence.DLFolderFinder.findF_ByG_M_F">
-		<![CDATA[
-			SELECT
-				DISTINCT folderId AS modelFolderId, DLFolder.createDate as createDate, DLFolder.modifiedDate as modifiedDate, DLFolder.name AS name, DLFolder.name AS title, 0 AS size_, 0 AS readCount, 0 AS fileShortcutId, 1 AS modelFolder
-			FROM
-				DLFolder
-			WHERE
-				(DLFolder.groupId = ?) AND
-				([$HIDDEN$]) AND
-				([$STATUS$]) AND
-				[$FOLDER_PARENT_FOLDER_ID$]
-		]]>
-	</sql>
 	<sql id="com.liferay.document.library.kernel.service.persistence.DLFolderFinder.findFE_ByG_F">
 		<![CDATA[
 			SELECT
@@ -388,6 +375,19 @@
 				(DLFileEntry.groupId = ?) AND
 				([$STATUS$] [$OWNER_USER_ID_AND_OR_CONNECTOR$] [$OWNER_USER_ID$]) AND
 				[$FILE_ENTRY_FOLDER_ID$]
+		]]>
+	</sql>
+	<sql id="com.liferay.document.library.kernel.service.persistence.DLFolderFinder.findF_ByG_M_F">
+		<![CDATA[
+			SELECT
+				DISTINCT folderId AS modelFolderId, DLFolder.createDate as createDate, DLFolder.modifiedDate as modifiedDate, DLFolder.name AS name, DLFolder.name AS title, 0 AS size_, 0 AS readCount, 0 AS fileShortcutId, 1 AS modelFolder
+			FROM
+				DLFolder
+			WHERE
+				(DLFolder.groupId = ?) AND
+				([$HIDDEN$]) AND
+				([$STATUS$]) AND
+				[$FOLDER_PARENT_FOLDER_ID$]
 		]]>
 	</sql>
 	<sql id="com.liferay.document.library.kernel.service.persistence.DLFolderFinder.findFS_ByG_F_A">

@@ -1635,10 +1635,6 @@
 			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewProcessAssignedToMe">
-			<var name="kfProcessName" value="Kaleo Forms Process" />
-		</execute>
-
 		<execute macro="Workflow#viewTaskAssignedToMeDetails">
 			<var name="workflowAssetContent" value="Test 1 Edit" />
 			<var name="workflowTask" value="${workflowTask}" />
@@ -1705,8 +1701,6 @@
 			<var name="workflowAssetContent" value="Test 1 Edit" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#completeFormForTaskViaRecordView" />
-
 		<execute macro="Workflow#gotoPreviewEdit" />
 
 		<execute macro="KaleoFormsAdmin#populateFieldText">
@@ -1735,8 +1729,6 @@
 			<var name="fieldValue" value="Test 2 EDIT" />
 			<var name="workflowAssetTitle" value="${kfProcessName}" />
 		</execute>
-
-		<execute macro="KaleoFormsPortlet#completeFormForTaskViaRecordView" />
 
 		<execute macro="Workflow#gotoPreviewEdit" />
 

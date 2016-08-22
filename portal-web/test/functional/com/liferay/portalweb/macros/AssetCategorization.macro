@@ -4,13 +4,17 @@
 
 		<execute function="AssertClick" locator1="AssetCategorization#CATEGORY_SELECT" value1="Select" />
 
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
 		<var name="key_categoryName" value="${categoryName}" />
 
 		<execute function="Click" locator1="AssetCategorization#CATEGORIES_CATEGORY_CHECKBOX" />
 
 		<execute function="AssertVisible" locator1="AssetCategorization#CATEGORIES_CATEGORY_CHECKBOX_CHECKED" />
 
-		<execute function="Click" locator1="Icon#CLOSE" />
+		<execute function="SelectFrameTop" />
+
+		<execute function="AssertClick" locator1="Button#DONE" value1="Done" />
 
 		<execute function="AssertTextEquals" locator1="AssetCategorization#CATEGORY" value1="${categoryName}" />
 	</command>

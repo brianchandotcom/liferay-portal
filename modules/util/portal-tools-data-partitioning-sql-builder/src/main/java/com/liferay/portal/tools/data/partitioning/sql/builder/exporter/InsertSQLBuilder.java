@@ -16,13 +16,18 @@ package com.liferay.portal.tools.data.partitioning.sql.builder.exporter;
 
 import com.liferay.portal.tools.data.partitioning.sql.builder.internal.exporter.SQLBuilder;
 
+import java.sql.ResultSetMetaData;
+
 /**
  * @author Manuel de la Peña
  */
 public class InsertSQLBuilder implements SQLBuilder {
 
 	@Override
-	public String build(String[] fields, String tableName) {
+	public String build(
+		String[] fields, ResultSetMetaData resultSetMetaData,
+		String tableName) {
+
 		if ((fields == null) || (fields.length == 0)) {
 			throw new IllegalArgumentException("Fields are null");
 		}

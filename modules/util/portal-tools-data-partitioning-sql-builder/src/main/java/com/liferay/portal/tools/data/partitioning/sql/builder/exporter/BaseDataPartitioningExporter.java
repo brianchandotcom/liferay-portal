@@ -152,7 +152,8 @@ public abstract class BaseDataPartitioningExporter
 
 				SQLBuilder insertSQLBuilder = new InsertSQLBuilder();
 
-				String insertSql = insertSQLBuilder.build(fields, tableName);
+				String insertSql = insertSQLBuilder.build(
+					fields, resultSetMetaData, tableName);
 
 				outputStream.write(insertSql.getBytes());
 			}

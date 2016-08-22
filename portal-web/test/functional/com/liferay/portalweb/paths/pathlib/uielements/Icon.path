@@ -260,7 +260,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PAGE__CUSTOMIZATION_ELLIPSIS</td>
+	<td>PAGE_CUSTOMIZATION_ELLIPSIS</td>
 	<td>//*[@data-qa-id='controlMenu']//div[contains(@class,'icon-menu')]</td>
 	<td></td>
 </tr>

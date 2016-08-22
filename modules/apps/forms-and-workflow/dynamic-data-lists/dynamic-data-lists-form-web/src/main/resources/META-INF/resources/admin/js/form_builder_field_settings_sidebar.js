@@ -97,7 +97,7 @@ AUI.add(
 
 						var settingsFormContainer = settingsForm.get('container');
 
-						settingsFormContainer.addClass('invisible');
+						instance._hideSettingsForm();
 
 						instance.set('bodyContent', settingsFormContainer);
 
@@ -125,6 +125,14 @@ AUI.add(
 						return toolbar;
 					},
 
+					_hideSettingsForm: function() {
+						var instance = this;
+
+						var container = instance.settingsForm.get('container');
+
+						container.addClass('invisible');
+					},
+
 					_loadFieldSettingsForm: function(field) {
 						var instance = this;
 
@@ -136,7 +144,7 @@ AUI.add(
 
 								settingsForm.evaluate(
 									function() {
-										instance.settingsForm.get('container').removeClass('invisible');
+										instance._showSettingsForm();
 										instance._removeLoading();
 									}
 								);
@@ -195,6 +203,14 @@ AUI.add(
 						if (!contentBox.one('.loading-icon')) {
 							contentBox.append(TPL_LOADING);
 						}
+					},
+
+					_showSettingsForm: function() {
+						var instance = this;
+
+						var container = instance.settingsForm.get('container');
+
+						container.removeClass('invisible');
 					}
 				}
 			}

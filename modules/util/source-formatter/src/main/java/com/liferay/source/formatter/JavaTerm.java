@@ -87,6 +87,10 @@ public class JavaTerm {
 		return _content;
 	}
 
+	public String getCustomSQLContent() {
+		return _customSQLContent;
+	}
+
 	public String getFileName() {
 		return _fileName;
 	}
@@ -274,6 +278,10 @@ public class JavaTerm {
 		}
 	}
 
+	public void setCustomSQLContent(String customSQLContent) {
+		_customSQLContent = customSQLContent;
+	}
+
 	public void setType(int type) {
 		_type = type;
 	}
@@ -421,6 +429,7 @@ public class JavaTerm {
 	}
 
 	private final String _content;
+	private String _customSQLContent;
 	private final String _fileName;
 	private final String _indent;
 	private final JavaSourceProcessor _javaSourceProcessor =

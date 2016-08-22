@@ -15,6 +15,7 @@
 package com.liferay.portal.tools.data.partitioning.sql.builder.exporter;
 
 import com.liferay.portal.tools.data.partitioning.sql.builder.exporter.context.ExportContext;
+import com.liferay.portal.tools.data.partitioning.sql.builder.internal.exporter.SQLBuilder;
 import com.liferay.portal.tools.data.partitioning.sql.builder.internal.exporter.ExportProcess;
 
 import com.zaxxer.hikari.HikariConfig;
@@ -220,29 +221,9 @@ public abstract class BaseDataPartitioningExporter
 			OutputStream outputStream, String tableName, String[] fields)
 		throws IOException {
 
-		if ((fields == null) || (fields.length == 0)) {
-			throw new IllegalArgumentException("Fields are null");
-		}
+		SQLBuilder insertSQLBuilder = new InsertSQLBuilder();
 
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("insert into ");
-		sb.append(tableName);
-		sb.append(" values (");
-
-		for (int i = 0; i < fields.length; i++) {
-			String field = fields[i];
-
-			sb.append(field);
-
-			if (i != (fields.length - 1)) {
-				sb.append(", ");
-			}
-		}
-
-		sb.append(")");
-
-		String sql = sb.toString() + ";\n";
+		String sql = insertSQLBuilder.build(fields, tableName);
 
 		outputStream.write(sql.getBytes());
 	}

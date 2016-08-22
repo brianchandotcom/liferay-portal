@@ -1696,7 +1696,7 @@
 		</execute>
 
 		<execute macro="Workflow#viewTaskAssignedToMeDetails">
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetTitle" value="${kfProcessName}" />
 			<var name="workflowTask" value="Review" />
 			<var name="workflowAssetContent" value="Test 1 EDIT" />
 		</execute>
@@ -1715,7 +1715,7 @@
 		</execute>
 
 		<execute macro="Workflow#viewTaskAssignedToMeDetails">
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetTitle" value="${kfProcessName}" />
 			<var name="workflowTask" value="Review" />
 			<var name="workflowAssetContent" value="Test 1 EDIT new edit" />
 		</execute>

@@ -5,12 +5,9 @@
 	<sql file="custom-sql/announcements.xml" />
 	<sql file="custom-sql/asset.xml" />
 	<sql file="custom-sql/blogs.xml" />
-	<sql file="custom-sql/calendar.xml" />
 	<sql file="custom-sql/documentlibrary.xml" />
 	<sql file="custom-sql/exportimport.xml" />
-	<sql file="custom-sql/expando.xml" />
 	<sql file="custom-sql/messageboards.xml" />
-	<sql file="custom-sql/mobiledevicerules.xml" />
 	<sql file="custom-sql/ratings.xml" />
 	<sql file="custom-sql/social.xml" />
 </custom-sql>

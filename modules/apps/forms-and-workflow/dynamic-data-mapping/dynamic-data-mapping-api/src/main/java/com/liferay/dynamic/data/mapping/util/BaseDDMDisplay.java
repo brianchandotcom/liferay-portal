@@ -322,11 +322,24 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 			return true;
 		}
 
-		if (!formsCycle(structure, classPK)) {
+		if (structure.getParentStructureId() == 0) {
 			return true;
 		}
 
-		return false;
+		DDMStructure parentStructure =
+			DDMStructureLocalServiceUtil.fetchStructure(
+				structure.getParentStructureId());
+
+		while (parentStructure != null) {
+			if (parentStructure.getStructureId() == classPK) {
+				return false;
+			}
+
+			parentStructure = DDMStructureLocalServiceUtil.fetchStructure(
+				parentStructure.getParentStructureId());
+		}
+
+		return true;
 	}
 
 	@Override
@@ -365,20 +378,6 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 
 	@Override
 	public boolean isVersioningEnabled() {
-		return false;
-	}
-
-	protected boolean formsCycle(DDMStructure structure, long classPK) {
-		while ((structure != null) && (structure.getParentStructureId() != 0)) {
-			if (structure.getParentStructureId() == classPK) {
-				return true;
-			}
-			else {
-				structure = DDMStructureLocalServiceUtil.fetchStructure(
-					structure.getParentStructureId());
-			}
-		}
-
 		return false;
 	}
 

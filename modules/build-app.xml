@@ -69,7 +69,7 @@
 	</target>
 
 	<target name="check-current-branch">
-		<exec dir="${portal.dir}" executable="git" outputproperty="liferay.releng.branch">
+		<exec dir="${modules.dir}" executable="git" outputproperty="liferay.releng.branch">
 			<arg value="rev-parse" />
 			<arg value="--abbrev-ref" />
 			<arg value="HEAD" />

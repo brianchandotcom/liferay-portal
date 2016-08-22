@@ -1631,6 +1631,10 @@
 
 		<execute macro="KaleoFormsAdmin#saveProcessRecord" />
 
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
+		</execute>
+
 		<execute macro="KaleoFormsPortlet#viewProcessAssignedToMe">
 			<var name="kfProcessName" value="Kaleo Forms Process" />
 		</execute>
@@ -1681,14 +1685,18 @@
 
 		<execute macro="KaleoFormsAdmin#saveProcessRecord" />
 
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
+		</execute>
+
 		<execute macro="Workflow#viewSecondAssetEntryContent">
 			<var name="fieldLabel" value="Text" />
 			<var name="fieldValue" value="Test 2 EDIT" />
 			<var name="workflowAssetTitle" value="${kfProcessName}" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewProcessAssignedToMe">
-			<var name="kfProcessName" value="Kaleo Forms Process" />
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
 		<execute macro="Workflow#viewTaskAssignedToMeDetails">
@@ -1708,10 +1716,18 @@
 
 		<execute macro="KaleoFormsAdmin#saveProcessRecord" />
 
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
+		</execute>
+
 		<execute macro="Workflow#viewTaskAssignedToMeDetails">
 			<var name="workflowAssetType" value="Kaleo Forms Process" />
 			<var name="workflowTask" value="Review" />
 			<var name="workflowAssetContent" value="Test 1 Edit new edit" />
+		</execute>
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
 		<execute macro="Workflow#viewSecondAssetEntryContent">
@@ -1730,6 +1746,10 @@
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#saveProcessRecord" />
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
+		</execute>
 
 		<execute macro="Workflow#viewSecondAssetEntryContent">
 			<var name="fieldLabel" value="Text" />

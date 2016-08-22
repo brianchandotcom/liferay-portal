@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.example.helloworld;
+package com.example.sample;
 
 /**
  * @author Andrea Di Giorgi

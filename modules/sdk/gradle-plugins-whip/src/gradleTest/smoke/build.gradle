@@ -1,22 +1,10 @@
-buildscript {
-	dependencies {
-		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.whip", version: "latest.release"
-	}
-
-	repositories {
-		mavenLocal()
-
-		maven {
-			url "https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public"
-		}
-	}
-}
-
 apply plugin: "com.liferay.whip"
 apply plugin: "eclipse"
 apply plugin: "java"
 
 group = "com.example"
+
+task runGradleTest
 
 dependencies {
 	testCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "latest.release"
@@ -30,6 +18,10 @@ repositories {
 	maven {
 		url "https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public"
 	}
+}
+
+runGradleTest {
+	dependsOn test
 }
 
 test {

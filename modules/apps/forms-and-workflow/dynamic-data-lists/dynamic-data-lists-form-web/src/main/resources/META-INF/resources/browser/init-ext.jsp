@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,21 +12,4 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-
-package com.liferay.dynamic.data.lists.form.web.internal.constants;
-
-/**
- * @author Marcellus Tavares
- */
-public class DDLFormPortletKeys {
-
-	public static final String DYNAMIC_DATA_LISTS_FORM =
-		"com_liferay_dynamic_data_lists_form_web_portlet_DDLFormPortlet";
-
-	public static final String DYNAMIC_DATA_LISTS_FORM_ADMIN =
-		"com_liferay_dynamic_data_lists_form_web_portlet_DDLFormAdminPortlet";
-
-	public static final String DYNAMIC_DATA_LISTS_FORM_BROWSER =
-		"com_liferay_dynamic_data_lists_form_web_portlet_DDLFormBrowserPortlet";
-
-}
+--%>

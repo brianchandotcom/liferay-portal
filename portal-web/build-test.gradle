@@ -38,7 +38,7 @@ poshiRunner {
 		poshiPropertiesFile = new File(projectDir.parentFile, project.properties["poshiRunnerExtProperties"])
 	}
 
-	version = "1.0.43"
+	version = "1.0.45"
 }
 
 repositories {

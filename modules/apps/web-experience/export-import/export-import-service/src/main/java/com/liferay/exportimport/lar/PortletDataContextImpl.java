@@ -1225,6 +1225,10 @@ public class PortletDataContextImpl implements PortletDataContext {
 		return _startDate;
 	}
 
+	public String getType() {
+		return _type;
+	}
+
 	@Override
 	public long getUserId(String userUuid) {
 		return _userIdStrategy.getUserId(userUuid);
@@ -1866,6 +1870,10 @@ public class PortletDataContextImpl implements PortletDataContext {
 	@Override
 	public void setStartDate(Date startDate) {
 		_startDate = startDate;
+	}
+
+	public void setType(String type) {
+		_type = type;
 	}
 
 	@Override
@@ -2569,6 +2577,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 	private long _sourceGroupId;
 	private long _sourceUserPersonalSiteGroupId;
 	private Date _startDate;
+	private String _type;
 	private transient UserIdStrategy _userIdStrategy;
 	private long _userPersonalSiteGroupId;
 	private transient XStream _xStream;

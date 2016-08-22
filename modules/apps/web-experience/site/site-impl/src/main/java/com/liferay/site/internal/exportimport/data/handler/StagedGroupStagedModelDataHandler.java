@@ -163,12 +163,6 @@ public class StagedGroupStagedModelDataHandler
 
 		Set<String> portletIds = new HashSet<>();
 
-		Element rootElement = portletDataContext.getExportDataRootElement();
-
-		Element headerElement = rootElement.element("header");
-
-		String type = headerElement.attributeValue("type");
-
 		for (Portlet portlet : dataSiteLevelPortlets) {
 			String portletId = portlet.getRootPortletId();
 
@@ -184,7 +178,8 @@ public class StagedGroupStagedModelDataHandler
 				Map<String, Boolean> exportPortletControlsMap =
 					ExportImportHelperUtil.getExportPortletControlsMap(
 						portletDataContext.getCompanyId(), portletId,
-						portletDataContext.getParameterMap(), type);
+						portletDataContext.getParameterMap(),
+						portletDataContext.getType());
 
 				if (exportPortletControlsMap.get(
 						PortletDataHandlerKeys.PORTLET_DATA)) {

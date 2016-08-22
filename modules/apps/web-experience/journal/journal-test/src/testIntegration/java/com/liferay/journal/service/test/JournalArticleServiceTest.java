@@ -40,7 +40,11 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.portlet.PortalPreferences;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameServiceUtil;
+import com.liferay.portal.kernel.service.PortalPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -53,6 +57,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.test.ServiceTestUtil;
@@ -95,6 +100,13 @@ public class JournalArticleServiceTest {
 	public void setUp() throws Exception {
 		setUpDDMFormXSDDeserializer();
 
+		CompanyThreadLocal.setCompanyId(TestPropsValues.getCompanyId());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		serviceContext.setCompanyId(TestPropsValues.getCompanyId());
+
 		_group = GroupTestUtil.addGroup();
 
 		_article = JournalTestUtil.addArticle(
@@ -107,6 +119,19 @@ public class JournalArticleServiceTest {
 		PortalRunMode.setTestMode(true);
 
 		ServiceTestUtil.setUser(TestPropsValues.getUser());
+
+		PortalPreferences portalPreferenceces =
+			PortletPreferencesFactoryUtil.getPortalPreferences(
+				TestPropsValues.getUserId(), true);
+
+		portalPreferenceces.setValue(
+			"", "expireAllArticleVersionsEnabled", "true");
+
+		_portalPreferences =
+			PortalPreferencesLocalServiceUtil.addPortalPreferences(
+				TestPropsValues.getCompanyId(),
+				PortletKeys.PREFS_OWNER_TYPE_COMPANY,
+				PortletPreferencesFactoryUtil.toXML(portalPreferenceces));
 	}
 
 	@After
@@ -118,6 +143,9 @@ public class JournalArticleServiceTest {
 		}
 
 		PortalRunMode.setTestMode(_testMode);
+
+		PortalPreferencesLocalServiceUtil.deletePortalPreferences(
+			_portalPreferences);
 	}
 
 	@Test
@@ -735,6 +763,8 @@ public class JournalArticleServiceTest {
 
 	private String _keyword;
 	private JournalArticle _latestArticle;
+	private com.liferay.portal.kernel.model.PortalPreferences
+		_portalPreferences;
 	private boolean _testMode;
 
 }

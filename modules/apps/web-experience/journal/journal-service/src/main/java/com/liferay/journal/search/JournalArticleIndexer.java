@@ -20,7 +20,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
-import com.liferay.journal.configuration.JournalServiceConfigurationValues;
+import com.liferay.journal.configuration.JournalServiceConfiguration;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleDisplay;
 import com.liferay.journal.service.JournalArticleLocalService;
@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
@@ -54,6 +55,7 @@ import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.QueryFilter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -273,9 +275,7 @@ public class JournalArticleIndexer
 
 						dynamicQuery.add(ddmStructureKey.in(ddmStructureKeys));
 
-						if (!JournalServiceConfigurationValues.
-								JOURNAL_ARTICLE_INDEX_ALL_VERSIONS) {
-
+						if (!isIndexAllArticleVersions()) {
 							Property statusProperty =
 								PropertyFactoryUtil.forName("status");
 
@@ -407,9 +407,7 @@ public class JournalArticleIndexer
 	protected void doDelete(JournalArticle journalArticle) throws Exception {
 		long classPK = journalArticle.getId();
 
-		if (!JournalServiceConfigurationValues.
-				JOURNAL_ARTICLE_INDEX_ALL_VERSIONS) {
-
+		if (!isIndexAllArticleVersions()) {
 			if (_journalArticleLocalService.getArticlesCount(
 					journalArticle.getGroupId(),
 					journalArticle.getArticleId()) > 0) {
@@ -453,9 +451,7 @@ public class JournalArticleIndexer
 
 		long classPK = journalArticle.getId();
 
-		if (!JournalServiceConfigurationValues.
-				JOURNAL_ARTICLE_INDEX_ALL_VERSIONS) {
-
+		if (!isIndexAllArticleVersions()) {
 			classPK = journalArticle.getResourcePrimKey();
 		}
 
@@ -700,9 +696,7 @@ public class JournalArticleIndexer
 
 		List<JournalArticle> articles = null;
 
-		if (JournalServiceConfigurationValues.
-				JOURNAL_ARTICLE_INDEX_ALL_VERSIONS) {
-
+		if (isIndexAllArticleVersions()) {
 			articles = _journalArticleLocalService.getArticlesByResourcePrimKey(
 				article.getResourcePrimKey());
 		}
@@ -768,6 +762,24 @@ public class JournalArticleIndexer
 		return content;
 	}
 
+	protected boolean isIndexAllArticleVersions() {
+		JournalServiceConfiguration journalServiceConfiguration = null;
+
+		try {
+			journalServiceConfiguration =
+				_configurationProvider.getCompanyConfiguration(
+					JournalServiceConfiguration.class,
+					CompanyThreadLocal.getCompanyId());
+
+			return journalServiceConfiguration.indexAllArticleVersionsEnabled();
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		return false;
+	}
+
 	protected void reindexArticles(long companyId) throws PortalException {
 		final IndexableActionableDynamicQuery indexableActionableDynamicQuery =
 			_journalArticleLocalService.getIndexableActionableDynamicQuery();
@@ -778,9 +790,7 @@ public class JournalArticleIndexer
 
 				@Override
 				public void performAction(JournalArticle article) {
-					if (!JournalServiceConfigurationValues.
-							JOURNAL_ARTICLE_INDEX_ALL_VERSIONS) {
-
+					if (!isIndexAllArticleVersions()) {
 						JournalArticle latestIndexableArticle =
 							fetchLatestIndexableArticleVersion(
 								article.getResourcePrimKey());
@@ -822,6 +832,13 @@ public class JournalArticleIndexer
 	}
 
 	@Reference(unbind = "-")
+	protected void setConfigurationProvider(
+		ConfigurationProvider configurationProvider) {
+
+		_configurationProvider = configurationProvider;
+	}
+
+	@Reference(unbind = "-")
 	protected void setDDMIndexer(DDMIndexer ddmIndexer) {
 		_ddmIndexer = ddmIndexer;
 	}
@@ -860,6 +877,7 @@ public class JournalArticleIndexer
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalArticleIndexer.class);
 
+	private ConfigurationProvider _configurationProvider;
 	private DDMIndexer _ddmIndexer;
 	private DDMStructureLocalService _ddmStructureLocalService;
 	private FieldsToDDMFormValuesConverter _fieldsToDDMFormValuesConverter;

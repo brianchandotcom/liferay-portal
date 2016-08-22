@@ -16,7 +16,9 @@ package com.liferay.journal.configuration;
 
 /**
  * @author Eduardo Garcia
+ * @deprecated As of 7.0.0, see {@link JournalServiceConfiguration}
  */
+@Deprecated
 public class JournalServiceConfigurationKeys {
 
 	public static final String CHAR_BLACKLIST = "char.blacklist";
@@ -56,6 +58,10 @@ public class JournalServiceConfigurationKeys {
 	public static final String JOURNAL_FOLDER_ICON_CHECK_COUNT =
 		"journal.folder.icon.check.count";
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static final String LAR_CREATION_STRATEGY = "lar.creation.strategy";
 
 	public static final String PUBLISH_TO_LIVE_BY_DEFAULT =
@@ -73,6 +79,10 @@ public class JournalServiceConfigurationKeys {
 	public static final String TERMS_OF_USE_JOURNAL_ARTICLE_ID =
 		"terms.of.use.journal.article.id";
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static final String TRANSFORMER_LISTENER = "transformer.listener";
 
 }

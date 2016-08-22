@@ -150,7 +150,11 @@ public abstract class BaseDataPartitioningExporter
 					fields[i] = serializeTableField(resultSet.getObject(i + 1));
 				}
 
-				generateInsertSQL(outputStream, tableName, fields);
+				SQLBuilder insertSQLBuilder = new InsertSQLBuilder();
+
+				String insertSql = insertSQLBuilder.build(fields, tableName);
+
+				outputStream.write(insertSql.getBytes());
 			}
 		}
 		catch (IOException | SQLException e) {
@@ -215,17 +219,6 @@ public abstract class BaseDataPartitioningExporter
 		DateFormat dateFormat = new SimpleDateFormat(getDateTimeFormat());
 
 		return dateFormat.format(date);
-	}
-
-	protected void generateInsertSQL(
-			OutputStream outputStream, String tableName, String[] fields)
-		throws IOException {
-
-		SQLBuilder insertSQLBuilder = new InsertSQLBuilder();
-
-		String sql = insertSQLBuilder.build(fields, tableName);
-
-		outputStream.write(sql.getBytes());
 	}
 
 	protected abstract String getControlTableNamesSQL(

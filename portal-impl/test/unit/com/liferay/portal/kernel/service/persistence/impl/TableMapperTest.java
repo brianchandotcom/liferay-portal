@@ -1778,8 +1778,8 @@ public class TableMapperTest {
 			Assert.assertSame(_dataSource, dataSource);
 			Assert.assertEquals(
 				"INSERT INTO " + _TABLE_NAME + " (" + _COMPANY_COLUMN_NAME +
-					", " + _LEFT_COLUMN_NAME + ", " + _RIGHT_COLUMN_NAME+ ") " +
-						"VALUES (?, ?, ?)",
+					", " + _LEFT_COLUMN_NAME + ", " + _RIGHT_COLUMN_NAME +
+						") VALUES (?, ?, ?)",
 				sql);
 			Assert.assertArrayEquals(
 				new ParamSetter[] {

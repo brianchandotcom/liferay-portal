@@ -33,14 +33,14 @@ public interface FacebookConnectConfiguration {
 	public boolean enabled();
 
 	@Meta.AD(
-		deflt = "false", name ="%require-verified-account", required = false
+		deflt = "false", name = "require-verified-account", required = false
 	)
 	public boolean verifiedAccountRequired();
 
-	@Meta.AD(name ="%application-id", required = false)
+	@Meta.AD(name = "%application-id", required = false)
 	public String appId();
 
-	@Meta.AD(name ="%application-secret", required = false)
+	@Meta.AD(name = "%application-secret", required = false)
 	public String appSecret();
 
 	@Meta.AD(deflt = "https://graph.facebook.com", required = false)
@@ -48,19 +48,19 @@ public interface FacebookConnectConfiguration {
 
 	@Meta.AD(
 		deflt = "https://graph.facebook.com/oauth/authorize",
-		name ="%oauth-authentication-url", required = false
+		name = "oauth-authentication-url", required = false
 	)
 	public String oauthAuthURL();
 
 	@Meta.AD(
 		deflt = "https://graph.facebook.com/oauth/access_token",
-		name ="%oauth-token-url", required = false
+		name = "oauth-token-url", required = false
 	)
 	public String oauthTokenURL();
 
 	@Meta.AD(
 		deflt = "http://localhost:8080/c/portal/facebook_connect_oauth",
-		name ="%redirect-url", required = false
+		name = "redirect-url", required = false
 	)
 	public String oauthRedirectURL();
 

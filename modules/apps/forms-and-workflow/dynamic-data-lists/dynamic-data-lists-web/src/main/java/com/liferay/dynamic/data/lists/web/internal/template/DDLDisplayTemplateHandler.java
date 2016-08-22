@@ -55,7 +55,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name="+ DDLPortletKeys.DYNAMIC_DATA_LISTS_DISPLAY
+		"javax.portlet.name=" + DDLPortletKeys.DYNAMIC_DATA_LISTS_DISPLAY
 	},
 	service = TemplateHandler.class
 )

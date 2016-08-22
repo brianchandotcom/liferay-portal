@@ -156,7 +156,7 @@ public class ElasticsearchIndexWriter extends BaseIndexWriter {
 				bulkRequestBuilder.add(deleteRequestBuilder);
 			}
 
-			if (PortalRunMode.isTestMode()||
+			if (PortalRunMode.isTestMode() ||
 				searchContext.isCommitImmediately()) {
 
 				bulkRequestBuilder.setRefresh(true);

@@ -795,7 +795,7 @@ public class HtmlImpl implements Html {
 
 		// Check if preceding character is / (i.e. is this instance of <abc/>)
 
-		if (text.charAt(x-1) == '/') {
+		if (text.charAt(x - 1) == '/') {
 			return pos;
 		}
 

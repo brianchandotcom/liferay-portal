@@ -196,7 +196,7 @@ public class TrashDisplayContext {
 		if (trashEntryId > 0) {
 			_trashEntry = TrashEntryLocalServiceUtil.fetchEntry(trashEntryId);
 		}
-		else if(classNameId > 0 && classPK > 0) {
+		else if ((classNameId > 0) && (classPK > 0)) {
 			String className = PortalUtil.getClassName(classNameId);
 
 			if (Validator.isNotNull(className)) {

@@ -161,7 +161,7 @@ public class ServletResponseUtilRangeTest extends PowerMockito {
 		File tempFile = FileUtil.createTempFile();
 
 		try {
-			try(FileOutputStream fos = new FileOutputStream(tempFile)) {
+			try (FileOutputStream fos = new FileOutputStream(tempFile)) {
 				fos.write(content);
 			}
 

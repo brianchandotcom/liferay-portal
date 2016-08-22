@@ -29,8 +29,11 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
@@ -67,6 +70,16 @@ public class ItemSelectorImpl implements ItemSelector {
 	public static final String PARAMETER_SELECTED_TAB = "selectedTab";
 
 	@Override
+	public String getItemSelectedEventName(String itemSelectorURL) {
+		String namespace = PortalUtil.getPortletNamespace(
+			ItemSelectorPortletKeys.ITEM_SELECTOR);
+
+		return HttpUtil.getParameter(
+			itemSelectorURL,
+			namespace.concat(PARAMETER_ITEM_SELECTED_EVENT_NAME), false);
+	}
+
+	@Override
 	public List<ItemSelectorCriterion> getItemSelectorCriteria(
 		Map<String, String[]> parameters) {
 
@@ -89,6 +102,31 @@ public class ItemSelectorImpl implements ItemSelector {
 		}
 
 		return itemSelectorCriteria;
+	}
+
+	@Override
+	public List<ItemSelectorCriterion> getItemSelectorCriteria(
+		String itemSelectorURL) {
+
+		Map<String, String[]> parameters = HttpUtil.getParameterMap(
+			itemSelectorURL);
+
+		Map<String, String[]> itemSelectorURLParameterMap = new HashMap<>();
+
+		String namespace = PortalUtil.getPortletNamespace(
+			ItemSelectorPortletKeys.ITEM_SELECTOR);
+
+		for (String parameterName : parameters.keySet()) {
+			if (parameterName.contains(namespace)) {
+				String key = StringUtil.removeSubstring(
+					parameterName, namespace);
+
+				itemSelectorURLParameterMap.put(
+					key, parameters.get(parameterName));
+			}
+		}
+
+		return getItemSelectorCriteria(itemSelectorURLParameterMap);
 	}
 
 	@Override

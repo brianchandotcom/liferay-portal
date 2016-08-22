@@ -14,6 +14,8 @@
 
 package com.liferay.item.selector;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -30,10 +32,29 @@ import javax.portlet.PortletURL;
  * @author Iván Zaera
  * @author Roberto Díaz
  */
+@ProviderType
 public interface ItemSelector {
+
+	/**
+	 * Returns the selected event name used to create the item selector url.
+	 *
+	 * @param  itemSelectorURL the unescaped item selector url
+	 * @return the selected event name
+	 */
+	public String getItemSelectedEventName(String itemSelectorURL);
 
 	public List<ItemSelectorCriterion> getItemSelectorCriteria(
 		Map<String, String[]> parameters);
+
+	/**
+	 * Returns the list of item selector criteria that was used to create the
+	 * item selector url.
+	 *
+	 * @param  itemSelectorURL the unescaped item selector url
+	 * @return the selected event name
+	 */
+	public List<ItemSelectorCriterion> getItemSelectorCriteria(
+		String itemSelectorURL);
 
 	/**
 	 * Returns the {@link ItemSelectorRendering} according to the parameters.

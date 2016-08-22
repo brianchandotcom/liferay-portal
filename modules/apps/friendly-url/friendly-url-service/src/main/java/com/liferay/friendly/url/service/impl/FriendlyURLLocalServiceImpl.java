@@ -108,6 +108,15 @@ public class FriendlyURLLocalServiceImpl
 
 		long classNameId = classNameLocalService.getClassNameId(clazz);
 
+		deleteFriendlyURL(companyId, groupId, classNameId, classPK, urlTitle);
+	}
+
+	@Override
+	public void deleteFriendlyURL(
+			long companyId, long groupId, long classNameId, long classPK,
+			String urlTitle)
+		throws NoSuchFriendlyURLException {
+
 		friendlyURLPersistence.removeByC_G_C_C_U(
 			companyId, groupId, classNameId, classPK, urlTitle);
 

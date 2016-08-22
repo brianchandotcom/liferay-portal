@@ -1631,23 +1631,10 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="Page#gotoMyAccount">
-			<var name="portletName" value="My Workflow Tasks" />
-		</execute>
-
-		<execute macro="Workflow#viewPendingTasks">
+		<execute macro="Workflow#viewTaskAssignedToMeDetails">
+			<var name="workflowAssetContent" value="Test 1" />
+			<var name="workflowTask" value="${workflowTask}" />
 			<var name="workflowAssetTitle" value="${kfProcessName}" />
-			<var name="workflowAssetType" value="${workflowAssetType}" />
-			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Workflow#gotoCompletedTaskAssignedToMePreview">
-			<var name="workflowAssetTitle" value="${kfProcessName}" />
-		</execute>
-
-		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="Text" />
-			<var name="fieldValue" value="Test 1" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#populateFieldText">
@@ -1661,9 +1648,10 @@
 			<var name="kfProcessName" value="Kaleo Forms Process" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewProcessEntryField">
-			<var name="fieldName" value="Text" />
-			<var name="kfProcessFieldData" value="Test 1 EDIT" />
+		<execute macro="Workflow#viewTaskAssignedToMeDetails">
+			<var name="workflowAssetContent" value="Test 1 Edit" />
+			<var name="workflowTask" value="${workflowTask}" />
+			<var name="workflowAssetTitle" value="${kfProcessName}" />
 		</execute>
 
 		<execute macro="KaleoFormsPortlet#completeFormForSecondProcessTaskViaTable">
@@ -1710,11 +1698,12 @@
 			<var name="kfProcessName" value="Kaleo Forms Process" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewProcessEntryField">
-			<var name="fieldName" value="Text" />
-			<var name="kfProcessFieldData" value="Test 1 EDIT" />
+		<execute macro="Workflow#viewTaskAssignedToMeDetails">
+			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowTask" value="Review" />
+			<var name="workflowAssetContent" value="Test 1 Edit" />
 		</execute>
-
+		
 		<execute macro="KaleoFormsPortlet#completeFormForTaskViaRecordView" />
 
 		<execute macro="KaleoFormsAdmin#populateFieldText">
@@ -1724,9 +1713,10 @@
 
 		<execute macro="KaleoFormsAdmin#saveProcessRecord" />
 
-		<execute macro="KaleoFormsPortlet#viewProcessEntryField">
-			<var name="fieldName" value="Text" />
-			<var name="kfProcessFieldData" value="Test 1 EDIT new edit" />
+		<execute macro="Workflow#viewTaskAssignedToMeDetails">
+			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowTask" value="Review" />
+			<var name="workflowAssetContent" value="Test 1 Edit new edit" />
 		</execute>
 
 		<execute macro="KaleoFormsPortlet#viewSecondProcessAssignedToMe">

@@ -15,6 +15,7 @@
 package com.liferay.portal.tools.data.partitioning.sql.builder.exporter;
 
 import com.liferay.portal.tools.data.partitioning.sql.builder.exporter.context.ExportContext;
+import com.liferay.portal.tools.data.partitioning.sql.builder.internal.exporter.SQLBuilder;
 
 import java.io.OutputStream;
 
@@ -28,6 +29,8 @@ public interface DBExporter {
 	public List<String> getControlTableNames(ExportContext exportContext);
 
 	public List<String> getPartitionedTableNames(ExportContext exportContext);
+
+	public SQLBuilder getSQLBuilder();
 
 	public void write(
 		long companyId, String tableName, OutputStream outputStream);

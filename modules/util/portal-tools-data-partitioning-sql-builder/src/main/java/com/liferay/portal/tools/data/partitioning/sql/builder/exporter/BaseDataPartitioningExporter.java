@@ -93,6 +93,11 @@ public abstract class BaseDataPartitioningExporter
 	}
 
 	@Override
+	public SQLBuilder getSQLBuilder() {
+		return new InsertSQLBuilder();
+	}
+
+	@Override
 	public String serializeTableField(Object field) {
 		StringBuilder sb = new StringBuilder();
 
@@ -150,7 +155,7 @@ public abstract class BaseDataPartitioningExporter
 					fields[i] = serializeTableField(resultSet.getObject(i + 1));
 				}
 
-				SQLBuilder insertSQLBuilder = new InsertSQLBuilder();
+				SQLBuilder insertSQLBuilder = getSQLBuilder();
 
 				String insertSql = insertSQLBuilder.build(
 					fields, resultSetMetaData, tableName);

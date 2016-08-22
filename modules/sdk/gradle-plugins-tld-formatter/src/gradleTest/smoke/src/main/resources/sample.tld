@@ -1,0 +1,3 @@
+<?xml version="1.0"?>
+
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.0" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"><tlib-version>1.0</tlib-version><short-name>sample</short-name><tag><description>Hello World</description><name>hello-world</name><tag-class>com.example.sample.HelloWorldTag</tag-class><body-content>empty</body-content><attribute><name>lastName</name><required>true</required><rtexprvalue>true</rtexprvalue></attribute><attribute><name>firstName</name><required>true</required><rtexprvalue>true</rtexprvalue></attribute></tag></taglib>

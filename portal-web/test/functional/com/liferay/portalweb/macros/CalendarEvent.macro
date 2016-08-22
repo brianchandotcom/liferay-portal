@@ -1408,7 +1408,7 @@
 			<then>
 				<execute function="Click" locator1="CalendarEditEvent#REPEAT_ENDS_ON_RADIO" />
 
-				<execute function="Type#clickAtSendKeys" locator1="CalendarEditEvent#REPEAT_ENDS_ON_DATE_FIELD" value1="${endOnDate}" />
+				<execute function="Type#clickAtType" locator1="CalendarEditEvent#REPEAT_ENDS_ON_DATE_FIELD" value1="${endOnDate}" />
 			</then>
 		</if>
 

@@ -50,7 +50,7 @@
 	</command>
 
 	<command name="addName">
-		<execute function="Type#clickAtSendKeys" locator1="TextInput#NAME" value1="${structureName}" />
+		<execute function="Type#clickAtType" locator1="TextInput#NAME" value1="${structureName}" />
 	</command>
 
 	<command name="addNullCP">

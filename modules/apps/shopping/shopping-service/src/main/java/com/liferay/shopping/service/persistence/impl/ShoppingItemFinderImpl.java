@@ -44,11 +44,6 @@ public class ShoppingItemFinderImpl
 		ShoppingItemFinder.class.getName() + ".countByG_C";
 
 	@Override
-	public int countByG_C(long groupId, List<Long> categoryIds) {
-		return doCountByG_C(groupId, categoryIds, false);
-	}
-
-	@Override
 	public int countByFeatured(long groupId, long[] categoryIds) {
 		Session session = null;
 
@@ -263,6 +258,11 @@ public class ShoppingItemFinderImpl
 		finally {
 			closeSession(session);
 		}
+	}
+
+	@Override
+	public int countByG_C(long groupId, List<Long> categoryIds) {
+		return doCountByG_C(groupId, categoryIds, false);
 	}
 
 	@Override

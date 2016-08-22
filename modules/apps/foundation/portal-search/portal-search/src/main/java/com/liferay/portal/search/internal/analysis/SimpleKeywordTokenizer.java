@@ -38,7 +38,7 @@ public class SimpleKeywordTokenizer implements KeywordTokenizer {
 		int end = keyword.indexOf(CharPool.QUOTE, start + 1);
 
 		if (!((keyword.indexOf(CharPool.QUOTE) == 0) &&
-			(keyword.lastIndexOf(CharPool.QUOTE) == (keyword.length() -1)))) {
+			(keyword.lastIndexOf(CharPool.QUOTE) == (keyword.length() - 1)))) {
 
 			if (((start > -1) && (end > start)) ||
 				((start == -1) && (end == -1) &&

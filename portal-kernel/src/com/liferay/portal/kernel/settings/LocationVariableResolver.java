@@ -70,7 +70,7 @@ public class LocationVariableResolver {
 	private String _getLocation(String value) {
 		int i = value.indexOf(_LOCATION_VARIABLE_PROTOCOL_SEPARATOR);
 
-		return value.substring(i+1, value.length()-1);
+		return value.substring(i + 1, value.length() - 1);
 	}
 
 	private String _getProtocol(String value) {
@@ -126,7 +126,7 @@ public class LocationVariableResolver {
 
 		Settings settings = _settingsFactory.getServerSettings(serviceName);
 
-		String property = location.substring(i+1);
+		String property = location.substring(i + 1);
 
 		return settings.getValue(property, null);
 	}

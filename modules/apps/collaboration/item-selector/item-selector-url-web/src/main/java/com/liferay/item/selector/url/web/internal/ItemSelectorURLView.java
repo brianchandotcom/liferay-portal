@@ -102,7 +102,7 @@ public class ItemSelectorURLView
 	}
 
 	@Reference(
-		target ="(osgi.web.symbolicname=com.liferay.item.selector.url.web)",
+		target = "(osgi.web.symbolicname=com.liferay.item.selector.url.web)",
 		unbind = "-"
 	)
 	public void setServletContext(ServletContext servletContext) {

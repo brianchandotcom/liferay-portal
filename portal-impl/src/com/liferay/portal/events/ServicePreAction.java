@@ -419,7 +419,7 @@ public class ServicePreAction extends Action {
 				sb.append("User ");
 				sb.append(user.getUserId());
 				sb.append(" is not allowed to access the ");
-				sb.append(layout.isPrivateLayout() ? "private": "public");
+				sb.append(layout.isPrivateLayout() ? "private" : "public");
 				sb.append(" pages of group ");
 				sb.append(layout.getGroupId());
 

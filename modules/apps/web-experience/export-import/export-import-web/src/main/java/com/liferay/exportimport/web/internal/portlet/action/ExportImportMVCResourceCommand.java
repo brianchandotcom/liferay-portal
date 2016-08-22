@@ -56,7 +56,7 @@ public class ExportImportMVCResourceCommand extends BaseMVCResourceCommand {
 			portletRequestDispatcher = getPortletRequestDispatcher(
 				resourceRequest, "/import_portlet_processes.jsp");
 		}
-		else if(cmd.equals("export_import")) {
+		else if (cmd.equals("export_import")) {
 			portletRequestDispatcher = getPortletRequestDispatcher(
 				resourceRequest, "/export_import_process.jsp");
 		}

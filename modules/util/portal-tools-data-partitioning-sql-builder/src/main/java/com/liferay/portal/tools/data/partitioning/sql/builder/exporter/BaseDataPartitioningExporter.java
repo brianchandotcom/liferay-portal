@@ -174,7 +174,7 @@ public abstract class BaseDataPartitioningExporter
 		try (Connection connection = dataSource.getConnection();
 			PreparedStatement preparedStatement = buildPreparedStatement(
 				connection,
-				"select count(1) from " + tableName +" where companyId = ?",
+				"select count(1) from " + tableName + " where companyId = ?",
 				companyId);
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 

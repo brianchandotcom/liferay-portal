@@ -15,27 +15,35 @@
 package com.liferay.portal.inactive.request.handler;
 
 import com.liferay.petra.content.ContentUtil;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.inactive.request.handler.configuration.InactiveRequestHandlerConfiguration;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.InactiveRequestHandler;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 
 import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Drew Brokke
  */
-@Component(immediate = true, service = InactiveRequestHandler.class)
+@Component(
+	configurationPid = "com.liferay.portal.inactive.request.handler.configuration.InactiveRequestHandlerConfiguration",
+	immediate = true, service = InactiveRequestHandler.class
+)
 public class InactiveRequestHandlerImpl implements InactiveRequestHandler {
 
 	@Override
@@ -43,6 +51,18 @@ public class InactiveRequestHandlerImpl implements InactiveRequestHandler {
 			HttpServletRequest request, HttpServletResponse response,
 			String messageKey)
 		throws IOException {
+
+		response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+
+		PrintWriter printWriter = response.getWriter();
+
+		if (!_inactiveRequestHandlerConfiguration.
+				showInactiveRequestMessage()) {
+
+			printWriter.print(StringPool.BLANK);
+
+			return;
+		}
 
 		response.setContentType(ContentTypes.TEXT_HTML_UTF8);
 
@@ -63,9 +83,17 @@ public class InactiveRequestHandlerImpl implements InactiveRequestHandler {
 
 		html = StringUtil.replace(html, "[$MESSAGE$]", message);
 
-		PrintWriter printWriter = response.getWriter();
-
 		printWriter.print(html);
 	};
+
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		_inactiveRequestHandlerConfiguration =
+			ConfigurableUtil.createConfigurable(
+				InactiveRequestHandlerConfiguration.class, properties);
+	}
+
+	private InactiveRequestHandlerConfiguration
+		_inactiveRequestHandlerConfiguration;
 
 }

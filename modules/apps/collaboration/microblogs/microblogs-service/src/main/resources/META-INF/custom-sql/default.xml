@@ -132,6 +132,26 @@
 				)
 		]]>
 	</sql>
+	<sql id="com.liferay.microblogs.service.persistence.MicroblogsEntryFinder.countByCCNI_ATN">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT MicroblogsEntry.microblogsEntryId) AS COUNT_VALUE
+			FROM
+				MicroblogsEntry
+			INNER JOIN
+				AssetEntry ON
+					(AssetEntry.classPK = MicroblogsEntry.microblogsEntryId)
+			INNER JOIN
+				AssetEntries_AssetTags ON
+					(AssetEntries_AssetTags.entryId = AssetEntry.entryId)
+			INNER JOIN
+				AssetTag ON
+					(AssetTag.tagId = AssetEntries_AssetTags.tagId)
+			WHERE
+				(MicroblogsEntry.creatorClassNameId = ?) AND
+				(AssetTag.name = ?)
+		]]>
+	</sql>
 	<sql id="com.liferay.microblogs.service.persistence.MicroblogsEntryFinder.countByC_U_ATN">
 		<![CDATA[
 			SELECT
@@ -173,26 +193,6 @@
 						(AssetTag.name = ?)
 					)
 				)
-		]]>
-	</sql>
-	<sql id="com.liferay.microblogs.service.persistence.MicroblogsEntryFinder.countByCCNI_ATN">
-		<![CDATA[
-			SELECT
-				COUNT(DISTINCT MicroblogsEntry.microblogsEntryId) AS COUNT_VALUE
-			FROM
-				MicroblogsEntry
-			INNER JOIN
-				AssetEntry ON
-					(AssetEntry.classPK = MicroblogsEntry.microblogsEntryId)
-			INNER JOIN
-				AssetEntries_AssetTags ON
-					(AssetEntries_AssetTags.entryId = AssetEntry.entryId)
-			INNER JOIN
-				AssetTag ON
-					(AssetTag.tagId = AssetEntries_AssetTags.tagId)
-			WHERE
-				(MicroblogsEntry.creatorClassNameId = ?) AND
-				(AssetTag.name = ?)
 		]]>
 	</sql>
 	<sql id="com.liferay.microblogs.service.persistence.MicroblogsEntryFinder.countByC_CCNI_ATN">
@@ -432,6 +432,28 @@
 				MicroblogsEntry.createDate DESC
 		]]>
 	</sql>
+	<sql id="com.liferay.microblogs.service.persistence.MicroblogsEntryFinder.findByCCNI_ATN">
+		<![CDATA[
+			SELECT
+				DISTINCT {MicroblogsEntry.*}
+			FROM
+				MicroblogsEntry
+			INNER JOIN
+				AssetEntry ON
+					(AssetEntry.classPK = MicroblogsEntry.microblogsEntryId)
+			INNER JOIN
+				AssetEntries_AssetTags ON
+					(AssetEntries_AssetTags.entryId = AssetEntry.entryId)
+			INNER JOIN
+				AssetTag ON
+					(AssetTag.tagId = AssetEntries_AssetTags.tagId)
+			WHERE
+				(MicroblogsEntry.creatorClassNameId = ?) AND
+				(AssetTag.name = ?)
+			ORDER BY
+				MicroblogsEntry.createDate DESC
+		]]>
+	</sql>
 	<sql id="com.liferay.microblogs.service.persistence.MicroblogsEntryFinder.findByC_U_ATN">
 		<![CDATA[
 			SELECT
@@ -473,28 +495,6 @@
 						(AssetTag.name = ?)
 					)
 				)
-			ORDER BY
-				MicroblogsEntry.createDate DESC
-		]]>
-	</sql>
-	<sql id="com.liferay.microblogs.service.persistence.MicroblogsEntryFinder.findByCCNI_ATN">
-		<![CDATA[
-			SELECT
-				DISTINCT {MicroblogsEntry.*}
-			FROM
-				MicroblogsEntry
-			INNER JOIN
-				AssetEntry ON
-					(AssetEntry.classPK = MicroblogsEntry.microblogsEntryId)
-			INNER JOIN
-				AssetEntries_AssetTags ON
-					(AssetEntries_AssetTags.entryId = AssetEntry.entryId)
-			INNER JOIN
-				AssetTag ON
-					(AssetTag.tagId = AssetEntries_AssetTags.tagId)
-			WHERE
-				(MicroblogsEntry.creatorClassNameId = ?) AND
-				(AssetTag.name = ?)
 			ORDER BY
 				MicroblogsEntry.createDate DESC
 		]]>

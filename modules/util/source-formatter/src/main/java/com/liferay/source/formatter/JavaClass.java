@@ -1010,7 +1010,7 @@ public class JavaClass {
 		}
 
 		JavaTerm javaTerm = new JavaTerm(
-			name, type, javaTermContent, lineCount, _indent);
+			name, type, javaTermContent, _fileName, lineCount, _indent);
 
 		if (javaTerm.isConstructor()) {
 			_constructorCount++;

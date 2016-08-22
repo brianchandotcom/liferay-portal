@@ -4028,9 +4028,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			if (customSQLFile != null) {
 				portalCustomSQLContent += FileUtil.read(customSQLFile);
 			}
-			else {
-				System.out.println("NULL: " + matcher.group(1));
-			}
 		}
 
 		_portalCustomSQLContent = portalCustomSQLContent;

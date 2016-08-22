@@ -1495,31 +1495,7 @@ public class JavaClass {
 			return;
 		}
 
-		if (previousJavaTerm.getLineCount() <= javaTerm.getLineCount()) {
-			return;
-		}
-
-		String previousJavaTermName = previousJavaTerm.getName();
-
-		String javaTermNameLowerCase = StringUtil.toLowerCase(javaTermName);
-		String previousJavaTermNameLowerCase = StringUtil.toLowerCase(
-			previousJavaTermName);
-
-		if (_fileName.contains("persistence") &&
-			((previousJavaTermName.startsWith("doCount") &&
-			  javaTermName.startsWith("doCount")) ||
-			 (previousJavaTermName.startsWith("doFind") &&
-			  javaTermName.startsWith("doFind")) ||
-			 (previousJavaTermNameLowerCase.startsWith("count") &&
-			  javaTermNameLowerCase.startsWith("count")) ||
-			 (previousJavaTermNameLowerCase.startsWith("filter") &&
-			  javaTermNameLowerCase.startsWith("filter")) ||
-			 (previousJavaTermNameLowerCase.startsWith("find") &&
-			  javaTermNameLowerCase.startsWith("find")) ||
-			 (previousJavaTermNameLowerCase.startsWith("join") &&
-			  javaTermNameLowerCase.startsWith("join")))) {
-		}
-		else {
+		if (previousJavaTerm.getLineCount() > javaTerm.getLineCount()) {
 			_classContent = StringUtil.replaceFirst(
 				_classContent, "\n" + javaTerm.getContent(),
 				"\n" + previousJavaTerm.getContent());

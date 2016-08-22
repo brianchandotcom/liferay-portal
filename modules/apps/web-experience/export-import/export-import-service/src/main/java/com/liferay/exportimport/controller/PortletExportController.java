@@ -748,7 +748,7 @@ public class PortletExportController implements ExportController {
 				"end-date", String.valueOf(portletDataContext.getEndDate()));
 		}
 
-		headerElement.addAttribute("type", "portlet");
+		headerElement.addAttribute("type", portletDataContext.getType());
 		headerElement.addAttribute(
 			"company-id", String.valueOf(portletDataContext.getCompanyId()));
 		headerElement.addAttribute(
@@ -1228,6 +1228,7 @@ public class PortletExportController implements ExportController {
 		portletDataContext.setOldPlid(sourcePlid);
 		portletDataContext.setPlid(sourcePlid);
 		portletDataContext.setPortletId(portletId);
+		portletDataContext.setType("portlet");
 
 		return portletDataContext;
 	}

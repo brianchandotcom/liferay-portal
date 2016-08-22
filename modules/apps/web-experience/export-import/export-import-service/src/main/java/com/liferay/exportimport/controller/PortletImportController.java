@@ -957,6 +957,7 @@ public class PortletImportController implements ImportController {
 		portletDataContext.setPlid(targetPlid);
 		portletDataContext.setPortletId(portletId);
 		portletDataContext.setPrivateLayout(layout.isPrivateLayout());
+		portletDataContext.setType("portlet");
 
 		return portletDataContext;
 	}

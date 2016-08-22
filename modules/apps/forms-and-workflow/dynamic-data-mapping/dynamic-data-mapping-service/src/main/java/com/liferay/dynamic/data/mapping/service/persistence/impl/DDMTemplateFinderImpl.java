@@ -259,6 +259,27 @@ public class DDMTemplateFinderImpl
 	}
 
 	@Override
+	public int filterCountByG_SC_S(
+		long groupId, long structureClassNameId, int status) {
+
+		long[] groupIds = new long[] {groupId};
+		long classNameId = PortalUtil.getClassNameId(DDMStructure.class);
+
+		return doCountByG_C_SC_S(
+			groupIds, classNameId, structureClassNameId, status, true);
+	}
+
+	@Override
+	public int filterCountByG_SC_S(
+		long[] groupIds, long structureClassNameId, int status) {
+
+		long classNameId = PortalUtil.getClassNameId(DDMStructure.class);
+
+		return doCountByG_C_SC_S(
+			groupIds, classNameId, structureClassNameId, status, true);
+	}
+
+	@Override
 	public int filterCountByC_G_C_C_R_T_M_S(
 		long companyId, long[] groupIds, long classNameId, long classPK,
 		long resourceClassNameId, String type, String mode, int status) {
@@ -337,27 +358,6 @@ public class DDMTemplateFinderImpl
 	}
 
 	@Override
-	public int filterCountByG_SC_S(
-		long groupId, long structureClassNameId, int status) {
-
-		long[] groupIds = new long[] {groupId};
-		long classNameId = PortalUtil.getClassNameId(DDMStructure.class);
-
-		return doCountByG_C_SC_S(
-			groupIds, classNameId, structureClassNameId, status, true);
-	}
-
-	@Override
-	public int filterCountByG_SC_S(
-		long[] groupIds, long structureClassNameId, int status) {
-
-		long classNameId = PortalUtil.getClassNameId(DDMStructure.class);
-
-		return doCountByG_C_SC_S(
-			groupIds, classNameId, structureClassNameId, status, true);
-	}
-
-	@Override
 	public List<DDMTemplate> filterFindByKeywords(
 		long companyId, long groupId, long classNameId, long classPK,
 		long resourceClassNameId, String keywords, String type, String mode,
@@ -413,6 +413,31 @@ public class DDMTemplateFinderImpl
 			companyId, groupIds, classNameIds, classPKs, resourceClassNameId,
 			names, descriptions, types, modes, languages, status, andOperator,
 			start, end, orderByComparator);
+	}
+
+	@Override
+	public List<DDMTemplate> filterFindByG_SC_S(
+		long groupId, long structureClassNameId, int status, int start, int end,
+		OrderByComparator<DDMTemplate> orderByComparator) {
+
+		long[] groupIds = new long[] {groupId};
+		long classNameId = PortalUtil.getClassNameId(DDMStructure.class);
+
+		return doFindByG_C_SC_S(
+			groupIds, classNameId, structureClassNameId, status, start, end,
+			orderByComparator, true);
+	}
+
+	@Override
+	public List<DDMTemplate> filterFindByG_SC_S(
+		long[] groupIds, long structureClassNameId, int status, int start,
+		int end, OrderByComparator<DDMTemplate> orderByComparator) {
+
+		long classNameId = PortalUtil.getClassNameId(DDMStructure.class);
+
+		return doFindByG_C_SC_S(
+			groupIds, classNameId, structureClassNameId, status, start, end,
+			orderByComparator, true);
 	}
 
 	@Override
@@ -500,31 +525,6 @@ public class DDMTemplateFinderImpl
 			companyId, groupIds, classNameIds, classPKs, resourceClassNameId,
 			names, descriptions, types, modes, languages, status, andOperator,
 			start, end, orderByComparator, true);
-	}
-
-	@Override
-	public List<DDMTemplate> filterFindByG_SC_S(
-		long groupId, long structureClassNameId, int status, int start, int end,
-		OrderByComparator<DDMTemplate> orderByComparator) {
-
-		long[] groupIds = new long[] {groupId};
-		long classNameId = PortalUtil.getClassNameId(DDMStructure.class);
-
-		return doFindByG_C_SC_S(
-			groupIds, classNameId, structureClassNameId, status, start, end,
-			orderByComparator, true);
-	}
-
-	@Override
-	public List<DDMTemplate> filterFindByG_SC_S(
-		long[] groupIds, long structureClassNameId, int status, int start,
-		int end, OrderByComparator<DDMTemplate> orderByComparator) {
-
-		long classNameId = PortalUtil.getClassNameId(DDMStructure.class);
-
-		return doFindByG_C_SC_S(
-			groupIds, classNameId, structureClassNameId, status, start, end,
-			orderByComparator, true);
 	}
 
 	@Override

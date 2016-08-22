@@ -94,6 +94,26 @@ public class AssetEntryFinderImpl
 	}
 
 	@Override
+	public List<AssetEntry> findEntries(AssetEntryQuery entryQuery) {
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = buildAssetQuerySQL(entryQuery, false, session);
+
+			return (List<AssetEntry>)QueryUtil.list(
+				q, getDialect(), entryQuery.getStart(), entryQuery.getEnd());
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	@Override
 	public List<AssetEntry> findByDLFileEntryC_T(
 		long classNameId, String treePath) {
 
@@ -159,26 +179,6 @@ public class AssetEntryFinderImpl
 			q.addEntity(AssetEntryImpl.TABLE_NAME, AssetEntryImpl.class);
 
 			return q.list(true);
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	@Override
-	public List<AssetEntry> findEntries(AssetEntryQuery entryQuery) {
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery q = buildAssetQuerySQL(entryQuery, false, session);
-
-			return (List<AssetEntry>)QueryUtil.list(
-				q, getDialect(), entryQuery.getStart(), entryQuery.getEnd());
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

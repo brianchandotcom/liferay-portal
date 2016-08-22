@@ -57,11 +57,11 @@ public class SocialActivityCounterFinderImpl
 	public static final String FIND_AC_BY_G_N_S_E_2 =
 		SocialActivityCounterFinder.class.getName() + ".findAC_ByG_N_S_E_2";
 
-	public static final String FIND_AC_BY_G_C_C_N_S_E =
-		SocialActivityCounterFinder.class.getName() + ".findAC_By_G_C_C_N_S_E";
-
 	public static final String FIND_U_BY_G_C_N_S_E =
 		SocialActivityCounterFinder.class.getName() + ".findU_ByG_C_N_S_E";
+
+	public static final String FIND_AC_BY_G_C_C_N_S_E =
+		SocialActivityCounterFinder.class.getName() + ".findAC_By_G_C_C_N_S_E";
 
 	@Override
 	public int countU_ByG_N(long groupId, String[] names) {
@@ -99,6 +99,46 @@ public class SocialActivityCounterFinderImpl
 			}
 
 			return 0;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	@Override
+	public List<Long> findU_ByG_N(
+		long groupId, String[] names, int start, int end) {
+
+		if (names.length == 0) {
+			return null;
+		}
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(FIND_U_BY_G_C_N_S_E);
+
+			sql = StringUtil.replace(sql, "[$NAME$]", getNames(names));
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar("classPK", Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+			qPos.add(PortalUtil.getClassNameId(User.class.getName()));
+
+			setNames(qPos, names);
+
+			qPos.add(SocialCounterPeriodUtil.getStartPeriod());
+
+			return (List<Long>)QueryUtil.list(q, getDialect(), start, end);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
@@ -278,46 +318,6 @@ public class SocialActivityCounterFinderImpl
 
 			return (List<SocialActivityCounter>)QueryUtil.list(
 				q, getDialect(), start, end);
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	@Override
-	public List<Long> findU_ByG_N(
-		long groupId, String[] names, int start, int end) {
-
-		if (names.length == 0) {
-			return null;
-		}
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			String sql = CustomSQLUtil.get(FIND_U_BY_G_C_N_S_E);
-
-			sql = StringUtil.replace(sql, "[$NAME$]", getNames(names));
-
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
-
-			q.addScalar("classPK", Type.LONG);
-
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			qPos.add(groupId);
-			qPos.add(PortalUtil.getClassNameId(User.class.getName()));
-
-			setNames(qPos, names);
-
-			qPos.add(SocialCounterPeriodUtil.getStartPeriod());
-
-			return (List<Long>)QueryUtil.list(q, getDialect(), start, end);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

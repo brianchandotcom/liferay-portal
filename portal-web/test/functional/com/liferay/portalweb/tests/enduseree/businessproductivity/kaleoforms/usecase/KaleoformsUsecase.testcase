@@ -1618,8 +1618,8 @@
 
 		<execute macro="Workflow#viewTaskAssignedToMeDetails">
 			<var name="workflowAssetContent" value="Test 1" />
-			<var name="workflowTask" value="${workflowTask}" />
 			<var name="workflowAssetTitle" value="${kfProcessName}" />
+			<var name="workflowTask" value="${workflowTask}" />
 		</execute>
 
 		<execute macro="Workflow#gotoPreviewEdit" />
@@ -1637,8 +1637,8 @@
 
 		<execute macro="Workflow#viewTaskAssignedToMeDetails">
 			<var name="workflowAssetContent" value="Test 1 EDIT" />
-			<var name="workflowTask" value="${workflowTask}" />
 			<var name="workflowAssetTitle" value="${kfProcessName}" />
+			<var name="workflowTask" value="${workflowTask}" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSitesContent">
@@ -1696,9 +1696,9 @@
 		</execute>
 
 		<execute macro="Workflow#viewTaskAssignedToMeDetails">
+			<var name="workflowAssetContent" value="Test 1 EDIT" />
 			<var name="workflowAssetTitle" value="${kfProcessName}" />
 			<var name="workflowTask" value="Review" />
-			<var name="workflowAssetContent" value="Test 1 EDIT" />
 		</execute>
 
 		<execute macro="Workflow#gotoPreviewEdit" />
@@ -1715,9 +1715,9 @@
 		</execute>
 
 		<execute macro="Workflow#viewTaskAssignedToMeDetails">
+			<var name="workflowAssetContent" value="Test 1 EDIT new edit" />
 			<var name="workflowAssetTitle" value="${kfProcessName}" />
 			<var name="workflowTask" value="Review" />
-			<var name="workflowAssetContent" value="Test 1 EDIT new edit" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">

@@ -1606,21 +1606,6 @@
 
 		<execute macro="KaleoFormsAdmin#saveProcessRecord" />
 
-		<execute macro="ProductMenu#gotoSitesContent">
-			<var name="portlet" value="Kaleo Forms Admin" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#submitNewProcess">
-			<var name="kfProcessName" value="${kfProcessName}" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#populateFieldText">
-			<var name="fieldName" value="Text" />
-			<var name="kfProcessFieldData" value="Test 2" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#saveProcessRecord" />
-
 		<execute macro="Page#gotoMyAccount">
 			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
@@ -1654,6 +1639,31 @@
 			<var name="workflowAssetContent" value="Test 1 Edit" />
 			<var name="workflowTask" value="${workflowTask}" />
 			<var name="workflowAssetTitle" value="${kfProcessName}" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Kaleo Forms Admin" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#submitNewProcess">
+			<var name="kfProcessName" value="${kfProcessName}" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#populateFieldText">
+			<var name="fieldName" value="Text" />
+			<var name="kfProcessFieldData" value="Test 2" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#saveProcessRecord" />
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
+		</execute>
+
+		<execute macro="Workflow#assignToMeTaskByDetails">
+			<var name="workflowAssetTitle" value="${kfProcessName}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="${workflowTask}" />
 		</execute>
 
 		<execute macro="Workflow#viewSecondAssetEntryContent">
@@ -1709,7 +1719,7 @@
 			<var name="fieldValue" value="Test 2 EDIT" />
 			<var name="workflowAssetTitle" value="${kfProcessName}" />
 		</execute>
-		
+
 		<execute macro="KaleoFormsPortlet#completeFormForTaskViaRecordView" />
 
 		<execute macro="Workflow#gotoPreviewEdit" />

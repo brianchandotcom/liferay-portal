@@ -97,6 +97,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ASSIGNED_TO_ME_TABLE_ASSET_TITLE_2</td>
+	<td>//div[contains(@id,'workflowTasksSearchContainerSearchContainer')]//tr[contains(.,'${key_workflowAssetTitle}')][2]/td[1]//a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ASSIGNED_TO_ME_TABLE_ASSET_TYPE</td>
 	<td>//div[contains(@id,'workflowTasksSearchContainerSearchContainer')]//tr[contains(.,'${key_workflowAssetTitle}')]/td[2]//a</td>
 	<td></td>

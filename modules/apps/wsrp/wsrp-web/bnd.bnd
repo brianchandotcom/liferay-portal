@@ -3,4 +3,5 @@ Bundle-SymbolicName: com.liferay.wsrp.web
 Bundle-Version: 1.0.2
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
+Require-Capability: osgi.identity;filter:="(&(osgi.identity=com.liferay.wsrp.service.wsdd)(version=${Bundle-Version}))"
 Web-ContextPath: /wsrp-admin-web

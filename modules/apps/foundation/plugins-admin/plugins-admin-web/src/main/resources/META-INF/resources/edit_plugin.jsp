@@ -132,6 +132,7 @@ renderResponse.setTitle(title);
 
 												editURL.setParameter(Constants.CMD, "edit");
 												editURL.setParameter("tabs1", "roles");
+												editURL.setParameter("redirect", currentURL);
 												editURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 												editURL.setParameter("portletResource", String.valueOf(portlet.getPortletId()));
 												%>

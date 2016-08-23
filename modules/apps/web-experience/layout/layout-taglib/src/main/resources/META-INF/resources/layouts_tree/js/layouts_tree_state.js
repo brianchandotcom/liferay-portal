@@ -113,7 +113,7 @@ AUI.add(
 						}
 
 						if (!Lang.isUndefined(checked)) {
-							instance._updateCheckedNodes(node, checked);
+							instance._updateCheckedNodes(node, checked, false);
 						}
 					},
 
@@ -236,7 +236,7 @@ AUI.add(
 						var node = event.node;
 
 						if (node.get('checked')) {
-							instance._updateCheckedNodes(node, true);
+							instance._updateCheckedNodes(node, true, false);
 						}
 
 						instance._restoreCheckedNode(node);
@@ -280,7 +280,7 @@ AUI.add(
 						node.get('children').forEach(A.bind(instance._restoreCheckedNode, instance));
 					},
 
-					_updateCheckedNodes: function(node, state) {
+					_updateCheckedNodes: function(node, state, force) {
 						var instance = this;
 
 						var plid = instance.get(STR_HOST).extractPlid(node);
@@ -292,6 +292,14 @@ AUI.add(
 						var checkedIndex = checkedNodes.indexOf(plid);
 						var localCheckedIndex = localCheckedNodes.indexOf(plid);
 						var localUncheckedIndex = localUncheckedNodes.indexOf(plid);
+
+						if (state === undefined) {
+							state = false;
+
+							if (checkedIndex > -1) {
+								state = true;
+							}
+						}
 
 						if (state) {
 							if (checkedIndex === -1) {
@@ -319,6 +327,10 @@ AUI.add(
 						node.set('checked', state);
 
 						var children = node.get('children');
+
+						if (force === false) {
+							state = undefined;
+						}
 
 						if (children.length) {
 							A.each(

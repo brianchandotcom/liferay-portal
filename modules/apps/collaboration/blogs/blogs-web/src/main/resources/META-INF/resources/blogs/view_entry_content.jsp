@@ -72,7 +72,7 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 
 				<div class="<%= colCssClass %> entry-info text-muted ">
 					<small>
-						<strong><%= entry.getUserName() %></strong>
+						<strong><%= HtmlUtil.escape(entry.getUserName()) %></strong>
 						<span> - </span>
 						<span class="hide-accessible"><liferay-ui:message key="published-date" /></span>
 						<%= dateFormatDate.format(entry.getDisplayDate()) %>

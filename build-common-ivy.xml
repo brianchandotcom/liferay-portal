@@ -128,6 +128,8 @@
 							/>
 						</else>
 					</if>
+
+					<checksum-downloaded-file file="${mirrors.cache.artifact.dir}/${mirrors.cache.artifact.file.name}" md5.url="${src}.md5" />
 				</then>
 			</if>
 

@@ -62,32 +62,6 @@
 		</if>
 	</command>
 
-	<command name="addMultipleViaBlogsPG">
-		<execute macro="BlogsNavigator#gotoAddEntry" />
-
-		<execute macro="BlogsEntry#addTitle">
-			<var name="entryTitle" value="${entryTitle}" />
-		</execute>
-
-		<execute macro="BlogsEntry#addContent">
-			<var name="entryContent" value="${entryContent}" />
-		</execute>
-
-		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Categorization" />
-		</execute>
-
-		<for list="${tagNameList}" param="tagName">
-			<execute macro="AssetCategorization#addTag">
-				<var name="tagName" value="${tagName}" />
-			</execute>
-		</for>
-
-		<execute function="Click" locator1="Button#PUBLISH" />
-
-		<execute macro="Alert#viewSuccessMessage" />
-	</command>
-
 	<command name="addViaSiteCP">
 		<execute macro="Panel#expandPanel">
 			<var name="panelHeading" value="Categorization" />
@@ -201,26 +175,6 @@
 		<execute function="AssertClickNoError" locator1="Button#SAVE" value1="Save" />
 
 		<execute function="Confirm" value1="Please choose at least 2 tags." />
-	</command>
-
-	<command name="removeTagViaBlogsPG">
-		<var name="key_entryTitle" value="${entryTitle}" />
-
-		<execute macro="BlogsNavigator#gotoEditPG">
-			<var name="entryTitle" value="${entryTitle}" />
-		</execute>
-
-		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Categorization" />
-		</execute>
-
-		<var name="key_tagName" value="${tagName1}" />
-
-		<execute macro="AssetCategorization#removeTag">
-			<var name="tagName" value="${tagName}" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
 	</command>
 
 	<command name="searchTagCP">

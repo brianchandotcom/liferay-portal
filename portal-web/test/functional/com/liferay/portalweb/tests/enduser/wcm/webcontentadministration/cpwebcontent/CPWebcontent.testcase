@@ -1937,7 +1937,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewDisplayStyleCP" priority="5">
+	<command name="ViewDisplayStyleCP" priority="3">
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">

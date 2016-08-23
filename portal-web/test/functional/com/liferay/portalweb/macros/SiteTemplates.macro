@@ -92,7 +92,7 @@
 			</then>
 		</if>
 
-		<execute function="Type#clickAtSendKeys" locator1="TextInput#NAME" value1="${pageName}" />
+		<execute function="Type#clickAtType" locator1="TextInput#NAME" value1="${pageName}" />
 		<execute function="AssertClick" locator1="Button#ADD_PAGE_BTN" value1="Add Page" />
 	</command>
 

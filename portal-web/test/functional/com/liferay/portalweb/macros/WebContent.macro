@@ -137,7 +137,7 @@
 
 		<execute function="Uncheck" locator1="Checkbox#NEVER_EXPIRE" value1="Never Expire" />
 
-		<execute function="Type#clickAtSendKeys" locator1="TextInput#EXPIRATION_DATE" value1="${expirationDate}" />
+		<execute function="Type#clickAtType" locator1="TextInput#EXPIRATION_DATE" value1="${expirationDate}" />
 	</command>
 
 	<command name="addFailWithoutRequiredCategoryAssetTypeCP">
@@ -684,7 +684,7 @@
 		<for list="${tagNameList}" param="tagName">
 			<execute function="Click" locator1="AssetCategorization#TAGS_ADD_BUTTON" />
 
-			<execute function="Type#clickAtSendKeys" locator1="AssetCategorization#TAGS_FIELD" value1="${tagName}" />
+			<execute function="Type#clickAtType" locator1="AssetCategorization#TAGS_FIELD" value1="${tagName}" />
 		</for>
 
 		<execute function="Click" locator1="AssetCategorization#TAGS_ADD_BUTTON" />

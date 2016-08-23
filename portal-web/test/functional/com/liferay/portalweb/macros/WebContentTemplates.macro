@@ -4,7 +4,7 @@
 
 		<execute macro="LexiconEntry#gotoAdd" />
 
-		<execute function="Type#clickAtSendKeys" locator1="TextInput#NAME" value1="${templateName}" />
+		<execute function="Type#clickAtType" locator1="TextInput#NAME" value1="${templateName}" />
 
 		<execute macro="Panel#expandPanel">
 			<var name="panelHeading" value="Details" />
@@ -216,7 +216,7 @@
 
 		<execute function="Click" locator1="Translation#LOCALIZATION_NAME" />
 
-		<execute function="Type#clickAtSendKeys" locator1="TextInput#NAME" value1="${localization1Name}" />
+		<execute function="Type#clickAtType" locator1="TextInput#NAME" value1="${localization1Name}" />
 
 		<if>
 			<isset var="localization2NameKey" />
@@ -225,7 +225,7 @@
 
 				<execute function="Click" locator1="Translation#LOCALIZATION_NAME" />
 
-				<execute function="Type#clickAtSendKeys" locator1="TextInput#NAME" value1="${localization2Name}" />
+				<execute function="Type#clickAtType" locator1="TextInput#NAME" value1="${localization2Name}" />
 			</then>
 		</if>
 	</command>

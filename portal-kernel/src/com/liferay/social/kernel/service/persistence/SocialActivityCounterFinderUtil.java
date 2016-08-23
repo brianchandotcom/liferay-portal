@@ -29,6 +29,11 @@ public class SocialActivityCounterFinderUtil {
 		return getFinder().countU_ByG_N(groupId, names);
 	}
 
+	public static java.util.List<java.lang.Long> findU_ByG_N(long groupId,
+		java.lang.String[] names, int start, int end) {
+		return getFinder().findU_ByG_N(groupId, names, start, end);
+	}
+
 	public static java.util.List<com.liferay.social.kernel.model.SocialActivityCounter> findAC_ByG_N_S_E_1(
 		long groupId, java.lang.String name, int startPeriod, int endPeriod,
 		int periodLength) {
@@ -50,11 +55,6 @@ public class SocialActivityCounterFinderUtil {
 		java.lang.String[] names, int start, int end) {
 		return getFinder()
 				   .findAC_By_G_C_C_N_S_E(groupId, userIds, names, start, end);
-	}
-
-	public static java.util.List<java.lang.Long> findU_ByG_N(long groupId,
-		java.lang.String[] names, int start, int end) {
-		return getFinder().findU_ByG_N(groupId, names, start, end);
 	}
 
 	public static SocialActivityCounterFinder getFinder() {

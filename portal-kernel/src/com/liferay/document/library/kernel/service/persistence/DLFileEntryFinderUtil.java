@@ -69,23 +69,6 @@ public class DLFileEntryFinderUtil {
 			mimeTypes, queryDefinition);
 	}
 
-	public static int filterCountByG_U_F_M(long groupId, long userId,
-		java.util.List<java.lang.Long> folderIds, java.lang.String[] mimeTypes,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.document.library.kernel.model.DLFileEntry> queryDefinition) {
-		return getFinder()
-				   .filterCountByG_U_F_M(groupId, userId, folderIds, mimeTypes,
-			queryDefinition);
-	}
-
-	public static int filterCountByG_U_R_F_M(long groupId, long userId,
-		java.util.List<java.lang.Long> repositoryIds,
-		java.util.List<java.lang.Long> folderIds, java.lang.String[] mimeTypes,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.document.library.kernel.model.DLFileEntry> queryDefinition) {
-		return getFinder()
-				   .filterCountByG_U_R_F_M(groupId, userId, repositoryIds,
-			folderIds, mimeTypes, queryDefinition);
-	}
-
 	public static com.liferay.document.library.kernel.model.DLFileEntry fetchByAnyImageId(
 		long imageId) {
 		return getFinder().fetchByAnyImageId(imageId);
@@ -104,6 +87,23 @@ public class DLFileEntryFinderUtil {
 		return getFinder()
 				   .filterCountByG_R_F(groupId, repositoryIds, folderIds,
 			queryDefinition);
+	}
+
+	public static int filterCountByG_U_F_M(long groupId, long userId,
+		java.util.List<java.lang.Long> folderIds, java.lang.String[] mimeTypes,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.document.library.kernel.model.DLFileEntry> queryDefinition) {
+		return getFinder()
+				   .filterCountByG_U_F_M(groupId, userId, folderIds, mimeTypes,
+			queryDefinition);
+	}
+
+	public static int filterCountByG_U_R_F_M(long groupId, long userId,
+		java.util.List<java.lang.Long> repositoryIds,
+		java.util.List<java.lang.Long> folderIds, java.lang.String[] mimeTypes,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.document.library.kernel.model.DLFileEntry> queryDefinition) {
+		return getFinder()
+				   .filterCountByG_U_R_F_M(groupId, userId, repositoryIds,
+			folderIds, mimeTypes, queryDefinition);
 	}
 
 	public static java.util.List<com.liferay.document.library.kernel.model.DLFileEntry> filterFindByG_F(
@@ -153,19 +153,14 @@ public class DLFileEntryFinderUtil {
 	}
 
 	public static java.util.List<com.liferay.document.library.kernel.model.DLFileEntry> findByDDMStructureIds(
-		long[] ddmStructureIds, int start, int end) {
-		return getFinder().findByDDMStructureIds(ddmStructureIds, start, end);
-	}
-
-	public static java.util.List<com.liferay.document.library.kernel.model.DLFileEntry> findByDDMStructureIds(
 		long groupId, long[] ddmStructureIds, int start, int end) {
 		return getFinder()
 				   .findByDDMStructureIds(groupId, ddmStructureIds, start, end);
 	}
 
-	public static java.util.List<com.liferay.document.library.kernel.model.DLFileEntry> findByExtraSettings(
-		int start, int end) {
-		return getFinder().findByExtraSettings(start, end);
+	public static java.util.List<com.liferay.document.library.kernel.model.DLFileEntry> findByDDMStructureIds(
+		long[] ddmStructureIds, int start, int end) {
+		return getFinder().findByDDMStructureIds(ddmStructureIds, start, end);
 	}
 
 	public static java.util.List<com.liferay.document.library.kernel.model.DLFileEntry> findByMisversioned() {
@@ -174,6 +169,11 @@ public class DLFileEntryFinderUtil {
 
 	public static java.util.List<com.liferay.document.library.kernel.model.DLFileEntry> findByNoAssets() {
 		return getFinder().findByNoAssets();
+	}
+
+	public static java.util.List<com.liferay.document.library.kernel.model.DLFileEntry> findByExtraSettings(
+		int start, int end) {
+		return getFinder().findByExtraSettings(start, end);
 	}
 
 	public static java.util.List<com.liferay.document.library.kernel.model.DLFileEntry> findByOrphanedFileEntries() {
@@ -202,6 +202,15 @@ public class DLFileEntryFinderUtil {
 				   .findByG_U_F(groupId, userId, folderIds, queryDefinition);
 	}
 
+	public static java.util.List<com.liferay.document.library.kernel.model.DLFileEntry> findByG_U_F_M(
+		long groupId, long userId, java.util.List<java.lang.Long> folderIds,
+		java.lang.String[] mimeTypes,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.document.library.kernel.model.DLFileEntry> queryDefinition) {
+		return getFinder()
+				   .findByG_U_F_M(groupId, userId, folderIds, mimeTypes,
+			queryDefinition);
+	}
+
 	public static java.util.List<com.liferay.document.library.kernel.model.DLFileEntry> findByG_U_R_F(
 		long groupId, long userId,
 		java.util.List<java.lang.Long> repositoryIds,
@@ -209,15 +218,6 @@ public class DLFileEntryFinderUtil {
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.document.library.kernel.model.DLFileEntry> queryDefinition) {
 		return getFinder()
 				   .findByG_U_R_F(groupId, userId, repositoryIds, folderIds,
-			queryDefinition);
-	}
-
-	public static java.util.List<com.liferay.document.library.kernel.model.DLFileEntry> findByG_U_F_M(
-		long groupId, long userId, java.util.List<java.lang.Long> folderIds,
-		java.lang.String[] mimeTypes,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.document.library.kernel.model.DLFileEntry> queryDefinition) {
-		return getFinder()
-				   .findByG_U_F_M(groupId, userId, folderIds, mimeTypes,
 			queryDefinition);
 	}
 

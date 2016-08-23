@@ -1,4 +1,4 @@
-# Change Log
+# Liferay Gradle Plugins Defaults Change Log
 
 ## 1.1.3 - 2016-08-22
 

@@ -169,6 +169,12 @@
 						<option name="CONTINUATION_INDENT_SIZE" value="8" />
 					</indentOptions>
 				</codeStyleSettings>
+				<codeStyleSettings language="SQL">
+					<indentOptions>
+						<option name="TAB_SIZE" value="4" />
+						<option name="USE_TAB_CHARACTER" value="true" />
+					</indentOptions>
+				</codeStyleSettings>
 				<codeStyleSettings language="TypeScript">
 					<option name="ELSE_ON_NEW_LINE" value="true" />
 					<option name="WHILE_ON_NEW_LINE" value="true" />

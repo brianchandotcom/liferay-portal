@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.type.checkbox.multiple;
+package com.liferay.dynamic.data.mapping.type.checkbox.multiple.internal;
 
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueRequestParameterRetriever;
 import com.liferay.portal.kernel.json.JSONFactory;

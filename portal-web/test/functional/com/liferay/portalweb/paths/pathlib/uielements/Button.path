@@ -139,6 +139,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>AUTOCOMPLETE</td>
+	<td>//button[contains(.,'Autocomplete')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>BACK</td>
 	<td>//a[@title='Back'] | //a[contains(@id,'back')] | //button[contains(.,'Back')]</td>
 	<td></td>

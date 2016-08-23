@@ -159,6 +159,10 @@
 		<execute function="AssertClick" locator1="Form#SIDEBAR_ADVANCED_TAB" value1="Advanced" />
 	</command>
 
+	<command name="gotoAutocompleteConfiguration">
+		<execute function="Click" locator1="Button#AUTOCOMPLETE" />
+	</command>
+
 	<command name="goToBasicTab">
 		<execute function="AssertClick" locator1="Form#SIDEBAR_BASIC_TAB" value1="Basic" />
 	</command>

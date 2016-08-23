@@ -632,11 +632,6 @@
 </tr>
 <!--SITE_LOCALIZATION-->
 <tr>
-	<td>PORTAL_LOCALIZATION_INFO_MESSAGE</td>
-	<td>//div[contains(@class,'portal-message') and contains(@class,'alert-info')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>PORTAL_LOCALIZATION_CONFIRMATION_MESSAGE</td>
 	<td>//div[@id='portalMessageContainer']/a</td>
 	<td></td>

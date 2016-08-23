@@ -71,17 +71,7 @@ public class ExportImportContentProcessorController {
 			exportImportContentProcessorsStream =
 				exportImportContentProcessors.stream();
 
-		Stream<ExportImportContentProcessor<S, T>>
-			castedExportImportContentProcessorsStream =
-				exportImportContentProcessorsStream.map(
-					this::_castExportImportContentProcessor);
-
-		castedExportImportContentProcessorsStream.filter(Objects::nonNull);
-
-		return castedExportImportContentProcessorsStream.allMatch(
-			exportImportContentProcessor ->
-				exportImportContentProcessor.validateContentReferences(
-					groupId, content));
+		return exportImportContentProcessorsStream.map(this::_castExportImportContentProcessor).filter(Objects::nonNull).allMatch(eicp -> eicp.validateContentReferences(groupId, content));
 	}
 
 	protected <S extends StagedModel, T extends Serializable> T

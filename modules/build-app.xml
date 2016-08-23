@@ -10,7 +10,8 @@
 
 	<property file="../build.properties" />
 
-	<property name="liferay.home" value="${modules.dir}/../bundles" />
+	<property location="${modules.dir}/../bundles" name="liferay.home" />
+	<property location="${modules.dir}/.." name="project.dir" />
 
 	<condition property="liferay.releng.ee">
 		<or>

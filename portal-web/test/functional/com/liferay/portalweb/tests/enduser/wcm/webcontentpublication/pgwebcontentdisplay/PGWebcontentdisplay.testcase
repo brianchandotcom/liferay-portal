@@ -552,7 +552,7 @@
 		</execute>
 
 		<execute macro="WebContentDisplayPortlet#searchWebContent">
-			<var name="webContentSearchValue" value="\&quot;WC WebContent Title\&quot;" />
+			<var name="webContentSearchValue" value="&quot;WC WebContent Title&quot;" />
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
@@ -561,7 +561,7 @@
 		</execute>
 
 		<execute macro="WebContentDisplayPortlet#searchWebContentNo">
-			<var name="webContentSearchValue" value="\&quot;WC2 WebContent2 Title2\&quot;" />
+			<var name="webContentSearchValue" value="&quot;WC2 WebContent2 Title2&quot;" />
 			<var name="webContentTitle" value="WC2 WebContent2 Title2" />
 		</execute>
 	</command>

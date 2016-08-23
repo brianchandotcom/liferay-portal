@@ -1599,7 +1599,7 @@
 		</if>
 
 		<if>
-			<condition function="IsElementPresent" locator1="Home#PORTAL_LOCALIZATION_INFO_MESSAGE" />
+			<condition function="IsElementPresent" locator1="Message#PORTAL_LOCALIZATION" />
 			<then>
 				<execute macro="Alert#closePortalLocalizationWarning" />
 			</then>

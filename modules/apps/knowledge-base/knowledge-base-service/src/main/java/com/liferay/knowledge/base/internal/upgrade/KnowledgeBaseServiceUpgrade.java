@@ -97,12 +97,16 @@ public class KnowledgeBaseServiceUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"com.liferay.knowledge.base.service", "1.3.0", "1.3.1",
 			new com.liferay.knowledge.base.internal.upgrade.v1_3_1.
+				UpgradeKBArticle(),
+			new com.liferay.knowledge.base.internal.upgrade.v1_3_1.
 				UpgradeKBComment());
 
 		registry.register(
 			"com.liferay.knowledge.base.service", "1.3.1", "1.3.2",
 			new com.liferay.knowledge.base.internal.upgrade.v1_3_2.
-				UpgradeKBArticle());
+				UpgradeKBArticle(),
+			new com.liferay.knowledge.base.internal.upgrade.v1_3_2.
+				UpgradeKBFolder());
 
 		registry.register(
 			"com.liferay.knowledge.base.service", "1.3.2", "1.3.3",
@@ -111,6 +115,8 @@ public class KnowledgeBaseServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"com.liferay.knowledge.base.service", "1.3.3", "1.3.4",
+			new com.liferay.knowledge.base.internal.upgrade.v1_3_4.
+				UpgradeKBArticle(),
 			new com.liferay.knowledge.base.internal.upgrade.v1_3_4.
 				UpgradeKBComment(),
 			new com.liferay.knowledge.base.internal.upgrade.v1_3_4.

@@ -15,7 +15,6 @@
 package com.liferay.knowledge.base.internal.upgrade.v1_3_3;
 
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
-import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -138,8 +137,7 @@ public class UpgradeKBFolder extends UpgradeProcess {
 				title, _normalizationFriendlyUrlPattern);
 		}
 
-		return ModelHintsUtil.trimString(
-			"com.liferay.knowledgebase.KBArticle", "urlTitle", title);
+		return title.substring(0, 75);
 	}
 
 	private void _updateKBFolder(

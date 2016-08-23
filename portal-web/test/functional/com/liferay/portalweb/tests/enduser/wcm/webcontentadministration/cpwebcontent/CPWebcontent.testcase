@@ -1957,7 +1957,7 @@
 			<var name="portlet" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContent#viewCPDisplayStyle">
+		<execute macro="WebContent#viewDisplayStyleCP">
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 	</command>

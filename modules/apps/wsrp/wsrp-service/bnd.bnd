@@ -1,6 +1,6 @@
 Bundle-Name: Liferay WSRP Service
 Bundle-SymbolicName: com.liferay.wsrp.service
-Bundle-Version: 1.0.2
+Bundle-Version: 1.0.3
 Export-Package:\
 	com.liferay.wsrp.model.impl,\
 	com.liferay.wsrp.util

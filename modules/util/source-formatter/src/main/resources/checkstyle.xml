@@ -91,6 +91,9 @@
 			<property name="format" value="^_[a-z0-9][_a-zA-Z0-9]*$|readObject|writeObject" />
 			<message key="name.invalidPattern" value="Private method ''{0}'' must match pattern ''{1}''" />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.checks.MissingAuthor">
+			<message key="author.missing" value="Missing author" />
+		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.MissingModifierCheck">
 			<message key="modifier.missing" value="Missing modifier for ''{0}''" />
 		</module>

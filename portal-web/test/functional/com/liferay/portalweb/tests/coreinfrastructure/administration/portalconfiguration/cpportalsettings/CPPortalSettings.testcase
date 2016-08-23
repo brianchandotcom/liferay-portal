@@ -290,6 +290,24 @@
 		</execute>
 	</command>
 
+	<command name="TestLDAPConnectionAndEntries" priority="3">
+		<property name="apacheds.enabled" value="true" />
+
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="Instance Settings" />
+		</execute>
+
+		<execute macro="PortalSettings#navigateToLDAPTab" />
+
+		<execute macro="PortalSettings#addLDAPServer">
+			<var name="LDAPServerName" value="ApacheDS Server" />
+		</execute>
+
+		<execute macro="PortalSettings#navigateToLDAPTab" />
+
+		<execute macro="PortalSettings#testLDAPConnection" />
+	</command>
+
 	<command name="ViewAuthenticationCAS" priority="3">
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="Instance Settings" />

@@ -17,9 +17,9 @@ package com.liferay.portal.settings.authentication.ldap.web.internal.portlet.act
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.PortletContextFactory;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -48,9 +48,10 @@ import java.util.Map;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletContext;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
 
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -89,34 +90,39 @@ public class PortalSettingsEditLDAPServerMVCActionCommand
 			sendRedirect(actionRequest, actionResponse);
 		}
 		catch (Exception e) {
-			String mvcPath =
-				"/com.liferay.portal.settings.web/edit_ldap_server.jsp";
-
 			if (e instanceof DuplicateLDAPServerNameException ||
 				e instanceof LDAPFilterException ||
 				e instanceof LDAPServerNameException) {
 
 				SessionErrors.add(actionRequest, e.getClass());
 
-				HttpServletRequest httpServletRequest =
-					_portal.getHttpServletRequest(actionRequest);
+				PortletURL portletURL = PortletURLFactoryUtil.create(
+					actionRequest, PortalSettingsPortletKeys.PORTAL_SETTINGS,
+					PortletRequest.RENDER_PHASE);
 
-				httpServletRequest.setAttribute(
-					MVCRenderConstants.
-						PORTLET_CONTEXT_OVERRIDE_REQUEST_ATTIBUTE_NAME_PREFIX +
-							mvcPath,
-					_portletContext);
+				portletURL.setParameter(
+					"mvcRenderCommandName",
+					"/portal_settings/edit_ldap_server");
+
+				String redirect = ParamUtil.getString(
+					actionRequest, "redirect");
+
+				portletURL.setParameter("redirect", redirect);
+
+				actionResponse.sendRedirect(portletURL.toString());
+
+				return;
 			}
-			else if (e instanceof PrincipalException) {
+
+			if (e instanceof PrincipalException) {
 				SessionErrors.add(actionRequest, e.getClass());
 
-				mvcPath = "/error.jsp";
-			}
-			else {
-				throw e;
+				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
+
+				return;
 			}
 
-			actionResponse.setRenderParameter("mvcPath", mvcPath);
+			throw e;
 		}
 	}
 

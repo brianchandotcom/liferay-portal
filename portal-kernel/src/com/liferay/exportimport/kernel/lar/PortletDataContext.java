@@ -309,6 +309,8 @@ public interface PortletDataContext extends Serializable {
 
 	public Element getImportDataStagedModelElement(StagedModel stagedModel);
 
+	public long[] getLayoutIds();
+
 	public Map<String, Lock> getLocks();
 
 	public ManifestSummary getManifestSummary();
@@ -556,6 +558,8 @@ public interface PortletDataContext extends Serializable {
 	public void setGroupId(long groupId);
 
 	public void setImportDataRootElement(Element importDataRootElement);
+
+	public void setLayoutIds(long[] layoutIds);
 
 	public void setManifestSummary(ManifestSummary manifestSummary);
 

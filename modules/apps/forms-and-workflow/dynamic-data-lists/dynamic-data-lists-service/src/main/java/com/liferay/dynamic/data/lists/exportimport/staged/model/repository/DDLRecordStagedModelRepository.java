@@ -36,9 +36,13 @@ import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -105,6 +109,32 @@ public class DDLRecordStagedModelRepository
 	@Override
 	public void deleteStagedModels(PortletDataContext portletDataContext)
 		throws PortalException {
+	}
+
+	public List<StagedModel> fetchChildrenStagedModels(
+		PortletDataContext portletDataContext, DDLRecord ddlRecord) {
+
+		return Collections.emptyList();
+	}
+
+	public List<StagedModel> fetchDependencyStagedModels(
+		PortletDataContext portletDataContext, DDLRecord ddlRecord) {
+
+		Optional<DDLRecordSet> ddlRecordSetOptional = null;
+
+		try {
+			ddlRecordSetOptional = Optional.ofNullable(
+				ddlRecord.getRecordSet());
+		}
+		catch (PortalException pe) {
+		}
+
+		List<StagedModel> dependencyStagedModels = new ArrayList<>();
+
+		ddlRecordSetOptional.ifPresent(
+			(bookmarksFolder) -> dependencyStagedModels.add(bookmarksFolder));
+
+		return dependencyStagedModels;
 	}
 
 	@Override

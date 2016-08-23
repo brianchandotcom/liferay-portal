@@ -136,12 +136,6 @@ public class LayoutExportController implements ExportController {
 		try {
 			ExportImportThreadLocal.setLayoutExportInProcess(true);
 
-			Map<String, Serializable> settingsMap =
-				exportImportConfiguration.getSettingsMap();
-
-			long[] layoutIds = GetterUtil.getLongValues(
-				settingsMap.get("layoutIds"));
-
 			portletDataContext = getPortletDataContext(
 				exportImportConfiguration);
 
@@ -150,7 +144,7 @@ public class LayoutExportController implements ExportController {
 				PortletDataContextFactoryUtil.clonePortletDataContext(
 					portletDataContext));
 
-			File file = doExport(portletDataContext, layoutIds);
+			File file = doExport(portletDataContext);
 
 			ExportImportThreadLocal.setLayoutExportInProcess(false);
 
@@ -174,8 +168,7 @@ public class LayoutExportController implements ExportController {
 		}
 	}
 
-	protected File doExport(
-			PortletDataContext portletDataContext, long[] layoutIds)
+	protected File doExport(PortletDataContext portletDataContext)
 		throws Exception {
 
 		Map<String, String[]> parameterMap =
@@ -280,6 +273,8 @@ public class LayoutExportController implements ExportController {
 		Group group = layoutSet.getGroup();
 
 		String type = "layout-set";
+
+		long[] layoutIds = portletDataContext.getLayoutIds();
 
 		if (group.isLayoutPrototype()) {
 			type = "layout-prototype";
@@ -605,6 +600,17 @@ public class LayoutExportController implements ExportController {
 		return zipWriter.getFile();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
+	protected File doExport(
+			PortletDataContext portletDataContext, long[] layoutIds)
+		throws Exception {
+
+		return doExport(portletDataContext, null);
+	}
+
 	protected void exportLayout(
 			PortletDataContext portletDataContext, long[] layoutIds,
 			Layout layout)
@@ -721,6 +727,8 @@ public class LayoutExportController implements ExportController {
 			(Map<String, String[]>)settingsMap.get("parameterMap");
 		DateRange dateRange = ExportImportDateUtil.getDateRange(
 			exportImportConfiguration);
+		long[] layoutIds = GetterUtil.getLongValues(
+			settingsMap.get("layoutIds"));
 
 		Group group = _groupLocalService.getGroup(sourceGroupId);
 		ZipWriter zipWriter = ExportImportHelperUtil.getLayoutSetZipWriter(
@@ -732,6 +740,7 @@ public class LayoutExportController implements ExportController {
 				dateRange.getStartDate(), dateRange.getEndDate(), zipWriter);
 
 		portletDataContext.setPrivateLayout(privateLayout);
+		portletDataContext.setLayoutIds(layoutIds);
 
 		return portletDataContext;
 	}

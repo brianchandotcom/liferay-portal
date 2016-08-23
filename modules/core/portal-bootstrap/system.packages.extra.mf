@@ -2185,7 +2185,7 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  feray.exportimport.kernel.lar,com.liferay.exportimport.kernel.model",
  com.liferay.exportimport.kernel.exception;version="1.0.0";uses:="com.
  liferay.exportimport.kernel.lar,com.liferay.portal.kernel.exception",
- com.liferay.exportimport.kernel.lar;version="1.1.0";uses:="com.lifera
+ com.liferay.exportimport.kernel.lar;version="1.2.0";uses:="com.lifera
  y.asset.kernel.model,com.liferay.expando.kernel.model,com.liferay.exp
  ortimport.kernel.model,com.liferay.message.boards.kernel.model,com.li
  feray.portal.kernel.dao.orm,com.liferay.portal.kernel.exception,com.l

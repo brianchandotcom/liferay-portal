@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Document;
@@ -35,6 +36,7 @@ import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipWriter;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Map;
@@ -67,6 +69,14 @@ public class PortletDataContextFactoryImpl
 			portletDataContext.getDataStrategy());
 		clonePortletDataContext.setEndDate(portletDataContext.getEndDate());
 		clonePortletDataContext.setGroupId(portletDataContext.getGroupId());
+
+		long[] layoutIds = portletDataContext.getLayoutIds();
+
+		if (ArrayUtil.isNotEmpty(layoutIds)) {
+			long[] cloneLayoutIds = Arrays.copyOf(layoutIds, layoutIds.length);
+
+			clonePortletDataContext.setLayoutIds(cloneLayoutIds);
+		}
 
 		ManifestSummary manifestSummary =
 			portletDataContext.getManifestSummary();

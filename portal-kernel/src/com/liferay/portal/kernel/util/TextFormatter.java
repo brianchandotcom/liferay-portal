@@ -180,10 +180,10 @@ public class TextFormatter {
 		}
 
 		if (s.endsWith("s")) {
-			s = s.substring(0, s.length() -1) + "ses";
+			s = s.substring(0, s.length() - 1) + "ses";
 		}
 		else if (s.endsWith("y")) {
-			s = s.substring(0, s.length() -1) + "ies";
+			s = s.substring(0, s.length() - 1) + "ies";
 		}
 		else {
 			s = s + "s";

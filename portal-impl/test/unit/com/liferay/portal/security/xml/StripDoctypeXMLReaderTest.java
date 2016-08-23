@@ -31,7 +31,7 @@ public class StripDoctypeXMLReaderTest {
 	public void testReadInputStream() throws Exception {
 		byte[] buff = new byte[4096];
 
-		for (int i = 0; i< _ORIGINAL_XML.length; i++) {
+		for (int i = 0; i < _ORIGINAL_XML.length; i++) {
 			String xml = _ORIGINAL_XML[i];
 
 			InputStream is = new ByteArrayInputStream(xml.getBytes());
@@ -50,7 +50,7 @@ public class StripDoctypeXMLReaderTest {
 	public void testReadReader() throws Exception {
 		char[] chars = new char[4096];
 
-		for (int i = 0; i< _ORIGINAL_XML.length; i++) {
+		for (int i = 0; i < _ORIGINAL_XML.length; i++) {
 			String xml = _ORIGINAL_XML[i];
 
 			Reader reader = new StringReader(xml);

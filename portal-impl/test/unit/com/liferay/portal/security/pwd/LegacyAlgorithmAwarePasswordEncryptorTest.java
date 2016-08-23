@@ -157,11 +157,11 @@ public class LegacyAlgorithmAwarePasswordEncryptorTest {
 	@Test
 	public void testEncryptPBKDF2With50000RoundsAnd128Key() throws Exception {
 		testEncrypt(
-			PasswordEncryptorUtil.TYPE_PBKDF2+ "WithHmacSHA1/128/50000",
+			PasswordEncryptorUtil.TYPE_PBKDF2 + "WithHmacSHA1/128/50000",
 			"AAAAoAAAw1AbW1e1Str9wSLWIX5X9swLn+j5/5+m6auSPdva");
 
 		testEncryptDisabled(
-			PasswordEncryptorUtil.TYPE_PBKDF2+ "WithHmacSHA1/128/50000");
+			PasswordEncryptorUtil.TYPE_PBKDF2 + "WithHmacSHA1/128/50000");
 	}
 
 	@Test

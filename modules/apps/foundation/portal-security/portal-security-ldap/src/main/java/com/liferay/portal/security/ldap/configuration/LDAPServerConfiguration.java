@@ -58,7 +58,7 @@ public interface LDAPServerConfiguration {
 	@Meta.AD(
 		deflt = "(mail=@email_address@)",
 		description = "authentication-search-filter-help",
-		name ="%authentication-search-filter", required = false
+		name = "authentication-search-filter", required = false
 	)
 	public String authSearchFilter();
 

@@ -133,7 +133,7 @@ public class RemoteExecutor {
 
 		@Override
 		public void run() {
-			synchronized(_remoteExecutor) {
+			synchronized (_remoteExecutor) {
 				_remoteExecutor._onThreadStart(this);
 			}
 
@@ -154,7 +154,7 @@ public class RemoteExecutor {
 				_handleError(e.getMessage());
 			}
 			finally {
-				synchronized(_remoteExecutor) {
+				synchronized (_remoteExecutor) {
 					_remoteExecutor._onThreadComplete(this);
 				}
 			}
@@ -181,7 +181,7 @@ public class RemoteExecutor {
 			for (int i = 0; i < commands.length; i++) {
 				sb.append(commands[i]);
 
-				if (i < (commands.length -1)) {
+				if (i < (commands.length - 1)) {
 					sb.append(" ; ");
 				}
 			}

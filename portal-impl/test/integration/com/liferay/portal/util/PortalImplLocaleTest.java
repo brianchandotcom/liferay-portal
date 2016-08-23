@@ -142,7 +142,7 @@ public class PortalImplLocaleTest {
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest(
-				servletContext, HttpMethods.GET, servletPath+pathInfo);
+				servletContext, HttpMethods.GET, servletPath + pathInfo);
 
 		mockHttpServletRequest.setPathInfo(pathInfo);
 		mockHttpServletRequest.setServletPath(servletPath);

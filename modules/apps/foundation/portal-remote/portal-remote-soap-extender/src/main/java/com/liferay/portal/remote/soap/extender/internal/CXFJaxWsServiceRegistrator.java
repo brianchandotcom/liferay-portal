@@ -161,7 +161,7 @@ public class CXFJaxWsServiceRegistrator {
 
 		String wsdlLocation = soapDescriptor.getWsdlLocation();
 
-		if (wsdlLocation!= null) {
+		if (wsdlLocation != null) {
 			jaxWsServerFactoryBean.setWsdlLocation(wsdlLocation);
 		}
 

@@ -83,7 +83,7 @@ public class WikiDLStoreConvertProcess implements DLStoreConvertProcess {
 		actionableDynamicQuery.performActions();
 	}
 
-	@Reference(unbind ="-")
+	@Reference(unbind = "-")
 	public void setWikiPageLocalService(
 		WikiPageLocalService wikiPageLocalService) {
 

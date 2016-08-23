@@ -98,7 +98,7 @@ public class VerifySQLServer extends VerifyProcess {
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
-				"Updating " + tableName + "." + columnName +" to use " +
+				"Updating " + tableName + "." + columnName + " to use " +
 					"nvarchar(max)");
 		}
 

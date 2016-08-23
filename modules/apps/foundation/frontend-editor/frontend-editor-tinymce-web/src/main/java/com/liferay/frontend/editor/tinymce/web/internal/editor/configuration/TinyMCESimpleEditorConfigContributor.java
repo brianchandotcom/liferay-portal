@@ -46,7 +46,7 @@ public class TinyMCESimpleEditorConfigContributor
 		String plugins = "contextmenu preview print";
 
 		if (isShowSource(inputEditorTaglibAttributes)) {
-			plugins+= " code";
+			plugins += " code";
 		}
 
 		jsonObject.put("plugins", plugins);

@@ -147,7 +147,7 @@ public class ListServiceTrackerMapTest {
 
 	@Test
 	public void testGetServicesIsNullAfterDeregistration() {
-		try(ServiceTrackerMap<String, List<TrackedOne>> serviceTrackerMap =
+		try (ServiceTrackerMap<String, List<TrackedOne>> serviceTrackerMap =
 				createServiceTrackerMap()) {
 
 			ServiceRegistration<TrackedOne> serviceRegistration1 =

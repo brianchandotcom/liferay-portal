@@ -66,7 +66,7 @@ public class ProxyUtil {
 		Class<?> clazz = classReferences.get(lookupKey);
 
 		if (clazz == null) {
-			synchronized(classReferences) {
+			synchronized (classReferences) {
 				clazz = classReferences.get(lookupKey);
 
 				if (clazz == null) {

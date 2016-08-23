@@ -104,7 +104,7 @@ public class ResourceBlockLocalServiceTest {
 			),
 			@ExpectedLog(
 				expectedDBType = ExpectedDBType.ORACLE,
-				expectedLog ="ORA-00001: unique constraint",
+				expectedLog = "ORA-00001: unique constraint",
 				expectedType = ExpectedType.PREFIX
 			),
 			@ExpectedLog(
@@ -229,7 +229,7 @@ public class ResourceBlockLocalServiceTest {
 			),
 			@ExpectedLog(
 				expectedDBType = ExpectedDBType.ORACLE,
-				expectedLog ="ORA-00001: unique constraint",
+				expectedLog = "ORA-00001: unique constraint",
 				expectedType = ExpectedType.PREFIX
 			),
 			@ExpectedLog(

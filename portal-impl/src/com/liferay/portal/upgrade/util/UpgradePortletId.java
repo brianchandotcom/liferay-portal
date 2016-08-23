@@ -444,7 +444,7 @@ public class UpgradePortletId extends UpgradeProcess {
 
 		runSQL(
 			"update UserNotificationDelivery set portletId = '" + newPortletId +
-				"' where portletId = '" + oldPortletId +"'");
+				"' where portletId = '" + oldPortletId + "'");
 	}
 
 	protected void updateUserNotificationEvent(

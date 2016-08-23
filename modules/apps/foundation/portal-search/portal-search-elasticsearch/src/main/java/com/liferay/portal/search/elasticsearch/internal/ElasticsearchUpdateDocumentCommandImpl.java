@@ -160,7 +160,7 @@ public class ElasticsearchUpdateDocumentCommandImpl
 				bulkRequestBuilder.add(updateRequestBuilder);
 			}
 
-			if (PortalRunMode.isTestMode()||
+			if (PortalRunMode.isTestMode() ||
 				searchContext.isCommitImmediately()) {
 
 				bulkRequestBuilder.setRefresh(true);

@@ -46,13 +46,13 @@ public class PropertyGetFunction extends BasePropertyFunction {
 		if (property.equals("readOnly")) {
 			return ddmFormFieldEvaluationResult.isReadOnly();
 		}
-		else if(property.equals("valid")) {
+		else if (property.equals("valid")) {
 			return ddmFormFieldEvaluationResult.isValid();
 		}
-		else if(property.equals("value")) {
+		else if (property.equals("value")) {
 			return ddmFormFieldEvaluationResult.getValue();
 		}
-		else if(property.equals("visible")) {
+		else if (property.equals("visible")) {
 			return ddmFormFieldEvaluationResult.isVisible();
 		}
 

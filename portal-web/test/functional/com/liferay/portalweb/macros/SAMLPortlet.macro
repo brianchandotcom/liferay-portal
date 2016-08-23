@@ -8,15 +8,19 @@
 		<execute function="Type" locator1="CPSAMLAdminAddServiceProvider#SERVICE_PROVIDER_METADATA_URL_FIELD" value1="${SPMetadataURL}" />
 		<execute function="Select" locator1="CPSAMLAdminAddServiceProvider#SERVICE_PROVIDER_NAME_IDENTIFIER_FORMAT_SELECT" value1="Email Address" />
 		<execute function="Type" locator1="CPSAMLAdminAddServiceProvider#SERVICE_PROVIDER_NAME_IDENTIFIER_ATTRIBUTE_NAME_FIELD" value1="emailAddress" />
+
 		<execute function="AssertClick" locator1="CPSAMLAdminAddServiceProvider#SAVE_BUTTON" value1="Save" />
-		<execute function="AssertClick" locator1="CPSAMLAdminAddServiceProvider#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+
+		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="configureIdentityProvider">
 		<execute function="Check" locator1="CPSAMLAdminIdentityProvider#IDENTITY_PROVIDER_SIGN_METADATA_CHECKBOX" />
 		<execute function="Check" locator1="CPSAMLAdminIdentityProvider#IDENTITY_PROVIDER_AUTH_REQUEST_SIGNATURE_REQUIRED_CHECKBOX" />
+
 		<execute function="AssertClick" locator1="CPSAMLAdminIdentityProvider#SAVE_BUTTON" value1="Save" />
-		<execute function="AssertClick" locator1="CPSAMLAdminIdentityProvider#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+
+		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="configureIdentityProviderConnection">
@@ -24,7 +28,9 @@
 		<execute function="Type" locator1="CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_ENTITY_ID_FIELD" value1="${IdpEntityID}" />
 		<execute function="Type" locator1="CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_METADATA_URL_FIELD" value1="${IdpMetadataURL}" />
 		<execute function="Select" locator1="CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_NAME_IDENTIFIER_FORMAT_SELECT" value1="Email Address" />
+
 		<execute function="AssertClick" locator1="CPSAMLAdminIdentityProviderConnection#SAVE_BUTTON" value1="Save" />
-		<execute function="AssertClick" locator1="CPSAMLAdminIdentityProviderConnection#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+
+		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 </definition>

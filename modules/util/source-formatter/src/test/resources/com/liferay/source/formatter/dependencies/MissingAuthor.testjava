@@ -14,5 +14,8 @@
 
 package com.liferay.source.formatter.dependencies;
 
+/**
+ * Hugo Huijser
+ */
 public class MissingAuthor {
 }

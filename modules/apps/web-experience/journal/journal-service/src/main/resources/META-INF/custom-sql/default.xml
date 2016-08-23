@@ -306,6 +306,18 @@
 				feedId ASC
 		]]>
 	</sql>
+	<sql id="com.liferay.journal.service.persistence.JournalFolderFinder.countF_ByG_F">
+		<![CDATA[
+			SELECT
+				COUNT(*) AS COUNT_VALUE
+			FROM
+				JournalFolder
+			WHERE
+				(JournalFolder.groupId = ?) AND
+				([$STATUS$])
+				[$FOLDER_PARENT_FOLDER_ID$]
+		]]>
+	</sql>
 	<sql id="com.liferay.journal.service.persistence.JournalFolderFinder.countA_ByG_U_F">
 		<![CDATA[
 			SELECT
@@ -319,10 +331,23 @@
 				[$ARTICLE_FOLDER_ID$]
 		]]>
 	</sql>
-	<sql id="com.liferay.journal.service.persistence.JournalFolderFinder.countF_ByG_F">
+	<sql id="com.liferay.journal.service.persistence.JournalFolderFinder.findByF_ByNoAssets">
 		<![CDATA[
 			SELECT
-				COUNT(*) AS COUNT_VALUE
+				{JournalFolder.*}
+			FROM
+				JournalFolder
+			LEFT JOIN
+				AssetEntry ON
+					(AssetEntry.classPK = JournalFolder.folderId)
+			WHERE
+				(AssetEntry.classPK IS NULL)
+		]]>
+	</sql>
+	<sql id="com.liferay.journal.service.persistence.JournalFolderFinder.findF_ByG_F">
+		<![CDATA[
+			SELECT
+				DISTINCT folderId AS modelFolderId, '' AS articleId, 0 AS version, 1 AS modelFolder, JournalFolder.createDate as displayDate, JournalFolder.modifiedDate as modifiedDate
 			FROM
 				JournalFolder
 			WHERE
@@ -355,6 +380,18 @@
 						(TEMP_TABLE.version = JournalArticle.version)
 		]]>
 	</sql>
+	<sql id="com.liferay.journal.service.persistence.JournalFolderFinder.findF_ByG_F_L">
+		<![CDATA[
+			SELECT
+				DISTINCT folderId AS modelFolderId, '' AS articleId, JournalFolder.name AS title, 0 AS version, 1 AS modelFolder, JournalFolder.createDate as displayDate, JournalFolder.modifiedDate as modifiedDate
+			FROM
+				JournalFolder
+			WHERE
+				(JournalFolder.groupId = ?) AND
+				([$STATUS$])
+				[$FOLDER_PARENT_FOLDER_ID$]
+		]]>
+	</sql>
 	<sql id="com.liferay.journal.service.persistence.JournalFolderFinder.findA_ByG_U_F_L">
 		<![CDATA[
 			SELECT
@@ -381,43 +418,6 @@
 					JournalArticleLocalization ON
 						(JournalArticle.id_ = JournalArticleLocalization.articlePK) AND
 						(JournalArticleLocalization.languageId = ?)
-		]]>
-	</sql>
-	<sql id="com.liferay.journal.service.persistence.JournalFolderFinder.findByF_ByNoAssets">
-		<![CDATA[
-			SELECT
-				{JournalFolder.*}
-			FROM
-				JournalFolder
-			LEFT JOIN
-				AssetEntry ON
-					(AssetEntry.classPK = JournalFolder.folderId)
-			WHERE
-				(AssetEntry.classPK IS NULL)
-		]]>
-	</sql>
-	<sql id="com.liferay.journal.service.persistence.JournalFolderFinder.findF_ByG_F">
-		<![CDATA[
-			SELECT
-				DISTINCT folderId AS modelFolderId, '' AS articleId, 0 AS version, 1 AS modelFolder, JournalFolder.createDate as displayDate, JournalFolder.modifiedDate as modifiedDate
-			FROM
-				JournalFolder
-			WHERE
-				(JournalFolder.groupId = ?) AND
-				([$STATUS$])
-				[$FOLDER_PARENT_FOLDER_ID$]
-		]]>
-	</sql>
-	<sql id="com.liferay.journal.service.persistence.JournalFolderFinder.findF_ByG_F_L">
-		<![CDATA[
-			SELECT
-				DISTINCT folderId AS modelFolderId, '' AS articleId, JournalFolder.name AS title, 0 AS version, 1 AS modelFolder, JournalFolder.createDate as displayDate, JournalFolder.modifiedDate as modifiedDate
-			FROM
-				JournalFolder
-			WHERE
-				(JournalFolder.groupId = ?) AND
-				([$STATUS$])
-				[$FOLDER_PARENT_FOLDER_ID$]
 		]]>
 	</sql>
 </custom-sql>

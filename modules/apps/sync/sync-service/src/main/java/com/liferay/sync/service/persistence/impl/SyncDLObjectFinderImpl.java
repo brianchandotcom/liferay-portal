@@ -42,11 +42,11 @@ import java.util.List;
 public class SyncDLObjectFinderImpl
 	extends SyncDLObjectFinderBaseImpl implements SyncDLObjectFinder {
 
-	public static final String FIND_BY_TYPE_PKS =
-		SyncDLObjectFinder.class.getName() + ".findByTypePKs";
-
 	public static final String FIND_BY_MODIFIED_TIME =
 		SyncDLObjectFinder.class.getName() + ".findByModifiedTime";
+
+	public static final String FIND_BY_TYPE_PKS =
+		SyncDLObjectFinder.class.getName() + ".findByTypePKs";
 
 	@Override
 	public List<Long> filterFindByR_U_T(

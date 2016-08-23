@@ -1694,17 +1694,52 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			String sqlElementName1 = getElementName(sqlElement1);
 			String sqlElementName2 = getElementName(sqlElement2);
 
-			if ((sqlElementName1 == null) || (sqlElementName2 == null)) {
+			String finderObjectName1 = _getFinderObjectName(sqlElementName1);
+			String finderObjectName2 = _getFinderObjectName(sqlElementName2);
+
+			if ((finderObjectName1 == null) || (finderObjectName2 == null)) {
 				return 0;
 			}
 
-			return sqlElementName1.compareToIgnoreCase(sqlElementName2);
+			int value = finderObjectName1.compareToIgnoreCase(
+				finderObjectName2);
+
+			if (value != 0) {
+				return value;
+			}
+
+			String finderKeyName1 = _getFinderKeyName(sqlElementName1);
+			String finderKeyName2 = _getFinderKeyName(sqlElementName2);
+
+			if (StringUtil.startsWithWeight(finderKeyName1, finderKeyName2) ==
+					0) {
+
+				return finderKeyName1.compareTo(finderKeyName2);
+			}
+
+			int columnCount1 = StringUtil.count(
+				sqlElementName1, CharPool.UNDERLINE);
+			int columnCount2 = StringUtil.count(
+				sqlElementName2, CharPool.UNDERLINE);
+
+			return columnCount1 - columnCount2;
 		}
 
-		@Override
-		protected String getElementName(Element element) {
-			String elementName = element.attributeValue(getNameAttribute());
+		private String _getFinderKeyName(String elementName) {
+			if (Validator.isNull(elementName)) {
+				return null;
+			}
 
+			int pos = elementName.lastIndexOf(StringPool.PERIOD);
+
+			if (pos == -1) {
+				return null;
+			}
+
+			return elementName.substring(pos + 1);
+		}
+
+		private String _getFinderObjectName(String elementName) {
 			if (Validator.isNull(elementName)) {
 				return null;
 			}

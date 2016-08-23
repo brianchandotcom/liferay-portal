@@ -15,6 +15,7 @@
 package com.liferay.source.formatter.checkstyle.util;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.SourceFormatterMessage;
@@ -34,6 +35,7 @@ import java.io.OutputStream;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.xml.sax.InputSource;
 
@@ -43,14 +45,14 @@ import org.xml.sax.InputSource;
 public class CheckStyleUtil {
 
 	public static List<SourceFormatterMessage> process(
-			List<File> files, String baseDirAbsolutePath)
+			Set<File> files, String baseDirAbsolutePath)
 		throws Exception {
 
 		_sourceFormatterMessages.clear();
 
 		Checker checker = _getChecker(baseDirAbsolutePath);
 
-		checker.process(files);
+		checker.process(ListUtil.fromCollection(files));
 
 		return _sourceFormatterMessages;
 	}

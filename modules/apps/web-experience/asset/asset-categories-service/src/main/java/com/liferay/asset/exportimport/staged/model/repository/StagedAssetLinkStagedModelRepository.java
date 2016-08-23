@@ -31,10 +31,12 @@ import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.model.adapter.ModelAdapterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -110,6 +112,36 @@ public class StagedAssetLinkStagedModelRepository
 
 		_assetLinkLocalService.deleteGroupLinks(
 			portletDataContext.getScopeGroupId());
+	}
+
+	@Override
+	public List<StagedModel> fetchChildrenStagedModels(
+		PortletDataContext portletDataContext,
+		StagedAssetLink stagedAssetLink) {
+
+		return Collections.emptyList();
+	}
+
+	@Override
+	public List<StagedModel> fetchDependencyStagedModels(
+		PortletDataContext portletDataContext,
+		StagedAssetLink stagedAssetLink) {
+
+		AssetEntry assetEntry1 = _assetEntryLocalService.fetchAssetEntry(
+			stagedAssetLink.getEntryId1());
+		AssetEntry assetEntry2 = _assetEntryLocalService.fetchAssetEntry(
+			stagedAssetLink.getEntryId2());
+
+		if ((assetEntry1 == null) || (assetEntry2 == null)) {
+			return Collections.emptyList();
+		}
+
+		ArrayList<StagedModel> dependencyStagedModels = new ArrayList<>();
+
+		dependencyStagedModels.add((StagedModel)assetEntry1);
+		dependencyStagedModels.add((StagedModel)assetEntry2);
+
+		return dependencyStagedModels;
 	}
 
 	public StagedAssetLink fetchExistingAssetLink(

@@ -580,25 +580,21 @@ public class DDMStructureLocalServiceTest extends BaseDDMServiceTestCase {
 	@Test
 	public void testUpdateStructureWithCycles() throws Exception {
 		DDMStructure structureNode1 = addStructure(
-			_classNameId, "Test Structure1");
+			0, _classNameId, null, "Test Structure1", null,
+			read("ddm-structure-text-field.xsd"), StorageType.JSON.getValue(),
+			DDMStructureConstants.TYPE_DEFAULT);
+
 		DDMStructure structureNode2 = addStructure(
-			_classNameId, "Test Structure2");
+			structureNode1.getStructureId(), _classNameId, null,
+			"Test Structure2", null, read("ddm-structure-radio-field.xsd"),
+			StorageType.JSON.getValue(), DDMStructureConstants.TYPE_DEFAULT);
+
 		DDMStructure structureNode3 = addStructure(
-			_classNameId, "Test Structure3");
-
-		structureNode2.setParentStructureId(structureNode1.getStructureId());
-		structureNode2.setDDMForm(
-			createDDMFormWithOneField("FieldNode2", "select", "string"));
-		updateStructure(structureNode2);
-
-		structureNode3.setParentStructureId(structureNode2.getStructureId());
-		structureNode3.setDDMForm(
-			createDDMFormWithOneField("FieldNode3", "select", "string"));
-		updateStructure(structureNode3);
+			structureNode2.getStructureId(), _classNameId, null,
+			"Test Structure3", null, read("ddm-structure-select-field.xsd"),
+			StorageType.JSON.getValue(), DDMStructureConstants.TYPE_DEFAULT);
 
 		structureNode1.setParentStructureId(structureNode3.getStructureId());
-		structureNode1.setDDMForm(
-			createDDMFormWithOneField("FieldNode1", "select", "string"));
 
 		Exception expectedException = null;
 
@@ -771,29 +767,6 @@ public class DDMStructureLocalServiceTest extends BaseDDMServiceTestCase {
 		return DDMDataProviderInstanceLocalServiceUtil.addDataProviderInstance(
 			TestPropsValues.getUserId(), group.getGroupId(), nameMap, nameMap,
 			ddmFormValues, "rest", serviceContext);
-	}
-
-	protected DDMForm createDDMFormWithOneField(
-		String name, String type, String dataType) {
-
-		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
-
-		List<DDMFormField> ddmFormFields = new ArrayList<>();
-
-		DDMFormField ddmFormField1 = new DDMFormField(name, type);
-
-		ddmFormField1.setDataType(dataType);
-
-		long ddmDataProviderInstanceId1 = RandomTestUtil.randomLong();
-
-		ddmFormField1.setProperty(
-			"ddmDataProviderInstanceId", ddmDataProviderInstanceId1);
-
-		ddmFormFields.add(ddmFormField1);
-
-		ddmForm.setDDMFormFields(ddmFormFields);
-
-		return ddmForm;
 	}
 
 	protected String getStructureName(DDMStructure structure) {

@@ -63,10 +63,7 @@ import groovy.lang.Closure;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-
-import java.net.JarURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
+import java.io.UncheckedIOException;
 
 import java.nio.charset.StandardCharsets;
 
@@ -81,6 +78,7 @@ import java.util.Properties;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 import java.util.jar.Attributes;
+import java.util.jar.JarFile;
 import java.util.jar.Manifest;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -104,7 +102,9 @@ import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.artifacts.ModuleDependency;
 import org.gradle.api.artifacts.ProjectDependency;
 import org.gradle.api.artifacts.ResolutionStrategy;
+import org.gradle.api.artifacts.ResolveException;
 import org.gradle.api.artifacts.dsl.ArtifactHandler;
+import org.gradle.api.artifacts.dsl.DependencyHandler;
 import org.gradle.api.artifacts.dsl.RepositoryHandler;
 import org.gradle.api.artifacts.maven.Conf2ScopeMapping;
 import org.gradle.api.artifacts.maven.Conf2ScopeMappingContainer;
@@ -165,6 +165,7 @@ import org.gradle.plugins.ide.idea.IdeaPlugin;
 import org.gradle.plugins.ide.idea.model.IdeaModel;
 import org.gradle.plugins.ide.idea.model.IdeaModule;
 import org.gradle.process.ExecSpec;
+import org.gradle.util.CollectionUtils;
 
 /**
  * @author Andrea Di Giorgi
@@ -491,11 +492,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				"baselining.");
 		configuration.setVisible(false);
 
-		ResolutionStrategy resolutionStrategy =
-			configuration.getResolutionStrategy();
-
-		resolutionStrategy.cacheChangingModulesFor(0, TimeUnit.SECONDS);
-		resolutionStrategy.cacheDynamicVersionsFor(0, TimeUnit.SECONDS);
+		_configureConfigurationNoCache(configuration);
 
 		return configuration;
 	}
@@ -2383,6 +2380,14 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		return false;
 	}
 
+	private void _configureConfigurationNoCache(Configuration configuration) {
+		ResolutionStrategy resolutionStrategy =
+			configuration.getResolutionStrategy();
+
+		resolutionStrategy.cacheChangingModulesFor(0, TimeUnit.SECONDS);
+		resolutionStrategy.cacheDynamicVersionsFor(0, TimeUnit.SECONDS);
+	}
+
 	private void _configureTasksEnabledIfStaleSnapshot(
 		Project project, String... taskNames) {
 
@@ -2406,37 +2411,45 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		}
 	}
 
-	private long _getSnapshotLastModifiedTime(Project project)
-		throws IOException {
+	private long _getArtifactLastModifiedTime(Project project) {
+		DependencyHandler dependencyHandler = project.getDependencies();
 
-		StringBuilder sb = new StringBuilder();
+		Map<String, Object> dependencyNotation = new HashMap<>();
 
-		sb.append("jar:");
-		sb.append("http://repository.liferay.com/");
-		sb.append("nexus/service/local/artifact/maven/content?g=");
-		sb.append(
-			URLEncoder.encode(
-				String.valueOf(project.getGroup()),
-				StandardCharsets.UTF_8.name()));
-		sb.append("&a=");
-		sb.append(
-			URLEncoder.encode(
-				GradleUtil.getArchivesBaseName(project),
-				StandardCharsets.UTF_8.name()));
-		sb.append("&v=LATEST&r=liferay-public-snapshots!/");
+		dependencyNotation.put("group", project.getGroup());
+		dependencyNotation.put("name", GradleUtil.getArchivesBaseName(project));
+		dependencyNotation.put("version", "latest.integration");
 
-		URL url = new URL(sb.toString());
+		Dependency dependency = dependencyHandler.create(dependencyNotation);
 
-		JarURLConnection jarURLConnection =
-			(JarURLConnection)url.openConnection();
+		ConfigurationContainer configurationContainer =
+			project.getConfigurations();
 
-		Manifest manifest = jarURLConnection.getManifest();
+		Configuration configuration =
+			configurationContainer.detachedConfiguration(dependency);
 
-		Attributes attributes = manifest.getMainAttributes();
+		_configureConfigurationNoCache(configuration);
 
-		String lastModified = attributes.getValue(Constants.BND_LASTMODIFIED);
+		File file = CollectionUtils.single(configuration.resolve());
 
-		return Long.valueOf(lastModified);
+		if (GradleUtil.isFromMavenLocal(project, file)) {
+			throw new GradleException(
+				"Please delete " + file.getParent() + " and try again");
+		}
+
+		try (JarFile jarFile = new JarFile(file)) {
+			Manifest manifest = jarFile.getManifest();
+
+			Attributes attributes = manifest.getMainAttributes();
+
+			String lastModified = attributes.getValue(
+				Constants.BND_LASTMODIFIED);
+
+			return Long.valueOf(lastModified);
+		}
+		catch (IOException ioe) {
+			throw new UncheckedIOException(ioe);
+		}
 	}
 
 	private boolean _isSnapshotStale(Project project) {
@@ -2445,14 +2458,17 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		long lastModifiedTime;
 
 		try {
-			lastModifiedTime = _getSnapshotLastModifiedTime(project);
+			lastModifiedTime = _getArtifactLastModifiedTime(project);
 		}
-		catch (IOException ioe) {
-			logger.error(
-				"Unable to get snapshot last modified time for " + project,
-				ioe);
+		catch (ResolveException re) {
+			if (logger.isInfoEnabled()) {
+				logger.info(
+					"Unable to get artifact last modified time for " + project +
+						", a new snapshot will be published",
+					re);
+			}
 
-			return false;
+			return true;
 		}
 
 		// Remove milliseconds from Unix epoch

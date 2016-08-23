@@ -484,6 +484,30 @@
 		</execute>
 	</command>
 
+	<command name="testLDAPConnection">
+		<execute function="Click" locator1="Icon#CUSTOM_EDIT" />
+
+		<execute function="AssertClick" locator1="PortalSettingsAuthentication#LDAP_SERVER_TEST_LDAP_CONNECTION_BUTTON" value1="Test LDAP Connection" />
+
+		<execute function="AssertTextEquals" locator1="Modal#BODY" value1="Liferay has successfully connected to the LDAP server." />
+
+		<var name="key_modalTitle" value="LDAP" />
+
+		<execute function="Click" locator1="Button#CLOSE_MODAL" />
+
+		<execute function="AssertClick" locator1="PortalSettingsAuthentication#LDAP_SERVER_TEST_LDAP_USERS_BUTTON" value1="Test LDAP Users" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="Modal#BODY" value1="A subset of users has been displayed for you to review." />
+
+		<execute function="Click" locator1="Button#CLOSE_MODAL" />
+
+		<execute function="AssertClick" locator1="PortalSettingsAuthentication#LDAP_SERVER_TEST_LDAP_GROUPS_BUTTON" value1="Test LDAP Groups" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="Modal#BODY" value1="A subset of groups has been displayed for you to review." />
+
+		<execute function="Click" locator1="Button#CLOSE_MODAL" />
+	</command>
+
 	<command name="viewAuthenticationCASCP">
 		<execute macro="Panel#expandPanel">
 			<var name="panelHeading" value="Authentication" />

@@ -24,7 +24,11 @@
 	</command>
 
 	<command name="closeSidebar">
+		<execute function="Pause" locator1="1000" />
+
 		<execute function="Click" locator1="Form#SIDEBAR_CLOSE" />
+
+		<execute function="Pause" locator1="1000" />
 	</command>
 
 	<command name="configureEmailNotifications">

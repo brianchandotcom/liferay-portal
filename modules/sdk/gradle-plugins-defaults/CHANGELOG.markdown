@@ -9,5 +9,11 @@
 - [LPS-67658]: Compile the plugin against Gradle 2.14 to make it compatible with
 both Gradle 2.14+ and Gradle 3.0.
 
+## 1.1.4 - 2016-08-22
+
+### Changed
+- [LPS-67352]: Update the [Liferay Gradle Plugins] dependency to version 2.0.11.
+
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
+[LPS-67352]: https://issues.liferay.com/browse/LPS-67352
 [LPS-67658]: https://issues.liferay.com/browse/LPS-67658

@@ -923,10 +923,17 @@ AUI.add(
 				'keyword': Liferay.Language.get('yes')
 			};
 
-			if (type == 'ddm-text-html' || type == 'text' || type == 'textarea') {
+			if (type == 'text') {
 				indexTypeOptions = {
 					'': Liferay.Language.get('not-indexable'),
 					'keyword': Liferay.Language.get('indexable-keyword'),
+					'text': Liferay.Language.get('indexable-text')
+				};
+			}
+			
+			if (type == 'ddm-text-html' || type == 'textarea') {
+				indexTypeOptions = {
+					'': Liferay.Language.get('not-indexable'),
 					'text': Liferay.Language.get('indexable-text')
 				};
 			}

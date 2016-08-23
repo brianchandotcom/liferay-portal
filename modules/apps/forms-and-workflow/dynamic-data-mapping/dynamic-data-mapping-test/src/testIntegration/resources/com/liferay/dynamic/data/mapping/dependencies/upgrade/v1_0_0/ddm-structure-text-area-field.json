@@ -4,7 +4,7 @@
 	"fields": [
 		{
 			"dataType": "string",
-			"indexType": "keyword",
+			"indexType": "text",
 			"label": {
 				"en_US": "Text Box"
 			},

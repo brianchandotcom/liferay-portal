@@ -14,16 +14,9 @@
 
 package com.liferay.marketplace.internal.upgrade.v1_0_0;
 
-import com.liferay.marketplace.util.ContextUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-
-import java.io.IOException;
-
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 /**
  * @author Ryan Park
@@ -57,6 +50,6 @@ public class UpgradeApp extends UpgradeProcess {
 		}
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(UpgradeModule.class);
+	private static final Log _log = LogFactoryUtil.getLog(UpgradeApp.class);
 
 }

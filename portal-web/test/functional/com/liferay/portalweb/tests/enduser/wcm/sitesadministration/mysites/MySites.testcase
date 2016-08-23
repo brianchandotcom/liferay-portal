@@ -662,7 +662,7 @@
 		</execute>
 
 		<execute macro="MySites#gotoPagesPG">
-			<var name="itemName" value="Go to Public Pages" />
+			<var name="menuItem" value="Go to Public Pages" />
 			<var name="pageName" value="Public Page" />
 			<var name="siteName" value="Site Name" />
 		</execute>
@@ -672,7 +672,7 @@
 		</execute>
 
 		<execute macro="MySites#gotoPagesPG">
-			<var name="itemName" value="Go to Private Pages" />
+			<var name="menuItem" value="Go to Private Pages" />
 			<var name="pageName" value="Private Page" />
 			<var name="siteName" value="Site Name" />
 		</execute>

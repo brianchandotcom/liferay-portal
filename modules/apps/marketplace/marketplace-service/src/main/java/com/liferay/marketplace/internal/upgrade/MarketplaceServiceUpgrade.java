@@ -17,10 +17,6 @@ package com.liferay.marketplace.internal.upgrade;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.expando.kernel.service.ExpandoValueLocalService;
-import com.liferay.marketplace.internal.upgrade.v1_0_0.UpgradeCompanyId;
-import com.liferay.marketplace.internal.upgrade.v1_0_0.UpgradeExpando;
-import com.liferay.marketplace.internal.upgrade.v1_0_0.UpgradeModule;
-import com.liferay.marketplace.internal.upgrade.v2_0_0.UpgradeApp;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -37,21 +33,24 @@ public class MarketplaceServiceUpgrade implements UpgradeStepRegistrator {
 	public void register(Registry registry) {
 		registry.register(
 			"com.liferay.marketplace.service", "0.0.1", "2.0.0",
-			new UpgradeExpando(
+			new com.liferay.marketplace.internal.upgrade.v1_0_0.UpgradeExpando(
 				_expandoColumnLocalService, _expandoTableLocalService,
 				_expandoValueLocalService));
 
 		registry.register(
 			"com.liferay.marketplace.service", "1.0.0", "1.0.1",
-			new UpgradeModule());
+			new com.liferay.marketplace.internal.upgrade.v1_0_0.UpgradeApp(),
+			new com.liferay.marketplace.internal.upgrade.v1_0_0.
+				UpgradeModule());
 
 		registry.register(
 			"com.liferay.marketplace.service", "1.0.1", "1.0.2",
-			new UpgradeCompanyId());
+			new com.liferay.marketplace.internal.upgrade.v1_0_0.
+				UpgradeCompanyId());
 
 		registry.register(
 			"com.liferay.marketplace.service", "1.0.2", "2.0.0",
-			new UpgradeApp());
+			new com.liferay.marketplace.internal.upgrade.v2_0_0.UpgradeApp());
 	}
 
 	@Reference(unbind = "-")

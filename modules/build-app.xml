@@ -154,7 +154,7 @@
 		</subant>
 	</target>
 
-	<target depends="init-build-app" name="dist-module-artifacts-lpkg" unless="module.dirs.null">
+	<target depends="get-osgi-static-modules,init-build-app" name="dist-module-artifacts-lpkg" unless="module.dirs.null">
 		<subant genericantfile="${modules.dir}/build-app-module.xml" target="dist-module-artifact-lpkg">
 			<dirset dir="${modules.dir}" excludes="${build.modules.excludes}" includes="${app.module.dirs}" />
 			<property name="osgi.dir" value="${osgi.dir}" />
@@ -259,6 +259,14 @@
 		</pathconvert>
 	</target>
 
+	<target depends="init-build-app" name="get-osgi-static-modules">
+		<pathconvert property="osgi.static.modules">
+			<fileset dir="${osgi.dir}/static" includes="*.jar" />
+
+			<flattenmapper />
+		</pathconvert>
+	</target>
+
 	<target name="index-modules-and-app-lpkgs">
 		<path id="target.platform.indexer.classpath">
 
@@ -351,12 +359,6 @@
 		</condition>
 
 		<property file="${modules.dir}/../build.properties" />
-
-		<pathconvert property="osgi.static.modules">
-			<fileset dir="${osgi.dir}/static" includes="*.jar" />
-
-			<flattenmapper />
-		</pathconvert>
 
 		<pathconvert property="app.bnd.file">
 			<fileset dir="${modules.dir}" includes="apps/${app.name}/app.bnd,private/apps/${app.name}/app.bnd" />

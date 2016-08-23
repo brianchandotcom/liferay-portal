@@ -158,7 +158,9 @@ for (int i = 0; i < groupMappingArray.length; i++) {
 	<liferay-ui:error key="ldapAuthentication" message="failed-to-bind-to-the-ldap-server-with-given-values" />
 
 	<aui:fieldset>
-		<aui:input cssClass="lfr-input-text-container" label="server-name" name='<%= "ldap--" + LDAPConstants.SERVER_NAME + "--" %>' type="text" value="<%= ldapServerName %>" />
+		<aui:input cssClass="lfr-input-text-container" label="server-name" name='<%= "ldap--" + LDAPConstants.SERVER_NAME + "--" %>' type="text" value="<%= ldapServerName %>">
+			<aui:validator name="required" />
+		</aui:input>
 	</aui:fieldset>
 
 	<h3><liferay-ui:message key="default-values" /></h3>

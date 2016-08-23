@@ -428,6 +428,14 @@
 		<execute function="AssertTextEquals" locator1="PortalSettingsUsers#RESERVED_CREDENTIALS_SCREEN_NAMES_FIELD" value1="${userScreenName}" />
 	</command>
 
+	<command name="navigateToLDAPTab">
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Authentication" />
+		</execute>
+
+		<execute function="AssertClick" locator1="NavTab#LDAP" value1="LDAP" />
+	</command>
+
 	<command name="tearDownAuthenticationCP">
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="Instance Settings" />

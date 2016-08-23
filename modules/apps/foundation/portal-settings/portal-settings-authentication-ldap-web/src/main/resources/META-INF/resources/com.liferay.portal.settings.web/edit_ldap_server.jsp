@@ -137,12 +137,12 @@ for (int i = 0; i < groupMappingArray.length; i++) {
 		groupMappingUser = mapping[1];
 	}
 }
-%>
 
-<liferay-ui:header
-	backURL="<%= backURL %>"
-	title='<%= (ldapServerId == 0) ? "add-ldap-server" : "edit-ldap-server" %>'
-/>
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(backURL);
+
+renderResponse.setTitle((ldapServerId == 0) ? LanguageUtil.get(resourceBundle, "add-ldap-server") : LanguageUtil.get(resourceBundle, "edit-ldap-server"));
+%>
 
 <portlet:actionURL name="/portal_settings/edit_ldap_server" var="editLDAPServerURL" />
 

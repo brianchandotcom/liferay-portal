@@ -3746,12 +3746,6 @@ public class PortletImpl extends PortletBaseImpl {
 	}
 
 	/**
-	 * Returns the names of the classes that represent staged model data handlers associated with the portlet.
-	 *
-	 * @return the names of the classes that represent staged model data handlers associated with the portlet
-	 */
-
-	/**
 	 * Sets the names of the classes that represent staged model data handlers
 	 * associated with the portlet.
 	 *

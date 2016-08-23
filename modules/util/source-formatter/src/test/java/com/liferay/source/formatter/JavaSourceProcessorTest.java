@@ -259,7 +259,7 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 
 	@Test
 	public void testMissingAuthor() throws Exception {
-		test("MissingAuthor.testjava", "Missing author");
+		test("MissingAuthor.testjava", "Missing author", 20);
 	}
 
 	@Test

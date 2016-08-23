@@ -15,12 +15,9 @@ runGradleTest {
 	dependsOn formatXML
 
 	doLast {
-		File sampleXml = file("src/main/resources/sample.xml")
+		File expectedSampleXmlFile = file("expected-sample.xml")
+		File sampleXmlFile = file("src/main/resources/sample.xml")
 
-		assert sampleXml.text == '''<?xml version="1.0"?>
-
-<foo id="abc">
-	<bar>123</bar>
-</foo>'''
+		assert expectedSampleXmlFile.text.normalize() == sampleXmlFile.text.normalize()
 	}
 }

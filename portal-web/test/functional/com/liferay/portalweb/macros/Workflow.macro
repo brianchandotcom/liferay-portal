@@ -948,6 +948,17 @@
 		<execute function="AssertElementPresent" locator1="MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_DUE_DATE" />
 	</command>
 
+	<command name="viewSecondAssetEntryContent">
+		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
+
+		<execute function="AssertClick" locator1="MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_ASSET_TITLE_2" value1="${workflowAssetTitle}" />
+
+		<execute macro="WorkflowAsset#previewViewContent">
+			<var name="fieldLabel" value="${fieldLabel}" />
+			<var name="fieldValue" value="${fieldValue}" />
+		</execute>
+	</command>
+
 	<command name="viewSubmissionNotPresent">
 		<execute macro="Workflow#_gotoPendingFilter" />
 

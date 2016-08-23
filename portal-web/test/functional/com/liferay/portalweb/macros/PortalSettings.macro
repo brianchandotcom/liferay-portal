@@ -3,6 +3,17 @@
 		<execute macro="PortletEntry#save" />
 	</command>
 
+	<command name="addLDAPServer">
+		<execute function="AssertClick" locator1="PortalSettingsAuthentication#AUTHENTICATION_LDAP_ADD_BUTTON" value1="Add" />
+
+		<execute function="Type" locator1="PortalSettingsAuthentication#LDAP_SERVER_SERVER_NAME" value1="${LDAPServerName}" />
+		<execute function="Click" locator1="PortalSettingsAuthentication#LDAP_SERVER_DEFAULT_VALUES_APACHE_DIRECTORY_SERVER_RADIO" />
+
+		<execute function="AssertClick" locator1="PortalSettingsAuthentication#LDAP_SERVER_RESET_VALUES_BUTTON" value1="Reset Values" />
+
+		<execute macro="Button#clickSave" />
+	</command>
+
 	<command name="configureContentSharingAcrossSitesCP">
 		<execute macro="Panel#expandPanel">
 			<var name="panelHeading" value="Content Sharing" />

@@ -29,6 +29,10 @@ public class MathUtil {
 		return difference;
 	}
 
+	public static int percent(Integer percent, Integer value) {
+		return quotient(product(percent, value), 100, true);
+	}
+
 	public static int product(Integer... values) {
 		int product = 1;
 

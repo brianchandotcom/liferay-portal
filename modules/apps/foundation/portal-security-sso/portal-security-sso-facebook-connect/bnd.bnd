@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal Security SSO Facebook Connect
 Bundle-SymbolicName: com.liferay.portal.security.sso.facebook.connect
-Bundle-Version: 3.0.2
+Bundle-Version: 3.0.3
 Export-Package:\
 	com.liferay.portal.security.sso.facebook.connect.configuration,\
 	com.liferay.portal.security.sso.facebook.connect.constants

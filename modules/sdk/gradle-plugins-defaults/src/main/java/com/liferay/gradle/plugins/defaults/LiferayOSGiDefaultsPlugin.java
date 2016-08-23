@@ -326,6 +326,12 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		configureTasksPmd(project);
 		configureTasksPublishNodeModule(project);
 
+		if (publishing) {
+			_configureTasksEnabledIfStaleSnapshot(
+				project, MavenPlugin.INSTALL_TASK_NAME,
+				BasePlugin.UPLOAD_ARCHIVES_TASK_NAME);
+		}
+
 		GradleUtil.withPlugin(
 			project, ServiceBuilderPlugin.class,
 			new Action<ServiceBuilderPlugin>() {
@@ -369,7 +375,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 					// configureTaskUploadArchives, because the latter one needs
 					// to know if we are publishing a snapshot or not.
 
-					_configureTaskInstall(project);
 					configureTaskUploadArchives(
 						project, updateFileVersionsTask, updateVersionTask);
 
@@ -2119,14 +2124,12 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		Project project, ReplaceRegexTask updateFileVersionsTask,
 		ReplaceRegexTask updateVersionTask) {
 
-		Task uploadArchivesTask = GradleUtil.getTask(
-			project, BasePlugin.UPLOAD_ARCHIVES_TASK_NAME);
-
 		if (GradleUtil.isSnapshot(project)) {
-			_configureTaskEnabledIfStaleSnapshot(uploadArchivesTask);
-
 			return;
 		}
+
+		Task uploadArchivesTask = GradleUtil.getTask(
+			project, BasePlugin.UPLOAD_ARCHIVES_TASK_NAME);
 
 		TaskContainer taskContainer = project.getTasks();
 
@@ -2380,40 +2383,27 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		return false;
 	}
 
-	private void _configureTaskEnabledIfStaleSnapshot(Task task) {
-		boolean snapshotIfStale = false;
+	private void _configureTasksEnabledIfStaleSnapshot(
+		Project project, String... taskNames) {
 
-		Project project = task.getProject();
+		boolean snapshotIfStale = false;
 
 		if (project.hasProperty(SNAPSHOT_IF_STALE_PROPERTY_NAME)) {
 			snapshotIfStale = GradleUtil.getProperty(
 				project, SNAPSHOT_IF_STALE_PROPERTY_NAME, true);
 		}
 
-		if (!snapshotIfStale) {
+		if (!snapshotIfStale || _isSnapshotStale(project)) {
 			return;
 		}
 
-		task.onlyIf(
-			new Spec<Task>() {
+		for (String taskName : taskNames) {
+			Task task = GradleUtil.getTask(project, taskName);
 
-				@Override
-				public boolean isSatisfiedBy(Task task) {
-					return _isSnapshotStale(task.getProject());
-				}
-
-			});
-	}
-
-	private void _configureTaskInstall(Project project) {
-		if (!GradleUtil.isSnapshot(project)) {
-			return;
+			task.setDependsOn(Collections.emptySet());
+			task.setEnabled(false);
+			task.setFinalizedBy(Collections.emptySet());
 		}
-
-		Task installTask = GradleUtil.getTask(
-			project, MavenPlugin.INSTALL_TASK_NAME);
-
-		_configureTaskEnabledIfStaleSnapshot(installTask);
 	}
 
 	private long _getSnapshotLastModifiedTime(Project project)

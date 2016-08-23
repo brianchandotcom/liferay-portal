@@ -304,7 +304,7 @@ AUI.add(
 
 					url.setName(params.actionName);
 					url.setParameters(params.queryParameters);
-					url.setPortletId('com_liferay_calendar_web_portlet_CalendarPortlet');
+					url.setPortletId(instance.ID);
 
 					var payload;
 
@@ -332,7 +332,7 @@ AUI.add(
 					var url = Liferay.PortletURL.createResourceURL();
 
 					url.setParameters(params.queryParameters);
-					url.setPortletId('com_liferay_calendar_web_portlet_CalendarPortlet');
+					url.setPortletId(instance.ID);
 					url.setResourceId(params.resourceId);
 
 					var payload;

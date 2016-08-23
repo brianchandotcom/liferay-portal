@@ -28,6 +28,9 @@ public class SyncServiceConfigurationKeys {
 	public static final String SYNC_CLIENT_BATCH_FILE_MAX_SIZE =
 		"sync.client.batch.file.max.size";
 
+	public static final String SYNC_CLIENT_FORCE_SECURITY_MODE =
+		"sync.client.force.security.mode";
+
 	public static final String SYNC_CLIENT_MAX_CONNECTIONS =
 		"sync.client.max.connections";
 

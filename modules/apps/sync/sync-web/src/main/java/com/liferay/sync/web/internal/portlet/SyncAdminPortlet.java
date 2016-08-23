@@ -130,6 +130,13 @@ public class SyncAdminPortlet extends BaseSyncPortlet {
 			SyncServiceConfigurationKeys.SYNC_SERVICES_ENABLED,
 			String.valueOf(enabled));
 
+		boolean forceSecurityMode = ParamUtil.getBoolean(
+			actionRequest, "forceSecurityMode");
+
+		portletPreferences.setValue(
+			SyncServiceConfigurationKeys.SYNC_CLIENT_FORCE_SECURITY_MODE,
+			String.valueOf(forceSecurityMode));
+
 		int maxConnections = ParamUtil.getInteger(
 			actionRequest, "maxConnections");
 

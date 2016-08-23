@@ -88,7 +88,7 @@ public class ExecuteNpmTask extends ExecuteNodeScriptTask {
 			super.executeNode();
 		}
 		else {
-			synchronized(ExecuteNpmTask.class) {
+			synchronized (ExecuteNpmTask.class) {
 				super.executeNode();
 			}
 		}

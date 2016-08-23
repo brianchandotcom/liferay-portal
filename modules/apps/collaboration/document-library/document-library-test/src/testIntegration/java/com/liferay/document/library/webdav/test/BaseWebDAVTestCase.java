@@ -350,9 +350,9 @@ public class BaseWebDAVTestCase {
 		_GROUP_FRIENDLY_URL + "/document_library/" + _FOLDER_NAME + "/";
 
 	private static final String _PROPFIND_XML =
-		"<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n"+
-		"<D:propfind xmlns:D=\"DAV:\">\n"+
-		"<D:allprop/>\n"+
+		"<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n" +
+		"<D:propfind xmlns:D=\"DAV:\">\n" +
+		"<D:allprop/>\n" +
 		"</D:propfind>";
 
 	private static final String _SERVLET_PATH = "";

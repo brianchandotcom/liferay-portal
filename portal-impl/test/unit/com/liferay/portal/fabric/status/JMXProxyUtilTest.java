@@ -430,7 +430,8 @@ public class JMXProxyUtilTest {
 							return _testClassObjectName;
 						}
 
-					}}));
+					}
+				}));
 	}
 
 	@Test

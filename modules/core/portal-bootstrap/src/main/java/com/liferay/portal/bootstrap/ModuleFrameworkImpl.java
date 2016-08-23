@@ -872,7 +872,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 			_log.debug(
 				"The portal's system bundle is exporting the following " +
-					"packages:\n" +s);
+					"packages:\n" + s);
 		}
 
 		return sb.toString();

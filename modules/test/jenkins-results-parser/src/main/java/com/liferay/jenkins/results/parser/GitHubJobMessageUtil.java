@@ -63,7 +63,7 @@ public class GitHubJobMessageUtil {
 					String runBuildURL = runsJSONObject.getString("url");
 
 					if (!runBuildURL.endsWith(
-							"/"+ jsonObject.get("number") + "/")) {
+							"/" + jsonObject.get("number") + "/")) {
 
 						continue;
 					}

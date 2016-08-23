@@ -864,7 +864,7 @@ public class PortletExportController implements ExportController {
 		}
 
 		if (configurationOptionsSB.index() > 0) {
-			configurationOptionsSB.setIndex(configurationOptionsSB.index() -1);
+			configurationOptionsSB.setIndex(configurationOptionsSB.index() - 1);
 		}
 
 		element.addAttribute(

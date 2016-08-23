@@ -36,9 +36,9 @@ public class ColorUtil {
 
 	public static Color blend(int[] color1, int[] color2, double ratio) {
 		Color blended = new Color(
-			(int)(((color2[0]-color1[0]) * ratio) + color1[0]),
-			(int)(((color2[1]-color1[1]) * ratio) + color1[1]),
-			(int)(((color2[2]-color1[2]) * ratio) + color1[2]));
+			(int)(((color2[0] - color1[0]) * ratio) + color1[0]),
+			(int)(((color2[1] - color1[1]) * ratio) + color1[1]),
+			(int)(((color2[2] - color1[2]) * ratio) + color1[2]));
 
 		return blended;
 	}

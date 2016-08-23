@@ -391,7 +391,7 @@ public class ServiceTrackerCollectionImpl<S> implements ServiceTrackerList<S> {
 			EntryWrapper entryWrapper = new EntryWrapper(
 				serviceReference, service);
 
-			synchronized(_services) {
+			synchronized (_services) {
 				int index = Collections.binarySearch(_services, entryWrapper);
 
 				if (remove) {

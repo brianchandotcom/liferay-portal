@@ -1872,7 +1872,7 @@ public class CMISRepository extends BaseCmisRepository {
 		}
 		catch (CmisObjectNotFoundException confe) {
 			throw new NoSuchFileEntryException(
-				"No CMIS file entry with {fileEntryId=" + fileEntryId+ "}",
+				"No CMIS file entry with {fileEntryId=" + fileEntryId + "}",
 				confe);
 		}
 	}

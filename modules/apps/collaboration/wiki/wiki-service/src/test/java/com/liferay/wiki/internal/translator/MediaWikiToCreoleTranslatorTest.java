@@ -361,7 +361,7 @@ public class MediaWikiToCreoleTranslatorTest {
 	public void testRemoveDisambiguation() throws Exception {
 		String content = "{{OtherTopics|Upgrade Instructions}}\ntest";
 
-		String expected ="\ntest";
+		String expected = "\ntest";
 		String actual = _translate(content);
 
 		Assert.assertEquals(expected, actual);

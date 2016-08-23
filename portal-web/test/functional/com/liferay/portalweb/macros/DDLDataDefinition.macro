@@ -23,14 +23,14 @@
 		</if>
 
 		<execute function="Click" locator1="Button#PLUS" />
-		<execute function="Type#clickAtSendKeys" locator1="DDMEditStructure#NAME_FIELD" value1="${ddlDataDefinitionName}" />
+		<execute function="Type#clickAtType" locator1="DDMEditStructure#NAME_FIELD" value1="${ddlDataDefinitionName}" />
 
 		<execute macro="DDLDataDefinition#_showDetails" />
 
 		<if>
 			<isset var="ddlDataDefinitionDescription" />
 			<then>
-				<execute function="Type#clickAtSendKeys" locator1="DDMEditStructure#DETAILS_DESCRIPTION_FIELD" value1="${ddlDataDefinitionDescription}" />
+				<execute function="Type#clickAtType" locator1="DDMEditStructure#DETAILS_DESCRIPTION_FIELD" value1="${ddlDataDefinitionDescription}" />
 			</then>
 		</if>
 	</command>
@@ -167,11 +167,11 @@
 		<execute function="Click#waitForMenuToggleJSClick" locator1="DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS_1" />
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
-		<execute function="Type#clickAtSendKeys" locator1="TextInput#NAME" value1="${ddlDataDefinitionNameEdit}" />
+		<execute function="Type#clickAtType" locator1="TextInput#NAME" value1="${ddlDataDefinitionNameEdit}" />
 
 		<execute macro="DDLDataDefinition#_showDetails" />
 
-		<execute function="Type#clickAtSendKeys" locator1="DDMEditStructure#DETAILS_DESCRIPTION_FIELD" value1="${ddlDataDefinitionDescriptionEdit}" />
+		<execute function="Type#clickAtType" locator1="DDMEditStructure#DETAILS_DESCRIPTION_FIELD" value1="${ddlDataDefinitionDescriptionEdit}" />
 	</command>
 
 	<command name="editPermissionsCP">

@@ -125,7 +125,7 @@
 		<execute function="Click#pauseClickAt" locator1="SOUserBar#GO_TO_ADD_SITE_BUTTON" />
 
 		<execute function="SelectFrameTop" />
-		<execute function="Type#clickAtSendKeys" locator1="SOUserBarAddSite#NAME_FIELD" value1="${siteName}" />
+		<execute function="Type#clickAtType" locator1="SOUserBarAddSite#NAME_FIELD" value1="${siteName}" />
 		<execute function="Type" locator1="SOUserBarAddSite#DESCRIPTION_FIELD" value1="${siteDescription}" />
 		<execute function="Click" locator1="SOUserBarAddSite#NEXT_BUTTON" />
 
@@ -165,7 +165,7 @@
 		<if>
 			<condition function="IsElementPresent" locator1="SOUserBarAddSite#ERROR_MESSAGE" />
 			<then>
-				<execute function="Type#clickAtSendKeys" locator1="SOUserBarAddSite#NAME_FIELD" value1="${siteName}" />
+				<execute function="Type#clickAtType" locator1="SOUserBarAddSite#NAME_FIELD" value1="${siteName}" />
 				<execute function="Click" locator1="SOUserBarAddSite#SAVE_BUTTON" />
 			</then>
 		</if>

@@ -266,7 +266,7 @@
 
 		<execute function="AssertClick" locator1="NavTab#DEFAULT_USER_ASSOCIATIONS" value1="Default User Associations" />
 
-		<execute function="Type#clickAtSendKeys" locator1="PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ROLES_FIELD" value1="${roleName}" />
+		<execute function="Type#clickAtType" locator1="PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ROLES_FIELD" value1="${roleName}" />
 	</command>
 
 	<command name="editConfigurationUsersDefaultUserAssociationsSitesCP">
@@ -600,7 +600,7 @@
 		</execute>
 
 		<execute function="AssertClick" locator1="NavTab#DEFAULT_USER_ASSOCIATIONS" value1="Default User Associations" />
-		<execute function="Type#clickAtSendKeys" locator1="PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ROLES_FIELD" value1="${roleName}" />
+		<execute function="Type#clickAtType" locator1="PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ROLES_FIELD" value1="${roleName}" />
 	</command>
 
 	<command name="viewConfigurationUsersDefaultUserAssociationsSitesCP">
@@ -649,7 +649,7 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ORGANIZATION_SITES_HEADER" value1="Organization Sites" />
 		<execute function="AssertTextEquals" locator1="PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ORGANIZATION_SITES_FIELD" value1="" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ROLES_HEADER" value1="Roles" />
-		<execute function="Type#clickAtSendKeys" locator1="PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ROLES_FIELD" value1="Power User\nUser" />
+		<execute function="Type#clickAtType" locator1="PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ROLES_FIELD" value1="Power User\nUser" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_USER_GROUPS_HEADER" value1="User Groups" />
 		<execute function="AssertTextEquals" locator1="PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_USER_GROUPS_FIELD" value1="" />
 	</command>

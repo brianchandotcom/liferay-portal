@@ -105,7 +105,7 @@
 
 	<command name="addTagList">
 		<for list="${tagNameList}" param="tagName">
-			<execute function="Type#clickAtSendKeys" locator1="AssetCategorization#CATEGORIES_SEARCH_FIELD" value1="${tagName}" />
+			<execute function="Type#clickAtType" locator1="AssetCategorization#CATEGORIES_SEARCH_FIELD" value1="${tagName}" />
 
 			<execute function="AssertClick" locator1="Button#ADD_TAGS" value1="Add" />
 		</for>

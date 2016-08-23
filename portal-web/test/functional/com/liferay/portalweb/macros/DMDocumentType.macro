@@ -85,7 +85,7 @@
 		<if>
 			<isset var="dmDocumentTypeNameEdit" />
 			<then>
-				<execute function="Type#clickAtSendKeys" locator1="DocumentsAndMediaEditDocumentType#NAME_FIELD" value1="${dmDocumentTypeNameEdit}"  />
+				<execute function="Type#clickAtType" locator1="DocumentsAndMediaEditDocumentType#NAME_FIELD" value1="${dmDocumentTypeNameEdit}"  />
 			</then>
 		</if>
 

@@ -820,7 +820,7 @@
 
 		<execute function="SikuliAssertElementPresent" locator1="SOUserBar#SCREENSHOTS_USERBAR_GO_TO_MENU_ADD_SITE_SITE_NAME_REQUIRED_PNG" />
 
-		<execute function="Type#clickAtSendKeys" locator1="SOUserBarAddSite#NAME_FIELD" value1="${siteName}" />
+		<execute function="Type#clickAtType" locator1="SOUserBarAddSite#NAME_FIELD" value1="${siteName}" />
 		<execute function="Click" locator1="SOUserBarAddSite#SAVE_BUTTON" />
 		<execute function="AssertElementNotPresent#assertNotVisible" locator1="SOUserBarAddSite#SAVE_BUTTON" />
 	</command>

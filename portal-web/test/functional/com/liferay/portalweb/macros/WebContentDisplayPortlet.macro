@@ -103,7 +103,7 @@
 
 		<execute function="SelectFrame" locator1="IFrame#MODAL_IFRAME" />
 
-		<execute function="Type#clickAtSendKeys" locator1="TextInput#NAME" value1="Template Edit" />
+		<execute function="Type#clickAtType" locator1="TextInput#NAME" value1="Template Edit" />
 
 		<if>
 			<isset var="templateScript" />

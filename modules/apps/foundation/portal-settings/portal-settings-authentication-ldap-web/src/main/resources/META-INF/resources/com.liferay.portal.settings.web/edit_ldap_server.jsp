@@ -164,9 +164,9 @@ renderResponse.setTitle((ldapServerId == 0) ? LanguageUtil.get(resourceBundle, "
 			</aui:input>
 		</aui:fieldset>
 
-		<h3><liferay-ui:message key="default-values" /></h3>
-
 		<aui:fieldset>
+			<h3><liferay-ui:message key="default-values" /></h3>
+
 			<aui:field-wrapper>
 				<aui:input label="Apache Directory Server" name="defaultLdap" type="radio" value="apache" />
 				<aui:input label="Fedora Directory Server" name="defaultLdap" type="radio" value="fedora" />
@@ -181,9 +181,9 @@ renderResponse.setTitle((ldapServerId == 0) ? LanguageUtil.get(resourceBundle, "
 			</aui:button-row>
 		</aui:fieldset>
 
-		<h3><liferay-ui:message key="connection" /></h3>
-
 		<aui:fieldset>
+			<h3><liferay-ui:message key="connection" /></h3>
+
 			<aui:input cssClass="lfr-input-text-container" helpMessage="the-ldap-url-format-is" label="base-provider-url" name='<%= "ldap--" + LDAPConstants.BASE_PROVIDER_URL + "--" %>' type="text" value="<%= ldapBaseProviderUrl %>" />
 
 			<aui:input cssClass="lfr-input-text-container" helpMessage="the-ldap-url-format-is" label="base-dn" name='<%= "ldap--" + LDAPConstants.BASE_DN + "--" %>' type="text" value="<%= ldapBaseDN %>" />
@@ -202,9 +202,9 @@ renderResponse.setTitle((ldapServerId == 0) ? LanguageUtil.get(resourceBundle, "
 			</aui:button-row>
 		</aui:fieldset>
 
-		<h3><liferay-ui:message key="users" /></h3>
-
 		<aui:fieldset>
+			<h3><liferay-ui:message key="users" /></h3>
+
 			<aui:input cssClass="lfr-input-text-container" helpMessage="enter-the-search-filter-that-is-used-to-test-the-validity-of-a-user" label="authentication-search-filter" name='<%= "ldap--" + LDAPConstants.AUTH_SEARCH_FILTER + "--" %>' type="text" value="<%= ldapAuthSearchFilter %>" />
 
 			<aui:input cssClass="lfr-input-text-container" label="import-search-filter" name='<%= "ldap--" + LDAPConstants.USER_SEARCH_FILTER + "--" %>' type="text" value="<%= ldapUserSearchFilter %>" />
@@ -247,9 +247,9 @@ renderResponse.setTitle((ldapServerId == 0) ? LanguageUtil.get(resourceBundle, "
 			</aui:button-row>
 		</aui:fieldset>
 
-		<h3><liferay-ui:message key="groups" /></h3>
-
 		<aui:fieldset>
+			<h3><liferay-ui:message key="groups" /></h3>
+
 			<aui:input cssClass="lfr-input-text-container" label="import-search-filter" name='<%= "ldap--" + LDAPConstants.GROUP_SEARCH_FILTER + "--" %>' type="text" value="<%= ldapGroupSearchFilter %>" />
 
 			<h4><liferay-ui:message key="group-mapping" /></h4>
@@ -272,9 +272,9 @@ renderResponse.setTitle((ldapServerId == 0) ? LanguageUtil.get(resourceBundle, "
 			</aui:button-row>
 		</aui:fieldset>
 
-		<h3><liferay-ui:message key="export" /></h3>
-
 		<aui:fieldset>
+			<h3><liferay-ui:message key="export" /></h3>
+
 			<aui:input cssClass="lfr-input-text-container" label="users-dn" name='<%= "ldap--" + LDAPConstants.USERS_DN + "--" %>' type="text" value="<%= ldapUsersDN %>" />
 
 			<aui:input cssClass="lfr-input-text-container" label="user-default-object-classes" name='<%= "ldap--" + LDAPConstants.USER_DEFAULT_OBJECT_CLASSES + "--" %>' type="text" value="<%= StringUtil.merge(ldapUserDefaultObjectClasses, StringPool.COMMA) %>" />

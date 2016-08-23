@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.mapping.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.dynamic.data.mapping.exception.InvalidParentStructureException;
 import com.liferay.dynamic.data.mapping.exception.RequiredStructureException;
 import com.liferay.dynamic.data.mapping.exception.StructureDefinitionException;
 import com.liferay.dynamic.data.mapping.exception.StructureDuplicateElementException;
@@ -577,7 +578,7 @@ public class DDMStructureLocalServiceTest extends BaseDDMServiceTestCase {
 		Assert.assertEquals(initialCount + 1, count);
 	}
 
-	@Test
+	@Test(expected = InvalidParentStructureException.class)
 	public void testUpdateStructureWithCycles() throws Exception {
 		DDMStructure structureNode1 = addStructure(
 			0, _classNameId, null, "Test Structure1", null,
@@ -596,18 +597,7 @@ public class DDMStructureLocalServiceTest extends BaseDDMServiceTestCase {
 
 		structureNode1.setParentStructureId(structureNode3.getStructureId());
 
-		Exception expectedException = null;
-
-		try {
-			updateStructure(structureNode1);
-		} catch(Exception e) {
-			expectedException = e;
-		}
-
-		Assert.assertNotNull(expectedException);
-		Assert.assertEquals(
-			expectedException.getClass(), StructureDefinitionException.class);
-		Assert.assertTrue(expectedException.getMessage().contains("cycle"));
+		updateStructure(structureNode1);
 	}
 
 	@Test

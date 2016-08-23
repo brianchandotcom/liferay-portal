@@ -47,7 +47,7 @@ public class PropertySetFunction extends BasePropertyFunction {
 			ddmFormFieldEvaluationResult.setReadOnly(
 				Boolean.valueOf(parameters[2].toString()));
 		}
-		else if(property.equals("valid")) {
+		else if (property.equals("valid")) {
 			ddmFormFieldEvaluationResult.setValid(
 				Boolean.valueOf(parameters[2].toString()));
 
@@ -56,10 +56,10 @@ public class PropertySetFunction extends BasePropertyFunction {
 					parameters[3].toString());
 			}
 		}
-		else if(property.equals("value")) {
+		else if (property.equals("value")) {
 			ddmFormFieldEvaluationResult.setValue(parameters[2]);
 		}
-		else if(property.equals("visible")) {
+		else if (property.equals("visible")) {
 			ddmFormFieldEvaluationResult.setVisible(
 				Boolean.valueOf(parameters[2].toString()));
 		}

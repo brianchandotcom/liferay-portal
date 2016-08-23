@@ -109,7 +109,7 @@ public class ServiceMonitorAdvice
 	public void duringFinally(MethodInvocation methodInvocation) {
 		DataSample dataSample = _dataSampleThreadLocal.get();
 
-		if (dataSample!= null) {
+		if (dataSample != null) {
 			_dataSampleThreadLocal.remove();
 
 			DataSampleThreadLocal.addDataSample(dataSample);

@@ -116,7 +116,7 @@ public class UpgradeResourcePermissionTest extends UpgradeResourcePermission {
 		resourcePermission.setPrimKeyId(-1);
 		resourcePermission.setOwnerId(_user.getUserId());
 		resourcePermission.setActionIds(actionIds);
-		resourcePermission.setViewActionId(actionIds % 2!= 1);
+		resourcePermission.setViewActionId(actionIds % 2 != 1);
 
 		resourcePermission =
 			ResourcePermissionLocalServiceUtil.addResourcePermission(

@@ -50,7 +50,7 @@ public class PortalHookConfigurator
 		ServiceReference<ExtendedLogReaderService> serviceReference =
 			bundleContext.getServiceReference(ExtendedLogReaderService.class);
 
-		if (serviceReference!= null) {
+		if (serviceReference != null) {
 			ExtendedLogReaderService extendedLogReaderService =
 				bundleContext.getService(serviceReference);
 

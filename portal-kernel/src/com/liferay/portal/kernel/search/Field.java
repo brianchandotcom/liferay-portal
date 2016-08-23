@@ -187,7 +187,7 @@ public class Field implements Serializable {
 		if (name.contains(StringPool.COMMA) ||
 			name.contains(StringPool.PERIOD) ||
 			name.contains(StringPool.POUND) ||
-			name.contains(StringPool.SLASH) || name.contains(StringPool.STAR)||
+			name.contains(StringPool.SLASH) || name.contains(StringPool.STAR) ||
 			name.startsWith(StringPool.UNDERLINE)) {
 
 			return false;

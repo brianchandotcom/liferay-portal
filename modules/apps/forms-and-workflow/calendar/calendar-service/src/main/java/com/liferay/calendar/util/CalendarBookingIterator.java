@@ -73,7 +73,7 @@ public class CalendarBookingIterator implements Iterator<CalendarBooking> {
 		Calendar jCalendar = _getStartTimeJCalendar(_currentDateValue);
 
 		newCalendarBooking.setEndTime(
-			jCalendar.getTimeInMillis() +_calendarBooking.getDuration());
+			jCalendar.getTimeInMillis() + _calendarBooking.getDuration());
 		newCalendarBooking.setInstanceIndex(_instanceIndex);
 		newCalendarBooking.setStartTime(jCalendar.getTimeInMillis());
 

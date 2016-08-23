@@ -1939,7 +1939,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 				}
 
 				dynamicContentValuesMap.put(
-					languageId, localizedContentIndex+1);
+					languageId, localizedContentIndex + 1);
 			}
 
 			ddmFormFieldValue.setValue(value);

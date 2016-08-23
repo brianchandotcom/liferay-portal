@@ -41,7 +41,7 @@ public class StaticLPKGResolver {
 
 		if (staticLPKGBundleSymbolicName == null) {
 			if (name.contains("Community")) {
-				_STATIC_LPKG_BUNDLE_SYMBOLIC_NAME ="Liferay CE Static";
+				_STATIC_LPKG_BUNDLE_SYMBOLIC_NAME = "Liferay CE Static";
 			}
 			else {
 				_STATIC_LPKG_BUNDLE_SYMBOLIC_NAME = "Liferay Static";

@@ -178,7 +178,7 @@ public class ChannelHubManagerImpl implements ChannelHubManager {
 		ChannelHub channelHub = _channelHubs.get(companyId);
 
 		if (channelHub == null) {
-			synchronized(_channelHubs) {
+			synchronized (_channelHubs) {
 				channelHub = _channelHubs.get(companyId);
 
 				if (channelHub == null) {

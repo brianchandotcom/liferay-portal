@@ -233,9 +233,8 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 
 			serviceDependency.setService(
 				Release.class,
-				"(&(release.bundle.symbolic.name=" +
-					_bundle.getSymbolicName()+ ")(release.schema.version=" +
-						_bundle.getVersion() + "))");
+				"(&(release.bundle.symbolic.name=" + _bundle.getSymbolicName() +
+					")(release.schema.version=" + _bundle.getVersion() + "))");
 
 			_component.add(serviceDependency);
 		}

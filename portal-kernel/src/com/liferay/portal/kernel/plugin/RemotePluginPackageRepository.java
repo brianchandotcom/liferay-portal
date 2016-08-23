@@ -112,7 +112,7 @@ public class RemotePluginPackageRepository {
 			pluginPackages = new ArrayList<>();
 
 			_groupAndArtifactIndex.put(
-				groupId+ StringPool.SLASH + artifactId, pluginPackages);
+				groupId + StringPool.SLASH + artifactId, pluginPackages);
 		}
 
 		pluginPackages.add(pluginPackage);

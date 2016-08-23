@@ -177,16 +177,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		long categoryId = MBCategoryConstants.DISCUSSION_CATEGORY_ID;
 
-		if (Validator.isNull(subject)) {
-			if (Validator.isNotNull(body)) {
-				int pos = Math.min(body.length(), 50);
-
-				subject = body.substring(0, pos) + "...";
-			}
-			else {
-				throw new MessageBodyException("Body is null");
-			}
-		}
+		subject = getDiscussionMessageSubject(subject, body);
 
 		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
 			Collections.emptyList();
@@ -1554,16 +1545,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			String subject, String body, ServiceContext serviceContext)
 		throws PortalException {
 
-		if (Validator.isNull(subject)) {
-			if (Validator.isNotNull(body)) {
-				int pos = Math.min(body.length(), 50);
-
-				subject = body.substring(0, pos) + "...";
-			}
-			else {
-				throw new MessageBodyException("Body is null");
-			}
-		}
+		subject = getDiscussionMessageSubject(subject, body);
 
 		List<ObjectValuePair<String, InputStream>> inputStreamOVPs = null;
 		List<String> existingFiles = null;
@@ -1978,6 +1960,22 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		}
 
 		return body;
+	}
+
+	protected String getDiscussionMessageSubject(String subject, String body)
+		throws MessageBodyException {
+
+		if (Validator.isNotNull(subject)) {
+			return subject;
+		}
+
+		if (Validator.isNull(body)) {
+			throw new MessageBodyException("Body is null");
+		}
+
+		subject = HtmlUtil.extractText(body);
+
+		return StringUtil.shorten(subject, 50);
 	}
 
 	protected String getMessageURL(

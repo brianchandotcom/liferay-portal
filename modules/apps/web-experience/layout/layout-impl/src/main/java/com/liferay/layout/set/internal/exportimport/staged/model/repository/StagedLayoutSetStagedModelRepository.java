@@ -178,8 +178,6 @@ public class StagedLayoutSetStagedModelRepository
 
 		List<LayoutSet> companyLayoutSets = dynamicQuery.list();
 
-		List<StagedLayoutSet> companyStagedLayoutSets = new ArrayList<>();
-
 		Stream<StagedLayoutSet> mappedStream = companyLayoutSets.stream().map(
 			(layoutSet) ->
 				ModelAdapterUtil.adapt(

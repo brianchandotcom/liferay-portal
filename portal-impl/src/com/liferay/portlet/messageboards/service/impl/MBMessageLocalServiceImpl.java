@@ -1965,21 +1965,21 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	protected String getDiscussionMessageSubject(String subject, String body)
 		throws MessageBodyException {
 
-		if (Validator.isNull(subject)) {
-			if (Validator.isNotNull(body)) {
-				subject = HtmlUtil.extractText(body);
-
-				if (subject.length() > 50) {
-					subject =
-						subject.substring(0, 50) + StringPool.TRIPLE_PERIOD;
-				}
-			}
-			else {
-				throw new MessageBodyException("Body is null");
-			}
+		if (Validator.isNotNull(subject)) {
+			return subject;
 		}
 
-		return subject;
+		if (Validator.isNull(body)) {
+			throw new MessageBodyException("Body is null");
+		}
+
+		subject = HtmlUtil.extractText(body);
+
+		if (subject.length() <= 50) {
+			return subject;
+		}
+
+		return subject.substring(50) + StringPool.TRIPLE_PERIOD;
 	}
 
 	protected String getMessageURL(

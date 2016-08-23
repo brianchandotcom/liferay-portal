@@ -14,11 +14,16 @@
 
 package com.liferay.source.formatter;
 
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Hugo Huijser
@@ -43,6 +48,50 @@ public class JavaTermComparator implements Comparator<JavaTerm> {
 		else {
 			return -value;
 		}
+	}
+
+	protected int compareFinderJavaTerms(
+		JavaTerm javaTerm1, JavaTerm javaTerm2, String customSQLContent) {
+
+		Matcher matcher1 = _finderPattern.matcher(javaTerm1.getName());
+
+		if (!matcher1.find()) {
+			return 0;
+		}
+
+		Matcher matcher2 = _finderPattern.matcher(javaTerm2.getName());
+
+		if (!matcher2.find()) {
+			return 0;
+		}
+
+		String namePart1 = matcher1.group(1);
+		String namePart2 = matcher2.group(1);
+
+		if (!namePart1.equals(namePart2)) {
+			return 0;
+		}
+
+		String customSQLKey1 = getCustomSQLKey(javaTerm1);
+		String customSQLKey2 = getCustomSQLKey(javaTerm2);
+
+		if ((customSQLKey1 == null) || (customSQLKey2 == null)) {
+			return 0;
+		}
+
+		int pos1 = customSQLContent.indexOf(customSQLKey1);
+		int pos2 = customSQLContent.indexOf(customSQLKey2);
+
+		if ((pos1 != -1) && (pos2 != -1)) {
+			return pos1 - pos2;
+		}
+
+		int columnCount1 = StringUtil.count(
+			javaTerm1.getName(), CharPool.UNDERLINE);
+		int columnCount2 = StringUtil.count(
+			javaTerm2.getName(), CharPool.UNDERLINE);
+
+		return columnCount1 - columnCount2;
 	}
 
 	protected int compareParameterTypes(
@@ -137,6 +186,19 @@ public class JavaTermComparator implements Comparator<JavaTerm> {
 			}
 		}
 
+		String customSQLContent = javaTerm1.getCustomSQLContent();
+
+		if (Validator.isNotNull(customSQLContent) &&
+			(name1.compareToIgnoreCase(name2) != 0)) {
+
+			int value = compareFinderJavaTerms(
+				javaTerm1, javaTerm2, customSQLContent);
+
+			if (value != 0) {
+				return value;
+			}
+		}
+
 		if (name1.compareToIgnoreCase(name2) != 0) {
 			NaturalOrderStringComparator naturalOrderStringComparator =
 				new NaturalOrderStringComparator(true, false);
@@ -154,6 +216,39 @@ public class JavaTermComparator implements Comparator<JavaTerm> {
 		return compareParameterTypes(javaTerm1, javaTerm2);
 	}
 
+	protected String getCustomSQLKey(JavaTerm javaTerm) {
+		String fileName = javaTerm.getFileName();
+
+		int pos = fileName.lastIndexOf(StringPool.SLASH);
+
+		String objectName = fileName.substring(pos + 1, fileName.length() - 9);
+
+		String javaTermName = javaTerm.getName();
+
+		if (javaTermName.matches("(COUNT|FIND|JOIN)_.*")) {
+			Matcher matcher = _sqlKeyPattern.matcher(javaTerm.getContent());
+
+			if (matcher.find()) {
+				return objectName + StringPool.PERIOD + matcher.group(1);
+			}
+
+			return null;
+		}
+
+		String sqlKey = javaTermName.replaceFirst(
+			"^(do|filter)", StringPool.BLANK);
+
+		sqlKey =
+			StringUtil.toLowerCase(sqlKey.substring(0, 1)) +
+				sqlKey.substring(1);
+
+		return objectName + StringPool.PERIOD + sqlKey;
+	}
+
 	private final boolean _ascending;
+	private final Pattern _finderPattern = Pattern.compile(
+		"((COUNT|FIND|JOIN)_|(do|filter)?([Cc]ount|[Ff]ind)).*");
+	private final Pattern _sqlKeyPattern = Pattern.compile(
+		"\"\\.([^\"]+)\";\n");
 
 }

@@ -72,17 +72,27 @@ public class JavaTerm {
 	public static final int TYPE_VARIABLE_PUBLIC_STATIC = 1;
 
 	public JavaTerm(
-		String name, int type, String content, int lineCount, String indent) {
+		String name, int type, String content, String fileName, int lineCount,
+		String indent) {
 
 		_name = name;
 		_type = type;
 		_content = content;
+		_fileName = fileName;
 		_lineCount = lineCount;
 		_indent = indent;
 	}
 
 	public String getContent() {
 		return _content;
+	}
+
+	public String getCustomSQLContent() {
+		return _customSQLContent;
+	}
+
+	public String getFileName() {
+		return _fileName;
 	}
 
 	public String getIndent() {
@@ -268,6 +278,10 @@ public class JavaTerm {
 		}
 	}
 
+	public void setCustomSQLContent(String customSQLContent) {
+		_customSQLContent = customSQLContent;
+	}
+
 	public void setType(int type) {
 		_type = type;
 	}
@@ -415,6 +429,8 @@ public class JavaTerm {
 	}
 
 	private final String _content;
+	private String _customSQLContent;
+	private final String _fileName;
 	private final String _indent;
 	private final JavaSourceProcessor _javaSourceProcessor =
 		new JavaSourceProcessor();

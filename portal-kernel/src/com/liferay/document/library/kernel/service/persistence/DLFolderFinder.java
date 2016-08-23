@@ -22,17 +22,13 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public interface DLFolderFinder {
-	public int countF_FE_FS_ByG_F_M_M(long groupId, long folderId,
-		java.lang.String[] mimeTypes, boolean includeMountFolders,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition);
-
 	public int countFE_ByG_F(long groupId, long folderId,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition);
 
 	public int countFE_FS_ByG_F(long groupId, long folderId,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition);
 
-	public int filterCountF_FE_FS_ByG_F_M_M(long groupId, long folderId,
+	public int countF_FE_FS_ByG_F_M_M(long groupId, long folderId,
 		java.lang.String[] mimeTypes, boolean includeMountFolders,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition);
 
@@ -46,23 +42,27 @@ public interface DLFolderFinder {
 		java.lang.String[] mimeTypes,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition);
 
-	public java.util.List<java.lang.Object> filterFindF_FE_FS_ByG_F_M_M(
-		long groupId, long folderId, java.lang.String[] mimeTypes,
-		boolean includeMountFolders,
+	public int filterCountF_FE_FS_ByG_F_M_M(long groupId, long folderId,
+		java.lang.String[] mimeTypes, boolean includeMountFolders,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition);
 
 	public java.util.List<java.lang.Object> filterFindFE_FS_ByG_F(
 		long groupId, long folderId,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition);
 
-	public java.util.List<com.liferay.document.library.kernel.model.DLFolder> findF_ByNoAssets();
-
-	public java.util.List<java.lang.Object> findF_FE_FS_ByG_F_M_M(
+	public java.util.List<java.lang.Object> filterFindF_FE_FS_ByG_F_M_M(
 		long groupId, long folderId, java.lang.String[] mimeTypes,
 		boolean includeMountFolders,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition);
 
+	public java.util.List<com.liferay.document.library.kernel.model.DLFolder> findF_ByNoAssets();
+
 	public java.util.List<java.lang.Object> findFE_FS_ByG_F(long groupId,
 		long folderId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition);
+
+	public java.util.List<java.lang.Object> findF_FE_FS_ByG_F_M_M(
+		long groupId, long folderId, java.lang.String[] mimeTypes,
+		boolean includeMountFolders,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition);
 }

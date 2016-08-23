@@ -699,7 +699,6 @@
 
 		<execute macro="Blogs#addEntryWithTags">
 			<var name="entryContent" value="Entry Content" />
-			<var name="entrySubtitle" value="Entry Subtitle" />
 			<var name="entryTitle" value="Entry Title" />
 			<var name="tagNameList" value="tag name 1,tag name 2,tag name 3" />
 		</execute>
@@ -711,7 +710,6 @@
 
 		<execute macro="Blogs#addEntryWithTags">
 			<var name="entryContent" value="Entry Content" />
-			<var name="entrySubtitle" value="Entry Subtitle" />
 			<var name="entryTitle" value="Entry Title" />
 			<var name="tagNameList" value="tag name 2,tag name 3" />
 		</execute>
@@ -723,7 +721,6 @@
 
 		<execute macro="Blogs#addEntryWithTags">
 			<var name="entryContent" value="Entry Content" />
-			<var name="entrySubtitle" value="Entry Subtitle" />
 			<var name="entryTitle" value="Entry Title" />
 			<var name="tagNameList" value="tag name 3" />
 		</execute>

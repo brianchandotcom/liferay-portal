@@ -147,6 +147,8 @@
 		<var name="key_fieldType" value="${fieldType}" />
 
 		<execute function="AssertClick" locator1="Form#ADD_FIELD_TYPE" value1="${fieldType}" />
+
+		<execute function="AssertElementPresent" locator1="Form#SIDEBAR_BASIC_TAB" />
 	</command>
 
 	<command name="goToAdvancedTab">

@@ -63,10 +63,7 @@ import groovy.lang.Closure;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-
-import java.net.JarURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
+import java.io.UncheckedIOException;
 
 import java.nio.charset.StandardCharsets;
 
@@ -81,6 +78,7 @@ import java.util.Properties;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 import java.util.jar.Attributes;
+import java.util.jar.JarFile;
 import java.util.jar.Manifest;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -104,7 +102,9 @@ import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.artifacts.ModuleDependency;
 import org.gradle.api.artifacts.ProjectDependency;
 import org.gradle.api.artifacts.ResolutionStrategy;
+import org.gradle.api.artifacts.ResolveException;
 import org.gradle.api.artifacts.dsl.ArtifactHandler;
+import org.gradle.api.artifacts.dsl.DependencyHandler;
 import org.gradle.api.artifacts.dsl.RepositoryHandler;
 import org.gradle.api.artifacts.maven.Conf2ScopeMapping;
 import org.gradle.api.artifacts.maven.Conf2ScopeMappingContainer;
@@ -165,6 +165,7 @@ import org.gradle.plugins.ide.idea.IdeaPlugin;
 import org.gradle.plugins.ide.idea.model.IdeaModel;
 import org.gradle.plugins.ide.idea.model.IdeaModule;
 import org.gradle.process.ExecSpec;
+import org.gradle.util.CollectionUtils;
 
 /**
  * @author Andrea Di Giorgi
@@ -326,6 +327,12 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		configureTasksPmd(project);
 		configureTasksPublishNodeModule(project);
 
+		if (publishing) {
+			_configureTasksEnabledIfStaleSnapshot(
+				project, MavenPlugin.INSTALL_TASK_NAME,
+				BasePlugin.UPLOAD_ARCHIVES_TASK_NAME);
+		}
+
 		GradleUtil.withPlugin(
 			project, ServiceBuilderPlugin.class,
 			new Action<ServiceBuilderPlugin>() {
@@ -369,7 +376,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 					// configureTaskUploadArchives, because the latter one needs
 					// to know if we are publishing a snapshot or not.
 
-					_configureTaskInstall(project);
 					configureTaskUploadArchives(
 						project, updateFileVersionsTask, updateVersionTask);
 
@@ -486,11 +492,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				"baselining.");
 		configuration.setVisible(false);
 
-		ResolutionStrategy resolutionStrategy =
-			configuration.getResolutionStrategy();
-
-		resolutionStrategy.cacheChangingModulesFor(0, TimeUnit.SECONDS);
-		resolutionStrategy.cacheDynamicVersionsFor(0, TimeUnit.SECONDS);
+		_configureConfigurationNoCache(configuration);
 
 		return configuration;
 	}
@@ -2119,14 +2121,12 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		Project project, ReplaceRegexTask updateFileVersionsTask,
 		ReplaceRegexTask updateVersionTask) {
 
-		Task uploadArchivesTask = GradleUtil.getTask(
-			project, BasePlugin.UPLOAD_ARCHIVES_TASK_NAME);
-
 		if (GradleUtil.isSnapshot(project)) {
-			_configureTaskEnabledIfStaleSnapshot(uploadArchivesTask);
-
 			return;
 		}
+
+		Task uploadArchivesTask = GradleUtil.getTask(
+			project, BasePlugin.UPLOAD_ARCHIVES_TASK_NAME);
 
 		TaskContainer taskContainer = project.getTasks();
 
@@ -2380,73 +2380,76 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		return false;
 	}
 
-	private void _configureTaskEnabledIfStaleSnapshot(Task task) {
-		boolean snapshotIfStale = false;
+	private void _configureConfigurationNoCache(Configuration configuration) {
+		ResolutionStrategy resolutionStrategy =
+			configuration.getResolutionStrategy();
 
-		Project project = task.getProject();
+		resolutionStrategy.cacheChangingModulesFor(0, TimeUnit.SECONDS);
+		resolutionStrategy.cacheDynamicVersionsFor(0, TimeUnit.SECONDS);
+	}
+
+	private void _configureTasksEnabledIfStaleSnapshot(
+		Project project, String... taskNames) {
+
+		boolean snapshotIfStale = false;
 
 		if (project.hasProperty(SNAPSHOT_IF_STALE_PROPERTY_NAME)) {
 			snapshotIfStale = GradleUtil.getProperty(
 				project, SNAPSHOT_IF_STALE_PROPERTY_NAME, true);
 		}
 
-		if (!snapshotIfStale) {
+		if (!snapshotIfStale || _isSnapshotStale(project)) {
 			return;
 		}
 
-		task.onlyIf(
-			new Spec<Task>() {
+		for (String taskName : taskNames) {
+			Task task = GradleUtil.getTask(project, taskName);
 
-				@Override
-				public boolean isSatisfiedBy(Task task) {
-					return _isSnapshotStale(task.getProject());
-				}
-
-			});
+			task.setDependsOn(Collections.emptySet());
+			task.setEnabled(false);
+			task.setFinalizedBy(Collections.emptySet());
+		}
 	}
 
-	private void _configureTaskInstall(Project project) {
-		if (!GradleUtil.isSnapshot(project)) {
-			return;
+	private long _getArtifactLastModifiedTime(Project project) {
+		DependencyHandler dependencyHandler = project.getDependencies();
+
+		Map<String, Object> dependencyNotation = new HashMap<>();
+
+		dependencyNotation.put("group", project.getGroup());
+		dependencyNotation.put("name", GradleUtil.getArchivesBaseName(project));
+		dependencyNotation.put("version", "latest.integration");
+
+		Dependency dependency = dependencyHandler.create(dependencyNotation);
+
+		ConfigurationContainer configurationContainer =
+			project.getConfigurations();
+
+		Configuration configuration =
+			configurationContainer.detachedConfiguration(dependency);
+
+		_configureConfigurationNoCache(configuration);
+
+		File file = CollectionUtils.single(configuration.resolve());
+
+		if (GradleUtil.isFromMavenLocal(project, file)) {
+			throw new GradleException(
+				"Please delete " + file.getParent() + " and try again");
 		}
 
-		Task installTask = GradleUtil.getTask(
-			project, MavenPlugin.INSTALL_TASK_NAME);
+		try (JarFile jarFile = new JarFile(file)) {
+			Manifest manifest = jarFile.getManifest();
 
-		_configureTaskEnabledIfStaleSnapshot(installTask);
-	}
+			Attributes attributes = manifest.getMainAttributes();
 
-	private long _getSnapshotLastModifiedTime(Project project)
-		throws IOException {
+			String lastModified = attributes.getValue(
+				Constants.BND_LASTMODIFIED);
 
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("jar:");
-		sb.append("http://repository.liferay.com/");
-		sb.append("nexus/service/local/artifact/maven/content?g=");
-		sb.append(
-			URLEncoder.encode(
-				String.valueOf(project.getGroup()),
-				StandardCharsets.UTF_8.name()));
-		sb.append("&a=");
-		sb.append(
-			URLEncoder.encode(
-				GradleUtil.getArchivesBaseName(project),
-				StandardCharsets.UTF_8.name()));
-		sb.append("&v=LATEST&r=liferay-public-snapshots!/");
-
-		URL url = new URL(sb.toString());
-
-		JarURLConnection jarURLConnection =
-			(JarURLConnection)url.openConnection();
-
-		Manifest manifest = jarURLConnection.getManifest();
-
-		Attributes attributes = manifest.getMainAttributes();
-
-		String lastModified = attributes.getValue(Constants.BND_LASTMODIFIED);
-
-		return Long.valueOf(lastModified);
+			return Long.valueOf(lastModified);
+		}
+		catch (IOException ioe) {
+			throw new UncheckedIOException(ioe);
+		}
 	}
 
 	private boolean _isSnapshotStale(Project project) {
@@ -2455,14 +2458,17 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		long lastModifiedTime;
 
 		try {
-			lastModifiedTime = _getSnapshotLastModifiedTime(project);
+			lastModifiedTime = _getArtifactLastModifiedTime(project);
 		}
-		catch (IOException ioe) {
-			logger.error(
-				"Unable to get snapshot last modified time for " + project,
-				ioe);
+		catch (ResolveException re) {
+			if (logger.isInfoEnabled()) {
+				logger.info(
+					"Unable to get artifact last modified time for " + project +
+						", a new snapshot will be published",
+					re);
+			}
 
-			return false;
+			return true;
 		}
 
 		// Remove milliseconds from Unix epoch

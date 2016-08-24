@@ -112,7 +112,7 @@
 		<if>
 			<isset var="contentTitle" />
 			<then>
-				<execute function="SelectWindow" locator1="title=${contentTitle} - ${pageName} - ${siteName}" />
+				<execute function="SelectWindow" locator1="title=- ${contentTitle} - ${siteName}" />
 			</then>
 			<else>
 				<execute function="SelectWindow" locator1="title=${pageName} - ${siteName}" />

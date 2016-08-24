@@ -327,6 +327,14 @@
 			<var name="siteName" value="${siteName}" />
 		</execute>
 
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="Server Administration" />
+		</execute>
+
+		<execute macro="ServerAdministration#executeServerResourcesActions">
+			<var name="actionsDescription" value="Reindex all search indexes." />
+		</execute>
+
 		<while>
 			<not>
 				<equals arg1="${count}" arg2="6" />
@@ -438,8 +446,6 @@
 					<var name="parentOrgName" value="Organization Name 2" />
 					<var name="subOrgName" value="Suborganization Name ${count}" />
 				</execute>
-
-				<execute macro="IFrame#closeFrame" />
 
 				<var method="MathUtil#sum('${count}', '1')" name="count" />
 			</then>

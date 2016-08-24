@@ -75,7 +75,7 @@ public class SoyManager extends BaseMultiTemplateManager {
 
 		Template template = new SoyTemplate(
 			templateResources, errorTemplateResource, helperUtilities,
-			templateContextHelper, privileged);
+			(SoyTemplateContextHelper)templateContextHelper, privileged);
 
 		if (restricted) {
 			template = new RestrictedTemplate(

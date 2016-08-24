@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.template.AbstractMultiResourceTemplate;
-import com.liferay.portal.template.TemplateContextHelper;
 
 import java.io.Reader;
 import java.io.Writer;
@@ -42,6 +41,7 @@ import java.security.PrivilegedExceptionAction;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Bruno Basto
@@ -51,12 +51,13 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 	public SoyTemplate(
 		List<TemplateResource> templateResources,
 		TemplateResource errorTemplateResource, Map<String, Object> context,
-		TemplateContextHelper templateContextHelper, boolean privileged) {
+		SoyTemplateContextHelper templateContextHelper, boolean privileged) {
 
 		super(
 			templateResources, errorTemplateResource, context,
 			templateContextHelper, TemplateConstants.LANG_TYPE_SOY, 0);
 
+		_templateContextHelper = templateContextHelper;
 		_privileged = privileged;
 	}
 
@@ -87,12 +88,17 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 	protected SoyMapData getSoyMapData() {
 		SoyMapData soyMapData = new SoyMapData();
 
+		Set<String> restrictedVariables =
+			_templateContextHelper.getRestrictedVariables();
+
 		for (String key : context.keySet()) {
-			if (key.equals(TemplateConstants.NAMESPACE)) {
+			if (restrictedVariables.contains(key)) {
 				continue;
 			}
 
-			soyMapData.put(key, get(key));
+			Object value = get(key);
+
+			soyMapData.put(key, _templateContextHelper.deserializeValue(value));
 		}
 
 		return soyMapData;
@@ -175,6 +181,7 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 	}
 
 	private final boolean _privileged;
+	private final SoyTemplateContextHelper _templateContextHelper;
 
 	private class TemplatePrivilegedExceptionAction
 		implements PrivilegedExceptionAction<SoyFileSet> {

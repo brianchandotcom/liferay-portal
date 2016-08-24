@@ -126,19 +126,34 @@ renderResponse.setTitle(title);
 				<div class="form-group">
 					<aui:input name="parentFolderName" type="resource" value="<%= parentFolderName %>" />
 
-					<aui:button name="selecFolderButton" value="select" />
+					<aui:button name="selectFolderButton" value="select" />
 
-					<aui:script>
-						AUI.$('#<portlet:namespace />selecFolderButton').on(
+					<aui:script use="liferay-item-selector-dialog">
+						$('#<portlet:namespace />selectFolderButton').on(
 							'click',
 							function(event) {
-								Liferay.Util.selectEntity(
+								event.preventDefault();
+
+								var itemSelectorDialog = new A.LiferayItemSelectorDialog(
 									{
-										dialog: {
-											constrain: true,
-											modal: true
+										eventName: '<portlet:namespace />selectFolder',
+										on: {
+											selectedItemChange: function(event) {
+												var selectedItem = event.newVal;
+
+												if (selectedItem) {
+													var folderData = {
+														idString: 'parentFolderId',
+														idValue: selectedItem.folderid,
+														nameString: 'parentFolderName',
+														nameValue: selectedItem.foldername
+													};
+
+													Liferay.Util.selectFolder(folderData, '<portlet:namespace />');
+												}
+											}
 										},
-										id: '<portlet:namespace />selectFolder',
+										'strings.add': '<liferay-ui:message key="done" />',
 										title: '<liferay-ui:message arguments="folder" key="select-x" />',
 
 										<portlet:renderURL var="selectFolderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
@@ -146,19 +161,11 @@ renderResponse.setTitle(title);
 											<portlet:param name="folderId" value="<%= String.valueOf(parentFolderId) %>" />
 										</portlet:renderURL>
 
-										uri: '<%= selectFolderURL.toString() %>'
-									},
-									function(event) {
-										var folderData = {
-											idString: 'parentFolderId',
-											idValue: event.folderid,
-											nameString: 'parentFolderName',
-											nameValue: event.foldername
-										};
-
-										Liferay.Util.selectFolder(folderData, '<portlet:namespace />');
+										url: '<%= selectFolderURL.toString() %>'
 									}
 								);
+
+								itemSelectorDialog.open();
 							}
 						);
 					</aui:script>

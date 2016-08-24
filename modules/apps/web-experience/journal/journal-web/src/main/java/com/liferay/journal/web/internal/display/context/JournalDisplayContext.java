@@ -46,6 +46,9 @@ import com.liferay.message.boards.kernel.service.MBMessageLocalServiceUtil;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -357,6 +360,25 @@ public class JournalDisplayContext {
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		return _folderId;
+	}
+
+	public String getFoldersJSON() {
+		ThemeDisplay themeDisplay = (ThemeDisplay) _request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		JSONArray jsonArray = _getFoldersJSON(
+			themeDisplay.getScopeGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		JSONObject rootNode = JSONFactoryUtil.createJSONObject();
+
+		rootNode.put("icon", "folder");
+		rootNode.put("children", jsonArray);
+		rootNode.put("id", JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+		rootNode.put(
+			"name", LanguageUtil.get(themeDisplay.getLocale(), "home"));
+
+		return rootNode.toString();
 	}
 
 	public String getFolderTitle() throws PortalException {
@@ -1128,6 +1150,32 @@ public class JournalDisplayContext {
 		return new ManagementBarFilterItem(
 			active, WorkflowConstants.getStatusLabel(status),
 			portletURL.toString());
+	}
+
+	private JSONArray _getFoldersJSON(long groupId, long folderId) {
+		List<JournalFolder> folders = JournalFolderLocalServiceUtil.getFolders(
+			groupId, folderId);
+
+		JSONArray jsonFolders = JSONFactoryUtil.createJSONArray();
+
+		for (JournalFolder folder : folders) {
+			JSONObject jsonFolder = JSONFactoryUtil.createJSONObject();
+
+			JSONArray childrenJsonArray = _getFoldersJSON(
+				groupId, folder.getFolderId());
+
+			if (childrenJsonArray.length() > 0) {
+				jsonFolder.put("children", childrenJsonArray);
+			}
+
+			jsonFolder.put("icon", "folder");
+			jsonFolder.put("id", folder.getFolderId());
+			jsonFolder.put("name", folder.getName());
+
+			jsonFolders.put(jsonFolder);
+		}
+
+		return jsonFolders;
 	}
 
 	private String[] _addMenuFavItems;

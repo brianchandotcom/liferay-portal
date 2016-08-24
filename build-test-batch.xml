@@ -1184,10 +1184,11 @@ app.server.type=@{app.server.type}]]></echo>
 											</gradle-execute>
 										</try>
 										<catch>
-											<move file="${module.base.dir}/settings.gradle.temp" tofile="${module.base.dir}/settings.gradle" />
-
 											<fail message="${failure.property}" />
 										</catch>
+										<finally>
+											<move file="${module.base.dir}/settings.gradle.temp" tofile="${module.base.dir}/settings.gradle" />
+										</finally>
 									</trycatch>
 								</else>
 							</if>
@@ -1886,10 +1887,11 @@ information. Make sure to commit in all build services results.
 				<gradle-execute dir="${module.base.dir}" task="compileJava" />
 			</try>
 			<catch>
-				<move file="${module.base.dir}/settings.gradle.temp" tofile="${module.base.dir}/settings.gradle" />
-
 				<fail message="${failure.property}" />
 			</catch>
+			<finally>
+				<move file="${module.base.dir}/settings.gradle.temp" tofile="${module.base.dir}/settings.gradle" />
+			</finally>
 		</trycatch>
 	</target>
 
@@ -1918,10 +1920,11 @@ information. Make sure to commit in all build services results.
 				</gradle-execute>
 			</try>
 			<catch>
-				<move file="${module.base.dir}/settings.gradle.temp" tofile="${module.base.dir}/settings.gradle" />
-
 				<fail message="${failure.property}" />
 			</catch>
+			<finally>
+				<move file="${module.base.dir}/settings.gradle.temp" tofile="${module.base.dir}/settings.gradle" />
+			</finally>
 		</trycatch>
 	</target>
 
@@ -1949,10 +1952,11 @@ information. Make sure to commit in all build services results.
 				<gradle-execute dir="${module.base.dir}" forcedcacheenabled="false" task="baseline" />
 			</try>
 			<catch>
-				<move file="${module.base.dir}/settings.gradle.temp" tofile="${module.base.dir}/settings.gradle" />
-
 				<fail message="${failure.property}" />
 			</catch>
+			<finally>
+				<move file="${module.base.dir}/settings.gradle.temp" tofile="${module.base.dir}/settings.gradle" />
+			</finally>
 		</trycatch>
 
 		<echo>Checking for baseline log files.</echo>
@@ -1996,10 +2000,11 @@ information. Make sure to commit in all build services results.
 				<gradle-execute dir="${module.base.dir}" task="checkSourceFormatting" />
 			</try>
 			<catch>
-				<move file="${module.base.dir}/settings.gradle.temp" tofile="${module.base.dir}/settings.gradle" />
-
 				<fail message="${failure.property}" />
 			</catch>
+			<finally>
+				<move file="${module.base.dir}/settings.gradle.temp" tofile="${module.base.dir}/settings.gradle" />
+			</finally>
 		</trycatch>
 	</target>
 
@@ -2015,10 +2020,11 @@ information. Make sure to commit in all build services results.
 				<gradle-execute dir="${module.base.dir}" task="test" />
 			</try>
 			<catch>
-				<move file="${module.base.dir}/settings.gradle.temp" tofile="${module.base.dir}/settings.gradle" />
-
 				<fail message="${failure.property}" />
 			</catch>
+			<finally>
+				<move file="${module.base.dir}/settings.gradle.temp" tofile="${module.base.dir}/settings.gradle" />
+			</finally>
 		</trycatch>
 	</target>
 

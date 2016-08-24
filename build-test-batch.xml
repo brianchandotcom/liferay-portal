@@ -444,13 +444,24 @@ app.server.type=@{app.server.type}]]></echo>
 /*/*/*/*/lib
 /*/*/*/*/tmp</echo>
 
+			<if>
+				<contains string="@{app.server.type}" substring="tomcat" />
+				<then>
+					<execute>
+						<![CDATA[
+							rm bundles/*.zip
+
+							git add -A
+
+							git diff --cached --name-only | grep -v '^bundles/' | xargs -n 1000 zip liferay-portal-source.zip
+						]]>
+					</execute>
+				</then>
+			</if>
+
 			<execute>
 				<![CDATA[
 					rm bundles/*.zip
-
-					git add -A
-
-					git diff --cached --name-only | grep -v '^bundles/' | xargs -n 1000 zip liferay-portal-source.zip
 
 					zip -r liferay-portal-bundle-@{app.server.type}.zip bundles/*
 				]]>

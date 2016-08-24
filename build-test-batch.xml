@@ -1636,6 +1636,18 @@ ${output.content}</echo>
 		</run-batch-test>
 	</target>
 
+	<target name="portal-gulp-jdk8">
+		<run-batch-test>
+			<test-action>
+				<gradle-execute dir="modules/apps/foundation/frontend-image-editor/frontend-image-editor-capability-brightness" task="gulpTest" />
+			</test-action>
+
+			<test-set-up>
+				<prepare-test-build />
+			</test-set-up>
+		</run-batch-test>
+	</target>
+
 	<target name="portal-web-jdk8">
 		<run-batch-test>
 			<test-action>

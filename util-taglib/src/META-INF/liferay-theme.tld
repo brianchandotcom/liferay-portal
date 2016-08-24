@@ -53,6 +53,21 @@
 		</attribute>
 	</tag>
 	<tag>
+		<name>portlet-messages</name>
+		<tag-class>com.liferay.taglib.theme.PortletMessagesTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>group</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>portlet</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
 		<name>wrap-portlet</name>
 		<tag-class>com.liferay.taglib.theme.WrapPortletTag</tag-class>
 		<body-content>JSP</body-content>

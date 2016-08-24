@@ -297,13 +297,25 @@
 			<var name="portlet" value="Instance Settings" />
 		</execute>
 
-		<execute macro="PortalSettings#navigateToLDAPTab" />
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Authentication" />
+		</execute>
+
+		<execute macro="PortalSettingsNavigator#gotoAuthenticationLDAP" />
 
 		<execute macro="PortalSettings#addLDAPServer">
 			<var name="LDAPServerName" value="ApacheDS Server" />
 		</execute>
 
-		<execute macro="PortalSettings#navigateToLDAPTab" />
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Authentication" />
+		</execute>
+
+		<execute macro="PortalSettingsNavigator#gotoAuthenticationLDAP" />
+
+		<execute macro="PortalSettings#editLDAPServer">
+			<var name="LDAPServerName" value="ApacheDS Server" />
+		</execute>
 
 		<execute macro="PortalSettings#testLDAPConnection" />
 	</command>

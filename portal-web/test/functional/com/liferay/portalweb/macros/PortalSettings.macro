@@ -358,6 +358,12 @@
 		<execute macro="PortletEntry#save" />
 	</command>
 
+	<command name="editLDAPServer">
+		<var name="key_LDAPServerName" value="${LDAPServerName}" />
+
+		<execute function="Click" locator1="PortalSettingsAuthentication#LDAP_SERVERS_TABLE_EDIT" />
+	</command>
+
 	<command name="editVirtualHostCP">
 		<execute function="Type" locator1="PortalSettings#VIRTUAL_HOST_FIELD" value1="${virtualHostName}" />
 		<execute macro="PortletEntry#save" />
@@ -428,14 +434,6 @@
 		<execute function="AssertTextEquals" locator1="PortalSettingsUsers#RESERVED_CREDENTIALS_SCREEN_NAMES_FIELD" value1="${userScreenName}" />
 	</command>
 
-	<command name="navigateToLDAPTab">
-		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Authentication" />
-		</execute>
-
-		<execute function="AssertClick" locator1="NavTab#LDAP" value1="LDAP" />
-	</command>
-
 	<command name="tearDownAuthenticationCP">
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="Instance Settings" />
@@ -485,8 +483,6 @@
 	</command>
 
 	<command name="testLDAPConnection">
-		<execute function="Click" locator1="Icon#CUSTOM_EDIT" />
-
 		<execute function="AssertClick" locator1="PortalSettingsAuthentication#LDAP_SERVER_TEST_LDAP_CONNECTION_BUTTON" value1="Test LDAP Connection" />
 
 		<execute function="AssertTextEquals" locator1="Modal#BODY" value1="Liferay has successfully connected to the LDAP server." />

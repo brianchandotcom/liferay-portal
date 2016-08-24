@@ -171,6 +171,27 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--LDAP_SERVERS_TABLE-->
+<tr>
+	<td>LDAP_SERVERS_TABLE_LDAP_SERVER_ID</td>
+	<td>//tr[contains(.,'${key_LDAPServerName}')]/td[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LDAP_SERVERS_TABLE_NAME</td>
+	<td>//tr[contains(.,'${key_LDAPServerName}')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LDAP_SERVERS_TABLE_EDIT</td>
+	<td>//tr[contains(.,'${key_LDAPServerName}')]/td[3]//span[@title='Edit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--LDAP_SERVER-->
 <tr>
 	<td>LDAP_SERVER_SERVER_NAME</td>

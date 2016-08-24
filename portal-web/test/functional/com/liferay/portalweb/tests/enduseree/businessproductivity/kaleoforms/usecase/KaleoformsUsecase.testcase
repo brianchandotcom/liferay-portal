@@ -2595,7 +2595,7 @@
 		</execute>
 
 		<execute macro="Notifications#viewNotification">
-			<var name="bodyContent" value="Test Test sent you a Kaleo Forms Process for review in the workflow." />
+			<var name="contentBody" value="Test Test sent you a Kaleo Forms Process for review in the workflow." />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -2613,7 +2613,7 @@
 		</execute>
 
 		<execute macro="Notifications#viewNotification">
-			<var name="bodyContent" value="Test Test sent you a Kaleo Forms Process for review in the workflow." />
+			<var name="contentBody" value="Test Test sent you a Kaleo Forms Process for review in the workflow." />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -7020,7 +7020,7 @@
 		</execute>
 
 		<execute macro="Notifications#viewNotification">
-			<var name="bodyContent" value="Your submission was rejected by Test Test, please modify and resubmit." />
+			<var name="contentBody" value="Your submission was rejected by Test Test, please modify and resubmit." />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -7049,7 +7049,7 @@
 		</execute>
 
 		<execute macro="Notifications#viewNotification">
-			<var name="bodyContent" value="Test Test sent you a Kaleo Forms Process for review in the workflow." />
+			<var name="contentBody" value="Test Test sent you a Kaleo Forms Process for review in the workflow." />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -7347,7 +7347,7 @@
 		</execute>
 
 		<execute macro="Notifications#viewNotification">
-			<var name="bodyContent" value="Submission reviewed. The reviewer left the following: ${comment}." />
+			<var name="contentBody" value="Submission reviewed. The reviewer left the following: ${comment}." />
 		</execute>
 	</command>
 
@@ -8271,7 +8271,7 @@
 		</execute>
 
 		<execute macro="Notifications#viewNotification">
-			<var name="bodyContent" value="Test Test sent you a Kaleo Forms Process for review in the workflow." />
+			<var name="contentBody" value="Test Test sent you a Kaleo Forms Process for review in the workflow." />
 		</execute>
 
 		<execute macro="Notifications#navigateToContent">
@@ -8298,7 +8298,7 @@
 		</execute>
 
 		<execute macro="Notifications#viewNotification">
-			<var name="bodyContent" value="Test Test sent you a Kaleo Forms Process for review in the workflow." />
+			<var name="contentBody" value="Test Test sent you a Kaleo Forms Process for review in the workflow." />
 		</execute>
 
 		<execute macro="Notifications#navigateToContent">

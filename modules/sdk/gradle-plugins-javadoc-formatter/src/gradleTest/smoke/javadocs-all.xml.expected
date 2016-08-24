@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+
+<javadocs>
+	<javadoc>
+		<name>GreetingBuilder</name>
+		<type>com.example.sample.GreetingBuilder</type>
+		<author><![CDATA[Brian Wing Shun Chan]]></author>
+		<method>
+			<name>GreetingBuilder</name>
+			<param>
+				<name>name</name>
+				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+		</method>
+		<method>
+			<name>getGoodbye</name>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
+		</method>
+		<method>
+			<name>getHello</name>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
+		</method>
+		<method>
+			<name>getName</name>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
+		</method>
+		<method>
+			<name>setName</name>
+			<param>
+				<name>name</name>
+				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+		</method>
+		<field>
+			<name>_name</name>
+		</field>
+	</javadoc>
+</javadocs>

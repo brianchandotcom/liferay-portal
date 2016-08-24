@@ -322,7 +322,7 @@
 			<var name="fieldValue" value="Text One" />
 		</execute>
 
-		<execute macro="Form#goToAdvancedTab" />
+		<execute macro="Form#gotoAdvancedTab" />
 
 		<execute macro="FormFields#editText">
 			<var name="fieldName" value="visibility" />
@@ -354,7 +354,7 @@
 			<var name="fieldValue" value="Text Two" />
 		</execute>
 
-		<execute macro="Form#goToAdvancedTab" />
+		<execute macro="Form#gotoAdvancedTab" />
 
 		<execute macro="FormFields#editText">
 			<var name="fieldName" value="visibility" />

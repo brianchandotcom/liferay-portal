@@ -155,7 +155,7 @@
 		<execute function="AssertElementPresent" locator1="Form#SIDEBAR_BASIC_TAB" />
 	</command>
 
-	<command name="goToAdvancedTab">
+	<command name="gotoAdvancedTab">
 		<execute function="AssertClick" locator1="Form#SIDEBAR_PROPERTIES_TAB" value1="Properties" />
 	</command>
 
@@ -163,7 +163,7 @@
 		<execute function="Click" locator1="Button#AUTOCOMPLETE" />
 	</command>
 
-	<command name="goToBasicTab">
+	<command name="gotoBasicTab">
 		<execute function="AssertClick" locator1="Form#SIDEBAR_BASIC_TAB" value1="Basic" />
 	</command>
 

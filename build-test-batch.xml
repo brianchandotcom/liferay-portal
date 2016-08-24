@@ -462,7 +462,6 @@ app.server.type=@{app.server.type}]]></echo>
 			</if>
 
 			<zip basedir="." destfile="liferay-portal-bundle-@{app.server.type}.zip" includes="bundles/**" />
-
 		</sequential>
 	</macrodef>
 

@@ -1,0 +1,115 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.captcha.configuration;
+
+import aQute.bnd.annotation.metatype.Meta;
+
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
+
+/**
+ * @author Pei-Jung Lan
+ */
+@ExtendedObjectClassDefinition(category = "foundation")
+@Meta.OCD(
+	id = "com.liferay.captcha.configuration.CaptchaConfiguration",
+	localization = "content/Language", name = "captcha"
+)
+public interface CaptchaConfiguration {
+
+	@Meta.AD(deflt = "1", required = false)
+	public int maxChallenges();
+
+	@Meta.AD(deflt = "true", required = false)
+	public boolean createAccountCaptchaEnabled();
+
+	@Meta.AD(deflt = "true", required = false)
+	public boolean sendPasswordCaptchaEnabled();
+
+	@Meta.AD(deflt = "false", required = false)
+	public boolean messageBoardsEditCategoryCaptchaEnabled();
+
+	@Meta.AD(deflt = "false", required = false)
+	public boolean messageBoardsEditMessageCaptchaEnabled();
+
+	@Meta.AD(
+		deflt = "com.liferay.captcha.simplecaptcha.SimpleCaptchaImpl",
+		optionLabels = {"SimpleCaptcha", "reCAPTCHA"},
+		optionValues = {
+			"com.liferay.captcha.simplecaptcha.SimpleCaptchaImpl",
+			"com.liferay.captcha.recaptcha.ReCaptchaImpl"
+		},
+		required = false
+	)
+	public String captchaEngine();
+
+	@Meta.AD(name = "recaptcha-public-key", required = false)
+	public String reCaptchaPublicKey();
+
+	@Meta.AD(name = "recaptcha-private-key", required = false)
+	public String reCaptchaPrivateKey();
+
+	@Meta.AD(
+		deflt = "https://www.google.com/recaptcha/api.js", required = false
+	)
+	public String reCaptchaScriptUrl();
+
+	@Meta.AD(
+		deflt = "https://www.google.com/recaptcha/api/fallback?k=",
+		required = false
+	)
+	public String reCaptchaNoScriptUrl();
+
+	@Meta.AD(
+		deflt = "https://www.google.com/recaptcha/api/siteverify",
+		required = false
+	)
+	public String reCaptchaVerifyUrl();
+
+	@Meta.AD(deflt = "50", required = false)
+	public int simpleCaptchaHeight();
+
+	@Meta.AD(deflt = "150", required = false)
+	public int simpleCaptchaWidth();
+
+	@Meta.AD(
+		deflt = "nl.captcha.backgrounds.FlatColorBackgroundProducer|nl.captcha.backgrounds.GradiatedBackgroundProducer|nl.captcha.backgrounds.SquigglesBackgroundProducer|nl.captcha.backgrounds.TransparentBackgroundProducer",
+		required = false
+	)
+	public String[] simpleCaptchaBackgroundProducers();
+
+	@Meta.AD(
+		deflt = "nl.captcha.gimpy.BlockGimpyRenderer|nl.captcha.gimpy.DropShadowGimpyRenderer|nl.captcha.gimpy.FishEyeGimpyRenderer|nl.captcha.gimpy.RippleGimpyRenderer|nl.captcha.gimpy.ShearGimpyRenderer",
+		required = false
+	)
+	public String[] simpleCaptchaGimpyRenderers();
+
+	@Meta.AD(
+		deflt = "nl.captcha.noise.CurvedLineNoiseProducer|nl.captcha.noise.StraightLineNoiseProducer",
+		required = false
+	)
+	public String[] simpleCaptchaNoiseProducers();
+
+	@Meta.AD(
+		deflt = "com.liferay.captcha.simplecaptcha.DictionaryWordTextProducer|com.liferay.captcha.simplecaptcha.PinNumberTextProducer|nl.captcha.text.producer.DefaultTextProducer|nl.captcha.text.producer.FiveLetterFirstNameTextProducer",
+		required = false
+	)
+	public String[] simpleCaptchaTextProducers();
+
+	@Meta.AD(
+		deflt = "nl.captcha.text.renderer.DefaultWordRenderer", required = false
+	)
+	public String[] simpleCaptchaWordRenderers();
+
+}

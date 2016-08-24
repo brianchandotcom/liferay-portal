@@ -79,7 +79,7 @@ public class JournalArticleLocalizationModelImpl extends BaseModelImpl<JournalAr
 		TABLE_COLUMNS_MAP.put("languageId", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table JournalArticleLocalization (articleLocalizationId LONG not null primary key,companyId LONG,articlePK LONG,title VARCHAR(75) null,description VARCHAR(75) null,languageId VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table JournalArticleLocalization (articleLocalizationId LONG not null primary key,companyId LONG,articlePK LONG,title VARCHAR(400) null,description STRING null,languageId VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table JournalArticleLocalization";
 	public static final String ORDER_BY_JPQL = " ORDER BY journalArticleLocalization.articleLocalizationId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY JournalArticleLocalization.articleLocalizationId ASC";

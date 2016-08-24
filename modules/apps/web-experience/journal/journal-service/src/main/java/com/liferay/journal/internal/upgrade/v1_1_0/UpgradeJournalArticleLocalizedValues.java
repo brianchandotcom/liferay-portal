@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.upgrade.UpgradeMVCCVersion;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -137,11 +136,33 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 				localeSet.addAll(descriptionMap.keySet());
 
 				for (Locale locale : localeSet) {
+					String articleTitle = titleMap.get(locale);
+					String articleDescription = descriptionMap.get(locale);
+
+					if ((articleTitle != null) &&
+						(articleTitle.length() > _maxArticleTitleLength)) {
+
+						articleTitle = articleTitle.substring(
+							0, _maxArticleTitleLength);
+
+						_logWarning(articleId, "Title");
+					}
+
+					if ((articleDescription != null) &&
+						(articleDescription.length() >
+							_maxArticleDescriptionLength)) {
+
+						articleDescription = articleDescription.substring(
+							0, _maxArticleDescriptionLength);
+
+						_logWarning(articleId, "Description");
+					}
+
 					ps2.setLong(1, _increment());
 					ps2.setLong(2, companyId);
 					ps2.setLong(3, articleId);
-					ps2.setString(4, titleMap.get(locale));
-					ps2.setString(5, descriptionMap.get(locale));
+					ps2.setString(4, articleTitle);
+					ps2.setString(5, articleDescription);
 					ps2.setString(6, LocaleUtil.toLanguageId(locale));
 
 					ps2.addBatch();
@@ -158,8 +179,6 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 				"dependencies/update.sql"));
 
 		runSQLTemplateString(template, false, false);
-
-		upgrade(UpgradeMVCCVersion.class);
 	}
 
 	private static long _increment() {
@@ -168,7 +187,25 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 		return db.increment();
 	}
 
+	private void _logWarning(long articleId, String field) {
+		if (_log.isWarnEnabled()) {
+			StringBundler sbInfo = new StringBundler(6);
+
+			sbInfo.append(field);
+			sbInfo.append(" for article");
+			sbInfo.append(" with Id: ");
+			sbInfo.append(articleId);
+			sbInfo.append(" was truncated because it");
+			sbInfo.append(" exceeded maximum length");
+
+			_log.warn(sbInfo.toString());
+		}
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		UpgradeJournalArticleLocalizedValues.class);
+
+	private static final int _maxArticleDescriptionLength = 4000;
+	private static final int _maxArticleTitleLength = 400;
 
 }

@@ -67,8 +67,12 @@
 		<field name="articleLocalizationId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="articlePK" type="long" />
-		<field name="title" type="String" />
-		<field name="description" type="String" />
+		<field name="title" type="String">
+			<hint name="max-length">400</hint>
+		</field>
+		<field name="description" type="String">
+			<hint name="max-length">4000</hint>
+		</field>
 		<field name="languageId" type="String" />
 	</model>
 	<model name="com.liferay.journal.model.JournalArticleResource">

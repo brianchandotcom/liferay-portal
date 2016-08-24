@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.samples.goodbye;
+package com.example.sample.goodbye;
 
 /**
  * Provided methods to build a "goodbye" greeting.

@@ -97,12 +97,21 @@ AUI.add(
 
 						var settingsFormContainer = settingsForm.get('container');
 
+						var evaluator = settingsForm.get('evaluator');
+
 						instance.set('bodyContent', settingsFormContainer);
 
 						settingsForm.after(
 							'render',
 							function() {
 								settingsFormContainer.one('.navbar-nav').wrap(TPL_NAVBAR_WRAPER);
+							}
+						);
+
+						evaluator.after(
+							'evaluationStarted',
+							function() {
+								instance.set('title', settingsForm.getField('label').getValue());
 							}
 						);
 

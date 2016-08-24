@@ -25,9 +25,11 @@ import java.io.FileReader;
 import java.io.IOException;
 
 import java.nio.charset.StandardCharsets;
+import java.nio.file.FileSystem;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.PathMatcher;
 import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
@@ -37,6 +39,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -221,6 +224,38 @@ public class ModulesStructureTest {
 		return false;
 	}
 
+	private boolean _containsFile(Path dirPath, String pattern)
+		throws IOException {
+
+		FileSystem fileSystem = dirPath.getFileSystem();
+
+		final PathMatcher pathMatcher = fileSystem.getPathMatcher(
+			"glob:" + pattern);
+
+		final AtomicBoolean found = new AtomicBoolean();
+
+		Files.walkFileTree(
+			dirPath,
+			new SimpleFileVisitor<Path>() {
+
+				@Override
+				public FileVisitResult visitFile(
+					Path path, BasicFileAttributes basicFileAttributes) {
+
+					if (pathMatcher.matches(path)) {
+						found.set(true);
+
+						return FileVisitResult.TERMINATE;
+					}
+
+					return FileVisitResult.CONTINUE;
+				}
+
+			});
+
+		return found.get();
+	}
+
 	private String _getGitRepoBuildGradle(
 			Path dirPath, String buildGradleTemplate)
 		throws IOException {
@@ -364,6 +399,23 @@ public class ModulesStructureTest {
 		Assert.assertEquals(
 			"Incorrect " + settingsGradlePath, settingsGradleTemplate,
 			settingsGradle);
+
+		// LPS-67772
+
+		Path gitAttributesPath = dirPath.resolve(".gitattributes");
+
+		boolean gitAttributesExists = Files.exists(gitAttributesPath);
+
+		if (_containsFile(dirPath, "**/src/main/resources/**/*.soy")) {
+			Assert.assertTrue(
+				"Missing " + gitAttributesPath, gitAttributesExists);
+
+			Assert.assertEquals("*.soy\ttext eol=lf", _read(gitAttributesPath));
+		}
+		else {
+			Assert.assertFalse(
+				"Forbidden " + gitAttributesPath, gitAttributesExists);
+		}
 	}
 
 	private void _testThemeBuildScripts(Path dirPath) throws IOException {

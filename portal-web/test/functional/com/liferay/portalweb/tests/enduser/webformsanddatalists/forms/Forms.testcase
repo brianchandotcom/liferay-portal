@@ -98,7 +98,7 @@
 			<var name="fieldValue" value="Text Field With Autocomplete" />
 		</execute>
 
-		<execute macro="Form#goToAdvancedTab" />
+		<execute macro="Form#gotoAdvancedTab" />
 
 		<execute macro="Form#gotoAutocompleteConfiguration" />
 
@@ -124,7 +124,7 @@
 			<var name="fieldName" value="TextFieldWithAutocomplete" />
 		</execute>
 
-		<execute macro="Form#goToAdvancedTab" />
+		<execute macro="Form#gotoAdvancedTab" />
 
 		<execute macro="Form#gotoAutocompleteConfiguration" />
 
@@ -2332,7 +2332,7 @@
 			<var name="fieldValue" value="Text" />
 		</execute>
 
-		<execute macro="Form#goToAdvancedTab" />
+		<execute macro="Form#gotoAdvancedTab" />
 
 		<execute macro="FormFields#enableSwitcher">
 			<var name="fieldName" value="validation" />
@@ -3040,7 +3040,7 @@
 			<var name="fieldName" value="required" />
 		</execute>
 
-		<execute macro="Form#goToAdvancedTab" />
+		<execute macro="Form#gotoAdvancedTab" />
 
 		<execute macro="FormFields#enableSwitcher">
 			<var name="fieldName" value="repeatable" />
@@ -3659,7 +3659,7 @@
 			<var name="fieldName" value="showAsSwitcher" />
 		</execute>
 
-		<execute macro="Form#goToAdvancedTab" />
+		<execute macro="Form#gotoAdvancedTab" />
 
 		<execute macro="FormFields#enableSwitcher">
 			<var name="fieldName" value="showLabel" />
@@ -3734,7 +3734,7 @@
 			<var name="fieldValue" value="Text Field" />
 		</execute>
 
-		<execute macro="Form#goToAdvancedTab" />
+		<execute macro="Form#gotoAdvancedTab" />
 
 		<execute macro="FormFields#enableSwitcher">
 			<var name="fieldName" value="repeatable" />
@@ -3811,7 +3811,7 @@
 			<var name="fieldValue" value="Hidden Field" />
 		</execute>
 
-		<execute macro="Form#goToAdvancedTab" />
+		<execute macro="Form#gotoAdvancedTab" />
 
 		<execute macro="FormFields#editText">
 			<var name="fieldName" value="visibility" />

@@ -135,7 +135,7 @@ if ((classNameId == 0) && (classPK == 0) && !PortalPermissionUtil.contains(permi
 	}
 
 	function <portlet:namespace />selectDistributionScope(distributionScope) {
-		var url = '<%= portletURL.toString() %>&<portlet:namespace />distributionScope=' + distributionScope;
+		var url = '<%= HtmlUtil.escapeJS(portletURL.toString()) %>&<portlet:namespace />distributionScope=' + distributionScope;
 
 		submitForm(document.<portlet:namespace />fm, url);
 	}

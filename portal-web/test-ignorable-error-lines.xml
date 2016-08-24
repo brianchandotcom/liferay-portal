@@ -172,6 +172,10 @@
 			<contains>The addSearchEngineConfigurator method has thrown an exception</contains>
 			<matches></matches>
 		</ignore-error>
+		<ignore-error description="LPS-66736, temporary workaround as the issue does not always occur">
+			<contains></contains>
+			<matches>.*Unable to process message.*product-app-theme.*</matches>
+		</ignore-error>
 		<ignore-error description="LPS-66910, temporary workaround while Albert Lee investigates it">
 			<contains></contains>
 			<matches>Unable to process message.*com.liferay.saml.messaging.Saml[A-Z].*\}\}</matches>

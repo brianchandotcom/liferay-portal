@@ -1243,7 +1243,7 @@
 
 		<execute macro="Page#add">
 			<var name="pageName" value="Embedded Page" />
-			<var name="pageTypeURL" value="http://www.nba.com" />
+			<var name="pageTypeURL" value="http://iscaliforniaonfire.com/" />
 			<var name="siteName" value="Page Type Test Site Name" />
 			<var name="sitePageType" value="Embedded" />
 		</execute>
@@ -1283,8 +1283,8 @@
 		<execute function="AssertLocation" value1="http://localhost:8080/web/page-type-test-site-name/embedded-page" />
 
 		<execute function="SelectFrame" locator1="IFrame#EMBEDDED_IFRAME" />
-		<execute function="AssertElementPresent" locator1="Embedded#EMBEDDED_IMAGE" />
-		<execute function="AssertVisible" locator1="Embedded#EMBEDDED_IMAGE" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Embedded#EMBEDDED_TEXT_YES" value1="Yes" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Embedded#EMBEDDED_TEXT_UPDATED" value1="updated" />
 		<execute function="SelectFrameTop" value1="relative=top" />
 
 		<execute macro="Navigator#gotoSitePage">

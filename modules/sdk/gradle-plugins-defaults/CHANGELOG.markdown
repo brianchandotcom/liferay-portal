@@ -18,8 +18,8 @@ both Gradle 2.14+ and Gradle 3.0.
 
 ### Changed
 - [LPS-67694]: Disable the `install` and `uploadArchives` tasks and all their
-dependencies at configuration phase if the `-PsnapshotIfStale` argument is
-provided and the latest published snapshot is up-to-date.
+dependencies during the configuration phase if the `-PsnapshotIfStale` argument
+is provided and the latest published snapshot is up-to-date.
 
 ### Fixed
 - [LPS-67694]: Use Gradle to download the latest published artifact of a project

@@ -12,7 +12,7 @@
 			<var name="plugin.war" unset="true" />
 
 			<if>
-				<matches pattern="http" string="${test.build.plugins.war.zip.url}" />
+				<matches pattern="https?://" string="${test.build.plugins.war.zip.url}" />
 				<then>
 					<pathconvert pathsep="," property="plugin.war" setonempty="false">
 						<path>
@@ -156,7 +156,7 @@ app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.42</echo>
 		<for list="${plugins.includes}" param="plugin">
 			<sequential>
 				<if>
-					<matches pattern="http" string="@{plugin}" />
+					<matches pattern="https?://" string="@{plugin}" />
 					<then>
 						<mirrors-get
 							dest="${auto.deploy.dir}"

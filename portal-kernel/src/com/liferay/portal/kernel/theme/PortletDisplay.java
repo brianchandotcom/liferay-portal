@@ -101,6 +101,7 @@ public class PortletDisplay implements Cloneable, Serializable {
 		_showExportImportIcon = master.isShowExportImportIcon();
 		_showHelpIcon = master.isShowHelpIcon();
 		_showMoveIcon = master.isShowMoveIcon();
+		_showPermissionsIcon = master.isShowPermissionsIcon();
 		_showPortletCssIcon = master.isShowPortletCssIcon();
 		_showPortletIcon = master.isShowPortletIcon();
 		_showPrintIcon = master.isShowPrintIcon();
@@ -172,6 +173,7 @@ public class PortletDisplay implements Cloneable, Serializable {
 		slave.setShowExportImportIcon(_showExportImportIcon);
 		slave.setShowHelpIcon(_showHelpIcon);
 		slave.setShowMoveIcon(_showMoveIcon);
+		slave.setShowPermissionsIcon(_showPermissionsIcon);
 		slave.setShowPortletCssIcon(_showPortletCssIcon);
 		slave.setShowPortletIcon(_showPortletIcon);
 		slave.setShowPrintIcon(_showPrintIcon);
@@ -461,6 +463,10 @@ public class PortletDisplay implements Cloneable, Serializable {
 		return _showMoveIcon;
 	}
 
+	public boolean isShowPermissionsIcon() {
+		return _showPermissionsIcon;
+	}
+
 	public boolean isShowPortletCssIcon() {
 		return _showPortletCssIcon;
 	}
@@ -544,6 +550,7 @@ public class PortletDisplay implements Cloneable, Serializable {
 		_showExportImportIcon = false;
 		_showHelpIcon = false;
 		_showMoveIcon = false;
+		_showPermissionsIcon = false;
 		_showPortletCssIcon = false;
 		_showPortletIcon = false;
 		_showPrintIcon = false;
@@ -744,6 +751,10 @@ public class PortletDisplay implements Cloneable, Serializable {
 		_showMoveIcon = showMoveIcon;
 	}
 
+	public void setShowPermissionsIcon(boolean showPermissionsIcon) {
+		_showPermissionsIcon = showPermissionsIcon;
+	}
+
 	public void setShowPortletCssIcon(boolean showPortletCssIcon) {
 		_showPortletCssIcon = showPortletCssIcon;
 	}
@@ -918,6 +929,7 @@ public class PortletDisplay implements Cloneable, Serializable {
 	private boolean _showExportImportIcon;
 	private boolean _showHelpIcon;
 	private boolean _showMoveIcon;
+	private boolean _showPermissionsIcon;
 	private boolean _showPortletCssIcon;
 	private boolean _showPortletIcon;
 	private boolean _showPrintIcon;

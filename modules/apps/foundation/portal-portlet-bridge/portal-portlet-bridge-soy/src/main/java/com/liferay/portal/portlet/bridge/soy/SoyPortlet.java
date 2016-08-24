@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -42,6 +43,8 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
@@ -125,6 +128,11 @@ public class SoyPortlet extends MVCPortlet {
 				template, portletResponse.getNamespace());
 
 			_deserializeTemplateContextValues();
+			
+			HttpServletRequest httpServletRequest =
+				PortalUtil.getHttpServletRequest(portletRequest);
+
+			template.prepare(httpServletRequest);
 
 			template.processTemplate(writer);
 

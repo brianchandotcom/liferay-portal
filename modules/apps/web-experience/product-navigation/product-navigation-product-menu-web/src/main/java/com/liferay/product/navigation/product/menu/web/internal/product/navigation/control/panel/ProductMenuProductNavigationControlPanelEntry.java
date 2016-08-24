@@ -16,6 +16,7 @@ package com.liferay.product.navigation.product.menu.web.internal.product.navigat
 
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.BaseControlPanelEntry;
 import com.liferay.portal.kernel.portlet.ControlPanelEntry;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -39,7 +40,13 @@ public class ProductMenuProductNavigationControlPanelEntry
 			PermissionChecker permissionChecker, Group group, Portlet portlet)
 		throws Exception {
 
-		return true;
+		User user = permissionChecker.getUser();
+
+		if (permissionChecker.isSignedIn() && user.isSetupComplete()) {
+			return true;
+		}
+
+		return false;
 	}
 
 }

@@ -1,0 +1,32 @@
+apply plugin: "com.liferay.app.javadoc.builder"
+
+task runGradleTest
+
+version = "2.0.0"
+
+project(":sample-goodbye") {
+	description = "Sample Goodbye"
+	version = "1.0.1"
+}
+
+project(":sample-hello") {
+	description = "Sample Hello"
+	version = "1.0.2"
+}
+
+subprojects {
+	apply plugin: "eclipse"
+	apply plugin: "java"
+}
+
+runGradleTest {
+	dependsOn appJavadoc
+
+	doLast {
+		for (String fileName in ["index.html", "com/example/sample/goodbye/GoodbyeBuilder.html", "com/example/sample/hello/HelloBuilder.html"]) {
+			File generatedFile = new File(appJavadoc.destinationDir, fileName)
+
+			assert generatedFile.exists()
+		}
+	}
+}

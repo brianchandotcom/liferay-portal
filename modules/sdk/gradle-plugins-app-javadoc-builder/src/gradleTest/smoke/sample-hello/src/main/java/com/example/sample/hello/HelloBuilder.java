@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.samples.hello;
+package com.example.sample.hello;
 
 /**
  * Provided methods to build a "hello" greeting.

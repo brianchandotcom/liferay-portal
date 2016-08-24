@@ -14,7 +14,6 @@
 
 package com.liferay.wsrp.internal.messaging;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -28,14 +27,12 @@ import com.liferay.wsrp.util.ExtensionHelperUtil;
 import javax.management.MBeanServer;
 import javax.management.ObjectName;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.util.tracker.ServiceTracker;
-import org.osgi.util.tracker.ServiceTrackerCustomizer;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Shuyang Zhou
@@ -47,24 +44,47 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 )
 public class WSRPMessageListener extends HotDeployMessageListener {
 
-	public void destroy() {
-		_serviceTracker.close();
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	public void registerMBeanServer(MBeanServer mBeanServer) {
+		try {
+			mBeanServer.registerMBean(
+				new WSRPConsumerPortletManager(), new ObjectName(
+					"com.liferay.wsrp:classification=wsrp," +
+						"name=WSRPConsumerPortletManager"));
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to register WSRP consumer portlet manager", e);
+			}
+		}
+	}
+
+	public void unregisterMBeanServer(MBeanServer mBeanServer) {
+		try {
+			mBeanServer.unregisterMBean(
+				new ObjectName(
+					"com.liferay.wsrp:classification=wsrp," +
+						"name=WSRPConsumerPortletManager"));
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to unregister WSRP consumer portlet manager", e);
+			}
+		}
 	}
 
 	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_bundleContext = bundleContext;
-
-		_serviceTracker = ServiceTrackerFactory.open(
-			bundleContext, MBeanServer.class,
-			new MBeanServerServiceTrackerCustomizer());
-
-		_serviceTracker.open();
-
+	protected void activate() {
 		ExtensionHelperUtil.initialize();
 
 		try {
-			_wSRPConsumerPortletLocalService.destroyWSRPConsumerPortlets();
+			_wsrpConsumerPortletLocalService.destroyWSRPConsumerPortlets();
 		}
 		catch (PortalException pe) {
 			if (_log.isWarnEnabled()) {
@@ -72,76 +92,20 @@ public class WSRPMessageListener extends HotDeployMessageListener {
 			}
 		}
 
-		_wSRPConsumerPortletLocalService.initWSRPConsumerPortlets();
-	}
-
-	@Deactivate
-	protected void deactivate(BundleContext bundleContext) {
-		try {
-			_wSRPConsumerPortletLocalService.destroyWSRPConsumerPortlets();
-		}
-		catch (PortalException pe) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to destroy WSRP consumer portlets", pe);
-			}
-		}
+		_wsrpConsumerPortletLocalService.initWSRPConsumerPortlets();
 	}
 
 	@Reference(unbind = "-")
 	protected void setWSRPConsumerPortletLocalService(
 		WSRPConsumerPortletLocalService wSRPConsumerPortletLocalService) {
 
-		_wSRPConsumerPortletLocalService = wSRPConsumerPortletLocalService;
+		_wsrpConsumerPortletLocalService = wSRPConsumerPortletLocalService;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		WSRPMessageListener.class);
 
 	private static WSRPConsumerPortletLocalService
-		_wSRPConsumerPortletLocalService;
-
-	private BundleContext _bundleContext;
-	private ServiceTracker<MBeanServer, MBeanServer> _serviceTracker;
-
-	private class MBeanServerServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer<MBeanServer, MBeanServer> {
-
-		@Override
-		public MBeanServer addingService(
-			ServiceReference<MBeanServer> serviceReference) {
-
-			MBeanServer mBeanServer = _bundleContext.getService(
-				serviceReference);
-
-			try {
-				mBeanServer.registerMBean(
-					new WSRPConsumerPortletManager(),
-					new ObjectName(
-						"com.liferay.wsrp:classification=wsrp,name=" +
-							"WSRPConsumerPortletManager"));
-			}
-			catch (Exception e) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Unable to register WSRP consumer portlet manager", e);
-				}
-			}
-
-			return mBeanServer;
-		}
-
-		@Override
-		public void modifiedService(
-			ServiceReference<MBeanServer> serviceReference,
-			MBeanServer mBeanServer) {
-		}
-
-		@Override
-		public void removedService(
-			ServiceReference<MBeanServer> serviceReference,
-			MBeanServer mBeanServer) {
-		}
-
-	}
+		_wsrpConsumerPortletLocalService;
 
 }

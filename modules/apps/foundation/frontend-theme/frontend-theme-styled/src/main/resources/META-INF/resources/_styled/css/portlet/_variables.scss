@@ -8,7 +8,7 @@ $portlet-topper-link-hover-color: $navbar-default-link-hover-color !default;
 
 $portlet-topper-border-radius: $navbar-border-radius $navbar-border-radius 0 0 !default;
 
-$portlet-topper-border-bottom-width: 1px!default;
+$portlet-topper-border-bottom-width: 1px !default;
 $portlet-topper-border-left-width: 1px !default;
 $portlet-topper-border-right-width: 1px !default;
 $portlet-topper-border-top-width: 1px !default;
@@ -24,6 +24,7 @@ $portlet-content-border-width: $portlet-content-border-top-width $portlet-conten
 
 /* ---------- Portlet decorator ---------- */
 
-$portlet-decorate-bg: #FFF !default;
-$portlet-decorate-border-color: #DEEEEE !default;
-$portlet-decorate-border-width: 1px !default;
+$portlet-decorate-bg: $body-bg !default;
+$portlet-decorate-border-color: $navbar-default-border !default;
+$portlet-decorate-border-style: solid !default;
+$portlet-decorate-border-width: $portlet-content-border-width !default;

@@ -17,11 +17,12 @@ package com.liferay.site.admin.web.internal.exportimport.data.handler;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.lar.BaseStagedModelDataHandler;
+import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.adapter.StagedGroup;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.site.model.adapter.StagedGroup;
 
 import java.util.Collections;
 import java.util.List;
@@ -166,11 +167,27 @@ public class StagedGroupStagedModelDataHandler
 		return _groupLocalService.fetchGroup(existingGroupId);
 	}
 
+	@Override
+	protected StagedModelRepository<StagedGroup> getStagedModelRepository() {
+		return _stagedModelRepository;
+	}
+
 	@Reference(unbind = "-")
 	protected void setGroupLocalService(GroupLocalService groupLocalService) {
 		_groupLocalService = groupLocalService;
 	}
 
+	@Reference(
+		target = "(model.class.name=com.liferay.site.model.adapter.StagedGroup)",
+		unbind = "-"
+	)
+	protected void setStagedModelRepository(
+		StagedModelRepository<StagedGroup> stagedModelRepository) {
+
+		_stagedModelRepository = stagedModelRepository;
+	}
+
 	private GroupLocalService _groupLocalService;
+	private StagedModelRepository<StagedGroup> _stagedModelRepository;
 
 }

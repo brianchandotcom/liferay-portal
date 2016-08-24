@@ -116,7 +116,7 @@
 
 		<echo message="Checking out public releng info from commit ID: ${git.commit.portal.public}" />
 
-		<exec executable="git">
+		<exec dir="${project.dir}" executable="git">
 			<arg value="fetch" />
 			<arg value="upstream" />
 		</exec>
@@ -207,7 +207,7 @@
 	</target>
 
 	<target depends="get-app-version" name="get-app-git-id">
-		<exec executable="git" outputproperty="git.rev.parse.output">
+		<exec dir="${project.dir}" executable="git" outputproperty="git.rev.parse.output">
 			<arg value="rev-parse" />
 			<arg value="head" />
 		</exec>

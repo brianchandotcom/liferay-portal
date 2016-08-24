@@ -97,8 +97,8 @@
 		<execute macro="RSS#addFeed">
 			<var name="buttonRowIndexNumber" value="1" />
 			<var name="feedRowIndexNumber" value="3" />
-			<var name="feedTitle" value="NBA" />
-			<var name="feedUrlLink" value="http://sports.espn.go.com/espn/rss/nba/news" />
+			<var name="feedTitle" value="Reuters > Sports News" />
+			<var name="feedUrlLink" value="http://feeds.reuters.com/reuters/sportsNews" />
 		</execute>
 
 		<execute macro="PortletEntry#save" />
@@ -108,7 +108,7 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<for list="Technology,NBA,Latimes > Technology News" param="feedTitle" >
+		<for list="Technology,Reuters > Sports News,Latimes > Technology News" param="feedTitle" >
 			<execute macro="RSS#viewDisplayFeedTitle">
 				<var name="feedTitle" value="${feedTitle}" />
 			</execute>

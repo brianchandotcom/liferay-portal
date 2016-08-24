@@ -176,6 +176,7 @@ boolean showEditGuestIcon = false;
 boolean showExportImportIcon = false;
 boolean showHelpIcon = false;
 boolean showMoveIcon = !stateMax && !themeDisplay.isStateExclusive();
+boolean showPermissionsIcon = false;
 boolean showPortletCssIcon = false;
 boolean showPortletIcon = (portletResourcePortlet != null) ? Validator.isNotNull(portletResourcePortlet.getIcon()) : Validator.isNotNull(portlet.getIcon());
 boolean showPrintIcon = portlet.hasPortletMode(responseContentType, LiferayPortletMode.PRINT);
@@ -190,30 +191,36 @@ if ((portletParallelRender != null) && (portletParallelRender.booleanValue() == 
 
 Layout curLayout = PortletConfigurationLayoutUtil.getLayout(themeDisplay);
 
-if ((!group.hasStagingGroup() || !PropsValues.STAGING_LIVE_GROUP_LOCKING_ENABLED) &&
-	(PortletPermissionUtil.contains(permissionChecker, themeDisplay.getScopeGroupId(), curLayout, portlet, ActionKeys.CONFIGURATION))) {
+if ((!group.hasStagingGroup() || !PropsValues.STAGING_LIVE_GROUP_LOCKING_ENABLED)) {
 
-	showConfigurationIcon = true;
+	if (PortletPermissionUtil.contains(permissionChecker, themeDisplay.getScopeGroupId(), curLayout, portlet, ActionKeys.CONFIGURATION)) {
 
-	boolean supportsConfigurationLAR = portlet.getConfigurationActionInstance() != null;
-	boolean supportsDataLAR = !(portlet.getPortletDataHandlerInstance() instanceof DefaultConfigurationPortletDataHandler);
+		showConfigurationIcon = true;
 
-	if (supportsConfigurationLAR || supportsDataLAR || !group.isControlPanel()) {
-		showExportImportIcon = true;
+		boolean supportsConfigurationLAR = portlet.getConfigurationActionInstance() != null;
+		boolean supportsDataLAR = !(portlet.getPortletDataHandlerInstance() instanceof DefaultConfigurationPortletDataHandler);
+
+		if (supportsConfigurationLAR || supportsDataLAR || !group.isControlPanel()) {
+			showExportImportIcon = true;
+		}
+
+		if (PropsValues.PORTLET_CSS_ENABLED) {
+			showPortletCssIcon = true;
+		}
+
+		Group checkingStagingGroup = group;
+
+		if (checkingStagingGroup.isControlPanel()) {
+			checkingStagingGroup = themeDisplay.getSiteGroup();
+		}
+
+		if ((checkingStagingGroup.isStaged() || checkingStagingGroup.isStagedRemotely()) && !checkingStagingGroup.hasLocalOrRemoteStagingGroup() && checkingStagingGroup.isStagedPortlet(portletId)) {
+			showStagingIcon = true;
+		}
 	}
 
-	if (PropsValues.PORTLET_CSS_ENABLED) {
-		showPortletCssIcon = true;
-	}
-
-	Group checkingStagingGroup = group;
-
-	if (checkingStagingGroup.isControlPanel()) {
-		checkingStagingGroup = themeDisplay.getSiteGroup();
-	}
-
-	if ((checkingStagingGroup.isStaged() || checkingStagingGroup.isStagedRemotely()) && !checkingStagingGroup.hasLocalOrRemoteStagingGroup() && checkingStagingGroup.isStagedPortlet(portletId)) {
-		showStagingIcon = true;
+	if (PortletPermissionUtil.contains(permissionChecker, themeDisplay.getScopeGroupId(), curLayout, portlet, ActionKeys.PERMISSIONS)) {
+		showPermissionsIcon = true;
 	}
 }
 
@@ -301,6 +308,7 @@ if (layout.isLayoutPrototypeLinkActive()) {
 	showCloseIcon = false;
 	showConfigurationIcon = false;
 	showMoveIcon = false;
+	showPermissionsIcon = false;
 	showPortletCssIcon = false;
 }
 
@@ -380,6 +388,7 @@ portletDisplay.setShowEditGuestIcon(showEditGuestIcon);
 portletDisplay.setShowExportImportIcon(showExportImportIcon);
 portletDisplay.setShowHelpIcon(showHelpIcon);
 portletDisplay.setShowMoveIcon(showMoveIcon);
+portletDisplay.setShowPermissionsIcon(showPermissionsIcon);
 portletDisplay.setShowPortletCssIcon(showPortletCssIcon);
 portletDisplay.setShowPortletIcon(showPortletIcon);
 portletDisplay.setShowPrintIcon(showPrintIcon);
@@ -794,6 +803,7 @@ if (group.isControlPanel()) {
 	portletDisplay.setShowBackIcon(false);
 	portletDisplay.setShowConfigurationIcon(false);
 	portletDisplay.setShowMoveIcon(false);
+	portletDisplay.setShowPermissionsIcon(false);
 	portletDisplay.setShowPortletCssIcon(false);
 
 	if (!portlet.isPreferencesUniquePerLayout() && (portlet.getConfigurationActionInstance() != null) && PortletPermissionUtil.contains(permissionChecker, themeDisplay.getScopeGroupId(), curLayout, portlet, ActionKeys.CONFIGURATION)) {

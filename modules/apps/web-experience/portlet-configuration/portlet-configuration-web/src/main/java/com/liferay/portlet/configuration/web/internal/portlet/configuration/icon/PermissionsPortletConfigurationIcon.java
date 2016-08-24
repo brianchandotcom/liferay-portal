@@ -105,31 +105,7 @@ public class PermissionsPortletConfigurationIcon
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		String rootPortletId = portletDisplay.getRootPortletId();
-
-		if (Validator.isNotNull(portletDisplay.getPortletResource())) {
-			String portletResource = portletDisplay.getPortletResource();
-
-			Portlet portlet = _portletLocalService.getPortletById(
-				themeDisplay.getCompanyId(), portletResource);
-
-			rootPortletId = portlet.getRootPortletId();
-		}
-
-		try {
-			if (!PortletPermissionUtil.contains(
-					themeDisplay.getPermissionChecker(),
-					themeDisplay.getLayout(), rootPortletId,
-					ActionKeys.PERMISSIONS)) {
-
-				return false;
-			}
-		}
-		catch (PortalException pe) {
-			return false;
-		}
-
-		return portletDisplay.isShowConfigurationIcon();
+		return portletDisplay.isShowPermissionsIcon();
 	}
 
 	@Override

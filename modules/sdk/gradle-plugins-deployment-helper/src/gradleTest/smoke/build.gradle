@@ -1,0 +1,23 @@
+apply plugin: "com.liferay.deployment.helper"
+
+task runGradleTest
+
+buildDeploymentHelper {
+	deploymentFiles = ["license.xml"]
+}
+
+repositories {
+	mavenLocal()
+
+	maven {
+		url "https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public"
+	}
+}
+
+runGradleTest {
+	dependsOn buildDeploymentHelper
+
+	doLast {
+		assert buildDeploymentHelper.outputFile.exists()
+	}
+}

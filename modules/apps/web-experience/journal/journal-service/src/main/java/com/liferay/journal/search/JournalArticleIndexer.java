@@ -818,6 +818,7 @@ public class JournalArticleIndexer
 			indexableActionableDynamicQuery =
 				_journalArticleResourceLocalService.
 					getIndexableActionableDynamicQuery();
+
 			indexableActionableDynamicQuery.setPerformActionMethod(
 				new ActionableDynamicQuery.
 					PerformActionMethod<JournalArticleResource>() {

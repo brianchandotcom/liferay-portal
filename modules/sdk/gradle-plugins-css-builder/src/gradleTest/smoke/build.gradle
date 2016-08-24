@@ -1,0 +1,26 @@
+apply plugin: "com.liferay.css.builder"
+apply plugin: "java"
+
+task runGradleTest
+
+repositories {
+	mavenLocal()
+
+	maven {
+		url "https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public"
+	}
+}
+
+runGradleTest {
+	dependsOn classes
+
+	doLast {
+		File dir = file("src/main/resources/css/.sass-cache")
+
+		for (String fileName in ["main.css", "main_rtl.css"]) {
+			File generatedFile = new File(dir, fileName)
+
+			assert generatedFile.exists()
+		}
+	}
+}

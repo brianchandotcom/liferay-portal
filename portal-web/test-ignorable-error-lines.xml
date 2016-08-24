@@ -176,34 +176,6 @@
 			<contains></contains>
 			<matches>.*Unable to process message.*product-app-theme.*</matches>
 		</ignore-error>
-		<ignore-error description="LPS-66910, temporary workaround while Albert Lee investigates it">
-			<contains></contains>
-			<matches>Unable to process message.*com.liferay.saml.messaging.Saml[A-Z].*\}\}</matches>
-		</ignore-error>
-		<ignore-error description="LPS-66910, temporary workaround while Albert Lee investigates it">
-			<contains>BeanLocator is null for servlet context opensocial-portlet</contains>
-			<matches></matches>
-		</ignore-error>
-		<ignore-error description="LPS-66910, temporary workaround while Albert Lee investigates it">
-			<contains>BeanLocator is null for servlet context saml-portlet</contains>
-			<matches></matches>
-		</ignore-error>
-		<ignore-error description="LPS-66910, temporary workaround while Albert Lee investigates it">
-			<contains>Error initializing Spring for oauth-portlet</contains>
-			<matches></matches>
-		</ignore-error>
-		<ignore-error description="LPS-66910, temporary workaround while Albert Lee investigates it">
-			<contains>Error initializing Spring for opensocial-portlet</contains>
-			<matches></matches>
-		</ignore-error>
-		<ignore-error description="LPS-66910, temporary workaround while Albert Lee investigates it">
-			<contains>Error initializing Spring for saml-portlet</contains>
-			<matches></matches>
-		</ignore-error>
-		<ignore-error description="LPS-66910, temporary workaround while Albert Lee investigates it">
-			<contains>Error registering hook for opensocial-portlet</contains>
-			<matches></matches>
-		</ignore-error>
 		<ignore-error description="LRQA-14442, temporary workaround until Kiyoshi Lee fixes it">
 			<contains>[org_eclipse_equinox_http_servlet.*Framework Event Dispatcher: Equinox Container:</contains>
 			<matches></matches>

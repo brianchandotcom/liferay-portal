@@ -3,6 +3,17 @@
 		<execute macro="PortletEntry#save" />
 	</command>
 
+	<command name="addLDAPServer">
+		<execute function="AssertClick" locator1="PortalSettingsAuthentication#AUTHENTICATION_LDAP_ADD_BUTTON" value1="Add" />
+
+		<execute function="Type" locator1="PortalSettingsAuthentication#LDAP_SERVER_SERVER_NAME" value1="${LDAPServerName}" />
+		<execute function="Click" locator1="PortalSettingsAuthentication#LDAP_SERVER_DEFAULT_VALUES_APACHE_DIRECTORY_SERVER_RADIO" />
+
+		<execute function="AssertClick" locator1="PortalSettingsAuthentication#LDAP_SERVER_RESET_VALUES_BUTTON" value1="Reset Values" />
+
+		<execute macro="Button#clickSave" />
+	</command>
+
 	<command name="configureContentSharingAcrossSitesCP">
 		<execute macro="Panel#expandPanel">
 			<var name="panelHeading" value="Content Sharing" />
@@ -347,6 +358,12 @@
 		<execute macro="PortletEntry#save" />
 	</command>
 
+	<command name="editLDAPServer">
+		<var name="key_LDAPServerName" value="${LDAPServerName}" />
+
+		<execute function="Click" locator1="PortalSettingsAuthentication#LDAP_SERVERS_TABLE_EDIT" />
+	</command>
+
 	<command name="editVirtualHostCP">
 		<execute function="Type" locator1="PortalSettings#VIRTUAL_HOST_FIELD" value1="${virtualHostName}" />
 		<execute macro="PortletEntry#save" />
@@ -463,6 +480,28 @@
 		<execute macro="PortalSettings#configureContentSharingAcrossSitesCP">
 			<var name="enableAcrossSite" value="true" />
 		</execute>
+	</command>
+
+	<command name="testLDAPConnection">
+		<execute function="AssertClick" locator1="PortalSettingsAuthentication#LDAP_SERVER_TEST_LDAP_CONNECTION_BUTTON" value1="Test LDAP Connection" />
+
+		<execute function="AssertTextEquals" locator1="Modal#BODY" value1="Liferay has successfully connected to the LDAP server." />
+
+		<var name="key_modalTitle" value="LDAP" />
+
+		<execute function="Click" locator1="Button#CLOSE_MODAL" />
+
+		<execute function="AssertClick" locator1="PortalSettingsAuthentication#LDAP_SERVER_TEST_LDAP_USERS_BUTTON" value1="Test LDAP Users" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="Modal#BODY" value1="A subset of users has been displayed for you to review." />
+
+		<execute function="Click" locator1="Button#CLOSE_MODAL" />
+
+		<execute function="AssertClick" locator1="PortalSettingsAuthentication#LDAP_SERVER_TEST_LDAP_GROUPS_BUTTON" value1="Test LDAP Groups" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="Modal#BODY" value1="A subset of groups has been displayed for you to review." />
+
+		<execute function="Click" locator1="Button#CLOSE_MODAL" />
 	</command>
 
 	<command name="viewAuthenticationCASCP">

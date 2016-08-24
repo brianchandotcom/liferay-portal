@@ -14,8 +14,8 @@ runGradleTest {
 	dependsOn buildWSDL
 
 	doLast {
-		File wsJarFile = file("lib/sample-ws.jar")
+		File generatedFile = file("lib/sample-ws.jar")
 
-		assert wsJarFile.exists()
+		assert generatedFile.exists()
 	}
 }

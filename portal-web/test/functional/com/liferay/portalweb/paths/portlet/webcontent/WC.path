@@ -78,7 +78,7 @@
 <!--ENTRY_ICON-->
 <tr>
 	<td>ENTRY_ICON_THUMBNAIL</td>
-	<td>//div[@data-title='${key_webContentTitle}']//div[@class='entry-thumbnail']/img</td>
+	<td>//li[contains(@data-title,'${key_webContentTitle}')]//div[contains(@class,'icon-vertical-card-container')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -193,6 +193,11 @@
 	<td></td>
 </tr>
 <!--ENTRY_LIST-->
+<tr>
+	<td>ENTRY_LIST_TITLE</td>
+	<td>//tr[contains(.,'${key_webContentTitle}')]//a</td>
+	<td></td>
+</tr>
 <tr>
 	<td>ENTRY_LIST_WORKFLOW_STATUS</td>
 	<td>//tr[contains(.,'${key_webContentTitle}')]//span[@class='workflow-status']/strong</td>

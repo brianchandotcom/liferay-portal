@@ -1483,6 +1483,28 @@
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
+	<command name="viewDisplayStyleCP">
+		<var name="key_webContentTitle" value="${webContentTitle}" />
+
+		<execute macro="Portlet#changeDisplayStyle">
+			<var name="displayStyle" value="Icon" />
+		</execute>
+
+		<execute function="AssertElementPresent#pauseAssertVisible" locator1="WC#ENTRY_ICON_THUMBNAIL" />
+
+		<execute macro="Portlet#changeDisplayStyle">
+			<var name="displayStyle" value="Descriptive" />
+		</execute>
+
+		<execute function="AssertElementPresent#pauseAssertVisible" locator1="WC#ENTRY_DESCRIPTIVE_THUMBNAIL" />
+
+		<execute macro="Portlet#changeDisplayStyle">
+			<var name="displayStyle" value="List" />
+		</execute>
+
+		<execute function="AssertElementPresent" locator1="WC#ENTRY_LIST_TITLE" />
+	</command>
+
 	<command name="viewEditWCViaWCD">
 		<execute function="AssertElementPresent" locator1="WCD#WEB_CONTENT_CONTENT" value1="${webContentContent}" />
 

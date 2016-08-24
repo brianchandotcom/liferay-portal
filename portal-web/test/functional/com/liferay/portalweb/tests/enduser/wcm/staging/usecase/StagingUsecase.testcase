@@ -629,6 +629,8 @@
 			<var name="tagName" value="tag name" />
 		</execute>
 
+		<execute function="Pause" locator1="3000" />
+
 		<execute macro="ProductMenu#gotoSitesPublishing">
 			<var name="portlet" value="Staging" />
 		</execute>

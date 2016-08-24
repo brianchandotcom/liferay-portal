@@ -393,25 +393,6 @@ public class PortletAction extends Action {
 			return;
 		}
 
-		// LPS-1928
-
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			actionRequest);
-
-		if (BrowserSnifferUtil.isIe(request) &&
-			(BrowserSnifferUtil.getMajorVersion(request) == 6.0) &&
-			redirect.contains(StringPool.POUND)) {
-
-			String redirectToken = "&#";
-
-			if (!redirect.contains(StringPool.QUESTION)) {
-				redirectToken = StringPool.QUESTION + redirectToken;
-			}
-
-			redirect = StringUtil.replace(
-				redirect, CharPool.POUND, redirectToken);
-		}
-
 		redirect = PortalUtil.escapeRedirect(redirect);
 
 		if (Validator.isNotNull(redirect)) {

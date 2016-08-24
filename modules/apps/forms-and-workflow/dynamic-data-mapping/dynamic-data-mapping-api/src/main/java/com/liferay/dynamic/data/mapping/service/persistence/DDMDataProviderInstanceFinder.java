@@ -25,28 +25,28 @@ public interface DDMDataProviderInstanceFinder {
 	public int countByKeywords(long companyId, long[] groupIds,
 		java.lang.String keywords);
 
-	public int filterCountByC_G_N_D(long companyId, long[] groupIds,
-		java.lang.String name, java.lang.String description, boolean andOperator);
-
 	public int countByC_G_N_D(long companyId, long[] groupIds,
 		java.lang.String name, java.lang.String description, boolean andOperator);
-
-	public int filterCountByKeywords(long companyId, long[] groupIds,
-		java.lang.String keywords);
 
 	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance> filterByKeywords(
 		long companyId, long[] groupIds, java.lang.String keywords, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance> orderByComparator);
 
-	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance> findByKeywords(
-		long companyId, long[] groupIds, java.lang.String keywords, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance> orderByComparator);
+	public int filterCountByKeywords(long companyId, long[] groupIds,
+		java.lang.String keywords);
+
+	public int filterCountByC_G_N_D(long companyId, long[] groupIds,
+		java.lang.String name, java.lang.String description, boolean andOperator);
 
 	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance> filterFindByC_G_N_D(
 		long companyId, long[] groupIds, java.lang.String name,
 		java.lang.String description, boolean andOperator, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance> orderByComparator);
+
+	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance> findByKeywords(
+		long companyId, long[] groupIds, java.lang.String keywords, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance> orderByComparator);
 
 	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance> findByC_G_N_D(

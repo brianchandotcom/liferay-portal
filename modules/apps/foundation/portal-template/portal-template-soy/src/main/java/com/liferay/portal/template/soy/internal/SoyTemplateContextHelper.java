@@ -14,6 +14,8 @@
 
 package com.liferay.portal.template.soy.internal;
 
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.template.TemplateContextHelper;
 
 import java.util.Collections;
@@ -48,6 +50,12 @@ public class SoyTemplateContextHelper extends TemplateContextHelper {
 	@Override
 	public void prepare(
 		Map<String, Object> contextObjects, HttpServletRequest request) {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		contextObjects.put("locale", themeDisplay.getLocale());
+		contextObjects.put("themeDisplay", themeDisplay);
 	}
 
 }

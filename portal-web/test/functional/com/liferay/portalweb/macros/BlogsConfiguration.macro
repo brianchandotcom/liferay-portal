@@ -102,7 +102,7 @@
 	<command name="viewAsSiteMemberPG">
 		<var name="key_portletName" value="Blogs" />
 
-		<execute function="AssertElementNotPresent" locator1="Portlet#TITLE" />
+		<execute function="AssertElementPresent" locator1="Portlet#TITLE" />
 		<execute function="AssertElementNotPresent" locator1="Blogs#ADD_BLOGS_ENTRY" value1="Add Blog Entry" />
 
 		<if>

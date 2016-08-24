@@ -6,32 +6,46 @@
 	YEAR = staticUtil["java.util.Calendar"].YEAR
 />
 
-<#if (hasFieldValue)>
+<#if fieldValue != "">
+	<#if (hasFieldValue)>
+		<#assign
+			dateValue = fieldRawValue?date["yyyy-MM-dd"]
+
+			fieldValue = calendarFactory.getCalendar(requestedLocale)
+
+			void = fieldValue.setTimeInMillis(dateValue?long)
+		/>
+	<#elseif validator.isNotNull(predefinedValue)>
+		<#assign
+			predefinedDate = dateUtil.parseDate(predefinedValue, requestedLocale)
+
+			fieldValue = calendarFactory.getCalendar(predefinedDate?long)
+		/>
+	<#else>
+		<#assign
+			calendar = calendarFactory.getCalendar(timeZone)
+
+			fieldValue = calendarFactory.getCalendar(calendar.get(YEAR), calendar.get(MONTH), calendar.get(DATE))
+		/>
+	</#if>
+
 	<#assign
-		dateValue = fieldRawValue?date["yyyy-MM-dd"]
-
-		fieldValue = calendarFactory.getCalendar(requestedLocale)
-
-		void = fieldValue.setTimeInMillis(dateValue?long)
-	/>
-<#elseif validator.isNotNull(predefinedValue)>
-	<#assign
-		predefinedDate = dateUtil.parseDate(predefinedValue, requestedLocale)
-
-		fieldValue = calendarFactory.getCalendar(predefinedDate?long)
+		day = fieldValue.get(DATE)
+		month = fieldValue.get(MONTH)
+		year = fieldValue.get(YEAR)
 	/>
 <#else>
 	<#assign
-		calendar = calendarFactory.getCalendar(timeZone)
-
-		fieldValue = calendarFactory.getCalendar(calendar.get(YEAR), calendar.get(MONTH), calendar.get(DATE))
+		day = 0
+		month = -1
+		year = 0
 	/>
 </#if>
 
 <#assign
-	dayValue = paramUtil.getInteger(request, "${namespacedFieldName}Day", fieldValue.get(DATE))
-	monthValue = paramUtil.getInteger(request, "${namespacedFieldName}Month", fieldValue.get(MONTH))
-	yearValue = paramUtil.getInteger(request, "${namespacedFieldName}Year", fieldValue.get(YEAR))
+	dayValue = paramUtil.getInteger(request, "${namespacedFieldName}Day", day)
+	monthValue = paramUtil.getInteger(request, "${namespacedFieldName}Month", month)
+	yearValue = paramUtil.getInteger(request, "${namespacedFieldName}Year", year)
 />
 
 <@liferay_aui["field-wrapper"] cssClass="form-builder-field" data=data helpMessage=escape(fieldStructure.tip) label=escape(label) name=namespacedFieldName>

@@ -70,7 +70,22 @@ else {
 	}
 }
 
+boolean nullDate = false;
+
+if (nullable && !required && (dayValue == 0) && (monthValue == -1) && (yearValue == 0)) {
+	nullDate = true;
+}
+
 Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(simpleDateFormatPattern, locale);
+
+String dateString;
+
+if (nullable && nullDate) {
+	dateString = StringPool.BLANK;
+}
+else {
+	dateString = format.format(calendar.getTime());
+}
 %>
 
 <span class="lfr-input-date <%= cssClass %>" id="<%= randomNamespace %>displayDate">
@@ -79,7 +94,7 @@ Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(simpleDateFormatPa
 			<input class="form-control" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= nameId %>" name="<%= namespace + HtmlUtil.escapeAttribute(name) %>" type="date" value="<%= format.format(calendar.getTime()) %>" />
 		</c:when>
 		<c:otherwise>
-			<aui:input disabled="<%= disabled %>" id="<%= HtmlUtil.getAUICompatibleId(name) %>" label="" name="<%= name %>" placeholder="<%= StringUtil.toLowerCase(simpleDateFormatPattern) %>" required="<%= required %>" title="" type="text" value="<%= format.format(calendar.getTime()) %>" wrappedField="<%= true %>">
+			<aui:input disabled="<%= disabled %>" id="<%= HtmlUtil.getAUICompatibleId(name) %>" label="" name="<%= name %>" placeholder="<%= StringUtil.toLowerCase(simpleDateFormatPattern) %>" required="<%= required %>" title="" type="text" value="<%= dateString %>" wrappedField="<%= true %>">
 				<aui:validator errorMessage="please-enter-a-valid-date" name="custom">
 					function(val) {
 						return AUI().use('aui-datatype-date-parse').Parsers.date('<%= mask %>', val);
@@ -116,10 +131,22 @@ Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(simpleDateFormatPa
 					form = $(checkbox.prop('form'));
 				}
 
-				form.fm('<%= HtmlUtil.getAUICompatibleId(name) %>').prop('disabled', checked);
-				form.fm('<%= HtmlUtil.escapeJS(dayParam) %>').prop('disabled', checked);
-				form.fm('<%= HtmlUtil.escapeJS(monthParam) %>').prop('disabled', checked);
-				form.fm('<%= HtmlUtil.escapeJS(yearParam) %>').prop('disabled', checked);
+				var dayField = form.fm('<%= HtmlUtil.escapeJS(dayParam) %>');
+				var inputDateField = form.fm('<%= HtmlUtil.getAUICompatibleId(name) %>');
+				var monthField = form.fm('<%= HtmlUtil.escapeJS(monthParam) %>');
+				var yearField = form.fm('<%= HtmlUtil.escapeJS(yearParam) %>');
+
+				inputDateField.prop('disabled', checked);
+				dayField.prop('disabled', checked);
+				monthField.prop('disabled', checked);
+				yearField.prop('disabled', checked);
+
+				if (checked) {
+					inputDateField.val('');
+					dayField.val('');
+					monthField.val('');
+					yearField.val('');
+				}
 			}
 		);
 	</aui:script>

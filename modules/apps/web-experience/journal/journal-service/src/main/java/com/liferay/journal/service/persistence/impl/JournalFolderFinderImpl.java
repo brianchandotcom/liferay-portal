@@ -48,17 +48,11 @@ import java.util.Locale;
 public class JournalFolderFinderImpl
 	extends JournalFolderFinderBaseImpl implements JournalFolderFinder {
 
-	public static final String COUNT_A_BY_G_U_F =
-		JournalFolderFinder.class.getName() + ".countA_ByG_U_F";
-
 	public static final String COUNT_F_BY_G_F =
 		JournalFolderFinder.class.getName() + ".countF_ByG_F";
 
-	public static final String FIND_A_BY_G_U_F =
-		JournalFolderFinder.class.getName() + ".findA_ByG_U_F";
-
-	public static final String FIND_A_BY_G_U_F_L =
-		JournalFolderFinder.class.getName() + ".findA_ByG_U_F_L";
+	public static final String COUNT_A_BY_G_U_F =
+		JournalFolderFinder.class.getName() + ".countA_ByG_U_F";
 
 	public static final String FIND_F_BY_NO_ASSETS =
 		JournalFolderFinder.class.getName() + ".findByF_ByNoAssets";
@@ -66,8 +60,14 @@ public class JournalFolderFinderImpl
 	public static final String FIND_F_BY_G_F =
 		JournalFolderFinder.class.getName() + ".findF_ByG_F";
 
+	public static final String FIND_A_BY_G_U_F =
+		JournalFolderFinder.class.getName() + ".findA_ByG_U_F";
+
 	public static final String FIND_F_BY_G_F_L =
 		JournalFolderFinder.class.getName() + ".findF_ByG_F_L";
+
+	public static final String FIND_A_BY_G_U_F_L =
+		JournalFolderFinder.class.getName() + ".findA_ByG_U_F_L";
 
 	@Override
 	public int countF_A_ByG_F(

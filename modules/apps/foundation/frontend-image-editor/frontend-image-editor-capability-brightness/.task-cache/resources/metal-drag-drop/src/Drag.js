@@ -345,7 +345,7 @@ define(['exports', 'metal/src/metal', 'metal-dom/src/all/dom', './helpers/DragAu
 			}
 
 			if (!this.isDragging()) {
-				this.startDragging_();
+				this.startDragging_(event);
 				this.dragScrollDelta_.start(this.activeDragPlaceholder_, this.scrollContainers);
 			}
 			if (this.autoScroll) {
@@ -361,7 +361,7 @@ define(['exports', 'metal/src/metal', 'metal-dom/src/all/dom', './helpers/DragAu
 				this.calculateInitialPosition_(event.targetTouches ? event.targetTouches[0] : event);
 				event.preventDefault();
 				if (event.type === 'keydown') {
-					this.startDragging_();
+					this.startDragging_(event);
 				} else {
 					this.dragHandler_.add.apply(this.dragHandler_, _DragShim2.default.attachDocListeners(this.useShim, {
 						mousemove: this.handleDragMoveEvent_.bind(this),
@@ -479,12 +479,14 @@ define(['exports', 'metal/src/metal', 'metal-dom/src/all/dom', './helpers/DragAu
 			return elements;
 		};
 
-		Drag.prototype.startDragging_ = function startDragging_() {
+		Drag.prototype.startDragging_ = function startDragging_(event) {
 			this.dragging_ = true;
 			this.createActiveDragPlaceholder_();
 			_dom2.default.addClasses(this.activeDragPlaceholder_, this.draggingClass);
 			this.activeDragPlaceholder_.setAttribute('aria-grabbed', 'true');
-			this.emit(Drag.Events.START);
+			this.emit(Drag.Events.START, {
+				originalEvent: event
+			});
 		};
 
 		Drag.prototype.toElements_ = function toElements_(elementOrSelector) {

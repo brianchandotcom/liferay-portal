@@ -1732,7 +1732,217 @@
 		</execute>
 	</command>
 
-	<command name="SearchFolderDocumentNoPermission" priority="4">
+	<command name="SearchFolderImage" priority="4">
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMFolder#addPG">
+			<var name="dmFolderDescription" value="DM Folder Description" />
+			<var name="dmFolderName" value="DM Folder Name" />
+		</execute>
+
+		<execute macro="DMNavigator#gotoFolder">
+			<var name="dmFolderName" value="DM Folder Name" />
+		</execute>
+
+		<execute macro="DMDocument#addPG">
+			<var name="dmDocumentDescription" value="DM Image Description" />
+			<var name="dmDocumentFile" value="Document_1.jpg" />
+			<var name="dmDocumentTitle" value="DM Image Title" />
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchTerm" value="DM Image Title" />
+		</execute>
+
+		<execute macro="Search#viewSearchResultPG">
+			<var name="searchAssetTitle" value="DM Image Title" />
+			<var name="searchAssetType" value="Document" />
+		</execute>
+	</command>
+
+	<command name="SearchSubFolderDocument" priority="4">
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMFolder#addPG">
+			<var name="dmFolderDescription" value="DM Folder Description" />
+			<var name="dmFolderName" value="DM Folder Name" />
+		</execute>
+
+		<execute macro="DMNavigator#gotoFolder">
+			<var name="dmFolderName" value="DM Folder Name" />
+		</execute>
+
+		<execute macro="DMFolder#addSubfolderPG">
+			<var name="dmSubFolderDescription" value="DM SubFolder Description" />
+			<var name="dmSubFolderName" value="DM SubFolder Name" />
+		</execute>
+
+		<execute macro="DMNavigator#gotoFolder">
+			<var name="dmFolderName" value="DM SubFolder Name" />
+		</execute>
+
+		<execute macro="DMDocument#addPG">
+			<var name="dmDocumentDescription" value="DM Document Description" />
+			<var name="dmDocumentFile" value="Document_1.doc" />
+			<var name="dmDocumentTitle" value="DM Document Title" />
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchTerm" value="DM Document Title" />
+		</execute>
+
+		<execute macro="Search#viewSearchResultPG">
+			<var name="searchAssetTitle" value="DM Document Title" />
+			<var name="searchAssetType" value="Document" />
+		</execute>
+	</command>
+
+	<command name="SubscribeToFolder" priority="4">
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMFolder#addPG">
+			<var name="dmFolderDescription" value="DM Folder Description" />
+			<var name="dmFolderName" value="DM Folder Name" />
+		</execute>
+
+		<execute macro="DMNavigator#gotoFolder">
+			<var name="dmFolderName" value="DM Folder Name" />
+		</execute>
+
+		<execute macro="DMFolder#subscribePG" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMNavigator#gotoFolder">
+			<var name="dmFolderName" value="DM Folder Name" />
+		</execute>
+
+		<execute function="Click" locator1="Icon#INFO" />
+
+		<execute function="AssertTextEquals" locator1="Link#UNSUBSCRIBE" value1="Unsubscribe" />
+	</command>
+
+	<command name="UnlockFolderDocument" priority="4">
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMFolder#addPG">
+			<var name="dmFolderDescription" value="DM Folder Description" />
+			<var name="dmFolderName" value="DM Folder Name" />
+		</execute>
+
+		<execute macro="DMNavigator#gotoFolder">
+			<var name="dmFolderName" value="DM Folder Name" />
+		</execute>
+
+		<execute macro="DMDocument#addPG">
+			<var name="dmDocumentDescription" value="DM Document Description" />
+			<var name="dmDocumentFile" value="Document_1.doc" />
+			<var name="dmDocumentTitle" value="DM Document Title" />
+		</execute>
+
+		<execute macro="DMDocument#checkoutPG">
+			<var name="dmDocumentTitle" value="DM Document Title" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMNavigator#gotoFolder">
+			<var name="dmFolderName" value="DM Folder Name" />
+		</execute>
+
+		<execute macro="DMDocument#viewCheckedoutPG">
+			<var name="dmDocumentTitle" value="DM Document Title" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMNavigator#gotoFolder">
+			<var name="dmFolderName" value="DM Folder Name" />
+		</execute>
+
+		<execute macro="DMDocument#checkinPG">
+			<var name="dmDocumentTitle" value="DM Document Title" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMNavigator#gotoFolder">
+			<var name="dmFolderName" value="DM Folder Name" />
+		</execute>
+
+		<execute macro="DMDocument#viewAllPG">
+			<var name="dmDocumentDescription" value="DM Document Description" />
+			<var name="dmDocumentTitle" value="DM Document Title" />
+			<var name="dmDocumentVersionNumber" value="2.0" />
+		</execute>
+	</command>
+
+	<command name="ViewOlderVersion" priority="4">
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMDocument#addPG">
+			<var name="dmDocumentDescription" value="DM Document Description" />
+			<var name="dmDocumentFile" value="Document_1.doc" />
+			<var name="dmDocumentTitle" value="DM Document Title" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMDocument#editPG">
+			<var name="dmDocumentDescriptionEdit" value="DM Document Description Edited" />
+			<var name="dmDocumentTitle" value="DM Document Title" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMDocument#viewPG">
+			<var name="dmDocumentDescription" value="DM Document Description Edited" />
+			<var name="dmDocumentTitle" value="DM Document Title" />
+		</execute>
+
+		<execute macro="DMDocument#viewOlderVersionPG">
+			<var name="dmDocumentDescription" value="DM Document Description" />
+			<var name="dmDocumentTitle" value="DM Document Title" />
+			<var name="dmDocumentVersionNumber" value="1.0" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMDocument#viewPG">
+			<var name="dmDocumentDescription" value="DM Document Description Edited" />
+			<var name="dmDocumentTitle" value="DM Document Title" />
+		</execute>
+
+		<execute macro="DMDocument#viewDocumentVersionNumberCmdPG">
+			<var name="dmDocumentVersionNumber" value="1.1" />
+		</execute>
+	</command>
+
+	<command name="viewSearchResultsForChildObjectRespectsParentFolderPermissions" priority="4">
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="Server Administration" />
 		</execute>
@@ -1764,7 +1974,7 @@
 		<execute macro="ProductMenu#gotoSitesMembers">
 			<var name="portlet" value="Site Memberships" />
 		</execute>
-		
+
 		<execute macro="Site#addMemberUserGroupCP">
 			<var name="userGroupName" value="UG UserGroup Name" />
 		</execute>
@@ -1976,221 +2186,14 @@
 			<var name="siteName" value="Site Name 1" />
 		</execute>
 
-		<execute macro="Search#searchNoPG">
+		<execute macro="Search#searchPG">
+			<var name="searchTerm" value="DM Document Title" />
+		</execute>
+
+		<execute macro="Search#viewSearchNoPG">
 			<var name="searchAssetTitle" value="DM Document Title" />
 			<var name="searchAssetType" value="Document" />
 			<var name="searchNoResults" value="true" />
-			<var name="searchTerm" value="DM Document Title" />
-		</execute>
-	</command>
-
-	<command name="SearchFolderImage" priority="4">
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="DMFolder#addPG">
-			<var name="dmFolderDescription" value="DM Folder Description" />
-			<var name="dmFolderName" value="DM Folder Name" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoFolder">
-			<var name="dmFolderName" value="DM Folder Name" />
-		</execute>
-
-		<execute macro="DMDocument#addPG">
-			<var name="dmDocumentDescription" value="DM Image Description" />
-			<var name="dmDocumentFile" value="Document_1.jpg" />
-			<var name="dmDocumentTitle" value="DM Image Title" />
-		</execute>
-
-		<execute macro="Search#searchPG">
-			<var name="searchTerm" value="DM Image Title" />
-		</execute>
-
-		<execute macro="Search#viewSearchResultPG">
-			<var name="searchAssetTitle" value="DM Image Title" />
-			<var name="searchAssetType" value="Document" />
-		</execute>
-	</command>
-
-	<command name="SearchSubFolderDocument" priority="4">
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="DMFolder#addPG">
-			<var name="dmFolderDescription" value="DM Folder Description" />
-			<var name="dmFolderName" value="DM Folder Name" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoFolder">
-			<var name="dmFolderName" value="DM Folder Name" />
-		</execute>
-
-		<execute macro="DMFolder#addSubfolderPG">
-			<var name="dmSubFolderDescription" value="DM SubFolder Description" />
-			<var name="dmSubFolderName" value="DM SubFolder Name" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoFolder">
-			<var name="dmFolderName" value="DM SubFolder Name" />
-		</execute>
-
-		<execute macro="DMDocument#addPG">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentFile" value="Document_1.doc" />
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
-
-		<execute macro="Search#searchPG">
-			<var name="searchTerm" value="DM Document Title" />
-		</execute>
-
-		<execute macro="Search#viewSearchResultPG">
-			<var name="searchAssetTitle" value="DM Document Title" />
-			<var name="searchAssetType" value="Document" />
-		</execute>
-	</command>
-
-	<command name="SubscribeToFolder" priority="4">
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="DMFolder#addPG">
-			<var name="dmFolderDescription" value="DM Folder Description" />
-			<var name="dmFolderName" value="DM Folder Name" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoFolder">
-			<var name="dmFolderName" value="DM Folder Name" />
-		</execute>
-
-		<execute macro="DMFolder#subscribePG" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoFolder">
-			<var name="dmFolderName" value="DM Folder Name" />
-		</execute>
-
-		<execute function="Click" locator1="Icon#INFO" />
-
-		<execute function="AssertTextEquals" locator1="Link#UNSUBSCRIBE" value1="Unsubscribe" />
-	</command>
-
-	<command name="UnlockFolderDocument" priority="4">
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="DMFolder#addPG">
-			<var name="dmFolderDescription" value="DM Folder Description" />
-			<var name="dmFolderName" value="DM Folder Name" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoFolder">
-			<var name="dmFolderName" value="DM Folder Name" />
-		</execute>
-
-		<execute macro="DMDocument#addPG">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentFile" value="Document_1.doc" />
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
-
-		<execute macro="DMDocument#checkoutPG">
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoFolder">
-			<var name="dmFolderName" value="DM Folder Name" />
-		</execute>
-
-		<execute macro="DMDocument#viewCheckedoutPG">
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoFolder">
-			<var name="dmFolderName" value="DM Folder Name" />
-		</execute>
-
-		<execute macro="DMDocument#checkinPG">
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="DMNavigator#gotoFolder">
-			<var name="dmFolderName" value="DM Folder Name" />
-		</execute>
-
-		<execute macro="DMDocument#viewAllPG">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentTitle" value="DM Document Title" />
-			<var name="dmDocumentVersionNumber" value="2.0" />
-		</execute>
-	</command>
-
-	<command name="ViewOlderVersion" priority="4">
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="DMDocument#addPG">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentFile" value="Document_1.doc" />
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="DMDocument#editPG">
-			<var name="dmDocumentDescriptionEdit" value="DM Document Description Edited" />
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="DMDocument#viewPG">
-			<var name="dmDocumentDescription" value="DM Document Description Edited" />
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
-
-		<execute macro="DMDocument#viewOlderVersionPG">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentTitle" value="DM Document Title" />
-			<var name="dmDocumentVersionNumber" value="1.0" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="DMDocument#viewPG">
-			<var name="dmDocumentDescription" value="DM Document Description Edited" />
-			<var name="dmDocumentTitle" value="DM Document Title" />
-		</execute>
-
-		<execute macro="DMDocument#viewDocumentVersionNumberCmdPG">
-			<var name="dmDocumentVersionNumber" value="1.1" />
 		</execute>
 	</command>
 </definition>

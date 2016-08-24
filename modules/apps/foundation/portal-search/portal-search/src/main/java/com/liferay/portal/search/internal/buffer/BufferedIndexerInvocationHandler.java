@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.search.Bufferable;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistryUtil;
+import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.search.buffer.IndexerRequest;
 import com.liferay.portal.search.buffer.IndexerRequestBuffer;
@@ -46,11 +46,14 @@ public class BufferedIndexerInvocationHandler implements InvocationHandler {
 
 	public BufferedIndexerInvocationHandler(
 		Indexer<?> indexer, IndexStatusManager indexStatusManager,
-		IndexerRegistryConfiguration indexerRegistryConfiguration) {
+		IndexerRegistryConfiguration indexerRegistryConfiguration,
+		PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry) {
 
 		_indexer = indexer;
 		_indexStatusManager = indexStatusManager;
 		_indexerRegistryConfiguration = indexerRegistryConfiguration;
+		_persistedModelLocalServiceRegistry =
+			persistedModelLocalServiceRegistry;
 	}
 
 	@Override
@@ -127,12 +130,13 @@ public class BufferedIndexerInvocationHandler implements InvocationHandler {
 			String className = (String)args[0];
 			Long classPK = (Long)args[1];
 
-			PersistedModelLocalService service =
-				PersistedModelLocalServiceRegistryUtil.
+			PersistedModelLocalService persistedModelLocalService =
+				_persistedModelLocalServiceRegistry.
 					getPersistedModelLocalService(className);
 
 			try {
-				Object obj = service.getPersistedModel(classPK);
+				Object obj = persistedModelLocalService.getPersistedModel(
+					classPK);
 
 				if (obj instanceof ResourcedModel) {
 					ResourcedModel resourcedModel = (ResourcedModel)obj;
@@ -234,5 +238,7 @@ public class BufferedIndexerInvocationHandler implements InvocationHandler {
 	private volatile IndexerRequestBufferOverflowHandler
 		_indexerRequestBufferOverflowHandler;
 	private final IndexStatusManager _indexStatusManager;
+	private final PersistedModelLocalServiceRegistry
+		_persistedModelLocalServiceRegistry;
 
 }

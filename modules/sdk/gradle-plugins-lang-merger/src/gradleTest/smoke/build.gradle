@@ -1,0 +1,62 @@
+buildscript {
+	dependencies {
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.lang.builder", version: "latest.release"
+	}
+
+	repositories {
+		mavenLocal()
+
+		maven {
+			url "https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public"
+		}
+	}
+}
+
+task runGradleTest
+
+subprojects {
+	apply plugin: "com.liferay.lang.builder"
+	apply plugin: "java"
+
+	buildLang {
+		translateClientId = project.properties["microsoft.translator.client.id"]
+		translateClientSecret = project.properties["microsoft.translator.client.secret"]
+	}
+
+	repositories {
+		mavenLocal()
+
+		maven {
+			url "https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public"
+		}
+	}
+}
+
+project(":sample-web") {
+	apply plugin: "com.liferay.lang.merger"
+}
+
+runGradleTest {
+	Project webProject = project(":sample-web")
+
+	dependsOn webProject.tasks.classes
+
+	doLast {
+		FileTree languagePropertiesFileTree = fileTree(dir: webProject.sourceSets.main.output.resourcesDir, include: "content/Language*.properties")
+
+		assert !languagePropertiesFileTree.empty
+
+		languagePropertiesFileTree.each {
+			File languagePropertiesFile ->
+
+			Properties languageProperties = new Properties()
+
+			languagePropertiesFile.withInputStream {
+				languageProperties.load it
+			}
+
+			assert languageProperties.getProperty("sample-lang")
+			assert languageProperties.getProperty("sample-web")
+		}
+	}
+}

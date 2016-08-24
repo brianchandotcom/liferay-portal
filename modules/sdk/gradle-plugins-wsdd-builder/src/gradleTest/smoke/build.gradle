@@ -1,0 +1,72 @@
+buildscript {
+	dependencies {
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.service.builder", version: "latest.release"
+	}
+
+	repositories {
+		mavenLocal()
+
+		maven {
+			url "https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public"
+		}
+	}
+}
+
+subprojects {
+	apply plugin: "java"
+
+	group = "com.example.sample"
+
+	repositories {
+		mavenLocal()
+
+		maven {
+			url "https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public"
+		}
+	}
+}
+
+task runGradleTest
+
+project(":sample-api") {
+	dependencies {
+		compile group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
+		compile group: "com.liferay", name: "com.liferay.osgi.util", version: "3.0.0"
+		compile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.6.0"
+		compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+	}
+}
+
+project(":sample-service") {
+	apply plugin: "com.liferay.portal.tools.service.builder"
+	apply plugin: "com.liferay.portal.tools.wsdd.builder"
+
+	buildService {
+		apiDir = "../sample-api/src/main/java"
+		osgiModule = true
+	}
+
+	dependencies {
+		compile group: "com.liferay", name: "com.liferay.portal.spring.extender", version: "2.0.0"
+		compile project(":sample-api")
+	}
+}
+
+runGradleTest {
+	Project serviceProject = project(":sample-service")
+
+	dependsOn serviceProject.tasks.buildWSDD
+
+	doLast {
+		String[] fileNames = [
+			"server-config.wsdd",
+			"src/main/resources/com/example/sample/service/http/FooService_deploy.wsdd",
+			"src/main/resources/com/example/sample/service/http/FooService_undeploy.wsdd"]
+
+		for (String fileName in fileNames) {
+			File file = serviceProject.file(fileName)
+
+			assert file.exists()
+		}
+	}
+}

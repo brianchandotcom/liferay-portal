@@ -1,0 +1,22 @@
+apply plugin: "com.liferay.tld.formatter"
+
+task runGradleTest
+
+repositories {
+	mavenLocal()
+
+	maven {
+		url "https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public"
+	}
+}
+
+runGradleTest {
+	dependsOn formatTLD
+
+	doLast {
+		File expectedSampleTldFile = file("expected-sample.tld")
+		File sampleTldFile = file("src/main/resources/sample.tld")
+
+		assert expectedSampleTldFile.text.normalize() == sampleTldFile.text.normalize()
+	}
+}

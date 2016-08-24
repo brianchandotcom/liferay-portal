@@ -1,0 +1,36 @@
+apply plugin: "com.liferay.whip"
+apply plugin: "eclipse"
+apply plugin: "java"
+
+group = "com.example"
+
+task runGradleTest
+
+dependencies {
+	testCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "latest.release"
+	testCompile group: "com.liferay.portal", name: "com.liferay.portal.test", version: "latest.release"
+	testCompile group: "junit", name: "junit", version: "4.12"
+}
+
+repositories {
+	mavenLocal()
+
+	maven {
+		url "https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public"
+	}
+}
+
+runGradleTest {
+	dependsOn test
+}
+
+test {
+	testLogging {
+		showStandardStreams = true
+	}
+
+	whip {
+		excludes = ['.*Test', '.*Test\\$.*', '.*\\$Proxy.*', 'com/liferay/whip/.*']
+		includes = ['com/example/.*']
+	}
+}

@@ -1,0 +1,26 @@
+apply plugin: "com.liferay.soy"
+apply plugin: "java"
+
+task runGradleTest
+
+repositories {
+	mavenLocal()
+
+	maven {
+		url "https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public"
+	}
+}
+
+runGradleTest {
+	dependsOn buildSoy
+
+	doLast {
+		FileTree soyFileTree = fileTree(dir: "src/main/resources", include: "**/*.soy")
+
+		soyFileTree.each {
+			File soyJsFile = file(relativePath(it) + ".js")
+
+			assert soyJsFile.exists()
+		}
+	}
+}

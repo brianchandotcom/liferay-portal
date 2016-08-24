@@ -1,0 +1,24 @@
+apply plugin: "com.liferay.tlddoc.builder"
+apply plugin: "java"
+
+task runGradleTest
+
+repositories {
+	mavenLocal()
+
+	maven {
+		url "https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public"
+	}
+}
+
+runGradleTest {
+	dependsOn "tlddoc"
+
+	doLast {
+		for (String fileName in ["index.html", "images/breadcrumb.png", "sample/hello-world.html"]) {
+			File file = new File(tlddoc.destinationDir, fileName)
+
+			assert file.exists()
+		}
+	}
+}

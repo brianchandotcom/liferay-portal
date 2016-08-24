@@ -24,26 +24,28 @@ boolean privateLayout = layoutsAdminDisplayContext.isPrivateLayout();
 long parentPlid = LayoutConstants.DEFAULT_PLID;
 long parentLayoutId = LayoutConstants.DEFAULT_PARENT_LAYOUT_ID;
 
-Theme selTheme = null;
+String selThemeId = null;
 
 if (layout.isTypeControlPanel()) {
 	if (layoutsAdminDisplayContext.getSelPlid() != 0) {
 		selLayout = LayoutLocalServiceUtil.getLayout(layoutsAdminDisplayContext.getSelPlid());
 
-		selTheme = selLayout.getTheme();
+		selThemeId = selLayout.getThemeId();
 
 		privateLayout = selLayout.isPrivateLayout();
 		parentPlid = selLayout.getPlid();
 		parentLayoutId = selLayout.getLayoutId();
 	}
 	else {
-		selTheme = selLayoutSet.getTheme();
+		LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
+
+		selThemeId = selLayoutSet.getThemeId();
 	}
 }
 else {
 	selLayout = layout;
 
-	selTheme = layout.getTheme();
+	selThemeId = layout.getThemeId();
 
 	privateLayout = layout.isPrivateLayout();
 	parentPlid = layout.getParentPlid();
@@ -171,7 +173,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "add-new-page"));
 						<liferay-ui:layout-templates-list
 							layoutTemplateId="<%= PropsValues.DEFAULT_LAYOUT_TEMPLATE_ID %>"
 							layoutTemplateIdPrefix="addLayout"
-							layoutTemplates="<%= LayoutTemplateLocalServiceUtil.getLayoutTemplates(layout.getThemeId()) %>"
+							layoutTemplates="<%= LayoutTemplateLocalServiceUtil.getLayoutTemplates(selThemeId) %>"
 						/>
 					</div>
 				</c:if>

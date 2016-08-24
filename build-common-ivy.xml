@@ -28,6 +28,14 @@
 				<then>
 					<loadfile property="md5.checksum" srcFile="@{file}.md5" />
 
+					<propertyregex
+						input="${md5.checksum}"
+						property="md5.checksum"
+						override="true"
+						regexp="^(\w+)"
+						select="\1"
+					/>
+
 					<checksum file="@{file}" property="${md5.checksum}" verifyproperty="valid.checksum" />
 				</then>
 				<else>

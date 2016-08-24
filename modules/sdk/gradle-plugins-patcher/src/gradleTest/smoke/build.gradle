@@ -2,8 +2,7 @@ import com.liferay.gradle.plugins.patcher.PatchTask
 
 buildscript {
 	dependencies {
-		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.patcher", version: "latest.release"
-		classpath group: "com.netflix.nebula", name: "gradle-extra-configurations-plugin", version: "latest.release"
+		classpath group: "com.netflix.nebula", name: "gradle-extra-configurations-plugin", version: "3.1.0"
 	}
 
 	repositories {
@@ -18,7 +17,7 @@ buildscript {
 apply plugin: "com.liferay.patcher"
 apply plugin: "nebula.optional-base"
 
-task patch(type: PatchTask)
+task runGradleTest(type: PatchTask)
 
 group = "com.liferay"
 version = "1.1.1.LIFERAY-PATCHED-1"
@@ -27,15 +26,22 @@ dependencies {
 	compile group: "com.googlecode.json-simple", name: "json-simple", optional, version: "1.1.1"
 }
 
-patch {
-	fileNames "org/json/simple/JSONObject.java"
-	originalLibModuleName = "json-simple"
-}
-
 repositories {
 	mavenLocal()
 
 	maven {
 		url "https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public"
 	}
+}
+
+runGradleTest {
+	doLast {
+		File expectedFile = file("JSONObject.java.expected")
+		File generatedFile = file("src/main/java/org/json/simple/JSONObject.java")
+
+		assert expectedFile.text.normalize() == generatedFile.text.normalize()
+	}
+
+	fileNames "org/json/simple/JSONObject.java"
+	originalLibModuleName = "json-simple"
 }

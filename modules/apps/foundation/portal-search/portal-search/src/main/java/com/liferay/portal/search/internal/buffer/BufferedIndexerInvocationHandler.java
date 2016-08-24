@@ -145,6 +145,9 @@ public class BufferedIndexerInvocationHandler implements InvocationHandler {
 				}
 			}
 			catch (Exception e) {
+				if (_log.isDebugEnabled()) {
+					_log.debug("Error obtaining resourcePrimKey", e);
+				}
 			}
 
 			bufferRequest(methodKey, className, classPK, indexerRequestBuffer);

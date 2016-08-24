@@ -1,0 +1,13 @@
+apply plugin: "com.liferay.node"
+
+task runGradleTest
+
+runGradleTest {
+	dependsOn npmInstall
+
+	doLast {
+		File generatedFile = file("node_modules/left-pad/index.js")
+
+		assert generatedFile.exists()
+	}
+}

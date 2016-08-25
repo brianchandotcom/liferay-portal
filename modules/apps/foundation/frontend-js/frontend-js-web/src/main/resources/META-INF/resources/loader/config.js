@@ -10,6 +10,12 @@
 		url: combine ? LiferayAUI.getComboPath() : themeDisplay.getPortalURL()
 	};
 
+	if (!combine) {
+		__CONFIG__.defaultURLParams = {
+			languageId: themeDisplay.getLanguageId()
+		};
+	}
+
 	__CONFIG__.maps = Liferay.MAPS;
 
 	__CONFIG__.modules = Liferay.MODULES;

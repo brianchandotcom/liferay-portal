@@ -387,9 +387,7 @@
 			<var name="searchAssetType" value="Wiki Page" />
 		</execute>
 
-		<execute macro="Search#removeFacetValuePG">
-			<var name="searchFacetValue" value="Wiki Page" />
-		</execute>
+		<execute macro="Search#unscopeAssetFacetPG" />
 
 		<execute macro="Search#gotoModifiedRangeFacetPG">
 			<var name="searchModifiedRange" value="Past Month" />

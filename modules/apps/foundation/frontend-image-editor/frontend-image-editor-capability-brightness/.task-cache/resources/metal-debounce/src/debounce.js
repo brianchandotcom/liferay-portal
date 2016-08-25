@@ -12,16 +12,24 @@ define(['exports'], function (exports) {
 		value: true
 	});
 	function debounce(fn, delay) {
-		var id;
-		return function () {
+		return function debounced() {
 			var args = arguments;
-			clearTimeout(id);
-			id = setTimeout(function () {
+			cancelDebounce(debounced);
+			debounced.id = setTimeout(function () {
 				fn.apply(null, args);
 			}, delay);
 		};
 	}
 
+	/**
+  * Cancels the scheduled debounced function.
+  */
+	function cancelDebounce(debounced) {
+		clearTimeout(debounced.id);
+	}
+
 	exports.default = debounce;
+	exports.cancelDebounce = cancelDebounce;
+	exports.debounce = debounce;
 });
 //# sourceMappingURL=debounce.js.map

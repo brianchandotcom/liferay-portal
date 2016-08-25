@@ -1,4 +1,4 @@
-define("frontend-image-editor-capability-brightness@1.0.4/BrighntessComponent.es", ['exports', 'metal-component/src/Component', 'metal-soy/src/Soy', 'metal/src/core', 'metal-debounce/src/debounce', 'metal-promise/src/promise/Promise', 'metal-slider/src/Slider', './BrightnessComponent.soy', './BrightnessControls.soy'], function (exports, _Component2, _Soy, _core, _debounce, _Promise, _Slider, _BrightnessComponent, _BrightnessControls) {
+define(['exports', 'metal-component/src/Component', 'metal-soy/src/Soy', 'metal/src/core', 'metal-debounce/src/debounce', 'metal-promise/src/promise/Promise', 'metal-slider/src/Slider', './BrightnessComponent.soy', './BrightnessControls.soy'], function (exports, _Component2, _Soy, _core, _debounce, _Promise, _Slider, _BrightnessComponent, _BrightnessControls) {
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {

@@ -9,6 +9,6 @@
         "dependencies": ["exports", "metal-component/src/Component", "metal-soy/src/Soy"]
     },
     "frontend-image-editor-capability-brightness@1.0.4/metal-slider/src/Slider.soy": {
-        "dependencies": ["exports", "metal-component/src/Component", "metal-soy/src/Soy"]
+        "dependencies": ["exports", "metal-component/src/all/component", "metal-soy/src/Soy"]
     }
 }

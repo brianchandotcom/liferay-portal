@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <root>
-	<header available-locales="zh_CN,es_ES,ja_JP,nl_NL,hu_HU,pt_BR,de_DE,iw_IL,fi_FI,ca_ES,fr_FR,en_US" build-number="7001" export-date="Tue, 09 Aug 2016 10:32:03 +0000" company-id="20116" company-group-id="20160" group-id="43802" user-personal-site-group-id="20157" private-layout="true" type-uuid="9645c43e-822a-7e90-8d5d-e20d6b122571" type="layout-set-prototype" logo-path="/group/43802/logo" theme-id="westerosbank_WAR_westerosbanktheme" color-scheme-id="01">
+	<header available-locales="en_US" build-number="7001" export-date="Tue, 09 Aug 2016 10:32:03 +0000" company-id="20116" company-group-id="20160" group-id="43802" user-personal-site-group-id="20157" private-layout="true" type-uuid="9645c43e-822a-7e90-8d5d-e20d6b122571" type="layout-set-prototype" logo-path="/group/43802/logo" theme-id="westerosbank_WAR_westerosbanktheme" color-scheme-id="01">
 		<css><![CDATA[]]></css>
 		<settings><![CDATA[showSiteName=false
 ]]></settings>

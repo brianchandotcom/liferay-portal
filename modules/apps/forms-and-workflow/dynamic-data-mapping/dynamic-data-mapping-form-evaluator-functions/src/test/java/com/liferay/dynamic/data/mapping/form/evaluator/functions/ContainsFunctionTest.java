@@ -23,6 +23,16 @@ import org.junit.Test;
 public class ContainsFunctionTest {
 
 	@Test
+	public void testCaseInsensitiveComparison() throws Exception {
+		ContainsFunction containsFunction = new ContainsFunction();
+
+		Boolean result = (Boolean)containsFunction.evaluate(
+			"Some test", "Test");
+
+		Assert.assertTrue(result);
+	}
+
+	@Test
 	public void testEvaluateFalse1() throws Exception {
 		ContainsFunction containsFunction = new ContainsFunction();
 

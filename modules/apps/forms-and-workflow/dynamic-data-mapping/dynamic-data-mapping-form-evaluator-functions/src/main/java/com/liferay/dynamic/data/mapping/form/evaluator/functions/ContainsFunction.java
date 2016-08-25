@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.mapping.form.evaluator.functions;
 
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import org.osgi.service.component.annotations.Component;
@@ -42,8 +43,8 @@ public class ContainsFunction implements DDMExpressionFunction {
 			return false;
 		}
 
-		String value1 = parameters[0].toString();
-		String value2 = parameters[1].toString();
+		String value1 = StringUtil.toLowerCase(parameters[0].toString());
+		String value2 = StringUtil.toLowerCase(parameters[1].toString());
 
 		return value1.contains(value2);
 	}

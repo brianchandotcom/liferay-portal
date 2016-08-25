@@ -6176,6 +6176,64 @@ public class JournalArticleLocalServiceImpl
 		}
 	}
 
+	protected void addImageFileEntries(
+			JournalArticle article, Element dynamicElementElement)
+		throws PortalException {
+
+		if (ExportImportThreadLocal.isImportInProcess()) {
+			return;
+		}
+
+		for (Element dynamicContentElement :
+				dynamicElementElement.elements("dynamic-content")) {
+
+			String value = dynamicContentElement.getText();
+
+			if (Validator.isNull(value)) {
+				continue;
+			}
+
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(value);
+
+			String uuid = jsonObject.getString("uuid");
+			long groupId = jsonObject.getLong("groupId");
+
+			FileEntry fileEntry = dlAppLocalService.getFileEntryByUuidAndGroupId(
+				uuid, groupId);
+
+			boolean isTempFile = fileEntry.isRepositoryCapabilityProvided(
+				TemporaryFileEntriesCapability.class);
+
+			if (isTempFile) {
+				FileEntry tempFileEntry = fileEntry;
+
+				Folder folder = article.addImagesFolder();
+
+				String fileEntryName = DLUtil.getUniqueFileName(
+					fileEntry.getGroupId(), folder.getFolderId(),
+					fileEntry.getFileName());
+
+				fileEntry = PortletFileRepositoryUtil.addPortletFileEntry(
+					groupId, fileEntry.getUserId(), JournalArticle.class.getName(),
+					article.getResourcePrimKey(), JournalConstants.SERVICE_NAME,
+					folder.getFolderId(), fileEntry.getContentStream(),
+					fileEntryName, fileEntry.getMimeType(), false);
+
+				dlAppLocalService.deleteFileEntry(tempFileEntry.getFileEntryId());
+			}
+
+			JSONObject cdata = JSONFactoryUtil.createJSONObject(
+				dynamicContentElement.getText());
+
+			cdata.put("resourcePrimKey", article.getResourcePrimKey());
+			cdata.put("uuid", fileEntry.getUuid());
+
+			dynamicContentElement.clearContent();
+
+			dynamicContentElement.addCDATA(cdata.toString());
+		}
+	}
+
 	protected String buildArticleURL(
 		String articleURL, long groupId, long folderId, String articleId) {
 
@@ -6642,7 +6700,7 @@ public class JournalArticleLocalServiceImpl
 				addDocumentLibraryFielEntries(element);
 			}
 			else if (elType.equals("image")) {
-				formatImage(article, element);
+				addImageFileEntries(article, element);
 			}
 			else if (elType.equals("text_area") || elType.equals("text") ||
 					 elType.equals("text_box")) {

@@ -444,21 +444,24 @@ app.server.type=@{app.server.type}]]></echo>
 /*/*/*/*/lib
 /*/*/*/*/tmp</echo>
 
-			<execute>
-				<![CDATA[
-					rm bundles/*.zip
+			<delete>
+				<fileset dir="bundles" includes="*.zip" />
+			</delete>
 
-					git add -A
+			<if>
+				<contains string="@{app.server.type}" substring="tomcat" />
+				<then>
+					<execute>
+						<![CDATA[
+							git add -A
 
-					git diff --binary --cached --name-only | grep -v '^bundles/' | xargs git diff --binary --cached -- > liferay-portal-source.diff
+							git diff --cached --name-only | grep -v '^bundles/' | xargs -n 1000 zip liferay-portal-source.zip
+						]]>
+					</execute>
+				</then>
+			</if>
 
-					zip liferay-portal-source.zip liferay-portal-source.diff
-
-					rm liferay-portal-source.diff
-
-					zip -r liferay-portal-bundle-@{app.server.type}.zip bundles/*
-				]]>
-			</execute>
+			<zip basedir="." destfile="liferay-portal-bundle-@{app.server.type}.zip" includes="bundles/**" />
 		</sequential>
 	</macrodef>
 
@@ -485,13 +488,9 @@ app.server.type=@{app.server.type}]]></echo>
 		<sequential>
 			<execute>
 				<![CDATA[
-					unzip -o liferay-portal-source.zip
+					unzip -oq liferay-portal-source.zip
 
-					rm liferay-portal-source.zip
-
-					git apply --exclude=.gitignore --whitespace=nowarn liferay-portal-source.diff
-
-					unzip -o liferay-portal-bundle-@{app.server.type}.zip
+					unzip -oq liferay-portal-bundle-@{app.server.type}.zip
 
 					chmod -R a+x bundles
 				]]>
@@ -672,13 +671,9 @@ app.server.type=@{app.server.type}]]></echo>
 							<then>
 								<execute>
 									<![CDATA[
-										unzip -o liferay-portal-source.zip
+										unzip -oq liferay-portal-source.zip
 
-										rm liferay-portal-source.zip
-
-										git apply --exclude=.gitignore --whitespace=nowarn liferay-portal-source.diff
-
-										unzip -o liferay-portal-bundle-@{app.server.type}.zip
+										unzip -oq liferay-portal-bundle-@{app.server.type}.zip
 
 										chmod -R a+x bundles
 									]]>

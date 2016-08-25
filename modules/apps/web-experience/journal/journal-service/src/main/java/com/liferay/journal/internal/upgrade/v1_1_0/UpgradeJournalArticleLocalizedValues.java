@@ -192,8 +192,15 @@ public class UpgradeJournalArticleLocalizedValues extends UpgradeProcess {
 			return;
 		}
 
-		return "Truncated the " + columnName + " value for article " +
-			articleId + " because it is too long";
+		StringBundler sbInfo = new StringBundler(5);
+
+		sbInfo.append("Truncated the ");
+		sbInfo.append(columnName);
+		sbInfo.append(" value for article ");
+		sbInfo.append(articleId);
+		sbInfo.append(" because it is too long");
+
+		_log.warn(sbInfo.toString());
 	}
 
 	private static final int _MAX_LENGTH_DESCRIPTION = 4000;

@@ -143,6 +143,10 @@
 		<execute function="KeyPress" locator1="Search#SEARCH_FIELD" value1="\RETURN" />
 	</command>
 
+	<command name="unscopeAssetFacetPG">
+		<execute function="Click" locator1="SearchResults#ASSET_TYPE_FACET_ANY_ASSET" />
+	</command>
+
 	<command name="viewAssetTypeFacetPG">
 		<var name="key_searchAssetType" value="${searchAssetType}" />
 

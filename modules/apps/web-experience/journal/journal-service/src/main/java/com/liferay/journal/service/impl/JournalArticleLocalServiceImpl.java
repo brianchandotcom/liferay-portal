@@ -6135,6 +6135,47 @@ public class JournalArticleLocalServiceImpl
 			groupId, classNameId, oldDDMTemplateKey, newDDMTemplateKey);
 	}
 
+	protected void addDocumentLibraryFielEntries(Element dynamicElementElement)
+		throws PortalException {
+
+		if (ExportImportThreadLocal.isImportInProcess()) {
+			return;
+		}
+
+		for (Element dynamicContentElement :
+				dynamicElementElement.elements("dynamic-content")) {
+
+			String value = dynamicContentElement.getText();
+
+			if (Validator.isNull(value)) {
+				continue;
+			}
+
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(value);
+
+			String uuid = jsonObject.getString("uuid");
+			long groupId = jsonObject.getLong("groupId");
+			boolean tempFile = jsonObject.getBoolean("tempFile");
+
+			if (!tempFile) {
+				continue;
+			}
+
+			FileEntry fileEntry =
+				dlAppLocalService.getFileEntryByUuidAndGroupId(uuid, groupId);
+
+			String fileEntryName = DLUtil.getUniqueFileName(
+				fileEntry.getGroupId(), fileEntry.getFolderId(),
+				fileEntry.getFileName());
+
+			dlAppLocalService.addFileEntry(
+				fileEntry.getUserId(), fileEntry.getGroupId(), 0, fileEntryName,
+				fileEntry.getMimeType(), fileEntryName, StringPool.BLANK,
+				StringPool.BLANK, fileEntry.getContentStream(),
+				fileEntry.getSize(), new ServiceContext());
+		}
+	}
+
 	protected String buildArticleURL(
 		String articleURL, long groupId, long folderId, String articleId) {
 
@@ -6598,7 +6639,7 @@ public class JournalArticleLocalServiceImpl
 			String elType = element.attributeValue("type", StringPool.BLANK);
 
 			if (elType.equals("document_library")) {
-				formatDocumentLibrary(article, element);
+				addDocumentLibraryFielEntries(element);
 			}
 			else if (elType.equals("image")) {
 				formatImage(article, element);

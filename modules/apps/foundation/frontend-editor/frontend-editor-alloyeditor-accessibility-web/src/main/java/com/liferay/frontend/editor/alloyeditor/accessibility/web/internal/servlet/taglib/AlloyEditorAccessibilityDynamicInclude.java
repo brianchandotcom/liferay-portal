@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.frontend.editor.alloyeditor.accessibility.web.internal;
+package com.liferay.frontend.editor.alloyeditor.accessibility.web.internal.servlet.taglib;
 
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;

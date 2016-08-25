@@ -1,0 +1,7 @@
+{
+	"dependencies": {
+		"left-pad": "^1.1.1"
+	},
+	"name": "sample",
+	"version": "1.0.0"
+}

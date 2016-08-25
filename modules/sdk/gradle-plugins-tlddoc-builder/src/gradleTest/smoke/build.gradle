@@ -16,9 +16,9 @@ runGradleTest {
 
 	doLast {
 		for (String fileName in ["index.html", "images/breadcrumb.png", "sample/hello-world.html"]) {
-			File file = new File(tlddoc.destinationDir, fileName)
+			File generatedFile = new File(tlddoc.destinationDir, fileName)
 
-			assert file.exists()
+			assert generatedFile.exists()
 		}
 	}
 }

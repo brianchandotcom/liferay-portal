@@ -1,0 +1,40 @@
+apply plugin: "com.liferay.javadoc.formatter"
+apply plugin: "java"
+
+task runGradleTest
+
+formatJavadoc {
+	generateXml = true
+	initializeMissingJavadocs = true
+	updateJavadocs = true
+}
+
+repositories {
+	mavenLocal()
+
+	maven {
+		url "https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public"
+	}
+}
+
+runGradleTest {
+	dependsOn formatJavadoc
+
+	doLast {
+		String[] fileNames = [
+			"src/main/java/com/example/sample/GreetingBuilder.java",
+			"src/main/resources/META-INF/javadocs-all.xml",
+			"src/main/resources/META-INF/javadocs-rt.xml"
+		]
+
+		for (String fileName in fileNames) {
+			File generatedFile = file(fileName)
+
+			assert generatedFile.exists()
+
+			File expectedFile = file(generatedFile.name + ".expected")
+
+			assert expectedFile.text.normalize() == generatedFile.text.normalize()
+		}
+	}
+}

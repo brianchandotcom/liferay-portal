@@ -1,0 +1,26 @@
+apply plugin: "com.liferay.js.module.config.generator"
+apply plugin: "java"
+
+task runGradleTest
+
+configJSModules {
+	include "**/*.js"
+}
+
+runGradleTest {
+	dependsOn classes
+
+	doLast {
+		File dir = new File(sourceSets.main.output.resourcesDir, "META-INF")
+
+		for (String fileName in ["config.json", "resources/math/math.js"]) {
+			File generatedFile = new File(dir, fileName)
+
+			assert generatedFile.exists()
+
+			File expectedFile = file(generatedFile.name + ".expected")
+
+			assert expectedFile.text.normalize() == generatedFile.text.normalize()
+		}
+	}
+}

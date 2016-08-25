@@ -14,8 +14,8 @@ runGradleTest {
 	dependsOn buildXSD
 
 	doLast {
-		File xbeanJarFile = file("lib/${project.name}-xbean.jar")
+		File generatedFile = file("lib/${project.name}-xbean.jar")
 
-		assert xbeanJarFile.exists()
+		assert generatedFile.exists()
 	}
 }

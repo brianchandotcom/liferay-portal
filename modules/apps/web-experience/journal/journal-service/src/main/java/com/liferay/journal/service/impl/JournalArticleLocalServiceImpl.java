@@ -6756,147 +6756,39 @@ public class JournalArticleLocalServiceImpl
 		return content;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	protected void formatDocumentLibrary(
 			JournalArticle article, Element dynamicElementElement)
 		throws PortalException {
-
-		if (ExportImportThreadLocal.isImportInProcess()) {
-			return;
-		}
-
-		for (Element dynamicContentElement :
-				dynamicElementElement.elements("dynamic-content")) {
-
-			formatDocumentLibraryDynamicContent(dynamicContentElement);
-		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	protected void formatDocumentLibraryDynamicContent(
 			Element dynamicContentElement)
 		throws PortalException {
-
-		String value = dynamicContentElement.getText();
-
-		if (Validator.isNull(value)) {
-			return;
-		}
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(value);
-
-		String data = jsonObject.getString("data");
-
-		if (Validator.isNotNull(data)) {
-			dynamicContentElement.clearContent();
-
-			dynamicContentElement.addCDATA(data);
-
-			return;
-		}
-
-		String uuid = jsonObject.getString("uuid");
-		long groupId = jsonObject.getLong("groupId");
-		boolean tempFile = jsonObject.getBoolean("tempFile");
-
-		FileEntry fileEntry = dlAppLocalService.getFileEntryByUuidAndGroupId(
-			uuid, groupId);
-
-		if (tempFile) {
-			String fileEntryName = DLUtil.getUniqueFileName(
-				fileEntry.getGroupId(), fileEntry.getFolderId(),
-				fileEntry.getFileName());
-
-			fileEntry = dlAppLocalService.addFileEntry(
-				fileEntry.getUserId(), fileEntry.getGroupId(), 0, fileEntryName,
-				fileEntry.getMimeType(), fileEntryName, StringPool.BLANK,
-				StringPool.BLANK, fileEntry.getContentStream(),
-				fileEntry.getSize(), new ServiceContext());
-		}
-
-		String previewURL = DLUtil.getPreviewURL(
-			fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK,
-			false, true);
-
-		dynamicContentElement.clearContent();
-
-		dynamicContentElement.addCDATA(previewURL);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	protected void formatImage(JournalArticle article, Element el)
 		throws PortalException {
-
-		List<Element> imageContents = el.elements("dynamic-content");
-
-		for (Element dynamicContent : imageContents) {
-			String elType = dynamicContent.attributeValue(
-				"type", StringPool.BLANK);
-
-			if (ExportImportThreadLocal.isImportInProcess()) {
-				continue;
-			}
-
-			formatImageDynamicContent(article, elType, dynamicContent);
-		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	protected void formatImageDynamicContent(
 			JournalArticle article, String type, Element dynamicContentElement)
 		throws PortalException {
-
-		String value = dynamicContentElement.getText();
-
-		if (Validator.isNull(value)) {
-			return;
-		}
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(value);
-
-		String data = jsonObject.getString("data");
-
-		if (Validator.isNotNull(data)) {
-			dynamicContentElement.clearContent();
-
-			dynamicContentElement.addCDATA(data);
-
-			return;
-		}
-
-		String uuid = jsonObject.getString("uuid");
-		long groupId = jsonObject.getLong("groupId");
-
-		FileEntry fileEntry = dlAppLocalService.getFileEntryByUuidAndGroupId(
-			uuid, groupId);
-
-		boolean isTempFile = fileEntry.isRepositoryCapabilityProvided(
-			TemporaryFileEntriesCapability.class);
-
-		if (isTempFile) {
-			FileEntry tempFileEntry = fileEntry;
-
-			Folder folder = article.addImagesFolder();
-
-			String fileEntryName = DLUtil.getUniqueFileName(
-				fileEntry.getGroupId(), folder.getFolderId(),
-				fileEntry.getFileName());
-
-			fileEntry = PortletFileRepositoryUtil.addPortletFileEntry(
-				groupId, fileEntry.getUserId(), JournalArticle.class.getName(),
-				article.getResourcePrimKey(), JournalConstants.SERVICE_NAME,
-				folder.getFolderId(), fileEntry.getContentStream(),
-				fileEntryName, fileEntry.getMimeType(), false);
-
-			dlAppLocalService.deleteFileEntry(tempFileEntry.getFileEntryId());
-		}
-
-		String previewURL = DLUtil.getPreviewURL(
-			fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK,
-			false, true);
-
-		dynamicContentElement.addAttribute(
-			"resourcePrimKey", String.valueOf(article.getResourcePrimKey()));
-
-		dynamicContentElement.clearContent();
-
-		dynamicContentElement.addCDATA(previewURL);
 	}
 
 	protected long getArticleCheckInterval() throws PortalException {

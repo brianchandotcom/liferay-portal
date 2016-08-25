@@ -14,7 +14,7 @@
 
 	<command name="closePortalLocalizationWarning">
 		<execute macro="Alert#_closeMessage">
-			<var name="messageType" value="PORTAL_LOCALIZATION_INFO_MESSAGE" />
+			<var name="messageType" value="PORTAL_LOCALIZATION" />
 		</execute>
 
 		<execute function="Pause" locator1="2000" />

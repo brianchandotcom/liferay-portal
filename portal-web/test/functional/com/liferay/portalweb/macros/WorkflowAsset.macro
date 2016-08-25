@@ -53,4 +53,8 @@
 	<command name="viewFormTemplateLabel">
 		<execute function="AssertTextEquals#assertPartialText" locator1="MyWorkflowTasksTask#PREVIEW_CONTENT" value1="${workflowFormsTemplateLabel}" />
 	</command>
+
+	<command name="viewNotification">
+		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATIONS_WORKFLOW_TITLE" value1="${contentBody}" />
+	</command>
 </definition>

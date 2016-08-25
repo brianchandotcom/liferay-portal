@@ -16,10 +16,11 @@ package com.liferay.journal.internal.upgrade.v1_1_0;
 
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
-import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.journal.constants.JournalConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Image;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
@@ -76,21 +77,23 @@ public class UpgradeImageTypeContent extends UpgradeProcess {
 
 				FileEntry fileEntry = getFileEntry(groupId, folderId, id);
 
-				String previewURL = StringPool.BLANK;
-
-				if (fileEntry != null) {
-					previewURL = DLUtil.getPreviewURL(
-						fileEntry, fileEntry.getFileVersion(), null,
-						StringPool.BLANK, false, true);
+				if (fileEntry == null) {
+					continue;
 				}
 
-				dynamicContentEl.addAttribute(
-					"resourcePrimKey", String.valueOf(resourcePrimKey));
-				dynamicContentEl.addAttribute("type", "journal");
+				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+				jsonObject.put("alt", StringPool.BLANK);
+				jsonObject.put("groupId", fileEntry.getGroupId());
+				jsonObject.put("name", fileEntry.getFileName());
+				jsonObject.put("resourcePrimKey", resourcePrimKey);
+				jsonObject.put("title", fileEntry.getTitle());
+				jsonObject.put("type", "journal");
+				jsonObject.put("uuid", fileEntry.getUuid());
 
 				dynamicContentEl.clearContent();
 
-				dynamicContentEl.addCDATA(previewURL);
+				dynamicContentEl.addCDATA(jsonObject.toString());
 			}
 		}
 

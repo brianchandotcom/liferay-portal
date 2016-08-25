@@ -575,24 +575,7 @@ public class JournalConverterImpl implements JournalConverter {
 
 		Serializable serializable = null;
 
-		if (DDMImpl.TYPE_DDM_IMAGE.equals(type)) {
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-			jsonObject.put("alt", dynamicContentElement.attributeValue("alt"));
-			jsonObject.put("data", dynamicContentElement.getText());
-			jsonObject.put(
-				"name", dynamicContentElement.attributeValue("name"));
-			jsonObject.put(
-				"resourcePrimKey",
-				dynamicContentElement.attributeValue("resourcePrimKey"));
-			jsonObject.put(
-				"title", dynamicContentElement.attributeValue("title"));
-			jsonObject.put(
-				"type", dynamicContentElement.attributeValue("type"));
-
-			serializable = jsonObject.toString();
-		}
-		else if (DDMImpl.TYPE_DDM_LINK_TO_PAGE.equals(type)) {
+		if (DDMImpl.TYPE_DDM_LINK_TO_PAGE.equals(type)) {
 			String[] values = StringUtil.split(
 				dynamicContentElement.getText(), CharPool.AT);
 
@@ -921,22 +904,6 @@ public class JournalConverterImpl implements JournalConverter {
 				fieldValue = StringPool.BLANK;
 			}
 
-			dynamicContentElement.addCDATA(fieldValue);
-		}
-		else if (DDMImpl.TYPE_DDM_IMAGE.equals(fieldType) &&
-				 Validator.isNotNull(fieldValue)) {
-
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-				fieldValue);
-
-			dynamicContentElement.addAttribute(
-				"alt", jsonObject.getString("alt"));
-			dynamicContentElement.addAttribute(
-				"name", jsonObject.getString("name"));
-			dynamicContentElement.addAttribute(
-				"title", jsonObject.getString("title"));
-			dynamicContentElement.addAttribute(
-				"type", jsonObject.getString("type"));
 			dynamicContentElement.addCDATA(fieldValue);
 		}
 		else if (DDMImpl.TYPE_DDM_LINK_TO_PAGE.equals(fieldType) &&

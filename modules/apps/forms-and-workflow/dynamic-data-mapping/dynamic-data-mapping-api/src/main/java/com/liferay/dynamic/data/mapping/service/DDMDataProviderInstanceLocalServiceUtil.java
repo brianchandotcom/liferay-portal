@@ -125,6 +125,11 @@ public class DDMDataProviderInstanceLocalServiceUtil {
 		return getService().fetchDataProviderInstance(dataProviderInstanceId);
 	}
 
+	public static com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance fetchDataProviderInstanceByUuid(
+		java.lang.String uuid) {
+		return getService().fetchDataProviderInstanceByUuid(uuid);
+	}
+
 	/**
 	* Returns the d d m data provider instance with the primary key.
 	*
@@ -157,6 +162,12 @@ public class DDMDataProviderInstanceLocalServiceUtil {
 		long dataProviderInstanceId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getDataProviderInstance(dataProviderInstanceId);
+	}
+
+	public static com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance getDataProviderInstanceByUuid(
+		java.lang.String uuid)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getDataProviderInstanceByUuid(uuid);
 	}
 
 	/**

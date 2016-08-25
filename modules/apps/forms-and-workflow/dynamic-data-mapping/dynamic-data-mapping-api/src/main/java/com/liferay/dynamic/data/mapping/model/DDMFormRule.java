@@ -14,14 +14,18 @@
 
 package com.liferay.dynamic.data.mapping.model;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
  * @author Leonardo Barros
  */
+@ProviderType
 public class DDMFormRule implements Serializable {
 
 	public DDMFormRule() {
@@ -29,13 +33,19 @@ public class DDMFormRule implements Serializable {
 
 	public DDMFormRule(DDMFormRule ddmFormRule) {
 		_condition = ddmFormRule._condition;
-		_actions = new ArrayList<>(ddmFormRule._actions);
+		_actions.addAll(ddmFormRule.getActions());
 		_enabled = ddmFormRule._enabled;
 	}
 
 	public DDMFormRule(String condition, List<String> actions) {
 		_condition = condition;
-		_actions = actions;
+		_actions.addAll(actions);
+	}
+
+	public DDMFormRule(String condition, String... actions) {
+		_condition = condition;
+
+		_actions.addAll(Arrays.asList(actions));
 	}
 
 	public void addAction(String action) {

@@ -60,10 +60,22 @@ public class DDMDataProviderInstanceServiceUtil {
 		return getService().fetchDataProviderInstance(dataProviderInstanceId);
 	}
 
+	public static com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance fetchDataProviderInstanceByUuid(
+		java.lang.String uuid)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().fetchDataProviderInstanceByUuid(uuid);
+	}
+
 	public static com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance getDataProviderInstance(
 		long dataProviderInstanceId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getDataProviderInstance(dataProviderInstanceId);
+	}
+
+	public static com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance getDataProviderInstanceByUuid(
+		java.lang.String uuid)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getDataProviderInstanceByUuid(uuid);
 	}
 
 	public static com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance updateDataProviderInstance(

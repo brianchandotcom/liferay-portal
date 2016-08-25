@@ -39,14 +39,14 @@ public class PortletPreferencesFinderUtil {
 			excludeDefaultPreferences);
 	}
 
-	public static java.util.List<com.liferay.portal.kernel.model.PortletPreferences> findByPortletId(
-		java.lang.String portletId) {
-		return getFinder().findByPortletId(portletId);
-	}
-
 	public static java.util.Map<java.io.Serializable, com.liferay.portal.kernel.model.PortletPreferences> fetchByPrimaryKeys(
 		java.util.Set<java.io.Serializable> primaryKeys) {
 		return getFinder().fetchByPrimaryKeys(primaryKeys);
+	}
+
+	public static java.util.List<com.liferay.portal.kernel.model.PortletPreferences> findByPortletId(
+		java.lang.String portletId) {
+		return getFinder().findByPortletId(portletId);
 	}
 
 	public static java.util.List<com.liferay.portal.kernel.model.PortletPreferences> findByC_G_O_O_P_P(

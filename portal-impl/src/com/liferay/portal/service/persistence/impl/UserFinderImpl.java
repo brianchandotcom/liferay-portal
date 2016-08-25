@@ -284,6 +284,34 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 	}
 
 	@Override
+	public int countByKeywords(
+		long companyId, String keywords, int status,
+		LinkedHashMap<String, Object> params) {
+
+		String[] firstNames = null;
+		String[] middleNames = null;
+		String[] lastNames = null;
+		String[] screenNames = null;
+		String[] emailAddresses = null;
+		boolean andOperator = false;
+
+		if (Validator.isNotNull(keywords)) {
+			firstNames = CustomSQLUtil.keywords(keywords);
+			middleNames = CustomSQLUtil.keywords(keywords);
+			lastNames = CustomSQLUtil.keywords(keywords);
+			screenNames = CustomSQLUtil.keywords(keywords);
+			emailAddresses = CustomSQLUtil.keywords(keywords);
+		}
+		else {
+			andOperator = true;
+		}
+
+		return countByC_FN_MN_LN_SN_EA_S(
+			companyId, firstNames, middleNames, lastNames, screenNames,
+			emailAddresses, status, params, andOperator);
+	}
+
+	@Override
 	public int countBySocialUsers(
 		long companyId, long userId, int socialRelationType,
 		String socialRelationTypeComparator, int status) {
@@ -371,34 +399,6 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 		finally {
 			closeSession(session);
 		}
-	}
-
-	@Override
-	public int countByKeywords(
-		long companyId, String keywords, int status,
-		LinkedHashMap<String, Object> params) {
-
-		String[] firstNames = null;
-		String[] middleNames = null;
-		String[] lastNames = null;
-		String[] screenNames = null;
-		String[] emailAddresses = null;
-		boolean andOperator = false;
-
-		if (Validator.isNotNull(keywords)) {
-			firstNames = CustomSQLUtil.keywords(keywords);
-			middleNames = CustomSQLUtil.keywords(keywords);
-			lastNames = CustomSQLUtil.keywords(keywords);
-			screenNames = CustomSQLUtil.keywords(keywords);
-			emailAddresses = CustomSQLUtil.keywords(keywords);
-		}
-		else {
-			andOperator = true;
-		}
-
-		return countByC_FN_MN_LN_SN_EA_S(
-			companyId, firstNames, middleNames, lastNames, screenNames,
-			emailAddresses, status, params, andOperator);
 	}
 
 	@Override

@@ -59,32 +59,39 @@ public class MBCategoryFinderImpl
 	public static final String COUNT_C_BY_G_P =
 		MBCategoryFinder.class.getName() + ".countC_ByG_P";
 
-	public static final String COUNT_C_BY_G_P_S =
-		MBCategoryFinder.class.getName() + ".countC_ByG_P_S";
-
-	public static final String COUNT_C_BY_S_G_U_P =
-		MBCategoryFinder.class.getName() + ".countC_ByS_G_U_P";
-
 	public static final String COUNT_T_BY_G_C =
 		MBCategoryFinder.class.getName() + ".countT_ByG_C";
+
+	public static final String COUNT_C_BY_G_P_S =
+		MBCategoryFinder.class.getName() + ".countC_ByG_P_S";
 
 	public static final String COUNT_T_BY_G_C_S =
 		MBCategoryFinder.class.getName() + ".countT_ByG_C_S";
 
+	public static final String COUNT_C_BY_S_G_U_P =
+		MBCategoryFinder.class.getName() + ".countC_ByS_G_U_P";
+
 	public static final String FIND_C_BY_G_P =
 		MBCategoryFinder.class.getName() + ".findC_ByG_P";
-
-	public static final String FIND_C_BY_G_P_S =
-		MBCategoryFinder.class.getName() + ".findC_ByG_P_S";
-
-	public static final String FIND_C_BY_S_G_U_P =
-		MBCategoryFinder.class.getName() + ".findC_ByS_G_U_P";
 
 	public static final String FIND_T_BY_G_C =
 		MBCategoryFinder.class.getName() + ".findT_ByG_C";
 
+	public static final String FIND_C_BY_G_P_S =
+		MBCategoryFinder.class.getName() + ".findC_ByG_P_S";
+
 	public static final String FIND_T_BY_G_C_S =
 		MBCategoryFinder.class.getName() + ".findT_ByG_C_S";
+
+	public static final String FIND_C_BY_S_G_U_P =
+		MBCategoryFinder.class.getName() + ".findC_ByS_G_U_P";
+
+	@Override
+	public int countC_T_ByG_C(
+		long groupId, long categoryId, QueryDefinition<?> queryDefinition) {
+
+		return doCountC_T_ByG_C(groupId, categoryId, queryDefinition, false);
+	}
 
 	@Override
 	public int countC_ByS_G_U_P(
@@ -96,33 +103,10 @@ public class MBCategoryFinderImpl
 	}
 
 	@Override
-	public int countC_T_ByG_C(
+	public int filterCountC_T_ByG_C(
 		long groupId, long categoryId, QueryDefinition<?> queryDefinition) {
 
-		return doCountC_T_ByG_C(groupId, categoryId, queryDefinition, false);
-	}
-
-	@Override
-	public List<MBCategory> filterFindC_ByS_G_U_P(
-		long groupId, long userId, long[] parentCategoryIds,
-		QueryDefinition<MBCategory> queryDefinition) {
-
-		return doFindC_ByS_G_U_P(
-			groupId, userId, parentCategoryIds, queryDefinition, true);
-	}
-
-	@Override
-	public List<Object> filterFindC_T_ByG_C(
-		long groupId, long categoryId, QueryDefinition<?> queryDefinition) {
-
-		return doFindC_T_ByG_C(groupId, categoryId, queryDefinition, true);
-	}
-
-	@Override
-	public List<Object> findC_T_ByG_C(
-		long groupId, long categoryId, QueryDefinition<?> queryDefinition) {
-
-		return doFindC_T_ByG_C(groupId, categoryId, queryDefinition, false);
+		return doCountC_T_ByG_C(groupId, categoryId, queryDefinition, true);
 	}
 
 	@Override
@@ -135,10 +119,26 @@ public class MBCategoryFinderImpl
 	}
 
 	@Override
-	public int filterCountC_T_ByG_C(
+	public List<Object> filterFindC_T_ByG_C(
 		long groupId, long categoryId, QueryDefinition<?> queryDefinition) {
 
-		return doCountC_T_ByG_C(groupId, categoryId, queryDefinition, true);
+		return doFindC_T_ByG_C(groupId, categoryId, queryDefinition, true);
+	}
+
+	@Override
+	public List<MBCategory> filterFindC_ByS_G_U_P(
+		long groupId, long userId, long[] parentCategoryIds,
+		QueryDefinition<MBCategory> queryDefinition) {
+
+		return doFindC_ByS_G_U_P(
+			groupId, userId, parentCategoryIds, queryDefinition, true);
+	}
+
+	@Override
+	public List<Object> findC_T_ByG_C(
+		long groupId, long categoryId, QueryDefinition<?> queryDefinition) {
+
+		return doFindC_T_ByG_C(groupId, categoryId, queryDefinition, false);
 	}
 
 	@Override
@@ -148,86 +148,6 @@ public class MBCategoryFinderImpl
 
 		return doFindC_ByS_G_U_P(
 			groupId, userId, parentCategoryIds, queryDefinition, false);
-	}
-
-	protected int doCountC_ByS_G_U_P(
-		long groupId, long userId, long[] parentCategoryIds,
-		QueryDefinition<MBCategory> queryDefinition, boolean inlineSQLHelper) {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			String sql = CustomSQLUtil.get(COUNT_C_BY_S_G_U_P);
-
-			if (ArrayUtil.isEmpty(parentCategoryIds)) {
-				sql = StringUtil.replace(
-					sql, "(MBCategory.parentCategoryId = ?) AND",
-					StringPool.BLANK);
-			}
-			else {
-				sql = StringUtil.replace(
-					sql, "MBCategory.parentCategoryId = ?",
-					"MBCategory.parentCategoryId = " +
-						StringUtil.merge(
-							parentCategoryIds,
-							" OR MBCategory.parentCategoryId = "));
-			}
-
-			sql = updateSQL(sql, queryDefinition);
-
-			if (inlineSQLHelper) {
-				sql = InlineSQLHelperUtil.replacePermissionCheck(
-					sql, MBCategory.class.getName(), "MBCategory.categoryId",
-					groupId);
-			}
-
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
-
-			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
-
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			qPos.add(PortalUtil.getClassNameId(MBCategory.class.getName()));
-			qPos.add(groupId);
-			qPos.add(userId);
-
-			if (queryDefinition.getStatus() != WorkflowConstants.STATUS_ANY) {
-				qPos.add(queryDefinition.getStatus());
-			}
-
-			int count = 0;
-
-			Iterator<Long> itr = q.iterate();
-
-			if (itr.hasNext()) {
-				Long l = itr.next();
-
-				if (l != null) {
-					count = l.intValue();
-				}
-			}
-
-			Group group = GroupLocalServiceUtil.getGroup(groupId);
-
-			Subscription subscription =
-				SubscriptionLocalServiceUtil.fetchSubscription(
-					group.getCompanyId(), userId, MBCategory.class.getName(),
-					groupId);
-
-			if (subscription != null) {
-				count++;
-			}
-
-			return count;
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	protected int doCountC_T_ByG_C(
@@ -325,7 +245,7 @@ public class MBCategoryFinderImpl
 		}
 	}
 
-	protected List<MBCategory> doFindC_ByS_G_U_P(
+	protected int doCountC_ByS_G_U_P(
 		long groupId, long userId, long[] parentCategoryIds,
 		QueryDefinition<MBCategory> queryDefinition, boolean inlineSQLHelper) {
 
@@ -334,7 +254,7 @@ public class MBCategoryFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(FIND_C_BY_S_G_U_P);
+			String sql = CustomSQLUtil.get(COUNT_C_BY_S_G_U_P);
 
 			if (ArrayUtil.isEmpty(parentCategoryIds)) {
 				sql = StringUtil.replace(
@@ -360,7 +280,7 @@ public class MBCategoryFinderImpl
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
-			q.addEntity("MBCategory", MBCategoryImpl.class);
+			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
@@ -372,8 +292,17 @@ public class MBCategoryFinderImpl
 				qPos.add(queryDefinition.getStatus());
 			}
 
-			List<MBCategory> list = (List<MBCategory>)QueryUtil.list(
-				q, getDialect(), QueryUtil.ALL_POS, QueryUtil.ALL_POS, false);
+			int count = 0;
+
+			Iterator<Long> itr = q.iterate();
+
+			if (itr.hasNext()) {
+				Long l = itr.next();
+
+				if (l != null) {
+					count = l.intValue();
+				}
+			}
 
 			Group group = GroupLocalServiceUtil.getGroup(groupId);
 
@@ -383,31 +312,10 @@ public class MBCategoryFinderImpl
 					groupId);
 
 			if (subscription != null) {
-				int threadCount =
-					MBThreadLocalServiceUtil.getCategoryThreadsCount(
-						groupId, MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
-						WorkflowConstants.STATUS_APPROVED);
-				int messageCount =
-					MBMessageLocalServiceUtil.getCategoryMessagesCount(
-						groupId, MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
-						WorkflowConstants.STATUS_APPROVED);
-
-				MBCategory category = new MBCategoryImpl();
-
-				category.setGroupId(group.getGroupId());
-				category.setCompanyId(group.getCompanyId());
-				category.setName(group.getDescriptiveName());
-				category.setDescription(group.getDescription());
-				category.setThreadCount(threadCount);
-				category.setMessageCount(messageCount);
-
-				list.add(category);
+				count++;
 			}
 
-			return Collections.unmodifiableList(
-				ListUtil.subList(
-					list, queryDefinition.getStart(),
-					queryDefinition.getEnd()));
+			return count;
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
@@ -520,6 +428,98 @@ public class MBCategoryFinderImpl
 			}
 
 			return models;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected List<MBCategory> doFindC_ByS_G_U_P(
+		long groupId, long userId, long[] parentCategoryIds,
+		QueryDefinition<MBCategory> queryDefinition, boolean inlineSQLHelper) {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(FIND_C_BY_S_G_U_P);
+
+			if (ArrayUtil.isEmpty(parentCategoryIds)) {
+				sql = StringUtil.replace(
+					sql, "(MBCategory.parentCategoryId = ?) AND",
+					StringPool.BLANK);
+			}
+			else {
+				sql = StringUtil.replace(
+					sql, "MBCategory.parentCategoryId = ?",
+					"MBCategory.parentCategoryId = " +
+						StringUtil.merge(
+							parentCategoryIds,
+							" OR MBCategory.parentCategoryId = "));
+			}
+
+			sql = updateSQL(sql, queryDefinition);
+
+			if (inlineSQLHelper) {
+				sql = InlineSQLHelperUtil.replacePermissionCheck(
+					sql, MBCategory.class.getName(), "MBCategory.categoryId",
+					groupId);
+			}
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addEntity("MBCategory", MBCategoryImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(PortalUtil.getClassNameId(MBCategory.class.getName()));
+			qPos.add(groupId);
+			qPos.add(userId);
+
+			if (queryDefinition.getStatus() != WorkflowConstants.STATUS_ANY) {
+				qPos.add(queryDefinition.getStatus());
+			}
+
+			List<MBCategory> list = (List<MBCategory>)QueryUtil.list(
+				q, getDialect(), QueryUtil.ALL_POS, QueryUtil.ALL_POS, false);
+
+			Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+			Subscription subscription =
+				SubscriptionLocalServiceUtil.fetchSubscription(
+					group.getCompanyId(), userId, MBCategory.class.getName(),
+					groupId);
+
+			if (subscription != null) {
+				int threadCount =
+					MBThreadLocalServiceUtil.getCategoryThreadsCount(
+						groupId, MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+						WorkflowConstants.STATUS_APPROVED);
+				int messageCount =
+					MBMessageLocalServiceUtil.getCategoryMessagesCount(
+						groupId, MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+						WorkflowConstants.STATUS_APPROVED);
+
+				MBCategory category = new MBCategoryImpl();
+
+				category.setGroupId(group.getGroupId());
+				category.setCompanyId(group.getCompanyId());
+				category.setName(group.getDescriptiveName());
+				category.setDescription(group.getDescription());
+				category.setThreadCount(threadCount);
+				category.setMessageCount(messageCount);
+
+				list.add(category);
+			}
+
+			return Collections.unmodifiableList(
+				ListUtil.subList(
+					list, queryDefinition.getStart(),
+					queryDefinition.getEnd()));
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

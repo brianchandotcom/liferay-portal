@@ -58,10 +58,15 @@
 
 	<command name="removeUserFacetDisplayPG">
 		<execute function="Click#makeVisibleClickAt" locator1="Search#SEARCH_PORTLET_OPTIONS_WRENCH" />
+
 		<execute function="AssertClick" locator1="MenuItem#CONFIGURATION" value1="Configuration" />
+
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
+
 		<execute function="Uncheck" locator1="SearchConfiguration#BASIC_DISPLAY_USER_FACET_CHECKBOX" />
+
 		<execute macro="Button#clickSave" />
+
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
@@ -152,6 +157,7 @@
 
 		<execute function="AssertTextEquals" locator1="SearchResults#ASSET_TYPE_FACET_ANY_ASSET" value1="Any Asset" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="SearchResults#ASSET_TYPE_FACET_FREQUENCY" value1="${facetFrequency}" />
+
 		<execute function="AssertClick#assertPartialTextClickAt" locator1="SearchResults#ASSET_TYPE_FACET_ASSET" value1="${searchAssetType}" />
 
 		<execute macro="Search#viewSearchResultPG">
@@ -166,6 +172,7 @@
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
 		<execute function="AssertTextEquals" locator1="Search#INCREMENTAL_SEARCH_SUGGESTION" value1="${kbArticleTitle}" />
+
 		<execute function="AssertClick" locator1="Search#INCREMENTAL_SEARCH_SUGGESTION" value1="${kbArticleTitle}" />
 	</command>
 
@@ -243,6 +250,7 @@
 		<var method="StringUtil#lowerCase('${userLoginFullName}')" name="key_userLoginFullName" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="SearchResults#USER_FACET_FREQUENCY" value1="${facetFrequency}" />
+
 		<execute function="AssertClick#assertPartialTextClickAt" locator1="SearchResults#USER_FACET_USER_NAME" value1="${key_userLoginFullName}" />
 
 		<execute macro="Search#viewSearchResultPG">

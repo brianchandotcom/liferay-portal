@@ -137,7 +137,7 @@
 		{
 			"dataType": "html",
 			"fieldNamespace": "ddm",
-			"indexType": "keyword",
+			"indexType": "text",
 			"label": {
 				"en_US": "HTML",
 				"pt_BR": "HTML"
@@ -417,7 +417,7 @@
 		},
 		{
 			"dataType": "string",
-			"indexType": "keyword",
+			"indexType": "text",
 			"label": {
 				"en_US": "Text Box",
 				"pt_BR": "Caixa de Texto"

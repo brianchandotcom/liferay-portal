@@ -203,6 +203,26 @@
 	<td>//tr[contains(.,'${key_webContentTitle}')]//span[@class='workflow-status']/strong</td>
 	<td></td>
 </tr>
+<tr>
+	<td>MOVE_WEB_CONTENT_ARTICLE</td>
+	<td>//li[contains(@class,'move-article') and contains(.,'${key_webContentTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WEB_CONTENT_PLUS_ICON_COLLAPSED</td>
+	<td>//div[contains(@class,'treeview') and @aria-expanded='false']/div[contains(@class,'treeview-node-toggler')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WEB_CONTENT_PLUS_ICON_EXPANDED</td>
+	<td>//div[contains(@class,'treeview') and @aria-expanded='true']/div[contains(@class,'treeview-node-toggler')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_FOLDER</td>
+	<td>//div[contains(@class,'treeview')]//div[contains(@class,'card-horizontal') and contains(.,'${key_folderName}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

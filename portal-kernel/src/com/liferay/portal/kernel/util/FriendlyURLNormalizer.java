@@ -32,6 +32,8 @@ public interface FriendlyURLNormalizer {
 	@Deprecated
 	public String normalize(String friendlyURL, Pattern friendlyURLPattern);
 
+	public String normalizeWithEncoding(String friendlyURL);
+
 	public String normalizeWithPeriodsAndSlashes(String friendlyURL);
 
 }

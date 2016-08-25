@@ -14,7 +14,10 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.kernel.util.StringPool;
@@ -22,6 +25,11 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.util.Normalizer;
 
+import java.io.UnsupportedEncodingException;
+
+import java.net.URLEncoder;
+
+import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -34,7 +42,7 @@ public class FriendlyURLNormalizerImpl implements FriendlyURLNormalizer {
 
 	@Override
 	public String normalize(String friendlyURL) {
-		return normalize(friendlyURL, false);
+		return normalize(friendlyURL, false, true);
 	}
 
 	/**
@@ -77,16 +85,32 @@ public class FriendlyURLNormalizerImpl implements FriendlyURLNormalizer {
 	}
 
 	@Override
+	public String normalizeWithEncoding(String friendlyURL) {
+		return normalize(friendlyURL, false, false);
+	}
+
+	@Override
 	public String normalizeWithPeriodsAndSlashes(String friendlyURL) {
-		return normalize(friendlyURL, true);
+		return normalize(friendlyURL, true, true);
 	}
 
 	protected String normalize(String friendlyURL, boolean periodsAndSlashes) {
+		return normalize(friendlyURL, periodsAndSlashes, true);
+	}
+
+	protected String normalize(
+		String friendlyURL, boolean periodsAndSlashes,
+		boolean normalizeToAscii) {
+
 		if (Validator.isNull(friendlyURL)) {
 			return friendlyURL;
 		}
 
-		friendlyURL = Normalizer.normalizeToAscii(friendlyURL);
+		friendlyURL = StringUtil.toLowerCase(friendlyURL);
+
+		if (normalizeToAscii) {
+			friendlyURL = Normalizer.normalizeToAscii(friendlyURL);
+		}
 
 		StringBuilder sb = new StringBuilder(friendlyURL.length());
 
@@ -98,28 +122,36 @@ public class FriendlyURLNormalizerImpl implements FriendlyURLNormalizer {
 			if (((CharPool.LOWER_CASE_A <= c) &&
 				 (c <= CharPool.LOWER_CASE_Z)) ||
 				((CharPool.NUMBER_0 <= c) && (c <= CharPool.NUMBER_9)) ||
-				(c == CharPool.UNDERLINE)) {
+				(c == CharPool.UNDERLINE) ||
+				(!normalizeToAscii && (CharPool.PERCENT == c))) {
 
 				sb.append(c);
-			}
-			else if ((CharPool.UPPER_CASE_A <= c) &&
-					 (c <= CharPool.UPPER_CASE_Z)) {
-
-				sb.append((char)(c + 32));
-
-				modified = true;
 			}
 			else if (!periodsAndSlashes &&
 					 ((c == CharPool.SLASH) || (c == CharPool.PERIOD))) {
 
 				sb.append(c);
 			}
-			else {
+			else if (normalizeToAscii ||
+					 ArrayUtil.contains(_REPLACE_CHARS, c)) {
+
 				if ((i == 0) || (CharPool.DASH != sb.charAt(sb.length() - 1))) {
 					sb.append(CharPool.DASH);
 				}
 
 				modified = true;
+			}
+			else {
+				try {
+					sb.append(URLEncoder.encode(String.valueOf(c), "UTF-8"));
+
+					modified = true;
+				}
+				catch (UnsupportedEncodingException uee) {
+					if (_log.isInfoEnabled()) {
+						_log.info(uee, uee);
+					}
+				}
 			}
 		}
 
@@ -128,6 +160,23 @@ public class FriendlyURLNormalizerImpl implements FriendlyURLNormalizer {
 		}
 
 		return friendlyURL;
+	}
+
+	private static final char[] _REPLACE_CHARS;
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		FriendlyURLNormalizerImpl.class);
+
+	static {
+		char[] replaceChars = new char[] {
+			' ', ',', '\\', '\'', '\"', '(', ')', '[', ']', '{', '}', '?', '#',
+			'@', '+', '~', ';', '$', '!', '=', ':', '&', '\u00a3', '\u2013',
+			'\u2014', '\u2018', '\u2019', '\u201c', '\u201d'
+		};
+
+		Arrays.sort(replaceChars);
+
+		_REPLACE_CHARS = replaceChars;
 	}
 
 }

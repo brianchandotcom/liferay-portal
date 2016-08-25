@@ -81,7 +81,7 @@ public abstract class BaseDDMFormSerializerTestCase extends BaseDDMTestCase {
 
 		ddmFormField.setDataType("html");
 		ddmFormField.setFieldNamespace("ddm");
-		ddmFormField.setIndexType("keyword");
+		ddmFormField.setIndexType("text");
 		ddmFormField.setLabel(createHTMLDDMFormFieldLabel());
 		ddmFormField.setLocalizable(true);
 		ddmFormField.setPredefinedValue(

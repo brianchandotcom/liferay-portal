@@ -1387,9 +1387,23 @@ public class ResourcePermissionLocalServiceImpl
 		try {
 			long[] roleIds = ArrayUtil.toLongArray(roleIdsToActionIds.keySet());
 
-			List<ResourcePermission> resourcePermissions =
+			List<ResourcePermission> resourcePermissions = new ArrayList<>();
+
+			int i = 0;
+
+			while (i < (roleIds.length - 1000)) {
+				resourcePermissions.addAll(
+					resourcePermissionPersistence.findByC_N_S_P_R(
+						companyId, name, scope, primKey,
+						ArrayUtil.subset(roleIds, i, i + 1000)));
+
+				i += 1000;
+			}
+
+			resourcePermissions.addAll(
 				resourcePermissionPersistence.findByC_N_S_P_R(
-					companyId, name, scope, primKey, roleIds);
+					companyId, name, scope, primKey,
+					ArrayUtil.subset(roleIds, i, roleIds.length)));
 
 			for (ResourcePermission resourcePermission : resourcePermissions) {
 				long roleId = resourcePermission.getRoleId();

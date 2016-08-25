@@ -17,6 +17,7 @@ package com.liferay.journal.upgrade;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLinkLocalService;
@@ -31,6 +32,7 @@ import com.liferay.journal.internal.upgrade.v0_0_5.UpgradeJournalDisplayPreferen
 import com.liferay.journal.internal.upgrade.v0_0_5.UpgradeLastPublishDate;
 import com.liferay.journal.internal.upgrade.v0_0_5.UpgradePortletSettings;
 import com.liferay.journal.internal.upgrade.v1_0_0.UpgradeJournalArticleImage;
+import com.liferay.journal.internal.upgrade.v1_1_0.UpgradeDocumentLibraryTypeContent;
 import com.liferay.journal.internal.upgrade.v1_1_0.UpgradeImageTypeContent;
 import com.liferay.journal.internal.upgrade.v1_1_0.UpgradeJournalArticleLocalizedValues;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -117,6 +119,7 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"com.liferay.journal.service", "1.0.0", "1.1.0",
+			new UpgradeDocumentLibraryTypeContent(_dlAppLocalService),
 			new UpgradeImageTypeContent(_imageLocalService),
 			new UpgradeJournalArticleLocalizedValues());
 	}
@@ -192,6 +195,11 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 	}
 
 	@Reference(unbind = "-")
+	protected void setDLAppLocalService(DLAppLocalService dlAppLocalService) {
+		_dlAppLocalService = dlAppLocalService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setGroupLocalService(GroupLocalService groupLocalService) {
 		_groupLocalService = groupLocalService;
 	}
@@ -241,6 +249,7 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 	private DDMStructureLocalService _ddmStructureLocalService;
 	private DDMTemplateLinkLocalService _ddmTemplateLinkLocalService;
 	private DefaultDDMStructureHelper _defaultDDMStructureHelper;
+	private DLAppLocalService _dlAppLocalService;
 	private GroupLocalService _groupLocalService;
 	private ImageLocalService _imageLocalService;
 	private LayoutLocalService _layoutLocalService;

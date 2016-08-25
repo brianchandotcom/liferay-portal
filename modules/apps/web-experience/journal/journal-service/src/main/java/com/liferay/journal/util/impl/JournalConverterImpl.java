@@ -575,11 +575,7 @@ public class JournalConverterImpl implements JournalConverter {
 
 		Serializable serializable = null;
 
-		if (DDMImpl.TYPE_DDM_DOCUMENTLIBRARY.equals(type)) {
-			serializable = getDocumentLibraryValue(
-				dynamicContentElement.getText());
-		}
-		else if (DDMImpl.TYPE_DDM_IMAGE.equals(type)) {
+		if (DDMImpl.TYPE_DDM_IMAGE.equals(type)) {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 			jsonObject.put("alt", dynamicContentElement.attributeValue("alt"));

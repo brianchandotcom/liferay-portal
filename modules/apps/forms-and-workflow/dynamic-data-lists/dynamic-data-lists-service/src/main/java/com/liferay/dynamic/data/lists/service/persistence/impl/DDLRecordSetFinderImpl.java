@@ -179,6 +179,27 @@ public class DDLRecordSetFinderImpl
 			end, orderByComparator, false);
 	}
 
+	protected int doCountByKeywords(
+		long companyId, long groupId, String keywords, int scope,
+		boolean inlineSQLHelper) {
+
+		String[] names = null;
+		String[] descriptions = null;
+		boolean andOperator = false;
+
+		if (Validator.isNotNull(keywords)) {
+			names = CustomSQLUtil.keywords(keywords);
+			descriptions = CustomSQLUtil.keywords(keywords, false);
+		}
+		else {
+			andOperator = true;
+		}
+
+		return doCountByC_G_N_D_S(
+			companyId, groupId, names, descriptions, scope, andOperator,
+			inlineSQLHelper);
+	}
+
 	protected int doCountByC_G_N_D_S(
 		long companyId, long groupId, String[] names, String[] descriptions,
 		int scope, boolean andOperator, boolean inlineSQLHelper) {
@@ -253,27 +274,6 @@ public class DDLRecordSetFinderImpl
 		finally {
 			closeSession(session);
 		}
-	}
-
-	protected int doCountByKeywords(
-		long companyId, long groupId, String keywords, int scope,
-		boolean inlineSQLHelper) {
-
-		String[] names = null;
-		String[] descriptions = null;
-		boolean andOperator = false;
-
-		if (Validator.isNotNull(keywords)) {
-			names = CustomSQLUtil.keywords(keywords);
-			descriptions = CustomSQLUtil.keywords(keywords, false);
-		}
-		else {
-			andOperator = true;
-		}
-
-		return doCountByC_G_N_D_S(
-			companyId, groupId, names, descriptions, scope, andOperator,
-			inlineSQLHelper);
 	}
 
 	protected List<DDLRecordSet> doFindByC_G_N_D_S(

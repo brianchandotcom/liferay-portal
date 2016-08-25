@@ -22,9 +22,6 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public interface ShoppingItemFinder {
-	public int countByG_C(long groupId,
-		java.util.List<java.lang.Long> categoryIds);
-
 	public int countByFeatured(long groupId, long[] categoryIds);
 
 	public int countByKeywords(long groupId, long[] categoryIds,
@@ -35,6 +32,9 @@ public interface ShoppingItemFinder {
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.shopping.model.ShoppingItem> obc);
 
 	public int countBySale(long groupId, long[] categoryIds);
+
+	public int countByG_C(long groupId,
+		java.util.List<java.lang.Long> categoryIds);
 
 	public int filterCountByG_C(long groupId,
 		java.util.List<java.lang.Long> categoryIds);

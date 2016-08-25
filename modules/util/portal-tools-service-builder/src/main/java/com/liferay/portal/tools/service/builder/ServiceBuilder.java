@@ -232,7 +232,7 @@ public class ServiceBuilder {
 				ServiceBuilderArgs.OUTPUT_KEY_MODIFIED_FILES,
 				modifiedFileNames);
 		}
-		catch (Throwable t) {
+		catch (Exception e) {
 			String message =
 				"Please set these arguments. Sample values are:\n" +
 				"\n" +
@@ -307,20 +307,14 @@ public class ServiceBuilder {
 				"\t-Dservice.tpl.spring_xml=" + _TPL_ROOT + "spring_xml.ftl\n"+
 				"\t-Dservice.tpl.spring_xml_session=" + _TPL_ROOT + "spring_xml_session.ftl";
 
-			if (t instanceof ServiceBuilderException) {
-				ServiceBuilderException serviceBuilderException =
-					(ServiceBuilderException)t;
-
-				System.err.println(serviceBuilderException.getMessage());
-			}
-			else if (t instanceof Exception) {
-				System.out.println(message);
-
-				ArgumentsUtil.processMainException(arguments, (Exception)t);
+			if (e instanceof ServiceBuilderException) {
+				System.err.println(e.getMessage());
 			}
 			else {
-				t.printStackTrace();
+				System.out.println(message);
 			}
+
+			ArgumentsUtil.processMainException(arguments, e);
 		}
 
 		try {

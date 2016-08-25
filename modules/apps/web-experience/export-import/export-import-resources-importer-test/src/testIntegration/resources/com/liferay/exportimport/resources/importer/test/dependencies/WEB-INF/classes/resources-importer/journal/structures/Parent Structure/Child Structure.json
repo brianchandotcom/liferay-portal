@@ -41,7 +41,7 @@
                 "en_US": ""
             },
             "dataType": "string",
-            "indexType": "keyword",
+            "indexType": "text",
             "localizable": true,
             "name": "Description",
             "readOnly": false,

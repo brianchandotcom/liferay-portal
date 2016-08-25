@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.util.Map;
 import java.util.Objects;
@@ -43,8 +42,6 @@ public class AlloyEditorAccessibilityConfigContributor
 		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
-
-		StringBundler sb = new StringBundler(1);
 
 		JSONObject toolbarsJSONObject = jsonObject.getJSONObject("toolbars");
 
@@ -68,7 +65,7 @@ public class AlloyEditorAccessibilityConfigContributor
 			if (Objects.equals(selection.get("name"), "image")) {
 				JSONArray buttons = selection.getJSONArray("buttons");
 
-				buttons.put("altImage");
+				buttons.put("imageAlt");
 			}
 		}
 

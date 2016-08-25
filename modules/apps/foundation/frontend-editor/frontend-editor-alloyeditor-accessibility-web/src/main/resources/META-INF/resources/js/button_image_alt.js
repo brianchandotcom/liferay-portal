@@ -5,18 +5,18 @@
 
 	var React = AlloyEditor.React;
 
-	var ButtonAltImage = React.createClass(
+	var ButtonImageAlt = React.createClass(
 		{
 			mixins: [AlloyEditor.ButtonStateClasses, AlloyEditor.ButtonCfgProps],
 
-			displayName: 'ButtonAltImage',
+			displayName: 'ButtonImageAlt',
 
 			propTypes: {
 				editor: React.PropTypes.object.isRequired
 			},
 
 			statics: {
-				key: 'altImage'
+				key: 'imageAlt'
 			},
 
 			/**
@@ -163,7 +163,7 @@
 			 * @method _requestExclusive
 			 */
 			_requestExclusive: function() {
-				this.props.requestExclusive(ButtonAltImage.key);
+				this.props.requestExclusive(ButtonImageAlt.key);
 			},
 
 			/**
@@ -195,5 +195,5 @@
 		}
 	);
 
-	AlloyEditor.Buttons[ButtonAltImage.key] = AlloyEditor.ButtonAltImage = ButtonAltImage;
+	AlloyEditor.Buttons[ButtonImageAlt.key] = AlloyEditor.ButtonImageAlt = ButtonImageAlt;
 }());

@@ -1324,7 +1324,7 @@
 	<command name="moveToSubFolderCP">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
-		<execute function="AssertClick" locator1="DocumentsAndMedia#ICON_DOCUMENT_ACTIONS" />
+		<execute function="Click" locator1="DocumentsAndMedia#ICON_DOCUMENT_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertElementPresent" locator1="MenuItem#MOVE" />
 
@@ -1338,7 +1338,7 @@
 
 		<execute function="AssertTextEquals" locator1="DocumentsAndMediaSelectFolder#FOLDER_GENERIC" value1="${dmSubFolderName}" />
 
-		<execute function="AssertClick" locator1="CHOOSE_BUTTON_GENERIC" value1="Choose" />
+		<execute function="AssertClick" locator1="DocumentsAndMediaSelectFolder#CHOOSE_BUTTON_GENERIC" value1="Choose" />
 
 		<execute function="SelectFrame" locator1="relative=top" />
 

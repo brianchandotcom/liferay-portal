@@ -29,14 +29,19 @@
 			<var name="portlet" value="Knowledge Base" />
 		</execute>
 
-		<execute function="AssertClick" locator1="KnowledgeBase#ADMIN_TABS_TEMPLATES" value1="Templates" />
+		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
+
+		<execute function="AssertClick" locator1="MenuItem#TEMPLATES" value1="Templates" />
 
 		<if>
-			<condition function="IsElementPresent" locator1="KnowledgeBaseTemplate#TEMPLATE_TABLE_SELECT_ALL_CHECKBOX" />
+			<condition function="IsElementPresent" locator1="ContentRow#ENTRY_CONTENT_ROW_1" />
 			<then>
-				<execute function="Check" locator1="KnowledgeBaseTemplate#TEMPLATE_TABLE_SELECT_ALL_CHECKBOX" />
+				<execute function="Check#checkAll" locator1="Checkbox#SELECT_ALL" />
+
 				<execute function="AssertClickNoError" locator1="Button#DELETE" value1="Delete" />
+
 				<execute function="Confirm" value1="Are you sure you want to delete the selected templates?" />
+
 				<execute macro="Alert#viewSuccessMessage" />
 			</then>
 		</if>

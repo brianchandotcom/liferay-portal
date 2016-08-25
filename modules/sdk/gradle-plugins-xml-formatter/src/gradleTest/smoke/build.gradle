@@ -15,9 +15,9 @@ runGradleTest {
 	dependsOn formatXML
 
 	doLast {
-		File expectedSampleXmlFile = file("expected-sample.xml")
-		File sampleXmlFile = file("src/main/resources/sample.xml")
+		File expectedFile = file("sample.xml.expected")
+		File generatedFile = file("src/main/resources/sample.xml")
 
-		assert expectedSampleXmlFile.text.normalize() == sampleXmlFile.text.normalize()
+		assert expectedFile.text.normalize() == generatedFile.text.normalize()
 	}
 }

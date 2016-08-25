@@ -1,0 +1,47 @@
+import com.liferay.gradle.plugins.patcher.PatchTask
+
+buildscript {
+	dependencies {
+		classpath group: "com.netflix.nebula", name: "gradle-extra-configurations-plugin", version: "3.1.0"
+	}
+
+	repositories {
+		mavenLocal()
+
+		maven {
+			url "https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public"
+		}
+	}
+}
+
+apply plugin: "com.liferay.patcher"
+apply plugin: "nebula.optional-base"
+
+task runGradleTest(type: PatchTask)
+
+group = "com.liferay"
+version = "1.1.1.LIFERAY-PATCHED-1"
+
+dependencies {
+	compile group: "com.googlecode.json-simple", name: "json-simple", optional, version: "1.1.1"
+}
+
+repositories {
+	mavenLocal()
+
+	maven {
+		url "https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public"
+	}
+}
+
+runGradleTest {
+	doLast {
+		File expectedFile = file("JSONObject.java.expected")
+		File generatedFile = file("src/main/java/org/json/simple/JSONObject.java")
+
+		assert expectedFile.text.normalize() == generatedFile.text.normalize()
+	}
+
+	fileNames "org/json/simple/JSONObject.java"
+	originalLibModuleName = "json-simple"
+}

@@ -48,12 +48,13 @@ runGradleTest {
 		String[] fileNames = [
 			"src/main/java/com/example/sample/exception/NoSuchFooException.java",
 			"src/main/java/com/example/sample/model/Foo.java",
-			"src/main/java/com/example/sample/service/FooLocalService.java"]
+			"src/main/java/com/example/sample/service/FooLocalService.java"
+		]
 
 		for (String fileName in fileNames) {
-			File file = apiProject.file(fileName)
+			File generatedFile = apiProject.file(fileName)
 
-			assert file.exists()
+			assert generatedFile.exists()
 		}
 
 		fileNames = [
@@ -61,12 +62,13 @@ runGradleTest {
 			"src/main/java/com/example/sample/service/impl/FooLocalServiceImpl.java",
 			"src/main/java/com/example/sample/service/util/ServiceProps.java",
 			"src/main/resources/META-INF/sql/tables.sql",
-			"src/main/resources/service.properties"]
+			"src/main/resources/service.properties"
+		]
 
 		for (String fileName in fileNames) {
-			File file = serviceProject.file(fileName)
+			File generatedFile = serviceProject.file(fileName)
 
-			assert file.exists()
+			assert generatedFile.exists()
 		}
 	}
 }

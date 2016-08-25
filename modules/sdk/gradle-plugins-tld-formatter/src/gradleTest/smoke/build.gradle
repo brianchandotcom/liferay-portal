@@ -14,9 +14,9 @@ runGradleTest {
 	dependsOn formatTLD
 
 	doLast {
-		File expectedSampleTldFile = file("expected-sample.tld")
-		File sampleTldFile = file("src/main/resources/sample.tld")
+		File expectedFile = file("sample.tld.expected")
+		File generatedFile = file("src/main/resources/sample.tld")
 
-		assert expectedSampleTldFile.text.normalize() == sampleTldFile.text.normalize()
+		assert expectedFile.text.normalize() == generatedFile.text.normalize()
 	}
 }

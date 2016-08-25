@@ -1,0 +1,22 @@
+apply plugin: "com.liferay.js.transpiler"
+apply plugin: "java"
+
+task runGradleTest
+
+runGradleTest {
+	dependsOn classes
+
+	doLast {
+		File dir = new File(sourceSets.main.output.resourcesDir, "META-INF/resources/math")
+
+		for (String fileName in ["math.es.js", "math.es.js.map"]) {
+			File generatedFile = new File(dir, fileName)
+
+			assert generatedFile.exists()
+
+			File expectedFile = file(generatedFile.name + ".expected")
+
+			assert expectedFile.text.normalize() == generatedFile.text.normalize()
+		}
+	}
+}

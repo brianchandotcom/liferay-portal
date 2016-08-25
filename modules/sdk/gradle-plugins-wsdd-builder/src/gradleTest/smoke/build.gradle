@@ -61,12 +61,13 @@ runGradleTest {
 		String[] fileNames = [
 			"server-config.wsdd",
 			"src/main/resources/com/example/sample/service/http/FooService_deploy.wsdd",
-			"src/main/resources/com/example/sample/service/http/FooService_undeploy.wsdd"]
+			"src/main/resources/com/example/sample/service/http/FooService_undeploy.wsdd"
+		]
 
 		for (String fileName in fileNames) {
-			File file = serviceProject.file(fileName)
+			File generatedFile = serviceProject.file(fileName)
 
-			assert file.exists()
+			assert generatedFile.exists()
 		}
 	}
 }

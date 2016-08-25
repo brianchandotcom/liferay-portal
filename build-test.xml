@@ -4461,7 +4461,8 @@ go]]></replacevalue>
 
 				<for list="${osgi.modules.includes}" param="osgi.module">
 					<sequential>
-						<var name="osgi.module.dir" unset="true" />
+						<local name="osgi.module.bnd.file" />
+						<local name="osgi.module.dir" />
 
 						<path id="osgi.module.bnd.file">
 							<fileset dir="${project.dir}/modules">

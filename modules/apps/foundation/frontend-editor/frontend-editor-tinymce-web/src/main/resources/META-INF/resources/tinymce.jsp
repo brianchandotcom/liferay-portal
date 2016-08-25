@@ -65,6 +65,8 @@ String toolbarSet = (String)request.getAttribute("liferay-ui:input-editor:toolba
 
 		<script src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNHost() + PortalWebResourcesUtil.getContextPath(PortalWebResourceConstants.RESOURCE_TYPE_EDITOR_TINYMCEEDITOR) + "/tiny_mce/tinymce.min.js", javaScriptLastModified)) %>" type="text/javascript"></script>
 
+		<liferay-util:dynamic-include key='<%= "com.liferay.frontend.editor.tinymce.web#" + editorName + "#additionalResources" %>' />
+
 		<script type="text/javascript">
 			Liferay.namespace('EDITORS')['<%= editorName %>'] = true;
 		</script>

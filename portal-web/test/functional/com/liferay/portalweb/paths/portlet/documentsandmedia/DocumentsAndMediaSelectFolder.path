@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>FOLDER_GENERIC</td>
-	<td>//tbody[@class='table-data']/tr/td//span/a</td>
+	<td>//tbody//span/a/span[2]</td>
 	<td></td>
 </tr>
 <tr>
@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>CHOOSE_BUTTON_GENERIC</td>
-	<td>//tbody[@class='table-data']/tr/td//button[contains(.,'Choose')]</td>
+	<td>//tbody//button[contains(.,'Choose')]</td>
 	<td></td>
 </tr>
 </tbody>

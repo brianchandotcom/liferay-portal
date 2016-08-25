@@ -1876,15 +1876,43 @@
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
-		<execute macro="User#deactivateCP">
-			<var name="userFirstName" value="userfn*" />
-		</execute>
+		<execute function="Click" locator1="Dropdown#FILTER" />
 
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
+		<var name="key_filterValue" value="Active" />
 
-		<execute macro="User#deleteCP" />
+		<execute function="AssertClick" locator1="Dropdown#FILTER_VALUES" value1="Active" />
+
+		<if>
+			<condition function="IsElementPresent" locator1="ContentRow#ENTRY_CONTENT_ROW_1" />
+			<then>
+				<execute function="Check#checkAll" locator1="Checkbox#SELECT_ALL" />
+
+				<execute function="AssertClickNoError" locator1="Button#DEACTIVATE" value1="Deactivate" />
+
+				<execute function="Confirm" value1="Are you sure you want to deactivate the selected users?" />
+
+				<execute macro="Alert#viewSuccessMessage" />
+			</then>
+		</if>
+
+		<execute function="Click" locator1="Dropdown#FILTER" />
+
+		<var name="key_filterValue" value="Inactive" />
+
+		<execute function="AssertClick" locator1="Dropdown#FILTER_VALUES" value1="Inactive" />
+
+		<if>
+			<condition function="IsElementPresent" locator1="ContentRow#ENTRY_CONTENT_ROW_1" />
+			<then>
+				<execute function="Check#checkAll" locator1="Checkbox#SELECT_ALL" />
+
+				<execute function="Click" locator1="Icon#DELETE" />
+
+				<execute function="Confirm" value1="Are you sure you want to permanently delete the selected users?" />
+
+				<execute macro="Alert#viewSuccessMessage" />
+			</then>
+		</if>
 	</command>
 
 	<command name="unassignRegularRoleCP">

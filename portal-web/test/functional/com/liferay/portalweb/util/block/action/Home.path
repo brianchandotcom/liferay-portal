@@ -170,7 +170,7 @@
 </tr>
 <tr>
 	<td>DELETE_PAGE_ICON</td>
-	<td>//li[contains(@class,'lfr-nav-deletable') and contains(@class,'lfr-nav-hover')]/span[@class='delete-tab']</td>
+	<td>//li[contains(@class,'lfr-nav-deletable') and contains(@class,'lfr-nav-sortable')]/span[@class='delete-tab']</td>
 	<td></td>
 </tr>
 <tr>

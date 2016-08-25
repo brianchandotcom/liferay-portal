@@ -110,11 +110,11 @@
 			<condition function="IsElementPresent" locator1="KnowledgeBase#FOLDER_TABLE_HEADER" />
 
 			<then>
-				<execute function="Click" locator1="KnowledgeBase#FOLDER_TABLE_ACTIONS_BUTTON_GENERIC" />
+				<execute function="Check#checkAll" locator1="KnowledgeBase#ARTICLE_TABLE_SELECT_ALL_CHECKBOX" />
 
-				<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
+				<execute function="Click" locator1="Icon#DELETE" />
 
-				<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
+				<execute function="Confirm" value1="Are you sure you want to delete the selected entries? They will be deleted immediately." />
 
 				<execute macro="Alert#viewSuccessMessage" />
 			</then>

@@ -116,7 +116,7 @@
 </tr>
 <tr>
 	<td>ICON_DOCUMENT_VERTICAL_ELLIPSIS</td>
-	<td>//li[contains(@data-title,'${key_dmDocumentTitle}')]//span[contains(@class,'icon-ellipsis-vertical')]</td>
+	<td>//ul[contains(@class,'display-style-icon')]/li[contains(@data-title,'${key_dmDocumentTitle}')]//span/*[name()='svg'][contains(@class,'icon-ellipsis')]</td>
 	<td></td>
 </tr>
 <tr>

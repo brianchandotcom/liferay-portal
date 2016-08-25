@@ -40,7 +40,7 @@ public interface CXFEndpointPublisherConfiguration {
 	)
 	public String[] authVerifierProperties();
 
-	@Meta.AD(name = "%required-extensions", required = false)
+	@Meta.AD(name = "required-extensions", required = false)
 	public String[] extensions();
 
 }

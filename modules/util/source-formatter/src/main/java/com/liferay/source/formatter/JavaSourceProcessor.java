@@ -4448,7 +4448,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private final Pattern _annotationLineBreakPattern2 = Pattern.compile(
 		"=(\n\t*)\"");
 	private final Pattern _annotationMetaTypePattern = Pattern.compile(
-		"\\s(name|description) = \"%");
+		"[\\s\\(](name|description) = \"%");
 	private final Pattern _anonymousClassPattern = Pattern.compile(
 		"\n(\t+)(\\S.* )?new .*\\) \\{\n\n");
 	private final Pattern _arrayPattern = Pattern.compile(

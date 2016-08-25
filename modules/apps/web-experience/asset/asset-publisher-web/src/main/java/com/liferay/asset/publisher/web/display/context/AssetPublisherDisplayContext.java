@@ -752,7 +752,7 @@ public class AssetPublisherDisplayContext {
 		// the view counter breaks
 
 		if ((assetEntry == null) || assetEntry.isNew() ||
-			!assetEntry.isVisible() ||!isEnableViewCountIncrement()) {
+			!assetEntry.isVisible() || !isEnableViewCountIncrement()) {
 
 			return assetEntry;
 		}

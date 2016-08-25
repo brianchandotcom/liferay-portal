@@ -179,12 +179,12 @@ public class CustomServletContextHelper
 					String subpath = path;
 
 					String urlPatternPath = urlPattern.substring(
-						0, urlPattern.indexOf("/*") +1);
+						0, urlPattern.indexOf("/*") + 1);
 
 					int index = subpath.lastIndexOf("/");
 
 					if (index > 0) {
-						subpath = subpath.substring(0, index +1);
+						subpath = subpath.substring(0, index + 1);
 					}
 
 					if (Objects.equals(urlPatternPath, subpath)) {

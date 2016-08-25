@@ -26,8 +26,7 @@ public class UpgradeKaleoAction extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try(
-			PreparedStatement ps = connection.prepareStatement(
+		try (PreparedStatement ps = connection.prepareStatement(
 				"select kaleoActionId, script from KaleoAction where script " +
 					"like '%WorkflowConstants.toStatus(%'");
 			ResultSet rs = ps.executeQuery();) {

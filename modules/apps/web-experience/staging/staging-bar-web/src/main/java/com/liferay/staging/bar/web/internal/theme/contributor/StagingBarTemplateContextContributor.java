@@ -66,14 +66,14 @@ public class StagingBarTemplateContextContributor
 					sb.append(StringPool.SPACE);
 					sb.append("staging local-staging");
 				}
-				else if(themeDisplay.isShowStagingIcon() &&
-				 group.hasStagingGroup()) {
+				else if (themeDisplay.isShowStagingIcon() &&
+						 group.hasStagingGroup()) {
 
 					sb.append(StringPool.SPACE);
 					sb.append("live-view");
 				}
-				else if(themeDisplay.isShowStagingIcon() &&
-				 group.isStagedRemotely()) {
+				else if (themeDisplay.isShowStagingIcon() &&
+						 group.isStagedRemotely()) {
 
 					sb.append(StringPool.SPACE);
 					sb.append("staging remote-staging");

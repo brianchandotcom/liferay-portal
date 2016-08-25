@@ -223,7 +223,7 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 		int count = assetVocabularyLocalService.getGroupVocabulariesCount(
 			new long[] {groupId});
 
-		if (count> 0) {
+		if (count > 0) {
 			return vocabularies;
 		}
 

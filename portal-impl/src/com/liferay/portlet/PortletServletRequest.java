@@ -496,7 +496,7 @@ public class PortletServletRequest extends HttpServletRequestWrapper {
 			jettyHttpSessionWrapperClass.getConstructor(
 				new Class[] {HttpSession.class});
 
-		return(HttpSession)constructor.newInstance(new Object[] {session});
+		return (HttpSession)constructor.newInstance(new Object[] {session});
 	}
 
 	private ClientDataRequest _getClientDataRequest() {

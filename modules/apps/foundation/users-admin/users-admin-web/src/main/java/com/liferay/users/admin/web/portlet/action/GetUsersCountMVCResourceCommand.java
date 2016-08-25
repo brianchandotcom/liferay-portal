@@ -78,7 +78,7 @@ public class GetUsersCountMVCResourceCommand implements MVCResourceCommand {
 
 			params.put("usersOrgs", organizationId);
 
-			count+= _userLocalService.searchCount(
+			count += _userLocalService.searchCount(
 				companyId, null, status, params);
 		}
 
@@ -121,7 +121,7 @@ public class GetUsersCountMVCResourceCommand implements MVCResourceCommand {
 
 			params.put("usersUserGroups", userGroupId);
 
-			count+= _userLocalService.searchCount(
+			count += _userLocalService.searchCount(
 				companyId, null, status, params);
 		}
 

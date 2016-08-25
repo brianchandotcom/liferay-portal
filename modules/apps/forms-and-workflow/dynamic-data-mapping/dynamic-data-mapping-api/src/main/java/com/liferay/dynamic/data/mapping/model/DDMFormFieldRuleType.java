@@ -36,10 +36,10 @@ public enum DDMFormFieldRuleType implements Serializable {
 		else if (VALUE.getValue().equals(value)) {
 			return VALUE;
 		}
-		else if(VALIDATION.getValue().equals(value)) {
+		else if (VALIDATION.getValue().equals(value)) {
 			return VALIDATION;
 		}
-		else if(VISIBILITY.getValue().equals(value)) {
+		else if (VISIBILITY.getValue().equals(value)) {
 			return VISIBILITY;
 		}
 		else {

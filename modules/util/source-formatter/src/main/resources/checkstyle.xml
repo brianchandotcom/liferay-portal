@@ -61,6 +61,9 @@
 			<message key="name.invalidPattern" value="Class, interface, enum or annotation ''{0}'' must match pattern ''{1}''" />
 		</module>
 		<module name="UpperEll" />
+		<module name="WhitespaceAround">
+			<property name="allowEmptyTypes" value="true" />
+		</module>
 
 		<!-- Custom checks -->
 

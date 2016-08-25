@@ -52,7 +52,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Matthew Tambara
  */
 @Component(
-	configurationPid ="com.liferay.portlet.tck.bridge.configuration.PortletTCKBridgeConfiguration"
+	configurationPid = "com.liferay.portlet.tck.bridge.configuration.PortletTCKBridgeConfiguration"
 )
 public class PortletTCKBridge {
 

@@ -80,7 +80,7 @@ public class AnnotatedSettingsDescriptor implements SettingsDescriptor {
 		Settings.Property settingsProperty = propertyMethod.getAnnotation(
 			Settings.Property.class);
 
-		if (settingsProperty!= null) {
+		if (settingsProperty != null) {
 			String name = settingsProperty.name();
 
 			if (!name.isEmpty()) {

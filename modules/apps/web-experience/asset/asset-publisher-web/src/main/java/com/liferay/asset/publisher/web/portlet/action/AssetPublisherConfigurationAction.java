@@ -457,7 +457,7 @@ public class AssetPublisherConfigurationAction
 			return;
 		}
 
-		String[] newEntries = new String[manualEntries.length -1];
+		String[] newEntries = new String[manualEntries.length - 1];
 
 		int i = 0;
 		int j = 0;

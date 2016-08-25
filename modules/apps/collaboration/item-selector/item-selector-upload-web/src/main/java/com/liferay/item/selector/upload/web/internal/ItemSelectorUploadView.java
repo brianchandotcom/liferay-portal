@@ -104,7 +104,7 @@ public class ItemSelectorUploadView
 	}
 
 	@Reference(
-		target ="(osgi.web.symbolicname=com.liferay.item.selector.upload.web)",
+		target = "(osgi.web.symbolicname=com.liferay.item.selector.upload.web)",
 		unbind = "-"
 	)
 	public void setServletContext(ServletContext servletContext) {

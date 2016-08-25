@@ -51,7 +51,7 @@ public interface TokenConfiguration {
 	public TokenLocation tokenLocation();
 
 	@Meta.AD(
-		deflt ="SMIDENTITY|SMSESSION",
+		deflt = "SMIDENTITY|SMSESSION",
 		description = "authentication-cookies-help", required = false
 	)
 	public String[] authenticationCookies();

@@ -26,6 +26,7 @@
 	<suppress checks="StaticVariableName" files="portal-test-integration/src/com/liferay/portal/events/test/TestServicePreAction\.java" />
 	<suppress checks="StaticVariableName" files="util-java/src/com/liferay/util/resiliency/spi/provider/SPIClassPathContextListener\.java" />
 	<suppress checks="StaticVariableName" files="util-slf4j/src/org/slf4j/impl/StaticLoggerBinder\.java" />
+	<suppress checks="WhitespaceAround" files="modules/apps/forms-and-workflow/dynamic-data-mapping/dynamic-data-mapping-expression/src/test/java/com/liferay/dynamic/data/mapping/expression/internal/ArithmeticEvaluationTest\.java" />
 
 	<!-- Custom checks -->
 

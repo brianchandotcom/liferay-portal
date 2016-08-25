@@ -17,6 +17,7 @@ package com.liferay.knowledge.base.internal.exportimport.data.handler;
 import com.liferay.document.library.kernel.exception.DuplicateFileEntryException;
 import com.liferay.document.library.kernel.exception.NoSuchFileException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.exportimport.content.processor.ExportImportContentProcessorController;
 import com.liferay.exportimport.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -156,6 +157,14 @@ public class KBArticleStagedModelDataHandler
 		exportKBArticleAttachments(
 			portletDataContext, kbArticleElement, kbArticle);
 
+		String content =
+			_exportImportContentProcessorController.
+				replaceExportContentReferences(
+					portletDataContext, kbArticle, kbArticle.getContent(), true,
+					true);
+
+		kbArticle.setContent(content);
+
 		portletDataContext.addClassedModel(
 			kbArticleElement, ExportImportPathUtil.getModelPath(kbArticle),
 			kbArticle);
@@ -243,6 +252,13 @@ public class KBArticleStagedModelDataHandler
 		}
 
 		String[] sections = AdminUtil.unescapeSections(kbArticle.getSections());
+
+		String content =
+			_exportImportContentProcessorController.
+				replaceImportContentReferences(
+					portletDataContext, kbArticle, kbArticle.getContent());
+
+		kbArticle.setContent(content);
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			kbArticle);
@@ -424,6 +440,15 @@ public class KBArticleStagedModelDataHandler
 	}
 
 	@Reference(unbind = "-")
+	protected void setExportImportContentProcessorController(
+		ExportImportContentProcessorController
+			exportImportContentProcessorController) {
+
+		_exportImportContentProcessorController =
+			exportImportContentProcessorController;
+	}
+
+	@Reference(unbind = "-")
 	protected void setKBArticleLocalService(
 		KBArticleLocalService kbArticleLocalService) {
 
@@ -459,6 +484,8 @@ public class KBArticleStagedModelDataHandler
 	private static final Log _log = LogFactoryUtil.getLog(
 		KBArticleStagedModelDataHandler.class);
 
+	private ExportImportContentProcessorController
+		_exportImportContentProcessorController;
 	private KBArticleLocalService _kbArticleLocalService;
 	private KBArticlePersistence _kbArticlePersistence;
 	private KBFolderLocalService _kbFolderLocalService;

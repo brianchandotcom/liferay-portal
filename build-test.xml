@@ -4473,24 +4473,7 @@ go]]></replacevalue>
 
 						<dirname file="${osgi.module.bnd.file}" property="osgi.module.dir" />
 
-						<if>
-							<contains string="${osgi.module.dir}" substring="modules" />
-							<then>
-								<gradle-execute dir="${osgi.module.dir}" task="deploy" />
-							</then>
-							<else>
-								<var name="osgi.module.dir" unset="true" />
-
-								<dirset dir="${project.dir}/modules" id="osgi.module.dir.id">
-									<exclude name=".releng/**" />
-									<include name="**/@{osgi.module}" />
-								</dirset>
-
-								<property name="osgi.module.dir" refid="osgi.module.dir.id" />
-
-								<gradle-execute dir="modules/${osgi.module.dir}" task="deploy" />
-							</else>
-						</if>
+						<gradle-execute dir="${osgi.module.dir}" task="deploy" />
 					</sequential>
 				</for>
 			</then>

@@ -64,8 +64,8 @@ public class AlloyEditorAccessibilityDynamicInclude extends BaseDynamicInclude {
 	@Override
 	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
 		dynamicIncludeRegistry.register(
-			"com.liferay.frontend.editor.alloyeditor.accessibility.web#" +
-				"additionalModules");
+			"com.liferay.frontend.editor.alloyeditor.web#alloyeditor#" +
+				"additionalResources");
 	}
 
 	@Reference(

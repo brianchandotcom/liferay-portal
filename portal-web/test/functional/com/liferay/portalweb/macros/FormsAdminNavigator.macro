@@ -41,6 +41,8 @@
 		<var name="key_fieldName" value="${fieldName}" />
 
 		<execute function="Click" locator1="Form#FIELD_BODY" />
+
+		<execute function="AssertElementPresent" locator1="Form#SIDEBAR_BASIC_TAB" />
 	</command>
 
 	<command name="gotoEditFormByName">

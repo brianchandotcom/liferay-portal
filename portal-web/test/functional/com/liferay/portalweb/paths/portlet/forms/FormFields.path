@@ -304,6 +304,12 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--AUTOCOMPLETE-->
+<tr>
+	<td>AUTOCOMPLETE_OPTION</td>
+	<td>//li[@data-text='${key_autocompleteOption}']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

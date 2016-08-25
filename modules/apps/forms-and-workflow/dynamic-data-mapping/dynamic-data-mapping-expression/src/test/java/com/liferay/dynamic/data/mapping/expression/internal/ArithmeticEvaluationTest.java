@@ -34,27 +34,31 @@ public class ArithmeticEvaluationTest {
 
 	@Test
 	public void testCombinedDecimalExpression() throws Exception {
-		int expected = -((1+3)-4*(2-(2+(4-5))*(5-2)*5)+1);
+		int expected = -((1 + 3) - 4 * (2 - (2 + (4 - 5)) * (5 - 2) * 5) +1);
 
-		Assert.assertEquals(
-			expected,
-			evaluate("-((1+3)-4*(2-(2+(4-5))*(5-2)*5)+1)").intValue());
+		Number actual = evaluate(
+			"-((1 + 3) - 4 * (2 - (2 + (4 - 5)) * (5 - 2) * 5) +1)");
 
-		expected = 1*2-5*4-3-5*2*5-5+7-10-4*3*4-2+11-11+4*3-1;
+		Assert.assertEquals(expected, actual.intValue());
 
-		Assert.assertEquals(
-			expected,
-			evaluate("1*2-5*4-3-5*2*5-5+7-10-4*3*4-2+11-11+4*3-1").intValue());
+		expected = 1 * 2 - 5 * 4 - 3 - 5 * 2 * 5 - 5 + 7 - 10 - 4 * 3 - 2 + 1;
+
+		actual = evaluate(
+			"1 * 2 - 5 * 4 - 3 - 5 * 2 * 5 - 5 + 7 - 10 - 4 * 3 - 2 + 1");
+
+		Assert.assertEquals(expected, actual.intValue());
 	}
 
 	@Test
 	public void testCombinedFloatingPointExpression() throws Exception {
-		double expected = -(-2.5+4*(2.15+((11+63.2)-2)*(.5+6)-(2.6*1.1-4)));
+		double expected =
+			-(-2.5 + 4 * (2.1 + ((11 + 3.2) - 2) * (.5 + 6) - (2.6 * 1.1 - 4)));
 
-		double actual = evaluate(
-			"-(-2.5+4*(2.15+((11+63.2)-2)*(.5+6)-(2.6*1.1-4)))").doubleValue();
+		Number actual = evaluate(
+			"-(-2.5 + 4 * (2.1 + ((11 + 3.2) - 2) * (.5 + 6) - " +
+				"(2.6 * 1.1 - 4)))");
 
-		Assert.assertEquals(expected, actual, .1);
+		Assert.assertEquals(expected, actual.doubleValue(), .1);
 	}
 
 	@Test

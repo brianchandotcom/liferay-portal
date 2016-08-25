@@ -43,7 +43,7 @@ public class FunctionEvaluationTest {
 	@Test
 	public void testCustomFunction2() throws Exception {
 		DDMExpression<Boolean> ddmExpression = new DDMExpressionImpl<>(
-			"not (length(\"123\") > length(\"1\"))", Boolean.class);
+			"not(length(\"123\") > length(\"1\"))", Boolean.class);
 
 		ddmExpression.setDDMExpressionFunction("length", new LengthFunction());
 

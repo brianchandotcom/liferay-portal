@@ -930,7 +930,7 @@ AUI.add(
 					'text': Liferay.Language.get('indexable-text')
 				};
 			}
-			
+
 			if (type == 'ddm-text-html' || type == 'textarea') {
 				indexTypeOptions = {
 					'': Liferay.Language.get('not-indexable'),

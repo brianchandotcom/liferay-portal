@@ -8274,8 +8274,15 @@
 			<var name="contentBody" value="Test Test sent you a Kaleo Forms Process for review in the workflow." />
 		</execute>
 
-		<execute macro="Notifications#navigateToContent">
-			<var name="contentBody" value="Test Test sent you a Kaleo Forms Process for review in the workflow." />
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="Notifications#viewBadgeCount">
+			<var name="notificationCount" value="1" />
+		</execute>
+
+		<execute macro="WorkflowAsset#gotoViaNotification">
+			<var name="assetType" value="Kaleo Forms Process" />
+			<var name="user" value="Test Test" />
 		</execute>
 
 		<execute macro="Workflow#viewTaskHeaderTitle">
@@ -8301,8 +8308,9 @@
 			<var name="contentBody" value="Test Test sent you a Kaleo Forms Process for review in the workflow." />
 		</execute>
 
-		<execute macro="Notifications#navigateToContent">
-			<var name="contentBody" value="Test Test sent you a Kaleo Forms Process for review in the workflow." />
+		<execute macro="WorkflowAsset#gotoViaNotification">
+			<var name="assetType" value="Kaleo Forms Process" />
+			<var name="user" value="Test Test" />
 		</execute>
 
 		<execute macro="Workflow#viewTaskHeaderTitle">

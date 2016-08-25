@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.marketplace.internal.upgrade.v1_0_0;
+package com.liferay.marketplace.internal.upgrade.v0_0_1;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 /**
  * @author Ryan Park
  */
-public class UpgradeApp extends UpgradeProcess {
+public class UpgradeModule extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
@@ -29,27 +29,18 @@ public class UpgradeApp extends UpgradeProcess {
 	}
 
 	protected void updateModules() throws Exception {
-		if (!hasColumn("Marketplace_App", "title")) {
-			runSQL("alter table Marketplace_App add title VARCHAR(75)");
+		if (!hasColumn("Marketplace_Module", "bundleSymbolicName")) {
+			runSQL(
+				"alter table Marketplace_Module add bundleSymbolicName " +
+					"VARCHAR(500)");
 		}
 
-		if (!hasColumn("Marketplace_App", "description")) {
-			runSQL("alter table Marketplace_App add description STRING");
-		}
-
-		if (!hasColumn("Marketplace_App", "category")) {
-			runSQL("alter table Marketplace_App add category VARCHAR(75)");
-		}
-
-		if (!hasColumn("Marketplace_App", "iconURL")) {
-			runSQL("alter table Marketplace_App add iconURL STRING");
-		}
-
-		if (!hasColumn("Marketplace_App", "version")) {
-			runSQL("alter table Marketplace_App add version VARCHAR(75)");
+		if (!hasColumn("Marketplace_Module", "bundleVersion")) {
+			runSQL(
+				"alter table Marketplace_Module add bundleVersion VARCHAR(75)");
 		}
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(UpgradeApp.class);
+	private static final Log _log = LogFactoryUtil.getLog(UpgradeModule.class);
 
 }

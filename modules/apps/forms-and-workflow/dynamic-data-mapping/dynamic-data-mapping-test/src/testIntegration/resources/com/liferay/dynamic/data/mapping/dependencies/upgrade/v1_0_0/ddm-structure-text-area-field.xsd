@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <root available-locales="en_US" default-locale="en_US">
-	<dynamic-element dataType="string" indexType="keyword" localizable="true" name="Text_Box" readOnly="false" repeatable="false" required="false" showLabel="true" type="textarea" width="small">
+	<dynamic-element dataType="string" indexType="text" localizable="true" name="Text_Box" readOnly="false" repeatable="false" required="false" showLabel="true" type="textarea" width="small">
 		<meta-data locale="en_US">
 			<entry name="label"><![CDATA[Text Box]]></entry>
 			<entry name="predefinedValue"><![CDATA[]]></entry>

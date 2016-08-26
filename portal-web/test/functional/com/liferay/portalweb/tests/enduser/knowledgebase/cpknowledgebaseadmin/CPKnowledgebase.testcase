@@ -265,7 +265,7 @@
 
 		<execute macro="Vocabulary#addWithAssociatedAssetTypeCP">
 			<var name="requiredCheckbox" value="true" />
-			<var name="vocabularyAssociatedAssetType" value="Knowledge Base Article" />
+			<var name="vocabularyAssociatedAssetTypeList" value="Knowledge Base Article" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
@@ -372,7 +372,7 @@
 
 		<execute macro="Vocabulary#addWithAssociatedAssetTypeCP">
 			<var name="required" value="true" />
-			<var name="vocabularyAssociatedAssetType" value="Knowledge Base Article" />
+			<var name="vocabularyAssociatedAssetTypeList" value="Knowledge Base Article" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 

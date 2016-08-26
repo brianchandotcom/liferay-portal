@@ -300,7 +300,7 @@
 </tr>
 <tr>
 	<td>GMAIL_HTML_MODE_MESSAGE_BODY_ATTACHMENT</td>
-	<td>//table[@class='att']//b[contains(.,'${key_gmailMesssageAttachment}')]</td>
+	<td>//table[@class='att']//b[contains(.,'${key_gmailMessageAttachment}')]</td>
 	<td></td>
 </tr>
 <tr>

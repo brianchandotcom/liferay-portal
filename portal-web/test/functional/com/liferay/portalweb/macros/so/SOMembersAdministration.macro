@@ -62,7 +62,7 @@
 			<var name="gmailMessageBodyClosing" value="If you have any questions, contact the administrator at ${adminEmailAddress}." />
 			<var name="gmailMessageBodyGreeting" value="${adminName} has invited you to join ${siteName} on Social Office." />
 			<var name="gmailMessageTitle" value="${adminName} has invited you to join ${siteName}" />
-			<var name="gmailMesssageAttachment" value="${gmailMesssageAttachment}" />
+			<var name="gmailMessageAttachment" value="${gmailMessageAttachment}" />
 		</execute>
 
 		<var name="key_gmailAssetType" value="${siteName}" />
@@ -141,7 +141,7 @@
 			<var name="gmailMessageBodyClosing" value="If you have any questions, contact the administrator at ${adminEmailAddress}." />
 			<var name="gmailMessageBodyGreeting" value="${adminName} has invited you to join ${siteName} on Social Office." />
 			<var name="gmailMessageTitle" value="${adminName} has invited you to join ${siteName}" />
-			<var name="gmailMesssageAttachment" value="${gmailMesssageAttachment}" />
+			<var name="gmailMessageAttachment" value="${gmailMessageAttachment}" />
 		</execute>
 
 		<execute function="AssertClick" locator1="Gmail#GMAIL_HTML_MODE_MESSAGE_BODY_SOCIAL_OFFICE_SITE_INVITE_CREATE_ACCOUNT_LINK" value1="Create Account" />

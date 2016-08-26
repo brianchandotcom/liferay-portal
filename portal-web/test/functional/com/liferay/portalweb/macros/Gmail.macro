@@ -192,11 +192,11 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="Gmail#GMAIL_HTML_MODE_MESSAGE_BODY_CLOSING" value1="${gmailMessageBody}" />
 
 		<if>
-			<isset var="gmailMesssageAttachment" />
+			<isset var="gmailMessageAttachment" />
 			<then>
-				<var name="key_gmailMesssageAttachment" value="${gmailMesssageAttachment}" />
+				<var name="key_gmailMessageAttachment" value="${gmailMessageAttachment}" />
 
-				<execute function="AssertTextEquals" locator1="Gmail#GMAIL_HTML_MODE_MESSAGE_BODY_ATTACHMENT" value1="${gmailMesssageAttachment}" />
+				<execute function="AssertTextEquals" locator1="Gmail#GMAIL_HTML_MODE_MESSAGE_BODY_ATTACHMENT" value1="${gmailMessageAttachment}" />
 			</then>
 		</if>
 	</command>

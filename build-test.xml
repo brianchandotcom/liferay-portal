@@ -1583,7 +1583,7 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 			<if>
 				<and>
 					<equals arg1="${app.server.type}" arg2="tomcat" />
-					<matches pattern="http" string="${test.build.fix.pack.zip.url}" />
+					<matches pattern="https?://" string="${test.build.fix.pack.zip.url}" />
 				</and>
 				<then>
 					<mirrors-get
@@ -1793,7 +1793,7 @@ tell application "Safari" to quit
 		<attribute name="unit" />
 		<sequential>
 			<if>
-				<matches pattern="http" string="${test.build.bundle.glassfish.zip.url}" />
+				<matches pattern="https?://" string="${test.build.bundle.glassfish.zip.url}" />
 				<then>
 					<antcall inheritAll="false" target="prepare-test-bundle">
 						<param name="app.server.type" value="glassfish" />
@@ -1821,7 +1821,7 @@ tell application "Safari" to quit
 			<if>
 				<and>
 					<equals arg1="${test.build.bundle.jbosseap6.1}" arg2="true" />
-					<matches pattern="http" string="${test.build.portal.war.url}" />
+					<matches pattern="https?://" string="${test.build.portal.war.url}" />
 				</and>
 				<then>
 					<app-server-properties-update>
@@ -1860,7 +1860,7 @@ tell application "Safari" to quit
 			</if>
 
 			<if>
-				<matches pattern="http" string="${test.build.bundle.jetty.zip.url}" />
+				<matches pattern="https?://" string="${test.build.bundle.jetty.zip.url}" />
 				<then>
 					<antcall inheritAll="false" target="prepare-test-bundle">
 						<param name="app.server.type" value="jetty" />
@@ -1877,7 +1877,7 @@ tell application "Safari" to quit
 			</if>
 
 			<if>
-				<matches pattern="http" string="${test.build.bundle.jonas.zip.url}" />
+				<matches pattern="https?://" string="${test.build.bundle.jonas.zip.url}" />
 				<then>
 					<antcall inheritAll="false" target="prepare-test-bundle">
 						<param name="app.server.type" value="jonas" />
@@ -1894,7 +1894,7 @@ tell application "Safari" to quit
 			</if>
 
 			<if>
-				<matches pattern="http" string="${test.build.bundle.resin.zip.url}" />
+				<matches pattern="https?://" string="${test.build.bundle.resin.zip.url}" />
 				<then>
 					<antcall inheritAll="false" target="prepare-test-bundle">
 						<param name="app.server.type" value="resin" />
@@ -1913,7 +1913,7 @@ tell application "Safari" to quit
 			<if>
 				<and>
 					<equals arg1="${test.build.bundle.tcserver}" arg2="true" />
-					<matches pattern="http" string="${test.build.portal.war.url}" />
+					<matches pattern="https?://" string="${test.build.portal.war.url}" />
 				</and>
 				<then>
 					<antcall inheritAll="false" target="prepare-test-bundle">
@@ -1931,7 +1931,7 @@ tell application "Safari" to quit
 			</if>
 
 			<if>
-				<matches pattern="http" string="${test.build.bundle.tomcat.zip.url}" />
+				<matches pattern="https?://" string="${test.build.bundle.tomcat.zip.url}" />
 				<then>
 					<set-tomcat-version-number liferay.portal.bundle="${liferay.portal.bundle}" />
 
@@ -1987,7 +1987,7 @@ tell application "Safari" to quit
 			<if>
 				<and>
 					<equals arg1="${test.build.bundle.weblogic}" arg2="true" />
-					<matches pattern="http" string="${test.build.portal.war.url}" />
+					<matches pattern="https?://" string="${test.build.portal.war.url}" />
 				</and>
 				<then>
 					<antcall inheritAll="false" target="prepare-test-bundle">
@@ -2021,7 +2021,7 @@ tell application "Safari" to quit
 			</if>
 
 			<if>
-				<matches pattern="http" string="${test.build.bundle.wildfly.zip.url}" />
+				<matches pattern="https?://" string="${test.build.bundle.wildfly.zip.url}" />
 				<then>
 					<antcall inheritAll="false" target="prepare-test-bundle">
 						<param name="app.server.type" value="wildfly" />
@@ -2040,7 +2040,7 @@ tell application "Safari" to quit
 			<antcall target="deploy-license-xml" />
 
 			<if>
-				<matches pattern="http" string="${test.build.plugins.war.zip.url}" />
+				<matches pattern="https?://" string="${test.build.plugins.war.zip.url}" />
 				<then>
 					<mirrors-get
 						dest="plugins.war.zip"
@@ -2057,7 +2057,7 @@ tell application "Safari" to quit
 			</if>
 
 			<if>
-				<matches pattern="http" string="${test.extra.apps.zip.urls}" />
+				<matches pattern="https?://" string="${test.extra.apps.zip.urls}" />
 				<then>
 					<mkdir dir="extraapps" />
 
@@ -4439,7 +4439,7 @@ go]]></replacevalue>
 
 	<target name="deploy-license-xml">
 		<if>
-			<matches pattern="http" string="${test.build.license.xml.zip.url}" />
+			<matches pattern="https?://" string="${test.build.license.xml.zip.url}" />
 			<then>
 				<mkdir dir="${liferay.home}/deploy" />
 
@@ -4560,7 +4560,7 @@ go]]></replacevalue>
 
 	<target name="deploy-sql-zip">
 		<if>
-			<matches pattern="http" string="${test.sql.zip.url}" />
+			<matches pattern="https?://" string="${test.sql.zip.url}" />
 			<then>
 				<mirrors-get
 					dest="sql/release-sql.zip"
@@ -6923,7 +6923,7 @@ liferay.home=${liferay.home}
 plugins.includes=marketplace-portlet</echo>
 
 				<if>
-					<matches pattern="http" string="${test.build.portal.war.url}" />
+					<matches pattern="https?://" string="${test.build.portal.war.url}" />
 					<then>
 						<mkdir dir="dist" />
 
@@ -6975,7 +6975,7 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 		</if>
 
 		<if>
-			<matches pattern="http" string="${test.build.bundle.zip.url}" />
+			<matches pattern="https?://" string="${test.build.bundle.zip.url}" />
 			<then>
 				<mkdir dir="${app.server.parent.dir}" />
 

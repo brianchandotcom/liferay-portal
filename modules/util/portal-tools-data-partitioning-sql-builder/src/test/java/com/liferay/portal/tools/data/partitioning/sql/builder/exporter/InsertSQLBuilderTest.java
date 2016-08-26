@@ -24,14 +24,13 @@ public class InsertSQLBuilderTest {
 
 	@Test
 	public void testBuild() {
-		String expected = "insert into Foo values (a, b, c, d);\n";
-
 		String[] fields = {"a", "b", "c", "d"};
 
 		InsertSQLBuilder insertSQLBuilder = new InsertSQLBuilder();
 
 		Assert.assertEquals(
-			expected, insertSQLBuilder.build(fields, null, "Foo"));
+			"insert into Foo values (a, b, c, d);\n",
+			insertSQLBuilder.build(fields, null, "Foo"));
 	}
 
 }

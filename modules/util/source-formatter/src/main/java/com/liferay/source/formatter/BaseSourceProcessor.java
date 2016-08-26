@@ -1565,6 +1565,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			if (Character.isLetter(linePart2.charAt(0)) &&
 				!linePart2.startsWith("default") &&
 				!linePart2.startsWith("instanceof") &&
+				!linePart2.startsWith("return") &&
 				!linePart2.startsWith("throws")) {
 
 				linePart = StringUtil.replaceFirst(

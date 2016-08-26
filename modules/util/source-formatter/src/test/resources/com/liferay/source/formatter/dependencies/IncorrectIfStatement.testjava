@@ -20,7 +20,7 @@ package com.liferay.source.formatter.dependencies;
 public class IncorrectIfStatement {
 
 	public void method(String s) {
-		if (s == null)return;
+		if (s == null) return;
 	}
 
 }

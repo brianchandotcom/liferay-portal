@@ -26,6 +26,8 @@
 			<if>
 				<available file="@{file}.md5" />
 				<then>
+					<local name="md5.checksum" />
+
 					<loadfile property="md5.checksum" srcFile="@{file}.md5" />
 
 					<propertyregex

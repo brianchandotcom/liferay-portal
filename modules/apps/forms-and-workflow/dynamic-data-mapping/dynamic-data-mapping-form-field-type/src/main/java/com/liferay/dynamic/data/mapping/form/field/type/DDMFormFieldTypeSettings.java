@@ -39,7 +39,7 @@ import com.liferay.dynamic.data.mapping.annotations.DDMFormRule;
 @DDMFormLayout(
 	{
 		@DDMFormLayoutPage(
-			title = "advanced",
+			title = "properties",
 			value = {
 				@DDMFormLayoutRow(
 					{

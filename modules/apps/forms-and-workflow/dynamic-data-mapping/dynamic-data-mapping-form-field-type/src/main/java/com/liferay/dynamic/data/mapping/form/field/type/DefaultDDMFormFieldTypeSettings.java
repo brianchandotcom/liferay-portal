@@ -58,7 +58,7 @@ import com.liferay.portal.kernel.util.StringPool;
 			}
 		),
 		@DDMFormLayoutPage(
-			title = "advanced",
+			title = "properties",
 			value = {
 				@DDMFormLayoutRow(
 					{

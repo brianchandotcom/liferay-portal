@@ -26,6 +26,11 @@ is provided and the latest published snapshot is up-to-date.
 instead of the Nexus REST API, as the latter does not always return the correct
 artifact.
 
+## 1.1.6 - 2016-08-25
+
+### Changed
+- [LPS-67352]: Update the [Liferay Gradle Plugins] dependency to version 2.0.12.
+
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [LPS-67352]: https://issues.liferay.com/browse/LPS-67352
 [LPS-67658]: https://issues.liferay.com/browse/LPS-67658

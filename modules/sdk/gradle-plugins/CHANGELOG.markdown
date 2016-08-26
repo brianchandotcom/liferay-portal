@@ -15,6 +15,13 @@ both Gradle 2.14+ and Gradle 3.0.
 - [LPS-67352]: Update the [Liferay Source Formatter] dependency to version
 1.0.261.
 
+## 2.0.12 - 2016-08-25
+
+### Changed
+- [LPS-67352]: Update the [Liferay Source Formatter] dependency to version
+1.0.262.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Source Formatter]: https://github.com/liferay/liferay-portal/tree/master/modules/util/source-formatter
+[LPS-67352]: https://issues.liferay.com/browse/LPS-67352
 [LPS-67658]: https://issues.liferay.com/browse/LPS-67658

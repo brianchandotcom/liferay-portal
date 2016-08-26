@@ -15,7 +15,6 @@
 package com.liferay.dynamic.data.mapping.form.evaluator.functions;
 
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
-import com.liferay.portal.kernel.util.Validator;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -31,27 +30,29 @@ public class BetweenFunction implements DDMExpressionFunction {
 	@Override
 	public Object evaluate(Object... parameters) {
 		if (parameters.length != 3) {
+			throw new IllegalArgumentException("Three parameters are expected");
+		}
+
+		if (!Number.class.isInstance(parameters[0]) ||
+			!Number.class.isInstance(parameters[1]) ||
+			!Number.class.isInstance(parameters[2])) {
+
 			throw new IllegalArgumentException(
-				String.format(
-					"Expected 3 parameters, received %d", parameters.length));
+				"The parameters should be numbers");
 		}
 
-		if (Validator.isNull(parameters[0]) ||
-			!Validator.isNumber(parameters[0].toString()) ||
-			Validator.isNull(parameters[1]) ||
-			!Validator.isNumber(parameters[1].toString()) ||
-			Validator.isNull(parameters[2]) ||
-			!Validator.isNumber(parameters[2].toString())) {
+		Number parameter = (Number)parameters[0];
 
-			return false;
+		Number minParameter = (Number)parameters[1];
+		Number maxParameter = (Number)parameters[2];
+
+		if ((parameter.doubleValue() >= minParameter.doubleValue()) &&
+			(parameter.doubleValue() <= maxParameter.doubleValue())) {
+
+			return Boolean.TRUE;
 		}
 
-		double value1 = ((Number)parameters[0]).doubleValue();
-		double value2 = ((Number)parameters[1]).doubleValue();
-		double value3 = ((Number)parameters[2]).doubleValue();
-
-		return Double.compare(value1, value2) >= 0 &&
-			Double.compare(value1, value3) <= 0;
+		return Boolean.FALSE;
 	}
 
 }

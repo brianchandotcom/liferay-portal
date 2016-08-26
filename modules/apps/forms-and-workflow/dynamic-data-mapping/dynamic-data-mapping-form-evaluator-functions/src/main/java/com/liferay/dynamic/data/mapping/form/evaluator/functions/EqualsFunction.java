@@ -15,7 +15,6 @@
 package com.liferay.dynamic.data.mapping.form.evaluator.functions;
 
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
-import com.liferay.portal.kernel.util.Validator;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -31,18 +30,17 @@ public class EqualsFunction implements DDMExpressionFunction {
 	@Override
 	public Object evaluate(Object... parameters) {
 		if (parameters.length != 2) {
-			throw new IllegalArgumentException(
-				String.format(
-					"Expected 2 parameters, received %d", parameters.length));
+			throw new IllegalArgumentException("Two parameters are expected");
 		}
 
-		if (Validator.isNull(parameters[0]) ||
-			Validator.isNull(parameters[1])) {
+		Object parameter1 = parameters[0];
+		Object parameter2 = parameters[1];
 
+		if ((parameter1 == null) || (parameter2 == null)) {
 			return false;
 		}
 
-		return parameters[0].equals(parameters[1]);
+		return parameter1.equals(parameter2);
 	}
 
 }

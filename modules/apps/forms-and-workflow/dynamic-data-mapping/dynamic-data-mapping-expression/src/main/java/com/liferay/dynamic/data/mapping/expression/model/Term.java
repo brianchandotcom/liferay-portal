@@ -22,14 +22,14 @@ import aQute.bnd.annotation.ProviderType;
 @ProviderType
 public class Term extends Expression {
 
-	public Term(Object value) {
+	public Term(String value) {
 		_value = value;
 	}
 
-	public Object getValue() {
+	public String getValue() {
 		return _value;
 	}
 
-	private final Object _value;
+	private final String _value;
 
 }

@@ -22,7 +22,11 @@ import aQute.bnd.annotation.ProviderType;
 @ProviderType
 public class ArithmeticExpression extends BinaryExpression {
 
-	public ArithmeticExpression(String operator) {
+	public ArithmeticExpression(
+		String operator, Expression leftOperand, Expression rightOperand) {
+
+		super(leftOperand, rightOperand);
+
 		_operator = operator;
 	}
 

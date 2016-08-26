@@ -16,7 +16,6 @@ package com.liferay.dynamic.data.mapping.expression.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,29 +24,26 @@ import java.util.List;
 @ProviderType
 public class FunctionCallExpression extends Expression {
 
-	public FunctionCallExpression(String name, int numberOfParameters) {
-		_name = name;
-		_numberOfParameters = numberOfParameters;
+	public FunctionCallExpression(
+		String functionName, List<Expression> parameters) {
+
+		_functionName = functionName;
+		_parameters = parameters;
 	}
 
-	public String getName() {
-		return _name;
+	public int getArity() {
+		return _parameters.size();
 	}
 
-	public int getNumberOfParameters() {
-		return _numberOfParameters;
+	public String getFunctionName() {
+		return _functionName;
 	}
 
 	public List<Expression> getParameters() {
 		return _parameters;
 	}
 
-	public void setParameters(List<Expression> parameters) {
-		_parameters.addAll(parameters);
-	}
-
-	private final String _name;
-	private final int _numberOfParameters;
-	private final List<Expression> _parameters = new ArrayList<>();
+	private final String _functionName;
+	private final List<Expression> _parameters;
 
 }

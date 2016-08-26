@@ -22,6 +22,11 @@ import aQute.bnd.annotation.ProviderType;
 @ProviderType
 public abstract class BinaryExpression extends Expression {
 
+	public BinaryExpression(Expression leftOperand, Expression rightOperand) {
+		_leftOperand = leftOperand;
+		_rightOperand = rightOperand;
+	}
+
 	public Expression getLeftOperand() {
 		return _leftOperand;
 	}
@@ -30,15 +35,7 @@ public abstract class BinaryExpression extends Expression {
 		return _rightOperand;
 	}
 
-	public void setLeftOperand(Expression leftOperand) {
-		_leftOperand = leftOperand;
-	}
-
-	public void setRightOperand(Expression rightOperand) {
-		_rightOperand = rightOperand;
-	}
-
-	private Expression _leftOperand;
-	private Expression _rightOperand;
+	private final Expression _leftOperand;
+	private final Expression _rightOperand;
 
 }

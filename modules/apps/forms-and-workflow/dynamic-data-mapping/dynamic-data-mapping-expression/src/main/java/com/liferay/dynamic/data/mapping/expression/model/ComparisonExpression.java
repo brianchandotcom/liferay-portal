@@ -22,7 +22,11 @@ import aQute.bnd.annotation.ProviderType;
 @ProviderType
 public class ComparisonExpression extends BinaryExpression {
 
-	public ComparisonExpression(String operator) {
+	public ComparisonExpression(
+		String operator, Expression leftOperand, Expression rightOperand) {
+
+		super(leftOperand, rightOperand);
+
 		_operator = operator;
 	}
 

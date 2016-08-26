@@ -6135,7 +6135,7 @@ public class JournalArticleLocalServiceImpl
 			groupId, classNameId, oldDDMTemplateKey, newDDMTemplateKey);
 	}
 
-	protected void addDocumentLibraryFielEntries(Element dynamicElementElement)
+	protected void addDocumentLibraryFileEntries(Element dynamicElementElement)
 		throws PortalException {
 
 		if (ExportImportThreadLocal.isImportInProcess()) {
@@ -6697,7 +6697,7 @@ public class JournalArticleLocalServiceImpl
 			String elType = element.attributeValue("type", StringPool.BLANK);
 
 			if (elType.equals("document_library")) {
-				addDocumentLibraryFielEntries(element);
+				addDocumentLibraryFileEntries(element);
 			}
 			else if (elType.equals("image")) {
 				addImageFileEntries(article, element);

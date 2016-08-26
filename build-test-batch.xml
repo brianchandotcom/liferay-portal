@@ -594,6 +594,7 @@ app.server.type=@{app.server.type}]]></echo>
 							<ant antfile="build-test-${app.server.type}.xml" inheritAll="false" target="run-selenium-${app.server.type}">
 								<property name="database.type" value="@{database.type}" />
 								<property name="liferay.portal.bundle" value="@{test.portal.bundle.version}" />
+								<property name="test.build.plugins.war.zip.url" value="@{test.plugins.war.zip.url}" />
 								<property name="test.class" value="${test.class}" />
 							</ant>
 

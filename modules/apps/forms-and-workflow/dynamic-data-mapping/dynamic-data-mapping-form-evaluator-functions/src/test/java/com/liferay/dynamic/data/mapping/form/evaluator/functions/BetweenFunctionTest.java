@@ -58,6 +58,27 @@ public class BetweenFunctionTest {
 		Assert.assertFalse(result);
 	}
 
+	@Test(expected = IllegalArgumentException.class)
+	public void testEvaluateInvalidArguments1() throws Exception {
+		BetweenFunction betweenFunction = new BetweenFunction();
+
+		betweenFunction.evaluate(1);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testEvaluateInvalidArguments2() throws Exception {
+		BetweenFunction betweenFunction = new BetweenFunction();
+
+		betweenFunction.evaluate(1, "2", "3");
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testEvaluateInvalidArguments3() throws Exception {
+		BetweenFunction betweenFunction = new BetweenFunction();
+
+		betweenFunction.evaluate(9, null, 10);
+	}
+
 	@Test
 	public void testEvaluateTrue1() throws Exception {
 		BetweenFunction betweenFunction = new BetweenFunction();

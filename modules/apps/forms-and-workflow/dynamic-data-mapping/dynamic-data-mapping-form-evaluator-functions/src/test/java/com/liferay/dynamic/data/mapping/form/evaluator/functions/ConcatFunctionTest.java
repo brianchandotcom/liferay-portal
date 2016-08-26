@@ -27,7 +27,7 @@ public class ConcatFunctionTest {
 		ConcatFunction concatFunction = new ConcatFunction();
 
 		Assert.assertEquals(
-			"hello world", concatFunction.evaluate("hello ", "world"));
+			"hello world!", concatFunction.evaluate("hello ", "world", "!"));
 	}
 
 	@Test
@@ -41,7 +41,7 @@ public class ConcatFunctionTest {
 	public void testConcatNullWithConstant() throws Exception {
 		ConcatFunction concatFunction = new ConcatFunction();
 
-		Assert.assertNull(concatFunction.evaluate(null, "string"));
+		Assert.assertEquals("test", concatFunction.evaluate(null, "test"));
 	}
 
 	@Test(expected = IllegalArgumentException.class)

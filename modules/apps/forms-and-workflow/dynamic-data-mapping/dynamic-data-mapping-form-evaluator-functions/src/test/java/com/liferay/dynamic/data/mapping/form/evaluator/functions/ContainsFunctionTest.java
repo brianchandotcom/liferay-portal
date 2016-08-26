@@ -80,11 +80,21 @@ public class ContainsFunctionTest {
 	}
 
 	@Test
-	public void testEvaluateTrue() throws Exception {
+	public void testEvaluateTrue1() throws Exception {
 		ContainsFunction containsFunction = new ContainsFunction();
 
 		Boolean result = (Boolean)containsFunction.evaluate(
 			"another text", "another");
+
+		Assert.assertTrue(result);
+	}
+
+	@Test
+	public void testEvaluateTrue2() throws Exception {
+		ContainsFunction containsFunction = new ContainsFunction();
+
+		Boolean result = (Boolean)containsFunction.evaluate(
+			"not contains 2", 2);
 
 		Assert.assertTrue(result);
 	}

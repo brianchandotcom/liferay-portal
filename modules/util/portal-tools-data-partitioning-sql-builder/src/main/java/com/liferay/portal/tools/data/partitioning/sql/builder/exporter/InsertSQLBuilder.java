@@ -29,7 +29,7 @@ public class InsertSQLBuilder implements SQLBuilder {
 		String tableName) {
 
 		if ((fields == null) || (fields.length == 0)) {
-			throw new IllegalArgumentException("Fields are null");
+			throw new IllegalArgumentException("Fields cannot be null");
 		}
 
 		StringBuilder sb = new StringBuilder();

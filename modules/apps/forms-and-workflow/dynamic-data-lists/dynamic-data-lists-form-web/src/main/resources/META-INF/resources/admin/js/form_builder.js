@@ -476,12 +476,9 @@ AUI.add(
 						var instance = this;
 
 						var newFieldDefaultContext = {
-							label: 'Untitled',
-							placeholder: 'Untitled',
 							portletNamespace: instance.get('portletNamespace'),
 							readOnly: true,
 							showLabel: true,
-							tooltip: '',
 							type: field.get('type'),
 							visible: true
 						};

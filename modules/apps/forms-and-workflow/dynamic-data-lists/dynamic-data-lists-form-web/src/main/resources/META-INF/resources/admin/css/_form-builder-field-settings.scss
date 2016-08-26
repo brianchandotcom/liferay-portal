@@ -158,4 +158,38 @@
 	.liferay-ddm-form-field-text textarea + .input-group-addon {
 		vertical-align: bottom;
 	}
+
+	.autocomplete-container {
+		.form-group {
+			margin-bottom: 18px;
+		}
+
+		.toolbar-group-content {
+			padding-right: 0;
+		}
+
+		.toolbar-group {
+			height: 48px;
+			margin: 0;
+		}
+
+		.radio {
+			display: inline-block;
+		}
+
+		.radio + .radio {
+			margin-left: 15px;
+		}
+
+		.header-toolbar {
+			font-size: 16px;
+			margin-left: -8px;
+		}
+
+		.toolbar-group-expand-text {
+			line-height: 48px;
+			margin: 0;
+			padding-left: 0;
+		}
+	}
 }

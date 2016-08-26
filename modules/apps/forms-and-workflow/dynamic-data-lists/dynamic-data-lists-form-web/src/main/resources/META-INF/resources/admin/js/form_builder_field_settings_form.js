@@ -7,6 +7,8 @@ AUI.add(
 
 		var RendererUtil = Liferay.DDM.Renderer.Util;
 
+		var SoyTemplateUtil = Liferay.DDL.SoyTemplateUtil;
+
 		var FormBuilderSettingsForm = A.Component.create(
 			{
 				ATTRS: {
@@ -140,6 +142,59 @@ AUI.add(
 						labelField.set('key', nameField.getValue());
 						labelField.set('keyInputEnabled', editModeValue);
 						labelField.set('generationLocked', !editModeValue);
+
+						if (instance.get('field').get('type') === 'text') {
+							instance._createAutocompleteButton();
+							instance._createAutocompleteContainer();
+						}
+					},
+
+					_afterTabViewSelectionChange: function() {
+						var instance = this;
+
+						if (instance.get('container').one('.tab-pane.active')) {
+							instance._showLastActivatedPage();
+							instance._hideAutoCompletePage();
+						}
+					},
+
+					_createAutocompleteButton: function() {
+						var instance = this;
+
+						var advancedSettingsNode = instance.getPageNode(2);
+
+						advancedSettingsNode.append(instance._getAutocompleteButtonTemplate());
+
+						advancedSettingsNode.one('.autocomplete-button').on('click', A.bind('_onClickAutocompleteButton', instance));
+					},
+
+					_createAutocompleteContainer: function() {
+						var instance = this;
+
+						var emptyPageRenderer = SoyTemplateUtil.getTemplateRenderer('ddm.tabbed_form_frame');
+
+						var emptyPageNode = A.Node.create(emptyPageRenderer());
+
+						var sidebarBody = A.one('.sidebar-body');
+
+						var dataSourceTypeContainer = instance.getField('dataSourceType').get('container');
+
+						var ddmDataProviderInstanceIdContainer = instance.getField('ddmDataProviderInstanceId').get('container');
+
+						var optionsContainer = instance.getField('options').get('container');
+
+						var tabView = instance.getTabView();
+
+						emptyPageNode.setHTML(instance._getAutocompleteContainerTemplate());
+
+						tabView.get('panelNode').append(emptyPageNode);
+
+						sidebarBody.one('.autocomplete-body').append(dataSourceTypeContainer);
+						sidebarBody.one('.autocomplete-body').append(ddmDataProviderInstanceIdContainer);
+						sidebarBody.one('.autocomplete-body').append(optionsContainer);
+
+						sidebarBody.one('.autocomplete-header-back').on('click', A.bind('_onClickAutocompleteHeaderBack', instance));
+						tabView.after('selectionChange', A.bind('_afterTabViewSelectionChange', instance));
 					},
 
 					_createModeToggler: function() {
@@ -154,6 +209,26 @@ AUI.add(
 						settingsTogglerNode.on('click', A.bind('_onClickModeToggler', instance));
 
 						instance.settingsTogglerNode = settingsTogglerNode;
+					},
+
+					_getAutocompleteButtonTemplate: function() {
+						var instance = this;
+
+						var autocompleteButtonContainer;
+
+						autocompleteButtonContainer = SoyTemplateUtil.getTemplateRenderer('ddl.autocomplete.button');
+
+						return autocompleteButtonContainer();
+					},
+
+					_getAutocompleteContainerTemplate: function() {
+						var instance = this;
+
+						var autocompleteContainerRenderer = SoyTemplateUtil.getTemplateRenderer('ddl.autocomplete.container');
+
+						var autocompleteContainer = autocompleteContainerRenderer({backButton: Liferay.Util.getLexiconIconTpl('angle-left', 'icon-monospaced')});
+
+						return autocompleteContainer;
 					},
 
 					_handleValidationResponse: function(hasErrors) {
@@ -174,6 +249,34 @@ AUI.add(
 						}
 
 						return hasErrors;
+					},
+
+					_hideActivatedPage: function() {
+						var instance = this;
+
+						instance.get('container').one('.tab-pane.active').hide();
+					},
+
+					_hideAutoCompletePage: function() {
+						var instance = this;
+
+						A.one('.sidebar-body').one('.autocomplete-container').ancestor().removeClass('active');
+					},
+
+					_onClickAutocompleteButton: function() {
+						var instance = this;
+
+						instance._hideActivatedPage();
+
+						A.one('.sidebar-body').one('.autocomplete-container').ancestor().addClass('active');
+					},
+
+					_onClickAutocompleteHeaderBack: function() {
+						var instance = this;
+
+						instance._showLastActivatedPage();
+
+						instance._hideAutoCompletePage();
 					},
 
 					_onClickModeToggler: function(event) {
@@ -222,6 +325,12 @@ AUI.add(
 						field.saveSettings(instance);
 					},
 
+					_showLastActivatedPage: function() {
+						var instance = this;
+
+						instance.get('container').one('.tab-pane.active').show();
+					},
+
 					_syncModeToggler: function() {
 						var instance = this;
 
@@ -259,6 +368,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['liferay-ddm-form-renderer', 'liferay-ddm-form-renderer-util', 'liferay-form']
+		requires: ['liferay-ddl-soy-template-util', 'liferay-ddm-form-renderer', 'liferay-ddm-form-renderer-util', 'liferay-form']
 	}
 );

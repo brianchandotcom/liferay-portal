@@ -57,11 +57,8 @@ public class DDMExpressionImpl<T> implements DDMExpression<T> {
 
 		_expressionContext = createExpressionContext();
 
-		DDMExpressionListener ddmExpressionListener = parseTree();
-
-		registerExpressionFunctionsAndVariables(ddmExpressionListener);
-
-		buildExpressionModel(ddmExpressionListener);
+		registerExpressionFunctionsAndVariables();
+		registerExpressionModel();
 	}
 
 	@Override
@@ -194,14 +191,6 @@ public class DDMExpressionImpl<T> implements DDMExpression<T> {
 		}
 	}
 
-	protected void buildExpressionModel(
-		DDMExpressionListener ddmExpressionListener) {
-
-		DDMExpressionModelBuilder ddmExpressionModelGenerator =
-			new DDMExpressionModelBuilder(ddmExpressionListener);
-
-		_expressionModel = ddmExpressionModelGenerator.build();
-	}
 
 	protected DDMExpressionVisitor createDDMExpressionVisitor()
 		throws DDMExpressionException {
@@ -310,17 +299,6 @@ public class DDMExpressionImpl<T> implements DDMExpression<T> {
 		return variableValue;
 	}
 
-	protected DDMExpressionListener parseTree() {
-		ParseTreeWalker parseTreeWalker = new ParseTreeWalker();
-
-		DDMExpressionListener ddmExpressionListener =
-			new DDMExpressionListener();
-
-		parseTreeWalker.walk(ddmExpressionListener, _expressionContext);
-
-		return ddmExpressionListener;
-	}
-
 	protected VariableDependencies populateVariableDependenciesMap(
 			Variable variable,
 			Map<String, VariableDependencies> variableDependenciesMap)
@@ -364,8 +342,13 @@ public class DDMExpressionImpl<T> implements DDMExpression<T> {
 		return variableDependencies;
 	}
 
-	protected void registerExpressionFunctionsAndVariables(
-		DDMExpressionListener ddmExpressionListener) {
+	protected void registerExpressionFunctionsAndVariables() {
+		ParseTreeWalker parseTreeWalker = new ParseTreeWalker();
+
+		DDMExpressionListener ddmExpressionListener =
+			new DDMExpressionListener();
+
+		parseTreeWalker.walk(ddmExpressionListener, _expressionContext);
 
 		// Function names
 
@@ -377,6 +360,13 @@ public class DDMExpressionImpl<T> implements DDMExpression<T> {
 		for (String variableName : ddmExpressionListener.getVariableNames()) {
 			_variables.put(variableName, new Variable(variableName));
 		}
+	}
+
+	protected void registerExpressionModel() {
+		DDMExpressionModelVisitor ddmExpressionModelVisitor =
+			new DDMExpressionModelVisitor();
+
+		_expressionModel = _expressionContext.accept(ddmExpressionModelVisitor);
 	}
 
 	protected void setVariableValue(String variableName, Object variableValue) {

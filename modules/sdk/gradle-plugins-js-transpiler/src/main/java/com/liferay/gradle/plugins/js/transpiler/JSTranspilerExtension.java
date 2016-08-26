@@ -26,23 +26,14 @@ public class JSTranspilerExtension {
 	public JSTranspilerExtension(Project project) {
 	}
 
-	public String getLfrAmdLoaderVersion() {
-		return GradleUtil.toString(_lfrAmdLoaderVersion);
-	}
-
 	public String getMetalCliVersion() {
 		return GradleUtil.toString(_metalCliVersion);
-	}
-
-	public void setLfrAmdLoaderVersion(Object lfrAmdLoaderVersion) {
-		_lfrAmdLoaderVersion = lfrAmdLoaderVersion;
 	}
 
 	public void setMetalCliVersion(Object metalCliVersion) {
 		_metalCliVersion = metalCliVersion;
 	}
 
-	private Object _lfrAmdLoaderVersion = "1.3.5";
 	private Object _metalCliVersion = "1.3.1";
 
 }

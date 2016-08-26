@@ -44,9 +44,6 @@ import org.gradle.api.tasks.TaskContainer;
  */
 public class JSTranspilerPlugin implements Plugin<Project> {
 
-	public static final String DOWNLOAD_LFR_AMD_LOADER_TASK_NAME =
-		"downloadLfrAmdLoader";
-
 	public static final String DOWNLOAD_METAL_CLI_TASK_NAME =
 		"downloadMetalCli";
 
@@ -65,8 +62,6 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 		JSTranspilerExtension jsTranspilerExtension = GradleUtil.addExtension(
 			project, EXTENSION_NAME, JSTranspilerExtension.class);
 
-		final DownloadNodeModuleTask downloadLfrAmdLoaderTask =
-			addTaskDownloadLfrAmdLoader(project, jsTranspilerExtension);
 		final DownloadNodeModuleTask downloadMetalCliTask =
 			addTaskDownloadMetalCli(project, jsTranspilerExtension);
 
@@ -78,33 +73,10 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 				@Override
 				public void execute(Project project) {
 					configureTasksTranspileJS(
-						project, downloadLfrAmdLoaderTask, downloadMetalCliTask,
-						npmInstallTask);
+						project, downloadMetalCliTask, npmInstallTask);
 				}
 
 			});
-	}
-
-	protected DownloadNodeModuleTask addTaskDownloadLfrAmdLoader(
-		Project project, final JSTranspilerExtension jsTranspilerExtension) {
-
-		DownloadNodeModuleTask downloadNodeModuleTask = GradleUtil.addTask(
-			project, DOWNLOAD_LFR_AMD_LOADER_TASK_NAME,
-			DownloadNodeModuleTask.class);
-
-		downloadNodeModuleTask.setModuleName("lfr-amd-loader");
-
-		downloadNodeModuleTask.setModuleVersion(
-			new Callable<String>() {
-
-				@Override
-				public String call() throws Exception {
-					return jsTranspilerExtension.getLfrAmdLoaderVersion();
-				}
-
-			});
-
-		return downloadNodeModuleTask;
 	}
 
 	protected DownloadNodeModuleTask addTaskDownloadMetalCli(
@@ -153,8 +125,7 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 	}
 
 	protected void configureTasksTranspileJS(
-		Project project, final DownloadNodeModuleTask downloadLfrAmdLoaderTask,
-		final DownloadNodeModuleTask downloadMetalCliTask,
+		Project project, final DownloadNodeModuleTask downloadMetalCliTask,
 		final ExecuteNpmTask npmInstallTask) {
 
 		TaskContainer taskContainer = project.getTasks();
@@ -166,8 +137,7 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 				@Override
 				public void execute(TranspileJSTask transpileJSTask) {
 					configureTaskTranspileJS(
-						transpileJSTask, downloadLfrAmdLoaderTask,
-						downloadMetalCliTask, npmInstallTask);
+						transpileJSTask, downloadMetalCliTask, npmInstallTask);
 				}
 
 			});
@@ -175,7 +145,6 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 
 	protected void configureTaskTranspileJS(
 		TranspileJSTask transpileJSTask,
-		final DownloadNodeModuleTask downloadLfrAmdLoaderTask,
 		final DownloadNodeModuleTask downloadMetalCliTask,
 		final ExecuteNpmTask npmInstallTask) {
 
@@ -188,8 +157,7 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 			return;
 		}
 
-		transpileJSTask.dependsOn(
-			downloadLfrAmdLoaderTask, downloadMetalCliTask, npmInstallTask);
+		transpileJSTask.dependsOn(downloadMetalCliTask, npmInstallTask);
 
 		transpileJSTask.setScriptFile(
 			new Callable<File>() {

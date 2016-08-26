@@ -115,6 +115,9 @@ public abstract class BaseWebDriverImpl
 	public BaseWebDriverImpl(String browserURL, WebDriver webDriver) {
 		super(webDriver);
 
+		_screenshotCount = 0;
+		_screenshotErrorCount = 0;
+
 		initKeysSpecialChars();
 
 		WebDriverHelper.setDefaultWindowHandle(webDriver.getWindowHandle());

@@ -17,6 +17,7 @@ package com.liferay.mail.reader.mailbox;
 import com.liferay.mail.reader.model.Account;
 import com.liferay.mail.reader.service.AccountLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 
 import javax.servlet.http.HttpServletRequest;
@@ -61,8 +62,13 @@ public class PasswordRetriever {
 	}
 
 	protected String encodeKey(long accountId) {
-		return PasswordRetriever.class.getName().concat(
-			StringPool.POUND).concat(String.valueOf(accountId));
+		StringBundler sb = new StringBundler(3);
+
+		sb.append(PasswordRetriever.class.getName());
+		sb.append(StringPool.POUND);
+		sb.append(accountId);
+
+		return sb.toString();
 	}
 
 	private final HttpServletRequest _request;

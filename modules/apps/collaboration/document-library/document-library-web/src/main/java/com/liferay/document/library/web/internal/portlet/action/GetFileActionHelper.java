@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -207,8 +208,14 @@ public class GetFileActionHelper {
 				id, is, sourceExtension, targetExtension);
 
 			if (convertedFile != null) {
-				fileName = FileUtil.stripExtension(fileName).concat(
-					StringPool.PERIOD).concat(targetExtension);
+				StringBundler sb = new StringBundler(3);
+
+				sb.append(FileUtil.stripExtension(fileName));
+				sb.append(StringPool.PERIOD);
+				sb.append(targetExtension);
+
+				fileName = sb.toString();
+
 				is = new FileInputStream(convertedFile);
 				contentLength = convertedFile.length();
 				contentType = MimeTypesUtil.getContentType(fileName);

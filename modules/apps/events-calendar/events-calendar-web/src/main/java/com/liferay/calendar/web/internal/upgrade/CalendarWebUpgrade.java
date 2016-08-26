@@ -14,16 +14,12 @@
 
 package com.liferay.calendar.web.internal.upgrade;
 
-import com.liferay.calendar.web.internal.upgrade.v1_0_0.UpgradePortletId;
-import com.liferay.calendar.web.internal.upgrade.v1_0_0.UpgradePortletPreferences;
-import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Marcellus Tavares
- * @author Manuel de la Peña
+ * @author Adam Brandizi
  */
 @Component(
 	immediate = true,
@@ -33,19 +29,6 @@ public class CalendarWebUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
-		registry.register(
-			"com.liferay.calendar.web", "0.0.0", "1.0.0",
-			new DummyUpgradeStep());
-
-		registry.register(
-			"com.liferay.calendar.web", "0.0.1", "1.0.0",
-			new UpgradePortletId(), new UpgradePortletPreferences());
-
-		registry.register(
-			"com.liferay.calendar.web", "1.0.0", "1.0.1",
-			new com.liferay.calendar.web.internal.upgrade.v1_0_1.
-				UpgradePortletPreferences());
-
 		registry.register(
 			"com.liferay.calendar.web", "1.0.1", "1.0.2",
 			new com.liferay.calendar.web.internal.upgrade.v1_0_2.

@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.File;
@@ -174,8 +175,13 @@ public class AttachmentLocalServiceImpl extends AttachmentLocalServiceBaseImpl {
 	}
 
 	protected String getFilePath(long messageId, String filename) {
-		return getDirectoryPath(messageId).concat(StringPool.SLASH).concat(
-			filename);
+		StringBundler sb = new StringBundler(3);
+
+		sb.append(getDirectoryPath(messageId));
+		sb.append(StringPool.SLASH);
+		sb.append(filename);
+
+		return sb.toString();
 	}
 
 	private static final String _DIRECTORY_PATH_PREFIX = "mail/";

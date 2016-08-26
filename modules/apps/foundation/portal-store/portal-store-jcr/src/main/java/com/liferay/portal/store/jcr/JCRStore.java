@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -690,8 +691,13 @@ public class JCRStore extends BaseStore {
 			Node newFileNode = newRepositoryNode.addNode(
 				fileName, JCRConstants.NT_FILE);
 
-			String newContentNodePath = newFileNode.getPath().concat(
-				StringPool.SLASH).concat(JCRConstants.JCR_CONTENT);
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(newFileNode.getPath());
+			sb.append(StringPool.SLASH);
+			sb.append(JCRConstants.JCR_CONTENT);
+
+			String newContentNodePath = sb.toString();
 
 			session.move(contentNodePath, newContentNodePath);
 
@@ -754,8 +760,13 @@ public class JCRStore extends BaseStore {
 			Node newFileNode = repositoryNode.addNode(
 				newFileName, JCRConstants.NT_FILE);
 
-			String newContentNodePath = newFileNode.getPath().concat(
-				StringPool.SLASH).concat(JCRConstants.JCR_CONTENT);
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(newFileNode.getPath());
+			sb.append(StringPool.SLASH);
+			sb.append(JCRConstants.JCR_CONTENT);
+
+			String newContentNodePath = sb.toString();
 
 			session.move(contentNodePath, newContentNodePath);
 

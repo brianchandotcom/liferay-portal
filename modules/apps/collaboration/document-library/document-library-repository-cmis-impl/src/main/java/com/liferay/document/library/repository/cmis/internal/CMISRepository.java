@@ -944,9 +944,13 @@ public class CMISRepository extends BaseCmisRepository {
 	@Override
 	public void initRepository() throws PortalException {
 		try {
-			_sessionKey =
-				Session.class.getName().concat(StringPool.POUND).concat(
-					String.valueOf(getRepositoryId()));
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(Session.class.getName());
+			sb.append(StringPool.POUND);
+			sb.append(String.valueOf(getRepositoryId()));
+
+			_sessionKey = sb.toString();
 
 			Session session = getSession();
 

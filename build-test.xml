@@ -5411,7 +5411,7 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 			<then>
 				<replaceregexp
 					file="portal-impl/src/portal-ext.properties"
-					match="(jdbc:oracle:.*)orcl"
+					match="(jdbc:oracle:.*)oracl"
 					replace="\1xe"
 				/>
 			</then>

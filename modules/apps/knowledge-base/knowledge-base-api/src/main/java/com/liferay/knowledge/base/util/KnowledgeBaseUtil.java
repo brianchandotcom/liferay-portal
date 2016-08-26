@@ -60,7 +60,7 @@ public class KnowledgeBaseUtil {
 		long plid, long resourcePrimKey, int status, String portalURL,
 		boolean maximized) {
 
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append(portalURL);
 		sb.append(PortalUtil.getPathMain());
@@ -74,19 +74,21 @@ public class KnowledgeBaseUtil {
 		sb.append(StringPool.EQUAL);
 		sb.append(String.valueOf(resourcePrimKey));
 
-		String url = sb.toString();
-
 		if (status != WorkflowConstants.STATUS_APPROVED) {
-			url = url.concat(StringPool.AMPERSAND).concat("status").concat(
-				StringPool.EQUAL).concat(String.valueOf(status));
+			sb.append(StringPool.AMPERSAND);
+			sb.append("status");
+			sb.append(StringPool.EQUAL);
+			sb.append(String.valueOf(status));
 		}
 
 		if (maximized) {
-			url = url.concat(StringPool.AMPERSAND).concat("maximized").concat(
-				StringPool.EQUAL).concat(String.valueOf(maximized));
+			sb.append(StringPool.AMPERSAND);
+			sb.append("maximized");
+			sb.append(StringPool.EQUAL);
+			sb.append(String.valueOf(maximized));
 		}
 
-		return url;
+		return sb.toString();
 	}
 
 	public static long getKBFolderId(

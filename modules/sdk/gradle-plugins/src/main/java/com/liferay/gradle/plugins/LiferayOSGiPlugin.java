@@ -41,6 +41,8 @@ import com.liferay.gradle.plugins.javadoc.formatter.JavadocFormatterPlugin;
 import com.liferay.gradle.plugins.js.module.config.generator.JSModuleConfigGeneratorPlugin;
 import com.liferay.gradle.plugins.js.transpiler.JSTranspilerPlugin;
 import com.liferay.gradle.plugins.lang.builder.LangBuilderPlugin;
+import com.liferay.gradle.plugins.node.tasks.DownloadNodeModuleTask;
+import com.liferay.gradle.plugins.node.tasks.NpmInstallTask;
 import com.liferay.gradle.plugins.source.formatter.SourceFormatterPlugin;
 import com.liferay.gradle.plugins.soy.BuildSoyTask;
 import com.liferay.gradle.plugins.soy.SoyPlugin;
@@ -741,7 +743,9 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 						taskName.equals("eclipseClasspath") ||
 						taskName.equals("eclipseProject") ||
 						taskName.equals("ideaModule") ||
-						(task instanceof BuildSoyTask)) {
+						(task instanceof BuildSoyTask) ||
+						(task instanceof DownloadNodeModuleTask) ||
+						(task instanceof NpmInstallTask)) {
 
 						continue;
 					}

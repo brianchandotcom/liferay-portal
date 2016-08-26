@@ -5888,14 +5888,9 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 
 		<delete file="${test.ext.properties.file}" />
 
-		<if>
-			<equals arg1="${test.poshi.runner.enabled}" arg2="true" />
-			<then>
-				<antcall target="prepare-poshi-runner-properties">
-					<param name="test.class" value="${test.class}" />
-				</antcall>
-			</then>
-		</if>
+		<antcall target="prepare-poshi-runner-properties">
+			<param name="test.class" value="${test.class}" />
+		</antcall>
 
 		<antcall target="prepare-selenium-app-server-properties" />
 		<antcall target="prepare-selenium-browser" />
@@ -5998,19 +5993,9 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 				</echo>
 			</then>
 			<else>
-				<if>
-					<equals arg1="${test.poshi.runner.enabled}" arg2="true" />
-					<then>
-						<echo append="true" file="${test.ext.properties.file}">
-							test.base.dir.name=${basedir.unix}/portal-web/test/functional/com/liferay/portalweb/
-						</echo>
-					</then>
-					<else>
-						<echo append="true" file="${test.ext.properties.file}">
-							test.base.dir.name=${basedir.unix}/portal-web
-						</echo>
-					</else>
-				</if>
+				<echo append="true" file="${test.ext.properties.file}">
+					test.base.dir.name=${basedir.unix}/portal-web/test/functional/com/liferay/portalweb/
+				</echo>
 			</else>
 		</if>
 
@@ -6819,12 +6804,9 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		<prepare-test-bundles unit="false" />
 
 		<if>
-			<and>
-				<not>
-					<equals arg1="${test.build.unit}" arg2="true" />
-				</not>
-				<equals arg1="${test.poshi.runner.enabled}" arg2="true" />
-			</and>
+			<not>
+				<equals arg1="${test.build.unit}" arg2="true" />
+			</not>
 			<then>
 				<antcall target="record-test-case-method-names" />
 			</then>
@@ -7972,43 +7954,7 @@ jdbc.default.password=${database.mysql.password}</echo>
 			</then>
 		</if>
 
-		<if>
-			<equals arg1="${test.poshi.runner.enabled}" arg2="true" />
-			<then>
-				<antcall target="run-poshi-runner" />
-			</then>
-			<else>
-				<ant dir="portal-impl" inheritAll="false" target="compile-test" />
-
-				<if>
-					<contains string="${test.class}" substring="#" />
-					<then>
-						<get-test-method-name />
-
-						<get-test-simple-class-name />
-
-						<var name="test.class" unset="true" />
-						<var name="test.methods" unset="true" />
-
-						<ant dir="portal-web" target="test-method">
-							<property name="test.class" value="${test.simple.class.name}" />
-							<property name="test.dir" value="functional-generated" />
-							<property name="test.methods" value="${test.method.name}" />
-						</ant>
-					</then>
-					<else>
-						<get-test-simple-class-name />
-
-						<var name="test.class" unset="true" />
-
-						<ant dir="portal-web" inheritAll="false" target="test-class">
-							<property name="test.class" value="${test.simple.class.name}" />
-							<property name="test.dir" value="functional-generated" />
-						</ant>
-					</else>
-				</if>
-			</else>
-		</if>
+		<antcall target="run-poshi-runner" />
 
 		<property name="test.class" value="${test.simple.class.name}#${test.method.name}" />
 

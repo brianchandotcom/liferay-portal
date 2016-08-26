@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PrefixPredicateFilter;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -160,8 +161,13 @@ public class AssetVocabularySettingsHelper {
 	protected String getClassNameIdAndClassTypePK(
 		long classNameId, long classTypePK) {
 
-		return String.valueOf(classNameId).concat(StringPool.COLON).concat(
-			String.valueOf(classTypePK));
+		StringBundler sb = new StringBundler(3);
+
+		sb.append(classNameId);
+		sb.append(StringPool.COLON);
+		sb.append(classTypePK);
+
+		return sb.toString();
 	}
 
 	protected long[] getClassNameIds(String[] classNameIdsAndClassTypePKs) {

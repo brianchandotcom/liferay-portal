@@ -84,6 +84,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -952,9 +953,13 @@ public class WebServerServlet extends HttpServlet {
 		long contentLength = 0;
 
 		if ((imageThumbnail > 0) && (imageThumbnail <= 3)) {
-			fileName = FileUtil.stripExtension(fileName).concat(
-				StringPool.PERIOD).concat(
-					ImageProcessorUtil.getThumbnailType(fileVersion));
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(FileUtil.stripExtension(fileName));
+			sb.append(StringPool.PERIOD);
+			sb.append(ImageProcessorUtil.getThumbnailType(fileVersion));
+
+			fileName = sb.toString();
 
 			int thumbnailIndex = imageThumbnail - 1;
 
@@ -966,8 +971,13 @@ public class WebServerServlet extends HttpServlet {
 			converted = true;
 		}
 		else if ((documentThumbnail > 0) && (documentThumbnail <= 3)) {
-			fileName = FileUtil.stripExtension(fileName).concat(
-				StringPool.PERIOD).concat(PDFProcessor.THUMBNAIL_TYPE);
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(FileUtil.stripExtension(fileName));
+			sb.append(StringPool.PERIOD);
+			sb.append(PDFProcessor.THUMBNAIL_TYPE);
+
+			fileName = sb.toString();
 
 			int thumbnailIndex = documentThumbnail - 1;
 
@@ -979,8 +989,14 @@ public class WebServerServlet extends HttpServlet {
 			converted = true;
 		}
 		else if (previewFileIndex > 0) {
-			fileName = FileUtil.stripExtension(fileName).concat(
-				StringPool.PERIOD).concat(PDFProcessor.PREVIEW_TYPE);
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(FileUtil.stripExtension(fileName));
+			sb.append(StringPool.PERIOD);
+			sb.append(PDFProcessor.PREVIEW_TYPE);
+
+			fileName = sb.toString();
+
 			inputStream = PDFProcessorUtil.getPreviewAsStream(
 				fileVersion, previewFileIndex);
 			contentLength = PDFProcessorUtil.getPreviewFileSize(
@@ -991,8 +1007,13 @@ public class WebServerServlet extends HttpServlet {
 		else if (audioPreview || videoPreview) {
 			String type = ParamUtil.getString(request, "type");
 
-			fileName = FileUtil.stripExtension(fileName).concat(
-				StringPool.PERIOD).concat(type);
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(FileUtil.stripExtension(fileName));
+			sb.append(StringPool.PERIOD);
+			sb.append(type);
+
+			fileName = sb.toString();
 
 			if (audioPreview) {
 				inputStream = AudioProcessorUtil.getPreviewAsStream(
@@ -1010,10 +1031,13 @@ public class WebServerServlet extends HttpServlet {
 			converted = true;
 		}
 		else if (imagePreview) {
-			String type = ImageProcessorUtil.getPreviewType(fileVersion);
+			StringBundler sb = new StringBundler(3);
 
-			fileName = FileUtil.stripExtension(fileName).concat(
-				StringPool.PERIOD).concat(type);
+			sb.append(FileUtil.stripExtension(fileName));
+			sb.append(StringPool.PERIOD);
+			sb.append(ImageProcessorUtil.getPreviewType(fileVersion));
+
+			fileName = sb.toString();
 
 			inputStream = ImageProcessorUtil.getPreviewAsStream(fileVersion);
 
@@ -1022,8 +1046,13 @@ public class WebServerServlet extends HttpServlet {
 			converted = true;
 		}
 		else if ((videoThumbnail > 0) && (videoThumbnail <= 3)) {
-			fileName = FileUtil.stripExtension(fileName).concat(
-				StringPool.PERIOD).concat(VideoProcessor.THUMBNAIL_TYPE);
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(FileUtil.stripExtension(fileName));
+			sb.append(StringPool.PERIOD);
+			sb.append(VideoProcessor.THUMBNAIL_TYPE);
+
+			fileName = sb.toString();
 
 			int thumbnailIndex = videoThumbnail - 1;
 
@@ -1044,8 +1073,14 @@ public class WebServerServlet extends HttpServlet {
 					targetExtension);
 
 				if (convertedFile != null) {
-					fileName = FileUtil.stripExtension(fileName).concat(
-						StringPool.PERIOD).concat(targetExtension);
+					StringBundler sb = new StringBundler(3);
+
+					sb.append(FileUtil.stripExtension(fileName));
+					sb.append(StringPool.PERIOD);
+					sb.append(targetExtension);
+
+					fileName = sb.toString();
+
 					inputStream = new FileInputStream(convertedFile);
 					contentLength = convertedFile.length();
 

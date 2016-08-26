@@ -103,8 +103,13 @@ public class ExportImportPathUtil {
 			throw new IllegalArgumentException(path + " is not an XML file");
 		}
 
-		return path.substring(0, pos).concat("-expando").concat(
-			path.substring(pos));
+		StringBundler sb = new StringBundler(3);
+
+		sb.append(path.substring(0, pos));
+		sb.append("-expando");
+		sb.append(path.substring(pos));
+
+		return sb.toString();
 	}
 
 	/**

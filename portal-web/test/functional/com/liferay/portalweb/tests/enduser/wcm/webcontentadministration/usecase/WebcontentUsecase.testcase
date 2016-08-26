@@ -358,6 +358,8 @@
 	</command>
 
 	<command name="AddEmbeddedPortletFreemarkerTemplate" priority="3">
+		<property name="osgi.modules.includes" value="currency-converter-web" />
+
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>
@@ -450,6 +452,8 @@
 	</command>
 
 	<command name="AddEmbeddedPortletVelocityTemplate" priority="3">
+		<property name="osgi.modules.includes" value="currency-converter-web" />
+
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>

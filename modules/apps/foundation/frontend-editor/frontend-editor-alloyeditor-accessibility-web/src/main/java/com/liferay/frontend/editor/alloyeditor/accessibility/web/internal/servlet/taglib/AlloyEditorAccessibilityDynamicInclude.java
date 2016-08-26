@@ -54,7 +54,7 @@ public class AlloyEditorAccessibilityDynamicInclude extends BaseDynamicInclude {
 		sb.append(themeDisplay.getPortalURL());
 		sb.append(PortalUtil.getPathProxy());
 		sb.append(_servletContext.getContextPath());
-		sb.append("/js/button_image_alt.js");
+		sb.append("/js/buttons.js");
 		sb.append("\" ");
 		sb.append("type=\"text/javascript\"></script>");
 

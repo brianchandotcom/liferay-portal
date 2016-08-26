@@ -1,4 +1,4 @@
-/* global React, AlloyEditor */
+/* global React, ReactDOM AlloyEditor */
 
 (function() {
 	'use strict';
@@ -48,60 +48,22 @@
 				var element;
 
 				if (this.props.renderExclusive) {
-
-					element = React.createElement(
-						'div',
-						{
-							className: 'ae-container-edit-link'
-						},
-						React.createElement(
-							'div',
-							{
-								className: 'ae-container-input xxl'
-							},
-							React.createElement(
-								'input',
-								{
-									ariaLabel: 'Alt',
-									className: 'ae-input',
-									onChange: this._handleAltChange,
-									onKeyDown: this._handleKeyDown,
-									placeholder: 'Alt',
-									ref: 'refAltInput',
-									title: 'Alt',
-									value: this.state.altImage
-								}
-							)
-						),
-						React.createElement(
-							'button',
-							{
-								className: 'ae-button',
-								onClick: this._updateAltImage
-							},
-							React.createElement(
-								'span',
-								{
-									className: 'ae-icon-ok'
-								}
-							)
-						)
+					return (
+						<div className="ae-container-edit-link">
+							<div className="ae-container-input xxl">
+								<input aria-label="alt" className="ae-input" onChange={this._handleAltChange} onKeyDown={this._handleKeyDown} placeholder="alt" ref="refAltInput" title="alt" type="text" value={this.state.altImage}></input>
+							</div>
+							<button aria-label={AlloyEditor.Strings.confirm} className="ae-button" onClick={this._updateAltImage} title={AlloyEditor.Strings.confirm}>
+								<span className="ae-icon-ok"></span>
+							</button>
+						</div>
 					);
 				}
 				else {
-					element = React.createElement(
-						'button',
-						{
-							className: cssClass,
-							onClick: this._requestExclusive
-						},
-						React.createElement(
-							'small',
-							{
-								className: 'ae-icon small'
-							},
-							'Alt'
-						)
+					return (
+						<button className={cssClass} onClick={this._requestExclusive} tabIndex={this.props.tabIndex}>
+							<small className="ae-icon small">Alt</small>
+						</button>
 					);
 				}
 

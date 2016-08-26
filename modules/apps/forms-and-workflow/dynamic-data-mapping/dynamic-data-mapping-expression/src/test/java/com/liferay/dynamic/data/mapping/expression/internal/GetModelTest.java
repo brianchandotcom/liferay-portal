@@ -39,11 +39,11 @@ public class GetModelTest {
 		DDMExpressionImpl<Boolean> expression = new DDMExpressionImpl<>(
 			"true && (2 != 3)", Boolean.class);
 
-		Expression model = expression.getModel();
+		Expression expressionModel = expression.getModel();
 
-		Assert.assertEquals(AndExpression.class, model.getClass());
+		Assert.assertEquals(AndExpression.class, expressionModel.getClass());
 
-		AndExpression andExpression = (AndExpression)model;
+		AndExpression andExpression = (AndExpression)expressionModel;
 
 		Expression leftOperand = andExpression.getLeftOperand();
 		Expression rightOperand = andExpression.getRightOperand();
@@ -67,9 +67,11 @@ public class GetModelTest {
 		Assert.assertEquals(Term.class, rightOperand2.getClass());
 
 		term = (Term)leftOperand2;
+
 		Assert.assertEquals("2", term.getValue());
 
 		term = (Term)rightOperand2;
+
 		Assert.assertEquals("3", term.getValue());
 	}
 
@@ -78,11 +80,13 @@ public class GetModelTest {
 		DDMExpressionImpl<Double> expression = new DDMExpressionImpl<>(
 			"a + b * c - d", Double.class);
 
-		Expression model = expression.getModel();
+		Expression expressionModel = expression.getModel();
 
-		Assert.assertEquals(ArithmeticExpression.class, model.getClass());
+		Assert.assertEquals(
+			ArithmeticExpression.class, expressionModel.getClass());
 
-		ArithmeticExpression arithmeticExpression = (ArithmeticExpression)model;
+		ArithmeticExpression arithmeticExpression =
+			(ArithmeticExpression)expressionModel;
 
 		Expression leftOperand = arithmeticExpression.getLeftOperand();
 		Expression rightOperand = arithmeticExpression.getRightOperand();
@@ -107,6 +111,7 @@ public class GetModelTest {
 		Assert.assertEquals("+", arithmeticExpression2.getOperator());
 
 		term = (Term)leftOperand2;
+
 		Assert.assertEquals("a", term.getValue());
 
 		ArithmeticExpression arithmeticExpression3 =
@@ -120,9 +125,11 @@ public class GetModelTest {
 		Assert.assertEquals("*", arithmeticExpression3.getOperator());
 
 		term = (Term)leftOperand3;
+
 		Assert.assertEquals("b", term.getValue());
 
 		term = (Term)rightOperand3;
+
 		Assert.assertEquals("c", term.getValue());
 	}
 
@@ -131,15 +138,16 @@ public class GetModelTest {
 		DDMExpressionImpl<Boolean> expression = new DDMExpressionImpl<>(
 			"date()", Boolean.class);
 
-		Expression model = expression.getModel();
+		Expression expressionModel = expression.getModel();
 
-		Assert.assertEquals(FunctionCallExpression.class, model.getClass());
+		Assert.assertEquals(
+			FunctionCallExpression.class, expressionModel.getClass());
 
 		FunctionCallExpression functionCallExpression =
-			(FunctionCallExpression)model;
+			(FunctionCallExpression)expressionModel;
 
-		Assert.assertEquals("date", functionCallExpression.getName());
-		Assert.assertEquals(0, functionCallExpression.getNumberOfParameters());
+		Assert.assertEquals("date", functionCallExpression.getFunctionName());
+		Assert.assertEquals(0, functionCallExpression.getArity());
 	}
 
 	@Test
@@ -147,11 +155,13 @@ public class GetModelTest {
 		DDMExpressionImpl<Boolean> expression = new DDMExpressionImpl<>(
 			"(2 * 5) > 3", Boolean.class);
 
-		Expression model = expression.getModel();
+		Expression expressionModel = expression.getModel();
 
-		Assert.assertEquals(ComparisonExpression.class, model.getClass());
+		Assert.assertEquals(
+			ComparisonExpression.class, expressionModel.getClass());
 
-		ComparisonExpression comparisonExpression = (ComparisonExpression)model;
+		ComparisonExpression comparisonExpression =
+			(ComparisonExpression)expressionModel;
 
 		Expression comparisonLeftOperand =
 			comparisonExpression.getLeftOperand();
@@ -182,9 +192,11 @@ public class GetModelTest {
 		Assert.assertEquals("2", term.getValue());
 
 		term = (Term)arithmeticRightOperand;
+
 		Assert.assertEquals("5", term.getValue());
 
 		term = (Term)comparisonRightOperand;
+
 		Assert.assertEquals("3", term.getValue());
 	}
 
@@ -193,11 +205,13 @@ public class GetModelTest {
 		DDMExpressionImpl<Boolean> expression = new DDMExpressionImpl<>(
 			"((1 + 4) / (5 - 2)) <= sum(Var1,Var2)", Boolean.class);
 
-		Expression model = expression.getModel();
+		Expression expressionModel = expression.getModel();
 
-		Assert.assertEquals(ComparisonExpression.class, model.getClass());
+		Assert.assertEquals(
+			ComparisonExpression.class, expressionModel.getClass());
 
-		ComparisonExpression comparisonExpression = (ComparisonExpression)model;
+		ComparisonExpression comparisonExpression =
+			(ComparisonExpression)expressionModel;
 
 		Expression comparisonLeftOperand =
 			comparisonExpression.getLeftOperand();
@@ -244,6 +258,7 @@ public class GetModelTest {
 		Assert.assertEquals("1", term.getValue());
 
 		term = (Term)arithmeticRightOperand2;
+
 		Assert.assertEquals("4", term.getValue());
 
 		ArithmeticExpression arithmeticExpression3 =
@@ -260,16 +275,18 @@ public class GetModelTest {
 		Assert.assertEquals(Term.class, arithmeticRightOperand3.getClass());
 
 		term = (Term)arithmeticLeftOperand3;
+
 		Assert.assertEquals("5", term.getValue());
 
 		term = (Term)arithmeticRightOperand3;
+
 		Assert.assertEquals("2", term.getValue());
 
 		FunctionCallExpression functionCallExpression =
 			(FunctionCallExpression)comparisonRightOperand;
 
-		Assert.assertEquals("sum", functionCallExpression.getName());
-		Assert.assertEquals(2, functionCallExpression.getNumberOfParameters());
+		Assert.assertEquals("sum", functionCallExpression.getFunctionName());
+		Assert.assertEquals(2, functionCallExpression.getArity());
 
 		List<Expression> parameters = functionCallExpression.getParameters();
 
@@ -281,6 +298,7 @@ public class GetModelTest {
 		Assert.assertEquals(Term.class, parameter.getClass());
 
 		term = (Term)parameter;
+
 		Assert.assertEquals("Var1", term.getValue());
 
 		parameter = parameters.get(1);
@@ -288,6 +306,7 @@ public class GetModelTest {
 		Assert.assertEquals(Term.class, parameter.getClass());
 
 		term = (Term)parameter;
+
 		Assert.assertEquals("Var2", term.getValue());
 	}
 
@@ -296,11 +315,11 @@ public class GetModelTest {
 		DDMExpressionImpl<Boolean> expression = new DDMExpressionImpl<>(
 			"not false", Boolean.class);
 
-		Expression model = expression.getModel();
+		Expression expressionModel = expression.getModel();
 
-		Assert.assertEquals(NotExpression.class, model.getClass());
+		Assert.assertEquals(NotExpression.class, expressionModel.getClass());
 
-		NotExpression notExpression = (NotExpression)model;
+		NotExpression notExpression = (NotExpression)expressionModel;
 
 		Expression operand = notExpression.getOperand();
 
@@ -316,11 +335,11 @@ public class GetModelTest {
 		DDMExpressionImpl<Boolean> expression = new DDMExpressionImpl<>(
 			"(-3 < Var1) || (not equals(Var2,sum(Var3,Var4)))", Boolean.class);
 
-		Expression model = expression.getModel();
+		Expression expressionModel = expression.getModel();
 
-		Assert.assertEquals(OrExpression.class, model.getClass());
+		Assert.assertEquals(OrExpression.class, expressionModel.getClass());
 
-		OrExpression orExpression = (OrExpression)model;
+		OrExpression orExpression = (OrExpression)expressionModel;
 
 		Expression leftOperand = orExpression.getLeftOperand();
 		Expression rightOperand = orExpression.getRightOperand();
@@ -349,6 +368,7 @@ public class GetModelTest {
 		Assert.assertEquals("3", term.getValue());
 
 		term = (Term)rightOperand2;
+
 		Assert.assertEquals("Var1", term.getValue());
 
 		NotExpression notExpression = (NotExpression)rightOperand;
@@ -361,8 +381,8 @@ public class GetModelTest {
 		FunctionCallExpression functionCallExpression =
 			(FunctionCallExpression)notOperand;
 
-		Assert.assertEquals("equals", functionCallExpression.getName());
-		Assert.assertEquals(2, functionCallExpression.getNumberOfParameters());
+		Assert.assertEquals("equals", functionCallExpression.getFunctionName());
+		Assert.assertEquals(2, functionCallExpression.getArity());
 
 		List<Expression> parameters = functionCallExpression.getParameters();
 
@@ -373,6 +393,7 @@ public class GetModelTest {
 		Assert.assertEquals(Term.class, parameter1.getClass());
 
 		term = (Term)parameter1;
+
 		Assert.assertEquals("Var2", term.getValue());
 
 		Expression parameter2 = parameters.get(1);
@@ -383,8 +404,8 @@ public class GetModelTest {
 		FunctionCallExpression functionCallExpression2 =
 			(FunctionCallExpression)parameter2;
 
-		Assert.assertEquals("sum", functionCallExpression2.getName());
-		Assert.assertEquals(2, functionCallExpression2.getNumberOfParameters());
+		Assert.assertEquals("sum", functionCallExpression2.getFunctionName());
+		Assert.assertEquals(2, functionCallExpression2.getArity());
 
 		List<Expression> parameters2 = functionCallExpression2.getParameters();
 
@@ -395,6 +416,7 @@ public class GetModelTest {
 		Assert.assertEquals(Term.class, parameter3.getClass());
 
 		term = (Term)parameter3;
+
 		Assert.assertEquals("Var3", term.getValue());
 
 		Expression parameter4 = parameters2.get(1);
@@ -402,6 +424,7 @@ public class GetModelTest {
 		Assert.assertEquals(Term.class, parameter4.getClass());
 
 		term = (Term)parameter4;
+
 		Assert.assertEquals("Var4", term.getValue());
 	}
 

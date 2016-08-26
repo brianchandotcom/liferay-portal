@@ -651,9 +651,11 @@ public class JspServlet extends HttpServlet {
 
 				String stringFileName = pathFileName.toString();
 
-				String escapedStringFileName =
-					stringFileName.substring(0, stringFileName.length() - 4) +
-					"_jsp.class";
+				String escapedStringFileName = stringFileName.replaceAll(
+					StringPool.UNDERLINE, "_005f");
+
+				String classFileName = escapedStringFileName.substring(
+					0, escapedStringFileName.length() - 4) + "_jsp.class";
 
 				String dirName = "/org/apache/jsp/";
 
@@ -661,8 +663,7 @@ public class JspServlet extends HttpServlet {
 					dirName += path.getParent().toString() + "/";
 				}
 
-				paths.add(
-					Paths.get(scratchDirName, dirName, escapedStringFileName));
+				paths.add(Paths.get(scratchDirName, dirName, classFileName));
 			}
 
 			_deleteOutdatedJspFiles(scratchDirName, paths);

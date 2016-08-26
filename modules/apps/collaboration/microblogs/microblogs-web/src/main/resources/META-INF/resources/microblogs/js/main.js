@@ -1,6 +1,7 @@
 AUI().use(
 	'aui-base',
 	'aui-io-plugin-deprecated',
+	'liferay-portlet-url',
 	'liferay-util-window',
 	function(A) {
 		Liferay.namespace('Microblogs');

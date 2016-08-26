@@ -47,8 +47,6 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 	public static final String DOWNLOAD_METAL_CLI_TASK_NAME =
 		"downloadMetalCli";
 
-	public static final String EXTENSION_NAME = "jsTranspiler";
-
 	public static final String TRANSPILE_JS_TASK_NAME = "transpileJS";
 
 	@Override
@@ -59,11 +57,8 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 			(ExecuteNpmTask)GradleUtil.getTask(
 				project, NodePlugin.NPM_INSTALL_TASK_NAME);
 
-		JSTranspilerExtension jsTranspilerExtension = GradleUtil.addExtension(
-			project, EXTENSION_NAME, JSTranspilerExtension.class);
-
 		final DownloadNodeModuleTask downloadMetalCliTask =
-			addTaskDownloadMetalCli(project, jsTranspilerExtension);
+			addTaskDownloadMetalCli(project);
 
 		addTaskTranspileJS(project);
 
@@ -79,24 +74,13 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 			});
 	}
 
-	protected DownloadNodeModuleTask addTaskDownloadMetalCli(
-		Project project, final JSTranspilerExtension jsTranspilerExtension) {
-
+	protected DownloadNodeModuleTask addTaskDownloadMetalCli(Project project) {
 		DownloadNodeModuleTask downloadNodeModuleTask = GradleUtil.addTask(
 			project, DOWNLOAD_METAL_CLI_TASK_NAME,
 			DownloadNodeModuleTask.class);
 
 		downloadNodeModuleTask.setModuleName("metal-cli");
-
-		downloadNodeModuleTask.setModuleVersion(
-			new Callable<String>() {
-
-				@Override
-				public String call() throws Exception {
-					return jsTranspilerExtension.getMetalCliVersion();
-				}
-
-			});
+		downloadNodeModuleTask.setModuleVersion(_METAL_CLI_VERSION);
 
 		return downloadNodeModuleTask;
 	}
@@ -231,5 +215,7 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 
 		return iterator.next();
 	}
+
+	private static final String _METAL_CLI_VERSION = "1.3.1";
 
 }

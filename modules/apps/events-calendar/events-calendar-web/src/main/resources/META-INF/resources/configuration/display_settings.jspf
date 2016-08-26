@@ -1,0 +1,31 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<aui:fieldset>
+	<aui:input label="display-scheduler-only" name="displaySchedulerOnly" type="checkbox" value="<%= displaySchedulerOnly %>" />
+
+	<aui:input label="display-user-events" name="showUserEvents" type="checkbox" value="<%= showUserEvents %>" />
+
+	<aui:fieldset collapsible="<%= true %>" label="enabled-views">
+		<aui:input label="day" name="showDayView" type="checkbox" value="<%= showDayView %>" />
+
+		<aui:input label="week" name="showWeekView" type="checkbox" value="<%= showWeekView %>" />
+
+		<aui:input label="month" name="showMonthView" type="checkbox" value="<%= showMonthView %>" />
+
+		<aui:input label="agenda" name="showAgendaView" type="checkbox" value="<%= showAgendaView %>" />
+	</aui:fieldset>
+</aui:fieldset>

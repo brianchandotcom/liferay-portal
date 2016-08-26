@@ -32,7 +32,7 @@ import org.junit.Test;
 /**
  * @author Leonardo Barros
  */
-public class GetModelTest {
+public class ExpressionModelTest {
 
 	@Test
 	public void testAndExpression() throws Exception {

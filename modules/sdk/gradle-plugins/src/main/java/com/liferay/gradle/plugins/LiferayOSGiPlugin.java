@@ -25,7 +25,6 @@ import com.liferay.gradle.plugins.internal.CSSBuilderDefaultsPlugin;
 import com.liferay.gradle.plugins.internal.EclipseDefaultsPlugin;
 import com.liferay.gradle.plugins.internal.IdeaDefaultsPlugin;
 import com.liferay.gradle.plugins.internal.JSModuleConfigGeneratorDefaultsPlugin;
-import com.liferay.gradle.plugins.internal.JSTranspilerDefaultsPlugin;
 import com.liferay.gradle.plugins.internal.JavadocFormatterDefaultsPlugin;
 import com.liferay.gradle.plugins.internal.JspCDefaultsPlugin;
 import com.liferay.gradle.plugins.internal.LangBuilderDefaultsPlugin;
@@ -578,7 +577,6 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		GradleUtil.applyPlugin(
 			project, JSModuleConfigGeneratorDefaultsPlugin.class);
 		GradleUtil.applyPlugin(project, JSModuleConfigGeneratorPlugin.class);
-		GradleUtil.applyPlugin(project, JSTranspilerDefaultsPlugin.class);
 		GradleUtil.applyPlugin(project, JSTranspilerPlugin.class);
 		GradleUtil.applyPlugin(project, JavadocFormatterDefaultsPlugin.class);
 		GradleUtil.applyPlugin(project, JavadocFormatterPlugin.class);

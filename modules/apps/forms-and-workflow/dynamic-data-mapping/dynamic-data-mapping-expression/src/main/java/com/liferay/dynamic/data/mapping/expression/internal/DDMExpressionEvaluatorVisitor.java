@@ -58,7 +58,8 @@ import org.antlr.v4.runtime.tree.ParseTree;
 /**
  * @author Marcellus Tavares
  */
-public class DDMExpressionVisitor extends DDMExpressionBaseVisitor<Object> {
+public class DDMExpressionEvaluatorVisitor
+	extends DDMExpressionBaseVisitor<Object> {
 
 	public void addFunctions(
 		Map<String, DDMExpressionFunction> ddmExpressionFunctions) {

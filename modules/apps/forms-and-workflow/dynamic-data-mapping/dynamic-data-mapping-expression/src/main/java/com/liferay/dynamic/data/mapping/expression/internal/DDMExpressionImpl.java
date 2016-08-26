@@ -71,10 +71,11 @@ public class DDMExpressionImpl<T> implements DDMExpression<T> {
 		}
 
 		try {
-			DDMExpressionVisitor ddmExpressionVisitor =
-				createDDMExpressionVisitor();
+			DDMExpressionEvaluatorVisitor ddmExpressionEvaluatorVisitor =
+				createDDMExpressionEvaluatorVisitor();
 
-			Object result = _expressionContext.accept(ddmExpressionVisitor);
+			Object result = _expressionContext.accept(
+				ddmExpressionEvaluatorVisitor);
 
 			return (T)toRetunType(result);
 		}
@@ -191,24 +192,25 @@ public class DDMExpressionImpl<T> implements DDMExpression<T> {
 		}
 	}
 
-
-	protected DDMExpressionVisitor createDDMExpressionVisitor()
+	protected DDMExpressionEvaluatorVisitor
+			createDDMExpressionEvaluatorVisitor()
 		throws DDMExpressionException {
 
-		DDMExpressionVisitor ddmExpressionVisitor = new DDMExpressionVisitor();
+		DDMExpressionEvaluatorVisitor ddmExpressionEvaluatorVisitor =
+			new DDMExpressionEvaluatorVisitor();
 
 		// Functions
 
-		ddmExpressionVisitor.addFunctions(_ddmExpressionFunctions);
+		ddmExpressionEvaluatorVisitor.addFunctions(_ddmExpressionFunctions);
 
 		// Variables
 
 		for (Map.Entry<String, Variable> entry : _variables.entrySet()) {
-			ddmExpressionVisitor.addVariable(
+			ddmExpressionEvaluatorVisitor.addVariable(
 				entry.getKey(), getVariableValue(entry.getValue()));
 		}
 
-		return ddmExpressionVisitor;
+		return ddmExpressionEvaluatorVisitor;
 	}
 
 	protected DDMExpression<Object> createExpression(String expressionString)

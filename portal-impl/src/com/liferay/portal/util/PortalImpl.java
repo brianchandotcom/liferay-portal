@@ -1182,8 +1182,13 @@ public class PortalImpl implements Portal {
 					return canonicalURL;
 				}
 
-				return canonicalURL.substring(0, pos).concat(
-					i18nPath).concat(canonicalURL.substring(pos));
+				StringBundler sb = new StringBundler(3);
+
+				sb.append(canonicalURL.substring(0, pos));
+				sb.append(i18nPath);
+				sb.append(canonicalURL.substring(pos));
+
+				return sb.toString();
 			}
 		}
 

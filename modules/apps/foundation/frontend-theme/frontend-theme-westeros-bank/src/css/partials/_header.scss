@@ -35,6 +35,12 @@
 	}
 }
 
+.signed-out .user-area .navbar-nav {
+	@include sm {
+		margin-top: 6px;
+	}
+}
+
 .user-avatar-image {
 	display: inline-block;
 	margin-right: 5px;
@@ -125,12 +131,18 @@
 
 				@include sm {
 					margin-right: 20px;
-					padding: 12px 12px 12px 0;
+					padding: 12px 24px 12px 0;
 				}
 			}
 
 			.lfr-nav-child-toggle {
 				float: right;
+
+				@include sm {
+					position: absolute;
+					right: 12px;
+					top: 12px;
+				}
 			}
 
 			&:last-child > a {

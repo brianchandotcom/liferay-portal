@@ -150,7 +150,7 @@
 	</command>
 
 	<command name="goToAdvancedTab">
-		<execute function="AssertClick" locator1="Form#SIDEBAR_ADVANCED_TAB" value1="Advanced" />
+		<execute function="AssertClick" locator1="Form#SIDEBAR_PROPERTIES_TAB" value1="Properties" />
 	</command>
 
 	<command name="goToBasicTab">

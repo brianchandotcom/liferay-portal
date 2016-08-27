@@ -183,6 +183,13 @@ public class ResourcePermissionFinderImpl
 	}
 
 	@Override
+	public Map<Serializable, ResourcePermission> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys) {
+
+		return ResourcePermissionUtil.fetchByPrimaryKeys(primaryKeys);
+	}
+
+	@Override
 	public List<ResourcePermission> findByResource(
 		long companyId, long groupId, String name, String primKey) {
 
@@ -213,13 +220,6 @@ public class ResourcePermissionFinderImpl
 		finally {
 			closeSession(session);
 		}
-	}
-
-	@Override
-	public Map<Serializable, ResourcePermission> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		return ResourcePermissionUtil.fetchByPrimaryKeys(primaryKeys);
 	}
 
 	@Override

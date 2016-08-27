@@ -213,6 +213,13 @@ public class PortletPreferencesFinderImpl
 	}
 
 	@Override
+	public Map<Serializable, PortletPreferences> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys) {
+
+		return PortletPreferencesUtil.fetchByPrimaryKeys(primaryKeys);
+	}
+
+	@Override
 	public List<PortletPreferences> findByPortletId(String portletId) {
 		Session session = null;
 
@@ -237,13 +244,6 @@ public class PortletPreferencesFinderImpl
 		finally {
 			closeSession(session);
 		}
-	}
-
-	@Override
-	public Map<Serializable, PortletPreferences> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		return PortletPreferencesUtil.fetchByPrimaryKeys(primaryKeys);
 	}
 
 	@Override

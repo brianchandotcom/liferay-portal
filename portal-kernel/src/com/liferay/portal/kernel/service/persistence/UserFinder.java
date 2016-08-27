@@ -25,15 +25,15 @@ public interface UserFinder {
 	public java.util.Map<java.lang.Long, java.lang.Integer> countByGroups(
 		long companyId, int status, long[] groupIds);
 
+	public int countByKeywords(long companyId, java.lang.String keywords,
+		int status,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params);
+
 	public int countBySocialUsers(long companyId, long userId,
 		int socialRelationType, java.lang.String socialRelationTypeComparator,
 		int status);
 
 	public int countByUser(long userId,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params);
-
-	public int countByKeywords(long companyId, java.lang.String keywords,
-		int status,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params);
 
 	public int countByC_FN_MN_LN_SN_EA_S(long companyId,

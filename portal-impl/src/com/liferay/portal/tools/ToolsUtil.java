@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -428,6 +429,11 @@ public class ToolsUtil {
 
 		env.set("author", author);
 
+		// Fail on format error
+
+		boolean failOnFormatError = MapUtil.getBoolean(
+			jalopySettings, "failOnFormatError");
+
 		// File name
 
 		env.set("fileName", file.getName());
@@ -444,7 +450,7 @@ public class ToolsUtil {
 			ConventionKeys.COMMENT_JAVADOC_TEMPLATE_INTERFACE,
 			env.interpolate(classMask));
 
-		jalopy.format();
+		boolean formatSuccess = jalopy.format();
 
 		String newContent = sb.toString();
 
@@ -475,6 +481,10 @@ public class ToolsUtil {
 		writeFileRaw(file, newContent, modifiedFileNames);
 
 		tempFile.deleteOnExit();
+
+		if (failOnFormatError && !formatSuccess) {
+			throw new IOException("Unable to beautify " + file);
+		}
 	}
 
 	public static void writeFile(

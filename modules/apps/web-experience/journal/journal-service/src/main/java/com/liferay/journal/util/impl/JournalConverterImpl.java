@@ -30,8 +30,6 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -62,8 +60,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -453,39 +449,12 @@ public class JournalConverterImpl implements JournalConverter {
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	protected Serializable getDocumentLibraryValue(String url) {
-		try {
-			FileEntry fileEntry = null;
-
-			if (url.contains("/c/document_library/get_file?") ||
-				url.contains("/image/image_gallery?")) {
-
-				fileEntry = getFileEntryByOldDocumentLibraryURL(url);
-			}
-			else if (url.contains("/documents/")) {
-				fileEntry = getFileEntryByDocumentLibraryURL(url);
-			}
-
-			if (fileEntry == null) {
-				return StringPool.BLANK;
-			}
-
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-			jsonObject.put("groupId", fileEntry.getGroupId());
-			jsonObject.put("title", fileEntry.getTitle());
-			jsonObject.put("uuid", fileEntry.getUuid());
-			jsonObject.put("version", fileEntry.getVersion());
-
-			return jsonObject.toString();
-		}
-		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Error retrieving file entry", e);
-			}
-		}
-
-		return StringPool.BLANK;
+		return null;
 	}
 
 	protected Field getField(
@@ -575,28 +544,7 @@ public class JournalConverterImpl implements JournalConverter {
 
 		Serializable serializable = null;
 
-		if (DDMImpl.TYPE_DDM_DOCUMENTLIBRARY.equals(type)) {
-			serializable = getDocumentLibraryValue(
-				dynamicContentElement.getText());
-		}
-		else if (DDMImpl.TYPE_DDM_IMAGE.equals(type)) {
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-			jsonObject.put("alt", dynamicContentElement.attributeValue("alt"));
-			jsonObject.put("data", dynamicContentElement.getText());
-			jsonObject.put(
-				"name", dynamicContentElement.attributeValue("name"));
-			jsonObject.put(
-				"resourcePrimKey",
-				dynamicContentElement.attributeValue("resourcePrimKey"));
-			jsonObject.put(
-				"title", dynamicContentElement.attributeValue("title"));
-			jsonObject.put(
-				"type", dynamicContentElement.attributeValue("type"));
-
-			serializable = jsonObject.toString();
-		}
-		else if (DDMImpl.TYPE_DDM_LINK_TO_PAGE.equals(type)) {
+		if (DDMImpl.TYPE_DDM_LINK_TO_PAGE.equals(type)) {
 			String[] values = StringUtil.split(
 				dynamicContentElement.getText(), CharPool.AT);
 
@@ -646,40 +594,22 @@ public class JournalConverterImpl implements JournalConverter {
 		return serializable;
 	}
 
-	protected FileEntry getFileEntryByDocumentLibraryURL(String url)
-		throws PortalException {
-
-		int x = url.indexOf("/documents/");
-
-		int y = url.indexOf(StringPool.QUESTION);
-
-		if (y == -1) {
-			y = url.length();
-		}
-
-		url = url.substring(x, y);
-
-		String[] parts = StringUtil.split(url, CharPool.SLASH);
-
-		long groupId = GetterUtil.getLong(parts[2]);
-
-		return _dlAppLocalService.getFileEntryByUuidAndGroupId(
-			parts[5], groupId);
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
+	protected FileEntry getFileEntryByDocumentLibraryURL(String url) {
+		return null;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	protected FileEntry getFileEntryByOldDocumentLibraryURL(String url)
 		throws PortalException {
 
-		Matcher matcher = _oldDocumentLibraryURLPattern.matcher(url);
-
-		if (!matcher.find()) {
-			return null;
-		}
-
-		long groupId = GetterUtil.getLong(matcher.group(2));
-
-		return _dlAppLocalService.getFileEntryByUuidAndGroupId(
-			matcher.group(1), groupId);
+		return null;
 	}
 
 	protected void getJournalMetadataElement(Element metadataElement) {
@@ -715,6 +645,10 @@ public class JournalConverterImpl implements JournalConverter {
 		element.remove(attribute);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	@Reference(unbind = "-")
 	protected void setDLAppLocalService(DLAppLocalService dlAppLocalService) {
 		_dlAppLocalService = dlAppLocalService;
@@ -925,22 +859,6 @@ public class JournalConverterImpl implements JournalConverter {
 				fieldValue = StringPool.BLANK;
 			}
 
-			dynamicContentElement.addCDATA(fieldValue);
-		}
-		else if (DDMImpl.TYPE_DDM_IMAGE.equals(fieldType) &&
-				 Validator.isNotNull(fieldValue)) {
-
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-				fieldValue);
-
-			dynamicContentElement.addAttribute(
-				"alt", jsonObject.getString("alt"));
-			dynamicContentElement.addAttribute(
-				"name", jsonObject.getString("name"));
-			dynamicContentElement.addAttribute(
-				"title", jsonObject.getString("title"));
-			dynamicContentElement.addAttribute(
-				"type", jsonObject.getString("type"));
 			dynamicContentElement.addCDATA(fieldValue);
 		}
 		else if (DDMImpl.TYPE_DDM_LINK_TO_PAGE.equals(fieldType) &&
@@ -1174,9 +1092,6 @@ public class JournalConverterImpl implements JournalConverter {
 		}
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		JournalConverterImpl.class);
-
 	private final Map<String, String> _ddmDataTypes;
 	private final Map<String, String> _ddmMetadataAttributes;
 	private final Map<String, String> _ddmTypesToJournalTypes;
@@ -1184,7 +1099,5 @@ public class JournalConverterImpl implements JournalConverter {
 	private FieldsToDDMFormValuesConverter _fieldsToDDMFormValuesConverter;
 	private GroupLocalService _groupLocalService;
 	private final Map<String, String> _journalTypesToDDMTypes;
-	private final Pattern _oldDocumentLibraryURLPattern = Pattern.compile(
-		"uuid=([^&]+)&groupId=([^&]+)");
 
 }

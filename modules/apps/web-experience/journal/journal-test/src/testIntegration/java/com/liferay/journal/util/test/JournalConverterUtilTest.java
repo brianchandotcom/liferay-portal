@@ -357,61 +357,6 @@ public class JournalConverterUtilTest {
 	}
 
 	@Test
-	public void testGetFieldsFromContentWithDocumentLibraryElement()
-		throws Exception {
-
-		Fields expectedFields = new Fields();
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
-		FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
-			TestPropsValues.getUserId(), _group.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Test 1.txt",
-			ContentTypes.TEXT_PLAIN,
-			RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.INSTANCE),
-			serviceContext);
-
-		Field documentLibraryField = getDocumentLibraryField(
-			fileEntry, _ddmStructure.getStructureId());
-
-		expectedFields.put(documentLibraryField);
-
-		Field fieldsDisplayField = getFieldsDisplayField(
-			_ddmStructure.getStructureId(),
-			"document_library_INSTANCE_4aGOvP3N");
-
-		expectedFields.put(fieldsDisplayField);
-
-		String content = read("test-journal-content-doc-library-field.xml");
-
-		XPath xPathSelector = SAXReaderUtil.createXPath("//dynamic-content");
-
-		Document document = UnsecureSAXReaderUtil.read(content);
-
-		Element element = (Element)xPathSelector.selectSingleNode(document);
-
-		String[] previewURLs = new String[2];
-
-		previewURLs[0] = DLUtil.getPreviewURL(
-			fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK, true,
-			true);
-		previewURLs[1] = DLUtil.getPreviewURL(
-			fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK,
-			false, false);
-
-		for (int i = 0; i < previewURLs.length; i++) {
-			element.addCDATA(previewURLs[i]);
-
-			Fields actualFields = _journalConverter.getDDMFields(
-				_ddmStructure, document.asXML());
-
-			Assert.assertEquals(expectedFields, actualFields);
-		}
-	}
-
-	@Test
 	public void testGetFieldsFromContentWithLinkToLayoutElement()
 		throws Exception {
 

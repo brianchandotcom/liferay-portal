@@ -16,10 +16,16 @@ package com.liferay.poshi.runner.selenium;
 
 import com.deque.axe.AXE;
 
+import com.liferay.poshi.runner.PoshiRunnerContext;
+import com.liferay.poshi.runner.PoshiRunnerGetterUtil;
+import com.liferay.poshi.runner.util.AntCommands;
+import com.liferay.poshi.runner.util.EmailCommands;
 import com.liferay.poshi.runner.util.FileUtil;
 import com.liferay.poshi.runner.util.GetterUtil;
+import com.liferay.poshi.runner.util.HtmlUtil;
 import com.liferay.poshi.runner.util.OSDetector;
 import com.liferay.poshi.runner.util.PropsValues;
+import com.liferay.poshi.runner.util.RuntimeVariables;
 import com.liferay.poshi.runner.util.StringPool;
 import com.liferay.poshi.runner.util.StringUtil;
 import com.liferay.poshi.runner.util.Validator;
@@ -28,7 +34,10 @@ import java.awt.Robot;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.StringReader;
 
 import java.net.URI;
@@ -39,8 +48,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -67,6 +85,20 @@ import org.openqa.selenium.internal.WrapsDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import org.sikuli.api.DesktopScreenRegion;
+import org.sikuli.api.ImageTarget;
+import org.sikuli.api.Location;
+import org.sikuli.api.ScreenRegion;
+import org.sikuli.api.robot.Key;
+import org.sikuli.api.robot.Keyboard;
+import org.sikuli.api.robot.Mouse;
+import org.sikuli.api.robot.desktop.DesktopKeyboard;
+import org.sikuli.api.robot.desktop.DesktopMouse;
+import org.sikuli.api.visual.Canvas;
+import org.sikuli.api.visual.CanvasBuilder.ElementAdder;
+import org.sikuli.api.visual.CanvasBuilder.ElementAreaSetter;
+import org.sikuli.api.visual.DesktopCanvas;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -82,6 +114,9 @@ public abstract class BaseWebDriverImpl
 
 	public BaseWebDriverImpl(String browserURL, WebDriver webDriver) {
 		super(webDriver);
+
+		_screenshotCount = 0;
+		_screenshotErrorCount = 0;
 
 		initKeysSpecialChars();
 
@@ -164,7 +199,20 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public void antCommand(String fileName, String target) throws Exception {
-		LiferaySeleniumHelper.antCommand(this, fileName, target);
+		AntCommands antCommands = new AntCommands(fileName, target);
+
+		ExecutorService executorService = Executors.newCachedThreadPool();
+
+		Future<Void> future = executorService.submit(antCommands);
+
+		try {
+			future.get(150, TimeUnit.SECONDS);
+		}
+		catch (ExecutionException ee) {
+			throw ee;
+		}
+		catch (TimeoutException te) {
+		}
 	}
 
 	@Override
@@ -196,22 +244,35 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public void assertAlert(String pattern) throws Exception {
-		LiferaySeleniumHelper.assertAlert(this, pattern);
+		TestCase.assertEquals(pattern, getAlert());
 	}
 
 	@Override
 	public void assertAlertNotPresent() throws Exception {
-		LiferaySeleniumHelper.assertAlertNotPresent(this);
+		if (isAlertPresent()) {
+			throw new Exception("Alert is present");
+		}
 	}
 
 	@Override
 	public void assertChecked(String locator) throws Exception {
-		LiferaySeleniumHelper.assertChecked(this, locator);
+		assertElementPresent(locator);
+
+		if (isNotChecked(locator)) {
+			throw new Exception(
+				"Element is not checked at \"" + locator + "\"");
+		}
 	}
 
 	@Override
 	public void assertConfirmation(String pattern) throws Exception {
-		LiferaySeleniumHelper.assertConfirmation(this, pattern);
+		String confirmation = getConfirmation();
+
+		if (!pattern.equals(confirmation)) {
+			throw new Exception(
+				"Expected text \"" + pattern +
+					"\" does not match actual text \"" + confirmation + "\"");
+		}
 	}
 
 	@Override
@@ -239,39 +300,53 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public void assertEditable(String locator) throws Exception {
-		LiferaySeleniumHelper.assertEditable(this, locator);
+		if (isNotEditable(locator)) {
+			throw new Exception(
+				"Element is not editable at \"" + locator + "\"");
+		}
 	}
 
 	@Override
 	public void assertElementNotPresent(String locator) throws Exception {
-		LiferaySeleniumHelper.assertElementNotPresent(this, locator);
+		if (isElementPresent(locator)) {
+			throw new Exception("Element is present at \"" + locator + "\"");
+		}
 	}
 
 	@Override
 	public void assertElementPresent(String locator) throws Exception {
-		LiferaySeleniumHelper.assertElementPresent(this, locator);
+		if (isElementNotPresent(locator)) {
+			throw new Exception(
+				"Element is not present at \"" + locator + "\"");
+		}
 	}
 
 	@Override
 	public void assertEmailBody(String index, String body) throws Exception {
-		LiferaySeleniumHelper.assertEmailBody(this, index, body);
+		TestCase.assertEquals(body, getEmailBody(index));
 	}
 
 	@Override
 	public void assertEmailSubject(String index, String subject)
 		throws Exception {
 
-		LiferaySeleniumHelper.assertEmailSubject(this, index, subject);
+		TestCase.assertEquals(subject, getEmailSubject(index));
 	}
 
 	@Override
 	public void assertHTMLSourceTextNotPresent(String value) throws Exception {
-		LiferaySeleniumHelper.assertHTMLSourceTextPresent(this, value);
+		if (isHTMLSourceTextPresent(value)) {
+			throw new Exception(
+				"Pattern \"" + value + "\" does exists in the HTML source");
+		}
 	}
 
 	@Override
 	public void assertHTMLSourceTextPresent(String value) throws Exception {
-		LiferaySeleniumHelper.assertHTMLSourceTextPresent(this, value);
+		if (!isHTMLSourceTextPresent(value)) {
+			throw new Exception(
+				"Pattern \"" + value + "\" does not exists in the HTML source");
+		}
 	}
 
 	@Override
@@ -288,7 +363,7 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public void assertLocation(String pattern) throws Exception {
-		LiferaySeleniumHelper.assertLocation(this, pattern);
+		TestCase.assertEquals(pattern, getLocation());
 	}
 
 	@Override
@@ -303,98 +378,189 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public void assertNotAlert(String pattern) {
-		LiferaySeleniumHelper.assertNotAlert(this, pattern);
+		TestCase.assertTrue(Objects.equals(pattern, getAlert()));
 	}
 
 	@Override
 	public void assertNotChecked(String locator) throws Exception {
-		LiferaySeleniumHelper.assertNotChecked(this, locator);
+		assertElementPresent(locator);
+
+		if (isChecked(locator)) {
+			throw new Exception("Element is checked at \"" + locator + "\"");
+		}
 	}
 
 	@Override
 	public void assertNotEditable(String locator) throws Exception {
-		LiferaySeleniumHelper.assertNotEditable(this, locator);
+		if (isEditable(locator)) {
+			throw new Exception("Element is editable at \"" + locator + "\"");
+		}
 	}
 
 	@Override
 	public void assertNotLocation(String pattern) throws Exception {
-		LiferaySeleniumHelper.assertNotLocation(this, pattern);
+		TestCase.assertTrue(Objects.equals(pattern, getLocation()));
 	}
 
 	@Override
 	public void assertNotPartialText(String locator, String pattern)
 		throws Exception {
 
-		LiferaySeleniumHelper.assertNotPartialText(this, locator, pattern);
+		assertElementPresent(locator);
+
+		if (isPartialText(locator, pattern)) {
+			String text = getText(locator);
+
+			throw new Exception(
+				"\"" + text + "\" contains \"" + pattern + "\" at \"" +
+					locator + "\"");
+		}
 	}
 
 	@Override
 	public void assertNotSelectedLabel(String selectLocator, String pattern)
 		throws Exception {
 
-		LiferaySeleniumHelper.assertNotSelectedLabel(
-			this, selectLocator, pattern);
+		assertElementPresent(selectLocator);
+
+		if (isSelectedLabel(selectLocator, pattern)) {
+			String text = getSelectedLabel(selectLocator);
+
+			throw new Exception(
+				"Pattern \"" + pattern + "\" matches \"" + text + "\" at \"" +
+					selectLocator + "\"");
+		}
 	}
 
 	@Override
 	public void assertNotText(String locator, String pattern) throws Exception {
-		LiferaySeleniumHelper.assertNotText(this, locator, pattern);
+		assertElementPresent(locator);
+
+		if (isText(locator, pattern)) {
+			String text = getText(locator);
+
+			throw new Exception(
+				"Pattern \"" + pattern + "\" matches \"" + text + "\" at \"" +
+					locator + "\"");
+		}
 	}
 
 	@Override
 	public void assertNotValue(String locator, String pattern)
 		throws Exception {
 
-		LiferaySeleniumHelper.assertNotValue(this, locator, pattern);
+		assertElementPresent(locator);
+
+		if (isValue(locator, pattern)) {
+			String value = getElementValue(locator);
+
+			throw new Exception(
+				"Pattern \"" + pattern + "\" matches \"" + value + "\" at \"" +
+					locator + "\"");
+		}
 	}
 
 	@Override
 	public void assertNotVisible(String locator) throws Exception {
-		LiferaySeleniumHelper.assertNotVisible(this, locator);
+		assertElementPresent(locator);
+
+		if (isVisible(locator)) {
+			throw new Exception("Element is visible at \"" + locator + "\"");
+		}
 	}
 
 	@Override
 	public void assertPartialConfirmation(String pattern) throws Exception {
-		LiferaySeleniumHelper.assertPartialConfirmation(this, pattern);
+		String confirmation = getConfirmation();
+
+		if (!confirmation.contains(pattern)) {
+			throw new Exception(
+				"\"" + confirmation + "\" does not contain \"" + pattern +
+					"\"");
+		}
 	}
 
 	@Override
 	public void assertPartialText(String locator, String pattern)
 		throws Exception {
 
-		LiferaySeleniumHelper.assertPartialText(this, locator, pattern);
+		assertElementPresent(locator);
+
+		if (isNotPartialText(locator, pattern)) {
+			String text = getText(locator);
+
+			throw new Exception(
+				"\"" + text + "\" does not contain \"" + pattern + "\" at \"" +
+					locator + "\"");
+		}
 	}
 
 	@Override
 	public void assertSelectedLabel(String selectLocator, String pattern)
 		throws Exception {
 
-		LiferaySeleniumHelper.assertSelectedLabel(this, selectLocator, pattern);
+		assertElementPresent(selectLocator);
+
+		if (isNotSelectedLabel(selectLocator, pattern)) {
+			String text = getSelectedLabel(selectLocator);
+
+			throw new Exception(
+				"Expected text \"" + pattern +
+					"\" does not match actual text \"" + text + "\" at \"" +
+						selectLocator + "\"");
+		}
 	}
 
 	@Override
 	public void assertText(String locator, String pattern) throws Exception {
-		LiferaySeleniumHelper.assertText(this, locator, pattern);
+		assertElementPresent(locator);
+
+		if (isNotText(locator, pattern)) {
+			String text = getText(locator);
+
+			throw new Exception(
+				"Expected text \"" + pattern +
+					"\" does not match actual text \"" + text + "\" at \"" +
+						locator + "\"");
+		}
 	}
 
 	@Override
 	public void assertTextNotPresent(String pattern) throws Exception {
-		LiferaySeleniumHelper.assertTextNotPresent(this, pattern);
+		if (isTextPresent(pattern)) {
+			throw new Exception("\"" + pattern + "\" is present");
+		}
 	}
 
 	@Override
 	public void assertTextPresent(String pattern) throws Exception {
-		LiferaySeleniumHelper.assertTextPresent(this, pattern);
+		if (isTextNotPresent(pattern)) {
+			throw new Exception("\"" + pattern + "\" is not present");
+		}
 	}
 
 	@Override
 	public void assertValue(String locator, String pattern) throws Exception {
-		LiferaySeleniumHelper.assertValue(this, locator, pattern);
+		assertElementPresent(locator);
+
+		if (isNotValue(locator, pattern)) {
+			String value = getElementValue(locator);
+
+			throw new Exception(
+				"Expected text \"" + pattern +
+					"\" does not match actual text \"" + value + "\" at \"" +
+						locator + "\"");
+		}
 	}
 
 	@Override
 	public void assertVisible(String locator) throws Exception {
-		LiferaySeleniumHelper.assertVisible(this, locator);
+		assertElementPresent(locator);
+
+		if (isNotVisible(locator)) {
+			throw new Exception(
+				"Element is not visible at \"" + locator + "\"");
+		}
 	}
 
 	@Override
@@ -1261,7 +1427,9 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public boolean isConfirmation(String pattern) {
-		return LiferaySeleniumHelper.isConfirmation(this, pattern);
+		String confirmation = getConfirmation();
+
+		return pattern.equals(confirmation);
 	}
 
 	@Override
@@ -1293,17 +1461,52 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public boolean isElementPresentAfterWait(String locator) throws Exception {
-		return LiferaySeleniumHelper.isElementPresentAfterWait(this, locator);
+		for (int second = 0;; second++) {
+			if (second >= PropsValues.TIMEOUT_EXPLICIT_WAIT) {
+				return isElementPresent(locator);
+			}
+
+			if (isElementPresent(locator)) {
+				break;
+			}
+
+			Thread.sleep(1000);
+		}
+
+		return isElementPresent(locator);
 	}
 
 	@Override
 	public boolean isHTMLSourceTextPresent(String value) throws Exception {
-		return LiferaySeleniumHelper.isHTMLSourceTextPresent(this, value);
+		URL url = new URL(getLocation());
+
+		InputStream inputStream = url.openStream();
+
+		BufferedReader bufferedReader = new BufferedReader(
+			new InputStreamReader(inputStream));
+
+		String line = null;
+
+		while ((line = bufferedReader.readLine()) != null) {
+			Pattern pattern = Pattern.compile(value);
+
+			Matcher matcher = pattern.matcher(line);
+
+			if (matcher.find()) {
+				return true;
+			}
+		}
+
+		inputStream.close();
+
+		bufferedReader.close();
+
+		return false;
 	}
 
 	@Override
 	public boolean isNotChecked(String locator) {
-		return LiferaySeleniumHelper.isNotChecked(this, locator);
+		return !isChecked(locator);
 	}
 
 	@Override
@@ -1313,7 +1516,7 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public boolean isNotPartialText(String locator, String value) {
-		return LiferaySeleniumHelper.isNotPartialText(this, locator, value);
+		return !isPartialText(locator, value);
 	}
 
 	@Override
@@ -1323,17 +1526,17 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public boolean isNotText(String locator, String value) throws Exception {
-		return LiferaySeleniumHelper.isNotText(this, locator, value);
+		return !isText(locator, value);
 	}
 
 	@Override
 	public boolean isNotValue(String locator, String value) throws Exception {
-		return LiferaySeleniumHelper.isNotValue(this, locator, value);
+		return !isValue(locator, value);
 	}
 
 	@Override
 	public boolean isNotVisible(String locator) {
-		return LiferaySeleniumHelper.isNotVisible(this, locator);
+		return !isVisible(locator);
 	}
 
 	@Override
@@ -1358,7 +1561,15 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public boolean isSikuliImagePresent(String image) throws Exception {
-		return LiferaySeleniumHelper.isSikuliImagePresent(this, image);
+		ScreenRegion screenRegion = new DesktopScreenRegion();
+
+		ImageTarget imageTarget = getImageTarget(image);
+
+		if (screenRegion.find(imageTarget) != null) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override
@@ -1368,12 +1579,16 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public boolean isTCatEnabled() {
-		return LiferaySeleniumHelper.isTCatEnabled();
+		return PropsValues.TCAT_ENABLED;
 	}
 
 	@Override
 	public boolean isTestName(String testName) {
-		return LiferaySeleniumHelper.isTestName(testName);
+		if (testName.equals(PoshiRunnerContext.getTestCaseCommandName())) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override
@@ -1383,7 +1598,7 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public boolean isTextNotPresent(String pattern) {
-		return LiferaySeleniumHelper.isTextNotPresent(this, pattern);
+		return !isTextPresent(pattern);
 	}
 
 	@Override
@@ -1832,7 +2047,9 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public void replyToEmail(String to, String body) throws Exception {
-		LiferaySeleniumHelper.replyToEmail(this, to, body);
+		EmailCommands.replyToEmail(to, body);
+
+		pause("3000");
 	}
 
 	@Override
@@ -1856,7 +2073,11 @@ public abstract class BaseWebDriverImpl
 			return;
 		}
 
-		LiferaySeleniumHelper.saveScreenshot(this);
+		_screenshotCount++;
+
+		LiferaySeleniumHelper.captureScreen(
+			_CURRENT_DIR_NAME + "test-results/functional/screenshots/" +
+				_screenshotCount + ".jpg");
 	}
 
 	@Override
@@ -1871,7 +2092,13 @@ public abstract class BaseWebDriverImpl
 			return;
 		}
 
-		LiferaySeleniumHelper.saveScreenshotBeforeAction(this, actionFailed);
+		if (actionFailed) {
+			_screenshotErrorCount++;
+		}
+
+		LiferaySeleniumHelper.captureScreen(
+			_CURRENT_DIR_NAME + "test-results/functional/screenshots/" +
+				"ScreenshotBeforeAction" + _screenshotErrorCount + ".jpg");
 	}
 
 	@Override
@@ -1947,7 +2174,9 @@ public abstract class BaseWebDriverImpl
 	public void sendEmail(String to, String subject, String body)
 		throws Exception {
 
-		LiferaySeleniumHelper.sendEmail(this, to, subject, body);
+		EmailCommands.sendEmail(to, subject, body);
+
+		pause("3000");
 	}
 
 	@Override
@@ -1961,7 +2190,37 @@ public abstract class BaseWebDriverImpl
 
 		webElement.sendKeys(Keys.chord(Keys.CONTROL, Keys.END));
 
-		LiferaySeleniumHelper.typeAceEditor(this, locator, value);
+		typeKeys(locator, "");
+
+		Keyboard keyboard = new DesktopKeyboard();
+
+		Matcher matcher = _aceEditorPattern.matcher(value);
+
+		int x = 0;
+
+		while (matcher.find()) {
+			int y = matcher.start();
+
+			String line = value.substring(x, y);
+
+			keyboard.type(line.trim());
+
+			String specialCharacter = matcher.group();
+
+			if (specialCharacter.equals("(")) {
+				keyboard.type("(");
+			}
+			else if (specialCharacter.equals("${line.separator}")) {
+				keyPress(locator, "\\SPACE");
+				keyPress(locator, "\\RETURN");
+			}
+
+			x = y + specialCharacter.length();
+		}
+
+		String line = value.substring(x);
+
+		keyboard.type(line.trim());
 	}
 
 	@Override
@@ -2080,82 +2339,256 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public void sikuliAssertElementNotPresent(String image) throws Exception {
-		LiferaySeleniumHelper.sikuliAssertElementNotPresent(this, image);
+		ScreenRegion screenRegion = new DesktopScreenRegion();
+
+		ImageTarget imageTarget = getImageTarget(image);
+
+		if (screenRegion.wait(imageTarget, 5000) != null) {
+			throw new Exception("Element is present");
+		}
 	}
 
 	@Override
 	public void sikuliAssertElementPresent(String image) throws Exception {
-		LiferaySeleniumHelper.sikuliAssertElementPresent(this, image);
+		ScreenRegion screenRegion = new DesktopScreenRegion();
+
+		ImageTarget imageTarget = getImageTarget(image);
+
+		screenRegion = screenRegion.wait(imageTarget, 5000);
+
+		if (screenRegion == null) {
+			throw new Exception("Element is not present");
+		}
+
+		Canvas canvas = new DesktopCanvas();
+
+		ElementAdder elementAdder = canvas.add();
+
+		ElementAreaSetter elementAreaSetter = elementAdder.box();
+
+		elementAreaSetter.around(screenRegion);
+
+		canvas.display(2);
 	}
 
 	@Override
 	public void sikuliClick(String image) throws Exception {
-		LiferaySeleniumHelper.sikuliClick(this, image);
+		Mouse mouse = new DesktopMouse();
+
+		ScreenRegion screenRegion = new DesktopScreenRegion();
+
+		ImageTarget imageTarget = getImageTarget(image);
+
+		ScreenRegion imageTargetScreenRegion = screenRegion.find(imageTarget);
+
+		if (imageTargetScreenRegion != null) {
+			mouse.click(imageTargetScreenRegion.getCenter());
+		}
 	}
 
 	@Override
 	public void sikuliClickByIndex(String image, String index)
 		throws Exception {
 
-		LiferaySeleniumHelper.sikuliClickByIndex(this, image, index);
+		Mouse mouse = new DesktopMouse();
+
+		ScreenRegion screenRegion = new DesktopScreenRegion();
+
+		ImageTarget imageTarget = getImageTarget(image);
+
+		List<ScreenRegion> imageTargetScreenRegions = screenRegion.findAll(
+			imageTarget);
+
+		ScreenRegion imageTargetScreenRegion = imageTargetScreenRegions.get(
+			Integer.parseInt(index));
+
+		if (imageTargetScreenRegion != null) {
+			mouse.click(imageTargetScreenRegion.getCenter());
+		}
 	}
 
 	@Override
 	public void sikuliDragAndDrop(String image, String coordString)
 		throws Exception {
 
-		LiferaySeleniumHelper.sikuliDragAndDrop(this, image, coordString);
+		ScreenRegion screenRegion = new DesktopScreenRegion();
+
+		ImageTarget imageTarget = getImageTarget(image);
+
+		screenRegion = screenRegion.find(imageTarget);
+
+		Mouse mouse = new DesktopMouse();
+
+		mouse.move(screenRegion.getCenter());
+
+		Robot robot = new Robot();
+
+		robot.delay(1000);
+
+		mouse.press();
+
+		robot.delay(2000);
+
+		String[] coords = coordString.split(",");
+
+		Location location = screenRegion.getCenter();
+
+		int x = location.getX() + GetterUtil.getInteger(coords[0]);
+		int y = location.getY() + GetterUtil.getInteger(coords[1]);
+
+		robot.mouseMove(x, y);
+
+		robot.delay(1000);
+
+		mouse.release();
 	}
 
 	@Override
 	public void sikuliLeftMouseDown() throws Exception {
-		LiferaySeleniumHelper.sikuliLeftMouseDown(this);
+		pause("1000");
+
+		Mouse mouse = new DesktopMouse();
+
+		mouse.press();
 	}
 
 	@Override
 	public void sikuliLeftMouseUp() throws Exception {
-		LiferaySeleniumHelper.sikuliLeftMouseUp(this);
+		pause("1000");
+
+		Mouse mouse = new DesktopMouse();
+
+		mouse.release();
 	}
 
 	@Override
 	public void sikuliMouseMove(String image) throws Exception {
-		LiferaySeleniumHelper.sikuliMouseMove(this, image);
+		ScreenRegion screenRegion = new DesktopScreenRegion();
+
+		ImageTarget imageTarget = getImageTarget(image);
+
+		screenRegion = screenRegion.find(imageTarget);
+
+		Mouse mouse = new DesktopMouse();
+
+		mouse.move(screenRegion.getCenter());
 	}
 
 	@Override
 	public void sikuliRightMouseDown() throws Exception {
-		LiferaySeleniumHelper.sikuliRightMouseDown(this);
+		pause("1000");
+
+		Mouse mouse = new DesktopMouse();
+
+		mouse.rightPress();
 	}
 
 	@Override
 	public void sikuliRightMouseUp() throws Exception {
-		LiferaySeleniumHelper.sikuliRightMouseUp(this);
+		pause("1000");
+
+		Mouse mouse = new DesktopMouse();
+
+		mouse.rightRelease();
 	}
 
 	@Override
 	public void sikuliType(String image, String value) throws Exception {
-		LiferaySeleniumHelper.sikuliType(this, image, value);
+		sikuliClick(image);
+
+		pause("1000");
+
+		Keyboard keyboard = new DesktopKeyboard();
+
+		if (value.contains("${line.separator}")) {
+			String[] tokens = StringUtil.split(value, "${line.separator}");
+
+			for (int i = 0; i < tokens.length; i++) {
+				keyboard.type(tokens[i]);
+
+				if ((i + 1) < tokens.length) {
+					keyboard.type(Key.ENTER);
+				}
+			}
+
+			if (value.endsWith("${line.separator}")) {
+				keyboard.type(Key.ENTER);
+			}
+		}
+		else {
+			keyboard.type(value);
+		}
 	}
 
 	@Override
 	public void sikuliUploadCommonFile(String image, String value)
 		throws Exception {
 
-		LiferaySeleniumHelper.sikuliUploadCommonFile(this, image, value);
+		sikuliClick(image);
+
+		Keyboard keyboard = new DesktopKeyboard();
+
+		keyboard.keyDown(Key.CTRL);
+
+		keyboard.type("a");
+
+		keyboard.keyUp(Key.CTRL);
+
+		String filePath =
+			FileUtil.getSeparator() + _TEST_DEPENDENCIES_DIR_NAME +
+				FileUtil.getSeparator() + value;
+
+		filePath = LiferaySeleniumHelper.getSourceDirFilePath(filePath);
+
+		if (OSDetector.isWindows()) {
+			filePath = StringUtil.replace(filePath, "/", "\\");
+		}
+
+		sikuliType(image, filePath);
+
+		keyboard.type(Key.ENTER);
 	}
 
 	@Override
 	public void sikuliUploadTCatFile(String image, String value)
 		throws Exception {
 
-		LiferaySeleniumHelper.sikuliUploadTCatFile(this, image, value);
+		String fileName = PropsValues.TCAT_ADMIN_REPOSITORY + "/" + value;
+
+		if (OSDetector.isWindows()) {
+			fileName = StringUtil.replace(fileName, "/", "\\");
+		}
+
+		sikuliType(image, fileName);
+
+		Keyboard keyboard = new DesktopKeyboard();
+
+		keyboard.type(Key.ENTER);
 	}
 
 	@Override
 	public void sikuliUploadTempFile(String image, String value)
 		throws Exception {
 
-		LiferaySeleniumHelper.sikuliUploadTempFile(this, image, value);
+		sikuliClick(image);
+
+		Keyboard keyboard = new DesktopKeyboard();
+
+		keyboard.keyDown(Key.CTRL);
+
+		keyboard.type("a");
+
+		keyboard.keyUp(Key.CTRL);
+
+		String fileName = getOutputDirName() + "/" + value;
+
+		if (OSDetector.isWindows()) {
+			fileName = StringUtil.replace(fileName, "/", "\\");
+		}
+
+		sikuliType(image, fileName);
+
+		keyboard.type(Key.ENTER);
 	}
 
 	@Override
@@ -2210,7 +2643,37 @@ public abstract class BaseWebDriverImpl
 
 		webElement.sendKeys(Keys.chord(Keys.CONTROL, "a"));
 
-		LiferaySeleniumHelper.typeAceEditor(this, locator, value);
+		typeKeys(locator, "");
+
+		Keyboard keyboard = new DesktopKeyboard();
+
+		Matcher matcher = _aceEditorPattern.matcher(value);
+
+		int x = 0;
+
+		while (matcher.find()) {
+			int y = matcher.start();
+
+			String line = value.substring(x, y);
+
+			keyboard.type(line.trim());
+
+			String specialCharacter = matcher.group();
+
+			if (specialCharacter.equals("(")) {
+				keyboard.type("(");
+			}
+			else if (specialCharacter.equals("${line.separator}")) {
+				keyPress(locator, "\\SPACE");
+				keyPress(locator, "\\RETURN");
+			}
+
+			x = y + specialCharacter.length();
+		}
+
+		String line = value.substring(x);
+
+		keyboard.type(line.trim());
 
 		webElement.sendKeys(Keys.chord(Keys.CONTROL, Keys.SHIFT, Keys.END));
 
@@ -2224,7 +2687,24 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public void typeCKEditor(String locator, String value) {
-		LiferaySeleniumHelper.typeCKEditor(this, locator, value);
+		StringBuilder sb = new StringBuilder();
+
+		String idAttribute = getAttribute(locator + "@id");
+
+		int x = idAttribute.indexOf("cke__");
+		int y = idAttribute.indexOf("cke__", x + 1);
+
+		if (y == -1) {
+			y = idAttribute.length();
+		}
+
+		sb.append(idAttribute.substring(x + 4, y));
+
+		sb.append(".setHTML(\"");
+		sb.append(HtmlUtil.escapeJS(value.replace("\\", "\\\\")));
+		sb.append("\")");
+
+		runScript(sb.toString());
 	}
 
 	@Override
@@ -2329,17 +2809,61 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public void waitForConfirmation(String pattern) throws Exception {
-		LiferaySeleniumHelper.waitForConfirmation(this, pattern);
+		int timeout =
+			PropsValues.TIMEOUT_EXPLICIT_WAIT /
+				PropsValues.TIMEOUT_IMPLICIT_WAIT;
+
+		for (int second = 0;; second++) {
+			if (second >= timeout) {
+				assertConfirmation(pattern);
+			}
+
+			try {
+				if (isConfirmation(pattern)) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+		}
 	}
 
 	@Override
 	public void waitForElementNotPresent(String locator) throws Exception {
-		LiferaySeleniumHelper.waitForElementNotPresent(this, locator);
+		for (int second = 0;; second++) {
+			if (second >= PropsValues.TIMEOUT_EXPLICIT_WAIT) {
+				assertElementNotPresent(locator);
+			}
+
+			try {
+				if (isElementNotPresent(locator)) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
 	}
 
 	@Override
 	public void waitForElementPresent(String locator) throws Exception {
-		LiferaySeleniumHelper.waitForElementPresent(this, locator);
+		for (int second = 0;; second++) {
+			if (second >= PropsValues.TIMEOUT_EXPLICIT_WAIT) {
+				assertElementPresent(locator);
+			}
+
+			try {
+				if (isElementPresent(locator)) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
 	}
 
 	@Override
@@ -2351,30 +2875,105 @@ public abstract class BaseWebDriverImpl
 	public void waitForNotPartialText(String locator, String value)
 		throws Exception {
 
-		LiferaySeleniumHelper.waitForNotPartialText(this, locator, value);
+		value = RuntimeVariables.replace(value);
+
+		for (int second = 0;; second++) {
+			if (second >= PropsValues.TIMEOUT_EXPLICIT_WAIT) {
+				assertNotPartialText(locator, value);
+			}
+
+			try {
+				if (isNotPartialText(locator, value)) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
 	}
 
 	@Override
 	public void waitForNotSelectedLabel(String selectLocator, String pattern)
 		throws Exception {
 
-		LiferaySeleniumHelper.waitForNotSelectedLabel(
-			this, selectLocator, pattern);
+		for (int second = 0;; second++) {
+			if (second >= PropsValues.TIMEOUT_EXPLICIT_WAIT) {
+				assertNotSelectedLabel(selectLocator, pattern);
+			}
+
+			try {
+				if (isNotSelectedLabel(selectLocator, pattern)) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
 	}
 
 	@Override
 	public void waitForNotText(String locator, String value) throws Exception {
-		LiferaySeleniumHelper.waitForNotText(this, locator, value);
+		value = RuntimeVariables.replace(value);
+
+		for (int second = 0;; second++) {
+			if (second >= PropsValues.TIMEOUT_EXPLICIT_WAIT) {
+				assertNotText(locator, value);
+			}
+
+			try {
+				if (isNotText(locator, value)) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
 	}
 
 	@Override
 	public void waitForNotValue(String locator, String value) throws Exception {
-		LiferaySeleniumHelper.waitForNotValue(this, locator, value);
+		value = RuntimeVariables.replace(value);
+
+		for (int second = 0;; second++) {
+			if (second >= PropsValues.TIMEOUT_EXPLICIT_WAIT) {
+				assertNotValue(locator, value);
+			}
+
+			try {
+				if (isNotValue(locator, value)) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
 	}
 
 	@Override
 	public void waitForNotVisible(String locator) throws Exception {
-		LiferaySeleniumHelper.waitForNotVisible(this, locator);
+		for (int second = 0;; second++) {
+			if (second >= PropsValues.TIMEOUT_EXPLICIT_WAIT) {
+				assertNotVisible(locator);
+			}
+
+			try {
+				if (isNotVisible(locator)) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
 	}
 
 	@Override
@@ -2385,7 +2984,23 @@ public abstract class BaseWebDriverImpl
 	public void waitForPartialText(String locator, String value)
 		throws Exception {
 
-		LiferaySeleniumHelper.waitForPartialText(this, locator, value);
+		value = RuntimeVariables.replace(value);
+
+		for (int second = 0;; second++) {
+			if (second >= PropsValues.TIMEOUT_EXPLICIT_WAIT) {
+				assertPartialText(locator, value);
+			}
+
+			try {
+				if (isPartialText(locator, value)) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
 	}
 
 	@Override
@@ -2450,33 +3065,124 @@ public abstract class BaseWebDriverImpl
 	public void waitForSelectedLabel(String selectLocator, String pattern)
 		throws Exception {
 
-		LiferaySeleniumHelper.waitForSelectedLabel(
-			this, selectLocator, pattern);
+		for (int second = 0;; second++) {
+			if (second >= PropsValues.TIMEOUT_EXPLICIT_WAIT) {
+				assertSelectedLabel(selectLocator, pattern);
+			}
+
+			try {
+				if (isSelectedLabel(selectLocator, pattern)) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
 	}
 
 	@Override
 	public void waitForText(String locator, String value) throws Exception {
-		LiferaySeleniumHelper.waitForText(this, locator, value);
+		value = RuntimeVariables.replace(value);
+
+		for (int second = 0;; second++) {
+			if (second >= PropsValues.TIMEOUT_EXPLICIT_WAIT) {
+				assertText(locator, value);
+			}
+
+			try {
+				if (isText(locator, value)) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
 	}
 
 	@Override
 	public void waitForTextNotPresent(String value) throws Exception {
-		LiferaySeleniumHelper.waitForTextNotPresent(this, value);
+		value = RuntimeVariables.replace(value);
+
+		for (int second = 0;; second++) {
+			if (second >= PropsValues.TIMEOUT_EXPLICIT_WAIT) {
+				assertTextNotPresent(value);
+			}
+
+			try {
+				if (isTextNotPresent(value)) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
 	}
 
 	@Override
 	public void waitForTextPresent(String value) throws Exception {
-		LiferaySeleniumHelper.waitForTextPresent(this, value);
+		value = RuntimeVariables.replace(value);
+
+		for (int second = 0;; second++) {
+			if (second >= PropsValues.TIMEOUT_EXPLICIT_WAIT) {
+				assertTextPresent(value);
+			}
+
+			try {
+				if (isTextPresent(value)) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
 	}
 
 	@Override
 	public void waitForValue(String locator, String value) throws Exception {
-		LiferaySeleniumHelper.waitForValue(this, locator, value);
+		value = RuntimeVariables.replace(value);
+
+		for (int second = 0;; second++) {
+			if (second >= PropsValues.TIMEOUT_EXPLICIT_WAIT) {
+				assertValue(locator, value);
+			}
+
+			try {
+				if (isValue(locator, value)) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
 	}
 
 	@Override
 	public void waitForVisible(String locator) throws Exception {
-		LiferaySeleniumHelper.waitForVisible(this, locator);
+		for (int second = 0;; second++) {
+			if (second >= PropsValues.TIMEOUT_EXPLICIT_WAIT) {
+				assertVisible(locator);
+			}
+
+			try {
+				if (isVisible(locator)) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
 	}
 
 	@Override
@@ -2501,6 +3207,16 @@ public abstract class BaseWebDriverImpl
 		Alert alert = targetLocator.alert();
 
 		alert.accept();
+	}
+
+	protected ImageTarget getImageTarget(String image) throws Exception {
+		String filePath =
+			FileUtil.getSeparator() + getSikuliImagesDirName() + image;
+
+		File file = new File(
+			LiferaySeleniumHelper.getSourceDirFilePath(filePath));
+
+		return new ImageTarget(file);
 	}
 
 	protected Set<Integer> getSpecialCharIndexes(String value) {
@@ -2576,15 +3292,22 @@ public abstract class BaseWebDriverImpl
 		WebDriverHelper.selectByRegexpValue(this, selectLocator, regexp);
 	}
 
+	private static final String _CURRENT_DIR_NAME =
+		PoshiRunnerGetterUtil.getCanonicalPath(".");
+
 	private static final String _OUTPUT_DIR_NAME = PropsValues.OUTPUT_DIR_NAME;
 
 	private static final String _TEST_DEPENDENCIES_DIR_NAME =
 		PropsValues.TEST_DEPENDENCIES_DIR_NAME;
 
+	private final Pattern _aceEditorPattern = Pattern.compile(
+		"\\(|\\$\\{line\\.separator\\}");
 	private String _clipBoard = "";
 	private final Map<String, String> _keysSpecialChars = new HashMap<>();
 	private final String _outputDirName;
 	private String _primaryTestSuiteName;
+	private int _screenshotCount;
+	private int _screenshotErrorCount;
 	private final String _sikuliImagesDirName;
 	private final String _testDependenciesDirName;
 

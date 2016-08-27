@@ -2950,8 +2950,13 @@ public class StringUtil {
 		int y = s.indexOf(oldSub, fromIndex);
 
 		if (y >= 0) {
-			return s.substring(0, y).concat(newSub).concat(
-				s.substring(y + oldSub.length()));
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(s.substring(0, y));
+			sb.append(newSub);
+			sb.append(s.substring(y + oldSub.length()));
+
+			return sb.toString();
 		}
 		else {
 			return s;
@@ -3056,8 +3061,13 @@ public class StringUtil {
 		int y = s.lastIndexOf(oldSub);
 
 		if (y >= 0) {
-			return s.substring(0, y).concat(newSub).concat(
-				s.substring(y + oldSub.length()));
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(s.substring(0, y));
+			sb.append(newSub);
+			sb.append(s.substring(y + oldSub.length()));
+
+			return sb.toString();
 		}
 		else {
 			return s;

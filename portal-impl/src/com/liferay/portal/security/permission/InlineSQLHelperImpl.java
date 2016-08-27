@@ -521,15 +521,25 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		pos = sql.indexOf(_GROUP_BY_CLAUSE);
 
 		if (pos != -1) {
-			return sql.substring(0, pos + 1).concat(permissionWhere).concat(
-				sql.substring(pos + 1));
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(sql.substring(0, pos + 1));
+			sb.append(permissionWhere);
+			sb.append(sql.substring(pos + 1));
+
+			return sb.toString();
 		}
 
 		pos = sql.indexOf(_ORDER_BY_CLAUSE);
 
 		if (pos != -1) {
-			return sql.substring(0, pos + 1).concat(permissionWhere).concat(
-				sql.substring(pos + 1));
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(sql.substring(0, pos + 1));
+			sb.append(permissionWhere);
+			sb.append(sql.substring(pos + 1));
+
+			return sb.toString();
 		}
 
 		return sql.concat(StringPool.SPACE).concat(permissionWhere);
@@ -684,22 +694,37 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		int pos = sql.indexOf(_WHERE_CLAUSE);
 
 		if (pos != -1) {
-			return sql.substring(0, pos + 1).concat(permissionJoin).concat(
-				sql.substring(pos + 1));
+			sb = new StringBundler(3);
+
+			sb.append(sql.substring(0, pos + 1));
+			sb.append(permissionJoin);
+			sb.append(sql.substring(pos + 1));
+
+			return sb.toString();
 		}
 
 		pos = sql.indexOf(_GROUP_BY_CLAUSE);
 
 		if (pos != -1) {
-			return sql.substring(0, pos + 1).concat(permissionJoin).concat(
-				sql.substring(pos + 1));
+			sb = new StringBundler(3);
+
+			sb.append(sql.substring(0, pos + 1));
+			sb.append(permissionJoin);
+			sb.append(sql.substring(pos + 1));
+
+			return sb.toString();
 		}
 
 		pos = sql.indexOf(_ORDER_BY_CLAUSE);
 
 		if (pos != -1) {
-			return sql.substring(0, pos + 1).concat(permissionJoin).concat(
-				sql.substring(pos + 1));
+			sb = new StringBundler(3);
+
+			sb.append(sql.substring(0, pos + 1));
+			sb.append(permissionJoin);
+			sb.append(sql.substring(pos + 1));
+
+			return sb.toString();
 		}
 
 		return sql.concat(StringPool.SPACE).concat(permissionJoin);

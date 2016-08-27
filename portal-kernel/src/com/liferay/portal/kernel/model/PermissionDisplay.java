@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.model;
 
+import com.liferay.portal.kernel.util.StringBundler;
+
 import java.io.Serializable;
 
 /**
@@ -113,7 +115,15 @@ public class PermissionDisplay
 
 	@Override
 	public int hashCode() {
-		return _portletName.concat(_modelName).concat(_actionId).hashCode();
+		StringBundler sb = new StringBundler(3);
+
+		sb.append(_portletName);
+		sb.append(_modelName);
+		sb.append(_actionId);
+
+		String hashCodeString = sb.toString();
+
+		return hashCodeString.hashCode();
 	}
 
 	private final String _actionId;

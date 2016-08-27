@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermission;
 import com.liferay.portal.kernel.util.PortletCategoryKeys;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.sites.kernel.util.SitesUtil;
 
@@ -475,8 +476,13 @@ public class PortletPermissionImpl implements PortletPermission {
 
 	@Override
 	public String getPrimaryKey(long plid, String portletId) {
-		return String.valueOf(plid).concat(
-			PortletConstants.LAYOUT_SEPARATOR).concat(portletId);
+		StringBundler sb = new StringBundler(3);
+
+		sb.append(plid);
+		sb.append(PortletConstants.LAYOUT_SEPARATOR);
+		sb.append(portletId);
+
+		return sb.toString();
 	}
 
 	@Override

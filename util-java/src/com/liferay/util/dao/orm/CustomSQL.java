@@ -103,15 +103,25 @@ public class CustomSQL {
 		int pos = sql.indexOf(_GROUP_BY_CLAUSE);
 
 		if (pos != -1) {
-			return sql.substring(0, pos + 1).concat(criteria).concat(
-				sql.substring(pos + 1));
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(sql.substring(0, pos + 1));
+			sb.append(criteria);
+			sb.append(sql.substring(pos + 1));
+
+			return sb.toString();
 		}
 
 		pos = sql.indexOf(_ORDER_BY_CLAUSE);
 
 		if (pos != -1) {
-			return sql.substring(0, pos + 1).concat(criteria).concat(
-				sql.substring(pos + 1));
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(sql.substring(0, pos + 1));
+			sb.append(criteria);
+			sb.append(sql.substring(pos + 1));
+
+			return sb.toString();
 		}
 
 		return sql.concat(criteria);
@@ -565,8 +575,13 @@ public class CustomSQL {
 					groupBy);
 			}
 			else {
-				sql = sql.substring(0, x + _GROUP_BY_CLAUSE.length()).concat(
-					groupBy).concat(sql.substring(y));
+				StringBundler sb = new StringBundler(3);
+
+				sb.append(sql.substring(0, x + _GROUP_BY_CLAUSE.length()));
+				sb.append(groupBy);
+				sb.append(sql.substring(y));
+
+				sql = sb.toString();
 			}
 		}
 		else {

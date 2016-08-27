@@ -75,7 +75,7 @@ boolean wsrp = ParamUtil.getBoolean(PortalUtil.getOriginalServletRequest(request
 	<c:when test="<%= themeDisplay.isStatePopUp() %>">
 		<div class="portlet-body">
 			<c:if test='<%= !tilesPortletContent.endsWith("/error.jsp") %>'>
-				<%@ include file="/html/common/themes/portlet_messages.jspf" %>
+				<liferay-theme:portlet-messages group="<%= group %>" portlet="<%= portlet %>" />
 			</c:if>
 
 			<c:choose>

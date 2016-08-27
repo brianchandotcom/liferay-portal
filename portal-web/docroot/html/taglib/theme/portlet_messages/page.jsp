@@ -14,7 +14,12 @@
  */
 --%>
 
+<%@ include file="/html/taglib/theme/portlet_messages/init.jsp" %>
+
 <%
+Group group = (Group)request.getAttribute("liferay-theme:portlet-messages:group");
+Portlet portlet = (Portlet)request.getAttribute("liferay-theme:portlet-messages:portlet");
+
 Group liveGroup = group;
 
 boolean inStaging = false;

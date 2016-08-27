@@ -16,6 +16,7 @@ package com.liferay.portal.security.sso.ntlm.internal.servlet.filter;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.servlet.BaseFilter;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
@@ -58,6 +59,34 @@ import org.osgi.service.component.annotations.Reference;
 public class NtlmPostFilter extends BaseFilter {
 
 	@Override
+	public boolean isFilterEnabled(
+		HttpServletRequest request, HttpServletResponse response) {
+
+		if (!BrowserSnifferUtil.isIe(request) ||
+			!request.getMethod().equals(HttpMethods.POST)) {
+
+			return false;
+		}
+
+		long companyId = PortalInstances.getCompanyId(request);
+
+		try {
+			NtlmConfiguration ntlmConfiguration =
+				_configurationProvider.getConfiguration(
+					NtlmConfiguration.class,
+					new CompanyServiceSettingsLocator(
+						companyId, NtlmConstants.SERVICE_NAME));
+
+			return ntlmConfiguration.enabled();
+		}
+		catch (ConfigurationException ce) {
+			_log.error(ce, ce);
+		}
+
+		return false;
+	}
+
+	@Override
 	protected Log getLog() {
 		return _log;
 	}
@@ -68,39 +97,26 @@ public class NtlmPostFilter extends BaseFilter {
 			FilterChain filterChain)
 		throws Exception {
 
-		long companyId = PortalInstances.getCompanyId(request);
+		String authorization = GetterUtil.getString(
+			request.getHeader(HttpHeaders.AUTHORIZATION));
 
-		NtlmConfiguration ntlmConfiguration =
-			_configurationProvider.getConfiguration(
-				NtlmConfiguration.class,
-				new CompanyServiceSettingsLocator(
-					companyId, NtlmConstants.SERVICE_NAME));
+		if (authorization.startsWith("NTLM ")) {
+			byte[] src = Base64.decode(authorization.substring(5));
 
-		if (ntlmConfiguration.enabled() && BrowserSnifferUtil.isIe(request) &&
-			request.getMethod().equals(HttpMethods.POST)) {
+			if (src[8] == 1) {
+				Type1Message type1 = new Type1Message(src);
+				Type2Message type2 = new Type2Message(type1, new byte[8], null);
 
-			String authorization = GetterUtil.getString(
-				request.getHeader(HttpHeaders.AUTHORIZATION));
+				authorization = Base64.encode(type2.toByteArray());
 
-			if (authorization.startsWith("NTLM ")) {
-				byte[] src = Base64.decode(authorization.substring(5));
+				response.setHeader(
+					HttpHeaders.WWW_AUTHENTICATE, "NTLM " + authorization);
+				response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+				response.setContentLength(0);
 
-				if (src[8] == 1) {
-					Type1Message type1 = new Type1Message(src);
-					Type2Message type2 = new Type2Message(
-						type1, new byte[8], null);
+				response.flushBuffer();
 
-					authorization = Base64.encode(type2.toByteArray());
-
-					response.setHeader(
-						HttpHeaders.WWW_AUTHENTICATE, "NTLM " + authorization);
-					response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-					response.setContentLength(0);
-
-					response.flushBuffer();
-
-					return;
-				}
+				return;
 			}
 		}
 

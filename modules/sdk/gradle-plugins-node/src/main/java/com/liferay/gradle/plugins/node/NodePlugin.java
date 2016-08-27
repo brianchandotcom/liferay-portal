@@ -14,6 +14,7 @@
 
 package com.liferay.gradle.plugins.node;
 
+import com.liferay.gradle.plugins.node.tasks.DownloadNodeModuleTask;
 import com.liferay.gradle.plugins.node.tasks.DownloadNodeTask;
 import com.liferay.gradle.plugins.node.tasks.ExecuteNodeTask;
 import com.liferay.gradle.plugins.node.tasks.ExecuteNpmTask;
@@ -21,8 +22,11 @@ import com.liferay.gradle.plugins.node.tasks.NpmInstallTask;
 import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask;
 import com.liferay.gradle.plugins.node.util.GradleUtil;
 
+import groovy.json.JsonSlurper;
+
 import java.io.File;
 
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
@@ -53,8 +57,10 @@ public class NodePlugin implements Plugin<Project> {
 		final DownloadNodeTask downloadNodeTask = addTaskDownloadNode(
 			project, nodeExtension);
 
-		addTaskNpmInstall(project, nodeExtension);
+		NpmInstallTask npmInstallTask = addTaskNpmInstall(
+			project, nodeExtension);
 
+		configureTasksDownloadNodeModule(project, npmInstallTask);
 		configureTasksExecuteNode(project, nodeExtension);
 		configureTasksPublishNodeModule(project);
 
@@ -190,6 +196,65 @@ public class NodePlugin implements Plugin<Project> {
 		downloadNodeTask.dependsOn(rootDownloadNodeTask);
 	}
 
+	protected void configureTaskDownloadNodeModule(
+		DownloadNodeModuleTask downloadNodeModuleTask,
+		final NpmInstallTask npmInstallTask) {
+
+		downloadNodeModuleTask.onlyIf(
+			new Spec<Task>() {
+
+				@Override
+				public boolean isSatisfiedBy(Task task) {
+					DownloadNodeModuleTask downloadNodeModuleTask =
+						(DownloadNodeModuleTask)task;
+
+					File moduleDir = downloadNodeModuleTask.getModuleDir();
+
+					File moduleParentDir = moduleDir.getParentFile();
+
+					if (!moduleParentDir.equals(
+							npmInstallTask.getNodeModulesDir())) {
+
+						return true;
+					}
+
+					File packageJsonFile = npmInstallTask.getPackageJsonFile();
+
+					if (!packageJsonFile.exists()) {
+						return true;
+					}
+
+					String moduleName = downloadNodeModuleTask.getModuleName();
+
+					JsonSlurper jsonSlurper = new JsonSlurper();
+
+					Map<String, Object> packageJson =
+						(Map<String, Object>)jsonSlurper.parse(packageJsonFile);
+
+					Map<String, Object> dependenciesJson =
+						(Map<String, Object>)packageJson.get("dependencies");
+
+					if ((dependenciesJson != null) &&
+						dependenciesJson.containsKey(moduleName)) {
+
+						return false;
+					}
+
+					dependenciesJson = (Map<String, Object>)packageJson.get(
+						"devDependencies");
+
+					if ((dependenciesJson != null) &&
+						dependenciesJson.containsKey(moduleName)) {
+
+						return false;
+					}
+
+					return true;
+				}
+
+			});
+	}
+
 	protected void configureTaskExecuteNode(
 		ExecuteNodeTask executeNodeTask, final NodeExtension nodeExtension) {
 
@@ -256,6 +321,26 @@ public class NodePlugin implements Plugin<Project> {
 				@Override
 				public Object call() throws Exception {
 					return project.getVersion();
+				}
+
+			});
+	}
+
+	protected void configureTasksDownloadNodeModule(
+		Project project, final NpmInstallTask npmInstallTask) {
+
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			DownloadNodeModuleTask.class,
+			new Action<DownloadNodeModuleTask>() {
+
+				@Override
+				public void execute(
+					DownloadNodeModuleTask downloadNodeModuleTask) {
+
+					configureTaskDownloadNodeModule(
+						downloadNodeModuleTask, npmInstallTask);
 				}
 
 			});

@@ -16,6 +16,8 @@ package com.liferay.portal.util;
 
 import com.liferay.portal.kernel.util.StringPool;
 
+import java.net.URLEncoder;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -29,37 +31,6 @@ public class FriendlyURLNormalizerImplTest {
 		Assert.assertEquals(
 			StringPool.BLANK,
 			_friendlyURLNormalizerImpl.normalize(StringPool.BLANK));
-	}
-
-	@Test
-	public void testNormalizeInternationalizedResourceIdentifiers() {
-		Assert.assertEquals(
-			"%E5%BC%95",
-			_friendlyURLNormalizerImpl.normalizeWithEncoding("\u5F15"));
-	}
-
-	@Test
-	public void testNormalizeIRIWithLatinCharacters() {
-		Assert.assertEquals(
-			"-pardonne-%C3%A3%C2%A0-tous-mais-non-%C3%A3%C2%A0-toi.-",
-			_friendlyURLNormalizerImpl.normalizeWithEncoding(
-				"\"Pardonne à tous mais non à toi.\""));
-	}
-
-	@Test
-	public void testNormalizeIRIWithOnlySpecialCharacters() {
-		Assert.assertEquals(
-			"-",
-			_friendlyURLNormalizerImpl.normalizeWithEncoding(
-				"' ,\\\'\"()[]{}?#@+~;$!=:&\u00a3\u2013\u2014\u2018\u2019" +
-					"\u201c\u201d'"));
-	}
-
-	@Test
-	public void testNormalizeIRIWithSpecialCharacters() {
-		Assert.assertEquals(
-			"-%E5%BC%95-",
-			_friendlyURLNormalizerImpl.normalizeWithEncoding("([\u5F15])"));
 	}
 
 	@Test
@@ -116,6 +87,79 @@ public class FriendlyURLNormalizerImplTest {
 		Assert.assertEquals(
 			StringPool.SPACE,
 			_friendlyURLNormalizerImpl.normalize(StringPool.SPACE));
+	}
+
+	@Test
+	public void testNormalizeWithEncoding1() throws Exception {
+		Assert.assertEquals(
+			URLEncoder.encode("\u5F15", StringPool.UTF8),
+			_friendlyURLNormalizerImpl.normalizeWithEncoding("\u5F15"));
+	}
+
+	@Test
+	public void testNormalizeWithEncoding2() throws Exception {
+		Assert.assertEquals(
+			URLEncoder.encode("テスト", StringPool.UTF8),
+			_friendlyURLNormalizerImpl.normalizeWithEncoding("テスト"));
+	}
+
+	@Test
+	public void testNormalizeWithEncoding3() throws Exception {
+		String encodedURLPart = URLEncoder.encode("テスト", StringPool.UTF8);
+
+		Assert.assertEquals(
+			encodedURLPart + StringPool.SLASH + encodedURLPart,
+			_friendlyURLNormalizerImpl.normalizeWithEncoding("テスト/テスト"));
+	}
+
+	@Test
+	public void testNormalizeWithEncoding4() throws Exception {
+		Assert.assertEquals(
+			URLEncoder.encode("اختبار", StringPool.UTF8),
+			_friendlyURLNormalizerImpl.normalizeWithEncoding("اختبار"));
+	}
+
+	@Test
+	public void testNormalizeWithEncoding5() throws Exception {
+		Assert.assertEquals(
+			URLEncoder.encode("\uD801\uDC37", StringPool.UTF8),
+			_friendlyURLNormalizerImpl.normalizeWithEncoding("\uD801\uDC37"));
+	}
+
+	@Test
+	public void testNormalizeWithEncoding6() throws Exception {
+		Assert.assertEquals(
+			StringPool.DASH,
+			_friendlyURLNormalizerImpl.normalizeWithEncoding("(-)"));
+	}
+
+	@Test
+	public void testNormalizeWithEncoding7() throws Exception {
+		Assert.assertEquals(
+			StringPool.DASH,
+			_friendlyURLNormalizerImpl.normalizeWithEncoding("---"));
+	}
+
+	@Test
+	public void testNormalizeWithEncoding8() throws Exception {
+		Assert.assertEquals(
+			URLEncoder.encode(
+				String.valueOf(Character.MAX_HIGH_SURROGATE), StringPool.UTF8),
+			_friendlyURLNormalizerImpl.normalizeWithEncoding(
+				String.valueOf(Character.MAX_HIGH_SURROGATE)));
+	}
+
+	@Test
+	public void testNormalizeWithoutPeriodsAndSlashes() throws Exception {
+		Assert.assertEquals(
+			"/./.", _friendlyURLNormalizerImpl.normalizeWithEncoding("/./."));
+	}
+
+	@Test
+	public void testNormalizeWithPeriodsAndSlashes() throws Exception {
+		Assert.assertEquals(
+			StringPool.DASH,
+			_friendlyURLNormalizerImpl.normalizeWithPeriodsAndSlashes("/./."));
 	}
 
 	@Test

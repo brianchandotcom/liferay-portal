@@ -23,20 +23,25 @@ import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Conjunction;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.Team;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.service.RoleLocalService;
-import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.roles.admin.constants.RolesAdminPortletKeys;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.portlet.PortletPreferences;
 
@@ -178,6 +183,22 @@ public class RolesAdminPortletDataHandler extends BasePortletDataHandler {
 						"classNameId");
 
 					dynamicQuery.add(classNameIdProperty.ne(classNameId));
+
+					if (!portletDataContext.getBooleanParameter(
+							NAMESPACE, "system-roles")) {
+
+						Conjunction conjunction =
+							RestrictionsFactoryUtil.conjunction();
+
+						Property nameProperty = PropertyFactoryUtil.forName(
+							"name");
+
+						for (String roleName : _allSystemRoleNames) {
+							conjunction.add(nameProperty.ne(roleName));
+						}
+
+						dynamicQuery.add(conjunction);
+					}
 				}
 
 			});
@@ -188,31 +209,23 @@ public class RolesAdminPortletDataHandler extends BasePortletDataHandler {
 				(ActionableDynamicQuery.PerformActionMethod<Role>)
 					actionableDynamicQuery.getPerformActionMethod();
 
+		ActionableDynamicQuery.PerformActionMethod<Role>
+			performActionMethodWrapper =
+				new RoleExportActionableDynamicQueryPerformActionMethod(
+					performActionMethod, portletDataContext, export);
+
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<Role>() {
-
-				@Override
-				public void performAction(Role role) throws PortalException {
-					if (!export) {
-						return;
-					}
-
-					long defaultUserId = _userLocalService.getDefaultUserId(
-						portletDataContext.getCompanyId());
-
-					if (!portletDataContext.getBooleanParameter(
-							NAMESPACE, "system-roles") &&
-						(role.getUserId() == defaultUserId)) {
-
-						return;
-					}
-
-					performActionMethod.performAction(role);
-				}
-
-			});
+			performActionMethodWrapper);
 
 		return actionableDynamicQuery;
+	}
+
+	protected void setAllSystemRoleNames(Set<String> allSystemRoleNames) {
+
+		// Source formatter would finalize the variable if no setter is present
+		// in the class
+
+		_allSystemRoleNames = allSystemRoleNames;
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
@@ -221,16 +234,52 @@ public class RolesAdminPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	@Reference(unbind = "-")
-	protected void setRoleLocalService(RoleLocalService roleLocalService) {
-		_roleLocalService = roleLocalService;
+	protected void setPortal(Portal portal) {
+		_allSystemRoleNames.addAll(
+			Arrays.asList(portal.getSystemOrganizationRoles()));
+		_allSystemRoleNames.addAll(Arrays.asList(portal.getSystemRoles()));
+		_allSystemRoleNames.addAll(Arrays.asList(portal.getSystemSiteRoles()));
 	}
 
-	@Reference(unbind = "-")
-	protected void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
-	}
+	private Set<String> _allSystemRoleNames = new HashSet<>();
 
+	@Reference
 	private RoleLocalService _roleLocalService;
-	private UserLocalService _userLocalService;
+
+	private class RoleExportActionableDynamicQueryPerformActionMethod
+		implements ActionableDynamicQuery.PerformActionMethod<Role> {
+
+		public RoleExportActionableDynamicQueryPerformActionMethod(
+			ActionableDynamicQuery.PerformActionMethod<Role>
+				performActionMethod,
+			PortletDataContext portletDataContext, boolean export) {
+
+			_performActionMethod = performActionMethod;
+			_portletDataContext = portletDataContext;
+			_export = export;
+		}
+
+		@Override
+		public void performAction(Role role) throws PortalException {
+			if (!_export) {
+				return;
+			}
+
+			if (!_portletDataContext.getBooleanParameter(
+					NAMESPACE, "system-roles") &&
+				_allSystemRoleNames.contains(role.getName())) {
+
+				return;
+			}
+
+			_performActionMethod.performAction(role);
+		}
+
+		private final boolean _export;
+		private final ActionableDynamicQuery.PerformActionMethod<Role>
+			_performActionMethod;
+		private final PortletDataContext _portletDataContext;
+
+	}
 
 }

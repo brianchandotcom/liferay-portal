@@ -19,9 +19,15 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.ReflectionUtil;
 
 import java.io.NotSerializableException;
 
+import java.lang.reflect.Field;
+
+import java.util.Map;
+
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -97,6 +103,45 @@ public class NonSerializableObjectRequestWrapper
 		}
 
 		super.setAttribute(name, object);
+
+		// See LPS-67818
+
+		_setWebLogicClassLoaderFlag(name);
+	}
+
+	private void _setWebLogicClassLoaderFlag(String attributeName) {
+		ServletRequest servletRequest = getRequest();
+
+		try {
+			Field attributes = ReflectionUtil.getDeclaredField(
+				servletRequest.getClass(), "attributes");
+
+			Object attributesInstance = attributes.get(servletRequest);
+
+			Field attrs = ReflectionUtil.getDeclaredField(
+				attributesInstance.getClass(), "attributes");
+
+			Map map = (Map)attrs.get(attributesInstance);
+
+			Object attribute = map.get(attributeName);
+
+			Field isWebLogicClassLoaderField = ReflectionUtil.getDeclaredField(
+				attribute.getClass(), "isWebLogicClassLoader");
+
+			isWebLogicClassLoaderField.set(attribute, false);
+		}
+		catch (NoSuchFieldException nsfe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("We only deal with Weblogic requests");
+			}
+		}
+		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Setting to false the field isWebLogicClassLoader in " +
+						"the servletRequest " + servletRequest);
+			}
+		}
 	}
 
 	private static final boolean _WEBLOGIC_REQUEST_WRAP_NON_SERIALIZABLE =

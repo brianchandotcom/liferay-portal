@@ -21,10 +21,8 @@ import com.liferay.dynamic.data.mapping.expression.VariableDependencies;
 import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionLexer;
 import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser;
 import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser.ExpressionContext;
+import com.liferay.dynamic.data.mapping.expression.model.Expression;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.math.MathContext;
 
@@ -59,8 +57,8 @@ public class DDMExpressionImpl<T> implements DDMExpression<T> {
 
 		_expressionContext = createExpressionContext();
 
-		registerDefaultFunctions();
 		registerExpressionFunctionsAndVariables();
+		registerExpressionModel();
 	}
 
 	@Override
@@ -73,10 +71,11 @@ public class DDMExpressionImpl<T> implements DDMExpression<T> {
 		}
 
 		try {
-			DDMExpressionVisitor ddmExpressionVisitor =
-				createDDMExpressionVisitor();
+			DDMExpressionEvaluatorVisitor ddmExpressionEvaluatorVisitor =
+				createDDMExpressionEvaluatorVisitor();
 
-			Object result = _expressionContext.accept(ddmExpressionVisitor);
+			Object result = _expressionContext.accept(
+				ddmExpressionEvaluatorVisitor);
 
 			return (T)toRetunType(result);
 		}
@@ -86,6 +85,10 @@ public class DDMExpressionImpl<T> implements DDMExpression<T> {
 		catch (Exception e) {
 			throw new DDMExpressionException(e);
 		}
+	}
+
+	public Expression getModel() {
+		return _expressionModel;
 	}
 
 	@Override
@@ -189,23 +192,25 @@ public class DDMExpressionImpl<T> implements DDMExpression<T> {
 		}
 	}
 
-	protected DDMExpressionVisitor createDDMExpressionVisitor()
+	protected DDMExpressionEvaluatorVisitor
+			createDDMExpressionEvaluatorVisitor()
 		throws DDMExpressionException {
 
-		DDMExpressionVisitor ddmExpressionVisitor = new DDMExpressionVisitor();
+		DDMExpressionEvaluatorVisitor ddmExpressionEvaluatorVisitor =
+			new DDMExpressionEvaluatorVisitor();
 
 		// Functions
 
-		ddmExpressionVisitor.addFunctions(_ddmExpressionFunctions);
+		ddmExpressionEvaluatorVisitor.addFunctions(_ddmExpressionFunctions);
 
 		// Variables
 
 		for (Map.Entry<String, Variable> entry : _variables.entrySet()) {
-			ddmExpressionVisitor.addVariable(
+			ddmExpressionEvaluatorVisitor.addVariable(
 				entry.getKey(), getVariableValue(entry.getValue()));
 		}
 
-		return ddmExpressionVisitor;
+		return ddmExpressionEvaluatorVisitor;
 	}
 
 	protected DDMExpression<Object> createExpression(String expressionString)
@@ -339,17 +344,6 @@ public class DDMExpressionImpl<T> implements DDMExpression<T> {
 		return variableDependencies;
 	}
 
-	protected void registerDefaultFunctions() {
-		_ddmExpressionFunctions.put("between", new BetweenFunction());
-		_ddmExpressionFunctions.put("concat", new ConcatFunction());
-		_ddmExpressionFunctions.put("contains", new ContainsFunction());
-		_ddmExpressionFunctions.put("equals", new EqualsFunction());
-		_ddmExpressionFunctions.put(
-			"isEmailAddress", new IsEmailAddressFunction());
-		_ddmExpressionFunctions.put("isURL", new IsURLFunction());
-		_ddmExpressionFunctions.put("sum", new SumFunction());
-	}
-
 	protected void registerExpressionFunctionsAndVariables() {
 		ParseTreeWalker parseTreeWalker = new ParseTreeWalker();
 
@@ -368,6 +362,13 @@ public class DDMExpressionImpl<T> implements DDMExpression<T> {
 		for (String variableName : ddmExpressionListener.getVariableNames()) {
 			_variables.put(variableName, new Variable(variableName));
 		}
+	}
+
+	protected void registerExpressionModel() {
+		DDMExpressionModelVisitor ddmExpressionModelVisitor =
+			new DDMExpressionModelVisitor();
+
+		_expressionModel = _expressionContext.accept(ddmExpressionModelVisitor);
 	}
 
 	protected void setVariableValue(String variableName, Object variableValue) {
@@ -449,117 +450,9 @@ public class DDMExpressionImpl<T> implements DDMExpression<T> {
 	private final Class<?> _expressionClass;
 	private final ExpressionContext _expressionContext;
 	private final Set<String> _expressionFunctionNames = new HashSet<>();
+	private Expression _expressionModel;
 	private final String _expressionString;
 	private final Map<String, Variable> _variables = new TreeMap<>();
 	private final Map<String, Object> _variableValues = new HashMap<>();
-
-	private static class BetweenFunction implements DDMExpressionFunction {
-
-		public Object evaluate(Object... parameters) {
-			Number parameter = (Number)parameters[0];
-
-			Number minParameter = (Number)parameters[1];
-			Number maxParameter = (Number)parameters[2];
-
-			if ((parameter.doubleValue() >= minParameter.doubleValue()) &&
-				(parameter.doubleValue() <= maxParameter.doubleValue())) {
-
-				return Boolean.TRUE;
-			}
-
-			return Boolean.FALSE;
-		}
-
-	}
-
-	private static class ConcatFunction implements DDMExpressionFunction {
-
-		public Object evaluate(Object... parameters) {
-			StringBundler sb = new StringBundler(parameters.length);
-
-			for (Object parameter : parameters) {
-				String string = (String)parameter;
-
-				if (Validator.isNull(string)) {
-					continue;
-				}
-
-				sb.append(string);
-			}
-
-			return sb.toString();
-		}
-
-	}
-
-	private static class ContainsFunction implements DDMExpressionFunction {
-
-		public Object evaluate(Object... parameters) {
-			String parameter1 = (String)parameters[0];
-			String parameter2 = (String)parameters[1];
-
-			if ((parameter1 == null) || (parameter2 == null)) {
-				return false;
-			}
-
-			String string1 = StringUtil.toLowerCase(parameter1);
-			String string2 = StringUtil.toLowerCase(parameter2);
-
-			return string1.contains(string2);
-		}
-
-	}
-
-	private static class EqualsFunction implements DDMExpressionFunction {
-
-		public Object evaluate(Object... parameters) {
-			Object parameter1 = (Object)parameters[0];
-			Object parameter2 = (Object)parameters[1];
-
-			if ((parameter1 == null) || (parameter2 == null)) {
-				return false;
-			}
-
-			return parameter1.equals(parameter2);
-		}
-
-	}
-
-	private static class IsEmailAddressFunction
-		implements DDMExpressionFunction {
-
-		public Object evaluate(Object... parameters) {
-			String string = (String)parameters[0];
-
-			return Validator.isEmailAddress(string);
-		}
-
-	}
-
-	private static class IsURLFunction implements DDMExpressionFunction {
-
-		public Object evaluate(Object... parameters) {
-			String string = (String)parameters[0];
-
-			return Validator.isUrl(string);
-		}
-
-	}
-
-	private static class SumFunction implements DDMExpressionFunction {
-
-		public Object evaluate(Object... parameters) {
-			double result = 0;
-
-			for (Object parameter : parameters) {
-				Number parameterDouble = (Number)parameter;
-
-				result += parameterDouble.doubleValue();
-			}
-
-			return result;
-		}
-
-	}
 
 }

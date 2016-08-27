@@ -32,9 +32,7 @@ public class IsEmailAddressFunction implements DDMExpressionFunction {
 	@Override
 	public Object evaluate(Object... parameters) {
 		if (parameters.length != 1) {
-			throw new IllegalArgumentException(
-				String.format(
-					"Expected 1 parameters, received %d", parameters.length));
+			throw new IllegalArgumentException("One parameter is expected");
 		}
 
 		return Validator.isEmailAddress(parameters[0].toString());

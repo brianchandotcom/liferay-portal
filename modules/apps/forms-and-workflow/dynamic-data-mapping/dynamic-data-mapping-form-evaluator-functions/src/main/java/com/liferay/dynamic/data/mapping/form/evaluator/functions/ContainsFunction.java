@@ -15,7 +15,7 @@
 package com.liferay.dynamic.data.mapping.form.evaluator.functions;
 
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -31,21 +31,17 @@ public class ContainsFunction implements DDMExpressionFunction {
 	@Override
 	public Object evaluate(Object... parameters) {
 		if (parameters.length != 2) {
-			throw new IllegalArgumentException(
-				String.format(
-					"Expected 2 parameters, received %d", parameters.length));
+			throw new IllegalArgumentException("Two parameters are expected");
 		}
 
-		if (Validator.isNull(parameters[0]) ||
-			Validator.isNull(parameters[1])) {
-
+		if ((parameters[0] == null) || (parameters[1] == null)) {
 			return false;
 		}
 
-		String value1 = parameters[0].toString();
-		String value2 = parameters[1].toString();
+		String string1 = StringUtil.toLowerCase(parameters[0].toString());
+		String string2 = StringUtil.toLowerCase(parameters[1].toString());
 
-		return value1.contains(value2);
+		return string1.contains(string2);
 	}
 
 }

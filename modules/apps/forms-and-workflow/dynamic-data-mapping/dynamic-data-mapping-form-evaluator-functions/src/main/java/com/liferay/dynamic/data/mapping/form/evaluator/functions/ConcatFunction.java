@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.mapping.form.evaluator.functions;
 
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
 import org.osgi.service.component.annotations.Component;
@@ -30,23 +31,24 @@ public class ConcatFunction implements DDMExpressionFunction {
 
 	@Override
 	public Object evaluate(Object... parameters) {
-		if (parameters.length != 2) {
+		if (parameters.length < 2) {
 			throw new IllegalArgumentException(
-				String.format(
-					"Expected 2 parameters, received %d", parameters.length));
+				"Two or more parameters are expected");
 		}
 
-		if (Validator.isNull(parameters[0])) {
-			return null;
-		}
-		else if (Validator.isNull(parameters[1])) {
-			return parameters[0];
+		StringBundler sb = new StringBundler(parameters.length);
+
+		for (Object parameter : parameters) {
+			String string = (String)parameter;
+
+			if (Validator.isNull(string)) {
+				continue;
+			}
+
+			sb.append(string);
 		}
 
-		String value1 = parameters[0].toString();
-		String value2 = parameters[1].toString();
-
-		return value1.concat(value2);
+		return sb.toString();
 	}
 
 }

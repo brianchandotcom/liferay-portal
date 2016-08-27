@@ -16,6 +16,8 @@ package com.liferay.dynamic.data.mapping.expression;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.dynamic.data.mapping.expression.model.Expression;
+
 import java.math.MathContext;
 
 import java.util.Map;
@@ -27,6 +29,8 @@ import java.util.Map;
 public interface DDMExpression<T> {
 
 	public T evaluate() throws DDMExpressionException;
+
+	public Expression getModel();
 
 	public Map<String, VariableDependencies> getVariableDependenciesMap()
 		throws DDMExpressionException;

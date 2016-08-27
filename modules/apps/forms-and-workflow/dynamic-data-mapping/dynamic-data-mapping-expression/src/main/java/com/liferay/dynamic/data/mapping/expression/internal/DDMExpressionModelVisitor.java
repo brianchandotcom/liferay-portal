@@ -40,15 +40,22 @@ import static com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExp
 import static com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser.StringLiteralContext;
 import static com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser.SubtractionExpressionContext;
 
-import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
 import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionBaseVisitor;
 import com.liferay.dynamic.data.mapping.expression.internal.parser.DDMExpressionParser;
+import com.liferay.dynamic.data.mapping.expression.model.AndExpression;
+import com.liferay.dynamic.data.mapping.expression.model.ArithmeticExpression;
+import com.liferay.dynamic.data.mapping.expression.model.ComparisonExpression;
+import com.liferay.dynamic.data.mapping.expression.model.Expression;
+import com.liferay.dynamic.data.mapping.expression.model.FunctionCallExpression;
+import com.liferay.dynamic.data.mapping.expression.model.MinusExpression;
+import com.liferay.dynamic.data.mapping.expression.model.NotExpression;
+import com.liferay.dynamic.data.mapping.expression.model.OrExpression;
+import com.liferay.dynamic.data.mapping.expression.model.Term;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.Token;
@@ -58,65 +65,58 @@ import org.antlr.v4.runtime.tree.ParseTree;
 /**
  * @author Marcellus Tavares
  */
-public class DDMExpressionVisitor extends DDMExpressionBaseVisitor<Object> {
-
-	public void addFunctions(
-		Map<String, DDMExpressionFunction> ddmExpressionFunctions) {
-
-		_functions.putAll(ddmExpressionFunctions);
-	}
-
-	public void addVariable(String name, Object value) {
-		_variables.put(name, value);
-	}
+public class DDMExpressionModelVisitor
+	extends DDMExpressionBaseVisitor<Expression> {
 
 	@Override
-	public Object visitAdditionExpression(
+	public Expression visitAdditionExpression(
 		@NotNull AdditionExpressionContext context) {
 
-		Number l = visitChild(context, 0);
-		Number r = visitChild(context, 2);
+		Expression l = visitChild(context, 0);
+		Expression r = visitChild(context, 2);
 
-		return l.doubleValue() + r.doubleValue();
+		return new ArithmeticExpression("+", l, r);
 	}
 
 	@Override
-	public Object visitAndExpression(@NotNull AndExpressionContext context) {
-		boolean l = visitChild(context, 0);
-		boolean r = visitChild(context, 2);
+	public Expression visitAndExpression(
+		@NotNull AndExpressionContext context) {
 
-		return l && r;
+		Expression l = visitChild(context, 0);
+		Expression r = visitChild(context, 2);
+
+		return new AndExpression(l, r);
 	}
 
 	@Override
-	public Object visitBooleanParenthesis(
+	public Expression visitBooleanParenthesis(
 		@NotNull BooleanParenthesisContext context) {
 
 		return visitChild(context, 1);
 	}
 
 	@Override
-	public Object visitDivisionExpression(
+	public Expression visitDivisionExpression(
 		@NotNull DivisionExpressionContext context) {
 
-		Number l = visitChild(context, 0);
-		Number r = visitChild(context, 2);
+		Expression l = visitChild(context, 0);
+		Expression r = visitChild(context, 2);
 
-		return l.doubleValue() / r.doubleValue();
+		return new ArithmeticExpression("/", l, r);
 	}
 
 	@Override
-	public Object visitEqualsExpression(
+	public Expression visitEqualsExpression(
 		@NotNull EqualsExpressionContext context) {
 
-		Object l = visitChild(context, 0);
-		Object r = visitChild(context, 2);
+		Expression l = visitChild(context, 0);
+		Expression r = visitChild(context, 2);
 
-		return l.equals(r);
+		return new ComparisonExpression("=", l, r);
 	}
 
 	@Override
-	public Object visitExpression(@NotNull ExpressionContext context) {
+	public Expression visitExpression(@NotNull ExpressionContext context) {
 		DDMExpressionParser.LogicalOrExpressionContext
 			logicalOrExpressionContext = context.logicalOrExpression();
 
@@ -124,205 +124,182 @@ public class DDMExpressionVisitor extends DDMExpressionBaseVisitor<Object> {
 	}
 
 	@Override
-	public Object visitFloatingPointLiteral(
+	public Expression visitFloatingPointLiteral(
 		@NotNull FloatingPointLiteralContext context) {
 
-		return Double.parseDouble(context.getText());
+		return new Term(context.getText());
 	}
 
 	@Override
-	public Object visitFunctionCallExpression(
+	public Expression visitFunctionCallExpression(
 		@NotNull FunctionCallExpressionContext context) {
 
 		String functionName = getFunctionName(context.functionName);
 
-		DDMExpressionFunction ddmExpressionFunction = _functions.get(
-			functionName);
+		List<Expression> parameters = getFunctionParameters(
+			context.functionParameters());
 
-		if (ddmExpressionFunction == null) {
-			throw new IllegalStateException(
-				String.format("Function \"%s\" not defined", functionName));
-		}
-
-		Object[] params = getFunctionParameters(context.functionParameters());
-
-		return ddmExpressionFunction.evaluate(params);
+		return new FunctionCallExpression(functionName, parameters);
 	}
 
 	@Override
-	public Object visitGreaterThanExpression(
+	public Expression visitGreaterThanExpression(
 		@NotNull GreaterThanExpressionContext context) {
 
-		Number l = visitChild(context, 0);
-		Number r = visitChild(context, 2);
+		Expression l = visitChild(context, 0);
+		Expression r = visitChild(context, 2);
 
-		return l.doubleValue() > r.doubleValue();
+		return new ComparisonExpression(">", l, r);
 	}
 
 	@Override
-	public Object visitGreaterThanOrEqualsExpression(
+	public Expression visitGreaterThanOrEqualsExpression(
 		@NotNull GreaterThanOrEqualsExpressionContext context) {
 
-		Number l = visitChild(context, 0);
-		Number r = visitChild(context, 2);
+		Expression l = visitChild(context, 0);
+		Expression r = visitChild(context, 2);
 
-		return l.doubleValue() >= r.doubleValue();
+		return new ComparisonExpression(">=", l, r);
 	}
 
 	@Override
-	public Object visitIntegerLiteral(@NotNull IntegerLiteralContext context) {
-		Number number = Long.parseLong(context.getText());
+	public Expression visitIntegerLiteral(
+		@NotNull IntegerLiteralContext context) {
 
-		return number.doubleValue();
+		return new Term(context.getText());
 	}
 
 	@Override
-	public Object visitLessThanExpression(
+	public Expression visitLessThanExpression(
 		@NotNull LessThanExpressionContext context) {
 
-		Number l = visitChild(context, 0);
-		Number r = visitChild(context, 2);
+		Expression l = visitChild(context, 0);
+		Expression r = visitChild(context, 2);
 
-		return l.doubleValue() < r.doubleValue();
+		return new ComparisonExpression("<", l, r);
 	}
 
 	@Override
-	public Object visitLessThanOrEqualsExpression(
+	public Expression visitLessThanOrEqualsExpression(
 		@NotNull LessThanOrEqualsExpressionContext context) {
 
-		Number l = visitChild(context, 0);
-		Number r = visitChild(context, 2);
+		Expression l = visitChild(context, 0);
+		Expression r = visitChild(context, 2);
 
-		return l.doubleValue() <= r.doubleValue();
+		return new ComparisonExpression("<=", l, r);
 	}
 
 	@Override
-	public Object visitLogicalConstant(
+	public Expression visitLogicalConstant(
 		@NotNull LogicalConstantContext context) {
 
-		String boleanString = StringUtil.toLowerCase(context.getText());
-
-		return Boolean.parseBoolean(boleanString);
+		return new Term(context.getText());
 	}
 
 	@Override
-	public Object visitLogicalVariable(
+	public Expression visitLogicalVariable(
 		@NotNull LogicalVariableContext context) {
 
-		String variable = context.getText();
-
-		Object variableValue = _variables.get(variable);
-
-		if (variableValue == null) {
-			throw new IllegalStateException(
-				String.format("Variable \"%s\" not defined", variable));
-		}
-
-		return variableValue;
+		return new Term(context.getText());
 	}
 
 	@Override
-	public Object visitMinusExpression(
+	public Expression visitMinusExpression(
 		@NotNull MinusExpressionContext context) {
 
-		Number number = visitChild(context, 1);
+		Expression expression = visitChild(context, 1);
 
-		return -(number.doubleValue());
+		return new MinusExpression(expression);
 	}
 
 	@Override
-	public Object visitMultiplicationExpression(
+	public Expression visitMultiplicationExpression(
 		@NotNull MultiplicationExpressionContext context) {
 
-		Number l = visitChild(context, 0);
-		Number r = visitChild(context, 2);
+		Expression l = visitChild(context, 0);
+		Expression r = visitChild(context, 2);
 
-		return l.doubleValue() * r.doubleValue();
+		return new ArithmeticExpression("*", l, r);
 	}
 
 	@Override
-	public Object visitNotEqualsExpression(
+	public Expression visitNotEqualsExpression(
 		@NotNull NotEqualsExpressionContext context) {
 
-		Object l = visitChild(context, 0);
-		Object r = visitChild(context, 2);
+		Expression l = visitChild(context, 0);
+		Expression r = visitChild(context, 2);
 
-		return !l.equals(r);
+		return new ComparisonExpression("!=", l, r);
 	}
 
 	@Override
-	public Object visitNotExpression(@NotNull NotExpressionContext context) {
-		boolean b = visitChild(context, 1);
+	public Expression visitNotExpression(
+		@NotNull NotExpressionContext context) {
 
-		return !b;
+		Expression expression = visitChild(context, 1);
+
+		return new NotExpression(expression);
 	}
 
 	@Override
-	public Object visitNumericParenthesis(
+	public Expression visitNumericParenthesis(
 		@NotNull NumericParenthesisContext context) {
 
 		return visitChild(context, 1);
 	}
 
 	@Override
-	public Object visitNumericVariable(
+	public Expression visitNumericVariable(
 		@NotNull NumericVariableContext context) {
 
-		String variable = context.getText();
-
-		Object variableValue = _variables.get(variable);
-
-		if (variableValue == null) {
-			throw new IllegalStateException(
-				String.format("variable %s not defined", variable));
-		}
-
-		return variableValue;
+		return new Term(context.getText());
 	}
 
 	@Override
-	public Object visitOrExpression(@NotNull OrExpressionContext context) {
-		boolean l = visitChild(context, 0);
-		boolean r = visitChild(context, 2);
+	public Expression visitOrExpression(@NotNull OrExpressionContext context) {
+		Expression l = visitChild(context, 0);
+		Expression r = visitChild(context, 2);
 
-		return l || r;
+		return new OrExpression(l, r);
 	}
 
 	@Override
-	public Object visitStringLiteral(@NotNull StringLiteralContext context) {
-		return StringUtil.unquote(context.getText());
+	public Expression visitStringLiteral(
+		@NotNull StringLiteralContext context) {
+
+		return new Term(StringUtil.unquote(context.getText()));
 	}
 
 	@Override
-	public Object visitSubtractionExpression(
+	public Expression visitSubtractionExpression(
 		@NotNull SubtractionExpressionContext context) {
 
-		Number l = visitChild(context, 0);
-		Number r = visitChild(context, 2);
+		Expression l = visitChild(context, 0);
+		Expression r = visitChild(context, 2);
 
-		return l.doubleValue() - r.doubleValue();
+		return new ArithmeticExpression("-", l, r);
 	}
 
 	protected String getFunctionName(Token functionNameToken) {
 		return functionNameToken.getText();
 	}
 
-	protected Object[] getFunctionParameters(
+	protected List<Expression> getFunctionParameters(
 		FunctionParametersContext context) {
 
 		if (context == null) {
-			return new Object[0];
+			return Collections.emptyList();
 		}
 
-		List parameters = new ArrayList<>();
+		List<Expression> parameters = new ArrayList<>();
 
 		for (int i = 0; i < context.getChildCount(); i += 2) {
-			Object parameter = visitChild(context, i);
+			Expression parameter = visitChild(context, i);
 
 			parameters.add(parameter);
 		}
 
-		return parameters.toArray(new Object[parameters.size()]);
+		return parameters;
 	}
 
 	protected <T> T visitChild(
@@ -332,9 +309,5 @@ public class DDMExpressionVisitor extends DDMExpressionBaseVisitor<Object> {
 
 		return (T)parseTree.accept(this);
 	}
-
-	private final Map<String, DDMExpressionFunction> _functions =
-		new HashMap<>();
-	private final Map<String, Object> _variables = new HashMap<>();
 
 }

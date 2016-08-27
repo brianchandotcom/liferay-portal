@@ -31,20 +31,20 @@ public class SumFunction implements DDMExpressionFunction {
 	public Object evaluate(Object... parameters) {
 		if (parameters.length < 2) {
 			throw new IllegalArgumentException(
-				String.format(
-					"Expected at least 2 parameters, received %d",
-					parameters.length));
+				"Two or more parameters are expected");
 		}
 
 		double sum = 0;
 
-		for (int i = 0; i < parameters.length; i++) {
-			if (parameters[i] instanceof Number) {
-				sum += ((Number)parameters[i]).doubleValue();
+		for (Object parameter : parameters) {
+			if (!Number.class.isInstance(parameter)) {
+				throw new IllegalArgumentException(
+					"The parameters should be numbers");
 			}
-			else {
-				throw new IllegalArgumentException("Invalid number");
-			}
+
+			Number parameterDouble = (Number)parameter;
+
+			sum += parameterDouble.doubleValue();
 		}
 
 		return sum;

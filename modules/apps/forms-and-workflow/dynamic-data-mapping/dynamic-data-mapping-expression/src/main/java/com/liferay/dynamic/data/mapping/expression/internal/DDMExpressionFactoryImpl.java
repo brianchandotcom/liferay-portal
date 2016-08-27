@@ -26,6 +26,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Marcellus Tavares
@@ -38,12 +40,7 @@ public class DDMExpressionFactoryImpl implements DDMExpressionFactory {
 			String expressionString)
 		throws DDMExpressionException {
 
-		DDMExpression<Boolean> ddmExpression = new DDMExpressionImpl<>(
-			expressionString, Boolean.class);
-
-		setDDMExpressionFunctions(ddmExpression);
-
-		return ddmExpression;
+		return createDDMExpression(expressionString, Boolean.class);
 	}
 
 	@Override
@@ -51,7 +48,7 @@ public class DDMExpressionFactoryImpl implements DDMExpressionFactory {
 			String expressionString)
 		throws DDMExpressionException {
 
-		return new DDMExpressionImpl<>(expressionString, Double.class);
+		return createDDMExpression(expressionString, Double.class);
 	}
 
 	@Override
@@ -59,7 +56,7 @@ public class DDMExpressionFactoryImpl implements DDMExpressionFactory {
 			String expressionString)
 		throws DDMExpressionException {
 
-		return new DDMExpressionImpl<>(expressionString, Float.class);
+		return createDDMExpression(expressionString, Float.class);
 	}
 
 	@Override
@@ -67,14 +64,14 @@ public class DDMExpressionFactoryImpl implements DDMExpressionFactory {
 			String expressionString)
 		throws DDMExpressionException {
 
-		return new DDMExpressionImpl<>(expressionString, Integer.class);
+		return createDDMExpression(expressionString, Integer.class);
 	}
 
 	@Override
 	public DDMExpression<Long> createLongDDMExpression(String expressionString)
 		throws DDMExpressionException {
 
-		return new DDMExpressionImpl<>(expressionString, Long.class);
+		return createDDMExpression(expressionString, Long.class);
 	}
 
 	@Override
@@ -82,12 +79,7 @@ public class DDMExpressionFactoryImpl implements DDMExpressionFactory {
 			String expressionString)
 		throws DDMExpressionException {
 
-		DDMExpression<Number> ddmExpression = new DDMExpressionImpl<>(
-			expressionString, Number.class);
-
-		setDDMExpressionFunctions(ddmExpression);
-
-		return ddmExpression;
+		return createDDMExpression(expressionString, Number.class);
 	}
 
 	@Override
@@ -95,19 +87,16 @@ public class DDMExpressionFactoryImpl implements DDMExpressionFactory {
 			String expressionString)
 		throws DDMExpressionException {
 
-		DDMExpression<String> ddmExpression = new DDMExpressionImpl<>(
-			expressionString, String.class);
-
-		setDDMExpressionFunctions(ddmExpression);
-
-		return ddmExpression;
+		return createDDMExpression(expressionString, String.class);
 	}
 
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
-		unbind = "unbindDDMExpressionFunction"
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		unbind = "removeDDMExpressionFunction"
 	)
-	protected void setDDMExpressionFunction(
+	protected void addDDMExpressionFunction(
 		DDMExpressionFunction ddmExpressionFunction,
 		Map<String, Object> properties) {
 
@@ -120,16 +109,19 @@ public class DDMExpressionFactoryImpl implements DDMExpressionFactory {
 		}
 	}
 
-	protected void setDDMExpressionFunctions(DDMExpression<?> ddmExpression) {
-		for (Map.Entry<String, DDMExpressionFunction> entry :
-				_ddmExpressionFunctionMap.entrySet()) {
+	protected <T> DDMExpression<T> createDDMExpression(
+			String expressionString, Class<T> expressionClass)
+		throws DDMExpressionException {
 
-			ddmExpression.setDDMExpressionFunction(
-				entry.getKey(), entry.getValue());
-		}
+		DDMExpression<T> ddmExpression = new DDMExpressionImpl<>(
+			expressionString, expressionClass);
+
+		setDDMExpressionFunctions(ddmExpression);
+
+		return ddmExpression;
 	}
 
-	protected void unbindDDMExpressionFunction(
+	protected void removeDDMExpressionFunction(
 		DDMExpressionFunction ddmExpressionFunction,
 		Map<String, Object> properties) {
 
@@ -138,6 +130,15 @@ public class DDMExpressionFactoryImpl implements DDMExpressionFactory {
 				properties, "ddm.form.evaluator.function.name");
 
 			_ddmExpressionFunctionMap.remove(functionName);
+		}
+	}
+
+	protected void setDDMExpressionFunctions(DDMExpression<?> ddmExpression) {
+		for (Map.Entry<String, DDMExpressionFunction> entry :
+				_ddmExpressionFunctionMap.entrySet()) {
+
+			ddmExpression.setDDMExpressionFunction(
+				entry.getKey(), entry.getValue());
 		}
 	}
 

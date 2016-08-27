@@ -31,24 +31,21 @@ public class MaxFunction implements DDMExpressionFunction {
 	public Object evaluate(Object... parameters) {
 		if (parameters.length < 2) {
 			throw new IllegalArgumentException(
-				String.format(
-					"Expected at least 2 parameters, received %d",
-					parameters.length));
+				"Two or more parameters are expected");
 		}
 
 		double max = Double.MIN_VALUE;
-		double value = Double.MIN_VALUE;
 
-		for (int i = 0; i < parameters.length; i++) {
-			if (parameters[i] instanceof Number) {
-				value = ((Number)parameters[i]).doubleValue();
-
-				if (value > max) {
-					max = value;
-				}
+		for (Object parameter : parameters) {
+			if (!Number.class.isInstance(parameter)) {
+				throw new IllegalArgumentException(
+					"The parameters should be numbers");
 			}
-			else {
-				throw new IllegalArgumentException("Invalid number");
+
+			double parameterDouble = ((Number)parameter).doubleValue();
+
+			if (parameterDouble > max) {
+				max = parameterDouble;
 			}
 		}
 

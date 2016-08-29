@@ -1,6 +1,10 @@
 {
-	"devDependencies": {
+	"dependencies": {
 		"metal-components": "1.0.0-rc.19"
+	},
+	"devDependencies": {
+		"liferay-module-config-generator": "^1.1.10",
+		"metal-cli": "^2.0.0"
 	},
 	"name": "journal-web",
 	"version": "1.4.0"

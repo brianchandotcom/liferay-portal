@@ -104,221 +104,223 @@ DDMNavigationHelper ddmNavigationHelper = ddmDisplay.getDDMNavigationHelper();
 		<aui:input name="structureAvailableFields" type="hidden" value="<%= structureAvailableFields %>" />
 		<aui:input name="saveAndContinue" type="hidden" value="<%= false %>" />
 
-		<liferay-ui:error exception="<%= TemplateNameException.class %>" message="please-enter-a-valid-name" />
-		<liferay-ui:error exception="<%= TemplateScriptException.class %>" message="please-enter-a-valid-script" />
+		<div class="lfr-form-content">
+			<liferay-ui:error exception="<%= TemplateNameException.class %>" message="please-enter-a-valid-name" />
+			<liferay-ui:error exception="<%= TemplateScriptException.class %>" message="please-enter-a-valid-script" />
 
-		<liferay-ui:error exception="<%= TemplateSmallImageNameException.class %>">
+			<liferay-ui:error exception="<%= TemplateSmallImageNameException.class %>">
 
-			<%
-			String[] imageExtensions = ddmDisplayContext.smallImageExtensions();
-			%>
+				<%
+				String[] imageExtensions = ddmDisplayContext.smallImageExtensions();
+				%>
 
-			<liferay-ui:message key="image-names-must-end-with-one-of-the-following-extensions" /> <%= StringUtil.merge(imageExtensions, StringPool.COMMA) %>.
-		</liferay-ui:error>
+				<liferay-ui:message key="image-names-must-end-with-one-of-the-following-extensions" /> <%= StringUtil.merge(imageExtensions, StringPool.COMMA) %>.
+			</liferay-ui:error>
 
-		<liferay-ui:error exception="<%= TemplateSmallImageSizeException.class %>">
+			<liferay-ui:error exception="<%= TemplateSmallImageSizeException.class %>">
 
-			<%
-			long imageMaxSize = ddmDisplayContext.smallImageMaxSize();
-			%>
+				<%
+				long imageMaxSize = ddmDisplayContext.smallImageMaxSize();
+				%>
 
-			<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(imageMaxSize, locale) %>" key="please-enter-a-small-image-with-a-valid-file-size-no-larger-than-x" translateArguments="<%= false %>" />
-		</liferay-ui:error>
+				<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(imageMaxSize, locale) %>" key="please-enter-a-small-image-with-a-valid-file-size-no-larger-than-x" translateArguments="<%= false %>" />
+			</liferay-ui:error>
 
-		<c:if test="<%= showHeader %>">
+			<c:if test="<%= showHeader %>">
 
-			<%
-			String title = StringPool.BLANK;
+				<%
+				String title = StringPool.BLANK;
 
-			if ((structure != null) || (template != null)) {
-				title = ddmDisplay.getEditTemplateTitle(structure, template, locale);
-			}
-			else {
-				title = ddmDisplay.getEditTemplateTitle(classNameId, locale);
-			}
-			%>
-
-			<c:choose>
-				<c:when test="<%= ddmDisplay.isShowBackURLInTitleBar() %>">
-
-					<%
-					portletDisplay.setShowBackIcon(true);
-					portletDisplay.setURLBack(ddmDisplay.getEditTemplateBackURL(liferayPortletRequest, liferayPortletResponse, classNameId, classPK, resourceClassNameId, portletResource));
-
-					renderResponse.setTitle(title);
-					%>
-
-				</c:when>
-				<c:otherwise>
-					<liferay-ui:header
-						backURL="<%= ddmDisplay.getEditTemplateBackURL(liferayPortletRequest, liferayPortletResponse, classNameId, classPK, resourceClassNameId, portletResource) %>"
-						localizeTitle="<%= false %>"
-						showBackURL="<%= showBackURL %>"
-						title="<%= title %>"
-					/>
-				</c:otherwise>
-			</c:choose>
-		</c:if>
-
-		<aui:model-context bean="<%= template %>" model="<%= DDMTemplate.class %>" />
-
-		<c:if test="<%= (templateVersion != null) && ddmDisplay.isVersioningEnabled() %>">
-			<aui:workflow-status model="<%= DDMTemplate.class %>" status="<%= templateVersion.getStatus() %>" version="<%= templateVersion.getVersion() %>" />
-
-			<div class="template-history-toolbar" id="<portlet:namespace />templateHistoryToolbar"></div>
-
-			<aui:script use="aui-toolbar,aui-dialog-iframe-deprecated,liferay-util-window">
-				var toolbarChildren = [
-					<portlet:renderURL var="viewHistoryURL">
-						<portlet:param name="mvcPath" value="/view_template_history.jsp" />
-						<portlet:param name="redirect" value="<%= ddmDisplay.getEditTemplateBackURL(liferayPortletRequest, liferayPortletResponse, classNameId, classPK, resourceClassNameId, portletResource) %>" />
-						<portlet:param name="templateId" value="<%= String.valueOf(template.getTemplateId()) %>" />
-					</portlet:renderURL>
-
-					{
-						icon: 'icon-time',
-						label: '<%= UnicodeLanguageUtil.get(request, "view-history") %>',
-						on: {
-							click: function(event) {
-								event.domEvent.preventDefault();
-
-								window.location.href = '<%= viewHistoryURL %>';
-							}
-						}
-					}
-				];
-
-				new A.Toolbar(
-					{
-						boundingBox: '#<portlet:namespace />templateHistoryToolbar',
-						children: toolbarChildren
-					}
-				).render();
-			</aui:script>
-		</c:if>
-
-		<aui:fieldset-group markupView="lexicon">
-			<aui:fieldset>
-				<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) || windowState.equals(LiferayWindowState.POP_UP) %>" name="name" />
-
-				<liferay-ui:panel-container cssClass="lfr-structure-entry-details-container" extended="<%= false %>" id="templateDetailsPanelContainer" persistState="<%= true %>">
-					<liferay-ui:panel collapsible="<%= true %>" defaultState="closed" extended="<%= false %>" id="templateDetailsSectionPanel" markupView="lexicon" persistState="<%= true %>" title="details">
-						<c:if test="<%= ddmDisplay.isShowStructureSelector() %>">
-							<div class="form-group">
-								<aui:input helpMessage="structure-help" name="structure" type="resource" value="<%= (structure != null) ? structure.getName(locale) : StringPool.BLANK %>" />
-
-								<c:if test="<%= ddmNavigationHelper.isNavigationStartsOnViewTemplates(liferayPortletRequest) && ((template == null) || (template.getClassPK() == 0)) %>">
-									<liferay-ui:icon
-										iconCssClass="icon-search"
-										label="<%= true %>"
-										linkCssClass="btn btn-default"
-										message="select"
-										url='<%= "javascript:" + renderResponse.getNamespace() + "openDDMStructureSelector();" %>'
-									/>
-								</c:if>
-							</div>
-						</c:if>
-
-						<c:if test="<%= type.equals(DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY) %>">
-							<aui:select changesContext="<%= true %>" helpMessage='<%= (template == null) ? StringPool.BLANK : "changing-the-language-does-not-automatically-translate-the-existing-template-script" %>' label="language" name="language">
-
-								<%
-								for (String curLangType : ddmDisplay.getTemplateLanguageTypes()) {
-									StringBundler sb = new StringBundler(6);
-
-									sb.append(LanguageUtil.get(request, curLangType + "[stands-for]"));
-									sb.append(StringPool.SPACE);
-									sb.append(StringPool.OPEN_PARENTHESIS);
-									sb.append(StringPool.PERIOD);
-									sb.append(curLangType);
-									sb.append(StringPool.CLOSE_PARENTHESIS);
-								%>
-
-									<aui:option label="<%= sb.toString() %>" selected="<%= language.equals(curLangType) %>" value="<%= curLangType %>" />
-
-								<%
-								}
-								%>
-
-							</aui:select>
-						</c:if>
-
-						<c:if test="<%= !ddmDisplayContext.autogenerateTemplateKey() %>">
-							<aui:input disabled="<%= (template != null) ? true : false %>" name="templateKey" />
-						</c:if>
-
-						<aui:input name="description" />
-
-						<c:if test="<%= template != null %>">
-							<aui:input helpMessage="template-key-help" name="templateKey" type="resource" value="<%= template.getTemplateKey() %>" />
-
-							<portlet:resourceURL id="getTemplate" var="getTemplateURL">
-								<portlet:param name="templateId" value="<%= String.valueOf(templateId) %>" />
-							</portlet:resourceURL>
-
-							<aui:input name="url" type="resource" value="<%= getTemplateURL.toString() %>" />
-
-							<c:if test="<%= Validator.isNotNull(refererWebDAVToken) %>">
-								<aui:input name="webDavURL" type="resource" value="<%= template.getWebDavURL(themeDisplay, refererWebDAVToken) %>" />
-							</c:if>
-						</c:if>
-
-						<c:choose>
-							<c:when test="<%= type.equals(DDMTemplateConstants.TEMPLATE_TYPE_FORM) %>">
-								<aui:select helpMessage="only-allow-deleting-required-fields-in-edit-mode" label="mode" name="mode">
-									<aui:option label="create" />
-									<aui:option label="edit" />
-								</aui:select>
-							</c:when>
-							<c:otherwise>
-								<c:if test="<%= showCacheableInput %>">
-									<aui:input helpMessage="journal-template-cacheable-help" name="cacheable" value="<%= cacheable %>" />
-								</c:if>
-
-								<div id="<portlet:namespace />smallImageContainer">
-									<div class="lfr-ddm-small-image-header">
-										<aui:input name="smallImage" />
-									</div>
-
-									<div class="lfr-ddm-small-image-content toggler-content-collapsed">
-										<aui:row>
-											<c:if test="<%= smallImage && (template != null) %>">
-												<aui:col width="<%= 50 %>">
-													<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="preview" />" class="lfr-ddm-small-image-preview" src="<%= HtmlUtil.escapeAttribute(template.getTemplateImageURL(themeDisplay)) %>" />
-												</aui:col>
-											</c:if>
-
-											<aui:col width="<%= (smallImage && (template != null)) ? 50 : 100 %>">
-												<aui:fieldset>
-													<aui:input cssClass="lfr-ddm-small-image-type" inlineField="<%= true %>" label="small-image-url" name="type" type="radio" />
-
-													<aui:input cssClass="lfr-ddm-small-image-value" inlineField="<%= true %>" label="" name="smallImageURL" title="small-image-url" />
-												</aui:fieldset>
-
-												<aui:fieldset>
-													<aui:input cssClass="lfr-ddm-small-image-type" inlineField="<%= true %>" label="small-image" name="type" type="radio" />
-
-													<aui:input cssClass="lfr-ddm-small-image-value" inlineField="<%= true %>" label="" name="smallImageFile" type="file" />
-												</aui:fieldset>
-											</aui:col>
-										</aui:row>
-									</div>
-								</div>
-							</c:otherwise>
-						</c:choose>
-					</liferay-ui:panel>
-				</liferay-ui:panel-container>
+				if ((structure != null) || (template != null)) {
+					title = ddmDisplay.getEditTemplateTitle(structure, template, locale);
+				}
+				else {
+					title = ddmDisplay.getEditTemplateTitle(classNameId, locale);
+				}
+				%>
 
 				<c:choose>
-					<c:when test="<%= type.equals(DDMTemplateConstants.TEMPLATE_TYPE_FORM) %>">
-						<%@ include file="/edit_template_form.jspf" %>
+					<c:when test="<%= ddmDisplay.isShowBackURLInTitleBar() %>">
+
+						<%
+						portletDisplay.setShowBackIcon(true);
+						portletDisplay.setURLBack(ddmDisplay.getEditTemplateBackURL(liferayPortletRequest, liferayPortletResponse, classNameId, classPK, resourceClassNameId, portletResource));
+
+						renderResponse.setTitle(title);
+						%>
+
 					</c:when>
 					<c:otherwise>
-						<%@ include file="/edit_template_display.jspf" %>
+						<liferay-ui:header
+							backURL="<%= ddmDisplay.getEditTemplateBackURL(liferayPortletRequest, liferayPortletResponse, classNameId, classPK, resourceClassNameId, portletResource) %>"
+							localizeTitle="<%= false %>"
+							showBackURL="<%= showBackURL %>"
+							title="<%= title %>"
+						/>
 					</c:otherwise>
 				</c:choose>
-			</aui:fieldset>
-		</aui:fieldset-group>
+			</c:if>
+
+			<aui:model-context bean="<%= template %>" model="<%= DDMTemplate.class %>" />
+
+			<c:if test="<%= (templateVersion != null) && ddmDisplay.isVersioningEnabled() %>">
+				<aui:workflow-status model="<%= DDMTemplate.class %>" status="<%= templateVersion.getStatus() %>" version="<%= templateVersion.getVersion() %>" />
+
+				<div class="template-history-toolbar" id="<portlet:namespace />templateHistoryToolbar"></div>
+
+				<aui:script use="aui-toolbar,aui-dialog-iframe-deprecated,liferay-util-window">
+					var toolbarChildren = [
+						<portlet:renderURL var="viewHistoryURL">
+							<portlet:param name="mvcPath" value="/view_template_history.jsp" />
+							<portlet:param name="redirect" value="<%= ddmDisplay.getEditTemplateBackURL(liferayPortletRequest, liferayPortletResponse, classNameId, classPK, resourceClassNameId, portletResource) %>" />
+							<portlet:param name="templateId" value="<%= String.valueOf(template.getTemplateId()) %>" />
+						</portlet:renderURL>
+
+						{
+							icon: 'icon-time',
+							label: '<%= UnicodeLanguageUtil.get(request, "view-history") %>',
+							on: {
+								click: function(event) {
+									event.domEvent.preventDefault();
+
+									window.location.href = '<%= viewHistoryURL %>';
+								}
+							}
+						}
+					];
+
+					new A.Toolbar(
+						{
+							boundingBox: '#<portlet:namespace />templateHistoryToolbar',
+							children: toolbarChildren
+						}
+					).render();
+				</aui:script>
+			</c:if>
+
+			<aui:fieldset-group markupView="lexicon">
+				<aui:fieldset>
+					<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) || windowState.equals(LiferayWindowState.POP_UP) %>" name="name" />
+
+					<liferay-ui:panel-container cssClass="lfr-structure-entry-details-container" extended="<%= false %>" id="templateDetailsPanelContainer" persistState="<%= true %>">
+						<liferay-ui:panel collapsible="<%= true %>" defaultState="closed" extended="<%= false %>" id="templateDetailsSectionPanel" markupView="lexicon" persistState="<%= true %>" title="details">
+							<c:if test="<%= ddmDisplay.isShowStructureSelector() %>">
+								<div class="form-group">
+									<aui:input helpMessage="structure-help" name="structure" type="resource" value="<%= (structure != null) ? structure.getName(locale) : StringPool.BLANK %>" />
+
+									<c:if test="<%= ddmNavigationHelper.isNavigationStartsOnViewTemplates(liferayPortletRequest) && ((template == null) || (template.getClassPK() == 0)) %>">
+										<liferay-ui:icon
+											iconCssClass="icon-search"
+											label="<%= true %>"
+											linkCssClass="btn btn-default"
+											message="select"
+											url='<%= "javascript:" + renderResponse.getNamespace() + "openDDMStructureSelector();" %>'
+										/>
+									</c:if>
+								</div>
+							</c:if>
+
+							<c:if test="<%= type.equals(DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY) %>">
+								<aui:select changesContext="<%= true %>" helpMessage='<%= (template == null) ? StringPool.BLANK : "changing-the-language-does-not-automatically-translate-the-existing-template-script" %>' label="language" name="language">
+
+									<%
+									for (String curLangType : ddmDisplay.getTemplateLanguageTypes()) {
+										StringBundler sb = new StringBundler(6);
+
+										sb.append(LanguageUtil.get(request, curLangType + "[stands-for]"));
+										sb.append(StringPool.SPACE);
+										sb.append(StringPool.OPEN_PARENTHESIS);
+										sb.append(StringPool.PERIOD);
+										sb.append(curLangType);
+										sb.append(StringPool.CLOSE_PARENTHESIS);
+									%>
+
+										<aui:option label="<%= sb.toString() %>" selected="<%= language.equals(curLangType) %>" value="<%= curLangType %>" />
+
+									<%
+									}
+									%>
+
+								</aui:select>
+							</c:if>
+
+							<c:if test="<%= !ddmDisplayContext.autogenerateTemplateKey() %>">
+								<aui:input disabled="<%= (template != null) ? true : false %>" name="templateKey" />
+							</c:if>
+
+							<aui:input name="description" />
+
+							<c:if test="<%= template != null %>">
+								<aui:input helpMessage="template-key-help" name="templateKey" type="resource" value="<%= template.getTemplateKey() %>" />
+
+								<portlet:resourceURL id="getTemplate" var="getTemplateURL">
+									<portlet:param name="templateId" value="<%= String.valueOf(templateId) %>" />
+								</portlet:resourceURL>
+
+								<aui:input name="url" type="resource" value="<%= getTemplateURL.toString() %>" />
+
+								<c:if test="<%= Validator.isNotNull(refererWebDAVToken) %>">
+									<aui:input name="webDavURL" type="resource" value="<%= template.getWebDavURL(themeDisplay, refererWebDAVToken) %>" />
+								</c:if>
+							</c:if>
+
+							<c:choose>
+								<c:when test="<%= type.equals(DDMTemplateConstants.TEMPLATE_TYPE_FORM) %>">
+									<aui:select helpMessage="only-allow-deleting-required-fields-in-edit-mode" label="mode" name="mode">
+										<aui:option label="create" />
+										<aui:option label="edit" />
+									</aui:select>
+								</c:when>
+								<c:otherwise>
+									<c:if test="<%= showCacheableInput %>">
+										<aui:input helpMessage="journal-template-cacheable-help" name="cacheable" value="<%= cacheable %>" />
+									</c:if>
+
+									<div id="<portlet:namespace />smallImageContainer">
+										<div class="lfr-ddm-small-image-header">
+											<aui:input name="smallImage" />
+										</div>
+
+										<div class="lfr-ddm-small-image-content toggler-content-collapsed">
+											<aui:row>
+												<c:if test="<%= smallImage && (template != null) %>">
+													<aui:col width="<%= 50 %>">
+														<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="preview" />" class="lfr-ddm-small-image-preview" src="<%= HtmlUtil.escapeAttribute(template.getTemplateImageURL(themeDisplay)) %>" />
+													</aui:col>
+												</c:if>
+
+												<aui:col width="<%= (smallImage && (template != null)) ? 50 : 100 %>">
+													<aui:fieldset>
+														<aui:input cssClass="lfr-ddm-small-image-type" inlineField="<%= true %>" label="small-image-url" name="type" type="radio" />
+
+														<aui:input cssClass="lfr-ddm-small-image-value" inlineField="<%= true %>" label="" name="smallImageURL" title="small-image-url" />
+													</aui:fieldset>
+
+													<aui:fieldset>
+														<aui:input cssClass="lfr-ddm-small-image-type" inlineField="<%= true %>" label="small-image" name="type" type="radio" />
+
+														<aui:input cssClass="lfr-ddm-small-image-value" inlineField="<%= true %>" label="" name="smallImageFile" type="file" />
+													</aui:fieldset>
+												</aui:col>
+											</aui:row>
+										</div>
+									</div>
+								</c:otherwise>
+							</c:choose>
+						</liferay-ui:panel>
+					</liferay-ui:panel-container>
+
+					<c:choose>
+						<c:when test="<%= type.equals(DDMTemplateConstants.TEMPLATE_TYPE_FORM) %>">
+							<%@ include file="/edit_template_form.jspf" %>
+						</c:when>
+						<c:otherwise>
+							<%@ include file="/edit_template_display.jspf" %>
+						</c:otherwise>
+					</c:choose>
+				</aui:fieldset>
+			</aui:fieldset-group>
+		</div>
 	</aui:form>
 
 	<c:if test="<%= type.equals(DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY) %>">

@@ -58,13 +58,17 @@
 /*/*/bin
 /*/*/bower_components
 /*/*/build
+/*/*/build_gradle
 /*/*/classes
+/*/*/dist
 /*/*/docroot/WEB-INF/classes
 /*/*/docroot/WEB-INF/lib
 /*/*/docroot/WEB-INF/tld
 /*/*/javadoc
 /*/*/lib
+/*/*/liferay-theme.json
 /*/*/node_modules
+/*/*/src/WEB-INF/src/resources-importer
 /*/*/test-classes
 /*/*/test-coverage
 /*/*/test-results

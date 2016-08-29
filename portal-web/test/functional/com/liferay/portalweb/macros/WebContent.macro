@@ -1056,11 +1056,10 @@
 	</command>
 
 	<command name="moveToFolderCP">
-		<execute function="Click" locator1="WC#ENTRY_DESCRIPTIVE_MENULIST_ICON">
-			<var name="key_webContentTitle" value="${webContentTitle}" />
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Move" />
+			<var name="rowEntry" value="${webContentTitle}" />
 		</execute>
-
-		<execute function="AssertClick" locator1="MenuItem#MOVE" value1="Move" />
 
 		<execute function="AssertTextEquals" locator1="WC#MOVE_WEB_CONTENT_ARTICLE" value1="${webContentTitle}">
 			<var name="key_webContentTitle" value="${webContentTitle}" />

@@ -82,6 +82,7 @@ int status = (Integer)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_STATUS);
 		<c:if test="<%= enableKBArticleHistory && (kbArticle.isApproved() || !kbArticle.isFirstVersion()) %>">
 			<liferay-portlet:renderURL var="historyURL">
 				<portlet:param name="mvcPath" value='<%= templatePath + "history.jsp" %>' />
+				<portlet:param name="redirect" value="<%= redirect %>" />
 				<portlet:param name="resourceClassNameId" value="<%= String.valueOf(kbArticle.getClassNameId()) %>" />
 				<portlet:param name="resourcePrimKey" value="<%= String.valueOf(kbArticle.getResourcePrimKey()) %>" />
 				<portlet:param name="status" value="<%= String.valueOf(status) %>" />

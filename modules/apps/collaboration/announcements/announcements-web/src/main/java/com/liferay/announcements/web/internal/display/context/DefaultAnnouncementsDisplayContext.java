@@ -134,8 +134,8 @@ public class DefaultAnnouncementsDisplayContext
 		if (AnnouncementsEntryPermission.contains(
 				_announcementsRequestHelper.getPermissionChecker(),
 				_announcementsRequestHelper.getLayout(),
-				_announcementsRequestHelper.getPortletName(),
-				ActionKeys.ADD_ENTRY)) {
+				AnnouncementsPortletKeys.ANNOUNCEMENTS_ADMIN,
+				ActionKeys.VIEW)) {
 
 			tabs1Names += ",manage-entries";
 		}
@@ -248,7 +248,8 @@ public class DefaultAnnouncementsDisplayContext
 			 AnnouncementsEntryPermission.contains(
 				 _announcementsRequestHelper.getPermissionChecker(),
 				 _announcementsRequestHelper.getLayout(),
-				 AnnouncementsPortletKeys.ALERTS, ActionKeys.ADD_ENTRY))) {
+				 AnnouncementsPortletKeys.ANNOUNCEMENTS_ADMIN,
+				 ActionKeys.VIEW))) {
 
 			return true;
 		}

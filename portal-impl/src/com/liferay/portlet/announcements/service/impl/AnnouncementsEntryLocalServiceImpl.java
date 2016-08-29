@@ -57,6 +57,7 @@ import java.util.Locale;
 /**
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
+ * @author Roberto Díaz
  */
 public class AnnouncementsEntryLocalServiceImpl
 	extends AnnouncementsEntryLocalServiceBaseImpl {
@@ -64,31 +65,13 @@ public class AnnouncementsEntryLocalServiceImpl
 	@Override
 	public AnnouncementsEntry addEntry(
 			long userId, long classNameId, long classPK, String title,
-			String content, String url, String type, int displayDateMonth,
-			int displayDateDay, int displayDateYear, int displayDateHour,
-			int displayDateMinute, boolean displayImmediately,
-			int expirationDateMonth, int expirationDateDay,
-			int expirationDateYear, int expirationDateHour,
-			int expirationDateMinute, int priority, boolean alert)
+			String content, String url, String type, Date displayDate,
+			Date expirationDate, int priority, boolean alert)
 		throws PortalException {
 
 		// Entry
 
 		User user = userPersistence.findByPrimaryKey(userId);
-
-		Date displayDate = new Date();
-
-		if (!displayImmediately) {
-			displayDate = PortalUtil.getDate(
-				displayDateMonth, displayDateDay, displayDateYear,
-				displayDateHour, displayDateMinute, user.getTimeZone(),
-				EntryDisplayDateException.class);
-		}
-
-		Date expirationDate = PortalUtil.getDate(
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, user.getTimeZone(),
-			EntryExpirationDateException.class);
 
 		validate(title, content, url, displayDate, expirationDate);
 
@@ -121,6 +104,43 @@ public class AnnouncementsEntryLocalServiceImpl
 			false, false);
 
 		return entry;
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #addEntry(long, long, long,
+	 *             String, String, String, String, Date, Date, int, boolean)}
+	 */
+	@Deprecated
+	@Override
+	public AnnouncementsEntry addEntry(
+			long userId, long classNameId, long classPK, String title,
+			String content, String url, String type, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, boolean displayImmediately,
+			int expirationDateMonth, int expirationDateDay,
+			int expirationDateYear, int expirationDateHour,
+			int expirationDateMinute, int priority, boolean alert)
+		throws PortalException {
+
+		User user = userPersistence.findByPrimaryKey(userId);
+
+		Date displayDate = new Date();
+
+		if (!displayImmediately) {
+			displayDate = PortalUtil.getDate(
+				displayDateMonth, displayDateDay, displayDateYear,
+				displayDateHour, displayDateMinute, user.getTimeZone(),
+				EntryDisplayDateException.class);
+		}
+
+		Date expirationDate = PortalUtil.getDate(
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, user.getTimeZone(),
+			EntryExpirationDateException.class);
+
+		return addEntry(
+			userId, classNameId, classPK, title, content, url, type,
+			displayDate, expirationDate, priority, alert);
 	}
 
 	@Override
@@ -307,6 +327,11 @@ public class AnnouncementsEntryLocalServiceImpl
 		return announcementsEntryPersistence.countByUserId(userId);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #updateEntry(long, String,
+	 *             String, String, String, Date, Date, int)}
+	 */
+	@Deprecated
 	@Override
 	public AnnouncementsEntry updateEntry(
 			long userId, long entryId, String title, String content, String url,
@@ -334,6 +359,17 @@ public class AnnouncementsEntryLocalServiceImpl
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, user.getTimeZone(),
 			EntryExpirationDateException.class);
+
+		return updateEntry(
+			entryId, title, content, url, type, displayDate, expirationDate,
+			priority);
+	}
+
+	@Override
+	public AnnouncementsEntry updateEntry(
+			long entryId, String title, String content, String url, String type,
+			Date displayDate, Date expirationDate, int priority)
+		throws PortalException {
 
 		validate(title, content, url, displayDate, expirationDate);
 

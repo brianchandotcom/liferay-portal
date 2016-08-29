@@ -14,6 +14,7 @@
 
 package com.liferay.announcements.web.internal.upgrade;
 
+import com.liferay.announcements.web.internal.upgrade.v1_0_2.UpgradePermissions;
 import com.liferay.portal.kernel.upgrade.BaseReplacePortletId;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
@@ -31,7 +32,7 @@ public class AnnouncementsWebUpgrade implements UpgradeStepRegistrator {
 	@Override
 	public void register(Registry registry) {
 		registry.register(
-			"com.liferay.announcements.web", "0.0.0", "1.0.0",
+			"com.liferay.announcements.web", "0.0.0", "1.0.2",
 			new DummyUpgradeStep());
 
 		UpgradeStep upgradePortletId = new BaseReplacePortletId() {
@@ -58,6 +59,10 @@ public class AnnouncementsWebUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"com.liferay.announcements.web", "1.0.0", "1.0.1",
 			upgradePortletId);
+
+		registry.register(
+			"com.liferay.announcements.web", "1.0.1", "1.0.2",
+			new UpgradePermissions());
 	}
 
 }

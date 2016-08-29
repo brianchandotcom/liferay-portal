@@ -97,11 +97,47 @@ public class AnnouncementsEntryServiceHttp {
 		}
 	}
 
+	public static com.liferay.announcements.kernel.model.AnnouncementsEntry addEntry(
+		HttpPrincipal httpPrincipal, long classNameId, long classPK,
+		java.lang.String title, java.lang.String content, java.lang.String url,
+		java.lang.String type, java.util.Date displayDate,
+		java.util.Date expirationDate, int priority, boolean alert)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(AnnouncementsEntryServiceUtil.class,
+					"addEntry", _addEntryParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					classNameId, classPK, title, content, url, type,
+					displayDate, expirationDate, priority, alert);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.announcements.kernel.model.AnnouncementsEntry)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static void deleteEntry(HttpPrincipal httpPrincipal, long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(AnnouncementsEntryServiceUtil.class,
-					"deleteEntry", _deleteEntryParameterTypes1);
+					"deleteEntry", _deleteEntryParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, entryId);
 
@@ -128,9 +164,44 @@ public class AnnouncementsEntryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(AnnouncementsEntryServiceUtil.class,
-					"getEntry", _getEntryParameterTypes2);
+					"getEntry", _getEntryParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, entryId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.announcements.kernel.model.AnnouncementsEntry)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.announcements.kernel.model.AnnouncementsEntry updateEntry(
+		HttpPrincipal httpPrincipal, long entryId, java.lang.String title,
+		java.lang.String content, java.lang.String url, java.lang.String type,
+		java.util.Date displayDate, java.util.Date expirationDate, int priority)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(AnnouncementsEntryServiceUtil.class,
+					"updateEntry", _updateEntryParameterTypes4);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, entryId,
+					title, content, url, type, displayDate, expirationDate,
+					priority);
 
 			Object returnObj = null;
 
@@ -164,7 +235,7 @@ public class AnnouncementsEntryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(AnnouncementsEntryServiceUtil.class,
-					"updateEntry", _updateEntryParameterTypes3);
+					"updateEntry", _updateEntryParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, entryId,
 					title, content, url, type, displayDateMonth,
@@ -203,13 +274,24 @@ public class AnnouncementsEntryServiceHttp {
 			int.class, boolean.class, int.class, int.class, int.class, int.class,
 			int.class, int.class, boolean.class
 		};
-	private static final Class<?>[] _deleteEntryParameterTypes1 = new Class[] {
+	private static final Class<?>[] _addEntryParameterTypes1 = new Class[] {
+			long.class, long.class, java.lang.String.class,
+			java.lang.String.class, java.lang.String.class,
+			java.lang.String.class, java.util.Date.class, java.util.Date.class,
+			int.class, boolean.class
+		};
+	private static final Class<?>[] _deleteEntryParameterTypes2 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _getEntryParameterTypes2 = new Class[] {
+	private static final Class<?>[] _getEntryParameterTypes3 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _updateEntryParameterTypes3 = new Class[] {
+	private static final Class<?>[] _updateEntryParameterTypes4 = new Class[] {
+			long.class, java.lang.String.class, java.lang.String.class,
+			java.lang.String.class, java.lang.String.class, java.util.Date.class,
+			java.util.Date.class, int.class
+		};
+	private static final Class<?>[] _updateEntryParameterTypes5 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class, int.class, int.class,
 			int.class, int.class, int.class, boolean.class, int.class, int.class,

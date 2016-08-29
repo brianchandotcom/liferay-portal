@@ -25,4 +25,7 @@ public class AnnouncementsPortletKeys {
 	public static final String ANNOUNCEMENTS =
 		"com_liferay_announcements_web_portlet_AnnouncementsPortlet";
 
+	public static final String ANNOUNCEMENTS_ADMIN =
+		"com_liferay_announcements_web_portlet_AnnouncementsAdminPortlet";
+
 }

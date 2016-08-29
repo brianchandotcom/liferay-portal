@@ -54,7 +54,7 @@ import org.osgi.service.component.annotations.Reference;
 public class AnnouncementsPortlet extends MVCPortlet {
 
 	@Reference(
-		target = "(&(release.bundle.symbolic.name=com.liferay.announcements.web)(release.schema.version=1.0.1))",
+		target = "(&(release.bundle.symbolic.name=com.liferay.announcements.web)(release.schema.version=1.0.2))",
 		unbind = "-"
 	)
 	protected void setRelease(Release release) {

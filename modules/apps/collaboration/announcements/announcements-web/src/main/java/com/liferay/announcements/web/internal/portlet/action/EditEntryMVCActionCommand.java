@@ -30,10 +30,12 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Calendar;
+import java.util.Date;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -43,6 +45,7 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Raymond Augé
+ * @author Roberto Díaz
  */
 @Component(
 	property = {
@@ -116,25 +119,34 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		String url = ParamUtil.getString(actionRequest, "url");
 		String type = ParamUtil.getString(actionRequest, "type");
 
-		int displayDateMonth = ParamUtil.getInteger(
-			actionRequest, "displayDateMonth");
-		int displayDateDay = ParamUtil.getInteger(
-			actionRequest, "displayDateDay");
-		int displayDateYear = ParamUtil.getInteger(
-			actionRequest, "displayDateYear");
-		int displayDateHour = ParamUtil.getInteger(
-			actionRequest, "displayDateHour");
-		int displayDateMinute = ParamUtil.getInteger(
-			actionRequest, "displayDateMinute");
-		int displayDateAmPm = ParamUtil.getInteger(
-			actionRequest, "displayDateAmPm");
-
-		if (displayDateAmPm == Calendar.PM) {
-			displayDateHour += 12;
-		}
-
 		boolean displayImmediately = ParamUtil.getBoolean(
 			actionRequest, "displayImmediately");
+
+		Date displayDate = new Date();
+
+		if (!displayImmediately) {
+			int displayDateMonth = ParamUtil.getInteger(
+				actionRequest, "displayDateMonth");
+			int displayDateDay = ParamUtil.getInteger(
+				actionRequest, "displayDateDay");
+			int displayDateYear = ParamUtil.getInteger(
+				actionRequest, "displayDateYear");
+			int displayDateHour = ParamUtil.getInteger(
+				actionRequest, "displayDateHour");
+			int displayDateMinute = ParamUtil.getInteger(
+				actionRequest, "displayDateMinute");
+			int displayDateAmPm = ParamUtil.getInteger(
+				actionRequest, "displayDateAmPm");
+
+			if (displayDateAmPm == Calendar.PM) {
+				displayDateHour += 12;
+			}
+
+			displayDate = PortalUtil.getDate(
+				displayDateMonth, displayDateDay, displayDateYear,
+				displayDateHour, displayDateMinute, themeDisplay.getTimeZone(),
+				EntryDisplayDateException.class);
+		}
 
 		int expirationDateMonth = ParamUtil.getInteger(
 			actionRequest, "expirationDateMonth");
@@ -153,30 +165,23 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 			expirationDateHour += 12;
 		}
 
+		Date expirationDate = PortalUtil.getDate(
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute,
+			themeDisplay.getTimeZone(), EntryExpirationDateException.class);
+
 		int priority = ParamUtil.getInteger(actionRequest, "priority");
 		boolean alert = ParamUtil.getBoolean(actionRequest, "alert");
 
 		if (entryId <= 0) {
-
-			// Add entry
-
 			_announcementsEntryService.addEntry(
-				themeDisplay.getPlid(), classNameId, classPK, title, content,
-				url, type, displayDateMonth, displayDateDay, displayDateYear,
-				displayDateHour, displayDateMinute, displayImmediately,
-				expirationDateMonth, expirationDateDay, expirationDateYear,
-				expirationDateHour, expirationDateMinute, priority, alert);
+				classNameId, classPK, title, content, url, type, displayDate,
+				expirationDate, priority, alert);
 		}
 		else {
-
-			// Update entry
-
 			_announcementsEntryService.updateEntry(
-				entryId, title, content, url, type, displayDateMonth,
-				displayDateDay, displayDateYear, displayDateHour,
-				displayDateMinute, displayImmediately, expirationDateMonth,
-				expirationDateDay, expirationDateYear, expirationDateHour,
-				expirationDateMinute, priority);
+				entryId, title, content, url, type, displayDate, expirationDate,
+				priority);
 		}
 	}
 

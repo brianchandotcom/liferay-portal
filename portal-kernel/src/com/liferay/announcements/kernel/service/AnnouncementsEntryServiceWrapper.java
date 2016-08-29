@@ -36,6 +36,23 @@ public class AnnouncementsEntryServiceWrapper
 
 	@Override
 	public com.liferay.announcements.kernel.model.AnnouncementsEntry addEntry(
+		long classNameId, long classPK, java.lang.String title,
+		java.lang.String content, java.lang.String url, java.lang.String type,
+		java.util.Date displayDate, java.util.Date expirationDate,
+		int priority, boolean alert)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _announcementsEntryService.addEntry(classNameId, classPK, title,
+			content, url, type, displayDate, expirationDate, priority, alert);
+	}
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #addEntry(long, long,
+	String, String, String, String, Date, Date, int,
+	boolean)}
+	*/
+	@Deprecated
+	@Override
+	public com.liferay.announcements.kernel.model.AnnouncementsEntry addEntry(
 		long plid, long classNameId, long classPK, java.lang.String title,
 		java.lang.String content, java.lang.String url, java.lang.String type,
 		int displayDateMonth, int displayDateDay, int displayDateYear,
@@ -59,6 +76,11 @@ public class AnnouncementsEntryServiceWrapper
 		return _announcementsEntryService.getEntry(entryId);
 	}
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #updateEntry(long, String,
+	String, String, String, Date, Date, int)}
+	*/
+	@Deprecated
 	@Override
 	public com.liferay.announcements.kernel.model.AnnouncementsEntry updateEntry(
 		long entryId, java.lang.String title, java.lang.String content,
@@ -73,6 +95,16 @@ public class AnnouncementsEntryServiceWrapper
 			displayDateHour, displayDateMinute, displayImmediately,
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, priority);
+	}
+
+	@Override
+	public com.liferay.announcements.kernel.model.AnnouncementsEntry updateEntry(
+		long entryId, java.lang.String title, java.lang.String content,
+		java.lang.String url, java.lang.String type,
+		java.util.Date displayDate, java.util.Date expirationDate, int priority)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _announcementsEntryService.updateEntry(entryId, title, content,
+			url, type, displayDate, expirationDate, priority);
 	}
 
 	/**

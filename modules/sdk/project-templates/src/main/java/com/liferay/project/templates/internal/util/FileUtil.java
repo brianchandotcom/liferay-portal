@@ -17,16 +17,102 @@ package com.liferay.project.templates.internal.util;
 import com.liferay.project.templates.ProjectTemplates;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 
 import java.net.URL;
 
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.StandardCopyOption;
+import java.nio.file.attribute.BasicFileAttributes;
+
 import java.security.CodeSource;
 import java.security.ProtectionDomain;
+
+import java.util.Enumeration;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 
 /**
  * @author Andrea Di Giorgi
  */
 public class FileUtil {
+
+	public static void extractDirectory(
+			String dirName, final Path destinationDirPath)
+		throws Exception {
+
+		File file = FileUtil.getJarFile();
+
+		if (file.isDirectory()) {
+			Path jarDirPath = file.toPath();
+
+			final Path rootDirPath = jarDirPath.resolve(dirName);
+
+			Files.walkFileTree(
+				rootDirPath,
+				new SimpleFileVisitor<Path>() {
+
+					@Override
+					public FileVisitResult visitFile(
+							Path path, BasicFileAttributes basicFileAttributes)
+						throws IOException {
+
+						Path relativePath = rootDirPath.relativize(path);
+
+						String fileName = relativePath.toString();
+
+						Path destinationPath = destinationDirPath.resolve(
+							fileName);
+
+						Files.createDirectories(destinationPath.getParent());
+
+						Files.copy(
+							path, destinationPath,
+							StandardCopyOption.REPLACE_EXISTING);
+
+						return FileVisitResult.CONTINUE;
+					}
+
+				});
+		}
+		else {
+			try (JarFile jarFile = new JarFile(file)) {
+				Enumeration<JarEntry> enumeration = jarFile.entries();
+
+				while (enumeration.hasMoreElements()) {
+					JarEntry jarEntry = enumeration.nextElement();
+
+					if (jarEntry.isDirectory()) {
+						continue;
+					}
+
+					String name = jarEntry.getName();
+
+					if (!name.startsWith(dirName + "/")) {
+						continue;
+					}
+
+					String fileName = name.substring(dirName.length() + 1);
+
+					Path destinationPath = destinationDirPath.resolve(fileName);
+
+					Files.createDirectories(destinationPath.getParent());
+
+					try (InputStream inputStream = jarFile.getInputStream(
+							jarEntry)) {
+
+						Files.copy(
+							inputStream, destinationPath,
+							StandardCopyOption.REPLACE_EXISTING);
+					}
+				}
+			}
+		}
+	}
 
 	public static File getJarFile() throws Exception {
 		ProtectionDomain protectionDomain =

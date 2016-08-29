@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.mapping.service.impl;
 
 import com.liferay.dynamic.data.mapping.background.task.DDMStructureIndexerBackgroundTaskExecutor;
+import com.liferay.dynamic.data.mapping.exception.InvalidParentStructureException;
 import com.liferay.dynamic.data.mapping.exception.InvalidStructureVersionException;
 import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
 import com.liferay.dynamic.data.mapping.exception.RequiredStructureException;
@@ -1543,6 +1544,7 @@ public class DDMStructureLocalServiceImpl
 
 		DDMForm parentDDMForm = getParentDDMForm(parentStructureId);
 
+		validateHierarchy(structure.getStructureId(), parentStructureId);
 		validate(nameMap, parentDDMForm, ddmForm);
 
 		structure.setParentStructureId(parentStructureId);
@@ -1903,6 +1905,21 @@ public class DDMStructureLocalServiceImpl
 			le.setTargetAvailableLocales(LanguageUtil.getAvailableLocales());
 
 			throw le;
+		}
+	}
+
+	protected void validateHierarchy(long structureId, long parentStructureId)
+		throws PortalException {
+
+		while (parentStructureId != 0) {
+			DDMStructure parentStructure =
+				ddmStructurePersistence.fetchByPrimaryKey(parentStructureId);
+
+			if (structureId == parentStructure.getStructureId()) {
+				throw new InvalidParentStructureException();
+			}
+
+			parentStructureId = parentStructure.getParentStructureId();
 		}
 	}
 

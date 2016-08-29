@@ -326,11 +326,20 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 			return true;
 		}
 
-		if (structure.getParentStructureId() != classPK) {
-			return true;
+		DDMStructure parentStructure =
+			DDMStructureLocalServiceUtil.fetchStructure(
+				structure.getParentStructureId());
+
+		while (parentStructure != null) {
+			if (parentStructure.getStructureId() == classPK) {
+				return false;
+			}
+
+			parentStructure = DDMStructureLocalServiceUtil.fetchStructure(
+				parentStructure.getParentStructureId());
 		}
 
-		return false;
+		return true;
 	}
 
 	@Override

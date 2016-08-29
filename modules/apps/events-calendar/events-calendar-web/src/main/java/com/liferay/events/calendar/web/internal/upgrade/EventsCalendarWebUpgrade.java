@@ -12,25 +12,27 @@
  * details.
  */
 
-package com.liferay.calendar.web.internal.portlet.route;
+package com.liferay.events.calendar.web.internal.upgrade;
 
-import com.liferay.calendar.constants.CalendarPortletKeys;
-import com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper;
-import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
+import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Marcellus Tavares
+ * @author Adam Brandizi
  */
 @Component(
 	immediate = true,
-	property = {
-		"com.liferay.portlet.friendly-url-routes=META-INF/friendly-url-routes/routes.xml",
-		"javax.portlet.name=" + CalendarPortletKeys.CALENDAR,
-		"service.ranking=1"
-	},
-	service = FriendlyURLMapper.class
+	service = {EventsCalendarWebUpgrade.class, UpgradeStepRegistrator.class}
 )
-public class CalendarFriendlyURLMapper extends DefaultFriendlyURLMapper {
+public class EventsCalendarWebUpgrade implements UpgradeStepRegistrator {
+
+	@Override
+	public void register(Registry registry) {
+		registry.register(
+			"com.liferay.calendar.web", "1.0.1", "1.0.2",
+			new com.liferay.events.calendar.web.internal.upgrade.v1_0_2.
+				UpgradePortletId());
+	}
+
 }

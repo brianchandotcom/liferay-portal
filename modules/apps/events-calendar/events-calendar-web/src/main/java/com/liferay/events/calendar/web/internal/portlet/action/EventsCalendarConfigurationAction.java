@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.calendar.web.internal.portlet.action;
+package com.liferay.events.calendar.web.internal.portlet.action;
 
 import com.liferay.calendar.constants.CalendarPortletKeys;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
@@ -44,7 +44,8 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = ConfigurationAction.class
 )
-public class CalendarConfigurationAction extends DefaultConfigurationAction {
+public class EventsCalendarConfigurationAction
+	extends DefaultConfigurationAction {
 
 	@Override
 	public String getJspPath(HttpServletRequest request) {

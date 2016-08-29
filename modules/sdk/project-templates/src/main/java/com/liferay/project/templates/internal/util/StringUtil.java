@@ -14,8 +14,6 @@
 
 package com.liferay.project.templates.internal.util;
 
-import java.util.Map;
-
 /**
  * @author Andrea Di Giorgi
  */
@@ -60,14 +58,6 @@ public class StringUtil {
 		sb.append(s.substring(x));
 
 		return sb.toString();
-	}
-
-	public static String replace(String s, Map<String, String> replacements) {
-		for (Map.Entry<String, String> entry : replacements.entrySet()) {
-			s = s.replace(entry.getKey(), entry.getValue());
-		}
-
-		return s;
 	}
 
 }

@@ -32,7 +32,7 @@ dependency to version 1.0.31.
 version 1.0.35.
 
 ### Removed
-- [LPS-67023]: Project properties `nodejs.lfr.amd.loader.version` and
+- [LPS-67023]: The project properties `nodejs.lfr.amd.loader.version` and
 `nodejs.metal.cli.version` are no longer available.
 - [LPS-67023]: Invoking the `clean` task no longer removes the
 `node_modules` directory of a project.

@@ -70,6 +70,9 @@
 		<module name="com.liferay.source.formatter.checkstyle.checks.AnnotationParameterOrder">
 			<message key="annotation.unsortedParameter" value="Annotation parameter ''{0}'' is not sorted alphabetically" />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.checks.Chaining">
+			<message key="chaining.avoid" value="Avoid chaining on method ''{0}'" />
+		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.ConstantName">
 			<message key="name.invalidPrivatePattern" value="Private constant ''{0}'' must match pattern ''{1}''" />
 			<message key="name.invalidProtectedPublicPattern" value="Protected or public constant ''{0}'' must match pattern ''{1}''" />

@@ -701,6 +701,17 @@
 				)
 		]]>
 	</sql>
+	<sql id="com.liferay.portal.kernel.service.persistence.OrganizationFinder.findO_ByC_P">
+		<![CDATA[
+			SELECT
+				organizationId, 0 AS userId, name
+			FROM
+				Organization_
+			WHERE
+				(companyId = ?) AND
+				(parentOrganizationId = ?)
+		]]>
+	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.OrganizationFinder.findU_ByC_S_O">
 		<![CDATA[
 			SELECT

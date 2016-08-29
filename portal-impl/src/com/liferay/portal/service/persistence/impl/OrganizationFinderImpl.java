@@ -83,6 +83,9 @@ public class OrganizationFinderImpl
 	public static final String FIND_BY_C_PO_N_L_S_C_Z_R_C =
 		OrganizationFinder.class.getName() + ".findByC_PO_N_L_S_C_Z_R_C";
 
+	public static final String FIND_O_BY_C_P =
+		OrganizationFinder.class.getName() + ".findO_ByC_P";
+
 	public static final String FIND_U_BY_C_S_O =
 		OrganizationFinder.class.getName() + ".findU_ByC_S_O";
 
@@ -683,20 +686,10 @@ public class OrganizationFinderImpl
 			StringBundler sb = new StringBundler(5);
 
 			sb.append(StringPool.OPEN_PARENTHESIS);
-
-			String sql = CustomSQLUtil.get(FIND_BY_C_P);
-
-			sql = StringUtil.replace(
-				sql, "SELECT organizationId",
-				"SELECT organizationId, 0 AS userId, name");
-			sql = StringUtil.replace(
-				sql, "(organizationId > ?) AND", StringPool.BLANK);
-			sql = CustomSQLUtil.removeOrderBy(sql);
-
-			sb.append(sql);
+			sb.append(CustomSQLUtil.get(FIND_O_BY_C_P));
 			sb.append(") UNION ALL (");
 
-			sql = CustomSQLUtil.get(FIND_U_BY_C_S_O);
+			String sql = CustomSQLUtil.get(FIND_U_BY_C_S_O);
 
 			int status = queryDefinition.getStatus();
 

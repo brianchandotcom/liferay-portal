@@ -14,7 +14,6 @@
 
 package com.liferay.portal.osgi.web.servlet.jsp.compiler;
 
-import com.liferay.portal.kernel.util.JavaDetector;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -277,15 +276,8 @@ public class JspServlet extends HttpServlet {
 			"com.liferay.portal.osgi.web.servlet.jsp.compiler.internal." +
 				"JspCompiler");
 
-		if (JavaDetector.isJDK7()) {
-			defaults.put("compilerSourceVM", "1.7");
-			defaults.put("compilerTargetVM", "1.7");
-		}
-		else {
-			defaults.put("compilerSourceVM", "1.8");
-			defaults.put("compilerTargetVM", "1.8");
-		}
-
+		defaults.put("compilerSourceVM", "1.8");
+		defaults.put("compilerTargetVM", "1.8");
 		defaults.put("development", "false");
 		defaults.put("httpMethods", "GET,POST,HEAD");
 		defaults.put("keepgenerated", "false");

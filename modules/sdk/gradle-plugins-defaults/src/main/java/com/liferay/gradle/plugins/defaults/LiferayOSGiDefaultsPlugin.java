@@ -66,6 +66,7 @@ import java.io.IOException;
 import java.io.UncheckedIOException;
 
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -115,6 +116,7 @@ import org.gradle.api.execution.TaskExecutionGraph;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.DuplicatesStrategy;
 import org.gradle.api.file.FileCollection;
+import org.gradle.api.file.FileCopyDetails;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.internal.GradleInternal;
@@ -166,6 +168,7 @@ import org.gradle.plugins.ide.idea.model.IdeaModel;
 import org.gradle.plugins.ide.idea.model.IdeaModule;
 import org.gradle.process.ExecSpec;
 import org.gradle.util.CollectionUtils;
+import org.gradle.util.GUtil;
 
 /**
  * @author Andrea Di Giorgi
@@ -218,6 +221,10 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	@Override
 	public void apply(final Project project) {
 		GradleUtil.applyPlugin(project, LiferayOSGiPlugin.class);
+
+		File versionOverridesFile = _getVersionOverridesFile(project);
+
+		_applyVersionOverrides(project, versionOverridesFile);
 
 		Gradle gradle = project.getGradle();
 
@@ -2380,6 +2387,63 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		return false;
 	}
 
+	private void _applyVersionOverrides(
+		Project project, File versionOverridesFile) {
+
+		if ((versionOverridesFile == null) || !versionOverridesFile.exists()) {
+			return;
+		}
+
+		final Properties versionOverrides = GUtil.loadProperties(
+			versionOverridesFile);
+
+		String bundleVersion = versionOverrides.getProperty(
+			Constants.BUNDLE_VERSION);
+
+		if (Validator.isNotNull(bundleVersion)) {
+			Map<String, String> bundleInstructions = getBundleInstructions(
+				project);
+
+			bundleInstructions.put(Constants.BUNDLE_VERSION, bundleVersion);
+
+			project.setVersion(bundleVersion);
+		}
+
+		final Copy copy = (Copy)GradleUtil.getTask(
+			project, JavaPlugin.PROCESS_RESOURCES_TASK_NAME);
+
+		copy.filesMatching(
+			"**/packageinfo",
+			new Action<FileCopyDetails>() {
+
+				@Override
+				public void execute(final FileCopyDetails fileCopyDetails) {
+					fileCopyDetails.filter(
+						new Closure<Void>(copy) {
+
+							@SuppressWarnings("unused")
+							public String doCall(String line) {
+								if (Validator.isNull(line)) {
+									return line;
+								}
+
+								String packagePath = fileCopyDetails.getPath();
+
+								packagePath = packagePath.substring(
+									0, packagePath.lastIndexOf('/'));
+
+								packagePath = packagePath.replace('/', '.');
+
+								return _getPackageInfoOverride(
+									packagePath, line, versionOverrides);
+							}
+
+						});
+				}
+
+			});
+	}
+
 	private void _configureConfigurationNoCache(Configuration configuration) {
 		ResolutionStrategy resolutionStrategy =
 			configuration.getResolutionStrategy();
@@ -2450,6 +2514,59 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		catch (IOException ioe) {
 			throw new UncheckedIOException(ioe);
 		}
+	}
+
+	private String _getPackageInfoOverride(
+		String packagePath, String packageInfo, Properties versionOverrides) {
+
+		String versionNumberOverride = versionOverrides.getProperty(
+			packagePath);
+
+		if (Validator.isNull(versionNumberOverride)) {
+			return packageInfo;
+		}
+
+		String versionNumber = packageInfo.substring(8);
+
+		Version version = Version.parseVersion(versionNumber);
+		Version versionOverride = Version.parseVersion(versionNumberOverride);
+
+		if (versionOverride.compareTo(version) > 0) {
+			return "version " + versionNumberOverride;
+		}
+
+		return packageInfo;
+	}
+
+	private File _getVersionOverridesFile(Project project) {
+		File gitRepoDir = GradleUtil.getRootDir(
+			project.getProjectDir(), ".gitrepo");
+
+		if (gitRepoDir == null) {
+			return null;
+		}
+
+		String gitRepo;
+
+		try {
+			File gitRepoFile = new File(gitRepoDir, ".gitrepo");
+
+			gitRepo = new String(
+				Files.readAllBytes(gitRepoFile.toPath()),
+				StandardCharsets.UTF_8);
+		}
+		catch (IOException ioe) {
+			throw new UncheckedIOException(ioe);
+		}
+
+		if (!gitRepo.contains("mode = pull")) {
+			return null;
+		}
+
+		String fileName =
+			".version-overrides-" + project.getName() + ".properties";
+
+		return new File(gitRepoDir.getParentFile(), fileName);
 	}
 
 	private boolean _isSnapshotStale(Project project) {

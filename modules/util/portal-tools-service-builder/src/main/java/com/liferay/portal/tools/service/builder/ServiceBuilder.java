@@ -934,32 +934,36 @@ public class ServiceBuilder {
 		}
 
 		if (name.equals("boolean")) {
-			return sb.append("Z").toString();
+			sb.append("Z");
 		}
 		else if (name.equals("byte")) {
-			return sb.append("B").toString();
+			sb.append("B");
 		}
 		else if (name.equals("char")) {
-			return sb.append("C").toString();
+			sb.append("C");
 		}
 		else if (name.equals("double")) {
-			return sb.append("D").toString();
+			sb.append("D");
 		}
 		else if (name.equals("float")) {
-			return sb.append("F").toString();
+			sb.append("F");
 		}
 		else if (name.equals("int")) {
-			return sb.append("I").toString();
+			sb.append("I");
 		}
 		else if (name.equals("long")) {
-			return sb.append("J").toString();
+			sb.append("J");
 		}
 		else if (name.equals("short")) {
-			return sb.append("S").toString();
+			sb.append("S");
 		}
 		else {
-			return sb.append("L").append(name).append(";").toString();
+			sb.append("L");
+			sb.append(name);
+			sb.append(";");
 		}
+
+		return sb.toString();
 	}
 
 	public String getCreateMappingTableSQL(EntityMapping entityMapping)

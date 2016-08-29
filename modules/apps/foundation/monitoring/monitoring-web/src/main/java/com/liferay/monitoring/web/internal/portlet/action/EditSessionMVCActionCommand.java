@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletSession;
 
 import javax.servlet.http.HttpSession;
 
@@ -82,9 +83,12 @@ public class EditSessionMVCActionCommand extends BaseMVCActionCommand {
 
 		if (userSession != null) {
 			try {
-				if (!actionRequest.getPortletSession().getId().equals(
-						sessionId)) {
+				PortletSession portletSession =
+					actionRequest.getPortletSession();
 
+				String portletSessionId = portletSession.getId();
+
+				if (!portletSessionId.equals(sessionId)) {
 					userSession.invalidate();
 				}
 			}

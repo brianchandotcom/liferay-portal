@@ -222,6 +222,10 @@ public class CalendarICalDataHandler implements CalendarDataHandler {
 			if (!propertyList.isEmpty()) {
 				StringBundler sb = new StringBundler();
 
+				sb.append(recurrence);
+				sb.append(StringPool.NEW_LINE);
+				sb.append(_EXDATE);
+
 				Iterator<ExDate> iterator = propertyList.iterator();
 
 				while (iterator.hasNext()) {
@@ -260,8 +264,7 @@ public class CalendarICalDataHandler implements CalendarDataHandler {
 					}
 				}
 
-				recurrence = recurrence.concat(
-					StringPool.NEW_LINE).concat(_EXDATE).concat(sb.toString());
+				recurrence = sb.toString();
 			}
 		}
 

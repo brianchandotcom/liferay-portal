@@ -1038,7 +1038,13 @@ public class CMISRepository extends BaseCmisRepository {
 
 			validateTitle(session, newFolderId, document.getName());
 
-			String oldFolderObjectId = document.getParents().get(0).getId();
+			List<org.apache.chemistry.opencmis.client.api.Folder> parents =
+				document.getParents();
+
+			org.apache.chemistry.opencmis.client.api.Folder oldFolder =
+				parents.get(0);
+
+			String oldFolderObjectId = oldFolder.getId();
 
 			if (oldFolderObjectId.equals(newFolderObjectId)) {
 				return toFileEntry(document);

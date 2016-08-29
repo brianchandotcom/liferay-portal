@@ -421,7 +421,11 @@ public class LayoutTypePortletImpl
 
 	@Override
 	public int getNumOfColumns() {
-		return getLayoutTemplate().getColumns().size();
+		LayoutTemplate layoutTemplate = getLayoutTemplate();
+
+		List<String> columns = layoutTemplate.getColumns();
+
+		return columns.size();
 	}
 
 	@Override

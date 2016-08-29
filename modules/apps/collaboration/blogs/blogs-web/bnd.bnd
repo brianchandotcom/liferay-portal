@@ -10,3 +10,4 @@ Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Blogs
 Web-ContextPath: /blogs-web
 -dsannotations-options: inherit
+-includeresource: @org.apache.commons.fileupload-*.jar

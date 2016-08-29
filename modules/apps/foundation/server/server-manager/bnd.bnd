@@ -8,5 +8,5 @@ Bundle-Version: 1.0.3
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
 -includeresource:\
-	lib/commons-fileupload.jar=commons-fileupload-[0-9]*.jar,\
-	lib/commons-io.jar=commons-io-[0-9]*.jar
+	lib/commons-io.jar=commons-io-[0-9]*.jar,\
+	@org.apache.commons.fileupload-*.jar

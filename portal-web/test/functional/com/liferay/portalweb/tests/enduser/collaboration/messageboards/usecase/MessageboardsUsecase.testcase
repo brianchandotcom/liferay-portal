@@ -1764,7 +1764,9 @@
 			<var name="portlet" value="Message Boards" />
 		</execute>
 
-		<execute macro="MessageboardsThread#viewMarkAsQuestionNotCheckedCP" />
+		<execute macro="MessageboardsThread#viewMarkAsQuestionNotCheckedCP" >
+			<var name="threadSubject" value="Thread Subject" />
+		</execute>
 
 		<execute macro="MessageboardsPortlet#configureGeneralCP">
 			<var name="threadAsQuestionByDefaultEnabled" value="true" />
@@ -1776,7 +1778,9 @@
 			<var name="portlet" value="Message Boards" />
 		</execute>
 
-		<execute macro="MessageboardsThread#viewMarkAsQuestionCheckedCP" />
+		<execute macro="MessageboardsThread#viewMarkAsQuestionCheckedCP" >
+			<var name="threadSubject" value="Thread Subject" />
+		</execute>
 
 		<execute macro="MessageboardsThread#addCP">
 			<var name="threadBody" value="Thread Body" />

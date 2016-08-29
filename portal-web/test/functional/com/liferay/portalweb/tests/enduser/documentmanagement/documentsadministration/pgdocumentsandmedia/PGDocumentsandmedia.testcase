@@ -1942,7 +1942,7 @@
 		</execute>
 	</command>
 
-	<command name="viewSearchResultsForChildObjectRespectsParentFolderPermissions" priority="4">
+	<command name="ViewSearchResultsForChildObjectRespectsParentFolderPermissions" priority="4">
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="Server Administration" />
 		</execute>

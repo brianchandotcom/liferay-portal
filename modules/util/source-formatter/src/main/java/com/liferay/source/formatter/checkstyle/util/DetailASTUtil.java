@@ -110,6 +110,27 @@ public class DetailASTUtil {
 		return list;
 	}
 
+	public static String getMethodName(DetailAST detailAST) {
+		if (detailAST.getType() != TokenTypes.METHOD_CALL) {
+			return null;
+		}
+
+		DetailAST dotAST = detailAST.findFirstToken(TokenTypes.DOT);
+
+		if (dotAST == null) {
+			DetailAST nameAST = detailAST.findFirstToken(TokenTypes.IDENT);
+
+			return nameAST.getText();
+		}
+
+		List<DetailAST> nameASTList = getAllChildTokens(
+			dotAST, TokenTypes.IDENT, false);
+
+		DetailAST methodNameAST = nameASTList.get(nameASTList.size() - 1);
+
+		return methodNameAST.getText();
+	}
+
 	public static List<DetailAST> getParameterDefs(DetailAST detailAST) {
 		List<DetailAST> list = new ArrayList<>();
 

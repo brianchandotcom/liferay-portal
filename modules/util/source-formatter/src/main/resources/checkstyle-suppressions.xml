@@ -30,6 +30,7 @@
 
 	<!-- Custom checks -->
 
+	<suppress checks="Chaining" files="/test/" />
 	<suppress checks="ConstantName" files="portal-kernel/src/com/liferay/portal/kernel/nio/intraband/BaseIntraband\.java" />
 	<suppress checks="LPS42924" files="^(?!.*ServiceImpl\.java$).*$" />
 	<suppress checks="MethodName" files="modules/apps/knowledge-base/knowledge-base-markdown-converter/src/main/java/org/pegdown/LiferayParser\.java" />

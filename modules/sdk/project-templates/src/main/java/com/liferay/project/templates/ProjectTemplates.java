@@ -166,13 +166,16 @@ public class ProjectTemplates {
 
 		Archetyper archetyper = new Archetyper();
 
-		ArchetypeGenerationResult result = archetyper.generateProject(
-			projectTemplatesArgs, destinationDir.getPath());
+		ArchetypeGenerationResult archetypeGenerationResult =
+			archetyper.generateProject(
+				projectTemplatesArgs, destinationDir.getPath());
 
-		if ((result != null) && (result.getCause() != null)) {
-			result.getCause().printStackTrace();
+		if (archetypeGenerationResult != null) {
+			Exception cause = archetypeGenerationResult.getCause();
 
-			System.exit(1);
+			if (cause != null) {
+				throw cause;
+			}
 		}
 
 		Path templateDirPath = destinationDir.toPath();

@@ -729,7 +729,8 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 		int scope = recordSet.getScope();
 
 		if ((scope != DDLRecordSetConstants.SCOPE_DYNAMIC_DATA_LISTS) &&
-			(scope != DDLRecordSetConstants.SCOPE_FORMS)) {
+			(scope != DDLRecordSetConstants.SCOPE_FORMS) &&
+			(scope != DDLRecordSetConstants.SCOPE_KALEO_FORMS)) {
 
 			return;
 		}

@@ -420,7 +420,8 @@ public class DDLRecordIndexer extends BaseIndexer<DDLRecord> {
 
 	private static final int[] _REINDEX_SCOPES = new int[] {
 		DDLRecordSetConstants.SCOPE_DYNAMIC_DATA_LISTS,
-		DDLRecordSetConstants.SCOPE_FORMS
+		DDLRecordSetConstants.SCOPE_FORMS,
+		DDLRecordSetConstants.SCOPE_KALEO_FORMS
 	};
 
 	private static final Log _log = LogFactoryUtil.getLog(

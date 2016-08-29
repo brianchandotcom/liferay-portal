@@ -79,6 +79,17 @@ public class JavaTermComparator implements Comparator<JavaTerm> {
 			return 0;
 		}
 
+		int startsWithWeight = StringUtil.startsWithWeight(
+			customSQLKey1, customSQLKey2);
+
+		if (startsWithWeight != 0) {
+			String startKey = customSQLKey1.substring(0, startsWithWeight);
+
+			if (!startKey.contains("By")) {
+				return customSQLKey1.compareTo(customSQLKey1);
+			}
+		}
+
 		int pos1 = customSQLContent.indexOf(customSQLKey1);
 		int pos2 = customSQLContent.indexOf(customSQLKey2);
 

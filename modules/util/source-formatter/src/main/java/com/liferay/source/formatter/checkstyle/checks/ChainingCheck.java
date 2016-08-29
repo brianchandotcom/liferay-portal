@@ -16,6 +16,7 @@ package com.liferay.source.formatter.checkstyle.checks;
 
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
 import com.puppycrawl.tools.checkstyle.api.AbstractCheck;
@@ -30,6 +31,12 @@ import java.util.List;
 public class ChainingCheck extends AbstractCheck {
 
 	public static final String MSG_AVOID_CHAINING = "chaining.avoid";
+
+	public static final String MSG_AVOID_CHAINING_MULTIPLE =
+		"chaining.avoid.multiple";
+
+	public static final String MSG_AVOID_TOO_MANY_CONCAT =
+		"concat.avoid.too.many";
 
 	@Override
 	public int[] getDefaultTokens() {
@@ -50,6 +57,22 @@ public class ChainingCheck extends AbstractCheck {
 
 			_checkMethodName(
 				chainedMethodNames, "getClass", methodCallAST, detailAST);
+
+			if (StringUtil.count(chainedMethodNames, StringPool.PERIOD) == 1) {
+				continue;
+			}
+
+			if (chainedMethodNames.contains("concat.concat.concat")) {
+				log(methodCallAST.getLineNo(), MSG_AVOID_TOO_MANY_CONCAT);
+
+				continue;
+			}
+
+			if (!chainedMethodNames.contains("concat.concat")) {
+				log(
+					methodCallAST.getLineNo(), MSG_AVOID_CHAINING_MULTIPLE,
+					DetailASTUtil.getMethodName(methodCallAST));
+			}
 		}
 	}
 

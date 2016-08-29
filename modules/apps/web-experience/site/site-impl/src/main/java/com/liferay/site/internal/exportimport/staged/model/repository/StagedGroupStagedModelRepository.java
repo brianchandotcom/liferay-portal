@@ -117,6 +117,46 @@ public class StagedGroupStagedModelRepository
 		return Collections.emptyList();
 	}
 
+	public Group fetchExistingGroup(
+		PortletDataContext portletDataContext, Element referenceElement) {
+
+		long groupId = GetterUtil.getLong(
+			referenceElement.attributeValue("group-id"));
+		long liveGroupId = GetterUtil.getLong(
+			referenceElement.attributeValue("live-group-id"));
+
+		if ((groupId == 0) || (liveGroupId == 0)) {
+			return null;
+		}
+
+		return fetchExistingGroup(portletDataContext, groupId, liveGroupId);
+	}
+
+	public Group fetchExistingGroup(
+		PortletDataContext portletDataContext, long groupId, long liveGroupId) {
+
+		Group liveGroup = _groupLocalService.fetchGroup(liveGroupId);
+
+		if (liveGroup != null) {
+			return liveGroup;
+		}
+
+		long existingGroupId = portletDataContext.getScopeGroupId();
+
+		if (groupId == portletDataContext.getSourceCompanyGroupId()) {
+			existingGroupId = portletDataContext.getCompanyGroupId();
+		}
+		else if (groupId == portletDataContext.getSourceGroupId()) {
+			existingGroupId = portletDataContext.getGroupId();
+		}
+
+		// During remote staging, valid mappings are found when the reference's
+		// group is properly staged. During local staging, valid mappings are
+		// found when the references do not change between staging and live.
+
+		return _groupLocalService.fetchGroup(existingGroupId);
+	}
+
 	@Override
 	public StagedGroup fetchStagedModelByUuidAndGroupId(
 		String uuid, long groupId) {
@@ -166,46 +206,6 @@ public class StagedGroupStagedModelRepository
 			stagedGroup.isActive(), serviceContext);
 
 		return ModelAdapterUtil.adapt(group, Group.class, StagedGroup.class);
-	}
-
-	protected Group fetchExistingGroup(
-		PortletDataContext portletDataContext, Element referenceElement) {
-
-		long groupId = GetterUtil.getLong(
-			referenceElement.attributeValue("group-id"));
-		long liveGroupId = GetterUtil.getLong(
-			referenceElement.attributeValue("live-group-id"));
-
-		if ((groupId == 0) || (liveGroupId == 0)) {
-			return null;
-		}
-
-		return fetchExistingGroup(portletDataContext, groupId, liveGroupId);
-	}
-
-	protected Group fetchExistingGroup(
-		PortletDataContext portletDataContext, long groupId, long liveGroupId) {
-
-		Group liveGroup = _groupLocalService.fetchGroup(liveGroupId);
-
-		if (liveGroup != null) {
-			return liveGroup;
-		}
-
-		long existingGroupId = portletDataContext.getScopeGroupId();
-
-		if (groupId == portletDataContext.getSourceCompanyGroupId()) {
-			existingGroupId = portletDataContext.getCompanyGroupId();
-		}
-		else if (groupId == portletDataContext.getSourceGroupId()) {
-			existingGroupId = portletDataContext.getGroupId();
-		}
-
-		// During remote staging, valid mappings are found when the reference's
-		// group is properly staged. During local staging, valid mappings are
-		// found when the references do not change between staging and live.
-
-		return _groupLocalService.fetchGroup(existingGroupId);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

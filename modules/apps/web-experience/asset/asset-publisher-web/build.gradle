@@ -22,4 +22,5 @@ dependencies {
 	provided group: "rome", name: "rome", version: "1.0"
 	provided project(":apps:web-experience:asset:asset-taglib")
 	provided project(":apps:web-experience:journal:journal-api")
+	provided project(":apps:web-experience:site:site-api")
 }

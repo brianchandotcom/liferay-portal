@@ -19,9 +19,12 @@ import com.liferay.portal.kernel.model.adapter.builder.ModelAdapterBuilder;
 import com.liferay.site.internal.model.adapter.impl.StagedGroupImpl;
 import com.liferay.site.model.adapter.StagedGroup;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Mate Thurzo
  */
+@Component(immediate = true, service = ModelAdapterBuilder.class)
 public class StagedGroupModelAdapterBuilder
 	implements ModelAdapterBuilder<Group, StagedGroup> {
 

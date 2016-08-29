@@ -1040,7 +1040,8 @@ public class CMISRepository extends BaseCmisRepository {
 
 			List<Folder> parents = document.getParents();
 
-			Folder oldFolder = parents.get(0);
+			org.apache.chemistry.opencmis.client.api.Folder oldFolder =
+				parents.get(0);
 
 			String oldFolderObjectId = oldFolder.getId();
 

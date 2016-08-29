@@ -672,8 +672,14 @@ public class JSONWebServiceActionsManagerImpl
 			contextName = servletContext.getServletContextName();
 
 			if (Validator.isNotNull(contextName)) {
-				path = StringPool.SLASH.concat(contextName).concat(
-					StringPool.PERIOD).concat(path.substring(1));
+				StringBundler sb = new StringBundler(4);
+
+				sb.append(StringPool.SLASH);
+				sb.append(contextName);
+				sb.append(StringPool.PERIOD);
+				sb.append(path.substring(1));
+
+				path = sb.toString();
 			}
 		}
 

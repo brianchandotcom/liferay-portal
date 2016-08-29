@@ -69,10 +69,14 @@ public class JSONWebServiceActionConfig
 		_actionMethod = newActionMethod;
 
 		if (Validator.isNotNull(_contextName)) {
-			path = path.substring(1);
+			StringBundler sb = new StringBundler(4);
 
-			path = StringPool.SLASH.concat(_contextName).concat(
-				StringPool.PERIOD).concat(path);
+			sb.append(StringPool.SLASH);
+			sb.append(_contextName);
+			sb.append(StringPool.PERIOD);
+			sb.append(path.substring(1));
+
+			path = sb.toString();
 		}
 
 		_path = path;

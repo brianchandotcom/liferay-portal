@@ -22,6 +22,7 @@ import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutPage;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutRow;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormRule;
 import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldTypeSettings;
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 
 /**
@@ -58,11 +59,12 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 						@DDMFormLayoutColumn(
 							size = 12,
 							value = {
-								"predefinedValue", "placeholder",
-								"visibilityExpression", "validation",
-								"fieldNamespace", "indexType", "localizable",
-								"readOnly", "dataType", "type", "name",
-								"showLabel", "repeatable", "tooltip"
+								"predefinedValue", "dataSourceType",
+								"ddmDataProviderInstanceId", "options",
+								"placeholder", "visibilityExpression",
+								"validation", "fieldNamespace", "indexType",
+								"localizable", "readOnly", "dataType", "type",
+								"name", "showLabel", "repeatable", "tooltip"
 							}
 						)
 					}
@@ -75,6 +77,21 @@ public interface TextDDMFormFieldTypeSettings
 	extends DefaultDDMFormFieldTypeSettings {
 
 	@DDMFormField(
+		label = "%create-list",
+		optionLabels = {"%manually", "%from-data-provider"},
+		optionValues = {"manual", "data-provider"}, predefinedValue = "manual",
+		properties = {"showLabel=false"}, type = "radio",
+		visibilityExpression = "TRUE"
+	)
+	public String dataSourceType();
+
+	@DDMFormField(
+		label = "%choose-a-data-provider", type = "select",
+		visibilityExpression = "equals(dataSourceType, \"data-provider\")"
+	)
+	public long ddmDataProviderInstanceId();
+
+	@DDMFormField(
 		label = "%my-text-field-has",
 		optionLabels = {"%a-single-line", "%multiple-lines"},
 		optionValues = {"singleline", "multiline"},
@@ -82,6 +99,13 @@ public interface TextDDMFormFieldTypeSettings
 		type = "radio"
 	)
 	public String displayStyle();
+
+	@DDMFormField(
+		dataType = "ddm-options", label = "%options",
+		properties = {"showLabel=false"}, required = false, type = "options",
+		visibilityExpression = "equals(dataSourceType, \"manual\")"
+	)
+	public DDMFormFieldOptions options();
 
 	@DDMFormField(
 		dataType = "string", label = "%placeholder-text",

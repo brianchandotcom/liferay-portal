@@ -624,7 +624,7 @@
 			<var name="assetContent" value="Blogs Entry Content" />
 			<var name="assetTitle" value="Blogs Entry Title" />
 			<var name="siteScope1" value="Site Name" />
-			<var name="siteScope2" value="${Sitename}" />
+			<var name="siteScope2" value="${siteName}" />
 		</execute>
 	</command>
 

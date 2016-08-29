@@ -1627,7 +1627,7 @@
 		</execute>
 	</command>
 
-	<command name="MoveWebContentFromFolderToAnotherFolder" priority="4">
+	<command name="MoveWebContentToFolder" priority="4">
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">

@@ -68,7 +68,9 @@ public class ChainingCheck extends AbstractCheck {
 				continue;
 			}
 
-			if (!chainedMethodNames.contains("concat.concat")) {
+			if (!chainedMethodNames.contains("concat.concat") &&
+				!chainedMethodNames.startsWith("bind.")) {
+
 				log(
 					methodCallAST.getLineNo(), MSG_AVOID_CHAINING_MULTIPLE,
 					DetailASTUtil.getMethodName(methodCallAST));

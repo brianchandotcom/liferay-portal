@@ -1,7 +1,0 @@
-Bundle-SymbolicName: _package_.api
-Bundle-Version: 1.0.0
-Export-Package:\
-	_package_.exception,\
-	_package_.model,\
-	_package_.service,\
-	_package_.service.persistence

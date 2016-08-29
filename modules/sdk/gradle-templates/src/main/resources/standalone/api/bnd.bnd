@@ -1,3 +1,0 @@
-Bundle-SymbolicName: _name_
-Bundle-Version: 1.0.0
-Export-Package: _package_.api

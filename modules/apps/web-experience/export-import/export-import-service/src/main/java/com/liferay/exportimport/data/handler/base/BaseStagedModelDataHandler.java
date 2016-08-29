@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.exportimport.lar;
+package com.liferay.exportimport.data.handler.base;
 
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.kernel.lar.ExportImportDateUtil;

@@ -1,0 +1,3 @@
+Bundle-Activator: ${package}.${className}
+Bundle-SymbolicName: ${package}
+Bundle-Version: ${version}

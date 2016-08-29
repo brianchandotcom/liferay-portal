@@ -1,0 +1,3 @@
+Bundle-SymbolicName: ${package}
+Bundle-Version: ${version}
+Web-ContextPath: /content-targeting-report-${artifactId}

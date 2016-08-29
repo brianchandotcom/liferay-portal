@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Project Templates Simulation Panel Entry
+Bundle-SymbolicName: com.liferay.project.templates.simulationpanelentry
+Bundle-Version: 1.0.0
+-removeheaders: Import-Package,Private-Package,Require-Capability

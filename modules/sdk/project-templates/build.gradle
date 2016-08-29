@@ -1,0 +1,41 @@
+import com.liferay.gradle.util.copy.RenameDependencyClosure
+
+bundle {
+	includeTransitiveDependencies = true
+}
+
+task copyTestLibs(type: Copy)
+
+copyTestLibs {
+	from configurations.provided
+	into "test-lib"
+	rename new RenameDependencyClosure(project, configurations.provided.name)
+}
+
+dependencies {
+	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.2.0"
+	provided group: "com.beust", name: "jcommander", version: "1.48"
+	provided group: "org.apache.maven.archetype", name: "archetype-common", version: "2.4"
+	provided project(":sdk:project-templates-activator")
+	provided project(":sdk:project-templates-api")
+	provided project(":sdk:project-templates-contenttargetingreport")
+	provided project(":sdk:project-templates-contenttargetingrule")
+	provided project(":sdk:project-templates-contenttargetingtrackingaction")
+	provided project(":sdk:project-templates-controlmenuentry")
+	provided project(":sdk:project-templates-fragment")
+	provided project(":sdk:project-templates-mvcportlet")
+	provided project(":sdk:project-templates-panelapp")
+	provided project(":sdk:project-templates-portlet")
+	provided project(":sdk:project-templates-portletconfigurationicon")
+	provided project(":sdk:project-templates-portletprovider")
+	provided project(":sdk:project-templates-portlettoolbarcontributor")
+	provided project(":sdk:project-templates-service")
+	provided project(":sdk:project-templates-servicebuilder")
+	provided project(":sdk:project-templates-servicewrapper")
+	provided project(":sdk:project-templates-simulationpanelentry")
+	provided project(":sdk:project-templates-templatecontextcontributor")
+
+	testCompile gradleTestKit()
+}
+
+test.dependsOn copyTestLibs

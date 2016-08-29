@@ -1,0 +1,33 @@
+Bundle-Name: Liferay Project Templates
+Bundle-SymbolicName: com.liferay.project.templates
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.project.templates
+Main-Class: com.liferay.project.templates.ProjectTemplates
+Private-Package:\
+	aQute.lib.io,\
+	com.liferay.project.templates.*,\
+	org.apache.commons.collections,\
+	org.apache.commons.collections.map,\
+	org.apache.commons.lang,\
+	org.apache.maven.archetype,\
+	org.apache.maven.archetype.common,\
+	org.apache.maven.archetype.common.util,\
+	org.apache.maven.archetype.creator,\
+	org.apache.maven.archetype.downloader,\
+	org.apache.maven.archetype.exception,\
+	org.apache.maven.archetype.generator,\
+	org.apache.maven.archetype.metadata,\
+	org.apache.maven.archetype.metadata.io.xpp3,\
+	org.apache.maven.archetype.old,\
+	org.apache.maven.archetype.source,\
+	org.apache.velocity.*,\
+	org.codehaus.plexus.logging,\
+	org.codehaus.plexus.personality.plexus.lifecycle.phase,\
+	org.codehaus.plexus.util,\
+	org.codehaus.plexus.util.xml,\
+	org.codehaus.plexus.util.xml.pull,\
+	org.codehaus.plexus.velocity,\
+	org.dom4j
+-includeresource:\
+	com.liferay.project.templates.*.jar,\
+	@jcommander-*.jar

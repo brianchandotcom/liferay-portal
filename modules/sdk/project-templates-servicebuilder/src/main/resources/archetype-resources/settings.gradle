@@ -1,0 +1,1 @@
+include "${artifactId}-api", "${artifactId}-service"

@@ -553,6 +553,15 @@
 		<var name="key_startDate" value="${startDate}" />
 		<var name="key_startDateTime" value="${startDateTime}" />
 
+		<if>
+			<not>
+				<condition function="IsElementPresent" locator1="Calendar#SCHEDULER_EVENT_REPEAT" />
+			</not>
+			<then>
+				<execute function="Click" locator1="Calendar#VIEW_NEXT_BUTTON" />
+			</then>
+		</if>
+
 		<execute function="AssertElementPresent" locator1="Calendar#SCHEDULER_EVENT_REPEAT" />
 		<execute function="AssertTextEquals" locator1="Calendar#SCHEDULER_EVENT_REPEAT_TITLE" value1="${eventTitle}" />
 	</command>

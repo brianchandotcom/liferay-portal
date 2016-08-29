@@ -44,6 +44,14 @@ public class GroupFinderUtil {
 			names, descriptions, params, andOperator);
 	}
 
+	public static java.util.List<com.liferay.portal.kernel.model.Group> findByCompanyId(
+		long companyId,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.Group> obc) {
+		return getFinder().findByCompanyId(companyId, params, start, end, obc);
+	}
+
 	public static java.util.List<com.liferay.portal.kernel.model.Group> findByLayouts(
 		long companyId, long parentGroupId, boolean site, int start, int end) {
 		return getFinder()
@@ -75,14 +83,6 @@ public class GroupFinderUtil {
 	public static java.util.List<com.liferay.portal.kernel.model.Group> findBySystem(
 		long companyId) {
 		return getFinder().findBySystem(companyId);
-	}
-
-	public static java.util.List<com.liferay.portal.kernel.model.Group> findByCompanyId(
-		long companyId,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.Group> obc) {
-		return getFinder().findByCompanyId(companyId, params, start, end, obc);
 	}
 
 	public static java.util.List<java.lang.Long> findByC_P(long companyId,

@@ -383,7 +383,7 @@
 						(JournalArticleLocalization.languageId = ?)
 		]]>
 	</sql>
-	<sql id="com.liferay.journal.service.persistence.JournalFolderFinder.findByF_ByNoAssets">
+	<sql id="com.liferay.journal.service.persistence.JournalFolderFinder.findF_ByNoAssets">
 		<![CDATA[
 			SELECT
 				{JournalFolder.*}

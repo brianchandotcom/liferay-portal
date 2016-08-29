@@ -30,6 +30,12 @@ public class UserFinderUtil {
 		return getFinder().countByGroups(companyId, status, groupIds);
 	}
 
+	public static int countByKeywords(long companyId,
+		java.lang.String keywords, int status,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params) {
+		return getFinder().countByKeywords(companyId, keywords, status, params);
+	}
+
 	public static int countBySocialUsers(long companyId, long userId,
 		int socialRelationType, java.lang.String socialRelationTypeComparator,
 		int status) {
@@ -41,12 +47,6 @@ public class UserFinderUtil {
 	public static int countByUser(long userId,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params) {
 		return getFinder().countByUser(userId, params);
-	}
-
-	public static int countByKeywords(long companyId,
-		java.lang.String keywords, int status,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params) {
-		return getFinder().countByKeywords(companyId, keywords, status, params);
 	}
 
 	public static int countByC_FN_MN_LN_SN_EA_S(long companyId,

@@ -61,7 +61,7 @@ public class JournalFolderFinderImpl
 		JournalFolderFinder.class.getName() + ".findA_ByG_U_F_L";
 
 	public static final String FIND_F_BY_NO_ASSETS =
-		JournalFolderFinder.class.getName() + ".findByF_ByNoAssets";
+		JournalFolderFinder.class.getName() + ".findF_ByNoAssets";
 
 	public static final String FIND_F_BY_G_F =
 		JournalFolderFinder.class.getName() + ".findF_ByG_F";
@@ -100,6 +100,13 @@ public class JournalFolderFinderImpl
 	}
 
 	@Override
+	public List<Object> findF_A_ByG_F(
+		long groupId, long folderId, QueryDefinition<?> queryDefinition) {
+
+		return doFindF_A_ByG_F(groupId, folderId, queryDefinition, false);
+	}
+
+	@Override
 	public List<JournalFolder> findF_ByNoAssets() {
 		Session session = null;
 
@@ -120,13 +127,6 @@ public class JournalFolderFinderImpl
 		finally {
 			closeSession(session);
 		}
-	}
-
-	@Override
-	public List<Object> findF_A_ByG_F(
-		long groupId, long folderId, QueryDefinition<?> queryDefinition) {
-
-		return doFindF_A_ByG_F(groupId, folderId, queryDefinition, false);
 	}
 
 	protected int doCountF_A_ByG_F(

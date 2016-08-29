@@ -45,32 +45,32 @@ import java.util.List;
 public class BookmarksFolderFinderImpl
 	extends BookmarksFolderFinderBaseImpl implements BookmarksFolderFinder {
 
-	public static final String COUNT_F_BY_G_P =
-		BookmarksFolderFinder.class.getName() + ".countF_ByG_P";
-
-	public static final String COUNT_F_BY_G_P_S =
-		BookmarksFolderFinder.class.getName() + ".countF_ByG_P_S";
-
 	public static final String COUNT_E_BY_G_F =
 		BookmarksFolderFinder.class.getName() + ".countE_ByG_F";
 
 	public static final String COUNT_E_BY_G_F_S =
 		BookmarksFolderFinder.class.getName() + ".countE_ByG_F_S";
 
+	public static final String COUNT_F_BY_G_P =
+		BookmarksFolderFinder.class.getName() + ".countF_ByG_P";
+
+	public static final String COUNT_F_BY_G_P_S =
+		BookmarksFolderFinder.class.getName() + ".countF_ByG_P_S";
+
 	public static final String FIND_BY_NO_ASSETS =
 		BookmarksFolderFinder.class.getName() + ".findByNoAssets";
-
-	public static final String FIND_F_BY_G_P =
-		BookmarksFolderFinder.class.getName() + ".findF_ByG_P";
-
-	public static final String FIND_F_BY_G_P_S =
-		BookmarksFolderFinder.class.getName() + ".findF_ByG_P_S";
 
 	public static final String FIND_E_BY_G_F =
 		BookmarksFolderFinder.class.getName() + ".findE_ByG_F";
 
 	public static final String FIND_E_BY_G_F_S =
 		BookmarksFolderFinder.class.getName() + ".findE_ByG_F_S";
+
+	public static final String FIND_F_BY_G_P =
+		BookmarksFolderFinder.class.getName() + ".findF_ByG_P";
+
+	public static final String FIND_F_BY_G_P_S =
+		BookmarksFolderFinder.class.getName() + ".findF_ByG_P_S";
 
 	@Override
 	public int countF_E_ByG_F(

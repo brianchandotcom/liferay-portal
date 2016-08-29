@@ -14,18 +14,18 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.portal.kernel.nio.charset.CharsetEncoderUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
-import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.util.Normalizer;
 
-import java.io.UnsupportedEncodingException;
-
-import java.net.URLEncoder;
+import java.nio.ByteBuffer;
+import java.nio.CharBuffer;
+import java.nio.charset.CharsetEncoder;
 
 import java.util.Arrays;
 import java.util.regex.Matcher;
@@ -92,10 +92,28 @@ public class FriendlyURLNormalizerImpl implements FriendlyURLNormalizer {
 
 		boolean modified = false;
 
+		ByteBuffer byteBuffer = null;
+		CharBuffer charBuffer = null;
+
+		CharsetEncoder charsetEncoder = null;
+
 		for (int i = 0; i < friendlyURL.length(); i++) {
 			char c = friendlyURL.charAt(i);
 
-			if (Arrays.binarySearch(_REPLACE_CHARS, c) >= 0) {
+			if ((CharPool.UPPER_CASE_A <= c) && (c <= CharPool.UPPER_CASE_Z)) {
+				sb.append((char)(c + 32));
+
+				modified = true;
+			}
+			else if (((CharPool.LOWER_CASE_A <= c) &&
+					  (c <= CharPool.LOWER_CASE_Z)) ||
+					 ((CharPool.NUMBER_0 <= c) && (c <= CharPool.NUMBER_9)) ||
+					 (c == CharPool.PERIOD) || (c == CharPool.SLASH) ||
+					 (c == CharPool.STAR) || (c == CharPool.UNDERLINE)) {
+
+				sb.append(c);
+			}
+			else if (Arrays.binarySearch(_REPLACE_CHARS, c) >= 0) {
 				if ((i == 0) || (CharPool.DASH != sb.charAt(sb.length() - 1))) {
 					sb.append(CharPool.DASH);
 
@@ -107,24 +125,67 @@ public class FriendlyURLNormalizerImpl implements FriendlyURLNormalizer {
 					modified = true;
 				}
 			}
+			else {
+				if (charsetEncoder == null) {
+					charsetEncoder = CharsetEncoderUtil.getCharsetEncoder(
+						StringPool.UTF8);
+
+					byteBuffer = ByteBuffer.allocate(8);
+					charBuffer = CharBuffer.allocate(2);
+				}
+				else {
+					byteBuffer.clear();
+					charBuffer.clear();
+				}
+
+				charBuffer.limit(1);
+
+				charBuffer.put(0, c);
+
+				if ((Character.MIN_HIGH_SURROGATE <= c) &&
+					(c <= Character.MAX_HIGH_SURROGATE)) {
+
+					if ((i + 1) < friendlyURL.length()) {
+						c = friendlyURL.charAt(i + 1);
+
+						if ((Character.MIN_LOW_SURROGATE <= c) &&
+							(c <= Character.MAX_LOW_SURROGATE)) {
+
+							charBuffer.limit(2);
+
+							charBuffer.put(1, c);
+
+							i++;
+						}
+					}
+				}
+
+				charsetEncoder.encode(
+					charBuffer, byteBuffer, ((friendlyURL.length() - 1) == i));
+
+				byteBuffer.limit(8 - byteBuffer.remaining());
+
+				byteBuffer.position(0);
+
+				while (byteBuffer.hasRemaining()) {
+					byte b = byteBuffer.get();
+
+					sb.append(CharPool.PERCENT);
+
+					sb.append(_forDigit((b >> 4) & 0xF));
+
+					sb.append(_forDigit(b & 0xF));
+				}
+
+				modified = true;
+			}
 		}
 
 		if (modified) {
-			friendlyURL = sb.toString();
+			return sb.toString();
 		}
 
-		String[] parts = StringUtil.split(friendlyURL, CharPool.SLASH);
-
-		try {
-			for (int i = 0; i < parts.length; i++) {
-				parts[i] = URLEncoder.encode(parts[i], StringPool.UTF8);
-			}
-		}
-		catch (UnsupportedEncodingException uee) {
-			ReflectionUtil.throwException(uee);
-		}
-
-		return StringUtil.merge(parts, StringPool.SLASH);
+		return friendlyURL;
 	}
 
 	@Override
@@ -163,9 +224,14 @@ public class FriendlyURLNormalizerImpl implements FriendlyURLNormalizer {
 			else {
 				if ((i == 0) || (CharPool.DASH != sb.charAt(sb.length() - 1))) {
 					sb.append(CharPool.DASH);
-				}
 
-				modified = true;
+					if (c != CharPool.DASH) {
+						modified = true;
+					}
+				}
+				else {
+					modified = true;
+				}
 			}
 		}
 
@@ -174,6 +240,18 @@ public class FriendlyURLNormalizerImpl implements FriendlyURLNormalizer {
 		}
 
 		return friendlyURL;
+	}
+
+	private char _forDigit(int digit) {
+		if ((digit < 0) || (16 <= digit)) {
+			return '\0';
+		}
+
+		if (digit < 10) {
+			return (char)(CharPool.NUMBER_0 + digit);
+		}
+
+		return (char)(CharPool.UPPER_CASE_A - 10 + digit);
 	}
 
 	private static final char[] _REPLACE_CHARS;

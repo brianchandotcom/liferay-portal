@@ -86,7 +86,10 @@ public class JavaTermComparator implements Comparator<JavaTerm> {
 			String startKey = customSQLKey1.substring(0, startsWithWeight);
 
 			if (!startKey.contains("By")) {
-				return customSQLKey1.compareTo(customSQLKey1);
+				NaturalOrderStringComparator comparator =
+					new NaturalOrderStringComparator();
+
+				return comparator.compare(customSQLKey1, customSQLKey2);
 			}
 		}
 

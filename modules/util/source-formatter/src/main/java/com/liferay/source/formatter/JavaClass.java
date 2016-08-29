@@ -111,7 +111,6 @@ public class JavaClass {
 			_formatReturnStatements(javaTerm);
 
 			if (javaTerm.isMethod() || javaTerm.isConstructor()) {
-				checkChaining(javaTerm);
 				checkLineBreak(javaTerm);
 			}
 
@@ -262,20 +261,6 @@ public class JavaClass {
 				_fileName,
 				"Annotation @" + annotation + " required for '" + methodName +
 					"'");
-		}
-	}
-
-	protected void checkChaining(JavaTerm javaTerm) {
-		Matcher matcher = _chainingPattern.matcher(javaTerm.getContent());
-
-		while (matcher.find()) {
-			int lineCount =
-				javaTerm.getLineCount() +
-					_javaSourceProcessor.getLineCount(
-						javaTerm.getContent(), matcher.end()) - 1;
-
-			_javaSourceProcessor.processMessage(
-				_fileName, "chaining", lineCount);
 		}
 	}
 
@@ -1774,8 +1759,6 @@ public class JavaClass {
 	private final String _absolutePath;
 	private final Pattern _booleanPattern = Pattern.compile(
 		"\n(\t+)boolean (\\w+) =(.*?);\n", Pattern.DOTALL);
-	private final Pattern _chainingPattern = Pattern.compile(
-		"^((?!this\\().)*\\WgetClass\\(\\)\\..", Pattern.DOTALL);
 	private String _classContent;
 	private final Pattern _classPattern = Pattern.compile(
 		"(private|protected|public) ((abstract|static) )*" +

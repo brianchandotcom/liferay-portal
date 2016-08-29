@@ -22,18 +22,19 @@ import com.liferay.project.templates.internal.util.StringUtil;
 import com.liferay.project.templates.internal.util.Validator;
 
 import java.io.File;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 
 import java.net.URL;
 
+import java.nio.file.DirectoryStream;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.StandardCopyOption;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.nio.file.attribute.PosixFilePermissions;
 
 import java.security.CodeSource;
 import java.security.ProtectionDomain;
@@ -41,6 +42,7 @@ import java.security.ProtectionDomain;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
+import java.util.Iterator;
 import java.util.List;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
@@ -53,29 +55,31 @@ import org.apache.maven.archetype.ArchetypeGenerationResult;
 public class ProjectTemplates {
 
 	public static String[] getTemplates() throws Exception {
-		final List<String> templates = new ArrayList<>();
+		List<String> templates = new ArrayList<>();
 
 		File file = _getJarFile();
 
 		if (file.isDirectory()) {
-			File[] templateFiles = file.listFiles(
-				new FilenameFilter() {
+			try (DirectoryStream<Path> directoryStream =
+					Files.newDirectoryStream(
+						file.toPath(), _TEMPLATE_BUNDLE_PREFIX + "*")) {
 
-					@Override
-					public boolean accept(File dir, String name) {
-						return name.startsWith(_TEMPLATES_BUNDLE_PREFIX);
-					}
+				Iterator<Path> iterator = directoryStream.iterator();
 
-				});
+				while (iterator.hasNext()) {
+					Path templateBundleFile = iterator.next();
 
-			for (File templateFile : templateFiles) {
-				String templateFileName = templateFile.getName();
+					Path templateBundleFileNamePath =
+						templateBundleFile.getFileName();
 
-				String templateName = templateFileName.substring(
-					_TEMPLATES_BUNDLE_PREFIX.length(),
-					templateFileName.lastIndexOf('.'));
+					String template = templateBundleFileNamePath.toString();
 
-				templates.add(templateName);
+					template = template.substring(
+						_TEMPLATE_BUNDLE_PREFIX.length(),
+						template.lastIndexOf('.'));
+
+					templates.add(template);
+				}
 			}
 		}
 		else {
@@ -89,12 +93,12 @@ public class ProjectTemplates {
 						continue;
 					}
 
-					String name = jarEntry.getName();
+					String template = jarEntry.getName();
 
-					if (name.startsWith(_TEMPLATES_BUNDLE_PREFIX)) {
-						String template = name.substring(
-							_TEMPLATES_BUNDLE_PREFIX.length(),
-							name.indexOf("-"));
+					if (template.startsWith(_TEMPLATE_BUNDLE_PREFIX)) {
+						template = template.substring(
+							_TEMPLATE_BUNDLE_PREFIX.length(),
+							template.indexOf("-"));
 
 						templates.add(template);
 					}
@@ -159,9 +163,6 @@ public class ProjectTemplates {
 		_checkArgs(projectTemplatesArgs);
 
 		File destinationDir = projectTemplatesArgs.getDestinationDir();
-		String name = projectTemplatesArgs.getName();
-
-		File dir = new File(destinationDir, name);
 
 		Archetyper archetyper = new Archetyper();
 
@@ -174,26 +175,31 @@ public class ProjectTemplates {
 			System.exit(1);
 		}
 
-		_extractDirectory(TEMPLATES_GRADLEWRAPPER_DIR, dir);
+		Path templateDirPath = destinationDir.toPath();
 
-		new File(dir, "gradlew").setExecutable(true);
+		templateDirPath = templateDirPath.resolve(
+			projectTemplatesArgs.getName());
 
-		if (projectTemplatesArgs.getWorkspaceDir() != null) {
-			File settingsGradleFile = new File(dir, "settings.gradle");
+		_extractDirectory("gradle-wrapper", templateDirPath);
 
-			settingsGradleFile.delete();
+		try {
+			Files.setPosixFilePermissions(
+				templateDirPath.resolve("gradlew"),
+				PosixFilePermissions.fromString("rwxrwxr--"));
+		}
+		catch (UnsupportedOperationException uoe) {
 		}
 
-		new File(dir, "pom.xml").delete();
+		if (projectTemplatesArgs.getWorkspaceDir() != null) {
+			Files.deleteIfExists(templateDirPath.resolve("settings.gradle"));
+		}
 
-		File gitIgnoreFile = new File(dir, "gitignore");
-		File dogGitIgnoreFile = new File(dir, ".gitignore");
+		Files.delete(templateDirPath.resolve("pom.xml"));
 
-		gitIgnoreFile.renameTo(dogGitIgnoreFile);
+		Files.move(
+			templateDirPath.resolve("gitignore"),
+			templateDirPath.resolve(".gitignore"));
 	}
-
-	protected static final String TEMPLATES_GRADLEWRAPPER_DIR =
-		"gradle-wrapper";
 
 	private static File _getJarFile() throws Exception {
 		ProtectionDomain protectionDomain =
@@ -304,10 +310,9 @@ public class ProjectTemplates {
 		}
 	}
 
-	private void _extractDirectory(String dirName, File destinationDir)
+	private void _extractDirectory(
+			String dirName, final Path destinationDirPath)
 		throws Exception {
-
-		final Path rootDestinationDirPath = destinationDir.toPath();
 
 		File file = _getJarFile();
 
@@ -329,7 +334,7 @@ public class ProjectTemplates {
 
 						String fileName = relativePath.toString();
 
-						Path destinationPath = rootDestinationDirPath.resolve(
+						Path destinationPath = destinationDirPath.resolve(
 							fileName);
 
 						Files.createDirectories(destinationPath.getParent());
@@ -362,8 +367,7 @@ public class ProjectTemplates {
 
 					String fileName = name.substring(dirName.length() + 1);
 
-					Path destinationPath = rootDestinationDirPath.resolve(
-						fileName);
+					Path destinationPath = destinationDirPath.resolve(fileName);
 
 					Files.createDirectories(destinationPath.getParent());
 
@@ -399,7 +403,7 @@ public class ProjectTemplates {
 		return name.toLowerCase();
 	}
 
-	private static final String _TEMPLATES_BUNDLE_PREFIX =
+	private static final String _TEMPLATE_BUNDLE_PREFIX =
 		"com.liferay.project.templates.";
 
 }

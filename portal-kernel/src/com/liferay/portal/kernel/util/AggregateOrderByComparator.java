@@ -29,7 +29,7 @@ public class AggregateOrderByComparator<T> extends OrderByComparator<T> {
 		_comparators = new ArrayList<>(comparators);
 	}
 
-	public AggregateOrderByComparator(OrderByComparator<T> ... comparators) {
+	public AggregateOrderByComparator(OrderByComparator<T>... comparators) {
 		_comparators = new ArrayList<>(Arrays.asList(comparators));
 	}
 

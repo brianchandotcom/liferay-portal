@@ -17,7 +17,7 @@ package com.liferay.project.templates;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.ParameterException;
 
-import com.liferay.project.templates.internal.archetype.Archetyper;
+import com.liferay.project.templates.internal.archetyper.Archetyper;
 import com.liferay.project.templates.internal.util.StringUtil;
 import com.liferay.project.templates.internal.util.Validator;
 

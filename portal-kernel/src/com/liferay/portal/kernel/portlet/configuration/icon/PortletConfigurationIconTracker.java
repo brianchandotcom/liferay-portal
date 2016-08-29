@@ -41,8 +41,8 @@ public class PortletConfigurationIconTracker {
 	public static List<PortletConfigurationIcon> getPortletConfigurationIcons(
 		String portletId, PortletRequest portletRequest) {
 
-		List<PortletConfigurationIcon> portletConfigurationIcons =
-			new ArrayList<>();
+		Set<PortletConfigurationIcon> portletConfigurationIcons =
+			new HashSet<>();
 
 		for (String path : getPaths(portletId, portletRequest)) {
 			List<PortletConfigurationIcon> portletPortletConfigurationIcons =
@@ -62,7 +62,7 @@ public class PortletConfigurationIconTracker {
 			}
 		}
 
-		return portletConfigurationIcons;
+		return new ArrayList<>(portletConfigurationIcons);
 	}
 
 	public static List<PortletConfigurationIcon> getPortletConfigurationIcons(

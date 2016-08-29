@@ -14,8 +14,29 @@
 
 package com.liferay.project.templates.internal.util;
 
+import com.liferay.project.templates.ProjectTemplates;
+
+import java.io.File;
+
+import java.net.URL;
+
+import java.security.CodeSource;
+import java.security.ProtectionDomain;
+
 /**
  * @author Andrea Di Giorgi
  */
 public class FileUtil {
+
+	public static File getJarFile() throws Exception {
+		ProtectionDomain protectionDomain =
+			ProjectTemplates.class.getProtectionDomain();
+
+		CodeSource codeSource = protectionDomain.getCodeSource();
+
+		URL url = codeSource.getLocation();
+
+		return new File(url.toURI());
+	}
+
 }

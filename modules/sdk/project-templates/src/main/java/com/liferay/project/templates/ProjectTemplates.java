@@ -18,14 +18,13 @@ import com.beust.jcommander.JCommander;
 import com.beust.jcommander.ParameterException;
 
 import com.liferay.project.templates.internal.archetyper.Archetyper;
+import com.liferay.project.templates.internal.util.FileUtil;
 import com.liferay.project.templates.internal.util.StringUtil;
 import com.liferay.project.templates.internal.util.Validator;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-
-import java.net.URL;
 
 import java.nio.file.DirectoryStream;
 import java.nio.file.FileVisitResult;
@@ -35,9 +34,6 @@ import java.nio.file.SimpleFileVisitor;
 import java.nio.file.StandardCopyOption;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.PosixFilePermissions;
-
-import java.security.CodeSource;
-import java.security.ProtectionDomain;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -57,7 +53,7 @@ public class ProjectTemplates {
 	public static String[] getTemplates() throws Exception {
 		List<String> templates = new ArrayList<>();
 
-		File file = _getJarFile();
+		File file = FileUtil.getJarFile();
 
 		if (file.isDirectory()) {
 			try (DirectoryStream<Path> directoryStream =
@@ -117,7 +113,7 @@ public class ProjectTemplates {
 		JCommander jCommander = new JCommander(projectTemplatesArgs);
 
 		try {
-			File jarFile = _getJarFile();
+			File jarFile = FileUtil.getJarFile();
 
 			if (jarFile.isFile()) {
 				jCommander.setProgramName("java -jar " + jarFile.getName());
@@ -202,17 +198,6 @@ public class ProjectTemplates {
 		Files.move(
 			templateDirPath.resolve("gitignore"),
 			templateDirPath.resolve(".gitignore"));
-	}
-
-	private static File _getJarFile() throws Exception {
-		ProtectionDomain protectionDomain =
-			ProjectTemplates.class.getProtectionDomain();
-
-		CodeSource codeSource = protectionDomain.getCodeSource();
-
-		URL url = codeSource.getLocation();
-
-		return new File(url.toURI());
 	}
 
 	private static void _printHelp(JCommander jCommander) throws Exception {
@@ -317,7 +302,7 @@ public class ProjectTemplates {
 			String dirName, final Path destinationDirPath)
 		throws Exception {
 
-		File file = _getJarFile();
+		File file = FileUtil.getJarFile();
 
 		if (file.isDirectory()) {
 			Path jarDirPath = file.toPath();

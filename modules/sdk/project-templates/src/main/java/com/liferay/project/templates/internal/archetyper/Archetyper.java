@@ -16,8 +16,8 @@ package com.liferay.project.templates.internal.archetyper;
 
 import aQute.lib.io.IO;
 
-import com.liferay.project.templates.ProjectTemplates;
 import com.liferay.project.templates.ProjectTemplatesArgs;
+import com.liferay.project.templates.internal.util.FileUtil;
 
 import java.io.File;
 
@@ -30,9 +30,6 @@ import java.net.URLClassLoader;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
-
-import java.security.CodeSource;
-import java.security.ProtectionDomain;
 
 import java.util.Enumeration;
 import java.util.List;
@@ -135,17 +132,6 @@ public class Archetyper {
 		}
 
 		return new URLClassLoader(urls, null);
-	}
-
-	private static File _getJarFile() throws Exception {
-		ProtectionDomain protectionDomain =
-			ProjectTemplates.class.getProtectionDomain();
-
-		CodeSource codeSource = protectionDomain.getCodeSource();
-
-		URL url = codeSource.getLocation();
-
-		return new File(url.toURI());
 	}
 
 	private static void _safePut(
@@ -304,7 +290,7 @@ public class Archetyper {
 			File archetypeJarFile = null;
 
 			try {
-				File file = _getJarFile();
+				File file = FileUtil.getJarFile();
 
 				if (file.isDirectory()) {
 					Path jarDirPath = file.toPath();

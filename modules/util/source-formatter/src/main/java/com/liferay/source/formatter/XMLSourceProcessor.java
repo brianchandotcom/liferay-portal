@@ -1711,9 +1711,16 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			String finderKeyName1 = _getFinderKeyName(sqlElementName1);
 			String finderKeyName2 = _getFinderKeyName(sqlElementName2);
 
-			if (StringUtil.startsWithWeight(finderKeyName1, finderKeyName2) ==
-					0) {
+			int startsWithWeight = StringUtil.startsWithWeight(
+				finderKeyName1, finderKeyName2);
 
+			if (startsWithWeight == 0) {
+				return finderKeyName1.compareTo(finderKeyName2);
+			}
+
+			String startFinder = finderKeyName1.substring(0, startsWithWeight);
+
+			if (!startFinder.contains("By")) {
 				return finderKeyName1.compareTo(finderKeyName2);
 			}
 

@@ -19,7 +19,6 @@ import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportProcessCallbackRegistryUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
-import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
@@ -129,7 +128,6 @@ public class StagedLayoutSetStagedModelDataHandler
 					portletDataContext, importedStagedLayoutSet);
 		}
 
-		importLayouts(portletDataContext);
 		importLogo(portletDataContext);
 		importTheme(portletDataContext, stagedLayoutSet);
 
@@ -159,8 +157,9 @@ public class StagedLayoutSetStagedModelDataHandler
 					return;
 				}
 
-				StagedModelDataHandlerUtil.exportStagedModel(
-					portletDataContext, layout);
+				StagedModelDataHandlerUtil.exportReferenceStagedModel(
+					portletDataContext, stagedLayoutSet, layout,
+					PortletDataContext.REFERENCE_TYPE_CHILD);
 			}
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {
@@ -273,26 +272,6 @@ public class StagedLayoutSetStagedModelDataHandler
 						e);
 				}
 			}
-		}
-	}
-
-	protected void importLayouts(PortletDataContext portletDataContext)
-		throws PortletDataException {
-
-		Element layoutsElement = portletDataContext.getImportDataGroupElement(
-			Layout.class);
-
-		List<Element> layoutElements = layoutsElement.elements();
-
-		if (_log.isDebugEnabled()) {
-			if (!layoutElements.isEmpty()) {
-				_log.debug("Importing layouts");
-			}
-		}
-
-		for (Element layoutElement : layoutElements) {
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, layoutElement);
 		}
 	}
 

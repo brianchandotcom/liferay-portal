@@ -15,7 +15,6 @@
 package com.liferay.dynamic.data.lists.internal.search;
 
 import com.liferay.dynamic.data.lists.model.DDLRecord;
-import com.liferay.dynamic.data.lists.model.DDLRecordConstants;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.model.DDLRecordSetConstants;
 import com.liferay.dynamic.data.lists.model.DDLRecordVersion;
@@ -59,7 +58,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import java.io.Serializable;
 
 import java.util.Locale;
-import java.util.Objects;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -226,22 +224,7 @@ public class DDLRecordIndexer extends BaseIndexer<DDLRecord> {
 
 	@Override
 	protected void doReindex(DDLRecord ddlRecord) throws Exception {
-		DDLRecordVersion recordVersion = ddlRecord.getRecordVersion();
-
 		Document document = getDocument(ddlRecord);
-
-		if (!recordVersion.isApproved()) {
-			if (Objects.equals(
-					recordVersion.getVersion(),
-					DDLRecordConstants.VERSION_DEFAULT)) {
-
-				IndexWriterHelperUtil.deleteDocument(
-					getSearchEngineId(), ddlRecord.getCompanyId(),
-					document.get(Field.UID), isCommitImmediately());
-			}
-
-			return;
-		}
 
 		IndexWriterHelperUtil.updateDocument(
 			getSearchEngineId(), ddlRecord.getCompanyId(), document,

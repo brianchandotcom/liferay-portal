@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.marketplace.internal.upgrade.v1_0_0;
+package com.liferay.marketplace.internal.upgrade.v0_0_1;
 
 import com.liferay.expando.kernel.exception.NoSuchTableException;
 import com.liferay.expando.kernel.model.ExpandoColumn;

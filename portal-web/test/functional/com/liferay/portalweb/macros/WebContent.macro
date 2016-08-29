@@ -1085,7 +1085,7 @@
 
 		<execute macro="WebContent#expandFolderTreeCP" />
 
-		<execute function="Click" locator1="WC#SELECT_FOLDER" value1="${folderName}">
+		<execute function="Click" locator1="WC#SELECT_FOLDER">
 			<var name="key_folderName" value="${folderName}" />
 		</execute>
 

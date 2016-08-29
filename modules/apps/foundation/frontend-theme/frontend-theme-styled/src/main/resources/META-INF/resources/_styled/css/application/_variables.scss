@@ -11,11 +11,14 @@ $card-horizontal-on-border-width: 2px !default;
 
 /* ---------- Dialogs ---------- */
 
+$dialog-footer-bg: $modal-footer-bg !default;
+$dialog-footer-border-color: $modal-footer-border-color !default;
 $dialog-footer-height: 60px;
-$dialog-navbar-height: 48px;
+$dialog-navbar-height: $navbar-height + 1 !default;
 
+$dialog-desktop-footer-bg: if(variable-exists(modal-desktop-footer-bg), $modal-desktop-footer-bg, $dialog-footer-bg) !default;
 $dialog-desktop-footer-height: 89px;
-$dialog-desktop-navbar-height: 60px;
+$dialog-desktop-navbar-height: if(variable-exists(navbar-desktop-height), $navbar-desktop-height, $dialog-navbar-height) !default;
 
 $dialog-footer-padding: 20px !default;
 $dialog-iframe-padding: 0 !default;

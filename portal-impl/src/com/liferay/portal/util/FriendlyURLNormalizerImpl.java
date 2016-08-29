@@ -42,7 +42,7 @@ public class FriendlyURLNormalizerImpl implements FriendlyURLNormalizer {
 
 	@Override
 	public String normalize(String friendlyURL) {
-		return normalize(friendlyURL, false, true);
+		return normalize(friendlyURL, false);
 	}
 
 	/**
@@ -86,31 +86,11 @@ public class FriendlyURLNormalizerImpl implements FriendlyURLNormalizer {
 
 	@Override
 	public String normalizeWithEncoding(String friendlyURL) {
-		return normalize(friendlyURL, false, false);
-	}
-
-	@Override
-	public String normalizeWithPeriodsAndSlashes(String friendlyURL) {
-		return normalize(friendlyURL, true, true);
-	}
-
-	protected String normalize(String friendlyURL, boolean periodsAndSlashes) {
-		return normalize(friendlyURL, periodsAndSlashes, true);
-	}
-
-	protected String normalize(
-		String friendlyURL, boolean periodsAndSlashes,
-		boolean normalizeToAscii) {
-
 		if (Validator.isNull(friendlyURL)) {
 			return friendlyURL;
 		}
 
 		friendlyURL = StringUtil.toLowerCase(friendlyURL);
-
-		if (normalizeToAscii) {
-			friendlyURL = Normalizer.normalizeToAscii(friendlyURL);
-		}
 
 		StringBuilder sb = new StringBuilder(friendlyURL.length());
 
@@ -122,19 +102,12 @@ public class FriendlyURLNormalizerImpl implements FriendlyURLNormalizer {
 			if (((CharPool.LOWER_CASE_A <= c) &&
 				 (c <= CharPool.LOWER_CASE_Z)) ||
 				((CharPool.NUMBER_0 <= c) && (c <= CharPool.NUMBER_9)) ||
-				(c == CharPool.UNDERLINE) ||
-				(!normalizeToAscii && (CharPool.PERCENT == c))) {
+				(c == CharPool.UNDERLINE) || (CharPool.PERCENT == c) ||
+				(c == CharPool.SLASH) || (c == CharPool.PERIOD)) {
 
 				sb.append(c);
 			}
-			else if (!periodsAndSlashes &&
-					 ((c == CharPool.SLASH) || (c == CharPool.PERIOD))) {
-
-				sb.append(c);
-			}
-			else if (normalizeToAscii ||
-					 ArrayUtil.contains(_REPLACE_CHARS, c)) {
-
+			else if (ArrayUtil.contains(_REPLACE_CHARS, c)) {
 				if ((i == 0) || (CharPool.DASH != sb.charAt(sb.length() - 1))) {
 					sb.append(CharPool.DASH);
 				}
@@ -152,6 +125,55 @@ public class FriendlyURLNormalizerImpl implements FriendlyURLNormalizer {
 						_log.info(uee, uee);
 					}
 				}
+			}
+		}
+
+		if (modified) {
+			return sb.toString();
+		}
+
+		return friendlyURL;
+	}
+
+	@Override
+	public String normalizeWithPeriodsAndSlashes(String friendlyURL) {
+		return normalize(friendlyURL, true);
+	}
+
+	protected String normalize(String friendlyURL, boolean periodsAndSlashes) {
+		if (Validator.isNull(friendlyURL)) {
+			return friendlyURL;
+		}
+
+		friendlyURL = Normalizer.normalizeToAscii(friendlyURL);
+
+		StringBuilder sb = new StringBuilder(friendlyURL.length());
+
+		boolean modified = false;
+
+		for (int i = 0; i < friendlyURL.length(); i++) {
+			char c = friendlyURL.charAt(i);
+
+			if ((CharPool.UPPER_CASE_A <= c) && (c <= CharPool.UPPER_CASE_Z)) {
+				sb.append((char)(c + 32));
+
+				modified = true;
+			}
+			else if (((CharPool.LOWER_CASE_A <= c) &&
+					  (c <= CharPool.LOWER_CASE_Z)) ||
+					 ((CharPool.NUMBER_0 <= c) && (c <= CharPool.NUMBER_9)) ||
+					 (c == CharPool.UNDERLINE) ||
+					 (!periodsAndSlashes &&
+					  ((c == CharPool.SLASH) || (c == CharPool.PERIOD)))) {
+
+				sb.append(c);
+			}
+			else {
+				if ((i == 0) || (CharPool.DASH != sb.charAt(sb.length() - 1))) {
+					sb.append(CharPool.DASH);
+				}
+
+				modified = true;
 			}
 		}
 

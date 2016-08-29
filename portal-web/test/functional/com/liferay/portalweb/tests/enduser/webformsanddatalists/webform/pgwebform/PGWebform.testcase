@@ -2,7 +2,7 @@
 	<property name="portal.release" value="true" />
 	<property name="testray.main.component.name" value="Web Form" />
 
-	<property name="osgi.modules.includes" value="web-form" />
+	<property name="osgi.modules.includes" value="web-form-web" />
 
 	<var name="pageName" value="Web Form Test Page" />
 	<var name="portletName" value="Web Form" />

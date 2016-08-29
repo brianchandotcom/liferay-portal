@@ -36,11 +36,11 @@ artifact.
 ### Added
 - [LPS-67023]: Automatically apply the following default settings when on
 Jenkins:
-	- block Node.js invocations if the `com.liferay.cache` plugin is applied
-	- enable the the `node_modules` directory cache
-	- retry `npm install` 3 times if a Node.js invocation fails
+	- block Node.js invocations if the `com.liferay.cache` plugin is applied.
+	- enable the `node_modules` directory cache.
+	- retry `npm install` three times if a Node.js invocation fails.
 	- set up the NPM registry URL based on the `nodejs.npm.ci.registry` project
-	property
+	property.
 
 ### Changed
 - [LPS-67023]: Update the [Liferay Gradle Plugins] dependency to version 2.0.13.

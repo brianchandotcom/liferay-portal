@@ -172,11 +172,6 @@ public class StagedGroupStagedModelDataHandler
 		return _stagedModelRepository;
 	}
 
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
 	@Reference(
 		target = "(model.class.name=com.liferay.site.model.adapter.StagedGroup)",
 		unbind = "-"
@@ -187,7 +182,9 @@ public class StagedGroupStagedModelDataHandler
 		_stagedModelRepository = stagedModelRepository;
 	}
 
+	@Reference
 	private GroupLocalService _groupLocalService;
+
 	private StagedModelRepository<StagedGroup> _stagedModelRepository;
 
 }

@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.model.StagedGroupedModel;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.model.WorkflowedModel;
-import com.liferay.portal.kernel.model.adapter.StagedGroup;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -738,10 +737,9 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			PortletDataContext portletDataContext, Element referenceElement)
 		throws PortletDataException {
 
-		StagedModelDataHandler<StagedGroup> stagedModelDataHandler =
-			(StagedModelDataHandler<StagedGroup>)
-				StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(
-					StagedGroup.class.getName());
+		StagedModelDataHandler<?> stagedModelDataHandler =
+			StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(
+				"com.liferay.site.model.adapter.StagedGroup");
 
 		stagedModelDataHandler.importMissingReference(
 			portletDataContext, referenceElement);
@@ -862,10 +860,9 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 	protected boolean validateMissingGroupReference(
 		PortletDataContext portletDataContext, Element referenceElement) {
 
-		StagedModelDataHandler<StagedGroup> stagedModelDataHandler =
-			(StagedModelDataHandler<StagedGroup>)
-				StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(
-					StagedGroup.class.getName());
+		StagedModelDataHandler<?> stagedModelDataHandler =
+			StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(
+				"com.liferay.site.model.adapter.StagedGroup");
 
 		return stagedModelDataHandler.validateReference(
 			portletDataContext, referenceElement);

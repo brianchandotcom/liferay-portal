@@ -30,21 +30,21 @@
 
 	<!-- Custom checks -->
 
-	<suppress checks="ConstantNameCheck" files="portal-kernel/src/com/liferay/portal/kernel/nio/intraband/BaseIntraband\.java" />
-	<suppress checks="LPS42924Check" files="^(?!.*ServiceImpl\.java$).*$" />
-	<suppress checks="MethodNameCheck" files="modules/apps/knowledge-base/knowledge-base-markdown-converter/src/main/java/org/pegdown/LiferayParser\.java" />
-	<suppress checks="MethodNameCheck" files="modules/apps/wsrp/wsrp-service/src/main/java/com/liferay/wsrp/internal/proxy/Stub\.java" />
-	<suppress checks="MethodNameCheck" files="portal-impl/src/com/liferay/portal/events/EventsProcessorUtil\.java" />
-	<suppress checks="MethodNameCheck" files="portal-impl/src/com/liferay/portal/template/AbstractTemplate\.java" />
-	<suppress checks="MethodNameCheck" files="portal-impl/src/com/liferay/portal/util/HttpImpl\.java" />
-	<suppress checks="MethodNameCheck" files="portal-impl/test/unit/com/liferay/portal/kernel/nio/intraband/CancelingPortalExecutorManagerUtilAdvice\.java" />
-	<suppress checks="MethodNameCheck" files="portal-impl/test/unit/com/liferay/portal/kernel/nio/intraband/PortalExecutorManagerUtilAdvice\.java" />
-	<suppress checks="MethodNameCheck" files="portal-impl/test/unit/com/liferay/portal/nio/intraband/proxy/IntrabandProxyUtilTest\.java" />
-	<suppress checks="MethodNameCheck" files="portal-kernel/test/unit/com/liferay/portal/kernel/annotation/AnnotationLocatorTest\.java" />
-	<suppress checks="MethodNameCheck" files="portal-kernel/src/com/liferay/portal/kernel/util/Http\.java" />
-	<suppress checks="MethodNameCheck" files="portal-kernel/src/com/liferay/portal/kernel/util/HttpUtil\.java" />
-	<suppress checks="MissingModifierCheck" files="portal-impl/test/unit/com/liferay/portal/nio/intraband/proxy/IntrabandProxyUtilTest\.java" />
-	<suppress checks="MissingModifierCheck" files="portal-kernel/test/unit/com/liferay/portal/kernel/annotation/AnnotationLocatorTest\.java" />
-	<suppress checks="MissingModifierCheck" files="portal-kernel/test/unit/com/liferay/portal/kernel/resiliency/spi/agent/annotation/DistributedRegistryTest\.java" />
-	<suppress checks="ValidatorIsNullCheck" files="portal-impl/src/com/liferay/portal/service/persistence/impl/UserFinderImpl\.java" />
+	<suppress checks="ConstantName" files="portal-kernel/src/com/liferay/portal/kernel/nio/intraband/BaseIntraband\.java" />
+	<suppress checks="LPS42924" files="^(?!.*ServiceImpl\.java$).*$" />
+	<suppress checks="MethodName" files="modules/apps/knowledge-base/knowledge-base-markdown-converter/src/main/java/org/pegdown/LiferayParser\.java" />
+	<suppress checks="MethodName" files="modules/apps/wsrp/wsrp-service/src/main/java/com/liferay/wsrp/internal/proxy/Stub\.java" />
+	<suppress checks="MethodName" files="portal-impl/src/com/liferay/portal/events/EventsProcessorUtil\.java" />
+	<suppress checks="MethodName" files="portal-impl/src/com/liferay/portal/template/AbstractTemplate\.java" />
+	<suppress checks="MethodName" files="portal-impl/src/com/liferay/portal/util/HttpImpl\.java" />
+	<suppress checks="MethodName" files="portal-impl/test/unit/com/liferay/portal/kernel/nio/intraband/CancelingPortalExecutorManagerUtilAdvice\.java" />
+	<suppress checks="MethodName" files="portal-impl/test/unit/com/liferay/portal/kernel/nio/intraband/PortalExecutorManagerUtilAdvice\.java" />
+	<suppress checks="MethodName" files="portal-impl/test/unit/com/liferay/portal/nio/intraband/proxy/IntrabandProxyUtilTest\.java" />
+	<suppress checks="MethodName" files="portal-kernel/test/unit/com/liferay/portal/kernel/annotation/AnnotationLocatorTest\.java" />
+	<suppress checks="MethodName" files="portal-kernel/src/com/liferay/portal/kernel/util/Http\.java" />
+	<suppress checks="MethodName" files="portal-kernel/src/com/liferay/portal/kernel/util/HttpUtil\.java" />
+	<suppress checks="MissingModifier" files="portal-impl/test/unit/com/liferay/portal/nio/intraband/proxy/IntrabandProxyUtilTest\.java" />
+	<suppress checks="MissingModifier" files="portal-kernel/test/unit/com/liferay/portal/kernel/annotation/AnnotationLocatorTest\.java" />
+	<suppress checks="MissingModifier" files="portal-kernel/test/unit/com/liferay/portal/kernel/resiliency/spi/agent/annotation/DistributedRegistryTest\.java" />
+	<suppress checks="ValidatorIsNull" files="portal-impl/src/com/liferay/portal/service/persistence/impl/UserFinderImpl\.java" />
 </suppressions>

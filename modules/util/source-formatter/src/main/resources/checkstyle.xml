@@ -67,7 +67,7 @@
 
 		<!-- Custom checks -->
 
-		<module name="com.liferay.source.formatter.checkstyle.checks.AnnotationParameterOrderCheck">
+		<module name="com.liferay.source.formatter.checkstyle.checks.AnnotationParameterOrder">
 			<message key="annotation.unsortedParameter" value="Annotation parameter ''{0}'' is not sorted alphabetically" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.ConstantName">
@@ -76,19 +76,19 @@
 			<message key="name.collectionPrivatePattern" value="Private collection ''{0}'' must match pattern ''{1}''" />
 			<message key="name.collectionProtectedPublicPattern" value="Protected or public collection ''{0}'' must match pattern ''{1}''" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.LocalPatternCheck">
+		<module name="com.liferay.source.formatter.checkstyle.checks.LocalPattern">
 			<message key="pattern.local" value="Create a global variable for Pattern ''{0}''" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.LPS42924Check">
+		<module name="com.liferay.source.formatter.checkstyle.checks.LPS42924">
 			<message key="lps42924" value="Use ''classNameLocalService.getClassNameId'' instead of ''PortalUtil.getClassName''" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.MethodNameCheck">
+		<module name="com.liferay.source.formatter.checkstyle.checks.MethodName">
 			<property name="applyToPackage" value="false" />
 			<property name="applyToPrivate" value="false" />
 			<property name="format" value="^[a-z0-9][_a-zA-Z0-9]*$" />
 			<message key="name.invalidPattern" value="Protected or public method ''{0}'' must match pattern ''{1}''" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.MethodNameCheck">
+		<module name="com.liferay.source.formatter.checkstyle.checks.MethodName">
 			<property name="applyToProtected" value="false" />
 			<property name="applyToPublic" value="false" />
 			<property name="format" value="^_[a-z0-9][_a-zA-Z0-9]*$|readObject|writeObject" />
@@ -97,16 +97,16 @@
 		<module name="com.liferay.source.formatter.checkstyle.checks.MissingAuthor">
 			<message key="author.missing" value="Missing author" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.MissingModifierCheck">
+		<module name="com.liferay.source.formatter.checkstyle.checks.MissingModifier">
 			<message key="modifier.missing" value="Missing modifier for ''{0}''" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.MultipleJavadocCheck">
+		<module name="com.liferay.source.formatter.checkstyle.checks.MultipleJavadoc">
 			<message key="javadoc.multiple" value="''{0}'' has multiple javadocs" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.UnusedParameterCheck">
+		<module name="com.liferay.source.formatter.checkstyle.checks.UnusedParameter">
 			<message key="parameter.unused" value="Parameter ''{0}'' is unused" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.ValidatorIsNullCheck">
+		<module name="com.liferay.source.formatter.checkstyle.checks.ValidatorIsNull">
 			<message key="method.invalidName" value="Avoid using method ''{0}''" />
 		</module>
 	</module>

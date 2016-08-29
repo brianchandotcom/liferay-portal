@@ -65,6 +65,27 @@ Jenkins:
 ### Changed
 - [LPS-67352]: Update the [Liferay Gradle Plugins] dependency to version 2.0.17.
 
+## 1.2.0 - 2016-08-30
+
+### Added
+- [LPS-67863]: Allow to override the `Bundle-Version` and `packageinfo`
+versions of an OSGi project by creating a `.version-overrides-${project.name}.properties`
+file in the parent directory of the `.gitrepo` file with the following values:
+	- `Bundle-Version=<new bundle version>`
+	- `com.liferay.foo.bar=<new packageinfo version for com.liferay.foo.bar package>`
+
+- [LPS-67863]: If running `gradlew baseline -PsyncRelease` on an OSGi project,
+execute the following actions:
+	1. Bump up the `Bundle-Version` and `packageinfo` versions based on the same
+	module found in the branch pointed by the `release.versions.test.other.dir`
+	project property. The changes are either saved directly in the project
+	files, or in the `.version-overrides-${project.name}.properties` file if the
+	`.gitrepo` file contains the string `"mode = pull"`, which denotes a
+	read-only sub-repository.
+	2. Execute the `baseline` task, automatically ignoring any semantic
+	versioning error.
+	3. Commit the project files changes caused by steps 1 and 2.
+
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [LPS-66853]: https://issues.liferay.com/browse/LPS-66853
 [LPS-67023]: https://issues.liferay.com/browse/LPS-67023
@@ -72,3 +93,4 @@ Jenkins:
 [LPS-67658]: https://issues.liferay.com/browse/LPS-67658
 [LPS-67694]: https://issues.liferay.com/browse/LPS-67694
 [LPS-67804]: https://issues.liferay.com/browse/LPS-67804
+[LPS-67863]: https://issues.liferay.com/browse/LPS-67863

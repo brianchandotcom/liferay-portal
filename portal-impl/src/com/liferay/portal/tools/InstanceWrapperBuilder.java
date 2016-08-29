@@ -194,7 +194,11 @@ public class InstanceWrapperBuilder {
 
 			sb.append("{\n");
 
-			if (!javaMethod.getReturnType().getValue().equals("void")) {
+			Type returnType = javaMethod.getReturnType();
+
+			String returnTypeValue = returnType.getValue();
+
+			if (!returnTypeValue.equals("void")) {
 				sb.append("return ");
 			}
 

@@ -68,8 +68,11 @@ public class CurrencyConverterWebCacheItem implements WebCacheItem {
 
 			st.nextToken();
 
-			rate = GetterUtil.getDouble(
-				st.nextToken().replace('"', ' ').trim());
+			String token = st.nextToken();
+
+			token = token.replace('"', ' ');
+
+			rate = GetterUtil.getDouble(token.trim());
 		}
 		catch (Exception e) {
 			throw new WebCacheException(e);

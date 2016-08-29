@@ -17,6 +17,7 @@ package com.liferay.util.xml.descriptor;
 import com.liferay.util.xml.ElementIdentifier;
 
 import org.dom4j.Document;
+import org.dom4j.Element;
 
 /**
  * @author Jorge Ferrer
@@ -25,7 +26,11 @@ public class PortletAppDescriptor extends SimpleXMLDescriptor {
 
 	@Override
 	public boolean canHandleType(String doctype, Document root) {
-		return root.getRootElement().getName().equals("portlet-app");
+		Element element = root.getRootElement();
+
+		String name = element.getName();
+
+		return name.equals("portlet-app");
 	}
 
 	@Override

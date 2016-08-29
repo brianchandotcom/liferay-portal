@@ -1038,7 +1038,11 @@ public class CMISRepository extends BaseCmisRepository {
 
 			validateTitle(session, newFolderId, document.getName());
 
-			String oldFolderObjectId = document.getParents().get(0).getId();
+			List<Folder> parents = document.getParents();
+
+			Folder oldFolder = parents.get(0);
+
+			String oldFolderObjectId = oldFolder.getId();
 
 			if (oldFolderObjectId.equals(newFolderObjectId)) {
 				return toFileEntry(document);

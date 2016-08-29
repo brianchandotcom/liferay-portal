@@ -159,7 +159,9 @@ public class TextFormatter {
 			return name;
 		}
 
-		char[] chars = StringUtil.toLowerCase(name).trim().toCharArray();
+		String lowerCaseName = StringUtil.trim(StringUtil.toLowerCase(name));
+
+		char[] chars = lowerCaseName.toCharArray();
 
 		if (chars.length > 0) {
 			chars[0] = Character.toUpperCase(chars[0]);

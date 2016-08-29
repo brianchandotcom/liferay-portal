@@ -36,13 +36,13 @@ if (kbArticle != null) {
 			DLMimeTypeDisplayContext dlMimeTypeDisplayContext = (DLMimeTypeDisplayContext)request.getAttribute(KBWebKeys.DL_MIME_TYPE_DISPLAY_CONTEXT);
 
 			for (FileEntry fileEntry : attachmentsFileEntries) {
-				String clipURL = DLUtil.getPreviewURL(fileEntry, fileEntry.getFileVersion(), themeDisplay, StringPool.BLANK);
+				String rowURL = PortletFileRepositoryUtil.getDownloadPortletFileEntryURL(themeDisplay, fileEntry, "status=" + WorkflowConstants.STATUS_APPROVED);
 			%>
 
 				<div class="col-md-4">
 					<liferay-frontend:horizontal-card
 						text="<%= HtmlUtil.escape(fileEntry.getTitle()) %>"
-						url="<%= clipURL %>"
+						url="<%= rowURL %>"
 					>
 						<liferay-frontend:horizontal-card-col>
 							<span class="icon-monospaced sticker-lg <%= (dlMimeTypeDisplayContext != null) ? dlMimeTypeDisplayContext.getCssClassFileMimeType(fileEntry.getMimeType()) : "file-icon-color-0" %>"><%= StringUtil.shorten(StringUtil.upperCase(fileEntry.getExtension()), 3, StringPool.BLANK) %></span>

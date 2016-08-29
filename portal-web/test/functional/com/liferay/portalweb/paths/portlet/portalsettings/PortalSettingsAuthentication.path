@@ -184,7 +184,7 @@
 </tr>
 <tr>
 	<td>LDAP_SERVERS_TABLE_EDIT</td>
-	<td>//tr[contains(.,'${key_LDAPServerName}')]/td[3]//span[@title='Edit']</td>
+	<td>//tr[contains(.,'${key_LDAPServerName}')]/td[3]//span[.='Edit']/preceding-sibling::i</td>
 	<td></td>
 </tr>
 <tr>

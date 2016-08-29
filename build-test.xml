@@ -4432,9 +4432,9 @@ go]]></replacevalue>
 	</target>
 
 	<target name="deploy-lcs-environment-token">
-		<copy todir="${liferay.home}/data">
+		<move todir="${liferay.home}/data">
 			<fileset dir="${selenium.output.dir.name}" includes="lcs-aatf-*.aatf" />
-		</copy>
+		</move>
 	</target>
 
 	<target name="deploy-license-xml">

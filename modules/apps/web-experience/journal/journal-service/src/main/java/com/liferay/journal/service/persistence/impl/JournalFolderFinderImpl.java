@@ -100,6 +100,13 @@ public class JournalFolderFinderImpl
 	}
 
 	@Override
+	public List<Object> findF_A_ByG_F(
+		long groupId, long folderId, QueryDefinition<?> queryDefinition) {
+
+		return doFindF_A_ByG_F(groupId, folderId, queryDefinition, false);
+	}
+
+	@Override
 	public List<JournalFolder> findF_ByNoAssets() {
 		Session session = null;
 
@@ -120,13 +127,6 @@ public class JournalFolderFinderImpl
 		finally {
 			closeSession(session);
 		}
-	}
-
-	@Override
-	public List<Object> findF_A_ByG_F(
-		long groupId, long folderId, QueryDefinition<?> queryDefinition) {
-
-		return doFindF_A_ByG_F(groupId, folderId, queryDefinition, false);
 	}
 
 	protected int doCountF_A_ByG_F(

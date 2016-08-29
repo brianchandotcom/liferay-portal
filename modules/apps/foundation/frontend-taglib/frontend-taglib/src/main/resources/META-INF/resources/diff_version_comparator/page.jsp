@@ -52,18 +52,20 @@ if (Validator.isNotNull(languageId)) {
 						Map<String, Object> data = new HashMap<String, Object>();
 
 						for (DiffVersion diffVersion : diffVersionsInfo.getDiffVersions()) {
-							data.put("version", diffVersion.getVersion());
+							if (sourceVersion != diffVersion.getVersion()) {
+								data.put("version", diffVersion.getVersion());
 						%>
 
-							<liferay-ui:icon
-								data="<%= data %>"
-								label="<%= true %>"
-								linkCssClass="source-version"
-								message='<%= LanguageUtil.format(request, "version-x", diffVersion.getVersion()) %>'
-								url="javascript:;"
-							/>
+								<liferay-ui:icon
+									data="<%= data %>"
+									label="<%= true %>"
+									linkCssClass="source-version"
+									message='<%= LanguageUtil.format(request, "version-x", diffVersion.getVersion()) %>'
+									url="javascript:;"
+								/>
 
 						<%
+							}
 						}
 						%>
 
@@ -85,18 +87,20 @@ if (Validator.isNotNull(languageId)) {
 						Map<String, Object> data = new HashMap<String, Object>();
 
 						for (DiffVersion diffVersion : diffVersionsInfo.getDiffVersions()) {
-							data.put("version", diffVersion.getVersion());
+							if (targetVersion != diffVersion.getVersion()) {
+								data.put("version", diffVersion.getVersion());
 						%>
 
-							<liferay-ui:icon
-								data="<%= data %>"
-								label="<%= true %>"
-								linkCssClass="target-version"
-								message='<%= LanguageUtil.format(request, "version-x", diffVersion.getVersion()) %>'
-								url="javascript:;"
-							/>
+								<liferay-ui:icon
+									data="<%= data %>"
+									label="<%= true %>"
+									linkCssClass="target-version"
+									message='<%= LanguageUtil.format(request, "version-x", diffVersion.getVersion()) %>'
+									url="javascript:;"
+								/>
 
 						<%
+							}
 						}
 						%>
 

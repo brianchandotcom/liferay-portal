@@ -1,10 +1,10 @@
 import com.liferay.gradle.util.copy.RenameDependencyClosure
 
+task copyTestLibs(type: Copy)
+
 bundle {
 	includeTransitiveDependencies = true
 }
-
-task copyTestLibs(type: Copy)
 
 copyTestLibs {
 	from configurations.provided
@@ -38,4 +38,6 @@ dependencies {
 	testCompile gradleTestKit()
 }
 
-test.dependsOn copyTestLibs
+test {
+	dependsOn copyTestLibs
+}

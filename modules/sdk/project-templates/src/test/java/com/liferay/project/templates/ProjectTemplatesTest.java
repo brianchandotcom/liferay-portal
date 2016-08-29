@@ -376,7 +376,7 @@ public class ProjectTemplatesTest {
 
 		BufferedReader reader = new BufferedReader(new FileReader(file));
 
-		while ((line = reader.readLine()) !=null) {
+		while ((line = reader.readLine()) != null) {
 			lines.add(line);
 
 			if (line.startsWith("import")) {
@@ -393,7 +393,7 @@ public class ProjectTemplatesTest {
 
 		reader.close();
 
-		try(Writer writer = new FileWriter(file)) {
+		try (Writer writer = new FileWriter(file)) {
 			for (String string : lines) {
 				writer.write(string + "\n");
 			}
@@ -426,7 +426,8 @@ public class ProjectTemplatesTest {
 
 		_contains(
 			settingsfile,
-			"include \"backend-integration-api\", \"backend-integration-service\"");
+			"include \"backend-integration-api\", " +
+				"\"backend-integration-service\"");
 
 		File apibndfile = new File(
 			projectDir, "/backend-integration-api/bnd.bnd");
@@ -680,7 +681,8 @@ public class ProjectTemplatesTest {
 
 		File portletfile = new File(
 			projectDir,
-			"/src/main/java/hello/world/portlet/portlet/HelloWorldPortlet.java");
+			"/src/main/java/hello/world/portlet/portlet/" +
+				"HelloWorldPortlet.java");
 
 		_contains(
 			portletfile,

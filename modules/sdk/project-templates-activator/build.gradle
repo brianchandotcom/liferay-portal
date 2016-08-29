@@ -8,6 +8,7 @@ processResources {
 	filesMatching("**/build.gradle") {
 		filter {
 			String line ->
+
 			gradlePluginVersions.each {
 				String name, String version ->
 

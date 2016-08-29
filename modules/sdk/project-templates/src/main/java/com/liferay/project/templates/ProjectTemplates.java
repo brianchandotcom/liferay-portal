@@ -95,6 +95,7 @@ public class ProjectTemplates {
 						String template = name.substring(
 							_TEMPLATES_BUNDLE_PREFIX.length(),
 							name.indexOf("-"));
+
 						templates.add(template);
 					}
 				}

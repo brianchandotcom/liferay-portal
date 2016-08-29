@@ -1828,6 +1828,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		configureTaskJavadocFilter(javadoc);
 		configureTaskJavadocOptions(javadoc);
+		_configureTaskJavadocTitle(javadoc);
 
 		JavaVersion javaVersion = JavaVersion.current();
 
@@ -2450,6 +2451,22 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		resolutionStrategy.cacheChangingModulesFor(0, TimeUnit.SECONDS);
 		resolutionStrategy.cacheDynamicVersionsFor(0, TimeUnit.SECONDS);
+	}
+
+	private void _configureTaskJavadocTitle(Javadoc javadoc) {
+		Project project = javadoc.getProject();
+
+		String bundleName = getBundleInstruction(
+			project, Constants.BUNDLE_NAME);
+
+		if (Validator.isNull(bundleName)) {
+			return;
+		}
+
+		String title = String.format(
+			"%s %s API", bundleName, project.getVersion());
+
+		javadoc.setTitle(title);
 	}
 
 	private void _configureTasksEnabledIfStaleSnapshot(

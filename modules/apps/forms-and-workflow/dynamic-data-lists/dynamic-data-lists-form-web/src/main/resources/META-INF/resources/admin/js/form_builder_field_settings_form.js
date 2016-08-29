@@ -50,7 +50,7 @@ AUI.add(
 						var existingField;
 
 						if (!key) {
-							key = field.get('context.label');
+							key = field.get('context.type');
 						}
 
 						var name = key;

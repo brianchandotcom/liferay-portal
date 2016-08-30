@@ -21,19 +21,13 @@ summary.setHighlight(searchDisplayContext.isHighlightEnabled());
 summary.setQueryTerms(searchDisplayContext.getQueryTerms());
 
 AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(className, classPK);
-
-long assetEntryUserId = assetEntry.getUserId();
-
-if (assetEntry.getClassName().equals(User.class.getName())) {
-	assetEntryUserId = assetEntry.getClassPK();
-}
 %>
 
 <c:if test="<%= assetEntry != null %>">
 	<liferay-ui:search-container-column-text>
 		<liferay-ui:user-portrait
 			cssClass="user-icon-lg"
-			userId="<%= assetEntryUserId %>"
+			userId="<%= Objects.equals(assetEntry.getClassName(), User.class.getName()) ? assetEntry.getClassPK() : assetEntry.getUserId() %>"
 		/>
 	</liferay-ui:search-container-column-text>
 </c:if>

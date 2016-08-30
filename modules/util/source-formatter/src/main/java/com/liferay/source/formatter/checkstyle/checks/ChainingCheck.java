@@ -43,6 +43,10 @@ public class ChainingCheck extends AbstractCheck {
 		return new int[] {TokenTypes.CTOR_DEF, TokenTypes.METHOD_DEF};
 	}
 
+	public void setChainingAllowedFormat(String chainingAllowedFormat) {
+		_chainingAllowedFormat = chainingAllowedFormat;
+	}
+
 	@Override
 	public void visitToken(DetailAST detailAST) {
 		List<DetailAST> methodCallASTList = DetailASTUtil.getAllChildTokens(
@@ -79,7 +83,7 @@ public class ChainingCheck extends AbstractCheck {
 			}
 
 			if (!chainedMethodNames.contains("concat.concat") &&
-				!chainedMethodNames.startsWith("bind.")) {
+				!chainedMethodNames.matches(_chainingAllowedFormat)) {
 
 				log(
 					methodCallAST.getLineNo(), MSG_AVOID_CHAINING_MULTIPLE,
@@ -145,5 +149,7 @@ public class ChainingCheck extends AbstractCheck {
 
 		return false;
 	}
+
+	private String _chainingAllowedFormat;
 
 }

@@ -27,7 +27,6 @@ import javax.servlet.ServletSecurityElement;
 
 /**
  * @author Juan Gonzalez
- *
  */
 public class ServletRegistrationImpl implements ServletRegistration.Dynamic {
 

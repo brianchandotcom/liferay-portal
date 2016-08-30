@@ -233,7 +233,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		File versionOverridesFile = _getVersionOverridesFile(project);
 
-		_syncReleaseVersions(project, portalRootDir, versionOverridesFile);
+		boolean syncReleaseVersions = _syncReleaseVersions(
+			project, portalRootDir, versionOverridesFile);
 
 		_applyVersionOverrides(project, versionOverridesFile);
 
@@ -295,7 +296,12 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			baselineConfiguration = addConfigurationBaseline(project);
 		}
 
-		addTaskBaseline(project, baselineConfiguration);
+		Task baselineTask = addTaskBaseline(project, baselineConfiguration);
+
+		if (syncReleaseVersions) {
+			_configureTaskBaselineSyncReleaseVersions(
+				baselineTask, versionOverridesFile);
+		}
 
 		InstallCacheTask installCacheTask = addTaskInstallCache(project);
 
@@ -2460,6 +2466,47 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		resolutionStrategy.cacheChangingModulesFor(0, TimeUnit.SECONDS);
 		resolutionStrategy.cacheDynamicVersionsFor(0, TimeUnit.SECONDS);
+	}
+
+	private void _configureTaskBaselineSyncReleaseVersions(
+		Task task, final File versionOverridesFile) {
+
+		Action<Task> action = new Action<Task>() {
+
+			@Override
+			public void execute(Task task) {
+				try {
+					Project project = task.getProject();
+
+					if (versionOverridesFile != null) {
+						Properties versions = _getVersions(
+							project.getProjectDir(), null);
+
+						_saveVersions(
+							project.getProjectDir(), versions,
+							versionOverridesFile);
+
+						GitUtil.executeGit(
+							project, "add",
+							project.relativePath(versionOverridesFile));
+					}
+					else {
+						GitUtil.executeGit(
+							project, "add", "bnd.bnd", "**/packageinfo");
+					}
+
+					String message = project.getName() + " packageinfo";
+
+					GitUtil.commit(project, message, true);
+				}
+				catch (IOException ioe) {
+					throw new UncheckedIOException(ioe);
+				}
+			}
+
+		};
+
+		task.doLast(action);
 	}
 
 	private void _configureTaskJavadocTitle(Javadoc javadoc) {

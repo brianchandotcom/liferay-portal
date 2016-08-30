@@ -25,7 +25,6 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleResource;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.model.JournalFolderConstants;
-import com.liferay.journal.service.JournalArticleImageLocalServiceUtil;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.service.JournalArticleResourceLocalServiceUtil;
 import com.liferay.journal.service.JournalFolderLocalServiceUtil;
@@ -156,15 +155,6 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 		journalArticle.setTitleMap(getTitleMap());
 
 		return journalArticle;
-	}
-
-	@Override
-	public long getArticleImageId(
-		String elInstanceId, String elName, String languageId) {
-
-		return JournalArticleImageLocalServiceUtil.getArticleImageId(
-			getGroupId(), getArticleId(), getVersion(), elInstanceId, elName,
-			languageId);
 	}
 
 	@Override

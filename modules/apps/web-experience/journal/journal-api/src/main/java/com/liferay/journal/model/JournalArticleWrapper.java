@@ -1007,13 +1007,6 @@ public class JournalArticleWrapper implements JournalArticle,
 		return _journalArticle.getTitleMap();
 	}
 
-	@Override
-	public long getArticleImageId(java.lang.String elInstanceId,
-		java.lang.String elName, java.lang.String languageId) {
-		return _journalArticle.getArticleImageId(elInstanceId, elName,
-			languageId);
-	}
-
 	/**
 	* Returns the class name ID of this journal article.
 	*

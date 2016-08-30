@@ -3,7 +3,6 @@
 
 <hibernate-mapping auto-import="false" default-lazy="false">
 	<import class="com.liferay.journal.model.JournalArticle" />
-	<import class="com.liferay.journal.model.JournalArticleImage" />
 	<import class="com.liferay.journal.model.JournalArticleLocalization" />
 	<import class="com.liferay.journal.model.JournalArticleResource" />
 	<import class="com.liferay.journal.model.JournalContentSearch" />
@@ -45,19 +44,6 @@
 		<property name="statusByUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="statusByUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="statusDate" type="org.hibernate.type.TimestampType" />
-	</class>
-	<class name="com.liferay.journal.model.impl.JournalArticleImageImpl" table="JournalArticleImage">
-		<id name="articleImageId" type="long">
-			<generator class="assigned" />
-		</id>
-		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="articleId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="version" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
-		<property name="elInstanceId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="elName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="languageId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="tempImage" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 	</class>
 	<class name="com.liferay.journal.model.impl.JournalArticleLocalizationImpl" table="JournalArticleLocalization">
 		<id name="articleLocalizationId" type="long">

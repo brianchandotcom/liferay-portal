@@ -209,7 +209,6 @@
 
 		<!-- References -->
 
-		<reference entity="JournalArticleImage" package-path="com.liferay.journal" />
 		<reference entity="JournalArticleLocalization" package-path="com.liferay.journal" />
 		<reference entity="JournalArticleResource" package-path="com.liferay.journal" />
 		<reference entity="JournalContentSearch" package-path="com.liferay.journal" />
@@ -235,55 +234,6 @@
 		<reference entity="RatingsStats" package-path="com.liferay.portlet.ratings" />
 		<reference entity="TrashEntry" package-path="com.liferay.portlet.trash" />
 		<reference entity="TrashVersion" package-path="com.liferay.portlet.trash" />
-	</entity>
-	<entity local-service="true" name="JournalArticleImage" remote-service="false">
-
-		<!-- PK fields -->
-
-		<column name="articleImageId" primary="true" type="long" />
-
-		<!-- Group instance -->
-
-		<column name="groupId" type="long" />
-
-		<!-- Audit fields -->
-
-		<column name="companyId" type="long" />
-
-		<!-- Other fields -->
-
-		<column name="articleId" type="String" />
-		<column name="version" type="double" />
-		<column name="elInstanceId" type="String" />
-		<column name="elName" type="String" />
-		<column name="languageId" type="String" />
-		<column name="tempImage" type="boolean" />
-
-		<!-- Finder methods -->
-
-		<finder name="GroupId" return-type="Collection">
-			<finder-column name="groupId" />
-		</finder>
-		<finder name="TempImage" return-type="Collection">
-			<finder-column name="tempImage" />
-		</finder>
-		<finder name="G_A_V" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column name="articleId" />
-			<finder-column name="version" />
-		</finder>
-		<finder name="G_A_V_E_E_L" return-type="JournalArticleImage" unique="true">
-			<finder-column name="groupId" />
-			<finder-column name="articleId" />
-			<finder-column name="version" />
-			<finder-column name="elInstanceId" />
-			<finder-column name="elName" />
-			<finder-column name="languageId" />
-		</finder>
-
-		<!-- References -->
-
-		<reference entity="Image" package-path="com.liferay.portal" />
 	</entity>
 	<entity local-service="false" name="JournalArticleLocalization" remote-service="false">
 
@@ -575,7 +525,6 @@
 		<exception>ArticleTitle</exception>
 		<exception>ArticleVersion</exception>
 		<exception>DuplicateArticleId</exception>
-		<exception>DuplicateArticleImageId</exception>
 		<exception>DuplicateFeedId</exception>
 		<exception>DuplicateFolderName</exception>
 		<exception>FeedContentField</exception>

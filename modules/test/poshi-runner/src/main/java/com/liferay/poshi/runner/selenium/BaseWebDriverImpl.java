@@ -109,12 +109,9 @@ import org.xml.sax.InputSource;
 /**
  * @author Brian Wing Shun Chan
  */
-public abstract class BaseWebDriverImpl
-	extends WebDriverWrapper implements LiferaySelenium {
+public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	public BaseWebDriverImpl(String browserURL, WebDriver webDriver) {
-		super(webDriver);
-
 		_screenshotCount = 0;
 		_screenshotErrorCount = 0;
 		_webDriver = webDriver;

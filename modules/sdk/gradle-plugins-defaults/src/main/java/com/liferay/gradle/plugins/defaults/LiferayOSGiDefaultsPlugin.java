@@ -60,7 +60,6 @@ import groovy.json.JsonSlurper;
 
 import groovy.lang.Closure;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.UncheckedIOException;
@@ -782,7 +781,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				public void execute(Task task) {
 					Project project = task.getProject();
 
-					final String commitSubject = getGitResult(
+					final String commitSubject = GitUtil.getGitResult(
 						project, "log", "-1", "--pretty=%s");
 
 					project.exec(
@@ -856,7 +855,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(Task task) {
-					String result = getGitResult(
+					String result = GitUtil.getGitResult(
 						task.getProject(), "status", "--porcelain", ".");
 
 					if (Validator.isNotNull(result)) {
@@ -2251,25 +2250,12 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		return (Map<String, String>)bundleExtension.getInstructions();
 	}
 
+	/**
+	 * @deprecated As of 1.2.0
+	 */
+	@Deprecated
 	protected String getGitResult(Project project, final Object... args) {
-		final ByteArrayOutputStream byteArrayOutputStream =
-			new ByteArrayOutputStream();
-
-		project.exec(
-			new Action<ExecSpec>() {
-
-				@Override
-				public void execute(ExecSpec execSpec) {
-					execSpec.args(args);
-					execSpec.setExecutable("git");
-					execSpec.setStandardOutput(byteArrayOutputStream);
-				}
-
-			});
-
-		String result = byteArrayOutputStream.toString();
-
-		return result.trim();
+		return GitUtil.getGitResult(project, args);
 	}
 
 	protected File getLibDir(Project project) {

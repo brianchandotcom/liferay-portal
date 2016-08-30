@@ -317,12 +317,12 @@ public class PollsQuestionLocalServiceImpl
 			if (choice == null) {
 				pollsChoiceLocalService.addChoice(
 					userId, questionId, choiceName, choiceDescription,
-					new ServiceContext());
+					serviceContext);
 			}
 			else {
 				pollsChoiceLocalService.updateChoice(
 					choice.getChoiceId(), questionId, choiceName,
-					choiceDescription, new ServiceContext());
+					choiceDescription, serviceContext);
 			}
 		}
 

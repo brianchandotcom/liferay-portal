@@ -32,6 +32,8 @@ public abstract class BaseMobileDriverImpl
 	public BaseMobileDriverImpl(String browserURL, WebDriver webDriver) {
 		super(webDriver);
 
+		_mobileDriver = (MobileDriver)webDriver;
+
 		WebDriverHelper.setDefaultWindowHandle(webDriver.getWindowHandle());
 
 		System.setProperty("java.awt.headless", "false");
@@ -1798,6 +1800,8 @@ public abstract class BaseMobileDriverImpl
 
 	private static final String _TEST_DEPENDENCIES_DIR_NAME =
 		PropsValues.TEST_DEPENDENCIES_DIR_NAME;
+
+	private final MobileDriver _mobileDriver;
 
 	private String _primaryTestSuiteName;
 

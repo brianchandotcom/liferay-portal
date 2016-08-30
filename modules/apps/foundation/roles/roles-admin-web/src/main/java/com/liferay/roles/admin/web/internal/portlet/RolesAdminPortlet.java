@@ -517,71 +517,6 @@ public class RolesAdminPortlet extends MVCPortlet {
 			_panelCategoryRegistry);
 	}
 
-	@Reference(unbind = "-")
-	protected void setGroupService(GroupService groupService) {
-		_groupService = groupService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPanelAppRegistry(PanelAppRegistry panelAppRegistry) {
-		_panelAppRegistry = panelAppRegistry;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPanelCategoryRegistry(
-		PanelCategoryRegistry panelCategoryRegistry) {
-
-		_panelCategoryRegistry = panelCategoryRegistry;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPermissionService(PermissionService permissionService) {
-		_permissionService = permissionService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setResourceBlockLocalService(
-		ResourceBlockLocalService resourceBlockLocalService) {
-
-		_resourceBlockLocalService = resourceBlockLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setResourceBlockService(
-		ResourceBlockService resourceBlockService) {
-
-		_resourceBlockService = resourceBlockService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setResourcePermissionLocalService(
-		ResourcePermissionLocalService resourcePermissionLocalService) {
-
-		_resourcePermissionLocalService = resourcePermissionLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setResourcePermissionService(
-		ResourcePermissionService resourcePermissionService) {
-
-		_resourcePermissionService = resourcePermissionService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setRoleLocalService(RoleLocalService roleLocalService) {
-		_roleLocalService = roleLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setRoleService(RoleService roleService) {
-		_roleService = roleService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserService(UserService userService) {
-		_userService = userService;
-	}
-
 	protected void updateActions_Blocks(
 			Role role, long scopeGroupId, String selResource, String actionId,
 			boolean selected, int scope, String[] groupIds)
@@ -618,16 +553,37 @@ public class RolesAdminPortlet extends MVCPortlet {
 		}
 	}
 
+	@Reference
 	private GroupService _groupService;
+
+	@Reference
 	private PanelAppRegistry _panelAppRegistry;
+
+	@Reference
 	private PanelCategoryRegistry _panelCategoryRegistry;
+
+	@Reference
 	private PermissionService _permissionService;
+
+	@Reference
 	private ResourceBlockLocalService _resourceBlockLocalService;
+
+	@Reference
 	private ResourceBlockService _resourceBlockService;
+
+	@Reference
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Reference
 	private ResourcePermissionService _resourcePermissionService;
+
+	@Reference
 	private RoleLocalService _roleLocalService;
+
+	@Reference
 	private RoleService _roleService;
+
+	@Reference
 	private UserService _userService;
 
 }

@@ -17,6 +17,8 @@ package com.liferay.portal.search.internal.instance.lifecycle;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.SearchEngineHelper;
 
@@ -32,24 +34,42 @@ public class SearchIndexPortalInstanceLifecycleListener
 
 	@Override
 	public void portalInstancePreregistered(long companyId) {
-		if (_clusterMasterExecutor.isMaster()) {
-			_searchEngineHelper.initialize(companyId);
+		try {
+			if (_clusterMasterExecutor.isMaster()) {
+				_searchEngineHelper.initialize(companyId);
+			}
+		}
+		catch (Exception e) {
+			_log.error("Search engine failure initializing " + companyId, e);
 		}
 	}
 
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
-		if (_clusterMasterExecutor.isMaster()) {
-			_searchEngineHelper.initialize(company.getCompanyId());
+		try {
+			if (_clusterMasterExecutor.isMaster()) {
+				_searchEngineHelper.initialize(company.getCompanyId());
+			}
+		}
+		catch (Exception e) {
+			_log.error("Search engine failure initializing " + company, e);
 		}
 	}
 
 	@Override
 	public void portalInstanceUnregistered(Company company) throws Exception {
-		if (_clusterMasterExecutor.isMaster()) {
-			_searchEngineHelper.removeCompany(company.getCompanyId());
+		try {
+			if (_clusterMasterExecutor.isMaster()) {
+				_searchEngineHelper.removeCompany(company.getCompanyId());
+			}
+		}
+		catch (Exception e) {
+			_log.error("Search engine failure removing " + company, e);
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SearchIndexPortalInstanceLifecycleListener.class);
 
 	@Reference
 	private ClusterMasterExecutor _clusterMasterExecutor;

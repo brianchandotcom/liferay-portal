@@ -14,6 +14,7 @@
 
 package com.liferay.exportimport.kernel.staging;
 
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutRevision;
@@ -39,5 +40,8 @@ public interface LayoutStaging {
 	public boolean isBranchingLayout(Layout layout);
 
 	public boolean isBranchingLayoutSet(Group group, boolean privateLayout);
+
+	public boolean prepareLayoutStagingHandler(
+		PortletDataContext portletDataContext, Layout layout);
 
 }

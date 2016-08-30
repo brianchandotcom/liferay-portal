@@ -117,6 +117,7 @@ public abstract class BaseWebDriverImpl
 
 		_screenshotCount = 0;
 		_screenshotErrorCount = 0;
+		_webDriver = webDriver;
 
 		initKeysSpecialChars();
 
@@ -3310,5 +3311,6 @@ public abstract class BaseWebDriverImpl
 	private int _screenshotErrorCount;
 	private final String _sikuliImagesDirName;
 	private final String _testDependenciesDirName;
+	private final WebDriver _webDriver;
 
 }

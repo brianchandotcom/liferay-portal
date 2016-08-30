@@ -54,15 +54,13 @@ import com.liferay.dynamic.data.mapping.annotations.DDMFormRule;
 )
 public interface DDMFormFieldTypeSettings {
 
-	@DDMFormField(required = true, visibilityExpression = "FALSE")
+	@DDMFormField(required = true)
 	public String dataType();
 
-	@DDMFormField(
-		label = "%name", required = true, visibilityExpression = "FALSE"
-	)
+	@DDMFormField(label = "%name", required = true)
 	public String name();
 
-	@DDMFormField(required = true, visibilityExpression = "FALSE")
+	@DDMFormField(required = true)
 	public String type();
 
 }

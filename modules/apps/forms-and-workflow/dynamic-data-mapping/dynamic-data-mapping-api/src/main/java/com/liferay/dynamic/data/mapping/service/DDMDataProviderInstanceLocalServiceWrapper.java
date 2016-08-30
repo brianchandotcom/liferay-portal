@@ -124,6 +124,12 @@ public class DDMDataProviderInstanceLocalServiceWrapper
 		return _ddmDataProviderInstanceLocalService.fetchDataProviderInstance(dataProviderInstanceId);
 	}
 
+	@Override
+	public com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance fetchDataProviderInstanceByUuid(
+		java.lang.String uuid) {
+		return _ddmDataProviderInstanceLocalService.fetchDataProviderInstanceByUuid(uuid);
+	}
+
 	/**
 	* Returns the d d m data provider instance with the primary key.
 	*
@@ -159,6 +165,13 @@ public class DDMDataProviderInstanceLocalServiceWrapper
 		long dataProviderInstanceId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmDataProviderInstanceLocalService.getDataProviderInstance(dataProviderInstanceId);
+	}
+
+	@Override
+	public com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance getDataProviderInstanceByUuid(
+		java.lang.String uuid)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddmDataProviderInstanceLocalService.getDataProviderInstanceByUuid(uuid);
 	}
 
 	/**

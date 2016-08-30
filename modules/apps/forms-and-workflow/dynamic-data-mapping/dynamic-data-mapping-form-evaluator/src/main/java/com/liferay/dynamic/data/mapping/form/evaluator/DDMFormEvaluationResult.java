@@ -45,6 +45,7 @@ public class DDMFormEvaluationResult {
 		return _ddmFormFieldEvaluationResults;
 	}
 
+	@JSON(include = false)
 	public Map<String, DDMFormFieldEvaluationResult>
 		getDDMFormFieldEvaluationResultsMap() {
 

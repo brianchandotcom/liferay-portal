@@ -68,7 +68,7 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 		DDMFormEvaluationResult ddmFormEvaluationResult =
 			getDDMFormEvaluationResult(ddmForm, ddmFormValues);
 
-		inspectDDMFormEvaluationResult(ddmFormEvaluationResult);
+		inspectDDMFormEvaluationResult(ddmForm, ddmFormEvaluationResult);
 
 		traverseDDMFormFields(
 			ddmForm.getDDMFormFields(),
@@ -117,8 +117,21 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 		return ddmFormFieldValues;
 	}
 
+	protected boolean hasInvalidValue(
+		DDMFormField ddmFormField,
+		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult) {
+
+		Object valueObject = ddmFormFieldEvaluationResult.getValue();
+
+		if (ddmFormField.isRequired() && Validator.isNull(valueObject)) {
+			return false;
+		}
+
+		return !ddmFormFieldEvaluationResult.isValid();
+	}
+
 	protected void inspectDDMFormEvaluationResult(
-			DDMFormEvaluationResult ddmFormEvaluationResult)
+			DDMForm ddmForm, DDMFormEvaluationResult ddmFormEvaluationResult)
 		throws DDMFormValuesValidationException {
 
 		Map<String, DDMFormFieldEvaluationResult>
@@ -128,10 +141,16 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 		List<DDMFormFieldEvaluationResult> ddmFormFieldEvaluationResults =
 			new ArrayList<>();
 
+		Map<String, DDMFormField> ddmFormFieldsMap =
+			ddmForm.getDDMFormFieldsMap(true);
+
 		for (DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult :
 				ddmFormFieldEvaluationResultsMap.values()) {
 
-			if (!ddmFormFieldEvaluationResult.isValid()) {
+			DDMFormField ddmFormField = ddmFormFieldsMap.get(
+				ddmFormFieldEvaluationResult.getName());
+
+			if (hasInvalidValue(ddmFormField, ddmFormFieldEvaluationResult)) {
 				ddmFormFieldEvaluationResults.add(ddmFormFieldEvaluationResult);
 			}
 		}

@@ -22,8 +22,7 @@ page import="com.liferay.portal.kernel.model.User" %><%@
 page import="com.liferay.portal.kernel.service.UserLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.util.LocaleUtil" %>
 
-<%@ page import="java.util.HashMap" %><%@
-page import="java.util.Locale" %><%@
+<%@ page import="java.util.Locale" %><%@
 page import="java.util.Set" %>
 
 <portlet:defineObjects />

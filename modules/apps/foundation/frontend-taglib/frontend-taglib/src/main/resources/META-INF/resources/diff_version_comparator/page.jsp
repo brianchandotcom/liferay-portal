@@ -30,6 +30,8 @@ double nextVersion = diffVersionsInfo.getNextVersion();
 double previousVersion = diffVersionsInfo.getPreviousVersion();
 
 if (Validator.isNotNull(languageId)) {
+	portletURL.setParameter("languageId", languageId);
+
 	resourceURL.setParameter("languageId", languageId);
 }
 %>
@@ -50,19 +52,19 @@ if (Validator.isNotNull(languageId)) {
 						<liferay-ui:icon-menu cssClass="diff-selector-version pull-right" direction="down" extended="<%= false %>" icon="../aui/caret-bottom-right" message='<%= LanguageUtil.format(request, "version-x", sourceVersion) %>' showArrow="<%= true %>" showWhenSingleIcon="<%= true %>" useIconCaret="<%= true %>">
 
 							<%
-							Map<String, Object> data = new HashMap<String, Object>();
+							PortletURL sourceURL = PortletURLUtil.clone(portletURL, renderResponse);
+
+							sourceURL.setParameter("targetVersion", String.valueOf(targetVersion));
 
 							for (DiffVersion diffVersion : diffVersionsInfo.getDiffVersions()) {
-								data.put("version", diffVersion.getVersion());
+								sourceURL.setParameter("sourceVersion", String.valueOf(diffVersion.getVersion()));
 							%>
 
 								<c:if test="<%= sourceVersion != diffVersion.getVersion() %>">
 									<liferay-ui:icon
-										data="<%= data %>"
 										label="<%= true %>"
-										linkCssClass="source-version"
 										message='<%= LanguageUtil.format(request, "version-x", diffVersion.getVersion()) %>'
-										url="javascript:;"
+										url="<%= sourceURL.toString() %>"
 									/>
 								</c:if>
 
@@ -85,19 +87,19 @@ if (Validator.isNotNull(languageId)) {
 						<liferay-ui:icon-menu cssClass="diff-selector-version" direction="down" extended="<%= false %>" icon="../aui/caret-bottom-right" message='<%= LanguageUtil.format(request, "version-x", targetVersion) %>' showArrow="<%= true %>" showWhenSingleIcon="<%= true %>" useIconCaret="<%= true %>">
 
 							<%
-							Map<String, Object> data = new HashMap<String, Object>();
+							PortletURL targetURL = PortletURLUtil.clone(portletURL, renderResponse);
+
+							targetURL.setParameter("sourceVersion", String.valueOf(sourceVersion));
 
 							for (DiffVersion diffVersion : diffVersionsInfo.getDiffVersions()) {
-								data.put("version", diffVersion.getVersion());
+								targetURL.setParameter("targetVersion", String.valueOf(diffVersion.getVersion()));
 							%>
 
 								<c:if test="<%= targetVersion != diffVersion.getVersion() %>">
 									<liferay-ui:icon
-										data="<%= data %>"
 										label="<%= true %>"
-										linkCssClass="target-version"
 										message='<%= LanguageUtil.format(request, "version-x", diffVersion.getVersion()) %>'
-										url="javascript:;"
+										url="<%= targetURL.toString() %>"
 									/>
 								</c:if>
 

@@ -1,8 +1,6 @@
 AUI.add(
 	'liferay-diff-version-comparator',
 	function(A) {
-		var BODY = A.getBody();
-
 		var Lang = A.Lang;
 
 		var SELECTOR_VERSION_ITEM = '.version-item';
@@ -108,8 +106,6 @@ AUI.add(
 						var instance = this;
 
 						var eventHandles = [
-							BODY.delegate(STR_CLICK, instance._onSourceVersionSelected, '.source-version', instance),
-							BODY.delegate(STR_CLICK, instance._onTargetVersionSelected, '.target-version', instance),
 							instance.get(STR_VERSION_FILTER).delegate(STR_CLICK, instance._onCloseFilter, '.close-version-filter', instance),
 							instance.get(STR_VERSION_ITEMS).delegate(STR_CLICK, instance._onSelectVersionItem, SELECTOR_VERSION_ITEM, instance)
 						];
@@ -258,26 +254,6 @@ AUI.add(
 						versionFilter.show();
 
 						instance._loadDiffHTML(currentTarget.attr('data-source-version'), currentTarget.attr(STR_DATA_VERSION));
-					},
-
-					_onSourceVersionSelected: function(event) {
-						var instance = this;
-
-						var sourceVersion = event.currentTarget.attr(STR_DATA_VERSION);
-
-						instance.byId('sourceVersion').val(sourceVersion);
-
-						submitForm(instance.get(STR_DIFF_FORM));
-					},
-
-					_onTargetVersionSelected: function(event) {
-						var instance = this;
-
-						var targetVersion = event.currentTarget.attr(STR_DATA_VERSION);
-
-						instance.byId('targetVersion').val(targetVersion);
-
-						submitForm(instance.get(STR_DIFF_FORM));
 					}
 				}
 			}

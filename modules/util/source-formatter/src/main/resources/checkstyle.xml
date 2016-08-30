@@ -10,6 +10,9 @@
 		<module name="AvoidStarImport" />
 		<module name="DefaultComesLast" />
 		<module name="GenericWhitespace" />
+		<module name="JavadocStyle">
+			<property name="checkFirstSentence" value="false" />
+		</module>
 		<module name="LocalFinalVariableName">
 			<property name="format" value="^[a-z0-9][_a-zA-Z0-9]*$" />
 			<message key="name.invalidPattern" value="Local final variable ''{0}'' must match pattern ''{1}''" />

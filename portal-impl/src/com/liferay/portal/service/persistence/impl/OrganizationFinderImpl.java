@@ -688,22 +688,11 @@ public class OrganizationFinderImpl
 			sb.append(StringPool.OPEN_PARENTHESIS);
 			sb.append(CustomSQLUtil.get(FIND_O_BY_C_P));
 			sb.append(") UNION ALL (");
-
-			String sql = CustomSQLUtil.get(FIND_U_BY_C_S_O);
-
-			int status = queryDefinition.getStatus();
-
-			if (status == WorkflowConstants.STATUS_ANY) {
-				sql = StringUtil.replace(
-					sql, "(User_.status = ?) AND", StringPool.BLANK);
-			}
-
-			sb.append(sql);
+			sb.append(getUsersSQL(queryDefinition));
 			sb.append(StringPool.CLOSE_PARENTHESIS);
 
-			sql = sb.toString();
-			sql = CustomSQLUtil.replaceOrderBy(
-				sql, queryDefinition.getOrderByComparator());
+			String sql = CustomSQLUtil.replaceOrderBy(
+				sb.toString(), queryDefinition.getOrderByComparator());
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -716,8 +705,10 @@ public class OrganizationFinderImpl
 			qPos.add(parentOrganizationId);
 			qPos.add(companyId);
 
+			int status = queryDefinition.getStatus();
+
 			if (status != WorkflowConstants.STATUS_ANY) {
-				qPos.add(queryDefinition.getStatus());
+				qPos.add(status);
 			}
 
 			qPos.add(parentOrganizationId);
@@ -809,6 +800,19 @@ public class OrganizationFinderImpl
 		}
 
 		return join;
+	}
+
+	protected String getUsersSQL(QueryDefinition<?> queryDefinition) {
+		String sql = CustomSQLUtil.get(FIND_U_BY_C_S_O);
+
+		int status = queryDefinition.getStatus();
+
+		if (status == WorkflowConstants.STATUS_ANY) {
+			sql = StringUtil.replace(
+				sql, "(User_.status = ?) AND", StringPool.BLANK);
+		}
+
+		return sql;
 	}
 
 	protected String getWhere(LinkedHashMap<String, Object> params) {

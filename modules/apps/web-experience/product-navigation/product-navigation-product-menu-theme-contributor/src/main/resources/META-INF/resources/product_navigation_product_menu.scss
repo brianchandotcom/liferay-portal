@@ -352,11 +352,6 @@ body {
 }
 
 .product-menu {
-	li.tree-node .tree-node-content {
-		overflow: visible;
-		width: 100%;
-	}
-
 	.layout-prototype-tree {
 		padding-bottom: 30px;
 	}
@@ -379,17 +374,18 @@ body {
 		}
 
 		li.tree-node .tree-node-content .tree-label {
-			@include ellipsis(200px);
-
-			display: inline-block;
-			max-width: 100%;
-			overflow: visible;
 			padding-right: 20px;
 			width: 100%;
 		}
 
 		.icon-file {
 			display: none;
+		}
+
+		.layout-tree {
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
 		}
 	}
 

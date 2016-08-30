@@ -14,14 +14,11 @@
 
 package com.liferay.gradle.plugins.defaults.tasks;
 
+import com.liferay.gradle.plugins.defaults.internal.util.FileUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
 
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
-
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -71,35 +68,7 @@ public class WritePropertiesTask extends DefaultTask {
 
 	@TaskAction
 	public void writeProperties() throws IOException {
-		File outputFile = getOutputFile();
-
-		File outputDir = outputFile.getParentFile();
-
-		outputDir.mkdirs();
-
-		try (BufferedWriter bufferedWriter = Files.newBufferedWriter(
-				outputFile.toPath(), StandardCharsets.ISO_8859_1)) {
-
-			Map<String, Object> properties = getProperties();
-
-			boolean firstLine = true;
-
-			for (Map.Entry<String, Object> entry : properties.entrySet()) {
-				String key = entry.getKey();
-				String value = GradleUtil.toString(entry.getValue());
-
-				if (firstLine) {
-					firstLine = false;
-				}
-				else {
-					bufferedWriter.newLine();
-				}
-
-				bufferedWriter.write(key);
-				bufferedWriter.write('=');
-				bufferedWriter.write(value);
-			}
-		}
+		FileUtil.writeProperties(getOutputFile(), getProperties());
 	}
 
 	private Object _outputFile;

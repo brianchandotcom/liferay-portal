@@ -16,8 +16,14 @@ package com.liferay.gradle.plugins.defaults.internal.util;
 
 import com.liferay.gradle.util.ArrayUtil;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileFilter;
+import java.io.IOException;
+import java.io.UncheckedIOException;
+
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -101,6 +107,37 @@ public class FileUtil extends com.liferay.gradle.util.FileUtil {
 		}
 
 		return joinedFileCollection;
+	}
+
+	public static void writeProperties(File file, Map<?, ?> properties) {
+		File dir = file.getParentFile();
+
+		dir.mkdirs();
+
+		try (BufferedWriter bufferedWriter = Files.newBufferedWriter(
+				file.toPath(), StandardCharsets.ISO_8859_1)) {
+
+			boolean firstLine = true;
+
+			for (Map.Entry<?, ?> entry : properties.entrySet()) {
+				String key = GradleUtil.toString(entry.getKey());
+				String value = GradleUtil.toString(entry.getValue());
+
+				if (firstLine) {
+					firstLine = false;
+				}
+				else {
+					bufferedWriter.newLine();
+				}
+
+				bufferedWriter.write(key);
+				bufferedWriter.write('=');
+				bufferedWriter.write(value);
+			}
+		}
+		catch (IOException ioe) {
+			throw new UncheckedIOException(ioe);
+		}
 	}
 
 }

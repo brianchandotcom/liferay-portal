@@ -115,7 +115,7 @@
 </tr>
 <tr>
 	<td>ENABLE_FLAGS</td>
-	<td>//label[contains(.,'Enable Flags')]/input[@type='checkbox']/../span[2]/span</td>
+	<td>//label[contains(.,'Enable Flags')]/input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>
@@ -140,7 +140,7 @@
 </tr>
 <tr>
 	<td>ENABLE_PRINT</td>
-	<td>//label[contains(.,'Enable Print')]/input[@type='checkbox']/../span[2]/span</td>
+	<td>//label[contains(.,'Enable Print')]/input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>
@@ -150,7 +150,7 @@
 </tr>
 <tr>
 	<td>ENABLE_RATINGS</td>
-	<td>//label[contains(.,'Enable Ratings')]/input[@type='checkbox']/../span[2]/span</td>
+	<td>//label[contains(.,'Enable Ratings')]/input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>
@@ -170,7 +170,7 @@
 </tr>
 <tr>
 	<td>ENABLE_SOCIAL_BOOKMARKS</td>
-	<td>//label[contains(.,'Enable Social Bookmarks')]/input[@type='checkbox']/../span[2]/span</td>
+	<td>//label[contains(.,'Enable Social Bookmarks')]/input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>

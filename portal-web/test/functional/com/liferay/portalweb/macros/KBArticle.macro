@@ -1385,7 +1385,19 @@
 
 				<execute function="SelectWindow" locator1="Google#PAGE_TITLE" />
 
-				<execute function="AssertLocation" value1="https://www.google.com/?gws_rd=ssl" />
+				<var method="selenium#getLocation()" name="url" />
+
+				<if>
+					<not>
+						<equals arg1="${url}" arg2="https://www.google.com/[#]gws_rd=ssl" />
+					</not>
+					<then>
+						<execute function="AssertLocation" value1="https://www.google.com/?gws_rd=ssl" />
+					</then>
+					<else>
+						<execute function="AssertLocation" value1="https://www.google.com/[#]gws_rd=ssl" />
+					</else>
+				</if>
 
 				<execute function="Close" locator1="Google#PAGE_TITLE" />
 			</then>

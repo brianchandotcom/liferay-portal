@@ -149,6 +149,7 @@ import org.gradle.api.tasks.SourceSetOutput;
 import org.gradle.api.tasks.StopActionException;
 import org.gradle.api.tasks.TaskCollection;
 import org.gradle.api.tasks.TaskContainer;
+import org.gradle.api.tasks.VerificationTask;
 import org.gradle.api.tasks.bundling.Jar;
 import org.gradle.api.tasks.compile.CompileOptions;
 import org.gradle.api.tasks.compile.JavaCompile;
@@ -2507,6 +2508,12 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		};
 
 		task.doLast(action);
+
+		if (task instanceof VerificationTask) {
+			VerificationTask verificationTask = (VerificationTask)task;
+
+			verificationTask.setIgnoreFailures(true);
+		}
 	}
 
 	private void _configureTaskJavadocTitle(Javadoc javadoc) {

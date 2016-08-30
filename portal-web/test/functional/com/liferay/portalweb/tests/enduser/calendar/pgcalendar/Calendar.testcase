@@ -1420,6 +1420,7 @@
 		<execute macro="CalendarEvent#setRepeatingYearly">
 			<var name="frequency" value="Yearly" />
 			<var name="yearlyRecurrenceSummary" value="Yearly, On The Third Sunday Of February" />
+			<var name="yearlyRecurrenceSummaryPreviousDay" value="Yearly, On The Third Saturday Of February" />
 		</execute>
 
 		<execute macro="CalendarEvent#publish" />

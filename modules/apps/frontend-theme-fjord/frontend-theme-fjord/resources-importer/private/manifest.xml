@@ -1,18 +1,18 @@
 <?xml version="1.0"?>
 
 <root>
-	<header available-locales="en_US" build-number="7001" export-date="Mon, 28 Mar 2016 14:37:41 +0000" company-id="20202" company-group-id="20246" group-id="30699" user-personal-site-group-id="20243" private-layout="true" type-uuid="5801da8d-d462-2896-c9cd-a944f329e525" type="layout-set-prototype" logo-path="/group/30699/logo" theme-id="productapp_WAR_productapptheme" color-scheme-id="01">
+	<header available-locales="en_US" build-number="7001" export-date="Mon, 28 Mar 2016 14:37:41 +0000" company-id="20202" company-group-id="20246" group-id="30699" user-personal-site-group-id="20243" private-layout="true" type-uuid="5801da8d-d462-2896-c9cd-a944f329e525" type="layout-set-prototype" logo-path="/group/30699/logo" theme-id="fjord_WAR_fjordtheme" color-scheme-id="01">
 		<css><![CDATA[]]></css>
 		<settings><![CDATA[showSiteName=false
 ]]></settings>
 	</header>
 	<missing-references>
-		<missing-reference class-name="com.liferay.portal.kernel.model.adapter.StagedTheme" class-pk="productapp_WAR_productapptheme" display-name="productapp_WAR_productapptheme" type="dependency" referrer-class-name="com.liferay.portal.kernel.model.LayoutSet" uuid="" company-id="20202"/>
+		<missing-reference class-name="com.liferay.portal.kernel.model.adapter.StagedTheme" class-pk="fjord_WAR_fjordtheme" display-name="fjord_WAR_fjordtheme" type="dependency" referrer-class-name="com.liferay.portal.kernel.model.LayoutSet" uuid="" company-id="20202"/>
 	</missing-references>
 	<LayoutSet>
 		<staged-model>
 			<references>
-				<reference class-name="com.liferay.portal.kernel.model.adapter.StagedTheme" class-pk="productapp_WAR_productapptheme" type="dependency" uuid="" company-id="20202" missing="true"/>
+				<reference class-name="com.liferay.portal.kernel.model.adapter.StagedTheme" class-pk="fjord_WAR_fjordtheme" type="dependency" uuid="" company-id="20202" missing="true"/>
 			</references>
 		</staged-model>
 	</LayoutSet>

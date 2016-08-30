@@ -1,10 +1,10 @@
 <Layout>
   <__cachedModel>false</__cachedModel>
   <__new>false</__new>
-  <__mvccVersion>0</__mvccVersion>
-  <__uuid>415ecf99-4757-e8db-0576-09bb5e1425e7</__uuid>
-  <__originalUuid>415ecf99-4757-e8db-0576-09bb5e1425e7</__originalUuid>
-  <__plid>30724</__plid>
+  <__mvccVersion>2</__mvccVersion>
+  <__uuid>9fb69eb1-3008-fc0f-7902-d7cee61a2a73</__uuid>
+  <__originalUuid>9fb69eb1-3008-fc0f-7902-d7cee61a2a73</__originalUuid>
+  <__plid>30702</__plid>
   <__groupId>30699</__groupId>
   <__originalGroupId>30699</__originalGroupId>
   <__setOriginalGroupId>false</__setOriginalGroupId>
@@ -13,40 +13,40 @@
   <__setOriginalCompanyId>false</__setOriginalCompanyId>
   <__userId>20205</__userId>
   <__userName></__userName>
-  <__createDate>2015-12-01 21:11:20.355 UTC</__createDate>
-  <__modifiedDate>2016-03-28 10:41:01.218 UTC</__modifiedDate>
+  <__createDate>2016-03-28 10:41:00.625 UTC</__createDate>
+  <__modifiedDate>2016-03-28 12:34:47.555 UTC</__modifiedDate>
   <__setModifiedDate>false</__setModifiedDate>
   <__privateLayout>true</__privateLayout>
   <__originalPrivateLayout>true</__originalPrivateLayout>
   <__setOriginalPrivateLayout>false</__setOriginalPrivateLayout>
-  <__layoutId>3</__layoutId>
-  <__originalLayoutId>3</__originalLayoutId>
+  <__layoutId>1</__layoutId>
+  <__originalLayoutId>1</__originalLayoutId>
   <__setOriginalLayoutId>false</__setOriginalLayoutId>
   <__parentLayoutId>0</__parentLayoutId>
   <__originalParentLayoutId>0</__originalParentLayoutId>
   <__setOriginalParentLayoutId>false</__setOriginalParentLayoutId>
-  <__name>&lt;?xml version=&apos;1.0&apos; encoding=&apos;UTF-8&apos;?&gt;&lt;root available-locales=&quot;en_US&quot; default-locale=&quot;en_US&quot;&gt;&lt;Name language-id=&quot;en_US&quot;&gt;Download&lt;/Name&gt;&lt;/root&gt;</__name>
+  <__name>&lt;?xml version=&apos;1.0&apos; encoding=&apos;UTF-8&apos;?&gt;&lt;root available-locales=&quot;en_US&quot; default-locale=&quot;en_US&quot;&gt;&lt;Name language-id=&quot;en_US&quot;&gt;Home&lt;/Name&gt;&lt;/root&gt;</__name>
   <__title></__title>
   <__description></__description>
   <__keywords></__keywords>
   <__robots></__robots>
   <__type>portlet</__type>
   <__originalType>portlet</__originalType>
-  <__typeSettings>column-1=com_liferay_journal_content_web_portlet_JournalContentPortlet_INSTANCE_j7M8VVRiDJ0e,
+  <__typeSettings>column-1=com_liferay_journal_content_web_portlet_JournalContentPortlet_INSTANCE_tRvpm2WYo2tO,com_liferay_journal_content_web_portlet_JournalContentPortlet_INSTANCE_yax4uQU9QjkN,com_liferay_journal_content_web_portlet_JournalContentPortlet_INSTANCE_IxC4J2Eao4Y8,com_liferay_journal_content_web_portlet_JournalContentPortlet_INSTANCE_rbKAGxoW7pyK,com_liferay_journal_content_web_portlet_JournalContentPortlet_INSTANCE_gI2bGJ66zoKI,com_liferay_journal_content_web_portlet_JournalContentPortlet_INSTANCE_SmrISwkJO7gL,com_liferay_journal_content_web_portlet_JournalContentPortlet_INSTANCE_0XQtPPqEEnAf,com_liferay_journal_content_web_portlet_JournalContentPortlet_INSTANCE_ajmmdBzG8xQU,com_liferay_journal_content_web_portlet_JournalContentPortlet_INSTANCE_C0DuKp5jcVae,com_liferay_journal_content_web_portlet_JournalContentPortlet_INSTANCE_j68toccLz8Zl
 layout-template-id=1_column
 layoutUpdateable=true
 privateLayout=true
 </__typeSettings>
   <__hidden>false</__hidden>
-  <__friendlyURL>/download</__friendlyURL>
-  <__originalFriendlyURL>/download</__originalFriendlyURL>
+  <__friendlyURL>/home</__friendlyURL>
+  <__originalFriendlyURL>/home</__originalFriendlyURL>
   <__iconImageId>0</__iconImageId>
   <__originalIconImageId>0</__originalIconImageId>
   <__setOriginalIconImageId>false</__setOriginalIconImageId>
   <__themeId>classic</__themeId>
   <__colorSchemeId></__colorSchemeId>
   <__css></__css>
-  <__priority>2</__priority>
+  <__priority>0</__priority>
   <__layoutPrototypeUuid></__layoutPrototypeUuid>
   <__originalLayoutPrototypeUuid></__originalLayoutPrototypeUuid>
   <__layoutPrototypeLinkEnabled>false</__layoutPrototypeLinkEnabled>
@@ -69,7 +69,7 @@ privateLayout=true
     <__originalPrivateLayout>true</__originalPrivateLayout>
     <__setOriginalPrivateLayout>false</__setOriginalPrivateLayout>
     <__logoId>30710</__logoId>
-    <__themeId>productapp_WAR_productapptheme</__themeId>
+    <__themeId>fjord_WAR_fjordtheme</__themeId>
     <__colorSchemeId>01</__colorSchemeId>
     <__css></__css>
     <__pageCount>4</__pageCount>

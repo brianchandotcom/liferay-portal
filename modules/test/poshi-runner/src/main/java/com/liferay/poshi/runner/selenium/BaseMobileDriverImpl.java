@@ -27,11 +27,9 @@ import org.w3c.dom.Node;
  * @author Kenji Heigel
  */
 public abstract class BaseMobileDriverImpl
-	extends MobileDriverWrapper implements LiferaySelenium {
+	implements LiferaySelenium, MobileDriver {
 
 	public BaseMobileDriverImpl(String browserURL, WebDriver webDriver) {
-		super(webDriver);
-
 		_mobileDriver = (MobileDriver)webDriver;
 
 		WebDriverHelper.setDefaultWindowHandle(webDriver.getWindowHandle());
@@ -1802,7 +1800,6 @@ public abstract class BaseMobileDriverImpl
 		PropsValues.TEST_DEPENDENCIES_DIR_NAME;
 
 	private final MobileDriver _mobileDriver;
-
 	private String _primaryTestSuiteName;
 
 }

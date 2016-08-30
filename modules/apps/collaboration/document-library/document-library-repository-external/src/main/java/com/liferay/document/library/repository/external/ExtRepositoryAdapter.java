@@ -1005,50 +1005,61 @@ public class ExtRepositoryAdapter extends BaseRepositoryImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		boolean needsCheckIn = false;
+
 		String extRepositoryFileEntryKey = getExtRepositoryObjectKey(
 			fileEntryId);
 
-		ExtRepositoryFileEntry extRepositoryFileEntry =
-			_extRepository.getExtRepositoryObject(
-				ExtRepositoryObjectType.FILE, extRepositoryFileEntryKey);
+		try {
+			ExtRepositoryFileEntry extRepositoryFileEntry =
+				_extRepository.getExtRepositoryObject(
+					ExtRepositoryObjectType.FILE, extRepositoryFileEntryKey);
 
-		boolean needsCheckIn = false;
+			if (!isCheckedOut(extRepositoryFileEntry)) {
+				_extRepository.checkOutExtRepositoryFileEntry(
+					extRepositoryFileEntryKey);
 
-		if (!isCheckedOut(extRepositoryFileEntry)) {
-			_extRepository.checkOutExtRepositoryFileEntry(
-				extRepositoryFileEntryKey);
+				needsCheckIn = true;
+			}
 
-			needsCheckIn = true;
+			if (inputStream != null) {
+				extRepositoryFileEntry =
+					_extRepository.updateExtRepositoryFileEntry(
+						extRepositoryFileEntryKey, mimeType, inputStream);
+			}
+
+			if (!title.equals(extRepositoryFileEntry.getTitle())) {
+				ExtRepositoryFolder folder =
+					_extRepository.getExtRepositoryParentFolder(
+						extRepositoryFileEntry);
+
+				extRepositoryFileEntry = _extRepository.moveExtRepositoryObject(
+					ExtRepositoryObjectType.FILE, extRepositoryFileEntryKey,
+					folder.getExtRepositoryModelKey(), title);
+
+				ExtRepositoryAdapterCache extRepositoryAdapterCache =
+					ExtRepositoryAdapterCache.getInstance();
+
+				extRepositoryAdapterCache.clear();
+			}
+
+			if (needsCheckIn) {
+				_extRepository.checkInExtRepositoryFileEntry(
+					extRepositoryFileEntryKey, majorVersion, changeLog);
+
+				needsCheckIn = false;
+			}
+
+			return _toExtRepositoryObjectAdapter(
+				ExtRepositoryObjectAdapterType.FILE, extRepositoryFileEntry);
 		}
+		catch (PortalException | SystemException e) {
+			if (needsCheckIn) {
+				_extRepository.cancelCheckOut(extRepositoryFileEntryKey);
+			}
 
-		if (inputStream != null) {
-			extRepositoryFileEntry =
-				_extRepository.updateExtRepositoryFileEntry(
-					extRepositoryFileEntryKey, mimeType, inputStream);
+			throw e;
 		}
-
-		if (!title.equals(extRepositoryFileEntry.getTitle())) {
-			ExtRepositoryFolder folder =
-				_extRepository.getExtRepositoryParentFolder(
-					extRepositoryFileEntry);
-
-			extRepositoryFileEntry = _extRepository.moveExtRepositoryObject(
-				ExtRepositoryObjectType.FILE, extRepositoryFileEntryKey,
-				folder.getExtRepositoryModelKey(), title);
-
-			ExtRepositoryAdapterCache extRepositoryAdapterCache =
-				ExtRepositoryAdapterCache.getInstance();
-
-			extRepositoryAdapterCache.clear();
-		}
-
-		if (needsCheckIn) {
-			_extRepository.checkInExtRepositoryFileEntry(
-				extRepositoryFileEntryKey, majorVersion, changeLog);
-		}
-
-		return _toExtRepositoryObjectAdapter(
-			ExtRepositoryObjectAdapterType.FILE, extRepositoryFileEntry);
 	}
 
 	@Override

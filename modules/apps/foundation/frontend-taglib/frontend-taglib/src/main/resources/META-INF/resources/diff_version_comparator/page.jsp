@@ -52,10 +52,10 @@ if (Validator.isNotNull(languageId)) {
 						Map<String, Object> data = new HashMap<String, Object>();
 
 						for (DiffVersion diffVersion : diffVersionsInfo.getDiffVersions()) {
-							if (sourceVersion != diffVersion.getVersion()) {
-								data.put("version", diffVersion.getVersion());
+							data.put("version", diffVersion.getVersion());
 						%>
 
+							<c:if test="<%= sourceVersion != diffVersion.getVersion() %>">
 								<liferay-ui:icon
 									data="<%= data %>"
 									label="<%= true %>"
@@ -63,9 +63,9 @@ if (Validator.isNotNull(languageId)) {
 									message='<%= LanguageUtil.format(request, "version-x", diffVersion.getVersion()) %>'
 									url="javascript:;"
 								/>
+							</c:if>
 
 						<%
-							}
 						}
 						%>
 
@@ -87,10 +87,10 @@ if (Validator.isNotNull(languageId)) {
 						Map<String, Object> data = new HashMap<String, Object>();
 
 						for (DiffVersion diffVersion : diffVersionsInfo.getDiffVersions()) {
-							if (targetVersion != diffVersion.getVersion()) {
-								data.put("version", diffVersion.getVersion());
+							data.put("version", diffVersion.getVersion());
 						%>
 
+							<c:if test="<%= targetVersion != diffVersion.getVersion() %>">
 								<liferay-ui:icon
 									data="<%= data %>"
 									label="<%= true %>"
@@ -98,9 +98,9 @@ if (Validator.isNotNull(languageId)) {
 									message='<%= LanguageUtil.format(request, "version-x", diffVersion.getVersion()) %>'
 									url="javascript:;"
 								/>
+							</c:if>
 
 						<%
-							}
 						}
 						%>
 

@@ -16,6 +16,8 @@ package com.liferay.portlet.configuration.web.internal.portlet.configuration.ico
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
@@ -27,7 +29,10 @@ import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -116,20 +121,35 @@ public class PermissionsPortletConfigurationIcon
 			rootPortletId = portlet.getRootPortletId();
 		}
 
-		try {
-			if (!PortletPermissionUtil.contains(
-					themeDisplay.getPermissionChecker(),
-					themeDisplay.getLayout(), rootPortletId,
-					ActionKeys.PERMISSIONS)) {
+		boolean showPermissionsIcon = false;
 
-				return false;
+		Layout layout = themeDisplay.getLayout();
+
+		Group group = themeDisplay.getScopeGroup();
+
+		if (!group.hasStagingGroup() || _STAGING_LIVE_GROUP_LOCKING_ENABLED) {
+			try {
+				if (PortletPermissionUtil.contains(
+						themeDisplay.getPermissionChecker(), layout,
+						rootPortletId, ActionKeys.PERMISSIONS)) {
+
+					showPermissionsIcon = true;
+				}
+			}
+			catch (PortalException pe) {
+				showPermissionsIcon = false;
 			}
 		}
-		catch (PortalException pe) {
-			return false;
+
+		if (layout.isLayoutPrototypeLinkActive()) {
+			showPermissionsIcon = false;
 		}
 
-		return portletDisplay.isShowConfigurationIcon();
+		if (group.isControlPanel()) {
+			showPermissionsIcon = false;
+		}
+
+		return showPermissionsIcon;
 	}
 
 	@Override
@@ -143,6 +163,10 @@ public class PermissionsPortletConfigurationIcon
 
 		_portletLocalService = portletLocalService;
 	}
+
+	private static final boolean _STAGING_LIVE_GROUP_LOCKING_ENABLED =
+		GetterUtil.getBoolean(
+			PropsUtil.get(PropsKeys.STAGING_LIVE_GROUP_LOCKING_ENABLED));
 
 	private PortletLocalService _portletLocalService;
 

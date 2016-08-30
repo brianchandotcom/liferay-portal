@@ -18,6 +18,7 @@ import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.journal.constants.JournalConstants;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -241,9 +242,11 @@ public class UpgradeImageTypeContent extends UpgradeProcess {
 				String newContent = convertTypeImageElements(
 					userId, groupId, content, resourcePrimKey);
 
-				try (PreparedStatement ps2 = connection.prepareStatement(
-						"update JournalArticle set content = ? where id_ = " +
-							"?")) {
+				try (PreparedStatement ps2 =
+						AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+							connection,
+							"update JournalArticle set content = ? where id_ " +
+								"= ?")) {
 
 					ps2.setString(1, newContent);
 					ps2.setLong(2, id);

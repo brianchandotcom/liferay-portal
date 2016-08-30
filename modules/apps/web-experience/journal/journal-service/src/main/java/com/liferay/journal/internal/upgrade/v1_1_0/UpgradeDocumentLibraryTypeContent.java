@@ -15,6 +15,7 @@
 package com.liferay.journal.internal.upgrade.v1_1_0;
 
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -165,9 +166,11 @@ public class UpgradeDocumentLibraryTypeContent extends UpgradeProcess {
 				String content = rs1.getString(1);
 				long id = rs1.getLong(2);
 
-				try (PreparedStatement ps2 = connection.prepareStatement(
-						"update JournalArticle set content = ? where id_ = " +
-							"?")) {
+				try (PreparedStatement ps2 =
+						AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+							connection,
+							"update JournalArticle set content = ? where id_ " +
+								"= ?")) {
 
 					ps2.setString(1, convertContent(content));
 					ps2.setLong(2, id);

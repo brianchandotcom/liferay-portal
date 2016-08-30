@@ -17,7 +17,6 @@ package com.liferay.roles.admin.web.internal.portlet;
 import com.liferay.application.list.PanelAppRegistry;
 import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.application.list.constants.ApplicationListWebKeys;
-import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.portal.kernel.exception.DuplicateRoleException;
 import com.liferay.portal.kernel.exception.NoSuchRoleException;
@@ -27,8 +26,6 @@ import com.liferay.portal.kernel.exception.RoleNameException;
 import com.liferay.portal.kernel.exception.RolePermissionsException;
 import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
 import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocalCloseable;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
@@ -40,6 +37,7 @@ import com.liferay.portal.kernel.security.permission.comparator.ActionComparator
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.service.ResourceBlockLocalService;
 import com.liferay.portal.kernel.service.ResourceBlockService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.RoleService;
@@ -55,7 +53,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -380,17 +377,40 @@ public class RolesAdminPortlet extends MVCPortlet {
 						actionId, selected, scope, groupIds);
 				}
 				else {
-					updateAction(
-						role, themeDisplay.getScopeGroupId(), selResource,
-						actionId, selected, scope, groupIds);
+					long groupId = themeDisplay.getScopeGroupId();
+
+					long companyId = role.getCompanyId();
+					long roleId1 = role.getRoleId();
+
+					if (selected) {
+						_resourcePermissionLocalService.updateAction(
+							role, selResource, actionId, scope, groupIds);
+					}
+					else {
+
+						// Remove company, group template, and group permissions
+
+						_resourcePermissionService.removeResourcePermissions(
+							groupId, companyId, selResource,
+							ResourceConstants.SCOPE_COMPANY, roleId1, actionId);
+
+						_resourcePermissionService.removeResourcePermissions(
+							groupId, companyId, selResource,
+							ResourceConstants.SCOPE_GROUP_TEMPLATE, roleId1,
+							actionId);
+
+						_resourcePermissionService.removeResourcePermissions(
+							groupId, companyId, selResource,
+							ResourceConstants.SCOPE_GROUP, roleId1, actionId);
+					}
 				}
 
 				if (selected &&
 					actionId.equals(ActionKeys.ACCESS_IN_CONTROL_PANEL)) {
 
-					updateViewControlPanelPermission(
-						role, themeDisplay.getScopeGroupId(), selResource,
-						scope, groupIds);
+					_resourcePermissionLocalService.
+						updateViewControlPanelPermission(
+							role, selResource, scope, groupIds);
 
 					rootResourceScope = scope;
 					rootResourceGroupIds = groupIds;
@@ -401,9 +421,8 @@ public class RolesAdminPortlet extends MVCPortlet {
 		// LPS-38031
 
 		if (rootResourceGroupIds != null) {
-			updateViewRootResourcePermission(
-				role, themeDisplay.getScopeGroupId(), portletResource,
-				rootResourceScope, rootResourceGroupIds);
+			_resourcePermissionLocalService.updateViewRootResourcePermission(
+				role, portletResource, rootResourceScope, rootResourceGroupIds);
 		}
 
 		// Send redirect
@@ -521,6 +540,13 @@ public class RolesAdminPortlet extends MVCPortlet {
 	}
 
 	@Reference(unbind = "-")
+	protected void setResourcePermissionLocalService(
+		ResourcePermissionLocalService resourcePermissionLocalService) {
+
+		_resourcePermissionLocalService = resourcePermissionLocalService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setResourcePermissionService(
 		ResourcePermissionService resourcePermissionService) {
 
@@ -540,58 +566,6 @@ public class RolesAdminPortlet extends MVCPortlet {
 	@Reference(unbind = "-")
 	protected void setUserService(UserService userService) {
 		_userService = userService;
-	}
-
-	protected void updateAction(
-			Role role, long groupId, String selResource, String actionId,
-			boolean selected, int scope, String[] groupIds)
-		throws Exception {
-
-		long companyId = role.getCompanyId();
-		long roleId = role.getRoleId();
-
-		if (selected) {
-			if (scope == ResourceConstants.SCOPE_COMPANY) {
-				_resourcePermissionService.addResourcePermission(
-					groupId, companyId, selResource, scope,
-					String.valueOf(role.getCompanyId()), roleId, actionId);
-			}
-			else if (scope == ResourceConstants.SCOPE_GROUP_TEMPLATE) {
-				_resourcePermissionService.addResourcePermission(
-					groupId, companyId, selResource,
-					ResourceConstants.SCOPE_GROUP_TEMPLATE,
-					String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
-					roleId, actionId);
-			}
-			else if (scope == ResourceConstants.SCOPE_GROUP) {
-				_resourcePermissionService.removeResourcePermissions(
-					groupId, companyId, selResource,
-					ResourceConstants.SCOPE_GROUP, roleId, actionId);
-
-				for (String curGroupId : groupIds) {
-					_resourcePermissionService.addResourcePermission(
-						groupId, companyId, selResource,
-						ResourceConstants.SCOPE_GROUP, curGroupId, roleId,
-						actionId);
-				}
-			}
-		}
-		else {
-
-			// Remove company, group template, and group permissions
-
-			_resourcePermissionService.removeResourcePermissions(
-				groupId, companyId, selResource,
-				ResourceConstants.SCOPE_COMPANY, roleId, actionId);
-
-			_resourcePermissionService.removeResourcePermissions(
-				groupId, companyId, selResource,
-				ResourceConstants.SCOPE_GROUP_TEMPLATE, roleId, actionId);
-
-			_resourcePermissionService.removeResourcePermissions(
-				groupId, companyId, selResource, ResourceConstants.SCOPE_GROUP,
-				roleId, actionId);
-		}
 	}
 
 	protected void updateActions_Blocks(
@@ -630,63 +604,12 @@ public class RolesAdminPortlet extends MVCPortlet {
 		}
 	}
 
-	protected void updateViewControlPanelPermission(
-			Role role, long scopeGroupId, String portletId, int scope,
-			String[] groupIds)
-		throws Exception {
-
-		PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(
-			_panelAppRegistry, _panelCategoryRegistry);
-
-		String selResource = null;
-		String actionId = null;
-
-		if (panelCategoryHelper.containsPortlet(
-				portletId, PanelCategoryKeys.CONTROL_PANEL) &&
-			(role.getType() == RoleConstants.TYPE_REGULAR)) {
-
-			selResource = PortletKeys.PORTAL;
-			actionId = ActionKeys.VIEW_CONTROL_PANEL;
-		}
-		else if (panelCategoryHelper.containsPortlet(
-					portletId, PanelCategoryKeys.SITE_ADMINISTRATION)) {
-
-			selResource = Group.class.getName();
-			actionId = ActionKeys.VIEW_SITE_ADMINISTRATION;
-		}
-
-		if (selResource != null) {
-			updateAction(
-				role, scopeGroupId, selResource, actionId, true, scope,
-				groupIds);
-		}
-	}
-
-	protected void updateViewRootResourcePermission(
-			Role role, long scopeGroupId, String portletId, int scope,
-			String[] groupIds)
-		throws Exception {
-
-		String modelResource = ResourceActionsUtil.getPortletRootModelResource(
-			portletId);
-
-		if (modelResource != null) {
-			List<String> actions = ResourceActionsUtil.getModelResourceActions(
-				modelResource);
-
-			if (actions.contains(ActionKeys.VIEW)) {
-				updateAction(
-					role, scopeGroupId, modelResource, ActionKeys.VIEW, true,
-					scope, groupIds);
-			}
-		}
-	}
-
 	private GroupService _groupService;
 	private PanelAppRegistry _panelAppRegistry;
 	private PanelCategoryRegistry _panelCategoryRegistry;
 	private ResourceBlockLocalService _resourceBlockLocalService;
 	private ResourceBlockService _resourceBlockService;
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
 	private ResourcePermissionService _resourcePermissionService;
 	private RoleLocalService _roleLocalService;
 	private RoleService _roleService;

@@ -19,15 +19,14 @@ import com.liferay.portal.kernel.exception.PortalException;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Provides an interface defining categories that will be used by a specific
+ * Provides an interface that defines categories to be used by a
  * <code>product-navigation:control-menu</code> tag instance to render a new
- * category.
- * Control menu categories includes control menu entries, defined by {@link
- * ProductNavigationControlMenuEntry} implementations.
+ * Control Menu category. Control Menu categories include Control Menu entries
+ * defined by {@link ProductNavigationControlMenuEntry} implementations.
  *
  * <p>
  * Implementations must be registered in the OSGi Registry. The order of the
- * control menu categories is determined by the
+ * Control Menu categories is determined by the
  * <code>product.navigation.control.menu.category.order</code> property value.
  * The parent control menu category key can be defined by the
  * <code>product.navigation.control.menu.category.key</code> property value.
@@ -38,27 +37,21 @@ import javax.servlet.http.HttpServletRequest;
 public interface ProductNavigationControlMenuCategory {
 
 	/**
-	 * Returns the key for the control menu category. This key needs to be
-	 * unique in the scope of a control menu.
+	 * Returns the Control Menu category's key. This key must be unique in the
+	 * scope of the Control Menu, since it is referred to by Control Menu
+	 * entries to be added to this Control Menu category.
 	 *
-	 * <p>
-	 * This key will be referred by the control menu entries to be added to
-	 * this control menu category.
-	 * </p>
-	 *
-	 * @return the key of the control menu category
+	 * @return the Control Menu category's key
 	 */
 	public String getKey();
 
 	/**
-	 * Returns <code>true</code> if the control menu category should be
-	 * displayed in the context of specific request.
+	 * Returns <code>true</code> if the Control Menu category should be
+	 * displayed in the request's context.
 	 *
-	 * @param  request the request with which the control menu category is
-	 *         rendered
-	 * @return <code>true</code> if the control menu category should be
-	 *         displayed in current request context; <code>false</code>
-	 *         otherwise
+	 * @param  request the request that renders the Control Menu category
+	 * @return <code>true</code> if the Control Menu category should be
+	 *         displayed in the request's context; <code>false</code> otherwise
 	 */
 	public boolean hasAccessPermission(HttpServletRequest request)
 		throws PortalException;

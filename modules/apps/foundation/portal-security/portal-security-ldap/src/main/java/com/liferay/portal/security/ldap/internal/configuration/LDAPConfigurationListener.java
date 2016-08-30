@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.ldap.configuration.ConfigurationProvider;
 
@@ -58,7 +59,7 @@ public class LDAPConfigurationListener implements ConfigurationListener {
 
 		try {
 			Configuration configuration = _configurationAdmin.getConfiguration(
-				configurationEvent.getPid());
+				configurationEvent.getPid(), StringPool.QUESTION);
 
 			if (configurationEvent.getType() == ConfigurationEvent.CM_DELETED) {
 				configurationProvider.unregisterConfiguration(configuration);

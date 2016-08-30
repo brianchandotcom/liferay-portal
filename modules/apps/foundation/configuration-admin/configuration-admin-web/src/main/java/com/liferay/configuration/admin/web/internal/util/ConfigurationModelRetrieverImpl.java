@@ -258,8 +258,7 @@ public class ConfigurationModelRetrieverImpl
 
 			configurationModel = new ConfigurationModel(
 				configurationModel.getExtendedObjectClassDefinition(),
-				configuration, bundle.getSymbolicName(),
-				configurationModel.getBundleLocation(),
+				configuration, bundle.getSymbolicName(), StringPool.QUESTION,
 				configurationModel.isFactory());
 		}
 

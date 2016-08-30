@@ -22,6 +22,7 @@ import com.liferay.portal.configuration.extender.NamedConfigurationContent;
 import com.liferay.portal.configuration.extender.SingleConfigurationDescription;
 import com.liferay.portal.configuration.extender.internal.ConfiguratorExtension;
 import com.liferay.portal.kernel.util.PropertiesUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Supplier;
 
 import java.io.ByteArrayInputStream;
@@ -149,7 +150,7 @@ public class ConfiguratorExtensionTest {
 	public void testFactoryConfigurationCreatesAnother() throws Exception {
 		Configuration configuration =
 			_configurationAdmin.createFactoryConfiguration(
-				"test.factory.pid", null);
+				"test.factory.pid", StringPool.QUESTION);
 
 		configuration.update(
 			new Hashtable<String, Object>() {
@@ -251,7 +252,7 @@ public class ConfiguratorExtensionTest {
 		throws Exception {
 
 		Configuration configuration = _configurationAdmin.getConfiguration(
-			"test.pid", null);
+			"test.pid", StringPool.QUESTION);
 		configuration.update(
 			new Hashtable<String, Object>() {
 				{

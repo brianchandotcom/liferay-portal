@@ -158,7 +158,8 @@ public class FriendlyURLLocalServiceImpl
 
 	@Override
 	public void validate(
-			long companyId, long groupId, long classNameId, String urlTitle)
+			long companyId, long groupId, long classNameId, long classPK,
+			String urlTitle)
 		throws PortalException {
 
 		int maxLength = ModelHintsUtil.getMaxLength(
@@ -171,12 +172,29 @@ public class FriendlyURLLocalServiceImpl
 		String normalizedUrlTitle = FriendlyURLNormalizerUtil.normalize(
 			urlTitle);
 
+		if (classPK > 0) {
+			FriendlyURL friendlyURL = friendlyURLPersistence.fetchByC_G_C_C_U(
+				companyId, groupId, classNameId, classPK, normalizedUrlTitle);
+
+			if (friendlyURL != null) {
+				return;
+			}
+		}
+
 		int count = friendlyURLPersistence.countByC_G_C_U(
 			companyId, groupId, classNameId, normalizedUrlTitle);
 
 		if (count > 0) {
 			throw new DuplicateFriendlyURLException();
 		}
+	}
+
+	@Override
+	public void validate(
+			long companyId, long groupId, long classNameId, String urlTitle)
+		throws PortalException {
+
+		validate(companyId, groupId, classNameId, 0, urlTitle);
 	}
 
 }

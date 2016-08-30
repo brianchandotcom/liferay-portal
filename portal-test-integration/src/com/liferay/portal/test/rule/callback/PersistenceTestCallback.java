@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.ModelListenerRegistrationUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.rule.ArquillianUtil;
 import com.liferay.portal.kernel.test.rule.callback.BaseTestCallback;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.service.test.ServiceTestUtil;
@@ -53,7 +54,7 @@ public class PersistenceTestCallback extends BaseTestCallback<Object, Object> {
 	public Object beforeMethod(Description description, Object target)
 		throws Exception {
 
-		_initialize();
+		_initialize(description);
 
 		Object instance = ReflectionTestUtil.getFieldValue(
 			ModelListenerRegistrationUtil.class, "_instance");
@@ -72,7 +73,11 @@ public class PersistenceTestCallback extends BaseTestCallback<Object, Object> {
 		return modelListeners;
 	}
 
-	private static void _initialize() {
+	private static void _initialize(Description description) {
+		if (ArquillianUtil.isArquillianTest(description)) {
+			return;
+		}
+
 		if (_initialized) {
 			return;
 		}

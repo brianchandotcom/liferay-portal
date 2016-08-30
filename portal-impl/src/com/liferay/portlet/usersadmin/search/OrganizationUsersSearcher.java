@@ -23,17 +23,17 @@ import com.liferay.portal.kernel.search.Indexer;
 /**
  * @author Pei-Jung Lan
  */
-public class OrganizationMembersSearcher extends BaseSearcher {
+public class OrganizationUsersSearcher extends BaseSearcher {
 
 	public static final String[] CLASS_NAMES = {
 		Organization.class.getName(), User.class.getName()
 	};
 
 	public static Indexer<?> getInstance() {
-		return new OrganizationMembersSearcher();
+		return new OrganizationUsersSearcher();
 	}
 
-	public OrganizationMembersSearcher() {
+	public OrganizationUsersSearcher() {
 		setDefaultSelectedFieldNames(
 			Field.COMPANY_ID, Field.ORGANIZATION_ID, Field.UID, Field.USER_ID);
 		setPermissionAware(true);

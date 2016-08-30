@@ -25,17 +25,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Provides an interface defining entries that will be used by a specific
+ * Provides an interface that defines entries to be used by a
  * <code>product-navigation:control-menu</code> tag instance to render a new
- * control menu entry.
- * Control menu entries are included within control menu categories, defined
- * by {@link ProductNavigationControlMenuCategory} implementations.
+ * Control Menu entry. Control Menu entries are included within Control Menu
+ * categories defined by {@link ProductNavigationControlMenuCategory}
+ * implementations.
  *
  * <p>
- * Implementations must be registered in the OSGi Registry. The order of the
- * control menu entries inside a category is determined by the
- * <code>product.navigation.control.menu.entry.order</code> property value and
- * the control menu category used to display that entry is determined by the
+ * Implementations must be registered in the OSGi Registry. The order of Control
+ * Menu entries inside a category is determined by the
+ * <code>product.navigation.control.menu.entry.order</code> property value. The
+ * Control Menu category used to display that entry is determined by the
  * <code>product.navigation.control.menu.category.key</code> property value.
  * </p>
  *
@@ -44,134 +44,129 @@ import javax.servlet.http.HttpServletResponse;
 public interface ProductNavigationControlMenuEntry {
 
 	/**
-	 * Returns the data which should be used as the data attribute of
-	 * <code>liferay-ui:icon</code> tag instance for the control menu entry.
+	 * Returns the data to be used as the <code>data</code> attribute of the
+	 * <code>liferay-ui:icon</code> tag instance for the Control Menu entry.
 	 *
-	 * @param  request the request with which the control menu entry is
-	 *         rendered
-	 * @return the data attribute of <code>liferay-ui:icon</code> tag instance
-	 *         for the control menu entry
+	 * @param  request the request that renders the Control Menu entry
+	 * @return the <code>data</code> attribute of the
+	 *         <code>liferay-ui:icon</code> tag instance for the Control Menu
+	 *         entry
 	 */
 	public Map<String, Object> getData(HttpServletRequest request);
 
 	/**
-	 * Returns the icon name which should be used as the icon attribute of
-	 * <code>liferay-ui:icon</code> tag instance for the control menu entry.
+	 * Returns the icon name to be injected as the <code>icon</code> attribute
+	 * of the <code>liferay-ui:icon</code> tag instance for the Control Menu
+	 * entry.
 	 *
-	 * @param  request the request with which the control menu entry is
-	 *         rendered
-	 * @return the icon attribute of <code>liferay-ui:icon</code> tag instance
-	 * 		   for the control menu entry
+	 * @param  request the request that renders the Control Menu entry
+	 * @return the <code>icon</code> attribute of the
+	 *         <code>liferay-ui:icon</code> tag instance for the Control Menu
+	 *         entry
 	 */
 	public String getIcon(HttpServletRequest request);
 
 	/**
-	 * Returns the icon CSS class which should be used as the iconCssClass
-	 * attribute of <code>liferay-ui:icon</code> tag instance for the control
-	 * menu entry.
+	 * Returns the icon CSS class to be injected as the
+	 * <code>iconCssClass</code> attribute of the <code>liferay-ui:icon</code>
+	 * tag instance for the Control Menu entry.
 	 *
-	 * @param  request the request with which the control menu entry is
-	 *         rendered
-	 * @return the iconCssClass attribute of <code>liferay-ui:icon</code> tag
-	 *         instance for the control menu entry
+	 * @param  request the request that renders the Control Menu entry
+	 * @return the <code>iconCssClass</code> attribute of the
+	 *         <code>liferay-ui:icon</code> tag instance for the Control Menu
+	 *         entry
 	 */
 	public String getIconCssClass(HttpServletRequest request);
 
 	/**
-	 * Returns the key for the control menu entry. This key needs to be
-	 * unique in the scope of an control menu entry selector.
+	 * Returns the Control Menu entry's key. This key must be unique in the
+	 * scope of the Control Menu entry selector.
 	 *
-	 * @return the key of the control menu entry
+	 * @return the Control Menu entry's key
 	 */
 	public String getKey();
 
 	/**
-	 * Defines the label that will be displayed in the user interface when the
-	 * control menu entry is included in the tag instance.
+	 * Returns the label that is displayed in the user interface when the
+	 * Control Menu entry is included in the tag instance.
 	 *
-	 * @param  locale the locale that the label should be retrieved for
-	 * @return the label of the control menu entry
+	 * @param  locale the label's retrieved locale
+	 * @return the Control Menu entry's label
 	 */
 	public String getLabel(Locale locale);
 
 	/**
-	 * Returns the link CSS class which should be injected as the linkCssClass
-	 * attribute of <code>liferay-ui:icon</code> tag instance for the control
-	 * menu entry.
+	 * Returns the link CSS class to be injected as the
+	 * <code>linkCssClass</code> attribute of the <code>liferay-ui:icon</code>
+	 * tag instance for the Control Menu entry.
 	 *
-	 * @param  request the request with which the control menu entry is
-	 *         rendered
-	 * @return the linkCssClass attribute of <code>liferay-ui:icon</code> tag
-	 *         instance for the control menu entry
+	 * @param  request the request that renders the Control Menu entry
+	 * @return the <code>linkCssClass</code> attribute of the
+	 *         <code>liferay-ui:icon</code> tag instance for the Control Menu
+	 *         entry
 	 */
 	public String getLinkCssClass(HttpServletRequest request);
 
 	/**
-	 * Returns the markup view string which should be injected as the markupView
-	 * attribute of <code>liferay-ui:icon</code> tag instance for the control
-	 * menu entry.
+	 * Returns the markup view string to be injected as the
+	 * <code>markupView</code> attribute of the <code>liferay-ui:icon</code> tag
+	 * instance for the Control Menu entry.
 	 *
-	 * @param  request the request with which the control menu entry is
-	 *         rendered
-	 * @return the markupView attribute of <code>liferay-ui:icon</code> tag
-	 *         instance for the control menu entry
+	 * @param  request the request that renders the Control Menu entry
+	 * @return the <code>markupView</code> attribute of the
+	 *         <code>liferay-ui:icon</code> tag instance for the Control Menu
+	 *         entry
 	 */
 	public String getMarkupView(HttpServletRequest request);
 
 	/**
-	 * Returns the URL which should be injected as the url attribute of
-	 * <code>liferay-ui:icon</code> tag instance for the control menu entry.
+	 * Returns the URL to be injected as the <code>url</code> attribute of the
+	 * <code>liferay-ui:icon</code> tag instance for the Control Menu entry.
 	 *
-	 * @param  request the request with which the control menu entry is
-	 *         rendered
-	 * @return the url attribute of <code>liferay-ui:icon</code> tag instance
-	 *         for the control menu entry
+	 * @param  request the request that renders the Control Menu entry
+	 * @return the <code>url</code> attribute of the
+	 *         <code>liferay-ui:icon</code> tag instance for the Control Menu
+	 *         entry
 	 */
 	public String getURL(HttpServletRequest request);
 
 	/**
-	 * Renders the HTML that needs to be displayed when the control menu entry
-	 * body is displayed.
+	 * Renders the HTML that must be displayed when the Control Menu entry body
+	 * is displayed.
 	 *
-	 * @param  request the request with which the control menu entry body is
-	 *         rendered
-	 * @param  response the response with which the control menu entry body is
-	 *         rendered
-	 * @throws IOException if an IO exception occurs
+	 * @param  request the request that renders the Control Menu entry
+	 * @param  response the response that renders the Control Menu entry
+	 * @throws IOException if an IO exception occurred
 	 */
 	public boolean includeBody(
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException;
 
 	/**
-	 * Renders the HTML that needs to be displayed when the control menu entry
-	 * icon is displayed.
+	 * Renders the HTML that must be displayed when the Control Menu entry icon
+	 * is displayed.
 	 *
-	 * @param  request the request with which the control menu entry icon is
-	 *         rendered
-	 * @param  response the response with which the control menu entry icon is
-	 *         rendered
-	 * @throws IOException if an IO exception occurs
+	 * @param  request the request that renders the Control Menu entry
+	 * @param  response the response that renders the Control Menu entry
+	 * @throws IOException if an IO exception occurred
 	 */
 	public boolean includeIcon(
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException;
 
 	/**
-	 * Returns <code>true</code> if the control menu entry should be
-	 * displayed in the context of specific request.
+	 * Returns <code>true</code> if the Control Menu entry should be displayed
+	 * in the request's context.
 	 *
-	 * @param  request the request with which the control menu entry is
-	 *         rendered
-	 * @return <code>true</code> if the control menu entry should be
-	 *         displayed in current request context; <code>false</code>
-	 *         otherwise
+	 * @param  request the request that renders the Control Menu entry
+	 * @return <code>true</code> if the control menu entry should be displayed
+	 *         in the request's context; <code>false</code> otherwise
 	 */
 	public boolean isShow(HttpServletRequest request) throws PortalException;
 
 	/**
-	 * Returns <code>true</code> if the control menu entry should be opened
-	 * in a dialog window or in the current window.
+	 * Returns <code>true</code> if the Control Menu entry should be opened in a
+	 * dialog window or in the current window.
 	 *
 	 * @return <code>true</code> if the control menu entry should be opened in a
 	 *         dialog window; <code>false</code> otherwise

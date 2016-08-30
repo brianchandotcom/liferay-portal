@@ -12,16 +12,18 @@
  * details.
  */
 
-package com.liferay.site.admin.web.internal.exportimport.data.handler;
+package com.liferay.site.internal.exportimport.data.handler;
 
 import com.liferay.exportimport.data.handler.base.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
+import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.adapter.StagedGroup;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.site.internal.exportimport.staged.model.repository.StagedGroupStagedModelRepository;
+import com.liferay.site.model.adapter.StagedGroup;
 
 import java.util.Collections;
 import java.util.List;
@@ -83,8 +85,9 @@ public class StagedGroupStagedModelDataHandler
 			return true;
 		}
 
-		Group existingGroup = fetchExistingGroup(
-			portletDataContext, referenceElement);
+		Group existingGroup =
+			_stagedGroupStagedModelRepository.fetchExistingGroup(
+				portletDataContext, referenceElement);
 
 		if (existingGroup == null) {
 			return false;
@@ -115,8 +118,9 @@ public class StagedGroupStagedModelDataHandler
 			return;
 		}
 
-		Group existingGroup = fetchExistingGroup(
-			portletDataContext, referenceElement);
+		Group existingGroup =
+			_stagedGroupStagedModelRepository.fetchExistingGroup(
+				portletDataContext, referenceElement);
 
 		groupIds.put(groupId, existingGroup.getGroupId());
 	}
@@ -126,51 +130,24 @@ public class StagedGroupStagedModelDataHandler
 		PortletDataContext portletDataContext, StagedGroup stagedGroup) {
 	}
 
-	protected Group fetchExistingGroup(
-		PortletDataContext portletDataContext, Element referenceElement) {
-
-		long groupId = GetterUtil.getLong(
-			referenceElement.attributeValue("group-id"));
-		long liveGroupId = GetterUtil.getLong(
-			referenceElement.attributeValue("live-group-id"));
-
-		if ((groupId == 0) || (liveGroupId == 0)) {
-			return null;
-		}
-
-		return fetchExistingGroup(portletDataContext, groupId, liveGroupId);
+	@Override
+	protected StagedModelRepository<StagedGroup> getStagedModelRepository() {
+		return _stagedGroupStagedModelRepository;
 	}
 
-	protected Group fetchExistingGroup(
-		PortletDataContext portletDataContext, long groupId, long liveGroupId) {
+	@Reference(
+		target = "(model.class.name=com.liferay.site.model.adapter.StagedGroup)",
+		unbind = "-"
+	)
+	protected void setStagedGroupStagedModelRepository(
+		StagedGroupStagedModelRepository stagedGroupStagedModelRepository) {
 
-		Group liveGroup = _groupLocalService.fetchGroup(liveGroupId);
-
-		if (liveGroup != null) {
-			return liveGroup;
-		}
-
-		long existingGroupId = portletDataContext.getScopeGroupId();
-
-		if (groupId == portletDataContext.getSourceCompanyGroupId()) {
-			existingGroupId = portletDataContext.getCompanyGroupId();
-		}
-		else if (groupId == portletDataContext.getSourceGroupId()) {
-			existingGroupId = portletDataContext.getGroupId();
-		}
-
-		// During remote staging, valid mappings are found when the reference's
-		// group is properly staged. During local staging, valid mappings are
-		// found when the references do not change between staging and live.
-
-		return _groupLocalService.fetchGroup(existingGroupId);
+		_stagedGroupStagedModelRepository = stagedGroupStagedModelRepository;
 	}
 
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
+	@Reference
 	private GroupLocalService _groupLocalService;
+
+	private StagedGroupStagedModelRepository _stagedGroupStagedModelRepository;
 
 }

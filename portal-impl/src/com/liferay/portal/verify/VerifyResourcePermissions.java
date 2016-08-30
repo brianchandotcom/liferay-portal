@@ -181,14 +181,14 @@ public class VerifyResourcePermissions extends VerifyProcess {
 		try (LoggingTimer loggingTimer = new LoggingTimer(
 				verifiableResourcedModel.getTableName());
 			Connection con = DataAccess.getUpgradeOptimizedConnection();
-			PreparedStatement ps1 = con.prepareStatement(
+			PreparedStatement ps = con.prepareStatement(
 				"select count(*) from " +
 					verifiableResourcedModel.getTableName() +
 						" where companyId = " + role.getCompanyId());
-			ResultSet rs1 = ps1.executeQuery()) {
+			ResultSet rs = ps.executeQuery()) {
 
-			if (rs1.next()) {
-				total = rs1.getInt(1);
+			if (rs.next()) {
+				total = rs.getInt(1);
 			}
 		}
 
@@ -206,13 +206,13 @@ public class VerifyResourcePermissions extends VerifyProcess {
 		try (LoggingTimer loggingTimer = new LoggingTimer(
 				verifiableResourcedModel.getTableName());
 			Connection con = DataAccess.getUpgradeOptimizedConnection();
-			PreparedStatement ps2 = con.prepareStatement(sb.toString());
-			ResultSet rs2 = ps2.executeQuery()) {
+			PreparedStatement ps = con.prepareStatement(sb.toString());
+			ResultSet rs = ps.executeQuery()) {
 
-			for (int i = 0; rs2.next(); i++) {
-				long primKey = rs2.getLong(
+			for (int i = 0; rs.next(); i++) {
+				long primKey = rs.getLong(
 					verifiableResourcedModel.getPrimaryKeyColumnName());
-				long userId = rs2.getLong(
+				long userId = rs.getLong(
 					verifiableResourcedModel.getUserIdColumnName());
 
 				verifyResourcedModel(

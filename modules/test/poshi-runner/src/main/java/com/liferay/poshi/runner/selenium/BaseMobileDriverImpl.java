@@ -16,10 +16,19 @@ package com.liferay.poshi.runner.selenium;
 
 import com.liferay.poshi.runner.util.PropsValues;
 
-import java.util.List;
+import io.appium.java_client.MobileDriver;
+import io.appium.java_client.MultiTouchAction;
+import io.appium.java_client.TouchAction;
 
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import org.openqa.selenium.ScreenOrientation;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.html5.Location;
+import org.openqa.selenium.remote.Response;
 
 import org.w3c.dom.Node;
 
@@ -388,12 +397,20 @@ public abstract class BaseMobileDriverImpl
 		super.close();
 	}
 
+	public void closeApp() {
+		_mobileDriver.closeApp();
+	}
+
 	@Override
 	public void connectToEmailAccount(String emailAddress, String emailPassword)
 		throws Exception {
 
 		LiferaySeleniumHelper.connectToEmailAccount(
 			emailAddress, emailPassword);
+	}
+
+	public WebDriver context(String name) {
+		return _mobileDriver.context(name);
 	}
 
 	@Override
@@ -484,9 +501,21 @@ public abstract class BaseMobileDriverImpl
 		LiferaySeleniumHelper.echo(message);
 	}
 
+	public Response execute(String driverCommand, Map<String, ?> parameters) {
+		return _mobileDriver.execute(driverCommand, parameters);
+	}
+
 	@Override
 	public void fail(String message) {
 		LiferaySeleniumHelper.fail(message);
+	}
+
+	public WebElement findElementByAccessibilityId(String using) {
+		return _mobileDriver.findElementByAccessibilityId(using);
+	}
+
+	public List<WebElement> findElementsByAccessibilityId(String using) {
+		return _mobileDriver.findElementsByAccessibilityId(using);
 	}
 
 	@Override
@@ -534,6 +563,14 @@ public abstract class BaseMobileDriverImpl
 		throw new UnsupportedOperationException();
 	}
 
+	public String getAppStrings() {
+		return _mobileDriver.getAppStrings();
+	}
+
+	public String getAppStrings(String language) {
+		return _mobileDriver.getAppStrings(language);
+	}
+
 	@Override
 	public String getAttribute(String attributeLocator) {
 		return WebDriverHelper.getAttribute(this, attributeLocator);
@@ -552,6 +589,14 @@ public abstract class BaseMobileDriverImpl
 	@Override
 	public String getConfirmation() {
 		return WebDriverHelper.getConfirmation(this);
+	}
+
+	public String getContext() {
+		return _mobileDriver.getContext();
+	}
+
+	public Set<String> getContextHandles() {
+		return _mobileDriver.getContextHandles();
 	}
 
 	@Override
@@ -718,6 +763,10 @@ public abstract class BaseMobileDriverImpl
 		return LiferaySeleniumHelper.getNumberIncrement(value);
 	}
 
+	public ScreenOrientation getOrientation() {
+		return _mobileDriver.getOrientation();
+	}
+
 	@Override
 	public String getOutputDirName() {
 		return _OUTPUT_DIR_NAME;
@@ -867,6 +916,10 @@ public abstract class BaseMobileDriverImpl
 		waitForPageToLoad("30000");
 	}
 
+	public void hideKeyboard() {
+		_mobileDriver.hideKeyboard();
+	}
+
 	@Override
 	public void highlight(String locator) {
 		throw new UnsupportedOperationException();
@@ -877,9 +930,17 @@ public abstract class BaseMobileDriverImpl
 		throw new UnsupportedOperationException();
 	}
 
+	public void installApp(String appPath) {
+		_mobileDriver.installApp(appPath);
+	}
+
 	@Override
 	public boolean isAlertPresent() {
 		throw new UnsupportedOperationException();
+	}
+
+	public boolean isAppInstalled(String bundleId) {
+		return _mobileDriver.isAppInstalled(bundleId);
 	}
 
 	@Override
@@ -1124,6 +1185,14 @@ public abstract class BaseMobileDriverImpl
 		throw new UnsupportedOperationException();
 	}
 
+	public void launchApp() {
+		_mobileDriver.launchApp();
+	}
+
+	public Location location() {
+		return _mobileDriver.location();
+	}
+
 	@Override
 	public void makeVisible(String locator) {
 		WebDriverHelper.makeVisible(this, locator);
@@ -1232,6 +1301,30 @@ public abstract class BaseMobileDriverImpl
 	public void pauseLoggerCheck() throws Exception {
 	}
 
+	public void performMultiTouchAction(MultiTouchAction multiAction) {
+		_mobileDriver.performMultiTouchAction(multiAction);
+	}
+
+	public TouchAction performTouchAction(TouchAction touchAction) {
+		return _mobileDriver.performTouchAction(touchAction);
+	}
+
+	public void pinch(int x, int y) {
+		_mobileDriver.pinch(x, y);
+	}
+
+	public void pinch(WebElement el) {
+		_mobileDriver.pinch(el);
+	}
+
+	public byte[] pullFile(String remotePath) {
+		return _mobileDriver.pullFile(remotePath);
+	}
+
+	public byte[] pullFolder(String remotePath) {
+		return _mobileDriver.pullFolder(remotePath);
+	}
+
 	@Override
 	public void refresh() {
 		WebDriverHelper.refresh(this);
@@ -1245,6 +1338,10 @@ public abstract class BaseMobileDriverImpl
 	@Override
 	public void removeAllSelections(String locator) {
 		throw new UnsupportedOperationException();
+	}
+
+	public void removeApp(String bundleId) {
+		_mobileDriver.removeApp(bundleId);
 	}
 
 	@Override
@@ -1262,6 +1359,10 @@ public abstract class BaseMobileDriverImpl
 		LiferaySeleniumHelper.replyToEmail(this, to, body);
 	}
 
+	public void resetApp() {
+		_mobileDriver.resetApp();
+	}
+
 	@Override
 	public String retrieveLastRemoteControlLogs() {
 		throw new UnsupportedOperationException();
@@ -1270,6 +1371,14 @@ public abstract class BaseMobileDriverImpl
 	@Override
 	public void rollup(String rollupName, String kwargs) {
 		throw new UnsupportedOperationException();
+	}
+
+	public void rotate(ScreenOrientation orientation) {
+		_mobileDriver.rotate(orientation);
+	}
+
+	public void runAppInBackground(int seconds) {
+		_mobileDriver.runAppInBackground(seconds);
 	}
 
 	@Override
@@ -1304,6 +1413,14 @@ public abstract class BaseMobileDriverImpl
 	@Override
 	public void scrollBy(String coordString) {
 		throw new UnsupportedOperationException();
+	}
+
+	public WebElement scrollTo(String text) {
+		return _mobileDriver.scrollTo(text);
+	}
+
+	public WebElement scrollToExact(String text) {
+		return _mobileDriver.scrollToExact(text);
 	}
 
 	@Override
@@ -1412,6 +1529,10 @@ public abstract class BaseMobileDriverImpl
 	@Override
 	public void setExtensionJs(String extensionJs) {
 		throw new UnsupportedOperationException();
+	}
+
+	public void setLocation(Location location) {
+		_mobileDriver.setLocation(location);
 	}
 
 	@Override
@@ -1580,6 +1701,20 @@ public abstract class BaseMobileDriverImpl
 	@Override
 	public void submit(String formLocator) {
 		throw new UnsupportedOperationException();
+	}
+
+	public void swipe(
+		int startx, int starty, int endx, int endy, int duration) {
+
+		_mobileDriver.swipe(startx, starty, endx, endy, duration);
+	}
+
+	public void tap(int fingers, int x, int y, int duration) {
+		_mobileDriver.tap(fingers, x, y, duration);
+	}
+
+	public void tap(int fingers, WebElement element, int duration) {
+		_mobileDriver.tap(fingers, element, duration);
 	}
 
 	@Override
@@ -1766,6 +1901,14 @@ public abstract class BaseMobileDriverImpl
 	@Override
 	public void windowMaximizeAndWait() {
 		throw new UnsupportedOperationException();
+	}
+
+	public void zoom(int x, int y) {
+		_mobileDriver.zoom(x, y);
+	}
+
+	public void zoom(WebElement el) {
+		_mobileDriver.zoom(el);
 	}
 
 	protected WebElement getWebElement(String locator) {

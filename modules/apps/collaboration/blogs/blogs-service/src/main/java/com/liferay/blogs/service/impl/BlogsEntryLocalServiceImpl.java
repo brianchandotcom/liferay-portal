@@ -1264,7 +1264,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			long classNameId = PortalUtil.getClassNameId(BlogsEntry.class);
 
 			friendlyURLLocalService.validate(
-				entry.getCompanyId(), entry.getGroupId(), classNameId,
+				entry.getCompanyId(), entry.getGroupId(), classNameId, entryId,
 				urlTitle);
 		}
 

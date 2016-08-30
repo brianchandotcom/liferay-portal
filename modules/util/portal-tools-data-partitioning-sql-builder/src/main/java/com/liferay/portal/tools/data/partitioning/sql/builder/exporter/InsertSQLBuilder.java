@@ -14,30 +14,43 @@
 
 package com.liferay.portal.tools.data.partitioning.sql.builder.exporter;
 
-import com.liferay.portal.tools.data.partitioning.sql.builder.exporter.context.ExportContext;
 import com.liferay.portal.tools.data.partitioning.sql.builder.internal.exporter.SQLBuilder;
 
-import java.io.OutputStream;
-
-import java.util.List;
+import java.sql.ResultSetMetaData;
 
 /**
  * @author Manuel de la Peña
  */
-public interface DBExporter {
+public class InsertSQLBuilder implements SQLBuilder {
 
-	public List<String> getControlTableNames(ExportContext exportContext);
+	@Override
+	public String build(
+		String[] fields, ResultSetMetaData resultSetMetaData,
+		String tableName) {
 
-	public List<String> getPartitionedTableNames(ExportContext exportContext);
+		if ((fields == null) || (fields.length == 0)) {
+			throw new IllegalArgumentException("Fields cannot be null");
+		}
 
-	public SQLBuilder getSQLBuilder();
+		StringBuilder sb = new StringBuilder();
 
-	public void write(
-		long companyId, String tableName, OutputStream outputStream);
+		sb.append("insert into ");
+		sb.append(tableName);
+		sb.append(" values (");
 
-	public void write(String tableName, OutputStream outputStream);
+		for (int i = 0; i < fields.length; i++) {
+			String field = fields[i];
 
-	public void writeDelete(
-		long companyId, String tableName, OutputStream outputStream);
+			sb.append(field);
+
+			if (i != (fields.length - 1)) {
+				sb.append(", ");
+			}
+		}
+
+		sb.append(")");
+
+		return sb.toString() + ";\n";
+	}
 
 }

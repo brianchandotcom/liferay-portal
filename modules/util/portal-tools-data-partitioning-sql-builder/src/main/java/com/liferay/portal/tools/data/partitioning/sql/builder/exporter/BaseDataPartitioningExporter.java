@@ -16,6 +16,7 @@ package com.liferay.portal.tools.data.partitioning.sql.builder.exporter;
 
 import com.liferay.portal.tools.data.partitioning.sql.builder.exporter.context.ExportContext;
 import com.liferay.portal.tools.data.partitioning.sql.builder.internal.exporter.ExportProcess;
+import com.liferay.portal.tools.data.partitioning.sql.builder.internal.exporter.SQLBuilder;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
@@ -50,6 +51,7 @@ public abstract class BaseDataPartitioningExporter
 	implements DataPartitioningExporter, DBExporter, DBProvider {
 
 	public BaseDataPartitioningExporter() {
+		_insertSQLBuilder = getSQLBuilder();
 	}
 
 	@Override
@@ -89,6 +91,11 @@ public abstract class BaseDataPartitioningExporter
 	@Override
 	public List<String> getPartitionedTableNames(ExportContext exportContext) {
 		return getTableNames(getPartitionedTableNamesSQL(exportContext));
+	}
+
+	@Override
+	public SQLBuilder getSQLBuilder() {
+		return new InsertSQLBuilder();
 	}
 
 	@Override
@@ -149,7 +156,10 @@ public abstract class BaseDataPartitioningExporter
 					fields[i] = serializeTableField(resultSet.getObject(i + 1));
 				}
 
-				generateInsertSQL(outputStream, tableName, fields);
+				String insertSql = _insertSQLBuilder.build(
+					fields, resultSetMetaData, tableName);
+
+				outputStream.write(insertSql.getBytes());
 			}
 		}
 		catch (IOException | SQLException e) {
@@ -216,37 +226,6 @@ public abstract class BaseDataPartitioningExporter
 		return dateFormat.format(date);
 	}
 
-	protected void generateInsertSQL(
-			OutputStream outputStream, String tableName, String[] fields)
-		throws IOException {
-
-		if ((fields == null) || (fields.length == 0)) {
-			throw new IllegalArgumentException("Fields are null");
-		}
-
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("insert into ");
-		sb.append(tableName);
-		sb.append(" values (");
-
-		for (int i = 0; i < fields.length; i++) {
-			String field = fields[i];
-
-			sb.append(field);
-
-			if (i != (fields.length - 1)) {
-				sb.append(", ");
-			}
-		}
-
-		sb.append(")");
-
-		String sql = sb.toString() + ";\n";
-
-		outputStream.write(sql.getBytes());
-	}
-
 	protected abstract String getControlTableNamesSQL(
 		ExportContext exportContext);
 
@@ -285,5 +264,6 @@ public abstract class BaseDataPartitioningExporter
 		BaseDataPartitioningExporter.class);
 
 	private DataSource _dataSource;
+	private final SQLBuilder _insertSQLBuilder;
 
 }

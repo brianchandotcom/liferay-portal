@@ -14,30 +14,23 @@
 
 package com.liferay.portal.tools.data.partitioning.sql.builder.exporter;
 
-import com.liferay.portal.tools.data.partitioning.sql.builder.exporter.context.ExportContext;
-import com.liferay.portal.tools.data.partitioning.sql.builder.internal.exporter.SQLBuilder;
-
-import java.io.OutputStream;
-
-import java.util.List;
+import org.junit.Assert;
+import org.junit.Test;
 
 /**
  * @author Manuel de la Peña
  */
-public interface DBExporter {
+public class InsertSQLBuilderTest {
 
-	public List<String> getControlTableNames(ExportContext exportContext);
+	@Test
+	public void testBuild() {
+		String[] fields = {"a", "b", "c", "d"};
 
-	public List<String> getPartitionedTableNames(ExportContext exportContext);
+		InsertSQLBuilder insertSQLBuilder = new InsertSQLBuilder();
 
-	public SQLBuilder getSQLBuilder();
-
-	public void write(
-		long companyId, String tableName, OutputStream outputStream);
-
-	public void write(String tableName, OutputStream outputStream);
-
-	public void writeDelete(
-		long companyId, String tableName, OutputStream outputStream);
+		Assert.assertEquals(
+			"insert into Foo values (a, b, c, d);\n",
+			insertSQLBuilder.build(fields, null, "Foo"));
+	}
 
 }

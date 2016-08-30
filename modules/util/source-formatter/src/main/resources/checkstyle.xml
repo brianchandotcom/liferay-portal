@@ -71,7 +71,7 @@
 			<message key="annotation.unsortedParameter" value="Annotation parameter ''{0}'' is not sorted alphabetically" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.Chaining">
-			<property name="chainingAllowedFormat" value="(^|.*\.)bind\..*" />
+			<property name="chainingAllowedFormat" value="(^|.*\.)(bind|stream)\..*" />
 			<message key="chaining.avoid" value="Avoid chaining on method ''{0}'" />
 			<message key="chaining.avoid.multiple" value="Avoid multiple chaining on method ''{0}'" />
 			<message key="concat.avoid.too.many" value="Use StringBundler instead of chaining concat when there is more than 3 parts" />

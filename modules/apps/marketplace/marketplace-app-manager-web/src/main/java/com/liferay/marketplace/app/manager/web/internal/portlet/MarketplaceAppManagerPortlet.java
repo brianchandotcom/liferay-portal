@@ -375,6 +375,15 @@ public class MarketplaceAppManagerPortlet extends MVCPortlet {
 			String fileName = null;
 
 			if (Validator.isNotNull(deploymentContext)) {
+				deploymentContext = StringUtil.replace(
+					deploymentContext,
+					new char[] {
+						CharPool.BACK_SLASH, CharPool.PERIOD, CharPool.SLASH
+					},
+					new String[] {
+						StringPool.BLANK, StringPool.BLANK, StringPool.BLANK
+					});
+
 				fileName = _DEPLOY_TO_PREFIX + deploymentContext + ".war";
 			}
 			else {

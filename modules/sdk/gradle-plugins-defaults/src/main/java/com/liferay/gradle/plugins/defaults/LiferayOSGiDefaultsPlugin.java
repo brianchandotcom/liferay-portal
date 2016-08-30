@@ -66,7 +66,11 @@ import java.io.IOException;
 import java.io.UncheckedIOException;
 
 import java.nio.charset.StandardCharsets;
+import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -205,6 +209,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	public static final String SNAPSHOT_IF_STALE_PROPERTY_NAME =
 		"snapshotIfStale";
 
+	public static final String SYNC_RELEASE_PROPERTY_NAME = "syncRelease";
+
 	public static final String UPDATE_FILE_VERSIONS_TASK_NAME =
 		"updateFileVersions";
 
@@ -220,9 +226,14 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 	@Override
 	public void apply(final Project project) {
+		final File portalRootDir = GradleUtil.getRootDir(
+			project.getRootProject(), "portal-impl");
+
 		GradleUtil.applyPlugin(project, LiferayOSGiPlugin.class);
 
 		File versionOverridesFile = _getVersionOverridesFile(project);
+
+		_syncReleaseVersions(project, portalRootDir, versionOverridesFile);
 
 		_applyVersionOverrides(project, versionOverridesFile);
 
@@ -232,8 +243,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		List<String> taskNames = startParameter.getTaskNames();
 
-		final File portalRootDir = GradleUtil.getRootDir(
-			project.getRootProject(), "portal-impl");
 		final boolean publishing = isPublishing(project);
 		boolean testProject = isTestProject(project);
 
@@ -1050,7 +1059,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			project, LiferayRelengPlugin.UPDATE_VERSION_TASK_NAME,
 			ReplaceRegexTask.class);
 
-		replaceRegexTask.match("Bundle-Version: (.+)(?:\\s|$)", "bnd.bnd");
+		replaceRegexTask.match(_BUNDLE_VERSION_REGEX, "bnd.bnd");
 
 		replaceRegexTask.onlyIf(
 			new Spec<Task>() {
@@ -2586,6 +2595,83 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		return new File(gitRepoDir.getParentFile(), fileName);
 	}
 
+	private Properties _getVersions(
+			File projectDir, Properties versionOverrides)
+		throws IOException {
+
+		final Properties versions = new Properties();
+
+		if (versionOverrides != null) {
+			versions.putAll(versionOverrides);
+		}
+
+		String bundleVersion = versions.getProperty(Constants.BUNDLE_VERSION);
+
+		if (Validator.isNull(bundleVersion)) {
+			Properties bundleProperties = GUtil.loadProperties(
+				new File(projectDir, "bnd.bnd"));
+
+			bundleVersion = bundleProperties.getProperty(
+				Constants.BUNDLE_VERSION);
+
+			if (Validator.isNotNull(bundleVersion)) {
+				versions.setProperty(Constants.BUNDLE_VERSION, bundleVersion);
+			}
+		}
+
+		File packageInfoRootDir = new File(projectDir, "src/main/resources");
+
+		final Path packageInfoRootDirPath = packageInfoRootDir.toPath();
+
+		if (Files.notExists(packageInfoRootDirPath)) {
+			return versions;
+		}
+
+		Files.walkFileTree(
+			packageInfoRootDirPath,
+			new SimpleFileVisitor<Path>() {
+
+				@Override
+				public FileVisitResult preVisitDirectory(
+						Path dirPath, BasicFileAttributes basicFileAttributes)
+					throws IOException {
+
+					Path packageInfoPath = dirPath.resolve("packageinfo");
+
+					if (Files.notExists(packageInfoPath)) {
+						return FileVisitResult.CONTINUE;
+					}
+
+					Path relativePath = packageInfoRootDirPath.relativize(
+						dirPath);
+
+					String packagePath = relativePath.toString();
+
+					packagePath = packagePath.replace(File.separatorChar, '.');
+
+					String packageVersion = versions.getProperty(packagePath);
+
+					if (Validator.isNotNull(packageVersion)) {
+						return FileVisitResult.CONTINUE;
+					}
+
+					packageVersion = new String(
+						Files.readAllBytes(packageInfoPath),
+						StandardCharsets.UTF_8);
+
+					packageVersion = packageVersion.trim();
+					packageVersion = packageVersion.substring(8);
+
+					versions.setProperty(packagePath, packageVersion);
+
+					return FileVisitResult.CONTINUE;
+				}
+
+			});
+
+		return versions;
+	}
+
 	private boolean _isSnapshotStale(Project project) {
 		Logger logger = project.getLogger();
 
@@ -2633,7 +2719,159 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		return false;
 	}
 
+	private void _saveVersions(
+			File projectDir, Properties versions, File versionOverridesFile)
+		throws IOException {
+
+		if (versionOverridesFile != null) {
+			FileUtil.writeProperties(versionOverridesFile, versions);
+		}
+
+		Path projectDirPath = projectDir.toPath();
+
+		String version = versions.getProperty(Constants.BUNDLE_VERSION);
+
+		if (Validator.isNotNull(version)) {
+			FileUtil.replace(
+				projectDirPath.resolve("bnd.bnd"), _BUNDLE_VERSION_REGEX,
+				version);
+		}
+
+		Path packageInfoRootDirPath = projectDirPath.resolve(
+			"src/main/resources");
+
+		for (String key : versions.stringPropertyNames()) {
+			if (key.equals(Constants.BUNDLE_VERSION)) {
+				continue;
+			}
+
+			version = versions.getProperty(key);
+
+			if (Validator.isNull(version)) {
+				continue;
+			}
+
+			String packageInfo = "version " + version;
+
+			Path packageDirPath = packageInfoRootDirPath.resolve(
+				key.replace('.', '/'));
+
+			Path packageInfoPath = packageDirPath.resolve("packageinfo");
+
+			// Avoid unnecessary update if packageinfo has a trailing empty line
+
+			String oldPackageInfo = new String(
+				Files.readAllBytes(packageInfoPath), StandardCharsets.UTF_8);
+
+			if (packageInfo.equals(oldPackageInfo.trim())) {
+				continue;
+			}
+
+			Files.createDirectories(packageDirPath);
+
+			Files.write(
+				packageInfoPath, packageInfo.getBytes(StandardCharsets.UTF_8));
+		}
+	}
+
+	private boolean _syncReleaseVersions(
+		Project project, File portalRootDir, File versionOverridesFile) {
+
+		boolean syncRelease = false;
+
+		if (project.hasProperty(SYNC_RELEASE_PROPERTY_NAME)) {
+			syncRelease = GradleUtil.getProperty(
+				project, SYNC_RELEASE_PROPERTY_NAME, true);
+		}
+
+		if ((portalRootDir == null) || !syncRelease ||
+			!GradleUtil.hasStartParameterTask(project, BASELINE_TASK_NAME)) {
+
+			return false;
+		}
+
+		File releasePortalRootDir = GradleUtil.getProperty(
+			project, _RELEASE_PORTAL_ROOT_DIR_PROPERTY_NAME, (File)null);
+
+		if (releasePortalRootDir == null) {
+			throw new GradleException(
+				"Please set the property \"" +
+					_RELEASE_PORTAL_ROOT_DIR_PROPERTY_NAME + "\".");
+		}
+
+		Logger logger = project.getLogger();
+
+		String relativePath = FileUtil.relativize(
+			project.getProjectDir(), portalRootDir);
+
+		File releaseProjectDir = new File(releasePortalRootDir, relativePath);
+
+		if (!releaseProjectDir.exists()) {
+			if (logger.isInfoEnabled()) {
+				logger.info(
+					"Unable to synchronize release versions of {}, {} does " +
+						"not exist",
+					project, releaseProjectDir);
+			}
+
+			return false;
+		}
+
+		if (logger.isLifecycleEnabled()) {
+			logger.lifecycle(
+				"Synchronizing release versions of {} with {}", project,
+				releaseProjectDir);
+		}
+
+		Properties releaseVersions = null;
+		Properties versions = null;
+
+		if ((versionOverridesFile != null) && versionOverridesFile.exists()) {
+			versions = GUtil.loadProperties(versionOverridesFile);
+		}
+
+		try {
+			releaseVersions = _getVersions(releaseProjectDir, null);
+			versions = _getVersions(project.getProjectDir(), versions);
+
+			for (String key : releaseVersions.stringPropertyNames()) {
+				if (!versions.containsKey(key)) {
+					continue;
+				}
+
+				Version releaseVersion = Version.parseVersion(
+					releaseVersions.getProperty(key));
+				Version version = Version.parseVersion(
+					versions.getProperty(key));
+
+				if (releaseVersion.compareTo(version) > 0) {
+					versions.setProperty(key, releaseVersion.toString());
+				}
+			}
+
+			_saveVersions(
+				project.getProjectDir(), versions, versionOverridesFile);
+		}
+		catch (IOException ioe) {
+			throw new UncheckedIOException(ioe);
+		}
+
+		// Reload Bundle-Version in case it is changed, so the project
+		// configuration can proceed with the new version
+
+		String bundleVersion = versions.getProperty(Constants.BUNDLE_VERSION);
+
+		if (Validator.isNotNull(bundleVersion)) {
+			project.setVersion(bundleVersion);
+		}
+
+		return true;
+	}
+
 	private static final String _APP_BND_FILE_NAME = "app.bnd";
+
+	private static final String _BUNDLE_VERSION_REGEX =
+		Constants.BUNDLE_VERSION + ": (.+)(?:\\s|$)";
 
 	private static final String _CACHE_COMMIT_MESSAGE = "FAKE GRADLE CACHE";
 
@@ -2648,6 +2886,9 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		"maven.local.ignore");
 
 	private static final String _PMD_PORTAL_TOOL_NAME = "com.liferay.pmd";
+
+	private static final String _RELEASE_PORTAL_ROOT_DIR_PROPERTY_NAME =
+		"release.versions.test.other.dir";
 
 	private static final String _REPOSITORY_PRIVATE_PASSWORD =
 		System.getProperty("repository.private.password");

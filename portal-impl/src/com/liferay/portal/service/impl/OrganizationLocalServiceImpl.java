@@ -70,7 +70,7 @@ import com.liferay.portal.service.base.OrganizationLocalServiceBaseImpl;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.usersadmin.search.OrganizationMembersSearcher;
+import com.liferay.portlet.usersadmin.search.OrganizationUsersSearcher;
 import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
@@ -1610,7 +1610,7 @@ public class OrganizationLocalServiceImpl
 			int end, Sort[] sorts)
 		throws PortalException {
 
-		Indexer indexer = OrganizationMembersSearcher.getInstance();
+		Indexer indexer = OrganizationUsersSearcher.getInstance();
 
 		SearchContext searchContext = buildSearchContext(
 			companyId, parentOrganizationId, keywords, status, params, start,
@@ -1639,7 +1639,7 @@ public class OrganizationLocalServiceImpl
 			int status, LinkedHashMap<String, Object> params)
 		throws PortalException {
 
-		Indexer indexer = OrganizationMembersSearcher.getInstance();
+		Indexer indexer = OrganizationUsersSearcher.getInstance();
 
 		SearchContext searchContext = buildSearchContext(
 			companyId, parentOrganizationId, keywords, status, params,

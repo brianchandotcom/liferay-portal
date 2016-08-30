@@ -21,8 +21,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 /**
  * @author Pei-Jung Lan
  */
-public class OrganizationMemberNameComparator
-	extends OrderByComparator<Object> {
+public class OrganizationUserNameComparator extends OrderByComparator<Object> {
 
 	public static final String ORDER_BY_ASC = "name ASC";
 
@@ -30,11 +29,11 @@ public class OrganizationMemberNameComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"name"};
 
-	public OrganizationMemberNameComparator() {
+	public OrganizationUserNameComparator() {
 		this(false);
 	}
 
-	public OrganizationMemberNameComparator(boolean ascending) {
+	public OrganizationUserNameComparator(boolean ascending) {
 		_ascending = ascending;
 	}
 

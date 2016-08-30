@@ -89,7 +89,7 @@ public class StagedLayoutSetStagedModelDataHandler
 			ExportImportPathUtil.getModelPath(stagedLayoutSet),
 			stagedLayoutSet);
 
-		// Last Publish Date
+		// Last publish date
 
 		boolean updateLastPublishDate = MapUtil.getBoolean(
 			portletDataContext.getParameterMap(),
@@ -139,7 +139,7 @@ public class StagedLayoutSetStagedModelDataHandler
 		PortletDataContext portletDataContext,
 		StagedLayoutSet stagedLayoutSet) {
 
-		// Force to always have a Layout group element
+		// Force to always have a layout group element
 
 		portletDataContext.getExportDataGroupElement(Layout.class);
 
@@ -163,7 +163,7 @@ public class StagedLayoutSetStagedModelDataHandler
 			}
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {
-					_log.warn("Cannot export layout " + layout.getName(), e);
+					_log.warn("Unable to export layout " + layout.getName(), e);
 				}
 			}
 		}
@@ -197,7 +197,7 @@ public class StagedLayoutSetStagedModelDataHandler
 			catch (PortalException pe) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
-						"Cannot retrieve logo for layout set branch " +
+						"Unable to get logo for layout set branch " +
 							layoutSetBranch.getLayoutSetBranchId(),
 						pe);
 				}
@@ -211,7 +211,7 @@ public class StagedLayoutSetStagedModelDataHandler
 			catch (PortalException pe) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
-						"Cannot retrieve logo for layout set " +
+						"Unable to get logo for layout set " +
 							stagedLayoutSet.getLayoutSetId(),
 						pe);
 				}
@@ -254,8 +254,8 @@ public class StagedLayoutSetStagedModelDataHandler
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
-						"Cannot export theme reference for layout set branch " +
-							layoutSetBranch.getLayoutSetBranchId(),
+						"Unable to export theme reference for layout set " +
+							"branch " + layoutSetBranch.getLayoutSetBranchId(),
 						e);
 				}
 			}
@@ -267,7 +267,7 @@ public class StagedLayoutSetStagedModelDataHandler
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
-						"Cannot export theme reference for layout set " +
+						"Unable to export theme reference for layout set " +
 							stagedLayoutSet.getLayoutSetId(),
 						e);
 				}
@@ -305,7 +305,7 @@ public class StagedLayoutSetStagedModelDataHandler
 		}
 		catch (PortalException pe) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Cannot import logo", pe);
+				_log.warn("Unable to import logo", pe);
 			}
 		}
 	}
@@ -322,7 +322,7 @@ public class StagedLayoutSetStagedModelDataHandler
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Cannot import theme reference " +
+					"Unable to import theme reference " +
 						stagedLayoutSet.getThemeId(),
 					e);
 			}

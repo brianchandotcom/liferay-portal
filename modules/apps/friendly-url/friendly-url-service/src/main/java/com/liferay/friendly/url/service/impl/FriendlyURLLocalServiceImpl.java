@@ -53,6 +53,15 @@ public class FriendlyURLLocalServiceImpl
 			friendlyURLPersistence.update(mainFriendlyURL);
 		}
 
+		FriendlyURL oldFriendlyURL = friendlyURLPersistence.fetchByC_G_C_C_U(
+			companyId, groupId, classNameId, classPK, normalizedUrlTitle);
+
+		if (oldFriendlyURL != null) {
+			oldFriendlyURL.setMain(true);
+
+			return friendlyURLPersistence.update(oldFriendlyURL);
+		}
+
 		long friendlyURLId = counterLocalService.increment();
 
 		FriendlyURL friendlyURL = createFriendlyURL(friendlyURLId);

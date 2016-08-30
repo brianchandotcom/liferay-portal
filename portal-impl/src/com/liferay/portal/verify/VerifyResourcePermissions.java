@@ -190,6 +190,7 @@ public class VerifyResourcePermissions extends VerifyProcess {
 			if (rs1.next()) {
 				total = rs1.getInt(1);
 			}
+		}
 
 			StringBundler sb = new StringBundler(8);
 
@@ -202,7 +203,10 @@ public class VerifyResourcePermissions extends VerifyProcess {
 			sb.append(" where companyId = ");
 			sb.append(role.getCompanyId());
 
-			try (PreparedStatement ps2 = con.prepareStatement(sb.toString());
+			try (LoggingTimer loggingTimer = new LoggingTimer(
+					verifiableResourcedModel.getTableName());
+				Connection con = DataAccess.getUpgradeOptimizedConnection();
+				PreparedStatement ps2 = con.prepareStatement(sb.toString());
 				ResultSet rs2 = ps2.executeQuery()) {
 
 				for (int i = 0; rs2.next(); i++) {
@@ -217,7 +221,6 @@ public class VerifyResourcePermissions extends VerifyProcess {
 						userId, i, total);
 				}
 			}
-		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -71,6 +71,12 @@ public interface DDMTemplateFinder {
 		java.lang.String keywords, java.lang.String type,
 		java.lang.String mode, int status);
 
+	public int filterCountByG_SC_S(long groupId, long structureClassNameId,
+		int status);
+
+	public int filterCountByG_SC_S(long[] groupIds, long structureClassNameId,
+		int status);
+
 	public int filterCountByC_G_C_C_R_T_M_S(long companyId, long[] groupIds,
 		long classNameId, long classPK, long resourceClassNameId,
 		java.lang.String type, java.lang.String mode, int status);
@@ -101,12 +107,6 @@ public interface DDMTemplateFinder {
 		java.lang.String[] modes, java.lang.String[] languages, int status,
 		boolean andOperator);
 
-	public int filterCountByG_SC_S(long groupId, long structureClassNameId,
-		int status);
-
-	public int filterCountByG_SC_S(long[] groupIds, long structureClassNameId,
-		int status);
-
 	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> filterFindByKeywords(
 		long companyId, long groupId, long classNameId, long classPK,
 		long resourceClassNameId, java.lang.String keywords,
@@ -118,6 +118,16 @@ public interface DDMTemplateFinder {
 		long companyId, long[] groupIds, long[] classNameIds, long[] classPKs,
 		long resourceClassNameId, java.lang.String keywords,
 		java.lang.String type, java.lang.String mode, int status, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMTemplate> orderByComparator);
+
+	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> filterFindByG_SC_S(
+		long groupId, long structureClassNameId, int status, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMTemplate> orderByComparator);
+
+	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> filterFindByG_SC_S(
+		long[] groupIds, long structureClassNameId, int status, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMTemplate> orderByComparator);
 
@@ -157,16 +167,6 @@ public interface DDMTemplateFinder {
 		java.lang.String[] descriptions, java.lang.String[] types,
 		java.lang.String[] modes, java.lang.String[] languages, int status,
 		boolean andOperator, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMTemplate> orderByComparator);
-
-	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> filterFindByG_SC_S(
-		long groupId, long structureClassNameId, int status, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMTemplate> orderByComparator);
-
-	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> filterFindByG_SC_S(
-		long[] groupIds, long structureClassNameId, int status, int start,
-		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMTemplate> orderByComparator);
 
 	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> findByKeywords(

@@ -17,6 +17,7 @@ package com.liferay.source.formatter;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -1694,17 +1695,62 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			String sqlElementName1 = getElementName(sqlElement1);
 			String sqlElementName2 = getElementName(sqlElement2);
 
-			if ((sqlElementName1 == null) || (sqlElementName2 == null)) {
+			String finderObjectName1 = _getFinderObjectName(sqlElementName1);
+			String finderObjectName2 = _getFinderObjectName(sqlElementName2);
+
+			if ((finderObjectName1 == null) || (finderObjectName2 == null)) {
 				return 0;
 			}
 
-			return sqlElementName1.compareToIgnoreCase(sqlElementName2);
+			int value = finderObjectName1.compareToIgnoreCase(
+				finderObjectName2);
+
+			if (value != 0) {
+				return value;
+			}
+
+			String finderKeyName1 = _getFinderKeyName(sqlElementName1);
+			String finderKeyName2 = _getFinderKeyName(sqlElementName2);
+
+			int startsWithWeight = StringUtil.startsWithWeight(
+				finderKeyName1, finderKeyName2);
+
+			if (startsWithWeight == 0) {
+				return finderKeyName1.compareTo(finderKeyName2);
+			}
+
+			String startFinder = finderKeyName1.substring(0, startsWithWeight);
+
+			if (!startFinder.contains("By")) {
+				NaturalOrderStringComparator comparator =
+					new NaturalOrderStringComparator();
+
+				return comparator.compare(finderKeyName1, finderKeyName2);
+			}
+
+			int columnCount1 = StringUtil.count(
+				sqlElementName1, CharPool.UNDERLINE);
+			int columnCount2 = StringUtil.count(
+				sqlElementName2, CharPool.UNDERLINE);
+
+			return columnCount1 - columnCount2;
 		}
 
-		@Override
-		protected String getElementName(Element element) {
-			String elementName = element.attributeValue(getNameAttribute());
+		private String _getFinderKeyName(String elementName) {
+			if (Validator.isNull(elementName)) {
+				return null;
+			}
 
+			int pos = elementName.lastIndexOf(StringPool.PERIOD);
+
+			if (pos == -1) {
+				return null;
+			}
+
+			return elementName.substring(pos + 1);
+		}
+
+		private String _getFinderObjectName(String elementName) {
 			if (Validator.isNull(elementName)) {
 				return null;
 			}

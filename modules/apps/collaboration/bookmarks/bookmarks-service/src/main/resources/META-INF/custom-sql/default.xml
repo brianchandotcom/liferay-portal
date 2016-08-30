@@ -25,17 +25,6 @@
 				(BookmarksEntry.folderId = ?)
 		]]>
 	</sql>
-	<sql id="com.liferay.bookmarks.service.persistence.BookmarksFolderFinder.countF_ByG_P">
-		<![CDATA[
-			SELECT
-				COUNT(*) AS COUNT_VALUE
-			FROM
-				BookmarksFolder
-			WHERE
-				(BookmarksFolder.groupId = ?) AND
-				(BookmarksFolder.parentFolderId = ?)
-		]]>
-	</sql>
 	<sql id="com.liferay.bookmarks.service.persistence.BookmarksFolderFinder.countE_ByG_F_S">
 		<![CDATA[
 			SELECT
@@ -46,6 +35,17 @@
 				(BookmarksEntry.groupId = ?) AND
 				(BookmarksEntry.folderId = ?) AND
 				(BookmarksEntry.status = ?)
+		]]>
+	</sql>
+	<sql id="com.liferay.bookmarks.service.persistence.BookmarksFolderFinder.countF_ByG_P">
+		<![CDATA[
+			SELECT
+				COUNT(*) AS COUNT_VALUE
+			FROM
+				BookmarksFolder
+			WHERE
+				(BookmarksFolder.groupId = ?) AND
+				(BookmarksFolder.parentFolderId = ?)
 		]]>
 	</sql>
 	<sql id="com.liferay.bookmarks.service.persistence.BookmarksFolderFinder.countF_ByG_P_S">
@@ -84,17 +84,6 @@
 				(BookmarksEntry.folderId = ?)
 		]]>
 	</sql>
-	<sql id="com.liferay.bookmarks.service.persistence.BookmarksFolderFinder.findF_ByG_P">
-		<![CDATA[
-			SELECT
-				BookmarksFolder.folderId AS modelId, BookmarksFolder.name AS modelName, 0 AS modelFolder
-			FROM
-				BookmarksFolder
-			WHERE
-				(BookmarksFolder.groupId = ?) AND
-				(BookmarksFolder.parentFolderId = ?)
-		]]>
-	</sql>
 	<sql id="com.liferay.bookmarks.service.persistence.BookmarksFolderFinder.findE_ByG_F_S">
 		<![CDATA[
 			SELECT
@@ -105,6 +94,17 @@
 				(BookmarksEntry.groupId = ?) AND
 				(BookmarksEntry.folderId = ?) AND
 				(BookmarksEntry.status = ?)
+		]]>
+	</sql>
+	<sql id="com.liferay.bookmarks.service.persistence.BookmarksFolderFinder.findF_ByG_P">
+		<![CDATA[
+			SELECT
+				BookmarksFolder.folderId AS modelId, BookmarksFolder.name AS modelName, 0 AS modelFolder
+			FROM
+				BookmarksFolder
+			WHERE
+				(BookmarksFolder.groupId = ?) AND
+				(BookmarksFolder.parentFolderId = ?)
 		]]>
 	</sql>
 	<sql id="com.liferay.bookmarks.service.persistence.BookmarksFolderFinder.findF_ByG_P_S">

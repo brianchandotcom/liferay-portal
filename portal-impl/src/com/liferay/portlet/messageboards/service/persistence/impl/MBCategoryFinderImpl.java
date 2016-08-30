@@ -103,29 +103,6 @@ public class MBCategoryFinderImpl
 	}
 
 	@Override
-	public List<MBCategory> filterFindC_ByS_G_U_P(
-		long groupId, long userId, long[] parentCategoryIds,
-		QueryDefinition<MBCategory> queryDefinition) {
-
-		return doFindC_ByS_G_U_P(
-			groupId, userId, parentCategoryIds, queryDefinition, true);
-	}
-
-	@Override
-	public List<Object> filterFindC_T_ByG_C(
-		long groupId, long categoryId, QueryDefinition<?> queryDefinition) {
-
-		return doFindC_T_ByG_C(groupId, categoryId, queryDefinition, true);
-	}
-
-	@Override
-	public List<Object> findC_T_ByG_C(
-		long groupId, long categoryId, QueryDefinition<?> queryDefinition) {
-
-		return doFindC_T_ByG_C(groupId, categoryId, queryDefinition, false);
-	}
-
-	@Override
 	public int filterCountC_ByS_G_U_P(
 		long groupId, long userId, long[] parentCategoryIds,
 		QueryDefinition<MBCategory> queryDefinition) {
@@ -142,12 +119,35 @@ public class MBCategoryFinderImpl
 	}
 
 	@Override
+	public List<MBCategory> filterFindC_ByS_G_U_P(
+		long groupId, long userId, long[] parentCategoryIds,
+		QueryDefinition<MBCategory> queryDefinition) {
+
+		return doFindC_ByS_G_U_P(
+			groupId, userId, parentCategoryIds, queryDefinition, true);
+	}
+
+	@Override
+	public List<Object> filterFindC_T_ByG_C(
+		long groupId, long categoryId, QueryDefinition<?> queryDefinition) {
+
+		return doFindC_T_ByG_C(groupId, categoryId, queryDefinition, true);
+	}
+
+	@Override
 	public List<MBCategory> findC_ByS_G_U_P(
 		long groupId, long userId, long[] parentCategoryIds,
 		QueryDefinition<MBCategory> queryDefinition) {
 
 		return doFindC_ByS_G_U_P(
 			groupId, userId, parentCategoryIds, queryDefinition, false);
+	}
+
+	@Override
+	public List<Object> findC_T_ByG_C(
+		long groupId, long categoryId, QueryDefinition<?> queryDefinition) {
+
+		return doFindC_T_ByG_C(groupId, categoryId, queryDefinition, false);
 	}
 
 	protected int doCountC_ByS_G_U_P(

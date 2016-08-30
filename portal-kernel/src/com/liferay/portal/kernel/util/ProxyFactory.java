@@ -86,6 +86,44 @@ public class ProxyFactory {
 
 		T dummyService = newDummyInstance(serviceClass);
 
+		return _doNewServiceTrackedInstance(
+			serviceClass, declaringClass, fieldName, filterString,
+			dummyService);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #newServiceTrackedInstance(Class, Class, String, String)}
+	 */
+	@Deprecated
+	public static <T> T newServiceTrackedInstance(
+		Class<T> interfaceClass, String filterString) {
+
+		return (T)ProxyUtil.newProxyInstance(
+			interfaceClass.getClassLoader(), new Class[] {interfaceClass},
+			new ServiceTrackedInvocationHandler<>(
+				interfaceClass, filterString));
+	}
+
+	public static <T> T newServiceTrackedInstanceWithoutDummyService(
+		Class<T> serviceClass, Class<?> declaringClass, String fieldName) {
+
+		return newServiceTrackedInstanceWithoutDummyService(
+			serviceClass, declaringClass, fieldName, null);
+	}
+
+	public static <T> T newServiceTrackedInstanceWithoutDummyService(
+		Class<T> serviceClass, Class<?> declaringClass, String fieldName,
+		String filterString) {
+
+		return _doNewServiceTrackedInstance(
+			serviceClass, declaringClass, fieldName, filterString, null);
+	}
+
+	private static <T> T _doNewServiceTrackedInstance(
+		Class<T> serviceClass, Class<?> declaringClass, String fieldName,
+		String filterString, T dummyService) {
+
 		try {
 			Field field = declaringClass.getDeclaredField(fieldName);
 
@@ -143,20 +181,6 @@ public class ProxyFactory {
 		catch (ReflectiveOperationException roe) {
 			return ReflectionUtil.throwException(roe);
 		}
-	}
-
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #newServiceTrackedInstance(Class, Class, String, String)}
-	 */
-	@Deprecated
-	public static <T> T newServiceTrackedInstance(
-		Class<T> interfaceClass, String filterString) {
-
-		return (T)ProxyUtil.newProxyInstance(
-			interfaceClass.getClassLoader(), new Class[] {interfaceClass},
-			new ServiceTrackedInvocationHandler<>(
-				interfaceClass, filterString));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(ProxyFactory.class);

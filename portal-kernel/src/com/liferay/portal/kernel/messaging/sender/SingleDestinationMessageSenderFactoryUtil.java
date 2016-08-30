@@ -14,9 +14,11 @@
 
 package com.liferay.portal.kernel.messaging.sender;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceTracker;
 
 /**
  * @author Michael C. Han
@@ -55,11 +57,18 @@ public class SingleDestinationMessageSenderFactoryUtil {
 		getSingleDestinationMessageSenderFactory() {
 
 		try {
-			while (_serviceTracker.getService() == null) {
+			while (_singleDestinationMessageSenderFactory == null) {
+				Registry registry = RegistryUtil.getRegistry();
+
+				_singleDestinationMessageSenderFactory = registry.getService(
+					SingleDestinationMessageSenderFactory.class);
+
+				if (_log.isDebugEnabled()) {
+					_log.debug("Waiting for a DestinationFactory");
+				}
+
 				Thread.sleep(500);
 			}
-
-			return _serviceTracker.getService();
 		}
 		catch (InterruptedException ie) {
 			throw new IllegalStateException(
@@ -67,22 +76,24 @@ public class SingleDestinationMessageSenderFactoryUtil {
 					"SingleDestinationMessageSenderFactoryUtil",
 				ie);
 		}
+
+		return _singleDestinationMessageSenderFactory;
 	}
 
 	private SingleDestinationMessageSenderFactoryUtil() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(
-			SingleDestinationMessageSenderFactory.class);
-
-		_serviceTracker.open();
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SingleDestinationMessageSenderFactoryUtil.class);
 
 	private static final SingleDestinationMessageSenderFactoryUtil _instance =
 		new SingleDestinationMessageSenderFactoryUtil();
 
-	private final ServiceTracker
-		<SingleDestinationMessageSenderFactory,
-			SingleDestinationMessageSenderFactory> _serviceTracker;
+	private static volatile SingleDestinationMessageSenderFactory
+		_singleDestinationMessageSenderFactory =
+			ProxyFactory.newServiceTrackedInstanceWithoutDummyService(
+				SingleDestinationMessageSenderFactory.class,
+				SingleDestinationMessageSenderFactoryUtil.class,
+				"_singleDestinationMessageSenderFactory");
 
 }

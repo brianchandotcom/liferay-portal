@@ -14,9 +14,11 @@
 
 package com.liferay.portal.kernel.messaging;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceTracker;
 
 import java.util.Collection;
 
@@ -38,30 +40,39 @@ public class DestinationFactoryUtil {
 
 	protected DestinationFactory getDestinationFactory() {
 		try {
-			while (_serviceTracker.getService() == null) {
+			while (_destinationFactory == null) {
+				Registry registry = RegistryUtil.getRegistry();
+
+				_destinationFactory = registry.getService(
+					DestinationFactory.class);
+
+				if (_log.isDebugEnabled()) {
+					_log.debug("Waiting for a DestinationFactory");
+				}
+
 				Thread.sleep(500);
 			}
-
-			return _serviceTracker.getService();
 		}
 		catch (InterruptedException ie) {
 			throw new IllegalStateException(
 				"Unable to obtain reference for destination factory", ie);
 		}
+
+		return _destinationFactory;
 	}
 
 	private DestinationFactoryUtil() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(DestinationFactory.class);
-
-		_serviceTracker.open();
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DestinationFactoryUtil.class);
 
 	private static final DestinationFactoryUtil _instance =
 		new DestinationFactoryUtil();
 
-	private final ServiceTracker<DestinationFactory, DestinationFactory>
-		_serviceTracker;
+	private static volatile DestinationFactory _destinationFactory =
+		ProxyFactory.newServiceTrackedInstanceWithoutDummyService(
+			DestinationFactory.class, DestinationFactoryUtil.class,
+			"_destinationFactory");
 
 }

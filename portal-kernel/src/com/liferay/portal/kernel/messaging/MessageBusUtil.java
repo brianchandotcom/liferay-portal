@@ -23,9 +23,6 @@ import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermissio
 import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceTracker;
-import com.liferay.registry.ServiceTrackerCustomizer;
 
 /**
  * @author Michael C. Han
@@ -73,9 +70,13 @@ public class MessageBusUtil {
 
 	public static MessageBus getMessageBus() {
 		try {
-			while (!_initialized && (_serviceTracker.getService() == null)) {
+			while (_messageBus == null) {
+				Registry registry = RegistryUtil.getRegistry();
+
+				_messageBus = registry.getService(MessageBus.class);
+
 				if (_log.isDebugEnabled()) {
-					_log.debug("Waiting for a PortalExecutorManager");
+					_log.debug("Waiting for a MessageBus");
 				}
 
 				Thread.sleep(500);
@@ -223,45 +224,9 @@ public class MessageBusUtil {
 
 	private static final MessageBusUtil _instance = new MessageBusUtil();
 
-	private static volatile boolean _initialized;
 	private static volatile MessageBus _messageBus =
-		ProxyFactory.newServiceTrackedInstance(
+		ProxyFactory.newServiceTrackedInstanceWithoutDummyService(
 			MessageBus.class, MessageBusUtil.class, "_messageBus");
-	private static final ServiceTracker<MessageBus, MessageBus> _serviceTracker;
 	private static SynchronousMessageSender.Mode _synchronousMessageSenderMode;
-
-	static {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(
-			MessageBus.class, new MessageBusServiceTrackerCustomizer());
-
-		_serviceTracker.open();
-	}
-
-	private static class MessageBusServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer<MessageBus, MessageBus> {
-
-		@Override
-		public MessageBus addingService(
-			ServiceReference<MessageBus> serviceReference) {
-
-			_initialized = true;
-
-			return null;
-		}
-
-		@Override
-		public void modifiedService(
-			ServiceReference<MessageBus> serviceReference,
-			MessageBus messageBus) {
-		}
-
-		@Override
-		public void removedService(
-			ServiceReference<MessageBus> serviceReference, MessageBus service) {
-		}
-
-	}
 
 }

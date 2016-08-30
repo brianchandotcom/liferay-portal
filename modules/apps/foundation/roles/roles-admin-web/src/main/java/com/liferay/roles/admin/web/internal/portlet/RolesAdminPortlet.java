@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.security.permission.comparator.ActionComparator;
 import com.liferay.portal.kernel.service.GroupService;
+import com.liferay.portal.kernel.service.PermissionService;
 import com.liferay.portal.kernel.service.ResourceBlockLocalService;
 import com.liferay.portal.kernel.service.ResourceBlockService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
@@ -282,6 +283,11 @@ public class RolesAdminPortlet extends MVCPortlet {
 
 		long roleId = ParamUtil.getLong(actionRequest, "roleId");
 
+		long groupId = themeDisplay.getScopeGroupId();
+
+		_permissionService.checkPermission(
+			groupId, Role.class.getName(), roleId);
+
 		Role role = _roleLocalService.getRole(roleId);
 
 		String roleName = role.getName();
@@ -377,8 +383,6 @@ public class RolesAdminPortlet extends MVCPortlet {
 						actionId, selected, scope, groupIds);
 				}
 				else {
-					long groupId = themeDisplay.getScopeGroupId();
-
 					long companyId = role.getCompanyId();
 					long roleId1 = role.getRoleId();
 
@@ -526,6 +530,11 @@ public class RolesAdminPortlet extends MVCPortlet {
 	}
 
 	@Reference(unbind = "-")
+	protected void setPermissionService(PermissionService permissionService) {
+		_permissionService = permissionService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setResourceBlockLocalService(
 		ResourceBlockLocalService resourceBlockLocalService) {
 
@@ -607,6 +616,7 @@ public class RolesAdminPortlet extends MVCPortlet {
 	private GroupService _groupService;
 	private PanelAppRegistry _panelAppRegistry;
 	private PanelCategoryRegistry _panelCategoryRegistry;
+	private PermissionService _permissionService;
 	private ResourceBlockLocalService _resourceBlockLocalService;
 	private ResourceBlockService _resourceBlockService;
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

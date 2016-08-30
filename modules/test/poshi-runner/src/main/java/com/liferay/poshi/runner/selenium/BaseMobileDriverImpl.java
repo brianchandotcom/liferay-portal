@@ -27,9 +27,11 @@ import org.w3c.dom.Node;
  * @author Kenji Heigel
  */
 public abstract class BaseMobileDriverImpl
-	implements LiferaySelenium, MobileDriver {
+	extends BaseWebDriverImpl implements MobileDriver {
 
 	public BaseMobileDriverImpl(String browserURL, WebDriver webDriver) {
+		super(browserURL, webDriver);
+
 		_mobileDriver = (MobileDriver)webDriver;
 
 		WebDriverHelper.setDefaultWindowHandle(webDriver.getWindowHandle());

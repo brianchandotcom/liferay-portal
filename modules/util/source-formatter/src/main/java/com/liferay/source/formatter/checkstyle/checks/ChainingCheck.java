@@ -49,6 +49,16 @@ public class ChainingCheck extends AbstractCheck {
 			detailAST, TokenTypes.METHOD_CALL, true);
 
 		for (DetailAST methodCallAST : methodCallASTList) {
+			List<DetailAST> childMethodCallASTList =
+				DetailASTUtil.getAllChildTokens(
+					methodCallAST, TokenTypes.METHOD_CALL, true);
+
+			// Only check the method that is first in the chain
+
+			if (!childMethodCallASTList.isEmpty()) {
+				continue;
+			}
+
 			String chainedMethodNames = _getChainedMethodNames(methodCallAST);
 
 			if (!chainedMethodNames.contains(StringPool.PERIOD)) {

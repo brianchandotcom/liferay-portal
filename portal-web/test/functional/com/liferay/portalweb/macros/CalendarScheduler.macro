@@ -591,6 +591,15 @@
 
 		<var name="key_messageLocalized" value="${messageLocalized}" />
 
+		<if>
+			<not>
+				<execute function="IsElementPresent" locator1="Calendar#SCHEDULER_VIEW_DAY_SHOW_MORE_LOCALIZED" />
+			</not>
+			<then>
+				<execute function="Click" locator1="Calendar#VIEW_NEXT_BUTTON" />
+			</then>
+		</if>
+
 		<execute function="AssertTextEquals" locator1="Calendar#SCHEDULER_VIEW_DAY_SHOW_MORE_LOCALIZED" value1="${messageLocalized}" />
 	</command>
 

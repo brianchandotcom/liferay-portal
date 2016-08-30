@@ -23,7 +23,7 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 /**
  * @author Hugo Huijser
  */
-public class MultipleJavadocCheck extends AbstractCheck {
+public class JavadocCheck extends AbstractCheck {
 
 	public static final String MSG_MULTIPLE_JAVADOC = "javadoc.multiple";
 

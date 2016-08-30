@@ -171,6 +171,8 @@
 			<var name="portlet" value="Web Content" />
 		</execute>
 
+		<execute function="Pause" locator1="3000" />
+
 		<execute macro="WebContentNavigator#gotoEditCP">
 			<var name="webContentTitle" value="Web Content Title" />
 		</execute>

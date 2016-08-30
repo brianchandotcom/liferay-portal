@@ -11,12 +11,12 @@
 					]
 				}
 			],
-			"title": {"en_US":"basic"}
+			"title": {"en_US": "basic"}
 		},
 		{
 			"rows": [
 				{
-					"columns":[
+					"columns": [
 						{
 							"fieldNames": ["e", "c", "d"],
 							"size": 12
@@ -24,7 +24,7 @@
 					]
 				}
 			],
-			"title": {"en_US":"advanced"}
+			"title": {"en_US": "advanced"}
 		}
 	]
 }

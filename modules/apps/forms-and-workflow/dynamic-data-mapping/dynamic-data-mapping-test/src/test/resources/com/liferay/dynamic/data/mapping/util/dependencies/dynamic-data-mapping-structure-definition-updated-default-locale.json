@@ -17,7 +17,7 @@
 					"dataType": "integer",
 					"fieldNamespace": "ddm",
 					"indexType": "keyword",
-					"label":{
+					"label": {
 						"en_US": "Integer",
 						"pt_BR": "Integer"
 					},
@@ -32,8 +32,8 @@
 					"required": false,
 					"showLabel": true,
 					"tip": {
-						"en_US":"Please type a integer.",
-						"pt_BR":"Please type a integer."
+						"en_US": "Please type a integer.",
+						"pt_BR": "Please type a integer."
 					},
 					"type": "ddm-integer",
 					"validation": {

@@ -25,6 +25,7 @@ import com.liferay.blogs.kernel.exception.EntryDisplayDateException;
 import com.liferay.blogs.kernel.exception.EntrySmallImageNameException;
 import com.liferay.blogs.kernel.exception.EntrySmallImageScaleException;
 import com.liferay.blogs.kernel.exception.EntryTitleException;
+import com.liferay.blogs.kernel.exception.NoSuchEntryException;
 import com.liferay.blogs.kernel.model.BlogsEntry;
 import com.liferay.blogs.kernel.service.persistence.BlogsEntryFinder;
 import com.liferay.blogs.kernel.service.persistence.BlogsEntryPersistence;
@@ -816,6 +817,16 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	@Override
 	public BlogsEntry getEntry(long groupId, String urlTitle)
 		throws PortalException {
+
+		Group group = groupLocalService.getGroup(groupId);
+
+		FriendlyURL friendlyURL = friendlyURLLocalService.fetchFriendlyURL(
+			group.getCompanyId(), groupId, BlogsEntry.class, urlTitle);
+
+		if (friendlyURL != null) {
+			return blogsEntryPersistence.findByPrimaryKey(
+				friendlyURL.getClassPK());
+		}
 
 		return blogsEntryPersistence.findByG_UT(groupId, urlTitle);
 	}

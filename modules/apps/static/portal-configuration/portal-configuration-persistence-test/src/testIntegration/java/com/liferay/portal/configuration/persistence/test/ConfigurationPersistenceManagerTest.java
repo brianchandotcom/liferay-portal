@@ -17,6 +17,7 @@ package com.liferay.portal.configuration.persistence.test;
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.configuration.persistence.ConfigurationPersistenceManager;
 import com.liferay.portal.kernel.test.rule.Sync;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.IOException;
 
@@ -81,7 +82,8 @@ public class ConfigurationPersistenceManagerTest {
 	@Test
 	public void testCreateFactoryConfiguration() throws Exception {
 		Configuration configuration =
-			_configurationAdmin.createFactoryConfiguration("test.pid");
+			_configurationAdmin.createFactoryConfiguration(
+				"test.pid", StringPool.QUESTION);
 
 		assertConfiguration(configuration);
 	}
@@ -89,7 +91,7 @@ public class ConfigurationPersistenceManagerTest {
 	@Test
 	public void testExists() throws Exception {
 		Configuration configuration = _configurationAdmin.getConfiguration(
-			"test.pid");
+			"test.pid", StringPool.QUESTION);
 
 		Assert.assertTrue(_persistenceManager.exists("test.pid"));
 

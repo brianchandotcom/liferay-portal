@@ -14,6 +14,9 @@
 
 package com.liferay.source.formatter.checkstyle.checks;
 
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+
 import com.puppycrawl.tools.checkstyle.api.AbstractCheck;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.FileContents;
@@ -24,6 +27,14 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
  * @author Hugo Huijser
  */
 public class JavadocCheck extends AbstractCheck {
+
+	public static final String MSG_EMPTY_LINE = "javadoc.empty.line";
+
+	public static final String MSG_INCORRECT_FIRST_LINE =
+		"javadoc.incorrect.first.line";
+
+	public static final String MSG_INCORRECT_LAST_LINE =
+		"javadoc.incorrect.last.line";
 
 	public static final String MSG_MULTIPLE_JAVADOC = "javadoc.multiple";
 
@@ -49,12 +60,39 @@ public class JavadocCheck extends AbstractCheck {
 			return;
 		}
 
+		_checkJavadoc(javadoc);
+
 		javadoc = fileContents.getJavadocBefore(javadoc.getStartLineNo());
 
 		if (javadoc != null) {
 			DetailAST nameAST = detailAST.findFirstToken(TokenTypes.IDENT);
 
 			log(detailAST.getLineNo(), MSG_MULTIPLE_JAVADOC, nameAST.getText());
+		}
+	}
+
+	private void _checkJavadoc(TextBlock javadoc) {
+		String[] text = javadoc.getText();
+
+		_checkLine(javadoc, text, 1, "/**", MSG_INCORRECT_FIRST_LINE, true);
+		_checkLine(javadoc, text, 2, StringPool.STAR, MSG_EMPTY_LINE, false);
+		_checkLine(
+			javadoc, text, text.length - 1, StringPool.STAR, MSG_EMPTY_LINE,
+			false);
+		_checkLine(
+			javadoc, text, text.length, "*/", MSG_INCORRECT_LAST_LINE, true);
+	}
+
+	private void _checkLine(
+		TextBlock javadoc, String[] text, int lineNumber, String expectedValue,
+		String message, boolean match) {
+
+		String line = StringUtil.trim(text[lineNumber - 1]);
+
+		if ((match && !line.equals(expectedValue)) ||
+			(!match && line.equals(expectedValue))) {
+
+			log(javadoc.getStartLineNo() + lineNumber - 1, message);
 		}
 	}
 

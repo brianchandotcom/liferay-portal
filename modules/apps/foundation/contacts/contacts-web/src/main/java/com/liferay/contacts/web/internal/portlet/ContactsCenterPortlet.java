@@ -390,6 +390,9 @@ public class ContactsCenterPortlet extends MVCPortlet {
 
 			if (socialRelationLocalService.hasRelation(
 					userId, themeDisplay.getUserId(),
+					SocialRelationConstants.TYPE_BI_CONNECTION) ||
+				socialRelationLocalService.hasRelation(
+					userId, themeDisplay.getUserId(),
 					SocialRelationConstants.TYPE_UNI_ENEMY) ||
 				socialRequestLocalService.hasRequest(
 					themeDisplay.getUserId(), User.class.getName(),

@@ -302,6 +302,15 @@
 		<if>
 			<equals arg1="${reminders}" arg2="true" />
 			<then>
+				<if>
+					<not>
+						<condition function="IsElementPresent" locator1="Calendar#SCHEDULER_EVENT_ALL_DAY_WITH_REMINDER" />
+					</not>
+					<then>
+						<execute function="Click" locator1="Calendar#VIEW_NEXT_BUTTON" />
+					</then>
+				</if>
+
 				<execute function="AssertElementPresent" locator1="Calendar#SCHEDULER_EVENT_ALL_DAY_WITH_REMINDER" />
 				<execute function="AssertTextEquals" locator1="Calendar#SCHEDULER_EVENT_ALL_DAY_TITLE_WITH_REMINDER" value1="${eventTitle}" />
 			</then>
@@ -552,6 +561,15 @@
 		<var name="key_endDateTime" value="${endDateTime}" />
 		<var name="key_startDate" value="${startDate}" />
 		<var name="key_startDateTime" value="${startDateTime}" />
+
+		<if>
+			<not>
+				<condition function="IsElementPresent" locator1="Calendar#SCHEDULER_EVENT_REPEAT" />
+			</not>
+			<then>
+				<execute function="Click" locator1="Calendar#VIEW_NEXT_BUTTON" />
+			</then>
+		</if>
 
 		<execute function="AssertElementPresent" locator1="Calendar#SCHEDULER_EVENT_REPEAT" />
 		<execute function="AssertTextEquals" locator1="Calendar#SCHEDULER_EVENT_REPEAT_TITLE" value1="${eventTitle}" />
@@ -1491,6 +1509,16 @@
 		<execute function="Click" locator1="CalendarEditEvent#REPEAT_DIALOG_SUMMARY" />
 
 		<execute function="Pause" value1="1000" />
+
+		<if>
+			<condition function="IsTextEqual" locator1="CalendarEditEvent#REPEAT_DIALOG_SUMMARY" value1="${yearlyRecurrenceSummary}" />
+			<then>
+				<execute function="AssertTextEquals" locator1="CalendarEditEvent#REPEAT_DIALOG_SUMMARY" value1="${yearlyRecurrenceSummary}" />
+			</then>
+			<else>
+				<execute function="AssertTextEquals" locator1="CalendarEditEvent#REPEAT_DIALOG_SUMMARY" value1="${yearlyRecurrenceSummaryPreviousDay}" />
+			</else>
+		</if>
 
 		<execute function="AssertTextEquals" locator1="CalendarEditEvent#REPEAT_DIALOG_SUMMARY" value1="${yearlyRecurrenceSummary}" />
 

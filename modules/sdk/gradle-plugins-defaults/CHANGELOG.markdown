@@ -31,7 +31,12 @@ artifact.
 ### Changed
 - [LPS-67352]: Update the [Liferay Gradle Plugins] dependency to version 2.0.12.
 
-## 1.1.7 - 2016-08-26
+## 1.1.7 - 2016-08-27
+
+### Changed
+- [LPS-67804]: Update the [Liferay Gradle Plugins] dependency to version 2.0.13.
+
+## 1.1.8 - 2016-08-27
 
 ### Added
 - [LPS-67023]: Automatically apply the following default settings when on
@@ -43,10 +48,27 @@ Jenkins:
 	property.
 
 ### Changed
-- [LPS-67023]: Update the [Liferay Gradle Plugins] dependency to version 2.0.13.
+- [LPS-67023]: Update the [Liferay Gradle Plugins] dependency to version 2.0.14.
+
+## 1.1.9 - 2016-08-27
+
+### Changed
+- [LPS-66853]: Update the [Liferay Gradle Plugins] dependency to version 2.0.15.
+
+## 1.1.10 - 2016-08-27
+
+### Changed
+- [LPS-66853]: Update the [Liferay Gradle Plugins] dependency to version 2.0.16.
+
+## 1.1.11 - 2016-08-29
+
+### Changed
+- [LPS-67352]: Update the [Liferay Gradle Plugins] dependency to version 2.0.17.
 
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
+[LPS-66853]: https://issues.liferay.com/browse/LPS-66853
 [LPS-67023]: https://issues.liferay.com/browse/LPS-67023
 [LPS-67352]: https://issues.liferay.com/browse/LPS-67352
 [LPS-67658]: https://issues.liferay.com/browse/LPS-67658
 [LPS-67694]: https://issues.liferay.com/browse/LPS-67694
+[LPS-67804]: https://issues.liferay.com/browse/LPS-67804

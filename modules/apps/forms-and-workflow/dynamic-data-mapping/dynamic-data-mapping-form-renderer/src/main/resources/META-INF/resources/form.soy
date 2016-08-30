@@ -257,6 +257,15 @@
 {/template}
 
 /**
+ * Prints an empty form tab.
+ *
+ * @param? active
+ */
+{template .tabbed_form_frame autoescape="deprecated-contextual"}
+	<div class="lfr-ddm-form-page tab-pane {if $active}active{/if}"></div>
+{/template}
+
+/**
  * Prints the settings form.
  *
  * @param containerId

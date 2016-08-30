@@ -97,7 +97,7 @@ AUI.add(
 
 						var settingsFormContainer = settingsForm.get('container');
 
-						var evaluator = settingsForm.get('evaluator');
+						instance._hideSettingsForm();
 
 						instance.set('bodyContent', settingsFormContainer);
 
@@ -107,6 +107,8 @@ AUI.add(
 								settingsFormContainer.one('.navbar-nav').wrap(TPL_NAVBAR_WRAPER);
 							}
 						);
+
+						var evaluator = settingsForm.get('evaluator');
 
 						evaluator.after(
 							'evaluationStarted',
@@ -132,6 +134,14 @@ AUI.add(
 						return toolbar;
 					},
 
+					_hideSettingsForm: function() {
+						var instance = this;
+
+						var container = instance.settingsForm.get('container');
+
+						container.addClass('invisible');
+					},
+
 					_loadFieldSettingsForm: function(field) {
 						var instance = this;
 
@@ -140,6 +150,13 @@ AUI.add(
 								instance.settingsForm = settingsForm;
 
 								instance._configureSideBar();
+
+								settingsForm.evaluate(
+									function() {
+										instance._showSettingsForm();
+										instance._removeLoading();
+									}
+								);
 
 								field.setAttrs(field.getSettings(settingsForm));
 
@@ -154,6 +171,14 @@ AUI.add(
 								);
 							}
 						);
+					},
+
+					_removeLoading: function() {
+						var instance = this;
+
+						var boundingBox = instance.get('boundingBox');
+
+						boundingBox.one('.loading-icon').remove();
 					},
 
 					_saveCurrentContext: function() {
@@ -179,14 +204,22 @@ AUI.add(
 					_showLoading: function() {
 						var instance = this;
 
-						var bodyContent = instance.get('bodyContent');
+						var contentBox = instance.get('contentBox');
 
 						instance.set('description', '');
 						instance.set('title', '');
 
-						if (bodyContent !== TPL_LOADING) {
-							instance.set('bodyContent', TPL_LOADING);
+						if (!contentBox.one('.loading-icon')) {
+							contentBox.append(TPL_LOADING);
 						}
+					},
+
+					_showSettingsForm: function() {
+						var instance = this;
+
+						var container = instance.settingsForm.get('container');
+
+						container.removeClass('invisible');
 					}
 				}
 			}

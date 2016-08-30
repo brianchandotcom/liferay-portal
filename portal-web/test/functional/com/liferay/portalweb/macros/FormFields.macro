@@ -106,6 +106,12 @@
 		<execute function="Click" locator1="FormFields#FIELD_REMOVE" />
 	</command>
 
+	<command name="selectAutoCompleteOption">
+		<var name="key_autocompleteOption" value="${autocompleteOption}" />
+
+		<execute function="Click" locator1="FormFields#AUTOCOMPLETE_OPTION" />
+	</command>
+
 	<command name="selectRadioOption">
 		<var name="key_fieldName" value="${fieldName}" />
 		<var name="key_radioOption" value="${radioOption}" />

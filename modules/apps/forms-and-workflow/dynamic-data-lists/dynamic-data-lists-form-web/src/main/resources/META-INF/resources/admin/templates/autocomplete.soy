@@ -1,0 +1,30 @@
+{namespace ddl.autocomplete}
+
+/**
+ * Prints the DDM autocomplete button.
+ */
+{template .button autoescape="deprecated-contextual"}
+    <button class="autocomplete-button btn btn-block btn-primary" type="button">Autocomplete</button>
+{/template}
+
+/**
+ * Prints the DDM autocomplete header.
+ * @param backButton
+ */
+{template .container autoescape="deprecated-contextual"}
+	<div class="autocomplete-container">
+		<header class="header-toolbar">
+			<div class="toolbar-group">
+				<div class="toolbar-group-content">
+					<a class="autocomplete-header-back" href="javascript:;">
+						{$backButton|noAutoescape}
+					</a>
+				</div>
+			</div>
+			<div class="toolbar-group-expand-text">
+				<span title="Autocomplete">Autocomplete</span>
+			</div>
+		</header>
+		<div class="autocomplete-body"></div>
+	</div>
+{/template}

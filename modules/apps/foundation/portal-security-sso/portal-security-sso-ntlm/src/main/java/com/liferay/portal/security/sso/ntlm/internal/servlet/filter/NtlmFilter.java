@@ -92,6 +92,7 @@ import org.osgi.service.component.annotations.Reference;
  * com.liferay.portal.security.sso.ntlm.internal.auto.login.NTLMAutoLogin} class
  * to log the user in (see above).
  * </li>
+ * </ol>
  *
  * @author Bruno Farache
  * @author Marcus Schmidke

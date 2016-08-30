@@ -19,7 +19,6 @@ import java.util.List;
 
 /**
  * @author Juan Gonzalez
- *
  */
 public class WebResourceCollectionDefinition {
 

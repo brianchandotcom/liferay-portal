@@ -28,7 +28,7 @@ import com.liferay.registry.ServiceTracker;
  * <p>
  * A user can be made a universal administrator by adding their primary key to
  * the list in <code>portal.properties</code> under the key
- * <code>omniadmin.users</key>. If this property is left blank, administrators
+ * <code>omniadmin.users</code>. If this property is left blank, administrators
  * of the default company will automatically be universal administrators.
  * </p>
  *

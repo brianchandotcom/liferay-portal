@@ -491,10 +491,10 @@ public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end -
 	 * start</code> instances. <code>start</code> and <code>end</code> are not
-	 * primary keys, they are indexes in the result set. Thus, <>0</code> refers
-	 * to the first result in the set. Setting both <code>start</code> and
-	 * <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result
-	 * set.
+	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
+	 * refers to the first result in the set. Setting both <code>start</code>
+	 * and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full
+	 * result set.
 	 * </p>
 	 *
 	 * @param  userId the primary key of the user

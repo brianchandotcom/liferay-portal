@@ -24,7 +24,6 @@ import java.util.List;
 /**
  * @author Vernon Singleton
  * @author Juan Gonzalez
- *
  */
 public class OrderCircularDependencyException extends Exception {
 

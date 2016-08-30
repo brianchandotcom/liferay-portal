@@ -23,7 +23,6 @@ import java.util.EnumMap;
 /**
  * @author Vernon Singleton
  * @author Juan Gonzalez
- *
  */
 public class OrderImpl implements Order {
 

@@ -19,7 +19,6 @@ import java.util.EnumMap;
 /**
  * @author Vernon Singleton
  * @author Juan Gonzalez
- *
  */
 public interface Order {
 

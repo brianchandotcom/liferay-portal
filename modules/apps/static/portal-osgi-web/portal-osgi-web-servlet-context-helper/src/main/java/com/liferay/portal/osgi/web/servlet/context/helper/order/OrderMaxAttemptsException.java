@@ -17,7 +17,6 @@ package com.liferay.portal.osgi.web.servlet.context.helper.order;
 /**
  * @author Vernon Singleton
  * @author Juan Gonzalez
- *
  */
 public class OrderMaxAttemptsException extends Exception {
 

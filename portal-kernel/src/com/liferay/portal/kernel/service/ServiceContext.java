@@ -336,7 +336,7 @@ public class ServiceContext implements Cloneable, Serializable {
 	 * Returns the date when an <code>aui:form</code> was generated in this
 	 * service context. The form date can be used in detecting situations in
 	 * which an entity has been modified while another client was editing that
-	 * entity. </p>
+	 * entity.
 	 *
 	 * <p>
 	 * Example:

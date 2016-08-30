@@ -354,6 +354,7 @@ public interface OrganizationMembershipPolicy {
 	 * new tags include it, any organization user that does not have the
 	 * Administrator role must be removed from the organization.
 	 * </li>
+	 * </ul>
 	 *
 	 * @param organization the added or updated organization to verify
 	 * @param oldOrganization the old organization

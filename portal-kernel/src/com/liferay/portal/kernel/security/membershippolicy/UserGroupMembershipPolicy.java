@@ -208,6 +208,7 @@ public interface UserGroupMembershipPolicy {
 	 * A and the new expando attributes include it, any user group user that
 	 * does not have the Administrator role must be removed from the user group.
 	 * </li>
+	 * </ul>
 	 *
 	 * @param userGroup the added or updated user group to verify
 	 * @param oldUserGroup the old user group

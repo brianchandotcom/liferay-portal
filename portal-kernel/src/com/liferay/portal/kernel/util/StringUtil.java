@@ -1339,8 +1339,8 @@ public class StringUtil {
 	 * <p>
 	 * <pre>
 	 * <code>
-	 * lastIndexOfAny(null</code>, *, *, *) returns -1
-	 * lastIndexOfAny(*, null</code>, *, *) returns -1
+	 * lastIndexOfAny(null, *, *, *) returns -1
+	 * lastIndexOfAny(*, null, *, *) returns -1
 	 * lastIndexOfAny(*, [], *, *) returns -1
 	 * lastIndexOfAny("zzabyycdxx", ['a','c'], 5, 7) returns 6
 	 * lastIndexOfAny("zzabyycdxx", ['m','n'], *, *) returns -1
@@ -1412,10 +1412,10 @@ public class StringUtil {
 	 * <p>
 	 * <pre>
 	 * <code>
-	 * lastIndexOfAny(null</code>, *) returns -1
-	 * lastIndexOfAny(*, null</code>) returns -1
+	 * lastIndexOfAny(null, *) returns -1
+	 * lastIndexOfAny(*, null) returns -1
 	 * lastIndexOfAny(*, []) returns -1
-	 * lastIndexOfAny(*, [null</code>]) returns -1
+	 * lastIndexOfAny(*, [null]) returns -1
 	 * lastIndexOfAny("zzabyycdxx", ["ab","cd"]) returns 6
 	 * lastIndexOfAny("zzabyycdxx", ["cd","ab"]) returns 6
 	 * lastIndexOfAny("zzabyycdxx", ["mn","op"]) returns -1

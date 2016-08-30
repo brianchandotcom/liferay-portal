@@ -343,6 +343,7 @@ public interface SiteMembershipPolicy {
 	 * role
 	 * must be removed from the site.
 	 * </li>
+	 * </ul>
 	 *
 	 * @param group the added or updated site to verify
 	 * @param oldGroup the old site

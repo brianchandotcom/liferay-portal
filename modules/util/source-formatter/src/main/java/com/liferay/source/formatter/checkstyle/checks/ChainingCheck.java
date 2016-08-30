@@ -43,12 +43,26 @@ public class ChainingCheck extends AbstractCheck {
 		return new int[] {TokenTypes.CTOR_DEF, TokenTypes.METHOD_DEF};
 	}
 
+	public void setChainingAllowedFormat(String chainingAllowedFormat) {
+		_chainingAllowedFormat = chainingAllowedFormat;
+	}
+
 	@Override
 	public void visitToken(DetailAST detailAST) {
 		List<DetailAST> methodCallASTList = DetailASTUtil.getAllChildTokens(
 			detailAST, TokenTypes.METHOD_CALL, true);
 
 		for (DetailAST methodCallAST : methodCallASTList) {
+			List<DetailAST> childMethodCallASTList =
+				DetailASTUtil.getAllChildTokens(
+					methodCallAST, TokenTypes.METHOD_CALL, true);
+
+			// Only check the method that is first in the chain
+
+			if (!childMethodCallASTList.isEmpty()) {
+				continue;
+			}
+
 			String chainedMethodNames = _getChainedMethodNames(methodCallAST);
 
 			if (!chainedMethodNames.contains(StringPool.PERIOD)) {
@@ -69,7 +83,7 @@ public class ChainingCheck extends AbstractCheck {
 			}
 
 			if (!chainedMethodNames.contains("concat.concat") &&
-				!chainedMethodNames.startsWith("bind.")) {
+				!chainedMethodNames.matches(_chainingAllowedFormat)) {
 
 				log(
 					methodCallAST.getLineNo(), MSG_AVOID_CHAINING_MULTIPLE,
@@ -135,5 +149,7 @@ public class ChainingCheck extends AbstractCheck {
 
 		return false;
 	}
+
+	private String _chainingAllowedFormat;
 
 }

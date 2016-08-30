@@ -302,6 +302,15 @@
 		<if>
 			<equals arg1="${reminders}" arg2="true" />
 			<then>
+				<if>
+					<not>
+						<condition function="IsElementPresent" locator1="Calendar#SCHEDULER_EVENT_ALL_DAY_WITH_REMINDER" />
+					</not>
+					<then>
+						<execute function="Click" locator1="Calendar#VIEW_NEXT_BUTTON" />
+					</then>
+				</if>
+
 				<execute function="AssertElementPresent" locator1="Calendar#SCHEDULER_EVENT_ALL_DAY_WITH_REMINDER" />
 				<execute function="AssertTextEquals" locator1="Calendar#SCHEDULER_EVENT_ALL_DAY_TITLE_WITH_REMINDER" value1="${eventTitle}" />
 			</then>

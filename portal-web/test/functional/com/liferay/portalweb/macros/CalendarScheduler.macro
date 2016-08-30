@@ -234,6 +234,15 @@
 						<var name="viewType" value="Week" />
 					</execute>
 
+					<if>
+						<not>
+							<condition function="IsElementPresent" locator1="Calendar#SCHEDULER_VIEW_EVENT_NOT_TODAY" />
+						</not>
+						<then>
+							<execute function="Click" locator1="Calendar#VIEW_NEXT_BUTTON" />
+						</then>
+					</if>
+
 					<execute function="ScrollWebElementIntoView" locator1="Calendar#SCHEDULER_VIEW_EVENT_NOT_TODAY" />
 
 					<execute function="AssertClick#assertPartialTextClickAt" locator1="Calendar#SCHEDULER_VIEW_EVENT_NOT_TODAY" value1="${eventTitle}" />

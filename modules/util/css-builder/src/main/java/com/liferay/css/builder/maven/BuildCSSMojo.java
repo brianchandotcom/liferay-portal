@@ -16,11 +16,16 @@ package com.liferay.css.builder.maven;
 
 import com.liferay.css.builder.CSSBuilderArgs;
 import com.liferay.css.builder.CSSBuilderInvoker;
+import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.io.File;
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
+
+import org.codehaus.plexus.util.Scanner;
+
+import org.sonatype.plexus.build.incremental.BuildContext;
 
 /**
  * Compiles CSS files.
@@ -33,7 +38,24 @@ public class BuildCSSMojo extends AbstractMojo {
 	@Override
 	public void execute() throws MojoExecutionException {
 		try {
-			CSSBuilderInvoker.invoke(baseDir, _cssBuilderArgs);
+			if (buildContext.isIncremental()) {
+				Scanner scanner = buildContext.newScanner(baseDir);
+
+				String[] includes = {"", "**/*.scss"};
+
+				scanner.setIncludes(includes);
+
+				scanner.scan();
+
+				String[] includedFiles = scanner.getIncludedFiles();
+
+				if (!ArrayUtil.isEmpty(includedFiles)) {
+					CSSBuilderInvoker.invoke(baseDir, _cssBuilderArgs);
+				}
+			}
+			else {
+				CSSBuilderInvoker.invoke(baseDir, _cssBuilderArgs);
+			}
 		}
 		catch (Exception e) {
 			throw new MojoExecutionException(e.getMessage(), e);
@@ -102,6 +124,11 @@ public class BuildCSSMojo extends AbstractMojo {
 	 * @readonly
 	 */
 	protected File baseDir;
+
+	/**
+	 * @component
+	 */
+	protected BuildContext buildContext;
 
 	private final CSSBuilderArgs _cssBuilderArgs = new CSSBuilderArgs();
 

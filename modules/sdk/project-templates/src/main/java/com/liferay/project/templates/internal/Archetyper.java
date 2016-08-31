@@ -19,6 +19,7 @@ import aQute.lib.io.IO;
 import com.liferay.project.templates.ProjectTemplatesArgs;
 import com.liferay.project.templates.internal.util.FileUtil;
 import com.liferay.project.templates.internal.util.ReflectionUtil;
+import com.liferay.project.templates.internal.util.Validator;
 
 import java.io.File;
 
@@ -138,7 +139,7 @@ public class Archetyper {
 	private static void _safePut(
 		Properties properties, String name, String value) {
 
-		if (value != null) {
+		if (Validator.isNotNull(value)) {
 			properties.put(name, value);
 		}
 	}

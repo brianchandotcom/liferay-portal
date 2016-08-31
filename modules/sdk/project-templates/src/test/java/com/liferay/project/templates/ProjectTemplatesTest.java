@@ -14,11 +14,6 @@
 
 package com.liferay.project.templates;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
 import aQute.lib.io.IO;
 
 import java.io.BufferedReader;
@@ -90,14 +85,14 @@ public class ProjectTemplatesTest {
 	@Before
 	public void setUp() throws Exception {
 		IO.delete(_testDir);
-		assertFalse(_testDir.exists());
+		Assert.assertFalse(_testDir.exists());
 	}
 
 	@After
 	public void tearDown() {
 		if (_testDir.exists()) {
 			IO.delete(_testDir);
-			assertFalse(_testDir.exists());
+			Assert.assertFalse(_testDir.exists());
 		}
 	}
 
@@ -112,22 +107,22 @@ public class ProjectTemplatesTest {
 
 		File projectDir = new File(_testDir, "bar-activator");
 
-		assertTrue(projectDir.exists());
+		Assert.assertTrue(projectDir.exists());
 
 		_testTemplateFiles(projectDir.toPath());
 
 		File bndFile = new File(projectDir, "bnd.bnd");
 
-		assertTrue(bndFile.exists());
+		Assert.assertTrue(bndFile.exists());
 
 		File gradlewFile = new File(projectDir, "gradlew");
 
-		assertTrue(gradlewFile.exists());
+		Assert.assertTrue(gradlewFile.exists());
 
 		File activatorFile = new File(
 			projectDir, "src/main/java/bar/activator/BarActivator.java");
 
-		assertTrue(activatorFile.exists());
+		Assert.assertTrue(activatorFile.exists());
 
 		_contains(
 			activatorFile,
@@ -152,7 +147,7 @@ public class ProjectTemplatesTest {
 
 		File projectDir = new File(_testDir, "loginhook");
 
-		assertTrue(projectDir.exists());
+		Assert.assertTrue(projectDir.exists());
 
 		_testTemplateFiles(projectDir.toPath());
 
@@ -189,7 +184,7 @@ public class ProjectTemplatesTest {
 
 		_testTemplateFiles(projectDir.toPath());
 
-		assertTrue(projectDir.exists());
+		Assert.assertTrue(projectDir.exists());
 
 		_checkFileExists(projectDir + "/bnd.bnd");
 
@@ -232,7 +227,7 @@ public class ProjectTemplatesTest {
 
 		File projectDir = new File(_testDir, "foo");
 
-		assertTrue(projectDir.exists());
+		Assert.assertTrue(projectDir.exists());
 
 		_testTemplateFiles(projectDir.toPath());
 
@@ -275,7 +270,7 @@ public class ProjectTemplatesTest {
 
 		File projectDir = new File(_testDir, "portlet-portlet");
 
-		assertTrue(projectDir.exists());
+		Assert.assertTrue(projectDir.exists());
 
 		_testTemplateFiles(projectDir.toPath());
 
@@ -316,7 +311,7 @@ public class ProjectTemplatesTest {
 
 		File projectDir = new File(_testDir, "gradle.test");
 
-		assertTrue(projectDir.exists());
+		Assert.assertTrue(projectDir.exists());
 
 		_testTemplateFiles(projectDir.toPath());
 
@@ -353,7 +348,7 @@ public class ProjectTemplatesTest {
 
 		File projectDir = new File(_testDir, "servicepreaction");
 
-		assertTrue(projectDir.exists());
+		Assert.assertTrue(projectDir.exists());
 
 		_testTemplateFiles(projectDir.toPath());
 
@@ -418,7 +413,7 @@ public class ProjectTemplatesTest {
 
 		File projectDir = new File(_testDir, "backend-integration");
 
-		assertTrue(projectDir.exists());
+		Assert.assertTrue(projectDir.exists());
 
 		_testTemplateFiles(projectDir.toPath());
 
@@ -479,7 +474,7 @@ public class ProjectTemplatesTest {
 
 		File projectDir = new File(_testDir, "guestbook");
 
-		assertTrue(projectDir.exists());
+		Assert.assertTrue(projectDir.exists());
 
 		_testTemplateFiles(projectDir.toPath());
 
@@ -544,7 +539,7 @@ public class ProjectTemplatesTest {
 
 		File projectDir = new File(_testDir, "serviceoverride");
 
-		assertTrue(projectDir.exists());
+		Assert.assertTrue(projectDir.exists());
 
 		_testTemplateFiles(projectDir.toPath());
 
@@ -581,7 +576,7 @@ public class ProjectTemplatesTest {
 
 		File projectDir = new File(_testDir, "barfoo");
 
-		assertTrue(projectDir.exists());
+		Assert.assertTrue(projectDir.exists());
 
 		_testTemplateFiles(projectDir.toPath());
 
@@ -609,36 +604,36 @@ public class ProjectTemplatesTest {
 
 		File projectDir = new File(_testDir, "foo");
 
-		assertTrue(projectDir.exists());
+		Assert.assertTrue(projectDir.exists());
 
 		_testTemplateFiles(projectDir.toPath());
 
 		File bndFile = new File(projectDir, "bnd.bnd");
 
-		assertTrue(bndFile.exists());
+		Assert.assertTrue(bndFile.exists());
 
 		File gradlewFile = new File(projectDir, "gradlew");
 
-		assertTrue(gradlewFile.exists());
+		Assert.assertTrue(gradlewFile.exists());
 
 		File portletFile = new File(
 			projectDir, "src/main/java/foo/portlet/FooPortlet.java");
 
-		assertTrue(portletFile.exists());
+		Assert.assertTrue(portletFile.exists());
 
 		_contains(
 			portletFile, ".*^public class FooPortlet extends MVCPortlet.*$");
 
 		File buildGradleFile = new File(projectDir, "build.gradle");
 
-		assertTrue(buildGradleFile.exists());
+		Assert.assertTrue(buildGradleFile.exists());
 
 		_contains(buildGradleFile, ".*^apply plugin: \"com.liferay.plugin\".*");
 
 		File viewJspFile = new File(
 			projectDir, "/src/main/resources/META-INF/resources/view.jsp");
 
-		assertTrue(viewJspFile.exists());
+		Assert.assertTrue(viewJspFile.exists());
 	}
 
 	@Test
@@ -653,7 +648,7 @@ public class ProjectTemplatesTest {
 		if (!existFile.exists()) {
 			IO.getFile("generated/exist").mkdirs();
 			existFile.createNewFile();
-			assertTrue(existFile.exists());
+			Assert.assertTrue(existFile.exists());
 		}
 
 		ProjectTemplates.main(args);
@@ -673,7 +668,7 @@ public class ProjectTemplatesTest {
 
 		File projectDir = new File(_testDir, "hello-world-portlet");
 
-		assertTrue(projectDir.exists());
+		Assert.assertTrue(projectDir.exists());
 
 		_testTemplateFiles(projectDir.toPath());
 
@@ -715,7 +710,7 @@ public class ProjectTemplatesTest {
 
 		File projectDir = new File(_testDir, "hello-world-refresh");
 
-		assertTrue(projectDir.exists());
+		Assert.assertTrue(projectDir.exists());
 
 		_testTemplateFiles(projectDir.toPath());
 
@@ -750,8 +745,8 @@ public class ProjectTemplatesTest {
 	public void testListTemplates() throws Exception {
 		String[] templates = ProjectTemplates.getTemplates();
 
-		assertNotNull(templates);
-		assertTrue(templates.length == 18);
+		Assert.assertNotNull(templates);
+		Assert.assertTrue(templates.length == 18);
 	}
 
 	private static BuildTask _executeGradleRunner(
@@ -779,19 +774,19 @@ public class ProjectTemplatesTest {
 	private static void _verifyBuildOutput(File projectDir, String fileName) {
 		File buildOutput = new File(projectDir, "build/libs/" + fileName);
 
-		assertTrue(buildOutput.exists());
+		Assert.assertTrue(buildOutput.exists());
 	}
 
 	private static void _verifyGradleRunnerOutput(BuildTask buildtask) {
-		assertNotNull(buildtask);
+		Assert.assertNotNull(buildtask);
 
-		assertEquals(buildtask.getOutcome(), TaskOutcome.SUCCESS);
+		Assert.assertEquals(buildtask.getOutcome(), TaskOutcome.SUCCESS);
 	}
 
 	private File _checkFileDoesNotExists(String path) {
 		File file = IO.getFile(path);
 
-		assertFalse(file.exists());
+		Assert.assertFalse(file.exists());
 
 		return file;
 	}
@@ -799,7 +794,7 @@ public class ProjectTemplatesTest {
 	private File _checkFileExists(String path) {
 		File file = IO.getFile(path);
 
-		assertTrue(file.exists());
+		Assert.assertTrue(file.exists());
 
 		return file;
 	}
@@ -822,7 +817,7 @@ public class ProjectTemplatesTest {
 		Matcher matcher = Pattern.compile(
 			pattern, Pattern.MULTILINE | Pattern.DOTALL).matcher(content);
 
-		assertTrue(matcher.matches());
+		Assert.assertTrue(matcher.matches());
 	}
 
 	private boolean _endsWithEmptyLine(Path path) throws IOException {
@@ -891,7 +886,7 @@ public class ProjectTemplatesTest {
 		Matcher matcher = Pattern.compile(
 			pattern, Pattern.MULTILINE | Pattern.DOTALL).matcher(content);
 
-		assertFalse(matcher.matches());
+		Assert.assertFalse(matcher.matches());
 	}
 
 	private String _readProperty(Path path, String key) throws IOException {

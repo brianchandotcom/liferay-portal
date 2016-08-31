@@ -3188,15 +3188,9 @@
 			<var name="portlet" value="Site Memberships" />
 		</execute>
 
-		<execute macro="Site#assignRoleCP">
+		<execute macro="Site#assignSiteRoleCP">
+			<var name="resourceName" value="${userFirstName} ${userLastName}" />
 			<var name="roleName" value="${roleName2}" />
-			<var name="roleType" value="${roleType2}" />
-			<var name="searchTerm" value="${roleName2}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userLastName" value="${userLastName}" />
-			<var name="userMiddleName" value="${userMiddleName}" />
-			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
 		<execute macro="SOActivities#addSiteContent">

@@ -140,15 +140,11 @@ public class FriendlyURLNormalizerImpl implements FriendlyURLNormalizer {
 
 				charBuffer.put(c);
 
-				if ((Character.MIN_HIGH_SURROGATE <= c) &&
-					(c <= Character.MAX_HIGH_SURROGATE)) {
-
+				if (Character.isHighSurrogate(c)) {
 					if ((i + 1) < friendlyURL.length()) {
 						c = friendlyURL.charAt(i + 1);
 
-						if ((Character.MIN_LOW_SURROGATE <= c) &&
-							(c <= Character.MAX_LOW_SURROGATE)) {
-
+						if (Character.isLowSurrogate(c)) {
 							charBuffer.put(c);
 
 							i++;

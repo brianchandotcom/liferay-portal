@@ -13,118 +13,16 @@
 	.diff-version-head {
 		border-bottom-color: #E5E5E5;
 
-		.diff-selector-version {
-			font-size: inherit;
-
-			a {
-				text-decoration: none;
-
-				.lfr-icon-menu-text {
-					&:hover, &:focus {
-						text-decoration: underline;
-					}
-				}
-			}
-
-			.caret {
-				border-top-color: #FFF;
-			}
-		}
-
 		.diff-target-selector {
 			border-left-color: #E5E5E5;
-		}
-
-		.diff-source-selector, .diff-target-selector {
-			font-size: 20px;
-			font-weight: 200;
-
-			.diff-selector-version-info {
-				color: #8C8C8C;
-				font-size: 12px;
-			}
-		}
-	}
-
-	.search-container-column {
-		.language-selector {
-			.form-group {
-				select {
-					font-size: 13px;
-				}
-			}
-		}
-
-		.search-panels {
-			.search-panels-bar {
-				.form-group {
-					.search-panels-input {
-						border-radius: 0;
-					}
-				}
-
-				.search-panel-icon {
-					background: url(../images/diff/search_panel_icon.png) no-repeat 0 50%;
-					color: #D4D4D4;
-					font-size: 0;
-				}
-
-				input {
-					font-size: 14px;
-				}
-			}
-		}
-
-		.version-item {
-			border-bottom-color: #E5E5E5;
-
-			&.selected {
-				background-color: #F0F0F0;
-
-				.version-title {
-					color: #555;
-				}
-
-				.version-info {
-					.user-info, .date-info {
-						color: #555;
-					}
-				}
-			}
-
-			.version-title {
-				color: #009AE5;
-				font-weight: 400;
-			}
-
-			.version-info {
-				.user-info {
-					color: #009AE5;
-					font-size: 13px;
-					line-height: 13px;
-				}
-
-				.date-info {
-					color: #8C8C8C;
-					font-size: 10px;
-				}
-			}
 		}
 	}
 
 	.diff-container-column {
-		background-color: #F1F1F1;
-		border-color: #EBEBEB;
-
-		.diff-container {
-			background-color: #FFF;
-			border-color: #E5E5E5;
-		}
+		background-color: #FFF;
+		border-color: #E5E5E5;
 
 		.legend-info {
-			background-color: #FFF;
-			border-color: #E5E5E5;
-
 			.add.icon-stop {
 				color: #CFC;
 			}
@@ -143,30 +41,6 @@
 		.diff-version-filter {
 			background-color: #F9F9F9;
 			border-color: #E5E5E5;
-
-			.close-version-filter {
-				color: #CCC;
-			}
-
-			.display-date {
-				color: #8C8C8C;
-				font-size: 10px;
-			}
-
-			.user-name {
-				color: #009AE5;
-				font-size: 13px;
-			}
-
-			.version {
-				color: #555;
-				font-weight: 400;
-			}
 		}
-	}
-
-	.diff-version-title {
-		color: #8C8C8C;
-		font-size: 12px;
 	}
 }

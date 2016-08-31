@@ -131,11 +131,13 @@ public interface ProductNavigationControlMenuEntry {
 	public String getURL(HttpServletRequest request);
 
 	/**
-	 * Renders the HTML that must be displayed when the Control Menu entry body
-	 * is displayed.
+	 * Returns <code>true</code> if the Control Menu entry body's HTML should be
+	 * rendered.
 	 *
 	 * @param  request the request that renders the Control Menu entry
 	 * @param  response the response that renders the Control Menu entry
+	 * @return <code>true</code> if the Control Menu entry body's HTML should be
+	 *         rendered; <code>false</code> otherwise
 	 * @throws IOException if an IO exception occurred
 	 */
 	public boolean includeBody(
@@ -143,11 +145,13 @@ public interface ProductNavigationControlMenuEntry {
 		throws IOException;
 
 	/**
-	 * Renders the HTML that must be displayed when the Control Menu entry icon
-	 * is displayed.
+	 * Returns <code>true</code> if the Control Menu entry icon's HTML should be
+	 * rendered.
 	 *
 	 * @param  request the request that renders the Control Menu entry
 	 * @param  response the response that renders the Control Menu entry
+	 * @return <code>true</code> if the Control Menu entry icon's HTML should be
+	 *         rendered; <code>false</code> otherwise
 	 * @throws IOException if an IO exception occurred
 	 */
 	public boolean includeIcon(
@@ -159,8 +163,9 @@ public interface ProductNavigationControlMenuEntry {
 	 * in the request's context.
 	 *
 	 * @param  request the request that renders the Control Menu entry
-	 * @return <code>true</code> if the control menu entry should be displayed
+	 * @return <code>true</code> if the Control Menu entry should be displayed
 	 *         in the request's context; <code>false</code> otherwise
+	 * @throws PortalException if a portal exception occurred
 	 */
 	public boolean isShow(HttpServletRequest request) throws PortalException;
 
@@ -168,7 +173,7 @@ public interface ProductNavigationControlMenuEntry {
 	 * Returns <code>true</code> if the Control Menu entry should be opened in a
 	 * dialog window.
 	 *
-	 * @return <code>true</code> if the control menu entry should be opened in a
+	 * @return <code>true</code> if the Control Menu entry should be opened in a
 	 *         dialog window; <code>false</code> if it should open in the
 	 *         current window
 	 */

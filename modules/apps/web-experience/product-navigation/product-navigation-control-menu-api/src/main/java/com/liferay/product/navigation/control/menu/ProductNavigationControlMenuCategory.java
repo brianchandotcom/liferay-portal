@@ -28,7 +28,7 @@ import javax.servlet.http.HttpServletRequest;
  * Implementations must be registered in the OSGi Registry. The order of the
  * Control Menu categories is determined by the
  * <code>product.navigation.control.menu.category.order</code> property value.
- * The parent control menu category key can be defined by the
+ * The parent Control Menu category key can be defined by the
  * <code>product.navigation.control.menu.category.key</code> property value.
  * </p>
  *
@@ -52,6 +52,7 @@ public interface ProductNavigationControlMenuCategory {
 	 * @param  request the request that renders the Control Menu category
 	 * @return <code>true</code> if the Control Menu category should be
 	 *         displayed in the request's context; <code>false</code> otherwise
+	 * @throws PortalException if a portal exception occurred
 	 */
 	public boolean hasAccessPermission(HttpServletRequest request)
 		throws PortalException;

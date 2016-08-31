@@ -44,6 +44,9 @@ import org.apache.maven.archetype.ArchetypeGenerationResult;
  */
 public class ProjectTemplates {
 
+	public static final String TEMPLATE_BUNDLE_PREFIX =
+		"com.liferay.project.templates.";
+
 	public static String[] getTemplates() throws Exception {
 		List<String> templates = new ArrayList<>();
 
@@ -52,7 +55,7 @@ public class ProjectTemplates {
 		if (file.isDirectory()) {
 			try (DirectoryStream<Path> directoryStream =
 					Files.newDirectoryStream(
-						file.toPath(), _TEMPLATE_BUNDLE_PREFIX + "*")) {
+						file.toPath(), TEMPLATE_BUNDLE_PREFIX + "*")) {
 
 				Iterator<Path> iterator = directoryStream.iterator();
 
@@ -65,7 +68,7 @@ public class ProjectTemplates {
 					String template = templateBundleFileNamePath.toString();
 
 					template = template.substring(
-						_TEMPLATE_BUNDLE_PREFIX.length(),
+						TEMPLATE_BUNDLE_PREFIX.length(),
 						template.lastIndexOf('.'));
 
 					templates.add(template);
@@ -85,9 +88,9 @@ public class ProjectTemplates {
 
 					String template = jarEntry.getName();
 
-					if (template.startsWith(_TEMPLATE_BUNDLE_PREFIX)) {
+					if (template.startsWith(TEMPLATE_BUNDLE_PREFIX)) {
 						template = template.substring(
-							_TEMPLATE_BUNDLE_PREFIX.length(),
+							TEMPLATE_BUNDLE_PREFIX.length(),
 							template.indexOf("-"));
 
 						templates.add(template);
@@ -294,8 +297,5 @@ public class ProjectTemplates {
 
 		return name.toLowerCase();
 	}
-
-	private static final String _TEMPLATE_BUNDLE_PREFIX =
-		"com.liferay.project.templates.";
 
 }

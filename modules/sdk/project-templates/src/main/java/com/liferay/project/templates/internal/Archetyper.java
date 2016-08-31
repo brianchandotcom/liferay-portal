@@ -14,6 +14,7 @@
 
 package com.liferay.project.templates.internal;
 
+import com.liferay.project.templates.ProjectTemplates;
 import com.liferay.project.templates.ProjectTemplatesArgs;
 import com.liferay.project.templates.internal.util.FileUtil;
 import com.liferay.project.templates.internal.util.ReflectionUtil;
@@ -88,7 +89,7 @@ public class Archetyper {
 			new ArchetypeGenerationRequest();
 
 		archetypeGenerationRequest.setArchetypeArtifactId(
-			"com.liferay.project.templates." + templateName);
+			ProjectTemplates.TEMPLATE_BUNDLE_PREFIX + templateName);
 		archetypeGenerationRequest.setArchetypeGroupId("com.liferay");
 
 		// archetypeVersion is ignored

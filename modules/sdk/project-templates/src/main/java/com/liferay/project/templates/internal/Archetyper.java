@@ -14,8 +14,6 @@
 
 package com.liferay.project.templates.internal;
 
-import aQute.lib.io.IO;
-
 import com.liferay.project.templates.ProjectTemplatesArgs;
 import com.liferay.project.templates.internal.util.FileUtil;
 import com.liferay.project.templates.internal.util.ReflectionUtil;
@@ -265,7 +263,9 @@ public class Archetyper {
 				List<ArtifactRepository> repositories)
 			throws UnknownArchetype {
 
-			File archetypeJarFile = null;
+			Path archetypePath = null;
+
+			String archetypeFileName = artifactId + ".jar";
 
 			try {
 				File file = FileUtil.getJarFile();
@@ -273,10 +273,7 @@ public class Archetyper {
 				if (file.isDirectory()) {
 					Path jarDirPath = file.toPath();
 
-					final Path archetypeJarPath = jarDirPath.resolve(
-						artifactId + ".jar");
-
-					archetypeJarFile = archetypeJarPath.toFile();
+					archetypePath = jarDirPath.resolve(archetypeFileName);
 				}
 				else {
 					try (JarFile jarFile = new JarFile(file)) {
@@ -291,15 +288,18 @@ public class Archetyper {
 
 							String name = jarEntry.getName();
 
-							archetypeJarFile = Files.createTempFile(
-								_TEMP_ARCHETYPE_PREFIX, null).toFile();
-
-							if (name.startsWith(artifactId)) {
-								IO.copy(
-									jarFile.getInputStream(jarEntry),
-									archetypeJarFile);
-								break;
+							if (!name.equals(archetypeFileName)) {
+								continue;
 							}
+
+							archetypePath = Files.createTempFile(
+								_TEMP_ARCHETYPE_PREFIX, null);
+
+							Files.copy(
+								jarFile.getInputStream(jarEntry),
+								archetypePath);
+
+							break;
 						}
 					}
 				}
@@ -307,7 +307,11 @@ public class Archetyper {
 			catch (Exception e) {
 			}
 
-			return archetypeJarFile;
+			if (archetypePath == null) {
+				return null;
+			}
+
+			return archetypePath.toFile();
 		}
 
 		@Override

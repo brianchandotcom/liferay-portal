@@ -220,14 +220,6 @@ public class RolesAdminPortletDataHandler extends BasePortletDataHandler {
 		return actionableDynamicQuery;
 	}
 
-	protected void setAllSystemRoleNames(Set<String> allSystemRoleNames) {
-
-		// Source formatter would finalize the variable if no setter is present
-		// in the class
-
-		_allSystemRoleNames = allSystemRoleNames;
-	}
-
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
@@ -241,7 +233,7 @@ public class RolesAdminPortletDataHandler extends BasePortletDataHandler {
 		_allSystemRoleNames.addAll(Arrays.asList(portal.getSystemSiteRoles()));
 	}
 
-	private Set<String> _allSystemRoleNames = new HashSet<>();
+	private final Set<String> _allSystemRoleNames = new HashSet<>();
 
 	@Reference
 	private RoleLocalService _roleLocalService;

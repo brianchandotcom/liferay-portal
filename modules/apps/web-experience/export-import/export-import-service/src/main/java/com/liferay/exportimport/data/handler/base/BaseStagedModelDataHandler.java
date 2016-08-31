@@ -14,6 +14,8 @@
 
 package com.liferay.exportimport.data.handler.base;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.kernel.lar.ExportImportDateUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportProcessCallbackRegistryUtil;
@@ -36,6 +38,7 @@ import java.util.concurrent.Callable;
 /**
  * @author Daniel Kocsis
  */
+@ProviderType
 public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 	extends com.liferay.exportimport.kernel.lar.BaseStagedModelDataHandler<T> {
 

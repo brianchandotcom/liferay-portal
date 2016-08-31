@@ -14,6 +14,8 @@
 
 package com.liferay.exportimport.content.processor.base;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.model.StagedModel;
@@ -24,6 +26,7 @@ import com.liferay.portal.kernel.util.StringUtil;
  * @author Gergely Mathe
  * @author Mate Thurzo
  */
+@ProviderType
 public abstract class BaseTextExportImportContentProcessor
 	<S extends StagedModel> implements ExportImportContentProcessor<S, String> {
 

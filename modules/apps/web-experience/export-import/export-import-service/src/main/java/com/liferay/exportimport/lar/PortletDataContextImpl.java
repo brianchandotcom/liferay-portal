@@ -14,6 +14,8 @@
 
 package com.liferay.exportimport.lar;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetLink;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
@@ -137,6 +139,7 @@ import jodd.bean.BeanUtil;
  * @author Alexander Chow
  * @author Mate Thurzo
  */
+@ProviderType
 public class PortletDataContextImpl implements PortletDataContext {
 
 	public PortletDataContextImpl(LockManager lockManager) {

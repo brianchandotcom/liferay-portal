@@ -14,6 +14,8 @@
 
 package com.liferay.exportimport.content.processor.base;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
@@ -57,6 +59,7 @@ import java.util.regex.Pattern;
 /**
  * @author Mate Thurzo
  */
+@ProviderType
 public abstract class BaseLayoutExportImportContentProcessor
 	<S extends StagedModel> implements ExportImportContentProcessor<S, String> {
 

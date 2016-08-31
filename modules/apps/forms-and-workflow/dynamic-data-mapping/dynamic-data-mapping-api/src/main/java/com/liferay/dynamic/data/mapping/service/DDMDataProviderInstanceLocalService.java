@@ -133,6 +133,10 @@ public interface DDMDataProviderInstanceLocalService extends BaseLocalService,
 	public DDMDataProviderInstance fetchDataProviderInstance(
 		long dataProviderInstanceId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DDMDataProviderInstance fetchDataProviderInstanceByUuid(
+		java.lang.String uuid);
+
 	/**
 	* Returns the d d m data provider instance with the primary key.
 	*
@@ -159,6 +163,10 @@ public interface DDMDataProviderInstanceLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDMDataProviderInstance getDataProviderInstance(
 		long dataProviderInstanceId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DDMDataProviderInstance getDataProviderInstanceByUuid(
+		java.lang.String uuid) throws PortalException;
 
 	/**
 	* Updates the d d m data provider instance in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

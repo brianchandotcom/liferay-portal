@@ -76,7 +76,7 @@ public interface KeyValueDDMFormFieldTypeSettings
 	@DDMFormField(dataType = "string", label = "%field-tip", type = "text")
 	public LocalizedValue placeholder();
 
-	@DDMFormField(visibilityExpression = "FALSE")
+	@DDMFormField
 	public LocalizedValue tooltip();
 
 }

@@ -1,45 +1,80 @@
 {
 	"fields": [
 		{
+			"errorMessage": "",
+			"instanceId": "lroa",
+			"name": "Integer",
+			"nestedFields": [],
+			"options": [],
+			"readOnly": false,
+			"valid": true ,
+			"value": 0,
+			"visible": false
+		},
+		{
+			"errorMessage": "Integer must be equal to zero.",
+			"instanceId": "uvwn",
+			"name": "Integer",
+			"nestedFields": [],
+			"options": [],
+			"readOnly": false,
+			"valid": false,
+			"value": 1,
+			"visible": false
+		},
+		{
+			"errorMessage": "Integer must be equal to zero.",
+			"instanceId": "lsky",
+			"name": "Integer",
+			"nestedFields": [],
+			"options": [],
+			"readOnly": false,
+			"valid": false,
+			"value": 2,
+			"visible": false
+		},
+		{
+			"errorMessage": "This field should contain 'Joe'.",
+			"instanceId": "nahi",
+			"name": "Text3",
+			"nestedFields": [],
+			"options": [],
+			"readOnly": false,
+			"valid": false,
+			"value": "Bloggs",
+			"visible": true
+		},
+		{
 			"errorMessage": "This field is never valid.",
 			"instanceId": "gfkm",
 			"name": "Text",
-			"nestedFields": [
-				{
-					"errorMessage": "",
-					"instanceId": "lroa",
-					"name": "Integer",
-					"nestedFields": [],
-					"valid": true,
-					"visible": false
-				}
-			],
+			"nestedFields": [],
+			"options": [],
+			"readOnly": false,
 			"valid": false,
+			"value": "Zero",
 			"visible": true
 		},
 		{
 			"errorMessage": "This field is never valid.",
 			"instanceId": "xucq",
 			"name": "Text",
-			"nestedFields": [
-				{
-					"errorMessage": "Integer must be equal to zero.",
-					"instanceId": "uvwn",
-					"name": "Integer",
-					"nestedFields": [],
-					"valid": false,
-					"visible": false
-				},
-				{
-					"errorMessage": "Integer must be equal to zero.",
-					"instanceId": "lsky",
-					"name": "Integer",
-					"nestedFields": [],
-					"valid": false,
-					"visible": false
-				}
-			],
+			"nestedFields": [],
+			"options": [],
+			"readOnly": false,
 			"valid": false,
+			"value": "OneTwo",
+			"visible": true
+		},
+		{
+			"errorMessage": "This field is required.",
+			"instanceId": "uahm",
+			"name": "Text2",
+			"nestedFields": [],
+			"options": [],
+			"readOnly": false,
+			"valid": false,
+			"value": "",
 			"visible": true
 		},
 		{
@@ -47,24 +82,11 @@
 			"instanceId": "mnst",
 			"name": "Boolean",
 			"nestedFields": [],
+			"options": [],
+			"readOnly": false,
 			"valid": true,
+			"value": true,
 			"visible": false
-		},
-		{
-			"errorMessage": "This field is required.",
-			"instanceId": "uahm",
-			"name": "Text2",
-			"nestedFields": [],
-			"valid": false,
-			"visible": true
-		},
-		{
-			"errorMessage": "This field should contain 'Joe'.",
-			"instanceId": "nahi",
-			"name": "Text3",
-			"nestedFields": [],
-			"valid": false,
-			"visible": true
 		}
 	]
 }

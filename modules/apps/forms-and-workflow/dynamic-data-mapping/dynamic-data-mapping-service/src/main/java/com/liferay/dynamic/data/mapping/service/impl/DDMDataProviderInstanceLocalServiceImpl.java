@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.mapping.service.impl;
 
 import com.liferay.dynamic.data.mapping.exception.DataProviderInstanceNameException;
+import com.liferay.dynamic.data.mapping.exception.NoSuchDataProviderInstanceException;
 import com.liferay.dynamic.data.mapping.exception.RequiredDataProviderInstanceException;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONSerializer;
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
@@ -182,12 +183,41 @@ public class DDMDataProviderInstanceLocalServiceImpl
 	}
 
 	@Override
+	public DDMDataProviderInstance fetchDataProviderInstanceByUuid(
+		String uuid) {
+
+		List<DDMDataProviderInstance> ddmDataProviderInstances =
+			ddmDataProviderInstancePersistence.findByUuid(uuid);
+
+		if (ddmDataProviderInstances.isEmpty()) {
+			return null;
+		}
+
+		return ddmDataProviderInstances.get(0);
+	}
+
+	@Override
 	public DDMDataProviderInstance getDataProviderInstance(
 			long dataProviderInstanceId)
 		throws PortalException {
 
 		return ddmDataProviderInstancePersistence.findByPrimaryKey(
 			dataProviderInstanceId);
+	}
+
+	@Override
+	public DDMDataProviderInstance getDataProviderInstanceByUuid(String uuid)
+		throws PortalException {
+
+		List<DDMDataProviderInstance> ddmDataProviderInstances =
+			ddmDataProviderInstancePersistence.findByUuid(uuid);
+
+		if (ddmDataProviderInstances.isEmpty()) {
+			throw new NoSuchDataProviderInstanceException(
+				"No DataProviderInstance found with uuid: " + uuid);
+		}
+
+		return ddmDataProviderInstances.get(0);
 	}
 
 	@Override

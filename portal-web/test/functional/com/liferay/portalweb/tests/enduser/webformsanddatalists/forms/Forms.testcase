@@ -2340,7 +2340,7 @@
 
 		<execute macro="FormFields#editValidation">
 			<var name="validationArgument" value="Contains" />
-			<var name="validationErrorMessage" value="Text must contain &quot;Test&quot;" />
+			<var name="validationErrorMessage" value="Text must contain &apos;&apos;Test&apos;&apos;" />
 			<var name="validationInput" value="Test" />
 			<var name="validationType" value="Text" />
 		</execute>
@@ -2383,7 +2383,7 @@
 		</execute>
 
 		<execute macro="FormPortlet#submitWithValidationError">
-			<var name="validationErrorMessage" value="Text must contain &quot;Test&quot;" />
+			<var name="validationErrorMessage" value="Text must contain &apos;&apos;Test&apos;&apos;" />
 		</execute>
 
 		<execute macro="FormFields#editText">

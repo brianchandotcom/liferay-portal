@@ -131,7 +131,7 @@ public class LayoutsLocalPublisherMessageListener
 	)
 	protected void setRelease(Release release) {
 	}
-	
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutsLocalPublisherMessageListener.class);
 

@@ -57,6 +57,7 @@ public abstract class BasePublisherMessageListener
 	 * @deprecated As of 7.0.0, replaced by {@link
 	 *  #initialize(ComponentContext, SingleDestinationMessageSenderFactory))}
 	 */
+	@Deprecated
 	protected void initialize(ComponentContext componentContext) {
 		initialize(componentContext, null);
 	}

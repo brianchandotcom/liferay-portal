@@ -16,12 +16,22 @@ package com.liferay.gradle.plugins.defaults.internal.util;
 
 import com.liferay.gradle.util.ArrayUtil;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileFilter;
+import java.io.IOException;
+import java.io.UncheckedIOException;
+
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.gradle.api.Project;
 import org.gradle.api.Task;
@@ -101,6 +111,64 @@ public class FileUtil extends com.liferay.gradle.util.FileUtil {
 		}
 
 		return joinedFileCollection;
+	}
+
+	public static void replace(
+			Path path, String regex, String firstGroupReplacement)
+		throws IOException {
+
+		String content = new String(
+			Files.readAllBytes(path), StandardCharsets.UTF_8);
+
+		Pattern pattern = Pattern.compile(regex);
+
+		Matcher matcher = pattern.matcher(content);
+
+		if (!matcher.find()) {
+			return;
+		}
+
+		int groupCount = matcher.groupCount();
+
+		content =
+			content.substring(0, matcher.start(groupCount)) +
+				firstGroupReplacement +
+					content.substring(matcher.end(groupCount));
+
+		Files.write(path, content.getBytes(StandardCharsets.UTF_8));
+	}
+
+	public static void writeProperties(File file, Map<?, ?> properties) {
+		File dir = file.getParentFile();
+
+		dir.mkdirs();
+
+		properties = new TreeMap<>(properties);
+
+		try (BufferedWriter bufferedWriter = Files.newBufferedWriter(
+				file.toPath(), StandardCharsets.ISO_8859_1)) {
+
+			boolean firstLine = true;
+
+			for (Map.Entry<?, ?> entry : properties.entrySet()) {
+				String key = GradleUtil.toString(entry.getKey());
+				String value = GradleUtil.toString(entry.getValue());
+
+				if (firstLine) {
+					firstLine = false;
+				}
+				else {
+					bufferedWriter.newLine();
+				}
+
+				bufferedWriter.write(key);
+				bufferedWriter.write('=');
+				bufferedWriter.write(value);
+			}
+		}
+		catch (IOException ioe) {
+			throw new UncheckedIOException(ioe);
+		}
 	}
 
 }

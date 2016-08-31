@@ -166,25 +166,21 @@ public class ReleaseVersionsTest {
 			}
 		}
 
-		boolean allowedDelta = false;
+		if ((delta != 0) && (delta != 1)) {
+			StringBundler sb = new StringBundler(9);
 
-		if ((delta == 0) || (delta == 1)) {
-			allowedDelta = true;
+			sb.append("Difference in ");
+			sb.append(Constants.BUNDLE_VERSION);
+			sb.append(" for ");
+			sb.append(relativePath);
+			sb.append(" between master (");
+			sb.append(masterVersion);
+			sb.append(") and release (");
+			sb.append(releaseVersion);
+			sb.append(") branches is not allowed");
+
+			Assert.fail(sb.toString());
 		}
-
-		StringBundler sb = new StringBundler(9);
-
-		sb.append("Difference in ");
-		sb.append(Constants.BUNDLE_VERSION);
-		sb.append(" for ");
-		sb.append(relativePath);
-		sb.append(" between master (");
-		sb.append(masterVersion);
-		sb.append(") and release (");
-		sb.append(releaseVersion);
-		sb.append(") branches is not allowed");
-
-		Assert.assertTrue(sb.toString(), allowedDelta);
 	}
 
 	private boolean _isRelease(Path path) {

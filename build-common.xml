@@ -1263,6 +1263,7 @@ rerun your task.
 					<propertyref name="liferay.releng.supported" />
 					<propertyref name="microsoft.translator.client.id" />
 					<propertyref name="microsoft.translator.client.secret" />
+					<propertyref name="release.versions.test.other.dir" />
 					<propertyref name="sass.compiler.class.name" />
 					<propertyref name="sass.generate.source.map" />
 					<propertyref name="sass.precision" />

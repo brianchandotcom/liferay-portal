@@ -96,6 +96,12 @@ execute the following actions:
 	versioning error.
 	3. Commit the project files changes caused by steps 1 and 2.
 
+## 1.2.1 - 2016-08-31
+
+### Fixed
+- [LPS-67863]: Avoid Git error while running `gradlew baseline -PsyncRelease` on
+an OSGi project that does not contain any `packageinfo` file.
+
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [LPS-66853]: https://issues.liferay.com/browse/LPS-66853
 [LPS-67023]: https://issues.liferay.com/browse/LPS-67023

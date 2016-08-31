@@ -21,27 +21,10 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.FilenameFilter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.RandomAccessFile;
 import java.io.Writer;
 
-import java.nio.charset.StandardCharsets;
-import java.nio.file.DirectoryStream;
-import java.nio.file.FileVisitResult;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.SimpleFileVisitor;
-import java.nio.file.attribute.BasicFileAttributes;
-
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Properties;
-import java.util.Set;
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -109,8 +92,6 @@ public class ProjectTemplatesTest {
 
 		Assert.assertTrue(projectDir.exists());
 
-		_testTemplateFiles(projectDir.toPath());
-
 		File bndFile = new File(projectDir, "bnd.bnd");
 
 		Assert.assertTrue(bndFile.exists());
@@ -149,8 +130,6 @@ public class ProjectTemplatesTest {
 
 		Assert.assertTrue(projectDir.exists());
 
-		_testTemplateFiles(projectDir.toPath());
-
 		File bndfile = new File(projectDir, "bnd.bnd");
 
 		_contains(
@@ -181,8 +160,6 @@ public class ProjectTemplatesTest {
 		ProjectTemplates.main(args);
 
 		File projectDir = new File(_testDir, "foo");
-
-		_testTemplateFiles(projectDir.toPath());
 
 		Assert.assertTrue(projectDir.exists());
 
@@ -229,8 +206,6 @@ public class ProjectTemplatesTest {
 
 		Assert.assertTrue(projectDir.exists());
 
-		_testTemplateFiles(projectDir.toPath());
-
 		_checkFileExists(projectDir + "/bnd.bnd");
 
 		File classfile = new File(
@@ -272,8 +247,6 @@ public class ProjectTemplatesTest {
 
 		Assert.assertTrue(projectDir.exists());
 
-		_testTemplateFiles(projectDir.toPath());
-
 		_checkFileExists(projectDir + "/bnd.bnd");
 
 		File classfile = new File(
@@ -313,8 +286,6 @@ public class ProjectTemplatesTest {
 
 		Assert.assertTrue(projectDir.exists());
 
-		_testTemplateFiles(projectDir.toPath());
-
 		_checkFileExists(projectDir + "/build.gradle");
 
 		File classfile = new File(
@@ -349,8 +320,6 @@ public class ProjectTemplatesTest {
 		File projectDir = new File(_testDir, "servicepreaction");
 
 		Assert.assertTrue(projectDir.exists());
-
-		_testTemplateFiles(projectDir.toPath());
 
 		_checkFileExists(projectDir + "/build.gradle");
 
@@ -415,8 +384,6 @@ public class ProjectTemplatesTest {
 
 		Assert.assertTrue(projectDir.exists());
 
-		_testTemplateFiles(projectDir.toPath());
-
 		File settingsfile = new File(projectDir, "settings.gradle");
 
 		_contains(
@@ -475,8 +442,6 @@ public class ProjectTemplatesTest {
 		File projectDir = new File(_testDir, "guestbook");
 
 		Assert.assertTrue(projectDir.exists());
-
-		_testTemplateFiles(projectDir.toPath());
 
 		File settingsfile = new File(projectDir, "settings.gradle");
 
@@ -541,8 +506,6 @@ public class ProjectTemplatesTest {
 
 		Assert.assertTrue(projectDir.exists());
 
-		_testTemplateFiles(projectDir.toPath());
-
 		_checkFileExists(projectDir + "/build.gradle");
 
 		File classfile = new File(
@@ -578,8 +541,6 @@ public class ProjectTemplatesTest {
 
 		Assert.assertTrue(projectDir.exists());
 
-		_testTemplateFiles(projectDir.toPath());
-
 		_checkFileExists(projectDir + "/build.gradle");
 
 		File bndfile = new File(projectDir, "bnd.bnd");
@@ -605,8 +566,6 @@ public class ProjectTemplatesTest {
 		File projectDir = new File(_testDir, "foo");
 
 		Assert.assertTrue(projectDir.exists());
-
-		_testTemplateFiles(projectDir.toPath());
 
 		File bndFile = new File(projectDir, "bnd.bnd");
 
@@ -670,8 +629,6 @@ public class ProjectTemplatesTest {
 
 		Assert.assertTrue(projectDir.exists());
 
-		_testTemplateFiles(projectDir.toPath());
-
 		_checkFileExists(projectDir + "/bnd.bnd");
 
 		File portletfile = new File(
@@ -711,8 +668,6 @@ public class ProjectTemplatesTest {
 		File projectDir = new File(_testDir, "hello-world-refresh");
 
 		Assert.assertTrue(projectDir.exists());
-
-		_testTemplateFiles(projectDir.toPath());
 
 		_checkFileExists(projectDir + "/bnd.bnd");
 
@@ -820,228 +775,6 @@ public class ProjectTemplatesTest {
 		Assert.assertTrue(matcher.matches());
 	}
 
-	private boolean _endsWithEmptyLine(Path path) throws IOException {
-		try (RandomAccessFile randomAccessFile = new RandomAccessFile(
-				path.toFile(), "r")) {
-
-			long pos = randomAccessFile.length() - 1;
-
-			if (pos < 0) {
-				return false;
-			}
-
-			randomAccessFile.seek(pos);
-
-			int c = randomAccessFile.read();
-
-			if ((c == '\n') || (c == '\r')) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	private boolean _exists(Path dirPath, String glob) throws IOException {
-		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
-				dirPath, glob)) {
-
-			Iterator<Path> iterator = directoryStream.iterator();
-
-			if (iterator.hasNext()) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	private boolean _isTextFile(Path path) {
-		Path fileNamePath = path.getFileName();
-
-		String fileName = fileNamePath.toString();
-
-		if (fileName.equals("gitignore")) {
-			return true;
-		}
-
-		int pos = fileName.indexOf('.');
-
-		if (pos == -1) {
-			return false;
-		}
-
-		String extension = fileName.substring(pos + 1);
-
-		if (_textFileExtensions.contains(extension)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	private void _lacks(File file, String pattern) throws Exception {
-		String content = new String(IO.read(file));
-
-		Matcher matcher = Pattern.compile(
-			pattern, Pattern.MULTILINE | Pattern.DOTALL).matcher(content);
-
-		Assert.assertFalse(matcher.matches());
-	}
-
-	private String _readProperty(Path path, String key) throws IOException {
-		Properties properties = new Properties();
-
-		try (InputStream inputStream = Files.newInputStream(path)) {
-			properties.load(inputStream);
-		}
-
-		return properties.getProperty(key);
-	}
-
-	private void _testLanguageProperties(Path path) throws IOException {
-		try (BufferedReader bufferedReader = Files.newBufferedReader(
-				path, StandardCharsets.UTF_8)) {
-
-			String line = null;
-
-			while ((line = bufferedReader.readLine()) != null) {
-				Assert.assertFalse(
-					"Forbidden empty line in " + path, line.isEmpty());
-				Assert.assertFalse(
-					"Forbidden comments in " + path, line.startsWith("##"));
-			}
-		}
-	}
-
-	private void _testTemplateFiles(Path rootDirPath) throws Exception {
-		_testTemplates(rootDirPath, false, false);
-
-		Files.walkFileTree(
-			rootDirPath,
-			new SimpleFileVisitor<Path>() {
-
-				@Override
-				public FileVisitResult preVisitDirectory(
-						Path dirPath, BasicFileAttributes basicFileAttributes)
-					throws IOException {
-
-					Path languagePropertiesPath = dirPath.resolve(
-						"Language.properties");
-
-					if (Files.exists(languagePropertiesPath)) {
-						_testLanguageProperties(languagePropertiesPath);
-
-						String glob = "Language_*.properties";
-
-						Assert.assertFalse(
-							"Forbidden " + dirPath + File.separator + glob,
-							_exists(dirPath, glob));
-					}
-
-					return FileVisitResult.CONTINUE;
-				}
-
-				@Override
-				public FileVisitResult visitFile(
-						Path path, BasicFileAttributes basicFileAttributes)
-					throws IOException {
-
-					if (!_isTextFile(path)) {
-						return FileVisitResult.CONTINUE;
-					}
-
-					_testTextFileLines(path);
-
-					Path fileNamePath = path.getFileName();
-
-					if (!_trailingEmptyLineAllowedFileNames.contains(
-							fileNamePath.toString())) {
-
-						Assert.assertFalse(
-							"Trailing empty line in " + path,
-							_endsWithEmptyLine(path));
-					}
-
-					return FileVisitResult.CONTINUE;
-				}
-
-			});
-	}
-
-	private void _testTemplates(
-			Path path, boolean gitIgnoreForbidden, boolean gradlewForbidden)
-		throws Exception {
-
-		final AtomicReference<String> previousGradlewDistributionUrl =
-			new AtomicReference<>(null);
-
-		Path gitIgnorePath = path.resolve("gitignore");
-		Path dotGitIgnorePath = path.resolve(".gitignore");
-
-		Assert.assertFalse(Files.exists(gitIgnorePath));
-		Assert.assertTrue(Files.exists(dotGitIgnorePath));
-
-		if (gitIgnoreForbidden) {
-			Assert.assertFalse(
-				"Forbidden " + dotGitIgnorePath,
-				Files.exists(dotGitIgnorePath));
-		}
-		else {
-			Assert.assertTrue(
-				"Missing " + dotGitIgnorePath, Files.exists(dotGitIgnorePath));
-		}
-
-		boolean gradlewExists = Files.exists(path.resolve("gradlew"));
-
-		if (gradlewForbidden) {
-			Assert.assertFalse(
-				"Forbidden Gradle wrapper in " + path, gradlewExists);
-		}
-		else {
-			Assert.assertTrue(
-				"Missing Gradle wrapper in " + path, gradlewExists);
-
-			String gradlewDistributionUrl = _readProperty(
-				path.resolve("gradle/wrapper/gradle-wrapper.properties"),
-				"distributionUrl");
-
-			boolean first = previousGradlewDistributionUrl.compareAndSet(
-				null, gradlewDistributionUrl);
-
-			if (!first) {
-				Assert.assertEquals(
-					"Wrong Gradle wrapper distribution URL in " + path,
-					previousGradlewDistributionUrl.get(),
-					gradlewDistributionUrl);
-			}
-		}
-
-		File buildGradle = new File(path.toFile(), "build.gradle");
-
-		Assert.assertTrue(buildGradle.exists());
-
-		_lacks(buildGradle, ".*latest.release.*");
-	}
-
-	private void _testTextFileLines(Path path) throws IOException {
-		try (BufferedReader bufferedReader = Files.newBufferedReader(
-				path, StandardCharsets.UTF_8)) {
-
-			String line = null;
-
-			while ((line = bufferedReader.readLine()) != null) {
-				if (line.isEmpty()) {
-					continue;
-				}
-
-				Assert.assertFalse(
-					"Forbidden whitespace trailing character in " + path,
-					Character.isWhitespace(line.charAt(line.length() - 1)));
-			}
-		}
-	}
-
 	private static final String _EVENT_METHOD =
 		"@Override\n" +
 		"public void processLifecycleEvent(LifecycleEvent lifecycleEvent)\n" +
@@ -1050,12 +783,5 @@ public class ProjectTemplatesTest {
 		"}\n";
 
 	private static final File _testDir = IO.getFile("build/test");
-	private static final Set<String> _textFileExtensions = new HashSet<>(
-		Arrays.asList(
-			"bnd", "gradle", "java", "jsp", "jspf", "properties", "xml"));
-	private static final Set<String> _trailingEmptyLineAllowedFileNames =
-		new HashSet<>(
-			Arrays.asList(
-				"gradle-wrapper.properties", "gradlew", "gradlew.bat"));
 
 }

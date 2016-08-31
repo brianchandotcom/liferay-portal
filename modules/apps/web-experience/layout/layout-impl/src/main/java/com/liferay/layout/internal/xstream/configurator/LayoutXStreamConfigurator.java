@@ -17,6 +17,8 @@ package com.liferay.layout.internal.xstream.configurator;
 import com.liferay.exportimport.kernel.xstream.XStreamAlias;
 import com.liferay.exportimport.kernel.xstream.XStreamConverter;
 import com.liferay.exportimport.kernel.xstream.XStreamType;
+import com.liferay.layout.set.internal.model.adapter.impl.StagedLayoutSetImpl;
+import com.liferay.layout.set.model.adapter.StagedLayoutSet;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetStagingHandler;
 import com.liferay.portal.kernel.model.LayoutStagingHandler;
@@ -56,8 +58,10 @@ public class LayoutXStreamConfigurator implements XStreamConfigurator {
 
 	@Activate
 	protected void activate() {
-		_xStreamAliases =
-			new XStreamAlias[] {new XStreamAlias(LayoutImpl.class, "Layout")};
+		_xStreamAliases = new XStreamAlias[] {
+			new XStreamAlias(LayoutImpl.class, "Layout"),
+			new XStreamAlias(StagedLayoutSetImpl.class, "StagedLayoutSet")
+		};
 
 		_xStreamTypes = new XStreamType[] {
 			new XStreamType(LayoutBranchImpl.class),
@@ -66,7 +70,9 @@ public class LayoutXStreamConfigurator implements XStreamConfigurator {
 			new XStreamType(LayoutSetBranchImpl.class),
 			new XStreamType(LayoutSetImpl.class),
 			new XStreamType(LayoutSetStagingHandler.class),
-			new XStreamType(LayoutStagingHandler.class)
+			new XStreamType(LayoutStagingHandler.class),
+			new XStreamType(StagedLayoutSet.class),
+			new XStreamType(StagedLayoutSetImpl.class)
 		};
 	}
 

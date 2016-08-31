@@ -55,11 +55,9 @@ import com.liferay.portal.kernel.model.Image;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutPrototype;
-import com.liferay.portal.kernel.model.LayoutRevision;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetBranch;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
-import com.liferay.portal.kernel.model.LayoutStagingHandler;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -625,7 +623,9 @@ public class LayoutExportController implements ExportController {
 			return;
 		}
 
-		if (!prepareLayoutStagingHandler(portletDataContext, layout)) {
+		if (!LayoutStagingUtil.prepareLayoutStagingHandler(
+				portletDataContext, layout)) {
+
 			return;
 		}
 
@@ -642,7 +642,8 @@ public class LayoutExportController implements ExportController {
 			return;
 		}
 
-		if (!prepareLayoutStagingHandler(portletDataContext, layout) ||
+		if (!LayoutStagingUtil.prepareLayoutStagingHandler(
+				portletDataContext, layout) ||
 			!layout.isSupportsEmbeddedPortlets()) {
 
 			// Only portlet type layouts support page scoping
@@ -755,37 +756,15 @@ public class LayoutExportController implements ExportController {
 		return PROCESS_FLAG_LAYOUT_EXPORT_IN_PROCESS;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	protected boolean prepareLayoutStagingHandler(
 		PortletDataContext portletDataContext, Layout layout) {
 
-		boolean exportLAR = MapUtil.getBoolean(
-			portletDataContext.getParameterMap(), "exportLAR");
-
-		if (exportLAR || !LayoutStagingUtil.isBranchingLayout(layout)) {
-			return true;
-		}
-
-		long layoutSetBranchId = MapUtil.getLong(
-			portletDataContext.getParameterMap(), "layoutSetBranchId");
-
-		if (layoutSetBranchId <= 0) {
-			return false;
-		}
-
-		LayoutRevision layoutRevision =
-			_layoutRevisionLocalService.fetchLayoutRevision(
-				layoutSetBranchId, true, layout.getPlid());
-
-		if (layoutRevision == null) {
-			return false;
-		}
-
-		LayoutStagingHandler layoutStagingHandler =
-			LayoutStagingUtil.getLayoutStagingHandler(layout);
-
-		layoutStagingHandler.setLayoutRevision(layoutRevision);
-
-		return true;
+		return LayoutStagingUtil.prepareLayoutStagingHandler(
+			portletDataContext, layout);
 	}
 
 	@Reference(unbind = "-")

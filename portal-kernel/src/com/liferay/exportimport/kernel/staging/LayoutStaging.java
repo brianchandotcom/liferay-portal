@@ -14,6 +14,9 @@
 
 package com.liferay.exportimport.kernel.staging;
 
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutRevision;
@@ -25,6 +28,7 @@ import com.liferay.portal.kernel.model.LayoutStagingHandler;
 /**
  * @author Raymond Augé
  */
+@ProviderType
 public interface LayoutStaging {
 
 	public LayoutRevision getLayoutRevision(Layout layout);
@@ -39,5 +43,8 @@ public interface LayoutStaging {
 	public boolean isBranchingLayout(Layout layout);
 
 	public boolean isBranchingLayoutSet(Group group, boolean privateLayout);
+
+	public boolean prepareLayoutStagingHandler(
+		PortletDataContext portletDataContext, Layout layout);
 
 }

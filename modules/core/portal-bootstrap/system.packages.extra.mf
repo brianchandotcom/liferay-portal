@@ -2213,7 +2213,7 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  import.kernel.exception,com.liferay.exportimport.kernel.model,com.lif
  eray.portal.kernel.dao.orm,com.liferay.portal.kernel.service,com.life
  ray.portal.kernel.service.persistence,com.liferay.portal.kernel.util"
- ,com.liferay.exportimport.kernel.staging;version="1.0.0";uses:="com.l
+ ,com.liferay.exportimport.kernel.staging;version="1.1.0";uses:="com.l
  iferay.exportimport.kernel.lar,com.liferay.exportimport.kernel.model,
  com.liferay.portal.kernel.exception,com.liferay.portal.kernel.json,co
  m.liferay.portal.kernel.model,com.liferay.portal.kernel.service,com.l

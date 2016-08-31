@@ -298,6 +298,11 @@ public class Archetyper {
 				}
 			}
 			catch (Exception e) {
+				throw new UnknownArchetype(e);
+			}
+
+			if (archetypeFile == null) {
+				throw new UnknownArchetype();
 			}
 
 			return archetypeFile;
@@ -307,17 +312,14 @@ public class Archetyper {
 		public ClassLoader getArchetypeJarLoader(File archetypeFile)
 			throws UnknownArchetype {
 
-			URL[] urls = new URL[1];
-
-			URI uri = archetypeFile.toURI();
-
 			try {
-				urls[0] = uri.toURL();
+				URI uri = archetypeFile.toURI();
+
+				return new URLClassLoader(new URL[] {uri.toURL()}, null);
 			}
 			catch (MalformedURLException murle) {
+				throw new UnknownArchetype(murle);
 			}
-
-			return new URLClassLoader(urls, null);
 		}
 
 	}

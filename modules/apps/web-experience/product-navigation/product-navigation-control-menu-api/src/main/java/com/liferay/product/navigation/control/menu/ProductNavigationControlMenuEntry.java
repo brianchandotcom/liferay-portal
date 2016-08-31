@@ -44,7 +44,7 @@ import javax.servlet.http.HttpServletResponse;
 public interface ProductNavigationControlMenuEntry {
 
 	/**
-	 * Returns the data to be used as the <code>data</code> attribute of the
+	 * Returns the data to be injected as the <code>data</code> attribute of the
 	 * <code>liferay-ui:icon</code> tag instance for the Control Menu entry.
 	 *
 	 * @param  request the request that renders the Control Menu entry

@@ -1,0 +1,148 @@
+<?xml version="1.0"?>
+
+<portlet-preferences owner-id="0" owner-type="3" default-user="false" plid="35235" portlet-id="com_liferay_blogs_web_portlet_BlogsPortlet">
+	
+	
+	<preference>
+		
+		
+		<name>enableComments</name>
+		
+		
+		<value>false</value>
+	
+	
+	</preference>
+	
+	
+	<preference>
+		
+		
+		<name>portletSetupUseCustomTitle</name>
+		
+		
+		<value>false</value>
+	
+	
+	</preference>
+	
+	
+	<preference>
+		
+		
+		<name>pageDelta</name>
+		
+		
+		<value>5</value>
+	
+	
+	</preference>
+	
+	
+	<preference>
+		
+		
+		<name>enableRelatedAssets</name>
+		
+		
+		<value>false</value>
+	
+	
+	</preference>
+	
+	
+	<preference>
+		
+		
+		<name>enableCommentRatings</name>
+		
+		
+		<value>false</value>
+	
+	
+	</preference>
+	
+	
+	<preference>
+		
+		
+		<name>portletSetupCss</name>
+		
+		
+		<value>{"textData":{"fontFamily":"","color":"","textAlign":"","wordSpacing":"","letterSpacing":"","fontSize":"","lineHeight":"","textDecoration":"","fontStyle":"","fontWeight":""},"spacingData":{"padding":{"top":{"unit":"px","value":""},"left":{"unit":"px","value":""},"bottom":{"unit":"px","value":""},"right":{"unit":"px","value":""},"sameForAll":true},"margin":{"top":{"unit":"px","value":""},"left":{"unit":"px","value":""},"bottom":{"unit":"px","value":""},"right":{"unit":"px","value":""},"sameForAll":true}},"borderData":{"borderColor":{"top":"","left":"","bottom":"","right":"","sameForAll":true},"borderWidth":{"top":{"unit":"px","value":""},"left":{"unit":"px","value":""},"bottom":{"unit":"px","value":""},"right":{"unit":"px","value":""},"sameForAll":true},"borderStyle":{"top":"","left":"","bottom":"","right":"","sameForAll":true}},"bgData":{"backgroundColor":"","useBgImage":false,"backgroundImage":"","backgroundPosition":{"top":{"unit":"px","value":""},"left":{"unit":"px","value":""}},"backgroundRepeat":""},"defaultPortletTitles":{"en_US":"Blogs"},"advancedData":{"customCSSClassName":"","customCSS":""}}</value>
+	
+	
+	</preference>
+	
+	
+	<preference>
+		
+		
+		<name>enableRatings</name>
+		
+		
+		<value>false</value>
+	
+	
+	</preference>
+	
+	
+	<preference>
+		
+		
+		<name>displayStyleGroupId</name>
+		
+		
+		<value>32928</value>
+	
+	
+	</preference>
+	
+	
+	<preference>
+		
+		
+		<name>portletSetupPortletDecoratorId</name>
+		
+		
+		<value>barebone</value>
+	
+	
+	</preference>
+	
+	
+	<preference>
+		
+		
+		<name>displayStyle</name>
+		
+		
+		<value>full-content</value>
+	
+	
+	</preference>
+	
+	
+	<preference>
+		
+		
+		<name>enableSocialBookmarks</name>
+		
+		
+		<value>false</value>
+	
+	
+	</preference>
+	
+	
+	<preference>
+		
+		
+		<name>enableFlags</name>
+		
+		
+		<value>false</value>
+	
+	
+	</preference>
+</portlet-preferences>

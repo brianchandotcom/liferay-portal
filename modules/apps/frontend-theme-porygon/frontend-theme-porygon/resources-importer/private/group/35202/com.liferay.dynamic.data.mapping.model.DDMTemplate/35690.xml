@@ -1,0 +1,74 @@
+<DDMTemplate>
+  <__cachedModel>false</__cachedModel>
+  <__new>false</__new>
+  <__uuid>6fa53906-461e-3c98-ef48-cdd263ad9e3e</__uuid>
+  <__originalUuid>6fa53906-461e-3c98-ef48-cdd263ad9e3e</__originalUuid>
+  <__templateId>35690</__templateId>
+  <__groupId>35202</__groupId>
+  <__originalGroupId>35202</__originalGroupId>
+  <__setOriginalGroupId>false</__setOriginalGroupId>
+  <__companyId>20116</__companyId>
+  <__originalCompanyId>20116</__originalCompanyId>
+  <__setOriginalCompanyId>false</__setOriginalCompanyId>
+  <__userId>20164</__userId>
+  <__userName>Test Test</__userName>
+  <__versionUserId>20164</__versionUserId>
+  <__versionUserName>Test Test</__versionUserName>
+  <__createDate class="sql-timestamp">2016-09-20 13:41:51.153</__createDate>
+  <__modifiedDate class="sql-timestamp">2016-09-20 13:41:51.153</__modifiedDate>
+  <__setModifiedDate>false</__setModifiedDate>
+  <__classNameId>20006</__classNameId>
+  <__originalClassNameId>20006</__originalClassNameId>
+  <__setOriginalClassNameId>false</__setOriginalClassNameId>
+  <__classPK>0</__classPK>
+  <__originalClassPK>0</__originalClassPK>
+  <__setOriginalClassPK>false</__setOriginalClassPK>
+  <__resourceClassNameId>29901</__resourceClassNameId>
+  <__templateKey>33502</__templateKey>
+  <__originalTemplateKey>33502</__originalTemplateKey>
+  <__version>1.0</__version>
+  <__name>&lt;?xml version=&apos;1.0&apos; encoding=&apos;UTF-8&apos;?&gt;&lt;root available-locales=&quot;en_US&quot; default-locale=&quot;en_US&quot;&gt;&lt;Name language-id=&quot;en_US&quot;&gt;Entry List 1 items ADT&lt;/Name&gt;&lt;/root&gt;</__name>
+  <__description></__description>
+  <__type>display</__type>
+  <__originalType>display</__originalType>
+  <__mode></__mode>
+  <__originalMode></__originalMode>
+  <__language>ftl</__language>
+  <__originalLanguage>ftl</__originalLanguage>
+  <__script>&lt;#if entries?has_content&gt;
+	${request.setAttribute(&quot;displayMode&quot;, 2)}
+	${request.setAttribute(&quot;colMd&quot;, &quot;col-md-12&quot;)}
+
+	&lt;div class=&quot;blog-list container-fluid-1280&quot;&gt;
+		&lt;div class=&quot;row&quot;&gt;
+			&lt;#list entries as curEntry&gt;
+				&lt;#assign assetRenderer = curEntry.getAssetRenderer() /&gt;
+				&lt;#assign viewURL = assetPublisherHelper.getAssetViewURL(renderRequest, renderResponse, curEntry) /&gt;
+
+				&lt;#if assetLinkBehavior != &quot;showFullContent&quot;&gt;
+					&lt;#assign viewURL = assetPublisherHelper.getAssetViewURL(renderRequest, renderResponse, curEntry, true) /&gt;
+				&lt;/#if&gt;
+
+				${request.setAttribute(&quot;viewURL&quot;, viewURL )}
+				${request.setAttribute(&quot;author&quot;, portalUtil.getUserName(assetRenderer.getUserId(), assetRenderer.getUserName()) )}
+
+				&lt;@liferay_ui[&quot;asset-display&quot;]
+					assetEntry=curEntry
+					template=&quot;full_content&quot;
+					/&gt;
+			&lt;/#list&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+
+	${request.setAttribute(&quot;author&quot;, &quot;&quot; )}
+	${request.setAttribute(&quot;displayMode&quot;, 0)}
+	${request.setAttribute(&quot;viewURL&quot;, &quot;&quot; )}
+&lt;/#if&gt;</__script>
+  <__cacheable>false</__cacheable>
+  <__smallImage>false</__smallImage>
+  <__smallImageId>35691</__smallImageId>
+  <__originalSmallImageId>35691</__originalSmallImageId>
+  <__setOriginalSmallImageId>false</__setOriginalSmallImageId>
+  <__smallImageURL></__smallImageURL>
+  <__columnBitmask>0</__columnBitmask>
+</DDMTemplate>

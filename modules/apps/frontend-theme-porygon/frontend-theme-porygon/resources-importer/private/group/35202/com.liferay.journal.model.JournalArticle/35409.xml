@@ -1,0 +1,99 @@
+<JournalArticle>
+  <__cachedModel>false</__cachedModel>
+  <__new>false</__new>
+  <__uuid>28b2c6ed-5ddb-a563-0b46-b252efe61168</__uuid>
+  <__originalUuid>28b2c6ed-5ddb-a563-0b46-b252efe61168</__originalUuid>
+  <__id>35409</__id>
+  <__resourcePrimKey>35410</__resourcePrimKey>
+  <__originalResourcePrimKey>35410</__originalResourcePrimKey>
+  <__setOriginalResourcePrimKey>false</__setOriginalResourcePrimKey>
+  <__groupId>35202</__groupId>
+  <__originalGroupId>35202</__originalGroupId>
+  <__setOriginalGroupId>false</__setOriginalGroupId>
+  <__companyId>20116</__companyId>
+  <__originalCompanyId>20116</__originalCompanyId>
+  <__setOriginalCompanyId>false</__setOriginalCompanyId>
+  <__userId>20164</__userId>
+  <__originalUserId>20164</__originalUserId>
+  <__setOriginalUserId>false</__setOriginalUserId>
+  <__userName>Test Test</__userName>
+  <__createDate class="sql-timestamp">2016-09-20 14:19:52.705</__createDate>
+  <__modifiedDate class="sql-timestamp">2016-09-20 14:19:52.764</__modifiedDate>
+  <__setModifiedDate>false</__setModifiedDate>
+  <__folderId>0</__folderId>
+  <__originalFolderId>0</__originalFolderId>
+  <__setOriginalFolderId>false</__setOriginalFolderId>
+  <__classNameId>0</__classNameId>
+  <__originalClassNameId>0</__originalClassNameId>
+  <__setOriginalClassNameId>false</__setOriginalClassNameId>
+  <__classPK>0</__classPK>
+  <__originalClassPK>0</__originalClassPK>
+  <__setOriginalClassPK>false</__setOriginalClassPK>
+  <__treePath>/</__treePath>
+  <__articleId>35408</__articleId>
+  <__originalArticleId>35408</__originalArticleId>
+  <__version>1.0</__version>
+  <__originalVersion>1.0</__originalVersion>
+  <__setOriginalVersion>false</__setOriginalVersion>
+  <__title>&lt;?xml version=&apos;1.0&apos; encoding=&apos;UTF-8&apos;?&gt;&lt;root available-locales=&quot;en_US&quot; default-locale=&quot;en_US&quot;&gt;&lt;Title language-id=&quot;en_US&quot;&gt;We want to explore&lt;/Title&gt;&lt;/root&gt;</__title>
+  <__urlTitle>we-want-to-explore</__urlTitle>
+  <__originalUrlTitle>we-want-to-explore</__originalUrlTitle>
+  <__description></__description>
+  <__content>&lt;?xml version=&quot;1.0&quot;?&gt;
+
+&lt;root available-locales=&quot;en_US&quot; default-locale=&quot;en_US&quot;&gt;
+	&lt;dynamic-element name=&quot;coverImage&quot; type=&quot;image&quot; index-type=&quot;keyword&quot; instance-id=&quot;jvpj&quot;&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot; alt=&quot;&quot; name=&quot;content_03.jpg&quot; title=&quot;content_03.jpg&quot; type=&quot;document&quot;&gt;&lt;![CDATA[[$dl-reference=/group/35202/com.liferay.document.library.kernel.model.DLFileEntry/35265.xml$]]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+	&lt;dynamic-element name=&quot;title&quot; type=&quot;text&quot; index-type=&quot;keyword&quot; instance-id=&quot;rooa&quot;&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[We want to explore]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+	&lt;dynamic-element name=&quot;subTitle&quot; type=&quot;text_box&quot; index-type=&quot;keyword&quot; instance-id=&quot;uddr&quot;&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[We’re curious people]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+	&lt;dynamic-element name=&quot;content&quot; type=&quot;text_area&quot; index-type=&quot;keyword&quot; instance-id=&quot;rkxj&quot;&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[&lt;p&gt;We want to explore. We&amp;rsquo;re curious people. Look back over history, people have put their lives at stake to go out and explore &amp;hellip; We believe in what we&amp;rsquo;re doing. Now it&amp;rsquo;s time to go.&lt;/p&gt;
+
+&lt;p&gt;Buy why, some say, the moon? Why choose this as our goal? And they may as well ask why climb the highest mountain?&lt;/p&gt;
+
+&lt;p&gt;What was most significant about the lunar voyage was not that man set foot on the Moon but that they set eye on the earth.&lt;/p&gt;
+
+&lt;p&gt;Science has not yet mastered prophecy. We predict too much for the next year and yet far too little for the next 10.&lt;/p&gt;
+
+&lt;p&gt;NASA is not about the &amp;lsquo;Adventure of Human Space Exploration&amp;rsquo;&amp;hellip;We won&amp;rsquo;t be doing it just to get out there in space &amp;ndash; we&amp;rsquo;ll be doing it because the things we learn out there will be making life better for a lot of people who won&amp;rsquo;t be able to go.&lt;/p&gt;
+
+&lt;p&gt;A Chinese tale tells of some men sent to harm a young girl who, upon seeing her beauty, become her protectors rather than her violators. That&amp;#39;s how I felt seeing the Earth for the first time. I could not help but love and cherish her.&lt;/p&gt;
+
+&lt;p&gt;We want to explore. We&amp;rsquo;re curious people. Look back over history, people have put their lives at stake to go out and explore &amp;hellip; We believe in what we&amp;rsquo;re doing. Now it&amp;rsquo;s time to go.&lt;/p&gt;
+
+&lt;p&gt;Across the sea of space, the stars are other suns.&lt;/p&gt;
+
+&lt;p&gt;It suddenly struck me that that tiny pea, pretty and blue, was the Earth. I put up my thumb and shut one eye, and my thumb blotted out the planet Earth. I didn&amp;#39;t feel like a giant. I felt very, very small.&lt;/p&gt;
+
+&lt;p&gt;NASA is not about the &amp;lsquo;Adventure of Human Space Exploration&amp;rsquo;&amp;hellip;We won&amp;rsquo;t be doing it just to get out there in space &amp;ndash; we&amp;rsquo;ll be doing it because the things we learn out there will be making life better for a lot of people who won&amp;rsquo;t be able to go.&lt;/p&gt;]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+&lt;/root&gt;</__content>
+  <__DDMStructureKey>33369</__DDMStructureKey>
+  <__originalDDMStructureKey>33369</__originalDDMStructureKey>
+  <__DDMTemplateKey>33373</__DDMTemplateKey>
+  <__originalDDMTemplateKey>33373</__originalDDMTemplateKey>
+  <__layoutUuid>b2f4b1b0-90d0-91c0-fad5-e716362b501e</__layoutUuid>
+  <__originalLayoutUuid>b2f4b1b0-90d0-91c0-fad5-e716362b501e</__originalLayoutUuid>
+  <__displayDate class="sql-timestamp">2016-09-20 14:18:00.0</__displayDate>
+  <__originalDisplayDate class="sql-timestamp" reference="../__displayDate"/>
+  <__indexable>true</__indexable>
+  <__originalIndexable>true</__originalIndexable>
+  <__setOriginalIndexable>false</__setOriginalIndexable>
+  <__smallImage>false</__smallImage>
+  <__smallImageId>35411</__smallImageId>
+  <__originalSmallImageId>35411</__originalSmallImageId>
+  <__setOriginalSmallImageId>false</__setOriginalSmallImageId>
+  <__smallImageURL></__smallImageURL>
+  <__status>0</__status>
+  <__originalStatus>0</__originalStatus>
+  <__setOriginalStatus>false</__setOriginalStatus>
+  <__statusByUserId>20164</__statusByUserId>
+  <__statusByUserName>Test Test</__statusByUserName>
+  <__statusDate class="sql-timestamp">2016-09-20 14:19:52.764</__statusDate>
+  <__columnBitmask>0</__columnBitmask>
+</JournalArticle>

@@ -394,18 +394,23 @@ public class RolesAdminPortlet extends MVCPortlet {
 
 						// Remove company, group template, and group permissions
 
-						_resourcePermissionService.removeResourcePermissions(
-							groupId, companyId, selResource,
-							ResourceConstants.SCOPE_COMPANY, roleId1, actionId);
+						_resourcePermissionLocalService.
+							removeResourcePermissions(
+								companyId, selResource,
+								ResourceConstants.SCOPE_COMPANY, roleId1,
+								actionId);
 
-						_resourcePermissionService.removeResourcePermissions(
-							groupId, companyId, selResource,
-							ResourceConstants.SCOPE_GROUP_TEMPLATE, roleId1,
-							actionId);
+						_resourcePermissionLocalService.
+							removeResourcePermissions(
+								companyId, selResource,
+								ResourceConstants.SCOPE_GROUP_TEMPLATE, roleId1,
+								actionId);
 
-						_resourcePermissionService.removeResourcePermissions(
-							groupId, companyId, selResource,
-							ResourceConstants.SCOPE_GROUP, roleId1, actionId);
+						_resourcePermissionLocalService.
+							removeResourcePermissions(
+								companyId, selResource,
+								ResourceConstants.SCOPE_GROUP, roleId1,
+								actionId);
 					}
 				}
 

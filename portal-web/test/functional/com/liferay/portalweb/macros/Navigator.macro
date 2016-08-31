@@ -57,7 +57,7 @@
 			</then>
 		</if>
 
-		<execute function="Pause" locator1="5000" />
+		<execute function="Pause" locator1="3000" />
 
 		<execute macro="Navigator#_gotoPage">
 			<var name="pageName" value="${pageName}" />

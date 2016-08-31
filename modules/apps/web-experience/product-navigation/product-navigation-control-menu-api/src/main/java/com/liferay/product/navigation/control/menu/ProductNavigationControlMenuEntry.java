@@ -166,10 +166,11 @@ public interface ProductNavigationControlMenuEntry {
 
 	/**
 	 * Returns <code>true</code> if the Control Menu entry should be opened in a
-	 * dialog window or in the current window.
+	 * dialog window.
 	 *
 	 * @return <code>true</code> if the control menu entry should be opened in a
-	 *         dialog window; <code>false</code> otherwise
+	 *         dialog window; <code>false</code> if it should open in the
+	 *         current window
 	 */
 	public boolean isUseDialog();
 

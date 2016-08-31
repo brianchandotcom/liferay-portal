@@ -31,107 +31,108 @@ import java.util.Locale;
 public class GetterUtil {
 
 	/**
-	 * String values that can be converted to <code>true<code/> booleans
+	 * The String values that can be converted to the <code>true</code> boolean
+	 * value.
 	 */
 	public static final String[] BOOLEANS = {"true", "t", "y", "on", "1"};
 
 	/**
-	 * The default boolean value is {@value #DEFAULT_BOOLEAN}
+	 * The default boolean value is {@value #DEFAULT_BOOLEAN}.
 	 */
 	public static final boolean DEFAULT_BOOLEAN = false;
 
 	/**
-	 * The default boolean array value is an empty boolean array
+	 * The default boolean array value is an empty boolean array.
 	 */
 	public static final boolean[] DEFAULT_BOOLEAN_VALUES = new boolean[0];
 
 	/**
-	 * The default byte value is {@value #DEFAULT_BYTE}
+	 * The default byte value is {@value #DEFAULT_BYTE}.
 	 */
 	public static final byte DEFAULT_BYTE = 0;
 
 	/**
-	 * The default byte array value is an empty byte array
+	 * The default byte array value is an empty byte array.
 	 */
 	public static final byte[] DEFAULT_BYTE_VALUES = new byte[0];
 
 	/**
-	 * The default Date array value is an empty Date array
+	 * The default Date array value is an empty Date array.
 	 */
 	public static final Date[] DEFAULT_DATE_VALUES = new Date[0];
 
 	/**
-	 * The default double value is {@value #DEFAULT_DOUBLE}
+	 * The default double value is {@value #DEFAULT_DOUBLE}.
 	 */
 	public static final double DEFAULT_DOUBLE = 0.0;
 
 	/**
-	 * The default double array value is an empty double array
+	 * The default double array value is an empty double array.
 	 */
 	public static final double[] DEFAULT_DOUBLE_VALUES = new double[0];
 
 	/**
-	 * The default float value is {@value #DEFAULT_FLOAT}
+	 * The default float value is {@value #DEFAULT_FLOAT}.
 	 */
 	public static final float DEFAULT_FLOAT = 0;
 
 	/**
-	 * The default float array value is an empty float array
+	 * The default float array value is an empty float array.
 	 */
 	public static final float[] DEFAULT_FLOAT_VALUES = new float[0];
 
 	/**
-	 * The default integer value is {@value #DEFAULT_INTEGER}
+	 * The default integer value is {@value #DEFAULT_INTEGER}.
 	 */
 	public static final int DEFAULT_INTEGER = 0;
 
 	/**
-	 * The default integer array value is an empty integer array
+	 * The default integer array value is an empty integer array.
 	 */
 	public static final int[] DEFAULT_INTEGER_VALUES = new int[0];
 
 	/**
-	 * The default long value is {@value #DEFAULT_LONG}
+	 * The default long value is {@value #DEFAULT_LONG}.
 	 */
 	public static final long DEFAULT_LONG = 0;
 
 	/**
-	 * The default long array value is an empty long array
+	 * The default long array value is an empty long array.
 	 */
 	public static final long[] DEFAULT_LONG_VALUES = new long[0];
 
 	/**
-	 * The default number value is {@value #DEFAULT_NUMBER}
+	 * The default Number value is <code>0</code>.
 	 */
 	public static final Number DEFAULT_NUMBER = 0;
 
 	/**
-	 * The default Number array value is an empty Number array
+	 * The default Number array value is an empty Number array.
 	 */
 	public static final Number[] DEFAULT_NUMBER_VALUES = new Number[0];
 
 	/**
-	 * The default Object value is <code>null<code/>
+	 * The default Object value is <code>null<code/>.
 	 */
 	public static final Number DEFAULT_OBJECT = null;
 
 	/**
-	 * The default short value is {@value #DEFAULT_SHORT}
+	 * The default short value is {@value #DEFAULT_SHORT}.
 	 */
 	public static final short DEFAULT_SHORT = 0;
 
 	/**
-	 * The default short array value is an empty short array
+	 * The default short array value is an empty short array.
 	 */
 	public static final short[] DEFAULT_SHORT_VALUES = new short[0];
 
 	/**
-	 * The default String value is {@value #DEFAULT_STRING}
+	 * The default String value is {@value #DEFAULT_STRING}.
 	 */
 	public static final String DEFAULT_STRING = StringPool.BLANK;
 
 	/**
-	 * The default String array value is an empty String array
+	 * The default String array value is an empty String array.
 	 */
 	public static final String[] DEFAULT_STRING_VALUES = new String[0];
 

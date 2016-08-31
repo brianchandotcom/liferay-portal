@@ -130,6 +130,7 @@
 		</execute>
 
 		<execute macro="LAR#configureExportTemplateCP">
+			<var name="checkContentNameList" value="Web Content" />
 			<var name="uncheckContentNameList" value="Blogs" />
 		</execute>
 

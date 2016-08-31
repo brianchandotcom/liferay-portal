@@ -3,6 +3,8 @@ AUI.add(
 	function(A) {
 		var Lang = A.Lang;
 
+		var STR_ACTIVE = 'active';
+
 		var SELECTOR_VERSION_ITEM = '.version-item';
 
 		var STR_CLICK = 'click';
@@ -11,21 +13,21 @@ AUI.add(
 
 		var STR_DIFF_FORM = 'diffForm';
 
-		var STR_SELECTED = 'selected';
-
 		var STR_VERSION_FILTER = 'versionFilter';
 
 		var STR_VERSION_ITEMS = 'versionItems';
 
 		var TPL_VERSION = '<div class="pull-right close-version-filter">' +
-				'<i class="icon-remove"></i>' +
+				'<a href="javascript:;">' +
+					'<svg class="lexicon-icon"><use xlink:href="' + Liferay.ThemeDisplay.getPathThemeImages() + '/lexicon/icons.svg#times" /></svg>' +
+				'</a>' +
 			'</div>' +
 			'<div>' +
-				'<span class="version">{version}</span>' +
+				'<span class="text-default">{version}</span>' +
 			'</div>' +
 			'<div>' +
-				'<span class="user-name">{userName}</span>' +
-				'<span class="display-date">{displayDate}</span>' +
+				'<small class="text-primary user-name">{userName}</small>' +
+				'<small class="text-default">{displayDate}</small>' +
 			'</div>';
 
 		var DiffVersionSearch = A.Component.create(
@@ -202,7 +204,7 @@ AUI.add(
 					_onCloseFilter: function(event) {
 						var instance = this;
 
-						instance.get(STR_VERSION_ITEMS).all(SELECTOR_VERSION_ITEM).removeClass(STR_SELECTED);
+						instance.get(STR_VERSION_ITEMS).all(SELECTOR_VERSION_ITEM).removeClass(STR_ACTIVE);
 
 						instance.get(STR_VERSION_FILTER).hide();
 
@@ -234,9 +236,9 @@ AUI.add(
 
 						var currentTarget = event.currentTarget;
 
-						instance.get(STR_VERSION_ITEMS).all(SELECTOR_VERSION_ITEM).removeClass(STR_SELECTED);
+						instance.get(STR_VERSION_ITEMS).all(SELECTOR_VERSION_ITEM).removeClass(STR_ACTIVE);
 
-						currentTarget.addClass(STR_SELECTED);
+						currentTarget.addClass(STR_ACTIVE);
 
 						var versionFilter = instance.get(STR_VERSION_FILTER);
 

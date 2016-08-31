@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one
+  or more contributor license agreements. See the NOTICE file
+  distributed with this work for additional information
+  regarding copyright ownership. The ASF licenses this file
+  to you under the Apache License, Version 2.0 (the
+  "License"); you may not use this file except in compliance
+  with the License. You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing,
+  software distributed under the License is distributed on an
+  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  KIND, either express or implied. See the License for the
+  specific language governing permissions and limitations
+  under the License.
+-->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.apache.maven.archetype</groupId>
+    <artifactId>maven-archetype</artifactId>
+    <version>2.4</version>
+  </parent>
+
+  <artifactId>archetype-common</artifactId>
+  <packaging>jar</packaging>
+
+  <name>Maven Archetype Common</name>
+  <description>Core Archetype classes.</description>
+
+  <properties>
+    <cargoVersion>1.0-alpha-6</cargoVersion>
+    <checkstyle.violation.ignore>RedundantThrows,NewlineAtEndOfFile,ParameterNumber,MethodLength,FileLength,javadoc,EmptyBlock,InterfaceIsType</checkstyle.violation.ignore>
+    <checkstyle.excludes>**/MavenJDOMWriter.java,**/XMLOutputter.java,**/Format.java,**/NamespaceStack.java</checkstyle.excludes>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.apache.maven.archetype</groupId>
+      <artifactId>archetype-catalog</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.maven.archetype</groupId>
+      <artifactId>archetype-descriptor</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.maven.archetype</groupId>
+      <artifactId>archetype-registry</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>net.sourceforge.jchardet</groupId>
+      <artifactId>jchardet</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.codehaus.plexus</groupId>
+      <artifactId>plexus-component-annotations</artifactId>
+      <version>1.5.5</version>
+    </dependency>
+    <dependency>
+      <groupId>dom4j</groupId>
+      <artifactId>dom4j</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>jdom</groupId>
+      <artifactId>jdom</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.maven</groupId>
+      <artifactId>maven-model</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.maven</groupId>
+      <artifactId>maven-project</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.maven.shared</groupId>
+      <artifactId>maven-invoker</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.codehaus.plexus</groupId>
+      <artifactId>plexus-container-default</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.codehaus.plexus</groupId>
+      <artifactId>plexus-utils</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.maven.plugin-testing</groupId>
+      <artifactId>maven-plugin-testing-harness</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>commons-io</groupId>
+      <artifactId>commons-io</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.codehaus.plexus</groupId>
+      <artifactId>plexus-velocity</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.velocity</groupId>
+      <artifactId>velocity</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.codehaus.cargo</groupId>
+      <artifactId>cargo-core-api-container</artifactId>
+      <version>${cargoVersion}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.codehaus.cargo</groupId>
+      <artifactId>cargo-core-api-generic</artifactId>
+      <version>${cargoVersion}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.codehaus.cargo</groupId>
+      <artifactId>cargo-core-container-jetty</artifactId>
+      <version>${cargoVersion}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.mortbay.jetty</groupId>
+      <artifactId>jetty</artifactId>
+      <version>6.1.11</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.maven.wagon</groupId>
+      <artifactId>wagon-file</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.maven.wagon</groupId>
+      <artifactId>wagon-http</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>archetype-repository</artifactId>
+      <version>${project.version}</version>
+      <type>war</type>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>archetype-proxy</artifactId>
+      <version>${project.version}</version>
+      <type>war</type>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <testResources>
+      <testResource>
+        <directory>src/test/resources</directory>
+        <filtering>true</filtering>
+      </testResource>
+    </testResources>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.modello</groupId>
+        <artifactId>modello-maven-plugin</artifactId>
+        <configuration>
+          <version>1.0.0</version>
+          <models>
+            <model>src/main/mdo/archetype.mdo</model>
+          </models>
+        </configuration>
+        <executions>
+          <execution>
+            <id>default</id>
+            <goals>
+              <goal>java</goal>
+              <goal>xpp3-reader</goal>
+              <goal>xpp3-writer</goal>
+              <goal>xsd</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>site-xsd</id>
+            <phase>pre-site</phase>
+            <goals>
+              <goal>xsd</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${basedir}/target/generated-site/resources/xsd</outputDirectory>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>copy</id>
+            <phase>process-test-resources</phase>
+            <goals>
+              <goal>copy-dependencies</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.build.directory}/wars</outputDirectory>
+              <overWriteReleases>true</overWriteReleases>
+              <overWriteSnapshots>true</overWriteSnapshots>
+              <includeTypes>war</includeTypes>
+              <stripVersion>true</stripVersion>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <dependencies>
+          <dependency>
+            <groupId>ant</groupId>
+            <artifactId>ant-antlr</artifactId>
+            <version>1.6.5</version>
+          </dependency>
+        </dependencies>
+
+        <executions>
+          <execution>
+            <id>archetype-test</id>
+            <phase>process-test-resources</phase>
+            <configuration>
+              <target>
+                <property name="test.archetype.name" value="basic" />
+                <property name="test.archetype.version" value="1.0" />
+
+                <property name="test.projects.repository" value="repositories/central" />
+                <property name="test.archetype.name-version" value="${test.archetype.name}-${test.archetype.version}" />
+                <property name="test.source.directory" value="${project.basedir}/src/test/archetypes/${test.archetype.name-version}" />
+                <property name="test.target.directory" value="${project.build.directory}/test-classes/${test.projects.repository}/archetypes/${test.archetype.name}/${test.archetype.version}" />
+
+                <mkdir dir="${test.target.directory}" />
+
+                <jar destfile="${test.target.directory}/${test.archetype.name-version}.jar" basedir="${test.source.directory}/" />
+
+                <copy tofile="${test.target.directory}/${test.archetype.name-version}.pom" file="${test.source.directory}/META-INF/maven/archetypes/${test.archetype.name}/pom.xml" />
+              </target>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+
+          <execution>
+            <id>archetype-test-partial</id>
+            <phase>process-test-resources</phase>
+            <configuration>
+              <target>
+                <property name="test.archetype.name" value="partial" />
+                <property name="test.archetype.version" value="1.0" />
+
+                <property name="test.projects.repository" value="repositories/central" />
+                <property name="test.archetype.name-version" value="${test.archetype.name}-${test.archetype.version}" />
+                <property name="test.source.directory" value="${project.basedir}/src/test/archetypes/${test.archetype.name-version}" />
+                <property name="test.target.directory" value="${project.build.directory}/test-classes/${test.projects.repository}/archetypes/${test.archetype.name}/${test.archetype.version}" />
+
+                <mkdir dir="${test.target.directory}" />
+
+                <jar destfile="${test.target.directory}/${test.archetype.name-version}.jar" basedir="${test.source.directory}/" />
+
+                <copy tofile="${test.target.directory}/${test.archetype.name-version}.pom" file="${test.source.directory}/META-INF/maven/archetypes/${test.archetype.name}/pom.xml" />
+              </target>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+
+          <execution>
+            <id>archetype-test-site</id>
+            <phase>process-test-resources</phase>
+            <configuration>
+              <target>
+                <property name="test.archetype.name" value="site" />
+                <property name="test.archetype.version" value="1.0" />
+
+                <property name="test.projects.repository" value="repositories/central" />
+                <property name="test.archetype.name-version" value="${test.archetype.name}-${test.archetype.version}" />
+                <property name="test.source.directory" value="${project.basedir}/src/test/archetypes/${test.archetype.name-version}" />
+                <property name="test.target.directory" value="${project.build.directory}/test-classes/${test.projects.repository}/archetypes/${test.archetype.name}/${test.archetype.version}" />
+
+                <mkdir dir="${test.target.directory}" />
+
+                <jar destfile="${test.target.directory}/${test.archetype.name-version}.jar" basedir="${test.source.directory}/" />
+
+                <copy tofile="${test.target.directory}/${test.archetype.name-version}.pom" file="${test.source.directory}/META-INF/maven/archetypes/${test.archetype.name}/pom.xml" />
+              </target>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+
+          <execution>
+            <id>archetype-test-old</id>
+            <phase>process-test-resources</phase>
+            <configuration>
+              <target>
+                <property name="test.archetype.name" value="old" />
+                <property name="test.archetype.version" value="1.0" />
+
+                <property name="test.projects.repository" value="repositories/central" />
+                <property name="test.archetype.name-version" value="${test.archetype.name}-${test.archetype.version}" />
+                <property name="test.source.directory" value="${project.basedir}/src/test/archetypes/${test.archetype.name-version}" />
+                <property name="test.target.directory" value="${project.build.directory}/test-classes/${test.projects.repository}/archetypes/${test.archetype.name}/${test.archetype.version}" />
+
+                <mkdir dir="${test.target.directory}" />
+
+                <jar destfile="${test.target.directory}/${test.archetype.name-version}.jar" basedir="${test.source.directory}/" />
+
+                <copy tofile="${test.target.directory}/${test.archetype.name-version}.pom" file="${test.source.directory}/META-INF/maven/archetypes/${test.archetype.name}/pom.xml" />
+              </target>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+
+          <execution>
+            <id>archetype-test-fileset</id>
+            <phase>process-test-resources</phase>
+            <configuration>
+              <target>
+                <property name="test.archetype.name" value="fileset" />
+                <property name="test.archetype.version" value="1.0" />
+
+                <property name="test.projects.repository" value="repositories/central" />
+                <property name="test.archetype.name-version" value="${test.archetype.name}-${test.archetype.version}" />
+                <property name="test.source.directory" value="${project.basedir}/src/test/archetypes/${test.archetype.name-version}" />
+                <property name="test.target.directory" value="${project.build.directory}/test-classes/${test.projects.repository}/archetypes/${test.archetype.name}/${test.archetype.version}" />
+
+                <mkdir dir="${test.target.directory}" />
+
+                <jar destfile="${test.target.directory}/${test.archetype.name-version}.jar" basedir="${test.source.directory}/" />
+
+                <copy tofile="${test.target.directory}/${test.archetype.name-version}.pom" file="${test.source.directory}/META-INF/maven/archetypes/${test.archetype.name}/pom.xml" />
+              </target>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+
+          <execution>
+            <id>repository-metadata</id>
+            <phase>process-test-resources</phase>
+            <configuration>
+              <target>
+                <property name="test.projects.source.directory" value="${test.projects.archetype}" />
+                <property name="test.projects.target.directory" value="archetypes" />
+                <property name="test.projects.repository" value="repositories/central" />
+
+                <mkdir dir="${project.build.directory}/test-classes/${test.projects.repository}/${test.projects.target.directory}" />
+              </target>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <systemPropertyVariables>
+            <maven.home>${maven.home}</maven.home>
+            <java.io.tmpdir>${project.build.outputDirectory}</java.io.tmpdir>
+          </systemPropertyVariables>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

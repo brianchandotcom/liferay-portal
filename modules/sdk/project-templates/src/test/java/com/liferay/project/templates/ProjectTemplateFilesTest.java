@@ -14,6 +14,7 @@
 
 package com.liferay.project.templates;
 
+import com.liferay.project.templates.internal.util.FileUtil;
 import com.liferay.project.templates.util.FileTestUtil;
 
 import java.io.BufferedReader;
@@ -195,9 +196,9 @@ public class ProjectTemplateFilesTest {
 
 						String glob = "Language_*.properties";
 
-						Assert.assertFalse(
+						Assert.assertNull(
 							"Forbidden " + dirPath + File.separator + glob,
-							FileTestUtil.exists(dirPath, glob));
+							FileUtil.getFile(dirPath, glob));
 					}
 
 					return FileVisitResult.CONTINUE;

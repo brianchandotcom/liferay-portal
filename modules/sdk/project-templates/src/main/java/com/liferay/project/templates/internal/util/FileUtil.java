@@ -22,6 +22,7 @@ import java.io.InputStream;
 
 import java.net.URL;
 
+import java.nio.file.DirectoryStream;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -33,6 +34,7 @@ import java.security.CodeSource;
 import java.security.ProtectionDomain;
 
 import java.util.Enumeration;
+import java.util.Iterator;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
@@ -112,6 +114,20 @@ public class FileUtil {
 				}
 			}
 		}
+	}
+
+	public static Path getFile(Path dirPath, String glob) throws IOException {
+		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
+				dirPath, glob)) {
+
+			Iterator<Path> iterator = directoryStream.iterator();
+
+			if (iterator.hasNext()) {
+				return iterator.next();
+			}
+		}
+
+		return null;
 	}
 
 	public static File getJarFile() throws Exception {

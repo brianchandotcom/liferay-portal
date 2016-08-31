@@ -253,17 +253,16 @@ public class Archetyper {
 
 			File archetypeFile = null;
 
-			String archetypeFileName = artifactId + ".jar";
-
 			try {
 				File file = FileUtil.getJarFile();
 
 				if (file.isDirectory()) {
-					Path jarDirPath = file.toPath();
+					Path archetypePath = FileUtil.getFile(
+						file.toPath(), artifactId + "-*.jar");
 
-					Path archetypePath = jarDirPath.resolve(archetypeFileName);
-
-					archetypeFile = archetypePath.toFile();
+					if (archetypePath != null) {
+						archetypeFile = archetypePath.toFile();
+					}
 				}
 				else {
 					try (JarFile jarFile = new JarFile(file)) {
@@ -278,7 +277,7 @@ public class Archetyper {
 
 							String name = jarEntry.getName();
 
-							if (!name.equals(archetypeFileName)) {
+							if (!name.startsWith(artifactId + "-")) {
 								continue;
 							}
 

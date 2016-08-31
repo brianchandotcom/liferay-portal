@@ -21,11 +21,8 @@ import java.io.InputStreamReader;
 import java.io.RandomAccessFile;
 
 import java.nio.charset.StandardCharsets;
-import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-
-import java.util.Iterator;
 
 /**
  * @author Andrea Di Giorgi
@@ -47,20 +44,6 @@ public class FileTestUtil {
 			int c = randomAccessFile.read();
 
 			if ((c == '\n') || (c == '\r')) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	public static boolean exists(Path dirPath, String glob) throws IOException {
-		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
-				dirPath, glob)) {
-
-			Iterator<Path> iterator = directoryStream.iterator();
-
-			if (iterator.hasNext()) {
 				return true;
 			}
 		}

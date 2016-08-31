@@ -27,6 +27,4 @@ Private-Package:\
 	org.codehaus.plexus.util.xml.pull,\
 	org.codehaus.plexus.velocity,\
 	org.dom4j
--includeresource:\
-	com.liferay.project.templates.*.jar,\
-	@jcommander-*.jar
+-includeresource: @jcommander-*.jar

@@ -69,7 +69,7 @@ public class ProjectTemplates {
 
 					template = template.substring(
 						TEMPLATE_BUNDLE_PREFIX.length(),
-						template.lastIndexOf('.'));
+						template.lastIndexOf('-'));
 
 					templates.add(template);
 				}

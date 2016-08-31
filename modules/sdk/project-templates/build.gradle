@@ -1,43 +1,38 @@
-import com.liferay.gradle.util.copy.RenameDependencyClosure
-
-task copyTestLibs(type: Copy)
-
 bundle {
 	includeTransitiveDependencies = true
 }
 
-copyTestLibs {
-	from configurations.provided
-	into "test-lib"
-	rename new RenameDependencyClosure(project, configurations.provided.name)
+configurations {
+	projectTemplates
 }
 
 dependencies {
+	projectTemplates project(":sdk:project-templates-activator")
+	projectTemplates project(":sdk:project-templates-api")
+	projectTemplates project(":sdk:project-templates-contenttargetingreport")
+	projectTemplates project(":sdk:project-templates-contenttargetingrule")
+	projectTemplates project(":sdk:project-templates-contenttargetingtrackingaction")
+	projectTemplates project(":sdk:project-templates-controlmenuentry")
+	projectTemplates project(":sdk:project-templates-fragment")
+	projectTemplates project(":sdk:project-templates-mvcportlet")
+	projectTemplates project(":sdk:project-templates-panelapp")
+	projectTemplates project(":sdk:project-templates-portlet")
+	projectTemplates project(":sdk:project-templates-portletconfigurationicon")
+	projectTemplates project(":sdk:project-templates-portletprovider")
+	projectTemplates project(":sdk:project-templates-portlettoolbarcontributor")
+	projectTemplates project(":sdk:project-templates-service")
+	projectTemplates project(":sdk:project-templates-servicebuilder")
+	projectTemplates project(":sdk:project-templates-servicewrapper")
+	projectTemplates project(":sdk:project-templates-simulationpanelentry")
+	projectTemplates project(":sdk:project-templates-templatecontextcontributor")
+
 	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.2.0"
 	provided group: "com.beust", name: "jcommander", version: "1.48"
 	provided group: "org.apache.maven.archetype", name: "archetype-common", version: "2.4"
-	provided project(":sdk:project-templates-activator")
-	provided project(":sdk:project-templates-api")
-	provided project(":sdk:project-templates-contenttargetingreport")
-	provided project(":sdk:project-templates-contenttargetingrule")
-	provided project(":sdk:project-templates-contenttargetingtrackingaction")
-	provided project(":sdk:project-templates-controlmenuentry")
-	provided project(":sdk:project-templates-fragment")
-	provided project(":sdk:project-templates-mvcportlet")
-	provided project(":sdk:project-templates-panelapp")
-	provided project(":sdk:project-templates-portlet")
-	provided project(":sdk:project-templates-portletconfigurationicon")
-	provided project(":sdk:project-templates-portletprovider")
-	provided project(":sdk:project-templates-portlettoolbarcontributor")
-	provided project(":sdk:project-templates-service")
-	provided project(":sdk:project-templates-servicebuilder")
-	provided project(":sdk:project-templates-servicewrapper")
-	provided project(":sdk:project-templates-simulationpanelentry")
-	provided project(":sdk:project-templates-templatecontextcontributor")
 
 	testCompile gradleTestKit()
 }
 
-test {
-	dependsOn copyTestLibs
+processResources {
+	from configurations.projectTemplates
 }

@@ -1231,11 +1231,11 @@ public class ResourcePermissionLocalServiceImpl
 				actionId);
 		}
 		else if (scope == ResourceConstants.SCOPE_GROUP) {
-			removeResourcePermissions(
-				companyId, selResource, ResourceConstants.SCOPE_GROUP, roleId,
-				actionId);
-
 			for (String curGroupId : groupIds) {
+				removeResourcePermission(
+					companyId, selResource, ResourceConstants.SCOPE_GROUP,
+					curGroupId, roleId, actionId);
+
 				addResourcePermission(
 					companyId, selResource, ResourceConstants.SCOPE_GROUP,
 					curGroupId, roleId, actionId);

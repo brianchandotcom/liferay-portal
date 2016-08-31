@@ -275,6 +275,15 @@ long usedMemory = totalMemory - runtime.freeMemory();
 					<aui:button cssClass="save-server-button" data-cmd="verifyMembershipPolicies" value="execute" />
 				</div>
 			</li>
+			<li class="clearfix list-group-item">
+				<div class="pull-left">
+					<h5><liferay-ui:message key="verify-roles-permissions" /></h5>
+				</div>
+
+				<div class="pull-right">
+					<aui:button cssClass="save-server-button" data-cmd="verifyRolesPermissions" value="execute" />
+				</div>
+			</li>
 		</ul>
 	</liferay-ui:panel>
 

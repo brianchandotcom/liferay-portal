@@ -75,13 +75,23 @@ public class OutputStreamWriter extends Writer {
 
 	@Override
 	public void close() throws IOException {
+		if (!_isOpen) {
+			return;
+		}
+
+		_flushEncoder();
+
 		_flushBuffer();
 
 		_outputStream.close();
+
+		_isOpen = false;
 	}
 
 	@Override
 	public void flush() throws IOException {
+		_ensureOpen();
+
 		_flushBuffer();
 
 		_outputStream.flush();
@@ -103,11 +113,9 @@ public class OutputStreamWriter extends Writer {
 
 	@Override
 	public void write(int c) throws IOException {
-		_inputArray[0] = (char)c;
+		_inputCharBuffer.put((char)c);
 
-		_doWrite(_inputCharBuffer);
-
-		_inputCharBuffer.clear();
+		_doWrite(_EMPTY_CHAR_BUFFER);
 	}
 
 	@Override
@@ -123,23 +131,68 @@ public class OutputStreamWriter extends Writer {
 	}
 
 	private void _doWrite(CharBuffer inputCharBuffer) throws IOException {
-		while (true) {
-			CoderResult coderResult = _charsetEncoder.encode(
-				inputCharBuffer, _outputByteBuffer, true);
+		_ensureOpen();
 
-			if (coderResult.isOverflow()) {
-				_flushBuffer();
+		_encodeLeftoverChar(inputCharBuffer, false);
+
+		_encodeLoop(inputCharBuffer, false);
+	}
+
+	private void _encodeLeftoverChar(
+			CharBuffer inputCharBuffer, boolean endOfInput)
+		throws IOException {
+
+		if (_inputCharBuffer.position() == 0) {
+			return;
+		}
+
+		if ((_inputCharBuffer.position() == 1) &&
+			inputCharBuffer.hasRemaining()) {
+
+			_inputCharBuffer.put(inputCharBuffer.get());
+		}
+
+		_inputCharBuffer.flip();
+
+		_encodeLoop(_inputCharBuffer, endOfInput);
+
+		_inputCharBuffer.compact();
+	}
+
+	private void _encodeLoop(CharBuffer inputCharBuffer, boolean endOfInput)
+		throws IOException {
+
+		while (inputCharBuffer.hasRemaining()) {
+			CoderResult coderResult = _charsetEncoder.encode(
+				inputCharBuffer, _outputByteBuffer, endOfInput);
+
+			if (coderResult.isError()) {
+				coderResult.throwException();
 			}
-			else if (coderResult.isUnderflow()) {
+
+			if (coderResult.isUnderflow()) {
 				if (_autoFlush) {
 					_flushBuffer();
 				}
 
+				if ((_inputCharBuffer != inputCharBuffer) &&
+					inputCharBuffer.hasRemaining()) {
+
+					_inputCharBuffer.put(inputCharBuffer.get());
+				}
+
 				break;
 			}
-			else {
-				throw new IOException("Unexcepted coder result " + coderResult);
-			}
+
+			// Must be overflow, no need to check
+
+			_flushBuffer();
+		}
+	}
+
+	private void _ensureOpen() throws IOException {
+		if (!_isOpen) {
+			throw new IOException("Stream closed");
 		}
 	}
 
@@ -152,13 +205,40 @@ public class OutputStreamWriter extends Writer {
 		}
 	}
 
+	private void _flushEncoder() throws IOException {
+		_encodeLeftoverChar(_EMPTY_CHAR_BUFFER, true);
+
+		// Ensure encoder transit to END state before flushing, in case the
+		// encoder was never used and still in RESET state.
+
+		_charsetEncoder.encode(_EMPTY_CHAR_BUFFER, _outputByteBuffer, true);
+
+		while (true) {
+			CoderResult coderResult = _charsetEncoder.flush(_outputByteBuffer);
+
+			if (coderResult.isError()) {
+				coderResult.throwException();
+			}
+
+			if (coderResult.isUnderflow()) {
+				break;
+			}
+
+			// Must be overflow, no need to check
+
+			_flushBuffer();
+		}
+	}
+
 	private static final int _DEFAULT_OUTPUT_BUFFER_SIZE = 8192;
+
+	private static final CharBuffer _EMPTY_CHAR_BUFFER = CharBuffer.allocate(0);
 
 	private final boolean _autoFlush;
 	private final CharsetEncoder _charsetEncoder;
 	private final String _charsetName;
-	private final char[] _inputArray = new char[1];
-	private final CharBuffer _inputCharBuffer = CharBuffer.wrap(_inputArray);
+	private final CharBuffer _inputCharBuffer = CharBuffer.allocate(2);
+	private boolean _isOpen = true;
 	private final ByteBuffer _outputByteBuffer;
 	private final OutputStream _outputStream;
 

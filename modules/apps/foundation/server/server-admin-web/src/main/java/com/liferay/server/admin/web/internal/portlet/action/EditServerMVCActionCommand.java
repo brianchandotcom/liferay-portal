@@ -43,6 +43,9 @@ import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.messaging.MessageListenerException;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.ResourcePermission;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.scripting.Scripting;
@@ -58,12 +61,16 @@ import com.liferay.portal.kernel.security.membershippolicy.SiteMembershipPolicy;
 import com.liferay.portal.kernel.security.membershippolicy.SiteMembershipPolicyFactory;
 import com.liferay.portal.kernel.security.membershippolicy.UserGroupMembershipPolicy;
 import com.liferay.portal.kernel.security.membershippolicy.UserGroupMembershipPolicyFactory;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceComponentLocalService;
 import com.liferay.portal.kernel.servlet.DirectServletRegistry;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.InstancePool;
@@ -96,6 +103,7 @@ import java.io.Serializable;
 
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
@@ -232,8 +240,58 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 		else if (cmd.equals("verifyPluginTables")) {
 			verifyPluginTables();
 		}
+		else if (cmd.equals("verifyRolesPermissions")) {
+			verifyRolesPermissions();
+		}
 
 		sendRedirect(actionRequest, actionResponse, redirect);
+	}
+
+	public void verifyRolesPermissions() throws Exception {
+		long[] companyIds = PortalInstances.getCompanyIdsBySQL();
+
+		for (long companyId : companyIds) {
+			_roleLocalService.checkSystemRoles(companyId);
+
+			List<Role> roles = _roleLocalService.getRoles(companyId);
+
+			for (Role role : roles) {
+				List<ResourcePermission> resourcePermissions =
+					_resourcePermissionLocalService.getRoleResourcePermissions(
+						role.getRoleId());
+
+				for (ResourcePermission resourcePermission :
+					resourcePermissions) {
+
+					int scope = resourcePermission.getScope();
+
+					if (scope == ResourceConstants.SCOPE_INDIVIDUAL) {
+						continue;
+					}
+
+					if (resourcePermission.hasActionId(
+							ActionKeys.ACCESS_IN_CONTROL_PANEL)) {
+
+						String name = resourcePermission.getName();
+						String primKey = resourcePermission.getPrimKey();
+
+						String[] groupIds = new String[0];
+
+						if (scope == ResourceConstants.SCOPE_GROUP) {
+							groupIds = ArrayUtil.append(groupIds, primKey);
+						}
+
+						_resourcePermissionLocalService.
+							updateViewControlPanelPermission(
+								role, name, scope, groupIds);
+
+						_resourcePermissionLocalService.
+							updateViewRootResourcePermission(
+								role, name, scope, groupIds);
+					}
+				}
+			}
+		}
 	}
 
 	protected void addLogLevel(ActionRequest actionRequest) throws Exception {
@@ -860,6 +918,12 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private PortalUUID _portalUUID;
+
+	@Reference
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Reference
+	private RoleLocalService _roleLocalService;
 
 	@Reference
 	private RoleMembershipPolicyFactory _roleMembershipPolicyFactory;

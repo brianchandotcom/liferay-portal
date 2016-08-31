@@ -1,0 +1,24 @@
+{
+	"author": "Nathan Cavanaugh <nathan.cavanaugh@liferay.com> (https://github.com/natecavanaugh)",
+	"bugs": {
+		"url": "https://issues.liferay.com/"
+	},
+	"dependencies": {
+		"gulp": "^3.8.10",
+		"liferay-theme-deps-7.0": "*",
+		"liferay-theme-tasks": "*"
+	},
+	"keywords": [
+		"liferay-theme"
+	],
+	"license": "LGPL",
+	"liferayTheme": {
+		"baseTheme": "styled",
+		"rubySass": false,
+		"version": "7.0"
+	},
+	"main": "package.json",
+	"name": "porygon-theme",
+	"repository": "liferay/liferay-portal",
+	"version": "1.0.4"
+}

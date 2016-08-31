@@ -1,0 +1,7 @@
+.user-icon-porygon {
+	background: $brand-bg-color-1;
+
+	.lexicon-icon {
+		@include size(20px, 20px);
+	}
+}

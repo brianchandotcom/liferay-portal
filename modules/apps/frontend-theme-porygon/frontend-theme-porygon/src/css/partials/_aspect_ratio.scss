@@ -1,0 +1,15 @@
+.aspect-ratio-9-to-16 {
+	padding-bottom: 56.25%;
+
+	@include sm {
+		padding-bottom: 112.5%;
+	}
+}
+
+.aspect-ratio-21-to-9 {
+	padding-bottom: 56.25%;
+
+	@include media-query($breakpoint_tablet, null) {
+		padding-bottom: 23.33%;
+	}
+}

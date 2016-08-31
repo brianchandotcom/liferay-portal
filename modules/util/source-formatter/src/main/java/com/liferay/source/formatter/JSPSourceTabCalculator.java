@@ -44,8 +44,7 @@ public class JSPSourceTabCalculator {
 		String originalContent = content;
 
 		while (true) {
-			String newContent = _calculateTabs(
-				fileName, content, originalContent);
+			String newContent = _calculateTabs(content, originalContent);
 
 			if (newContent.equals(content) ||
 				newContent.equals(originalContent)) {
@@ -108,8 +107,7 @@ public class JSPSourceTabCalculator {
 		return level;
 	}
 
-	private String _calculateTabs(
-			String fileName, String content, String originalContent)
+	private String _calculateTabs(String content, String originalContent)
 		throws Exception {
 
 		List<JSPLine> jspLines = _getJSPLines(content);
@@ -191,58 +189,8 @@ public class JSPSourceTabCalculator {
 					actualCloseTagTabCount - expectedTabCount);
 			}
 
-			if (line.matches("\t*<%!?")) {
-				content = _checkTabsJavaSourceBlock(
-					fileName, content, expectedTabCount,
-					jspLine.getLineCount() + 1,
-					closeTagJSPLine.getLineCount() - 1, jspLine.getTabLevel());
-			}
-
 			closeTagJSPLine.setClosed(true);
 		}
-
-		return content;
-	}
-
-	private String _checkTabsJavaSourceBlock(
-			String fileName, String content, int tabCount, int startLine,
-			int endLine, int tabLevel)
-		throws Exception {
-
-		int minLeadingTabCount = -1;
-
-		for (int i = startLine; i <= endLine; i++) {
-			String line = _jspSourceProcessor.getLine(content, i);
-
-			if (Validator.isNull(line)) {
-				continue;
-			}
-
-			int leadingTabCount = _jspSourceProcessor.getLeadingTabCount(line);
-
-			if (minLeadingTabCount == -1) {
-				minLeadingTabCount = leadingTabCount;
-			}
-			else {
-				minLeadingTabCount = Math.min(
-					minLeadingTabCount, leadingTabCount);
-			}
-		}
-
-		if (tabCount != minLeadingTabCount) {
-			return _fixTabs(
-				content, startLine, endLine, minLeadingTabCount - tabCount);
-		}
-
-		int startPos = _jspSourceProcessor.getLineStartPos(content, startLine);
-		int endPos = _jspSourceProcessor.getLineStartPos(content, endLine + 1);
-
-		JavaSourceTabCalculator javaSourceTabCalculator =
-			new JavaSourceTabCalculator();
-
-		javaSourceTabCalculator.calculateTabs(
-			fileName, content.substring(startPos, endPos), startLine - 1,
-			tabLevel, _jspSourceProcessor);
 
 		return content;
 	}
@@ -365,7 +313,7 @@ public class JSPSourceTabCalculator {
 	}
 
 	private List<JSPLine> _getJSPLines(String content) throws Exception {
-		List<JSPLine> jspLines = new ArrayList();
+		List<JSPLine> jspLines = new ArrayList<>();
 
 		try (UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(new UnsyncStringReader(content))) {

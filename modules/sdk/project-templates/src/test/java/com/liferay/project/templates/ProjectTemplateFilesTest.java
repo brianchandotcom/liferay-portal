@@ -23,11 +23,9 @@ import java.io.IOException;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.DirectoryStream;
-import java.nio.file.DirectoryStream.Filter;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
@@ -48,28 +46,8 @@ public class ProjectTemplateFilesTest {
 	public static void setUpClass() throws IOException {
 		_projectTemplateDirPaths = new HashSet<>();
 
-		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
-				Paths.get("../"),
-				new Filter<Path>() {
-
-					@Override
-					public boolean accept(Path path) throws IOException {
-						if (!Files.isDirectory(path)) {
-							return false;
-						}
-
-						Path fileNamePath = path.getFileName();
-
-						String fileName = fileNamePath.toString();
-
-						if (fileName.startsWith("project-templates-")) {
-							return true;
-						}
-
-						return false;
-					}
-
-				})) {
+		try (DirectoryStream<Path> directoryStream =
+				FileTestUtil.getProjectTemplatesDirectoryStream()) {
 
 			for (Path path : directoryStream) {
 				_projectTemplateDirPaths.add(path);

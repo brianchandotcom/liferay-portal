@@ -21,13 +21,19 @@ import java.io.InputStreamReader;
 import java.io.RandomAccessFile;
 
 import java.nio.charset.StandardCharsets;
+import java.nio.file.DirectoryStream;
+import java.nio.file.DirectoryStream.Filter;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
  * @author Andrea Di Giorgi
  */
 public class FileTestUtil {
+
+	public static final String PROJECT_TEMPLATE_DIR_PREFIX =
+		"project-templates-";
 
 	public static boolean endsWithEmptyLine(Path path) throws IOException {
 		try (RandomAccessFile randomAccessFile = new RandomAccessFile(
@@ -59,6 +65,33 @@ public class FileTestUtil {
 		}
 
 		return fileName.substring(pos + 1);
+	}
+
+	public static DirectoryStream<Path> getProjectTemplatesDirectoryStream()
+		throws IOException {
+
+		return Files.newDirectoryStream(
+			Paths.get("../"),
+			new Filter<Path>() {
+
+				@Override
+				public boolean accept(Path path) throws IOException {
+					if (!Files.isDirectory(path)) {
+						return false;
+					}
+
+					Path fileNamePath = path.getFileName();
+
+					String fileName = fileNamePath.toString();
+
+					if (fileName.startsWith(PROJECT_TEMPLATE_DIR_PREFIX)) {
+						return true;
+					}
+
+					return false;
+				}
+
+			});
 	}
 
 	public static String read(Path path) throws IOException {

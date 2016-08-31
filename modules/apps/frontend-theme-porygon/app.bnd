@@ -1,0 +1,13 @@
+Liferay-Releng-App-Description: Porygon theme has been designed to get you started with your own digital magazine. Porygon is a modern and visually attractive theme that will bring new life to your already amazing contents.<br /><br />This theme includes some new thrilling features such as:<ul><li>Different ways to show the content preview: you can choose from a variety of cards, lists and carousel setups to mold your layout.</li><li>Matching support for blogs and contents. You can use both blog entries or structured contents independently and they will all blend together in your site.</li><li>16 article examples with big photos and realistic contents.</li><li>A Portlet Decorator that you can use to showcase a specific content or application.</li><li>A subtle and minimalistic search integration.</li></ul>
+Liferay-Releng-App-Title: ${liferay.releng.app.title.prefix} Porygon
+Liferay-Releng-Bundle: false
+Liferay-Releng-Category: Themes
+Liferay-Releng-Demo-Url:
+Liferay-Releng-Deprecated: false
+Liferay-Releng-Labs: false
+Liferay-Releng-Marketplace: true
+Liferay-Releng-Portal-Required: true
+Liferay-Releng-Public: ${liferay.releng.public}
+Liferay-Releng-Restart-Required: false
+Liferay-Releng-Support-Url: http://www.liferay.com
+Liferay-Releng-Supported: ${liferay.releng.supported}

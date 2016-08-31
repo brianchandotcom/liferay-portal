@@ -130,7 +130,7 @@ public class FriendlyURLNormalizerImpl implements FriendlyURLNormalizer {
 					charsetEncoder = CharsetEncoderUtil.getCharsetEncoder(
 						StringPool.UTF8);
 
-					byteBuffer = ByteBuffer.allocate(8);
+					byteBuffer = ByteBuffer.allocate(4);
 					charBuffer = CharBuffer.allocate(2);
 				}
 				else {
@@ -157,7 +157,7 @@ public class FriendlyURLNormalizerImpl implements FriendlyURLNormalizer {
 				charsetEncoder.encode(
 					charBuffer, byteBuffer, ((friendlyURL.length() - 1) == i));
 
-				byteBuffer.limit(8 - byteBuffer.remaining());
+				byteBuffer.limit(4 - byteBuffer.remaining());
 
 				byteBuffer.position(0);
 

@@ -2440,13 +2440,9 @@
 			<var name="portlet" value="Site Memberships" />
 		</execute>
 
-		<execute macro="Site#assignRoleCP">
+		<execute macro="Site#assignSiteRoleCP">
+			<var name="resourceName" value="${userFirstName1} ${userLastName1}" />
 			<var name="roleName" value="${roleName}" />
-			<var name="userEmailAddress" value="${userEmailAddress1}" />
-			<var name="userFirstName" value="${userFirstName1}" />
-			<var name="userLastName" value="${userLastName1}" />
-			<var name="userMiddleName" value="${userMiddleName1}" />
-			<var name="userScreenName" value="${userScreenName1}" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSite">
@@ -2457,13 +2453,9 @@
 			<var name="portlet" value="Site Memberships" />
 		</execute>
 
-		<execute macro="Site#assignRoleCP">
+		<execute macro="Site#assignSiteRoleCP">
+			<var name="resourceName" value="${userFirstName2} ${userLastName2}" />
 			<var name="roleName" value="${roleName}" />
-			<var name="userEmailAddress" value="${userEmailAddress2}" />
-			<var name="userFirstName" value="${userFirstName2}" />
-			<var name="userLastName" value="${userLastName2}" />
-			<var name="userMiddleName" value="${userMiddleName2}" />
-			<var name="userScreenName" value="${userScreenName2}" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">

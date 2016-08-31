@@ -302,10 +302,9 @@
 			<var name="portlet" value="Site Memberships" />
 		</execute>
 
-		<execute macro="Site#assignRoleCP">
-			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
-			<var name="userMiddleName" value="${userMiddleName}" />
-			<var name="userScreenName" value="${userScreenName}" />
+		<execute macro="Site#assignSiteRoleCP">
+			<var name="resourceName" value="${userFirstName} ${userLastName}" />
+			<var name="roleName" value="${roleName}" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
@@ -667,10 +666,9 @@
 			<var name="portlet" value="Site Memberships" />
 		</execute>
 
-		<execute macro="Site#assignRoleCP">
-			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
-			<var name="userMiddleName" value="${userMiddleName}" />
-			<var name="userScreenName" value="${userScreenName}" />
+		<execute macro="Site#assignSiteRoleCP">
+			<var name="resourceName" value="${userFirstName} ${userLastName}" />
+			<var name="roleName" value="${roleName}" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
@@ -1033,10 +1031,9 @@
 			<var name="portlet" value="Site Memberships" />
 		</execute>
 
-		<execute macro="Site#assignRoleCP">
-			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
-			<var name="userMiddleName" value="${userMiddleName}" />
-			<var name="userScreenName" value="${userScreenName}" />
+		<execute macro="Site#assignSiteRoleCP">
+			<var name="resourceName" value="${userFirstName} ${userLastName}" />
+			<var name="roleName" value="${roleName}" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
@@ -1396,10 +1393,9 @@
 			<var name="portlet" value="Site Memberships" />
 		</execute>
 
-		<execute macro="Site#assignRoleCP">
-			<var name="userLoginEmailAddress" value="${adminEmailAddress}" />
-			<var name="userMiddleName" value="${userMiddleName}" />
-			<var name="userScreenName" value="${userScreenName}" />
+		<execute macro="Site#assignSiteRoleCP">
+			<var name="resourceName" value="${userFirstName} ${userLastName}" />
+			<var name="roleName" value="${roleName" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">

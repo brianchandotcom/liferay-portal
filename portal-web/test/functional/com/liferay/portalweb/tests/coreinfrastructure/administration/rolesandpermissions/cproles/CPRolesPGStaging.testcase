@@ -256,11 +256,9 @@
 			<var name="portlet" value="Site Memberships" />
 		</execute>
 
-		<execute macro="Site#assignRoleCP">
+		<execute macro="Site#assignSiteRoleCP">
+			<var name="resourceName" value="userfnpu userlnpu" />
 			<var name="roleName" value="Power User Name" />
-			<var name="userFirstName" value="userfnpu" />
-			<var name="userLastName" value="userlnpu" />
-			<var name="userScreenName" value="usersnpu" />
 		</execute>
 
 		<execute macro="Navigator#openSiteURL">

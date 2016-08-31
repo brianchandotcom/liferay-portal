@@ -886,12 +886,13 @@
 			<var name="userScreenName" value="test1test" />
 		</execute>
 
-		<execute macro="Site#assignRoleCP">
+		<execute macro="ProductMenu#gotoSitesMembers">
+			<var name="portlet" value="Site Memberships" />
+		</execute>
+
+		<execute macro="Site#assignSiteRoleCP">
+			<var name="resourceName" value="test1 test1" />
 			<var name="roleName" value="Site Administrator" />
-			<var name="siteName" value="Liferay" />
-			<var name="userFirstName" value="test1" />
-			<var name="userLastName" value="test1" />
-			<var name="userScreenName" value="test1test" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">

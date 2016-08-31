@@ -49,8 +49,7 @@ public class CSSBuilderInvoker {
 		args.add(
 			"sass.generate.source.map=" + cssBuilderArgs.isGenerateSourceMap());
 		args.add(
-			"sass.output.dir=" +
-				_getAbsolutePath(baseDir, cssBuilderArgs.getOutputDirName()));
+			"sass.output.dir=" + cssBuilderArgs.getOutputDirName());
 		args.add(
 			"sass.portal.common.path=" +
 				_getAbsolutePath(

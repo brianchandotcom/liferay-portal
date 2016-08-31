@@ -135,8 +135,7 @@ public class Archetyper {
 	}
 
 	private ArchetypeGenerator _getArchetypeGenerator() throws Exception {
-		ArchetypeGenerator archetypeGenerator =
-			new ArchetyperArchetypeGenerator();
+		ArchetypeGenerator archetypeGenerator = new DefaultArchetypeGenerator();
 
 		ArchetypeArtifactManager archetypeArtifactManager =
 			_getArchetypeArtifactManager();
@@ -225,8 +224,6 @@ public class Archetyper {
 		}
 	}
 
-	private static final String _TEMP_ARCHETYPE_PREFIX = "temp-archetype";
-
 	private static final Field _loggerField;
 
 	static {
@@ -263,7 +260,7 @@ public class Archetyper {
 				List<ArtifactRepository> repositories)
 			throws UnknownArchetype {
 
-			Path archetypePath = null;
+			File archetypeFile = null;
 
 			String archetypeFileName = artifactId + ".jar";
 
@@ -273,7 +270,9 @@ public class Archetyper {
 				if (file.isDirectory()) {
 					Path jarDirPath = file.toPath();
 
-					archetypePath = jarDirPath.resolve(archetypeFileName);
+					Path archetypePath = jarDirPath.resolve(archetypeFileName);
+
+					archetypeFile = archetypePath.toFile();
 				}
 				else {
 					try (JarFile jarFile = new JarFile(file)) {
@@ -292,12 +291,16 @@ public class Archetyper {
 								continue;
 							}
 
-							archetypePath = Files.createTempFile(
-								_TEMP_ARCHETYPE_PREFIX, null);
+							Path archetypePath = Files.createTempFile(
+								"temp-archetype", null);
 
 							Files.copy(
 								jarFile.getInputStream(jarEntry),
 								archetypePath);
+
+							archetypeFile = archetypePath.toFile();
+
+							archetypeFile.deleteOnExit();
 
 							break;
 						}
@@ -307,11 +310,7 @@ public class Archetyper {
 			catch (Exception e) {
 			}
 
-			if (archetypePath == null) {
-				return null;
-			}
-
-			return archetypePath.toFile();
+			return archetypeFile;
 		}
 
 		@Override
@@ -329,28 +328,6 @@ public class Archetyper {
 			}
 
 			return new URLClassLoader(urls, null);
-		}
-
-	}
-
-	private static class ArchetyperArchetypeGenerator
-		extends DefaultArchetypeGenerator {
-
-		@Override
-		public void generateArchetype(
-			ArchetypeGenerationRequest archetypeGenerationRequest,
-			File archetypeFile,
-			ArchetypeGenerationResult archetypeGenerationResult) {
-
-			super.generateArchetype(
-				archetypeGenerationRequest, archetypeFile,
-				archetypeGenerationResult);
-
-			String fileName = archetypeFile.getName();
-
-			if (fileName.startsWith(_TEMP_ARCHETYPE_PREFIX)) {
-				archetypeFile.delete();
-			}
 		}
 
 	}

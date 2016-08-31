@@ -18,4 +18,6 @@ processResources {
 			return line
 		}
 	}
+
+	rename "gitignore", ".gitignore"
 }

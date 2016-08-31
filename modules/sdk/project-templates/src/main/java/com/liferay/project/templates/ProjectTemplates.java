@@ -187,10 +187,6 @@ public class ProjectTemplates {
 		}
 
 		Files.delete(templateDirPath.resolve("pom.xml"));
-
-		Files.move(
-			templateDirPath.resolve("gitignore"),
-			templateDirPath.resolve(".gitignore"));
 	}
 
 	private static void _printHelp(JCommander jCommander) throws Exception {

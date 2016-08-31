@@ -29,7 +29,7 @@
 			<parameters>
 				<parameter>
 					<name>baseDir</name>
-					<type>java$io$File</type>
+					<type>java.io.File</type>
 					<required>false</required>
 					<editable>false</editable>
 					<description/>
@@ -92,11 +92,11 @@
 				</parameter>
 			</parameters>
 			<configuration>
-				<baseDir default-value="${project.basedir}" implementation="java$io$File" />
+				<baseDir default-value="${project.basedir}" implementation="java.io.File" />
 			</configuration>
 			<requirements>
 				<requirement>
-					<role>org$sonatype$plexus$build$incremental$BuildContext</role>
+					<role>org.sonatype.plexus.build.incremental.BuildContext</role>
 					<field-name>buildContext</field-name>
 				</requirement>
 			</requirements>

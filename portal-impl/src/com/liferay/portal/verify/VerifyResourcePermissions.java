@@ -116,7 +116,9 @@ public class VerifyResourcePermissions extends VerifyProcess {
 			long ownerId, int cur, int total)
 		throws Exception {
 
-		if (_log.isInfoEnabled() && ((cur % 100) == 0)) {
+		if (_log.isInfoEnabled() && (((cur + 1) % 100) == 0)) {
+			cur++;
+
 			_log.info(
 				"Processed " + cur + " of " + total + " resource permissions " +
 					"for company = " + companyId + " and model " + modelName);

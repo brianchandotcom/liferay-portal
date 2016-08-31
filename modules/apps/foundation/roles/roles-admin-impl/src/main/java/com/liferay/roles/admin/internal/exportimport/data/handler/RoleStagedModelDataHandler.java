@@ -35,8 +35,11 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.ResourceTypePermission;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionConversionFilter;
 import com.liferay.portal.kernel.security.permission.PermissionConverterUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceBlockLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
@@ -334,19 +337,26 @@ public class RoleStagedModelDataHandler
 		}
 		else if (scope == ResourceConstants.SCOPE_GROUP) {
 			long groupId = portletDataContext.getCompanyGroupId();
+			long primaryKey = groupId;
 
 			long sourceGroupId = GetterUtil.getLong(permission.getPrimKey());
 
 			if (sourceGroupId ==
 					portletDataContext.getSourceUserPersonalSiteGroupId()) {
 
-				groupId = portletDataContext.getUserPersonalSiteGroupId();
+				PermissionChecker permissionChecker =
+					PermissionThreadLocal.getPermissionChecker();
+
+				User currentUser = permissionChecker.getUser();
+
+				groupId = currentUser.getGroupId();
+				primaryKey = portletDataContext.getUserPersonalSiteGroupId();
 			}
 
 			_resourcePermissionService.addResourcePermission(
 				groupId, portletDataContext.getCompanyId(),
 				permission.getName(), ResourceConstants.SCOPE_GROUP,
-				String.valueOf(groupId), importedRole.getRoleId(),
+				String.valueOf(primaryKey), importedRole.getRoleId(),
 				permission.getActionId());
 		}
 		else if (scope == ResourceConstants.SCOPE_GROUP_TEMPLATE) {

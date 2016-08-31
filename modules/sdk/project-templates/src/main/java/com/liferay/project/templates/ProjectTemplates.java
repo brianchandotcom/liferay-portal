@@ -157,8 +157,7 @@ public class ProjectTemplates {
 		Archetyper archetyper = new Archetyper();
 
 		ArchetypeGenerationResult archetypeGenerationResult =
-			archetyper.generateProject(
-				projectTemplatesArgs, destinationDir.getPath());
+			archetyper.generateProject(projectTemplatesArgs, destinationDir);
 
 		if (archetypeGenerationResult != null) {
 			Exception cause = archetypeGenerationResult.getCause();

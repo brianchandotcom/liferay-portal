@@ -70,7 +70,7 @@ public class Archetyper {
 	}
 
 	public ArchetypeGenerationResult generateProject(
-			ProjectTemplatesArgs projectTemplatesArgs, String outputDirectory)
+			ProjectTemplatesArgs projectTemplatesArgs, File destinationDir)
 		throws Exception {
 
 		ArchetypeGenerationRequest archetypeGenerationRequest =
@@ -99,7 +99,7 @@ public class Archetyper {
 		archetypeGenerationRequest.setGroupId(packageName);
 		archetypeGenerationRequest.setInteractiveMode(false);
 		archetypeGenerationRequest.setVersion("1.0.0");
-		archetypeGenerationRequest.setOutputDirectory(outputDirectory);
+		archetypeGenerationRequest.setOutputDirectory(destinationDir.getPath());
 		archetypeGenerationRequest.setPackage(packageName);
 
 		Properties additionalProperties = new Properties();

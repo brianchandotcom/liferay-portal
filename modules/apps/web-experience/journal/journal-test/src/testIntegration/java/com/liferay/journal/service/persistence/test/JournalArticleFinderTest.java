@@ -232,7 +232,7 @@ public class JournalArticleFinderTest {
 				JournalArticleConstants.CLASSNAME_ID_DEFAULT, new Date(),
 				queryDefinition);
 
-		Assert.assertEquals(1, articles.size());
+		Assert.assertEquals(4, articles.size());
 
 		JournalArticle article = articles.get(0);
 
@@ -260,7 +260,7 @@ public class JournalArticleFinderTest {
 			JournalArticleConstants.CLASSNAME_ID_DEFAULT, new Date(),
 			queryDefinition);
 
-		Assert.assertEquals(0, articles.size());
+		Assert.assertEquals(3, articles.size());
 	}
 
 	@Test

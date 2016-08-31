@@ -101,7 +101,7 @@ public class ProjectTemplates {
 		return templates.toArray(new String[templates.size()]);
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		ProjectTemplatesArgs projectTemplatesArgs = new ProjectTemplatesArgs();
 
 		JCommander jCommander = new JCommander(projectTemplatesArgs);
@@ -131,19 +131,7 @@ public class ProjectTemplates {
 		catch (ParameterException pe) {
 			System.err.println(pe.getMessage());
 
-			try {
-				_printHelp(jCommander);
-			}
-			catch (Exception e) {
-				e.printStackTrace();
-			}
-
-			System.exit(1);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-
-			System.exit(1);
+			_printHelp(jCommander);
 		}
 	}
 

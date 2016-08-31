@@ -701,7 +701,6 @@ public class ProjectTemplatesTest {
 	public void testListTemplates() throws Exception {
 		String[] templates = ProjectTemplates.getTemplates();
 
-		Assert.assertNotNull(templates);
 		Assert.assertTrue(templates.length == 18);
 	}
 

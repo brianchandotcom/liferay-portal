@@ -171,10 +171,8 @@ public class FriendlyURLNormalizerImpl implements FriendlyURLNormalizer {
 					byte b = byteBuffer.get();
 
 					sb.append(CharPool.PERCENT);
-
-					sb.append(_forDigit((b >> 4) & 0xF));
-
-					sb.append(_forDigit(b & 0xF));
+					sb.append(_HEX_DIGITS[(b >> 4) & 0x0F]);
+					sb.append(_HEX_DIGITS[b & 0x0F]);
 				}
 
 				modified = true;
@@ -242,17 +240,10 @@ public class FriendlyURLNormalizerImpl implements FriendlyURLNormalizer {
 		return friendlyURL;
 	}
 
-	private char _forDigit(int digit) {
-		if ((digit < 0) || (16 <= digit)) {
-			return '\0';
-		}
-
-		if (digit < 10) {
-			return (char)(CharPool.NUMBER_0 + digit);
-		}
-
-		return (char)(CharPool.UPPER_CASE_A - 10 + digit);
-	}
+	private static final char[] _HEX_DIGITS = {
+		'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D',
+		'E', 'F'
+	};
 
 	private static final char[] _REPLACE_CHARS;
 

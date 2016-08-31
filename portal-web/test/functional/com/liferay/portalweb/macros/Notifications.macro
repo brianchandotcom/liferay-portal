@@ -171,12 +171,6 @@
 		<execute function="AssertElementNotPresent" locator1="Button#IGNORE" />
 	</command>
 
-	<command name="viewNotification">
-		<var name="key_contentBody" value="${contentBody}" />
-
-		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATIONS_CONTENT" value1="${contentBody}" />
-	</command>
-
 	<command name="viewRequest">
 		<execute function="Click" locator1="Notifications#REQUESTS_LIST_TAB" />
 

@@ -313,7 +313,7 @@ public class JSPSourceTabCalculator {
 	}
 
 	private List<JSPLine> _getJSPLines(String content) throws Exception {
-		List<JSPLine> jspLines = new ArrayList();
+		List<JSPLine> jspLines = new ArrayList<>();
 
 		try (UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(new UnsyncStringReader(content))) {

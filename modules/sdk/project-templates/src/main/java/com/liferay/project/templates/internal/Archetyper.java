@@ -65,16 +65,9 @@ import org.codehaus.plexus.velocity.DefaultVelocityComponent;
  */
 public class Archetyper {
 
-	public Archetyper() {
-		_logger = new ArchetyperLogger();
-	}
-
 	public ArchetypeGenerationResult generateProject(
 			ProjectTemplatesArgs projectTemplatesArgs, File destinationDir)
 		throws Exception {
-
-		ArchetypeGenerationRequest archetypeGenerationRequest =
-			new ArchetypeGenerationRequest();
 
 		String artifactId = projectTemplatesArgs.getName();
 		String className = projectTemplatesArgs.getClassName();
@@ -82,11 +75,18 @@ public class Archetyper {
 			projectTemplatesArgs.getHostBundleSymbolicName();
 		String hostBundleVersion = projectTemplatesArgs.getHostBundleVersion();
 		String packageName = projectTemplatesArgs.getPackageName();
-		String projectType =
-			projectTemplatesArgs.getWorkspaceDir() != null ?
-				"workspace" : "standalone";
+
+		String projectType = "standalone";
+
+		if (projectTemplatesArgs.getWorkspaceDir() != null) {
+			projectType = "workspace";
+		}
+
 		String service = projectTemplatesArgs.getService();
 		String templateName = projectTemplatesArgs.getTemplate();
+
+		ArchetypeGenerationRequest archetypeGenerationRequest =
+			new ArchetypeGenerationRequest();
 
 		archetypeGenerationRequest.setArchetypeArtifactId(
 			"com.liferay.project.templates." + templateName);
@@ -95,53 +95,31 @@ public class Archetyper {
 		// archetypeVersion is ignored
 
 		archetypeGenerationRequest.setArchetypeVersion("0");
+
 		archetypeGenerationRequest.setArtifactId(artifactId);
 		archetypeGenerationRequest.setGroupId(packageName);
 		archetypeGenerationRequest.setInteractiveMode(false);
-		archetypeGenerationRequest.setVersion("1.0.0");
 		archetypeGenerationRequest.setOutputDirectory(destinationDir.getPath());
 		archetypeGenerationRequest.setPackage(packageName);
 
-		Properties additionalProperties = new Properties();
+		Properties properties = new Properties();
 
-		_safePut(additionalProperties, "className", className);
-		_safePut(
-			additionalProperties, "hostBundleSymbolicName",
-			hostBundleSymbolicName);
-		_safePut(additionalProperties, "hostBundleVersion", hostBundleVersion);
-		_safePut(additionalProperties, "package", packageName);
-		_safePut(additionalProperties, "projectType", projectType);
-		_safePut(additionalProperties, "serviceClass", service);
+		_setProperty(properties, "className", className);
+		_setProperty(
+			properties, "hostBundleSymbolicName", hostBundleSymbolicName);
+		_setProperty(properties, "hostBundleVersion", hostBundleVersion);
+		_setProperty(properties, "package", packageName);
+		_setProperty(properties, "projectType", projectType);
+		_setProperty(properties, "serviceClass", service);
 
-		archetypeGenerationRequest.setProperties(additionalProperties);
+		archetypeGenerationRequest.setProperties(properties);
 
-		ArchetypeGenerationResult result =
-			_getArchetypeManager().generateProjectFromArchetype(
-				archetypeGenerationRequest);
+		archetypeGenerationRequest.setVersion("1.0.0");
 
-		return result;
-	}
+		ArchetypeManager archetypeManager = _getArchetypeManager();
 
-	private static ClassLoader _createArchetypeJarLoader(File archetypeFile) {
-		URL[] urls = new URL[1];
-
-		URI uri = archetypeFile.toURI();
-
-		try {
-			urls[0] = uri.toURL();
-		}
-		catch (MalformedURLException murle) {
-		}
-
-		return new URLClassLoader(urls, null);
-	}
-
-	private static void _safePut(
-		Properties properties, String name, String value) {
-
-		if (Validator.isNotNull(value)) {
-			properties.put(name, value);
-		}
+		return archetypeManager.generateProjectFromArchetype(
+			archetypeGenerationRequest);
 	}
 
 	private ArchetypeArtifactManager _getArchetypeArtifactManager()
@@ -241,6 +219,14 @@ public class Archetyper {
 		return filesetArchetypeGenerator;
 	}
 
+	private void _setProperty(
+		Properties properties, String name, String value) {
+
+		if (Validator.isNotNull(value)) {
+			properties.setProperty(name, value);
+		}
+	}
+
 	private static final String _TEMP_ARCHETYPE_PREFIX = "temp-archetype";
 
 	private static final Field _loggerField;
@@ -256,7 +242,7 @@ public class Archetyper {
 	}
 
 	private ArchetypeArtifactManager _archetypeArtifactManager;
-	private final Logger _logger;
+	private final Logger _logger = new ArchetyperLogger();
 
 	private static class ArchetyperArchetypeArtifactManager
 		extends DefaultArchetypeArtifactManager {
@@ -328,7 +314,17 @@ public class Archetyper {
 		public ClassLoader getArchetypeJarLoader(File archetypeFile)
 			throws UnknownArchetype {
 
-			return _createArchetypeJarLoader(archetypeFile);
+			URL[] urls = new URL[1];
+
+			URI uri = archetypeFile.toURI();
+
+			try {
+				urls[0] = uri.toURL();
+			}
+			catch (MalformedURLException murle) {
+			}
+
+			return new URLClassLoader(urls, null);
 		}
 
 	}
@@ -338,12 +334,17 @@ public class Archetyper {
 
 		@Override
 		public void generateArchetype(
-			ArchetypeGenerationRequest request, File archetypeFile,
-			ArchetypeGenerationResult result) {
+			ArchetypeGenerationRequest archetypeGenerationRequest,
+			File archetypeFile,
+			ArchetypeGenerationResult archetypeGenerationResult) {
 
-			super.generateArchetype(request, archetypeFile, result);
+			super.generateArchetype(
+				archetypeGenerationRequest, archetypeFile,
+				archetypeGenerationResult);
 
-			if (archetypeFile.getName().startsWith(_TEMP_ARCHETYPE_PREFIX)) {
+			String fileName = archetypeFile.getName();
+
+			if (fileName.startsWith(_TEMP_ARCHETYPE_PREFIX)) {
 				archetypeFile.delete();
 			}
 		}

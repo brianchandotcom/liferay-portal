@@ -14,6 +14,8 @@
 
 package com.liferay.exportimport.messaging;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
@@ -24,6 +26,7 @@ import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageStatus;
+import com.liferay.portal.kernel.messaging.sender.SingleDestinationMessageSenderFactory;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -51,12 +54,13 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = LayoutsLocalPublisherMessageListener.class
 )
+@ProviderType
 public class LayoutsLocalPublisherMessageListener
 	extends BasePublisherMessageListener {
 
 	@Activate
 	protected void activate(ComponentContext componentContext) {
-		initialize(componentContext);
+		initialize(componentContext, _singleDestinationMessageSenderFactory);
 	}
 
 	@Deactivate
@@ -121,15 +125,6 @@ public class LayoutsLocalPublisherMessageListener
 	protected void setDestination(Destination destination) {
 	}
 
-	@Reference(unbind = "-")
-	protected void setExportImportConfigurationLocalService(
-		ExportImportConfigurationLocalService
-			exportImportConfigurationLocalService) {
-
-		_exportImportConfigurationLocalService =
-			exportImportConfigurationLocalService;
-	}
-
 	@Reference(
 		target = "(&(release.bundle.symbolic.name=com.liferay.exportimport.service)(release.schema.version=1.0.0))",
 		unbind = "-"
@@ -140,7 +135,12 @@ public class LayoutsLocalPublisherMessageListener
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutsLocalPublisherMessageListener.class);
 
+	@Reference
 	private ExportImportConfigurationLocalService
 		_exportImportConfigurationLocalService;
+
+	@Reference
+	private SingleDestinationMessageSenderFactory
+		_singleDestinationMessageSenderFactory;
 
 }

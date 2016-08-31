@@ -14,6 +14,8 @@
 
 package com.liferay.exportimport.messaging;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
@@ -24,6 +26,7 @@ import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageStatus;
+import com.liferay.portal.kernel.messaging.sender.SingleDestinationMessageSenderFactory;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -53,12 +56,13 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = LayoutsRemotePublisherMessageListener.class
 )
+@ProviderType
 public class LayoutsRemotePublisherMessageListener
 	extends BasePublisherMessageListener {
 
 	@Activate
 	protected void activate(ComponentContext componentContext) {
-		initialize(componentContext);
+		initialize(componentContext, _singleDestinationMessageSenderFactory);
 	}
 
 	@Deactivate
@@ -137,15 +141,6 @@ public class LayoutsRemotePublisherMessageListener
 	protected void setDestination(Destination destination) {
 	}
 
-	@Reference(unbind = "-")
-	protected void setExportImportConfigurationLocalService(
-		ExportImportConfigurationLocalService
-			exportImportConfigurationLocalService) {
-
-		_exportImportConfigurationLocalService =
-			exportImportConfigurationLocalService;
-	}
-
 	@Reference(
 		target = "(&(release.bundle.symbolic.name=com.liferay.exportimport.service)(release.schema.version=1.0.0))",
 		unbind = "-"
@@ -153,16 +148,18 @@ public class LayoutsRemotePublisherMessageListener
 	protected void setRelease(Release release) {
 	}
 
-	@Reference(unbind = "-")
-	protected void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutsRemotePublisherMessageListener.class);
 
+	@Reference
 	private ExportImportConfigurationLocalService
 		_exportImportConfigurationLocalService;
+
+	@Reference
+	private SingleDestinationMessageSenderFactory
+		_singleDestinationMessageSenderFactory;
+
+	@Reference
 	private UserLocalService _userLocalService;
 
 }

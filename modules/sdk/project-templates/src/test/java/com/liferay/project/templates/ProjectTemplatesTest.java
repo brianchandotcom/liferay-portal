@@ -40,6 +40,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
+ * @author Lawrence Lee
  * @author Andrea Di Giorgi
  */
 public class ProjectTemplatesTest {

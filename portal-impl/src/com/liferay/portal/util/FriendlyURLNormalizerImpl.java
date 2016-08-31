@@ -138,9 +138,7 @@ public class FriendlyURLNormalizerImpl implements FriendlyURLNormalizer {
 					charBuffer.clear();
 				}
 
-				charBuffer.limit(1);
-
-				charBuffer.put(0, c);
+				charBuffer.put(c);
 
 				if ((Character.MIN_HIGH_SURROGATE <= c) &&
 					(c <= Character.MAX_HIGH_SURROGATE)) {
@@ -151,14 +149,14 @@ public class FriendlyURLNormalizerImpl implements FriendlyURLNormalizer {
 						if ((Character.MIN_LOW_SURROGATE <= c) &&
 							(c <= Character.MAX_LOW_SURROGATE)) {
 
-							charBuffer.limit(2);
-
-							charBuffer.put(1, c);
+							charBuffer.put(c);
 
 							i++;
 						}
 					}
 				}
+
+				charBuffer.flip();
 
 				charsetEncoder.encode(
 					charBuffer, byteBuffer, ((friendlyURL.length() - 1) == i));

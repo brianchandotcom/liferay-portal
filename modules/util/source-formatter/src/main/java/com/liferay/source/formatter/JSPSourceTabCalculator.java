@@ -44,8 +44,7 @@ public class JSPSourceTabCalculator {
 		String originalContent = content;
 
 		while (true) {
-			String newContent = _calculateTabs(
-				fileName, content, originalContent);
+			String newContent = _calculateTabs(content, originalContent);
 
 			if (newContent.equals(content) ||
 				newContent.equals(originalContent)) {
@@ -108,8 +107,7 @@ public class JSPSourceTabCalculator {
 		return level;
 	}
 
-	private String _calculateTabs(
-			String fileName, String content, String originalContent)
+	private String _calculateTabs(String content, String originalContent)
 		throws Exception {
 
 		List<JSPLine> jspLines = _getJSPLines(content);

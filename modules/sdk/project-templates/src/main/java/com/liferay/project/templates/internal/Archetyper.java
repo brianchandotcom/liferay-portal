@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.project.templates.internal.archetyper;
+package com.liferay.project.templates.internal;
 
 import aQute.lib.io.IO;
 

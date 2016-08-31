@@ -18,6 +18,7 @@ import aQute.lib.io.IO;
 
 import com.liferay.project.templates.ProjectTemplatesArgs;
 import com.liferay.project.templates.internal.util.FileUtil;
+import com.liferay.project.templates.internal.util.ReflectionUtil;
 
 import java.io.File;
 
@@ -149,7 +150,8 @@ public class Archetyper {
 			_archetypeArtifactManager =
 				new ArchetyperArchetypeArtifactManager();
 
-			_getLoggerField().set(_archetypeArtifactManager, _logger);
+			ReflectionUtil.setFieldValue(
+				_loggerField, _archetypeArtifactManager, _logger);
 		}
 
 		return _archetypeArtifactManager;
@@ -162,14 +164,14 @@ public class Archetyper {
 		ArchetypeArtifactManager archetypeArtifactManager =
 			_getArchetypeArtifactManager();
 
-		_setField(
+		ReflectionUtil.setFieldValue(
 			DefaultArchetypeGenerator.class, "archetypeArtifactManager",
 			archetypeGenerator, archetypeArtifactManager);
 
 		FilesetArchetypeGenerator filesetGenerator =
 			_getFilesetArchetypeGenerator();
 
-		_setField(
+		ReflectionUtil.setFieldValue(
 			DefaultArchetypeGenerator.class, "filesetGenerator",
 			archetypeGenerator, filesetGenerator);
 
@@ -180,23 +182,15 @@ public class Archetyper {
 		DefaultArchetypeManager archetypeManager =
 			new DefaultArchetypeManager();
 
-		_getLoggerField().set(archetypeManager, _logger);
+		ReflectionUtil.setFieldValue(_loggerField, archetypeManager, _logger);
 
 		ArchetypeGenerator archetypeGenerator = _getArchetypeGenerator();
 
-		_setField(
+		ReflectionUtil.setFieldValue(
 			DefaultArchetypeManager.class, "generator", archetypeManager,
 			archetypeGenerator);
 
 		return archetypeManager;
-	}
-
-	private Field _getField(Class<?> clazz, String name) throws Exception {
-		Field field = clazz.getDeclaredField(name);
-
-		field.setAccessible(true);
-
-		return field;
 	}
 
 	private FilesetArchetypeGenerator _getFilesetArchetypeGenerator()
@@ -205,23 +199,24 @@ public class Archetyper {
 		FilesetArchetypeGenerator filesetArchetypeGenerator =
 			new DefaultFilesetArchetypeGenerator();
 
-		_setField(
+		ReflectionUtil.setFieldValue(
 			DefaultFilesetArchetypeGenerator.class, "archetypeArtifactManager",
 			filesetArchetypeGenerator, _getArchetypeArtifactManager());
 
-		_getLoggerField().set(filesetArchetypeGenerator, _logger);
+		ReflectionUtil.setFieldValue(
+			_loggerField, filesetArchetypeGenerator, _logger);
 
 		DefaultArchetypeFilesResolver defaultArchetypeFilesResolver =
 			new DefaultArchetypeFilesResolver();
 
-		_setField(
+		ReflectionUtil.setFieldValue(
 			DefaultFilesetArchetypeGenerator.class, "archetypeFilesResolver",
 			filesetArchetypeGenerator, defaultArchetypeFilesResolver);
 
 		DefaultVelocityComponent velocityComponent =
 			new DefaultVelocityComponent();
 
-		_getLoggerField().set(velocityComponent, _logger);
+		ReflectionUtil.setFieldValue(_loggerField, velocityComponent, _logger);
 
 		Properties velocityProps = new Properties();
 
@@ -232,11 +227,11 @@ public class Archetyper {
 			"classpath.resource.loader.class",
 			ClasspathResourceLoader.class.getName());
 
-		_setField(
+		ReflectionUtil.setFieldValue(
 			DefaultVelocityComponent.class, "properties", velocityComponent,
 			velocityProps);
 
-		_setField(
+		ReflectionUtil.setFieldValue(
 			DefaultFilesetArchetypeGenerator.class, "velocity",
 			filesetArchetypeGenerator, velocityComponent);
 
@@ -245,26 +240,22 @@ public class Archetyper {
 		return filesetArchetypeGenerator;
 	}
 
-	private Field _getLoggerField() throws Exception {
-		if (_loggerField == null) {
-			_loggerField = _getField(AbstractLogEnabled.class, "logger");
-		}
-
-		return _loggerField;
-	}
-
-	private void _setField(
-			Class<?> clazz, String name, Object obj, Object value)
-		throws Exception {
-
-		_getField(clazz, name).set(obj, value);
-	}
-
 	private static final String _TEMP_ARCHETYPE_PREFIX = "temp-archetype";
+
+	private static final Field _loggerField;
+
+	static {
+		try {
+			_loggerField = ReflectionUtil.getField(
+				AbstractLogEnabled.class, "logger");
+		}
+		catch (Exception e) {
+			throw new ExceptionInInitializerError(e);
+		}
+	}
 
 	private ArchetypeArtifactManager _archetypeArtifactManager;
 	private final Logger _logger;
-	private Field _loggerField;
 
 	private static class ArchetyperArchetypeArtifactManager
 		extends DefaultArchetypeArtifactManager {

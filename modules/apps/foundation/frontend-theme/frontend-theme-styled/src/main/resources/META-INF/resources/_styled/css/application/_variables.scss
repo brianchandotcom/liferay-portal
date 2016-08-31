@@ -40,10 +40,13 @@ $label-entry-padding: 0 0 0 12px !default;
 
 /* ---------- Splitter ---------- */
 
-$splitter-bg: #F5F8FA !default;
+$splitter-bg: $panel-default-heading-bg !default;
+$splitter-border-radius: nth($panel-border-radius, 1) nth($panel-border-radius, 1) 0 0 !default;
+$splitter-box-shadow: if(variable-exists(panel-box-shadow), $panel-box-shadow, null) !default;
 $splitter-footer-margin: 20px;
 $splitter-padding: 10px 15px !default;
-$splitter-text-color: #869CAD !default;
+$splitter-spaced-border-radius: $panel-border-radius;
+$splitter-text-color: $panel-default-text !default;
 
 /* ---------- Toggle card ---------- */
 

@@ -157,9 +157,7 @@ public class FriendlyURLNormalizerImpl implements FriendlyURLNormalizer {
 				charsetEncoder.encode(
 					charBuffer, byteBuffer, ((friendlyURL.length() - 1) == i));
 
-				byteBuffer.limit(4 - byteBuffer.remaining());
-
-				byteBuffer.position(0);
+				byteBuffer.flip();
 
 				while (byteBuffer.hasRemaining()) {
 					byte b = byteBuffer.get();

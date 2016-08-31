@@ -57,6 +57,7 @@ import org.codehaus.plexus.logging.AbstractLogEnabled;
 import org.codehaus.plexus.logging.AbstractLogger;
 import org.codehaus.plexus.logging.Logger;
 import org.codehaus.plexus.velocity.DefaultVelocityComponent;
+import org.codehaus.plexus.velocity.VelocityComponent;
 
 /**
  * @author Gregory Amerson
@@ -114,106 +115,96 @@ public class Archetyper {
 
 		archetypeGenerationRequest.setVersion("1.0.0");
 
-		ArchetypeManager archetypeManager = _getArchetypeManager();
+		ArchetypeManager archetypeManager = _createArchetypeManager();
 
 		return archetypeManager.generateProjectFromArchetype(
 			archetypeGenerationRequest);
 	}
 
-	private ArchetypeArtifactManager _getArchetypeArtifactManager()
+	private ArchetypeArtifactManager _createArchetypeArtifactManager()
 		throws Exception {
 
-		if (_archetypeArtifactManager == null) {
-			_archetypeArtifactManager =
-				new ArchetyperArchetypeArtifactManager();
+		ArchetypeArtifactManager archetypeArtifactManager =
+			new ArchetyperArchetypeArtifactManager();
 
-			ReflectionUtil.setFieldValue(
-				_loggerField, _archetypeArtifactManager, _logger);
-		}
+		ReflectionUtil.setFieldValue(
+			_loggerField, archetypeArtifactManager, _logger);
 
-		return _archetypeArtifactManager;
+		return archetypeArtifactManager;
 	}
 
-	private ArchetypeGenerator _getArchetypeGenerator() throws Exception {
+	private ArchetypeGenerator _createArchetypeGenerator() throws Exception {
 		ArchetypeGenerator archetypeGenerator = new DefaultArchetypeGenerator();
 
 		ArchetypeArtifactManager archetypeArtifactManager =
-			_getArchetypeArtifactManager();
+			_createArchetypeArtifactManager();
 
 		ReflectionUtil.setFieldValue(
 			DefaultArchetypeGenerator.class, "archetypeArtifactManager",
 			archetypeGenerator, archetypeArtifactManager);
-
-		FilesetArchetypeGenerator filesetGenerator =
-			_getFilesetArchetypeGenerator();
-
 		ReflectionUtil.setFieldValue(
 			DefaultArchetypeGenerator.class, "filesetGenerator",
-			archetypeGenerator, filesetGenerator);
+			archetypeGenerator,
+			_createFilesetArchetypeGenerator(archetypeArtifactManager));
 
 		return archetypeGenerator;
 	}
 
-	private ArchetypeManager _getArchetypeManager() throws Exception {
+	private ArchetypeManager _createArchetypeManager() throws Exception {
 		DefaultArchetypeManager archetypeManager =
 			new DefaultArchetypeManager();
 
 		ReflectionUtil.setFieldValue(_loggerField, archetypeManager, _logger);
-
-		ArchetypeGenerator archetypeGenerator = _getArchetypeGenerator();
-
 		ReflectionUtil.setFieldValue(
 			DefaultArchetypeManager.class, "generator", archetypeManager,
-			archetypeGenerator);
+			_createArchetypeGenerator());
 
 		return archetypeManager;
 	}
 
-	private FilesetArchetypeGenerator _getFilesetArchetypeGenerator()
+	private FilesetArchetypeGenerator _createFilesetArchetypeGenerator(
+			ArchetypeArtifactManager archetypeArtifactManager)
 		throws Exception {
 
 		FilesetArchetypeGenerator filesetArchetypeGenerator =
 			new DefaultFilesetArchetypeGenerator();
 
 		ReflectionUtil.setFieldValue(
-			DefaultFilesetArchetypeGenerator.class, "archetypeArtifactManager",
-			filesetArchetypeGenerator, _getArchetypeArtifactManager());
-
-		ReflectionUtil.setFieldValue(
 			_loggerField, filesetArchetypeGenerator, _logger);
-
-		DefaultArchetypeFilesResolver defaultArchetypeFilesResolver =
-			new DefaultArchetypeFilesResolver();
-
+		ReflectionUtil.setFieldValue(
+			DefaultFilesetArchetypeGenerator.class, "archetypeArtifactManager",
+			filesetArchetypeGenerator, archetypeArtifactManager);
 		ReflectionUtil.setFieldValue(
 			DefaultFilesetArchetypeGenerator.class, "archetypeFilesResolver",
-			filesetArchetypeGenerator, defaultArchetypeFilesResolver);
+			filesetArchetypeGenerator, new DefaultArchetypeFilesResolver());
+		ReflectionUtil.setFieldValue(
+			DefaultFilesetArchetypeGenerator.class, "velocity",
+			filesetArchetypeGenerator, _createVelocityComponent());
 
-		DefaultVelocityComponent velocityComponent =
+		return filesetArchetypeGenerator;
+	}
+
+	private VelocityComponent _createVelocityComponent() throws Exception {
+		DefaultVelocityComponent defaultVelocityComponent =
 			new DefaultVelocityComponent();
 
-		ReflectionUtil.setFieldValue(_loggerField, velocityComponent, _logger);
+		ReflectionUtil.setFieldValue(
+			_loggerField, defaultVelocityComponent, _logger);
 
-		Properties velocityProps = new Properties();
+		Properties properties = new Properties();
 
-		velocityProps.setProperty(
-			RuntimeConstants.RESOURCE_LOADER, "classpath");
-
-		velocityProps.setProperty(
+		properties.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
+		properties.setProperty(
 			"classpath.resource.loader.class",
 			ClasspathResourceLoader.class.getName());
 
 		ReflectionUtil.setFieldValue(
-			DefaultVelocityComponent.class, "properties", velocityComponent,
-			velocityProps);
+			DefaultVelocityComponent.class, "properties",
+			defaultVelocityComponent, properties);
 
-		ReflectionUtil.setFieldValue(
-			DefaultFilesetArchetypeGenerator.class, "velocity",
-			filesetArchetypeGenerator, velocityComponent);
+		defaultVelocityComponent.initialize();
 
-		velocityComponent.initialize();
-
-		return filesetArchetypeGenerator;
+		return defaultVelocityComponent;
 	}
 
 	private void _setProperty(
@@ -236,7 +227,6 @@ public class Archetyper {
 		}
 	}
 
-	private ArchetypeArtifactManager _archetypeArtifactManager;
 	private final Logger _logger = new ArchetyperLogger();
 
 	private static class ArchetyperArchetypeArtifactManager

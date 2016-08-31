@@ -75,7 +75,7 @@ Jenkins:
 ### Changed
 - [LPS-66853]: Update the [Liferay Gradle Plugins] dependency to version 2.0.19.
 
-## 1.2.0 - 2016-08-30
+## 1.2.0 - 2016-08-31
 
 ### Added
 - [LPS-67863]: Allow to override the `Bundle-Version` and `packageinfo`

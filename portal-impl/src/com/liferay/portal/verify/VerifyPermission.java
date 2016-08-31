@@ -19,11 +19,15 @@ import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -178,19 +182,43 @@ public class VerifyPermission extends VerifyProcess {
 		Role role = RoleLocalServiceUtil.getRole(
 			companyId, RoleConstants.GUEST);
 
-		List<ResourcePermission> resourcePermissions =
-			ResourcePermissionLocalServiceUtil.getRoleResourcePermissions(
-				role.getRoleId());
+		long roleId = role.getRoleId();
 
-		for (ResourcePermission resourcePermission : resourcePermissions) {
-			if (isPrivateLayout(
-					resourcePermission.getName(),
-					resourcePermission.getPrimKey())) {
+		ActionableDynamicQuery actionableDynamicQuery =
+			ResourcePermissionLocalServiceUtil.getActionableDynamicQuery();
 
-				ResourcePermissionLocalServiceUtil.deleteResourcePermission(
-					resourcePermission.getResourcePermissionId());
-			}
-		}
+		actionableDynamicQuery.setAddCriteriaMethod(
+			new ActionableDynamicQuery.AddCriteriaMethod() {
+
+				@Override
+				public void addCriteria(DynamicQuery dynamicQuery) {
+					Property property = PropertyFactoryUtil.forName("roleId");
+
+					dynamicQuery.add(property.eq(roleId));
+				}
+
+			});
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.
+				PerformActionMethod<ResourcePermission>() {
+
+				@Override
+				public void performAction(ResourcePermission resourcePermission)
+					throws PortalException {
+
+					if (isPrivateLayout(
+							resourcePermission.getName(),
+							resourcePermission.getPrimKey())) {
+
+						ResourcePermissionLocalServiceUtil.
+							deleteResourcePermission(
+								resourcePermission.getResourcePermissionId());
+					}
+				}
+
+			});
+
+		actionableDynamicQuery.performActions();
 	}
 
 	@Override
@@ -442,7 +470,7 @@ public class VerifyPermission extends VerifyProcess {
 	}
 
 	protected boolean isPrivateLayout(String name, String primKey)
-		throws Exception {
+		throws PortalException {
 
 		if (!name.equals(Layout.class.getName()) &&
 			!primKey.contains(PortletConstants.LAYOUT_SEPARATOR)) {

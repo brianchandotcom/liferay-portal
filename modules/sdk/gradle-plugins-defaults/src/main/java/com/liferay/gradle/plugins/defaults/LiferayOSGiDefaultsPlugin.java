@@ -2477,9 +2477,12 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 							project, "add",
 							project.relativePath(versionOverridesFile));
 					}
-					else {
+					else if (_hasPackageInfoFiles(project)) {
 						GitUtil.executeGit(
 							project, "add", "bnd.bnd", "**/packageinfo");
+					}
+					else {
+						GitUtil.executeGit(project, "add", "bnd.bnd");
 					}
 
 					String message = project.getName() + " packageinfo";
@@ -2489,6 +2492,21 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				catch (IOException ioe) {
 					throw new UncheckedIOException(ioe);
 				}
+			}
+
+			private boolean _hasPackageInfoFiles(Project project) {
+				Map<String, Object> args = new HashMap<>();
+
+				args.put("dir", project.getProjectDir());
+				args.put("include", "src/main/resources/**/packageinfo");
+
+				FileTree fileTree = project.fileTree(args);
+
+				if (!fileTree.isEmpty()) {
+					return true;
+				}
+
+				return false;
 			}
 
 		};

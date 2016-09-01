@@ -3295,8 +3295,9 @@
 			<var name="fieldName" value="CheckboxField" />
 		</execute>
 
-		<execute macro="FormFields#enableSwitcher">
+		<execute macro="FormFields#selectSwitcherOption">
 			<var name="fieldName" value="CheckboxField" />
+			<var name="switcherOption" value="Switcher 1" />
 		</execute>
 
 		<execute macro="FormPortlet#clickSubmit" />

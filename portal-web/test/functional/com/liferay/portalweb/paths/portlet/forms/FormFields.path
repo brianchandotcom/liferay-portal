@@ -262,6 +262,11 @@
 	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//label[contains(.,'${key_fieldLabel}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SWITCHER_OPTION</td>
+	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//label[contains(@class,'${key_switcherOption}')]//span[@class='toggle-switch-bar']</td>
+	<td></td>
+</tr>
 <!--VALIDATION-->
 <tr>
 	<td>VALIDATION_TYPE</td>

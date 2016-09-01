@@ -13,45 +13,27 @@
 		}
 	}
 
-	.diff-version-head {
-		border-bottom: 1px solid transparent;
-		margin-bottom: 40px;
-		padding-bottom: 10px;
-
-		.diff-target-selector {
-			border-left: 1px solid transparent;
-			padding-left: 40px;
-		}
+	.diff-target-selector {
+		border-left: 1px solid transparent;
+		padding-left: 30px;
 	}
 
 	.diff-container-column {
-		border: 1px solid transparent;
-
 		.diff-container {
 			min-height: 400px;
-			padding: 25px 20px;
 		}
 
-		.diff-version-filter {
-			border-bottom: 1px solid transparent;
-			padding: 10px 15px;
-
-			.user-name {
-				margin-right: 5px;
-			}
+		.user-name {
+			margin-right: 5px;
 		}
 
-		.legend-info {
-			padding: 20px;
-
-			.legend-item {
-				margin-right: 15px;
-
-				&.diff-html-changed {
-					border-bottom: 2px dotted transparent;
-				}
-			}
+		.legend-item {
+			margin-right: 15px;
 		}
+	}
+
+	.divider {
+		margin-bottom: 20px;
 	}
 
 	.input-group-search {

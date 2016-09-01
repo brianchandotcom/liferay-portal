@@ -46,7 +46,7 @@ if (Validator.isNotNull(languageId)) {
 				<liferay-ui:message key="you-are-comparing-these-versions" />
 			</span>
 
-			<aui:row cssClass="diff-version-head">
+			<aui:row>
 				<aui:col width="<%= 30 %>">
 					<div class="pull-right">
 						<liferay-ui:icon-menu direction="down" extended="<%= false %>" message='<%= LanguageUtil.format(request, "version-x", sourceVersion) %>' showArrow="<%= true %>" showWhenSingleIcon="<%= true %>" useIconCaret="<%= true %>">
@@ -115,6 +115,8 @@ if (Validator.isNotNull(languageId)) {
 					</c:if>
 				</aui:col>
 			</aui:row>
+
+			<div class="divider row"></div>
 
 			<aui:row>
 				<aui:col width="<%= 30 %>">
@@ -216,17 +218,17 @@ if (Validator.isNotNull(languageId)) {
 				</aui:col>
 
 				<aui:col width="<%= 70 %>">
-					<div class="diff-container-column">
-						<div class="diff-version-filter hide" id="<portlet:namespace />versionFilter">
+					<div class="card diff-container-column">
+						<div class="card-row-padded diff-version-filter hide" id="<portlet:namespace />versionFilter">
 						</div>
 
-						<div class="diff-container">
+						<div class="card-row-padded diff-container">
 							<liferay-ui:diff-html
 								diffHtmlResults="<%= diffHtmlResults %>"
 							/>
 						</div>
 
-						<div class="legend-info taglib-diff-html">
+						<div class="card-row-padded taglib-diff-html">
 							<span class="diff-html-added legend-item">
 								<liferay-ui:message key="added" />
 							</span>

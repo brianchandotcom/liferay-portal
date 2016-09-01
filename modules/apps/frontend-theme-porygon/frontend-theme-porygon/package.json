@@ -6,7 +6,10 @@
 	"dependencies": {
 		"gulp": "^3.8.10",
 		"liferay-theme-deps-7.0": "*",
-		"liferay-theme-tasks": "*"
+		"liferay-theme-tasks": "*",
+		"metal": "^2.2.0",
+		"metal-dom": "^2.4.0",
+		"metal-state": "^2.3.0"
 	},
 	"devDependencies": {
 		"gulp-metal": "^1.7.6",

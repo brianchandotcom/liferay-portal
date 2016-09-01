@@ -8210,6 +8210,26 @@
 			"resolved": "https://registry.npmjs.org/meow/-/meow-3.7.0.tgz",
 			"version": "3.7.0"
 		},
+		"metal": {
+			"from": "metal@>=2.2.3 <3.0.0",
+			"resolved": "https://registry.npmjs.org/metal/-/metal-2.2.3.tgz",
+			"version": "2.2.3"
+		},
+		"metal-dom": {
+			"from": "metal-dom@latest",
+			"resolved": "https://registry.npmjs.org/metal-dom/-/metal-dom-2.4.0.tgz",
+			"version": "2.4.0"
+		},
+		"metal-events": {
+			"from": "metal-events@>=2.2.3 <3.0.0",
+			"resolved": "https://registry.npmjs.org/metal-events/-/metal-events-2.2.3.tgz",
+			"version": "2.2.3"
+		},
+		"metal-state": {
+			"from": "metal-state@>=2.3.0 <3.0.0",
+			"resolved": "https://registry.npmjs.org/metal-state/-/metal-state-2.3.0.tgz",
+			"version": "2.3.0"
+		},
 		"micromatch": {
 			"from": "micromatch@>=2.3.7 <3.0.0",
 			"resolved": "https://registry.npmjs.org/micromatch/-/micromatch-2.3.11.tgz",

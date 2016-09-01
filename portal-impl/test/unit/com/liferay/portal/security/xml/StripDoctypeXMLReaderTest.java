@@ -14,6 +14,8 @@
 
 package com.liferay.portal.security.xml;
 
+import com.liferay.portal.kernel.util.StringBundler;
+
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.Reader;
@@ -26,6 +28,50 @@ import org.junit.Test;
  * @author Tomas Polesovsky
  */
 public class StripDoctypeXMLReaderTest {
+
+	@Test
+	public void testInternalBufferWithInputStream() throws Exception {
+		String prologue = "<?xml version=\"1.0\"?>";
+		String xml = prologue + "<root />";
+
+		byte[] bytes = new byte[prologue.length() + 1];
+
+		InputStream is = new ByteArrayInputStream(xml.getBytes());
+
+		StripDoctypeFilter stripDoctypeFilter = new StripDoctypeFilter(is);
+
+		StringBundler sb = new StringBundler();
+		int length;
+		while ((length = stripDoctypeFilter.read(bytes, 0, bytes.length)) > 0) {
+			sb.append(new String(bytes, 0, length));
+		}
+
+		String result = sb.toString();
+
+		Assert.assertEquals(xml, result);
+	}
+
+	@Test
+	public void testInternalBufferWithReader() throws Exception {
+		String prologue = "<?xml version=\"1.0\"?>";
+		String xml = prologue + "<root />";
+
+		char[] chars = new char[prologue.length() + 1];
+
+		Reader reader = new StringReader(xml);
+
+		StripDoctypeFilter stripDoctypeFilter = new StripDoctypeFilter(reader);
+
+		StringBundler sb = new StringBundler();
+		int length;
+		while ((length = stripDoctypeFilter.read(chars, 0, chars.length)) > 0) {
+			sb.append(new String(chars, 0, length));
+		}
+
+		String result = sb.toString();
+
+		Assert.assertEquals(xml, result);
+	}
 
 	@Test
 	public void testReadInputStream() throws Exception {

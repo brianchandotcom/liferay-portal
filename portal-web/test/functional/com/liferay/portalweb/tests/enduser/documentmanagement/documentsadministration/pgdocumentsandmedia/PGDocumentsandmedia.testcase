@@ -2194,6 +2194,7 @@
 			<var name="searchAssetTitle" value="DM Document Title" />
 			<var name="searchAssetType" value="Document" />
 			<var name="searchNoResults" value="true" />
+			<var name="searchTerm" value="DM Document Title" />
 		</execute>
 	</command>
 </definition>

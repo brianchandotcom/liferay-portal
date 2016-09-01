@@ -2956,7 +2956,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		List<Properties> propertiesList = new ArrayList<>();
 
-		int level = 2;
+		int level = PLUGINS_MAX_DIR_LEVEL;
 
 		if (portalSource) {
 			level = PORTAL_MAX_DIR_LEVEL;

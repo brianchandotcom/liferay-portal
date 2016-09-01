@@ -1620,7 +1620,7 @@ public class GetterUtil {
 
 	/**
 	 * Returns the Object value. If the value is <code>null</code>, the {@link
-	 * #DEFAULT_OBJECT} is returned
+	 * #DEFAULT_OBJECT} is returned.
 	 *
 	 * @param  value the value
 	 * @return the value

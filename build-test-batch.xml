@@ -1405,6 +1405,10 @@ app.server.type=@{app.server.type}]]></echo>
 		<antcall target="functional-tomcat8-mysql56-jdk8" />
 	</target>
 
+	<target name="functional-upgrade-tomcat8-mysql56-jdk8">
+		<run-functional-test app.server.type="tomcat" database.type="mysql" />
+	</target>
+
 	<target name="integration-db2105-jdk8">
 		<run-integration-test database.type="db2" />
 	</target>

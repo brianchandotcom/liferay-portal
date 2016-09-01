@@ -212,21 +212,23 @@ public class StagedLayoutSetStagedModelRepository
 			StagedLayoutSet stagedLayoutSet)
 		throws PortalException {
 
+		LayoutSet existingLayoutSet = _layoutSetLocalService.fetchLayoutSet(
+			stagedLayoutSet.getLayoutSetId());
+
 		// Layout set prototype settings
 
 		boolean layoutSetPrototypeSettings = MapUtil.getBoolean(
 			portletDataContext.getParameterMap(),
 			PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_SETTINGS);
 
-		LayoutSet layoutSet = null;
-
 		if (!layoutSetPrototypeSettings ||
 			Validator.isNull(stagedLayoutSet.getLayoutSetPrototypeUuid())) {
 
-			stagedLayoutSet.setLayoutSetPrototypeUuid(null);
-			stagedLayoutSet.setLayoutSetPrototypeLinkEnabled(false);
+			existingLayoutSet.setLayoutSetPrototypeUuid(null);
+			existingLayoutSet.setLayoutSetPrototypeLinkEnabled(false);
 
-			layoutSet = _layoutSetLocalService.updateLayoutSet(stagedLayoutSet);
+			existingLayoutSet = _layoutSetLocalService.updateLayoutSet(
+				existingLayoutSet);
 		}
 
 		// Layout set settings
@@ -236,14 +238,14 @@ public class StagedLayoutSetStagedModelRepository
 			PortletDataHandlerKeys.LAYOUT_SET_SETTINGS);
 
 		if (layoutSetSettings) {
-			layoutSet = _layoutSetLocalService.updateSettings(
-				portletDataContext.getGroupId(),
-				portletDataContext.isPrivateLayout(),
+			existingLayoutSet = _layoutSetLocalService.updateSettings(
+				existingLayoutSet.getGroupId(),
+				existingLayoutSet.isPrivateLayout(),
 				stagedLayoutSet.getSettings());
 		}
 
 		return ModelAdapterUtil.adapt(
-			layoutSet, LayoutSet.class, StagedLayoutSet.class);
+			existingLayoutSet, LayoutSet.class, StagedLayoutSet.class);
 	}
 
 	@Reference

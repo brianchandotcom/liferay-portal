@@ -106,6 +106,7 @@
 		<module name="com.liferay.source.formatter.checkstyle.checks.MethodName">
 			<property name="applyToProtected" value="false" />
 			<property name="applyToPublic" value="false" />
+			<property name="checkDoMethodName" value="true" />
 			<property name="format" value="^_[a-z0-9][_a-zA-Z0-9]*$|readObject|writeObject" />
 			<message key="method.rename" value="Rename method ''{0}'' to ''{1}''" />
 			<message key="name.invalidPattern" value="Private method ''{0}'' must match pattern ''{1}''" />

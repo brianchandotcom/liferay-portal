@@ -32,9 +32,15 @@ public class MethodNameCheck
 
 	public static final String MSG_RENAME_METHOD = "method.rename";
 
+	public void setCheckDoMethodName(boolean checkDoMethodName) {
+		_checkDoMethodName = checkDoMethodName;
+	}
+
 	@Override
 	public void visitToken(DetailAST detailAST) {
-		_checkDoMethodName(detailAST);
+		if (_checkDoMethodName) {
+			_checkDoMethodName(detailAST);
+		}
 
 		super.visitToken(detailAST);
 	}
@@ -100,6 +106,7 @@ public class MethodNameCheck
 		return nameAST.getText();
 	}
 
+	private boolean _checkDoMethodName;
 	private final Pattern _doMethodNamePattern = Pattern.compile(
 		"^_do([A-Z])(.*)$");
 

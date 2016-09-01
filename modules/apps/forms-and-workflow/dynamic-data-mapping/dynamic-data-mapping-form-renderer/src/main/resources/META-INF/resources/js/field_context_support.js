@@ -3,8 +3,6 @@ AUI.add(
 	function(A) {
 		var AObject = A.Object;
 
-		var Lang = A.Lang;
-
 		var Renderer = Liferay.DDM.Renderer;
 
 		var FieldTypes = Renderer.FieldTypes;
@@ -37,8 +35,6 @@ AUI.add(
 				var EXTENDS = fieldClass;
 
 				while (!!EXTENDS) {
-					var extendAttributes = {};
-
 					AObject.keys(EXTENDS.ATTRS).forEach(
 						function(attributeName) {
 							if (EXTENDS.ATTRS[attributeName].state) {

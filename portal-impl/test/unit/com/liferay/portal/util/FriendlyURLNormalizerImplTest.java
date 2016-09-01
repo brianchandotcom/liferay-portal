@@ -136,7 +136,8 @@ public class FriendlyURLNormalizerImplTest {
 		CharsetEncoder charsetEncoder = CharsetEncoderUtil.getCharsetEncoder(
 			StringPool.UTF8);
 
-		String replacement = new String(charsetEncoder.replacement());
+		String replacement = new String(
+			charsetEncoder.replacement(), StringPool.UTF8);
 
 		String encodedReplacement = URLEncoder.encode(
 			replacement, StringPool.UTF8);

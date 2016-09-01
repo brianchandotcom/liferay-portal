@@ -103,6 +103,11 @@ the `.gitrepo` file with the following values:
 - [LPS-67863]: Avoid Git error while running `gradlew baseline -PsyncRelease` on
 an OSGi project that does not contain a `packageinfo` file.
 
+## 1.2.2 - 2016-09-01
+
+### Changed
+- [LPS-67352]: Update the [Liferay Gradle Plugins] dependency to version 2.0.20.
+
 ## 1.2.3 - 2016-09-01
 
 ### Changed

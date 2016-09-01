@@ -224,9 +224,7 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 		_lpkgBundleTracker.close();
 	}
 
-	private void _activate(final BundleContext bundleContext)
-		throws Exception {
-
+	private void _activate(final BundleContext bundleContext) throws Exception {
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 		properties.put(

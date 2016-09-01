@@ -130,14 +130,6 @@ public class OutputStreamWriter extends Writer {
 		_write(CharBuffer.wrap(string, offset, offset + length));
 	}
 
-	private void _write(CharBuffer inputCharBuffer) throws IOException {
-		_ensureOpen();
-
-		_encodeLeftoverChar(inputCharBuffer, false);
-
-		_encodeLoop(inputCharBuffer, false);
-	}
-
 	private void _encodeLeftoverChar(
 			CharBuffer inputCharBuffer, boolean endOfInput)
 		throws IOException {
@@ -228,6 +220,14 @@ public class OutputStreamWriter extends Writer {
 
 			_flushBuffer();
 		}
+	}
+
+	private void _write(CharBuffer inputCharBuffer) throws IOException {
+		_ensureOpen();
+
+		_encodeLeftoverChar(inputCharBuffer, false);
+
+		_encodeLoop(inputCharBuffer, false);
 	}
 
 	private static final int _DEFAULT_OUTPUT_BUFFER_SIZE = 8192;

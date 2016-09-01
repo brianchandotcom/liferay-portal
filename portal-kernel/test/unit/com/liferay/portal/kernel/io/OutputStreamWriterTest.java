@@ -319,30 +319,6 @@ public class OutputStreamWriterTest {
 		_testWriteString(true);
 	}
 
-	private void _testUnicodeSurrogatePair(
-			SurrogatePairConsumer surrogatePairConsumer)
-		throws IOException {
-
-		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
-			new UnsyncByteArrayOutputStream();
-
-		OutputStreamWriter outputStreamWriter = new OutputStreamWriter(
-			unsyncByteArrayOutputStream, "UTF-8");
-
-		char[] surrogatePair = Character.toChars(0x2363A);
-
-		Assert.assertEquals(2, surrogatePair.length);
-
-		surrogatePairConsumer.accept(outputStreamWriter, surrogatePair);
-
-		outputStreamWriter.flush();
-
-		String decodedString = new String(
-			unsyncByteArrayOutputStream.toByteArray(), "UTF-8");
-
-		Assert.assertArrayEquals(surrogatePair, decodedString.toCharArray());
-	}
-
 	private int _getDefaultOutputBufferSize() {
 		return ReflectionTestUtil.getFieldValue(
 			OutputStreamWriter.class, "_DEFAULT_OUTPUT_BUFFER_SIZE");
@@ -372,6 +348,30 @@ public class OutputStreamWriterTest {
 	private boolean _isAutoFlush(OutputStreamWriter outputStreamWriter) {
 		return ReflectionTestUtil.getFieldValue(
 			outputStreamWriter, "_autoFlush");
+	}
+
+	private void _testUnicodeSurrogatePair(
+			SurrogatePairConsumer surrogatePairConsumer)
+		throws IOException {
+
+		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
+			new UnsyncByteArrayOutputStream();
+
+		OutputStreamWriter outputStreamWriter = new OutputStreamWriter(
+			unsyncByteArrayOutputStream, "UTF-8");
+
+		char[] surrogatePair = Character.toChars(0x2363A);
+
+		Assert.assertEquals(2, surrogatePair.length);
+
+		surrogatePairConsumer.accept(outputStreamWriter, surrogatePair);
+
+		outputStreamWriter.flush();
+
+		String decodedString = new String(
+			unsyncByteArrayOutputStream.toByteArray(), "UTF-8");
+
+		Assert.assertArrayEquals(surrogatePair, decodedString.toCharArray());
 	}
 
 	private void _testWriteCharArray(boolean autoFlush) throws IOException {

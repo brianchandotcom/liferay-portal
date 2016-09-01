@@ -234,14 +234,6 @@ public class ReflectionUtil {
 		return field;
 	}
 
-	@SuppressWarnings("unchecked")
-	private static <T, E extends Throwable> T _throwException(
-			Throwable throwable)
-		throws E {
-
-		throw (E)throwable;
-	}
-
 	private static Type _getGenericInterface(
 		Class<?> clazz, Class<?> interfaceClass) {
 
@@ -282,6 +274,14 @@ public class ReflectionUtil {
 			catch (ClassNotFoundException cnfe) {
 			}
 		}
+	}
+
+	@SuppressWarnings("unchecked")
+	private static <T, E extends Throwable> T _throwException(
+			Throwable throwable)
+		throws E {
+
+		throw (E)throwable;
 	}
 
 	private static final Method _CLONE_METHOD;

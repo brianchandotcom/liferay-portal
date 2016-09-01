@@ -37,7 +37,6 @@ import com.liferay.source.formatter.util.FileUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -49,7 +48,6 @@ import java.nio.charset.CodingErrorAction;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -184,6 +182,11 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			new SourceFormatterMessage(fileName, message, lineCount));
 
 		_sourceFormatterMessagesMap.put(fileName, sourceFormatterMessages);
+	}
+
+	@Override
+	public void setProperties(Properties properties) {
+		_properties = properties;
 	}
 
 	@Override
@@ -1836,18 +1839,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	protected File getFile(String fileName, int level) {
-		for (int i = 0; i < level; i++) {
-			File file = new File(
-				sourceFormatterArgs.getBaseDirName() + fileName);
-
-			if (file.exists()) {
-				return file;
-			}
-
-			fileName = "../" + fileName;
-		}
-
-		return null;
+		return _sourceFormatterHelper.getFile(
+			sourceFormatterArgs.getBaseDirName(), fileName, level);
 	}
 
 	protected List<String> getFileNames(
@@ -2949,93 +2942,16 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return excludesList.toArray(new String[excludesList.size()]);
 	}
 
-	private Properties _getProperties() throws Exception {
-		String fileName = "source-formatter.properties";
-
-		Properties properties = new Properties();
-
-		List<Properties> propertiesList = new ArrayList<>();
-
-		int level = 2;
-
-		if (portalSource) {
-			level = PORTAL_MAX_DIR_LEVEL;
-		}
-
-		for (int i = 0; i <= level; i++) {
-			try {
-				InputStream inputStream = new FileInputStream(
-					sourceFormatterArgs.getBaseDirName() + fileName);
-
-				Properties props = new Properties();
-
-				props.load(inputStream);
-
-				propertiesList.add(props);
-
-				break;
-			}
-			catch (FileNotFoundException fnfe) {
-			}
-
-			fileName = "../" + fileName;
-		}
-
-		if (propertiesList.isEmpty()) {
-			return properties;
-		}
-
-		properties = propertiesList.get(0);
-
-		if (propertiesList.size() == 1) {
-			return properties;
-		}
-
-		for (int i = 1; i < propertiesList.size(); i++) {
-			Properties props = propertiesList.get(i);
-
-			Enumeration<String> enu =
-				(Enumeration<String>)props.propertyNames();
-
-			while (enu.hasMoreElements()) {
-				String key = enu.nextElement();
-
-				String value = props.getProperty(key);
-
-				if (Validator.isNull(value)) {
-					continue;
-				}
-
-				if (key.contains("excludes")) {
-					String existingValue = properties.getProperty(key);
-
-					if (Validator.isNotNull(existingValue)) {
-						value = existingValue + StringPool.COMMA + value;
-					}
-
-					properties.put(key, value);
-				}
-				else if (!properties.containsKey(key)) {
-					properties.put(key, value);
-				}
-			}
-		}
-
-		return properties;
-	}
-
 	private void _init() {
-		portalSource = _isPortalSource();
-
-		_sourceFormatterMessagesMap = new HashMap<>();
-
 		try {
-			_properties = _getProperties();
-
 			_sourceFormatterHelper = new SourceFormatterHelper(
 				sourceFormatterArgs.isUseProperties());
 
 			_sourceFormatterHelper.init();
+
+			portalSource = _isPortalSource();
+
+			_sourceFormatterMessagesMap = new HashMap<>();
 		}
 		catch (Exception e) {
 			ReflectionUtil.throwException(e);

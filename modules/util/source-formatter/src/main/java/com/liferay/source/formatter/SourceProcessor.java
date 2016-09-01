@@ -15,6 +15,7 @@
 package com.liferay.source.formatter;
 
 import java.util.List;
+import java.util.Properties;
 
 /**
  * @author Hugo Huijser
@@ -34,6 +35,8 @@ public interface SourceProcessor {
 	public void processMessage(String fileName, String message);
 
 	public void processMessage(String fileName, String message, int lineCount);
+
+	public void setProperties(Properties properties);
 
 	public void setSourceFormatterArgs(SourceFormatterArgs sourceFormatterArgs);
 

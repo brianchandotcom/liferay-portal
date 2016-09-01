@@ -2819,7 +2819,12 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		throws IOException {
 
 		if (versionOverrideFile != null) {
-			FileUtil.writeProperties(versionOverrideFile, versions);
+			if (versions.isEmpty()) {
+				versionOverrideFile.delete();
+			}
+			else {
+				FileUtil.writeProperties(versionOverrideFile, versions);
+			}
 		}
 
 		Path projectDirPath = projectDir.toPath();

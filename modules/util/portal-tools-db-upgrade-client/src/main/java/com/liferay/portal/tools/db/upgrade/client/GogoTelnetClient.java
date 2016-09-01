@@ -38,7 +38,7 @@ public class GogoTelnetClient implements AutoCloseable {
 		_dataInputStream = new DataInputStream(_socket.getInputStream());
 		_dataOutputStream = new DataOutputStream(_socket.getOutputStream());
 
-		_doHandshake();
+		_handshake();
 	}
 
 	@Override
@@ -76,7 +76,7 @@ public class GogoTelnetClient implements AutoCloseable {
 		}
 	}
 
-	private void _doHandshake() throws IOException {
+	private void _handshake() throws IOException {
 
 		// Gogo server first sends 4 commands
 

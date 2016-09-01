@@ -61,7 +61,7 @@ public class PortalResiliencyAction extends Action {
 			(String)session.getAttribute(WebKeys.USER_PASSWORD));
 
 		try {
-			_doExecute(request, response);
+			_execute(request, response);
 		}
 		finally {
 			SPIAgentResponse spiAgentResponse =
@@ -77,7 +77,7 @@ public class PortalResiliencyAction extends Action {
 		return null;
 	}
 
-	private void _doExecute(
+	private void _execute(
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 

@@ -271,7 +271,7 @@ public class MPIHelperUtil {
 	public static boolean unregisterSPI(SPI spi) {
 		try {
 			if (spi == _unregisteringSPIThreadLocal.get()) {
-				_doUnregisterSPI(spi);
+				_unregisterSPI(spi);
 
 				return true;
 			}
@@ -308,7 +308,7 @@ public class MPIHelperUtil {
 			if (spiProviderContainer.removeSPI(
 					spiConfiguration.getSPIId(), spi)) {
 
-				_doUnregisterSPI(spi);
+				_unregisterSPI(spi);
 
 				return true;
 			}
@@ -384,7 +384,7 @@ public class MPIHelperUtil {
 		return false;
 	}
 
-	private static void _doUnregisterSPI(SPI spi) throws RemoteException {
+	private static void _unregisterSPI(SPI spi) throws RemoteException {
 		SPIRegistryUtil.unregisterSPI(spi);
 
 		SPIConfiguration spiConfiguration = spi.getSPIConfiguration();

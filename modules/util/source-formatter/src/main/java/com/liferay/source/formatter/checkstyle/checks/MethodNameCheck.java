@@ -14,18 +14,36 @@
 
 package com.liferay.source.formatter.checkstyle.checks;
 
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Hugo Huijser
  */
 public class MethodNameCheck
 	extends com.puppycrawl.tools.checkstyle.checks.naming.MethodNameCheck {
+
+	public static final String MSG_RENAME_METHOD = "method.rename";
+
+	public void setCheckDoMethodName(boolean checkDoMethodName) {
+		_checkDoMethodName = checkDoMethodName;
+	}
+
+	@Override
+	public void visitToken(DetailAST detailAST) {
+		if (_checkDoMethodName) {
+			_checkDoMethodName(detailAST);
+		}
+
+		super.visitToken(detailAST);
+	}
 
 	@Override
 	protected boolean mustCheckName(DetailAST detailAST) {
@@ -50,5 +68,46 @@ public class MethodNameCheck
 
 		return shouldCheckInScope(modifiersAST);
 	}
+
+	private void _checkDoMethodName(DetailAST detailAST) {
+		String name = _getMethodName(detailAST);
+
+		Matcher matcher = _doMethodNamePattern.matcher(name);
+
+		if (!matcher.find()) {
+			return;
+		}
+
+		String noDoName =
+			"_" + StringUtil.toLowerCase(matcher.group(1)) + matcher.group(2);
+		String noUnderscoreName = name.substring(1);
+
+		DetailAST parentAST = detailAST.getParent();
+
+		List<DetailAST> methodDefASTList = DetailASTUtil.getAllChildTokens(
+			parentAST, TokenTypes.METHOD_DEF, false);
+
+		for (DetailAST methodDefAST : methodDefASTList) {
+			String methodName = _getMethodName(methodDefAST);
+
+			if (methodName.equals(noDoName) ||
+				methodName.equals(noUnderscoreName)) {
+
+				return;
+			}
+		}
+
+		log(detailAST.getLineNo(), MSG_RENAME_METHOD, name, noDoName);
+	}
+
+	private String _getMethodName(DetailAST detailAST) {
+		DetailAST nameAST = detailAST.findFirstToken(TokenTypes.IDENT);
+
+		return nameAST.getText();
+	}
+
+	private boolean _checkDoMethodName;
+	private final Pattern _doMethodNamePattern = Pattern.compile(
+		"^_do([A-Z])(.*)$");
 
 }

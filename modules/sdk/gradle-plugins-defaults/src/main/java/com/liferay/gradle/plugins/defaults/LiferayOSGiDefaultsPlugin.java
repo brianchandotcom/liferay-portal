@@ -76,9 +76,12 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Properties;
+import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 import java.util.jar.Attributes;
@@ -2469,35 +2472,63 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			@Override
 			public void execute(Task task) {
 				try {
-					Project project = task.getProject();
-
-					if (versionOverrideFile != null) {
-						Properties versions = _getVersions(
-							project.getProjectDir(), null);
-
-						_saveVersions(
-							project.getProjectDir(), versions,
-							versionOverrideFile);
-
-						GitUtil.executeGit(
-							project, "add",
-							project.relativePath(versionOverrideFile));
-					}
-					else if (_hasPackageInfoFiles(project)) {
-						GitUtil.executeGit(
-							project, "add", "bnd.bnd", "**/packageinfo");
-					}
-					else {
-						GitUtil.executeGit(project, "add", "bnd.bnd");
-					}
-
-					String message = project.getName() + " packageinfo";
-
-					GitUtil.commit(project, message, true);
+					_execute(task.getProject());
 				}
 				catch (IOException ioe) {
 					throw new UncheckedIOException(ioe);
 				}
+			}
+
+			private void _execute(Project project) throws IOException {
+				boolean hasPackageInfoFiles = _hasPackageInfoFiles(project);
+
+				if (versionOverrideFile != null) {
+
+					// Get versions fixed by baseline
+
+					Properties versions = _getVersions(
+						project.getProjectDir(), null);
+
+					// Reset to committed versions
+
+					if (hasPackageInfoFiles) {
+						GitUtil.executeGit(
+							project, "checkout", "--", "bnd.bnd",
+							"**/packageinfo");
+					}
+					else {
+						GitUtil.executeGit(
+							project, "checkout", "--", "bnd.bnd");
+					}
+
+					// Keep only the version overrides that are different
+					// from the committed versions
+
+					Properties committedVersions = _getVersions(
+						project.getProjectDir(), null);
+
+					_removeDuplicates(versions, committedVersions);
+
+					// Save version override file
+
+					_saveVersions(
+						project.getProjectDir(), versions, versionOverrideFile);
+
+					GitUtil.executeGit(
+						project, "add",
+						project.relativePath(versionOverrideFile));
+				}
+				else if (hasPackageInfoFiles) {
+					GitUtil.executeGit(
+						project, "add", "bnd.bnd", "**/packageinfo");
+				}
+				else {
+					GitUtil.executeGit(project, "add", "bnd.bnd");
+				}
+
+				String message = project.getName() + " packageinfo";
+
+				GitUtil.commit(project, message, true);
 			}
 
 			private boolean _hasPackageInfoFiles(Project project) {
@@ -2513,6 +2544,28 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				}
 
 				return false;
+			}
+
+			private void _removeDuplicates(
+				Properties properties, Properties otherProperties) {
+
+				Set<Map.Entry<Object, Object>> entrySet = properties.entrySet();
+
+				Iterator<Map.Entry<Object, Object>> iterator =
+					entrySet.iterator();
+
+				while (iterator.hasNext()) {
+					Map.Entry<Object, Object> entry = iterator.next();
+
+					String key = (String)entry.getKey();
+
+					if (Objects.equals(
+							entry.getValue(),
+							otherProperties.getProperty(key))) {
+
+						iterator.remove();
+					}
+				}
 			}
 
 		};

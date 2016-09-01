@@ -103,6 +103,20 @@ the `.gitrepo` file with the following values:
 - [LPS-67863]: Avoid Git error while running `gradlew baseline -PsyncRelease` on
 an OSGi project that does not contain a `packageinfo` file.
 
+## 1.2.2 - 2016-09-01
+
+### Changed
+- [LPS-67352]: Update the [Liferay Gradle Plugins] dependency to version 2.0.20.
+
+## 1.2.3 - 2016-09-01
+
+### Changed
+- [LPS-67863]: The file which contains the version overrides for an OSGi module
+is now called `.version-override-${project.name}.properties`.
+- [LPS-67863]: The `packageinfo` versions are always overriden with the versions
+specified in the `.version-override-${project.name}.properties` file, even if
+the ones in the `packageinfo` files are greater.
+
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [LPS-66853]: https://issues.liferay.com/browse/LPS-66853
 [LPS-67023]: https://issues.liferay.com/browse/LPS-67023

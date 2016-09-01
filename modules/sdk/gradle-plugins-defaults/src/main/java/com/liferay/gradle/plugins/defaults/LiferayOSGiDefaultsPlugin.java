@@ -231,12 +231,12 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		GradleUtil.applyPlugin(project, LiferayOSGiPlugin.class);
 
-		File versionOverridesFile = _getVersionOverridesFile(project);
+		File versionOverrideFile = _getVersionOverrideFile(project);
 
 		boolean syncReleaseVersions = _syncReleaseVersions(
-			project, portalRootDir, versionOverridesFile);
+			project, portalRootDir, versionOverrideFile);
 
-		_applyVersionOverrides(project, versionOverridesFile);
+		_applyVersionOverrides(project, versionOverrideFile);
 
 		Gradle gradle = project.getGradle();
 
@@ -300,7 +300,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		if (syncReleaseVersions) {
 			_configureTaskBaselineSyncReleaseVersions(
-				baselineTask, versionOverridesFile);
+				baselineTask, versionOverrideFile);
 		}
 
 		InstallCacheTask installCacheTask = addTaskInstallCache(project);
@@ -2391,14 +2391,14 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	}
 
 	private void _applyVersionOverrides(
-		Project project, File versionOverridesFile) {
+		Project project, File versionOverrideFile) {
 
-		if ((versionOverridesFile == null) || !versionOverridesFile.exists()) {
+		if ((versionOverrideFile == null) || !versionOverrideFile.exists()) {
 			return;
 		}
 
 		final Properties versionOverrides = GUtil.loadProperties(
-			versionOverridesFile);
+			versionOverrideFile);
 
 		String bundleVersion = versionOverrides.getProperty(
 			Constants.BUNDLE_VERSION);
@@ -2437,8 +2437,14 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 								packagePath = packagePath.replace('/', '.');
 
-								return _getPackageInfoOverride(
-									packagePath, line, versionOverrides);
+								String versionOverride =
+									versionOverrides.getProperty(packagePath);
+
+								if (Validator.isNotNull(versionOverride)) {
+									return "version " + versionOverride;
+								}
+
+								return line;
 							}
 
 						});
@@ -2456,7 +2462,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	}
 
 	private void _configureTaskBaselineSyncReleaseVersions(
-		Task task, final File versionOverridesFile) {
+		Task task, final File versionOverrideFile) {
 
 		Action<Task> action = new Action<Task>() {
 
@@ -2465,17 +2471,17 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				try {
 					Project project = task.getProject();
 
-					if (versionOverridesFile != null) {
+					if (versionOverrideFile != null) {
 						Properties versions = _getVersions(
 							project.getProjectDir(), null);
 
 						_saveVersions(
 							project.getProjectDir(), versions,
-							versionOverridesFile);
+							versionOverrideFile);
 
 						GitUtil.executeGit(
 							project, "add",
-							project.relativePath(versionOverridesFile));
+							project.relativePath(versionOverrideFile));
 					}
 					else if (_hasPackageInfoFiles(project)) {
 						GitUtil.executeGit(
@@ -2600,29 +2606,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		}
 	}
 
-	private String _getPackageInfoOverride(
-		String packagePath, String packageInfo, Properties versionOverrides) {
-
-		String versionNumberOverride = versionOverrides.getProperty(
-			packagePath);
-
-		if (Validator.isNull(versionNumberOverride)) {
-			return packageInfo;
-		}
-
-		String versionNumber = packageInfo.substring(8);
-
-		Version version = Version.parseVersion(versionNumber);
-		Version versionOverride = Version.parseVersion(versionNumberOverride);
-
-		if (versionOverride.compareTo(version) > 0) {
-			return "version " + versionNumberOverride;
-		}
-
-		return packageInfo;
-	}
-
-	private File _getVersionOverridesFile(Project project) {
+	private File _getVersionOverrideFile(Project project) {
 		File gitRepoDir = GradleUtil.getRootDir(
 			project.getProjectDir(), ".gitrepo");
 
@@ -2648,7 +2632,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		}
 
 		String fileName =
-			".version-overrides-" + project.getName() + ".properties";
+			".version-override-" + project.getName() + ".properties";
 
 		return new File(gitRepoDir.getParentFile(), fileName);
 	}
@@ -2778,11 +2762,11 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	}
 
 	private void _saveVersions(
-			File projectDir, Properties versions, File versionOverridesFile)
+			File projectDir, Properties versions, File versionOverrideFile)
 		throws IOException {
 
-		if (versionOverridesFile != null) {
-			FileUtil.writeProperties(versionOverridesFile, versions);
+		if (versionOverrideFile != null) {
+			FileUtil.writeProperties(versionOverrideFile, versions);
 		}
 
 		Path projectDirPath = projectDir.toPath();
@@ -2833,7 +2817,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	}
 
 	private boolean _syncReleaseVersions(
-		Project project, File portalRootDir, File versionOverridesFile) {
+		Project project, File portalRootDir, File versionOverrideFile) {
 
 		boolean syncRelease = false;
 
@@ -2884,8 +2868,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		Properties releaseVersions = null;
 		Properties versions = null;
 
-		if ((versionOverridesFile != null) && versionOverridesFile.exists()) {
-			versions = GUtil.loadProperties(versionOverridesFile);
+		if ((versionOverrideFile != null) && versionOverrideFile.exists()) {
+			versions = GUtil.loadProperties(versionOverrideFile);
 		}
 
 		try {
@@ -2908,7 +2892,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			}
 
 			_saveVersions(
-				project.getProjectDir(), versions, versionOverridesFile);
+				project.getProjectDir(), versions, versionOverrideFile);
 		}
 		catch (IOException ioe) {
 			throw new UncheckedIOException(ioe);

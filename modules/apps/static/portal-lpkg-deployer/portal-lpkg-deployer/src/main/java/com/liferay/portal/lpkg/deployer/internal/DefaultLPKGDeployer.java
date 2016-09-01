@@ -88,7 +88,7 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 	@Activate
 	public void activate(BundleContext bundleContext) {
 		try {
-			_doActivate(bundleContext);
+			_activate(bundleContext);
 		}
 		catch (Throwable t) {
 			_throwableCollector.collect(t);
@@ -224,7 +224,7 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 		_lpkgBundleTracker.close();
 	}
 
-	private void _doActivate(final BundleContext bundleContext)
+	private void _activate(final BundleContext bundleContext)
 		throws Exception {
 
 		Dictionary<String, Object> properties = new HashMapDictionary<>();

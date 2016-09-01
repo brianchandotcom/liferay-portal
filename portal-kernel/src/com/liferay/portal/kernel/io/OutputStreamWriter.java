@@ -103,34 +103,34 @@ public class OutputStreamWriter extends Writer {
 
 	@Override
 	public void write(char[] chars) throws IOException {
-		_doWrite(CharBuffer.wrap(chars, 0, chars.length));
+		_write(CharBuffer.wrap(chars, 0, chars.length));
 	}
 
 	@Override
 	public void write(char[] chars, int offset, int length) throws IOException {
-		_doWrite(CharBuffer.wrap(chars, offset, length));
+		_write(CharBuffer.wrap(chars, offset, length));
 	}
 
 	@Override
 	public void write(int c) throws IOException {
 		_inputCharBuffer.put((char)c);
 
-		_doWrite(_EMPTY_CHAR_BUFFER);
+		_write(_EMPTY_CHAR_BUFFER);
 	}
 
 	@Override
 	public void write(String string) throws IOException {
-		_doWrite(CharBuffer.wrap(string, 0, string.length()));
+		_write(CharBuffer.wrap(string, 0, string.length()));
 	}
 
 	@Override
 	public void write(String string, int offset, int length)
 		throws IOException {
 
-		_doWrite(CharBuffer.wrap(string, offset, offset + length));
+		_write(CharBuffer.wrap(string, offset, offset + length));
 	}
 
-	private void _doWrite(CharBuffer inputCharBuffer) throws IOException {
+	private void _write(CharBuffer inputCharBuffer) throws IOException {
 		_ensureOpen();
 
 		_encodeLeftoverChar(inputCharBuffer, false);

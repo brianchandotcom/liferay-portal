@@ -250,7 +250,7 @@ public abstract class RemoteSPI implements ProcessCallable<SPI>, Remote, SPI {
 			}
 
 			if (unregistered || !_waitForMPI()) {
-				_doShutdown();
+				_shutdown();
 			}
 		}
 
@@ -260,12 +260,12 @@ public abstract class RemoteSPI implements ProcessCallable<SPI>, Remote, SPI {
 
 			runtime.removeShutdownHook(this);
 
-			_doShutdown();
+			_shutdown();
 
 			return true;
 		}
 
-		private void _doShutdown() {
+		private void _shutdown() {
 			try {
 				RemoteSPI.this.stop();
 			}

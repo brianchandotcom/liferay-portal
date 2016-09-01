@@ -145,6 +145,7 @@
 	</command>
 
 	<command name="viewCheckboxLabel">
+		<var name="key_fieldLabel" value="${fieldLabel}" />
 		<var name="key_fieldName" value="${fieldName}" />
 
 		<execute function="AssertTextEquals#assertText" locator1="FormFields#CHECKBOX_LABEL" value1="${fieldLabel}" />
@@ -361,6 +362,7 @@
 	</command>
 
 	<command name="viewSwitcherLabel">
+		<var name="key_fieldLabel" value="${fieldLabel}" />
 		<var name="key_fieldName" value="${fieldName}" />
 
 		<execute function="AssertTextEquals#assertText" locator1="FormFields#SWITCHER_LABEL" value1="${fieldLabel}" />

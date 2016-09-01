@@ -31,9 +31,13 @@ import org.dom4j.Element;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.rules.TestRule;
+import org.junit.runner.Description;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
+import org.junit.runners.model.MultipleFailureException;
+import org.junit.runners.model.Statement;
 
 import org.openqa.selenium.WebDriverException;
 
@@ -235,5 +239,70 @@ public class PoshiRunner {
 
 	private final String _testClassCommandName;
 	private final String _testClassName;
+
+	private class Retry implements TestRule {
+
+		public Retry(int retryCount, Class... retryClasses) {
+			_retryClasses = retryClasses;
+			_retryCount = retryCount;
+		}
+
+		public Statement apply(
+			final Statement statement, final Description description) {
+
+			return new Statement() {
+				@Override
+				public void evaluate() throws Throwable {
+					Throwable throwable = null;
+
+					for (int i = 0; i < _retryCount; i++) {
+						try {
+							statement.evaluate();
+
+							return;
+						}
+						catch (MultipleFailureException mfe) {
+							throwable = mfe;
+
+							boolean retry = false;
+
+							for (Class retryClass : _retryClasses) {
+								for (Throwable failure : mfe.getFailures()) {
+									if (retryClass.isInstance(failure)) {
+										retry = true;
+									}
+								}
+							}
+
+							if (retry == false) {
+								throw throwable;
+							}
+						}
+						catch (Throwable t) {
+							throwable = t;
+
+							boolean retry = false;
+
+							for (Class retryClass : _retryClasses) {
+								if (retryClass.isInstance(t)) {
+									retry = true;
+								}
+							}
+
+							if (retry == false) {
+								throw throwable;
+							}
+						}
+					}
+
+					throw throwable;
+				}
+			};
+		}
+
+		private Class[] _retryClasses;
+		private int _retryCount;
+
+	}
 
 }

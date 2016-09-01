@@ -15,6 +15,8 @@
 package com.liferay.source.formatter;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -305,6 +307,8 @@ public class SourceFormatter {
 			return new Properties();
 		}
 
+		String[] excludes = new String[0];
+
 		List<Properties> propertiesList = new ArrayList<>();
 
 		// Find properties file in portal-impl/src/
@@ -321,6 +325,14 @@ public class SourceFormatter {
 			properties.load(inputStream);
 
 			propertiesList.add(properties);
+
+			String excludesValue = properties.getProperty(
+				"source.formatter.excludes");
+
+			List<String> excludesList = ListUtil.fromString(
+				GetterUtil.getString(excludesValue), StringPool.COMMA);
+
+			excludes = excludesList.toArray(new String[excludesList.size()]);
 		}
 
 		// Find properties files in any parent directory
@@ -348,7 +360,7 @@ public class SourceFormatter {
 
 		List<String> modulePropertiesFileNames =
 			sourceFormatterHelper.getFileNames(
-				_sourceFormatterArgs.getBaseDirName(), null, new String[0],
+				_sourceFormatterArgs.getBaseDirName(), null, excludes,
 				new String[] {"**/modules/**/" + fileName});
 
 		for (String modulePropertiesFileName : modulePropertiesFileNames) {

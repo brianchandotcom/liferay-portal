@@ -4,7 +4,6 @@ Bundle-Version: 1.0.0
 Export-Package: com.liferay.project.templates
 Main-Class: com.liferay.project.templates.ProjectTemplates
 Private-Package:\
-	aQute.lib.io,\
 	org.apache.commons.collections,\
 	org.apache.commons.collections.map,\
 	org.apache.commons.lang,\

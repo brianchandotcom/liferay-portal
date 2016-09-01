@@ -18,6 +18,8 @@
 PortletURL exportAssetURL = assetRenderer.getURLExport(liferayPortletRequest, liferayPortletResponse);
 
 exportAssetURL.setWindowState(LiferayWindowState.EXCLUSIVE);
+exportAssetURL.setParameter("portletResource", portletDisplay.getId());
+exportAssetURL.setParameter("plid", String.valueOf(portletDisplay.getThemeDisplay().getPlid()));
 %>
 
 <liferay-ui:icon-list>

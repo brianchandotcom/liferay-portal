@@ -8,6 +8,7 @@ dependencies {
 	provided group: "com.liferay", name: "com.liferay.exportimport.service", version: "3.0.0"
 	provided group: "com.liferay", name: "com.liferay.frontend.taglib", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.journal.content.asset.addon.entry.common", version: "2.0.0"
+	provided group: "com.liferay", name: "com.liferay.journal.content.asset.addon.entry.conversions", version: "default"
 	provided group: "com.liferay", name: "com.liferay.journal.lang", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.journal.service", version: "3.0.0"
 	provided group: "com.liferay", name: "com.liferay.journal.web", version: "1.0.0"

@@ -18,6 +18,9 @@ import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.journal.constants.JournalWebKeys;
+import com.liferay.journal.content.asset.addon.entry.common.UserToolAssetAddonEntry;
+import com.liferay.journal.content.asset.addon.entry.common.UserToolAssetAddonEntryTracker;
+import com.liferay.journal.content.asset.addon.entry.conversions.util.ConversionUserToolAssetAddonEntryUtil;
 import com.liferay.journal.content.web.constants.JournalContentPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.util.JournalContent;
@@ -27,6 +30,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -86,6 +90,36 @@ public class JournalContentConfigurationAction
 		long articleGroupId = getArticleGroupId(actionRequest);
 
 		setPreference(actionRequest, "groupId", String.valueOf(articleGroupId));
+
+		String userToolAssetAddonEntryKeys = getParameter(
+			actionRequest, "userToolAssetAddonEntryKeys");
+
+		String[] addonEntryKeys = userToolAssetAddonEntryKeys.split(
+			StringPool.COMMA);
+
+		StringBundler sb = new StringBundler(addonEntryKeys.length * 2 - 1);
+
+		for (String addonEntryKey : addonEntryKeys) {
+			UserToolAssetAddonEntry userToolAssetAddonEntry =
+				UserToolAssetAddonEntryTracker.getUserToolAssetAddonEntry(
+					addonEntryKey);
+
+			String extension =
+				ConversionUserToolAssetAddonEntryUtil.getExtension(
+					addonEntryKey);
+
+			if (extension == null) {
+				continue;
+			}
+
+			if (sb.length() > 0) {
+				sb.append(StringPool.COMMA);
+			}
+
+			sb.append(extension);
+		}
+
+		setPreference(actionRequest, "extensions", sb.toString());
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
 	}

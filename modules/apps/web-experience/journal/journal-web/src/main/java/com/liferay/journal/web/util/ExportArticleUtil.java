@@ -19,7 +19,10 @@ import com.liferay.journal.model.JournalArticleDisplay;
 import com.liferay.journal.util.JournalContent;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -36,7 +39,6 @@ import com.liferay.portlet.documentlibrary.util.DocumentConversionUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 
 import javax.portlet.PortletPreferences;
@@ -57,7 +59,7 @@ public class ExportArticleUtil {
 
 	public void sendFile(
 			PortletRequest portletRequest, PortletResponse portletResponse)
-		throws IOException {
+		throws Exception {
 
 		long groupId = ParamUtil.getLong(portletRequest, "groupId");
 		String articleId = ParamUtil.getString(portletRequest, "articleId");
@@ -67,14 +69,30 @@ public class ExportArticleUtil {
 
 		PortletPreferences portletPreferences = portletRequest.getPreferences();
 
-		String[] allowedExtensions = StringUtil.split(
-			portletPreferences.getValue("extensions", null));
+		String porletResource = ParamUtil.getString(
+			portletRequest, "portletResource");
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (!Validator.isBlank(porletResource)) {
+			portletPreferences =
+				PortletPreferencesFactoryUtil.getExistingPortletSetup(
+					themeDisplay.getLayout(), porletResource);
+		}
+
+		String[] allowedExtensions = portletPreferences.getValues(
+			"extensions", null);
+
+		if (allowedExtensions.length == 1) {
+			allowedExtensions = StringUtil.split(
+				portletPreferences.getValue("extensions", null));
+		}
 
 		String languageId = LanguageUtil.getLanguageId(portletRequest);
 		PortletRequestModel portletRequestModel = new PortletRequestModel(
 			portletRequest, portletResponse);
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			portletRequest);
 		HttpServletResponse response = PortalUtil.getHttpServletResponse(
@@ -155,6 +173,14 @@ public class ExportArticleUtil {
 		_journalContent = journalContent;
 	}
 
+	@Reference(unbind = "-")
+	protected void setLayoutLocalService(
+		LayoutLocalService layoutLocalService) {
+
+		_layoutLocalService = layoutLocalService;
+	}
+
 	private JournalContent _journalContent;
+	private LayoutLocalService _layoutLocalService;
 
 }

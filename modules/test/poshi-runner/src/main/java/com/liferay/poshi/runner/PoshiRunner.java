@@ -30,6 +30,7 @@ import org.dom4j.Element;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
@@ -40,6 +41,7 @@ import org.junit.runners.model.MultipleFailureException;
 import org.junit.runners.model.Statement;
 
 import org.openqa.selenium.WebDriverException;
+import org.openqa.selenium.remote.UnreachableBrowserException;
 
 /**
  * @author Brian Wing Shun Chan
@@ -48,6 +50,9 @@ import org.openqa.selenium.WebDriverException;
  */
 @RunWith(Parameterized.class)
 public class PoshiRunner {
+
+	@Rule
+	public Retry retry = new Retry(3, UnreachableBrowserException.class);
 
 	@Parameters(name = "{0}")
 	public static List<String> getList() throws Exception {

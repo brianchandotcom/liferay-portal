@@ -48,6 +48,9 @@ public class OutputStreamWriterTest {
 
 	@Test
 	public void testClose() throws IOException {
+
+		// Normal close
+
 		MarkerOutputStream markerOutputStream = new MarkerOutputStream();
 
 		try (OutputStreamWriter outputStreamWriter = new OutputStreamWriter(
@@ -72,6 +75,35 @@ public class OutputStreamWriterTest {
 		}
 
 		Assert.assertFalse(markerOutputStream._closed);
+
+		// Exception close
+
+		final IOException ioException = new IOException();
+
+		OutputStreamWriter outputStreamWriter = new OutputStreamWriter(
+			new UnsyncByteArrayOutputStream() {
+
+				@Override
+				public void close() throws IOException {
+					throw ioException;
+				}
+
+			});
+
+		// 1st close
+
+		try {
+			outputStreamWriter.close();
+
+			Assert.fail();
+		}
+		catch (IOException ioe) {
+			Assert.assertSame(ioe, ioException);
+		}
+
+		// 2nd close to check 1st close indeed changed the state
+
+		outputStreamWriter.close();
 	}
 
 	@Test

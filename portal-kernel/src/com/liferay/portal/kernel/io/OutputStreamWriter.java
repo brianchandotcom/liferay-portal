@@ -79,13 +79,16 @@ public class OutputStreamWriter extends Writer {
 			return;
 		}
 
-		_flushEncoder();
+		try {
+			_flushEncoder();
 
-		_flushBuffer();
+			_flushBuffer();
 
-		_outputStream.close();
-
-		_isOpen = false;
+			_outputStream.close();
+		}
+		finally {
+			_isOpen = false;
+		}
 	}
 
 	@Override

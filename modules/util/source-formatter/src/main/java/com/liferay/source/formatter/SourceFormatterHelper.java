@@ -87,6 +87,10 @@ public class SourceFormatterHelper {
 		FileSystem fileSystem = FileSystems.getDefault();
 
 		for (String exclude : excludes) {
+			if (!exclude.startsWith("**/")) {
+				exclude = "**/" + exclude;
+			}
+
 			if (exclude.endsWith("/**")) {
 				exclude = exclude.substring(0, exclude.length() - 3);
 

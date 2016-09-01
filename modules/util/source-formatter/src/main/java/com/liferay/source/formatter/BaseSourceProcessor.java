@@ -2943,15 +2943,15 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	private void _init() {
-		portalSource = _isPortalSource();
-
-		_sourceFormatterMessagesMap = new HashMap<>();
-
 		try {
 			_sourceFormatterHelper = new SourceFormatterHelper(
 				sourceFormatterArgs.isUseProperties());
 
 			_sourceFormatterHelper.init();
+
+			portalSource = _isPortalSource();
+
+			_sourceFormatterMessagesMap = new HashMap<>();
 		}
 		catch (Exception e) {
 			ReflectionUtil.throwException(e);

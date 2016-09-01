@@ -64,7 +64,6 @@
 								<span class="icon-asterisk text-warning"></span>
 							{/if}
 						</span>
-
 					</label>
 
 				{else}
@@ -75,7 +74,6 @@
 					{if $required and length($options) == 1}
 						<span class="icon-asterisk text-warning"></span>
 					{/if}
-
 				{/if}
 
 				{if not $inline}
@@ -83,7 +81,7 @@
 				{/if}
 			{/foreach}
 		</div>
-		
+
 		{if $tip and length($options) == 1}
 			<p class="liferay-ddm-form-field-tip">{$tip}</p>
 		{/if}

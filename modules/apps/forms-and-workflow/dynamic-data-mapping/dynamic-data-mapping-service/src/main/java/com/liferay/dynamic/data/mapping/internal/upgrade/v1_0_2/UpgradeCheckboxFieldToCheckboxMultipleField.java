@@ -24,15 +24,15 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.DDMFormFieldValueTransformer;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesTransformer;
+import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.upgrade.AutoBatchPreparedStatementUtil;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -50,11 +50,13 @@ public class UpgradeCheckboxFieldToCheckboxMultipleField
 	public UpgradeCheckboxFieldToCheckboxMultipleField(
 		DDMFormJSONDeserializer ddmFormJSONDeserializer,
 		DDMFormValuesJSONDeserializer ddmFormValuesJSONDeserializer,
-		DDMFormValuesJSONSerializer ddmFormValuesJSONSerializer) {
+		DDMFormValuesJSONSerializer ddmFormValuesJSONSerializer,
+		JSONFactory jsonFactory) {
 
 		_ddmFormJSONDeserializer = ddmFormJSONDeserializer;
 		_ddmFormValuesJSONDeserializer = ddmFormValuesJSONDeserializer;
 		_ddmFormValuesJSONSerializer = ddmFormValuesJSONSerializer;
+		_jsonFactory = jsonFactory;
 	}
 
 	@Override
@@ -102,21 +104,21 @@ public class UpgradeCheckboxFieldToCheckboxMultipleField
 		}
 	}
 
-	protected JSONArray getOptionJSONArray(JSONObject checkboxFieldJSONObject) {
-		JSONArray optionJSONArray = JSONFactoryUtil.createJSONArray();
+	protected JSONArray getOptionsJSONArray(
+		JSONObject checkboxFieldJSONObject) {
 
-		JSONObject labelJSONObject = checkboxFieldJSONObject.getJSONObject(
-			"label");
+		JSONArray optionsJSONArray = _jsonFactory.createJSONArray();
 
-		JSONObject option = JSONFactoryUtil.createJSONObject();
+		JSONObject optionJSONObject = _jsonFactory.createJSONObject();
 
-		option.put("label", labelJSONObject);
+		optionJSONObject.put(
+			"label", checkboxFieldJSONObject.getJSONObject("label"));
+		optionJSONObject.put(
+			"value", checkboxFieldJSONObject.getString("name"));
 
-		option.put("value", checkboxFieldJSONObject.getString("name"));
+		optionsJSONArray.put(optionJSONObject);
 
-		optionJSONArray.put(option);
-
-		return optionJSONArray;
+		return optionsJSONArray;
 	}
 
 	protected JSONObject getPredefinedValue(
@@ -124,8 +126,9 @@ public class UpgradeCheckboxFieldToCheckboxMultipleField
 
 		JSONObject oldPredefinedValueJSONObject =
 			checkboxFieldJSONObject.getJSONObject("predefinedValue");
+
 		JSONObject newPredefinedValueJSONObject =
-			JSONFactoryUtil.createJSONObject();
+			_jsonFactory.createJSONObject();
 
 		Iterator<String> languageKeys = oldPredefinedValueJSONObject.keys();
 
@@ -151,13 +154,10 @@ public class UpgradeCheckboxFieldToCheckboxMultipleField
 		JSONObject checkboxFieldJSONObject) {
 
 		checkboxFieldJSONObject.put("dataType", "string");
-
 		checkboxFieldJSONObject.put(
-			"options", getOptionJSONArray(checkboxFieldJSONObject));
-
+			"options", getOptionsJSONArray(checkboxFieldJSONObject));
 		checkboxFieldJSONObject.put(
 			"predefinedValue", getPredefinedValue(checkboxFieldJSONObject));
-
 		checkboxFieldJSONObject.put("type", "checkbox_multiple");
 	}
 
@@ -169,7 +169,7 @@ public class UpgradeCheckboxFieldToCheckboxMultipleField
 			new DDMFormValuesTransformer(ddmFormValues);
 
 		ddmFormValuesTransformer.addTransformer(
-			new CheckboxDDMFormFieldValueTransformer());
+			new CheckboxDDMFormFieldValueTransformer(_jsonFactory));
 
 		ddmFormValuesTransformer.transform();
 	}
@@ -221,7 +221,7 @@ public class UpgradeCheckboxFieldToCheckboxMultipleField
 	protected String upgradeRecordSetStructureDefinition(String definition)
 		throws JSONException {
 
-		JSONObject definitionJSONObject = JSONFactoryUtil.createJSONObject(
+		JSONObject definitionJSONObject = _jsonFactory.createJSONObject(
 			definition);
 
 		JSONArray fieldsJSONArray = definitionJSONObject.getJSONArray("fields");
@@ -255,9 +255,14 @@ public class UpgradeCheckboxFieldToCheckboxMultipleField
 	private final DDMFormJSONDeserializer _ddmFormJSONDeserializer;
 	private final DDMFormValuesJSONDeserializer _ddmFormValuesJSONDeserializer;
 	private final DDMFormValuesJSONSerializer _ddmFormValuesJSONSerializer;
+	private final JSONFactory _jsonFactory;
 
 	private static class CheckboxDDMFormFieldValueTransformer
 		implements DDMFormFieldValueTransformer {
+
+		public CheckboxDDMFormFieldValueTransformer(JSONFactory jsonFactory) {
+			_jsonFactory = jsonFactory;
+		}
 
 		@Override
 		public String getFieldType() {
@@ -273,7 +278,7 @@ public class UpgradeCheckboxFieldToCheckboxMultipleField
 			for (Locale locale : value.getAvailableLocales()) {
 				String valueString = value.getString(locale);
 
-				JSONArray valueJSONArray = JSONFactoryUtil.createJSONArray();
+				JSONArray valueJSONArray = _jsonFactory.createJSONArray();
 
 				if (Objects.equals(valueString, "true")) {
 					DDMFormField ddmFormField =
@@ -285,6 +290,8 @@ public class UpgradeCheckboxFieldToCheckboxMultipleField
 				value.addString(locale, valueJSONArray.toString());
 			}
 		}
+
+		private JSONFactory _jsonFactory;
 
 	}
 

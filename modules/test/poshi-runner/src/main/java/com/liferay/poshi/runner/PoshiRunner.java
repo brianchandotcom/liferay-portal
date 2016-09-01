@@ -28,6 +28,7 @@ import java.util.List;
 
 import org.dom4j.Element;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -78,15 +79,18 @@ public class PoshiRunner {
 	}
 
 	public PoshiRunner(String classCommandName) throws Exception {
-		System.out.println();
-		System.out.println("###");
-		System.out.println("### " + classCommandName);
-		System.out.println("###");
-		System.out.println();
-
 		_testClassCommandName = classCommandName;
 		_testClassName = PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
 			_testClassCommandName);
+	}
+
+	@Before
+	public void setUp() throws Exception {
+		System.out.println();
+		System.out.println("###");
+		System.out.println("### " + _testClassCommandName);
+		System.out.println("###");
+		System.out.println();
 
 		PoshiRunnerContext.setTestCaseCommandName(_testClassCommandName);
 		PoshiRunnerContext.setTestCaseName(_testClassName);
@@ -94,16 +98,33 @@ public class PoshiRunner {
 		PoshiRunnerVariablesUtil.clear();
 
 		try {
-			XMLLoggerHandler.generateXMLLog(classCommandName);
+			XMLLoggerHandler.generateXMLLog(_testClassCommandName);
 
 			LoggerUtil.startLogger();
 
 			SeleniumUtil.startSelenium();
+
+			_runSetUp();
 		}
 		catch (WebDriverException wde) {
 			wde.printStackTrace();
 
 			throw wde;
+		}
+		catch (Exception e) {
+			LiferaySeleniumHelper.printJavaProcessStacktrace();
+
+			PoshiRunnerStackTraceUtil.printStackTrace(e.getMessage());
+
+			PoshiRunnerStackTraceUtil.emptyStackTrace();
+
+			e.printStackTrace();
+
+			if (PropsValues.TEST_PAUSE_ON_FAILURE) {
+				LoggerUtil.pauseFailedTest();
+			}
+
+			throw e;
 		}
 	}
 

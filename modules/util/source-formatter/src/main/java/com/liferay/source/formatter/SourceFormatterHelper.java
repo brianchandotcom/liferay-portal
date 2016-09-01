@@ -61,6 +61,20 @@ public class SourceFormatterHelper {
 		}
 	}
 
+	public File getFile(String baseDir, String fileName, int level) {
+		for (int i = 0; i < level; i++) {
+			File file = new File(baseDir + fileName);
+
+			if (file.exists()) {
+				return file;
+			}
+
+			fileName = "../" + fileName;
+		}
+
+		return null;
+	}
+
 	public List<String> getFileNames(
 			String baseDir, List<String> recentChangesFileNames,
 			String[] excludes, String[] includes)

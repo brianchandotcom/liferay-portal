@@ -39,6 +39,30 @@ public class FriendlyURLNormalizerImplTest {
 	}
 
 	@Test
+	public void testNormalizeIRIWithLatinCharacters() {
+		Assert.assertEquals(
+			"-pardonne-%C3%A3%C2%A0-tous-mais-non-%C3%A3%C2%A0-toi.-",
+			_friendlyURLNormalizerImpl.normalizeWithEncoding(
+				"\"Pardonne à tous mais non à toi.\""));
+	}
+
+	@Test
+	public void testNormalizeIRIWithOnlySpecialCharacters() {
+		Assert.assertEquals(
+			"-",
+			_friendlyURLNormalizerImpl.normalizeWithEncoding(
+				"' ,\\\'\"()[]{}?#@+~;$!=:&\u00a3\u2013\u2014\u2018\u2019" +
+					"\u201c\u201d'"));
+	}
+
+	@Test
+	public void testNormalizeIRIWithSpecialCharacters() {
+		Assert.assertEquals(
+			"-%E5%BC%95-",
+			_friendlyURLNormalizerImpl.normalizeWithEncoding("([\u5F15])"));
+	}
+
+	@Test
 	public void testNormalizeNull() {
 		Assert.assertEquals(null, _friendlyURLNormalizerImpl.normalize(null));
 	}

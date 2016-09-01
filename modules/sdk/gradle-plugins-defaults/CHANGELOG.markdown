@@ -117,6 +117,16 @@ is now called `.version-override-${project.name}.properties`.
 specified in the `.version-override-${project.name}.properties` file, even if
 the ones in the `packageinfo` files are greater.
 
+## 1.2.4 - 2016-09-01
+
+### Changed
+- [LPS-67863]: In order to prevent releasing modules with unpublished
+dependencies, Disable the `printArtifactPublishCommands` task if the project's
+`build.gradle` contains the string `version: "default"`.
+- [LPS-67863]: The `.version-override-${project.name}.properties` now contains
+only the version overrides that are different from the versions specified in the
+`bnd.bnd` and `packageinfo` files.
+
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [LPS-66853]: https://issues.liferay.com/browse/LPS-66853
 [LPS-67023]: https://issues.liferay.com/browse/LPS-67023

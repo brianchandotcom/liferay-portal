@@ -45,6 +45,17 @@ import org.gradle.api.tasks.TaskInputs;
  */
 public class FileUtil extends com.liferay.gradle.util.FileUtil {
 
+	public static boolean contains(File file, String s) throws IOException {
+		String content = new String(
+			Files.readAllBytes(file.toPath()), StandardCharsets.UTF_8);
+
+		if (content.contains(s)) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public static File[] getDirectories(File dir) {
 		return dir.listFiles(
 			new FileFilter() {

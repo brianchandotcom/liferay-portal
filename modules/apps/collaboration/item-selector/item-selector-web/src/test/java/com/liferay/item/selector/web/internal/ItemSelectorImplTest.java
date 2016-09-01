@@ -20,7 +20,7 @@ import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewRenderer;
 import com.liferay.item.selector.constants.ItemSelectorPortletKeys;
-import com.liferay.item.selector.web.internal.util.ItemSelectorCriterionSerializer;
+import com.liferay.item.selector.web.internal.util.ItemSelectorCriterionSerializerImpl;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -66,15 +66,15 @@ public class ItemSelectorImplTest extends PowerMockito {
 
 		_itemSelectorImpl = new ItemSelectorImpl();
 
-		_itemSelectorCriterionSerializer.addItemSelectorReturnType(
+		_stubItemSelectorCriterionSerializer.addItemSelectorReturnType(
 			_testFileEntryItemSelectorReturnType);
-		_itemSelectorCriterionSerializer.addItemSelectorReturnType(
+		_stubItemSelectorCriterionSerializer.addItemSelectorReturnType(
 			_testStringItemSelectorReturnType);
-		_itemSelectorCriterionSerializer.addItemSelectorReturnType(
+		_stubItemSelectorCriterionSerializer.addItemSelectorReturnType(
 			_testURLItemSelectorReturnType);
 
 		_itemSelectorImpl.setItemSelectorCriterionSerializer(
-			_itemSelectorCriterionSerializer);
+			_stubItemSelectorCriterionSerializer);
 
 		_mediaItemSelectorCriterion = new MediaItemSelectorCriterion();
 
@@ -286,16 +286,28 @@ public class ItemSelectorImplTest extends PowerMockito {
 	}
 
 	private FlickrItemSelectorCriterion _flickrItemSelectorCriterion;
-	private final ItemSelectorCriterionSerializer
-		_itemSelectorCriterionSerializer =
-			new ItemSelectorCriterionSerializer();
 	private ItemSelectorImpl _itemSelectorImpl;
 	private MediaItemSelectorCriterion _mediaItemSelectorCriterion;
+	private final StubItemSelectorCriterionSerializerImpl
+		_stubItemSelectorCriterionSerializer =
+			new StubItemSelectorCriterionSerializerImpl();
 	private final ItemSelectorReturnType _testFileEntryItemSelectorReturnType =
 		new TestFileEntryItemSelectorReturnType();
 	private final ItemSelectorReturnType _testStringItemSelectorReturnType =
 		new TestStringItemSelectorReturnType();
 	private final ItemSelectorReturnType _testURLItemSelectorReturnType =
 		new TestURLItemSelectorReturnType();
+
+	private class StubItemSelectorCriterionSerializerImpl
+		extends ItemSelectorCriterionSerializerImpl {
+
+		@Override
+		public void addItemSelectorReturnType(
+			ItemSelectorReturnType itemSelectorReturnType) {
+
+			super.addItemSelectorReturnType(itemSelectorReturnType);
+		}
+
+	}
 
 }

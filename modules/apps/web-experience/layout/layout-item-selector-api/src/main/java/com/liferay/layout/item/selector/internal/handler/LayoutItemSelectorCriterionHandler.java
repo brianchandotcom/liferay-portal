@@ -21,6 +21,7 @@ import com.liferay.layout.item.selector.criterion.LayoutItemSelectorCriterion;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Sergio González
@@ -38,6 +39,11 @@ public class LayoutItemSelectorCriterionHandler
 	@Override
 	protected void activate(BundleContext bundleContext) {
 		super.activate(bundleContext);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		super.deactivate();
 	}
 
 }

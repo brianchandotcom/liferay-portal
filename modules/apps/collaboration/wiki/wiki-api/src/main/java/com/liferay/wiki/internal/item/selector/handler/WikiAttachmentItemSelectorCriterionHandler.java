@@ -21,6 +21,7 @@ import com.liferay.wiki.item.selector.criterion.WikiAttachmentItemSelectorCriter
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Iván Zaera
@@ -41,6 +42,11 @@ public class WikiAttachmentItemSelectorCriterionHandler
 	@Override
 	protected void activate(BundleContext bundleContext) {
 		super.activate(bundleContext);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		super.deactivate();
 	}
 
 }

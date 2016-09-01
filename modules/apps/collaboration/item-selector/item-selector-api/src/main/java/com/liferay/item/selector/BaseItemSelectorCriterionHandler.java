@@ -18,6 +18,7 @@ import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReference
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.util.ClassUtil;
 
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ import java.util.List;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Roberto Díaz
@@ -68,12 +70,22 @@ public abstract class BaseItemSelectorCriterionHandler
 	}
 
 	protected void activate(BundleContext bundleContext) {
+		_serviceTracker = ServiceTrackerFactory.open(
+			bundleContext, ItemSelectorViewReturnTypeProviderHandler.class,
+			null);
+
 		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
 			bundleContext, ItemSelectorView.class, null,
 			new ItemSelectorViewServiceReferenceMapper(bundleContext),
 			Collections.reverseOrder(
 				new PropertyServiceReferenceComparator(
 					"item.selector.view.order")));
+	}
+
+	protected void deactivate() {
+		_serviceTracker.close();
+
+		_serviceTrackerMap.close();
 	}
 
 	private boolean _isItemSelectorViewSupported(
@@ -83,8 +95,21 @@ public abstract class BaseItemSelectorCriterionHandler
 		String itemSelectorReturnTypeClassName = ClassUtil.getClassName(
 			itemSelectorReturnType);
 
-		List<ItemSelectorReturnType> supportedItemSelectorReturnTypes =
-			itemSelectorView.getSupportedItemSelectorReturnTypes();
+		List<ItemSelectorReturnType> supportedItemSelectorReturnTypes = null;
+
+		ItemSelectorViewReturnTypeProviderHandler
+			itemSelectorViewReturnTypeProviderHandler =
+				_serviceTracker.getService();
+
+		if (itemSelectorViewReturnTypeProviderHandler != null) {
+			supportedItemSelectorReturnTypes =
+				itemSelectorViewReturnTypeProviderHandler.
+					getSupportedItemSelectorReturnTypes(itemSelectorView);
+		}
+		else {
+			supportedItemSelectorReturnTypes =
+				itemSelectorView.getSupportedItemSelectorReturnTypes();
+		}
 
 		for (ItemSelectorReturnType supportedItemSelectorReturnType :
 				supportedItemSelectorReturnTypes) {
@@ -102,6 +127,9 @@ public abstract class BaseItemSelectorCriterionHandler
 		return false;
 	}
 
+	private ServiceTracker
+		<ItemSelectorViewReturnTypeProviderHandler,
+			ItemSelectorViewReturnTypeProviderHandler> _serviceTracker;
 	private ServiceTrackerMap<Class, List<ItemSelectorView>> _serviceTrackerMap;
 
 	private class ItemSelectorViewServiceReferenceMapper

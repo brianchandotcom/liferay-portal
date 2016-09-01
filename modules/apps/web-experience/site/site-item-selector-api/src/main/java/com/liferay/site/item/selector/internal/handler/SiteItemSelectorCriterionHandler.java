@@ -21,6 +21,7 @@ import com.liferay.site.item.selector.criterion.SiteItemSelectorCriterion;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Julio Camarero
@@ -38,6 +39,11 @@ public class SiteItemSelectorCriterionHandler
 	@Override
 	protected void activate(BundleContext bundleContext) {
 		super.activate(bundleContext);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		super.deactivate();
 	}
 
 }

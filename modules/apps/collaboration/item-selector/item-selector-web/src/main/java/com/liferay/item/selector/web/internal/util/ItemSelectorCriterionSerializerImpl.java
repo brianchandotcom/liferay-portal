@@ -17,6 +17,8 @@ package com.liferay.item.selector.web.internal.util;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
+import com.liferay.item.selector.ItemSelectorViewReturnTypeProviderHandler;
+import com.liferay.item.selector.web.ItemSelectorCriterionSerializer;
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.json.JSONContext;
 import com.liferay.portal.kernel.json.JSONDeserializer;
@@ -26,6 +28,7 @@ import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.json.JSONTransformer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -43,16 +46,64 @@ import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Iván Zaera
+ * @author Roberto Díaz
  */
-@Component(immediate = true, service = ItemSelectorCriterionSerializer.class)
-public class ItemSelectorCriterionSerializer {
+@Component(immediate = true)
+public class ItemSelectorCriterionSerializerImpl
+	implements ItemSelectorCriterionSerializer {
 
-	public void addItemSelectorReturnType(
+	@Override
+	public <T extends ItemSelectorCriterion> T deserialize(
+		Class<T> itemSelectorCriterionClass, String json) {
+
+		JSONDeserializer<T> jsonDeserializer =
+			JSONFactoryUtil.createJSONDeserializer();
+
+		jsonDeserializer.transform(
+			_desiredItemSelectorReturnTypesJSONDeserializerTransformer,
+			"desiredItemSelectorReturnTypes");
+
+		return jsonDeserializer.deserialize(json, itemSelectorCriterionClass);
+	}
+
+	@Override
+	public String serialize(ItemSelectorCriterion itemSelectorCriterion) {
+		JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
+
+		jsonSerializer.transform(
+			_desiredItemSelectorReturnTypesJSONTransformer,
+			"desiredItemSelectorReturnTypes");
+
+		jsonSerializer.exclude(_EXCLUDED_FIELD_NAMES);
+
+		return jsonSerializer.serializeDeep(itemSelectorCriterion);
+	}
+
+	@Reference(unbind = "-")
+	public void setItemSelectorViewReturnTypeProviderHandler(
+		ItemSelectorViewReturnTypeProviderHandler
+			itemSelectorViewReturnTypeProviderHandler) {
+
+		_itemSelectorViewReturnTypeProviderHandler =
+			itemSelectorViewReturnTypeProviderHandler;
+	}
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_bundleContext = bundleContext;
+
+		_serviceTracker = ServiceTrackerFactory.open(
+			bundleContext, ItemSelectorView.class,
+			new ItemSelectorReturnTypeServiceTrackerCustomizer());
+	}
+
+	protected void addItemSelectorReturnType(
 		ItemSelectorReturnType itemSelectorReturnType) {
 
 		Class<? extends ItemSelectorReturnType> itemSelectorReturnTypeClass =
@@ -77,40 +128,6 @@ public class ItemSelectorCriterionSerializer {
 		itemSelectorReturnTypes.add(itemSelectorReturnType);
 	}
 
-	public <T extends ItemSelectorCriterion> T deserialize(
-		Class<T> itemSelectorCriterionClass, String json) {
-
-		JSONDeserializer<T> jsonDeserializer =
-			JSONFactoryUtil.createJSONDeserializer();
-
-		jsonDeserializer.transform(
-			_desiredItemSelectorReturnTypesJSONDeserializerTransformer,
-			"desiredItemSelectorReturnTypes");
-
-		return jsonDeserializer.deserialize(json, itemSelectorCriterionClass);
-	}
-
-	public String serialize(ItemSelectorCriterion itemSelectorCriterion) {
-		JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
-
-		jsonSerializer.transform(
-			_desiredItemSelectorReturnTypesJSONTransformer,
-			"desiredItemSelectorReturnTypes");
-
-		jsonSerializer.exclude(_EXCLUDED_FIELD_NAMES);
-
-		return jsonSerializer.serializeDeep(itemSelectorCriterion);
-	}
-
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_bundleContext = bundleContext;
-
-		_serviceTracker = ServiceTrackerFactory.open(
-			bundleContext, ItemSelectorView.class,
-			new ItemSelectorReturnTypeServiceTrackerCustomizer());
-	}
-
 	@Deactivate
 	protected void deactivate() {
 		_serviceTracker.close();
@@ -120,7 +137,7 @@ public class ItemSelectorCriterionSerializer {
 		new String[] {"availableItemSelectorReturnTypes", "class"};
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ItemSelectorCriterionSerializer.class);
+		ItemSelectorCriterionSerializerImpl.class);
 
 	private BundleContext _bundleContext;
 	private final DesiredItemSelectorReturnTypesJSONDeserializerTransformer
@@ -131,6 +148,8 @@ public class ItemSelectorCriterionSerializer {
 			new DesiredItemSelectorReturnTypesJSONTransformer();
 	private final ConcurrentMap<String, List<ItemSelectorReturnType>>
 		_itemSelectorReturnTypes = new ConcurrentHashMap<>();
+	private ItemSelectorViewReturnTypeProviderHandler
+		_itemSelectorViewReturnTypeProviderHandler;
 	private ServiceTracker<ItemSelectorView, ItemSelectorView> _serviceTracker;
 
 	private static class DesiredItemSelectorReturnTypesJSONTransformer
@@ -228,8 +247,15 @@ public class ItemSelectorCriterionSerializer {
 			ItemSelectorView itemSelectorView = _bundleContext.getService(
 				serviceReference);
 
+			String itemSelectorViewKey = GetterUtil.getString(
+				serviceReference.getProperty("item.selector.view.key"));
+
 			List<ItemSelectorReturnType> supportedItemSelectorReturnTypes =
-				itemSelectorView.getSupportedItemSelectorReturnTypes();
+				_itemSelectorViewReturnTypeProviderHandler.
+					getSupportedItemSelectorReturnTypes(
+						itemSelectorView.
+							getSupportedItemSelectorReturnTypes(),
+						itemSelectorViewKey);
 
 			for (ItemSelectorReturnType supportedItemSelectorReturnType :
 					supportedItemSelectorReturnTypes) {

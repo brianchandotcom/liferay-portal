@@ -21,6 +21,7 @@ import com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriteri
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Roberto Díaz
@@ -38,6 +39,11 @@ public class FileItemSelectorCriterionHandler
 	@Override
 	protected void activate(BundleContext bundleContext) {
 		super.activate(bundleContext);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		super.deactivate();
 	}
 
 }

@@ -2259,7 +2259,13 @@
 			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="Workflow#viewDefaultMyWorkflowTasksCP" />
+		<execute macro="Workflow#gotoAssignedToMe" />
+
+		<execute macro="Workflow#viewCompletedTask">
+			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowTask" value="Review" />
+		</execute>
 
 		<execute macro="MockMock#viewMail">
 			<var name="asset" value="Updater Modification Notification Description" />

@@ -2648,7 +2648,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		}
 
 		String fileName =
-			".version-overrides-" + project.getName() + ".properties";
+			".version-override-" + project.getName() + ".properties";
 
 		return new File(gitRepoDir.getParentFile(), fileName);
 	}

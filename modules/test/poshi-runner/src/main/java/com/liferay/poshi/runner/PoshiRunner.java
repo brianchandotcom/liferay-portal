@@ -28,6 +28,7 @@ import java.util.List;
 
 import org.dom4j.Element;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -128,11 +129,36 @@ public class PoshiRunner {
 		}
 	}
 
+	@After
+	public void tearDown() throws Exception {
+		LiferaySeleniumHelper.writePoshiWarnings();
+
+		LoggerUtil.createSummary();
+
+		try {
+			if (!PropsValues.TEST_SKIP_TEAR_DOWN) {
+				_runTearDown();
+			}
+		}
+		catch (Exception e) {
+			PoshiRunnerStackTraceUtil.printStackTrace(e.getMessage());
+
+			PoshiRunnerStackTraceUtil.emptyStackTrace();
+
+			if (PropsValues.TEST_PAUSE_ON_FAILURE) {
+				LoggerUtil.pauseFailedTest();
+			}
+		}
+		finally {
+			LoggerUtil.stopLogger();
+
+			SeleniumUtil.stopSelenium();
+		}
+	}
+
 	@Test
 	public void test() throws Exception {
 		try {
-			_runSetUp();
-
 			_runCommand();
 
 			LiferaySeleniumHelper.assertNoPoshiWarnings();
@@ -150,32 +176,7 @@ public class PoshiRunner {
 				LoggerUtil.pauseFailedTest();
 			}
 
-			throw new Exception(e.getMessage(), e);
-		}
-		finally {
-			LiferaySeleniumHelper.writePoshiWarnings();
-
-			LoggerUtil.createSummary();
-
-			try {
-				if (!PropsValues.TEST_SKIP_TEAR_DOWN) {
-					_runTearDown();
-				}
-			}
-			catch (Exception e) {
-				PoshiRunnerStackTraceUtil.printStackTrace(e.getMessage());
-
-				PoshiRunnerStackTraceUtil.emptyStackTrace();
-
-				if (PropsValues.TEST_PAUSE_ON_FAILURE) {
-					LoggerUtil.pauseFailedTest();
-				}
-			}
-			finally {
-				LoggerUtil.stopLogger();
-
-				SeleniumUtil.stopSelenium();
-			}
+			throw e;
 		}
 	}
 

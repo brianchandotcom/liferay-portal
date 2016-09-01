@@ -88,6 +88,7 @@ AUI.add(
 				},
 
 				AUGMENTS: [
+					Renderer.FieldContextSupport,
 					Renderer.FieldEvaluationSupport,
 					Renderer.FieldEventsSupport,
 					Renderer.FieldFeedbackSupport,
@@ -101,14 +102,6 @@ AUI.add(
 				NAME: 'liferay-ddm-form-renderer-field',
 
 				prototype: {
-					initializer: function() {
-						var instance = this;
-
-						instance._eventHandlers = [
-							instance.after('contextChange', instance._afterContextChange)
-						];
-					},
-
 					destructor: function() {
 						var instance = this;
 
@@ -214,13 +207,21 @@ AUI.add(
 					getTemplateContext: function() {
 						var instance = this;
 
-						return A.merge(
-							instance.get('context'),
-							{
-								name: instance.getQualifiedName(),
-								value: instance.get('value')
-							}
-						);
+						return {
+							childElementsHTML: instance.get('childElementsHTML'),
+							dir: instance.get('dir'),
+							label: instance.get('label'),
+							multiple: instance.get('multiple'),
+							name: instance.getQualifiedName(),
+							options: instance.get('options'),
+							readOnly: instance.get('readOnly'),
+							required: instance.get('required'),
+							showLabel: instance.get('showLabel'),
+							strings: instance.get('strings'),
+							tip: instance.get('tip'),
+							value: instance.get('value'),
+							visible: instance.get('visible')
+						};
 					},
 
 					getTemplateRenderer: function() {
@@ -315,33 +316,6 @@ AUI.add(
 						var instance = this;
 
 						instance.set('container', instance._valueContainer());
-					},
-
-					_afterContextChange: function(event) {
-						var instance = this;
-
-						if (instance.get('rendered')) {
-							var repaint = false;
-
-							var newContext = event.newVal;
-							var oldContext = event.prevVal;
-
-							for (var name in newContext) {
-								if (!Util.compare(newContext[name], oldContext[name])) {
-									if (instance.isRepaintable(name)) {
-										repaint = true;
-									}
-
-									if (instance.attrAdded(name)) {
-										instance.set(name, newContext[name]);
-									}
-								}
-							}
-
-							if (repaint) {
-								instance.render();
-							}
-						}
 					},
 
 					_createContainer: function() {
@@ -453,6 +427,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-datatype', 'aui-node', 'liferay-ddm-form-renderer', 'liferay-ddm-form-renderer-field-evaluation', 'liferay-ddm-form-renderer-field-events', 'liferay-ddm-form-renderer-field-feedback', 'liferay-ddm-form-renderer-field-repetition', 'liferay-ddm-form-renderer-field-validation', 'liferay-ddm-form-renderer-nested-fields', 'liferay-ddm-form-renderer-types', 'liferay-ddm-form-renderer-util']
+		requires: ['aui-datatype', 'aui-node', 'liferay-ddm-form-renderer', 'liferay-ddm-form-renderer-field-context-support', 'liferay-ddm-form-renderer-field-evaluation', 'liferay-ddm-form-renderer-field-events', 'liferay-ddm-form-renderer-field-feedback', 'liferay-ddm-form-renderer-field-repetition', 'liferay-ddm-form-renderer-field-validation', 'liferay-ddm-form-renderer-nested-fields', 'liferay-ddm-form-renderer-types', 'liferay-ddm-form-renderer-util']
 	}
 );

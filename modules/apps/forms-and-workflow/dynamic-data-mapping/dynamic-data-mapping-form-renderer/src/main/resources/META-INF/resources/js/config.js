@@ -31,7 +31,6 @@
 						'liferay-ddm-form-renderer-context': {
 							path: 'form_context_support.js',
 							requires: [
-								'liferay-ddm-form-renderer-field-class-factory',
 								'liferay-ddm-form-renderer-layout-visitor',
 								'liferay-ddm-form-renderer-types',
 								'liferay-ddm-form-renderer-util'
@@ -75,13 +74,6 @@
 								'liferay-ddm-form-renderer-field-repetition',
 								'liferay-ddm-form-renderer-field-validation',
 								'liferay-ddm-form-renderer-nested-fields',
-								'liferay-ddm-form-renderer-types',
-								'liferay-ddm-form-renderer-util'
-							]
-						},
-						'liferay-ddm-form-renderer-field-class-factory': {
-							path: 'field_class_factory.js',
-							requires: [
 								'liferay-ddm-form-renderer-types',
 								'liferay-ddm-form-renderer-util'
 							]

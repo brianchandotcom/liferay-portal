@@ -436,7 +436,7 @@
 			LEFT JOIN
 				ResourcePermission ON
 					(ResourcePermission.companyId = Layout.companyId) AND
-					(ResourcePermission.name = 'com.liferay.portal.kernel.model.Layout') AND
+					(ResourcePermission.name = ?) AND
 					(ResourcePermission.scope = ?) AND
 					(ResourcePermission.primKey = CAST_TEXT(Layout.plid)) AND
 					(ResourcePermission.roleId = ?)

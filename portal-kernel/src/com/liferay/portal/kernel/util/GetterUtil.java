@@ -639,8 +639,8 @@ public class GetterUtil {
 	/**
 	 * Returns the Object value as a boolean array. If the value is
 	 * <code>null</code>, the {@link #DEFAULT_BOOLEAN_VALUES} array is returned.
-	 * In the returned array, each value element that is <code>null</code>
-	 * is replaced by the {@link #DEFAULT_BOOLEAN}, and each value element that
+	 * In the returned array, each value element that is <code>null</code> is
+	 * replaced by the {@link #DEFAULT_BOOLEAN}, and each value element that
 	 * does not match a {@link #BOOLEANS} value is replaced with
 	 * <code>false</code>.
 	 *
@@ -653,11 +653,10 @@ public class GetterUtil {
 
 	/**
 	 * Returns the Object value as a boolean array. If the value is
-	 * <code>null</code>, the default value is returned.
-	 * In the returned array, each value element that is <code>null</code>
-	 * is replaced by a default value, and each value element that
-	 * does not match a {@link #BOOLEANS} value is replaced with
-	 * <code>false</code>.
+	 * <code>null</code>, the default value is returned. In the returned array,
+	 * each value element that is <code>null</code> is replaced by a default
+	 * value, and each value element that does not match a {@link #BOOLEANS}
+	 * value is replaced with <code>false</code>.
 	 *
 	 * @param  value the value to convert
 	 * @param  defaultValue a default value
@@ -680,8 +679,8 @@ public class GetterUtil {
 	/**
 	 * Returns the String values as a boolean array. If the values array is
 	 * <code>null</code>, the {@link #DEFAULT_BOOLEAN_VALUES} array is returned.
-	 * In the returned array, each value element that is <code>null</code>
-	 * is replaced by the {@link #DEFAULT_BOOLEAN}, and each value element that
+	 * In the returned array, each value element that is <code>null</code> is
+	 * replaced by the {@link #DEFAULT_BOOLEAN}, and each value element that
 	 * does not match a {@link #BOOLEANS} value is replaced with
 	 * <code>false</code>.
 	 *
@@ -694,11 +693,10 @@ public class GetterUtil {
 
 	/**
 	 * Returns the String values as a boolean array. If the values array is
-	 * <code>null</code>, the default value is returned.
-	 * In the returned array, each value element that is <code>null</code>
-	 * is replaced by a default value, and each value element that
-	 * does not match a {@link #BOOLEANS} value is replaced with
-	 * <code>false</code>.
+	 * <code>null</code>, the default value is returned. In the returned array,
+	 * each value element that is <code>null</code> is replaced by a default
+	 * value, and each value element that does not match a {@link #BOOLEANS}
+	 * value is replaced with <code>false</code>.
 	 *
 	 * @param  values the values to convert
 	 * @param  defaultValue a default value
@@ -775,9 +773,10 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the Object value as a Date array. If the value is <code>null</code>,
-	 * the {@link #DEFAULT_DATE_VALUES} array is returned. In the returned array, each
-	 * value element not convertible to a Date is replaced by the current date.
+	 * Returns the Object value as a Date array. If the value is
+	 * <code>null</code>, the {@link #DEFAULT_DATE_VALUES} array is returned. In
+	 * the returned array, each value element not convertible to a Date is
+	 * replaced by the current date.
 	 *
 	 * @param  value the value to convert
 	 * @param  dateFormat the format used to parse the date
@@ -788,9 +787,10 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the Object value as a Date array. If the value is <code>null</code>,
-	 * the default value is returned. In the returned array, each
-	 * value element not convertible to a Date is replaced by the current date.
+	 * Returns the Object value as a Date array. If the value is
+	 * <code>null</code>, the default value is returned. In the returned array,
+	 * each value element not convertible to a Date is replaced by the current
+	 * date.
 	 *
 	 * @param  value the value to convert
 	 * @param  dateFormat the format used to parse the date
@@ -812,9 +812,10 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the String value as a Date array. If the values array is <code>null</code>,
-	 * the {@link #DEFAULT_DATE_VALUES} is returned. In the returned array, each
-	 * value element not convertible to a Date is replaced by the current date.
+	 * Returns the String value as a Date array. If the values array is
+	 * <code>null</code>, the {@link #DEFAULT_DATE_VALUES} is returned. In the
+	 * returned array, each value element not convertible to a Date is replaced
+	 * by the current date.
 	 *
 	 * @param  values the values to convert
 	 * @param  dateFormat the format used to parse the date
@@ -825,9 +826,10 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the String value as a Date array. If the values array is <code>null</code>,
-	 * the default value is returned. In the returned array, each
-	 * value element not convertible to a Date is replaced by the current date.
+	 * Returns the String value as a Date array. If the values array is
+	 * <code>null</code>, the default value is returned. In the returned array,
+	 * each value element not convertible to a Date is replaced by the current
+	 * date.
 	 *
 	 * @param  values the values to convert
 	 * @param  dateFormat the format used to parse the date
@@ -852,8 +854,7 @@ public class GetterUtil {
 
 	/**
 	 * Returns the Object value as a double. If the value is <code>null</code>
-	 * or not convertible to a double, the {@link #DEFAULT_DOUBLE}
-	 * is returned.
+	 * or not convertible to a double, the {@link #DEFAULT_DOUBLE} is returned.
 	 *
 	 * @param  value the value to convert
 	 * @return the value as a double
@@ -876,8 +877,7 @@ public class GetterUtil {
 
 	/**
 	 * Returns the String value as a double. If the value is <code>null</code>
-	 * or not convertible to a double, the {@link #DEFAULT_DOUBLE}
-	 * is returned.
+	 * or not convertible to a double, the {@link #DEFAULT_DOUBLE} is returned.
 	 *
 	 * @param  value the value to convert
 	 * @return the value as a double
@@ -900,8 +900,7 @@ public class GetterUtil {
 
 	/**
 	 * Returns the String value as a double. If the value is <code>null</code>
-	 * or not convertible to a double, the {@link #DEFAULT_DOUBLE}
-	 * is returned.
+	 * or not convertible to a double, the {@link #DEFAULT_DOUBLE} is returned.
 	 *
 	 * @param  value the value to convert
 	 * @param  locale the locale used to parse the double value
@@ -912,10 +911,10 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the Object value as a double array. If the value is <code>null</code>,
-	 * the default value is returned. In the returned array, each
-	 * value element not convertible to a double is replaced by the
-	 * {@link #DEFAULT_DOUBLE}.
+	 * Returns the Object value as a double array. If the value is
+	 * <code>null</code>, the default value is returned. In the returned array,
+	 * each value element not convertible to a double is replaced by the {@link
+	 * #DEFAULT_DOUBLE}.
 	 *
 	 * @param  value the value to convert
 	 * @return the value as a double array
@@ -925,10 +924,10 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the Object values as a double array. If the value is <code>null</code>,
-	 * the default value is returned. In the returned array, each
-	 * value element not convertible to a double is replaced by the
-	 * {@link #DEFAULT_DOUBLE}.
+	 * Returns the Object values as a double array. If the value is
+	 * <code>null</code>, the default value is returned. In the returned array,
+	 * each value element not convertible to a double is replaced by the {@link
+	 * #DEFAULT_DOUBLE}.
 	 *
 	 * @param  value the value to convert
 	 * @param  defaultValue a default value
@@ -949,9 +948,10 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the String values as a double array. If the values array is <code>null</code>,
-	 * the default value is returned. In the returned array, each value element
-	 * not convertible to a double is replaced by the {@link #DEFAULT_DOUBLE}.
+	 * Returns the String values as a double array. If the values array is
+	 * <code>null</code>, the default value is returned. In the returned array,
+	 * each value element not convertible to a double is replaced by the {@link
+	 * #DEFAULT_DOUBLE}.
 	 *
 	 * @param  values the values to convert
 	 * @return the values as a double array
@@ -961,9 +961,10 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the String values as a double array. If the values array is <code>null</code>,
-	 * the default value is returned. In the returned array, each value element
-	 * not convertible to a double is replaced by the default value.
+	 * Returns the String values as a double array. If the values array is
+	 * <code>null</code>, the default value is returned. In the returned array,
+	 * each value element not convertible to a double is replaced by the default
+	 * value.
 	 *
 	 * @param  values the values to convert
 	 * @param  defaultValue a default value
@@ -1032,10 +1033,10 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the Object value as a float array. If the value is <code>null</code>,
-	 * the {@link #DEFAULT_FLOAT_VALUES} array is returned.
-	 * In the returned array, each value element not convertible to a float is replaced by
-	 * the {@link #DEFAULT_FLOAT}.
+	 * Returns the Object value as a float array. If the value is
+	 * <code>null</code>, the {@link #DEFAULT_FLOAT_VALUES} array is returned.
+	 * In the returned array, each value element not convertible to a float is
+	 * replaced by the {@link #DEFAULT_FLOAT}.
 	 *
 	 * @param  value the value to convert
 	 * @return the value as a float array
@@ -1045,9 +1046,10 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the Object value as a float array. If the value is <code>null</code>,
-	 * the default value is returned. In the returned array, each value element
-	 * not convertible to a float is replaced by the {@link #DEFAULT_FLOAT}.
+	 * Returns the Object value as a float array. If the value is
+	 * <code>null</code>, the default value is returned. In the returned array,
+	 * each value element not convertible to a float is replaced by the {@link
+	 * #DEFAULT_FLOAT}.
 	 *
 	 * @param  value the value to convert
 	 * @param  defaultValue a default value
@@ -1066,10 +1068,10 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the String values as a float array. If the values array is <code>null</code>,
-	 * the {@link #DEFAULT_FLOAT_VALUES} array is returned.
-	 * In the returned array, each value element not convertible to a float is replaced by
-	 * the {@link #DEFAULT_FLOAT}.
+	 * Returns the String values as a float array. If the values array is
+	 * <code>null</code>, the {@link #DEFAULT_FLOAT_VALUES} array is returned.
+	 * In the returned array, each value element not convertible to a float is
+	 * replaced by the {@link #DEFAULT_FLOAT}.
 	 *
 	 * @param  values the values to convert
 	 * @return the values as a float array
@@ -1079,10 +1081,10 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the String values as a float array. If the values array is <code>null</code>,
-	 * the {@link #DEFAULT_FLOAT_VALUES} array is returned.
-	 * In the returned array, each value element not convertible to a float is replaced by
-	 * the default value.
+	 * Returns the String values as a float array. If the values array is
+	 * <code>null</code>, the {@link #DEFAULT_FLOAT_VALUES} array is returned.
+	 * In the returned array, each value element not convertible to a float is
+	 * replaced by the default value.
 	 *
 	 * @param  values the values to convert
 	 * @param  defaultValue a default value
@@ -1106,7 +1108,8 @@ public class GetterUtil {
 
 	/**
 	 * Returns the Object value as an integer. If the value is <code>null</code>
-	 * or not convertible to an integer, the {@link #DEFAULT_INTEGER} is returned.
+	 * or not convertible to an integer, the {@link #DEFAULT_INTEGER} is
+	 * returned.
 	 *
 	 * @param  value the value to convert
 	 * @return the value as an integer
@@ -1129,7 +1132,8 @@ public class GetterUtil {
 
 	/**
 	 * Returns the String value as an integer. If the value is <code>null</code>
-	 * or not convertible to an integer, the {@link #DEFAULT_INTEGER} is returned.
+	 * or not convertible to an integer, the {@link #DEFAULT_INTEGER} is
+	 * returned.
 	 *
 	 * @param  value the value to convert
 	 * @return the value as an integer
@@ -1221,10 +1225,10 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the Object value as an integer array. If the value is <code>null</code>,
-	 * the {@link #DEFAULT_INTEGER_VALUES} array is returned.
-	 * In the returned array, each value element not convertible to an integer is replaced by
-	 * the {@link #DEFAULT_INTEGER}.
+	 * Returns the Object value as an integer array. If the value is
+	 * <code>null</code>, the {@link #DEFAULT_INTEGER_VALUES} array is returned.
+	 * In the returned array, each value element not convertible to an integer
+	 * is replaced by the {@link #DEFAULT_INTEGER}.
 	 *
 	 * @param  value the value to convert
 	 * @return the value as an integer array
@@ -1234,9 +1238,10 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the Object value as an integer array. If the value is <code>null</code>,
-	 * the default value is returned. In the returned array, each value element
-	 * not convertible to an integer is replaced by the {@link #DEFAULT_INTEGER}.
+	 * Returns the Object value as an integer array. If the value is
+	 * <code>null</code>, the default value is returned. In the returned array,
+	 * each value element not convertible to an integer is replaced by the
+	 * {@link #DEFAULT_INTEGER}.
 	 *
 	 * @param  value the value to convert
 	 * @param  defaultValue a default value
@@ -1255,10 +1260,10 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the String array values as an integer array. If the values array is <code>null</code>,
-	 * the {@link #DEFAULT_INTEGER_VALUES} array is returned.
-	 * In the returned array, each value element not convertible to an integer is replaced by
-	 * the {@link #DEFAULT_INTEGER}.
+	 * Returns the String array values as an integer array. If the values array
+	 * is <code>null</code>, the {@link #DEFAULT_INTEGER_VALUES} array is
+	 * returned. In the returned array, each value element not convertible to an
+	 * integer is replaced by the {@link #DEFAULT_INTEGER}.
 	 *
 	 * @param  values the values to convert
 	 * @return the values as an integer array
@@ -1268,9 +1273,10 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the String array values as an integer array. If the values array is <code>null</code>,
-	 * the default value is returned. In the returned array, each value element
-	 * not convertible to an integer is replaced by the {@link #DEFAULT_INTEGER}.
+	 * Returns the String array values as an integer array. If the values array
+	 * is <code>null</code>, the default value is returned. In the returned
+	 * array, each value element not convertible to an integer is replaced by
+	 * the {@link #DEFAULT_INTEGER}.
 	 *
 	 * @param  values the values to convert
 	 * @param  defaultValue a default value
@@ -1337,8 +1343,8 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the String value as a long. If the value is not convertible
-	 * to a long, a <code>NumberFormatException</code> is thrown.
+	 * Returns the String value as a long. If the value is not convertible to a
+	 * long, a <code>NumberFormatException</code> is thrown.
 	 *
 	 * @param  value the value to convert
 	 * @return the value as an long
@@ -1407,10 +1413,10 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the Object value as a long array. If the value is <code>null</code>,
-	 * the {@link #DEFAULT_LONG_VALUES} array is returned.
-	 * In the returned array, each value element not convertible to a long is replaced by
-	 * the {@link #DEFAULT_LONG}.
+	 * Returns the Object value as a long array. If the value is
+	 * <code>null</code>, the {@link #DEFAULT_LONG_VALUES} array is returned. In
+	 * the returned array, each value element not convertible to a long is
+	 * replaced by the {@link #DEFAULT_LONG}.
 	 *
 	 * @param  value the value to convert
 	 * @return the value as a long array
@@ -1420,9 +1426,10 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the Object value as a long array. If the value is <code>null</code>,
-	 * the default value is returned. In the returned array, each value element
-	 * not convertible to a long is replaced by the {@link #DEFAULT_LONG}.
+	 * Returns the Object value as a long array. If the value is
+	 * <code>null</code>, the default value is returned. In the returned array,
+	 * each value element not convertible to a long is replaced by the {@link
+	 * #DEFAULT_LONG}.
 	 *
 	 * @param  value the value to convert
 	 * @param  defaultValue a default value
@@ -1453,10 +1460,10 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the String array values as a long array. If the values array is <code>null</code>,
-	 * the {@link #DEFAULT_LONG_VALUES} array is returned.
-	 * In the returned array, each value element not convertible to a long is replaced by
-	 * the {@link #DEFAULT_LONG}.
+	 * Returns the String array values as a long array. If the values array is
+	 * <code>null</code>, the {@link #DEFAULT_LONG_VALUES} array is returned. In
+	 * the returned array, each value element not convertible to a long is
+	 * replaced by the {@link #DEFAULT_LONG}.
 	 *
 	 * @param  values the values to convert
 	 * @return the values as a long array
@@ -1466,9 +1473,10 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the String array values as a long array. If the values array is <code>null</code>,
-	 * the default value is returned. In the returned array, each value element not
-	 * convertible to a long is replaced by the {@link #DEFAULT_LONG}.
+	 * Returns the String array values as a long array. If the values array is
+	 * <code>null</code>, the default value is returned. In the returned array,
+	 * each value element not convertible to a long is replaced by the {@link
+	 * #DEFAULT_LONG}.
 	 *
 	 * @param  values the values to convert
 	 * @param  defaultValue a default value
@@ -1490,8 +1498,7 @@ public class GetterUtil {
 
 	/**
 	 * Returns the Object value as a Number. If the value is <code>null</code>
-	 * or not convertible to a Number, the {@link #DEFAULT_NUMBER}
-	 * is returned.
+	 * or not convertible to a Number, the {@link #DEFAULT_NUMBER} is returned.
 	 *
 	 * @param  value the value to convert
 	 * @return the value as a Number
@@ -1514,8 +1521,7 @@ public class GetterUtil {
 
 	/**
 	 * Returns the String value as a Number. If the value is <code>null</code>
-	 * or not convertible to a Number, the {@link #DEFAULT_NUMBER} is
-	 * returned.
+	 * or not convertible to a Number, the {@link #DEFAULT_NUMBER} is returned.
 	 *
 	 * @param  value the value to convert
 	 * @return the value as a Number
@@ -1537,8 +1543,8 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the Object value as a Number array. If the value is <code>null</code>,
-	 * the {@link #DEFAULT_NUMBER_VALUES} array is returned.
+	 * Returns the Object value as a Number array. If the value is
+	 * <code>null</code>, the {@link #DEFAULT_NUMBER_VALUES} array is returned.
 	 * In the returned array, each value element not convertible to a Number is
 	 * replaced by the {@link #DEFAULT_NUMBER}.
 	 *
@@ -1550,9 +1556,10 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the Object value as a Number array. If the value is <code>null</code>,
-	 * the default value is returned. In the returned array, each value element
-	 * not convertible to a Number is replaced by the {@link #DEFAULT_NUMBER}.
+	 * Returns the Object value as a Number array. If the value is
+	 * <code>null</code>, the default value is returned. In the returned array,
+	 * each value element not convertible to a Number is replaced by the {@link
+	 * #DEFAULT_NUMBER}.
 	 *
 	 * @param  value the value to convert
 	 * @param  defaultValue a default value
@@ -1588,8 +1595,8 @@ public class GetterUtil {
 	/**
 	 * Returns the String array values as a Number array. If the values array is
 	 * <code>null</code>, the default value is returned. In the returned array,
-	 * each value element not convertible to a Number is replaced by
-	 * the {@link #DEFAULT_NUMBER}.
+	 * each value element not convertible to a Number is replaced by the {@link
+	 * #DEFAULT_NUMBER}.
 	 *
 	 * @param  values the values to convert
 	 * @param  defaultValue a default value
@@ -1612,8 +1619,8 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the Object value. If the value is  <code>null</code>,
-	 * the {@link #DEFAULT_OBJECT} is returned
+	 * Returns the Object value. If the value is <code>null</code>, the {@link
+	 * #DEFAULT_OBJECT} is returned
 	 *
 	 * @param  value the value
 	 * @return the value
@@ -1685,8 +1692,8 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the String value as a short. If the value is not convertible
-	 * to a short, a <code>NumberFormatException</code> is thrown.
+	 * Returns the String value as a short. If the value is not convertible to a
+	 * short, a <code>NumberFormatException</code> is thrown.
 	 *
 	 * @param  value the value to convert
 	 * @return the value as a short
@@ -1702,8 +1709,8 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the Object value as a short array. If the value is <code>null</code>,
-	 * the {@link #DEFAULT_SHORT_VALUES} array is returned.
+	 * Returns the Object value as a short array. If the value is
+	 * <code>null</code>, the {@link #DEFAULT_SHORT_VALUES} array is returned.
 	 * In the returned array, each value element not convertible to a short is
 	 * replaced by the {@link #DEFAULT_SHORT}.
 	 *
@@ -1715,9 +1722,10 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the Object value as a short array. If the value is <code>null</code>,
-	 * the default value is returned. In the returned array, each value element
-	 * not convertible to a short is replaced by the {@link #DEFAULT_SHORT}.
+	 * Returns the Object value as a short array. If the value is
+	 * <code>null</code>, the default value is returned. In the returned array,
+	 * each value element not convertible to a short is replaced by the {@link
+	 * #DEFAULT_SHORT}.
 	 *
 	 * @param  value the value to convert
 	 * @param  defaultValue a default value
@@ -1751,8 +1759,8 @@ public class GetterUtil {
 	/**
 	 * Returns the String array values as a short array. If the values array is
 	 * <code>null</code>, the default value is returned. In the returned array,
-	 * each value element not convertible to a short is replaced by the
-	 * {@link #DEFAULT_SHORT}.
+	 * each value element not convertible to a short is replaced by the {@link
+	 * #DEFAULT_SHORT}.
 	 *
 	 * @param  values the values to convert
 	 * @param  defaultValue a default value
@@ -1798,8 +1806,8 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the String value. If the value is <code>null</code>, the
-	 * {@link #DEFAULT_STRING} is returned.
+	 * Returns the String value. If the value is <code>null</code>, the {@link
+	 * #DEFAULT_STRING} is returned.
 	 *
 	 * @param  value the value
 	 * @return the value
@@ -1821,8 +1829,8 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the Object value as a String array. If the value is <code>null</code>,
-	 * the {@link #DEFAULT_STRING_VALUES} array is returned.
+	 * Returns the Object value as a String array. If the value is
+	 * <code>null</code>, the {@link #DEFAULT_STRING_VALUES} array is returned.
 	 * In the returned array, each value element not convertible to a String is
 	 * replaced by the {@link #DEFAULT_STRING}.
 	 *
@@ -1834,9 +1842,10 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the Object value as a String array. If the value is <code>null</code>,
-	 * the default value is returned. In the returned array, each value element
-	 * not convertible to a String is replaced by the {@link #DEFAULT_STRING}.
+	 * Returns the Object value as a String array. If the value is
+	 * <code>null</code>, the default value is returned. In the returned array,
+	 * each value element not convertible to a String is replaced by the {@link
+	 * #DEFAULT_STRING}.
 	 *
 	 * @param  value the value to convert
 	 * @param  defaultValue a default value
@@ -1853,9 +1862,10 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the String array values as a String array. If the values array is <code>null</code>,
-	 * the default value is returned. In the returned array, each value element
-	 * not convertible to a String is replaced by the {@link #DEFAULT_STRING}.
+	 * Returns the String array values as a String array. If the values array is
+	 * <code>null</code>, the default value is returned. In the returned array,
+	 * each value element not convertible to a String is replaced by the {@link
+	 * #DEFAULT_STRING}.
 	 *
 	 * @param  values the values to convert
 	 * @param  defaultValue a default value
@@ -1878,9 +1888,10 @@ public class GetterUtil {
 	}
 
 	/**
-	 * Returns the String array values as a String array. If the values array is <code>null</code>,
-	 * the default value is returned. In the returned array, each value element
-	 * not convertible to a String is replaced by the {@link #DEFAULT_STRING}.
+	 * Returns the String array values as a String array. If the values array is
+	 * <code>null</code>, the default value is returned. In the returned array,
+	 * each value element not convertible to a String is replaced by the {@link
+	 * #DEFAULT_STRING}.
 	 *
 	 * @param  values the values to convert
 	 * @return the values as a String array

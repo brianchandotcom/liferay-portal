@@ -1964,6 +1964,7 @@
 
 	<command name="CompleteProcessAndViewEmailNotifications" priority="4">
 		<property name="test.assert.javascript.errors" value="false" />
+		<property name="test.smtp.server.enabled" value="true" />
 
 		<var method="TestPropsUtil#get('email.address.2')" name="user1EmailAddress" />
 		<var method="TestPropsUtil#get('email.address.3')" name="user2EmailAddress" />
@@ -2222,6 +2223,14 @@
 
 		<execute macro="KaleoFormsAdmin#saveProcessRecord" />
 
+		<execute macro="MockMock#viewMail">
+			<var name="asset" value="Review Notification Description" />
+			<var name="content" value="userfn Creator sent you a Kaleo Forms Process for review in the workflow." />
+			<var name="recipient" value="userfn Reviewer" />
+			<var name="sender" value="Liferay Portal Workflow Notifications" />
+			<var name="subject" value="Review Notification Description" />
+		</execute>		
+
 		<execute function="Open" locator1="http://localhost:8080" />
 
 		<execute macro="User#logoutAndLoginPG">
@@ -2239,8 +2248,6 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute function="Open" locator1="http://localhost:8080" />
-
 		<execute macro="Workflow#rejectTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
 			<var name="workflowAssetType" value="Kaleo Forms Process" />
@@ -2252,6 +2259,14 @@
 		</execute>
 
 		<execute macro="Workflow#viewDefaultMyWorkflowTasksCP" />
+
+		<execute macro="MockMock#viewMail">
+			<var name="asset" value="Updater Modification Notification Description" />
+			<var name="content" value="Your submission was rejected by userfn Reviewer, please modify and resubmit." />
+			<var name="recipient" value="userfn Updater" />
+			<var name="sender" value="Liferay Portal Workflow Notifications" />
+			<var name="subject" value="Updater Modification Notification Description" />
+		</execute>		
 
 		<execute function="Open" locator1="http://localhost:8080" />
 
@@ -2275,6 +2290,14 @@
 			<var name="workflowAssetType" value="Kaleo Forms Process" />
 			<var name="workflowTask" value="Update" />
 		</execute>
+
+		<execute macro="MockMock#viewMail">
+			<var name="asset" value="Review Notification Description" />
+			<var name="content" value="userfn Updater sent you a Kaleo Forms Process for review in the workflow." />
+			<var name="recipient" value="userfn Reviewer" />
+			<var name="sender" value="Liferay Portal Workflow Notifications" />
+			<var name="subject" value="Review Notification Description" />
+		</execute>		
 
 		<execute function="Open" locator1="http://localhost:8080" />
 
@@ -7529,6 +7552,7 @@
 
 		<property name="test.assert.javascript.errors" value="false" />
 		<property name="test.name.skip.portal.instance" value="KaleoformsUsecase#ViewEmailNotificationSentToTaskAssignees" />
+		<property name="test.smtp.server.enabled" value="true" />
 
 		<var method="TestPropsUtil#get('email.address.2')" name="user1EmailAddress" />
 		<var method="TestPropsUtil#get('email.password.2')" name="user1EmailPassword" />
@@ -7829,6 +7853,19 @@
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
 			<var name="workflowAssetType" value="Kaleo Forms Process" />
 			<var name="workflowTask" value="Review" />
+		</execute>
+
+		<execute macro="MockMock#viewMail">
+			<var name="asset" value="Update Notification Description" />
+			<var name="content" value="Your submission was rejected by userfn3 Administrator, please modify and resubmit." />
+			<var name="recipient" value="userfn2 Updater" />
+			<var name="sender" value="Liferay Portal Workflow Notifications" />
+			<var name="subject" value="Update Notification Description" />
+		</execute>
+
+		<execute macro="MockMock#viewNoMailFromInbox">
+			<var name="asset" value="Update Notification Description" />
+			<var name="recipient" value="userfn1 Updater" />
 		</execute>
 	</command>
 

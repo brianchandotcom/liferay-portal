@@ -98,6 +98,16 @@
 		margin-top: 0;
 	}
 
+	.checkbox-multiple-options .checkbox-multiple-switcher-inline {
+		cursor: pointer;
+		display: inline-block;
+		font-weight: normal;
+		margin: 5px 15px 0 0;
+		padding-left: 0;
+		position: relative;
+		vertical-align: middle;
+	}
+
 	.multi-step-progress-bar .progress-bar-title {
 		word-break: break-all;
 	}

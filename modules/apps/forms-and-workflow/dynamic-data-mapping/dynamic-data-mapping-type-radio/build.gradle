@@ -1,3 +1,5 @@
+apply plugin: "com.liferay.lang.merger"
+
 dependencies {
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
@@ -12,6 +14,13 @@ task wrapSoyTemplates
 
 classes {
 	dependsOn wrapSoyTemplates
+}
+
+mergeLang {
+	sourceDirs = [
+		"../dynamic-data-mapping-lang/src/main/resources/content",
+		"src/main/resources/content"
+	]
 }
 
 transpileJS {

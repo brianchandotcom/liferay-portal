@@ -1345,11 +1345,11 @@ app.server.type=@{app.server.type}]]></echo>
 		/>
 	</target>
 
-	<target name="functional-jboss64-mysql56-jdk8">
+	<target name="functional-smoke-jboss64-mysql56-jdk8">
 		<run-functional-test app.server.type="jboss" database.type="mysql" />
 	</target>
 
-	<target name="functional-resin40-mysql56-jdk8">
+	<target name="functional-smoke-resin40-mysql56-jdk8">
 		<run-functional-test app.server.type="resin" database.type="mysql" />
 	</target>
 
@@ -1357,7 +1357,7 @@ app.server.type=@{app.server.type}]]></echo>
 		<run-functional-test app.server.type="tomcat" database.type="mysql" />
 	</target>
 
-	<target name="functional-tcserver26-mysql56-jdk8">
+	<target name="functional-smoke-tcserver26-mysql56-jdk8">
 		<run-functional-test app.server.type="tcserver" database.type="mysql" />
 	</target>
 
@@ -1365,7 +1365,7 @@ app.server.type=@{app.server.type}]]></echo>
 		<run-functional-test app.server.type="tomcat" database.type="hypersonic" />
 	</target>
 
-	<target name="functional-tomcat8-mariadb100-jdk8">
+	<target name="functional-smoke-tomcat8-mariadb100-jdk8">
 		<run-functional-test app.server.type="tomcat" database.type="mariadb" />
 	</target>
 
@@ -1381,27 +1381,27 @@ app.server.type=@{app.server.type}]]></echo>
 		<antcall target="functional-tomcat8-mysql56-jdk8" />
 	</target>
 
-	<target name="functional-tomcat8-oracle12-jdk8">
+	<target name="functional-smoke-tomcat8-oracle12-jdk8">
 		<run-functional-test app.server.type="tomcat" database.type="oracle" />
 	</target>
 
-	<target name="functional-tomcat8-postgresql94-jdk8">
+	<target name="functional-smoke-tomcat8-postgresql94-jdk8">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" />
 	</target>
 
-	<target name="functional-tomcat8-sybase16-jdk8">
+	<target name="functional-smoke-tomcat8-sybase16-jdk8">
 		<run-functional-test app.server.type="tomcat" database.type="sybase" />
 	</target>
 
-	<target name="functional-weblogic121-mysql56-jdk8">
+	<target name="functional-smoke-weblogic121-mysql56-jdk8">
 		<run-functional-test app.server.type="weblogic" database.type="mysql" />
 	</target>
 
-	<target name="functional-websphere85-mysql56-jdk8">
+	<target name="functional-smoke-websphere85-mysql56-jdk8">
 		<run-functional-test app.server.type="websphere" database.type="mysql" />
 	</target>
 
-	<target name="functional-wildfly10-mariadb100-jdk8">
+	<target name="functional-smoke-wildfly10-mariadb100-jdk8">
 		<run-functional-test app.server.type="wildfly" database.type="mariadb" />
 	</target>
 

@@ -2437,8 +2437,14 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 								packagePath = packagePath.replace('/', '.');
 
-								return _getPackageInfoOverride(
-									packagePath, line, versionOverrides);
+								String versionOverride =
+									versionOverrides.getProperty(packagePath);
+
+								if (Validator.isNotNull(versionOverride)) {
+									return "version " + versionOverride;
+								}
+
+								return line;
 							}
 
 						});
@@ -2598,28 +2604,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		catch (IOException ioe) {
 			throw new UncheckedIOException(ioe);
 		}
-	}
-
-	private String _getPackageInfoOverride(
-		String packagePath, String packageInfo, Properties versionOverrides) {
-
-		String versionNumberOverride = versionOverrides.getProperty(
-			packagePath);
-
-		if (Validator.isNull(versionNumberOverride)) {
-			return packageInfo;
-		}
-
-		String versionNumber = packageInfo.substring(8);
-
-		Version version = Version.parseVersion(versionNumber);
-		Version versionOverride = Version.parseVersion(versionNumberOverride);
-
-		if (versionOverride.compareTo(version) > 0) {
-			return "version " + versionNumberOverride;
-		}
-
-		return packageInfo;
 	}
 
 	private File _getVersionOverrideFile(Project project) {

@@ -80,7 +80,9 @@ import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.kernel.xml.XPath;
 import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
 import com.liferay.site.model.adapter.StagedGroup;
@@ -299,11 +301,8 @@ public class LayoutImportController implements ImportController {
 	protected void deletePortletData(PortletDataContext portletDataContext)
 		throws Exception {
 
-		Element rootElement = portletDataContext.getImportDataRootElement();
-
-		Element portletsElement = rootElement.element("portlets");
-
-		List<Element> portletElements = portletsElement.elements("portlet");
+		List<Element> portletElements = fetchPortletElements(
+			portletDataContext.getImportDataRootElement());
 
 		Map<Long, Layout> layouts =
 			(Map<Long, Layout>)portletDataContext.getNewPrimaryKeysMap(
@@ -515,9 +514,7 @@ public class LayoutImportController implements ImportController {
 				headerElement.attributeValue("type-uuid"));
 		}
 
-		Element portletsElement = rootElement.element("site-portlets");
-
-		List<Element> portletElements = portletsElement.elements("portlet");
+		List<Element> portletElements = fetchPortletElements(rootElement);
 
 		if (permissions) {
 			for (Element portletElement : portletElements) {
@@ -568,6 +565,31 @@ public class LayoutImportController implements ImportController {
 		ZipReader zipReader = portletDataContext.getZipReader();
 
 		zipReader.close();
+	}
+
+	protected List<Element> fetchPortletElements(Element rootElement) {
+		List<Element> portletElements = new ArrayList<>();
+
+		// Site portlets
+
+		Element sitePortletsElement = rootElement.element("site-portlets");
+
+		portletElements.addAll(sitePortletsElement.elements("portlet"));
+
+		// Layout portlets
+
+		XPath xPath = SAXReaderUtil.createXPath(
+			"staged-model/portlets/portlet");
+
+		Element layoutsElement = rootElement.element(
+			Layout.class.getSimpleName());
+
+		List<Node> nodes = xPath.selectNodes(layoutsElement);
+
+		nodes.stream().map(
+			(node) -> (Element)node).forEach(portletElements::add);
+
+		return portletElements;
 	}
 
 	protected PortletDataContext getPortletDataContext(
@@ -627,11 +649,8 @@ public class LayoutImportController implements ImportController {
 			PortletDataContext portletDataContext)
 		throws Exception {
 
-		Element rootElement = portletDataContext.getImportDataRootElement();
-
-		Element portletsElement = rootElement.element("site-portlets");
-
-		List<Element> portletElements = portletsElement.elements("portlet");
+		List<Element> portletElements = fetchPortletElements(
+			portletDataContext.getImportDataRootElement());
 
 		for (Element portletElement : portletElements) {
 			String portletId = portletElement.attributeValue("portlet-id");
@@ -898,9 +917,7 @@ public class LayoutImportController implements ImportController {
 
 		// Portlets compatibility
 
-		Element portletsElement = rootElement.element("site-portlets");
-
-		List<Element> portletElements = portletsElement.elements("portlet");
+		List<Element> portletElements = fetchPortletElements(rootElement);
 
 		for (Element portletElement : portletElements) {
 			String portletId = GetterUtil.getString(

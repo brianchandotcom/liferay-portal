@@ -12,13 +12,12 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.type.date;
+package com.liferay.dynamic.data.mapping.type.text.internal;
 
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormRule;
 import com.liferay.dynamic.data.mapping.type.BaseDDMFormFieldTypeSettingsTest;
-import com.liferay.dynamic.data.mapping.type.date.internal.DateDDMFormFieldTypeSettings;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -34,17 +33,17 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
- * @author Bruno Basto
+ * @author Leonardo Barros
  */
 @PrepareForTest({PortalClassLoaderUtil.class, ResourceBundleUtil.class})
 @RunWith(PowerMockRunner.class)
-public class DateDDMFormFieldTypeSettingsTest
+public class TextDDMFormFieldTypeSettingsTest
 	extends BaseDDMFormFieldTypeSettingsTest {
 
 	@Test
-	public void testCreateDateDDMFormFieldTypeSettingsDDMForm() {
+	public void testCreateTextDDMFormFieldTypeSettingsDDMForm() {
 		DDMForm ddmForm = DDMFormFactory.create(
-			DateDDMFormFieldTypeSettings.class);
+			TextDDMFormFieldTypeSettings.class);
 
 		List<DDMFormRule> ddmFormRules = ddmForm.getDDMFormRules();
 
@@ -57,30 +56,27 @@ public class DateDDMFormFieldTypeSettingsTest
 		List<String> ddmFormRuleActions = ddmFormRule.getActions();
 
 		Assert.assertArrayEquals(
-			new String[] {
-				"set(fieldAt(\"validation\", 0), \"visible\", false)"
-			},
+			new String[] {"set(fieldAt(\"tooltip\", 0), \"visible\", false)"},
 			ddmFormRuleActions.toArray());
 
 		Map<String, DDMFormField> ddmFormFieldsMap =
 			ddmForm.getDDMFormFieldsMap(false);
 
-		DDMFormField predefinedValueDDMFormField = ddmFormFieldsMap.get(
-			"predefinedValue");
+		DDMFormField displayStyleDDMFormField = ddmFormFieldsMap.get(
+			"displayStyle");
 
-		Assert.assertNotNull(predefinedValueDDMFormField);
+		Assert.assertNotNull(displayStyleDDMFormField);
+		Assert.assertNotNull(displayStyleDDMFormField.getLabel());
 		Assert.assertEquals(
-			"string", predefinedValueDDMFormField.getDataType());
-		Assert.assertEquals("date", predefinedValueDDMFormField.getType());
-		Assert.assertEquals(true, predefinedValueDDMFormField.isLocalizable());
+			"true", displayStyleDDMFormField.getProperty("inline"));
+		Assert.assertEquals("radio", displayStyleDDMFormField.getType());
 
-		DDMFormField validationDDMFormField = ddmFormFieldsMap.get(
-			"validation");
+		DDMFormField placeholderDDMFormField = ddmFormFieldsMap.get(
+			"placeholder");
 
-		Assert.assertNotNull(validationDDMFormField);
-		Assert.assertEquals(
-			"ddm-validation", validationDDMFormField.getDataType());
-		Assert.assertEquals("validation", validationDDMFormField.getType());
+		Assert.assertNotNull(placeholderDDMFormField);
+		Assert.assertEquals("string", placeholderDDMFormField.getDataType());
+		Assert.assertEquals("text", placeholderDDMFormField.getType());
 	}
 
 }

@@ -12,13 +12,10 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.type.select;
+package com.liferay.dynamic.data.mapping.type.radio.internal;
 
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
-import com.liferay.dynamic.data.mapping.type.select.internal.SelectDDMFormFieldContextHelper;
 import com.liferay.portal.json.JSONFactoryImpl;
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
@@ -34,7 +31,7 @@ import org.junit.Test;
 /**
  * @author Marcellus Tavares
  */
-public class SelectDDMFormFieldContextHelperTest {
+public class RadioDDMFormFieldContextHelperTest {
 
 	@Test
 	public void testGetOptions() {
@@ -74,24 +71,12 @@ public class SelectDDMFormFieldContextHelperTest {
 	protected List<Object> getActualOptions(
 		DDMFormFieldOptions ddmFormFieldOptions, Locale locale) {
 
-		SelectDDMFormFieldContextHelper selectDDMFormFieldContextHelper =
-			new SelectDDMFormFieldContextHelper(
-				_jsonFactory, ddmFormFieldOptions, StringPool.BLANK, null,
-				locale);
+		RadioDDMFormFieldContextHelper radioDDMFormFieldContextHelper =
+			new RadioDDMFormFieldContextHelper(
+				new JSONFactoryImpl(), ddmFormFieldOptions, StringPool.BLANK,
+				null, locale);
 
-		return selectDDMFormFieldContextHelper.getOptions();
+		return radioDDMFormFieldContextHelper.getOptions();
 	}
-
-	protected JSONArray toJSONArray(String... strings) {
-		JSONArray jsonArray = _jsonFactory.createJSONArray();
-
-		for (String string : strings) {
-			jsonArray.put(string);
-		}
-
-		return jsonArray;
-	}
-
-	private final JSONFactory _jsonFactory = new JSONFactoryImpl();
 
 }

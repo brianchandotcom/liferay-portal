@@ -14,10 +14,12 @@
 
 package com.liferay.item.selector;
 
+import com.liferay.item.selector.bucket.factory.ItemSelectorViewServiceTrackerBucketFactory;
+import com.liferay.osgi.service.tracker.collections.internal.DefaultServiceTrackerCustomizer;
+import com.liferay.osgi.service.tracker.collections.internal.map.ServiceTrackerMapImpl;
 import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.util.ClassUtil;
 
 import java.util.ArrayList;
@@ -68,12 +70,17 @@ public abstract class BaseItemSelectorCriterionHandler
 	}
 
 	protected void activate(BundleContext bundleContext) {
-		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
+		_serviceTrackerMap = new ServiceTrackerMapImpl<>(
 			bundleContext, ItemSelectorView.class, null,
 			new ItemSelectorViewServiceReferenceMapper(bundleContext),
-			Collections.reverseOrder(
-				new PropertyServiceReferenceComparator(
-					"item.selector.view.order")));
+			new DefaultServiceTrackerCustomizer(bundleContext),
+			new ItemSelectorViewServiceTrackerBucketFactory(
+				Collections.reverseOrder(
+					new PropertyServiceReferenceComparator(
+						"item.selector.view.order"))),
+			null);
+
+		_serviceTrackerMap.open();
 	}
 
 	private boolean _isItemSelectorViewSupported(

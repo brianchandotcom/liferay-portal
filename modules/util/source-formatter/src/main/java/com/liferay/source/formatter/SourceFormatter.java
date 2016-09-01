@@ -18,14 +18,23 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ArgumentsUtil;
 import com.liferay.portal.tools.GitException;
 import com.liferay.portal.tools.GitUtil;
+import com.liferay.portal.tools.ToolsUtil;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentSkipListSet;
@@ -162,6 +171,8 @@ public class SourceFormatter {
 	}
 
 	public void format() throws Exception {
+		_properties = _getProperties();
+
 		List<SourceProcessor> sourceProcessors = new ArrayList<>();
 
 		sourceProcessors.add(new BNDSourceProcessor());
@@ -263,9 +274,141 @@ public class SourceFormatter {
 		return _firstSourceMismatchException;
 	}
 
+	private Properties _getProperties() throws Exception {
+		SourceFormatterHelper sourceFormatterHelper = new SourceFormatterHelper(
+			_sourceFormatterArgs.isUseProperties());
+
+		String fileName = "source-formatter.properties";
+
+		File portalImplDir = sourceFormatterHelper.getFile(
+			_sourceFormatterArgs.getBaseDirName(), "portal-impl",
+			ToolsUtil.PORTAL_MAX_DIR_LEVEL);
+
+		if (portalImplDir == null) {
+			for (int i = 0; i <= ToolsUtil.PLUGINS_MAX_DIR_LEVEL; i++) {
+				try {
+					InputStream inputStream = new FileInputStream(
+						_sourceFormatterArgs.getBaseDirName() + fileName);
+
+					Properties properties = new Properties();
+
+					properties.load(inputStream);
+
+					return properties;
+				}
+				catch (FileNotFoundException fnfe) {
+				}
+
+				fileName = "../" + fileName;
+			}
+
+			return new Properties();
+		}
+
+		List<Properties> propertiesList = new ArrayList<>();
+
+		// Find properties file in portal-impl/src/
+
+		File propertiesFile = sourceFormatterHelper.getFile(
+			_sourceFormatterArgs.getBaseDirName(),
+			"portal-impl/src/" + fileName, ToolsUtil.PORTAL_MAX_DIR_LEVEL);
+
+		if (propertiesFile != null) {
+			InputStream inputStream = new FileInputStream(propertiesFile);
+
+			Properties properties = new Properties();
+
+			properties.load(inputStream);
+
+			propertiesList.add(properties);
+		}
+
+		// Find properties files in any parent directory
+
+		String parentDirName = _sourceFormatterArgs.getBaseDirName() + "../";
+
+		for (int i = 0; i < ToolsUtil.PORTAL_MAX_DIR_LEVEL - 1; i++) {
+			try {
+				InputStream inputStream = new FileInputStream(
+					parentDirName + fileName);
+
+				Properties properties = new Properties();
+
+				properties.load(inputStream);
+
+				propertiesList.add(properties);
+			}
+			catch (FileNotFoundException fnfe) {
+			}
+
+			parentDirName += "../";
+		}
+
+		// Find properties file in any child directory
+
+		List<String> modulePropertiesFileNames =
+			sourceFormatterHelper.getFileNames(
+				_sourceFormatterArgs.getBaseDirName(), null, new String[0],
+				new String[] {"**/modules/**/" + fileName});
+
+		for (String modulePropertiesFileName : modulePropertiesFileNames) {
+			InputStream inputStream = new FileInputStream(
+				modulePropertiesFileName);
+
+			Properties properties = new Properties();
+
+			properties.load(inputStream);
+
+			propertiesList.add(properties);
+		}
+
+		if (propertiesList.isEmpty()) {
+			return new Properties();
+		}
+
+		if (propertiesList.size() == 1) {
+			return propertiesList.get(0);
+		}
+
+		Properties properties = new Properties();
+
+		for (int i = 0; i < propertiesList.size(); i++) {
+			Properties props = propertiesList.get(i);
+
+			Enumeration<String> enu =
+				(Enumeration<String>)props.propertyNames();
+
+			while (enu.hasMoreElements()) {
+				String key = enu.nextElement();
+
+				String value = props.getProperty(key);
+
+				if (Validator.isNull(value)) {
+					continue;
+				}
+
+				if (key.contains("excludes")) {
+					String existingValue = properties.getProperty(key);
+
+					if (Validator.isNotNull(existingValue)) {
+						value = existingValue + StringPool.COMMA + value;
+					}
+
+					properties.put(key, value);
+				}
+				else if (!properties.containsKey(key)) {
+					properties.put(key, value);
+				}
+			}
+		}
+
+		return properties;
+	}
+
 	private void _runSourceProcessor(SourceProcessor sourceProcessor)
 		throws Exception {
 
+		sourceProcessor.setProperties(_properties);
 		sourceProcessor.setSourceFormatterArgs(_sourceFormatterArgs);
 
 		sourceProcessor.format();
@@ -283,6 +426,7 @@ public class SourceFormatter {
 	private volatile SourceMismatchException _firstSourceMismatchException;
 	private final List<String> _modifiedFileNames =
 		new CopyOnWriteArrayList<>();
+	private Properties _properties;
 	private final SourceFormatterArgs _sourceFormatterArgs;
 	private final Set<SourceFormatterMessage> _sourceFormatterMessages =
 		new ConcurrentSkipListSet<>();

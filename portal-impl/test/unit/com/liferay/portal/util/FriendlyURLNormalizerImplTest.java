@@ -14,11 +14,14 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.portal.kernel.nio.charset.CharsetEncoderUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.UnsupportedEncodingException;
 
 import java.net.URLEncoder;
+
+import java.nio.charset.CharsetEncoder;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -126,6 +129,34 @@ public class FriendlyURLNormalizerImplTest {
 		Assert.assertEquals(
 			encodedValue,
 			_friendlyURLNormalizerImpl.normalizeWithEncoding(value));
+	}
+
+	@Test
+	public void testNormalizeWithEncodingUnicodeMalformed() throws Exception {
+		CharsetEncoder charsetEncoder = CharsetEncoderUtil.getCharsetEncoder(
+			StringPool.UTF8);
+
+		String replacement = new String(charsetEncoder.replacement());
+
+		String encodedReplacement = URLEncoder.encode(
+			replacement, StringPool.UTF8);
+
+		Assert.assertEquals(
+			encodedReplacement + "a" + encodedReplacement,
+			_friendlyURLNormalizerImpl.normalizeWithEncoding("\uDBFFA\uDFFF"));
+
+		Assert.assertEquals(
+			encodedReplacement + StringPool.DASH + encodedReplacement,
+			_friendlyURLNormalizerImpl.normalizeWithEncoding("\uDBFF-\uDFFF"));
+
+		String value = "テスト";
+
+		String encodedValue = URLEncoder.encode(value, StringPool.UTF8);
+
+		Assert.assertEquals(
+			encodedReplacement + StringPool.DASH + encodedValue,
+			_friendlyURLNormalizerImpl.normalizeWithEncoding(
+				"\uDBFF-" + value));
 	}
 
 	@Test

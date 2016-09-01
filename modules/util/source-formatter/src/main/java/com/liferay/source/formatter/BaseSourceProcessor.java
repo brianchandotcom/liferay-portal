@@ -2952,56 +2952,93 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	private Properties _getProperties() throws Exception {
 		String fileName = "source-formatter.properties";
 
-		Properties properties = new Properties();
-
-		List<Properties> propertiesList = new ArrayList<>();
-
-		if (portalSource) {
-			File propertiesFile = getFile(
-				"portal-impl/src/" + fileName, PORTAL_MAX_DIR_LEVEL);
-
-			if (propertiesFile != null) {
-				InputStream inputStream = new FileInputStream(propertiesFile);
-
-				properties = new Properties();
-
-				properties.load(inputStream);
-
-				propertiesList.add(properties);
-			}
-		}
-		else {
+		if (!portalSource) {
 			for (int i = 0; i <= PLUGINS_MAX_DIR_LEVEL; i++) {
 				try {
 					InputStream inputStream = new FileInputStream(
 						sourceFormatterArgs.getBaseDirName() + fileName);
 
-					Properties props = new Properties();
+					Properties properties = new Properties();
 
-					props.load(inputStream);
+					properties.load(inputStream);
 
-					propertiesList.add(props);
-
-					break;
+					return properties;
 				}
 				catch (FileNotFoundException fnfe) {
 				}
 
 				fileName = "../" + fileName;
 			}
+
+			return new Properties();
+		}
+
+		List<Properties> propertiesList = new ArrayList<>();
+
+		// Find properties file in portal-impl/src/
+
+		File propertiesFile = getFile(
+			"portal-impl/src/" + fileName, PORTAL_MAX_DIR_LEVEL);
+
+		if (propertiesFile != null) {
+			InputStream inputStream = new FileInputStream(propertiesFile);
+
+			Properties properties = new Properties();
+
+			properties.load(inputStream);
+
+			propertiesList.add(properties);
+		}
+
+		// Find properties files in any parent directory
+
+		String parentDirName = sourceFormatterArgs.getBaseDirName() + "../";
+
+		for (int i = 0; i < PORTAL_MAX_DIR_LEVEL - 1; i++) {
+			try {
+				InputStream inputStream = new FileInputStream(
+					parentDirName + fileName);
+
+				Properties properties = new Properties();
+
+				properties.load(inputStream);
+
+				propertiesList.add(properties);
+			}
+			catch (FileNotFoundException fnfe) {
+			}
+
+			parentDirName += "../";
+		}
+
+		// Find properties file in any child directory
+
+		List<String> modulePropertiesFileNames = getFileNames(
+			sourceFormatterArgs.getBaseDirName(), null, new String[0],
+			new String[] {"**/modules/**/" + fileName});
+
+		for (String modulePropertiesFileName : modulePropertiesFileNames) {
+			InputStream inputStream = new FileInputStream(
+				modulePropertiesFileName);
+
+			Properties properties = new Properties();
+
+			properties.load(inputStream);
+
+			propertiesList.add(properties);
 		}
 
 		if (propertiesList.isEmpty()) {
-			return properties;
+			return new Properties();
 		}
-
-		properties = propertiesList.get(0);
 
 		if (propertiesList.size() == 1) {
-			return properties;
+			return propertiesList.get(0);
 		}
 
-		for (int i = 1; i < propertiesList.size(); i++) {
+		Properties properties = new Properties();
+
+		for (int i = 0; i < propertiesList.size(); i++) {
 			Properties props = propertiesList.get(i);
 
 			Enumeration<String> enu =
@@ -3040,12 +3077,12 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		_sourceFormatterMessagesMap = new HashMap<>();
 
 		try {
-			_properties = _getProperties();
-
 			_sourceFormatterHelper = new SourceFormatterHelper(
 				sourceFormatterArgs.isUseProperties());
 
 			_sourceFormatterHelper.init();
+
+			_properties = _getProperties();
 		}
 		catch (Exception e) {
 			ReflectionUtil.throwException(e);

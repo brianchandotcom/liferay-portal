@@ -4,7 +4,7 @@ Liferay-Releng-Bundle: false
 Liferay-Releng-Category: Themes
 Liferay-Releng-Demo-Url:
 Liferay-Releng-Deprecated: false
-Liferay-Releng-Labs: false
+Liferay-Releng-Labs: true
 Liferay-Releng-Marketplace: true
 Liferay-Releng-Portal-Required: true
 Liferay-Releng-Public: ${liferay.releng.public}

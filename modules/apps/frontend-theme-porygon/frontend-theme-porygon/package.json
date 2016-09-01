@@ -8,6 +8,10 @@
 		"liferay-theme-deps-7.0": "*",
 		"liferay-theme-tasks": "*"
 	},
+	"devDependencies": {
+		"gulp-metal": "^1.7.6",
+		"run-sequence": "^1.2.2"
+	},
 	"keywords": [
 		"liferay-theme"
 	],

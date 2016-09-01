@@ -72,14 +72,13 @@ public class ExportArticleUtil {
 		String porletResource = ParamUtil.getString(
 			portletRequest, "portletResource");
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		if (!Validator.isBlank(porletResource)) {
-			long plid = ParamUtil.getLong(portletRequest, "plid");
-
-			Layout layout = _layoutLocalService.getLayout(plid);
-
 			portletPreferences =
 				PortletPreferencesFactoryUtil.getExistingPortletSetup(
-					layout, porletResource);
+					themeDisplay.getLayout(), porletResource);
 		}
 
 		String[] allowedExtensions = portletPreferences.getValues(
@@ -93,8 +92,7 @@ public class ExportArticleUtil {
 		String languageId = LanguageUtil.getLanguageId(portletRequest);
 		PortletRequestModel portletRequestModel = new PortletRequestModel(
 			portletRequest, portletResponse);
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			portletRequest);
 		HttpServletResponse response = PortalUtil.getHttpServletResponse(

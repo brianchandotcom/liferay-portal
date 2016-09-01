@@ -12,6 +12,7 @@ buildscript {
 
 task buildFixPackChangeLog(type: BuildChangeLogTask)
 task cleanReleng
+task cleanVersionOverride
 task setUpPortalTools
 task wrapper(type: Wrapper)
 
@@ -51,6 +52,22 @@ cleanReleng << {
 
 			println "Removed " + relativePath(relengDir)
 		}
+	}
+}
+
+cleanVersionOverride << {
+	String gitRepoPath = project.properties["gitRepoPath"]
+
+	if (!gitRepoPath) {
+		throw new GradleException("Please set the property \"-PgitRepoPath\".")
+	}
+
+	File gitRepoDir = file(gitRepoPath)
+
+	FileTree bndBndFileTree = fileTree(dir: gitRepoDir, include : "**/bnd.bnd")
+
+	delete bndBndFileTree.collect {
+		new File(gitRepoDir.parentFile, ".version-override-${it.parentFile.name}.properties")
 	}
 }
 

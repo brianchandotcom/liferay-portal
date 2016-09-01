@@ -1993,7 +1993,8 @@
 			<var name="fieldValue" value="05/02/2016" />
 		</execute>
 
-		<execute macro="FormFields#enableCheckbox">
+		<execute macro="FormFields#selectCheckboxOption">
+			<var name="checkboxOption" value="Checkbox 1" />
 			<var name="fieldName" value="Checkbox" />
 		</execute>
 
@@ -2255,7 +2256,8 @@
 			<var name="fieldValue" value="05/02/2016" />
 		</execute>
 
-		<execute macro="FormFields#enableCheckbox">
+		<execute macro="FormFields#selectCheckboxOption">
+			<var name="checkboxOption" value="Checkbox 1" />
 			<var name="fieldName" value="Checkbox" />
 		</execute>
 
@@ -2554,7 +2556,8 @@
 			<var name="fieldName" value="CheckboxField" />
 		</execute>
 
-		<execute macro="FormFields#enableCheckbox">
+		<execute macro="FormFields#selectCheckboxOption">
+			<var name="checkboxOption" value="Checkbox 1" />
 			<var name="fieldName" value="CheckboxField" />
 		</execute>
 
@@ -2843,7 +2846,8 @@
 
 		<execute macro="FormPortlet#submitWithValidationError" />
 
-		<execute macro="FormFields#enableCheckbox">
+		<execute macro="FormFields#selectCheckboxOption">
+			<var name="checkboxOption" value="Checkbox 1" />
 			<var name="fieldName" value="CheckboxField" />
 		</execute>
 
@@ -3553,7 +3557,8 @@
 			<var name="fieldName" value="Checkbox" />
 		</execute>
 
-		<execute macro="FormFields#enableCheckbox">
+		<execute macro="FormFields#selectCheckboxOption">
+			<var name="checkboxOption" value="Checkbox 1" />
 			<var name="fieldName" value="Checkbox" />
 		</execute>
 

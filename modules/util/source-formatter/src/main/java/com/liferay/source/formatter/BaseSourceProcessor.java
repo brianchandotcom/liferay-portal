@@ -37,7 +37,6 @@ import com.liferay.source.formatter.util.FileUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -49,7 +48,6 @@ import java.nio.charset.CodingErrorAction;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -2944,128 +2942,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return excludesList.toArray(new String[excludesList.size()]);
 	}
 
-	private Properties _getProperties() throws Exception {
-		String fileName = "source-formatter.properties";
-
-		if (!portalSource) {
-			for (int i = 0; i <= PLUGINS_MAX_DIR_LEVEL; i++) {
-				try {
-					InputStream inputStream = new FileInputStream(
-						sourceFormatterArgs.getBaseDirName() + fileName);
-
-					Properties properties = new Properties();
-
-					properties.load(inputStream);
-
-					return properties;
-				}
-				catch (FileNotFoundException fnfe) {
-				}
-
-				fileName = "../" + fileName;
-			}
-
-			return new Properties();
-		}
-
-		List<Properties> propertiesList = new ArrayList<>();
-
-		// Find properties file in portal-impl/src/
-
-		File propertiesFile = getFile(
-			"portal-impl/src/" + fileName, PORTAL_MAX_DIR_LEVEL);
-
-		if (propertiesFile != null) {
-			InputStream inputStream = new FileInputStream(propertiesFile);
-
-			Properties properties = new Properties();
-
-			properties.load(inputStream);
-
-			propertiesList.add(properties);
-		}
-
-		// Find properties files in any parent directory
-
-		String parentDirName = sourceFormatterArgs.getBaseDirName() + "../";
-
-		for (int i = 0; i < PORTAL_MAX_DIR_LEVEL - 1; i++) {
-			try {
-				InputStream inputStream = new FileInputStream(
-					parentDirName + fileName);
-
-				Properties properties = new Properties();
-
-				properties.load(inputStream);
-
-				propertiesList.add(properties);
-			}
-			catch (FileNotFoundException fnfe) {
-			}
-
-			parentDirName += "../";
-		}
-
-		// Find properties file in any child directory
-
-		List<String> modulePropertiesFileNames = getFileNames(
-			sourceFormatterArgs.getBaseDirName(), null, new String[0],
-			new String[] {"**/modules/**/" + fileName});
-
-		for (String modulePropertiesFileName : modulePropertiesFileNames) {
-			InputStream inputStream = new FileInputStream(
-				modulePropertiesFileName);
-
-			Properties properties = new Properties();
-
-			properties.load(inputStream);
-
-			propertiesList.add(properties);
-		}
-
-		if (propertiesList.isEmpty()) {
-			return new Properties();
-		}
-
-		if (propertiesList.size() == 1) {
-			return propertiesList.get(0);
-		}
-
-		Properties properties = new Properties();
-
-		for (int i = 0; i < propertiesList.size(); i++) {
-			Properties props = propertiesList.get(i);
-
-			Enumeration<String> enu =
-				(Enumeration<String>)props.propertyNames();
-
-			while (enu.hasMoreElements()) {
-				String key = enu.nextElement();
-
-				String value = props.getProperty(key);
-
-				if (Validator.isNull(value)) {
-					continue;
-				}
-
-				if (key.contains("excludes")) {
-					String existingValue = properties.getProperty(key);
-
-					if (Validator.isNotNull(existingValue)) {
-						value = existingValue + StringPool.COMMA + value;
-					}
-
-					properties.put(key, value);
-				}
-				else if (!properties.containsKey(key)) {
-					properties.put(key, value);
-				}
-			}
-		}
-
-		return properties;
-	}
-
 	private void _init() {
 		portalSource = _isPortalSource();
 
@@ -3076,8 +2952,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				sourceFormatterArgs.isUseProperties());
 
 			_sourceFormatterHelper.init();
-
-			_properties = _getProperties();
 		}
 		catch (Exception e) {
 			ReflectionUtil.throwException(e);

@@ -4238,6 +4238,16 @@ go]]></replacevalue>
 		<copy file="portal-web/docroot/WEB-INF/web.xml" overwrite="true" tofile="${app.server.dir}/webapps/ROOT/WEB-INF/web.xml" />
 	</target>
 
+	<target name="clean-version-override">
+		<fail message="Please set the property ${module.dir}." unless="module.dir" />
+
+		<gradle-execute dir="${portal.dir}/modules" task="cleanVersionOverride">
+			<arg value="-b" />
+			<arg value="util.gradle" />
+			<arg value="-PgitRepoPath=${module.dir}" />
+		</gradle-execute>
+	</target>
+
 	<target name="copy-log-file">
 		<for param="log.file">
 			<path>

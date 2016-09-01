@@ -1353,6 +1353,10 @@ app.server.type=@{app.server.type}]]></echo>
 		<run-functional-test app.server.type="resin" database.type="mysql" />
 	</target>
 
+	<target name="functional-smoke-tomcat8-mysql56-jdk8">
+		<run-functional-test app.server.type="tomcat" database.type="mysql" />
+	</target>
+
 	<target name="functional-tcserver26-mysql56-jdk8">
 		<run-functional-test app.server.type="tcserver" database.type="mysql" />
 	</target>

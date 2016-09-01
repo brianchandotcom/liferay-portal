@@ -20,5 +20,5 @@
 	"main": "package.json",
 	"name": "porygon-theme",
 	"repository": "liferay/liferay-portal",
-	"version": "1.0.4"
+	"version": "1.0.0"
 }

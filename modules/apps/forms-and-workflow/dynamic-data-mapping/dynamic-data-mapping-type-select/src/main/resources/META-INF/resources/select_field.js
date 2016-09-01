@@ -19,12 +19,12 @@ AUI.add(
 
 					options: {
 						getter: '_getOptions',
+						state: true,
 						validator: Array.isArray,
 						value: []
 					},
 
 					strings: {
-						repaint: false,
 						value: {
 							chooseAnOption: Liferay.Language.get('choose-an-option'),
 							dynamicallyLoadedData: Liferay.Language.get('dynamically-loaded-data')
@@ -36,7 +36,6 @@ AUI.add(
 					},
 
 					value: {
-						repaint: false,
 						value: []
 					}
 				},

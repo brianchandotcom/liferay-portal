@@ -22,7 +22,6 @@ AUI.add(
 					},
 
 					context: {
-						validator: Lang.isObject,
 						value: {}
 					},
 
@@ -32,12 +31,17 @@ AUI.add(
 					},
 
 					fieldName: {
+						state: true,
 						value: ''
 					},
 
 					instanceId: {
-						repaint: false,
 						valueFn: '_valueInstanceId'
+					},
+
+					label: {
+						state: true,
+						value: ''
 					},
 
 					locale: {
@@ -45,7 +49,7 @@ AUI.add(
 					},
 
 					name: {
-						repaint: false,
+						state: true,
 						value: ''
 					},
 
@@ -62,6 +66,7 @@ AUI.add(
 					},
 
 					readOnly: {
+						state: true,
 						value: false
 					},
 
@@ -70,6 +75,7 @@ AUI.add(
 					},
 
 					showLabel: {
+						state: true,
 						value: true
 					},
 
@@ -77,12 +83,20 @@ AUI.add(
 						value: ''
 					},
 
+					validation: {
+						value: {
+							errorMessage: '',
+							expression: '',
+							type: ''
+						}
+					},
+
 					value: {
-						repaint: false,
 						value: ''
 					},
 
 					visible: {
+						state: true,
 						value: true
 					}
 				},
@@ -207,21 +221,13 @@ AUI.add(
 					getTemplateContext: function() {
 						var instance = this;
 
-						return {
-							childElementsHTML: instance.get('childElementsHTML'),
-							dir: instance.get('dir'),
-							label: instance.get('label'),
-							multiple: instance.get('multiple'),
-							name: instance.getQualifiedName(),
-							options: instance.get('options'),
-							readOnly: instance.get('readOnly'),
-							required: instance.get('required'),
-							showLabel: instance.get('showLabel'),
-							strings: instance.get('strings'),
-							tip: instance.get('tip'),
-							value: instance.get('value'),
-							visible: instance.get('visible')
-						};
+						return A.merge(
+							instance.get('context'),
+							{
+								name: instance.getQualifiedName(),
+								value: instance.get('value')
+							}
+						);
 					},
 
 					getTemplateRenderer: function() {

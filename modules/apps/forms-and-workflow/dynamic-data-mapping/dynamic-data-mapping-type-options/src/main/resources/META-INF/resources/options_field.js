@@ -33,7 +33,6 @@ AUI.add(
 					},
 
 					value: {
-						repaint: false,
 						value: []
 					}
 				},

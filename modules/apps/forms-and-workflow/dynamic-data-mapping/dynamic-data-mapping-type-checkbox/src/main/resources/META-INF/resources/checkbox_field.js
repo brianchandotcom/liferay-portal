@@ -11,6 +11,7 @@ AUI.add(
 					},
 
 					showAsSwitcher: {
+						state: true,
 						value: false
 					},
 

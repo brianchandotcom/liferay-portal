@@ -136,16 +136,13 @@ public class FriendlyURLNormalizerImplTest {
 		CharsetEncoder charsetEncoder = CharsetEncoderUtil.getCharsetEncoder(
 			StringPool.UTF8);
 
-		String replacement = new String(
-			charsetEncoder.replacement(), StringPool.UTF8);
-
 		String encodedReplacement = URLEncoder.encode(
-			replacement, StringPool.UTF8);
+			new String(charsetEncoder.replacement(), StringPool.UTF8),
+			StringPool.UTF8);
 
 		Assert.assertEquals(
 			encodedReplacement + "a" + encodedReplacement,
 			_friendlyURLNormalizerImpl.normalizeWithEncoding("\uDBFFA\uDFFF"));
-
 		Assert.assertEquals(
 			encodedReplacement + StringPool.DASH + encodedReplacement,
 			_friendlyURLNormalizerImpl.normalizeWithEncoding("\uDBFF-\uDFFF"));

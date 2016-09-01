@@ -22,6 +22,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Writer;
 
+import java.net.URI;
+
 import java.nio.charset.StandardCharsets;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
@@ -31,6 +33,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Properties;
 import java.util.Set;
 
 import org.gradle.testkit.runner.BuildResult;
@@ -39,6 +42,7 @@ import org.gradle.testkit.runner.GradleRunner;
 import org.gradle.testkit.runner.TaskOutcome;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -48,6 +52,15 @@ import org.junit.rules.TemporaryFolder;
  * @author Andrea Di Giorgi
  */
 public class ProjectTemplatesTest {
+
+	@BeforeClass
+	public static void setUpClass() throws IOException {
+		Properties properties = FileTestUtil.readProperties(
+			"gradle-wrapper/gradle/wrapper/gradle-wrapper.properties");
+
+		_gradleDistribution = URI.create(
+			properties.getProperty("distributionUrl"));
+	}
 
 	@Test
 	public void testBuildTemplate() throws Exception {
@@ -393,6 +406,7 @@ public class ProjectTemplatesTest {
 		GradleRunner gradleRunner = GradleRunner.create();
 
 		gradleRunner.withArguments(taskPath);
+		gradleRunner.withGradleDistribution(_gradleDistribution);
 		gradleRunner.withProjectDir(projectDir);
 
 		BuildResult buildResult = gradleRunner.build();
@@ -492,5 +506,7 @@ public class ProjectTemplatesTest {
 	}
 
 	private static final String _TASK_PATH_BUILD = ":build";
+
+	private static URI _gradleDistribution;
 
 }

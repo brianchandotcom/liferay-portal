@@ -27,6 +27,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import java.util.Properties;
+
 /**
  * @author Andrea Di Giorgi
  */
@@ -123,6 +125,18 @@ public class FileTestUtil {
 		String content = sb.toString();
 
 		return content.trim();
+	}
+
+	public static Properties readProperties(String name) throws IOException {
+		Properties properties = new Properties();
+
+		ClassLoader classLoader = FileTestUtil.class.getClassLoader();
+
+		try (InputStream inputStream = classLoader.getResourceAsStream(name)) {
+			properties.load(inputStream);
+		}
+
+		return properties;
 	}
 
 }

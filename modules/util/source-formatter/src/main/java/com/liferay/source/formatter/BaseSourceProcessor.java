@@ -2956,29 +2956,39 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		List<Properties> propertiesList = new ArrayList<>();
 
-		int level = PLUGINS_MAX_DIR_LEVEL;
-
 		if (portalSource) {
-			level = PORTAL_MAX_DIR_LEVEL;
+			File propertiesFile = getFile(
+				"portal-impl/src/" + fileName, PORTAL_MAX_DIR_LEVEL);
+
+			if (propertiesFile != null) {
+				InputStream inputStream = new FileInputStream(propertiesFile);
+
+				properties = new Properties();
+
+				properties.load(inputStream);
+
+				propertiesList.add(properties);
+			}
 		}
+		else {
+			for (int i = 0; i <= PLUGINS_MAX_DIR_LEVEL; i++) {
+				try {
+					InputStream inputStream = new FileInputStream(
+						sourceFormatterArgs.getBaseDirName() + fileName);
 
-		for (int i = 0; i <= level; i++) {
-			try {
-				InputStream inputStream = new FileInputStream(
-					sourceFormatterArgs.getBaseDirName() + fileName);
+					Properties props = new Properties();
 
-				Properties props = new Properties();
+					props.load(inputStream);
 
-				props.load(inputStream);
+					propertiesList.add(props);
 
-				propertiesList.add(props);
+					break;
+				}
+				catch (FileNotFoundException fnfe) {
+				}
 
-				break;
+				fileName = "../" + fileName;
 			}
-			catch (FileNotFoundException fnfe) {
-			}
-
-			fileName = "../" + fileName;
 		}
 
 		if (propertiesList.isEmpty()) {

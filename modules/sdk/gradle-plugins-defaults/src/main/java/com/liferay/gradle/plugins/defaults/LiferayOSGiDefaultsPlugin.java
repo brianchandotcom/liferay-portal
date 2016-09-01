@@ -2514,9 +2514,11 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 					_saveVersions(
 						project.getProjectDir(), versions, versionOverrideFile);
 
-					GitUtil.executeGit(
-						project, "add",
-						project.relativePath(versionOverrideFile));
+					if (versionOverrideFile.exists()) {
+						GitUtil.executeGit(
+							project, "add",
+							project.relativePath(versionOverrideFile));
+					}
 				}
 				else if (hasPackageInfoFiles) {
 					GitUtil.executeGit(

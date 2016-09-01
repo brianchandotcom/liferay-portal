@@ -1836,18 +1836,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	protected File getFile(String fileName, int level) {
-		for (int i = 0; i < level; i++) {
-			File file = new File(
-				sourceFormatterArgs.getBaseDirName() + fileName);
-
-			if (file.exists()) {
-				return file;
-			}
-
-			fileName = "../" + fileName;
-		}
-
-		return null;
+		return _sourceFormatterHelper.getFile(
+			sourceFormatterArgs.getBaseDirName(), fileName, level);
 	}
 
 	protected List<String> getFileNames(

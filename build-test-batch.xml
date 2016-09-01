@@ -1353,32 +1353,16 @@ app.server.type=@{app.server.type}]]></echo>
 		<run-functional-test app.server.type="resin" database.type="mysql" />
 	</target>
 
-	<target name="functional-smoke-tomcat8-mysql56-jdk8">
-		<run-functional-test app.server.type="tomcat" database.type="mysql" />
-	</target>
-
 	<target name="functional-smoke-tcserver26-mysql56-jdk8">
 		<run-functional-test app.server.type="tcserver" database.type="mysql" />
-	</target>
-
-	<target name="functional-tomcat8-hypersonic20-jdk8">
-		<run-functional-test app.server.type="tomcat" database.type="hypersonic" />
 	</target>
 
 	<target name="functional-smoke-tomcat8-mariadb100-jdk8">
 		<run-functional-test app.server.type="tomcat" database.type="mariadb" />
 	</target>
 
-	<target name="functional-tomcat8-mysql55-jdk8">
-		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.5" />
-	</target>
-
-	<target name="functional-tomcat8-mysql56-jdk8">
+	<target name="functional-smoke-tomcat8-mysql56-jdk8">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" />
-	</target>
-
-	<target name="functional-tomcat8-mysql56-jdk8-quarantine">
-		<antcall target="functional-tomcat8-mysql56-jdk8" />
 	</target>
 
 	<target name="functional-smoke-tomcat8-oracle12-jdk8">
@@ -1403,6 +1387,22 @@ app.server.type=@{app.server.type}]]></echo>
 
 	<target name="functional-smoke-wildfly10-mariadb100-jdk8">
 		<run-functional-test app.server.type="wildfly" database.type="mariadb" />
+	</target>
+
+	<target name="functional-tomcat8-hypersonic20-jdk8">
+		<run-functional-test app.server.type="tomcat" database.type="hypersonic" />
+	</target>
+
+	<target name="functional-tomcat8-mysql55-jdk8">
+		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.5" />
+	</target>
+
+	<target name="functional-tomcat8-mysql56-jdk8">
+		<run-functional-test app.server.type="tomcat" database.type="mysql" />
+	</target>
+
+	<target name="functional-tomcat8-mysql56-jdk8-quarantine">
+		<antcall target="functional-tomcat8-mysql56-jdk8" />
 	</target>
 
 	<target name="integration-db2105-jdk8">

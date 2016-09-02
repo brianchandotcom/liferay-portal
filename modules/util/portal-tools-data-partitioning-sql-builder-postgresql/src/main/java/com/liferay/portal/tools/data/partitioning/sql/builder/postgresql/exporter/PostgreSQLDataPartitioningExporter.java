@@ -17,9 +17,6 @@ package com.liferay.portal.tools.data.partitioning.sql.builder.postgresql.export
 import com.liferay.portal.tools.data.partitioning.sql.builder.exporter.BaseDataPartitioningExporter;
 import com.liferay.portal.tools.data.partitioning.sql.builder.exporter.context.ExportContext;
 
-import java.sql.Date;
-import java.sql.Timestamp;
-
 /**
  * @author Manuel de la Peña
  */
@@ -67,36 +64,6 @@ public class PostgreSQLDataPartitioningExporter
 	@Override
 	public String getTableNameFieldName() {
 		return "table_name";
-	}
-
-	@Override
-	public String serializeTableField(Object field) {
-		StringBuilder sb = new StringBuilder();
-
-		if (field == null) {
-			sb.append("null");
-		}
-		else if ((field instanceof Date) || (field instanceof Timestamp)) {
-			sb.append("to_timestamp('");
-			sb.append(formatDateTime(field));
-			sb.append("', 'YYYY-MM-DD HH24:MI:SS:MS')");
-		}
-		else if (field instanceof String) {
-			sb.append("'");
-
-			String value = (String)field;
-
-			sb.append(value.replace("'", "''"));
-
-			sb.append("'");
-		}
-		else {
-			sb.append("'");
-			sb.append(field);
-			sb.append("'");
-		}
-
-		return sb.toString();
 	}
 
 }

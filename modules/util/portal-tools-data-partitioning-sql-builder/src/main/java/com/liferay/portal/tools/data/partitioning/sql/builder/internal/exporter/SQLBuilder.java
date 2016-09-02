@@ -24,4 +24,8 @@ public interface SQLBuilder {
 	public String build(
 		ResultSetMetaData resultSetMetaData, String tableName, String[] fields);
 
+	public String getDateTimeFormat();
+
+	public String serializeTableField(Object field);
+
 }

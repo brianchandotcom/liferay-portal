@@ -25,15 +25,10 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,11 +74,6 @@ public abstract class BaseDataPartitioningExporter
 	}
 
 	@Override
-	public String getDateTimeFormat() {
-		return "YYYY-MM-DD HH:MM:SS";
-	}
-
-	@Override
 	public int getFetchSize() {
 		return 0;
 	}
@@ -96,36 +86,6 @@ public abstract class BaseDataPartitioningExporter
 	@Override
 	public SQLBuilder getSQLBuilder() {
 		return new InsertSQLBuilder();
-	}
-
-	@Override
-	public String serializeTableField(Object field) {
-		StringBuilder sb = new StringBuilder();
-
-		if (field == null) {
-			sb.append("null");
-		}
-		else if ((field instanceof Date) || (field instanceof Timestamp)) {
-			sb.append("'");
-			sb.append(formatDateTime(field));
-			sb.append("'");
-		}
-		else if (field instanceof String) {
-			String value = (String)field;
-
-			value = value.replace("'", "''");
-
-			sb.append("'");
-			sb.append(value);
-			sb.append("'");
-		}
-		else {
-			sb.append("'");
-			sb.append(field);
-			sb.append("'");
-		}
-
-		return sb.toString();
 	}
 
 	@Override
@@ -153,7 +113,8 @@ public abstract class BaseDataPartitioningExporter
 				String[] fields = new String[columnCount];
 
 				for (int i = 0; i < columnCount; i++) {
-					fields[i] = serializeTableField(resultSet.getObject(i + 1));
+					fields[i] = _insertSQLBuilder.serializeTableField(
+						resultSet.getObject(i + 1));
 				}
 
 				String insertSQL = _insertSQLBuilder.build(
@@ -218,12 +179,6 @@ public abstract class BaseDataPartitioningExporter
 		}
 
 		return preparedStatement;
-	}
-
-	protected String formatDateTime(Object date) {
-		DateFormat dateFormat = new SimpleDateFormat(getDateTimeFormat());
-
-		return dateFormat.format(date);
 	}
 
 	protected abstract String getControlTableNamesSQL(

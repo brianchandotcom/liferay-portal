@@ -1887,19 +1887,6 @@ AUI.add(
 							listNode.on('scroll', instance._handleModalScroll, instance);
 						}
 						else {
-							var path = instance.get('selectedLayoutPath');
-
-							instance.set(
-								'selectedLayout',
-								{
-									groupId: value.groupId,
-									label: value.label,
-									layoutId: value.layoutId,
-									path: path.slice(),
-									privateLayout: privateLayout
-								}
-							);
-
 							instance._renderLayoutsList(privateLayout);
 						}
 

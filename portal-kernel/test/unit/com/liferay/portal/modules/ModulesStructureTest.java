@@ -143,6 +143,32 @@ public class ModulesStructureTest {
 	}
 
 	@Test
+	public void testScanIgnoreFiles() throws IOException {
+		Files.walkFileTree(
+			_modulesDirPath,
+			new SimpleFileVisitor<Path>() {
+
+				@Override
+				public FileVisitResult preVisitDirectory(
+					Path dirPath, BasicFileAttributes basicFileAttributes) {
+
+					Path dirNamePath = dirPath.getFileName();
+
+					String dirName = dirNamePath.toString();
+
+					if (dirName.startsWith("frontend-theme-") &&
+						Files.exists(dirPath.resolve("gulpfile.js"))) {
+
+						_testThemeIgnoreFiles(dirPath);
+					}
+
+					return FileVisitResult.CONTINUE;
+				}
+
+			});
+	}
+
+	@Test
 	public void testScanLog4JConfigurationXML() throws IOException {
 		final Map<String, String> renameMap = new HashMap<>();
 
@@ -434,8 +460,24 @@ public class ModulesStructureTest {
 		}
 	}
 
+	private void _testThemeIgnoreFiles(Path dirPath) {
+		Path resourcesImporterDirPath = dirPath.resolve("resources-importer");
+
+		if (Files.exists(resourcesImporterDirPath)) {
+			Path resourcesImporterIgnorePath = resourcesImporterDirPath.resolve(
+				_SOURCE_FORMATTER_IGNORE_FILE_NAME);
+
+			Assert.assertTrue(
+				"Missing " + resourcesImporterIgnorePath,
+				Files.exists(resourcesImporterIgnorePath));
+		}
+	}
+
 	private static final String _APP_BUILD_GRADLE =
 		"apply plugin: \"com.liferay.app.defaults.plugin\"";
+
+	private static final String _SOURCE_FORMATTER_IGNORE_FILE_NAME =
+		"source_formatter.ignore";
 
 	private static Path _modulesDirPath;
 

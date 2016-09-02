@@ -2602,7 +2602,7 @@
 
 		<execute macro="FormsAdmin#viewFormTableEntry">
 			<var name="fieldLabel" value="Checkbox Field" />
-			<var name="fieldValue" value="Yes" />
+			<var name="fieldValue" value="Checkbox 1" />
 		</execute>
 
 		<execute macro="FormsAdmin#viewFormTableEntry">
@@ -2863,7 +2863,7 @@
 
 		<execute macro="FormsAdmin#viewFormTableEntry">
 			<var name="fieldLabel" value="Checkbox Field" />
-			<var name="fieldValue" value="Yes" />
+			<var name="fieldValue" value="Checkbox 1" />
 		</execute>
 	</command>
 
@@ -3314,7 +3314,7 @@
 
 		<execute macro="FormsAdmin#viewFormTableEntry">
 			<var name="fieldLabel" value="Checkbox Field" />
-			<var name="fieldValue" value="Yes" />
+			<var name="fieldValue" value="Switcher 1" />
 		</execute>
 
 		<execute macro="FormsAdminNavigator#gotoView" />
@@ -3585,7 +3585,7 @@
 
 		<execute macro="FormsAdmin#viewFormTableEntry">
 			<var name="fieldLabel" value="Checkbox" />
-			<var name="fieldValue" value="Yes" />
+			<var name="fieldValue" value="Checkbox 1" />
 		</execute>
 	</command>
 

@@ -35,3 +35,7 @@ dependencies {
 processResources {
 	from configurations.projectTemplates
 }
+
+test {
+	systemProperty "repository.url", System.properties["repository.url"]
+}

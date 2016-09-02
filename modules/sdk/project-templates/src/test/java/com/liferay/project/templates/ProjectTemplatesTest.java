@@ -60,6 +60,8 @@ public class ProjectTemplatesTest {
 
 		_gradleDistribution = URI.create(
 			properties.getProperty("distributionUrl"));
+
+		_repositoryUrl = System.getProperty("repository.url");
 	}
 
 	@Test
@@ -403,6 +405,21 @@ public class ProjectTemplatesTest {
 			File projectDir, String taskPath, String... testTaskPaths)
 		throws IOException {
 
+		if (Validator.isNotNull(_repositoryUrl)) {
+			File buildGradleFile = new File(projectDir, "build.gradle");
+
+			Path buildGradlePath = buildGradleFile.toPath();
+
+			String buildGradle = FileTestUtil.read(buildGradlePath);
+
+			buildGradle = buildGradle.replace(
+				"\"" + _REPOSITORY_CDN_URL + "\"",
+				"\"" + _repositoryUrl + "\"");
+
+			Files.write(
+				buildGradlePath, buildGradle.getBytes(StandardCharsets.UTF_8));
+		}
+
 		GradleRunner gradleRunner = GradleRunner.create();
 
 		gradleRunner.withArguments(taskPath);
@@ -505,8 +522,13 @@ public class ProjectTemplatesTest {
 		}
 	}
 
+	private static final String _REPOSITORY_CDN_URL =
+		"https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/" +
+			"public";
+
 	private static final String _TASK_PATH_BUILD = ":build";
 
 	private static URI _gradleDistribution;
+	private static String _repositoryUrl;
 
 }

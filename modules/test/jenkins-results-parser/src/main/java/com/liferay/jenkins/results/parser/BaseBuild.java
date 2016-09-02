@@ -14,15 +14,47 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
  * @author Kevin Yen
  */
 public abstract class BaseBuild implements Build {
+
+	public BaseBuild(String url) throws Exception {
+		setStatus("starting");
+
+		if (url.contains("buildWithParameters")) {
+			setInvocationURL(url);
+			
+			return;
+		}
+
+		setBuildURL(buildURL);
+	}
+	
+	public JSONObject getBuildJSONObject() throws Exception {
+		return getBuildJSONObject(null);
+	}
+	
+	public JSONObject getBuildJSONObject(String tree) throws Exception {
+		if (tree == null) {
+			tree = "actions[parameters[*]],number,result,runs[number,url]";
+		}
+		
+		return JenkinsResultsParserUtil.toJSONObject(
+			JenkinsResultsParserUtil.getLocalURL(
+				buildURL + "/api/json?pretty&tree=" + tree));
+	}
 
 	@Override
 	public int getBuildNumber() {
@@ -106,28 +138,137 @@ public abstract class BaseBuild implements Build {
 		return url;
 	}
 
-	protected BaseBuild() {
-		setStatus("starting");
+	protected Set<String> getJobParameterNames() throws Exception {
+		JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
+			getJobURL() + "/api/json?tree=actions[parameterDefinitions" +
+				"[name,type,value]]");
+
+		JSONArray actionsJSONArray = jsonObject.getJSONArray("actions");
+
+		JSONObject firstActionJSONObject = actionsJSONArray.getJSONObject(0);
+
+		JSONArray parameterDefinitionsJSONArray =
+			firstActionJSONObject.getJSONArray("parameterDefinitions");
+
+		Set<String> parameterNames = new HashSet<>(
+			parameterDefinitionsJSONArray.length());
+
+		for (int i = 0; i < parameterDefinitionsJSONArray.length(); i++) {
+			JSONObject parameterDefinitionJSONObject =
+				parameterDefinitionsJSONArray.getJSONObject(i);
+
+			String type = parameterDefinitionJSONObject.getString("type");
+
+			if (type.equals("StringParameterDefinition")) {
+				parameterNames.add(
+					parameterDefinitionJSONObject.getString("name"));
+			}
+		}
+
+		return parameterNames;
 	}
 
-	protected BaseBuild(String buildURL) throws Exception {
-		setBuildURL(buildURL);
+	protected void loadParameters()
+		throws Exception {
+		
+		if (buildURL == null) {
+			Matcher invocationURLMatcher = invocationURLPattern.matcher(
+				this.invocationURL);
+	
+			if (!invocationURLMatcher.find()) {
+				throw new IllegalArgumentException("Invalid invocation URL");
+			}
+	
+			String queryString = invocationURLMatcher.group("queryString");
+			
+			Set<String> jobParameterNames = getJobParameterNames();
+	
+			for (String parameter : queryString.split("&")) {
+				String[] nameValueArray = parameter.split("=");
+				if ((nameValueArray.length == 2) && jobParameterNames.contains(nameValueArray[0])) {
+					parameters.put(nameValueArray[0], nameValueArray[1]);
+				}
+			}
+			
+			return;
+		}		
+		
+		JSONObject buildJSONObject = getBuildJSONObject();
+
+		JSONArray actionsJSONArray = buildJSONObject.getJSONArray("actions");
+
+		if (actionsJSONArray.length() == 0) {
+			parameters = new HashMap<>(0);
+
+			return;
+		}
+
+		JSONObject actionJSONObject = actionsJSONArray.getJSONObject(0);
+
+		if (actionJSONObject.has("parameters")) {
+			JSONArray parametersJSONArray =
+				actionJSONObject.getJSONArray("parameters");
+
+			parameters = new HashMap<>(parametersJSONArray.length());
+
+			for (int i = 0; i < parametersJSONArray.length(); i++) {
+				JSONObject parameterJSONObject =
+					parametersJSONArray.getJSONObject(i);
+
+				Object value = parameterJSONObject.opt("value");
+
+				if (value instanceof String) {
+					if (!value.toString().isEmpty()) {
+						parameters.put(
+							parameterJSONObject.getString("name"),
+							value.toString());
+					}
+				}
+			}
+
+			return;
+		}
+
+		parameters = Collections.emptyMap();
 	}
 
 	protected void setBuildURL(String buildURL) throws Exception {
-		buildURL = decodeURL(buildURL);
+		this.buildURL = decodeURL(buildURL);
 
-		Matcher matcher = _buildURLPattern.matcher(buildURL);
+		Matcher matcher = buildURLPattern.matcher(this.buildURL);
 
 		if (!matcher.find()) {
-			throw new IllegalArgumentException("Invalid build URL " + buildURL);
+			throw new IllegalArgumentException("Invalid build URL " + this.buildURL);
 		}
 
 		buildNumber = Integer.parseInt(matcher.group("buildNumber"));
 		jobName = matcher.group("jobName");
 		master = matcher.group("master");
+		
+		loadParameters();
 
 		update();
+	}
+
+	protected void setInvocationURL(String invocationURL) throws Exception {
+		this.invocationURL = decodeURL(invocationURL);
+
+		if (buildURL == null) {
+			Matcher invocationURLMatcher = invocationURLPattern.matcher(
+				this.invocationURL);
+	
+			if (!invocationURLMatcher.find()) {
+				throw new IllegalArgumentException("Invalid invocation URL");
+			}
+	
+			jobName = invocationURLMatcher.group("jobName");
+			master = invocationURLMatcher.group("master");
+			
+			loadParameters();
+			
+			update();
+		}
+
 	}
 
 	protected void setStatus(String status) {
@@ -141,14 +282,20 @@ public abstract class BaseBuild implements Build {
 	}
 
 	protected int buildNumber = -1;
+	protected String buildURL;
+	protected final Pattern buildURLPattern = Pattern.compile(
+		"\\w+://(?<master>[^/]+)/+job/+(?<jobName>[^/]+).*/(?<buildNumber>" +
+			"\\d+)/?");
+	protected String invocationURL;
+	protected final Pattern invocationURLPattern = Pattern.compile(
+		"\\w+://(?<master>[^/]+)/+job/+(?<jobName>[^/]+).*/" +
+			"buildWithParameters\\?(?<queryString>.*)");
 	protected String jobName;
 	protected String master;
+	protected Map<String, String> parameters = new HashMap<>();
 	protected String result;
 	protected long statusModifiedTime;
 
-	private static final Pattern _buildURLPattern = Pattern.compile(
-		"\\w+://(?<master>[^/]+)/+job/+(?<jobName>[^/]+).*/(?<buildNumber>" +
-			"\\d+)/?");
 
 	private String _status;
 

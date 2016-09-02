@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Brian Wing Shun Chan
  *
- * @deprecated As of 7.0.0 as of 7.1.0, replaced by {@link #com.liferay.journal.properties.trasnformer.listener.JournalPropertiesTransformerListener}
+ * @deprecated As of 7.0.0, replaced by {@link #com.liferay.journal.properties.trasnformer.listener.JournalPropertiesTransformerListener}
  */
 @Component(
 	immediate = true,

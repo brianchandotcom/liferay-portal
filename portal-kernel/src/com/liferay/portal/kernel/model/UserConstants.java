@@ -51,7 +51,7 @@ public class UserConstants {
 		PropsKeys.USERS_EMAIL_ADDRESS_AUTO_SUFFIX);
 
 	/**
-	 * @deprecated As of 7.0.0 replaced by {@link #getPortraitURL(String,
+	 * @deprecated As of 7.0.0, replaced by {@link #getPortraitURL(String,
 	 *             boolean, long, String)}
 	 */
 	@Deprecated

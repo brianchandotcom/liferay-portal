@@ -1699,6 +1699,46 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return content;
 	}
 
+	protected String formatDeprecatedJavadoc(String line) {
+		Matcher matcher = _deprecatedPattern.matcher(line);
+
+		if (!matcher.find()) {
+			return line;
+		}
+
+		ComparableVersion mainReleaseComparableVersion =
+			getMainReleaseComparableVersion();
+
+		if (matcher.group(2) == null) {
+			return StringUtil.insert(
+				line, " As of " + mainReleaseComparableVersion.toString(),
+				matcher.end(1));
+		}
+
+		String version = matcher.group(3);
+
+		ComparableVersion comparableVersion = new ComparableVersion(version);
+
+		if (comparableVersion.compareTo(mainReleaseComparableVersion) > 0) {
+			return StringUtil.replaceFirst(
+				line, version, mainReleaseComparableVersion.toString());
+		}
+
+		if (StringUtil.count(version, CharPool.PERIOD) == 1) {
+			return StringUtil.insert(line, ".0", matcher.end(3));
+		}
+
+		String deprecatedInfo = matcher.group(4);
+
+		if ((deprecatedInfo != null) &&
+			!deprecatedInfo.startsWith(StringPool.COMMA)) {
+
+			return StringUtil.insert(line, StringPool.COMMA, matcher.end(3));
+		}
+
+		return line;
+	}
+
 	protected String formatDuplicateReferenceMethods(
 			String fileName, String content, String className,
 			String packagePath)
@@ -2226,44 +2266,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 				checkResourceUtil(line, fileName, lineCount);
 
-				if (trimmedLine.startsWith("* @deprecated") &&
-					_addMissingDeprecationReleaseVersion) {
-
-					ComparableVersion mainReleaseComparableVersion =
-						getMainReleaseComparableVersion();
-
-					if (!trimmedLine.startsWith("* @deprecated As of ")) {
-						line = StringUtil.replace(
-							line, "* @deprecated",
-							"* @deprecated As of " +
-								mainReleaseComparableVersion.toString());
-					}
-					else {
-						String version = trimmedLine.substring(20);
-
-						version = StringUtil.split(
-							version, StringPool.SPACE)[0];
-
-						version = StringUtil.replace(
-							version, StringPool.COMMA, StringPool.BLANK);
-
-						ComparableVersion comparableVersion =
-							new ComparableVersion(version);
-
-						if (comparableVersion.compareTo(
-								mainReleaseComparableVersion) > 0) {
-
-							line = StringUtil.replaceFirst(
-								line, version,
-								mainReleaseComparableVersion.toString());
-						}
-						else if (StringUtil.count(
-									version, CharPool.PERIOD) == 1) {
-
-							line = StringUtil.replaceFirst(
-								line, version, version + ".0");
-						}
-					}
+				if (_addMissingDeprecationReleaseVersion) {
+					line = formatDeprecatedJavadoc(line);
 				}
 
 				if (trimmedLine.startsWith("* @see ") &&
@@ -4490,6 +4494,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		"@Component(\n|\\([\\s\\S]*?\\)\n)");
 	private final Pattern _customSQLFilePattern = Pattern.compile(
 		"<sql file=\"(.*)\" \\/>");
+	private final Pattern _deprecatedPattern = Pattern.compile(
+		"(^\\s*\\* @deprecated)( As of ([0-9\\.]+)(.+)?)?");
 	private List<String> _diamondOperatorExcludes;
 	private final Pattern _diamondOperatorPattern = Pattern.compile(
 		"(return|=)\n?(\t+| )new ([A-Za-z]+)(\\s*)<(.+)>\\(\n*\t*.*\\);\n");

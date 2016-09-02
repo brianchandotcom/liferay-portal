@@ -3,16 +3,17 @@
 /**
  * Prints the DDL form rule builder cotainer.
  *
- * @param addRuleLabel
+ * @param plusIcon
  */
 {template .rule_builder autoescape="deprecated-contextual"}
 	<div class="form-builder-rule-builder-container">
 		<div class="form-builder-rule-builder-rules-list"></div>
 		<div class="form-builder-rule-builder-add-rule-container">
-			<a class="btn form-builder-rule-builder-add-rule" href="javascript:;">
-			<span class="form-builder-rule-builder-add-rule-button-icon">+</span>
-			<label class="form-builder-rule-builder-add-rule-button-label">{$addRuleLabel}</label>
-			</a>
+			<div class="btn-action-secondary btn-bottom-right form-builder-rule-builder-add-rule-button dropdown">
+				<button class="btn btn-primary form-builder-rule-builder-add-rule-button-icon" type="button">
+					{$plusIcon|noAutoescape}
+				</button>
+			</div>
 		</div>
 	</div>
 {/template}

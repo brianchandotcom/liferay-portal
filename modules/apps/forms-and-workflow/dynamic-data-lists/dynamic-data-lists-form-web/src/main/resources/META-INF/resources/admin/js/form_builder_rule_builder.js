@@ -1,6 +1,8 @@
 AUI.add(
 	'liferay-ddl-form-builder-rule-builder',
 	function(A) {
+		var ddl = window.ddl;
+
 		var FormBuilderRuleBuilder = A.Component.create(
 			{
 				ATTRS: {
@@ -185,7 +187,7 @@ AUI.add(
 						var popover = new A.Popover(
 							{
 								align: {
-									node: '.form-builder-rule-builder-add-rule-button-icon'
+									node: '.form-builder-rule-builder-add-rule-button'
 								},
 								animated: true,
 								bodyContent: ddl.rule_types(
@@ -193,20 +195,18 @@ AUI.add(
 										strings: instance.get('strings')
 									}
 								),
+								constrain: true,
 								cssClass: 'form-builder-rulles-builder-popover',
 								duration: 0.25,
 								hideOn: [{
 									eventName: 'click',
 									node: A.one(document)
 								}],
-								position: 'bottom',
+								position: 'top',
 								visible: false,
 								zIndex: Liferay.zIndex.TOOLTIP
 							}
 						).render();
-
-						instance.get('boundingBox').delegate('click', A.bind(popover.show, popover), '.form-builder-rule-builder-add-rule-button-icon');
-						// popover.get('boundingBox').delegate('click', A.bind(instance._handlePopoverClick, instance), 'a');
 					},
 
 					_renderRuleSettings: function(rule) {

@@ -366,6 +366,10 @@ public class LayoutImportController implements ImportController {
 
 		if (group.isLayoutSetPrototype()) {
 			layoutSetPrototypeLinkEnabled = false;
+
+			parameterMap.put(
+				PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_LINK_ENABLED,
+				new String[] {Boolean.FALSE.toString()});
 		}
 
 		String layoutsImportMode = MapUtil.getString(
@@ -477,6 +481,10 @@ public class LayoutImportController implements ImportController {
 		}
 		else if (group.isLayoutSetPrototype() &&
 				 larType.equals("layout-set-prototype")) {
+
+			parameterMap.put(
+				PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_SETTINGS,
+				new String[] {Boolean.TRUE.toString()});
 
 			LayoutSetPrototype layoutSetPrototype =
 				_layoutSetPrototypeLocalService.getLayoutSetPrototype(

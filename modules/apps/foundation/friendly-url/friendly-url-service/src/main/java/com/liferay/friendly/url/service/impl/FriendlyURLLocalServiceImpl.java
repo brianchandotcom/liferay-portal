@@ -195,6 +195,17 @@ public class FriendlyURLLocalServiceImpl
 	}
 
 	@Override
+	public FriendlyURL getMainFriendlyURL(
+			long companyId, long groupId, Class<?> clazz, long classPK)
+		throws PortalException {
+
+		long classNameId = classNameLocalService.getClassNameId(clazz);
+
+		return friendlyURLPersistence.findByC_G_C_C_M(
+			companyId, groupId, classNameId, classPK, true);
+	}
+
+	@Override
 	public void validate(
 			long companyId, long groupId, long classNameId, long classPK,
 			String urlTitle)

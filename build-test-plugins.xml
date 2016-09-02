@@ -195,6 +195,15 @@ app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.42</echo>
 							</else>
 						</if>
 
+						<get-testcase-property property.name="solr.enabled" />
+
+						<if>
+							<equals arg1="${solr.enabled}" arg2="true" />
+							<then>
+								<echo file="${plugin.path}/WEB-INF/classes/solr-ext.properties">server.http.url=http://localhost:8983/solr</echo>
+							</then>
+						</if>
+
 						<if>
 							<equals arg1="@{plugin}" arg2="so-portlet" />
 							<then>

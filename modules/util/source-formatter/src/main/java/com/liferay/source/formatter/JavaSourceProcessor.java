@@ -1728,6 +1728,14 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			return StringUtil.insert(line, ".0", matcher.end(3));
 		}
 
+		String deprecatedInfo = matcher.group(4);
+
+		if ((deprecatedInfo != null) &&
+			!deprecatedInfo.startsWith(StringPool.COMMA)) {
+
+			return StringUtil.insert(line, StringPool.COMMA, matcher.end(3));
+		}
+
 		return line;
 	}
 

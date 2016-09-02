@@ -31,6 +31,7 @@ import org.sonatype.plexus.build.incremental.BuildContext;
  * Compiles CSS files.
  *
  * @author Andrea Di Giorgi
+ * @author Gregory Amerson
  * @goal build-css
  */
 public class BuildCSSMojo extends AbstractMojo {

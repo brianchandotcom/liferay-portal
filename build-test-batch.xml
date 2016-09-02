@@ -1667,6 +1667,20 @@ ${output.content}</echo>
 		<run-batch-test>
 			<test-action>
 				<gradle-execute dir="modules" task="testJS" />
+
+				<replace
+					dir="modules"
+					includes="**/TEST-frontend-js.xml"
+				>
+					<replacefilter>
+						<replacetoken><![CDATA[<testsuites>]]></replacetoken>
+						<replacevalue><![CDATA[]]></replacevalue>
+					</replacefilter>
+					<replacefilter>
+						<replacetoken><![CDATA[</testsuites>]]></replacetoken>
+						<replacevalue><![CDATA[]]></replacevalue>
+					</replacefilter>
+				</replace>
 			</test-action>
 
 			<test-set-up>

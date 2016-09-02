@@ -599,7 +599,7 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 
 			Type type = beanProperty.getType();
 
-			sb.append(type.getFullyQualifiedName());
+			sb.append(_getTypeName(type));
 
 			sb.append(' ');
 			sb.append(beanProperty.getName());
@@ -613,16 +613,18 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 
 		JavaSource javaSource = javaClass.getSource();
 
-		String code = javaSource.getCodeBlock();
+		URL url = javaSource.getURL();
+
+		Path path = Paths.get(url.toURI());
+
+		String code = new String(
+			Files.readAllBytes(path), StandardCharsets.UTF_8);
 
 		int pos = code.lastIndexOf('}');
 
 		code = code.substring(0, pos) + sb.toString() + code.substring(pos);
 
-		URL url = javaSource.getURL();
-
-		Files.write(
-			Paths.get(url.toURI()), code.getBytes(StandardCharsets.UTF_8));
+		Files.write(path, code.getBytes(StandardCharsets.UTF_8));
 	}
 
 	protected void prepareSources(final File preparedSourceDir)
@@ -710,6 +712,18 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 		content = sb.toString();
 
 		Files.write(path, content.getBytes(StandardCharsets.UTF_8));
+	}
+
+	private String _getTypeName(Type type) {
+		String name = type.getFullyQualifiedName();
+
+		int pos = name.lastIndexOf('.');
+
+		if (pos != -1) {
+			name = name.substring(pos + 1);
+		}
+
+		return name;
 	}
 
 	private static final Logger _logger = Logging.getLogger(

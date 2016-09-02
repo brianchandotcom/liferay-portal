@@ -66,7 +66,82 @@ if (cur > 0) {
 String keywords = ParamUtil.getString(request, "keywords");
 %>
 
+<%
+int entriesTotal = 0;
+List entriesResults = null;
+
+SearchContainer entriesSearchContainer = new SearchContainer(renderRequest, PortletURLUtil.clone(portletURL, liferayPortletResponse), null, "no-entries-were-found");
+
+if ((assetCategoryId != 0) || Validator.isNotNull(assetTagName)) {
+	SearchContainerResults<AssetEntry> searchContainerResults = BlogsUtil.getSearchContainerResults(entriesSearchContainer);
+
+	entriesSearchContainer.setTotal(searchContainerResults.getTotal());
+
+	List<AssetEntry> assetEntries = searchContainerResults.getResults();
+
+	for (AssetEntry assetEntry : assetEntries) {
+		entriesResults.add(BlogsEntryLocalServiceUtil.getEntry(assetEntry.getClassPK()));
+	}
+}
+else if (Validator.isNull(keywords)) {
+	if (entriesNavigation.equals("mine")) {
+		entriesTotal = BlogsEntryServiceUtil.getGroupUserEntriesCount(scopeGroupId, themeDisplay.getUserId(), WorkflowConstants.STATUS_ANY);
+	}
+	else {
+		entriesTotal = BlogsEntryServiceUtil.getGroupEntriesCount(scopeGroupId, WorkflowConstants.STATUS_ANY);
+	}
+
+	entriesSearchContainer.setTotal(entriesTotal);
+
+	if (entriesNavigation.equals("mine")) {
+		entriesResults = BlogsEntryServiceUtil.getGroupUserEntries(scopeGroupId, themeDisplay.getUserId(), WorkflowConstants.STATUS_ANY, entriesSearchContainer.getStart(), entriesSearchContainer.getEnd(), entriesSearchContainer.getOrderByComparator());
+	}
+	else {
+		entriesResults = BlogsEntryServiceUtil.getGroupEntries(scopeGroupId, WorkflowConstants.STATUS_ANY, entriesSearchContainer.getStart(), entriesSearchContainer.getEnd(), entriesSearchContainer.getOrderByComparator());
+	}
+}
+else {
+	Indexer indexer = IndexerRegistryUtil.getIndexer(BlogsEntry.class);
+
+	SearchContext searchContext = SearchContextFactory.getInstance(request);
+
+	searchContext.setEnd(entriesSearchContainer.getEnd());
+	searchContext.setKeywords(keywords);
+	searchContext.setStart(entriesSearchContainer.getStart());
+
+	Hits hits = indexer.search(searchContext);
+
+	entriesSearchContainer.setTotal(hits.getLength());
+
+	for (int i = 0; i < hits.getDocs().length; i++) {
+		Document doc = hits.doc(i);
+
+		long entryId = GetterUtil.getLong(doc.get(Field.ENTRY_CLASS_PK));
+
+		BlogsEntry entry = null;
+
+		try {
+			entry = BlogsEntryServiceUtil.getEntry(entryId);
+
+			entry = entry.toEscapedModel();
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Blogs search index is stale and contains entry " + entryId);
+			}
+
+			continue;
+		}
+
+		entriesResults.add(entry);
+	}
+}
+
+entriesSearchContainer.setResults(entriesResults);
+%>
+
 <liferay-frontend:management-bar
+	disabled="<%= entriesSearchContainer.getTotal() <= 0 %>"
 	includeCheckBox="<%= true %>"
 	searchContainerId="blogEntries"
 >
@@ -123,12 +198,8 @@ String keywords = ParamUtil.getString(request, "keywords");
 			id="blogEntries"
 			orderByComparator="<%= BlogsUtil.getOrderByComparator(orderByCol, orderByType) %>"
 			rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
-			searchContainer='<%= new SearchContainer(renderRequest, PortletURLUtil.clone(portletURL, liferayPortletResponse), null, "no-entries-were-found") %>'
+			searchContainer="<%= entriesSearchContainer %>"
 		>
-			<liferay-ui:search-container-results>
-				<%@ include file="/blogs_admin/entry_search_results.jspf" %>
-			</liferay-ui:search-container-results>
-
 			<liferay-ui:search-container-row
 				className="com.liferay.blogs.kernel.model.BlogsEntry"
 				escapedModel="<%= true %>"
@@ -137,7 +208,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 			>
 				<liferay-portlet:renderURL varImpl="rowURL">
 					<portlet:param name="mvcRenderCommandName" value="/blogs/edit_entry" />
-					<portlet:param name="redirect" value="<%= searchContainer.getIteratorURL().toString() %>" />
+					<portlet:param name="redirect" value="<%= entriesSearchContainer.getIteratorURL().toString() %>" />
 					<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
 				</liferay-portlet:renderURL>
 
@@ -173,3 +244,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 		}
 	}
 </aui:script>
+
+<%!
+private static Log _log = LogFactoryUtil.getLog("com_liferay_blogs_web.blogs_admin.view_entries_jsp");
+%>

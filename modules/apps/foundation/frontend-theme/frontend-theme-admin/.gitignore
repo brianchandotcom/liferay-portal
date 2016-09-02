@@ -1,0 +1,4 @@
+*.lar
+/build_gradle
+/dist
+/liferay-theme.json

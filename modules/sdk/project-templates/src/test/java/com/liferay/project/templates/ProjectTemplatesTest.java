@@ -61,6 +61,8 @@ public class ProjectTemplatesTest {
 		_gradleDistribution = URI.create(
 			properties.getProperty("distributionUrl"));
 
+		_httpProxyHost = System.getProperty("http.proxyHost");
+		_httpProxyPort = System.getProperty("http.proxyPort");
 		_repositoryUrl = System.getProperty("repository.url");
 	}
 
@@ -422,7 +424,17 @@ public class ProjectTemplatesTest {
 
 		GradleRunner gradleRunner = GradleRunner.create();
 
-		gradleRunner.withArguments(taskPath);
+		if (Validator.isNotNull(_httpProxyHost) &&
+			Validator.isNotNull(_httpProxyPort)) {
+
+			gradleRunner.withArguments(
+				"-Dhttp.proxyHost=" + _httpProxyHost,
+				"-Dhttp.proxyPort=" + _httpProxyPort, taskPath);
+		}
+		else {
+			gradleRunner.withArguments(taskPath);
+		}
+
 		gradleRunner.withGradleDistribution(_gradleDistribution);
 		gradleRunner.withProjectDir(projectDir);
 
@@ -529,6 +541,8 @@ public class ProjectTemplatesTest {
 	private static final String _TASK_PATH_BUILD = ":build";
 
 	private static URI _gradleDistribution;
+	private static String _httpProxyHost;
+	private static String _httpProxyPort;
 	private static String _repositoryUrl;
 
 }

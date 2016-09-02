@@ -38,4 +38,6 @@ processResources {
 
 test {
 	systemProperty "repository.url", System.properties["repository.url"]
+	systemProperty "http.proxyHost", System.properties["http.proxyHost"]
+	systemProperty "http.proxyPort", System.properties["http.proxyPort"]
 }

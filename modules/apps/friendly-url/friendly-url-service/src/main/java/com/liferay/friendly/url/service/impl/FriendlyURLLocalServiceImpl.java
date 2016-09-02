@@ -56,7 +56,7 @@ public class FriendlyURLLocalServiceImpl
 		String normalizedUrlTitle = FriendlyURLNormalizerUtil.normalize(
 			urlTitle);
 
-		validate(companyId, groupId, classNameId, normalizedUrlTitle);
+		validate(companyId, groupId, classNameId, classPK, normalizedUrlTitle);
 
 		FriendlyURL mainFriendlyURL = friendlyURLPersistence.fetchByC_G_C_C_M(
 			companyId, groupId, classNameId, classPK, true);
@@ -140,8 +140,7 @@ public class FriendlyURLLocalServiceImpl
 
 	@Override
 	public FriendlyURL fetchFriendlyURL(
-			long companyId, long groupId, Class<?> clazz, String urlTitle)
-		throws PortalException {
+		long companyId, long groupId, Class<?> clazz, String urlTitle) {
 
 		return friendlyURLPersistence.fetchByC_G_C_U(
 			companyId, groupId, classNameLocalService.getClassNameId(clazz),

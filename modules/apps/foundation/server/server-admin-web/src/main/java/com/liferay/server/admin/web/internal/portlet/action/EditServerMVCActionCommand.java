@@ -273,21 +273,24 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 							ActionKeys.ACCESS_IN_CONTROL_PANEL)) {
 
 						String name = resourcePermission.getName();
-						String primKey = resourcePermission.getPrimKey();
 
 						String[] groupIds = new String[0];
 
 						if (scope == ResourceConstants.SCOPE_GROUP) {
-							groupIds = ArrayUtil.append(groupIds, primKey);
+							groupIds = ArrayUtil.append(
+								groupIds, resourcePermission.getPrimKey());
 						}
+
+						long roleId = role.getRoleId();
 
 						_resourcePermissionLocalService.
 							updateViewControlPanelPermission(
-								role, name, scope, groupIds);
+								companyId, name, scope, roleId, role.getType(),
+								groupIds);
 
 						_resourcePermissionLocalService.
 							updateViewRootResourcePermission(
-								role, name, scope, groupIds);
+								companyId, name, scope, roleId, groupIds);
 					}
 				}
 			}

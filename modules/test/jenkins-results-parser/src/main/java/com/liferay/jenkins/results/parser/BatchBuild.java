@@ -34,9 +34,9 @@ import org.json.JSONObject;
 /**
  * @author Kevin Yen
  */
-public class DownstreamBuild extends BaseBuild {
+public class BatchBuild extends BaseBuild {
 
-	public DownstreamBuild(String invocationURL, TopLevelBuild topLevelBuild)
+	public BatchBuild(String invocationURL, TopLevelBuild topLevelBuild)
 		throws Exception {
 
 		this.topLevelBuild = topLevelBuild;

@@ -28,7 +28,7 @@ public class TopLevelBuild extends BaseBuild {
 
 	public void addDownstreamBuilds(String... invocationURLs) throws Exception {
 		for (String invocationURL : invocationURLs) {
-			_downstreamBuilds.add(new DownstreamBuild(invocationURL, this));
+			_downstreamBuilds.add(new BatchBuild(invocationURL, this));
 		}
 
 		String status = getStatus();
@@ -40,14 +40,14 @@ public class TopLevelBuild extends BaseBuild {
 		update();
 	}
 
-	public List<DownstreamBuild> getDownstreamBuilds(String status) {
+	public List<BatchBuild> getDownstreamBuilds(String status) {
 		if (status == null) {
 			return _downstreamBuilds;
 		}
 
-		List<DownstreamBuild> filteredDownstreamBuilds = new ArrayList<>();
+		List<BatchBuild> filteredDownstreamBuilds = new ArrayList<>();
 
-		for (DownstreamBuild downstreamBuild : _downstreamBuilds) {
+		for (BatchBuild downstreamBuild : _downstreamBuilds) {
 			if (status.equals(downstreamBuild.getStatus())) {
 				filteredDownstreamBuilds.add(downstreamBuild);
 			}
@@ -71,7 +71,7 @@ public class TopLevelBuild extends BaseBuild {
 		}
 
 		if (_downstreamBuilds != null) {
-			for (DownstreamBuild downstreamBuild : _downstreamBuilds) {
+			for (BatchBuild downstreamBuild : _downstreamBuilds) {
 				downstreamBuild.update();
 			}
 
@@ -100,11 +100,11 @@ public class TopLevelBuild extends BaseBuild {
 	}
 
 	protected int getDownstreamBuildCount(String status) {
-		List<DownstreamBuild> downstreamBuilds = getDownstreamBuilds(status);
+		List<BatchBuild> downstreamBuilds = getDownstreamBuilds(status);
 
 		return downstreamBuilds.size();
 	}
 
-	private final List<DownstreamBuild> _downstreamBuilds = new ArrayList<>();
+	private final List<BatchBuild> _downstreamBuilds = new ArrayList<>();
 
 }

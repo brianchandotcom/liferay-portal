@@ -1670,6 +1670,8 @@ AUI.add(
 
 						instance._clearedModal = true;
 
+						instance._navbar.one('.active').removeClass('active');
+
 						instance.setValue('');
 
 						instance.set('selectedLayout', instance.get('selectedLayoutPath')[0]);
@@ -1892,8 +1894,11 @@ AUI.add(
 						}
 						else {
 							if (instance._clearedModal) {
-								instance._renderLayoutsList(privateLayout);
+								var activeClass = privateLayout ? '.private' : '.public';
 
+								instance._navbar.one(activeClass).addClass('active');
+								instance._resetBreadcrumb(privateLayout);
+								instance._renderLayoutsList(privateLayout);
 								instance._clearedModal = false;
 							}
 						}

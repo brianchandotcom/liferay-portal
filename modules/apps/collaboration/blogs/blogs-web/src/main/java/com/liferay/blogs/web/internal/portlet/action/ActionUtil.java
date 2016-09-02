@@ -20,23 +20,19 @@ import com.liferay.blogs.service.BlogsEntryServiceUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletRequest;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * @author Brian Wing Shun Chan
  */
 public class ActionUtil {
 
-	public static void getEntry(PortletRequest portletRequest)
+	public static BlogsEntry getEntry(PortletRequest portletRequest)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
@@ -80,10 +76,7 @@ public class ActionUtil {
 			throw new NoSuchEntryException("{entryId=" + entryId + "}");
 		}
 
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			portletRequest);
-
-		request.setAttribute(WebKeys.BLOGS_ENTRY, entry);
+		return entry;
 	}
 
 }

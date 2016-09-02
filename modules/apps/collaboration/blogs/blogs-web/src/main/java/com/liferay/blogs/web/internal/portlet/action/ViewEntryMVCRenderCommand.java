@@ -30,6 +30,7 @@ import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
@@ -62,12 +63,14 @@ public class ViewEntryMVCRenderCommand implements MVCRenderCommand {
 		}
 
 		try {
-			ActionUtil.getEntry(renderRequest);
+			BlogsEntry entry = ActionUtil.getEntry(renderRequest);
+
+			HttpServletRequest request = PortalUtil.getHttpServletRequest(
+				renderRequest);
+
+			request.setAttribute(WebKeys.BLOGS_ENTRY, entry);
 
 			if (PropsValues.BLOGS_PINGBACK_ENABLED) {
-				BlogsEntry entry = (BlogsEntry)renderRequest.getAttribute(
-					WebKeys.BLOGS_ENTRY);
-
 				if ((entry != null) && entry.isAllowPingbacks()) {
 					HttpServletResponse response =
 						PortalUtil.getHttpServletResponse(renderResponse);

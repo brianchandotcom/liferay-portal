@@ -2230,7 +2230,7 @@
 			<var name="recipient" value="userfn Reviewer" />
 			<var name="sender" value="Liferay Portal Workflow Notifications" />
 			<var name="subject" value="Review Notification Description" />
-		</execute>		
+		</execute>
 
 		<execute function="Open" locator1="http://localhost:8080" />
 
@@ -2273,7 +2273,7 @@
 			<var name="recipient" value="userfn Updater" />
 			<var name="sender" value="Liferay Portal Workflow Notifications" />
 			<var name="subject" value="Updater Modification Notification Description" />
-		</execute>		
+		</execute>
 
 		<execute function="Open" locator1="http://localhost:8080" />
 
@@ -2304,7 +2304,7 @@
 			<var name="recipient" value="userfn Reviewer" />
 			<var name="sender" value="Liferay Portal Workflow Notifications" />
 			<var name="subject" value="Review Notification Description" />
-		</execute>		
+		</execute>
 
 		<execute function="Open" locator1="http://localhost:8080" />
 
@@ -2327,11 +2327,6 @@
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
 			<var name="workflowAssetType" value="Kaleo Forms Process" />
 			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="${user1EmailAddress}" />
-			<var name="userLoginFullName" value="userfn Creator" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -7841,6 +7836,11 @@
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#saveProcessRecord" />
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${user2EmailAddress}" />
+			<var name="userLoginFullName" value="userfn2 Updater" />
+		</execute>
 
 		<execute macro="Page#gotoMyAccount">
 			<var name="portletName" value="My Workflow Tasks" />

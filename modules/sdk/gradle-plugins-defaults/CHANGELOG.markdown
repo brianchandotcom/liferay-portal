@@ -130,15 +130,15 @@ only the version overrides that differ from the versions specified in the
 ## 1.2.5 - 2016-09-01
 
 ### Fixed
-- [LPS-67863]: Fixed exception thrown while running
-`gradlew baseline -PsyncRelease` and the
-`.version-override-${project.name}.properties` file does not exist.
+- [LPS-67863]: Avoid throwing an exception while running `gradlew baseline
+-PsyncRelease` on a project that does not contain a
+`.version-override-${project.name}.properties` file.
 
 ## 1.2.6 - 2016-09-02
 
 ### Fixed
-- [LPS-67863]: Fixed exception thrown while running
-the `printArtifactPublishCommands` task on a project that does not contain a
+- [LPS-67863]: Avoid throwing an exception while running the
+`printArtifactPublishCommands` task on a project that does not contain a
 `build.gradle` file.
 
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins

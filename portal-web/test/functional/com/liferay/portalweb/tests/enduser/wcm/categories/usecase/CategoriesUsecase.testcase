@@ -363,6 +363,56 @@
 		</execute>
 	</command>
 
+	<command name="AddPageWithRequiredVocabulary" priority="4">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Categories" />
+		</execute>
+
+		<execute macro="Vocabulary#addWithAssociatedAssetTypeCP">
+			<var name="required" value="true" />
+			<var name="vocabularyAssociatedAssetTypeList" value="Page" />
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Categories" />
+		</execute>
+
+		<execute macro="Category#addCP">
+			<var name="categoryName" value="Category Name" />
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="SitePageNavigator#gotoAddPage" />
+
+		<execute macro="Page#addPageTitle">
+			<var name="pageName" value="Page Category" />
+		</execute>
+
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Categorization" />
+		</execute>
+
+		<execute macro="AssetCategorization#addCategory">
+			<var name="categoryName" value="Category Name" />
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+
+		<execute macro="Page#saveAddPage" />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="Page#viewSpecificPG">
+			<var name="pageNameList" value="Page Category" />
+		</execute>
+	</command>
+
 	<command name="AddSubcategoryProperty" priority="3">
 		<execute macro="Navigator#openURL" />
 

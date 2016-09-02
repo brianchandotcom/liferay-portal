@@ -14,6 +14,7 @@
 
 package com.liferay.gradle.plugins.soy;
 
+import com.liferay.gradle.plugins.soy.tasks.BuildSoyTask;
 import com.liferay.gradle.util.GradleUtil;
 
 import java.io.File;

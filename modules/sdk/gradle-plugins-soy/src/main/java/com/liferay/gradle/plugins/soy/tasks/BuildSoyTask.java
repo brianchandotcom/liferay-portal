@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.gradle.plugins.soy;
+package com.liferay.gradle.plugins.soy.tasks;
 
 import java.io.File;
 

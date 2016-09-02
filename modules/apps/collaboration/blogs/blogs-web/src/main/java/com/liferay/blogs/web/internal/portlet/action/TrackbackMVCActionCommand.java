@@ -124,14 +124,7 @@ public class TrackbackMVCActionCommand extends BaseMVCActionCommand {
 		throws Exception {
 
 		try {
-			BlogsEntry entry = ActionUtil.getEntry(actionRequest);
-
-			HttpServletRequest request = PortalUtil.getHttpServletRequest(
-				actionRequest);
-
-			request.setAttribute(WebKeys.BLOGS_ENTRY, entry);
-
-			return entry;
+			return ActionUtil.getEntry(actionRequest);
 		}
 		catch (PrincipalException pe) {
 			throw new TrackbackValidationException(

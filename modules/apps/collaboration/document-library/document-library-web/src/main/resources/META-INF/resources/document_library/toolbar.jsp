@@ -30,10 +30,13 @@ long fileEntryTypeId = ParamUtil.getLong(request, "fileEntryTypeId", -1);
 String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 
 boolean search = mvcRenderCommandName.equals("/document_library/search");
+
+DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(dlRequestHelper);
 %>
 
 <liferay-frontend:management-bar
-	includeCheckBox="<%= DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, WorkflowConstants.STATUS_ANY, true) > 0 %>"
+	disabled="<%= DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, WorkflowConstants.STATUS_ANY, true) <= 0 %>"
+	includeCheckBox="<%= !user.isDefaultUser() && dlPortletInstanceSettingsHelper.isShowActions() %>"
 	searchContainerId="<%= searchContainerId %>"
 >
 	<liferay-frontend:management-bar-buttons>
@@ -96,7 +99,40 @@ boolean search = mvcRenderCommandName.equals("/document_library/search");
 		</liferay-frontend:management-bar-navigation>
 
 		<c:if test='<%= !search && !navigation.equals("recent") %>'>
-			<liferay-util:include page="/document_library/sort_button.jsp" servletContext="<%= application %>" />
+
+			<%
+			int deltaEntry = ParamUtil.getInteger(request, "deltaEntry");
+
+			String orderByCol = GetterUtil.getString((String)request.getAttribute("view.jsp-orderByCol"));
+			String orderByType = GetterUtil.getString((String)request.getAttribute("view.jsp-orderByType"));
+
+			Map<String, String> orderColumns = new HashMap<String, String>();
+
+			orderColumns.put("creationDate", "create-date");
+			orderColumns.put("downloads", "downloads");
+			orderColumns.put("modifiedDate", "modified-date");
+			orderColumns.put("size", "size");
+			orderColumns.put("title", "title");
+
+			PortletURL sortURL = renderResponse.createRenderURL();
+
+			sortURL.setParameter("mvcRenderCommandName", (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) ? "/document_library/view" : "/document_library/view_folder");
+			sortURL.setParameter("navigation", navigation);
+
+			if (deltaEntry > 0) {
+				sortURL.setParameter("deltaEntry", String.valueOf(deltaEntry));
+			}
+
+			sortURL.setParameter("folderId", String.valueOf(folderId));
+			sortURL.setParameter("fileEntryTypeId", String.valueOf(fileEntryTypeId));
+			%>
+
+			<liferay-frontend:management-bar-sort
+				orderByCol="<%= orderByCol %>"
+				orderByType="<%= orderByType %>"
+				orderColumns="<%= orderColumns %>"
+				portletURL="<%= sortURL %>"
+			/>
 		</c:if>
 	</liferay-frontend:management-bar-filters>
 

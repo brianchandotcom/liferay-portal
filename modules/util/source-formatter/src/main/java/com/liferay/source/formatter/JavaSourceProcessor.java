@@ -1699,6 +1699,38 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return content;
 	}
 
+	protected String formatDeprecatedJavadoc(String line) {
+		Matcher matcher = _deprecatedPattern.matcher(line);
+
+		if (!matcher.find()) {
+			return line;
+		}
+
+		ComparableVersion mainReleaseComparableVersion =
+			getMainReleaseComparableVersion();
+
+		if (matcher.group(2) == null) {
+			return StringUtil.insert(
+				line, " As of " + mainReleaseComparableVersion.toString(),
+				matcher.end(1));
+		}
+
+		String version = matcher.group(3);
+
+		ComparableVersion comparableVersion = new ComparableVersion(version);
+
+		if (comparableVersion.compareTo(mainReleaseComparableVersion) > 0) {
+			return StringUtil.replaceFirst(
+				line, version, mainReleaseComparableVersion.toString());
+		}
+
+		if (StringUtil.count(version, CharPool.PERIOD) == 1) {
+			return StringUtil.insert(line, ".0", matcher.end(3));
+		}
+
+		return line;
+	}
+
 	protected String formatDuplicateReferenceMethods(
 			String fileName, String content, String className,
 			String packagePath)
@@ -2227,40 +2259,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				checkResourceUtil(line, fileName, lineCount);
 
 				if (_addMissingDeprecationReleaseVersion) {
-					Matcher matcher = _deprecatedPattern.matcher(line);
-
-					if (matcher.find()) {
-						ComparableVersion mainReleaseComparableVersion =
-							getMainReleaseComparableVersion();
-
-						if (matcher.group(2) == null) {
-							line = StringUtil.insert(
-								line,
-								" As of " +
-									mainReleaseComparableVersion.toString(),
-								matcher.end(1));
-						}
-						else {
-							String version = matcher.group(3);
-
-							ComparableVersion comparableVersion =
-								new ComparableVersion(version);
-
-							if (comparableVersion.compareTo(
-									mainReleaseComparableVersion) > 0) {
-
-								line = StringUtil.replaceFirst(
-									line, version,
-									mainReleaseComparableVersion.toString());
-							}
-							else if (StringUtil.count(
-										version, CharPool.PERIOD) == 1) {
-
-								line = StringUtil.insert(
-									line, ".0", matcher.end(3));
-							}
-						}
-					}
+					line = formatDeprecatedJavadoc(line);
 				}
 
 				if (trimmedLine.startsWith("* @see ") &&

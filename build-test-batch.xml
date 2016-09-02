@@ -1663,6 +1663,18 @@ ${output.content}</echo>
 		</run-batch-test>
 	</target>
 
+	<target name="portal-frontend-js-jdk8">
+		<run-batch-test>
+			<test-action>
+				<gradle-execute dir="modules" task="testJS" />
+			</test-action>
+
+			<test-set-up>
+				<prepare-test-build />
+			</test-set-up>
+		</run-batch-test>
+	</target>
+
 	<target name="portal-web-jdk8">
 		<run-batch-test>
 			<test-action>

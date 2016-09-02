@@ -49,7 +49,7 @@ public class BuildCSSMojo extends AbstractMojo {
 
 				String[] includedFiles = scanner.getIncludedFiles();
 
-				if (!ArrayUtil.isEmpty(includedFiles)) {
+				if (ArrayUtil.isNotEmpty(includedFiles)) {
 					CSSBuilderInvoker.invoke(baseDir, _cssBuilderArgs);
 				}
 			}

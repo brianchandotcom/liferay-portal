@@ -1803,6 +1803,8 @@ AUI.add(
 
 						currentTarget.addClass('active');
 
+						instance._currentParentLayoutId = 0;
+
 						instance._cleanSelectedLayout();
 
 						var privateLayout = currentTarget.test('.private');

@@ -198,6 +198,7 @@ public class VerifyPermission extends VerifyProcess {
 				}
 
 			});
+
 		actionableDynamicQuery.setPerformActionMethod(
 			new ActionableDynamicQuery.
 				PerformActionMethod<ResourcePermission>() {

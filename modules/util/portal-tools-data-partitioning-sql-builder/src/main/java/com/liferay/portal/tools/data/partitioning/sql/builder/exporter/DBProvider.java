@@ -23,12 +23,8 @@ public interface DBProvider {
 
 	public DataSource getDataSource();
 
-	public String getDateTimeFormat();
-
 	public int getFetchSize();
 
 	public String getTableNameFieldName();
-
-	public String serializeTableField(Object field);
 
 }

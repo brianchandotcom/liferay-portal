@@ -394,10 +394,19 @@ public class LayoutExportController implements ExportController {
 			// Calculate the amount of exported data
 
 			if (BackgroundTaskThreadLocal.hasBackgroundTask()) {
-				PortletDataHandler portletDataHandler =
-					portlet.getPortletDataHandlerInstance();
+				Map<String, Boolean> exportPortletControlsMap =
+					ExportImportHelperUtil.getExportPortletControlsMap(
+						companyId, portletId, parameterMap, type);
 
-				portletDataHandler.prepareManifestSummary(portletDataContext);
+				if (exportPortletControlsMap.get(
+						PortletDataHandlerKeys.PORTLET_DATA)) {
+
+					PortletDataHandler portletDataHandler =
+						portlet.getPortletDataHandlerInstance();
+
+					portletDataHandler.prepareManifestSummary(
+						portletDataContext);
+				}
 			}
 
 			// Add portlet ID to exportable portlets list

@@ -21,6 +21,7 @@ import java.io.File;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Properties;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -87,6 +88,7 @@ public class BaseSourceProcessorTest {
 
 		};
 
+		_baseSourceProcessor.setProperties(new Properties());
 		_baseSourceProcessor.setSourceFormatterArgs(new SourceFormatterArgs());
 	}
 

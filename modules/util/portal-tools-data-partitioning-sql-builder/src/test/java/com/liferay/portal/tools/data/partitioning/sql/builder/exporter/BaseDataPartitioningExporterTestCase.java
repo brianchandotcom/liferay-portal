@@ -17,7 +17,6 @@ package com.liferay.portal.tools.data.partitioning.sql.builder.exporter;
 import com.liferay.portal.tools.data.partitioning.sql.builder.test.util.DBProviderTestUtil;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -27,9 +26,7 @@ import java.util.Properties;
 import javax.sql.DataSource;
 
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 
 /**
  * @author Manuel de la Peña
@@ -63,64 +60,6 @@ public abstract class BaseDataPartitioningExporterTestCase {
 	@After
 	public void tearDown() throws Exception {
 		executeUpdate(dbProvider.getDataSource(), getDropTableSQL());
-	}
-
-	@Test
-	public void testSerializeTableFieldDate() throws Exception {
-		String serializeTableField = dbProvider.serializeTableField(
-			new Date(0L));
-
-		Assert.assertEquals("'1970-01-01 00:01:00'", serializeTableField);
-	}
-
-	@Test
-	public void testSerializeTableFieldDouble() throws Exception {
-		String serializeTableField = dbProvider.serializeTableField(
-			Double.valueOf(99.99));
-
-		Assert.assertEquals("99.99", serializeTableField);
-	}
-
-	@Test
-	public void testSerializeTableFieldFloat() throws Exception {
-		String serializeTableField = dbProvider.serializeTableField(
-			Float.valueOf(1));
-
-		Assert.assertEquals("1.0", serializeTableField);
-	}
-
-	@Test
-	public void testSerializeTableFieldInteger() throws Exception {
-		String serializeTableField = dbProvider.serializeTableField(
-			Integer.valueOf(1));
-
-		Assert.assertEquals("1", serializeTableField);
-	}
-
-	@Test
-	public void testSerializeTableFieldString() throws Exception {
-		String serializeTableField = dbProvider.serializeTableField(
-			new String("1"));
-
-		Assert.assertEquals("'1'", serializeTableField);
-	}
-
-	@Test
-	public void testSerializeTableFieldStringShouldWithQuotes()
-		throws Exception {
-
-		String serializeTableField = dbProvider.serializeTableField(
-			new String("'1'"));
-
-		Assert.assertEquals("'\\'1\\''", serializeTableField);
-	}
-
-	@Test
-	public void testSerializeTableFieldTimestamp() throws Exception {
-		String serializeTableField = dbProvider.serializeTableField(
-			new Timestamp(0L));
-
-		Assert.assertEquals("'1970-01-01 00:01:00'", serializeTableField);
 	}
 
 	protected String getCreateTableSQL() {

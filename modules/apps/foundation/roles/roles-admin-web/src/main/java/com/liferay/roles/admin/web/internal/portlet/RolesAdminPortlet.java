@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.service.PermissionService;
 import com.liferay.portal.kernel.service.ResourceBlockLocalService;
 import com.liferay.portal.kernel.service.ResourceBlockService;
-import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.RoleService;
@@ -283,11 +282,6 @@ public class RolesAdminPortlet extends MVCPortlet {
 
 		long roleId = ParamUtil.getLong(actionRequest, "roleId");
 
-		long groupId = themeDisplay.getScopeGroupId();
-
-		_permissionService.checkPermission(
-			groupId, Role.class.getName(), roleId);
-
 		Role role = _roleLocalService.getRole(roleId);
 
 		String roleName = role.getName();
@@ -338,6 +332,9 @@ public class RolesAdminPortlet extends MVCPortlet {
 		String[] unselectedTargets = StringUtil.split(
 			ParamUtil.getString(actionRequest, "unselectedTargets"));
 
+		long groupId = themeDisplay.getScopeGroupId();
+		long companyId = role.getCompanyId();
+
 		for (Map.Entry<String, List<String>> entry :
 				resourceActionsMap.entrySet()) {
 
@@ -383,43 +380,36 @@ public class RolesAdminPortlet extends MVCPortlet {
 						actionId, selected, scope, groupIds);
 				}
 				else {
-					long companyId = role.getCompanyId();
-					long roleId1 = role.getRoleId();
-
 					if (selected) {
-						_resourcePermissionLocalService.updateAction(
-							role, selResource, actionId, scope, groupIds);
+						_resourcePermissionService.setResourcePermission(
+							groupId, companyId, selResource, scope, roleId,
+							actionId, groupIds);
 					}
 					else {
 
 						// Remove company, group template, and group permissions
 
-						_resourcePermissionLocalService.
-							removeResourcePermissions(
-								companyId, selResource,
-								ResourceConstants.SCOPE_COMPANY, roleId1,
-								actionId);
+						_resourcePermissionService.removeResourcePermissions(
+							groupId, companyId, selResource,
+							ResourceConstants.SCOPE_COMPANY, roleId, actionId);
 
-						_resourcePermissionLocalService.
-							removeResourcePermissions(
-								companyId, selResource,
-								ResourceConstants.SCOPE_GROUP_TEMPLATE, roleId1,
-								actionId);
+						_resourcePermissionService.removeResourcePermissions(
+							groupId, companyId, selResource,
+							ResourceConstants.SCOPE_GROUP_TEMPLATE, roleId,
+							actionId);
 
-						_resourcePermissionLocalService.
-							removeResourcePermissions(
-								companyId, selResource,
-								ResourceConstants.SCOPE_GROUP, roleId1,
-								actionId);
+						_resourcePermissionService.removeResourcePermissions(
+							groupId, companyId, selResource,
+							ResourceConstants.SCOPE_GROUP, roleId, actionId);
 					}
 				}
 
 				if (selected &&
 					actionId.equals(ActionKeys.ACCESS_IN_CONTROL_PANEL)) {
 
-					_resourcePermissionLocalService.
-						updateViewControlPanelPermission(
-							role, selResource, scope, groupIds);
+					_resourcePermissionService.updateViewControlPanelPermission(
+						groupId, companyId, selResource, scope, roleId,
+						role.getType(), groupIds);
 
 					rootResourceScope = scope;
 					rootResourceGroupIds = groupIds;
@@ -430,8 +420,9 @@ public class RolesAdminPortlet extends MVCPortlet {
 		// LPS-38031
 
 		if (rootResourceGroupIds != null) {
-			_resourcePermissionLocalService.updateViewRootResourcePermission(
-				role, portletResource, rootResourceScope, rootResourceGroupIds);
+			_resourcePermissionService.updateViewRootResourcePermission(
+				groupId, companyId, portletResource, rootResourceScope, roleId,
+				rootResourceGroupIds);
 		}
 
 		// Send redirect
@@ -570,9 +561,6 @@ public class RolesAdminPortlet extends MVCPortlet {
 
 	@Reference
 	private ResourceBlockService _resourceBlockService;
-
-	@Reference
-	private ResourcePermissionLocalService _resourcePermissionLocalService;
 
 	@Reference
 	private ResourcePermissionService _resourcePermissionService;

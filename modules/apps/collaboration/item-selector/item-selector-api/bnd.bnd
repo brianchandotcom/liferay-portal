@@ -6,3 +6,4 @@ Export-Package:\
 	com.liferay.item.selector.constants
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Item Selector
+-includeresource: @com.liferay.osgi.service.tracker.collections-[0-9]*.jar

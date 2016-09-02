@@ -144,13 +144,20 @@ public class ModulesStructureTest {
 
 	@Test
 	public void testScanIgnoreFiles() throws IOException {
+		ClassLoader classLoader = ModulesStructureTest.class.getClassLoader();
+
+		final String themeGitIgnoreTemplate = StringUtil.read(
+			classLoader,
+			"com/liferay/portal/modules/dependencies/theme_gitignore.tmpl");
+
 		Files.walkFileTree(
 			_modulesDirPath,
 			new SimpleFileVisitor<Path>() {
 
 				@Override
 				public FileVisitResult preVisitDirectory(
-					Path dirPath, BasicFileAttributes basicFileAttributes) {
+						Path dirPath, BasicFileAttributes basicFileAttributes)
+					throws IOException {
 
 					Path dirNamePath = dirPath.getFileName();
 
@@ -159,7 +166,7 @@ public class ModulesStructureTest {
 					if (dirName.startsWith("frontend-theme-") &&
 						Files.exists(dirPath.resolve("gulpfile.js"))) {
 
-						_testThemeIgnoreFiles(dirPath);
+						_testThemeIgnoreFiles(dirPath, themeGitIgnoreTemplate);
 					}
 
 					return FileVisitResult.CONTINUE;
@@ -460,7 +467,9 @@ public class ModulesStructureTest {
 		}
 	}
 
-	private void _testThemeIgnoreFiles(Path dirPath) {
+	private void _testThemeIgnoreFiles(Path dirPath, String gitIgnoreTemplate)
+		throws IOException {
+
 		Path resourcesImporterDirPath = dirPath.resolve("resources-importer");
 
 		if (Files.exists(resourcesImporterDirPath)) {
@@ -471,6 +480,16 @@ public class ModulesStructureTest {
 				"Missing " + resourcesImporterIgnorePath,
 				Files.exists(resourcesImporterIgnorePath));
 		}
+
+		Path gitIgnorePath = dirPath.resolve(".gitignore");
+
+		Assert.assertTrue(
+			"Missing " + gitIgnorePath, Files.exists(gitIgnorePath));
+
+		String gitIgnore = _read(gitIgnorePath);
+
+		Assert.assertEquals(
+			"Incorrect " + gitIgnorePath, gitIgnoreTemplate, gitIgnore);
 	}
 
 	private static final String _APP_BUILD_GRADLE =

@@ -36,13 +36,6 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class ActionUtil {
 
-	public static void getEntry(HttpServletRequest request) throws Exception {
-		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_REQUEST);
-
-		getEntry(portletRequest);
-	}
-
 	public static void getEntry(PortletRequest portletRequest)
 		throws Exception {
 

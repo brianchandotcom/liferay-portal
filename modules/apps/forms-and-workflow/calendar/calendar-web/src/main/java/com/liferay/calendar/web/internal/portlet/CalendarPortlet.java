@@ -736,7 +736,7 @@ public class CalendarPortlet extends MVCPortlet {
 		String namespace = actionResponse.getNamespace();
 
 		editCalendarURL = HttpUtil.setParameter(
-			editCalendarURL, "p_p_id", CalendarPortletKeys.CALENDAR);
+			editCalendarURL, "p_p_id", themeDisplay.getPpid());
 		editCalendarURL = HttpUtil.setParameter(
 			editCalendarURL, namespace + "mvcPath",
 			templatePath + "edit_calendar.jsp");

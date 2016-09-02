@@ -2226,42 +2226,39 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 				checkResourceUtil(line, fileName, lineCount);
 
-				if (trimmedLine.startsWith("* @deprecated") &&
-					_addMissingDeprecationReleaseVersion) {
+				if (_addMissingDeprecationReleaseVersion) {
+					Matcher matcher = _deprecatedPattern.matcher(line);
 
-					ComparableVersion mainReleaseComparableVersion =
-						getMainReleaseComparableVersion();
+					if (matcher.find()) {
+						ComparableVersion mainReleaseComparableVersion =
+							getMainReleaseComparableVersion();
 
-					if (!trimmedLine.startsWith("* @deprecated As of ")) {
-						line = StringUtil.replace(
-							line, "* @deprecated",
-							"* @deprecated As of " +
-								mainReleaseComparableVersion.toString());
-					}
-					else {
-						String version = trimmedLine.substring(20);
-
-						version = StringUtil.split(
-							version, StringPool.SPACE)[0];
-
-						version = StringUtil.replace(
-							version, StringPool.COMMA, StringPool.BLANK);
-
-						ComparableVersion comparableVersion =
-							new ComparableVersion(version);
-
-						if (comparableVersion.compareTo(
-								mainReleaseComparableVersion) > 0) {
-
-							line = StringUtil.replaceFirst(
-								line, version,
-								mainReleaseComparableVersion.toString());
+						if (matcher.group(2) == null) {
+							line = StringUtil.insert(
+								line,
+								" As of " +
+									mainReleaseComparableVersion.toString(),
+								matcher.end(1));
 						}
-						else if (StringUtil.count(
-									version, CharPool.PERIOD) == 1) {
+						else {
+							String version = matcher.group(3);
 
-							line = StringUtil.replaceFirst(
-								line, version, version + ".0");
+							ComparableVersion comparableVersion =
+								new ComparableVersion(version);
+
+							if (comparableVersion.compareTo(
+									mainReleaseComparableVersion) > 0) {
+
+								line = StringUtil.replaceFirst(
+									line, version,
+									mainReleaseComparableVersion.toString());
+							}
+							else if (StringUtil.count(
+										version, CharPool.PERIOD) == 1) {
+
+								line = StringUtil.insert(
+									line, ".0", matcher.end(3));
+							}
 						}
 					}
 				}
@@ -4490,6 +4487,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		"@Component(\n|\\([\\s\\S]*?\\)\n)");
 	private final Pattern _customSQLFilePattern = Pattern.compile(
 		"<sql file=\"(.*)\" \\/>");
+	private final Pattern _deprecatedPattern = Pattern.compile(
+		"(^\\s*\\* @deprecated)( As of ([0-9\\.]+)(.+)?)?");
 	private List<String> _diamondOperatorExcludes;
 	private final Pattern _diamondOperatorPattern = Pattern.compile(
 		"(return|=)\n?(\t+| )new ([A-Za-z]+)(\\s*)<(.+)>\\(\n*\t*.*\\);\n");

@@ -127,6 +127,20 @@ modules with unpublished dependencies.
 only the version overrides that differ from the versions specified in the
 `bnd.bnd` and `packageinfo` files.
 
+## 1.2.5 - 2016-09-01
+
+### Fixed
+- [LPS-67863]: Fixed exception thrown while running
+`gradlew baseline -PsyncRelease` and the
+`.version-override-${project.name}.properties` file does not exist.
+
+## 1.2.6 - 2016-09-02
+
+### Fixed
+- [LPS-67863]: Fixed exception thrown while running
+the `printArtifactPublishCommands` task on a project that does not contain a
+`build.gradle` file.
+
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [LPS-66853]: https://issues.liferay.com/browse/LPS-66853
 [LPS-67023]: https://issues.liferay.com/browse/LPS-67023

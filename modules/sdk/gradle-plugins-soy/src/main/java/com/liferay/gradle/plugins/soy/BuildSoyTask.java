@@ -45,7 +45,7 @@ public class BuildSoyTask extends SourceTask {
 					javaExecSpec.args(
 						"--outputPathFormat",
 						"{INPUT_DIRECTORY}/{INPUT_FILE_NAME}.js");
-					javaExecSpec.args("--srcs", getSourceFileNames());
+					javaExecSpec.args("--srcs", _getSourceFileNames());
 
 					javaExecSpec.setClasspath(getClasspath());
 					javaExecSpec.setMain(
@@ -80,7 +80,7 @@ public class BuildSoyTask extends SourceTask {
 		_classpath = classpath;
 	}
 
-	protected String getSourceFileNames() {
+	private String _getSourceFileNames() {
 		FileCollection sourceFiles = getSource();
 
 		if (sourceFiles.isEmpty()) {

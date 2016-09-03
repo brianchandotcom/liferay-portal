@@ -61,6 +61,20 @@ public class SourceFormatterHelper {
 		}
 	}
 
+	public File getFile(String baseDir, String fileName, int level) {
+		for (int i = 0; i < level; i++) {
+			File file = new File(baseDir + fileName);
+
+			if (file.exists()) {
+				return file;
+			}
+
+			fileName = "../" + fileName;
+		}
+
+		return null;
+	}
+
 	public List<String> getFileNames(
 			String baseDir, List<String> recentChangesFileNames,
 			String[] excludes, String[] includes)
@@ -73,6 +87,10 @@ public class SourceFormatterHelper {
 		FileSystem fileSystem = FileSystems.getDefault();
 
 		for (String exclude : excludes) {
+			if (!exclude.startsWith("**/")) {
+				exclude = "**/" + exclude;
+			}
+
 			if (exclude.endsWith("/**")) {
 				exclude = exclude.substring(0, exclude.length() - 3);
 

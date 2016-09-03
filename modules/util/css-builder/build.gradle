@@ -30,7 +30,9 @@ dependencies {
 	compile group: "com.liferay", name: "com.liferay.sass.compiler.jni", version: "2.0.4"
 	compile group: "com.liferay", name: "com.liferay.sass.compiler.ruby", version: "2.0.3"
 	compile group: "org.apache.ant", name: "ant", version: "1.9.4"
+	compile group: "org.codehaus.plexus", name: "plexus-utils", transitive: false, version: "3.0.15"
 	compile group: "org.slf4j", name: "slf4j-log4j12", version: "1.7.2"
+	compile group: "org.sonatype.plexus", name: "plexus-build-api", transitive: false, version: "0.0.7"
 
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"

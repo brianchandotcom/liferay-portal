@@ -1,0 +1,23 @@
+ext {
+	gradlePluginVersions = [
+		"com.liferay.gradle.plugins": "2.0.10"
+	]
+}
+
+processResources {
+	filesMatching("**/build.gradle") {
+		filter {
+			String line ->
+
+			gradlePluginVersions.each {
+				String name, String version ->
+
+				line = line.replace "group: \"com.liferay\", name: \"${name}\", version: \"latest.release\"", "group: \"com.liferay\", name: \"${name}\", version: \"${version}\""
+			}
+
+			return line
+		}
+	}
+
+	rename "gitignore", ".gitignore"
+}

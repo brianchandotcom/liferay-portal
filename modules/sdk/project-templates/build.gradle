@@ -1,0 +1,43 @@
+bundle {
+	includeTransitiveDependencies = true
+}
+
+configurations {
+	projectTemplates
+}
+
+dependencies {
+	projectTemplates project(":sdk:project-templates-activator")
+	projectTemplates project(":sdk:project-templates-api")
+	projectTemplates project(":sdk:project-templates-contenttargetingreport")
+	projectTemplates project(":sdk:project-templates-contenttargetingrule")
+	projectTemplates project(":sdk:project-templates-contenttargetingtrackingaction")
+	projectTemplates project(":sdk:project-templates-controlmenuentry")
+	projectTemplates project(":sdk:project-templates-fragment")
+	projectTemplates project(":sdk:project-templates-mvcportlet")
+	projectTemplates project(":sdk:project-templates-panelapp")
+	projectTemplates project(":sdk:project-templates-portlet")
+	projectTemplates project(":sdk:project-templates-portletconfigurationicon")
+	projectTemplates project(":sdk:project-templates-portletprovider")
+	projectTemplates project(":sdk:project-templates-portlettoolbarcontributor")
+	projectTemplates project(":sdk:project-templates-service")
+	projectTemplates project(":sdk:project-templates-servicebuilder")
+	projectTemplates project(":sdk:project-templates-servicewrapper")
+	projectTemplates project(":sdk:project-templates-simulationpanelentry")
+	projectTemplates project(":sdk:project-templates-templatecontextcontributor")
+
+	provided group: "com.beust", name: "jcommander", version: "1.48"
+	provided group: "org.apache.maven.archetype", name: "archetype-common", version: "2.4"
+
+	testCompile gradleTestKit()
+}
+
+processResources {
+	from configurations.projectTemplates
+}
+
+test {
+	systemProperty "repository.url", System.properties["repository.url"]
+	systemProperty "http.proxyHost", System.properties["http.proxyHost"]
+	systemProperty "http.proxyPort", System.properties["http.proxyPort"]
+}

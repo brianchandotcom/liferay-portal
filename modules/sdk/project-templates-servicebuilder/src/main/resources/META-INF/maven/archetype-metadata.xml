@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+
+<archetype-descriptor name="liferay-module-servicebuilder">
+	<fileSets>
+		<fileSet filtered="true">
+			<directory>__artifactId__-api</directory>
+			<includes>
+				<include>*</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="true">
+			<directory>__artifactId__-service</directory>
+			<includes>
+				<include>*</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="true">
+			<directory></directory>
+			<includes>
+				<include>.gitignore</include>
+				<include>build.gradle</include>
+				<include>settings.gradle</include>
+			</includes>
+		</fileSet>
+	</fileSets>
+	<requiredProperties>
+		<requiredProperty key="package">
+			<defaultValue>${groupId}.${artifactId}</defaultValue>
+		</requiredProperty>
+		<requiredProperty key="projectType">
+			<defaultValue>standalone</defaultValue>
+		</requiredProperty>
+	</requiredProperties>
+</archetype-descriptor>

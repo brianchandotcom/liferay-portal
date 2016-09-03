@@ -1,0 +1,3 @@
+Bundle-SymbolicName: ${package}
+Bundle-Version: ${version}
+Web-ContextPath: /simulation-panel-app-${artifactId}

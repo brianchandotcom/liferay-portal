@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Project Templates MVC Portlet
+Bundle-SymbolicName: com.liferay.project.templates.mvcportlet
+Bundle-Version: 1.0.0
+-removeheaders: Import-Package,Private-Package,Require-Capability

@@ -600,7 +600,7 @@ public interface WikiPageLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0 replaced by {@link #addTempFileEntry(long, long,
+	* @deprecated As of 7.0.0, replaced by {@link #addTempFileEntry(long, long,
 	String, String, InputStream, String)}
 	*/
 	@java.lang.Deprecated
@@ -676,7 +676,7 @@ public interface WikiPageLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0 replaced by {@link
+	* @deprecated As of 7.0.0, replaced by {@link
 	WikiPageTitleValidator#validate(String)}
 	*/
 	@java.lang.Deprecated

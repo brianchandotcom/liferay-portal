@@ -203,7 +203,7 @@ public interface WikiPageService extends BaseService {
 		int start, int end) throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0 replaced by {@link #addTempFileEntry(long,
+	* @deprecated As of 7.0.0, replaced by {@link #addTempFileEntry(long,
 	String, String, InputStream, String)}
 	*/
 	@java.lang.Deprecated

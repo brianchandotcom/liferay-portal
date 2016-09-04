@@ -12,11 +12,9 @@
  * details.
  */
 
-package com.liferay.layout.item.selector.internal.handler;
+package com.liferay.item.selector.test;
 
 import com.liferay.item.selector.BaseItemSelectorCriterionHandler;
-import com.liferay.item.selector.ItemSelectorCriterionHandler;
-import com.liferay.layout.item.selector.criterion.LayoutItemSelectorCriterion;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -24,25 +22,24 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 
 /**
- * @author Sergio González
+ * @author Roberto Díaz
  */
-@Component(service = ItemSelectorCriterionHandler.class)
-public class LayoutItemSelectorCriterionHandler
-	extends BaseItemSelectorCriterionHandler<LayoutItemSelectorCriterion> {
-
-	@Override
-	public Class<LayoutItemSelectorCriterion> getItemSelectorCriterionClass() {
-		return LayoutItemSelectorCriterion.class;
-	}
+@Component(service = TestItemSelectorCriterionHandler.class)
+public class TestItemSelectorCriterionHandler
+	extends BaseItemSelectorCriterionHandler<TestItemSelectorCriterion> {
 
 	@Activate
 	@Override
-	protected void activate(BundleContext bundleContext) {
+	public void activate(BundleContext bundleContext) {
 		super.activate(bundleContext);
 	}
 
-	@Deactivate
 	@Override
+	public Class getItemSelectorCriterionClass() {
+		return TestItemSelectorCriterion.class;
+	}
+
+	@Deactivate
 	protected void deactivate() {
 		super.deactivate();
 	}

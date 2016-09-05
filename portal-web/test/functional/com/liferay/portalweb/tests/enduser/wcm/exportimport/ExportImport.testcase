@@ -474,7 +474,7 @@
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesConfiguration">
-			<var name="portlet" value="Application Display Templates" />
+			<var name="portlet" value="Application Display Template" />
 		</execute>
 
 		<execute macro="ApplicationDisplayTemplates#addCP">

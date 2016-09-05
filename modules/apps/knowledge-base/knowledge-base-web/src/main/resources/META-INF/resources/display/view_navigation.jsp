@@ -27,6 +27,8 @@ long rootResourcePrimKey = kbNavigationDisplayContext.getRootResourcePrimKey();
 
 String pageTitle = kbNavigationDisplayContext.getPageTitle();
 
+int level = 0;
+
 if (Validator.isNotNull(pageTitle)) {
 	PortalUtil.setPageTitle(pageTitle, request);
 }
@@ -71,60 +73,14 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 				<c:if test="<%= kbArticleExpanded %>">
 
 					<%
-					List<KBArticle> childKBArticles = KBArticleServiceUtil.getKBArticles(themeDisplay.getScopeGroupId(), curKBArticle.getResourcePrimKey(), WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS, QueryUtil.ALL_POS, new KBArticlePriorityComparator(true));
-
-					for (KBArticle childKBArticle : childKBArticles) {
-						PortletURL viewChildURL = kbArticleURLHelper.createViewURL(childKBArticle);
+					request.setAttribute("kbArticle", KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
+					request.setAttribute("curKBArticle", curKBArticle);
+					request.setAttribute("ancestorResourcePrimaryKeys", ancestorResourcePrimaryKeys);
+					request.setAttribute("kbArticleURLHelper", kbArticleURLHelper);
+					request.setAttribute("level", level);
 					%>
 
-						<ul>
-							<li>
-
-								<%
-								boolean childKBArticleExpanded = false;
-
-								if ((ancestorResourcePrimaryKeys.size() > 1) && (childKBArticle.getResourcePrimKey() == ancestorResourcePrimaryKeys.get(1))) {
-									childKBArticleExpanded = true;
-								}
-
-								String childKBArticleClass = StringPool.BLANK;
-
-								if (childKBArticle.getResourcePrimKey() == kbArticle.getResourcePrimKey()) {
-									childKBArticleClass = "kbarticle-selected";
-								}
-								else if (childKBArticleExpanded) {
-									childKBArticleClass = "kbarticle-expanded";
-								}
-								%>
-
-								<a class="<%= childKBArticleClass %>" href="<%= viewChildURL %>"><%= HtmlUtil.escape(childKBArticle.getTitle()) %></a>
-
-								<c:if test="<%= childKBArticleExpanded %>">
-
-									<%
-									List<KBArticle> allDescendantKBArticles = KBArticleServiceUtil.getAllDescendantKBArticles(childKBArticle.getResourcePrimKey(), WorkflowConstants.STATUS_APPROVED, new KBArticlePriorityComparator(true));
-
-									for (KBArticle descendantKBArticle : allDescendantKBArticles) {
-										PortletURL viewCurKBArticleURL = kbArticleURLHelper.createViewURL(descendantKBArticle);
-									%>
-
-										<ul>
-											<li>
-												<a class="<%= descendantKBArticle.getResourcePrimKey() == kbArticle.getResourcePrimKey() ? "kbarticle-selected" : StringPool.BLANK %>" href="<%= viewCurKBArticleURL %>"><%= HtmlUtil.escape(descendantKBArticle.getTitle()) %></a>
-											</li>
-										</ul>
-
-									<%
-									}
-									%>
-
-								</c:if>
-							</li>
-						</ul>
-
-					<%
-					}
-					%>
+					<liferay-util:include page="/display/view_child_articles.jsp" servletContext="<%= application %>" />
 
 				</c:if>
 			</li>

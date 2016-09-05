@@ -26,4 +26,5 @@ Web-ContextPath: /wiki-engine-jspwiki
 	@../../../../lib/portal/jsonrpc.jar,\
 	@../../../../lib/portal/jspwiki.jar,\
 	@../../../../lib/portal/oro.jar,\
-	@../../../../lib/portal/oscache.jar
+	@../../../../lib/portal/oscache.jar,\
+	@dependencies/jrcs-diff.jar

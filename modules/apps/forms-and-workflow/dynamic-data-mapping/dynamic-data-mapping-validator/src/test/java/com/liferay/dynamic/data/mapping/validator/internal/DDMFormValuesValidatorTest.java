@@ -57,6 +57,33 @@ public class DDMFormValuesValidatorTest {
 	}
 
 	@Test
+	public void testValidationWithAutocompleteText() throws Exception {
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
+
+		DDMFormField ddmFormField = DDMFormTestUtil.createTextDDMFormField(
+			"Country", false, false, false);
+
+		DDMFormFieldOptions ddmFormFieldOptions = new DDMFormFieldOptions();
+
+		ddmFormFieldOptions.addOptionLabel("Brazil", LocaleUtil.US, "Brazil");
+		ddmFormFieldOptions.addOptionLabel("USA", LocaleUtil.US, "USA");
+		ddmFormFieldOptions.addOptionLabel("France", LocaleUtil.US, "France");
+
+		ddmFormField.setDDMFormFieldOptions(ddmFormFieldOptions);
+
+		ddmForm.addDDMFormField(ddmFormField);
+
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm);
+
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
+				"Country", "Spain"));
+
+		_ddmFormValuesValidatorImpl.validate(ddmFormValues);
+	}
+
+	@Test
 	public void testValidationWithInvalidFieldName() throws Exception {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm("firstName");
 

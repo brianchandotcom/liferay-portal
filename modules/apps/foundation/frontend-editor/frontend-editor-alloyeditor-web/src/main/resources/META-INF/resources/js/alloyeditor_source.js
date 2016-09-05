@@ -300,6 +300,21 @@ AUI.add(
 								hidden: true
 							}
 						);
+
+						instance._toggleEditorSwitchTooltip(editorSwitch);
+					},
+
+					_toggleEditorSwitchTooltip: function(editorSwitch) {
+
+						if (editorSwitch.hasClass('editor-view')) {
+							editorSwitch.setAttribute('data-title', Liferay.Language.get('editor-view'));
+						}
+						else {
+							editorSwitch.setAttribute('data-title', Liferay.Language.get('code-view'));
+						}
+
+						editorSwitch.toggleClass('code-view');
+						editorSwitch.toggleClass('editor-view');
 					},
 
 					_toggleSourceSwitch: function(editorState) {

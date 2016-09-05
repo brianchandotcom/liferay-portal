@@ -1964,21 +1964,13 @@
 
 	<command name="CompleteProcessAndViewEmailNotifications" priority="4">
 		<property name="test.assert.javascript.errors" value="false" />
+		<property name="test.smtp.server.enabled" value="true" />
 
 		<var method="TestPropsUtil#get('email.address.2')" name="user1EmailAddress" />
 		<var method="TestPropsUtil#get('email.address.3')" name="user2EmailAddress" />
 		<var method="TestPropsUtil#get('email.password.3')" name="user2EmailPassword" />
 		<var method="TestPropsUtil#get('email.address.4')" name="user3EmailAddress" />
 		<var method="TestPropsUtil#get('email.password.4')" name="user3EmailPassword" />
-
-		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Server Administration" />
-		</execute>
-
-		<execute macro="ServerAdministration#configureMailServerSettings">
-			<var method="TestPropsUtil#get('email.address.1')" name="userName" />
-			<var method="TestPropsUtil#get('email.password.1')" name="userPassword" />
-		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Roles" />
@@ -2172,8 +2164,9 @@
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
+			<var name="edit" value="true" />
 			<var name="kfProcessName" value="Kaleo Forms Process" />
-			<var name="workflowDefinitionTitleEdit" value="Edited Workflow Definition" />
+			<var name="workflowDefinitionTitle" value="Edited Workflow Definition" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
@@ -2231,28 +2224,12 @@
 
 		<execute macro="KaleoFormsAdmin#saveProcessRecord" />
 
-		<execute function="Pause" locator1="30000" />
-
-		<execute macro="Gmail#login">
-			<var name="userEmailAddress" value="${user2EmailAddress}" />
-			<var name="userPassword" value="${user2EmailPassword}" />
-		</execute>
-
-		<execute macro="Gmail#gotoHtmlMode" />
-
-		<execute macro="Gmail#viewMail">
-			<var name="emailFromUserName" value="Liferay Portal Workflow ." />
-			<var name="gmailAssetType" value="Review Notification Description" />
-			<var name="gmailMailTableMessageTitle" value="Review Notification Description - userfn Creator sent you a Kaleo Forms Process for review in the workflow." />
-			<var name="gmailMessageBody" value="userfn Creator sent you a Kaleo Forms Process for review in the workflow." />
-			<var name="gmailMessageBodyClosing" value="userfn Creator sent you a Kaleo Forms Process for review in the workflow." />
-			<var name="gmailMessageBodyGreeting" value="userfn Creator sent you a Kaleo Forms Process for review in the workflow." />
-			<var name="gmailMessageTitle" value="Review Notification Description" />
-		</execute>
-
-		<execute macro="Gmail#tearDown">
-			<var name="userEmailAddress" value="${user2EmailAddress}" />
-			<var name="userPassword" value="${user2EmailPassword}" />
+		<execute macro="MockMock#viewMail">
+			<var name="asset" value="Review Notification Description" />
+			<var name="content" value="userfn Creator sent you a Kaleo Forms Process for review in the workflow." />
+			<var name="recipient" value="userfn Reviewer" />
+			<var name="sender" value="Liferay Portal Workflow Notifications" />
+			<var name="subject" value="Review Notification Description" />
 		</execute>
 
 		<execute function="Open" locator1="http://localhost:8080" />
@@ -2272,32 +2249,6 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute function="Pause" locator1="30000" />
-
-		<execute macro="Gmail#login">
-			<var name="userEmailAddress" value="${user2EmailAddress}" />
-			<var name="userPassword" value="${user2EmailPassword}" />
-		</execute>
-
-		<execute macro="Gmail#gotoHtmlMode" />
-
-		<execute macro="Gmail#viewMail">
-			<var name="emailFromUserName" value="Liferay Portal Workflow ." />
-			<var name="gmailAssetType" value="Review Notification Description" />
-			<var name="gmailMailTableMessageTitle" value="Review Notification Description - userfn Creator sent you a Kaleo Forms Process for review in the workflow." />
-			<var name="gmailMessageBody" value="userfn Creator sent you a Kaleo Forms Process for review in the workflow." />
-			<var name="gmailMessageBodyClosing" value="userfn Creator sent you a Kaleo Forms Process for review in the workflow." />
-			<var name="gmailMessageBodyGreeting" value="userfn Creator sent you a Kaleo Forms Process for review in the workflow." />
-			<var name="gmailMessageTitle" value="Review Notification Description" />
-		</execute>
-
-		<execute macro="Gmail#tearDown">
-			<var name="userEmailAddress" value="${user2EmailAddress}" />
-			<var name="userPassword" value="${user2EmailPassword}" />
-		</execute>
-
-		<execute function="Open" locator1="http://localhost:8080" />
-
 		<execute macro="Workflow#rejectTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
 			<var name="workflowAssetType" value="Kaleo Forms Process" />
@@ -2308,29 +2259,20 @@
 			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="Workflow#viewDefaultMyWorkflowTasksCP" />
+		<execute macro="Workflow#gotoAssignedToMe" />
 
-		<execute function="Pause" locator1="30000" />
-
-		<execute macro="Gmail#logoutAndLogin">
-			<var name="userEmailAddress" value="${user3EmailAddress}" />
-			<var name="userPassword" value="${user3EmailPassword}" />
+		<execute macro="Workflow#viewCompletedTask">
+			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="Gmail#gotoHtmlMode" />
-		<execute macro="Gmail#viewMail">
-			<var name="emailFromUserName" value="Liferay Portal Workflow ." />
-			<var name="gmailAssetType" value="Updater Modification Notification Description" />
-			<var name="gmailMailTableMessageTitle" value="Updater Modification Notification Description - Your submission was rejected by userfn Reviewer, please modify and resubmit." />
-			<var name="gmailMessageBody" value="Your submission was rejected by userfn Reviewer, please modify and resubmit." />
-			<var name="gmailMessageBodyClosing" value="Your submission was rejected by userfn Reviewer, please modify and resubmit." />
-			<var name="gmailMessageBodyGreeting" value="Your submission was rejected by userfn Reviewer, please modify and resubmit." />
-			<var name="gmailMessageTitle" value="Updater Modification Notification Description" />
-		</execute>
-
-		<execute macro="Gmail#tearDown">
-			<var name="userEmailAddress" value="${user3EmailAddress}" />
-			<var name="userPassword" value="${user3EmailPassword}" />
+		<execute macro="MockMock#viewMail">
+			<var name="asset" value="Updater Modification Notification Description" />
+			<var name="content" value="Your submission was rejected by userfn Reviewer, please modify and resubmit." />
+			<var name="recipient" value="userfn Updater" />
+			<var name="sender" value="Liferay Portal Workflow Notifications" />
+			<var name="subject" value="Updater Modification Notification Description" />
 		</execute>
 
 		<execute function="Open" locator1="http://localhost:8080" />
@@ -2356,28 +2298,12 @@
 			<var name="workflowTask" value="Update" />
 		</execute>
 
-		<execute function="Pause" locator1="30000" />
-
-		<execute macro="Gmail#logoutAndLogin">
-			<var name="userEmailAddress" value="${user2EmailAddress}" />
-			<var name="userPassword" value="${user2EmailPassword}" />
-		</execute>
-
-		<execute macro="Gmail#gotoHtmlMode" />
-
-		<execute macro="Gmail#viewMail">
-			<var name="emailFromUserName" value="Liferay Portal Workflow ." />
-			<var name="gmailAssetType" value="Review Notification Description" />
-			<var name="gmailMailTableMessageTitle" value="Review Notification Description - userfn Updater sent you a Kaleo Forms Process for review in the workflow." />
-			<var name="gmailMessageBody" value="userfn Updater sent you a Kaleo Forms Process for review in the workflow." />
-			<var name="gmailMessageBodyClosing" value="userfn Updater sent you a Kaleo Forms Process for review in the workflow." />
-			<var name="gmailMessageBodyGreeting" value="userfn Updater sent you a Kaleo Forms Process for review in the workflow." />
-			<var name="gmailMessageTitle" value="Review Notification Description" />
-		</execute>
-
-		<execute macro="Gmail#tearDown">
-			<var name="userEmailAddress" value="${user2EmailAddress}" />
-			<var name="userPassword" value="${user2EmailPassword}" />
+		<execute macro="MockMock#viewMail">
+			<var name="asset" value="Review Notification Description" />
+			<var name="content" value="userfn Updater sent you a Kaleo Forms Process for review in the workflow." />
+			<var name="recipient" value="userfn Reviewer" />
+			<var name="sender" value="Liferay Portal Workflow Notifications" />
+			<var name="subject" value="Review Notification Description" />
 		</execute>
 
 		<execute function="Open" locator1="http://localhost:8080" />
@@ -2401,11 +2327,6 @@
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
 			<var name="workflowAssetType" value="Kaleo Forms Process" />
 			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="${user1EmailAddress}" />
-			<var name="userLoginFullName" value="userfn Creator" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -7633,6 +7554,7 @@
 
 		<property name="test.assert.javascript.errors" value="false" />
 		<property name="test.name.skip.portal.instance" value="KaleoformsUsecase#ViewEmailNotificationSentToTaskAssignees" />
+		<property name="test.smtp.server.enabled" value="true" />
 
 		<var method="TestPropsUtil#get('email.address.2')" name="user1EmailAddress" />
 		<var method="TestPropsUtil#get('email.password.2')" name="user1EmailPassword" />
@@ -7640,15 +7562,6 @@
 		<var method="TestPropsUtil#get('email.password.3')" name="user2EmailPassword" />
 		<var method="TestPropsUtil#get('email.address.4')" name="user3EmailAddress" />
 		<var method="TestPropsUtil#get('email.password.4')" name="user3EmailPassword" />
-
-		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Server Administration" />
-		</execute>
-
-		<execute macro="ServerAdministration#configureMailServerSettings">
-			<var method="TestPropsUtil#get('email.address.1')" name="userName" />
-			<var method="TestPropsUtil#get('email.password.1')" name="userPassword" />
-		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Roles" />
@@ -7685,6 +7598,18 @@
 		<execute macro="Role#definePermissionCmdCP">
 			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN_RESOURCE_PERMISSIONS_KALEO_FORMS_PROCESS_VIEW" />
 			<var name="permissionDefinitionValue" value="View" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN" />
+			<var name="permissionNavigationValue" value="Kaleo Forms Admin" />
+			<var name="roleName" value="aleoSubmitRole Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Roles" />
+		</execute>
+
+		<execute macro="Role#definePermissionCmdCP">
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION" />
+			<var name="permissionDefinitionValue" value="Access in Site Administration" />
 			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN" />
 			<var name="permissionNavigationValue" value="Kaleo Forms Admin" />
 			<var name="roleName" value="aleoSubmitRole Name" />
@@ -7852,8 +7777,9 @@
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#chooseWorkflow">
+			<var name="edit" value="true" />
 			<var name="kfProcessName" value="Kaleo Forms Process" />
-			<var name="workflowDefinitionTitleEdit" value="Edited Workflow Definition" />
+			<var name="workflowDefinitionTitle" value="Edited Workflow Definition" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#next" />
@@ -7911,6 +7837,11 @@
 
 		<execute macro="KaleoFormsAdmin#saveProcessRecord" />
 
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${user2EmailAddress}" />
+			<var name="userLoginFullName" value="userfn2 Updater" />
+		</execute>
+
 		<execute macro="Page#gotoMyAccount">
 			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
@@ -7944,46 +7875,17 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="Gmail#login">
-			<var name="userEmailAddress" value="${user2EmailAddress}" />
-			<var name="userPassword" value="${user2EmailPassword}" />
+		<execute macro="MockMock#viewMail">
+			<var name="asset" value="Update Notification Description" />
+			<var name="content" value="Your submission was rejected by userfn3 Administrator, please modify and resubmit." />
+			<var name="recipient" value="userfn2 Updater" />
+			<var name="sender" value="Liferay Portal Workflow Notifications" />
+			<var name="subject" value="Update Notification Description" />
 		</execute>
 
-		<execute macro="Gmail#gotoHtmlMode" />
-
-		<execute macro="Gmail#viewMail">
-			<var name="emailFromUserName" value="Liferay Portal Workflow ." />
-			<var name="gmailAssetType" value="Update Notification Description" />
-			<var name="gmailMailTableMessageTitle" value="Update Notification Description" />
-			<var name="gmailMessageBody" value="Your submission was rejected by userfn3 Administrator, please modify and resubmit." />
-			<var name="gmailMessageTitle" value="Update Notification Description" />
-		</execute>
-
-		<execute macro="Gmail#tearDown">
-			<var name="userEmailAddress" value="${user2EmailAddress}" />
-			<var name="userPassword" value="${user2EmailPassword}" />
-		</execute>
-
-		<execute macro="Gmail#logoutAndLogin">
-			<var name="userEmailAddress" value="${user1EmailAddress}" />
-			<var name="userPassword" value="${user1EmailPassword}" />
-		</execute>
-
-		<execute macro="Gmail#gotoHtmlMode" />
-
-		<execute macro="Gmail#viewMailNotPresent">
-			<var name="gmailAssetType" value="Update Notification Description" />
-		</execute>
-
-		<execute macro="Gmail#logoutAndLogin">
-			<var name="userEmailAddress" value="${user3EmailAddress}" />
-			<var name="userPassword" value="${user3EmailPassword}" />
-		</execute>
-
-		<execute macro="Gmail#gotoHtmlMode" />
-
-		<execute macro="Gmail#viewMailNotPresent">
-			<var name="gmailAssetType" value="Update Notification Description" />
+		<execute macro="MockMock#viewNoMailFromInbox">
+			<var name="asset" value="Update Notification Description" />
+			<var name="recipient" value="userfn1 Updater" />
 		</execute>
 	</command>
 

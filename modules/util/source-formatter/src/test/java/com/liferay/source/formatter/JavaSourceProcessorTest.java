@@ -30,7 +30,7 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	public void testAssertUsage() throws Exception {
 		test(
 			"AssertUsage.testjava",
-			"Use org.junit.Assert instead of org.testng.Assert");
+			"Use org.junit.Assert instead of org.testng.Assert, see LPS-55690");
 	}
 
 	@Test
@@ -146,8 +146,9 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 		test(
 			"IncorrectImports2.testjava",
 			new String[] {
-				"edu.emory.mathcs.backport.java", "jodd.util.StringPool",
-				"Proxy"
+				"Illegal import: edu.emory.mathcs.backport.java",
+				"Illegal import: jodd.util.StringPool",
+				"Use ProxyUtil instead of java.lang.reflect.Proxy"
 			});
 	}
 
@@ -256,7 +257,7 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 
 	@Test
 	public void testLPS28266() throws Exception {
-		test("LPS28266.testjava", "Use getInt(1) for count");
+		test("LPS28266.testjava", "Use rs.getInt(1) for count, see LPS-28266");
 	}
 
 	@Test
@@ -283,12 +284,17 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 
 	@Test
 	public void testPackagePath() throws Exception {
-		test("PackagePath.testjava", "Incorrect package path");
+		test(
+			"PackagePath.testjava",
+			"Package path does not match expected package path " +
+				"'com.liferay.source.formatter.dependencies'");
 	}
 
 	@Test
 	public void testProxyUsage() throws Exception {
-		test("ProxyUsage.testjava", "Proxy");
+		test(
+			"ProxyUsage.testjava",
+			"Use ProxyUtil instead of java.lang.reflect.Proxy");
 	}
 
 	@Test

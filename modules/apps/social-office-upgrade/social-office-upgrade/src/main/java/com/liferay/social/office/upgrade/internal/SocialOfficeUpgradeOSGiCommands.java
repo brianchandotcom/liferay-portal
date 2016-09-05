@@ -158,8 +158,7 @@ public class SocialOfficeUpgradeOSGiCommands {
 		final AtomicInteger atomicInteger = new AtomicInteger(0);
 
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.
-				PerformActionMethod<Layout>() {
+			new ActionableDynamicQuery.PerformActionMethod<Layout>() {
 
 				public void performAction(Layout layout)
 					throws PortalException {
@@ -173,6 +172,26 @@ public class SocialOfficeUpgradeOSGiCommands {
 					_updatePortletPreferences(layout, newPortletId);
 
 					atomicInteger.incrementAndGet();
+				}
+
+				private void _addPreference(
+					Element rootElement, String name, String value) {
+
+					Element nameElement = SAXReaderUtil.createElement("name");
+
+					nameElement.setText(name);
+
+					Element valueElement = SAXReaderUtil.createElement("value");
+
+					valueElement.setText(value);
+
+					Element preferenceElement = SAXReaderUtil.createElement(
+						"preference");
+
+					preferenceElement.add(nameElement);
+					preferenceElement.add(valueElement);
+
+					rootElement.add(preferenceElement);
 				}
 
 				private void _addPreferences(
@@ -207,26 +226,6 @@ public class SocialOfficeUpgradeOSGiCommands {
 
 					portletPreferences.setPreferences(
 						preferencesElement.asXML());
-				}
-
-				private void _addPreference(
-					Element rootElement, String name, String value) {
-
-					Element nameElement = SAXReaderUtil.createElement("name");
-
-					nameElement.setText(name);
-
-					Element valueElement = SAXReaderUtil.createElement("value");
-
-					valueElement.setText(value);
-
-					Element preferenceElement = SAXReaderUtil.createElement(
-						"preference");
-
-					preferenceElement.add(nameElement);
-					preferenceElement.add(valueElement);
-
-					rootElement.add(preferenceElement);
 				}
 
 				private void _updateLayout(Layout layout, String newPortletId) {

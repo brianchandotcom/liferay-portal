@@ -591,8 +591,7 @@ public class V2MarkupServiceImpl
 			opaqueValue);
 
 		String portletConfigurationPortletId = PortletProviderUtil.getPortletId(
-			PortletConfigurationApplicationType.
-				PortletConfiguration.CLASS_NAME,
+			PortletConfigurationApplicationType.PortletConfiguration.CLASS_NAME,
 			PortletProvider.Action.VIEW);
 
 		if (parameterMap.containsKey(

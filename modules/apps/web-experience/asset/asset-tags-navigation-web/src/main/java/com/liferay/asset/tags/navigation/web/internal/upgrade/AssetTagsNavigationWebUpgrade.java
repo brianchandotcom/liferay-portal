@@ -42,8 +42,7 @@ public class AssetTagsNavigationWebUpgrade implements UpgradeStepRegistrator {
 					return new String[][] {
 						new String[] {
 							"141",
-							AssetTagsNavigationPortletKeys.
-								ASSET_TAGS_NAVIGATION
+							AssetTagsNavigationPortletKeys.ASSET_TAGS_NAVIGATION
 						},
 						new String[] {
 							"148",

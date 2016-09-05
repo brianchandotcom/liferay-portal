@@ -404,6 +404,8 @@ public class BlogsEntryLocalServiceTest {
 	public void testGetEntryByGroupAndOldUrlTitle() throws Exception {
 		BlogsEntry expectedEntry = addEntry(false);
 
+		String oldUrlTitle = expectedEntry.getUrlTitle();
+
 		String urlTitle = "new-friendly-url";
 
 		ServiceContext serviceContext =
@@ -418,6 +420,11 @@ public class BlogsEntryLocalServiceTest {
 			expectedEntry.getCoverImageCaption(), null, null, serviceContext);
 
 		BlogsEntry actualEntry = BlogsEntryLocalServiceUtil.getEntry(
+			expectedEntry.getGroupId(), oldUrlTitle);
+
+		BlogsTestUtil.assertEquals(expectedEntry, actualEntry);
+
+		actualEntry = BlogsEntryLocalServiceUtil.getEntry(
 			expectedEntry.getGroupId(), urlTitle);
 
 		BlogsTestUtil.assertEquals(expectedEntry, actualEntry);

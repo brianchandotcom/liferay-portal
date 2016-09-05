@@ -35,12 +35,16 @@ public class BlogsServiceUpgrade implements UpgradeStepRegistrator {
 			new DummyUpgradeStep());
 		registry.register(
 			"com.liferay.blogs.service", "1.0.0", "1.1.0",
-			new UpgradeFriendlyURL());
+			new UpgradeFriendlyURL(_friendlyURLLocalService));
 	}
 
 	@Reference(unbind = "-")
 	protected void setFriendlyURLLocalService(
 		FriendlyURLLocalService friendlyURLLocalService) {
+
+		_friendlyURLLocalService = friendlyURLLocalService;
 	}
+
+	private final FriendlyURLLocalService _friendlyURLLocalService;
 
 }

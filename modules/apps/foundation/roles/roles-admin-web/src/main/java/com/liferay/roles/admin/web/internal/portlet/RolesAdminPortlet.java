@@ -51,7 +51,9 @@ import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -189,13 +191,12 @@ public class RolesAdminPortlet extends MVCPortlet {
 		}
 	}
 
-	public Role editRole(
+	public void editRole(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		long roleId = ParamUtil.getLong(actionRequest, "roleId");
 
-		String name = ParamUtil.getString(actionRequest, "name");
 		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "title");
 		Map<Locale, String> descriptionMap =
@@ -206,19 +207,39 @@ public class RolesAdminPortlet extends MVCPortlet {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			Role.class.getName(), actionRequest);
 
+		Locale defaultLocale = LocaleUtil.getDefault();
+
+		String name = titleMap.get(defaultLocale);
+
+		if (name == null) {
+			throw new RoleNameException();
+		}
+
 		if (roleId <= 0) {
 
 			// Add role
 
-			return _roleService.addRole(
+			Role role = _roleService.addRole(
 				null, 0, name, titleMap, descriptionMap, type, subtype,
 				serviceContext);
+
+			String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+			redirect = HttpUtil.setParameter(
+				redirect, actionResponse.getNamespace() + "roleId",
+				role.getRoleId());
+
+			actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
+
+			SessionMessages.add(actionRequest, "roleCreated");
+
+			actionResponse.sendRedirect(redirect);
 		}
 		else {
 
 			// Update role
 
-			return _roleService.updateRole(
+			_roleService.updateRole(
 				roleId, name, titleMap, descriptionMap, subtype,
 				serviceContext);
 		}

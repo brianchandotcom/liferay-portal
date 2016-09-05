@@ -19,6 +19,23 @@ PanelAppRegistry panelAppRegistry = (PanelAppRegistry)request.getAttribute(Appli
 PanelCategoryRegistry panelCategoryRegistry = (PanelCategoryRegistry)request.getAttribute(ApplicationListWebKeys.PANEL_CATEGORY_REGISTRY);
 %>
 
+<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" varImpl="editPermissionsResourceURL">
+	<portlet:param name="mvcPath" value="/view_resources.jsp" />
+	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EDIT %>" />
+	<portlet:param name="tabs2" value="roles" />
+	<portlet:param name="redirect" value="<%= backURL %>" />
+	<portlet:param name="roleId" value="<%= String.valueOf(role.getRoleId()) %>" />
+</liferay-portlet:resourceURL>
+
+<liferay-portlet:renderURL copyCurrentRenderParameters="<%= false %>" varImpl="editPermissionsURL">
+	<portlet:param name="mvcPath" value="/view_resources.jsp" />
+	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EDIT %>" />
+	<portlet:param name="tabs2" value="roles" />
+	<portlet:param name="redirect" value="<%= backURL %>" />
+	<portlet:param name="backURL" value="<%= backURL %>" />
+	<portlet:param name="roleId" value="<%= String.valueOf(role.getRoleId()) %>" />
+</liferay-portlet:renderURL>
+
 <div class="lfr-permission-navigation-container" id="<portlet:namespace />permissionNavigationContainer">
 	<div class="search" id="<portlet:namespace />permissionNavigationSearchContainer">
 		<input class="field form-control search-query" id="<portlet:namespace />permissionNavigationSearch" placeholder="<%= LanguageUtil.get(request, "search") %>" type="text" />

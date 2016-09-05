@@ -39,8 +39,21 @@ renderResponse.setTitle((role == null) ? LanguageUtil.get(request, "new-role") :
 	<portlet:param name="backURL" value="<%= backURL %>" />
 </portlet:actionURL>
 
+<liferay-util:include page="/edit_role_tabs.jsp" servletContext="<%= application %>" />
+
+<c:if test="<%= role != null %>">
+	<c:choose>
+		<c:when test="<%= role.getType() == RoleConstants.TYPE_REGULAR %>">
+			<liferay-ui:success key="roleCreated" message='<%= LanguageUtil.format(request, "x-was-created-successfully.-you-can-now-define-its-permissions-and-assign-users", role.getName()) %>' />
+		</c:when>
+		<c:otherwise>
+			<liferay-ui:success key="roleCreated" message='<%= LanguageUtil.format(request, "x-was-created-successfully.-you-can-now-define-its-permissions", role.getName()) %>' />
+		</c:otherwise>
+	</c:choose>
+</c:if>
+
 <aui:form action="<%= editRoleURL %>" cssClass="container-fluid-1280" method="post" name="fm">
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="roleId" type="hidden" value="<%= roleId %>" />
 
 	<liferay-ui:error exception="<%= DuplicateRoleException.class %>" message="please-enter-a-unique-name" />
@@ -75,15 +88,6 @@ renderResponse.setTitle((role == null) ? LanguageUtil.get(request, "new-role") :
 				</c:when>
 				<c:otherwise>
 					<aui:input label="type" name="typeLabel" type="resource" value="<%= LanguageUtil.get(request, role.getTypeLabel()) %>" />
-				</c:otherwise>
-			</c:choose>
-
-			<c:choose>
-				<c:when test="<%= (role != null) && role.isSystem() %>">
-					<aui:input name="name" type="hidden" value="<%= role.getName() %>" />
-				</c:when>
-				<c:otherwise>
-					<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" label='<%= (role != null) ? "new-name" : "name" %>' name="name" />
 				</c:otherwise>
 			</c:choose>
 
@@ -128,16 +132,14 @@ renderResponse.setTitle((role == null) ? LanguageUtil.get(request, "new-role") :
 				</c:if>
 			</c:if>
 
-			<aui:fieldset-group markupView="lexicon">
-				<aui:fieldset>
-					<liferay-ui:custom-attribute-list
-						className="<%= Role.class.getName() %>"
-						classPK="<%= (role != null) ? role.getRoleId() : 0 %>"
-						editable="<%= true %>"
-						label="<%= true %>"
-					/>
-				</aui:fieldset>
-			</aui:fieldset-group>
+			<liferay-ui:custom-attributes-available className="<%= Role.class.getName() %>">
+				<liferay-ui:custom-attribute-list
+					className="<%= Role.class.getName() %>"
+					classPK="<%= (role != null) ? role.getRoleId() : 0 %>"
+					editable="<%= true %>"
+					label="<%= true %>"
+				/>
+			</liferay-ui:custom-attributes-available>
 
 			<aui:button-row>
 				<aui:button cssClass="btn-lg" type="submit" />
@@ -149,5 +151,5 @@ renderResponse.setTitle((role == null) ? LanguageUtil.get(request, "new-role") :
 </aui:form>
 
 <%
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, ((role == null) ? "add-role" : "edit")), currentURL);
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, ((role == null) ? "add-role" : "details")), currentURL);
 %>

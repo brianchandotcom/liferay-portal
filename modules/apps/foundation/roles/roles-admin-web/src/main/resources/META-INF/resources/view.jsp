@@ -23,7 +23,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 String displayStyle = ParamUtil.getString(request, "displayStyle");
 
 if (Validator.isNull(displayStyle)) {
-	displayStyle = portalPreferences.getValue(RolesAdminPortletKeys.ROLES_ADMIN, "displayStyle", "list");
+	displayStyle = portalPreferences.getValue(RolesAdminPortletKeys.ROLES_ADMIN, "displayStyle", "descriptive");
 }
 else {
 	portalPreferences.setValue(RolesAdminPortletKeys.ROLES_ADMIN, "displayStyle", displayStyle);
@@ -71,6 +71,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, breadcrumbTitle, currentURL);
 	<liferay-portlet:renderURL varImpl="addRoleURL">
 		<portlet:param name="mvcPath" value="/edit_role.jsp" />
 		<portlet:param name="redirect" value="<%= portletURLString %>" />
+		<portlet:param name="tabs1" value="details" />
 		<portlet:param name="type" value="<%= String.valueOf(type) %>" />
 	</liferay-portlet:renderURL>
 
@@ -201,22 +202,15 @@ PortalUtil.addPortletBreadcrumbEntry(request, breadcrumbTitle, currentURL);
 		>
 
 			<%
-			String name = role.getName();
-
-			boolean unassignableRole = false;
-
-			if (name.equals(RoleConstants.GUEST) || name.equals(RoleConstants.OWNER) || name.equals(RoleConstants.USER)) {
-				unassignableRole = true;
-			}
-
 			PortletURL rowURL = null;
 
-			if (!unassignableRole && (role.getType() == RoleConstants.TYPE_REGULAR) && RolePermissionUtil.contains(permissionChecker, role.getRoleId(), ActionKeys.ASSIGN_MEMBERS)) {
+			if (RolePermissionUtil.contains(permissionChecker, role.getRoleId(), ActionKeys.UPDATE)) {
 				rowURL = renderResponse.createRenderURL();
 
-				rowURL.setParameter("mvcPath", "/edit_role_assignments.jsp");
+				rowURL.setParameter("mvcPath", "/edit_role.jsp");
 				rowURL.setParameter("redirect", searchContainer.getIteratorURL().toString());
 				rowURL.setParameter("roleId", String.valueOf(role.getRoleId()));
+				rowURL.setParameter("tabs1", "details");
 			}
 			%>
 

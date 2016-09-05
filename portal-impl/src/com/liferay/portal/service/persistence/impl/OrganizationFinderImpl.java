@@ -14,6 +14,7 @@
 
 package com.liferay.portal.service.persistence.impl;
 
+import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
@@ -23,11 +24,13 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.service.persistence.OrganizationFinder;
 import com.liferay.portal.kernel.service.persistence.OrganizationUtil;
+import com.liferay.portal.kernel.service.persistence.UserUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.impl.OrganizationImpl;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
@@ -53,11 +56,17 @@ public class OrganizationFinderImpl
 	public static final String COUNT_BY_ORGANIZATION_ID =
 		OrganizationFinder.class.getName() + ".countByOrganizationId";
 
+	public static final String COUNT_BY_C_P =
+		OrganizationFinder.class.getName() + ".countByC_P";
+
 	public static final String COUNT_BY_C_PO_N_S_C_Z_R_C =
 		OrganizationFinder.class.getName() + ".countByC_PO_N_S_C_Z_R_C";
 
 	public static final String COUNT_BY_C_PO_N_L_S_C_Z_R_C =
 		OrganizationFinder.class.getName() + ".countByC_PO_N_L_S_C_Z_R_C";
+
+	public static final String COUNT_U_BY_C_S_O =
+		OrganizationFinder.class.getName() + ".countU_ByC_S_O";
 
 	public static final String FIND_BY_NO_ASSETS =
 		OrganizationFinder.class.getName() + ".findByNoAssets";
@@ -73,6 +82,12 @@ public class OrganizationFinderImpl
 
 	public static final String FIND_BY_C_PO_N_L_S_C_Z_R_C =
 		OrganizationFinder.class.getName() + ".findByC_PO_N_L_S_C_Z_R_C";
+
+	public static final String FIND_O_BY_C_P =
+		OrganizationFinder.class.getName() + ".findO_ByC_P";
+
+	public static final String FIND_U_BY_C_S_O =
+		OrganizationFinder.class.getName() + ".findU_ByC_S_O";
 
 	public static final String JOIN_BY_ORGANIZATIONS_GROUPS =
 		OrganizationFinder.class.getName() + ".joinByOrganizationsGroups";
@@ -296,6 +311,15 @@ public class OrganizationFinderImpl
 		finally {
 			closeSession(session);
 		}
+	}
+
+	@Override
+	public int countO_U_ByC_P(
+		long companyId, long parentOrganizationId,
+		QueryDefinition<?> queryDefinition) {
+
+		return doCountO_U_ByC_P(
+			companyId, parentOrganizationId, queryDefinition);
 	}
 
 	@Override
@@ -544,6 +568,15 @@ public class OrganizationFinderImpl
 		}
 	}
 
+	@Override
+	public List<Object> findO_U_ByC_P(
+		long companyId, long parentOrganizationId,
+		QueryDefinition<?> queryDefinition) {
+
+		return doFindO_U_ByC_P(
+			companyId, parentOrganizationId, queryDefinition);
+	}
+
 	protected int countByOrganizationId(
 		Session session, long organizationId,
 		LinkedHashMap<String, Object> params) {
@@ -574,6 +607,145 @@ public class OrganizationFinderImpl
 		}
 
 		return 0;
+	}
+
+	protected int doCountO_U_ByC_P(
+		long companyId, long parentOrganizationId,
+		QueryDefinition<?> queryDefinition) {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			StringBundler sb = new StringBundler(5);
+
+			sb.append(StringPool.OPEN_PARENTHESIS);
+			sb.append(CustomSQLUtil.get(COUNT_BY_C_P));
+			sb.append(") UNION ALL (");
+
+			String sql = CustomSQLUtil.get(COUNT_U_BY_C_S_O);
+
+			int status = queryDefinition.getStatus();
+
+			if (status == WorkflowConstants.STATUS_ANY) {
+				sql = StringUtil.replace(
+					sql, "(User_.status = ?) AND", StringPool.BLANK);
+			}
+
+			sb.append(sql);
+			sb.append(StringPool.CLOSE_PARENTHESIS);
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sb.toString());
+
+			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(companyId);
+			qPos.add(parentOrganizationId);
+			qPos.add(companyId);
+
+			if (status != WorkflowConstants.STATUS_ANY) {
+				qPos.add(queryDefinition.getStatus());
+			}
+
+			qPos.add(parentOrganizationId);
+
+			int count = 0;
+
+			Iterator<Long> itr = q.iterate();
+
+			while (itr.hasNext()) {
+				Long l = itr.next();
+
+				if (l != null) {
+					count += l.intValue();
+				}
+			}
+
+			return count;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected List<Object> doFindO_U_ByC_P(
+		long companyId, long parentOrganizationId,
+		QueryDefinition<?> queryDefinition) {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			StringBundler sb = new StringBundler(5);
+
+			sb.append(StringPool.OPEN_PARENTHESIS);
+			sb.append(CustomSQLUtil.get(FIND_O_BY_C_P));
+			sb.append(") UNION ALL (");
+			sb.append(getUsersSQL(queryDefinition));
+			sb.append(StringPool.CLOSE_PARENTHESIS);
+
+			String sql = CustomSQLUtil.replaceOrderBy(
+				sb.toString(), queryDefinition.getOrderByComparator());
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar("organizationId", Type.LONG);
+			q.addScalar("userId", Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(companyId);
+			qPos.add(parentOrganizationId);
+			qPos.add(companyId);
+
+			int status = queryDefinition.getStatus();
+
+			if (status != WorkflowConstants.STATUS_ANY) {
+				qPos.add(status);
+			}
+
+			qPos.add(parentOrganizationId);
+
+			List<Object> models = new ArrayList<>();
+
+			Iterator<Object[]> itr = (Iterator<Object[]>)QueryUtil.iterate(
+				q, getDialect(), queryDefinition.getStart(),
+				queryDefinition.getEnd());
+
+			while (itr.hasNext()) {
+				Object[] array = itr.next();
+
+				long organizationId = (Long)array[0];
+
+				Object obj = null;
+
+				if (organizationId > 0) {
+					obj = OrganizationUtil.findByPrimaryKey(organizationId);
+				}
+				else {
+					long userId = (Long)array[1];
+
+					obj = UserUtil.findByPrimaryKey(userId);
+				}
+
+				models.add(obj);
+			}
+
+			return models;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
 	}
 
 	protected String getJoin(LinkedHashMap<String, Object> params) {
@@ -628,6 +800,19 @@ public class OrganizationFinderImpl
 		}
 
 		return join;
+	}
+
+	protected String getUsersSQL(QueryDefinition<?> queryDefinition) {
+		String sql = CustomSQLUtil.get(FIND_U_BY_C_S_O);
+
+		int status = queryDefinition.getStatus();
+
+		if (status == WorkflowConstants.STATUS_ANY) {
+			sql = StringUtil.replace(
+				sql, "(User_.status = ?) AND", StringPool.BLANK);
+		}
+
+		return sql;
 	}
 
 	protected String getWhere(LinkedHashMap<String, Object> params) {

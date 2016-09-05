@@ -35,26 +35,23 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ROLE_TABLE_ACTIONS_1</td>
-	<td>//tr/td[4]//span</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ROLE_TABLE_ACTIONS</td>
-	<td>//tr[contains(.,'${key_roleName}')]/td[4]//span</td>
+	<td>//tr[contains(.,'${key_roleName}')]//span/*[name()='svg'][contains(@class,'icon-ellipsis-v')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ROLE_TABLE_DEFINE_PERMISSIONS</td>
-	<td>//tr[contains(.,'${key_roleName}')]/td[4]//span[contains(.,'Define Permissions')]</td>
+	<td>ROLE_TABLE_ACTIONS_DEFAULT</td>
+	<td>//tr//span/*[name()='svg'][contains(@class,'icon-ellipsis-v')]</td>
 	<td></td>
 </tr>
+<!---->
 <!--SEARCH-->
 <tr>
 	<td>ROLE_SEARCH_BUTTON</td>
 	<td>//*[@data-qa-id='searchButton']</td>
 	<td></td>
 </tr>
+<!---->
 <!--BREADCRUMB-->
 <tr>
 	<td>BREADCRUMB</td>

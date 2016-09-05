@@ -36,6 +36,14 @@ public class RoleFinderUtil {
 		return getFinder().countByKeywords(companyId, keywords, types, params);
 	}
 
+	public static int countUsersGroupsByRoleId(long roleId) {
+		return getFinder().countUsersGroupsByRoleId(roleId);
+	}
+
+	public static int countUsersUserGroupsByRoleId(long roleId) {
+		return getFinder().countUsersUserGroupsByRoleId(roleId);
+	}
+
 	public static int countByUserGroupGroupRole(long userId, long groupId) {
 		return getFinder().countByUserGroupGroupRole(userId, groupId);
 	}

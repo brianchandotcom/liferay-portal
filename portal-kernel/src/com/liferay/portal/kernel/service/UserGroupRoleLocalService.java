@@ -162,6 +162,9 @@ public interface UserGroupRoleLocalService extends BaseLocalService,
 	public int getUserGroupRolesCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getUserGroupRolesCount(long roleId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getUserGroupRolesCount(long userId, long groupId);
 
 	/**

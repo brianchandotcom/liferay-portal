@@ -84,14 +84,14 @@ renderResponse.setTitle(entry.getTitle());
 								%>
 
 								<c:if test="<%= Validator.isNotNull(smallImageURL) %>">
-									<aui:a href="<%= previousEntryURL %>" title="<%= previousEntry.getTitle() %>">
+									<aui:a href="<%= previousEntryURL %>" title="<%= HtmlUtil.escape(previousEntry.getTitle()) %>">
 										<span class="small-image visible-lg-block visible-md-block" style="background-image: url(<%= HtmlUtil.escape(smallImageURL) %>)"></span>
 									</aui:a>
 								</c:if>
 
 								<div class="entry-info text-muted">
 									<small>
-										<strong><%= previousEntry.getUserName() %></strong>
+										<strong><%= HtmlUtil.escape(previousEntry.getUserName()) %></strong>
 										<span> - </span>
 										<span class="hide-accessible"><liferay-ui:message key="published-date" /></span>
 										<%= dateFormatDate.format(previousEntry.getDisplayDate()) %>
@@ -100,7 +100,7 @@ renderResponse.setTitle(entry.getTitle());
 
 								<div class="entry-content">
 									<h4>
-										<aui:a href="<%= previousEntryURL %>" title="<%= previousEntry.getTitle() %>"><%= previousEntry.getTitle() %></aui:a>
+										<aui:a href="<%= previousEntryURL %>" title="<%= HtmlUtil.escape(previousEntry.getTitle()) %>"><%= HtmlUtil.escape(previousEntry.getTitle()) %></aui:a>
 									</h4>
 
 									<p class="entry-content-body visible-lg-block">
@@ -126,14 +126,14 @@ renderResponse.setTitle(entry.getTitle());
 								%>
 
 								<c:if test="<%= Validator.isNotNull(smallImageURL) %>">
-									<aui:a href="<%= nextEntryURL %>" title="<%= nextEntry.getTitle() %>">
+									<aui:a href="<%= nextEntryURL %>" title="<%= HtmlUtil.escape(nextEntry.getTitle()) %>">
 										<span class="small-image visible-lg-block visible-md-block" style="background-image: url(<%= HtmlUtil.escape(smallImageURL) %>)"></span>
 									</aui:a>
 								</c:if>
 
 								<div class="entry-info text-muted">
 									<small>
-										<strong><%= nextEntry.getUserName() %></strong>
+										<strong><%= HtmlUtil.escape(nextEntry.getUserName()) %></strong>
 										<span> - </span>
 										<span class="hide-accessible"><liferay-ui:message key="published-date" /></span>
 										<%= dateFormatDate.format(nextEntry.getDisplayDate()) %>
@@ -142,7 +142,7 @@ renderResponse.setTitle(entry.getTitle());
 
 								<div class="entry-content">
 									<h4>
-										<aui:a href="<%= nextEntryURL %>" title="<%= nextEntry.getTitle() %>"><%= nextEntry.getTitle() %></aui:a>
+										<aui:a href="<%= nextEntryURL %>" title="<%= HtmlUtil.escape(nextEntry.getTitle()) %>"><%= HtmlUtil.escape(nextEntry.getTitle()) %></aui:a>
 									</h4>
 
 									<p class="visible-lg-block">

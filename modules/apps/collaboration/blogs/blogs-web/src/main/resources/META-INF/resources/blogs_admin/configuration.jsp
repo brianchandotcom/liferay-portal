@@ -73,10 +73,10 @@ BlogsGroupServiceOverriddenConfiguration blogsGroupServiceOverriddenConfiguratio
 								%>
 
 									<dt>
-										<%= entry.getKey() %>
+										<%= HtmlUtil.escape(entry.getKey()) %>
 									</dt>
 									<dd>
-										<%= entry.getValue() %>
+										<%= HtmlUtil.escape(entry.getValue()) %>
 									</dd>
 
 								<%

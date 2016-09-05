@@ -42,11 +42,11 @@ String thumbnailSrc = DLUtil.getThumbnailSrc(fileEntry, themeDisplay);
 			%>
 
 			<h5 class="text-default">
-				<liferay-ui:message arguments="<%= new String[] {fileEntry.getUserName(), createDateDescription} %>" key="x-created-x-ago" />
+				<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(fileEntry.getUserName()), createDateDescription} %>" key="x-created-x-ago" />
 			</h5>
 
 			<h4>
-				<%= fileEntry.getTitle() %>
+				<%= HtmlUtil.escape(fileEntry.getTitle()) %>
 			</h4>
 		</liferay-ui:search-container-column-text>
 

@@ -47,7 +47,7 @@
 
 						<div class="entry-info text-muted ">
 							<small>
-								<strong><%= entry.getUserName() %></strong>
+								<strong><%= HtmlUtil.escape(entry.getUserName()) %></strong>
 								<span> - </span>
 								<span class="hide-accessible"><liferay-ui:message key="published-date" /></span>
 								<%= dateFormatDate.format(entry.getDisplayDate()) %>
@@ -57,7 +57,7 @@
 					<c:otherwise>
 						<div class="entry-info text-muted ">
 							<small>
-								<strong><%= entry.getUserName() %></strong>
+								<strong><%= HtmlUtil.escape(entry.getUserName()) %></strong>
 								<span> - </span>
 								<span class="hide-accessible"><liferay-ui:message key="published-date" /></span>
 								<%= dateFormatDate.format(entry.getDisplayDate()) %>

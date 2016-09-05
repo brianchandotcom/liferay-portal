@@ -21,6 +21,7 @@ import com.liferay.knowledge.base.item.selector.criterion.KBAttachmentItemSelect
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Roberto Díaz
@@ -41,6 +42,12 @@ public class KBAttachmentItemSelectorCriterionHandler
 	@Override
 	protected void activate(BundleContext bundleContext) {
 		super.activate(bundleContext);
+	}
+
+	@Deactivate
+	@Override
+	protected void deactivate() {
+		super.deactivate();
 	}
 
 }

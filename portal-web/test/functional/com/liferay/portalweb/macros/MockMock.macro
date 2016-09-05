@@ -83,4 +83,11 @@
 	<command name="viewNoMailCount">
 		<execute function="AssertTextEquals#assertPartialText" locator1="MockMock#MOCKMOCK_NO_EMAILS_MESSAGE" value1="No emails in queue" />
 	</command>
+
+	<command name="viewNoMailFromInbox">
+		<var name="key_columnEntry" value="${asset}" />
+		<var name="key_recipient" value="${recipient}" />
+
+		<execute function="AssertTextNotPresent" locator1="MockMock#MOCKMOCK_TO_FIELD" value1="${recipient}" />
+	</command>
 </definition>

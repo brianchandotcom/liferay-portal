@@ -1892,15 +1892,13 @@ AUI.add(
 
 							listNode.on('scroll', instance._handleModalScroll, instance);
 						}
-						else {
-							if (instance._clearedModal) {
-								var activeClass = privateLayout ? '.private' : '.public';
+						else if (instance._clearedModal) {
+							var activeClass = privateLayout ? '.private' : '.public';
 
-								instance._navbar.one(activeClass).addClass('active');
-								instance._resetBreadcrumb(privateLayout);
-								instance._renderLayoutsList(privateLayout);
-								instance._clearedModal = false;
-							}
+							instance._navbar.one(activeClass).addClass('active');
+							instance._resetBreadcrumb(privateLayout);
+							instance._renderLayoutsList(privateLayout);
+							instance._clearedModal = false;
 						}
 
 						modal.show();

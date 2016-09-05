@@ -2395,6 +2395,8 @@
 	</command>
 
 	<command name="DeleteEventAndViewRSSFeed" priority="3">
+		<description message="This is a use case for LPS-67928." />
+
 		<execute macro="TestCase#getSiteName">
 			<return from="siteName" name="siteName" />
 			<var name="siteName" value="${siteName}" />
@@ -2645,6 +2647,8 @@
 	</command>
 
 	<command name="DisableRSSFeedForSiteCalendar" priority="3">
+		<description message="This is a use case for LPS-67928." />
+
 		<execute macro="TestCase#getSiteName">
 			<return from="siteName" name="siteName" />
 			<var name="siteName" value="${siteName}" />
@@ -5523,6 +5527,8 @@
 	</command>
 
 	<command name="ViewSiteCalendarRSSFeed" priority="5">
+		<description message="This is a use case for LPS-67928." />
+
 		<execute macro="TestCase#getSiteName">
 			<return from="siteName" name="siteName" />
 			<var name="siteName" value="${siteName}" />

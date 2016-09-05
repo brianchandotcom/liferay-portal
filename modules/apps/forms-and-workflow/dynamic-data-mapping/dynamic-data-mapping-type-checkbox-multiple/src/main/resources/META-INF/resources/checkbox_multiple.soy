@@ -16,7 +16,6 @@
  * @param label
  * @param name
  * @param options
- * @param predefinedValue
  * @param readOnly
  * @param required
  * @param showAsSwitcher
@@ -25,8 +24,6 @@
  * @param value
  */
 {template .checkbox_multiple autoescape="deprecated-contextual"}
-	{let $displayValue: $value ? $value : $predefinedValue /}
-
 	<div class="form-group liferay-ddm-form-field-checkbox-multiple" data-fieldname="{$name}">
 		{if $showLabel}
 			<label for="{$name}">
@@ -48,7 +45,13 @@
 					<div>
 				{/if}
 
-				{let $checked: $option.value == $displayValue ? 'checked' : '' /}
+				{let $checked}
+					{foreach $currentValue in $value}
+						{if $currentValue == $option.value}
+							checked
+						{/if}
+					{/foreach}
+				{/let}
 
 				{if $showAsSwitcher}
 					<label class="checkbox-default{$inline ? ' checkbox-multiple-switcher-inline' : ''} checkbox-option-{$option.value}" for="{$name}_{$option.value}">

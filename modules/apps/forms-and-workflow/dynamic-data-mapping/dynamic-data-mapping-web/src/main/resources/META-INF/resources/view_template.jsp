@@ -49,6 +49,11 @@ if (layout != null) {
 
 PortletURL iteratorURL = renderResponse.createRenderURL();
 
+iteratorURL.setParameter("mvcPath", "/view_template.jsp");
+iteratorURL.setParameter("classNameId", String.valueOf(classNameId));
+iteratorURL.setParameter("groupId", String.valueOf(groupId));
+iteratorURL.setParameter("resourceClassNameId", String.valueOf(resourceClassNameId));
+
 TemplateSearch templateSearch = new TemplateSearch(renderRequest, iteratorURL);
 
 OrderByComparator<DDMTemplate> orderByComparator = DDMUtil.getTemplateOrderByComparator(ddmDisplayContext.getOrderByCol(), ddmDisplayContext.getOrderByType());

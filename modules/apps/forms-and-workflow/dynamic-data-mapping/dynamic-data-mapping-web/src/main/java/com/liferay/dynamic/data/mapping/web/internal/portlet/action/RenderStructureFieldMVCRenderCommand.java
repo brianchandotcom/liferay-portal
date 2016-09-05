@@ -74,7 +74,8 @@ public class RenderStructureFieldMVCRenderCommand
 
 		request.setAttribute("aui:form:portletNamespace", portletNamespace);
 
-		ddmFormFieldRenderingContext.setHttpServletRequest(request);
+		ddmFormFieldRenderingContext.setHttpServletRequest(
+			PortalUtil.getOriginalServletRequest(request));
 		ddmFormFieldRenderingContext.setHttpServletResponse(response);
 		ddmFormFieldRenderingContext.setLocale(themeDisplay.getLocale());
 		ddmFormFieldRenderingContext.setMode(mode);

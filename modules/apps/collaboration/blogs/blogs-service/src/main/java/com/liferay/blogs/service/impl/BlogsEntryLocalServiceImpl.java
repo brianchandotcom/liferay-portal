@@ -731,6 +731,21 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	}
 
 	@Override
+	public BlogsEntry fetchEntry(long groupId, String urlTitle) {
+		Group group = groupLocalService.fetchGroup(groupId);
+
+		FriendlyURL friendlyURL = friendlyURLLocalService.fetchFriendlyURL(
+			group.getCompanyId(), groupId, BlogsEntry.class, urlTitle);
+
+		if (friendlyURL != null) {
+			return blogsEntryPersistence.fetchByPrimaryKey(
+				friendlyURL.getClassPK());
+		}
+
+		return blogsEntryPersistence.fetchByG_UT(groupId, urlTitle);
+	}
+
+	@Override
 	public List<BlogsEntry> getBlogsEntriesByUuidAndCompanyId(
 		String uuid, long companyId, int start, int end,
 		OrderByComparator<BlogsEntry> orderByComparator) {
@@ -1842,8 +1857,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		String urlTitle = BlogsUtil.getUrlTitle(entryId, title);
 
 		for (int i = 1;; i++) {
-			BlogsEntry entry = blogsEntryPersistence.fetchByG_UT(
-				groupId, urlTitle);
+			BlogsEntry entry = fetchEntry(groupId, urlTitle);
 
 			if ((entry == null) || (entryId == entry.getEntryId())) {
 				break;

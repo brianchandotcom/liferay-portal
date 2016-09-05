@@ -24,6 +24,7 @@ import com.liferay.calendar.exporter.CalendarDataHandlerFactory;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.model.CalendarBookingConstants;
+import com.liferay.calendar.model.CalendarResource;
 import com.liferay.calendar.notification.NotificationTemplateType;
 import com.liferay.calendar.notification.NotificationType;
 import com.liferay.calendar.notification.impl.NotificationUtil;
@@ -1306,8 +1307,15 @@ public class CalendarBookingLocalServiceImpl
 			serviceContext, "sendNotification", true);
 
 		try {
-			Group group = serviceContext.getScopeGroup();
-			
+			CalendarBooking parentCalendarBooking =
+				calendarBooking.getParentCalendarBooking();
+
+			CalendarResource calendarResource =
+				parentCalendarBooking.getCalendarResource();
+
+			Group group = groupLocalService.getGroup(
+				calendarResource.getGroupId());
+
 			if (!sendNotification || group.isStagingGroup()) {
 				return;
 			}

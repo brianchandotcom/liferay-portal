@@ -144,6 +144,7 @@
 
 		<reference entity="Mail" package-path="com.liferay.mail" />
 		<reference entity="Company" package-path="com.liferay.portal" />
+		<reference entity="Group" package-path="com.liferay.portal" />
 		<reference entity="Subscription" package-path="com.liferay.portal" />
 		<reference entity="WorkflowInstanceLink" package-path="com.liferay.portal" />
 		<reference entity="AssetEntry" package-path="com.liferay.portlet.asset" />

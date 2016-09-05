@@ -1,0 +1,1 @@
+alter table CalendarBooking add recurringCalendarBookingId LONG null;

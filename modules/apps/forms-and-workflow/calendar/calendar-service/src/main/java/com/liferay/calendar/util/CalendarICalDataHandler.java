@@ -416,6 +416,7 @@ public class CalendarICalDataHandler implements CalendarDataHandler {
 			CalendarBookingServiceUtil.addCalendarBooking(
 				calendarId, childCalendarIdsArray,
 				CalendarBookingConstants.PARENT_CALENDAR_BOOKING_ID_DEFAULT,
+				CalendarBookingConstants.RECURRING_CALENDAR_BOOKING_ID_DEFAULT,
 				titleMap, descriptionMap, locationString, startDate.getTime(),
 				endDate.getTime(), allDay, recurrence, firstReminder,
 				firstReminderType, secondReminder, secondReminderType,

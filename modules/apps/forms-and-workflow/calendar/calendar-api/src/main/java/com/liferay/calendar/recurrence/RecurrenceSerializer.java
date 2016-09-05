@@ -62,7 +62,7 @@ public class RecurrenceSerializer {
 				for (DateValue dateValue : rDateList.getDatesUtc()) {
 					Calendar jCalendar = _toJCalendar(dateValue, timeZone);
 
-					recurrence.addExceptionDate(jCalendar);
+					recurrence.addExceptionJCalendar(jCalendar);
 				}
 
 				data = data.substring(0, index);

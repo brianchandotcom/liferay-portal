@@ -101,6 +101,7 @@ public class CalendarBookingModelImpl extends BaseModelImpl<CalendarBooking>
 			{ "calendarId", Types.BIGINT },
 			{ "calendarResourceId", Types.BIGINT },
 			{ "parentCalendarBookingId", Types.BIGINT },
+			{ "recurringCalendarBookingId", Types.BIGINT },
 			{ "vEventUid", Types.VARCHAR },
 			{ "title", Types.VARCHAR },
 			{ "description", Types.CLOB },
@@ -134,6 +135,7 @@ public class CalendarBookingModelImpl extends BaseModelImpl<CalendarBooking>
 		TABLE_COLUMNS_MAP.put("calendarId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("calendarResourceId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("parentCalendarBookingId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("recurringCalendarBookingId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("vEventUid", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("description", Types.CLOB);
@@ -153,7 +155,7 @@ public class CalendarBookingModelImpl extends BaseModelImpl<CalendarBooking>
 		TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CalendarBooking (uuid_ VARCHAR(75) null,calendarBookingId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,resourceBlockId LONG,calendarId LONG,calendarResourceId LONG,parentCalendarBookingId LONG,vEventUid VARCHAR(255) null,title STRING null,description TEXT null,location STRING null,startTime LONG,endTime LONG,allDay BOOLEAN,recurrence STRING null,firstReminder LONG,firstReminderType VARCHAR(75) null,secondReminder LONG,secondReminderType VARCHAR(75) null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table CalendarBooking (uuid_ VARCHAR(75) null,calendarBookingId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,resourceBlockId LONG,calendarId LONG,calendarResourceId LONG,parentCalendarBookingId LONG,recurringCalendarBookingId LONG,vEventUid VARCHAR(255) null,title STRING null,description TEXT null,location STRING null,startTime LONG,endTime LONG,allDay BOOLEAN,recurrence STRING null,firstReminder LONG,firstReminderType VARCHAR(75) null,secondReminder LONG,secondReminderType VARCHAR(75) null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table CalendarBooking";
 	public static final String ORDER_BY_JPQL = " ORDER BY calendarBooking.startTime ASC, calendarBooking.title ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CalendarBooking.startTime ASC, CalendarBooking.title ASC";
@@ -174,12 +176,13 @@ public class CalendarBookingModelImpl extends BaseModelImpl<CalendarBooking>
 	public static final long COMPANYID_COLUMN_BITMASK = 4L;
 	public static final long GROUPID_COLUMN_BITMASK = 8L;
 	public static final long PARENTCALENDARBOOKINGID_COLUMN_BITMASK = 16L;
-	public static final long RESOURCEBLOCKID_COLUMN_BITMASK = 32L;
-	public static final long STATUS_COLUMN_BITMASK = 64L;
-	public static final long UUID_COLUMN_BITMASK = 128L;
-	public static final long VEVENTUID_COLUMN_BITMASK = 256L;
-	public static final long STARTTIME_COLUMN_BITMASK = 512L;
-	public static final long TITLE_COLUMN_BITMASK = 1024L;
+	public static final long RECURRINGCALENDARBOOKINGID_COLUMN_BITMASK = 32L;
+	public static final long RESOURCEBLOCKID_COLUMN_BITMASK = 64L;
+	public static final long STATUS_COLUMN_BITMASK = 128L;
+	public static final long UUID_COLUMN_BITMASK = 256L;
+	public static final long VEVENTUID_COLUMN_BITMASK = 512L;
+	public static final long STARTTIME_COLUMN_BITMASK = 1024L;
+	public static final long TITLE_COLUMN_BITMASK = 2048L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -206,6 +209,7 @@ public class CalendarBookingModelImpl extends BaseModelImpl<CalendarBooking>
 		model.setCalendarId(soapModel.getCalendarId());
 		model.setCalendarResourceId(soapModel.getCalendarResourceId());
 		model.setParentCalendarBookingId(soapModel.getParentCalendarBookingId());
+		model.setRecurringCalendarBookingId(soapModel.getRecurringCalendarBookingId());
 		model.setVEventUid(soapModel.getVEventUid());
 		model.setTitle(soapModel.getTitle());
 		model.setDescription(soapModel.getDescription());
@@ -300,6 +304,8 @@ public class CalendarBookingModelImpl extends BaseModelImpl<CalendarBooking>
 		attributes.put("calendarId", getCalendarId());
 		attributes.put("calendarResourceId", getCalendarResourceId());
 		attributes.put("parentCalendarBookingId", getParentCalendarBookingId());
+		attributes.put("recurringCalendarBookingId",
+			getRecurringCalendarBookingId());
 		attributes.put("vEventUid", getVEventUid());
 		attributes.put("title", getTitle());
 		attributes.put("description", getDescription());
@@ -397,6 +403,13 @@ public class CalendarBookingModelImpl extends BaseModelImpl<CalendarBooking>
 
 		if (parentCalendarBookingId != null) {
 			setParentCalendarBookingId(parentCalendarBookingId);
+		}
+
+		Long recurringCalendarBookingId = (Long)attributes.get(
+				"recurringCalendarBookingId");
+
+		if (recurringCalendarBookingId != null) {
+			setRecurringCalendarBookingId(recurringCalendarBookingId);
 		}
 
 		String vEventUid = (String)attributes.get("vEventUid");
@@ -744,6 +757,29 @@ public class CalendarBookingModelImpl extends BaseModelImpl<CalendarBooking>
 
 	public long getOriginalParentCalendarBookingId() {
 		return _originalParentCalendarBookingId;
+	}
+
+	@JSON
+	@Override
+	public long getRecurringCalendarBookingId() {
+		return _recurringCalendarBookingId;
+	}
+
+	@Override
+	public void setRecurringCalendarBookingId(long recurringCalendarBookingId) {
+		_columnBitmask |= RECURRINGCALENDARBOOKINGID_COLUMN_BITMASK;
+
+		if (!_setOriginalRecurringCalendarBookingId) {
+			_setOriginalRecurringCalendarBookingId = true;
+
+			_originalRecurringCalendarBookingId = _recurringCalendarBookingId;
+		}
+
+		_recurringCalendarBookingId = recurringCalendarBookingId;
+	}
+
+	public long getOriginalRecurringCalendarBookingId() {
+		return _originalRecurringCalendarBookingId;
 	}
 
 	@JSON
@@ -1528,6 +1564,7 @@ public class CalendarBookingModelImpl extends BaseModelImpl<CalendarBooking>
 		calendarBookingImpl.setCalendarId(getCalendarId());
 		calendarBookingImpl.setCalendarResourceId(getCalendarResourceId());
 		calendarBookingImpl.setParentCalendarBookingId(getParentCalendarBookingId());
+		calendarBookingImpl.setRecurringCalendarBookingId(getRecurringCalendarBookingId());
 		calendarBookingImpl.setVEventUid(getVEventUid());
 		calendarBookingImpl.setTitle(getTitle());
 		calendarBookingImpl.setDescription(getDescription());
@@ -1647,6 +1684,10 @@ public class CalendarBookingModelImpl extends BaseModelImpl<CalendarBooking>
 
 		calendarBookingModelImpl._setOriginalParentCalendarBookingId = false;
 
+		calendarBookingModelImpl._originalRecurringCalendarBookingId = calendarBookingModelImpl._recurringCalendarBookingId;
+
+		calendarBookingModelImpl._setOriginalRecurringCalendarBookingId = false;
+
 		calendarBookingModelImpl._originalVEventUid = calendarBookingModelImpl._vEventUid;
 
 		calendarBookingModelImpl._originalStatus = calendarBookingModelImpl._status;
@@ -1709,6 +1750,8 @@ public class CalendarBookingModelImpl extends BaseModelImpl<CalendarBooking>
 		calendarBookingCacheModel.calendarResourceId = getCalendarResourceId();
 
 		calendarBookingCacheModel.parentCalendarBookingId = getParentCalendarBookingId();
+
+		calendarBookingCacheModel.recurringCalendarBookingId = getRecurringCalendarBookingId();
 
 		calendarBookingCacheModel.vEventUid = getVEventUid();
 
@@ -1811,7 +1854,7 @@ public class CalendarBookingModelImpl extends BaseModelImpl<CalendarBooking>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(59);
+		StringBundler sb = new StringBundler(61);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1837,6 +1880,8 @@ public class CalendarBookingModelImpl extends BaseModelImpl<CalendarBooking>
 		sb.append(getCalendarResourceId());
 		sb.append(", parentCalendarBookingId=");
 		sb.append(getParentCalendarBookingId());
+		sb.append(", recurringCalendarBookingId=");
+		sb.append(getRecurringCalendarBookingId());
 		sb.append(", vEventUid=");
 		sb.append(getVEventUid());
 		sb.append(", title=");
@@ -1878,7 +1923,7 @@ public class CalendarBookingModelImpl extends BaseModelImpl<CalendarBooking>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(91);
+		StringBundler sb = new StringBundler(94);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.calendar.model.CalendarBooking");
@@ -1931,6 +1976,10 @@ public class CalendarBookingModelImpl extends BaseModelImpl<CalendarBooking>
 		sb.append(
 			"<column><column-name>parentCalendarBookingId</column-name><column-value><![CDATA[");
 		sb.append(getParentCalendarBookingId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>recurringCalendarBookingId</column-name><column-value><![CDATA[");
+		sb.append(getRecurringCalendarBookingId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>vEventUid</column-name><column-value><![CDATA[");
@@ -2036,6 +2085,9 @@ public class CalendarBookingModelImpl extends BaseModelImpl<CalendarBooking>
 	private long _parentCalendarBookingId;
 	private long _originalParentCalendarBookingId;
 	private boolean _setOriginalParentCalendarBookingId;
+	private long _recurringCalendarBookingId;
+	private long _originalRecurringCalendarBookingId;
+	private boolean _setOriginalRecurringCalendarBookingId;
 	private String _vEventUid;
 	private String _originalVEventUid;
 	private String _title;

@@ -61,15 +61,12 @@ public class EditActionMVCRenderCommand implements MVCRenderCommand {
 			String type = BeanPropertiesUtil.getString(action, "type");
 
 			renderRequest.setAttribute(
-				MDRWebKeys.
-					MOBILE_DEVICE_RULES_RULE_GROUP_ACTION_TYPE,
-				type);
+				MDRWebKeys.MOBILE_DEVICE_RULES_RULE_GROUP_ACTION_TYPE, type);
 
 			String editorJSP = ActionUtil.getActionEditorJSP(type);
 
 			renderRequest.setAttribute(
-				MDRWebKeys.
-					MOBILE_DEVICE_RULES_RULE_GROUP_ACTION_EDITOR_JSP,
+				MDRWebKeys.MOBILE_DEVICE_RULES_RULE_GROUP_ACTION_EDITOR_JSP,
 				editorJSP);
 
 			long ruleGroupInstanceId = BeanParamUtil.getLong(
@@ -80,8 +77,7 @@ public class EditActionMVCRenderCommand implements MVCRenderCommand {
 					ruleGroupInstanceId);
 
 			renderRequest.setAttribute(
-				MDRWebKeys.
-					MOBILE_DEVICE_RULES_RULE_GROUP_INSTANCE,
+				MDRWebKeys.MOBILE_DEVICE_RULES_RULE_GROUP_INSTANCE,
 				ruleGroupInstance);
 
 			MDRRuleGroup ruleGroup = ruleGroupInstance.getRuleGroup();

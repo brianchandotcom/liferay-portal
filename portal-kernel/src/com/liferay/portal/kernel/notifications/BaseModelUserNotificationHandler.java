@@ -146,8 +146,7 @@ public abstract class BaseModelUserNotificationHandler
 			message = "x-added-a-new-x";
 		}
 		else if (notificationType ==
-					UserNotificationDefinition.
-						NOTIFICATION_TYPE_UPDATE_ENTRY) {
+					UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY) {
 
 			message = "x-updated-a-x";
 		}

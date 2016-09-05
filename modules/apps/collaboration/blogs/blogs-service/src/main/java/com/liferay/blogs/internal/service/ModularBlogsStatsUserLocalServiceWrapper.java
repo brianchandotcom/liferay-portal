@@ -299,11 +299,8 @@ public class ModularBlogsStatsUserLocalServiceWrapper
 
 	@Reference
 	protected void setBlogsStatsUserLocalService(
-		com.
-			liferay.
-				blogs.
-					service.
-						BlogsStatsUserLocalService blogsStatsUserLocalService) {
+		com.liferay.blogs.service.BlogsStatsUserLocalService
+			blogsStatsUserLocalService) {
 
 		_blogsStatsUserLocalService = blogsStatsUserLocalService;
 	}

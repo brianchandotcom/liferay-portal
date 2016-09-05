@@ -430,8 +430,7 @@ public class WabBundleProcessor {
 				HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT,
 				_contextName);
 			properties.put(
-				HttpWhiteboardConstants.
-					HTTP_WHITEBOARD_FILTER_ASYNC_SUPPORTED,
+				HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_ASYNC_SUPPORTED,
 				filterDefinition.isAsyncSupported());
 			properties.put(
 				HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_DISPATCHER,

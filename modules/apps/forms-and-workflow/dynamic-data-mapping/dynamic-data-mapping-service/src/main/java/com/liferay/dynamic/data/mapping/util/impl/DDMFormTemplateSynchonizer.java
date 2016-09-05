@@ -87,24 +87,22 @@ public class DDMFormTemplateSynchonizer {
 				if (structureDDMFormField.isRequired()) {
 					templateDDMFormFields.add(structureDDMFormField);
 				}
-
-				continue;
 			}
+			else {
+				String fieldType = templateDDMFormField.getType();
 
-			if (templateDDMFormField.getProperty("type").equals("select") ||
-				templateDDMFormField.getProperty("type").equals("radio")) {
-				if (structureDDMFormField.isRequired()) {
+				if (fieldType.equals(DDMImpl.TYPE_SELECT) ||
+					fieldType.equals((DDMImpl.TYPE_RADIO))) {
+
 					templateDDMFormField.setProperty(
 						"options",
 						structureDDMFormField.getDDMFormFieldOptions());
 				}
 
-				continue;
+				addRequiredDDMFormFields(
+					structureDDMFormField.getNestedDDMFormFields(),
+					templateDDMFormField.getNestedDDMFormFields());
 			}
-
-			addRequiredDDMFormFields(
-				structureDDMFormField.getNestedDDMFormFields(),
-				templateDDMFormField.getNestedDDMFormFields());
 		}
 	}
 

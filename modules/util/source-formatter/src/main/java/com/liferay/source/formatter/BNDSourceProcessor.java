@@ -71,8 +71,10 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 		Matcher matcher = _bundleNamePattern.matcher(content);
 
 		if (matcher.find()) {
+			String bundleName = matcher.group(1);
+
 			String strippedBundleName = StringUtil.removeChars(
-				matcher.group(1), CharPool.DASH, CharPool.SPACE);
+				bundleName, CharPool.DASH, CharPool.SPACE);
 
 			strippedBundleName = strippedBundleName.replaceAll(
 				"Implementation$", "Impl");
@@ -85,7 +87,8 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 			if (!StringUtil.equalsIgnoreCase(
 					strippedBundleName, expectedBundleName)) {
 
-				processMessage(fileName, "Bundle-Name");
+				processMessage(
+					fileName, "Incorrect Bundle-Name '" + bundleName + "'");
 			}
 		}
 
@@ -105,7 +108,10 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 			if (!StringUtil.equalsIgnoreCase(
 					bundleSymbolicName, expectedBundleSymbolicName)) {
 
-				processMessage(fileName, "Bundle-SymbolicName");
+				processMessage(
+					fileName,
+					"Incorrect Bundle-SymbolicName '" + bundleSymbolicName +
+						"'");
 			}
 		}
 
@@ -115,7 +121,9 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 			String webContextPath = matcher.group(1);
 
 			if (!webContextPath.equals("/" + dirName)) {
-				processMessage(fileName, "Web-ContextPath");
+				processMessage(
+					fileName,
+					"Incorrect Web-ContextPath '" + webContextPath + "'");
 			}
 		}
 	}

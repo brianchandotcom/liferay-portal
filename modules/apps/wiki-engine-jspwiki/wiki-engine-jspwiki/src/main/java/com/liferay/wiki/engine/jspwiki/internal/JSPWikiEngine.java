@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
@@ -29,6 +30,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.language.LanguageResources;
 import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
 import com.liferay.wiki.engine.WikiEngine;
 import com.liferay.wiki.engine.input.editor.common.BaseInputEditorWikiEngine;
@@ -233,7 +235,7 @@ public class JSPWikiEngine extends BaseInputEditorWikiEngine {
 
 	@Override
 	protected ResourceBundleLoader getResourceBundleLoader() {
-		return ResourceBundleLoaderUtil.getPortalResourceBundleLoader();
+		return _resourceBundleLoader;
 	}
 
 	protected synchronized void setProperties(String configuration) {
@@ -248,6 +250,17 @@ public class JSPWikiEngine extends BaseInputEditorWikiEngine {
 		catch (IOException ioe) {
 			_log.error(ioe, ioe);
 		}
+	}
+
+	@Reference(
+		target = "(bundle.symbolic.name=com.liferay.wiki.engine.jspwiki)",
+		unbind = "-"
+	)
+	protected void setResourceBundleLoader(
+		ResourceBundleLoader resourceBundleLoader) {
+
+		_resourceBundleLoader = new AggregateResourceBundleLoader(
+			resourceBundleLoader, LanguageResources.RESOURCE_BUNDLE_LOADER);
 	}
 
 	@Reference(
@@ -372,6 +385,7 @@ public class JSPWikiEngine extends BaseInputEditorWikiEngine {
 	private final Map<Long, LiferayJSPWikiEngine> _engines =
 		new ConcurrentHashMap<>();
 	private Properties _properties = new Properties();
+	private ResourceBundleLoader _resourceBundleLoader;
 	private ServletContext _servletContext;
 	private WikiGroupServiceConfiguration _wikiGroupServiceConfiguration;
 	private WikiPageLocalService _wikiPageLocalService;

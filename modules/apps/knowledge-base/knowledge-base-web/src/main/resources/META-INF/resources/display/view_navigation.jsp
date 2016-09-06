@@ -44,5 +44,5 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 	request.setAttribute("parentResourcePrimKey", rootResourcePrimKey);
 	%>
 
-	<liferay-util:include page="/display/view_child_articles.jsp" servletContext="<%= application %>" />
+	<liferay-util:include page="/display/view_navigation_articles.jsp" servletContext="<%= application %>" />
 </div>

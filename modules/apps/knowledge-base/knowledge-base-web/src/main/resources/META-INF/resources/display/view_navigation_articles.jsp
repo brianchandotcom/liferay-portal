@@ -74,7 +74,7 @@ for (KBArticle childKBArticle : childKBArticles) {
 				request.setAttribute("parentResourcePrimKey", childKBArticle.getResourcePrimKey());
 				%>
 
-				<liferay-util:include page="/display/view_child_articles.jsp" servletContext="<%= application %>" />
+				<liferay-util:include page="/display/view_navigation_articles.jsp" servletContext="<%= application %>" />
 			</c:if>
 		</li>
 	</ul>

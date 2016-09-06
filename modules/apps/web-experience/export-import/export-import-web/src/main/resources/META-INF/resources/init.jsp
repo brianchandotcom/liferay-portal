@@ -185,6 +185,10 @@ Calendar calendar = CalendarFactoryUtil.getCalendar(timeZone, locale);
 int timeZoneOffset = timeZone.getOffset(calendar.getTimeInMillis());
 
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
+
+Calendar calendar = CalendarFactoryUtil.getCalendar(timeZone, locale);
+
+int timeZoneOffset = timeZone.getOffset(calendar.getTimeInMillis());
 %>
 
 <%@ include file="/init-ext.jsp" %>

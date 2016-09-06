@@ -176,10 +176,6 @@
 	}
 
 	.ddl-form-basic-info {
-		background-color: #869CAD;
-		min-height: 300px;
-		padding-bottom: 187px;
-
 		h1,
 		h2,
 		h3,
@@ -198,7 +194,6 @@
 		.ddl-form-name,
 		.ddl-form-description {
 			border-width: 0;
-			color: #FFF;
 			margin: 0;
 			padding-left: 0;
 
@@ -211,9 +206,19 @@
 			}
 		}
 
+		.alloy-editor.alloy-editor-placeholder,
+		.ddl-form-name,
+		.ddl-form-description {
+			color: #869CAD;
+		}
+
+		.alloy-editor.alloy-editor-placeholder:empty:not(:focus) {
+			color: #C0CCD3;
+		}
+
 		.ddl-form-name {
 			font-weight: 300;
-			padding: 52px 0 0 0;
+			padding: $base-line * 5 0 0 0;
 
 			p {
 				margin: 0;
@@ -222,7 +227,7 @@
 
 		.ddl-form-description {
 			font-weight: normal;
-			padding: 17px 0 0 0;
+			padding: $base-line * 2 0 0 0;
 
 			p {
 				margin: 0;
@@ -231,7 +236,7 @@
 	}
 
 	.ddl-form-builder-app {
-		margin-top: -120px;
+		margin-top: $base-line * 4;
 
 		.form-builder-content,
 		.lfr-ddm-form-content {

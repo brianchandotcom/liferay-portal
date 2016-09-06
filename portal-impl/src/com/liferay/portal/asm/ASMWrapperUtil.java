@@ -215,7 +215,9 @@ public class ASMWrapperUtil {
 			Opcodes.INVOKEVIRTUAL, targetClassBinaryName, method.getName(),
 			Type.getMethodDescriptor(method), false);
 
-		_returnvalue(methodVisitor, method.getReturnType());
+		Type type = Type.getType(method.getReturnType());
+
+		methodVisitor.visitInsn(type.getOpcode(Opcodes.IRETURN));
 
 		methodVisitor.visitMaxs(0, 0);
 		methodVisitor.visitEnd();
@@ -233,58 +235,11 @@ public class ASMWrapperUtil {
 		int i = 1;
 
 		for (Class<?> parameterClass : parameterClasses) {
-			if (Object.class.isAssignableFrom(parameterClass)) {
-				methodVisitor.visitVarInsn(Opcodes.ALOAD, i++);
-			}
-			else if (parameterClass.equals(Boolean.TYPE) ||
-					 parameterClass.equals(Character.TYPE) ||
-					 parameterClass.equals(Byte.TYPE) ||
-					 parameterClass.equals(Short.TYPE) ||
-					 parameterClass.equals(Integer.TYPE)) {
+			Type type = Type.getType(parameterClass);
 
-				methodVisitor.visitVarInsn(Opcodes.ILOAD, i++);
-			}
-			else if (parameterClass.equals(Double.TYPE)) {
-				methodVisitor.visitVarInsn(Opcodes.DLOAD, i);
+			methodVisitor.visitVarInsn(type.getOpcode(Opcodes.ILOAD), i);
 
-				i += 2;
-			}
-			else if (parameterClass.equals(Float.TYPE)) {
-				methodVisitor.visitVarInsn(Opcodes.FLOAD, i++);
-			}
-			else {
-				methodVisitor.visitVarInsn(Opcodes.LLOAD, i);
-
-				i += 2;
-			}
-		}
-	}
-
-	private static void _returnvalue(
-		MethodVisitor methodVisitor, Class<?> returnClass) {
-
-		if (Object.class.isAssignableFrom(returnClass)) {
-			methodVisitor.visitInsn(Opcodes.ARETURN);
-		}
-		else if (returnClass.equals(Boolean.TYPE) ||
-				 returnClass.equals(Character.TYPE) ||
-				 returnClass.equals(Byte.TYPE) ||
-				 returnClass.equals(Short.TYPE) ||
-				 returnClass.equals(Integer.TYPE)) {
-
-			methodVisitor.visitInsn(Opcodes.IRETURN);
-		}
-		else if (returnClass.equals(Double.TYPE)) {
-			methodVisitor.visitInsn(Opcodes.DRETURN);
-		}
-		else if (returnClass.equals(Float.TYPE)) {
-			methodVisitor.visitInsn(Opcodes.FRETURN);
-		}
-		else if (returnClass.equals(Long.TYPE)) {
-			methodVisitor.visitInsn(Opcodes.LRETURN);
-		}
-		else {
-			methodVisitor.visitInsn(Opcodes.RETURN);
+			i += type.getSize();
 		}
 	}
 

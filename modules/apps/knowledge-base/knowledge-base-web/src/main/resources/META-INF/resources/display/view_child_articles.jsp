@@ -26,7 +26,7 @@ KBArticleURLHelper kbArticleURLHelper = (KBArticleURLHelper)request.getAttribute
 int level = GetterUtil.getInteger(request.getAttribute("level"));
 level = level + 1;
 
-List<KBArticle> childKBArticles = KBArticleLocalServiceUtil.getKBArticles(themeDisplay.getScopeGroupId(), curKBArticle.getResourcePrimKey(), WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS, QueryUtil.ALL_POS, new KBArticlePriorityComparator(true));
+List<KBArticle> childKBArticles = KBArticleServiceUtil.getKBArticles(themeDisplay.getScopeGroupId(), curKBArticle.getResourcePrimKey(), WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS, QueryUtil.ALL_POS, new KBArticlePriorityComparator(true));
 
 for (KBArticle childKBArticle : childKBArticles) {
 	PortletURL viewChildURL = kbArticleURLHelper.createViewURL(childKBArticle);
@@ -64,7 +64,7 @@ for (KBArticle childKBArticle : childKBArticles) {
 				<c:when test="<%= childKBArticleSelected %>">
 
 					<%
-					List<KBArticle> descendantKBArticles = KBArticleLocalServiceUtil.getKBArticles(themeDisplay.getScopeGroupId(), childKBArticle.getResourcePrimKey(), WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS, QueryUtil.ALL_POS, new KBArticlePriorityComparator(true));
+					List<KBArticle> descendantKBArticles = KBArticleServiceUtil.getKBArticles(themeDisplay.getScopeGroupId(), childKBArticle.getResourcePrimKey(), WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS, QueryUtil.ALL_POS, new KBArticlePriorityComparator(true));
 
 					for (KBArticle descendantKBArticle : descendantKBArticles) {
 						PortletURL viewCurKBArticleURL = kbArticleURLHelper.createViewURL(descendantKBArticle);

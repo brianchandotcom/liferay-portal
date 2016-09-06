@@ -387,9 +387,14 @@
 
 		<execute macro="WebContentNavigator#gotoEditPGViaWCD" />
 
-		<execute macro="WebContent#addCategoryPGViaWCD">
+		<execute macro="WebContent#selectCategory">
 			<var name="categoryName" value="Vocabulary1 Category" />
 			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+
+		<execute macro="PortletEntry#publish" />
+
+		<execute macro="WebContentNavigator#gotoEditCP">
 			<var name="webContentContent" value="Web Content1 Content" />
 		</execute>
 

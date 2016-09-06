@@ -99,7 +99,9 @@ public class StagedLayoutSetStagedModelRepository
 		List<Layout> layouts = _layoutLocalService.getLayouts(
 			stagedLayoutSet.getGroupId(), stagedLayoutSet.isPrivateLayout());
 
-		return layouts.stream().map((layout) -> (StagedModel)layout).collect(
+		Stream<Layout> layoutsStream = layouts.stream();
+
+		return layoutsStream.map((layout) -> (StagedModel)layout).collect(
 			Collectors.toList());
 	}
 

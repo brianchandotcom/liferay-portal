@@ -90,17 +90,18 @@ public class ArticlePortlet extends BaseKBPortlet {
 			KBArticle kbArticle = null;
 
 			long resourcePrimKey = getResourcePrimKey(renderRequest);
-			int status = getStatus(renderRequest);
 
 			if (resourcePrimKey > 0) {
 				kbArticle = kbArticleService.getLatestKBArticle(
-					resourcePrimKey, status);
+					resourcePrimKey, WorkflowConstants.STATUS_APPROVED);
 			}
 
 			renderRequest.setAttribute(
 				KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE, kbArticle);
 
-			renderRequest.setAttribute(KBWebKeys.KNOWLEDGE_BASE_STATUS, status);
+			renderRequest.setAttribute(
+				KBWebKeys.KNOWLEDGE_BASE_STATUS,
+				WorkflowConstants.STATUS_APPROVED);
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchArticleException ||
@@ -197,40 +198,6 @@ public class ArticlePortlet extends BaseKBPortlet {
 		}
 
 		return defaultValue;
-	}
-
-	protected int getStatus(RenderRequest renderRequest) throws Exception {
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			KBWebKeys.THEME_DISPLAY);
-
-		if (!themeDisplay.isSignedIn()) {
-			return WorkflowConstants.STATUS_APPROVED;
-		}
-
-		String value = renderRequest.getParameter("status");
-		int status = GetterUtil.getInteger(value);
-
-		if ((value != null) && (status == WorkflowConstants.STATUS_APPROVED)) {
-			return WorkflowConstants.STATUS_APPROVED;
-		}
-
-		long resourcePrimKey = getResourcePrimKey(renderRequest);
-
-		if (resourcePrimKey == 0) {
-			return WorkflowConstants.STATUS_APPROVED;
-		}
-
-		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
-
-		if (KBArticlePermission.contains(
-				permissionChecker, resourcePrimKey, KBActionKeys.UPDATE)) {
-
-			return ParamUtil.getInteger(
-				renderRequest, "status", WorkflowConstants.STATUS_ANY);
-		}
-
-		return WorkflowConstants.STATUS_APPROVED;
 	}
 
 	@Reference(

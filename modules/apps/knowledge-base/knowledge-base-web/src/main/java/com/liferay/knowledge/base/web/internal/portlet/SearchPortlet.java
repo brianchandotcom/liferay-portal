@@ -14,20 +14,15 @@
 
 package com.liferay.knowledge.base.web.internal.portlet;
 
-import com.liferay.knowledge.base.constants.KBActionKeys;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.exception.NoSuchArticleException;
 import com.liferay.knowledge.base.exception.NoSuchCommentException;
 import com.liferay.knowledge.base.model.KBArticle;
-import com.liferay.knowledge.base.service.permission.KBArticlePermission;
 import com.liferay.knowledge.base.web.internal.constants.KBWebKeys;
 import com.liferay.portal.kernel.exception.NoSuchSubscriptionException;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -85,17 +80,18 @@ public class SearchPortlet extends BaseKBPortlet {
 
 			long resourcePrimKey = ParamUtil.getLong(
 				renderRequest, "resourcePrimKey");
-			int status = getStatus(renderRequest);
 
 			if (resourcePrimKey > 0) {
 				kbArticle = kbArticleService.getLatestKBArticle(
-					resourcePrimKey, status);
+					resourcePrimKey, WorkflowConstants.STATUS_APPROVED);
 			}
 
 			renderRequest.setAttribute(
 				KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE, kbArticle);
 
-			renderRequest.setAttribute(KBWebKeys.KNOWLEDGE_BASE_STATUS, status);
+			renderRequest.setAttribute(
+				KBWebKeys.KNOWLEDGE_BASE_STATUS,
+				WorkflowConstants.STATUS_APPROVED);
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchArticleException ||
@@ -145,41 +141,6 @@ public class SearchPortlet extends BaseKBPortlet {
 		else {
 			super.doDispatch(renderRequest, renderResponse);
 		}
-	}
-
-	protected int getStatus(RenderRequest renderRequest) throws Exception {
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			KBWebKeys.THEME_DISPLAY);
-
-		if (!themeDisplay.isSignedIn()) {
-			return WorkflowConstants.STATUS_APPROVED;
-		}
-
-		String value = renderRequest.getParameter("status");
-		int status = GetterUtil.getInteger(value);
-
-		if ((value != null) && (status == WorkflowConstants.STATUS_APPROVED)) {
-			return WorkflowConstants.STATUS_APPROVED;
-		}
-
-		long resourcePrimKey = ParamUtil.getLong(
-			renderRequest, "resourcePrimKey");
-
-		if (resourcePrimKey == 0) {
-			return WorkflowConstants.STATUS_APPROVED;
-		}
-
-		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
-
-		if (KBArticlePermission.contains(
-				permissionChecker, resourcePrimKey, KBActionKeys.UPDATE)) {
-
-			return ParamUtil.getInteger(
-				renderRequest, "status", WorkflowConstants.STATUS_ANY);
-		}
-
-		return WorkflowConstants.STATUS_APPROVED;
 	}
 
 	@Reference(

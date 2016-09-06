@@ -18,12 +18,20 @@
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
+	<command name="selectCategoryFrame">
+		<execute function="SelectFrame" locator1="IFrame#SELECT_CATEGORY" />
+	</command>
+
 	<command name="selectConfigurationFrame">
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 	</command>
 
 	<command name="selectEditAssetFrame">
 		<execute function="SelectFrame" locator1="IFrame#EDIT_ASSET" />
+	</command>
+
+	<command name="selectModalFrame">
+		<execute function="SelectFrame" locator1="IFrame#MODAL_IFRAME" />
 	</command>
 
 	<command name="selectPermissionsFrame">

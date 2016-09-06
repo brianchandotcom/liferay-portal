@@ -192,4 +192,17 @@ public interface ResourcePermissionService extends BaseService {
 	public void setIndividualResourcePermissions(long groupId, long companyId,
 		java.lang.String name, java.lang.String primKey, long roleId,
 		java.lang.String[] actionIds) throws PortalException;
+
+	public void setResourcePermission(long groupId, long companyId,
+		java.lang.String name, int scope, long roleId,
+		java.lang.String actionId, java.lang.String[] groupIds)
+		throws java.lang.Exception;
+
+	public void updateViewControlPanelPermission(long groupId, long companyId,
+		java.lang.String portletId, int scope, long roleId, int roleType,
+		java.lang.String[] groupIds) throws java.lang.Exception;
+
+	public void updateViewRootResourcePermission(long groupId, long companyId,
+		java.lang.String portletId, int scope, long roleId,
+		java.lang.String[] groupIds) throws java.lang.Exception;
 }

@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.model.adapter.ModelAdapterUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -100,14 +99,8 @@ public class StagedLayoutSetStagedModelRepository
 		List<Layout> layouts = _layoutLocalService.getLayouts(
 			stagedLayoutSet.getGroupId(), stagedLayoutSet.isPrivateLayout());
 
-		long[] layoutIds = portletDataContext.getLayoutIds();
-
-		Stream<Layout> layoutsStream = layouts.stream();
-
-		layoutsStream = layoutsStream.filter(
-			(layout) -> ArrayUtil.contains(layoutIds, layout.getLayoutId()));
-
-		return layoutsStream.collect(Collectors.toList());
+		return layouts.stream().map((layout) -> (StagedModel)layout).collect(
+			Collectors.toList());
 	}
 
 	public List<StagedModel> fetchDependencyStagedModels(

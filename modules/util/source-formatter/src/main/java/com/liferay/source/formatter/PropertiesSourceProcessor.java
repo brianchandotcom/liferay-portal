@@ -492,15 +492,9 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 			String fileName, String content)
 		throws Exception {
 
-		String path = StringPool.BLANK;
-
-		int pos = fileName.lastIndexOf(CharPool.SLASH);
-
-		if (pos != -1) {
-			path = fileName.substring(0, pos + 1);
-		}
-
 		boolean hasPrivateAppsDir = false;
+
+		int level = PLUGINS_MAX_DIR_LEVEL;
 
 		if (portalSource) {
 			File privateAppsDir = getFile(
@@ -509,6 +503,8 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 			if (privateAppsDir != null) {
 				hasPrivateAppsDir = true;
 			}
+
+			level = PORTAL_MAX_DIR_LEVEL;
 		}
 
 		Properties properties = new Properties();
@@ -537,13 +533,11 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 				value, StringPool.COMMA);
 
 			for (String propertyFileName : propertyFileNames) {
-				if (propertyFileName.startsWith("**") ||
-					propertyFileName.endsWith("**")) {
-
+				if (propertyFileName.contains(StringPool.STAR)) {
 					continue;
 				}
 
-				pos = propertyFileName.indexOf(CharPool.AT);
+				int pos = propertyFileName.indexOf(CharPool.AT);
 
 				if (pos != -1) {
 					propertyFileName = propertyFileName.substring(0, pos);
@@ -555,9 +549,9 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 					continue;
 				}
 
-				File file = new File(path + propertyFileName);
+				File file = getFile(propertyFileName, level);
 
-				if (!file.exists()) {
+				if (file == null) {
 					processMessage(
 						fileName,
 						"Incorrect property value: " + propertyFileName);

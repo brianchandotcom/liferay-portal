@@ -84,10 +84,7 @@ for (KBArticle childKBArticle : childKBArticles) {
 
 					<%
 					if (childKBArticleExpanded) {
-						request.setAttribute("ancestorResourcePrimaryKeys", ancestorResourcePrimaryKeys);
 						request.setAttribute("curKBArticle", childKBArticle);
-						request.setAttribute("kbArticle", KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
-						request.setAttribute("kbArticleURLHelper", kbArticleURLHelper);
 						request.setAttribute("level", level + 1);
 					%>
 

@@ -100,7 +100,7 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 		String[] includes = new String[] {"**/Language_*.properties"};
 
 		List<String> translationFileNames = getFileNames(
-			dirName, null, new String[0], includes);
+			dirName, null, new String[0], includes, true);
 
 		for (String translationFileName : translationFileNames) {
 			translationFileName = StringUtil.replace(
@@ -657,8 +657,8 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 		String[] includes = new String[] {"**/Language.properties"};
 
 		List<String> modulesLanguagePropertiesNames = getFileNames(
-			sourceFormatterArgs.getBaseDirName(), null, new String[0],
-			includes);
+			sourceFormatterArgs.getBaseDirName(), null, new String[0], includes,
+			true);
 
 		for (String fileName : modulesLanguagePropertiesNames) {
 			Properties properties = new Properties();

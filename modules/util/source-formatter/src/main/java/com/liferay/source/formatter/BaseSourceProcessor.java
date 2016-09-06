@@ -349,7 +349,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 			if (Objects.equals(value, defaultValue)) {
 				processMessage(
-					fileName, "No need to pass default value",
+					fileName,
+					"No need to pass default value '" + parametersList.get(1) +
+						"'",
 					getLineCount(content, matcher.start()));
 			}
 		}
@@ -375,7 +377,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		if (hasRedundantParentheses(ifClause, "||", "&&") ||
 			hasRedundantParentheses(ifClause, "&&", "||")) {
 
-			processMessage(fileName, "redundant parentheses", lineCount);
+			processMessage(
+				fileName, "Redundant parentheses in if-statement", lineCount);
 
 			return;
 		}
@@ -400,7 +403,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 					if (hasMissingParentheses(s)) {
 						processMessage(
-							fileName, "missing parentheses", lineCount);
+							fileName, "Missing parentheses in if-statement",
+							lineCount);
 
 						return;
 					}
@@ -430,7 +434,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 							if (hasRedundantParentheses(s)) {
 								processMessage(
-									fileName, "redundant parentheses",
+									fileName,
+									"Redundant parentheses in if-statement",
 									lineCount);
 
 								return;
@@ -441,7 +446,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 							(nextChar == CharPool.CLOSE_PARENTHESIS)) {
 
 							processMessage(
-								fileName, "redundant parentheses", lineCount);
+								fileName,
+								"Redundant parentheses in if-statement",
+								lineCount);
 
 							return;
 						}
@@ -571,7 +578,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 					!bndFileLanguageProperties.containsKey(languageKey)) {
 
 					processMessage(
-						fileName, "missing language key: " + languageKey);
+						fileName, "Missing language key '" + languageKey + "'");
 				}
 			}
 		}
@@ -595,9 +602,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 				StringBundler sb = new StringBundler(7);
 
-				sb.append("order ");
+				sb.append("Incorrect order '");
 				sb.append(elementName);
-				sb.append(StringPool.COLON);
+				sb.append("':");
 
 				if (Validator.isNotNull(parentElementName)) {
 					sb.append(StringPool.SPACE);
@@ -639,7 +646,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		if (content.contains("org.apache.commons.beanutils.PropertyUtils")) {
 			processMessage(
 				fileName,
-				"Do not use org.apache.commons.beanutils.PropertyUtils");
+				"Do not use org.apache.commons.beanutils.PropertyUtils, see " +
+					"LPS-62786");
 		}
 	}
 
@@ -654,7 +662,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			processMessage(
 				fileName,
 				"Use ResourceBundleUtil.getBundle instead of " +
-					"ResourceBundle.getBundle",
+					"ResourceBundle.getBundle, see LPS-58529",
 				lineCount);
 		}
 
@@ -662,7 +670,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			processMessage(
 				fileName,
 				"Use ResourceBundleUtil.getString instead of " +
-					"resourceBundle.getString",
+					"resourceBundle.getString, see LPS-58529",
 				lineCount);
 		}
 	}
@@ -800,7 +808,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 			content = StringUtil.replace(content, _oldCopyright, copyright);
 
-			processMessage(fileName, "old (c)");
+			processMessage(fileName, "File contains old copyright information");
 		}
 
 		if (!content.contains(copyright)) {
@@ -1176,7 +1184,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				}
 
 				if (delimeter != CharPool.AMPERSAND) {
-					processMessage(fileName, "delimeter", lineCount);
+					processMessage(
+						fileName, "Incorrect delimeter '" + delimeter + "'",
+						lineCount);
 				}
 
 				return line;
@@ -1426,7 +1436,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			}
 
 			processMessage(
-				fileName, "plus", getLineCount(content, matcher.start(1)));
+				fileName, "Incorrect use of '+' inside StringBundler",
+				getLineCount(content, matcher.start(1)));
 		}
 
 		matcher = sbAppendWithStartingSpacePattern.matcher(content);
@@ -1442,7 +1453,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				(getLineLength(firstLine) >= maxLineLength)) {
 
 				processMessage(
-					fileName, "leading space in sb",
+					fileName,
+					"Do not append string starting with space to StringBundler",
 					getLineCount(content, matcher.start(3)));
 			}
 			else {

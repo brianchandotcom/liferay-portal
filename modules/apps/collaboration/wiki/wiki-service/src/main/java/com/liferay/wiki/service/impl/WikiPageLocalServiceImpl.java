@@ -2092,6 +2092,16 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 					userId, page.getNodeId(), oldPage.getTitle(),
 					page.getTitle(), serviceContext);
 			}
+			else if (cmd.equals(Constants.CHANGE_PARENT)) {
+				List<WikiPage> pageVersions = wikiPagePersistence.findByN_T(
+					page.getNodeId(), page.getTitle());
+
+				for (WikiPage pageVersion : pageVersions) {
+					pageVersion.setParentTitle(page.getParentTitle());
+
+					wikiPagePersistence.update(pageVersion);
+				}
+			}
 
 			// Asset
 

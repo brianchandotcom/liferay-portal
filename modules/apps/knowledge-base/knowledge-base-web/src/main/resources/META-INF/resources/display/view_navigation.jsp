@@ -17,8 +17,6 @@
 <%@ include file="/display/init.jsp" %>
 
 <%
-KBArticle kbArticle = (KBArticle)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
-
 KBNavigationDisplayContext kbNavigationDisplayContext = (KBNavigationDisplayContext)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_KB_NAVIGATION_DISPLAY_CONTEXT);
 
 List<Long> ancestorResourcePrimaryKeys = kbNavigationDisplayContext.getAncestorResourcePrimaryKeys();
@@ -40,50 +38,11 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 	</c:if>
 
 	<%
-	List<KBArticle> kbArticles = KBArticleServiceUtil.getKBArticles(themeDisplay.getScopeGroupId(), rootResourcePrimKey, WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS, QueryUtil.ALL_POS, new KBArticlePriorityComparator(true));
-
-	for (KBArticle curKBArticle : kbArticles) {
-		PortletURL viewURL = kbArticleURLHelper.createViewURL(curKBArticle);
+	request.setAttribute("ancestorResourcePrimaryKeys", ancestorResourcePrimaryKeys);
+	request.setAttribute("kbArticleURLHelper", kbArticleURLHelper);
+	request.setAttribute("level", 0);
+	request.setAttribute("parentResourcePrimKey", rootResourcePrimKey);
 	%>
 
-		<ul>
-			<li>
-
-				<%
-				boolean kbArticleExpanded = false;
-
-				if ((ancestorResourcePrimaryKeys.size() > 0) && (curKBArticle.getResourcePrimKey() == ancestorResourcePrimaryKeys.get(0))) {
-					kbArticleExpanded = true;
-				}
-
-				String kbArticleClass = StringPool.BLANK;
-
-				if (curKBArticle.getResourcePrimKey() == kbArticle.getResourcePrimKey()) {
-					kbArticleClass = "kbarticle-selected";
-				}
-				else if (kbArticleExpanded) {
-					kbArticleClass = "kbarticle-expanded";
-				}
-				%>
-
-				<a class="<%= kbArticleClass %>" href="<%= viewURL %>"><%= HtmlUtil.escape(curKBArticle.getTitle()) %></a>
-
-				<c:if test="<%= kbArticleExpanded %>">
-
-					<%
-					request.setAttribute("ancestorResourcePrimaryKeys", ancestorResourcePrimaryKeys);
-					request.setAttribute("curKBArticle", curKBArticle);
-					request.setAttribute("kbArticleURLHelper", kbArticleURLHelper);
-					request.setAttribute("level", 1);
-					%>
-
-					<liferay-util:include page="/display/view_child_articles.jsp" servletContext="<%= application %>" />
-				</c:if>
-			</li>
-		</ul>
-
-	<%
-	}
-	%>
-
+	<liferay-util:include page="/display/view_child_articles.jsp" servletContext="<%= application %>" />
 </div>

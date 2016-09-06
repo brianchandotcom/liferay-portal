@@ -12,11 +12,11 @@
 		<execute macro="User#firstLoginPG" />
 
 		<execute macro="Page#add">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="SitePageNavigator#gotoEditPage">
-			<var name="page" value="${pageName}" />
+			<var name="page" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="Page#editPageLayoutColumn">
@@ -24,11 +24,11 @@
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${portletName}" />
+			<var name="portletName" value="Message Boards" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -63,7 +63,7 @@
 
 		<for list="${categoryNameList}" param="categoryName" >
 			<execute macro="Navigator#gotoPage">
-				<var name="pageName" value="${pageName}" />
+				<var name="pageName" value="Message Boards Page" />
 			</execute>
 
 			<execute macro="MessageboardsCategory#addPG">
@@ -77,350 +77,311 @@
 	</command>
 
 	<command name="AddMBCategory" priority="5">
-		<var name="categoryName" value="MB Category Name" />
-
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="MessageboardsCategory#addPG">
-			<var name="categoryName" value="${categoryName}" />
+			<var name="categoryName" value="MB Category Name" />
 		</execute>
 
 		<execute macro="MessageboardsCategory#viewPG">
-			<var name="categoryName" value="${categoryName}" />
+			<var name="categoryName" value="MB Category Name" />
 		</execute>
 	</command>
 
 	<command name="AddMBCategoryDescription" priority="4">
-		<var name="categoryDescription" value="MB Category Description" />
-		<var name="categoryDescriptionEnabled" value="true" />
-		<var name="categoryName" value="MB Category Name" />
-
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="MessageboardsCategory#addPG">
-			<var name="categoryDescription" value="${categoryDescription}" />
-			<var name="categoryDescriptionEnabled" value="${categoryDescriptionEnabled}" />
-			<var name="categoryName" value="${categoryName}" />
+			<var name="categoryDescription" value="MB Category Description" />
+			<var name="categoryDescriptionEnabled" value="true" />
+			<var name="categoryName" value="MB Category Name" />
 		</execute>
 
 		<execute macro="MessageboardsCategory#viewPG">
-			<var name="categoryDescription" value="${categoryDescription}" />
-			<var name="categoryDescriptionEnabled" value="${categoryDescriptionEnabled}" />
-			<var name="categoryName" value="${categoryName}" />
+			<var name="categoryDescription" value="MB Category Description" />
+			<var name="categoryDescriptionEnabled" value="true" />
+			<var name="categoryName" value="MB Category Name" />
 		</execute>
 	</command>
 
 	<command name="AddMBCategoryNameUTF8" priority="4">
-		<var name="categoryName" value="MB Catègory Name" />
-
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="MessageboardsCategory#addPG">
-			<var name="categoryName" value="${categoryName}" />
+			<var name="categoryName" value="MB Catègory Name" />
 		</execute>
 
 		<execute macro="MessageboardsCategory#viewPG">
-			<var name="categoryName" value="${categoryName}" />
+			<var name="categoryName" value="MB Catègory Name" />
 		</execute>
 	</command>
 
 	<command name="AddMBCategorySubcategory" priority="4">
-		<var name="categoryName" value="MB Category Name" />
-		<var name="subCategoryDescription" value="MB Subcategory Description" />
-		<var name="subCategoryName" value="MB Subcategory Name" />
-
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="MessageboardsCategory#addPG">
-			<var name="categoryName" value="${categoryName}" />
+			<var name="categoryName" value="MB Category Name" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="MessageboardsCategory#addSubcategoryPG">
-			<var name="categoryName" value="${categoryName}" />
-			<var name="subCategoryDescription" value="${subCategoryDescription}" />
-			<var name="subCategoryName" value="${subCategoryName}" />
+			<var name="categoryName" value="MB Category Name" />
+			<var name="subCategoryDescription" value="MB Subcategory Description" />
+			<var name="subCategoryName" value="MB Subcategory Name" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="MessageboardsCategory#viewSubcategoryPG">
-			<var name="categoryName" value="${categoryName}" />
-			<var name="subCategoryDescription" value="${subCategoryDescription}" />
-			<var name="subCategoryName" value="${subCategoryName}" />
+			<var name="categoryName" value="MB Category Name" />
+			<var name="subCategoryDescription" value="MB Subcategory Description" />
+			<var name="subCategoryName" value="MB Subcategory Name" />
 			<var name="threadsNumber" value="0" />
 		</execute>
 	</command>
 
 	<command name="AddMBCategorySubcategoryNullName" priority="4">
-		<var name="categoryName" value="MB Category Name" />
-		<var name="subCategoryDescription" value="MB Subcategory Description" />
-		<var name="subCategoryNullName" value=" " />
-
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="MessageboardsCategory#addPG">
-			<var name="categoryName" value="${categoryName}" />
+			<var name="categoryName" value="MB Category Name" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="MessageboardsCategory#addSubcategoryNullPG">
-			<var name="categoryName" value="${categoryName}" />
-			<var name="subCategoryDescription" value="${subCategoryDescription}" />
-			<var name="subCategoryNullName" value="${subCategoryNullName}" />
+			<var name="categoryName" value="MB Category Name" />
+			<var name="subCategoryDescription" value="MB Subcategory Description" />
+			<var name="subCategoryNullName" value=" " />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="MessageboardsCategory#viewCategoryDefaultPG">
-			<var name="categoryName" value="${categoryName}" />
+			<var name="categoryName" value="MB Category Name" />
 			<var name="subcategoriesNumber" value="0" />
 			<var name="threadsNumber" value="0" />
 		</execute>
 	</command>
 
 	<command name="AddMBCategorySubcategoryThread" priority="4">
-		<var name="categoryName" value="MB Category Name" />
-		<var name="subCategoryDescription" value="MB Subcategory Description" />
-		<var name="subCategoryEnabled" value="true" />
-		<var name="subCategoryName" value="MB Subcategory Name" />
-		<var name="threadBody" value="MB Thread Message Body" />
-		<var name="threadSubject" value="MB Thread Message Subject" />
-
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="MessageboardsCategory#addPG">
-			<var name="categoryName" value="${categoryName}" />
+			<var name="categoryName" value="MB Category Name" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="MessageboardsCategory#addSubcategoryPG">
-			<var name="categoryName" value="${categoryName}" />
-			<var name="subCategoryDescription" value="${subCategoryDescription}" />
-			<var name="subCategoryName" value="${subCategoryName}" />
+			<var name="categoryName" value="MB Category Name" />
+			<var name="subCategoryDescription" value="MB Subcategory Description" />
+			<var name="subCategoryName" value="MB Subcategory Name" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="MessageboardsCategory#gotoPG">
-			<var name="categoryName" value="${categoryName}" />
-			<var name="subCategoryEnabled" value="${subCategoryEnabled}" />
-			<var name="subCategoryName" value="${subCategoryName}" />
+			<var name="categoryName" value="MB Category Name" />
+			<var name="subCategoryEnabled" value="true" />
+			<var name="subCategoryName" value="MB Subcategory Name" />
 		</execute>
 
 		<execute macro="MessageboardsThread#addPG">
-			<var name="threadBody" value="${threadBody}" />
-			<var name="threadSubject" value="${threadSubject}" />
+			<var name="threadBody" value="MB Thread Message Body" />
+			<var name="threadSubject" value="MB Thread Message Subject" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="MessageboardsCategory#gotoPG">
-			<var name="categoryName" value="${categoryName}" />
-			<var name="subCategoryEnabled" value="${subCategoryEnabled}" />
-			<var name="subCategoryName" value="${subCategoryName}" />
+			<var name="categoryName" value="MB Category Name" />
+			<var name="subCategoryEnabled" value="true" />
+			<var name="subCategoryName" value="MB Subcategory Name" />
 		</execute>
 
 		<execute macro="MessageboardsThread#gotoPG">
 			<var name="lastPostUserName" value="Test Test" />
 			<var name="postCount" value="1" />
-			<var name="threadBody" value="${threadBody}" />
-			<var name="threadSubject" value="${threadSubject}" />
+			<var name="threadBody" value="MB Thread Message Body" />
+			<var name="threadSubject" value="MB Thread Message Subject" />
 		</execute>
 
 		<execute macro="MessageboardsThread#viewPG">
-			<var name="threadBody" value="${threadBody}" />
-			<var name="threadSubject" value="${threadSubject}" />
+			<var name="threadBody" value="MB Thread Message Body" />
+			<var name="threadSubject" value="MB Thread Message Subject" />
 		</execute>
 	</command>
 
 	<command name="AddMBCategoryThreadQuestion" priority="4">
-		<var name="categoryName" value="MB Category Name" />
-		<var name="threadBody" value="MB Thread Message Body" />
-		<var name="threadSubject" value="MB Thread Message Subject" />
-
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="MessageboardsCategory#addPG">
-			<var name="categoryName" value="${categoryName}" />
+			<var name="categoryName" value="MB Category Name" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="MessageboardsCategory#gotoPG">
-			<var name="categoryName" value="${categoryName}" />
+			<var name="categoryName" value="MB Category Name" />
 		</execute>
 
 		<execute macro="MessageboardsThread#addPGAsQuestion">
-			<var name="threadBody" value="${threadBody}" />
-			<var name="threadSubject" value="${threadSubject}" />
+			<var name="threadBody" value="MB Thread Message Body" />
+			<var name="threadSubject" value="MB Thread Message Subject" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="MessageboardsCategory#gotoPG">
-			<var name="categoryName" value="${categoryName}" />
+			<var name="categoryName" value="MB Category Name" />
 		</execute>
 
 		<execute macro="MessageboardsThread#gotoPG">
 			<var name="lastPostUserName" value="Test Test" />
 			<var name="postCount" value="1" />
-			<var name="threadBody" value="${threadBody}" />
-			<var name="threadSubject" value="${threadSubject}" />
+			<var name="threadBody" value="MB Thread Message Body" />
+			<var name="threadSubject" value="MB Thread Message Subject" />
 		</execute>
 
 		<execute macro="MessageboardsThread#viewPG">
-			<var name="threadBody" value="${threadBody}" />
-			<var name="threadSubject" value="${threadSubject}" />
+			<var name="threadBody" value="MB Thread Message Body" />
+			<var name="threadSubject" value="MB Thread Message Subject" />
 		</execute>
 	</command>
 
 	<command name="AddMBCategoryThreadUTF8" priority="4">
-		<var name="categoryName" value="MB Category Name" />
-		<var name="threadBody" value="MB Thrèad Mèssagè Body" />
-		<var name="threadSubject" value="MB Thrèad Mèssagè Subjèct" />
-
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="MessageboardsCategory#addPG">
-			<var name="categoryName" value="${categoryName}" />
+			<var name="categoryName" value="MB Category Name" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="MessageboardsCategory#gotoPG">
-			<var name="categoryName" value="${categoryName}" />
+			<var name="categoryName" value="MB Category Name" />
 		</execute>
 
 		<execute macro="MessageboardsThread#addPG">
-			<var name="threadBody" value="${threadBody}" />
-			<var name="threadSubject" value="${threadSubject}" />
+			<var name="threadBody" value="MB Thrèad Mèssagè Body" />
+			<var name="threadSubject" value="MB Thrèad Mèssagè Subjèct" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="MessageboardsCategory#gotoPG">
-			<var name="categoryName" value="${categoryName}" />
+			<var name="categoryName" value="MB Category Name" />
 		</execute>
 
 		<execute macro="MessageboardsThread#gotoPG">
 			<var name="lastPostUserName" value="Test Test" />
 			<var name="postCount" value="1" />
-			<var name="threadBody" value="${threadBody}" />
-			<var name="threadSubject" value="${threadSubject}" />
+			<var name="threadBody" value="MB Thrèad Mèssagè Body" />
+			<var name="threadSubject" value="MB Thrèad Mèssagè Subjèct" />
 		</execute>
 
 		<execute macro="MessageboardsThread#viewPG">
-			<var name="threadBody" value="${threadBody}" />
-			<var name="threadSubject" value="${threadSubject}" />
+			<var name="threadBody" value="MB Thrèad Mèssagè Body" />
+			<var name="threadSubject" value="MB Thrèad Mèssagè Subjèct" />
 		</execute>
 	</command>
 
 	<command name="AddMBThread" priority="5">
-		<var name="threadBody" value="MB Thread Message Body" />
-		<var name="threadSubject" value="MB Thread Message Subject" />
-
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="MessageboardsThread#addPG">
-			<var name="threadBody" value="${threadBody}" />
-			<var name="threadSubject" value="${threadSubject}" />
+			<var name="threadBody" value="MB Thread Message Body" />
+			<var name="threadSubject" value="MB Thread Message Subject" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="MessageboardsThread#gotoPG">
 			<var name="lastPostUserName" value="Test Test" />
 			<var name="postCount" value="1" />
-			<var name="threadBody" value="${threadBody}" />
-			<var name="threadSubject" value="${threadSubject}" />
+			<var name="threadBody" value="MB Thread Message Body" />
+			<var name="threadSubject" value="MB Thread Message Subject" />
 		</execute>
 
 		<execute macro="MessageboardsThread#viewPG">
-			<var name="threadBody" value="${threadBody}" />
-			<var name="threadSubject" value="${threadSubject}" />
+			<var name="threadBody" value="MB Thread Message Body" />
+			<var name="threadSubject" value="MB Thread Message Subject" />
 		</execute>
 	</command>
 
 	<command name="AddMBThreadGuestReply" priority="5">
-		<var name="replytoMessage" value="guest" />
-		<var name="threadBody" value="MB Thread Message Body" />
-		<var name="threadReplyBody" value="MB Thread Reply Body As Guest" />
-		<var name="threadSubject" value="MB Thread Message Subject" />
-
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="MessageboardsThread#addPG">
-			<var name="threadBody" value="${threadBody}" />
-			<var name="threadSubject" value="${threadSubject}" />
+			<var name="threadBody" value="MB Thread Message Body" />
+			<var name="threadSubject" value="MB Thread Message Subject" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="MessageboardsThread#gotoPG">
 			<var name="lastPostUserName" value="Test Test" />
 			<var name="postCount" value="1" />
-			<var name="threadBody" value="${threadBody}" />
-			<var name="threadSubject" value="${threadSubject}" />
+			<var name="threadBody" value="MB Thread Message Body" />
+			<var name="threadSubject" value="MB Thread Message Subject" />
 		</execute>
 
 		<execute macro="MessageboardsThread#viewPG">
 			<var name="postCount" value="1" />
-			<var name="threadBody" value="${threadBody}" />
-			<var name="threadSubject" value="${threadSubject}" />
+			<var name="threadBody" value="MB Thread Message Body" />
+			<var name="threadSubject" value="MB Thread Message Subject" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="MessageboardsPermissions#checkReplyToMessageForGuestPG" />
@@ -428,93 +389,86 @@
 		<execute macro="User#logoutPG" />
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="MessageboardsThread#replyPG">
-			<var name="threadBody" value="${threadBody}" />
-			<var name="threadReplyBody" value="${threadReplyBody}" />
-			<var name="threadSubject" value="${threadSubject}" />
+			<var name="threadBody" value="MB Thread Message Body" />
+			<var name="threadReplyBody" value="MB Thread Reply Body As Guest" />
+			<var name="threadSubject" value="MB Thread Message Subject" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="MessageboardsThread#viewReplyPG">
 			<var name="guestReply" value="true" />
 			<var name="loggedOut" value="true" />
 			<var name="postCount" value="2" />
-			<var name="threadBody" value="${threadBody}" />
-			<var name="threadReplyBody" value="${threadReplyBody}" />
-			<var name="threadSubject" value="${threadSubject}" />
+			<var name="threadBody" value="MB Thread Message Body" />
+			<var name="threadReplyBody" value="MB Thread Reply Body As Guest" />
+			<var name="threadSubject" value="MB Thread Message Subject" />
 			<var name="userName" value="Anonymous" />
 		</execute>
 	</command>
 
 	<command name="AddMBThreadNullBody" priority="4">
-		<var name="threadBody" value="" />
-		<var name="threadSubject" value="MB Thread Message Subject" />
-
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="MessageboardsThread#addPG">
-			<var name="threadBody" value="${threadBody}" />
-			<var name="threadSubject" value="${threadSubject}" />
+			<var name="threadBody" value="" />
+			<var name="threadSubject" value="MB Thread Message Subject" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="MessageboardsThread#gotoPG">
 			<var name="lastPostUserName" value="Test Test" />
 			<var name="postCount" value="1" />
-			<var name="threadBody" value="${threadBody}" />
-			<var name="threadSubject" value="${threadSubject}" />
+			<var name="threadBody" value="" />
+			<var name="threadSubject" value="MB Thread Message Subject" />
 		</execute>
 
 		<execute macro="MessageboardsThread#viewPG">
-			<var name="threadBody" value="${threadSubject}" />
-			<var name="threadSubject" value="${threadSubject}" />
+			<var name="threadBody" value="MB Thread Message Subject" />
+			<var name="threadSubject" value="MB Thread Message Subject" />
 		</execute>
 	</command>
 
 	<command name="AddMBThreadReply" priority="5">
-		<var name="threadBody" value="MB Thread Message Body" />
-		<var name="threadReplyBody" value="MB Thread Reply Body" />
-		<var name="threadSubject" value="MB Thread Message Subject" />
-
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="MessageboardsThread#addPG">
-			<var name="threadBody" value="${threadBody}" />
-			<var name="threadSubject" value="${threadSubject}" />
+			<var name="threadBody" value="MB Thread Message Body" />
+			<var name="threadSubject" value="MB Thread Message Subject" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="MessageboardsThread#replyPG">
-			<var name="threadBody" value="${threadBody}" />
-			<var name="threadReplyBody" value="${threadReplyBody}" />
-			<var name="threadSubject" value="${threadSubject}" />
+			<var name="threadBody" value="MB Thread Message Body" />
+			<var name="threadReplyBody" value="MB Thread Reply Body" />
+			<var name="threadSubject" value="MB Thread Message Subject" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="MessageboardsThread#viewReplyPG">
 			<var name="postCount" value="2" />
-			<var name="threadBody" value="${threadBody}" />
-			<var name="threadReplyBody" value="${threadReplyBody}" />
-			<var name="threadSubject" value="${threadSubject}" />
+			<var name="threadBody" value="MB Thread Message Body" />
+			<var name="threadReplyBody" value="MB Thread Reply Body" />
+			<var name="threadSubject" value="MB Thread Message Subject" />
 		</execute>
 	</command>
 
@@ -555,7 +509,7 @@
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="MessageboardsThread#gotoPG">
@@ -595,22 +549,20 @@
 	<command name="DeleteMBCategory" priority="5">
 		<property name="portal.acceptance" value="true" />
 
-		<var name="categoryName" value="MB Category Name" />
-
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="MessageboardsCategory#addPG">
-			<var name="categoryName" value="${categoryName}" />
+			<var name="categoryName" value="MB Category Name" />
 		</execute>
 
 		<execute macro="MessageboardsCategory#deletePG">
-			<var name="categoryName" value="${categoryName}" />
+			<var name="categoryName" value="MB Category Name" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="MessageboardsCategory#viewDefaultPG" />
@@ -619,24 +571,21 @@
 	<command name="DeleteMBThread" priority="5">
 		<property name="portal.acceptance" value="quarantine" />
 
-		<var name="threadBody" value="MB Thread Message Body" />
-		<var name="threadSubject" value="MB Thread Message Subject" />
-
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="MessageboardsThread#addPG">
-			<var name="threadBody" value="${threadBody}" />
-			<var name="threadSubject" value="${threadSubject}" />
+			<var name="threadBody" value="MB Thread Message Body" />
+			<var name="threadSubject" value="MB Thread Message Subject" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="MessageboardsThread#deletePG">
-			<var name="threadSubject" value="${threadSubject}" />
+			<var name="threadSubject" value="MB Thread Message Subject" />
 		</execute>
 	</command>
 
@@ -644,7 +593,7 @@
 		<property name="portal.acceptance" value="true" />
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="MessageboardsCategory#addPG">
@@ -663,7 +612,7 @@
 
 	<command name="EditMBThreadBody" priority="5">
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="MessageboardsThread#addPG">
@@ -672,7 +621,7 @@
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="MessageboardsThread#gotoPG">
@@ -694,7 +643,7 @@
 
 	<command name="EditMBThreadSubject" priority="5">
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="MessageboardsThread#addPG">
@@ -703,7 +652,7 @@
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="MessageboardsThread#gotoPG">
@@ -725,7 +674,7 @@
 
 	<command name="EditMBThreadSubjectAndBody" priority="5">
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="MessageboardsThread#addPG">
@@ -734,7 +683,7 @@
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="MessageboardsThread#gotoPG">
@@ -757,145 +706,166 @@
 	</command>
 
 	<command name="MoveMBCategory1ThreadToCategory2" priority="4">
-		<var name="categoryName1" value="MB Category1 Name" />
-		<var name="categoryName2" value="MB Category2 Name" />
-		<var name="threadBody" value="MB Thread Message Body" />
-		<var name="threadSubject" value="MB Thread Message Subject" />
-
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="MessageboardsCategory#addPG">
-			<var name="categoryName" value="${categoryName1}" />
+			<var name="categoryName" value="MB Category1 Name" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="MessageboardsCategory#gotoPG">
-			<var name="categoryName" value="${categoryName1}" />
+			<var name="categoryName" value="MB Category1 Name" />
 		</execute>
 
 		<execute macro="MessageboardsThread#addPG">
-			<var name="threadBody" value="${threadBody}" />
-			<var name="threadSubject" value="${threadSubject}" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="MessageboardsCategory#addPG">
-			<var name="categoryName" value="${categoryName2}" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="MessageboardsThread#movePG">
-			<var name="categoryName" value="${categoryName2}" />
-			<var name="categoryName1" value="${categoryName1}" />
-			<var name="categoryName2" value="${categoryName2}" />
 			<var name="threadBody" value="MB Thread Message Body" />
 			<var name="threadSubject" value="MB Thread Message Subject" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
+		</execute>
+
+		<execute macro="MessageboardsCategory#addPG">
+			<var name="categoryName" value="MB Category2 Name" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Message Boards Page" />
+		</execute>
+
+		<execute macro="MessageboardsThread#movePG">
+			<var name="categoryName" value="MB Category2 Name" />
+			<var name="categoryName1" value="MB Category1 Name" />
+			<var name="categoryName2" value="MB Category2 Name" />
+			<var name="threadBody" value="MB Thread Message Body" />
+			<var name="threadSubject" value="MB Thread Message Subject" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="MessageboardsCategory#gotoPG">
-			<var name="categoryName" value="${categoryName2}" />
+			<var name="categoryName" value="MB Category2 Name" />
 		</execute>
 
 		<execute macro="MessageboardsThread#gotoPG">
 			<var name="lastPostUserName" value="Test Test" />
 			<var name="postCount" value="1" />
-			<var name="threadBody" value="${threadBody}" />
-			<var name="threadSubject" value="${threadSubject}" />
+			<var name="threadBody" value="MB Thread Message Body" />
+			<var name="threadSubject" value="MB Thread Message Subject" />
 		</execute>
 
 		<execute macro="MessageboardsThread#viewPG">
-			<var name="threadBody" value="${threadBody}" />
-			<var name="threadSubject" value="${threadSubject}" />
+			<var name="threadBody" value="MB Thread Message Body" />
+			<var name="threadSubject" value="MB Thread Message Subject" />
 		</execute>
 	</command>
 
 	<command name="MoveMBCategory1ThreadWithExplanationPostToCategory2" priority="3">
-		<var name="categoryName1" value="MB Category1 Name" />
-		<var name="categoryName2" value="MB Category2 Name" />
-		<var name="explanationBody" value="MB Explanation Post Body" />
-		<var name="explanationSubject" value="MB Explanation Post Subject" />
-		<var name="threadBody" value="MB Thread Message Body" />
-		<var name="threadSubject" value="MB Thread Message Subject" />
-
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="MessageboardsCategory#addPG">
-			<var name="categoryName" value="${categoryName1}" />
+			<var name="categoryName" value="MB Category1 Name" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="MessageboardsCategory#gotoPG">
-			<var name="categoryName" value="${categoryName1}" />
+			<var name="categoryName" value="MB Category1 Name" />
 		</execute>
 
 		<execute macro="MessageboardsThread#addPG">
-			<var name="threadBody" value="${threadBody}" />
-			<var name="threadSubject" value="${threadSubject}" />
+			<var name="threadBody" value="MB Thread Message Body" />
+			<var name="threadSubject" value="MB Thread Message Subject" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="MessageboardsCategory#addPG">
-			<var name="categoryName" value="${categoryName2}" />
+			<var name="categoryName" value="MB Category2 Name" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="MessageboardsThread#movePG">
-			<var name="categoryName" value="${categoryName2}" />
-			<var name="categoryName1" value="${categoryName1}" />
-			<var name="categoryName2" value="${categoryName2}" />
-			<var name="explanationBody" value="${explanationBody}" />
+			<var name="categoryName" value="MB Category2 Name" />
+			<var name="categoryName1" value="MB Category1 Name" />
+			<var name="categoryName2" value="MB Category2 Name" />
+			<var name="explanationBody" value="MB Explanation Post Body" />
 			<var name="explanationPost" value="true" />
-			<var name="explanationSubject" value="${explanationSubject}" />
-			<var name="threadBody" value="${threadBody}" />
-			<var name="threadSubject" value="${threadSubject}" />
+			<var name="explanationSubject" value="MB Explanation Post Subject" />
+			<var name="threadBody" value="MB Thread Message Body" />
+			<var name="threadSubject" value="MB Thread Message Subject" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="MessageboardsCategory#gotoPG">
-			<var name="categoryName" value="${categoryName2}" />
+			<var name="categoryName" value="MB Category2 Name" />
 		</execute>
 
 		<execute macro="MessageboardsThread#gotoPG">
 			<var name="lastPostUserName" value="Test Test" />
 			<var name="postCount" value="2" />
-			<var name="threadBody" value="${threadBody}" />
-			<var name="threadSubject" value="${threadSubject}" />
+			<var name="threadBody" value="MB Thread Message Body" />
+			<var name="threadSubject" value="MB Thread Message Subject" />
 		</execute>
 
 		<execute macro="MessageboardsThread#viewPG">
-			<var name="threadBody" value="${threadBody}" />
-			<var name="threadBody2" value="${explanationBody}" />
-			<var name="threadSubject" value="${threadSubject}" />
-			<var name="threadSubject2" value="${explanationSubject}" />
+			<var name="threadBody" value="MB Thread Message Body" />
+			<var name="threadBody2" value="MB Explanation Post Body" />
+			<var name="threadSubject" value="MB Thread Message Subject" />
+			<var name="threadSubject2" value="MB Explanation Post Subject" />
+		</execute>
+	</command>
+
+	<command name="ReplyAfterDownloadingMBThreadAttachmentTwice" priority="5">
+		<description message="This is a use case for LPS-67722." />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Message Boards Page" />
+		</execute>
+
+		<execute macro="MessageboardsThread#addPGWithAttachment">
+			<var name="mbThreadAttachment" value="Document_1.jpg" />
+			<var name="threadBody" value="MB Thread Message Body" />
+			<var name="threadSubject" value="MB Thread Message Subject" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Message Boards Page" />
+		</execute>
+
+		<execute macro="MessageboardsThread#gotoCP">
+			<var name="threadSubject" value="MB Thread Message Subject" />
+		</execute>
+
+		<execute macro="MessageboardsThread#downloadAttachmentPG" />
+
+		<execute function="Pause" locator1="5000" />
+
+		<execute macro="MessageboardsThread#downloadAttachmentPG" />
+
+		<execute macro="MessageboardsThread#replyPG">
+			<var name="threadReplyBody" value="MB Thread Reply Body" />
+			<var name="threadSubject" value="MB Thread Message Subject" />
 		</execute>
 	</command>
 
@@ -966,7 +936,7 @@
 		<execute macro="MessageboardsPortlet#viewDefaultEmailFromCP" />
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="MessageboardsCategory#addPG">
@@ -981,7 +951,7 @@
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="MessageboardsCategory#gotoPG">
@@ -998,7 +968,7 @@
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="MessageboardsCategory#gotoPG">
@@ -1031,7 +1001,7 @@
 		<property name="custom.properties" value="discussion.comments.delta.value=5" />
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="MessageboardsThread#addPG">
@@ -1040,7 +1010,7 @@
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<var name="mbThreadReplyCounter" value="1,2,3,4,5,6,7" />
@@ -1052,7 +1022,7 @@
 			</execute>
 
 			<execute macro="Navigator#gotoPage">
-				<var name="pageName" value="${pageName}" />
+				<var name="pageName" value="Message Boards Page" />
 			</execute>
 		</for>
 

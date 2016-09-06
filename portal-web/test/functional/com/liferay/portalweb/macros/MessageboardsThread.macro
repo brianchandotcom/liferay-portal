@@ -277,6 +277,12 @@
 		<execute function="AssertElementNotPresent" locator1="MessageBoards#THREAD_LIST_THREAD" />
 	</command>
 
+	<command name="downloadAttachmentPG">
+		<execute function="Click" locator1="MessageBoardsThread#MESSAGE_BODY_ATTACHMENT_1" />
+
+		<execute function="DownloadTempFile" />
+	</command>
+
 	<command name="editCP">
 		<execute macro="PortletEntry#clickEditFromEllipsis" />
 

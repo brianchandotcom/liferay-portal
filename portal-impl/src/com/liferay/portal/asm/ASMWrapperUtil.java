@@ -128,6 +128,8 @@ public class ASMWrapperUtil {
 			asmWrapperClassBinaryName, null, _getClassBinaryName(Object.class),
 			new String[] {interfaceClassBinaryName});
 
+		// Fields
+
 		FieldVisitor fieldVisitor = classWriter.visitField(
 			Opcodes.ACC_PRIVATE + Opcodes.ACC_FINAL, "_delegate",
 			delegateObjectClassDescriptor, null, null);
@@ -138,6 +140,8 @@ public class ASMWrapperUtil {
 			Opcodes.ACC_PRIVATE + Opcodes.ACC_FINAL, "_default",
 			defaultObjectClassDescriptor, null, null);
 		fieldVisitor.visitEnd();
+
+		// Constructor
 
 		MethodVisitor methodVisitor = classWriter.visitMethod(
 			Opcodes.ACC_PRIVATE, "<init>",
@@ -163,6 +167,8 @@ public class ASMWrapperUtil {
 		methodVisitor.visitInsn(Opcodes.RETURN);
 		methodVisitor.visitMaxs(0, 0);
 		methodVisitor.visitEnd();
+
+		// Delegate and fallback methods
 
 		List<List<Method>> methods = _computeMethods(
 			interfaceClass, delegateObjectClass);
@@ -209,7 +215,15 @@ public class ASMWrapperUtil {
 			Opcodes.GETFIELD, asmWrapperClassBinaryName, fieldName,
 			targetClassDescriptor);
 
-		_loadValues(methodVisitor, method.getParameterTypes());
+		int i = 1;
+
+		for (Class<?> parameterClass : method.getParameterTypes()) {
+			Type type = Type.getType(parameterClass);
+
+			methodVisitor.visitVarInsn(type.getOpcode(Opcodes.ILOAD), i);
+
+			i += type.getSize();
+		}
 
 		methodVisitor.visitMethodInsn(
 			Opcodes.INVOKEVIRTUAL, targetClassBinaryName, method.getName(),
@@ -227,20 +241,6 @@ public class ASMWrapperUtil {
 		String className = clazz.getName();
 
 		return className.replace('.', '/');
-	}
-
-	private static void _loadValues(
-		MethodVisitor methodVisitor, Class<?>[] parameterClasses) {
-
-		int i = 1;
-
-		for (Class<?> parameterClass : parameterClasses) {
-			Type type = Type.getType(parameterClass);
-
-			methodVisitor.visitVarInsn(type.getOpcode(Opcodes.ILOAD), i);
-
-			i += type.getSize();
-		}
 	}
 
 	private ASMWrapperUtil() {

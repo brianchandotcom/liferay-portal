@@ -361,14 +361,6 @@
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Web Content Display" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Language Selector" />
 		</execute>
 
@@ -376,16 +368,18 @@
 			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
 
-		<execute macro="WebContent#addPGViaWCD">
+		<execute macro="WebContent#addPGViaAP">
 			<var name="webContentContent" value="Web Content1 Content" />
 			<var name="webContentTitle" value="Web Content1 Title" />
 		</execute>
 
-		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="Web Content1 Content" />
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContentNavigator#gotoEditPGViaWCD" />
+		<execute macro="WebContentNavigator#gotoEditCP">
+			<var name="webContentTitle" value="Web Content1 Title" />
+		</execute>
 
 		<execute macro="WebContent#selectCategory">
 			<var name="categoryName" value="Vocabulary1 Category" />
@@ -395,7 +389,7 @@
 		<execute macro="PortletEntry#publish" />
 
 		<execute macro="WebContentNavigator#gotoEditCP">
-			<var name="webContentContent" value="Web Content1 Content" />
+			<var name="webContentTitle" value="Web Content1 Title" />
 		</execute>
 
 		<execute macro="WebContent#addTranslation">
@@ -409,14 +403,10 @@
 			<var name="localizedContent" value="Contenu de Contenu Web1" />
 			<var name="localizedLanguage" value="French (France)" />
 			<var name="localizedTitle" value="Titre de Contenu Web1" />
-			<var name="webContentTitle" value="Web Content1 Title" />
+			<var name="webContentTitle" value="Netz Content1 Titel" />
 		</execute>
 
 		<execute macro="PortletEntry#publish" />
-
-		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="Web Content1 Content" />
-		</execute>
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Asset Publisher Page" />

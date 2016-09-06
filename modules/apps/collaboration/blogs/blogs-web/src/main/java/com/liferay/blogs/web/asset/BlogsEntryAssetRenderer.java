@@ -19,6 +19,8 @@ import com.liferay.asset.kernel.model.BaseJSPAssetRenderer;
 import com.liferay.blogs.kernel.model.BlogsEntry;
 import com.liferay.blogs.service.permission.BlogsEntryPermission;
 import com.liferay.blogs.web.constants.BlogsPortletKeys;
+import com.liferay.blogs.web.internal.util.BlogsEntryHelper;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -26,9 +28,12 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.trash.TrashRenderer;
+import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
+import com.liferay.portal.kernel.util.ClassResourceBundleLoader;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -37,6 +42,7 @@ import com.liferay.portlet.asset.util.AssetUtil;
 
 import java.util.Date;
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -55,8 +61,24 @@ import javax.servlet.http.HttpServletResponse;
 public class BlogsEntryAssetRenderer
 	extends BaseJSPAssetRenderer<BlogsEntry> implements TrashRenderer {
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #BlogsEntryAssetRenderer(
+	 *             BlogsEntry, ResourceBundleLoader)}
+	 */
+	@Deprecated
 	public BlogsEntryAssetRenderer(BlogsEntry entry) {
+		this(
+			entry,
+			new AggregateResourceBundleLoader(
+				new ClassResourceBundleLoader(
+					"content.Language", BlogsEntryAssetRenderer.class)));
+	}
+
+	public BlogsEntryAssetRenderer(
+		BlogsEntry entry, ResourceBundleLoader resourceBundleLoader) {
+
 		_entry = entry;
+		_resourceBundleLoader = resourceBundleLoader;
 	}
 
 	@Override
@@ -148,7 +170,14 @@ public class BlogsEntryAssetRenderer
 
 	@Override
 	public String getTitle(Locale locale) {
-		return _entry.getTitle();
+		ResourceBundle resourceBundle =
+			_resourceBundleLoader.loadResourceBundle(
+				LanguageUtil.getLanguageId(locale));
+
+		BlogsEntryHelper blogsEntryHelper = new BlogsEntryHelper(
+			resourceBundle);
+
+		return blogsEntryHelper.getDisplayTitle(_entry);
 	}
 
 	@Override
@@ -258,5 +287,6 @@ public class BlogsEntryAssetRenderer
 	}
 
 	private final BlogsEntry _entry;
+	private final ResourceBundleLoader _resourceBundleLoader;
 
 }

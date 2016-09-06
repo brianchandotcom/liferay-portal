@@ -142,9 +142,17 @@ public class FriendlyURLLocalServiceImpl
 	public FriendlyURL fetchFriendlyURL(
 		long companyId, long groupId, Class<?> clazz, String urlTitle) {
 
+		long classNameId = classNameLocalService.getClassNameId(clazz);
+
+		return fetchFriendlyURL(companyId, groupId, classNameId, urlTitle);
+	}
+
+	@Override
+	public FriendlyURL fetchFriendlyURL(
+		long companyId, long groupId, long classNameId, String urlTitle) {
+
 		return friendlyURLPersistence.fetchByC_G_C_U(
-			companyId, groupId, classNameLocalService.getClassNameId(clazz),
-			urlTitle);
+			companyId, groupId, classNameId, urlTitle);
 	}
 
 	@Override

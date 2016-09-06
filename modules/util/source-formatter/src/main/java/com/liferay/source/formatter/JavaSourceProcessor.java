@@ -2581,9 +2581,12 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					}
 				}
 
-				if (line.contains("    ") && !line.matches("\\s*\\*.*")) {
+				if (line.contains(StringPool.FOUR_SPACES) &&
+					!line.matches("\\s*\\*.*")) {
+
 					if (!fileName.endsWith("StringPool.java")) {
-						processMessage(fileName, "tab", lineCount);
+						processMessage(
+							fileName, "Use tabs instead of spaces", lineCount);
 					}
 				}
 
@@ -2681,7 +2684,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 								 previousLine.endsWith(
 									 StringPool.OPEN_PARENTHESIS))) {
 
-								processMessage(fileName, "tab", lineCount);
+								processMessage(
+									fileName, "Line should be indented ",
+									lineCount);
 							}
 
 							if (Validator.isNotNull(trimmedLine) &&
@@ -2692,7 +2697,12 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 								((previousLineLeadingTabCount + 1) !=
 									lineLeadingTabCount)) {
 
-								processMessage(fileName, "tab", lineCount);
+								processMessage(
+									fileName,
+									"Line starts with " + lineLeadingTabCount +
+										" tabs, but should be " +
+											(previousLineLeadingTabCount + 1),
+									lineCount);
 							}
 
 							if (previousLine.endsWith(StringPool.PERIOD)) {
@@ -2715,12 +2725,13 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 							int diff =
 								lineLeadingTabCount -
-								previousLineLeadingTabCount;
+									previousLineLeadingTabCount;
 
 							if (trimmedLine.startsWith("throws ") &&
 								((diff == 0) || (diff > 1))) {
 
-								processMessage(fileName, "tab", lineCount);
+								processMessage(
+									fileName, "incorrect indent", lineCount);
 							}
 
 							if ((diff == 2) &&

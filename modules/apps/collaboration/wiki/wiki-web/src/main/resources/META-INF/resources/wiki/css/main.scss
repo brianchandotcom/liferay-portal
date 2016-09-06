@@ -24,6 +24,10 @@
 	}
 
 	.wiki-body, .wiki-page-editor {
+		img {
+			max-width: 100%;
+		}
+
 		table {
 			border-collapse: collapse;
 			width: 100%;

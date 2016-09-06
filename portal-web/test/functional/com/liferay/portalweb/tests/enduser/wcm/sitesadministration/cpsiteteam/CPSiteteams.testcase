@@ -436,6 +436,161 @@
 		</execute>
 	</command>
 
+	<command name="AddSiteTeamSearchUserGroups">
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<for list="1,2" param="n">
+			<execute macro="ProductMenu#gotoControlPanelUsers">
+				<var name="portlet" value="User Groups" />
+			</execute>
+
+			<execute macro="UserGroup#addCP">
+				<var name="userGroupName" value="User Group Name ${n}" />
+			</execute>
+
+			<execute macro="ProductMenu#gotoSite">
+				<var name="site" value="Site Name" />
+			</execute>
+
+			<execute macro="ProductMenu#gotoSitesMembers">
+				<var name="portlet" value="Site Memberships" />
+			</execute>
+
+			<execute macro="Site#addMemberUserGroupCP">
+				<var name="userGroupName" value="User Group Name ${n}" />
+			</execute>
+		</for>
+
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesMembers">
+			<var name="portlet" value="Site Teams" />
+		</execute>
+
+		<execute macro="Team#addCP">
+			<var name="teamDescription" value="Site Team Description" />
+			<var name="teamName" value="Site Team Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesMembers">
+			<var name="portlet" value="Site Teams" />
+		</execute>
+
+		<execute macro="Team#assignUserGroups">
+			<var name="teamName" value="Site Team Name" />
+			<var name="userGroupName" value="User Group Name 1" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesMembers">
+			<var name="portlet" value="Site Teams" />
+		</execute>
+
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="rowEntry" value="Site Team Name" />
+		</execute>
+
+		<execute macro="Team#searchCP">
+			<var name="membershipType" value="User Group" />
+			<var name="searchTerm">"User Group Name 1"</var>
+		</execute>
+
+		<execute macro="Team#searchCP">
+			<var name="isEmpty" value="true" />
+			<var name="membershipType" value="User Group" />
+			<var name="searchTerm">"User Group Name 2"</var>
+		</execute>
+	</command>
+
+	<command name="AddSiteTeamSearchUsers">
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<for list="1,2" param="n">
+			<execute macro="ProductMenu#gotoControlPanelUsers">
+				<var name="portlet" value="Users and Organizations" />
+			</execute>
+
+			<execute macro="User#addCP">
+				<var name="userEmailAddress" value="userea${n}@liferay.com" />
+				<var name="userFirstName" value="userfn${n}" />
+				<var name="userLastName" value="userln${n}" />
+				<var name="userScreenName" value="usersn${n}" />
+			</execute>
+
+			<execute macro="ProductMenu#gotoSite">
+				<var name="site" value="Site Name" />
+			</execute>
+
+			<execute macro="ProductMenu#gotoSitesMembers">
+				<var name="portlet" value="Site Memberships" />
+			</execute>
+
+			<execute macro="Site#addMemberCP">
+				<var name="userFirstName" value="userfn${n}" />
+				<var name="userLastName" value="userln${n}" />
+				<var name="userScreenName" value="usersn${n}" />
+			</execute>
+		</for>
+
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesMembers">
+			<var name="portlet" value="Site Teams" />
+		</execute>
+
+		<execute macro="Team#addCP">
+			<var name="teamDescription" value="Site Team Description" />
+			<var name="teamName" value="Site Team Name" />
+		</execute>
+
+		<execute macro="Team#assignMembersCP">
+			<var name="teamName" value="Site Team Name" />
+			<var name="userScreenName" value="usersn1" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesMembers">
+			<var name="portlet" value="Site Teams" />
+		</execute>
+
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="rowEntry" value="Site Team Name" />
+		</execute>
+
+		<for list="userfn1,userln1,usersn1" param="searchTerm">
+			<execute macro="Team#searchCP">
+				<var name="membershipType" value="User" />
+				<var name="searchTerm" value="${searchTerm}" />
+			</execute>
+		</for>
+
+		<for list="userfn2,userln2,usersn2" param="searchTerm">
+			<execute macro="Team#searchCP">
+				<var name="isEmpty" value="true" />
+				<var name="membershipType" value="User" />
+				<var name="searchTerm" value="${searchTerm}" />
+			</execute>
+		</for>
+	</command>
+
 	<command name="DeleteSiteTeam" priority="5">
 		<property name="portal.acceptance" value="true" />
 

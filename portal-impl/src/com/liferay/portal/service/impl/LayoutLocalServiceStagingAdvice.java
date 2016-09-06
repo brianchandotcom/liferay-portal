@@ -245,13 +245,15 @@ public class LayoutLocalServiceStagingAdvice implements MethodInterceptor {
 		parentLayoutId = layoutLocalServiceHelper.getParentLayoutId(
 			groupId, privateLayout, parentLayoutId);
 		String name = nameMap.get(LocaleUtil.getSiteDefault());
-		friendlyURLMap = layoutLocalServiceHelper.getFriendlyURLMap(
-			groupId, privateLayout, layoutId, name, friendlyURLMap);
-		String friendlyURL = friendlyURLMap.get(LocaleUtil.getSiteDefault());
+		Map<Locale, String> layoutFriendlyURLMap =
+			layoutLocalServiceHelper.getFriendlyURLMap(
+				groupId, privateLayout, layoutId, name, friendlyURLMap);
+		String friendlyURL = layoutFriendlyURLMap.get(
+			LocaleUtil.getSiteDefault());
 
 		layoutLocalServiceHelper.validate(
 			groupId, privateLayout, layoutId, parentLayoutId, name, type,
-			hidden, friendlyURLMap, serviceContext);
+			hidden, layoutFriendlyURLMap, serviceContext);
 
 		layoutLocalServiceHelper.validateParentLayoutId(
 			groupId, privateLayout, layoutId, parentLayoutId);
@@ -305,7 +307,8 @@ public class LayoutLocalServiceStagingAdvice implements MethodInterceptor {
 		LayoutFriendlyURLLocalServiceUtil.updateLayoutFriendlyURLs(
 			originalLayout.getUserId(), originalLayout.getCompanyId(),
 			originalLayout.getGroupId(), originalLayout.getPlid(),
-			originalLayout.isPrivateLayout(), friendlyURLMap, serviceContext);
+			originalLayout.isPrivateLayout(), layoutFriendlyURLMap,
+			serviceContext);
 
 		boolean hasWorkflowTask = StagingUtil.hasWorkflowTask(
 			serviceContext.getUserId(), layoutRevision);

@@ -179,10 +179,10 @@ if (user2 != null) {
 	);
 
 	<%
-	ServletContext servletContext = ServletContextPool.get("private-messaging-portlet");
+	String privateMessagingPortletId = PortletProviderUtil.getPortletId("com.liferay.social.privatemessaging.model.UserThread", PortletProvider.Action.EDIT);
 	%>
 
-	<c:if test="<%= Validator.isNotNull(servletContext) && ((user2 == null) || (user2.getUserId() != themeDisplay.getUserId())) %>">
+	<c:if test="<%= Validator.isNotNull(privateMessagingPortletId) && ((user2 == null) || (user2.getUserId() != themeDisplay.getUserId())) %>">
 		contactsToolbarChildren.push(
 			{
 				icon: 'icon-envelope',
@@ -192,7 +192,7 @@ if (user2 != null) {
 					click: function(event) {
 						<portlet:renderURL var="redirectURL" windowState="<%= LiferayWindowState.NORMAL.toString() %>" />
 
-						var uri = '<liferay-portlet:renderURL portletName="<%= PrivateMessagingPortletKeys.PRIVATE_MESSAGING %>" windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/new_message.jsp" /><portlet:param name="redirect" value="<%= redirectURL %>" /></liferay-portlet:renderURL>';
+						var uri = '<liferay-portlet:renderURL portletName="<%= privateMessagingPortletId %>" windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/new_message.jsp" /><portlet:param name="redirect" value="<%= redirectURL %>" /></liferay-portlet:renderURL>';
 
 						<c:choose>
 							<c:when test="<%= user2 != null %>">
@@ -203,7 +203,7 @@ if (user2 != null) {
 							</c:otherwise>
 						</c:choose>
 
-						uri = Liferay.Util.addParams('<%= PortalUtil.getPortletNamespace(PrivateMessagingPortletKeys.PRIVATE_MESSAGING) %>userIds=' + userIds.join(), uri) || uri;
+						uri = Liferay.Util.addParams('<%= PortalUtil.getPortletNamespace(privateMessagingPortletId) %>userIds=' + userIds.join(), uri) || uri;
 
 						Liferay.Util.openWindow(
 							{
@@ -217,7 +217,7 @@ if (user2 != null) {
 									plugins: [Liferay.WidgetZIndex],
 									width: 600
 								},
-								id: '<%= PortalUtil.getPortletNamespace(PrivateMessagingPortletKeys.PRIVATE_MESSAGING) %>Dialog',
+								id: '<%= PortalUtil.getPortletNamespace(privateMessagingPortletId) %>Dialog',
 								title: '<%= UnicodeLanguageUtil.get(request, "new-message") %>',
 								uri: uri
 							}

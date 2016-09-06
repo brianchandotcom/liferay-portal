@@ -144,7 +144,11 @@ else if (SocialRelationLocalServiceUtil.hasRelation(themeDisplay.getUserId(), us
 	</c:when>
 </c:choose>
 
-<c:if test="<%= user2.getUserId() != themeDisplay.getUserId() %>">
+<%
+String privateMessagingPortletId = PortletProviderUtil.getPortletId("com.liferay.social.privatemessaging.model.UserThread", PortletProvider.Action.EDIT);
+%>
+
+<c:if test="<%= Validator.isNotNull(privateMessagingPortletId) && (user2.getUserId() != themeDisplay.getUserId()) %>">
 
 	<%
 	String messageTaglibOnClick = liferayPortletResponse.getNamespace() + "sendMessage();";
@@ -171,38 +175,40 @@ else if (SocialRelationLocalServiceUtil.hasRelation(themeDisplay.getUserId(), us
 	url="<%= exportURL %>"
 />
 
-<aui:script>
-	Liferay.provide(
-		window,
-		'<portlet:namespace />sendMessage',
-		function() {
-			<portlet:renderURL var="redirectURL" windowState="<%= LiferayWindowState.NORMAL.toString() %>" />
+<c:if test="<%= Validator.isNotNull(privateMessagingPortletId)  %>">
+	<aui:script>
+		Liferay.provide(
+			window,
+			'<portlet:namespace />sendMessage',
+			function() {
+				<portlet:renderURL var="redirectURL" windowState="<%= LiferayWindowState.NORMAL.toString() %>" />
 
-			var uri = '<liferay-portlet:renderURL portletName="<%= PrivateMessagingPortletKeys.PRIVATE_MESSAGING %>" windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/new_message.jsp" /><portlet:param name="redirect" value="<%= redirectURL %>" /></liferay-portlet:renderURL>';
+				var uri = '<liferay-portlet:renderURL portletName="<%= privateMessagingPortletId %>" windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/new_message.jsp" /><portlet:param name="redirect" value="<%= redirectURL %>" /></liferay-portlet:renderURL>';
 
-			uri = Liferay.Util.addParams('<%= PortalUtil.getPortletNamespace(PrivateMessagingPortletKeys.PRIVATE_MESSAGING) %>userIds=' + '<%= user2.getUserId() %>', uri) || uri;
+				uri = Liferay.Util.addParams('<%= PortalUtil.getPortletNamespace(privateMessagingPortletId) %>userIds=' + '<%= user2.getUserId() %>', uri) || uri;
 
-			Liferay.Util.openWindow(
-				{
-					dialog: {
-						centered: true,
-						constrain: true,
-						cssClass: 'private-messaging-portlet',
-						destroyOnHide: true,
-						height: 600,
-						modal: true,
-						plugins: [Liferay.WidgetZIndex],
-						width: 600
-					},
-					id: '<%= PortalUtil.getPortletNamespace(PrivateMessagingPortletKeys.PRIVATE_MESSAGING) %>Dialog',
-					title: '<%= UnicodeLanguageUtil.get(request, "new-message") %>',
-					uri: uri
-				}
-			);
-		},
-		['liferay-util-window']
-	);
-</aui:script>
+				Liferay.Util.openWindow(
+					{
+						dialog: {
+							centered: true,
+							constrain: true,
+							cssClass: 'private-messaging-portlet',
+							destroyOnHide: true,
+							height: 600,
+							modal: true,
+							plugins: [Liferay.WidgetZIndex],
+							width: 600
+						},
+						id: '<%= PortalUtil.getPortletNamespace(privateMessagingPortletId) %>Dialog',
+						title: '<%= UnicodeLanguageUtil.get(request, "new-message") %>',
+						uri: uri
+					}
+				);
+			},
+			['liferay-util-window']
+		);
+	</aui:script>
+</c:if>
 
 <aui:script use="aui-base,aui-io-request-deprecated,aui-io-plugin-deprecated">
 	var contactAction = A.one('.contacts-portlet .contacts-action');

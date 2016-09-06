@@ -84,4 +84,7 @@ public interface KBDisplayPortletInstanceConfiguration {
 	@Meta.AD(deflt = StringPool.BLANK, required = false)
 	public String contentRootPrefix();
 
+	@Meta.AD(deflt = "3", required = false)
+	public int maxNestingLevel();
+
 }

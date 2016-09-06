@@ -24,8 +24,22 @@ List<Long> ancestorResourcePrimaryKeys = (List<Long>)request.getAttribute("ances
 KBArticleURLHelper kbArticleURLHelper = (KBArticleURLHelper)request.getAttribute("kbArticleURLHelper");
 
 int level = GetterUtil.getInteger(request.getAttribute("level"));
+int maxNestingLevel = kbDisplayPortletInstanceConfiguration.maxNestingLevel();
 
-List<KBArticle> childKBArticles = KBArticleServiceUtil.getKBArticles(themeDisplay.getScopeGroupId(), parentResourcePrimKey, WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS, QueryUtil.ALL_POS, new KBArticlePriorityComparator(true));
+boolean maxNestingLevelReached = false;
+
+if ((maxNestingLevel - level) <= 1) {
+	maxNestingLevelReached = true;
+}
+
+List<KBArticle> childKBArticles = null;
+
+if (maxNestingLevelReached) {
+	childKBArticles = KBArticleServiceUtil.getAllDescendantKBArticles(parentResourcePrimKey, WorkflowConstants.STATUS_APPROVED, new KBArticlePriorityComparator(true));
+}
+else {
+	childKBArticles = KBArticleServiceUtil.getKBArticles(themeDisplay.getScopeGroupId(), parentResourcePrimKey, WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS, QueryUtil.ALL_POS, new KBArticlePriorityComparator(true));
+}
 
 for (KBArticle childKBArticle : childKBArticles) {
 	PortletURL viewChildURL = kbArticleURLHelper.createViewURL(childKBArticle);
@@ -46,14 +60,14 @@ for (KBArticle childKBArticle : childKBArticles) {
 			if (childKBArticle.getResourcePrimKey() == kbArticle.getResourcePrimKey()) {
 				childKBArticleClass = "kbarticle-selected";
 			}
-			else if (childKBArticleExpanded) {
+			else if (childKBArticleExpanded && !maxNestingLevelReached) {
 				childKBArticleClass = "kbarticle-expanded";
 			}
 			%>
 
 			<a class="<%= childKBArticleClass %>" href="<%= viewChildURL %>"><%= HtmlUtil.escape(childKBArticle.getTitle()) %></a>
 
-			<c:if test="<%= parentResourcePrimKey != kbArticle.getResourcePrimKey() %>">
+			<c:if test="<%= (parentResourcePrimKey != kbArticle.getResourcePrimKey()) && !maxNestingLevelReached %>">
 
 				<%
 				request.setAttribute("level", level + 1);

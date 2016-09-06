@@ -49,7 +49,7 @@ boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getIni
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
-renderResponse.setTitle((entry != null) ? entry.getTitle() : LanguageUtil.get(request, "new-blog-entry"));
+renderResponse.setTitle((entry != null) ? blogsEntryHelper.getDisplayTitle(entry) : LanguageUtil.get(request, "new-blog-entry"));
 %>
 
 <liferay-util:buffer var="saveStatus">
@@ -448,7 +448,7 @@ if (entry != null) {
 	portletURL.setParameter("mvcRenderCommandName", "/blogs/view_entry");
 	portletURL.setParameter("entryId", String.valueOf(entry.getEntryId()));
 
-	PortalUtil.addPortletBreadcrumbEntry(request, entry.getTitle(), portletURL.toString());
+	PortalUtil.addPortletBreadcrumbEntry(request, blogsEntryHelper.getDisplayTitle(entry), portletURL.toString());
 	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "edit"), currentURL);
 }
 else {

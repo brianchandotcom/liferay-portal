@@ -248,20 +248,21 @@ public class JavaClass {
 			if (!matcher.find()) {
 				_javaSourceProcessor.processMessage(
 					_fileName,
-					"LPS-36303: Incorrect method name '" + methodName + "'");
+					"Incorrect method name '" + methodName +
+						"', see LPS-36303");
 			}
 			else if (javaTerm.getType() != requiredMethodType) {
 				_javaSourceProcessor.processMessage(
 					_fileName,
-					"LPS-36303: Incorrect method type for '" + methodName +
-						"'");
+					"Incorrect method type for '" + methodName +
+						"', see LPS-36303");
 			}
 		}
 		else if (matcher.find() && !javaTerm.hasAnnotation("Override")) {
 			_javaSourceProcessor.processMessage(
 				_fileName,
 				"Annotation @" + annotation + " required for '" + methodName +
-					"'");
+					"', see LPS-36303");
 		}
 	}
 
@@ -314,7 +315,8 @@ public class JavaClass {
 		if (!matcher.find()) {
 			_javaSourceProcessor.processMessage(
 				_fileName,
-				"LPS-66242: Initial value differs from value in cleanUp method",
+				"Initial value differs from value in cleanUp method, see " +
+					"LPS-66242",
 				javaTerm.getLineCount());
 		}
 	}
@@ -408,7 +410,9 @@ public class JavaClass {
 
 			if (previousPos > pos) {
 				_javaSourceProcessor.processMessage(
-					_fileName, "Constructor parameter order " + parameterName);
+					_fileName,
+					"Follow constructor parameter order '" + parameterName +
+						"'");
 
 				return;
 			}
@@ -547,8 +551,8 @@ public class JavaClass {
 
 			_javaSourceProcessor.processMessage(
 				_fileName,
-				"Create a new var for " + StringUtil.trim(matcher.group(1)) +
-					" for better readability",
+				"Create a new var for '" + StringUtil.trim(matcher.group(1)) +
+					"' for better readability",
 				lineCount);
 		}
 	}
@@ -568,8 +572,8 @@ public class JavaClass {
 
 			_javaSourceProcessor.processMessage(
 				_fileName,
-				"LPS-65690 Use Collator for locale-sensitive String " +
-					"comparison");
+				"Use Collator for locale-sensitive String comparison, see " +
+					"LPS-65690");
 		}
 	}
 

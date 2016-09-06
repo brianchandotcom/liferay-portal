@@ -112,6 +112,8 @@ kbDisplayPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBDispl
 							/>
 
 							<aui:input label="content-root-prefix" name="preferences--contentRootPrefix--" type="input" value="<%= kbDisplayPortletInstanceConfiguration.contentRootPrefix() %>" />
+
+							<aui:input label="maximum-nesting-level" name="preferences--maxNestingLevel--" type="input" value="<%= kbDisplayPortletInstanceConfiguration.maxNestingLevel() %>" />
 						</aui:fieldset>
 					</aui:fieldset-group>
 				</div>

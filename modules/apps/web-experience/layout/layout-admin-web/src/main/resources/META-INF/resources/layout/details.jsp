@@ -100,12 +100,12 @@ StringBuilder friendlyURLBase = new StringBuilder();
 					<div class="input-group">
 						<span class="input-group-addon" id="<portlet:namespace />urlBase"><liferay-ui:message key="<%= StringUtil.shorten(friendlyURLBase.toString(), 40) %>" /></span>
 
-						<liferay-ui:input-localized cssClass="form-control" defaultLanguageId="<%= LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()) %>" name="friendlyURL" xml="<%= selLayout.getFriendlyURLsXML() %>" />
+						<liferay-ui:input-localized cssClass="form-control" defaultLanguageId="<%= LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()) %>" name="friendlyURL" xml="<%= HttpUtil.decodeURL(selLayout.getFriendlyURLsXML()) %>" />
 					</div>
 				</div>
 			</c:when>
 			<c:otherwise>
-				<aui:input name="friendlyURL" type="hidden" value="<%= (selLayout != null) ? selLayout.getFriendlyURL() : StringPool.BLANK %>" />
+				<aui:input name="friendlyURL" type="hidden" value="<%= (selLayout != null) ? HttpUtil.decodeURL(selLayout.getFriendlyURL()) : StringPool.BLANK %>" />
 			</c:otherwise>
 		</c:choose>
 
@@ -123,7 +123,7 @@ StringBuilder friendlyURLBase = new StringBuilder();
 	</c:when>
 	<c:otherwise>
 		<aui:input name='<%= "name_" + defaultLanguageId %>' type="hidden" value="<%= selLayout.getName(defaultLocale) %>" />
-		<aui:input name="friendlyURL" type="hidden" value="<%= (selLayout != null) ? selLayout.getFriendlyURL() : StringPool.BLANK %>" />
+		<aui:input name="friendlyURL" type="hidden" value="<%= (selLayout != null) ? HttpUtil.decodeURL(selLayout.getFriendlyURL()) : StringPool.BLANK %>" />
 	</c:otherwise>
 </c:choose>
 

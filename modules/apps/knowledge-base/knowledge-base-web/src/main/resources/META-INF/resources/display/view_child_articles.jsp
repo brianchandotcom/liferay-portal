@@ -18,14 +18,14 @@
 
 <%
 KBArticle kbArticle = (KBArticle)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
-KBArticle curKBArticle = (KBArticle)request.getAttribute("curKBArticle");
+long parentResourcePrimKey = (long)request.getAttribute("parentResourcePrimKey");
 
 List<Long> ancestorResourcePrimaryKeys = (List<Long>)request.getAttribute("ancestorResourcePrimaryKeys");
 KBArticleURLHelper kbArticleURLHelper = (KBArticleURLHelper)request.getAttribute("kbArticleURLHelper");
 
 int level = GetterUtil.getInteger(request.getAttribute("level"));
 
-List<KBArticle> childKBArticles = KBArticleServiceUtil.getKBArticles(themeDisplay.getScopeGroupId(), curKBArticle.getResourcePrimKey(), WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS, QueryUtil.ALL_POS, new KBArticlePriorityComparator(true));
+List<KBArticle> childKBArticles = KBArticleServiceUtil.getKBArticles(themeDisplay.getScopeGroupId(), parentResourcePrimKey, WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS, QueryUtil.ALL_POS, new KBArticlePriorityComparator(true));
 
 for (KBArticle childKBArticle : childKBArticles) {
 	PortletURL viewChildURL = kbArticleURLHelper.createViewURL(childKBArticle);
@@ -84,7 +84,7 @@ for (KBArticle childKBArticle : childKBArticles) {
 
 					<%
 					if (childKBArticleExpanded) {
-						request.setAttribute("curKBArticle", childKBArticle);
+						request.setAttribute("parentResourcePrimKey", childKBArticle.getResourcePrimKey());
 						request.setAttribute("level", level + 1);
 					%>
 

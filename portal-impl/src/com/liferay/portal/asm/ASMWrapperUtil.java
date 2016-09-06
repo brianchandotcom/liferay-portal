@@ -15,8 +15,6 @@
 package com.liferay.portal.asm;
 
 import com.liferay.portal.kernel.util.ReflectionUtil;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
@@ -147,15 +145,12 @@ public class ASMWrapperUtil {
 			defaultObjectClassDescriptor, null, null);
 		fieldVisitor.visitEnd();
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(StringPool.OPEN_PARENTHESIS);
-		sb.append(delegateObjectClassDescriptor);
-		sb.append(defaultObjectClassDescriptor);
-		sb.append(")V");
-
 		MethodVisitor methodVisitor = classWriter.visitMethod(
-			Opcodes.ACC_PRIVATE, "<init>", sb.toString(), null, null);
+			Opcodes.ACC_PRIVATE, "<init>",
+			Type.getMethodDescriptor(
+				Type.VOID_TYPE, Type.getType(delegateObjectClass),
+				Type.getType(defaultObjectClassDescriptor)),
+			null, null);
 
 		methodVisitor.visitCode();
 		methodVisitor.visitVarInsn(Opcodes.ALOAD, 0);

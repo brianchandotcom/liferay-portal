@@ -24,8 +24,8 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.sync.constants.SyncAdminPortletKeys;
 import com.liferay.sync.constants.SyncConstants;
+import com.liferay.sync.constants.SyncPortletKeys;
 import com.liferay.sync.exception.OAuthPortletUndeployedException;
 import com.liferay.sync.oauth.helper.SyncOAuthHelperUtil;
 import com.liferay.sync.service.configuration.SyncServiceConfigurationKeys;
@@ -60,7 +60,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
-		"javax.portlet.name=" + SyncAdminPortletKeys.SYNC_ADMIN_PORTLET,
+		"javax.portlet.name=" + SyncPortletKeys.SYNC_ADMIN_PORTLET,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=administrator",
 		"javax.portlet.supports.mime-type=text/html"

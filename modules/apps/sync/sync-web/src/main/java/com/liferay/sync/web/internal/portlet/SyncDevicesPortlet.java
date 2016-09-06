@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.sync.constants.SyncAdminPortletKeys;
+import com.liferay.sync.constants.SyncPortletKeys;
 import com.liferay.sync.model.SyncDevice;
 
 import javax.portlet.ActionRequest;
@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/devices.jsp",
-		"javax.portlet.name=" + SyncAdminPortletKeys.SYNC_DEVICES_PORTLET,
+		"javax.portlet.name=" + SyncPortletKeys.SYNC_DEVICES_PORTLET,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user",
 		"javax.portlet.supports.mime-type=text/html"

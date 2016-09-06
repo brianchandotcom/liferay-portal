@@ -18,7 +18,7 @@ import com.liferay.application.list.BasePanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.portal.kernel.model.Portlet;
-import com.liferay.sync.constants.SyncAdminPortletKeys;
+import com.liferay.sync.constants.SyncPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -38,12 +38,12 @@ public class SyncAdminPanelApp extends BasePanelApp {
 
 	@Override
 	public String getPortletId() {
-		return SyncAdminPortletKeys.SYNC_ADMIN_PORTLET;
+		return SyncPortletKeys.SYNC_ADMIN_PORTLET;
 	}
 
 	@Override
 	@Reference(
-		target = "(javax.portlet.name=" + SyncAdminPortletKeys.SYNC_ADMIN_PORTLET + ")",
+		target = "(javax.portlet.name=" + SyncPortletKeys.SYNC_ADMIN_PORTLET + ")",
 		unbind = "-"
 	)
 	public void setPortlet(Portlet portlet) {

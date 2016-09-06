@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.sync.service.SyncDeviceLocalService;
 import com.liferay.sync.web.internal.constants.SyncWebKeys;
+import com.liferay.sync.web.internal.upgrade.SyncWebUpgrade;
 
 import java.io.IOException;
 
@@ -86,6 +87,10 @@ public abstract class BaseSyncPortlet extends MVCPortlet {
 		SyncDeviceLocalService syncDeviceLocalService) {
 
 		this.syncDeviceLocalService = syncDeviceLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setSyncWebUpgrade(SyncWebUpgrade syncWebUpgrade) {
 	}
 
 	protected SyncDeviceLocalService syncDeviceLocalService;

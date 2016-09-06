@@ -15,6 +15,7 @@
 package com.liferay.source.formatter;
 
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -143,9 +144,8 @@ public class BaseSourceProcessorTestCase {
 		}
 
 		List<SourceFormatterMessage> sourceFormatterMessages =
-			sourceFormatter.getSourceFormatterMessages();
-
-		Collections.sort(sourceFormatterMessages);
+			ListUtil.fromCollection(
+				sourceFormatter.getSourceFormatterMessages());
 
 		if (!sourceFormatterMessages.isEmpty() ||
 			(expectedMessages.length > 0)) {

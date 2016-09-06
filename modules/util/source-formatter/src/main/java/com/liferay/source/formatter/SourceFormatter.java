@@ -268,8 +268,8 @@ public class SourceFormatter {
 		return _sourceFormatterArgs;
 	}
 
-	public List<SourceFormatterMessage> getSourceFormatterMessages() {
-		return new ArrayList<>(_sourceFormatterMessages);
+	public Set<SourceFormatterMessage> getSourceFormatterMessages() {
+		return _sourceFormatterMessages;
 	}
 
 	public SourceMismatchException getSourceMismatchException() {

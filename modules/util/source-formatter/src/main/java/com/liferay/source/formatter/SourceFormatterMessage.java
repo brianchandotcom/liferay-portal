@@ -14,7 +14,6 @@
 
 package com.liferay.source.formatter;
 
-import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 
@@ -38,11 +37,17 @@ public class SourceFormatterMessage
 
 	@Override
 	public int compareTo(SourceFormatterMessage sourceFormatterMessage) {
-		NaturalOrderStringComparator naturalOrderStringComparator =
-			new NaturalOrderStringComparator();
+		if (!_fileName.equals(sourceFormatterMessage.getFileName())) {
+			return _fileName.compareTo(sourceFormatterMessage.getFileName());
+		}
 
-		return naturalOrderStringComparator.compare(
-			toString(), sourceFormatterMessage.toString());
+		if ((_lineCount != -1) ||
+			(sourceFormatterMessage.getLineCount() != -1)) {
+
+			return _lineCount - sourceFormatterMessage.getLineCount();
+		}
+
+		return _message.compareTo(sourceFormatterMessage.getMessage());
 	}
 
 	public String getFileName() {

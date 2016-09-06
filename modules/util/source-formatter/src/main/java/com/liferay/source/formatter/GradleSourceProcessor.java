@@ -50,7 +50,7 @@ public class GradleSourceProcessor extends BaseSourceProcessor {
 				!name.equals("com.liferay.util.taglib")) {
 
 				processMessage(
-					fileName, "Do not use 'default' version",
+					fileName, "Do not use 'default' version for '" + name + "'",
 					getLineCount(content, matcher.start()));
 			}
 		}

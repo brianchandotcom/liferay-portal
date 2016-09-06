@@ -606,7 +606,8 @@ public class MailEngine {
 				}
 			}
 			else {
-				LogUtil.log(_log, me);
+				LogUtil.log(
+					_log, me, "Failed to send message: " + me.getMessage());
 			}
 
 			if (_isThrowsExceptionOnFailure()) {

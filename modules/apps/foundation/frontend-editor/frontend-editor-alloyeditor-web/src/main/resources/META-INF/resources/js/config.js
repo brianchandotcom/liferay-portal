@@ -5,6 +5,7 @@
 				alloyeditor: {
 					base: MODULE_PATH + '/js/',
 					combine: Liferay.AUI.getCombine(),
+					filter: Liferay.AUI.getFilterConfig(),
 					modules: {
 						'liferay-alloy-editor': {
 							path: 'alloyeditor.js',

@@ -1853,7 +1853,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		return _sourceFormatterHelper.getFileNames(
-			basedir, recentChangesFileNames, excludes, includes);
+			basedir, recentChangesFileNames, excludes, includes,
+			sourceFormatterArgs.isIncludeSubrepositories());
 	}
 
 	protected List<String> getFileNames(

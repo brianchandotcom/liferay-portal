@@ -77,7 +77,8 @@ public class SourceFormatterHelper {
 
 	public List<String> getFileNames(
 			String baseDir, List<String> recentChangesFileNames,
-			String[] excludes, String[] includes)
+			String[] excludes, String[] includes,
+			boolean includeSubrepositories)
 		throws Exception {
 
 		List<PathMatcher> excludeDirPathMatchers = new ArrayList<>();
@@ -111,7 +112,7 @@ public class SourceFormatterHelper {
 		if (recentChangesFileNames == null) {
 			return scanForFiles(
 				baseDir, excludeDirPathMatchers, excludeFilePathMatchers,
-				includeFilePathMatchers);
+				includeFilePathMatchers, includeSubrepositories);
 		}
 
 		return getFileNames(
@@ -240,7 +241,8 @@ public class SourceFormatterHelper {
 	protected List<String> scanForFiles(
 			String baseDir, final List<PathMatcher> excludeDirPathMatchers,
 			final List<PathMatcher> excludeFilePathMatchers,
-			final List<PathMatcher> includeFilePathMatchers)
+			final List<PathMatcher> includeFilePathMatchers,
+			final boolean includeSubrepositories)
 		throws Exception {
 
 		final List<String> fileNames = new ArrayList<>();
@@ -257,6 +259,23 @@ public class SourceFormatterHelper {
 							dirPath.resolve("source_formatter.ignore"))) {
 
 						return FileVisitResult.SKIP_SUBTREE;
+					}
+
+					if (!includeSubrepositories) {
+						Path gitRepoPath = dirPath.resolve(".gitrepo");
+
+						if (Files.exists(gitRepoPath)) {
+							try {
+								String content = FileUtil.read(
+									gitRepoPath.toFile());
+
+								if (content.contains("mode = pull")) {
+									return FileVisitResult.SKIP_SUBTREE;
+								}
+							}
+							catch (Exception e) {
+							}
+						}
 					}
 
 					dirPath = getCanonicalPath(dirPath);

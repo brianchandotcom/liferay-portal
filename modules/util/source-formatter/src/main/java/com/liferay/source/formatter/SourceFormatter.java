@@ -368,7 +368,8 @@ public class SourceFormatter {
 		List<String> modulePropertiesFileNames =
 			sourceFormatterHelper.getFileNames(
 				_sourceFormatterArgs.getBaseDirName(), null, excludes,
-				new String[] {"**/modules/**/" + fileName});
+				new String[] {"**/modules/**/" + fileName},
+				_sourceFormatterArgs.isIncludeSubrepositories());
 
 		for (String modulePropertiesFileName : modulePropertiesFileNames) {
 			InputStream inputStream = new FileInputStream(

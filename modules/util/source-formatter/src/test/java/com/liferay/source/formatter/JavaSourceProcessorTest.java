@@ -42,7 +42,7 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	public void testConstructorParameterOrder() throws Exception {
 		test(
 			"ConstructorParameterOrder.testjava",
-			"Constructor parameter order attribute");
+			"Follow constructor parameter order 'attribute'");
 	}
 
 	@Test

@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + com.liferay.dynamic.data.lists.form.web.internal.constants.DDLFormPortletKeys.DYNAMIC_DATA_LISTS_FORM_ADMIN,
+		"javax.portlet.name=" + com.liferay.dynamic.data.lists.form.web.constants.DDLFormPortletKeys.DYNAMIC_DATA_LISTS_FORM_ADMIN,
 		"path=/admin/edit_record_set.jsp"
 	},
 	service = PortletConfigurationIcon.class

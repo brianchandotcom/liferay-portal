@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.dynamic.data.lists.form.web.internal.constants;
+package com.liferay.dynamic.data.lists.form.web.constants;
 
 /**
- * @author Lino Alves
+ * @author Marcellus Tavares
  */
-public class DDLFormConstants {
+public class DDLFormWebKeys {
 
-	public static final String SERVICE_NAME =
-		"com.liferay.dynamic.data.lists.form.web";
+	public static final String DYNAMIC_DATA_LISTS_RECORD_SET =
+		"DYNAMIC_DATA_LISTS_RECORD_SET";
 
 }

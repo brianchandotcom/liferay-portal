@@ -16,7 +16,7 @@ package com.liferay.dynamic.data.lists.form.web.internal.exportimport.data.handl
 
 import com.liferay.dynamic.data.lists.exportimport.staged.model.repository.DDLRecordSetStagedModelRepository;
 import com.liferay.dynamic.data.lists.exportimport.staged.model.repository.DDLRecordStagedModelRepository;
-import com.liferay.dynamic.data.lists.form.web.internal.constants.DDLFormPortletKeys;
+import com.liferay.dynamic.data.lists.form.web.constants.DDLFormPortletKeys;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.model.DDLRecordSetConstants;

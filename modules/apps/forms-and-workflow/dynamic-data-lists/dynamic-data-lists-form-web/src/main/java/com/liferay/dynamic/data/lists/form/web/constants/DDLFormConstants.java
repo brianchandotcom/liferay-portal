@@ -12,20 +12,14 @@
  * details.
  */
 
-package com.liferay.dynamic.data.lists.form.web.internal.constants;
+package com.liferay.dynamic.data.lists.form.web.constants;
 
 /**
- * @author Marcellus Tavares
+ * @author Lino Alves
  */
-public class DDLFormPortletKeys {
+public class DDLFormConstants {
 
-	public static final String DYNAMIC_DATA_LISTS_FORM =
-		"com_liferay_dynamic_data_lists_form_web_portlet_DDLFormPortlet";
-
-	public static final String DYNAMIC_DATA_LISTS_FORM_ADMIN =
-		"com_liferay_dynamic_data_lists_form_web_portlet_DDLFormAdminPortlet";
-
-	public static final String DYNAMIC_DATA_LISTS_FORM_BROWSER =
-		"com_liferay_dynamic_data_lists_form_web_portlet_DDLFormBrowserPortlet";
+	public static final String SERVICE_NAME =
+		"com.liferay.dynamic.data.lists.form.web";
 
 }

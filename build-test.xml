@@ -5354,9 +5354,7 @@ sprite.root.dir=/tmp/sprite
 
 axis.servlet.hosts.allowed=
 
-tunnel.servlet.hosts.allowed=
-
-javascript.single.page.application.timeout=300000</echo>
+tunnel.servlet.hosts.allowed=</echo>
 
 		<get-testcase-property property.name="captcha.max.challenges" />
 

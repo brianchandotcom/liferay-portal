@@ -112,10 +112,13 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 		test(
 			"IfClauseParentheses.testjava",
 			new String[] {
-				"missing parentheses", "missing parentheses",
-				"missing parentheses", "missing parentheses",
-				"missing parentheses", "redundant parentheses",
-				"redundant parentheses"
+				"Missing parentheses in if-statement",
+				"Missing parentheses in if-statement",
+				"Missing parentheses in if-statement",
+				"Missing parentheses in if-statement",
+				"Missing parentheses in if-statement",
+				"Redundant parentheses in if-statement",
+				"Redundant parentheses in if-statement"
 			},
 			new Integer[] {25, 29, 33, 39, 43, 47, 51});
 	}

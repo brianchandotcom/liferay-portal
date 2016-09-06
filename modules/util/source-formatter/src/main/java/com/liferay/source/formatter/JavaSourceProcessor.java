@@ -1973,7 +1973,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					int lineCount = getLineCount(content, matcher.start(2));
 
 					processMessage(
-						fileName, "Unprocessed " + originalExceptionClassName,
+						fileName,
+						"Unprocessed " + originalExceptionClassName +
+							", see LPS-36174",
 						lineCount);
 
 					break;
@@ -2276,7 +2278,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 				if (trimmedLine.contains("StopWatch stopWatch = null;")) {
 					processMessage(
-						fileName, "Do not set stopwatch to null", lineCount);
+						fileName, "Do not set stopwatch to null, see LPS-45492",
+						lineCount);
 				}
 
 				checkEmptyCollection(trimmedLine, fileName, lineCount);
@@ -2315,12 +2318,13 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 				if (line.contains("ActionForm form")) {
 					processMessage(
-						fileName, "Rename form to actionForm", lineCount);
+						fileName, "Rename 'form' to 'actionForm'", lineCount);
 				}
 
 				if (line.contains("ActionMapping mapping")) {
 					processMessage(
-						fileName, "Rename mapping to ActionMapping", lineCount);
+						fileName, "Rename 'mapping' to 'ActionMapping'",
+						lineCount);
 				}
 
 				if (!trimmedLine.equals("{") && line.endsWith("{") &&
@@ -2800,14 +2804,15 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 					processMessage(
 						fileName,
-						"Do not use PowerMock inside Arquillian tests");
+						"Do not use PowerMock inside Arquillian tests, see " +
+							"LPS-56706");
 				}
 
 				if (!packagePath.endsWith(".test")) {
 					processMessage(
 						fileName,
 						"Module integration test must be under a test " +
-							"subpackage");
+							"subpackage, see LPS-57722");
 				}
 			}
 			else if ((absolutePath.contains("/test/unit/") ||
@@ -2816,7 +2821,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 				processMessage(
 					fileName,
-					"Module unit test should not be under a test subpackage");
+					"Module unit test should not be under a test subpackage, " +
+						"see LPS-57722");
 			}
 		}
 
@@ -2825,7 +2831,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		if (content.contains("ProxyFactory.newServiceTrackedInstance(")) {
 			processMessage(
 				fileName,
-				"Do not use ProxyFactory.newServiceTrackedInstance in modules");
+				"Do not use ProxyFactory.newServiceTrackedInstance in " +
+					"modules, see LPS-57358");
 		}
 
 		// LPS-59076
@@ -2849,7 +2856,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			if (matcher.find()) {
 				processMessage(
 					fileName,
-					"Do not use com.liferay.registry classes in modules");
+					"Do not use com.liferay.registry classes in modules, " +
+						"see LPS-62989");
 			}
 		}
 
@@ -2860,7 +2868,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 			processMessage(
 				fileName,
-				"Specify category using @ExtendedObjectClassDefinition");
+				"Specify category using @ExtendedObjectClassDefinition, see " +
+					"LPS-60186");
 		}
 
 		// LPS-64238
@@ -2868,14 +2877,17 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		if (content.contains("import com.liferay.util.dao.orm.CustomSQLUtil")) {
 			processMessage(
 				fileName,
-				"Do not use com.liferay.util.dao.orm.CustomSQLUtil in modules");
+				"Do not use com.liferay.util.dao.orm.CustomSQLUtil in " +
+					"modules, see LPS-64238");
 		}
 
 		// LPS-64335
 
 		if (content.contains("import com.liferay.util.ContentUtil")) {
 			processMessage(
-				fileName, "Do not use com.liferay.util.ContentUtil in modules");
+				fileName,
+				"Do not use com.liferay.util.ContentUtil in modules, see " +
+					"LPS-64335");
 		}
 
 		// LPS-67042
@@ -2914,8 +2926,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 			processMessage(
 				fileName,
-				"LPS-59076: Use @Reference instead of calling " +
-					serviceUtilClassName + " directly");
+				"Use @Reference instead of calling " + serviceUtilClassName +
+					" directly, see LPS-59076");
 		}
 
 		matcher = _referenceMethodPattern.matcher(content);

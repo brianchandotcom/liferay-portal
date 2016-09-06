@@ -95,7 +95,7 @@ public class ASMWrapperUtil {
 		for (Method method : interfaceClass.getMethods()) {
 			try {
 				commonMethods.add(
-					delegateObjectClass.getDeclaredMethod(
+					delegateObjectClass.getMethod(
 						method.getName(), method.getParameterTypes()));
 			}
 			catch (NoSuchMethodException nsme) {

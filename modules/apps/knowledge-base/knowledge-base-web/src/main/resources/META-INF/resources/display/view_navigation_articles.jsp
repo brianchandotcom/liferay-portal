@@ -67,7 +67,7 @@ for (KBArticle childKBArticle : childKBArticles) {
 
 			<a class="<%= childKBArticleClass %>" href="<%= viewChildURL %>"><%= HtmlUtil.escape(childKBArticle.getTitle()) %></a>
 
-			<c:if test="<%= (parentResourcePrimKey != kbArticle.getResourcePrimKey()) && !maxNestingLevelReached %>">
+			<c:if test="<%= (parentResourcePrimKey != kbArticle.getResourcePrimKey()) && !maxNestingLevelReached && ancestorResourcePrimaryKeys.contains(childKBArticle.getResourcePrimKey()) %>">
 
 				<%
 				request.setAttribute("level", level + 1);

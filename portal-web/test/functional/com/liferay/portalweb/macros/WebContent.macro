@@ -376,24 +376,6 @@
 		</if>
 	</command>
 
-	<command name="addTranslationPGViaWCD">
-		<execute function="Click" locator1="Translation#ADD" />
-
-		<var name="key_localizedLanguage" value="${webContentTranslationLanguage}" />
-
-		<execute function="AssertClick" locator1="MenuItem#WEB_CONTENT_LANGUAGE" value1="${webContentTranslationLanguage}" />
-
-		<execute function="Type" locator1="TextInput#TITLE" value1="${webContentTranslationTitle}" />
-
-		<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${webContentTranslationContent}" />
-
-		<execute function="AssertTextEquals" locator1="Translation#AVAILABLE_TRANSLATION" value1="${webContentTranslationLanguage}" />
-
-		<execute function="AssertClick#pauseAssertTextClickAt" locator1="Button#PUBLISH" value1="Publish" />
-
-		<execute function="SelectFrame" value1="relative=top" />
-	</command>
-
 	<command name="addViaCKEditor">
 		<execute function="Type#mouseOverFocusType" locator1="TextInput#TITLE" value1="${webContentTitle}" />
 

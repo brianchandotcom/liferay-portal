@@ -113,7 +113,7 @@ String kbArticleDisplayStyle = kbSectionPortletInstanceConfiguration.kbArticleDi
 		%>
 
 		<div class="alert alert-info">
-			<%= LanguageUtil.format(request, "please-input-a-list-of-comma-delimited-words-for-portlet-property-x-to-enable-this-portlet", "admin.kb.article.sections", false) %>
+			<%= LanguageUtil.get(resourceBundle, "please-configure-the-list-of-available-sections-in-system-settings-collaboration-knowledge-base-to-enable-this-portlet") %>
 		</div>
 	</c:otherwise>
 </c:choose>

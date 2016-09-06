@@ -35,6 +35,8 @@ public class SourceFormatterArgs {
 
 	public static final String GIT_WORKING_BRANCH_NAME = "master";
 
+	public static final boolean INCLUDE_SUBREPOSITORIES = false;
+
 	public static final int MAX_LINE_LENGTH = 80;
 
 	public static final String OUTPUT_KEY_MODIFIED_FILES =
@@ -90,6 +92,10 @@ public class SourceFormatterArgs {
 
 	public boolean isFormatLocalChanges() {
 		return _formatLocalChanges;
+	}
+
+	public boolean isIncludeSubrepositories() {
+		return _includeSubrepositories;
 	}
 
 	public boolean isPrintErrors() {
@@ -153,6 +159,10 @@ public class SourceFormatterArgs {
 		_gitWorkingBranchName = gitWorkingBranchName;
 	}
 
+	public void setIncludeSubrepositories(boolean includeSubrepositories) {
+		_includeSubrepositories = includeSubrepositories;
+	}
+
 	public void setMaxLineLength(int maxLineLength) {
 		_maxLineLength = maxLineLength;
 	}
@@ -185,6 +195,7 @@ public class SourceFormatterArgs {
 	private boolean _formatLatestAuthor = FORMAT_LATEST_AUTHOR;
 	private boolean _formatLocalChanges = FORMAT_LOCAL_CHANGES;
 	private String _gitWorkingBranchName = GIT_WORKING_BRANCH_NAME;
+	private boolean _includeSubrepositories = INCLUDE_SUBREPOSITORIES;
 	private int _maxLineLength = MAX_LINE_LENGTH;
 	private boolean _printErrors = PRINT_ERRORS;
 	private int _processorThreadCount = PROCESSOR_THREAD_COUNT;

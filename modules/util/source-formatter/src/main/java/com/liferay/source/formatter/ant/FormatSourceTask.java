@@ -100,6 +100,10 @@ public class FormatSourceTask extends Task {
 		_sourceFormatterArgs.setGitWorkingBranchName(gitWorkingBranchName);
 	}
 
+	public void setIncludeSubrepositories(boolean includeSubrepositories) {
+		_sourceFormatterArgs.setIncludeSubrepositories(includeSubrepositories);
+	}
+
 	public void setMaxLineLength(int maxLineLength) {
 		_sourceFormatterArgs.setMaxLineLength(maxLineLength);
 	}

@@ -1772,7 +1772,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		List<String> allFileNames = getFileNames(
 			sourceFormatterArgs.getBaseDirName(), null, excludes,
-			getIncludes());
+			getIncludes(), true);
 
 		try {
 			for (String fileName : allFileNames) {
@@ -1852,7 +1852,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		List<String> tldFileNames = getFileNames(
 			sourceFormatterArgs.getBaseDirName(), null,
 			new String[] {"**/dependencies/**", "**/util-taglib/**"},
-			new String[] {"**/*.tld"});
+			new String[] {"**/*.tld"}, true);
 
 		outerLoop:
 		for (String tldFileName : tldFileNames) {

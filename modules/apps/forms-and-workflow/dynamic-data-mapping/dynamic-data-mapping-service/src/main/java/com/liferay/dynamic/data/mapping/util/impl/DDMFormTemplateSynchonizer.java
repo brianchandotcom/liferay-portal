@@ -89,16 +89,6 @@ public class DDMFormTemplateSynchonizer {
 				}
 			}
 			else {
-				String fieldType = templateDDMFormField.getType();
-
-				if (fieldType.equals(DDMImpl.TYPE_SELECT) ||
-					fieldType.equals((DDMImpl.TYPE_RADIO))) {
-
-					templateDDMFormField.setProperty(
-						"options",
-						structureDDMFormField.getDDMFormFieldOptions());
-				}
-
 				addRequiredDDMFormFields(
 					structureDDMFormField.getNestedDDMFormFields(),
 					templateDDMFormField.getNestedDDMFormFields());
@@ -126,6 +116,23 @@ public class DDMFormTemplateSynchonizer {
 
 	protected List<DDMTemplate> getDDMFormTemplates() {
 		return _ddmFormTemplates;
+	}
+
+	protected void synchronizeDDMFormFieldOptions(
+		DDMFormField structureDDMFormField, DDMFormField templateDDMFormField) {
+
+		if (structureDDMFormField == null) {
+			return;
+		}
+
+		String fieldType = structureDDMFormField.getType();
+
+		if (fieldType.equals(DDMImpl.TYPE_SELECT) ||
+			fieldType.equals(DDMImpl.TYPE_RADIO)) {
+
+			templateDDMFormField.setDDMFormFieldOptions(
+				structureDDMFormField.getDDMFormFieldOptions());
+		}
 	}
 
 	protected void synchronizeDDMFormFieldRequiredProperty(
@@ -162,6 +169,9 @@ public class DDMFormTemplateSynchonizer {
 
 				continue;
 			}
+
+			synchronizeDDMFormFieldOptions(
+				structureDDMFormFieldsMap.get(name), templateDDMFormField);
 
 			synchronizeDDMFormFieldRequiredProperty(
 				structureDDMFormFieldsMap.get(name), templateDDMFormField,

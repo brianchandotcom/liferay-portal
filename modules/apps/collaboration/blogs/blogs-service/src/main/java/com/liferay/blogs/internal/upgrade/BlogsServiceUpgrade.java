@@ -45,6 +45,6 @@ public class BlogsServiceUpgrade implements UpgradeStepRegistrator {
 		_friendlyURLLocalService = friendlyURLLocalService;
 	}
 
-	private final FriendlyURLLocalService _friendlyURLLocalService;
+	private FriendlyURLLocalService _friendlyURLLocalService;
 
 }

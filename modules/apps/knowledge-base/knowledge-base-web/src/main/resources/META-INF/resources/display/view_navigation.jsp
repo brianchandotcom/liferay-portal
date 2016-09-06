@@ -71,15 +71,14 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 				<c:if test="<%= kbArticleExpanded %>">
 
 					<%
-					request.setAttribute("kbArticle", KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
-					request.setAttribute("curKBArticle", curKBArticle);
 					request.setAttribute("ancestorResourcePrimaryKeys", ancestorResourcePrimaryKeys);
+					request.setAttribute("curKBArticle", curKBArticle);
+					request.setAttribute("kbArticle", KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
 					request.setAttribute("kbArticleURLHelper", kbArticleURLHelper);
 					request.setAttribute("level", 1);
 					%>
 
 					<liferay-util:include page="/display/view_child_articles.jsp" servletContext="<%= application %>" />
-
 				</c:if>
 			</li>
 		</ul>

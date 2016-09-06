@@ -84,14 +84,14 @@ for (KBArticle childKBArticle : childKBArticles) {
 
 					<%
 					if (childKBArticleExpanded) {
-						request.setAttribute("kbArticle", KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
-						request.setAttribute("curKBArticle", childKBArticle);
 						request.setAttribute("ancestorResourcePrimaryKeys", ancestorResourcePrimaryKeys);
+						request.setAttribute("curKBArticle", childKBArticle);
+						request.setAttribute("kbArticle", KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
 						request.setAttribute("kbArticleURLHelper", kbArticleURLHelper);
 						request.setAttribute("level", level + 1);
 					%>
 
-					<liferay-util:include page="/display/view_child_articles.jsp" servletContext="<%= application %>" />
+						<liferay-util:include page="/display/view_child_articles.jsp" servletContext="<%= application %>" />
 
 					<%
 					}

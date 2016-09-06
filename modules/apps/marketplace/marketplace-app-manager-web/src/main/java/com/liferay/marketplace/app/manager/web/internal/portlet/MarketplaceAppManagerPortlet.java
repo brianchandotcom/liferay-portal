@@ -368,33 +368,8 @@ public class MarketplaceAppManagerPortlet extends MVCPortlet {
 
 		int responseCode = HttpServletResponse.SC_OK;
 
-		String deploymentContext = ParamUtil.getString(
-			actionRequest, "deploymentContext");
-
 		try {
 			String fileName = null;
-
-			if (Validator.isNotNull(deploymentContext)) {
-				deploymentContext = StringUtil.replace(
-					deploymentContext,
-					new char[] {
-						CharPool.BACK_SLASH, CharPool.PERIOD, CharPool.SLASH
-					},
-					new String[] {
-						StringPool.BLANK, StringPool.BLANK, StringPool.BLANK
-					});
-
-				fileName = _DEPLOY_TO_PREFIX + deploymentContext + ".war";
-			}
-			else {
-				fileName = url.substring(url.lastIndexOf(CharPool.SLASH) + 1);
-
-				int pos = fileName.lastIndexOf(CharPool.PERIOD);
-
-				if (pos != -1) {
-					deploymentContext = fileName.substring(0, pos);
-				}
-			}
 
 			Http.Options options = new Http.Options();
 

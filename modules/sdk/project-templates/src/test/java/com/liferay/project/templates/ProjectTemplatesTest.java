@@ -14,21 +14,15 @@
 
 package com.liferay.project.templates;
 
-import com.liferay.project.templates.internal.util.Validator;
-import com.liferay.project.templates.util.FileTestUtil;
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
 import java.io.Writer;
-
 import java.net.URI;
-
 import java.nio.charset.StandardCharsets;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -40,7 +34,6 @@ import org.gradle.testkit.runner.BuildResult;
 import org.gradle.testkit.runner.BuildTask;
 import org.gradle.testkit.runner.GradleRunner;
 import org.gradle.testkit.runner.TaskOutcome;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Rule;

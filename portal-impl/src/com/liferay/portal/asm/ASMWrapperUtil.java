@@ -20,9 +20,8 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.FieldVisitor;
@@ -85,30 +84,25 @@ public class ASMWrapperUtil {
 		}
 	}
 
-	private static Map<String, List<Method>> _compareMethods(
+	private static List<List<Method>> _computeMethods(
 		Class<?> interfaceClass, Class<?> delegateObjectClass) {
 
-		List<Method> commonMethods = new ArrayList<>();
+		List<Method> delegateMethods = new ArrayList<>();
 
-		List<Method> differentMethods = new ArrayList<>();
+		List<Method> fallbackMethods = new ArrayList<>();
 
 		for (Method method : interfaceClass.getMethods()) {
 			try {
-				commonMethods.add(
+				delegateMethods.add(
 					delegateObjectClass.getMethod(
 						method.getName(), method.getParameterTypes()));
 			}
 			catch (NoSuchMethodException nsme) {
-				differentMethods.add(method);
+				fallbackMethods.add(method);
 			}
 		}
 
-		Map<String, List<Method>> methods = new HashMap<>();
-
-		methods.put(_COMMON_METHODS, commonMethods);
-		methods.put(_DIFFERENT_METHODS, differentMethods);
-
-		return methods;
+		return Arrays.asList(delegateMethods, fallbackMethods);
 	}
 
 	private static <T> byte[] _generateASMWrapperClassData(
@@ -170,20 +164,20 @@ public class ASMWrapperUtil {
 		methodVisitor.visitMaxs(0, 0);
 		methodVisitor.visitEnd();
 
-		Map<String, List<Method>> methods = _compareMethods(
+		List<List<Method>> methods = _computeMethods(
 			interfaceClass, delegateObjectClass);
 
-		for (Method method : methods.get(_COMMON_METHODS)) {
+		for (Method delegateMethod : methods.get(0)) {
 			_generateMethod(
-				classWriter, method, asmWrapperClassBinaryName, "_delegate",
-				delegateObjectClassDescriptor,
+				classWriter, delegateMethod, asmWrapperClassBinaryName,
+				"_delegate", delegateObjectClassDescriptor,
 				_getClassBinaryName(delegateObjectClass));
 		}
 
-		for (Method method : methods.get(_DIFFERENT_METHODS)) {
+		for (Method fallbackMethod : methods.get(1)) {
 			_generateMethod(
-				classWriter, method, asmWrapperClassBinaryName, "_default",
-				defaultObjectClassDescriptor,
+				classWriter, fallbackMethod, asmWrapperClassBinaryName,
+				"_default", defaultObjectClassDescriptor,
 				_getClassBinaryName(defaultObject.getClass()));
 		}
 
@@ -296,9 +290,5 @@ public class ASMWrapperUtil {
 
 	private ASMWrapperUtil() {
 	}
-
-	private static final String _COMMON_METHODS = "common_methods";
-
-	private static final String _DIFFERENT_METHODS = "different_methods";
 
 }

@@ -35,15 +35,9 @@ for (KBArticle childKBArticle : childKBArticles) {
 		<li>
 
 			<%
-			boolean childKBArticleSelected = false;
-
-			if (childKBArticle.getResourcePrimKey() == kbArticle.getResourcePrimKey()) {
-				childKBArticleSelected = true;
-			}
-
 			boolean childKBArticleExpanded = false;
 
-			if ((ancestorResourcePrimaryKeys.size() > 1) && (childKBArticle.getResourcePrimKey() == ancestorResourcePrimaryKeys.get(level))) {
+			if ((ancestorResourcePrimaryKeys.size() > 1) && (level < ancestorResourcePrimaryKeys.size()) && (childKBArticle.getResourcePrimKey() == ancestorResourcePrimaryKeys.get(level))) {
 				childKBArticleExpanded = true;
 			}
 
@@ -59,43 +53,15 @@ for (KBArticle childKBArticle : childKBArticles) {
 
 			<a class="<%= childKBArticleClass %>" href="<%= viewChildURL %>"><%= HtmlUtil.escape(childKBArticle.getTitle()) %></a>
 
-			<c:choose>
-				<c:when test="<%= childKBArticleSelected %>">
+			<c:if test="<%= parentResourcePrimKey != kbArticle.getResourcePrimKey() %>">
 
-					<%
-					List<KBArticle> descendantKBArticles = KBArticleServiceUtil.getKBArticles(themeDisplay.getScopeGroupId(), childKBArticle.getResourcePrimKey(), WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS, QueryUtil.ALL_POS, new KBArticlePriorityComparator(true));
+				<%
+				request.setAttribute("level", level + 1);
+				request.setAttribute("parentResourcePrimKey", childKBArticle.getResourcePrimKey());
+				%>
 
-					for (KBArticle descendantKBArticle : descendantKBArticles) {
-						PortletURL viewCurKBArticleURL = kbArticleURLHelper.createViewURL(descendantKBArticle);
-					%>
-
-						<ul>
-							<li>
-								<a href="<%= viewCurKBArticleURL %>"><%= HtmlUtil.escape(descendantKBArticle.getTitle()) %></a>
-							</li>
-						</ul>
-
-					<%
-					}
-					%>
-
-				</c:when>
-				<c:otherwise>
-
-					<%
-					if (childKBArticleExpanded) {
-						request.setAttribute("parentResourcePrimKey", childKBArticle.getResourcePrimKey());
-						request.setAttribute("level", level + 1);
-					%>
-
-						<liferay-util:include page="/display/view_child_articles.jsp" servletContext="<%= application %>" />
-
-					<%
-					}
-					%>
-
-				</c:otherwise>
-			</c:choose>
+				<liferay-util:include page="/display/view_child_articles.jsp" servletContext="<%= application %>" />
+			</c:if>
 		</li>
 	</ul>
 

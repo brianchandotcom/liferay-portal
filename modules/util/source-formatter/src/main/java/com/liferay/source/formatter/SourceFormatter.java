@@ -123,6 +123,13 @@ public class SourceFormatter {
 				sourceFormatterArgs.setFileNames(Arrays.asList(fileNames));
 			}
 
+			boolean includeSubrepositories = ArgumentsUtil.getBoolean(
+				arguments, "include.subrepositories",
+				SourceFormatterArgs.INCLUDE_SUBREPOSITORIES);
+	
+			sourceFormatterArgs.setIncludeSubrepositories(
+				includeSubrepositories);
+
 			int maxLineLength = ArgumentsUtil.getInteger(
 				arguments, "max.line.length",
 				SourceFormatterArgs.MAX_LINE_LENGTH);

@@ -581,6 +581,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 			<arg value="format.latest.author=${format.latest.author}" />
 			<arg value="format.local.changes=${format.local.changes}" />
 			<arg value="git.working.branch.name=${git.working.branch.name}" />
+			<arg value="include.subrepositories=${source.formatter.include.subrepositories}" />
 			<arg value="max.line.length=${source.formatter.max.line.length}" />
 			<arg value="processor.thread.count=${source.formatter.processor.thread.count}" />
 			<arg value="source.auto.fix=${source.auto.fix}" />

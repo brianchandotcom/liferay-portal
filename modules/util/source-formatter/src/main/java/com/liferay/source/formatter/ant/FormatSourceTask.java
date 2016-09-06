@@ -96,6 +96,10 @@ public class FormatSourceTask extends Task {
 		_sourceFormatterArgs.setFormatLocalChanges(formatLocalChanges);
 	}
 
+	public void setIncludeSubrepositories(boolean includeSubrepositories) {
+		_sourceFormatterArgs.setIncludeSubrepositories(includeSubrepositories);
+	}
+
 	public void setGitWorkingBranchName(String gitWorkingBranchName) {
 		_sourceFormatterArgs.setGitWorkingBranchName(gitWorkingBranchName);
 	}

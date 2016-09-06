@@ -109,6 +109,10 @@ public class FormatSourceTask extends JavaExec {
 		return _sourceFormatterArgs.isFormatLocalChanges();
 	}
 
+	public boolean isIncludeSubrepositories() {
+		return _sourceFormatterArgs.isIncludeSubrepositories();
+	}
+
 	public boolean isPrintErrors() {
 		return _sourceFormatterArgs.isPrintErrors();
 	}
@@ -158,6 +162,10 @@ public class FormatSourceTask extends JavaExec {
 		_sourceFormatterArgs.setGitWorkingBranchName(gitWorkingBranchName);
 	}
 
+	public void setIncludeSubrepositories(boolean includeSubrepositories) {
+		_sourceFormatterArgs.setIncludeSubrepositories(includeSubrepositories);
+	}
+
 	public void setMaxLineLength(int maxLineLength) {
 		_sourceFormatterArgs.setMaxLineLength(maxLineLength);
 	}
@@ -185,6 +193,7 @@ public class FormatSourceTask extends JavaExec {
 		args.add("format.latest.author=" + isFormatLatestAuthor());
 		args.add("format.local.changes=" + isFormatLocalChanges());
 		args.add("git.working.branch.name=" + getGitWorkingBranchName());
+		args.add("include.subrepositories=" + isIncludeSubrepositories());
 		args.add("max.line.length=" + getMaxLineLength());
 		args.add("processor.thread.count=" + getProcessorThreadCount());
 		args.add("source.auto.fix=" + isAutoFix());

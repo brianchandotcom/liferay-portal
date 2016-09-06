@@ -51,6 +51,15 @@ public class SourceFormatterDefaultsPlugin
 			formatSourceTask.setGitWorkingBranchName(gitWorkingBranchName);
 		}
 
+		String includeSubrepositories = GradleUtil.getProperty(
+			formatSourceTask.getProject(),
+			"source.formatter.include.subrepositories", (String)null);
+
+		if (Validator.isNotNull(includeSubrepositories)) {
+			formatSourceTask.setIncludeSubrepositories(
+				Boolean.parseBoolean(includeSubrepositories));
+		}
+
 		String maxLineLength = GradleUtil.getProperty(
 			formatSourceTask.getProject(), "source.formatter.max.line.length",
 			(String)null);

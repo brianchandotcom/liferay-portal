@@ -24,6 +24,7 @@ import com.liferay.calendar.exporter.CalendarDataHandlerFactory;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.model.CalendarBookingConstants;
+import com.liferay.calendar.model.CalendarResource;
 import com.liferay.calendar.notification.NotificationTemplateType;
 import com.liferay.calendar.notification.NotificationType;
 import com.liferay.calendar.notification.impl.NotificationUtil;
@@ -48,6 +49,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
@@ -1304,11 +1306,20 @@ public class CalendarBookingLocalServiceImpl
 		boolean sendNotification = ParamUtil.getBoolean(
 			serviceContext, "sendNotification", true);
 
-		if (!sendNotification) {
-			return;
-		}
-
 		try {
+			CalendarBooking parentCalendarBooking =
+				calendarBooking.getParentCalendarBooking();
+
+			CalendarResource calendarResource =
+				parentCalendarBooking.getCalendarResource();
+
+			Group group = groupLocalService.getGroup(
+				calendarResource.getGroupId());
+
+			if (!sendNotification || group.isStagingGroup()) {
+				return;
+			}
+
 			User sender = userLocalService.fetchUser(
 				serviceContext.getUserId());
 

@@ -4387,7 +4387,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		File baseDirFile = new File(sourceFormatterArgs.getBaseDirName());
 
-		List<SourceFormatterMessage> sourceFormatterMessages =
+		Set<SourceFormatterMessage> sourceFormatterMessages =
 			CheckStyleUtil.process(
 				_ungeneratedFiles, getAbsolutePath(baseDirFile));
 

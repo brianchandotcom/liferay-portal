@@ -33,9 +33,8 @@ import com.puppycrawl.tools.checkstyle.api.FilterSet;
 import java.io.File;
 import java.io.OutputStream;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 import org.xml.sax.InputSource;
 
@@ -44,7 +43,7 @@ import org.xml.sax.InputSource;
  */
 public class CheckStyleUtil {
 
-	public static List<SourceFormatterMessage> process(
+	public static Set<SourceFormatterMessage> process(
 			Set<File> files, String baseDirAbsolutePath)
 		throws Exception {
 
@@ -87,8 +86,8 @@ public class CheckStyleUtil {
 		return checker;
 	}
 
-	private static final List<SourceFormatterMessage> _sourceFormatterMessages =
-		new ArrayList<>();
+	private static final Set<SourceFormatterMessage> _sourceFormatterMessages =
+		new TreeSet<>();
 
 	private static class SourceFormatterLogger extends DefaultLogger {
 

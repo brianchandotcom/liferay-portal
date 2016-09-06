@@ -54,6 +54,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -151,11 +152,11 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	@Override
-	public List<SourceFormatterMessage> getSourceFormatterMessages() {
-		List<SourceFormatterMessage> sourceFormatterMessages =
-			new ArrayList<>();
+	public Set<SourceFormatterMessage> getSourceFormatterMessages() {
+		Set<SourceFormatterMessage> sourceFormatterMessages =
+			new TreeSet<>();
 
-		for (Map.Entry<String, List<SourceFormatterMessage>> entry :
+		for (Map.Entry<String, Set<SourceFormatterMessage>> entry :
 				_sourceFormatterMessagesMap.entrySet()) {
 
 			sourceFormatterMessages.addAll(entry.getValue());
@@ -171,11 +172,11 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 	@Override
 	public void processMessage(String fileName, String message, int lineCount) {
-		List<SourceFormatterMessage> sourceFormatterMessages =
+		Set<SourceFormatterMessage> sourceFormatterMessages =
 			_sourceFormatterMessagesMap.get(fileName);
 
 		if (sourceFormatterMessages == null) {
-			sourceFormatterMessages = new ArrayList<>();
+			sourceFormatterMessages = new TreeSet<>();
 		}
 
 		sourceFormatterMessages.add(
@@ -2582,7 +2583,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		if (sourceFormatterArgs.isPrintErrors()) {
-			List<SourceFormatterMessage> sourceFormatterMessages =
+			Set<SourceFormatterMessage> sourceFormatterMessages =
 				_sourceFormatterMessagesMap.get(fileName);
 
 			if (sourceFormatterMessages != null) {
@@ -3026,7 +3027,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	private Properties _properties;
 	private List<String> _runOutsidePortalExcludes;
 	private SourceFormatterHelper _sourceFormatterHelper;
-	private Map<String, List<SourceFormatterMessage>>
+	private Map<String, Set<SourceFormatterMessage>>
 		_sourceFormatterMessagesMap = new ConcurrentHashMap<>();
 	private boolean _usePortalCompatImport;
 

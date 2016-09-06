@@ -391,8 +391,23 @@
 			<var name="categoryName" value="Vocabulary1 Category" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 			<var name="webContentContent" value="Web Content1 Content" />
+		</execute>
+
+		<execute macro="WebContent#addTranslation">
+			<var name="localizedContent" value="Netz Content1 Inhalt" />
+			<var name="localizedLanguage" value="German (Germany)" />
+			<var name="localizedTitle" value="Netz Content1 Titel" />
 			<var name="webContentTitle" value="Web Content1 Title" />
 		</execute>
+
+		<execute macro="WebContent#addTranslation">
+			<var name="localizedContent" value="Contenu de Contenu Web1" />
+			<var name="localizedLanguage" value="French (France)" />
+			<var name="localizedTitle" value="Titre de Contenu Web1" />
+			<var name="webContentTitle" value="Web Content1 Title" />
+		</execute>
+
+		<execute macro="PortletEntry#publish" />
 
 		<execute macro="WebContent#viewPGViaWCD">
 			<var name="webContentContent" value="Web Content1 Content" />
@@ -405,32 +420,6 @@
 		<execute macro="WebContent#viewPGViaAP">
 			<var name="webContentContent" value="Web Content1 Content" />
 			<var name="webContentTitle" value="Web Content1 Title" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditPGViaWCD" />
-
-		<execute macro="WebContent#addTranslationPGViaWCD">
-			<var name="lowercaseLanguageCode" value="de" />
-			<var name="webContentContent" value="Web Content1 Content" />
-			<var name="webContentTitle" value="Web Content1 Title" />
-			<var name="webContentTranslationContent" value="Netz Content1 Inhalt" />
-			<var name="webContentTranslationLanguage" value="German (Germany)" />
-			<var name="webContentTranslationTitle" value="Netz Content1 Titel" />
-		</execute>
-
-		<execute macro="WebContentNavigator#gotoEditPGViaWCD" />
-
-		<execute macro="WebContent#addTranslationPGViaWCD">
-			<var name="lowercaseLanguageCode" value="fr" />
-			<var name="webContentContent" value="Web Content1 Content" />
-			<var name="webContentTitle" value="Web Content1 Title" />
-			<var name="webContentTranslationContent" value="Contenu de Contenu Web1" />
-			<var name="webContentTranslationLanguage" value="French (France)" />
-			<var name="webContentTranslationTitle" value="Titre de Contenu Web1" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#configureShowMetadataFieldsPG">

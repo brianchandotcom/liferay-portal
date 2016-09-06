@@ -477,12 +477,14 @@
 
 		<execute macro="WebContentNavigator#gotoEditPGViaWCD" />
 
-		<execute macro="WebContent#addTranslationPGViaWCD">
-			<var name="lowercaseLanguageCode" value="zh" />
-			<var name="webContentTranslationContent" value="世界您好 Content" />
-			<var name="webContentTranslationLanguage" value="Chinese (China)" />
-			<var name="webContentTranslationTitle" value="世界您好 Title" />
+		<execute macro="WebContent#addTranslation">
+			<var name="localizedContent" value="世界您好 Content" />
+			<var name="localizedLanguage" value="Chinese (China)" />
+			<var name="localizedTitle" value="世界您好 Title" />
+			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
+
+		<execute macro="PortletEntry#publish" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Web Content Display Page" />
@@ -943,13 +945,14 @@
 
 		<execute macro="WebContentNavigator#gotoEditPGViaWCD" />
 
-		<execute macro="WebContent#addTranslationPGViaWCD">
-			<var name="languageKey" value="zh_CN" />
-			<var name="lowercaseLanguageCode" value="zh" />
-			<var name="webContentTranslationContent" value="世界您好 Content" />
-			<var name="webContentTranslationLanguage" value="Chinese (China)" />
-			<var name="webContentTranslationTitle" value="世界您好 Title" />
+		<execute macro="WebContent#addTranslation">
+			<var name="localizedContent" value="世界您好 Content" />
+			<var name="localizedLanguage" value="Chinese (China)" />
+			<var name="localizedTitle" value="世界您好 Title" />
+			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
+
+		<execute macro="PortletEntry#publish" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Web Content Display Page" />

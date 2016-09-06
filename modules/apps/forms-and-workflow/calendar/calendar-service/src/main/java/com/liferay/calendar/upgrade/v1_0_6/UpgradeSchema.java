@@ -12,16 +12,22 @@
  * details.
  */
 
-package com.liferay.calendar.model;
+package com.liferay.calendar.upgrade.v1_0_6;
+
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.StringUtil;
 
 /**
- * @author Brian Wing Shun Chan
- * @author Fabio Pezzutto
+ * @author Adam Brandizzi
  */
-public class CalendarBookingConstants {
+public class UpgradeSchema extends UpgradeProcess {
 
-	public static final long PARENT_CALENDAR_BOOKING_ID_DEFAULT = 0;
+	@Override
+	protected void doUpgrade() throws Exception {
+		String template = StringUtil.read(
+			UpgradeSchema.class.getResourceAsStream("dependencies/update.sql"));
 
-	public static final long RECURRING_CALENDAR_BOOKING_ID_DEFAULT = 0;
+		runSQLTemplateString(template, false, false);
+	}
 
 }

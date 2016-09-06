@@ -975,7 +975,7 @@ public class CalendarPortlet extends MVCPortlet {
 			ParamUtil.getString(actionRequest, "exceptionDates"));
 
 		for (String exceptionDate : exceptionDates) {
-			recurrence.addExceptionDate(
+			recurrence.addExceptionJCalendar(
 				JCalendarUtil.getJCalendar(Long.valueOf(exceptionDate)));
 		}
 
@@ -1468,7 +1468,8 @@ public class CalendarPortlet extends MVCPortlet {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		CalendarBooking calendarBooking = null;
+		CalendarBooking calendarBooking =
+			_calendarBookingService.fetchCalendarBooking(calendarBookingId);
 
 		TimeZone timeZone = TimeZoneUtil.getTimeZone(StringPool.UTC);
 
@@ -1487,6 +1488,7 @@ public class CalendarPortlet extends MVCPortlet {
 		if (calendarBookingId <= 0) {
 			calendarBooking = _calendarBookingService.addCalendarBooking(
 				calendar.getCalendarId(), childCalendarIds,
+				CalendarBookingConstants.RECURRING_CALENDAR_BOOKING_ID_DEFAULT,
 				CalendarBookingConstants.PARENT_CALENDAR_BOOKING_ID_DEFAULT,
 				titleMap, descriptionMap, location, startTime, endTime, allDay,
 				RecurrenceSerializer.serialize(recurrence), reminders[0],
@@ -1494,15 +1496,28 @@ public class CalendarPortlet extends MVCPortlet {
 				serviceContext);
 		}
 		else {
-			if (updateInstance) {
-				calendarBooking =
-					_calendarBookingService.updateCalendarBookingInstance(
-						calendarBookingId, instanceIndex,
-						calendar.getCalendarId(), childCalendarIds, titleMap,
-						descriptionMap, location, startTime, endTime, allDay,
-						RecurrenceSerializer.serialize(recurrence),
-						allFollowing, reminders[0], remindersType[0],
-						reminders[1], remindersType[1], serviceContext);
+			if (calendarBooking.isRecurring()) {
+				if (updateInstance) {
+					calendarBooking =
+						_calendarBookingService.updateCalendarBookingInstance(
+							calendarBookingId, instanceIndex,
+							calendar.getCalendarId(), childCalendarIds,
+							titleMap, descriptionMap, location, startTime,
+							endTime, allDay,
+							RecurrenceSerializer.serialize(recurrence),
+							allFollowing, reminders[0], remindersType[0],
+							reminders[1], remindersType[1], serviceContext);
+				}
+				else {
+					calendarBooking =
+						_calendarBookingService.updateRecurringCalendarBooking(
+							calendarBookingId, calendar.getCalendarId(),
+							childCalendarIds, titleMap, descriptionMap,
+							location, startTime, endTime, allDay,
+							RecurrenceSerializer.serialize(recurrence),
+							reminders[0], remindersType[0], reminders[1],
+							remindersType[1], serviceContext);
+				}
 			}
 			else {
 				calendarBooking =

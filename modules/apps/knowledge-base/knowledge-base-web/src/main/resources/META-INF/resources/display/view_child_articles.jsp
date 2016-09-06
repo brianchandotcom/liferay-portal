@@ -24,7 +24,6 @@ List<Long> ancestorResourcePrimaryKeys = (List<Long>)request.getAttribute("ances
 KBArticleURLHelper kbArticleURLHelper = (KBArticleURLHelper)request.getAttribute("kbArticleURLHelper");
 
 int level = GetterUtil.getInteger(request.getAttribute("level"));
-level = level + 1;
 
 List<KBArticle> childKBArticles = KBArticleServiceUtil.getKBArticles(themeDisplay.getScopeGroupId(), curKBArticle.getResourcePrimKey(), WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS, QueryUtil.ALL_POS, new KBArticlePriorityComparator(true));
 
@@ -89,7 +88,7 @@ for (KBArticle childKBArticle : childKBArticles) {
 						request.setAttribute("curKBArticle", childKBArticle);
 						request.setAttribute("ancestorResourcePrimaryKeys", ancestorResourcePrimaryKeys);
 						request.setAttribute("kbArticleURLHelper", kbArticleURLHelper);
-						request.setAttribute("level", level);
+						request.setAttribute("level", level + 1);
 					%>
 
 					<liferay-util:include page="/display/view_child_articles.jsp" servletContext="<%= application %>" />

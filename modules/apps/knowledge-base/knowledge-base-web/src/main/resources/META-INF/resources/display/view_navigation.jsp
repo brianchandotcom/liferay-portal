@@ -27,8 +27,6 @@ long rootResourcePrimKey = kbNavigationDisplayContext.getRootResourcePrimKey();
 
 String pageTitle = kbNavigationDisplayContext.getPageTitle();
 
-int level = 0;
-
 if (Validator.isNotNull(pageTitle)) {
 	PortalUtil.setPageTitle(pageTitle, request);
 }
@@ -77,7 +75,7 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 					request.setAttribute("curKBArticle", curKBArticle);
 					request.setAttribute("ancestorResourcePrimaryKeys", ancestorResourcePrimaryKeys);
 					request.setAttribute("kbArticleURLHelper", kbArticleURLHelper);
-					request.setAttribute("level", level);
+					request.setAttribute("level", 1);
 					%>
 
 					<liferay-util:include page="/display/view_child_articles.jsp" servletContext="<%= application %>" />

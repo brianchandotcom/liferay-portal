@@ -14,7 +14,6 @@
 
 package com.liferay.portal.asm;
 
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.rule.NewEnv;
@@ -22,8 +21,8 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.aspects.ReflectionUtilAdvice;
 import com.liferay.portal.test.rule.AdviseWith;
 import com.liferay.portal.test.rule.AspectJNewEnvTestRule;
-import java.lang.reflect.Constructor;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
@@ -49,8 +48,8 @@ public class ASMWrapperUtilTest {
 	@Test
 	public void testASMWrapper() throws Exception {
 		Object asmWrapper = ASMWrapperUtil.createASMWrapper(
-			ASMWrapperUtilTestInterface.class, new ASMWrapperUtilTestDefault(),
-			new ASMWrapperUtilTestWrapper());
+			ASMWrapperUtilTestInterface.class, new ASMWrapperUtilTestWrapper(),
+			new ASMWrapperUtilTestDefault());
 
 		Class<?> asmWrapperClass = asmWrapper.getClass();
 
@@ -83,8 +82,8 @@ public class ASMWrapperUtilTest {
 	@Test
 	public void testCreateASMWrapper() throws Exception {
 		Object asmWrapper = ASMWrapperUtil.createASMWrapper(
-			ASMWrapperUtilTestInterface.class, new ASMWrapperUtilTestDefault(),
-			new ASMWrapperUtilTestWrapper());
+			ASMWrapperUtilTestInterface.class, new ASMWrapperUtilTestWrapper(),
+			new ASMWrapperUtilTestDefault());
 
 		Class<?> asmWrapperClass = asmWrapper.getClass();
 
@@ -233,7 +232,7 @@ public class ASMWrapperUtilTest {
 	public void testErrorCreateASMWrapper() throws Exception {
 		try {
 			ASMWrapperUtil.createASMWrapper(
-				Object.class, Object.class, new Object());
+				Object.class, new Object(), Object.class);
 
 			Assert.fail();
 		}
@@ -249,8 +248,8 @@ public class ASMWrapperUtilTest {
 		try {
 			ASMWrapperUtil.createASMWrapper(
 				ASMWrapperUtilTestInterface.class,
-				new ASMWrapperUtilTestDefault(),
-				new ASMWrapperUtilTestWrapper());
+				new ASMWrapperUtilTestWrapper(),
+				new ASMWrapperUtilTestDefault());
 
 			Assert.fail();
 		}

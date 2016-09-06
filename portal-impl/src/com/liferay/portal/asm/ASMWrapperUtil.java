@@ -38,16 +38,16 @@ import org.objectweb.asm.Type;
 public class ASMWrapperUtil {
 
 	public static <T> T createASMWrapper(
-		Class<T> wrappedClass, T defaultObject, Object wrapper) {
+		Class<T> interfaceClass, Object delegateObject, T defaultObject) {
 
-		if (!wrappedClass.isInterface()) {
+		if (!interfaceClass.isInterface()) {
 			throw new IllegalArgumentException(
-				wrappedClass + " is not an interface");
+				interfaceClass + " is not an interface");
 		}
 
-		ClassLoader classLoader = wrappedClass.getClassLoader();
+		ClassLoader classLoader = interfaceClass.getClassLoader();
 
-		String asmWrapperClassName = wrappedClass.getName() + "ASMWrapper";
+		String asmWrapperClassName = interfaceClass.getName() + "ASMWrapper";
 
 		Class<?> asmWrapperClass = null;
 
@@ -65,20 +65,21 @@ public class ASMWrapperUtil {
 						byte[].class, int.class, int.class);
 
 					byte[] classData = _generateASMWrapperClassData(
-						wrappedClass, defaultObject, wrapper);
+						interfaceClass, delegateObject, defaultObject);
 
 					asmWrapperClass = (Class<?>)defineClassMethod.invoke(
 						classLoader, asmWrapperClassName, classData, 0,
 						classData.length);
 				}
 
-				Constructor constructor =
+				Constructor<?> constructor =
 					asmWrapperClass.getDeclaredConstructor(
-						wrapper.getClass(), defaultObject.getClass());
+						delegateObject.getClass(), defaultObject.getClass());
 
 				constructor.setAccessible(true);
 
-				return (T)constructor.newInstance(wrapper, defaultObject);
+				return (T)constructor.newInstance(
+					delegateObject, defaultObject);
 			}
 			catch (Throwable t) {
 				throw new RuntimeException(t);
@@ -86,17 +87,17 @@ public class ASMWrapperUtil {
 		}
 	}
 
-	public static Map<String, List<Method>> compareMethods(
-		Class<?> wrappedClass, Class<?> wrapperClass) {
+	private static Map<String, List<Method>> _compareMethods(
+		Class<?> interfaceClass, Class<?> delegateObjectClass) {
 
 		List<Method> commonMethods = new ArrayList<>();
 
 		List<Method> differentMethods = new ArrayList<>();
 
-		for (Method method : wrappedClass.getMethods()) {
+		for (Method method : interfaceClass.getMethods()) {
 			try {
 				commonMethods.add(
-					wrapperClass.getDeclaredMethod(
+					delegateObjectClass.getDeclaredMethod(
 						method.getName(), method.getParameterTypes()));
 			}
 			catch (NoSuchMethodException nsme) {
@@ -113,18 +114,19 @@ public class ASMWrapperUtil {
 	}
 
 	private static <T> byte[] _generateASMWrapperClassData(
-		Class<T> wrappedClass, T defaultObject, Object wrapper) {
+		Class<T> interfaceClass, Object delegateObject, T defaultObject) {
 
-		String wrappedClassBinaryName = _getClassBinaryName(wrappedClass);
+		String interfaceClassBinaryName = _getClassBinaryName(interfaceClass);
 
 		String asmWrapperClassBinaryName =
-			wrappedClassBinaryName + "ASMWrapper";
+			interfaceClassBinaryName + "ASMWrapper";
 
-		Class<?> wrapperClass = wrapper.getClass();
+		Class<?> delegateObjectClass = delegateObject.getClass();
 
-		String wrapperClassDescription = Type.getDescriptor(wrapperClass);
+		String delegateObjectClassDescriptor = Type.getDescriptor(
+			delegateObjectClass);
 
-		String defaultObjectClassDescription = Type.getDescriptor(
+		String defaultObjectClassDescriptor = Type.getDescriptor(
 			defaultObject.getClass());
 
 		ClassWriter classWriter = new ClassWriter(ClassWriter.COMPUTE_MAXS);
@@ -132,24 +134,24 @@ public class ASMWrapperUtil {
 		classWriter.visit(
 			Opcodes.V1_7, Opcodes.ACC_PUBLIC | Opcodes.ACC_SUPER,
 			asmWrapperClassBinaryName, null, _getClassBinaryName(Object.class),
-			new String[] {wrappedClassBinaryName});
+			new String[] {interfaceClassBinaryName});
 
 		FieldVisitor fieldVisitor = classWriter.visitField(
-			Opcodes.ACC_PRIVATE + Opcodes.ACC_FINAL, "_wrapper",
-			wrapperClassDescription, null, null);
+			Opcodes.ACC_PRIVATE + Opcodes.ACC_FINAL, "_delegate",
+			delegateObjectClassDescriptor, null, null);
 
 		fieldVisitor.visitEnd();
 
 		fieldVisitor = classWriter.visitField(
 			Opcodes.ACC_PRIVATE + Opcodes.ACC_FINAL, "_default",
-			defaultObjectClassDescription, null, null);
+			defaultObjectClassDescriptor, null, null);
 		fieldVisitor.visitEnd();
 
 		StringBundler sb = new StringBundler(4);
 
 		sb.append(StringPool.OPEN_PARENTHESIS);
-		sb.append(wrapperClassDescription);
-		sb.append(defaultObjectClassDescription);
+		sb.append(delegateObjectClassDescriptor);
+		sb.append(defaultObjectClassDescriptor);
 		sb.append(")V");
 
 		MethodVisitor methodVisitor = classWriter.visitMethod(
@@ -162,30 +164,31 @@ public class ASMWrapperUtil {
 		methodVisitor.visitVarInsn(Opcodes.ALOAD, 0);
 		methodVisitor.visitVarInsn(Opcodes.ALOAD, 1);
 		methodVisitor.visitFieldInsn(
-			Opcodes.PUTFIELD, asmWrapperClassBinaryName, "_wrapper",
-			wrapperClassDescription);
+			Opcodes.PUTFIELD, asmWrapperClassBinaryName, "_delegate",
+			delegateObjectClassDescriptor);
 		methodVisitor.visitVarInsn(Opcodes.ALOAD, 0);
 		methodVisitor.visitVarInsn(Opcodes.ALOAD, 2);
 		methodVisitor.visitFieldInsn(
 			Opcodes.PUTFIELD, asmWrapperClassBinaryName, "_default",
-			defaultObjectClassDescription);
+			defaultObjectClassDescriptor);
 		methodVisitor.visitInsn(Opcodes.RETURN);
 		methodVisitor.visitMaxs(0, 0);
 		methodVisitor.visitEnd();
 
-		Map<String, List<Method>> methods = compareMethods(
-			wrappedClass, wrapperClass);
+		Map<String, List<Method>> methods = _compareMethods(
+			interfaceClass, delegateObjectClass);
 
 		for (Method method : methods.get(_COMMON_METHODS)) {
 			_generateMethod(
-				classWriter, method, asmWrapperClassBinaryName, "_wrapper",
-				wrapperClassDescription, _getClassBinaryName(wrapperClass));
+				classWriter, method, asmWrapperClassBinaryName, "_delegate",
+				delegateObjectClassDescriptor,
+				_getClassBinaryName(delegateObjectClass));
 		}
 
 		for (Method method : methods.get(_DIFFERENT_METHODS)) {
 			_generateMethod(
 				classWriter, method, asmWrapperClassBinaryName, "_default",
-				defaultObjectClassDescription,
+				defaultObjectClassDescriptor,
 				_getClassBinaryName(defaultObject.getClass()));
 		}
 
@@ -197,7 +200,7 @@ public class ASMWrapperUtil {
 	private static void _generateMethod(
 		ClassWriter classWriter, Method method,
 		String asmWrapperClassBinaryName, String fieldName,
-		String targetClassDescription, String targetClassBinaryName) {
+		String targetClassDescriptor, String targetClassBinaryName) {
 
 		Class<?>[] exceptions = method.getExceptionTypes();
 
@@ -215,7 +218,7 @@ public class ASMWrapperUtil {
 		methodVisitor.visitVarInsn(Opcodes.ALOAD, 0);
 		methodVisitor.visitFieldInsn(
 			Opcodes.GETFIELD, asmWrapperClassBinaryName, fieldName,
-			targetClassDescription);
+			targetClassDescriptor);
 
 		_loadValues(methodVisitor, method.getParameterTypes());
 

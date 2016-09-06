@@ -21,6 +21,7 @@ import com.liferay.item.selector.criteria.upload.criterion.UploadItemSelectorCri
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Ambrín Chaudhary
@@ -38,6 +39,12 @@ public class UploadItemSelectorCriterionHandler
 	@Override
 	protected void activate(BundleContext bundleContext) {
 		super.activate(bundleContext);
+	}
+
+	@Deactivate
+	@Override
+	protected void deactivate() {
+		super.deactivate();
 	}
 
 }

@@ -1,4 +1,9 @@
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+
 dependencies {
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.5"
 	testIntegrationCompile project(":apps:collaboration:item-selector:item-selector-api")
+	testIntegrationCompile project(":apps:collaboration:item-selector:item-selector-criteria-api")
+	testIntegrationCompile project(":apps:collaboration:item-selector:item-selector-web")
 }

@@ -27,7 +27,6 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
 import java.util.Arrays;
-import java.util.Comparator;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -48,8 +47,7 @@ public class ASMWrapperUtilTest {
 	@Test
 	public void testASMWrapper() throws Exception {
 		Object asmWrapper = ASMWrapperUtil.createASMWrapper(
-			ASMWrapperUtilTestInterface.class, new ASMWrapperUtilTestWrapper(),
-			new ASMWrapperUtilTestDefault());
+			TestInterface.class, new TestDelegate(), new TestDefault());
 
 		Class<?> asmWrapperClass = asmWrapper.getClass();
 
@@ -69,10 +67,12 @@ public class ASMWrapperUtilTest {
 
 	@Test
 	public void testConstructor() throws Exception {
-		Class clazz = ASMWrapperUtil.class;
+		Class<ASMWrapperUtil> clazz = ASMWrapperUtil.class;
 
 		Constructor<ASMWrapperUtil> constructor =
 			clazz.getDeclaredConstructor();
+
+		Assert.assertEquals(Modifier.PRIVATE, constructor.getModifiers());
 
 		constructor.setAccessible(true);
 
@@ -82,148 +82,27 @@ public class ASMWrapperUtilTest {
 	@Test
 	public void testCreateASMWrapper() throws Exception {
 		Object asmWrapper = ASMWrapperUtil.createASMWrapper(
-			ASMWrapperUtilTestInterface.class, new ASMWrapperUtilTestWrapper(),
-			new ASMWrapperUtilTestDefault());
+			TestInterface.class, new TestDelegate(), new TestDefault());
 
 		Class<?> asmWrapperClass = asmWrapper.getClass();
 
 		Assert.assertEquals(Modifier.PUBLIC, asmWrapperClass.getModifiers());
 		Assert.assertEquals(
-			ASMWrapperUtilTestInterface.class.getName() + "ASMWrapper",
+			TestInterface.class.getName() + "ASMWrapper",
 			asmWrapperClass.getName());
 		Assert.assertSame(Object.class, asmWrapperClass.getSuperclass());
 
-		Method[] methods = asmWrapperClass.getDeclaredMethods();
+		Method[] expectedMethods = _getDeclaredMethods(TestInterface.class);
+		Method[] actualMethods = _getDeclaredMethods(asmWrapperClass);
 
-		Assert.assertEquals(10, methods.length);
+		Assert.assertEquals(
+			"Expected: " + Arrays.toString(expectedMethods) + ", actual: " +
+				Arrays.toString(actualMethods),
+			expectedMethods.length, actualMethods.length);
 
-		Arrays.sort(
-			methods,
-			new Comparator<Method>() {
-
-				@Override
-				public int compare(Method method1, Method method2) {
-					String name1 = method1.getName();
-					String name2 = method2.getName();
-
-					return name1.compareTo(name2);
-				}
-
-			});
-
-		Method method = methods[0];
-
-		Assert.assertEquals(Modifier.PUBLIC, method.getModifiers());
-		Assert.assertSame(Boolean.TYPE, method.getReturnType());
-		Assert.assertEquals("booleanMethod", method.getName());
-
-		Class<?>[] parameterTypes = method.getParameterTypes();
-
-		Assert.assertEquals(1, parameterTypes.length);
-		Assert.assertEquals(Boolean.TYPE, parameterTypes[0]);
-
-		method = methods[1];
-
-		Assert.assertEquals(Modifier.PUBLIC, method.getModifiers());
-		Assert.assertSame(Byte.TYPE, method.getReturnType());
-		Assert.assertEquals("byteMethod", method.getName());
-
-		parameterTypes = method.getParameterTypes();
-
-		Assert.assertEquals(1, parameterTypes.length);
-		Assert.assertEquals(Byte.TYPE, parameterTypes[0]);
-
-		method = methods[2];
-
-		Assert.assertEquals(Modifier.PUBLIC, method.getModifiers());
-		Assert.assertSame(Character.TYPE, method.getReturnType());
-		Assert.assertEquals("charMethod", method.getName());
-
-		parameterTypes = method.getParameterTypes();
-
-		Assert.assertEquals(1, parameterTypes.length);
-		Assert.assertEquals(Character.TYPE, parameterTypes[0]);
-
-		method = methods[3];
-
-		Assert.assertEquals(Modifier.PUBLIC, method.getModifiers());
-		Assert.assertSame(Double.TYPE, method.getReturnType());
-		Assert.assertEquals("doubleMethod", method.getName());
-
-		parameterTypes = method.getParameterTypes();
-
-		Assert.assertEquals(1, parameterTypes.length);
-		Assert.assertEquals(Double.TYPE, parameterTypes[0]);
-
-		method = methods[4];
-
-		Assert.assertEquals(Modifier.PUBLIC, method.getModifiers());
-		Assert.assertSame(Float.TYPE, method.getReturnType());
-		Assert.assertEquals("floatMethod", method.getName());
-
-		parameterTypes = method.getParameterTypes();
-
-		Assert.assertEquals(1, parameterTypes.length);
-		Assert.assertEquals(Float.TYPE, parameterTypes[0]);
-
-		method = methods[5];
-
-		Assert.assertEquals(Modifier.PUBLIC, method.getModifiers());
-		Assert.assertSame(Integer.TYPE, method.getReturnType());
-		Assert.assertEquals("intMethod", method.getName());
-
-		parameterTypes = method.getParameterTypes();
-
-		Assert.assertEquals(1, parameterTypes.length);
-		Assert.assertEquals(Integer.TYPE, parameterTypes[0]);
-
-		method = methods[6];
-
-		Assert.assertEquals(Modifier.PUBLIC, method.getModifiers());
-		Assert.assertSame(Long.TYPE, method.getReturnType());
-		Assert.assertEquals("longMethod", method.getName());
-
-		parameterTypes = method.getParameterTypes();
-
-		Assert.assertEquals(1, parameterTypes.length);
-		Assert.assertEquals(Long.TYPE, parameterTypes[0]);
-
-		method = methods[7];
-
-		Assert.assertEquals(Modifier.PUBLIC, method.getModifiers());
-		Assert.assertSame(Object.class, method.getReturnType());
-		Assert.assertEquals("objectMethod", method.getName());
-
-		parameterTypes = method.getParameterTypes();
-
-		Assert.assertEquals(1, parameterTypes.length);
-		Assert.assertEquals(Object.class, parameterTypes[0]);
-
-		method = methods[8];
-
-		Assert.assertEquals(Modifier.PUBLIC, method.getModifiers());
-		Assert.assertSame(Short.TYPE, method.getReturnType());
-		Assert.assertEquals("shortMethod", method.getName());
-
-		parameterTypes = method.getParameterTypes();
-
-		Assert.assertEquals(1, parameterTypes.length);
-		Assert.assertEquals(Short.TYPE, parameterTypes[0]);
-
-		method = methods[9];
-
-		Assert.assertEquals(Modifier.PUBLIC, method.getModifiers());
-		Assert.assertSame(Void.TYPE, method.getReturnType());
-		Assert.assertEquals("voidWithExceptionMethod", method.getName());
-
-		parameterTypes = method.getParameterTypes();
-
-		Assert.assertEquals(0, parameterTypes.length);
-
-		Class<?>[] exceptionTypes = method.getExceptionTypes();
-
-		Assert.assertEquals(1, exceptionTypes.length);
-		Assert.assertEquals(Exception.class, exceptionTypes[0]);
+		for (int i = 0; i < expectedMethods.length; i++) {
+			_assertEquals(expectedMethods[i], actualMethods[i]);
+		}
 	}
 
 	@AdviseWith(adviceClasses = {ReflectionUtilAdvice.class})
@@ -247,9 +126,7 @@ public class ASMWrapperUtilTest {
 
 		try {
 			ASMWrapperUtil.createASMWrapper(
-				ASMWrapperUtilTestInterface.class,
-				new ASMWrapperUtilTestWrapper(),
-				new ASMWrapperUtilTestDefault());
+				TestInterface.class, new TestDelegate(), new TestDefault());
 
 			Assert.fail();
 		}
@@ -260,8 +137,7 @@ public class ASMWrapperUtilTest {
 		ReflectionUtilAdvice.setDeclaredMethodThrowable(null);
 	}
 
-	public static class ASMWrapperUtilTestDefault
-		implements ASMWrapperUtilTestInterface {
+	public static class TestDefault implements TestInterface {
 
 		@Override
 		public boolean booleanMethod(boolean booleanArg) {
@@ -314,7 +190,7 @@ public class ASMWrapperUtilTest {
 
 	}
 
-	public static class ASMWrapperUtilTestWrapper {
+	public static class TestDelegate {
 
 		public Object objectMethod(Object object) {
 			return new Object();
@@ -322,7 +198,7 @@ public class ASMWrapperUtilTest {
 
 	}
 
-	public interface ASMWrapperUtilTestInterface {
+	public interface TestInterface {
 
 		public boolean booleanMethod(boolean booleanArg);
 
@@ -344,6 +220,42 @@ public class ASMWrapperUtilTest {
 
 		public void voidWithExceptionMethod() throws Exception;
 
+	}
+
+	private void _assertEquals(Method expectedMethod, Method actualMethod) {
+		Assert.assertEquals(
+			"Expected:" + expectedMethod + ", actual: " + actualMethod,
+			expectedMethod.getModifiers() - Modifier.ABSTRACT,
+			actualMethod.getModifiers());
+		Assert.assertSame(
+			"Expected:" + expectedMethod + ", actual: " + actualMethod,
+			expectedMethod.getReturnType(), actualMethod.getReturnType());
+		Assert.assertEquals(
+			"Expected:" + expectedMethod + ", actual: " + actualMethod,
+			expectedMethod.getName(), actualMethod.getName());
+		Assert.assertArrayEquals(
+			"Expected:" + expectedMethod + ", actual: " + actualMethod,
+			expectedMethod.getParameterTypes(),
+			actualMethod.getParameterTypes());
+		Assert.assertArrayEquals(
+			"Expected:" + expectedMethod + ", actual: " + actualMethod,
+			expectedMethod.getExceptionTypes(),
+			actualMethod.getExceptionTypes());
+	}
+
+	private Method[] _getDeclaredMethods(Class<?> clazz) {
+		Method[] methods = clazz.getDeclaredMethods();
+
+		Arrays.sort(
+			methods,
+			(method1, method2) -> {
+				String name1 = method1.getName();
+				String name2 = method2.getName();
+
+				return name1.compareTo(name2);
+			});
+
+		return methods;
 	}
 
 }

@@ -141,6 +141,26 @@ only the version overrides that differ from the versions specified in the
 `printArtifactPublishCommands` task on a project that does not contain a
 `build.gradle` file.
 
+## 1.2.7 - 2016-09-02
+
+### Changed
+- [LPS-66853]: Update the [Liferay Gradle Plugins] dependency to version 2.0.21.
+
+## 1.2.8 - 2016-09-02
+
+### Changed
+- [LPS-66853]: Update the [Liferay Gradle Plugins] dependency to version 2.0.22.
+
+## 1.2.9 - 2016-09-05
+
+### Changed
+- [LPS-66853]: Update the [Liferay Gradle Plugins] dependency to version 2.0.23.
+
+## 1.2.10 - 2016-09-05
+
+### Changed
+- [LPS-66853]: Update the [Liferay Gradle Plugins] dependency to version 2.0.24.
+
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [LPS-66853]: https://issues.liferay.com/browse/LPS-66853
 [LPS-67023]: https://issues.liferay.com/browse/LPS-67023

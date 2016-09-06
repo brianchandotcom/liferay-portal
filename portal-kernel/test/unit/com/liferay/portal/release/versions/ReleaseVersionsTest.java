@@ -136,10 +136,10 @@ public class ReleaseVersionsTest {
 
 		Assert.assertEquals(bundleSymbolicName, otherBundleSymbolicName);
 
-		String bundleVersion = bndProperties.getProperty(
-			Constants.BUNDLE_VERSION);
-		String otherBundleVersion = otherBndProperties.getProperty(
-			Constants.BUNDLE_VERSION);
+		String bundleVersion = _getVersion(
+			bndBndPath.getParent(), bndProperties);
+		String otherBundleVersion = _getVersion(
+			otherBndBndPath.getParent(), otherBndProperties);
 
 		Version masterVersion;
 		Version releaseVersion;
@@ -180,6 +180,46 @@ public class ReleaseVersionsTest {
 			sb.append(") branches is not allowed");
 
 			Assert.fail(sb.toString());
+		}
+	}
+
+	private String _getVersion(Path dirPath, Properties bndProperties)
+		throws IOException {
+
+		Path versionOverridePath = _getVersionOverrideFile(dirPath);
+
+		if (versionOverridePath != null) {
+			Properties versionOverrides = _loadProperties(versionOverridePath);
+
+			String version = versionOverrides.getProperty(
+				Constants.BUNDLE_VERSION);
+
+			if (Validator.isNotNull(version)) {
+				return version;
+			}
+		}
+
+		return bndProperties.getProperty(Constants.BUNDLE_VERSION);
+	}
+
+	private Path _getVersionOverrideFile(Path dirPath) {
+		Path dirNamePath = dirPath.getFileName();
+
+		String fileName =
+			".version-override-" + dirNamePath.toString() + ".properties";
+
+		while (true) {
+			Path path = dirPath.resolve(fileName);
+
+			if (Files.exists(path)) {
+				return path;
+			}
+
+			dirPath = dirPath.getParent();
+
+			if (dirPath == null) {
+				return null;
+			}
 		}
 	}
 

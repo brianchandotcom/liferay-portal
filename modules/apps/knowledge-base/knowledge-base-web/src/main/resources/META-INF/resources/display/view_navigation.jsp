@@ -73,7 +73,6 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 					<%
 					request.setAttribute("ancestorResourcePrimaryKeys", ancestorResourcePrimaryKeys);
 					request.setAttribute("curKBArticle", curKBArticle);
-					request.setAttribute("kbArticle", KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
 					request.setAttribute("kbArticleURLHelper", kbArticleURLHelper);
 					request.setAttribute("level", 1);
 					%>

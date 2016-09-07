@@ -130,7 +130,7 @@ if (editorOptions != null) {
 </c:if>
 
 <%
-String textareaName = name;
+String textareaName = HtmlUtil.escapeAttribute(name);
 
 String modules = "aui-node-base";
 
@@ -145,7 +145,7 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 	<textarea id="<%= textareaName %>" name="<%= textareaName %>" style="display: none;"></textarea>
 </liferay-util:buffer>
 
-<div class="<%= cssClass %>" id="<%= name %>Container">
+<div class="<%= cssClass %>" id="<%= HtmlUtil.escapeAttribute(name) %>Container">
 	<c:if test="<%= autoCreate %>">
 		<%= editor %>
 	</c:if>
@@ -154,6 +154,10 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 <script type="text/javascript">
 	CKEDITOR.disableAutoInline = true;
 </script>
+
+<%
+name = HtmlUtil.escapeJS(name);
+%>
 
 <aui:script use="<%= modules %>">
 	var getInitialContent = function() {

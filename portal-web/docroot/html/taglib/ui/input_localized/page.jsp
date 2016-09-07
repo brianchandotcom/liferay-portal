@@ -34,26 +34,26 @@
 
 			<aui:script>
 				function <portlet:namespace /><%= randomNamespace %>OnBlurEditor() {
-					Liferay.component('<portlet:namespace /><%= fieldName %>').blur();
+					Liferay.component('<portlet:namespace /><%= HtmlUtil.escapeJS(fieldName) %>').blur();
 				}
 
 				function <portlet:namespace /><%= randomNamespace %>OnChangeEditor() {
-					var inputLocalized = Liferay.component('<portlet:namespace /><%= fieldName %>');
+					var inputLocalized = Liferay.component('<portlet:namespace /><%= HtmlUtil.escapeJS(fieldName) %>');
 
-					var editor = window['<portlet:namespace /><%= fieldName %>'];
+					var editor = window['<portlet:namespace /><%= HtmlUtil.escapeJS(fieldName) %>'];
 
 					inputLocalized.updateInputLanguage(editor.getHTML());
 				}
 
 				function <portlet:namespace /><%= randomNamespace %>OnFocusEditor() {
-					Liferay.component('<portlet:namespace /><%= fieldName %>').focus();
+					Liferay.component('<portlet:namespace /><%= HtmlUtil.escapeJS(fieldName) %>').focus();
 				}
 
 				$('#<portlet:namespace /><%= id %>ContentBox').on(
 					'click',
 					'.palette-item-inner',
 					function() {
-						window['<portlet:namespace /><%= fieldName %>'].focus();
+						window['<portlet:namespace /><%= HtmlUtil.escapeJS(fieldName) %>'].focus();
 					}
 				);
 			</aui:script>
@@ -250,7 +250,7 @@
 					defaultLanguageId: defaultLanguageId,
 
 					<c:if test='<%= type.equals("editor") %>'>
-						editor: window['<portlet:namespace /><%= fieldName %>'],
+						editor: window['<portlet:namespace /><%= HtmlUtil.escapeJS(fieldName) %>'],
 					</c:if>
 
 					fieldPrefix: '<%= fieldPrefix %>',

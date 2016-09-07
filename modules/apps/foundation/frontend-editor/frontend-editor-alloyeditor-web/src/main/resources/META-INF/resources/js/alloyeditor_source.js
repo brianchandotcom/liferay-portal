@@ -294,27 +294,13 @@ AUI.add(
 						instance._isVisible = editorWrapper.hasClass(CSS_SHOW_SOURCE);
 
 						editorSwitch.one('.lexicon-icon').replace(instance._getEditorStateLexiconIcon());
+						editorSwitch.setAttribute('data-title', instance._isVisible ? Liferay.Language.get('editor-view') : Liferay.Language.get('code-view'));
 
 						instance._toggleSourceSwitchFn(
 							{
 								hidden: true
 							}
 						);
-
-						instance._toggleEditorSwitchTooltip(editorSwitch);
-					},
-
-					_toggleEditorSwitchTooltip: function(editorSwitch) {
-
-						if (editorSwitch.hasClass('editor-view')) {
-							editorSwitch.setAttribute('data-title', Liferay.Language.get('editor-view'));
-						}
-						else {
-							editorSwitch.setAttribute('data-title', Liferay.Language.get('code-view'));
-						}
-
-						editorSwitch.toggleClass('code-view');
-						editorSwitch.toggleClass('editor-view');
 					},
 
 					_toggleSourceSwitch: function(editorState) {

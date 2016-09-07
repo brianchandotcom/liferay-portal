@@ -165,7 +165,7 @@ if (editorOptions != null) {
 					<aui:icon cssClass="icon-monospaced" image="moon" markupView="lexicon" />
 				</button>
 
-				<button class="btn btn-default btn-xs lfr-portal-tooltip editor-view" data-title='<%= LanguageUtil.get(resourceBundle, "code-view") %>' id="<%= name %>Switch" type="button">
+				<button class="btn btn-default btn-xs editor-view lfr-portal-tooltip" data-title='<%= LanguageUtil.get(resourceBundle, "code-view") %>' id="<%= name %>Switch" type="button">
 					<aui:icon cssClass="icon-monospaced" image="code" markupView="lexicon" />
 				</button>
 			</div>

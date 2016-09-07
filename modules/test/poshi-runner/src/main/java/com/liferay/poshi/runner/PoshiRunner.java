@@ -266,6 +266,10 @@ public class PoshiRunner {
 							return;
 						}
 						catch (Throwable t) {
+							if (i == _retryCount -1) {
+								throw t;
+							}
+
 							boolean retry = false;
 
 							List<Throwable> throwables = null;

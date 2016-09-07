@@ -53,6 +53,8 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 
 	public static final String SNAPSHOT_PROPERTY_NAME = "snapshot";
 
+	public static final String SNAPSHOT_VERSION_SUFFIX = "-SNAPSHOT";
+
 	public static <T extends Task> T addTask(
 		Project project, String name, Class<T> clazz, boolean overwrite) {
 
@@ -200,7 +202,7 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 	public static boolean isSnapshot(Project project) {
 		String version = String.valueOf(project.getVersion());
 
-		if (version.endsWith(_SNAPSHOT_VERSION_SUFFIX)) {
+		if (version.endsWith(SNAPSHOT_VERSION_SUFFIX)) {
 			return true;
 		}
 
@@ -230,8 +232,8 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 
 		String version = String.valueOf(project.getVersion());
 
-		if (snapshot && !version.endsWith(_SNAPSHOT_VERSION_SUFFIX)) {
-			project.setVersion(version + _SNAPSHOT_VERSION_SUFFIX);
+		if (snapshot && !version.endsWith(SNAPSHOT_VERSION_SUFFIX)) {
+			project.setVersion(version + SNAPSHOT_VERSION_SUFFIX);
 		}
 	}
 
@@ -242,7 +244,5 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 
 		pluginContainer.withType(pluginClass, action);
 	}
-
-	private static final String _SNAPSHOT_VERSION_SUFFIX = "-SNAPSHOT";
 
 }

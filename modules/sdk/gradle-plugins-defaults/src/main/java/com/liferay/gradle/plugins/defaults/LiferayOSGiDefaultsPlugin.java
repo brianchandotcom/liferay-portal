@@ -102,6 +102,8 @@ import org.gradle.api.JavaVersion;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
+import org.gradle.api.artifacts.ComponentSelection;
+import org.gradle.api.artifacts.ComponentSelectionRules;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.artifacts.Dependency;
@@ -110,6 +112,7 @@ import org.gradle.api.artifacts.ModuleDependency;
 import org.gradle.api.artifacts.ProjectDependency;
 import org.gradle.api.artifacts.ResolutionStrategy;
 import org.gradle.api.artifacts.ResolveException;
+import org.gradle.api.artifacts.component.ModuleComponentIdentifier;
 import org.gradle.api.artifacts.dsl.ArtifactHandler;
 import org.gradle.api.artifacts.dsl.DependencyHandler;
 import org.gradle.api.artifacts.dsl.RepositoryHandler;
@@ -518,6 +521,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		configuration.setVisible(false);
 
 		_configureConfigurationNoCache(configuration);
+		_configureConfigurationNoSnapshots(configuration);
 
 		return configuration;
 	}
@@ -2462,6 +2466,33 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		resolutionStrategy.cacheChangingModulesFor(0, TimeUnit.SECONDS);
 		resolutionStrategy.cacheDynamicVersionsFor(0, TimeUnit.SECONDS);
+	}
+
+	private void _configureConfigurationNoSnapshots(
+		Configuration configuration) {
+
+		ResolutionStrategy resolutionStrategy =
+			configuration.getResolutionStrategy();
+
+		ComponentSelectionRules componentSelectionRules =
+			resolutionStrategy.getComponentSelection();
+
+		componentSelectionRules.all(
+			new Action<ComponentSelection>() {
+
+				@Override
+				public void execute(ComponentSelection componentSelection) {
+					ModuleComponentIdentifier moduleComponentIdentifier =
+						componentSelection.getCandidate();
+
+					String version = moduleComponentIdentifier.getVersion();
+
+					if (version.endsWith(GradleUtil.SNAPSHOT_VERSION_SUFFIX)) {
+						componentSelection.reject("no snapshots are allowed");
+					}
+				}
+
+			});
 	}
 
 	private void _configureTaskBaselineSyncReleaseVersions(

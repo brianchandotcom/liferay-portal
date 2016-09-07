@@ -311,6 +311,8 @@ public interface PortletDataContext extends Serializable {
 
 	public long[] getLayoutIds();
 
+	public String getLayoutSetPrototypeUuid();
+
 	public Map<String, Lock> getLocks();
 
 	public ManifestSummary getManifestSummary();
@@ -562,6 +564,8 @@ public interface PortletDataContext extends Serializable {
 	public void setImportDataRootElement(Element importDataRootElement);
 
 	public void setLayoutIds(long[] layoutIds);
+
+	public void setLayoutSetPrototypeUuid(String layoutSetPrototypeUuid);
 
 	public void setManifestSummary(ManifestSummary manifestSummary);
 

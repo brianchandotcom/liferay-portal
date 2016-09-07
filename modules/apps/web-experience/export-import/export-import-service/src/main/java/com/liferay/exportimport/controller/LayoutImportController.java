@@ -514,6 +514,11 @@ public class LayoutImportController implements ImportController {
 				headerElement.attributeValue("type-uuid"));
 		}
 
+		if (Validator.isNotNull(layoutSetPrototypeUuid)) {
+			portletDataContext.setLayoutSetPrototypeUuid(
+				layoutSetPrototypeUuid);
+		}
+
 		List<Element> portletElements = fetchPortletElements(rootElement);
 
 		if (permissions) {

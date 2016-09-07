@@ -56,6 +56,7 @@ import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -68,6 +69,9 @@ import java.util.concurrent.TimeoutException;
 
 import org.apache.commons.lang.time.StopWatch;
 import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDDocumentCatalog;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.common.PDRectangle;
 
 /**
  * @author Alexander Chow
@@ -332,6 +336,42 @@ public class PDFProcessorImpl
 		}
 	}
 
+	private void _addDimensions(List<String> arguments, File file)
+		throws Exception {
+
+		Map<String, Integer> scaledDimensions = _getScaledDimensions(file);
+
+		if ((PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_WIDTH != 0) &&
+			(PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_HEIGHT != 0)) {
+
+			arguments.add(
+				"-dDEVICEWIDTH=" +
+					PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_WIDTH);
+
+			arguments.add(
+				"-dDEVICEHEIGHT=" +
+					PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_HEIGHT);
+		}
+		else if ((PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_WIDTH != 0) &&
+				 (PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_HEIGHT == 0)) {
+
+			arguments.add(
+				"-dDEVICEWIDTH=" +
+					PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_WIDTH);
+
+			arguments.add("-dDEVICEHEIGHT=" + scaledDimensions.get("height"));
+		}
+		else if ((PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_WIDTH == 0) &&
+				 (PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_HEIGHT != 0)) {
+
+			arguments.add("-dDEVICEWIDTH=" + scaledDimensions.get("width"));
+
+			arguments.add(
+				"-dDEVICEHEIGHT=" +
+					PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_HEIGHT);
+		}
+	}
+
 	private void _generateImages(FileVersion fileVersion, File file)
 		throws Exception {
 
@@ -500,17 +540,7 @@ public class PDFProcessorImpl
 		arguments.add("-dGraphicsAlphaBits=4");
 		arguments.add("-r" + PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_DPI);
 
-		if (PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_WIDTH != 0) {
-			arguments.add(
-				"-dDEVICEWIDTH=" +
-					PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_WIDTH);
-		}
-
-		if (PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_HEIGHT != 0) {
-			arguments.add(
-				"-dDEVICEHEIGHT=" +
-					PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_HEIGHT);
-		}
+		_addDimensions(arguments, file);
 
 		arguments.add(file.getPath());
 
@@ -807,6 +837,51 @@ public class PDFProcessorImpl
 		}
 		finally {
 			FileUtil.delete(file);
+		}
+	}
+
+	private Map<String, Integer> _getScaledDimensions(File file)
+		throws Exception {
+
+		PDDocument pdDocument = null;
+
+		try {
+			pdDocument = PDDocument.load(file);
+
+			PDDocumentCatalog pdDocumentCatalog =
+				pdDocument.getDocumentCatalog();
+
+			List<PDPage> pdPages = pdDocumentCatalog.getAllPages();
+
+			PDPage firstPage = pdPages.get(0);
+
+			PDRectangle mediaBox = firstPage.getMediaBox();
+
+			float width = mediaBox.getWidth();
+			float height = mediaBox.getHeight();
+
+			double widthFactor =
+				(double)PropsValues.
+					DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_WIDTH / width;
+
+			double heightFactor =
+				(double)PropsValues.
+					DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_HEIGHT / height;
+
+			int scaledWidth = (int)Math.round(heightFactor * width);
+			int scaledHeight = (int)Math.round(widthFactor * height);
+
+			Map<String, Integer> scaledDimensions = new HashMap<>();
+
+			scaledDimensions.put("width", scaledWidth);
+			scaledDimensions.put("height", scaledHeight);
+
+			return scaledDimensions;
+		}
+		finally {
+			if (pdDocument != null) {
+				pdDocument.close();
+			}
 		}
 	}
 

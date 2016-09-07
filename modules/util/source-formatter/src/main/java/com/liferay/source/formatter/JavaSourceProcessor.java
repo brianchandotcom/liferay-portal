@@ -2474,7 +2474,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 							lineCount);
 					}
 
-					if (!trimmedLine.startsWith("//") && !line.endsWith("{") &&
+					if (!trimmedLine.contains("\t//") && !line.endsWith("{") &&
 						strippedQuotesLine.contains("{") &&
 						!strippedQuotesLine.contains("}")) {
 

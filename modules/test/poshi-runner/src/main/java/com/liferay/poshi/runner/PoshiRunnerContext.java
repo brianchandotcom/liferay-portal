@@ -314,6 +314,14 @@ public class PoshiRunnerContext {
 			properties.setProperty(propertyName, propertyValue);
 		}
 
+		if (Validator.isNotNull(
+				commandElement.attributeValue("known-issues"))) {
+
+			String knownIssues = commandElement.attributeValue("known-issues");
+
+			properties.setProperty("known-issues", knownIssues);
+		}
+
 		if (Validator.isNotNull(commandElement.attributeValue("priority"))) {
 			String priority = commandElement.attributeValue("priority");
 
@@ -1198,6 +1206,7 @@ public class PoshiRunnerContext {
 					StringUtil.split(testCaseAvailablePropertyNames)));
 		}
 
+		_testCaseAvailablePropertyNames.add("known-issues");
 		_testCaseAvailablePropertyNames.add("priority");
 
 		String testCaseRequiredPropertyNames =

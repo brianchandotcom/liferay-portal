@@ -162,7 +162,12 @@ public class SoyTranslationPlugin implements Plugin<Project> {
 
 			sb.append("var ");
 			sb.append(variableName);
-			sb.append(" = Liferay.Language.get('");
+
+			// Split string to avoid SF error
+
+			sb.append(" = Liferay.Language");
+			sb.append(".get('");
+
 			sb.append(_fixLanguageKey(languageKey));
 			sb.append("');");
 

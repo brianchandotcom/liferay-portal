@@ -258,8 +258,6 @@ public class PoshiRunner {
 			return new Statement() {
 				@Override
 				public void evaluate() throws Throwable {
-					Throwable throwable = null;
-
 					for (int i = 0; i < _retryCount; i++) {
 						try {
 							statement.evaluate();
@@ -267,8 +265,6 @@ public class PoshiRunner {
 							return;
 						}
 						catch (MultipleFailureException mfe) {
-							throwable = mfe;
-
 							boolean retry = false;
 
 							for (Class retryClass : _retryClasses) {
@@ -280,13 +276,11 @@ public class PoshiRunner {
 							}
 
 							if (retry == false) {
-								throw throwable;
+								throw mfe;
 							}
 						}
 						catch (Throwable t) {
-							throwable = t;
-
-							boolean retry = false;
+								boolean retry = false;
 
 							for (Class retryClass : _retryClasses) {
 								if (retryClass.isInstance(t)) {
@@ -295,12 +289,10 @@ public class PoshiRunner {
 							}
 
 							if (retry == false) {
-								throw throwable;
+								throw t;
 							}
 						}
 					}
-
-					throw throwable;
 				}
 			};
 		}

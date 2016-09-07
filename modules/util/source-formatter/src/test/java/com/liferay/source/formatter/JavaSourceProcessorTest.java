@@ -203,18 +203,17 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 			new Integer[] {24, 28});
 	}
 
-	/*
 	@Test
 	public void testIncorrectTabs() throws Exception {
 		test(
 			"IncorrectTabs.testjava",
 			new String[] {
-				"Incorrect tab or line break", "Incorrect tab or line break",
-				"Incorrect tab or line break"
+				"There should be a line break after '('",
+				"There should be a line break after '{'",
+				"Line starts with 3 tabs, but should be 4"
 			},
-			new Integer[] {27, 31, 37});
+			new Integer[] {26, 30, 37});
 	}
-	*/
 
 	@Test
 	public void testIncorrectVariableNames() throws Exception {

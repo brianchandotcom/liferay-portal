@@ -51,9 +51,6 @@ import org.openqa.selenium.remote.UnreachableBrowserException;
 @RunWith(Parameterized.class)
 public class PoshiRunner {
 
-	@Rule
-	public Retry retry = new Retry(3, UnreachableBrowserException.class);
-
 	@Parameters(name = "{0}")
 	public static List<String> getList() throws Exception {
 		PoshiRunnerContext.readFiles();
@@ -189,6 +186,9 @@ public class PoshiRunner {
 		}
 	}
 
+	@Rule
+	public Retry retry = new Retry(3, UnreachableBrowserException.class);
+
 	private void _runClassCommandName(String classCommandName)
 		throws Exception {
 
@@ -256,6 +256,7 @@ public class PoshiRunner {
 			final Statement statement, final Description description) {
 
 			return new Statement() {
+
 				@Override
 				public void evaluate() throws Throwable {
 					for (int i = 0; i < _retryCount; i++) {
@@ -280,7 +281,7 @@ public class PoshiRunner {
 							}
 						}
 						catch (Throwable t) {
-								boolean retry = false;
+							boolean retry = false;
 
 							for (Class retryClass : _retryClasses) {
 								if (retryClass.isInstance(t)) {
@@ -294,11 +295,12 @@ public class PoshiRunner {
 						}
 					}
 				}
+
 			};
 		}
 
-		private Class[] _retryClasses;
-		private int _retryCount;
+		private final Class[] _retryClasses;
+		private final int _retryCount;
 
 	}
 

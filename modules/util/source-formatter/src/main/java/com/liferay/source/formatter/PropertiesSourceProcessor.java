@@ -376,7 +376,10 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 				}
 
 				if (pos < previousPos) {
-					processMessage(fileName, "sort", lineCount);
+					processMessage(
+						fileName,
+						"Follow order as in portal-impl/src/portal.properties",
+						lineCount);
 				}
 
 				previousPos = pos;
@@ -437,7 +440,9 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 				if (Validator.isNotNull(previousProperty) &&
 					(previousProperty.compareToIgnoreCase(property) > 0)) {
 
-					processMessage(fileName, "sort", lineCount);
+					processMessage(
+						fileName, "Unsorted property '" + property + "'",
+						lineCount);
 				}
 
 				previousProperty = property;
@@ -554,7 +559,8 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 				if (file == null) {
 					processMessage(
 						fileName,
-						"Incorrect property value: " + propertyFileName);
+						"Property value '" + propertyFileName +
+							"' points to file that does not exist");
 				}
 			}
 		}

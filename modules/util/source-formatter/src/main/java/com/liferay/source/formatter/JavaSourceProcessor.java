@@ -1311,7 +1311,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 				processMessage(
 					fileName,
-					"There should be line break before '" + matcher.group(1) +
+					"There should be a line break before '" + matcher.group(1) +
 						"'",
 					lineCount);
 			}

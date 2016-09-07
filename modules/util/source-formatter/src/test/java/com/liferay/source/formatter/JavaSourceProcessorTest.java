@@ -176,8 +176,8 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 				"There should be a line break after '('",
 				"There should be a line break after '('",
 				"'null) {' should be added to previous line",
-				"There should be line break before 'new Comparator<String>()" +
-					" {'",
+				"There should be a line break before 'new " +
+					"Comparator<String>() {'",
 				"There should be a line break after '},'",
 				"There should be a line break before 'throws'",
 				"There should be a line break before 'throws'",

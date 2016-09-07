@@ -553,7 +553,7 @@ public class BlogsEntryLocalServiceTest {
 	}
 
 	@Test(expected = EntryTitleException.class)
-	public void testPublishEntryWithBlankTitle() throws Exception {
+	public void testPublishWithBlankTitle() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group, _user.getUserId());
 
@@ -563,7 +563,7 @@ public class BlogsEntryLocalServiceTest {
 	}
 
 	@Test(expected = EntryTitleException.class)
-	public void testPublishEntryWithNullTitle() throws Exception {
+	public void testPublishWithNullTitle() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group, _user.getUserId());
 
@@ -573,7 +573,7 @@ public class BlogsEntryLocalServiceTest {
 	}
 
 	@Test(expected = EntryTitleException.class)
-	public void testPublishEntryWithoutTitle() throws Exception {
+	public void testPublishWithoutTitle() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group, _user.getUserId());
 

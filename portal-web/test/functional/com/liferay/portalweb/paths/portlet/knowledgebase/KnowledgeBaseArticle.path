@@ -133,7 +133,7 @@
 <!--EDIT-->
 <tr>
 	<td>EDIT_FRIENDLY_URL_FIELD</td>
-	<td>//input[contains(@id,'knowledge_base_web') and contains(@id, 'AdminPortlet_urlTitle')]</td>
+	<td>//input[contains(@id,'knowledge_base_web') and contains(@id,'urlTitle')]</td>
 	<td></td>
 </tr>
 <tr>

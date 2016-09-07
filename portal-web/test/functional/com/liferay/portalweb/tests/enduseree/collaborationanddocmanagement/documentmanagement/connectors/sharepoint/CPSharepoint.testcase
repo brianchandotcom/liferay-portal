@@ -516,6 +516,8 @@
 			<var name="dmRepositoryName" value="Sharepoint Repository Name" />
 		</execute>
 
+		<execute macro="DMPortlet#setIconView" />
+
 		<execute macro="DMDocument#moveToSubFolderCP">
 			<var name="dmDocumentTitle" value="Document_1.txt" />
 			<var name="dmFolderName" value="Sharepoint Repository Name" />

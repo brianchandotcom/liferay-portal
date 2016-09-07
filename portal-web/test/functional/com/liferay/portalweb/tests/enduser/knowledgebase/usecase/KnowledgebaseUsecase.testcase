@@ -605,6 +605,63 @@
 		</execute>
 	</command>
 
+	<command name="ViewChildArticleViaUserDefinedFriendlyURL" priority="3">
+		<execute macro="Page#add">
+			<var name="pageName" value="Knowledge Base Page" />
+		</execute>
+
+		<execute macro="SitePageNavigator#gotoEditPage">
+			<var name="page" value="Knowledge Base Page" />
+		</execute>
+
+		<execute macro="Page#editPageLayoutColumn">
+			<var name="columnName" value="1 Column" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Knowledge Base Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Knowledge Base Display" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Knowledge Base" />
+		</execute>
+
+		<execute macro="KBArticle#addCP">
+			<var name="kbArticleContent" value="Knowledge Base Article Content" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Knowledge Base Page" />
+		</execute>
+
+		<execute macro="KBArticle#addChildPGViaKBDisplay">
+			<var name="kbArticleContent" value="Child Article Content" />
+			<var name="kbArticleFriendlyURL" value="Friendly URL" />
+			<var name="kbArticleTitle" value="Child Article Title" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Knowledge Base Page" />
+		</execute>
+
+		<execute macro="KBArticle#viewChildArticlePG">
+			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
+			<var name="kbChildArticleContent" value="Child Article Content" />
+			<var name="kbChildArticleTitle" value="Child Article Title" />
+		</execute>
+
+		<execute function="AssertLocation" value1="http://localhost:8080/web/guest/knowledge-base-page/-/knowledge_base/friendly-url" />
+	</command>
+
 	<command name="ViewConfiguredKBArticleWithinFolderViaKBDisplay" priority="3">
 		<execute macro="Page#add">
 			<var name="pageName" value="Knowledge Base Display Page" />

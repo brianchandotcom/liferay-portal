@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>KB_TOOLS</td>
-	<td>//div[@class='kb-tools']//span[contains(.,'${key_kbTool}')]/a/span</td>
+	<td>//div[@class='kb-tools']//span[contains(.,'${key_kbTool}')]</td>
 	<td></td>
 </tr>
 <tr>

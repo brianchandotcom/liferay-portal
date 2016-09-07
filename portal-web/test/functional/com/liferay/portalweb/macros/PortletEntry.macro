@@ -15,6 +15,14 @@
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
+	<command name="publishAndWait">
+		<execute macro="Button#clickPublish" />
+
+		<execute function="Pause" locator1="5000" />
+
+		<execute macro="Alert#viewSuccessMessage" />
+	</command>
+
 	<command name="save">
 		<execute macro="Button#clickSave" />
 

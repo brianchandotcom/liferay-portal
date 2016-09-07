@@ -2005,7 +2005,7 @@
 			<var name="uploadFileName" value="Document_1.jpg" />
 		</execute>
 
-		<execute macro="BlogsEntry#publish" />
+		<execute macro="PortletEntry#publishAndWait" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Blogs Page" />

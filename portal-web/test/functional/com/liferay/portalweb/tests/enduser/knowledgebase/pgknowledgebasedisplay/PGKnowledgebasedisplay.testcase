@@ -216,6 +216,46 @@
 		</for>
 	</command>
 
+	<command name="CancelAddChildArticle" priority="4">
+		<var name="kbArticleContent" value="Knowledge Base Article Content" />
+		<var name="kbArticleTitle" value="Knowledge Base Article Title" />
+		<var name="kbChildArticleContent" value="Child Article Content" />
+		<var name="kbChildArticleTitle" value="Child Article Title" />
+		<var name="pageName" value="Knowledge Base Display Page" />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Knowledge Base" />
+		</execute>
+
+		<execute macro="KBArticle#addCP">
+			<var name="kbArticleContent" value="${kbArticleContent}" />
+			<var name="kbArticleTitle" value="${kbArticleTitle}" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="KBArticle#addChildPGViaKBDisplay">
+			<var name="cancel" value="true" />
+			<var name="kbArticleContent" value="${kbChildArticleContent}" />
+			<var name="kbArticleTitle" value="${kbChildArticleTitle}" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="KBArticle#viewPG">
+			<var name="kbArticleContent" value="Knowledge Base Article Content" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
+		</execute>
+
+		<execute function="AssertElementNotPresent" locator1="KnowledgeBase#HIERARCHY_NAVIGATION_CHILD" />
+	</command>
+
 	<command name="CannotViewDuplicateBreadcrumbsWhenAddingParentArticle" priority="3" >
 		<execute macro="Navigator#openURL" />
 
@@ -324,6 +364,46 @@
 				<var name="socialBookmarkSite" value="${socialBookmarkSites}" />
 			</execute>
 		</for>
+	</command>
+
+	<command name="DeleteChildArticle" priority="4">
+		<var name="kbArticleContent" value="Knowledge Base Article Content" />
+		<var name="kbArticleTitle" value="Knowledge Base Article Title" />
+		<var name="kbChildArticleContent" value="Child Article Content" />
+		<var name="kbChildArticleTitle" value="Child Article Title" />
+		<var name="pageName" value="Knowledge Base Display Page" />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Knowledge Base" />
+		</execute>
+
+		<execute macro="KBArticle#addCP">
+			<var name="kbArticleContent" value="${kbArticleContent}" />
+			<var name="kbArticleTitle" value="${kbArticleTitle}" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="KBArticle#addChildPGViaKBDisplay">
+			<var name="kbArticleContent" value="${kbChildArticleContent}" />
+			<var name="kbArticleTitle" value="${kbChildArticleTitle}" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="KBArticle#viewChildArticlePG">
+			<var name="kbArticleTitle" value="${kbArticleTitle}" />
+			<var name="kbChildArticleContent" value="${kbChildArticleContent}" />
+			<var name="kbChildArticleTitle" value="${kbChildArticleTitle}" />
+		</execute>
+
+		<execute macro="KBArticle#deletePG" />
 	</command>
 
 	<command name="DeleteKBArticleViaKBDisplay" priority="4">

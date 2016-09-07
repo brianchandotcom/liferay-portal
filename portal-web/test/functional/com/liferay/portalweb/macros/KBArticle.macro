@@ -61,7 +61,42 @@
 
 		<execute function="Type#typeEditor" locator1="AlloyEditor#TITLE_FIELD" value1="${kbArticleTitle}" />
 		<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${kbArticleContent}" />
-		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
+
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Configuration" />
+		</execute>
+
+		<if>
+			<isset var="kbArticleFriendlyURL" />
+			<then>
+				<var method="StringUtil#lowerCase('${kbArticleFriendlyURL}')" name="kbArticleTitleFormatted" />
+				<var method="StringUtil#replace('${kbArticleTitleFormatted}', ' ', '-')" name="kbArticleTitleFormatted" />
+
+				<execute function="Type" locator1="KnowledgeBaseArticle#EDIT_FRIENDLY_URL_FIELD" value1="${kbArticleTitleFormatted}" />
+			</then>
+			<else>
+				<var method="StringUtil#lowerCase('${kbArticleTitle}')" name="kbArticleTitleFormatted" />
+				<var method="StringUtil#replace('${kbArticleTitleFormatted}', ' ', '-')" name="kbArticleTitleFormatted" />
+
+				<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#EDIT_FRIENDLY_URL_FIELD" value1="${kbArticleTitleFormatted}" />
+			</else>
+		</if>
+
+		<if>
+			<equals arg1="${cancel}" arg2="true" />
+			<then>
+				<execute macro="Button#clickCancel" />
+			</then>
+			<elseif>
+				<equals arg1="${saveAsDraft}" arg2="true" />
+				<then>
+					<execute macro="Button#clickSaveAsDraft" />
+				</then>
+			</elseif>
+			<else>
+				<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
+			</else>
+		</if>
 	</command>
 
 	<command name="addCP">
@@ -656,7 +691,22 @@
 		<execute function="AssertTextEquals" locator1="Message#INFO" value1="A new version is created automatically if this content is modified." />
 		<execute function="Type#typeEditor" locator1="AlloyEditor#TITLE_FIELD" value1="${kbArticleTitleEdit}" />
 		<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${kbArticleContentEdit}" />
-		<execute macro="PortletEntry#publish" />
+
+		<if>
+			<equals arg1="${cancel}" arg2="true" />
+			<then>
+				<execute macro="Button#clickCancel" />
+			</then>
+			<elseif>
+				<equals arg1="${saveAsDraft}" arg2="true" />
+				<then>
+					<execute macro="Button#clickSaveAsDraft" />
+				</then>
+			</elseif>
+			<else>
+				<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
+			</else>
+		</if>
 	</command>
 
 	<command name="editPGViaLocalizedKBDisplay">

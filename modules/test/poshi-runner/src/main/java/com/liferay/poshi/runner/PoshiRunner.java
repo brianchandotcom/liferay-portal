@@ -28,12 +28,20 @@ import java.util.List;
 
 import org.dom4j.Element;
 
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestRule;
+import org.junit.runner.Description;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
+import org.junit.runners.model.MultipleFailureException;
+import org.junit.runners.model.Statement;
 
 import org.openqa.selenium.WebDriverException;
+import org.openqa.selenium.remote.UnreachableBrowserException;
 
 /**
  * @author Brian Wing Shun Chan
@@ -78,15 +86,18 @@ public class PoshiRunner {
 	}
 
 	public PoshiRunner(String classCommandName) throws Exception {
-		System.out.println();
-		System.out.println("###");
-		System.out.println("### " + classCommandName);
-		System.out.println("###");
-		System.out.println();
-
 		_testClassCommandName = classCommandName;
 		_testClassName = PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
 			_testClassCommandName);
+	}
+
+	@Before
+	public void setUp() throws Exception {
+		System.out.println();
+		System.out.println("###");
+		System.out.println("### " + _testClassCommandName);
+		System.out.println("###");
+		System.out.println();
 
 		PoshiRunnerContext.setTestCaseCommandName(_testClassCommandName);
 		PoshiRunnerContext.setTestCaseName(_testClassName);
@@ -94,24 +105,66 @@ public class PoshiRunner {
 		PoshiRunnerVariablesUtil.clear();
 
 		try {
-			XMLLoggerHandler.generateXMLLog(classCommandName);
+			XMLLoggerHandler.generateXMLLog(_testClassCommandName);
 
 			LoggerUtil.startLogger();
 
 			SeleniumUtil.startSelenium();
+
+			_runSetUp();
 		}
 		catch (WebDriverException wde) {
 			wde.printStackTrace();
 
 			throw wde;
 		}
+		catch (Exception e) {
+			LiferaySeleniumHelper.printJavaProcessStacktrace();
+
+			PoshiRunnerStackTraceUtil.printStackTrace(e.getMessage());
+
+			PoshiRunnerStackTraceUtil.emptyStackTrace();
+
+			e.printStackTrace();
+
+			if (PropsValues.TEST_PAUSE_ON_FAILURE) {
+				LoggerUtil.pauseFailedTest();
+			}
+
+			throw e;
+		}
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		LiferaySeleniumHelper.writePoshiWarnings();
+
+		LoggerUtil.createSummary();
+
+		try {
+			if (!PropsValues.TEST_SKIP_TEAR_DOWN) {
+				_runTearDown();
+			}
+		}
+		catch (Exception e) {
+			PoshiRunnerStackTraceUtil.printStackTrace(e.getMessage());
+
+			PoshiRunnerStackTraceUtil.emptyStackTrace();
+
+			if (PropsValues.TEST_PAUSE_ON_FAILURE) {
+				LoggerUtil.pauseFailedTest();
+			}
+		}
+		finally {
+			LoggerUtil.stopLogger();
+
+			SeleniumUtil.stopSelenium();
+		}
 	}
 
 	@Test
 	public void test() throws Exception {
 		try {
-			_runSetUp();
-
 			_runCommand();
 
 			LiferaySeleniumHelper.assertNoPoshiWarnings();
@@ -129,34 +182,12 @@ public class PoshiRunner {
 				LoggerUtil.pauseFailedTest();
 			}
 
-			throw new Exception(e.getMessage(), e);
-		}
-		finally {
-			LiferaySeleniumHelper.writePoshiWarnings();
-
-			LoggerUtil.createSummary();
-
-			try {
-				if (!PropsValues.TEST_SKIP_TEAR_DOWN) {
-					_runTearDown();
-				}
-			}
-			catch (Exception e) {
-				PoshiRunnerStackTraceUtil.printStackTrace(e.getMessage());
-
-				PoshiRunnerStackTraceUtil.emptyStackTrace();
-
-				if (PropsValues.TEST_PAUSE_ON_FAILURE) {
-					LoggerUtil.pauseFailedTest();
-				}
-			}
-			finally {
-				LoggerUtil.stopLogger();
-
-				SeleniumUtil.stopSelenium();
-			}
+			throw e;
 		}
 	}
+
+	@Rule
+	public Retry retry = new Retry(3, UnreachableBrowserException.class);
 
 	private void _runClassCommandName(String classCommandName)
 		throws Exception {
@@ -213,5 +244,65 @@ public class PoshiRunner {
 
 	private final String _testClassCommandName;
 	private final String _testClassName;
+
+	private class Retry implements TestRule {
+
+		public Retry(int retryCount, Class... retryClasses) {
+			_retryClasses = retryClasses;
+			_retryCount = retryCount;
+		}
+
+		public Statement apply(
+			final Statement statement, final Description description) {
+
+			return new Statement() {
+
+				@Override
+				public void evaluate() throws Throwable {
+					for (int i = 0; i < _retryCount; i++) {
+						try {
+							statement.evaluate();
+
+							return;
+						}
+						catch (Throwable t) {
+							boolean retry = false;
+
+							List<Throwable> throwables = null;
+
+							if (t instanceof MultipleFailureException) {
+								MultipleFailureException mfe =
+									(MultipleFailureException)t;
+
+								throwables = mfe.getFailures();
+							}
+							else {
+								throwables = new ArrayList<>(1);
+
+								throwables.add(t);
+							}
+
+							for (Class retryClass : _retryClasses) {
+								for (Throwable throwable : throwables) {
+									if (retryClass.isInstance(throwable)) {
+										retry = true;
+									}
+								}
+							}
+
+							if (retry == false) {
+								throw t;
+							}
+						}
+					}
+				}
+
+			};
+		}
+
+		private final Class[] _retryClasses;
+		private final int _retryCount;
+
+	}
 
 }

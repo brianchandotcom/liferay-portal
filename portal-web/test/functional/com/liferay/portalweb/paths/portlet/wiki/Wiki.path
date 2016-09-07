@@ -289,7 +289,7 @@
 </tr>
 <tr>
 	<td>COMPARE_VERSIONS_VERSION_ACTIONS</td>
-	<td>//h4[contains(.,'${key_wikiPageVersion}')]/..//span/*[name()='svg'][contains(@class,'icon-ellipsis-v')]</td>
+	<td>//dl[contains(.,'${key_wikiPageVersion}')]/..//div/a/span/*[name()='svg'][contains(@class,'icon-ellipsis-v')]</td>
 	<td></td>
 </tr>
 <tr>

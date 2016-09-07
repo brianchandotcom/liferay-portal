@@ -254,13 +254,13 @@ public class ServletContextHelperRegistrationImpl
 			createContextSelectFilterString());
 		properties.put(
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_NAME,
-			PortletServletWrapper.class.getName());
+			PortletServlet.class.getName());
 		properties.put(
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_PATTERN,
 			"/portlet-servlet/*");
 
 		return _bundleContext.registerService(
-			Servlet.class, new PortletServletWrapper(), properties);
+			Servlet.class, new PortletServlet() {}, properties);
 	}
 
 	protected ServiceRegistration<?>
@@ -415,21 +415,6 @@ public class ServletContextHelperRegistrationImpl
 	private ServiceRegistration<ServletContext> _servletContextRegistration;
 	private final boolean _wabShapedBundle;
 	private final WebXMLDefinition _webXMLDefinition;
-
-	private static class PortletServletWrapper extends HttpServlet {
-
-		@Override
-		protected void service(
-				HttpServletRequest httpServletRequest,
-				HttpServletResponse httpServletResponse)
-			throws IOException, ServletException {
-
-			_servlet.service(httpServletRequest, httpServletResponse);
-		}
-
-		private final Servlet _servlet = new PortletServlet();
-
-	}
 
 	private static class RestrictPortletServletRequestFilter implements Filter {
 

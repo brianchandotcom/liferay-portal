@@ -206,6 +206,96 @@ public class ResourcePermissionServiceHttp {
 		}
 	}
 
+	public static void setResourcePermission(HttpPrincipal httpPrincipal,
+		long groupId, long companyId, java.lang.String name, int scope,
+		long roleId, java.lang.String actionId, java.lang.String[] groupIds)
+		throws java.lang.Exception {
+		try {
+			MethodKey methodKey = new MethodKey(ResourcePermissionServiceUtil.class,
+					"setResourcePermission",
+					_setResourcePermissionParameterTypes5);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					companyId, name, scope, roleId, actionId, groupIds);
+
+			try {
+				TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof java.lang.Exception) {
+					throw (java.lang.Exception)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static void updateViewControlPanelPermission(
+		HttpPrincipal httpPrincipal, long groupId, long companyId,
+		java.lang.String portletId, int scope, long roleId, int roleType,
+		java.lang.String[] groupIds) throws java.lang.Exception {
+		try {
+			MethodKey methodKey = new MethodKey(ResourcePermissionServiceUtil.class,
+					"updateViewControlPanelPermission",
+					_updateViewControlPanelPermissionParameterTypes6);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					companyId, portletId, scope, roleId, roleType, groupIds);
+
+			try {
+				TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof java.lang.Exception) {
+					throw (java.lang.Exception)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static void updateViewRootResourcePermission(
+		HttpPrincipal httpPrincipal, long groupId, long companyId,
+		java.lang.String portletId, int scope, long roleId,
+		java.lang.String[] groupIds) throws java.lang.Exception {
+		try {
+			MethodKey methodKey = new MethodKey(ResourcePermissionServiceUtil.class,
+					"updateViewRootResourcePermission",
+					_updateViewRootResourcePermissionParameterTypes7);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					companyId, portletId, scope, roleId, groupIds);
+
+			try {
+				TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof java.lang.Exception) {
+					throw (java.lang.Exception)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(ResourcePermissionServiceHttp.class);
 	private static final Class<?>[] _addResourcePermissionParameterTypes0 = new Class[] {
 			long.class, long.class, java.lang.String.class, int.class,
@@ -228,5 +318,19 @@ public class ResourcePermissionServiceHttp {
 		new Class[] {
 			long.class, long.class, java.lang.String.class,
 			java.lang.String.class, java.util.Map.class
+		};
+	private static final Class<?>[] _setResourcePermissionParameterTypes5 = new Class[] {
+			long.class, long.class, java.lang.String.class, int.class,
+			long.class, java.lang.String.class, java.lang.String[].class
+		};
+	private static final Class<?>[] _updateViewControlPanelPermissionParameterTypes6 =
+		new Class[] {
+			long.class, long.class, java.lang.String.class, int.class,
+			long.class, int.class, java.lang.String[].class
+		};
+	private static final Class<?>[] _updateViewRootResourcePermissionParameterTypes7 =
+		new Class[] {
+			long.class, long.class, java.lang.String.class, int.class,
+			long.class, java.lang.String[].class
 		};
 }

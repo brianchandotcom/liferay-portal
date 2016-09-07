@@ -726,6 +726,10 @@ public interface ResourcePermissionLocalService extends BaseLocalService,
 		long roleId, long ownerId, java.lang.String[] actionIds)
 		throws PortalException;
 
+	public void setResourcePermission(long companyId, java.lang.String name,
+		int scope, long roleId, java.lang.String actionId,
+		java.lang.String[] groupIds) throws java.lang.Exception;
+
 	/**
 	* Updates the role's permissions at the scope, setting the actions that can
 	* be performed on resources of the type. Existing actions are replaced.
@@ -789,4 +793,12 @@ public interface ResourcePermissionLocalService extends BaseLocalService,
 	public void setResourcePermissions(long companyId, java.lang.String name,
 		int scope, java.lang.String primKey, long roleId,
 		java.lang.String[] actionIds) throws PortalException;
+
+	public void updateViewControlPanelPermission(long companyId,
+		java.lang.String portletId, int scope, long roleId, int roleType,
+		java.lang.String[] groupIds) throws java.lang.Exception;
+
+	public void updateViewRootResourcePermission(long companyId,
+		java.lang.String portletId, int scope, long roleId,
+		java.lang.String[] groupIds) throws java.lang.Exception;
 }

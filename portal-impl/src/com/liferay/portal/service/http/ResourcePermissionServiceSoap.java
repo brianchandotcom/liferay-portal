@@ -214,5 +214,48 @@ public class ResourcePermissionServiceSoap {
 		}
 	}
 
+	public static void setResourcePermission(long groupId, long companyId,
+		java.lang.String name, int scope, long roleId,
+		java.lang.String actionId, java.lang.String[] groupIds)
+		throws RemoteException {
+		try {
+			ResourcePermissionServiceUtil.setResourcePermission(groupId,
+				companyId, name, scope, roleId, actionId, groupIds);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void updateViewControlPanelPermission(long groupId,
+		long companyId, java.lang.String portletId, int scope, long roleId,
+		int roleType, java.lang.String[] groupIds) throws RemoteException {
+		try {
+			ResourcePermissionServiceUtil.updateViewControlPanelPermission(groupId,
+				companyId, portletId, scope, roleId, roleType, groupIds);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void updateViewRootResourcePermission(long groupId,
+		long companyId, java.lang.String portletId, int scope, long roleId,
+		java.lang.String[] groupIds) throws RemoteException {
+		try {
+			ResourcePermissionServiceUtil.updateViewRootResourcePermission(groupId,
+				companyId, portletId, scope, roleId, groupIds);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(ResourcePermissionServiceSoap.class);
 }

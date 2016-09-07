@@ -218,4 +218,43 @@ public class ResourcePermissionServiceImpl
 			roleIdsToActionIds);
 	}
 
+	@Override
+	public void setResourcePermission(
+			long groupId, long companyId, String name, int scope, long roleId,
+			String actionId, String[] groupIds)
+		throws Exception {
+
+		permissionService.checkPermission(
+			groupId, Role.class.getName(), roleId);
+
+		resourcePermissionLocalService.setResourcePermission(
+			companyId, name, scope, roleId, actionId, groupIds);
+	}
+
+	@Override
+	public void updateViewControlPanelPermission(
+			long groupId, long companyId, String portletId, int scope,
+			long roleId, int roleType, String[] groupIds)
+		throws Exception {
+
+		permissionService.checkPermission(
+			groupId, Role.class.getName(), roleId);
+
+		resourcePermissionLocalService.updateViewControlPanelPermission(
+			companyId, portletId, scope, roleId, roleType, groupIds);
+	}
+
+	@Override
+	public void updateViewRootResourcePermission(
+			long groupId, long companyId, String portletId, int scope,
+			long roleId, String[] groupIds)
+		throws Exception {
+
+		permissionService.checkPermission(
+			groupId, Role.class.getName(), roleId);
+
+		resourcePermissionLocalService.updateViewRootResourcePermission(
+			companyId, portletId, scope, roleId, groupIds);
+	}
+
 }

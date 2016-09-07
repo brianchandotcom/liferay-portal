@@ -211,6 +211,31 @@ public class ResourcePermissionServiceUtil {
 			primKey, roleId, actionIds);
 	}
 
+	public static void setResourcePermission(long groupId, long companyId,
+		java.lang.String name, int scope, long roleId,
+		java.lang.String actionId, java.lang.String[] groupIds)
+		throws java.lang.Exception {
+		getService()
+			.setResourcePermission(groupId, companyId, name, scope, roleId,
+			actionId, groupIds);
+	}
+
+	public static void updateViewControlPanelPermission(long groupId,
+		long companyId, java.lang.String portletId, int scope, long roleId,
+		int roleType, java.lang.String[] groupIds) throws java.lang.Exception {
+		getService()
+			.updateViewControlPanelPermission(groupId, companyId, portletId,
+			scope, roleId, roleType, groupIds);
+	}
+
+	public static void updateViewRootResourcePermission(long groupId,
+		long companyId, java.lang.String portletId, int scope, long roleId,
+		java.lang.String[] groupIds) throws java.lang.Exception {
+		getService()
+			.updateViewRootResourcePermission(groupId, companyId, portletId,
+			scope, roleId, groupIds);
+	}
+
 	public static ResourcePermissionService getService() {
 		if (_service == null) {
 			_service = (ResourcePermissionService)PortalBeanLocatorUtil.locate(ResourcePermissionService.class.getName());

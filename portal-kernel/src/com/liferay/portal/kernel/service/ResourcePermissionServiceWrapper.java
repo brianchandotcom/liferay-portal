@@ -204,6 +204,31 @@ public class ResourcePermissionServiceWrapper
 	}
 
 	@Override
+	public void setResourcePermission(long groupId, long companyId,
+		java.lang.String name, int scope, long roleId,
+		java.lang.String actionId, java.lang.String[] groupIds)
+		throws java.lang.Exception {
+		_resourcePermissionService.setResourcePermission(groupId, companyId,
+			name, scope, roleId, actionId, groupIds);
+	}
+
+	@Override
+	public void updateViewControlPanelPermission(long groupId, long companyId,
+		java.lang.String portletId, int scope, long roleId, int roleType,
+		java.lang.String[] groupIds) throws java.lang.Exception {
+		_resourcePermissionService.updateViewControlPanelPermission(groupId,
+			companyId, portletId, scope, roleId, roleType, groupIds);
+	}
+
+	@Override
+	public void updateViewRootResourcePermission(long groupId, long companyId,
+		java.lang.String portletId, int scope, long roleId,
+		java.lang.String[] groupIds) throws java.lang.Exception {
+		_resourcePermissionService.updateViewRootResourcePermission(groupId,
+			companyId, portletId, scope, roleId, groupIds);
+	}
+
+	@Override
 	public ResourcePermissionService getWrappedService() {
 		return _resourcePermissionService;
 	}

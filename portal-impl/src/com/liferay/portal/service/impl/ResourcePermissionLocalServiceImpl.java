@@ -14,6 +14,7 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
@@ -21,6 +22,9 @@ import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.NoSuchResourcePermissionException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.Resource;
 import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -30,19 +34,24 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionUpdateHandler;
 import com.liferay.portal.kernel.security.permission.PermissionUpdateHandlerRegistryUtil;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.ExceptionRetryAcceptor;
+import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.spring.aop.Property;
 import com.liferay.portal.kernel.spring.aop.Retry;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.PortletCategoryKeys;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.service.base.ResourcePermissionLocalServiceBaseImpl;
 import com.liferay.portal.util.PropsValues;
@@ -1115,6 +1124,34 @@ public class ResourcePermissionLocalServiceImpl
 			ResourcePermissionConstants.OPERATOR_SET);
 	}
 
+	@Override
+	public void setResourcePermission(
+			long companyId, String name, int scope, long roleId,
+			String actionId, String[] groupIds)
+		throws Exception {
+
+		if (scope == ResourceConstants.SCOPE_COMPANY) {
+			addResourcePermission(
+				companyId, name, scope, String.valueOf(companyId), roleId,
+				actionId);
+		}
+		else if (scope == ResourceConstants.SCOPE_GROUP_TEMPLATE) {
+			addResourcePermission(
+				companyId, name, scope,
+				String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID), roleId,
+				actionId);
+		}
+		else if (scope == ResourceConstants.SCOPE_GROUP) {
+			for (String curGroupId : groupIds) {
+				removeResourcePermission(
+					companyId, name, scope, curGroupId, roleId, actionId);
+
+				addResourcePermission(
+					companyId, name, scope, curGroupId, roleId, actionId);
+			}
+		}
+	}
+
 	/**
 	 * Updates the role's permissions at the scope, setting the actions that can
 	 * be performed on resources of the type. Existing actions are replaced.
@@ -1199,6 +1236,69 @@ public class ResourcePermissionLocalServiceImpl
 
 		updateResourcePermission(
 			companyId, name, scope, primKey, 0, roleIdsToActionIds);
+	}
+
+	@Override
+	public void updateViewControlPanelPermission(
+			long companyId, String portletId, int scope, long roleId,
+			int roleType, String[] groupIds)
+		throws Exception {
+
+		Portlet portlet = portletLocalService.getPortletById(
+			companyId, portletId);
+
+		if (Validator.isNull(portlet)) {
+			return;
+		}
+
+		String controlPanelCategory = portlet.getControlPanelEntryCategory();
+
+		if (Validator.isNull(controlPanelCategory)) {
+			return;
+		}
+
+		String selResource = null;
+		String actionId = null;
+
+		if (ArrayUtil.contains(PortletCategoryKeys.ALL, controlPanelCategory) &&
+			(roleType == RoleConstants.TYPE_REGULAR)) {
+
+			selResource = PortletKeys.PORTAL;
+			actionId = ActionKeys.VIEW_CONTROL_PANEL;
+		}
+		else if (ArrayUtil.contains(
+					PortletCategoryKeys.SITE_ADMINISTRATION_ALL,
+					controlPanelCategory)) {
+
+			selResource = Group.class.getName();
+			actionId = ActionKeys.VIEW_SITE_ADMINISTRATION;
+		}
+
+		if (selResource != null) {
+			setResourcePermission(
+				companyId, selResource, scope, roleId, actionId, groupIds);
+		}
+	}
+
+	@Override
+	public void updateViewRootResourcePermission(
+			long companyId, String portletId, int scope, long roleId,
+			String[] groupIds)
+		throws Exception {
+
+		String modelResource = ResourceActionsUtil.getPortletRootModelResource(
+			portletId);
+
+		if (modelResource != null) {
+			List<String> actions = ResourceActionsUtil.getModelResourceActions(
+				modelResource);
+
+			if (actions.contains(ActionKeys.VIEW)) {
+				setResourcePermission(
+					companyId, modelResource, scope, roleId, ActionKeys.VIEW,
+					groupIds);
+			}
+		}
 	}
 
 	protected void doUpdateResourcePermission(
@@ -1444,6 +1544,9 @@ public class ResourcePermissionLocalServiceImpl
 			IndexWriterHelperUtil.updatePermissionFields(name, primKey);
 		}
 	}
+
+	@BeanReference(type = PortletLocalService.class)
+	protected PortletLocalService portletLocalService;
 
 	private static final String _FIND_MISSING_RESOURCE_PERMISSIONS =
 		ResourcePermissionLocalServiceImpl.class.getName() +

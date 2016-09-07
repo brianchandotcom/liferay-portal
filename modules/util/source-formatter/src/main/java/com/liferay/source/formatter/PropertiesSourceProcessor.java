@@ -533,7 +533,11 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 				value, StringPool.COMMA);
 
 			for (String propertyFileName : propertyFileNames) {
-				if (propertyFileName.contains(StringPool.STAR)) {
+				if (propertyFileName.contains(StringPool.STAR) ||
+					propertyFileName.endsWith("-ext.properties") ||
+					(portalSource && !hasPrivateAppsDir &&
+					 propertyFileName.contains("/private/apps/"))) {
+
 					continue;
 				}
 
@@ -541,12 +545,6 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 
 				if (pos != -1) {
 					propertyFileName = propertyFileName.substring(0, pos);
-				}
-
-				if (portalSource && !hasPrivateAppsDir &&
-					propertyFileName.contains("/private/apps/")) {
-
-					continue;
 				}
 
 				File file = getFile(propertyFileName, level);

@@ -121,6 +121,12 @@ public class IncorrectWhitespace {
 			newList.add(s);
 		}
 
+		String test = "Hello World";
+
+		for (String s : StringUtil.split(test, ':')) {
+			newList.add(s);
+		}
+
 		return newList;
 	}
 

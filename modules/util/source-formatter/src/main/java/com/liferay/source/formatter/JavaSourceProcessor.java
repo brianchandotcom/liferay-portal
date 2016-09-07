@@ -2466,6 +2466,23 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 						}
 					}
 
+					if (trimmedLine.matches("^[^(].*\\+$") &&
+						(getLevel(trimmedLine) > 0)) {
+
+						processMessage(
+							fileName, "There should be a line break after '('",
+							lineCount);
+					}
+
+					if (!trimmedLine.startsWith("//") && !line.endsWith("{") &&
+						strippedQuotesLine.contains("{") &&
+						!strippedQuotesLine.contains("}")) {
+
+						processMessage(
+							fileName, "There should be a line break after '{'",
+							lineCount);
+					}
+
 					if (previousLine.endsWith(StringPool.OPEN_PARENTHESIS) ||
 						previousLine.endsWith(StringPool.PLUS)) {
 
@@ -2693,20 +2710,36 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 									lineCount);
 							}
 
-							if (Validator.isNotNull(trimmedLine) &&
-								previousLine.endsWith(
-									StringPool.OPEN_CURLY_BRACE) &&
-								!trimmedLine.startsWith(
-									StringPool.CLOSE_CURLY_BRACE) &&
-								((previousLineLeadingTabCount + 1) !=
-									lineLeadingTabCount)) {
+							if (Validator.isNotNull(trimmedLine)) {
+								int expectedTabCount = -1;
 
-								processMessage(
-									fileName,
-									"Line starts with " + lineLeadingTabCount +
-										" tabs, but should be " +
-											(previousLineLeadingTabCount + 1),
-									lineCount);
+								if (previousLine.endsWith(
+										StringPool.OPEN_CURLY_BRACE) &&
+									!trimmedLine.startsWith(
+										StringPool.CLOSE_CURLY_BRACE)) {
+
+									expectedTabCount =
+										previousLineLeadingTabCount + 1;
+								}
+
+								if (previousLine.matches(
+										".*\t(if|for) .*[(:]")) {
+
+									expectedTabCount =
+										previousLineLeadingTabCount + 2;
+								}
+
+								if ((expectedTabCount != -1) &&
+									(lineLeadingTabCount != expectedTabCount)) {
+
+									processMessage(
+										fileName,
+										"Line starts with " +
+											lineLeadingTabCount +
+												" tabs, but should be " +
+													expectedTabCount,
+										lineCount);
+								}
 							}
 
 							if (previousLine.endsWith(StringPool.PERIOD)) {

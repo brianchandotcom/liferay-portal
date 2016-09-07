@@ -277,12 +277,11 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		User user = userPersistence.findByPrimaryKey(userId);
 		long groupId = serviceContext.getScopeGroupId();
-
-		long entryId = counterLocalService.increment();
-
 		int status = WorkflowConstants.STATUS_DRAFT;
 
 		validate(title, urlTitle, content, status);
+
+		long entryId = counterLocalService.increment();
 
 		BlogsEntry entry = blogsEntryPersistence.create(entryId);
 

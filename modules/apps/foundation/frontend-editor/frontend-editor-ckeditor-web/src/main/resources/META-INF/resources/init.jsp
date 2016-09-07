@@ -48,7 +48,7 @@ page import="javax.portlet.PortletResponse" %>
 
 <liferay-theme:defineObjects />
 
-<liferay-frontend:defineObjects overrideResourceBundle="<%= FrontEndEditorResourceBundleUtil.getResourceBundle(locale) %>" />
+<liferay-frontend:defineObjects />
 
 <%
 PortletRequest portletRequest = (PortletRequest)request.getAttribute(JavaConstants.JAVAX_PORTLET_REQUEST);

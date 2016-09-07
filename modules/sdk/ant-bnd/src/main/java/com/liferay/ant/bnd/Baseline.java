@@ -136,6 +136,16 @@ public abstract class Baseline {
 					match = false;
 				}
 
+				Diff packageDiff = info.packageDiff;
+
+				Delta delta = packageDiff.getDelta();
+
+				if (_forceVersionOneOnAddedPackages && (delta == Delta.ADDED) &&
+					bundleInfo.newerVersion.equals(info.newerVersion)) {
+
+					info.suggestedVersion = Version.ONE;
+				}
+
 				String warnings = "-";
 
 				Version newerVersion = info.newerVersion;
@@ -151,10 +161,6 @@ public abstract class Baseline {
 						warnings = "VERSION INCREASE REQUIRED";
 					}
 				}
-
-				Diff packageDiff = info.packageDiff;
-
-				Delta delta = packageDiff.getDelta();
 
 				if (delta == Delta.REMOVED) {
 					warnings = "PACKAGE REMOVED";
@@ -232,6 +238,12 @@ public abstract class Baseline {
 
 	public void setForcePackageInfo(boolean forcePackageInfo) {
 		_forcePackageInfo = forcePackageInfo;
+	}
+
+	public void setForceVersionOneOnAddedPackages(
+		boolean forceVersionOneOnAddedPackages) {
+
+		_forceVersionOneOnAddedPackages = forceVersionOneOnAddedPackages;
 	}
 
 	public void setLogFile(File logFile) {
@@ -485,6 +497,7 @@ public abstract class Baseline {
 
 	private File _bndFile;
 	private boolean _forcePackageInfo;
+	private boolean _forceVersionOneOnAddedPackages = true;
 	private boolean _headerPrinted;
 	private File _logFile;
 	private File _newJarFile;

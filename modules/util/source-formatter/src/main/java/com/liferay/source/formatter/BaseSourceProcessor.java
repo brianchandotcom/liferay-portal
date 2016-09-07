@@ -1335,14 +1335,14 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			return line;
 		}
 
-		String whitespace = matcher.group(1);
+		String whitespace = matcher.group(2);
 
 		if (whitespace.length() > 0) {
 			return line;
 		}
 
-		return line.substring(0, matcher.start(1)) + StringPool.SPACE +
-			line.substring(matcher.start(1));
+		return line.substring(0, matcher.start(2)) + StringPool.SPACE +
+			line.substring(matcher.start(2));
 	}
 
 	protected String formatIncorrectSyntax(
@@ -1526,10 +1526,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			linePart = formatIncorrectSyntax(linePart, " }", "}", false);
 			linePart = formatIncorrectSyntax(linePart, " )", ")", false);
 			linePart = formatIncorrectSyntax(linePart, "( ", "(", false);
-			linePart = formatIncorrectSyntax(linePart, "\\w( ?)=");
-			linePart = formatIncorrectSyntax(linePart, "=( ?)\\w");
-			linePart = formatIncorrectSyntax(linePart, "for \\(.*( ?):");
-			linePart = formatIncorrectSyntax(linePart, "for \\(.*:( ?).+");
+			linePart = formatIncorrectSyntax(linePart, "\\w(( ?)=)");
+			linePart = formatIncorrectSyntax(linePart, "(=( ?))\\w");
+			linePart = formatIncorrectSyntax(linePart, "for \\(.*(( ?):)");
+			linePart = formatIncorrectSyntax(linePart, "for \\(.*(:( ?)).+");
 		}
 
 		if (!linePart.startsWith("##")) {

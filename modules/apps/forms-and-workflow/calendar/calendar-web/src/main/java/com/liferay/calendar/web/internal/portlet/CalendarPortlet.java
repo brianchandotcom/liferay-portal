@@ -53,6 +53,7 @@ import com.liferay.calendar.util.CalendarUtil;
 import com.liferay.calendar.util.JCalendarUtil;
 import com.liferay.calendar.util.RSSUtil;
 import com.liferay.calendar.util.RecurrenceUtil;
+import com.liferay.calendar.web.internal.display.context.CalendarDisplayContext;
 import com.liferay.calendar.web.internal.upgrade.CalendarWebUpgrade;
 import com.liferay.calendar.workflow.CalendarBookingWorkflowConstants;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQLUtil;
@@ -278,6 +279,7 @@ public class CalendarPortlet extends MVCPortlet {
 		throws IOException, PortletException {
 
 		try {
+			setRenderRequestAttributes(renderRequest);
 			getCalendar(renderRequest);
 			getCalendarBooking(renderRequest);
 			getCalendarResource(renderRequest);
@@ -1047,7 +1049,7 @@ public class CalendarPortlet extends MVCPortlet {
 		return false;
 	}
 
-	protected Hits search(long companyId, long userId, String keywords)
+	protected Hits search(ThemeDisplay themeDisplay, String keywords)
 		throws Exception {
 
 		SearchContext searchContext = new SearchContext();
@@ -1056,11 +1058,15 @@ public class CalendarPortlet extends MVCPortlet {
 
 		searchContext.setAttribute(Field.NAME, keywords);
 		searchContext.setAttribute("resourceName", keywords);
-		searchContext.setCompanyId(companyId);
+		searchContext.setCompanyId(themeDisplay.getCompanyId());
 		searchContext.setEnd(SearchContainer.DEFAULT_DELTA);
 		searchContext.setGroupIds(new long[0]);
+
+		Group group = themeDisplay.getScopeGroup();
+
+		searchContext.setIncludeStagingGroups(group.isStagingGroup());
 		searchContext.setStart(0);
-		searchContext.setUserId(userId);
+		searchContext.setUserId(themeDisplay.getUserId());
 
 		Indexer<?> indexer = CalendarSearcher.getInstance();
 
@@ -1233,8 +1239,7 @@ public class CalendarPortlet extends MVCPortlet {
 
 		Set<Calendar> calendarsSet = new LinkedHashSet<>();
 
-		Hits hits = search(
-			themeDisplay.getCompanyId(), themeDisplay.getUserId(), keywords);
+		Hits hits = search(themeDisplay, keywords);
 
 		for (Document document : hits.getDocs()) {
 			long calendarId = GetterUtil.getLong(
@@ -1245,6 +1250,21 @@ public class CalendarPortlet extends MVCPortlet {
 			CalendarResource calendarResource = calendar.getCalendarResource();
 
 			if (calendarResource.isActive()) {
+				Group group = _groupLocalService.getGroup(
+					calendar.getGroupId());
+
+				if (group.hasStagingGroup()) {
+					Group stagingGroup = group.getStagingGroup();
+
+					long stagingGroupId = stagingGroup.getGroupId();
+
+					if (stagingGroupId == themeDisplay.getScopeGroupId()) {
+						calendar =
+							_calendarLocalService.fetchCalendarByUuidAndGroupId(
+								calendar.getUuid(), stagingGroupId);
+					}
+				}
+
 				calendarsSet.add(calendar);
 			}
 		}
@@ -1452,6 +1472,19 @@ public class CalendarPortlet extends MVCPortlet {
 	@Reference(unbind = "-")
 	protected void setGroupLocalService(GroupLocalService groupLocalService) {
 		_groupLocalService = groupLocalService;
+	}
+
+	protected void setRenderRequestAttributes(RenderRequest renderRequest) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		CalendarDisplayContext calendarDisplayContext =
+			new CalendarDisplayContext(
+				_groupLocalService, _calendarService, _calendarLocalService,
+				themeDisplay);
+
+		renderRequest.setAttribute(
+			WebKeys.PORTLET_DISPLAY_CONTEXT, calendarDisplayContext);
 	}
 
 	@Reference(unbind = "-")

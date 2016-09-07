@@ -66,6 +66,7 @@ page import="com.liferay.calendar.util.ColorUtil" %><%@
 page import="com.liferay.calendar.util.JCalendarUtil" %><%@
 page import="com.liferay.calendar.util.RecurrenceUtil" %><%@
 page import="com.liferay.calendar.util.comparator.CalendarNameComparator" %><%@
+page import="com.liferay.calendar.web.internal.display.context.CalendarDisplayContext" %><%@
 page import="com.liferay.calendar.web.internal.search.CalendarResourceDisplayTerms" %><%@
 page import="com.liferay.calendar.web.internal.search.CalendarResourceSearch" %><%@
 page import="com.liferay.calendar.workflow.CalendarBookingWorkflowConstants" %><%@
@@ -205,16 +206,10 @@ long[] calendarIds = StringUtil.split(SessionClicks.get(request, "com.liferay.ca
 
 Calendar defaultCalendar = null;
 
-for (long calendarId : calendarIds) {
-	Calendar calendar = CalendarServiceUtil.fetchCalendar(calendarId);
+CalendarDisplayContext calendarDisplayContext = (CalendarDisplayContext)renderRequest.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-	if (calendar != null) {
-		CalendarResource calendarResource = calendar.getCalendarResource();
-
-		if (calendarResource.isActive()) {
-			otherCalendars.add(calendar);
-		}
-	}
+if (calendarDisplayContext != null) {
+	otherCalendars = calendarDisplayContext.getOtherCalendars(calendarIds);
 }
 
 for (Calendar groupCalendar : groupCalendars) {

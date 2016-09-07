@@ -1,0 +1,96 @@
+{namespace ddm}
+
+/**
+ * Defines the delegated template for the checkbox multiple field.
+ */
+{deltemplate ddm.field autoescape="deprecated-contextual" variant="'checkbox_multiple'"}
+	{call .checkbox_multiple data="all" /}
+{/deltemplate}
+
+/**
+ * Prints the DDM form checkbox multiple field.
+ *
+ * @param? childElementsHTML
+ * @param dir
+ * @param inline
+ * @param label
+ * @param name
+ * @param options
+ * @param readOnly
+ * @param required
+ * @param showAsSwitcher
+ * @param showLabel
+ * @param tip
+ * @param value
+ */
+{template .checkbox_multiple autoescape="deprecated-contextual"}
+	<div class="form-group liferay-ddm-form-field-checkbox-multiple" data-fieldname="{$name}">
+		{if $showLabel}
+			<label for="{$name}">
+				{$label}
+
+				{if $required and length($options) > 1}
+					<span class="icon-asterisk text-warning"></span>
+				{/if}
+			</label>
+
+			{if $tip}
+				<p class="liferay-ddm-form-field-tip">{$tip}</p>
+			{/if}
+		{/if}
+
+		<div class="clearfix checkbox-multiple-options">
+			{foreach $option in $options}
+				{if not $inline}
+					<div>
+				{/if}
+
+				{let $checked}
+					{foreach $currentValue in $value}
+						{if $currentValue == $option.value}
+							checked
+						{/if}
+					{/foreach}
+				{/let}
+
+				{if $showAsSwitcher}
+					<label class="checkbox-default{$inline ? ' checkbox-multiple-switcher-inline' : ''} checkbox-option-{$option.value}" for="{$name}_{$option.value}">
+						<input {$checked} class="hide toggle-switch " {if $readOnly}disabled{/if} id="{$name}_{$option.value}" name="{$name}" type="checkbox" value="{$option.value}" />
+
+						<span aria-hidden="true" class="toggle-switch-bar">
+							<span class="toggle-switch-handle"></span>
+						</span>
+						<span class="toggle-switch-text toggle-switch-text-right">
+							{$option.label}
+
+							{if $required and length($options) == 1}
+								<span class="icon-asterisk text-warning"></span>
+							{/if}
+						</span>
+					</label>
+
+				{else}
+					<label class="checkbox-default{$inline ? ' checkbox-inline' : ''} checkbox-option-{$option.value}" for="{$name}_{$option.value}">
+						<input {$checked} class="field" dir="{$dir}" {if $readOnly}disabled{/if} id="{$name}_{$option.value}" name="{$name}" type="checkbox" value="{$option.value}" /> {$option.label}
+					</label>
+
+					{if $required and length($options) == 1}
+						<span class="icon-asterisk text-warning"></span>
+					{/if}
+				{/if}
+
+				{if not $inline}
+					</div>
+				{/if}
+			{/foreach}
+		</div>
+
+		{if $tip and length($options) == 1}
+			<p class="liferay-ddm-form-field-tip">{$tip}</p>
+		{/if}
+
+		{if $childElementsHTML}
+			{$childElementsHTML|noAutoescape}
+		{/if}
+	</div>
+{/template}

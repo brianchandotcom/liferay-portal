@@ -573,7 +573,7 @@ public class BlogsEntryLocalServiceTest {
 	}
 
 	@Test(expected = EntryTitleException.class)
-	public void testPublishEntryWithWithoutTitle() throws Exception {
+	public void testPublishEntryWithoutTitle() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group, _user.getUserId());
 

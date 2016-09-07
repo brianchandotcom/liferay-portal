@@ -2232,12 +2232,14 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			throw new EntryTitleException("Title is null");
 		}
 
-		int titleMaxLength = ModelHintsUtil.getMaxLength(
-			BlogsEntry.class.getName(), "title");
+		if (Validator.isNotNull(title)) {
+			int titleMaxLength = ModelHintsUtil.getMaxLength(
+				BlogsEntry.class.getName(), "title");
 
-		if (title.length() > titleMaxLength) {
-			throw new EntryTitleException(
-				"Title has more than " + titleMaxLength + " characters");
+			if (title.length() > titleMaxLength) {
+				throw new EntryTitleException(
+					"Title has more than " + titleMaxLength + " characters");
+			}
 		}
 
 		if (Validator.isNotNull(urlTitle)) {

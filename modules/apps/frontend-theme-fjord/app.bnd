@@ -1,12 +1,12 @@
-Liferay-Releng-App-Description: Fjord is a minimalistic theme inspired by existing product sites. It allows you to create an appealing and engaging site to showcase and promote your product. Fjord introduces only the necessary overhead, allowing you to easily build your custom experiences on top of it.<br /><br />The Fjord theme includes these key features:<ul><li>Structures and templates that allow to easily create attractive content for your site</li><li>Configurable social media links</li><li>Configurable full screen navigation</li>
-Liferay-Releng-App-Title: ${liferay.releng.app.title.prefix} Fjord
+Liferay-Releng-App-Description: Fjord is a minimalistic theme inspired by existing product sites. It allows you to create an appealing and engaging site to showcase and promote your product. Fjord introduces only the necessary overhead, allowing you to easily build your custom experiences on top of it.<br /><br />The Fjord theme includes these key features:<ul><li>Structures and templates that allow to easily create attractive content for your site</li><li>Configurable social media links</li><li>Configurable full screen navigation</li></ul>Note: Once this theme is installed, you can access it as a site template through the control panel.
+Liferay-Releng-App-Title: ${liferay.releng.app.title.prefix} Fjord Theme
 Liferay-Releng-Bundle: false
 Liferay-Releng-Category: Themes
 Liferay-Releng-Demo-Url:
 Liferay-Releng-Deprecated: false
 Liferay-Releng-Labs: true
 Liferay-Releng-Marketplace: true
-Liferay-Releng-Portal-Required: true
+Liferay-Releng-Portal-Required: false
 Liferay-Releng-Public: ${liferay.releng.public}
 Liferay-Releng-Restart-Required: false
 Liferay-Releng-Support-Url: http://www.liferay.com

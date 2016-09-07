@@ -177,6 +177,11 @@ only the version overrides that differ from the versions specified in the
 - [LPS-68009]: Reject snapshot artifacts while resolving the `baseline`
 configuration.
 
+## 1.2.14 - 2016-09-07
+
+### Changed
+- [LPS-68014]: Update the [Liferay Gradle Plugins] dependency to version 2.0.27.
+
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [LPS-66853]: https://issues.liferay.com/browse/LPS-66853
 [LPS-67023]: https://issues.liferay.com/browse/LPS-67023
@@ -187,3 +192,4 @@ configuration.
 [LPS-67863]: https://issues.liferay.com/browse/LPS-67863
 [LPS-67996]: https://issues.liferay.com/browse/LPS-67996
 [LPS-68009]: https://issues.liferay.com/browse/LPS-68009
+[LPS-68014]: https://issues.liferay.com/browse/LPS-68014

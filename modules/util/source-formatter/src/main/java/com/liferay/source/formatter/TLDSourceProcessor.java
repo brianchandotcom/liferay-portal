@@ -49,7 +49,7 @@ public class TLDSourceProcessor extends BaseSourceProcessor {
 
 			if (typeName.matches("[A-Z]\\w*")) {
 				processMessage(
-					fileName, "Use fully qualified classType",
+					fileName, "Use fully qualified class name, see LPS-61841",
 					getLineCount(content, matcher.start(1)));
 			}
 			else if (typeName.equals("java.lang.String")) {

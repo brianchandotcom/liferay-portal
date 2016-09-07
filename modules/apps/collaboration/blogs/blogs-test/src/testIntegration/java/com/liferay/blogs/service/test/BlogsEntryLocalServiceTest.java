@@ -534,6 +534,18 @@ public class BlogsEntryLocalServiceTest {
 		testGetOrganizationEntries(false);
 	}
 
+	@Test(expected = EntryTitleException.class)
+	public void testPublishEntryWithWithoutTitle() throws Exception {
+		String title = "";
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group, _user.getUserId());
+
+		BlogsEntryLocalServiceUtil.addEntry(
+			_user.getUserId(), title, RandomTestUtil.randomString(),
+			serviceContext);
+	}
+
 	@Test
 	public void testSubscribe() throws Exception {
 		int initialCount =

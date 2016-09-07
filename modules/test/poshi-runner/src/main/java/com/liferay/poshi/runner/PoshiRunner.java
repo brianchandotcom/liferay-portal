@@ -265,27 +265,28 @@ public class PoshiRunner {
 
 							return;
 						}
-						catch (MultipleFailureException mfe) {
-							boolean retry = false;
-
-							for (Class retryClass : _retryClasses) {
-								for (Throwable failure : mfe.getFailures()) {
-									if (retryClass.isInstance(failure)) {
-										retry = true;
-									}
-								}
-							}
-
-							if (retry == false) {
-								throw mfe;
-							}
-						}
 						catch (Throwable t) {
 							boolean retry = false;
 
+							List<Throwable> throwables = null;
+
+							if (t instanceof MultipleFailureException) {
+								MultipleFailureException mfe =
+									(MultipleFailureException)t;
+
+								throwables = mfe.getFailures();
+							}
+							else {
+								throwables = new ArrayList<>(1);
+
+								throwables.add(t);
+							}
+
 							for (Class retryClass : _retryClasses) {
-								if (retryClass.isInstance(t)) {
-									retry = true;
+								for (Throwable throwable : throwables) {
+									if (retryClass.isInstance(throwable)) {
+										retry = true;
+									}
 								}
 							}
 

@@ -49,10 +49,42 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="unzip-apacheds-instance-custom-blank-password">
+		<sequential>
+			<if>
+				<not>
+					<available file="${apacheds.dir}/instances/${apacheds.instance.blank.password.custom.zip.name}" />
+				</not>
+				<then>
+					<mirrors-get
+						dest="${apacheds.dir}/instances/${apacheds.instance.blank.password.custom.zip.name}"
+						src="http://files.liferay.com/private/apps/apache/apacheds/${apacheds.instance.blank.password.custom.zip.name}"
+						verbose="true"
+					/>
+				</then>
+			</if>
+
+			<unzip
+				dest="${apacheds.dir}/instances"
+				src="${apacheds.dir}/instances/${apacheds.instance.blank.password.custom.zip.name}"
+			/>
+		</sequential>
+	</macrodef>
+
 	<target name="start-apacheds">
 		<unzip-apacheds />
 
-		<unzip-apacheds-instance-custom />
+		<get-testcase-property property.name="apacheds.blank.password.enabled" />
+
+		<if>
+			<equals arg1="${apacheds.blank.password.enabled}" arg2="true" />
+			<then>
+				<unzip-apacheds-instance-custom-blank-password />
+			</then>
+			<else>
+				<unzip-apacheds-instance-custom />
+			</else>
+		</if>
 
 		<if>
 			<os family="unix" />

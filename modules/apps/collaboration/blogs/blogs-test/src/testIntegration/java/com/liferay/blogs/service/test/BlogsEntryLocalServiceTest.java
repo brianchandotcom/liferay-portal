@@ -98,7 +98,27 @@ public class BlogsEntryLocalServiceTest {
 	}
 
 	@Test
-	public void testAddDraftEntryWithoutTitle() throws Exception {
+	public void testAddDraftEntryWithNullTitle() throws Exception {
+		int initialCount = BlogsEntryLocalServiceUtil.getGroupEntriesCount(
+			_group.getGroupId(), _statusAnyQueryDefinition);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group, _user.getUserId());
+
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
+
+		BlogsEntryLocalServiceUtil.addEntry(
+			_user.getUserId(), null, RandomTestUtil.randomString(),
+			serviceContext);
+
+		int actualCount = BlogsEntryLocalServiceUtil.getGroupEntriesCount(
+			_group.getGroupId(), _statusAnyQueryDefinition);
+
+		Assert.assertEquals(initialCount + 1, actualCount);
+	}
+
+	@Test
+	public void testAddDraftEntryWithBlankTitle() throws Exception {
 		int initialCount = BlogsEntryLocalServiceUtil.getGroupEntriesCount(
 			_group.getGroupId(), _statusAnyQueryDefinition);
 
@@ -530,6 +550,26 @@ public class BlogsEntryLocalServiceTest {
 	@Test
 	public void testGetOrganizationEntriesNotInTrash() throws Exception {
 		testGetOrganizationEntries(false);
+	}
+
+	@Test(expected = EntryTitleException.class)
+	public void testPublishEntryWithNullTitle() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group, _user.getUserId());
+
+		BlogsEntryLocalServiceUtil.addEntry(
+			_user.getUserId(), null, RandomTestUtil.randomString(),
+			serviceContext);
+	}
+
+	@Test(expected = EntryTitleException.class)
+	public void testPublishEntryWithBlankTitle() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group, _user.getUserId());
+
+		BlogsEntryLocalServiceUtil.addEntry(
+			_user.getUserId(), StringPool.BLANK, RandomTestUtil.randomString(),
+			serviceContext);
 	}
 
 	@Test(expected = EntryTitleException.class)

@@ -102,6 +102,10 @@ default value is false.
 	portal CDATA #IMPLIED
 >
 
+<!--
+The composite-model-name element groups multiple model names together, which
+generates a dash separated list of model names.
+-->
 <!ELEMENT composite-model-name (model-name+) >
 
 <!--

@@ -252,7 +252,8 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		String projectName = rootElement.attributeValue("name");
 
 		if (!projectName.equals(expectedProjectName)) {
-			processMessage(fileName, "incorrect project name");
+			processMessage(
+				fileName, "Incorrect project name '" + projectName + "'");
 		}
 	}
 
@@ -276,7 +277,8 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 			if (!file.exists()) {
 				processMessage(
-					fileName, "Incorrect import file: " + matcher.group(1));
+					fileName,
+					"Incorrect import file '" + matcher.group(1) + "'");
 			}
 		}
 	}
@@ -670,13 +672,13 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		int y = content.indexOf("<process-ivy");
 
 		if ((y != -1) && (x > y)) {
-			processMessage(fileName, "macrodefs go before process-ivy");
+			processMessage(fileName, "Macrodefs go before process-ivy");
 		}
 
 		int z = content.indexOf("</target>");
 
 		if ((z != -1) && (x > z)) {
-			processMessage(fileName, "macrodefs go before targets");
+			processMessage(fileName, "Macrodefs go before targets");
 		}
 
 		checkImportFiles(fileName, newContent);
@@ -709,8 +711,8 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		processMessage(
 			fileName,
-			"LPS-51315 Avoid using WHERE ... NOT IN: " +
-				content.substring(y + 1, z));
+			"Avoid using WHERE ... NOT IN: " + content.substring(y + 1, z) +
+				", see LPS-51315");
 	}
 
 	protected String formatDDLStructuresXML(String content) throws Exception {
@@ -870,7 +872,8 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 				if (!Validator.isNumber(portletNameText)) {
 					processMessage(
 						fileName,
-						"nonstandard portlet-name element " + portletNameText);
+						"Nonstandard portlet-name element '" + portletNameText +
+							"'");
 				}
 			}
 
@@ -1281,7 +1284,8 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			if (!importFile) {
 				processMessage(
 					fileName,
-					"ant element pointing to non-existing " + buildfileName);
+					"Ant element points to non-existing build file '" +
+						buildfileName + "'");
 			}
 
 			return null;

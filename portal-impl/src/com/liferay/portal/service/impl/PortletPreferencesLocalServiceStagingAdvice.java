@@ -121,7 +121,6 @@ public class PortletPreferencesLocalServiceStagingAdvice
 	protected Object getPortletPreferences(MethodInvocation methodInvocation)
 		throws Throwable {
 
-		Method method = methodInvocation.getMethod();
 		Object[] arguments = methodInvocation.getArguments();
 
 		int index = -1;
@@ -157,14 +156,13 @@ public class PortletPreferencesLocalServiceStagingAdvice
 
 		arguments[index] = layoutRevision.getLayoutRevisionId();
 
-		return method.invoke(methodInvocation.getThis(), arguments);
+		return methodInvocation.proceed();
 	}
 
 	protected Object getPortletPreferencesCount(
 			MethodInvocation methodInvocation)
 		throws Throwable {
 
-		Method method = methodInvocation.getMethod();
 		Object[] arguments = methodInvocation.getArguments();
 
 		long plid = 0;
@@ -189,13 +187,12 @@ public class PortletPreferencesLocalServiceStagingAdvice
 			arguments[2] = layoutRevision.getLayoutRevisionId();
 		}
 
-		return method.invoke(methodInvocation.getThis(), arguments);
+		return methodInvocation.proceed();
 	}
 
 	protected Object getPreferences(MethodInvocation methodInvocation)
 		throws Throwable {
 
-		Method method = methodInvocation.getMethod();
 		Object[] arguments = methodInvocation.getArguments();
 
 		long plid = 0;
@@ -242,13 +239,12 @@ public class PortletPreferencesLocalServiceStagingAdvice
 			arguments[3] = plid;
 		}
 
-		return method.invoke(methodInvocation.getThis(), arguments);
+		return methodInvocation.proceed();
 	}
 
 	protected Object updatePreferences(MethodInvocation methodInvocation)
 		throws Throwable {
 
-		Method method = methodInvocation.getMethod();
 		Object[] arguments = methodInvocation.getArguments();
 
 		long plid = (Long)arguments[2];
@@ -291,7 +287,7 @@ public class PortletPreferencesLocalServiceStagingAdvice
 
 		ProxiedLayoutsThreadLocal.clearProxiedLayouts();
 
-		return method.invoke(methodInvocation.getThis(), arguments);
+		return methodInvocation.proceed();
 	}
 
 }

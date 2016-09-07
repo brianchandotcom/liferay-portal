@@ -17,6 +17,7 @@ package com.liferay.blogs.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
+import com.liferay.blogs.kernel.exception.EntryTitleException;
 import com.liferay.blogs.kernel.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -161,6 +162,21 @@ public class BlogsEntryStatusTransitionTest {
 		Assert.assertEquals(1, searchBlogsEntriesCount(group.getGroupId()));
 
 		checkSocialActivity(BlogsActivityKeys.UPDATE_ENTRY, 1);
+	}
+
+	@Test(expected = EntryTitleException.class)
+	public void testDraftToApprovedWithoutTitle() throws Exception {
+		ServiceContext serviceContext = getServiceContext(entry);
+		String title = "";
+
+		BlogsEntry entryWithoutTitle = BlogsEntryLocalServiceUtil.addEntry(
+			user.getUserId(), title, RandomTestUtil.randomString(),
+			serviceContext);
+
+		BlogsEntryLocalServiceUtil.updateStatus(
+			TestPropsValues.getUserId(), entryWithoutTitle.getEntryId(),
+			WorkflowConstants.STATUS_APPROVED, serviceContext,
+			new HashMap<String, Serializable>());
 	}
 
 	@Test

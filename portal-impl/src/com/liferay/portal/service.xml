@@ -1753,8 +1753,11 @@
 
 		<!-- References -->
 
+		<reference entity="Layout" package-path="com.liferay.portal" />
+		<reference entity="LayoutRevision" package-path="com.liferay.portal" />
 		<reference entity="Portlet" package-path="com.liferay.portal" />
 		<reference entity="PortletItem" package-path="com.liferay.portal" />
+		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
 	<entity local-service="true" name="RecentLayoutBranch" remote-service="false" uuid="false">
 

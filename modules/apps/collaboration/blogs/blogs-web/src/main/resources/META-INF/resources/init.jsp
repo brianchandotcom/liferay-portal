@@ -160,10 +160,10 @@ page import="javax.portlet.WindowState" %>
 <%
 PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(liferayPortletRequest);
 
+BlogsEntryHelper blogsEntryHelper = new BlogsEntryHelper(resourceBundle);
+
 Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
-
-BlogsEntryHelper blogsEntryHelper = new BlogsEntryHelper(resourceBundle);
 %>
 
 <%@ include file="/init-ext.jsp" %>

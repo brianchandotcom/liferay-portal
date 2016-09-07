@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portlet.blogs.service.permission.BlogsPermission;
 
 import javax.portlet.PortletRequest;
@@ -71,7 +72,7 @@ public class BlogsEntryAssetRendererFactory
 		BlogsEntry entry = _blogsEntryLocalService.getEntry(classPK);
 
 		BlogsEntryAssetRenderer blogsEntryAssetRenderer =
-			new BlogsEntryAssetRenderer(entry);
+			new BlogsEntryAssetRenderer(entry, _resourceBundleLoader);
 
 		blogsEntryAssetRenderer.setAssetRendererType(type);
 		blogsEntryAssetRenderer.setServletContext(_servletContext);
@@ -86,7 +87,7 @@ public class BlogsEntryAssetRendererFactory
 
 		BlogsEntry entry = _blogsEntryService.getEntry(groupId, urlTitle);
 
-		return new BlogsEntryAssetRenderer(entry);
+		return new BlogsEntryAssetRenderer(entry, _resourceBundleLoader);
 	}
 
 	@Override
@@ -155,6 +156,15 @@ public class BlogsEntryAssetRendererFactory
 	}
 
 	@Reference(
+		target = "(bundle.symbolic.name=com.liferay.blogs.web)", unbind = "-"
+	)
+	public void setResourceBundleLoader(
+		ResourceBundleLoader resourceBundleLoader) {
+
+		_resourceBundleLoader = resourceBundleLoader;
+	}
+
+	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.blogs.web)", unbind = "-"
 	)
 	public void setServletContext(ServletContext servletContext) {
@@ -175,6 +185,7 @@ public class BlogsEntryAssetRendererFactory
 
 	private BlogsEntryLocalService _blogsEntryLocalService;
 	private BlogsEntryService _blogsEntryService;
+	private ResourceBundleLoader _resourceBundleLoader;
 	private ServletContext _servletContext;
 
 }

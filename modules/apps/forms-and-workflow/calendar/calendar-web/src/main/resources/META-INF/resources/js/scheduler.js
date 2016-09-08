@@ -377,19 +377,19 @@ AUI.add(
 
 						var editCalendarBookingURL = decodeURIComponent(recorder.get('editCalendarBookingURL'));
 
-						var startTimeYear = instance.get('date').getFullYear();
+						var startTimeDay = instance.get('date').getDate();
 
 						var startTimeMonth = instance.get('date').getMonth();
 
-						var startTimeDay = instance.get('date').getDate();
+						var startTimeYear = instance.get('date').getFullYear();
 
 						var data = {
 							activeView: activeViewName,
 							calendarId: calendarId,
-							titleCurrentValue: '',
-							startTimeYear: startTimeYear,
+							startTimeDay: startTimeDay,
 							startTimeMonth: startTimeMonth,
-							startTimeDay: startTimeDay
+							startTimeYear: startTimeYear,
+							titleCurrentValue: ''
 						};
 
 						Liferay.Util.openWindow(

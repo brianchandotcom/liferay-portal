@@ -15,17 +15,10 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
-import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutRevision;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
-import com.liferay.portal.kernel.service.LayoutRevisionLocalServiceUtil;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.LayoutRevisionUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portlet.exportimport.staging.ProxiedLayoutsThreadLocal;
 import com.liferay.portlet.exportimport.staging.StagingAdvicesThreadLocal;
 
 import java.lang.reflect.InvocationTargetException;
@@ -62,9 +55,6 @@ public class PortletPreferencesLocalServiceStagingAdvice
 				 (arguments.length == 4))) {
 
 				return getPortletPreferences(methodInvocation);
-			}
-			else if (methodName.equals("updatePreferences")) {
-				return updatePreferences(methodInvocation);
 			}
 
 			return methodInvocation.proceed();
@@ -139,54 +129,6 @@ public class PortletPreferencesLocalServiceStagingAdvice
 		}
 
 		arguments[index] = layoutRevision.getLayoutRevisionId();
-
-		return methodInvocation.proceed();
-	}
-
-	protected Object updatePreferences(MethodInvocation methodInvocation)
-		throws Throwable {
-
-		Object[] arguments = methodInvocation.getArguments();
-
-		long plid = (Long)arguments[2];
-
-		LayoutRevision layoutRevision = getLayoutRevision(plid);
-
-		if (layoutRevision == null) {
-			return methodInvocation.proceed();
-		}
-
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		if (serviceContext == null) {
-			return methodInvocation.proceed();
-		}
-
-		boolean exporting = ParamUtil.getBoolean(serviceContext, "exporting");
-
-		if (exporting) {
-			return methodInvocation.proceed();
-		}
-
-		if (!MergeLayoutPrototypesThreadLocal.isInProgress()) {
-			serviceContext.setWorkflowAction(
-				WorkflowConstants.ACTION_SAVE_DRAFT);
-		}
-
-		layoutRevision = LayoutRevisionLocalServiceUtil.updateLayoutRevision(
-			serviceContext.getUserId(), layoutRevision.getLayoutRevisionId(),
-			layoutRevision.getLayoutBranchId(), layoutRevision.getName(),
-			layoutRevision.getTitle(), layoutRevision.getDescription(),
-			layoutRevision.getKeywords(), layoutRevision.getRobots(),
-			layoutRevision.getTypeSettings(), layoutRevision.getIconImage(),
-			layoutRevision.getIconImageId(), layoutRevision.getThemeId(),
-			layoutRevision.getColorSchemeId(), layoutRevision.getCss(),
-			serviceContext);
-
-		arguments[2] = layoutRevision.getLayoutRevisionId();
-
-		ProxiedLayoutsThreadLocal.clearProxiedLayouts();
 
 		return methodInvocation.proceed();
 	}

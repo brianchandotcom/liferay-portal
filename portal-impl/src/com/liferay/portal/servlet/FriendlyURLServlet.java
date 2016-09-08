@@ -252,25 +252,18 @@ public class FriendlyURLServlet extends HttpServlet {
 	private Object[] _getRedirect(HttpServletRequest request, String path)
 		throws Exception {
 
-		if (path.isEmpty()) {
+		if (path.length() <= 1) {
 			return new Object[] {Portal.PATH_MAIN, Boolean.FALSE};
 		}
 
 		// Group friendly URL
 
-		String friendlyURL = null;
+		String friendlyURL = path;
 
 		int pos = path.indexOf(CharPool.SLASH, 1);
 
 		if (pos != -1) {
 			friendlyURL = path.substring(0, pos);
-		}
-		else if (path.length() > 1) {
-			friendlyURL = path;
-		}
-
-		if (Validator.isNull(friendlyURL)) {
-			return new Object[] {Portal.PATH_MAIN, Boolean.FALSE};
 		}
 
 		long companyId = PortalInstances.getCompanyId(request);

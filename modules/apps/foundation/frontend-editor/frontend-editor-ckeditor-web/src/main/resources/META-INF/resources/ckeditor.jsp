@@ -135,7 +135,7 @@ String textareaName = HtmlUtil.escapeAttribute(name);
 String modules = "aui-node-base";
 
 if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
-	textareaName = name + "_original";
+	textareaName = textareaName + "_original";
 
 	modules += ",inline-editor-ckeditor";
 }

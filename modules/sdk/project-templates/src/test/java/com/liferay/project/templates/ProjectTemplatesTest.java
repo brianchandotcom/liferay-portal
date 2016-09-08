@@ -44,7 +44,6 @@ import org.gradle.testkit.runner.BuildResult;
 import org.gradle.testkit.runner.BuildTask;
 import org.gradle.testkit.runner.GradleRunner;
 import org.gradle.testkit.runner.TaskOutcome;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Rule;
@@ -73,15 +72,6 @@ public class ProjectTemplatesTest {
 		_httpProxyHost = System.getProperty("http.proxyHost");
 		_httpProxyPort = System.getProperty("http.proxyPort");
 		_repositoryUrl = System.getProperty("repository.url");
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		File velocityLog = new File("velocity.log");
-
-		if (velocityLog.exists()) {
-			velocityLog.delete();
-		}
 	}
 
 	@Test

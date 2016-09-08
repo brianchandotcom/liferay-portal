@@ -54,6 +54,9 @@ import javax.portlet.filter.ResourceFilter;
 public class InvokerFilterContainerImpl
 	implements Closeable, InvokerFilterContainer {
 
+	public static final InvokerFilterContainer EMPTY_INVOKER_FILTER_CONTAINER =
+		new EmptyInvokerFilterContainer();
+
 	public InvokerFilterContainerImpl(
 			Portlet portlet, PortletContext portletContext)
 		throws PortletException {
@@ -190,6 +193,35 @@ public class InvokerFilterContainerImpl
 	private final List<ServiceRegistrationTuple> _serviceRegistrationTuples =
 		new CopyOnWriteArrayList<>();
 	private final ServiceTracker<PortletFilter, PortletFilter> _serviceTracker;
+
+	private static class EmptyInvokerFilterContainer
+		implements Closeable, InvokerFilterContainer {
+
+		@Override
+		public void close() {
+		}
+
+		@Override
+		public List<ActionFilter> getActionFilters() {
+			return Collections.emptyList();
+		}
+
+		@Override
+		public List<EventFilter> getEventFilters() {
+			return Collections.emptyList();
+		}
+
+		@Override
+		public List<RenderFilter> getRenderFilters() {
+			return Collections.emptyList();
+		}
+
+		@Override
+		public List<ResourceFilter> getResourceFilters() {
+			return Collections.emptyList();
+		}
+
+	}
 
 	private static class ServiceRegistrationTuple {
 

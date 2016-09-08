@@ -331,8 +331,7 @@ public class FriendlyURLServlet extends HttpServlet {
 		if ((pos != -1) && ((pos + 1) != path.length())) {
 			friendlyURL = path.substring(pos);
 		}
-
-		if (Validator.isNull(friendlyURL)) {
+		else {
 			request.setAttribute(
 				WebKeys.REDIRECT_TO_DEFAULT_LAYOUT, Boolean.TRUE);
 		}

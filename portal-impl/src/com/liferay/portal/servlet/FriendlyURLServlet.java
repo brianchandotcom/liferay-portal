@@ -253,7 +253,7 @@ public class FriendlyURLServlet extends HttpServlet {
 		throws Exception {
 
 		if (path.isEmpty()) {
-			return new Object[] {Portal.PATH_MAIN, false};
+			return new Object[] {Portal.PATH_MAIN, Boolean.FALSE};
 		}
 
 		// Group friendly URL

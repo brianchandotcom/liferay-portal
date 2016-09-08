@@ -182,6 +182,11 @@ configuration.
 ### Changed
 - [LPS-68014]: Update the [Liferay Gradle Plugins] dependency to version 2.0.27.
 
+## 1.2.15 - 2016-09-08
+
+### Changed
+- [LPS-66853]: Update the [Liferay Gradle Plugins] dependency to version 2.0.28.
+
 ## 1.2.16 - 2016-09-08
 
 ### Added

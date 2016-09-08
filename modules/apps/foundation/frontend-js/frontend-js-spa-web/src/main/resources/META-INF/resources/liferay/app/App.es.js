@@ -13,6 +13,8 @@ class LiferayApp extends App {
 		this.portletsBlacklist = {};
 		this.validStatusCodes = [];
 
+		this.setShouldUseFacade(true);
+
 		this.timeout = Math.max(Liferay.SPA.requestTimeout, 0) || Utils.getMaxTimeout();
 		this.timeoutAlert = null;
 
@@ -73,8 +75,8 @@ class LiferayApp extends App {
 		return lastModifiedInterval > this.getCacheExpirationTime();
 	}
 
-	onBeforeNavigate(event) {
-		if (Liferay.SPA.clearScreensCache || event.form) {
+	onBeforeNavigate(data, event) {
+		if (Liferay.SPA.clearScreensCache || data.form) {
 			this.clearScreensCache();
 		}
 
@@ -82,7 +84,8 @@ class LiferayApp extends App {
 			'beforeNavigate',
 			{
 				app: this,
-				path: event.path
+				originalEvent: event,
+				path: data.path
 			}
 		);
 	}

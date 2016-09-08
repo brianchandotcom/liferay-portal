@@ -62,6 +62,8 @@ define("frontend-js-spa-web@1.0.11/liferay/app/App.es", ['exports', 'senna/src/a
 			_this.portletsBlacklist = {};
 			_this.validStatusCodes = [];
 
+			_this.setShouldUseFacade(true);
+
 			_this.timeout = Math.max(Liferay.SPA.requestTimeout, 0) || _Utils2.default.getMaxTimeout();
 			_this.timeoutAlert = null;
 
@@ -123,14 +125,15 @@ define("frontend-js-spa-web@1.0.11/liferay/app/App.es", ['exports', 'senna/src/a
 			return lastModifiedInterval > this.getCacheExpirationTime();
 		};
 
-		LiferayApp.prototype.onBeforeNavigate = function onBeforeNavigate(event) {
-			if (Liferay.SPA.clearScreensCache || event.form) {
+		LiferayApp.prototype.onBeforeNavigate = function onBeforeNavigate(data, event) {
+			if (Liferay.SPA.clearScreensCache || data.form) {
 				this.clearScreensCache();
 			}
 
 			Liferay.fire('beforeNavigate', {
 				app: this,
-				path: event.path
+				originalEvent: event,
+				path: data.path
 			});
 		};
 

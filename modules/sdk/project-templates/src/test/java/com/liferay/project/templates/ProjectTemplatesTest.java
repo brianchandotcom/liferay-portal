@@ -86,7 +86,7 @@ public class ProjectTemplatesTest {
 
 	@Test
 	public void testBuildTemplate() throws Exception {
-		File projectDir = _buildTemplateWithGradle(null, "hello-world-portlet");
+		File projectDir = _createTemplateWithGradle(null, "hello-world-portlet");
 
 		_testExists(projectDir, "bnd.bnd");
 		_testExists(
@@ -108,7 +108,7 @@ public class ProjectTemplatesTest {
 
 	@Test
 	public void testBuildTemplateActivator() throws Exception {
-		File projectDir = _buildTemplateWithGradle("activator", "bar-activator");
+		File projectDir = _createTemplateWithGradle("activator", "bar-activator");
 
 		_testExists(projectDir, "bnd.bnd");
 
@@ -124,12 +124,10 @@ public class ProjectTemplatesTest {
 
 		File gradleBundleFile = new File(projectDir, "build/libs/bar.activator-1.0.0.jar");
 
-		File mavenProjectDir = _buildTemplateWithMaven(
+		File mavenProjectDir = _createTemplateWithMaven(
 			"activator", "bar-activator",
-			"-DartifactId=bar-activator",
 			"-Dpackage=bar.activator",
-			"-DclassName=BarActivator",
-			"-DprojectType=standalone");
+			"-DclassName=BarActivator");
 
 		_executeMaven(mavenProjectDir, new String[] { _TASK_PATH_PACKAGE });
 
@@ -142,7 +140,7 @@ public class ProjectTemplatesTest {
 
 	@Test
 	public void testBuildTemplateApi() throws Exception {
-		File projectDir = _buildTemplateWithGradle("api", "foo");
+		File projectDir = _createTemplateWithGradle("api", "foo");
 
 		_testExists(projectDir, "bnd.bnd");
 
@@ -159,7 +157,7 @@ public class ProjectTemplatesTest {
 
 	@Test
 	public void testBuildTemplateContentTargetingReport() throws Exception {
-		File projectDir = _buildTemplateWithGradle("contenttargetingreport", "foo-bar");
+		File projectDir = _createTemplateWithGradle("contenttargetingreport", "foo-bar");
 
 		_testExists(projectDir, "bnd.bnd");
 
@@ -174,7 +172,7 @@ public class ProjectTemplatesTest {
 
 	@Test
 	public void testBuildTemplateContentTargetingRule() throws Exception {
-		File projectDir = _buildTemplateWithGradle("contenttargetingrule", "foo-bar");
+		File projectDir = _createTemplateWithGradle("contenttargetingrule", "foo-bar");
 
 		_testExists(projectDir, "bnd.bnd");
 
@@ -189,7 +187,7 @@ public class ProjectTemplatesTest {
 
 	@Test
 	public void testBuildTemplateContentTargetingTrackingAction() throws Exception {
-		File projectDir = _buildTemplateWithGradle("contenttargetingtrackingaction", "foo-bar");
+		File projectDir = _createTemplateWithGradle("contenttargetingtrackingaction", "foo-bar");
 
 		_testExists(projectDir, "bnd.bnd");
 
@@ -204,7 +202,7 @@ public class ProjectTemplatesTest {
 
 	@Test
 	public void testBuildTemplateControlMenuEntry() throws Exception {
-		File projectDir = _buildTemplateWithGradle("controlmenuentry", "foo-bar");
+		File projectDir = _createTemplateWithGradle("controlmenuentry", "foo-bar");
 
 		_testExists(projectDir, "bnd.bnd");
 
@@ -221,7 +219,7 @@ public class ProjectTemplatesTest {
 
 	@Test
 	public void testBuildTemplateFragment() throws Exception {
-		File projectDir = _buildTemplateWithGradle(
+		File projectDir = _createTemplateWithGradle(
 			"fragment", "loginHook", "--host-bundle-symbolic-name",
 			"com.liferay.login.web", "--host-bundle-version", "1.0.0");
 
@@ -238,7 +236,7 @@ public class ProjectTemplatesTest {
 
 	@Test
 	public void testBuildTemplateMVCPortlet() throws Exception {
-		File projectDir = _buildTemplateWithGradle("mvcportlet", "foo");
+		File projectDir = _createTemplateWithGradle("mvcportlet", "foo");
 
 		_testExists(projectDir, "bnd.bnd");
 		_testExists(
@@ -259,7 +257,7 @@ public class ProjectTemplatesTest {
 
 	@Test
 	public void testBuildTemplateMVCPortletWithPackage() throws Exception {
-		File projectDir = _buildTemplateWithGradle(
+		File projectDir = _createTemplateWithGradle(
 			"mvcportlet", "foo", "--package-name", "com.liferay.test");
 
 		_testExists(projectDir, "bnd.bnd");
@@ -284,7 +282,7 @@ public class ProjectTemplatesTest {
 	public void testBuildTemplateMVCPortletWithPortletSuffix()
 		throws Exception {
 
-		File projectDir = _buildTemplateWithGradle("mvcportlet", "portlet-portlet");
+		File projectDir = _createTemplateWithGradle("mvcportlet", "portlet-portlet");
 
 		_testExists(projectDir, "bnd.bnd");
 		_testExists(
@@ -306,13 +304,13 @@ public class ProjectTemplatesTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testBuildTemplateOnExistingDirectory() throws Exception {
-		_buildTemplateWithGradle("activator", "dup-activator");
-		_buildTemplateWithGradle("activator", "dup-activator");
+		_createTemplateWithGradle("activator", "dup-activator");
+		_createTemplateWithGradle("activator", "dup-activator");
 	}
 
 	@Test
 	public void testBuildTemplatePanelApp() throws Exception {
-		File projectDir = _buildTemplateWithGradle(
+		File projectDir = _createTemplateWithGradle(
 			"panelapp", "gradle.test", "--class-name", "Foo");
 
 		_testExists(projectDir, "bnd.bnd");
@@ -329,7 +327,7 @@ public class ProjectTemplatesTest {
 
 	@Test
 	public void testBuildTemplatePortlet() throws Exception {
-		File projectDir = _buildTemplateWithGradle(
+		File projectDir = _createTemplateWithGradle(
 			"portlet", "gradle.test", "--class-name", "Foo");
 
 		_testExists(projectDir, "bnd.bnd");
@@ -354,7 +352,7 @@ public class ProjectTemplatesTest {
 
 	@Test
 	public void testBuildTemplatePortletConfigurationIcon() throws Exception {
-		File projectDir = _buildTemplateWithGradle(
+		File projectDir = _createTemplateWithGradle(
 		"portletconfigurationicon", "icontest", "--package-name", "blade.test");
 
 		_testExists(projectDir, "bnd.bnd");
@@ -373,7 +371,7 @@ public class ProjectTemplatesTest {
 
 	@Test
 	public void testBuildTemplatePortletProvider() throws Exception {
-		File projectDir = _buildTemplateWithGradle(
+		File projectDir = _createTemplateWithGradle(
 		"portletprovider", "provider.test");
 
 		_testExists(projectDir, "bnd.bnd");
@@ -392,7 +390,7 @@ public class ProjectTemplatesTest {
 
 	@Test
 	public void testBuildTemplatePortletToolbarContributor() throws Exception {
-		File projectDir = _buildTemplateWithGradle(
+		File projectDir = _createTemplateWithGradle(
 		"portlettoolbarcontributor", "toolbartest", "--package-name", "blade.test");
 
 		_testExists(projectDir, "bnd.bnd");
@@ -412,7 +410,7 @@ public class ProjectTemplatesTest {
 
 	@Test
 	public void testBuildTemplateService() throws Exception {
-		File projectDir = _buildTemplateWithGradle(
+		File projectDir = _createTemplateWithGradle(
 			"service", "servicepreaction", "--class-name", "FooAction",
 			"--service", "com.liferay.portal.kernel.events.LifecycleAction");
 
@@ -480,7 +478,7 @@ public class ProjectTemplatesTest {
 
 	@Test
 	public void testBuildTemplateServiceWrapper() throws Exception {
-		File projectDir = _buildTemplateWithGradle(
+		File projectDir = _createTemplateWithGradle(
 			"servicewrapper", "serviceoverride", "--service",
 			"com.liferay.portal.kernel.service.UserLocalServiceWrapper");
 
@@ -503,7 +501,7 @@ public class ProjectTemplatesTest {
 
 	@Test
 	public void testBuildTemplateSimulationPanelEntry() throws Exception {
-		File projectDir = _buildTemplateWithGradle(
+		File projectDir = _createTemplateWithGradle(
 		"simulationpanelentry", "simulator", "--package-name", "test.simulator");
 
 		_testExists(projectDir, "bnd.bnd");
@@ -523,7 +521,7 @@ public class ProjectTemplatesTest {
 
 	@Test
 	public void testBuildTemplateContextContributor() throws Exception {
-		File projectDir = _buildTemplateWithGradle(
+		File projectDir = _createTemplateWithGradle(
 		"templatecontextcontributor", "blade-test");
 
 		_testExists(projectDir, "bnd.bnd");
@@ -543,7 +541,7 @@ public class ProjectTemplatesTest {
 
 	@Test
 	public void testBuildTemplateWithPackageName() throws Exception {
-		File projectDir = _buildTemplateWithGradle(
+		File projectDir = _createTemplateWithGradle(
 			null, "barfoo", "--package-name", "foo.bar");
 
 		_testExists(
@@ -588,7 +586,7 @@ public class ProjectTemplatesTest {
 	@Rule
 	public final TemporaryFolder temporaryFolder = new TemporaryFolder();
 
-	private File _buildTemplateWithGradle(String template, String name, String... args)
+	private File _createTemplateWithGradle(String template, String name, String... args)
 		throws Exception {
 
 		File destinationDir = new File(temporaryFolder.getRoot(), "gradle");
@@ -625,7 +623,7 @@ public class ProjectTemplatesTest {
 		return projectDir;
 	}
 
-	private File _buildTemplateWithMaven(String template, String name, String... args)
+	private File _createTemplateWithMaven(String template, String name, String... args)
 		throws Exception {
 
 		File destinationDir = new File(temporaryFolder.getRoot(), "maven");
@@ -638,7 +636,9 @@ public class ProjectTemplatesTest {
 		completeArgs.add("-DarchetypeGroupId=com.liferay");
 		completeArgs.add("-DarchetypeVersion=1.0.0");
 		completeArgs.add("-DgroupId=com.test");
+		completeArgs.add("-DartifactId=" + name);
 		completeArgs.add("-Dversion=1.0.0");
+		completeArgs.add("-DprojectType=standalone");
 
 		for (String arg : args) {
 			completeArgs.add(arg);
@@ -794,7 +794,7 @@ public class ProjectTemplatesTest {
 			String name, String packageName)
 		throws Exception {
 
-		File projectDir = _buildTemplateWithGradle(
+		File projectDir = _createTemplateWithGradle(
 			"servicebuilder", name, "--package-name", packageName);
 
 		String apiProjectName = name + "-api";

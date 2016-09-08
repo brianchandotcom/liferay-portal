@@ -68,11 +68,6 @@ public class PortletPreferencesLocalServiceStagingAdvice
 
 				return getPortletPreferences(methodInvocation);
 			}
-			else if (methodName.equals("getPortletPreferencesCount") &&
-					 ((arguments.length == 3) || (arguments.length == 5))) {
-
-				return getPortletPreferencesCount(methodInvocation);
-			}
 			else if (methodName.equals("getPreferences")) {
 				return getPreferences(methodInvocation);
 			}
@@ -155,37 +150,6 @@ public class PortletPreferencesLocalServiceStagingAdvice
 		}
 
 		arguments[index] = layoutRevision.getLayoutRevisionId();
-
-		return methodInvocation.proceed();
-	}
-
-	protected Object getPortletPreferencesCount(
-			MethodInvocation methodInvocation)
-		throws Throwable {
-
-		Object[] arguments = methodInvocation.getArguments();
-
-		long plid = 0;
-
-		if (arguments.length == 3) {
-			plid = (Long)arguments[1];
-		}
-		else {
-			plid = (Long)arguments[2];
-		}
-
-		LayoutRevision layoutRevision = getLayoutRevision(plid);
-
-		if (layoutRevision == null) {
-			return methodInvocation.proceed();
-		}
-
-		if (arguments.length == 3) {
-			arguments[1] = layoutRevision.getLayoutRevisionId();
-		}
-		else {
-			arguments[2] = layoutRevision.getLayoutRevisionId();
-		}
 
 		return methodInvocation.proceed();
 	}

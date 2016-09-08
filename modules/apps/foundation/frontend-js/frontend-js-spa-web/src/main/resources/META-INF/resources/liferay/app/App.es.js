@@ -80,11 +80,14 @@ class LiferayApp extends App {
 			this.clearScreensCache();
 		}
 
-		Liferay.fire('beforeNavigate', {
-			originalEvent: event,
-			app: this,
-			path: data.path
-		});
+		Liferay.fire(
+			'beforeNavigate',
+			{
+				app: this,
+				originalEvent: event,
+				path: data.path
+			}
+		);
 	}
 
 	onDocClickDelegate_(event) {

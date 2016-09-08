@@ -417,6 +417,10 @@
 			<var name="webContentTitle" value="Web Content1 Title" />
 		</execute>
 
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Asset Publisher Page" />
+		</execute>
+
 		<execute macro="AssetPublisherPortlet#configureShowMetadataFieldsPG">
 			<var name="addMetadata" value="true" />
 			<var name="metadataField" value="Categories" />

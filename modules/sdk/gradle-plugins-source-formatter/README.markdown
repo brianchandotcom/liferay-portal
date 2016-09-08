@@ -94,10 +94,12 @@ Property Name | Type | Default Value | Description
 `formatCurrentBranch` | `boolean` | `false` | Whether to format only the files contained in `baseDir` that are added or modified in the current Git branch.
 `formatLatestAuthor` | `boolean` | `false` | Whether to format only the files contained in `baseDir` that are added or modified in the latest Git commits of the same author.
 `formatLocalChanges` | `boolean` | `false` | Whether to format only the unstaged files contained in `baseDir`.
+`includeSubrepositories` | `boolean` | `false` | Whether to format files that are in read-only subrepositories.
 `maxLineLength` | `int` | `80` | The maximum number of characters allowed in Java files.
 `printErrors` | `boolean` | `true` | Whether to print formatting errors on the Standard Output stream.
 `processThreadCount` | `int` | `5` | The number of threads used by Source Formatter.
 `throwException` | `boolean` | `false` | Whether to fail the build if formatting errors are found.
+`useProperties` | `boolean` | `false` | Whether to use a properties file and only format files that have been modified since the last time Source Formatter was executed.
 
 ## Additional Configuration
 

@@ -100,10 +100,7 @@ public class FriendlyURLServlet extends HttpServlet {
 
 		// Do not set the entire full main path. See LEP-456.
 
-		//String mainPath = (String)ctx.getAttribute(WebKeys.MAIN_PATH);
-		String mainPath = Portal.PATH_MAIN;
-
-		String redirect = mainPath;
+		String redirect = Portal.PATH_MAIN;
 
 		String pathInfo = getPathInfo(request);
 
@@ -115,7 +112,7 @@ public class FriendlyURLServlet extends HttpServlet {
 
 		try {
 			redirectArray = getRedirect(
-				request, pathInfo, mainPath, request.getParameterMap());
+				request, pathInfo, Portal.PATH_MAIN, request.getParameterMap());
 
 			redirect = (String)redirectArray[0];
 			forcePermanentRedirect = (Boolean)redirectArray[1];
@@ -155,7 +152,7 @@ public class FriendlyURLServlet extends HttpServlet {
 		}
 
 		if (Validator.isNull(redirect)) {
-			redirect = mainPath;
+			redirect = Portal.PATH_MAIN;
 		}
 
 		if (_log.isDebugEnabled()) {

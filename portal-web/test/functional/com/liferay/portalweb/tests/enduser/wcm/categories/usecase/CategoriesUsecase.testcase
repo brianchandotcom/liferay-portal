@@ -372,7 +372,7 @@
 
 		<execute macro="Vocabulary#addWithAssociatedAssetTypeCP">
 			<var name="required" value="true" />
-			<var name="vocabularyAssociatedAssetTypeList" value="Page" />
+			<var name="assetType" value="Page" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
@@ -527,7 +527,7 @@
 
 		<execute macro="Vocabulary#addWithAssociatedAssetTypeCP">
 			<var name="required" value="true" />
-			<var name="vocabularyAssociatedAssetTypeList" value="Web Content Article" />
+			<var name="assetType" value="Web Content Article" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
@@ -587,7 +587,7 @@
 		</execute>
 
 		<execute macro="Vocabulary#addWithAssociatedAssetTypeCP">
-			<var name="vocabularyAssociatedAssetTypeList" value="Web Content Article" />
+			<var name="assetType" value="Web Content Article" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 

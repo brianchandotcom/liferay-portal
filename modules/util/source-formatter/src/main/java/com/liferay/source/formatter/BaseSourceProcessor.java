@@ -574,7 +574,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				Properties bndFileLanguageProperties =
 					getBNDFileLanguageProperties(fileName);
 
-				if ((bndFileLanguageProperties == null) ||
+				if ((bndFileLanguageProperties != null) &&
 					!bndFileLanguageProperties.containsKey(languageKey)) {
 
 					processMessage(
@@ -1678,7 +1678,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			getBNDFileLocationAndContentTuple(fileName);
 
 		if (bndFileLocationAndContentTuple == null) {
-			return null;
+			return new Properties();
 		}
 
 		String bndFileLocation =
@@ -1692,6 +1692,17 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		String bndContent = (String)bndFileLocationAndContentTuple.getObject(1);
 
+		if (bndContent.matches(
+				"[\\s\\S]*Provide-Capability:.*liferay\\.resource\\.bundle" +
+					"[\\s\\S]*")) {
+
+			// Return null, in order to skip checking for language keys for
+			// modules that use LanguageExtender. No fix in place for this right
+			// now.
+
+			return null;
+		}
+
 		Matcher matcher = bndContentDirPattern.matcher(bndContent);
 
 		if (matcher.find()) {
@@ -1699,7 +1710,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				bndFileLocation + matcher.group(1) + "/Language.properties");
 
 			if (!file.exists()) {
-				return null;
+				return new Properties();
 			}
 
 			properties = new Properties();
@@ -1713,7 +1724,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			return properties;
 		}
 
-		return null;
+		return new Properties();
 	}
 
 	protected Tuple getBNDFileLocationAndContentTuple(String fileName)

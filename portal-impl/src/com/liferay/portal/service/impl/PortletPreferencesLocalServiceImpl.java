@@ -15,6 +15,7 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
+import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -25,11 +26,14 @@ import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.model.PortletPreferencesIds;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ExceptionRetryAcceptor;
 import com.liferay.portal.kernel.spring.aop.Property;
 import com.liferay.portal.kernel.spring.aop.Retry;
 import com.liferay.portal.kernel.spring.aop.Skip;
+import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.base.PortletPreferencesLocalServiceBaseImpl;
@@ -415,6 +419,8 @@ public class PortletPreferencesLocalServiceImpl
 		long companyId, long ownerId, int ownerType, long plid,
 		String portletId, String defaultPreferences, boolean strict) {
 
+		plid = _swapPlidForPreferences(plid);
+
 		PortletPreferences portletPreferences =
 			portletPreferencesPersistence.fetchByO_O_P_P(
 				ownerId, ownerType, plid, portletId);
@@ -490,6 +496,34 @@ public class PortletPreferencesLocalServiceImpl
 		}
 
 		return layoutRevision.getLayoutRevisionId();
+	}
+
+	private long _swapPlidForPreferences(long plid) {
+		if (!StagingAdvicesThreadLocal.isEnabled()) {
+			return plid;
+		}
+
+		LayoutRevision layoutRevision = _getLayoutRevision(plid);
+
+		if (layoutRevision == null) {
+			return plid;
+		}
+
+		User user = userPersistence.fetchByPrimaryKey(
+			PrincipalThreadLocal.getUserId());
+
+		if ((user == null) || user.isDefaultUser()) {
+			return layoutRevision.getLayoutRevisionId();
+		}
+
+		try {
+			return StagingUtil.getRecentLayoutRevisionId(
+				user, layoutRevision.getLayoutSetBranchId(),
+				layoutRevision.getPlid());
+		}
+		catch (PortalException pe) {
+			return ReflectionUtil.throwException(pe);
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

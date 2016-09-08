@@ -18,12 +18,12 @@
 
 <%
 KBArticle kbArticle = (KBArticle)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
-long parentResourcePrimKey = (long)request.getAttribute("parentResourcePrimKey");
+long parentResourcePrimKey = (long)request.getAttribute("view_navigation_articles.jsp-parentResourcePrimKey");
 
-List<Long> ancestorResourcePrimaryKeys = (List<Long>)request.getAttribute("ancestorResourcePrimaryKeys");
-KBArticleURLHelper kbArticleURLHelper = (KBArticleURLHelper)request.getAttribute("kbArticleURLHelper");
+List<Long> ancestorResourcePrimaryKeys = (List<Long>)request.getAttribute("view_navigation_articles.jsp-ancestorResourcePrimaryKeys");
+KBArticleURLHelper kbArticleURLHelper = (KBArticleURLHelper)request.getAttribute("view_navigation_articles.jsp-kbArticleURLHelper");
 
-int level = GetterUtil.getInteger(request.getAttribute("level"));
+int level = GetterUtil.getInteger(request.getAttribute("view_navigation_articles.jsp-level"));
 int maxNestingLevel = kbDisplayPortletInstanceConfiguration.maxNestingLevel();
 
 boolean maxNestingLevelReached = false;
@@ -70,8 +70,8 @@ for (KBArticle childKBArticle : childKBArticles) {
 			<c:if test="<%= (parentResourcePrimKey != kbArticle.getResourcePrimKey()) && !maxNestingLevelReached && ancestorResourcePrimaryKeys.contains(childKBArticle.getResourcePrimKey()) %>">
 
 				<%
-				request.setAttribute("level", level + 1);
-				request.setAttribute("parentResourcePrimKey", childKBArticle.getResourcePrimKey());
+				request.setAttribute("view_navigation_articles.jsp-level", level + 1);
+				request.setAttribute("view_navigation_articles.jsp-parentResourcePrimKey", childKBArticle.getResourcePrimKey());
 				%>
 
 				<liferay-util:include page="/display/view_navigation_articles.jsp" servletContext="<%= application %>" />

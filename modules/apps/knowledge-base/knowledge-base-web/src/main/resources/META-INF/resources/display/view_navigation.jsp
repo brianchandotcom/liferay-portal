@@ -38,10 +38,10 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 	</c:if>
 
 	<%
-	request.setAttribute("ancestorResourcePrimaryKeys", ancestorResourcePrimaryKeys);
-	request.setAttribute("kbArticleURLHelper", kbArticleURLHelper);
-	request.setAttribute("level", 0);
-	request.setAttribute("parentResourcePrimKey", rootResourcePrimKey);
+	request.setAttribute("view_navigation_articles.jsp-ancestorResourcePrimaryKeys", ancestorResourcePrimaryKeys);
+	request.setAttribute("view_navigation_articles.jsp-kbArticleURLHelper", kbArticleURLHelper);
+	request.setAttribute("view_navigation_articles.jsp-level", 0);
+	request.setAttribute("view_navigation_articles.jsp-parentResourcePrimKey", rootResourcePrimKey);
 	%>
 
 	<liferay-util:include page="/display/view_navigation_articles.jsp" servletContext="<%= application %>" />

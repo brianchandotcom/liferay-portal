@@ -16,7 +16,6 @@ package com.liferay.project.templates;
 
 import aQute.bnd.main.bnd;
 
-import com.liferay.project.templates.internal.util.FileUtil;
 import com.liferay.project.templates.internal.util.Validator;
 import com.liferay.project.templates.util.FileTestUtil;
 
@@ -751,7 +750,7 @@ public class ProjectTemplatesTest {
 
 		File deps = new File("build/mavenEmbedderDeps.txt");
 
-		String[] lines = FileUtil.readFile(deps);
+		String[] lines = FileTestUtil.readLines(deps);
 
 		URL[] urls = new URL[lines.length];
 

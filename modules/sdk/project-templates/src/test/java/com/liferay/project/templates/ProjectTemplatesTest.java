@@ -307,15 +307,8 @@ public class ProjectTemplatesTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testBuildTemplateOnExistingDirectory() throws Exception {
-		File projectDir = new File(temporaryFolder.getRoot(), "bar-activator");
-
-		Assert.assertTrue(projectDir.mkdirs());
-
-		File file = new File(projectDir, "foo.txt");
-
-		Assert.assertTrue(file.createNewFile());
-
-		_buildTemplateWithGradle("activator", projectDir.getName());
+		_buildTemplateWithGradle("activator", "dup-activator");
+		_buildTemplateWithGradle("activator", "dup-activator");
 	}
 
 	@Test
@@ -675,28 +668,28 @@ public class ProjectTemplatesTest {
 			exclusions.append("Javac-Encoding, ");
 			exclusions.append("*pom.properties, ");
 			exclusions.append("*pom.xml");
-		
+
 		String[] args = {
 				"diff",
 				"-i",
 				exclusions.toString(),
 				gradleBundleFile.getPath(),
 				mavenBundleFile.getPath()};
-		
+
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
 
 		PrintStream ps = new PrintStream(output);
-		
+
 		System.setOut(ps);
-		
+
 		bnd main = new bnd();
-		
+
 		try {
 			main.start(args);
 		} finally {
 			main.close();
 		}
-		
+
 		Assert.assertEquals("Gradle Jar does not match Maven Jar", "", new String(output.toByteArray()));
 	}
 

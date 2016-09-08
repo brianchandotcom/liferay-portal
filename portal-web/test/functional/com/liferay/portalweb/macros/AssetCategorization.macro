@@ -6,7 +6,18 @@
 
 		<execute function="SelectFrameTop" />
 
-		<execute macro="IFrame#selectCategoryFrame" />
+		<if>
+			<condition function="IsElementPresent" locator1="IFrame#SELECT_CATEGORY" />
+			<then>
+				<execute macro="IFrame#selectCategoryFrame" />
+			</then>
+			<elseif>
+				<condition function="IsElementPresent" locator1="IFrame#MODAL_IFRAME" />
+				<then>
+					<execute macro="IFrame#selectModalFrame" />
+				</then>
+			</elseif>
+		</if>
 
 		<var name="key_categoryName" value="${categoryName}" />
 

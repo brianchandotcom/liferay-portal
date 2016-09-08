@@ -1573,7 +1573,7 @@
 				if (selectedData && selectedData.length) {
 					var currentWindow = event.currentTarget.node.get('contentWindow.document');
 
-					var selectorButtons = currentWindow.all('.lfr-search-container .selector-button');
+					var selectorButtons = currentWindow.all('.lfr-search-container-wrapper .selector-button');
 
 					A.some(
 						selectorButtons,

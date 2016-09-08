@@ -495,13 +495,8 @@ public abstract class BaseBuild implements Build {
 	}
 
 	protected void findDownstreamBuilds() {
-		Matcher downstreamBuildURLMatcher =
-			downstreamBuildURLPattern.matcher(getConsoleText());
-
-		Set<String> downstreamBuildURLs = new HashSet<>();
-		while (downstreamBuildURLMatcher.find()) {
-			downstreamBuildURLs.add(downstreamBuildURLMatcher.group("url"));
-		}
+		Set<String> downstreamBuildURLs = 
+			new HashSet<>(findDownstreamBuildsInConsoleText());
 
 		JSONObject buildJSONObject;
 
@@ -528,6 +523,19 @@ public abstract class BaseBuild implements Build {
 
 		addDownstreamBuilds(downstreamBuildURLs.toArray(
 			new String[downstreamBuildURLs.size()]));
+	}
+
+	protected Set<String> findDownstreamBuildsInConsoleText() {
+		Matcher downstreamBuildURLMatcher =
+			downstreamBuildURLPattern.matcher(getConsoleText());
+
+		Set<String> downstreamBuildURLs = new HashSet<>();
+
+		while (downstreamBuildURLMatcher.find()) {
+			downstreamBuildURLs.add(downstreamBuildURLMatcher.group("url"));
+		}
+
+		return downstreamBuildURLs;
 	}
 
 	protected JSONArray getBuildsJSONArray() throws Exception {

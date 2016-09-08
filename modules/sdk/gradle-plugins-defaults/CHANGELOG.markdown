@@ -123,9 +123,9 @@ even if the versions in the `packageinfo` files are greater.
 - [LPS-67863]: Disable the `printArtifactPublishCommands` task if the project's
 `build.gradle` contains the string `version: "default"`, to prevent releasing
 modules with unpublished dependencies.
-- [LPS-67863]: The `.version-override-${project.name}.properties` now contains
-only the version overrides that differ from the versions specified in the
-`bnd.bnd` and `packageinfo` files.
+- [LPS-67863]: The `.version-override-${project.name}.properties` file now
+contains only the version overrides that differ from the versions specified in
+the `bnd.bnd` and `packageinfo` files.
 
 ## 1.2.5 - 2016-09-01
 
@@ -181,6 +181,19 @@ configuration.
 
 ### Changed
 - [LPS-68014]: Update the [Liferay Gradle Plugins] dependency to version 2.0.27.
+
+## 1.2.15 - 2016-09-08
+
+### Changed
+- [LPS-66853]: Update the [Liferay Gradle Plugins] dependency to version 2.0.28.
+
+## 1.2.16 - 2016-09-08
+
+### Added
+- [LPS-67863]: Allow to override dependency versions in the
+`.version-override-${project.name}.properties` file:
+
+		<artifact group>-<artifact name>=<new version>
 
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [LPS-66853]: https://issues.liferay.com/browse/LPS-66853

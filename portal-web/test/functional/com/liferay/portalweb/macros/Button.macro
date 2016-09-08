@@ -1,4 +1,8 @@
 <definition>
+	<command name="clickAddRow">
+		<execute function="Click" locator1="Button#ADD_ROW" />
+	</command>
+
 	<command name="clickCancel">
 		<execute function="AssertClick" locator1="Button#CANCEL" value1="Cancel" />
 	</command>

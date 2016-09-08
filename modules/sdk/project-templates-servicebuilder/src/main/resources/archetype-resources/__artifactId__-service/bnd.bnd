@@ -1,3 +1,4 @@
+Bundle-Name: ${artifactId}-service
 Bundle-SymbolicName: ${package}.service
 Bundle-Version: ${version}
 Liferay-Require-SchemaVersion: 1.0.0

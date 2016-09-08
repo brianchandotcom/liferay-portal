@@ -1,3 +1,4 @@
+Bundle-Name: ${artifactId}
 Bundle-SymbolicName: ${package}
 Bundle-Version: ${version}
 Fragment-Host: ${hostBundleSymbolicName};bundle-version="${hostBundleVersion}"

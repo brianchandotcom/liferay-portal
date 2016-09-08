@@ -348,16 +348,17 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
-	protected void checkPackagePath(
-		String content, String fileName, String packagePath) {
+	protected void checkPackagePath(String fileName, String packagePath) {
+		int pos = fileName.lastIndexOf(CharPool.SLASH);
 
-		if (!content.contains(
-				"package " + packagePath + StringPool.SEMICOLON)) {
+		String filePath = StringUtil.replace(
+			fileName.substring(0, pos), CharPool.SLASH, CharPool.PERIOD);
 
+		if (!filePath.endsWith(packagePath)) {
 			processMessage(
 				fileName,
-				"Package path does not match expected package path '" +
-					packagePath + "'");
+				"The declared package '" + packagePath +
+					"'does not match the expected package");
 		}
 	}
 
@@ -630,9 +631,15 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		className = className.substring(0, pos);
 
-		String packagePath = ToolsUtil.getPackagePath(fileName);
+		Matcher matcher = _packagePattern.matcher(content);
 
-		checkPackagePath(content, fileName, packagePath);
+		if (!matcher.find()) {
+			processMessage(fileName, "Missing package");
+		}
+
+		String packagePath = matcher.group(2);
+
+		checkPackagePath(fileName, packagePath);
 
 		if (packagePath.endsWith(".model")) {
 			if (content.contains("extends " + className + "Model")) {
@@ -704,7 +711,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		newContent = formatAnnotations(
 			fileName, StringPool.BLANK, newContent, StringPool.BLANK, true);
 
-		Matcher matcher = _logPattern.matcher(newContent);
+		matcher = _logPattern.matcher(newContent);
 
 		if (matcher.find()) {
 			String logClassName = matcher.group(1);
@@ -4688,6 +4695,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private final Map<String, String> _moduleFileContentsMap =
 		new ConcurrentHashMap<>();
 	private Map<String, String> _moduleFileNamesMap;
+	private final Pattern _packagePattern = Pattern.compile(
+		"(\n|^)\\s*package (.*);\n");
 	private String _portalCustomSQLContent;
 	private final Pattern _processCallablePattern = Pattern.compile(
 		"implements ProcessCallable\\b");

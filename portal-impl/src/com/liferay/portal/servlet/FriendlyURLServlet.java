@@ -76,6 +76,9 @@ public class FriendlyURLServlet extends HttpServlet {
 
 		_private = GetterUtil.getBoolean(
 			servletConfig.getInitParameter("private"));
+
+		String proxyPath = PortalUtil.getPathProxy();
+
 		_user = GetterUtil.getBoolean(servletConfig.getInitParameter("user"));
 
 		if (_private) {
@@ -91,6 +94,8 @@ public class FriendlyURLServlet extends HttpServlet {
 		else {
 			_friendlyURLPathPrefix = PortalUtil.getPathFriendlyURLPublic();
 		}
+
+		_pathInfoOffset = _friendlyURLPathPrefix.length() - proxyPath.length();
 	}
 
 	@Override
@@ -195,15 +200,11 @@ public class FriendlyURLServlet extends HttpServlet {
 
 		int pos = requestURI.indexOf(Portal.JSESSIONID);
 
-		if (pos != -1) {
-			requestURI = requestURI.substring(0, pos);
+		if (pos == -1) {
+			return requestURI.substring(_pathInfoOffset);
 		}
 
-		String pathProxy = PortalUtil.getPathProxy();
-
-		pos = _friendlyURLPathPrefix.length() - pathProxy.length();
-
-		return requestURI.substring(pos);
+		return requestURI.substring(_pathInfoOffset, pos);
 	}
 
 	protected Object[] getRedirect(
@@ -424,6 +425,7 @@ public class FriendlyURLServlet extends HttpServlet {
 		FriendlyURLServlet.class);
 
 	private String _friendlyURLPathPrefix;
+	private int _pathInfoOffset;
 	private boolean _private;
 	private boolean _user;
 

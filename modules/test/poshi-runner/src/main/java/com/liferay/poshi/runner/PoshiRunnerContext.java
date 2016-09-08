@@ -452,6 +452,18 @@ public class PoshiRunnerContext {
 			propertyQuery = sb.toString();
 		}
 
+		if (Validator.isNotNull(PropsValues.TEST_RUN_ENVIRONMENT)) {
+			StringBuilder sb = new StringBuilder();
+
+			sb.append(propertyQuery);
+			sb.append(" AND ");
+			sb.append("(test.run.environment == \"");
+			sb.append(PropsValues.TEST_RUN_ENVIRONMENT);
+			sb.append("\" OR test.run.environment == null)");
+
+			propertyQuery = sb.toString();
+		}
+
 		List<String> classCommandNames = new ArrayList<>();
 
 		PQLEntity pqlEntity = PQLEntityFactory.newPQLEntity(propertyQuery);

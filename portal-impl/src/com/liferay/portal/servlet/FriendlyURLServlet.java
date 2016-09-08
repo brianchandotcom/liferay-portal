@@ -252,7 +252,7 @@ public class FriendlyURLServlet extends HttpServlet {
 	private Object[] _getRedirect(HttpServletRequest request, String path)
 		throws Exception {
 
-		if (Validator.isNull(path) || (path.charAt(0) != CharPool.SLASH)) {
+		if (path.isEmpty()) {
 			return new Object[] {Portal.PATH_MAIN, false};
 		}
 

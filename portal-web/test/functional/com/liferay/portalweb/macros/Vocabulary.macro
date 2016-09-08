@@ -108,8 +108,8 @@
 		</execute>
 
 		<execute macro="Vocabulary#addAssociatedAssetType">
-			<var name="required" value="${required}" />
 			<var name="assetType" value="${assetType}" />
+			<var name="required" value="${required}" />
 			<var name="rowNumber" value="${rowNumber}" />
 		</execute>
 

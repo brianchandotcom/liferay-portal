@@ -786,15 +786,15 @@
 		</execute>
 
 		<execute macro="Vocabulary#addAssociatedAssetType">
-			<var name="required" value="true" />
 			<var name="assetType" value="Blogs Entry" />
+			<var name="required" value="true" />
 		</execute>
 
 		<execute macro="Button#clickAddRow" />
 
 		<execute macro="Vocabulary#addAssociatedAssetType">
-			<var name="required" value="true" />
 			<var name="assetType" value="Web Content Article" />
+			<var name="required" value="true" />
 			<var name="rowNumber" value="2" />
 		</execute>
 

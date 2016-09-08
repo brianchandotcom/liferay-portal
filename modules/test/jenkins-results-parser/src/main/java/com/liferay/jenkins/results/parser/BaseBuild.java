@@ -85,21 +85,14 @@ public abstract class BaseBuild implements Build {
 	public void addDownstreamBuilds(String... urls) {
 		boolean downstreamBuildAdded = false;
 
-		boolean debugFlag = downstreamBuilds.size() > 0;
-
 		List<URL> downstreamBuildURLs =
 			new ArrayList<>(downstreamBuilds.size());
-
-		int skipCount = 0;
-		int addCount = 0;
 
 		try {
 			for (Build downstreamBuild : downstreamBuilds) {
 				URL url = new URL(downstreamBuild.getBuildURL());
+
 				downstreamBuildURLs.add(url);
-				if (debugFlag) {
-					System.out.println("existing: " + url.toString());
-				}
 			}
 
 			for (String url : urls) {
@@ -111,26 +104,11 @@ public abstract class BaseBuild implements Build {
 
 					downstreamBuilds.add(BuildFactory.newBuild(
 						addURL.toString(), this));
-
-					if (debugFlag) {
-						System.out.println("adding: " + addURL.toString());
-					}
-					addCount++;
-				}
-				else {
-					skipCount++;
 				}
 			}
 
 			if (downstreamBuildAdded) {
 				setStatus("starting");
-			}
-
-			if (debugFlag) {
-				System.out.println("skipCount: " + skipCount);
-				System.out.println("addCount: " + addCount);
-				System.out.println("downstreamBuilds size: "
-					+ downstreamBuilds.size());
 			}
 		}
 		catch (Exception e) {

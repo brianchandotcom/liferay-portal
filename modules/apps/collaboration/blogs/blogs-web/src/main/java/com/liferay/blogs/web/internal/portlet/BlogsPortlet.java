@@ -16,7 +16,6 @@ package com.liferay.blogs.web.internal.portlet;
 
 import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.portal.kernel.model.Release;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 import javax.portlet.Portlet;
 
@@ -57,7 +56,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = Portlet.class
 )
-public class BlogsPortlet extends MVCPortlet {
+public class BlogsPortlet extends BaseBlogsPortlet {
 
 	@Reference(
 		target = "(&(release.bundle.symbolic.name=com.liferay.blogs.web)(release.schema.version=1.0.0))",

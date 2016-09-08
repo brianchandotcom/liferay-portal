@@ -145,8 +145,6 @@
 		</execute>
 
 		<execute macro="Site#addMemberCP">
-			<var name="siteName" value="${siteName1}" />
-			<var name="siteScopeName" value="${siteName1}" />
 			<var name="userFirstName" value="${userFirstName1}" />
 			<var name="userLastName" value="${userLastName1}" />
 			<var name="userMiddleName" value="${userMiddleName1}" />
@@ -162,8 +160,6 @@
 		</execute>
 
 		<execute macro="Site#addMemberCP">
-			<var name="siteName" value="${siteName2}" />
-			<var name="siteScopeName" value="${siteName2}" />
 			<var name="userFirstName" value="${userFirstName2}" />
 			<var name="userLastName" value="${userLastName2}" />
 			<var name="userMiddleName" value="${userMiddleName2}" />
@@ -179,8 +175,6 @@
 		</execute>
 
 		<execute macro="Site#addMemberCP">
-			<var name="siteName" value="${siteName3}" />
-			<var name="siteScopeName" value="${siteName3}" />
 			<var name="userFirstName" value="${userFirstName3}" />
 			<var name="userLastName" value="${userLastName3}" />
 			<var name="userMiddleName" value="${userMiddleName3}" />
@@ -196,8 +190,6 @@
 		</execute>
 
 		<execute macro="Site#addMemberCP">
-			<var name="siteName" value="${siteName4}" />
-			<var name="siteScopeName" value="${siteName4}" />
 			<var name="userFirstName" value="${userFirstName4}" />
 			<var name="userLastName" value="${userLastName4}" />
 			<var name="userMiddleName" value="${userMiddleName4}" />
@@ -685,8 +677,6 @@
 		</execute>
 
 		<execute macro="Site#addMemberCP">
-			<var name="siteName" value="${siteName1}" />
-			<var name="siteScopeName" value="${siteName1}" />
 			<var name="userFirstName" value="${userFirstName1}" />
 			<var name="userLastName" value="${userLastName1}" />
 			<var name="userMiddleName" value="${userMiddleName1}" />
@@ -702,8 +692,6 @@
 		</execute>
 
 		<execute macro="Site#addMemberCP">
-			<var name="siteName" value="${siteName2}" />
-			<var name="siteScopeName" value="${siteName2}" />
 			<var name="userFirstName" value="${userFirstName2}" />
 			<var name="userLastName" value="${userLastName2}" />
 			<var name="userMiddleName" value="${userMiddleName2}" />
@@ -719,8 +707,6 @@
 		</execute>
 
 		<execute macro="Site#addMemberCP">
-			<var name="siteName" value="${siteName3}" />
-			<var name="siteScopeName" value="${siteName3}" />
 			<var name="userFirstName" value="${userFirstName3}" />
 			<var name="userLastName" value="${userLastName3}" />
 			<var name="userMiddleName" value="${userMiddleName3}" />
@@ -736,8 +722,6 @@
 		</execute>
 
 		<execute macro="Site#addMemberCP">
-			<var name="siteName" value="${siteName4}" />
-			<var name="siteScopeName" value="${siteName4}" />
 			<var name="userFirstName" value="${userFirstName4}" />
 			<var name="userLastName" value="${userLastName4}" />
 			<var name="userMiddleName" value="${userMiddleName4}" />

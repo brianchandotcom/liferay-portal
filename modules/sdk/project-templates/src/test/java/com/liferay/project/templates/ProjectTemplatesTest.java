@@ -25,14 +25,18 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.Writer;
+
 import java.lang.reflect.Method;
+
 import java.net.URI;
 import java.net.URL;
 import java.net.URLClassLoader;
+
 import java.nio.charset.StandardCharsets;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -44,6 +48,7 @@ import org.gradle.testkit.runner.BuildResult;
 import org.gradle.testkit.runner.BuildTask;
 import org.gradle.testkit.runner.GradleRunner;
 import org.gradle.testkit.runner.TaskOutcome;
+
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Rule;
@@ -76,7 +81,8 @@ public class ProjectTemplatesTest {
 
 	@Test
 	public void testBuildTemplate() throws Exception {
-		File projectDir = _createTemplateWithGradle(null, "hello-world-portlet");
+		File projectDir = _createTemplateWithGradle(
+			null, "hello-world-portlet");
 
 		_testExists(projectDir, "bnd.bnd");
 		_testExists(
@@ -98,7 +104,8 @@ public class ProjectTemplatesTest {
 
 	@Test
 	public void testBuildTemplateActivator() throws Exception {
-		File projectDir = _createTemplateWithGradle("activator", "bar-activator");
+		File projectDir = _createTemplateWithGradle(
+			"activator", "bar-activator");
 
 		_testExists(projectDir, "bnd.bnd");
 
@@ -112,18 +119,19 @@ public class ProjectTemplatesTest {
 
 		_testExists(projectDir, "build/libs/bar.activator-1.0.0.jar");
 
-		File gradleBundleFile = new File(projectDir, "build/libs/bar.activator-1.0.0.jar");
+		File gradleBundleFile = new File(
+			projectDir, "build/libs/bar.activator-1.0.0.jar");
 
 		File mavenProjectDir = _createTemplateWithMaven(
-			"activator", "bar-activator",
-			"-Dpackage=bar.activator",
+			"activator", "bar-activator", "-Dpackage=bar.activator",
 			"-DclassName=BarActivator");
 
-		_executeMaven(mavenProjectDir, new String[] { _TASK_PATH_PACKAGE });
+		_executeMaven(mavenProjectDir, new String[] {_TASK_PATH_PACKAGE});
 
 		_testExists(mavenProjectDir, "target/bar-activator-1.0.0.jar");
 
-		File mavenBundleFile = new File(mavenProjectDir, "target/bar-activator-1.0.0.jar");
+		File mavenBundleFile = new File(
+			mavenProjectDir, "target/bar-activator-1.0.0.jar");
 
 		_executeBndDiff(gradleBundleFile, mavenBundleFile);
 	}
@@ -147,12 +155,14 @@ public class ProjectTemplatesTest {
 
 	@Test
 	public void testBuildTemplateContentTargetingReport() throws Exception {
-		File projectDir = _createTemplateWithGradle("contenttargetingreport", "foo-bar");
+		File projectDir = _createTemplateWithGradle(
+			"contenttargetingreport", "foo-bar");
 
 		_testExists(projectDir, "bnd.bnd");
 
 		_testContains(
-			projectDir, "src/main/java/foo/bar/content/targeting/report/FooBarReport.java",
+			projectDir,
+			"src/main/java/foo/bar/content/targeting/report/FooBarReport.java",
 			"public class FooBarReport extends BaseJSPReport");
 
 		_executeGradle(projectDir, _TASK_PATH_BUILD);
@@ -162,12 +172,14 @@ public class ProjectTemplatesTest {
 
 	@Test
 	public void testBuildTemplateContentTargetingRule() throws Exception {
-		File projectDir = _createTemplateWithGradle("contenttargetingrule", "foo-bar");
+		File projectDir = _createTemplateWithGradle(
+			"contenttargetingrule", "foo-bar");
 
 		_testExists(projectDir, "bnd.bnd");
 
 		_testContains(
-			projectDir, "src/main/java/foo/bar/content/targeting/rule/FooBarRule.java",
+			projectDir,
+			"src/main/java/foo/bar/content/targeting/rule/FooBarRule.java",
 			"public class FooBarRule extends BaseJSPRule");
 
 		_executeGradle(projectDir, _TASK_PATH_BUILD);
@@ -176,13 +188,18 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
-	public void testBuildTemplateContentTargetingTrackingAction() throws Exception {
-		File projectDir = _createTemplateWithGradle("contenttargetingtrackingaction", "foo-bar");
+	public void testBuildTemplateContentTargetingTrackingAction()
+		throws Exception {
+
+		File projectDir = _createTemplateWithGradle(
+			"contenttargetingtrackingaction", "foo-bar");
 
 		_testExists(projectDir, "bnd.bnd");
 
 		_testContains(
-			projectDir, "src/main/java/foo/bar/content/targeting/tracking/action/FooBarTrackingAction.java",
+			projectDir,
+			"src/main/java/foo/bar/content/targeting/tracking/action/" +
+			"FooBarTrackingAction.java",
 			"public class FooBarTrackingAction extends BaseJSPTrackingAction");
 
 		_executeGradle(projectDir, _TASK_PATH_BUILD);
@@ -191,16 +208,39 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
-	public void testBuildTemplateControlMenuEntry() throws Exception {
-		File projectDir = _createTemplateWithGradle("controlmenuentry", "foo-bar");
+	public void testBuildTemplateContextContributor() throws Exception {
+		File projectDir = _createTemplateWithGradle(
+			"templatecontextcontributor", "blade-test");
 
 		_testExists(projectDir, "bnd.bnd");
 
 		_testContains(
-				projectDir, "src/main/java/foo/bar/control/menu/FooBarProductNavigationControlMenuEntry.java",
-				"public class FooBarProductNavigationControlMenuEntry",
-				"extends BaseProductNavigationControlMenuEntry",
-				"implements ProductNavigationControlMenuEntry");
+			projectDir, "build.gradle", "apply plugin: \"com.liferay.plugin\"");
+
+		_testContains(
+			projectDir, "src/main/java/blade/test/theme/contributor/" +
+			"BladeTestTemplateContextContributor.java",
+			"public class BladeTestTemplateContextContributor",
+			"implements TemplateContextContributor");
+
+		_executeGradle(projectDir, _TASK_PATH_BUILD);
+
+		_testExists(projectDir, "build/libs/blade.test-1.0.0.jar");
+	}
+
+	@Test
+	public void testBuildTemplateControlMenuEntry() throws Exception {
+		File projectDir = _createTemplateWithGradle(
+			"controlmenuentry", "foo-bar");
+
+		_testExists(projectDir, "bnd.bnd");
+
+		_testContains(
+			projectDir, "src/main/java/foo/bar/control/menu/" +
+			"FooBarProductNavigationControlMenuEntry.java",
+			"public class FooBarProductNavigationControlMenuEntry",
+			"extends BaseProductNavigationControlMenuEntry",
+			"implements ProductNavigationControlMenuEntry");
 
 		_executeGradle(projectDir, _TASK_PATH_BUILD);
 
@@ -272,7 +312,8 @@ public class ProjectTemplatesTest {
 	public void testBuildTemplateMVCPortletWithPortletSuffix()
 		throws Exception {
 
-		File projectDir = _createTemplateWithGradle("mvcportlet", "portlet-portlet");
+		File projectDir = _createTemplateWithGradle(
+			"mvcportlet", "portlet-portlet");
 
 		_testExists(projectDir, "bnd.bnd");
 		_testExists(
@@ -307,7 +348,8 @@ public class ProjectTemplatesTest {
 		_testExists(projectDir, "build.gradle");
 
 		_testContains(
-			projectDir, "src/main/java/gradle/test/application/list/FooPanelApp.java",
+			projectDir,
+			"src/main/java/gradle/test/application/list/FooPanelApp.java",
 			"public class FooPanelApp extends BasePanelApp");
 
 		_executeGradle(projectDir, _TASK_PATH_BUILD);
@@ -343,14 +385,17 @@ public class ProjectTemplatesTest {
 	@Test
 	public void testBuildTemplatePortletConfigurationIcon() throws Exception {
 		File projectDir = _createTemplateWithGradle(
-		"portletconfigurationicon", "icontest", "--package-name", "blade.test");
+			"portletconfigurationicon", "icontest", "--package-name",
+			"blade.test");
 
 		_testExists(projectDir, "bnd.bnd");
 
-		_testContains(projectDir, "build.gradle",
-				"apply plugin: \"com.liferay.plugin\"");
 		_testContains(
-			projectDir, "src/main/java/blade/test/portlet/configuration/icon/IcontestPortletConfigurationIcon.java",
+			projectDir, "build.gradle", "apply plugin: \"com.liferay.plugin\"");
+
+		_testContains(
+			projectDir, "src/main/java/blade/test/portlet/configuration/icon/" +
+			"IcontestPortletConfigurationIcon.java",
 			"public class IcontestPortletConfigurationIcon",
 			"extends BasePortletConfigurationIcon");
 
@@ -362,14 +407,16 @@ public class ProjectTemplatesTest {
 	@Test
 	public void testBuildTemplatePortletProvider() throws Exception {
 		File projectDir = _createTemplateWithGradle(
-		"portletprovider", "provider.test");
+			"portletprovider", "provider.test");
 
 		_testExists(projectDir, "bnd.bnd");
 		_testExists(projectDir, "build.gradle");
 
+		String filePath = "src/main/java/provider/test/constants/";
+		String fileName = filePath + "ProviderTestPortletKeys.java";
+
 		_testContains(
-			projectDir, "src/main/java/provider/test/constants/ProviderTestPortletKeys.java",
-			"package provider.test.constants;",
+			projectDir, fileName, "package provider.test.constants;",
 			"public class ProviderTestPortletKeys",
 			"public static final String ProviderTest = \"ProviderTest\";");
 
@@ -381,15 +428,18 @@ public class ProjectTemplatesTest {
 	@Test
 	public void testBuildTemplatePortletToolbarContributor() throws Exception {
 		File projectDir = _createTemplateWithGradle(
-		"portlettoolbarcontributor", "toolbartest", "--package-name", "blade.test");
+			"portlettoolbarcontributor", "toolbartest", "--package-name",
+			"blade.test");
 
 		_testExists(projectDir, "bnd.bnd");
 
-		_testContains(projectDir, "build.gradle",
-				"apply plugin: \"com.liferay.plugin\"");
+		_testContains(
+			projectDir, "build.gradle", "apply plugin: \"com.liferay.plugin\"");
+
 		_testContains(
 			projectDir,
-			"src/main/java/blade/test/portlet/toolbar/contributor/ToolbartestPortletToolbarContributor.java",
+			"src/main/java/blade/test/portlet/toolbar/contributor/" +
+			"ToolbartestPortletToolbarContributor.java",
 			"public class ToolbartestPortletToolbarContributor",
 			"implements PortletToolbarContributor");
 
@@ -492,41 +542,23 @@ public class ProjectTemplatesTest {
 	@Test
 	public void testBuildTemplateSimulationPanelEntry() throws Exception {
 		File projectDir = _createTemplateWithGradle(
-		"simulationpanelentry", "simulator", "--package-name", "test.simulator");
+			"simulationpanelentry", "simulator", "--package-name",
+			"test.simulator");
 
 		_testExists(projectDir, "bnd.bnd");
 
-		_testContains(projectDir, "build.gradle",
-				"apply plugin: \"com.liferay.plugin\"");
 		_testContains(
-			projectDir,
-			"src/main/java/test/simulator/application/list/SimulatorSimulationPanelApp.java",
+			projectDir, "build.gradle", "apply plugin: \"com.liferay.plugin\"");
+
+		_testContains(
+			projectDir, "src/main/java/test/simulator/application/list/" +
+			"SimulatorSimulationPanelApp.java",
 			"public class SimulatorSimulationPanelApp",
 			"extends BaseJSPPanelApp");
 
 		_executeGradle(projectDir, _TASK_PATH_BUILD);
 
 		_testExists(projectDir, "build/libs/test.simulator-1.0.0.jar");
-	}
-
-	@Test
-	public void testBuildTemplateContextContributor() throws Exception {
-		File projectDir = _createTemplateWithGradle(
-		"templatecontextcontributor", "blade-test");
-
-		_testExists(projectDir, "bnd.bnd");
-
-		_testContains(projectDir, "build.gradle",
-				"apply plugin: \"com.liferay.plugin\"");
-		_testContains(
-			projectDir,
-			"src/main/java/blade/test/theme/contributor/BladeTestTemplateContextContributor.java",
-			"public class BladeTestTemplateContextContributor",
-			"implements TemplateContextContributor");
-
-		_executeGradle(projectDir, _TASK_PATH_BUILD);
-
-		_testExists(projectDir, "build/libs/blade.test-1.0.0.jar");
 	}
 
 	@Test
@@ -576,7 +608,8 @@ public class ProjectTemplatesTest {
 	@Rule
 	public final TemporaryFolder temporaryFolder = new TemporaryFolder();
 
-	private File _createTemplateWithGradle(String template, String name, String... args)
+	private File _createTemplateWithGradle(
+			String template, String name, String... args)
 		throws Exception {
 
 		File destinationDir = new File(temporaryFolder.getRoot(), "gradle");
@@ -613,7 +646,8 @@ public class ProjectTemplatesTest {
 		return projectDir;
 	}
 
-	private File _createTemplateWithMaven(String template, String name, String... args)
+	private File _createTemplateWithMaven(
+			String template, String name, String... args)
 		throws Exception {
 
 		File destinationDir = new File(temporaryFolder.getRoot(), "maven");
@@ -622,7 +656,8 @@ public class ProjectTemplatesTest {
 
 		completeArgs.add("archetype:generate");
 		completeArgs.add("-B");
-		completeArgs.add("-DarchetypeArtifactId=com.liferay.project.templates." + template);
+		completeArgs.add(
+			"-DarchetypeArtifactId=com.liferay.project.templates." + template);
 		completeArgs.add("-DarchetypeGroupId=com.liferay");
 		completeArgs.add("-DarchetypeVersion=1.0.0");
 		completeArgs.add("-DgroupId=com.test");
@@ -647,23 +682,24 @@ public class ProjectTemplatesTest {
 		return projectDir;
 	}
 
-	private void _executeBndDiff(File gradleBundleFile, File mavenBundleFile) throws Exception {
+	private void _executeBndDiff(File gradleBundleFile, File mavenBundleFile)
+		throws Exception {
+
 		StringBuilder exclusions = new StringBuilder();
-			exclusions.append("Archiver-Version, ");
-			exclusions.append("Build-Jdk, ");
-			exclusions.append("Built-By, ");
-			exclusions.append("Javac-Debug, ");
-			exclusions.append("Javac-Deprecation, ");
-			exclusions.append("Javac-Encoding, ");
-			exclusions.append("*pom.properties, ");
-			exclusions.append("*pom.xml");
+
+		exclusions.append("Archiver-Version, ");
+		exclusions.append("Build-Jdk, ");
+		exclusions.append("Built-By, ");
+		exclusions.append("Javac-Debug, ");
+		exclusions.append("Javac-Deprecation, ");
+		exclusions.append("Javac-Encoding, ");
+		exclusions.append("*pom.properties, ");
+		exclusions.append("*pom.xml");
 
 		String[] args = {
-				"diff",
-				"-i",
-				exclusions.toString(),
-				gradleBundleFile.getPath(),
-				mavenBundleFile.getPath()};
+			"diff", "-i", exclusions.toString(), gradleBundleFile.getPath(),
+			mavenBundleFile.getPath()
+		};
 
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
 
@@ -675,11 +711,14 @@ public class ProjectTemplatesTest {
 
 		try {
 			main.start(args);
-		} finally {
+		}
+		finally {
 			main.close();
 		}
 
-		Assert.assertEquals("Gradle Jar does not match Maven Jar", "", new String(output.toByteArray()));
+		Assert.assertEquals(
+			"Gradle Jar does not match Maven Jar", "",
+			new String(output.toByteArray()));
 	}
 
 	private void _executeGradle(
@@ -753,26 +792,35 @@ public class ProjectTemplatesTest {
 		}
 
 		try (URLClassLoader classLoader = new URLClassLoader(urls, null)) {
-
-			Class<?> mavenCLIClazz = classLoader.loadClass("org.apache.maven.cli.MavenCli");
+			Class<?> mavenCLIClazz = classLoader.loadClass(
+				"org.apache.maven.cli.MavenCli");
 
 			Object mavenCli = mavenCLIClazz.newInstance();
 
 			ByteArrayOutputStream output = new ByteArrayOutputStream();
 			ByteArrayOutputStream errorOutput = new ByteArrayOutputStream();
 
-			Method doMain = mavenCLIClazz.getMethod("doMain", String[].class, String.class, PrintStream.class, PrintStream.class);
+			Method doMain = mavenCLIClazz.getMethod(
+				"doMain", String[].class, String.class, PrintStream.class,
+				PrintStream.class);
 
 			Thread currentThread = Thread.currentThread();
 
-			ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+			ClassLoader contextClassLoader =
+				currentThread.getContextClassLoader();
 
 			currentThread.setContextClassLoader(classLoader);
 
 			try {
-				Integer retcode = (Integer) doMain.invoke(mavenCli,args, projectDir.getAbsolutePath(), new PrintStream(output), new PrintStream(errorOutput));
+				PrintStream out = new PrintStream(output);
+				PrintStream err = new PrintStream(errorOutput);
 
-				Assert.assertEquals(new String(errorOutput.toByteArray()), 0, retcode.intValue());
+				Integer retcode = (Integer)doMain.invoke(
+					mavenCli, args, projectDir.getAbsolutePath(), out, err);
+
+				Assert.assertEquals(
+					new String(errorOutput.toByteArray()), 0,
+					retcode.intValue());
 			}
 			finally {
 				currentThread.setContextClassLoader(contextClassLoader);
@@ -863,6 +911,7 @@ public class ProjectTemplatesTest {
 			"public";
 
 	private static final String _TASK_PATH_BUILD = ":build";
+
 	private static final String _TASK_PATH_PACKAGE = "package";
 
 	private static URI _gradleDistribution;

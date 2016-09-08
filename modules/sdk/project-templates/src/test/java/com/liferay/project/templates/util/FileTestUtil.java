@@ -21,12 +21,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.RandomAccessFile;
+
 import java.nio.charset.StandardCharsets;
 import java.nio.file.DirectoryStream;
 import java.nio.file.DirectoryStream.Filter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -129,6 +131,34 @@ public class FileTestUtil {
 		return content.trim();
 	}
 
+	public static String[] readLines(File file) {
+		if (file == null) {
+			return null;
+		}
+
+		if (!file.exists()) {
+			return null;
+		}
+
+		List<String> lines = new ArrayList<>();
+
+		try (BufferedReader bufferedReader =
+				new BufferedReader(new FileReader(file))) {
+
+			String line;
+
+			while ((line = bufferedReader.readLine()) != null) {
+				StringBuffer contents = new StringBuffer(line);
+
+				lines.add(contents.toString());
+			}
+		}
+		catch (Exception e) {
+		}
+
+		return lines.toArray(new String[lines.size()]);
+	}
+
 	public static Properties readProperties(String name) throws IOException {
 		Properties properties = new Properties();
 
@@ -139,32 +169,6 @@ public class FileTestUtil {
 		}
 
 		return properties;
-	}
-
-	public static String[] readLines( File file ) {
-	    if( file == null ) {
-	        return null;
-	    }
-
-	    if( !file.exists() ) {
-	        return null;
-	    }
-
-	    List<String> lines = new ArrayList<String>();
-
-	    try(BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
-	        String line;
-
-	        while((line = bufferedReader.readLine() ) != null) {
-	            StringBuffer contents = new StringBuffer(line);
-
-	            lines.add( contents.toString() );
-	        }
-	    }
-	    catch( Exception e ) {
-	    }
-
-	    return lines.toArray(new String[lines.size()]);
 	}
 
 }

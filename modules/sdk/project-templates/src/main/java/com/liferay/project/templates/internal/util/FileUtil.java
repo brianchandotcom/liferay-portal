@@ -19,7 +19,9 @@ import com.liferay.project.templates.ProjectTemplates;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+
 import java.net.URL;
+
 import java.nio.file.DirectoryStream;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
@@ -27,8 +29,10 @@ import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.StandardCopyOption;
 import java.nio.file.attribute.BasicFileAttributes;
+
 import java.security.CodeSource;
 import java.security.ProtectionDomain;
+
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.jar.JarEntry;

@@ -112,6 +112,7 @@ version 1.0.125.
 
 ## 2.0.26 - 2016-09-07
 
+### Changed
 - [LPS-66853]: Update the [Liferay Source Formatter] dependency to version
 1.0.273.
 

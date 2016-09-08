@@ -220,6 +220,28 @@
 		<execute function="AssertNotChecked" locator1="//tr[contains(.,'${teamName}')]/td/input[contains(@id,'${permissionDefinitionKey}')]" />
 	</command>
 
+	<command name="searchCP">
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="${membershipType}s" />
+		</execute>
+
+		<execute macro="Team#_searchCP">
+			<var name="searchTerm" value="${searchTerm}" />
+		</execute>
+
+		<if>
+			<equals arg1="${isEmpty}" arg2="true" />
+			<then>
+				<execute function="AssertElementPresent" locator1="Message#EMPTY_INFO" />
+			</then>
+			<else>
+				<execute function="AssertElementPresent" locator1="Card#SPECIFIC_LARGE_TEXT">
+					<var method="StringUtil#unquote('${searchTerm}')" name="key_cardText" />
+				</execute>
+			</else>
+		</if>
+	</command>
+
 	<command name="tearDownCP">
 		<execute macro="TestCase#getSiteName">
 			<return from="siteName" name="siteName" />

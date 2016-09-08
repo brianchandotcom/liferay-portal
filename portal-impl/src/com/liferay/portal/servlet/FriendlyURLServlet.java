@@ -109,8 +109,6 @@ public class FriendlyURLServlet extends HttpServlet {
 
 		String pathInfo = getPathInfo(request);
 
-		request.setAttribute(WebKeys.FRIENDLY_URL, getFriendlyURL(pathInfo));
-
 		Object[] redirectArray = null;
 
 		boolean forcePermanentRedirect = false;
@@ -185,6 +183,10 @@ public class FriendlyURLServlet extends HttpServlet {
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	protected String getFriendlyURL(String pathInfo) {
 		String friendlyURL = _friendlyURLPathPrefix;
 

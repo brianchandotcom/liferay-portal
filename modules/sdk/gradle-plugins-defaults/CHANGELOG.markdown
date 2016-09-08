@@ -123,9 +123,9 @@ even if the versions in the `packageinfo` files are greater.
 - [LPS-67863]: Disable the `printArtifactPublishCommands` task if the project's
 `build.gradle` contains the string `version: "default"`, to prevent releasing
 modules with unpublished dependencies.
-- [LPS-67863]: The `.version-override-${project.name}.properties` now contains
-only the version overrides that differ from the versions specified in the
-`bnd.bnd` and `packageinfo` files.
+- [LPS-67863]: The `.version-override-${project.name}.properties` file now
+contains only the version overrides that differ from the versions specified in
+the `bnd.bnd` and `packageinfo` files.
 
 ## 1.2.5 - 2016-09-01
 

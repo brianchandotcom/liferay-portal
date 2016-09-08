@@ -105,7 +105,7 @@ int totalBannedUsers = MBBanLocalServiceUtil.getBansCount(scopeGroupId);
 					%>
 
 					<h5 class="text-default">
-						<liferay-ui:message arguments="<%= new String[] {PortalUtil.getUserName(ban.getUserId(), StringPool.BLANK), modifiedDateDescription} %>" key="banned-by-x-x-ago" />
+						<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(PortalUtil.getUserName(ban.getUserId(), StringPool.BLANK)), modifiedDateDescription} %>" key="banned-by-x-x-ago" />
 					</h5>
 
 					<h4>

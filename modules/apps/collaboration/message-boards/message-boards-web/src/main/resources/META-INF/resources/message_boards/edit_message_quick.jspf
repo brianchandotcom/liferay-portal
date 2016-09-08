@@ -74,7 +74,7 @@ Boolean showPermanentLink = (Boolean)request.getAttribute("edit-message.jsp-show
 				<div class="card-col-content card-col-gutters">
 
 					<%
-					String userDisplayText = LanguageUtil.format(request, "x-replying", new Object[] {PortalUtil.getUserName(themeDisplay.getUserId(), StringPool.BLANK)});
+					String userDisplayText = LanguageUtil.format(request, "x-replying", new Object[] {HtmlUtil.escape(PortalUtil.getUserName(themeDisplay.getUserId(), StringPool.BLANK))});
 					%>
 
 					<h5 class="message-user-display text-default" title="<%= userDisplayText %>">

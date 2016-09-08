@@ -35,8 +35,8 @@ User topUser = UserLocalServiceUtil.fetchUserById(statsUser.getUserId());
 			<h5 class="text-default"><liferay-ui:message key="rank" />: <%= HtmlUtil.escape(ranks[0]) %></h5>
 		</c:if>
 
-		<h4 title="<%= topUser.getFullName() %>">
-			<%= topUser.getFullName() %>
+		<h4 title="<%= HtmlUtil.escapeAttribute(topUser.getFullName()) %>">
+			<%= HtmlUtil.escape(topUser.getFullName()) %>
 		</h4>
 
 		<span class="h5 text-default">

@@ -201,7 +201,7 @@ if (groupThreadsUserId > 0) {
 									String messageUserName = "anonymous";
 
 									if (thread.getLastPostByUserId() != 0) {
-										messageUserName = PortalUtil.getUserName(thread.getLastPostByUserId(), StringPool.BLANK);
+										messageUserName = HtmlUtil.escape(PortalUtil.getUserName(thread.getLastPostByUserId(), StringPool.BLANK));
 									}
 
 									Date lastPostDate = thread.getLastPostDate();

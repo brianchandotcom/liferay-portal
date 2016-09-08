@@ -56,7 +56,6 @@ page import="com.liferay.blogs.web.constants.BlogsPortletKeys" %><%@
 page import="com.liferay.blogs.web.constants.BlogsWebKeys" %><%@
 page import="com.liferay.blogs.web.internal.BlogsItemSelectorHelper" %><%@
 page import="com.liferay.blogs.web.internal.display.context.BlogsPortletInstanceSettingsHelper" %><%@
-page import="com.liferay.blogs.web.internal.util.BlogsEntryHelper" %><%@
 page import="com.liferay.document.library.display.context.DLMimeTypeDisplayContext" %><%@
 page import="com.liferay.document.library.kernel.exception.FileSizeException" %><%@
 page import="com.liferay.document.library.kernel.service.DLAppLocalServiceUtil" %><%@
@@ -159,8 +158,6 @@ page import="javax.portlet.WindowState" %>
 
 <%
 PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(liferayPortletRequest);
-
-BlogsEntryHelper blogsEntryHelper = new BlogsEntryHelper(resourceBundle);
 
 Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);

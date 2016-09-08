@@ -44,7 +44,7 @@ portletURL.setParameter("mvcRenderCommandName", "/blogs/view");
 	<c:if test="<%= BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.PERMISSIONS) %>">
 		<liferay-security:permissionsURL
 			modelResource="<%= BlogsEntry.class.getName() %>"
-			modelResourceDescription="<%= blogsEntryHelper.getDisplayTitle(entry) %>"
+			modelResourceDescription="<%= BlogsEntryUtil.getDisplayTitle(entry, resourceBundle) %>"
 			resourcePrimKey="<%= String.valueOf(entry.getEntryId()) %>"
 			var="permissionsEntryURL"
 			windowState="<%= LiferayWindowState.POP_UP.toString() %>"

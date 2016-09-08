@@ -24,21 +24,17 @@ import java.util.ResourceBundle;
 /**
  * @author Alejandro Tardín
  */
-public class BlogsEntryHelper {
+public class BlogsEntryUtil {
 
-	public BlogsEntryHelper(ResourceBundle resourceBundle) {
-		_resourceBundle = resourceBundle;
-	}
+	public static String getDisplayTitle(
+		BlogsEntry entry, ResourceBundle resourceBundle) {
 
-	public String getDisplayTitle(BlogsEntry entry) {
 		if (Validator.isNull(entry.getTitle())) {
 			return HtmlUtil.escape(
-				LanguageUtil.get(_resourceBundle, "untitled-entry"));
+				LanguageUtil.get(resourceBundle, "untitled-entry"));
 		}
 
 		return HtmlUtil.escape(entry.getTitle());
 	}
-
-	private final ResourceBundle _resourceBundle;
 
 }

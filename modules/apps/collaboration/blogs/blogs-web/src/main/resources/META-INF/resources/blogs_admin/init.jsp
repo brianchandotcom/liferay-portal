@@ -15,6 +15,7 @@
 --%>
 
 <%@ include file="/init.jsp" %>
+<%@ page import="com.liferay.blogs.web.internal.util.BlogsEntryUtil" %>
 
 <%
 BlogsGroupServiceSettings blogsGroupServiceSettings = BlogsGroupServiceSettings.getInstance(scopeGroupId);

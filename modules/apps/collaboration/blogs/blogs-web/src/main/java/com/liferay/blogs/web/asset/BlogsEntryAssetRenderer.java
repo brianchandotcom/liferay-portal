@@ -19,7 +19,7 @@ import com.liferay.asset.kernel.model.BaseJSPAssetRenderer;
 import com.liferay.blogs.kernel.model.BlogsEntry;
 import com.liferay.blogs.service.permission.BlogsEntryPermission;
 import com.liferay.blogs.web.constants.BlogsPortletKeys;
-import com.liferay.blogs.web.internal.util.BlogsEntryHelper;
+import com.liferay.blogs.web.internal.util.BlogsEntryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -174,10 +174,7 @@ public class BlogsEntryAssetRenderer
 			_resourceBundleLoader.loadResourceBundle(
 				LanguageUtil.getLanguageId(locale));
 
-		BlogsEntryHelper blogsEntryHelper = new BlogsEntryHelper(
-			resourceBundle);
-
-		return blogsEntryHelper.getDisplayTitle(_entry);
+		return BlogsEntryUtil.getDisplayTitle(_entry, resourceBundle);
 	}
 
 	@Override

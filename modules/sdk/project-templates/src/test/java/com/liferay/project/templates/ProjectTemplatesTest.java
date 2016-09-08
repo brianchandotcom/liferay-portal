@@ -134,8 +134,6 @@ public class ProjectTemplatesTest {
 
 		_executeMaven(mavenProjectDir, new String[] { _TASK_PATH_PACKAGE });
 
-		_testContains(mavenProjectDir, "pom.xml", "<source>1.8</source>");
-
 		_testExists(mavenProjectDir, "target/bar-activator-1.0.0.jar");
 
 		File mavenBundleFile = new File(mavenProjectDir, "target/bar-activator-1.0.0.jar");
@@ -668,14 +666,38 @@ public class ProjectTemplatesTest {
 	}
 
 	private void _executeBndDiff(File gradleBundleFile, File mavenBundleFile) throws Exception {
+		StringBuilder exclusions = new StringBuilder();
+			exclusions.append("Archiver-Version, ");
+			exclusions.append("Build-Jdk, ");
+			exclusions.append("Built-By, ");
+			exclusions.append("Javac-Debug, ");
+			exclusions.append("Javac-Deprecation, ");
+			exclusions.append("Javac-Encoding, ");
+			exclusions.append("*pom.properties, ");
+			exclusions.append("*pom.xml");
+		
 		String[] args = {
 				"diff",
 				"-i",
-				"*pom.properties, *pom.xml, Archiver-Version, Built-By, Build-Jdk, Javac-Debug, Javac-Deprecation, Javac-Encoding",
+				exclusions.toString(),
 				gradleBundleFile.getPath(),
 				mavenBundleFile.getPath()};
+		
+		ByteArrayOutputStream output = new ByteArrayOutputStream();
 
-		bnd.main(args);
+		PrintStream ps = new PrintStream(output);
+		
+		System.setOut(ps);
+		
+		bnd main = new bnd();
+		
+		try {
+			main.start(args);
+		} finally {
+			main.close();
+		}
+		
+		Assert.assertEquals("Gradle Jar does not match Maven Jar", "", new String(output.toByteArray()));
 	}
 
 	private void _executeGradle(

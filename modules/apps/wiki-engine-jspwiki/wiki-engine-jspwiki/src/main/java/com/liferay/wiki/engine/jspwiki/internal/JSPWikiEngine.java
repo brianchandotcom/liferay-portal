@@ -253,7 +253,7 @@ public class JSPWikiEngine extends BaseInputEditorWikiEngine {
 	}
 
 	@Reference(
-		target = "(bundle.symbolic.name=com.liferay.wiki.engine.jspwiki)",
+		target = "(bundle.symbolic.name=com.liferay.wiki.engine.lang)",
 		unbind = "-"
 	)
 	protected void setResourceBundleLoader(

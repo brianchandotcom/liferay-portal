@@ -131,8 +131,8 @@ define("frontend-js-spa-web@1.0.11/liferay/app/App.es", ['exports', 'senna/src/a
 			}
 
 			Liferay.fire('beforeNavigate', {
-				originalEvent: event,
 				app: this,
+				originalEvent: event,
 				path: data.path
 			});
 		};

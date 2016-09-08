@@ -268,11 +268,11 @@ if (step == 1) {
 							<%
 							Map<String, Object> data = new HashMap<String, Object>();
 
+							data.put("entityid", role.getRoleId());
+							data.put("entityname", role.getTitle(locale));
 							data.put("iconcssclass", RolesAdminUtil.getIconCssClass(role));
 							data.put("groupdescriptivename", organization.getGroup().getDescriptiveName(locale));
 							data.put("groupid", organization.getGroupId());
-							data.put("roleid", role.getRoleId());
-							data.put("roletitle", role.getTitle(locale));
 							data.put("searchcontainername", "organizationRoles");
 
 							boolean disabled = false;

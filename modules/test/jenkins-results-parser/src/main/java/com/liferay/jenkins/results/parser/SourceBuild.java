@@ -11,23 +11,22 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-
 package com.liferay.jenkins.results.parser;
 
-
 /**
- * @author Kevin Yen
+ * @author Peter Yoo
  */
-public class BatchBuild extends BaseBuild {
+public class SourceBuild extends BaseBuild {
 
-	protected BatchBuild(String url) throws Exception {
-		this(url, null);
+	public SourceBuild(String url) throws Exception {
+		super(url);
 	}
 
-	protected BatchBuild(String url, TopLevelBuild topLevelBuild)
-		throws Exception {
-
-		super(url, topLevelBuild);
+	public SourceBuild(String url, Build parent) throws Exception {
+		super(url, parent);
 	}
 
+	@Override
+	public void findDownstreamBuilds() {
+	}
 }

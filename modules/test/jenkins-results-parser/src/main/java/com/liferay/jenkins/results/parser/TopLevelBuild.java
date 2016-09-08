@@ -14,97 +14,17 @@
 
 package com.liferay.jenkins.results.parser;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * @author Kevin Yen
  */
 public class TopLevelBuild extends BaseBuild {
 
-	public TopLevelBuild(String buildURL) throws Exception {
-		super(buildURL);
+	protected TopLevelBuild(String url) throws Exception {
+		this(url, null);
 	}
 
-	public void addDownstreamBuilds(String... invocationURLs) throws Exception {
-		for (String invocationURL : invocationURLs) {
-			_downstreamBuilds.add(new BatchBuild(invocationURL, this));
-		}
-
-		String status = getStatus();
-
-		if (status.equals("completed")) {
-			setStatus(null);
-		}
-
-		update();
+	protected TopLevelBuild(String url, TopLevelBuild parent) throws Exception {
+		super(url, parent);
 	}
-
-	public List<BatchBuild> getDownstreamBuilds(String status) {
-		if (status == null) {
-			return _downstreamBuilds;
-		}
-
-		List<BatchBuild> filteredDownstreamBuilds = new ArrayList<>();
-
-		for (BatchBuild downstreamBuild : _downstreamBuilds) {
-			if (status.equals(downstreamBuild.getStatus())) {
-				filteredDownstreamBuilds.add(downstreamBuild);
-			}
-		}
-
-		return filteredDownstreamBuilds;
-	}
-
-	@Override
-	public void update() throws Exception {
-		String status = getStatus();
-
-		if (status == null) {
-			setStatus("running");
-
-			status = getStatus();
-		}
-
-		if (status.equals("completed")) {
-			return;
-		}
-
-		if (_downstreamBuilds != null) {
-			for (BatchBuild downstreamBuild : _downstreamBuilds) {
-				downstreamBuild.update();
-			}
-
-			if (_downstreamBuilds.size() ==
-					getDownstreamBuildCount("completed")) {
-
-				setStatus("completed");
-
-				return;
-			}
-
-			if (getDownstreamBuildCount("missing") > 0) {
-				setStatus("missing");
-
-				return;
-			}
-
-			if (getDownstreamBuildCount("starting") > 0) {
-				setStatus("starting");
-
-				return;
-			}
-		}
-
-		setStatus("running");
-	}
-
-	protected int getDownstreamBuildCount(String status) {
-		List<BatchBuild> downstreamBuilds = getDownstreamBuilds(status);
-
-		return downstreamBuilds.size();
-	}
-
-	private final List<BatchBuild> _downstreamBuilds = new ArrayList<>();
 
 }

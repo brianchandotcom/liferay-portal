@@ -14,10 +14,11 @@
 
 package com.liferay.project.templates;
 
+import aQute.bnd.main.bnd;
+
+import com.liferay.project.templates.internal.util.FileUtil;
 import com.liferay.project.templates.internal.util.Validator;
 import com.liferay.project.templates.util.FileTestUtil;
-
-import aQute.bnd.main.bnd;
 
 import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
@@ -25,14 +26,14 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.Writer;
-
+import java.lang.reflect.Method;
 import java.net.URI;
-
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -40,7 +41,6 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 
-import org.apache.maven.cli.MavenCli;
 import org.gradle.testkit.runner.BuildResult;
 import org.gradle.testkit.runner.BuildTask;
 import org.gradle.testkit.runner.GradleRunner;
@@ -75,7 +75,7 @@ public class ProjectTemplatesTest {
 		_httpProxyPort = System.getProperty("http.proxyPort");
 		_repositoryUrl = System.getProperty("repository.url");
 	}
-	
+
 	@After
 	public void tearDown() throws Exception {
 		File velocityLog = new File("velocity.log");
@@ -122,25 +122,27 @@ public class ProjectTemplatesTest {
 		_executeGradle(projectDir, _TASK_PATH_BUILD);
 
 		_testExists(projectDir, "build/libs/bar.activator-1.0.0.jar");
-		
+
 		File gradleBundleFile = new File(projectDir, "build/libs/bar.activator-1.0.0.jar");
-		
+
 		File mavenProjectDir = _buildTemplateWithMaven(
 			"activator", "bar-activator",
-			"-DartifactId=bar",
-			"-Dpackage=com.test.bar",
+			"-DartifactId=bar-activator",
+			"-Dpackage=bar.activator",
 			"-DclassName=BarActivator",
 			"-DprojectType=standalone");
-		
-		_executeMaven(projectDir, _TASK_PATH_PACKAGE);
-		
-		_testExists(mavenProjectDir, "target/bar.activator-1.0.0.jar");
-		
-		File mavenBundleFile = new File(projectDir, "target/bar.activator-1.0.0.jar");
-		
+
+		_executeMaven(mavenProjectDir, new String[] { _TASK_PATH_PACKAGE });
+
+		_testContains(mavenProjectDir, "pom.xml", "<source>1.8</source>");
+
+		_testExists(mavenProjectDir, "target/bar-activator-1.0.0.jar");
+
+		File mavenBundleFile = new File(mavenProjectDir, "target/bar-activator-1.0.0.jar");
+
 		_executeBndDiff(gradleBundleFile, mavenBundleFile);
 	}
-	
+
 	@Test
 	public void testBuildTemplateApi() throws Exception {
 		File projectDir = _buildTemplateWithGradle("api", "foo");
@@ -157,7 +159,7 @@ public class ProjectTemplatesTest {
 
 		_testExists(projectDir, "build/libs/foo-1.0.0.jar");
 	}
-	
+
 	@Test
 	public void testBuildTemplateContentTargetingReport() throws Exception {
 		File projectDir = _buildTemplateWithGradle("contenttargetingreport", "foo-bar");
@@ -172,7 +174,7 @@ public class ProjectTemplatesTest {
 
 		_testExists(projectDir, "build/libs/foo.bar-1.0.0.jar");
 	}
-	
+
 	@Test
 	public void testBuildTemplateContentTargetingRule() throws Exception {
 		File projectDir = _buildTemplateWithGradle("contenttargetingrule", "foo-bar");
@@ -187,7 +189,7 @@ public class ProjectTemplatesTest {
 
 		_testExists(projectDir, "build/libs/foo.bar-1.0.0.jar");
 	}
-	
+
 	@Test
 	public void testBuildTemplateContentTargetingTrackingAction() throws Exception {
 		File projectDir = _buildTemplateWithGradle("contenttargetingtrackingaction", "foo-bar");
@@ -206,20 +208,20 @@ public class ProjectTemplatesTest {
 	@Test
 	public void testBuildTemplateControlMenuEntry() throws Exception {
 		File projectDir = _buildTemplateWithGradle("controlmenuentry", "foo-bar");
-		
+
 		_testExists(projectDir, "bnd.bnd");
-				
+
 		_testContains(
 				projectDir, "src/main/java/foo/bar/control/menu/FooBarProductNavigationControlMenuEntry.java",
 				"public class FooBarProductNavigationControlMenuEntry",
 				"extends BaseProductNavigationControlMenuEntry",
 				"implements ProductNavigationControlMenuEntry");
-		
+
 		_executeGradle(projectDir, _TASK_PATH_BUILD);
-		
+
 		_testExists(projectDir, "build/libs/foo.bar-1.0.0.jar");
 	}
-	
+
 	@Test
 	public void testBuildTemplateFragment() throws Exception {
 		File projectDir = _buildTemplateWithGradle(
@@ -334,7 +336,7 @@ public class ProjectTemplatesTest {
 
 		_testExists(projectDir, "build/libs/gradle.test-1.0.0.jar");
 	}
-	
+
 	@Test
 	public void testBuildTemplatePortlet() throws Exception {
 		File projectDir = _buildTemplateWithGradle(
@@ -359,14 +361,14 @@ public class ProjectTemplatesTest {
 
 		_testExists(projectDir, "build/libs/gradle.test-1.0.0.jar");
 	}
-	
+
 	@Test
 	public void testBuildTemplatePortletConfigurationIcon() throws Exception {
 		File projectDir = _buildTemplateWithGradle(
 		"portletconfigurationicon", "icontest", "--package-name", "blade.test");
 
 		_testExists(projectDir, "bnd.bnd");
-		
+
 		_testContains(projectDir, "build.gradle",
 				"apply plugin: \"com.liferay.plugin\"");
 		_testContains(
@@ -378,7 +380,7 @@ public class ProjectTemplatesTest {
 
 		_testExists(projectDir, "build/libs/blade.test-1.0.0.jar");
 	}
-	
+
 	@Test
 	public void testBuildTemplatePortletProvider() throws Exception {
 		File projectDir = _buildTemplateWithGradle(
@@ -397,18 +399,18 @@ public class ProjectTemplatesTest {
 
 		_testExists(projectDir, "build/libs/provider.test-1.0.0.jar");
 	}
-	
+
 	@Test
 	public void testBuildTemplatePortletToolbarContributor() throws Exception {
 		File projectDir = _buildTemplateWithGradle(
 		"portlettoolbarcontributor", "toolbartest", "--package-name", "blade.test");
 
 		_testExists(projectDir, "bnd.bnd");
-		
+
 		_testContains(projectDir, "build.gradle",
 				"apply plugin: \"com.liferay.plugin\"");
 		_testContains(
-			projectDir, 
+			projectDir,
 			"src/main/java/blade/test/portlet/toolbar/contributor/ToolbartestPortletToolbarContributor.java",
 			"public class ToolbartestPortletToolbarContributor",
 			"implements PortletToolbarContributor");
@@ -508,18 +510,18 @@ public class ProjectTemplatesTest {
 
 		_testExists(projectDir, "build/libs/serviceoverride-1.0.0.jar");
 	}
-	
+
 	@Test
 	public void testBuildTemplateSimulationPanelEntry() throws Exception {
 		File projectDir = _buildTemplateWithGradle(
 		"simulationpanelentry", "simulator", "--package-name", "test.simulator");
 
 		_testExists(projectDir, "bnd.bnd");
-		
+
 		_testContains(projectDir, "build.gradle",
 				"apply plugin: \"com.liferay.plugin\"");
 		_testContains(
-			projectDir, 
+			projectDir,
 			"src/main/java/test/simulator/application/list/SimulatorSimulationPanelApp.java",
 			"public class SimulatorSimulationPanelApp",
 			"extends BaseJSPPanelApp");
@@ -528,18 +530,18 @@ public class ProjectTemplatesTest {
 
 		_testExists(projectDir, "build/libs/test.simulator-1.0.0.jar");
 	}
-	
+
 	@Test
 	public void testBuildTemplateContextContributor() throws Exception {
 		File projectDir = _buildTemplateWithGradle(
 		"templatecontextcontributor", "blade-test");
 
 		_testExists(projectDir, "bnd.bnd");
-		
+
 		_testContains(projectDir, "build.gradle",
 				"apply plugin: \"com.liferay.plugin\"");
 		_testContains(
-			projectDir, 
+			projectDir,
 			"src/main/java/blade/test/theme/contributor/BladeTestTemplateContextContributor.java",
 			"public class BladeTestTemplateContextContributor",
 			"implements TemplateContextContributor");
@@ -599,7 +601,7 @@ public class ProjectTemplatesTest {
 	private File _buildTemplateWithGradle(String template, String name, String... args)
 		throws Exception {
 
-		File destinationDir = temporaryFolder.getRoot();
+		File destinationDir = new File(temporaryFolder.getRoot(), "gradle");
 
 		List<String> completeArgs = new ArrayList<>(args.length + 6);
 
@@ -632,14 +634,14 @@ public class ProjectTemplatesTest {
 
 		return projectDir;
 	}
-	
+
 	private File _buildTemplateWithMaven(String template, String name, String... args)
 		throws Exception {
-		
-		File destinationDir = temporaryFolder.newFolder("mavenBuild");
-		
-		List<String> completeArgs = new ArrayList<>(args.length + 6);
-		
+
+		File destinationDir = new File(temporaryFolder.getRoot(), "maven");
+
+		List<String> completeArgs = new ArrayList<>();
+
 		completeArgs.add("archetype:generate");
 		completeArgs.add("-B");
 		completeArgs.add("-DarchetypeArtifactId=com.liferay.project.templates." + template);
@@ -647,59 +649,32 @@ public class ProjectTemplatesTest {
 		completeArgs.add("-DarchetypeVersion=1.0.0");
 		completeArgs.add("-DgroupId=com.test");
 		completeArgs.add("-Dversion=1.0.0");
-		
-		if (Validator.isNotNull(template)) {
-			completeArgs.add("--template");
-			completeArgs.add(template);
-		}
-		
+
 		for (String arg : args) {
 			completeArgs.add(arg);
 		}
-		
-		MavenCli mavenCli = new MavenCli();
-		
-		ByteArrayOutputStream output = new ByteArrayOutputStream();
-		ByteArrayOutputStream errorOutput = new ByteArrayOutputStream();
-		
-		int retcode = mavenCli.doMain(completeArgs.toArray(new String[
-		    completeArgs.size()]), 
-			destinationDir.getPath(), 
-			new PrintStream(output), 
-			new PrintStream(errorOutput));
-		
-		Assert.assertEquals(new String(errorOutput.toByteArray()), 0, retcode);
 
-		output = new ByteArrayOutputStream();
-		errorOutput = new ByteArrayOutputStream();
-		
+		_executeMaven(destinationDir, completeArgs.toArray(new String[0]));
+
 		File projectDir = new File(destinationDir, name);
-		
+
 		_testExists(projectDir, "pom.xml");
-		_testNotExists(projectDir, "build.gradle");
 		_testNotExists(projectDir, "gradlew");
 		_testNotExists(projectDir, "gradlew.bat");
 		_testNotExists(projectDir, "gradle/wrapper/gradle-wrapper.jar");
-		_testNotExists(projectDir, "gradle/wrapper/gradle-wrapper.properties");	
-		
+		_testNotExists(projectDir, "gradle/wrapper/gradle-wrapper.properties");
+
 		return projectDir;
 	}
-	
-	private void _executeBndDiff(File gradleBundleFile, File mavenBundleFile) throws Exception {		
+
+	private void _executeBndDiff(File gradleBundleFile, File mavenBundleFile) throws Exception {
 		String[] args = {
 				"diff",
 				"-i",
-				"*pom.properties",
-				"*pom.xml", 
-				"Archiver-Version", 
-				"Built-By", 
-				"Build-Jdk", 
-				"Javac-Debug", 
-				"Javac-Deprecation", 
-				"Javac-Encoding",
+				"*pom.properties, *pom.xml, Archiver-Version, Built-By, Build-Jdk, Javac-Debug, Javac-Deprecation, Javac-Encoding",
 				gradleBundleFile.getPath(),
 				mavenBundleFile.getPath()};
-		
+
 		bnd.main(args);
 	}
 
@@ -755,24 +730,50 @@ public class ProjectTemplatesTest {
 				TaskOutcome.SUCCESS, buildTask.getOutcome());
 		}
 	}
-	
-	private void _executeMaven(
-			File projectDir, String taskPath, String... testTaskPaths)
-		throws IOException {
-		
-		MavenCli mavenCli = new MavenCli();
-		
-		ByteArrayOutputStream output = new ByteArrayOutputStream();
-		ByteArrayOutputStream errorOutput = new ByteArrayOutputStream();
-		
-		String[] args = new String[] { 
-				"-e",
-				"package"
-		};
 
-		int retcode = mavenCli.doMain(args, "build/test/bar", new PrintStream(output), new PrintStream(errorOutput));
+	private void _executeMaven(File projectDir, String[] args)
+		throws Exception {
 
-		Assert.assertEquals(new String(errorOutput.toByteArray()), 0, retcode);
+		File deps = new File("build/mavenEmbedderDeps.txt");
+
+		String[] lines = FileUtil.readFile(deps);
+
+		URL[] urls = new URL[lines.length];
+
+		for (int i = 0; i < lines.length; i++) {
+			File file = new File(lines[i]);
+
+			URI uri = file.toURI();
+
+			urls[i] = uri.toURL();
+		}
+
+		try (URLClassLoader classLoader = new URLClassLoader(urls, null)) {
+
+			Class<?> mavenCLIClazz = classLoader.loadClass("org.apache.maven.cli.MavenCli");
+
+			Object mavenCli = mavenCLIClazz.newInstance();
+
+			ByteArrayOutputStream output = new ByteArrayOutputStream();
+			ByteArrayOutputStream errorOutput = new ByteArrayOutputStream();
+
+			Method doMain = mavenCLIClazz.getMethod("doMain", String[].class, String.class, PrintStream.class, PrintStream.class);
+
+			Thread currentThread = Thread.currentThread();
+
+			ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+
+			currentThread.setContextClassLoader(classLoader);
+
+			try {
+				Integer retcode = (Integer) doMain.invoke(mavenCli,args, projectDir.getAbsolutePath(), new PrintStream(output), new PrintStream(errorOutput));
+
+				Assert.assertEquals(new String(errorOutput.toByteArray()), 0, retcode.intValue());
+			}
+			finally {
+				currentThread.setContextClassLoader(contextClassLoader);
+			}
+		}
 	}
 
 	private void _testBuildTemplateServiceBuilder(

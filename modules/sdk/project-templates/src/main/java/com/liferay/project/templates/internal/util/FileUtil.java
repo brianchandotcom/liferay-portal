@@ -16,12 +16,12 @@ package com.liferay.project.templates.internal.util;
 
 import com.liferay.project.templates.ProjectTemplates;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
-
 import java.net.URL;
-
 import java.nio.file.DirectoryStream;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
@@ -29,12 +29,12 @@ import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.StandardCopyOption;
 import java.nio.file.attribute.BasicFileAttributes;
-
 import java.security.CodeSource;
 import java.security.ProtectionDomain;
-
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Iterator;
+import java.util.List;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
@@ -140,5 +140,36 @@ public class FileUtil {
 
 		return new File(url.toURI());
 	}
+
+	public static String[] readFile( File file )
+    {
+        if( file == null )
+        {
+            return null;
+        }
+
+        if( !file.exists() )
+        {
+            return null;
+        }
+
+        List<String> lines = new ArrayList<String>();
+
+        try(BufferedReader bufferedReader = new BufferedReader(new FileReader(file)))
+        {
+            String line;
+
+            while( ( line = bufferedReader.readLine() ) != null )
+            {
+                StringBuffer contents = new StringBuffer(line);
+
+                lines.add( contents.toString() );
+            }
+        }
+        catch( Exception e ) {
+        }
+
+        return lines.toArray( new String[lines.size()] );
+    }
 
 }

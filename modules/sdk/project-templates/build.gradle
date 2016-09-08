@@ -6,17 +6,28 @@ bundle {
 
 configurations {
 	projectTemplates
+	mavenEmbedder
+}
+
+task depsFile << {
+	File depsFile = new File(buildDir, "mavenEmbedderDeps.txt")
+
+	buildDir.mkdirs()
+
+	depsFile.text = configurations.mavenEmbedder.join('\n')
 }
 
 dependencies {
 	testCompile group: "biz.aQute.bnd", name: "biz.aQute.bnd", version: "3.2.0"
+
 	testCompile group: "junit", name: "junit", version: "4.12"
-	testCompile group: "org.apache.avalon.logkit", name: "avalon-logkit", version: "2.2.1"
-	testCompile group: "org.apache.maven", name: "maven-embedder", version: "3.3.9"
-	testCompile group: "org.apache.maven.wagon", name: "wagon-http", version: "2.10"
-	testCompile group: "org.eclipse.aether", name: "aether-connector-basic", version: "1.0.2.v20150114"
-	testCompile group: "org.eclipse.aether", name: "aether-transport-http", version: "1.0.2.v20150114"
-	testCompile group: "org.slf4j", name: "slf4j-simple", version: "1.7.5"
+
+	mavenEmbedder group: "org.apache.avalon.logkit", name: "avalon-logkit", version: "2.2.1"
+	mavenEmbedder group: "org.apache.maven", name: "maven-embedder", version: "3.3.9"
+	mavenEmbedder group: "org.apache.maven.wagon", name: "wagon-http", version: "2.10"
+	mavenEmbedder group: "org.eclipse.aether", name: "aether-connector-basic", version: "1.0.2.v20150114"
+	mavenEmbedder group: "org.eclipse.aether", name: "aether-transport-http", version: "1.0.2.v20150114"
+	mavenEmbedder group: "org.slf4j", name: "slf4j-simple", version: "1.7.5"
 
 	projectTemplates project(":sdk:project-templates-activator")
 	projectTemplates project(":sdk:project-templates-api")
@@ -48,7 +59,7 @@ processResources {
 }
 
 test {
-	dependsOn install
+	dependsOn install, depsFile
 
 	doFirst {
 		Properties gradleWrapperProperties = new Properties()

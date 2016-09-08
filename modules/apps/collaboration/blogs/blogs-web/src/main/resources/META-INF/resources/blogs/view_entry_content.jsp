@@ -100,7 +100,7 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 						<c:choose>
 							<c:when test="<%= !viewSingleEntry %>">
 								<h2>
-									<aui:a href="<%= viewEntryURL %>"><%= HtmlUtil.escape(BlogsEntryUtil.getDisplayTitle(entry, resourceBundle)) %></aui:a>
+									<aui:a href="<%= viewEntryURL %>"><%= BlogsEntryUtil.getDisplayTitle(entry, resourceBundle) %></aui:a>
 								</h2>
 
 								<c:if test="<%= !entry.isApproved() %>">
@@ -114,7 +114,7 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 								</c:if>
 							</c:when>
 							<c:otherwise>
-								<h1><%= HtmlUtil.escape(BlogsEntryUtil.getDisplayTitle(entry, resourceBundle)) %></h1>
+								<h1><%= BlogsEntryUtil.getDisplayTitle(entry, resourceBundle) %></h1>
 							</c:otherwise>
 						</c:choose>
 					</div>

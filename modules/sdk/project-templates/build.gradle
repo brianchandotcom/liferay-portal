@@ -59,6 +59,14 @@ processResources {
 }
 
 test {
+	Set<Project> projectTemplateProjects = project.parent.subprojects.findAll {
+		it.name.startsWith "project-templates-"
+	}
+
+	dependsOn projectTemplateProjects.collect {
+		"${it.path}:install"
+	}
+
 	dependsOn install, depsFile
 
 	doFirst {

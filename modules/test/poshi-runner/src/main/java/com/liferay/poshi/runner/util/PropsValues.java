@@ -239,6 +239,9 @@ public class PropsValues {
 	public static final int TEST_RETRY_COMMAND_WAIT_TIME =
 		GetterUtil.getInteger(PropsUtil.get("test.retry.command.wait.time"));
 
+	public static final String TEST_RUN_ENVIRONMENT = PropsUtil.get(
+		"test.run.environment");
+
 	public static final boolean TEST_RUN_LOCALLY = GetterUtil.getBoolean(
 		PropsUtil.get("test.run.locally"));
 

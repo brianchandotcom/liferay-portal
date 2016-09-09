@@ -100,7 +100,7 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 						<c:choose>
 							<c:when test="<%= !viewSingleEntry %>">
 								<h2>
-									<aui:a href="<%= viewEntryURL %>"><%= BlogsEntryUtil.getDisplayTitle(entry, resourceBundle) %></aui:a>
+									<aui:a href="<%= viewEntryURL %>"><%= BlogsEntryUtil.getDisplayTitle(resourceBundle, entry) %></aui:a>
 								</h2>
 
 								<c:if test="<%= !entry.isApproved() %>">
@@ -114,7 +114,7 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 								</c:if>
 							</c:when>
 							<c:otherwise>
-								<h1><%= BlogsEntryUtil.getDisplayTitle(entry, resourceBundle) %></h1>
+								<h1><%= BlogsEntryUtil.getDisplayTitle(resourceBundle, entry) %></h1>
 							</c:otherwise>
 						</c:choose>
 					</div>
@@ -286,7 +286,7 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 								contentId="<%= String.valueOf(entry.getEntryId()) %>"
 								displayStyle="<%= blogsPortletInstanceConfiguration.socialBookmarksDisplayStyle() %>"
 								target="_blank"
-								title="<%= BlogsEntryUtil.getDisplayTitle(entry, resourceBundle) %>"
+								title="<%= BlogsEntryUtil.getDisplayTitle(resourceBundle, entry) %>"
 								types="<%= blogsPortletInstanceConfiguration.socialBookmarksTypes() %>"
 								url="<%= PortalUtil.getCanonicalURL(bookmarkURL.toString(), themeDisplay, layout) %>"
 							/>
@@ -298,7 +298,7 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 							<liferay-flags:flags
 								className="<%= BlogsEntry.class.getName() %>"
 								classPK="<%= entry.getEntryId() %>"
-								contentTitle="<%= BlogsEntryUtil.getDisplayTitle(entry, resourceBundle) %>"
+								contentTitle="<%= BlogsEntryUtil.getDisplayTitle(resourceBundle, entry) %>"
 								reportedUserId="<%= entry.getUserId() %>"
 							/>
 						</div>

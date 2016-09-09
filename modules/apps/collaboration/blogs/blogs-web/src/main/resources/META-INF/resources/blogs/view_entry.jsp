@@ -40,7 +40,7 @@ request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
-renderResponse.setTitle(BlogsEntryUtil.getDisplayTitle(entry, resourceBundle));
+renderResponse.setTitle(BlogsEntryUtil.getDisplayTitle(resourceBundle, entry));
 %>
 
 <portlet:actionURL name="/blogs/edit_entry" var="editEntryURL" />
@@ -84,7 +84,7 @@ renderResponse.setTitle(BlogsEntryUtil.getDisplayTitle(entry, resourceBundle));
 								%>
 
 								<c:if test="<%= Validator.isNotNull(smallImageURL) %>">
-									<aui:a href="<%= previousEntryURL %>" title="<%= BlogsEntryUtil.getDisplayTitle(previousEntry, resourceBundle) %>">
+									<aui:a href="<%= previousEntryURL %>" title="<%= BlogsEntryUtil.getDisplayTitle(resourceBundle, previousEntry) %>">
 										<span class="small-image visible-lg-block visible-md-block" style="background-image: url(<%= HtmlUtil.escape(smallImageURL) %>)"></span>
 									</aui:a>
 								</c:if>
@@ -100,7 +100,7 @@ renderResponse.setTitle(BlogsEntryUtil.getDisplayTitle(entry, resourceBundle));
 
 								<div class="entry-content">
 									<h4>
-										<aui:a href="<%= previousEntryURL %>" title="<%= BlogsEntryUtil.getDisplayTitle(previousEntry, resourceBundle) %>"><%= BlogsEntryUtil.getDisplayTitle(previousEntry, resourceBundle) %></aui:a>
+										<aui:a href="<%= previousEntryURL %>" title="<%= BlogsEntryUtil.getDisplayTitle(resourceBundle, previousEntry) %>"><%= BlogsEntryUtil.getDisplayTitle(resourceBundle, previousEntry) %></aui:a>
 									</h4>
 
 									<p class="entry-content-body visible-lg-block">
@@ -126,7 +126,7 @@ renderResponse.setTitle(BlogsEntryUtil.getDisplayTitle(entry, resourceBundle));
 								%>
 
 								<c:if test="<%= Validator.isNotNull(smallImageURL) %>">
-									<aui:a href="<%= nextEntryURL %>" title="<%= BlogsEntryUtil.getDisplayTitle(nextEntry, resourceBundle) %>">
+									<aui:a href="<%= nextEntryURL %>" title="<%= BlogsEntryUtil.getDisplayTitle(resourceBundle, nextEntry) %>">
 										<span class="small-image visible-lg-block visible-md-block" style="background-image: url(<%= HtmlUtil.escape(smallImageURL) %>)"></span>
 									</aui:a>
 								</c:if>
@@ -142,7 +142,7 @@ renderResponse.setTitle(BlogsEntryUtil.getDisplayTitle(entry, resourceBundle));
 
 								<div class="entry-content">
 									<h4>
-										<aui:a href="<%= nextEntryURL %>" title="<%= BlogsEntryUtil.getDisplayTitle(nextEntry, resourceBundle) %>"><%= BlogsEntryUtil.getDisplayTitle(nextEntry, resourceBundle) %></aui:a>
+										<aui:a href="<%= nextEntryURL %>" title="<%= BlogsEntryUtil.getDisplayTitle(resourceBundle, nextEntry) %>"><%= BlogsEntryUtil.getDisplayTitle(resourceBundle, nextEntry) %></aui:a>
 									</h4>
 
 									<p class="visible-lg-block">
@@ -186,7 +186,7 @@ renderResponse.setTitle(BlogsEntryUtil.getDisplayTitle(entry, resourceBundle));
 </div>
 
 <%
-PortalUtil.setPageTitle(BlogsEntryUtil.getDisplayTitle(entry, resourceBundle), request);
+PortalUtil.setPageTitle(BlogsEntryUtil.getDisplayTitle(resourceBundle, entry), request);
 PortalUtil.setPageSubtitle(entry.getSubtitle(), request);
 PortalUtil.setPageDescription(entry.getDescription(), request);
 
@@ -194,7 +194,7 @@ List<AssetTag> assetTags = AssetTagLocalServiceUtil.getTags(BlogsEntry.class.get
 
 PortalUtil.setPageKeywords(ListUtil.toString(assetTags, AssetTag.NAME_ACCESSOR), request);
 
-PortalUtil.addPortletBreadcrumbEntry(request, BlogsEntryUtil.getDisplayTitle(entry, resourceBundle), currentURL);
+PortalUtil.addPortletBreadcrumbEntry(request, BlogsEntryUtil.getDisplayTitle(resourceBundle, entry), currentURL);
 %>
 
 <liferay-util:dynamic-include key="com.liferay.blogs.web#/blogs/view_entry.jsp#post" />

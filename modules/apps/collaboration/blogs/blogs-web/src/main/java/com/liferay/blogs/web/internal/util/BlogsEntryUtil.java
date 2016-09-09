@@ -27,7 +27,7 @@ import java.util.ResourceBundle;
 public class BlogsEntryUtil {
 
 	public static String getDisplayTitle(
-		BlogsEntry entry, ResourceBundle resourceBundle) {
+		ResourceBundle resourceBundle, BlogsEntry entry) {
 
 		if (Validator.isNull(entry.getTitle())) {
 			return HtmlUtil.escape(

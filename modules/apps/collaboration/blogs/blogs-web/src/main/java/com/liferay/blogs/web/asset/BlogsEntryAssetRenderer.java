@@ -174,7 +174,7 @@ public class BlogsEntryAssetRenderer
 			_resourceBundleLoader.loadResourceBundle(
 				LanguageUtil.getLanguageId(locale));
 
-		return BlogsEntryUtil.getDisplayTitle(_entry, resourceBundle);
+		return BlogsEntryUtil.getDisplayTitle(resourceBundle, _entry);
 	}
 
 	@Override

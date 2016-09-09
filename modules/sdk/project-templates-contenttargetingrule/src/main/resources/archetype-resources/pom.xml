@@ -12,9 +12,45 @@
 	<packaging>jar</packaging>
 	<dependencies>
 		<dependency>
+			<groupId>com.liferay.content-targeting</groupId>
+			<artifactId>com.liferay.content.targeting.analytics.api</artifactId>
+			<version>3.0.0</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.liferay.content-targeting</groupId>
+			<artifactId>com.liferay.content.targeting.anonymous.users.api</artifactId>
+			<version>2.0.2</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.liferay.content-targeting</groupId>
+			<artifactId>com.liferay.content.targeting.api</artifactId>
+			<version>4.0.0</version>
+			<scope>provided</scope>
+		</dependency>		
+		<dependency>
 			<groupId>com.liferay.portal</groupId>
 			<artifactId>com.liferay.portal.kernel</artifactId>
+			<version>2.3.0</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.liferay.portal</groupId>
+			<artifactId>com.liferay.util.taglib</artifactId>
 			<version>2.0.0</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.portlet</groupId>
+			<artifactId>portlet-api</artifactId>
+			<version>2.0</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.0.1</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -31,8 +67,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.1</version>
 				<configuration>
-					<source>1.7</source>
-					<target>1.7</target>
+					<source>1.8</source>
+					<target>1.8</target>
 				</configuration>
 			</plugin>
 			<plugin>

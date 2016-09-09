@@ -16,7 +16,7 @@ package com.liferay.dynamic.data.mapping.web.internal.exportimport.content.proce
 
 /**
  * @author Gergely Mathe
- * @deprecated As of 7.0.0
+ * @deprecated As of 1.0.0
  */
 @Deprecated
 public class DDMTemplateExportImportContentProcessor {

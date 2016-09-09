@@ -416,7 +416,8 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			newContent = formatDDLStructuresXML(newContent);
 		}
 		else if (fileName.endsWith("routes.xml")) {
-			newContent = formatFriendlyURLRoutesXML(fileName, newContent);
+			newContent = formatFriendlyURLRoutesXML(
+				fileName, absolutePath, newContent);
 		}
 		else if (fileName.endsWith("-hbm.xml")) {
 			formatHBMXML(fileName, newContent);
@@ -744,7 +745,8 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		return Dom4jUtil.toString(document);
 	}
 
-	protected String formatFriendlyURLRoutesXML(String fileName, String content)
+	protected String formatFriendlyURLRoutesXML(
+			String fileName, String absolutePath, String content)
 		throws Exception {
 
 		Document document = readXML(content);
@@ -776,7 +778,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		StringBundler sb = new StringBundler(9);
 
 		ComparableVersion mainReleaseComparableVersion =
-			getMainReleaseComparableVersion();
+			getMainReleaseComparableVersion(fileName, absolutePath, false);
 
 		String mainReleaseVersion = mainReleaseComparableVersion.toString();
 

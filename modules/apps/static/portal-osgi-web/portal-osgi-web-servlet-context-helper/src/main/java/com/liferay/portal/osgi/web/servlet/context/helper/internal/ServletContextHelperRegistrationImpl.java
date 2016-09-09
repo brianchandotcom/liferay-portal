@@ -166,7 +166,7 @@ public class ServletContextHelperRegistrationImpl
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of 2.1.0, with no direct replacement
 	 */
 	@Deprecated
 	@Override

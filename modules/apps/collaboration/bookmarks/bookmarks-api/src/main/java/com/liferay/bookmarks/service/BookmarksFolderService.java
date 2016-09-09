@@ -72,7 +72,7 @@ public interface BookmarksFolderService extends BaseService {
 		throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #updateFolder(long, long,
+	* @deprecated As of 1.0.0, replaced by {@link #updateFolder(long, long,
 	String, String, ServiceContext)} and {@link
 	#mergeFolders(long, long)}
 	*/
@@ -145,7 +145,7 @@ public interface BookmarksFolderService extends BaseService {
 		throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getSubfolderIds(List, long,
+	* @deprecated As of 1.0.0, replaced by {@link #getSubfolderIds(List, long,
 	long, boolean)}
 	*/
 	@java.lang.Deprecated

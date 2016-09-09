@@ -79,7 +79,7 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of 1.1.0
 	 */
 	@Deprecated
 	protected DynamicQuery createRecordSetDynamicQuery() {
@@ -87,7 +87,7 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of 1.1.0
 	 */
 	@Deprecated
 	protected DynamicQuery createRecordVersionDynamicQuery() {
@@ -95,7 +95,7 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of 1.1.0
 	 */
 	@Deprecated
 	protected void deleteDDMStructures(Set<Long> ddmStructureIds)
@@ -103,7 +103,7 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of 1.1.0
 	 */
 	@Deprecated
 	protected void deleteRecordSets(PortletDataContext portletDataContext)
@@ -239,7 +239,7 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of 1.1.0
 	 */
 	@Deprecated
 	protected ActionableDynamicQuery getRecordActionableDynamicQuery(
@@ -250,7 +250,7 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of 1.1.0
 	 */
 	@Deprecated
 	protected ActionableDynamicQuery getRecordSetActionableDynamicQuery(
@@ -261,7 +261,7 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of 1.1.0
 	 */
 	@Deprecated
 	protected void setDDLRecordLocalService(
@@ -269,7 +269,7 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of 1.1.0
 	 */
 	@Deprecated
 	protected void setDDLRecordSetLocalService(
@@ -297,7 +297,7 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of 1.1.0
 	 */
 	@Deprecated
 	protected void setDDMStructureLocalService(

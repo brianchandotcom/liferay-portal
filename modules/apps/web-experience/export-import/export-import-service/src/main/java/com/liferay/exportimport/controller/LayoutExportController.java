@@ -608,7 +608,7 @@ public class LayoutExportController implements ExportController {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of 4.0.0
 	 */
 	@Deprecated
 	protected File doExport(
@@ -766,7 +766,7 @@ public class LayoutExportController implements ExportController {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of 4.0.0
 	 */
 	@Deprecated
 	protected boolean prepareLayoutStagingHandler(

@@ -143,7 +143,7 @@ public class AdvancedFileSystemStore extends FileSystemStore {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #getFileNames(List, String,
+	 * @deprecated As of 2.0.0, replaced by {@link #getFileNames(List, String,
 	 *             String)}
 	 */
 	@Deprecated

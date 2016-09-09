@@ -69,17 +69,17 @@ public class UpgradeCheckboxFieldToCheckboxMultipleField
 		sb.append("DDMStructure.structureId where DDLRecordSet.scope = ? and ");
 		sb.append("DDMStructure.definition like ?");
 
-		try (PreparedStatement ps = connection.prepareStatement(sb.toString());
+		try (PreparedStatement ps1 = connection.prepareStatement(sb.toString());
 			PreparedStatement ps2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
 					"update DDMStructure set definition = ? " +
 						" where structureId = ?")) {
 
-			ps.setInt(1, _SCOPE_FORMS);
-			ps.setString(2, "%checkbox%");
+			ps1.setInt(1, _SCOPE_FORMS);
+			ps1.setString(2, "%checkbox%");
 
-			try (ResultSet rs = ps.executeQuery()) {
+			try (ResultSet rs = ps1.executeQuery()) {
 				while (rs.next()) {
 					String definition = rs.getString(1);
 					long recordSetId = rs.getLong(2);

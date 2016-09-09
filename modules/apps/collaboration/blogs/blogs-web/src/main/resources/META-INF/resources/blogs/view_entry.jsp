@@ -37,10 +37,14 @@ request.setAttribute("view_entry_content.jsp-entry", entry);
 
 request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
 
+boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
+
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
-renderResponse.setTitle(entry.getTitle());
+if (portletTitleBasedNavigation) {
+	renderResponse.setTitle(entry.getTitle());
+}
 %>
 
 <portlet:actionURL name="/blogs/edit_entry" var="editEntryURL" />

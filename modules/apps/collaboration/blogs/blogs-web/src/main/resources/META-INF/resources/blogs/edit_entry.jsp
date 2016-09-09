@@ -49,7 +49,10 @@ boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getIni
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
-renderResponse.setTitle((entry != null) ? entry.getTitle() : LanguageUtil.get(request, "new-blog-entry"));
+if (portletTitleBasedNavigation) {
+	renderResponse.setTitle((entry != null) ? entry.getTitle() :
+		LanguageUtil.get(request, "new-blog-entry"));
+}
 %>
 
 <liferay-util:buffer var="saveStatus">

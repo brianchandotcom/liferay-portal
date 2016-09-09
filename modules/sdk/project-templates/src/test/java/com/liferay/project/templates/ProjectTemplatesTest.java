@@ -519,10 +519,6 @@ public class ProjectTemplatesTest {
 			"portlet", "gradle.test", "--class-name", "Foo");
 
 		_testExists(projectDir, "bnd.bnd");
-		_testExists(
-			projectDir, "src/main/resources/META-INF/resources/init.jsp");
-		_testExists(
-			projectDir, "src/main/resources/META-INF/resources/view.jsp");
 
 		_testContains(
 			projectDir, "build.gradle", "apply plugin: \"com.liferay.plugin\"");

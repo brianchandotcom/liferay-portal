@@ -3,6 +3,6 @@ Bundle-SymbolicName: ${package}.service
 Bundle-Version: ${version}
 Liferay-Require-SchemaVersion: 1.0.0
 Liferay-Service: true
+#if( ${buildType} != "gradle")
 -plugin.service: com.liferay.ant.bnd.service.ServiceAnalyzerPlugin
--plugin.spring: com.liferay.ant.bnd.spring.SpringDependencyAnalyzerPlugin
--sources: true
+-plugin.spring: com.liferay.ant.bnd.spring.SpringDependencyAnalyzerPlugin#end

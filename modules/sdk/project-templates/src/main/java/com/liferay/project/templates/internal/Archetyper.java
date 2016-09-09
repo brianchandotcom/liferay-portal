@@ -104,6 +104,7 @@ public class Archetyper {
 
 		Properties properties = new Properties();
 
+		_setProperty(properties, "buildType", "gradle");
 		_setProperty(properties, "className", className);
 		_setProperty(
 			properties, "hostBundleSymbolicName", hostBundleSymbolicName);

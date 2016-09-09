@@ -118,6 +118,23 @@ public class DDMFormTemplateSynchonizer {
 		return _ddmFormTemplates;
 	}
 
+	protected void synchronizeDDMFormFieldOptions(
+		DDMFormField structureDDMFormField, DDMFormField templateDDMFormField) {
+
+		if (structureDDMFormField == null) {
+			return;
+		}
+
+		String fieldType = structureDDMFormField.getType();
+
+		if (fieldType.equals(DDMImpl.TYPE_SELECT) ||
+			fieldType.equals(DDMImpl.TYPE_RADIO)) {
+
+			templateDDMFormField.setDDMFormFieldOptions(
+				structureDDMFormField.getDDMFormFieldOptions());
+		}
+	}
+
 	protected void synchronizeDDMFormFieldRequiredProperty(
 		DDMFormField structureDDMFormField, DDMFormField templateDDMFormField,
 		String templateMode) {
@@ -152,6 +169,9 @@ public class DDMFormTemplateSynchonizer {
 
 				continue;
 			}
+
+			synchronizeDDMFormFieldOptions(
+				structureDDMFormFieldsMap.get(name), templateDDMFormField);
 
 			synchronizeDDMFormFieldRequiredProperty(
 				structureDDMFormFieldsMap.get(name), templateDDMFormField,

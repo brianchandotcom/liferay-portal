@@ -2044,10 +2044,7 @@
 		<execute macro="Gmail#viewMail">
 			<var name="emailFromUserName" value="Joe Bloggs" />
 			<var name="gmailAssetType" value="Wiki" />
-			<var name="gmailMailTableMessageTitle" value="[Wiki Main] Updated Page: ${wikiFrontPageTitle}" />
 			<var name="gmailMessageBody" value="${wikiFrontPageContent}" />
-			<var name="gmailMessageBodyClosing" value="View Page (${wikiFrontPageTitle}) | View Changes" />
-			<var name="gmailMessageBodyGreeting" value="By ${adminName}" />
 			<var name="gmailMessageTitle" value="[Wiki ${wikiNodeName}] Updated Page: ${wikiFrontPageTitle}" />
 		</execute>
 

@@ -2069,10 +2069,7 @@
 		<execute macro="Gmail#viewMail">
 			<var name="emailFromUserName" value="Joe Bloggs" />
 			<var name="gmailAssetType" value="Announcements" />
-			<var name="gmailMailTableMessageTitle" value="[General announcement] ${entryTitle}" />
 			<var name="gmailMessageBody" value="${entryContent}" />
-			<var name="gmailMessageBodyClosing" value="${entryContent}" />
-			<var name="gmailMessageBodyGreeting" value="${entryContent}" />
 			<var name="gmailMessageTitle" value="[General announcement] ${entryTitle}" />
 		</execute>
 
@@ -2169,10 +2166,7 @@
 		<execute macro="Gmail#viewMail">
 			<var name="emailFromUserName" value="Joe Bloggs" />
 			<var name="gmailAssetType" value="Announcements" />
-			<var name="gmailMailTableMessageTitle" value="[General announcement] ${entryTitle}" />
 			<var name="gmailMessageBody" value="${entryContent}" />
-			<var name="gmailMessageBodyClosing" value="${entryContent}" />
-			<var name="gmailMessageBodyGreeting" value="${entryContent}" />
 			<var name="gmailMessageTitle" value="[General announcement] ${entryTitle}" />
 		</execute>
 

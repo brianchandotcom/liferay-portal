@@ -1833,10 +1833,7 @@
 		<execute macro="Gmail#viewMail">
 			<var name="emailFromUserName" value="${adminName}" />
 			<var name="gmailAssetType" value="Event" />
-			<var name="gmailMailTableMessageTitle" value="Calendar: Event Notification for &quot;${eventTitle}&quot;" />
 			<var name="gmailMessageBody" value="You have been invited to event ${eventTitle} that will start on" />
-			<var name="gmailMessageBodyClosing" value="Sincerely" />
-			<var name="gmailMessageBodyGreeting" value="${userName}," />
 			<var name="gmailMessageTitle" value="Calendar: Event Notification for &quot;${eventTitle}&quot;" />
 		</execute>
 

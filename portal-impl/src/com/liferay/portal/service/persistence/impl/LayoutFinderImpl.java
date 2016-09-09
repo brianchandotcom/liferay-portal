@@ -38,6 +38,7 @@ import com.liferay.util.dao.orm.CustomSQLUtil;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -84,7 +85,7 @@ public class LayoutFinderImpl
 
 			qPos.add(role.getCompanyId());
 
-			Set<Long> plids = new HashSet<>(q.list(true));
+			Set<BigInteger> plids = new HashSet<>(q.list(true));
 
 			StringBundler sb = new StringBundler(3);
 
@@ -116,10 +117,10 @@ public class LayoutFinderImpl
 
 			List<Layout> layouts = new ArrayList<>(plids.size());
 
-			for (Long plid : plids) {
+			for (BigInteger plid : plids) {
 				Layout layout = (Layout)ProxyUtil.newProxyInstance(
 					layoutClassLoader, layoutClassArray,
-					new LayoutPlidOnlyInvocationHandler(plid));
+					new LayoutPlidOnlyInvocationHandler(plid.longValue()));
 
 				layouts.add(layout);
 			}

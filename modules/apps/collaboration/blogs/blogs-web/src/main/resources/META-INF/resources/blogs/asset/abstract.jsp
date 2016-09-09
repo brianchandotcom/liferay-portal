@@ -22,13 +22,15 @@ AssetRenderer<?> assetRenderer = (AssetRenderer<?>)request.getAttribute(WebKeys.
 BlogsEntry entry = (BlogsEntry)request.getAttribute(WebKeys.BLOGS_ENTRY);
 
 Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), portletDisplay.getId());
+
+String coverImageURL = entry.getCoverImageURL(themeDisplay);
 %>
 
 <liferay-util:html-top outputKey="blogs_common_main_css">
 	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/blogs/css/common_main.css", portlet.getTimestamp()) %>" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>
 
-<c:if test="<%= entry.isSmallImage() %>">
+<c:if test="<%= entry.isSmallImage() && Validator.isNull(coverImageURL) %>">
 	<div class="asset-small-image">
 		<img alt="" class="asset-small-image img-thumbnail" src="<%= HtmlUtil.escape(entry.getSmallImageURL(themeDisplay)) %>" width="150" />
 	</div>
@@ -36,11 +38,6 @@ Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(),
 
 <div class="portlet-blogs">
 	<div class="entry-body">
-
-		<%
-		String coverImageURL = entry.getCoverImageURL(themeDisplay);
-		%>
-
 		<c:if test="<%= Validator.isNotNull(coverImageURL) %>">
 			<div class="cover-image-container" style="background-image: url(<%= coverImageURL %>)"></div>
 		</c:if>

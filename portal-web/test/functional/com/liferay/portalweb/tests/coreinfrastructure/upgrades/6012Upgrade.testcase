@@ -43,7 +43,7 @@
 		<execute macro="Upgrade#viewCalendar" />
 	</command>
 
-	<command name="View6012DataArchive" priority="5">
+	<command name="View6012PortalSmokeArchive" priority="5">
 		<property name="data.archive.type" value="data-archive-portal" />
 		<property name="test.assert.warning.exceptions" value="true" />
 

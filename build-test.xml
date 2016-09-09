@@ -5836,6 +5836,15 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		</if>
 
 		<if>
+			<isset property="test.run.environment" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					test.run.environment=${test.run.environment}
+				</echo>
+			</then>
+		</if>
+
+		<if>
 			<contains string="${test.class}" substring="," />
 			<then>
 				<propertyregex

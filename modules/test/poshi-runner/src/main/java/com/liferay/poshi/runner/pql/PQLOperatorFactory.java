@@ -129,14 +129,20 @@ public class PQLOperatorFactory {
 					if ((pqlResultObject1 == null) ||
 						(pqlResultObject2 == null)) {
 
-						return false;
+						if (operator.equals("==")) {
+							return pqlResultObject1 == pqlResultObject2;
+						}
+						else if (operator.equals("!=")) {
+							return pqlResultObject1 != pqlResultObject2;
+						}
 					}
-
-					if (operator.equals("==")) {
-						return pqlResultObject1.equals(pqlResultObject2);
-					}
-					else if (operator.equals("!=")) {
-						return !pqlResultObject1.equals(pqlResultObject2);
+					else {
+						if (operator.equals("==")) {
+							return pqlResultObject1.equals(pqlResultObject2);
+						}
+						else if (operator.equals("!=")) {
+							return !pqlResultObject1.equals(pqlResultObject2);
+						}
 					}
 
 					throw new Exception("Unsupported operator: " + operator);

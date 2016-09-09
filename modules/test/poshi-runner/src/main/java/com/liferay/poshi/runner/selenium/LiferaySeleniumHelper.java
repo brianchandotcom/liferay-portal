@@ -1389,9 +1389,7 @@ public class LiferaySeleniumHelper {
 
 		filePath = getSourceDirFilePath(filePath);
 
-		if (OSDetector.isWindows()) {
-			filePath = StringUtil.replace(filePath, "/", "\\");
-		}
+		filePath = StringUtil.replace(filePath, "/", FileUtil.getSeparator());
 
 		if (OSDetector.isApple()) {
 			keyboard.keyDown(Key.CMD);

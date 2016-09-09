@@ -831,6 +831,11 @@ versions of Git.
 error if the version of [Liferay Source Formatter] in use is not the latest one
 and is older than 30 days.
 
+## 2.3.12 - 2016-12-28
+
+### Added
+- [LPS-61987]: Enforce the use of snapshot timestamp versions for dependencies.
+
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [Liferay Gradle Plugins App Javadoc Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-app-javadoc-builder
@@ -841,6 +846,7 @@ and is older than 30 days.
 [LPS-52675]: https://issues.liferay.com/browse/LPS-52675
 [LPS-58672]: https://issues.liferay.com/browse/LPS-58672
 [LPS-61099]: https://issues.liferay.com/browse/LPS-61099
+[LPS-61987]: https://issues.liferay.com/browse/LPS-61987
 [LPS-66396]: https://issues.liferay.com/browse/LPS-66396
 [LPS-66396]: https://issues.liferay.com/browse/LPS-66396
 [LPS-66762]: https://issues.liferay.com/browse/LPS-66762

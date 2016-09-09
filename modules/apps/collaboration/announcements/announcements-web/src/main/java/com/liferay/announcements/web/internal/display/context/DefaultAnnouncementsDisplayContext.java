@@ -19,13 +19,15 @@ import com.liferay.announcements.web.constants.AnnouncementsPortletKeys;
 import com.liferay.announcements.web.internal.display.context.util.AnnouncementsRequestHelper;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -34,7 +36,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portlet.announcements.service.permission.AnnouncementsEntryPermission;
 
 import java.text.DateFormat;
 import java.text.Format;
@@ -129,18 +130,7 @@ public class DefaultAnnouncementsDisplayContext
 
 	@Override
 	public String getTabs1Names() {
-		String tabs1Names = "new,previous";
-
-		if (AnnouncementsEntryPermission.contains(
-				_announcementsRequestHelper.getPermissionChecker(),
-				_announcementsRequestHelper.getLayout(),
-				AnnouncementsPortletKeys.ANNOUNCEMENTS_ADMIN,
-				ActionKeys.VIEW)) {
-
-			tabs1Names += ",manage-entries";
-		}
-
-		return tabs1Names;
+		return "new,previous";
 	}
 
 	@Override
@@ -243,15 +233,22 @@ public class DefaultAnnouncementsDisplayContext
 	public boolean isTabs1Visible() {
 		String portletName = _announcementsRequestHelper.getPortletName();
 
-		if (!portletName.equals(AnnouncementsPortletKeys.ALERTS) ||
-			(portletName.equals(AnnouncementsPortletKeys.ALERTS) &&
-			 AnnouncementsEntryPermission.contains(
-				 _announcementsRequestHelper.getPermissionChecker(),
-				 _announcementsRequestHelper.getLayout(),
-				 AnnouncementsPortletKeys.ANNOUNCEMENTS_ADMIN,
-				 ActionKeys.VIEW))) {
+		ThemeDisplay themeDisplay =
+			_announcementsRequestHelper.getThemeDisplay();
 
-			return true;
+		try {
+			if (!portletName.equals(AnnouncementsPortletKeys.ALERTS) ||
+				(portletName.equals(AnnouncementsPortletKeys.ALERTS) &&
+				 PortletPermissionUtil.hasControlPanelAccessPermission(
+					 _announcementsRequestHelper.getPermissionChecker(),
+					 themeDisplay.getScopeGroupId(),
+					 AnnouncementsPortletKeys.ANNOUNCEMENTS_ADMIN))) {
+
+				return true;
+			}
+		}
+		catch (PortalException pe) {
+			_log.error(pe, pe);
 		}
 
 		return false;
@@ -289,6 +286,9 @@ public class DefaultAnnouncementsDisplayContext
 
 	private static final UUID _UUID = UUID.fromString(
 		"CD705D0E-7DB4-430C-9492-F1FA25ACE02E");
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DefaultAnnouncementsDisplayContext.class);
 
 	private final AnnouncementsRequestHelper _announcementsRequestHelper;
 

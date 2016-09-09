@@ -23,20 +23,23 @@ import com.liferay.portal.kernel.portlet.ViewPortletProvider;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Adolfo Pérez
+ * @author Roberto Díaz
  */
 @Component(
 	immediate = true,
 	property = {"model.class.name=com.liferay.announcements.kernel.model.AnnouncementsEntry"},
-	service = {EditPortletProvider.class, ViewPortletProvider.class}
+	service = {
+		EditPortletProvider.class, ManagePortletProvider.class,
+		ViewPortletProvider.class
+	}
 )
-public class AnnouncementsEditPortletProvider
+public class AnnouncementsAdminEditPortletProvider
 	extends BasePortletProvider
 	implements EditPortletProvider, ManagePortletProvider, ViewPortletProvider {
 
 	@Override
 	public String getPortletName() {
-		return AnnouncementsPortletKeys.ANNOUNCEMENTS;
+		return AnnouncementsPortletKeys.ANNOUNCEMENTS_ADMIN;
 	}
 
 }

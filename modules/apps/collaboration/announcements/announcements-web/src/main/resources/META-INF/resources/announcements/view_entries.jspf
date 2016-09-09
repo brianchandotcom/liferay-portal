@@ -34,7 +34,7 @@
 		request.setAttribute(AnnouncementsWebKeys.VIEW_ENTRY_FLAG_VALUE, flag);
 	%>
 
-		<liferay-util:include page="/view_entry.jsp" servletContext="<%= application %>" />
+		<liferay-util:include page="/announcements/view_entry.jsp" servletContext="<%= application %>" />
 
 	<%
 	}

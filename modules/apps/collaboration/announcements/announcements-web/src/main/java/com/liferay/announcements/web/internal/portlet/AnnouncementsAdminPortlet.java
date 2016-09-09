@@ -29,9 +29,25 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
+		"com.liferay.portlet.css-class-wrapper=portlet-announcements",
 		"com.liferay.portlet.display-category=category.hidden",
+		"com.liferay.portlet.header-portlet-css=/announcements/css/main.css",
+		"com.liferay.portlet.icon=/announcements/icons/announcements.png",
+		"com.liferay.portlet.preferences-company-wide=true",
+		"com.liferay.portlet.preferences-owned-by-group=true",
+		"com.liferay.portlet.private-request-attributes=false",
+		"com.liferay.portlet.private-session-attributes=false",
+		"com.liferay.portlet.render-weight=50",
+		"com.liferay.portlet.use-default-template=true",
 		"javax.portlet.display-name=Announcements",
-		"javax.portlet.name=" + AnnouncementsPortletKeys.ANNOUNCEMENTS_ADMIN
+		"javax.portlet.expiration-cache=0",
+		"javax.portlet.init-param.mvc-command-names-default-views=/announcements/view",
+		"javax.portlet.init-param.portlet-title-based-navigation=true",
+		"javax.portlet.init-param.template-path=/",
+		"javax.portlet.name=" + AnnouncementsPortletKeys.ANNOUNCEMENTS_ADMIN,
+		"javax.portlet.resource-bundle=content.Language",
+		"javax.portlet.security-role-ref=administrator",
+		"javax.portlet.supports.mime-type=text/html"
 	},
 	service = Portlet.class
 )

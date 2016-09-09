@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADD_ANNOUNCEMENT</td>
+	<td>//span[contains(.,'Add Announcement')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADD_CATEGORY</td>
 	<td>//span[contains(.,'Add Category')]</td>
 	<td></td>

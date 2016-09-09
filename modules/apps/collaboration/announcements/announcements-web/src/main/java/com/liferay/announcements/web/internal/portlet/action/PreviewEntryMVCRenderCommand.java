@@ -18,6 +18,7 @@ import com.liferay.announcements.kernel.model.AnnouncementsEntry;
 import com.liferay.announcements.kernel.model.AnnouncementsFlagConstants;
 import com.liferay.announcements.web.constants.AnnouncementsPortletKeys;
 import com.liferay.announcements.web.constants.AnnouncementsWebKeys;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -43,7 +44,9 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"javax.portlet.name=" + AnnouncementsPortletKeys.ALERTS,
 		"javax.portlet.name=" + AnnouncementsPortletKeys.ANNOUNCEMENTS,
-		"mvc.command.name=/announcements/preview_entry"
+		"javax.portlet.name=" + AnnouncementsPortletKeys.ANNOUNCEMENTS_ADMIN,
+		"mvc.command.name=/announcements/preview_entry",
+		"mvc.command.name=/announcements/view_entry"
 	}
 )
 public class PreviewEntryMVCRenderCommand implements MVCRenderCommand {
@@ -53,18 +56,30 @@ public class PreviewEntryMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		renderRequest.setAttribute(
-			AnnouncementsWebKeys.ANNOUNCEMENTS_ENTRY,
-			_getAnnouncementsEntry(renderRequest));
-		renderRequest.setAttribute(
-			AnnouncementsWebKeys.VIEW_ENTRY_FLAG_VALUE,
-			AnnouncementsFlagConstants.NOT_HIDDEN);
+		try {
+			renderRequest.setAttribute(
+				AnnouncementsWebKeys.ANNOUNCEMENTS_ENTRY,
+				_getAnnouncementsEntry(renderRequest));
+			renderRequest.setAttribute(
+				AnnouncementsWebKeys.VIEW_ENTRY_FLAG_VALUE,
+				AnnouncementsFlagConstants.NOT_HIDDEN);
+		}
+		catch (PortalException pe) {
+			return "/announcements/error.jsp";
+		}
 
-		return "/view_entry.jsp";
+		return "/announcements/view_entry.jsp";
 	}
 
 	private AnnouncementsEntry _getAnnouncementsEntry(
-		PortletRequest portletRequest) {
+			PortletRequest portletRequest)
+		throws PortalException {
+
+		AnnouncementsEntry entry = ActionUtil.getEntry(portletRequest);
+
+		if (entry != null) {
+			return entry;
+		}
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -93,7 +108,7 @@ public class PreviewEntryMVCRenderCommand implements MVCRenderCommand {
 		int priority = ParamUtil.getInteger(portletRequest, "priority");
 		boolean alert = ParamUtil.getBoolean(portletRequest, "alert");
 
-		AnnouncementsEntry entry = new AnnouncementsEntryImpl();
+		entry = new AnnouncementsEntryImpl();
 
 		entry.setCompanyId(user.getCompanyId());
 		entry.setUserId(user.getUserId());

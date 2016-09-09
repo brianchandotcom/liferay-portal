@@ -34,13 +34,13 @@ import org.osgi.service.component.annotations.Component;
 		"mvc.command.name=/announcements/view"
 	}
 )
-public class ViewMVCRenderCommand implements MVCRenderCommand {
+public class AnnouncementsViewMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		return "/view.jsp";
+		return "/announcements/view.jsp";
 	}
 
 }

@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<%@ include file="/announcements/init.jsp" %>
 
 <%
 String tabs1 = ParamUtil.getString(request, "tabs1", "sites");

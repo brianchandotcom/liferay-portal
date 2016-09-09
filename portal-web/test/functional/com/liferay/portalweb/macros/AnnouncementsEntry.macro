@@ -43,10 +43,9 @@
 	</command>
 
 	<command name="addPG">
-		<execute function="Click" locator1="Announcements#NAVIGATION_MANAGE_ENTRIES" />
+		<execute function="AssertClick" locator1="Button#ADD_ANNOUNCEMENT" value1="Add Announcement" />
 
 		<execute function="Select#selectAndWait" locator1="AnnouncementsManageEntries#DISTRIBUTION_SCOPE_SELECT" value1="${distributionScope}" />
-		<execute function="AssertClick" locator1="Button#ADD_ENTRY" value1="Add Entry" />
 
 		<execute function="Type" locator1="TextInput#TITLE" value1="${entryTitle}" />
 		<execute function="Type" locator1="TextInput#URL" value1="${entryURL}" />
@@ -191,13 +190,6 @@
 		<var name="key_entryContent" value="${entryContent}" />
 
 		<execute function="AssertTextEquals" locator1="Announcements#CARD_VIEW_ENTRY_CONTENT" value1="${entryContent}" />
-
-		<execute function="Click" locator1="Announcements#NAVIGATION_MANAGE_ENTRIES" />
-
-		<execute function="Select#selectAndWait" locator1="AnnouncementsManageEntries#DISTRIBUTION_SCOPE_SELECT" value1="${distributionScope}" />
-
-		<execute function="AssertTextEquals" locator1="AnnouncementsManageEntries#ENTRY_TABLE_TITLE" value1="${entryTitle}" />
-		<execute function="AssertTextEquals" locator1="AnnouncementsManageEntries#ENTRY_TABLE_TYPE" value1="${announcementType}" />
 	</command>
 
 	<command name="viewPreviousPG">

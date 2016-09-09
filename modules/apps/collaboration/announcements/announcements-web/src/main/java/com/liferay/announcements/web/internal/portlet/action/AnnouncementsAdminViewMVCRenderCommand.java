@@ -12,31 +12,33 @@
  * details.
  */
 
-package com.liferay.announcements.web.internal.portlet;
+package com.liferay.announcements.web.internal.portlet.action;
 
 import com.liferay.announcements.web.constants.AnnouncementsPortletKeys;
-import com.liferay.portal.kernel.portlet.BasePortletProvider;
-import com.liferay.portal.kernel.portlet.EditPortletProvider;
-import com.liferay.portal.kernel.portlet.ManagePortletProvider;
-import com.liferay.portal.kernel.portlet.ViewPortletProvider;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Adolfo Pérez
+ * @author Roberto Díaz
  */
 @Component(
-	immediate = true,
-	property = {"model.class.name=com.liferay.announcements.kernel.model.AnnouncementsEntry"},
-	service = {EditPortletProvider.class, ViewPortletProvider.class}
+	property = {
+		"javax.portlet.name=" + AnnouncementsPortletKeys.ANNOUNCEMENTS_ADMIN,
+		"mvc.command.name=/", "mvc.command.name=/announcements/view"
+	}
 )
-public class AnnouncementsEditPortletProvider
-	extends BasePortletProvider
-	implements EditPortletProvider, ManagePortletProvider, ViewPortletProvider {
+public class AnnouncementsAdminViewMVCRenderCommand
+	implements MVCRenderCommand {
 
 	@Override
-	public String getPortletName() {
-		return AnnouncementsPortletKeys.ANNOUNCEMENTS;
+	public String render(
+		RenderRequest renderRequest, RenderResponse renderResponse) {
+
+		return "/announcements_admin/view.jsp";
 	}
 
 }

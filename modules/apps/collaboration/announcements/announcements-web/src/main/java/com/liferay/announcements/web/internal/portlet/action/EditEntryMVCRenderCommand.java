@@ -15,7 +15,9 @@
 package com.liferay.announcements.web.internal.portlet.action;
 
 import com.liferay.announcements.kernel.exception.NoSuchEntryException;
+import com.liferay.announcements.kernel.model.AnnouncementsEntry;
 import com.liferay.announcements.web.constants.AnnouncementsPortletKeys;
+import com.liferay.announcements.web.constants.AnnouncementsWebKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -33,6 +35,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"javax.portlet.name=" + AnnouncementsPortletKeys.ALERTS,
 		"javax.portlet.name=" + AnnouncementsPortletKeys.ANNOUNCEMENTS,
+		"javax.portlet.name=" + AnnouncementsPortletKeys.ANNOUNCEMENTS_ADMIN,
 		"mvc.command.name=/announcements/edit_entry"
 	}
 )
@@ -44,12 +47,15 @@ public class EditEntryMVCRenderCommand implements MVCRenderCommand {
 		throws PortletException {
 
 		try {
-			ActionUtil.getEntry(renderRequest);
+			AnnouncementsEntry entry = ActionUtil.getEntry(renderRequest);
+
+			renderRequest.setAttribute(
+				AnnouncementsWebKeys.ANNOUNCEMENTS_ENTRY, entry);
 		}
 		catch (NoSuchEntryException | PrincipalException e) {
 			SessionErrors.add(renderRequest, e.getClass());
 
-			return "/error.jsp";
+			return "/announcements/error.jsp";
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -58,7 +64,7 @@ public class EditEntryMVCRenderCommand implements MVCRenderCommand {
 			throw new PortletException(e);
 		}
 
-		return "/edit_entry.jsp";
+		return "/announcements/edit_entry.jsp";
 	}
 
 }

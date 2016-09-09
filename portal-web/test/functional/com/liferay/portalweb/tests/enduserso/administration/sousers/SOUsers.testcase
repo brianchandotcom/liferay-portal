@@ -210,7 +210,7 @@
 			<var name="portlet" value="Site Memberships" />
 		</execute>
 
-		<execute macro="Site#addMemberCP">
+		<execute macro="Site#assignUserAsMemberCP">
 			<var name="userFirstName" value="${userFirstName}" />
 			<var name="userLastName" value="${userLastName}" />
 			<var name="userMiddleName" value="${userMiddleName}" />
@@ -284,7 +284,7 @@
 			<var name="portlet" value="Site Memberships" />
 		</execute>
 
-		<execute macro="Site#addMemberCP">
+		<execute macro="Site#assignUserAsMemberCP">
 			<var name="userFirstName" value="${userFirstName}" />
 			<var name="userLastName" value="${userLastName}" />
 			<var name="userMiddleName" value="${userMiddleName}" />
@@ -380,7 +380,7 @@
 			<var name="portlet" value="Site Memberships" />
 		</execute>
 
-		<execute macro="Site#addMemberCP">
+		<execute macro="Site#assignUserAsMemberCP">
 			<var name="userFirstName" value="${userFirstName1}" />
 			<var name="userLastName" value="${userLastName1}" />
 			<var name="userMiddleName" value="${userMiddleName1}" />
@@ -395,7 +395,7 @@
 			<var name="portlet" value="Site Memberships" />
 		</execute>
 
-		<execute macro="Site#addMemberCP">
+		<execute macro="Site#assignUserAsMemberCP">
 			<var name="userFirstName" value="${userFirstName2}" />
 			<var name="userLastName" value="${userLastName2}" />
 			<var name="userMiddleName" value="${userMiddleName2}" />
@@ -596,7 +596,7 @@
 			<var name="portlet" value="Site Memberships" />
 		</execute>
 
-		<execute macro="Site#addMemberCP">
+		<execute macro="Site#assignUserAsMemberCP">
 			<var name="userFirstName" value="${userFirstName}" />
 			<var name="userLastName" value="${userLastName}" />
 			<var name="userMiddleName" value="${userMiddleName}" />

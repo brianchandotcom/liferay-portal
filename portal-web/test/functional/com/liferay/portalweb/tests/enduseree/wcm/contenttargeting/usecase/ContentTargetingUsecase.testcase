@@ -2970,7 +2970,7 @@
 				<var name="portlet" value="Site Memberships" />
 			</execute>
 
-			<execute macro="Site#addMemberCP">
+			<execute macro="Site#assignUserAsMemberCP">
 				<var name="userFirstName" value="${userScreenName}" />
 				<var name="userLastName" value="${userScreenName}" />
 				<var name="userScreenName" value="${userScreenName}" />
@@ -3496,7 +3496,7 @@
 			<var name="portlet" value="Site Memberships" />
 		</execute>
 
-		<execute macro="Site#addMemberCP">
+		<execute macro="Site#assignUserAsMemberCP">
 			<var name="userFirstName" value="female" />
 			<var name="userLastName" value="female" />
 			<var name="userScreenName" value="female" />
@@ -3648,7 +3648,7 @@
 			<var name="portlet" value="Site Memberships" />
 		</execute>
 
-		<execute macro="Site#addMemberCP">
+		<execute macro="Site#assignUserAsMemberCP">
 			<var name="userFirstName" value="female" />
 			<var name="userLastName" value="female" />
 			<var name="userScreenName" value="female" />

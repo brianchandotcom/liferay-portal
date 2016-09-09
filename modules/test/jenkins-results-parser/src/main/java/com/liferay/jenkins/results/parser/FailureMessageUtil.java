@@ -48,6 +48,7 @@ public class FailureMessageUtil {
 		new PluginFailureMessageGenerator(),
 		new PluginGitIDFailureMessageGenerator(),
 		new RebaseFailureMessageGenerator(),
+		new SemanticVersioningFailureMessageGenerator(),
 		new SourceFormatFailureMessageGenerator()
 	};
 	private static final GenericFailureMessageGenerator

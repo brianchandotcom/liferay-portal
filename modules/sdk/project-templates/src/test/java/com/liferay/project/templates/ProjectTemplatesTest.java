@@ -670,49 +670,29 @@ public class ProjectTemplatesTest {
 		_testContains(
 			projectDir, "build.gradle", "apply plugin: \"com.liferay.plugin\"");
 
-		String importLine =
-			"import com.liferay.portal.kernel.events.LifecycleAction;";
-		String classLine =
-			"public class FooAction implements LifecycleAction {";
-
-		File actionJavaFile = _testContains(
-			projectDir, "src/main/java/servicepreaction/FooAction.java",
-			"package servicepreaction;", importLine,
-			"service = LifecycleAction.class", classLine);
-
-		Path actionJavaPath = actionJavaFile.toPath();
-
-		List<String> lines = Files.readAllLines(
-			actionJavaPath, StandardCharsets.UTF_8);
-
-		try (BufferedWriter bufferedWriter = Files.newBufferedWriter(
-				actionJavaPath, StandardCharsets.UTF_8)) {
-
-			for (String line : lines) {
-				_write(bufferedWriter, line);
-
-				if (line.equals(classLine)) {
-					_write(
-						bufferedWriter, "@Override",
-						"public void processLifecycleEvent(",
-						"LifecycleEvent lifecycleEvent)",
-						"throws ActionException {", "System.out.println(",
-						"\"login.event.pre=\" + lifecycleEvent);", "}");
-				}
-				else if (line.equals(importLine)) {
-					_write(
-						bufferedWriter,
-						"import com.liferay.portal.kernel.events." +
-							"LifecycleEvent;",
-						"import com.liferay.portal.kernel.events." +
-							"ActionException;");
-				}
-			}
-		}
+		_writeServiceClass(projectDir);
 
 		_executeGradle(projectDir, _TASK_PATH_BUILD);
 
 		_testExists(projectDir, "build/libs/servicepreaction-1.0.0.jar");
+		
+		File gradleBundleFile = new File(
+				projectDir, "build/libs/servicepreaction-1.0.0.jar");
+
+		File mavenProjectDir = _buildTemplateWithMaven(
+			"service", "servicepreaction", "-Dpackage=servicepreaction",
+			"-DclassName=FooAction", "-DserviceClass=com.liferay.portal.kernel.events.LifecycleAction");
+		
+		_writeServiceClass(mavenProjectDir);
+
+		_executeMaven(mavenProjectDir, new String[] {_TASK_PATH_PACKAGE});
+
+		_testExists(mavenProjectDir, "target/servicepreaction-1.0.0.jar");
+
+		File mavenBundleFile = new File(
+			mavenProjectDir, "target/servicepreaction-1.0.0.jar");
+
+		_executeBndDiff(gradleBundleFile, mavenBundleFile);
 	}
 
 	@Test
@@ -748,6 +728,31 @@ public class ProjectTemplatesTest {
 		_executeGradle(projectDir, _TASK_PATH_BUILD);
 
 		_testExists(projectDir, "build/libs/serviceoverride-1.0.0.jar");
+		
+		File gradleBundleFile = new File(
+				projectDir, "build/libs/serviceoverride-1.0.0.jar");
+
+		File mavenProjectDir = _buildTemplateWithMaven(
+			"servicewrapper", "serviceoverride", "-Dpackage=serviceoverride",
+			"-DclassName=Serviceoverride",
+			"-DserviceWrapperClass=com.liferay.portal.kernel.service.UserLocalServiceWrapper");
+		
+		_testContains(
+				mavenProjectDir, "src/main/java/serviceoverride/Serviceoverride.java",
+				"package serviceoverride;",
+				"import com.liferay.portal.kernel.service.UserLocalServiceWrapper;",
+				"service = ServiceWrapper.class",
+				"public class Serviceoverride extends UserLocalServiceWrapper {",
+				"public Serviceoverride() {");
+		
+		_executeMaven(mavenProjectDir, new String[] {_TASK_PATH_PACKAGE});
+
+		_testExists(mavenProjectDir, "target/serviceoverride-1.0.0.jar");
+
+		File mavenBundleFile = new File(
+			mavenProjectDir, "target/serviceoverride-1.0.0.jar");
+
+		_executeBndDiff(gradleBundleFile, mavenBundleFile);
 	}
 
 	@Test
@@ -1154,6 +1159,58 @@ public class ProjectTemplatesTest {
 			projectDir,
 			serviceProjectName + "/build/libs/" + packageName +
 				".service-1.0.0.jar");
+		
+		File gradleBundleApiFile = new File(
+				projectDir,
+				apiProjectName + "/build/libs/" + packageName + ".api-1.0.0.jar");
+		
+		File gradleBundleServiceFile = new File(
+				projectDir, 
+				serviceProjectName + "/build/libs/" + packageName +
+				".service-1.0.0.jar");
+		
+		File mavenProjectDir = _buildTemplateWithMaven(
+				"servicebuilder", name, "-Dpackage=" + packageName);
+
+		_testContains(
+			projectDir, "settings.gradle",
+			"include \"" + apiProjectName + "\", \"" + serviceProjectName +
+				"\"");
+		_testContains(
+			projectDir, apiProjectName + "/bnd.bnd", "Export-Package:\\",
+			packageName + ".exception,\\", packageName + ".model,\\",
+			packageName + ".service,\\", packageName + ".service.persistence");
+		_testContains(
+			projectDir, serviceProjectName + "/bnd.bnd",
+			"Liferay-Service: true");
+		_testContains(
+			projectDir, serviceProjectName + "/build.gradle",
+			"compileOnly project(\":" + apiProjectName + "\")");
+
+		_executeMaven(new File(mavenProjectDir, serviceProjectName), new String [] {"liferay:build-service"});
+		
+		_executeMaven(mavenProjectDir, new String [] {_TASK_PATH_PACKAGE});
+		
+		_testExists(
+				mavenProjectDir,
+				apiProjectName + "/target/" + name + "-api-1.0.0.jar");
+		
+		_testExists(
+				mavenProjectDir,
+				serviceProjectName + "/target/" + name +
+					"-service-1.0.0.jar");
+
+		File mavenBundleApiFile = new File(
+			mavenProjectDir,
+			apiProjectName + "/target/" + name + "-api-1.0.0.jar");
+		
+		File mavenBundleServiceFile = new File(
+				mavenProjectDir,
+				serviceProjectName + "/target/" + name +
+					"-service-1.0.0.jar");
+
+		_executeBndDiff(gradleBundleApiFile, mavenBundleApiFile);
+		_executeBndDiff(gradleBundleServiceFile, mavenBundleServiceFile);
 	}
 
 	private File _testContains(File dir, String fileName, String... strings)
@@ -1192,6 +1249,48 @@ public class ProjectTemplatesTest {
 			writer.write(line);
 			writer.write(System.lineSeparator());
 		}
+	}
+	
+	private void _writeServiceClass(File projectDir) throws IOException {
+		String importLine =
+				"import com.liferay.portal.kernel.events.LifecycleAction;";
+			String classLine =
+				"public class FooAction implements LifecycleAction {";
+
+			File actionJavaFile = _testContains(
+				projectDir, "src/main/java/servicepreaction/FooAction.java",
+				"package servicepreaction;", importLine,
+				"service = LifecycleAction.class", classLine);
+
+			Path actionJavaPath = actionJavaFile.toPath();
+
+			List<String> lines = Files.readAllLines(
+				actionJavaPath, StandardCharsets.UTF_8);
+
+			try (BufferedWriter bufferedWriter = Files.newBufferedWriter(
+					actionJavaPath, StandardCharsets.UTF_8)) {
+
+				for (String line : lines) {
+					_write(bufferedWriter, line);
+
+					if (line.equals(classLine)) {
+						_write(
+							bufferedWriter, "@Override",
+							"public void processLifecycleEvent(",
+							"LifecycleEvent lifecycleEvent)",
+							"throws ActionException {", "System.out.println(",
+							"\"login.event.pre=\" + lifecycleEvent);", "}");
+					}
+					else if (line.equals(importLine)) {
+						_write(
+							bufferedWriter,
+							"import com.liferay.portal.kernel.events." +
+								"LifecycleEvent;",
+							"import com.liferay.portal.kernel.events." +
+								"ActionException;");
+					}
+				}
+			}
 	}
 
 	private static final String _REPOSITORY_CDN_URL =

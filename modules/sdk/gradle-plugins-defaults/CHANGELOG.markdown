@@ -195,6 +195,9 @@ configuration.
 
 		<artifact group>-<artifact name>=<new version>
 
+### Changed
+- [LPS-66853]: Update the [Liferay Gradle Plugins] dependency to version 2.0.29.
+
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [LPS-66853]: https://issues.liferay.com/browse/LPS-66853
 [LPS-67023]: https://issues.liferay.com/browse/LPS-67023

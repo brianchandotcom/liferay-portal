@@ -261,7 +261,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		final LiferayExtension liferayExtension = GradleUtil.getExtension(
 			project, LiferayExtension.class);
 
-		GitRepo gitRepo = _getGitRepo(project);
+		final GitRepo gitRepo = _getGitRepo(project);
 
 		File versionOverrideFile = _getVersionOverrideFile(project, gitRepo);
 
@@ -368,13 +368,13 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		final Jar jarTLDDocTask = _addTaskJarTLDDoc(project);
 
 		final ReplaceRegexTask updateFileVersionsTask =
-			_addTaskUpdateFileVersions(project);
+			_addTaskUpdateFileVersions(project, gitRepo);
 		final ReplaceRegexTask updateVersionTask = _addTaskUpdateVersion(
 			project);
 
 		_configureBasePlugin(project, portalRootDir);
 		_configureBundleDefaultInstructions(project, portalRootDir, publishing);
-		_configureConfigurations(project, liferayExtension);
+		_configureConfigurations(project, gitRepo, liferayExtension);
 		_configureDependencyChecker(project);
 		_configureDeployDir(
 			project, liferayExtension, deployToAppServerLibs, deployToTools);
@@ -481,7 +481,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 						project, JavaPlugin.JAR_TASK_NAME);
 
 					if (taskExecutionGraph.hasTask(jarTask)) {
-						_configureBundleInstructions(project);
+						_configureBundleInstructions(project, gitRepo);
 					}
 				}
 
@@ -1021,7 +1021,9 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		return replaceRegexTask;
 	}
 
-	private ReplaceRegexTask _addTaskUpdateFileVersions(final Project project) {
+	private ReplaceRegexTask _addTaskUpdateFileVersions(
+		final Project project, final GitRepo gitRepo) {
+
 		ReplaceRegexTask replaceRegexTask = GradleUtil.addTask(
 			project, UPDATE_FILE_VERSIONS_TASK_NAME, ReplaceRegexTask.class);
 
@@ -1062,8 +1064,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 					if (!projectPath.startsWith(":apps:") &&
 						!projectPath.startsWith(":core:") &&
 						!projectPath.startsWith(":private:") &&
-						!FileUtil.exists(
-							project.getRootProject(), ".gitrepo")) {
+						(gitRepo == null)) {
 
 						return true;
 					}
@@ -1541,12 +1542,13 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			bundleDefaultInstructions);
 	}
 
-	private void _configureBundleInstructions(Project project) {
+	private void _configureBundleInstructions(
+		Project project, GitRepo gitRepo) {
+
 		String projectPath = project.getPath();
 
 		if (!projectPath.startsWith(":apps:") &&
-			!projectPath.startsWith(":private:") &&
-			!FileUtil.exists(project.getRootProject(), ".gitrepo")) {
+			!projectPath.startsWith(":private:") && (gitRepo == null)) {
 
 			return;
 		}
@@ -1748,7 +1750,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	}
 
 	private void _configureConfigurations(
-		Project project, LiferayExtension liferayExtension) {
+		Project project, GitRepo gitRepo, LiferayExtension liferayExtension) {
 
 		_configureConfigurationDefault(project);
 		_configureConfigurationJspC(project, liferayExtension);
@@ -1759,8 +1761,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		if (projectPath.startsWith(":apps:") ||
 			projectPath.startsWith(":core:") ||
 			projectPath.startsWith(":private:apps:") ||
-			projectPath.startsWith(":private:core:") ||
-			FileUtil.exists(project.getRootProject(), ".gitrepo")) {
+			projectPath.startsWith(":private:core:") || (gitRepo != null)) {
 
 			_configureConfigurationTransitive(
 				project, JavaPlugin.COMPILE_CONFIGURATION_NAME, false);

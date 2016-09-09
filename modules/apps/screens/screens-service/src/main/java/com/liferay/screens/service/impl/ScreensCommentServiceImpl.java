@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Function;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.screens.service.base.ScreensCommentServiceBaseImpl;
 
@@ -68,6 +69,23 @@ public class ScreensCommentServiceImpl
 	public JSONObject updateComment(
 		long commentId, String body)
 		throws PortalException {
+
+		Comment comment = commentManager.fetchComment(commentId);
+
+		String className = comment.getClassName();
+		long classPK = comment.getClassPK();
+
+		DiscussionPermission discussionPermission =
+			commentManager.getDiscussionPermission(getPermissionChecker());
+
+		discussionPermission.checkUpdatePermission(commentId);
+
+		commentManager.updateComment(
+			getUserId(), className, classPK, commentId, StringPool.BLANK, body,
+			createServiceContextFunction(WorkflowConstants.ACTION_PUBLISH));
+
+		return getJSONObject(
+			commentManager.fetchComment(commentId), discussionPermission);
 	}
 
 	protected Function<String, ServiceContext> createServiceContextFunction() {
@@ -76,6 +94,23 @@ public class ScreensCommentServiceImpl
 			@Override
 			public ServiceContext apply(String className) {
 				return new ServiceContext();
+			}
+
+		};
+	}
+
+	protected Function<String, ServiceContext> createServiceContextFunction(
+		final int workflowAction) {
+
+		return new Function<String, ServiceContext>() {
+
+			@Override
+			public ServiceContext apply(String className) {
+				ServiceContext serviceContext = new ServiceContext();
+
+				serviceContext.setWorkflowAction(workflowAction);
+
+				return serviceContext;
 			}
 
 		};

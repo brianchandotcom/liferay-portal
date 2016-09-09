@@ -8,6 +8,8 @@
 		<execute macro="SignIn#signIn" />
 
 		<execute macro="Smoke#viewWelcomePage" />
+
+		<execute macro="Upgrade#reindexSearches" />
 	</set-up>
 
 	<command name="AddFormAfterUpgrade" priority="5">

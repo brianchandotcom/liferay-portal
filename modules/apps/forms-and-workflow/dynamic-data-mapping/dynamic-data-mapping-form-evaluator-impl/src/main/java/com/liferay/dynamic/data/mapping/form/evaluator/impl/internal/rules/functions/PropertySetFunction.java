@@ -14,54 +14,31 @@
 
 package com.liferay.dynamic.data.mapping.form.evaluator.impl.internal.rules.functions;
 
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormFieldEvaluationResult;
-import com.liferay.portal.kernel.util.StringUtil;
-
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author Leonardo Barros
  */
-public class PropertySetFunction extends BasePropertyFunction {
-
-	public PropertySetFunction(
-		Map<String, List<DDMFormFieldEvaluationResult>>
-			ddmFormFieldEvaluationResults) {
-
-		super(ddmFormFieldEvaluationResults);
-	}
+public class PropertySetFunction implements DDMExpressionFunction {
 
 	@Override
 	public Object evaluate(Object... parameters) {
-		String[] fieldNameParts = StringUtil.split(
-			parameters[0].toString(), '#');
-
-		String property = parameters[1].toString();
+		if (parameters.length < 3) {
+			throw new IllegalArgumentException(
+				"Three or more parameters are expected");
+		}
 
 		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult =
-			getDDMFormFieldEvaluationResult(
-				fieldNameParts[0], Integer.valueOf(fieldNameParts[1]));
+			(DDMFormFieldEvaluationResult)parameters[0];
 
-		if (property.equals("readOnly")) {
-			ddmFormFieldEvaluationResult.setReadOnly(
-				Boolean.valueOf(parameters[2].toString()));
-		}
-		else if (property.equals("valid")) {
-			ddmFormFieldEvaluationResult.setValid(
-				Boolean.valueOf(parameters[2].toString()));
+		String propertyName = parameters[1].toString();
 
-			if (parameters.length > 3) {
-				ddmFormFieldEvaluationResult.setErrorMessage(
-					parameters[3].toString());
-			}
-		}
-		else if (property.equals("value")) {
-			ddmFormFieldEvaluationResult.setValue(parameters[2]);
-		}
-		else if (property.equals("visible")) {
-			ddmFormFieldEvaluationResult.setVisible(
-				Boolean.valueOf(parameters[2].toString()));
+		ddmFormFieldEvaluationResult.setProperty(propertyName, parameters[2]);
+
+		if (propertyName.equals("valid") && (parameters.length > 3)) {
+			ddmFormFieldEvaluationResult.setErrorMessage(
+				parameters[3].toString());
 		}
 
 		return true;

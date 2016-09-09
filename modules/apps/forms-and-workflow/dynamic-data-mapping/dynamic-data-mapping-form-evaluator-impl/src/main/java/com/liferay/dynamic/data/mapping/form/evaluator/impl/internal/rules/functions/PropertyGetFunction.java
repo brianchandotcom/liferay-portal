@@ -14,49 +14,26 @@
 
 package com.liferay.dynamic.data.mapping.form.evaluator.impl.internal.rules.functions;
 
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormFieldEvaluationResult;
-import com.liferay.portal.kernel.util.StringUtil;
-
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author Leonardo Barros
  */
-public class PropertyGetFunction extends BasePropertyFunction {
-
-	public PropertyGetFunction(
-		Map<String, List<DDMFormFieldEvaluationResult>>
-			ddmFormFieldEvaluationResults) {
-
-		super(ddmFormFieldEvaluationResults);
-	}
+public class PropertyGetFunction implements DDMExpressionFunction {
 
 	@Override
 	public Object evaluate(Object... parameters) {
-		String[] fieldNameParts = StringUtil.split(
-			parameters[0].toString(), '#');
-
-		String property = parameters[1].toString();
+		if (parameters.length != 2) {
+			throw new IllegalArgumentException("Two parameters are expected");
+		}
 
 		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult =
-			getDDMFormFieldEvaluationResult(
-				fieldNameParts[0], Integer.valueOf(fieldNameParts[1]));
+			(DDMFormFieldEvaluationResult)parameters[0];
 
-		if (property.equals("readOnly")) {
-			return ddmFormFieldEvaluationResult.isReadOnly();
-		}
-		else if (property.equals("valid")) {
-			return ddmFormFieldEvaluationResult.isValid();
-		}
-		else if (property.equals("value")) {
-			return ddmFormFieldEvaluationResult.getValue();
-		}
-		else if (property.equals("visible")) {
-			return ddmFormFieldEvaluationResult.isVisible();
-		}
+		String propertyName = parameters[1].toString();
 
-		return null;
+		return ddmFormFieldEvaluationResult.getProperty(propertyName);
 	}
 
 }

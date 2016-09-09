@@ -111,14 +111,30 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 		<aui:fieldset cssClass="ddl-form-basic-info">
 			<div class="container-fluid-1280">
 				<h1>
-					<liferay-ui:input-editor autoCreate="<%= false %>" contents="<%= HtmlUtil.escape(LocalizationUtil.getLocalization(name, themeDisplay.getLanguageId())) %>" cssClass="ddl-form-name" editorName="alloyeditor" name="nameEditor" placeholder="untitled-form" showSource="<%= false %>" />
+					<liferay-ui:input-editor
+						autoCreate="<%= false %>"
+						contents="<%= HtmlUtil.escape(LocalizationUtil.getLocalization(name, themeDisplay.getLanguageId())) %>"
+						cssClass="ddl-form-name"
+						editorName="alloyeditor"
+						name="nameEditor"
+						placeholder="untitled-form"
+						showSource="<%= false %>"
+					/>
 				</h1>
 
 				<aui:input name="name" type="hidden" />
 
-				<h2>
-					<liferay-ui:input-editor autoCreate="<%= false %>" contents="<%= HtmlUtil.escape(LocalizationUtil.getLocalization(description, themeDisplay.getLanguageId())) %>" cssClass="ddl-form-description" editorName="alloyeditor" name="descriptionEditor" placeholder="add-a-short-description-for-this-form" showSource="<%= false %>" />
-				</h2>
+				<h5>
+					<liferay-ui:input-editor
+						autoCreate="<%= false %>"
+						contents="<%= HtmlUtil.escape(LocalizationUtil.getLocalization(description, themeDisplay.getLanguageId())) %>"
+						cssClass="ddl-form-description h5"
+						editorName="alloyeditor"
+						name="descriptionEditor"
+						placeholder="add-a-short-description-for-this-form"
+						showSource="<%= false %>"
+					/>
+				</h5>
 
 				<aui:input name="description" type="hidden" />
 			</div>

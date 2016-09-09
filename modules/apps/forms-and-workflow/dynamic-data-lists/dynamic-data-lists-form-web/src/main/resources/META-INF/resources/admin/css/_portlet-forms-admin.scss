@@ -3,6 +3,40 @@
 		top: 0;
 	}
 
+	.ddl-form-basic-info {
+		h1,
+		h5,
+		.h5 {
+			margin: 0;
+		}
+
+		.ae-placeholder:empty:before {
+			content: attr(data-placeholder);
+		}
+
+		.alloy-editor-container .alloy-editor.alloy-editor-placeholder,
+		.alloy-editor-container .alloy-editor.alloy-editor-placeholder:empty:not(:focus) {
+			border-width: 0;
+			padding-left: 0;
+
+			.help-block {
+				top: -15px;
+			}
+
+			p {
+				margin: 0;
+			}
+		}
+
+		.alloy-editor-container .alloy-editor.alloy-editor-placeholder {
+			color: $form-header-text-color;
+		}
+
+		.alloy-editor-container .alloy-editor.alloy-editor-placeholder:empty:not(:focus) {
+			color: $form-header-placeholder-color;
+		}
+	}
+
 	.form-builder-content {
 		.layout-builder-layout-container {
 			margin-bottom: 0;

@@ -175,66 +175,6 @@
 		margin-top: 0;
 	}
 
-	.ddl-form-basic-info {
-		h1,
-		h2,
-		h3,
-		h4,
-		h5,
-		h6 {
-			margin: 0;
-		}
-
-		.ae-placeholder:empty:before {
-			content: attr(data-placeholder);
-		}
-
-		.alloy-editor.alloy-editor-placeholder,
-		.alloy-editor.alloy-editor-placeholder:empty:not(:focus),
-		.ddl-form-name,
-		.ddl-form-description {
-			border-width: 0;
-			margin: 0;
-			padding-left: 0;
-
-			.help-block {
-				top: -15px;
-			}
-
-			p {
-				margin: 0;
-			}
-		}
-
-		.alloy-editor.alloy-editor-placeholder,
-		.ddl-form-name,
-		.ddl-form-description {
-			color: #869CAD;
-		}
-
-		.alloy-editor.alloy-editor-placeholder:empty:not(:focus) {
-			color: #C0CCD3;
-		}
-
-		.ddl-form-name {
-			font-weight: 300;
-			padding: $base-line * 5 0 0 0;
-
-			p {
-				margin: 0;
-			}
-		}
-
-		.ddl-form-description {
-			font-weight: normal;
-			padding: $base-line * 2 0 0 0;
-
-			p {
-				margin: 0;
-			}
-		}
-	}
-
 	.ddl-form-builder-app {
 		margin-top: $base-line * 4;
 

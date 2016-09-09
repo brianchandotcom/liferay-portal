@@ -138,9 +138,8 @@ version 1.0.125.
 ## 2.0.30 - 2016-09-09
 
 ### Added
-- [LPS-61099]: Allow to overwrite the default value of
-`liferay.appServerParentDir` by setting the project property
-`app.server.parent.dir`.
+- [LPS-61099]: Allow the `liferay.appServerParentDir` property's default value
+to be overridden by setting the project property `app.server.parent.dir`.
 
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd

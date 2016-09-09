@@ -57,6 +57,7 @@ page import="com.liferay.knowledge.base.exception.KBArticleContentException" %><
 page import="com.liferay.knowledge.base.exception.KBArticleImportException" %><%@
 page import="com.liferay.knowledge.base.exception.KBArticlePriorityException" %><%@
 page import="com.liferay.knowledge.base.exception.KBArticleSourceURLException" %><%@
+page import="com.liferay.knowledge.base.exception.KBArticleStatusException" %><%@
 page import="com.liferay.knowledge.base.exception.KBArticleTitleException" %><%@
 page import="com.liferay.knowledge.base.exception.KBArticleUrlTitleException" %><%@
 page import="com.liferay.knowledge.base.exception.KBCommentContentException" %><%@

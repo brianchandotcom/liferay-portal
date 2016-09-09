@@ -21,6 +21,7 @@ import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.exception.KBArticleContentException;
 import com.liferay.knowledge.base.exception.KBArticleParentException;
 import com.liferay.knowledge.base.exception.KBArticleSourceURLException;
+import com.liferay.knowledge.base.exception.KBArticleStatusException;
 import com.liferay.knowledge.base.exception.KBArticleTitleException;
 import com.liferay.knowledge.base.exception.KBArticleUrlTitleException;
 import com.liferay.knowledge.base.model.KBArticle;
@@ -87,6 +88,117 @@ public class KBArticleLocalServiceTest {
 
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			_group, _user.getUserId());
+	}
+
+	@Test
+	public void testAddApprovedKBArticleInsideApprovedKBArticle()
+		throws Exception {
+
+		_serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+
+		KBArticle parentKBArticle = KBArticleLocalServiceUtil.addKBArticle(
+			_user.getUserId(), _kbFolderClassNameId,
+			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), StringUtil.randomString(), null, null,
+			null, _serviceContext);
+
+		KBArticleLocalServiceUtil.addKBArticle(
+			_user.getUserId(), parentKBArticle.getClassNameId(),
+			parentKBArticle.getResourcePrimKey(), StringUtil.randomString(),
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), null, null, null, _serviceContext);
+	}
+
+	@Test(expected = KBArticleStatusException.class)
+	public void testAddApprovedKBArticleInsideDraftKBArticle()
+		throws Exception {
+
+		_serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
+
+		KBArticle parentKBArticle = KBArticleLocalServiceUtil.addKBArticle(
+			_user.getUserId(), _kbFolderClassNameId,
+			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), StringUtil.randomString(), null, null,
+			null, _serviceContext);
+
+		_serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+
+		KBArticleLocalServiceUtil.addKBArticle(
+			_user.getUserId(), parentKBArticle.getClassNameId(),
+			parentKBArticle.getResourcePrimKey(), StringUtil.randomString(),
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), null, null, null, _serviceContext);
+	}
+
+	@Test
+	public void testAddApprovedKBArticleInsideNonLatestApprovedKBArticle()
+		throws Exception {
+
+		_serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+
+		KBArticle parentKBArticle = KBArticleLocalServiceUtil.addKBArticle(
+			_user.getUserId(), _kbFolderClassNameId,
+			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), StringUtil.randomString(), null, null,
+			null, _serviceContext);
+
+		_serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
+
+		parentKBArticle = KBArticleLocalServiceUtil.updateKBArticle(
+			_user.getUserId(), parentKBArticle.getResourcePrimKey(),
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), null, null, null, null, _serviceContext);
+
+		_serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+
+		KBArticleLocalServiceUtil.addKBArticle(
+			_user.getUserId(), parentKBArticle.getClassNameId(),
+			parentKBArticle.getResourcePrimKey(), StringUtil.randomString(),
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), null, null, null, _serviceContext);
+	}
+
+	@Test
+	public void testAddDraftKBArticleInsideApprovedKBArticle()
+		throws Exception {
+
+		_serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+
+		KBArticle parentKBArticle = KBArticleLocalServiceUtil.addKBArticle(
+			_user.getUserId(), _kbFolderClassNameId,
+			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), StringUtil.randomString(), null, null,
+			null, _serviceContext);
+
+		_serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
+
+		KBArticleLocalServiceUtil.addKBArticle(
+			_user.getUserId(), parentKBArticle.getClassNameId(),
+			parentKBArticle.getResourcePrimKey(), StringUtil.randomString(),
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), null, null, null, _serviceContext);
+	}
+
+	@Test
+	public void testAddDraftKBArticleInsideDraftKBArticle() throws Exception {
+		_serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
+
+		KBArticle parentKBArticle = KBArticleLocalServiceUtil.addKBArticle(
+			_user.getUserId(), _kbFolderClassNameId,
+			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), StringUtil.randomString(), null, null,
+			null, _serviceContext);
+
+		KBArticleLocalServiceUtil.addKBArticle(
+			_user.getUserId(), parentKBArticle.getClassNameId(),
+			parentKBArticle.getResourcePrimKey(), StringUtil.randomString(),
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), null, null, null, _serviceContext);
 	}
 
 	@Test(expected = KBArticleContentException.class)

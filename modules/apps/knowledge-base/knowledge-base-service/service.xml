@@ -366,6 +366,7 @@
 		<exception>KBArticleParent</exception>
 		<exception>KBArticlePriority</exception>
 		<exception>KBArticleSourceURL</exception>
+		<exception>KBArticleStatus</exception>
 		<exception>KBArticleTitle</exception>
 		<exception>KBArticleUrlTitle</exception>
 		<exception>KBCommentContent</exception>

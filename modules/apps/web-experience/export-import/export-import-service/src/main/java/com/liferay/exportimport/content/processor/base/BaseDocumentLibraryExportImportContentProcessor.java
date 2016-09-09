@@ -120,22 +120,6 @@ public abstract class BaseDocumentLibraryExportImportContentProcessor
 		sb.replace(beginPos + 1, endPos, urlParams);
 	}
 
-	protected String getDLReference(String content, int beginPos, int endPos) {
-		char[] stopChars = DL_REFERENCE_LEGACY_STOP_CHARS;
-
-		if (content.startsWith("/documents/", beginPos)) {
-			stopChars = DL_REFERENCE_STOP_CHARS;
-		}
-
-		endPos = StringUtil.indexOfAny(content, stopChars, beginPos, endPos);
-
-		if (endPos == -1) {
-			return null;
-		}
-
-		return content.substring(beginPos, endPos);
-	}
-
 	protected Map<String, String[]> getDLReferenceParameters(
 		long groupId, String content, int beginPos, int endPos) {
 
@@ -531,8 +515,8 @@ public abstract class BaseDocumentLibraryExportImportContentProcessor
 
 			if (fileEntry == null) {
 				throw new NoSuchFileEntryException(
-					getDLReference(
-						content, beginPos + portalURL.length(), endPos));
+					"File entry reference parameters: " +
+						MapUtil.toString(dlReferenceParameters));
 			}
 
 			endPos = beginPos - 1;

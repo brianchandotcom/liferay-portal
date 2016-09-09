@@ -15,10 +15,10 @@
 package com.liferay.calendar.constants;
 
 /**
- * @author Eduardo Lundgren
- * @author Andrea Di Giorgi
+ * @author     Eduardo Lundgren
+ * @author     Andrea Di Giorgi
  * @deprecated As of 7.0.0, replaced by {@link
- * 			   com.liferay.calendar.web.internal.constants.CalendarWebKeys}
+ *             com.liferay.calendar.web.internal.constants.CalendarWebKeys}
  */
 @Deprecated
 public class CalendarWebKeys {

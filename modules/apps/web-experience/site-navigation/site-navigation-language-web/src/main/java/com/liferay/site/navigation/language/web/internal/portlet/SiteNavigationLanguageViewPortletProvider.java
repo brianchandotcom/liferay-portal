@@ -56,7 +56,7 @@ public class SiteNavigationLanguageViewPortletProvider
 	}
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of 2.1.0
 	 */
 	@Deprecated
 	@Override

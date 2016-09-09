@@ -38,7 +38,7 @@ public interface PortletDisplayTemplate {
 	public String getDDMTemplateKey(String displayStyle);
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of 2.0.0
 	 */
 	@Deprecated
 	public String getDDMTemplateUuid(String displayStyle);
@@ -56,7 +56,7 @@ public interface PortletDisplayTemplate {
 		boolean useDefault);
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of 2.0.0
 	 */
 	@Deprecated
 	public long getPortletDisplayTemplateDDMTemplateId(

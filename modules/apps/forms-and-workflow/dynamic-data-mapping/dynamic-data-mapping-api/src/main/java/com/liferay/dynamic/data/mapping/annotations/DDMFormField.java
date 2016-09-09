@@ -53,7 +53,7 @@ public @interface DDMFormField {
 	public String validationExpression() default StringPool.BLANK;
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link DDMFormRule}
+	 * @deprecated As of 3.5.0, replaced by {@link DDMFormRule}
 	 */
 	@Deprecated
 	public String visibilityExpression() default StringPool.BLANK;

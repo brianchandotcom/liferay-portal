@@ -31,7 +31,7 @@ import javax.servlet.http.HttpServletResponse;
 public class DDMFormFieldRenderingContext {
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of 3.5.0, with no direct replacement
 	 */
 	@Deprecated
 	public String getChildElementsHTML() {
@@ -107,7 +107,7 @@ public class DDMFormFieldRenderingContext {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of 3.5.0, with no direct replacement
 	 */
 	@Deprecated
 	public void setChildElementsHTML(String childElementsHTML) {

@@ -32,7 +32,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface SearchPermissionCheckerConfiguration {
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of 3.3.0, with no direct replacement
 	 */
 	@Deprecated
 	@Meta.AD(

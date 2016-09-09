@@ -16,7 +16,7 @@ package com.liferay.calendar.internal.exportimport.content.processor;
 
 /**
  * @author Gergely Mathe
- * @deprecated As of 7.0.0, with no direct replacement
+ * @deprecated As of 2.2.0, with no direct replacement
  */
 @Deprecated
 public class CalendarNotificationTemplateExportImportContentProcessor {

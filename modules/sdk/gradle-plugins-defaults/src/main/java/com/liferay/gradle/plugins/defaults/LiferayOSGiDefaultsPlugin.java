@@ -261,7 +261,9 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		final LiferayExtension liferayExtension = GradleUtil.getExtension(
 			project, LiferayExtension.class);
 
-		File versionOverrideFile = _getVersionOverrideFile(project);
+		GitRepo gitRepo = _getGitRepo(project);
+
+		File versionOverrideFile = _getVersionOverrideFile(project, gitRepo);
 
 		boolean syncReleaseVersions = _syncReleaseVersions(
 			project, portalRootDir, versionOverrideFile);
@@ -3056,6 +3058,34 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		return (Map<String, String>)bundleExtension.getInstructions();
 	}
 
+	private GitRepo _getGitRepo(Project project) {
+		File dir = GradleUtil.getRootDir(project, ".gitrepo");
+
+		if (dir == null) {
+			return null;
+		}
+
+		String content;
+
+		try {
+			File file = new File(dir, ".gitrepo");
+
+			content = new String(
+				Files.readAllBytes(file.toPath()), StandardCharsets.UTF_8);
+		}
+		catch (IOException ioe) {
+			throw new UncheckedIOException(ioe);
+		}
+
+		boolean readOnly = false;
+
+		if (content.contains("mode = pull")) {
+			readOnly = true;
+		}
+
+		return new GitRepo(dir, readOnly);
+	}
+
 	private File _getLibDir(Project project) {
 		File docrootDir = project.file("docroot");
 
@@ -3122,35 +3152,15 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		}
 	}
 
-	private File _getVersionOverrideFile(Project project) {
-		File gitRepoDir = GradleUtil.getRootDir(
-			project.getProjectDir(), ".gitrepo");
-
-		if (gitRepoDir == null) {
-			return null;
-		}
-
-		String gitRepo;
-
-		try {
-			File gitRepoFile = new File(gitRepoDir, ".gitrepo");
-
-			gitRepo = new String(
-				Files.readAllBytes(gitRepoFile.toPath()),
-				StandardCharsets.UTF_8);
-		}
-		catch (IOException ioe) {
-			throw new UncheckedIOException(ioe);
-		}
-
-		if (!gitRepo.contains("mode = pull")) {
+	private File _getVersionOverrideFile(Project project, GitRepo gitRepo) {
+		if ((gitRepo == null) || !gitRepo.readOnly) {
 			return null;
 		}
 
 		String fileName =
 			".version-override-" + project.getName() + ".properties";
 
-		return new File(gitRepoDir.getParentFile(), fileName);
+		return new File(gitRepo.dir, fileName);
 	}
 
 	private Properties _getVersions(
@@ -3577,5 +3587,17 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		new BackupFilesBuildAdapter();
 	private static final Pattern _jsonVersionPattern = Pattern.compile(
 		"\\n\\t\"version\": \"(.+)\"");
+
+	private static class GitRepo {
+
+		public GitRepo(File dir, boolean readOnly) {
+			this.dir = dir;
+			this.readOnly = readOnly;
+		}
+
+		public final File dir;
+		public final boolean readOnly;
+
+	}
 
 }

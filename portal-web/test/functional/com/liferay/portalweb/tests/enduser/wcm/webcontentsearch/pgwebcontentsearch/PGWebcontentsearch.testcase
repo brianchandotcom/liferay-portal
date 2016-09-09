@@ -11,15 +11,15 @@
 		<execute macro="User#firstLoginPG" />
 
 		<execute macro="Page#add">
-			<var name="pageName" value="${webContentSearchPageName}" />
+			<var name="pageName" value="Web Content Search Page" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${webContentSearchPageName}" />
+			<var name="pageName" value="Web Content Search Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${webContentSearchPortletName}" />
+			<var name="portletName" value="Web Content Search" />
 		</execute>
 	</set-up>
 
@@ -44,52 +44,47 @@
 	</tear-down>
 
 	<command name="SearchWebContent" priority="4">
-		<var name="pageName" value="Web Content Display Page" />
-		<var name="portletName" value="Web Content Display" />
-		<var name="webContentContent" value="WC WebContent Content" />
-		<var name="webContentTitle" value="WC WebContent Title" />
-
 		<execute macro="Page#add">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Web Content Display Page" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Web Content Display Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${portletName}" />
+			<var name="portletName" value="Web Content Display" />
 		</execute>
 
 		<execute macro="WebContent#addPGViaWCD">
-			<var name="webContentContent" value="${webContentContent}" />
-			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
 		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentContent" value="WC WebContent Content" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${webContentSearchPageName}" />
+			<var name="pageName" value="Web Content Search Page" />
 		</execute>
 
 		<execute macro="WebContentSearchPortlet#search">
-			<var name="webContentSearchTerm" value="${webContentTitle}" />
+			<var name="webContentSearchTerm" value="WC WebContent Title" />
 		</execute>
 
 		<execute macro="WebContentSearchPortlet#viewResultsEntry">
-			<var name="webContentContent" value="${webContentContent}" />
-			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
 		<execute macro="WebContentSearchPortlet#search">
-			<var name="webContentSearchTerm" value="${webContentContent}" />
+			<var name="webContentSearchTerm" value="WC WebContent Content" />
 		</execute>
 
 		<execute macro="WebContentSearchPortlet#viewResultsEntry">
-			<var name="webContentContent" value="${webContentContent}" />
-			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
 		<execute macro="WebContentSearchPortlet#search">
@@ -97,8 +92,8 @@
 		</execute>
 
 		<execute macro="WebContentSearchPortlet#viewResultsEntry">
-			<var name="webContentContent" value="${webContentContent}" />
-			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
 		<execute macro="WebContentSearchPortlet#search">
@@ -106,8 +101,8 @@
 		</execute>
 
 		<execute macro="WebContentSearchPortlet#viewResultsEntry">
-			<var name="webContentContent" value="${webContentContent}" />
-			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
 		<execute macro="WebContentSearchPortlet#search">
@@ -115,8 +110,8 @@
 		</execute>
 
 		<execute macro="WebContentSearchPortlet#viewResultsEntry">
-			<var name="webContentContent" value="${webContentContent}" />
-			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
 		<execute macro="WebContentSearchPortlet#search">
@@ -124,8 +119,8 @@
 		</execute>
 
 		<execute macro="WebContentSearchPortlet#viewResultsEntry">
-			<var name="webContentContent" value="${webContentContent}" />
-			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
 		<execute macro="WebContentSearchPortlet#search">
@@ -162,13 +157,6 @@
 	</command>
 
 	<command name="SearchWebContentCategory" priority="4">
-		<var name="categoryName" value="Category Name" />
-		<var name="pageName" value="Web Content Display Page" />
-		<var name="portletName" value="Web Content Display" />
-		<var name="vocabularyName" value="Vocabulary Name" />
-		<var name="webContentContent" value="WC WebContent Content" />
-		<var name="webContentTitle" value="WC WebContent Title" />
-
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
@@ -176,57 +164,59 @@
 		</execute>
 
 		<execute macro="Vocabulary#addCP">
-			<var name="vocabularyName" value="${vocabularyName}" />
+			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
 		<execute macro="Category#addCP">
-			<var name="categoryName" value="${categoryName}" />
-			<var name="vocabularyName" value="${vocabularyName}" />
+			<var name="categoryName" value="Category Name" />
+			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Web Content Display Page" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Web Content Display Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${portletName}" />
+			<var name="portletName" value="Web Content Display" />
 		</execute>
 
 		<execute macro="WebContent#addPGViaWCD">
-			<var name="webContentContent" value="${webContentContent}" />
-			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
 		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentContent" value="WC WebContent Content" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Web Content Display Page" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoEditPGViaWCD" />
 
-		<execute macro="WebContent#addCategoryPGViaWCD">
-			<var name="categoryName" value="${categoryName}" />
-			<var name="vocabularyName" value="${vocabularyName}" />
+		<execute macro="WebContent#selectCategory">
+			<var name="categoryName" value="Category Name" />
+			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
+		<execute macro="PortletEntry#publish" />
+
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${webContentSearchPageName}" />
+			<var name="pageName" value="Web Content Search Page" />
 		</execute>
 
 		<execute macro="WebContentSearchPortlet#search">
-			<var name="webContentSearchTerm" value="${categoryName}" />
+			<var name="webContentSearchTerm" value="Category Name" />
 		</execute>
 
 		<execute macro="WebContentSearchPortlet#viewResultsEntry">
-			<var name="webContentContent" value="${webContentContent}" />
-			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
 		<execute macro="WebContentSearchPortlet#search">
@@ -234,8 +224,8 @@
 		</execute>
 
 		<execute macro="WebContentSearchPortlet#viewResultsEntry">
-			<var name="webContentContent" value="${webContentContent}" />
-			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
 		<execute macro="WebContentSearchPortlet#search">
@@ -243,8 +233,8 @@
 		</execute>
 
 		<execute macro="WebContentSearchPortlet#viewResultsEntry">
-			<var name="webContentContent" value="${webContentContent}" />
-			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
 		<execute macro="WebContentSearchPortlet#search">
@@ -265,13 +255,6 @@
 	</command>
 
 	<command name="SearchWebContentCategoryQuotes" priority="3">
-		<var name="categoryName" value="Category Name" />
-		<var name="pageName" value="Web Content Display Page" />
-		<var name="portletName" value="Web Content Display" />
-		<var name="vocabularyName" value="Vocabulary Name" />
-		<var name="webContentContent" value="WC WebContent Content" />
-		<var name="webContentTitle" value="WC WebContent Title" />
-
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
@@ -279,48 +262,50 @@
 		</execute>
 
 		<execute macro="Vocabulary#addCP">
-			<var name="vocabularyName" value="${vocabularyName}" />
+			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
 		<execute macro="Category#addCP">
-			<var name="categoryName" value="${categoryName}" />
-			<var name="vocabularyName" value="${vocabularyName}" />
+			<var name="categoryName" value="Category Name" />
+			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Web Content Display Page" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Web Content Display Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${portletName}" />
+			<var name="portletName" value="Web Content Display" />
 		</execute>
 
 		<execute macro="WebContent#addPGViaWCD">
-			<var name="webContentContent" value="${webContentContent}" />
-			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
 		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentContent" value="WC WebContent Content" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Web Content Display Page" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoEditPGViaWCD" />
 
-		<execute macro="WebContent#addCategoryPGViaWCD">
-			<var name="categoryName" value="${categoryName}" />
-			<var name="vocabularyName" value="${vocabularyName}" />
+		<execute macro="WebContent#selectCategory">
+			<var name="categoryName" value="Category Name" />
+			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
+		<execute macro="PortletEntry#publish" />
+
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${webContentSearchPageName}" />
+			<var name="pageName" value="Web Content Search Page" />
 		</execute>
 
 		<execute macro="WebContentSearchPortlet#search">
@@ -328,8 +313,8 @@
 		</execute>
 
 		<execute macro="WebContentSearchPortlet#viewResultsEntry">
-			<var name="webContentContent" value="${webContentContent}" />
-			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
 		<execute macro="WebContentSearchPortlet#search">
@@ -337,8 +322,8 @@
 		</execute>
 
 		<execute macro="WebContentSearchPortlet#viewResultsEntry">
-			<var name="webContentContent" value="${webContentContent}" />
-			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
 		<execute macro="WebContentSearchPortlet#search">
@@ -346,8 +331,8 @@
 		</execute>
 
 		<execute macro="WebContentSearchPortlet#viewResultsEntry">
-			<var name="webContentContent" value="${webContentContent}" />
-			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
 		<execute macro="WebContentSearchPortlet#search">
@@ -376,34 +361,29 @@
 	</command>
 
 	<command name="SearchWebContentQuotes" priority="3">
-		<var name="pageName" value="Web Content Display Page" />
-		<var name="portletName" value="Web Content Display" />
-		<var name="webContentContent" value="WC WebContent Content" />
-		<var name="webContentTitle" value="WC WebContent Title" />
-
 		<execute macro="Page#add">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Web Content Display Page" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Web Content Display Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${portletName}" />
+			<var name="portletName" value="Web Content Display" />
 		</execute>
 
 		<execute macro="WebContent#addPGViaWCD">
-			<var name="webContentContent" value="${webContentContent}" />
-			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
 		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentContent" value="WC WebContent Content" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${webContentSearchPageName}" />
+			<var name="pageName" value="Web Content Search Page" />
 		</execute>
 
 		<execute macro="WebContentSearchPortlet#search">
@@ -411,8 +391,8 @@
 		</execute>
 
 		<execute macro="WebContentSearchPortlet#viewResultsEntry">
-			<var name="webContentContent" value="${webContentContent}" />
-			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
 		<execute macro="WebContentSearchPortlet#search">
@@ -420,8 +400,8 @@
 		</execute>
 
 		<execute macro="WebContentSearchPortlet#viewResultsEntry">
-			<var name="webContentContent" value="${webContentContent}" />
-			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
 		<execute macro="WebContentSearchPortlet#search">
@@ -429,8 +409,8 @@
 		</execute>
 
 		<execute macro="WebContentSearchPortlet#viewResultsEntry">
-			<var name="webContentContent" value="${webContentContent}" />
-			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
 		<execute macro="WebContentSearchPortlet#search">
@@ -438,8 +418,8 @@
 		</execute>
 
 		<execute macro="WebContentSearchPortlet#viewResultsEntry">
-			<var name="webContentContent" value="${webContentContent}" />
-			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
 		<execute macro="WebContentSearchPortlet#search">
@@ -447,8 +427,8 @@
 		</execute>
 
 		<execute macro="WebContentSearchPortlet#viewResultsEntry">
-			<var name="webContentContent" value="${webContentContent}" />
-			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
 		<execute macro="WebContentSearchPortlet#search">
@@ -456,8 +436,8 @@
 		</execute>
 
 		<execute macro="WebContentSearchPortlet#viewResultsEntry">
-			<var name="webContentContent" value="${webContentContent}" />
-			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
 		<execute macro="WebContentSearchPortlet#search">
@@ -465,8 +445,8 @@
 		</execute>
 
 		<execute macro="WebContentSearchPortlet#viewResultsEntry">
-			<var name="webContentContent" value="${webContentContent}" />
-			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
 		<execute macro="WebContentSearchPortlet#search">
@@ -474,8 +454,8 @@
 		</execute>
 
 		<execute macro="WebContentSearchPortlet#viewResultsEntry">
-			<var name="webContentContent" value="${webContentContent}" />
-			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
 		<execute macro="WebContentSearchPortlet#search">
@@ -483,8 +463,8 @@
 		</execute>
 
 		<execute macro="WebContentSearchPortlet#viewResultsEntry">
-			<var name="webContentContent" value="${webContentContent}" />
-			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
 		<execute macro="WebContentSearchPortlet#search">
@@ -537,54 +517,48 @@
 	</command>
 
 	<command name="SearchWebContentTag" priority="4">
-		<var name="pageName" value="Web Content Display Page" />
-		<var name="portletName" value="Web Content Display" />
-		<var name="tagName" value="tag name" />
-		<var name="webContentContent" value="WC WebContent Content" />
-		<var name="webContentTitle" value="WC WebContent Title" />
-
 		<execute macro="Page#add">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Web Content Display Page" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Web Content Display Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${portletName}" />
+			<var name="portletName" value="Web Content Display" />
 		</execute>
 
 		<execute macro="WebContent#addPGViaWCD">
-			<var name="webContentContent" value="${webContentContent}" />
-			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
 		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentContent" value="WC WebContent Content" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Web Content Display Page" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoEditPGViaWCD" />
 
 		<execute macro="WebContent#addTagPGViaWCD">
-			<var name="tagName" value="${tagName}" />
+			<var name="tagName" value="tag name" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${webContentSearchPageName}" />
+			<var name="pageName" value="Web Content Search Page" />
 		</execute>
 
 		<execute macro="WebContentSearchPortlet#search">
-			<var name="webContentSearchTerm" value="${tagName}" />
+			<var name="webContentSearchTerm" value="tag name" />
 		</execute>
 
 		<execute macro="WebContentSearchPortlet#viewResultsEntry">
-			<var name="webContentContent" value="${webContentContent}" />
-			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
 		<execute macro="WebContentSearchPortlet#search">
@@ -592,8 +566,8 @@
 		</execute>
 
 		<execute macro="WebContentSearchPortlet#viewResultsEntry">
-			<var name="webContentContent" value="${webContentContent}" />
-			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
 		<execute macro="WebContentSearchPortlet#search">
@@ -601,8 +575,8 @@
 		</execute>
 
 		<execute macro="WebContentSearchPortlet#viewResultsEntry">
-			<var name="webContentContent" value="${webContentContent}" />
-			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
 		<execute macro="WebContentSearchPortlet#search">
@@ -623,45 +597,39 @@
 	</command>
 
 	<command name="SearchWebContentTagQuotes" priority="3">
-		<var name="pageName" value="Web Content Display Page" />
-		<var name="portletName" value="Web Content Display" />
-		<var name="tagName" value="tag name" />
-		<var name="webContentContent" value="WC WebContent Content" />
-		<var name="webContentTitle" value="WC WebContent Title" />
-
 		<execute macro="Page#add">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Web Content Display Page" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Web Content Display Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${portletName}" />
+			<var name="portletName" value="Web Content Display" />
 		</execute>
 
 		<execute macro="WebContent#addPGViaWCD">
-			<var name="webContentContent" value="${webContentContent}" />
-			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
 		<execute macro="WebContent#viewPGViaWCD">
-			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentContent" value="WC WebContent Content" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Web Content Display Page" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoEditPGViaWCD" />
 
 		<execute macro="WebContent#addTagPGViaWCD">
-			<var name="tagName" value="${tagName}" />
+			<var name="tagName" value="tag name" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${webContentSearchPageName}" />
+			<var name="pageName" value="Web Content Search Page" />
 		</execute>
 
 		<execute macro="WebContentSearchPortlet#search">
@@ -669,8 +637,8 @@
 		</execute>
 
 		<execute macro="WebContentSearchPortlet#viewResultsEntry">
-			<var name="webContentContent" value="${webContentContent}" />
-			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
 		<execute macro="WebContentSearchPortlet#search">
@@ -678,8 +646,8 @@
 		</execute>
 
 		<execute macro="WebContentSearchPortlet#viewResultsEntry">
-			<var name="webContentContent" value="${webContentContent}" />
-			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
 		<execute macro="WebContentSearchPortlet#search">
@@ -687,8 +655,8 @@
 		</execute>
 
 		<execute macro="WebContentSearchPortlet#viewResultsEntry">
-			<var name="webContentContent" value="${webContentContent}" />
-			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
 		<execute macro="WebContentSearchPortlet#search">

@@ -4,11 +4,19 @@
 
 		<execute function="AssertClick" locator1="AssetCategorization#CATEGORY_SELECT" value1="Select" />
 
+		<execute function="SelectFrameTop" />
+
 		<if>
-			<condition function="IsElementPresent" locator1="IFrame#DIALOG" />
+			<condition function="IsElementPresent" locator1="IFrame#SELECT_CATEGORY" />
 			<then>
-				<execute macro="IFrame#selectConfigurationFrame" />
+				<execute macro="IFrame#selectCategoryFrame" />
 			</then>
+			<elseif>
+				<condition function="IsElementPresent" locator1="IFrame#MODAL_IFRAME" />
+				<then>
+					<execute macro="IFrame#selectModalFrame" />
+				</then>
+			</elseif>
 		</if>
 
 		<var name="key_categoryName" value="${categoryName}" />
@@ -17,7 +25,7 @@
 
 		<execute function="AssertVisible" locator1="AssetCategorization#CATEGORIES_CATEGORY_CHECKBOX_CHECKED" />
 
-		<execute function="SelectFrame" value1="relative=top" />
+		<execute function="SelectFrameTop" />
 
 		<if>
 			<condition function="IsElementPresent" locator1="Button#DONE" />
@@ -27,6 +35,13 @@
 			<else>
 				<execute function="Click" locator1="Icon#CLOSE" />
 			</else>
+		</if>
+
+		<if>
+			<condition function="IsElementPresent" locator1="IFrame#MODAL_IFRAME" />
+			<then>
+				<execute macro="IFrame#selectModalFrame" />
+			</then>
 		</if>
 
 		<execute function="AssertTextEquals" locator1="AssetCategorization#CATEGORY" value1="${categoryName}" />

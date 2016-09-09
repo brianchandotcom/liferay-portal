@@ -332,14 +332,9 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 				long layoutRevisionId = rs.getLong("layoutRevisionId");
 				String typeSettings = rs.getString("typeSettings");
 
-				List<String> layoutColumnIds = _getLayoutColumnIds();
-
-				layoutColumnIds.addAll(
-					_getNestedPortletColumnIds(typeSettings));
-
 				String newTypeSettings = getNewTypeSettings(
 					typeSettings, oldRootPortletId, newRootPortletId,
-					layoutColumnIds, exactMatch);
+					exactMatch);
 
 				updateLayoutRevision(layoutRevisionId, newTypeSettings);
 			}
@@ -362,14 +357,9 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 				long plid = rs.getLong("plid");
 				String typeSettings = rs.getString("typeSettings");
 
-				List<String> layoutColumnIds = _getLayoutColumnIds();
-
-				layoutColumnIds.addAll(
-					_getNestedPortletColumnIds(typeSettings));
-
 				String newTypeSettings = getNewTypeSettings(
 					typeSettings, oldRootPortletId, newRootPortletId,
-					layoutColumnIds, exactMatch);
+					exactMatch);
 
 				updateLayout(plid, newTypeSettings);
 			}
@@ -565,16 +555,6 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 				updateLayouts(portletId, newPortletInstanceKey, true);
 			}
 		}
-	}
-
-	private List<String> _getLayoutColumnIds() {
-		List<String> columnIds = new ArrayList<>();
-
-		for (int i = 1; i <= 10; i++) {
-			columnIds.add(LayoutTypePortletConstants.COLUMN_PREFIX + i);
-		}
-
-		return columnIds;
 	}
 
 	private List<String> _getLayoutColumnIds(String typeSettings) {

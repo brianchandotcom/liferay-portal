@@ -609,10 +609,10 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 	private void _addDependenciesPortalTest(Project project) {
 		GradleUtil.addDependency(
-			project, PORTAL_TEST_CONFIGURATION_NAME, "com.liferay.portal",
+			project, PORTAL_TEST_CONFIGURATION_NAME, _GROUP_PORTAL,
 			"com.liferay.portal.test", "default");
 		GradleUtil.addDependency(
-			project, PORTAL_TEST_CONFIGURATION_NAME, "com.liferay.portal",
+			project, PORTAL_TEST_CONFIGURATION_NAME, _GROUP_PORTAL,
 			"com.liferay.portal.test.integration", "default");
 	}
 
@@ -1603,8 +1603,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 						name.equals("com.liferay.jasper.jspc")) {
 
 						moduleDependency.exclude(
-							Collections.singletonMap(
-								"group", "com.liferay.portal"));
+							Collections.singletonMap("group", _GROUP_PORTAL));
 					}
 				}
 
@@ -3060,7 +3059,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	}
 
 	private GitRepo _getGitRepo(Project project) {
-		File dir = GradleUtil.getRootDir(project, ".gitrepo");
+		File dir = GradleUtil.getRootDir(project, _GIT_REPO_FILE_NAME);
 
 		if (dir == null) {
 			return null;
@@ -3069,7 +3068,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		String content;
 
 		try {
-			File file = new File(dir, ".gitrepo");
+			File file = new File(dir, _GIT_REPO_FILE_NAME);
 
 			content = new String(
 				Files.readAllBytes(file.toPath()), StandardCharsets.UTF_8);
@@ -3551,7 +3550,11 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 	private static final char _DEPENDENCY_KEY_SEPARATOR = '/';
 
+	private static final String _GIT_REPO_FILE_NAME = ".gitrepo";
+
 	private static final String _GROUP = "com.liferay";
+
+	private static final String _GROUP_PORTAL = "com.liferay.portal";
 
 	private static final JavaVersion _JAVA_VERSION = JavaVersion.VERSION_1_7;
 

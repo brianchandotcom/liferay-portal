@@ -349,6 +349,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected void checkPackagePath(String fileName, String packagePath) {
+		if (Validator.isNull(packagePath)) {
+			processMessage(fileName, "Missing package");
+		}
+
 		int pos = fileName.lastIndexOf(CharPool.SLASH);
 
 		String filePath = StringUtil.replace(
@@ -631,13 +635,13 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		className = className.substring(0, pos);
 
+		String packagePath = StringPool.BLANK;
+
 		Matcher matcher = _packagePattern.matcher(content);
 
-		if (!matcher.find()) {
-			processMessage(fileName, "Missing package");
+		if (matcher.find()) {
+			packagePath = matcher.group(2);
 		}
-
-		String packagePath = matcher.group(2);
 
 		checkPackagePath(fileName, packagePath);
 

@@ -134,6 +134,11 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 			<div class="<%= colCssClass %> entry-body">
 				<c:choose>
 					<c:when test="<%= blogsPortletInstanceConfiguration.displayStyle().equals(BlogsUtil.DISPLAY_STYLE_ABSTRACT) && !viewSingleEntry %>">
+						<c:if test="<%= entry.isSmallImage() && Validator.isNull(coverImageURL) %>">
+							<div class="asset-small-image">
+								<img alt="" class="asset-small-image img-thumbnail" src="<%= HtmlUtil.escape(entry.getSmallImageURL(themeDisplay)) %>" width="150" />
+							</div>
+						</c:if>
 
 						<%
 						String summary = entry.getDescription();

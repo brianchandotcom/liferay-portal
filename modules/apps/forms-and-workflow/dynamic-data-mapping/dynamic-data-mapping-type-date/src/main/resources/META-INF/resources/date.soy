@@ -25,7 +25,7 @@
 	<div class="form-group{$visible ? '' : ' hide'} liferay-ddm-form-field-date" data-fieldname="{$name}">
 		{if $showLabel}
 			<label class="control-label" for="{$name}">
-				{$label}
+				{$label or ''}
 
 				{if $required}
 					<span class="icon-asterisk text-warning"></span>

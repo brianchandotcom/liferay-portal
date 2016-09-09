@@ -14,6 +14,7 @@
 							requires: [
 								'aui-form-builder',
 								'aui-form-builder-pages',
+								'liferay-ddl-form-builder-confirmation-dialog',
 								'liferay-ddl-form-builder-field-list',
 								'liferay-ddl-form-builder-field-options-toolbar',
 								'liferay-ddl-form-builder-field-settings-sidebar',
@@ -33,6 +34,10 @@
 							requires: [
 								'soyutils'
 							]
+						},
+						'liferay-ddl-form-builder-confirmation-dialog': {
+							path: 'form_builder_confirmation_dialog.js',
+							requires: []
 						},
 						'liferay-ddl-form-builder-definition-serializer': {
 							path: 'form_definition_serializer.js',

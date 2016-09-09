@@ -19,7 +19,7 @@ AUI.add(
 					},
 
 					description: {
-						value: 'No description'
+						value: ''
 					},
 
 					field: {
@@ -27,7 +27,7 @@ AUI.add(
 					},
 
 					title: {
-						value: 'Untitle'
+						value: ''
 					},
 
 					toolbar: {
@@ -55,6 +55,26 @@ AUI.add(
 						instance._eventHandlers = eventHandlers;
 					},
 
+					destructor: function() {
+						var instance = this;
+
+						var toolbar = instance.get('toolbar');
+
+						toolbar.destroy();
+
+						instance.destroyFieldSettingsForm();
+
+						(new A.EventHandle(instance._eventHandlers)).detach();
+					},
+
+					destroyFieldSettingsForm: function() {
+						var instance = this;
+
+						if (instance.settingsForm) {
+							instance.settingsForm.destroy();
+						}
+					},
+
 					getFieldSettings: function() {
 						var instance = this;
 
@@ -67,10 +87,36 @@ AUI.add(
 						return settings;
 					},
 
+					getPreviousContext: function() {
+						var instance = this;
+
+						return instance._previousContext;
+					},
+
+					hasChanges: function() {
+						var instance = this;
+
+						var previousContext = instance.getPreviousContext();
+
+						var currentFieldSettings = instance.getFieldSettings();
+
+						return JSON.stringify(previousContext) !== JSON.stringify(currentFieldSettings.context);
+					},
+
 					_afterOpenStart: function() {
 						var instance = this;
 
 						instance._showLoading();
+					},
+
+					_afterPressEscapeKey: function() {
+						var instance = this;
+
+						if (instance.isOpen()) {
+							var field = instance.get('field');
+
+							instance.get('builder').cancelFieldEdition(field);
+						}
 					},
 
 					_afterSidebarOpen: function() {
@@ -79,6 +125,10 @@ AUI.add(
 						var field = instance.get('field');
 
 						var toolbar = instance.get('toolbar');
+
+						if (instance.settingsForm) {
+							instance._hideSettingsForm();
+						}
 
 						instance._showLoading();
 
@@ -96,8 +146,6 @@ AUI.add(
 						var settingsForm = instance.settingsForm;
 
 						var settingsFormContainer = settingsForm.get('container');
-
-						instance._hideSettingsForm();
 
 						instance.set('bodyContent', settingsFormContainer);
 
@@ -205,9 +253,6 @@ AUI.add(
 						var instance = this;
 
 						var contentBox = instance.get('contentBox');
-
-						instance.set('description', '');
-						instance.set('title', '');
 
 						if (!contentBox.one('.loading-icon')) {
 							contentBox.append(TPL_LOADING);

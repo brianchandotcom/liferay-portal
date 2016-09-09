@@ -36,7 +36,7 @@ if (goog.DEBUG) {
 
 
 ddl.sidebar.header = function(opt_data, opt_ignored) {
-  return '<div class="sidebar-header"><ul class="sidebar-header-actions">' + ((opt_data.toolbarTemplateContext) ? '<li>' + ddl.sidebar.field_options_toolbar(opt_data) + '</li>' : '') + '<li><a class="form-builder-sidebar-close" href="javascript:;">' + soy.$$filterNoAutoescape(opt_data.closeButtonIcon) + '</a></li></ul><h4 class="form-builder-sidebar-title truncate-text" title="' + soy.$$escapeHtmlAttribute(opt_data.title) + '">' + soy.$$escapeHtml(opt_data.title) + '</h4><h5 class="form-builder-sidebar-description" title="' + soy.$$escapeHtmlAttribute(opt_data.description) + '">' + soy.$$escapeHtml(opt_data.description) + '</h5></div>';
+  return '<div class="sidebar-header"><ul class="sidebar-header-actions">' + ((opt_data.toolbarTemplateContext) ? '<li>' + ddl.sidebar.field_options_toolbar(opt_data) + '</li>' : '') + '<li><a class="form-builder-sidebar-close" href="javascript:;">' + soy.$$filterNoAutoescape(opt_data.closeButtonIcon) + '</a></li></ul><h4 class="form-builder-sidebar-title truncate-text" title="' + soy.$$escapeHtmlAttribute(opt_data.title) + '">' + soy.$$escapeHtml(opt_data.title || '') + '</h4><h5 class="form-builder-sidebar-description" title="' + soy.$$escapeHtmlAttribute(opt_data.description) + '">' + soy.$$escapeHtml(opt_data.description || '') + '</h5></div>';
 };
 if (goog.DEBUG) {
   ddl.sidebar.header.soyTemplateName = 'ddl.sidebar.header';

@@ -35,7 +35,7 @@
 
 				<span class="toggle-switch-text toggle-switch-text-right">
 					{if $showLabel}
-						{$label}
+						{$label or ''}
 					{/if}
 
 					{if $required}
@@ -53,7 +53,7 @@
 					<label for="{$name}">
 				{/if}
 
-						<input {if $readOnly}disabled{/if} id="{$name}" name="{$name}" type="checkbox" {$status} value="true" />{if $showLabel} {$label}{/if}
+						<input {if $readOnly}disabled{/if} id="{$name}" name="{$name}" type="checkbox" {$status} value="true" />{if $showLabel} {$label or ''}{/if}
 
 				{if $showLabel}
 						{if $required}

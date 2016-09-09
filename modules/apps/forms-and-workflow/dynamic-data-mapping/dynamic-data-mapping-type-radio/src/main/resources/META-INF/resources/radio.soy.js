@@ -22,7 +22,7 @@ soy.$$registerDelegateFn(soy.$$getDelTemplateId('ddm.field'), 'radio', 0, ddm.__
 ddm.radio = function(opt_data, opt_ignored) {
   var output = '';
   var displayValue__soy5 = opt_data.value ? opt_data.value : opt_data.predefinedValue;
-  output += '<div class="form-group' + soy.$$escapeHtmlAttribute(opt_data.visible ? '' : ' hide') + '" data-fieldname="' + soy.$$escapeHtmlAttribute(opt_data.name) + '">' + ((opt_data.showLabel) ? '<label class="control-label">' + soy.$$escapeHtml(opt_data.label) + ((opt_data.required) ? '<span class="icon-asterisk text-warning"></span>' : '') + '</label>' + ((opt_data.tip) ? '<p class="liferay-ddm-form-field-tip">' + soy.$$escapeHtml(opt_data.tip) + '</p>' : '') : '') + '<div class="clearfix radio radio-options">';
+  output += '<div class="form-group' + soy.$$escapeHtmlAttribute(opt_data.visible ? '' : ' hide') + '" data-fieldname="' + soy.$$escapeHtmlAttribute(opt_data.name) + '">' + ((opt_data.showLabel) ? '<label class="control-label">' + soy.$$escapeHtml(opt_data.label || '') + ((opt_data.required) ? '<span class="icon-asterisk text-warning"></span>' : '') + '</label>' + ((opt_data.tip) ? '<p class="liferay-ddm-form-field-tip">' + soy.$$escapeHtml(opt_data.tip) + '</p>' : '') : '') + '<div class="clearfix radio radio-options">';
   var optionList60 = opt_data.options;
   var optionListLen60 = optionList60.length;
   for (var optionIndex60 = 0; optionIndex60 < optionListLen60; optionIndex60++) {

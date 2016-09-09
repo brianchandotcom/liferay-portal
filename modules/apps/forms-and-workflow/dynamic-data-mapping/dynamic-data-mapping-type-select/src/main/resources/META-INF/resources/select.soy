@@ -29,7 +29,7 @@
 		<div class="input-select-wrapper">
 			{if $showLabel}
 				<label class="control-label" for="{$name}">
-					{$label}
+					{$label or ''}
 
 					{if $required}
 						<span class="icon-asterisk text-warning"></span>

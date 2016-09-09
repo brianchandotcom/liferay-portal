@@ -73,6 +73,7 @@ AUI.add(
 						var closeButton = boundingBox.one('.' + CSS_CLASS_CLOSE);
 
 						instance._eventHandlers.push(
+							A.one('doc').on('key', A.bind('_afterPressEscapeKey', instance), 'esc'),
 							boundingBox.on('transitionend', A.bind('_onTransitionEnd', instance)),
 							closeButton.on('click', A.bind('_afterClickCloseButton', instance))
 						);
@@ -125,10 +126,16 @@ AUI.add(
 						return AObject.getValue(window, ['ddl', 'sidebar', 'render']);
 					},
 
+					isOpen: function() {
+						var instance = this;
+
+						return !!instance._isOpen;
+					},
+
 					open: function() {
 						var instance = this;
 
-						if (!instance._isOpen) {
+						if (!instance.isOpen()) {
 							instance.fire('open:start');
 						}
 						else {
@@ -144,6 +151,14 @@ AUI.add(
 
 						event.preventDefault();
 						instance.close();
+					},
+
+					_afterPressEscapeKey: function() {
+						var instance = this;
+
+						if (instance.isOpen()) {
+							instance.close();
+						}
 					},
 
 					_afterRender: function() {

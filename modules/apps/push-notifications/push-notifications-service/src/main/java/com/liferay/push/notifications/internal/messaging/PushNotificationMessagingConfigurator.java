@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
 import com.liferay.portal.kernel.messaging.DestinationFactory;
-import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.push.notifications.constants.PushNotificationsDestinationNames;
@@ -124,9 +123,6 @@ public class PushNotificationMessagingConfigurator {
 
 	@Reference
 	private JSONFactory _jsonFactory;
-
-	@Reference
-	private MessageBus _messageBus;
 
 	@Reference
 	private PushNotificationsDeviceLocalService

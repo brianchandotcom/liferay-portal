@@ -17,6 +17,7 @@
 		<reference entity="DLApp" package-path="com.liferay.portlet.documentlibrary" />
 		<reference entity="DLFileEntry" package-path="com.liferay.portlet.documentlibrary" />
 	</entity>
+	<entity local-service="false" name="ScreensComment" remote-service="true"/>
 	<entity local-service="false" name="ScreensDDLRecord" remote-service="true">
 		<reference entity="DDLRecord" package-path="com.liferay.dynamic.data.lists" />
 	</entity>

@@ -3,6 +3,13 @@ import com.liferay.gradle.util.copy.RenameDependencyClosure
 
 import org.dm.gradle.plugins.bundle.JarBuilder
 
+ext {
+	systemPackagesExtraManifestHeaders = [
+		"Bnd-LastModified": "1468904359940",
+		"Created-By": "1.8.0_92 (Oracle Corporation)"
+	]
+}
+
 task buildSystemPackagesExtraManifest
 task copySystemPackagesExtraLibs(type: Copy)
 task copySystemPackagesExtraManifest(type: Copy)
@@ -31,9 +38,17 @@ buildSystemPackagesExtraManifest {
 		jarBuilder.withTrace false
 		jarBuilder.withVersion project.version
 
-		systemPackagesExtraManifestFile.withOutputStream {
-			jarBuilder.writeManifestTo it
+		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream()
+
+		jarBuilder.writeManifestTo byteArrayOutputStream
+
+		String systemPackagesExtraManifest = byteArrayOutputStream.toString("UTF-8")
+
+		for (entry in systemPackagesExtraManifestHeaders) {
+			systemPackagesExtraManifest = systemPackagesExtraManifest.replaceFirst "${entry.key}: .+", "${entry.key}: ${entry.value}"
 		}
+
+		systemPackagesExtraManifestFile.setText systemPackagesExtraManifest, "UTF-8"
 	}
 }
 

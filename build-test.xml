@@ -8352,13 +8352,13 @@ jdbc.default.password=${database.mysql.password}</echo>
 			</then>
 		</if>
 
+		<get-testcase-property property.name="apacheds.blank.user.password.enabled" />
 		<get-testcase-property property.name="apacheds.enabled" />
-		<get-testcase-property property.name="apacheds.blank.password.enabled" />
 
 		<if>
 			<or>
+				<equals arg1="${apacheds.blank.user.password.enabled}" arg2="true" />
 				<equals arg1="${apacheds.enabled}" arg2="true" />
-				<equals arg1="${apacheds.blank.password.enabled}" arg2="true" />
 			</or>
 			<then>
 				<ant antfile="build-test-apacheds.xml" target="start-apacheds" />

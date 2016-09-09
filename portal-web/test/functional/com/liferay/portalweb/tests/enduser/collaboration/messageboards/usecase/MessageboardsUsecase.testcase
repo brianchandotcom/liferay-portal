@@ -1175,10 +1175,7 @@
 		<execute macro="Gmail#viewMail">
 			<var name="emailFromUserName" value="Test Test" />
 			<var name="gmailAssetType" value="MB Category Name New Message" />
-			<var name="gmailMailTableMessageTitle" value="MB Thread Message Subject" />
 			<var name="gmailMessageBody" value="MB Thread Message Body" />
-			<var name="gmailMessageBodyClosing" value="Liferay Message Boards" />
-			<var name="gmailMessageBodyGreeting" value="MB Thread Message Body" />
 			<var name="gmailMessageTitle" value="MB Category Name New Message: MB Thread Message Subject" />
 		</execute>
 

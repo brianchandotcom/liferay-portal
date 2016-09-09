@@ -1527,7 +1527,6 @@
 		</execute>
 
 		<execute macro="SOMembersAdministration#confirmMemberInviteByEmail">
-			<var name="adminEmailAddress" value="${adminEmailAddress}" />
 			<var name="adminName" value="${adminName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
@@ -1625,7 +1624,6 @@
 		</execute>
 
 		<execute macro="SOMembersAdministration#confirmMemberInviteByEmail">
-			<var name="adminEmailAddress" value="${adminEmailAddress}" />
 			<var name="adminName" value="${adminName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
@@ -1700,7 +1698,6 @@
 		</execute>
 
 		<execute macro="SOMembersAdministration#confirmMemberNonUserInviteByEmail">
-			<var name="adminEmailAddress" value="${adminEmailAddress}" />
 			<var name="adminName" value="${adminName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />

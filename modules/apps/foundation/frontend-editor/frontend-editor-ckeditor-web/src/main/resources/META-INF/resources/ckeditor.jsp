@@ -91,10 +91,10 @@ if (editorOptions != null) {
 		long javaScriptLastModified = PortalWebResourcesUtil.getLastModified(PortalWebResourceConstants.RESOURCE_TYPE_EDITOR_CKEDITOR);
 		%>
 
-		<script src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNHost() + PortalWebResourcesUtil.getContextPath(PortalWebResourceConstants.RESOURCE_TYPE_EDITOR_CKEDITOR) + "/ckeditor/ckeditor.js", javaScriptLastModified)) %>" type="text/javascript"></script>
+		<script src="<%= HtmlUtil.escapeAttribute(PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNHost() + PortalWebResourcesUtil.getContextPath(PortalWebResourceConstants.RESOURCE_TYPE_EDITOR_CKEDITOR) + "/ckeditor/ckeditor.js", javaScriptLastModified)) %>" type="text/javascript"></script>
 
 		<c:if test="<%= inlineEdit && Validator.isNotNull(inlineEditSaveURL) %>">
-			<script src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNHost() + PortalWebResourcesUtil.getContextPath(PortalWebResourceConstants.RESOURCE_TYPE_EDITOR_CKEDITOR) + "/ckeditor/main.js", javaScriptLastModified)) %>" type="text/javascript"></script>
+			<script src="<%= HtmlUtil.escapeAttribute(PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNHost() + PortalWebResourcesUtil.getContextPath(PortalWebResourceConstants.RESOURCE_TYPE_EDITOR_CKEDITOR) + "/ckeditor/main.js", javaScriptLastModified)) %>" type="text/javascript"></script>
 		</c:if>
 
 		<liferay-util:dynamic-include key='<%= "com.liferay.frontend.editor.ckeditor.web#" + editorName + "#additionalResources" %>' />
@@ -163,8 +163,8 @@ name = HtmlUtil.escapeJS(name);
 	var getInitialContent = function() {
 		var data;
 
-		if (window['<%= HtmlUtil.escape(namespace + initMethod) %>']) {
-			data = <%= HtmlUtil.escape(namespace + initMethod) %>();
+		if (window['<%= HtmlUtil.escapeJS(namespace + initMethod) %>']) {
+			data = <%= HtmlUtil.escapeJS(namespace + initMethod) %>();
 		}
 		else {
 			data = '<%= contents != null ? HtmlUtil.escapeJS(contents) : StringPool.BLANK %>';

@@ -72,6 +72,17 @@ public class WikiAttachmentEditorConfigContributor
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
+		String removePlugins = jsonObject.getString("removePlugins");
+
+		if (Validator.isNotNull(removePlugins)) {
+			removePlugins += ",ae_addimages";
+		}
+		else {
+			removePlugins = "ae_addimages";
+		}
+
+		jsonObject.put("removePlugins", removePlugins);
+
 		boolean allowBrowseDocuments = GetterUtil.getBoolean(
 			inputEditorTaglibAttributes.get(
 				"liferay-ui:input-editor:allowBrowseDocuments"));
@@ -162,17 +173,6 @@ public class WikiAttachmentEditorConfigContributor
 		jsonObject.put(
 			"filebrowserImageBrowseLinkUrl", itemSelectorURL.toString());
 		jsonObject.put("filebrowserImageBrowseUrl", itemSelectorURL.toString());
-
-		String removePlugins = jsonObject.getString("removePlugins");
-
-		if (Validator.isNotNull(removePlugins)) {
-			removePlugins += ",ae_addimages";
-		}
-		else {
-			removePlugins = "ae_addimages";
-		}
-
-		jsonObject.put("removePlugins", removePlugins);
 	}
 
 	@Reference(unbind = "-")

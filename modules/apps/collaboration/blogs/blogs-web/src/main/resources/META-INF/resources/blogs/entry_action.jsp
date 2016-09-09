@@ -44,7 +44,7 @@ if (row != null) {
 	<c:if test="<%= BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.PERMISSIONS) %>">
 		<liferay-security:permissionsURL
 			modelResource="<%= BlogsEntry.class.getName() %>"
-			modelResourceDescription="<%= entry.getTitle() %>"
+			modelResourceDescription="<%= BlogsEntryUtil.getDisplayTitle(resourceBundle, entry) %>"
 			resourceGroupId="<%= String.valueOf(entry.getGroupId()) %>"
 			resourcePrimKey="<%= String.valueOf(entry.getEntryId()) %>"
 			var="permissionsEntryURL"

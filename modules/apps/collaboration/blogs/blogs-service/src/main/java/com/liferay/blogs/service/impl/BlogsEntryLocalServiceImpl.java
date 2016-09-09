@@ -277,10 +277,11 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		User user = userPersistence.findByPrimaryKey(userId);
 		long groupId = serviceContext.getScopeGroupId();
+		int status = WorkflowConstants.STATUS_DRAFT;
+
+		validate(title, urlTitle, content, status);
 
 		long entryId = counterLocalService.increment();
-
-		validate(title, urlTitle, content);
 
 		BlogsEntry entry = blogsEntryPersistence.create(entryId);
 
@@ -301,7 +302,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		entry.setDisplayDate(displayDate);
 		entry.setAllowPingbacks(allowPingbacks);
 		entry.setAllowTrackbacks(allowTrackbacks);
-		entry.setStatus(WorkflowConstants.STATUS_DRAFT);
+		entry.setStatus(status);
 		entry.setStatusByUserId(userId);
 		entry.setStatusDate(serviceContext.getModifiedDate(null));
 		entry.setExpandoBridgeAttributes(serviceContext);
@@ -1221,7 +1222,13 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		BlogsEntry entry = blogsEntryPersistence.findByPrimaryKey(entryId);
 
-		validate(title, urlTitle, content);
+		int status = entry.getStatus();
+
+		if (!entry.isPending() && !entry.isDraft()) {
+			status = WorkflowConstants.STATUS_DRAFT;
+		}
+
+		validate(title, urlTitle, content, status);
 
 		String oldUrlTitle = entry.getUrlTitle();
 
@@ -1238,12 +1245,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		entry.setDisplayDate(displayDate);
 		entry.setAllowPingbacks(allowPingbacks);
 		entry.setAllowTrackbacks(allowTrackbacks);
-
-		if (entry.isPending() || entry.isDraft()) {
-		}
-		else {
-			entry.setStatus(WorkflowConstants.STATUS_DRAFT);
-		}
+		entry.setStatus(status);
 
 		entry.setExpandoBridgeAttributes(serviceContext);
 
@@ -1449,6 +1451,9 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		Date now = new Date();
 
 		BlogsEntry entry = blogsEntryPersistence.findByPrimaryKey(entryId);
+
+		validate(
+			entry.getTitle(), entry.getUrlTitle(), entry.getContent(), status);
 
 		int oldStatus = entry.getStatus();
 
@@ -2206,19 +2211,34 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #validate(String, String,
+	 *             String, int)}
+	 */
+	@Deprecated
 	protected void validate(String title, String urlTitle, String content)
 		throws PortalException {
 
-		if (Validator.isNull(title)) {
+		validate(title, urlTitle, content, WorkflowConstants.STATUS_APPROVED);
+	}
+
+	protected void validate(String title, String urlTitle, String content, int status)
+		throws PortalException {
+
+		if ((status == WorkflowConstants.STATUS_APPROVED) &&
+			Validator.isNull(title)) {
+
 			throw new EntryTitleException("Title is null");
 		}
 
-		int titleMaxLength = ModelHintsUtil.getMaxLength(
-			BlogsEntry.class.getName(), "title");
+		if (Validator.isNotNull(title)) {
+			int titleMaxLength = ModelHintsUtil.getMaxLength(
+				BlogsEntry.class.getName(), "title");
 
-		if (title.length() > titleMaxLength) {
-			throw new EntryTitleException(
-				"Title has more than " + titleMaxLength + " characters");
+			if (title.length() > titleMaxLength) {
+				throw new EntryTitleException(
+					"Title has more than " + titleMaxLength + " characters");
+			}
 		}
 
 		if (Validator.isNotNull(urlTitle)) {

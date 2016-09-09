@@ -248,7 +248,7 @@ AUI.add(
 						var form = instance._getPrincipalForm();
 
 						if (draft && ajax) {
-							var hasData = content !== STR_BLANK && title !== STR_BLANK;
+							var hasData = content !== STR_BLANK && (draft || (title !== STR_BLANK));
 
 							var hasChanged = instance._oldContent !== content || instance._oldSubtitle !== subtitle || instance._oldTitle !== title;
 

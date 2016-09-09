@@ -1,5 +1,5 @@
 <definition component-name="marketplace">
-	<property name="community.app.acceptance" value="true" />
+	<property name="marketplace.app.acceptance" value="true" />
 	<property name="testray.main.component.name" value="Marketplace" />
 
 	<set-up>

@@ -1273,6 +1273,32 @@ app.server.type=@{app.server.type}]]></echo>
 		<prepare-test-build-dist app.server.type="${axis.variable}" />
 	</target>
 
+	<target name="functional-bundle-jboss-mysql56-jdk8">
+		<run-functional-test
+			app.server.type="jboss"
+			database.type="mysql"
+			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
+			test.fix.pack.base.url="${test.fix.pack.base.url}"
+			test.license.xml.url="${test.license.xml.url}"
+			test.plugin.zip.url="${test.plugin.zip.url}"
+			test.portal.bundle.version="${test.portal.bundle.version}"
+			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
+			test.sql.zip.url="${test.sql.zip.url}"
+		/>
+	</target>
+
+	<target name="functional-bundle-markerplaceapp-smoke-jboss-mysql56-jdk8">
+		<antcall target="functional-bundle-jboss-mysql56-jdk8" />
+	</target>
+
+	<target name="functional-bundle-markerplaceapp-smoke-tomcat-mysql56-jdk8">
+		<antcall target="functional-bundle-tomcat-mysql56-jdk8" />
+	</target>
+
+	<target name="functional-bundle-markerplaceapp-smoke-wildfly-mysql56-jdk8">
+		<antcall target="functional-bundle-wildfly-mysql56-jdk8" />
+	</target>
+
 	<target name="functional-bundle-tomcat-mysql56-jdk7">
 		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
 

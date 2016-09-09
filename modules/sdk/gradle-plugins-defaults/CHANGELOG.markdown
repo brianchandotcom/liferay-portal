@@ -190,10 +190,10 @@ configuration.
 ## 1.2.16 - 2016-09-08
 
 ### Added
-- [LPS-67863]: Allow to override dependency versions in the
+- [LPS-67863]: Allow dependency versions to be overridden in the
 `.version-override-${project.name}.properties` file:
 
-		<artifact group>-<artifact name>=<new version>
+		[artifact group]-[artifact name]=[new version]
 
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [LPS-66853]: https://issues.liferay.com/browse/LPS-66853

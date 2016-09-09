@@ -404,6 +404,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FAVORITE</td>
+	<td>//div[contains(@class,'open')]//li[contains(@class,'dropdown-header') and contains(.,'Favorite')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FEEDS</td>
 	<td>//div[contains(@class,'open')]//a[@role='menuitem']//span[contains(.,'Feeds')] | //a[@role='menuitem' and contains(.,'Feeds')]</td>
 	<td></td>

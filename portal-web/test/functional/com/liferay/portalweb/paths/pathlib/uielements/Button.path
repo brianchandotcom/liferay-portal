@@ -429,6 +429,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MORE</td>
+	<td>//a[contains(@id,'viewMoreButton') and contains(.,'More')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MORE_MESSAGES</td>
 	<td>//a[contains(@class,'btn') and contains(.,'More Messages')]</td>
 	<td></td>

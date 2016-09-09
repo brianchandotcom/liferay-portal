@@ -14,6 +14,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADD_TO_FAVORITES</td>
+	<td>//table[contains(@class,'table-heading')]//th[contains(@id,'add-to-favorites') and contains(.,'Add to Favorites')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ACTIVE_NAV_ITEM_LINK</td>
 	<td>//div[contains(@class,'navbar-default')]//li[contains(@class,'active')]/a/span[contains(.,'${key_navItem}')]</td>
 	<td></td>

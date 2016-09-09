@@ -1,6 +1,7 @@
 Bundle-Name: Liferay Blogs Item Selector Web
 Bundle-SymbolicName: com.liferay.blogs.item.selector.web
-Bundle-Version: 1.0.4
+Bundle-Version: 1.1.0
+Export-Package: com.liferay.blogs.item.selector.web.constants
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Blogs
 Web-ContextPath: /blogs-item-selector-web

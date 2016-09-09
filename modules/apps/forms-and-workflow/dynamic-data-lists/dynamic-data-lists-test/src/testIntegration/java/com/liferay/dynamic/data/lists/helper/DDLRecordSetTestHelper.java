@@ -17,8 +17,11 @@ package com.liferay.dynamic.data.lists.helper;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.model.DDLRecordSetConstants;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalServiceUtil;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.dynamic.data.mapping.storage.StorageType;
+import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -26,6 +29,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -39,6 +43,17 @@ public class DDLRecordSetTestHelper {
 
 	public DDLRecordSetTestHelper(Group group) throws Exception {
 		_group = group;
+	}
+
+	public DDLRecordSet addRecordSet(DDMForm ddmForm) throws Exception {
+		DDMStructureTestHelper ddmStructureTestHelper =
+			new DDMStructureTestHelper(
+				PortalUtil.getClassNameId(DDLRecordSet.class), _group);
+
+		DDMStructure ddmStructure = ddmStructureTestHelper.addStructure(
+			ddmForm, StorageType.JSON.toString());
+
+		return addRecordSet(ddmStructure);
 	}
 
 	public DDLRecordSet addRecordSet(DDMStructure ddmStructure)

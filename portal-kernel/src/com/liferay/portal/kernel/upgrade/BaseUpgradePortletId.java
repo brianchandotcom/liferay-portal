@@ -38,6 +38,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Brian Wing Shun Chan
@@ -72,6 +73,19 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 		typeSettingsProperties.setProperty(newStagingPortletId, value);
 
 		return typeSettingsProperties.toString();
+	}
+
+	protected String getNewTypeSettings(
+		String typeSettings, String oldRootPortletId, String newRootPortletId,
+		boolean exactMatch) {
+
+		List<String> columnIds = _getLayoutColumnIds(typeSettings);
+
+		columnIds.addAll(_getNestedPortletColumnIds(typeSettings));
+
+		return getNewTypeSettings(
+			typeSettings, oldRootPortletId, newRootPortletId, columnIds,
+			exactMatch);
 	}
 
 	protected String getNewTypeSettings(
@@ -558,6 +572,26 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 
 		for (int i = 1; i <= 10; i++) {
 			columnIds.add(LayoutTypePortletConstants.COLUMN_PREFIX + i);
+		}
+
+		return columnIds;
+	}
+
+	private List<String> _getLayoutColumnIds(String typeSettings) {
+		UnicodeProperties typeSettingsProperties = new UnicodeProperties(true);
+
+		typeSettingsProperties.fastLoad(typeSettings);
+
+		List<String> columnIds = new ArrayList<>();
+
+		Set<String> keys = typeSettingsProperties.keySet();
+
+		for (String key : keys) {
+			if (StringUtil.startsWith(
+					key, LayoutTypePortletConstants.COLUMN_PREFIX)) {
+
+				columnIds.add(key);
+			}
 		}
 
 		return columnIds;

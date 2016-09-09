@@ -14,21 +14,14 @@
 
 package com.liferay.dynamic.data.mapping.form.evaluator.impl.internal.rules;
 
-import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderConsumerTracker;
 import com.liferay.dynamic.data.mapping.expression.DDMExpression;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionException;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluationException;
-import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormFieldEvaluationResult;
-import com.liferay.dynamic.data.mapping.form.evaluator.impl.internal.rules.functions.CallFunction;
-import com.liferay.dynamic.data.mapping.form.evaluator.impl.internal.rules.functions.FieldAtFunction;
-import com.liferay.dynamic.data.mapping.form.evaluator.impl.internal.rules.functions.PropertyGetFunction;
-import com.liferay.dynamic.data.mapping.form.evaluator.impl.internal.rules.functions.PropertySetFunction;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
-import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceService;
-import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.dynamic.data.mapping.model.DDMFormRule;
 
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -37,74 +30,64 @@ import java.util.Map;
 public class DDMFormRuleEvaluator {
 
 	public DDMFormRuleEvaluator(
-		DDMDataProviderConsumerTracker ddmDataProviderConsumerTracker,
-		DDMDataProviderInstanceService ddmDataProviderInstanceService,
-		DDMExpressionFactory ddmExpressionFactory,
-		Map<String, List<DDMFormFieldEvaluationResult>>
-			ddmFormFieldEvaluationResults,
-		DDMFormValuesJSONDeserializer ddmFormValuesJSONDeserializer,
-		String expression, JSONFactory jsonFactory) {
+		DDMFormRule ddmFormRule, DDMExpressionFactory ddmExpressionFactory) {
 
-		_ddmDataProviderConsumerTracker = ddmDataProviderConsumerTracker;
-		_ddmDataProviderInstanceService = ddmDataProviderInstanceService;
+		_ddmFormRule = ddmFormRule;
 		_ddmExpressionFactory = ddmExpressionFactory;
-		_ddmFormFieldEvaluationResults = ddmFormFieldEvaluationResults;
-		_ddmFormValuesJSONDeserializer = ddmFormValuesJSONDeserializer;
-		_expression = expression;
-		_jsonFactory = jsonFactory;
 	}
 
-	public boolean evaluate() throws DDMFormEvaluationException {
+	public void evaluate() throws DDMFormEvaluationException {
+		if (!_ddmFormRule.isEnabled()) {
+			return;
+		}
+
 		try {
-			DDMExpression<Boolean> ddmExpression =
-				_ddmExpressionFactory.createBooleanDDMExpression(_expression);
+			boolean conditionEvaluationResult = evaluateDDMExpression(
+				_ddmFormRule.getCondition());
 
-			setFunctions(ddmExpression);
+			if (!conditionEvaluationResult) {
+				return;
+			}
 
-			return ddmExpression.evaluate();
+			for (String action : _ddmFormRule.getActions()) {
+				evaluateDDMExpression(action);
+			}
 		}
 		catch (DDMExpressionException ddmee) {
 			throw new DDMFormEvaluationException(ddmee);
 		}
 	}
 
-	public void execute() throws DDMFormEvaluationException {
-		try {
-			DDMExpression<String> ddmExpression =
-				_ddmExpressionFactory.createStringDDMExpression(_expression);
+	public void setDDMExpressionFunction(
+		String functionName, DDMExpressionFunction ddmExpressionFunction) {
 
-			setFunctions(ddmExpression);
+		_ddmExpressionFunctionsMap.put(functionName, ddmExpressionFunction);
+	}
 
-			ddmExpression.evaluate();
-		}
-		catch (DDMExpressionException ddmee) {
-			throw new DDMFormEvaluationException(ddmee);
+	protected boolean evaluateDDMExpression(String ddmExpressionString)
+		throws DDMExpressionException {
+
+		DDMExpression<Boolean> ddmExpression =
+			_ddmExpressionFactory.createBooleanDDMExpression(
+				ddmExpressionString);
+
+		setDDMExpressionFunctions(ddmExpression);
+
+		return ddmExpression.evaluate();
+	}
+
+	protected void setDDMExpressionFunctions(DDMExpression<?> ddmExpression) {
+		for (Map.Entry<String, DDMExpressionFunction> entry :
+				_ddmExpressionFunctionsMap.entrySet()) {
+
+			ddmExpression.setDDMExpressionFunction(
+				entry.getKey(), entry.getValue());
 		}
 	}
 
-	protected void setFunctions(DDMExpression<?> ddmExpression) {
-		ddmExpression.setDDMExpressionFunction(
-			"call", new CallFunction(
-				_ddmDataProviderConsumerTracker,
-				_ddmDataProviderInstanceService, _ddmFormFieldEvaluationResults,
-				_ddmFormValuesJSONDeserializer, _jsonFactory));
-		ddmExpression.setDDMExpressionFunction(
-			"fieldAt", new FieldAtFunction());
-		ddmExpression.setDDMExpressionFunction(
-			"get", new PropertyGetFunction(_ddmFormFieldEvaluationResults));
-		ddmExpression.setDDMExpressionFunction(
-			"set", new PropertySetFunction(_ddmFormFieldEvaluationResults));
-	}
-
-	private final DDMDataProviderConsumerTracker
-		_ddmDataProviderConsumerTracker;
-	private final DDMDataProviderInstanceService
-		_ddmDataProviderInstanceService;
 	private final DDMExpressionFactory _ddmExpressionFactory;
-	private final Map<String, List<DDMFormFieldEvaluationResult>>
-		_ddmFormFieldEvaluationResults;
-	private final DDMFormValuesJSONDeserializer _ddmFormValuesJSONDeserializer;
-	private final String _expression;
-	private final JSONFactory _jsonFactory;
+	private final Map<String, DDMExpressionFunction>
+		_ddmExpressionFunctionsMap = new HashMap<>();
+	private final DDMFormRule _ddmFormRule;
 
 }

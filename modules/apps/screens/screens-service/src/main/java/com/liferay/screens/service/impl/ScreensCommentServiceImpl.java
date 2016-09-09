@@ -14,7 +14,20 @@
 
 package com.liferay.screens.service.impl;
 
+import com.liferay.portal.kernel.comment.Comment;
+import com.liferay.portal.kernel.comment.CommentManager;
+import com.liferay.portal.kernel.comment.DiscussionPermission;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.Function;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.screens.service.base.ScreensCommentServiceBaseImpl;
+
+import java.util.Locale;
 
 /**
  * @author Alejandro Hernández Malillos
@@ -27,5 +40,62 @@ public class ScreensCommentServiceImpl
 			String className, long classPK, String body)
 			throws PortalException {
 
+		JSONObject assetEntry =
+			screensAssetEntryService.getAssetEntry(className, classPK,
+				Locale.getDefault());
+
+		long groupId = assetEntry.getLong("groupId");
+
+		DiscussionPermission discussionPermission =
+			commentManager.getDiscussionPermission(getPermissionChecker());
+
+		long companyId = groupLocalService.getGroup(groupId).getCompanyId();
+
+		discussionPermission.checkAddPermission(
+			companyId, groupId, className, classPK);
+
+		long commentId = commentManager.addComment(
+			getUserId(), groupId, className, classPK, getUser().getFullName(),
+			StringPool.BLANK, body, createServiceContextFunction());
+
+		JSONObject jsonObject = getJSONObject(
+			commentManager.fetchComment(commentId), discussionPermission);
+
+		return jsonObject;
 	}
+
+	protected Function<String, ServiceContext> createServiceContextFunction() {
+		return new Function<String, ServiceContext>() {
+
+			@Override
+			public ServiceContext apply(String className) {
+				return new ServiceContext();
+			}
+
+		};
+	}
+
+	protected JSONObject getJSONObject(
+			Comment comment, DiscussionPermission discussionPermission)
+			throws PortalException {
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		jsonObject.put("body", comment.getBody());
+		jsonObject.put("commentId", comment.getCommentId());
+		jsonObject.put("createDate", comment.getCreateDate().getTime());
+		jsonObject.put("modifiedDate", comment.getModifiedDate().getTime());
+		jsonObject.put("userId", comment.getUserId());
+		jsonObject.put("userName", comment.getUserName());
+		jsonObject.put("updatePermission",
+			discussionPermission.hasUpdatePermission(comment.getCommentId()));
+		jsonObject.put("deletePermission",
+			discussionPermission.hasDeletePermission(comment.getCommentId()));
+
+		return jsonObject;
+	}
+
+	@ServiceReference(type = CommentManager.class)
+	protected CommentManager commentManager;
+
+	@ServiceReference(type = GroupLocalService.class)
+	protected GroupLocalService groupLocalService;
 }

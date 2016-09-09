@@ -834,6 +834,7 @@ and is older than 30 days.
 ## 2.4.0 - 2016-12-29
 
 ### Added
+- [LPS-61987]: Enforce the use of snapshot timestamp versions for dependencies.
 - [LPS-69847]: Add the ability to ignore the locally deployed JAR files of a
 portal tool by setting the project property `[portal tool name].ignore.local`.
 
@@ -847,6 +848,7 @@ portal tool by setting the project property `[portal tool name].ignore.local`.
 [LPS-52675]: https://issues.liferay.com/browse/LPS-52675
 [LPS-58672]: https://issues.liferay.com/browse/LPS-58672
 [LPS-61099]: https://issues.liferay.com/browse/LPS-61099
+[LPS-61987]: https://issues.liferay.com/browse/LPS-61987
 [LPS-66396]: https://issues.liferay.com/browse/LPS-66396
 [LPS-66396]: https://issues.liferay.com/browse/LPS-66396
 [LPS-66762]: https://issues.liferay.com/browse/LPS-66762

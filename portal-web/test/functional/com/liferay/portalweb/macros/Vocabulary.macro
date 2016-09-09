@@ -112,9 +112,9 @@
 
 		<execute macro="PortletEntry#save" />
 
-		<var name="key_vocabularyName" value="${vocabularyName}" />
-
-		<execute function="AssertTextEquals" locator1="Categories#VOCABULARY_ENTRY" value1="${vocabularyName}" />
+		<execute function="AssertTextEquals" locator1="Categories#VOCABULARY_ENTRY" value1="${vocabularyName}">
+			<var name="key_vocabularyName" value="${vocabularyName}" />
+		</execute>
 	</command>
 
 	<command name="deleteAssociatedAssetTypeViaVocabularyCP">

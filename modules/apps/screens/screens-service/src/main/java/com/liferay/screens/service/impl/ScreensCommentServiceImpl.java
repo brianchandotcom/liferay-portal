@@ -86,30 +86,18 @@ public class ScreensCommentServiceImpl extends ScreensCommentServiceBaseImpl {
 	}
 
 	protected Function<String, ServiceContext> createServiceContextFunction() {
-		return new Function<String, ServiceContext>() {
-
-			@Override
-			public ServiceContext apply(String className) {
-				return new ServiceContext();
-			}
-
-		};
+		return (className) -> new ServiceContext();
 	}
 
 	protected Function<String, ServiceContext> createServiceContextFunction(
-		final int workflowAction) {
+		int workflowAction) {
 
-		return new Function<String, ServiceContext>() {
+		return (className) -> {
+			ServiceContext serviceContext = new ServiceContext();
 
-			@Override
-			public ServiceContext apply(String className) {
-				ServiceContext serviceContext = new ServiceContext();
+			serviceContext.setWorkflowAction(workflowAction);
 
-				serviceContext.setWorkflowAction(workflowAction);
-
-				return serviceContext;
-			}
-
+			return serviceContext;
 		};
 	}
 

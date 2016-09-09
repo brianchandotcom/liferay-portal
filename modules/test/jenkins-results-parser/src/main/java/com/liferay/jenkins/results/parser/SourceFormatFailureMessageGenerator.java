@@ -27,18 +27,18 @@ public class SourceFormatFailureMessageGenerator
 			String buildURL, String consoleOutput, Project project)
 		throws Exception {
 
-		if (!consoleOutput.contains(_MARKER)) {
+		if (!consoleOutput.contains(_SOURCE_FORMAT_STRING)) {
 			return null;
 		}
 
-		int end = consoleOutput.indexOf(_MARKER);
+		int end = consoleOutput.indexOf(_SOURCE_FORMAT_STRING);
 
 		end = consoleOutput.indexOf("[exec] :", end);
 
 		return getConsoleOutputSnippet(consoleOutput, true, end);
 	}
 
-	private static final String _MARKER =
+	private static final String _SOURCE_FORMAT_STRING =
 		"[exec] com.liferay.source.formatter.SourceFormatterTest > " +
 			"testSourceFormatter FAILED";
 

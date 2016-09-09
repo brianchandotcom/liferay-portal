@@ -15,11 +15,7 @@
 package com.liferay.dynamic.data.mapping.form.evaluator.impl.internal.rules.functions;
 
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormFieldEvaluationResult;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -27,145 +23,103 @@ import org.junit.Test;
 /**
  * @author Leonardo Barros
  */
-public class PropertySetFunctionTest extends BasePropertyFunctionTest {
+public class PropertySetFunctionTest {
 
 	@Test(expected = IllegalArgumentException.class)
-	public void testInvalidFieldName() throws Exception {
-		List<DDMFormFieldEvaluationResult> ddmFormFieldEvaluationResults =
-			new ArrayList<>();
+	public void testInvalidArguments() throws Exception {
+		PropertySetFunction propertySetFunction = new PropertySetFunction();
 
-		Map<String, List<DDMFormFieldEvaluationResult>>
-			ddmFormFieldEvaluationResultsMap = new HashMap<>();
-
-		ddmFormFieldEvaluationResultsMap.put(
-			"fieldName", ddmFormFieldEvaluationResults);
-
-		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult =
-			createDefaultDDMFormFieldEvaluationResult(
-				"fieldName", "fieldName_instanceId");
-
-		ddmFormFieldEvaluationResults.add(ddmFormFieldEvaluationResult);
-
-		PropertySetFunction propertySetFunction = new PropertySetFunction(
-			ddmFormFieldEvaluationResultsMap);
-
-		propertySetFunction.evaluate("invalidFieldName#0", "value", "test");
+		propertySetFunction.evaluate();
 	}
 
 	@Test
 	public void testSetReadOnly() throws Exception {
-		List<DDMFormFieldEvaluationResult> ddmFormFieldEvaluationResults =
-			new ArrayList<>();
-
-		Map<String, List<DDMFormFieldEvaluationResult>>
-			ddmFormFieldEvaluationResultsMap = new HashMap<>();
-
-		ddmFormFieldEvaluationResultsMap.put(
-			"fieldName", ddmFormFieldEvaluationResults);
-
 		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult =
-			createDefaultDDMFormFieldEvaluationResult(
-				"fieldName", "fieldName_instanceId");
+			new DDMFormFieldEvaluationResult(
+				"field", StringUtil.randomString());
 
-		ddmFormFieldEvaluationResults.add(ddmFormFieldEvaluationResult);
+		evaluatePropertySetFunction(
+			ddmFormFieldEvaluationResult, "readOnly", false);
 
-		PropertySetFunction propertySetFunction = new PropertySetFunction(
-			ddmFormFieldEvaluationResultsMap);
+		Assert.assertFalse(ddmFormFieldEvaluationResult.isReadOnly());
 
-		propertySetFunction.evaluate("fieldName#0", "readOnly", true);
+		evaluatePropertySetFunction(
+			ddmFormFieldEvaluationResult, "readOnly", true);
 
-		Assert.assertEquals(true, ddmFormFieldEvaluationResult.isReadOnly());
+		Assert.assertTrue(ddmFormFieldEvaluationResult.isReadOnly());
+	}
 
-		propertySetFunction.evaluate("fieldName#0", "readOnly", false);
+	@Test
+	public void testSetRequired() throws Exception {
+		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult =
+			new DDMFormFieldEvaluationResult(
+				"field", StringUtil.randomString());
 
-		Assert.assertEquals(false, ddmFormFieldEvaluationResult.isReadOnly());
+		evaluatePropertySetFunction(
+			ddmFormFieldEvaluationResult, "required", false);
+
+		Assert.assertFalse(ddmFormFieldEvaluationResult.isRequired());
+
+		evaluatePropertySetFunction(
+			ddmFormFieldEvaluationResult, "required", true);
+
+		Assert.assertTrue(ddmFormFieldEvaluationResult.isRequired());
 	}
 
 	@Test
 	public void testSetValid() throws Exception {
-		List<DDMFormFieldEvaluationResult> ddmFormFieldEvaluationResults =
-			new ArrayList<>();
-
-		Map<String, List<DDMFormFieldEvaluationResult>>
-			ddmFormFieldEvaluationResultsMap = new HashMap<>();
-
-		ddmFormFieldEvaluationResultsMap.put(
-			"fieldName", ddmFormFieldEvaluationResults);
-
 		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult =
-			createDefaultDDMFormFieldEvaluationResult(
-				"fieldName", "fieldName_instanceId");
+			new DDMFormFieldEvaluationResult(
+				"field", StringUtil.randomString());
 
-		ddmFormFieldEvaluationResults.add(ddmFormFieldEvaluationResult);
+		PropertySetFunction propertySetFunction = new PropertySetFunction();
 
-		PropertySetFunction propertySetFunction = new PropertySetFunction(
-			ddmFormFieldEvaluationResultsMap);
+		propertySetFunction.evaluate(
+			ddmFormFieldEvaluationResult, "valid", false,
+			"This field is invalid.");
 
-		propertySetFunction.evaluate("fieldName#0", "valid", true);
-
-		Assert.assertEquals(true, ddmFormFieldEvaluationResult.isValid());
-
-		propertySetFunction.evaluate("fieldName#0", "valid", false);
-
-		Assert.assertEquals(false, ddmFormFieldEvaluationResult.isValid());
+		Assert.assertFalse(ddmFormFieldEvaluationResult.isValid());
+		Assert.assertEquals(
+			"This field is invalid.",
+			ddmFormFieldEvaluationResult.getErrorMessage());
 	}
 
 	@Test
 	public void testSetValue() throws Exception {
-		List<DDMFormFieldEvaluationResult> ddmFormFieldEvaluationResults =
-			new ArrayList<>();
-
-		Map<String, List<DDMFormFieldEvaluationResult>>
-			ddmFormFieldEvaluationResultsMap = new HashMap<>();
-
-		ddmFormFieldEvaluationResultsMap.put(
-			"fieldName", ddmFormFieldEvaluationResults);
-
 		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult =
-			createDefaultDDMFormFieldEvaluationResult(
-				"fieldName", "fieldName_instanceId");
+			new DDMFormFieldEvaluationResult(
+				"field", StringUtil.randomString());
 
-		ddmFormFieldEvaluationResults.add(ddmFormFieldEvaluationResult);
+		evaluatePropertySetFunction(ddmFormFieldEvaluationResult, "value", 42);
 
-		PropertySetFunction propertySetFunction = new PropertySetFunction(
-			ddmFormFieldEvaluationResultsMap);
-
-		propertySetFunction.evaluate("fieldName#0", "value", "test");
-
-		Assert.assertEquals("test", ddmFormFieldEvaluationResult.getValue());
-
-		propertySetFunction.evaluate("fieldName#0", "value", 23.4);
-
-		Assert.assertEquals(23.4, ddmFormFieldEvaluationResult.getValue());
+		Assert.assertEquals(42, ddmFormFieldEvaluationResult.getValue());
 	}
 
 	@Test
 	public void testSetVisible() throws Exception {
-		List<DDMFormFieldEvaluationResult> ddmFormFieldEvaluationResults =
-			new ArrayList<>();
-
-		Map<String, List<DDMFormFieldEvaluationResult>>
-			ddmFormFieldEvaluationResultsMap = new HashMap<>();
-
-		ddmFormFieldEvaluationResultsMap.put(
-			"fieldName", ddmFormFieldEvaluationResults);
-
 		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult =
-			createDefaultDDMFormFieldEvaluationResult(
-				"fieldName", "fieldName_instanceId");
+			new DDMFormFieldEvaluationResult(
+				"field", StringUtil.randomString());
 
-		ddmFormFieldEvaluationResults.add(ddmFormFieldEvaluationResult);
+		evaluatePropertySetFunction(
+			ddmFormFieldEvaluationResult, "visible", false);
 
-		PropertySetFunction propertySetFunction = new PropertySetFunction(
-			ddmFormFieldEvaluationResultsMap);
+		Assert.assertFalse(ddmFormFieldEvaluationResult.isVisible());
 
-		propertySetFunction.evaluate("fieldName#0", "visible", true);
+		evaluatePropertySetFunction(
+			ddmFormFieldEvaluationResult, "visible", true);
 
-		Assert.assertEquals(true, ddmFormFieldEvaluationResult.isVisible());
+		Assert.assertTrue(ddmFormFieldEvaluationResult.isVisible());
+	}
 
-		propertySetFunction.evaluate("fieldName#0", "visible", false);
+	protected void evaluatePropertySetFunction(
+		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult,
+		String property, Object value) {
 
-		Assert.assertEquals(false, ddmFormFieldEvaluationResult.isVisible());
+		PropertySetFunction propertySetFunction = new PropertySetFunction();
+
+		propertySetFunction.evaluate(
+			ddmFormFieldEvaluationResult, property, value);
 	}
 
 }

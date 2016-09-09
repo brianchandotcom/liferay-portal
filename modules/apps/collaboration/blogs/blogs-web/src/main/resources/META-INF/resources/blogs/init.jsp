@@ -15,7 +15,6 @@
 --%>
 
 <%@ include file="/init.jsp" %>
-<%@ page import="com.liferay.blogs.web.internal.util.BlogsEntryUtil" %>
 
 <%
 String portletResource = ParamUtil.getString(request, "portletResource");

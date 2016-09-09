@@ -63,7 +63,7 @@ public interface CalendarBookingService extends BaseService {
 	public boolean hasChildCalendarBookings(long parentCalendarBookingId);
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #addCalendarBooking(long,
+	* @deprecated As of 2.2.0, replaced by {@link #addCalendarBooking(long,
 	long[], long, long, Map, Map, String, long, long, boolean,
 	String, long, String, long, String, ServiceContext)}
 	*/
@@ -82,7 +82,7 @@ public interface CalendarBookingService extends BaseService {
 		throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0
+	* @deprecated As of 2.2.0
 	*/
 	@java.lang.Deprecated
 	public CalendarBooking addCalendarBooking(long calendarId,

@@ -221,7 +221,7 @@ public class MicroblogsEntryLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0
+	* @deprecated As of 2.1.0
 	*/
 	@Deprecated
 	public static int getMicroblogsEntriesCount(long creatorClassNameId,
@@ -231,7 +231,7 @@ public class MicroblogsEntryLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0
+	* @deprecated As of 2.1.0
 	*/
 	@Deprecated
 	public static int getMicroblogsEntriesCount(long creatorClassNameId,
@@ -241,7 +241,7 @@ public class MicroblogsEntryLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0
+	* @deprecated As of 2.1.0
 	*/
 	@Deprecated
 	public static int getMicroblogsEntriesCount(long creatorClassNameId,
@@ -252,7 +252,7 @@ public class MicroblogsEntryLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0
+	* @deprecated As of 2.1.0
 	*/
 	@Deprecated
 	public static int getMicroblogsEntriesCount(long creatorClassNameId,
@@ -398,7 +398,7 @@ public class MicroblogsEntryLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0
+	* @deprecated As of 2.1.0
 	*/
 	@Deprecated
 	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> getMicroblogsEntries(
@@ -410,7 +410,7 @@ public class MicroblogsEntryLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0
+	* @deprecated As of 2.1.0
 	*/
 	@Deprecated
 	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> getMicroblogsEntries(
@@ -422,7 +422,7 @@ public class MicroblogsEntryLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0
+	* @deprecated As of 2.1.0
 	*/
 	@Deprecated
 	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> getMicroblogsEntries(
@@ -433,7 +433,7 @@ public class MicroblogsEntryLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0
+	* @deprecated As of 2.1.0
 	*/
 	@Deprecated
 	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> getMicroblogsEntries(
@@ -445,7 +445,7 @@ public class MicroblogsEntryLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0
+	* @deprecated As of 2.1.0
 	*/
 	@Deprecated
 	public static java.util.List<com.liferay.microblogs.model.MicroblogsEntry> getMicroblogsEntries(

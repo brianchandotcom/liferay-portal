@@ -262,7 +262,7 @@ public class BookmarksFolderServiceSoap {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getSubfolderIds(List, long,
+	* @deprecated As of 1.0.0, replaced by {@link #getSubfolderIds(List, long,
 	long, boolean)}
 	*/
 	@Deprecated
@@ -400,7 +400,7 @@ public class BookmarksFolderServiceSoap {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #updateFolder(long, long,
+	* @deprecated As of 1.0.0, replaced by {@link #updateFolder(long, long,
 	String, String, ServiceContext)} and {@link
 	#mergeFolders(long, long)}
 	*/

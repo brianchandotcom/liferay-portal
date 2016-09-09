@@ -84,36 +84,6 @@ public class DDMFormTemplateSynchonizerTest extends BaseDDMTestCase {
 	}
 
 	@Test
-	public void testChangeDDMFormFieldOptionsIfTheyWereChangedFromStructure()
-		throws Exception {
-
-		DDMForm structureDDMForm = createDDMForm();
-
-		DDMFormField selectDDMFormField = createSelectDDMFormField(
-			"Select", false, 2);
-
-		addDDMFormField(structureDDMForm, selectDDMFormField);
-
-		DDMFormField radioDDMFormField = createSelectDDMFormField(
-			"Radio", true, 3);
-
-		addDDMFormField(structureDDMForm, radioDDMFormField);
-
-		createFormTemplates(structureDDMForm);
-
-		selectDDMFormField.setDDMFormFieldOptions(createDDMFormFieldOptions(1));
-		radioDDMFormField.setDDMFormFieldOptions(createDDMFormFieldOptions(2));
-
-		DDMFormTemplateSynchonizer ddmFormTemplateSynchonizer =
-			new MockDDMFormTemplateSynchronizer(structureDDMForm);
-
-		ddmFormTemplateSynchonizer.synchronize();
-
-		testFormTemplatesAfterChangeDDMFormFieldOptionsProperty(
-			structureDDMForm, "Select", "Radio");
-	}
-
-	@Test
 	public void testRemoveTemplateFieldsIfTheyWereRemovedFromStructure()
 		throws Exception {
 
@@ -134,6 +104,37 @@ public class DDMFormTemplateSynchonizerTest extends BaseDDMTestCase {
 		ddmFormTemplateSynchonizer.synchronize();
 
 		testFormTemplatesAfterRemoveFields();
+	}
+
+	@Test
+	public void testUpdateDDMFormFieldOptionsIfTheyWereModifiedFromStructure()
+		throws Exception {
+
+		DDMForm structureDDMForm = createDDMForm();
+
+		DDMFormField selectDDMFormField = createSelectDDMFormField(
+			"Select", false, 2);
+
+		addDDMFormField(structureDDMForm, selectDDMFormField);
+
+		DDMFormField radioDDMFormField = createSelectDDMFormField(
+			"Radio", true, 3);
+
+		addDDMFormField(structureDDMForm, radioDDMFormField);
+
+		createFormTemplates(structureDDMForm);
+
+		selectDDMFormField.setDDMFormFieldOptions(createDDMFormFieldOptions(1));
+
+		radioDDMFormField.setDDMFormFieldOptions(createDDMFormFieldOptions(2));
+
+		DDMFormTemplateSynchonizer ddmFormTemplateSynchonizer =
+			new MockDDMFormTemplateSynchronizer(structureDDMForm);
+
+		ddmFormTemplateSynchonizer.synchronize();
+
+		testFormTemplatesAfterChangeDDMFormFieldOptionsProperty(
+			structureDDMForm, "Select", "Radio");
 	}
 
 	@Test
@@ -295,23 +296,23 @@ public class DDMFormTemplateSynchonizerTest extends BaseDDMTestCase {
 
 	protected void testFormTemplatesAfterAddRequiredFields() throws Exception {
 
-		// Edit
+		// Create
 
 		Map<String, DDMFormField> ddmFormFieldsMap = getDDMFormFieldsMap(
-			_editDDMTemplate);
+			_createDDMTemplate);
 
 		DDMFormField ddmFormField = ddmFormFieldsMap.get("name2");
 
-		Assert.assertNull(ddmFormField);
+		Assert.assertNotNull(ddmFormField);
+		Assert.assertTrue(ddmFormField.isRequired());
 
-		// Create
+		// Edit
 
-		ddmFormFieldsMap = getDDMFormFieldsMap(_createDDMTemplate);
+		ddmFormFieldsMap = getDDMFormFieldsMap(_editDDMTemplate);
 
 		ddmFormField = ddmFormFieldsMap.get("name2");
 
-		Assert.assertNotNull(ddmFormField);
-		Assert.assertTrue(ddmFormField.isRequired());
+		Assert.assertNull(ddmFormField);
 	}
 
 	protected void testFormTemplatesAfterChangeDDMFormFieldOptionsProperty(
@@ -359,18 +360,18 @@ public class DDMFormTemplateSynchonizerTest extends BaseDDMTestCase {
 
 	protected void testFormTemplatesAfterRemoveFields() throws Exception {
 
-		// Edit
+		// Create
 
 		Map<String, DDMFormField> ddmFormFieldsMap = getDDMFormFieldsMap(
-			_editDDMTemplate);
+			_createDDMTemplate);
 
 		DDMFormField ddmFormField = ddmFormFieldsMap.get("name1");
 
 		Assert.assertNull(ddmFormField);
 
-		// Create
+		// Edit
 
-		ddmFormFieldsMap = getDDMFormFieldsMap(_createDDMTemplate);
+		ddmFormFieldsMap = getDDMFormFieldsMap(_editDDMTemplate);
 
 		ddmFormField = ddmFormFieldsMap.get("name1");
 
@@ -380,26 +381,26 @@ public class DDMFormTemplateSynchonizerTest extends BaseDDMTestCase {
 	protected void testFormTemplatesAfterUpdateRequiredFieldProperties()
 		throws Exception {
 
-		// Edit
+		// Create
 
 		Map<String, DDMFormField> ddmFormFieldsMap = getDDMFormFieldsMap(
-			_editDDMTemplate);
+			_createDDMTemplate);
 
 		DDMFormField name1DDMFormField = ddmFormFieldsMap.get("name1");
 		DDMFormField name2DDMFormField = ddmFormFieldsMap.get("name2");
 
-		Assert.assertFalse(name1DDMFormField.isRequired());
-		Assert.assertTrue(name2DDMFormField.isRequired());
+		Assert.assertTrue(name1DDMFormField.isRequired());
+		Assert.assertFalse(name2DDMFormField.isRequired());
 
-		// Create
+		// Edit
 
-		ddmFormFieldsMap = getDDMFormFieldsMap(_createDDMTemplate);
+		ddmFormFieldsMap = getDDMFormFieldsMap(_editDDMTemplate);
 
 		name1DDMFormField = ddmFormFieldsMap.get("name1");
 		name2DDMFormField = ddmFormFieldsMap.get("name2");
 
-		Assert.assertTrue(name1DDMFormField.isRequired());
-		Assert.assertFalse(name2DDMFormField.isRequired());
+		Assert.assertFalse(name1DDMFormField.isRequired());
+		Assert.assertTrue(name2DDMFormField.isRequired());
 	}
 
 	protected void updateDDMFormFieldRequiredProperty(

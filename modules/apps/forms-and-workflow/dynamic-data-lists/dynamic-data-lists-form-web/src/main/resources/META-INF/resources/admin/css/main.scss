@@ -9,6 +9,10 @@
 @import "portlet-forms";
 @import "portlet-forms-admin";
 
+.cursor-pointer {
+	cursor: pointer;
+}
+
 .ddl-form-builder-buttons .icon-spinner,
 .lfr-ddm-form-pagination-controls .icon-spinner,
 .ddl-form-settings-modal .btn-toolbar-button .icon-spinner {

@@ -163,9 +163,9 @@ AUI.add(
 
 						var advancedSettingsNode = instance.getPageNode(2);
 
-						advancedSettingsNode.append(instance._getAutocompleteButtonTemplate());
+						advancedSettingsNode.append('<div class="row"><div class="col-md-12">' + instance._getAutocompleteCardActionTemplate() + '</div></div>');
 
-						advancedSettingsNode.one('.autocomplete-button').on('click', A.bind('_onClickAutocompleteButton', instance));
+						advancedSettingsNode.one('.autocomplete-action-panel').on('click', A.bind('_onClickAutocompleteButton', instance));
 					},
 
 					_createAutocompleteContainer: function() {
@@ -211,14 +211,21 @@ AUI.add(
 						instance.settingsTogglerNode = settingsTogglerNode;
 					},
 
-					_getAutocompleteButtonTemplate: function() {
+					_getAutocompleteCardActionTemplate: function() {
 						var instance = this;
 
 						var autocompleteButtonContainer;
 
-						autocompleteButtonContainer = SoyTemplateUtil.getTemplateRenderer('ddl.autocomplete.button');
+						autocompleteButtonContainer = SoyTemplateUtil.getTemplateRenderer('ddl.autocomplete.actionPanel');
 
-						return autocompleteButtonContainer();
+						var addAutocompleteButtonTemplate = autocompleteButtonContainer(
+							{
+								addAutoCompleteButton: Liferay.Util.getLexiconIconTpl('angle-right'),
+								label: Liferay.Language.get('autocomplete')
+							}
+						);
+
+						return addAutocompleteButtonTemplate;
 					},
 
 					_getAutocompleteContainerTemplate: function() {
@@ -226,7 +233,12 @@ AUI.add(
 
 						var autocompleteContainerRenderer = SoyTemplateUtil.getTemplateRenderer('ddl.autocomplete.container');
 
-						var autocompleteContainer = autocompleteContainerRenderer({backButton: Liferay.Util.getLexiconIconTpl('angle-left', 'icon-monospaced')});
+						var autocompleteContainer = autocompleteContainerRenderer(
+							{
+								backButton: Liferay.Util.getLexiconIconTpl('angle-left', 'icon-monospaced'),
+								label: Liferay.Language.get('autocomplete')
+							}
+						);
 
 						return autocompleteContainer;
 					},

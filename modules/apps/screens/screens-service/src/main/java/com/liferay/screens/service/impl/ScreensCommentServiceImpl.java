@@ -66,7 +66,7 @@ public class ScreensCommentServiceImpl extends ScreensCommentServiceBaseImpl {
 
 	@Override
 	public JSONArray getComments(
-		String className, long classPK, int start, int end)
+			String className, long classPK, int start, int end)
 		throws PortalException {
 
 		DiscussionPermission discussionPermission =
@@ -108,8 +108,8 @@ public class ScreensCommentServiceImpl extends ScreensCommentServiceBaseImpl {
 			while (threadDiscussionCommentIterator.hasNext() &&
 				   (commentsCount > 0)) {
 
-				JSONObject jsonObject = getJSONObject
-					(
+				JSONObject jsonObject = getJSONObject(
+
 						threadDiscussionCommentIterator.next(),
 						discussionPermission);
 
@@ -176,20 +176,6 @@ public class ScreensCommentServiceImpl extends ScreensCommentServiceBaseImpl {
 		};
 	}
 
-	private long getCompanyId(long groupId) throws PortalException {
-		Group group = groupLocalService.getGroup(groupId);
-
-		return group.getCompanyId();
-	}
-
-	private long getGroupId(String className, long classPK)
-		throws PortalException {
-		JSONObject assetEntry = screensAssetEntryService.getAssetEntry(
-			className, classPK, Locale.getDefault());
-
-		return assetEntry.getLong("groupId");
-	}
-
 	protected JSONObject getJSONObject(
 			Comment comment, DiscussionPermission discussionPermission)
 		throws PortalException {
@@ -217,5 +203,20 @@ public class ScreensCommentServiceImpl extends ScreensCommentServiceBaseImpl {
 
 	@ServiceReference(type = GroupLocalService.class)
 	protected GroupLocalService groupLocalService;
+
+	private long getCompanyId(long groupId) throws PortalException {
+		Group group = groupLocalService.getGroup(groupId);
+
+		return group.getCompanyId();
+	}
+
+	private long getGroupId(String className, long classPK)
+		throws PortalException {
+
+		JSONObject assetEntry = screensAssetEntryService.getAssetEntry(
+			className, classPK, Locale.getDefault());
+
+		return assetEntry.getLong("groupId");
+	}
 
 }

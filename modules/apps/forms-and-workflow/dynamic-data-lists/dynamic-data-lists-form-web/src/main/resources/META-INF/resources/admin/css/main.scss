@@ -171,6 +171,12 @@
 	padding-right: 21px;
 }
 
+.liferay-ddl-form-rule-builder {
+	.ddl-form-basic-info {
+		display: none;
+	}
+}
+
 .portal-popup,
 .portlet-forms-admin {
 	.alert {

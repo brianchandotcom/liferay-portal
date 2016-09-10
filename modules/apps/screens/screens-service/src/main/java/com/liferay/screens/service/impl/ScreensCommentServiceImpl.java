@@ -64,6 +64,12 @@ public class ScreensCommentServiceImpl
 		return jsonObject;
 	}
 
+	@Override
+	public JSONObject updateComment(
+		long commentId, String body)
+		throws PortalException {
+	}
+
 	protected Function<String, ServiceContext> createServiceContextFunction() {
 		return new Function<String, ServiceContext>() {
 

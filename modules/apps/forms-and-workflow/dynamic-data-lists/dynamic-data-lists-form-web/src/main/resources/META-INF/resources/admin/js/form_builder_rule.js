@@ -162,6 +162,7 @@ AUI.add(
 							{
 								fieldName: index + '-target',
 								options: instance._getActionOptions(),
+								showLabel: false,
 								value: value,
 								visible: true
 							}
@@ -186,7 +187,7 @@ AUI.add(
 								fieldName: index + '-action',
 								label: Liferay.Language.get('the'),
 								options: instance.get('fields'),
-								showLabel: true,
+								showLabel: false,
 								value: value,
 								visible: true
 							}
@@ -338,6 +339,7 @@ AUI.add(
 								deleteIcon: Liferay.Util.getLexiconIconTpl('trash', 'icon-monospaced'),
 								logicalOperator: instance.get('logicOperator'),
 								plusIcon: Liferay.Util.getLexiconIconTpl('plus', 'icon-monospaced'),
+								showLabel: false,
 								strings: instance.get('strings')
 							}
 						);
@@ -349,12 +351,12 @@ AUI.add(
 						var instance = this;
 
 						switch (type) {
-							case 'fields':
-								return instance._conditions[index + '-condition-second-operand-select'];
-							case 'options':
-								return instance._conditions[index + '-condition-second-operand-options-select'];
-							default:
-								return instance._conditions[index + '-condition-second-operand-input'];
+						case 'fields':
+							return instance._conditions[index + '-condition-second-operand-select'];
+						case 'options':
+							return instance._conditions[index + '-condition-second-operand-options-select'];
+						default:
+							return instance._conditions[index + '-condition-second-operand-input'];
 						}
 					},
 
@@ -604,7 +606,7 @@ AUI.add(
 								fieldName: index + '-condition-first-operand',
 								label: instance.get('strings').if,
 								options: instance.get('fields'),
-								showLabel: true,
+								showLabel: false,
 								value: value,
 								visible: true
 							}
@@ -753,7 +755,7 @@ AUI.add(
 										value: 'field'
 									}
 								],
-								showLabel: true,
+								showLabel: false,
 								value: value,
 								visible: instance._isBinaryCondition(index)
 							}

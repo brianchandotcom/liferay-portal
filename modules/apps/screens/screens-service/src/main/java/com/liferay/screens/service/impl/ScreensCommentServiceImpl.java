@@ -16,8 +16,13 @@ package com.liferay.screens.service.impl;
 
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentManager;
+import com.liferay.portal.kernel.comment.Discussion;
+import com.liferay.portal.kernel.comment.DiscussionComment;
+import com.liferay.portal.kernel.comment.DiscussionCommentIterator;
 import com.liferay.portal.kernel.comment.DiscussionPermission;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
@@ -63,8 +68,61 @@ public class ScreensCommentServiceImpl extends ScreensCommentServiceBaseImpl {
 	public JSONArray getComments(
 		String className, long classPK, int start, int end)
 		throws PortalException {
+
+		DiscussionPermission discussionPermission =
+			commentManager.getDiscussionPermission(getPermissionChecker());
+
+		long groupId = getGroupId(className, classPK);
+
+		long companyId = getCompanyId(groupId);
+
+		discussionPermission.checkViewPermission(
+			companyId, groupId, className, classPK);
+
+		Discussion discussion = commentManager.getDiscussion(
+			getUserId(), groupId, className, classPK,
+			createServiceContextFunction());
+
+		DiscussionComment rootDiscussionComment =
+			discussion.getRootDiscussionComment();
+
+		if (start == QueryUtil.ALL_POS) {
+			start = 0;
+		}
+
+		DiscussionCommentIterator threadDiscussionCommentIterator =
+			rootDiscussionComment.getThreadDiscussionCommentIterator(start);
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		if (end == QueryUtil.ALL_POS) {
+			while (threadDiscussionCommentIterator.hasNext()) {
+				JSONObject jsonObject = getJSONObject
+					(threadDiscussionCommentIterator.next(), discussionPermission);
+
+				jsonArray.put(jsonObject);
+			}
+		} else {
+			int commentsCount = end - start;
+
+			while (threadDiscussionCommentIterator.hasNext() &&
+				   (commentsCount > 0)) {
+
+				JSONObject jsonObject = getJSONObject
+					(
+						threadDiscussionCommentIterator.next(),
+						discussionPermission);
+
+				jsonArray.put(jsonObject);
+
+				commentsCount--;
+			}
+		}
+
+		return jsonArray;
 	}
 
+	@Override
 	public int getCommentsCount(String className, long classPK)
 		throws PortalException {
 

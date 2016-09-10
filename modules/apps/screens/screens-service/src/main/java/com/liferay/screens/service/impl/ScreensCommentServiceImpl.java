@@ -60,6 +60,11 @@ public class ScreensCommentServiceImpl extends ScreensCommentServiceBaseImpl {
 	}
 
 	@Override
+	public JSONArray getComments(
+		String className, long classPK, int start, int end)
+		throws PortalException {
+	}
+
 	public int getCommentsCount(String className, long classPK)
 		throws PortalException {
 

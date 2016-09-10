@@ -79,13 +79,17 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 		String typeSettings, String oldRootPortletId, String newRootPortletId,
 		boolean exactMatch) {
 
-		List<String> columnIds = _getLayoutColumnIds(typeSettings);
+		UnicodeProperties typeSettingsProperties = new UnicodeProperties(true);
 
-		columnIds.addAll(_getNestedPortletColumnIds(typeSettings));
+		typeSettingsProperties.fastLoad(typeSettings);
+
+		List<String> columnIds = _getLayoutColumnIds(typeSettingsProperties);
+
+		columnIds.addAll(_getNestedPortletColumnIds(typeSettingsProperties));
 
 		return getNewTypeSettings(
-			typeSettings, oldRootPortletId, newRootPortletId, columnIds,
-			exactMatch);
+			typeSettingsProperties, oldRootPortletId, newRootPortletId,
+			columnIds, exactMatch);
 	}
 
 	protected String getNewTypeSettings(
@@ -95,6 +99,15 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 		UnicodeProperties typeSettingsProperties = new UnicodeProperties(true);
 
 		typeSettingsProperties.fastLoad(typeSettings);
+
+		return getNewTypeSettings(
+			typeSettingsProperties, oldRootPortletId, newRootPortletId,
+			columnIds, exactMatch);
+	}
+
+	protected String getNewTypeSettings(
+		UnicodeProperties typeSettingsProperties, String oldRootPortletId,
+		String newRootPortletId, List<String> columnIds, boolean exactMatch) {
 
 		for (String columnId : columnIds) {
 			if (!typeSettingsProperties.containsKey(columnId)) {
@@ -557,10 +570,8 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 		}
 	}
 
-	private List<String> _getLayoutColumnIds(String typeSettings) {
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties(true);
-
-		typeSettingsProperties.fastLoad(typeSettings);
+	private List<String> _getLayoutColumnIds(
+		UnicodeProperties typeSettingsProperties) {
 
 		List<String> columnIds = new ArrayList<>();
 
@@ -577,10 +588,8 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 		return columnIds;
 	}
 
-	private List<String> _getNestedPortletColumnIds(String typeSettings) {
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties(true);
-
-		typeSettingsProperties.fastLoad(typeSettings);
+	private List<String> _getNestedPortletColumnIds(
+		UnicodeProperties typeSettingsProperties) {
 
 		if (!typeSettingsProperties.containsKey("nested-column-ids")) {
 			return Collections.emptyList();

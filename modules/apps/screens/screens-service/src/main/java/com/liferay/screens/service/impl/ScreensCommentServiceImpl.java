@@ -17,10 +17,15 @@ package com.liferay.screens.service.impl;
 import com.liferay.screens.service.base.ScreensCommentServiceBaseImpl;
 
 /**
- * @author José Manuel Navarro
+ * @author Alejandro Hernández Malillos
  */
 public class ScreensCommentServiceImpl
 	extends ScreensCommentServiceBaseImpl {
 
+	@Override
+	public JSONObject addComment(
+			String className, long classPK, String body)
+			throws PortalException {
 
+	}
 }

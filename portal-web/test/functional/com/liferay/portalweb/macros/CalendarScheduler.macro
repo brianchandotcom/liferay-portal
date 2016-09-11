@@ -587,7 +587,7 @@
 	<command name="viewShowMoreLocalizedViaDayView">
 		<execute function="AssertClick" locator1="Calendar#VIEW_DAY_BUTTON" value1="${viewTypeLocalized}" />
 
-		<execute function="Pause" locator1="5000" />
+		<execute function="Pause" locator1="10000" />
 
 		<var name="key_messageLocalized" value="${messageLocalized}" />
 
@@ -597,6 +597,15 @@
 			</not>
 			<then>
 				<execute function="Click" locator1="Calendar#VIEW_NEXT_BUTTON" />
+			</then>
+		</if>
+
+		<if>
+			<not>
+				<execute function="IsElementPresent" locator1="Calendar#SCHEDULER_VIEW_DAY_SHOW_MORE_LOCALIZED" />
+			</not>
+			<then>
+				<execute function="Click" locator1="Calendar#VIEW_PREVIOUS_BUTTON" />
 			</then>
 		</if>
 

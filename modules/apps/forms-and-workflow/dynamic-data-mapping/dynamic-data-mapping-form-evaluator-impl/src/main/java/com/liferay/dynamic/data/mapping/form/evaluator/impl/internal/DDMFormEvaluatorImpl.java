@@ -19,7 +19,6 @@ import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluationException;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluationResult;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluator;
-import com.liferay.dynamic.data.mapping.form.evaluator.impl.internal.rules.DDMFormRuleEvaluatorHelper;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceService;
@@ -47,8 +46,8 @@ public class DDMFormEvaluatorImpl implements DDMFormEvaluator {
 		throws DDMFormEvaluationException {
 
 		try {
-			DDMFormRuleEvaluatorHelper ddmFormRuleEvaluatorHelper =
-				new DDMFormRuleEvaluatorHelper(
+			DDMFormEvaluatorHelper ddmFormRuleEvaluatorHelper =
+				new DDMFormEvaluatorHelper(
 					_ddmDataProviderConsumerTracker,
 					_ddmDataProviderInstanceService, _ddmExpressionFactory,
 					ddmForm, ddmFormValues, _ddmFormValuesJSONDeserializer,

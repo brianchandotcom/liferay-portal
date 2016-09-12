@@ -337,6 +337,7 @@ public class RoleStagedModelDataHandler
 		}
 		else if (scope == ResourceConstants.SCOPE_GROUP) {
 			long groupId = portletDataContext.getCompanyGroupId();
+
 			long primaryKey = groupId;
 
 			long sourceGroupId = GetterUtil.getLong(permission.getPrimKey());

@@ -260,6 +260,7 @@ public class DDMFormRuleEvaluatorHelper {
 				DDMFormFieldValue ddmFormFieldValue =
 					createDefaultDDMFormFieldValue(
 						entry.getValue(), ddmFormValues);
+
 				_ddmFormFieldValues.put(
 					entry.getKey(), Arrays.asList(ddmFormFieldValue));
 			}

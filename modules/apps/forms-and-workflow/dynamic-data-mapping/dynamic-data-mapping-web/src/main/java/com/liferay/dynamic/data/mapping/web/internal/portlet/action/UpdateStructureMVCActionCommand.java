@@ -85,7 +85,9 @@ public class UpdateStructureMVCActionCommand extends DDMBaseMVCActionCommand {
 			actionRequest, "name");
 		Map<Locale, String> descriptionMap =
 			LocalizationUtil.getLocalizationMap(actionRequest, "description");
+
 		DDMForm ddmForm = _ddm.getDDMForm(actionRequest);
+
 		DDMFormLayout ddmFormLayout = _ddm.getDefaultDDMFormLayout(ddmForm);
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(

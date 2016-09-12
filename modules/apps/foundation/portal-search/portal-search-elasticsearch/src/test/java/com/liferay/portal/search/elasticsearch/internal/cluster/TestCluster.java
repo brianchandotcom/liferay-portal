@@ -97,6 +97,7 @@ public class TestCluster {
 
 		if (size > 1) {
 			int endingPort = startingPort + size - 1;
+
 			range = range + StringPool.MINUS + endingPort;
 		}
 

@@ -106,6 +106,7 @@ public class DDMFormFieldEvaluationResult {
 	@Override
 	public int hashCode() {
 		int hash = HashUtil.hash(0, _name);
+
 		return HashUtil.hash(hash, _instanceId);
 	}
 

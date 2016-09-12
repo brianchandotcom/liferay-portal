@@ -191,6 +191,7 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 
 			for (TemplateResource templateResource : _templateResources) {
 				String templateContent = getTemplateContent(templateResource);
+
 				builder.add(templateContent, templateResource.getTemplateId());
 			}
 

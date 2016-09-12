@@ -124,6 +124,7 @@ public class ExportConfigurationMVCResourceCommand
 
 				for (ConfigurationModel factoryInstance : factoryInstances) {
 					String curPid = factoryInstance.getID();
+
 					String curFileName = getFileName(curFactoryPid, curPid);
 
 					zipWriter.addEntry(
@@ -134,6 +135,7 @@ public class ExportConfigurationMVCResourceCommand
 			}
 			else if (configurationModel.hasConfiguration()) {
 				String curPid = configurationModel.getID();
+
 				String curFileName = getFileName(null, curPid);
 
 				zipWriter.addEntry(
@@ -176,6 +178,7 @@ public class ExportConfigurationMVCResourceCommand
 
 		for (ConfigurationModel factoryInstance : factoryInstances) {
 			String curPid = factoryInstance.getID();
+
 			String curFileName = getFileName(null, curPid);
 
 			zipWriter.addEntry(

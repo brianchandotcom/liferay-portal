@@ -69,6 +69,7 @@ public class DownloadFileEntryPortletConfigurationIcon
 
 		try {
 			fileEntry = ActionUtil.getFileEntry(portletRequest);
+
 			fileVersion = ActionUtil.getFileVersion(portletRequest, fileEntry);
 		}
 		catch (Exception e) {

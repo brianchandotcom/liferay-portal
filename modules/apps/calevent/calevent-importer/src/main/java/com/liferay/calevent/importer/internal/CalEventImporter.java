@@ -378,6 +378,7 @@ public class CalEventImporter {
 			_ratingsStatsLocalService.createRatingsStats(statsId);
 
 		long classNameId = _classNameLocalService.getClassNameId(className);
+
 		ratingsStats.setClassNameId(classNameId);
 
 		ratingsStats.setClassPK(classPK);
@@ -947,6 +948,7 @@ public class CalEventImporter {
 		long calendarBookingId = _counterLocalService.increment();
 
 		long startTime = startDate.getTime();
+
 		long endTime =
 			startTime + durationHour * Time.HOUR + durationMinute * Time.MINUTE;
 
@@ -1173,6 +1175,7 @@ public class CalEventImporter {
 		}
 
 		List<Long> oldClassPKs = new ArrayList<>();
+
 		oldClassPKs.add(oldClassPK);
 
 		List<RatingsStats> ratingsStatsList =

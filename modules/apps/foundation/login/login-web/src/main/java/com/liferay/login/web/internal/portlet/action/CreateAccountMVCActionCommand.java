@@ -426,6 +426,7 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 
 		if ((facebookId > 0) || Validator.isNotNull(googleUserId)) {
 			password1 = PwdGenerator.getPassword();
+
 			password2 = password1;
 		}
 

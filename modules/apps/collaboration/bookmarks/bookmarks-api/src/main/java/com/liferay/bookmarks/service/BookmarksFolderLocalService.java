@@ -193,7 +193,7 @@ public interface BookmarksFolderLocalService extends BaseLocalService,
 		BookmarksFolder bookmarksFolder);
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #updateFolder(long, long,
+	* @deprecated As of 1.0.0, replaced by {@link #updateFolder(long, long,
 	long, String, String, ServiceContext)} and {@link
 	#mergeFolders(long, long)}
 	*/

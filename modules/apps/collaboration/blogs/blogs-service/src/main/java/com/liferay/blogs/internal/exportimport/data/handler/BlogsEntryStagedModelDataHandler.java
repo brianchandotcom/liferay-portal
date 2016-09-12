@@ -424,7 +424,7 @@ public class BlogsEntryStagedModelDataHandler
 	}
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of 1.1.0
 	 */
 	@Deprecated
 	protected void setBlogsEntryExportImportContentProcessor(

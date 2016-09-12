@@ -150,7 +150,7 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 	}
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of 4.0.0
 	 */
 	@Deprecated
 	protected ExportImportContentProcessor getExportImportContentProcessor(

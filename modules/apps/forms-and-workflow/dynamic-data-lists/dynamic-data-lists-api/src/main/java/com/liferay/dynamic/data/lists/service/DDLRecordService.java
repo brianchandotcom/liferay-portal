@@ -94,7 +94,7 @@ public interface DDLRecordService extends BaseService {
 	the record.
 	* @return the record
 	* @throws PortalException if a portal exception occurred
-	* @deprecated As of 7.0.0, replaced by {@link #addRecord(long, long, int,
+	* @deprecated As of 1.2.0, replaced by {@link #addRecord(long, long, int,
 	DDMFormValues, ServiceContext)}
 	*/
 	@java.lang.Deprecated
@@ -116,7 +116,7 @@ public interface DDLRecordService extends BaseService {
 	the record.
 	* @return the record
 	* @throws PortalException if a portal exception occurred
-	* @deprecated As of 7.0.0, replaced by {@link #addRecord(long, long, int,
+	* @deprecated As of 1.2.0, replaced by {@link #addRecord(long, long, int,
 	DDMFormValues, ServiceContext)}
 	*/
 	@java.lang.Deprecated
@@ -133,7 +133,7 @@ public interface DDLRecordService extends BaseService {
 	set the record modified date.
 	* @return the affected record
 	* @throws PortalException
-	* @deprecated As of 7.0.0, replaced by {@link #updateRecord(long, boolean,
+	* @deprecated As of 1.2.0, replaced by {@link #updateRecord(long, boolean,
 	int, DDMFormValues, ServiceContext)}
 	*/
 	@java.lang.Deprecated
@@ -185,7 +185,7 @@ public interface DDLRecordService extends BaseService {
 	set the record modified date.
 	* @return the record
 	* @throws PortalException if a portal exception occurred
-	* @deprecated As of 7.0.0, replaced by {@link #updateRecord(long, boolean,
+	* @deprecated As of 1.2.0, replaced by {@link #updateRecord(long, boolean,
 	int, DDMFormValues, ServiceContext)}
 	*/
 	@java.lang.Deprecated
@@ -207,7 +207,7 @@ public interface DDLRecordService extends BaseService {
 	set the record modified date.
 	* @return the record
 	* @throws PortalException if a portal exception occurred
-	* @deprecated As of 7.0.0, replaced by {@link #updateRecord(long, boolean,
+	* @deprecated As of 1.2.0, replaced by {@link #updateRecord(long, boolean,
 	int, DDMFormValues, ServiceContext)}
 	*/
 	@java.lang.Deprecated
@@ -243,7 +243,7 @@ public interface DDLRecordService extends BaseService {
 		ServiceContext serviceContext) throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #revertRecord(long, String,
+	* @deprecated As of 1.2.0, replaced by {@link #revertRecord(long, String,
 	ServiceContext)}
 	*/
 	@java.lang.Deprecated

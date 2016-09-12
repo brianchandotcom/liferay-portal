@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Component;
 
 /**
  * @author     Eudaldo Alonso
- * @deprecated As of 7.0.0, with a replacement. Theme developers must eventually
+ * @deprecated As of 2.0.0, with a replacement. Theme developers must eventually
  *             switch from using Velocity  templates that leverage this taglib
  *             wrapper mechanism, to using FreeMarker templates that leverage
  *             the <code>liferay-product-navigation:control-menu</code> tag.

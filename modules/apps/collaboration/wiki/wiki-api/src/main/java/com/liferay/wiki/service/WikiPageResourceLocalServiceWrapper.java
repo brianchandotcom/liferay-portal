@@ -74,7 +74,7 @@ public class WikiPageResourceLocalServiceWrapper
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #addPageResource(long, long,
+	* @deprecated As of 1.2.0, replaced by {@link #addPageResource(long, long,
 	String)}
 	*/
 	@Deprecated
@@ -380,7 +380,7 @@ public class WikiPageResourceLocalServiceWrapper
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getPageResourcePrimKey(long,
+	* @deprecated As of 1.2.0, replaced by {@link #getPageResourcePrimKey(long,
 	long, String)}
 	*/
 	@Deprecated

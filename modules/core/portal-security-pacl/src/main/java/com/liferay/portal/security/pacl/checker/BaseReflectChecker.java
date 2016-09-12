@@ -18,7 +18,7 @@ package com.liferay.portal.security.pacl.checker;
  * @author     Brian Wing Shun Chan
  * @author     Raymond Augé
  * @author     Zsolt Berentey
- * @deprecated As of 6.0.2
+ * @deprecated As of 1.0.0
  */
 @Deprecated
 public abstract class BaseReflectChecker extends BaseChecker {

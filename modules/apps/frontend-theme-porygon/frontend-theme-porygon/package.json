@@ -13,6 +13,7 @@
 	},
 	"devDependencies": {
 		"gulp-metal": "^1.7.6",
+		"liferay-module-config-generator": "^1.1.10",
 		"run-sequence": "^1.2.2"
 	},
 	"keywords": [

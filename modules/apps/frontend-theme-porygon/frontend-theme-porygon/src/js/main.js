@@ -11,12 +11,8 @@
 	);
 
 	require(
-		'metal/src/async/async',
-		'metal/src/core',
-		'metal-dom/src/dom',
-		'metal-state/src/State',
 		'porygon-theme/js/top_search.es',
-		function(async, core, dom, State, TopSearch) {
+		function(TopSearch) {
 			new TopSearch.default();
 		}
 	);

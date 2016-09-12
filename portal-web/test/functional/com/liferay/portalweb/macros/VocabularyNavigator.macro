@@ -1,0 +1,11 @@
+<definition>
+	<command name="gotoAdd">
+		<execute function="AssertVisible" locator1="Button#PLUS" />
+
+		<execute function="Pause" locator1="3000" />
+
+		<execute function="Click" locator1="Button#PLUS" />
+
+		<execute function="AssertVisible" locator1="TextInput#TITLE" />
+	</command>
+</definition>

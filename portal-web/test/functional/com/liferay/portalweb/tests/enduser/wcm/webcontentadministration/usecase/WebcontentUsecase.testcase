@@ -881,7 +881,6 @@
 		</execute>
 
 		<execute macro="Site#addMemberCP">
-			<var name="siteName" value="Liferay" />
 			<var name="userFirstName" value="test1" />
 			<var name="userLastName" value="test1" />
 			<var name="userScreenName" value="test1test" />

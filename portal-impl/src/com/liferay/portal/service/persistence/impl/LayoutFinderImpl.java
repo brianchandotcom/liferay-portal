@@ -51,9 +51,6 @@ import java.util.Set;
 public class LayoutFinderImpl
 	extends LayoutFinderBaseImpl implements LayoutFinder {
 
-	public static final String FIND_BY_NO_PERMISSIONS =
-		LayoutFinder.class.getName() + ".findByNoPermissions";
-
 	public static final String FIND_BY_NULL_FRIENDLY_URL =
 		LayoutFinder.class.getName() + ".findByNullFriendlyURL";
 

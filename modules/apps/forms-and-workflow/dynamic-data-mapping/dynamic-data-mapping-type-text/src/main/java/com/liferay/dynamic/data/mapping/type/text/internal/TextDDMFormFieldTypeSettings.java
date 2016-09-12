@@ -31,7 +31,7 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 @DDMForm(
 	rules = {
 		@DDMFormRule(
-			actions = {"set(fieldAt(\"tooltip\", 0), \"visible\", false)"}
+			actions = {"set(fieldAt(\"tooltip\",0),\"visible\",false)"}
 		)
 	}
 )

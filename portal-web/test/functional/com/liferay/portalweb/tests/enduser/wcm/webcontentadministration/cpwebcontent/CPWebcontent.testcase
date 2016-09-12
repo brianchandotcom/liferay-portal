@@ -2053,13 +2053,13 @@
 			</execute>
 		</for>
 
-		<execute macro="WebContentStructures#viewNoFovariteStructure" />
+		<execute macro="WebContentStructures#viewNoFavoriteStructure" />
 
-		<execute macro="WebContentStructures#addFovariteStructure">
+		<execute macro="WebContentStructures#addFavoriteStructure">
 			<var name="rowEntry" value="WC Structure Name 9" />
 		</execute>
 
-		<execute macro="WebContentStructures#viewFovariteStructure">
+		<execute macro="WebContentStructures#viewFavoriteStructure">
 			<var name="indexNumber" value="1" />
 			<var name="rowEntry" value="WC Structure Name 9" />
 		</execute>
@@ -2070,7 +2070,7 @@
 			<var name="portlet" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContentStructures#viewFovariteStructureViaAddPlusMenu">
+		<execute macro="WebContentStructures#viewFavoriteStructureViaPlusButton">
 			<var name="structureName" value="WC Structure Name 9" />
 		</execute>
 	</command>

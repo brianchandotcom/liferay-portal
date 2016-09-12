@@ -36,6 +36,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -1214,7 +1215,16 @@ public class ProjectTemplatesTest {
 		_executeMaven(
 			new File(mavenProjectDir, serviceProjectName),
 			new String[] {"-U", "liferay:build-service"});
-
+				
+		File gradleServiceProps = new File(
+				projectDir,
+				serviceProjectName + "/src/main/resources/service.properties");
+		File mavenServiceProps = new File(
+				mavenProjectDir,
+				serviceProjectName + "/src/main/resources/service.properties");
+		
+		Files.copy(gradleServiceProps.toPath(), mavenServiceProps.toPath(), StandardCopyOption.REPLACE_EXISTING);
+		
 		_executeMaven(mavenProjectDir, _MAVEN_BUILD_ARGS);
 
 		_testExists(

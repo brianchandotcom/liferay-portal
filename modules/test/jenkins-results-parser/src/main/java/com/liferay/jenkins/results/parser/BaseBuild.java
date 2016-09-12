@@ -22,6 +22,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -108,7 +110,7 @@ public abstract class BaseBuild implements Build {
 			}
 
 			if (downstreamBuildAdded) {
-				setStatus("starting");
+				setStatus("running");
 			}
 		}
 		catch (Exception e) {
@@ -405,11 +407,26 @@ public abstract class BaseBuild implements Build {
 			JSONObject buildJSONObject = getBuildJSONObject("result");
 
 			if (downstreamBuilds != null) {
-				for (Build downstreamBuild : downstreamBuilds) {
-					downstreamBuild.update();
+				ExecutorService executorService = Executors.newFixedThreadPool(100);
+
+				for (final Build downstreamBuild : downstreamBuilds) {
+					Runnable runnable = new Runnable() {
+						public void run() {
+							downstreamBuild.update();
+						}
+					};
+
+					executorService.execute(runnable);
+				}
+
+				executorService.shutdown();
+
+				while (!executorService.isTerminated()) {
+					JenkinsResultsParserUtil.sleep(100);
 				}
 
 				String result = buildJSONObject.optString("result");
+				
 
 				if ((downstreamBuilds.size() == getDownstreamBuildCount("completed"))
 					&& result.length() > 0) {
@@ -440,8 +457,6 @@ public abstract class BaseBuild implements Build {
 		}
 
 		findDownstreamBuilds();
-
-		setStatus("running");
 	}
 
 	protected BaseBuild(String url) throws Exception {
@@ -451,14 +466,14 @@ public abstract class BaseBuild implements Build {
 	protected BaseBuild(String url, Build parent) throws Exception {
 		this._parent = parent;
 
-		setStatus("starting");
-
 		if (url.contains("buildWithParameters")) {
 			setInvocationURL(url);
 		}
 		else {
 			setBuildURL(url);
 		}
+
+		setStatus("starting");
 
 		update();
 	}
@@ -526,56 +541,60 @@ public abstract class BaseBuild implements Build {
 	}
 
 	protected String getBuildMessage() {
-		String status = getStatus();
-
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("Build '");
-		sb.append(jobName);
-		sb.append("'");
-
-		if (status.equals("completed")) {
-			sb.append(" completed at ");
-			sb.append(getBuildURL());
-			sb.append(". ");
-			sb.append(getResult());
-
-			return sb.toString();
+		if (jobName != null) {
+			String status = getStatus();
+	
+			StringBuilder sb = new StringBuilder();
+	
+			sb.append("Build '");
+			sb.append(jobName);
+			sb.append("'");
+	
+			if (status.equals("completed")) {
+				sb.append(" completed at ");
+				sb.append(getBuildURL());
+				sb.append(". ");
+				sb.append(getResult());
+	
+				return sb.toString();
+			}
+	
+			if (status.equals("missing")) {
+				sb.append(" is missing ");
+				sb.append(getJobURL());
+				sb.append(".");
+	
+				return sb.toString();
+			}
+	
+			if (status.equals("queued")) {
+				sb.append(" is queued at ");
+				sb.append(getJobURL());
+				sb.append(".");
+	
+				return sb.toString();
+			}
+	
+			if (status.equals("running")) {
+				sb.append(" started at ");
+				sb.append(getBuildURL());
+				sb.append(".");
+	
+				return sb.toString();
+			}
+	
+			if (status.equals("starting")) {
+				sb.append(" invoked at ");
+				sb.append(getJobURL());
+				sb.append(".");
+	
+				return sb.toString();
+			}
+	
+			throw new RuntimeException("Unknown status: " + status + ".");
 		}
 
-		if (status.equals("missing")) {
-			sb.append(" is missing ");
-			sb.append(getJobURL());
-			sb.append(".");
-
-			return sb.toString();
-		}
-
-		if (status.equals("queued")) {
-			sb.append(" is queued at ");
-			sb.append(getJobURL());
-			sb.append(".");
-
-			return sb.toString();
-		}
-
-		if (status.equals("running")) {
-			sb.append(" started at ");
-			sb.append(getBuildURL());
-			sb.append(".");
-
-			return sb.toString();
-		}
-
-		if (status.equals("starting")) {
-			sb.append(" invoked at ");
-			sb.append(getJobURL());
-			sb.append(".");
-
-			return sb.toString();
-		}
-
-		throw new RuntimeException("Unknown status: " + status + ".");
+		return "";
 	}
 
 	protected Set<String> getJobParameterNames() throws Exception {
@@ -809,9 +828,10 @@ public abstract class BaseBuild implements Build {
 			_status = status;
 
 			statusModifiedTime = System.currentTimeMillis();
+
+			System.out.println(getBuildMessage());
 		}
 
-		System.out.println(getBuildMessage());
 	}
 
 	protected List<Integer> badBuildNumbers = new ArrayList<>();

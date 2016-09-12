@@ -1,9 +1,9 @@
-#set( $lastIndexOf = $serviceClass.lastIndexOf(".") )
+#set( $lastIndexOf = $serviceWrapperClass.lastIndexOf(".") )
 #set( $substringIndex = $lastIndexOf + 1 )
-#set( $serviceClassName = $serviceClass.substring($substringIndex) )
+#set( $serviceWrapperClassName = $serviceWrapperClass.substring($substringIndex) )
 package ${package};
 
-import ${serviceClass};
+import ${serviceWrapperClass};
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
@@ -15,7 +15,7 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = ServiceWrapper.class
 )
-public class ${className} extends ${serviceClassName} {
+public class ${className} extends ${serviceWrapperClassName} {
 
 	public ${className}() {
 		super(null);

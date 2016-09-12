@@ -108,7 +108,7 @@ long recordSetId = ddlFormDisplayContext.getRecordSetId();
 								%>
 
 								<c:if test="<%= Validator.isNotNull(description) %>">
-									<h2 class="ddl-form-description"><%= description %></h2>
+									<h5 class="ddl-form-description"><%= description %></h5>
 								</c:if>
 							</div>
 						</div>

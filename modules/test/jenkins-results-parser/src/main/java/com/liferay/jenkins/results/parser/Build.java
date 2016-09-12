@@ -54,7 +54,7 @@ public interface Build {
 
 	public long getStatusAge();
 
-	public String getStatusReport(int indent);
+	public String getStatusReport(int indentSize);
 
 	public String getStatusReport();
 

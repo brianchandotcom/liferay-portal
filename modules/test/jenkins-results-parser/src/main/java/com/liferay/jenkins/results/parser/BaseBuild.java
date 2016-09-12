@@ -251,9 +251,9 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
-	public String getStatusReport(int indent) {
+	public String getStatusReport(int indentSize) {
 		StringBuffer indentStringBuffer = new StringBuffer();
-		for (int i = 0; i < indent; i++) {
+		for (int i = 0; i < indentSize; i++) {
 			indentStringBuffer.append(" ");
 		}
 
@@ -299,7 +299,7 @@ public abstract class BaseBuild implements Build {
 			if (getDownstreamBuildCount(null) > 0) {
 				for (Build downstreamBuild : getDownstreamBuilds("running")) {
 					sb.append(indentStringBuffer);
-					sb.append(downstreamBuild.getStatusReport(indent + 4));
+					sb.append(downstreamBuild.getStatusReport(indentSize + 4));
 					sb.append("\n\n");
 				}
 

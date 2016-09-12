@@ -23,14 +23,14 @@ buildscript {
 }
 ```
 
-Apply the [*Soy Plugin*](#soyplugin) to compile Closure Templates into
+Apply the [*Soy Plugin*](#soy-plugin) to compile Closure Templates into
 Javascript functions:
 
 ```gradle
 apply plugin: "com.liferay.soy"
 ```
 
-Apply the [*Soy Translation Plugin*](#soytranslationplugin) to use a custom
+Apply the [*Soy Translation Plugin*](#soy-translation-plugin) to use a custom
 localization mechanism in the generated `.soy.js` files:
 
 ```gradle
@@ -131,7 +131,7 @@ one or more file and replace them with a custom function call.
 var MSG_EXTERNAL_123 = goog.getMsg('welcome-to-{$releaseInfo}', { 'releaseInfo': opt_data.releaseInfo });
 ```
 
-A `goog.getMsg` definition looks like the example above, and it is has the
+A `goog.getMsg` definition looks like the example above, and it has the
 following components:
 
 - *variable name*: `MSG_EXTERNAL_123`
@@ -147,4 +147,4 @@ are available.
 
 Property Name | Type | Default Value | Description
 ------------- | ---- | ------------- | -----------
-<a name="replacementclosure"></a>`replacementClosure` | `Closure<String>` | `null` | The closure invoked in order to get the replacement for `goog.getMsg` definitions. The given closure is passed the *variable name*, the *language key* and the *arguments object* as its parameters.
+<a name="replacementclosure"></a>`replacementClosure` | `Closure<String>` | `null` | The closure invoked in order to get the replacement for `goog.getMsg` definitions. The given closure is passed the *variable name*, *language key*, and *arguments object* as its parameters.

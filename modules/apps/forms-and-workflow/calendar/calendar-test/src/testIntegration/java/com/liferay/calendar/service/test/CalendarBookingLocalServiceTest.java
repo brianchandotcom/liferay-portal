@@ -264,7 +264,9 @@ public class CalendarBookingLocalServiceTest {
 	}
 
 	@Test
-	public void testAddCalendarBookingsAndViewSentReminders() throws Exception {
+	public void testAddCalendarBookingDoesNotNotifyCreatorTwice()
+	throws Exception {
+
 		ServiceContext serviceContext = createServiceContext();
 
 		_invitingUser = UserTestUtil.addUser();

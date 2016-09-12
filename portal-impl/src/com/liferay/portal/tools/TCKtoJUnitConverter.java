@@ -67,6 +67,7 @@ public class TCKtoJUnitConverter {
 				}
 
 				int x = s.indexOf(StringPool.POUND);
+
 				int y = s.lastIndexOf(StringPool.SLASH, x);
 
 				String className = s.substring(15, y);

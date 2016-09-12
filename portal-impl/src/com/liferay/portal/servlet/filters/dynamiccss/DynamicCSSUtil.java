@@ -99,6 +99,7 @@ public class DynamicCSSUtil {
 
 		while (true) {
 			int importX = content.indexOf(_CSS_IMPORT_BEGIN, pos);
+
 			int importY = content.indexOf(
 				_CSS_IMPORT_END, importX + _CSS_IMPORT_BEGIN.length());
 

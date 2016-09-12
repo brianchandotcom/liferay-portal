@@ -33,6 +33,7 @@ public class StrutsActionPortletURL extends PortletURLImplWrapper {
 		super(portletResponseImpl, plid, lifecycle);
 
 		_portlet = portletResponseImpl.getPortlet();
+
 		_strutsPath =
 			StringPool.SLASH + _portlet.getStrutsPath() + StringPool.SLASH;
 	}

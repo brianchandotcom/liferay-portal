@@ -464,6 +464,7 @@ public class HttpImpl implements Http {
 			int x =
 				sb.indexOf(Http.PROTOCOL_DELIMITER) +
 					Http.PROTOCOL_DELIMITER.length();
+
 			int y = sb.indexOf(StringPool.SLASH, x);
 
 			sb.insert(y, proxyPath);

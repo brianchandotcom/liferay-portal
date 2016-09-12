@@ -2042,6 +2042,7 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 
 		if ((x == -1) || (y == -1)) {
 			x = webXmlContent.lastIndexOf("</display-name>") + 15;
+
 			y = x;
 		}
 		else {

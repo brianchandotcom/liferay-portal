@@ -66,8 +66,11 @@ public class DDMTemplateResourceParser implements TemplateResourceParser {
 
 		try {
 			int w = templateId.indexOf(CharPool.SLASH, pos);
+
 			int x = templateId.indexOf(CharPool.SLASH, w + 1);
+
 			int y = templateId.indexOf(CharPool.SLASH, x + 1);
+
 			int z = templateId.indexOf(CharPool.SLASH, y + 1);
 
 			long companyId = GetterUtil.getLong(templateId.substring(w + 1, x));

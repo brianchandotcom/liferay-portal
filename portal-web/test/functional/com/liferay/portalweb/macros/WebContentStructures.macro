@@ -30,7 +30,7 @@
 		<execute function="AssertTextEquals" locator1="Message#INFO_1" value1="You can add as many as 7 favorites in your quick menu." />
 
 		<execute function="Click" locator1="Icon#ADD_FAVORITE">
-			<var name="key_rowEntry" value="${rowEntry}" />
+			<var name="key_rowEntry" value="${structureName}" />
 		</execute>
 
 		<execute macro="Alert#viewSuccessMessage" />
@@ -277,7 +277,7 @@
 		<execute function="ScrollBy" value1="0, 50" />
 
 		<execute function="AssertElementPresent" locator1="Icon#REMOVE_FAVORITE">
-			<var name="key_rowEntry" value="${rowEntry}" />
+			<var name="key_rowEntry" value="${structureName}" />
 		</execute>
 	</command>
 
@@ -299,8 +299,8 @@
 	</command>
 
 	<command name="viewStructuresViaMoreIFrame">
-		<execute function="AssertTextEquals" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK" value1="${rowEntry}">
-			<var name="key_rowEntry" value="${rowEntry}" />
+		<execute function="AssertTextEquals" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK" value1="${structureName}">
+			<var name="key_rowEntry" value="${structureName}" />
 		</execute>
 	</command>
 

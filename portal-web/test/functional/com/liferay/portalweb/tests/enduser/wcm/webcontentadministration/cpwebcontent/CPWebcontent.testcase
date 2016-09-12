@@ -2047,21 +2047,21 @@
 			<var name="pageMod" value="7 of 10" />
 		</execute>
 
-		<for list="Basic Web Content,WC Structure Name 1,WC Structure Name 2,WC Structure Name 3,WC Structure Name 4,WC Structure Name 5,WC Structure Name 6,WC Structure Name 7,WC Structure Name 8,WC Structure Name 9" param="rowEntry">
+		<for list="Basic Web Content,WC Structure Name 1,WC Structure Name 2,WC Structure Name 3,WC Structure Name 4,WC Structure Name 5,WC Structure Name 6,WC Structure Name 7,WC Structure Name 8,WC Structure Name 9" param="structureName">
 			<execute macro="WebContentStructures#viewStructuresViaMoreIFrame">
-				<var name="rowEntry" value="${rowEntry}" />
+				<var name="structureName" value="${structureName}" />
 			</execute>
 		</for>
 
 		<execute macro="WebContentStructures#viewNoFavoriteStructure" />
 
 		<execute macro="WebContentStructures#addFavoriteStructure">
-			<var name="rowEntry" value="WC Structure Name 9" />
+			<var name="structureName" value="WC Structure Name 9" />
 		</execute>
 
 		<execute macro="WebContentStructures#viewFavoriteStructure">
 			<var name="indexNumber" value="1" />
-			<var name="rowEntry" value="WC Structure Name 9" />
+			<var name="structureName" value="WC Structure Name 9" />
 		</execute>
 
 		<execute macro="Navigator#openURL" />

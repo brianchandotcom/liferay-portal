@@ -11,7 +11,7 @@ if (typeof ddl.autocomplete == 'undefined') { ddl.autocomplete = {}; }
 
 
 ddl.autocomplete.actionPanel = function(opt_data, opt_ignored) {
-  return '<div class="panel panel-default autocomplete-action-panel cursor-pointer"><div class="panel-body">' + soy.$$escapeHtml(opt_data.label) + '<span class="pull-right">' + soy.$$filterNoAutoescape(opt_data.addAutoCompleteButton) + '</span></div></div>';
+  return '<div class="row"><div class="col-md-12"><div class="autocomplete-action-panel cursor-pointer panel panel-default"><div class="panel-body">' + soy.$$escapeHtml(opt_data.label) + '<span class="pull-right">' + soy.$$filterNoAutoescape(opt_data.addAutoCompleteButton) + '</span></div></div></div></div>';
 };
 if (goog.DEBUG) {
   ddl.autocomplete.actionPanel.soyTemplateName = 'ddl.autocomplete.actionPanel';

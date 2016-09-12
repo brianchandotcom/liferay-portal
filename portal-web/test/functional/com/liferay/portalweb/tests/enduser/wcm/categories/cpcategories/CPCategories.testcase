@@ -498,7 +498,7 @@
 		</execute>
 
 		<execute macro="Vocabulary#addWithAssociatedAssetTypeCP">
-			<var name="vocabularyAssociatedAssetTypeList" value="All Asset Types" />
+			<var name="assetType" value="All Asset Types" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
@@ -516,7 +516,7 @@
 		</execute>
 
 		<execute macro="Vocabulary#addWithAssociatedAssetTypeCP">
-			<var name="vocabularyAssociatedAssetTypeList" value="Blogs Entry" />
+			<var name="assetType" value="Blogs Entry" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
@@ -534,7 +534,7 @@
 		</execute>
 
 		<execute macro="Vocabulary#addWithAssociatedAssetTypeCP">
-			<var name="vocabularyAssociatedAssetTypeList" value="Bookmarks Entry" />
+			<var name="assetType" value="Bookmarks Entry" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
@@ -552,7 +552,7 @@
 		</execute>
 
 		<execute macro="Vocabulary#addWithAssociatedAssetTypeCP">
-			<var name="vocabularyAssociatedAssetTypeList" value="Document" />
+			<var name="assetType" value="Document" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
@@ -570,7 +570,7 @@
 		</execute>
 
 		<execute macro="Vocabulary#addWithAssociatedAssetTypeCP">
-			<var name="vocabularyAssociatedAssetTypeList" value="Blogs Entry" />
+			<var name="assetType" value="Blogs Entry" />
 			<var name="vocabularyName" value="Vocabulary Name 1" />
 		</execute>
 
@@ -586,7 +586,7 @@
 		</execute>
 
 		<execute macro="Vocabulary#addWithAssociatedAssetTypeCP">
-			<var name="vocabularyAssociatedAssetTypeList" value="Web Content Article" />
+			<var name="assetType" value="Web Content Article" />
 			<var name="vocabularyName" value="Vocabulary Name 2" />
 		</execute>
 
@@ -604,7 +604,7 @@
 		</execute>
 
 		<execute macro="Vocabulary#addWithAssociatedAssetTypeCP">
-			<var name="vocabularyAssociatedAssetTypeList" value="User" />
+			<var name="assetType" value="User" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
@@ -622,7 +622,7 @@
 		</execute>
 
 		<execute macro="Vocabulary#addWithAssociatedAssetTypeCP">
-			<var name="vocabularyAssociatedAssetTypeList" value="Web Content Article" />
+			<var name="assetType" value="Web Content Article" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
@@ -640,7 +640,7 @@
 		</execute>
 
 		<execute macro="Vocabulary#addWithAssociatedAssetTypeCP">
-			<var name="vocabularyAssociatedAssetTypeList" value="Wiki Page" />
+			<var name="assetType" value="Wiki Page" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
@@ -779,10 +779,26 @@
 			<var name="portlet" value="Categories" />
 		</execute>
 
-		<execute macro="Vocabulary#addWithAssociatedAssetTypeCP">
-			<var name="vocabularyAssociatedAssetTypeList" value="Blogs Entry,Web Content Article" />
-			<var name="vocabularyName" value="Vocabulary Name" />
+		<execute macro="VocabularyNavigator#gotoAdd" />
+
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="Vocabulary Name" />
 		</execute>
+
+		<execute macro="Vocabulary#addAssociatedAssetType">
+			<var name="assetType" value="Blogs Entry" />
+			<var name="required" value="true" />
+		</execute>
+
+		<execute macro="Button#clickAddRow" />
+
+		<execute macro="Vocabulary#addAssociatedAssetType">
+			<var name="assetType" value="Web Content Article" />
+			<var name="required" value="true" />
+			<var name="rowNumber" value="2" />
+		</execute>
+
+		<execute macro="Button#clickSave" />
 
 		<execute macro="Vocabulary#deleteAssociatedAssetTypeViaVocabularyCP">
 			<var name="vocabularyName" value="Vocabulary Name" />

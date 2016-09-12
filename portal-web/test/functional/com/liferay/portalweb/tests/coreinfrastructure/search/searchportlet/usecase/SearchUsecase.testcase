@@ -456,8 +456,6 @@
 		</execute>
 
 		<execute macro="Site#addMemberCP">
-			<var name="siteName" value="Site Name" />
-			<var name="siteScopeName" value="Site Name" />
 			<var name="userFirstName" value="userfn1" />
 			<var name="userLastName" value="userln1" />
 			<var name="userScreenName" value="usersn1" />
@@ -570,8 +568,6 @@
 		</execute>
 
 		<execute macro="Site#addMemberCP">
-			<var name="siteName" value="Site Name" />
-			<var name="siteScopeName" value="Site Name" />
 			<var name="userFirstName" value="userfn1" />
 			<var name="userLastName" value="userln1" />
 			<var name="userScreenName" value="usersn1" />
@@ -693,8 +689,6 @@
 		</execute>
 
 		<execute macro="Site#addMemberCP">
-			<var name="siteName" value="Site Name" />
-			<var name="siteScopeName" value="Site Name" />
 			<var name="userFirstName" value="userfn1" />
 			<var name="userLastName" value="userln1" />
 			<var name="userScreenName" value="usersn1" />
@@ -818,8 +812,6 @@
 		</execute>
 
 		<execute macro="Site#addMemberCP">
-			<var name="siteName" value="Site Name" />
-			<var name="siteScopeName" value="Site Name" />
 			<var name="userFirstName" value="userfn1" />
 			<var name="userLastName" value="userln1" />
 			<var name="userScreenName" value="usersn1" />

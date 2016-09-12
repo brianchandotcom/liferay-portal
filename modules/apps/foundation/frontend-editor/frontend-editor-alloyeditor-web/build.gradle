@@ -54,7 +54,6 @@ classes {
 dependencies {
 	alloyEditor group: "com.liferay.webjars", name: "com.liferay.webjars.alloyeditor", transitive: false, version: alloyEditorVersion
 
-	provided group: "com.liferay", name: "com.liferay.frontend.editor.lang", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.frontend.taglib", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.petra.encryptor", version: "1.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"

@@ -21,8 +21,7 @@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.frontend.editor.lang.FrontEndEditorResourceBundleUtil" %><%@
-page import="com.liferay.petra.encryptor.Encryptor" %><%@
+<%@ page import="com.liferay.petra.encryptor.Encryptor" %><%@
 page import="com.liferay.portal.kernel.editor.configuration.EditorOptions" %><%@
 page import="com.liferay.portal.kernel.json.JSONObject" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
@@ -43,9 +42,9 @@ page import="java.util.Map" %>
 <%@ page import="javax.portlet.PortletRequest" %><%@
 page import="javax.portlet.PortletResponse" %>
 
-<liferay-theme:defineObjects />
+<liferay-frontend:defineObjects />
 
-<liferay-frontend:defineObjects overrideResourceBundle="<%= FrontEndEditorResourceBundleUtil.getResourceBundle(locale) %>" />
+<liferay-theme:defineObjects />
 
 <%
 PortletRequest portletRequest = (PortletRequest)request.getAttribute(JavaConstants.JAVAX_PORTLET_REQUEST);

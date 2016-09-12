@@ -3,8 +3,8 @@ Bundle-SymbolicName: com.liferay.frontend.editor.tinymce.web
 Bundle-Version: 1.0.6
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Rich Text Editors
+Provide-Capability: liferay.resource.bundle;resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.frontend.editor.lang)";resource.bundle.base.name="content.Language"
+Require-Capability: liferay.resource.bundle;filter:="(bundle.symbolic.name=com.liferay.frontend.editor.lang)"
 Web-ContextPath: /frontend-editor-tinymce-web
 -donotcopy: (\.touch|.*_diffs.*|.*.properties)
--includeresource:\
-	content=../frontend-editor-lang/src/main/resources/content,\
-	META-INF/resources=tmp/META-INF/resources
+-includeresource: META-INF/resources=tmp/META-INF/resources

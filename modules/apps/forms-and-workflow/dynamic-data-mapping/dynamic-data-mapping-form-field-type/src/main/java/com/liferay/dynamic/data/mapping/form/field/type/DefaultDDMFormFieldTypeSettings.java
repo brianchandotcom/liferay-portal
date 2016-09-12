@@ -147,7 +147,7 @@ public interface DefaultDDMFormFieldTypeSettings
 	public DDMFormFieldValidation validation();
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of 2.1.0
 	 */
 	@DDMFormField(
 		label = "%field-visibility-expression",

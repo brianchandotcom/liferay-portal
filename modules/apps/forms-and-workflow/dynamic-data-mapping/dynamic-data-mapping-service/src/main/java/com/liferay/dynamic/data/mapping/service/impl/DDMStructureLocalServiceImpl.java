@@ -220,7 +220,7 @@ public class DDMStructureLocalServiceImpl
 	 *             UUID, creation date, modification date, guest permissions,
 	 *             and group permissions for the structure.
 	 * @return     the structure
-	 * @deprecated As of 7.0.0, replaced by {@link #addStructure(long, long,
+	 * @deprecated As of 3.0.0, replaced by {@link #addStructure(long, long,
 	 *             long, long, String, Map, Map, DDMForm, DDMFormLayout, String,
 	 *             int, ServiceContext)}
 	 */
@@ -276,7 +276,7 @@ public class DDMStructureLocalServiceImpl
 	 *             UUID, creation date, modification date, guest permissions,
 	 *             and group permissions for the structure.
 	 * @return     the structure
-	 * @deprecated As of 7.0.0, replaced by {@link #addStructure(long, long,
+	 * @deprecated As of 3.0.0, replaced by {@link #addStructure(long, long,
 	 *             long, Map, Map, DDMForm, DDMFormLayout, ServiceContext)}
 	 */
 	@Deprecated
@@ -343,7 +343,7 @@ public class DDMStructureLocalServiceImpl
 	 *             UUID, creation date, modification date, guest permissions and
 	 *             group permissions for the structure.
 	 * @return     the structure
-	 * @deprecated As of 7.0.0, replaced by {@link #addStructure(long, long,
+	 * @deprecated As of 3.0.0, replaced by {@link #addStructure(long, long,
 	 *             String, long, String, Map, Map, DDMForm, DDMFormLayout,
 	 *             String, int, ServiceContext)}
 	 */
@@ -1341,7 +1341,7 @@ public class DDMStructureLocalServiceImpl
 	 * @param      serviceContext the service context to be applied. Can set the
 	 *             structure's modification date.
 	 * @return     the updated structure
-	 * @deprecated As of 7.0.0, replaced by {@link #updateStructure(long, long,
+	 * @deprecated As of 3.0.0, replaced by {@link #updateStructure(long, long,
 	 *             long, long, String, Map, Map, DDMForm, DDMFormLayout,
 	 *             ServiceContext)}
 	 */
@@ -1386,7 +1386,7 @@ public class DDMStructureLocalServiceImpl
 	 * @param      serviceContext the service context to be applied. Can set the
 	 *             structure's modification date.
 	 * @return     the updated structure
-	 * @deprecated As of 7.0.0, replaced by {@link #updateStructure(long, long,
+	 * @deprecated As of 3.0.0, replaced by {@link #updateStructure(long, long,
 	 *             long, Map, Map, DDMForm, DDMFormLayout, ServiceContext)}
 	 */
 	@Deprecated
@@ -1423,7 +1423,7 @@ public class DDMStructureLocalServiceImpl
 	 * @param      serviceContext the service context to be applied. Can set the
 	 *             structure's modification date.
 	 * @return     the updated structure
-	 * @deprecated As of 7.0.0, replaced by {@link #updateStructure(long,
+	 * @deprecated As of 3.0.0, replaced by {@link #updateStructure(long,
 	 *             DDMForm, DDMFormLayout, ServiceContext)}
 	 */
 	@Deprecated

@@ -223,7 +223,7 @@ public class CalendarNotificationTemplateStagedModelDataHandler
 	}
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of 2.2.0
 	 */
 	@Deprecated
 	protected void setCalendarNotificationTemplateExportImportContentProcessor(

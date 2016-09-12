@@ -93,7 +93,7 @@ public class StagedGroupImpl implements StagedGroup {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of 1.0.0, replaced by {@link
 	 *             #getChildrenWithLayouts(boolean, int, int,
 	 *             OrderByComparator)}
 	 */
@@ -544,7 +544,7 @@ public class StagedGroupImpl implements StagedGroup {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #hasAncestor}
+	 * @deprecated As of 1.0.0, replaced by {@link #hasAncestor}
 	 */
 	@Deprecated
 	@Override

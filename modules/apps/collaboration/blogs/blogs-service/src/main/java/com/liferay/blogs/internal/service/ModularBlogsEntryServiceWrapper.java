@@ -49,7 +49,7 @@ public class ModularBlogsEntryServiceWrapper extends BlogsEntryServiceWrapper {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #addEntry(String, String,
+	 * @deprecated As of 1.1.0, replaced by {@link #addEntry(String, String,
 	 *             String, String, int, int, int, int, int, boolean, boolean,
 	 *             String[], String, ImageSelector, ImageSelector,
 	 *             ServiceContext)}
@@ -288,7 +288,7 @@ public class ModularBlogsEntryServiceWrapper extends BlogsEntryServiceWrapper {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #updateEntry(long, String,
+	 * @deprecated As of 1.1.0, replaced by {@link #updateEntry(long, String,
 	 *             String, String, String, int, int, int, int, int, boolean,
 	 *             boolean, String[], String, ImageSelector, ImageSelector,
 	 *             ServiceContext)}

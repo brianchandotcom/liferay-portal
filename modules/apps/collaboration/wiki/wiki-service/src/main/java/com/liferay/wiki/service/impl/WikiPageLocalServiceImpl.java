@@ -441,7 +441,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #addTempFileEntry(long, long,
+	 * @deprecated As of 1.2.0, replaced by {@link #addTempFileEntry(long, long,
 	 *             String, String, InputStream, String)}
 	 */
 	@Deprecated
@@ -1524,7 +1524,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #renamePage(long, long,
+	 * @deprecated As of 1.2.0, replaced by {@link #renamePage(long, long,
 	 *             String, String, ServiceContext)}
 	 */
 	@Deprecated
@@ -1589,7 +1589,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #movePageFromTrash(long,
+	 * @deprecated As of 1.2.0, replaced by {@link #movePageFromTrash(long,
 	 *             long, String, long, String)} *
 	 */
 	@Deprecated
@@ -2034,7 +2034,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #updateStatus(long, WikiPage,
+	 * @deprecated As of 1.2.0, replaced by {@link #updateStatus(long, WikiPage,
 	 *             int, ServiceContext, Map)}
 	 */
 	@Deprecated
@@ -2236,7 +2236,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of 1.2.0, replaced by {@link
 	 *             WikiPageTitleValidator#validate(String)}
 	 */
 	@Deprecated

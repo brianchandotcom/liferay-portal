@@ -107,6 +107,7 @@ public class MBTreeWalkerImpl implements MBTreeWalker {
 		}
 
 		int[] range = new int[2];
+
 		range[0] = pos.intValue();
 
 		for (int i = range[0]; i < _messages.size(); i++) {

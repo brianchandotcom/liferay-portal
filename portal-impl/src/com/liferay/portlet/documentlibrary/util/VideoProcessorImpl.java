@@ -713,6 +713,7 @@ public class VideoProcessorImpl
 			ClassLoader classLoader = clazz.getClassLoader();
 
 			Properties systemProperties = System.getProperties();
+
 			SystemEnv.setProperties(systemProperties);
 
 			Log4JUtil.initLog4J(

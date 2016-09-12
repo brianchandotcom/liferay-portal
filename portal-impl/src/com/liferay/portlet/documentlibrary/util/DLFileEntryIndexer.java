@@ -659,6 +659,7 @@ public class DLFileEntryIndexer
 				@Override
 				public void performAction(Group group) throws PortalException {
 					long groupId = group.getGroupId();
+
 					long folderId = groupId;
 
 					String[] newIds = {

@@ -279,11 +279,13 @@ public class DocumentConversionUtil {
 
 		if (_isRemoteOpenOfficeHost(host)) {
 			_openOfficeConnection = new SocketOpenOfficeConnection(host, port);
+
 			_documentConverter = new StreamOpenOfficeDocumentConverter(
 				_openOfficeConnection);
 		}
 		else {
 			_openOfficeConnection = new SocketOpenOfficeConnection(port);
+
 			_documentConverter = new OpenOfficeDocumentConverter(
 				_openOfficeConnection);
 		}

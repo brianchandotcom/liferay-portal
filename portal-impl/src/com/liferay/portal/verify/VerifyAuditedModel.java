@@ -127,6 +127,7 @@ public class VerifyAuditedModel extends VerifyProcess {
 					}
 					else {
 						userId = rs.getLong("userId");
+
 						userName = getUserName(con, userId);
 					}
 

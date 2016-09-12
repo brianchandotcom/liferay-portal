@@ -184,6 +184,7 @@ public class AssetTagFinderImpl
 			session = openSession();
 
 			String sql = CustomSQLUtil.get(FIND_BY_G_N_S_E);
+
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			QueryPos qPos = QueryPos.getInstance(q);

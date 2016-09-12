@@ -324,6 +324,7 @@ public class WebDriverHelper {
 
 		if (titleAttribute.contains("Rich Text Editor,")) {
 			int x = titleAttribute.indexOf(",");
+
 			int y = titleAttribute.indexOf(",", x + 1);
 
 			if (y == -1) {
@@ -337,6 +338,7 @@ public class WebDriverHelper {
 
 		if (idAttribute.contains("cke__")) {
 			int x = idAttribute.indexOf("cke__");
+
 			int y = idAttribute.indexOf("cke__", x + 1);
 
 			if (y == -1) {
@@ -972,6 +974,7 @@ public class WebDriverHelper {
 		String titleAttribute = getAttribute(webDriver, locator + "@title");
 
 		int x = titleAttribute.indexOf(",");
+
 		int y = titleAttribute.indexOf(",", x + 1);
 
 		if (y == -1) {

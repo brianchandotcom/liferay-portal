@@ -415,6 +415,7 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 
 			while (enumeration.hasMoreElements()) {
 				String key = enumeration.nextElement();
+
 				String value = poshiProperties.getProperty(key);
 
 				systemProperties.put(key, value);

@@ -260,6 +260,7 @@ public class PoshiRunnerGetterUtil {
 
 				if (!tagIsReservedTag) {
 					int x = line.indexOf("<");
+
 					int y = line.indexOf(" ", x);
 
 					if (y == -1) {

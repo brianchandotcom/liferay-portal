@@ -87,6 +87,7 @@ public class PoshiRunner {
 
 	public PoshiRunner(String classCommandName) throws Exception {
 		_testClassCommandName = classCommandName;
+
 		_testClassName = PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
 			_testClassCommandName);
 	}

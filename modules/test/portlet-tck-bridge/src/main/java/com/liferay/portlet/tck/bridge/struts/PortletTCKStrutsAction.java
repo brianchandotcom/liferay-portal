@@ -151,8 +151,11 @@ public class PortletTCKStrutsAction extends BaseStrutsAction {
 		catch (Exception e) {
 			long creatorUserId = 0;
 			boolean autoPassword = false;
+
 			String password1 = "password";
+
 			String password2 = password1;
+
 			boolean autoScreenName = false;
 			String screenName = "tck";
 			String emailAddress = "tck@liferay.com";

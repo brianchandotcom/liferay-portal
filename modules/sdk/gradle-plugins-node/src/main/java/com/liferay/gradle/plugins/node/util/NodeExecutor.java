@@ -37,6 +37,7 @@ public class NodeExecutor {
 
 	public NodeExecutor(Project project) {
 		_project = project;
+
 		_workingDir = _project.getProjectDir();
 	}
 

@@ -22,6 +22,25 @@
 .liferay-ddl-form-rule-builder-timeline {
 	margin-bottom: 0;
 
+	&.can-remove-item {
+		.timeline-item:hover > .container-trash {
+			display: block;
+		}
+	}
+
+	.container-trash {
+		cursor: pointer;
+		display: none;
+		padding: 10px;
+		position: absolute;
+		right: 0;
+		top: 0;
+
+		&:hover {
+			color: #65B6F0;
+		}
+	}
+
 	&.liferay-ddl-form-builder-rule-action-list {
 		.timeline-item:last-child::before {
 			bottom: 42px;

@@ -11,24 +11,24 @@ if (typeof ddl.rule == 'undefined') { ddl.rule = {}; }
 
 
 ddl.rule.settings = function(opt_data, opt_ignored) {
-  var output = '<div class="top-informations"><h2 class="form-builder-section-title text-default">' + soy.$$escapeHtml(opt_data.strings.title) + '</h2><h4 class="text-default">' + soy.$$escapeHtml(opt_data.strings.description) + '</h4></div><ul class="liferay-ddl-form-builder-rule-condition-list liferay-ddl-form-rule-builder-timeline timeline">' + ddl.rule.rulesHeader({logicalOperator: opt_data.logicalOperator, title: 'Condition'});
-  var conditionList60 = opt_data.conditions;
-  var conditionListLen60 = conditionList60.length;
-  if (conditionListLen60 > 0) {
-    for (var conditionIndex60 = 0; conditionIndex60 < conditionListLen60; conditionIndex60++) {
-      var conditionData60 = conditionList60[conditionIndex60];
-      output += ddl.rule.condition({index: conditionIndex60, deleteIcon: opt_data.deleteIcon, logicOperator: opt_data.logicalOperator});
+  var output = '<div class="top-informations"><h2 class="form-builder-section-title text-default">' + soy.$$escapeHtml(opt_data.strings.title) + '</h2><h4 class="text-default">' + soy.$$escapeHtml(opt_data.strings.description) + '</h4></div><ul class="liferay-ddl-form-builder-rule-condition-list liferay-ddl-form-rule-builder-timeline timeline ' + soy.$$escapeHtmlAttribute(opt_data.actions.length > 1 ? 'can-remove-item' : '') + '">' + ddl.rule.rulesHeader({logicalOperator: opt_data.logicalOperator, title: 'Condition'});
+  var conditionList62 = opt_data.conditions;
+  var conditionListLen62 = conditionList62.length;
+  if (conditionListLen62 > 0) {
+    for (var conditionIndex62 = 0; conditionIndex62 < conditionListLen62; conditionIndex62++) {
+      var conditionData62 = conditionList62[conditionIndex62];
+      output += ddl.rule.condition({index: conditionIndex62, deleteIcon: opt_data.deleteIcon, logicOperator: opt_data.logicalOperator});
     }
   } else {
     output += ddl.rule.condition({index: 0, deleteIcon: opt_data.deleteIcon, logicOperator: opt_data.logicalOperator});
   }
-  output += '</ul>' + ddl.rule.btnAddNewTimelineItem({plusIcon: opt_data.plusIcon, cssClass: 'form-builder-rule-add-condition'}) + '<ul class="action-list liferay-ddl-form-builder-rule-action-list liferay-ddl-form-rule-builder-timeline timeline">' + ddl.rule.rulesHeader({logicalOperator: opt_data.logicalOperator, title: 'Actions'});
-  var actionList77 = opt_data.actions;
-  var actionListLen77 = actionList77.length;
-  if (actionListLen77 > 0) {
-    for (var actionIndex77 = 0; actionIndex77 < actionListLen77; actionIndex77++) {
-      var actionData77 = actionList77[actionIndex77];
-      output += ddl.rule.action({index: actionIndex77, deleteIcon: opt_data.deleteIcon});
+  output += '</ul>' + ddl.rule.btnAddNewTimelineItem({plusIcon: opt_data.plusIcon, cssClass: 'form-builder-rule-add-condition'}) + '<ul class="action-list liferay-ddl-form-builder-rule-action-list liferay-ddl-form-rule-builder-timeline timeline ' + soy.$$escapeHtmlAttribute(opt_data.actions.length > 1 ? 'can-remove-item' : '') + '">' + ddl.rule.rulesHeader({logicalOperator: opt_data.logicalOperator, title: 'Actions'});
+  var actionList81 = opt_data.actions;
+  var actionListLen81 = actionList81.length;
+  if (actionListLen81 > 0) {
+    for (var actionIndex81 = 0; actionIndex81 < actionListLen81; actionIndex81++) {
+      var actionData81 = actionList81[actionIndex81];
+      output += ddl.rule.action({index: actionIndex81, deleteIcon: opt_data.deleteIcon});
     }
   } else {
     output += ddl.rule.action({index: 0, deleteIcon: opt_data.deleteIcon});
@@ -42,7 +42,7 @@ if (goog.DEBUG) {
 
 
 ddl.rule.condition = function(opt_data, opt_ignored) {
-  return '<li class="form-builder-rule-condition-container-' + soy.$$escapeHtmlAttribute(opt_data.index) + ' timeline-item"><div class="panel panel-default"><div class="flex-container panel-body"><h4>If</h4><div class="condition-if-' + soy.$$escapeHtmlAttribute(opt_data.index) + ' form-group"></div><div class="condition-operator-' + soy.$$escapeHtmlAttribute(opt_data.index) + ' form-group"></div><div class="condition-the-' + soy.$$escapeHtmlAttribute(opt_data.index) + ' form-group"></div><div class="condition-type-value-' + soy.$$escapeHtmlAttribute(opt_data.index) + ' form-group"></div><div class="condition-type-value-options-' + soy.$$escapeHtmlAttribute(opt_data.index) + ' form-group"></div><div class="timeline-increment-icon"><span class="timeline-icon"></span></div></div></div><div class="operator panel panel-default panel-inline"><div class="panel-body text-uppercase">' + soy.$$escapeHtml(opt_data.logicOperator) + '</div></div><div class="container__trash"><button class="btn btn-link condition-card-delete icon-monospaced" data-card-id="' + soy.$$escapeHtmlAttribute(opt_data.index) + '" href="javascript:;" type="button">' + soy.$$filterNoAutoescape(opt_data.deleteIcon) + '</button></div></li>';
+  return '<li class="form-builder-rule-condition-container-' + soy.$$escapeHtmlAttribute(opt_data.index) + ' timeline-item"><div class="panel panel-default"><div class="flex-container panel-body"><h4>If</h4><div class="condition-if-' + soy.$$escapeHtmlAttribute(opt_data.index) + ' form-group"></div><div class="condition-operator-' + soy.$$escapeHtmlAttribute(opt_data.index) + ' form-group"></div><div class="condition-the-' + soy.$$escapeHtmlAttribute(opt_data.index) + ' form-group"></div><div class="condition-type-value-' + soy.$$escapeHtmlAttribute(opt_data.index) + ' form-group"></div><div class="condition-type-value-options-' + soy.$$escapeHtmlAttribute(opt_data.index) + ' form-group"></div><div class="timeline-increment-icon"><span class="timeline-icon"></span></div></div></div><div class="operator panel panel-default panel-inline"><div class="panel-body text-uppercase">' + soy.$$escapeHtml(opt_data.logicOperator) + '</div></div><div class="container-trash"><button class="btn btn-link condition-card-delete icon-monospaced" data-card-id="' + soy.$$escapeHtmlAttribute(opt_data.index) + '" href="javascript:;" type="button">' + soy.$$filterNoAutoescape(opt_data.deleteIcon) + '</button></div></li>';
 };
 if (goog.DEBUG) {
   ddl.rule.condition.soyTemplateName = 'ddl.rule.condition';
@@ -66,7 +66,7 @@ if (goog.DEBUG) {
 
 
 ddl.rule.action = function(opt_data, opt_ignored) {
-  return '<li class="form-builder-rule-action-container-' + soy.$$escapeHtmlAttribute(opt_data.index) + ' timeline-item"><div class="panel panel-default"><div class="panel-body flex-container"><h4>Do</h4><div class="action-' + soy.$$escapeHtmlAttribute(opt_data.index) + ' form-group"></div><div class="target-' + soy.$$escapeHtmlAttribute(opt_data.index) + ' form-group"></div><div class="timeline-increment-icon"><span class="timeline-icon"></span></div></div></div><div class="container__trash"><button class="btn btn-link action-card-delete icon-monospaced" data-card-id="' + soy.$$escapeHtmlAttribute(opt_data.index) + '" href="javascript:;" type="button">' + soy.$$filterNoAutoescape(opt_data.deleteIcon) + '</button></div></li>';
+  return '<li class="form-builder-rule-action-container-' + soy.$$escapeHtmlAttribute(opt_data.index) + ' timeline-item"><div class="panel panel-default"><div class="panel-body flex-container"><h4>Do</h4><div class="action-' + soy.$$escapeHtmlAttribute(opt_data.index) + ' form-group"></div><div class="target-' + soy.$$escapeHtmlAttribute(opt_data.index) + ' form-group"></div><div class="timeline-increment-icon"><span class="timeline-icon"></span></div></div></div><div class="container-trash"><button class="btn btn-link action-card-delete icon-monospaced" data-card-id="' + soy.$$escapeHtmlAttribute(opt_data.index) + '" href="javascript:;" type="button">' + soy.$$filterNoAutoescape(opt_data.deleteIcon) + '</button></div></li>';
 };
 if (goog.DEBUG) {
   ddl.rule.action.soyTemplateName = 'ddl.rule.action';

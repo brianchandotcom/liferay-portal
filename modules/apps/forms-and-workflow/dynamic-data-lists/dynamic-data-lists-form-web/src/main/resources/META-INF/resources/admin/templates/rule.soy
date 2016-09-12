@@ -16,7 +16,7 @@
 		<h4 class="text-default">{$strings.description}</h4>
 	</div>
 
-	<ul class="liferay-ddl-form-builder-rule-condition-list liferay-ddl-form-rule-builder-timeline timeline">
+	<ul class="liferay-ddl-form-builder-rule-condition-list liferay-ddl-form-rule-builder-timeline timeline {length($actions) > 1 ? 'can-remove-item' : ''}">
 		{call .rulesHeader}
 			{param logicalOperator: $logicalOperator /}
 			{param title: 'Condition' /}
@@ -42,7 +42,7 @@
 		{param cssClass: 'form-builder-rule-add-condition' /}
 	{/call}
 
-	<ul class="action-list liferay-ddl-form-builder-rule-action-list liferay-ddl-form-rule-builder-timeline timeline">
+	<ul class="action-list liferay-ddl-form-builder-rule-action-list liferay-ddl-form-rule-builder-timeline timeline {length($actions) > 1 ? 'can-remove-item' : ''}">
 		{call .rulesHeader}
 			{param logicalOperator: $logicalOperator /}
 			{param title: 'Actions' /}
@@ -105,7 +105,7 @@
 			<div class="panel-body text-uppercase">{$logicOperator}</div>
 		</div>
 
-		<div class="container__trash">
+		<div class="container-trash">
 			<button
 				class="btn btn-link condition-card-delete icon-monospaced"
 				data-card-id="{$index}"
@@ -187,7 +187,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="container__trash">
+		<div class="container-trash">
 			<button
 				class="btn btn-link action-card-delete icon-monospaced"
 				data-card-id="{$index}"

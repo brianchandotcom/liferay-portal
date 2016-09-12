@@ -7,23 +7,6 @@
 		width: 100%;
 	}
 
-	.container__trash {
-		cursor: pointer;
-		display: none;
-		padding: 10px;
-		position: absolute;
-		right: 0;
-		top: 0;
-
-		&:hover {
-			color: #65B6F0;
-		}
-
-		&--hide {
-			display: none;
-		}
-	}
-
 	&:first-child {
 		.timeline-icon {
 			background-color: #869CAD;
@@ -36,10 +19,6 @@
 
 	.form-group {
 		margin: 0 10px;
-	}
-
-	&:hover > .container__trash {
-		display: block;
 	}
 
 	.rule-choose-box {

@@ -163,7 +163,7 @@ AUI.add(
 
 						var advancedSettingsNode = instance.getPageNode(2);
 
-						advancedSettingsNode.append('<div class="row"><div class="col-md-12">' + instance._getAutocompleteCardActionTemplate() + '</div></div>');
+						advancedSettingsNode.append(instance._getAutocompleteCardActionTemplate());
 
 						advancedSettingsNode.one('.autocomplete-action-panel').on('click', A.bind('_onClickAutocompleteButton', instance));
 					},
@@ -214,18 +214,14 @@ AUI.add(
 					_getAutocompleteCardActionTemplate: function() {
 						var instance = this;
 
-						var autocompleteButtonContainer;
+						var actionPanelRenderer = SoyTemplateUtil.getTemplateRenderer('ddl.autocomplete.actionPanel');
 
-						autocompleteButtonContainer = SoyTemplateUtil.getTemplateRenderer('ddl.autocomplete.actionPanel');
-
-						var addAutocompleteButtonTemplate = autocompleteButtonContainer(
+						return actionPanelRenderer(
 							{
 								addAutoCompleteButton: Liferay.Util.getLexiconIconTpl('angle-right'),
 								label: Liferay.Language.get('autocomplete')
 							}
 						);
-
-						return addAutocompleteButtonTemplate;
 					},
 
 					_getAutocompleteContainerTemplate: function() {

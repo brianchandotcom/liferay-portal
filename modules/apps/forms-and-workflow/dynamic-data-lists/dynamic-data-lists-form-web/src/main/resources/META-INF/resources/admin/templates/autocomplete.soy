@@ -6,12 +6,16 @@
  * @param label
  */
 {template .actionPanel autoescape="deprecated-contextual"}
-	<div class="autocomplete-action-panel cursor-pointer panel panel-default">
-		<div class="panel-body">
-			{$label}
-			<span class="pull-right">
-				{$addAutoCompleteButton|noAutoescape}
-			</span>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="autocomplete-action-panel cursor-pointer panel panel-default">
+				<div class="panel-body">
+					{$label}
+					<span class="pull-right">
+						{$addAutoCompleteButton|noAutoescape}
+					</span>
+				</div>
+			</div>
 		</div>
 	</div>
 {/template}

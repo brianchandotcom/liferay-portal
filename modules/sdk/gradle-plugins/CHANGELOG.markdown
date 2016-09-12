@@ -141,6 +141,12 @@ version 1.0.125.
 - [LPS-61099]: Allow the `liferay.appServerParentDir` property's default value
 to be overridden by setting the project property `app.server.parent.dir`.
 
+## 2.0.31 - 2016-09-12
+
+### Added
+- [LPS-67766]: Automatically apply plugin `com.liferay.soy.translation` in order
+to use the Liferay localization mechanism in the generated `.soy.js` files.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
 [Liferay CSS Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/css-builder
@@ -154,6 +160,7 @@ to be overridden by setting the project property `app.server.parent.dir`.
 [LPS-67023]: https://issues.liferay.com/browse/LPS-67023
 [LPS-67352]: https://issues.liferay.com/browse/LPS-67352
 [LPS-67658]: https://issues.liferay.com/browse/LPS-67658
+[LPS-67766]: https://issues.liferay.com/browse/LPS-67766
 [LPS-67804]: https://issues.liferay.com/browse/LPS-67804
 [LPS-67986]: https://issues.liferay.com/browse/LPS-67986
 [LPS-67996]: https://issues.liferay.com/browse/LPS-67996

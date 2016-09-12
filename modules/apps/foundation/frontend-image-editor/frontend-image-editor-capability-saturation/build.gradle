@@ -6,6 +6,7 @@ cache {
 		cacheDir = ".task-cache"
 
 		skipTaskDependency configJSModules
+		skipTaskDependency replaceSoyTranslation
 		skipTaskDependency transpileJS
 
 		testFile "build.gradle"

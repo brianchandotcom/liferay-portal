@@ -42,6 +42,11 @@ public class AxisBuild extends BaseBuild {
 		return jobURL + "/" + axisVariable + "/" + buildNumber + "/";
 	}
 
+	@Override
+	public void reinvoke() {
+		throw new RuntimeException("Axis builds cannot be reinvoked.");
+	}
+
 	protected AxisBuild(String url) throws Exception {
 		this(url, null);
 	}

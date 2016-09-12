@@ -53,8 +53,8 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 				<%
 				Map<String, Object> data = new HashMap<String, Object>();
 
-				data.put("fileentrytypeid", fileEntryType.getFileEntryTypeId());
-				data.put("fileentrytypename", fileEntryType.getName(locale));
+				data.put("entityid", fileEntryType.getFileEntryTypeId());
+				data.put("entityname", fileEntryType.getName(locale));
 				%>
 
 				<aui:button cssClass="selector-button" data="<%= data %>" value="choose" />

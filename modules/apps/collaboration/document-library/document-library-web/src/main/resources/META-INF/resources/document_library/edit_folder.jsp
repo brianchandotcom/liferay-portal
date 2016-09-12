@@ -339,6 +339,17 @@ if (portletTitleBasedNavigation) {
 	var <portlet:namespace />documentTypesChanged = false;
 
 	function <portlet:namespace />openFileEntryTypeSelector() {
+		var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />dlFileEntryTypesSearchContainer');
+
+		var searchContainerData = searchContainer.getData();
+
+		if (!searchContainerData.length) {
+			searchContainerData = [];
+		}
+		else {
+			searchContainerData = searchContainerData.split(',');
+		}
+
 		Liferay.Util.selectEntity(
 			{
 				dialog: {
@@ -349,11 +360,12 @@ if (portletTitleBasedNavigation) {
 				},
 				eventName: '<portlet:namespace />selectFileEntryType',
 				id: '<portlet:namespace />fileEntryTypeSelector',
+				selectedData: searchContainerData,
 				title: '<%= UnicodeLanguageUtil.get(request, "document-types") %>',
 				uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/document_library/select_restricted_file_entry_type.jsp" /><portlet:param name="includeBasicFileEntryType" value="<%= Boolean.TRUE.toString() %>" /></portlet:renderURL>'
 			},
 			function(event) {
-				<portlet:namespace />selectFileEntryType(event.fileentrytypeid, event.fileentrytypename);
+				<portlet:namespace />selectFileEntryType(event.entityid, event.entityname);
 			}
 		);
 	}

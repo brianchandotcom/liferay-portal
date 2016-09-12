@@ -377,18 +377,14 @@ AUI.add(
 
 						var editCalendarBookingURL = decodeURIComponent(recorder.get('editCalendarBookingURL'));
 
-						var startTimeDay = instance.get('date').getDate();
-
-						var startTimeMonth = instance.get('date').getMonth();
-
-						var startTimeYear = instance.get('date').getFullYear();
+						var startTimeDate = instance.get('date');
 
 						var data = {
 							activeView: activeViewName,
 							calendarId: calendarId,
-							startTimeDay: startTimeDay,
-							startTimeMonth: startTimeMonth,
-							startTimeYear: startTimeYear,
+							startTimeDay: startTimeDate.getDate(),
+							startTimeMonth: startTimeDate.getMonth(),
+							startTimeYear: startTimeDate.getFullYear(),
 							titleCurrentValue: ''
 						};
 

@@ -88,13 +88,44 @@ public class ScreensCommentServiceHttp {
 		}
 	}
 
+	public static com.liferay.portal.kernel.json.JSONObject getComment(
+		HttpPrincipal httpPrincipal, long commentId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(ScreensCommentServiceUtil.class,
+					"getComment", _getCommentParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, commentId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.portal.kernel.json.JSONObject)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static com.liferay.portal.kernel.json.JSONArray getComments(
 		HttpPrincipal httpPrincipal, java.lang.String className, long classPK,
 		int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ScreensCommentServiceUtil.class,
-					"getComments", _getCommentsParameterTypes1);
+					"getComments", _getCommentsParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					className, classPK, start, end);
@@ -126,7 +157,7 @@ public class ScreensCommentServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ScreensCommentServiceUtil.class,
-					"getCommentsCount", _getCommentsCountParameterTypes2);
+					"getCommentsCount", _getCommentsCountParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					className, classPK);
@@ -158,7 +189,7 @@ public class ScreensCommentServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ScreensCommentServiceUtil.class,
-					"updateComment", _updateCommentParameterTypes3);
+					"updateComment", _updateCommentParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					commentId, body);
@@ -189,13 +220,16 @@ public class ScreensCommentServiceHttp {
 	private static final Class<?>[] _addCommentParameterTypes0 = new Class[] {
 			java.lang.String.class, long.class, java.lang.String.class
 		};
-	private static final Class<?>[] _getCommentsParameterTypes1 = new Class[] {
+	private static final Class<?>[] _getCommentParameterTypes1 = new Class[] {
+			long.class
+		};
+	private static final Class<?>[] _getCommentsParameterTypes2 = new Class[] {
 			java.lang.String.class, long.class, int.class, int.class
 		};
-	private static final Class<?>[] _getCommentsCountParameterTypes2 = new Class[] {
+	private static final Class<?>[] _getCommentsCountParameterTypes3 = new Class[] {
 			java.lang.String.class, long.class
 		};
-	private static final Class<?>[] _updateCommentParameterTypes3 = new Class[] {
+	private static final Class<?>[] _updateCommentParameterTypes4 = new Class[] {
 			long.class, java.lang.String.class
 		};
 }

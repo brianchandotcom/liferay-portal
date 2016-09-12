@@ -48,6 +48,12 @@ public class ScreensCommentServiceWrapper implements ScreensCommentService,
 	}
 
 	@Override
+	public com.liferay.portal.kernel.json.JSONObject getComment(long commentId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _screensCommentService.getComment(commentId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.json.JSONObject updateComment(
 		long commentId, java.lang.String body)
 		throws com.liferay.portal.kernel.exception.PortalException {

@@ -59,6 +59,9 @@ public interface ScreensCommentService extends BaseService {
 	public JSONObject addComment(java.lang.String className, long classPK,
 		java.lang.String body) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public JSONObject getComment(long commentId) throws PortalException;
+
 	public JSONObject updateComment(long commentId, java.lang.String body)
 		throws PortalException;
 

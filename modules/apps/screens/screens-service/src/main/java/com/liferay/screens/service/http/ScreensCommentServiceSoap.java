@@ -69,6 +69,20 @@ public class ScreensCommentServiceSoap {
 		}
 	}
 
+	public static java.lang.String getComment(long commentId)
+		throws RemoteException {
+		try {
+			com.liferay.portal.kernel.json.JSONObject returnValue = ScreensCommentServiceUtil.getComment(commentId);
+
+			return returnValue.toString();
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static java.lang.String getComments(java.lang.String className,
 		long classPK, int start, int end) throws RemoteException {
 		try {

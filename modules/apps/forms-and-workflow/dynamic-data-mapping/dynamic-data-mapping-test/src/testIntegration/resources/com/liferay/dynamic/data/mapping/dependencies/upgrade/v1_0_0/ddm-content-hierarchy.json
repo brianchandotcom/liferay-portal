@@ -1,0 +1,20 @@
+{
+	"availableLanguageIds": [
+		"en_US"
+	],
+	"defaultLanguageId": "en_US",
+	"fieldValues": [
+		{
+			"instanceId": "qagd",
+			"name": "Child",
+			"value": "Child1"
+		},
+		{
+			"instanceId": "zhow",
+			"name": "Parent",
+			"value": {
+				"en_US": "Parent1"
+			}
+		}
+	]
+}

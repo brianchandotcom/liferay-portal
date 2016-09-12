@@ -381,6 +381,44 @@ public class UpgradeDynamicDataMappingTest {
 	}
 
 	@Test
+	public void testUpgradeHierarchyStructures() throws Exception {
+		addStructure(
+			_parentStructureId,
+			DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
+			DDMStructureConstants.VERSION_DEFAULT,
+			read("ddm-structure-parent.xsd"), "xml");
+
+		addStructure(
+			_structureId, _parentStructureId,
+			DDMStructureConstants.VERSION_DEFAULT,
+			read("ddm-structure-child.xsd"), "xml");
+
+		long recordSetId = RandomTestUtil.randomLong();
+
+		addRecordSet(recordSetId, _structureId);
+
+		addContent(_contentId, read("ddm-content-hierarchy.xsd"));
+
+		addStorageLink(_storageLinkId, _contentId, _structureId);
+
+		long recordId = RandomTestUtil.randomLong();
+
+		addRecord(recordId, recordSetId, _contentId);
+
+		_upgradeDynamicDataMapping.upgrade();
+
+		String content = getContentData(_contentId);
+
+		String expectedContent = read("ddm-content-hierarchy.json");
+
+		JSONAssert.assertEquals(expectedContent, content, false);
+
+		deleteRecord(recordId);
+
+		deleteRecordSet(recordSetId);
+	}
+
+	@Test
 	public void testUpgradeStructureLocalized() throws Exception {
 		addStructure(
 			_structureId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
@@ -1208,6 +1246,118 @@ public class UpgradeDynamicDataMappingTest {
 		}
 	}
 
+	protected void addRecord(long recordId, long recordSetId, long storageId)
+		throws Exception {
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("insert into DDLRecord (uuid_, recordId, groupId, ");
+		sb.append("companyId, userId, userName, versionUserId, ");
+		sb.append("versionUserName, createDate, modifiedDate, ");
+		sb.append("DDMStorageId, recordSetId, version, displayIndex) ");
+		sb.append("values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ");
+
+		String sql = sb.toString();
+
+		try (Connection con = DataAccess.getUpgradeOptimizedConnection();
+			PreparedStatement ps = con.prepareStatement(sql)) {
+
+			ps.setString(1, PortalUUIDUtil.generate());
+			ps.setLong(2, recordId);
+			ps.setLong(3, _group.getGroupId());
+			ps.setLong(4, _group.getCompanyId());
+			ps.setLong(5, TestPropsValues.getUserId());
+			ps.setString(6, null);
+			ps.setLong(7, TestPropsValues.getUserId());
+			ps.setString(8, null);
+			ps.setTimestamp(9, _timestamp);
+			ps.setTimestamp(10, _timestamp);
+			ps.setLong(11, storageId);
+			ps.setLong(12, recordSetId);
+			ps.setString(13, "1.0");
+			ps.setInt(14, 0);
+
+			ps.executeUpdate();
+		}
+
+		long recordVersionId = RandomTestUtil.randomLong();
+
+		addRecordVersion(recordVersionId, recordId, recordSetId, storageId);
+	}
+
+	protected void addRecordSet(long recordSetId, long structureId)
+		throws Exception {
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("insert into DDLRecordSet (uuid_, recordSetId, groupId, ");
+		sb.append("companyId, userId, userName, createDate, modifiedDate, ");
+		sb.append("DDMStructureId, recordSetKey, name, description, ");
+		sb.append("minDisplayRows, scope) ");
+		sb.append("values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ");
+
+		String sql = sb.toString();
+
+		try (Connection con = DataAccess.getUpgradeOptimizedConnection();
+			PreparedStatement ps = con.prepareStatement(sql)) {
+
+			ps.setString(1, PortalUUIDUtil.generate());
+			ps.setLong(2, recordSetId);
+			ps.setLong(3, _group.getGroupId());
+			ps.setLong(4, _group.getCompanyId());
+			ps.setLong(5, TestPropsValues.getUserId());
+			ps.setString(6, null);
+			ps.setTimestamp(7, _timestamp);
+			ps.setTimestamp(8, _timestamp);
+			ps.setLong(9, structureId);
+			ps.setString(10, null);
+			ps.setString(11, StringUtil.randomString());
+			ps.setString(12, StringPool.BLANK);
+			ps.setInt(13, 10);
+			ps.setInt(14, 0);
+
+			ps.executeUpdate();
+		}
+	}
+
+	protected void addRecordVersion(
+			long recordVersionId, long recordId, long recordSetId,
+			long storageId)
+		throws Exception {
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("insert into DDLRecordVersion (recordVersionId, groupId, ");
+		sb.append("companyId, userId, userName, createDate, DDMStorageId, ");
+		sb.append("recordSetId, recordId, version, displayIndex, status, ");
+		sb.append("statusByUserId, statusByUserName, statusDate) ");
+		sb.append("values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ");
+
+		String sql = sb.toString();
+
+		try (Connection con = DataAccess.getUpgradeOptimizedConnection();
+			PreparedStatement ps = con.prepareStatement(sql)) {
+
+			ps.setLong(1, recordVersionId);
+			ps.setLong(2, _group.getGroupId());
+			ps.setLong(3, _group.getCompanyId());
+			ps.setLong(4, TestPropsValues.getUserId());
+			ps.setString(5, null);
+			ps.setTimestamp(6, _timestamp);
+			ps.setLong(7, storageId);
+			ps.setLong(8, recordSetId);
+			ps.setLong(9, recordId);
+			ps.setString(10, "1.0");
+			ps.setInt(11, 0);
+			ps.setInt(12, 0);
+			ps.setLong(13, TestPropsValues.getUserId());
+			ps.setString(14, null);
+			ps.setTimestamp(15, _timestamp);
+
+			ps.executeUpdate();
+		}
+	}
+
 	protected void addResourcePermission(
 			long resourcePermissionId, long structureId, String name)
 		throws Exception {
@@ -1355,6 +1505,20 @@ public class UpgradeDynamicDataMappingTest {
 		DB db = DBManagerUtil.getDB();
 
 		db.runSQL("delete from DDMContent where contentId = " + contentId);
+	}
+
+	protected void deleteRecord(long recordId) throws Exception {
+		DB db = DBManagerUtil.getDB();
+
+		db.runSQL("delete from DDLRecordVersion where recordId = " + recordId);
+		db.runSQL("delete from DDLRecord where recordId = " + recordId);
+	}
+
+	protected void deleteRecordSet(long recordSetId) throws Exception {
+		DB db = DBManagerUtil.getDB();
+
+		db.runSQL(
+			"delete from DDLRecordSet where recordSetId = " + recordSetId);
 	}
 
 	protected void deleteStorageLink(long storageLinkId) throws Exception {

@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+
+<root>
+	<dynamic-element default-language-id="en_US" name="Parent">
+		<dynamic-content language-id="en_US"><![CDATA[Parent1]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element default-language-id="en_US" name="Child">
+		<dynamic-content language-id="en_US"><![CDATA[Child1]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element default-language-id="en_US" name="_fieldsDisplay">
+		<dynamic-content language-id="en_US"><![CDATA[Parent_INSTANCE_zhow,Child_INSTANCE_qagd]]></dynamic-content>
+	</dynamic-element>
+</root>

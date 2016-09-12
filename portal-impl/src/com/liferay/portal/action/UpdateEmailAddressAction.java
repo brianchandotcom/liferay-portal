@@ -89,7 +89,9 @@ public class UpdateEmailAddressAction extends Action {
 			request, UpdateEmailAddressAction.class.getName());
 
 		long userId = PortalUtil.getUserId(request);
+
 		String password = AdminUtil.getUpdateUserPassword(request, userId);
+
 		String emailAddress1 = ParamUtil.getString(request, "emailAddress1");
 		String emailAddress2 = ParamUtil.getString(request, "emailAddress2");
 

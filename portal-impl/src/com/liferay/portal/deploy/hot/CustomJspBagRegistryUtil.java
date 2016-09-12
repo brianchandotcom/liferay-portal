@@ -141,6 +141,7 @@ public class CustomJspBagRegistryUtil {
 
 			if (customJspGlobal) {
 				File portalJspFile = new File(portalWebDir + portalJsp);
+
 				File portalJspBackupFile = getPortalJspBackupFile(
 					portalJspFile);
 
@@ -387,6 +388,7 @@ public class CustomJspBagRegistryUtil {
 				if (customJspBag.isCustomJspGlobal()) {
 					File portalJspFile = new File(
 						PortalUtil.getPortalWebDir() + portalJsp);
+
 					File portalJspBackupFile = getPortalJspBackupFile(
 						portalJspFile);
 

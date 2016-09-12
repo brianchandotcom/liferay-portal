@@ -65,9 +65,7 @@ public class ScreensCommentServiceImpl extends ScreensCommentServiceBaseImpl {
 	}
 
 	@Override
-	public JSONObject getComment(long commentId)
-		throws PortalException {
-
+	public JSONObject getComment(long commentId) throws PortalException {
 		DiscussionPermission discussionPermission =
 			commentManager.getDiscussionPermission(getPermissionChecker());
 

@@ -52,8 +52,8 @@ AUI.add(
 					},
 
 					value: {
-						state: true,
 						setter: '_setValue',
+						state: true,
 						valueFn: '_valueValidation'
 					}
 				},

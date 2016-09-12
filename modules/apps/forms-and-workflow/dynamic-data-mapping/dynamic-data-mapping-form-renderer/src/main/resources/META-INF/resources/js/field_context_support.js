@@ -34,16 +34,16 @@ AUI.add(
 
 				var EXTENDS = fieldClass;
 
-				while (!!EXTENDS) {
-					AObject.keys(EXTENDS.ATTRS).forEach(
-						function(attributeName) {
-							if (EXTENDS.ATTRS[attributeName].state) {
-								instance._repaintableAttributes[attributeName] = true;
- 
-								instance.after(attributeName + 'Change', A.bind(instance._afterAttributeChange, instance, attributeName));
-							}
-						}
-					);
+				var setAttributeChangeEvent = function(attributeName) {
+					if (EXTENDS.ATTRS[attributeName].state) {
+						instance._repaintableAttributes[attributeName] = true;
+
+						instance.after(attributeName + 'Change', A.bind(instance._afterAttributeChange, instance, attributeName));
+					}
+				};
+
+				while (EXTENDS) {
+					AObject.keys(EXTENDS.ATTRS).forEach(setAttributeChangeEvent);
 
 					EXTENDS = EXTENDS.EXTENDS;
 				}

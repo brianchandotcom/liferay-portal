@@ -40,13 +40,6 @@
 							path: 'form_evaluation_support.js',
 							requires: []
 						},
-						'liferay-ddm-form-renderer-field-context-support': {
-							path: 'field_context_support.js',
-							requires: [
-								'liferay-ddm-form-renderer-types',
-								'liferay-ddm-form-renderer-util'
-							]
-						},
 						'liferay-ddm-form-renderer-expressions-evaluator': {
 							path: 'expressions_evaluator.js',
 							requires: [
@@ -74,6 +67,13 @@
 								'liferay-ddm-form-renderer-field-repetition',
 								'liferay-ddm-form-renderer-field-validation',
 								'liferay-ddm-form-renderer-nested-fields',
+								'liferay-ddm-form-renderer-types',
+								'liferay-ddm-form-renderer-util'
+							]
+						},
+						'liferay-ddm-form-renderer-field-context-support': {
+							path: 'field_context_support.js',
+							requires: [
 								'liferay-ddm-form-renderer-types',
 								'liferay-ddm-form-renderer-util'
 							]

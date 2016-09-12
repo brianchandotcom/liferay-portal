@@ -282,11 +282,12 @@
 	</command>
 
 	<command name="viewFavoriteStructureViaPlusButton">
-		<execute function="AssertVisible" locator1="Button#PLUS" />
+		<execute macro="LexiconEntry#gotoAdd" />
 
-		<execute function="Click" locator1="Button#PLUS" />
+		<execute function="AssertTextEquals" locator1="MenuItem#ANY_MENU_ITEM" value1="More">
+			<var name="key_menuItem" value="More" />
+		</execute>
 
-		<execute function="AssertTextEquals" locator1="Button#MORE" value1="More" />
 		<execute function="AssertTextEquals" locator1="MenuItem#FAVORITE" value1="Favorite" />
 
 		<execute function="AssertTextEquals" locator1="MenuItem#STRUCTURE_NAME" value1="${structureName}">

@@ -15,9 +15,12 @@
 package com.liferay.portal.tools.data.partitioning.sql.builder.mysql.exporter;
 
 import com.liferay.portal.tools.data.partitioning.sql.builder.exporter.InsertSQLBuilder;
+import com.liferay.portal.tools.data.partitioning.sql.builder.internal.serializer.DefaultFieldSerializer;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+
+import java.text.SimpleDateFormat;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -29,15 +32,14 @@ public class MySQLInsertSQLBuilderTest {
 
 	@Test
 	public void testSerializeTableFieldDate() throws Exception {
-		String serializeTableField = _insertSQLBuilder.serializeTableField(
-			new Date(0L));
+		String serializeTableField = _insertSQLBuilder.buildField(new Date(0L));
 
 		Assert.assertEquals("'1970-01-01 00:00:00'", serializeTableField);
 	}
 
 	@Test
 	public void testSerializeTableFieldDouble() throws Exception {
-		String serializeTableField = _insertSQLBuilder.serializeTableField(
+		String serializeTableField = _insertSQLBuilder.buildField(
 			Double.valueOf(99.99));
 
 		Assert.assertEquals("'99.99'", serializeTableField);
@@ -45,7 +47,7 @@ public class MySQLInsertSQLBuilderTest {
 
 	@Test
 	public void testSerializeTableFieldFloat() throws Exception {
-		String serializeTableField = _insertSQLBuilder.serializeTableField(
+		String serializeTableField = _insertSQLBuilder.buildField(
 			Float.valueOf(1));
 
 		Assert.assertEquals("'1.0'", serializeTableField);
@@ -53,7 +55,7 @@ public class MySQLInsertSQLBuilderTest {
 
 	@Test
 	public void testSerializeTableFieldInteger() throws Exception {
-		String serializeTableField = _insertSQLBuilder.serializeTableField(
+		String serializeTableField = _insertSQLBuilder.buildField(
 			Integer.valueOf(1));
 
 		Assert.assertEquals("'1'", serializeTableField);
@@ -61,7 +63,7 @@ public class MySQLInsertSQLBuilderTest {
 
 	@Test
 	public void testSerializeTableFieldString() throws Exception {
-		String serializeTableField = _insertSQLBuilder.serializeTableField(
+		String serializeTableField = _insertSQLBuilder.buildField(
 			new String("1"));
 
 		Assert.assertEquals("'1'", serializeTableField);
@@ -71,7 +73,7 @@ public class MySQLInsertSQLBuilderTest {
 	public void testSerializeTableFieldStringShouldWithQuotes()
 		throws Exception {
 
-		String serializeTableField = _insertSQLBuilder.serializeTableField(
+		String serializeTableField = _insertSQLBuilder.buildField(
 			new String("'1'"));
 
 		Assert.assertEquals("'''1'''", serializeTableField);
@@ -79,13 +81,14 @@ public class MySQLInsertSQLBuilderTest {
 
 	@Test
 	public void testSerializeTableFieldTimestamp() throws Exception {
-		String serializeTableField = _insertSQLBuilder.serializeTableField(
+		String serializeTableField = _insertSQLBuilder.buildField(
 			new Timestamp(0L));
 
 		Assert.assertEquals("'1970-01-01 00:00:00'", serializeTableField);
 	}
 
-	private final InsertSQLBuilder _insertSQLBuilder =
-		new MySQLInsertSQLBuilder();
+	private final InsertSQLBuilder _insertSQLBuilder = new InsertSQLBuilder(
+		new DefaultFieldSerializer(
+			new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")));
 
 }

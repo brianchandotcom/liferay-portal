@@ -12,20 +12,23 @@
  * details.
  */
 
-package com.liferay.portal.tools.data.partitioning.sql.builder.postgresql.exporter;
+package com.liferay.portal.tools.data.partitioning.sql.builder.postgresql.exporter.serializer;
 
-import com.liferay.portal.tools.data.partitioning.sql.builder.exporter.InsertSQLBuilder;
+import com.liferay.portal.tools.data.partitioning.sql.builder.exporter.serializer.FieldSerializer;
 
 import java.sql.Date;
 import java.sql.Timestamp;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 /**
  * @author Manuel de la Peña
  */
-public class PostgreSQLInsertSQLBuilder extends InsertSQLBuilder {
+public class PostgreSQLFieldSerializer implements FieldSerializer {
 
 	@Override
-	public String serializeTableField(Object field) {
+	public String serialize(Object field) {
 		StringBuilder sb = new StringBuilder();
 
 		if (field == null) {
@@ -33,7 +36,7 @@ public class PostgreSQLInsertSQLBuilder extends InsertSQLBuilder {
 		}
 		else if ((field instanceof Date) || (field instanceof Timestamp)) {
 			sb.append("to_timestamp('");
-			sb.append(formatDateTime(field));
+			sb.append(_dateFormat.format(field));
 			sb.append("', 'YYYY-MM-DD HH24:MI:SS:MS')");
 		}
 		else if (field instanceof String) {
@@ -53,5 +56,8 @@ public class PostgreSQLInsertSQLBuilder extends InsertSQLBuilder {
 
 		return sb.toString();
 	}
+
+	private final DateFormat _dateFormat = new SimpleDateFormat(
+		"YYYY-MM-DD HH:MM:SS");
 
 }

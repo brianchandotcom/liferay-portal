@@ -15,6 +15,7 @@
 package com.liferay.portal.tools.data.partitioning.sql.builder.postgresql.exporter;
 
 import com.liferay.portal.tools.data.partitioning.sql.builder.exporter.InsertSQLBuilder;
+import com.liferay.portal.tools.data.partitioning.sql.builder.postgresql.exporter.serializer.PostgreSQLFieldSerializer;
 
 import java.sql.Date;
 import java.sql.Timestamp;
@@ -29,8 +30,7 @@ public class PostgreSQLInsertSQLBuilderTest {
 
 	@Test
 	public void testSerializeTableFieldDate() throws Exception {
-		String serializeTableField = _insertSQLBuilder.serializeTableField(
-			new Date(0L));
+		String serializeTableField = _insertSQLBuilder.buildField(new Date(0L));
 
 		Assert.assertEquals(
 			"to_timestamp('1970-01-01 00:01:00', 'YYYY-MM-DD HH24:MI:SS:MS')",
@@ -39,7 +39,7 @@ public class PostgreSQLInsertSQLBuilderTest {
 
 	@Test
 	public void testSerializeTableFieldDouble() throws Exception {
-		String serializeTableField = _insertSQLBuilder.serializeTableField(
+		String serializeTableField = _insertSQLBuilder.buildField(
 			Double.valueOf(99.99));
 
 		Assert.assertEquals("'99.99'", serializeTableField);
@@ -47,7 +47,7 @@ public class PostgreSQLInsertSQLBuilderTest {
 
 	@Test
 	public void testSerializeTableFieldFloat() throws Exception {
-		String serializeTableField = _insertSQLBuilder.serializeTableField(
+		String serializeTableField = _insertSQLBuilder.buildField(
 			Float.valueOf(1));
 
 		Assert.assertEquals("'1.0'", serializeTableField);
@@ -55,7 +55,7 @@ public class PostgreSQLInsertSQLBuilderTest {
 
 	@Test
 	public void testSerializeTableFieldInteger() throws Exception {
-		String serializeTableField = _insertSQLBuilder.serializeTableField(
+		String serializeTableField = _insertSQLBuilder.buildField(
 			Integer.valueOf(1));
 
 		Assert.assertEquals("'1'", serializeTableField);
@@ -63,15 +63,14 @@ public class PostgreSQLInsertSQLBuilderTest {
 
 	@Test
 	public void testSerializeTableFieldNull() throws Exception {
-		String serializeTableField = _insertSQLBuilder.serializeTableField(
-			null);
+		String serializeTableField = _insertSQLBuilder.buildField(null);
 
 		Assert.assertEquals("null", serializeTableField);
 	}
 
 	@Test
 	public void testSerializeTableFieldString() throws Exception {
-		String serializeTableField = _insertSQLBuilder.serializeTableField(
+		String serializeTableField = _insertSQLBuilder.buildField(
 			new String("1"));
 
 		Assert.assertEquals("'1'", serializeTableField);
@@ -81,7 +80,7 @@ public class PostgreSQLInsertSQLBuilderTest {
 	public void testSerializeTableFieldStringShouldWithQuotes()
 		throws Exception {
 
-		String serializeTableField = _insertSQLBuilder.serializeTableField(
+		String serializeTableField = _insertSQLBuilder.buildField(
 			new String("'1'"));
 
 		Assert.assertEquals("'''1'''", serializeTableField);
@@ -89,7 +88,7 @@ public class PostgreSQLInsertSQLBuilderTest {
 
 	@Test
 	public void testSerializeTableFieldTimestamp() throws Exception {
-		String serializeTableField = _insertSQLBuilder.serializeTableField(
+		String serializeTableField = _insertSQLBuilder.buildField(
 			new Timestamp(0L));
 
 		Assert.assertEquals(
@@ -97,7 +96,7 @@ public class PostgreSQLInsertSQLBuilderTest {
 			serializeTableField);
 	}
 
-	private final InsertSQLBuilder _insertSQLBuilder =
-		new PostgreSQLInsertSQLBuilder();
+	private final InsertSQLBuilder _insertSQLBuilder = new InsertSQLBuilder(
+		new PostgreSQLFieldSerializer());
 
 }

@@ -43,6 +43,13 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 	<portlet:param name="mvcPath" value="/admin/edit_record_set.jsp" />
 </portlet:actionURL>
 
+<liferay-frontend:management-bar>
+	<liferay-frontend:management-bar-buttons>
+		<liferay-frontend:management-bar-button id="showForm" label="Form" href="javascript:;" />
+		<liferay-frontend:management-bar-button id="showRules" label="Label" href="javascript:;" />
+	</liferay-frontend:management-bar-buttons>
+</liferay-frontend:management-bar>
+
 <div class="hide portlet-forms" id="<portlet:namespace />formContainer">
 	<aui:form action="<%= (recordSet == null) ? addRecordSetURL : updateRecordSetURL %>" cssClass="ddl-form-builder-form" method="post" name="editForm">
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
@@ -52,7 +59,6 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 		<aui:input name="serializedSettingsDDMFormValues" type="hidden" value="" />
 
 		<liferay-ui:error exception="<%= DDMFormLayoutValidationException.class %>" message="please-enter-a-valid-form-layout" />
-
 		<liferay-ui:error exception="<%= DDMFormLayoutValidationException.MustNotDuplicateFieldName.class %>">
 
 			<%
@@ -143,8 +149,10 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 		<aui:fieldset cssClass="container-fluid-1280 ddl-form-builder-app">
 			<aui:input name="definition" type="hidden" />
 			<aui:input name="layout" type="hidden" />
+			<aui:input name="rules" type="hidden" />
 
 			<div id="<portlet:namespace />formBuilder"></div>
+			<div id="<portlet:namespace />ruleBuilder"></div>
 		</aui:fieldset>
 
 		<div class="container-fluid-1280">

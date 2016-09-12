@@ -121,6 +121,8 @@ AUI.add(
 							formBuilder._layoutBuilder.after('layout-builder:moveEnd', A.bind(instance._afterFormBuilderLayoutBuilderMoveEnd, instance)),
 							formBuilder._layoutBuilder.after('layout-builder:moveStart', A.bind(instance._afterFormBuilderLayoutBuilderMoveStart, instance)),
 							instance.one('.btn-cancel').on('click', A.bind('_onCancel', instance)),
+							instance.one('#showRules').on('click', A.bind('_onRulesButtonClick', instance)),
+							instance.one('#showForm').on('click', A.bind('_onFormButtonClick', instance)),
 							Liferay.on('destroyPortlet', A.bind('_onDestroyPortlet', instance))
 						];
 					},
@@ -423,6 +425,18 @@ AUI.add(
 						var instance = this;
 
 						instance.destroy();
+					},
+
+					_onFormButtonClick: function() {
+						var instance = this;
+
+						instance.one('#formBuilder').show();
+					},
+
+					_onRulesButtonClick: function() {
+						var instance = this;
+
+						instance.one('#formBuilder').hide();
 					},
 
 					_onSubmitEditForm: function(event) {

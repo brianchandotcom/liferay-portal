@@ -81,7 +81,7 @@ public class DDLRecordServiceUtil {
 	the record.
 	* @return the record
 	* @throws PortalException if a portal exception occurred
-	* @deprecated As of 7.0.0, replaced by {@link #addRecord(long, long, int,
+	* @deprecated As of 1.2.0, replaced by {@link #addRecord(long, long, int,
 	DDMFormValues, ServiceContext)}
 	*/
 	@Deprecated
@@ -109,7 +109,7 @@ public class DDLRecordServiceUtil {
 	the record.
 	* @return the record
 	* @throws PortalException if a portal exception occurred
-	* @deprecated As of 7.0.0, replaced by {@link #addRecord(long, long, int,
+	* @deprecated As of 1.2.0, replaced by {@link #addRecord(long, long, int,
 	DDMFormValues, ServiceContext)}
 	*/
 	@Deprecated
@@ -132,7 +132,7 @@ public class DDLRecordServiceUtil {
 	set the record modified date.
 	* @return the affected record
 	* @throws PortalException
-	* @deprecated As of 7.0.0, replaced by {@link #updateRecord(long, boolean,
+	* @deprecated As of 1.2.0, replaced by {@link #updateRecord(long, boolean,
 	int, DDMFormValues, ServiceContext)}
 	*/
 	@Deprecated
@@ -197,7 +197,7 @@ public class DDLRecordServiceUtil {
 	set the record modified date.
 	* @return the record
 	* @throws PortalException if a portal exception occurred
-	* @deprecated As of 7.0.0, replaced by {@link #updateRecord(long, boolean,
+	* @deprecated As of 1.2.0, replaced by {@link #updateRecord(long, boolean,
 	int, DDMFormValues, ServiceContext)}
 	*/
 	@Deprecated
@@ -226,7 +226,7 @@ public class DDLRecordServiceUtil {
 	set the record modified date.
 	* @return the record
 	* @throws PortalException if a portal exception occurred
-	* @deprecated As of 7.0.0, replaced by {@link #updateRecord(long, boolean,
+	* @deprecated As of 1.2.0, replaced by {@link #updateRecord(long, boolean,
 	int, DDMFormValues, ServiceContext)}
 	*/
 	@Deprecated
@@ -277,7 +277,7 @@ public class DDLRecordServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #revertRecord(long, String,
+	* @deprecated As of 1.2.0, replaced by {@link #revertRecord(long, String,
 	ServiceContext)}
 	*/
 	@Deprecated

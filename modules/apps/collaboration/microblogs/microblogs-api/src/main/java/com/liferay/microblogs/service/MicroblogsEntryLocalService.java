@@ -188,7 +188,7 @@ public interface MicroblogsEntryLocalService extends BaseLocalService,
 		java.lang.String assetTagName, boolean andOperator);
 
 	/**
-	* @deprecated As of 7.0.0
+	* @deprecated As of 2.1.0
 	*/
 	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -196,7 +196,7 @@ public interface MicroblogsEntryLocalService extends BaseLocalService,
 		java.lang.String assetTagName);
 
 	/**
-	* @deprecated As of 7.0.0
+	* @deprecated As of 2.1.0
 	*/
 	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -204,7 +204,7 @@ public interface MicroblogsEntryLocalService extends BaseLocalService,
 		long creatorClassPK);
 
 	/**
-	* @deprecated As of 7.0.0
+	* @deprecated As of 2.1.0
 	*/
 	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -212,7 +212,7 @@ public interface MicroblogsEntryLocalService extends BaseLocalService,
 		long creatorClassPK, int type);
 
 	/**
-	* @deprecated As of 7.0.0
+	* @deprecated As of 2.1.0
 	*/
 	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -318,7 +318,7 @@ public interface MicroblogsEntryLocalService extends BaseLocalService,
 		java.lang.String assetTagName, boolean andOperator, int start, int end);
 
 	/**
-	* @deprecated As of 7.0.0
+	* @deprecated As of 2.1.0
 	*/
 	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -326,7 +326,7 @@ public interface MicroblogsEntryLocalService extends BaseLocalService,
 		int type, int start, int end, OrderByComparator obc);
 
 	/**
-	* @deprecated As of 7.0.0
+	* @deprecated As of 2.1.0
 	*/
 	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -334,7 +334,7 @@ public interface MicroblogsEntryLocalService extends BaseLocalService,
 		java.lang.String assetTagName, int start, int end);
 
 	/**
-	* @deprecated As of 7.0.0
+	* @deprecated As of 2.1.0
 	*/
 	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -342,7 +342,7 @@ public interface MicroblogsEntryLocalService extends BaseLocalService,
 		long creatorClassPK, int start, int end);
 
 	/**
-	* @deprecated As of 7.0.0
+	* @deprecated As of 2.1.0
 	*/
 	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -350,7 +350,7 @@ public interface MicroblogsEntryLocalService extends BaseLocalService,
 		long creatorClassPK, int type, int start, int end);
 
 	/**
-	* @deprecated As of 7.0.0
+	* @deprecated As of 2.1.0
 	*/
 	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

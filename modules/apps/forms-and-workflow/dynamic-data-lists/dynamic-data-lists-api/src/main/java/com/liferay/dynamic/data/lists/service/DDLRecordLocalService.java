@@ -122,7 +122,7 @@ public interface DDLRecordLocalService extends BaseLocalService,
 	the record.
 	* @return the record
 	* @throws PortalException if a portal exception occurred
-	* @deprecated As of 7.0.0, replaced by {@link #addRecord(long, long, int,
+	* @deprecated As of 1.2.0, replaced by {@link #addRecord(long, long, int,
 	DDMFormValues, ServiceContext)}
 	*/
 	@java.lang.Deprecated
@@ -146,7 +146,7 @@ public interface DDLRecordLocalService extends BaseLocalService,
 	the record.
 	* @return the record
 	* @throws PortalException if a portal exception occurred
-	* @deprecated As of 7.0.0, replaced by {@link #addRecord(long, long, int,
+	* @deprecated As of 1.2.0, replaced by {@link #addRecord(long, long, int,
 	DDMFormValues, ServiceContext)}
 	*/
 	@java.lang.Deprecated
@@ -201,7 +201,7 @@ public interface DDLRecordLocalService extends BaseLocalService,
 	set the record modified date.
 	* @return the affected record
 	* @throws PortalException if a portal exception occurred
-	* @deprecated As of 7.0.0, replaced by {@link #updateRecord(long, boolean,
+	* @deprecated As of 1.2.0, replaced by {@link #updateRecord(long, boolean,
 	int, DDMFormValues, ServiceContext)}
 	*/
 	@java.lang.Deprecated
@@ -310,7 +310,7 @@ public interface DDLRecordLocalService extends BaseLocalService,
 	set the record modified date.
 	* @return the record
 	* @throws PortalException if a portal exception occurred
-	* @deprecated As of 7.0.0, replaced by {@link #updateRecord(long, long,
+	* @deprecated As of 1.2.0, replaced by {@link #updateRecord(long, long,
 	boolean, int, DDMFormValues, ServiceContext)}
 	*/
 	@java.lang.Deprecated
@@ -334,7 +334,7 @@ public interface DDLRecordLocalService extends BaseLocalService,
 	set the record modified date.
 	* @return the record
 	* @throws PortalException if a portal exception occurred
-	* @deprecated As of 7.0.0, replaced by {@link #updateRecord(long, long,
+	* @deprecated As of 1.2.0, replaced by {@link #updateRecord(long, long,
 	boolean, int, DDMFormValues, ServiceContext)}
 	*/
 	@java.lang.Deprecated
@@ -359,7 +359,7 @@ public interface DDLRecordLocalService extends BaseLocalService,
 		int status, ServiceContext serviceContext) throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link
+	* @deprecated As of 1.2.0, replaced by {@link
 	DDLRecordVersionLocalService#getLatestRecordVersion(long)}
 	*/
 	@java.lang.Deprecated
@@ -368,7 +368,7 @@ public interface DDLRecordLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link
+	* @deprecated As of 1.2.0, replaced by {@link
 	DDLRecordVersionLocalService#getRecordVersion(
 	long, String)}
 	*/
@@ -378,7 +378,7 @@ public interface DDLRecordLocalService extends BaseLocalService,
 		java.lang.String version) throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link
+	* @deprecated As of 1.2.0, replaced by {@link
 	DDLRecordVersionLocalService#getRecordVersion(
 	long)}
 	*/
@@ -474,7 +474,7 @@ public interface DDLRecordLocalService extends BaseLocalService,
 	public int getDDLRecordsCount();
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link
+	* @deprecated As of 1.2.0, replaced by {@link
 	DDLRecordVersionLocalService#getRecordVersionsCount(
 	long)}
 	*/
@@ -621,7 +621,7 @@ public interface DDLRecordLocalService extends BaseLocalService,
 		int status, int scope, long minRecordId, long maxRecordId);
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link
+	* @deprecated As of 1.2.0, replaced by {@link
 	DDLRecordVersionLocalService#getRecordVersions(
 	long, int, int, OrderByComparator)}
 	*/
@@ -726,7 +726,7 @@ public interface DDLRecordLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #revertRecord(long, long,
+	* @deprecated As of 1.2.0, replaced by {@link #revertRecord(long, long,
 	String, ServiceContext)}
 	*/
 	@java.lang.Deprecated

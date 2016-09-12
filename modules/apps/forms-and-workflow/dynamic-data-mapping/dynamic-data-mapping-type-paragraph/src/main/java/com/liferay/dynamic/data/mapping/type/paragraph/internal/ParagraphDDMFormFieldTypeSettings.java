@@ -88,19 +88,19 @@ public interface ParagraphDDMFormFieldTypeSettings
 	@Override
 	public LocalizedValue label();
 
-	@DDMFormField
+	@DDMFormField(visibilityExpression = "FALSE")
 	@Override
 	public LocalizedValue predefinedValue();
 
-	@DDMFormField
+	@DDMFormField(visibilityExpression = "FALSE")
 	@Override
 	public boolean repeatable();
 
-	@DDMFormField
+	@DDMFormField(visibilityExpression = "FALSE")
 	@Override
 	public boolean required();
 
-	@DDMFormField
+	@DDMFormField(visibilityExpression = "FALSE")
 	@Override
 	public boolean showLabel();
 
@@ -111,11 +111,14 @@ public interface ParagraphDDMFormFieldTypeSettings
 	)
 	public String text();
 
-	@DDMFormField
+	@DDMFormField(visibilityExpression = "FALSE")
 	@Override
 	public LocalizedValue tip();
 
-	@DDMFormField(dataType = "ddm-validation", type = "validation")
+	@DDMFormField(
+		dataType = "ddm-validation", type = "validation",
+		visibilityExpression = "FALSE"
+	)
 	@Override
 	public DDMFormFieldValidation validation();
 

@@ -79,7 +79,10 @@ public interface DateDDMFormFieldTypeSettings
 	@Override
 	public LocalizedValue predefinedValue();
 
-	@DDMFormField(dataType = "ddm-validation", type = "validation")
+	@DDMFormField(
+		dataType = "ddm-validation", type = "validation",
+		visibilityExpression = "FALSE"
+	)
 	@Override
 	public DDMFormFieldValidation validation();
 

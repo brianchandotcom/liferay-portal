@@ -52,7 +52,7 @@
 			<plugin>
 				<groupId>com.liferay</groupId>
 				<artifactId>com.liferay.portal.tools.service.builder</artifactId>
-				<version>1.0.105</version>
+				<version>1.0.119</version>
 				<configuration>
 					<apiDirName>../${artifactId}-api/src/main/java</apiDirName>
 					<autoImportDefaultReferences>true</autoImportDefaultReferences>
@@ -63,7 +63,7 @@
 					<inputFileName>service.xml</inputFileName>
 					<modelHintsFileName>src/main/resources/META-INF/portlet-model-hints.xml</modelHintsFileName>
 					<osgiModule>true</osgiModule>
-					<propsUtil>${package}.service.util.PropsUtil</propsUtil>
+					<propsUtil>${package}.service.util.ServiceProps</propsUtil>
 					<resourcesDirName>src/main/resources</resourcesDirName>
 					<springFileName>src/main/resources/META-INF/spring/module-spring.xml</springFileName>
 					<springNamespaces>beans,osgi</springNamespaces>

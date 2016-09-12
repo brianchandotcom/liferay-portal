@@ -7,4 +7,3 @@ Export-Package:\
 	${package}.service,\
 	${package}.service.persistence
 -includeresource: META-INF/service.xml=../${artifactId}-service/service.xml
--sources: true

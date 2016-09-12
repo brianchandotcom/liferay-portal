@@ -69,7 +69,9 @@ public class BookmarksFolderLocalServiceImpl
 		// Folder
 
 		User user = userPersistence.findByPrimaryKey(userId);
+
 		long groupId = serviceContext.getScopeGroupId();
+
 		parentFolderId = getParentFolderId(groupId, parentFolderId);
 
 		validate(name);

@@ -91,6 +91,7 @@ public class VariablesEvaluationTest {
 		ddmExpression.setExpressionStringVariableValue("z", "x - y");
 
 		int y = x + 1;
+
 		int z = x - y;
 
 		Assert.assertEquals(x + y + z, ddmExpression.evaluate().intValue());

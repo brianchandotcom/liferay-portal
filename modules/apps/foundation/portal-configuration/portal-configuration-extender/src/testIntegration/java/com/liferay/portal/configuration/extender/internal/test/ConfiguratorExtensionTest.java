@@ -253,6 +253,7 @@ public class ConfiguratorExtensionTest {
 
 		Configuration configuration = _configurationAdmin.getConfiguration(
 			"test.pid", StringPool.QUESTION);
+
 		configuration.update(
 			new Hashtable<String, Object>() {
 				{

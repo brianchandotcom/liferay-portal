@@ -235,6 +235,7 @@ public class PingbackMethodImpl implements Method {
 		}
 
 		long plid = PortalUtil.getPlidFromFriendlyURL(companyId, friendlyURL);
+
 		long groupId = PortalUtil.getScopeGroupId(plid);
 
 		Map<String, String[]> params = new HashMap<>();

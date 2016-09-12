@@ -130,6 +130,7 @@ public class DDMRESTDataProvider
 			Iterator<String> keysIterator = jsonObject.keys();
 
 			Map<Object, Object> map = new HashMap<>();
+
 			data.add(map);
 
 			while (keysIterator.hasNext()) {

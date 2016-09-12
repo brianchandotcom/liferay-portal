@@ -44,6 +44,7 @@ public class FastExtendedProperties extends ExtendedProperties {
 
 		while (keys.hasMoreElements()) {
 			String key = (String)keys.nextElement();
+
 			Object value = extendedProperties.get(key);
 
 			addProperty(key, value);

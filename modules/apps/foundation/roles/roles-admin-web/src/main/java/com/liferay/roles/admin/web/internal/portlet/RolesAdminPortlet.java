@@ -229,6 +229,7 @@ public class RolesAdminPortlet extends MVCPortlet {
 		throws Exception {
 
 		long roleId = ParamUtil.getLong(actionRequest, "roleId");
+
 		Role role = _roleLocalService.getRole(roleId);
 
 		if (role.getName().equals(RoleConstants.OWNER)) {

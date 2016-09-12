@@ -59,6 +59,7 @@ public class NetrLogonSamLogon extends DcerpcMessage {
 
 		if (validationInformation > 0) {
 			ndrBuffer = ndrBuffer.deferred;
+
 			_validationInformation.decode(ndrBuffer);
 		}
 

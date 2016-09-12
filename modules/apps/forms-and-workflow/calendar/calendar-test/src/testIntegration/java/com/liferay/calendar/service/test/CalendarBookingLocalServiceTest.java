@@ -344,6 +344,7 @@ public class CalendarBookingLocalServiceTest {
 			RandomTestUtil.randomLocaleStringMap();
 
 		int instanceIndex = 2;
+
 		long instanceStartTime = startTime + Time.DAY * instanceIndex;
 
 		CalendarBookingLocalServiceUtil.updateCalendarBookingInstance(
@@ -414,6 +415,7 @@ public class CalendarBookingLocalServiceTest {
 			RandomTestUtil.randomLocaleStringMap();
 
 		int instanceIndex = 2;
+
 		long firstInstancStartTime = startTime + Time.DAY * instanceIndex;
 
 		CalendarBookingLocalServiceUtil.updateCalendarBookingInstance(
@@ -424,6 +426,7 @@ public class CalendarBookingLocalServiceTest {
 			null, false, 0, null, 0, null, serviceContext);
 
 		instanceIndex = 4;
+
 		long secondInstancStartTime =
 			firstInstancStartTime + Time.DAY * instanceIndex;
 
@@ -1033,6 +1036,7 @@ public class CalendarBookingLocalServiceTest {
 			CalendarBookingWorkflowConstants.STATUS_MAYBE, serviceContext);
 
 		int firstReminder = RandomTestUtil.randomInt();
+
 		int secondReminder = RandomTestUtil.randomInt(1, firstReminder);
 
 		childCalendarBooking =
@@ -1093,6 +1097,7 @@ public class CalendarBookingLocalServiceTest {
 			false, false, serviceContext);
 
 		long startTime = System.currentTimeMillis();
+
 		long endTime = startTime + 36000000;
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);

@@ -215,6 +215,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 			}
 
 			String redirect = ParamUtil.getString(actionRequest, "redirect");
+
 			String portletId = HttpUtil.getParameter(redirect, "p_p_id", false);
 
 			int workflowAction = ParamUtil.getInteger(

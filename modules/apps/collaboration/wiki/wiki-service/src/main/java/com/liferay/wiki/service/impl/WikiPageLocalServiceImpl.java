@@ -2304,7 +2304,9 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		String format = page.getFormat();
 		boolean head = true;
 		String parentTitle = page.getParentTitle();
+
 		String redirectTitle = page.getTitle();
+
 		String content =
 			StringPool.DOUBLE_OPEN_BRACKET + redirectTitle +
 				StringPool.DOUBLE_CLOSE_BRACKET;

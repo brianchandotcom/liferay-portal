@@ -336,6 +336,7 @@ public class SAPEntryLocalServiceImpl extends SAPEntryLocalServiceBaseImpl {
 
 		if (titleMap != null) {
 			Locale defaultLocale = LocaleUtil.getDefault();
+
 			String defaultTitle = titleMap.get(defaultLocale);
 
 			if (Validator.isNotNull(defaultTitle)) {

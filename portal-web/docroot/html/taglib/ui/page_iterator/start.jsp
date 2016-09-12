@@ -138,7 +138,7 @@ if (forcePost && (portletURL != null)) {
 
 					if (forcePost) {
 						sb.append("' onClick='");
-						sb.append(_getOnClick(namespace, deltaParam, curDelta));
+						sb.append(_getOnClick(namespace, curParam, i));
 					}
 
 					sb.append("'>");

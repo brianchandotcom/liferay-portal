@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.form.evaluator.impl.internal.rules;
+package com.liferay.dynamic.data.mapping.form.evaluator.impl.internal;
 
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderConsumerTracker;
 import com.liferay.dynamic.data.mapping.expression.DDMExpression;
@@ -21,10 +21,10 @@ import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluationException;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluationResult;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormFieldEvaluationResult;
-import com.liferay.dynamic.data.mapping.form.evaluator.impl.internal.rules.functions.CallFunction;
-import com.liferay.dynamic.data.mapping.form.evaluator.impl.internal.rules.functions.FieldAtFunction;
-import com.liferay.dynamic.data.mapping.form.evaluator.impl.internal.rules.functions.PropertyGetFunction;
-import com.liferay.dynamic.data.mapping.form.evaluator.impl.internal.rules.functions.PropertySetFunction;
+import com.liferay.dynamic.data.mapping.form.evaluator.impl.internal.functions.CallFunction;
+import com.liferay.dynamic.data.mapping.form.evaluator.impl.internal.functions.FieldAtFunction;
+import com.liferay.dynamic.data.mapping.form.evaluator.impl.internal.functions.PropertyGetFunction;
+import com.liferay.dynamic.data.mapping.form.evaluator.impl.internal.functions.PropertySetFunction;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
@@ -56,9 +56,9 @@ import java.util.Objects;
 /**
  * @author Leonardo Barros
  */
-public class DDMFormRuleEvaluatorHelper {
+public class DDMFormEvaluatorHelper {
 
-	public DDMFormRuleEvaluatorHelper(
+	public DDMFormEvaluatorHelper(
 		DDMDataProviderConsumerTracker ddmDataProviderConsumerTracker,
 		DDMDataProviderInstanceService ddmDataProviderInstanceService,
 		DDMExpressionFactory ddmExpressionFactory, DDMForm ddmForm,
@@ -420,7 +420,7 @@ public class DDMFormRuleEvaluatorHelper {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DDMFormRuleEvaluatorHelper.class);
+		DDMFormEvaluatorHelper.class);
 
 	private final DDMDataProviderConsumerTracker
 		_ddmDataProviderConsumerTracker;

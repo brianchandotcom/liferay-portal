@@ -12,14 +12,13 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.form.evaluator.impl.internal.rules.functions;
+package com.liferay.dynamic.data.mapping.form.evaluator.impl.internal;
 
 import static java.util.Arrays.asList;
 
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
 import com.liferay.dynamic.data.mapping.expression.internal.DDMExpressionFactoryImpl;
-import com.liferay.dynamic.data.mapping.form.evaluator.impl.internal.rules.DDMFormRuleEvaluator;
 import com.liferay.dynamic.data.mapping.model.DDMFormRule;
 
 import org.junit.Assert;

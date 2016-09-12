@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.form.evaluator.impl.internal.rules.functions;
+package com.liferay.dynamic.data.mapping.form.evaluator.impl.internal.functions;
 
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderConsumer;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderConsumerRequest;

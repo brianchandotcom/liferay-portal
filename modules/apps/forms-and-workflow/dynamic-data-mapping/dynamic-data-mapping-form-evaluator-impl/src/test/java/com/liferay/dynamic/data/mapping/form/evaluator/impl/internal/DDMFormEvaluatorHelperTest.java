@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.form.evaluator.impl.internal.rules.functions;
+package com.liferay.dynamic.data.mapping.form.evaluator.impl.internal;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -21,7 +21,6 @@ import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
 import com.liferay.dynamic.data.mapping.expression.internal.DDMExpressionFactoryImpl;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluationResult;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormFieldEvaluationResult;
-import com.liferay.dynamic.data.mapping.form.evaluator.impl.internal.rules.DDMFormRuleEvaluatorHelper;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidation;
@@ -53,7 +52,7 @@ import org.mockito.Matchers;
  * @author Leonardo Barros
  * @author Marcellus Tavares
  */
-public class DDMFormRuleEvaluatorHelperTest {
+public class DDMFormEvaluatorHelperTest {
 
 	@Before
 	public void setUp() {
@@ -77,13 +76,13 @@ public class DDMFormRuleEvaluatorHelperTest {
 			DDMFormValuesTestUtil.createDDMFormFieldValue(
 				"field0_instanceId", "field0", new UnlocalizedValue("false")));
 
-		DDMFormRuleEvaluatorHelper ddmFormRuleEvaluatorHelper =
-			new DDMFormRuleEvaluatorHelper(
+		DDMFormEvaluatorHelper ddmFormEvaluatorHelper =
+			new DDMFormEvaluatorHelper(
 				null, null, _ddmExpressionFactory, ddmForm, ddmFormValues, null,
 				_jsonFactory, LocaleUtil.US);
 
 		DDMFormEvaluationResult ddmFormEvaluationResult =
-			ddmFormRuleEvaluatorHelper.evaluate();
+			ddmFormEvaluatorHelper.evaluate();
 
 		Map<String, DDMFormFieldEvaluationResult>
 			ddmFormFieldEvaluationResultMap =
@@ -127,13 +126,13 @@ public class DDMFormRuleEvaluatorHelperTest {
 			DDMFormValuesTestUtil.createDDMFormFieldValue(
 				"field1_instanceId", "field1", new UnlocalizedValue("")));
 
-		DDMFormRuleEvaluatorHelper ddmFormRuleEvaluatorHelper =
-			new DDMFormRuleEvaluatorHelper(
+		DDMFormEvaluatorHelper ddmFormEvaluatorHelper =
+			new DDMFormEvaluatorHelper(
 				null, null, _ddmExpressionFactory, ddmForm, ddmFormValues, null,
 				_jsonFactory, LocaleUtil.US);
 
 		DDMFormEvaluationResult ddmFormEvaluationResult =
-			ddmFormRuleEvaluatorHelper.evaluate();
+			ddmFormEvaluatorHelper.evaluate();
 
 		Map<String, DDMFormFieldEvaluationResult>
 			ddmFormFieldEvaluationResultMap =
@@ -190,13 +189,13 @@ public class DDMFormRuleEvaluatorHelperTest {
 
 		ddmForm.addDDMFormRule(ddmFormRule);
 
-		DDMFormRuleEvaluatorHelper ddmFormRuleEvaluatorHelper =
-			new DDMFormRuleEvaluatorHelper(
+		DDMFormEvaluatorHelper ddmFormEvaluatorHelper =
+			new DDMFormEvaluatorHelper(
 				null, null, _ddmExpressionFactory, ddmForm, ddmFormValues, null,
 				_jsonFactory, LocaleUtil.US);
 
 		DDMFormEvaluationResult ddmFormEvaluationResult =
-			ddmFormRuleEvaluatorHelper.evaluate();
+			ddmFormEvaluatorHelper.evaluate();
 
 		Map<String, DDMFormFieldEvaluationResult>
 			ddmFormFieldEvaluationResultMap =
@@ -285,13 +284,13 @@ public class DDMFormRuleEvaluatorHelperTest {
 
 		ddmForm.addDDMFormRule(ddmFormRule);
 
-		DDMFormRuleEvaluatorHelper ddmFormRuleEvaluatorHelper =
-			new DDMFormRuleEvaluatorHelper(
+		DDMFormEvaluatorHelper ddmFormEvaluatorHelper =
+			new DDMFormEvaluatorHelper(
 				null, null, _ddmExpressionFactory, ddmForm, ddmFormValues, null,
 				_jsonFactory, LocaleUtil.US);
 
 		DDMFormEvaluationResult ddmFormEvaluationResult =
-			ddmFormRuleEvaluatorHelper.evaluate();
+			ddmFormEvaluatorHelper.evaluate();
 
 		Map<String, DDMFormFieldEvaluationResult>
 			ddmFormFieldEvaluationResultMap =
@@ -359,13 +358,13 @@ public class DDMFormRuleEvaluatorHelperTest {
 			DDMFormValuesTestUtil.createDDMFormFieldValue(
 				"field0_instanceId", "field0", new UnlocalizedValue("1")));
 
-		DDMFormRuleEvaluatorHelper ddmFormRuleEvaluatorHelper =
-			new DDMFormRuleEvaluatorHelper(
+		DDMFormEvaluatorHelper ddmFormEvaluatorHelper =
+			new DDMFormEvaluatorHelper(
 				null, null, _ddmExpressionFactory, ddmForm, ddmFormValues, null,
 				_jsonFactory, LocaleUtil.US);
 
 		DDMFormEvaluationResult ddmFormEvaluationResult =
-			ddmFormRuleEvaluatorHelper.evaluate();
+			ddmFormEvaluatorHelper.evaluate();
 
 		Map<String, DDMFormFieldEvaluationResult>
 			ddmFormFieldEvaluationResultMap =
@@ -407,13 +406,13 @@ public class DDMFormRuleEvaluatorHelperTest {
 
 		ddmForm.addDDMFormRule(ddmFormRule);
 
-		DDMFormRuleEvaluatorHelper ddmFormRuleEvaluatorHelper =
-			new DDMFormRuleEvaluatorHelper(
+		DDMFormEvaluatorHelper ddmFormEvaluatorHelper =
+			new DDMFormEvaluatorHelper(
 				null, null, _ddmExpressionFactory, ddmForm, ddmFormValues, null,
 				_jsonFactory, LocaleUtil.US);
 
 		DDMFormEvaluationResult ddmFormEvaluationResult =
-			ddmFormRuleEvaluatorHelper.evaluate();
+			ddmFormEvaluatorHelper.evaluate();
 
 		Map<String, DDMFormFieldEvaluationResult>
 			ddmFormFieldEvaluationResultMap =
@@ -456,13 +455,13 @@ public class DDMFormRuleEvaluatorHelperTest {
 			DDMFormValuesTestUtil.createDDMFormFieldValue(
 				"field1_instanceId", "field1", new UnlocalizedValue("")));
 
-		DDMFormRuleEvaluatorHelper ddmFormRuleEvaluatorHelper =
-			new DDMFormRuleEvaluatorHelper(
+		DDMFormEvaluatorHelper ddmFormEvaluatorHelper =
+			new DDMFormEvaluatorHelper(
 				null, null, _ddmExpressionFactory, ddmForm, ddmFormValues, null,
 				_jsonFactory, LocaleUtil.US);
 
 		DDMFormEvaluationResult ddmFormEvaluationResult =
-			ddmFormRuleEvaluatorHelper.evaluate();
+			ddmFormEvaluatorHelper.evaluate();
 
 		Map<String, DDMFormFieldEvaluationResult>
 			ddmFormFieldEvaluationResultMap =

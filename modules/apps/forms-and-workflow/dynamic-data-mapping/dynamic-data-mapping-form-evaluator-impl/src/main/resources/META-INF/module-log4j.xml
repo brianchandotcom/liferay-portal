@@ -2,7 +2,7 @@
 <!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
 
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
-	<category name="com.liferay.dynamic.data.mapping.form.evaluator.impl.internal.rules.functions.CallFunction">
+	<category name="com.liferay.dynamic.data.mapping.form.evaluator.impl.internal.functions.CallFunction">
 		<priority value="WARN" />
 	</category>
 </log4j:configuration>

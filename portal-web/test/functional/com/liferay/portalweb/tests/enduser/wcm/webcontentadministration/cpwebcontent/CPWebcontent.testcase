@@ -2010,7 +2010,7 @@
 		</execute>
 	</command>
 
-	<command name="viewStructuresViaMoreIFrame" priority="4">
+	<command name="ViewFavoriteStructure" priority="4">
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
@@ -2043,7 +2043,7 @@
 			<var name="portlet" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContentNavigator#gotoMoreStructuresViaAddPlusButton">
+		<execute macro="WebContentNavigator#gotoMoreStructuresViaPlusButton">
 			<var name="pageMod" value="7 of 10" />
 		</execute>
 
@@ -2059,7 +2059,7 @@
 			<var name="structureName" value="WC Structure Name 9" />
 		</execute>
 
-		<execute macro="WebContentStructures#viewFavoriteStructure">
+		<execute macro="WebContentStructures#viewFavoriteStructureViaIFrame">
 			<var name="indexNumber" value="1" />
 			<var name="structureName" value="WC Structure Name 9" />
 		</execute>

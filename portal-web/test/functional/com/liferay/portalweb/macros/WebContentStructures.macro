@@ -271,7 +271,7 @@
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
-	<command name="viewFavoriteStructure">
+	<command name="viewFavoriteStructureViaIFrame">
 		<execute function="AssertTextEquals" locator1="NavBar#ADD_TO_FAVORITES" value1="Add to Favorites (${indexNumber})" />
 
 		<execute function="ScrollBy" value1="0, 50" />

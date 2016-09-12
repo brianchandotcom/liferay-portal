@@ -131,7 +131,7 @@
 		</execute>
 	</command>
 
-	<command name="gotoMoreStructuresViaAddPlusButton">
+	<command name="gotoMoreStructuresViaPlusButton">
 		<execute function="AssertVisible" locator1="Button#PLUS" />
 
 		<execute function="Click" locator1="Button#PLUS" />

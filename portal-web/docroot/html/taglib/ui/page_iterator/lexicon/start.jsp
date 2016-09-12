@@ -92,7 +92,7 @@ if (forcePost && (portletURL != null)) {
 					%>
 
 						<li>
-							<a href="<%= deltaURL + "&" + namespace + deltaParam + "=" + curDelta + urlAnchor %>" onClick="<%= forcePost ? "event.preventDefault(); " + namespace + "submitForm(\'" + namespace + deltaParam + "\'," + curDelta + ");" : "" %>"><%= String.valueOf(curDelta) %></a>
+							<a href="<%= deltaURL + "&" + namespace + deltaParam + "=" + curDelta + urlAnchor %>" onClick="<%= forcePost ? _getOnClick(namespace, deltaParam, curDelta) : "" %>"><%= String.valueOf(curDelta) %></a>
 						</li>
 
 					<%
@@ -109,7 +109,7 @@ if (forcePost && (portletURL != null)) {
 
 		<ul class="pagination">
 			<li class="<%= (cur > 1) ? StringPool.BLANK : "disabled" %>">
-				<a href="<%= (cur > 1) ? _getHREF(formName, namespace + curParam, cur - 1, jsCall, url, urlAnchor) : "javascript:;" %>" onclick="<%= (cur > 1 && forcePost) ? "event.preventDefault(); " + namespace + "submitForm('" + namespace + curParam + "'," + (cur -1) + ");" : "" %>"><span class="icon-caret-left"></span></a>
+				<a href="<%= (cur > 1) ? _getHREF(formName, namespace + curParam, cur - 1, jsCall, url, urlAnchor) : "javascript:;" %>" onclick="<%= (cur > 1 && forcePost) ? _getOnClick(namespace, curParam, cur -1) : "" %>"><span class="icon-caret-left"></span></a>
 			</li>
 
 			<c:choose>
@@ -120,7 +120,7 @@ if (forcePost && (portletURL != null)) {
 					%>
 
 						<li class="<%= (i == cur) ? "active" : StringPool.BLANK %>">
-							<a href="<%= _getHREF(formName, namespace + curParam, i, jsCall, url, urlAnchor) %>" onclick="<%= forcePost ? "event.preventDefault(); " + namespace + "submitForm('" + namespace + curParam + "'," + i + ");" : "" %>"><%= i %></a>
+							<a href="<%= _getHREF(formName, namespace + curParam, i, jsCall, url, urlAnchor) %>" onclick="<%= forcePost ? _getOnClick(namespace, curParam, i) : "" %>"><%= i %></a>
 						</li>
 
 					<%
@@ -130,13 +130,13 @@ if (forcePost && (portletURL != null)) {
 				</c:when>
 				<c:when test="<%= cur == 1 %>">
 					<li class="active">
-						<a href="<%= _getHREF(formName, namespace + curParam, 1, jsCall, url, urlAnchor) %>" onclick="<%= forcePost ? "event.preventDefault(); " + namespace + "submitForm('" + namespace + curParam + "'," + 1 + ");" : "" %>">1</a>
+						<a href="<%= _getHREF(formName, namespace + curParam, 1, jsCall, url, urlAnchor) %>" onclick="<%= forcePost ? _getOnClick(namespace, curParam, 1) : "" %>">1</a>
 					</li>
 					<li>
-						<a href="<%= _getHREF(formName, namespace + curParam, 2, jsCall, url, urlAnchor) %>" onclick="<%= forcePost ? "event.preventDefault(); " + namespace + "submitForm('" + namespace + curParam + "'," + 2 + ");" : "" %>">2</a>
+						<a href="<%= _getHREF(formName, namespace + curParam, 2, jsCall, url, urlAnchor) %>" onclick="<%= forcePost ? _getOnClick(namespace, curParam, 2) : "" %>">2</a>
 					</li>
 					<li>
-						<a href="<%= _getHREF(formName, namespace + curParam, 3, jsCall, url, urlAnchor) %>" onclick="<%= forcePost ? "event.preventDefault(); " + namespace + "submitForm('" + namespace + curParam + "'," + 3 + ");" : "" %>">3</a>
+						<a href="<%= _getHREF(formName, namespace + curParam, 3, jsCall, url, urlAnchor) %>" onclick="<%= forcePost ? _getOnClick(namespace, curParam, 3) : "" %>">3</a>
 					</li>
 					<li class="dropdown">
 						<a class="dropdown-toggle" data-toggle="dropdown" href="javascript:;">...</a>
@@ -149,7 +149,7 @@ if (forcePost && (portletURL != null)) {
 								%>
 
 									<li>
-										<a href="<%= _getHREF(formName, namespace + curParam, i, jsCall, url, urlAnchor) %>" onclick="<%= forcePost ? "event.preventDefault(); " + namespace + "submitForm('" + namespace + curParam + "'," + i + ");" : "" %>"><%= i %></a>
+										<a href="<%= _getHREF(formName, namespace + curParam, i, jsCall, url, urlAnchor) %>" onclick="<%= forcePost ? _getOnClick(namespace, curParam, i) : "" %>"><%= i %></a>
 									</li>
 
 								<%
@@ -160,12 +160,12 @@ if (forcePost && (portletURL != null)) {
 						</div>
 					</li>
 					<li>
-						<a href="<%= _getHREF(formName, namespace + curParam, pages, jsCall, url, urlAnchor) %>" onclick="<%= forcePost ? "event.preventDefault(); " + namespace + "submitForm('" + namespace + curParam + "'," + pages + ");" : "" %>"><%= pages %></a>
+						<a href="<%= _getHREF(formName, namespace + curParam, pages, jsCall, url, urlAnchor) %>" onclick="<%= forcePost ? _getOnClick(namespace, curParam, pages) : "" %>"><%= pages %></a>
 					</li>
 				</c:when>
 				<c:when test="<%= cur == pages %>">
 					<li>
-						<a href="<%= _getHREF(formName, namespace + curParam, 1, jsCall, url, urlAnchor) %>" onclick="<%= forcePost ? "event.preventDefault(); " + namespace + "submitForm('" + namespace + curParam + "'," + 1 + ");" : "" %>">1</a>
+						<a href="<%= _getHREF(formName, namespace + curParam, 1, jsCall, url, urlAnchor) %>" onclick="<%= forcePost ? _getOnClick(namespace, curParam, 1) : "" %>">1</a>
 					</li>
 					<li class="dropdown">
 						<a class="dropdown-toggle" data-toggle="dropdown" href="javascript:;">...</a>
@@ -178,7 +178,7 @@ if (forcePost && (portletURL != null)) {
 								%>
 
 									<li>
-										<a href="<%= _getHREF(formName, namespace + curParam, i, jsCall, url, urlAnchor) %>" onclick="<%= forcePost ? "event.preventDefault(); " + namespace + "submitForm('" + namespace + curParam + "'," + i + ");" : "" %>"><%= i %></a>
+										<a href="<%= _getHREF(formName, namespace + curParam, i, jsCall, url, urlAnchor) %>" onclick="<%= forcePost ? _getOnClick(namespace, curParam, i) : "" %>"><%= i %></a>
 									</li>
 
 								<%
@@ -189,18 +189,18 @@ if (forcePost && (portletURL != null)) {
 						</div>
 					</li>
 					<li>
-						<a href="<%= _getHREF(formName, namespace + curParam, pages - 2, jsCall, url, urlAnchor) %>" onclick="<%= forcePost ? "event.preventDefault(); " + namespace + "submitForm('" + namespace + curParam + "'," + (pages - 2) + ");" : "" %>"><%= pages - 2 %></a>
+						<a href="<%= _getHREF(formName, namespace + curParam, pages - 2, jsCall, url, urlAnchor) %>" onclick="<%= forcePost ? _getOnClick(namespace, curParam, pages - 2) : "" %>"><%= pages - 2 %></a>
 					</li>
 					<li>
-						<a href="<%= _getHREF(formName, namespace + curParam, pages - 1, jsCall, url, urlAnchor) %>" onclick="<%= forcePost ? "event.preventDefault(); " + namespace + "submitForm('" + namespace + curParam + "'," + (pages - 1) + ");" : "" %>"><%= pages - 1 %></a>
+						<a href="<%= _getHREF(formName, namespace + curParam, pages - 1, jsCall, url, urlAnchor) %>" onclick="<%= forcePost ? _getOnClick(namespace, curParam, pages - 1) : "" %>"><%= pages - 1 %></a>
 					</li>
 					<li class="active">
-						<a href="<%= _getHREF(formName, namespace + curParam, pages, jsCall, url, urlAnchor) %>" onclick="<%= forcePost ? "event.preventDefault(); " + namespace + "submitForm('" + namespace + curParam + "'," + pages + ");" : "" %>"><%= pages %></a>
+						<a href="<%= _getHREF(formName, namespace + curParam, pages, jsCall, url, urlAnchor) %>" onclick="<%= forcePost ? _getOnClick(namespace, curParam, pages) : "" %>"><%= pages %></a>
 					</li>
 				</c:when>
 				<c:otherwise>
 					<li>
-						<a href="<%= _getHREF(formName, namespace + curParam, 1, jsCall, url, urlAnchor) %>" onclick="<%= forcePost ? "event.preventDefault(); " + namespace + "submitForm('" + namespace + curParam + "'," + 1 + ");" : "" %>">1</a>
+						<a href="<%= _getHREF(formName, namespace + curParam, 1, jsCall, url, urlAnchor) %>" onclick="<%= forcePost ? _getOnClick(namespace, curParam, 1) : "" %>">1</a>
 					</li>
 
 					<c:if test="<%= (cur - 3) > 1 %>">
@@ -216,7 +216,7 @@ if (forcePost && (portletURL != null)) {
 					%>
 
 						<li>
-							<a href="<%= _getHREF(formName, namespace + curParam, i, jsCall, url, urlAnchor) %>" onclick="<%= forcePost ? "event.preventDefault(); " + namespace + "submitForm('" + namespace + curParam + "'," + i + ");" : "" %>"><%= i %></a>
+							<a href="<%= _getHREF(formName, namespace + curParam, i, jsCall, url, urlAnchor) %>" onclick="<%= forcePost ? _getOnClick(namespace, curParam, i) : "" %>"><%= i %></a>
 						</li>
 
 					<%
@@ -231,17 +231,17 @@ if (forcePost && (portletURL != null)) {
 
 					<c:if test="<%= (cur - 1) > 1 %>">
 						<li>
-							<a href="<%= _getHREF(formName, namespace + curParam, cur - 1, jsCall, url, urlAnchor) %>" onclick="<%= forcePost ? "event.preventDefault(); " + namespace + "submitForm('" + namespace + curParam + "'," + (cur - 1) + ");" : "" %>"><%= cur - 1 %></a>
+							<a href="<%= _getHREF(formName, namespace + curParam, cur - 1, jsCall, url, urlAnchor) %>" onclick="<%= forcePost ? _getOnClick(namespace, curParam, cur - 1) : "" %>"><%= cur - 1 %></a>
 						</li>
 					</c:if>
 
 					<li class="active">
-						<a href="<%= _getHREF(formName, namespace + curParam, cur, jsCall, url, urlAnchor) %>" onclick="<%= forcePost ? "event.preventDefault(); " + namespace + "submitForm('" + namespace + curParam + "'," + cur + ");" : "" %>"><%= cur %></a>
+						<a href="<%= _getHREF(formName, namespace + curParam, cur, jsCall, url, urlAnchor) %>" onclick="<%= forcePost ? _getOnClick(namespace, curParam, cur) : "" %>"><%= cur %></a>
 					</li>
 
 					<c:if test="<%= (cur + 1) < pages %>">
 						<li>
-							<a href="<%= _getHREF(formName, namespace + curParam, cur + 1, jsCall, url, urlAnchor) %>" onclick="<%= forcePost ? "event.preventDefault(); " + namespace + "submitForm('" + namespace + curParam + "'," + (cur + 1) + ");" : "" %>"><%= cur + 1 %></a>
+							<a href="<%= _getHREF(formName, namespace + curParam, cur + 1, jsCall, url, urlAnchor) %>" onclick="<%= forcePost ? _getOnClick(namespace, curParam, cur + 1) : "" %>"><%= cur + 1 %></a>
 						</li>
 					</c:if>
 
@@ -258,7 +258,7 @@ if (forcePost && (portletURL != null)) {
 					%>
 
 						<li>
-							<a href="<%= _getHREF(formName, namespace + curParam, i, jsCall, url, urlAnchor) %>" onclick="<%= forcePost ? "event.preventDefault(); " + namespace + "submitForm('" + namespace + curParam + "'," + i + ");" : "" %>"><%= i %></a>
+							<a href="<%= _getHREF(formName, namespace + curParam, i, jsCall, url, urlAnchor) %>" onclick="<%= forcePost ? _getOnClick(namespace, curParam, i) : "" %>"><%= i %></a>
 						</li>
 
 					<%
@@ -272,13 +272,13 @@ if (forcePost && (portletURL != null)) {
 					</c:if>
 
 					<li>
-						<a href="<%= _getHREF(formName, namespace + curParam, pages, jsCall, url, urlAnchor) %>" onclick="<%= forcePost ? "event.preventDefault(); " + namespace + "submitForm('" + namespace + curParam + "'," + pages + ");" : "" %>"><%= pages %></a>
+						<a href="<%= _getHREF(formName, namespace + curParam, pages, jsCall, url, urlAnchor) %>" onclick="<%= forcePost ? _getOnClick(namespace, curParam, pages) : "" %>"><%= pages %></a>
 					</li>
 				</c:otherwise>
 			</c:choose>
 
 			<li class="<%= (cur < pages) ? StringPool.BLANK : "disabled" %>">
-				<a href="<%= (cur < pages) ? _getHREF(formName, namespace + curParam, cur + 1, jsCall, url, urlAnchor) : "javascript:;" %>" onclick="<%= (cur < pages && forcePost) ? "event.preventDefault(); " + namespace + "submitForm('" + namespace + curParam + "'," + (cur + 1) + ");" : "" %>"><span class="icon-caret-right"></span></a>
+				<a href="<%= (cur < pages) ? _getHREF(formName, namespace + curParam, cur + 1, jsCall, url, urlAnchor) : "javascript:;" %>" onclick="<%= (cur < pages && forcePost) ? _getOnClick(namespace, curParam, cur + 1) : "" %>"><span class="icon-caret-right"></span></a>
 			</li>
 		</ul>
 	</div>
@@ -301,5 +301,11 @@ private String _getHREF(String formName, String curParam, int cur, String jsCall
 	}
 
 	return "javascript:document." + formName + "." + curParam + ".value = '" + cur + "'; " + jsCall;
+}
+%>
+
+<%!
+private String _getOnClick(String namespace, String curParam, int cur) {
+	return "event.preventDefault(); " + namespace + "submitForm('" + namespace + curParam + "','" + cur + "');";
 }
 %>

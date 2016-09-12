@@ -15,13 +15,19 @@
 package com.liferay.portal.tools.data.partitioning.sql.builder.postgresql.exporter;
 
 import com.liferay.portal.tools.data.partitioning.sql.builder.exporter.BaseDataPartitioningExporter;
+import com.liferay.portal.tools.data.partitioning.sql.builder.exporter.InsertSQLBuilder;
 import com.liferay.portal.tools.data.partitioning.sql.builder.exporter.context.ExportContext;
+import com.liferay.portal.tools.data.partitioning.sql.builder.postgresql.exporter.serializer.PostgreSQLFieldSerializer;
 
 /**
  * @author Manuel de la Peña
  */
 public class PostgreSQLDataPartitioningExporter
 	extends BaseDataPartitioningExporter {
+
+	public PostgreSQLDataPartitioningExporter() {
+		super(new InsertSQLBuilder(new PostgreSQLFieldSerializer()));
+	}
 
 	@Override
 	public String getControlTableNamesSQL(ExportContext exportContext) {

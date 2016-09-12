@@ -78,7 +78,9 @@ public class UpgradePortletPreferencesTest {
 	@Before
 	public void setUp() throws Exception {
 		_active = CacheRegistryUtil.isActive();
+
 		_group = GroupTestUtil.addGroup();
+
 		_layout = LayoutTestUtil.addLayout(_group);
 
 		CacheRegistryUtil.setActive(false);

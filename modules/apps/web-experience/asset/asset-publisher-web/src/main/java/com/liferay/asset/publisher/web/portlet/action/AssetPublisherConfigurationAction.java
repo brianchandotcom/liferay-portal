@@ -604,6 +604,7 @@ public class AssetPublisherConfigurationAction
 
 		String[] classNameIds = StringUtil.split(
 			getParameter(actionRequest, "classNameIds"));
+
 		String[] classTypeIds = getClassTypeIds(actionRequest, classNameIds);
 
 		String[] extensions = actionRequest.getParameterValues("extensions");

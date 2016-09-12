@@ -567,8 +567,10 @@ public class WebFormPortlet extends MVCPortlet {
 		for (int i = 0; i < fieldsMap.size(); i++) {
 			String fieldType = preferences.getValue(
 				"fieldType" + (i + 1), StringPool.BLANK);
+
 			String fieldLabel = preferences.getValue(
 				"fieldLabel" + (i + 1), StringPool.BLANK);
+
 			String fieldValue = fieldsMap.get(fieldLabel);
 
 			boolean fieldOptional = GetterUtil.getBoolean(

@@ -493,6 +493,7 @@ public class ConfigurationPersistenceManager
 
 		try {
 			connection = _dataSource.getConnection();
+
 			connection.setAutoCommit(false);
 
 			preparedStatement = connection.prepareStatement(

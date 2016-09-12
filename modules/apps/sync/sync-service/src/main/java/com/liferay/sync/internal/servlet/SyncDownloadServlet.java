@@ -126,6 +126,7 @@ public class SyncDownloadServlet extends HttpServlet {
 			PermissionThreadLocal.setPermissionChecker(permissionChecker);
 
 			String path = HttpUtil.fixPath(request.getPathInfo());
+
 			String[] pathArray = StringUtil.split(path, CharPool.SLASH);
 
 			if (pathArray[0].equals("image")) {

@@ -110,9 +110,13 @@ public class ConsumerFriendlyURLMapper extends BaseFriendlyURLMapper {
 		Map<String, Object> requestContext) {
 
 		int pos1 = friendlyURLPath.indexOf("/", 1);
+
 		int pos2 = friendlyURLPath.indexOf("/", pos1 + 1);
+
 		int pos3 = friendlyURLPath.indexOf("/", pos2 + 1);
+
 		int pos4 = friendlyURLPath.indexOf("/", pos3 + 1);
+
 		int pos5 = friendlyURLPath.indexOf("/", pos4 + 1);
 
 		String portletId = friendlyURLPath.substring(pos1 + 1, pos2);

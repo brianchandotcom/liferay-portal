@@ -84,6 +84,7 @@ public class WebFormConfigurationAction extends DefaultConfigurationAction {
 		}
 
 		Locale defaultLocale = LocaleUtil.getSiteDefault();
+
 		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
 
 		boolean updateFields = ParamUtil.getBoolean(

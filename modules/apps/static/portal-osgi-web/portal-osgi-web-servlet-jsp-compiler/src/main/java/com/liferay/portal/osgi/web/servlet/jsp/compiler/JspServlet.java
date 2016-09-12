@@ -296,6 +296,7 @@ public class JspServlet extends HttpServlet {
 			TagHandlerPool.OPTION_TAGPOOL, JspTagHandlerPool.class.getName());
 
 		Enumeration<String> names = servletConfig.getInitParameterNames();
+
 		Set<String> nameSet = new HashSet<>(Collections.list(names));
 
 		nameSet.addAll(defaults.keySet());

@@ -89,6 +89,7 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 	protected DDMFormField getDDMFormField(DDMForm ddmForm, String fieldName) {
 		Map<String, DDMFormField> ddmFormFieldsMap =
 			ddmForm.getDDMFormFieldsMap(false);
+
 		return ddmFormFieldsMap.get(fieldName);
 	}
 

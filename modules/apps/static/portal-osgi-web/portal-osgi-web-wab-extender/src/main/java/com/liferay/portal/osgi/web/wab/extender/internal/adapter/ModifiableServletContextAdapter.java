@@ -518,6 +518,7 @@ public class ModifiableServletContextAdapter
 			Method equalsHandlerMethod =
 				ModifiableServletContextAdapter.class.getMethod(
 					"equals", Object.class);
+
 			methods.put(equalsMethod, equalsHandlerMethod);
 
 			Method hashCodeMethod = Object.class.getMethod(
@@ -526,6 +527,7 @@ public class ModifiableServletContextAdapter
 			Method hashCodeHandlerMethod =
 				ModifiableServletContextAdapter.class.getMethod(
 					"hashCode", (Class<?>[])null);
+
 			methods.put(hashCodeMethod, hashCodeHandlerMethod);
 		}
 		catch (NoSuchMethodException nsme) {

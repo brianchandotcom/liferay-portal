@@ -147,6 +147,7 @@ public class MeetupsPortlet extends MVCPortlet {
 		double price = ParamUtil.getDouble(uploadPortletRequest, "price");
 
 		File file = uploadPortletRequest.getFile("fileName");
+
 		byte[] bytes = FileUtil.getBytes(file);
 
 		if (meetupsEntryId <= 0) {

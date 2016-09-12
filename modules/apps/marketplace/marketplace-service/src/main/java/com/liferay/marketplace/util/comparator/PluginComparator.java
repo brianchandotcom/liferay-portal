@@ -46,7 +46,9 @@ public class PluginComparator implements Comparator, Serializable {
 
 	public PluginComparator(ServletContext servletContext, Locale locale) {
 		_servletContext = servletContext;
+
 		_locale = locale;
+
 		_collator = Collator.getInstance(_locale);
 	}
 

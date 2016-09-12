@@ -123,7 +123,9 @@ public class KBArticleAssetEntriesUtil {
 		throws Exception {
 
 		long classPK = assetRenderer.getClassPK();
+
 		String className = assetRendererFactory.getClassName();
+
 		String portletId = PortletProviderUtil.getPortletId(
 			className, PortletProvider.Action.VIEW);
 

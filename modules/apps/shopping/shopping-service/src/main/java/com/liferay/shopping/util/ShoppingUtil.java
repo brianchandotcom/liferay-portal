@@ -125,6 +125,7 @@ public class ShoppingUtil {
 		throws PortalException {
 
 		double shipping = calculateShipping(items);
+
 		double alternativeShipping = shipping;
 
 		ShoppingGroupServiceOverriddenConfiguration

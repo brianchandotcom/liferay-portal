@@ -437,6 +437,7 @@ public class LiferayMediaItemService implements MediaItemService {
 		byte[] byteArray = HttpUtil.URLtoByteArray(options);
 
 		String fileName = getFileName(mediaItem, options);
+
 		String contentType = MimeTypesUtil.getContentType(fileName);
 
 		ServiceContext serviceContext = new ServiceContext();

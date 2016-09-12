@@ -163,6 +163,7 @@ public class KBTemplateServiceImpl extends KBTemplateServiceBaseImpl {
 			}
 
 			start = start + _INTERVAL;
+
 			end = start + _INTERVAL;
 		}
 

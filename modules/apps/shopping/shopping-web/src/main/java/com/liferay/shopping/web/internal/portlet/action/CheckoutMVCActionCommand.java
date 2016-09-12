@@ -266,6 +266,7 @@ public class CheckoutMVCActionCommand extends BaseMVCActionCommand {
 
 		String billingStateSel = ParamUtil.getString(
 			actionRequest, "billingStateSel");
+
 		String billingState = billingStateSel;
 
 		if (Validator.isNull(billingStateSel)) {
@@ -295,6 +296,7 @@ public class CheckoutMVCActionCommand extends BaseMVCActionCommand {
 
 		String shippingStateSel = ParamUtil.getString(
 			actionRequest, "shippingStateSel");
+
 		String shippingState = shippingStateSel;
 
 		if (Validator.isNull(shippingStateSel)) {

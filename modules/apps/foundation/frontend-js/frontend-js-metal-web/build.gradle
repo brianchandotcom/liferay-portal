@@ -28,7 +28,9 @@ cache {
 	task(classes) {
 		baseDir = "classes/META-INF"
 		cacheDir = ".task-cache"
+
 		skipTaskDependency configJSModules
+		skipTaskDependency replaceSoyTranslation
 
 		testFile "build.gradle"
 		testFile "package.json"

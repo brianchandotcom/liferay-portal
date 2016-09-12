@@ -12,19 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.tools.data.partitioning.sql.builder.exporter;
-
-import javax.sql.DataSource;
+package com.liferay.portal.tools.data.partitioning.sql.builder.exporter.serializer;
 
 /**
- * @author Manuel de la Peña
+ * @author Miguel Pastor
  */
-public interface DBProvider {
+public interface FieldSerializer {
 
-	public DataSource getDataSource();
-
-	public int getFetchSize();
-
-	public String getTableNameFieldName();
+	public String serialize(Object field);
 
 }

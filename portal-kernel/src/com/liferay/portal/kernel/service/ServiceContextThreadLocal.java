@@ -27,10 +27,6 @@ public class ServiceContextThreadLocal {
 		LinkedList<ServiceContext> serviceContextStack =
 			_serviceContextThreadLocal.get();
 
-		if (serviceContextStack.isEmpty()) {
-			return null;
-		}
-
 		return serviceContextStack.peek();
 	}
 
@@ -56,7 +52,7 @@ public class ServiceContextThreadLocal {
 		_serviceContextThreadLocal =
 			new AutoResetThreadLocal<LinkedList<ServiceContext>>(
 				ServiceContextThreadLocal.class + "._serviceContextThreadLocal",
-				new LinkedList<ServiceContext>()) {
+				new LinkedList<>()) {
 
 				@Override
 				protected LinkedList<ServiceContext> copy(

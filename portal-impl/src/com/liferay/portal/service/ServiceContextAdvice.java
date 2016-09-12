@@ -29,23 +29,38 @@ public class ServiceContextAdvice extends ChainableMethodAdvice {
 
 	@Override
 	public Object invoke(MethodInvocation methodInvocation) throws Throwable {
-		if (!hasServiceContextParameter(methodInvocation.getMethod())) {
+		int index = _getServiceContextParameterIndex(
+			methodInvocation.getMethod());
+
+		if (index < 0) {
 			serviceBeanAopCacheManager.removeMethodInterceptor(
 				methodInvocation, this);
+
+			return methodInvocation.proceed();
 		}
 
-		boolean pushedServiceContext = pushServiceContext(methodInvocation);
+		Object[] arguments = methodInvocation.getArguments();
+
+		ServiceContext serviceContext = (ServiceContext)arguments[index];
+
+		if (serviceContext != null) {
+			ServiceContextThreadLocal.pushServiceContext(serviceContext);
+		}
 
 		try {
 			return methodInvocation.proceed();
 		}
 		finally {
-			if (pushedServiceContext) {
+			if (serviceContext != null) {
 				ServiceContextThreadLocal.popServiceContext();
 			}
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	protected boolean hasServiceContextParameter(Method method) {
 		Class<?>[] parameterTypes = method.getParameterTypes();
 
@@ -58,6 +73,10 @@ public class ServiceContextAdvice extends ChainableMethodAdvice {
 		return false;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	protected boolean pushServiceContext(MethodInvocation methodInvocation) {
 		Object[] arguments = methodInvocation.getArguments();
 
@@ -76,6 +95,18 @@ public class ServiceContextAdvice extends ChainableMethodAdvice {
 		}
 
 		return false;
+	}
+
+	private int _getServiceContextParameterIndex(Method method) {
+		Class<?>[] parameterTypes = method.getParameterTypes();
+
+		for (int i = parameterTypes.length - 1; i >= 0; i--) {
+			if (ServiceContext.class.isAssignableFrom(parameterTypes[i])) {
+				return i;
+			}
+		}
+
+		return -1;
 	}
 
 }

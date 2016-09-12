@@ -73,17 +73,6 @@ public class ServiceContextAdviceTest {
 	}
 
 	@Test
-	public void testWithNullServiceContextArgument() throws Throwable {
-		MethodInvocation methodInvocation = createMethodInvocation(
-			new Object[0], new Class<?>[] {ServiceContext.class}, true);
-
-		_serviceContextAdvice.invoke(methodInvocation);
-
-		Assert.assertFalse(
-			_testServiceBeanAopCacheManager.isRemovedMethodInterceptor());
-	}
-
-	@Test
 	public void testWithoutServiceContextParameter() throws Throwable {
 		MethodInvocation methodInvocation = createMethodInvocation(
 			new Object[] {null}, new Class<?>[] {Object.class}, true);

@@ -21,7 +21,9 @@ import java.sql.ResultSetMetaData;
  */
 public interface SQLBuilder {
 
-	public String build(
+	public String buildField(Object object);
+
+	public String buildInsert(
 		ResultSetMetaData resultSetMetaData, String tableName, String[] fields);
 
 }

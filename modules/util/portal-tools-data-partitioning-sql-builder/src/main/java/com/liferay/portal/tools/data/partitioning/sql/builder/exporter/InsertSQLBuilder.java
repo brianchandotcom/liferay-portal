@@ -14,7 +14,9 @@
 
 package com.liferay.portal.tools.data.partitioning.sql.builder.exporter;
 
+import com.liferay.portal.tools.data.partitioning.sql.builder.exporter.serializer.FieldSerializer;
 import com.liferay.portal.tools.data.partitioning.sql.builder.internal.exporter.SQLBuilder;
+import com.liferay.portal.tools.data.partitioning.sql.builder.internal.serializer.DefaultFieldSerializer;
 
 import java.sql.ResultSetMetaData;
 
@@ -23,8 +25,21 @@ import java.sql.ResultSetMetaData;
  */
 public class InsertSQLBuilder implements SQLBuilder {
 
+	public InsertSQLBuilder() {
+		_fieldSerializer = new DefaultFieldSerializer();
+	}
+
+	public InsertSQLBuilder(FieldSerializer fieldSerializer) {
+		_fieldSerializer = fieldSerializer;
+	}
+
 	@Override
-	public String build(
+	public String buildField(Object object) {
+		return _fieldSerializer.serialize(object);
+	}
+
+	@Override
+	public String buildInsert(
 		ResultSetMetaData resultSetMetaData, String tableName,
 		String[] fields) {
 
@@ -52,5 +67,7 @@ public class InsertSQLBuilder implements SQLBuilder {
 
 		return sb.toString() + ";\n";
 	}
+
+	private final FieldSerializer _fieldSerializer;
 
 }

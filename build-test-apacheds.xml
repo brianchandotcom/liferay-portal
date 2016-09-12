@@ -28,15 +28,18 @@
 	</macrodef>
 
 	<macrodef name="unzip-apacheds-instance-custom">
+		<attribute default="" name="apacheds.instance.custom.zip.name" />
+		<attribute default="" name="apacheds.instance.custom.zip.source" />
+
 		<sequential>
 			<if>
 				<not>
-					<available file="${apacheds.dir}/instances/${apacheds.instance.custom.zip.name}" />
+					<available file="${apacheds.dir}/instances/@{apacheds.instance.custom.zip.name}" />
 				</not>
 				<then>
 					<mirrors-get
-						dest="${apacheds.dir}/instances/${apacheds.instance.custom.zip.name}"
-						src="http://files.liferay.com/private/apps/apache/apacheds/${apacheds.instance.custom.zip.name}"
+						dest="${apacheds.dir}/instances/@{apacheds.instance.custom.zip.name}"
+						src="@{apacheds.instance.custom.zip.source}"
 						verbose="true"
 					/>
 				</then>
@@ -44,7 +47,7 @@
 
 			<unzip
 				dest="${apacheds.dir}/instances"
-				src="${apacheds.dir}/instances/${apacheds.instance.custom.zip.name}"
+				src="${apacheds.dir}/instances/@{apacheds.instance.custom.zip.name}"
 			/>
 		</sequential>
 	</macrodef>
@@ -52,7 +55,23 @@
 	<target name="start-apacheds">
 		<unzip-apacheds />
 
-		<unzip-apacheds-instance-custom />
+		<get-testcase-property property.name="apacheds.blank.user.password.enabled" />
+
+		<if>
+			<equals arg1="${apacheds.blank.user.password.enabled}" arg2="true" />
+			<then>
+				<unzip-apacheds-instance-custom
+					apacheds.instance.custom.zip.name="${apacheds.instance.blank.user.password.custom.zip.name}"
+					apacheds.instance.custom.zip.source="http://files.liferay.com/private/apps/apache/apacheds/${apacheds.instance.blank.user.password.custom.zip.name}"
+				/>
+			</then>
+			<else>
+				<unzip-apacheds-instance-custom
+					apacheds.instance.custom.zip.name="${apacheds.instance.custom.zip.name}"
+					apacheds.instance.custom.zip.source="http://files.liferay.com/private/apps/apache/apacheds/${apacheds.instance.custom.zip.name}"
+				/>
+			</else>
+		</if>
 
 		<if>
 			<os family="unix" />

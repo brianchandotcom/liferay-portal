@@ -1,6 +1,6 @@
 # Liferay Gradle Plugins Soy Change Log
 
-## 2.0.0 - 2016-09-07
+## 2.0.0 - 2016-09-12
 
 ### Added
 - [LPS-67766]: Add a new `com.liferay.soy.translation` plugin to use a custom

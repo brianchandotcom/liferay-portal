@@ -206,7 +206,7 @@ configuration.
 directory instead of the root project directory. Doing this lets submodules like
 `content-targeting` have their own separate `.releng` directory.
 
-## 1.2.16 - 2016-09-08
+## 1.2.18 - 2016-09-12
 
 ### Changed
 - [LPS-67766]: Update the [Liferay Gradle Plugins] dependency to version 2.0.31.

@@ -272,7 +272,7 @@
 	</command>
 
 	<command name="viewFavoriteStructureViaIFrame">
-		<execute function="AssertTextEquals" locator1="NavBar#ADD_TO_FAVORITES" value1="Add to Favorites (${indexNumber})" />
+		<execute function="AssertTextEquals" locator1="WC#ADD_TO_FAVORITES" value1="Add to Favorites (${indexNumber})" />
 
 		<execute function="ScrollBy" value1="0, 50" />
 
@@ -296,7 +296,7 @@
 	</command>
 
 	<command name="viewNoFavoriteStructure">
-		<execute function="AssertTextEquals" locator1="NavBar#ADD_TO_FAVORITES" value1="Add to Favorites (0)" />
+		<execute function="AssertTextEquals" locator1="WC#ADD_TO_FAVORITES" value1="Add to Favorites (0)" />
 	</command>
 
 	<command name="viewStructuresViaMoreIFrame">

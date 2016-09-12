@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>ADD_TO_FAVORITES</td>
+	<td>//table[contains(@class,'table-heading')]//th[contains(@id,'add-to-favorites') and contains(.,'Add to Favorites')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LINK_TO_PAGE_SELECT_PAGE_BUTTON</td>
 	<td>//button[contains(@id,'SelectButton')]</td>
 	<td></td>

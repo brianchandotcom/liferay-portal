@@ -86,7 +86,7 @@ public interface CheckboxDDMFormFieldTypeSettings
 	@Override
 	public LocalizedValue predefinedValue();
 
-	@DDMFormField
+	@DDMFormField(visibilityExpression = "FALSE")
 	@Override
 	public boolean repeatable();
 
@@ -96,7 +96,7 @@ public interface CheckboxDDMFormFieldTypeSettings
 	)
 	public boolean showAsSwitcher();
 
-	@DDMFormField
+	@DDMFormField(visibilityExpression = "FALSE")
 	@Override
 	public DDMFormFieldValidation validation();
 

@@ -227,7 +227,9 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		// Group
 
 		User user = userPersistence.findByPrimaryKey(userId);
+
 		className = GetterUtil.getString(className);
+
 		long classNameId = classNameLocalService.getClassNameId(className);
 
 		String groupKey = StringPool.BLANK;

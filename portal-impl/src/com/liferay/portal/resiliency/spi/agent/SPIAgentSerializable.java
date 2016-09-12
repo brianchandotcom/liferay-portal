@@ -188,6 +188,7 @@ public class SPIAgentSerializable implements Serializable {
 
 			while (enumeration.hasMoreElements()) {
 				String name = enumeration.nextElement();
+
 				Object value = portletSession.getAttribute(name);
 
 				if (value instanceof Serializable) {

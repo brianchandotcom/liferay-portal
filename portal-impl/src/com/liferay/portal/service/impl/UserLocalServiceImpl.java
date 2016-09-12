@@ -204,8 +204,11 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		long creatorUserId = 0;
 		boolean autoPassword = false;
+
 		String password1 = PropsValues.DEFAULT_ADMIN_PASSWORD;
+
 		String password2 = password1;
+
 		boolean autoScreenName = false;
 
 		screenName = getLogin(screenName);
@@ -1322,7 +1325,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		if (failedLoginAttempts > 0) {
 			long failedLoginTime = user.getLastFailedLoginDate().getTime();
+
 			long elapsedTime = now.getTime() - failedLoginTime;
+
 			long requiredElapsedTime =
 				passwordPolicy.getResetFailureCount() * 1000;
 
@@ -1339,7 +1344,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		if (user.isLockout()) {
 			long lockoutTime = user.getLockoutDate().getTime();
+
 			long elapsedTime = now.getTime() - lockoutTime;
+
 			long requiredElapsedTime =
 				passwordPolicy.getLockoutDuration() * 1000;
 
@@ -1588,6 +1595,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		}
 
 		String userPassword = user.getPassword();
+
 		String encPassword = PasswordEncryptorUtil.encrypt(
 			password, userPassword);
 
@@ -2740,6 +2748,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			}
 
 			long passwordStartTime = user.getPasswordModifiedDate().getTime();
+
 			long elapsedTime = now.getTime() - passwordStartTime;
 
 			if (elapsedTime > (passwordPolicy.getMaxAge() * 1000)) {
@@ -2778,6 +2787,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			}
 
 			long timeModified = user.getPasswordModifiedDate().getTime();
+
 			long passwordExpiresOn =
 				(passwordPolicy.getMaxAge() * 1000) + timeModified;
 
@@ -4243,6 +4253,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 			if ((password1 == null) || (password2 == null)) {
 				password1 = PwdGenerator.getPassword();
+
 				password2 = password1;
 			}
 

@@ -267,11 +267,11 @@ public class CalendarBookingLocalServiceTest {
 	public void testAddCalendarBookingsAndViewSentReminders() throws Exception {
 		ServiceContext serviceContext = createServiceContext();
 
-		User calendarBookingCreatorUser = UserTestUtil.addUser();
+		_invitingUser = UserTestUtil.addUser();
 
 		CalendarResource calendarResource =
 			CalendarResourceUtil.getUserCalendarResource(
-				calendarBookingCreatorUser.getUserId(), serviceContext);
+				_invitingUser.getUserId(), serviceContext);
 
 		Calendar calendar = calendarResource.getDefaultCalendar();
 
@@ -291,8 +291,7 @@ public class CalendarBookingLocalServiceTest {
 
 		CalendarBooking calendarBooking =
 			CalendarBookingLocalServiceUtil.addCalendarBooking(
-				calendarBookingCreatorUser.getUserId(),
-				calendar.getCalendarId(),
+				_invitingUser.getUserId(), calendar.getCalendarId(),
 				new long[] {invitedCalendar.getCalendarId()},
 				CalendarBookingConstants.PARENT_CALENDAR_BOOKING_ID_DEFAULT,
 				RandomTestUtil.randomLocaleStringMap(),
@@ -1493,6 +1492,9 @@ public class CalendarBookingLocalServiceTest {
 
 		return childCalendarBooking;
 	}
+
+	@DeleteAfterTestRun
+	private User _invitingUser;
 
 	@DeleteAfterTestRun
 	private User _user;

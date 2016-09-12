@@ -308,10 +308,7 @@ public class CalendarBookingLocalServiceTest {
 			_user.getUserId(), childCalendarBooking,
 			CalendarBookingWorkflowConstants.STATUS_APPROVED, serviceContext);
 
-		// Wait one minute to give enough time to the reminder emails arrive to
-		// the users.
-
-		Thread.sleep(Time.MINUTE);
+		CalendarBookingLocalServiceUtil.checkCalendarBookings();
 
 		String mailMessageSubject =
 			"Calendar: Event Reminder for " + StringPool.QUOTE +

@@ -61,19 +61,15 @@
 			<var name="roleName" value="Regrole Name" />
 		</execute>
 
-		<execute function="Type" locator1="RolesPermissionsNavigation#SEARCH_FIELD" value1="Roles" />
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Roles" />
+		</execute>
 
-		<execute function="AssertClick" locator1="RolesPermissionsNavigation#CONTROL_PANEL_USERS_ROLES" value1="Roles" />
-
-		<var name="permissionNavigationValue" value="Roles" />
-
-		<execute function="AssertTextEquals" locator1="RolesPermissions#PERMISSION_HEADER" value1="Roles" />
-
-		<execute function="Check" locator1="RolesPermissions#CONTROL_PANEL_USERS_ROLES_GENERAL_PERMISSIONS_ACCESS_IN_CONTROL_PANEL_CHECKBOX" />
-
-		<execute macro="Button#clickSave" />
-
-		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
+		<execute macro="Role#definePermissionCP">
+			<var name="permissionDefinitionKey" value="CONTROL_PANEL_USERS_ROLES_GENERAL_PERMISSIONS_ACCESS_IN_CONTROL_PANEL_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="Access in Control Panel" />
+			<var name="roleName" value="Regrole Name" />
+		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="userea@liferay.com" />

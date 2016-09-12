@@ -2019,10 +2019,10 @@
 
 		<execute macro="WebContentNavigator#gotoManageStructures" />
 
-		<for list="WC Structure Name 1,WC Structure Name 2,WC Structure Name 3,WC Structure Name 4,WC Structure Name 5,WC Structure Name 6,WC Structure Name 7,WC Structure Name 8,WC Structure Name 9" param="structureName">
+		<for list="1,2,3,4,5,6,7,8,9" param="n">
 			<execute macro="WebContentStructures#addCP">
 				<var name="structureDescription" value="WC Structure Description" />
-				<var name="structureName" value="${structureName}" />
+				<var name="structureName" value="WC Structure Name ${n}" />
 			</execute>
 
 			<execute macro="DynamicDataMapping#addField">

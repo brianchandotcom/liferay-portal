@@ -20,18 +20,18 @@ package com.liferay.jenkins.results.parser;
 public class TopLevelBuild extends BaseBuild {
 
 	@Override
+	public String getStatusReport(int indentSize) {
+		return super.getStatusReport(indentSize) + "Update duration: " +
+			_updateDuration + " milliseconds.";
+	}
+
+	@Override
 	public void update() {
 		long start = System.currentTimeMillis();
 		super.update();
 		_updateDuration = System.currentTimeMillis() - start;
 	}
-	
-	@Override
-	public String getStatusReport(int indentSize) {
-		return super.getStatusReport(indentSize) + "Update duration: "
-			+ _updateDuration + " milliseconds.";
-	}
-	
+
 	protected TopLevelBuild(String url) throws Exception {
 		this(url, null);
 	}
@@ -39,7 +39,7 @@ public class TopLevelBuild extends BaseBuild {
 	protected TopLevelBuild(String url, TopLevelBuild parent) throws Exception {
 		super(url, parent);
 	}
-	
+
 	private long _updateDuration;
 
 }

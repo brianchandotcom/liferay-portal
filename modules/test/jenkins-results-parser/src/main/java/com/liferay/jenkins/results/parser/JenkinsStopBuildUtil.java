@@ -53,8 +53,8 @@ public class JenkinsStopBuildUtil {
 			TopLevelBuild topLevelBuild, String username, String password)
 		throws Exception {
 
-		List<Build> downstreamBuilds =
-			topLevelBuild.getDownstreamBuilds("running");
+		List<Build> downstreamBuilds = topLevelBuild.getDownstreamBuilds(
+			"running");
 
 		for (Build downstreamBuild : downstreamBuilds) {
 			_stopBuild(downstreamBuild, username, password);

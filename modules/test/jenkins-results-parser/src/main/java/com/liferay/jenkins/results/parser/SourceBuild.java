@@ -11,6 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 package com.liferay.jenkins.results.parser;
 
 /**
@@ -29,4 +30,5 @@ public class SourceBuild extends BaseBuild {
 	@Override
 	public void findDownstreamBuilds() {
 	}
+
 }

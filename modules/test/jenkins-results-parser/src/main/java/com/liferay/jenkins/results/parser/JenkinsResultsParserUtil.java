@@ -661,9 +661,11 @@ public class JenkinsResultsParserUtil {
 
 	public static void write(String path, String content) throws IOException {
 		if (path.startsWith("${dependencies.url}")) {
-			path = path.replace("${dependencies.url}", DEPENDENCIES_URL_FILE.replace("file:", ""));
+			path = path.replace(
+				"${dependencies.url}",
+				DEPENDENCIES_URL_FILE.replace("file:", ""));
 		}
-		
+
 		write(new File(path), content);
 	}
 

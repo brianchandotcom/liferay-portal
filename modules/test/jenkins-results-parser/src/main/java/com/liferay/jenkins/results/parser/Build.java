@@ -22,13 +22,13 @@ import java.util.Map;
  */
 public interface Build {
 
+	public void addDownstreamBuilds(String... urls);
+
 	public int getBuildNumber();
 
 	public String getBuildURL();
 
 	public String getConsoleText();
-
-	public void addDownstreamBuilds(String... urls);
 
 	public int getDownstreamBuildCount(String status);
 
@@ -42,7 +42,7 @@ public interface Build {
 
 	public String getMaster();
 
-	public Map<String,String> getParameters();
+	public Map<String, String> getParameters();
 
 	public String getParameterValue(String name);
 
@@ -54,9 +54,9 @@ public interface Build {
 
 	public long getStatusAge();
 
-	public String getStatusReport(int indentSize);
-
 	public String getStatusReport();
+
+	public String getStatusReport(int indentSize);
 
 	public void reinvoke();
 

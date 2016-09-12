@@ -11,6 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 package com.liferay.jenkins.results.parser;
 
 import java.util.regex.Matcher;
@@ -20,11 +21,15 @@ import java.util.regex.Pattern;
  * @author Peter Yoo
  */
 public class AxisBuild extends BaseBuild {
-	
+
 	@Override
 	public void findDownstreamBuilds() {
 	}
-	
+
+	public String getAxisVariable() {
+		return axisVariable;
+	}
+
 	@Override
 	public String getBuildURL() {
 		String jobURL = getJobURL();
@@ -35,10 +40,6 @@ public class AxisBuild extends BaseBuild {
 		}
 
 		return jobURL + "/" + axisVariable + "/" + buildNumber + "/";
-	}
-
-	public String getAxisVariable() {
-		return axisVariable;
 	}
 
 	protected AxisBuild(String url) throws Exception {
@@ -71,9 +72,10 @@ public class AxisBuild extends BaseBuild {
 	}
 
 	protected String axisVariable;
+
 	private static final Pattern _buildURLPattern = Pattern.compile(
-		"\\w+://(?<master>[^/]+)/+job/+(?<jobName>[^/]+)/" + 
-			"(?<axisVariable>AXIS_VARIABLE=[^,]+,[^/]+)/(?<buildNumber>\\d+)/?"
-		);
+		"\\w+://(?<master>[^/]+)/+job/+(?<jobName>[^/]+)/" +
+			"(?<axisVariable>AXIS_VARIABLE=[^,]+,[^/]+)/" +
+				"(?<buildNumber>\\d+)/?");
 
 }

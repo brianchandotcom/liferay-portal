@@ -15,6 +15,7 @@
 package com.liferay.jenkins.results.parser;
 
 import java.net.URL;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -76,7 +77,8 @@ public abstract class BaseBuild implements Build {
 		try {
 			return JenkinsResultsParserUtil.toString(
 				JenkinsResultsParserUtil.getLocalURL(
-					getBuildURL() + "/consoleText"), false);
+					getBuildURL() + "/consoleText"),
+				false);
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -87,8 +89,8 @@ public abstract class BaseBuild implements Build {
 	public void addDownstreamBuilds(String... urls) {
 		boolean downstreamBuildAdded = false;
 
-		List<URL> downstreamBuildURLs =
-			new ArrayList<>(downstreamBuilds.size());
+		List<URL> downstreamBuildURLs = new ArrayList<>(
+			downstreamBuilds.size());
 
 		try {
 			for (Build downstreamBuild : downstreamBuilds) {
@@ -98,14 +100,14 @@ public abstract class BaseBuild implements Build {
 			}
 
 			for (String url : urls) {
-				URL addURL =
-					new URL(
-						JenkinsResultsParserUtil.getLocalURL(decodeURL(url)));
+				URL addURL = new URL(
+					JenkinsResultsParserUtil.getLocalURL(decodeURL(url)));
+
 				if (!downstreamBuildURLs.contains(addURL)) {
 					downstreamBuildAdded = true;
 
-					downstreamBuilds.add(BuildFactory.newBuild(
-						addURL.toString(), this));
+					downstreamBuilds.add(
+						BuildFactory.newBuild(addURL.toString(), this));
 				}
 			}
 
@@ -253,6 +255,7 @@ public abstract class BaseBuild implements Build {
 	@Override
 	public String getStatusReport(int indentSize) {
 		StringBuffer indentStringBuffer = new StringBuffer();
+
 		for (int i = 0; i < indentSize; i++) {
 			indentStringBuffer.append(" ");
 		}
@@ -393,7 +396,7 @@ public abstract class BaseBuild implements Build {
 						setStatus("queued");
 					}
 					else if (status.equals("queued") &&
-						(queueItemJSONObject == null)) {
+							 (queueItemJSONObject == null)) {
 
 						setStatus("missing");
 
@@ -407,13 +410,16 @@ public abstract class BaseBuild implements Build {
 			JSONObject buildJSONObject = getBuildJSONObject("result");
 
 			if (downstreamBuilds != null) {
-				ExecutorService executorService = Executors.newFixedThreadPool(100);
+				ExecutorService executorService = Executors.newFixedThreadPool(
+					100);
 
 				for (final Build downstreamBuild : downstreamBuilds) {
 					Runnable runnable = new Runnable() {
+
 						public void run() {
 							downstreamBuild.update();
 						}
+
 					};
 
 					executorService.execute(runnable);
@@ -426,26 +432,29 @@ public abstract class BaseBuild implements Build {
 				}
 
 				String result = buildJSONObject.optString("result");
-				
 
-				if ((downstreamBuilds.size() == getDownstreamBuildCount("completed"))
-					&& result.length() > 0) {
+				if ((downstreamBuilds.size() ==
+						getDownstreamBuildCount("completed")) &&
+					(result.length() > 0)) {
+
 					setStatus("completed");
 
 					return;
 				}
 
 				if (getDownstreamBuildCount("missing") > 0) {
-					System.out.println("missing: "
-						+ getDownstreamBuildCount("missing"));
+					System.out.println(
+						"missing: " + getDownstreamBuildCount("missing"));
+
 					setStatus("missing");
 
 					return;
 				}
 
 				if (getDownstreamBuildCount("starting") > 0) {
-					System.out.println("starting: "
-						+ getDownstreamBuildCount("starting"));
+					System.out.println(
+						"starting: " + getDownstreamBuildCount("starting"));
+
 					setStatus("starting");
 
 					return;
@@ -488,8 +497,8 @@ public abstract class BaseBuild implements Build {
 	}
 
 	protected void findDownstreamBuilds() {
-		Set<String> downstreamBuildURLs = 
-			new HashSet<>(findDownstreamBuildsInConsoleText());
+		Set<String> downstreamBuildURLs = new HashSet<>(
+			findDownstreamBuildsInConsoleText());
 
 		JSONObject buildJSONObject;
 
@@ -514,13 +523,14 @@ public abstract class BaseBuild implements Build {
 			}
 		}
 
-		addDownstreamBuilds(downstreamBuildURLs.toArray(
-			new String[downstreamBuildURLs.size()]));
+		addDownstreamBuilds(
+			downstreamBuildURLs.toArray(
+				new String[downstreamBuildURLs.size()]));
 	}
 
 	protected Set<String> findDownstreamBuildsInConsoleText() {
-		Matcher downstreamBuildURLMatcher =
-			downstreamBuildURLPattern.matcher(getConsoleText());
+		Matcher downstreamBuildURLMatcher = downstreamBuildURLPattern.matcher(
+			getConsoleText());
 
 		Set<String> downstreamBuildURLs = new HashSet<>();
 
@@ -543,54 +553,54 @@ public abstract class BaseBuild implements Build {
 	protected String getBuildMessage() {
 		if (jobName != null) {
 			String status = getStatus();
-	
+
 			StringBuilder sb = new StringBuilder();
-	
+
 			sb.append("Build '");
 			sb.append(jobName);
 			sb.append("'");
-	
+
 			if (status.equals("completed")) {
 				sb.append(" completed at ");
 				sb.append(getBuildURL());
 				sb.append(". ");
 				sb.append(getResult());
-	
+
 				return sb.toString();
 			}
-	
+
 			if (status.equals("missing")) {
 				sb.append(" is missing ");
 				sb.append(getJobURL());
 				sb.append(".");
-	
+
 				return sb.toString();
 			}
-	
+
 			if (status.equals("queued")) {
 				sb.append(" is queued at ");
 				sb.append(getJobURL());
 				sb.append(".");
-	
+
 				return sb.toString();
 			}
-	
+
 			if (status.equals("running")) {
 				sb.append(" started at ");
 				sb.append(getBuildURL());
 				sb.append(".");
-	
+
 				return sb.toString();
 			}
-	
+
 			if (status.equals("starting")) {
 				sb.append(" invoked at ");
 				sb.append(getJobURL());
 				sb.append(".");
-	
+
 				return sb.toString();
 			}
-	
+
 			throw new RuntimeException("Unknown status: " + status + ".");
 		}
 
@@ -721,8 +731,7 @@ public abstract class BaseBuild implements Build {
 		return null;
 	}
 
-	protected void loadParameters()
-		throws Exception {
+	protected void loadParameters() throws Exception {
 
 		if (getBuildURL() == null) {
 			return;
@@ -741,8 +750,8 @@ public abstract class BaseBuild implements Build {
 		JSONObject actionJSONObject = actionsJSONArray.getJSONObject(0);
 
 		if (actionJSONObject.has("parameters")) {
-			JSONArray parametersJSONArray =
-				actionJSONObject.getJSONArray("parameters");
+			JSONArray parametersJSONArray = actionJSONObject.getJSONArray(
+				"parameters");
 
 			_parameters = new HashMap<>(parametersJSONArray.length());
 
@@ -772,8 +781,10 @@ public abstract class BaseBuild implements Build {
 
 		for (String parameter : queryString.split("&")) {
 			String[] nameValueArray = parameter.split("=");
-			if ((nameValueArray.length == 2)
-				&& jobParameterNames.contains(nameValueArray[0])) {
+
+			if ((nameValueArray.length == 2) &&
+				jobParameterNames.contains(nameValueArray[0])) {
+
 				_parameters.put(nameValueArray[0], nameValueArray[1]);
 			}
 		}
@@ -831,7 +842,6 @@ public abstract class BaseBuild implements Build {
 
 			System.out.println(getBuildMessage());
 		}
-
 	}
 
 	protected List<Integer> badBuildNumbers = new ArrayList<>();

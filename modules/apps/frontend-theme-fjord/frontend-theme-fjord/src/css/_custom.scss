@@ -4,6 +4,11 @@
 @import "partials/footer";
 @import "partials/navbar";
 
+#column-1 {
+	padding-left: 0;
+	padding-right: 0;
+}
+
 #content {
 	background-color: $color-2;
 	color: $color-1;
@@ -11,6 +16,18 @@
 
 #wrapper {
 	padding-top: 0;
+}
+
+.portlet-layout.row {
+	margin-left: 0;
+	margin-right: 0;
+}
+
+.big-item-list-template h2 + p,
+.list-packages-template h3 + p + p {
+	@include md {
+		min-height: 70px;
+	}
 }
 
 .jumbotron {

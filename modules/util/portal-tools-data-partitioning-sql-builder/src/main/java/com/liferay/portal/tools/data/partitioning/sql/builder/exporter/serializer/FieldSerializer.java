@@ -12,18 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.tools.data.partitioning.sql.builder.mysql.exporter;
-
-import com.liferay.portal.tools.data.partitioning.sql.builder.exporter.InsertSQLBuilder;
+package com.liferay.portal.tools.data.partitioning.sql.builder.exporter.serializer;
 
 /**
- * @author Manuel de la Peña
+ * @author Miguel Pastor
  */
-public class MySQLInsertSQLBuilder extends InsertSQLBuilder {
+public interface FieldSerializer {
 
-	@Override
-	public String getDateTimeFormat() {
-		return "yyyy-MM-dd HH:mm:ss";
-	}
+	public String serialize(Object field);
 
 }

@@ -98,9 +98,9 @@ teamSearch.setTotal(teamsCount);
 			<%
 			Map<String, Object> data = new HashMap<String, Object>();
 
+			data.put("entityid", curTeam.getTeamId());
+			data.put("entityname", curTeam.getName());
 			data.put("teamdescription", curTeam.getDescription());
-			data.put("teamid", curTeam.getTeamId());
-			data.put("teamname", curTeam.getName());
 
 			Group group = themeDisplay.getScopeGroup();
 

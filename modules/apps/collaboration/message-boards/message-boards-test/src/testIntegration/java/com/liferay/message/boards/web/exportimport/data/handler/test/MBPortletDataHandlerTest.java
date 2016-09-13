@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.message.boards.lar.test;
+package com.liferay.message.boards.web.exportimport.data.handler.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;

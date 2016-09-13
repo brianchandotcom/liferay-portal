@@ -147,8 +147,16 @@ public class LiferayAppDefaultsPlugin implements Plugin<Project> {
 				String moduleName = artifactURL.substring(start, pos);
 				String moduleVersion = artifactURL.substring(pos + 1, end);
 
-				groupName =
-					moduleName + ' ' + moduleVersion + " - " + groupName;
+				StringBuilder sb = new StringBuilder();
+
+				sb.append("Module ");
+				sb.append(moduleName);
+				sb.append(' ');
+				sb.append(moduleVersion);
+				sb.append(" - ");
+				sb.append(groupName);
+
+				groupName = sb.toString();
 			}
 		}
 

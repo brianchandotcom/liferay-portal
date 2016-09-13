@@ -1380,6 +1380,8 @@ AUI.add(
 
 						instance._cache = {};
 
+						instance._clearedModal = false;
+
 						instance.after('selectedLayoutChange', instance._afterSelectedLayoutChange);
 						instance.after('selectedLayoutPathChange', instance._afterSelectedLayoutPathChange);
 
@@ -1666,6 +1668,10 @@ AUI.add(
 					_handleClearButtonClick: function() {
 						var instance = this;
 
+						instance._clearedModal = true;
+
+						instance._navbar.one('.active').removeClass('active');
+
 						instance.setValue('');
 
 						instance.set('selectedLayout', instance.get('selectedLayoutPath')[0]);
@@ -1803,6 +1809,8 @@ AUI.add(
 
 						currentTarget.addClass('active');
 
+						instance._currentParentLayoutId = 0;
+
 						instance._cleanSelectedLayout();
 
 						var privateLayout = currentTarget.test('.private');
@@ -1884,21 +1892,13 @@ AUI.add(
 
 							listNode.on('scroll', instance._handleModalScroll, instance);
 						}
-						else {
-							var path = instance.get('selectedLayoutPath');
+						else if (instance._clearedModal) {
+							var activeClass = privateLayout ? '.private' : '.public';
 
-							instance.set(
-								'selectedLayout',
-								{
-									groupId: value.groupId,
-									label: value.label,
-									layoutId: value.layoutId,
-									path: path.slice(),
-									privateLayout: privateLayout
-								}
-							);
-
+							instance._navbar.one(activeClass).addClass('active');
+							instance._resetBreadcrumb(privateLayout);
 							instance._renderLayoutsList(privateLayout);
+							instance._clearedModal = false;
 						}
 
 						modal.show();

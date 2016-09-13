@@ -153,6 +153,11 @@ to use the Liferay localization mechanism in the generated `.soy.js` files.
 - [LPS-67352]: Update the [Liferay Source Formatter] dependency to version
 1.0.277.
 
+## 2.0.33 - 2016-09-13
+
+### Changed
+- [LPS-67986]: Update the [Liferay CSS Builder] dependency to version 1.0.20.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
 [Liferay CSS Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/css-builder

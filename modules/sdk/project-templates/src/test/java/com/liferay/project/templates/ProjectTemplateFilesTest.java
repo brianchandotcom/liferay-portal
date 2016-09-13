@@ -20,6 +20,7 @@ import com.liferay.project.templates.util.FileTestUtil;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.StringReader;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.DirectoryStream;
@@ -200,11 +201,7 @@ public class ProjectTemplateFilesTest {
 					}
 
 					if (_isTextFile(fileName, extension)) {
-						_testTextFileLines(path);
-
-						Assert.assertFalse(
-							"Trailing empty line in " + path,
-							FileTestUtil.endsWithEmptyLine(path));
+						_testTextFile(path);
 					}
 
 					return FileVisitResult.CONTINUE;
@@ -213,9 +210,19 @@ public class ProjectTemplateFilesTest {
 			});
 	}
 
-	private void _testTextFileLines(Path path) throws IOException {
-		try (BufferedReader bufferedReader = Files.newBufferedReader(
-				path, StandardCharsets.UTF_8)) {
+	private void _testTextFile(Path path) throws IOException {
+		String text = FileTestUtil.read(path);
+
+		boolean trailingEmptyLine = false;
+
+		if ((text.length() > 0) && text.charAt(text.length() - 1) == '\n') {
+			trailingEmptyLine = true;
+		}
+
+		Assert.assertFalse("Trailing empty line in " + path, trailingEmptyLine);
+
+		try (BufferedReader bufferedReader = new BufferedReader(
+				new StringReader(text))) {
 
 			String line = null;
 

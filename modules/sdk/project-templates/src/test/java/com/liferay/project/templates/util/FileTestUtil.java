@@ -20,7 +20,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.RandomAccessFile;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.DirectoryStream;
@@ -40,28 +39,6 @@ public class FileTestUtil {
 
 	public static final String PROJECT_TEMPLATE_DIR_PREFIX =
 		"project-templates-";
-
-	public static boolean endsWithEmptyLine(Path path) throws IOException {
-		try (RandomAccessFile randomAccessFile = new RandomAccessFile(
-				path.toFile(), "r")) {
-
-			long pos = randomAccessFile.length() - 1;
-
-			if (pos < 0) {
-				return false;
-			}
-
-			randomAccessFile.seek(pos);
-
-			int c = randomAccessFile.read();
-
-			if ((c == '\n') || (c == '\r')) {
-				return true;
-			}
-		}
-
-		return false;
-	}
 
 	public static String getExtension(String fileName) {
 		int pos = fileName.indexOf('.');

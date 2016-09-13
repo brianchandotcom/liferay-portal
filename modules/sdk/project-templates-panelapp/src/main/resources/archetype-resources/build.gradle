@@ -1,4 +1,4 @@
-#if( ${projectType} != "workspace")buildscript {
+#if (${projectType} != "workspace")buildscript {
 	dependencies {
 		classpath group: "com.liferay", name: "com.liferay.gradle.plugins", version: "latest.release"
 	}
@@ -22,7 +22,7 @@ dependencies {
 	compileOnly group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
 }
-#if( ${projectType} != "workspace")
+#if (${projectType} != "workspace")
 
 repositories {
 	mavenLocal()

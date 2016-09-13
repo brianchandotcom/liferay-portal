@@ -1,20 +1,14 @@
 import com.liferay.gradle.util.FileUtil
 
+task writeMavenEmbedderDependencies
+
 bundle {
 	includeTransitiveDependencies = true
 }
 
 configurations {
-	projectTemplates
 	mavenEmbedder
-}
-
-task mavenEmbedderDeps << {
-	File mavenEmbedderDepsFile = new File(buildDir, "mavenEmbedderDeps.txt")
-
-	buildDir.mkdirs()
-
-	mavenEmbedderDepsFile.text = configurations.mavenEmbedder.join('\n')
+	projectTemplates
 }
 
 dependencies {
@@ -65,7 +59,7 @@ test {
 		"${it.path}:install"
 	}
 
-	dependsOn mavenEmbedderDeps
+	dependsOn writeMavenEmbedderDependencies
 
 	doFirst {
 		Properties gradleWrapperProperties = new Properties()
@@ -83,13 +77,19 @@ test {
 		systemProperty "gradle.distribution", uri(gradleDistributionFile)
 	}
 
-	jvmArgs '-XX:MaxMetaspaceSize=256m'
-
+	jvmArgs "-XX:MaxMetaspaceSize=256m"
 	maxHeapSize = "1024m"
 
-	systemProperty 'maven.multiModuleProjectDirectory', "$buildDir"
-
+	systemProperty "maven.multiModuleProjectDirectory", buildDir
 	systemProperty "repository.url", System.properties["repository.url"]
 	systemProperty "http.proxyHost", System.properties["http.proxyHost"]
 	systemProperty "http.proxyPort", System.properties["http.proxyPort"]
+}
+
+writeMavenEmbedderDependencies << {
+	File mavenEmbedderDependenciesFile = new File(buildDir, "maven-embedder-dependencies.txt")
+
+	mavenEmbedderDependenciesFile.parentFile.mkdirs()
+
+	mavenEmbedderDependenciesFile.text = configurations.mavenEmbedder.join(System.lineSeparator())
 }

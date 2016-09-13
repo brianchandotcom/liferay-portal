@@ -86,8 +86,8 @@ public class ProjectTemplatesTest {
 			null, "hello-world-portlet");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
-			"mvcportlet", "hello-world-portlet",
-			"-Dpackage=hello.world.portlet", "-DclassName=HelloWorld");
+			"mvcportlet", "hello-world-portlet", "-DclassName=HelloWorld",
+			"-Dpackage=hello.world.portlet");
 
 		_testExists(gradleProjectDir, "bnd.bnd");
 		_testExists(
@@ -115,8 +115,8 @@ public class ProjectTemplatesTest {
 			"activator", "bar-activator");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
-			"activator", "bar-activator", "-Dpackage=bar.activator",
-			"-DclassName=BarActivator");
+			"activator", "bar-activator", "-DclassName=BarActivator",
+			"-DclassName=HelloWorld");
 
 		_testExists(gradleProjectDir, "bnd.bnd");
 
@@ -138,7 +138,7 @@ public class ProjectTemplatesTest {
 		File gradleProjectDir = _buildTemplateWithGradle("api", "foo");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
-			"api", "foo", "-Dpackage=foo", "-DclassName=Foo");
+			"api", "foo", "-DclassName=Foo", "-Dpackage=foo");
 
 		_testExists(gradleProjectDir, "bnd.bnd");
 
@@ -160,8 +160,8 @@ public class ProjectTemplatesTest {
 			"contenttargetingreport", "foo-bar");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
-			"contenttargetingreport", "foo-bar", "-Dpackage=foo.bar",
-			"-DclassName=FooBar");
+			"contenttargetingreport", "foo-bar", "-DclassName=FooBar",
+			"-Dpackage=foo.bar");
 
 		_testExists(gradleProjectDir, "bnd.bnd");
 
@@ -181,8 +181,8 @@ public class ProjectTemplatesTest {
 			"contenttargetingrule", "foo-bar");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
-			"contenttargetingrule", "foo-bar", "-Dpackage=foo.bar",
-			"-DclassName=FooBar");
+			"contenttargetingrule", "foo-bar", "-DclassName=FooBar",
+			"-Dpackage=foo.bar");
 
 		_testExists(gradleProjectDir, "bnd.bnd");
 
@@ -204,8 +204,8 @@ public class ProjectTemplatesTest {
 			"contenttargetingtrackingaction", "foo-bar");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
-			"contenttargetingtrackingaction", "foo-bar", "-Dpackage=foo.bar",
-			"-DclassName=FooBar");
+			"contenttargetingtrackingaction", "foo-bar", "-DclassName=FooBar",
+			"-Dpackage=foo.bar");
 
 		_testExists(gradleProjectDir, "bnd.bnd");
 
@@ -226,8 +226,8 @@ public class ProjectTemplatesTest {
 			"controlmenuentry", "foo-bar");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
-			"controlmenuentry", "foo-bar", "-Dpackage=foo.bar",
-			"-DclassName=FooBar");
+			"controlmenuentry", "foo-bar", "-DclassName=FooBar",
+			"-Dpackage=foo.bar");
 
 		_testExists(gradleProjectDir, "bnd.bnd");
 
@@ -250,9 +250,9 @@ public class ProjectTemplatesTest {
 			"com.liferay.login.web", "--host-bundle-version", "1.0.0");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
-			"fragment", "loginhook", "-Dpackage=loginhook",
+			"fragment", "loginhook",
 			"-DhostBundleSymbolicName=com.liferay.login.web",
-			"-DhostBundleVersion=1.0.0");
+			"-DhostBundleVersion=1.0.0", "-Dpackage=loginhook");
 
 		_testContains(
 			gradleProjectDir, "bnd.bnd", "Bundle-SymbolicName: loginhook",
@@ -271,7 +271,7 @@ public class ProjectTemplatesTest {
 		File gradleProjectDir = _buildTemplateWithGradle("mvcportlet", "foo");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
-			"mvcportlet", "foo", "-Dpackage=foo", "-DclassName=Foo");
+			"mvcportlet", "foo", "-DclassName=Foo", "-Dpackage=foo");
 
 		_testExists(gradleProjectDir, "bnd.bnd");
 		_testExists(
@@ -297,8 +297,8 @@ public class ProjectTemplatesTest {
 			"mvcportlet", "foo", "--package-name", "com.liferay.test");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
-			"mvcportlet", "foo", "-Dpackage=com.liferay.test",
-			"-DclassName=Foo");
+			"mvcportlet", "foo", "-DclassName=Foo",
+			"-Dpackage=com.liferay.test");
 
 		_testExists(gradleProjectDir, "bnd.bnd");
 		_testExists(
@@ -327,8 +327,8 @@ public class ProjectTemplatesTest {
 			"mvcportlet", "portlet-portlet");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
-			"mvcportlet", "portlet-portlet", "-Dpackage=portlet.portlet",
-			"-DclassName=Portlet");
+			"mvcportlet", "portlet-portlet", "-DclassName=Portlet",
+			"-Dpackage=portlet.portlet");
 
 		_testExists(gradleProjectDir, "bnd.bnd");
 		_testExists(
@@ -362,8 +362,8 @@ public class ProjectTemplatesTest {
 			"panelapp", "gradle.test", "--class-name", "Foo");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
-			"panelapp", "gradle.test", "-Dpackage=gradle.test",
-			"-DclassName=Foo");
+			"panelapp", "gradle.test", "-DclassName=Foo",
+			"-Dpackage=gradle.test");
 
 		_testExists(gradleProjectDir, "bnd.bnd");
 		_testExists(gradleProjectDir, "build.gradle");
@@ -384,7 +384,7 @@ public class ProjectTemplatesTest {
 			"portlet", "foo.test", "--class-name", "Foo");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
-			"portlet", "foo.test", "-Dpackage=foo.test", "-DclassName=Foo");
+			"portlet", "foo.test", "-DclassName=Foo", "-Dpackage=foo.test");
 
 		_testExists(gradleProjectDir, "bnd.bnd");
 
@@ -409,8 +409,8 @@ public class ProjectTemplatesTest {
 			"blade.test");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
-			"portletconfigurationicon", "icontest", "-Dpackage=blade.test",
-			"-DclassName=Icontest");
+			"portletconfigurationicon", "icontest", "-DclassName=Icontest",
+			"-Dpackage=blade.test");
 
 		_testExists(gradleProjectDir, "bnd.bnd");
 
@@ -436,8 +436,8 @@ public class ProjectTemplatesTest {
 			"portletprovider", "provider.test");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
-			"portletprovider", "provider.test", "-Dpackage=provider.test",
-			"-DclassName=ProviderTest");
+			"portletprovider", "provider.test", "-DclassName=ProviderTest",
+			"-Dpackage=provider.test");
 
 		_testExists(gradleProjectDir, "bnd.bnd");
 		_testExists(gradleProjectDir, "build.gradle");
@@ -463,8 +463,8 @@ public class ProjectTemplatesTest {
 			"blade.test");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
-			"portlettoolbarcontributor", "toolbartest", "-Dpackage=blade.test",
-			"-DclassName=Toolbartest");
+			"portlettoolbarcontributor", "toolbartest",
+			"-DclassName=Toolbartest", "-Dpackage=blade.test");
 
 		_testExists(gradleProjectDir, "bnd.bnd");
 
@@ -491,9 +491,9 @@ public class ProjectTemplatesTest {
 			"--service", "com.liferay.portal.kernel.events.LifecycleAction");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
-			"service", "servicepreaction", "-Dpackage=servicepreaction",
-			"-DclassName=FooAction", "-DserviceClass=" +
-			"com.liferay.portal.kernel.events.LifecycleAction");
+			"service", "servicepreaction", "-DclassName=FooAction",
+			"-Dpackage=servicepreaction",
+			"-DserviceClass=com.liferay.portal.kernel.events.LifecycleAction");
 
 		_testExists(gradleProjectDir, "bnd.bnd");
 
@@ -540,8 +540,8 @@ public class ProjectTemplatesTest {
 			serviceWrapperClassName);
 
 		File mavenProjectDir = _buildTemplateWithMaven(
-			"servicewrapper", "serviceoverride", "-Dpackage=serviceoverride",
-			"-DclassName=Serviceoverride",
+			"servicewrapper", "serviceoverride", "-DclassName=Serviceoverride",
+			"-Dpackage=serviceoverride",
 			"-DserviceWrapperClass=" + serviceWrapperClassName);
 
 		_testExists(gradleProjectDir, "bnd.bnd");
@@ -587,8 +587,8 @@ public class ProjectTemplatesTest {
 			"test.simulator");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
-			"simulationpanelentry", "simulator", "-Dpackage=test.simulator",
-			"-DclassName=Simulator");
+			"simulationpanelentry", "simulator", "-DclassName=Simulator",
+			"-Dpackage=test.simulator");
 
 		_testExists(gradleProjectDir, "bnd.bnd");
 
@@ -614,8 +614,8 @@ public class ProjectTemplatesTest {
 			"templatecontextcontributor", "blade-test");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
-			"templatecontextcontributor", "blade-test", "-Dpackage=blade.test",
-			"-DclassName=BladeTest");
+			"templatecontextcontributor", "blade-test", "-DclassName=BladeTest",
+			"-Dpackage=blade.test");
 
 		_testExists(gradleProjectDir, "bnd.bnd");
 
@@ -640,7 +640,7 @@ public class ProjectTemplatesTest {
 			null, "barfoo", "--package-name", "foo.bar");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
-			"mvcportlet", "barfoo", "-Dpackage=foo.bar", "-DclassName=Barfoo");
+			"mvcportlet", "barfoo", "-DclassName=Barfoo", "-Dpackage=foo.bar");
 
 		_testExists(
 			gradleProjectDir, "src/main/resources/META-INF/resources/init.jsp");
@@ -724,18 +724,17 @@ public class ProjectTemplatesTest {
 		ProjectTemplates.main(
 			completeArgs.toArray(new String[completeArgs.size()]));
 
-		File gradleProjectDir = new File(destinationDir, name);
+		File projectDir = new File(destinationDir, name);
 
-		_testExists(gradleProjectDir, ".gitignore");
-		_testExists(gradleProjectDir, "build.gradle");
-		_testExists(gradleProjectDir, "gradlew");
-		_testExists(gradleProjectDir, "gradlew.bat");
-		_testExists(gradleProjectDir, "gradle/wrapper/gradle-wrapper.jar");
-		_testExists(
-			gradleProjectDir, "gradle/wrapper/gradle-wrapper.properties");
-		_testNotExists(gradleProjectDir, "pom.xml");
+		_testExists(projectDir, ".gitignore");
+		_testExists(projectDir, "build.gradle");
+		_testExists(projectDir, "gradlew");
+		_testExists(projectDir, "gradlew.bat");
+		_testExists(projectDir, "gradle/wrapper/gradle-wrapper.jar");
+		_testExists(projectDir, "gradle/wrapper/gradle-wrapper.properties");
+		_testNotExists(projectDir, "pom.xml");
 
-		return gradleProjectDir;
+		return projectDir;
 	}
 
 	private File _buildTemplateWithMaven(
@@ -747,7 +746,7 @@ public class ProjectTemplatesTest {
 		List<String> completeArgs = new ArrayList<>();
 
 		completeArgs.add("archetype:generate");
-		completeArgs.add("-B");
+		completeArgs.add("--batch-mode");
 
 		if (Validator.isNotNull(template)) {
 			completeArgs.add(
@@ -768,16 +767,15 @@ public class ProjectTemplatesTest {
 
 		_executeMaven(destinationDir, completeArgs.toArray(new String[0]));
 
-		File gradleProjectDir = new File(destinationDir, name);
+		File projectDir = new File(destinationDir, name);
 
-		_testExists(gradleProjectDir, "pom.xml");
-		_testNotExists(gradleProjectDir, "gradlew");
-		_testNotExists(gradleProjectDir, "gradlew.bat");
-		_testNotExists(gradleProjectDir, "gradle/wrapper/gradle-wrapper.jar");
-		_testNotExists(
-			gradleProjectDir, "gradle/wrapper/gradle-wrapper.properties");
+		_testExists(projectDir, "pom.xml");
+		_testNotExists(projectDir, "gradlew");
+		_testNotExists(projectDir, "gradlew.bat");
+		_testNotExists(projectDir, "gradle/wrapper/gradle-wrapper.jar");
+		_testNotExists(projectDir, "gradle/wrapper/gradle-wrapper.properties");
 
-		return gradleProjectDir;
+		return projectDir;
 	}
 
 	private void _executeBndDiff(File gradleBundleFile, File mavenBundleFile)
@@ -819,11 +817,11 @@ public class ProjectTemplatesTest {
 	}
 
 	private void _executeGradle(
-			File gradleProjectDir, String[] taskPath, String... testTaskPaths)
+			File projectDir, String[] taskPaths, String... testTaskPaths)
 		throws IOException {
 
 		if (Validator.isNotNull(_repositoryUrl)) {
-			File buildGradleFile = new File(gradleProjectDir, "build.gradle");
+			File buildGradleFile = new File(projectDir, "build.gradle");
 
 			Path buildGradlePath = buildGradleFile.toPath();
 
@@ -842,25 +840,26 @@ public class ProjectTemplatesTest {
 		if (Validator.isNotNull(_httpProxyHost) &&
 			Validator.isNotNull(_httpProxyPort)) {
 
-			String[] arguments = new String[taskPath.length + 2];
+			String[] arguments = new String[taskPaths.length + 2];
+
 			arguments[0] = "-Dhttp.proxyHost=" + _httpProxyHost;
 			arguments[1] = "-Dhttp.proxyPort=" + _httpProxyPort;
 
-			System.arraycopy(taskPath, 0, arguments, 2, taskPath.length);
+			System.arraycopy(taskPaths, 0, arguments, 2, taskPaths.length);
 
 			gradleRunner.withArguments(arguments);
 		}
 		else {
-			gradleRunner.withArguments(taskPath);
+			gradleRunner.withArguments(taskPaths);
 		}
 
 		gradleRunner.withGradleDistribution(_gradleDistribution);
-		gradleRunner.withProjectDir(gradleProjectDir);
+		gradleRunner.withProjectDir(projectDir);
 
 		BuildResult buildResult = gradleRunner.build();
 
 		if (testTaskPaths.length == 0) {
-			testTaskPaths = taskPath;
+			testTaskPaths = taskPaths;
 		}
 
 		for (String testTaskPath : testTaskPaths) {
@@ -875,10 +874,10 @@ public class ProjectTemplatesTest {
 		}
 	}
 
-	private void _executeMaven(File gradleProjectDir, String[] args)
+	private void _executeMaven(File projectDir, String[] args)
 		throws Exception {
 
-		File deps = new File("build/mavenEmbedderDeps.txt");
+		File deps = new File("build/maven-embedder-dependencies.txt");
 
 		String[] lines = FileTestUtil.readLines(deps);
 
@@ -893,15 +892,15 @@ public class ProjectTemplatesTest {
 		}
 
 		try (URLClassLoader classLoader = new URLClassLoader(urls, null)) {
-			Class<?> mavenCLIClazz = classLoader.loadClass(
+			Class<?> mavenCliClass = classLoader.loadClass(
 				"org.apache.maven.cli.MavenCli");
 
-			Object mavenCli = mavenCLIClazz.newInstance();
+			Object mavenCli = mavenCliClass.newInstance();
 
-			ByteArrayOutputStream output = new ByteArrayOutputStream();
-			ByteArrayOutputStream errorOutput = new ByteArrayOutputStream();
+			ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+			ByteArrayOutputStream errorStream = new ByteArrayOutputStream();
 
-			Method doMain = mavenCLIClazz.getMethod(
+			Method doMainMethod = mavenCliClass.getMethod(
 				"doMain", String[].class, String.class, PrintStream.class,
 				PrintStream.class);
 
@@ -913,8 +912,8 @@ public class ProjectTemplatesTest {
 			currentThread.setContextClassLoader(classLoader);
 
 			try {
-				PrintStream out = new PrintStream(output);
-				PrintStream err = new PrintStream(errorOutput);
+				PrintStream outputPrintStream = new PrintStream(outputStream);
+				PrintStream errorPrintStream = new PrintStream(errorStream);
 
 				String[] arguments = null;
 
@@ -931,13 +930,13 @@ public class ProjectTemplatesTest {
 					arguments = args;
 				}
 
-				Integer retcode = (Integer)doMain.invoke(
-					mavenCli, arguments, gradleProjectDir.getAbsolutePath(),
-					out, err);
+				Integer exitCode = (Integer)doMainMethod.invoke(
+					mavenCli, arguments, projectDir.getAbsolutePath(),
+					outputPrintStream, errorPrintStream);
 
 				Assert.assertEquals(
-					new String(errorOutput.toByteArray()), 0,
-					retcode.intValue());
+					new String(errorStream.toByteArray()), 0,
+					exitCode.intValue());
 			}
 			finally {
 				currentThread.setContextClassLoader(contextClassLoader);
@@ -979,8 +978,7 @@ public class ProjectTemplatesTest {
 		_executeGradle(gradleProjectDir, tasks);
 
 		tasks = new String[] {
-			":" + apiProjectName + ":build", ":" + serviceProjectName +
-			":build"
+			":" + apiProjectName + ":build", ":" + serviceProjectName + ":build"
 		};
 
 		_executeGradle(gradleProjectDir, tasks);

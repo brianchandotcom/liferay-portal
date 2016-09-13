@@ -69,11 +69,17 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 
 		String uri = getURI(request);
 
+		int length = uri.length();
+
 		HttpServletResponse response = (HttpServletResponse)servletResponse;
 
-		String requestURL = getURL(request);
+		String queryString = request.getQueryString();
 
-		if (requestURL.length() > _invokerFilterURIMaxLength) {
+		if (queryString != null) {
+			length += queryString.length();
+		}
+
+		if (length > _invokerFilterURIMaxLength) {
 			response.sendError(HttpServletResponse.SC_REQUEST_URI_TOO_LONG);
 
 			if (_log.isWarnEnabled()) {
@@ -269,6 +275,10 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 		return HttpUtil.normalizePath(uri);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	protected String getURL(HttpServletRequest request) {
 		StringBuffer requestURL = request.getRequestURL();
 

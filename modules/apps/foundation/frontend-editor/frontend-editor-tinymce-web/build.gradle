@@ -40,7 +40,6 @@ classes {
 }
 
 dependencies {
-	provided group: "com.liferay", name: "com.liferay.frontend.editor.lang", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.frontend.taglib", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "2.0.0"

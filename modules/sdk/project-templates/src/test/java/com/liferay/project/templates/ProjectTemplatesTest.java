@@ -850,7 +850,7 @@ public class ProjectTemplatesTest {
 
 			String[] arguments = new String[taskPath.length + 2];
 			arguments[0] = "-Dhttp.proxyHost=" + _httpProxyHost;
-			arguments[0] = "-Dhttp.proxyPort=" + _httpProxyPort;
+			arguments[1] = "-Dhttp.proxyPort=" + _httpProxyPort;
 
 			System.arraycopy(taskPath, 0, arguments, 2, taskPath.length);
 
@@ -922,9 +922,24 @@ public class ProjectTemplatesTest {
 				PrintStream out = new PrintStream(output);
 				PrintStream err = new PrintStream(errorOutput);
 
+				String[] arguments = null;
+
+				if (Validator.isNotNull(_httpProxyHost) &&
+					Validator.isNotNull(_httpProxyPort)) {
+
+					arguments = new String[args.length + 2];
+					arguments[0] = "-Dhttp.proxyHost=" + _httpProxyHost;
+					arguments[1] = "-Dhttp.proxyPort=" + _httpProxyPort;
+
+					System.arraycopy(args, 0, arguments, 2, args.length);
+				}
+				else {
+					arguments = args;
+				}
+
 				Integer retcode = (Integer)doMain.invoke(
-					mavenCli, args, gradleProjectDir.getAbsolutePath(), out,
-					err);
+					mavenCli, arguments, gradleProjectDir.getAbsolutePath(),
+					out, err);
 
 				Assert.assertEquals(
 					new String(errorOutput.toByteArray()), 0,

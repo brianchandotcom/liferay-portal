@@ -37,7 +37,9 @@ public class ByteArrayFileInputStream extends InputStream {
 		}
 
 		this.file = file;
+
 		fileSize = file.length();
+
 		this.threshold = threshold;
 		this.deleteOnClose = deleteOnClose;
 	}

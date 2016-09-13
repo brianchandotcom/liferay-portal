@@ -53,6 +53,7 @@ public class RowChecker {
 
 	public RowChecker(PortletResponse portletResponse) {
 		_portletResponse = portletResponse;
+
 		_allRowIds = _portletResponse.getNamespace() + ALL_ROW_IDS;
 		_formName = _portletResponse.getNamespace() + FORM_NAME;
 		_rowIds = _portletResponse.getNamespace() + ROW_IDS;

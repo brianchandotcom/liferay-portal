@@ -34,6 +34,7 @@ public class CoalescedPipe<E> {
 		_notEmptyCondition = _takeLock.newCondition();
 
 		_headElementLink = new ElementLink<>(null);
+
 		_lastElementLink = _headElementLink;
 	}
 

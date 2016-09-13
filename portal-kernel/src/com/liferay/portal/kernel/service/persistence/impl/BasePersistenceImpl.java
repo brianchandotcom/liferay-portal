@@ -308,7 +308,9 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		_sessionFactory = sessionFactory;
+
 		_dialect = _sessionFactory.getDialect();
+
 		_db = DBManagerUtil.getDB(_dialect, getDataSource());
 
 		DBType dbType = _db.getDBType();

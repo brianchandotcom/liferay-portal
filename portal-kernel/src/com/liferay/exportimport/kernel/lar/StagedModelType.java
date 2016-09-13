@@ -141,6 +141,7 @@ public class StagedModelType {
 
 	protected void setClassName(String className) {
 		_className = className;
+
 		_classSimpleName = getSimpleName(_className);
 
 		if (Validator.isNotNull(className)) {
@@ -154,6 +155,7 @@ public class StagedModelType {
 	protected void setClassNameId(long classNameId) {
 		if (classNameId > 0) {
 			_className = PortalUtil.getClassName(classNameId);
+
 			_classSimpleName = getSimpleName(_className);
 		}
 		else {

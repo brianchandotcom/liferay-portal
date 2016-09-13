@@ -252,7 +252,7 @@ AUI.add(
 									{
 										icon: 'icon-eye-open',
 										id: 'viewBtn',
-										label: Liferay.Language.get('view-details'),
+										label: instance.get('strings.viewDetails'),
 										on: {
 											click: A.bind(instance._handleViewEvent, instance)
 										}
@@ -339,7 +339,7 @@ AUI.add(
 									modal: true
 								},
 								refreshWindow: window,
-								title: Liferay.Language.get('edit-calendar-booking'),
+								title: instance.get('string.editCalendarBooking'),
 								uri: Lang.sub(editCalendarBookingURL, data)
 							}
 						);
@@ -388,7 +388,7 @@ AUI.add(
 									modal: true
 								},
 								refreshWindow: window,
-								title: Liferay.Language.get('view-calendar-booking-details'),
+								title: instance.get('strings.viewCalendarBookingDetails'),
 								uri: Lang.sub(viewCalendarBookingURL, data)
 							}
 						);

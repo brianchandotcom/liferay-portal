@@ -219,7 +219,10 @@ while (manageableCalendarsIterator.hasNext()) {
 						userCalendarResourceId: <%= userCalendarResource.getCalendarResourceId() %>,
 					</c:if>
 
-					namespace: '<portlet:namespace />'
+					namespace: '<portlet:namespace />',
+					strings: {
+						checkAvailability: '<liferay-ui:message key="check-availability" />'
+					}
 				}
 			);
 

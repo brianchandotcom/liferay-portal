@@ -29,6 +29,10 @@ AUI.add(
 						value: 0
 					},
 
+					strings: {
+						checkAvailability: Liferay.Language.get('check-availability')
+					},
+
 					userCalendarResourceId: {
 						setter: toInt,
 						value: 0
@@ -124,7 +128,7 @@ AUI.add(
 
 						var items = [
 							{
-								caption: Liferay.Language.get('check-availability'),
+								caption: instance.get('strings.checkAvailability'),
 								fn: function(event) {
 									var instance = this;
 

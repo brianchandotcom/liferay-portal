@@ -128,7 +128,10 @@ String viewCalendarBookingURL = ParamUtil.getString(request, "viewCalendarBookin
 				remoteServices: remoteServices,
 				showHeader: <%= showSchedulerHeader %>,
 				strings: {
-					'description-hint': '<liferay-ui:message key="description-hint" />'
+					'description-hint': '<liferay-ui:message key="description-hint" />',
+					editCalendarBooking: '<liferay-ui:message key="edit-calendar-booking" />',
+					viewCalendarBookingDetails: '<liferay-ui:message key="view-calendar-booking-details" />',
+					viewDetails: '<liferay-ui:message key="view-details" />'
 				},
 				viewCalendarBookingURL: '<%= HtmlUtil.escapeJS(viewCalendarBookingURL) %>'
 			}
@@ -187,9 +190,12 @@ String viewCalendarBookingURL = ParamUtil.getString(request, "viewCalendarBookin
 			showAddEventBtn: <%= showAddEventBtn %>,
 			showHeader: <%= showSchedulerHeader %>,
 			strings: {
+				addCalendarBooking: '<liferay-ui:message key="add-calendar-booking" />',
 				agenda: '<liferay-ui:message key="agenda" />',
 				day: '<liferay-ui:message key="day" />',
+				deletingThisEventWillCancelTheMeetingWithYourGuestsWouldYouLikeToDelete: '<liferay-ui:message key="deleting-this-event-will-cancel-the-meeting-with-your-guests-would-you-like-to-delete" />',
 				month: '<liferay-ui:message key="month" />',
+				newCalendarBooking: '<liferay-ui:message key="new-calendar-booking" />',
 				today: '<liferay-ui:message key="today" />',
 				week: '<liferay-ui:message key="week" />',
 				year: '<liferay-ui:message key="year" />'

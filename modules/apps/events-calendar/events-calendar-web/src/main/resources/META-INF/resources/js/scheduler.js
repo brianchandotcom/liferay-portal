@@ -22,7 +22,7 @@ AUI.add(
 
 		var TPL_ICON_ADD_EVENT_NODE = '<div class="btn-group">' +
 				'<button class="btn btn-primary calendar-add-event-btn" type="button">' +
-					Liferay.Language.get('add-calendar-booking') +
+				'{addCalendarBooking}' +
 				'</button>' +
 			'</div>';
 
@@ -60,7 +60,16 @@ AUI.add(
 
 					iconAddEventNode: {
 						valueFn: function() {
-							return A.Node.create(TPL_ICON_ADD_EVENT_NODE);
+							var instance = this;
+
+							return A.Node.create(
+								Lang.sub(
+									TPL_ICON_ADD_EVENT_NODE,
+									{
+										addCalendarBooking: instance.get('strings.addCalendarBooking')
+									}
+								)
+							);
 						}
 					},
 
@@ -389,7 +398,7 @@ AUI.add(
 										destroyOnHide: true,
 										modal: true
 									},
-									title: Liferay.Language.get('new-calendar-booking'),
+									title: instance.get('strings.newCalendarBooking'),
 									uri: Lang.sub(editCalendarBookingURL, data)
 								}
 							);
@@ -422,7 +431,7 @@ AUI.add(
 								}
 							);
 						}
-						else if (schedulerEvent.isMasterBooking() && confirm(Liferay.Language.get('deleting-this-event-will-cancel-the-meeting-with-your-guests-would-you-like-to-delete'))) {
+						else if (schedulerEvent.isMasterBooking() && confirm(instance.get('strings.deletingThisEventWillCancelTheMeetingWithYourGuestsWouldYouLikeToDelete'))) {
 							remoteServices.deleteEvent(schedulerEvent, success);
 						}
 

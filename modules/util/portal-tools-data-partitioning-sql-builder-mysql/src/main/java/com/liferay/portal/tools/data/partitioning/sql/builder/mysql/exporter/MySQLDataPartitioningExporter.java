@@ -15,13 +15,24 @@
 package com.liferay.portal.tools.data.partitioning.sql.builder.mysql.exporter;
 
 import com.liferay.portal.tools.data.partitioning.sql.builder.exporter.BaseDataPartitioningExporter;
+import com.liferay.portal.tools.data.partitioning.sql.builder.exporter.InsertSQLBuilder;
 import com.liferay.portal.tools.data.partitioning.sql.builder.exporter.context.ExportContext;
+import com.liferay.portal.tools.data.partitioning.sql.builder.internal.serializer.DefaultFieldSerializer;
+
+import java.text.SimpleDateFormat;
 
 /**
  * @author Manuel de la Peña
  */
 public class MySQLDataPartitioningExporter
 	extends BaseDataPartitioningExporter {
+
+	public MySQLDataPartitioningExporter() {
+		super(
+			new InsertSQLBuilder(
+				new DefaultFieldSerializer(
+					new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"))));
+	}
 
 	@Override
 	public String getControlTableNamesSQL(ExportContext exportContext) {
@@ -42,11 +53,6 @@ public class MySQLDataPartitioningExporter
 		sb.append(getTableNameFieldName());
 
 		return sb.toString();
-	}
-
-	@Override
-	public String getDateTimeFormat() {
-		return "yyyy-MM-dd HH:mm:ss";
 	}
 
 	@Override

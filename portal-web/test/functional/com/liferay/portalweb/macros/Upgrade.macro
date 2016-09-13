@@ -413,7 +413,7 @@
 		</execute>
 	</command>
 
-	<command name="searchForAssetsAfterUpgrade">
+	<command name="reindexSearches">
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
@@ -435,7 +435,9 @@
 		</execute>
 
 		<execute function="Pause" locator1="10000" />
+	</command>
 
+	<command name="searchForAssetsAfterUpgrade">
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="Search#searchPG">

@@ -2,9 +2,10 @@ AUI.add(
 	'liferay-ddm-form-renderer-context',
 	function(A) {
 		var AArray = A.Array;
+		var AObject = A.Object;
 		var Renderer = Liferay.DDM.Renderer;
 
-		var FieldClassFactory = Renderer.FieldClassFactory;
+		var FieldTypes = Renderer.FieldTypes;
 		var Util = Renderer.Util;
 
 		var FormContextSupport = function() {
@@ -61,7 +62,11 @@ AUI.add(
 					}
 				);
 
-				var fieldClass = FieldClassFactory.getFieldClass(config.type, config.context);
+				var fieldType = FieldTypes.get(context.type);
+
+				var fieldClassName = fieldType.get('className');
+
+				var fieldClass = AObject.getValue(window, fieldClassName.split('.'));
 
 				var field = new fieldClass(config);
 
@@ -140,6 +145,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['liferay-ddm-form-renderer-field-class-factory', 'liferay-ddm-form-renderer-layout-visitor', 'liferay-ddm-form-renderer-types', 'liferay-ddm-form-renderer-util']
+		requires: ['liferay-ddm-form-renderer-layout-visitor', 'liferay-ddm-form-renderer-types', 'liferay-ddm-form-renderer-util']
 	}
 );

@@ -12,7 +12,6 @@ AUI.add(
 			},
 
 			valid: {
-				repaint: false,
 				value: true
 			}
 		};

@@ -53,6 +53,7 @@ AUI.add(
 
 					value: {
 						setter: '_setValue',
+						state: true,
 						valueFn: '_valueValidation'
 					}
 				},

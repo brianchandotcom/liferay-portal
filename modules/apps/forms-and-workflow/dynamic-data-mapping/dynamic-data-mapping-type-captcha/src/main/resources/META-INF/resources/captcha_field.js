@@ -7,7 +7,6 @@ AUI.add(
 			{
 				ATTRS: {
 					html: {
-						repaint: false,
 						value: ''
 					},
 

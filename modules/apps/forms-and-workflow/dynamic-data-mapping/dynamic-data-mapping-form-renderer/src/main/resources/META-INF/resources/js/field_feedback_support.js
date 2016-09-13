@@ -12,7 +12,6 @@ AUI.add(
 
 		FieldFeedbackSupport.ATTRS = {
 			errorMessage: {
-				repaint: false,
 				value: ''
 			}
 		};

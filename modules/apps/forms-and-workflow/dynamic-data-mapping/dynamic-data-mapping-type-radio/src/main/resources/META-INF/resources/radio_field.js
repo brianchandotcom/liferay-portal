@@ -9,6 +9,7 @@ AUI.add(
 					},
 
 					options: {
+						state: true,
 						validator: Array.isArray,
 						value: []
 					},

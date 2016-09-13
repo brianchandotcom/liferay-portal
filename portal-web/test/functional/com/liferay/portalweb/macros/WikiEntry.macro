@@ -4,7 +4,9 @@
 	</command>
 
 	<command name="addPageContent">
-		<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${wikiPageContent}" />
+		<execute macro="AlloyEditor#addContent">
+			<var name="content" value="${wikiPageContent}" />
+		</execute>
 	</command>
 
 	<command name="addPageContentViaSource">

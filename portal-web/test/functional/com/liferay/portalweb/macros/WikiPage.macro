@@ -33,7 +33,9 @@
 	<command name="_editEmptyFrontPage">
 		<execute function="AssertClick" locator1="Wiki#FRONTPAGE_DEFAULT_MESSAGE" value1="This page is empty. Edit it to add some text." />
 
-		<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${wikiPageContent}" />
+		<execute macro="AlloyEditor#addContent">
+			<var name="content" value="${wikiPageContent}" />
+		</execute>
 	</command>
 
 	<command name="addAttachmentViaPageEdit">
@@ -61,9 +63,10 @@
 
 		<var name="key_wikiChildPageTitle" value="${wikiChildPageTitle}" />
 
-		<execute function="Type#typeEditor" locator1="AlloyEditor#TITLE_FIELD" value1="${wikiChildPageTitle}" />
-
-		<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${wikiChildPageContent}" />
+		<execute macro="AlloyEditor#addTitleAndContent">
+			<var name="content" value="${wikiChildPageContent}" />
+			<var name="title" value="${wikiChildPageTitle}" />
+		</execute>
 
 		<execute function="Click" locator1="Button#PUBLISH" value1="Publish" />
 
@@ -75,9 +78,10 @@
 
 		<var name="key_wikiChildPageTitle" value="${wikiChildPageTitle}" />
 
-		<execute function="Type#typeEditor" locator1="AlloyEditor#TITLE_FIELD" value1="${wikiChildPageTitle}" />
-
-		<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${wikiChildPageContent}" />
+		<execute macro="AlloyEditor#addTitleAndContent">
+			<var name="content" value="${wikiChildPageContent}" />
+			<var name="title" value="${wikiChildPageTitle}" />
+		</execute>
 
 		<execute function="Click" locator1="Button#PUBLISH" value1="Publish" />
 
@@ -140,9 +144,10 @@
 
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
-		<execute function="Type#typeEditor" locator1="AlloyEditor#TITLE_FIELD" value1="${wikiPageTitle}" />
-
-		<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${wikiPageContent}" />
+		<execute macro="AlloyEditor#addTitleAndContent">
+			<var name="content" value="${wikiPageContent}" />
+			<var name="title" value="${wikiPageTitle}" />
+		</execute>
 
 		<execute macro="PortletEntry#publish" />
 	</command>
@@ -152,9 +157,10 @@
 
 		<var name="key_wikiChildPageTitle" value="${wikiChildPageTitle}" />
 
-		<execute function="Type#typeEditor" locator1="AlloyEditor#TITLE_FIELD" value1="${wikiChildPageTitle}" />
-
-		<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${wikiChildPageContent}" />
+		<execute macro="AlloyEditor#addTitleAndContent">
+			<var name="content" value="${wikiChildPageContent}" />
+			<var name="title" value="${wikiChildPageTitle}" />
+		</execute>
 
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
 
@@ -168,9 +174,10 @@
 
 		<var name="key_wikiChildPageTitle" value="${wikiChildPageTitle}" />
 
-		<execute function="Type#typeEditor" locator1="AlloyEditor#TITLE_FIELD" value1="${wikiChildPageTitle}" />
-
-		<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${wikiChildPageContent}" />
+		<execute macro="AlloyEditor#addTitleAndContent">
+			<var name="content" value="${wikiChildPageContent}" />
+			<var name="title" value="${wikiChildPageTitle}" />
+		</execute>
 
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
 
@@ -182,7 +189,9 @@
 	<command name="addFrontPageCP">
 		<execute function="AssertClick" locator1="Message#INFO_LINK" value1="This page is empty. Edit it to add some text." />
 
-		<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${wikiFrontPageContent}" />
+		<execute macro="AlloyEditor#addContent">
+			<var name="content" value="${wikiFrontPageContent}" />
+		</execute>
 
 		<execute macro="PortletEntry#publish" />
 	</command>
@@ -208,7 +217,9 @@
 
 				<execute function="Select#pauseSelect" locator1="Wiki#ADD_PAGE_FORMAT_DROPDOWN" value1="Creole" />
 
-				<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${wikiPageContent}" />
+				<execute macro="AlloyEditor#addContent">
+					<var name="content" value="${wikiPageContent}" />
+				</execute>
 			</then>
 			<elseif>
 				<equals arg1="${htmlSource}" arg2="true" />
@@ -221,11 +232,15 @@
 
 					<execute function="Confirm" value1="You may lose some formatting when switching from Creole to HTML. Do you want to continue?" />
 
-					<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${wikiPageContent}" />
+					<execute macro="AlloyEditor#addContent">
+						<var name="content" value="${wikiPageContent}" />
+					</execute>
 				</then>
 			</elseif>
 			<else>
-				<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${wikiPageContent}" />
+				<execute macro="AlloyEditor#addContent">
+					<var name="content" value="${wikiPageContent}" />
+				</execute>
 			</else>
 		</if>
 
@@ -299,9 +314,10 @@
 	<command name="addPageWithWorkflowPG">
 		<execute macro="WikiNavigator#gotoAddPageViaPG" />
 
-		<execute function="Type#typeEditor" locator1="AlloyEditor#TITLE_FIELD" value1="${wikiPageTitle}" />
-
-		<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${wikiPageContent}" />
+		<execute macro="AlloyEditor#addTitleAndContent">
+			<var name="content" value="${wikiPageContent}" />
+			<var name="title" value="${wikiPageTitle}" />
+		</execute>
 
 		<execute function="AssertClick" locator1="Button#SUBMIT_FOR_PUBLICATION" value1="Submit for Publication" />
 
@@ -311,9 +327,10 @@
 	<command name="addPageWithWorkflowPGViaWD">
 		<execute macro="WikiNavigator#gotoAddPageViaPG" />
 
-		<execute function="Type#typeEditor" locator1="AlloyEditor#TITLE_FIELD" value1="${wikiPageTitle}" />
-
-		<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${wikiPageContent}" />
+		<execute macro="AlloyEditor#addTitleAndContent">
+			<var name="content" value="${wikiPageContent}" />
+			<var name="title" value="${wikiPageTitle}" />
+		</execute>
 
 		<execute function="AssertClick" locator1="Button#SUBMIT_FOR_PUBLICATION" value1="Submit for Publication" />
 
@@ -351,7 +368,9 @@
 
 		<execute function="AssertElementPresent" locator1="AlloyEditor#TITLE_FIELD" />
 
-		<execute function="Type#typeEditor" locator1="AlloyEditor#TITLE_FIELD" value1="${wikiPageTitle}" />
+		<execute macro="AlloyEditor#addTitle">
+			<var name="title" value="${wikiPageTitle}" />
+		</execute>
 
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
@@ -362,13 +381,17 @@
 			</then>
 		</if>
 
-		<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${wikiPageContent}" />
+		<execute macro="AlloyEditor#addContent">
+			<var name="content" value="${wikiPageContent}" />
+		</execute>
 
 		<if>
 			<equals arg1="${viewCKEditorResizer}" arg2="true" />
 			<then>
 				<execute function="AssertVisible" locator1="CKEditor#RESIZER" />
+
 				<execute function="MouseDown" locator1="CKEditor#RESIZER" />
+
 				<execute function="MouseUp" locator1="CKEditor#RESIZER" />
 			</then>
 		</if>
@@ -420,6 +443,7 @@
 			<then>
 				<for list="${tagNameList}" param="tagName">
 					<execute function="Type" locator1="AssetCategorization#TAGS_FIELD" value1="${tagName}" />
+
 					<execute function="AssertClick" locator1="AssetCategorization#TAGS_ADD_BUTTON" value1="Add" />
 				</for>
 			</then>
@@ -427,7 +451,9 @@
 				<var name="key_tagName" value="${tagName}" />
 
 				<execute function="Type" locator1="AssetCategorization#TAGS_FIELD" value1="${tagName}" />
+
 				<execute function="AssertClick" locator1="AssetCategorization#TAGS_ADD_BUTTON" value1="Add" />
+
 				<execute function="AssertElementPresent" locator1="AssetCategorization#TAG" value1="${tagName}" />
 			</else>
 		</if>
@@ -527,7 +553,9 @@
 				<execute function="AssertTextEquals" locator1="Wiki#COMPARE_VERSIONS_DIFF_ADDED" value1="${wikiPageContentCompareAdded}" />
 				<execute function="AssertTextEquals" locator1="Wiki#COMPARE_VERSIONS_DIFF_REMOVED" value1="${wikiPageContentCompareRemoved}" />
 				<execute function="AssertTextEquals" locator1="Wiki#COMPARE_VERSIONS_PARAGRAPH_FULL" value1="${wikiPageContentCompareFull}" />
+
 				<execute function="AssertClick" locator1="Wiki#COMPARE_ACTIVITIES_NAVIGATION_TEXT_MODE_LINK" value1="Text Mode" />
+
 				<execute function="AssertTextEquals" locator1="Wiki#COMPARE_VERSIONS_TEXT_MODE_TABLE_TITLE_VERSION_OLD" value1="${wikiPageTitle} ${wikiPageVersionOld}" />
 				<execute function="AssertTextEquals" locator1="Wiki#COMPARE_VERSIONS_TEXT_MODE_TABLE_TITLE_VERSION_NEW" value1="${wikiPageTitle} ${wikiPageVersionNew}" />
 
@@ -569,14 +597,18 @@
 
 		<execute function="AssertClick" locator1="MenuItem#COPY" value1="Copy" />
 
-		<execute function="Type#typeEditor" locator1="AlloyEditor#TITLE_FIELD" value1="${wikiPageTitleCopy}" />
+		<execute macro="AlloyEditor#addTitle">
+			<var name="title" value="${wikiPageTitleCopy}" />
+		</execute>
 
 		<if>
 			<equals arg1="${creole}" arg2="true" />
 			<then>
 				<execute function="Select#pauseSelect" locator1="Wiki#ADD_PAGE_FORMAT_DROPDOWN" value1="Creole" />
 
-				<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${wikiPageContent}" />
+				<execute macro="AlloyEditor#addContent">
+					<var name="content" value="${wikiPageContent}" />
+				</execute>
 			</then>
 			<elseif>
 				<equals arg1="${html}" arg2="true" />
@@ -585,7 +617,9 @@
 
 					<execute function="Confirm" value1="You may lose some formatting when switching from Creole to HTML. Do you want to continue?" />
 
-					<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${welcomeToLiferay}" />
+					<execute macro="AlloyEditor#addContent">
+						<var name="content" value="${welcomeToLiferay}" />
+					</execute>
 				</then>
 			</elseif>
 			<elseif>
@@ -599,7 +633,9 @@
 				</then>
 			</elseif>
 			<else>
-				<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${wikiPageContentCopy}" />
+				<execute macro="AlloyEditor#addContent">
+					<var name="content" value="${wikiPageContentCopy}" />
+				</execute>
 
 				<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
 
@@ -617,10 +653,12 @@
 			<equals arg1="${soPage}" arg2="true" />
 			<then>
 				<execute function="AssertClickNoError" locator1="Wiki#COMMENT_DELETE_LINK" value1="Delete" />
+
 				<execute function="Confirm" value1="Are you sure you want to delete the selected comment?" />
 			</then>
 			<else>
 				<execute function="AssertClickNoError" locator1="Wiki#COMMENT_DELETE_LINK" value1="Delete" />
+
 				<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 			</else>
 		</if>
@@ -632,8 +670,11 @@
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
 		<execute function="AssertTextEquals" locator1="WikiTable#ALL_PAGES_WIKI_PAGE_TITLE" value1="${wikiPageTitle}" />
+
 		<execute function="Click" locator1="WikiTable#ALL_PAGES_VERTICAL_ELLIPSIS" />
+
 		<execute macro="PortletEntry#clickMoveToRecycleBin" />
+
 		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 	</command>
 
@@ -641,7 +682,9 @@
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
 		<execute function="Click" locator1="WikiTable#ALL_PAGES_VERTICAL_ELLIPSIS" />
+
 		<execute macro="PortletEntry#clickMoveToRecycleBin" />
+
 		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="WikiTable#ALL_PAGES_REVISION" value1="1.0" />
 
@@ -658,7 +701,9 @@
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
 		<execute function="Click" locator1="WikiTable#ALL_PAGES_VERTICAL_ELLIPSIS" />
+
 		<execute macro="PortletEntry#clickMoveToRecycleBin" />
+
 		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 
 		<if>
@@ -692,7 +737,9 @@
 
 		<execute function="Pause" locator1="3000" />
 
-		<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${wikiPageContentEdit}" />
+		<execute macro="AlloyEditor#addContent">
+			<var name="content" value="${wikiPageContentEdit}" />
+		</execute>
 
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
 
@@ -707,7 +754,9 @@
 		<execute function="Click" locator1="Wiki#DESCRIPTIVE_VIEW_ACTIONS" />
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
-		<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${wikiPageContentEdit}" />
+		<execute macro="AlloyEditor#addContent">
+			<var name="content" value="${wikiPageContentEdit}" />
+		</execute>
 
 		<execute macro="PortletEntry#publish" />
 	</command>
@@ -716,9 +765,12 @@
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
 		<execute function="Click" locator1="WikiTable#ALL_PAGES_VERTICAL_ELLIPSIS" />
+
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
-		<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${wikiPageContentEdit}" />
+		<execute macro="AlloyEditor#addContent">
+			<var name="content" value="${wikiPageContentEdit}" />
+		</execute>
 
 		<if>
 			<equals arg1="${minorEdit}" arg2="true" />
@@ -824,14 +876,18 @@
 					<![CDATA[<p>${wikiPageContent} <a href="${siteNameURL}${pageNameURL}/-/wiki${wikiNodeNameURL}${wikiPage2TitleURL}">Link to ${wikiPage2Title}</a></p>]]>
 				</var>
 
-				<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${wikiPageContentURL}" />
+				<execute macro="AlloyEditor#addContent">
+					<var name="content" value="${wikiPageContentURL}" />
+				</execute>
 			</then>
 			<else>
 				<var name="wikiPageContentLinkHTML">
 					<![CDATA[<p>${wikiPageContent} <a href="${pageAccessURL}${siteNameURL}${pageStagingURL}${pageNameURL}/-/wiki${wikiNodeNameURL}${wikiPage2TitleURL}">Link to ${wikiPage2Title}</a></p>]]>
 				</var>
 
-				<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${wikiPageContentLinkHTML}" />
+				<execute macro="AlloyEditor#addContent">
+					<var name="content" value="${wikiPageContentLinkHTML}" />
+				</execute>
 			</else>
 		</if>
 
@@ -843,6 +899,7 @@
 
 		<execute function="AssertTextNotPresent" locator1="Portlet#H3_HEADER" value1="${wikiPage2Title}" />
 		<execute function="AssertTextNotPresent" locator1="WikiEntry#BODY" value1="${wikiPage2Content}" />
+
 		<execute function="AssertClick" locator1="Link#EDIT" value1="Edit" />
 
 		<execute function="Click" locator1="AlloyEditor#CONTENT_FIELD" />
@@ -853,7 +910,9 @@
 
 		<execute function="Select" locator1="Wiki#ADD_PAGE_FORMAT_DROPDOWN" value1="Creole" />
 
-		<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${wikiPage2Link}" />
+		<execute macro="AlloyEditor#addContent">
+			<var name="content" value="${wikiPage2Link}" />
+		</execute>
 
 		<execute macro="PortletEntry#publish" />
 
@@ -865,6 +924,7 @@
 
 	<command name="markAsSpamCP">
 		<execute function="AssertClick" locator1="Link#MARK_AS_SPAM" value1="Mark as Spam" />
+
 		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="This version has been flagged as spam. An administrator will review your version as soon as possible." />
 	</command>
@@ -873,7 +933,9 @@
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
 		<execute function="Click" locator1="Wiki#DESCRIPTIVE_VIEW_ACTIONS" />
+
 		<execute macro="PortletEntry#clickMoveToRecycleBin" />
+
 		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 	</command>
 
@@ -882,6 +944,7 @@
 
 		<execute function="AssertTextEquals" locator1="Portlet#H3_HEADER" value1="${wikiPageTitle}" />
 		<execute function="AssertTextEquals" locator1="WikiEntry#BODY" value1="${wikiPageContent}" />
+
 		<execute function="AssertClick" locator1="Link#DETAILS" value1="Details" />
 
 		<execute function="AssertClick" locator1="Link#MOVE" value1="Move" />
@@ -907,6 +970,7 @@
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
 		<execute function="Click#clickNoMouseOver" locator1="Ratings#YOUR_RATING_STAR_EMPTY_4" />
+
 		<execute function="AssertElementPresent" locator1="Ratings#YOUR_RATING_STAR_4" />
 	</command>
 
@@ -922,9 +986,12 @@
 		<execute function="AssertClick" locator1="Link#REDIRECT" value1="(Redirected from ${wikiPageTitle})" />
 
 		<execute function="AssertTextEquals" locator1="Message#INFO_1" value1="This page is currently redirected to ${wikiPageTitleRename}." />
+
 		<execute function="AssertClick" locator1="Button#REMOVE_REDIRECT" value1="Remove Redirect" />
 
-		<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${wikiPage2Content}" />
+		<execute macro="AlloyEditor#addContent">
+			<var name="content" value="${wikiPage2Content}" />
+		</execute>
 
 		<execute macro="PortletEntry#publish" />
 	</command>
@@ -962,7 +1029,9 @@
 		<execute function="AssertClick" locator1="Link#MOVE" value1="Move" />
 
 		<execute function="AssertTextEquals" locator1="Portlet#H3_HEADER" value1="${wikiPageTitle}" />
+
 		<execute function="Type" locator1="TextInput#NEW_TITLE" value1="${wikiPageTitleRename}" />
+
 		<execute function="AssertClick" locator1="Button#RENAME" value1="Rename" />
 
 		<execute macro="Alert#viewSuccessMessage" />
@@ -1005,6 +1074,7 @@
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
 		<execute function="AssertTextEquals" locator1="Portlet#H3_HEADER" value1="${wikiPageTitle}" />
+
 		<execute function="AssertClick" locator1="Link#DETAILS" value1="Details" />
 
 		<execute function="AssertClick" locator1="Wiki#PAGE_TABS_HISTORY" value1="History" />
@@ -1030,6 +1100,7 @@
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
 		<execute function="Type" locator1="TextInput#SEARCH" value1="${searchTerm}" />
+
 		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
 	</command>
 
@@ -1055,6 +1126,7 @@
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
 		<execute function="AssertTextEquals" locator1="Portlet#H3_HEADER" value1="${wikiPageTitle}" />
+
 		<execute function="AssertClick" locator1="Link#DETAILS" value1="Details" />
 
 		<execute function="AssertClick" locator1="Link#SUBSCRIBE" value1="Subscribe" />
@@ -1079,7 +1151,9 @@
 			<condition function="IsTextNotEqual" locator1="WikiTable#ALL_PAGES_REVISION" value1="1.0 (Minor Edit)" />
 			<then>
 				<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+
 				<execute macro="PortletEntry#clickMoveToRecycleBin" />
+
 				<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 			</then>
 		</while>
@@ -1088,7 +1162,9 @@
 			<condition function="IsElementPresent" locator1="Icon#BODY_VERTICAL_ELLIPSIS_2" />
 			<then>
 				<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS_2" />
+
 				<execute macro="PortletEntry#clickMoveToRecycleBin" />
+
 				<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 			</then>
 		</while>
@@ -1165,12 +1241,15 @@
 			<equals arg1="${changeWikiFormat}" arg2="true" />
 			<then>
 				<execute function="SelectNoError#pauseSelect" locator1="Wiki#ADD_PAGE_FORMAT_DROPDOWN" value1="${newFormat}" />
+
 				<execute function="Confirm" value1="You may lose some formatting when switching from ${oldFormat} to ${newFormat}. Do you want to continue?" />
 			</then>
 		</if>
 
 		<execute function="AssertVisible" locator1="CKEditor#RESIZER" />
+
 		<execute function="MouseDown" locator1="CKEditor#RESIZER" />
+
 		<execute function="MouseUp" locator1="CKEditor#RESIZER" />
 	</command>
 
@@ -1208,9 +1287,9 @@
 
 	<command name="viewCustomADTSocialPG" >
 		<execute function="AssertClick" locator1="WikiTable#NAVIGATION_FRONTPAGE" value1="FrontPage" />
+
 		<execute function="AssertTextEquals" locator1="Portlet#H1_HEADER" value1="FrontPage" />
 		<execute function="AssertTextEquals" locator1="WikiEntry#BODY" value1="${wikiPageContent}" />
-
 		<execute function="AssertElementPresent" locator1="Link#ADD_CHILD_PAGE" />
 		<execute function="AssertElementPresent" locator1="Comments#SUBSCRIBE_TO_COMMENTS_LINK" />
 		<execute function="AssertElementPresent" locator1="Link#ATTACHMENTS" />
@@ -1422,6 +1501,7 @@
 				<execute function="AssertTextEquals" locator1="WikiTable#ALL_PAGES_REVISION" value1="${wikiPageRevisionIncomingLink}" />
 				<execute function="AssertTextEquals" locator1="WikiTable#ALL_PAGES_USER" value1="${wikiPageUsernameIncomingLink}" />
 				<execute function="AssertElementPresent" locator1="WikiTable#ALL_PAGES_DATE" />
+
 				<execute function="AssertClick" locator1="WikiTable#ALL_PAGES_WIKI_PAGE_TITLE" value1="${wikiPageTitleIncomingLink}" />
 
 				<execute function="AssertTextEquals" locator1="Portlet#H3_HEADER_2" value1="${wikiPageTitleIncomingLink}" />

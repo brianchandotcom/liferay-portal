@@ -96,7 +96,7 @@
 </tr>
 <tr>
 	<td>ICON_DOCUMENT_ACTIONS</td>
-	<td>//div[contains(@class,'document-container') and contains(.,'${key_dmDocumentTitle}')]//span/*[name()='svg'][contains(@class,'icon-ellipsis-v')]</td>
+	<td>//div[contains(@class,'document-container')]//li[contains(.,'${key_dmDocumentTitle}')]//span/*[name()='svg'][contains(@class,'icon-ellipsis-v')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -461,6 +461,7 @@ public class StringUtil {
 		}
 
 		char[] chars = s.toCharArray();
+
 		char[] reverse = new char[chars.length];
 
 		for (int i = 0; i < chars.length; i++) {
@@ -514,6 +515,7 @@ public class StringUtil {
 
 		while (true) {
 			int x = s.indexOf(begin, pos);
+
 			int y = s.indexOf(end, x + begin.length());
 
 			if ((x == -1) || (y == -1)) {
@@ -603,6 +605,7 @@ public class StringUtil {
 		}
 
 		int len = s.length();
+
 		int x = len;
 
 		for (int i = 0; i < len; i++) {

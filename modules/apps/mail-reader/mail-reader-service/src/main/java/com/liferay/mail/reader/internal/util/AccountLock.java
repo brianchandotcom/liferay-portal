@@ -34,6 +34,7 @@ public class AccountLock {
 
 			if (_locks.containsKey(key)) {
 				long timeLocked = _locks.get(key);
+
 				long expireTime = timeLocked + _EXPIRY_TIME;
 
 				if (nowTime < expireTime) {

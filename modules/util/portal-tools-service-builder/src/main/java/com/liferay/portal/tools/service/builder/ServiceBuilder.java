@@ -1073,6 +1073,7 @@ public class ServiceBuilder {
 
 		if (!refFile.exists()) {
 			refFileName = String.valueOf(System.currentTimeMillis());
+
 			refFile = new File(_TMP_DIR, refFileName);
 
 			Class<?> clazz = getClass();
@@ -2296,6 +2297,7 @@ public class ServiceBuilder {
 		String content = _processTemplate(_tplHbmXml, context);
 
 		int lastImportStart = content.lastIndexOf("<import class=");
+
 		int lastImportEnd = content.indexOf("/>", lastImportStart) + 3;
 
 		String imports = content.substring(0, lastImportEnd);
@@ -2316,6 +2318,7 @@ public class ServiceBuilder {
 		}
 
 		String oldContent = _read(xmlFile);
+
 		String newContent = _fixHbmXml(oldContent);
 
 		int firstImport = newContent.indexOf(
@@ -2506,6 +2509,7 @@ public class ServiceBuilder {
 			}
 
 			superClass = javaClass.getSuperClass();
+
 			superClassValue = superClass.getValue();
 		}
 
@@ -2549,6 +2553,7 @@ public class ServiceBuilder {
 		}
 
 		String oldContent = _read(xmlFile);
+
 		String newContent = oldContent;
 
 		int firstModel = newContent.indexOf(
@@ -3491,6 +3496,7 @@ public class ServiceBuilder {
 
 		int x = content.indexOf(
 			_SQL_CREATE_TABLE + entityMapping.getTable() + " (");
+
 		int y = content.indexOf(");", x);
 
 		if (x != -1) {
@@ -3516,6 +3522,7 @@ public class ServiceBuilder {
 				while ((line = unsyncBufferedReader.readLine()) != null) {
 					if (appendNewTable && line.startsWith(_SQL_CREATE_TABLE)) {
 						x = _SQL_CREATE_TABLE.length();
+
 						y = line.indexOf(" ", x);
 
 						String tableName = line.substring(x, y);
@@ -3700,6 +3707,7 @@ public class ServiceBuilder {
 		String content = _read(sqlFile);
 
 		int x = content.indexOf(_SQL_CREATE_TABLE + entity.getTable() + " (");
+
 		int y = content.indexOf(");", x);
 
 		if (x != -1) {
@@ -3725,6 +3733,7 @@ public class ServiceBuilder {
 				while ((line = unsyncBufferedReader.readLine()) != null) {
 					if (appendNewTable && line.startsWith(_SQL_CREATE_TABLE)) {
 						x = _SQL_CREATE_TABLE.length();
+
 						y = line.indexOf(" ", x);
 
 						String tableName = line.substring(x, y);

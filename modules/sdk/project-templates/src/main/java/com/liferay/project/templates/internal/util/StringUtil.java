@@ -52,6 +52,7 @@ public class StringUtil {
 			sb.append(s.substring(x, y));
 
 			x = y + 1;
+
 			y = s.indexOf(c, x);
 		}
 

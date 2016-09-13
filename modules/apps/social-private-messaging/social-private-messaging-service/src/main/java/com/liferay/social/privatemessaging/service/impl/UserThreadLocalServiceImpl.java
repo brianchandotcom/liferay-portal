@@ -459,6 +459,7 @@ public class UserThreadLocalServiceImpl extends UserThreadLocalServiceBaseImpl {
 		long portraitId = sender.getPortraitId();
 		String tokenId = WebServerServletTokenUtil.getToken(
 			sender.getPortraitId());
+
 		String portraitURL =
 			themeDisplay.getPortalURL() + themeDisplay.getPathImage() +
 				"/user_" + (sender.isFemale() ? "female" : "male") +

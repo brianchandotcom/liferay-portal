@@ -2623,6 +2623,7 @@ public class StagingImpl implements Staging {
 
 		if (sourceLayout.isTypeControlPanel()) {
 			stagingGroup = _groupLocalService.fetchGroup(scopeGroupId);
+
 			liveGroup = stagingGroup.getLiveGroup();
 
 			targetLayout = sourceLayout;
@@ -2631,6 +2632,7 @@ public class StagingImpl implements Staging {
 				 (sourceLayout.getScopeGroup().getGroupId() == scopeGroupId)) {
 
 			stagingGroup = sourceLayout.getScopeGroup();
+
 			liveGroup = stagingGroup.getLiveGroup();
 
 			targetLayout = _layoutLocalService.getLayout(
@@ -2638,6 +2640,7 @@ public class StagingImpl implements Staging {
 		}
 		else {
 			stagingGroup = sourceLayout.getGroup();
+
 			liveGroup = stagingGroup.getLiveGroup();
 
 			targetLayout = _layoutLocalService.fetchLayoutByUuidAndGroupId(

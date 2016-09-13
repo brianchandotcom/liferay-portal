@@ -192,6 +192,7 @@ public class LayoutExportController implements ExportController {
 			portletDataContext.isPrivateLayout());
 
 		long companyId = layoutSet.getCompanyId();
+
 		long defaultUserId = _userLocalService.getDefaultUserId(companyId);
 
 		ServiceContext serviceContext =

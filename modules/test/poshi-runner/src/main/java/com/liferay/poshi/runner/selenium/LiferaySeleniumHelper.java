@@ -1503,6 +1503,7 @@ public class LiferaySeleniumHelper {
 		String idAttribute = liferaySelenium.getAttribute(locator + "@id");
 
 		int x = idAttribute.indexOf("cke__");
+
 		int y = idAttribute.indexOf("cke__", x + 1);
 
 		if (y == -1) {

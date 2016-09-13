@@ -191,6 +191,7 @@ public class IdeaDefaultsPlugin extends BaseDefaultsPlugin<IdeaPlugin> {
 		IdeaModel ideaModel = ideaPlugin.getModel();
 
 		IdeaModule ideaModule = ideaModel.getModule();
+
 		return ideaModule;
 	}
 

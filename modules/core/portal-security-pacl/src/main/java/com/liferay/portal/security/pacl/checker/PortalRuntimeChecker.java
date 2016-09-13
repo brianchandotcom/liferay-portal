@@ -434,6 +434,7 @@ public class PortalRuntimeChecker extends BaseChecker {
 			}
 
 			int x = key.indexOf("[");
+
 			int y = key.indexOf("]", x);
 
 			String servletContextName = key.substring(x + 1, y);
@@ -533,6 +534,7 @@ public class PortalRuntimeChecker extends BaseChecker {
 			}
 
 			int x = key.indexOf("[");
+
 			int y = key.indexOf("]", x);
 
 			String servletContextName = key.substring(x + 1, y);

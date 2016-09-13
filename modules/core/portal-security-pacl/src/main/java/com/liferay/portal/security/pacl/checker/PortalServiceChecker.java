@@ -159,6 +159,7 @@ public class PortalServiceChecker extends BaseChecker {
 			}
 
 			int x = key.indexOf("[");
+
 			int y = key.indexOf("]", x);
 
 			String servicesServletContextName = key.substring(x + 1, y);

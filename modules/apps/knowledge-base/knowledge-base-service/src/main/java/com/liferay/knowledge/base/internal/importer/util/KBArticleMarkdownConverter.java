@@ -319,6 +319,7 @@ public class KBArticleMarkdownConverter {
 
 		do {
 			int x = content.indexOf(StringPool.EQUAL, index);
+
 			int y = content.indexOf(StringPool.CLOSE_PARENTHESIS, x);
 
 			if (y != -1) {

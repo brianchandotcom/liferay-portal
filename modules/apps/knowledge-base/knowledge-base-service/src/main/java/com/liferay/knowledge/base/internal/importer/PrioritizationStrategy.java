@@ -117,6 +117,7 @@ public class PrioritizationStrategy {
 
 		if (list == null) {
 			list = new ArrayList<>();
+
 			map.put(key, list);
 		}
 

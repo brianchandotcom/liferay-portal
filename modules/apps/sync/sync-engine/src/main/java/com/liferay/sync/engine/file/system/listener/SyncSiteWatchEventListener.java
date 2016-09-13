@@ -129,8 +129,10 @@ public class SyncSiteWatchEventListener extends BaseWatchEventListener {
 
 			if (lastSyncWatchEvent != null) {
 				previousEventType = lastSyncWatchEvent.getEventType();
+
 				previousFilePath = Paths.get(
 					lastSyncWatchEvent.getFilePathName());
+
 				previousRepositoryId = getRepositoryId(previousFilePath);
 			}
 

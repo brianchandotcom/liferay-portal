@@ -54,6 +54,7 @@ public class WabFactory extends AbstractExtender {
 		setSynchronous(true);
 
 		_bundleContext = componentContext.getBundleContext();
+
 		_eventUtil = new EventUtil(_bundleContext);
 		_logger = new Logger(_bundleContext);
 

@@ -476,6 +476,7 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 			}
 
 			start = start + _INTERVAL;
+
 			end = start + _INTERVAL;
 		}
 

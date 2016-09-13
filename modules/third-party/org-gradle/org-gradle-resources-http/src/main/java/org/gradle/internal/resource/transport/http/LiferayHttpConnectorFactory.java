@@ -40,8 +40,10 @@ public class LiferayHttpConnectorFactory extends HttpConnectorFactory {
 
 		HttpResourceAccessor httpResourceAccessor =
 			new LiferayHttpResourceAccessor(httpClientHelper);
+
 		HttpResourceLister httpResourceLister = new HttpResourceLister(
 			httpResourceAccessor);
+
 		HttpResourceUploader httpResourceUploader = new HttpResourceUploader(
 			httpClientHelper);
 

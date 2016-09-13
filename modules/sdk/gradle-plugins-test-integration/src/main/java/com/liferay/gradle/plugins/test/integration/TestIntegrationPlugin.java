@@ -98,6 +98,7 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 		StopTestableTomcatTask stopTestableTomcatTask =
 			addTaskStopTestableTomcat(
 				project, testIntegrationTask, testIntegrationTomcatExtension);
+
 		StartTestableTomcatTask startTestableTomcatTask =
 			addTaskStartTestableTomcat(
 				project, setUpTestableTomcatTask, stopTestableTomcatTask,

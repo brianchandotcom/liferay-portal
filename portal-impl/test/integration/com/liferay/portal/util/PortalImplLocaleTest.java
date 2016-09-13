@@ -80,6 +80,7 @@ public class PortalImplLocaleTest {
 		LanguageResources.getSuperLocale(LocaleUtil.US);
 
 		_group = GroupTestUtil.addGroup();
+
 		_layout = LayoutTestUtil.addLayout(_group);
 
 		List<Locale> availableLocales = Arrays.asList(

@@ -104,6 +104,7 @@ public class WebServerRangeTest extends BaseWebServerTestCase {
 			Assert.assertTrue(Validator.isNull(lines[2]));
 
 			String[] rangePair = StringUtil.split(ranges[i], StringPool.DASH);
+
 			int start = GetterUtil.getInteger(rangePair[0]);
 			int end = GetterUtil.getInteger(rangePair[1]);
 

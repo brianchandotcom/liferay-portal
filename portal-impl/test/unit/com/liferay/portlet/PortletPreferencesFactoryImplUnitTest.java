@@ -152,7 +152,9 @@ public class PortletPreferencesFactoryImplUnitTest {
 
 		Assert.assertNotNull(preference);
 		Assert.assertEquals("name1", preference.getName());
+
 		values = preference.getValues();
+
 		Assert.assertEquals(0, values.length);
 		Assert.assertFalse(preference.isReadOnly());
 

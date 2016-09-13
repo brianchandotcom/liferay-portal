@@ -619,6 +619,7 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 		params.put("ints", new int[] {1, 2});
 
 		Map<String, Integer> map2 = new HashMap<>(1);
+
 		map2.put("key", Integer.valueOf(122));
 
 		params.put("map", map2);

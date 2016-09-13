@@ -32,6 +32,7 @@ public class StripDoctypeXMLReaderTest {
 	@Test
 	public void testInternalBufferWithInputStream() throws Exception {
 		String prologue = "<?xml version=\"1.0\"?>";
+
 		String xml = prologue + "<root />";
 
 		byte[] bytes = new byte[prologue.length() + 1];
@@ -54,6 +55,7 @@ public class StripDoctypeXMLReaderTest {
 	@Test
 	public void testInternalBufferWithReader() throws Exception {
 		String prologue = "<?xml version=\"1.0\"?>";
+
 		String xml = prologue + "<root />";
 
 		char[] chars = new char[prologue.length() + 1];

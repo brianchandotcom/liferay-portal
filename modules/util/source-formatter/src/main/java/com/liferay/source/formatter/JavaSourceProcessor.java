@@ -1731,7 +1731,14 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return content;
 	}
 
-	protected String formatDeprecatedJavadoc(String line) {
+	protected String formatDeprecatedJavadoc(
+			String fileName, String absolutePath, String line)
+		throws Exception {
+
+		if (!portalSource) {
+			return line;
+		}
+
 		Matcher matcher = _deprecatedPattern.matcher(line);
 
 		if (!matcher.find()) {
@@ -1739,7 +1746,11 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 
 		ComparableVersion mainReleaseComparableVersion =
-			getMainReleaseComparableVersion();
+			getMainReleaseComparableVersion(fileName, absolutePath, true);
+
+		if (mainReleaseComparableVersion == null) {
+			return line;
+		}
 
 		if (matcher.group(2) == null) {
 			return StringUtil.insert(
@@ -2302,7 +2313,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				checkResourceUtil(line, fileName, lineCount);
 
 				if (_addMissingDeprecationReleaseVersion) {
-					line = formatDeprecatedJavadoc(line);
+					line = formatDeprecatedJavadoc(
+						fileName, absolutePath, line);
 				}
 
 				if (trimmedLine.startsWith("* @see ") &&

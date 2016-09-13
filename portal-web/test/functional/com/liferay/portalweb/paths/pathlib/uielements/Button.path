@@ -485,7 +485,7 @@
 </tr>
 <tr>
 	<td>POST</td>
-	<td>//button[contains(.,'Post') and not(contains(@class,'disabled'))]</td>
+	<td>//div[@class='button-holder']/button[contains(@id,'MicroblogsPortlet')]/span[contains(.,'Post')]</td>
 	<td></td>
 </tr>
 <tr>

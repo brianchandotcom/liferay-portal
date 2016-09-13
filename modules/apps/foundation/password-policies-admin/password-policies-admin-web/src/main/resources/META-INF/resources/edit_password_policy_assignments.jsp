@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String tabs1 = ParamUtil.getString(request, "tabs1");
+String tabs1 = ParamUtil.getString(request, "tabs1", "assignees");
 String tabs2 = ParamUtil.getString(request, "tabs2", "users");
 
 String redirect = ParamUtil.getString(request, "redirect");
@@ -68,6 +68,8 @@ homeURL.setParameter("mvcPath", "/view.jsp");
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "password-policies"), homeURL.toString());
 PortalUtil.addPortletBreadcrumbEntry(request, passwordPolicy.getName(), null);
 %>
+
+<liferay-util:include page="/edit_password_policy_tabs.jsp" servletContext="<%= application %>" />
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">

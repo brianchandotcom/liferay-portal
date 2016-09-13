@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String tabs1 = ParamUtil.getString(request, "tabs1", "details");
+
 String redirect = ParamUtil.getString(request, "redirect");
 
 String backURL = ParamUtil.getString(request, "backURL", redirect);
@@ -38,6 +40,8 @@ portletDisplay.setURLBack(backURL.toString());
 
 renderResponse.setTitle(passwordPolicy.isNew() ? LanguageUtil.get(request, "new-password-policy") : passwordPolicy.getName());
 %>
+
+<liferay-util:include page="/edit_password_policy_tabs.jsp" servletContext="<%= application %>" />
 
 <portlet:actionURL name="editPasswordPolicy" var="editPasswordPolicyURL" />
 

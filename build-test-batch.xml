@@ -1663,6 +1663,32 @@ ${output.content}</echo>
 		</run-batch-test>
 	</target>
 
+	<target name="portal-frontend-js-jdk8">
+		<run-batch-test>
+			<test-action>
+				<gradle-execute dir="modules" task="testJS" />
+
+				<replace
+					dir="modules"
+					includes="**/TEST-frontend-js.xml"
+				>
+					<replacefilter>
+						<replacetoken><![CDATA[<testsuites>]]></replacetoken>
+						<replacevalue><![CDATA[]]></replacevalue>
+					</replacefilter>
+					<replacefilter>
+						<replacetoken><![CDATA[</testsuites>]]></replacetoken>
+						<replacevalue><![CDATA[]]></replacevalue>
+					</replacefilter>
+				</replace>
+			</test-action>
+
+			<test-set-up>
+				<prepare-test-build />
+			</test-set-up>
+		</run-batch-test>
+	</target>
+
 	<target name="portal-web-jdk8">
 		<run-batch-test>
 			<test-action>

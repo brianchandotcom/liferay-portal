@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.lists.service.impl;
 
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.dynamic.data.lists.exception.NoSuchRecordException;
+import com.liferay.dynamic.data.lists.exception.RecordGroupIdException;
 import com.liferay.dynamic.data.lists.model.DDLFormRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordConstants;
@@ -111,6 +112,8 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 		DDLRecordSet recordSet = ddlRecordSetPersistence.findByPrimaryKey(
 			recordSetId);
+
+		validate(groupId, recordSet);
 
 		long recordId = counterLocalService.increment();
 
@@ -1294,6 +1297,15 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 		recordVersion.setStatusDate(serviceContext.getModifiedDate(null));
 
 		ddlRecordVersionPersistence.update(recordVersion);
+	}
+
+	protected void validate(long groupId, DDLRecordSet recordSet)
+		throws PortalException {
+
+		if (recordSet.getGroupId() != groupId) {
+			throw new RecordGroupIdException(
+				"Record groupId should be the same as its recordSet.");
+		}
 	}
 
 	@ServiceReference(type = DDM.class)

@@ -1,5 +1,4 @@
 dependencies {
-	testCompile group: "com.liferay", name: "com.liferay.dynamic.data.lists.api", version: "2.0.0"
 	testCompile group: "com.liferay", name: "com.liferay.dynamic.data.lists.form.web", version: "1.0.0"
 	testCompile group: "com.liferay", name: "com.liferay.dynamic.data.lists.service", version: "1.0.0"
 	testCompile group: "com.liferay", name: "com.liferay.dynamic.data.lists.web", version: "1.0.0"
@@ -8,6 +7,7 @@ dependencies {
 	testCompile group: "com.liferay", name: "com.liferay.exportimport.api", version: "2.0.0"
 	testCompile group: "com.liferay", name: "com.liferay.exportimport.service", version: "3.0.0"
 	testCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
+	testCompile project(":apps:forms-and-workflow:dynamic-data-lists:dynamic-data-lists-api")
 
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.5"
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.dynamic.data.mapping.test.util", version: "2.0.0"

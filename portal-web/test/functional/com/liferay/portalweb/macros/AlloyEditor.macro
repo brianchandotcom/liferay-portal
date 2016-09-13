@@ -1,0 +1,19 @@
+<definition>
+	<command name="addContent">
+		<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${content}" />
+	</command>
+
+	<command name="addTitle">
+		<execute function="Type#typeEditor" locator1="AlloyEditor#TITLE_FIELD" value1="${title}" />
+	</command>
+
+	<command name="addTitleAndContent">
+		<execute macro="AlloyEditor#addTitle">
+			<var name="title" value="${title}" />
+		</execute>
+
+		<execute macro="AlloyEditor#addContent">
+			<var name="content" value="${content}" />
+		</execute>
+	</command>
+</definition>

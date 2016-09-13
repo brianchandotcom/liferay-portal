@@ -803,6 +803,7 @@
 			</then>
 			<else>
 				<execute macro="PortletEntry#clickMoveToRecycleBin" />
+
 				<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 			</else>
 		</if>
@@ -1833,6 +1834,7 @@
 			</then>
 			<else>
 				<execute function="AssertTextEquals" locator1="DocumentsAndMedia#ICON_DOCUMENT_WORKFLOW_STATUS" value1="${dmDocumentStatus}" />
+
 				<execute function="AssertClick" locator1="DocumentsAndMedia#ICON_DOCUMENT_TITLE_LINK" value1="${dmDocumentTitle}" />
 
 				<execute function="AssertTextEquals" locator1="TextInput#TITLE" value1="${dmDocumentTitle}" />

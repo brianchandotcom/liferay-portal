@@ -49,8 +49,11 @@
 
 		<execute function="AssertClick" locator1="MenuItem#ADD_CHILD_ARTICLE" value1="Add Child Article" />
 
-		<execute function="Type#typeEditor" locator1="AlloyEditor#TITLE_FIELD" value1="${kbChildArticleTitle}" />
-		<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${kbChildArticleContent}" />
+		<execute macro="AlloyEditor#addTitleAndContent">
+			<var name="content" value="${kbChildArticleContent}" />
+			<var name="title" value="${kbChildArticleTitle}" />
+		</execute>
+
 		<execute macro="PortletEntry#publish" />
 	</command>
 
@@ -59,8 +62,10 @@
 
 		<execute function="AssertClick" locator1="KnowledgeBase#KB_TOOLS" value1="Add Child Article" />
 
-		<execute function="Type#typeEditor" locator1="AlloyEditor#TITLE_FIELD" value1="${kbArticleTitle}" />
-		<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${kbArticleContent}" />
+		<execute macro="AlloyEditor#addTitleAndContent">
+			<var name="content" value="${kbArticleContent}" />
+			<var name="title" value="${kbArticleTitle}" />
+		</execute>
 
 		<execute macro="Panel#expandPanel">
 			<var name="panelHeading" value="Configuration" />
@@ -118,7 +123,9 @@
 				<execute function="Type#sendKeys" locator1="AlloyEditor#TITLE_FIELD" value1="${kbArticleTitle}" />
 			</then>
 			<else>
-				<execute function="Type#typeEditor" locator1="AlloyEditor#TITLE_FIELD" value1="${kbArticleTitle}" />
+				<execute macro="AlloyEditor#addTitle">
+					<var name="title" value="${kbArticleTitle}" />
+				</execute>
 			</else>
 		</if>
 
@@ -152,7 +159,9 @@
 				<execute function="Type#sendKeysAceEditor" locator1="TextArea#ACE_EDITOR" value1="${kbArticleContentSource}" />
 			</then>
 			<else>
-				<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${kbArticleContent}" />
+				<execute macro="AlloyEditor#addContent">
+					<var name="content" value="${kbArticleContent}" />
+				</execute>
 			</else>
 		</if>
 
@@ -258,9 +267,10 @@
 
 		<execute function="AssertClick" locator1="MenuItem#BASIC_ARTICLE" value1="Basic Article" />
 
-		<execute function="Type#typeEditor" locator1="AlloyEditor#TITLE_FIELD" value1="${kbArticleTitle}" />
-
-		<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${kbArticleContent}" />
+		<execute macro="AlloyEditor#addTitleAndContent">
+			<var name="content" value="${kbArticleContent}" />
+			<var name="title" value="${kbArticleTitle}" />
+		</execute>
 
 		<execute macro="KBArticle#selectAttachmentCP">
 			<var name="kbArticleAttachment" value="${kbArticleAttachment}" />
@@ -276,8 +286,10 @@
 
 		<execute function="AssertClick" locator1="MenuItem#BASIC_ARTICLE" value1="Basic Article" />
 
-		<execute function="Type#typeEditor" locator1="AlloyEditor#TITLE_FIELD" value1="${kbArticleTitle}" />
-		<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${kbArticleContent}" />
+		<execute macro="AlloyEditor#addTitleAndContent">
+			<var name="content" value="${kbArticleContent}" />
+			<var name="title" value="${kbArticleTitle}" />
+		</execute>
 
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
 
@@ -305,8 +317,10 @@
 	<command name="cancelAddKBArticle">
 		<execute macro="KBArticle#_gotoAddBasicArticle" />
 
-		<execute function="Type#typeEditor" locator1="AlloyEditor#TITLE_FIELD" value1="${kbArticleTitle}" />
-		<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${kbArticleContent}" />
+		<execute macro="AlloyEditor#addTitleAndContent">
+			<var name="content" value="${kbArticleContent}" />
+			<var name="title" value="${kbArticleTitle}" />
+		</execute>
 
 		<execute macro="Button#clickCancel" />
 	</command>
@@ -440,6 +454,7 @@
 		</execute>
 
 		<execute function="SelectFrame" locator1="KnowledgeBaseConfiguration#IFRAME" />
+
 		<execute function="AssertClick" locator1="KnowledgeBaseConfiguration#NAVIGATION_TAB_DISPLAY_SETTINGS" value1="Display Settings" />
 
 		<if>
@@ -482,7 +497,9 @@
 		</if>
 
 		<execute macro="Button#clickSave" />
+
 		<execute macro="Alert#viewSuccessMessage" />
+
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
@@ -495,15 +512,21 @@
 		</execute>
 
 		<execute function="SelectFrame" locator1="KnowledgeBaseConfiguration#IFRAME" />
+
 		<execute function="AssertClick" locator1="Button#SELECT" value1="Select" />
+
 		<execute function="SelectFrame" value1="relative=top" />
 
 		<execute function="SelectFrame" locator1="KnowledgeBaseSelectParent#SELECT_PARENT_DISPLAY_IFRAME" />
+
 		<execute function="AssertClick" locator1="KnowledgeBaseSelectParent#CHOOSE_FOLDER_BUTTON" value1="Choose" />
+
 		<execute function="SelectFrame" value1="relative=top" />
 
 		<execute function="SelectFrame" locator1="KnowledgeBaseConfiguration#IFRAME" />
+
 		<execute macro="Button#clickSave" />
+
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
@@ -514,6 +537,7 @@
 		</execute>
 
 		<execute function="SelectFrame" locator1="KnowledgeBaseConfiguration#IFRAME" />
+
 		<execute function="AssertClick" locator1="KnowledgeBaseConfiguration#NAVIGATION_TAB_DISPLAY_SETTINGS" value1="Display Settings" />
 
 		<if>
@@ -540,9 +564,13 @@
 		</execute>
 
 		<execute function="SelectFrame" locator1="KnowledgeBaseConfiguration#IFRAME" />
+
 		<execute function="AssertChecked" locator1="KnowledgeBaseSection#CONFIGURATION_SHOW_SECTIONS_TITLE_CHECKBOX" />
+
 		<execute function="AddSelection" locator1="KnowledgeBaseSection#CONFIGURATION_SECTIONS_SELECT" value1="${kbArticleSection}" />
+
 		<execute macro="Button#clickSave" />
+
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
@@ -553,6 +581,7 @@
 		</execute>
 
 		<execute function="SelectFrame" locator1="KnowledgeBaseConfiguration#IFRAME" />
+
 		<execute function="AssertClick" locator1="KnowledgeBaseConfiguration#NAVIGATION_TAB_DISPLAY_SETTINGS" value1="Display Settings" />
 
 		<if>
@@ -601,7 +630,9 @@
 		</if>
 
 		<execute function="Confirm" value1="Are you sure you want to delete the selected entries? They will be deleted immediately." />
+
 		<execute macro="Alert#viewSuccessMessage" />
+
 		<execute function="AssertTextNotPresent" locator1="Message#ERROR" value1="Your request failed to complete." />
 		<execute function="AssertTextNotPresent" locator1="Message#ERROR" value1="An unexpected error occurred while importing articles: File name is null." />
 	</command>
@@ -641,8 +672,11 @@
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
 		<execute function="AssertTextEquals" locator1="Message#INFO" value1="A new version is created automatically if this content is modified." />
-		<execute function="Type#typeEditor" locator1="AlloyEditor#TITLE_FIELD" value1="${kbArticleTitleEdit}" />
-		<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${kbArticleContentEdit}" />
+
+		<execute macro="AlloyEditor#addTitleAndContent">
+			<var name="content" value="${kbArticleContentEdit}" />
+			<var name="title" value="${kbArticleTitleEdit}" />
+		</execute>
 
 		<if>
 			<isset var="kbArticleAttachment" />
@@ -676,10 +710,15 @@
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
 		<execute function="AssertTextEquals" locator1="KnowledgeBase#ARTICLE_TABLE_ARTICLE_PRIORITY" value1="${kbPriority}" />
+
 		<execute function="Type" locator1="KnowledgeBase#ARTICLE_TABLE_ARTICLE_PRIORITY" value1="${kbNewPriority}" />
+
 		<execute function="AssertClick" locator1="KnowledgeBase#MENUBAR_ACTIONS" value1="Actions" />
+
 		<execute function="AssertClick" locator1="MenuItem#SAVE" value1="Save" />
+
 		<execute macro="Alert#viewSuccessMessage" />
+
 		<execute function="AssertTextEquals" locator1="KnowledgeBase#ARTICLE_TABLE_ARTICLE_PRIORITY" value1="${kbNewPriority}" />
 	</command>
 
@@ -689,8 +728,11 @@
 		<execute function="AssertClick" locator1="KnowledgeBase#KB_TOOLS" value1="Edit" />
 
 		<execute function="AssertTextEquals" locator1="Message#INFO" value1="A new version is created automatically if this content is modified." />
-		<execute function="Type#typeEditor" locator1="AlloyEditor#TITLE_FIELD" value1="${kbArticleTitleEdit}" />
-		<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${kbArticleContentEdit}" />
+
+		<execute macro="AlloyEditor#addTitleAndContent">
+			<var name="content" value="${kbArticleContentEdit}" />
+			<var name="title" value="${kbArticleTitleEdit}" />
+		</execute>
 
 		<if>
 			<equals arg1="${cancel}" arg2="true" />
@@ -717,6 +759,7 @@
 		<execute function="AssertClick" locator1="MenuItem#EDIT_LOCALIZED" value1="Editar" />
 
 		<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#HEADER_TITLE" value1="${kbArticleTitle}" />
+
 		<execute function="Type#typeEditor" locator1="AlloyEditor#TITLE_FIELD_LOCALIZED" value1="${kbArticleTitleEdit}" />
 		<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD_LOCALIZED" value1="${kbArticleContentEdit}" />
 
@@ -760,6 +803,7 @@
 		<execute function="AssertTextEquals#assertValue" locator1="KnowledgeBase#ARTICLE_TABLE_ARTICLE_PRIORITY" value1="${kbPriority}" />
 		<execute function="AssertTextEquals" locator1="KnowledgeBase#DESCRIPTIVE_VIEW_ARTICLE_TITLE" value1="${kbArticleTitle}" />
 		<execute function="AssertTextEquals" locator1="KnowledgeBase#ARTICLE_TABLE_ARTICLE_AUTHOR" value1="${kbAuthor}" />
+
 		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MenuItem#VIEW" value1="View" />
@@ -776,6 +820,7 @@
 		<var name="key_kbChildArticleTitle" value="${kbChildArticleTitle}" />
 
 		<execute function="AssertClick" locator1="KnowledgeBase#HIERARCHY_NAVIGATION_PARENT" value1="${kbArticleTitle}" />
+
 		<execute function="AssertClick#assertTextClickNoMouseOver" locator1="KnowledgeBase#HIERARCHY_NAVIGATION_CHILD" value1="${kbChildArticleTitle}" />
 	</command>
 
@@ -785,7 +830,9 @@
 		<var name="key_kbGrandchildArticleTitle" value="${kbGrandchildArticleTitle}" />
 
 		<execute function="AssertClick" locator1="KnowledgeBase#HIERARCHY_NAVIGATION_PARENT" value1="${kbArticleTitle}" />
+
 		<execute function="AssertClick#assertTextClickNoMouseOver" locator1="KnowledgeBase#HIERARCHY_NAVIGATION_CHILD" value1="${kbChildArticleTitle}" />
+
 		<execute function="AssertClick#assertTextClickNoMouseOver" locator1="KnowledgeBase#HIERARCHY_NAVIGATION_GRANDCHILD" value1="${kbGrandchildArticleTitle}" />
 	</command>
 
@@ -889,6 +936,7 @@
 		<execute function="AssertTextEquals" locator1="KnowledgeBase#MOVE_CURRENT_PARENT_PRIORITY_LABEL" value1="Priority" />
 		<execute function="AssertTextEquals" locator1="KnowledgeBase#MOVE_NEW_PARENT_TITLE_LABEL" value1="New Parent" />
 		<execute function="AssertTextEquals" locator1="KnowledgeBase#MOVE_NEW_PARENT_PRIORITY_LABEL" value1="Priority" />
+
 		<execute function="AssertClick" locator1="Button#SELECT" value1="Select" />
 	</command>
 
@@ -904,6 +952,7 @@
 		<execute function="AssertTextEquals" locator1="KnowledgeBase#MOVE_CURRENT_PARENT_PRIORITY_LABEL" value1="Priority" />
 		<execute function="AssertTextEquals" locator1="KnowledgeBase#MOVE_NEW_PARENT_TITLE_LABEL" value1="New Parent" />
 		<execute function="AssertTextEquals" locator1="KnowledgeBase#MOVE_NEW_PARENT_PRIORITY_LABEL" value1="Priority" />
+
 		<execute function="AssertClick" locator1="Button#SELECT" value1="Select" />
 	</command>
 
@@ -913,6 +962,7 @@
 		<execute function="AssertTextEquals" locator1="KnowledgeBase#DISPLAY_TITLE" value1="${kbArticleTitle}" />
 
 		<execute function="Click#clickWaitForInlineCKEditorNoMouseOver" locator1="Ratings#YOUR_RATING_STAR_EMPTY_1" />
+
 		<execute function="AssertElementPresent" locator1="Ratings#YOUR_RATING_STAR_1" />
 		<execute function="AssertElementNotPresent" locator1="Ratings#YOUR_RATING_STAR_EMPTY_5" />
 	</command>
@@ -923,6 +973,7 @@
 		<execute function="AssertTextEquals" locator1="KnowledgeBase#DISPLAY_TITLE" value1="${kbArticleTitle}" />
 
 		<execute function="Click#clickWaitForInlineCKEditorNoMouseOver" locator1="Ratings#YOUR_RATING_STAR_EMPTY_4" />
+
 		<execute function="AssertElementPresent" locator1="Ratings#YOUR_RATING_STAR_5" />
 		<execute function="AssertElementNotPresent" locator1="Ratings#YOUR_RATING_STAR_EMPTY_1" />
 	</command>
@@ -950,6 +1001,7 @@
 
 	<command name="searchPGViaKBSearch">
 		<execute function="Type" locator1="KnowledgeBaseSearch#SEARCH_FIELD" value1="${searchTerm}" />
+
 		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
 	</command>
 
@@ -972,6 +1024,7 @@
 		</if>
 
 		<execute function="AssertClick" locator1="Button#SELECT_FILES" value1="Select Files" />
+
 		<execute function="SikuliUploadCommonFile" locator1="OS#FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG" value1="${kbArticleAttachment}" />
 	</command>
 
@@ -987,8 +1040,11 @@
 		</if>
 
 		<execute function="AssertClick" locator1="Button#SELECT_VOCABULARY" value1="Select" />
+
 		<execute function="AssertClick" locator1="CPKnowledgebaseadminAddarticle#CATEGORIES_CATEGORY_UNSELECTED" value1="${categoryName}" />
+
 		<execute function="AssertElementPresent" locator1="CPKnowledgebaseadminAddarticle#CATEGORIES_CATEGORY_SELECTED" value1="${categoryName}" />
+
 		<execute function="Click" locator1="CPKnowledgebaseadminAddarticle#CATEGORIES_CLOSE_BUTTON" />
 	</command>
 
@@ -996,10 +1052,13 @@
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
 		<execute function="SelectFrame" locator1="KnowledgeBaseSelectParent#IFRAME" />
+
 		<execute function="Click" locator1="KnowledgeBaseSelectParent#CHOOSE_BUTTON" value1="Choose" />
+
 		<execute function="SelectFrame" value1="relative=top" />
 
 		<execute function="AssertTextEquals" locator1="KnowledgeBase#MOVE_NEW_PARENT_TITLE_FIELD" value1="${kbArticleTitle}" />
+
 		<execute function="Click" locator1="Button#MOVE" />
 
 		<execute macro="Alert#viewSuccessMessage" />
@@ -1009,13 +1068,17 @@
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
 		<execute function="SelectFrame" locator1="KnowledgeBaseSelectParent#IFRAME" />
+
 		<execute function="Click" locator1="KnowledgeBaseSelectParent#CHOOSE_BUTTON" value1="Choose" />
+
 		<execute function="SelectFrame" value1="relative=top" />
 
 		<execute function="AssertTextEquals" locator1="KnowledgeBase#MOVE_NEW_PARENT_TITLE_FIELD" value1="${kbArticleTitle}" />
+
 		<execute function="Click" locator1="Button#MOVE" />
 
 		<execute macro="Alert#viewSuccessMessage" />
+
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
@@ -1081,11 +1144,16 @@
 		</execute>
 
 		<execute function="SelectFrame" locator1="KnowledgeBaseConfiguration#IFRAME" />
+
 		<execute function="AssertChecked" locator1="KnowledgeBaseSection#CONFIGURATION_SHOW_SECTIONS_TITLE_CHECKBOX" />
+
 		<execute function="AddSelection" locator1="KnowledgeBaseSection#CONFIGURATION_SECTIONS_SELECT" value1="${kbArticleSection}" />
+
 		<execute function="AssertSelectedLabel" locator1="KnowledgeBaseSection#CONFIGURATION_ARTICLE_DISPLAY_STYLE_SELECT" value1="Title" />
 		<execute function="AssertSelectedLabel" locator1="KnowledgeBaseSection#CONFIGURATION_ARTICLE_WINDOW_STATE_SELECT" value1="Maximized" />
+
 		<execute macro="Button#clickSave" />
+
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
@@ -1093,9 +1161,13 @@
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
 		<execute function="Type" locator1="KnowledgeBase#ARTICLE_TABLE_ARTICLE_PRIORITY" value1="${kbPriority}" />
+
 		<execute function="Check" locator1="KnowledgeBase#ARTICLE_DESCRIPTIVE_ARTICLE_CHECKBOX" />
+
 		<execute function="Click" locator1="KnowledgeBase#MENUBAR_ACTIONS" />
+
 		<execute function="AssertClick" locator1="MenuItem#SAVE" value1="Save" />
+
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
@@ -1225,6 +1297,7 @@
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
 		<execute function="AssertClick" locator1="KnowledgeBaseArticle#ATTACHMENTS_HEADER_COLLAPSED" value1="Attachments" />
+
 		<execute function="AssertElementPresent" locator1="KnowledgeBaseArticle#ATTACHMENTS_SAVED_ATTACHMENTS_CONTAINER" />
 	</command>
 

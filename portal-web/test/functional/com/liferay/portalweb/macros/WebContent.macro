@@ -32,7 +32,9 @@
 		<if>
 			<isset var="webContentContent" />
 			<then>
-				<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${webContentContent}" />
+				<execute macro="AlloyEditor#addContent">
+					<var name="content" value="${webContentContent}" />
+				</execute>
 			</then>
 		</if>
 	</command>
@@ -116,7 +118,9 @@
 	<command name="addFailWithoutRequiredCategoryAssetTypeCP">
 		<execute function="Type" locator1="TextInput#TITLE" value1="Web Content Title" />
 
-		<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="Web Content Content" />
+		<execute macro="AlloyEditor#addContent">
+			<var name="content" value="Web Content Content" />
+		</execute>
 
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
 
@@ -150,7 +154,9 @@
 		<if>
 			<isset var="webContentContent" />
 			<then>
-				<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${webContentContent}" />
+				<execute macro="AlloyEditor#addContent">
+					<var name="content" value="${webContentContent}" />
+				</execute>
 			</then>
 		</if>
 
@@ -272,7 +278,9 @@
 		<if>
 			<isset var="localizedContent" />
 			<then>
-				<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${localizedContent}" />
+				<execute macro="AlloyEditor#addContent">
+					<var name="content" value="${localizedContent}" />
+				</execute>
 			</then>
 		</if>
 
@@ -778,7 +786,9 @@
 		<if>
 			<isset var="webContentContentEdit" />
 			<then>
-				<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${webContentContentEdit}" />
+				<execute macro="AlloyEditor#addContent">
+					<var name="content" value="${webContentContentEdit}" />
+				</execute>
 			</then>
 		</if>
 
@@ -877,7 +887,9 @@
 		<if>
 			<isset var="webContentContent" />
 			<then>
-				<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${webContentContent}" />
+				<execute macro="AlloyEditor#addContent">
+					<var name="content" value="${webContentContent}" />
+				</execute>
 			</then>
 		</if>
 
@@ -895,7 +907,9 @@
 
 		<execute function="Type#mouseOverFocusType" locator1="TextInput#TITLE" value1="${webContentTitleEdit}" />
 
-		<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${webContentContentEdit}" />
+		<execute macro="AlloyEditor#addContent">
+			<var name="content" value="${webContentContentEdit}" />
+		</execute>
 
 		<execute function="Click" locator1="Button#PUBLISH" value1="Publish" />
 	</command>
@@ -911,7 +925,9 @@
 
 		<execute function="Type#mouseOverFocusType" locator1="TextInput#TITLE" value1="${webContentTitleEdit}" />
 
-		<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${webContentContentEdit}" />
+		<execute macro="AlloyEditor#addContent">
+			<var name="content" value="${webContentContentEdit}" />
+		</execute>
 
 		<execute function="Click" locator1="Button#PUBLISH" value1="Publish" />
 	</command>
@@ -927,7 +943,9 @@
 				<execute function="Type" locator1="DDMField#TEXT" value1="${webContentText}" />
 			</then>
 			<else>
-				<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${webContentContentEdit}" />
+				<execute macro="AlloyEditor#addContent">
+					<var name="content" value="${webContentContentEdit}" />
+				</execute>
 			</else>
 		</if>
 

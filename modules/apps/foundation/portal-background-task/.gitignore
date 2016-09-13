@@ -1,4 +1,4 @@
-**docroot/WEB-INF/tld/
+**/docroot/WEB-INF/tld/
 *.iml
 .classpath
 .gradle/

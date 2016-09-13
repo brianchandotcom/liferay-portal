@@ -174,82 +174,6 @@
 		</execute>
 	</command>
 
-	<command name="addMemberCP">
-		<var name="key_cardText" value="${userScreenName}" />
-
-		<execute macro="LexiconEntry#gotoAdd" />
-
-		<execute function="AssertVisible" locator1="Button#DONE" />
-
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
-
-		<if>
-			<isset var="userMiddleName" />
-			<then>
-				<execute function="AssertTextEquals" locator1="Card#SPECIFIC_LARGE_TEXT" value1="${userFirstName} ${userMiddleName} ${userLastName}" />
-			</then>
-			<else>
-				<execute function="AssertTextEquals" locator1="Card#SPECIFIC_LARGE_TEXT" value1="${userFirstName} ${userLastName}" />
-			</else>
-		</if>
-
-		<execute function="AssertTextEquals" locator1="Card#SPECIFIC_TEXT" value1="${userScreenName}" />
-
-		<execute function="Check" locator1="Card#SPECIFIC_CHECKBOX" />
-
-		<execute function="SelectFrameTop" />
-
-		<execute macro="Button#clickDone" />
-
-		<execute macro="Alert#viewSuccessMessage" />
-	</command>
-
-	<command name="addMemberOrganizationCP">
-		<var name="key_cardText" value="${orgName}" />
-
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Organizations" />
-		</execute>
-
-		<execute function="Click" locator1="Button#PLUS" />
-
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
-
-		<execute function="AssertTextEquals" locator1="Card#SPECIFIC_LARGE_TEXT" value1="${orgName}" />
-
-		<execute function="Check" locator1="Card#SPECIFIC_CHECKBOX" />
-
-		<execute function="SelectFrameTop" />
-
-		<execute macro="Button#clickDone" />
-
-		<execute macro="Alert#viewSuccessMessage" />
-	</command>
-
-	<command name="addMemberUserGroupCP">
-		<var name="key_cardText" value="${userGroupName}" />
-
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="User Groups" />
-		</execute>
-
-		<execute function="Pause" locator1="5000" />
-
-		<execute macro="LexiconEntry#gotoAdd" />
-
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
-
-		<execute function="AssertTextEquals" locator1="Card#SPECIFIC_LARGE_TEXT" value1="${userGroupName}" />
-
-		<execute function="Check" locator1="Card#SPECIFIC_CHECKBOX" />
-
-		<execute function="SelectFrameTop" />
-
-		<execute macro="Button#clickDone" />
-
-		<execute macro="Alert#viewSuccessMessage" />
-	</command>
-
 	<command name="addSiteTemplateCP">
 		<execute macro="Site#addCP">
 			<var name="membershipType" value="${membershipType}" />
@@ -363,74 +287,99 @@
 		<execute function="AssertTextEquals" locator1="SiteSettingsDefaultUserAssociations#TEAMS_SELECTED" value1="${teamName}" />
 	</command>
 
-	<command name="assignRoleCP">
-		<execute function="AssertVisible" locator1="Portlet#HEADER" />
+	<command name="assignOrganizationAsMemberCP">
+		<var name="key_cardText" value="${orgName}" />
 
-		<var name="key_cardText" value="${userScreenName}" />
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Organizations" />
+		</execute>
 
-		<execute function="AssertTextEquals" locator1="Card#SPECIFIC_TEXT" value1="${userScreenName}" />
+		<execute function="Click" locator1="Button#PLUS" />
+
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
+		<execute function="AssertTextEquals" locator1="Card#SPECIFIC_LARGE_TEXT" value1="${orgName}" />
 
 		<execute function="Check" locator1="Card#SPECIFIC_CHECKBOX" />
-
-		<execute function="AssertClick" locator1="Button#ASSIGN_SITE_ROLES" value1="Assign Site Roles" />
-
-		<var name="key_iframeTitle" value="Assign Site Roles" />
-
-		<execute function="AssertElementPresent" locator1="IFrame#IFRAME_TITLE" />
-		<execute function="AssertVisible" locator1="Button#DONE" />
-
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
-
-		<execute function="Type" locator1="TextInput#SEARCH" value1="${roleName}" />
-
-		<execute function="KeyPress" locator1="TextInput#SEARCH" value1="\RETURN" />
-
-		<var name="key_roleName" value="${roleName}" />
-
-		<execute function="AssertTextEquals" locator1="SiteMembershipsAssignUserRoles#ROLE_TABLE_TITLE" value1="${roleName}" />
-
-		<execute function="Check" locator1="SiteMembershipsAssignUserRoles#ROLE_TABLE_CHECKBOX" />
-
-		<execute function="SelectFrameTop" />
-
-		<execute function="AssertClick" locator1="Button#DONE" value1="Done" />
-
-		<execute macro="Alert#viewSuccessMessage" />
-	</command>
-
-	<command name="assignSiteRolesUserGroupsCP">
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="User Groups" />
-		</execute>
-
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Assign Site Roles" />
-			<var name="rowEntry" value="${userGroupName}" />
-		</execute>
-
-		<var name="key_iframeTitle" value="Assign Site Roles" />
-
-		<execute function="AssertTextEquals" locator1="IFrame#IFRAME_TITLE" value1="Assign Site Roles" />
-
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
-
-		<execute function="Type" locator1="TextInput#SEARCH" value1="${roleName}" />
-
-		<execute function="KeyPress" locator1="TextInput#SEARCH" value1="\RETURN" />
-
-		<var name="key_rowEntry" value="${roleName}" />
-
-		<execute function="Check" locator1="ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX" value1="${roleName}" />
 
 		<execute function="SelectFrameTop" />
 
 		<execute macro="Button#clickDone" />
 
 		<execute macro="Alert#viewSuccessMessage" />
+	</command>
 
-		<execute function="AssertTextEquals" locator1="Card#SPECIFIC_SMALL_TEXT" value1="${roleName}">
-			<var name="key_cardText" value="${userGroupName}" />
+	<command name="assignSiteRoleCP">
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Assign Site Roles" />
+			<var name="rowEntry" value="${resourceName}" />
 		</execute>
+
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
+		<execute function="Check" locator1="Card#SPECIFIC_CHECKBOX">
+			<var name="key_cardText" value="${roleName}" />
+		</execute>
+
+		<execute function="SelectFrameTop" />
+
+		<execute macro="Button#clickDone" />
+
+		<execute macro="Alert#viewSuccessMessage" />
+	</command>
+
+	<command name="assignUserAsMemberCP">
+		<var name="key_cardText" value="${userScreenName}" />
+
+		<execute macro="LexiconEntry#gotoAdd" />
+
+		<execute function="AssertVisible" locator1="Button#DONE" />
+
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
+		<if>
+			<isset var="userMiddleName" />
+			<then>
+				<execute function="AssertTextEquals" locator1="Card#SPECIFIC_LARGE_TEXT" value1="${userFirstName} ${userMiddleName} ${userLastName}" />
+			</then>
+			<else>
+				<execute function="AssertTextEquals" locator1="Card#SPECIFIC_LARGE_TEXT" value1="${userFirstName} ${userLastName}" />
+			</else>
+		</if>
+
+		<execute function="AssertTextEquals" locator1="Card#SPECIFIC_TEXT" value1="${userScreenName}" />
+
+		<execute function="Check" locator1="Card#SPECIFIC_CHECKBOX" />
+
+		<execute function="SelectFrameTop" />
+
+		<execute macro="Button#clickDone" />
+
+		<execute macro="Alert#viewSuccessMessage" />
+	</command>
+
+	<command name="assignUserGroupAsMemberCP">
+		<var name="key_cardText" value="${userGroupName}" />
+
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="User Groups" />
+		</execute>
+
+		<execute function="Pause" locator1="5000" />
+
+		<execute macro="LexiconEntry#gotoAdd" />
+
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
+		<execute function="AssertTextEquals" locator1="Card#SPECIFIC_LARGE_TEXT" value1="${userGroupName}" />
+
+		<execute function="Check" locator1="Card#SPECIFIC_CHECKBOX" />
+
+		<execute function="SelectFrameTop" />
+
+		<execute macro="Button#clickDone" />
+
+		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="assignUserSitesCP">
@@ -944,6 +893,28 @@
 		</execute>
 	</command>
 
+	<command name="searchMembershipCP">
+		<execute function="Type" locator1="TextInput#SEARCH" value1="${searchValue}" />
+
+		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
+
+		<if>
+			<equals arg1="${emptyResults}" arg2="true" />
+			<then>
+				<execute function="AssertElementPresent" locator1="Message#EMPTY_INFO" />
+			</then>
+			<else>
+				<execute function="AssertElementPresent" locator1="Card#GENERIC_LARGE_TEXT" />
+
+				<var method="StringUtil#unquote('${searchValue}')" name="cardText" />
+
+				<execute function="AssertTextEquals" locator1="Card#SPECIFIC_LARGE_TEXT" value1="${cardText}">
+					<var name="key_cardText" value="${cardText}" />
+				</execute>
+			</else>
+		</if>
+	</command>
+
 	<command name="selectPageType">
 		<execute macro="Panel#expandPanel">
 			<var name="panelHeading" value="Pages" />
@@ -1178,6 +1149,16 @@
 		</if>
 	</command>
 
+	<command name="viewMemberUserGroupCP">
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="User Groups" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="Card#SPECIFIC_LARGE_TEXT" value1="${userGroupName}">
+			<var name="key_cardText" value="${userGroupName}" />
+		</execute>
+	</command>
+
 	<command name="viewMySitesViaMySitesPG">
 		<execute function="AssertTextEquals" locator1="NavBar#NAV_ITEM_LINK" value1="My Sites">
 			<var name="key_navItem" value="My Sites" />
@@ -1276,6 +1257,16 @@
 		<execute function="AssertClick" locator1="SitesEditSite#MENU_BASIC_INFORMATION_SITE_TEMPLATE" value1="Site Template" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="SiteSettingsSiteTemplate#SITE_CLONED_FROM_TEMPLATE_MESSAGE" value1="Site Template" />
+	</command>
+
+	<command name="viewSiteRoleViaSiteMembershipsCP">
+		<execute function="AssertTextEquals" locator1="Card#SPECIFIC_LARGE_TEXT" value1="${resourceName}">
+			<var name="key_cardText" value="${resourceName}" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="Card#SPECIFIC_SMALL_TEXT" value1="${roleName}">
+			<var name="key_cardText" value="${resourceName}" />
+		</execute>
 	</command>
 
 	<command name="viewVirtualHostsURLPG">

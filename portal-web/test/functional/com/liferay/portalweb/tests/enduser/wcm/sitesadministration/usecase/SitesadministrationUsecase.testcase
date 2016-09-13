@@ -291,7 +291,7 @@
 			<var name="portlet" value="Site Memberships" />
 		</execute>
 
-		<execute macro="Site#addMemberUserGroupCP">
+		<execute macro="Site#assignUserGroupAsMemberCP">
 			<var name="userGroupName" value="UG UserGroup Name" />
 		</execute>
 
@@ -402,11 +402,9 @@
 			<var name="portlet" value="Site Memberships" />
 		</execute>
 
-		<execute macro="Site#assignRoleCP">
+		<execute macro="Site#assignSiteRoleCP">
+			<var name="resourceName" value="userfn userln" />
 			<var name="roleName" value="Roles Siterole Name" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
 		</execute>
 
 		<execute macro="Navigator#openURL" />

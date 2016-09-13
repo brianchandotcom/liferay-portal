@@ -8,43 +8,53 @@
 		<execute macro="SignIn#signIn" />
 
 		<execute macro="Smoke#viewWelcomePage" />
+
+		<execute macro="Upgrade#reindexSearches" />
 	</set-up>
 
 	<command name="AddFormAfterUpgrade" priority="5">
 		<property name="data.archive.type" value="data-archive-portal" />
-		<property name="test.assert.warning.exceptions" value="true" />
 
 		<execute macro="Upgrade#addForm" />
 	</command>
 
 	<command name="AddOrganizationAfterUpgrade" priority="4">
 		<property name="data.archive.type" value="data-archive-portal" />
-		<property name="test.assert.warning.exceptions" value="true" />
 
 		<execute macro="Upgrade#addOrganization" />
 	</command>
 
 	<command name="Publish621015StagingArchiveAfterUpgrade" priority="4">
-		<property name="test.assert.warning.exceptions" value="true" />
+		<property name="data.archive.type" value="data-archive-staging-unpublished" />
 
 		<execute macro="Upgrade#publishStagedSite" />
 	</command>
 
 	<command name="View621015AssetPublisherArchive" priority="3">
 		<property name="data.archive.type" value="data-archive-asset-publisher" />
-		<property name="test.assert.warning.exceptions" value="true" />
 
 		<execute macro="Upgrade#viewAssetPublisher" />
 	</command>
 
 	<command name="View621015CalendarArchive" priority="3">
 		<property name="data.archive.type" value="data-archive-calendar" />
-		<property name="test.assert.warning.exceptions" value="true" />
 
 		<execute macro="Upgrade#viewCalendar" />
 	</command>
 
-	<command name="View621015DataArchive" priority="5">
+	<command name="View621015NestedPortletsArchive" priority="3">
+		<property name="data.archive.type" value="data-archive-nested-portlets" />
+
+		<execute macro="Upgrade#viewNestedPortlets" />
+	</command>
+
+	<command name="View621015PollsArchive" priority="3">
+		<property name="data.archive.type" value="data-archive-polls" />
+
+		<execute macro="Upgrade#viewPolls" />
+	</command>
+
+	<command name="View621015PortalSmokeArchive" priority="5">
 		<property name="data.archive.type" value="data-archive-portal" />
 		<property name="test.assert.warning.exceptions" value="true" />
 
@@ -53,23 +63,8 @@
 		<execute macro="Upgrade#searchForAssetsAfterUpgrade" />
 	</command>
 
-	<command name="View621015NestedPortletsArchive" priority="3">
-		<property name="data.archive.type" value="data-archive-nested-portlets" />
-		<property name="test.assert.warning.exceptions" value="true" />
-
-		<execute macro="Upgrade#viewNestedPortlets" />
-	</command>
-
-	<command name="View621015PollsArchive" priority="3">
-		<property name="data.archive.type" value="data-archive-polls" />
-		<property name="test.assert.warning.exceptions" value="true" />
-
-		<execute macro="Upgrade#viewPolls" />
-	</command>
-
 	<command name="View621015WebContentArchive" priority="3">
 		<property name="data.archive.type" value="data-archive-web-content-draft" />
-		<property name="test.assert.warning.exceptions" value="true" />
 
 		<execute macro="Upgrade#addWCStructureAndTemplate" />
 
@@ -78,7 +73,6 @@
 
 	<command name="View621015WorkflowArchive" priority="4">
 		<property name="data.archive.type" value="data-archive-workflow" />
-		<property name="test.assert.warning.exceptions" value="true" />
 
 		<execute macro="Upgrade#approveWorkflow" />
 	</command>

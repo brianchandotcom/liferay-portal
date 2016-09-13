@@ -166,7 +166,9 @@ public class ModulesStructureTest {
 
 					String dirName = dirNamePath.toString();
 
-					if (Files.exists(dirPath.resolve(".gitrepo"))) {
+					if (dirPath.equals(_modulesDirPath) ||
+						Files.exists(dirPath.resolve(".gitrepo"))) {
+
 						_testGitRepoIgnoreFiles(
 							dirPath, gitRepoGitIgnoreTemplate);
 					}

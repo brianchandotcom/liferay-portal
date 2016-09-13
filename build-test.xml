@@ -495,6 +495,50 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="get-jstack-output">
+		<attribute name="process.name" />
+
+		<sequential>
+			<var name="jstack.output" unset="true" />
+
+			<execute>
+				<![CDATA[
+					jps > jps_output
+				]]>
+			</execute>
+
+			<local name="jps.output" />
+
+			<loadfile property="jps.output" srcfile="jps_output" />
+
+			<if>
+				<contains string="${jps.output}" substring="@{process.name}" />
+				<then>
+					<local name="bootstrap.pid" />
+
+					<propertyregex
+						input="${jps.output}"
+						override="true"
+						property="bootstrap.pid"
+						regexp="(|[\S\s]*\n)([0-9]+) @{process.name}[\S\s]*"
+						replace="\2"
+					/>
+
+					<execute>
+						<![CDATA[
+							jstack ${bootstrap.pid} > jstack_output
+						]]>
+					</execute>
+
+					<loadfile property="jstack.output" srcfile="jstack_output" />
+				</then>
+			</if>
+
+			<delete file="jps_output" />
+			<delete file="jstack_output" />
+		</sequential>
+	</macrodef>
+
 	<macrodef name="get-master-hostname">
 		<attribute default="${env.JENKINS_URL}" name="jenkins.url" />
 
@@ -3261,51 +3305,26 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 					<if>
 						<isset property="app.server.stopping.timeout" />
 						<then>
-							<execute>
-								jps > jps_output
-							</execute>
-
-							<var name="jps.output" unset="true" />
-
-							<loadfile property="jps.output" srcfile="jps_output" />
+							<get-jstack-output process.name="Bootstrap" />
 
 							<if>
-								<contains string="${jps.output}" substring="Bootstrap" />
+								<and>
+									<equals arg1="${app.server.type}" arg2="weblogic" />
+									<isset property="env.HOSTNAME" />
+								</and>
 								<then>
-									<propertyregex
-										input="${jps.output}"
-										override="true"
-										property="bootstrap.pid"
-										regexp="(|[\S\s]*\n)([0-9]+) Bootstrap[\S\s]*"
-										replace="\2"
+									<replaceregexp
+										file="${app.server.weblogic.bin.dir}/stopWebLogic.sh"
+										flags="g"
+										match="(t3:\/\/)[^:]*(:\d+)"
+										replace="\1${env.HOSTNAME}\2"
 									/>
-
-									<execute>
-										jstack ${bootstrap.pid}
-									</execute>
-
-									<if>
-										<and>
-											<equals arg1="${app.server.type}" arg2="weblogic" />
-											<isset property="env.HOSTNAME" />
-										</and>
-										<then>
-											<replaceregexp
-												file="${app.server.weblogic.bin.dir}/stopWebLogic.sh"
-												flags="g"
-												match="(t3:\/\/)[^:]*(:\d+)"
-												replace="\1${env.HOSTNAME}\2"
-											/>
-										</then>
-									</if>
-
-									<stop-app-server app.server.bundle.index="@{app.server.bundle.index}" />
 								</then>
 							</if>
 
-							<delete file="jps_output" />
+							<stop-app-server app.server.bundle.index="@{app.server.bundle.index}" />
 
-							<fail if="app.server.stopping.timeout" message="Server is still available at ${app.server.waiting.url}." />
+							<fail if="app.server.stopping.timeout" message="Server is still available at ${app.server.waiting.url}.${line.separator}${jstack.output}" />
 						</then>
 					</if>
 				</sequential>
@@ -3449,36 +3468,11 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 			<if>
 				<isset property="app.server.waiting.timeout" />
 				<then>
-					<execute>
-						jps > jps_output
-					</execute>
+					<get-jstack-output process.name="Bootstrap" />
 
-					<var name="jps.output" unset="true" />
+					<stop-app-server app.server.bundle.index="@{app.server.bundle.index}" />
 
-					<loadfile property="jps.output" srcfile="jps_output" />
-
-					<if>
-						<contains string="${jps.output}" substring="Bootstrap" />
-						<then>
-							<propertyregex
-								input="${jps.output}"
-								override="true"
-								property="bootstrap.pid"
-								regexp="(|[\S\s]*\n)([0-9]+) Bootstrap[\S\s]*"
-								replace="\2"
-							/>
-
-							<execute>
-								jstack ${bootstrap.pid}
-							</execute>
-
-							<stop-app-server app.server.bundle.index="@{app.server.bundle.index}" />
-						</then>
-					</if>
-
-					<delete file="jps_output" />
-
-					<fail if="app.server.waiting.timeout" message="No server is available at ${app.server.waiting.url}" />
+					<fail if="app.server.waiting.timeout" message="No server is available at ${app.server.waiting.url}${line.separator}${jstack.output}" />
 				</then>
 			</if>
 
@@ -3572,34 +3566,9 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 					<if>
 						<isset property="wait.for.app.server.log.timed.out.message" />
 						<then>
-							<execute>
-								jps > jps_output
-							</execute>
+							<get-jstack-output process.name="Bootstrap" />
 
-							<var name="jps.output" unset="true" />
-
-							<loadfile property="jps.output" srcfile="jps_output" />
-
-							<if>
-								<contains string="${jps.output}" substring="Bootstrap" />
-								<then>
-									<propertyregex
-										input="${jps.output}"
-										override="true"
-										property="bootstrap.pid"
-										regexp="(|[\S\s]*\n)([0-9]+) Bootstrap[\S\s]*"
-										replace="\2"
-									/>
-
-									<execute>
-										jstack ${bootstrap.pid}
-									</execute>
-								</then>
-							</if>
-
-							<delete file="jps_output" />
-
-							<fail message="${wait.for.app.server.log.timed.out.message}" />
+							<fail message="${wait.for.app.server.log.timed.out.message}${line.separator}${jstack.output}" />
 						</then>
 					</if>
 				</then>
@@ -8776,34 +8745,9 @@ jdbc.default.password=${database.password}</echo>
 				/>
 			</try>
 			<catch>
-				<execute>
-					jps > jps_output
-				</execute>
+				<get-jstack-output process.name="DBUpgrader" />
 
-				<var name="jps.output" unset="true" />
-
-				<loadfile property="jps.output" srcfile="jps_output" />
-
-				<if>
-					<contains string="${jps.output}" substring="DBUpgrader" />
-					<then>
-						<propertyregex
-							input="${jps.output}"
-							override="true"
-							property="db.upgrader.pid"
-							regexp="(|[\S\s]*\n)([0-9]+) DBUpgrader[\S\s]*"
-							replace="\2"
-						/>
-
-						<execute>
-							jstack ${db.upgrader.pid}
-						</execute>
-					</then>
-				</if>
-
-				<delete file="jps_output" />
-
-				<fail message="${upgrade.error}" />
+				<fail message="${upgrade.error}${line.separator}${jstack.output}" />
 			</catch>
 		</trycatch>
 

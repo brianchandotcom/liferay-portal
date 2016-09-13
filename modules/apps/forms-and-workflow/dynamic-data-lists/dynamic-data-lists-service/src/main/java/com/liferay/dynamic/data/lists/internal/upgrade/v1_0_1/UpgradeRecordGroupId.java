@@ -32,10 +32,10 @@ public class UpgradeRecordGroupId extends UpgradeProcess {
 
 	protected void updateRecordGroupId() throws Exception {
 		String sql =
-			"SELECT DDLRecordSet.groupId, DDLRecord.recordId " +
-			"FROM DDLRecord INNER JOIN DDLRecordSet " +
-			"ON DDLRecord.recordSetId = DDLRecordSet.recordSetId " +
-			"WHERE DDLRecord.groupId != DDLRecordSet.groupId;";
+			"select DDLRecordSet.groupId, DDLRecord.recordId " +
+			"from DDLRecord inner join DDLRecordSet " +
+			"on DDLRecord.recordSetId = DDLRecordSet.recordSetId " +
+			"where DDLRecord.groupId != DDLRecordSet.groupId";
 
 		try (PreparedStatement ps1 = connection.prepareStatement(sql);
 			ResultSet rs = ps1.executeQuery();

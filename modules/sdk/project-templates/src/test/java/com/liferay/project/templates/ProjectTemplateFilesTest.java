@@ -33,6 +33,8 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -236,6 +238,16 @@ public class ProjectTemplateFilesTest {
 					Character.isWhitespace(line.charAt(line.length() - 1)));
 			}
 		}
+
+		Matcher matcher = _velocityIfPattern.matcher(text);
+
+		while (matcher.find()) {
+			String condition = matcher.group(1);
+
+			Assert.assertEquals(
+				"Source formatting error in " + path,
+				"#if (" + condition.trim() + ")", matcher.group());
+		}
 	}
 
 	private static final String[] _SOURCESET_NAMES = {
@@ -246,5 +258,7 @@ public class ProjectTemplateFilesTest {
 	private static final Set<String> _textFileExtensions = new HashSet<>(
 		Arrays.asList(
 			"bnd", "gradle", "java", "jsp", "jspf", "properties", "xml"));
+	private static final Pattern _velocityIfPattern = Pattern.compile(
+		"#if\\s*\\(\\s*(.+)\\s*\\)");
 
 }

@@ -334,6 +334,7 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 		}
 		else {
 			filteredEntries = entries;
+
 			filteredEntriesCount = filteredEntries.size();
 		}
 

@@ -576,6 +576,7 @@ public class LocalizationImpl implements Localization {
 		String xml = null;
 
 		Locale defaultLocale = LocaleUtil.getSiteDefault();
+
 		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
 
 		for (Locale locale : LanguageUtil.getAvailableLocales()) {

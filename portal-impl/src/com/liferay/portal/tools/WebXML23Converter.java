@@ -76,6 +76,7 @@ public class WebXML23Converter {
 			String webXML23 = document.formattedString();
 
 			int x = webXML23.indexOf("<web-app");
+
 			int y = webXML23.indexOf(">", x);
 
 			webXML23 = webXML23.substring(0, x) + "<!DOCTYPE web-app PUBLIC \"-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN\" \"http://java.sun.com/dtd/web-app_2_3.dtd\"><web-app>" + webXML23.substring(y + 1);

@@ -146,6 +146,7 @@ public class LiferayProcessorLocalRepositoryWrapper
 
 		if (is == null) {
 			oldFileEntry = getFileEntry(fileEntryId);
+
 			oldFileVersion = oldFileEntry.getLatestFileVersion(true);
 		}
 

@@ -100,6 +100,7 @@ public class LanguageFilter extends BasePortalFilter {
 		HttpServletRequest request, String content) {
 
 		String languageId = LanguageUtil.getLanguageId(request);
+
 		Locale locale = LocaleUtil.fromLanguageId(languageId);
 
 		ResourceBundle resourceBundle = LanguageResources.getResourceBundle(

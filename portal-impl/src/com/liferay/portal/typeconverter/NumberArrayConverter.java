@@ -51,6 +51,7 @@ public class NumberArrayConverter implements TypeConverter<Number[]> {
 		if (componentType.isPrimitive()) {
 			if (type == boolean[].class) {
 				boolean[] values = (boolean[])value;
+
 				Number[] results = new Number[values.length];
 
 				for (int i = 0; i < values.length; i++) {
@@ -61,6 +62,7 @@ public class NumberArrayConverter implements TypeConverter<Number[]> {
 			}
 			else if (type == byte[].class) {
 				byte[] values = (byte[])value;
+
 				Number[] results = new Number[values.length];
 
 				for (int i = 0; i < values.length; i++) {
@@ -71,6 +73,7 @@ public class NumberArrayConverter implements TypeConverter<Number[]> {
 			}
 			else if (type == double[].class) {
 				double[] values = (double[])value;
+
 				Number[] results = new Number[values.length];
 
 				for (int i = 0; i < values.length; i++) {
@@ -81,6 +84,7 @@ public class NumberArrayConverter implements TypeConverter<Number[]> {
 			}
 			else if (type == float[].class) {
 				float[] values = (float[])value;
+
 				Number[] results = new Number[values.length];
 
 				for (int i = 0; i < values.length; i++) {
@@ -91,6 +95,7 @@ public class NumberArrayConverter implements TypeConverter<Number[]> {
 			}
 			else if (type == int[].class) {
 				int[] values = (int[])value;
+
 				Number[] results = new Number[values.length];
 
 				for (int i = 0; i < values.length; i++) {
@@ -101,6 +106,7 @@ public class NumberArrayConverter implements TypeConverter<Number[]> {
 			}
 			else if (type == long[].class) {
 				long[] values = (long[])value;
+
 				Number[] results = new Number[values.length];
 
 				for (int i = 0; i < values.length; i++) {
@@ -111,6 +117,7 @@ public class NumberArrayConverter implements TypeConverter<Number[]> {
 			}
 			else if (type == short[].class) {
 				short[] values = (short[])value;
+
 				Number[] results = new Number[values.length];
 
 				for (int i = 0; i < values.length; i++) {

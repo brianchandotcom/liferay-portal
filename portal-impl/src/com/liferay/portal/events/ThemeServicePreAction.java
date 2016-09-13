@@ -79,6 +79,7 @@ public class ThemeServicePreAction extends Action {
 
 			theme = ThemeLocalServiceUtil.getTheme(
 				themeDisplay.getCompanyId(), themeId);
+
 			colorScheme = ThemeLocalServiceUtil.getColorScheme(
 				themeDisplay.getCompanyId(), theme.getThemeId(), colorSchemeId);
 		}

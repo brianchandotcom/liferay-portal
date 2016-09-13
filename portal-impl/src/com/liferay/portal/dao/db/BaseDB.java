@@ -92,6 +92,7 @@ public abstract class BaseDB implements DB {
 			}
 
 			int y = sql.indexOf(" on ");
+
 			int x = sql.lastIndexOf(" ", y - 1);
 
 			String indexName = sql.substring(x + 1, y);
@@ -772,10 +773,14 @@ public abstract class BaseDB implements DB {
 		for (Index index : indexes) {
 			String indexNameUpperCase = StringUtil.toUpperCase(
 				index.getIndexName());
+
 			String indexNameLowerCase = StringUtil.toLowerCase(
 				indexNameUpperCase);
+
 			String tableName = index.getTableName();
+
 			String tableNameLowerCase = StringUtil.toLowerCase(tableName);
+
 			boolean unique = index.isUnique();
 
 			validIndexNames.add(indexNameUpperCase);
@@ -1000,11 +1005,13 @@ public abstract class BaseDB implements DB {
 					String table = line.substring(x + 4, y);
 
 					x = y + 2;
+
 					y = line.indexOf(")", x);
 
 					String[] columns = StringUtil.split(line.substring(x, y));
 
 					x = portalData.indexOf(CREATE_TABLE + table + " (");
+
 					y = portalData.indexOf(");", x);
 
 					String portalTableData = portalData.substring(x, y);

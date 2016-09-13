@@ -78,7 +78,9 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 		// Category
 
 		User user = userPersistence.findByPrimaryKey(userId);
+
 		long groupId = serviceContext.getScopeGroupId();
+
 		parentCategoryId = getParentCategoryId(groupId, parentCategoryId);
 
 		validate(name);

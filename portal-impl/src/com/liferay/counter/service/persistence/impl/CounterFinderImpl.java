@@ -340,6 +340,7 @@ public class CounterFinderImpl
 			// Double check
 
 			counterHolder = counterRegister.getCounterHolder();
+
 			newValue = counterHolder.addAndGet(size);
 
 			if (newValue > counterHolder.getRangeMax()) {

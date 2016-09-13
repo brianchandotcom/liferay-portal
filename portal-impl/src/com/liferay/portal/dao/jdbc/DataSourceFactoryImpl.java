@@ -231,6 +231,7 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 
 		while (enu.hasMoreElements()) {
 			String key = enu.nextElement();
+
 			String value = properties.getProperty(key);
 
 			// Map org.apache.commons.dbcp.BasicDataSource to C3PO

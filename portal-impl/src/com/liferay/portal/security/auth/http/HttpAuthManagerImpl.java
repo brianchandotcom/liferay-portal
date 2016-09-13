@@ -367,6 +367,7 @@ public class HttpAuthManagerImpl implements HttpAuthManager {
 				authorizationProperties.entrySet()) {
 
 			String key = authorizationProperty.getKey();
+
 			String value = StringUtil.unquote(
 				authorizationProperties.getProperty(key));
 

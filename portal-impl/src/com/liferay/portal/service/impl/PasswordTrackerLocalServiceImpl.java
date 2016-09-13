@@ -89,6 +89,7 @@ public class PasswordTrackerLocalServiceImpl
 			}
 
 			String oldEncPwd = passwordTracker.getPassword();
+
 			String newEncPwd = PasswordEncryptorUtil.encrypt(
 				newClearTextPwd, oldEncPwd);
 

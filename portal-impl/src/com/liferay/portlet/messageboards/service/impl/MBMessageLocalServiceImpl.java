@@ -143,7 +143,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		long threadId = 0;
 		long parentMessageId = MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID;
+
 		String subject = String.valueOf(classPK);
+
 		String body = subject;
 
 		ServiceContext serviceContext = new ServiceContext();
@@ -266,6 +268,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		long messageId = counterLocalService.increment();
 
 		subject = getSubject(subject, body);
+
 		body = getBody(subject, body);
 
 		Map<String, Object> options = new HashMap<>();
@@ -1589,6 +1592,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			MBMessage.class.getName(), "subject", subject);
 
 		subject = getSubject(subject, body);
+
 		body = getBody(subject, body);
 
 		Map<String, Object> options = new HashMap<>();

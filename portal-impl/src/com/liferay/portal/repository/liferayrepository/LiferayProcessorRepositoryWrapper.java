@@ -205,6 +205,7 @@ public class LiferayProcessorRepositoryWrapper extends RepositoryWrapper {
 
 		if (is == null) {
 			oldFileEntry = getFileEntry(fileEntryId);
+
 			oldFileVersion = oldFileEntry.getLatestFileVersion(true);
 		}
 

@@ -81,10 +81,12 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 
 		while (true) {
 			int commentX = content.indexOf(_CSS_COMMENT_BEGIN, pos);
+
 			int commentY = content.indexOf(
 				_CSS_COMMENT_END, commentX + _CSS_COMMENT_BEGIN.length());
 
 			int importX = content.indexOf(_CSS_IMPORT_BEGIN, pos);
+
 			int importY = content.indexOf(
 				_CSS_IMPORT_END, importX + _CSS_IMPORT_BEGIN.length());
 

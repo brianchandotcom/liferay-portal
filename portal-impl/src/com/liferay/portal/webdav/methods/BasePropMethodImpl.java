@@ -106,10 +106,13 @@ public abstract class BasePropMethodImpl implements Method {
 
 		Element successStatElement = DocUtil.add(
 			responseElement, createQName("propstat"));
+
 		Element successPropElement = DocUtil.add(
 			successStatElement, createQName("prop"));
+
 		Element failureStatElement = DocUtil.add(
 			responseElement, createQName("propstat"));
+
 		Element failurePropElement = DocUtil.add(
 			failureStatElement, createQName("prop"));
 

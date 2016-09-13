@@ -60,9 +60,10 @@
 			cssClass="table-cell-content"
 			href="<%= rowURL %>"
 			name="name"
-			property="name"
 			truncate="<%= true %>"
-		/>
+		>
+			<strong><%= passwordPolicy.getName() %></strong>
+		</liferay-ui:search-container-column-text>
 
 		<liferay-ui:search-container-column-text
 			cssClass="table-cell-content"

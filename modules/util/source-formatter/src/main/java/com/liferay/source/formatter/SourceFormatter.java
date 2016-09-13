@@ -127,7 +127,7 @@ public class SourceFormatter {
 			boolean includeSubrepositories = ArgumentsUtil.getBoolean(
 				arguments, "include.subrepositories",
 				SourceFormatterArgs.INCLUDE_SUBREPOSITORIES);
-	
+
 			sourceFormatterArgs.setIncludeSubrepositories(
 				includeSubrepositories);
 

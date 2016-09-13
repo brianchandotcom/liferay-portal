@@ -73,26 +73,12 @@ PortalUtil.addPortletBreadcrumbEntry(request, passwordPolicy.getName(), null);
 
 <liferay-util:include page="/edit_password_policy_tabs.jsp" servletContext="<%= application %>" />
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-
-		<%
-		PortletURL usersURL = PortletURLUtil.clone(portletURL, renderResponse);
-
-		usersURL.setParameter("tabs2", "users");
-		%>
-
-		<aui:nav-item href="<%= usersURL.toString() %>" label="users" selected='<%= tabs2.equals("users") %>' />
-
-		<%
-		PortletURL userGroupsURL = PortletURLUtil.clone(portletURL, renderResponse);
-
-		userGroupsURL.setParameter("tabs2", "organizations");
-		%>
-
-		<aui:nav-item href="<%= userGroupsURL.toString() %>" label="organizations" selected='<%= tabs2.equals("organizations") %>' />
-	</aui:nav>
-</aui:nav-bar>
+<liferay-ui:tabs
+	names="users,organizations"
+	param="tabs2"
+	type="tabs nav-tabs-default"
+	url="<%= portletURL.toString() %>"
+/>
 
 <liferay-frontend:management-bar
 	includeCheckBox="<%= true %>"

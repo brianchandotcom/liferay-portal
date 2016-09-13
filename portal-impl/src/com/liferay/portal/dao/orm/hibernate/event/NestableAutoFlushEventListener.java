@@ -50,10 +50,17 @@ public class NestableAutoFlushEventListener
 
 		int oldSize = actionQueue.numberOfCollectionRemovals();
 
-		flushEverythingToExecutions(autoFlushEvent);
-
 		PersistenceContext persistenceContext =
 			eventSource.getPersistenceContext();
+
+		boolean flushing = persistenceContext.isFlushing();
+
+		try {
+			flushEverythingToExecutions(autoFlushEvent);
+		}
+		finally {
+			persistenceContext.setFlushing(flushing);
+		}
 
 		if (_isFlushReallyNeeded(autoFlushEvent, eventSource)) {
 			persistenceContext.setFlushing(true);
@@ -64,7 +71,7 @@ public class NestableAutoFlushEventListener
 				postFlush(eventSource);
 			}
 			finally {
-				persistenceContext.setFlushing(false);
+				persistenceContext.setFlushing(flushing);
 			}
 
 			SessionFactoryImplementor sessionFactoryImplementor =

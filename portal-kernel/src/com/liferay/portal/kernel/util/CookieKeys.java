@@ -75,6 +75,7 @@ public class CookieKeys {
 		String name = cookie.getName();
 
 		String originalValue = cookie.getValue();
+
 		String encodedValue = originalValue;
 
 		if (isEncodedCookie(name)) {
@@ -129,6 +130,7 @@ public class CookieKeys {
 
 		try {
 			String encodedValue = value;
+
 			String originalValue = new String(
 				UnicodeFormatter.hexToBytes(encodedValue));
 

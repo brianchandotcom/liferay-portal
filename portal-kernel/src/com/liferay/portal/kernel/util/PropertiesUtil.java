@@ -190,6 +190,7 @@ public class PropertiesUtil {
 
 		while (enu.hasMoreElements()) {
 			String key = enu.nextElement();
+
 			String value = properties2.getProperty(key);
 
 			properties1.setProperty(key, value);
@@ -204,6 +205,7 @@ public class PropertiesUtil {
 
 		while (enumeration.hasMoreElements()) {
 			String key = (String)enumeration.nextElement();
+
 			String value = properties.getProperty(key);
 
 			propertiesMap.put(key, value);
@@ -256,6 +258,7 @@ public class PropertiesUtil {
 
 		while (enu.hasMoreElements()) {
 			String key = enu.nextElement();
+
 			String value = properties.getProperty(key);
 
 			String trimmedKey = key.trim();

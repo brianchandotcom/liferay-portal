@@ -203,7 +203,7 @@ public class ProjectTemplateFilesTest {
 					}
 
 					if (_isTextFile(fileName, extension)) {
-						_testTextFile(path);
+						_testTextFile(path, fileName, extension);
 					}
 
 					return FileVisitResult.CONTINUE;
@@ -212,7 +212,9 @@ public class ProjectTemplateFilesTest {
 			});
 	}
 
-	private void _testTextFile(Path path) throws IOException {
+	private void _testTextFile(Path path, String fileName, String extension)
+		throws IOException {
+
 		String text = FileTestUtil.read(path);
 
 		boolean trailingEmptyLine = false;
@@ -248,11 +250,28 @@ public class ProjectTemplateFilesTest {
 				"Source formatting error in " + path,
 				"#if (" + condition.trim() + ")", matcher.group());
 		}
+
+		if (extension.equals("xml")) {
+			String xmlDeclaration = _XML_DECLARATION;
+
+			if (fileName.equals("service.xml")) {
+				xmlDeclaration = _SERVICE_XML_DECLARATION;
+			}
+
+			Assert.assertTrue(
+				"Incorrect XML declaration in " + path,
+				text.startsWith(xmlDeclaration));
+		}
 	}
+
+	private static final String _SERVICE_XML_DECLARATION;
 
 	private static final String[] _SOURCESET_NAMES = {
 		"main", "test", "testIntegration"
 	};
+
+	private static final String _XML_DECLARATION =
+		"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n";
 
 	private static Set<Path> _projectTemplateDirPaths;
 	private static final Set<String> _textFileExtensions = new HashSet<>(
@@ -260,5 +279,18 @@ public class ProjectTemplateFilesTest {
 			"bnd", "gradle", "java", "jsp", "jspf", "properties", "xml"));
 	private static final Pattern _velocityIfPattern = Pattern.compile(
 		"#if\\s*\\(\\s*(.+)\\s*\\)");
+
+	static {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("<?xml version=\"1.0\"?>");
+		sb.append('\n');
+		sb.append("<!DOCTYPE service-builder PUBLIC ");
+		sb.append("\"-//Liferay//DTD Service Builder 7.0.0//EN\" ");
+		sb.append("\"http://www.liferay.com/dtd/");
+		sb.append("liferay-service-builder_7_0_0.dtd\">\n\n");
+
+		_SERVICE_XML_DECLARATION = sb.toString();
+	}
 
 }

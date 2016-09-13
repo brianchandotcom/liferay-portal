@@ -69,11 +69,17 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 
 		String uri = getURI(request);
 
+		int length = uri.length();
+
 		HttpServletResponse response = (HttpServletResponse)servletResponse;
 
-		String requestURL = getURL(request);
+		String queryString = request.getQueryString();
 
-		if (requestURL.length() > _invokerFilterURIMaxLength) {
+		if (queryString != null) {
+			length += queryString.length();
+		}
+
+		if (length > _invokerFilterURIMaxLength) {
 			response.sendError(HttpServletResponse.SC_REQUEST_URI_TOO_LONG);
 
 			if (_log.isWarnEnabled()) {
@@ -168,15 +174,9 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 
 	@Override
 	protected void doPortalInit() throws Exception {
-		_invokerFilterChainSize = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.INVOKER_FILTER_CHAIN_SIZE));
-
 		if (_invokerFilterChainSize > 0) {
 			_filterChains = new ConcurrentLFUCache<>(_invokerFilterChainSize);
 		}
-
-		_invokerFilterURIMaxLength = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.INVOKER_FILTER_URI_MAX_LENGTH));
 
 		ServletContext servletContext = _filterConfig.getServletContext();
 
@@ -197,25 +197,8 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 
 		_invokerFilterHelper.addInvokerFilter(this);
 
-		String dispatcher = GetterUtil.getString(
+		_dispatcher = Dispatcher.valueOf(
 			_filterConfig.getInitParameter("dispatcher"));
-
-		if (dispatcher.equals("ERROR")) {
-			_dispatcher = Dispatcher.ERROR;
-		}
-		else if (dispatcher.equals("FORWARD")) {
-			_dispatcher = Dispatcher.FORWARD;
-		}
-		else if (dispatcher.equals("INCLUDE")) {
-			_dispatcher = Dispatcher.INCLUDE;
-		}
-		else if (dispatcher.equals("REQUEST")) {
-			_dispatcher = Dispatcher.REQUEST;
-		}
-		else {
-			throw new IllegalArgumentException(
-				"Invalid dispatcher " + dispatcher);
-		}
 	}
 
 	protected InvokerFilterChain getInvokerFilterChain(
@@ -269,6 +252,10 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 		return HttpUtil.normalizePath(uri);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	protected String getURL(HttpServletRequest request) {
 		StringBuffer requestURL = request.getRequestURL();
 
@@ -318,12 +305,15 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 
 	private static final Log _log = LogFactoryUtil.getLog(InvokerFilter.class);
 
+	private static final int _invokerFilterChainSize = GetterUtil.getInteger(
+		PropsUtil.get(PropsKeys.INVOKER_FILTER_CHAIN_SIZE));
+	private static final int _invokerFilterURIMaxLength = GetterUtil.getInteger(
+		PropsUtil.get(PropsKeys.INVOKER_FILTER_URI_MAX_LENGTH));
+
 	private String _contextPath;
 	private Dispatcher _dispatcher;
 	private ConcurrentLFUCache<String, InvokerFilterChain> _filterChains;
 	private FilterConfig _filterConfig;
-	private int _invokerFilterChainSize;
 	private InvokerFilterHelper _invokerFilterHelper;
-	private int _invokerFilterURIMaxLength;
 
 }

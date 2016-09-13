@@ -133,6 +133,7 @@ public class NtlmManager {
 		throws UnsupportedEncodingException {
 
 		byte[] valueBytes = value.getBytes("UTF-16LE");
+
 		byte[] avPairBytes = new byte[4 + valueBytes.length];
 
 		Encdec.enc_uint16le((short)avId, avPairBytes, 0);

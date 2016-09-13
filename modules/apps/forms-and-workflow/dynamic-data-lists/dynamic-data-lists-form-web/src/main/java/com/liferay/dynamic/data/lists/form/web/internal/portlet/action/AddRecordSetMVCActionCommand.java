@@ -189,6 +189,7 @@ public class AddRecordSetMVCActionCommand
 		DDMFormValues settingsDDMFormValues =
 			ddmFormValuesJSONDeserializer.deserialize(
 				ddmForm, serializedSettingsDDMFormValues);
+
 		return settingsDDMFormValues;
 	}
 

@@ -150,6 +150,7 @@ public class CalendarBookingIndexerTest {
 		titleMap.put(LocaleUtil.getDefault(), title);
 
 		long startTime = DateUtil.newTime() + RandomTestUtil.randomInt();
+
 		long endTime = startTime + Time.HOUR;
 
 		HashMap<Locale, String> hashMap = new HashMap<>();

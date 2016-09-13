@@ -182,6 +182,7 @@ public class BindConfigurationMVCActionCommand implements MVCActionCommand {
 
 			while (keys.hasMoreElements()) {
 				String key = keys.nextElement();
+
 				Object value = properties.get(key);
 
 				configuredProperties.put(key, value);

@@ -506,6 +506,7 @@ public class DDMImplTest extends BaseDDMTestCase {
 		Assert.assertNotNull(fieldsDisplayField);
 
 		String fieldsDisplayValue = (String)fieldsDisplayField.getValue();
+
 		String[] fieldsDisplayValues = StringUtil.split(fieldsDisplayValue);
 
 		testValues(

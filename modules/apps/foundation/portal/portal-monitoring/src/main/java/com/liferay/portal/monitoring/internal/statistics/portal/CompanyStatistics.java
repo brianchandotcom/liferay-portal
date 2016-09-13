@@ -31,7 +31,9 @@ public class CompanyStatistics
 
 	public CompanyStatistics() {
 		_companyId = CompanyConstants.SYSTEM;
+
 		_webId = CompanyConstants.SYSTEM_STRING;
+
 		_requestStatistics = new RequestStatistics(_webId);
 	}
 
@@ -42,7 +44,9 @@ public class CompanyStatistics
 			Company company = companyLocalService.getCompanyByWebId(webId);
 
 			_companyId = company.getCompanyId();
+
 			_webId = webId;
+
 			_requestStatistics = new RequestStatistics(_webId);
 		}
 		catch (Exception e) {

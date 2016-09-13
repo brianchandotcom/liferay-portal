@@ -74,6 +74,7 @@ public class BlogsEntryAttachmentFileEntryHelperTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
+
 		_user = UserTestUtil.addGroupAdminUser(_group);
 
 		ServiceTestUtil.setUser(TestPropsValues.getUser());

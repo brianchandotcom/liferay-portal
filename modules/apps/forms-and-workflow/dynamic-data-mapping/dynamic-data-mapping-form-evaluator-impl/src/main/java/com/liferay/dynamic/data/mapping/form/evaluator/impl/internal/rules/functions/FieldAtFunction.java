@@ -31,6 +31,7 @@ public class FieldAtFunction implements DDMExpressionFunction {
 
 		String fieldName = parameters[0].toString();
 		int index = Double.valueOf(parameters[1].toString()).intValue();
+
 		return String.format("%s#%d", fieldName, index);
 	}
 

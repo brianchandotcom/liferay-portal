@@ -74,7 +74,9 @@ public class BaseStatistics implements Statistics {
 		_maxTime = 0;
 		_minTime = 0;
 		_lastTime = 0;
+
 		_startTime = System.currentTimeMillis();
+
 		_lastSampleTime = _startTime;
 	}
 

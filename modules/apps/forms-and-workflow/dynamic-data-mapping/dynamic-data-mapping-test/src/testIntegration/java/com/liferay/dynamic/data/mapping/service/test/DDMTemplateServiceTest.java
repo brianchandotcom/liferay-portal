@@ -106,6 +106,7 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 			_recordSetClassNameId, StringUtil.randomString());
 
 		String language = TemplateConstants.LANG_TYPE_FTL;
+
 		String script = getTestTemplateScript(language);
 
 		addTemplate(
@@ -379,7 +380,9 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 			_recordSetClassNameId, StringUtil.randomString());
 
 		String language = TemplateConstants.LANG_TYPE_FTL;
+
 		String script = getTestTemplateScript(language);
+
 		String type = null;
 		String mode = null;
 
@@ -417,7 +420,9 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 			_recordSetClassNameId, StringUtil.randomString());
 
 		String language = TemplateConstants.LANG_TYPE_FTL;
+
 		String script = getTestTemplateScript(language);
+
 		String type = null;
 		String mode = null;
 
@@ -458,7 +463,9 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 			_recordSetClassNameId, StringUtil.randomString());
 
 		String language = TemplateConstants.LANG_TYPE_FTL;
+
 		String script = getTestTemplateScript(language);
+
 		String type = null;
 		String mode = null;
 
@@ -494,7 +501,9 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 			_recordSetClassNameId, StringUtil.randomString());
 
 		String language = TemplateConstants.LANG_TYPE_FTL;
+
 		String script = getTestTemplateScript(language);
+
 		String type = null;
 		String mode = null;
 
@@ -533,7 +542,9 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 			_recordSetClassNameId, StringUtil.randomString());
 
 		String language = TemplateConstants.LANG_TYPE_FTL;
+
 		String script = getTestTemplateScript(language);
+
 		String type = null;
 		String mode = null;
 
@@ -568,7 +579,9 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 			_recordSetClassNameId, StringUtil.randomString());
 
 		String language = TemplateConstants.LANG_TYPE_FTL;
+
 		String script = getTestTemplateScript(language);
+
 		String type = null;
 		String mode = null;
 
@@ -606,7 +619,9 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 			_recordSetClassNameId, StringUtil.randomString());
 
 		String language = TemplateConstants.LANG_TYPE_FTL;
+
 		String script = getTestTemplateScript(language);
+
 		String type = null;
 		String mode = null;
 
@@ -641,7 +656,9 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 			_recordSetClassNameId, StringUtil.randomString());
 
 		String language = TemplateConstants.LANG_TYPE_FTL;
+
 		String script = getTestTemplateScript(language);
+
 		String type = null;
 		String mode = null;
 

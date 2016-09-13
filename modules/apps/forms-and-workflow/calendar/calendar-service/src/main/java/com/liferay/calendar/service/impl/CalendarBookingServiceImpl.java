@@ -670,6 +670,7 @@ public class CalendarBookingServiceImpl extends CalendarBookingServiceBaseImpl {
 
 		java.util.Calendar startTimeJCalendar = JCalendarUtil.getJCalendar(
 			calendarBooking.getStartTime() + offset);
+
 		java.util.Calendar endTimeJCalendar = JCalendarUtil.getJCalendar(
 			startTimeJCalendar.getTimeInMillis() + duration);
 

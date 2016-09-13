@@ -136,9 +136,12 @@ public class AmazonRankingsWebCacheItem implements WebCacheItem {
 		String productName = itemAttributesElement.elementText("Title");
 		String catalog = StringPool.BLANK;
 		String[] authors = getAuthors(itemAttributesElement);
+
 		String releaseDateAsString = itemAttributesElement.elementText(
 			"PublicationDate");
+
 		Date releaseDate = getReleaseDate(releaseDateAsString);
+
 		String manufacturer = itemAttributesElement.elementText("Manufacturer");
 		String smallImageURL = getImageURL(itemElement, "SmallImage");
 		String mediumImageURL = getImageURL(itemElement, "MediumImage");

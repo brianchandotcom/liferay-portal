@@ -1185,10 +1185,13 @@ public class CalendarPortlet extends MVCPortlet {
 		int max = GetterUtil.getInteger(
 			portletPreferences.getValue("rssDelta", StringPool.BLANK),
 			SearchContainer.DEFAULT_DELTA);
+
 		String rssFeedType = portletPreferences.getValue(
 			"rssFeedType", RSSUtil.FORMAT_DEFAULT);
+
 		String type = RSSUtil.getFormatType(rssFeedType);
 		double version = RSSUtil.getFeedTypeVersion(rssFeedType);
+
 		String displayStyle = portletPreferences.getValue(
 			"rssDisplayStyle", RSSUtil.DISPLAY_STYLE_DEFAULT);
 

@@ -32,6 +32,7 @@ public class RollingChecksum {
 		throws IOException {
 
 		_blockLength = blockLength;
+
 		_byteChannelReader = new ByteChannelReader(
 			readableByteChannel, _blockLength * DeltaUtil.BUFFER_FACTOR);
 

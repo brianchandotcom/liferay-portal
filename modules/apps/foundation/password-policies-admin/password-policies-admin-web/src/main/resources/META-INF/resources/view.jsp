@@ -144,7 +144,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "passwor
 				modelVar="passwordPolicy"
 			>
 				<portlet:renderURL var="rowURL">
-					<portlet:param name="mvcPath" value="/edit_password_policy_assignments.jsp" />
+					<portlet:param name="mvcPath" value="/edit_password_policy.jsp" />
 					<portlet:param name="redirect" value="<%= passwordPolicySearchContainer.getIteratorURL().toString() %>" />
 					<portlet:param name="passwordPolicyId" value="<%= String.valueOf(passwordPolicy.getPasswordPolicyId()) %>" />
 				</portlet:renderURL>

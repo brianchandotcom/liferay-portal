@@ -14,40 +14,22 @@
 
 package com.liferay.portal.osgi.web.servlet.context.helper.internal;
 
-import com.liferay.portal.kernel.portlet.RestrictPortletServletRequest;
 import com.liferay.portal.kernel.servlet.PortletServlet;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
-import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.Props;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.osgi.web.servlet.context.helper.ServletContextHelperRegistration;
 import com.liferay.portal.osgi.web.servlet.context.helper.definition.WebXMLDefinition;
 import com.liferay.portal.osgi.web.servlet.context.helper.internal.definition.WebXMLDefinitionLoader;
 
-import java.io.IOException;
-
 import java.net.URL;
 
 import java.util.Dictionary;
-import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Map;
 
-import javax.portlet.PortletRequest;
-
-import javax.servlet.DispatcherType;
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
 import javax.servlet.Servlet;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextListener;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 
 import javax.xml.parsers.SAXParserFactory;
 
@@ -66,11 +48,10 @@ public class ServletContextHelperRegistrationImpl
 	implements ServletContextHelperRegistration {
 
 	public ServletContextHelperRegistrationImpl(
-		Bundle bundle, Props props, SAXParserFactory saxParserFactory,
-		Logger logger, Map<String, Object> properties) {
+		Bundle bundle, SAXParserFactory saxParserFactory, Logger logger,
+		Map<String, Object> properties) {
 
 		_bundle = bundle;
-		_props = props;
 		_logger = logger;
 		_properties = properties;
 
@@ -124,9 +105,6 @@ public class ServletContextHelperRegistrationImpl
 		_jspServletServiceRegistration = createJspServlet();
 
 		_portletServletServiceRegistration = createPortletServlet();
-
-		_portletServletRequestFilterServiceRegistration =
-			createRestrictPortletServletRequestFilter();
 	}
 
 	@Override
@@ -143,10 +121,6 @@ public class ServletContextHelperRegistrationImpl
 
 		if (_portletServletServiceRegistration != null) {
 			_portletServletServiceRegistration.unregister();
-		}
-
-		if (_portletServletRequestFilterServiceRegistration != null) {
-			_portletServletRequestFilterServiceRegistration.unregister();
 		}
 	}
 
@@ -260,43 +234,6 @@ public class ServletContextHelperRegistrationImpl
 			Servlet.class, new PortletServlet() {}, properties);
 	}
 
-	protected ServiceRegistration<?>
-		createRestrictPortletServletRequestFilter() {
-
-		if (_wabShapedBundle) {
-			return null;
-		}
-
-		if (!GetterUtil.getBoolean(
-				_props.get(PropsKeys.PORTLET_CONTAINER_RESTRICT))) {
-
-			return null;
-		}
-
-		Dictionary<String, Object> properties = new HashMapDictionary<>();
-
-		properties.put(
-			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT,
-			createContextSelectFilterString());
-		properties.put(
-			HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_ASYNC_SUPPORTED,
-			Boolean.TRUE);
-		properties.put(
-			HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_DISPATCHER,
-			new String[] {
-				DispatcherType.ASYNC.toString(),
-				DispatcherType.FORWARD.toString(),
-				DispatcherType.INCLUDE.toString(),
-				DispatcherType.REQUEST.toString()
-			});
-		properties.put(
-			HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_PATTERN, "/*");
-
-		return _bundleContext.registerService(
-			Filter.class, new RestrictPortletServletRequestFilter(),
-			properties);
-	}
-
 	protected ServiceRegistration<ServletContextHelper>
 		createServletContextHelper(String contextPath) {
 
@@ -398,12 +335,9 @@ public class ServletContextHelperRegistrationImpl
 	private final ServiceRegistration<?> _defaultServletServiceRegistration;
 	private final ServiceRegistration<Servlet> _jspServletServiceRegistration;
 	private final Logger _logger;
-	private final ServiceRegistration<?>
-		_portletServletRequestFilterServiceRegistration;
 	private final ServiceRegistration<Servlet>
 		_portletServletServiceRegistration;
 	private final Map<String, Object> _properties;
-	private final Props _props;
 	private final ServiceRegistration<ServletContextHelper>
 		_servletContextHelperServiceRegistration;
 	private final ServiceRegistration<ServletContextListener>
@@ -412,59 +346,5 @@ public class ServletContextHelperRegistrationImpl
 	private ServiceRegistration<ServletContext> _servletContextRegistration;
 	private final boolean _wabShapedBundle;
 	private final WebXMLDefinition _webXMLDefinition;
-
-	private static class RestrictPortletServletRequestFilter implements Filter {
-
-		@Override
-		public void destroy() {
-		}
-
-		@Override
-		public void doFilter(
-				ServletRequest servletRequest, ServletResponse servletResponse,
-				FilterChain filterChain)
-			throws IOException, ServletException {
-
-			try {
-				filterChain.doFilter(servletRequest, servletResponse);
-			}
-			finally {
-				PortletRequest portletRequest =
-					(PortletRequest)servletRequest.getAttribute(
-						JavaConstants.JAVAX_PORTLET_REQUEST);
-
-				if (portletRequest == null) {
-					return;
-				}
-
-				RestrictPortletServletRequest restrictPortletServletRequest =
-					new RestrictPortletServletRequest(
-						PortalUtil.getHttpServletRequest(portletRequest));
-
-				Enumeration<String> enumeration =
-					servletRequest.getAttributeNames();
-
-				while (enumeration.hasMoreElements()) {
-					String name = enumeration.nextElement();
-
-					if (!RestrictPortletServletRequest.isSharedRequestAttribute(
-							name)) {
-
-						continue;
-					}
-
-					restrictPortletServletRequest.setAttribute(
-						name, servletRequest.getAttribute(name));
-				}
-
-				restrictPortletServletRequest.mergeSharedAttributes();
-			}
-		}
-
-		@Override
-		public void init(FilterConfig filterConfig) {
-		}
-
-	}
 
 }

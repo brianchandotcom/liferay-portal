@@ -14,7 +14,6 @@
 
 package com.liferay.portal.osgi.web.servlet.context.helper;
 
-import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.osgi.web.servlet.context.helper.internal.ServletContextHelperRegistrationServiceFactory;
 
@@ -69,7 +68,7 @@ public class ServletContextHelperFactory {
 		_serviceRegistration = bundleContext.registerService(
 			ServletContextHelperRegistration.class.getName(),
 			new ServletContextHelperRegistrationServiceFactory(
-				_props, _saxParserFactory, _logger, properties),
+				_saxParserFactory, _logger, properties),
 			null);
 	}
 
@@ -94,9 +93,6 @@ public class ServletContextHelperFactory {
 	private HttpServiceRuntime _httpServiceRuntime;
 
 	private Logger _logger;
-
-	@Reference
-	private Props _props;
 
 	@Reference
 	private SAXParserFactory _saxParserFactory;

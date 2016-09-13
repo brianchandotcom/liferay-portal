@@ -146,6 +146,9 @@ public class ModulesStructureTest {
 	public void testScanIgnoreFiles() throws IOException {
 		ClassLoader classLoader = ModulesStructureTest.class.getClassLoader();
 
+		final String gitRepoGitIgnoreTemplate = StringUtil.read(
+			classLoader,
+			"com/liferay/portal/modules/dependencies/git_repo_gitignore.tmpl");
 		final String themeGitIgnoreTemplate = StringUtil.read(
 			classLoader,
 			"com/liferay/portal/modules/dependencies/theme_gitignore.tmpl");
@@ -163,8 +166,12 @@ public class ModulesStructureTest {
 
 					String dirName = dirNamePath.toString();
 
-					if (dirName.startsWith("frontend-theme-") &&
-						Files.exists(dirPath.resolve("gulpfile.js"))) {
+					if (Files.exists(dirPath.resolve(".gitrepo"))) {
+						_testGitRepoIgnoreFiles(
+							dirPath, gitRepoGitIgnoreTemplate);
+					}
+					else if (dirName.startsWith("frontend-theme-") &&
+							 Files.exists(dirPath.resolve("gulpfile.js"))) {
 
 						_testThemeIgnoreFiles(dirPath, themeGitIgnoreTemplate);
 					}
@@ -451,6 +458,20 @@ public class ModulesStructureTest {
 			Assert.assertFalse(
 				"Forbidden " + gitAttributesPath, gitAttributesExists);
 		}
+	}
+
+	private void _testGitRepoIgnoreFiles(Path dirPath, String gitIgnoreTemplate)
+		throws IOException {
+
+		Path gitIgnorePath = dirPath.resolve(".gitignore");
+
+		Assert.assertTrue(
+			"Missing " + gitIgnorePath, Files.exists(gitIgnorePath));
+
+		String gitIgnore = _read(gitIgnorePath);
+
+		Assert.assertEquals(
+			"Incorrect " + gitIgnorePath, gitIgnoreTemplate, gitIgnore);
 	}
 
 	private void _testThemeBuildScripts(Path dirPath) throws IOException {

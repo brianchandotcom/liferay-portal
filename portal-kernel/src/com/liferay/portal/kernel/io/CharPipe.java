@@ -180,6 +180,7 @@ public class CharPipe {
 					// Two step read
 
 					int tailLength = buffer.length - readIndex;
+
 					int headLength = read - tailLength;
 
 					System.arraycopy(
@@ -431,6 +432,7 @@ public class CharPipe {
 						// Two step write
 
 						int tailLength = buffer.length - writeIndex;
+
 						int headLength = write - tailLength;
 
 						System.arraycopy(
@@ -516,6 +518,7 @@ public class CharPipe {
 						// Two step write
 
 						int tailLength = buffer.length - writeIndex;
+
 						int headLength = write - tailLength;
 
 						string.getChars(

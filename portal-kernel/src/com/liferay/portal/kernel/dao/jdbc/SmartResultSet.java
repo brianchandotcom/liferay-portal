@@ -34,8 +34,11 @@ public class SmartResultSet {
 
 	public SmartResultSet(ResultSet rs) throws SQLException {
 		_rs = rs;
+
 		_metaData = _rs.getMetaData();
+
 		_columnCount = _metaData.getColumnCount();
+
 		_columnIndexCache = new HashMap<>();
 	}
 

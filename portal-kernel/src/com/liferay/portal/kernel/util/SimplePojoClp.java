@@ -46,7 +46,9 @@ public class SimplePojoClp<T> {
 		throws ClassNotFoundException {
 
 		_localImplementationClass = localImplementationClass;
+
 		_remoteClassLoader = remoteClassLoader;
+
 		_remoteImplementationClass = _remoteClassLoader.loadClass(
 			remoteImplementationClassName);
 	}

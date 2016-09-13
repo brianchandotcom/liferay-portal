@@ -24,6 +24,7 @@ public class FooBean {
 
 	public FooBean() {
 		_collection = new HashSet<>();
+
 		_collection.add("element");
 	}
 

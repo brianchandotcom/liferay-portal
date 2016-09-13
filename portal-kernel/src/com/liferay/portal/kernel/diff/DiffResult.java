@@ -46,7 +46,9 @@ public class DiffResult {
 
 	public DiffResult(int linePos, String changedLine) {
 		_lineNumber = linePos + 1;
+
 		_changedLines = new ArrayList<>();
+
 		_changedLines.add(changedLine);
 	}
 

@@ -36,7 +36,9 @@ public class Deserializer {
 
 	public Deserializer(ByteBuffer byteBuffer) {
 		buffer = byteBuffer.array();
+
 		index = byteBuffer.arrayOffset();
+
 		limit = index + byteBuffer.remaining();
 	}
 

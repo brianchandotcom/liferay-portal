@@ -2303,6 +2303,7 @@ public class StringUtil {
 				sb.append(s.substring(x, y));
 
 				x = y + 1;
+
 				y = s.indexOf(oldSub, x);
 			}
 
@@ -2471,6 +2472,7 @@ public class StringUtil {
 				sb.append(s.substring(x, y));
 
 				x = y + length;
+
 				y = s.indexOf(oldSub, x);
 			}
 
@@ -2713,6 +2715,7 @@ public class StringUtil {
 				sb.append(newSub);
 
 				x = y + length;
+
 				y = s.indexOf(oldSub, x);
 			}
 
@@ -3152,6 +3155,7 @@ public class StringUtil {
 
 		while (true) {
 			int x = s.indexOf(begin, pos);
+
 			int y = s.indexOf(end, x + begin.length());
 
 			if ((x == -1) || (y == -1)) {
@@ -3218,6 +3222,7 @@ public class StringUtil {
 
 		while (true) {
 			int x = s.indexOf(begin, pos);
+
 			int y = s.indexOf(end, x + begin.length());
 
 			if ((x == -1) || (y == -1)) {
@@ -3259,6 +3264,7 @@ public class StringUtil {
 		}
 
 		char[] chars = s.toCharArray();
+
 		char[] reverse = new char[chars.length];
 
 		for (int i = 0; i < chars.length; i++) {
@@ -3543,12 +3549,14 @@ public class StringUtil {
 		List<String> nodeValues = new ArrayList<>();
 
 		int offset = 0;
+
 		int pos = s.indexOf(delimiter, offset);
 
 		while (pos != -1) {
 			nodeValues.add(s.substring(offset, pos));
 
 			offset = pos + 1;
+
 			pos = s.indexOf(delimiter, offset);
 		}
 
@@ -3677,12 +3685,14 @@ public class StringUtil {
 		List<String> nodeValues = new ArrayList<>();
 
 		int offset = 0;
+
 		int pos = s.indexOf(delimiter, offset);
 
 		while (pos != -1) {
 			nodeValues.add(s.substring(offset, pos));
 
 			offset = pos + delimiter.length();
+
 			pos = s.indexOf(delimiter, offset);
 		}
 
@@ -3707,6 +3717,7 @@ public class StringUtil {
 	 */
 	public static boolean[] split(String s, String delimiter, boolean x) {
 		String[] array = split(s, delimiter);
+
 		boolean[] newArray = new boolean[array.length];
 
 		for (int i = 0; i < array.length; i++) {
@@ -3739,6 +3750,7 @@ public class StringUtil {
 	 */
 	public static double[] split(String s, String delimiter, double x) {
 		String[] array = split(s, delimiter);
+
 		double[] newArray = new double[array.length];
 
 		for (int i = 0; i < array.length; i++) {
@@ -3770,6 +3782,7 @@ public class StringUtil {
 	 */
 	public static float[] split(String s, String delimiter, float x) {
 		String[] array = split(s, delimiter);
+
 		float[] newArray = new float[array.length];
 
 		for (int i = 0; i < array.length; i++) {
@@ -3801,6 +3814,7 @@ public class StringUtil {
 	 */
 	public static int[] split(String s, String delimiter, int x) {
 		String[] array = split(s, delimiter);
+
 		int[] newArray = new int[array.length];
 
 		for (int i = 0; i < array.length; i++) {
@@ -3832,6 +3846,7 @@ public class StringUtil {
 	 */
 	public static long[] split(String s, String delimiter, long x) {
 		String[] array = split(s, delimiter);
+
 		long[] newArray = new long[array.length];
 
 		for (int i = 0; i < array.length; i++) {
@@ -3863,6 +3878,7 @@ public class StringUtil {
 	 */
 	public static short[] split(String s, String delimiter, short x) {
 		String[] array = split(s, delimiter);
+
 		short[] newArray = new short[array.length];
 
 		for (int i = 0; i < array.length; i++) {
@@ -4149,6 +4165,7 @@ public class StringUtil {
 
 		while (true) {
 			int x = s.indexOf(begin, pos);
+
 			int y = s.indexOf(end, x + begin.length());
 
 			if ((x == -1) || (y == -1)) {
@@ -4593,6 +4610,7 @@ public class StringUtil {
 		}
 
 		int len = s.length();
+
 		int x = len;
 
 		for (int i = 0; i < len; i++) {
@@ -4646,6 +4664,7 @@ public class StringUtil {
 		}
 
 		int len = s.length();
+
 		int x = len;
 
 		for (int i = 0; i < len; i++) {
@@ -4707,6 +4726,7 @@ public class StringUtil {
 		}
 
 		int len = s.length();
+
 		int x = len;
 
 		for (int i = 0; i < len; i++) {

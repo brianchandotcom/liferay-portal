@@ -44,6 +44,7 @@ public class IdReplacer {
 
 		while (true) {
 			int x = s.indexOf(begin, pos);
+
 			int y = _getEndPos(chars, x + begin.length());
 
 			if ((x == -1) || (y == -1)) {
@@ -100,6 +101,7 @@ public class IdReplacer {
 
 		while (true) {
 			int x = s.indexOf(begin, pos);
+
 			int y = s.indexOf(end, x + begin.length());
 
 			if ((x == -1) || (y == -1)) {

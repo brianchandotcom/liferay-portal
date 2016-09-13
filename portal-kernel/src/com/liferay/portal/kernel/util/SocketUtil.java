@@ -67,6 +67,7 @@ public class SocketUtil {
 			socket = new Socket(host, port);
 
 			InetAddress inetAddress = socket.getLocalAddress();
+
 			NetworkInterface networkInterface =
 				NetworkInterface.getByInetAddress(inetAddress);
 

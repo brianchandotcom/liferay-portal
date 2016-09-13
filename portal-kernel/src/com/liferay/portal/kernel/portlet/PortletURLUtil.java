@@ -134,6 +134,7 @@ public class PortletURLUtil {
 
 		while (enu.hasMoreElements()) {
 			String param = enu.nextElement();
+
 			String[] values = liferayPortletRequest.getParameterValues(param);
 
 			boolean addParam = true;

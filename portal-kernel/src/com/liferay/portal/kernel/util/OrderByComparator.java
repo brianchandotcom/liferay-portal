@@ -62,6 +62,7 @@ public abstract class OrderByComparator<T>
 			String part = parts[i];
 
 			int x = part.indexOf(CharPool.PERIOD);
+
 			int y = part.indexOf(CharPool.SPACE, x);
 
 			if (y == -1) {

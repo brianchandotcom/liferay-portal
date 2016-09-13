@@ -49,6 +49,7 @@ public class CallbackMatcher {
 			sb.replace(matchStart, matchEnd, replacement);
 
 			int matchLength = matchResult.end() - matchResult.start();
+
 			int lengthChange = replacement.length() - matchLength;
 
 			offset += lengthChange;

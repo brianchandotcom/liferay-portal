@@ -147,6 +147,12 @@ to be overridden by setting the project property `app.server.parent.dir`.
 - [LPS-67766]: Automatically apply plugin `com.liferay.soy.translation` in order
 to use the Liferay localization mechanism in the generated `.soy.js` files.
 
+## 2.0.32 - 2016-09-13
+
+### Changed
+- [LPS-67352]: Update the [Liferay Source Formatter] dependency to version
+1.0.277.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
 [Liferay CSS Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/css-builder

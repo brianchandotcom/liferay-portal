@@ -113,7 +113,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 		DDLRecordSet recordSet = ddlRecordSetPersistence.findByPrimaryKey(
 			recordSetId);
 
-		validate(recordSet, groupId);
+		validate(groupId, recordSet);
 
 		long recordId = counterLocalService.increment();
 
@@ -1299,7 +1299,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 		ddlRecordVersionPersistence.update(recordVersion);
 	}
 
-	protected void validate(DDLRecordSet recordSet, long groupId)
+	protected void validate(long groupId, DDLRecordSet recordSet)
 		throws PortalException {
 
 		if (recordSet.getGroupId() != groupId) {

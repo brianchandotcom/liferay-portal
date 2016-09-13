@@ -2458,6 +2458,7 @@
 			<var name="eventTitle" value="Current Day Event" />
 			<var name="pageName" value="${pageName}" />
 			<var name="siteCalendarName" value="${siteName}" />
+			<var name="siteName" value="${siteName}" />
 		</execute>
 
 		<execute macro="Navigator#closeWindow" />
@@ -5586,6 +5587,7 @@
 			<var name="eventTitle" value="Past Day Event" />
 			<var name="pageName" value="${pageName}" />
 			<var name="siteCalendarName" value="${siteName}" />
+			<var name="siteName" value="${siteName}" />
 		</execute>
 
 		<execute macro="Calendar#viewRSSFeedEventPresent">

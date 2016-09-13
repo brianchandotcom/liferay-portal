@@ -1012,6 +1012,8 @@
 			<var name="siteName" value="${siteName}" />
 		</execute>
 
+		<execute function="SelectWindow" locator1="title=${siteName}" />
+
 		<execute function="AssertTextEquals" locator1="CalendarRSS#FEED_TITLE"  value1="${calendarName}" />
 
 		<var name="key_eventTitle" value="${eventTitle}" />
@@ -1026,6 +1028,8 @@
 			<var name="siteCalendarName" value="${siteCalendarName}" />
 			<var name="siteName" value="${siteName}" />
 		</execute>
+
+		<execute function="SelectWindow" locator1="title=${siteName}" />
 
 		<execute function="AssertTextEquals" locator1="CalendarRSS#FEED_TITLE"  value1="${calendarName}" />
 

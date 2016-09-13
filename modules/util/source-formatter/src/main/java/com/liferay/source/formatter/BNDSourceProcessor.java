@@ -58,14 +58,16 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 
 		int y = absolutePath.lastIndexOf(StringPool.SLASH, x - 1);
 
-		String dirName = absolutePath.substring(y + 1, x);
+		String moduleName = absolutePath.substring(y + 1, x);
 
-		if (dirName.endsWith("-taglib-web")) {
-			String newDirName = dirName.substring(0, dirName.length() - 4);
+		if (moduleName.endsWith("-taglib-web")) {
+			String newModuleName = moduleName.substring(
+				0, moduleName.length() - 4);
 
 			processMessage(
 				fileName,
-				"Rename module '" + dirName + "' to '" + newDirName + "'");
+				"Rename module '" + moduleName + "' to '" + newModuleName +
+					"'");
 		}
 
 		Matcher matcher = _bundleNamePattern.matcher(content);
@@ -82,7 +84,7 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 				"Utilities$", "Util");
 
 			String expectedBundleName =
-				"liferay" + StringUtil.removeChars(dirName, CharPool.DASH);
+				"liferay" + StringUtil.removeChars(moduleName, CharPool.DASH);
 
 			if (!StringUtil.equalsIgnoreCase(
 					strippedBundleName, expectedBundleName)) {
@@ -92,7 +94,9 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 			}
 		}
 
-		if (dirName.contains("-import-") || dirName.contains("-private-")) {
+		if (moduleName.contains("-import-") ||
+			moduleName.contains("-private-")) {
+
 			return;
 		}
 
@@ -103,7 +107,8 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 
 			String expectedBundleSymbolicName =
 				"com.liferay." +
-					StringUtil.replace(dirName, CharPool.DASH, CharPool.PERIOD);
+					StringUtil.replace(
+						moduleName, CharPool.DASH, CharPool.PERIOD);
 
 			if (!StringUtil.equalsIgnoreCase(
 					bundleSymbolicName, expectedBundleSymbolicName)) {
@@ -120,7 +125,7 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 		if (matcher.find()) {
 			String webContextPath = matcher.group(1);
 
-			if (!webContextPath.equals("/" + dirName)) {
+			if (!webContextPath.equals("/" + moduleName)) {
 				processMessage(
 					fileName,
 					"Incorrect Web-ContextPath '" + webContextPath + "'");

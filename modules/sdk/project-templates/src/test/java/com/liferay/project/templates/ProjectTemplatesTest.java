@@ -797,10 +797,6 @@ public class ProjectTemplatesTest {
 		exclusions.append("Javac-Debug, ");
 		exclusions.append("Javac-Deprecation, ");
 		exclusions.append("Javac-Encoding, ");
-
-		// TODO this Private-Package should be checked
-
-		exclusions.append("Private-Package, ");
 		exclusions.append("*pom.properties, ");
 		exclusions.append("*pom.xml");
 

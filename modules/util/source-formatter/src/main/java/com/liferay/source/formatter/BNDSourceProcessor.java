@@ -60,6 +60,19 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 
 		String moduleName = absolutePath.substring(y + 1, x);
 
+		if (absolutePath.matches(".*/apps(/.*){3,}")) {
+			int z = absolutePath.lastIndexOf(StringPool.SLASH, y - 1);
+
+			String applicationName = absolutePath.substring(z + 1, y);
+
+			if (!moduleName.startsWith(applicationName)) {
+				processMessage(
+					fileName,
+					"Module '" + moduleName + "' should start with '" +
+						applicationName + "'");
+			}
+		}
+
 		if (moduleName.endsWith("-taglib-web")) {
 			String newModuleName = moduleName.substring(
 				0, moduleName.length() - 4);

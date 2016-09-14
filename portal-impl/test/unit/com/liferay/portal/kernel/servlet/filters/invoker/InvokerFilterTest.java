@@ -16,7 +16,9 @@ package com.liferay.portal.kernel.servlet.filters.invoker;
 
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.util.HttpImpl;
+import com.liferay.portal.util.PropsImpl;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -41,6 +43,10 @@ public class InvokerFilterTest extends PowerMockito {
 		HttpUtil httpUtil = new HttpUtil();
 
 		httpUtil.setHttp(new HttpImpl());
+
+		PropsUtil propsUtil = new PropsUtil();
+
+		propsUtil.setProps(new PropsImpl());
 	}
 
 	@Test

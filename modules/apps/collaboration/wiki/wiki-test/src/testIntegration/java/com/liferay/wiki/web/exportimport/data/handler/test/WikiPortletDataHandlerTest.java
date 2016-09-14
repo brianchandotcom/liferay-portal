@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.lar.test;
+package com.liferay.wiki.web.exportimport.data.handler.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.service.ServiceContext;

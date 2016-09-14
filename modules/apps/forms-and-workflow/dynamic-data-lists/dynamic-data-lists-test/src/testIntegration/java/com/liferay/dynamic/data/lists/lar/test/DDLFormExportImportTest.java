@@ -21,13 +21,16 @@ import com.liferay.dynamic.data.lists.helper.DDLRecordTestHelper;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.model.DDLRecordSetConstants;
+import com.liferay.dynamic.data.lists.model.DDLRecordSetSettings;
 import com.liferay.dynamic.data.lists.service.DDLRecordLocalServiceUtil;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalServiceUtil;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
+import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
+import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
@@ -38,7 +41,6 @@ import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 import javax.portlet.PortletPreferences;
@@ -86,9 +88,7 @@ public class DDLFormExportImportTest extends BasePortletExportImportTestCase {
 			ddmStructure, DDLRecordSetConstants.SCOPE_FORMS);
 
 		DDMFormValues settingsDDMFormValues =
-			DDMFormValuesTestUtil.createDDMFormValues(
-				ddmStructure.getDDMForm(),
-				DDMFormTestUtil.createAvailableLocales(Locale.US), Locale.US);
+			createDefaultSettingsDDMFormValues();
 
 		DDLRecordSetLocalServiceUtil.updateRecordSet(
 			recordSet.getRecordSetId(), settingsDDMFormValues);
@@ -133,6 +133,47 @@ public class DDLFormExportImportTest extends BasePortletExportImportTestCase {
 	@Override
 	@Test
 	public void testExportImportAssetLinks() throws Exception {
+	}
+
+	protected DDMFormValues createDefaultSettingsDDMFormValues() {
+		DDMForm settingsDDMForm = DDMFormFactory.create(
+			DDLRecordSetSettings.class);
+
+		DDMFormValues settingsDDMFormValues =
+			DDMFormValuesTestUtil.createDDMFormValues(settingsDDMForm);
+
+		settingsDDMFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
+				"emailFromAddress", StringPool.BLANK));
+		settingsDDMFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
+				"emailFromName", StringPool.BLANK));
+		settingsDDMFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
+				"emailSubject", StringPool.BLANK));
+		settingsDDMFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
+				"emailToAddress", StringPool.BLANK));
+		settingsDDMFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
+				"published", Boolean.FALSE.toString()));
+		settingsDDMFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
+				"redirectURL", StringPool.BLANK));
+		settingsDDMFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
+				"requireCaptcha", Boolean.FALSE.toString()));
+		settingsDDMFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
+				"sendEmailNotification", Boolean.FALSE.toString()));
+		settingsDDMFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
+				"storageType", StorageType.JSON.toString()));
+		settingsDDMFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
+				"workflowDefinition", StringPool.BLANK));
+
+		return settingsDDMFormValues;
 	}
 
 	private DDLRecordSetTestHelper _ddlRecordSetTestHelper;

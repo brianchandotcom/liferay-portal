@@ -37,7 +37,9 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Brian Wing Shun Chan
- */
+ * @deprecated As of 7.0.0, with no direct replacement
+*/
+@Deprecated
 @DoPrivileged
 public class CaptchaImpl implements Captcha {
 

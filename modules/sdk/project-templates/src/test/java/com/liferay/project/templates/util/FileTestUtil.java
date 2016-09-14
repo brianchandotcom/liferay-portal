@@ -18,6 +18,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Writer;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.DirectoryStream;
@@ -114,6 +115,15 @@ public class FileTestUtil {
 		}
 
 		return properties;
+	}
+
+	public static void write(Writer writer, String... lines)
+		throws IOException {
+
+		for (String line : lines) {
+			writer.write(line);
+			writer.write(System.lineSeparator());
+		}
 	}
 
 }

@@ -25,7 +25,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.io.Writer;
 
 import java.lang.reflect.Method;
 
@@ -1094,13 +1093,6 @@ public class ProjectTemplatesTest {
 		_executeBndDiff(gradleBundleFile, mavenBundleFile);
 	}
 
-	private void _write(Writer writer, String... lines) throws IOException {
-		for (String line : lines) {
-			writer.write(line);
-			writer.write(System.lineSeparator());
-		}
-	}
-
 	private void _writeServiceClass(File gradleProjectDir) throws IOException {
 		String importLine =
 			"import com.liferay.portal.kernel.events.LifecycleAction;";
@@ -1122,10 +1114,10 @@ public class ProjectTemplatesTest {
 					actionJavaPath, StandardCharsets.UTF_8)) {
 
 				for (String line : lines) {
-					_write(bufferedWriter, line);
+					FileTestUtil.write(bufferedWriter, line);
 
 					if (line.equals(classLine)) {
-						_write(
+						FileTestUtil.write(
 							bufferedWriter, "@Override",
 							"public void processLifecycleEvent(",
 							"LifecycleEvent lifecycleEvent)",
@@ -1133,7 +1125,7 @@ public class ProjectTemplatesTest {
 							"\"login.event.pre=\" + lifecycleEvent);", "}");
 					}
 					else if (line.equals(importLine)) {
-						_write(
+						FileTestUtil.write(
 							bufferedWriter,
 							"import com.liferay.portal.kernel.events." +
 								"LifecycleEvent;",

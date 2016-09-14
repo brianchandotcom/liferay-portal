@@ -441,6 +441,14 @@
 			<var method="TestPropsUtil#get('email.password.1')" name="userPassword" />
 		</execute>
 
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="Server Administration" />
+		</execute>
+
+		<execute macro="ServerAdministration#executeServerResourcesActions">
+			<var name="actionsDescription" value="Reindex all search indexes." />
+		</execute>
+
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
@@ -476,7 +484,7 @@
 
 		<execute macro="Page#add">
 			<var name="pageName" value="Test Private Page" />
-			<var name="siteName" value="Liferay" />
+			<var name="siteName" value="${siteName}" />
 			<var name="sitePagePrivacy" value="Private" />
 		</execute>
 
@@ -585,7 +593,7 @@
 			<var name="emailFromUserName" value="Test Test" />
 			<var name="gmailAssetType" value="Message Boards" />
 			<var name="gmailMessageBody" value="MB Thread Message Body" />
-			<var name="gmailMessageTitle" value="Message Boards Home - Liferay New Message: MB Thread Message Subject" />
+			<var name="gmailMessageTitle" value="Message Boards Home - ${siteName} New Message: MB Thread Message Subject" />
 		</execute>
 
 		<execute macro="Gmail#openMessageLink">
@@ -815,7 +823,7 @@
 			<var name="emailFromUserName" value="Test Test" />
 			<var name="gmailAssetType" value="Message Boards" />
 			<var name="gmailMessageBody" value="MB Thread Message Body" />
-			<var name="gmailMessageTitle" value="Message Boards Home - Liferay New Message: MB Thread Message Subject" />
+			<var name="gmailMessageTitle" value="Message Boards Home - ${siteName} New Message: MB Thread Message Subject" />
 		</execute>
 
 		<execute macro="Gmail#openMessageLink">
@@ -1057,7 +1065,7 @@
 			<var name="emailFromUserName" value="Test Test" />
 			<var name="gmailAssetType" value="Message Boards" />
 			<var name="gmailMessageBody" value="MB Thread Message Body" />
-			<var name="gmailMessageTitle" value="Message Boards Home - Liferay New Message: MB Thread Message Subject" />
+			<var name="gmailMessageTitle" value="Message Boards Home - ${siteName} New Message: MB Thread Message Subject" />
 		</execute>
 
 		<execute macro="Gmail#openMessageLink">

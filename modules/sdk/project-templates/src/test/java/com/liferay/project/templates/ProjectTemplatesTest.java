@@ -55,11 +55,16 @@ public class ProjectTemplatesTest {
 
 	@BeforeClass
 	public static void setUpClass() throws IOException {
-		Properties properties = FileTestUtil.readProperties(
-			"gradle-wrapper/gradle/wrapper/gradle-wrapper.properties");
+		String gradleDistribution = System.getProperty("gradle.distribution");
 
-		_gradleDistribution = URI.create(
-			properties.getProperty("distributionUrl"));
+		if (Validator.isNull(gradleDistribution)) {
+			Properties properties = FileTestUtil.readProperties(
+				"gradle-wrapper/gradle/wrapper/gradle-wrapper.properties");
+
+			gradleDistribution = properties.getProperty("distributionUrl");
+		}
+
+		_gradleDistribution = URI.create(gradleDistribution);
 
 		_httpProxyHost = System.getProperty("http.proxyHost");
 		_httpProxyPort = System.getProperty("http.proxyPort");

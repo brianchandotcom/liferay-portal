@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+
+<portlet-preferences owner-id="0" owner-type="3" default-user="false" plid="31404" portlet-id="com_liferay_journal_content_web_portlet_JournalContentPortlet_INSTANCE_cI4k12UrmYiS">
+	<preference>
+		<name>portletSetupUseCustomTitle</name>
+		<value>false</value>
+	</preference>
+	<preference>
+		<name>ddmTemplateKey</name>
+		<value/>
+	</preference>
+	<preference>
+		<name>portletSetupCss</name>
+		<value>{"defaultPortletTitles":{"iw_IL":"תצוגת תוכן אינטרנט","pt_BR":"Publicador de conteúdo web","ca_ES":"Visualització del contingut web","en_US":"Web Content Display","ja_JP":"Webコンテンツの表示","fi_FI":"Web-sisällön esitys","de_DE":"Webcontent-Anzeige","es_ES":"Visor de contenido web","hu_HU":"Webtartalom-megjelenítő","fr_FR":"Affichage de contenus web","nl_NL":"Webcontent weergeven","zh_CN":"网页内容展示"},"spacingData":{"margin":{"sameForAll":true,"bottom":{"unit":"px","value":""},"left":{"unit":"px","value":""},"right":{"unit":"px","value":""},"top":{"unit":"px","value":""}},"padding":{"sameForAll":true,"bottom":{"unit":"px","value":""},"left":{"unit":"px","value":""},"right":{"unit":"px","value":""},"top":{"unit":"px","value":""}}},"borderData":{"borderStyle":{"sameForAll":true,"bottom":"","left":"","right":"","top":""},"borderColor":{"sameForAll":true,"bottom":"","left":"","right":"","top":""},"borderWidth":{"sameForAll":true,"bottom":{"unit":"px","value":""},"left":{"unit":"px","value":""},"right":{"unit":"px","value":""},"top":{"unit":"px","value":""}}},"textData":{"fontWeight":"","lineHeight":"","textDecoration":"","letterSpacing":"","color":"","textAlign":"","fontStyle":"","fontFamily":"","wordSpacing":"","fontSize":""},"bgData":{"backgroundPosition":{"left":{"unit":"px","value":""},"top":{"unit":"px","value":""}},"backgroundColor":"","backgroundRepeat":"","backgroundImage":"","useBgImage":false},"advancedData":{"customCSS":"","customCSSClassName":""}}</value>
+	</preference>
+	<preference>
+		<name>groupId</name>
+		<value>31390</value>
+	</preference>
+	<preference>
+		<name>articleId</name>
+		<value>31779</value>
+	</preference>
+	<preference>
+		<name>portletSetupPortletDecoratorId</name>
+		<value>barebone</value>
+	</preference>
+</portlet-preferences>

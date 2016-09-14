@@ -1,5 +1,0 @@
-<?xml version="1.0"?>
-
-<portlet portlet-id="com_liferay_calendar_web_portlet_CalendarPortlet" root-portlet-id="com_liferay_calendar_web_portlet_CalendarPortlet" old-plid="0" scope-group-id="43802" scope-layout-type="" scope-layout-uuid="" private-layout="false">
-	<portlet-data path="/group/43802/portlet/com_liferay_calendar_web_portlet_CalendarPortlet/43802/portlet-data.xml"/>
-</portlet>

@@ -1,0 +1,30 @@
+<com.liferay.portal.model.impl.LayoutFriendlyURLImpl>
+  <__cachedModel>false</__cachedModel>
+  <__new>false</__new>
+  <__mvccVersion>0</__mvccVersion>
+  <__uuid>b9adadc5-e8e1-b441-a7d5-2e77f9a32232</__uuid>
+  <__originalUuid>b9adadc5-e8e1-b441-a7d5-2e77f9a32232</__originalUuid>
+  <__layoutFriendlyURLId>31487</__layoutFriendlyURLId>
+  <__groupId>31390</__groupId>
+  <__originalGroupId>31390</__originalGroupId>
+  <__setOriginalGroupId>false</__setOriginalGroupId>
+  <__companyId>20116</__companyId>
+  <__originalCompanyId>20116</__originalCompanyId>
+  <__setOriginalCompanyId>false</__setOriginalCompanyId>
+  <__userId>20120</__userId>
+  <__userName></__userName>
+  <__createDate>2016-02-17 14:33:32.915 UTC</__createDate>
+  <__modifiedDate>2016-08-09 08:30:52.771 UTC</__modifiedDate>
+  <__setModifiedDate>false</__setModifiedDate>
+  <__plid>31481</__plid>
+  <__originalPlid>31481</__originalPlid>
+  <__setOriginalPlid>false</__setOriginalPlid>
+  <__privateLayout>true</__privateLayout>
+  <__originalPrivateLayout>true</__originalPrivateLayout>
+  <__setOriginalPrivateLayout>false</__setOriginalPrivateLayout>
+  <__friendlyURL>/atms-and-branches1</__friendlyURL>
+  <__originalFriendlyURL>/atms-and-branches1</__originalFriendlyURL>
+  <__languageId>en_US</__languageId>
+  <__originalLanguageId>en_US</__originalLanguageId>
+  <__columnBitmask>0</__columnBitmask>
+</com.liferay.portal.model.impl.LayoutFriendlyURLImpl>

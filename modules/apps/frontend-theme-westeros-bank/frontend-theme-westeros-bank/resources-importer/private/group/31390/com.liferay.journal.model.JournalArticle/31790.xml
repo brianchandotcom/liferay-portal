@@ -1,0 +1,99 @@
+<JournalArticle>
+  <__cachedModel>false</__cachedModel>
+  <__new>false</__new>
+  <__uuid>a94e1490-078c-5463-c93c-5ac6aecb2b21</__uuid>
+  <__originalUuid>a94e1490-078c-5463-c93c-5ac6aecb2b21</__originalUuid>
+  <__id>31790</__id>
+  <__resourcePrimKey>31781</__resourcePrimKey>
+  <__originalResourcePrimKey>31781</__originalResourcePrimKey>
+  <__setOriginalResourcePrimKey>false</__setOriginalResourcePrimKey>
+  <__groupId>31390</__groupId>
+  <__originalGroupId>31390</__originalGroupId>
+  <__setOriginalGroupId>false</__setOriginalGroupId>
+  <__companyId>20116</__companyId>
+  <__originalCompanyId>20116</__originalCompanyId>
+  <__setOriginalCompanyId>false</__setOriginalCompanyId>
+  <__userId>20120</__userId>
+  <__originalUserId>20120</__originalUserId>
+  <__setOriginalUserId>false</__setOriginalUserId>
+  <__userName></__userName>
+  <__createDate class="sql-timestamp">2016-02-17 11:15:44.478</__createDate>
+  <__modifiedDate class="sql-timestamp">2016-02-17 11:15:57.028</__modifiedDate>
+  <__setModifiedDate>false</__setModifiedDate>
+  <__folderId>0</__folderId>
+  <__originalFolderId>0</__originalFolderId>
+  <__setOriginalFolderId>false</__setOriginalFolderId>
+  <__classNameId>0</__classNameId>
+  <__originalClassNameId>0</__originalClassNameId>
+  <__setOriginalClassNameId>false</__setOriginalClassNameId>
+  <__classPK>0</__classPK>
+  <__originalClassPK>0</__originalClassPK>
+  <__setOriginalClassPK>false</__setOriginalClassPK>
+  <__treePath>/</__treePath>
+  <__articleId>31779</__articleId>
+  <__originalArticleId>31779</__originalArticleId>
+  <__version>1.1</__version>
+  <__originalVersion>1.1</__originalVersion>
+  <__setOriginalVersion>false</__setOriginalVersion>
+  <__title>&lt;?xml version=&apos;1.0&apos; encoding=&apos;UTF-8&apos;?&gt;&lt;root available-locales=&quot;en_US&quot; default-locale=&quot;en_US&quot;&gt;&lt;Title language-id=&quot;en_US&quot;&gt;Items Row&lt;/Title&gt;&lt;/root&gt;</__title>
+  <__urlTitle>items-row</__urlTitle>
+  <__originalUrlTitle>items-row</__originalUrlTitle>
+  <__description></__description>
+  <__content>&lt;?xml version=&quot;1.0&quot;?&gt;
+
+&lt;root available-locales=&quot;en_US&quot; default-locale=&quot;en_US&quot;&gt;
+	&lt;dynamic-element name=&quot;ItemTitle&quot; type=&quot;text&quot; index-type=&quot;keyword&quot; index=&quot;0&quot; instance-id=&quot;tyax&quot;&gt;
+		&lt;dynamic-element name=&quot;ItemImage&quot; index=&quot;0&quot; instance-id=&quot;vggr&quot; type=&quot;image&quot; index-type=&quot;keyword&quot;&gt;
+			&lt;dynamic-content language-id=&quot;en_US&quot; alt=&quot;&quot; name=&quot;280x100-01.png&quot; title=&quot;280x100-01.png&quot; type=&quot;document&quot;&gt;&lt;![CDATA[{&quot;title&quot;:&quot;280x100-01.png&quot;,&quot;alt&quot;:&quot;&quot;,&quot;name&quot;:&quot;280x100-01.png&quot;,&quot;data&quot;:&quot;[$dl-reference=/group/31390/com.liferay.document.library.kernel.model.DLFileEntry/31695.xml$]&quot;,&quot;type&quot;:&quot;document&quot;}]]&gt;&lt;/dynamic-content&gt;
+		&lt;/dynamic-element&gt;
+		&lt;dynamic-element name=&quot;htmlContent&quot; index=&quot;0&quot; instance-id=&quot;vhqn&quot; type=&quot;text_area&quot; index-type=&quot;keyword&quot;&gt;
+			&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[&lt;p&gt;Proin consequat dolor vel malesuada condimentum. Maecenas pellentesque, felis id lacinia egestas, velit diam viverra nunc, fringilla vestibulum justo est vel orci. Fusce interdum dolor a justo pharetra, eu viverra neque fringilla.&lt;/p&gt;]]&gt;&lt;/dynamic-content&gt;
+		&lt;/dynamic-element&gt;
+		&lt;dynamic-element name=&quot;linkTo&quot; index=&quot;0&quot; instance-id=&quot;hgwt&quot; type=&quot;text&quot; index-type=&quot;keyword&quot;&gt;
+			&lt;dynamic-element name=&quot;linkText&quot; index=&quot;0&quot; instance-id=&quot;kqfv&quot; type=&quot;text&quot; index-type=&quot;keyword&quot;&gt;
+				&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[Visit our simulator]]&gt;&lt;/dynamic-content&gt;
+			&lt;/dynamic-element&gt;
+			&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[http://www.liferay.com]]&gt;&lt;/dynamic-content&gt;
+		&lt;/dynamic-element&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[We help you to achieve your goals]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+	&lt;dynamic-element name=&quot;ItemTitle&quot; type=&quot;text&quot; index-type=&quot;keyword&quot; index=&quot;1&quot; instance-id=&quot;tpes&quot;&gt;
+		&lt;dynamic-element name=&quot;ItemImage&quot; index=&quot;1&quot; instance-id=&quot;dioh&quot; type=&quot;image&quot; index-type=&quot;keyword&quot;&gt;
+			&lt;dynamic-content language-id=&quot;en_US&quot; alt=&quot;&quot; name=&quot;280x100-02.png&quot; title=&quot;280x100-02.png&quot; type=&quot;document&quot;&gt;&lt;![CDATA[{&quot;title&quot;:&quot;280x100-02.png&quot;,&quot;alt&quot;:&quot;&quot;,&quot;name&quot;:&quot;280x100-02.png&quot;,&quot;data&quot;:&quot;[$dl-reference=/group/31390/com.liferay.document.library.kernel.model.DLFileEntry/31687.xml$]&quot;,&quot;type&quot;:&quot;document&quot;}]]&gt;&lt;/dynamic-content&gt;
+		&lt;/dynamic-element&gt;
+		&lt;dynamic-element name=&quot;htmlContent&quot; index=&quot;1&quot; instance-id=&quot;noiv&quot; type=&quot;text_area&quot; index-type=&quot;keyword&quot;&gt;
+			&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[&lt;p&gt;Suspendisse ante eros, egestas non consectetur sed, fermentum quis lectus. Nam iaculis eget mi ac rutrum.&lt;/p&gt;]]&gt;&lt;/dynamic-content&gt;
+		&lt;/dynamic-element&gt;
+		&lt;dynamic-element name=&quot;linkTo&quot; index=&quot;1&quot; instance-id=&quot;stoq&quot; type=&quot;text&quot; index-type=&quot;keyword&quot;&gt;
+			&lt;dynamic-element name=&quot;linkText&quot; index=&quot;1&quot; instance-id=&quot;aqdx&quot; type=&quot;text&quot; index-type=&quot;keyword&quot;&gt;
+				&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[Visit our Online Broker]]&gt;&lt;/dynamic-content&gt;
+			&lt;/dynamic-element&gt;
+			&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[http://www.liferay.com]]&gt;&lt;/dynamic-content&gt;
+		&lt;/dynamic-element&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[Vivamus placerat ante vitae]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+&lt;/root&gt;</__content>
+  <__DDMStructureKey>21880</__DDMStructureKey>
+  <__originalDDMStructureKey>21880</__originalDDMStructureKey>
+  <__DDMTemplateKey>21884</__DDMTemplateKey>
+  <__originalDDMTemplateKey>21884</__originalDDMTemplateKey>
+  <__layoutUuid></__layoutUuid>
+  <__originalLayoutUuid></__originalLayoutUuid>
+  <__displayDate class="sql-timestamp">2016-02-17 11:12:00.0</__displayDate>
+  <__originalDisplayDate class="sql-timestamp" reference="../__displayDate"/>
+  <__indexable>true</__indexable>
+  <__originalIndexable>true</__originalIndexable>
+  <__setOriginalIndexable>false</__setOriginalIndexable>
+  <__smallImage>false</__smallImage>
+  <__smallImageId>31791</__smallImageId>
+  <__originalSmallImageId>31791</__originalSmallImageId>
+  <__setOriginalSmallImageId>false</__setOriginalSmallImageId>
+  <__smallImageURL></__smallImageURL>
+  <__status>0</__status>
+  <__originalStatus>0</__originalStatus>
+  <__setOriginalStatus>false</__setOriginalStatus>
+  <__statusByUserId>20120</__statusByUserId>
+  <__statusByUserName></__statusByUserName>
+  <__statusDate class="sql-timestamp">2016-02-17 11:15:57.028</__statusDate>
+  <__columnBitmask>0</__columnBitmask>
+</JournalArticle>

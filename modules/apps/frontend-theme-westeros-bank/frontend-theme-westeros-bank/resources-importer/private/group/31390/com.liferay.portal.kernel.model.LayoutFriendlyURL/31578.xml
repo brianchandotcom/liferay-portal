@@ -1,0 +1,30 @@
+<com.liferay.portal.model.impl.LayoutFriendlyURLImpl>
+  <__cachedModel>false</__cachedModel>
+  <__new>false</__new>
+  <__mvccVersion>0</__mvccVersion>
+  <__uuid>1a198193-47f7-7fcd-d6ff-1dd591e316da</__uuid>
+  <__originalUuid>1a198193-47f7-7fcd-d6ff-1dd591e316da</__originalUuid>
+  <__layoutFriendlyURLId>31578</__layoutFriendlyURLId>
+  <__groupId>31390</__groupId>
+  <__originalGroupId>31390</__originalGroupId>
+  <__setOriginalGroupId>false</__setOriginalGroupId>
+  <__companyId>20116</__companyId>
+  <__originalCompanyId>20116</__originalCompanyId>
+  <__setOriginalCompanyId>false</__setOriginalCompanyId>
+  <__userId>20120</__userId>
+  <__userName></__userName>
+  <__createDate>2016-02-17 13:59:18.361 UTC</__createDate>
+  <__modifiedDate>2016-08-09 08:29:22.725 UTC</__modifiedDate>
+  <__setModifiedDate>false</__setModifiedDate>
+  <__plid>31572</__plid>
+  <__originalPlid>31572</__originalPlid>
+  <__setOriginalPlid>false</__setOriginalPlid>
+  <__privateLayout>true</__privateLayout>
+  <__originalPrivateLayout>true</__originalPrivateLayout>
+  <__setOriginalPrivateLayout>false</__setOriginalPrivateLayout>
+  <__friendlyURL>/all-mortgage-products</__friendlyURL>
+  <__originalFriendlyURL>/all-mortgage-products</__originalFriendlyURL>
+  <__languageId>en_US</__languageId>
+  <__originalLanguageId>en_US</__originalLanguageId>
+  <__columnBitmask>0</__columnBitmask>
+</com.liferay.portal.model.impl.LayoutFriendlyURLImpl>

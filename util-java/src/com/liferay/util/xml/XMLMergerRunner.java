@@ -103,6 +103,7 @@ public class XMLMergerRunner {
 		if (pos >= 0) {
 			masterDoctype = masterXml.substring(
 				pos, masterXml.indexOf(">", pos) + 1);
+
 			masterXml = StringUtil.replace(masterXml, masterDoctype, "");
 		}
 
@@ -113,6 +114,7 @@ public class XMLMergerRunner {
 		if (pos >= 0) {
 			slaveDoctype = slaveXml.substring(
 				pos, slaveXml.indexOf(">", pos) + 1);
+
 			slaveXml = StringUtil.replace(slaveXml, slaveDoctype, "");
 		}
 

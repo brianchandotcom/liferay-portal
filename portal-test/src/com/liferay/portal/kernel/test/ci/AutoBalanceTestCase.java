@@ -61,6 +61,7 @@ public abstract class AutoBalanceTestCase {
 		}
 
 		int start = groupSize * testClassGroupIndex;
+
 		int end = start + groupSize;
 
 		if (end > array.length) {

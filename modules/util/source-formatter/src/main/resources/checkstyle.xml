@@ -114,6 +114,9 @@
 		<module name="com.liferay.source.formatter.checkstyle.checks.MissingAuthor">
 			<message key="author.missing" value="Missing author" />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.checks.MissingEmptyLine">
+			<message key="empty.line.missing" value="There should be an empty line between assigning and using variable ''{0}''" />
+		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.MissingModifier">
 			<message key="modifier.missing" value="Missing modifier for ''{0}''" />
 		</module>

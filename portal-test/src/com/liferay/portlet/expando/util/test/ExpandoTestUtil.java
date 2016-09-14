@@ -94,6 +94,7 @@ public class ExpandoTestUtil {
 
 		ExpandoTable table = addTable(
 			classNameId, RandomTestUtil.randomString());
+
 		ExpandoColumn column = addColumn(
 			table, RandomTestUtil.randomString(),
 			ExpandoColumnConstants.STRING);

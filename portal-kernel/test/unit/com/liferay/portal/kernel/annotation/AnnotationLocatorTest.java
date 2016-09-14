@@ -477,6 +477,7 @@ public class AnnotationLocatorTest {
 			Annotation[] expectedAnnotations = expectedAnnotationsList.get(i);
 
 			java.lang.reflect.Method method = _interfaceMethods[i];
+
 			List<Annotation> actualAnnotations = AnnotationLocator.locate(
 				method, clazz);
 

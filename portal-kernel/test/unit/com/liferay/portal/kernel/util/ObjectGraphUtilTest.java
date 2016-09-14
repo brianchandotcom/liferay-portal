@@ -48,9 +48,12 @@ public class ObjectGraphUtilTest {
 	@Before
 	public void setUp() {
 		_recordVisitor = new RecordVisitor();
+
 		_objectValuePairs = _recordVisitor._objectValuePairs;
+
 		_recordAnnotatedFieldMappingVisitor =
 			new RecordAnnotatedFieldMappingVisitor();
+
 		_annotatedFieldMappingObjectValuePairs =
 			_recordAnnotatedFieldMappingVisitor._objectValuePairs;
 	}

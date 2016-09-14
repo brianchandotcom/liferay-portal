@@ -42,7 +42,9 @@ public class ConcurrentMapperHashMapCombinationTest {
 			StringPool.FALSE);
 
 		String testKey1 = "testKey1";
+
 		String testKey2 = new String(testKey1);
+
 		Object testValue1 = new Object();
 		Object testValue2 = new Object();
 

@@ -121,6 +121,7 @@ public class ColorUtil {
 		}
 
 		int[] rgb = new int[3];
+
 		rgb[0] = (hexArray[0] * 16) + hexArray[1];
 		rgb[1] = (hexArray[2] * 16) + hexArray[3];
 		rgb[2] = (hexArray[4] * 16) + hexArray[5];

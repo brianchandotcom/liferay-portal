@@ -28,9 +28,8 @@ public class DetailASTUtil {
 	public static final int ALL_TYPES = -1;
 
 	public static DetailAST findTypeAST(DetailAST methodAST, String name) {
-		List<DetailAST> localVariableDefASTList =
-			DetailASTUtil.getAllChildTokens(
-				methodAST, TokenTypes.VARIABLE_DEF, true);
+		List<DetailAST> localVariableDefASTList = getAllChildTokens(
+			methodAST, TokenTypes.VARIABLE_DEF, true);
 
 		DetailAST typeAST = _findTypeAST(localVariableDefASTList, name);
 
@@ -38,8 +37,7 @@ public class DetailASTUtil {
 			return typeAST;
 		}
 
-		List<DetailAST> parameterDefASTList = DetailASTUtil.getParameterDefs(
-			methodAST);
+		List<DetailAST> parameterDefASTList = getParameterDefs(methodAST);
 
 		typeAST = _findTypeAST(parameterDefASTList, name);
 
@@ -50,9 +48,8 @@ public class DetailASTUtil {
 		DetailAST classAST = methodAST.getParent();
 
 		while (classAST != null) {
-			List<DetailAST> globalVariableDefASTList =
-				DetailASTUtil.getAllChildTokens(
-					classAST, TokenTypes.VARIABLE_DEF, false);
+			List<DetailAST> globalVariableDefASTList = getAllChildTokens(
+				classAST, TokenTypes.VARIABLE_DEF, false);
 
 			typeAST = _findTypeAST(globalVariableDefASTList, name);
 
@@ -70,6 +67,20 @@ public class DetailASTUtil {
 		DetailAST detailAST, int tokenType, boolean recursive) {
 
 		return _getAllChildTokens(detailAST, tokenType, recursive, null);
+	}
+
+	public static int getEndLine(DetailAST detailAST) {
+		int endLine = detailAST.getLineNo();
+
+		for (DetailAST childAST :
+				getAllChildTokens(detailAST, ALL_TYPES, true)) {
+
+			if (childAST.getLineNo() > endLine) {
+				endLine = childAST.getLineNo();
+			}
+		}
+
+		return endLine;
 	}
 
 	public static List<DetailAST> getMethodCalls(
@@ -158,6 +169,20 @@ public class DetailASTUtil {
 		}
 
 		return parameterNames;
+	}
+
+	public static int getStartLine(DetailAST detailAST) {
+		int startLine = detailAST.getLineNo();
+
+		for (DetailAST childAST :
+				getAllChildTokens(detailAST, ALL_TYPES, true)) {
+
+			if (childAST.getLineNo() < startLine) {
+				startLine = childAST.getLineNo();
+			}
+		}
+
+		return startLine;
 	}
 
 	public static boolean isCollection(DetailAST detailAST) {

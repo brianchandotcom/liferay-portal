@@ -493,6 +493,7 @@ public class MetaInfoCacheServletResponseTest {
 
 		MetaInfoCacheServletResponse innerMetaInfoCacheServletResponse =
 			new MetaInfoCacheServletResponse(stubHttpServletResponse);
+
 		MetaInfoCacheServletResponse outerMetaInfoCacheServletResponse =
 			new MetaInfoCacheServletResponse(innerMetaInfoCacheServletResponse);
 

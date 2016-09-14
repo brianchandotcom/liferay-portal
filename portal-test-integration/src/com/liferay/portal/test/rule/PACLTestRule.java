@@ -132,6 +132,7 @@ public class PACLTestRule implements TestRule {
 		throws ReflectiveOperationException {
 
 		_testClass = _loadTestClass(description.getTestClass());
+
 		_instance = _testClass.newInstance();
 
 		ServletContext servletContext = ServletContextPool.get(

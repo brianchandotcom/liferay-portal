@@ -43,6 +43,7 @@ public class BaseSettingsTest extends PowerMockito {
 	@Test
 	public void testGetModifiableSettingsForUnmodifiableBaseSettings() {
 		ModifiableSettings modifiableSettings = new MemorySettings();
+
 		BaseSettings baseSettings = new ParameterMapSettings(
 			Collections.<String, String[]>emptyMap(), modifiableSettings);
 

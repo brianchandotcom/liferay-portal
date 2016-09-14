@@ -226,6 +226,7 @@ public class ServletResponseUtilRangeTest extends PowerMockito {
 					throws Throwable {
 
 					Object[] args = invocation.getArguments();
+
 					File file = (File)args[0];
 
 					return file.delete();

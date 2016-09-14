@@ -31,6 +31,7 @@ public class NullServletResponse extends HttpServletResponseWrapper {
 		super(response);
 
 		_servletOutputStream = new NullServletOutputStream();
+
 		_printWriter = UnsyncPrintWriterPool.borrow(
 			_servletOutputStream, getCharacterEncoding());
 	}

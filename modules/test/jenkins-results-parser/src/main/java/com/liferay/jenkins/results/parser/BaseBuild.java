@@ -14,6 +14,10 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.io.UnsupportedEncodingException;
+
+import java.net.URLDecoder;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -22,7 +26,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -444,25 +447,27 @@ public abstract class BaseBuild implements Build {
 
 					JSONObject buildJSONObject = getBuildJSONObject("result");
 
-					if (buildJSONObject != null) {	
+					if (buildJSONObject != null) {
 						String result = buildJSONObject.optString("result");
-	
+
 						if ((downstreamBuilds.size() ==
 								getDownstreamBuildCount("completed")) &&
 							!result.isEmpty()) {
-	
+
 							setStatus("completed");
 						}
 						else if (getDownstreamBuildCount("missing") > 0) {
 							System.out.println(
-								"missing: " + getDownstreamBuildCount("missing"));
-	
+								"missing: " +
+									getDownstreamBuildCount("missing"));
+
 							setStatus("missing");
 						}
 						else if (getDownstreamBuildCount("starting") > 0) {
 							System.out.println(
-								"starting: " + getDownstreamBuildCount("starting"));
-	
+								"starting: " +
+									getDownstreamBuildCount("starting"));
+
 							setStatus("starting");
 						}
 					}
@@ -496,12 +501,12 @@ public abstract class BaseBuild implements Build {
 	}
 
 	protected static String decodeURL(String url) {
-		url = url.replace("%28", "(");
-		url = url.replace("%29", ")");
-		url = url.replace("%5B", "[");
-		url = url.replace("%5D", "]");
-
-		return url;
+		try {
+			return URLDecoder.decode(url, "UTF-8");
+		}
+		catch (UnsupportedEncodingException uee) {
+			throw new RuntimeException(uee);
+		}
 	}
 
 	protected void findDownstreamBuilds() {

@@ -56,9 +56,7 @@ public class InvokerFilterTest extends PowerMockito {
 
 		httpUtil.setHttp(new HttpImpl());
 
-		PropsUtil propsUtil = new PropsUtil();
-
-		propsUtil.setProps(new PropsImpl());
+		PropsUtil.setProps(new PropsImpl());
 	}
 
 	@Test

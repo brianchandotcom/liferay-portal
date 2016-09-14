@@ -378,102 +378,102 @@ public abstract class BaseBuild implements Build {
 	public void update() {
 		String status = getStatus();
 
-		if (status.equals("completed")) {
-			return;
-		}
+		if (!status.equals("completed")) {
+			try {
+				if (status.equals("missing") || status.equals("queued") ||
+					status.equals("starting")) {
 
-		try {
-			if (status.equals("missing") || status.equals("queued") ||
-				status.equals("starting")) {
+					JSONObject runningBuildJSONObject =
+						getRunningBuildJSONObject();
 
-				JSONObject runningBuildJSONObject = getRunningBuildJSONObject();
+					if (runningBuildJSONObject != null) {
+						setBuildNumber(runningBuildJSONObject.getInt("number"));
 
-				if (runningBuildJSONObject != null) {
-					setBuildNumber(runningBuildJSONObject.getInt("number"));
-
-					setStatus("running");
-
-					System.out.println(getBuildMessage());
-				}
-				else {
-					JSONObject queueItemJSONObject = getQueueItemJSONObject();
-
-					if (status.equals("starting") &&
-						(queueItemJSONObject != null)) {
-
-						setStatus("queued");
-					}
-					else if (status.equals("queued") &&
-							 (queueItemJSONObject == null)) {
-
-						setStatus("missing");
+						setStatus("running");
 
 						System.out.println(getBuildMessage());
 					}
+					else {
+						JSONObject queueItemJSONObject =
+							getQueueItemJSONObject();
+
+						if (status.equals("starting") &&
+							(queueItemJSONObject != null)) {
+
+							setStatus("queued");
+						}
+						else if (status.equals("queued") &&
+								 (queueItemJSONObject == null)) {
+
+							setStatus("missing");
+
+							System.out.println(getBuildMessage());
+						}
+					}
 				}
-			}
 
-			status = getStatus();
+				status = getStatus();
 
-			JSONObject buildJSONObject = getBuildJSONObject("result");
+				if (downstreamBuilds != null) {
+					ExecutorService executorService = getExecutorService();
 
-			if (downstreamBuilds != null) {
-				ExecutorService executorService = Executors.newFixedThreadPool(
-					100);
+					for (final Build downstreamBuild : downstreamBuilds) {
+						if (executorService != null) {
+							Runnable runnable = new Runnable() {
 
-				for (final Build downstreamBuild : downstreamBuilds) {
-					Runnable runnable = new Runnable() {
+								public void run() {
+									downstreamBuild.update();
+								}
 
-						public void run() {
+							};
+
+							executorService.execute(runnable);
+						}
+						else {
 							downstreamBuild.update();
 						}
+					}
 
-					};
+					if (executorService != null) {
+						executorService.shutdown();
 
-					executorService.execute(runnable);
-				}
+						while (!executorService.isTerminated()) {
+							JenkinsResultsParserUtil.sleep(100);
+						}
+					}
 
-				executorService.shutdown();
+					JSONObject buildJSONObject = getBuildJSONObject("result");
 
-				while (!executorService.isTerminated()) {
-					JenkinsResultsParserUtil.sleep(100);
-				}
-
-				String result = buildJSONObject.optString("result");
-
-				if ((downstreamBuilds.size() ==
-						getDownstreamBuildCount("completed")) &&
-					(result.length() > 0)) {
-
-					setStatus("completed");
-
-					return;
-				}
-
-				if (getDownstreamBuildCount("missing") > 0) {
-					System.out.println(
-						"missing: " + getDownstreamBuildCount("missing"));
-
-					setStatus("missing");
-
-					return;
-				}
-
-				if (getDownstreamBuildCount("starting") > 0) {
-					System.out.println(
-						"starting: " + getDownstreamBuildCount("starting"));
-
-					setStatus("starting");
-
-					return;
+					if (buildJSONObject != null) {	
+						String result = buildJSONObject.optString("result");
+	
+						if ((downstreamBuilds.size() ==
+								getDownstreamBuildCount("completed")) &&
+							!result.isEmpty()) {
+	
+							setStatus("completed");
+						}
+						else if (getDownstreamBuildCount("missing") > 0) {
+							System.out.println(
+								"missing: " + getDownstreamBuildCount("missing"));
+	
+							setStatus("missing");
+						}
+						else if (getDownstreamBuildCount("starting") > 0) {
+							System.out.println(
+								"starting: " + getDownstreamBuildCount("starting"));
+	
+							setStatus("starting");
+						}
+					}
 				}
 			}
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
 
-		findDownstreamBuilds();
+			findDownstreamBuilds();
+		}
 	}
 
 	protected BaseBuild(String url) throws Exception {
@@ -630,6 +630,10 @@ public abstract class BaseBuild implements Build {
 		}
 
 		return "";
+	}
+
+	protected ExecutorService getExecutorService() {
+		return null;
 	}
 
 	protected Set<String> getJobParameterNames() throws Exception {

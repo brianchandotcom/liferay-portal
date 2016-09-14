@@ -14,6 +14,9 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 /**
  * @author Kevin Yen
  */
@@ -38,6 +41,11 @@ public class TopLevelBuild extends BaseBuild {
 
 	protected TopLevelBuild(String url, TopLevelBuild parent) throws Exception {
 		super(url, parent);
+	}
+
+	@Override
+	protected ExecutorService getExecutorService() {
+		return Executors.newFixedThreadPool(100);
 	}
 
 	private long _updateDuration;

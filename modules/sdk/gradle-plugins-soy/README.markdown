@@ -3,7 +3,7 @@
 The Soy Gradle plugin lets you compile [Closure Templates](https://developers.google.com/closure/templates/)
 into JavaScript functions. It also lets you use a custom localization mechanism
 in the generated `.soy.js` files by replacing [`goog.getMsg`](https://developers.google.com/closure/templates/docs/translation#closurecompiler)
-definitions with a different function call, for example `Liferay.Language.get`.
+definitions with a different function call (e.g., `Liferay.Language.get`).
 
 ## Usage
 
@@ -23,23 +23,25 @@ buildscript {
 }
 ```
 
-Apply the [*Soy Plugin*](#soy-plugin) to compile Closure Templates into
-Javascript functions:
+There are additional Soy plugins you can apply to your Soy Gradle plugin:
 
-```gradle
-apply plugin: "com.liferay.soy"
-```
+- Apply the [*Soy Plugin*](#soy-plugin) to compile Closure Templates into
+JavaScript functions:
 
-Apply the [*Soy Translation Plugin*](#soy-translation-plugin) to use a custom
+	```gradle
+	apply plugin: "com.liferay.soy"
+	```
+
+- Apply the [*Soy Translation Plugin*](#soy-translation-plugin) to use a custom
 localization mechanism in the generated `.soy.js` files:
 
-```gradle
-apply plugin: "com.liferay.soy.translation"
-```
+	```gradle
+	apply plugin: "com.liferay.soy.translation"
+	```
 
-Since the plugin automatically resolves the Soy library as a dependency, you
-have to configure a repository that hosts the library and its transitive
-dependencies. The Liferay CDN repository hosts them all:
+Since the Soy Gradle plugin automatically resolves the Soy library as a
+dependency, you have to configure a repository that hosts the library and its
+transitive dependencies. The Liferay CDN repository hosts them all:
 
 ```gradle
 repositories {
@@ -51,7 +53,7 @@ repositories {
 
 ## Soy Plugin
 
-The plugin adds one task to your project:
+The Soy plugin adds one task to your project:
 
 Name | Depends On | Type | Description
 ---- | ---------- | ---- | -----------
@@ -85,11 +87,11 @@ dependencies {
 
 ## Soy Translation Plugin
 
-The plugin adds one task to your project:
+The Soy Translation plugin adds one task to your project:
 
 Name | Depends On | Type | Description
 ---- | ---------- | ---- | -----------
-`replaceSoyTranslation` | `configJSModules` (if [`com.liferay.js.module.config.generator`](https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-js-module-config-generator) is applied), `processResources` (if `java` is applied), `transpileJS` (if [`com.liferay.js.transpiler`](https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-js-transpiler) is applied) | [`ReplaceSoyTranslationTask`](#replacesoytranslationtask) | Replaces `goog.getMsg` definitions with `Liferay.Language.get` calls.
+`replaceSoyTranslation` | - `configJSModules` if [`com.liferay.js.module.config.generator`](https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-js-module-config-generator) is applied <br> - `processResources` if `java` is applied <br> - `transpileJS` if [`com.liferay.js.transpiler`](https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-js-transpiler is applied) | [`ReplaceSoyTranslationTask`](#replacesoytranslationtask) | Replaces `goog.getMsg` definitions with `Liferay.Language.get` calls.
 
 The plugin also adds the following dependencies to tasks defined by the `java`
 plugin:
@@ -105,7 +107,7 @@ Property Name | Default Value
 ------------- | -------------
 [`includes`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.SourceTask.html#org.gradle.api.tasks.SourceTask:includes) | `["**/*.soy.js"]`
 [`replacementClosure`](#replacementclosure) | Replaces `goog.getMsg` definitions with `Liferay.Language.get` calls.
-[`source`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.SourceTask.html#org.gradle.api.tasks.SourceTask:source) | <p>**If the `java` plugin is applied:** `project.sourceSets.main.output.resourcesDir`.</p><p>**Otherwise:** `[]`</p>
+[`source`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.SourceTask.html#org.gradle.api.tasks.SourceTask:source) | <p>**If the `java` plugin is applied:** `project.sourceSets.main.output.resourcesDir`</p><p>**Otherwise:** `[]`</p>
 
 ## Tasks
 
@@ -124,8 +126,9 @@ Property Name | Type | Default Value | Description
 
 ### ReplaceSoyTranslationTask
 
-Purpose of this type of task is to find all the `goog.getMsg` definitions in
-one or more file and replace them with a custom function call.
+The `ReplaceSoyTranslationTask` task type finds all the `goog.getMsg`
+definitions in the project's files and replaces them with a custom function
+call.
 
 ```javascript
 var MSG_EXTERNAL_123 = goog.getMsg('welcome-to-{$releaseInfo}', { 'releaseInfo': opt_data.releaseInfo });

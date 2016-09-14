@@ -50,7 +50,7 @@ public class ScreensCommentServiceImpl extends ScreensCommentServiceBaseImpl {
 
 		long groupId = getGroupId(className, classPK);
 
-		long companyId = getCompanyId(groupId);
+		long companyId = groupLocalService.getGroup(groupId).getCompanyId();
 
 		discussionPermission.checkAddPermission(
 			companyId, groupId, className, classPK);
@@ -73,7 +73,7 @@ public class ScreensCommentServiceImpl extends ScreensCommentServiceBaseImpl {
 
 		long groupId = getGroupId(comment.getClassName(), comment.getClassPK());
 
-		long companyId = getCompanyId(groupId);
+		long companyId = groupLocalService.getGroup(groupId).getCompanyId();
 
 		discussionPermission.checkViewPermission(
 			companyId, groupId, comment.getClassName(), comment.getClassPK());
@@ -91,7 +91,7 @@ public class ScreensCommentServiceImpl extends ScreensCommentServiceBaseImpl {
 
 		long groupId = getGroupId(className, classPK);
 
-		long companyId = getCompanyId(groupId);
+		long companyId = groupLocalService.getGroup(groupId).getCompanyId();
 
 		discussionPermission.checkViewPermission(
 			companyId, groupId, className, classPK);
@@ -150,7 +150,7 @@ public class ScreensCommentServiceImpl extends ScreensCommentServiceBaseImpl {
 
 		long groupId = getGroupId(className, classPK);
 
-		long companyId = getCompanyId(groupId);
+		long companyId = groupLocalService.getGroup(groupId).getCompanyId();
 
 		discussionPermission.checkViewPermission(
 			companyId, groupId, className, classPK);
@@ -224,12 +224,6 @@ public class ScreensCommentServiceImpl extends ScreensCommentServiceBaseImpl {
 
 	@ServiceReference(type = GroupLocalService.class)
 	protected GroupLocalService groupLocalService;
-
-	private long getCompanyId(long groupId) throws PortalException {
-		Group group = groupLocalService.getGroup(groupId);
-
-		return group.getCompanyId();
-	}
 
 	private long getGroupId(String className, long classPK)
 		throws PortalException {

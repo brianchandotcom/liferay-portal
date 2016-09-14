@@ -67,34 +67,9 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 
 		HttpServletRequest request = (HttpServletRequest)servletRequest;
 
-		String uri = getURI(request);
-
-		int length = uri.length();
-
 		HttpServletResponse response = (HttpServletResponse)servletResponse;
 
-		String queryString = request.getQueryString();
-
-		if (queryString != null) {
-			length += queryString.length();
-		}
-
-		if (length > _INVOKER_FILTER_URI_MAX_LENGTH) {
-			response.sendError(HttpServletResponse.SC_REQUEST_URI_TOO_LONG);
-
-			if (_log.isWarnEnabled()) {
-				StringBundler sb = new StringBundler(5);
-
-				sb.append("Rejected ");
-				sb.append(
-					StringUtil.shorten(uri, _INVOKER_FILTER_URI_MAX_LENGTH));
-				sb.append(" because it has more than ");
-				sb.append(_INVOKER_FILTER_URI_MAX_LENGTH);
-				sb.append(" characters");
-
-				_log.warn(sb.toString());
-			}
-
+		if (!handleLongRequestURL(request, response)) {
 			return;
 		}
 
@@ -105,6 +80,8 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 				response);
 
 		response = secureResponseHeaders(request, response);
+
+		String uri = getURI(request);
 
 		request.setAttribute(WebKeys.INVOKER_FILTER_URI, uri);
 
@@ -229,7 +206,7 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 		return invokerFilterChain.clone(filterChain);
 	}
 
-	protected String getURI(HttpServletRequest request) {
+	protected String getOriginalRequestURI(HttpServletRequest request) {
 		String uri = null;
 
 		if (_dispatcher == Dispatcher.ERROR) {
@@ -243,6 +220,12 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 		else {
 			uri = request.getRequestURI();
 		}
+
+		return uri;
+	}
+
+	protected String getURI(HttpServletRequest request) {
+		String uri = getOriginalRequestURI(request);
 
 		if (Validator.isNotNull(_contextPath) &&
 			!_contextPath.equals(StringPool.SLASH) &&
@@ -273,6 +256,43 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 		}
 
 		return requestURL.toString();
+	}
+
+	protected boolean handleLongRequestURL(
+			HttpServletRequest request, HttpServletResponse response)
+		throws IOException {
+
+		String queryString = request.getQueryString();
+
+		String originalURI = getOriginalRequestURI(request);
+
+		int length = originalURI.length();
+
+		if (queryString != null) {
+			length += queryString.length();
+		}
+
+		if (length <= _INVOKER_FILTER_URI_MAX_LENGTH) {
+			return true;
+		}
+
+		response.sendError(HttpServletResponse.SC_REQUEST_URI_TOO_LONG);
+
+		if (_log.isWarnEnabled()) {
+			StringBundler sb = new StringBundler(5);
+
+			sb.append("Rejected ");
+			sb.append(
+				StringUtil.shorten(
+					originalURI, _INVOKER_FILTER_URI_MAX_LENGTH));
+			sb.append(" because it has more than ");
+			sb.append(_INVOKER_FILTER_URI_MAX_LENGTH);
+			sb.append(" characters");
+
+			_log.warn(sb.toString());
+		}
+
+		return false;
 	}
 
 	protected HttpServletRequest handleNonSerializableRequest(

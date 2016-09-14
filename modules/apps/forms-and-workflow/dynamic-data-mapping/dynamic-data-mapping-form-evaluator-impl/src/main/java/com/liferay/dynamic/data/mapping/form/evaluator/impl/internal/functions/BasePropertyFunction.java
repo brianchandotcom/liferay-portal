@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.form.evaluator.impl.internal.rules.functions;
+package com.liferay.dynamic.data.mapping.form.evaluator.impl.internal.functions;
 
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormFieldEvaluationResult;
@@ -27,30 +27,31 @@ public abstract class BasePropertyFunction implements DDMExpressionFunction {
 
 	public BasePropertyFunction(
 		Map<String, List<DDMFormFieldEvaluationResult>>
-			ddmFormFieldEvaluationResults) {
+			ddmFormFieldEvaluationResultsMap) {
 
-		this.ddmFormFieldEvaluationResults = ddmFormFieldEvaluationResults;
+		this.ddmFormFieldEvaluationResultsMap =
+			ddmFormFieldEvaluationResultsMap;
 	}
 
 	protected DDMFormFieldEvaluationResult getDDMFormFieldEvaluationResult(
 		String ddmFormFieldName, int index) {
 
-		if (!ddmFormFieldEvaluationResults.containsKey(ddmFormFieldName)) {
+		if (!ddmFormFieldEvaluationResultsMap.containsKey(ddmFormFieldName)) {
 			throw new IllegalArgumentException("Invalid field name");
 		}
 
 		List<DDMFormFieldEvaluationResult>
 			ddmFormFieldEvaluationInstanceResults =
-				ddmFormFieldEvaluationResults.get(ddmFormFieldName);
+				ddmFormFieldEvaluationResultsMap.get(ddmFormFieldName);
 
 		if (ddmFormFieldEvaluationInstanceResults.size() <= index) {
-			throw new IllegalArgumentException("Field's instance not found");
+			throw new IllegalArgumentException("Invalid field instance");
 		}
 
 		return ddmFormFieldEvaluationInstanceResults.get(index);
 	}
 
 	protected final Map<String, List<DDMFormFieldEvaluationResult>>
-		ddmFormFieldEvaluationResults;
+		ddmFormFieldEvaluationResultsMap;
 
 }

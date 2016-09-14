@@ -12,27 +12,36 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.form.evaluator.impl.internal.rules.functions;
+package com.liferay.dynamic.data.mapping.form.evaluator.impl.internal.functions;
 
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
+import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormFieldEvaluationResult;
 
 /**
  * @author Leonardo Barros
  */
-public class FieldAtFunction implements DDMExpressionFunction {
+public class PropertySetFunction implements DDMExpressionFunction {
 
 	@Override
 	public Object evaluate(Object... parameters) {
-		if (parameters.length != 2) {
+		if (parameters.length < 3) {
 			throw new IllegalArgumentException(
-				String.format(
-					"Expected 2 parameters, received %d", parameters.length));
+				"Three or more parameters are expected");
 		}
 
-		String fieldName = parameters[0].toString();
-		int index = Double.valueOf(parameters[1].toString()).intValue();
+		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult =
+			(DDMFormFieldEvaluationResult)parameters[0];
 
-		return String.format("%s#%d", fieldName, index);
+		String propertyName = parameters[1].toString();
+
+		ddmFormFieldEvaluationResult.setProperty(propertyName, parameters[2]);
+
+		if (propertyName.equals("valid") && (parameters.length > 3)) {
+			ddmFormFieldEvaluationResult.setErrorMessage(
+				parameters[3].toString());
+		}
+
+		return true;
 	}
 
 }

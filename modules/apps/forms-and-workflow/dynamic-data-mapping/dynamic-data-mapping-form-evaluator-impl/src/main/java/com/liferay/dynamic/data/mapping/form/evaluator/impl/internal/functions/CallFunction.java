@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.form.evaluator.impl.internal.rules.functions;
+package com.liferay.dynamic.data.mapping.form.evaluator.impl.internal.functions;
 
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderConsumer;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderConsumerRequest;
@@ -242,7 +242,7 @@ public class CallFunction extends BasePropertyFunction {
 			return StringPool.BLANK;
 		}
 
-		Object value = ddmFormFieldEvaluationResult.getValue();
+		Object value = ddmFormFieldEvaluationResult.getProperty("value");
 
 		if (Validator.isNull(value)) {
 			return StringPool.BLANK;
@@ -262,7 +262,8 @@ public class CallFunction extends BasePropertyFunction {
 			return;
 		}
 
-		List<KeyValuePair> options = ddmFormFieldEvaluationResult.getOptions();
+		List<KeyValuePair> options = ddmFormFieldEvaluationResult.getProperty(
+			"options");
 
 		for (Map<Object, Object> dataMap : data) {
 			Object key = dataMap.getOrDefault(keyProperty, StringPool.BLANK);
@@ -291,7 +292,7 @@ public class CallFunction extends BasePropertyFunction {
 			getDDMFormFieldEvaluationResult(ddmFormFieldName);
 
 		if (ddmFormFieldEvaluationResult != null) {
-			ddmFormFieldEvaluationResult.setValue(value);
+			ddmFormFieldEvaluationResult.setProperty("value", value);
 		}
 	}
 

@@ -16,13 +16,11 @@ package com.liferay.dynamic.data.mapping.type.date.internal;
 
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
-import com.liferay.dynamic.data.mapping.model.DDMFormRule;
 import com.liferay.dynamic.data.mapping.type.BaseDDMFormFieldTypeSettingsTest;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
-import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -45,22 +43,6 @@ public class DateDDMFormFieldTypeSettingsTest
 		DDMForm ddmForm = DDMFormFactory.create(
 			DateDDMFormFieldTypeSettings.class);
 
-		List<DDMFormRule> ddmFormRules = ddmForm.getDDMFormRules();
-
-		Assert.assertEquals(1, ddmFormRules.size());
-
-		DDMFormRule ddmFormRule = ddmFormRules.get(0);
-
-		Assert.assertEquals("TRUE", ddmFormRule.getCondition());
-
-		List<String> ddmFormRuleActions = ddmFormRule.getActions();
-
-		Assert.assertArrayEquals(
-			new String[] {
-				"set(fieldAt(\"validation\", 0), \"visible\", false)"
-			},
-			ddmFormRuleActions.toArray());
-
 		Map<String, DDMFormField> ddmFormFieldsMap =
 			ddmForm.getDDMFormFieldsMap(false);
 
@@ -80,6 +62,8 @@ public class DateDDMFormFieldTypeSettingsTest
 		Assert.assertEquals(
 			"ddm-validation", validationDDMFormField.getDataType());
 		Assert.assertEquals("validation", validationDDMFormField.getType());
+		Assert.assertEquals(
+			"FALSE", validationDDMFormField.getVisibilityExpression());
 	}
 
 }

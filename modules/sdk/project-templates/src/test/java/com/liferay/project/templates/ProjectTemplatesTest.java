@@ -524,7 +524,7 @@ public class ProjectTemplatesTest {
 
 		_writeServiceClass(gradleProjectDir);
 
-		_executeGradle(gradleProjectDir, _GRADLE_BUILD_ARGS);
+		_executeGradle(gradleProjectDir, _GRADLE_TASK_PATH_BUILD);
 
 		File gradleBundleFile = _testExists(
 			gradleProjectDir, "build/libs/servicepreaction-1.0.0.jar");
@@ -584,7 +584,7 @@ public class ProjectTemplatesTest {
 			gradleProjectDir, serviceOverrideFilePath, packageServiceOverride,
 			importStatement, service, classDecl, constructorDecl);
 
-		_executeGradle(gradleProjectDir, _GRADLE_BUILD_ARGS);
+		_executeGradle(gradleProjectDir, _GRADLE_TASK_PATH_BUILD);
 
 		File gradleBundleFile = _testExists(
 			gradleProjectDir, "build/libs/serviceoverride-1.0.0.jar");
@@ -712,7 +712,7 @@ public class ProjectTemplatesTest {
 			String mavenFileName)
 		throws Exception {
 
-		_executeGradle(gradleProjectDir, _GRADLE_BUILD_ARGS);
+		_executeGradle(gradleProjectDir, _GRADLE_TASK_PATH_BUILD);
 
 		_executeMaven(mavenProjectDir, _MAVEN_GOAL_PACKAGE);
 
@@ -837,8 +837,7 @@ public class ProjectTemplatesTest {
 			"output jars do not match", "", new String(output.toByteArray()));
 	}
 
-	private void _executeGradle(
-			File projectDir, String[] taskPaths, String... testTaskPaths)
+	private void _executeGradle(File projectDir, String... taskPaths)
 		throws IOException {
 
 		if (Validator.isNotNull(_repositoryUrl)) {
@@ -879,15 +878,11 @@ public class ProjectTemplatesTest {
 
 		BuildResult buildResult = gradleRunner.build();
 
-		if (testTaskPaths.length == 0) {
-			testTaskPaths = taskPaths;
-		}
-
-		for (String testTaskPath : testTaskPaths) {
-			BuildTask buildTask = buildResult.task(testTaskPath);
+		for (String taskPath : taskPaths) {
+			BuildTask buildTask = buildResult.task(taskPath);
 
 			Assert.assertNotNull(
-				"Build task \"" + testTaskPath + "\" not found", buildTask);
+				"Build task \"" + taskPath + "\" not found", buildTask);
 
 			Assert.assertEquals(
 				"Unexpected outcome for task \"" + buildTask.getPath() + "\"",
@@ -975,16 +970,13 @@ public class ProjectTemplatesTest {
 			gradleProjectDir, serviceProjectName + "/build.gradle",
 			"compileOnly project(\":" + apiProjectName + "\")");
 
-		String[] tasks =
-			new String[] {":" + serviceProjectName + ":buildService"};
+		_executeGradle(
+			gradleProjectDir,
+			":" + serviceProjectName + _GRADLE_TASK_PATH_BUILD_SERVICE);
 
-		_executeGradle(gradleProjectDir, tasks);
-
-		tasks = new String[] {
-			":" + apiProjectName + ":build", ":" + serviceProjectName + ":build"
-		};
-
-		_executeGradle(gradleProjectDir, tasks);
+		_executeGradle(
+			gradleProjectDir, ":" + apiProjectName + _GRADLE_TASK_PATH_BUILD,
+			":" + serviceProjectName + _GRADLE_TASK_PATH_BUILD);
 
 		File gradleBundleApiFile = _testExists(
 			gradleProjectDir, apiProjectName + "/build/libs/" +
@@ -1130,7 +1122,10 @@ public class ProjectTemplatesTest {
 			}
 	}
 
-	private static final String[] _GRADLE_BUILD_ARGS = new String[] {":build"};
+	private static final String _GRADLE_TASK_PATH_BUILD = ":build";
+
+	private static final String _GRADLE_TASK_PATH_BUILD_SERVICE =
+		":buildService";
 
 	private static final String _MAVEN_GOAL_BUILD_SERVICE =
 		"liferay:build-service";

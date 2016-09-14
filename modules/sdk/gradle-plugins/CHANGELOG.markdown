@@ -144,8 +144,9 @@ to be overridden by setting the project property `app.server.parent.dir`.
 ## 2.0.31 - 2016-09-12
 
 ### Added
-- [LPS-67766]: Automatically apply plugin `com.liferay.soy.translation` in order
-to use the Liferay localization mechanism in the generated `.soy.js` files.
+- [LPS-67766]: Automatically apply the `com.liferay.soy.translation` plugin in
+order to use the Liferay localization mechanism in the generated `.soy.js`
+files.
 
 ## 2.0.32 - 2016-09-13
 

@@ -1,3 +1,5 @@
+import com.liferay.gradle.util.FileUtil
+
 bundle {
 	includeTransitiveDependencies = true
 }
@@ -37,6 +39,22 @@ processResources {
 }
 
 test {
+	doFirst {
+		Properties gradleWrapperProperties = new Properties()
+
+		File gradleWrapperPropertiesFile = file("src/main/resources/gradle-wrapper/gradle/wrapper/gradle-wrapper.properties")
+
+		gradleWrapperPropertiesFile.withInputStream {
+			gradleWrapperProperties.load it
+		}
+
+		String gradleDistributionUrl = gradleWrapperProperties["distributionUrl"]
+
+		File gradleDistributionFile = FileUtil.get(project, gradleDistributionUrl)
+
+		systemProperty "gradle.distribution", uri(gradleDistributionFile)
+	}
+
 	systemProperty "repository.url", System.properties["repository.url"]
 	systemProperty "http.proxyHost", System.properties["http.proxyHost"]
 	systemProperty "http.proxyPort", System.properties["http.proxyPort"]

@@ -15,7 +15,7 @@
 package com.liferay.jenkins.results.parser;
 
 import java.util.Collections;
-import java.util.Set;
+import java.util.List;
 
 /**
  * @author Kevin Yen
@@ -32,8 +32,8 @@ public class BatchBuild extends BaseBuild {
 		super(url, topLevelBuild);
 	}
 
-	protected Set<String> findDownstreamBuildsInConsoleText() {
-		return Collections.emptySet();
+	protected List<String> findDownstreamBuildsInConsoleText() {
+		return Collections.emptyList();
 	}
 
 }

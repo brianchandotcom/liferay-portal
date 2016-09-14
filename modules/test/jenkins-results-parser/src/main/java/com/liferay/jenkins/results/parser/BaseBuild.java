@@ -505,7 +505,7 @@ public abstract class BaseBuild implements Build {
 	}
 
 	protected void findDownstreamBuilds() {
-		Set<String> downstreamBuildURLs = new HashSet<>(
+		List<String> foundDownstreamBuildURLs = new ArrayList<>(
 			findDownstreamBuildsInConsoleText());
 
 		JSONObject buildJSONObject;
@@ -517,7 +517,7 @@ public abstract class BaseBuild implements Build {
 			throw new RuntimeException(e);
 		}
 
-		if (buildJSONObject.has("runs")) {
+		if ((buildJSONObject != null) && buildJSONObject.has("runs")) {
 			JSONArray runsJSONArray = buildJSONObject.getJSONArray("runs");
 
 			if (runsJSONArray != null) {
@@ -525,28 +525,45 @@ public abstract class BaseBuild implements Build {
 					JSONObject runJSONObject = runsJSONArray.getJSONObject(i);
 
 					if (runJSONObject.getInt("number") == _buildNumber) {
-						downstreamBuildURLs.add(runJSONObject.getString("url"));
+						String url = runJSONObject.getString("url");
+
+						if (!hasBuildURL(url) &&
+							!foundDownstreamBuildURLs.contains(url)) {
+
+							foundDownstreamBuildURLs.add(url);
+						}
 					}
 				}
 			}
 		}
 
 		addDownstreamBuilds(
-			downstreamBuildURLs.toArray(
-				new String[downstreamBuildURLs.size()]));
+			foundDownstreamBuildURLs.toArray(
+				new String[foundDownstreamBuildURLs.size()]));
 	}
 
-	protected Set<String> findDownstreamBuildsInConsoleText() {
-		Matcher downstreamBuildURLMatcher = downstreamBuildURLPattern.matcher(
-			getConsoleText());
+	protected List<String> findDownstreamBuildsInConsoleText() {
+		List<String> foundDownstreamBuildURLs = new ArrayList<>();
 
-		Set<String> downstreamBuildURLs = new HashSet<>();
+		if (getBuildURL() != null) {
+			String consoleText = getConsoleText();
 
-		while (downstreamBuildURLMatcher.find()) {
-			downstreamBuildURLs.add(downstreamBuildURLMatcher.group("url"));
+			Matcher downstreamBuildURLMatcher =
+				downstreamBuildURLPattern.matcher(
+					consoleText.substring(_consoleReadCursor));
+
+			_consoleReadCursor = consoleText.length();
+
+			while (downstreamBuildURLMatcher.find()) {
+				String url = downstreamBuildURLMatcher.group("url");
+
+				if (!foundDownstreamBuildURLs.contains(url)) {
+					foundDownstreamBuildURLs.add(url);
+				}
+			}
 		}
 
-		return downstreamBuildURLs;
+		return foundDownstreamBuildURLs;
 	}
 
 	protected JSONArray getBuildsJSONArray() throws Exception {
@@ -868,6 +885,7 @@ public abstract class BaseBuild implements Build {
 	protected long statusModifiedTime;
 
 	private int _buildNumber = -1;
+	private int _consoleReadCursor = 0;
 	private Map<String, String> _parameters = new HashMap<>();
 	private Build _parent;
 	private String _status;

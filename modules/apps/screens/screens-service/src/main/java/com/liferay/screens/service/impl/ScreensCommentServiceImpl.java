@@ -62,7 +62,7 @@ public class ScreensCommentServiceImpl extends ScreensCommentServiceBaseImpl {
 
 		Comment comment = commentManager.fetchComment(commentId);
 
-		return getJSONObject(comment, discussionPermission);
+		return toJSONObject(comment, discussionPermission);
 	}
 
 	@Override
@@ -82,7 +82,7 @@ public class ScreensCommentServiceImpl extends ScreensCommentServiceBaseImpl {
 		discussionPermission.checkViewPermission(
 			companyId, groupId, comment.getClassName(), comment.getClassPK());
 
-		return getJSONObject(comment, discussionPermission);
+		return toJSONObject(comment, discussionPermission);
 	}
 
 	@Override
@@ -121,7 +121,7 @@ public class ScreensCommentServiceImpl extends ScreensCommentServiceBaseImpl {
 
 		if (end == QueryUtil.ALL_POS) {
 			while (threadDiscussionCommentIterator.hasNext()) {
-				JSONObject jsonObject = getJSONObject(
+				JSONObject jsonObject = toJSONObject(
 					threadDiscussionCommentIterator.next(),
 					discussionPermission);
 
@@ -134,8 +134,7 @@ public class ScreensCommentServiceImpl extends ScreensCommentServiceBaseImpl {
 			while (threadDiscussionCommentIterator.hasNext() &&
 				   (commentsCount > 0)) {
 
-				JSONObject jsonObject = getJSONObject(
-
+				JSONObject jsonObject = toJSONObject(
 						threadDiscussionCommentIterator.next(),
 						discussionPermission);
 
@@ -186,7 +185,7 @@ public class ScreensCommentServiceImpl extends ScreensCommentServiceBaseImpl {
 
 		comment = commentManager.fetchComment(commentId);
 
-		return getJSONObject(comment, discussionPermission);
+		return toJSONObject(comment, discussionPermission);
 	}
 
 	protected Function<String, ServiceContext> createServiceContextFunction() {
@@ -205,7 +204,7 @@ public class ScreensCommentServiceImpl extends ScreensCommentServiceBaseImpl {
 		};
 	}
 
-	protected JSONObject getJSONObject(
+	protected JSONObject toJSONObject(
 			Comment comment, DiscussionPermission discussionPermission)
 		throws PortalException {
 

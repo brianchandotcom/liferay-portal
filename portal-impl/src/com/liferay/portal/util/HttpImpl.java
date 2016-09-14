@@ -1083,6 +1083,8 @@ public class HttpImpl implements Http {
 
 		url = url.trim();
 
+		// "/[a-zA-Z0-9]+" is considered as valid relative URL
+
 		if ((url.length() >= 2) && (url.charAt(0) == CharPool.SLASH) &&
 			_isLetterOrNumber(url.charAt(1))) {
 
@@ -1093,6 +1095,9 @@ public class HttpImpl implements Http {
 
 		protocol:
 		while (true) {
+
+			// Find and skip all valid protocol "[a-zA-Z0-9]+://" headers
+
 			int index = url.indexOf(Http.PROTOCOL_DELIMITER, pos);
 
 			if (index > 0) {
@@ -1113,6 +1118,8 @@ public class HttpImpl implements Http {
 				}
 			}
 
+			// Ignore all "[\\\\/]+" after valid protocol header
+
 			for (int i = pos; i < url.length(); i++) {
 				char c = url.charAt(i);
 
@@ -1126,6 +1133,8 @@ public class HttpImpl implements Http {
 					break;
 				}
 			}
+
+			// Chop off protocol and return
 
 			return url.substring(pos);
 		}

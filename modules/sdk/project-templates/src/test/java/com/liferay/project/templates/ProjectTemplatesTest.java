@@ -234,7 +234,7 @@ public class ProjectTemplatesTest {
 		_testContains(
 			gradleProjectDir,
 			"src/main/java/foo/bar/content/targeting/tracking/action/" +
-			"FooBarTrackingAction.java",
+				"FooBarTrackingAction.java",
 			"public class FooBarTrackingAction extends BaseJSPTrackingAction");
 
 		_buildProjects(
@@ -254,8 +254,9 @@ public class ProjectTemplatesTest {
 		_testExists(gradleProjectDir, "bnd.bnd");
 
 		_testContains(
-			gradleProjectDir, "src/main/java/foo/bar/control/menu/" +
-			"FooBarProductNavigationControlMenuEntry.java",
+			gradleProjectDir,
+			"src/main/java/foo/bar/control/menu/" +
+				"FooBarProductNavigationControlMenuEntry.java",
 			"public class FooBarProductNavigationControlMenuEntry",
 			"extends BaseProductNavigationControlMenuEntry",
 			"implements ProductNavigationControlMenuEntry");
@@ -439,11 +440,10 @@ public class ProjectTemplatesTest {
 		_testContains(
 			gradleProjectDir, "build.gradle",
 			"apply plugin: \"com.liferay.plugin\"");
-
 		_testContains(
 			gradleProjectDir,
 			"src/main/java/blade/test/portlet/configuration/icon/" +
-			"IcontestPortletConfigurationIcon.java",
+				"IcontestPortletConfigurationIcon.java",
 			"public class IcontestPortletConfigurationIcon",
 			"extends BasePortletConfigurationIcon");
 
@@ -464,11 +464,11 @@ public class ProjectTemplatesTest {
 		_testExists(gradleProjectDir, "bnd.bnd");
 		_testExists(gradleProjectDir, "build.gradle");
 
-		String filePath = "src/main/java/provider/test/constants/";
-		String fileName = filePath + "ProviderTestPortletKeys.java";
-
 		_testContains(
-			gradleProjectDir, fileName, "package provider.test.constants;",
+			gradleProjectDir,
+			"src/main/java/provider/test/constants/" +
+				"ProviderTestPortletKeys.java",
+			"package provider.test.constants;",
 			"public class ProviderTestPortletKeys",
 			"public static final String ProviderTest = \"ProviderTest\";");
 
@@ -493,11 +493,10 @@ public class ProjectTemplatesTest {
 		_testContains(
 			gradleProjectDir, "build.gradle",
 			"apply plugin: \"com.liferay.plugin\"");
-
 		_testContains(
 			gradleProjectDir,
 			"src/main/java/blade/test/portlet/toolbar/contributor/" +
-			"ToolbartestPortletToolbarContributor.java",
+				"ToolbartestPortletToolbarContributor.java",
 			"public class ToolbartestPortletToolbarContributor",
 			"implements PortletToolbarContributor");
 
@@ -617,10 +616,10 @@ public class ProjectTemplatesTest {
 		_testContains(
 			gradleProjectDir, "build.gradle",
 			"apply plugin: \"com.liferay.plugin\"");
-
 		_testContains(
-			gradleProjectDir, "src/main/java/test/simulator/application/list/" +
-			"SimulatorSimulationPanelApp.java",
+			gradleProjectDir,
+			"src/main/java/test/simulator/application/list/" +
+				"SimulatorSimulationPanelApp.java",
 			"public class SimulatorSimulationPanelApp",
 			"extends BaseJSPPanelApp");
 
@@ -646,8 +645,9 @@ public class ProjectTemplatesTest {
 			"apply plugin: \"com.liferay.plugin\"");
 
 		_testContains(
-			gradleProjectDir, "src/main/java/blade/test/theme/contributor/" +
-			"BladeTestTemplateContextContributor.java",
+			gradleProjectDir,
+			"src/main/java/blade/test/theme/contributor/" +
+				"BladeTestTemplateContextContributor.java",
 			"public class BladeTestTemplateContextContributor",
 			"implements TemplateContextContributor");
 
@@ -1064,47 +1064,46 @@ public class ProjectTemplatesTest {
 		return file;
 	}
 
-	private void _writeServiceClass(File gradleProjectDir) throws IOException {
+	private void _writeServiceClass(File projectDir) throws IOException {
 		String importLine =
 			"import com.liferay.portal.kernel.events.LifecycleAction;";
-			String classLine =
-				"public class FooAction implements LifecycleAction {";
+		String classLine =
+			"public class FooAction implements LifecycleAction {";
 
-			File actionJavaFile = _testContains(
-				gradleProjectDir,
-				"src/main/java/servicepreaction/FooAction.java",
-				"package servicepreaction;", importLine,
-				"service = LifecycleAction.class", classLine);
+		File actionJavaFile = _testContains(
+			projectDir, "src/main/java/servicepreaction/FooAction.java",
+			"package servicepreaction;", importLine,
+			"service = LifecycleAction.class", classLine);
 
-			Path actionJavaPath = actionJavaFile.toPath();
+		Path actionJavaPath = actionJavaFile.toPath();
 
-			List<String> lines = Files.readAllLines(
-				actionJavaPath, StandardCharsets.UTF_8);
+		List<String> lines = Files.readAllLines(
+			actionJavaPath, StandardCharsets.UTF_8);
 
-			try (BufferedWriter bufferedWriter = Files.newBufferedWriter(
-					actionJavaPath, StandardCharsets.UTF_8)) {
+		try (BufferedWriter bufferedWriter = Files.newBufferedWriter(
+				actionJavaPath, StandardCharsets.UTF_8)) {
 
-				for (String line : lines) {
-					FileTestUtil.write(bufferedWriter, line);
+			for (String line : lines) {
+				FileTestUtil.write(bufferedWriter, line);
 
-					if (line.equals(classLine)) {
-						FileTestUtil.write(
-							bufferedWriter, "@Override",
-							"public void processLifecycleEvent(",
-							"LifecycleEvent lifecycleEvent)",
-							"throws ActionException {", "System.out.println(",
-							"\"login.event.pre=\" + lifecycleEvent);", "}");
-					}
-					else if (line.equals(importLine)) {
-						FileTestUtil.write(
-							bufferedWriter,
-							"import com.liferay.portal.kernel.events." +
-								"LifecycleEvent;",
-							"import com.liferay.portal.kernel.events." +
-								"ActionException;");
-					}
+				if (line.equals(classLine)) {
+					FileTestUtil.write(
+						bufferedWriter, "@Override",
+						"public void processLifecycleEvent(",
+						"LifecycleEvent lifecycleEvent)",
+						"throws ActionException {", "System.out.println(",
+						"\"login.event.pre=\" + lifecycleEvent);", "}");
+				}
+				else if (line.equals(importLine)) {
+					FileTestUtil.write(
+						bufferedWriter,
+						"import com.liferay.portal.kernel.events." +
+							"LifecycleEvent;",
+						"import com.liferay.portal.kernel.events." +
+							"ActionException;");
 				}
 			}
+		}
 	}
 
 	private static final String _BUNDLES_DIFF_IGNORES = StringTestUtil.merge(

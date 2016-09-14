@@ -362,7 +362,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			processMessage(
 				fileName,
 				"The declared package '" + packagePath +
-					"'does not match the expected package");
+					"' does not match the expected package");
 		}
 	}
 

@@ -87,15 +87,6 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 
 		columnIds.addAll(_getNestedPortletColumnIds(typeSettingsProperties));
 
-		return getNewTypeSettings(
-			typeSettingsProperties, oldRootPortletId, newRootPortletId,
-			columnIds, exactMatch);
-	}
-
-	protected String getNewTypeSettings(
-		UnicodeProperties typeSettingsProperties, String oldRootPortletId,
-		String newRootPortletId, List<String> columnIds, boolean exactMatch) {
-
 		for (String columnId : columnIds) {
 			if (!typeSettingsProperties.containsKey(columnId)) {
 				continue;

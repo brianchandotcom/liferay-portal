@@ -24,8 +24,19 @@ public class TopLevelBuild extends BaseBuild {
 
 	@Override
 	public String getStatusReport(int indentSize) {
-		return super.getStatusReport(indentSize) + "Update duration: " +
-			_updateDuration + " milliseconds.";
+		String statusReport = super.getStatusReport(indentSize);
+
+		if (getDownstreamBuildCount(null) > 0) {
+			while (statusReport.endsWith("\n")) {
+				statusReport = statusReport.substring(
+					0, statusReport.length() - 1);
+			}
+
+			statusReport += " / ";
+		}
+
+		return statusReport + "Update took " + _updateDuration +
+			" milliseconds.\n";
 	}
 
 	@Override

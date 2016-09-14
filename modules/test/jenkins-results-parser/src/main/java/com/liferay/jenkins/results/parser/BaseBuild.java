@@ -15,9 +15,7 @@
 package com.liferay.jenkins.results.parser;
 
 import java.io.UnsupportedEncodingException;
-
 import java.net.URLDecoder;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -290,32 +288,36 @@ public abstract class BaseBuild implements Build {
 			sb.append(".\n");
 
 			if (getDownstreamBuildCount(null) > 0) {
+				sb.append("\n");
+
 				for (Build downstreamBuild : getDownstreamBuilds("running")) {
-					sb.append(indentStringBuffer);
 					sb.append(downstreamBuild.getStatusReport(indentSize + 4));
-					sb.append("\n\n");
 				}
 
+				sb.append("\n");
 				sb.append(indentStringBuffer);
-				sb.append("missing: ");
+				sb.append(getDownstreamBuildCount("starting"));
+				sb.append(" Starting  ");
+				sb.append("/ ");
+
 				sb.append(getDownstreamBuildCount("missing"));
-				sb.append(" / ");
+				sb.append(" Missing  ");
+				sb.append("/ ");
 
-				sb.append("queued: ");
 				sb.append(getDownstreamBuildCount("queued"));
-				sb.append(" / ");
+				sb.append(" Queued  ");
+				sb.append("/ ");
 
-				sb.append("running: ");
 				sb.append(getDownstreamBuildCount("running"));
-				sb.append(" / ");
+				sb.append(" Running  ");
+				sb.append("/ ");
 
-				sb.append("completed: ");
 				sb.append(getDownstreamBuildCount("completed"));
-				sb.append(" / ");
+				sb.append(" Completed  ");
+				sb.append("/ ");
 
-				sb.append("total: ");
 				sb.append(getDownstreamBuildCount(null));
-
+				sb.append(" Total ");
 				sb.append("\n");
 			}
 

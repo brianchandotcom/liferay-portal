@@ -867,6 +867,10 @@ public class ProjectTemplatesTest {
 				"doMain", String[].class, String.class, PrintStream.class,
 				PrintStream.class);
 
+			System.setProperty(
+				"maven.multiModuleProjectDirectory",
+				projectDir.getAbsolutePath());
+
 			Object mavenCli = mavenCliClass.newInstance();
 
 			ByteArrayOutputStream outputStream = new ByteArrayOutputStream();

@@ -29,6 +29,8 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("redirect", redirect);
 portletURL.setParameter("passwordPolicyId", String.valueOf(passwordPolicyId));
+
+boolean hasAssignMembersPermission = PasswordPolicyPermissionUtil.contains(permissionChecker, passwordPolicy.getPasswordPolicyId(), ActionKeys.ASSIGN_MEMBERS);
 %>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
@@ -48,12 +50,18 @@ portletURL.setParameter("passwordPolicyId", String.valueOf(passwordPolicyId));
 
 		assigneesURL.setParameter("mvcPath", "/edit_password_policy_assignments.jsp");
 		assigneesURL.setParameter("tabs1", "assignees");
+
+		boolean isShowNav = false;
+
+		if ((passwordPolicy != null) && hasAssignMembersPermission) {
+			isShowNav = true;
+		}
 		%>
 
-		<aui:nav-item cssClass='<%= (passwordPolicy == null) ? "disabled" : StringPool.BLANK %>' href="<%= (passwordPolicy == null) ? null : assigneesURL.toString() %>" label="assignees" selected='<%= tabs1.equals("assignees") %>' />
+		<aui:nav-item cssClass='<%= isShowNav ? StringPool.BLANK : "disabled" %>' href="<%= isShowNav ? assigneesURL.toString() : null %>" label="assignees" selected='<%= tabs1.equals("assignees") %>' />
 	</aui:nav>
 
-	<c:if test='<%= tabs1.equals("assignees") %>'>
+	<c:if test='<%= hasAssignMembersPermission && tabs1.equals("assignees") %>'>
 
 		<%
 		PortletURL searchURL = (PortletURL)request.getAttribute("edit_password_policy_assignments.jsp-portletURL");

@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+
+<lifecycleMappingMetadata>
+	<pluginExecutions>
+		<pluginExecution>
+			<pluginExecutionFilter>
+				<goals>
+					<goal>format-tld</goal>
+				</goals>
+			</pluginExecutionFilter>
+			<action>
+				<ignore/>
+			</action>
+		</pluginExecution>
+	</pluginExecutions>
+</lifecycleMappingMetadata>

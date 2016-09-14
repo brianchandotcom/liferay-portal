@@ -2035,13 +2035,10 @@ public class HttpImpl implements Http {
 		}
 	}
 
-	private boolean _isLetterOrNumber(char targetChar) {
-		if (((CharPool.NUMBER_0 <= targetChar) &&
-			 (targetChar <= CharPool.NUMBER_9)) ||
-			((CharPool.UPPER_CASE_A <= targetChar) &&
-			 (targetChar <= CharPool.UPPER_CASE_Z)) ||
-			((CharPool.LOWER_CASE_A <= targetChar) &&
-			 (targetChar <= CharPool.LOWER_CASE_Z))) {
+	private boolean _isLetterOrNumber(char c) {
+		if (((CharPool.NUMBER_0 <= c) && (c <= CharPool.NUMBER_9)) ||
+			((CharPool.UPPER_CASE_A <= c) && (c <= CharPool.UPPER_CASE_Z)) ||
+			((CharPool.LOWER_CASE_A <= c) && (c <= CharPool.LOWER_CASE_Z))) {
 
 			return true;
 		}

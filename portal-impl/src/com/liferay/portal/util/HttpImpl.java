@@ -1089,14 +1089,16 @@ public class HttpImpl implements Http {
 			return url;
 		}
 
+		int pos = 0;
+
 		protocol:
 		while (true) {
-			int index = url.indexOf(Http.PROTOCOL_DELIMITER);
+			int index = url.indexOf(Http.PROTOCOL_DELIMITER, pos);
 
 			if (index > 0) {
 				boolean hasProtocol = true;
 
-				for (int i = 0; i < index; i++) {
+				for (int i = pos; i < index; i++) {
 					if (!_isLetterOrNumber(url.charAt(i))) {
 						hasProtocol = false;
 
@@ -1105,19 +1107,18 @@ public class HttpImpl implements Http {
 				}
 
 				if (hasProtocol) {
-					url = url.substring(
-						index + Http.PROTOCOL_DELIMITER.length());
+					pos = index + Http.PROTOCOL_DELIMITER.length();
 
 					continue;
 				}
 			}
 
-			for (int i = 0; i < url.length(); i++) {
+			for (int i = pos; i < url.length(); i++) {
 				char c = url.charAt(i);
 
 				if ((c != CharPool.SLASH) && (c != CharPool.BACK_SLASH)) {
-					if (i != 0) {
-						url = url.substring(i);
+					if (i != pos) {
+						pos = i;
 
 						continue protocol;
 					}
@@ -1126,7 +1127,7 @@ public class HttpImpl implements Http {
 				}
 			}
 
-			return url;
+			return url.substring(pos);
 		}
 	}
 

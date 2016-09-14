@@ -224,7 +224,7 @@ directory instead of the root project directory. Doing this lets submodules like
 ## 1.2.21 - 2016-09-13
 
 ### Changed
-- [LRDOCS-2981]: Prepend `"Module "` to `appJavadoc` module headings.
+- [LRDOCS-2981]: Prepend *Module* string to `appJavadoc` module headings.
 
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [LPS-61099]: https://issues.liferay.com/browse/LPS-61099

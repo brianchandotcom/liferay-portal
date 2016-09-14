@@ -295,7 +295,7 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 	}
 
 	/**
-	 * @deprecated As of 3.5.0
+	 * @deprecated As of 3.4.0
 	 */
 	@Deprecated
 	@Override

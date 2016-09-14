@@ -225,6 +225,8 @@ public class ProjectTemplateFilesTest {
 
 		Assert.assertFalse("Trailing empty line in " + path, trailingEmptyLine);
 
+		boolean firstEmptyLine = false;
+
 		try (BufferedReader bufferedReader = new BufferedReader(
 				new StringReader(text))) {
 
@@ -232,6 +234,13 @@ public class ProjectTemplateFilesTest {
 
 			while ((line = bufferedReader.readLine()) != null) {
 				if (line.isEmpty()) {
+					Assert.assertFalse(
+						"Forbidden empty line in " + path,
+						firstEmptyLine && extension.equals("xml") &&
+							!fileName.equals("service.xml"));
+
+					firstEmptyLine = true;
+
 					continue;
 				}
 

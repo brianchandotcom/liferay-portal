@@ -69,7 +69,9 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 
 		HttpServletResponse response = (HttpServletResponse)servletResponse;
 
-		if (!handleLongRequestURL(request, response)) {
+		String originalURI = getOriginalRequestURI(request);
+
+		if (!handleLongRequestURL(request, response, originalURI)) {
 			return;
 		}
 
@@ -81,7 +83,7 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 
 		response = secureResponseHeaders(request, response);
 
-		String uri = getURI(request);
+		String uri = getURI(request, originalURI);
 
 		request.setAttribute(WebKeys.INVOKER_FILTER_URI, uri);
 
@@ -224,17 +226,24 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 		return uri;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getURI(HttpServletRequest, String)}
+	 */
+	@Deprecated
 	protected String getURI(HttpServletRequest request) {
-		String uri = getOriginalRequestURI(request);
+		return null;
+	}
 
+	protected String getURI(HttpServletRequest request, String originalURI) {
 		if (Validator.isNotNull(_contextPath) &&
 			!_contextPath.equals(StringPool.SLASH) &&
-			uri.startsWith(_contextPath)) {
+			originalURI.startsWith(_contextPath)) {
 
-			uri = uri.substring(_contextPath.length());
+			originalURI = originalURI.substring(_contextPath.length());
 		}
 
-		return HttpUtil.normalizePath(uri);
+		return HttpUtil.normalizePath(originalURI);
 	}
 
 	/**
@@ -259,12 +268,11 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 	}
 
 	protected boolean handleLongRequestURL(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest request, HttpServletResponse response,
+			String originalURI)
 		throws IOException {
 
 		String queryString = request.getQueryString();
-
-		String originalURI = getOriginalRequestURI(request);
 
 		int length = originalURI.length();
 

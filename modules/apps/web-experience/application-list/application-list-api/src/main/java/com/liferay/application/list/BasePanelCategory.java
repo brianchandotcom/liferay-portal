@@ -32,6 +32,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
+ * This class provides a skeletal implementation of the {@link PanelCategory} in
+ * order to minimize the effort required to implement this interface.
+ *
+ * To implement an application category the programmer needs to extend this
+ * class and override <code>include</code> method which returns
+ * <code>true</code> in case of successful rendering of application view and
+ * <code>false</code> otherwise, and <code>includeHeader</code> method which
+ * returns <code>true</code> in case of successful category header rendering and
+ * <code>false</code> otherwise.
+ *
+ * @see PanelCategory
+ *
  * @author Adolfo Pérez
  */
 public abstract class BasePanelCategory implements PanelCategory {

@@ -21,14 +21,45 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import java.util.Locale;
 
 /**
+ * Provides basic interface for panel categories and implementations.
+ * In order to create new {@link PanelCategory} or {@link PanelApp}
+ * implementation it is necessary to implement corresponding interface, but
+ * never implement this interface directly.
+ *
+ * @see PanelApp
+ * @see PanelCategory
+ *
  * @author Adolfo Pérez
  */
 public interface PanelEntry {
 
+	/**
+	 * Return the key of the panel entry.
+	 *
+	 * @return the key of the panel entry.
+	 */
 	public String getKey();
 
+	/**
+	 * Returns the label that is displayed in the user interface when the
+	 * panel entry is included.
+	 *
+	 * @param  locale the label's retrieved locale
+	 * @return the label of the panel entry.
+	 */
 	public String getLabel(Locale locale);
 
+	/**
+	 * Returns <code>true</code> if the panel entry should be displayed
+	 * in the group's context
+	 *
+	 * @param permissionChecker the permission checker instance
+	 * @param group the group instance to check for permissions
+	 * @return <code>true</code> if the Control Menu entry should be displayed
+	 *         in the request's context; <code>false</code> otherwise
+	 *
+	 * @throws PortalException if a portal exception occurred
+	 */
 	public boolean isShow(PermissionChecker permissionChecker, Group group)
 		throws PortalException;
 

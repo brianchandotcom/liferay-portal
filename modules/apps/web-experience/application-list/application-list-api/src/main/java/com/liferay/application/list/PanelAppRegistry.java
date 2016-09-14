@@ -42,6 +42,11 @@ import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
+ * Provides methods for retrieving application instances defined by
+ * {@link PanelApp} implementations.
+ * Applications registry is an OSGi component, applications used within the
+ * registry should also be OSGi components in order to be registered.
+ *
  * @author Adolfo Pérez
  */
 @Component(immediate = true, service = PanelAppRegistry.class)

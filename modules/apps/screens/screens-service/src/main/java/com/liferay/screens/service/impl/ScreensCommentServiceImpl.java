@@ -232,7 +232,4 @@ public class ScreensCommentServiceImpl extends ScreensCommentServiceBaseImpl {
 	@ServiceReference(type = CommentManager.class)
 	protected CommentManager commentManager;
 
-	@ServiceReference(type = GroupLocalService.class)
-	protected GroupLocalService groupLocalService;
-
 }

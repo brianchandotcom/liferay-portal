@@ -1264,10 +1264,24 @@ this task.
 			</else>
 		</if>
 
-		<replace file="${app.server.jboss.bin.dir}/standalone.conf">
-			<replacetoken><![CDATA[JAVA_OPTS="-Xms1303m -Xmx1303m -XX:MaxPermSize=256m ]]></replacetoken>
-			<replacevalue><![CDATA[JAVA_OPTS="]]></replacevalue>
-		</replace>
+		<if>
+			<equals arg1="${app.server.jboss.version}" arg2="6.4.0" />
+			<then>
+				<replace file="${app.server.jboss.bin.dir}/standalone.conf">
+					<replacetoken><![CDATA[JAVA_OPTS="-Xms1303m -Xmx1303m -XX:MaxPermSize=256m ]]></replacetoken>
+					<replacevalue><![CDATA[JAVA_OPTS="]]></replacevalue>
+				</replace>
+			</then>
+			<elseif>
+				<equals arg1="${app.server.jboss.version}" arg2="7.0.0" />
+				<then>
+					<replace file="${app.server.jboss.bin.dir}/standalone.conf">
+						<replacetoken><![CDATA[JAVA_OPTS="-Xms1303m -Xmx1303m -XX:MetaspaceSize=96M -XX:MaxMetaspaceSize=256m ]]></replacetoken>
+						<replacevalue><![CDATA[JAVA_OPTS="]]></replacevalue>
+					</replace>
+				</then>
+			</elseif>
+		</if>
 
 		<echo append="true" file="${app.server.jboss.bin.dir}/standalone.conf">
 			<![CDATA[

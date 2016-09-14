@@ -1089,7 +1089,6 @@ public class HttpImpl implements Http {
 			return url;
 		}
 
-		Matcher matcher = null;
 		boolean modified = false;
 
 		do {
@@ -1112,12 +1111,20 @@ public class HttpImpl implements Http {
 				}
 			}
 
-			matcher = _protocolRelativeURLPattern.matcher(url);
+			for (int i = 0; i < url.length(); i++) {
+				char targetChar = url.charAt(i);
 
-			if (matcher.lookingAt()) {
-				url = url.substring(matcher.end());
+				if ((targetChar != CharPool.SLASH) &&
+					(targetChar != CharPool.BACK_SLASH)) {
 
-				modified = true;
+					if (i != 0) {
+						url = url.substring(i);
+
+						modified = true;
+					}
+
+					break;
+				}
 			}
 		} while (modified);
 
@@ -2091,8 +2098,6 @@ public class HttpImpl implements Http {
 	private final Pattern _nonProxyHostsPattern;
 	private final PoolingHttpClientConnectionManager
 		_poolingHttpClientConnectionManager;
-	private final Pattern _protocolRelativeURLPattern = Pattern.compile(
-		"[\\\\/]+");
 	private final List<String> _proxyAuthPrefs = new ArrayList<>();
 	private final CloseableHttpClient _proxyCloseableHttpClient;
 	private final Credentials _proxyCredentials;

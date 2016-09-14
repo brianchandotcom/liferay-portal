@@ -54,6 +54,7 @@ import org.gradle.testkit.runner.TaskOutcome;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -63,6 +64,10 @@ import org.junit.rules.TemporaryFolder;
  * @author Andrea Di Giorgi
  */
 public class ProjectTemplatesTest {
+
+	@ClassRule
+	public static final TemporaryFolder testCaseTemporaryFolder =
+		new TemporaryFolder();
 
 	@BeforeClass
 	public static void setUpClass() throws IOException {
@@ -100,6 +105,8 @@ public class ProjectTemplatesTest {
 			new URL[mavenEmbedderDependencyURLs.size()]);
 
 		_repositoryUrl = System.getProperty("repository.url");
+
+		_createMavenSettingsXmlFile();
 	}
 
 	@Test
@@ -685,6 +692,57 @@ public class ProjectTemplatesTest {
 	@Rule
 	public final TemporaryFolder temporaryFolder = new TemporaryFolder();
 
+	private static void _createMavenSettingsXmlFile() throws IOException {
+		boolean mirrors = false;
+		boolean proxies = false;
+
+		if (Validator.isNotNull(_repositoryUrl)) {
+			mirrors = true;
+		}
+
+		if (Validator.isNotNull(_httpProxyHost) &&
+			Validator.isNotNull(_httpProxyPort)) {
+
+			proxies = true;
+		}
+
+		if (!mirrors && !proxies) {
+			_mavenSettingsXmlFile = null;
+
+			return;
+		}
+
+		String mavenSettingsXml = FileTestUtil.read(
+			"com/liferay/project/templates/dependencies/" +
+				"maven_settings_xml.tmpl");
+
+		if (mirrors) {
+			mavenSettingsXml = mavenSettingsXml.replace(
+				"[$REPOSITORY_URL$]", _repositoryUrl);
+		}
+		else {
+			mavenSettingsXml = mavenSettingsXml.replaceFirst(
+				"<mirrors>[\\s\\S]+<\\/mirrors>", "");
+		}
+
+		if (proxies) {
+			mavenSettingsXml = mavenSettingsXml.replace(
+				"[$HTTP_PROXY_HOST$]", _httpProxyHost);
+			mavenSettingsXml = mavenSettingsXml.replace(
+				"[$HTTP_PROXY_PORT$]", _httpProxyPort);
+		}
+		else {
+			mavenSettingsXml = mavenSettingsXml.replaceFirst(
+				"<proxies>[\\s\\S]+<\\/proxies>", "");
+		}
+
+		_mavenSettingsXmlFile = testCaseTemporaryFolder.newFile("settings.xml");
+
+		Files.write(
+			_mavenSettingsXmlFile.toPath(),
+			mavenSettingsXml.getBytes(StandardCharsets.UTF_8));
+	}
+
 	private void _buildProjects(
 			File gradleProjectDir, File mavenProjectDir,
 			String gradleBundleFileName, String mavenBundleFileName)
@@ -847,14 +905,12 @@ public class ProjectTemplatesTest {
 
 		List<String> completeArgs = new ArrayList<>();
 
-		completeArgs.add("--update-snapshots");
-
-		if (Validator.isNotNull(_httpProxyHost) &&
-			Validator.isNotNull(_httpProxyPort)) {
-
-			completeArgs.add("-Dhttp.proxyHost=" + _httpProxyHost);
-			completeArgs.add("-Dhttp.proxyPort=" + _httpProxyPort);
+		if (_mavenSettingsXmlFile != null) {
+			completeArgs.add(
+				"--settings=" + _mavenSettingsXmlFile.getAbsolutePath());
 		}
+
+		completeArgs.add("--update-snapshots");
 
 		for (String arg : args) {
 			completeArgs.add(arg);
@@ -1099,6 +1155,7 @@ public class ProjectTemplatesTest {
 	private static String _httpProxyHost;
 	private static String _httpProxyPort;
 	private static URL[] _mavenEmbedderDependencyURLs;
+	private static File _mavenSettingsXmlFile;
 	private static String _repositoryUrl;
 
 }

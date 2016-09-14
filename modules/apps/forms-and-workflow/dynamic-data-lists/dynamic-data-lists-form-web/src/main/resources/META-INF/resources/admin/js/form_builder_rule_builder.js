@@ -175,7 +175,7 @@ AUI.add(
 					_renderCards: function(rules) {
 						var instance = this;
 
-						var rulesList = instance.get('boundingBox').one('.form-builder-rule-builder-rules-list');
+						var rulesList = instance.get('boundingBox').one('.liferay-ddl-form-rule-rules-list-container');
 
 						rulesList.setHTML(ddl.rule_list({kebab: Liferay.Util.getLexiconIconTpl('ellipsis-v', 'icon-monospaced'), rules: rules, strings: instance.get('strings')}));
 					}

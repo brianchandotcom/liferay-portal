@@ -724,7 +724,7 @@ public class ProjectTemplatesTest {
 			String template, String name, String... args)
 		throws Exception {
 
-		File destinationDir = new File(temporaryFolder.getRoot(), "gradle");
+		File destinationDir = temporaryFolder.newFolder("gradle");
 
 		List<String> completeArgs = new ArrayList<>(args.length + 6);
 
@@ -762,7 +762,7 @@ public class ProjectTemplatesTest {
 			String template, String name, String... args)
 		throws Exception {
 
-		File destinationDir = new File(temporaryFolder.getRoot(), "maven");
+		File destinationDir = temporaryFolder.newFolder("maven");
 
 		List<String> completeArgs = new ArrayList<>();
 

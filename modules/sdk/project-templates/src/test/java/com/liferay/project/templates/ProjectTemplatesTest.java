@@ -978,11 +978,10 @@ public class ProjectTemplatesTest {
 
 		_executeGradle(gradleProjectDir, tasks);
 
-		tasks =
-			new String[] {":" + apiProjectName + ":build",
-			":" + serviceProjectName +
-				":build"
-			};
+		tasks = new String[] {
+			":" + apiProjectName + ":build", ":" + serviceProjectName +
+			":build"
+		};
 
 		_executeGradle(gradleProjectDir, tasks);
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.blogs.lar.test;
+package com.liferay.blogs.web.internal.exportimport.data.handler.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.blogs.service.BlogsEntryLocalServiceUtil;

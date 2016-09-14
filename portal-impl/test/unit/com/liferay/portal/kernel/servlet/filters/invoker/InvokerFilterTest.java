@@ -93,21 +93,21 @@ public class InvokerFilterTest extends PowerMockito {
 	}
 
 	@Test
-	public void testLongURLsWithPath() {
+	public void testLongURLsWithPath() throws Exception {
 		testLongURL("/c/portal/login/");
 	}
 
 	@Test
-	public void testLongURLsWithPathParameters() {
+	public void testLongURLsWithPathParameters() throws Exception {
 		testLongURL("/c/portal/login/;");
 	}
 
 	@Test
-	public void testLongURLsWithQueryString() {
+	public void testLongURLsWithQueryString() throws Exception {
 		testLongURL("/c/portal/login?param=");
 	}
 
-	protected void testLongURL(String urlPrefix) {
+	protected void testLongURL(String urlPrefix) throws Exception {
 		InvokerFilter invokerFilter = new InvokerFilter();
 
 		int invokerFilterUriMaxLength = GetterUtil.getInteger(
@@ -150,9 +150,6 @@ public class InvokerFilterTest extends PowerMockito {
 
 			Assert.assertTrue(
 				logRecord.getMessage().startsWith("Rejected " + urlPrefix));
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
 		}
 	}
 

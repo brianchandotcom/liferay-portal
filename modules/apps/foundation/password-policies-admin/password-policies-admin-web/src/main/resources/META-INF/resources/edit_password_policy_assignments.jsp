@@ -196,7 +196,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, passwordPolicy.getName(), null);
 </aui:form>
 
 <liferay-frontend:add-menu>
-	<liferay-frontend:add-menu-item id="addMembers" title='<%= LanguageUtil.get(request, "add-members") %>' url="javascript:;" />
+	<liferay-frontend:add-menu-item id="addAssignees" title='<%= LanguageUtil.get(request, "add-assignees") %>' url="javascript:;" />
 </liferay-frontend:add-menu>
 
 <aui:script use="liferay-item-selector-dialog">
@@ -213,7 +213,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, passwordPolicy.getName(), null);
 		<portlet:param name="passwordPolicyId" value="<%= String.valueOf(passwordPolicyId) %>" />
 	</portlet:renderURL>
 
-	$('#<portlet:namespace />addMembers').on(
+	$('#<portlet:namespace />addAssignees').on(
 		'click',
 		function(event) {
 			event.preventDefault();
@@ -237,7 +237,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, passwordPolicy.getName(), null);
 							}
 						}
 					},
-					title: '<liferay-ui:message arguments="<%= HtmlUtil.escape(passwordPolicy.getName()) %>" key="add-members-to-x" />',
+					title: '<liferay-ui:message arguments="<%= HtmlUtil.escape(passwordPolicy.getName()) %>" key="add-assignees-to-x" />',
 					url: '<%= selectMembersURL %>'
 				}
 			);

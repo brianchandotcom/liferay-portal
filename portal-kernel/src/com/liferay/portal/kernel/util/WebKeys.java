@@ -165,6 +165,10 @@ public interface WebKeys {
 
 	public static final String FORWARD_URL = "FORWARD_URL";
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static final String FRIENDLY_URL = "FRIENDLY_URL";
 
 	public static final String FTL_VARIABLES = "FTL_VARIABLES";

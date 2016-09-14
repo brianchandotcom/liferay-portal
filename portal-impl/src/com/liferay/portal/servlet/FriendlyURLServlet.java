@@ -76,6 +76,9 @@ public class FriendlyURLServlet extends HttpServlet {
 
 		_private = GetterUtil.getBoolean(
 			servletConfig.getInitParameter("private"));
+
+		String proxyPath = PortalUtil.getPathProxy();
+
 		_user = GetterUtil.getBoolean(servletConfig.getInitParameter("user"));
 
 		if (_private) {
@@ -91,6 +94,8 @@ public class FriendlyURLServlet extends HttpServlet {
 		else {
 			_friendlyURLPathPrefix = PortalUtil.getPathFriendlyURLPublic();
 		}
+
+		_pathInfoOffset = _friendlyURLPathPrefix.length() - proxyPath.length();
 	}
 
 	@Override
@@ -100,22 +105,14 @@ public class FriendlyURLServlet extends HttpServlet {
 
 		// Do not set the entire full main path. See LEP-456.
 
-		//String mainPath = (String)ctx.getAttribute(WebKeys.MAIN_PATH);
-		String mainPath = Portal.PATH_MAIN;
-
-		String redirect = mainPath;
+		String redirect = Portal.PATH_MAIN;
 
 		String pathInfo = getPathInfo(request);
-
-		request.setAttribute(WebKeys.FRIENDLY_URL, getFriendlyURL(pathInfo));
-
-		Object[] redirectArray = null;
 
 		boolean forcePermanentRedirect = false;
 
 		try {
-			redirectArray = getRedirect(
-				request, pathInfo, mainPath, request.getParameterMap());
+			Object[] redirectArray = _getRedirect(request, pathInfo);
 
 			redirect = (String)redirectArray[0];
 			forcePermanentRedirect = (Boolean)redirectArray[1];
@@ -155,7 +152,7 @@ public class FriendlyURLServlet extends HttpServlet {
 		}
 
 		if (Validator.isNull(redirect)) {
-			redirect = mainPath;
+			redirect = Portal.PATH_MAIN;
 		}
 
 		if (_log.isDebugEnabled()) {
@@ -183,6 +180,10 @@ public class FriendlyURLServlet extends HttpServlet {
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	protected String getFriendlyURL(String pathInfo) {
 		String friendlyURL = _friendlyURLPathPrefix;
 
@@ -198,41 +199,71 @@ public class FriendlyURLServlet extends HttpServlet {
 
 		int pos = requestURI.indexOf(Portal.JSESSIONID);
 
-		if (pos != -1) {
-			requestURI = requestURI.substring(0, pos);
+		if (pos == -1) {
+			return requestURI.substring(_pathInfoOffset);
 		}
 
-		String pathProxy = PortalUtil.getPathProxy();
-
-		pos = _friendlyURLPathPrefix.length() - pathProxy.length();
-
-		return requestURI.substring(pos);
+		return requestURI.substring(_pathInfoOffset, pos);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	protected Object[] getRedirect(
 			HttpServletRequest request, String path, String mainPath,
 			Map<String, String[]> params)
 		throws Exception {
 
-		if (Validator.isNull(path) || (path.charAt(0) != CharPool.SLASH)) {
-			return new Object[] {mainPath, false};
+		return _getRedirect(request, path);
+	}
+
+	protected Locale setAlternativeLayoutFriendlyURL(
+			HttpServletRequest request, Layout layout, String friendlyURL)
+		throws Exception {
+
+		List<LayoutFriendlyURL> layoutFriendlyURLs =
+			LayoutFriendlyURLLocalServiceUtil.getLayoutFriendlyURLs(
+				layout.getPlid(), friendlyURL, 0, 1);
+
+		if (layoutFriendlyURLs.isEmpty()) {
+			return null;
+		}
+
+		LayoutFriendlyURL layoutFriendlyURL = layoutFriendlyURLs.get(0);
+
+		Locale locale = LocaleUtil.fromLanguageId(
+			layoutFriendlyURL.getLanguageId());
+
+		String alternativeLayoutFriendlyURL =
+			PortalUtil.getLocalizedFriendlyURL(request, layout, locale, locale);
+
+		SessionMessages.add(
+			request, "alternativeLayoutFriendlyURL",
+			alternativeLayoutFriendlyURL);
+
+		PortalMessages.add(
+			request, PortalMessages.KEY_JSP_PATH,
+			"/html/common/themes/layout_friendly_url_redirect.jsp");
+
+		return locale;
+	}
+
+	private Object[] _getRedirect(HttpServletRequest request, String path)
+		throws Exception {
+
+		if (path.length() <= 1) {
+			return new Object[] {Portal.PATH_MAIN, Boolean.FALSE};
 		}
 
 		// Group friendly URL
 
-		String friendlyURL = null;
+		String friendlyURL = path;
 
 		int pos = path.indexOf(CharPool.SLASH, 1);
 
 		if (pos != -1) {
 			friendlyURL = path.substring(0, pos);
-		}
-		else if (path.length() > 1) {
-			friendlyURL = path;
-		}
-
-		if (Validator.isNull(friendlyURL)) {
-			return new Object[] {mainPath, Boolean.FALSE};
 		}
 
 		long companyId = PortalInstances.getCompanyId(request);
@@ -300,8 +331,7 @@ public class FriendlyURLServlet extends HttpServlet {
 		if ((pos != -1) && ((pos + 1) != path.length())) {
 			friendlyURL = path.substring(pos);
 		}
-
-		if (Validator.isNull(friendlyURL)) {
+		else {
 			request.setAttribute(
 				WebKeys.REDIRECT_TO_DEFAULT_LAYOUT, Boolean.TRUE);
 		}
@@ -318,6 +348,8 @@ public class FriendlyURLServlet extends HttpServlet {
 
 			ServiceContextThreadLocal.pushServiceContext(serviceContext);
 		}
+
+		Map<String, String[]> params = request.getParameterMap();
 
 		try {
 			LayoutFriendlyURLComposite layoutFriendlyURLComposite =
@@ -376,7 +408,7 @@ public class FriendlyURLServlet extends HttpServlet {
 			for (Layout layout : layouts) {
 				if (layout.matches(request, friendlyURL)) {
 					String redirect = PortalUtil.getLayoutActualURL(
-						layout, mainPath);
+						layout, Portal.PATH_MAIN);
 
 					return new Object[] {redirect, Boolean.FALSE};
 				}
@@ -386,47 +418,17 @@ public class FriendlyURLServlet extends HttpServlet {
 		}
 
 		String actualURL = PortalUtil.getActualURL(
-			group.getGroupId(), _private, mainPath, friendlyURL, params,
+			group.getGroupId(), _private, Portal.PATH_MAIN, friendlyURL, params,
 			requestContext);
 
 		return new Object[] {actualURL, Boolean.FALSE};
-	}
-
-	protected Locale setAlternativeLayoutFriendlyURL(
-			HttpServletRequest request, Layout layout, String friendlyURL)
-		throws Exception {
-
-		List<LayoutFriendlyURL> layoutFriendlyURLs =
-			LayoutFriendlyURLLocalServiceUtil.getLayoutFriendlyURLs(
-				layout.getPlid(), friendlyURL, 0, 1);
-
-		if (layoutFriendlyURLs.isEmpty()) {
-			return null;
-		}
-
-		LayoutFriendlyURL layoutFriendlyURL = layoutFriendlyURLs.get(0);
-
-		Locale locale = LocaleUtil.fromLanguageId(
-			layoutFriendlyURL.getLanguageId());
-
-		String alternativeLayoutFriendlyURL =
-			PortalUtil.getLocalizedFriendlyURL(request, layout, locale, locale);
-
-		SessionMessages.add(
-			request, "alternativeLayoutFriendlyURL",
-			alternativeLayoutFriendlyURL);
-
-		PortalMessages.add(
-			request, PortalMessages.KEY_JSP_PATH,
-			"/html/common/themes/layout_friendly_url_redirect.jsp");
-
-		return locale;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FriendlyURLServlet.class);
 
 	private String _friendlyURLPathPrefix;
+	private int _pathInfoOffset;
 	private boolean _private;
 	private boolean _user;
 

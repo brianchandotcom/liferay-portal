@@ -1097,17 +1097,21 @@ public class HttpImpl implements Http {
 			int index = url.indexOf(Http.PROTOCOL_DELIMITER);
 
 			if (index > 0) {
+				boolean hasProtocol = true;
+
 				for (int i = 0; i < index; i++) {
 					if (!_isLetterOrNumber(url.charAt(i))) {
+						hasProtocol = false;
+
 						break;
 					}
+				}
 
-					if (i == (index - 1)) {
-						url = url.substring(
-							index + Http.PROTOCOL_DELIMITER.length());
+				if (hasProtocol) {
+					url = url.substring(
+						index + Http.PROTOCOL_DELIMITER.length());
 
-						modified = true;
-					}
+					modified = true;
 				}
 			}
 

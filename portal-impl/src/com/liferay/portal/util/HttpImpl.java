@@ -1081,6 +1081,8 @@ public class HttpImpl implements Http {
 			return url;
 		}
 
+		url = url.trim();
+
 		Matcher matcher = _relativeURLPattern.matcher(url);
 
 		if (matcher.lookingAt()) {
@@ -2073,6 +2075,6 @@ public class HttpImpl implements Http {
 	private final CloseableHttpClient _proxyCloseableHttpClient;
 	private final Credentials _proxyCredentials;
 	private final Pattern _relativeURLPattern = Pattern.compile(
-		"\\s*/[a-zA-Z0-9]+");
+		"/[a-zA-Z0-9]+");
 
 }

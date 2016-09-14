@@ -114,12 +114,14 @@ public class ScreensCommentServiceImpl extends ScreensCommentServiceBaseImpl {
 
 		if (end == QueryUtil.ALL_POS) {
 			while (threadDiscussionCommentIterator.hasNext()) {
-				JSONObject jsonObject = getJSONObject
-					(threadDiscussionCommentIterator.next(), discussionPermission);
+				JSONObject jsonObject = getJSONObject(
+					threadDiscussionCommentIterator.next(),
+					discussionPermission);
 
 				jsonArray.put(jsonObject);
 			}
-		} else {
+		}
+		else {
 			int commentsCount = end - start;
 
 			while (threadDiscussionCommentIterator.hasNext() &&
@@ -200,24 +202,18 @@ public class ScreensCommentServiceImpl extends ScreensCommentServiceBaseImpl {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		jsonObject.put("body", comment.getBody());
+		jsonObject.put("commentId", Long.valueOf(comment.getCommentId()));
 		jsonObject.put(
-			"commentId",
-			new Long(comment.getCommentId()));
-		jsonObject.put(
-			"createDate",
-			new Long(comment.getCreateDate().getTime()));
+			"createDate", Long.valueOf(comment.getCreateDate().getTime()));
 		jsonObject.put(
 			"deletePermission",
 			discussionPermission.hasDeletePermission(comment.getCommentId()));
 		jsonObject.put(
-			"modifiedDate",
-			new Long(comment.getModifiedDate().getTime()));
+			"modifiedDate", Long.valueOf(comment.getModifiedDate().getTime()));
 		jsonObject.put(
 			"updatePermission",
 			discussionPermission.hasUpdatePermission(comment.getCommentId()));
-		jsonObject.put(
-			"userId",
-			new Long(comment.getUserId()));
+		jsonObject.put("userId", Long.valueOf(comment.getUserId()));
 		jsonObject.put("userName", comment.getUserName());
 
 		return jsonObject;

@@ -2070,7 +2070,7 @@ public class HttpImpl implements Http {
 	private final PoolingHttpClientConnectionManager
 		_poolingHttpClientConnectionManager;
 	private final Pattern _protocolRelativeURLPattern = Pattern.compile(
-		"[\\s\\\\/]+");
+		"[\\\\/]+");
 	private final List<String> _proxyAuthPrefs = new ArrayList<>();
 	private final CloseableHttpClient _proxyCloseableHttpClient;
 	private final Credentials _proxyCredentials;

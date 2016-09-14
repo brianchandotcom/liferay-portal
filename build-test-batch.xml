@@ -456,6 +456,8 @@ app.server.type=@{app.server.type}]]></echo>
 							git add -A
 
 							git diff --cached --name-only | grep -v '^bundles/' | xargs -n 1000 zip liferay-portal-source.zip
+
+							zip -d liferay-portal-source.zip modules/.gitignore
 						]]>
 					</execute>
 				</then>

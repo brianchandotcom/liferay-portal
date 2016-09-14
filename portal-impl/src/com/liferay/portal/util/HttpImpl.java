@@ -1089,11 +1089,8 @@ public class HttpImpl implements Http {
 			return url;
 		}
 
-		boolean modified = false;
-
-		do {
-			modified = false;
-
+		protocol:
+		while (true) {
 			int index = url.indexOf(Http.PROTOCOL_DELIMITER);
 
 			if (index > 0) {
@@ -1111,7 +1108,7 @@ public class HttpImpl implements Http {
 					url = url.substring(
 						index + Http.PROTOCOL_DELIMITER.length());
 
-					modified = true;
+					continue;
 				}
 			}
 
@@ -1124,15 +1121,15 @@ public class HttpImpl implements Http {
 					if (i != 0) {
 						url = url.substring(i);
 
-						modified = true;
+						continue protocol;
 					}
 
 					break;
 				}
 			}
-		} while (modified);
 
-		return url;
+			return url;
+		}
 	}
 
 	@Override

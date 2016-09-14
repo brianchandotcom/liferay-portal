@@ -12,21 +12,17 @@
  * details.
  */
 
-package com.liferay.dynamic.data.lists.lar.test;
+package com.liferay.dynamic.data.lists.internal.exportimport.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.dynamic.data.lists.form.web.constants.DDLFormPortletKeys;
+import com.liferay.dynamic.data.lists.constants.DDLPortletKeys;
 import com.liferay.dynamic.data.lists.helper.DDLRecordSetTestHelper;
 import com.liferay.dynamic.data.lists.helper.DDLRecordTestHelper;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
-import com.liferay.dynamic.data.lists.model.DDLRecordSetConstants;
 import com.liferay.dynamic.data.lists.service.DDLRecordLocalServiceUtil;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
-import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -38,7 +34,6 @@ import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 import javax.portlet.PortletPreferences;
@@ -56,7 +51,8 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 @Sync
-public class DDLFormExportImportTest extends BasePortletExportImportTestCase {
+public class DDLDisplayExportImportTest
+	extends BasePortletExportImportTestCase {
 
 	@ClassRule
 	@Rule
@@ -67,7 +63,7 @@ public class DDLFormExportImportTest extends BasePortletExportImportTestCase {
 
 	@Override
 	public String getPortletId() {
-		return DDLFormPortletKeys.DYNAMIC_DATA_LISTS_FORM;
+		return DDLPortletKeys.DYNAMIC_DATA_LISTS_DISPLAY;
 	}
 
 	@Before
@@ -83,15 +79,7 @@ public class DDLFormExportImportTest extends BasePortletExportImportTestCase {
 		_ddlRecordSetTestHelper = new DDLRecordSetTestHelper(group);
 
 		DDLRecordSet recordSet = _ddlRecordSetTestHelper.addRecordSet(
-			ddmStructure, DDLRecordSetConstants.SCOPE_FORMS);
-
-		DDMFormValues settingsDDMFormValues =
-			DDMFormValuesTestUtil.createDDMFormValues(
-				ddmStructure.getDDMForm(),
-				DDMFormTestUtil.createAvailableLocales(Locale.US), Locale.US);
-
-		DDLRecordSetLocalServiceUtil.updateRecordSet(
-			recordSet.getRecordSetId(), settingsDDMFormValues);
+			ddmStructure);
 
 		_ddlRecordTestHelper = new DDLRecordTestHelper(group, recordSet);
 	}
@@ -115,7 +103,7 @@ public class DDLFormExportImportTest extends BasePortletExportImportTestCase {
 			DDLRecordLocalServiceUtil.fetchDDLRecordByUuidAndGroupId(
 				record.getUuid(), importedGroup.getGroupId());
 
-		Assert.assertNull(importedRecord);
+		Assert.assertNotNull(importedRecord);
 
 		DDLRecordSet importedRecordSet =
 			DDLRecordSetLocalServiceUtil.fetchDDLRecordSetByUuidAndGroupId(

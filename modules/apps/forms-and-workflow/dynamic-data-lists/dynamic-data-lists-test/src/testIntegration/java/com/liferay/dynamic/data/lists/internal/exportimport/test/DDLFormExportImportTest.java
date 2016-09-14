@@ -12,17 +12,21 @@
  * details.
  */
 
-package com.liferay.dynamic.data.lists.lar.test;
+package com.liferay.dynamic.data.lists.internal.exportimport.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.dynamic.data.lists.constants.DDLPortletKeys;
+import com.liferay.dynamic.data.lists.form.web.constants.DDLFormPortletKeys;
 import com.liferay.dynamic.data.lists.helper.DDLRecordSetTestHelper;
 import com.liferay.dynamic.data.lists.helper.DDLRecordTestHelper;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
+import com.liferay.dynamic.data.lists.model.DDLRecordSetConstants;
 import com.liferay.dynamic.data.lists.service.DDLRecordLocalServiceUtil;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
+import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -34,6 +38,7 @@ import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.portlet.PortletPreferences;
@@ -51,8 +56,7 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 @Sync
-public class DDLDisplayExportImportTest
-	extends BasePortletExportImportTestCase {
+public class DDLFormExportImportTest extends BasePortletExportImportTestCase {
 
 	@ClassRule
 	@Rule
@@ -63,7 +67,7 @@ public class DDLDisplayExportImportTest
 
 	@Override
 	public String getPortletId() {
-		return DDLPortletKeys.DYNAMIC_DATA_LISTS_DISPLAY;
+		return DDLFormPortletKeys.DYNAMIC_DATA_LISTS_FORM;
 	}
 
 	@Before
@@ -79,7 +83,15 @@ public class DDLDisplayExportImportTest
 		_ddlRecordSetTestHelper = new DDLRecordSetTestHelper(group);
 
 		DDLRecordSet recordSet = _ddlRecordSetTestHelper.addRecordSet(
-			ddmStructure);
+			ddmStructure, DDLRecordSetConstants.SCOPE_FORMS);
+
+		DDMFormValues settingsDDMFormValues =
+			DDMFormValuesTestUtil.createDDMFormValues(
+				ddmStructure.getDDMForm(),
+				DDMFormTestUtil.createAvailableLocales(Locale.US), Locale.US);
+
+		DDLRecordSetLocalServiceUtil.updateRecordSet(
+			recordSet.getRecordSetId(), settingsDDMFormValues);
 
 		_ddlRecordTestHelper = new DDLRecordTestHelper(group, recordSet);
 	}
@@ -103,7 +115,7 @@ public class DDLDisplayExportImportTest
 			DDLRecordLocalServiceUtil.fetchDDLRecordByUuidAndGroupId(
 				record.getUuid(), importedGroup.getGroupId());
 
-		Assert.assertNotNull(importedRecord);
+		Assert.assertNull(importedRecord);
 
 		DDLRecordSet importedRecordSet =
 			DDLRecordSetLocalServiceUtil.fetchDDLRecordSetByUuidAndGroupId(

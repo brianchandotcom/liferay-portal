@@ -69,6 +69,20 @@ public class DetailASTUtil {
 		return _getAllChildTokens(detailAST, tokenType, recursive, null);
 	}
 
+	public static int getEndLine(DetailAST detailAST) {
+		int endLine = detailAST.getLineNo();
+
+		for (DetailAST childAST :
+				getAllChildTokens(detailAST, ALL_TYPES, true)) {
+
+			if (childAST.getLineNo() > endLine) {
+				endLine = childAST.getLineNo();
+			}
+		}
+
+		return endLine;
+	}
+
 	public static List<DetailAST> getMethodCalls(
 		DetailAST detailAST, String className, String methodName) {
 
@@ -155,6 +169,20 @@ public class DetailASTUtil {
 		}
 
 		return parameterNames;
+	}
+
+	public static int getStartLine(DetailAST detailAST) {
+		int startLine = detailAST.getLineNo();
+
+		for (DetailAST childAST :
+				getAllChildTokens(detailAST, ALL_TYPES, true)) {
+
+			if (childAST.getLineNo() < startLine) {
+				startLine = childAST.getLineNo();
+			}
+		}
+
+		return startLine;
 	}
 
 	public static boolean isCollection(DetailAST detailAST) {

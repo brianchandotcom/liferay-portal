@@ -68,15 +68,20 @@ public class InvokerFilterTest extends PowerMockito {
 				HttpMethods.GET,
 				"/c///portal/%2e/login;jsessionid=ae01b0f2af.worker1");
 
+		String originalURI = invokerFilter.getOriginalRequestURI(
+			mockHttpServletRequest);
+
 		Assert.assertEquals(
-			"/c/portal/login", invokerFilter.getURI(mockHttpServletRequest));
+			"/c/portal/login",
+			invokerFilter.getURI(mockHttpServletRequest, originalURI));
 
 		mockHttpServletRequest = new MockHttpServletRequest(
 			HttpMethods.GET,
 			"/c///portal/%2e/../login;jsessionid=ae01b0f2af.worker1");
 
 		Assert.assertEquals(
-			"/c/portal/login", invokerFilter.getURI(mockHttpServletRequest));
+			"/c/portal/login",
+			invokerFilter.getURI(mockHttpServletRequest, originalURI));
 	}
 
 	@Test
@@ -88,8 +93,12 @@ public class InvokerFilterTest extends PowerMockito {
 				HttpMethods.GET,
 				"/c/portal/login;jsessionid=ae01b0f2af.worker1");
 
+		String originalURI = invokerFilter.getOriginalRequestURI(
+			mockHttpServletRequest);
+
 		Assert.assertEquals(
-			"/c/portal/login", invokerFilter.getURI(mockHttpServletRequest));
+			"/c/portal/login",
+			invokerFilter.getURI(mockHttpServletRequest, originalURI));
 	}
 
 	@Test

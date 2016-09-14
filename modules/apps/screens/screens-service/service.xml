@@ -19,6 +19,7 @@
 	</entity>
 	<entity local-service="false" name="ScreensComment" remote-service="true">
 		<reference entity="AssetEntry" package-path="com.liferay.portlet.asset" />
+		<reference entity="Group" package-path="com.liferay.portal" />
 	</entity>
 	<entity local-service="false" name="ScreensDDLRecord" remote-service="true">
 		<reference entity="DDLRecord" package-path="com.liferay.dynamic.data.lists" />

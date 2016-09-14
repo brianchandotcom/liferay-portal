@@ -531,7 +531,7 @@ public class ProjectTemplatesTest {
 
 		_writeServiceClass(mavenProjectDir);
 
-		_executeMaven(mavenProjectDir, _MAVEN_BUILD_ARGS);
+		_executeMaven(mavenProjectDir, _MAVEN_GOAL_PACKAGE);
 
 		File mavenBundleFile = _testExists(
 			mavenProjectDir, "target/servicepreaction-1.0.0.jar");
@@ -593,7 +593,7 @@ public class ProjectTemplatesTest {
 			mavenProjectDir, serviceOverrideFilePath, packageServiceOverride,
 			importStatement, service, classDecl, constructorDecl);
 
-		_executeMaven(mavenProjectDir, _MAVEN_BUILD_ARGS);
+		_executeMaven(mavenProjectDir, _MAVEN_GOAL_PACKAGE);
 
 		File mavenBundleFile = _testExists(
 			mavenProjectDir, "target/serviceoverride-1.0.0.jar");
@@ -714,7 +714,7 @@ public class ProjectTemplatesTest {
 
 		_executeGradle(gradleProjectDir, _GRADLE_BUILD_ARGS);
 
-		_executeMaven(mavenProjectDir, _MAVEN_BUILD_ARGS);
+		_executeMaven(mavenProjectDir, _MAVEN_GOAL_PACKAGE);
 
 		_verifyBuilds(
 			gradleProjectDir, mavenProjectDir, gradleFileName, mavenFileName);
@@ -895,61 +895,55 @@ public class ProjectTemplatesTest {
 		}
 	}
 
-	private void _executeMaven(File projectDir, String[] args)
+	private void _executeMaven(File projectDir, String... args)
 		throws Exception {
 
-		try (URLClassLoader classLoader = new URLClassLoader(
+		List<String> completeArgs = new ArrayList<>();
+
+		completeArgs.add("--update-snapshots");
+
+		if (Validator.isNotNull(_httpProxyHost) &&
+			Validator.isNotNull(_httpProxyPort)) {
+
+			completeArgs.add("-Dhttp.proxyHost=" + _httpProxyHost);
+			completeArgs.add("-Dhttp.proxyPort=" + _httpProxyPort);
+		}
+
+		for (String arg : args) {
+			completeArgs.add(arg);
+		}
+
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+
+		try (URLClassLoader urlClassLoader = new URLClassLoader(
 				_mavenEmbedderDependencyURLs, null)) {
 
-			Class<?> mavenCliClass = classLoader.loadClass(
+			currentThread.setContextClassLoader(urlClassLoader);
+
+			Class<?> mavenCliClass = urlClassLoader.loadClass(
 				"org.apache.maven.cli.MavenCli");
+
+			Method doMainMethod = mavenCliClass.getMethod(
+				"doMain", String[].class, String.class, PrintStream.class,
+				PrintStream.class);
 
 			Object mavenCli = mavenCliClass.newInstance();
 
 			ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 			ByteArrayOutputStream errorStream = new ByteArrayOutputStream();
 
-			Method doMainMethod = mavenCliClass.getMethod(
-				"doMain", String[].class, String.class, PrintStream.class,
-				PrintStream.class);
+			Integer exitCode = (Integer)doMainMethod.invoke(
+				mavenCli, completeArgs.toArray(new String[completeArgs.size()]),
+				projectDir.getAbsolutePath(),
+				new PrintStream(outputStream, true),
+				new PrintStream(errorStream, true));
 
-			Thread currentThread = Thread.currentThread();
-
-			ClassLoader contextClassLoader =
-				currentThread.getContextClassLoader();
-
-			currentThread.setContextClassLoader(classLoader);
-
-			try {
-				PrintStream outputPrintStream = new PrintStream(outputStream);
-				PrintStream errorPrintStream = new PrintStream(errorStream);
-
-				String[] arguments = null;
-
-				if (Validator.isNotNull(_httpProxyHost) &&
-					Validator.isNotNull(_httpProxyPort)) {
-
-					arguments = new String[args.length + 2];
-					arguments[0] = "-Dhttp.proxyHost=" + _httpProxyHost;
-					arguments[1] = "-Dhttp.proxyPort=" + _httpProxyPort;
-
-					System.arraycopy(args, 0, arguments, 2, args.length);
-				}
-				else {
-					arguments = args;
-				}
-
-				Integer exitCode = (Integer)doMainMethod.invoke(
-					mavenCli, arguments, projectDir.getAbsolutePath(),
-					outputPrintStream, errorPrintStream);
-
-				Assert.assertEquals(
-					new String(errorStream.toByteArray()), 0,
-					exitCode.intValue());
-			}
-			finally {
-				currentThread.setContextClassLoader(contextClassLoader);
-			}
+			Assert.assertEquals(errorStream.toString(), 0, exitCode.intValue());
+		}
+		finally {
+			currentThread.setContextClassLoader(contextClassLoader);
 		}
 	}
 
@@ -1023,7 +1017,7 @@ public class ProjectTemplatesTest {
 
 		_executeMaven(
 			new File(mavenProjectDir, serviceProjectName),
-			new String[] {"-U", "liferay:build-service"});
+			_MAVEN_GOAL_BUILD_SERVICE);
 
 		File gradleServiceProps = new File(
 			gradleProjectDir,
@@ -1037,7 +1031,7 @@ public class ProjectTemplatesTest {
 			gradleServiceProps.toPath(), mavenServiceProps.toPath(),
 			StandardCopyOption.REPLACE_EXISTING);
 
-		_executeMaven(mavenProjectDir, _MAVEN_BUILD_ARGS);
+		_executeMaven(mavenProjectDir, _MAVEN_GOAL_PACKAGE);
 
 		File mavenBundleApiFile = _testExists(
 			mavenProjectDir,
@@ -1138,8 +1132,10 @@ public class ProjectTemplatesTest {
 
 	private static final String[] _GRADLE_BUILD_ARGS = new String[] {":build"};
 
-	private static final String[] _MAVEN_BUILD_ARGS =
-		new String[] {"-U", "package"};
+	private static final String _MAVEN_GOAL_BUILD_SERVICE =
+		"liferay:build-service";
+
+	private static final String _MAVEN_GOAL_PACKAGE = "package";
 
 	private static final String _REPOSITORY_CDN_URL =
 		"https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/" +

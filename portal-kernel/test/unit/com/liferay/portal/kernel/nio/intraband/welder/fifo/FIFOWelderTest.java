@@ -109,6 +109,7 @@ public class FIFOWelderTest {
 	@Test
 	public void testWeld() throws Exception {
 		final FIFOWelder serverFifoWelder = new FIFOWelder();
+
 		final FIFOWelder clientFIFOWelder = WelderTestUtil.transform(
 			serverFifoWelder);
 

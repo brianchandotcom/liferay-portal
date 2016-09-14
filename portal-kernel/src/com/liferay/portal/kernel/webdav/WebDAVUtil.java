@@ -116,6 +116,7 @@ public class WebDAVUtil {
 		HttpServletRequest request, String rootPath) {
 
 		String headerDestination = request.getHeader("Destination");
+
 		String[] pathSegments = StringUtil.split(headerDestination, rootPath);
 
 		String destination = pathSegments[pathSegments.length - 1];

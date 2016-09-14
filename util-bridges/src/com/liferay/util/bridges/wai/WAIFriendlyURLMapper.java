@@ -86,6 +86,7 @@ public class WAIFriendlyURLMapper implements FriendlyURLMapper {
 		Map<String, Object> requestContext) {
 
 		int x = friendlyURLPath.indexOf(_MAPPING);
+
 		int y = friendlyURLPath.indexOf(
 			CharPool.SLASH, x + _MAPPING.length() + 1);
 

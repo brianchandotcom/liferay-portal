@@ -162,8 +162,11 @@ public class MembershipPolicyTestUtil {
 
 		long userId = user.getUserId();
 		String oldPassword = user.getPassword();
+
 		String newPassword1 = RandomTestUtil.randomString();
+
 		String newPassword2 = newPassword1;
+
 		boolean passwordReset = true;
 		String reminderQueryQuestion = RandomTestUtil.randomString();
 		String reminderQueryAnswer = RandomTestUtil.randomString();

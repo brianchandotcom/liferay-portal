@@ -93,6 +93,7 @@ public class HypersonicServerTestRule extends BaseTestRule<Server, Object> {
 			}
 
 			_DATABASE_NAME = databaseName;
+
 			_DATABASE_URL =
 				HypersonicServerTestCallback.DATABASE_URL_BASE + _DATABASE_NAME;
 		}

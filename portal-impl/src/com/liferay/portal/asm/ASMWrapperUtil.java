@@ -112,6 +112,7 @@ public class ASMWrapperUtil {
 		fieldVisitor = classWriter.visitField(
 			Opcodes.ACC_PRIVATE + Opcodes.ACC_FINAL, "_default",
 			defaultObjectClassDescriptor, null, null);
+
 		fieldVisitor.visitEnd();
 
 		// Constructor

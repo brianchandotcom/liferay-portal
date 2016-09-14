@@ -85,6 +85,7 @@ public class DeserializerTest {
 		bufferInputStream = deserializer.new BufferInputStream();
 
 		int size1 = _COUNT * 2 / 3;
+
 		int size2 = _COUNT - size1;
 
 		byte[] newBytes = new byte[size1];

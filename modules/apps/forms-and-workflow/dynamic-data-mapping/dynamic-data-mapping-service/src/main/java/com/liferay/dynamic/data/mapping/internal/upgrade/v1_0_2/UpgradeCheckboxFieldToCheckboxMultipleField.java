@@ -134,6 +134,7 @@ public class UpgradeCheckboxFieldToCheckboxMultipleField
 
 		while (languageKeys.hasNext()) {
 			String languageKey = languageKeys.next();
+
 			String predefinedValue = oldPredefinedValueJSONObject.getString(
 				languageKey);
 

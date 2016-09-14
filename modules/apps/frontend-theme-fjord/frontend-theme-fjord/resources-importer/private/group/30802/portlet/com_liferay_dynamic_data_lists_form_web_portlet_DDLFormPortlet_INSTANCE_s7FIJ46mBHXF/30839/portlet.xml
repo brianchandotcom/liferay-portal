@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+
+<portlet portlet-id="com_liferay_dynamic_data_lists_form_web_portlet_DDLFormPortlet_INSTANCE_s7FIJ46mBHXF" root-portlet-id="com_liferay_dynamic_data_lists_form_web_portlet_DDLFormPortlet" old-plid="30839" scope-group-id="30802" private-layout="true">
+	<portlet-preferences path="/group/30802/portlet/com_liferay_dynamic_data_lists_form_web_portlet_DDLFormPortlet_INSTANCE_s7FIJ46mBHXF/preferences/layout/0/30839/portlet-preferences.xml">
+		<preference-data>
+			<DDLRecordSet>
+				<staged-model group-id="30802" uuid="dd045a61-8ea0-8eec-b8ae-21446c66e930" settings-ddm-form-values-path="/group/30802/com.liferay.dynamic.data.lists.model.DDLRecordSet/31220/settings-ddm-form-values.json" path="/group/30802/com.liferay.dynamic.data.lists.model.DDLRecordSet/31220.xml">
+					<references>
+						<reference class-name="com.liferay.dynamic.data.mapping.model.DDMStructure" class-pk="31217" attached-class-name="com.liferay.dynamic.data.lists.model.DDLRecordSet" group-id="30802" live-group-id="30802" type="strong" uuid="9598e775-9a87-15df-a0ee-55b8c3249883" company-id="20116" preloaded="true" referenced-class-name="com.liferay.dynamic.data.lists.model.DDLRecordSet" structure-key="31252" missing="false"/>
+					</references>
+				</staged-model>
+			</DDLRecordSet>
+			<DDMStructure>
+				<staged-model group-id="30802" uuid="9598e775-9a87-15df-a0ee-55b8c3249883" preloaded="true" ddm-form-path="/group/30802/com.liferay.dynamic.data.mapping.model.DDMStructure/31217/ddm-form.json" ddm-data-provider-instance-ids="" ddm-form-layout-path="/group/30802/com.liferay.dynamic.data.mapping.model.DDMStructure/31217/ddm-form-layout.json" path="/group/30802/com.liferay.dynamic.data.mapping.model.DDMStructure/31217.xml" attached-class-name="com.liferay.dynamic.data.lists.model.DDLRecordSet"/>
+			</DDMStructure>
+			<references>
+				<reference class-name="com.liferay.dynamic.data.lists.model.DDLRecordSet" class-pk="31220" group-id="30802" live-group-id="30802" type="dependency" uuid="dd045a61-8ea0-8eec-b8ae-21446c66e930" company-id="20116" missing="false"/>
+			</references>
+			<DDLRecord>
+				<staged-model group-id="30802" uuid="52a46c0f-48cc-49dd-5909-26a2b0332f13" ddm-form-values-path="/group/30802/com.liferay.dynamic.data.lists.model.DDLRecord/31222/ddm-form-values.json" path="/group/30802/com.liferay.dynamic.data.lists.model.DDLRecord/31222.xml">
+					<references>
+						<reference class-name="com.liferay.dynamic.data.lists.model.DDLRecordSet" class-pk="31220" group-id="30802" live-group-id="30802" type="strong" uuid="dd045a61-8ea0-8eec-b8ae-21446c66e930" company-id="20116" missing="false"/>
+					</references>
+				</staged-model>
+			</DDLRecord>
+		</preference-data>
+	</portlet-preferences>
+</portlet>

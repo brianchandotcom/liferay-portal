@@ -1,0 +1,90 @@
+<JournalArticle>
+  <__cachedModel>false</__cachedModel>
+  <__new>false</__new>
+  <__uuid>a65b24a9-3539-fff1-da47-a02ea2f5f478</__uuid>
+  <__originalUuid>a65b24a9-3539-fff1-da47-a02ea2f5f478</__originalUuid>
+  <__id>31193</__id>
+  <__resourcePrimKey>31085</__resourcePrimKey>
+  <__originalResourcePrimKey>31085</__originalResourcePrimKey>
+  <__setOriginalResourcePrimKey>false</__setOriginalResourcePrimKey>
+  <__groupId>30802</__groupId>
+  <__originalGroupId>30802</__originalGroupId>
+  <__setOriginalGroupId>false</__setOriginalGroupId>
+  <__companyId>20116</__companyId>
+  <__originalCompanyId>20116</__originalCompanyId>
+  <__setOriginalCompanyId>false</__setOriginalCompanyId>
+  <__userId>20120</__userId>
+  <__originalUserId>20120</__originalUserId>
+  <__setOriginalUserId>false</__setOriginalUserId>
+  <__userName></__userName>
+  <__createDate class="sql-timestamp">2015-12-03 19:27:32.599</__createDate>
+  <__modifiedDate class="sql-timestamp">2016-03-28 12:31:03.111</__modifiedDate>
+  <__setModifiedDate>false</__setModifiedDate>
+  <__folderId>0</__folderId>
+  <__originalFolderId>0</__originalFolderId>
+  <__setOriginalFolderId>false</__setOriginalFolderId>
+  <__classNameId>0</__classNameId>
+  <__originalClassNameId>0</__originalClassNameId>
+  <__setOriginalClassNameId>false</__setOriginalClassNameId>
+  <__classPK>0</__classPK>
+  <__originalClassPK>0</__originalClassPK>
+  <__setOriginalClassPK>false</__setOriginalClassPK>
+  <__treePath>/</__treePath>
+  <__articleId>31083</__articleId>
+  <__originalArticleId>31083</__originalArticleId>
+  <__version>1.3</__version>
+  <__originalVersion>1.3</__originalVersion>
+  <__setOriginalVersion>false</__setOriginalVersion>
+  <__title>&lt;?xml version=&apos;1.0&apos; encoding=&apos;UTF-8&apos;?&gt;&lt;root available-locales=&quot;en_US&quot; default-locale=&quot;en_US&quot;&gt;&lt;Title language-id=&quot;en_US&quot;&gt;Big Home Content Beach&lt;/Title&gt;&lt;/root&gt;</__title>
+  <__urlTitle>big-home-content-beach</__urlTitle>
+  <__originalUrlTitle>big-home-content-beach</__originalUrlTitle>
+  <__description></__description>
+  <__content>&lt;?xml version=&quot;1.0&quot;?&gt;
+
+&lt;root available-locales=&quot;en_US&quot; default-locale=&quot;en_US&quot;&gt;
+	&lt;dynamic-element name=&quot;backgroundType&quot; type=&quot;list&quot; index-type=&quot;keyword&quot; instance-id=&quot;xszw&quot;&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[main-background-image]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+	&lt;dynamic-element name=&quot;backgroundImage&quot; type=&quot;image&quot; index-type=&quot;keyword&quot; instance-id=&quot;vcqp&quot;&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot; alt=&quot;&quot; name=&quot;background_1440x560_01.jpg&quot; title=&quot;background_1440x560_01.jpg&quot; type=&quot;document&quot;&gt;&lt;![CDATA[[$dl-reference=/group/30802/com.liferay.document.library.kernel.model.DLFileEntry/30870.xml$]]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+	&lt;dynamic-element name=&quot;blockAlign&quot; type=&quot;list&quot; index-type=&quot;keyword&quot; instance-id=&quot;vuii&quot;&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[center]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+	&lt;dynamic-element name=&quot;numberOfColumns&quot; type=&quot;list&quot; index-type=&quot;keyword&quot; instance-id=&quot;uity&quot;&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[8]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+	&lt;dynamic-element name=&quot;textAlign&quot; type=&quot;list&quot; index-type=&quot;keyword&quot; instance-id=&quot;rrkl&quot;&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[center]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+	&lt;dynamic-element name=&quot;bigTitle&quot; type=&quot;text&quot; index-type=&quot;keyword&quot; instance-id=&quot;gstc&quot;&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[“Love this! I’ve tried many other apps and this is the only one that’s kept me on track and led to real results.”]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+	&lt;dynamic-element name=&quot;htmlContent&quot; type=&quot;text_area&quot; index-type=&quot;keyword&quot; instance-id=&quot;ipal&quot;&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[&lt;p&gt;-Jack S., Satisfied Customer&lt;/p&gt;]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+&lt;/root&gt;</__content>
+  <__DDMStructureKey>21609</__DDMStructureKey>
+  <__originalDDMStructureKey>21609</__originalDDMStructureKey>
+  <__DDMTemplateKey>21613</__DDMTemplateKey>
+  <__originalDDMTemplateKey>21613</__originalDDMTemplateKey>
+  <__layoutUuid></__layoutUuid>
+  <__originalLayoutUuid></__originalLayoutUuid>
+  <__displayDate class="sql-timestamp">2015-12-03 19:25:00.0</__displayDate>
+  <__originalDisplayDate class="sql-timestamp" reference="../__displayDate"/>
+  <__indexable>true</__indexable>
+  <__originalIndexable>true</__originalIndexable>
+  <__setOriginalIndexable>false</__setOriginalIndexable>
+  <__smallImage>false</__smallImage>
+  <__smallImageId>31194</__smallImageId>
+  <__originalSmallImageId>31194</__originalSmallImageId>
+  <__setOriginalSmallImageId>false</__setOriginalSmallImageId>
+  <__smallImageURL></__smallImageURL>
+  <__status>0</__status>
+  <__originalStatus>0</__originalStatus>
+  <__setOriginalStatus>false</__setOriginalStatus>
+  <__statusByUserId>20120</__statusByUserId>
+  <__statusByUserName></__statusByUserName>
+  <__statusDate class="sql-timestamp">2016-03-28 12:31:03.111</__statusDate>
+  <__columnBitmask>0</__columnBitmask>
+</JournalArticle>

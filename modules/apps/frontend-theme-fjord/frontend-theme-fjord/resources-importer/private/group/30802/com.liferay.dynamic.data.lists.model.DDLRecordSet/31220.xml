@@ -1,0 +1,27 @@
+<DDLRecordSet>
+  <__cachedModel>false</__cachedModel>
+  <__new>false</__new>
+  <__uuid>dd045a61-8ea0-8eec-b8ae-21446c66e930</__uuid>
+  <__originalUuid>dd045a61-8ea0-8eec-b8ae-21446c66e930</__originalUuid>
+  <__recordSetId>31220</__recordSetId>
+  <__groupId>30802</__groupId>
+  <__originalGroupId>30802</__originalGroupId>
+  <__setOriginalGroupId>false</__setOriginalGroupId>
+  <__companyId>20116</__companyId>
+  <__originalCompanyId>20116</__originalCompanyId>
+  <__setOriginalCompanyId>false</__setOriginalCompanyId>
+  <__userId>20120</__userId>
+  <__userName></__userName>
+  <__createDate>2016-03-28 13:18:26.630 UTC</__createDate>
+  <__modifiedDate>2016-09-14 10:10:29.381 UTC</__modifiedDate>
+  <__setModifiedDate>false</__setModifiedDate>
+  <__DDMStructureId>31217</__DDMStructureId>
+  <__recordSetKey>31256</__recordSetKey>
+  <__originalRecordSetKey>31256</__originalRecordSetKey>
+  <__name>&lt;?xml version=&apos;1.0&apos; encoding=&apos;UTF-8&apos;?&gt;&lt;root available-locales=&quot;en_US&quot; default-locale=&quot;en_US&quot;&gt;&lt;Name language-id=&quot;en_US&quot;&gt;Contact&lt;/Name&gt;&lt;/root&gt;</__name>
+  <__description></__description>
+  <__minDisplayRows>10</__minDisplayRows>
+  <__scope>2</__scope>
+  <__settings>{&quot;availableLanguageIds&quot;:[&quot;en_US&quot;],&quot;defaultLanguageId&quot;:&quot;en_US&quot;,&quot;fieldValues&quot;:[{&quot;instanceId&quot;:&quot;JAkjBHEB&quot;,&quot;name&quot;:&quot;emailToAddress&quot;,&quot;value&quot;:&quot;&quot;},{&quot;instanceId&quot;:&quot;TGUAi9TW&quot;,&quot;name&quot;:&quot;storageType&quot;,&quot;value&quot;:&quot;json&quot;},{&quot;instanceId&quot;:&quot;XGhzcgZj&quot;,&quot;name&quot;:&quot;redirectURL&quot;,&quot;value&quot;:&quot;&quot;},{&quot;instanceId&quot;:&quot;p1mOreEk&quot;,&quot;name&quot;:&quot;workflowDefinition&quot;,&quot;value&quot;:&quot;&quot;},{&quot;instanceId&quot;:&quot;65rfglrt&quot;,&quot;name&quot;:&quot;sendEmailNotification&quot;,&quot;value&quot;:&quot;false&quot;},{&quot;instanceId&quot;:&quot;Q36aHdGO&quot;,&quot;name&quot;:&quot;emailFromName&quot;,&quot;value&quot;:&quot;&quot;},{&quot;instanceId&quot;:&quot;k8CyfByK&quot;,&quot;name&quot;:&quot;emailFromAddress&quot;,&quot;value&quot;:&quot;&quot;},{&quot;instanceId&quot;:&quot;ZGE6ZGdS&quot;,&quot;name&quot;:&quot;emailSubject&quot;,&quot;value&quot;:&quot;&quot;},{&quot;instanceId&quot;:&quot;UYcgqQma&quot;,&quot;name&quot;:&quot;published&quot;,&quot;value&quot;:&quot;false&quot;},{&quot;instanceId&quot;:&quot;O1dIbyyN&quot;,&quot;name&quot;:&quot;requireCaptcha&quot;,&quot;value&quot;:&quot;false&quot;}]}</__settings>
+  <__columnBitmask>0</__columnBitmask>
+</DDLRecordSet>

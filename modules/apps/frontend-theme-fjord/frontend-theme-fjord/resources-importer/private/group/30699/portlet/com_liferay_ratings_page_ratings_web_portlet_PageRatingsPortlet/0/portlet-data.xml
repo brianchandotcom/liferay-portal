@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-
-<PageRatingsPortletDataHandler>
-	<RatingsEntry>
-		<staged-model uuid="5e4dedd9-e225-2b0b-9180-a9cb8d4da956" path="/company/20202/com.liferay.ratings.kernel.model.RatingsEntry/30682.xml" attached-class-name="com.liferay.blogs.kernel.model.BlogsEntry"/>
-	</RatingsEntry>
-</PageRatingsPortletDataHandler>

@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+
+<portlet portlet-id="com_liferay_journal_content_web_portlet_JournalContentPortlet_INSTANCE_1ZAFaYo2lz6D" root-portlet-id="com_liferay_journal_content_web_portlet_JournalContentPortlet" old-plid="30825" scope-group-id="30802" private-layout="true">
+	<portlet-preferences path="/group/30802/portlet/com_liferay_journal_content_web_portlet_JournalContentPortlet_INSTANCE_1ZAFaYo2lz6D/preferences/layout/0/30825/portlet-preferences.xml">
+		<preference-data>
+			<JournalArticle>
+				<staged-model group-id="30802" uuid="e0ffd065-0b03-fcce-fc7d-42f9d6bb49a0" article-resource-uuid="1235c06d-7e7a-be8d-c5e2-cde0a8876c4a" preloaded="true" path="/group/30802/com.liferay.journal.model.JournalArticle/31143.xml">
+					<references>
+						<reference class-name="com.liferay.dynamic.data.mapping.model.DDMStructure" class-pk="31030" attached-class-name="com.liferay.journal.model.JournalArticle" group-id="30802" live-group-id="30802" type="strong" uuid="c72670b8-0aa0-ab71-f118-c8103850d704" company-id="20116" preloaded="true" referenced-class-name="com.liferay.journal.model.JournalArticle" structure-key="22544" missing="false"/>
+						<reference class-name="com.liferay.dynamic.data.mapping.model.DDMTemplate" class-pk="31048" attached-class-name="com.liferay.dynamic.data.mapping.model.DDMStructure" group-id="30802" live-group-id="30802" type="strong" uuid="73fe64d8-8361-26d3-1a75-a38f24fd5e59" company-id="20116" preloaded="true" referenced-class-name="com.liferay.dynamic.data.mapping.model.DDMStructure" template-key="22578" missing="false"/>
+					</references>
+				</staged-model>
+			</JournalArticle>
+			<DDMStructure>
+				<staged-model group-id="30802" uuid="c72670b8-0aa0-ab71-f118-c8103850d704" preloaded="true" ddm-form-path="/group/30802/com.liferay.dynamic.data.mapping.model.DDMStructure/31030/ddm-form.json" ddm-data-provider-instance-ids="" ddm-form-layout-path="/group/30802/com.liferay.dynamic.data.mapping.model.DDMStructure/31030/ddm-form-layout.json" path="/group/30802/com.liferay.dynamic.data.mapping.model.DDMStructure/31030.xml" attached-class-name="com.liferay.journal.model.JournalArticle"/>
+			</DDMStructure>
+			<DDMTemplate>
+				<staged-model group-id="30802" uuid="73fe64d8-8361-26d3-1a75-a38f24fd5e59" preloaded="true" resource-class-name="com.liferay.journal.model.JournalArticle" path="/group/30802/com.liferay.dynamic.data.mapping.model.DDMTemplate/31048.xml" attached-class-name="com.liferay.dynamic.data.mapping.model.DDMStructure">
+					<references>
+						<reference class-name="com.liferay.dynamic.data.mapping.model.DDMStructure" class-pk="31030" attached-class-name="com.liferay.journal.model.JournalArticle" group-id="30802" live-group-id="30802" type="strong" uuid="c72670b8-0aa0-ab71-f118-c8103850d704" company-id="20116" preloaded="true" referenced-class-name="com.liferay.journal.model.JournalArticle" structure-key="22544" missing="false"/>
+					</references>
+				</staged-model>
+			</DDMTemplate>
+			<references>
+				<reference class-name="com.liferay.journal.model.JournalArticle" class-pk="31143" group-id="30802" live-group-id="30802" type="dependency" uuid="e0ffd065-0b03-fcce-fc7d-42f9d6bb49a0" company-id="20116" article-id="31142" preloaded="true" article-resource-uuid="1235c06d-7e7a-be8d-c5e2-cde0a8876c4a" missing="false"/>
+			</references>
+		</preference-data>
+	</portlet-preferences>
+</portlet>

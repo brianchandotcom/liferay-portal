@@ -1,0 +1,90 @@
+<JournalArticle>
+  <__cachedModel>false</__cachedModel>
+  <__new>false</__new>
+  <__uuid>76bd09ee-c091-ec4e-b5f2-dfe2510804e7</__uuid>
+  <__originalUuid>76bd09ee-c091-ec4e-b5f2-dfe2510804e7</__originalUuid>
+  <__id>31108</__id>
+  <__resourcePrimKey>31109</__resourcePrimKey>
+  <__originalResourcePrimKey>31109</__originalResourcePrimKey>
+  <__setOriginalResourcePrimKey>false</__setOriginalResourcePrimKey>
+  <__groupId>30802</__groupId>
+  <__originalGroupId>30802</__originalGroupId>
+  <__setOriginalGroupId>false</__setOriginalGroupId>
+  <__companyId>20116</__companyId>
+  <__originalCompanyId>20116</__originalCompanyId>
+  <__setOriginalCompanyId>false</__setOriginalCompanyId>
+  <__userId>20120</__userId>
+  <__originalUserId>20120</__originalUserId>
+  <__setOriginalUserId>false</__setOriginalUserId>
+  <__userName></__userName>
+  <__createDate class="sql-timestamp">2015-12-03 21:37:00.927</__createDate>
+  <__modifiedDate class="sql-timestamp">2016-02-03 15:09:11.822</__modifiedDate>
+  <__setModifiedDate>false</__setModifiedDate>
+  <__folderId>0</__folderId>
+  <__originalFolderId>0</__originalFolderId>
+  <__setOriginalFolderId>false</__setOriginalFolderId>
+  <__classNameId>0</__classNameId>
+  <__originalClassNameId>0</__originalClassNameId>
+  <__setOriginalClassNameId>false</__setOriginalClassNameId>
+  <__classPK>0</__classPK>
+  <__originalClassPK>0</__originalClassPK>
+  <__setOriginalClassPK>false</__setOriginalClassPK>
+  <__treePath>/</__treePath>
+  <__articleId>31107</__articleId>
+  <__originalArticleId>31107</__originalArticleId>
+  <__version>1.3</__version>
+  <__originalVersion>1.3</__originalVersion>
+  <__setOriginalVersion>false</__setOriginalVersion>
+  <__title>&lt;?xml version=&apos;1.0&apos; encoding=&apos;UTF-8&apos;?&gt;&lt;root available-locales=&quot;en_US&quot; default-locale=&quot;en_US&quot;&gt;&lt;Title language-id=&quot;en_US&quot;&gt;Big Home Subscribe Content&lt;/Title&gt;&lt;/root&gt;</__title>
+  <__urlTitle>big-home-subscribe-content</__urlTitle>
+  <__originalUrlTitle>big-home-subscribe-content</__originalUrlTitle>
+  <__description></__description>
+  <__content>&lt;?xml version=&quot;1.0&quot;?&gt;
+
+&lt;root available-locales=&quot;en_US&quot; default-locale=&quot;en_US&quot;&gt;
+	&lt;dynamic-element name=&quot;backgroundType&quot; type=&quot;list&quot; index-type=&quot;keyword&quot; index=&quot;0&quot; instance-id=&quot;xgbg&quot;&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[main-background-image]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+	&lt;dynamic-element name=&quot;backgroundImage&quot; type=&quot;image&quot; index-type=&quot;keyword&quot; index=&quot;0&quot; instance-id=&quot;samw&quot;&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot; alt=&quot;&quot; name=&quot;background_1440x560_02.jpg&quot; title=&quot;background_1440x560_02.jpg&quot; type=&quot;&quot; id=&quot;44561&quot;&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+	&lt;dynamic-element name=&quot;blockAlign&quot; type=&quot;list&quot; index-type=&quot;keyword&quot; index=&quot;0&quot; instance-id=&quot;bzak&quot;&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[center]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+	&lt;dynamic-element name=&quot;numberOfColumns&quot; type=&quot;list&quot; index-type=&quot;keyword&quot; index=&quot;0&quot; instance-id=&quot;ozfc&quot;&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[10]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+	&lt;dynamic-element name=&quot;textAlign&quot; type=&quot;list&quot; index-type=&quot;keyword&quot; index=&quot;0&quot; instance-id=&quot;ivbj&quot;&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[center]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+	&lt;dynamic-element name=&quot;bigTitle&quot; type=&quot;text&quot; index-type=&quot;keyword&quot; index=&quot;0&quot; instance-id=&quot;dgbd&quot;&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[“I use this every single day. I will definitely be recommending to my friends.”]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+	&lt;dynamic-element name=&quot;htmlContent&quot; type=&quot;text_area&quot; index-type=&quot;keyword&quot; index=&quot;0&quot; instance-id=&quot;yyuf&quot;&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[&lt;p&gt;-Alexandra F., Satisfied Customer&lt;/p&gt;]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+&lt;/root&gt;</__content>
+  <__DDMStructureKey>21609</__DDMStructureKey>
+  <__originalDDMStructureKey>21609</__originalDDMStructureKey>
+  <__DDMTemplateKey>21613</__DDMTemplateKey>
+  <__originalDDMTemplateKey>21613</__originalDDMTemplateKey>
+  <__layoutUuid></__layoutUuid>
+  <__originalLayoutUuid></__originalLayoutUuid>
+  <__displayDate class="sql-timestamp">2015-12-03 21:31:00.0</__displayDate>
+  <__originalDisplayDate class="sql-timestamp" reference="../__displayDate"/>
+  <__indexable>true</__indexable>
+  <__originalIndexable>true</__originalIndexable>
+  <__setOriginalIndexable>false</__setOriginalIndexable>
+  <__smallImage>false</__smallImage>
+  <__smallImageId>31112</__smallImageId>
+  <__originalSmallImageId>31112</__originalSmallImageId>
+  <__setOriginalSmallImageId>false</__setOriginalSmallImageId>
+  <__smallImageURL></__smallImageURL>
+  <__status>0</__status>
+  <__originalStatus>0</__originalStatus>
+  <__setOriginalStatus>false</__setOriginalStatus>
+  <__statusByUserId>20120</__statusByUserId>
+  <__statusByUserName></__statusByUserName>
+  <__statusDate class="sql-timestamp">2016-02-03 15:09:11.822</__statusDate>
+  <__columnBitmask>0</__columnBitmask>
+</JournalArticle>

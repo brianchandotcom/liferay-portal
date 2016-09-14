@@ -1,5 +1,0 @@
-<?xml version="1.0"?>
-
-<portlet portlet-id="com_liferay_bookmarks_web_portlet_BookmarksAdminPortlet" root-portlet-id="com_liferay_bookmarks_web_portlet_BookmarksAdminPortlet" old-plid="0" scope-group-id="30699" scope-layout-type="" scope-layout-uuid="" private-layout="false">
-	<portlet-data path="/group/30699/portlet/com_liferay_bookmarks_web_portlet_BookmarksAdminPortlet/30699/portlet-data.xml"/>
-</portlet>

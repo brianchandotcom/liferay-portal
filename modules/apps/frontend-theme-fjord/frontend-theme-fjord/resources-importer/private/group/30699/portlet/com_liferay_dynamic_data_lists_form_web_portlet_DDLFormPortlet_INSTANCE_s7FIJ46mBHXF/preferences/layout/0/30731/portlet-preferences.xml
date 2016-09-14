@@ -1,8 +1,0 @@
-<?xml version="1.0"?>
-
-<portlet-preferences owner-id="0" owner-type="3" default-user="false" plid="30731" portlet-id="com_liferay_dynamic_data_lists_form_web_portlet_DDLFormPortlet_INSTANCE_s7FIJ46mBHXF">
-	<preference>
-		<name>recordSetId</name>
-		<value>31257</value>
-	</preference>
-</portlet-preferences>

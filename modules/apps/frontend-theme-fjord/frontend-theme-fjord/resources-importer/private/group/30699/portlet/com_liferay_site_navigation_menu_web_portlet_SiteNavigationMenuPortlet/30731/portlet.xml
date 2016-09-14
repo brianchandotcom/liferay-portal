@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-
-<portlet portlet-id="com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet" root-portlet-id="com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet" old-plid="30731" scope-group-id="30699" private-layout="true">
-	<portlet-preferences path="/group/30699/portlet/com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet/preferences/layout/0/30731/portlet-preferences.xml">
-		<preference-data/>
-	</portlet-preferences>
-</portlet>

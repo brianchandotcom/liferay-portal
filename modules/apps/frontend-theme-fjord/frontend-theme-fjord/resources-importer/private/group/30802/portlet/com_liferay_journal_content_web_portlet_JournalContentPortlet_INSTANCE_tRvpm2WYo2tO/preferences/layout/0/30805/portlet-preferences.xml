@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+
+<portlet-preferences owner-id="0" owner-type="3" default-user="false" plid="30805" portlet-id="com_liferay_journal_content_web_portlet_JournalContentPortlet_INSTANCE_tRvpm2WYo2tO">
+	<preference>
+		<name>ddmTemplateKey</name>
+		<value>21613</value>
+	</preference>
+	<preference>
+		<name>userToolAssetAddonEntryKeys</name>
+		<value/>
+	</preference>
+	<preference>
+		<name>enableViewCountIncrement</name>
+		<value>true</value>
+	</preference>
+	<preference>
+		<name>groupId</name>
+		<value>30802</value>
+	</preference>
+	<preference>
+		<name>articleId</name>
+		<value>31057</value>
+	</preference>
+	<preference>
+		<name>contentMetadataAssetAddonEntryKeys</name>
+		<value/>
+	</preference>
+	<preference>
+		<name>assetEntryId</name>
+		<value>21664</value>
+	</preference>
+</portlet-preferences>

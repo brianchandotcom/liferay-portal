@@ -1095,12 +1095,21 @@ public class HttpImpl implements Http {
 		do {
 			modified = false;
 
-			matcher = _absoluteURLPattern.matcher(url);
+			int index = url.indexOf(Http.PROTOCOL_DELIMITER);
 
-			if (matcher.lookingAt()) {
-				url = url.substring(matcher.end());
+			if (index > 0) {
+				for (int i = 0; i < index; i++) {
+					if (!_isLetterOrNumber(url.charAt(i))) {
+						break;
+					}
 
-				modified = true;
+					if (i == (index - 1)) {
+						url = url.substring(
+							index + Http.PROTOCOL_DELIMITER.length());
+
+						modified = true;
+					}
+				}
 			}
 
 			matcher = _protocolRelativeURLPattern.matcher(url);
@@ -2078,8 +2087,6 @@ public class HttpImpl implements Http {
 
 	private static final ThreadLocal<Cookie[]> _cookies = new ThreadLocal<>();
 
-	private final Pattern _absoluteURLPattern = Pattern.compile(
-		"[a-zA-Z0-9]+://");
 	private final CloseableHttpClient _closeableHttpClient;
 	private final Pattern _nonProxyHostsPattern;
 	private final PoolingHttpClientConnectionManager

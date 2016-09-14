@@ -14,8 +14,6 @@
 
 package com.liferay.jenkins.results.parser;
 
-import java.net.URL;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -89,25 +87,14 @@ public abstract class BaseBuild implements Build {
 	public void addDownstreamBuilds(String... urls) {
 		boolean downstreamBuildAdded = false;
 
-		List<URL> downstreamBuildURLs = new ArrayList<>(
-			downstreamBuilds.size());
-
 		try {
-			for (Build downstreamBuild : downstreamBuilds) {
-				URL url = new URL(downstreamBuild.getBuildURL());
-
-				downstreamBuildURLs.add(url);
-			}
-
 			for (String url : urls) {
-				URL addURL = new URL(
-					JenkinsResultsParserUtil.getLocalURL(decodeURL(url)));
+				url = JenkinsResultsParserUtil.getLocalURL(decodeURL(url));
 
-				if (!downstreamBuildURLs.contains(addURL)) {
+				if (!hasBuildURL(url)) {
 					downstreamBuildAdded = true;
 
-					downstreamBuilds.add(
-						BuildFactory.newBuild(addURL.toString(), this));
+					downstreamBuilds.add(BuildFactory.newBuild(url, this));
 				}
 			}
 
@@ -341,6 +328,27 @@ public abstract class BaseBuild implements Build {
 		}
 
 		throw new RuntimeException("Unknown status: " + status + ".");
+	}
+
+	@Override
+	public boolean hasBuildURL(String buildURL) {
+		buildURL = decodeURL(buildURL);
+
+		buildURL = JenkinsResultsParserUtil.getLocalURL(buildURL);
+
+		String myBuildURL = getBuildURL();
+
+		if ((myBuildURL != null) && myBuildURL.equals(buildURL)) {
+			return true;
+		}
+
+		for (Build downstreamBuild : downstreamBuilds) {
+			if (downstreamBuild.hasBuildURL(buildURL)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	@Override

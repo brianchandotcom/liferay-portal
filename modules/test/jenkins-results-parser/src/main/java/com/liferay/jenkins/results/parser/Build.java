@@ -58,6 +58,8 @@ public interface Build {
 
 	public String getStatusReport(int indentSize);
 
+	public boolean hasBuildURL(String buildURL);
+
 	public void reinvoke();
 
 	public void update();

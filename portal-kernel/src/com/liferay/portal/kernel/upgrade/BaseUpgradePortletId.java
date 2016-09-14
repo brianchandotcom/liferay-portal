@@ -93,19 +93,6 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 	}
 
 	protected String getNewTypeSettings(
-		String typeSettings, String oldRootPortletId, String newRootPortletId,
-		List<String> columnIds, boolean exactMatch) {
-
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties(true);
-
-		typeSettingsProperties.fastLoad(typeSettings);
-
-		return getNewTypeSettings(
-			typeSettingsProperties, oldRootPortletId, newRootPortletId,
-			columnIds, exactMatch);
-	}
-
-	protected String getNewTypeSettings(
 		UnicodeProperties typeSettingsProperties, String oldRootPortletId,
 		String newRootPortletId, List<String> columnIds, boolean exactMatch) {
 

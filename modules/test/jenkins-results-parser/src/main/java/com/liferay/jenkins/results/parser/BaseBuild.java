@@ -15,7 +15,9 @@
 package com.liferay.jenkins.results.parser;
 
 import java.io.UnsupportedEncodingException;
+
 import java.net.URLDecoder;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -34,6 +36,30 @@ import org.json.JSONObject;
  * @author Kevin Yen
  */
 public abstract class BaseBuild implements Build {
+
+	@Override
+	public void addDownstreamBuilds(String... urls) {
+		boolean downstreamBuildAdded = false;
+
+		try {
+			for (String url : urls) {
+				url = JenkinsResultsParserUtil.getLocalURL(decodeURL(url));
+
+				if (!hasBuildURL(url)) {
+					downstreamBuildAdded = true;
+
+					downstreamBuilds.add(BuildFactory.newBuild(url, this));
+				}
+			}
+
+			if (downstreamBuildAdded) {
+				setStatus("running");
+			}
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
 
 	public JSONObject getBuildJSONObject() throws Exception {
 		return getBuildJSONObject(null);
@@ -78,30 +104,6 @@ public abstract class BaseBuild implements Build {
 				JenkinsResultsParserUtil.getLocalURL(
 					getBuildURL() + "/consoleText"),
 				false);
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@Override
-	public void addDownstreamBuilds(String... urls) {
-		boolean downstreamBuildAdded = false;
-
-		try {
-			for (String url : urls) {
-				url = JenkinsResultsParserUtil.getLocalURL(decodeURL(url));
-
-				if (!hasBuildURL(url)) {
-					downstreamBuildAdded = true;
-
-					downstreamBuilds.add(BuildFactory.newBuild(url, this));
-				}
-			}
-
-			if (downstreamBuildAdded) {
-				setStatus("running");
-			}
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);

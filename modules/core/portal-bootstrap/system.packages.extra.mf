@@ -2926,7 +2926,7 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  feray.portal.kernel.service,com.liferay.portal.kernel.util,com.lifera
  y.trash.kernel.model,javax.portlet,javax.servlet,javax.servlet.http",
  com.liferay.portal.kernel.tree;version="2.1.0";uses:="com.liferay.por
- tal.kernel.exception",com.liferay.portal.kernel.upgrade;version="7.1.
+ tal.kernel.exception",com.liferay.portal.kernel.upgrade;version="7.2.
  0";uses:="com.liferay.portal.kernel.dao.db,com.liferay.portal.kernel.
  exception,com.liferay.portal.kernel.upgrade.util,com.liferay.portal.k
  ernel.util,com.liferay.portal.kernel.xml,javax.portlet",com.liferay.p

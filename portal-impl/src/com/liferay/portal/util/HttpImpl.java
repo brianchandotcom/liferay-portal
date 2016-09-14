@@ -1113,11 +1113,9 @@ public class HttpImpl implements Http {
 			}
 
 			for (int i = 0; i < url.length(); i++) {
-				char targetChar = url.charAt(i);
+				char c = url.charAt(i);
 
-				if ((targetChar != CharPool.SLASH) &&
-					(targetChar != CharPool.BACK_SLASH)) {
-
+				if ((c != CharPool.SLASH) && (c != CharPool.BACK_SLASH)) {
 					if (i != 0) {
 						url = url.substring(i);
 

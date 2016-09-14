@@ -375,8 +375,10 @@ public class ProjectTemplatesTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testBuildTemplateOnExistingDirectory() throws Exception {
-		_buildTemplateWithGradle("activator", "dup-activator");
-		_buildTemplateWithGradle("activator", "dup-activator");
+		File destinationDir = temporaryFolder.newFolder("gradle");
+
+		_buildTemplateWithGradle(destinationDir, "activator", "dup-activator");
+		_buildTemplateWithGradle(destinationDir, "activator", "dup-activator");
 	}
 
 	@Test
@@ -634,7 +636,7 @@ public class ProjectTemplatesTest {
 	@Test
 	public void testBuildTemplateWithPackageName() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
-			null, "barfoo", "--package-name", "foo.bar");
+			"", "barfoo", "--package-name", "foo.bar");
 
 		_testExists(
 			gradleProjectDir, "src/main/resources/META-INF/resources/init.jsp");
@@ -702,10 +704,8 @@ public class ProjectTemplatesTest {
 	}
 
 	private File _buildTemplateWithGradle(
-			String template, String name, String... args)
+			File destinationDir, String template, String name, String... args)
 		throws Exception {
-
-		File destinationDir = temporaryFolder.newFolder("gradle");
 
 		List<String> completeArgs = new ArrayList<>(args.length + 6);
 
@@ -737,6 +737,15 @@ public class ProjectTemplatesTest {
 		_testNotExists(projectDir, "pom.xml");
 
 		return projectDir;
+	}
+
+	private File _buildTemplateWithGradle(
+			String template, String name, String... args)
+		throws Exception {
+
+		File destinationDir = temporaryFolder.newFolder("gradle");
+
+		return _buildTemplateWithGradle(destinationDir, template, name, args);
 	}
 
 	private File _buildTemplateWithMaven(

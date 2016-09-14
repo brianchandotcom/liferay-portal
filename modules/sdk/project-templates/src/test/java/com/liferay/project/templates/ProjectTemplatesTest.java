@@ -19,6 +19,7 @@ import aQute.bnd.main.bnd;
 import com.liferay.project.templates.internal.util.Validator;
 import com.liferay.project.templates.util.FileTestUtil;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -36,6 +37,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
 import java.util.ArrayList;
@@ -77,6 +79,26 @@ public class ProjectTemplatesTest {
 
 		_httpProxyHost = System.getProperty("http.proxyHost");
 		_httpProxyPort = System.getProperty("http.proxyPort");
+
+		List<URL> mavenEmbedderDependencyURLs = new ArrayList<>();
+
+		try (BufferedReader bufferedReader = Files.newBufferedReader(
+				Paths.get("build", "maven-embedder-dependencies.txt"))) {
+
+			String line;
+
+			while ((line = bufferedReader.readLine()) != null) {
+				Path path = Paths.get(line);
+
+				URI uri = path.toUri();
+
+				mavenEmbedderDependencyURLs.add(uri.toURL());
+			}
+		}
+
+		_mavenEmbedderDependencyURLs = mavenEmbedderDependencyURLs.toArray(
+			new URL[mavenEmbedderDependencyURLs.size()]);
+
 		_repositoryUrl = System.getProperty("repository.url");
 	}
 
@@ -877,21 +899,9 @@ public class ProjectTemplatesTest {
 	private void _executeMaven(File projectDir, String[] args)
 		throws Exception {
 
-		File deps = new File("build/maven-embedder-dependencies.txt");
+		try (URLClassLoader classLoader = new URLClassLoader(
+				_mavenEmbedderDependencyURLs, null)) {
 
-		String[] lines = FileTestUtil.readLines(deps);
-
-		URL[] urls = new URL[lines.length];
-
-		for (int i = 0; i < lines.length; i++) {
-			File file = new File(lines[i]);
-
-			URI uri = file.toURI();
-
-			urls[i] = uri.toURL();
-		}
-
-		try (URLClassLoader classLoader = new URLClassLoader(urls, null)) {
 			Class<?> mavenCliClass = classLoader.loadClass(
 				"org.apache.maven.cli.MavenCli");
 
@@ -1146,6 +1156,7 @@ public class ProjectTemplatesTest {
 	private static URI _gradleDistribution;
 	private static String _httpProxyHost;
 	private static String _httpProxyPort;
+	private static URL[] _mavenEmbedderDependencyURLs;
 	private static String _repositoryUrl;
 
 }

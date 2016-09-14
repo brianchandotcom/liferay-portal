@@ -18,6 +18,7 @@ import aQute.bnd.main.bnd;
 
 import com.liferay.project.templates.internal.util.Validator;
 import com.liferay.project.templates.util.FileTestUtil;
+import com.liferay.project.templates.util.StringTestUtil;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -536,7 +537,7 @@ public class ProjectTemplatesTest {
 		File mavenBundleFile = _testExists(
 			mavenProjectDir, "target/servicepreaction-1.0.0.jar");
 
-		_executeBndDiff(gradleBundleFile, mavenBundleFile);
+		_testBundlesDiff(gradleBundleFile, mavenBundleFile);
 	}
 
 	@Test
@@ -598,7 +599,7 @@ public class ProjectTemplatesTest {
 		File mavenBundleFile = _testExists(
 			mavenProjectDir, "target/serviceoverride-1.0.0.jar");
 
-		_executeBndDiff(gradleBundleFile, mavenBundleFile);
+		_testBundlesDiff(gradleBundleFile, mavenBundleFile);
 	}
 
 	@Test
@@ -708,16 +709,21 @@ public class ProjectTemplatesTest {
 	public final TemporaryFolder temporaryFolder = new TemporaryFolder();
 
 	private void _buildProjects(
-			File gradleProjectDir, File mavenProjectDir, String gradleFileName,
-			String mavenFileName)
+			File gradleProjectDir, File mavenProjectDir,
+			String gradleBundleFileName, String mavenBundleFileName)
 		throws Exception {
 
 		_executeGradle(gradleProjectDir, _GRADLE_TASK_PATH_BUILD);
 
+		File gradleBundleFile = _testExists(
+			gradleProjectDir, gradleBundleFileName);
+
 		_executeMaven(mavenProjectDir, _MAVEN_GOAL_PACKAGE);
 
-		_verifyBuilds(
-			gradleProjectDir, mavenProjectDir, gradleFileName, mavenFileName);
+		File mavenBundleFile = _testExists(
+			mavenProjectDir, mavenBundleFileName);
+
+		_testBundlesDiff(gradleBundleFile, mavenBundleFile);
 	}
 
 	private File _buildTemplateWithGradle(
@@ -797,44 +803,6 @@ public class ProjectTemplatesTest {
 		_testNotExists(projectDir, "gradle/wrapper/gradle-wrapper.properties");
 
 		return projectDir;
-	}
-
-	private void _executeBndDiff(File gradleBundleFile, File mavenBundleFile)
-		throws Exception {
-
-		StringBuilder exclusions = new StringBuilder();
-
-		exclusions.append("Archiver-Version, ");
-		exclusions.append("Build-Jdk, ");
-		exclusions.append("Built-By, ");
-		exclusions.append("Javac-Debug, ");
-		exclusions.append("Javac-Deprecation, ");
-		exclusions.append("Javac-Encoding, ");
-		exclusions.append("*pom.properties, ");
-		exclusions.append("*pom.xml");
-
-		String[] args = {
-			"diff", "-i", exclusions.toString(), gradleBundleFile.getPath(),
-			mavenBundleFile.getPath()
-		};
-
-		ByteArrayOutputStream output = new ByteArrayOutputStream();
-
-		PrintStream ps = new PrintStream(output);
-
-		System.setOut(ps);
-
-		bnd main = new bnd();
-
-		try {
-			main.start(args);
-		}
-		finally {
-			main.close();
-		}
-
-		Assert.assertEquals(
-			"output jars do not match", "", new String(output.toByteArray()));
 	}
 
 	private void _executeGradle(File projectDir, String... taskPaths)
@@ -1032,8 +1000,37 @@ public class ProjectTemplatesTest {
 			mavenProjectDir,
 			serviceProjectName + "/target/" + name + "-service-1.0.0.jar");
 
-		_executeBndDiff(gradleBundleApiFile, mavenBundleApiFile);
-		_executeBndDiff(gradleBundleServiceFile, mavenBundleServiceFile);
+		_testBundlesDiff(gradleBundleApiFile, mavenBundleApiFile);
+		_testBundlesDiff(gradleBundleServiceFile, mavenBundleServiceFile);
+	}
+
+	private void _testBundlesDiff(File bundleFile1, File bundleFile2)
+		throws Exception {
+
+		PrintStream originalPrintStream = System.out;
+
+		originalPrintStream.flush();
+
+		ByteArrayOutputStream byteArrayOutputStream =
+			new ByteArrayOutputStream();
+
+		try (bnd bnd = new bnd()) {
+			System.setOut(new PrintStream(byteArrayOutputStream, true));
+
+			String[] args = {
+				"diff", "--ignore", _BUNDLES_DIFF_IGNORES,
+				bundleFile1.getAbsolutePath(), bundleFile2.getAbsolutePath()
+			};
+
+			bnd.start(args);
+		}
+		finally {
+			System.setOut(originalPrintStream);
+		}
+
+		Assert.assertEquals(
+			"Bundle " + bundleFile1 + " and " + bundleFile2 + " do not match",
+			"", byteArrayOutputStream.toString());
 	}
 
 	private File _testContains(File dir, String fileName, String... strings)
@@ -1065,18 +1062,6 @@ public class ProjectTemplatesTest {
 		Assert.assertFalse("Unexpected " + fileName, file.exists());
 
 		return file;
-	}
-
-	private void _verifyBuilds(
-			File gradleProjectDir, File mavenProjectDir, String gradleFileName,
-			String mavenFileName)
-		throws Exception {
-
-		File gradleBundleFile = _testExists(gradleProjectDir, gradleFileName);
-
-		File mavenBundleFile = _testExists(mavenProjectDir, mavenFileName);
-
-		_executeBndDiff(gradleBundleFile, mavenBundleFile);
 	}
 
 	private void _writeServiceClass(File gradleProjectDir) throws IOException {
@@ -1121,6 +1106,10 @@ public class ProjectTemplatesTest {
 				}
 			}
 	}
+
+	private static final String _BUNDLES_DIFF_IGNORES = StringTestUtil.merge(
+		"*pom.properties", "*pom.xml", "Archiver-Version", "Build-Jdk",
+		"Built-By", "Javac-Debug", "Javac-Deprecation", "Javac-Encoding");
 
 	private static final String _GRADLE_TASK_PATH_BUILD = ":build";
 

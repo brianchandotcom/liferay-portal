@@ -10,8 +10,8 @@ localization mechanism in the generated `.soy.js` files by replacing
 
 ### Changed
 - [LPS-67573]: Make most methods private in order to reduce API surface.
-- [LPS-67573]: Move `BuildSoyTask` in `com.liferay.gradle.plugins.soy.tasks`
-package.
+- [LPS-67573]: Move `BuildSoyTask` from the `com.liferay.gradle.plugins.soy`
+package to the `com.liferay.gradle.plugins.soy.tasks` package.
 
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573
 [LPS-67766]: https://issues.liferay.com/browse/LPS-67766

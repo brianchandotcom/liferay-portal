@@ -91,15 +91,6 @@ renderResponse.setTitle((role == null) ? LanguageUtil.get(request, "new-role") :
 				</c:otherwise>
 			</c:choose>
 
-			<c:choose>
-				<c:when test="<%= (role != null) && role.isSystem() %>">
-					<aui:input name="name" type="hidden" value="<%= role.getName() %>" />
-				</c:when>
-				<c:otherwise>
-					<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" label='<%= (role != null) ? "new-name" : "name" %>' name="name" />
-				</c:otherwise>
-			</c:choose>
-
 			<aui:input name="title" />
 
 			<aui:input name="description" />
@@ -140,6 +131,15 @@ renderResponse.setTitle((role == null) ? LanguageUtil.get(request, "new-role") :
 					</aui:select>
 				</c:if>
 			</c:if>
+
+			<c:choose>
+				<c:when test="<%= (role != null) && role.isSystem() %>">
+					<aui:input name="name" type="hidden" value="<%= role.getName() %>" />
+				</c:when>
+				<c:otherwise>
+					<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" helpMessage="key-field-help" label="key" name="name" />
+				</c:otherwise>
+			</c:choose>
 
 			<%
 			ExpandoBridge roleExpandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.getCompanyId(), Role.class.getName(), (role != null) ? role.getRoleId() : 0);

@@ -168,3 +168,21 @@ renderResponse.setTitle((role == null) ? LanguageUtil.get(request, "new-role") :
 		</aui:fieldset>
 	</aui:fieldset-group>
 </aui:form>
+
+<c:if test="<%= role == null %>">
+	<aui:script sandbox="<%= true %>">
+		var form = $(document.<portlet:namespace />fm);
+
+		var nameInput = form.fm('name');
+		var titleInput = form.fm('title');
+
+		var onTitleInput = _.debounce(
+			function(event) {
+				nameInput.val(titleInput.val());
+			},
+			200
+		);
+
+		titleInput.on('input', onTitleInput);
+	</aui:script>
+</c:if>

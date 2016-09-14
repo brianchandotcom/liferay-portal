@@ -228,20 +228,15 @@ public class ReleaseManagerOSGiCommands {
 		String bundleSymbolicName,
 		ServiceTrackerMap<String, List<UpgradeInfo>> serviceTrackerMap) {
 
-		ReleaseGraphManager releaseGraphManager = new ReleaseGraphManager(
-			serviceTrackerMap.getService(bundleSymbolicName));
-
-		String schemaVersionString = getSchemaVersionString(bundleSymbolicName);
-
-		List<List<UpgradeInfo>> upgradeInfosList =
-			releaseGraphManager.getUpgradeInfosList(schemaVersionString);
+		List<List<UpgradeInfo>> upgradeInfosList = getCurrentUpgradeInfoList(
+			bundleSymbolicName);
 
 		int size = upgradeInfosList.size();
 
 		if (size > 1) {
 			throw new IllegalStateException(
 				"There are " + size + " possible end nodes for " +
-					schemaVersionString);
+					getSchemaVersionString(bundleSymbolicName));
 		}
 
 		if (size == 0) {

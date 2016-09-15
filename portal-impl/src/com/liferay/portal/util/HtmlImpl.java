@@ -225,6 +225,8 @@ public class HtmlImpl implements Html {
 
 		StringBuilder sb = new StringBuilder(text.length());
 
+		char[] hexBuffer = new char[4];
+
 		for (int i = 0; i < text.length(); i++) {
 			char c = text.charAt(i);
 
@@ -243,13 +245,8 @@ public class HtmlImpl implements Html {
 			else {
 				sb.append(prefix);
 
-				String hexString = StringUtil.toHexString(c);
+				_appendHexChars(sb, hexBuffer, c);
 
-				if (hexString.length() == 1) {
-					sb.append(CharPool.NUMBER_0);
-				}
-
-				sb.append(hexString);
 				sb.append(postfix);
 
 				if ((mode == ESCAPE_MODE_CSS) && (i < (text.length() - 1))) {
@@ -824,6 +821,25 @@ public class HtmlImpl implements Html {
 		return pos;
 	}
 
+	private static void _appendHexChars(
+		StringBuilder sb, char[] buffer, char c) {
+
+		int index = buffer.length;
+
+		do {
+			buffer[--index] = _HEX_DIGITS[c & 15];
+
+			c >>>= 4;
+		}
+		while (c != 0);
+
+		if (index == (buffer.length - 1)) {
+			sb.append(CharPool.NUMBER_0);
+		}
+
+		sb.append(buffer, index, buffer.length - index);
+	}
+
 	private boolean _isUnicodeCompatibilityCharacter(char c) {
 		if (((c >= '\u007f') && (c <= '\u0084')) ||
 			((c >= '\u0086') && (c <= '\u009f')) ||
@@ -846,6 +862,11 @@ public class HtmlImpl implements Html {
 
 		return false;
 	}
+
+	private static final char[] _HEX_DIGITS = {
+		'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd',
+		'e', 'f'
+	};
 
 	private static final String[] _MS_WORD_HTML = new String[] {
 		"&reg;", StringPool.APOSTROPHE, StringPool.QUOTE, StringPool.QUOTE

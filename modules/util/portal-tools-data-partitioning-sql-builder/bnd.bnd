@@ -4,7 +4,8 @@ Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.portal.tools.data.partitioning.sql.builder.exporter,\
 	com.liferay.portal.tools.data.partitioning.sql.builder.exporter.context,\
-	com.liferay.portal.tools.data.partitioning.sql.builder.exporter.exception
+	com.liferay.portal.tools.data.partitioning.sql.builder.exporter.exception,\
+	com.liferay.portal.tools.data.partitioning.sql.builder.exporter.serializer
 Main-Class: com.liferay.portal.tools.data.partitioning.sql.builder.Main
 -includeresource:\
 	@HikariCP-[0-9]*.jar,\

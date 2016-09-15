@@ -303,8 +303,7 @@ public class WebServerServlet extends HttpServlet {
 
 					long imageCompanyId = image.getCompanyId();
 
-					if ((imageCompanyId != userCompanyId) &&
-						_processCompanyInactiveRequest(
+					if (_processCompanyInactiveRequest(
 							request, response, imageCompanyId)) {
 
 						return;

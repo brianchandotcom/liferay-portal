@@ -67,24 +67,6 @@ portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
 renderResponse.setTitle(role.getTitle(locale));
-
-String breadcrumbKey = null;
-
-if (role.getType() == RoleConstants.TYPE_SITE) {
-	breadcrumbKey = "site-roles";
-}
-else if (role.getType() == RoleConstants.TYPE_ORGANIZATION) {
-	breadcrumbKey = "organization-roles";
-}
-else {
-	breadcrumbKey = "regular-roles";
-}
-
-String breadcrumbTitle = LanguageUtil.get(request, breadcrumbKey);
-
-PortalUtil.addPortletBreadcrumbEntry(request, breadcrumbTitle, redirect);
-
-PortalUtil.addPortletBreadcrumbEntry(request, role.getName(), currentURL);
 %>
 
 <liferay-frontend:add-menu>
@@ -158,11 +140,6 @@ String[] tabs2Urls = {
 			<aui:input name="removeUserIds" type="hidden" />
 			<aui:input name="addGroupIds" type="hidden" />
 			<aui:input name="removeGroupIds" type="hidden" />
-
-			<liferay-ui:breadcrumb
-				showLayout="<%= false %>"
-				showPortletBreadcrumb="<%= true %>"
-			/>
 
 			<liferay-ui:section>
 				<liferay-util:include page="/edit_role_assignments_users.jsp" servletContext="<%= application %>" />
@@ -254,18 +231,3 @@ String[] tabs2Urls = {
 		}
 	);
 </aui:script>
-
-<%
-PortletURL assignMembersURL = renderResponse.createRenderURL();
-
-assignMembersURL.setParameter("mvcPath", "/edit_role_assignments.jsp");
-assignMembersURL.setParameter("redirect", redirect);
-assignMembersURL.setParameter("roleId", String.valueOf(role.getRoleId()));
-assignMembersURL.setParameter("tabs1", "assignees");
-
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "assignees"), assignMembersURL.toString());
-
-assignMembersURL.setParameter("tabs2", tabs2);
-
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, tabs2), assignMembersURL.toString());
-%>

@@ -168,7 +168,3 @@ renderResponse.setTitle((role == null) ? LanguageUtil.get(request, "new-role") :
 		</aui:fieldset>
 	</aui:fieldset-group>
 </aui:form>
-
-<%
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, ((role == null) ? "add-role" : "details")), currentURL);
-%>

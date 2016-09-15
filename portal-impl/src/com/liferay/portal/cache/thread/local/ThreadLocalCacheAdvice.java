@@ -38,44 +38,22 @@ public class ThreadLocalCacheAdvice
 	extends AnnotationChainableMethodAdvice<ThreadLocalCachable> {
 
 	@Override
-	public void afterReturning(MethodInvocation methodInvocation, Object result)
-		throws Throwable {
+	public ThreadLocalCachable getNullAnnotation() {
+		return _nullThreadLocalCacheable;
+	}
 
+	@Override
+	public Object invoke(MethodInvocation methodInvocation) throws Throwable {
 		ThreadLocalCachable threadLocalCachable = findAnnotation(
 			methodInvocation);
 
 		if (threadLocalCachable == _nullThreadLocalCacheable) {
-			return;
+			return methodInvocation.proceed();
 		}
 
 		Serializable cacheName = _getCacheName(methodInvocation);
 
 		ThreadLocalCache<Object> threadLocalCache =
-			ThreadLocalCacheManager.getThreadLocalCache(
-				threadLocalCachable.scope(), cacheName);
-
-		String cacheKey = _getCacheKey(methodInvocation.getArguments());
-
-		if (result == null) {
-			threadLocalCache.put(cacheKey, nullResult);
-		}
-		else {
-			threadLocalCache.put(cacheKey, result);
-		}
-	}
-
-	@Override
-	public Object before(MethodInvocation methodInvocation) throws Throwable {
-		ThreadLocalCachable threadLocalCachable = findAnnotation(
-			methodInvocation);
-
-		if (threadLocalCachable == _nullThreadLocalCacheable) {
-			return null;
-		}
-
-		Serializable cacheName = _getCacheName(methodInvocation);
-
-		ThreadLocalCache<?> threadLocalCache =
 			ThreadLocalCacheManager.getThreadLocalCache(
 				threadLocalCachable.scope(), cacheName);
 
@@ -87,12 +65,16 @@ public class ThreadLocalCacheAdvice
 			return null;
 		}
 
-		return value;
-	}
+		Object result = methodInvocation.proceed();
 
-	@Override
-	public ThreadLocalCachable getNullAnnotation() {
-		return _nullThreadLocalCacheable;
+		if (result == null) {
+			threadLocalCache.put(cacheKey, nullResult);
+		}
+		else {
+			threadLocalCache.put(cacheKey, result);
+		}
+
+		return result;
 	}
 
 	private String _getCacheKey(Object[] arguments) {

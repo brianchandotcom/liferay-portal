@@ -26,33 +26,36 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = new ArrayList<>
 
 <liferay-portlet:renderURL portletConfiguration="<%= true %>" varImpl="configurationRenderURL" />
 
-<div class="portlet-configuration-body-content">
-	<aui:form action="<%= configurationActionURL %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit="event.preventDefault();">
-		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-		<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL.toString() %>" />
-		<aui:input name="groupId" type="hidden" />
-		<aui:input name="typeSelection" type="hidden" />
-		<aui:input name="assetEntryId" type="hidden" />
-		<aui:input name="assetEntryOrder" type="hidden" value="-1" />
-		<aui:input name="assetEntryType" type="hidden" />
 
-		<%
-		request.setAttribute("configuration.jsp-classTypesAssetRendererFactories", classTypesAssetRendererFactories);
-		request.setAttribute("configuration.jsp-configurationRenderURL", configurationRenderURL);
-		request.setAttribute("configuration.jsp-redirect", redirect);
-		%>
+<aui:form action="<%= configurationActionURL %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit="event.preventDefault();">
+	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
+	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL.toString() %>" />
+	<aui:input name="groupId" type="hidden" />
+	<aui:input name="typeSelection" type="hidden" />
+	<aui:input name="assetEntryId" type="hidden" />
+	<aui:input name="assetEntryOrder" type="hidden" value="-1" />
+	<aui:input name="assetEntryType" type="hidden" />
 
-		<liferay-ui:form-navigator
-			id="<%= AssetPublisherConstants.FORM_NAVIGATOR_ID_CONFIGURATION %>"
-			markupView="lexicon"
-			showButtons="<%= false %>"
-		/>
+	<%
+	request.setAttribute("configuration.jsp-classTypesAssetRendererFactories", classTypesAssetRendererFactories);
+	request.setAttribute("configuration.jsp-configurationRenderURL", configurationRenderURL);
+	request.setAttribute("configuration.jsp-redirect", redirect);
+	%>
 
-		<aui:button-row>
-			<aui:button cssClass="btn-lg" onClick='<%= renderResponse.getNamespace() + "saveSelectBoxes();" %>' type="submit" />
-		</aui:button-row>
-	</aui:form>
-</div>
+	<div class="portlet-configuration-body-content">
+		<div class="container-fluid-1280">
+			<liferay-ui:form-navigator
+				id="<%= AssetPublisherConstants.FORM_NAVIGATOR_ID_CONFIGURATION %>"
+				markupView="lexicon"
+				showButtons="<%= false %>"
+			/>
+		</div>
+	</div>
+
+	<aui:button-row>
+		<aui:button cssClass="btn-lg" onClick='<%= renderResponse.getNamespace() + "saveSelectBoxes();" %>' type="submit" />
+	</aui:button-row>
+</aui:form>
 
 <aui:script>
 	function <portlet:namespace />saveSelectBoxes() {

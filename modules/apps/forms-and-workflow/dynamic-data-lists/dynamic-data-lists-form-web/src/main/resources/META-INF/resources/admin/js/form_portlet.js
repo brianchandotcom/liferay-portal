@@ -141,6 +141,7 @@ AUI.add(
 						var instance = this;
 
 						instance.get('formBuilder').destroy();
+						instance.get('ruleBuilder').destroy();
 
 						(new A.EventHandle(instance._eventHandlers)).detach();
 					},

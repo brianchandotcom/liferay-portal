@@ -46,8 +46,10 @@ AUI.add(
 						instance.on('*:saveRule', A.bind(instance._handleSaveRule, instance));
 						instance.on('*:cancelRule', A.bind(instance._handleCancelRule, instance));
 
-						boundingBox.delegate('click', A.bind(instance._handleEditCardClick, instance), '.rule-card-edit');
-						boundingBox.delegate('click', A.bind(instance._handleDeleteCardClick, instance), '.rule-card-delete');
+						instance._eventHandlers = [
+							boundingBox.delegate('click', A.bind(instance._handleDeleteCardClick, instance), '.rule-card-delete'),
+							boundingBox.delegate('click', A.bind(instance._handleEditCardClick, instance), '.rule-card-edit')
+						];
 					},
 
 					syncUI: function() {
@@ -62,6 +64,12 @@ AUI.add(
 						instance.get('boundingBox').setHTML(rulesBuilder);
 
 						instance._renderCards(instance.get('rules'));
+					},
+
+					destructor: function() {
+						var instance = this;
+
+						(new A.EventHandle(instance._eventHandlers)).detach();
 					},
 
 					getFields: function() {

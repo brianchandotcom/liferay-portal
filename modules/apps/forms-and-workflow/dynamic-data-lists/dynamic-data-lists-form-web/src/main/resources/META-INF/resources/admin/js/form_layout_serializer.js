@@ -78,17 +78,18 @@ AUI.add(
 
 						var pages = builder.get('pages');
 
-
 						var descriptions = pages.get('descriptions');
 						var titles = pages.get('titles');
 
 						var languageId = instance.get('defaultLanguageId');
 
 						var description = {};
+
 						description[languageId] = descriptions[index] || '';
 
 						var title = {};
-						title[languageId] = titles[index] || ''
+
+						title[languageId] = titles[index] || '';
 
 						return {
 							description: description,

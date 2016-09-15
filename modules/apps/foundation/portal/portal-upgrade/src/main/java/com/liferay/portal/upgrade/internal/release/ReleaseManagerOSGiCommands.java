@@ -98,7 +98,7 @@ public class ReleaseManagerOSGiCommands {
 
 			StringBundler sb = new StringBundler(7);
 
-			sb.append("Dry run upgrade ");
+			sb.append("Would upgrade ");
 			sb.append(bundleSymbolicName);
 			sb.append(" from ");
 			sb.append(schemaVersionString);

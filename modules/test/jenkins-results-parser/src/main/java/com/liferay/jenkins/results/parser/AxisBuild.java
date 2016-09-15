@@ -71,7 +71,7 @@ public class AxisBuild extends BaseBuild {
 
 		setBuildNumber(Integer.parseInt(matcher.group("buildNumber")));
 
-		loadParameters();
+		loadParametersFromBuildJSONObject();
 
 		setStatus("running");
 	}

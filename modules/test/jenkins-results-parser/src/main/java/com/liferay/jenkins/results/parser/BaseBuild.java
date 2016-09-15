@@ -650,7 +650,8 @@ public abstract class BaseBuild implements Build {
 		return parameterNames;
 	}
 
-	protected Map<String, String> getParameters(JSONObject buildJSONObject)
+	protected Map<String, String> getParametersFromBuildJSONObject(
+			JSONObject buildJSONObject)
 		throws Exception {
 
 		JSONArray actionsJSONArray = buildJSONObject.getJSONArray("actions");
@@ -665,13 +666,14 @@ public abstract class BaseBuild implements Build {
 			JSONArray parametersJSONArray = jsonObject.getJSONArray(
 				"parameters");
 
-			return getParameters(parametersJSONArray);
+			return getParametersFromJSONArray(parametersJSONArray);
 		}
 
 		return new HashMap<>();
 	}
 
-	protected Map<String, String> getParameters(JSONArray jsonArray)
+	protected Map<String, String> getParametersFromJSONArray(
+			JSONArray jsonArray)
 		throws Exception {
 
 		Map<String, String> parameters = new HashMap<>(jsonArray.length());
@@ -708,7 +710,9 @@ public abstract class BaseBuild implements Build {
 				continue;
 			}
 
-			if (_parameters.equals(getParameters(queueItemJSONObject))) {
+			if (_parameters.equals(
+					getParametersFromBuildJSONObject(queueItemJSONObject))) {
+
 				return queueItemJSONObject;
 			}
 		}
@@ -734,7 +738,8 @@ public abstract class BaseBuild implements Build {
 
 			Map<String, String> parameters = getParameters();
 
-			if (parameters.equals(getParameters(buildJSONObject)) &&
+			if (parameters.equals(
+					getParametersFromBuildJSONObject(buildJSONObject)) &&
 				!badBuildNumbers.contains(buildJSONObject.getInt("number"))) {
 
 				return buildJSONObject;
@@ -744,7 +749,7 @@ public abstract class BaseBuild implements Build {
 		return null;
 	}
 
-	protected void loadParameters() throws Exception {
+	protected void loadParametersFromBuildJSONObject() throws Exception {
 
 		if (getBuildURL() == null) {
 			return;
@@ -789,7 +794,9 @@ public abstract class BaseBuild implements Build {
 		_parameters = Collections.emptyMap();
 	}
 
-	protected void loadParameters(String queryString) throws Exception {
+	protected void loadParametersFromQueryString(String queryString)
+		throws Exception {
+
 		Set<String> jobParameterNames = getJobParameterNames();
 
 		for (String parameter : queryString.split("&")) {
@@ -822,7 +829,7 @@ public abstract class BaseBuild implements Build {
 		jobName = matcher.group("jobName");
 		master = matcher.group("master");
 
-		loadParameters();
+		loadParametersFromBuildJSONObject();
 
 		_consoleReadCursor = 0;
 
@@ -843,7 +850,7 @@ public abstract class BaseBuild implements Build {
 			jobName = invocationURLMatcher.group("jobName");
 			master = invocationURLMatcher.group("master");
 
-			loadParameters(invocationURL);
+			loadParametersFromQueryString(invocationURL);
 		}
 	}
 

@@ -53,25 +53,6 @@ public abstract class BaseBuild implements Build {
 		}
 	}
 
-	public JSONObject getBuildJSONObject() throws Exception {
-		return getBuildJSONObject(null);
-	}
-
-	public JSONObject getBuildJSONObject(String tree) throws Exception {
-		if (getBuildURL() == null) {
-			return null;
-		}
-
-		if ((tree == null) || tree.isEmpty()) {
-			tree = "actions[parameters[*]],number,result,runs[number,url]";
-		}
-
-		String url = JenkinsResultsParserUtil.getLocalURL(
-			getBuildURL() + "/api/json?pretty&tree=" + tree);
-
-		return JenkinsResultsParserUtil.toJSONObject(url, false);
-	}
-
 	@Override
 	public int getBuildNumber() {
 		return _buildNumber;
@@ -567,15 +548,6 @@ public abstract class BaseBuild implements Build {
 		return foundDownstreamBuildURLs;
 	}
 
-	protected JSONArray getBuildsJSONArray() throws Exception {
-		JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
-			getJobURL() + "/api/json?tree=builds[actions[parameters" +
-				"[name,type,value]],building,duration,number,result,url]",
-			false);
-
-		return jsonObject.getJSONArray("builds");
-	}
-
 	protected String getBuildMessage() {
 		if (jobName != null) {
 			String status = getStatus();
@@ -631,6 +603,34 @@ public abstract class BaseBuild implements Build {
 		}
 
 		return "";
+	}
+
+	protected JSONObject getBuildJSONObject() throws Exception {
+		return getBuildJSONObject(null);
+	}
+
+	protected JSONObject getBuildJSONObject(String tree) throws Exception {
+		if (getBuildURL() == null) {
+			return null;
+		}
+
+		if ((tree == null) || tree.isEmpty()) {
+			tree = "actions[parameters[*]],number,result,runs[number,url]";
+		}
+
+		String url = JenkinsResultsParserUtil.getLocalURL(
+			getBuildURL() + "/api/json?pretty&tree=" + tree);
+
+		return JenkinsResultsParserUtil.toJSONObject(url, false);
+	}
+
+	protected JSONArray getBuildsJSONArray() throws Exception {
+		JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
+			getJobURL() + "/api/json?tree=builds[actions[parameters" +
+				"[name,type,value]],building,duration,number,result,url]",
+			false);
+
+		return jsonObject.getJSONArray("builds");
 	}
 
 	protected ExecutorService getExecutorService() {

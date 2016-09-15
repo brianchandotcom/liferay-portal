@@ -124,6 +124,8 @@ public class PushNotificationsDevicePersistenceTest {
 
 		PushNotificationsDevice newPushNotificationsDevice = _persistence.create(pk);
 
+		newPushNotificationsDevice.setCompanyId(RandomTestUtil.nextLong());
+
 		newPushNotificationsDevice.setUserId(RandomTestUtil.nextLong());
 
 		newPushNotificationsDevice.setCreateDate(RandomTestUtil.nextDate());
@@ -139,6 +141,8 @@ public class PushNotificationsDevicePersistenceTest {
 
 		Assert.assertEquals(existingPushNotificationsDevice.getPushNotificationsDeviceId(),
 			newPushNotificationsDevice.getPushNotificationsDeviceId());
+		Assert.assertEquals(existingPushNotificationsDevice.getCompanyId(),
+			newPushNotificationsDevice.getCompanyId());
 		Assert.assertEquals(existingPushNotificationsDevice.getUserId(),
 			newPushNotificationsDevice.getUserId());
 		Assert.assertEquals(Time.getShortTimestamp(
@@ -199,8 +203,8 @@ public class PushNotificationsDevicePersistenceTest {
 
 	protected OrderByComparator<PushNotificationsDevice> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("PushNotificationsDevice",
-			"pushNotificationsDeviceId", true, "userId", true, "createDate",
-			true, "platform", true, "token", true);
+			"pushNotificationsDeviceId", true, "companyId", true, "userId",
+			true, "createDate", true, "platform", true, "token", true);
 	}
 
 	@Test
@@ -427,6 +431,8 @@ public class PushNotificationsDevicePersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		PushNotificationsDevice pushNotificationsDevice = _persistence.create(pk);
+
+		pushNotificationsDevice.setCompanyId(RandomTestUtil.nextLong());
 
 		pushNotificationsDevice.setUserId(RandomTestUtil.nextLong());
 

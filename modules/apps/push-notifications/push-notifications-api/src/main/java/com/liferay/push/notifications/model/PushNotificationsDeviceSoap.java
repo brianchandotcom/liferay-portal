@@ -36,6 +36,7 @@ public class PushNotificationsDeviceSoap implements Serializable {
 		PushNotificationsDeviceSoap soapModel = new PushNotificationsDeviceSoap();
 
 		soapModel.setPushNotificationsDeviceId(model.getPushNotificationsDeviceId());
+		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setPlatform(model.getPlatform());
@@ -103,6 +104,14 @@ public class PushNotificationsDeviceSoap implements Serializable {
 		_pushNotificationsDeviceId = pushNotificationsDeviceId;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getUserId() {
 		return _userId;
 	}
@@ -136,6 +145,7 @@ public class PushNotificationsDeviceSoap implements Serializable {
 	}
 
 	private long _pushNotificationsDeviceId;
+	private long _companyId;
 	private long _userId;
 	private Date _createDate;
 	private String _platform;

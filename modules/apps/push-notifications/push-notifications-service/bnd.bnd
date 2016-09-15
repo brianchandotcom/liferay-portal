@@ -4,4 +4,5 @@ Bundle-Version: 1.0.6
 Export-Package: com.liferay.push.notifications.service.permission
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
+Liferay-Require-SchemaVersion: 1.0.6
 Liferay-Service: true

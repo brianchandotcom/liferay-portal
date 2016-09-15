@@ -171,17 +171,11 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public String getResult() {
-		if (!_status.equals("completed")) {
-			throw new IllegalStateException("Build not completed");
-		}
-
 		String buildURL = getBuildURL();
 
 		if ((result == null) && (buildURL != null)) {
 			try {
-				JSONObject resultJSONObject =
-					JenkinsResultsParserUtil.toJSONObject(
-						buildURL + "api/json?tree=result");
+				JSONObject resultJSONObject = getBuildJSONObject("result");
 
 				result = resultJSONObject.optString("result");
 
@@ -422,23 +416,19 @@ public abstract class BaseBuild implements Build {
 						}
 					}
 
-					JSONObject buildJSONObject = getBuildJSONObject("result");
+					String result = getResult();
 
-					if (buildJSONObject != null) {
-						String result = buildJSONObject.optString("result");
+					if ((downstreamBuilds.size() ==
+							getDownstreamBuildCount("completed")) &&
+						(result != null)) {
 
-						if ((downstreamBuilds.size() ==
-								getDownstreamBuildCount("completed")) &&
-							!result.isEmpty()) {
-
-							setStatus("completed");
-						}
-						else if (getDownstreamBuildCount("missing") > 0) {
-							setStatus("missing");
-						}
-						else if (getDownstreamBuildCount("starting") > 0) {
-							setStatus("starting");
-						}
+						setStatus("completed");
+					}
+					else if (getDownstreamBuildCount("missing") > 0) {
+						setStatus("missing");
+					}
+					else if (getDownstreamBuildCount("starting") > 0) {
+						setStatus("starting");
 					}
 				}
 			}
@@ -588,23 +578,22 @@ public abstract class BaseBuild implements Build {
 		return "";
 	}
 
-	protected JSONObject getBuildJSONObject() throws Exception {
-		return getBuildJSONObject(null);
-	}
-
 	protected JSONObject getBuildJSONObject(String tree) throws Exception {
 		if (getBuildURL() == null) {
 			return null;
 		}
 
-		if ((tree == null) || tree.isEmpty()) {
-			tree = "actions[parameters[*]],number,result,runs[number,url]";
+		StringBuffer sb = new StringBuffer();
+
+		sb.append(JenkinsResultsParserUtil.getLocalURL(getBuildURL()));
+		sb.append("/api/json?pretty");
+
+		if (tree != null) {
+			sb.append("&tree=");
+			sb.append(tree);
 		}
 
-		String url = JenkinsResultsParserUtil.getLocalURL(
-			getBuildURL() + "/api/json?pretty&tree=" + tree);
-
-		return JenkinsResultsParserUtil.toJSONObject(url, false);
+		return JenkinsResultsParserUtil.toJSONObject(sb.toString(), false);
 	}
 
 	protected JSONArray getBuildsJSONArray() throws Exception {
@@ -755,7 +744,8 @@ public abstract class BaseBuild implements Build {
 			return;
 		}
 
-		JSONObject buildJSONObject = getBuildJSONObject();
+		JSONObject buildJSONObject = getBuildJSONObject(
+			"actions[parameters[*]]");
 
 		JSONArray actionsJSONArray = buildJSONObject.getJSONArray("actions");
 

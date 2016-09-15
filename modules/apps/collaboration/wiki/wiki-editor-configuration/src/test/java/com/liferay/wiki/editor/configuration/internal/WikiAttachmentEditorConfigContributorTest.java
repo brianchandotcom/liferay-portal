@@ -163,6 +163,8 @@ public class WikiAttachmentEditorConfigContributorTest extends PowerMockito {
 			"itemSelectorPortletURLWithWikiUrlAndUploadSelectionViews");
 		expectedJSONObject.put("removePlugins", "plugin1,ae_addimages");
 
+		expectedJSONObject.put("removePlugins", "plugin1,ae_addimages");
+
 		JSONAssert.assertEquals(
 			expectedJSONObject.toJSONString(), jsonObject.toJSONString(), true);
 	}
@@ -218,6 +220,8 @@ public class WikiAttachmentEditorConfigContributorTest extends PowerMockito {
 		expectedJSONObject.put(
 			"filebrowserImageBrowseUrl",
 			"itemSelectorPortletURLWithWikiImageUrlAndUploadSelectionViews");
+		expectedJSONObject.put("removePlugins", "plugin1,ae_addimages");
+
 		expectedJSONObject.put("removePlugins", "plugin1,ae_addimages");
 
 		JSONAssert.assertEquals(
@@ -292,6 +296,8 @@ public class WikiAttachmentEditorConfigContributorTest extends PowerMockito {
 		throws Exception {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		jsonObject.put("removePlugins", "plugin1");
 
 		jsonObject.put(
 			"filebrowserImageBrowseLinkUrl", "defaultItemSelectorPortletURL");

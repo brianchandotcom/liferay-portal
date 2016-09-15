@@ -351,6 +351,8 @@ public abstract class BaseBuild implements Build {
 
 		setStatus("starting");
 
+		_consoleReadCursor = 0;
+
 		System.out.println("Reinvoked: " + invocationURL);
 	}
 
@@ -828,6 +830,8 @@ public abstract class BaseBuild implements Build {
 		master = matcher.group("master");
 
 		loadParameters();
+
+		_consoleReadCursor = 0;
 
 		setStatus("running");
 	}

@@ -39,21 +39,13 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public void addDownstreamBuilds(String... urls) {
-		boolean downstreamBuildAdded = false;
-
 		try {
 			for (String url : urls) {
 				url = JenkinsResultsParserUtil.getLocalURL(decodeURL(url));
 
 				if (!hasBuildURL(url)) {
-					downstreamBuildAdded = true;
-
 					downstreamBuilds.add(BuildFactory.newBuild(url, this));
 				}
-			}
-
-			if (downstreamBuildAdded) {
-				setStatus("running");
 			}
 		}
 		catch (Exception e) {

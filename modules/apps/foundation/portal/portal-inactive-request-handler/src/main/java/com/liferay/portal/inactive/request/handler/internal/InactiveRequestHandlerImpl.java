@@ -85,7 +85,7 @@ public class InactiveRequestHandlerImpl implements InactiveRequestHandler {
 		String html = StringUtil.replace(_content, "[$MESSAGE$]", message);
 
 		printWriter.print(html);
-	};
+	}
 
 	@Activate
 	protected void activate(

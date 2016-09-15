@@ -37,14 +37,14 @@
 		<if>
 			<isset var="contentName" />
 			<then>
-				<var name="key_contentName" value="${contentName}" />
-
-				<execute function="Check#checkToggleSwitch" locator1="Checkbox#STAGED_CONTENT" />
+				<execute function="Check#checkToggleSwitch" locator1="Checkbox#STAGED_CONTENT">
+					<var name="key_contentName" value="${contentName}" />
+				</execute>
 
 				<for list="Documents and Media,Mobile Device Families" param="contentName">
-					<var name="key_contentName" value="${contentName}" />
-
-					<execute function="Uncheck#uncheckToggleSwitchNoErrorNoAssert" locator1="Checkbox#STAGED_CONTENT" />
+					<execute function="Uncheck#uncheckToggleSwitchNoErrorNoAssert" locator1="Checkbox#STAGED_CONTENT">
+						<var name="key_contentName" value="${contentName}" />
+					</execute>
 				</for>
 			</then>
 			<else>

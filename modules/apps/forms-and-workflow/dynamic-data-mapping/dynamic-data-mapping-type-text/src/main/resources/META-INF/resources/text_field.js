@@ -27,6 +27,11 @@ AUI.add(
 						value: []
 					},
 
+					placeholder: {
+						state: true,
+						value: ''
+					},
+
 					type: {
 						value: 'text'
 					}

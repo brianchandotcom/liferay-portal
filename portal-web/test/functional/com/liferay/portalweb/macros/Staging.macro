@@ -34,11 +34,27 @@
 			</then>
 		</if>
 
-		<for list="Application Display Template,Blogs,Bookmarks,Calendar,Documents and Media,Dynamic Data Lists,Message Boards,Mobile Device Families,Polls,Web Content,Wiki" param="contentName">
-			<var name="key_contentName" value="${contentName}" />
+		<if>
+			<isset var="contentName" />
+			<then>
+				<execute function="Check#checkToggleSwitch" locator1="Checkbox#STAGED_CONTENT">
+					<var name="key_contentName" value="${contentName}" />
+				</execute>
 
-			<execute function="Check#checkToggleSwitch" locator1="Checkbox#STAGED_CONTENT" />
-		</for>
+				<for list="Documents and Media,Mobile Device Families" param="contentName">
+					<execute function="Uncheck#uncheckToggleSwitchNoErrorNoAssert" locator1="Checkbox#STAGED_CONTENT">
+						<var name="key_contentName" value="${contentName}" />
+					</execute>
+				</for>
+			</then>
+			<else>
+				<for list="Application Display Template,Blogs,Bookmarks,Calendar,Documents and Media,Dynamic Data Lists,Message Boards,Mobile Device Families,Polls,Web Content,Wiki" param="contentName">
+					<var name="key_contentName" value="${contentName}" />
+
+					<execute function="Check#checkToggleSwitch" locator1="Checkbox#STAGED_CONTENT" />
+				</for>
+			</else>
+		</if>
 
 		<for list="Audience Targeting" param="contentName">
 			<var name="key_contentName" value="${contentName}" />

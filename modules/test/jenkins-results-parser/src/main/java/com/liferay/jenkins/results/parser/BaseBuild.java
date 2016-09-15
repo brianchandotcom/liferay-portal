@@ -370,8 +370,6 @@ public abstract class BaseBuild implements Build {
 						setBuildNumber(runningBuildJSONObject.getInt("number"));
 
 						setStatus("running");
-
-						System.out.println(getBuildMessage());
 					}
 					else {
 						JSONObject queueItemJSONObject =
@@ -386,8 +384,6 @@ public abstract class BaseBuild implements Build {
 								 (queueItemJSONObject == null)) {
 
 							setStatus("missing");
-
-							System.out.println(getBuildMessage());
 						}
 					}
 				}
@@ -434,17 +430,9 @@ public abstract class BaseBuild implements Build {
 							setStatus("completed");
 						}
 						else if (getDownstreamBuildCount("missing") > 0) {
-							System.out.println(
-								"missing: " +
-									getDownstreamBuildCount("missing"));
-
 							setStatus("missing");
 						}
 						else if (getDownstreamBuildCount("starting") > 0) {
-							System.out.println(
-								"starting: " +
-									getDownstreamBuildCount("starting"));
-
 							setStatus("starting");
 						}
 					}

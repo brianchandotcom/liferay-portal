@@ -56,9 +56,7 @@ public class InvokerFilterTest extends PowerMockito {
 
 		httpUtil.setHttp(new HttpImpl());
 
-		PropsUtil propsUtil = new PropsUtil();
-
-		propsUtil.setProps(new PropsImpl());
+		PropsUtil.setProps(new PropsImpl());
 	}
 
 	@Test
@@ -70,15 +68,20 @@ public class InvokerFilterTest extends PowerMockito {
 				HttpMethods.GET,
 				"/c///portal/%2e/login;jsessionid=ae01b0f2af.worker1");
 
+		String originalURI = invokerFilter.getOriginalRequestURI(
+			mockHttpServletRequest);
+
 		Assert.assertEquals(
-			"/c/portal/login", invokerFilter.getURI(mockHttpServletRequest));
+			"/c/portal/login",
+			invokerFilter.getURI(mockHttpServletRequest, originalURI));
 
 		mockHttpServletRequest = new MockHttpServletRequest(
 			HttpMethods.GET,
 			"/c///portal/%2e/../login;jsessionid=ae01b0f2af.worker1");
 
 		Assert.assertEquals(
-			"/c/portal/login", invokerFilter.getURI(mockHttpServletRequest));
+			"/c/portal/login",
+			invokerFilter.getURI(mockHttpServletRequest, originalURI));
 	}
 
 	@Test
@@ -90,26 +93,30 @@ public class InvokerFilterTest extends PowerMockito {
 				HttpMethods.GET,
 				"/c/portal/login;jsessionid=ae01b0f2af.worker1");
 
+		String originalURI = invokerFilter.getOriginalRequestURI(
+			mockHttpServletRequest);
+
 		Assert.assertEquals(
-			"/c/portal/login", invokerFilter.getURI(mockHttpServletRequest));
+			"/c/portal/login",
+			invokerFilter.getURI(mockHttpServletRequest, originalURI));
 	}
 
 	@Test
-	public void testLongURLsWithPath() {
+	public void testLongURLsWithPath() throws Exception {
 		testLongURL("/c/portal/login/");
 	}
 
 	@Test
-	public void testLongURLsWithPathParameters() {
+	public void testLongURLsWithPathParameters() throws Exception {
 		testLongURL("/c/portal/login/;");
 	}
 
 	@Test
-	public void testLongURLsWithQueryString() {
+	public void testLongURLsWithQueryString() throws Exception {
 		testLongURL("/c/portal/login?param=");
 	}
 
-	protected void testLongURL(String urlPrefix) {
+	protected void testLongURL(String urlPrefix) throws Exception {
 		InvokerFilter invokerFilter = new InvokerFilter();
 
 		int invokerFilterUriMaxLength = GetterUtil.getInteger(
@@ -152,9 +159,6 @@ public class InvokerFilterTest extends PowerMockito {
 
 			Assert.assertTrue(
 				logRecord.getMessage().startsWith("Rejected " + urlPrefix));
-		}
-		catch (Exception e) {
-			Assert.fail(e.getMessage());
 		}
 	}
 

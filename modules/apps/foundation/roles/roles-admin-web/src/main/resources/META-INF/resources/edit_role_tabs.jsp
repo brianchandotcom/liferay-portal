@@ -88,14 +88,6 @@ if (role != null) {
 
 		tabs1URLs = ArrayUtil.append(tabs1URLs, assignMembersURL.toString());
 	}
-
-	// Breadcrumbs
-
-	PortalUtil.addPortletBreadcrumbEntry(request, role.getTitle(locale), null);
-
-	request.setAttribute("edit_role_permissions.jsp-role", role);
-
-	request.setAttribute("edit_role_permissions.jsp-portletResource", portletResource);
 }
 %>
 

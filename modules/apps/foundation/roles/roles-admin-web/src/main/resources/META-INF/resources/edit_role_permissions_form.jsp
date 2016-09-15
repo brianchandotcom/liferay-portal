@@ -219,18 +219,4 @@ definePermissionsURL.setParameter(Constants.CMD, Constants.VIEW);
 definePermissionsURL.setParameter("redirect", backURL);
 definePermissionsURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 definePermissionsURL.setParameter("tabs1", "define-permissions");
-
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "define-permissions"), definePermissionsURL.toString());
-
-if (Validator.isNotNull(portletResource)) {
-	PortletURL resourceURL = liferayPortletResponse.createRenderURL();
-
-	resourceURL.setParameter("mvcPath", "/edit_role.jsp");
-	resourceURL.setParameter(Constants.CMD, Constants.EDIT);
-	resourceURL.setParameter("tabs1", "details");
-	resourceURL.setParameter("tabs2", tabs2);
-	resourceURL.setParameter("portletResource", portletResource);
-
-	PortalUtil.addPortletBreadcrumbEntry(request, portletResourceLabel, resourceURL.toString());
-}
 %>

@@ -320,6 +320,7 @@
 				<classpath mode="compile">lib/development/tomcat-coyote.jar</classpath>
 				<classpath mode="compile">lib/development/velocity.jar</classpath>
 				<classpath mode="compile">lib/development/velocity-tools.jar</classpath>
+				<classpath mode="compile">lib/development/websocket-api.jar</classpath>
 				<classpath mode="compile">lib/development/xmltask.jar</classpath>
 				<classpath mode="compile">lib/global/portlet.jar</classpath>
 				<classpath mode="compile">lib/portal/abdera.jar</classpath>

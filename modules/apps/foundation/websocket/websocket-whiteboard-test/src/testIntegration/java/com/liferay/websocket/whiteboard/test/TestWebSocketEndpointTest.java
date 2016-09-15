@@ -43,6 +43,7 @@ public class TestWebSocketEndpointTest {
 			ContainerProvider.getWebSocketContainer();
 
 		StringBuilder sb = new StringBuilder(4);
+
 		sb.append("ws://");
 		sb.append(_liferayHttpURL.getHost());
 		sb.append(":");

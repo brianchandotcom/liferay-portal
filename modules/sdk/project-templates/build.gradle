@@ -1,6 +1,11 @@
 import com.liferay.gradle.util.FileUtil
 
 task writeMavenEmbedderDependencies
+task writeProjectTemplateVersions
+
+Set<Project> projectTemplateProjects = project.parent.subprojects.findAll {
+	it.name.startsWith "project-templates-"
+}
 
 bundle {
 	includeTransitiveDependencies = true
@@ -51,15 +56,12 @@ processResources {
 }
 
 test {
-	Set<Project> projectTemplateProjects = project.parent.subprojects.findAll {
-		it.name.startsWith "project-templates-"
-	}
-
 	dependsOn projectTemplateProjects.collect {
 		"${it.path}:install"
 	}
 
 	dependsOn writeMavenEmbedderDependencies
+	dependsOn writeProjectTemplateVersions
 
 	doFirst {
 		Properties gradleWrapperProperties = new Properties()
@@ -91,4 +93,28 @@ writeMavenEmbedderDependencies << {
 	mavenEmbedderDependenciesFile.parentFile.mkdirs()
 
 	mavenEmbedderDependenciesFile.text = configurations.mavenEmbedder.join(System.lineSeparator())
+}
+
+writeProjectTemplateVersions << {
+	Properties properties = new Properties()
+
+	for (Project projectTemplateProject in projectTemplateProjects) {
+		File bndFile = projectTemplateProject.file("bnd.bnd")
+
+		Properties bndProperties = new Properties()
+
+		bndFile.withInputStream {
+			bndProperties.load it
+		}
+
+		properties.setProperty projectTemplateProject.name.substring(18), bndProperties["Bundle-Version"]
+	}
+
+	File projectTemplateVersionsFile = new File(buildDir, "project-template-versions.properties")
+
+	projectTemplateVersionsFile.parentFile.mkdirs()
+
+	projectTemplateVersionsFile.withOutputStream {
+		properties.store it, null
+	}
 }

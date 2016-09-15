@@ -104,6 +104,9 @@ public class ProjectTemplatesTest {
 		_mavenEmbedderDependencyURLs = mavenEmbedderDependencyURLs.toArray(
 			new URL[mavenEmbedderDependencyURLs.size()]);
 
+		_projectTemplateVersions = FileTestUtil.readProperties(
+			Paths.get("build", "project-template-versions.properties"));
+
 		_repositoryUrl = System.getProperty("repository.url");
 
 		_createMavenSettingsXmlFile();
@@ -823,8 +826,15 @@ public class ProjectTemplatesTest {
 					template);
 		}
 
+		String projectTemplateVersion = _projectTemplateVersions.getProperty(
+			template);
+
+		Assert.assertTrue(
+			"Unable to get project template version",
+			Validator.isNotNull(projectTemplateVersion));
+
 		completeArgs.add("-DarchetypeGroupId=com.liferay");
-		completeArgs.add("-DarchetypeVersion=1.0.0");
+		completeArgs.add("-DarchetypeVersion=" + projectTemplateVersion);
 		completeArgs.add("-DgroupId=com.test");
 		completeArgs.add("-DartifactId=" + name);
 		completeArgs.add("-Dversion=1.0.0");
@@ -1156,6 +1166,7 @@ public class ProjectTemplatesTest {
 	private static String _httpProxyPort;
 	private static URL[] _mavenEmbedderDependencyURLs;
 	private static File _mavenSettingsXmlFile;
+	private static Properties _projectTemplateVersions;
 	private static String _repositoryUrl;
 
 }

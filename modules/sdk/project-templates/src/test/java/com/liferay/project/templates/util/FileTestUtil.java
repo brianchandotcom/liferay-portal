@@ -105,6 +105,16 @@ public class FileTestUtil {
 		return content.trim();
 	}
 
+	public static Properties readProperties(Path path) throws IOException {
+		Properties properties = new Properties();
+
+		try (InputStream inputStream = Files.newInputStream(path)) {
+			properties.load(inputStream);
+		}
+
+		return properties;
+	}
+
 	public static Properties readProperties(String name) throws IOException {
 		Properties properties = new Properties();
 

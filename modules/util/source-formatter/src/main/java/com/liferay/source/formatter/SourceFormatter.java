@@ -295,16 +295,20 @@ public class SourceFormatter {
 			ToolsUtil.PORTAL_MAX_DIR_LEVEL);
 
 		if (portalImplDir == null) {
+			Properties properties = null;
+
 			for (int i = 0; i <= ToolsUtil.PLUGINS_MAX_DIR_LEVEL; i++) {
 				try {
 					InputStream inputStream = new FileInputStream(
 						_sourceFormatterArgs.getBaseDirName() + fileName);
 
-					Properties properties = new Properties();
+					Properties props = new Properties();
 
-					properties.load(inputStream);
+					props.load(inputStream);
 
-					return properties;
+					properties = props;
+
+					break;
 				}
 				catch (FileNotFoundException fnfe) {
 				}
@@ -312,7 +316,24 @@ public class SourceFormatter {
 				fileName = "../" + fileName;
 			}
 
-			return new Properties();
+			if (properties == null) {
+				properties = new Properties();
+			}
+
+			String excludesValue = properties.getProperty(
+				"source.formatter.excludes");
+
+			if (Validator.isNull(excludesValue)) {
+				excludesValue = StringUtil.merge(_defaultExcludes);
+			}
+			else {
+				excludesValue +=
+					StringPool.COMMA + StringUtil.merge(_defaultExcludes);
+			}
+
+			properties.setProperty("source.formatter.excludes", excludesValue);
+
+			return properties;
 		}
 
 		Set<String> excludes = new HashSet<>(_defaultExcludes);

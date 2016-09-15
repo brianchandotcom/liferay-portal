@@ -14,16 +14,11 @@
 
 package com.liferay.hello.soy.web.internal.portlet;
 
-import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.LayoutService;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.portlet.bridge.soy.SoyPortlet;
 
 import java.io.IOException;
-
-import java.util.List;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
@@ -55,7 +50,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.copy-request-parameters=true",
 		"javax.portlet.init-param.template-path=/",
-		"javax.portlet.init-param.view-template=hello_soy_view",
+		"javax.portlet.init-param.view-template=View",
 		"javax.portlet.name=hello_soy_portlet",
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=guest,power-user,user",
@@ -70,26 +65,12 @@ public class HelloSoyPortlet extends SoyPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		Layout layout = themeDisplay.getLayout();
-
-		List<Layout> layouts = layoutService.getLayouts(
-			themeDisplay.getScopeGroupId(), layout.isPrivateLayout());
-
-		template.put("layouts", layouts);
-
 		PortletURL navigationURL = renderResponse.createRenderURL();
 
-		navigationURL.setParameter(
-			"mvcRenderCommandName", "hello_soy_navigation");
+		navigationURL.setParameter("mvcRenderCommandName", "Navigation");
 
 		template.put("navigationURL", navigationURL.toString());
-
-		User user = themeDisplay.getUser();
-
-		template.put("userName", user.getFirstName());
+		template.put("releaseInfo", ReleaseInfo.getReleaseInfo());
 
 		super.render(renderRequest, renderResponse);
 	}

@@ -36,6 +36,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Drew Brokke
@@ -56,9 +57,7 @@ public class InactiveRequestHandlerImpl implements InactiveRequestHandler {
 
 		PrintWriter printWriter = response.getWriter();
 
-		if (!_inactiveRequestHandlerConfiguration.
-				showInactiveRequestMessage()) {
-
+		if (!_showInactiveRequestMessage) {
 			printWriter.print(StringPool.BLANK);
 
 			return;
@@ -87,13 +86,17 @@ public class InactiveRequestHandlerImpl implements InactiveRequestHandler {
 	};
 
 	@Activate
+	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_inactiveRequestHandlerConfiguration =
-			ConfigurableUtil.createConfigurable(
-				InactiveRequestHandlerConfiguration.class, properties);
+		InactiveRequestHandlerConfiguration
+			inactiveRequestHandlerConfiguration =
+				ConfigurableUtil.createConfigurable(
+					InactiveRequestHandlerConfiguration.class, properties);
+
+		_showInactiveRequestMessage =
+			inactiveRequestHandlerConfiguration.showInactiveRequestMessage();
 	}
 
-	private InactiveRequestHandlerConfiguration
-		_inactiveRequestHandlerConfiguration;
+	private volatile boolean _showInactiveRequestMessage;
 
 }

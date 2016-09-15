@@ -14,10 +14,6 @@
 
 package com.liferay.jenkins.results.parser;
 
-import java.io.UnsupportedEncodingException;
-
-import java.net.URLDecoder;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -41,7 +37,8 @@ public abstract class BaseBuild implements Build {
 	public void addDownstreamBuilds(String... urls) {
 		try {
 			for (String url : urls) {
-				url = JenkinsResultsParserUtil.getLocalURL(decodeURL(url));
+				url = JenkinsResultsParserUtil.getLocalURL(
+					JenkinsResultsParserUtil.decode(url));
 
 				if (!hasBuildURL(url)) {
 					downstreamBuilds.add(BuildFactory.newBuild(url, this));
@@ -312,7 +309,12 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public boolean hasBuildURL(String buildURL) {
-		buildURL = decodeURL(buildURL);
+		try {
+			buildURL = JenkinsResultsParserUtil.decode(buildURL);
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 
 		buildURL = JenkinsResultsParserUtil.getLocalURL(buildURL);
 
@@ -465,15 +467,6 @@ public abstract class BaseBuild implements Build {
 		setStatus("starting");
 
 		update();
-	}
-
-	protected static String decodeURL(String url) {
-		try {
-			return URLDecoder.decode(url, "UTF-8");
-		}
-		catch (UnsupportedEncodingException uee) {
-			throw new RuntimeException(uee);
-		}
 	}
 
 	protected void findDownstreamBuilds() {
@@ -817,7 +810,7 @@ public abstract class BaseBuild implements Build {
 	}
 
 	protected void setBuildURL(String buildURL) throws Exception {
-		buildURL = decodeURL(buildURL);
+		buildURL = JenkinsResultsParserUtil.decode(buildURL);
 
 		Matcher matcher = buildURLPattern.matcher(buildURL);
 
@@ -837,7 +830,7 @@ public abstract class BaseBuild implements Build {
 	}
 
 	protected void setInvocationURL(String invocationURL) throws Exception {
-		invocationURL = decodeURL(invocationURL);
+		invocationURL = JenkinsResultsParserUtil.decode(invocationURL);
 
 		if (getBuildURL() == null) {
 			Matcher invocationURLMatcher = invocationURLPattern.matcher(

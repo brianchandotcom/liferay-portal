@@ -57,7 +57,7 @@ public class AxisBuild extends BaseBuild {
 
 	@Override
 	protected void setBuildURL(String buildURL) throws Exception {
-		buildURL = decodeURL(buildURL);
+		buildURL = JenkinsResultsParserUtil.decode(buildURL);
 
 		Matcher matcher = _buildURLPattern.matcher(buildURL);
 

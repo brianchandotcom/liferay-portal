@@ -27,6 +27,7 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.URLDecoder;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -91,6 +92,10 @@ public class JenkinsResultsParserUtil {
 		URL url = new URL(urlString);
 
 		return encode(url);
+	}
+
+	public static String decode(String url) throws Exception {
+		return URLDecoder.decode(url, "UTF-8");
 	}
 
 	public static URL encode(URL url) throws Exception {

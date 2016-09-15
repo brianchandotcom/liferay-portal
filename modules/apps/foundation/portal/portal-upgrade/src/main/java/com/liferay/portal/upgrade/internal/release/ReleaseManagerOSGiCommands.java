@@ -96,9 +96,9 @@ public class ReleaseManagerOSGiCommands {
 				continue;
 			}
 
-			StringBundler sb = new StringBundler(7);
+			StringBundler sb = new StringBundler(6);
 
-			sb.append("Check upgrade ");
+			sb.append("There is an upgrade process available for ");
 			sb.append(bundleSymbolicName);
 			sb.append(" from ");
 			sb.append(schemaVersionString);
@@ -110,8 +110,6 @@ public class ReleaseManagerOSGiCommands {
 				upgradeInfos.size() - 1);
 
 			sb.append(lastUpgradeInfo.getToSchemaVersionString());
-
-			sb.append(" and its dependent modules");
 
 			System.out.println(sb.toString());
 		}

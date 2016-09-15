@@ -232,7 +232,7 @@ public class HtmlImpl implements Html {
 				(!_isValidXmlCharacter(c) ||
 				 _isUnicodeCompatibilityCharacter(c))) {
 
-				sb.append(StringPool.SPACE);
+				sb.append(CharPool.SPACE);
 			}
 			else if ((c > 255) || (c == CharPool.DASH) ||
 					 (c == CharPool.UNDERLINE) ||
@@ -246,7 +246,7 @@ public class HtmlImpl implements Html {
 				String hexString = StringUtil.toHexString(c);
 
 				if (hexString.length() == 1) {
-					sb.append(StringPool.ASCII_TABLE[48]);
+					sb.append(CharPool.NUMBER_0);
 				}
 
 				sb.append(hexString);
@@ -258,7 +258,7 @@ public class HtmlImpl implements Html {
 					if ((nextChar >= CharPool.NUMBER_0) &&
 						(nextChar <= CharPool.NUMBER_9)) {
 
-						sb.append(StringPool.SPACE);
+						sb.append(CharPool.SPACE);
 					}
 				}
 			}
@@ -398,7 +398,7 @@ public class HtmlImpl implements Html {
 			}
 
 			if (hasToken) {
-				sb.append(StringPool.UNDERLINE);
+				sb.append(CharPool.UNDERLINE);
 			}
 			else {
 				sb.append(c);

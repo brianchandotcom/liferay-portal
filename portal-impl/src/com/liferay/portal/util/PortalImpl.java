@@ -5423,17 +5423,7 @@ public class PortalImpl implements Portal {
 
 			boolean unWrap = false;
 
-			for (String requestUnwrapPackage :
-					PropsValues.REQUEST_UNWRAP_PACKAGES) {
-
-				if (currentRequestClassName.startsWith(requestUnwrapPackage)) {
-					unWrap = true;
-
-					break;
-				}
-			}
-
-			if (!unWrap) {
+			if (!_needToUnWrapRequest(currentRequestClassName)) {
 				break;
 			}
 
@@ -8170,6 +8160,18 @@ public class PortalImpl implements Portal {
 		themeDisplay.setI18nLanguageId(i18nLanguageId);
 		themeDisplay.setI18nPath(i18nPath);
 		themeDisplay.setLocale(locale);
+	}
+
+	private boolean _needToUnWrapRequest(String currentRequestClassName) {
+		for (String requestUnwrapPackage :
+				PropsValues.REQUEST_UNWRAP_PACKAGES) {
+
+			if (currentRequestClassName.startsWith(requestUnwrapPackage)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private static final Log _logWebServerServlet = LogFactoryUtil.getLog(

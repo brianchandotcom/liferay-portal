@@ -224,6 +224,14 @@ public class SiteNavigationSiteMapDisplayContext {
 			return;
 		}
 
+		if ((rootLayout != null) &&
+			!LayoutPermissionUtil.contains(
+				themeDisplay.getPermissionChecker(), rootLayout,
+				ActionKeys.VIEW)) {
+
+			return;
+		}
+
 		sb.append("<ul>");
 
 		if (includeRootInTree && (rootLayout != null) && (curDepth == 1)) {

@@ -192,7 +192,7 @@ else {
 	<li class="control-menu-nav-item">
 		<div class="dropdown hidden-xs">
 			<a class="dropdown-toggle taglib-icon" data-toggle="dropdown" href="javascript:;">
-				<aui:icon image="ellipsis-v" markupView="lexicon" />
+				<aui:icon cssClass="icon-monospaced" image="ellipsis-v" markupView="lexicon" />
 
 				<span class="sr-only">
 					<liferay-ui:message key="options" />

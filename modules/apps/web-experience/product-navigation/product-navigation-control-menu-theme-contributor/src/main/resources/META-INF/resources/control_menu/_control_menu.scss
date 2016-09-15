@@ -73,6 +73,11 @@
 	background-color: $control-menu-level-2-bg;
 	color: $control-menu-level-2-color;
 
+	.container-fluid-1280 {
+		padding-left: 20px;
+		padding-right: 20px;
+	}
+
 	.control-menu-label {
 		@include sm() {
 			color: $control-menu-level-2-label-color;
@@ -229,6 +234,15 @@
 	}
 }
 
+%control-menu-icon-monospaced {
+	height: 35px;
+	line-height: 35px;
+	margin-left: 3px;
+	margin-right: 3px;
+	text-align: center;
+	width: 35px;
+}
+
 .tools-control-group {
 	@include flex(1);
 	@include flex-wrap(wrap);
@@ -236,6 +250,10 @@
 	> .control-menu-nav {
 		@include flex-wrap(wrap);
 		@include justify-content(center);
+
+		> li > .lfr-portal-tooltip > .control-menu-icon {
+			@extend %control-menu-icon-monospaced;
+		}
 	}
 
 	.taglib-icon-help {
@@ -246,6 +264,10 @@
 }
 
 .user-control-group {
+	> .control-menu-nav > li > .control-menu-icon {
+		@extend %control-menu-icon-monospaced;
+	}
+
 	.portlet-options {
 		margin-right: -1px;
 	}

@@ -245,6 +245,10 @@ public class HttpImplTest extends PowerMockito {
 	@Test
 	public void testRemoveProtocol() {
 		Assert.assertEquals(
+			"#^&://abc.com", _httpImpl.removeProtocol("#^&://abc.com"));
+		Assert.assertEquals(
+			"^&://abc.com", _httpImpl.removeProtocol("/^&://abc.com"));
+		Assert.assertEquals(
 			"ftp.foo.com", _httpImpl.removeProtocol("ftp://ftp.foo.com"));
 		Assert.assertEquals(
 			"foo.com", _httpImpl.removeProtocol("http://///foo.com"));

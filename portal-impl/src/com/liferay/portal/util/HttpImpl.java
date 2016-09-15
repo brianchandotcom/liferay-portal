@@ -1081,35 +1081,63 @@ public class HttpImpl implements Http {
 			return url;
 		}
 
-		Matcher matcher = _relativeURLPattern.matcher(url);
+		url = url.trim();
 
-		if (matcher.lookingAt()) {
+		// "/[a-zA-Z0-9]+" is considered as valid relative URL
+
+		if ((url.length() >= 2) && (url.charAt(0) == CharPool.SLASH) &&
+			_isLetterOrNumber(url.charAt(1))) {
+
 			return url;
 		}
 
-		boolean modified = false;
+		int pos = 0;
 
-		do {
-			modified = false;
+		protocol:
+		while (true) {
 
-			matcher = _absoluteURLPattern.matcher(url);
+			// Find and skip all valid protocol "[a-zA-Z0-9]+://" headers
 
-			if (matcher.lookingAt()) {
-				url = url.substring(matcher.end());
+			int index = url.indexOf(Http.PROTOCOL_DELIMITER, pos);
 
-				modified = true;
+			if (index > 0) {
+				boolean hasProtocol = true;
+
+				for (int i = pos; i < index; i++) {
+					if (!_isLetterOrNumber(url.charAt(i))) {
+						hasProtocol = false;
+
+						break;
+					}
+				}
+
+				if (hasProtocol) {
+					pos = index + Http.PROTOCOL_DELIMITER.length();
+
+					continue;
+				}
 			}
 
-			matcher = _protocolRelativeURLPattern.matcher(url);
+			// Ignore all "[\\\\/]+" after valid protocol header
 
-			if (matcher.lookingAt()) {
-				url = url.substring(matcher.end());
+			for (int i = pos; i < url.length(); i++) {
+				char c = url.charAt(i);
 
-				modified = true;
+				if ((c != CharPool.SLASH) && (c != CharPool.BACK_SLASH)) {
+					if (i != pos) {
+						pos = i;
+
+						continue protocol;
+					}
+
+					break;
+				}
 			}
-		} while (modified);
 
-		return url;
+			// Chop off protocol and return
+
+			return url.substring(pos);
+		}
 	}
 
 	@Override
@@ -2016,6 +2044,17 @@ public class HttpImpl implements Http {
 		}
 	}
 
+	private boolean _isLetterOrNumber(char c) {
+		if (((CharPool.NUMBER_0 <= c) && (c <= CharPool.NUMBER_9)) ||
+			((CharPool.UPPER_CASE_A <= c) && (c <= CharPool.UPPER_CASE_Z)) ||
+			((CharPool.LOWER_CASE_A <= c) && (c <= CharPool.LOWER_CASE_Z))) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private static final String _DEFAULT_USER_AGENT =
 		"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)";
 
@@ -2061,18 +2100,12 @@ public class HttpImpl implements Http {
 
 	private static final ThreadLocal<Cookie[]> _cookies = new ThreadLocal<>();
 
-	private final Pattern _absoluteURLPattern = Pattern.compile(
-		"^[a-zA-Z0-9]+://");
 	private final CloseableHttpClient _closeableHttpClient;
 	private final Pattern _nonProxyHostsPattern;
 	private final PoolingHttpClientConnectionManager
 		_poolingHttpClientConnectionManager;
-	private final Pattern _protocolRelativeURLPattern = Pattern.compile(
-		"^[\\s\\\\/]+");
 	private final List<String> _proxyAuthPrefs = new ArrayList<>();
 	private final CloseableHttpClient _proxyCloseableHttpClient;
 	private final Credentials _proxyCredentials;
-	private final Pattern _relativeURLPattern = Pattern.compile(
-		"^\\s*/[a-zA-Z0-9]+");
 
 }

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.inactive.request.handler;
+package com.liferay.portal.inactive.request.handler.internal;
 
 import com.liferay.petra.content.ContentUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;

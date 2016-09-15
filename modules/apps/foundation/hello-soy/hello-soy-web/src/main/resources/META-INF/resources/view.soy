@@ -1,31 +1,32 @@
-{namespace hello_soy_view}
+{namespace View}
 
 /**
- * Prints the Hello Soy portlet view page.
+ * Prints the Hello Soy portlet main view.
  *
- * @param layouts
+ * @param id
  * @param navigationURL
- * @param userName
+ * @param themeDisplay
  */
 {template .render}
-	<p>
-		Hello, {$userName}! This is an example of a <cite>Soy Portlet</cite>.
-		Here you'll find how easy it is to do things like:
-	</p>
+	<div id="{$id}">
+		{call Header.render data="all"}{/call}
 
-	<h3>Listing pages</h3>
+		<p>{msg desc=""}here-you-will-find-how-easy-it-is-to-do-things-like{/msg}</p>
 
-	<div class="list-group">
-		<div class="list-group-heading">Navigate to</div>
+		<h3>{msg desc=""}listing-pages{/msg}</h3>
 
-		{foreach $layout in $layouts}
-			<a class="list-group-item" href="{$layout.friendlyURL}">{$layout.nameCurrentValue}</a>
-		{/foreach}
+		<div class="list-group">
+			<div class="list-group-heading">{msg desc=""}navigate-to{/msg}</div>
+
+			{foreach $layout in $themeDisplay.layouts}
+				<a class="list-group-item" href="{$layout.friendlyURL}">{$layout.nameCurrentValue}</a>
+			{/foreach}
+		</div>
+
+		<h3>{msg desc=""}navigating-between-views{/msg}</h3>
+
+		<a href="{$navigationURL}">{msg desc=""}click-here-to-navigate-to-another-view{/msg}</a>
+
+		{call Footer.render data="all"}{/call}
 	</div>
-
-	<h3>Navigating between views</h3>
-
-	<a href="{$navigationURL}">Click here to navigate to another view.</a>
-
-	{call hello_soy_common.footer /}
 {/template}

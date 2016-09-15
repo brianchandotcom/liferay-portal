@@ -9,18 +9,20 @@ AUI.add(
 					formBuilder: {
 						value: null
 					},
+
 					rules: {
 						value: []
 					},
+
 					strings: {
 						value: {
+							delete: Liferay.Language.get('delete'),
+							edit: Liferay.Language.get('edit'),
 							emptyListText: Liferay.Language.get('there-are-no-rules-yet-click-on-plus-icon-bellow-to-add-the-first'),
 							showHide: Liferay.Language.get('show-hide')
 						}
 					}
 				},
-
-				AUGMENTS: [],
 
 				NAME: 'liferay-ddl-form-builder-rule-builder',
 
@@ -28,7 +30,7 @@ AUI.add(
 					initializer: function() {
 						var instance = this;
 
-						instance._ruleClasses = {};
+						instance._ruleTypeInstances = {};
 					},
 
 					renderUI: function() {
@@ -101,10 +103,10 @@ AUI.add(
 
 						var ruleType = type.toLowerCase();
 
-						var ruleClassInstance = instance._ruleClasses[ruleType];
+						var ruleTypeInstance = instance._ruleTypeInstances[ruleType];
 
-						if (!ruleClassInstance) {
-							ruleClassInstance = new Liferay.DDL.Rules[ruleType](
+						if (!ruleTypeInstance) {
+							ruleTypeInstance = new Liferay.DDL.Rules[ruleType](
 								{
 									boundingBox: instance.get('boundingBox'),
 									bubbleTargets: [instance],
@@ -112,13 +114,13 @@ AUI.add(
 								}
 							);
 
-							instance._ruleClasses[ruleType] = ruleClassInstance;
+							instance._ruleTypeInstances[ruleType] = ruleTypeInstance;
 						}
 
-						return ruleClassInstance;
+						return ruleTypeInstance;
 					},
 
-					_handleCancelRule: function(event) {
+					_handleCancelRule: function() {
 						var instance = this;
 
 						instance.syncUI();
@@ -186,13 +188,21 @@ AUI.add(
 
 						var rulesList = instance.get('boundingBox').one('.form-builder-rule-builder-rules-list');
 
-						rulesList.setHTML(ddl.rule_list({kebab: Liferay.Util.getLexiconIconTpl('ellipsis-v', 'icon-monospaced'), rules: rules, strings: instance.get('strings')}));
+						rulesList.setHTML(
+							ddl.rule_list(
+								{
+									kebab: Liferay.Util.getLexiconIconTpl('ellipsis-v', 'icon-monospaced'),
+									rules: rules,
+									strings: instance.get('strings')
+								}
+							)
+						);
 					},
 
 					_renderPopover: function() {
 						var instance = this;
 
-						var popover = new A.Popover(
+						new A.Popover(
 							{
 								align: {
 									node: '.form-builder-rule-builder-add-rule-button'
@@ -206,10 +216,12 @@ AUI.add(
 								constrain: true,
 								cssClass: 'form-builder-rulles-builder-popover',
 								duration: 0.25,
-								hideOn: [{
-									eventName: 'click',
-									node: A.one(document)
-								}],
+								hideOn: [
+									{
+										eventName: 'click',
+										node: A.one(document)
+									}
+								],
 								position: 'top',
 								visible: false,
 								zIndex: Liferay.zIndex.TOOLTIP

@@ -40,6 +40,13 @@ import org.osgi.service.component.annotations.Component;
 public class IEMimeTypeCompatibilityFilter extends BasePortalFilter {
 
 	@Override
+	public boolean isFilterEnabled(
+		HttpServletRequest request, HttpServletResponse response) {
+
+		return BrowserSnifferUtil.isIe(request);
+	}
+
+	@Override
 	protected void processFilter(
 			HttpServletRequest request, HttpServletResponse response,
 			FilterChain filterChain)
@@ -47,33 +54,26 @@ public class IEMimeTypeCompatibilityFilter extends BasePortalFilter {
 
 		processFilter(
 			IEMimeTypeCompatibilityFilter.class.getName(), request,
-			new IEMimeTypeCompatibilityResponseWrapper(request, response),
-			filterChain);
+			new IEMimeTypeCompatibilityResponseWrapper(response), filterChain);
 	}
 
 	private static class IEMimeTypeCompatibilityResponseWrapper
 		extends HttpServletResponseWrapper {
 
-		public IEMimeTypeCompatibilityResponseWrapper(
-			HttpServletRequest request, HttpServletResponse response) {
-
-			super(response);
-
-			_request = request;
-		}
-
 		@Override
 		public void setContentType(String contentType) {
-			if (contentType.equals(ContentTypes.IMAGE_X_MS_BMP) &&
-				BrowserSnifferUtil.isIe(_request)) {
-
+			if (contentType.equals(ContentTypes.IMAGE_X_MS_BMP)) {
 				contentType = ContentTypes.IMAGE_BMP;
 			}
 
 			super.setContentType(contentType);
 		}
 
-		private final HttpServletRequest _request;
+		private IEMimeTypeCompatibilityResponseWrapper(
+			HttpServletResponse response) {
+
+			super(response);
+		}
 
 	}
 

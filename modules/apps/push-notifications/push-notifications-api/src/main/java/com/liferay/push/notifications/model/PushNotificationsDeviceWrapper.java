@@ -61,6 +61,7 @@ public class PushNotificationsDeviceWrapper implements PushNotificationsDevice,
 
 		attributes.put("pushNotificationsDeviceId",
 			getPushNotificationsDeviceId());
+		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("platform", getPlatform());
@@ -76,6 +77,12 @@ public class PushNotificationsDeviceWrapper implements PushNotificationsDevice,
 
 		if (pushNotificationsDeviceId != null) {
 			setPushNotificationsDeviceId(pushNotificationsDeviceId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -209,6 +216,16 @@ public class PushNotificationsDeviceWrapper implements PushNotificationsDevice,
 	}
 
 	/**
+	* Returns the company ID of this push notifications device.
+	*
+	* @return the company ID of this push notifications device
+	*/
+	@Override
+	public long getCompanyId() {
+		return _pushNotificationsDevice.getCompanyId();
+	}
+
+	/**
 	* Returns the primary key of this push notifications device.
 	*
 	* @return the primary key of this push notifications device
@@ -246,6 +263,16 @@ public class PushNotificationsDeviceWrapper implements PushNotificationsDevice,
 	@Override
 	public void setCachedModel(boolean cachedModel) {
 		_pushNotificationsDevice.setCachedModel(cachedModel);
+	}
+
+	/**
+	* Sets the company ID of this push notifications device.
+	*
+	* @param companyId the company ID of this push notifications device
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_pushNotificationsDevice.setCompanyId(companyId);
 	}
 
 	/**

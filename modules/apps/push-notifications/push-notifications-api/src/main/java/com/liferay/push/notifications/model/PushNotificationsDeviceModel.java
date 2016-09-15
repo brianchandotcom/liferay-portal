@@ -21,6 +21,7 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
@@ -41,7 +42,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface PushNotificationsDeviceModel extends BaseModel<PushNotificationsDevice> {
+public interface PushNotificationsDeviceModel extends BaseModel<PushNotificationsDevice>,
+	ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -75,6 +77,22 @@ public interface PushNotificationsDeviceModel extends BaseModel<PushNotification
 	 * @param pushNotificationsDeviceId the push notifications device ID of this push notifications device
 	 */
 	public void setPushNotificationsDeviceId(long pushNotificationsDeviceId);
+
+	/**
+	 * Returns the company ID of this push notifications device.
+	 *
+	 * @return the company ID of this push notifications device
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this push notifications device.
+	 *
+	 * @param companyId the company ID of this push notifications device
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this push notifications device.

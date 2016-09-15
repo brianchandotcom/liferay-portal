@@ -38,6 +38,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Brian Wing Shun Chan
@@ -76,11 +77,15 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 
 	protected String getNewTypeSettings(
 		String typeSettings, String oldRootPortletId, String newRootPortletId,
-		List<String> columnIds, boolean exactMatch) {
+		boolean exactMatch) {
 
 		UnicodeProperties typeSettingsProperties = new UnicodeProperties(true);
 
 		typeSettingsProperties.fastLoad(typeSettings);
+
+		List<String> columnIds = _getLayoutColumnIds(typeSettingsProperties);
+
+		columnIds.addAll(_getNestedPortletColumnIds(typeSettingsProperties));
 
 		for (String columnId : columnIds) {
 			if (!typeSettingsProperties.containsKey(columnId)) {
@@ -121,6 +126,22 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 		}
 
 		return typeSettingsProperties.toString();
+	}
+
+	/**
+	* @deprecated As of 7.0.0
+	*/
+	@Deprecated
+	protected String getNewTypeSettings(
+		String typeSettings, String oldRootPortletId, String newRootPortletId,
+		List<String> columnIds, boolean exactMatch) {
+
+		UnicodeProperties typeSettingsProperties = new UnicodeProperties(true);
+
+		typeSettingsProperties.fastLoad(typeSettings);
+
+		return getNewTypeSettings(
+			typeSettings, oldRootPortletId, newRootPortletId, exactMatch);
 	}
 
 	protected String[][] getRenamePortletIdsArray() {
@@ -318,14 +339,9 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 				long layoutRevisionId = rs.getLong("layoutRevisionId");
 				String typeSettings = rs.getString("typeSettings");
 
-				List<String> layoutColumnIds = _getLayoutColumnIds();
-
-				layoutColumnIds.addAll(
-					_getNestedPortletColumnIds(typeSettings));
-
 				String newTypeSettings = getNewTypeSettings(
 					typeSettings, oldRootPortletId, newRootPortletId,
-					layoutColumnIds, exactMatch);
+					exactMatch);
 
 				updateLayoutRevision(layoutRevisionId, newTypeSettings);
 			}
@@ -348,14 +364,9 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 				long plid = rs.getLong("plid");
 				String typeSettings = rs.getString("typeSettings");
 
-				List<String> layoutColumnIds = _getLayoutColumnIds();
-
-				layoutColumnIds.addAll(
-					_getNestedPortletColumnIds(typeSettings));
-
 				String newTypeSettings = getNewTypeSettings(
 					typeSettings, oldRootPortletId, newRootPortletId,
-					layoutColumnIds, exactMatch);
+					exactMatch);
 
 				updateLayout(plid, newTypeSettings);
 			}
@@ -553,20 +564,26 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 		}
 	}
 
-	private List<String> _getLayoutColumnIds() {
+	private List<String> _getLayoutColumnIds(
+		UnicodeProperties typeSettingsProperties) {
+
 		List<String> columnIds = new ArrayList<>();
 
-		for (int i = 1; i <= 10; i++) {
-			columnIds.add(LayoutTypePortletConstants.COLUMN_PREFIX + i);
+		Set<String> keys = typeSettingsProperties.keySet();
+
+		for (String key : keys) {
+			if (StringUtil.startsWith(
+					key, LayoutTypePortletConstants.COLUMN_PREFIX)) {
+
+				columnIds.add(key);
+			}
 		}
 
 		return columnIds;
 	}
 
-	private List<String> _getNestedPortletColumnIds(String typeSettings) {
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties(true);
-
-		typeSettingsProperties.fastLoad(typeSettings);
+	private List<String> _getNestedPortletColumnIds(
+		UnicodeProperties typeSettingsProperties) {
 
 		if (!typeSettingsProperties.containsKey("nested-column-ids")) {
 			return Collections.emptyList();

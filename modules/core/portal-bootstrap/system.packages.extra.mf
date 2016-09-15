@@ -2933,7 +2933,7 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  ortal.kernel.upgrade.dao.orm;version="7.0.0";uses:="com.liferay.porta
  l.kernel.dao.db",com.liferay.portal.kernel.upgrade.util;version="7.0.
  0";uses:="com.liferay.portal.kernel.model,com.liferay.portal.kernel.u
- pgrade",com.liferay.portal.kernel.upgrade.v6_2_0;version="7.2.0";uses
+ pgrade",com.liferay.portal.kernel.upgrade.v6_2_0;version="7.1.0";uses
  :="com.liferay.portal.kernel.upgrade",com.liferay.portal.kernel.uploa
  d;version="6.3.0";uses:="com.liferay.portal.kernel.exception,com.life
  ray.portal.kernel.json,com.liferay.portal.kernel.repository.model,com

@@ -54,7 +54,7 @@ import com.liferay.portal.kernel.service.ResourceActionLocalServiceUtil;
 import com.liferay.portal.kernel.service.ThemeLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
-import com.liferay.portal.kernel.servlet.InactiveRequestHandlerUtil;
+import com.liferay.portal.kernel.servlet.InactiveRequestHandler;
 import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateManager;
@@ -66,6 +66,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalLifecycleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -1096,7 +1097,7 @@ public class MainServlet extends ActionServlet {
 			return false;
 		}
 
-		InactiveRequestHandlerUtil.processInactiveRequest(
+		_inactiveRequesthandler.processInactiveRequest(
 			request, response,
 			"this-instance-is-inactive-please-contact-the-administrator");
 
@@ -1134,7 +1135,7 @@ public class MainServlet extends ActionServlet {
 			return false;
 		}
 
-		InactiveRequestHandlerUtil.processInactiveRequest(
+		_inactiveRequesthandler.processInactiveRequest(
 			request, response,
 			"this-site-is-inactive-please-contact-the-administrator");
 
@@ -1295,7 +1296,7 @@ public class MainServlet extends ActionServlet {
 			messageKey = "the-system-is-shutdown-please-try-again-later";
 		}
 
-		InactiveRequestHandlerUtil.processInactiveRequest(
+		_inactiveRequesthandler.processInactiveRequest(
 			request, response, messageKey);
 
 		return true;
@@ -1379,6 +1380,11 @@ public class MainServlet extends ActionServlet {
 		"Liferay-Portal";
 
 	private static final Log _log = LogFactoryUtil.getLog(MainServlet.class);
+
+	private static final InactiveRequestHandler _inactiveRequesthandler =
+		ProxyFactory.newServiceTrackedInstance(
+			InactiveRequestHandler.class, MainServlet.class,
+			"_inactiveRequesthandler");
 
 	private ServiceRegistration<ModuleServiceLifecycle>
 		_moduleServiceLifecycleServiceRegistration;

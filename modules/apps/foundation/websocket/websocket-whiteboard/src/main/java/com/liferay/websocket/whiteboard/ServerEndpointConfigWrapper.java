@@ -14,15 +14,20 @@
 
 package com.liferay.websocket.whiteboard;
 
+import java.io.IOException;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentSkipListMap;
 
+import javax.websocket.CloseReason;
 import javax.websocket.Decoder;
 import javax.websocket.Encoder;
 import javax.websocket.Endpoint;
+import javax.websocket.EndpointConfig;
 import javax.websocket.Extension;
+import javax.websocket.Session;
 import javax.websocket.server.ServerEndpointConfig;
 
 import org.osgi.framework.ServiceReference;
@@ -43,6 +48,10 @@ public class ServerEndpointConfigWrapper implements ServerEndpointConfig {
 	public Configurator getConfigurator() {
 		Entry<ServiceReference<Endpoint>, ServiceObjectsConfigurator> entry =
 			_endpoints.firstEntry();
+
+		if (entry == null) {
+			return _null;
+		}
 
 		return entry.getValue();
 	}
@@ -88,9 +97,38 @@ public class ServerEndpointConfigWrapper implements ServerEndpointConfig {
 		_endpoints.put(reference, configurator);
 	}
 
+	private final Configurator _null = new ServerEndpointConfig.Configurator() {
+
+		@Override
+		@SuppressWarnings("unchecked")
+		public <T> T getEndpointInstance(Class<T> endpointClass) {
+			return (T)new NullEndpoint();
+		}
+
+	};
+
 	private ServerEndpointConfig _serverEndpointConfig;
 	private ConcurrentSkipListMap<ServiceReference<Endpoint>,
 		ServiceObjectsConfigurator> _endpoints = new ConcurrentSkipListMap<>();
+
+	final class NullEndpoint extends Endpoint {
+
+		@Override
+		public void onOpen(Session session, EndpointConfig config) {
+			try {
+				session.close(
+					new CloseReason(
+						CloseReason.CloseCodes.GOING_AWAY,
+						"Service has gone away"));
+			}
+			catch (IOException ioe) {
+				_log.log(
+					LogService.LOG_ERROR,
+					"It is not possible close the session", ioe);
+			}
+		}
+
+	}
 
 	private final LogService _log;
 }

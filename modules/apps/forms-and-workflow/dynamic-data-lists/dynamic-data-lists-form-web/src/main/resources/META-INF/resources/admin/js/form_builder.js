@@ -287,11 +287,7 @@ AUI.add(
 
 						var settingsPanel = instance.getFieldSettingsPanel();
 
-						settingsPanel.setAttrs(
-							{
-								field: field
-							}
-						);
+						settingsPanel.set('field', field);
 
 						settingsPanel.open();
 					},

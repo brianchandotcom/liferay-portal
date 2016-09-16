@@ -45,6 +45,7 @@ import org.apache.commons.cli.ParseException;
 
 /**
  * @author David Truong
+ * @author Andrea Di Giorgi
  */
 public class ThemeBuilder {
 

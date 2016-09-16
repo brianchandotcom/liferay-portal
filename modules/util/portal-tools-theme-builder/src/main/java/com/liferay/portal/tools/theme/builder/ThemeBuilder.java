@@ -140,11 +140,19 @@ public class ThemeBuilder {
 	}
 
 	public void build() throws IOException {
-		_copyThemeParent();
+		if (_unstyledDir != null) {
+			_copyTheme(_UNSTYLED, _unstyledDir);
+		}
+
+		if (_parentDir != null) {
+			_copyTheme(_parentName, _parentDir);
+		}
 
 		_createLookAndFeelXml();
 
-		_copyDiffs();
+		if (_diffsDir != null) {
+			_copyTheme(_diffsDir);
+		}
 
 		_buildThumbnails();
 	}
@@ -279,61 +287,29 @@ public class ThemeBuilder {
 		thumbnailBuilder.toFile(new File(_outputDir, "images/thumbnail.png"));
 	}
 
-	private void _copyDiffs() throws IOException {
-		if (!_diffsDir.exists()) {
-			return;
-		}
-
-		_copyFiles(_diffsDir);
-	}
-
-	private void _copyFiles(File source) throws IOException {
-		if (!source.exists()) {
-			return;
-		}
-
-		final Path outputPath = _outputDir.toPath();
-		final Path sourcePath = source.toPath();
+	private void _copyTheme(File themeDir) throws IOException {
+		final Path outputDirPath = _outputDir.toPath();
+		final Path themeDirPath = themeDir.toPath();
 
 		Files.walkFileTree(
-			sourcePath,
+			themeDirPath,
 			new SimpleFileVisitor<Path>() {
 
-				@Override
-				public FileVisitResult preVisitDirectory(
-						final Path dir, final BasicFileAttributes attrs)
-					throws IOException {
-
-					Files.createDirectories(
-						outputPath.resolve(sourcePath.relativize(dir)));
-
-					return FileVisitResult.CONTINUE;
-				}
-
-				@Override
 				public FileVisitResult visitFile(
-						final Path file, final BasicFileAttributes attrs)
+						Path path, BasicFileAttributes basicFileAttributes)
 					throws IOException {
 
-					String fileName = file.toString();
-
-					fileName = fileName.toLowerCase();
-
-					if (fileName.endsWith("vm") &&
-						_templateExtension.equals("ftl")) {
-
+					if (_isIgnoredTemplateFile(path.toString())) {
 						return FileVisitResult.CONTINUE;
 					}
 
-					if (fileName.endsWith("ftl") &&
-						_templateExtension.equals("vm")) {
+					Path outputPath = outputDirPath.resolve(
+						themeDirPath.relativize(path));
 
-						return FileVisitResult.CONTINUE;
-					}
+					Files.createDirectories(outputPath.getParent());
 
 					Files.copy(
-						file, outputPath.resolve(sourcePath.relativize(file)),
-						StandardCopyOption.REPLACE_EXISTING);
+						path, outputPath, StandardCopyOption.REPLACE_EXISTING);
 
 					return FileVisitResult.CONTINUE;
 				}
@@ -341,24 +317,43 @@ public class ThemeBuilder {
 			});
 	}
 
-	private void _copyThemeDir(String themeName, File themeDir)
+	private void _copyTheme(String themeName, File themeDir)
 		throws IOException {
 
-		if (themeDir.isFile()) {
-			themeDir = _unzipJar(themeName, themeDir);
-		}
+		if (themeDir.isDirectory()) {
+			_copyTheme(themeDir);
 
-		_copyFiles(themeDir);
-	}
-
-	private void _copyThemeParent() throws IOException {
-		if (Validator.isNull(_parentName)) {
 			return;
 		}
 
-		_copyThemeDir("_unstyled", _unstyledDir);
+		Path outputDirPath = _outputDir.toPath();
 
-		_copyThemeDir(_parentName, _parentDir);
+		try (ZipFile zipFile = new ZipFile(themeDir)) {
+			Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
+
+			while (enumeration.hasMoreElements()) {
+				ZipEntry zipEntry = enumeration.nextElement();
+
+				String name = zipEntry.getName();
+
+				if (name.endsWith("/") ||
+					!name.startsWith("META-INF/resources/" + themeName) ||
+					_isIgnoredTemplateFile(name)) {
+
+					continue;
+				}
+
+				name = name.substring(20 + themeName.length());
+
+				Path path = outputDirPath.resolve(name);
+
+				Files.createDirectories(path.getParent());
+
+				Files.copy(
+					zipFile.getInputStream(zipEntry), path,
+					StandardCopyOption.REPLACE_EXISTING);
+			}
+		}
 	}
 
 	private void _createLookAndFeelXml() throws IOException {
@@ -393,6 +388,19 @@ public class ThemeBuilder {
 		Files.write(lookAndFeelXml.toPath(), content.getBytes("UTF-8"));
 	}
 
+	private boolean _isIgnoredTemplateFile(String fileName) {
+		String extension = FileUtil.getExtension(fileName);
+
+		if ((extension.equalsIgnoreCase("ftl") ||
+			 extension.equalsIgnoreCase("vm")) &&
+			!extension.equalsIgnoreCase(_templateExtension)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private byte[] _read(String fileName) throws IOException {
 		ByteArrayOutputStream byteArrayOutputStream =
 			new ByteArrayOutputStream();
@@ -411,40 +419,6 @@ public class ThemeBuilder {
 		}
 
 		return byteArrayOutputStream.toByteArray();
-	}
-
-	private File _unzipJar(String themeName, File themeFile)
-		throws IOException {
-
-		Path jarPath = Files.createTempDirectory("themeBuilder");
-
-		try (ZipFile zipFile = new ZipFile(themeFile)) {
-			Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
-
-			while (enumeration.hasMoreElements()) {
-				ZipEntry zipEntry = enumeration.nextElement();
-
-				String name = zipEntry.getName();
-
-				if (name.endsWith("/") ||
-					!name.startsWith("META-INF/resources/" + themeName)) {
-
-					continue;
-				}
-
-				name = name.substring(19 + themeName.length());
-
-				Path path = jarPath.resolve(name);
-
-				Files.createDirectories(path.getParent());
-
-				Files.copy(
-					zipFile.getInputStream(zipEntry), path,
-					StandardCopyOption.REPLACE_EXISTING);
-			}
-		}
-
-		return jarPath.toFile();
 	}
 
 	private static final String _DEFAULT_NAME;

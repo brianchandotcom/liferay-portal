@@ -1,15 +1,29 @@
 {namespace ddl.autocomplete}
 
 /**
- * Prints the DDM autocomplete button.
+ * Prints the DDM autocomplete action panel.
+ * @param addAutoCompleteButton
+ * @param label
  */
-{template .button autoescape="deprecated-contextual"}
-    <button class="autocomplete-button btn btn-block btn-primary" type="button">Autocomplete</button>
+{template .actionPanel autoescape="deprecated-contextual"}
+	<div class="row">
+		<div class="col-md-12">
+			<div class="autocomplete-action-panel cursor-pointer panel panel-default">
+				<div class="panel-body">
+					{$label}
+					<span class="pull-right">
+						{$addAutoCompleteButton|noAutoescape}
+					</span>
+				</div>
+			</div>
+		</div>
+	</div>
 {/template}
 
 /**
  * Prints the DDM autocomplete header.
  * @param backButton
+ * @param label
  */
 {template .container autoescape="deprecated-contextual"}
 	<div class="autocomplete-container">
@@ -22,7 +36,7 @@
 				</div>
 			</div>
 			<div class="toolbar-group-expand-text">
-				<span title="Autocomplete">Autocomplete</span>
+				<span title="Autocomplete">{$label}</span>
 			</div>
 		</header>
 		<div class="autocomplete-body"></div>

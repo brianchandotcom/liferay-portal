@@ -44,6 +44,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
@@ -203,6 +204,12 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 	protected void validateDDMFormFieldOptions(
 			DDMFormField ddmFormField, Value value)
 		throws DDMFormValuesValidationException {
+
+		if (!Objects.equals(ddmFormField.getType(), "select") &&
+			!Objects.equals(ddmFormField.getType(), "radio")) {
+
+			return;
+		}
 
 		DDMFormFieldOptions ddmFormFieldOptions =
 			ddmFormField.getDDMFormFieldOptions();

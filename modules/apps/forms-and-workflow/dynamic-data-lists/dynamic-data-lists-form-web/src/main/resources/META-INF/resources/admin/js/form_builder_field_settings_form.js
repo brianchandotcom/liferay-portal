@@ -163,9 +163,9 @@ AUI.add(
 
 						var advancedSettingsNode = instance.getPageNode(2);
 
-						advancedSettingsNode.append(instance._getAutocompleteButtonTemplate());
+						advancedSettingsNode.append(instance._getAutocompleteCardActionTemplate());
 
-						advancedSettingsNode.one('.autocomplete-button').on('click', A.bind('_onClickAutocompleteButton', instance));
+						advancedSettingsNode.one('.autocomplete-action-panel').on('click', A.bind('_onClickAutocompleteButton', instance));
 					},
 
 					_createAutocompleteContainer: function() {
@@ -211,14 +211,17 @@ AUI.add(
 						instance.settingsTogglerNode = settingsTogglerNode;
 					},
 
-					_getAutocompleteButtonTemplate: function() {
+					_getAutocompleteCardActionTemplate: function() {
 						var instance = this;
 
-						var autocompleteButtonContainer;
+						var actionPanelRenderer = SoyTemplateUtil.getTemplateRenderer('ddl.autocomplete.actionPanel');
 
-						autocompleteButtonContainer = SoyTemplateUtil.getTemplateRenderer('ddl.autocomplete.button');
-
-						return autocompleteButtonContainer();
+						return actionPanelRenderer(
+							{
+								addAutoCompleteButton: Liferay.Util.getLexiconIconTpl('angle-right'),
+								label: Liferay.Language.get('autocomplete')
+							}
+						);
 					},
 
 					_getAutocompleteContainerTemplate: function() {
@@ -226,7 +229,12 @@ AUI.add(
 
 						var autocompleteContainerRenderer = SoyTemplateUtil.getTemplateRenderer('ddl.autocomplete.container');
 
-						var autocompleteContainer = autocompleteContainerRenderer({backButton: Liferay.Util.getLexiconIconTpl('angle-left', 'icon-monospaced')});
+						var autocompleteContainer = autocompleteContainerRenderer(
+							{
+								backButton: Liferay.Util.getLexiconIconTpl('angle-left', 'icon-monospaced'),
+								label: Liferay.Language.get('autocomplete')
+							}
+						);
 
 						return autocompleteContainer;
 					},

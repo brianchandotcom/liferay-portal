@@ -160,7 +160,7 @@
 	</command>
 
 	<command name="gotoAutocompleteConfiguration">
-		<execute function="Click" locator1="Button#AUTOCOMPLETE" />
+		<execute function="Click" locator1="FormFields#AUTOCOMPLETE_PANEL" />
 	</command>
 
 	<command name="gotoBasicTab">

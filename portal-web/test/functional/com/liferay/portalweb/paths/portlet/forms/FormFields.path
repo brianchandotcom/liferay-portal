@@ -320,6 +320,11 @@
 	<td>//li[@data-text='${key_autocompleteOption}']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>AUTOCOMPLETE_PANEL</td>
+	<td>//div[@class='panel-body' and contains(.,'Autocomplete')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

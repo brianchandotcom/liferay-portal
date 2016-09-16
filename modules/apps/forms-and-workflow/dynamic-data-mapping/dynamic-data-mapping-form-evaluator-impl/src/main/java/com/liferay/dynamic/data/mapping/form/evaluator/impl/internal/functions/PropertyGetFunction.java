@@ -12,29 +12,28 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.form.evaluator.impl.internal.rules.functions;
+package com.liferay.dynamic.data.mapping.form.evaluator.impl.internal.functions;
 
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormFieldEvaluationResult;
-import com.liferay.portal.kernel.util.StringPool;
 
 /**
  * @author Leonardo Barros
  */
-public abstract class BasePropertyFunctionTest {
+public class PropertyGetFunction implements DDMExpressionFunction {
 
-	protected DDMFormFieldEvaluationResult
-		createDefaultDDMFormFieldEvaluationResult(
-			String fieldName, String instanceId) {
+	@Override
+	public Object evaluate(Object... parameters) {
+		if (parameters.length != 2) {
+			throw new IllegalArgumentException("Two parameters are expected");
+		}
 
 		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult =
-			new DDMFormFieldEvaluationResult(fieldName, instanceId);
+			(DDMFormFieldEvaluationResult)parameters[0];
 
-		ddmFormFieldEvaluationResult.setErrorMessage(StringPool.BLANK);
-		ddmFormFieldEvaluationResult.setReadOnly(false);
-		ddmFormFieldEvaluationResult.setValid(true);
-		ddmFormFieldEvaluationResult.setVisible(true);
+		String propertyName = parameters[1].toString();
 
-		return ddmFormFieldEvaluationResult;
+		return ddmFormFieldEvaluationResult.getProperty(propertyName);
 	}
 
 }

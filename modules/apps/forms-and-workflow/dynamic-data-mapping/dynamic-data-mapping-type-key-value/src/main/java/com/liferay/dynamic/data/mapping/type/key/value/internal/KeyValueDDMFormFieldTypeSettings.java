@@ -20,20 +20,13 @@ import com.liferay.dynamic.data.mapping.annotations.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutColumn;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutPage;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutRow;
-import com.liferay.dynamic.data.mapping.annotations.DDMFormRule;
 import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldTypeSettings;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 
 /**
  * @author Bruno Basto
  */
-@DDMForm(
-	rules = {
-		@DDMFormRule(
-			actions = {"set(fieldAt(\"tooltip\", 0), \"visible\", false)"}
-		)
-	}
-)
+@DDMForm
 @DDMFormLayout(
 	paginationMode = com.liferay.dynamic.data.mapping.model.DDMFormLayout.SETTINGS_MODE,
 	value = {
@@ -76,7 +69,7 @@ public interface KeyValueDDMFormFieldTypeSettings
 	@DDMFormField(dataType = "string", label = "%field-tip", type = "text")
 	public LocalizedValue placeholder();
 
-	@DDMFormField
+	@DDMFormField(visibilityExpression = "FALSE")
 	public LocalizedValue tooltip();
 
 }

@@ -16,13 +16,11 @@ package com.liferay.dynamic.data.mapping.type.radio.internal;
 
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
-import com.liferay.dynamic.data.mapping.model.DDMFormRule;
 import com.liferay.dynamic.data.mapping.type.BaseDDMFormFieldTypeSettingsTest;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
-import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -45,22 +43,6 @@ public class RadioDDMFormFieldTypeSettingsTest
 		DDMForm ddmForm = DDMFormFactory.create(
 			RadioDDMFormFieldTypeSettings.class);
 
-		List<DDMFormRule> ddmFormRules = ddmForm.getDDMFormRules();
-
-		Assert.assertEquals(1, ddmFormRules.size());
-
-		DDMFormRule ddmFormRule = ddmFormRules.get(0);
-
-		Assert.assertEquals("TRUE", ddmFormRule.getCondition());
-
-		List<String> ddmFormRuleActions = ddmFormRule.getActions();
-
-		Assert.assertArrayEquals(
-			new String[] {
-				"set(fieldAt(\"validation\", 0), \"visible\", false)"
-			},
-			ddmFormRuleActions.toArray());
-
 		Map<String, DDMFormField> ddmFormFieldsMap =
 			ddmForm.getDDMFormFieldsMap(false);
 
@@ -78,6 +60,13 @@ public class RadioDDMFormFieldTypeSettingsTest
 		Assert.assertNotNull(optionsDDMFormField.getLabel());
 		Assert.assertTrue(optionsDDMFormField.isRequired());
 		Assert.assertEquals("options", optionsDDMFormField.getType());
+
+		DDMFormField validationDDMFormField = ddmFormFieldsMap.get(
+			"validation");
+
+		Assert.assertNotNull(validationDDMFormField);
+		Assert.assertEquals(
+			"FALSE", validationDDMFormField.getVisibilityExpression());
 	}
 
 }

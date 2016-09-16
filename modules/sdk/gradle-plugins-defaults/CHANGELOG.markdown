@@ -231,7 +231,7 @@ directory instead of the root project directory. Doing this lets submodules like
 ### Changed
 - [LPS-68131]: Update the [Liferay Gradle Plugins] dependency to version 2.0.34.
 
-## 1.2.23 - 2016-09-15
+## 1.2.23 - 2016-09-16
 
 ### Changed
 - [LPS-68131]: Update the [Liferay Gradle Plugins] dependency to version 2.0.35.

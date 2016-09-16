@@ -17,6 +17,19 @@
 	position: absolute;
 }
 
+.form-builder-rulles-builder-popover .popover-content {
+	padding: 0;
+
+	.dropdown-menu {
+		border-width: 0;
+		box-shadow: none;
+		display: block;
+		float: none;
+		margin: 0;
+		position: relative;
+	}
+}
+
 .ddl-form-settings-modal,
 .ddl-publish-modal,
 .dynamic-data-mapping-data-providers-modal {
@@ -156,6 +169,12 @@
 .lfr-ddl-field-settings-yes {
 	padding-left: 21px;
 	padding-right: 21px;
+}
+
+.liferay-ddl-form-rule-builder {
+	.ddl-form-basic-info {
+		display: none;
+	}
 }
 
 .portal-popup,

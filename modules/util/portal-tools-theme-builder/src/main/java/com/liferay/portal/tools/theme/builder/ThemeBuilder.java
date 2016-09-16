@@ -14,7 +14,6 @@
 
 package com.liferay.portal.tools.theme.builder;
 
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.theme.builder.internal.util.FileUtil;
 import com.liferay.portal.tools.theme.builder.internal.util.Validator;
 
@@ -318,7 +317,7 @@ public class ThemeBuilder {
 
 					String fileName = file.toString();
 
-					fileName = StringUtil.toLowerCase(fileName);
+					fileName = fileName.toLowerCase();
 
 					if (fileName.endsWith("vm") &&
 						_templateExtension.equals("ftl")) {
@@ -383,7 +382,7 @@ public class ThemeBuilder {
 
 		String content = new String(bytes);
 
-		String id = StringUtil.toLowerCase(_name);
+		String id = _name.toLowerCase();
 
 		id = id.replaceAll(" ", "_");
 

@@ -28,6 +28,16 @@ import java.security.ProtectionDomain;
  */
 public class FileUtil {
 
+	public static String getExtension(String fileName) {
+		int pos = fileName.lastIndexOf('.');
+
+		if (pos == -1) {
+			return "";
+		}
+
+		return fileName.substring(pos + 1);
+	}
+
 	public static File getJarFile() throws Exception {
 		ProtectionDomain protectionDomain =
 			ThemeBuilder.class.getProtectionDomain();

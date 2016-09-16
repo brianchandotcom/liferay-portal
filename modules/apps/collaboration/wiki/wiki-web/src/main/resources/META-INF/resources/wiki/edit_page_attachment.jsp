@@ -21,7 +21,7 @@ WikiNode node = (WikiNode)request.getAttribute(WikiWebKeys.WIKI_NODE);
 WikiPage wikiPage = (WikiPage)request.getAttribute(WikiWebKeys.WIKI_PAGE);
 %>
 
-<div class="lfr-dynamic-uploader" id ="<portlet:namespace />uploaderContainer">
+<div class="lfr-dynamic-uploader" id="<portlet:namespace />uploaderContainer">
 	<div class="lfr-upload-container" id="<portlet:namespace />fileUpload"></div>
 </div>
 

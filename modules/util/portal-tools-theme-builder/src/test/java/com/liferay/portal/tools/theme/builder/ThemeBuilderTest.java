@@ -14,41 +14,69 @@
 
 package com.liferay.portal.tools.theme.builder;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+
+import java.net.URL;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
 /**
  * @author David Truong
+ * @author Andrea Di Giorgi
  */
 public class ThemeBuilderTest {
 
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		URL url = ThemeBuilderTest.class.getResource("dependencies/diffs");
+
+		_diffsDir = new File(url.toURI());
+
+		Assert.assertTrue(_diffsDir.isDirectory());
+
+		try (BufferedReader bufferedReader = Files.newBufferedReader(
+				Paths.get("build/parent-theme-dependencies.txt"))) {
+
+			String line;
+
+			while ((line = bufferedReader.readLine()) != null) {
+				File jarFile = new File(line);
+
+				Assert.assertTrue(jarFile.isFile());
+
+				if (line.contains("com.liferay.frontend.theme.styled-")) {
+					_styledJarFile = jarFile;
+				}
+				else if (line.contains(
+							"com.liferay.frontend.theme.unstyled-")) {
+
+					_unstyledJarFile = jarFile;
+				}
+			}
+		}
+	}
+
 	@Test
 	public void testThemeBuilderStyled() throws IOException {
-		File diffsDir = new File(
-			"src/test/resources/com/liferay/portal/tools/theme/builder/diffs");
 		String name = "Test Theme";
 		File outputDir = temporaryFolder.getRoot();
-		File parentDir = new File(
-			"../../apps/foundation/frontend-theme/frontend-theme-styled/src/" +
-				"main/resources/META-INF/resources/_styled");
 		String parentName = "_styled";
 		String templateExtension = "ftl";
-		File unstyledDir = new File(
-			"../../apps/foundation/frontend-theme/frontend-theme-unstyled/" +
-				"src/main/resources/META-INF/resources/_unstyled");
 
 		ThemeBuilder themeBuilder = new ThemeBuilder(
-			diffsDir, name, outputDir, parentDir, parentName, templateExtension,
-			unstyledDir);
+			_diffsDir, name, outputDir, _styledJarFile, parentName,
+			templateExtension, _unstyledJarFile);
 
 		themeBuilder.build();
 
@@ -82,20 +110,14 @@ public class ThemeBuilderTest {
 
 	@Test
 	public void testThemeBuilderUnstyled() throws IOException {
-		File diffsDir = new File(
-			"src/test/resources/com/liferay/portal/tools/theme/builder/diffs");
 		String name = "testTheme";
 		File outputDir = temporaryFolder.getRoot();
-		File parentDir = null;
 		String parentName = "_unstyled";
 		String templateExtension = "vm";
-		File unstyledDir = new File(
-			"../../apps/foundation/frontend-theme/frontend-theme-unstyled/" +
-				"src/main/resources/META-INF/resources/_unstyled");
 
 		ThemeBuilder themeBuilder = new ThemeBuilder(
-			diffsDir, name, outputDir, parentDir, parentName, templateExtension,
-			unstyledDir);
+			_diffsDir, name, outputDir, null, parentName, templateExtension,
+			_unstyledJarFile);
 
 		themeBuilder.build();
 
@@ -129,5 +151,9 @@ public class ThemeBuilderTest {
 	private static String _read(Path path) throws IOException {
 		return new String(Files.readAllBytes(path), StandardCharsets.UTF_8);
 	}
+
+	private static File _diffsDir;
+	private static File _styledJarFile;
+	private static File _unstyledJarFile;
 
 }

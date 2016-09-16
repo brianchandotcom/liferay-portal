@@ -17,11 +17,10 @@ package com.liferay.portal.tools.theme.builder;
 import com.liferay.portal.tools.theme.builder.internal.util.FileUtil;
 import com.liferay.portal.tools.theme.builder.internal.util.Validator;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 
+import java.nio.charset.StandardCharsets;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -129,6 +128,9 @@ public class ThemeBuilder {
 		if (Validator.isNull(templateExtension)) {
 			templateExtension = _DEFAULT_TEMPLATE_EXTENSION;
 		}
+		else {
+			templateExtension = templateExtension.toLowerCase();
+		}
 
 		_diffsDir = diffsDir;
 		_name = name;
@@ -148,7 +150,7 @@ public class ThemeBuilder {
 			_copyTheme(_parentName, _parentDir);
 		}
 
-		_createLookAndFeelXml();
+		_writeLookAndFeelXml();
 
 		if (_diffsDir != null) {
 			_copyTheme(_diffsDir);
@@ -356,38 +358,6 @@ public class ThemeBuilder {
 		}
 	}
 
-	private void _createLookAndFeelXml() throws IOException {
-		File webInfDir = new File(_outputDir, "WEB-INF");
-
-		File lookAndFeelXml = new File(webInfDir, "liferay-look-and-feel.xml");
-
-		if (lookAndFeelXml.exists()) {
-			return;
-		}
-
-		if (!webInfDir.exists()) {
-			webInfDir.mkdir();
-		}
-
-		lookAndFeelXml.createNewFile();
-
-		byte[] bytes = _read(
-			"com/liferay/portal/tools/theme/builder/dependencies/" +
-			"liferay-look-and-feel.xml");
-
-		String content = new String(bytes);
-
-		String id = _name.toLowerCase();
-
-		id = id.replaceAll(" ", "_");
-
-		content = content.replace("${id}", id);
-		content = content.replace("${name}", _name);
-		content = content.replace("${template.extension}", _templateExtension);
-
-		Files.write(lookAndFeelXml.toPath(), content.getBytes("UTF-8"));
-	}
-
 	private boolean _isIgnoredTemplateFile(String fileName) {
 		String extension = FileUtil.getExtension(fileName);
 
@@ -401,24 +371,30 @@ public class ThemeBuilder {
 		return false;
 	}
 
-	private byte[] _read(String fileName) throws IOException {
-		ByteArrayOutputStream byteArrayOutputStream =
-			new ByteArrayOutputStream();
+	private void _writeLookAndFeelXml() throws IOException {
+		Path path = _outputDir.toPath();
 
-		ClassLoader classLoader = ThemeBuilder.class.getClassLoader();
+		path = path.resolve("WEB-INF/liferay-look-and-feel.xml");
 
-		try (InputStream inputStream =
-				classLoader.getResourceAsStream(fileName)) {
-
-			byte[] bytes = new byte[1024];
-			int length = 0;
-
-			while ((length = inputStream.read(bytes)) > 0) {
-				byteArrayOutputStream.write(bytes, 0, length);
-			}
+		if (Files.exists(path)) {
+			return;
 		}
 
-		return byteArrayOutputStream.toByteArray();
+		String content = FileUtil.read(
+			"com/liferay/portal/tools/theme/builder/dependencies/" +
+				"liferay-look-and-feel.xml");
+
+		String id = _name.toLowerCase();
+
+		id = id.replaceAll(" ", "_");
+
+		content = content.replace("[$ID$]", id);
+		content = content.replace("[$NAME$]", _name);
+		content = content.replace("[$TEMPLATE_EXTENSION$]", _templateExtension);
+
+		Files.createDirectories(path.getParent());
+
+		Files.write(path, content.getBytes(StandardCharsets.UTF_8));
 	}
 
 	private static final String _DEFAULT_NAME;

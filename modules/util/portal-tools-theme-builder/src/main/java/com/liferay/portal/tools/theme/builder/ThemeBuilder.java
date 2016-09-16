@@ -94,6 +94,43 @@ public class ThemeBuilder {
 		File diffsDir, String name, File outputDir, File parentDir,
 		String parentName, String templateExtension, File unstyledDir) {
 
+		if (Validator.isNull(name)) {
+			name = _DEFAULT_NAME;
+		}
+
+		if (outputDir == null) {
+			throw new IllegalArgumentException(
+				"The output directory is required");
+		}
+
+		if (parentDir == null) {
+			if (Validator.isNotNull(parentName) &&
+				((unstyledDir == null) ||
+				 ((unstyledDir != null) && !parentName.equals(_UNSTYLED)))) {
+
+				throw new IllegalArgumentException("Parent path is required");
+			}
+		}
+		else {
+			if (Validator.isNull(parentName)) {
+				throw new IllegalArgumentException("Parent name is required");
+			}
+
+			if (!parentName.equals(_UNSTYLED) && (unstyledDir == null)) {
+				throw new IllegalArgumentException("Unstyled path is required");
+			}
+
+			if (parentName.equals(_UNSTYLED) && (unstyledDir != null)) {
+				unstyledDir = parentDir;
+
+				parentDir = null;
+			}
+		}
+
+		if (Validator.isNull(templateExtension)) {
+			templateExtension = _DEFAULT_TEMPLATE_EXTENSION;
+		}
+
 		_diffsDir = diffsDir;
 		_name = name;
 		_outputDir = outputDir;
@@ -139,7 +176,8 @@ public class ThemeBuilder {
 		builder = Option.builder("n");
 
 		builder.argName(_OPTION_NAME);
-		builder.desc("The name of the theme.");
+		builder.desc(
+			"The name of the theme (default: \"" + _DEFAULT_NAME + "\").");
 		builder.hasArg();
 		builder.longOpt(_OPTION_NAME);
 
@@ -186,7 +224,9 @@ public class ThemeBuilder {
 		builder = Option.builder("t");
 
 		builder.argName(_OPTION_TEMPLATE_EXTENSION);
-		builder.desc("The extension of the template files.");
+		builder.desc(
+			"The extension of the template files (default: \"" +
+				_DEFAULT_TEMPLATE_EXTENSION + "\").");
 		builder.hasArg();
 		builder.longOpt(_OPTION_TEMPLATE_EXTENSION);
 
@@ -408,6 +448,10 @@ public class ThemeBuilder {
 		return jarPath.toFile();
 	}
 
+	private static final String _DEFAULT_NAME;
+
+	private static final String _DEFAULT_TEMPLATE_EXTENSION = "ftl";
+
 	private static final String _OPTION_DIFFS_DIR = "diffs-dir";
 
 	private static final String _OPTION_HELP = "help";
@@ -424,6 +468,14 @@ public class ThemeBuilder {
 		"template-extension";
 
 	private static final String _OPTION_UNSTYLED_PATH = "unstyled-path";
+
+	private static final String _UNSTYLED = "_unstyled";
+
+	static {
+		File userDir = new File(System.getProperty("user.dir"));
+
+		_DEFAULT_NAME = userDir.getName();
+	}
 
 	private final File _diffsDir;
 	private final String _name;

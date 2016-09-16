@@ -17,6 +17,8 @@ package com.liferay.portal.kernel.util;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
+import java.lang.reflect.Field;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -57,12 +59,28 @@ public class ServerDetector {
 		return StringUtil.toLowerCase(_serverType.toString());
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static void init(String serverId) {
+		ServerType serverType = null;
+
 		try {
-			_serverType = ServerType.valueOf(StringUtil.toUpperCase(serverId));
+			serverType = ServerType.valueOf(StringUtil.toUpperCase(serverId));
 		}
 		catch (IllegalArgumentException iae) {
-			_serverType = _detectServerType();
+			serverType = _detectServerType();
+		}
+
+		try {
+			Field field = ReflectionUtil.getDeclaredField(
+				ServerDetector.class, "_serverType");
+
+			field.set(null, serverType);
+		}
+		catch (Exception e) {
+			ReflectionUtil.throwException(e);
 		}
 	}
 
@@ -248,7 +266,7 @@ public class ServerDetector {
 
 	private static final Log _log = LogFactoryUtil.getLog(ServerDetector.class);
 
-	private static ServerType _serverType;
+	private static final ServerType _serverType;
 
 	static {
 		_serverType = _detectServerType();

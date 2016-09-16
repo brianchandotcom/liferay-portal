@@ -82,10 +82,10 @@ public class ThemeBuilder {
 
 		_copyDiffs();
 
-		_buildThumbNails();
+		_buildThumbnails();
 	}
 
-	private void _buildThumbNails() throws IOException {
+	private void _buildThumbnails() throws IOException {
 		File screenshotFile = new File(_outputDir, "images/screenshot.png");
 
 		if (!screenshotFile.exists()) {
@@ -93,6 +93,7 @@ public class ThemeBuilder {
 		}
 
 		Builder<File> thumbnailBuilder = Thumbnails.of(screenshotFile);
+
 		thumbnailBuilder.size(160, 120);
 		thumbnailBuilder.outputFormat("png");
 		thumbnailBuilder.toFile(new File(_outputDir, "images/thumbnail.png"));

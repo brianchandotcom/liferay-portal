@@ -81,7 +81,7 @@ public class ThemeBuilderTest {
 			diffsPath, name, outputPath, parentName, templateExtension,
 			themeParentPath, themeUnstyledPath);
 
-		themeBuilder.compileTheme();
+		themeBuilder.build();
 
 		File outputDir = new File(outputPath);
 
@@ -130,7 +130,7 @@ public class ThemeBuilderTest {
 			diffsPath, name, outputPath, parentName, templateExtension,
 			themeParentPath, themeUnstyledPath);
 
-		themeBuilder.compileTheme();
+		themeBuilder.build();
 
 		File outputDir = new File(outputPath);
 

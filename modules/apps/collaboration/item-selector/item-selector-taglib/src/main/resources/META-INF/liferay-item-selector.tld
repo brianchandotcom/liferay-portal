@@ -88,6 +88,12 @@
 		<tag-class>com.liferay.item.selector.taglib.servlet.taglib.RepositoryEntryBrowserTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<description>Deprecated as of 1.1.0, with no direct replacement.</description>
+			<name>desiredItemSelectorReturnTypes</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<description>The style of the element list. The icon style is used by default.</description>
 			<name>displayStyle</name>
 			<required>false</required>
@@ -108,7 +114,7 @@
 		<attribute>
 			<description>An <![CDATA[<code>ItemSelectorReturnTypeResolver</code>]]> that resolves the value of the model based on the desired return type.</description>
 			<name>itemSelectorReturnTypeResolver</name>
-			<required>true</required>
+			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>

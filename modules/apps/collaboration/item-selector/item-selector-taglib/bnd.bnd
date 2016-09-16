@@ -1,7 +1,9 @@
 Bundle-Name: Liferay Item Selector Taglib
 Bundle-SymbolicName: com.liferay.item.selector.taglib
-Bundle-Version: 2.0.0
-Export-Package: com.liferay.item.selector.taglib.servlet.taglib
+Bundle-Version: 1.1.0
+Export-Package:\
+	com.liferay.item.selector.taglib,\
+	com.liferay.item.selector.taglib.servlet.taglib
 Liferay-JS-Config: /META-INF/resources/config.js
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Item Selector

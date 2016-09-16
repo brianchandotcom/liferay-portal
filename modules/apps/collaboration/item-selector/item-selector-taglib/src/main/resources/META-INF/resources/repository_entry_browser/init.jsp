@@ -16,7 +16,8 @@
 
 <%@ include file="/init.jsp" %>
 
-<%@ page import="com.liferay.portal.kernel.model.Image" %><%@
+<%@ page import="com.liferay.item.selector.ItemSelectorReturnType" %><%@
+page import="com.liferay.portal.kernel.model.Image" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletProvider" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletProviderUtil" %><%@

@@ -17,6 +17,9 @@ package com.liferay.item.selector.taglib.internal.util;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.document.library.kernel.util.DLUtil;
+import com.liferay.item.selector.ItemSelectorReturnType;
+import com.liferay.item.selector.ItemSelectorReturnTypeResolver;
+import com.liferay.item.selector.taglib.ItemSelectorRepositoryEntryBrowserReturnTypeUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -31,6 +34,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
@@ -160,6 +164,42 @@ public class ItemSelectorRepositoryEntryBrowserUtil {
 		itemMetadataJSONObject.put("groups", groupsJSONArray);
 
 		return itemMetadataJSONObject;
+	}
+
+	public static String getItemSelectorReturnTypeClassName(
+			ItemSelectorReturnTypeResolver
+				<? extends ItemSelectorReturnType, FileEntry>
+					itemSelectorReturnTypeResolver,
+			ItemSelectorReturnType itemSelectorReturnType)
+		throws Exception {
+
+		if (itemSelectorReturnTypeResolver != null) {
+			Class<? extends ItemSelectorReturnType>
+				itemSelectorReturnTypeClass =
+					itemSelectorReturnTypeResolver.
+						getItemSelectorReturnTypeClass();
+
+			return itemSelectorReturnTypeClass.getName();
+		}
+
+		return ClassUtil.getClassName(itemSelectorReturnType);
+	}
+
+	public static String getValue(
+			ItemSelectorReturnTypeResolver
+				<? extends ItemSelectorReturnType, FileEntry>
+					itemSelectorReturnTypeResolver,
+			ItemSelectorReturnType itemSelectorReturnType, FileEntry fileEntry,
+			ThemeDisplay themeDisplay)
+		throws Exception {
+
+		if (itemSelectorReturnTypeResolver != null) {
+			return itemSelectorReturnTypeResolver.getValue(
+				fileEntry, themeDisplay);
+		}
+
+		return ItemSelectorRepositoryEntryBrowserReturnTypeUtil.getValue(
+			itemSelectorReturnType, fileEntry, themeDisplay);
 	}
 
 	protected static void addGroupSelectorBreadcrumbEntry(

@@ -7,6 +7,4 @@ Import-Package:\
 	!org.apache.tools.ant.*,\
 	*
 Main-Class: com.liferay.portal.tools.theme.builder.ThemeBuilder
--includeresource:\
-	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/util/StringUtil.class,\
-	@commons-cli-[0-9]*.jar
+-includeresource: @commons-cli-[0-9]*.jar

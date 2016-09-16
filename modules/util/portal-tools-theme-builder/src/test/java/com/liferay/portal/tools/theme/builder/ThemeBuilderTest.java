@@ -15,7 +15,9 @@
 package com.liferay.portal.tools.theme.builder;
 
 import java.io.File;
+import java.io.IOException;
 
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -30,7 +32,7 @@ import org.junit.rules.TemporaryFolder;
 public class ThemeBuilderTest {
 
 	@Test
-	public void testThemeBuilderStyled() throws Exception {
+	public void testThemeBuilderStyled() throws IOException {
 		File diffsDir = new File(
 			"src/test/resources/com/liferay/portal/tools/theme/builder/diffs");
 		String name = "Test Theme";
@@ -79,7 +81,7 @@ public class ThemeBuilderTest {
 	}
 
 	@Test
-	public void testThemeBuilderUnstyled() throws Exception {
+	public void testThemeBuilderUnstyled() throws IOException {
 		File diffsDir = new File(
 			"src/test/resources/com/liferay/portal/tools/theme/builder/diffs");
 		String name = "testTheme";
@@ -124,8 +126,8 @@ public class ThemeBuilderTest {
 	@Rule
 	public final TemporaryFolder temporaryFolder = new TemporaryFolder();
 
-	private String _read(Path filePath) throws Exception {
-		return new String(Files.readAllBytes(filePath));
+	private static String _read(Path path) throws IOException {
+		return new String(Files.readAllBytes(path), StandardCharsets.UTF_8);
 	}
 
 }

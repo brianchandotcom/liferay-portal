@@ -1459,8 +1459,8 @@
 					<var method="StringUtil#lowerCase('${currentDay}')" name="currentDay" />
 					<var method="StringUtil#upperCaseFirstLetter('${currentDay}')" name="currentDay" />
 
-					<execute function="AssertTextEquals#assertPartialText" locator1="CalendarEditEvent#REPEAT_DIALOG_SUMMARY" value1="${currentDay}" />"
-					<execute function="AssertTextEquals#assertPartialText" locator1="CalendarEditEvent#REPEAT_DIALOG_SUMMARY" value1="${numberOfOccurrences} Times" />"
+					<execute function="AssertTextEquals#assertPartialText" locator1="CalendarEditEvent#REPEAT_DIALOG_SUMMARY" value1="${currentDay}" />
+					<execute function="AssertTextEquals#assertPartialText" locator1="CalendarEditEvent#REPEAT_DIALOG_SUMMARY" value1="${numberOfOccurrences} Times" />
 
 					<execute function="AssertClick" locator1="CalendarEditEvent#REPEAT_DONE_BUTTON" value1="Done" />
 				</then>

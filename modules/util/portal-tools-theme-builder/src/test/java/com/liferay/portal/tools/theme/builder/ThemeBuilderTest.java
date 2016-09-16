@@ -15,59 +15,26 @@
 package com.liferay.portal.tools.theme.builder;
 
 import java.io.File;
-import java.io.IOException;
 
-import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.SimpleFileVisitor;
-import java.nio.file.attribute.BasicFileAttributes;
 
-import org.junit.After;
 import org.junit.Assert;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 
 /**
  * @author David Truong
  */
 public class ThemeBuilderTest {
 
-	@After
-	public void tearDown() throws Exception {
-		Files.walkFileTree(
-			Paths.get("build/theme"),
-			new SimpleFileVisitor<Path>() {
-
-				@Override
-				public FileVisitResult postVisitDirectory(
-						Path path, IOException ioe)
-					throws IOException {
-
-					Files.delete(path);
-
-					return FileVisitResult.CONTINUE;
-				}
-
-				@Override
-				public FileVisitResult visitFile(
-						Path path, BasicFileAttributes basicFileAttributes)
-					throws IOException {
-
-					Files.delete(path);
-
-					return FileVisitResult.CONTINUE;
-				}
-
-			});
-	}
-
 	@Test
 	public void testThemeBuilderStyled() throws Exception {
 		File diffsDir = new File(
 			"src/test/resources/com/liferay/portal/tools/theme/builder/diffs");
 		String name = "Test Theme";
-		File outputDir = new File("build/theme");
+		File outputDir = temporaryFolder.getRoot();
 		File parentDir = new File(
 			"../../apps/foundation/frontend-theme/frontend-theme-styled/src/" +
 				"main/resources/META-INF/resources/_styled");
@@ -116,7 +83,7 @@ public class ThemeBuilderTest {
 		File diffsDir = new File(
 			"src/test/resources/com/liferay/portal/tools/theme/builder/diffs");
 		String name = "testTheme";
-		File outputDir = new File("build/theme");
+		File outputDir = temporaryFolder.getRoot();
 		File parentDir = null;
 		String parentName = "_unstyled";
 		String templateExtension = "vm";
@@ -153,6 +120,9 @@ public class ThemeBuilderTest {
 
 		Assert.assertTrue(lookAndFeelXmlFile.exists());
 	}
+
+	@Rule
+	public final TemporaryFolder temporaryFolder = new TemporaryFolder();
 
 	private String _read(Path filePath) throws Exception {
 		return new String(Files.readAllBytes(filePath));

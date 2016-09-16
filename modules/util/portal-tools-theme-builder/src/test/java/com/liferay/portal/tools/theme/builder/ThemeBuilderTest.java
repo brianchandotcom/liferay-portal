@@ -22,7 +22,6 @@ import java.net.URL;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import org.junit.Assert;
@@ -69,88 +68,64 @@ public class ThemeBuilderTest {
 
 	@Test
 	public void testThemeBuilderStyled() throws IOException {
-		String name = "Test Theme";
-		File outputDir = temporaryFolder.getRoot();
-		String parentName = "_styled";
-		String templateExtension = "ftl";
-
 		ThemeBuilder themeBuilder = new ThemeBuilder(
-			_diffsDir, name, outputDir, _styledJarFile, parentName,
-			templateExtension, _unstyledJarFile);
+			_diffsDir, _NAME, temporaryFolder.getRoot(), _styledJarFile,
+			"_styled", "ftl", _unstyledJarFile);
 
 		themeBuilder.build();
 
-		Assert.assertTrue(outputDir.exists());
-
-		File customScssFile = new File(outputDir, "css/custom.scss");
-
-		Assert.assertTrue(customScssFile.exists());
-
-		String customScssContent = _read(customScssFile.toPath());
-
-		Assert.assertEquals(".text { color: black; }", customScssContent);
-
-		File thumbnailFile = new File(outputDir, "images/thumbnail.png");
-
-		Assert.assertTrue(thumbnailFile.exists());
-
-		File templateFtlFile = new File(outputDir, "templates/init.ftl");
-
-		Assert.assertTrue(templateFtlFile.exists());
-
-		File templateVmFile = new File(outputDir, "templates/init.vm");
-
-		Assert.assertFalse(templateVmFile.exists());
-
-		File lookAndFeelXmlFile = new File(
-			outputDir, "WEB-INF/liferay-look-and-feel.xml");
-
-		Assert.assertTrue(lookAndFeelXmlFile.exists());
+		_assertEquals("css/custom.scss", ".text { color: black; }");
+		_assertExists("images/thumbnail.png");
+		_assertExists("templates/init.ftl");
+		_assertNotExists("templates/init.vm");
+		_assertExists("WEB-INF/liferay-look-and-feel.xml");
 	}
 
 	@Test
 	public void testThemeBuilderUnstyled() throws IOException {
-		String name = "testTheme";
-		File outputDir = temporaryFolder.getRoot();
-		String parentName = "_unstyled";
-		String templateExtension = "vm";
-
 		ThemeBuilder themeBuilder = new ThemeBuilder(
-			_diffsDir, name, outputDir, null, parentName, templateExtension,
-			_unstyledJarFile);
+			_diffsDir, _NAME, temporaryFolder.getRoot(), null, "_unstyled",
+			"vm", _unstyledJarFile);
 
 		themeBuilder.build();
 
-		Assert.assertTrue(outputDir.exists());
-
-		File customScssFile = new File(outputDir, "css/custom.scss");
-
-		Assert.assertTrue(customScssFile.exists());
-
-		String customScssContent = _read(customScssFile.toPath());
-
-		Assert.assertEquals(".text { color: black; }", customScssContent);
-
-		File templateFtlFile = new File(outputDir, "templates/init.ftl");
-
-		Assert.assertFalse(templateFtlFile.exists());
-
-		File templateVmFile = new File(outputDir, "templates/init.vm");
-
-		Assert.assertTrue(templateVmFile.exists());
-
-		File lookAndFeelXmlFile = new File(
-			outputDir, "WEB-INF/liferay-look-and-feel.xml");
-
-		Assert.assertTrue(lookAndFeelXmlFile.exists());
+		_assertEquals("css/custom.scss", ".text { color: black; }");
+		_assertNotExists("templates/init.ftl");
+		_assertExists("templates/init.vm");
+		_assertExists("WEB-INF/liferay-look-and-feel.xml");
 	}
 
 	@Rule
 	public final TemporaryFolder temporaryFolder = new TemporaryFolder();
 
-	private static String _read(Path path) throws IOException {
-		return new String(Files.readAllBytes(path), StandardCharsets.UTF_8);
+	private void _assertEquals(String fileName, String expected)
+		throws IOException {
+
+		File file = _assertExists(fileName);
+
+		String content = new String(
+			Files.readAllBytes(file.toPath()), StandardCharsets.UTF_8);
+
+		Assert.assertEquals(expected, content);
 	}
+
+	private File _assertExists(String fileName) {
+		File file = new File(temporaryFolder.getRoot(), fileName);
+
+		Assert.assertTrue("Missing " + fileName, file.exists());
+
+		return file;
+	}
+
+	private File _assertNotExists(String fileName) {
+		File file = new File(temporaryFolder.getRoot(), fileName);
+
+		Assert.assertFalse("Unexpected " + fileName, file.exists());
+
+		return file;
+	}
+
+	private static final String _NAME = "Test Theme";
 
 	private static File _diffsDir;
 	private static File _styledJarFile;

@@ -230,34 +230,44 @@ public class HtmlImpl implements Html {
 		for (int i = 0; i < text.length(); i++) {
 			char c = text.charAt(i);
 
-			if ((mode == ESCAPE_MODE_ATTRIBUTE) &&
-				(!_isValidXmlCharacter(c) ||
-				 _isUnicodeCompatibilityCharacter(c))) {
+			if (c < 256) {
+				if ((c < 128) && _validChars[c]) {
+					sb.append(c);
+				}
+				else if ((mode == ESCAPE_MODE_ATTRIBUTE) &&
+						 ((c == CharPool.TAB) || (c == CharPool.NEW_LINE) ||
+						  (c == CharPool.RETURN))) {
+
+					sb.append(CharPool.SPACE);
+				}
+				else {
+					sb.append(prefix);
+
+					_appendHexChars(sb, hexBuffer, c);
+
+					sb.append(postfix);
+
+					if ((mode == ESCAPE_MODE_CSS) &&
+						(i < (text.length() - 1))) {
+
+						char nextChar = text.charAt(i + 1);
+
+						if ((nextChar >= CharPool.NUMBER_0) &&
+							(nextChar <= CharPool.NUMBER_9)) {
+
+							sb.append(CharPool.SPACE);
+						}
+					}
+				}
+			}
+			else if ((mode == ESCAPE_MODE_ATTRIBUTE) &&
+					 (!_isValidXmlCharacter(c) ||
+					  _isUnicodeCompatibilityCharacter(c))) {
 
 				sb.append(CharPool.SPACE);
 			}
-			else if ((c > 255) || (c == CharPool.DASH) ||
-					 (c == CharPool.UNDERLINE) ||
-					 Character.isLetterOrDigit(c)) {
-
-				sb.append(c);
-			}
 			else {
-				sb.append(prefix);
-
-				_appendHexChars(sb, hexBuffer, c);
-
-				sb.append(postfix);
-
-				if ((mode == ESCAPE_MODE_CSS) && (i < (text.length() - 1))) {
-					char nextChar = text.charAt(i + 1);
-
-					if ((nextChar >= CharPool.NUMBER_0) &&
-						(nextChar <= CharPool.NUMBER_9)) {
-
-						sb.append(CharPool.SPACE);
-					}
-				}
+				sb.append(c);
 			}
 		}
 
@@ -887,6 +897,7 @@ public class HtmlImpl implements Html {
 	};
 
 	private static final Map<String, String> _unescapeMap = new HashMap<>();
+	private static final boolean[] _validChars = new boolean[128];
 
 	static {
 		_unescapeMap.put("lt", "<");
@@ -904,6 +915,21 @@ public class HtmlImpl implements Html {
 		_unescapeMap.put("#61", "=");
 		_unescapeMap.put("#43", "+");
 		_unescapeMap.put("#45", "-");
+
+		for (int i = 'a'; i <= 'z'; i++) {
+			_validChars[i] = true;
+		}
+
+		for (int i = 'A'; i <= 'Z'; i++) {
+			_validChars[i] = true;
+		}
+
+		for (int i = '0'; i <= '9'; i++) {
+			_validChars[i] = true;
+		}
+
+		_validChars['-'] = true;
+		_validChars['_'] = true;
 	}
 
 	private final Pattern _pattern = Pattern.compile("([\\s<&]|$)");

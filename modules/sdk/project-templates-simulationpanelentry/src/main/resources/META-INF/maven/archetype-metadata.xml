@@ -24,6 +24,9 @@
 		</fileSet>
 	</fileSets>
 	<requiredProperties>
+		<requiredProperty key="buildType">
+			<defaultValue>maven</defaultValue>
+		</requiredProperty>
 		<requiredProperty key="package">
 			<defaultValue>${groupId}.${artifactId}</defaultValue>
 		</requiredProperty>

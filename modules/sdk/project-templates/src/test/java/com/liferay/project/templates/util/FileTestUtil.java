@@ -18,7 +18,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.RandomAccessFile;
+import java.io.Writer;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.DirectoryStream;
@@ -36,28 +36,6 @@ public class FileTestUtil {
 
 	public static final String PROJECT_TEMPLATE_DIR_PREFIX =
 		"project-templates-";
-
-	public static boolean endsWithEmptyLine(Path path) throws IOException {
-		try (RandomAccessFile randomAccessFile = new RandomAccessFile(
-				path.toFile(), "r")) {
-
-			long pos = randomAccessFile.length() - 1;
-
-			if (pos < 0) {
-				return false;
-			}
-
-			randomAccessFile.seek(pos);
-
-			int c = randomAccessFile.read();
-
-			if ((c == '\n') || (c == '\r')) {
-				return true;
-			}
-		}
-
-		return false;
-	}
 
 	public static String getExtension(String fileName) {
 		int pos = fileName.indexOf('.');
@@ -127,6 +105,16 @@ public class FileTestUtil {
 		return content.trim();
 	}
 
+	public static Properties readProperties(Path path) throws IOException {
+		Properties properties = new Properties();
+
+		try (InputStream inputStream = Files.newInputStream(path)) {
+			properties.load(inputStream);
+		}
+
+		return properties;
+	}
+
 	public static Properties readProperties(String name) throws IOException {
 		Properties properties = new Properties();
 
@@ -137,6 +125,15 @@ public class FileTestUtil {
 		}
 
 		return properties;
+	}
+
+	public static void write(Writer writer, String... lines)
+		throws IOException {
+
+		for (String line : lines) {
+			writer.write(line);
+			writer.write(System.lineSeparator());
+		}
 	}
 
 }

@@ -9,12 +9,6 @@
 			</includes>
 		</fileSet>
 		<fileSet filtered="true">
-			<directory>src/main/resources</directory>
-			<includes>
-				<include>**/*</include>
-			</includes>
-		</fileSet>
-		<fileSet filtered="true">
 			<directory></directory>
 			<includes>
 				<include>.gitignore</include>
@@ -24,6 +18,9 @@
 		</fileSet>
 	</fileSets>
 	<requiredProperties>
+		<requiredProperty key="buildType">
+			<defaultValue>maven</defaultValue>
+		</requiredProperty>
 		<requiredProperty key="className">
 		</requiredProperty>
 		<requiredProperty key="package">

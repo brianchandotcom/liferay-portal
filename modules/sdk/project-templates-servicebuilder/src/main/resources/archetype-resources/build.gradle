@@ -1,4 +1,4 @@
-#if( ${projectType} != "workspace")buildscript {
+#if (${projectType} != "workspace")buildscript {
 	dependencies {
 		classpath group: "com.liferay", name: "com.liferay.gradle.plugins", version: "latest.release"
 	}

@@ -20,6 +20,7 @@ import com.liferay.project.templates.util.FileTestUtil;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.StringReader;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.DirectoryStream;
@@ -32,6 +33,8 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -200,11 +203,7 @@ public class ProjectTemplateFilesTest {
 					}
 
 					if (_isTextFile(fileName, extension)) {
-						_testTextFileLines(path);
-
-						Assert.assertFalse(
-							"Trailing empty line in " + path,
-							FileTestUtil.endsWithEmptyLine(path));
+						_testTextFile(path, fileName, extension);
 					}
 
 					return FileVisitResult.CONTINUE;
@@ -213,14 +212,35 @@ public class ProjectTemplateFilesTest {
 			});
 	}
 
-	private void _testTextFileLines(Path path) throws IOException {
-		try (BufferedReader bufferedReader = Files.newBufferedReader(
-				path, StandardCharsets.UTF_8)) {
+	private void _testTextFile(Path path, String fileName, String extension)
+		throws IOException {
+
+		String text = FileTestUtil.read(path);
+
+		boolean trailingEmptyLine = false;
+
+		if ((text.length() > 0) && text.charAt(text.length() - 1) == '\n') {
+			trailingEmptyLine = true;
+		}
+
+		Assert.assertFalse("Trailing empty line in " + path, trailingEmptyLine);
+
+		boolean firstEmptyLine = false;
+
+		try (BufferedReader bufferedReader = new BufferedReader(
+				new StringReader(text))) {
 
 			String line = null;
 
 			while ((line = bufferedReader.readLine()) != null) {
 				if (line.isEmpty()) {
+					Assert.assertFalse(
+						"Forbidden empty line in " + path,
+						firstEmptyLine && extension.equals("xml") &&
+							!fileName.equals("service.xml"));
+
+					firstEmptyLine = true;
+
 					continue;
 				}
 
@@ -229,15 +249,57 @@ public class ProjectTemplateFilesTest {
 					Character.isWhitespace(line.charAt(line.length() - 1)));
 			}
 		}
+
+		Matcher matcher = _velocityIfPattern.matcher(text);
+
+		while (matcher.find()) {
+			String condition = matcher.group(1);
+
+			Assert.assertEquals(
+				"Source formatting error in " + path,
+				"#if (" + condition.trim() + ")", matcher.group());
+		}
+
+		if (extension.equals("xml")) {
+			String xmlDeclaration = _XML_DECLARATION;
+
+			if (fileName.equals("service.xml")) {
+				xmlDeclaration = _SERVICE_XML_DECLARATION;
+			}
+
+			Assert.assertTrue(
+				"Incorrect XML declaration in " + path,
+				text.startsWith(xmlDeclaration));
+		}
 	}
+
+	private static final String _SERVICE_XML_DECLARATION;
 
 	private static final String[] _SOURCESET_NAMES = {
 		"main", "test", "testIntegration"
 	};
 
+	private static final String _XML_DECLARATION =
+		"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n";
+
 	private static Set<Path> _projectTemplateDirPaths;
 	private static final Set<String> _textFileExtensions = new HashSet<>(
 		Arrays.asList(
 			"bnd", "gradle", "java", "jsp", "jspf", "properties", "xml"));
+	private static final Pattern _velocityIfPattern = Pattern.compile(
+		"#if\\s*\\(\\s*(.+)\\s*\\)");
+
+	static {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("<?xml version=\"1.0\"?>");
+		sb.append('\n');
+		sb.append("<!DOCTYPE service-builder PUBLIC ");
+		sb.append("\"-//Liferay//DTD Service Builder 7.0.0//EN\" ");
+		sb.append("\"http://www.liferay.com/dtd/");
+		sb.append("liferay-service-builder_7_0_0.dtd\">\n\n");
+
+		_SERVICE_XML_DECLARATION = sb.toString();
+	}
 
 }

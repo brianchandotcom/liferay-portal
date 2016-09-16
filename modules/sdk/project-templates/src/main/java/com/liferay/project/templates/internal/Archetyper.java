@@ -104,6 +104,7 @@ public class Archetyper {
 
 		Properties properties = new Properties();
 
+		_setProperty(properties, "buildType", "gradle");
 		_setProperty(properties, "className", className);
 		_setProperty(
 			properties, "hostBundleSymbolicName", hostBundleSymbolicName);
@@ -111,6 +112,7 @@ public class Archetyper {
 		_setProperty(properties, "package", packageName);
 		_setProperty(properties, "projectType", projectType);
 		_setProperty(properties, "serviceClass", service);
+		_setProperty(properties, "serviceWrapperClass", service);
 
 		archetypeGenerationRequest.setProperties(properties);
 

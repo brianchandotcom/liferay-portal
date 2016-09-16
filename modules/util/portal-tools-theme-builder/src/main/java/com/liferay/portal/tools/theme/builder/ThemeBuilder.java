@@ -16,6 +16,7 @@ package com.liferay.portal.tools.theme.builder;
 
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.theme.builder.internal.util.FileUtil;
+import com.liferay.portal.tools.theme.builder.internal.util.Validator;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -312,7 +313,7 @@ public class ThemeBuilder {
 	}
 
 	private void _copyThemeParent() throws IOException {
-		if ((_parentName == null) || _parentName.isEmpty()) {
+		if (Validator.isNull(_parentName)) {
 			return;
 		}
 

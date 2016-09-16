@@ -53,45 +53,17 @@ public class ServerDetector {
 	}
 
 	public static String getServerId() {
-		return getInstance()._serverId;
+		return StringUtil.toLowerCase(getInstance()._serverType.toString());
 	}
 
 	public static void init(String serverId) {
 		ServerDetector serverDetector = new ServerDetector();
 
-		serverDetector._serverId = serverId;
-
-		if (serverId.equals(GLASSFISH_ID)) {
-			serverDetector._glassfish = true;
+		try {
+			serverDetector._serverType = ServerType.valueOf(
+				StringUtil.toUpperCase(serverId));
 		}
-		else if (serverId.equals(JBOSS_ID)) {
-			serverDetector._jBoss = true;
-		}
-		else if (serverId.equals(JETTY_ID)) {
-			serverDetector._jetty = true;
-		}
-		else if (serverId.equals(JONAS_ID)) {
-			serverDetector._jonas = true;
-		}
-		else if (serverId.equals(OC4J_ID)) {
-			serverDetector._oc4j = true;
-		}
-		else if (serverId.equals(RESIN_ID)) {
-			serverDetector._resin = true;
-		}
-		else if (serverId.equals(TOMCAT_ID)) {
-			serverDetector._tomcat = true;
-		}
-		else if (serverId.equals(WEBLOGIC_ID)) {
-			serverDetector._webLogic = true;
-		}
-		else if (serverId.equals(WEBSPHERE_ID)) {
-			serverDetector._webSphere = true;
-		}
-		else if (serverId.equals(WILDFLY_ID)) {
-			serverDetector._wildfly = true;
-		}
-		else {
+		catch (IllegalArgumentException iae) {
 			serverDetector._init();
 		}
 
@@ -99,27 +71,51 @@ public class ServerDetector {
 	}
 
 	public static boolean isGlassfish() {
-		return getInstance()._glassfish;
+		if (getInstance()._serverType == ServerType.GLASSFISH) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public static boolean isJBoss() {
-		return getInstance()._jBoss;
+		if (getInstance()._serverType == ServerType.JBOSS) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public static boolean isJetty() {
-		return getInstance()._jetty;
+		if (getInstance()._serverType == ServerType.JETTY) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public static boolean isJOnAS() {
-		return getInstance()._jonas;
+		if (getInstance()._serverType == ServerType.JONAS) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public static boolean isOC4J() {
-		return getInstance()._oc4j;
+		if (getInstance()._serverType == ServerType.OC4J) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public static boolean isResin() {
-		return getInstance()._resin;
+		if (getInstance()._serverType == ServerType.RESIN) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public static boolean isSupportsComet() {
@@ -135,19 +131,35 @@ public class ServerDetector {
 	}
 
 	public static boolean isTomcat() {
-		return getInstance()._tomcat;
+		if (getInstance()._serverType == ServerType.TOMCAT) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public static boolean isWebLogic() {
-		return getInstance()._webLogic;
+		if (getInstance()._serverType == ServerType.WEBLOGIC) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public static boolean isWebSphere() {
-		return getInstance()._webSphere;
+		if (getInstance()._serverType == ServerType.WEBSPHERE) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public static boolean isWildfly() {
-		return getInstance()._wildfly;
+		if (getInstance()._serverType == ServerType.WILDFLY) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
@@ -190,53 +202,45 @@ public class ServerDetector {
 
 	private void _init() {
 		if (_isGlassfish()) {
-			_serverId = GLASSFISH_ID;
-			_glassfish = true;
+			_serverType = ServerType.GLASSFISH;
 		}
 		else if (_isJBoss()) {
-			_serverId = JBOSS_ID;
-			_jBoss = true;
+			_serverType = ServerType.JBOSS;
 		}
 		else if (_isJOnAS()) {
-			_serverId = JONAS_ID;
-			_jonas = true;
+			_serverType = ServerType.JONAS;
 		}
 		else if (_isOC4J()) {
-			_serverId = OC4J_ID;
-			_oc4j = true;
+			_serverType = ServerType.OC4J;
 		}
 		else if (_isResin()) {
-			_serverId = RESIN_ID;
-			_resin = true;
+			_serverType = ServerType.RESIN;
 		}
 		else if (_isWebLogic()) {
-			_serverId = WEBLOGIC_ID;
-			_webLogic = true;
+			_serverType = ServerType.WEBLOGIC;
 		}
 		else if (_isWebSphere()) {
-			_serverId = WEBSPHERE_ID;
-			_webSphere = true;
+			_serverType = ServerType.WEBSPHERE;
 		}
 		else if (_isWildfly()) {
-			_serverId = WILDFLY_ID;
-			_wildfly = true;
+			_serverType = ServerType.WILDFLY;
 		}
 
-		if (_serverId == null) {
+		if (_serverType == null) {
 			if (_isJetty()) {
-				_serverId = JETTY_ID;
-				_jetty = true;
+				_serverType = ServerType.JETTY;
 			}
 			else if (_isTomcat()) {
-				_serverId = TOMCAT_ID;
-				_tomcat = true;
+				_serverType = ServerType.TOMCAT;
 			}
 		}
 
 		if (System.getProperty("external-properties") == null) {
 			if (_log.isInfoEnabled()) {
-				if (_serverId != null) {
-					_log.info("Detected server " + _serverId);
+				if (_serverType != null) {
+					_log.info(
+						"Detected server " +
+							StringUtil.toLowerCase(_serverType.toString()));
 				}
 				else {
 					_log.info("No server detected");
@@ -295,16 +299,12 @@ public class ServerDetector {
 
 	private static ServerDetector _instance;
 
-	private boolean _glassfish;
-	private boolean _jBoss;
-	private boolean _jetty;
-	private boolean _jonas;
-	private boolean _oc4j;
-	private boolean _resin;
-	private String _serverId;
-	private boolean _tomcat;
-	private boolean _webLogic;
-	private boolean _webSphere;
-	private boolean _wildfly;
+	private ServerType _serverType;
+
+	private enum ServerType {
+
+		GLASSFISH, JBOSS, JETTY, JONAS, OC4J, RESIN, TOMCAT, WEBLOGIC,
+		WEBSPHERE, WILDFLY;
+	}
 
 }

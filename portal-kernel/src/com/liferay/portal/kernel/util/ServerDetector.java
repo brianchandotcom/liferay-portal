@@ -34,6 +34,9 @@ public class ServerDetector {
 
 	public static final String RESIN_ID = "resin";
 
+	public static final String SERVER_DETECTOR_SERVER_ID =
+		"server.detector.server.id";
+
 	public static final String TOMCAT_ID = "tomcat";
 
 	public static final String WEBLOGIC_ID = "weblogic";
@@ -192,7 +195,12 @@ public class ServerDetector {
 	}
 
 	private static void _init() {
-		if (_hasSystemProperty("com.sun.aas.instanceRoot")) {
+		String serverId = System.getProperty(SERVER_DETECTOR_SERVER_ID);
+
+		if (serverId != null) {
+			_serverType = ServerType.valueOf(StringUtil.toUpperCase(serverId));
+		}
+		else if (_hasSystemProperty("com.sun.aas.instanceRoot")) {
 			_serverType = ServerType.GLASSFISH;
 		}
 		else if (_hasSystemProperty("jboss.home.dir")) {

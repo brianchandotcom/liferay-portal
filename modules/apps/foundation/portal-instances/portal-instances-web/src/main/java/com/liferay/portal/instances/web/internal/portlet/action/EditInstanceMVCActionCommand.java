@@ -15,6 +15,8 @@
 package com.liferay.portal.instances.web.internal.portlet.action;
 
 import com.liferay.portal.instances.web.internal.constants.PortalInstancesPortletKeys;
+import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
+import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.exception.CompanyMxException;
 import com.liferay.portal.kernel.exception.CompanyVirtualHostException;
 import com.liferay.portal.kernel.exception.CompanyWebIdException;
@@ -27,6 +29,8 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.CompanyService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.MethodHandler;
+import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PortalInstances;
@@ -58,6 +62,8 @@ public class EditInstanceMVCActionCommand extends BaseMVCActionCommand {
 		long companyId = ParamUtil.getLong(actionRequest, "companyId");
 
 		_companyService.deleteCompany(companyId);
+
+		_syncPortalInstances();
 	}
 
 	@Override
@@ -141,7 +147,21 @@ public class EditInstanceMVCActionCommand extends BaseMVCActionCommand {
 			_companyService.updateCompany(
 				companyId, virtualHostname, mx, maxUsers, active);
 		}
+
+		_syncPortalInstances();
 	}
+
+	private void _syncPortalInstances() {
+		MethodHandler methodHandler = new MethodHandler(_syncMethodKey);
+
+		ClusterRequest clusterRequest = ClusterRequest.createMulticastRequest(
+			methodHandler, true);
+
+		ClusterExecutorUtil.execute(clusterRequest);
+	}
+
+	private static final MethodKey _syncMethodKey = new MethodKey(
+		PortalInstances.class, "sync");
 
 	private CompanyService _companyService;
 

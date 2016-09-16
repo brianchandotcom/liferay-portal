@@ -64,26 +64,24 @@ public class ThemeBuilderTest {
 
 	@Test
 	public void testThemeBuilderStyled() throws Exception {
-		String diffsPath =
-			"src/test/resources/com/liferay/portal/tools/theme/builder/diffs";
+		File diffsDir = new File(
+			"src/test/resources/com/liferay/portal/tools/theme/builder/diffs");
 		String name = "Test Theme";
-		String outputPath = "build/theme";
+		File outputDir = new File("build/theme");
+		File parentDir = new File(
+			"../../apps/foundation/frontend-theme/frontend-theme-styled/src/" +
+				"main/resources/META-INF/resources/_styled");
 		String parentName = "_styled";
 		String templateExtension = "ftl";
-		String themeParentPath =
-			"../../apps/foundation/frontend-theme/frontend-theme-styled/" +
-				"src/main/resources/META-INF/resources/_styled";
-		String themeUnstyledPath =
+		File unstyledDir = new File(
 			"../../apps/foundation/frontend-theme/frontend-theme-unstyled/" +
-				"src/main/resources/META-INF/resources/_unstyled";
+				"src/main/resources/META-INF/resources/_unstyled");
 
 		ThemeBuilder themeBuilder = new ThemeBuilder(
-			diffsPath, name, outputPath, parentName, templateExtension,
-			themeParentPath, themeUnstyledPath);
+			diffsDir, name, outputDir, parentDir, parentName, templateExtension,
+			unstyledDir);
 
 		themeBuilder.build();
-
-		File outputDir = new File(outputPath);
 
 		Assert.assertTrue(outputDir.exists());
 
@@ -115,24 +113,22 @@ public class ThemeBuilderTest {
 
 	@Test
 	public void testThemeBuilderUnstyled() throws Exception {
-		String diffsPath =
-			"src/test/resources/com/liferay/portal/tools/theme/builder/diffs";
+		File diffsDir = new File(
+			"src/test/resources/com/liferay/portal/tools/theme/builder/diffs");
 		String name = "testTheme";
-		String outputPath = "build/theme";
+		File outputDir = new File("build/theme");
+		File parentDir = null;
 		String parentName = "_unstyled";
 		String templateExtension = "vm";
-		String themeParentPath = "";
-		String themeUnstyledPath =
+		File unstyledDir = new File(
 			"../../apps/foundation/frontend-theme/frontend-theme-unstyled/" +
-				"src/main/resources/META-INF/resources/_unstyled";
+				"src/main/resources/META-INF/resources/_unstyled");
 
 		ThemeBuilder themeBuilder = new ThemeBuilder(
-			diffsPath, name, outputPath, parentName, templateExtension,
-			themeParentPath, themeUnstyledPath);
+			diffsDir, name, outputDir, parentDir, parentName, templateExtension,
+			unstyledDir);
 
 		themeBuilder.build();
-
-		File outputDir = new File(outputPath);
 
 		Assert.assertTrue(outputDir.exists());
 

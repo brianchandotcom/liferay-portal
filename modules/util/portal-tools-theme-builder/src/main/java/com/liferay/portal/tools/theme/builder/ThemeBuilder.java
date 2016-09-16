@@ -76,9 +76,8 @@ public class ThemeBuilder {
 					_OPTION_UNSTYLED_PATH);
 
 				ThemeBuilder themeBuilder = new ThemeBuilder(
-					diffsDir.getPath(), name, outputDir.getPath(), parentName,
-					templateExtension, parentDir.getPath(),
-					unstyledDir.getPath());
+					diffsDir, name, outputDir, parentDir, parentName,
+					templateExtension, unstyledDir);
 
 				themeBuilder.build();
 			}
@@ -91,18 +90,16 @@ public class ThemeBuilder {
 	}
 
 	public ThemeBuilder(
-			String diffsPath, String name, String outputPath, String parentName,
-			String templateExtension, String themeParentPath,
-			String themeUnstyledPath)
-		throws Exception {
+		File diffsDir, String name, File outputDir, File parentDir,
+		String parentName, String templateExtension, File unstyledDir) {
 
-		_diffsPath = diffsPath;
+		_diffsDir = diffsDir;
 		_name = name;
-		_outputDir = new File(outputPath);
+		_outputDir = outputDir;
+		_parentDir = parentDir;
 		_parentName = parentName;
 		_templateExtension = templateExtension;
-		_themeParentPath = themeParentPath;
-		_themeUnstyledPath = themeUnstyledPath;
+		_unstyledDir = unstyledDir;
 	}
 
 	public void build() throws IOException {
@@ -243,13 +240,11 @@ public class ThemeBuilder {
 	}
 
 	private void _copyDiffs() throws IOException {
-		File diffsDir = new File(_diffsPath);
-
-		if (!diffsDir.exists()) {
+		if (!_diffsDir.exists()) {
 			return;
 		}
 
-		_copyFiles(diffsDir);
+		_copyFiles(_diffsDir);
 	}
 
 	private void _copyFiles(File source) throws IOException {
@@ -306,13 +301,11 @@ public class ThemeBuilder {
 			});
 	}
 
-	private void _copyThemeDir(String themeName, String themePath)
+	private void _copyThemeDir(String themeName, File themeDir)
 		throws IOException {
 
-		File themeDir = new File(themePath);
-
-		if (themePath.endsWith("jar")) {
-			themeDir = _unzipJar(themeName, themePath);
+		if (themeDir.isFile()) {
+			themeDir = _unzipJar(themeName, themeDir);
 		}
 
 		_copyFiles(themeDir);
@@ -323,9 +316,9 @@ public class ThemeBuilder {
 			return;
 		}
 
-		_copyThemeDir("_unstyled", _themeUnstyledPath);
+		_copyThemeDir("_unstyled", _unstyledDir);
 
-		_copyThemeDir(_parentName, _themeParentPath);
+		_copyThemeDir(_parentName, _parentDir);
 	}
 
 	private void _createLookAndFeelXml() throws IOException {
@@ -380,12 +373,12 @@ public class ThemeBuilder {
 		return byteArrayOutputStream.toByteArray();
 	}
 
-	private File _unzipJar(String themeName, String themePath)
+	private File _unzipJar(String themeName, File themeFile)
 		throws IOException {
 
 		Path jarPath = Files.createTempDirectory("themeBuilder");
 
-		try (ZipFile zipFile = new ZipFile(themePath)) {
+		try (ZipFile zipFile = new ZipFile(themeFile)) {
 			Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
 
 			while (enumeration.hasMoreElements()) {
@@ -431,12 +424,12 @@ public class ThemeBuilder {
 
 	private static final String _OPTION_UNSTYLED_PATH = "unstyled-path";
 
-	private final String _diffsPath;
+	private final File _diffsDir;
 	private final String _name;
 	private final File _outputDir;
+	private final File _parentDir;
 	private final String _parentName;
 	private final String _templateExtension;
-	private final String _themeParentPath;
-	private final String _themeUnstyledPath;
+	private final File _unstyledDir;
 
 }

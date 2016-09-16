@@ -111,6 +111,10 @@ public class WebSocketEndpointTracker
 		ServiceReference<Endpoint> serviceReference,
 		ServerEndpointConfigWrapper serverEndpointConfig) {
 
+		ServiceObjectsConfigurator configurator =
+			serverEndpointConfig.removeConfigurator(serviceReference);
+
+		configurator.close();
 	}
 
 	@Activate

@@ -7,4 +7,6 @@ Import-Package:\
 	!org.apache.tools.ant.*,\
 	*
 Main-Class: com.liferay.portal.tools.theme.builder.ThemeBuilder
--includeresource: @commons-cli-[0-9]*.jar
+-includeresource:\
+	@commons-cli-[0-9]*.jar,\
+	@thumbnailator-[0-9]*.jar

@@ -16,9 +16,14 @@ package com.liferay.portal.tools.theme.builder.internal.util;
 
 import com.liferay.portal.tools.theme.builder.ThemeBuilder;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 
 import java.net.URL;
+
+import java.nio.charset.StandardCharsets;
 
 import java.security.CodeSource;
 import java.security.ProtectionDomain;
@@ -47,6 +52,24 @@ public class FileUtil {
 		URL url = codeSource.getLocation();
 
 		return new File(url.toURI());
+	}
+
+	public static String read(String name) throws IOException {
+		ByteArrayOutputStream byteArrayOutputStream =
+			new ByteArrayOutputStream();
+
+		ClassLoader classLoader = ThemeBuilder.class.getClassLoader();
+
+		try (InputStream inputStream = classLoader.getResourceAsStream(name)) {
+			byte[] bytes = new byte[1024];
+			int length = 0;
+
+			while ((length = inputStream.read(bytes)) > 0) {
+				byteArrayOutputStream.write(bytes, 0, length);
+			}
+		}
+
+		return byteArrayOutputStream.toString(StandardCharsets.UTF_8.name());
 	}
 
 }

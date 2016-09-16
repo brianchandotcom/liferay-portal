@@ -80,7 +80,7 @@ public class ThemeBuilder {
 					templateExtension, parentDir.getPath(),
 					unstyledDir.getPath());
 
-				themeBuilder.compileTheme();
+				themeBuilder.build();
 			}
 		}
 		catch (ParseException pe) {
@@ -105,7 +105,7 @@ public class ThemeBuilder {
 		_themeUnstyledPath = themeUnstyledPath;
 	}
 
-	public void compileTheme() throws IOException {
+	public void build() throws IOException {
 		_copyThemeParent();
 
 		_createLookAndFeelXml();

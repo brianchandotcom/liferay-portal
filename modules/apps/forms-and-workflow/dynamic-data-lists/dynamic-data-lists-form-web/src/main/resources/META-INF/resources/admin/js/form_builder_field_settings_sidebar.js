@@ -27,6 +27,7 @@ AUI.add(
 					},
 
 					title: {
+						setter: '_setTitle',
 						value: ''
 					},
 
@@ -247,6 +248,10 @@ AUI.add(
 						if (content) {
 							instance.get('boundingBox').one('.sidebar-body').setHTML(content);
 						}
+					},
+
+					_setTitle: function(value) {
+						return value || Liferay.Language.get('unlabeled');
 					},
 
 					_showLoading: function() {

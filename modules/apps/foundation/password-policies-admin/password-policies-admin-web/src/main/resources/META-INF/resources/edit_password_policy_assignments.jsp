@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String tabs1 = ParamUtil.getString(request, "tabs1");
+String tabs1 = ParamUtil.getString(request, "tabs1", "assignees");
 String tabs2 = ParamUtil.getString(request, "tabs2", "users");
 
 String redirect = ParamUtil.getString(request, "redirect");
@@ -45,12 +45,14 @@ portletURL.setParameter("tabs2", tabs2);
 portletURL.setParameter("redirect", redirect);
 portletURL.setParameter("passwordPolicyId", String.valueOf(passwordPolicy.getPasswordPolicyId()));
 
+request.setAttribute("edit_password_policy_assignments.jsp-portletURL", portletURL);
+
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
 renderResponse.setTitle(passwordPolicy.getName());
 
-String[] orderColumns = new String[] {"first-name", "screen-name"};
+String[] orderColumns = new String[] {"first-name", "last-name", "screen-name"};
 RowChecker rowChecker = new DeleteUserPasswordPolicyChecker(renderResponse, passwordPolicy);
 PortletURL searchURL = PortletURLUtil.clone(portletURL, renderResponse);
 SearchContainer searchContainer = new UserSearch(renderRequest, searchURL);
@@ -69,32 +71,14 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "passwor
 PortalUtil.addPortletBreadcrumbEntry(request, passwordPolicy.getName(), null);
 %>
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
+<liferay-util:include page="/edit_password_policy_tabs.jsp" servletContext="<%= application %>" />
 
-		<%
-		PortletURL usersURL = PortletURLUtil.clone(portletURL, renderResponse);
-
-		usersURL.setParameter("tabs2", "users");
-		%>
-
-		<aui:nav-item href="<%= usersURL.toString() %>" label="users" selected='<%= tabs2.equals("users") %>' />
-
-		<%
-		PortletURL userGroupsURL = PortletURLUtil.clone(portletURL, renderResponse);
-
-		userGroupsURL.setParameter("tabs2", "organizations");
-		%>
-
-		<aui:nav-item href="<%= userGroupsURL.toString() %>" label="organizations" selected='<%= tabs2.equals("organizations") %>' />
-	</aui:nav>
-
-	<aui:nav-bar-search>
-		<aui:form action="<%= portletURL.toString() %>" name="searchFm">
-			<liferay-ui:input-search markupView="lexicon" />
-		</aui:form>
-	</aui:nav-bar-search>
-</aui:nav-bar>
+<liferay-ui:tabs
+	names="users,organizations"
+	param="tabs2"
+	type="tabs nav-tabs-default"
+	url="<%= portletURL.toString() %>"
+/>
 
 <liferay-frontend:management-bar
 	includeCheckBox="<%= true %>"
@@ -212,7 +196,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, passwordPolicy.getName(), null);
 </aui:form>
 
 <liferay-frontend:add-menu>
-	<liferay-frontend:add-menu-item id="addMembers" title='<%= LanguageUtil.get(request, "add-members") %>' url="javascript:;" />
+	<liferay-frontend:add-menu-item id="addAssignees" title='<%= LanguageUtil.get(request, "add-assignees") %>' url="javascript:;" />
 </liferay-frontend:add-menu>
 
 <aui:script use="liferay-item-selector-dialog">
@@ -229,7 +213,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, passwordPolicy.getName(), null);
 		<portlet:param name="passwordPolicyId" value="<%= String.valueOf(passwordPolicyId) %>" />
 	</portlet:renderURL>
 
-	$('#<portlet:namespace />addMembers').on(
+	$('#<portlet:namespace />addAssignees').on(
 		'click',
 		function(event) {
 			event.preventDefault();
@@ -253,7 +237,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, passwordPolicy.getName(), null);
 							}
 						}
 					},
-					title: '<liferay-ui:message arguments="<%= HtmlUtil.escape(passwordPolicy.getName()) %>" key="add-members-to-x" />',
+					title: '<liferay-ui:message arguments="<%= HtmlUtil.escape(passwordPolicy.getName()) %>" key="add-assignees-to-x" />',
 					url: '<%= selectMembersURL %>'
 				}
 			);

@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String tabs1 = ParamUtil.getString(request, "tabs1", "details");
+
 String redirect = ParamUtil.getString(request, "redirect");
 
 String backURL = ParamUtil.getString(request, "backURL", redirect);
@@ -39,10 +41,12 @@ portletDisplay.setURLBack(backURL.toString());
 renderResponse.setTitle(passwordPolicy.isNew() ? LanguageUtil.get(request, "new-password-policy") : passwordPolicy.getName());
 %>
 
+<liferay-util:include page="/edit_password_policy_tabs.jsp" servletContext="<%= application %>" />
+
 <portlet:actionURL name="editPasswordPolicy" var="editPasswordPolicyURL" />
 
 <aui:form action="<%= editPasswordPolicyURL %>" cssClass="container-fluid-1280" method="post" name="fm">
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="passwordPolicyId" type="hidden" value="<%= passwordPolicyId %>" />
 
 	<liferay-ui:error exception="<%= DuplicatePasswordPolicyException.class %>" message="please-enter-a-unique-name" />

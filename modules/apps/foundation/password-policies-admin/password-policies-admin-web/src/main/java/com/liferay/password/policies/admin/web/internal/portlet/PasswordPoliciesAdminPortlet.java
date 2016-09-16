@@ -29,8 +29,11 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
@@ -147,13 +150,16 @@ public class PasswordPoliciesAdminPortlet extends MVCPortlet {
 
 			// Add password policy
 
-			_passwordPolicyService.addPasswordPolicy(
-				name, description, changeable, changeRequired, minAge,
+			PasswordPolicy passwordPolicy =
+				_passwordPolicyService.addPasswordPolicy(
+					name, description, changeable, changeRequired, minAge,
 				checkSyntax, allowDictionaryWords, minAlphanumeric, minLength,
 				minLowerCase, minNumbers, minSymbols, minUpperCase, regex,
 				history, historyCount, expireable, maxAge, warningTime,
 				graceLimit, lockout, maxFailure, lockoutDuration,
 				resetFailureCount, resetTicketMaxAge, serviceContext);
+
+			passwordPolicyId = passwordPolicy.getPasswordPolicyId();
 		}
 		else {
 
@@ -166,6 +172,16 @@ public class PasswordPoliciesAdminPortlet extends MVCPortlet {
 				regex, history, historyCount, expireable, maxAge, warningTime,
 				graceLimit, lockout, maxFailure, lockoutDuration,
 				resetFailureCount, resetTicketMaxAge, serviceContext);
+		}
+
+		String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+		if (Validator.isNotNull(redirect)) {
+			redirect = HttpUtil.setParameter(
+				redirect, actionResponse.getNamespace() + "passwordPolicyId",
+				passwordPolicyId);
+
+			actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 		}
 	}
 

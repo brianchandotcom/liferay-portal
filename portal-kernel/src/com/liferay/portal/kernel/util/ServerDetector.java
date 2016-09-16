@@ -216,14 +216,11 @@ public class ServerDetector {
 		else if (_hasSystemProperty("jboss.home.dir")) {
 			_serverType = ServerType.WILDFLY;
 		}
-
-		if (_serverType == null) {
-			if (_hasSystemProperty("jetty.home")) {
-				_serverType = ServerType.JETTY;
-			}
-			else if (_hasSystemProperty("catalina.base")) {
-				_serverType = ServerType.TOMCAT;
-			}
+		else if (_hasSystemProperty("jetty.home")) {
+			_serverType = ServerType.JETTY;
+		}
+		else if (_hasSystemProperty("catalina.base")) {
+			_serverType = ServerType.TOMCAT;
 		}
 
 		if (System.getProperty("external-properties") == null) {

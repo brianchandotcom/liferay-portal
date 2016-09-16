@@ -15,6 +15,7 @@
 package com.liferay.portal.tools.theme.builder;
 
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.tools.theme.builder.internal.util.FileUtil;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -35,28 +36,57 @@ import java.util.zip.ZipFile;
 import net.coobird.thumbnailator.Thumbnails;
 import net.coobird.thumbnailator.Thumbnails.Builder;
 
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.DefaultParser;
+import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.Option;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
+
 /**
  * @author David Truong
  */
 public class ThemeBuilder {
 
 	public static void main(String[] args) throws Exception {
+		Options options = _getOptions();
+
 		try {
-			String diffsPath = null;
-			String name = null;
-			String outputPath = null;
-			String parentName = null;
-			String templateExtension = null;
-			String themeParentPath = null;
-			String themeUnstyledPath = null;
+			CommandLineParser commandLineParser = new DefaultParser();
 
-			ThemeBuilder themeBuilder = new ThemeBuilder(
-				diffsPath, name, outputPath, parentName, templateExtension,
-				themeParentPath, themeUnstyledPath);
+			CommandLine commandLine = commandLineParser.parse(options, args);
 
-			themeBuilder.compileTheme();
+			if (commandLine.hasOption(_OPTION_HELP)) {
+				_printHelp(options);
+			}
+			else {
+				File diffsDir = (File)commandLine.getParsedOptionValue(
+					_OPTION_DIFFS_DIR);
+				String name = commandLine.getOptionValue(_OPTION_NAME);
+				File outputDir = (File)commandLine.getParsedOptionValue(
+					_OPTION_OUTPUT_DIR);
+				File parentDir = (File)commandLine.getParsedOptionValue(
+					_OPTION_PARENT_PATH);
+				String parentName = commandLine.getOptionValue(
+					_OPTION_PARENT_NAME);
+				String templateExtension = commandLine.getOptionValue(
+					_OPTION_TEMPLATE_EXTENSION);
+				File unstyledDir = (File)commandLine.getParsedOptionValue(
+					_OPTION_UNSTYLED_PATH);
+
+				ThemeBuilder themeBuilder = new ThemeBuilder(
+					diffsDir.getPath(), name, outputDir.getPath(), parentName,
+					templateExtension, parentDir.getPath(),
+					unstyledDir.getPath());
+
+				themeBuilder.compileTheme();
+			}
 		}
-		catch (Exception e) {
+		catch (ParseException pe) {
+			System.err.println(pe.getMessage());
+
+			_printHelp(options);
 		}
 	}
 
@@ -83,6 +113,119 @@ public class ThemeBuilder {
 		_copyDiffs();
 
 		_buildThumbnails();
+	}
+
+	private static Options _getOptions() {
+		Options options = new Options();
+
+		// diffs-dir
+
+		Option.Builder builder = Option.builder("d");
+
+		builder.argName(_OPTION_DIFFS_DIR);
+		builder.desc(
+			"The directory that contains the files to copy over the parent " +
+				"theme.");
+		builder.hasArg();
+		builder.longOpt(_OPTION_DIFFS_DIR);
+		builder.type(File.class);
+
+		options.addOption(builder.build());
+
+		// help
+
+		options.addOption("h", _OPTION_HELP, false, "Print this message.");
+
+		// name
+
+		builder = Option.builder("n");
+
+		builder.argName(_OPTION_NAME);
+		builder.desc("The name of the theme.");
+		builder.hasArg();
+		builder.longOpt(_OPTION_NAME);
+
+		options.addOption(builder.build());
+
+		// output-dir
+
+		builder = Option.builder("o");
+
+		builder.argName(_OPTION_OUTPUT_DIR);
+		builder.desc("The directory where to build the theme.");
+		builder.hasArg();
+		builder.longOpt(_OPTION_OUTPUT_DIR);
+		builder.required();
+		builder.type(File.class);
+
+		options.addOption(builder.build());
+
+		// parent-name
+
+		builder = Option.builder("m");
+
+		builder.argName(_OPTION_PARENT_NAME);
+		builder.desc("The name of the parent theme.");
+		builder.hasArg();
+		builder.longOpt(_OPTION_PARENT_NAME);
+
+		options.addOption(builder.build());
+
+		// parent-path
+
+		builder = Option.builder("p");
+
+		builder.argName(_OPTION_PARENT_PATH);
+		builder.desc("The directory or the JAR file of the parent theme.");
+		builder.hasArg();
+		builder.longOpt(_OPTION_PARENT_PATH);
+		builder.type(File.class);
+
+		options.addOption(builder.build());
+
+		// template-extension
+
+		builder = Option.builder("t");
+
+		builder.argName(_OPTION_TEMPLATE_EXTENSION);
+		builder.desc("The extension of the template files.");
+		builder.hasArg();
+		builder.longOpt(_OPTION_TEMPLATE_EXTENSION);
+
+		options.addOption(builder.build());
+
+		// unstyled-path
+
+		builder = Option.builder("u");
+
+		builder.argName(_OPTION_UNSTYLED_PATH);
+		builder.desc(
+			"The directory or the JAR file of Liferay Frontend Theme " +
+				"Unstyled.");
+		builder.hasArg();
+		builder.longOpt(_OPTION_UNSTYLED_PATH);
+
+		options.addOption(builder.build());
+
+		return options;
+	}
+
+	private static void _printHelp(Options options) throws Exception {
+		HelpFormatter helpFormatter = new HelpFormatter();
+
+		String usage;
+
+		File jarFile = FileUtil.getJarFile();
+
+		if (jarFile.isFile()) {
+			usage = "java -jar " + jarFile.getName();
+		}
+		else {
+			usage = ThemeBuilder.class.getName();
+		}
+
+		helpFormatter.printHelp(
+			usage, "Build a Liferay theme.", options, null, true);
 	}
 
 	private void _buildThumbnails() throws IOException {
@@ -270,6 +413,23 @@ public class ThemeBuilder {
 
 		return jarPath.toFile();
 	}
+
+	private static final String _OPTION_DIFFS_DIR = "diffs-dir";
+
+	private static final String _OPTION_HELP = "help";
+
+	private static final String _OPTION_NAME = "name";
+
+	private static final String _OPTION_OUTPUT_DIR = "output-dir";
+
+	private static final String _OPTION_PARENT_NAME = "parent-name";
+
+	private static final String _OPTION_PARENT_PATH = "parent-path";
+
+	private static final String _OPTION_TEMPLATE_EXTENSION =
+		"template-extension";
+
+	private static final String _OPTION_UNSTYLED_PATH = "unstyled-path";
 
 	private final String _diffsPath;
 	private final String _name;

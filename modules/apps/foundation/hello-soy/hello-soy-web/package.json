@@ -1,0 +1,7 @@
+{
+	"devDependencies": {
+		"metal-components": "1.0.0-rc.19"
+	},
+	"name": "hello-soy-web",
+	"version": "1.0.3"
+}

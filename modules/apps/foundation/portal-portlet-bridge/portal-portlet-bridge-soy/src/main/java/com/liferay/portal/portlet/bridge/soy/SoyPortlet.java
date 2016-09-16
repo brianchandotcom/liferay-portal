@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -33,7 +34,6 @@ import java.io.Writer;
 
 import java.util.Collections;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
 import javax.portlet.MimeResponse;
@@ -42,6 +42,8 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
@@ -79,10 +81,6 @@ public class SoyPortlet extends MVCPortlet {
 		renderRequest.setAttribute(WebKeys.TEMPLATE, template);
 
 		super.render(renderRequest, renderResponse);
-	}
-
-	protected Object deserializeTemplateContextValue(Object value) {
-		return _soyPortletHelper.deserializeValue(value);
 	}
 
 	protected Set<String> getJavaScriptRequiredModules(String path) {
@@ -124,7 +122,10 @@ public class SoyPortlet extends MVCPortlet {
 			populateJavaScriptTemplateContext(
 				template, portletResponse.getNamespace());
 
-			_deserializeTemplateContextValues();
+			HttpServletRequest httpServletRequest =
+				PortalUtil.getHttpServletRequest(portletRequest);
+
+			template.prepare(httpServletRequest);
 
 			template.processTemplate(writer);
 
@@ -172,14 +173,6 @@ public class SoyPortlet extends MVCPortlet {
 
 	protected boolean propagateRequestParameters;
 	protected Template template;
-
-	private void _deserializeTemplateContextValues() {
-		for (Entry<String, Object> entry : template.entrySet()) {
-			template.put(
-				entry.getKey(),
-				deserializeTemplateContextValue(entry.getValue()));
-		}
-	}
 
 	private Template _getTemplate() throws TemplateException {
 		SoyTemplateResourcesCollector soyTemplateResourcesCollector =

@@ -124,13 +124,15 @@ public class PluginPackageImpl
 		RemotePluginPackageRepository remotePluginPackageRepository =
 			getRepository();
 
-		Properties settings = remotePluginPackageRepository.getSettings();
+		if (remotePluginPackageRepository != null) {
+			Properties settings = remotePluginPackageRepository.getSettings();
 
-		String useDownloadURL = settings.getProperty(
-			RemotePluginPackageRepository.SETTING_USE_DOWNLOAD_URL);
+			String useDownloadURL = settings.getProperty(
+				RemotePluginPackageRepository.SETTING_USE_DOWNLOAD_URL);
 
-		if (!GetterUtil.getBoolean(useDownloadURL, true)) {
-			return getArtifactURL();
+			if (!GetterUtil.getBoolean(useDownloadURL, true)) {
+				return getArtifactURL();
+			}
 		}
 
 		if (Validator.isNotNull(_downloadURL)) {

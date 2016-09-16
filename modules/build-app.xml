@@ -13,19 +13,6 @@
 	<property location="${modules.dir}/../bundles" name="liferay.home" />
 	<property location="${modules.dir}/.." name="project.dir" />
 
-	<condition property="liferay.releng.ee">
-		<or>
-			<istrue value="${ee.override}" />
-			<matches pattern="ee-.+" string="${liferay.releng.branch}" />
-		</or>
-	</condition>
-
-	<condition else="Liferay" property="liferay.releng.app.title.prefix" value="Liferay CE">
-		<not>
-			<istrue value="${liferay.releng.ee}" />
-		</not>
-	</condition>
-
 	<property name="portal.lib.dir" value="${app.server.tomcat.lib.portal.dir}" />
 
 	<property name="osgi.dir" value="${liferay.home}/osgi" />
@@ -80,6 +67,13 @@
 
 		<condition property="current.branch.private">
 			<contains string="${liferay.releng.branch}" substring="ee-" />
+		</condition>
+
+		<condition else="Liferay CE" property="liferay.releng.app.title.prefix" value="Liferay">
+			<or>
+				<istrue value="${ee.override}" />
+				<istrue value="${current.branch.private}" />
+			</or>
 		</condition>
 	</target>
 

@@ -56,6 +56,7 @@ PasswordPolicy passwordPolicy = (PasswordPolicy)row.getObject();
 	<c:if test="<%= PasswordPolicyPermissionUtil.contains(permissionChecker, passwordPolicy.getPasswordPolicyId(), ActionKeys.ASSIGN_MEMBERS) %>">
 		<portlet:renderURL var="assignMembersURL">
 			<portlet:param name="mvcPath" value="/edit_password_policy_assignments.jsp" />
+			<portlet:param name="tabs1" value="assignees" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="passwordPolicyId" value="<%= String.valueOf(passwordPolicy.getPasswordPolicyId()) %>" />
 		</portlet:renderURL>

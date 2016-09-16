@@ -19,7 +19,9 @@ import java.util.concurrent.ConcurrentMap;
 
 import javax.servlet.ServletContext;
 
+import javax.websocket.DeploymentException;
 import javax.websocket.Endpoint;
+import javax.websocket.server.ServerContainer;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceObjects;
@@ -56,13 +58,40 @@ public class WebSocketEndpointTracker
 		ServerEndpointConfigWrapper serverEndpointConfig =
 			_webSocketEndpointRegistrations.get(path);
 
+		boolean isNew = false;
+
 		if (serverEndpointConfig == null) {
 			serverEndpointConfig = new ServerEndpointConfigWrapper(path, _log);
+
+			isNew = true;
 		}
 
 		serverEndpointConfig.setConfigurator(
 			serviceReference,
 			new ServiceObjectsConfigurator(serviceObjects, _log));
+
+		if (isNew) {
+			ServerContainer serverContainer =
+				(ServerContainer)_servletContext.getAttribute(
+					ServerContainer.class.getName());
+
+			try {
+				serverContainer.addEndpoint(serverEndpointConfig);
+			}
+			catch (DeploymentException de) {
+				Endpoint endpoint = serviceObjects.getService();
+
+				_log.log(
+					LogService.LOG_ERROR,
+					"Can't add websocket endpoint " + endpoint.getClass() +
+						" in the path " + path,
+					de);
+
+				return null;
+			}
+
+			_webSocketEndpointRegistrations.put(path, serverEndpointConfig);
+		}
 
 		return serverEndpointConfig;
 	}
@@ -106,6 +135,9 @@ public class WebSocketEndpointTracker
 
 	@Reference
 	private LogService _log;
+
+	@Reference(target = "(websocket.active =true)")
+	private ServletContext _servletContext;
 
 	private final ConcurrentMap<String, ServerEndpointConfigWrapper>
 		_webSocketEndpointRegistrations = new ConcurrentHashMap<>();

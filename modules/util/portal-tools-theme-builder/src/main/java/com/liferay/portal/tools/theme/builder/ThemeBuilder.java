@@ -156,7 +156,7 @@ public class ThemeBuilder {
 			_copyTheme(_diffsDir);
 		}
 
-		_buildThumbnails();
+		_writeScreenshotThumbnail();
 	}
 
 	private static Options _getOptions() {
@@ -275,20 +275,6 @@ public class ThemeBuilder {
 			usage, "Build a Liferay theme.", options, null, true);
 	}
 
-	private void _buildThumbnails() throws IOException {
-		File screenshotFile = new File(_outputDir, "images/screenshot.png");
-
-		if (!screenshotFile.exists()) {
-			return;
-		}
-
-		Builder<File> thumbnailBuilder = Thumbnails.of(screenshotFile);
-
-		thumbnailBuilder.size(160, 120);
-		thumbnailBuilder.outputFormat("png");
-		thumbnailBuilder.toFile(new File(_outputDir, "images/thumbnail.png"));
-	}
-
 	private void _copyTheme(File themeDir) throws IOException {
 		final Path outputDirPath = _outputDir.toPath();
 		final Path themeDirPath = themeDir.toPath();
@@ -395,6 +381,21 @@ public class ThemeBuilder {
 		Files.createDirectories(path.getParent());
 
 		Files.write(path, content.getBytes(StandardCharsets.UTF_8));
+	}
+
+	private void _writeScreenshotThumbnail() throws IOException {
+		File file = new File(_outputDir, "images/screenshot.png");
+
+		if (!file.exists()) {
+			return;
+		}
+
+		Builder<File> thumbnailBuilder = Thumbnails.of(file);
+
+		thumbnailBuilder.outputFormat("png");
+		thumbnailBuilder.size(160, 120);
+
+		thumbnailBuilder.toFile(new File(_outputDir, "images/thumbnail.png"));
 	}
 
 	private static final String _DEFAULT_NAME;

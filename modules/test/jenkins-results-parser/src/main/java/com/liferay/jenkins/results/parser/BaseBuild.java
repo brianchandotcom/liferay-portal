@@ -424,12 +424,6 @@ public abstract class BaseBuild implements Build {
 
 						setStatus("completed");
 					}
-					else if (getDownstreamBuildCount("missing") > 0) {
-						setStatus("missing");
-					}
-					else if (getDownstreamBuildCount("starting") > 0) {
-						setStatus("starting");
-					}
 				}
 			}
 			catch (Exception e) {
@@ -445,7 +439,7 @@ public abstract class BaseBuild implements Build {
 	}
 
 	protected BaseBuild(String url, Build parent) throws Exception {
-		this._parent = parent;
+		_parent = parent;
 
 		if (url.contains("buildWithParameters")) {
 			setInvocationURL(url);
@@ -453,8 +447,6 @@ public abstract class BaseBuild implements Build {
 		else {
 			setBuildURL(url);
 		}
-
-		setStatus("starting");
 
 		update();
 	}
@@ -827,9 +819,9 @@ public abstract class BaseBuild implements Build {
 	}
 
 	protected void setInvocationURL(String invocationURL) throws Exception {
-		invocationURL = JenkinsResultsParserUtil.decode(invocationURL);
-
 		if (getBuildURL() == null) {
+			invocationURL = JenkinsResultsParserUtil.decode(invocationURL);
+
 			Matcher invocationURLMatcher = invocationURLPattern.matcher(
 				invocationURL);
 
@@ -841,6 +833,8 @@ public abstract class BaseBuild implements Build {
 			master = invocationURLMatcher.group("master");
 
 			loadParametersFromQueryString(invocationURL);
+
+			setStatus("starting");
 		}
 	}
 

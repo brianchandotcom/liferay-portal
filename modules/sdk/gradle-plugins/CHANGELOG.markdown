@@ -168,6 +168,17 @@ files.
 
 - [LPS-68131]: Update the [Liferay Source Formatter] dependency to version
 1.0.280.
+- [LPS-68165]: Update the [Liferay Javadoc Formatter] dependency to version
+1.0.16.
+- [LPS-68165]: Update the [Liferay Lang Builder] dependency to version 1.0.10.
+- [LPS-68165]: Update the [Liferay Portal Tools Service Builder] dependency to
+version 1.0.126.
+- [LPS-68165]: Update the [Liferay Portal Tools Upgrade Table Builder]
+dependency to version 1.0.5.
+- [LPS-68165]: Update the [Liferay Portal Tools WSDD Builder] dependency to
+version 1.0.5.
+- [LPS-68165]: Update the [Liferay TLD Formatter] dependency to version 1.0.1.
+- [LPS-68165]: Update the [Liferay XML Formatter] dependency to version 1.0.1.
 
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
@@ -175,8 +186,14 @@ files.
 [Liferay Gradle Plugins Gulp]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-gulp
 [Liferay Gradle Plugins JS Module Config Generator]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-js-module-config-generator
 [Liferay Gradle Plugins JS Transpiler]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-js-transpiler
+[Liferay Javadoc Formatter]: https://github.com/liferay/liferay-portal/tree/master/modules/util/javadoc-formatter
+[Liferay Lang Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/lang-builder
 [Liferay Portal Tools Service Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/portal-tools-service-builder
+[Liferay Portal Tools Upgrade Table Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/portal-tools-upgrade-table-builder
+[Liferay Portal Tools WSDD Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/portal-tools-wsd-builder
 [Liferay Source Formatter]: https://github.com/liferay/liferay-portal/tree/master/modules/util/source-formatter
+[Liferay TLD Formatter]: https://github.com/liferay/liferay-portal/tree/master/modules/util/tld-formatter
+[Liferay XML Formatter]: https://github.com/liferay/liferay-portal/tree/master/modules/util/xml-formatter
 [LPS-61099]: https://issues.liferay.com/browse/LPS-61099
 [LPS-66853]: https://issues.liferay.com/browse/LPS-66853
 [LPS-67023]: https://issues.liferay.com/browse/LPS-67023
@@ -189,3 +206,4 @@ files.
 [LPS-68014]: https://issues.liferay.com/browse/LPS-68014
 [LPS-68035]: https://issues.liferay.com/browse/LPS-68035
 [LPS-68131]: https://issues.liferay.com/browse/LPS-68131
+[LPS-68165]: https://issues.liferay.com/browse/LPS-68165

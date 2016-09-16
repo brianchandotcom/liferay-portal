@@ -2838,7 +2838,7 @@
 			<var name="fieldValueRepeat" value="Text Field Value Repeat" />
 		</execute>
 
-		<execute macro="FormPortlet#submit" />
+		<execute macro="FormPortlet#submitSuccessfully" />
 
 		<execute macro="Navigator#openURL" />
 

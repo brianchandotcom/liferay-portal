@@ -1912,11 +1912,7 @@ that may or may not be enforced with a unique index at the database level. Case
 						return Collections.emptyList();
 					}
 					else {
-						List<${entity.name}> list = new ArrayList<${entity.name}>(1);
-
-						list.add(${entity.varName});
-
-						return list;
+						return Collections.singletonList(${entity.varName});
 					}
 				<#else>
 					return findBy${entityFinder.name}(

@@ -40,39 +40,6 @@ AUI.add(
 						instance._fieldEventHandlers = [];
 					},
 
-					generateFieldName: function(key) {
-						var instance = this;
-
-						var counter = 0;
-
-						var field = instance.get('field');
-
-						var builder = field.get('builder');
-
-						var existingField;
-
-						if (!key) {
-							key = field.get('context.type');
-						}
-
-						var name = key;
-
-						if (name) {
-							do {
-								if (counter > 0) {
-									name = key + counter;
-								}
-
-								existingField = builder.findField(name);
-
-								counter++;
-							}
-							while (existingField !== undefined && existingField !== field);
-						}
-
-						return name;
-					},
-
 					getEvaluationPayload: function() {
 						var instance = this;
 
@@ -119,7 +86,7 @@ AUI.add(
 					_afterLabelFieldNormalizeKey: function(key) {
 						var instance = this;
 
-						return new A.Do.AlterReturn(null, instance.generateFieldName(A.Do.originalRetVal));
+						return new A.Do.AlterReturn(null, instance.get('field').generateFieldName(A.Do.originalRetVal));
 					},
 
 					_afterSettingsFormRender: function() {

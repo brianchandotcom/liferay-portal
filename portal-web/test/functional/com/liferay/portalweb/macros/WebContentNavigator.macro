@@ -131,6 +131,27 @@
 		</execute>
 	</command>
 
+	<command name="gotoMoreStructuresViaPlusButton">
+		<execute macro="LexiconEntry#gotoAdd" />
+
+		<var name="key_menuItem" value="More" />
+
+		<if>
+			<condition function="IsElementPresent" locator1="MenuItem#ANY_MENU_ITEM" />
+			<then>
+				<execute function="AssertTextEquals" locator1="Pagination#SHOWING_TOTAL_ITEMS" value1="Showing ${pageMod} Items">
+					<var name="key_pageMod" value="${pageMod}" />
+				</execute>
+			</then>
+		</if>
+
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="More">
+			<var name="key_menuItem" value="More" />
+		</execute>
+
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+	</command>
+
 	<command name="gotoPreviewEntryCP">
 		<execute macro="WebContentNavigator#_openDescriptiveMenulistCP">
 			<var name="webContentTitle" value="${webContentTitle}" />

@@ -2009,4 +2009,69 @@
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 	</command>
+
+	<command name="ViewFavoriteStructure" priority="4">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoManageStructures" />
+
+		<for list="1,2,3,4,5,6,7,8,9" param="n">
+			<execute macro="WebContentStructures#addCP">
+				<var name="structureDescription" value="WC Structure Description" />
+				<var name="structureName" value="WC Structure Name ${n}" />
+			</execute>
+
+			<execute macro="DynamicDataMapping#addField">
+				<var name="field" value="HTML" />
+				<var name="fieldFieldLabel" value="HTML" />
+				<var name="fieldName" value="HTML" />
+				<var name="structureFieldName" value="HTML" />
+			</execute>
+
+			<execute macro="WebContentStructures#saveCP">
+				<var name="structureName" value="${structureName}" />
+			</execute>
+		</for>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoMoreStructuresViaPlusButton">
+			<var name="pageMod" value="7 of 10" />
+		</execute>
+
+		<for list="Basic Web Content,WC Structure Name 1,WC Structure Name 2,WC Structure Name 3,WC Structure Name 4,WC Structure Name 5,WC Structure Name 6,WC Structure Name 7,WC Structure Name 8,WC Structure Name 9" param="structureName">
+			<execute macro="WebContentStructures#viewStructuresViaMoreIFrame">
+				<var name="structureName" value="${structureName}" />
+			</execute>
+		</for>
+
+		<execute macro="WebContentStructures#viewNoFavoriteStructure" />
+
+		<execute macro="WebContentStructures#addFavoriteStructure">
+			<var name="structureName" value="WC Structure Name 9" />
+		</execute>
+
+		<execute macro="WebContentStructures#viewFavoriteStructureViaIFrame">
+			<var name="indexNumber" value="1" />
+			<var name="structureName" value="WC Structure Name 9" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentStructures#viewFavoriteStructureViaPlusButton">
+			<var name="structureName" value="WC Structure Name 9" />
+		</execute>
+	</command>
 </definition>

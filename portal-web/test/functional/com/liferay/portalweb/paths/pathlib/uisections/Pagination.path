@@ -69,6 +69,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SHOWING_TOTAL_ITEMS</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li[contains(.,'Showing ${key_pageMod} Items')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>VARIABLE_ITEMS_PER_PAGE</td>
 	<td>//div[@class='clearfix lfr-pagination']/div/div[contains(.,'${key_paginationNumber} Items per Page')]</td>
 	<td></td>

@@ -26,6 +26,16 @@
 		<execute function="Type" locator1="TextInput#DESCRIPTION" value1="${structureDescription}" />
 	</command>
 
+	<command name="addFavoriteStructure">
+		<execute function="AssertTextEquals" locator1="Message#INFO_1" value1="You can add as many as 7 favorites in your quick menu." />
+
+		<execute function="Click" locator1="Icon#ADD_FAVORITE">
+			<var name="key_rowEntry" value="${structureName}" />
+		</execute>
+
+		<execute macro="Alert#viewSuccessMessage" />
+	</command>
+
 	<command name="addLocalization">
 		<var name="key_localizationName" value="${localization1NameKey}" />
 
@@ -259,6 +269,40 @@
 		</if>
 
 		<execute function="SelectFrame" value1="relative=top" />
+	</command>
+
+	<command name="viewFavoriteStructureViaIFrame">
+		<execute function="AssertTextEquals" locator1="WC#ADD_TO_FAVORITES" value1="Add to Favorites (${indexNumber})" />
+
+		<execute function="ScrollBy" value1="0, 50" />
+
+		<execute function="AssertElementPresent" locator1="Icon#REMOVE_FAVORITE">
+			<var name="key_rowEntry" value="${structureName}" />
+		</execute>
+	</command>
+
+	<command name="viewFavoriteStructureViaPlusButton">
+		<execute macro="LexiconEntry#gotoAdd" />
+
+		<execute function="AssertTextEquals" locator1="MenuItem#ANY_MENU_ITEM" value1="More">
+			<var name="key_menuItem" value="More" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="MenuItem#FAVORITE" value1="Favorite" />
+
+		<execute function="AssertTextEquals" locator1="MenuItem#STRUCTURE_NAME" value1="${structureName}">
+			<var name="key_structureName" value="${structureName}" />
+		</execute>
+	</command>
+
+	<command name="viewNoFavoriteStructure">
+		<execute function="AssertTextEquals" locator1="WC#ADD_TO_FAVORITES" value1="Add to Favorites (0)" />
+	</command>
+
+	<command name="viewStructuresViaMoreIFrame">
+		<execute function="AssertTextEquals" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK" value1="${structureName}">
+			<var name="key_rowEntry" value="${structureName}" />
+		</execute>
 	</command>
 
 	<command name="viewTemplateValidation">

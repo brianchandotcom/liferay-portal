@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>ADD_FAVORITE</td>
+	<td>//*[@data-qa-id='row'][contains(.,'${key_rowEntry}')]//span/*[name()='svg'][contains(@class,'lexicon-icon-star')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADD_REPEATABLE_ENTRY</td>
 	<td>xpath=(//div[contains(@data-fieldname,'${key_assetType}')]/../div//a[contains(@class,'repeatable-add-button')])[${key_counter}]</td>
 	<td></td>
@@ -250,6 +255,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FAVORITE</td>
+	<td>//div[contains(@class,'open')]//li[contains(@class,'dropdown-header') and contains(.,'Favorite')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>HEADER_VERTICAL_ELLIPSIS</td>
 	<td>//*[@data-qa-id='header']//*[name()='svg'][contains(@class,'icon-ellipsis')]</td>
 	<td></td>
@@ -262,6 +272,11 @@
 <tr>
 	<td>PAGE_CUSTOMIZATION_ELLIPSIS</td>
 	<td>//*[@data-qa-id='controlMenu']//div[contains(@class,'icon-menu')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REMOVE_FAVORITE</td>
+	<td>//*[@data-qa-id='row'][contains(.,'${key_rowEntry}')]//a[contains(@onclick,'removeAddMenuFavIte')]</td>
 	<td></td>
 </tr>
 <tr>

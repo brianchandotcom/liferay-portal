@@ -273,8 +273,8 @@ if (portletTitleBasedNavigation) {
 						width: 680
 					},
 					id: '<portlet:namespace />selectFolder',
-					title: '<liferay-ui:message arguments="folder" key="select-x" />',
 					selectedData: [folderName],
+					title: '<liferay-ui:message arguments="folder" key="select-x" />',
 
 					<portlet:renderURL var="selectFolderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 						<portlet:param name="mvcRenderCommandName" value="/bookmarks/select_folder" />

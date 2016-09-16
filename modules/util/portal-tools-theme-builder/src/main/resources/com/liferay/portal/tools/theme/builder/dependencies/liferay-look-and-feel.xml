@@ -5,7 +5,7 @@
 	<compatibility>
 		<version>7.0.0+</version>
 	</compatibility>
-	<theme id="${id}" name="${name}">
-		<template-extension>${template.extension}</template-extension>
+	<theme id="[$ID$]" name="[$NAME$]">
+		<template-extension>[$TEMPLATE_EXTENSION$]</template-extension>
 	</theme>
 </look-and-feel>

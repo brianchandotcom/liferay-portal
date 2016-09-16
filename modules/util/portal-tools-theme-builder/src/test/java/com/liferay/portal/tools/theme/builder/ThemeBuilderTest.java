@@ -107,8 +107,8 @@ public class ThemeBuilderTest {
 
 		Assert.assertFalse(templateVmFile.exists());
 
-		File lookAndFeelXmlFile =
-			new File(outputDir, "WEB-INF/liferay-look-and-feel.xml");
+		File lookAndFeelXmlFile = new File(
+			outputDir, "WEB-INF/liferay-look-and-feel.xml");
 
 		Assert.assertTrue(lookAndFeelXmlFile.exists());
 	}
@@ -152,8 +152,8 @@ public class ThemeBuilderTest {
 
 		Assert.assertTrue(templateVmFile.exists());
 
-		File lookAndFeelXmlFile =
-			new File(outputDir, "WEB-INF/liferay-look-and-feel.xml");
+		File lookAndFeelXmlFile = new File(
+			outputDir, "WEB-INF/liferay-look-and-feel.xml");
 
 		Assert.assertTrue(lookAndFeelXmlFile.exists());
 	}

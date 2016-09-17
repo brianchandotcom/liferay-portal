@@ -20,8 +20,6 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.io.Writer;
 
-import java.util.Arrays;
-
 /**
  * <p>
  * See https://issues.liferay.com/browse/LPS-6072.
@@ -335,7 +333,11 @@ public class StringBundler implements Serializable {
 
 		public void ensureCapacity(int newLength) {
 			if (_value.length < newLength) {
-				_value = Arrays.copyOf(_value, newLength);
+				char[] copy = new char[newLength];
+
+				System.arraycopy(_value, 0, copy, 0, _value.length);
+
+				_value = copy;
 			}
 		}
 

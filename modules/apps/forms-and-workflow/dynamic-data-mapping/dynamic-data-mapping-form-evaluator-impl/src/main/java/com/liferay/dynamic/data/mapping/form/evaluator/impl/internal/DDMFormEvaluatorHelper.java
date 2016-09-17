@@ -24,6 +24,7 @@ import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormFieldEvaluationRes
 import com.liferay.dynamic.data.mapping.form.evaluator.impl.internal.functions.CallFunction;
 import com.liferay.dynamic.data.mapping.form.evaluator.impl.internal.functions.PropertyGetFunction;
 import com.liferay.dynamic.data.mapping.form.evaluator.impl.internal.functions.PropertySetFunction;
+import com.liferay.dynamic.data.mapping.form.evaluator.impl.internal.functions.SetInvalidFunction;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
@@ -267,15 +268,35 @@ public class DDMFormEvaluatorHelper {
 		DDMFormRuleEvaluator ddmFormRuleEvaluator) {
 
 		ddmFormRuleEvaluator.setDDMExpressionFunction(
-			"call", new CallFunction(
+			"call",
+			new CallFunction(
 				_ddmDataProviderConsumerTracker,
 				_ddmDataProviderInstanceService,
 				_ddmFormFieldEvaluationResultsMap,
 				_ddmFormValuesJSONDeserializer, _jsonFactory));
 		ddmFormRuleEvaluator.setDDMExpressionFunction(
-			"get", new PropertyGetFunction());
+			"enable",
+			new PropertySetFunction(
+				_ddmFormFieldEvaluationResultsMap, "readOnly"));
 		ddmFormRuleEvaluator.setDDMExpressionFunction(
-			"set", new PropertySetFunction());
+			"getValue",
+			new PropertyGetFunction(
+				_ddmFormFieldEvaluationResultsMap, "value"));
+		ddmFormRuleEvaluator.setDDMExpressionFunction(
+			"setInvalid",
+			new SetInvalidFunction(_ddmFormFieldEvaluationResultsMap));
+		ddmFormRuleEvaluator.setDDMExpressionFunction(
+			"setRequired",
+			new PropertySetFunction(
+				_ddmFormFieldEvaluationResultsMap, "required"));
+		ddmFormRuleEvaluator.setDDMExpressionFunction(
+			"setValue",
+			new PropertySetFunction(
+				_ddmFormFieldEvaluationResultsMap, "value"));
+		ddmFormRuleEvaluator.setDDMExpressionFunction(
+			"show",
+			new PropertySetFunction(
+				_ddmFormFieldEvaluationResultsMap, "visible"));
 	}
 
 	protected void setDDMExpressionVariables(

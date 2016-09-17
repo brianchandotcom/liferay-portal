@@ -35,7 +35,7 @@ public class PropertyGetFunction extends BasePropertyFunction {
 
 	@Override
 	public Object evaluate(Object... parameters) {
-		if (parameters.length != 2) {
+		if (parameters.length != 1) {
 			throw new IllegalArgumentException("One parameter is expected");
 		}
 

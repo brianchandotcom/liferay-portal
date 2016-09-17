@@ -177,12 +177,11 @@ public class DDMFormEvaluatorHelperTest {
 			DDMFormValuesTestUtil.createDDMFormFieldValue(
 				"field2_instanceId", "field2", new UnlocalizedValue("10")));
 
-		String condition = "get(fieldAt(\"field0\", 0), \"value\") >= 30";
+		String condition = "getValue(\"field0\") >= 30";
 
 		List<String> actions = ListUtil.fromArray(
 			new String[] {
-				"set(fieldAt(\"field1\", 0), \"visible\", false)",
-				"set(fieldAt(\"field2\", 0), \"readOnly\", true)"
+				"setVisible(\"field1\", false)", "setEnabled(\"field2\", false)"
 			});
 
 		DDMFormRule ddmFormRule = new DDMFormRule(condition, actions);
@@ -271,13 +270,10 @@ public class DDMFormEvaluatorHelperTest {
 				"field2_instanceId", "field2", new UnlocalizedValue("0")));
 
 		String condition =
-			"get(fieldAt('field0', 0), 'value') > 0 && " +
-				"get(fieldAt('field1', 0), 'value') > 0";
+			"getValue(\"field0\") > 0 && getValue(\"field1\") > 0";
 
 		String action =
-			"set(fieldAt('field2', 0), 'value', " +
-				"get(fieldAt('field0', 0), 'value') * " +
-					"get(fieldAt('field1', 0), 'value'))";
+			"setValue(\"field2\", getValue(\"field0\") * getValue(\"field1\"))";
 
 		DDMFormRule ddmFormRule = new DDMFormRule(
 			condition, Arrays.asList(action));
@@ -395,11 +391,10 @@ public class DDMFormEvaluatorHelperTest {
 			DDMFormValuesTestUtil.createDDMFormFieldValue(
 				"field0_instanceId", "field0", new UnlocalizedValue("5")));
 
-		String condition = "get(fieldAt('field0', 0), 'value') <= 10";
+		String condition = "getValue(\"field0\") <= 10";
 
 		String action =
-			"set(fieldAt('field0', 0), 'valid', false, " +
-				"'The value should be greater than 10.')";
+			"setInvalid(\"field0\", \"The value should be greater than 10.\")";
 
 		DDMFormRule ddmFormRule = new DDMFormRule(
 			condition, Arrays.asList(action));

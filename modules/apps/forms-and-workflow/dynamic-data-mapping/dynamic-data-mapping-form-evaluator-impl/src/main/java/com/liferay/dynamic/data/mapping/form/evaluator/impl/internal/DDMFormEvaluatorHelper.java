@@ -24,6 +24,7 @@ import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormFieldEvaluationRes
 import com.liferay.dynamic.data.mapping.form.evaluator.impl.internal.functions.CallFunction;
 import com.liferay.dynamic.data.mapping.form.evaluator.impl.internal.functions.PropertyGetFunction;
 import com.liferay.dynamic.data.mapping.form.evaluator.impl.internal.functions.PropertySetFunction;
+import com.liferay.dynamic.data.mapping.form.evaluator.impl.internal.functions.SetEnabledFunction;
 import com.liferay.dynamic.data.mapping.form.evaluator.impl.internal.functions.SetInvalidFunction;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
@@ -275,13 +276,12 @@ public class DDMFormEvaluatorHelper {
 				_ddmFormFieldEvaluationResultsMap,
 				_ddmFormValuesJSONDeserializer, _jsonFactory));
 		ddmFormRuleEvaluator.setDDMExpressionFunction(
-			"enable",
-			new PropertySetFunction(
-				_ddmFormFieldEvaluationResultsMap, "readOnly"));
-		ddmFormRuleEvaluator.setDDMExpressionFunction(
 			"getValue",
 			new PropertyGetFunction(
 				_ddmFormFieldEvaluationResultsMap, "value"));
+		ddmFormRuleEvaluator.setDDMExpressionFunction(
+			"setEnabled",
+			new SetEnabledFunction(_ddmFormFieldEvaluationResultsMap));
 		ddmFormRuleEvaluator.setDDMExpressionFunction(
 			"setInvalid",
 			new SetInvalidFunction(_ddmFormFieldEvaluationResultsMap));
@@ -294,7 +294,7 @@ public class DDMFormEvaluatorHelper {
 			new PropertySetFunction(
 				_ddmFormFieldEvaluationResultsMap, "value"));
 		ddmFormRuleEvaluator.setDDMExpressionFunction(
-			"show",
+			"setVisible",
 			new PropertySetFunction(
 				_ddmFormFieldEvaluationResultsMap, "visible"));
 	}

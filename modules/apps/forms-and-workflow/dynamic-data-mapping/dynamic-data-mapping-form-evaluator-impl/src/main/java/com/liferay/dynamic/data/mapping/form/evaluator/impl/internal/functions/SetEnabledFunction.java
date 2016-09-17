@@ -22,13 +22,13 @@ import java.util.Map;
 /**
  * @author Leonardo Barros
  */
-public class FieldAtFunction extends BasePropertyFunction {
+public class SetEnabledFunction extends SetPropertyFunction {
 
-	public FieldAtFunction(
+	public SetEnabledFunction(
 		Map<String, List<DDMFormFieldEvaluationResult>>
-			ddmFormFieldEvaluationResultsMap) {
+			ddmFormFieldEvaluationResults) {
 
-		super(ddmFormFieldEvaluationResultsMap);
+		super(ddmFormFieldEvaluationResults, "readOnly");
 	}
 
 	@Override
@@ -37,14 +37,20 @@ public class FieldAtFunction extends BasePropertyFunction {
 			throw new IllegalArgumentException("Two parameters are expected");
 		}
 
-		String fieldNameParameter = parameters[0].toString();
-		Number fieldIndexParameter = (Number)parameters[1];
+		String fieldName = parameters[0].toString();
 
-		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult =
-			getDDMFormFieldEvaluationResult(
-				fieldNameParameter, fieldIndexParameter.intValue());
+		List<DDMFormFieldEvaluationResult> ddmFormFieldEvaluationResults =
+			getDDMFormFieldEvaluationResults(fieldName);
 
-		return ddmFormFieldEvaluationResult;
+		boolean propertyValue = (Boolean)parameters[1];
+
+		for (DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult :
+				ddmFormFieldEvaluationResults) {
+
+			ddmFormFieldEvaluationResult.setReadOnly(!propertyValue);
+		}
+
+		return true;
 	}
 
 }

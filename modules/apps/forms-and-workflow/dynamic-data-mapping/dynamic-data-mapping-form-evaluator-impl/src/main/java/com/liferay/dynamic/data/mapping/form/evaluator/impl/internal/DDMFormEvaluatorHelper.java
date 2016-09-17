@@ -22,9 +22,10 @@ import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluationExceptio
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluationResult;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormFieldEvaluationResult;
 import com.liferay.dynamic.data.mapping.form.evaluator.impl.internal.functions.CallFunction;
-import com.liferay.dynamic.data.mapping.form.evaluator.impl.internal.functions.FieldAtFunction;
-import com.liferay.dynamic.data.mapping.form.evaluator.impl.internal.functions.PropertyGetFunction;
-import com.liferay.dynamic.data.mapping.form.evaluator.impl.internal.functions.PropertySetFunction;
+import com.liferay.dynamic.data.mapping.form.evaluator.impl.internal.functions.GetPropertyFunction;
+import com.liferay.dynamic.data.mapping.form.evaluator.impl.internal.functions.SetEnabledFunction;
+import com.liferay.dynamic.data.mapping.form.evaluator.impl.internal.functions.SetInvalidFunction;
+import com.liferay.dynamic.data.mapping.form.evaluator.impl.internal.functions.SetPropertyFunction;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
@@ -268,17 +269,34 @@ public class DDMFormEvaluatorHelper {
 		DDMFormRuleEvaluator ddmFormRuleEvaluator) {
 
 		ddmFormRuleEvaluator.setDDMExpressionFunction(
-			"call", new CallFunction(
+			"call",
+			new CallFunction(
 				_ddmDataProviderConsumerTracker,
 				_ddmDataProviderInstanceService,
 				_ddmFormFieldEvaluationResultsMap,
 				_ddmFormValuesJSONDeserializer, _jsonFactory));
 		ddmFormRuleEvaluator.setDDMExpressionFunction(
-			"fieldAt", new FieldAtFunction(_ddmFormFieldEvaluationResultsMap));
+			"getValue",
+			new GetPropertyFunction(
+				_ddmFormFieldEvaluationResultsMap, "value"));
 		ddmFormRuleEvaluator.setDDMExpressionFunction(
-			"get", new PropertyGetFunction());
+			"setEnabled",
+			new SetEnabledFunction(_ddmFormFieldEvaluationResultsMap));
 		ddmFormRuleEvaluator.setDDMExpressionFunction(
-			"set", new PropertySetFunction());
+			"setInvalid",
+			new SetInvalidFunction(_ddmFormFieldEvaluationResultsMap));
+		ddmFormRuleEvaluator.setDDMExpressionFunction(
+			"setRequired",
+			new SetPropertyFunction(
+				_ddmFormFieldEvaluationResultsMap, "required"));
+		ddmFormRuleEvaluator.setDDMExpressionFunction(
+			"setValue",
+			new SetPropertyFunction(
+				_ddmFormFieldEvaluationResultsMap, "value"));
+		ddmFormRuleEvaluator.setDDMExpressionFunction(
+			"setVisible",
+			new SetPropertyFunction(
+				_ddmFormFieldEvaluationResultsMap, "visible"));
 	}
 
 	protected void setDDMExpressionVariables(

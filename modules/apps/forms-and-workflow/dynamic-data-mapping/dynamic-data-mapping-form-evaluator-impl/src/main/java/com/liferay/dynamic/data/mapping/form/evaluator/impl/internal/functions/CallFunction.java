@@ -47,7 +47,7 @@ import java.util.Map;
 /**
  * @author Leonardo Barros
  */
-public class CallFunction extends BasePropertyFunction {
+public class CallFunction extends BaseDDMFormRuleFunction {
 
 	public CallFunction(
 		DDMDataProviderConsumerTracker ddmDataProviderConsumerTracker,

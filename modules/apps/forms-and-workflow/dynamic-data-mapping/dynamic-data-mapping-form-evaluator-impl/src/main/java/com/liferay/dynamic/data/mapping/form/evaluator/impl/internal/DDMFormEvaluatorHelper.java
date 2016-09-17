@@ -22,7 +22,6 @@ import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluationExceptio
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluationResult;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormFieldEvaluationResult;
 import com.liferay.dynamic.data.mapping.form.evaluator.impl.internal.functions.CallFunction;
-import com.liferay.dynamic.data.mapping.form.evaluator.impl.internal.functions.FieldAtFunction;
 import com.liferay.dynamic.data.mapping.form.evaluator.impl.internal.functions.PropertyGetFunction;
 import com.liferay.dynamic.data.mapping.form.evaluator.impl.internal.functions.PropertySetFunction;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
@@ -273,8 +272,6 @@ public class DDMFormEvaluatorHelper {
 				_ddmDataProviderInstanceService,
 				_ddmFormFieldEvaluationResultsMap,
 				_ddmFormValuesJSONDeserializer, _jsonFactory));
-		ddmFormRuleEvaluator.setDDMExpressionFunction(
-			"fieldAt", new FieldAtFunction(_ddmFormFieldEvaluationResultsMap));
 		ddmFormRuleEvaluator.setDDMExpressionFunction(
 			"get", new PropertyGetFunction());
 		ddmFormRuleEvaluator.setDDMExpressionFunction(

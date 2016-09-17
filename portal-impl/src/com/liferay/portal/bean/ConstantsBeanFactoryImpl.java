@@ -117,23 +117,73 @@ public class ConstantsBeanFactoryImpl implements ConstantsBeanFactory {
 		Field[] fields = constantsClass.getFields();
 
 		for (Field field : fields) {
-			if (Modifier.isStatic(field.getModifiers())) {
-				Type fieldType = Type.getType(field.getType());
-
-				methodVisitor = classWriter.visitMethod(
-					Opcodes.ACC_PUBLIC, "get" + field.getName(),
-					"()" + fieldType.getDescriptor(), null, null);
-
-				methodVisitor.visitCode();
-				methodVisitor.visitFieldInsn(
-					Opcodes.GETSTATIC, constantsClassBinaryName,
-					field.getName(), fieldType.getDescriptor());
-
-				methodVisitor.visitInsn(fieldType.getOpcode(Opcodes.IRETURN));
-
-				methodVisitor.visitMaxs(fieldType.getSize(), 1);
-				methodVisitor.visitEnd();
+			if (!Modifier.isStatic(field.getModifiers())) {
+				continue;
 			}
+
+			Type fieldType = Type.getType(field.getType());
+
+			methodVisitor = classWriter.visitMethod(
+				Opcodes.ACC_PUBLIC, "get" + field.getName(),
+				"()" + fieldType.getDescriptor(), null, null);
+
+			methodVisitor.visitCode();
+			methodVisitor.visitFieldInsn(
+				Opcodes.GETSTATIC, constantsClassBinaryName, field.getName(),
+				fieldType.getDescriptor());
+
+			methodVisitor.visitInsn(fieldType.getOpcode(Opcodes.IRETURN));
+
+			methodVisitor.visitMaxs(fieldType.getSize(), 1);
+
+			methodVisitor.visitEnd();
+		}
+
+		Method[] methods = constantsClass.getMethods();
+
+		for (Method method : methods) {
+			if (!Modifier.isStatic(method.getModifiers())) {
+				continue;
+			}
+
+			Class<?>[] parameterClasses = method.getParameterTypes();
+
+			Type[] parameterTypes = new Type[parameterClasses.length];
+
+			for (int i = 0; i < parameterClasses.length; i++) {
+				parameterTypes[i] = Type.getType(parameterClasses[i]);
+			}
+
+			String methodDescriptor = Type.getMethodDescriptor(
+				Type.getType(method.getReturnType()), parameterTypes);
+
+			methodVisitor = classWriter.visitMethod(
+				Opcodes.ACC_PUBLIC | Opcodes.ACC_STATIC, method.getName(),
+				methodDescriptor, null, null);
+
+			methodVisitor.visitCode();
+
+			int stackIndex = 0;
+
+			for (Type parameterType : parameterTypes) {
+				methodVisitor.visitVarInsn(
+					parameterType.getOpcode(Opcodes.ILOAD), stackIndex);
+
+				stackIndex += parameterType.getSize();
+			}
+
+			methodVisitor.visitMethodInsn(
+				Opcodes.INVOKESTATIC, constantsClassBinaryName,
+				method.getName(), methodDescriptor);
+
+			Type returnType = Type.getType(method.getReturnType());
+
+			methodVisitor.visitInsn(returnType.getOpcode(Opcodes.IRETURN));
+
+			methodVisitor.visitMaxs(
+				stackIndex + returnType.getSize(), parameterTypes.length + 1);
+
+			methodVisitor.visitEnd();
 		}
 
 		classWriter.visitEnd();

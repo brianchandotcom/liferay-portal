@@ -22,7 +22,7 @@ import java.util.Map;
 /**
  * @author Leonardo Barros
  */
-public class SetEnabledFunction extends PropertySetFunction {
+public class SetEnabledFunction extends SetPropertyFunction {
 
 	public SetEnabledFunction(
 		Map<String, List<DDMFormFieldEvaluationResult>>

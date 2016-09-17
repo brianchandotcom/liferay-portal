@@ -22,7 +22,7 @@ import java.util.Map;
 /**
  * @author Leonardo Barros
  */
-public class SetInvalidFunction extends BasePropertyFunction {
+public class SetInvalidFunction extends BaseDDMFormRuleFunction {
 
 	public SetInvalidFunction(
 		Map<String, List<DDMFormFieldEvaluationResult>>

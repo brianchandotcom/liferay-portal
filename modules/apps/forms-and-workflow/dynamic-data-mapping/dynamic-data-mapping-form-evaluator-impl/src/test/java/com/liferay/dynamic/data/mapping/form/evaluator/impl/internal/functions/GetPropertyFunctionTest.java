@@ -27,7 +27,7 @@ import org.junit.Test;
 /**
  * @author Leonardo Barros
  */
-public class PropertyGetFunctionTest extends BasePropertyFunctionTest {
+public class GetPropertyFunctionTest extends BaseDDMFormRuleFunctionTest {
 
 	@Test
 	public void testGetBooleanProperty() {
@@ -44,11 +44,11 @@ public class PropertyGetFunctionTest extends BasePropertyFunctionTest {
 				createDDMFormFieldEvaluationResultsMap(
 					ddmFormFieldEvaluationResult);
 
-		PropertyGetFunction propertyGetFunction = new PropertyGetFunction(
+		GetPropertyFunction getPropertyFunction = new GetPropertyFunction(
 			ddmFormFieldEvaluationResultsMap, propertyName);
 
-		boolean propertyValue = evaluatePropertyGetFunction(
-			propertyGetFunction, "Field");
+		boolean propertyValue = evaluateGetPropertyFunction(
+			getPropertyFunction, "Field");
 
 		Assert.assertEquals(randomBoolean, propertyValue);
 	}
@@ -65,27 +65,27 @@ public class PropertyGetFunctionTest extends BasePropertyFunctionTest {
 				createDDMFormFieldEvaluationResultsMap(
 					ddmFormFieldEvaluationResult);
 
-		PropertyGetFunction propertyGetFunction = new PropertyGetFunction(
+		GetPropertyFunction getPropertyFunction = new GetPropertyFunction(
 			ddmFormFieldEvaluationResultsMap, "value");
 
-		int propertyValue = evaluatePropertyGetFunction(
-			propertyGetFunction, "Field");
+		int propertyValue = evaluateGetPropertyFunction(
+			getPropertyFunction, "Field");
 
 		Assert.assertEquals(randomInt, propertyValue);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testInvalidArguments() {
-		PropertyGetFunction propertyGetFunction = new PropertyGetFunction(
+		GetPropertyFunction getPropertyFunction = new GetPropertyFunction(
 			null, null);
 
-		propertyGetFunction.evaluate();
+		getPropertyFunction.evaluate();
 	}
 
-	protected <T> T evaluatePropertyGetFunction(
-		PropertyGetFunction propertyGetFunction, String fieldName) {
+	protected <T> T evaluateGetPropertyFunction(
+		GetPropertyFunction getPropertyFunction, String fieldName) {
 
-		return (T)propertyGetFunction.evaluate(fieldName);
+		return (T)getPropertyFunction.evaluate(fieldName);
 	}
 
 }

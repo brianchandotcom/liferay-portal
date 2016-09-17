@@ -27,14 +27,14 @@ import org.junit.Test;
 /**
  * @author Leonardo Barros
  */
-public class PropertySetFunctionTest extends BasePropertyFunctionTest {
+public class SetPropertyFunctionTest extends BaseDDMFormRuleFunctionTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testInvalidArguments() {
-		PropertySetFunction propertySetFunction = new PropertySetFunction(
+		SetPropertyFunction setPropertyFunction = new SetPropertyFunction(
 			null, null);
 
-		propertySetFunction.evaluate();
+		setPropertyFunction.evaluate();
 	}
 
 	@Test
@@ -62,13 +62,13 @@ public class PropertySetFunctionTest extends BasePropertyFunctionTest {
 					ddmFormFieldEvaluationResult2,
 					ddmFormFieldEvaluationResult3);
 
-		PropertySetFunction propertySetFunction = new PropertySetFunction(
+		SetPropertyFunction setPropertyFunction = new SetPropertyFunction(
 			ddmFormFieldEvaluationResultsMap, randomPropertyName);
 
 		boolean expectedDDMFormField1PropertyValue =
 			RandomTestUtil.randomBoolean();
 
-		propertySetFunction.evaluate(
+		setPropertyFunction.evaluate(
 			"Field1", expectedDDMFormField1PropertyValue);
 
 		Assert.assertEquals(
@@ -108,10 +108,10 @@ public class PropertySetFunctionTest extends BasePropertyFunctionTest {
 
 		int expectedDDMFormField1PropertyValue = RandomTestUtil.randomInt();
 
-		PropertySetFunction propertySetFunction = new PropertySetFunction(
+		SetPropertyFunction setPropertyFunction = new SetPropertyFunction(
 			ddmFormFieldEvaluationResultsMap, "value");
 
-		propertySetFunction.evaluate(
+		setPropertyFunction.evaluate(
 			"Field1", expectedDDMFormField1PropertyValue);
 
 		Assert.assertEquals(

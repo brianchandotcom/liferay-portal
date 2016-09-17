@@ -22,10 +22,10 @@ import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluationExceptio
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluationResult;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormFieldEvaluationResult;
 import com.liferay.dynamic.data.mapping.form.evaluator.impl.internal.functions.CallFunction;
-import com.liferay.dynamic.data.mapping.form.evaluator.impl.internal.functions.PropertyGetFunction;
-import com.liferay.dynamic.data.mapping.form.evaluator.impl.internal.functions.PropertySetFunction;
+import com.liferay.dynamic.data.mapping.form.evaluator.impl.internal.functions.GetPropertyFunction;
 import com.liferay.dynamic.data.mapping.form.evaluator.impl.internal.functions.SetEnabledFunction;
 import com.liferay.dynamic.data.mapping.form.evaluator.impl.internal.functions.SetInvalidFunction;
+import com.liferay.dynamic.data.mapping.form.evaluator.impl.internal.functions.SetPropertyFunction;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
@@ -277,7 +277,7 @@ public class DDMFormEvaluatorHelper {
 				_ddmFormValuesJSONDeserializer, _jsonFactory));
 		ddmFormRuleEvaluator.setDDMExpressionFunction(
 			"getValue",
-			new PropertyGetFunction(
+			new GetPropertyFunction(
 				_ddmFormFieldEvaluationResultsMap, "value"));
 		ddmFormRuleEvaluator.setDDMExpressionFunction(
 			"setEnabled",
@@ -287,15 +287,15 @@ public class DDMFormEvaluatorHelper {
 			new SetInvalidFunction(_ddmFormFieldEvaluationResultsMap));
 		ddmFormRuleEvaluator.setDDMExpressionFunction(
 			"setRequired",
-			new PropertySetFunction(
+			new SetPropertyFunction(
 				_ddmFormFieldEvaluationResultsMap, "required"));
 		ddmFormRuleEvaluator.setDDMExpressionFunction(
 			"setValue",
-			new PropertySetFunction(
+			new SetPropertyFunction(
 				_ddmFormFieldEvaluationResultsMap, "value"));
 		ddmFormRuleEvaluator.setDDMExpressionFunction(
 			"setVisible",
-			new PropertySetFunction(
+			new SetPropertyFunction(
 				_ddmFormFieldEvaluationResultsMap, "visible"));
 	}
 

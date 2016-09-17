@@ -22,9 +22,9 @@ import java.util.Map;
 /**
  * @author Leonardo Barros
  */
-public class PropertyGetFunction extends BasePropertyFunction {
+public class SetPropertyFunction extends BaseDDMFormRuleFunction {
 
-	public PropertyGetFunction(
+	public SetPropertyFunction(
 		Map<String, List<DDMFormFieldEvaluationResult>>
 			ddmFormFieldEvaluationResultsMap, String propertyName) {
 
@@ -35,8 +35,8 @@ public class PropertyGetFunction extends BasePropertyFunction {
 
 	@Override
 	public Object evaluate(Object... parameters) {
-		if (parameters.length != 1) {
-			throw new IllegalArgumentException("One parameter is expected");
+		if (parameters.length != 2) {
+			throw new IllegalArgumentException("Two parameters are expected");
 		}
 
 		String ddmFormFieldName = parameters[0].toString();
@@ -44,10 +44,14 @@ public class PropertyGetFunction extends BasePropertyFunction {
 		List<DDMFormFieldEvaluationResult> ddmFormFieldEvaluationResults =
 			getDDMFormFieldEvaluationResults(ddmFormFieldName);
 
-		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult =
-			ddmFormFieldEvaluationResults.get(0);
+		for (DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult :
+				ddmFormFieldEvaluationResults) {
 
-		return ddmFormFieldEvaluationResult.getProperty(_propertyName);
+			ddmFormFieldEvaluationResult.setProperty(
+				_propertyName, parameters[1]);
+		}
+
+		return true;
 	}
 
 	private final String _propertyName;

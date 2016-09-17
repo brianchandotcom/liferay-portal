@@ -14,26 +14,42 @@
 
 package com.liferay.dynamic.data.mapping.form.evaluator.impl.internal.functions;
 
-import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormFieldEvaluationResult;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Leonardo Barros
  */
-public class PropertyGetFunction implements DDMExpressionFunction {
+public class PropertyGetFunction extends BasePropertyFunction {
+
+	public PropertyGetFunction(
+		Map<String, List<DDMFormFieldEvaluationResult>>
+			ddmFormFieldEvaluationResultsMap, String propertyName) {
+
+		super(ddmFormFieldEvaluationResultsMap);
+
+		_propertyName = propertyName;
+	}
 
 	@Override
 	public Object evaluate(Object... parameters) {
 		if (parameters.length != 2) {
-			throw new IllegalArgumentException("Two parameters are expected");
+			throw new IllegalArgumentException("One parameter is expected");
 		}
 
+		String ddmFormFieldName = parameters[0].toString();
+
+		List<DDMFormFieldEvaluationResult> ddmFormFieldEvaluationResults =
+			getDDMFormFieldEvaluationResults(ddmFormFieldName);
+
 		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult =
-			(DDMFormFieldEvaluationResult)parameters[0];
+			ddmFormFieldEvaluationResults.get(0);
 
-		String propertyName = parameters[1].toString();
-
-		return ddmFormFieldEvaluationResult.getProperty(propertyName);
+		return ddmFormFieldEvaluationResult.getProperty(_propertyName);
 	}
+
+	private final String _propertyName;
 
 }

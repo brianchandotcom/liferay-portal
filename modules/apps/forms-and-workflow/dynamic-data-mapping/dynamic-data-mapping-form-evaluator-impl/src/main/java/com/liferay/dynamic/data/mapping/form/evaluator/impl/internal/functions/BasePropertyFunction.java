@@ -33,22 +33,14 @@ public abstract class BasePropertyFunction implements DDMExpressionFunction {
 			ddmFormFieldEvaluationResultsMap;
 	}
 
-	protected DDMFormFieldEvaluationResult getDDMFormFieldEvaluationResult(
-		String ddmFormFieldName, int index) {
+	protected List<DDMFormFieldEvaluationResult>
+		getDDMFormFieldEvaluationResults(String ddmFormFieldName) {
 
 		if (!ddmFormFieldEvaluationResultsMap.containsKey(ddmFormFieldName)) {
 			throw new IllegalArgumentException("Invalid field name");
 		}
 
-		List<DDMFormFieldEvaluationResult>
-			ddmFormFieldEvaluationInstanceResults =
-				ddmFormFieldEvaluationResultsMap.get(ddmFormFieldName);
-
-		if (ddmFormFieldEvaluationInstanceResults.size() <= index) {
-			throw new IllegalArgumentException("Invalid field instance");
-		}
-
-		return ddmFormFieldEvaluationInstanceResults.get(index);
+		return ddmFormFieldEvaluationResultsMap.get(ddmFormFieldName);
 	}
 
 	protected final Map<String, List<DDMFormFieldEvaluationResult>>

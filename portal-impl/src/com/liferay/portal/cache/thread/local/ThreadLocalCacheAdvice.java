@@ -61,8 +61,12 @@ public class ThreadLocalCacheAdvice
 
 		Object value = threadLocalCache.get(cacheKey);
 
-		if (value == nullResult) {
-			return null;
+		if (value != null) {
+			if (value == nullResult) {
+				return null;
+			}
+
+			return value;
 		}
 
 		Object result = methodInvocation.proceed();
@@ -78,14 +82,19 @@ public class ThreadLocalCacheAdvice
 	}
 
 	private String _getCacheKey(Object[] arguments) {
-		StringBundler sb = new StringBundler(arguments.length * 2);
-
-		for (Object argument : arguments) {
-			sb.append(StringUtil.toHexString(argument));
-			sb.append(StringPool.POUND);
+		if (arguments.length == 1) {
+			return StringUtil.toHexString(arguments[0]);
 		}
 
-		sb.setIndex(sb.index() - 1);
+		StringBundler sb = new StringBundler(arguments.length * 2 - 1);
+
+		for (int i = 0; i < arguments.length; i++) {
+			sb.append(StringUtil.toHexString(arguments[i]));
+
+			if ((i + 1) < arguments.length) {
+				sb.append(StringPool.POUND);
+			}
+		}
 
 		return sb.toString();
 	}

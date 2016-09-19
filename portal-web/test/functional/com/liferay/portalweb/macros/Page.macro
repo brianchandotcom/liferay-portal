@@ -156,7 +156,9 @@
 			</not>
 			<then>
 				<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${siteName}" />
+
 				<execute function="Click" locator1="Icon#BASIC_SEARCH" />
+
 				<execute function="AssertClick" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK" value1="${siteName}">
 					<var name="key_rowEntry" value="${siteName}" />
 				</execute>
@@ -184,6 +186,7 @@
 		<var name="key_friendlyUrlLocalized" value="${friendlyUrlLocalized}" />
 
 		<execute function="Click" locator1="SitePagesEditPage#FRIENDLY_URL_LOCALIZED" />
+
 		<execute function="Type" locator1="SitePagesEditPage#FRIENDLY_URL_FIELD" value1="${localizedFriendlyURL}" />
 	</command>
 
@@ -201,7 +204,9 @@
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="SitePages#JAVASCRIPT_LABEL" value1="Paste JavaScript code that is executed at the bottom of the page." />
+
 		<execute function="Type" locator1="SitePages#JAVASCRIPT_TEXTAREA" value1="${javaScript}" />
+
 		<execute macro="PortletEntry#save" />
 	</command>
 
@@ -225,6 +230,7 @@
 		<execute function="SelectFrame" value1="relative=top" />
 
 		<execute function="AssertClick" locator1="Button#DONE" value1="Done" />
+
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 	</command>
 
@@ -256,7 +262,9 @@
 		<var name="key_pageTranslation" value="${pageTranslation}" />
 
 		<execute function="Click" locator1="SitePages#DETAILS_LANGUAGE_TRANSLATIONS" />
+
 		<execute function="Type" locator1="TextInput#NAME" value1="${pageTranslationName}" />
+
 		<execute macro="PortletEntry#save" />
 	</command>
 
@@ -269,6 +277,7 @@
 			<var name="key_componentOrPortletName" value="${portletName}" />
 
 			<execute function="Click" locator1="SitePagesEditPage#PAGE_TYPE_PANEL_CHECKBOX" value1="${portletName}" />
+
 			<execute function="AssertChecked#waitForElementPresentAssertChecked" locator1="SitePagesEditPage#PAGE_TYPE_PANEL_CHECKBOX_INPUT" />
 		</for>
 	</command>
@@ -322,6 +331,7 @@
 		<execute function="Pause" locator1="5000" />
 
 		<execute function="SelectFrameTop" />
+
 		<execute macro="PortletEntry#save" />
 	</command>
 
@@ -346,7 +356,9 @@
 		<var name="key_friendlyUrlLocalized" value="${friendlyUrlLocalized}" />
 
 		<execute function="Click#pauseClickAt" locator1="SitePagesEditPage#FRIENDLY_URL_LOCALIZED" />
+
 		<execute function="Type" locator1="SitePagesEditPage#FRIENDLY_URL_FIELD" value1=" " />
+
 		<execute function="AssertClick#pauseAssertTextClickAt" locator1="Button#SAVE" value1="Save" />
 
 		<execute macro="Alert#viewSuccessMessage" />
@@ -390,6 +402,7 @@
 		<execute function="AssertClick" locator1="SitePages#PAGE_TREE_PAGE_SPECIFIC_PAGE" value1="${pageName}" />
 
 		<execute function="Uncheck" locator1="Checkbox#ALLOW_SITE_ADMIN_MODIFY_PAGES" />
+
 		<execute macro="Button#clickSave" />
 	</command>
 
@@ -486,6 +499,7 @@
 		<var name="key_siteTemplateName" value="${siteTemplateName}" />
 
 		<execute function="Click" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_ACTIONS" value1="${siteTemplateName}" />
+
 		<execute function="Click" locator1="MenuItem#MANAGE" />
 	</command>
 
@@ -709,6 +723,7 @@
 			<equals arg1="${siteChildPages}" arg2="false" />
 			<then>
 				<execute function="AssertClick" locator1="SitePages#PAGE_TREE_LOAD_MORE_RESULTS_LINK" value1="Load more results" />
+
 				<execute function="AssertTextEquals" locator1="SitePages#PAGE_TREE_PAGE_LINK_4" value1="Page3 Name" />
 				<execute function="AssertTextEquals" locator1="SitePages#PAGE_TREE_PAGE_LINK_5" value1="Page4 Name" />
 			</then>
@@ -716,6 +731,7 @@
 				<equals arg1="${siteChildPages}" arg2="true" />
 				<then>
 					<execute function="AssertClick" locator1="SitePages#PAGE_TREE_LOAD_MORE_RESULTS_LINK" value1="Load more results" />
+
 					<execute function="AssertTextEquals" locator1="SitePages#PAGE_TREE_PAGE_LINK_5" value1="Child Page4 Name" />
 					<execute function="AssertTextEquals" locator1="SitePages#PAGE_TREE_PAGE_LINK_6" value1="Child Page5 Name" />
 				</then>
@@ -958,8 +974,11 @@
 
 	<command name="viewSiteTemplatePages">
 		<var name="key_siteName" value="${siteName}" />
+
 		<execute function="AssertTextEquals" locator1="SitePages#SITE_NAME" value1="${siteName}" />
+
 		<execute function="Click" locator1="SitePages#PAGE_TREE_ROOT_LINK" />
+
 		<execute function="Click" locator1="SitePages#TOOLBAR_VIEW_PAGES" />
 
 		<execute function="Pause" locator1="5000" />
@@ -975,6 +994,7 @@
 
 	<command name="viewTranslationsPG">
 		<execute function="Open" locator1="${sitePageURL}" />
+
 		<execute function="AssertLocation" value1="${sitePageURL}" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Home#PORTAL_LOCALIZATION_MESSAGE_INFO" value1="${pageLocalizationMessage}" />

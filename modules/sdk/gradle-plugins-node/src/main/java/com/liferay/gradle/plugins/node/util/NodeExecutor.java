@@ -22,12 +22,15 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.gradle.api.Project;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.logging.Logging;
+import org.gradle.util.CollectionUtils;
 import org.gradle.util.GUtil;
 
 /**
@@ -97,6 +100,10 @@ public class NodeExecutor {
 		return GradleUtil.toFile(_project, _workingDir);
 	}
 
+	public boolean isInheritProxy() {
+		return _inheritProxy;
+	}
+
 	public void setArgs(Iterable<?> args) {
 		_args.clear();
 
@@ -109,6 +116,10 @@ public class NodeExecutor {
 
 	public void setCommand(Object command) {
 		_command = command;
+	}
+
+	public void setInheritProxy(boolean inheritProxy) {
+		_inheritProxy = inheritProxy;
 	}
 
 	public void setNodeDir(Object nodeDir) {
@@ -195,25 +206,122 @@ public class NodeExecutor {
 		return windowsArgs;
 	}
 
-	protected void updateEnvironment(Map<String, String> environment) {
-		File executableDir = getExecutableDir();
+	protected void setNonProxyHosts(Map<String, String> environment) {
+		if (environment.containsKey(_NO_PROXY_KEY) ||
+			environment.containsKey(_NO_PROXY_KEY.toUpperCase())) {
 
-		if (executableDir == null) {
+			if (_logger.isInfoEnabled()) {
+				_logger.info("Non-proxy hosts are already set");
+			}
+
 			return;
 		}
 
-		for (String pathKey : _PATH_KEYS) {
-			String path = environment.get(pathKey);
+		Set<String> nonProxyHosts = new LinkedHashSet<>();
 
-			if (Validator.isNull(path)) {
-				continue;
-			}
+		String hosts = System.getProperty("http.nonProxyHosts");
 
-			path = executableDir.getAbsolutePath() + File.pathSeparator + path;
+		if (Validator.isNotNull(hosts)) {
+			nonProxyHosts.addAll(Arrays.asList(hosts.split("\\|")));
+		}
 
-			environment.put(pathKey, path);
+		hosts = System.getProperty("https.nonProxyHosts");
+
+		if (Validator.isNotNull(hosts)) {
+			nonProxyHosts.addAll(Arrays.asList(hosts.split("\\|")));
+		}
+
+		if (nonProxyHosts.isEmpty()) {
+			return;
+		}
+
+		hosts = CollectionUtils.join(",", nonProxyHosts);
+
+		environment.put(_NO_PROXY_KEY, hosts);
+
+		if (_logger.isInfoEnabled()) {
+			_logger.info("Non-proxy hosts set to {}", hosts);
 		}
 	}
+
+	protected void setProxy(Map<String, String> environment, String protocol) {
+		String key = protocol + "_proxy";
+
+		if (environment.containsKey(key) ||
+			environment.containsKey(key.toUpperCase())) {
+
+			if (_logger.isInfoEnabled()) {
+				_logger.info("{} proxy is already set", protocol.toUpperCase());
+			}
+
+			return;
+		}
+
+		String host = System.getProperty(protocol + ".proxyHost");
+		String port = System.getProperty(protocol + ".proxyPort");
+
+		if (Validator.isNull(host) || Validator.isNull(port)) {
+			return;
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(protocol);
+		sb.append("://");
+
+		String user = System.getProperty(protocol + ".proxyUser");
+
+		if (Validator.isNotNull(user)) {
+			sb.append(user);
+
+			String password = System.getProperty(protocol + ".proxyPassword");
+
+			if (Validator.isNotNull(password)) {
+				sb.append(':');
+				sb.append(password);
+				sb.append('@');
+			}
+		}
+
+		sb.append(host);
+		sb.append(':');
+		sb.append(port);
+
+		String url = sb.toString();
+
+		if (_logger.isInfoEnabled()) {
+			_logger.info("{} proxy set to {}", protocol.toUpperCase(), url);
+		}
+
+		environment.put(key, sb.toString());
+	}
+
+	protected void updateEnvironment(Map<String, String> environment) {
+		if (isInheritProxy()) {
+			setNonProxyHosts(environment);
+			setProxy(environment, "http");
+			setProxy(environment, "https");
+		}
+
+		File executableDir = getExecutableDir();
+
+		if (executableDir != null) {
+			for (String pathKey : _PATH_KEYS) {
+				String path = environment.get(pathKey);
+
+				if (Validator.isNull(path)) {
+					continue;
+				}
+
+				path =
+					executableDir.getAbsolutePath() + File.pathSeparator + path;
+
+				environment.put(pathKey, path);
+			}
+		}
+	}
+
+	private static final String _NO_PROXY_KEY = "no_proxy";
 
 	private static final String[] _PATH_KEYS = {"Path", "PATH"};
 
@@ -221,6 +329,7 @@ public class NodeExecutor {
 
 	private final List<Object> _args = new ArrayList<>();
 	private Object _command = "node";
+	private boolean _inheritProxy = true;
 	private Object _nodeDir;
 	private final Project _project;
 	private Object _workingDir;

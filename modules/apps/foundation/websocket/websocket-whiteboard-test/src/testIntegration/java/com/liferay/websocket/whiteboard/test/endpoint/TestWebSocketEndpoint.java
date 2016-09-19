@@ -19,6 +19,7 @@ import java.io.IOException;
 import javax.websocket.Endpoint;
 import javax.websocket.EndpointConfig;
 import javax.websocket.MessageHandler;
+import javax.websocket.RemoteEndpoint;
 import javax.websocket.Session;
 
 import org.osgi.service.component.annotations.Component;
@@ -41,7 +42,10 @@ public class TestWebSocketEndpoint extends Endpoint {
 				@Override
 				public void onMessage(String text) {
 					try {
-						session.getBasicRemote().sendText(text);
+						RemoteEndpoint.Basic remoteEndpoint =
+							session.getBasicRemote();
+
+						remoteEndpoint.sendText(text);
 					}
 					catch (IOException ioe) {
 						throw new RuntimeException(ioe);

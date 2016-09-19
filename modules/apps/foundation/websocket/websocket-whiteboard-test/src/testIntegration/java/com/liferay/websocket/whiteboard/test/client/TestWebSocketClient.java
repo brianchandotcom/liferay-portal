@@ -48,7 +48,7 @@ public class TestWebSocketClient {
 			_session.getBasicRemote().sendText(str);
 		}
 		catch (IOException ioe) {
-			ioe.printStackTrace();
+			throw new RuntimeException(ioe);
 		}
 	}
 

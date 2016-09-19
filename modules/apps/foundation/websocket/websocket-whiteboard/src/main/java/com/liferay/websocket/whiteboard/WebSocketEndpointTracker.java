@@ -83,8 +83,8 @@ public class WebSocketEndpointTracker
 
 				_log.log(
 					LogService.LOG_ERROR,
-					"Can't add websocket endpoint " + endpoint.getClass() +
-						" in the path " + path,
+					"Can't register websocket endpoint " + endpoint.getClass() +
+						" for path " + path,
 					de);
 
 				return null;
@@ -111,10 +111,10 @@ public class WebSocketEndpointTracker
 		ServiceReference<Endpoint> serviceReference,
 		ServerEndpointConfigWrapper serverEndpointConfig) {
 
-		ServiceObjectsConfigurator configurator =
+		ServiceObjectsConfigurator serviceObjectsConfigurator =
 			serverEndpointConfig.removeConfigurator(serviceReference);
 
-		configurator.close();
+		serviceObjectsConfigurator.close();
 	}
 
 	@Activate
@@ -140,7 +140,7 @@ public class WebSocketEndpointTracker
 	@Reference
 	private LogService _log;
 
-	@Reference(target = "(websocket.active =true)")
+	@Reference(target = "(websocket.active=true)")
 	private ServletContext _servletContext;
 
 	private final ConcurrentMap<String, ServerEndpointConfigWrapper>

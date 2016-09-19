@@ -42,7 +42,9 @@ public class ServiceObjectsConfigurator
 
 		while (iterator.hasNext()) {
 			EndpointWrapper wrappedEndpoint = iterator.next();
+
 			iterator.remove();
+
 			wrappedEndpoint.close();
 		}
 	}

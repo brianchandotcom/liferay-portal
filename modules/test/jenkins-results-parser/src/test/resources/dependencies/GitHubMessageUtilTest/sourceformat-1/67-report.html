@@ -1,0 +1,33 @@
+<h5 job-result="FAILURE"><a href="http://test-1-10/job/test-portal-acceptance-pullrequest-batch(master)/33958/">test-portal-acceptance-pullrequest-batch(master)</a></h5><h6>Job Results:</h6><p>0 Tests Passed.<br />1 Test Failed.</p><ol><li><strong><a href="https://test-1-10.liferay.com/job/test-portal-acceptance-pullrequest-batch%28master%29/AXIS_VARIABLE=0,label_exp=!master/33958/">test-portal-acceptance-pullrequest-batch&#40;master&#41; &raquo; 0,!master #33958</a></strong><pre><code>     \[exec\] :private:apps:foundation:portal:portal\-dao\-db:jar UP\-TO\-DATE
+     \[exec\] :private:apps:foundation:portal:portal\-dao\-db:jarSources
+     \[exec\] :private:apps:foundation:portal:portal\-dao\-db:assemble
+     \[exec\] :private:apps:foundation:portal\-security\-audit:portal\-security\-audit\-web:assemble
+     \[exec\] :private:apps:foundation:portal:portal\-upgrade\-dao\-orm:buildCSS UP\-TO\-DATE
+     \[exec\] :private:apps:foundation:portal:portal\-upgrade\-dao\-orm:processResources UP\-TO\-DATE
+     \[exec\] :private:apps:foundation:portal:portal\-upgrade\-dao\-orm:transpileJS SKIPPED
+     \[exec\] :private:apps:foundation:portal:portal\-upgrade\-dao\-orm:configJSModules SKIPPED
+     \[exec\] :private:apps:foundation:portal:portal\-upgrade\-dao\-orm:copyLibs SKIPPED
+     \[exec\] :private:apps:foundation:portal:portal\-upgrade\-dao\-orm:replaceSoyTranslation UP\-TO\-DATE
+     \[exec\] :private:apps:foundation:portal:portal\-upgrade\-dao\-orm:classes
+     \[exec\] :private:apps:foundation:portal:portal\-upgrade\-dao\-orm:jar UP\-TO\-DATE
+     \[exec\] :private:apps:foundation:portal:portal\-upgrade\-dao\-orm:jarSources
+     \[exec\] :private:apps:foundation:portal:portal\-upgrade\-dao\-orm:assemble
+     \[exec\] 
+     \[exec\] FAILURE: Build completed with 5 failures\.
+     \[exec\] :private:apps:foundation:portal\-cache:portal\-cache\-ehcache\-ee\-provider:jarSources
+     \[exec\] :private:apps:foundation:portal\-cache:portal\-cache\-ehcache\-ee\-provider:assemble
+     \[exec\] 
+     \[exec\] 1: Task failed with an exception\.
+     \[exec\] \-\-\-\-\-\-\-\-\-\-\-
+     \[exec\] \* What went wrong:
+     \[exec\] Execution failed for task ':private:util:portal\-tools\-data\-partitioning\-sql\-builder\-db2:compileJava'\.
+     \[exec\] > Compilation failed; see the compiler error output for details\.
+     \[exec\] 
+     \[exec\] \* Try:
+     \[exec\] Run with \-\-info or \-\-debug option to get more log output\.
+     \[exec\] 
+     \[exec\] \* Exception is:
+     \[exec\] org\.gradle\.api\.tasks\.TaskExecutionException: Execution failed for task ':private:util:portal\-tools\-data\-partitioning\-sql\-builder\-db2:compileJava'\.
+     \[exec\] 	at org\.gradle\.api\.internal\.tasks\.execution\.ExecuteActionsTaskExecuter\.executeActions\(ExecuteActionsTaskExecuter\.java:69\)
+     \[exec\] 	at org\.gradle\.api\.internal\.tasks\.execution\.ExecuteActionsTaskExecuter\.execute\(ExecuteActionsTaskExecuter\.java:46\)
+     \[exec\] 	at org\.gradle\.api\.internal\.tasks\.execution\.PostExecutionAnalysisTaskExecuter\.execute\(PostExecutionAnalysisTaskExecuter\.java:35\)</code></pre></li></ol>

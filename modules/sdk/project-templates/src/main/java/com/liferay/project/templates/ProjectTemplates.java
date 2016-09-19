@@ -71,6 +71,8 @@ public class ProjectTemplates {
 						TEMPLATE_BUNDLE_PREFIX.length(),
 						template.lastIndexOf('-'));
 
+					template = template.replace('.', '-');
+
 					templates.add(template);
 				}
 			}
@@ -92,6 +94,8 @@ public class ProjectTemplates {
 						template = template.substring(
 							TEMPLATE_BUNDLE_PREFIX.length(),
 							template.indexOf("-"));
+
+						template = template.replace('.', '-');
 
 						templates.add(template);
 					}
@@ -264,7 +268,7 @@ public class ProjectTemplates {
 		if (template.equals("activator") && !className.endsWith("Activator")) {
 			className += "Activator";
 		}
-		else if ((template.equals("mvcportlet") ||
+		else if ((template.equals("mvc-portlet") ||
 				  template.equals("portlet")) &&
 				 className.endsWith("Portlet")) {
 

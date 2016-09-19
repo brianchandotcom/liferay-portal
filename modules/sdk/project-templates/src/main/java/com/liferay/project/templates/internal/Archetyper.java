@@ -89,7 +89,8 @@ public class Archetyper {
 			new ArchetypeGenerationRequest();
 
 		archetypeGenerationRequest.setArchetypeArtifactId(
-			ProjectTemplates.TEMPLATE_BUNDLE_PREFIX + templateName);
+			ProjectTemplates.TEMPLATE_BUNDLE_PREFIX +
+				templateName.replace('-', '.'));
 		archetypeGenerationRequest.setArchetypeGroupId("com.liferay");
 
 		// archetypeVersion is ignored

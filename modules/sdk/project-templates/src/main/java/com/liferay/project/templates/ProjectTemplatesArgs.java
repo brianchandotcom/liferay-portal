@@ -165,7 +165,7 @@ public class ProjectTemplatesArgs {
 		description = "The template to use when creating the project.",
 		names = "--template"
 	)
-	private String _template = "mvcportlet";
+	private String _template = "mvc-portlet";
 
 	@Parameter(
 		description = "The root directory of the Liferay Workspace where the new project is being created.",

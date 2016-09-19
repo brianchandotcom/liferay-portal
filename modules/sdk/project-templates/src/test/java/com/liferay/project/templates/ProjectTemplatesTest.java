@@ -823,7 +823,7 @@ public class ProjectTemplatesTest {
 		if (Validator.isNotNull(template)) {
 			completeArgs.add(
 				"-DarchetypeArtifactId=com.liferay.project.templates." +
-					template);
+					template.replace('-', '.'));
 		}
 
 		String projectTemplateVersion = _projectTemplateVersions.getProperty(

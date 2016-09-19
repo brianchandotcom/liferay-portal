@@ -1282,6 +1282,8 @@ public class PropsValues {
 
 	public static final String[] REQUEST_SHARED_ATTRIBUTES = PropsUtil.getArray(PropsKeys.REQUEST_SHARED_ATTRIBUTES);
 
+	public static final String[] REQUEST_UNWRAP_PACKAGES = PropsUtil.getArray(PropsKeys.REQUEST_UNWRAP_PACKAGES);
+
 	public static String[] RESOURCE_ACTIONS_CONFIGS = PropsUtil.getArray(PropsKeys.RESOURCE_ACTIONS_CONFIGS);
 
 	public static final boolean RESOURCE_ACTIONS_READ_PORTLET_RESOURCES = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.RESOURCE_ACTIONS_READ_PORTLET_RESOURCES));

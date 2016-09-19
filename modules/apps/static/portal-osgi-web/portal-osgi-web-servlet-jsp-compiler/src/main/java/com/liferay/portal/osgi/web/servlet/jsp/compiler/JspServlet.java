@@ -635,37 +635,25 @@ public class JspServlet extends HttpServlet {
 			while (enumeration.hasMoreElements()) {
 				URL url = enumeration.nextElement();
 
-				Path path = Paths.get(url.getPath());
+				String path = url.getPath();
 
 				if (path.startsWith(_DIR_NAME_RESOURCES)) {
-					path = path.subpath(2, path.getNameCount());
+					path = path.substring(
+						_DIR_NAME_RESOURCES.length() + 1, path.length() - 4);
+				}
+				else {
+					path = path.substring(1, path.length() - 4);
 				}
 
-				String dirName = "/org/apache/jsp/";
+				path = StringUtil.replace(path, CharPool.UNDERLINE, "_005f");
 
-				Path parentPath = path.getParent();
+				StringBundler sb = new StringBundler(3);
 
-				if (parentPath != null) {
-					String parentPathString = parentPath.toString();
+				sb.append("/org/apache/jsp/");
+				sb.append(path);
+				sb.append("_jsp.class");
 
-					parentPathString = StringUtil.replace(
-						parentPathString, CharPool.UNDERLINE, "_005f");
-
-					dirName += parentPathString + "/";
-				}
-
-				Path fileNamePath = path.getFileName();
-
-				String fileName = fileNamePath.toString();
-
-				fileName = StringUtil.replace(
-					fileName, CharPool.UNDERLINE, "_005f");
-
-				fileName = fileName.substring(0, fileName.length() - 4);
-
-				fileName = fileName + "_jsp.class";
-
-				paths.add(Paths.get(scratchDirName, dirName, fileName));
+				paths.add(Paths.get(scratchDirName, sb.toString()));
 			}
 
 			_deleteOutdatedJspFiles(scratchDirName, paths);

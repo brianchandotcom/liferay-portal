@@ -49,80 +49,82 @@ Map<String, Object> data = new HashMap<>();
 data.put("qa-id", "info");
 %>
 
-<liferay-ui:icon
-	data="<%= data %>"
-	icon="information-live"
-	id='<%= portletNamespace + "infoButton" %>'
-	label="<%= false %>"
-	linkCssClass="control-menu-icon"
-	markupView="lexicon"
-	message="additional-information"
-	url="javascript:;"
-/>
+<li class="control-menu-nav-item">
+	<liferay-ui:icon
+		data="<%= data %>"
+		icon="information-live"
+		id='<%= portletNamespace + "infoButton" %>'
+		label="<%= false %>"
+		linkCssClass="control-menu-icon"
+		markupView="lexicon"
+		message="additional-information"
+		url="javascript:;"
+	/>
 
-<div class="hide">
-	<div id="<%= portletNamespace %>infoContainer">
+	<div class="hide">
+		<div id="<%= portletNamespace %>infoContainer">
 
-		<%
-		boolean modifiedLayout = GetterUtil.getBoolean(request.getAttribute(InformationMessagesProductNavigationControlMenuEntry.INFORMATION_MESSAGES_MODIFIED_LAYOUT));
-		%>
+			<%
+			boolean modifiedLayout = GetterUtil.getBoolean(request.getAttribute(InformationMessagesProductNavigationControlMenuEntry.INFORMATION_MESSAGES_MODIFIED_LAYOUT));
+			%>
 
-		<c:if test="<%= modifiedLayout %>">
-			<div class="modified-layout">
-				<aui:icon image="information-live" markupView="lexicon" />
+			<c:if test="<%= modifiedLayout %>">
+				<div class="modified-layout">
+					<aui:icon image="information-live" markupView="lexicon" />
 
-				<span class="message-info">
-					<liferay-ui:message key="this-page-has-been-changed-since-the-last-update-from-the-site-template-excerpt" />
+					<span class="message-info">
+						<liferay-ui:message key="this-page-has-been-changed-since-the-last-update-from-the-site-template-excerpt" />
 
-					<liferay-ui:icon-help message="this-page-has-been-changed-since-the-last-update-from-the-site-template" />
-				</span>
-
-				<%
-				PortletURL resetPrototypeURL = PortletURLFactoryUtil.create(request, LayoutAdminPortletKeys.LAYOUT_ADMIN, PortletRequest.ACTION_PHASE);
-
-				resetPrototypeURL.setParameter(ActionRequest.ACTION_NAME, "resetPrototype");
-				resetPrototypeURL.setParameter("redirect", PortalUtil.getLayoutURL(themeDisplay));
-				resetPrototypeURL.setParameter("groupId", String.valueOf(themeDisplay.getSiteGroupId()));
-
-				String taglibURL = "submitForm(document.hrefFm, '" + HtmlUtil.escapeJS(resetPrototypeURL.toString()) + "');";
-				%>
-
-				<span class="button-info">
-					<aui:button cssClass="btn-link" name="submit" onClick="<%= taglibURL %>" type="submit" value="reset-changes" />
-				</span>
-			</div>
-		</c:if>
-
-		<%
-		boolean linkedLayout = GetterUtil.getBoolean(request.getAttribute(InformationMessagesProductNavigationControlMenuEntry.INFORMATION_MESSAGES_LINKED_LAYOUT));
-		%>
-
-		<c:if test="<%= linkedLayout %>">
-			<div class="linked-layout">
-				<aui:icon image="information-live" markupView="lexicon" />
-
-				<span class="message-info">
+						<liferay-ui:icon-help message="this-page-has-been-changed-since-the-last-update-from-the-site-template" />
+					</span>
 
 					<%
-					Group group = themeDisplay.getScopeGroup();
+					PortletURL resetPrototypeURL = PortletURLFactoryUtil.create(request, LayoutAdminPortletKeys.LAYOUT_ADMIN, PortletRequest.ACTION_PHASE);
+
+					resetPrototypeURL.setParameter(ActionRequest.ACTION_NAME, "resetPrototype");
+					resetPrototypeURL.setParameter("redirect", PortalUtil.getLayoutURL(themeDisplay));
+					resetPrototypeURL.setParameter("groupId", String.valueOf(themeDisplay.getSiteGroupId()));
+
+					String taglibURL = "submitForm(document.hrefFm, '" + HtmlUtil.escapeJS(resetPrototypeURL.toString()) + "');";
 					%>
 
-					<c:choose>
-						<c:when test="<%= layout.isLayoutPrototypeLinkActive() && !group.hasStagingGroup() %>">
-							<liferay-ui:message key="this-page-is-linked-to-a-page-template" />
-						</c:when>
-						<c:when test="<%= SitesUtil.isUserGroupLayout(layout) %>">
-							<liferay-ui:message key="this-page-belongs-to-a-user-group" />
-						</c:when>
-						<c:otherwise>
-							<liferay-ui:message key="this-page-is-linked-to-a-site-template-which-does-not-allow-modifications-to-it" />
-						</c:otherwise>
-					</c:choose>
-				</span>
-			</div>
-		</c:if>
+					<span class="button-info">
+						<aui:button cssClass="btn-link" name="submit" onClick="<%= taglibURL %>" type="submit" value="reset-changes" />
+					</span>
+				</div>
+			</c:if>
+
+			<%
+			boolean linkedLayout = GetterUtil.getBoolean(request.getAttribute(InformationMessagesProductNavigationControlMenuEntry.INFORMATION_MESSAGES_LINKED_LAYOUT));
+			%>
+
+			<c:if test="<%= linkedLayout %>">
+				<div class="linked-layout">
+					<aui:icon image="information-live" markupView="lexicon" />
+
+					<span class="message-info">
+
+						<%
+						Group group = themeDisplay.getScopeGroup();
+						%>
+
+						<c:choose>
+							<c:when test="<%= layout.isLayoutPrototypeLinkActive() && !group.hasStagingGroup() %>">
+								<liferay-ui:message key="this-page-is-linked-to-a-page-template" />
+							</c:when>
+							<c:when test="<%= SitesUtil.isUserGroupLayout(layout) %>">
+								<liferay-ui:message key="this-page-belongs-to-a-user-group" />
+							</c:when>
+							<c:otherwise>
+								<liferay-ui:message key="this-page-is-linked-to-a-site-template-which-does-not-allow-modifications-to-it" />
+							</c:otherwise>
+						</c:choose>
+					</span>
+				</div>
+			</c:if>
+		</div>
 	</div>
-</div>
+</li>
 
 <aui:script position="auto" use="aui-popover,event-outside">
 	var trigger = A.one('#<%= portletNamespace %>infoButton');
@@ -152,7 +154,7 @@ data.put("qa-id", "info");
 			trigger: trigger,
 			visible: false,
 			width: 300,
-			zIndex: Liferay.zIndex.OVERLAY
+			zIndex: Liferay.zIndex.POPOVER
 		}
 	).render();
 </aui:script>

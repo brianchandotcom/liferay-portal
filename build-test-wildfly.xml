@@ -17,8 +17,6 @@
 			</then>
 		</if>
 
-		<antcall target="revert-test-properties" />
-
 		<antcall target="record-test-generated-properties" />
 
 		<antcall target="prepare-virtual-host-name-properties" />

@@ -56,8 +56,6 @@ plugins.includes=marketplace-portlet</echo>
 		<mkdir dir="${app.server.tcat.dir}/admin/temp" />
 		<mkdir dir="${app.server.tcat.dir}/agent/temp" />
 
-		<antcall target="revert-test-properties" />
-
 		<antcall target="record-test-generated-properties" />
 
 		<antcall inheritAll="false" target="run-tcat">

@@ -7854,18 +7854,6 @@ if (ppstate.equals("normal")) {
 		</replace>
 	</target>
 
-	<target name="revert-test-properties">
-		<execute>
-			<![CDATA[git checkout -- portal-impl/test/portal-test.properties]]>
-		</execute>
-
-		<delete failonerror="false" file="portal-impl/test/portal-test-ext.properties" />
-
-		<execute>
-			<![CDATA[git checkout -- portal-web/test/test-portal-web.properties]]>
-		</execute>
-	</target>
-
 	<target name="run-poshi-evaluate-console">
 		<if>
 			<isset property="test.base.dir.name" />

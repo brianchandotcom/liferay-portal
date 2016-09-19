@@ -19,8 +19,6 @@
 			</then>
 		</if>
 
-		<antcall target="revert-test-properties" />
-
 		<antcall target="record-test-generated-properties" />
 
 		<if>

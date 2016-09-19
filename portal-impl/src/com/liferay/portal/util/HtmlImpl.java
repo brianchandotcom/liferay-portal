@@ -488,13 +488,13 @@ public class HtmlImpl implements Html {
 				sb.append(text.substring(lastReplacementIndex, i));
 			}
 
-			sb.append(CharPool.UNDERLINE);
+			sb.append(StringPool.UNDERLINE);
 
 			if (c != CharPool.UNDERLINE) {
 				sb.append(StringUtil.toHexString(c));
 			}
 
-			sb.append(CharPool.UNDERLINE);
+			sb.append(StringPool.UNDERLINE);
 
 			lastReplacementIndex = i + 1;
 		}

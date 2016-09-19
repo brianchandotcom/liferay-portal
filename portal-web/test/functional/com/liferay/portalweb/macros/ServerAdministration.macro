@@ -5,7 +5,9 @@
 		<execute function="AssertClick" locator1="NavBar#ADD_CATEGORY" value1="Add Category" />
 
 		<execute function="Type" locator1="ServerAdministrationLogLevels#ADD_CATEGORY_NAME_FIELD" value1="${catagoryName}" />
+
 		<execute function="Select" locator1="ServerAdministrationLogLevels#ADD_CATEGORY_PRIORITY_SELECT" value1="${categoryPriority}" />
+
 		<execute macro="PortletEntry#save" />
 	</command>
 
@@ -57,6 +59,7 @@
 			<equals arg1="${enableXuggler}" arg2="true" />
 			<then>
 				<execute function="AssertTextEquals" locator1="Message#INFO" value1="Xuggler appears to be installed correctly. Enable to allow audio and video preview generation." />
+
 				<execute function="Check" locator1="ServerAdministrationExternalServices#XUGGLER_ENABLED_CHECKBOX"  />
 			</then>
 		</if>
@@ -66,8 +69,11 @@
 
 	<command name="configureFileUploadOverallMaximumFileSize">
 		<execute function="AssertClick" locator1="NavBar#FILE_UPLOADS" value1="File Uploads" />
+
 		<execute function="Type" locator1="ServerAdministrationFileUploads#GENERAL_OVERALL_MAX_FILE_SIZE_FIELD" value1="${maxFileSize}" />
+
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
@@ -104,6 +110,7 @@
 		</if>
 
 		<execute function="Type" locator1="ServerAdministrationMail#OUTGOING_PASSWORD" value1="${userPassword}" />
+
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
@@ -119,15 +126,19 @@
 		<var name="key_actionsDescription" value="${actionsDescription}" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="ServerAdministrationResources#ACTIONS_TABLE_DESCRIPTION" value1="${actionsDescription}" />
+
 		<execute function="AssertClick" locator1="ServerAdministrationResources#ACTIONS_TABLE_EXECUTE" value1="Execute" />
+
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="searchPortalPropertiesCP">
 		<execute function="AssertClick" locator1="NavTab#PROPERTIES" value1="Properties" />
+
 		<execute function="AssertClick" locator1="NavTab#PORTAL_PROPERTIES" value1="Portal Properties" />
 
 		<execute function="Type" locator1="ServerAdministrationProperties#PORTAL_PROPERTIES_SEARCH_FIELD" value1="${propertyName}" />
+
 		<execute function="AssertClick" locator1="ServerAdministrationProperties#PORTAL_PROPERTIES_SEARCH_BUTTON" value1="Search" />
 
 		<var name="key_propertyName" value="${propertyName}" />
@@ -138,10 +149,12 @@
 			<isset var="propertyOveridden" />
 			<then>
 				<execute function="MouseOver" locator1="ServerAdministrationResources#SOURCE" />
+
 				<execute function="AssertTextEquals" locator1="ServerAdministrationProperties#PORTAL_PROPERTIES_TABLE_SOURCE" value1="The value of this property was overridden using the Control Panel and is stored in the database." />
 			</then>
 			<else>
 				<execute function="MouseOver" locator1="ServerAdministrationResources#SOURCE" />
+
 				<execute function="AssertTextEquals" locator1="ServerAdministrationProperties#PORTAL_PROPERTIES_TABLE_SOURCE" value1="The value of this property is read from a portal.properties file or one of its extension files." />
 			</else>
 		</if>
@@ -153,7 +166,9 @@
 		</execute>
 
 		<execute function="AssertClick" locator1="NavBar#FILE_UPLOADS" value1="File Uploads" />
+
 		<execute function="Type" locator1="ServerAdministrationFileUploads#DOCS_AND_MEDIA_MAX_FILE_SIZE_FIELD" value1="" />
+
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 	</command>
 
@@ -174,6 +189,7 @@
 		<execute function="Uncheck" locator1="ServerAdministrationMail#OUTGOING_SECURE_CONNECTION_CHECKBOX" />
 		<execute function="Type" locator1="ServerAdministrationMail#OUTGOING_USER_NAME" value1="" />
 		<execute function="Type" locator1="ServerAdministrationMail#OUTGOING_PASSWORD" value1="" />
+
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />

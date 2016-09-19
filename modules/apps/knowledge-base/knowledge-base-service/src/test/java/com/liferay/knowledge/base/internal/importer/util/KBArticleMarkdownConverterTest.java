@@ -55,6 +55,23 @@ public class KBArticleMarkdownConverterTest {
 	}
 
 	@Test
+	public void testGetSourceURLAddsTheMissingSlashInTheBaseUrl()
+		throws Exception {
+
+		String markdown = "Title [](id=1234)\n=============";
+		String fileEntryName = "some/unix/file";
+		HashMap<String, String> metadata = new HashMap<String, String>() { {
+			put("base.source.url", "http://baseUrl");
+		}};
+
+		KBArticleMarkdownConverter converter = new KBArticleMarkdownConverter(
+			markdown, fileEntryName, metadata);
+
+		Assert.assertEquals(
+			"http://baseUrl/some/unix/file", converter.getSourceURL());
+	}
+
+	@Test
 	public void testGetSourceURLReplacesBackslashesWithForwardSlashes()
 		throws Exception {
 
@@ -69,6 +86,35 @@ public class KBArticleMarkdownConverterTest {
 
 		Assert.assertEquals(
 			"http://baseUrl/some/windows/file", converter.getSourceURL());
+	}
+
+	@Test
+	public void testGetSourceURLReturnsNullIfThereIsNoBaseUrl()
+		throws Exception {
+
+		String markdown = "Title [](id=1234)\n=============";
+		String fileEntryName = "some\\windows\\file";
+		HashMap<String, String> metadata = new HashMap<>();
+
+		KBArticleMarkdownConverter converter = new KBArticleMarkdownConverter(
+			markdown, fileEntryName, metadata);
+
+		Assert.assertNull(converter.getSourceURL());
+	}
+
+	@Test
+	public void testGetSourceURLUsesTheSlashInTheBaseUrl() throws Exception {
+		String markdown = "Title [](id=1234)\n=============";
+		String fileEntryName = "some/unix/file";
+		HashMap<String, String> metadata = new HashMap<String, String>() { {
+			put("base.source.url", "http://baseUrl/");
+		}};
+
+		KBArticleMarkdownConverter converter = new KBArticleMarkdownConverter(
+			markdown, fileEntryName, metadata);
+
+		Assert.assertEquals(
+			"http://baseUrl/some/unix/file", converter.getSourceURL());
 	}
 
 	@Mock

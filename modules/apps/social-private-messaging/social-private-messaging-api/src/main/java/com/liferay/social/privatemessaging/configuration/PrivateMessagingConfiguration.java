@@ -32,7 +32,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface PrivateMessagingConfiguration {
 
 	@Meta.AD(
-		deflt = "com/liferay/social/privatemessaging/dependencies/notification_message_subject.tmpl",
+		deflt = "com/liferay/social/privatemessaging/dependencies/notification_message_body.tmpl",
 		required = false
 	)
 	public String emailBody();

@@ -145,16 +145,21 @@ public class ReleaseManagerOSGiCommands {
 		}
 
 		StringBundler sb = new StringBundler(
-			(upgradedFailedBundleSymbolicNames.size() * 2) + 1);
+			(upgradedFailedBundleSymbolicNames.size() * 3) + 3);
 
-		sb.append("\nFollowing module upgrades have finished with errors:");
+		sb.append(
+			"\nThe following module upgrades have finished with errors:\n");
 
 		for (String upgradedFailedBundleSymbolicName :
 				upgradedFailedBundleSymbolicNames) {
 
-			sb.append("\n");
+			sb.append("\t");
 			sb.append(upgradedFailedBundleSymbolicName);
+			sb.append("\n");
 		}
+
+		sb.append("Use the command upgrade:list <module name> to get more ");
+		sb.append("details about the status of a specific upgrade");
 
 		System.out.println(sb.toString());
 	}

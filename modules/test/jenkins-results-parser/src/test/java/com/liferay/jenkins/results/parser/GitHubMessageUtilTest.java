@@ -240,9 +240,9 @@ public class GitHubMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 		new GitHubJobMessageUtilTest();
 
 	private static final Pattern _jobNamePattern = Pattern.compile(
-		".+://(?<hostName>[^.]+).liferay.com/job/(?<jobName>[^/]+).*/" +
+		".+://(?<hostName>[^.]+)[^/]*/job/(?<jobName>[^/]+).*/" +
 			"(?<buildNumber>\\d+)/");
 	private static final Pattern _progressiveTextPattern = Pattern.compile(
-		"\\'.*\\' completed at (?<url>.+)\\.");
+		"\\'.*\\' started at (?<url>.+)\\.");
 
 }

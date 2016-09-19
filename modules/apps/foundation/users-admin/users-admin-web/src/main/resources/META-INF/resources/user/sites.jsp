@@ -152,19 +152,21 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites"
 						uri: '<%= groupSelectorURL.toString() %>'
 					},
 					function(event) {
+						var entityId = event.entityid;
+
 						var rowColumns = [];
 
 						rowColumns.push(event.entityname);
 						rowColumns.push('');
-						rowColumns.push('<a class="modify-link" data-rowId="' + event.entityid + '" href="javascript:;"><%= UnicodeFormatter.toString(removeGroupIcon) %></a>');
+						rowColumns.push('<a class="modify-link" data-rowId="' + entityId + '" href="javascript:;"><%= UnicodeFormatter.toString(removeGroupIcon) %></a>');
 
-						searchContainer.addRow(rowColumns, event.entityid);
+						searchContainer.addRow(rowColumns, entityId);
 
 						searchContainer.updateDataStore();
 
-						addGroupIds.push(event.entityid);
+						addGroupIds.push(entityId);
 
-						AArray.removeItem(deleteGroupIds, event.entityid);
+						AArray.removeItem(deleteGroupIds, entityId);
 
 						document.<portlet:namespace />fm.<portlet:namespace />addGroupIds.value = addGroupIds.join(',');
 						document.<portlet:namespace />fm.<portlet:namespace />deleteGroupIds.value = deleteGroupIds.join(',');

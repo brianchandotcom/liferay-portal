@@ -108,7 +108,7 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 			function(event) {
 				var searchContainerName = '<portlet:namespace/>rolesSearchContainer';
 
-				searchContainer = Liferay.SearchContainer.get(searchContainerName);
+				var searchContainer = Liferay.SearchContainer.get(searchContainerName);
 
 				var searchContainerData = searchContainer.getData();
 
@@ -341,7 +341,7 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 			function(event) {
 				var searchContainerName = '<portlet:namespace/>organizationRolesSearchContainer';
 
-				searchContainer = Liferay.SearchContainer.get(searchContainerName);
+				var searchContainer = Liferay.SearchContainer.get(searchContainerName);
 
 				var searchContainerData = searchContainer.getData();
 

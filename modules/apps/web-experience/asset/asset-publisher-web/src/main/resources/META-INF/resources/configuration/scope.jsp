@@ -197,7 +197,7 @@ List<Group> selectedGroups = GroupLocalServiceUtil.getGroups(assetPublisherDispl
 
 			var searchContainerName = '<portlet:namespace/>groupsSearchContainer';
 
-			searchContainer = Liferay.SearchContainer.get(searchContainerName);
+			var searchContainer = Liferay.SearchContainer.get(searchContainerName);
 
 			var searchContainerData = searchContainer.getData();
 

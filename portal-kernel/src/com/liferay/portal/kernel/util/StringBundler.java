@@ -263,7 +263,7 @@ public class StringBundler implements Serializable {
 				usb.ensureCapacity(length);
 			}
 
-			usb.setLength(0);
+			usb.reset();
 		}
 		else {
 			usb = new UnsafeStringBuilder(length);
@@ -337,8 +337,8 @@ public class StringBundler implements Serializable {
 			}
 		}
 
-		public void setLength(int newLength) {
-			_count = newLength;
+		public void reset() {
+			_count = 0;
 		}
 
 		@Override

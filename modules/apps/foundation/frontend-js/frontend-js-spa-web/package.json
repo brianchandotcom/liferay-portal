@@ -1,4 +1,8 @@
 {
+	"devDependencies": {
+		"liferay-module-config-generator": "^1.1.10",
+		"metal-cli": "^2.0.2"
+	},
 	"name": "frontend-js-spa-web",
 	"version": "1.0.11"
 }

@@ -1,7 +1,5 @@
 import com.liferay.gradle.util.copy.StripPathSegmentsAction
 
-apply plugin: "com.liferay.cache"
-
 configurations {
 	senna
 }
@@ -20,22 +18,6 @@ buildSenna {
 	include "META-INF/resources/webjars/senna.js/${sennaVersion}/build/amd/"
 	includeEmptyDirs = false
 	into "classes/META-INF/resources"
-}
-
-cache {
-	task(classes) {
-		baseDir = "classes/META-INF"
-		exclude "**/*.jsp"
-		cacheDir = ".task-cache"
-
-		skipTaskDependency configJSModules
-		skipTaskDependency replaceSoyTranslation
-		skipTaskDependency transpileJS
-
-		testFile "build.gradle"
-		testFile "package.json"
-		testFile fileTree(dir: "src/main/resources/META-INF/resources", exclude: "**/*.jsp")
-	}
 }
 
 configJSModules {

@@ -53,7 +53,7 @@
 					<label for="{$name}">
 				{/if}
 
-						<input {if $readOnly}disabled{/if} id="{$name}" name="{$name}" type="checkbox" {$status} value="true" />{if $showLabel} {$label or ''}{/if}
+				<input {if $readOnly}disabled{/if} id="{$name}" name="{$name}" type="checkbox" {$status} value="true" />{if $showLabel} {$label}{/if}
 
 				{if $showLabel}
 						{if $required}

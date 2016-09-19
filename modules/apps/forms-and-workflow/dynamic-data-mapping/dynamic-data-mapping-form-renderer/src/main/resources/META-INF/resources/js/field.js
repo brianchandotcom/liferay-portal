@@ -21,11 +21,6 @@ AUI.add(
 						valueFn: '_valueContainer'
 					},
 
-					context: {
-						setter: '_setContext',
-						value: {}
-					},
-
 					dataType: {
 						getter: '_getDataType',
 						value: 'string'
@@ -390,12 +385,6 @@ AUI.add(
 						}
 
 						return dataType;
-					},
-
-					_setContext: function(val) {
-						var instance = this;
-
-						return A.merge(instance.get('context'), val);
 					},
 
 					_setParent: function(val) {

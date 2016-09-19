@@ -161,21 +161,21 @@ String helpMessage2 = "<em>" + LanguageUtil.format(request, "content-with-tag-x"
 		var displayStyle = selectDisplayStyle.val();
 
 		if (displayStyle == 'full-content') {
-			showParent('.show-asset-title', '.checkbox');
-			showParent('.show-context-link', '.checkbox');
-			showParent('.show-extra-info', '.checkbox');
+			showParent('.show-asset-title');
+			showParent('.show-context-link');
+			showParent('.show-extra-info');
 		}
 		else {
 			if (displayStyle == 'abstracts') {
-				showParent('.abstract-length', '.form-group');
+				showParent('.abstract-length');
 			}
 
-			showParent('.asset-link-behavior', '.form-group');
+			showParent('.asset-link-behavior');
 		}
 	}
 
 	function showParent(child, parent) {
-		$(child).parentsUntil('.general-display-settings', parent).removeClass('hide');
+		$(child).parentsUntil('.general-display-settings', '.form-group').removeClass('hide');
 	}
 
 	showHiddenFields();

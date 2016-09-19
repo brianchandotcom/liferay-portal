@@ -324,11 +324,11 @@ public class StringBundler implements Serializable {
 	private static class UnsafeStringBuilder {
 
 		public void append(String s) {
-			int len = s.length();
+			int length = s.length();
 
-			s.getChars(0, len, _value, _count);
+			s.getChars(0, length, _value, _count);
 
-			_count += len;
+			_count += length;
 		}
 
 		public void ensureCapacity(int newLength) {
@@ -346,8 +346,8 @@ public class StringBundler implements Serializable {
 			return new String(_value, 0, _count);
 		}
 
-		private UnsafeStringBuilder(int initialCapacity) {
-			_value = new char[initialCapacity];
+		private UnsafeStringBuilder(int length) {
+			_value = new char[length];
 		}
 
 		private int _count;

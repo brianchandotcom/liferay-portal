@@ -9,5 +9,5 @@ Export-Package:\
 	com.liferay.dynamic.data.lists.workflow
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Dynamic Data Lists
-Liferay-Require-SchemaVersion: 1.0.0
+Liferay-Require-SchemaVersion: 1.0.1
 Liferay-Service: true

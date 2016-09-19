@@ -29,10 +29,14 @@ AUI.add(
 
 						return new A.Promise(
 							function(resolve, reject) {
-								var cachedContext = CACHE[type];
+								var resolveJSON = function(json) {
+									resolve(JSON.parse(json));
+								};
 
-								if (cachedContext) {
-									resolve(A.merge(JSON.parse(cachedContext), {}));
+								var cachedContextJSON = CACHE[type];
+
+								if (cachedContextJSON) {
+									resolveJSON(cachedContextJSON);
 								}
 								else {
 									var payload = {
@@ -52,11 +56,11 @@ AUI.add(
 													reject(error);
 												},
 												success: function(event, status, xhr) {
-													var context = xhr.responseText;
+													var contextJSON = xhr.responseText;
 
-													CACHE[type] = context;
+													CACHE[type] = contextJSON;
 
-													resolve(JSON.parse(context));
+													resolveJSON(contextJSON);
 												}
 											}
 										}

@@ -67,7 +67,7 @@ public class UpgradeOracle extends UpgradeProcess {
 						ReleaseInfo.RELEASE_6_0_0_BUILD_NUMBER) ||
 					isBetweenBuildNumbers(
 						buildNumber, ReleaseInfo.RELEASE_6_0_5_BUILD_NUMBER,
-						ReleaseInfo.RELEASE_6_1_20_BUILD_NUMBER)) {
+						ReleaseInfo.RELEASE_6_2_0_BUILD_NUMBER)) {
 
 					// LPS-33903
 

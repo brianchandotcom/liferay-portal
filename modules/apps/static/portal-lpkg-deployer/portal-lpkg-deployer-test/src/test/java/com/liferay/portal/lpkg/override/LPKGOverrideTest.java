@@ -142,6 +142,9 @@ public class LPKGOverrideTest {
 
 					String fileNameString = fileName.toString();
 
+					fileNameString = fileNameString.replace(
+						"-dxp", StringPool.BLANK);
+
 					overrides.put(
 						"war.".concat(
 							fileNameString.substring(

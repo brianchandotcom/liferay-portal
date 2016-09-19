@@ -27,6 +27,7 @@ import java.io.Writer;
  *
  * @author Shuyang Zhou
  * @author Brian Wing Shun Chan
+ * @author Preston Crary
  */
 public class StringBundler implements Serializable {
 
@@ -248,31 +249,31 @@ public class StringBundler implements Serializable {
 			length += _array[i].length();
 		}
 
-		StringBuilder sb = null;
+		UnsafeStringBuilder usb = null;
 
 		if (length > _THREAD_LOCAL_BUFFER_LIMIT) {
-			sb = _stringBuilderThreadLocal.get();
+			usb = _unsafeStringBuilderThreadLocal.get();
 
-			if (sb == null) {
-				sb = new StringBuilder(length);
+			if (usb == null) {
+				usb = new UnsafeStringBuilder(length);
 
-				_stringBuilderThreadLocal.set(sb);
+				_unsafeStringBuilderThreadLocal.set(usb);
 			}
-			else if (sb.capacity() < length) {
-				sb.setLength(length);
+			else {
+				usb.ensureCapacity(length);
 			}
 
-			sb.setLength(0);
+			usb.reset();
 		}
 		else {
-			sb = new StringBuilder(length);
+			usb = new UnsafeStringBuilder(length);
 		}
 
 		for (int i = 0; i < _arrayIndex; i++) {
-			sb.append(_array[i]);
+			usb.append(_array[i]);
 		}
 
-		return sb.toString();
+		return usb.toString();
 	}
 
 	public void writeTo(Writer writer) throws IOException {
@@ -293,7 +294,8 @@ public class StringBundler implements Serializable {
 
 	private static final int _THREAD_LOCAL_BUFFER_LIMIT;
 
-	private static final ThreadLocal<StringBuilder> _stringBuilderThreadLocal;
+	private static final ThreadLocal<UnsafeStringBuilder>
+		_unsafeStringBuilderThreadLocal;
 	private static final long serialVersionUID = 1L;
 
 	static {
@@ -307,16 +309,50 @@ public class StringBundler implements Serializable {
 
 			_THREAD_LOCAL_BUFFER_LIMIT = threadLocalBufferLimit;
 
-			_stringBuilderThreadLocal = new SoftReferenceThreadLocal<>();
+			_unsafeStringBuilderThreadLocal = new SoftReferenceThreadLocal<>();
 		}
 		else {
 			_THREAD_LOCAL_BUFFER_LIMIT = Integer.MAX_VALUE;
 
-			_stringBuilderThreadLocal = null;
+			_unsafeStringBuilderThreadLocal = null;
 		}
 	}
 
 	private String[] _array;
 	private int _arrayIndex;
+
+	private static class UnsafeStringBuilder {
+
+		public void append(String s) {
+			int length = s.length();
+
+			s.getChars(0, length, _value, _count);
+
+			_count += length;
+		}
+
+		public void ensureCapacity(int newLength) {
+			if (_value.length < newLength) {
+				_value = new char[newLength];
+			}
+		}
+
+		public void reset() {
+			_count = 0;
+		}
+
+		@Override
+		public String toString() {
+			return new String(_value, 0, _count);
+		}
+
+		private UnsafeStringBuilder(int length) {
+			_value = new char[length];
+		}
+
+		private int _count;
+		private char[] _value;
+
+	}
 
 }

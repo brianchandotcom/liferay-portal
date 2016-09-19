@@ -14,10 +14,12 @@
 
 package com.liferay.portal.osgi.web.servlet.jsp.compiler;
 
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.osgi.web.servlet.jsp.compiler.internal.JspBundleClassloader;
 import com.liferay.portal.osgi.web.servlet.jsp.compiler.internal.JspServletContext;
 import com.liferay.portal.osgi.web.servlet.jsp.compiler.internal.JspTagHandlerPool;
@@ -646,8 +648,8 @@ public class JspServlet extends HttpServlet {
 				if (parentPath != null) {
 					String parentPathString = parentPath.toString();
 
-					parentPathString = parentPathString.replaceAll(
-						StringPool.UNDERLINE, "_005f");
+					parentPathString = StringUtil.replace(
+						parentPathString, CharPool.UNDERLINE, "_005f");
 
 					dirName += parentPathString + "/";
 				}
@@ -656,7 +658,8 @@ public class JspServlet extends HttpServlet {
 
 				String fileName = fileNamePath.toString();
 
-				fileName = fileName.replaceAll(StringPool.UNDERLINE, "_005f");
+				fileName = StringUtil.replace(
+					fileName, CharPool.UNDERLINE, "_005f");
 
 				fileName = fileName.substring(0, fileName.length() - 4);
 

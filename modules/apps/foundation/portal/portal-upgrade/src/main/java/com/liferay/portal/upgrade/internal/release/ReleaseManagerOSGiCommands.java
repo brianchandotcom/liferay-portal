@@ -138,8 +138,8 @@ public class ReleaseManagerOSGiCommands {
 
 		doExecuteAll(upgradedFailedBundleSymbolicNames);
 
-		if (upgradedFailedBundleSymbolicNames.size() == 0) {
-			System.out.println("All modules have been upgraded successfully");
+		if (upgradedFailedBundleSymbolicNames.isEmpty()) {
+			System.out.println("All modules have been successfully upgraded!");
 
 			return;
 		}
@@ -253,7 +253,7 @@ public class ReleaseManagerOSGiCommands {
 		upgradableBundleSymbolicNames.removeAll(
 			upgradedFailedBundleSymbolicNames);
 
-		if (upgradableBundleSymbolicNames.size() == 0) {
+		if (upgradableBundleSymbolicNames.isEmpty()) {
 			return;
 		}
 

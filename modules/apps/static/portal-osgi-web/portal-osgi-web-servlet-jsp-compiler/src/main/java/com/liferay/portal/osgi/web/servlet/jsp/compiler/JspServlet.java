@@ -644,7 +644,12 @@ public class JspServlet extends HttpServlet {
 				Path parentPath = path.getParent();
 
 				if (parentPath != null) {
-					dirName += parentPath.toString() + "/";
+					String parentPathString = parentPath.toString();
+
+					parentPathString = parentPathString.replaceAll(
+						StringPool.UNDERLINE, "_005f");
+
+					dirName += parentPathString + "/";
 				}
 
 				Path fileNamePath = path.getFileName();

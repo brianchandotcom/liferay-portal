@@ -184,12 +184,14 @@ for (long defaultTeamId : defaultTeamIds) {
 						uri: uri
 					},
 					function(event) {
+						var entityId = event.entityid;
+
 						var rowColumns = [
 							A.Escape.html(event.entityname),
-							'<a class="modify-link" data-rowId="' + event.entityid + '" href="javascript:;"><%= UnicodeFormatter.toString(removeRoleIcon) %></a>'
+							'<a class="modify-link" data-rowId="' + entityId + '" href="javascript:;"><%= UnicodeFormatter.toString(removeRoleIcon) %></a>'
 						];
 
-						searchContainer.addRow(rowColumns, event.entityid);
+						searchContainer.addRow(rowColumns, entityId);
 
 						searchContainer.updateDataStore();
 					}

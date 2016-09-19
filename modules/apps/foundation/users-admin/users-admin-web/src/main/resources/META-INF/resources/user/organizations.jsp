@@ -197,20 +197,22 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "organi
 							uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_organization.jsp" /><portlet:param name="p_u_i_d" value='<%= selUser == null ? "0" : String.valueOf(selUser.getUserId()) %>' /></portlet:renderURL>'
 						},
 						function(event) {
+							var entityId = event.entityid;
+
 							var rowColumns = [];
 
 							rowColumns.push(event.entityname);
 							rowColumns.push(event.type);
 							rowColumns.push('');
-							rowColumns.push('<a class="modify-link" data-rowId="' + event.entityid + '" href="javascript:;"><%= UnicodeFormatter.toString(removeOrganizationIcon) %></a>');
+							rowColumns.push('<a class="modify-link" data-rowId="' + entityId + '" href="javascript:;"><%= UnicodeFormatter.toString(removeOrganizationIcon) %></a>');
 
-							searchContainer.addRow(rowColumns, event.entityid);
+							searchContainer.addRow(rowColumns, entityId);
 
 							searchContainer.updateDataStore();
 
-							AArray.removeItem(deleteOrganizationIds, event.entityid);
+							AArray.removeItem(deleteOrganizationIds, entityId);
 
-							addOrganizationIds.push(event.entityid);
+							addOrganizationIds.push(entityId);
 
 							document.<portlet:namespace />fm.<portlet:namespace />addOrganizationIds.value = addOrganizationIds.join(',');
 							document.<portlet:namespace />fm.<portlet:namespace />deleteOrganizationIds.value = deleteOrganizationIds.join(',');

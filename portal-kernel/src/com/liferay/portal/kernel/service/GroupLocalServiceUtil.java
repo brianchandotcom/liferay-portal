@@ -100,6 +100,10 @@ public class GroupLocalServiceUtil {
 		return getService().hasUserGroups(userId);
 	}
 
+	public static boolean isActive(com.liferay.portal.kernel.model.Group group) {
+		return getService().isActive(group);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}

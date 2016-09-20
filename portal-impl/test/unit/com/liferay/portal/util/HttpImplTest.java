@@ -256,7 +256,7 @@ public class HttpImplTest extends PowerMockito {
 			Assert.fail();
 		}
 		catch (IllegalArgumentException iae) {
-			Assert.assertEquals("Unable to handle uri :;x=y", iae.getMessage());
+			Assert.assertEquals("Unable to handle URI: ;x=y", iae.getMessage());
 		}
 	}
 

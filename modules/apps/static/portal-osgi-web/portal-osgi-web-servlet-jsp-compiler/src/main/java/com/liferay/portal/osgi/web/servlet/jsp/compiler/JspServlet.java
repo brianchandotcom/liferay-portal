@@ -647,13 +647,11 @@ public class JspServlet extends HttpServlet {
 
 				path = StringUtil.replace(path, CharPool.UNDERLINE, "_005f");
 
-				StringBundler sb = new StringBundler(3);
+				String jspClassPath = "/org/apache/jsp/".concat(path);
 
-				sb.append("/org/apache/jsp/");
-				sb.append(path);
-				sb.append("_jsp.class");
+				jspClassPath = jspClassPath.concat("_jsp.class");
 
-				paths.add(Paths.get(scratchDirName, sb.toString()));
+				paths.add(Paths.get(scratchDirName, jspClassPath));
 			}
 
 			_deleteOutdatedJspFiles(scratchDirName, paths);

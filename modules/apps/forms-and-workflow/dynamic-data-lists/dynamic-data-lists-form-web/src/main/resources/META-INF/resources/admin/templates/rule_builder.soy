@@ -9,7 +9,7 @@
 	<div class="form-builder-rule-builder-container">
 		<div class="form-builder-rule-builder-rules-list"></div>
 		<div class="form-builder-rule-builder-add-rule-container">
-			<div class="btn-action-secondary btn-bottom-right dropdown form-builder-rule-builder-add-rule-button">
+			<div class="btn-action-secondary btn-bottom-right form-builder-rule-builder-add-rule-button dropdown">
 				<button class="btn btn-primary form-builder-rule-builder-add-rule-button-icon" type="button">
 					{$plusIcon|noAutoescape}
 				</button>
@@ -53,17 +53,4 @@
 		{ifempty}
 			{$strings.emptyListText}
 	{/foreach}
-{/template}
-
-/**
- * Prints the list of rule types on the Popover.
- *
- * @param strings
- */
-{template .rule_types autoescape="deprecated-contextual"}
-	<ul class="dropdown-menu">
-		<li>
-			<a data-rule-type="visibility" href="javascript:;">{$strings.showHide}</a>
-		</li>
-	</ul>
 {/template}

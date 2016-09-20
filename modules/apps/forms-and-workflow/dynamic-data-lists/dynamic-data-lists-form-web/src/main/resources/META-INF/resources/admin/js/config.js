@@ -132,7 +132,7 @@
 						},
 						'liferay-ddl-form-builder-rule-builder': {
 							path: 'form_builder_rule_builder.js',
-							requires: ['aui-popover', 'liferay-ddl-form-builder-rule-builder-template']
+							requires: ['liferay-ddl-form-builder-rule-builder-template']
 						},
 						'liferay-ddl-form-builder-rule-builder-template': {
 							path: '../templates/rule_builder.soy.js',

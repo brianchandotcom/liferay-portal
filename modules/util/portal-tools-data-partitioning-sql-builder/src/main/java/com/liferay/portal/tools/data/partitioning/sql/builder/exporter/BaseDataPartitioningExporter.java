@@ -88,11 +88,6 @@ public abstract class BaseDataPartitioningExporter
 	}
 
 	@Override
-	public SQLBuilder getSQLBuilder() {
-		return new InsertSQLBuilder();
-	}
-
-	@Override
 	public void write(
 		long companyId, String tableName, OutputStream outputStream) {
 

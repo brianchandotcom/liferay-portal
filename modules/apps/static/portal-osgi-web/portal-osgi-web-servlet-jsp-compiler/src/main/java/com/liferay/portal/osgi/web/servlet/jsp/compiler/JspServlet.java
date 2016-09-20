@@ -612,7 +612,8 @@ public class JspServlet extends HttpServlet {
 				return null;
 			}
 
-			String[] fragmentHostParts = fragmentHost.split(";");
+			String[] fragmentHostParts = StringUtil.split(
+				fragmentHost, CharPool.SEMICOLON);
 
 			fragmentHost = fragmentHostParts[0];
 

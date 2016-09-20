@@ -57,6 +57,23 @@ request.setAttribute("view.jsp-categoryId", categoryId);
 request.setAttribute("view.jsp-portletURL", portletURL);
 request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 
+String orderByCol = ParamUtil.getString(request, "orderByCol", "modified-date");
+
+boolean orderByAsc = false;
+
+String orderByType = ParamUtil.getString(request, "orderByType", "desc");
+
+if (orderByType.equals("asc")) {
+	orderByAsc = true;
+}
+
+OrderByComparator orderByComparator = null;
+
+if (orderByCol.equals("modified-date")) {
+	orderByComparator = new MBCategoryThreadModifiedDateComparator(orderByAsc);
+
+}
+
 MBListDisplayContext mbListDisplayContext = mbDisplayContextProvider.getMbListDisplayContext(request, response, categoryId);
 %>
 
@@ -85,6 +102,9 @@ MBListDisplayContext mbListDisplayContext = mbDisplayContextProvider.getMbListDi
 		SearchContainer entriesSearchContainer = new SearchContainer(renderRequest, null, null, "cur1", 0, SearchContainer.DEFAULT_DELTA, portletURL, null, "there-are-no-threads-nor-categories");
 
 		entriesSearchContainer.setId("mbEntries");
+		entriesSearchContainer.setOrderByCol(orderByCol);
+		entriesSearchContainer.setOrderByComparator(orderByComparator);
+		entriesSearchContainer.setOrderByType(orderByType);
 
 		mbListDisplayContext.populateResultsAndTotal(entriesSearchContainer);
 		%>

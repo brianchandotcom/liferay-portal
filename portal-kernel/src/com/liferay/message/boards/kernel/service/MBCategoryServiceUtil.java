@@ -240,6 +240,14 @@ public class MBCategoryServiceUtil {
 			end);
 	}
 
+	public static java.util.List<java.lang.Object> getCategoriesAndThreads(
+		long groupId, long categoryId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<?> obc) {
+		return getService()
+				   .getCategoriesAndThreads(groupId, categoryId, status, start,
+			end, obc);
+	}
+
 	public static java.util.List<java.lang.Long> getSubcategoryIds(
 		java.util.List<java.lang.Long> categoryIds, long groupId,
 		long categoryId) {

@@ -853,6 +853,9 @@ public class HtmlImpl implements Html {
 
 		if (index == (buffer.length - 1)) {
 			sb.append(CharPool.NUMBER_0);
+			sb.append(buffer[index]);
+
+			return;
 		}
 
 		sb.append(buffer, index, buffer.length - index);

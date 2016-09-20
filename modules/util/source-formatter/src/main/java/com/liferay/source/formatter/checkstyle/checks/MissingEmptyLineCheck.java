@@ -27,6 +27,9 @@ import java.util.List;
  */
 public class MissingEmptyLineCheck extends AbstractCheck {
 
+	public static final String MSG_MISSING_EMPTY_LINE_AFTER_VARIABLE_REFERENCE =
+		"empty.line.missing.after.variable.reference";
+
 	public static final String MSG_MISSING_EMPTY_LINE_BEFORE_VARIABLE_USE =
 		"empty.line.missing.before.variable.use";
 
@@ -60,8 +63,70 @@ public class MissingEmptyLineCheck extends AbstractCheck {
 			return;
 		}
 
+		_checkMissingEmptyLineAfterReferencingVariable(
+			parentAST, nameAST.getText(), DetailASTUtil.getEndLine(detailAST));
 		_checkMissingEmptyLineBetweenAssigningAndUsingVariable(
 			parentAST, nameAST.getText(), DetailASTUtil.getEndLine(detailAST));
+	}
+
+	private void _checkMissingEmptyLineAfterReferencingVariable(
+		DetailAST detailAST, String name, int endLine) {
+
+		boolean isReferenced = false;
+
+		DetailAST nextSibling = detailAST.getNextSibling();
+
+		while (true) {
+			if ((nextSibling == null) ||
+				(nextSibling.getType() != TokenTypes.SEMI)) {
+
+				return;
+			}
+
+			nextSibling = nextSibling.getNextSibling();
+
+			if ((nextSibling == null) ||
+				((nextSibling.getType() != TokenTypes.EXPR) &&
+				 (nextSibling.getType() != TokenTypes.VARIABLE_DEF))) {
+
+				return;
+			}
+
+			boolean expressionReferencesVariable = false;
+
+			List<DetailAST> identASTList = DetailASTUtil.getAllChildTokens(
+				nextSibling, TokenTypes.IDENT, true);
+
+			for (DetailAST identAST : identASTList) {
+				String identName = identAST.getText();
+
+				if (identName.equals(name)) {
+					expressionReferencesVariable = true;
+				}
+			}
+
+			if (!expressionReferencesVariable) {
+				if (isReferenced) {
+					int startLineNextExpression = DetailASTUtil.getStartLine(
+						nextSibling);
+
+					if ((endLine + 1) == startLineNextExpression) {
+						log(
+							startLineNextExpression,
+							MSG_MISSING_EMPTY_LINE_AFTER_VARIABLE_REFERENCE,
+							startLineNextExpression, name);
+					}
+				}
+
+				return;
+			}
+
+			isReferenced = true;
+
+			endLine = DetailASTUtil.getEndLine(nextSibling);
+
+			nextSibling = nextSibling.getNextSibling();
+		}
 	}
 
 	private void _checkMissingEmptyLineBetweenAssigningAndUsingVariable(

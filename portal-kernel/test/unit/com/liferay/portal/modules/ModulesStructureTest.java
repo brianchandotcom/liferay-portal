@@ -426,7 +426,7 @@ public class ModulesStructureTest {
 			_getGitRepoBuildGradle(dirPath, buildGradleTemplate), buildGradle);
 
 		if (!gradlePropertiesExists) {
-			Assert.fail("Missing " + gradlePropertiesExists);
+			Assert.fail("Missing " + gradlePropertiesPath);
 		}
 
 		String gradleProperties = _read(gradlePropertiesPath);

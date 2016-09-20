@@ -6,13 +6,13 @@
  *  @param toolbarButtonIcon
  */
 {template .field_settings_toolbar autoescape="deprecated-contextual"}
-    <div class="dropdown open">
-        <a class="dropdown-toggle icon-monospaced" data-toggle="dropdown" href="javascript:;">{$toolbarButtonIcon|noAutoescape}</a>
+	<div class="dropdown open">
+		<a class="dropdown-toggle icon-monospaced" data-toggle="dropdown" href="javascript:;">{$toolbarButtonIcon|noAutoescape}</a>
 
-        {call ddl.field_settings_toolbar_list}
-            {param options: $toolbarTemplateContext.options /}
-        {/call}
-    </div>
+		{call ddl.field_settings_toolbar_list}
+			{param options: $toolbarTemplateContext.options /}
+		{/call}
+	</div>
 {/template}
 
 /**
@@ -20,13 +20,13 @@
  *  @param options
  */
 {template .field_settings_toolbar_list autoescape="deprecated-contextual"}
-    <ul class="dropdown-menu dropdown-menu-right">
-        {foreach $option in $options}
-            {call ddl.field_settings_toolbar_item}
-                {param option: $option /}
-            {/call}
-        {/foreach}
-    </ul>
+	<ul class="dropdown-menu dropdown-menu-right">
+		{foreach $option in $options}
+			{call ddl.field_settings_toolbar_item}
+				{param option: $option /}
+			{/call}
+		{/foreach}
+	</ul>
 {/template}
 
 /**
@@ -34,7 +34,7 @@
  *  @param option
  */
 {template .field_settings_toolbar_item autoescape="deprecated-contextual"}
-    <li>
-        <a class="{$option.buttonClass or ''}" data-handler="{$option.handler}" href="javascript:;" title="{$option.label}">{$option.label}</a>
-    </li>
+	<li>
+		<a class="{$option.buttonClass or ''}" data-handler="{$option.handler}" href="javascript:;" title="{$option.label}">{$option.label}</a>
+	</li>
 {/template}

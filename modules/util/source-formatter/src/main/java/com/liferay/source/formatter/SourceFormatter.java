@@ -194,8 +194,10 @@ public class SourceFormatter {
 		sourceProcessors.add(new JSONSourceProcessor());
 		sourceProcessors.add(new JSPSourceProcessor());
 		sourceProcessors.add(new JSSourceProcessor());
+		sourceProcessors.add(new MarkdownSourceProcessor());
 		sourceProcessors.add(new PropertiesSourceProcessor());
 		sourceProcessors.add(new SHSourceProcessor());
+		sourceProcessors.add(new SoySourceProcessor());
 		sourceProcessors.add(new SQLSourceProcessor());
 		sourceProcessors.add(new TLDSourceProcessor());
 		sourceProcessors.add(new XMLSourceProcessor());

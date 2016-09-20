@@ -1049,7 +1049,7 @@ Error-Prone was automatically installed. Please rerun your task.
 
 			<if>
 				<and>
-					<equals arg1="${basedir}" arg2="${project.dir}/portal-impl" />
+					<equals arg1="${basedir.unix}" arg2="${project.dir}/portal-impl" />
 					<equals arg1="@{test.type}" arg2="integration" />
 				</and>
 				<then>
@@ -1059,7 +1059,7 @@ Error-Prone was automatically installed. Please rerun your task.
 
 			<if>
 				<and>
-					<equals arg1="${basedir}" arg2="${project.dir}/portal-impl" />
+					<equals arg1="${basedir.unix}" arg2="${project.dir}/portal-impl" />
 					<equals arg1="@{test.type}" arg2="unit" />
 				</and>
 				<then>
@@ -1069,7 +1069,7 @@ Error-Prone was automatically installed. Please rerun your task.
 
 			<if>
 				<and>
-					<equals arg1="${basedir}" arg2="${project.dir}/portal-kernel" />
+					<equals arg1="${basedir.unix}" arg2="${project.dir}/portal-kernel" />
 					<equals arg1="@{test.type}" arg2="unit" />
 				</and>
 				<then>
@@ -1079,7 +1079,7 @@ Error-Prone was automatically installed. Please rerun your task.
 
 			<if>
 				<and>
-					<equals arg1="${basedir}" arg2="${project.dir}/util-java" />
+					<equals arg1="${basedir.unix}" arg2="${project.dir}/util-java" />
 					<equals arg1="@{test.type}" arg2="unit" />
 				</and>
 				<then>

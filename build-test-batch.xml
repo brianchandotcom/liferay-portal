@@ -435,13 +435,17 @@ app.server.type=@{app.server.type}]]></echo>
 /*/*/javadoc
 /*/*/lib
 /*/*/tmp
+/*/*/*/build/node
 /*/*/*/ivy.xml.MD5
 /*/*/*/javadoc
 /*/*/*/lib
+/*/*/*/node_modules
 /*/*/*/tmp
+/*/*/*/*/build/node
 /*/*/*/*/ivy.xml.MD5
 /*/*/*/*/javadoc
 /*/*/*/*/lib
+/*/*/*/*/node_modules
 /*/*/*/*/tmp</echo>
 
 			<delete>

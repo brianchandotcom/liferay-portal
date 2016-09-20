@@ -55,7 +55,7 @@ public class NodeExecutor {
 	}
 
 	public void execute() throws Exception {
-		ProcessBuilder processBuilder = new ProcessBuilder(getCommandLine());
+		ProcessBuilder processBuilder = new ProcessBuilder(_getCommandLine());
 
 		File workingDir = getWorkingDir();
 
@@ -63,7 +63,7 @@ public class NodeExecutor {
 
 		processBuilder.inheritIO();
 
-		updateEnvironment(processBuilder.environment());
+		_updateEnvironment(processBuilder.environment());
 
 		if (_logger.isInfoEnabled()) {
 			_logger.info(
@@ -130,25 +130,25 @@ public class NodeExecutor {
 		_workingDir = workingDir;
 	}
 
-	protected List<String> getCommandLine() {
+	private List<String> _getCommandLine() {
 		List<String> commandLine = new ArrayList<>();
 
 		if (OSDetector.isWindows()) {
 			commandLine.add("cmd");
-			commandLine.addAll(getWindowsArgs());
+			commandLine.addAll(_getWindowsArgs());
 		}
 		else {
-			commandLine.add(getExecutable());
+			commandLine.add(_getExecutable());
 			commandLine.addAll(getArgs());
 		}
 
 		return commandLine;
 	}
 
-	protected String getExecutable() {
+	private String _getExecutable() {
 		String executable = GradleUtil.toString(_command);
 
-		File executableDir = getExecutableDir();
+		File executableDir = _getExecutableDir();
 
 		if (executableDir != null) {
 			File executableFile = new File(executableDir, executable);
@@ -159,7 +159,7 @@ public class NodeExecutor {
 		return executable;
 	}
 
-	protected File getExecutableDir() {
+	private File _getExecutableDir() {
 		File nodeDir = getNodeDir();
 
 		if (nodeDir == null) {
@@ -169,7 +169,7 @@ public class NodeExecutor {
 		return new File(nodeDir, "bin");
 	}
 
-	protected List<String> getWindowsArgs() {
+	private List<String> _getWindowsArgs() {
 		List<String> windowsArgs = new ArrayList<>(2);
 
 		windowsArgs.add("/c");
@@ -178,7 +178,7 @@ public class NodeExecutor {
 
 		sb.append('"');
 
-		String executable = getExecutable();
+		String executable = _getExecutable();
 
 		if (executable.indexOf(File.separatorChar) == -1) {
 			sb.append(executable);
@@ -206,7 +206,7 @@ public class NodeExecutor {
 		return windowsArgs;
 	}
 
-	protected void setNonProxyHosts(Map<String, String> environment) {
+	private void _setNonProxyHosts(Map<String, String> environment) {
 		if (environment.containsKey(_NO_PROXY_KEY) ||
 			environment.containsKey(_NO_PROXY_KEY.toUpperCase())) {
 
@@ -244,7 +244,7 @@ public class NodeExecutor {
 		}
 	}
 
-	protected void setProxy(Map<String, String> environment, String protocol) {
+	private void _setProxy(Map<String, String> environment, String protocol) {
 		String key = protocol + "_proxy";
 
 		if (environment.containsKey(key) ||
@@ -296,14 +296,14 @@ public class NodeExecutor {
 		environment.put(key, sb.toString());
 	}
 
-	protected void updateEnvironment(Map<String, String> environment) {
+	private void _updateEnvironment(Map<String, String> environment) {
 		if (isInheritProxy()) {
-			setNonProxyHosts(environment);
-			setProxy(environment, "http");
-			setProxy(environment, "https");
+			_setNonProxyHosts(environment);
+			_setProxy(environment, "http");
+			_setProxy(environment, "https");
 		}
 
-		File executableDir = getExecutableDir();
+		File executableDir = _getExecutableDir();
 
 		if (executableDir != null) {
 			for (String pathKey : _PATH_KEYS) {

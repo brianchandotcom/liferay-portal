@@ -58,23 +58,23 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 				project, NodePlugin.NPM_INSTALL_TASK_NAME);
 
 		final DownloadNodeModuleTask downloadMetalCliTask =
-			addTaskDownloadMetalCli(project);
+			_addTaskDownloadMetalCli(project);
 
-		addTaskTranspileJS(project);
+		_addTaskTranspileJS(project);
 
 		project.afterEvaluate(
 			new Action<Project>() {
 
 				@Override
 				public void execute(Project project) {
-					configureTasksTranspileJS(
+					_configureTasksTranspileJS(
 						project, downloadMetalCliTask, npmInstallTask);
 				}
 
 			});
 	}
 
-	protected DownloadNodeModuleTask addTaskDownloadMetalCli(Project project) {
+	private DownloadNodeModuleTask _addTaskDownloadMetalCli(Project project) {
 		DownloadNodeModuleTask downloadNodeModuleTask = GradleUtil.addTask(
 			project, DOWNLOAD_METAL_CLI_TASK_NAME,
 			DownloadNodeModuleTask.class);
@@ -85,7 +85,7 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 		return downloadNodeModuleTask;
 	}
 
-	protected TranspileJSTask addTaskTranspileJS(Project project) {
+	private TranspileJSTask _addTaskTranspileJS(Project project) {
 		final TranspileJSTask transpileJSTask = GradleUtil.addTask(
 			project, TRANSPILE_JS_TASK_NAME, TranspileJSTask.class);
 
@@ -100,7 +100,7 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(JavaPlugin javaPlugin) {
-					configureTaskTranspileJSForJavaPlugin(transpileJSTask);
+					_configureTaskTranspileJSForJavaPlugin(transpileJSTask);
 				}
 
 			});
@@ -108,7 +108,7 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 		return transpileJSTask;
 	}
 
-	protected void configureTasksTranspileJS(
+	private void _configureTasksTranspileJS(
 		Project project, final DownloadNodeModuleTask downloadMetalCliTask,
 		final ExecuteNpmTask npmInstallTask) {
 
@@ -120,14 +120,14 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(TranspileJSTask transpileJSTask) {
-					configureTaskTranspileJS(
+					_configureTaskTranspileJS(
 						transpileJSTask, downloadMetalCliTask, npmInstallTask);
 				}
 
 			});
 	}
 
-	protected void configureTaskTranspileJS(
+	private void _configureTaskTranspileJS(
 		TranspileJSTask transpileJSTask,
 		final DownloadNodeModuleTask downloadMetalCliTask,
 		final ExecuteNpmTask npmInstallTask) {
@@ -166,7 +166,7 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 			});
 	}
 
-	protected void configureTaskTranspileJSForJavaPlugin(
+	private void _configureTaskTranspileJSForJavaPlugin(
 		TranspileJSTask transpileJSTask) {
 
 		transpileJSTask.mustRunAfter(JavaPlugin.PROCESS_RESOURCES_TASK_NAME);
@@ -181,7 +181,7 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 
 				@Override
 				public File call() throws Exception {
-					File resourcesDir = getSrcDir(sourceSet.getResources());
+					File resourcesDir = _getSrcDir(sourceSet.getResources());
 
 					return new File(resourcesDir, "META-INF/resources");
 				}
@@ -208,7 +208,7 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 		classesTask.dependsOn(transpileJSTask);
 	}
 
-	protected File getSrcDir(SourceDirectorySet sourceDirectorySet) {
+	private File _getSrcDir(SourceDirectorySet sourceDirectorySet) {
 		Set<File> srcDirs = sourceDirectorySet.getSrcDirs();
 
 		Iterator<File> iterator = srcDirs.iterator();

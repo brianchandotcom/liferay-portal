@@ -34,10 +34,10 @@ public class GulpPlugin implements Plugin<Project> {
 	public void apply(Project project) {
 		GradleUtil.applyPlugin(project, NodePlugin.class);
 
-		addTaskRuleGulp(project);
+		_addTaskRuleGulp(project);
 	}
 
-	protected ExecuteGulpTask addTaskExecuteGulp(
+	private ExecuteGulpTask _addTaskExecuteGulp(
 		Project project, String taskName) {
 
 		ExecuteGulpTask executeGulpTask = GradleUtil.addTask(
@@ -53,7 +53,7 @@ public class GulpPlugin implements Plugin<Project> {
 		return executeGulpTask;
 	}
 
-	protected void addTaskRuleGulp(final Project project) {
+	private void _addTaskRuleGulp(final Project project) {
 		TaskContainer taskContainer = project.getTasks();
 
 		taskContainer.addRule(
@@ -62,7 +62,7 @@ public class GulpPlugin implements Plugin<Project> {
 				@Override
 				public void apply(String taskName) {
 					if (taskName.startsWith("gulp")) {
-						addTaskExecuteGulp(project, taskName);
+						_addTaskExecuteGulp(project, taskName);
 					}
 				}
 

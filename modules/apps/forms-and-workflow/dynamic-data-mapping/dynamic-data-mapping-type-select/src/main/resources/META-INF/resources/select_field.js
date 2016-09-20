@@ -45,6 +45,16 @@ AUI.add(
 				NAME: 'liferay-ddm-form-field-select',
 
 				prototype: {
+					cleanSelect: function() {
+						var instance = this;
+
+						var inputNode = instance.getInputNode();
+
+						inputNode.setAttribute('selected', false);
+
+						instance.set('value', []);
+					},
+
 					getTemplateContext: function() {
 						var instance = this;
 

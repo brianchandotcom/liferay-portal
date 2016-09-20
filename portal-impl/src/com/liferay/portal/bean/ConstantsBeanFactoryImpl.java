@@ -146,16 +146,7 @@ public class ConstantsBeanFactoryImpl implements ConstantsBeanFactory {
 				continue;
 			}
 
-			Class<?>[] parameterClasses = method.getParameterTypes();
-
-			Type[] parameterTypes = new Type[parameterClasses.length];
-
-			for (int i = 0; i < parameterClasses.length; i++) {
-				parameterTypes[i] = Type.getType(parameterClasses[i]);
-			}
-
-			String methodDescriptor = Type.getMethodDescriptor(
-				Type.getType(method.getReturnType()), parameterTypes);
+			String methodDescriptor = Type.getMethodDescriptor(method);
 
 			methodVisitor = classWriter.visitMethod(
 				Opcodes.ACC_PUBLIC | Opcodes.ACC_STATIC, method.getName(),
@@ -164,6 +155,8 @@ public class ConstantsBeanFactoryImpl implements ConstantsBeanFactory {
 			methodVisitor.visitCode();
 
 			int stackIndex = 0;
+
+			Type[] parameterTypes = Type.getArgumentTypes(method);
 
 			for (Type parameterType : parameterTypes) {
 				methodVisitor.visitVarInsn(

@@ -30,7 +30,7 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 
 		TaskContainer taskContainer = project.getTasks();
 
-		Task task = (Task)taskContainer.findByName(taskName);
+		Task task = taskContainer.findByName(taskName);
 
 		if (clazz.isInstance(task)) {
 			return (T)task;

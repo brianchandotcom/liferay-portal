@@ -230,7 +230,7 @@ public class ServerDetector {
 			return ServerType.TOMCAT;
 		}
 
-		return null;
+		return ServerType.UNKNOWN;
 	}
 
 	private static boolean _hasSystemProperty(String key) {
@@ -255,21 +255,16 @@ public class ServerDetector {
 
 		if (System.getProperty("external-properties") == null) {
 			if (_log.isInfoEnabled()) {
-				if (_serverType != null) {
-					_log.info(
-						"Detected server " +
-							StringUtil.toLowerCase(_serverType.toString()));
-				}
-				else {
-					_log.info("No server detected");
-				}
+				_log.info(
+					"Detected server " +
+						StringUtil.toLowerCase(_serverType.toString()));
 			}
 		}
 	}
 
 	private enum ServerType {
 
-		GLASSFISH, JBOSS, JETTY, JONAS, OC4J, RESIN, TOMCAT, WEBLOGIC,
+		GLASSFISH, JBOSS, JETTY, JONAS, OC4J, RESIN, TOMCAT, UNKNOWN, WEBLOGIC,
 		WEBSPHERE, WILDFLY;
 	}
 

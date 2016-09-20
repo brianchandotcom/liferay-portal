@@ -233,7 +233,7 @@ public class ReleaseManagerOSGiCommands {
 		String bundleSymbolicName,
 		ServiceTrackerMap<String, List<UpgradeInfo>> serviceTrackerMap) {
 
-		List<List<UpgradeInfo>> upgradeInfosList = getCurrentUpgradeInfoList(
+		List<List<UpgradeInfo>> upgradeInfosList = getCurrentUpgradeInfosList(
 			bundleSymbolicName);
 
 		int size = upgradeInfosList.size();
@@ -253,7 +253,7 @@ public class ReleaseManagerOSGiCommands {
 
 	protected void doExecuteAll(Set<String> upgradedFailedBundleSymbolicNames) {
 		Set<String> upgradableBundleSymbolicNames =
-			getUpgrableBundleSymbolicNames();
+			getUpgradableBundleSymbolicNames();
 
 		upgradableBundleSymbolicNames.removeAll(
 			upgradedFailedBundleSymbolicNames);
@@ -309,7 +309,7 @@ public class ReleaseManagerOSGiCommands {
 		}
 	}
 
-	protected List<List<UpgradeInfo>> getCurrentUpgradeInfoList(
+	protected List<List<UpgradeInfo>> getCurrentUpgradeInfosList(
 		String bundleSymbolicName) {
 
 		String schemaVersionString = getSchemaVersionString(bundleSymbolicName);
@@ -330,7 +330,7 @@ public class ReleaseManagerOSGiCommands {
 		return release.getSchemaVersion();
 	}
 
-	protected Set<String> getUpgrableBundleSymbolicNames() {
+	protected Set<String> getUpgradableBundleSymbolicNames() {
 		Set<String> upgradableBundleSymbolicNames = new HashSet<>();
 
 		for (String bundleSymbolicName : _serviceTrackerMap.keySet()) {
@@ -343,7 +343,7 @@ public class ReleaseManagerOSGiCommands {
 	}
 
 	protected boolean isUpgradable(String bundleSymbolicName) {
-		if (getCurrentUpgradeInfoList(bundleSymbolicName).size() == 1) {
+		if (getCurrentUpgradeInfosList(bundleSymbolicName).size() == 1) {
 			return true;
 		}
 

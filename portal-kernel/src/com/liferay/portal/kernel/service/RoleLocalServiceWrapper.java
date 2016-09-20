@@ -395,6 +395,12 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 	}
 
 	@Override
+	public int getAssigneesTotal(long roleId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _roleLocalService.getAssigneesTotal(roleId);
+	}
+
+	@Override
 	public int getGroupRolesCount(long groupId) {
 		return _roleLocalService.getGroupRolesCount(groupId);
 	}

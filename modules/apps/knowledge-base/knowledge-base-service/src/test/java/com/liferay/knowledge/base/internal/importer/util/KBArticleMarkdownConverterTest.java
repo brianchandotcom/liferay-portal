@@ -23,6 +23,7 @@ import com.liferay.portal.util.FileImpl;
 import com.liferay.portal.util.HtmlImpl;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -41,17 +42,23 @@ public class KBArticleMarkdownConverterTest {
 
 	@Before
 	public void setUp() {
-		ModelHintsUtil modelHintsUtil = new ModelHintsUtil();
 		FileUtil fileUtil = new FileUtil();
+
+		fileUtil.setFile(new FileImpl());
+
 		HtmlUtil htmlUtil = new HtmlUtil();
 
-		modelHintsUtil.setModelHints(_modelHints);
-		fileUtil.setFile(new FileImpl());
 		htmlUtil.setHtml(new HtmlImpl());
+
+		ModelHintsUtil modelHintsUtil = new ModelHintsUtil();
+
+		modelHintsUtil.setModelHints(_modelHints);
 
 		Mockito.when(
 			_modelHints.getMaxLength(KBArticle.class.getName(), "urlTitle")
-		).thenReturn(256);
+		).thenReturn(
+			256
+		);
 	}
 
 	@Test
@@ -59,10 +66,12 @@ public class KBArticleMarkdownConverterTest {
 		throws Exception {
 
 		String markdown = "Title [](id=1234)\n=============";
+
 		String fileEntryName = "some/unix/file";
-		HashMap<String, String> metadata = new HashMap<String, String>() { {
-			put("base.source.url", "http://baseUrl");
-		}};
+
+		Map<String, String> metadata = new HashMap<>();
+
+		metadata.put("base.source.url", "http://baseUrl");
 
 		KBArticleMarkdownConverter converter = new KBArticleMarkdownConverter(
 			markdown, fileEntryName, metadata);
@@ -72,14 +81,16 @@ public class KBArticleMarkdownConverterTest {
 	}
 
 	@Test
-	public void testGetSourceURLReplacesBackslashesWithForwardSlashes()
+	public void testGetSourceURLReplacesBackSlashesWithForwardSlashes()
 		throws Exception {
 
 		String markdown = "Title [](id=1234)\n=============";
+
 		String fileEntryName = "some\\windows\\file";
-		HashMap<String, String> metadata = new HashMap<String, String>() { {
-			put("base.source.url", "http://baseUrl");
-		}};
+
+		Map<String, String> metadata = new HashMap<>();
+
+		metadata.put("base.source.url", "http://baseUrl");
 
 		KBArticleMarkdownConverter converter = new KBArticleMarkdownConverter(
 			markdown, fileEntryName, metadata);
@@ -93,8 +104,10 @@ public class KBArticleMarkdownConverterTest {
 		throws Exception {
 
 		String markdown = "Title [](id=1234)\n=============";
+
 		String fileEntryName = "some\\windows\\file";
-		HashMap<String, String> metadata = new HashMap<>();
+
+		Map<String, String> metadata = new HashMap<>();
 
 		KBArticleMarkdownConverter converter = new KBArticleMarkdownConverter(
 			markdown, fileEntryName, metadata);
@@ -105,10 +118,12 @@ public class KBArticleMarkdownConverterTest {
 	@Test
 	public void testGetSourceURLUsesTheSlashInTheBaseUrl() throws Exception {
 		String markdown = "Title [](id=1234)\n=============";
+
 		String fileEntryName = "some/unix/file";
-		HashMap<String, String> metadata = new HashMap<String, String>() { {
-			put("base.source.url", "http://baseUrl/");
-		}};
+
+		Map<String, String> metadata = new HashMap<>();
+
+		metadata.put("base.source.url", "http://baseUrl/");
 
 		KBArticleMarkdownConverter converter = new KBArticleMarkdownConverter(
 			markdown, fileEntryName, metadata);

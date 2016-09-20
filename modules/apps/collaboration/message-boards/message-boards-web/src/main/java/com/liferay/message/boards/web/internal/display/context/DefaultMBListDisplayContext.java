@@ -220,7 +220,8 @@ public class DefaultMBListDisplayContext implements MBListDisplayContext {
 			searchContainer.setResults(
 				MBCategoryServiceUtil.getCategoriesAndThreads(
 					themeDisplay.getScopeGroupId(), _categoryId, status,
-					searchContainer.getStart(), searchContainer.getEnd()));
+					searchContainer.getStart(), searchContainer.getEnd(),
+					searchContainer.getOrderByComparator()));
 		}
 	}
 

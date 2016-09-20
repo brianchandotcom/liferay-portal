@@ -23,9 +23,6 @@
 		</requiredProperty>
 		<requiredProperty key="className">
 		</requiredProperty>
-		<requiredProperty key="package">
-			<defaultValue>${groupId}.${artifactId}</defaultValue>
-		</requiredProperty>
 		<requiredProperty key="projectType">
 			<defaultValue>standalone</defaultValue>
 		</requiredProperty>

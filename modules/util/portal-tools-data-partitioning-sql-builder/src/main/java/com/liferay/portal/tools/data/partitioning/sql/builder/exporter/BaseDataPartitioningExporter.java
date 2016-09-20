@@ -83,6 +83,11 @@ public abstract class BaseDataPartitioningExporter
 	}
 
 	@Override
+	public String getOutputFileExtension() {
+		return ".sql";
+	}
+
+	@Override
 	public List<String> getPartitionedTableNames(ExportContext exportContext) {
 		return getTableNames(getPartitionedTableNamesSQL(exportContext));
 	}

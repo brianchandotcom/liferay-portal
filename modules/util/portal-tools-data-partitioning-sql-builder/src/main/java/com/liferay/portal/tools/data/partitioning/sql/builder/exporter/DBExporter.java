@@ -27,6 +27,8 @@ public interface DBExporter {
 
 	public List<String> getControlTableNames(ExportContext exportContext);
 
+	public String getOutputFileExtension();
+
 	public List<String> getPartitionedTableNames(ExportContext exportContext);
 
 	public void write(

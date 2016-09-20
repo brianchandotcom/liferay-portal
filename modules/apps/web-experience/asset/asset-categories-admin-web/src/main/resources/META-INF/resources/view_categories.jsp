@@ -112,6 +112,10 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(assetCategoriesDisplayContext.getVoc
 				<portlet:param name="vocabularyId" value="<%= String.valueOf(curCategory.getVocabularyId()) %>" />
 			</portlet:renderURL>
 
+			<%
+			int subCategoriesCount = AssetCategoryLocalServiceUtil.getChildCategoriesCount(curCategory.getCategoryId());
+			%>
+
 			<c:choose>
 				<c:when test='<%= Objects.equals(assetCategoriesDisplayContext.getDisplayStyle(), "descriptive") %>'>
 					<liferay-ui:search-container-column-icon
@@ -132,6 +136,10 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(assetCategoriesDisplayContext.getVoc
 
 						<h6 class="text-default">
 							<%= HtmlUtil.escape(curCategory.getDescription(locale)) %>
+						</h6>
+
+						<h6 class="text-default">
+							<liferay-ui:message arguments="<%= subCategoriesCount %>" key="x-subcategories" />
 						</h6>
 					</liferay-ui:search-container-column-text>
 
@@ -159,6 +167,10 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(assetCategoriesDisplayContext.getVoc
 							<liferay-frontend:vertical-card-header>
 								<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - curCategory.getCreateDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
 							</liferay-frontend:vertical-card-header>
+
+							<liferay-frontend:vertical-card-footer>
+								<liferay-ui:message arguments="<%= subCategoriesCount %>" key="x-subcategories" />
+							</liferay-frontend:vertical-card-footer>
 						</liferay-frontend:icon-vertical-card>
 					</liferay-ui:search-container-column-text>
 				</c:when>
@@ -174,6 +186,12 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(assetCategoriesDisplayContext.getVoc
 						cssClass="table-cell-content"
 						name="description"
 						value="<%= HtmlUtil.escape(curCategory.getDescription(locale)) %>"
+					/>
+
+					<liferay-ui:search-container-column-text
+						cssClass="table-cell-content"
+						name="subcategories"
+						value="<%= String.valueOf(subCategoriesCount) %>"
 					/>
 
 					<liferay-ui:search-container-column-date

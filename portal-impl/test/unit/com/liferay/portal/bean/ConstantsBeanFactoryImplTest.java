@@ -56,7 +56,7 @@ public class ConstantsBeanFactoryImplTest {
 	@AdviseWith(adviceClasses = {ReflectionUtilAdvice.class})
 	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test
-	public void testCreateConstantsBean() throws ClassNotFoundException {
+	public void testCreateConstantsBean() throws Exception {
 
 		// Exception on create
 
@@ -89,7 +89,7 @@ public class ConstantsBeanFactoryImplTest {
 
 		Method[] methods = constantsBeanClass.getDeclaredMethods();
 
-		Assert.assertEquals(9, methods.length);
+		Assert.assertEquals(12, methods.length);
 
 		Arrays.sort(
 			methods,
@@ -208,6 +208,53 @@ public class ConstantsBeanFactoryImplTest {
 		Assert.assertEquals(Modifier.PUBLIC, method.getModifiers());
 		Assert.assertEquals(Short.TYPE, method.getReturnType());
 		Assert.assertEquals("getSHORT_VALUE", method.getName());
+
+		parameterTypes = method.getParameterTypes();
+
+		Assert.assertEquals(0, parameterTypes.length);
+
+		// public int get_Int(int)
+
+		method = methods[9];
+
+		Assert.assertEquals(
+			Modifier.PUBLIC | Modifier.STATIC, method.getModifiers());
+		Assert.assertEquals(Integer.TYPE, method.getReturnType());
+		Assert.assertEquals("get_Int", method.getName());
+
+		parameterTypes = method.getParameterTypes();
+
+		Assert.assertEquals(1, parameterTypes.length);
+		Assert.assertSame(int.class, parameterTypes[0]);
+
+		Assert.assertEquals(10, method.invoke(null, 10));
+
+		// public Object get_Object(Object)
+
+		method = methods[10];
+
+		Assert.assertEquals(
+			Modifier.PUBLIC | Modifier.STATIC, method.getModifiers());
+		Assert.assertEquals(Object.class, method.getReturnType());
+		Assert.assertEquals("get_Object", method.getName());
+
+		parameterTypes = method.getParameterTypes();
+
+		Assert.assertEquals(1, parameterTypes.length);
+		Assert.assertSame(Object.class, parameterTypes[0]);
+
+		Object obj = new Object();
+
+		Assert.assertSame(obj, method.invoke(null, obj));
+
+		// public void get_Void()
+
+		method = methods[11];
+
+		Assert.assertEquals(
+			Modifier.PUBLIC | Modifier.STATIC, method.getModifiers());
+		Assert.assertEquals(Void.TYPE, method.getReturnType());
+		Assert.assertEquals("get_Void", method.getName());
 
 		parameterTypes = method.getParameterTypes();
 
@@ -359,6 +406,17 @@ public class ConstantsBeanFactoryImplTest {
 		public static Object OBJECT_VALUE = new Object();
 
 		public static short SHORT_VALUE = 0;
+
+		public static int get_Int(int i) {
+			return i;
+		}
+
+		public static Object get_Object(Object obj) {
+			return obj;
+		}
+
+		public static void get_Void() {
+		}
 
 		public Object NON_STATIC_VALUE = new Object();
 

@@ -57,8 +57,7 @@ public class NodePlugin implements Plugin<Project> {
 		final DownloadNodeTask downloadNodeTask = _addTaskDownloadNode(
 			project, nodeExtension);
 
-		NpmInstallTask npmInstallTask = _addTaskNpmInstall(
-			project, nodeExtension);
+		NpmInstallTask npmInstallTask = _addTaskNpmInstall(project);
 
 		_configureTasksDownloadNodeModule(project, npmInstallTask);
 
@@ -137,10 +136,8 @@ public class NodePlugin implements Plugin<Project> {
 		return downloadNodeTask;
 	}
 
-	private NpmInstallTask _addTaskNpmInstall(
-		Project project, final NodeExtension nodeExtension) {
-
-		final NpmInstallTask npmInstallTask = GradleUtil.addTask(
+	private NpmInstallTask _addTaskNpmInstall(Project project) {
+		NpmInstallTask npmInstallTask = GradleUtil.addTask(
 			project, NPM_INSTALL_TASK_NAME, NpmInstallTask.class);
 
 		npmInstallTask.setDescription(

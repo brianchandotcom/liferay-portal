@@ -103,11 +103,9 @@ request.setAttribute("view.jsp-orderByType", orderByType);
 
 <liferay-util:include page="/document_library/navigation.jsp" servletContext="<%= application %>" />
 
-<c:if test='<%= !mvcRenderCommandName.equals("/document_library/search") %>'>
-	<liferay-util:include page="/document_library/toolbar.jsp" servletContext="<%= application %>">
-		<liferay-util:param name="searchContainerId" value="entries" />
-	</liferay-util:include>
-</c:if>
+<liferay-util:include page="/document_library/toolbar.jsp" servletContext="<%= application %>">
+	<liferay-util:param name="searchContainerId" value="entries" />
+</liferay-util:include>
 
 <div id="<portlet:namespace />documentLibraryContainer">
 
@@ -155,7 +153,9 @@ request.setAttribute("view.jsp-orderByType", orderByType);
 				<div class="document-container">
 					<c:choose>
 						<c:when test='<%= mvcRenderCommandName.equals("/document_library/search") %>'>
-							<liferay-util:include page="/document_library/search_resources.jsp" servletContext="<%= application %>" />
+							<liferay-util:include page="/document_library/search_resources.jsp" servletContext="<%= application %>">
+								<liferay-util:param name="searchContainerId" value="entries" />
+							</liferay-util:include>
 						</c:when>
 						<c:otherwise>
 							<liferay-util:include page="/document_library/view_entries.jsp" servletContext="<%= application %>">

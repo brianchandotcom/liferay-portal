@@ -44,7 +44,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 					<portlet:param name="showSearchInfo" value="<%= Boolean.TRUE.toString() %>" />
 				</liferay-portlet:renderURL>
 
-				<aui:form action="<%= searchURL.toString() %>" name="searchFm">
+				<aui:form action="<%= searchURL.toString() %>" method="get" name="searchFm">
 					<liferay-portlet:renderURLParams varImpl="searchURL" />
 					<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 

@@ -21,8 +21,6 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 long repositoryId = ParamUtil.getLong(request, "repositoryId");
 
-long breadcrumbsFolderId = ParamUtil.getLong(request, "breadcrumbsFolderId");
-
 long searchFolderId = ParamUtil.getLong(request, "searchFolderId");
 
 String keywords = ParamUtil.getString(request, "keywords");
@@ -36,7 +34,6 @@ String keywords = ParamUtil.getString(request, "keywords");
 	<liferay-portlet:renderURLParams varImpl="searchURL" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="repositoryId" type="hidden" value="<%= repositoryId %>" />
-	<aui:input name="breadcrumbsFolderId" type="hidden" value="<%= breadcrumbsFolderId %>" />
 	<aui:input name="searchFolderId" type="hidden" value="<%= searchFolderId %>" />
 
 	<liferay-ui:header
@@ -49,7 +46,6 @@ String keywords = ParamUtil.getString(request, "keywords");
 
 	portletURL.setParameter("mvcPath", "/image_gallery_display/search.jsp");
 	portletURL.setParameter("redirect", redirect);
-	portletURL.setParameter("breadcrumbsFolderId", String.valueOf(breadcrumbsFolderId));
 	portletURL.setParameter("searchFolderId", String.valueOf(searchFolderId));
 	portletURL.setParameter("keywords", keywords);
 

@@ -37,7 +37,7 @@ library.
 3. Install `g++ 4.6`.
 4. Execute `gradle buildLibSass_Linux_x86_64` from `sass-compiler`.
 
-## Building the Windows 32-bit LibSass Library 
+## Building the Windows 32-bit LibSass Library
 
 The following instructions builds the `resources/win32-x86/sass.dll` library.
 

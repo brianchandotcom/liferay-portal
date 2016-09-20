@@ -508,6 +508,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 						Constants.BUNDLE_SYMBOLICNAME,
 						bundleSymbolicName + ".wsdd");
 					properties.put(Constants.FRAGMENT_HOST, bundleSymbolicName);
+
 					properties.put(
 						Constants.IMPORT_PACKAGE,
 						"javax.servlet,javax.servlet.http");

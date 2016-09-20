@@ -668,6 +668,7 @@ public class ServicePreAction extends Action {
 				companyId, theme.getThemeId(), colorSchemeId);
 
 			request.setAttribute(WebKeys.COLOR_SCHEME, colorScheme);
+
 			request.setAttribute(WebKeys.THEME, theme);
 		}
 

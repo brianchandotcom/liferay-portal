@@ -130,6 +130,7 @@ public abstract class BaseAssetSearchTestCase {
 
 		_assetCategoryIds1 =
 			new long[] {_healthCategoryId, _sportCategoryId, _travelCategoryId};
+
 		_assetCategoryIds2 = new long[] {
 			_fashionCategoryId, _foodCategoryId, _healthCategoryId,
 			_sportCategoryId

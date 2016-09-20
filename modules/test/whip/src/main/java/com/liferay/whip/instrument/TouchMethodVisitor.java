@@ -144,6 +144,7 @@ public class TouchMethodVisitor extends MethodVisitor {
 				Label label2 = new Label();
 
 				mv.visitJumpInsn(Opcodes.GOTO, label2);
+
 				mv.visitLabel(label1);
 				mv.visitVarInsn(Opcodes.ILOAD, _variableIndex + 1);
 				mv.visitJumpInsn(Opcodes.IFLT, label2);
@@ -310,6 +311,7 @@ public class TouchMethodVisitor extends MethodVisitor {
 		Label label = new Label();
 
 		mv.visitJumpInsn(Opcodes.IF_ICMPNE, label);
+
 		mv.visitVarInsn(Opcodes.ILOAD, _variableIndex + 1);
 		mv.visitIntInsn(Opcodes.SIPUSH, _lastJump.getJumpNumber());
 		mv.visitJumpInsn(Opcodes.IF_ICMPNE, label);

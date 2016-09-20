@@ -779,6 +779,7 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 				kbArticle.getStatus(), themeDisplay.getPortalURL(), false);
 
 			syndEntry.setLink(link);
+
 			syndEntry.setPublishedDate(kbArticle.getCreateDate());
 			syndEntry.setTitle(kbArticle.getTitle());
 			syndEntry.setUpdatedDate(kbArticle.getModifiedDate());

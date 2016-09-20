@@ -122,6 +122,7 @@ public class KaleoLogLocalServiceImpl extends KaleoLogLocalServiceBaseImpl {
 				LogType.WORKFLOW_INSTANCE_START);
 
 			Date startDate = previousKaleoLog.getStartDate();
+
 			Date endDate = kaleoLog.getEndDate();
 
 			kaleoLog.setDuration(endDate.getTime() - startDate.getTime());
@@ -290,6 +291,7 @@ public class KaleoLogLocalServiceImpl extends KaleoLogLocalServiceBaseImpl {
 				LogType.WORKFLOW_INSTANCE_START);
 
 			Date startDate = previousKaleoLog.getStartDate();
+
 			Date endDate = kaleoLog.getEndDate();
 
 			kaleoLog.setDuration(endDate.getTime() - startDate.getTime());

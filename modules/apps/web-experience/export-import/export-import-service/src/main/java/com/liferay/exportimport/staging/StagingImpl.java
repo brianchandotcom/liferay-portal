@@ -718,6 +718,7 @@ public class StagingImpl implements Staging {
 			errorMessage = LanguageUtil.format(
 				locale, "please-import-a-lar-file-of-the-correct-type-x",
 				lte.getMessage());
+
 			errorType = ServletResponseConstants.SC_FILE_CUSTOM_EXCEPTION;
 		}
 		else if (e instanceof LARFileException) {
@@ -818,6 +819,7 @@ public class StagingImpl implements Staging {
 
 			errorMessagesJSONArray = getErrorMessagesJSONArray(
 				locale, missingReferences.getDependencyMissingReferences());
+
 			errorType = ServletResponseConstants.SC_FILE_CUSTOM_EXCEPTION;
 			warningMessagesJSONArray = getWarningMessagesJSONArray(
 				locale, missingReferences.getWeakMissingReferences());
@@ -835,6 +837,7 @@ public class StagingImpl implements Staging {
 					stagedModel.getStagedModelType();
 
 				referrerClassName = stagedModelType.getClassName();
+
 				referrerDisplayName = StagedModelDataHandlerUtil.getDisplayName(
 					stagedModel);
 			}

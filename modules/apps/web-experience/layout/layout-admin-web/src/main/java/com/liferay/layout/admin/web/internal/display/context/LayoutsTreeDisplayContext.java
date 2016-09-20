@@ -131,6 +131,7 @@ public class LayoutsTreeDisplayContext extends BaseLayoutDisplayContext {
 
 		emptyLayoutSetURL.setParameter(
 			"groupId", String.valueOf(liveGroup.getGroupId()));
+
 		emptyLayoutSetURL.setParameter(
 			"privateLayout", String.valueOf(privateLayout));
 

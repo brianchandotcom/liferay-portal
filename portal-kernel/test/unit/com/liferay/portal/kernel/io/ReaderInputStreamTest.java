@@ -104,6 +104,7 @@ public class ReaderInputStreamTest {
 			int result = readerInputStream.read(bytes);
 
 			Assert.assertEquals(_expectedBytesForEnglish.length, result);
+
 			assertEquals(_expectedBytesForEnglish, bytes);
 		}
 	}
@@ -120,6 +121,7 @@ public class ReaderInputStreamTest {
 			int result = readerInputStream.read(bytes);
 
 			Assert.assertEquals(_expectedBytesForChinese.length, result);
+
 			assertEquals(_expectedBytesForChinese, bytes);
 		}
 	}
@@ -136,6 +138,7 @@ public class ReaderInputStreamTest {
 			int result = readerInputStream.read(bytes);
 
 			Assert.assertEquals(_expectedBytesForChinese.length, result);
+
 			assertEquals(_expectedBytesForChinese, bytes);
 		}
 	}
@@ -152,6 +155,7 @@ public class ReaderInputStreamTest {
 			int result = readerInputStream.read(bytes);
 
 			Assert.assertEquals(_expectedBytesForChinese.length, result);
+
 			assertEquals(_expectedBytesForChinese, bytes);
 		}
 	}
@@ -168,6 +172,7 @@ public class ReaderInputStreamTest {
 			int result = readerInputStream.read(bytes);
 
 			Assert.assertEquals(_expectedBytesForChinese.length, result);
+
 			assertEquals(_expectedBytesForChinese, bytes);
 		}
 	}

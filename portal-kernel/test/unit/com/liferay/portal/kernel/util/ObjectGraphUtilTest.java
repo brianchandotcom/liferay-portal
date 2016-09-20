@@ -149,6 +149,7 @@ public class ObjectGraphUtilTest {
 		Assert.assertSame(
 			linkedType1,
 			_recordAnnotatedFieldMappingVisitor.mapValue(null, linkedType1));
+
 		Assert.assertEquals(1, _annotatedFieldMappingObjectValuePairs.size());
 
 		ObjectValuePair<Field, Object> objectValuePair =
@@ -169,6 +170,7 @@ public class ObjectGraphUtilTest {
 
 		Assert.assertNotSame(linkedType1Array, mappedLinkedType1Array);
 		Assert.assertArrayEquals(linkedType1Array, mappedLinkedType1Array);
+
 		Assert.assertEquals(2, _annotatedFieldMappingObjectValuePairs.size());
 
 		ObjectValuePair<Field, Object> objectValuePair =
@@ -212,6 +214,7 @@ public class ObjectGraphUtilTest {
 			_recordAnnotatedFieldMappingVisitor.visit(
 				ReflectionUtil.getDeclaredField(LinkedType1.class, "_object1"),
 				linkedType1));
+
 		Assert.assertTrue(_annotatedFieldMappingObjectValuePairs.isEmpty());
 		Assert.assertSame(
 			linkedType1._object2,
@@ -225,6 +228,7 @@ public class ObjectGraphUtilTest {
 
 		Assert.assertNull(
 			_recordAnnotatedFieldMappingVisitor.visit(field, linkedType1));
+
 		Assert.assertEquals(1, _annotatedFieldMappingObjectValuePairs.size());
 
 		ObjectValuePair<Field, Object> objectValuePair =

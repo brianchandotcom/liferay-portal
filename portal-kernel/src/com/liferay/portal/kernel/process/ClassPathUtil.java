@@ -143,6 +143,7 @@ public class ClassPathUtil {
 			classLoader, ServletException.class.getName());
 
 		sb.append(appServerGlobalClassPath);
+
 		sb.append(File.pathSeparator);
 
 		String portalGlobalClassPath = _buildClassPath(

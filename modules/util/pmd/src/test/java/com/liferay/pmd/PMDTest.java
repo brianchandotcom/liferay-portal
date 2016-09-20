@@ -99,6 +99,7 @@ public class PMDTest extends AutoBalanceTestCase {
 		_logFilePath = Files.createTempFile(null, null);
 
 		formatter.setToFile(_logFilePath.toFile());
+
 		formatter.setType("text");
 
 		_pmdTask.addFormatter(formatter);

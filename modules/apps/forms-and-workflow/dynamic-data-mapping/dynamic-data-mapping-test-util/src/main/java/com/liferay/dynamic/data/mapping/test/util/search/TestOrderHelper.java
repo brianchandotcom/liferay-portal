@@ -241,6 +241,7 @@ public abstract class TestOrderHelper {
 			ddmStructure.getStructureId(), "name");
 
 		assetEntryQuery.setOrderByCol1(orderByCol1);
+
 		assetEntryQuery.setOrderByType1("asc");
 
 		return assetEntryQuery;

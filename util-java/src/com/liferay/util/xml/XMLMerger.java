@@ -42,6 +42,7 @@ public class XMLMerger {
 		Document mergedDocument = (Document)masterDocument.clone();
 
 		Element mergedRootElement = mergedDocument.getRootElement();
+
 		Element slaveRootElement = slaveDocument.getRootElement();
 
 		for (Element slaveElement :

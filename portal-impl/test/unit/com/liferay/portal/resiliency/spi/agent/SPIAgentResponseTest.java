@@ -397,6 +397,7 @@ public class SPIAgentResponseTest {
 			requestAttributeNames.contains(RequestAttributes.ATTRIBUTE_1));
 		Assert.assertTrue(
 			requestAttributeNames.contains(RequestAttributes.ATTRIBUTE_3));
+
 		Assert.assertEquals(
 			RequestAttributes.ATTRIBUTE_1,
 			mockHttpServletRequest.getAttribute(RequestAttributes.ATTRIBUTE_1));

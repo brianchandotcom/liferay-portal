@@ -110,6 +110,7 @@ public class IndexerRegistryImpl implements IndexerRegistry {
 		Class<?> clazz = indexer.getClass();
 
 		unregister(clazz.getName());
+
 		unregister(indexer.getClassName());
 	}
 

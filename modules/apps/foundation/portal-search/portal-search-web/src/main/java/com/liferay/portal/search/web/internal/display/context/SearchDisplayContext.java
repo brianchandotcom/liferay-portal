@@ -135,6 +135,7 @@ public class SearchDisplayContext {
 
 		searchContainer.setTotal(hits.getLength());
 		searchContainer.setResults(hits.toList());
+
 		searchContainer.setSearch(true);
 
 		_hits = hits;

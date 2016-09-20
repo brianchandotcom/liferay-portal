@@ -191,6 +191,7 @@ public class ImageToolImplTest {
 
 		Assert.assertTrue(
 			StringUtil.equalsIgnoreCase(expectedType, resultType));
+
 		Assert.assertTrue(
 			expectedDataBuffer instanceof DataBufferByte ||
 			expectedDataBuffer instanceof DataBufferInt);

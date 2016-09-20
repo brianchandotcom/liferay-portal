@@ -153,6 +153,7 @@ public class GeneratingPACLPolicy extends ActivePACLPolicy {
 				String key = entry.getKey();
 
 				sb.append(key);
+
 				sb.append(StringPool.EQUAL);
 
 				Set<String> values = entry.getValue();

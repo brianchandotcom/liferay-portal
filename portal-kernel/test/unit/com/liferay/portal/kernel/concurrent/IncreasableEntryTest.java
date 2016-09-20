@@ -72,6 +72,7 @@ public class IncreasableEntryTest {
 		Assert.assertNotSame(increasableEntry1, increasableEntry2);
 		Assert.assertEquals(
 			increasableEntry1.getKey(), increasableEntry2.getKey());
+
 		Assert.assertEquals(2, (int)increasableEntry2.getValue());
 	}
 

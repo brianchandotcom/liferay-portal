@@ -108,6 +108,7 @@ public class PortalResiliencyActionTest {
 		_mockHttpServletRequest.setAttribute(
 			WebKeys.SPI_AGENT_REQUEST,
 			new SPIAgentRequest(originalMockHttpServletRequest));
+
 		_mockHttpServletRequest.setAttribute(
 			WebKeys.SPI_AGENT_RESPONSE,
 			new SPIAgentResponse(_SERVLET_CONTEXT_NAME));

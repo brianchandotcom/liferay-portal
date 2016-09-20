@@ -152,6 +152,7 @@ public class PortalClientBuilder {
 				_axisHttpServlet.getServletContext(), "GET", path);
 
 		mockHttpServletRequest.setPathInfo(path.substring(index));
+
 		mockHttpServletRequest.setQueryString(url.getQuery());
 		mockHttpServletRequest.setScheme(url.getProtocol());
 		mockHttpServletRequest.setServerName(url.getHost());

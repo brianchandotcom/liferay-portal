@@ -136,6 +136,7 @@ public class InstanceWrapperBuilder {
 					TypeVariable typeParameter = typeParameters[i];
 
 					sb.append(typeParameter.getName());
+
 					sb.append(", ");
 				}
 
@@ -211,6 +212,7 @@ public class InstanceWrapperBuilder {
 				JavaParameter javaParameter = javaParameters[j];
 
 				sb.append(javaParameter.getName());
+
 				sb.append(", ");
 			}
 

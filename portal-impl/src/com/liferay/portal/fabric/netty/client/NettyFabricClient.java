@@ -273,6 +273,7 @@ public class NettyFabricClient implements FabricClient {
 			channelPipeline.addLast(
 				new FileResponseChannelHandler(
 					repository.getAsyncBroker(), fileServerEventExecutorGroup));
+
 			channelPipeline.addLast(
 				createEventExecutorGroup(
 					_nettyFabricClientConfig.getRPCGroupThreadCount(),

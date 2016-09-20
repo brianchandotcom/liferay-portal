@@ -27,6 +27,7 @@ public class ServiceRequestDataSample extends BaseDataSample {
 		_methodSignature = methodSignature;
 
 		setDescription(_methodSignature.toString());
+
 		setNamespace(MonitorNames.SERVICE);
 	}
 

@@ -128,6 +128,7 @@ public class PortletPreferencesServiceImpl
 			PortletPreferences.class.getName());
 
 		long ownerId = portletItem.getPortletItemId();
+
 		int ownerType = PortletKeys.PREFS_OWNER_TYPE_ARCHIVED;
 		long plid = 0;
 

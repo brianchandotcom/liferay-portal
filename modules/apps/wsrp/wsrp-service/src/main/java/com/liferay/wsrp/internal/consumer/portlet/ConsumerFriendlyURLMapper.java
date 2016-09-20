@@ -122,6 +122,7 @@ public class ConsumerFriendlyURLMapper extends BaseFriendlyURLMapper {
 		String portletId = friendlyURLPath.substring(pos1 + 1, pos2);
 
 		addParameter(parameterMap, "p_p_id", portletId);
+
 		addParameter(
 			parameterMap, "p_p_state",
 			friendlyURLPath.substring(pos2 + 1, pos3));

@@ -186,6 +186,7 @@ public class ShindigUtil {
 		ModulePrefs modulePrefs = gadgetSpec.getModulePrefs();
 
 		gadget.setName(modulePrefs.getTitle());
+
 		gadget.setUrl(url);
 
 		return gadget;

@@ -86,6 +86,7 @@ public class UpgradePortalPreferences extends UpgradeProcess {
 				String preferences = rs.getString("preferences");
 
 				ps2.setString(1, convertStagingPreferencesToJSON(preferences));
+
 				ps2.setLong(2, portalPreferencesId);
 
 				ps2.addBatch();

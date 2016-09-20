@@ -39,6 +39,7 @@ public class UnsyncBufferedWriterTest {
 		Assert.assertEquals(2, unsyncBufferedWriter.count);
 		Assert.assertEquals('a', unsyncBufferedWriter.buffer[0]);
 		Assert.assertEquals('b', unsyncBufferedWriter.buffer[1]);
+
 		Assert.assertEquals(0, stringWriter.getBuffer().length());
 
 		// Auto flush
@@ -171,6 +172,7 @@ public class UnsyncBufferedWriterTest {
 		Assert.assertEquals(2, unsyncBufferedWriter.count);
 		Assert.assertEquals('a', unsyncBufferedWriter.buffer[0]);
 		Assert.assertEquals('b', unsyncBufferedWriter.buffer[1]);
+
 		Assert.assertEquals(0, stringWriter.getBuffer().length());
 
 		// Auto flush
@@ -204,6 +206,7 @@ public class UnsyncBufferedWriterTest {
 
 		Assert.assertEquals(1, unsyncBufferedWriter.count);
 		Assert.assertEquals('a', unsyncBufferedWriter.buffer[0]);
+
 		Assert.assertEquals(0, stringWriter.getBuffer().length());
 
 		unsyncBufferedWriter.write('b');

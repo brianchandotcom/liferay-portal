@@ -308,6 +308,7 @@ public class MailEngine {
 					DataSource dataSource = new FileDataSource(file);
 
 					mimeBodyPart.setDataHandler(new DataHandler(dataSource));
+
 					mimeBodyPart.setDisposition(Part.ATTACHMENT);
 
 					if (fileAttachment.getFileName() != null) {

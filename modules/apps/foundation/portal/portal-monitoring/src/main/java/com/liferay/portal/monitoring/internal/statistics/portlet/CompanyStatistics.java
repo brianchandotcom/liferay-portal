@@ -47,6 +47,7 @@ public class CompanyStatistics
 			Company company = companyLocalService.getCompanyByWebId(webId);
 
 			_companyId = company.getCompanyId();
+
 			_webId = webId;
 		}
 		catch (Exception e) {

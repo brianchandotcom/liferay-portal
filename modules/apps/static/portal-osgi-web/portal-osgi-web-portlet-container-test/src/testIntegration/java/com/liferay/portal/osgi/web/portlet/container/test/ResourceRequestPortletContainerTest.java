@@ -103,6 +103,7 @@ public class ResourceRequestPortletContainerTest
 				"Reject serveResource for " + layoutURL +
 					" on '\"><script>alert(1)</script>",
 				loggingEvent.getMessage());
+
 			Assert.assertEquals(400, response.getCode());
 		}
 	}
@@ -186,6 +187,7 @@ public class ResourceRequestPortletContainerTest
 			url, Collections.singletonMap("Cookie", response.getCookies()));
 
 		Assert.assertEquals(200, response.getCode());
+
 		Assert.assertTrue(testTargetPortlet.isCalledServeResource());
 	}
 
@@ -206,6 +208,7 @@ public class ResourceRequestPortletContainerTest
 			portletURL.toString());
 
 		Assert.assertEquals(200, response.getCode());
+
 		Assert.assertTrue(testPortlet.isCalledServeResource());
 	}
 
@@ -254,6 +257,7 @@ public class ResourceRequestPortletContainerTest
 			portletURL.toString());
 
 		Assert.assertEquals(200, response.getCode());
+
 		Assert.assertTrue(testRuntimePortlet.isCalledRender());
 	}
 

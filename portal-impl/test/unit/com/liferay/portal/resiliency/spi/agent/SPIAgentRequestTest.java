@@ -546,6 +546,7 @@ public class SPIAgentRequestTest {
 		String[] parameter3 = parameterMap.get(_PARAMETER_NAME_3);
 
 		Assert.assertEquals(0, parameter3.length);
+
 		Assert.assertEquals(
 			_PARAMETER_VALUE_1,
 			populatedHttpServletRequest.getParameter(_PARAMETER_NAME_1));

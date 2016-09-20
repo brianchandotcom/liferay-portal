@@ -57,6 +57,7 @@ public class NodeExecutor {
 		File workingDir = getWorkingDir();
 
 		processBuilder.directory(workingDir);
+
 		processBuilder.inheritIO();
 
 		updateEnvironment(processBuilder.environment());

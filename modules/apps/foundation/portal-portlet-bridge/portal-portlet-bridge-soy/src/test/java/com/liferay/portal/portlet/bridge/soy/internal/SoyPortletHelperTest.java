@@ -96,6 +96,7 @@ public class SoyPortletHelperTest {
 
 		jsonObject.put("element", StringPool.POUND.concat(portletComponentId));
 		jsonObject.put("id", portletComponentId);
+
 		jsonObject.put("key 1", "value 1");
 
 		String expectedPortletJavaScript =

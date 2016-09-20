@@ -137,6 +137,7 @@ public class SharepointRequest {
 				String[] kvp = param.split(StringPool.EQUAL);
 
 				String key = HttpUtil.decodeURL(kvp[0]);
+
 				String value = StringPool.BLANK;
 
 				if (kvp.length > 1) {

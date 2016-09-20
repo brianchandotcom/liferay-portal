@@ -220,6 +220,7 @@ public class DDLDisplayExportImportPortletPreferencesProcessor
 				}
 
 			});
+
 		recordActionableDynamicQuery.setGroupId(recordSet.getGroupId());
 		recordActionableDynamicQuery.setPerformActionMethod(
 			new ActionableDynamicQuery.PerformActionMethod<DDLRecord>() {

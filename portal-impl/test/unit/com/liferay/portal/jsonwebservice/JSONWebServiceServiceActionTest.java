@@ -111,6 +111,7 @@ public class JSONWebServiceServiceActionTest
 
 		MockHttpServletRequest mockHttpServletRequest =
 			createInvokerHttpServletRequest(json);
+
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
@@ -138,6 +139,7 @@ public class JSONWebServiceServiceActionTest
 
 		MockHttpServletRequest mockHttpServletRequest =
 			createInvokerHttpServletRequest(json);
+
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 

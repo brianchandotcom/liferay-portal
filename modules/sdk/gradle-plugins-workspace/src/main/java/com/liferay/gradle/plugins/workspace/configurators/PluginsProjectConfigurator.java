@@ -64,6 +64,7 @@ public class PluginsProjectConfigurator extends BaseProjectConfigurator {
 			project, workspaceExtension);
 
 		addTaskBuild(project, updatePropertiesTask);
+
 		configureTaskWar(project, workspaceExtension, initBundleTask);
 
 		configureRootTaskDistBundle(

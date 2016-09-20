@@ -90,6 +90,7 @@ public class FindPageAction extends FindStrutsAction {
 		WikiNode node = _wikiNodeLocalService.getNode(pageResource.getNodeId());
 
 		portletURL.setParameter("nodeName", node.getName());
+
 		portletURL.setParameter("title", pageResource.getTitle());
 
 		return portletURL;

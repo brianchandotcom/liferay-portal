@@ -154,6 +154,7 @@ public class CXFEndpointPublisher {
 			properties.put(
 				HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_NAME,
 				contextName);
+
 			properties.put(
 				HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_PATH,
 				contextPath);

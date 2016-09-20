@@ -301,6 +301,7 @@ public class ConstantsBeanFactoryImplTest {
 
 		Assert.assertNotSame(constantsBean1, constantsBean2);
 		Assert.assertNotSame(constantsBeanClass1, constantsBean2.getClass());
+
 		Assert.assertEquals(2, constantsBeans.size());
 
 		// Hit cache

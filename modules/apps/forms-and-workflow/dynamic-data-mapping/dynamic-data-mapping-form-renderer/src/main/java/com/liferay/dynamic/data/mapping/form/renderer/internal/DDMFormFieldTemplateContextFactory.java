@@ -106,6 +106,7 @@ public class DDMFormFieldTemplateContextFactory {
 
 		setDDMFormFieldTemplateContextDataType(
 			ddmFormFieldTemplateContext, ddmFormField.getDataType());
+
 		setDDMFormFieldTemplateContextDir(ddmFormFieldTemplateContext);
 		setDDMFormFieldTemplateContextLocalizedValue(
 			ddmFormFieldTemplateContext, "label", ddmFormField.getLabel());
@@ -125,6 +126,7 @@ public class DDMFormFieldTemplateContextFactory {
 
 		setDDMFormFieldTemplateContextNestedTemplateContexts(
 			ddmFormFieldTemplateContext, nestedDDMFormFieldTemplateContext);
+
 		setDDMFormFieldTemplateContextReadOnly(
 			ddmFormFieldTemplateContext, ddmFormField.isReadOnly());
 		setDDMFormFieldTemplateContextRepeatable(
@@ -329,6 +331,7 @@ public class DDMFormFieldTemplateContextFactory {
 			LocalizedValue localizedValue = entry.getValue();
 
 			option.put("label", localizedValue.getString(_locale));
+
 			option.put("value", entry.getKey());
 
 			list.add(option);

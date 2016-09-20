@@ -463,6 +463,7 @@ public class LicenseUtil {
 		bytes = Encryptor.encryptUnencoded(_symmetricKey, bytes);
 
 		jsonObject.put("content", Base64.objectToString(bytes));
+
 		jsonObject.put("key", _encryptedSymmetricKey);
 
 		return jsonObject.toString().getBytes(StringPool.UTF8);

@@ -132,6 +132,7 @@ public class NettyRepositoryTest {
 		Assert.assertSame(_repositoryPath, nettyRepository.getRepositoryPath());
 		Assert.assertEquals(Long.MAX_VALUE, nettyRepository.getFileTimeout);
 		Assert.assertNotNull(nettyRepository.pathMap);
+
 		Assert.assertTrue(
 			_annotatedObjectDecoder.removeFirst() instanceof
 				FileResponseChannelHandler);
@@ -166,6 +167,7 @@ public class NettyRepositoryTest {
 			Path localFilePath = noticeableFuture.get();
 
 			Assert.assertNotNull(localFilePath);
+
 			Assert.assertTrue(Files.notExists(tempFilePath));
 			Assert.assertTrue(Files.exists(localFilePath));
 			Assert.assertEquals(1, pathMap.size());
@@ -225,6 +227,7 @@ public class NettyRepositoryTest {
 			Assert.assertSame(localFilePath, noticeableFuture2.get());
 			Assert.assertSame(localFilePath, fileResponse.getLocalFile());
 			Assert.assertNotNull(localFilePath);
+
 			Assert.assertTrue(Files.notExists(tempFilePath));
 			Assert.assertTrue(Files.exists(localFilePath));
 			Assert.assertEquals(1, pathMap.size());
@@ -484,6 +487,7 @@ public class NettyRepositoryTest {
 			Paths.get("localFile1"));
 
 		pathMap.put(remoteFilePath1, localFilePath);
+
 		pathMap.put(remoteFilePath2, Paths.get("localFile2"));
 
 		NoticeableFuture<Map<Path, Path>> noticeableFuture =
@@ -535,6 +539,7 @@ public class NettyRepositoryTest {
 		Path remoteFilePath1 = Paths.get("remoteFile1");
 
 		pathMap.put(remoteFilePath1, Paths.get("localFile1"));
+
 		pathMap.put(Paths.get("remoteFile2"), Paths.get("requestFile2"));
 
 		NoticeableFuture<Map<Path, Path>> noticeableFuture =
@@ -623,6 +628,7 @@ public class NettyRepositoryTest {
 		Path remoteFilePath1 = Paths.get("remoteFile1");
 
 		pathMap.put(remoteFilePath1, Paths.get("requestFile1"));
+
 		pathMap.put(Paths.get("remoteFile2"), Paths.get("requestFile2"));
 
 		NoticeableFuture<Map<Path, Path>> noticeableFuture =

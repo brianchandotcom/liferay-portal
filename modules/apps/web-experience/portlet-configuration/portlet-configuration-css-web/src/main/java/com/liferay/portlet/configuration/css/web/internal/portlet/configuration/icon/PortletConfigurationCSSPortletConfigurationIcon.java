@@ -82,6 +82,7 @@ public class PortletConfigurationCSSPortletConfigurationIcon
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		sb.append(portletDisplay.getId());
+
 		sb.append("', '");
 		sb.append(baseActionURL);
 		sb.append("', '");

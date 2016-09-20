@@ -217,6 +217,7 @@ public class WebFormUtil {
 				new String[] {"\\n", "\\n", "\\n"});
 
 			sb.append(HtmlUtil.escapeJS(value));
+
 			sb.append("';\n");
 		}
 

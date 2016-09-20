@@ -129,6 +129,7 @@ public class PortletBagFactoryTest extends TestCase {
 			Class<?> clazz = getClass();
 
 			portletBagFactory.setClassLoader(clazz.getClassLoader());
+
 			portletBagFactory.setServletContext(new MockServletContext());
 			portletBagFactory.setWARFile(false);
 

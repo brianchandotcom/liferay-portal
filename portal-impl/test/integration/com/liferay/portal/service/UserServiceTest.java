@@ -758,6 +758,7 @@ public class UserServiceTest {
 						_user.getCompanyId(), _user.getEmailAddress());
 
 				Assert.assertTrue(sentPassword);
+
 				Assert.assertEquals(
 					initialInboxSize + 1, MailServiceTestUtil.getInboxSize());
 				Assert.assertTrue(
@@ -781,6 +782,7 @@ public class UserServiceTest {
 					_user.getCompanyId(), _user.getScreenName());
 
 				Assert.assertTrue(sentPassword);
+
 				Assert.assertEquals(
 					initialInboxSize + 1, MailServiceTestUtil.getInboxSize());
 				Assert.assertTrue(
@@ -804,6 +806,7 @@ public class UserServiceTest {
 					_user.getUserId());
 
 				Assert.assertTrue(sentPassword);
+
 				Assert.assertEquals(
 					initialInboxSize + 1, MailServiceTestUtil.getInboxSize());
 				Assert.assertTrue(
@@ -828,6 +831,7 @@ public class UserServiceTest {
 						_user.getCompanyId(), _user.getEmailAddress());
 
 				Assert.assertFalse(sentPassword);
+
 				Assert.assertEquals(
 					initialInboxSize + 1, MailServiceTestUtil.getInboxSize());
 				Assert.assertTrue(
@@ -851,6 +855,7 @@ public class UserServiceTest {
 					_user.getCompanyId(), _user.getScreenName());
 
 				Assert.assertFalse(sentPassword);
+
 				Assert.assertEquals(
 					initialInboxSize + 1, MailServiceTestUtil.getInboxSize());
 				Assert.assertTrue(
@@ -874,6 +879,7 @@ public class UserServiceTest {
 					_user.getUserId());
 
 				Assert.assertFalse(sentPassword);
+
 				Assert.assertEquals(
 					initialInboxSize + 1, MailServiceTestUtil.getInboxSize());
 				Assert.assertTrue(

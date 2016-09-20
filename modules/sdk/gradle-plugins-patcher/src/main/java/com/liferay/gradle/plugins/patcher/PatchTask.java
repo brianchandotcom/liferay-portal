@@ -501,6 +501,7 @@ public class PatchTask extends DefaultTask {
 			String moduleGroup = getOriginalLibModuleGroup();
 
 			sb.append(moduleGroup.replace('.', '/'));
+
 			sb.append('/');
 		}
 

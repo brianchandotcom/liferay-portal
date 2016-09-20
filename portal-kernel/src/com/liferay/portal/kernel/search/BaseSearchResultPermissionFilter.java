@@ -88,6 +88,7 @@ public abstract class BaseSearchResultPermissionFilter
 			int amplifiedEnd = offset + amplifiedCount;
 
 			searchContext.setEnd(amplifiedEnd);
+
 			searchContext.setStart(offset);
 
 			Hits hits = getHits(searchContext);

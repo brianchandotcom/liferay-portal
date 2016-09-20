@@ -147,6 +147,7 @@ public class RecurrenceMonthlyByDayTest extends RecurrenceTestCase {
 		DayAndPosition[] days = {new DayAndPosition(day, position)};
 
 		recurrence.setByDay(days);
+
 		recurrence.setInterval(interval);
 
 		return recurrence;

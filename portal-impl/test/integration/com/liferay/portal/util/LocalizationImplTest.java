@@ -146,6 +146,7 @@ public class LocalizationImplTest {
 
 		String languageIdsFromDoc = LocalizationUtil.getDefaultLanguageId(
 			document);
+
 		String languageIdsFromXml = LocalizationUtil.getDefaultLanguageId(_xml);
 
 		Assert.assertEquals(

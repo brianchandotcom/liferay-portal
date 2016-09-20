@@ -154,6 +154,7 @@ public class ChatPollerProcessor extends BasePollerProcessor {
 				firstName, middleName, lastName);
 
 			curUserJSONObject.put("fullName", fullName);
+
 			curUserJSONObject.put("groupId", groupId);
 			curUserJSONObject.put("portraitId", portraitId);
 
@@ -167,6 +168,7 @@ public class ChatPollerProcessor extends BasePollerProcessor {
 			String statusMessage = buddyStatus.getMessage();
 
 			curUserJSONObject.put("statusMessage", statusMessage);
+
 			curUserJSONObject.put("userId", userId);
 
 			buddiesJSONArray.put(curUserJSONObject);

@@ -81,6 +81,7 @@ public class BaseConcurrentReferenceHashMapTestCase {
 		Iterator<Object> valueIterator = values.iterator();
 
 		Assert.assertSame(testValue2, valueIterator.next());
+
 		Assert.assertSame(
 			testValue2, concurrentMap.replace(testKey, new Object()));
 		Assert.assertEquals(1, finalizeActions.size());

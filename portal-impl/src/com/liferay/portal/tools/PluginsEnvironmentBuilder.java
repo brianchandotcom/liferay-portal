@@ -563,6 +563,7 @@ public class PluginsEnvironmentBuilder {
 
 					globalJars.addAll(
 						ListUtil.sort(ListUtil.toList(fileNames)));
+
 					globalJars.removeAll(extGlobalJars);
 				}
 				else if (dirName.equals("portal")) {
@@ -574,6 +575,7 @@ public class PluginsEnvironmentBuilder {
 
 					portalJars.addAll(
 						ListUtil.sort(ListUtil.toList(fileNames)));
+
 					portalJars.removeAll(extPortalJars);
 				}
 			}

@@ -84,6 +84,7 @@ public abstract class BaseCMISRepositoryFactory<T extends CMISRepositoryHandler>
 		baseRepository.setCmisRepository(cmisRepository);
 
 		setupRepository(repositoryId, repository, cmisRepository);
+
 		setupRepository(repositoryId, repository, baseRepository);
 
 		if (!ExportImportThreadLocal.isImportInProcess()) {

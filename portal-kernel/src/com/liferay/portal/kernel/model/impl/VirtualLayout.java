@@ -188,6 +188,7 @@ public class VirtualLayout extends LayoutWrapper {
 			int pos = layoutURL.indexOf(group.getFriendlyURL());
 
 			sb.append(layoutURL.substring(0, pos));
+
 			sb.append(_targetGroup.getFriendlyURL());
 			sb.append(getFriendlyURL(locale));
 

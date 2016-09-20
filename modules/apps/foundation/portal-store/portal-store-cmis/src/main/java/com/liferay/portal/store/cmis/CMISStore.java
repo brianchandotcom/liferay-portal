@@ -569,6 +569,7 @@ public class CMISStore extends BaseStore {
 			SessionParameter.LOCALE_ISO3166_COUNTRY, locale.getCountry());
 		parameters.put(
 			SessionParameter.LOCALE_ISO639_LANGUAGE, locale.getLanguage());
+
 		parameters.put(
 			SessionParameter.PASSWORD,
 			cmisStoreConfiguration.credentialsPassword());

@@ -131,6 +131,7 @@ public class MediaWikiImporter implements WikiImporter {
 			processRegularPages(
 				userId, node, rootElement, specialNamespaces, usersMap,
 				imagesInputStream, options);
+
 			processImages(userId, node, imagesInputStream);
 
 			moveFrontPage(userId, node, options);

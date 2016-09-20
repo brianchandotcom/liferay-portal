@@ -266,6 +266,7 @@ public class SampleSQLBuilder {
 				miscSQL = db.buildSQL(miscSQL);
 
 				miscSQLWriter.write(miscSQL);
+
 				miscSQLWriter.write(StringPool.NEW_LINE);
 			}
 		}

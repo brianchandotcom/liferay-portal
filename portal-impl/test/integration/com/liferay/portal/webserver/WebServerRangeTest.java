@@ -112,6 +112,7 @@ public class WebServerRangeTest extends BaseWebServerTestCase {
 				_SAMPLE_DATA.getBytes(), start, end + 1);
 
 			Assert.assertArrayEquals(bytes, lines[3].getBytes("UTF-8"));
+
 			Assert.assertEquals(StringPool.DOUBLE_DASH, lines[4]);
 		}
 	}

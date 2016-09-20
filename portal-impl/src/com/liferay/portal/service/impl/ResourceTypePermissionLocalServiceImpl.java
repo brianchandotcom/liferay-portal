@@ -146,6 +146,7 @@ public class ResourceTypePermissionLocalServiceImpl
 				companyId, groupId, name, roleId);
 
 		long actionIdsLong = resourceTypePermission.getActionIds();
+
 		long bitwiseValue = resourceAction.getBitwiseValue();
 
 		if ((actionIdsLong & bitwiseValue) == bitwiseValue) {

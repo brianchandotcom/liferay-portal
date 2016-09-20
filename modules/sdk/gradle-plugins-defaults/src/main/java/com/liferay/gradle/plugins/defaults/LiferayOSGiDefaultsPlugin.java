@@ -837,6 +837,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			project, JavaPlugin.RUNTIME_CONFIGURATION_NAME);
 
 		copy.from(configuration);
+
 		copy.into(libDir);
 		copy.rename(
 			new RenameDependencyClosure(project, configuration.getName()));

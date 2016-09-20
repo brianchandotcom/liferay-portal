@@ -150,6 +150,7 @@ public class ServiceTrackerCollectionsTest {
 			InterfaceOne.class, "(a.property=G)");
 
 		Assert.assertEquals(0, interfaceOnes.size());
+
 		Assert.assertEquals(0, serviceTrackerList.size());
 	}
 
@@ -204,6 +205,7 @@ public class ServiceTrackerCollectionsTest {
 			InterfaceOne.class, "(a.property=G)");
 
 		Assert.assertEquals(0, interfaceOnes.size());
+
 		Assert.assertEquals(0, serviceTrackerList.size());
 	}
 
@@ -255,6 +257,7 @@ public class ServiceTrackerCollectionsTest {
 			InterfaceOne.class, "(a.property=G)");
 
 		Assert.assertEquals(1, interfaceOnes.size());
+
 		Assert.assertEquals(1, counter.intValue());
 
 		serviceRegistrationA.unregister();
@@ -273,6 +276,7 @@ public class ServiceTrackerCollectionsTest {
 			InterfaceOne.class, "(a.property=G)");
 
 		Assert.assertEquals(0, interfaceOnes.size());
+
 		Assert.assertEquals(0, serviceTrackerList.size());
 		Assert.assertEquals(2, counter.intValue());
 	}
@@ -321,6 +325,7 @@ public class ServiceTrackerCollectionsTest {
 			InterfaceOne.class, "(a.property=G)");
 
 		Assert.assertEquals(1, interfaceOnes.size());
+
 		Assert.assertEquals(1, counter.intValue());
 
 		serviceRegistrationA.unregister();
@@ -339,6 +344,7 @@ public class ServiceTrackerCollectionsTest {
 			InterfaceOne.class, "(a.property=G)");
 
 		Assert.assertEquals(0, interfaceOnes.size());
+
 		Assert.assertEquals(0, serviceTrackerList.size());
 		Assert.assertEquals(2, counter.intValue());
 	}
@@ -392,6 +398,7 @@ public class ServiceTrackerCollectionsTest {
 			InterfaceOne.class, "(a.property=G)");
 
 		Assert.assertEquals(0, interfaceOnes.size());
+
 		Assert.assertEquals(0, serviceTrackerList.size());
 	}
 
@@ -481,6 +488,7 @@ public class ServiceTrackerCollectionsTest {
 			InterfaceOne.class, "(a.property=G)");
 
 		Assert.assertEquals(2, interfaceOnes.size());
+
 		Assert.assertEquals(2, counter.intValue());
 
 		serviceRegistrationA.unregister();
@@ -499,6 +507,7 @@ public class ServiceTrackerCollectionsTest {
 			InterfaceOne.class, "(a.property=G)");
 
 		Assert.assertEquals(0, interfaceOnes.size());
+
 		Assert.assertEquals(0, serviceTrackerList.size());
 		Assert.assertEquals(4, counter.intValue());
 	}
@@ -544,6 +553,7 @@ public class ServiceTrackerCollectionsTest {
 			InterfaceOne.class, "(a.property=G)");
 
 		Assert.assertEquals(1, interfaceOnes.size());
+
 		Assert.assertEquals(2, counter.intValue());
 
 		serviceRegistrationA.unregister();
@@ -562,6 +572,7 @@ public class ServiceTrackerCollectionsTest {
 			InterfaceOne.class, "(a.property=G)");
 
 		Assert.assertEquals(0, interfaceOnes.size());
+
 		Assert.assertEquals(0, serviceTrackerList.size());
 		Assert.assertEquals(4, counter.intValue());
 	}

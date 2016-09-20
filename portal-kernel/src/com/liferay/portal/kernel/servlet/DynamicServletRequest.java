@@ -62,6 +62,7 @@ public class DynamicServletRequest extends HttpServletRequestWrapper {
 				parameter, CharPool.EQUAL);
 
 			String name = parameterParts[0];
+
 			String value = StringPool.BLANK;
 
 			if (parameterParts.length == 2) {

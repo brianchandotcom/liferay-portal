@@ -422,6 +422,7 @@ public class MarketplaceStorePortlet extends RemoteMVCPortlet {
 		addOAuthParameter(
 			oAuthRequest, serverNamespace.concat("appPackageId"),
 			String.valueOf(appPackageId));
+
 		addOAuthParameter(oAuthRequest, "p_p_lifecycle", "2");
 
 		if (unlicensed) {

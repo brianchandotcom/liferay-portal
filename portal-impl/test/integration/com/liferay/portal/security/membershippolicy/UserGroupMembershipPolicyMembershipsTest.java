@@ -102,6 +102,7 @@ public class UserGroupMembershipPolicyMembershipsTest
 			initialUserGroupUsersCount + 2,
 			UserLocalServiceUtil.getUserGroupUsersCount(
 				requiredUserGroupIds[0]));
+
 		Assert.assertTrue(isPropagateMembership());
 	}
 
@@ -267,6 +268,7 @@ public class UserGroupMembershipPolicyMembershipsTest
 			initialUserUserGroupCount - 1,
 			UserLocalServiceUtil.getUserGroupUsersCount(
 				standardUserGroupIds[0]));
+
 		Assert.assertTrue(isPropagateMembership());
 	}
 

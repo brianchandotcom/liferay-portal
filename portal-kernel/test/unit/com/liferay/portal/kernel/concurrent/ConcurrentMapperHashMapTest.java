@@ -123,6 +123,7 @@ public class ConcurrentMapperHashMapTest {
 		Assert.assertTrue(entrySet.isEmpty());
 		Assert.assertFalse(entrySet.contains(new Object()));
 		Assert.assertFalse(entrySet.remove(new Object()));
+
 		Assert.assertNull(_concurrentMap.put(_testKey, _testValue));
 
 		_assertEventQueue(Event.MAP_KEY, Event.MAP_VALUE);

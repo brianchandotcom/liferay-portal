@@ -280,6 +280,7 @@ public class ItemSelectorImpl implements ItemSelector {
 			Class<?> clazz = itemSelectorCriterion.getClass();
 
 			sb.append(clazz.getName());
+
 			sb.append(StringPool.COMMA);
 		}
 

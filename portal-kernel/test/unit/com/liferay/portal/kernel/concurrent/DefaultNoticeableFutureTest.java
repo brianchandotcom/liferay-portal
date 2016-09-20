@@ -78,6 +78,7 @@ public class DefaultNoticeableFutureTest {
 			recordedFutureListener1.hashCode() +
 				recordedFutureListener2.hashCode(),
 			futureListeners.hashCode());
+
 		Assert.assertFalse(
 			_defaultNoticeableFuture.addFutureListener(
 				recordedFutureListener1));
@@ -201,6 +202,7 @@ public class DefaultNoticeableFutureTest {
 		defaultNoticeableFuture.run();
 
 		Assert.assertSame(flag, defaultNoticeableFuture.get());
+
 		Assert.assertTrue(flag.get());
 
 		defaultNoticeableFuture = new DefaultNoticeableFuture<Object>(
@@ -217,6 +219,7 @@ public class DefaultNoticeableFutureTest {
 		defaultNoticeableFuture.run();
 
 		Assert.assertSame(flag, defaultNoticeableFuture.get());
+
 		Assert.assertFalse(flag.get());
 	}
 

@@ -123,6 +123,7 @@ public class ElasticsearchUpdateDocumentCommandImpl
 			elasticsearchDocumentFactory.getElasticsearchDocument(document);
 
 		updateRequestBuilder.setDoc(elasticSearchDocument);
+
 		updateRequestBuilder.setDocAsUpsert(true);
 		updateRequestBuilder.setRetryOnConflict(
 			_elasticsearchConfiguration.retryOnConflict());

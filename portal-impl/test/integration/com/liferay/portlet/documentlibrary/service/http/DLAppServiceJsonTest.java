@@ -143,6 +143,7 @@ public class DLAppServiceJsonTest extends BaseJsonClientTestCase {
 		checkException(responseContent);
 
 		String uuid = parseResponseContent(responseContent, "uuid", true);
+
 		String groupId = String.valueOf(_group.getGroupId());
 
 		String url = StringUtil.replace(

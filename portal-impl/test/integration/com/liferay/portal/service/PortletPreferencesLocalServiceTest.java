@@ -97,6 +97,7 @@ public class PortletPreferencesLocalServiceTest {
 				portletPreferences);
 
 		assertOwner(_layout, portletPreferencesImpl);
+
 		assertValues(portletPreferences, _NAME, _MULTIPLE_VALUES);
 	}
 
@@ -156,6 +157,7 @@ public class PortletPreferencesLocalServiceTest {
 				portletPreferences);
 
 		assertOwner(_layout, portletPreferencesImpl);
+
 		assertValues(portletPreferences, _NAME, _SINGLE_VALUE);
 	}
 
@@ -176,6 +178,7 @@ public class PortletPreferencesLocalServiceTest {
 				portletPreferences);
 
 		assertOwner(_layout, portletPreferencesImpl);
+
 		assertValues(portletPreferences, _NAME, _SINGLE_VALUE);
 	}
 

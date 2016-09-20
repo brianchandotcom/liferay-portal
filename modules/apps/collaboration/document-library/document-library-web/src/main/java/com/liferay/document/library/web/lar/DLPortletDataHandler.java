@@ -357,6 +357,7 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 				}
 
 			});
+
 		actionableDynamicQuery.setPerformActionMethod(
 			new ActionableDynamicQuery.PerformActionMethod<DLFileEntryType>() {
 
@@ -399,6 +400,7 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 				}
 
 			});
+
 		exportActionableDynamicQuery.setPerformActionMethod(
 			new ActionableDynamicQuery.PerformActionMethod<DLFileShortcut>() {
 
@@ -540,6 +542,7 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 				}
 
 			});
+
 		exportActionableDynamicQuery.setPerformActionMethod(
 			new ActionableDynamicQuery.PerformActionMethod<DLFolder>() {
 
@@ -618,6 +621,7 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 				}
 
 			});
+
 		exportActionableDynamicQuery.setStagedModelType(
 			new StagedModelType(
 				PortalUtil.getClassNameId(Repository.class.getName()),

@@ -365,6 +365,7 @@ public class DDMTemplateLocalServiceTest extends BaseDDMServiceTestCase {
 			classNameId1, classPK1, _resourceClassNameId,
 			StringUtil.randomString(), StringUtil.randomString(),
 			WorkflowConstants.STATUS_APPROVED);
+
 		addDisplayTemplate(
 			classNameId1, RandomTestUtil.randomLong(), _resourceClassNameId,
 			StringUtil.randomString(), StringUtil.randomString(),

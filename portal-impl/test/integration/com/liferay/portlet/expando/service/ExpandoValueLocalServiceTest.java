@@ -198,6 +198,7 @@ public class ExpandoValueLocalServiceTest {
 
 		Assert.assertEquals(_ptLocale, availableLocales.get(0));
 		Assert.assertEquals(_enLocale, availableLocales.get(1));
+
 		Assert.assertEquals("um", value.getString(_ptLocale));
 		Assert.assertEquals("one", value.getString(_enLocale));
 		Assert.assertEquals("um", value.getString(_frLocale));

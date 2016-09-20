@@ -69,6 +69,7 @@ public class ObjectDecodeChannelInboundHandlerTest {
 
 		Assert.assertSame(
 			uuid, dateChannelHandler.channelRead(null, uuid, null));
+
 		Assert.assertNull(dateChannelHandler.getDate());
 
 		Date date = new Date();
@@ -145,6 +146,7 @@ public class ObjectDecodeChannelInboundHandlerTest {
 
 		Assert.assertEquals(1, map.size());
 		Assert.assertTrue(map.containsValue(annotatedObjectDecoder));
+
 		Assert.assertSame(
 			dateChannelHandler, annotatedObjectDecoder.removeLast());
 	}

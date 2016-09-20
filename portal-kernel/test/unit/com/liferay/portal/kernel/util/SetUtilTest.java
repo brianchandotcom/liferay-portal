@@ -55,6 +55,7 @@ public class SetUtilTest {
 		Set<String> set3 = new HashSet<>(Arrays.asList("c", "d", "e"));
 
 		Assert.assertSame(set1, SetUtil.intersect(set1, set3));
+
 		Assert.assertEquals(set1, new HashSet<String>(Arrays.asList("c")));
 	}
 

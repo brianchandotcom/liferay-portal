@@ -156,6 +156,7 @@ public class CompareVersionsMVCRenderCommand implements MVCRenderCommand {
 			new InputStreamReader(sourceIs), new InputStreamReader(targetIs));
 
 		renderRequest.setAttribute(WebKeys.DIFF_RESULTS, diffResults);
+
 		renderRequest.setAttribute(
 			WebKeys.SOURCE_NAME,
 			sourceFileVersion.getTitle() + StringPool.SPACE +

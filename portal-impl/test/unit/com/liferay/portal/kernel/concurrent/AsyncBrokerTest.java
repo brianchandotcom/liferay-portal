@@ -280,6 +280,7 @@ public class AsyncBrokerTest {
 				asyncBroker, "_defaultNoticeableFutures");
 
 		Assert.assertTrue(defaultNoticeableFutures.isEmpty());
+
 		Assert.assertNull(asyncBroker.take(_KEY));
 
 		NoticeableFuture<String> noticeableFuture = asyncBroker.post(_KEY);
@@ -334,6 +335,7 @@ public class AsyncBrokerTest {
 				asyncBroker, "_defaultNoticeableFutures");
 
 		Assert.assertTrue(defaultNoticeableFutures.isEmpty());
+
 		Assert.assertFalse(asyncBroker.takeWithResult(_KEY, _VALUE));
 
 		NoticeableFuture<String> noticeableFuture = asyncBroker.post(_KEY);

@@ -316,6 +316,7 @@ public class WebFormPortlet extends MVCPortlet {
 			String fieldValue = fieldsMap.get(fieldLabel);
 
 			sb.append(getCSVFormattedValue(fieldValue));
+
 			sb.append(_webFormGroupServiceConfiguration.csvSeparator());
 		}
 
@@ -382,6 +383,7 @@ public class WebFormPortlet extends MVCPortlet {
 						fieldName, row.getClassPK(), StringPool.BLANK);
 
 					sb.append(getCSVFormattedValue(data));
+
 					sb.append(_webFormGroupServiceConfiguration.csvSeparator());
 				}
 

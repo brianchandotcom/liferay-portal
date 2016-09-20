@@ -64,6 +64,7 @@ public class DDLRecordDDMFormValuesReaderTest {
 			createTextDDMFormField("NestedText", true));
 
 		ddmForm.addDDMFormField(textDDMFormField);
+
 		ddmForm.addDDMFormField(createTextAreaDDMFormField("TextArea"));
 
 		return ddmForm;
@@ -97,6 +98,7 @@ public class DDLRecordDDMFormValuesReaderTest {
 			createDDMFormFieldValue("NestedText"));
 
 		ddmFormValues.addDDMFormFieldValue(textDDMFormFieldValue);
+
 		ddmFormValues.addDDMFormFieldValue(createDDMFormFieldValue("TextArea"));
 
 		return ddmFormValues;

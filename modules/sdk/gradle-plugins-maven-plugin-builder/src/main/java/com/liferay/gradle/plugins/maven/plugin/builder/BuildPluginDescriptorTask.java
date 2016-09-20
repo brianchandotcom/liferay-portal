@@ -92,6 +92,7 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 		Project project = getProject();
 
 		File pomFile = project.file(System.currentTimeMillis() + ".xml");
+
 		File preparedSourceDir = null;
 
 		try {

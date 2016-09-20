@@ -59,6 +59,7 @@ public class RepositoryClassDefinition
 				repositoryDefiner, defaultRepositoryEventRegistry);
 
 		repositoryDefiner.registerRepositoryFactory(repositoryClassDefinition);
+
 		repositoryDefiner.registerRepositoryEventListeners(
 			defaultRepositoryEventRegistry);
 

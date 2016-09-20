@@ -218,6 +218,7 @@ public class DLFileEntryTrashHandlerTest
 		Assert.assertEquals(
 			DLUtil.getSanitizedFileName(title, dlFileEntry.getExtension()),
 			dlFileEntry.getFileName());
+
 		Assert.assertEquals(
 			DLUtil.getSanitizedFileName(title, dlFileVersion.getExtension()),
 			dlFileVersion.getFileName());

@@ -74,6 +74,7 @@ public class RecurrenceSerializer {
 			recurrence.setFrequency(
 				Frequency.parse(String.valueOf(rRule.getFreq())));
 			recurrence.setInterval(rRule.getInterval());
+
 			recurrence.setTimeZone(timeZone);
 
 			DateValue dateValue = rRule.getUntil();

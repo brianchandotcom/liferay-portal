@@ -97,6 +97,7 @@ public class RenderRequestPortletContainerTest
 			Assert.assertEquals(
 				"Invalid portlet ID '\"><script>alert(1)</script>",
 				loggingEvent.getMessage());
+
 			Assert.assertEquals(200, response.getCode());
 		}
 	}
@@ -180,6 +181,7 @@ public class RenderRequestPortletContainerTest
 			url, Collections.singletonMap("Cookie", response.getCookies()));
 
 		Assert.assertEquals(200, response.getCode());
+
 		Assert.assertTrue(testTargetPortlet.isCalledRender());
 	}
 
@@ -200,6 +202,7 @@ public class RenderRequestPortletContainerTest
 			portletURL.toString());
 
 		Assert.assertEquals(200, response.getCode());
+
 		Assert.assertTrue(testPortlet.isCalledRender());
 	}
 
@@ -246,6 +249,7 @@ public class RenderRequestPortletContainerTest
 			portletURL.toString());
 
 		Assert.assertEquals(200, response.getCode());
+
 		Assert.assertTrue(testRuntimePortlet.isCalledRender());
 	}
 

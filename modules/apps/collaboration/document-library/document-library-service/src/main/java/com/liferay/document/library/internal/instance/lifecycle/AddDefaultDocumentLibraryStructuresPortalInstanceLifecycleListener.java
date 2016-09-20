@@ -277,6 +277,7 @@ public class AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener
 		Class<?> fieldClass = field.getDeclaringClass();
 
 		sb.append(fieldClass.getSimpleName());
+
 		sb.append(StringPool.UNDERLINE);
 		sb.append(field.getName());
 		sb.append("\" localizable=\"false\" required=\"false\" ");

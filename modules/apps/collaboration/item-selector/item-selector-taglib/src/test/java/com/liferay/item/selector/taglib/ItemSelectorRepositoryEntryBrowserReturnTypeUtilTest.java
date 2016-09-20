@@ -42,6 +42,7 @@ public class ItemSelectorRepositoryEntryBrowserReturnTypeUtilTest {
 			new URLItemSelectorReturnType();
 
 		itemSelectorReturnTypes.add(existingFileEntryReturnType);
+
 		itemSelectorReturnTypes.add(new Base64ItemSelectorReturnType());
 
 		ItemSelectorReturnType itemSelectorReturnType =

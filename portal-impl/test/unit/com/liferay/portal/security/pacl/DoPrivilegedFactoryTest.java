@@ -52,6 +52,7 @@ public class DoPrivilegedFactoryTest {
 
 		Assert.assertEquals(
 			wrappedClassWithNoInterfaces, classWithNoInterfaces);
+
 		Assert.assertFalse(
 			wrappedClassWithNoInterfaces instanceof DoPrivilegedBean);
 	}

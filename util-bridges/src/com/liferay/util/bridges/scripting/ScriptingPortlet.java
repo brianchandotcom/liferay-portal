@@ -267,6 +267,7 @@ public class ScriptingPortlet extends GenericPortlet {
 				String script = new String(FileUtil.getBytes(inputStream));
 
 				sb.append(script);
+
 				sb.append(StringPool.NEW_LINE);
 			}
 		}

@@ -427,6 +427,7 @@ public class InvokerPortletImpl
 				String title = invokeRender(renderRequest, renderResponse);
 
 				response.setTitle(title);
+
 				response.setContent(bufferCacheServletResponse.getString());
 				response.setTime(now + Time.SECOND * _expCache.intValue());
 			}

@@ -399,6 +399,7 @@ public class PrintArtifactPublishCommandsTask extends DefaultTask {
 		String version = String.valueOf(project.getVersion());
 
 		VersionNumber versionNumber = VersionNumber.parse(version);
+
 		VersionNumber lowestPublishedVersionNumber = VersionNumber.parse(
 			getLowestPublishedVersion());
 

@@ -35,6 +35,7 @@ public class UnsyncBufferedReaderTest {
 			stringReader, 5);
 
 		Assert.assertEquals(5, unsyncBufferedReader.buffer.length);
+
 		Assert.assertTrue(stringReader.ready());
 		Assert.assertTrue(unsyncBufferedReader.ready());
 
@@ -57,6 +58,7 @@ public class UnsyncBufferedReaderTest {
 		int read = unsyncBufferedReader.read(buffer);
 
 		Assert.assertEquals(buffer.length, read);
+
 		Assert.assertEquals('b', buffer[0]);
 		Assert.assertEquals('c', buffer[1]);
 		Assert.assertEquals('d', buffer[2]);
@@ -232,6 +234,7 @@ public class UnsyncBufferedReaderTest {
 		unsyncBufferedReader.mark(markLimit);
 
 		Assert.assertEquals(markLimit, unsyncBufferedReader.markLimitIndex);
+
 		Assert.assertEquals(0, unsyncBufferedReader.index);
 		Assert.assertEquals('a', unsyncBufferedReader.read());
 		Assert.assertEquals('b', unsyncBufferedReader.read());

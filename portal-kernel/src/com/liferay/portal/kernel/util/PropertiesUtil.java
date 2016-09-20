@@ -237,6 +237,7 @@ public class PropertiesUtil {
 			String key = enu.nextElement();
 
 			sb.append(key);
+
 			sb.append(StringPool.EQUAL);
 
 			if (safeProperties != null) {

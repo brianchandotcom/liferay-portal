@@ -78,6 +78,7 @@ public class RatingsEntryLocalServiceImpl
 
 		int totalEntries = stats.getTotalEntries() - 1;
 		double totalScore = stats.getTotalScore() - oldScore;
+
 		double averageScore = 0;
 
 		if (totalEntries > 0) {

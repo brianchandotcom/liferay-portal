@@ -95,6 +95,7 @@ public class LiferayOAuthStoreProvider implements Provider<OAuthStore> {
 		consumerSecret = _convertFromOpenSsl(consumerSecret);
 
 		oAuthConsumer.setConsumerSecret(consumerSecret);
+
 		oAuthConsumer.setKeyType(OAuthConsumerConstants.KEY_TYPE_RSA_PRIVATE);
 		oAuthConsumer.setKeyName(keyName);
 

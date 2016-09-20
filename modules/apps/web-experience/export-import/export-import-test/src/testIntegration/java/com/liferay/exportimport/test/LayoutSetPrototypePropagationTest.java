@@ -338,6 +338,7 @@ public class LayoutSetPrototypePropagationTest
 		layout = LayoutTestUtil.updateLayoutTemplateId(layout, "1_column");
 
 		Assert.assertTrue(SitesUtil.isLayoutModifiedSinceLastMerge(layout));
+
 		Assert.assertFalse(SitesUtil.isLayoutModifiedSinceLastMerge(_layout));
 
 		_layout = LayoutTestUtil.updateLayoutTemplateId(_layout, "1_column");
@@ -377,6 +378,7 @@ public class LayoutSetPrototypePropagationTest
 			layout, portletId, "showAvailableLocales", Boolean.TRUE.toString());
 
 		Assert.assertTrue(SitesUtil.isLayoutModifiedSinceLastMerge(layout));
+
 		Assert.assertFalse(SitesUtil.isLayoutModifiedSinceLastMerge(_layout));
 
 		_layout = LayoutTestUtil.updateLayoutPortletPreference(

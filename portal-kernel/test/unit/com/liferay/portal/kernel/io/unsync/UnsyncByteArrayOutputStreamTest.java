@@ -114,6 +114,7 @@ public class UnsyncByteArrayOutputStreamTest {
 		Assert.assertFalse(
 			new String(_BUFFER, charsetName1).equals(
 				unsyncByteArrayOutputStream.toString(charsetName2)));
+
 		Assert.assertEquals(
 			new String(_BUFFER, charsetName1),
 			unsyncByteArrayOutputStream.toString(charsetName1));

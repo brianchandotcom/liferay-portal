@@ -109,6 +109,7 @@ public class NettyFabricWorkerStubTest {
 			nettyFabricWorkerStub.getProcessNoticeableFuture();
 
 		Assert.assertFalse(noticeableFuture.isDone());
+
 		Assert.assertTrue(channelFuture.cancel(true));
 		Assert.assertTrue(noticeableFuture.isCancelled());
 		Assert.assertNull(
@@ -131,6 +132,7 @@ public class NettyFabricWorkerStubTest {
 
 		Assert.assertFalse(noticeableFuture.isDone());
 		Assert.assertTrue(noticeableFuture.cancel(true));
+
 		Assert.assertFalse(channelFuture.isDone());
 		Assert.assertNull(
 			ReflectionTestUtil.getFieldValue(channelFuture, "listeners"));
@@ -252,6 +254,7 @@ public class NettyFabricWorkerStubTest {
 			nettyFabricWorkerStub.getProcessNoticeableFuture();
 
 		Assert.assertFalse(noticeableFuture.isDone());
+
 		Assert.assertTrue(defaultNoticeableFuture.cancel(true));
 		Assert.assertTrue(noticeableFuture.isCancelled());
 	}

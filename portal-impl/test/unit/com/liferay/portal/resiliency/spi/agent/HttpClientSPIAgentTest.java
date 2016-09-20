@@ -278,6 +278,7 @@ public class HttpClientSPIAgentTest {
 		Assert.assertSame(
 			mockRegistrationReference,
 			httpClientSPIAgent.registrationReference);
+
 		Assert.assertEquals(
 			new InetSocketAddress(
 				InetAddressUtil.getLoopbackInetAddress(),
@@ -588,6 +589,7 @@ public class HttpClientSPIAgentTest {
 			mockHttpServletResponse,
 			mockHttpServletRequest.getAttribute(
 				WebKeys.SPI_AGENT_ORIGINAL_RESPONSE));
+
 		Assert.assertNotNull(
 			mockHttpServletRequest.getAttribute(WebKeys.SPI_AGENT_RESPONSE));
 

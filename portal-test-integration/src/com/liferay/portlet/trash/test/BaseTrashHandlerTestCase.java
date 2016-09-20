@@ -118,6 +118,7 @@ public abstract class BaseTrashHandlerTestCase {
 
 		int initialBaseModelsCount = getNotInTrashBaseModelsCount(
 			parentBaseModel);
+
 		int initialTrashEntriesCount = getTrashEntriesCount(group.getGroupId());
 
 		baseModel = addBaseModel(parentBaseModel, serviceContext);
@@ -1081,6 +1082,7 @@ public abstract class BaseTrashHandlerTestCase {
 
 		int initialBaseModelsCount = getNotInTrashBaseModelsCount(
 			parentBaseModel);
+
 		int initialTrashEntriesCount = getTrashEntriesCount(group.getGroupId());
 
 		baseModel = addBaseModel(parentBaseModel, serviceContext);
@@ -1130,6 +1132,7 @@ public abstract class BaseTrashHandlerTestCase {
 
 		int initialBaseModelsCount = getNotInTrashBaseModelsCount(
 			parentBaseModel);
+
 		int initialTrashEntriesCount = getTrashEntriesCount(group.getGroupId());
 
 		baseModel = addBaseModel(parentBaseModel, serviceContext);
@@ -1231,6 +1234,7 @@ public abstract class BaseTrashHandlerTestCase {
 
 		int initialBaseModelsCount = getNotInTrashBaseModelsCount(
 			parentBaseModel);
+
 		int initialTrashEntriesCount = getTrashEntriesCount(group.getGroupId());
 
 		baseModel = addBaseModel(parentBaseModel, serviceContext);
@@ -1250,6 +1254,7 @@ public abstract class BaseTrashHandlerTestCase {
 		Assert.assertEquals(
 			initialBaseModelsCount + 1,
 			getNotInTrashBaseModelsCount(newParentBaseModel));
+
 		Assert.assertEquals(
 			initialTrashEntriesCount + 1,
 			getTrashEntriesCount(group.getGroupId()));
@@ -1466,6 +1471,7 @@ public abstract class BaseTrashHandlerTestCase {
 
 		int initialBaseModelsCount = getNotInTrashBaseModelsCount(
 			parentBaseModel);
+
 		int initialTrashEntriesCount = getTrashEntriesCount(group.getGroupId());
 
 		baseModel = addBaseModel(parentBaseModel, serviceContext);
@@ -1514,6 +1520,7 @@ public abstract class BaseTrashHandlerTestCase {
 
 		int initialBaseModelsCount = getNotInTrashBaseModelsCount(
 			grandparentBaseModel);
+
 		int initialTrashEntriesCount = getTrashEntriesCount(group.getGroupId());
 
 		BaseModel<?> parentBaseModel = getParentBaseModel(
@@ -1831,6 +1838,7 @@ public abstract class BaseTrashHandlerTestCase {
 
 		int initialBaseModelsCount = getNotInTrashBaseModelsCount(
 			parentBaseModel);
+
 		int initialTrashEntriesCount = getTrashEntriesCount(group.getGroupId());
 
 		baseModel = addBaseModel(parentBaseModel, serviceContext);
@@ -1938,6 +1946,7 @@ public abstract class BaseTrashHandlerTestCase {
 
 		int initialBaseModelsCount = getNotInTrashBaseModelsCount(
 			parentBaseModel);
+
 		int initialTrashEntriesCount = getTrashEntriesCount(group.getGroupId());
 
 		baseModel = addBaseModel(parentBaseModel, serviceContext);
@@ -2271,6 +2280,7 @@ public abstract class BaseTrashHandlerTestCase {
 
 		int initialBaseModelsCount = getNotInTrashBaseModelsCount(
 			parentBaseModel);
+
 		int initialTrashEntriesCount = getTrashEntriesCount(group.getGroupId());
 
 		baseModel = addBaseModel(parentBaseModel, serviceContext);
@@ -2303,6 +2313,7 @@ public abstract class BaseTrashHandlerTestCase {
 
 		int initialBaseModelsCount = getNotInTrashBaseModelsCount(
 			parentBaseModel);
+
 		int initialTrashEntriesCount = getTrashEntriesCount(group.getGroupId());
 
 		baseModel = addBaseModel(parentBaseModel, serviceContext);
@@ -2471,6 +2482,7 @@ public abstract class BaseTrashHandlerTestCase {
 
 		int initialBaseModelsCount = getNotInTrashBaseModelsCount(
 			parentBaseModel);
+
 		int initialTrashEntriesCount = getTrashEntriesCount(group.getGroupId());
 
 		baseModel = addBaseModel(parentBaseModel, serviceContext);
@@ -3002,6 +3014,7 @@ public abstract class BaseTrashHandlerTestCase {
 
 		int initialBaseModelsCount = getNotInTrashBaseModelsCount(
 			parentBaseModel);
+
 		int initialTrashEntriesCount = getTrashEntriesCount(group.getGroupId());
 
 		baseModel = addBaseModel(parentBaseModel, serviceContext);

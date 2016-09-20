@@ -299,6 +299,7 @@ public abstract class BaseIntraband implements Intraband {
 			new SendSyncDatagramCompletionHandler();
 
 		datagram.completionHandler = sendSyncDatagramCompletionHandler;
+
 		datagram.completionTypes = REPLIED_ENUM_SET;
 		datagram.timeout = timeout;
 

@@ -95,6 +95,7 @@ public class PortalSessionDestroyer extends BasePortalLifecycle {
 					userId);
 
 				jsonObject.put("companyId", companyId);
+
 				jsonObject.put("sessionId", session.getId());
 				jsonObject.put("userId", userId);
 

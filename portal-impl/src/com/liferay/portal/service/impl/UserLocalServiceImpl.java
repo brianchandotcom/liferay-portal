@@ -5773,6 +5773,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				user = userPersistence.fetchByPrimaryKey(user.getUserId());
 
 				int failedLoginAttempts = user.getFailedLoginAttempts();
+
 				int maxFailures = passwordPolicy.getMaxFailure();
 
 				if ((failedLoginAttempts >= maxFailures) &&

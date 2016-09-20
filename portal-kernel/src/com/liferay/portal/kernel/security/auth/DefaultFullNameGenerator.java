@@ -92,6 +92,7 @@ public class DefaultFullNameGenerator implements FullNameGenerator {
 		String[] name = StringUtil.split(fullName, CharPool.SPACE);
 
 		firstName = name[0];
+
 		middleName = StringPool.BLANK;
 		lastName = name[name.length - 1];
 

@@ -198,6 +198,7 @@ public class VerifyGroup extends VerifyProcess {
 							GroupLocalServiceImpl.ORGANIZATION_NAME_SUFFIX;
 
 					ps2.setString(1, newName);
+
 					ps2.setLong(2, groupId);
 
 					ps2.addBatch();

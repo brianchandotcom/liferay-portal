@@ -55,6 +55,7 @@ public class SelectDDMFormFieldContextHelper {
 				optionValue);
 
 			optionMap.put("label", optionLabel.getString(_locale));
+
 			optionMap.put("value", optionValue);
 
 			options.add(optionMap);

@@ -63,6 +63,7 @@ public class RubyScriptingContainer
 				Object object = rubyArray.get(i);
 
 				sb.append(String.valueOf(object));
+
 				sb.append(StringPool.NEW_LINE);
 			}
 

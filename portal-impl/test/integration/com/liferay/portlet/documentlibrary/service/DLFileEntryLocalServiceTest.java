@@ -165,6 +165,7 @@ public class DLFileEntryLocalServiceTest {
 				expandoBridge.getAttribute("ExpandoAttributeName"));
 
 			Assert.assertEquals("ExpandoAttributeValue", attributeValue);
+
 			Assert.assertEquals(
 				fileEntryTypeId, copyFileEntry.getFileEntryTypeId());
 
@@ -192,6 +193,7 @@ public class DLFileEntryLocalServiceTest {
 			Value value = ddmFormFieldValue.getValue();
 
 			Assert.assertEquals("Text1", ddmFormFieldValue.getName());
+
 			Assert.assertEquals("Text 1 Value", value.getString(LocaleUtil.US));
 		}
 		finally {
@@ -480,6 +482,7 @@ public class DLFileEntryLocalServiceTest {
 		label.addString(LocaleUtil.US, "Text1");
 
 		ddmFormField.setLabel(label);
+
 		ddmFormField.setLocalizable(false);
 
 		ddmForm.addDDMFormField(ddmFormField);

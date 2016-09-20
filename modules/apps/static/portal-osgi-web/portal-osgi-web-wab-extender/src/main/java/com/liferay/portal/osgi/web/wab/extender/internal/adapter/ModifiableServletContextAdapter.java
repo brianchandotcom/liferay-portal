@@ -96,6 +96,7 @@ public class ModifiableServletContextAdapter
 		Class<? extends Filter> filterClass = filter.getClass();
 
 		filterRegistrationImpl.setClassName(filterClass.getName());
+
 		filterRegistrationImpl.setName(filterName);
 		filterRegistrationImpl.setInstance(filter);
 
@@ -169,6 +170,7 @@ public class ModifiableServletContextAdapter
 		Class<? extends Servlet> servetClass = servlet.getClass();
 
 		servletRegistrationImpl.setClassName(servetClass.getName());
+
 		servletRegistrationImpl.setName(servletName);
 		servletRegistrationImpl.setInstance(servlet);
 

@@ -132,6 +132,7 @@ public class RecurrenceWeeklyByDayTest extends RecurrenceTestCase {
 		};
 
 		recurrence.setByDay(days);
+
 		recurrence.setInterval(interval);
 
 		return recurrence;

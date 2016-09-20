@@ -183,6 +183,7 @@ public class DLFileEntryDDMFormValuesReaderTest {
 		label.addString(LocaleUtil.US, name);
 
 		ddmFormField.setLabel(label);
+
 		ddmFormField.setLocalizable(false);
 
 		return ddmFormField;

@@ -584,6 +584,7 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 
 		String oldPassword = AdminUtil.getUpdateUserPassword(
 			actionRequest, user.getUserId());
+
 		String newPassword1 = actionRequest.getParameter("password1");
 		String newPassword2 = actionRequest.getParameter("password2");
 		boolean passwordReset = ParamUtil.getBoolean(
@@ -648,6 +649,7 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "birthdayDay", birthdayCal.get(Calendar.DATE));
 		int birthdayYear = ParamUtil.getInteger(
 			actionRequest, "birthdayYear", birthdayCal.get(Calendar.YEAR));
+
 		String comments = BeanParamUtil.getString(
 			user, actionRequest, "comments");
 		String smsSn = BeanParamUtil.getString(contact, actionRequest, "smsSn");

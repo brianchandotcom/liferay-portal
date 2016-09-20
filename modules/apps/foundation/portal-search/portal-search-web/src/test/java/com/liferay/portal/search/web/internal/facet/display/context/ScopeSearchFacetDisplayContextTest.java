@@ -61,6 +61,7 @@ public class ScopeSearchFacetDisplayContextTest {
 				scopeSearchFacetDisplayContext.getTermDisplayContexts();
 
 		Assert.assertEquals(0, scopeSearchFacetTermDisplayContexts.size());
+
 		Assert.assertEquals(
 			facetParam,
 			scopeSearchFacetDisplayContext.getFieldParamInputValue());
@@ -96,6 +97,7 @@ public class ScopeSearchFacetDisplayContextTest {
 			groupId, scopeSearchFacetTermDisplayContext.getGroupId());
 		Assert.assertTrue(scopeSearchFacetTermDisplayContext.isSelected());
 		Assert.assertTrue(scopeSearchFacetTermDisplayContext.isShowCount());
+
 		Assert.assertEquals(
 			facetParam,
 			scopeSearchFacetDisplayContext.getFieldParamInputValue());
@@ -136,6 +138,7 @@ public class ScopeSearchFacetDisplayContextTest {
 			groupId, scopeSearchFacetTermDisplayContext.getGroupId());
 		Assert.assertFalse(scopeSearchFacetTermDisplayContext.isSelected());
 		Assert.assertTrue(scopeSearchFacetTermDisplayContext.isShowCount());
+
 		Assert.assertEquals(
 			facetParam,
 			scopeSearchFacetDisplayContext.getFieldParamInputValue());
@@ -176,6 +179,7 @@ public class ScopeSearchFacetDisplayContextTest {
 			groupId, scopeSearchFacetTermDisplayContext.getGroupId());
 		Assert.assertTrue(scopeSearchFacetTermDisplayContext.isSelected());
 		Assert.assertTrue(scopeSearchFacetTermDisplayContext.isShowCount());
+
 		Assert.assertEquals(
 			facetParam,
 			scopeSearchFacetDisplayContext.getFieldParamInputValue());

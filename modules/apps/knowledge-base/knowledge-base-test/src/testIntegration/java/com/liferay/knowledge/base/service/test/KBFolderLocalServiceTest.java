@@ -241,6 +241,7 @@ public class KBFolderLocalServiceTest {
 		KBFolder currentKBFolder = (KBFolder)kbFolderAndKBArticles.get(0);
 
 		Assert.assertEquals(1, kbFolderAndKBArticles.size());
+
 		Assert.assertEquals(
 			_kbFolder.getKbFolderId(), currentKBFolder.getKbFolderId());
 	}
@@ -635,6 +636,7 @@ public class KBFolderLocalServiceTest {
 		KBArticle currentKBArticle1 = (KBArticle)kbFolderAndKBArticles.get(1);
 
 		Assert.assertEquals(2, kbFolderAndKBArticles.size());
+
 		Assert.assertEquals(
 			_kbFolder.getKbFolderId(), currentKBFolder.getKbFolderId());
 		Assert.assertEquals(

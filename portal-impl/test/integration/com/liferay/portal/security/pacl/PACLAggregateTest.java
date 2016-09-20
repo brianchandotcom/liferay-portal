@@ -120,6 +120,7 @@ public class PACLAggregateTest extends AutoBalanceTestCase {
 		URL url = PACLAggregateTest.class.getResource("security.policy");
 
 		arguments.add("-Djava.security.policy==" + url.getFile());
+
 		arguments.add("-Dliferay.mode=test");
 
 		boolean junitDebug = Boolean.getBoolean("jvm.debug");

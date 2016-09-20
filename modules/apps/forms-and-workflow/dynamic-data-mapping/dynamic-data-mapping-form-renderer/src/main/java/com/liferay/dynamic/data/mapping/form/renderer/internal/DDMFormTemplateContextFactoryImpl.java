@@ -115,6 +115,7 @@ public class DDMFormTemplateContextFactoryImpl
 		templateContext.put(
 			"fieldTypes",
 			_ddmFormFieldTypesJSONSerializer.serialize(ddmFormFieldTypes));
+
 		templateContext.put(
 			"layout", _ddmFormLayoutJSONSerializer.serialize(ddmFormLayout));
 
@@ -122,6 +123,7 @@ public class DDMFormTemplateContextFactoryImpl
 			ddmForm, ddmFormLayout, ddmFormRenderingContext);
 
 		templateContext.put("pages", pages);
+
 		templateContext.put(
 			"portletNamespace", ddmFormRenderingContext.getPortletNamespace());
 		templateContext.put("readOnly", ddmFormRenderingContext.isReadOnly());
@@ -137,6 +139,7 @@ public class DDMFormTemplateContextFactoryImpl
 		templateContext.put(
 			"requiredFieldsWarningMessageHTML",
 			getRequiredFieldsWarningMessageHTML(resourceBundle));
+
 		templateContext.put(
 			"showRequiredFieldsWarning",
 			ddmFormRenderingContext.isShowRequiredFieldsWarning());
@@ -155,6 +158,7 @@ public class DDMFormTemplateContextFactoryImpl
 			LanguageUtil.get(locale, "submit"));
 
 		templateContext.put("submitLabel", submitLabel);
+
 		templateContext.put(
 			"templateNamespace", getTemplateNamespace(ddmFormLayout));
 

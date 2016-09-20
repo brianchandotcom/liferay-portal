@@ -116,6 +116,7 @@ public abstract class BaseBooleanQueryImpl
 					keywords.add(values.substring(0, pos));
 
 					values = values.substring(pos + 1);
+
 					values = values.trim();
 				}
 			}
@@ -126,6 +127,7 @@ public abstract class BaseBooleanQueryImpl
 					keywords.add(values.substring(0, pos));
 
 					values = values.substring(pos + 1);
+
 					values = values.trim();
 				}
 				else {

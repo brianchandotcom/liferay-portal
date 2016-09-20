@@ -123,6 +123,7 @@ public class AssetEntryQueryTest {
 			_healthAssetCategoryId, _sportAssetCategoryId,
 			_travelAssetCategoryId
 		};
+
 		_assetCategoryIds2 = new long[] {
 			_fashionAssetCategoryId, _foodAssetCategoryId,
 			_healthAssetCategoryId, _sportAssetCategoryId

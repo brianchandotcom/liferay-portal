@@ -69,6 +69,7 @@ public class ExportImportPortletConfigurationIcon
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		sb.append(portletDisplay.getNamespace());
+
 		sb.append("', portlet: '#p_p_id_");
 		sb.append(portletDisplay.getId());
 		sb.append("_', portletId: '");

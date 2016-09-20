@@ -247,6 +247,7 @@ public class SPIAgentRequest extends SPIAgentSerializable {
 				Cookie cookie = CookieUtil.deserialize(cookieBytes);
 
 				sb.append(CookieUtil.toString(cookie));
+
 				sb.append(", ");
 			}
 

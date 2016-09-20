@@ -240,6 +240,7 @@ public class UpgradeImageGallery extends UpgradeProcess {
 
 					long groupId = getCompanyGroupId(companyId);
 					long userId = getDefaultUserId(companyId);
+
 					Timestamp now = new Timestamp(System.currentTimeMillis());
 
 					addIGImageDLFileEntryType(

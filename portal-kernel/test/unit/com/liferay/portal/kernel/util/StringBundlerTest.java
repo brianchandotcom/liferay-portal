@@ -899,6 +899,7 @@ public class StringBundlerTest {
 			sb.append("4");
 
 			Assert.assertEquals("1234", sb.toString());
+
 			Assert.assertNull(
 				ReflectionTestUtil.getFieldValue(
 					StringBundler.class, "_unsafeStringBuilderThreadLocal"));

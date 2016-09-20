@@ -316,6 +316,7 @@ public class V2MarkupServiceImpl
 				String content = new String(itemBinary);
 
 				resourceContext.setItemString(content);
+
 				resourceContext.setRequiresRewriting(true);
 			}
 			else {
@@ -784,6 +785,7 @@ public class V2MarkupServiceImpl
 						ExtensionHelperUtil.getNameAttribute(formParameter));
 
 					sb.append(name);
+
 					sb.append(StringPool.EQUAL);
 					sb.append(HttpUtil.encodeURL(formParameter.getValue()));
 				}
@@ -866,6 +868,7 @@ public class V2MarkupServiceImpl
 				int pos = contentType.indexOf(StringPool.SEMICOLON);
 
 				charSet = contentType.substring(pos + 1);
+
 				charSet = StringUtil.trim(charSet);
 
 				contentType = contentType.substring(0, pos);

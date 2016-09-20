@@ -203,6 +203,7 @@ public class JspCompiler extends Jsr199JavaCompiler {
 				Bundle currentBundle = curBundleWiring.getBundle();
 
 				sb.append(currentBundle.getSymbolicName());
+
 				sb.append(StringPool.DASH);
 				sb.append(currentBundle.getVersion());
 				sb.append(StringPool.COMMA_AND_SPACE);

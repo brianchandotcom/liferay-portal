@@ -88,6 +88,7 @@ public class WabBundleProcessor {
 		BundleWiring bundleWiring = _bundle.adapt(BundleWiring.class);
 
 		_bundleClassLoader = bundleWiring.getClassLoader();
+
 		_bundleContext = _bundle.getBundleContext();
 	}
 

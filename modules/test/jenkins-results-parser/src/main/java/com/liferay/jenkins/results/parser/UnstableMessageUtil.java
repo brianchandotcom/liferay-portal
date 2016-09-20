@@ -33,6 +33,7 @@ public class UnstableMessageUtil {
 				buildURL + "testReport/api/json"));
 
 		int failCount = testReportJSONObject.getInt("failCount");
+
 		int passCount = 0;
 		int totalCount = 0;
 
@@ -287,6 +288,7 @@ public class UnstableMessageUtil {
 							description = description.replace("\"", "\"");
 
 							sb.append(description);
+
 							sb.append(" - ");
 						}
 

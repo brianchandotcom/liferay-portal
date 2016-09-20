@@ -161,6 +161,7 @@ public class MethodParameter {
 
 						extractedTopLevelGenericName = _getGenericName(
 							generics.substring(index - 1, endIndex));
+
 						extractedTopLevelGenericName =
 							extractedTopLevelGenericName.concat(
 								StringPool.SEMICOLON);

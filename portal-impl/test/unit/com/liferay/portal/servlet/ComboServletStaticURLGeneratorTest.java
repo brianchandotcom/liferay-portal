@@ -372,6 +372,7 @@ public class ComboServletStaticURLGeneratorTest {
 		portlet.setHeaderPortalJavaScript(portletResourcesList);
 		portlet.setHeaderPortletCss(portletResourcesList);
 		portlet.setHeaderPortletJavaScript(portletResourcesList);
+
 		portlet.setPortletId(PortletKeys.PORTAL);
 		portlet.setPortletName(contextName);
 

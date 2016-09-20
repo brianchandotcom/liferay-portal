@@ -127,6 +127,7 @@ public class ViewJournalSourcePortletConfigurationIcon
 
 		long groupId = ParamUtil.getLong(
 			request, "groupId", themeDisplay.getScopeGroupId());
+
 		long classNameId = ParamUtil.getLong(request, "classNameId");
 		long classPK = ParamUtil.getLong(request, "classPK");
 		String articleId = ParamUtil.getString(request, "articleId");
@@ -192,6 +193,7 @@ public class ViewJournalSourcePortletConfigurationIcon
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		sb.append(HtmlUtil.escape(portletDisplay.getNamespace()));
+
 		sb.append("viewSource', namespace: '");
 		sb.append(portletDisplay.getNamespace());
 		sb.append("', portlet: '#p_p_id_");

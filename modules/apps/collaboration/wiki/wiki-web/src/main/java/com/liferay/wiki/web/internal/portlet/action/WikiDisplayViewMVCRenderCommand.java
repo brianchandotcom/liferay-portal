@@ -78,6 +78,7 @@ public class WikiDisplayViewMVCRenderCommand implements MVCRenderCommand {
 				renderRequest, "title",
 				portletPreferences.getValue(
 					"title", wikiGroupServiceConfiguration.frontPageName()));
+
 			double version = ParamUtil.getDouble(renderRequest, "version");
 
 			WikiNode node = getNode(renderRequest);

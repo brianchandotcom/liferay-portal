@@ -177,6 +177,7 @@ public class WikiPageTrashHandler extends BaseWikiTrashHandler {
 		WikiNode node = page.getNode();
 
 		portletURL.setParameter("nodeName", node.getName());
+
 		portletURL.setParameter("title", HtmlUtil.unescape(page.getTitle()));
 
 		return portletURL.toString();
@@ -435,6 +436,7 @@ public class WikiPageTrashHandler extends BaseWikiTrashHandler {
 
 			ree.setDuplicateEntryId(duplicatePage.getResourcePrimKey());
 			ree.setOldName(duplicatePage.getTitle());
+
 			ree.setTrashEntryId(trashEntryId);
 
 			throw ree;

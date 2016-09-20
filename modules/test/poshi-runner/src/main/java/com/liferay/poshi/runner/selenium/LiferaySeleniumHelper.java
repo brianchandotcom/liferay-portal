@@ -189,6 +189,7 @@ public class LiferaySeleniumHelper {
 		Element rootElement = document.getRootElement();
 
 		List<Element> eventElements = rootElement.elements("event");
+
 		List<Exception> exceptions = new ArrayList<>();
 
 		for (Element eventElement : eventElements) {
@@ -418,6 +419,7 @@ public class LiferaySeleniumHelper {
 				Exception exception = _javaScriptExceptions.get(i);
 
 				sb.append(exception.getMessage());
+
 				sb.append("\n");
 			}
 
@@ -448,6 +450,7 @@ public class LiferaySeleniumHelper {
 				Exception exception = _liferayExceptions.get(i);
 
 				sb.append(exception.getMessage());
+
 				sb.append("\n");
 			}
 

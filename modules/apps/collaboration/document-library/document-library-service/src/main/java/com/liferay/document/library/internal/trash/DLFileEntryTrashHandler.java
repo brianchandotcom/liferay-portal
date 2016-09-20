@@ -308,6 +308,7 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 			name, dlFileEntry.getExtension());
 
 		dlFileEntry.setFileName(fileName);
+
 		dlFileEntry.setTitle(name);
 
 		_dlFileEntryLocalService.updateDLFileEntry(dlFileEntry);

@@ -81,6 +81,7 @@ public class AssetVocabularyImplTest {
 				new long[] {
 					category21.getCategoryId(), category22.getCategoryId()
 				}));
+
 		Assert.assertFalse(
 			vocabulary2.hasMoreThanOneCategorySelected(new long[0]));
 		Assert.assertFalse(

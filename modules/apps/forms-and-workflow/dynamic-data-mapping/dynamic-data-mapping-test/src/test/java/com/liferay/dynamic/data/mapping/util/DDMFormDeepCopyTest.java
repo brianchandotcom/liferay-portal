@@ -134,6 +134,7 @@ public class DDMFormDeepCopyTest extends BaseDDMTestCase {
 		tip.addString(LocaleUtil.FRANCE, "tip");
 
 		nameDDMFormField.setTip(tip);
+
 		nameDDMFormField.setVisibilityExpression("expression");
 
 		DDMFormFieldOptions ddmFormFieldOptions = new DDMFormFieldOptions();

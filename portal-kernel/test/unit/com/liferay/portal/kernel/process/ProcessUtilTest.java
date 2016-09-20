@@ -125,6 +125,7 @@ public class ProcessUtilTest {
 		ExecutorService executorService = _invokeGetThreadPoolExecutor();
 
 		Assert.assertNotNull(executorService);
+
 		Assert.assertNotNull(_getExecutorService());
 
 		processUtil.destroy();
@@ -136,6 +137,7 @@ public class ProcessUtilTest {
 		executorService = _invokeGetThreadPoolExecutor();
 
 		Assert.assertNotNull(executorService);
+
 		Assert.assertNotNull(_getExecutorService());
 
 		DummyJob dummyJob = new DummyJob();

@@ -635,6 +635,7 @@ public class LocalProcessExecutorTest {
 		ExecutorService executorService = _invokeGetThreadPoolExecutor();
 
 		Assert.assertNotNull(executorService);
+
 		Assert.assertNotNull(_getThreadPoolExecutor());
 
 		_localProcessExecutor.destroy();
@@ -646,6 +647,7 @@ public class LocalProcessExecutorTest {
 		executorService = _invokeGetThreadPoolExecutor();
 
 		Assert.assertNotNull(executorService);
+
 		Assert.assertNotNull(_getThreadPoolExecutor());
 
 		DummyJob dummyJob = new DummyJob();
@@ -851,6 +853,7 @@ public class LocalProcessExecutorTest {
 
 		Assert.assertEquals(
 			DummyReturnProcessCallable.class.getName(), returnValue);
+
 		Assert.assertFalse(future.isCancelled());
 		Assert.assertTrue(future.isDone());
 

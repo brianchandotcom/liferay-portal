@@ -44,6 +44,7 @@ public class MappingEnumerationTest {
 			new MappingEnumeration<>(enumeration, _mapper);
 
 		Assert.assertSame(enumeration, mappingEnumeration.enumeration);
+
 		Assert.assertSame(_mapper, mappingEnumeration.mapper);
 		Assert.assertNull(mappingEnumeration.nextElement);
 
@@ -52,6 +53,7 @@ public class MappingEnumerationTest {
 		mappingEnumeration = new MappingEnumeration<>(enumeration, _mapper);
 
 		Assert.assertSame(enumeration, mappingEnumeration.enumeration);
+
 		Assert.assertSame(_mapper, mappingEnumeration.mapper);
 		Assert.assertEquals("1", mappingEnumeration.nextElement);
 	}

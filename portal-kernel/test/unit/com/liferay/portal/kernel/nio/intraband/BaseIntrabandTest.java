@@ -131,6 +131,7 @@ public class BaseIntrabandTest {
 		Assert.assertSame(
 			datagramReceiveHandler2,
 			_mockIntraband.unregisterDatagramReceiveHandler(_TYPE));
+
 		Assert.assertNull(_mockIntraband.getDatagramReceiveHandlers()[_TYPE]);
 
 		// Concurrent registering
@@ -399,6 +400,7 @@ public class BaseIntrabandTest {
 				ByteBuffer dataByteBuffer = receiveDatagram.getDataByteBuffer();
 
 				Assert.assertArrayEquals(_data, dataByteBuffer.array());
+
 				Assert.assertEquals(1, logRecords.size());
 
 				logRecord = logRecords.get(0);
@@ -425,6 +427,7 @@ public class BaseIntrabandTest {
 				dataByteBuffer = receiveDatagram.getDataByteBuffer();
 
 				Assert.assertArrayEquals(_data, dataByteBuffer.array());
+
 				Assert.assertTrue(logRecords.isEmpty());
 
 				// Read ownerless ACK response, with log
@@ -521,6 +524,7 @@ public class BaseIntrabandTest {
 				dataByteBuffer = receiveDatagram.getDataByteBuffer();
 
 				Assert.assertArrayEquals(_data, dataByteBuffer.array());
+
 				Assert.assertEquals(1, logRecords.size());
 
 				logRecord = logRecords.get(0);
@@ -549,6 +553,7 @@ public class BaseIntrabandTest {
 				dataByteBuffer = receiveDatagram.getDataByteBuffer();
 
 				Assert.assertArrayEquals(_data, dataByteBuffer.array());
+
 				Assert.assertTrue(logRecords.isEmpty());
 
 				// Reply response
@@ -622,6 +627,7 @@ public class BaseIntrabandTest {
 				dataByteBuffer = receiveDatagram.getDataByteBuffer();
 
 				Assert.assertArrayEquals(_data, dataByteBuffer.array());
+
 				Assert.assertEquals(1, logRecords.size());
 
 				logRecord = logRecords.get(0);
@@ -664,6 +670,7 @@ public class BaseIntrabandTest {
 				dataByteBuffer = receiveDatagram.getDataByteBuffer();
 
 				Assert.assertArrayEquals(_data, dataByteBuffer.array());
+
 				Assert.assertTrue(logRecords.isEmpty());
 
 				// Ownerless request with ACK requirement, with log
@@ -698,6 +705,7 @@ public class BaseIntrabandTest {
 				dataByteBuffer = receiveDatagram.getDataByteBuffer();
 
 				Assert.assertArrayEquals(_data, dataByteBuffer.array());
+
 				Assert.assertEquals(1, logRecords.size());
 
 				logRecord = logRecords.get(0);
@@ -760,6 +768,7 @@ public class BaseIntrabandTest {
 				dataByteBuffer = recordDatagram.getDataByteBuffer();
 
 				Assert.assertArrayEquals(_data, dataByteBuffer.array());
+
 				Assert.assertEquals(1, logRecords.size());
 
 				logRecord = logRecords.get(0);
@@ -816,6 +825,7 @@ public class BaseIntrabandTest {
 				dataByteBuffer = recordDatagram.getDataByteBuffer();
 
 				Assert.assertArrayEquals(_data, dataByteBuffer.array());
+
 				Assert.assertTrue(logRecords.isEmpty());
 			}
 		}
@@ -1314,6 +1324,7 @@ public class BaseIntrabandTest {
 		sentDatagram = _mockIntraband.getDatagram();
 
 		Assert.assertEquals(2000, sentDatagram.timeout);
+
 		Assert.assertEquals(1, responseWaitingMap.size());
 		Assert.assertSame(
 			requestDatagram,
@@ -1389,6 +1400,7 @@ public class BaseIntrabandTest {
 
 		Assert.assertSame(
 			registrationReference, _mockIntraband.getRegistrationReference());
+
 		Assert.assertSame(datagram, _mockIntraband.getDatagram());
 	}
 

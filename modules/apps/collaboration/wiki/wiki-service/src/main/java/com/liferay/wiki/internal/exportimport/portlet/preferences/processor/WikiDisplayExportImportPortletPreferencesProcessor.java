@@ -199,6 +199,7 @@ public class WikiDisplayExportImportPortletPreferencesProcessor
 				}
 
 			});
+
 		actionableDynamicQuery.setPerformActionMethod(
 			new ActionableDynamicQuery.PerformActionMethod<WikiPage>() {
 

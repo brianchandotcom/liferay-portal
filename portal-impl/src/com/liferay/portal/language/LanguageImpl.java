@@ -1596,6 +1596,7 @@ public class LanguageImpl implements Language, Serializable {
 			String value = get(resourceBundle, key);
 
 			sb.append(HtmlUtil.escapeJS(value));
+
 			sb.append(StringPool.APOSTROPHE);
 
 			x = matcher.end(0);

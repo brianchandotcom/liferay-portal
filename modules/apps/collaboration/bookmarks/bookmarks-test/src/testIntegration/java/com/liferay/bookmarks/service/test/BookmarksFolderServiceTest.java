@@ -152,6 +152,7 @@ public class BookmarksFolderServiceTest {
 		long companyId = entry.getCompanyId();
 		long groupId = entry.getFolder().getGroupId();
 		long folderId = entry.getFolderId();
+
 		String keywords = "test";
 
 		SearchContext searchContext = BookmarksTestUtil.getSearchContext(

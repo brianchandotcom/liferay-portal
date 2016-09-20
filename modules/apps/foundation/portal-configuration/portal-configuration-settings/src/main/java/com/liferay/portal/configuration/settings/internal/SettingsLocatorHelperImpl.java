@@ -309,6 +309,7 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 
 		_configurationBeanClasses.remove(
 			configurationBeanManagedService.getConfigurationPid());
+
 		_configurationBeanManagedServices.remove(configurationBeanClass);
 	}
 

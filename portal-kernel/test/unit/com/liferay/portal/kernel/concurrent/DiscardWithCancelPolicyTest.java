@@ -55,6 +55,7 @@ public class DiscardWithCancelPolicyTest {
 		Future<?> future = threadPoolExecutor.submit(markerBlockingJob);
 
 		Assert.assertFalse(markerBlockingJob.isEnded());
+
 		Assert.assertTrue(future.isCancelled());
 	}
 

@@ -174,6 +174,7 @@ public class NotificationTemplateContextFactory {
 
 		url = HttpUtil.addParameter(
 			url, namespace + "mvcPath", "/view_calendar_booking.jsp");
+
 		url = HttpUtil.addParameter(
 			url, "p_p_id", CalendarPortletKeys.CALENDAR);
 		url = HttpUtil.addParameter(url, "p_p_lifecycle", "0");

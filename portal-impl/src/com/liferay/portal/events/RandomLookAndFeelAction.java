@@ -91,6 +91,7 @@ public class RandomLookAndFeelAction extends Action {
 				themeDisplay.setLookAndFeel(theme, colorScheme);
 
 				request.setAttribute(WebKeys.COLOR_SCHEME, colorScheme);
+
 				request.setAttribute(WebKeys.THEME, theme);
 			}
 		}

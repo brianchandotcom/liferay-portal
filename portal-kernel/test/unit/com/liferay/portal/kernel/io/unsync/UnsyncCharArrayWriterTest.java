@@ -192,6 +192,7 @@ public class UnsyncCharArrayWriterTest {
 		int length = unsyncCharArrayWriter.writeTo(charBuffer);
 
 		Assert.assertEquals(2, length);
+
 		Assert.assertEquals(2, charBuffer.position());
 		Assert.assertEquals(2, charBuffer.limit());
 		charBuffer.position(0);
@@ -204,6 +205,7 @@ public class UnsyncCharArrayWriterTest {
 			byteArrayOutputStream, StringPool.UTF8);
 
 		Assert.assertEquals(4, length);
+
 		Assert.assertEquals(4, byteArrayOutputStream.size());
 		Assert.assertTrue(
 			Arrays.equals(
@@ -214,6 +216,7 @@ public class UnsyncCharArrayWriterTest {
 		length = unsyncCharArrayWriter.writeTo(stringWriter);
 
 		Assert.assertEquals(4, length);
+
 		Assert.assertEquals("abcd", stringWriter.toString());
 	}
 

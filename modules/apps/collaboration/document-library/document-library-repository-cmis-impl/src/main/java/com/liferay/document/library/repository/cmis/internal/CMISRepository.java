@@ -1840,6 +1840,7 @@ public class CMISRepository extends BaseCmisRepository {
 			String objectId = toFolderId(session, folderId);
 
 			sb.append(StringUtil.quote(objectId));
+
 			sb.append(StringPool.CLOSE_PARENTHESIS);
 		}
 
@@ -1918,6 +1919,7 @@ public class CMISRepository extends BaseCmisRepository {
 			String objectId = toFolderId(session, folderId);
 
 			sb.append(StringUtil.quote(objectId));
+
 			sb.append(StringPool.CLOSE_PARENTHESIS);
 		}
 

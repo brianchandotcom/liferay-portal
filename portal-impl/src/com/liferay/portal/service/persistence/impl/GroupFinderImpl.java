@@ -358,6 +358,7 @@ public class GroupFinderImpl
 
 			params3.remove("usersGroups");
 			params3.put("groupsOrgs", userId);
+
 			params2.put("classNameIds", groupOrganizationClassNameIds[1]);
 			params3.put("classNameIds", groupOrganizationClassNameIds[0]);
 		}

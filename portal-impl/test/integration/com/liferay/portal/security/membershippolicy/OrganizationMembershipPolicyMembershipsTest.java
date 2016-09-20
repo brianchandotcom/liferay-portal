@@ -104,6 +104,7 @@ public class OrganizationMembershipPolicyMembershipsTest
 			initialOrganizationUsersCount + 2,
 			UserLocalServiceUtil.getOrganizationUsersCount(
 				requiredOrganizationIds[0]));
+
 		Assert.assertTrue(isPropagateMembership());
 	}
 
@@ -260,6 +261,7 @@ public class OrganizationMembershipPolicyMembershipsTest
 			initialUserOrganizationCount - 1,
 			UserLocalServiceUtil.getOrganizationUsersCount(
 				standardOrganizationIds[0]));
+
 		Assert.assertTrue(isPropagateMembership());
 	}
 

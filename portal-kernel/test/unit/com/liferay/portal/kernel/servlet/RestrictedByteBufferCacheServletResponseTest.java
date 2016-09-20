@@ -52,6 +52,7 @@ public class RestrictedByteBufferCacheServletResponseTest {
 		Assert.assertSame(
 			stubHttpServletResponse,
 			restrictedByteBufferCacheServletResponse.getResponse());
+
 		Assert.assertFalse(
 			restrictedByteBufferCacheServletResponse.isOverflowed());
 	}
@@ -133,6 +134,7 @@ public class RestrictedByteBufferCacheServletResponseTest {
 		Assert.assertNotSame(
 			emptyByteBuffer,
 			restrictedByteBufferCacheServletResponse.getByteBuffer());
+
 		Assert.assertEquals(0, byteBuffer.remaining());
 
 		outputStream.flush();

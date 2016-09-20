@@ -416,6 +416,7 @@ public class CalendarBookingLocalServiceTest {
 			0, null, 0, null, serviceContext);
 
 		instanceIndex = 4;
+
 		instanceStartTime = instanceStartTime + Time.DAY * instanceStartTime;
 
 		CalendarBookingLocalServiceUtil.updateCalendarBookingInstance(
@@ -1131,6 +1132,7 @@ public class CalendarBookingLocalServiceTest {
 		Assert.assertNotEquals(
 			calendarBooking.getSecondReminder(),
 			childCalendarBooking.getSecondReminder());
+
 		Assert.assertEquals(
 			firstReminder, childCalendarBooking.getFirstReminder());
 		Assert.assertEquals(

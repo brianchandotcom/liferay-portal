@@ -647,6 +647,7 @@ public class WikiPageDependentsTrashHandlerTest {
 			relatedPages.getChildPageResourcePrimKey());
 
 		Assert.assertFalse(childPage.isInTrash());
+
 		Assert.assertFalse(page.isInTrash());
 		Assert.assertEquals(page.getTitle(), childPage.getParentTitle());
 	}

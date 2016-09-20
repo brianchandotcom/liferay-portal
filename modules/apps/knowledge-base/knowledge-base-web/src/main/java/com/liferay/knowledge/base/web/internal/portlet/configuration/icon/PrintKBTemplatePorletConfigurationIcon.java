@@ -72,6 +72,7 @@ public class PrintKBTemplatePorletConfigurationIcon
 
 			portletURL.setParameter(
 				"kbTemplateId", String.valueOf(kbTemplate.getKbTemplateId()));
+
 			portletURL.setParameter("viewMode", Constants.PRINT);
 			portletURL.setWindowState(LiferayWindowState.POP_UP);
 

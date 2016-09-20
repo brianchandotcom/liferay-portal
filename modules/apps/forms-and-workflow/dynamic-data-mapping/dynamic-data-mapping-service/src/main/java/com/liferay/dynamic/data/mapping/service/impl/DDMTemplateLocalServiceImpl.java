@@ -1382,6 +1382,7 @@ public class DDMTemplateLocalServiceImpl
 			latestTemplateVersion.getVersion(), majorVersion);
 
 		template.setVersion(version);
+
 		template.setVersionUserId(user.getUserId());
 		template.setVersionUserName(user.getFullName());
 		template.setNameMap(nameMap);

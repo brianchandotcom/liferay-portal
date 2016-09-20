@@ -211,6 +211,7 @@ public class PingbackMethodImpl implements Method {
 			companyId, portletId);
 
 		sb.append(portlet.getFriendlyURLMapping());
+
 		sb.append(StringPool.SLASH);
 		sb.append(urlTitle);
 

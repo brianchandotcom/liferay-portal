@@ -145,6 +145,7 @@ public class PublicRenderParameterTest extends BasePortletContainerTestCase {
 		Response response = PortletContainerTestUtil.request(portletURLString);
 
 		Assert.assertEquals(200, response.getCode());
+
 		Assert.assertTrue(success.get());
 	}
 
@@ -202,6 +203,7 @@ public class PublicRenderParameterTest extends BasePortletContainerTestCase {
 		Response response = PortletContainerTestUtil.request(portletURLString);
 
 		Assert.assertEquals(200, response.getCode());
+
 		Assert.assertTrue(success.get());
 	}
 

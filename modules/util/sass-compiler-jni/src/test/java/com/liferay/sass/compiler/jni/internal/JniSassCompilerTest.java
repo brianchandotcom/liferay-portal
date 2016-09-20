@@ -131,6 +131,7 @@ public class JniSassCompilerTest {
 			sourceMapFile.getCanonicalPath());
 
 		Assert.assertNotNull(actualOutput);
+
 		Assert.assertTrue(sourceMapFile.exists());
 
 		File expectedOutputFile = new File(
@@ -206,6 +207,7 @@ public class JniSassCompilerTest {
 			input, inputFile.getCanonicalPath(), "", true);
 
 		Assert.assertNotNull(actualOutput);
+
 		Assert.assertTrue(sourceMapFile.exists());
 
 		File expectedOutputFile = new File(

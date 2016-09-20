@@ -135,6 +135,7 @@ public class SyncFilePersistence extends BasePersistenceImpl<SyncFile, Long> {
 			parentFilePathName + fileSystem.getSeparator(), "\\", "\\\\");
 
 		where.like("filePathName", new SelectArg(parentFilePathName + "%"));
+
 		where.eq("state", state);
 		where.ne("uiEvent", SyncFile.UI_EVENT_DELETED_LOCAL);
 		where.ne("uiEvent", SyncFile.UI_EVENT_DELETED_REMOTE);
@@ -219,6 +220,7 @@ public class SyncFilePersistence extends BasePersistenceImpl<SyncFile, Long> {
 			parentFilePathName + fileSystem.getSeparator(), "\\", "\\\\");
 
 		where.like("filePathName", new SelectArg(parentFilePathName + "%"));
+
 		where.lt("localSyncTime", localSyncTime);
 		where.or(
 			where.eq("state", SyncFile.STATE_SYNCED),

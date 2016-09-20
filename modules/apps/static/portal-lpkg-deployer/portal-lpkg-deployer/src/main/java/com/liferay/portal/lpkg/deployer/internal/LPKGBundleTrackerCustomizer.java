@@ -211,6 +211,7 @@ public class LPKGBundleTrackerCustomizer
 			Package pkg = clazz.getPackage();
 
 			sb.append(pkg.getName());
+
 			sb.append(StringPool.COMMA);
 		}
 

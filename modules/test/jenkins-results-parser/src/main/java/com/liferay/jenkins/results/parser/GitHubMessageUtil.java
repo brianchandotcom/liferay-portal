@@ -142,6 +142,7 @@ public class GitHubMessageUtil {
 				project.getProperty("top.level.fail.count")) + 1;
 
 			sb.append(topLevelFailCount);
+
 			sb.append(" Job");
 
 			if (topLevelFailCount != 1) {

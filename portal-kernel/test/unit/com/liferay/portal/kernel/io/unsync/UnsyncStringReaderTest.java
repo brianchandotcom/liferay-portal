@@ -34,6 +34,7 @@ public class UnsyncStringReaderTest {
 		char[] chars = new char[4];
 
 		Assert.assertEquals(4, unsyncStringReader.read(chars));
+
 		Assert.assertEquals(4, unsyncStringReader.index);
 		Assert.assertTrue(Arrays.equals("abcd".toCharArray(), chars));
 

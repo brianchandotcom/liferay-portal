@@ -62,7 +62,7 @@ public class KBArticleMarkdownConverterTest {
 	}
 
 	@Test
-	public void testGetSourceURLAddsTheMissingSlashInTheBaseUrl()
+	public void testGetSourceURLAddsTheMissingSlashInTheBaseURL()
 		throws Exception {
 
 		String markdown = "Title [](id=1234)\n=============";
@@ -71,13 +71,13 @@ public class KBArticleMarkdownConverterTest {
 
 		Map<String, String> metadata = new HashMap<>();
 
-		metadata.put("base.source.url", "http://baseUrl");
+		metadata.put("base.source.url", "http://baseURL");
 
 		KBArticleMarkdownConverter converter = new KBArticleMarkdownConverter(
 			markdown, fileEntryName, metadata);
 
 		Assert.assertEquals(
-			"http://baseUrl/some/unix/file", converter.getSourceURL());
+			"http://baseURL/some/unix/file", converter.getSourceURL());
 	}
 
 	@Test
@@ -90,17 +90,17 @@ public class KBArticleMarkdownConverterTest {
 
 		Map<String, String> metadata = new HashMap<>();
 
-		metadata.put("base.source.url", "http://baseUrl");
+		metadata.put("base.source.url", "http://baseURL");
 
 		KBArticleMarkdownConverter converter = new KBArticleMarkdownConverter(
 			markdown, fileEntryName, metadata);
 
 		Assert.assertEquals(
-			"http://baseUrl/some/windows/file", converter.getSourceURL());
+			"http://baseURL/some/windows/file", converter.getSourceURL());
 	}
 
 	@Test
-	public void testGetSourceURLReturnsNullIfThereIsNoBaseUrl()
+	public void testGetSourceURLReturnsNullIfThereIsNoBaseURL()
 		throws Exception {
 
 		String markdown = "Title [](id=1234)\n=============";
@@ -116,20 +116,20 @@ public class KBArticleMarkdownConverterTest {
 	}
 
 	@Test
-	public void testGetSourceURLUsesTheSlashInTheBaseUrl() throws Exception {
+	public void testGetSourceURLUsesTheSlashInTheBaseURL() throws Exception {
 		String markdown = "Title [](id=1234)\n=============";
 
 		String fileEntryName = "some/unix/file";
 
 		Map<String, String> metadata = new HashMap<>();
 
-		metadata.put("base.source.url", "http://baseUrl/");
+		metadata.put("base.source.url", "http://baseURL/");
 
 		KBArticleMarkdownConverter converter = new KBArticleMarkdownConverter(
 			markdown, fileEntryName, metadata);
 
 		Assert.assertEquals(
-			"http://baseUrl/some/unix/file", converter.getSourceURL());
+			"http://baseURL/some/unix/file", converter.getSourceURL());
 	}
 
 	@Mock

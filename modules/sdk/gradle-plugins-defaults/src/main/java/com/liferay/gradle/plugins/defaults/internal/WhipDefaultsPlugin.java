@@ -23,6 +23,7 @@ import com.liferay.gradle.plugins.whip.WhipTaskExtension;
 import com.liferay.gradle.util.Validator;
 
 import org.gradle.api.Action;
+import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.testing.Test;
@@ -32,6 +33,8 @@ import org.gradle.api.tasks.testing.Test;
  */
 public class WhipDefaultsPlugin
 	extends BasePortalToolDefaultsPlugin<WhipPlugin> {
+
+	public static final Plugin<Project> INSTANCE = new WhipDefaultsPlugin();
 
 	@Override
 	protected void addPortalToolDependencies(Project project) {
@@ -89,6 +92,9 @@ public class WhipDefaultsPlugin
 	@Override
 	protected String getPortalToolName() {
 		return _PORTAL_TOOL_NAME;
+	}
+
+	private WhipDefaultsPlugin() {
 	}
 
 	private static final String _PORTAL_TOOL_NAME = "com.liferay.whip";

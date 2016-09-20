@@ -36,12 +36,17 @@ import org.gradle.api.tasks.TaskContainer;
  */
 public class LiferayCIPlugin implements Plugin<Project> {
 
+	public static final Plugin<Project> INSTANCE = new LiferayCIPlugin();
+
 	@Override
 	public void apply(Project project) {
 		_configureTasksDownloadNode(project);
 		_configureTasksExecuteNode(project);
 		_configureTasksExecuteNpm(project);
 		_configureTasksNpmInstall(project);
+	}
+
+	private LiferayCIPlugin() {
 	}
 
 	private void _configureTaskDownloadNode(DownloadNodeTask downloadNodeTask) {

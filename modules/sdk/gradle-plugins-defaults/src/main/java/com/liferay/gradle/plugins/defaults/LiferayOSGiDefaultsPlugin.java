@@ -280,8 +280,9 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		addDependenciesPmd(project);
 
 		if (testProject || hasTests(project)) {
-			GradleUtil.applyPlugin(project, WhipDefaultsPlugin.class);
 			GradleUtil.applyPlugin(project, WhipPlugin.class);
+
+			WhipDefaultsPlugin.INSTANCE.apply(project);
 
 			Configuration portalConfiguration = GradleUtil.getConfiguration(
 				project, LiferayBasePlugin.PORTAL_CONFIGURATION_NAME);

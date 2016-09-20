@@ -180,6 +180,12 @@ version 1.0.5.
 - [LPS-68165]: Update the [Liferay TLD Formatter] dependency to version 1.0.1.
 - [LPS-68165]: Update the [Liferay XML Formatter] dependency to version 1.0.1.
 
+## 2.0.36 - 2016-09-20
+
+### Changed
+- [LPS-67352]: Update the [Liferay Source Formatter] dependency to version
+1.0.281.
+
 ## 2.0.37 - 2016-09-20
 
 ### Changed

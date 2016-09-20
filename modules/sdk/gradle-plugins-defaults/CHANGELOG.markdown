@@ -236,9 +236,10 @@ directory instead of the root project directory. Doing this lets submodules like
 ### Changed
 - [LPS-68131]: Update the [Liferay Gradle Plugins] dependency to version 2.0.35.
 
-## 1.2.24 - 2016-09-19
+## 1.2.24 - 2016-09-20
 
 ### Changed
+- [LPS-67352]: Update the [Liferay Gradle Plugins] dependency to version 2.0.36.
 - [LPS-68230]: Configure [Liferay Gradle Plugins Node] to use version 6.6.0 of
 Node.js.
 

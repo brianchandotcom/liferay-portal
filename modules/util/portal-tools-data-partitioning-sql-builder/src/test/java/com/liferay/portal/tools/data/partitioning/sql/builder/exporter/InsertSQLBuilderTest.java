@@ -30,7 +30,7 @@ public class InsertSQLBuilderTest {
 
 		Assert.assertEquals(
 			"insert into Foo values (a, b, c, d);\n",
-			insertSQLBuilder.buildInsert(null, "Foo", fields));
+			insertSQLBuilder.buildInsert("Foo", fields));
 	}
 
 }

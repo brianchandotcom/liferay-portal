@@ -18,8 +18,6 @@ import com.liferay.portal.tools.data.partitioning.sql.builder.exporter.serialize
 import com.liferay.portal.tools.data.partitioning.sql.builder.internal.exporter.SQLBuilder;
 import com.liferay.portal.tools.data.partitioning.sql.builder.internal.serializer.DefaultFieldSerializer;
 
-import java.sql.ResultSetMetaData;
-
 /**
  * @author Manuel de la Peña
  */
@@ -39,10 +37,7 @@ public class InsertSQLBuilder implements SQLBuilder {
 	}
 
 	@Override
-	public String buildInsert(
-		ResultSetMetaData resultSetMetaData, String tableName,
-		String[] fields) {
-
+	public String buildInsert(String tableName, String[] fields) {
 		if ((fields == null) || (fields.length == 0)) {
 			throw new IllegalArgumentException("Fields are null");
 		}

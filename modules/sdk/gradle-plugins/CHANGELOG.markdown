@@ -180,6 +180,18 @@ version 1.0.5.
 - [LPS-68165]: Update the [Liferay TLD Formatter] dependency to version 1.0.1.
 - [LPS-68165]: Update the [Liferay XML Formatter] dependency to version 1.0.1.
 
+## 2.0.37 - 2016-09-20
+
+### Changed
+
+### Changed
+- [LPS-66906]: Update the [Liferay Gradle Plugins Gulp] dependency to version
+2.0.0.
+- [LPS-66906]: Update the [Liferay Gradle Plugins JS Module Config Generator]
+dependency to version 2.0.0.
+- [LPS-66906]: Update the [Liferay Gradle Plugins JS Transpiler] dependency to
+version 2.0.0.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
 [Liferay CSS Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/css-builder
@@ -196,6 +208,7 @@ version 1.0.5.
 [Liferay XML Formatter]: https://github.com/liferay/liferay-portal/tree/master/modules/util/xml-formatter
 [LPS-61099]: https://issues.liferay.com/browse/LPS-61099
 [LPS-66853]: https://issues.liferay.com/browse/LPS-66853
+[LPS-66906]: https://issues.liferay.com/browse/LPS-66906
 [LPS-67023]: https://issues.liferay.com/browse/LPS-67023
 [LPS-67352]: https://issues.liferay.com/browse/LPS-67352
 [LPS-67658]: https://issues.liferay.com/browse/LPS-67658

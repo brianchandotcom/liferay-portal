@@ -248,10 +248,16 @@ thus improve performance, plugins in
 `com.liferay.gradle.plugins.defaults.internal` are no longer applied via
 `apply plugin`.
 
+## 1.2.25 - 2016-09-20
+
+### Changed
+- [LPS-66906]: Update the [Liferay Gradle Plugins] dependency to version 2.0.37.
+
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [Liferay Gradle Plugins Node]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-node
 [LPS-61099]: https://issues.liferay.com/browse/LPS-61099
 [LPS-66853]: https://issues.liferay.com/browse/LPS-66853
+[LPS-66906]: https://issues.liferay.com/browse/LPS-66906
 [LPS-67023]: https://issues.liferay.com/browse/LPS-67023
 [LPS-67352]: https://issues.liferay.com/browse/LPS-67352
 [LPS-67658]: https://issues.liferay.com/browse/LPS-67658

@@ -110,7 +110,7 @@ public class ConstantsBeanFactoryImplTest {
 		Method method = methods[0];
 
 		Assert.assertEquals(Modifier.PUBLIC, method.getModifiers());
-		Assert.assertEquals(Boolean.TYPE, method.getReturnType());
+		Assert.assertSame(Boolean.TYPE, method.getReturnType());
 		Assert.assertEquals("getBOOLEAN_VALUE", method.getName());
 
 		Class<?>[] parameterTypes = method.getParameterTypes();
@@ -122,7 +122,7 @@ public class ConstantsBeanFactoryImplTest {
 		method = methods[1];
 
 		Assert.assertEquals(Modifier.PUBLIC, method.getModifiers());
-		Assert.assertEquals(Byte.TYPE, method.getReturnType());
+		Assert.assertSame(Byte.TYPE, method.getReturnType());
 		Assert.assertEquals("getBYTE_VALUE", method.getName());
 
 		parameterTypes = method.getParameterTypes();
@@ -134,7 +134,7 @@ public class ConstantsBeanFactoryImplTest {
 		method = methods[2];
 
 		Assert.assertEquals(Modifier.PUBLIC, method.getModifiers());
-		Assert.assertEquals(Character.TYPE, method.getReturnType());
+		Assert.assertSame(Character.TYPE, method.getReturnType());
 		Assert.assertEquals("getCHAR_VALUE", method.getName());
 
 		parameterTypes = method.getParameterTypes();
@@ -146,7 +146,7 @@ public class ConstantsBeanFactoryImplTest {
 		method = methods[3];
 
 		Assert.assertEquals(Modifier.PUBLIC, method.getModifiers());
-		Assert.assertEquals(Double.TYPE, method.getReturnType());
+		Assert.assertSame(Double.TYPE, method.getReturnType());
 		Assert.assertEquals("getDOUBLE_VALUE", method.getName());
 
 		parameterTypes = method.getParameterTypes();
@@ -158,7 +158,7 @@ public class ConstantsBeanFactoryImplTest {
 		method = methods[4];
 
 		Assert.assertEquals(Modifier.PUBLIC, method.getModifiers());
-		Assert.assertEquals(Float.TYPE, method.getReturnType());
+		Assert.assertSame(Float.TYPE, method.getReturnType());
 		Assert.assertEquals("getFLOAT_VALUE", method.getName());
 
 		parameterTypes = method.getParameterTypes();
@@ -170,7 +170,7 @@ public class ConstantsBeanFactoryImplTest {
 		method = methods[5];
 
 		Assert.assertEquals(Modifier.PUBLIC, method.getModifiers());
-		Assert.assertEquals(Integer.TYPE, method.getReturnType());
+		Assert.assertSame(Integer.TYPE, method.getReturnType());
 		Assert.assertEquals("getINT_VALUE", method.getName());
 
 		parameterTypes = method.getParameterTypes();
@@ -182,7 +182,7 @@ public class ConstantsBeanFactoryImplTest {
 		method = methods[6];
 
 		Assert.assertEquals(Modifier.PUBLIC, method.getModifiers());
-		Assert.assertEquals(Long.TYPE, method.getReturnType());
+		Assert.assertSame(Long.TYPE, method.getReturnType());
 		Assert.assertEquals("getLONG_VALUE", method.getName());
 
 		parameterTypes = method.getParameterTypes();
@@ -194,7 +194,7 @@ public class ConstantsBeanFactoryImplTest {
 		method = methods[7];
 
 		Assert.assertEquals(Modifier.PUBLIC, method.getModifiers());
-		Assert.assertEquals(Object.class, method.getReturnType());
+		Assert.assertSame(Object.class, method.getReturnType());
 		Assert.assertEquals("getOBJECT_VALUE", method.getName());
 
 		parameterTypes = method.getParameterTypes();
@@ -206,7 +206,7 @@ public class ConstantsBeanFactoryImplTest {
 		method = methods[8];
 
 		Assert.assertEquals(Modifier.PUBLIC, method.getModifiers());
-		Assert.assertEquals(Short.TYPE, method.getReturnType());
+		Assert.assertSame(Short.TYPE, method.getReturnType());
 		Assert.assertEquals("getSHORT_VALUE", method.getName());
 
 		parameterTypes = method.getParameterTypes();
@@ -219,7 +219,7 @@ public class ConstantsBeanFactoryImplTest {
 
 		Assert.assertEquals(
 			Modifier.PUBLIC | Modifier.STATIC, method.getModifiers());
-		Assert.assertEquals(Integer.TYPE, method.getReturnType());
+		Assert.assertSame(Integer.TYPE, method.getReturnType());
 		Assert.assertEquals("get_Int", method.getName());
 
 		parameterTypes = method.getParameterTypes();
@@ -235,7 +235,7 @@ public class ConstantsBeanFactoryImplTest {
 
 		Assert.assertEquals(
 			Modifier.PUBLIC | Modifier.STATIC, method.getModifiers());
-		Assert.assertEquals(Object.class, method.getReturnType());
+		Assert.assertSame(Object.class, method.getReturnType());
 		Assert.assertEquals("get_Object", method.getName());
 
 		parameterTypes = method.getParameterTypes();
@@ -253,7 +253,7 @@ public class ConstantsBeanFactoryImplTest {
 
 		Assert.assertEquals(
 			Modifier.PUBLIC | Modifier.STATIC, method.getModifiers());
-		Assert.assertEquals(Void.TYPE, method.getReturnType());
+		Assert.assertSame(Void.TYPE, method.getReturnType());
 		Assert.assertEquals("get_Void", method.getName());
 
 		parameterTypes = method.getParameterTypes();

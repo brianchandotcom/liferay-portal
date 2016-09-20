@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.gradle.plugins.node.util;
+package com.liferay.gradle.plugins.node.internal.util;
 
 import com.liferay.gradle.util.OSDetector;
 

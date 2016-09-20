@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.gradle.plugins.node.util;
+package com.liferay.gradle.plugins.node.internal;
 
+import com.liferay.gradle.plugins.node.internal.util.GradleUtil;
 import com.liferay.gradle.util.OSDetector;
 import com.liferay.gradle.util.Validator;
 

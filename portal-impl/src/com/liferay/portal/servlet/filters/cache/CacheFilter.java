@@ -31,8 +31,6 @@ import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.struts.LastPath;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -91,21 +89,11 @@ public class CacheFilter extends BasePortalFilter {
 	}
 
 	protected String getCacheKey(HttpServletRequest request) {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(9);
 
 		// Url
 
-		sb.append(HttpUtil.getProtocol(request));
-		sb.append(Http.PROTOCOL_DELIMITER);
-
-		String url = PortalUtil.getCurrentCompleteURL(request);
-
-		sb.append(HttpUtil.getDomain(url));
-
-		sb.append(request.getContextPath());
-		sb.append(request.getServletPath());
-		sb.append(request.getPathInfo());
-		sb.append(StringPool.QUESTION);
+		sb.append(request.getRequestURL());
 
 		String queryString = request.getQueryString();
 
@@ -114,6 +102,8 @@ public class CacheFilter extends BasePortalFilter {
 				JavaConstants.JAVAX_SERVLET_FORWARD_QUERY_STRING);
 
 			if (queryString == null) {
+				String url = PortalUtil.getCurrentCompleteURL(request);
+
 				int pos = url.indexOf(CharPool.QUESTION);
 
 				if (pos > -1) {
@@ -123,6 +113,7 @@ public class CacheFilter extends BasePortalFilter {
 		}
 
 		if (queryString != null) {
+			sb.append(StringPool.QUESTION);
 			sb.append(queryString);
 		}
 

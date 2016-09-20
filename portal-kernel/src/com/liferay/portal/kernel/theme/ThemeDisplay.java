@@ -620,6 +620,10 @@ public class ThemeDisplay
 		return _plid;
 	}
 
+	public String getPortalDomain() {
+		return _portalDomain;
+	}
+
 	/**
 	 * Returns the portal instance's base URL, which can be configured by
 	 * setting the <code>web.server.host</code> property in a
@@ -1492,6 +1496,10 @@ public class ThemeDisplay
 		_plid = plid;
 	}
 
+	public void setPortalDomain(String portalDomain) {
+		_portalDomain = portalDomain;
+	}
+
 	public void setPortalURL(String portalURL) {
 		_portalURL = portalURL;
 	}
@@ -1857,6 +1865,7 @@ public class ThemeDisplay
 	private String _pathThemeTemplates = StringPool.BLANK;
 	private transient PermissionChecker _permissionChecker;
 	private long _plid;
+	private String _portalDomain = StringPool.BLANK;
 	private String _portalURL = StringPool.BLANK;
 	private PortletDisplay _portletDisplay = new PortletDisplay();
 	private String _ppid = StringPool.BLANK;

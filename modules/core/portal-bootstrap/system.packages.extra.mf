@@ -2881,7 +2881,7 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  vlet,javax.servlet.http",com.liferay.portal.kernel.servlet.filters.co
  mpoundsessionid;version="7.0.0";uses:="com.liferay.portal.kernel.serv
  let,javax.servlet.http",com.liferay.portal.kernel.servlet.filters.inv
- oker;version="7.1.0";uses:="com.liferay.portal.kernel.util,javax.serv
+ oker;version="7.2.0";uses:="com.liferay.portal.kernel.util,javax.serv
  let,javax.servlet.http",com.liferay.portal.kernel.servlet.taglib;vers
  ion="7.0.0";uses:="com.liferay.portal.kernel.log,com.liferay.portal.k
  ernel.util,javax.servlet,javax.servlet.http",com.liferay.portal.kerne
@@ -2911,7 +2911,7 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  n="6.2.0";uses:="com.liferay.portal.kernel.template",com.liferay.port
  al.kernel.templateparser;version="7.0.0";uses:="com.liferay.portal.ke
  rnel.exception,com.liferay.portal.kernel.theme,com.liferay.portal.ker
- nel.xml",com.liferay.portal.kernel.theme;version="1.0.0";uses:="com.l
+ nel.xml",com.liferay.portal.kernel.theme;version="1.1.0";uses:="com.l
  iferay.mobile.device.rules.kernel,com.liferay.portal.kernel.exception
  ,com.liferay.portal.kernel.json,com.liferay.portal.kernel.mobile.devi
  ce,com.liferay.portal.kernel.model,com.liferay.portal.kernel.module.c

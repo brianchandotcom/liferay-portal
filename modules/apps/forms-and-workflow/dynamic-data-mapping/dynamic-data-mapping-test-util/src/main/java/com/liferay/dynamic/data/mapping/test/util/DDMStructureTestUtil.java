@@ -200,6 +200,7 @@ public class DDMStructureTestUtil {
 		Set<Locale> availableLocalesSet = SetUtil.fromArray(availableLocales);
 
 		ddmForm.setAvailableLocales(availableLocalesSet);
+
 		ddmForm.setDefaultLocale(defaultLocale);
 
 		DDMFormField ddmFormField = new DDMFormField(name, type);

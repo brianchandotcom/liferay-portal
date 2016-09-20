@@ -228,6 +228,7 @@ public class UpgradeDynamicDataMappingTest extends PowerMockito {
 		Value value = updatedDDMFormFieldValue.getValue();
 
 		Assert.assertEquals("name", updatedDDMFormFieldValue.getName());
+
 		Assert.assertEquals("Joe Bloggs", value.getString(Locale.US));
 	}
 

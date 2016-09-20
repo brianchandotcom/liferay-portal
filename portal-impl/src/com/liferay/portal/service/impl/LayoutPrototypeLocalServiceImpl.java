@@ -253,6 +253,7 @@ public class LayoutPrototypeLocalServiceImpl
 		Layout layout = layoutPrototype.getLayout();
 
 		layout.setModifiedDate(layoutPrototype.getModifiedDate());
+
 		layout.setNameMap(nameMap);
 
 		layoutPersistence.update(layout);

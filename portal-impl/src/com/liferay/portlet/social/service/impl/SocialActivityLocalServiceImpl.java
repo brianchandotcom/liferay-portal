@@ -262,6 +262,7 @@ public class SocialActivityLocalServiceImpl
 					SocialActivity.class.getName());
 
 				mirrorActivity.setActivityId(mirrorActivityId);
+
 				mirrorActivity.setMirrorActivityId(activity.getPrimaryKey());
 
 				socialActivityPersistence.update(mirrorActivity);

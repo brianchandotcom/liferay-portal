@@ -366,6 +366,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			Group group = groupLocalService.getGroup(categoryId);
 
 			groupId = group.getGroupId();
+
 			categoryId = MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID;
 			name = group.getDescriptiveName();
 			description = group.getDescription();

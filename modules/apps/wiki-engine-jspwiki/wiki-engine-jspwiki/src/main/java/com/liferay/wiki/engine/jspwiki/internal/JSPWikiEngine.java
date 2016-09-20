@@ -299,6 +299,7 @@ public class JSPWikiEngine extends BaseInputEditorWikiEngine {
 			Matcher wikiLinkMatcher = _wikiLinkPattern.matcher(oldContent);
 
 			encodedContent.append(_encodeLink(oldContent, wikiLinkMatcher));
+
 			encodedContent.append(
 				content.substring(
 					commentMatcher.start(), commentMatcher.end()));

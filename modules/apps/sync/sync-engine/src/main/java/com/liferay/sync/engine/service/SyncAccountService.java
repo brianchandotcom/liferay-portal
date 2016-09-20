@@ -136,6 +136,7 @@ public class SyncAccountService {
 				syncAccount.getFilePathName(), syncSite.getSanitizedName());
 
 			syncSite.setFilePathName(siteFilePathName);
+
 			syncSite.setRemoteSyncTime(-1);
 			syncSite.setSyncAccountId(syncAccount.getSyncAccountId());
 

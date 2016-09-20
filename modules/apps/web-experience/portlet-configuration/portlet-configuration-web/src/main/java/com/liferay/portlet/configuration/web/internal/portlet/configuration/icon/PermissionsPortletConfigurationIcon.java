@@ -88,6 +88,7 @@ public class PermissionsPortletConfigurationIcon
 				"resourcePrimKey",
 				PortletPermissionUtil.getPrimaryKey(
 					themeDisplay.getPlid(), portletDisplay.getId()));
+
 			portletURL.setWindowState(LiferayWindowState.POP_UP);
 
 			return portletURL.toString();

@@ -89,6 +89,7 @@ public class ActionRequestPortletContainerTest
 				portletURL.toString());
 
 			Assert.assertEquals(200, response.getCode());
+
 			Assert.assertTrue(testPortlet.isCalledAction());
 		}
 		finally {
@@ -123,6 +124,7 @@ public class ActionRequestPortletContainerTest
 			portletURL.toString());
 
 		Assert.assertEquals(200, response.getCode());
+
 		Assert.assertTrue(testPortlet.isCalledAction());
 	}
 
@@ -149,6 +151,7 @@ public class ActionRequestPortletContainerTest
 			portletURL.toString());
 
 		Assert.assertEquals(200, response.getCode());
+
 		Assert.assertTrue(testPortlet.isCalledAction());
 	}
 
@@ -173,6 +176,7 @@ public class ActionRequestPortletContainerTest
 			portletURL.toString());
 
 		Assert.assertEquals(200, response.getCode());
+
 		Assert.assertTrue(testPortlet.isCalledAction());
 	}
 
@@ -210,6 +214,7 @@ public class ActionRequestPortletContainerTest
 					url.substring(0, url.indexOf('?')) + " and portlet " +
 						TEST_PORTLET_ID,
 				loggingEvent.getMessage());
+
 			Assert.assertEquals(200, response.getCode());
 			Assert.assertFalse(testPortlet.isCalledAction());
 		}
@@ -245,6 +250,7 @@ public class ActionRequestPortletContainerTest
 			url, Collections.singletonMap("Cookie", response.getCookies()));
 
 		Assert.assertEquals(200, response.getCode());
+
 		Assert.assertTrue(testPortlet.isCalledAction());
 	}
 
@@ -271,6 +277,7 @@ public class ActionRequestPortletContainerTest
 				portletURL.toString());
 
 			Assert.assertEquals(200, response.getCode());
+
 			Assert.assertTrue(testPortlet.isCalledAction());
 		}
 		finally {
@@ -302,6 +309,7 @@ public class ActionRequestPortletContainerTest
 			portletURL.toString());
 
 		Assert.assertEquals(200, response.getCode());
+
 		Assert.assertTrue(testPortlet.isCalledAction());
 	}
 
@@ -340,6 +348,7 @@ public class ActionRequestPortletContainerTest
 		response = PortletContainerTestUtil.request(url, headers);
 
 		Assert.assertEquals(200, response.getCode());
+
 		Assert.assertTrue(testPortlet.isCalledAction());
 	}
 

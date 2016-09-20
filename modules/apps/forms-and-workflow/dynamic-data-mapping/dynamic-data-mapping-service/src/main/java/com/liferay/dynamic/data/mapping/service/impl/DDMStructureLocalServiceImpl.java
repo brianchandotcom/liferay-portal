@@ -1560,6 +1560,7 @@ public class DDMStructureLocalServiceImpl
 			latestStructureVersion.getVersion(), majorVersion);
 
 		structure.setVersion(version);
+
 		structure.setNameMap(nameMap);
 		structure.setVersionUserId(user.getUserId());
 		structure.setVersionUserName(user.getFullName());

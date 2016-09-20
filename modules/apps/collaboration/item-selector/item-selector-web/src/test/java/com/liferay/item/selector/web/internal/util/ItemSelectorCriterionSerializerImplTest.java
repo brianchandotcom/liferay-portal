@@ -82,6 +82,7 @@ public class ItemSelectorCriterionSerializerImplTest {
 			"\"desiredItemSelectorReturnTypes\":\"" +
 				testURLItemSelectorReturnTypeClass.getName() + "\"",
 			json);
+
 		json = _assert("\"tags\":[\"me\",\"photo\",\"picture\"]", json);
 		json = _assert("\"user\":\"anonymous\"", json);
 

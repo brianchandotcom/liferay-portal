@@ -677,6 +677,7 @@ public class PluginPackageUtil {
 
 				_repositoryCache.put(repositoryURL, repository);
 				_availableTagsCache.addAll(repository.getTags());
+
 				_lastUpdateDate = new Date();
 				_updateAvailable = null;
 

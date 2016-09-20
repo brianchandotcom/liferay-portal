@@ -198,6 +198,7 @@ public class DefaultMBListDisplayContext implements MBListDisplayContext {
 				MBThreadServiceUtil.getGroupThreads(
 					themeDisplay.getScopeGroupId(), groupThreadsUserId, status,
 					searchContainer.getStart(), searchContainer.getEnd()));
+
 			searchContainer.setEmptyResultsMessage("you-do-not-have-any-posts");
 		}
 		else {

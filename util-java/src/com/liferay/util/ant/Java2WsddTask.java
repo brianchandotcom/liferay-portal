@@ -202,12 +202,14 @@ public class Java2WsddTask {
 				String name = element.attributeValue("name");
 
 				sb.append(name);
+
 				sb.append("_METHOD_");
 
 				for (Element parameterElement : parameters) {
 					String type = parameterElement.attributeValue("type");
 
 					sb.append(type);
+
 					sb.append("_PARAMETER_");
 				}
 

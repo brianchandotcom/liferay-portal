@@ -117,6 +117,7 @@ public class MenuItem implements Serializable {
 
 			portletURL.setParameter(
 				"nodeId", String.valueOf(wikiNode.getNodeId()));
+
 			portletURL.setParameter("title", title);
 
 			MenuItem menuItem = new MenuItem();

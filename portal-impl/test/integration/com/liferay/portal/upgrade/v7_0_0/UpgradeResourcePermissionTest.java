@@ -108,6 +108,7 @@ public class UpgradeResourcePermissionTest extends UpgradeResourcePermission {
 			ResourcePermission.class.getName());
 
 		resourcePermission.setResourcePermissionId(resourcePermissionId);
+
 		resourcePermission.setCompanyId(_user.getCompanyId());
 		resourcePermission.setName(
 			UpgradeResourcePermissionTest.class.getName());

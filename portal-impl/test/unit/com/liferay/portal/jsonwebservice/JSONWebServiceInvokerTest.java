@@ -101,6 +101,7 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 		result = invokerResult.getResult();
 
 		Assert.assertTrue(result instanceof List);
+
 		Assert.assertEquals(
 			"[\"Welcome 173 to Jupiter\",\"Welcome 173 to Jupiter\"]",
 			toJSON(invokerResult));
@@ -269,6 +270,7 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 			(JSONWebServiceInvokerAction.InvokerResult)result;
 
 		Assert.assertTrue(invokerResult.getResult() instanceof Map);
+
 		Assert.assertEquals(
 			toMap("{\"id\":173,\"world\":\"Welcome 173 to Jupiter\"}"),
 			toMap(toJSON(result)));
@@ -351,6 +353,7 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 		result = invokerResult.getResult();
 
 		Assert.assertTrue(result instanceof Map);
+
 		Assert.assertEquals(
 			"{\"height\":177,\"id\":173,\"name\":\"John Doe\",\"value\":" +
 				"\"foo!\",\"world\":\"Welcome 173 to Jupiter\"}",
@@ -428,6 +431,7 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 		result = invokerResult.getResult();
 
 		Assert.assertTrue(result instanceof List);
+
 		Assert.assertEquals(
 			"[{\"id\":1},{\"id\":2},{\"id\":3}]", toJSON(invokerResult));
 	}
@@ -773,6 +777,7 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 		result = invokerResult.getResult();
 
 		Assert.assertEquals("Welcome 173 to Jupiter", result);
+
 		Assert.assertEquals(
 			"\"Welcome 173 to Jupiter\"", toJSON(invokerResult));
 	}
@@ -801,6 +806,7 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 		result = invokerResult.getResult();
 
 		Assert.assertEquals("Welcome 173 to Jupiter", result);
+
 		Assert.assertEquals(
 			"\"Welcome 173 to Jupiter\"", toJSON(invokerResult));
 	}
@@ -828,6 +834,7 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 		result = invokerResult.getResult();
 
 		Assert.assertEquals("Welcome 173 to Jupiter", result);
+
 		Assert.assertEquals(
 			"\"Welcome 173 to Jupiter\"", toJSON(invokerResult));
 	}
@@ -855,6 +862,7 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 		result = invokerResult.getResult();
 
 		Assert.assertEquals("Welcome 173 to null", result);
+
 		Assert.assertEquals("\"Welcome 173 to null\"", toJSON(invokerResult));
 	}
 

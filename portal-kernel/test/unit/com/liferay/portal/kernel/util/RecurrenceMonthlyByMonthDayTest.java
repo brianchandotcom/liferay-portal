@@ -146,6 +146,7 @@ public class RecurrenceMonthlyByMonthDayTest extends RecurrenceTestCase {
 		int[] monthDays = {monthDay};
 
 		recurrence.setByMonthDay(monthDays);
+
 		recurrence.setInterval(interval);
 
 		return recurrence;

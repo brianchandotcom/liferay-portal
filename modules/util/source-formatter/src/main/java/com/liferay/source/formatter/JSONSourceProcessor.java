@@ -67,6 +67,7 @@ public class JSONSourceProcessor extends BaseSourceProcessor {
 					line, StringPool.DOUBLE_SPACE, StringPool.SPACE);
 
 				sb.append(line);
+
 				sb.append("\n");
 			}
 		}

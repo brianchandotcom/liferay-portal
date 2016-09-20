@@ -245,6 +245,7 @@ public class UnsyncBufferedInputStreamTest {
 
 		Assert.assertEquals(
 			markLimitIndex, unsyncBufferedInputStream.markLimitIndex);
+
 		Assert.assertEquals(_SIZE, unsyncBufferedInputStream.available());
 		Assert.assertEquals(0, unsyncBufferedInputStream.read());
 		Assert.assertEquals(1, unsyncBufferedInputStream.read());
@@ -350,6 +351,7 @@ public class UnsyncBufferedInputStreamTest {
 			new UnsyncBufferedInputStream(byteArrayInputStream, size);
 
 		Assert.assertEquals(_SIZE, byteArrayInputStream.available());
+
 		Assert.assertEquals(_SIZE, unsyncBufferedInputStream.available());
 		Assert.assertEquals(0, unsyncBufferedInputStream.read());
 		Assert.assertEquals(_SIZE - size, byteArrayInputStream.available());
@@ -384,6 +386,7 @@ public class UnsyncBufferedInputStreamTest {
 		// Zero skip
 
 		Assert.assertEquals(0, unsyncBufferedInputStream.skip(0));
+
 		Assert.assertEquals(_SIZE, byteArrayInputStream.available());
 		Assert.assertEquals(_SIZE, unsyncBufferedInputStream.available());
 

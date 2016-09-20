@@ -183,6 +183,7 @@ public class TaskQueueTest {
 		boolean result = taskQueue.offer(new Object(), hasWaiterMarker);
 
 		Assert.assertTrue(result);
+
 		Assert.assertFalse(hasWaiterMarker[0]);
 	}
 

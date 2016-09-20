@@ -159,6 +159,7 @@ public class DDLFormBrowserDisplayContext {
 			recordSetSearch.getEnd(), recordSetSearch.getOrderByComparator());
 
 		recordSetSearch.setResults(results);
+
 		recordSetSearch.setTotal(_getRecordSetSearchTotal());
 
 		_recordSetSearch = recordSetSearch;

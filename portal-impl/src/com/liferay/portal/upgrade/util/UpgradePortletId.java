@@ -194,6 +194,7 @@ public class UpgradePortletId extends UpgradeProcess {
 					portletId, oldRootPortletId, newRootPortletId);
 
 				ps2.setString(1, newPortletId);
+
 				ps2.setLong(2, portletPreferencesId);
 
 				ps2.addBatch();

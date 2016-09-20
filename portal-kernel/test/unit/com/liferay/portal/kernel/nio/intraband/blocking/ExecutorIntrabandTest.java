@@ -472,6 +472,7 @@ public class ExecutorIntrabandTest {
 		Pipe writePipe = Pipe.open();
 
 		GatheringByteChannel gatheringByteChannel = writePipe.sink();
+
 		ScatteringByteChannel scatteringByteChannel = readPipe.source();
 
 		FutureRegistrationReference futureRegistrationReference =

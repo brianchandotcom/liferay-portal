@@ -98,6 +98,7 @@ public abstract class BaseStagingBackgroundTaskExecutor
 			groupId, privateLayout);
 
 		serviceContext.setCompanyId(layoutSet.getCompanyId());
+
 		serviceContext.setSignedIn(false);
 
 		long defaultUserId = UserLocalServiceUtil.getDefaultUserId(

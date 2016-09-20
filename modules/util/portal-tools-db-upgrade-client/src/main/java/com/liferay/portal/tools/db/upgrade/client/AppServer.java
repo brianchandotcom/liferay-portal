@@ -32,6 +32,7 @@ public class AppServer {
 		String extraLibDirPrefix = "/modules/system/layers/base/";
 
 		sb.append(extraLibDirPrefix);
+
 		sb.append("javax/mail,");
 		sb.append(extraLibDirPrefix);
 		sb.append("javax/persistence,");
@@ -88,6 +89,7 @@ public class AppServer {
 		String extraLibDirPrefix = "/modules/system/layers/base/";
 
 		sb.append(extraLibDirPrefix);
+
 		sb.append("javax/mail,");
 		sb.append(extraLibDirPrefix);
 		sb.append("javax/persistence,");

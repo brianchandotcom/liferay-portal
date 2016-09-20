@@ -660,6 +660,7 @@ public class DDMImplTest extends BaseDDMTestCase {
 
 		Assert.assertEquals(
 			expectedDDMFormFieldName, actualDDMFormFieldNames.get(0));
+
 		Assert.assertEquals(
 			DDMFormLayoutColumn.FULL, actualDDMFormLayoutColumn.getSize());
 	}

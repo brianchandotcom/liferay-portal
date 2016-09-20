@@ -43,6 +43,7 @@ public class WorkflowDefinitionTitleComparator
 		_locale = locale;
 
 		_collator = Collator.getInstance(_locale);
+
 		_languageId = LocaleUtil.toLanguageId(locale);
 	}
 

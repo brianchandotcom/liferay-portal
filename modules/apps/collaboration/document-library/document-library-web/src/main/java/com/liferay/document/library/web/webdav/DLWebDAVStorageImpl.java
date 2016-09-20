@@ -620,6 +620,7 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 			long companyId = webDAVRequest.getCompanyId();
 
 			long groupId = WebDAVUtil.getGroupId(companyId, destinationArray);
+
 			long folderId = folder.getFolderId();
 			long parentFolderId = getParentFolderId(
 				companyId, destinationArray);
@@ -697,6 +698,7 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 			long groupId = WebDAVUtil.getGroupId(companyId, destinationArray);
 			long newParentFolderId = getParentFolderId(
 				companyId, destinationArray);
+
 			String title = getTitle(destinationArray);
 			String description = fileEntry.getDescription();
 			String changeLog = StringPool.BLANK;

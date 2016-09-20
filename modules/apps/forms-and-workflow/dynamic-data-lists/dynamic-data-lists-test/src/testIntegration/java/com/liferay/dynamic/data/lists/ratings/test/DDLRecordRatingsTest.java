@@ -64,6 +64,7 @@ public class DDLRecordRatingsTest extends BaseRatingsTestCase {
 		availableLocales.add(LocaleUtil.US);
 
 		ddmForm.setAvailableLocales(availableLocales);
+
 		ddmForm.setDefaultLocale(LocaleUtil.US);
 
 		DDMStructureTestHelper ddmStructureTestHelper =

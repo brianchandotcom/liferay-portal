@@ -172,6 +172,7 @@ public class NettyFabricAgentStubTest {
 				}
 
 			});
+
 		FabricWorker<String> fabricWorker = nettyFabricAgentStub.execute(
 			processConfig, processCallable);
 

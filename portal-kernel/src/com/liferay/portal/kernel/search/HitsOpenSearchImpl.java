@@ -154,6 +154,7 @@ public abstract class HitsOpenSearchImpl extends BaseOpenSearchImpl {
 					indexer, result, themeDisplay.getLocale(), snippet);
 
 				String title = summary.getTitle();
+
 				String url = getURL(
 					themeDisplay, resultScopeGroupId, result, portletURL);
 				Date modifiedDate = result.getDate(Field.MODIFIED_DATE);

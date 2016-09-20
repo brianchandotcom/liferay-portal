@@ -191,6 +191,7 @@ public class DDMDataProviderServlet extends HttpServlet {
 				keyValuePair.getKey());
 
 			jsonObject.put("label", labelJSONObject);
+
 			jsonObject.put("value", keyValuePair.getValue());
 
 			jsonArray.put(jsonObject);

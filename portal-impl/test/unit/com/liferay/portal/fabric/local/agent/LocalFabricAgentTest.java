@@ -93,6 +93,7 @@ public class LocalFabricAgentTest {
 		defaultNoticeableFuture.run();
 
 		Assert.assertEquals(result, defaultNoticeableFuture.get());
+
 		Assert.assertTrue(fabricWorkers.isEmpty());
 
 		final ProcessException processException = new ProcessException(

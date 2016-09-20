@@ -576,6 +576,7 @@ public class ThreadPoolExecutorTest {
 
 		Assert.assertTrue(
 			threadPoolHandler instanceof ThreadPoolHandlerAdapter);
+
 		Assert.assertFalse(threadPoolExecutor.isShutdown());
 		Assert.assertFalse(threadPoolExecutor.isTerminating());
 		Assert.assertFalse(threadPoolExecutor.isTerminated());
@@ -606,6 +607,7 @@ public class ThreadPoolExecutorTest {
 
 		Assert.assertTrue(
 			threadPoolHandler instanceof ThreadPoolHandlerAdapter);
+
 		Assert.assertFalse(threadPoolExecutor.isShutdown());
 		Assert.assertFalse(threadPoolExecutor.isTerminating());
 		Assert.assertFalse(threadPoolExecutor.isTerminated());
@@ -1022,6 +1024,7 @@ public class ThreadPoolExecutorTest {
 
 			Assert.assertEquals(1, rejectedList.size());
 			Assert.assertSame(markerBlockingJob, rejectedList.get(0));
+
 			Assert.assertFalse(markerBlockingJob.isStarted());
 		}
 		finally {

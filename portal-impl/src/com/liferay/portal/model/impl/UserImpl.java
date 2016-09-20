@@ -185,12 +185,14 @@ public class UserImpl extends UserBaseImpl {
 			Digester.MD5, getEmailAddress(), Portal.PORTAL_REALM, password);
 
 		sb.append(digest1);
+
 		sb.append(StringPool.COMMA);
 
 		String digest2 = DigesterUtil.digestHex(
 			Digester.MD5, getScreenName(), Portal.PORTAL_REALM, password);
 
 		sb.append(digest2);
+
 		sb.append(StringPool.COMMA);
 
 		String digest3 = DigesterUtil.digestHex(

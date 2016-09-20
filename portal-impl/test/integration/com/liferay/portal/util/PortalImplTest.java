@@ -171,6 +171,7 @@ public class PortalImplTest {
 		long userId = PortalUtil.getUserId(mockHttpServletRequest);
 
 		Assert.assertEquals(0, userId);
+
 		Assert.assertTrue(_atomicState.isSet());
 
 		_atomicState.reset();
@@ -183,6 +184,7 @@ public class PortalImplTest {
 		userId = PortalUtil.getUserId(mockHttpServletRequest);
 
 		Assert.assertEquals(0, userId);
+
 		Assert.assertTrue(_atomicState.isSet());
 	}
 

@@ -408,6 +408,7 @@ public class GroupServiceTest {
 
 		Assert.assertEquals(1, groups.size());
 		Assert.assertEquals(group, groups.get(0));
+
 		Assert.assertEquals(
 			1, GroupLocalServiceUtil.getRoleGroupsCount(roleId));
 

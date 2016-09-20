@@ -167,6 +167,7 @@ public class DDMFormJSONDeserializerTest
 		Assert.assertEquals(
 			"You must check this box to continue.",
 			ddmFormFieldValidation.getErrorMessage());
+
 		Assert.assertEquals("true", ddmFormField.getVisibilityExpression());
 	}
 

@@ -236,6 +236,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 				addAssetLinks(clazz, classPK);
 				addAssetPriority(element, clazz, classPK);
+
 				addExpando(element, path, classedModel, clazz);
 				addLocks(clazz, String.valueOf(classPK));
 				addPermissions(clazz, classPK);

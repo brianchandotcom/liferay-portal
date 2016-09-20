@@ -236,6 +236,7 @@ public class JenkinsPerformanceDataUtil {
 			int x = _className.lastIndexOf(".");
 
 			sb.append(_className.substring(0, x));
+
 			sb.append("/");
 			sb.append(_className.substring(x + 1));
 			sb.append("/");

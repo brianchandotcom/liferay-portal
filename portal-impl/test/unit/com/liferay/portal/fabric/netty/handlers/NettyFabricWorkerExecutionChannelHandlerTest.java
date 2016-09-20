@@ -230,6 +230,7 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 		startupNoticeableFutures.put(0L, defaultNoticeableFuture);
 
 		Assert.assertFalse(defaultNoticeableFuture.isDone());
+
 		Assert.assertNull(fabricWorkerFinishStartupProcessCallable.call());
 		Assert.assertTrue(defaultNoticeableFuture.isDone());
 	}
@@ -1180,6 +1181,7 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 			fabricAgent.getFabricWorkers();
 
 		Assert.assertEquals(1, fabricWorkers.size());
+
 		Assert.assertFalse(noticeableFuture.isDone());
 	}
 

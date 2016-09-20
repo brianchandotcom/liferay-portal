@@ -71,6 +71,7 @@ public class EditKBArticlePortletConfigurationIcon
 			"resourceClassNameId", String.valueOf(kbArticle.getClassNameId()));
 		portletURL.setParameter(
 			"resourcePrimKey", String.valueOf(kbArticle.getResourcePrimKey()));
+
 		portletURL.setParameter(
 			"status", String.valueOf(WorkflowConstants.STATUS_ANY));
 

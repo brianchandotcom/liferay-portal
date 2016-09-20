@@ -420,6 +420,7 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 						groupId, getCompanyGroupId(companyId), structureId);
 
 					ps2.setLong(1, ddmStructureId);
+
 					ps2.setLong(2, classNameId);
 					ps2.setLong(3, resourcePrimKey);
 

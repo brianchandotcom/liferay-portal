@@ -119,6 +119,7 @@ public class VerifyOrganization extends VerifyProcess {
 						String uuid = rs.getString("uuid");
 
 						ps2.setString(1, uuid);
+
 						ps2.setLong(2, classPK);
 						ps2.setLong(3, classNameId);
 

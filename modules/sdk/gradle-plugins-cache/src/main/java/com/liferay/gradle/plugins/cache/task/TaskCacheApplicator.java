@@ -184,6 +184,7 @@ public class TaskCacheApplicator {
 
 		copy.dependsOn(
 			task, BasePlugin.CLEAN_TASK_NAME + StringUtil.capitalize(taskName));
+
 		copy.from(taskCache.getFiles());
 		copy.into(taskCache.getCacheDir());
 		copy.setDescription("Caches the output files of " + task + ".");

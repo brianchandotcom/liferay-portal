@@ -349,6 +349,7 @@ public class OrderUtil {
 				EnumMap<Order.Path, String[]> curRoutes = curOrder.getRoutes();
 
 				String[] curPathNames = curRoutes.get(path);
+
 				String fragmentName = webXMLDefinition.getFragmentName();
 
 				if (Arrays.binarySearch(curPathNames, fragmentName) >= 0) {

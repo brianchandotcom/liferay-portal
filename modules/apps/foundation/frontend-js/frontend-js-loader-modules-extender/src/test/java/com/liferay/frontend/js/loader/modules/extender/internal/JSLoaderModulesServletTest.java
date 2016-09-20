@@ -460,6 +460,7 @@ public class JSLoaderModulesServletTest extends PowerMockito {
 		mockServletContext.setContextPath("/loader");
 
 		jsLoaderModulesServlet.init(new MockServletConfig(mockServletContext));
+
 		jsLoaderModulesServlet.setDetails(
 			Converter.cnv(Details.class, properties));
 

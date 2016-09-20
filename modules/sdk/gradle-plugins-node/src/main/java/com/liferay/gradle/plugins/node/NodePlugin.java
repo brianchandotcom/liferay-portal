@@ -61,6 +61,7 @@ public class NodePlugin implements Plugin<Project> {
 			project, nodeExtension);
 
 		configureTasksDownloadNodeModule(project, npmInstallTask);
+
 		configureTasksExecuteNode(project, nodeExtension);
 		configureTasksPublishNodeModule(project);
 

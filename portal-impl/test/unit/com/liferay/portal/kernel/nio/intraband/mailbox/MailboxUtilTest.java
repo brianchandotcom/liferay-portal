@@ -192,6 +192,7 @@ public class MailboxUtilTest {
 		long receipt2 = MailboxUtil.depositMail(byteBuffer2);
 
 		Assert.assertSame(byteBuffer2, MailboxUtil.receiveMail(receipt2));
+
 		Assert.assertSame(byteBuffer1, MailboxUtil.receiveMail(receipt1));
 	}
 
@@ -215,6 +216,7 @@ public class MailboxUtilTest {
 		long receipt2 = MailboxUtil.depositMail(byteBuffer2);
 
 		Assert.assertSame(byteBuffer2, MailboxUtil.receiveMail(receipt2));
+
 		Assert.assertSame(byteBuffer1, MailboxUtil.receiveMail(receipt1));
 	}
 

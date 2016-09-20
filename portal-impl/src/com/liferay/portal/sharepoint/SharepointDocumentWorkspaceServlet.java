@@ -152,6 +152,7 @@ public class SharepointDocumentWorkspaceServlet extends HttpServlet {
 				"/sharepoint";
 
 		root.addElement("SubscribeUrl").setText(url);
+
 		root.addElement("MtgInstance");
 		root.addElement("SettingUrl").setText(url);
 		root.addElement("PermsUrl").setText(url);

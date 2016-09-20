@@ -123,6 +123,7 @@ public abstract class BaseJavaFileObject implements JavaFileObject {
 		Class<?> clazz = getClass();
 
 		sb.append(clazz.getName());
+
 		sb.append(StringPool.OPEN_BRACKET);
 		sb.append(toUri());
 		sb.append(StringPool.CLOSE_BRACKET);

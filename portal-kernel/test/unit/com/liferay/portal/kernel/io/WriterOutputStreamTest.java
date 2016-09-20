@@ -73,6 +73,7 @@ public class WriterOutputStreamTest {
 			dummyWriter);
 
 		Assert.assertSame(dummyWriter, _getWriter(writerOutputStream));
+
 		Assert.assertSame(
 			StringPool.DEFAULT_CHARSET_NAME, writerOutputStream.getEncoding());
 		Assert.assertEquals(

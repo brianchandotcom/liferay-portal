@@ -56,6 +56,7 @@ public class BuildChangeLogTask extends DefaultTask {
 		Project project = getProject();
 
 		setGitDir(project.getRootDir());
+
 		setTicketIdPrefixes("CLDSVCS", "LPS", "SOS", "SYNC");
 	}
 

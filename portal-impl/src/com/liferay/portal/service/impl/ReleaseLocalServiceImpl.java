@@ -70,6 +70,7 @@ public class ReleaseLocalServiceImpl extends ReleaseLocalServiceBaseImpl {
 
 		release.setCreateDate(now);
 		release.setModifiedDate(now);
+
 		release.setServletContextName(servletContextName);
 		release.setBuildNumber(buildNumber);
 
@@ -104,6 +105,7 @@ public class ReleaseLocalServiceImpl extends ReleaseLocalServiceBaseImpl {
 
 		release.setCreateDate(now);
 		release.setModifiedDate(now);
+
 		release.setServletContextName(servletContextName);
 		release.setSchemaVersion(schemaVersion);
 

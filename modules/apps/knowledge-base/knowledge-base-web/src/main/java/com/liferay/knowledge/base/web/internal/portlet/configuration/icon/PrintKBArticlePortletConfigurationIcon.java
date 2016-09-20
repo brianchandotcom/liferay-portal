@@ -73,6 +73,7 @@ public class PrintKBArticlePortletConfigurationIcon
 			portletURL.setParameter(
 				"resourcePrimKey",
 				String.valueOf(kbArticle.getResourcePrimKey()));
+
 			portletURL.setParameter("viewMode", Constants.PRINT);
 			portletURL.setWindowState(LiferayWindowState.POP_UP);
 

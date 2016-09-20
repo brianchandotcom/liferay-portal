@@ -330,6 +330,7 @@ public class RemoteSPITest {
 			uuid, _mockRemoteSPI);
 
 		Assert.assertSame(_mockRemoteSPI, registerCallback.call());
+
 		Assert.assertSame(_mockRemoteSPI, takeSPIFutureTask.get());
 
 		// Interrupted on notify waiting
@@ -378,6 +379,7 @@ public class RemoteSPITest {
 		Object object = objectInputStream.readObject();
 
 		Assert.assertSame(MockRemoteSPI.class, object.getClass());
+
 		Assert.assertEquals(
 			ExecutorIntraband.class.getName(),
 			System.getProperty(PropsKeys.INTRABAND_IMPL));

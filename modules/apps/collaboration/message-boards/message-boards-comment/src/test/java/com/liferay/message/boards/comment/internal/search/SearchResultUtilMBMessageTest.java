@@ -134,6 +134,7 @@ public class SearchResultUtilMBMessageTest
 		Comment comment = relatedSearchResult.getModel();
 
 		Assert.assertEquals(_mbMessage.getMessageId(), comment.getCommentId());
+
 		Assert.assertEquals(1, relatedSearchResults.size());
 		Assert.assertNull(searchResult.getSummary());
 

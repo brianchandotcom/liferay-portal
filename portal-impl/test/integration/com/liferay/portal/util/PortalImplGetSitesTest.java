@@ -73,6 +73,7 @@ public class PortalImplGetSitesTest {
 		_group = GroupTestUtil.addGroup(parentGroup.getGroupId());
 
 		_groups.add(_group);
+
 		_groups.add(parentGroup);
 		_groups.add(grandparentGroup);
 

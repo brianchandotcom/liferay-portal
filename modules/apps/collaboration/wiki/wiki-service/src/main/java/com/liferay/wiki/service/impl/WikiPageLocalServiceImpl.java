@@ -490,6 +490,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		double version = page.getVersion();
 		String content = page.getContent();
+
 		String summary = serviceContext.translate(
 			"changed-parent-from-x", originalParentTitle);
 		boolean minorEdit = false;

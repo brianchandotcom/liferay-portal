@@ -33,6 +33,7 @@ public class MemorySettingsTest extends PowerMockito {
 		Collection<String> keys = _memorySettings.getModifiedKeys();
 
 		Assert.assertEquals(1, keys.size());
+
 		Assert.assertEquals("value", _memorySettings.getValue("key", null));
 	}
 

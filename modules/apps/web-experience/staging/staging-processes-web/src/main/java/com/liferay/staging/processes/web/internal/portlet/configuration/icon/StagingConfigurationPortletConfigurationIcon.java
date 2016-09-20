@@ -71,6 +71,7 @@ public class StagingConfigurationPortletConfigurationIcon
 			WebKeys.THEME_DISPLAY);
 
 		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
+
 		portletURL.setParameter(
 			"showStagingConfiguration", Boolean.TRUE.toString());
 

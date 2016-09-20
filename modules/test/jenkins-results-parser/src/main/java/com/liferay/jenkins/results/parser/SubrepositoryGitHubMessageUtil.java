@@ -87,6 +87,7 @@ public class SubrepositoryGitHubMessageUtil {
 					consoleSnippet);
 
 				sb.append(taskName);
+
 				sb.append(".log");
 				sb.append("\">");
 				sb.append(taskName);
@@ -97,6 +98,7 @@ public class SubrepositoryGitHubMessageUtil {
 					buildURL, consoleSnippet);
 
 				sb.append(_getResult(subrepositoryTask));
+
 				sb.append("</li>");
 			}
 

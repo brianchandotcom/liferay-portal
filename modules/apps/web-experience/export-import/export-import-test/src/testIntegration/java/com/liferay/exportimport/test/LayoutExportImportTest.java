@@ -173,6 +173,7 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 			RandomTestUtil.randomString());
 
 		group = layoutPrototype.getGroup();
+
 		importedGroup = GroupTestUtil.addGroup();
 
 		long[] layoutIds = new long[0];

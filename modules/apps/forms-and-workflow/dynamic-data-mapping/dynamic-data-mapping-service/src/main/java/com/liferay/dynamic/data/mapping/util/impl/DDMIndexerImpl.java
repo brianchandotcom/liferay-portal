@@ -330,6 +330,7 @@ public class DDMIndexerImpl implements DDMIndexer {
 							jsonArray);
 
 						sb.append(stringArray);
+
 						sb.append(StringPool.SPACE);
 					}
 					else {

@@ -103,6 +103,7 @@ public abstract class UpgradePortletSettings extends UpgradeProcess {
 					long groupId = getGroupId(plid);
 
 					portletPreferencesRow.setOwnerId(groupId);
+
 					portletPreferencesRow.setPlid(0);
 
 					if (_log.isInfoEnabled()) {

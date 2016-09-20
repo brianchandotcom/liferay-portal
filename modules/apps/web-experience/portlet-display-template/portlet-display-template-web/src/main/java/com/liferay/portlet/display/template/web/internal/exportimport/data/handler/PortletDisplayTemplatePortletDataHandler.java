@@ -193,6 +193,7 @@ public class PortletDisplayTemplatePortletDataHandler
 				}
 
 			});
+
 		exportActionableDynamicQuery.setStagedModelType(stagedModelType);
 
 		return exportActionableDynamicQuery;

@@ -50,6 +50,7 @@ public class CacheResponseData implements Serializable {
 		ByteBuffer byteBuffer = bufferCacheServletResponse.getByteBuffer();
 
 		_content = byteBuffer.array();
+
 		_contentType = bufferCacheServletResponse.getContentType();
 		_headers = bufferCacheServletResponse.getHeaders();
 		_length = byteBuffer.remaining();

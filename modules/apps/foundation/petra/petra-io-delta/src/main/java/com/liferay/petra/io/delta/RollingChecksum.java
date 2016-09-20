@@ -89,6 +89,7 @@ public class RollingChecksum {
 			x = _byteChannelReader.get(_blockLength - 1);
 
 			_a += x;
+
 			_b += _a;
 		}
 	}

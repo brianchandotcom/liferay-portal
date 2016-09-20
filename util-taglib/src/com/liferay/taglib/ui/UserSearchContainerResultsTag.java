@@ -71,6 +71,7 @@ public class UserSearchContainerResultsTag<R> extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:user-search-container-results:searchContainer",
 			_searchContainer);
+
 		request.setAttribute(
 			"liferay-ui:user-search-container-results:searchTerms",
 			_searchTerms);

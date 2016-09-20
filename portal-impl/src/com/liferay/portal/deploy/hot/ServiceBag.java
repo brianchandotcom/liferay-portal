@@ -75,6 +75,7 @@ public class ServiceBag<V> {
 		TargetSource targetSource = _advisedSupport.getTargetSource();
 
 		Object currentService = targetSource.getTarget();
+
 		ServiceWrapper<T> previousService = null;
 
 		// Loop through services

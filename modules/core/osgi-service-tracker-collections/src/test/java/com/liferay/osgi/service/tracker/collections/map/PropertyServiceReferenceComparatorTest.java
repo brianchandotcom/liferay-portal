@@ -76,6 +76,7 @@ public class PropertyServiceReferenceComparatorTest {
 		Assert.assertTrue(
 			propertyServiceReferenceComparator.compare(
 				serviceReference4, serviceReference1) > 0);
+
 		Assert.assertTrue(
 			propertyServiceReferenceComparator.compare(
 				serviceReference1, serviceReference2) > 0);

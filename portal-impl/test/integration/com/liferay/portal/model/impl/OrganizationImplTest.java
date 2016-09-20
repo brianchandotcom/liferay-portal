@@ -57,6 +57,7 @@ public class OrganizationImplTest {
 			false);
 
 		_organizations.add(_organization4);
+
 		_organizations.add(_organization3);
 		_organizations.add(_organization2);
 		_organizations.add(_organization1);

@@ -54,6 +54,7 @@ public class LayoutRequestPortletContainerTest
 			layout.getRegularURL(httpServletRequest));
 
 		Assert.assertEquals(200, response.getCode());
+
 		Assert.assertTrue(testPortlet.isCalledRender());
 	}
 

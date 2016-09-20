@@ -52,6 +52,7 @@ public class PortletRequestDataSample extends BaseDataSample {
 		Portlet portlet = liferayPortletResponse.getPortlet();
 
 		setCompanyId(portlet.getCompanyId());
+
 		setGroupId(portletRequest, portal);
 		setName(portlet.getPortletName());
 		setNamespace(MonitorNames.PORTLET);

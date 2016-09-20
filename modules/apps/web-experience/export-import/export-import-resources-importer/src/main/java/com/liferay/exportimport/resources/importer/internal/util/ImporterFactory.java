@@ -139,6 +139,7 @@ public class ImporterFactory {
 			Group group = _groupLocalService.getCompanyGroup(companyId);
 
 			importer.setGroupId(group.getGroupId());
+
 			importer.setJournalConverter(_journalConverter);
 			importer.setResourcesDir(TEMPLATES_DIR);
 		}

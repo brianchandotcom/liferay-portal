@@ -233,6 +233,7 @@ public class MDRActionStagedModelDataHandler
 
 		long groupId = GetterUtil.getLong(
 			typeSettingsProperties.getProperty("groupId"));
+
 		boolean privateLayout = GetterUtil.getBoolean(
 			actionElement.attributeValue("private-layout"));
 

@@ -93,6 +93,7 @@ public abstract class BaseLayoutTypeControllerImpl
 			response, unsyncStringWriter);
 
 		String contentType = servletResponse.getContentType();
+
 		String includeServletPath = (String)request.getAttribute(
 			RequestDispatcher.INCLUDE_SERVLET_PATH);
 

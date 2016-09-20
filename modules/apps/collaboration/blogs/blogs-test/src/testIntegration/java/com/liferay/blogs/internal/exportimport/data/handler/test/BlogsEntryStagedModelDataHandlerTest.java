@@ -97,6 +97,7 @@ public class BlogsEntryStagedModelDataHandlerTest
 
 		Assert.assertEquals(
 			liveGroup.getGroupId(), coverImageFileEntry.getGroupId());
+
 		Assert.assertEquals(
 			liveGroup.getGroupId(), coverImageFileEntryFolder.getGroupId());
 	}
@@ -129,6 +130,7 @@ public class BlogsEntryStagedModelDataHandlerTest
 
 		Assert.assertEquals(
 			liveGroup.getGroupId(), smallImageFileEntry.getGroupId());
+
 		Assert.assertEquals(
 			liveGroup.getGroupId(), smallImageFileEntryFolder.getGroupId());
 	}

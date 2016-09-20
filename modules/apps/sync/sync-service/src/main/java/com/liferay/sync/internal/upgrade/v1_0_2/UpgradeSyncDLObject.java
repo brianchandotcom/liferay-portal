@@ -313,6 +313,7 @@ public class UpgradeSyncDLObject extends UpgradeProcess {
 				extraSettingsJSONObject.put("macPackage", true);
 
 				ps2.setString(1, extraSettingsJSONObject.toString());
+
 				ps2.setLong(2, folderId);
 
 				ps2.addBatch();

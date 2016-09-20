@@ -697,6 +697,7 @@ public abstract class BaseDB implements DB {
 						include = replaceTemplate(include, getTemplate());
 
 						sb.append(include);
+
 						sb.append("\n\n");
 					}
 					else {
@@ -865,6 +866,7 @@ public abstract class BaseDB implements DB {
 				line = line.trim();
 
 				sb.append(line);
+
 				sb.append("\n");
 			}
 		}

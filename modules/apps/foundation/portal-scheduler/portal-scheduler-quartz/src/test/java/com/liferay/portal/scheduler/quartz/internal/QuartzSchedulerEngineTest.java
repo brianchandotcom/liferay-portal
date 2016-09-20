@@ -300,6 +300,7 @@ public class QuartzSchedulerEngineTest {
 				_MEMORY_TEST_GROUP_NAME, StorageType.MEMORY);
 
 		Assert.assertEquals(_DEFAULT_JOB_NUMBER, schedulerResponses.size());
+
 		Assert.assertEquals(
 			0, _synchronousDestination.getMessageListenerCount());
 
@@ -324,6 +325,7 @@ public class QuartzSchedulerEngineTest {
 				_MEMORY_TEST_GROUP_NAME, StorageType.MEMORY);
 
 		Assert.assertEquals(_DEFAULT_JOB_NUMBER, schedulerResponses.size());
+
 		Assert.assertEquals(
 			0, _synchronousDestination.getMessageListenerCount());
 
@@ -339,6 +341,7 @@ public class QuartzSchedulerEngineTest {
 			_MEMORY_TEST_GROUP_NAME, StorageType.MEMORY);
 
 		Assert.assertEquals(_DEFAULT_JOB_NUMBER + 1, schedulerResponses.size());
+
 		Assert.assertEquals(
 			0, _synchronousDestination.getMessageListenerCount());
 	}

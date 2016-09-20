@@ -70,6 +70,7 @@ public class HistoryKBArticlePortletConfigurationIcon
 			"resourceClassNameId", String.valueOf(kbArticle.getClassNameId()));
 		portletURL.setParameter(
 			"resourcePrimKey", String.valueOf(kbArticle.getResourcePrimKey()));
+
 		portletURL.setParameter(
 			"status", String.valueOf(
 				portletRequest.getAttribute(KBWebKeys.KNOWLEDGE_BASE_STATUS)));

@@ -1123,6 +1123,7 @@ public class PortletExportController implements ExportController {
 			portletDataContext, serviceName, ownerId, ownerType);
 
 		serviceElement.addAttribute("path", path);
+
 		serviceElement.addAttribute("service-name", serviceName);
 
 		portletDataContext.addZipEntry(path, document.formattedString());
@@ -1178,6 +1179,7 @@ public class PortletExportController implements ExportController {
 		String portletId = MapUtil.getString(settingsMap, "portletId");
 		Map<String, String[]> parameterMap =
 			(Map<String, String[]>)settingsMap.get("parameterMap");
+
 		DateRange dateRange = ExportImportDateUtil.getDateRange(
 			exportImportConfiguration);
 

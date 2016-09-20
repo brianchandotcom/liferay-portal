@@ -358,6 +358,7 @@ public class EhcachePortalCacheTest {
 		_ehcachePortalCache.reconfigEhcache(ehcache2);
 
 		Assert.assertSame(ehcache2, _ehcachePortalCache.ehcache);
+
 		Assert.assertEquals(
 			oldPortalCacheListeners,
 			_ehcachePortalCache.getPortalCacheListeners());

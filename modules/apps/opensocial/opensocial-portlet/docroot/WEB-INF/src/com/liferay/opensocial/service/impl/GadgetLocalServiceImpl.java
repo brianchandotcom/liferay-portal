@@ -94,6 +94,7 @@ public class GadgetLocalServiceImpl extends GadgetLocalServiceBaseImpl {
 		ModulePrefs modulePrefs = gadgetSpec.getModulePrefs();
 
 		gadget.setName(modulePrefs.getTitle());
+
 		gadget.setUrl(url);
 		gadget.setPortletCategoryNames(portletCategoryNames);
 

@@ -91,6 +91,7 @@ public class ParagraphDDMFormFieldTypeSettingsTest
 		properties = textDDMFormField.getProperties();
 
 		Assert.assertTrue(properties.containsKey("placeholder"));
+
 		Assert.assertTrue(textDDMFormField.isRequired());
 		Assert.assertEquals("editor", textDDMFormField.getType());
 

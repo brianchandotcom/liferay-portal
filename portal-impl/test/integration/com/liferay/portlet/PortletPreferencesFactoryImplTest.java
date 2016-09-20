@@ -83,6 +83,7 @@ public class PortletPreferencesFactoryImplTest {
 		long userId = RandomTestUtil.randomLong();
 
 		long ownerId = userId;
+
 		int ownerType = PortletKeys.PREFS_OWNER_TYPE_USER;
 		String customizableColumnPortletId = PortletConstants.assemblePortletId(
 			_PORTLET_ID, userId, null);

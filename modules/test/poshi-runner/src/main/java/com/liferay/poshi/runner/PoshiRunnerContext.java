@@ -662,6 +662,7 @@ public class PoshiRunnerContext {
 		Element rootElement = getTestCaseRootElement(className);
 
 		List<Element> commandElements = rootElement.elements("command");
+
 		Set<String> commandNames = new TreeSet<>();
 
 		for (Element commandElement : commandElements) {
@@ -1102,6 +1103,7 @@ public class PoshiRunnerContext {
 					componentNameKey.replace("-", "_"));
 
 				sb.append(componentNameKey);
+
 				sb.append("=");
 
 				Set<String> classCommandNames = _componentClassCommandNames.get(

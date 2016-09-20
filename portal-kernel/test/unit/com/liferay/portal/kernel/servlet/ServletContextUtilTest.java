@@ -120,6 +120,7 @@ public class ServletContextUtilTest {
 		URI rootURI = ServletContextUtil.getRootURI(servletContext);
 
 		Assert.assertEquals(uri, rootURI);
+
 		Assert.assertEquals(
 			uri, servletContext.getAttribute(ServletContextUtil.URI_ATTRIBUTE));
 	}

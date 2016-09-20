@@ -965,6 +965,7 @@ public class SyncFileService {
 		String targetFilePathName = filePath.toString();
 
 		syncFile.setFilePathName(targetFilePathName);
+
 		syncFile.setLocalSyncTime(System.currentTimeMillis());
 		syncFile.setName(String.valueOf(filePath.getFileName()));
 		syncFile.setParentFolderId(parentFolderId);

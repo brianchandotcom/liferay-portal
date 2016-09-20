@@ -47,6 +47,7 @@ public class CheckboxDDMFormFieldTemplateContextContributor
 			ddmFormField.getProperty("showAsSwitcher"));
 
 		parameters.put("showAsSwitcher", showAsSwitcher);
+
 		parameters.put(
 			"value", Boolean.parseBoolean(
 				ddmFormFieldRenderingContext.getValue()));

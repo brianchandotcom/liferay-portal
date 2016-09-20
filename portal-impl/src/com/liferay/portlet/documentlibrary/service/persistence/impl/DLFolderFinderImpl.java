@@ -370,6 +370,7 @@ public class DLFolderFinderImpl
 				inlineSQLHelper);
 
 			sb.append(sql);
+
 			sb.append(") UNION ALL (");
 			sb.append(
 				getFileShortcutsSQL(
@@ -457,6 +458,7 @@ public class DLFolderFinderImpl
 				inlineSQLHelper);
 
 			sb.append(sql);
+
 			sb.append(" UNION ALL ");
 
 			sql = getFileShortcutsSQL(
@@ -464,6 +466,7 @@ public class DLFolderFinderImpl
 				inlineSQLHelper);
 
 			sb.append(sql);
+
 			sb.append(") TEMP_TABLE ORDER BY modelFolder DESC, title ASC");
 
 			sql = sb.toString();
@@ -472,6 +475,7 @@ public class DLFolderFinderImpl
 
 			sql = updateSQL(
 				sql, folderId, includeMountFolders, showHiddenMountFolders);
+
 			sql = CustomSQLUtil.replaceOrderBy(
 				sql, queryDefinition.getOrderByComparator());
 
@@ -581,6 +585,7 @@ public class DLFolderFinderImpl
 				inlineSQLHelper);
 
 			sb.append(sql);
+
 			sb.append(" UNION ALL ");
 
 			sql = getFileShortcutsSQL(
@@ -588,6 +593,7 @@ public class DLFolderFinderImpl
 				inlineSQLHelper);
 
 			sb.append(sql);
+
 			sb.append(") TEMP_TABLE ORDER BY modelFolder DESC, title ASC");
 
 			sql = sb.toString();

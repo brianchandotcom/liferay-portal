@@ -474,6 +474,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 						title, extension);
 
 					ps2.setString(1, fileName);
+
 					ps2.setLong(2, fileVersionId);
 
 					ps2.addBatch();

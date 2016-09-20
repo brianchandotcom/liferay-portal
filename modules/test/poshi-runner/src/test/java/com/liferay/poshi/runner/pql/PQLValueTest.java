@@ -163,6 +163,7 @@ public class PQLValueTest extends TestCase {
 		PQLValue pqlValue = new PQLValue(pql);
 
 		Object actualResult = pqlValue.getPQLResult(properties);
+
 		Object expectedResult = null;
 
 		if (actualResult != null) {

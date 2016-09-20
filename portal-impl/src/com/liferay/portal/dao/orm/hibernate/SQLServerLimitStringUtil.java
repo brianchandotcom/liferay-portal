@@ -105,6 +105,7 @@ public class SQLServerLimitStringUtil {
 			orderByColumn = orderByColumn.trim();
 
 			String orderByColumnName = orderByColumn;
+
 			String orderByType = "ASC";
 
 			int spacePos = orderByColumn.lastIndexOf(CharPool.SPACE);
@@ -144,6 +145,7 @@ public class SQLServerLimitStringUtil {
 				orderByColumnName = matcher.replaceAll("$1");
 
 				outerOrderBySB.append(orderByColumnName);
+
 				outerOrderBySB.append(StringPool.SPACE);
 				outerOrderBySB.append(orderByType);
 			}

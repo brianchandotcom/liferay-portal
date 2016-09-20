@@ -51,6 +51,7 @@ public class CallerRunsPolicyTest {
 		threadPoolExecutor.execute(markerBlockingJob);
 
 		Assert.assertFalse(markerBlockingJob.isStarted());
+
 		Assert.assertFalse(markerThreadPoolHandler.isBeforeExecuteRan());
 		Assert.assertFalse(markerThreadPoolHandler.isAfterExecuteRan());
 	}
@@ -74,6 +75,7 @@ public class CallerRunsPolicyTest {
 			threadPoolExecutor.execute(markerBlockingJob);
 
 			Assert.assertTrue(markerBlockingJob.isEnded());
+
 			Assert.assertTrue(markerThreadPoolHandler.isBeforeExecuteRan());
 			Assert.assertTrue(markerThreadPoolHandler.isAfterExecuteRan());
 		}

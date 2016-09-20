@@ -117,6 +117,7 @@ public class UnsyncByteArrayInputStreamTest {
 			_SIZE - size, unsyncByteArrayInputStream.available());
 		Assert.assertEquals(
 			_SIZE - size, unsyncByteArrayInputStream.skip(size));
+
 		Assert.assertEquals(0, unsyncByteArrayInputStream.available());
 	}
 

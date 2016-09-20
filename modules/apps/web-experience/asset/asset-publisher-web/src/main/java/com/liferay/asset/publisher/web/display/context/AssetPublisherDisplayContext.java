@@ -1258,6 +1258,7 @@ public class AssetPublisherDisplayContext {
 			AssetPublisherUtil.encodeName(
 				classTypeField.getClassTypeId(), getDDMStructureFieldName(),
 				locale));
+
 		assetEntryQuery.setAttribute(
 			"ddmStructureFieldValue", getDDMStructureFieldValue());
 	}

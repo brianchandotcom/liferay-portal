@@ -92,6 +92,7 @@ public class UserBagFactoryTest {
 		groups = getGroups();
 
 		Assert.assertEquals(5, groups.size());
+
 		Assert.assertEquals(2, userGroups.size());
 		Assert.assertEquals(2, userOrgGroups.size());
 		Assert.assertEquals(1, userUserGroupGroups.size());

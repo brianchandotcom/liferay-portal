@@ -222,6 +222,7 @@ public class CharPipeTest {
 		int result = reader.read(buffer);
 
 		Assert.assertEquals(4, result);
+
 		Assert.assertEquals('a', buffer[0]);
 		Assert.assertEquals('b', buffer[1]);
 		Assert.assertEquals('c', buffer[2]);
@@ -265,6 +266,7 @@ public class CharPipeTest {
 		Reader reader2 = charPipe.getReader();
 
 		Assert.assertSame(reader1, reader2);
+
 		Assert.assertFalse(reader1.markSupported());
 
 		try {
@@ -342,6 +344,7 @@ public class CharPipeTest {
 		int result = reader.read(buffer);
 
 		Assert.assertEquals(4, result);
+
 		Assert.assertTrue(Arrays.equals(data, buffer));
 
 		writer.append(new String(data));
@@ -349,6 +352,7 @@ public class CharPipeTest {
 		result = reader.read(buffer);
 
 		Assert.assertEquals(4, result);
+
 		Assert.assertTrue(Arrays.equals(data, buffer));
 
 		charPipe.close();
@@ -379,6 +383,7 @@ public class CharPipeTest {
 		result = reader.read(buffer, 1, 3);
 
 		Assert.assertEquals(2, result);
+
 		Assert.assertEquals('b', buffer[1]);
 		Assert.assertEquals('c', buffer[2]);
 
@@ -391,6 +396,7 @@ public class CharPipeTest {
 		result = reader.read(buffer, 1, 3);
 
 		Assert.assertEquals(2, result);
+
 		Assert.assertEquals('b', buffer[1]);
 		Assert.assertEquals('c', buffer[2]);
 
@@ -414,6 +420,7 @@ public class CharPipeTest {
 		int result = reader.read(buffer, 0, 3);
 
 		Assert.assertEquals(3, result);
+
 		Assert.assertEquals('a', buffer[0]);
 		Assert.assertEquals('b', buffer[1]);
 		Assert.assertEquals('c', buffer[2]);
@@ -423,6 +430,7 @@ public class CharPipeTest {
 		result = reader.read(buffer);
 
 		Assert.assertEquals(4, result);
+
 		Assert.assertEquals('d', buffer[0]);
 		Assert.assertEquals('a', buffer[1]);
 		Assert.assertEquals('b', buffer[2]);
@@ -433,6 +441,7 @@ public class CharPipeTest {
 		result = reader.read(buffer);
 
 		Assert.assertEquals(4, result);
+
 		Assert.assertEquals('a', buffer[0]);
 		Assert.assertEquals('b', buffer[1]);
 		Assert.assertEquals('c', buffer[2]);
@@ -485,6 +494,7 @@ public class CharPipeTest {
 		int result = reader.read(buffer);
 
 		Assert.assertEquals(4, result);
+
 		Assert.assertEquals("abcd", new String(buffer));
 
 		charPipe.close();
@@ -513,6 +523,7 @@ public class CharPipeTest {
 		result = reader.read(buffer, 1, 3);
 
 		Assert.assertEquals(3, result);
+
 		Assert.assertEquals('b', buffer[1]);
 		Assert.assertEquals('c', buffer[2]);
 		Assert.assertEquals('d', buffer[3]);
@@ -535,6 +546,7 @@ public class CharPipeTest {
 		int result = reader.read(buffer, 0, 3);
 
 		Assert.assertEquals(3, result);
+
 		Assert.assertEquals('a', buffer[0]);
 		Assert.assertEquals('b', buffer[1]);
 		Assert.assertEquals('c', buffer[2]);
@@ -544,6 +556,7 @@ public class CharPipeTest {
 		result = reader.read(buffer);
 
 		Assert.assertEquals(4, result);
+
 		Assert.assertEquals('d', buffer[0]);
 		Assert.assertEquals('a', buffer[1]);
 		Assert.assertEquals('b', buffer[2]);
@@ -554,6 +567,7 @@ public class CharPipeTest {
 		result = reader.read(buffer);
 
 		Assert.assertEquals(4, result);
+
 		Assert.assertEquals('a', buffer[0]);
 		Assert.assertEquals('b', buffer[1]);
 		Assert.assertEquals('c', buffer[2]);

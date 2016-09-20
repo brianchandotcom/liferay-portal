@@ -519,6 +519,7 @@ public class MBCategoryLocalServiceTest {
 		MBCategory category = addCategory(parentCategory.getCategoryId());
 
 		Assert.assertNotNull(category.getParentCategory());
+
 		Assert.assertNull(parentCategory.getParentCategory());
 	}
 

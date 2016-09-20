@@ -164,6 +164,7 @@ public class TrashImpl implements Trash {
 					trashedModel.getTrashEntryClassPK());
 
 				classNames.add(trashRenderer.getClassName());
+
 				restoreTrashEntryIds.add(trashEntry.getEntryId());
 				titles.add(trashRenderer.getTitle(themeDisplay.getLocale()));
 			}

@@ -59,6 +59,7 @@ public class AnnotatedObjectEncoderTest {
 				new ByteBufInputStream(byteBuf));
 
 		Assert.assertEquals(date, annotatedObjectInputStream.readObject());
+
 		Assert.assertFalse(byteBuf.isReadable());
 	}
 

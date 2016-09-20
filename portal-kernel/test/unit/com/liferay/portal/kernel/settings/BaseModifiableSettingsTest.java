@@ -54,6 +54,7 @@ public class BaseModifiableSettingsTest extends PowerMockito {
 		Collection<String> keys = _baseModifiableSettings.getModifiedKeys();
 
 		Assert.assertEquals(3, keys.size());
+
 		Assert.assertEquals(
 			"otherValue", _baseModifiableSettings.getValue("otherKey", null));
 		Assert.assertEquals(

@@ -47,6 +47,7 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 				sourcePreferenceName, null);
 
 			portletPreferences.setValue(targetPreferenceName, value);
+
 			portletPreferences.reset(sourcePreferenceName);
 		}
 

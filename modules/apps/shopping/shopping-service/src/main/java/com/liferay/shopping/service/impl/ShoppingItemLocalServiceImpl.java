@@ -180,6 +180,7 @@ public class ShoppingItemLocalServiceImpl
 			long itemFieldId = counterLocalService.increment();
 
 			itemField.setItemFieldId(itemFieldId);
+
 			itemField.setItemId(itemId);
 			itemField.setName(checkItemField(itemField.getName()));
 			itemField.setValues(checkItemField(itemField.getValues()));
@@ -194,6 +195,7 @@ public class ShoppingItemLocalServiceImpl
 				long itemPriceId = counterLocalService.increment();
 
 				itemPrice.setItemPriceId(itemPriceId);
+
 				itemPrice.setItemId(itemId);
 
 				shoppingItemPricePersistence.update(itemPrice);
@@ -548,6 +550,7 @@ public class ShoppingItemLocalServiceImpl
 			long itemFieldId = counterLocalService.increment();
 
 			itemField.setItemFieldId(itemFieldId);
+
 			itemField.setItemId(itemId);
 			itemField.setName(checkItemField(itemField.getName()));
 			itemField.setValues(checkItemField(itemField.getValues()));
@@ -564,6 +567,7 @@ public class ShoppingItemLocalServiceImpl
 				long itemPriceId = counterLocalService.increment();
 
 				itemPrice.setItemPriceId(itemPriceId);
+
 				itemPrice.setItemId(itemId);
 
 				shoppingItemPricePersistence.update(itemPrice);

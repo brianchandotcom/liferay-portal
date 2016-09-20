@@ -179,6 +179,7 @@ public class SelectorIntrabandTest {
 		Pipe writePipe = Pipe.open();
 
 		GatheringByteChannel gatheringByteChannel = writePipe.sink();
+
 		ScatteringByteChannel scatteringByteChannel = readPipe.source();
 
 		SelectionKeyRegistrationReference registrationReference =
@@ -487,6 +488,7 @@ public class SelectorIntrabandTest {
 			dataByteBuffer = receiveDatagram.getDataByteBuffer();
 
 			Assert.assertArrayEquals(_data, dataByteBuffer.array());
+
 			Assert.assertEquals(1, logRecords.size());
 
 			IntrabandTestUtil.assertMessageStartWith(
@@ -912,6 +914,7 @@ public class SelectorIntrabandTest {
 		Pipe writePipe = Pipe.open();
 
 		GatheringByteChannel gatheringByteChannel = writePipe.sink();
+
 		ScatteringByteChannel scatteringByteChannel = readPipe.source();
 
 		RegistrationReference registrationReference =
@@ -983,6 +986,7 @@ public class SelectorIntrabandTest {
 
 			Assert.assertSame(
 				attachment, recordCompletionHandler.getAttachment());
+
 			Assert.assertTrue(logRecords.isEmpty());
 		}
 

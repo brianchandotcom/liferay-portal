@@ -252,6 +252,7 @@ public class DLFileShortcutTrashHandlerTest
 
 		int initialBaseModelsCount = getNotInTrashBaseModelsCount(
 			parentBaseModel);
+
 		int initialTrashEntriesCount = getTrashEntriesCount(group.getGroupId());
 
 		BaseModel<?> baseModel = addBaseModel(parentBaseModel, serviceContext);

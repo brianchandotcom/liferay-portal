@@ -70,6 +70,7 @@ public class VelocityManager extends BaseSingleTemplateManager {
 			request.getServletContext(), request, response, contextObjects);
 
 		contextObjects.put(themeName, velocityTaglib);
+
 		contextObjects.put("velocityTaglib_layoutIcon", _layoutIconMethod);
 
 		// Legacy support

@@ -242,6 +242,7 @@ public class NettyUtilTest {
 			scheduledFuture.get(1, TimeUnit.HOURS);
 
 			Assert.assertFalse(scheduledFuture.isCancelled());
+
 			Assert.assertTrue(defaultNoticeableFuture.isCancelled());
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
@@ -268,6 +269,7 @@ public class NettyUtilTest {
 			scheduledFuture.get(1, TimeUnit.HOURS);
 
 			Assert.assertFalse(scheduledFuture.isCancelled());
+
 			Assert.assertTrue(defaultNoticeableFuture.isCancelled());
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();

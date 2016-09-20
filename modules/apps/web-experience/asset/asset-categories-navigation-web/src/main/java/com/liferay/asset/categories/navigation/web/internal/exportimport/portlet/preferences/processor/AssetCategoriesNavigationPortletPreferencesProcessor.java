@@ -157,6 +157,7 @@ public class AssetCategoriesNavigationPortletPreferencesProcessor
 			portletPreferencesOldValue, StringPool.POUND);
 
 		String uuid = oldValues[0];
+
 		long groupId = portletDataContext.getScopeGroupId();
 
 		if (oldValues.length > 1) {

@@ -87,6 +87,7 @@ public class DirectRequestDispatcherFactoryImpl
 		String contextPath = servletContext.getContextPath();
 
 		String fullPath = contextPath.concat(path);
+
 		String queryString = null;
 
 		int pos = fullPath.indexOf(CharPool.QUESTION);

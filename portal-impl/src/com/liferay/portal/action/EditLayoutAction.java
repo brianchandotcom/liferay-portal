@@ -114,6 +114,7 @@ public class EditLayoutAction extends JSONAction {
 					"originalParentLayoutId", layout.getParentLayoutId());
 				jsonObject.put("originalParentPlid", layout.getParentPlid());
 				jsonObject.put("originalPriority", layout.getPriority());
+
 				jsonObject.put("plid", plid);
 
 				jsonObject.put("status", HttpServletResponse.SC_BAD_REQUEST);

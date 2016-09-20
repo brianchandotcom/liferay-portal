@@ -153,6 +153,7 @@ public abstract class BaseAppServerTask extends DefaultTask {
 		File executableFile = new File(getBinDir(), getExecutable());
 
 		commands.add(executableFile.getAbsolutePath());
+
 		commands.addAll(getExecutableArgs());
 
 		ProcessExecutor processExecutor = new ProcessExecutor(commands);

@@ -116,6 +116,7 @@ public class RubySassCompilerTest {
 			sourceMapFile.getCanonicalPath());
 
 		Assert.assertNotNull(actualOutput);
+
 		Assert.assertTrue(sourceMapFile.exists());
 
 		File expectedOutputFile = new File(
@@ -188,6 +189,7 @@ public class RubySassCompilerTest {
 			input, inputFile.getCanonicalPath(), "", true);
 
 		Assert.assertNotNull(actualOutput);
+
 		Assert.assertTrue(sourceMapFile.exists());
 
 		File expectedOutputFile = new File(

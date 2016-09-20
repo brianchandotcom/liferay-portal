@@ -291,6 +291,7 @@ public class BlogsEntryStatusTransitionTest {
 		displayDate.add(Calendar.DATE, 1);
 
 		entry.setDisplayDate(displayDate.getTime());
+
 		entry.setStatus(WorkflowConstants.STATUS_DRAFT);
 
 		BlogsEntryLocalServiceUtil.updateBlogsEntry(entry);

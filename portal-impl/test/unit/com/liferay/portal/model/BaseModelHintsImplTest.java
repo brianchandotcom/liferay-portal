@@ -284,6 +284,7 @@ public class BaseModelHintsImplTest {
 			_MODEL, "simpleField", "type", type);
 
 		Assert.assertEquals("long", type);
+
 		Assert.assertEquals("long", value);
 
 		type = _testBaseModelHints.getType(_MODEL, "hintField");
@@ -291,6 +292,7 @@ public class BaseModelHintsImplTest {
 		value = _testBaseModelHints.getValue(_MODEL, "hintField", "type", type);
 
 		Assert.assertEquals("long", type);
+
 		Assert.assertEquals("Date", value);
 	}
 

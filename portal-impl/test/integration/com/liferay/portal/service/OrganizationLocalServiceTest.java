@@ -85,6 +85,7 @@ public class OrganizationLocalServiceTest {
 			organizationA.getOrganizationId(), "Organization B", false);
 
 		_organizations.add(organizationB);
+
 		_organizations.add(organizationA);
 
 		Assert.assertEquals(
@@ -109,6 +110,7 @@ public class OrganizationLocalServiceTest {
 			organizationA.getOrganizationId(), "Organization B", false);
 
 		_organizations.add(organizationB);
+
 		_organizations.add(organizationA);
 
 		Assert.assertEquals(
@@ -133,6 +135,7 @@ public class OrganizationLocalServiceTest {
 			organizationA.getOrganizationId(), "Organization B", true);
 
 		_organizations.add(organizationB);
+
 		_organizations.add(organizationA);
 
 		Assert.assertEquals(
@@ -157,6 +160,7 @@ public class OrganizationLocalServiceTest {
 			organizationA.getOrganizationId(), "Organization B", true);
 
 		_organizations.add(organizationB);
+
 		_organizations.add(organizationA);
 
 		Assert.assertEquals(
@@ -181,6 +185,7 @@ public class OrganizationLocalServiceTest {
 			organizationA.getOrganizationId(), "Organization B", false);
 
 		_organizations.add(organizationB);
+
 		_organizations.add(organizationA);
 
 		organizationA = OrganizationTestUtil.addSite(organizationA);
@@ -203,11 +208,13 @@ public class OrganizationLocalServiceTest {
 			organizationA.getOrganizationId(), "Organization B", true);
 
 		_organizations.add(organizationB);
+
 		_organizations.add(organizationA);
 
 		organizationA = OrganizationTestUtil.addSite(organizationA);
 
 		Group groupA = organizationA.getGroup();
+
 		Group groupB = organizationB.getGroup();
 
 		Assert.assertEquals(groupA.getGroupId(), groupB.getParentGroupId());
@@ -225,6 +232,7 @@ public class OrganizationLocalServiceTest {
 			organizationA.getOrganizationId(), "Organization B", false);
 
 		_organizations.add(organizationB);
+
 		_organizations.add(organizationA);
 
 		organizationB = OrganizationTestUtil.addSite(organizationB);
@@ -247,6 +255,7 @@ public class OrganizationLocalServiceTest {
 			organizationA.getOrganizationId(), "Organization B", false);
 
 		_organizations.add(organizationB);
+
 		_organizations.add(organizationA);
 
 		organizationB = OrganizationTestUtil.addSite(organizationB);
@@ -283,6 +292,7 @@ public class OrganizationLocalServiceTest {
 				false, new ServiceContext());
 
 		_organizations.add(organizationB);
+
 		_organizations.add(organizationA);
 
 		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
@@ -335,6 +345,7 @@ public class OrganizationLocalServiceTest {
 			organizationA.getOrganizationId(), "Organization AA", false);
 
 		_organizations.add(organizationAA);
+
 		_organizations.add(organizationA);
 
 		UserLocalServiceUtil.addOrganizationUser(
@@ -373,6 +384,7 @@ public class OrganizationLocalServiceTest {
 			organizationAA.getComments(), false, null, true, null);
 
 		_organizations.add(organizationAA);
+
 		_organizations.add(organizationB);
 		_organizations.add(organizationA);
 
@@ -409,6 +421,7 @@ public class OrganizationLocalServiceTest {
 			organizationAA.getComments(), false, null, true, null);
 
 		_organizations.add(organizationAA);
+
 		_organizations.add(organizationB);
 		_organizations.add(organizationA);
 
@@ -445,6 +458,7 @@ public class OrganizationLocalServiceTest {
 			organizationAA.getComments(), false, null, true, null);
 
 		_organizations.add(organizationAA);
+
 		_organizations.add(organizationB);
 		_organizations.add(organizationA);
 
@@ -481,6 +495,7 @@ public class OrganizationLocalServiceTest {
 			organizationAA.getComments(), false, null, true, null);
 
 		_organizations.add(organizationAA);
+
 		_organizations.add(organizationB);
 		_organizations.add(organizationA);
 

@@ -351,6 +351,7 @@ public class NewEnvTestRule implements TestRule {
 
 			_afterMethodKeys = getMethodKeys(testClass, After.class);
 			_beforeMethodKeys = getMethodKeys(testClass, Before.class);
+
 			_newClassLoader = createClassLoader(description);
 			_testClassName = testClass.getName();
 			_testMethodKey = new MethodKey(

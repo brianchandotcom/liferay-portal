@@ -215,6 +215,7 @@ public class GoogleDocsMetadataHelper {
 				serviceContext);
 
 			_dlFileEntryMetadata.setDDMStorageId(ddmStorageId);
+
 			_dlFileEntryMetadata.setDDMStructureId(ddmStructureId);
 			_dlFileEntryMetadata.setFileEntryId(dlFileEntry.getFileEntryId());
 			_dlFileEntryMetadata.setFileVersionId(

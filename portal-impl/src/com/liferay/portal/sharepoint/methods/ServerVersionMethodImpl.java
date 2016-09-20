@@ -40,6 +40,7 @@ public class ServerVersionMethodImpl extends BaseMethodImpl {
 			getMethodName(), serverVersionTree);
 
 		_elements.add(serverVersionProperty);
+
 		_elements.add(new Property("source control", "1"));
 	}
 

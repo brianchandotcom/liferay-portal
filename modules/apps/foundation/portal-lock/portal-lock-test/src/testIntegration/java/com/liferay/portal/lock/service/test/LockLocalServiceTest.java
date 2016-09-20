@@ -146,6 +146,7 @@ public class LockLocalServiceTest {
 		Lock lock1 = LockLocalServiceUtil.lock(className, key, owner1);
 
 		Assert.assertEquals(owner1, lock1.getOwner());
+
 		Assert.assertTrue(lock1.isNew());
 
 		String owner2 = "owner2";

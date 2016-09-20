@@ -73,6 +73,7 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 			ParamUtil.getString(
 				request, "contextName",
 				servletContext.getServletContextName()));
+
 		_jsonWebServiceNaming =
 			JSONWebServiceActionsManagerUtil.getJSONWebServiceNaming();
 	}

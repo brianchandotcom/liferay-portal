@@ -102,6 +102,7 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 					oldValue, name[0], name[1]);
 
 				ps2.setString(1, newValue);
+
 				ps2.setString(2, oldValue);
 
 				ps2.addBatch();

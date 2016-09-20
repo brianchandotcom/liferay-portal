@@ -96,13 +96,16 @@ public class OverrideIncrementTest {
 			integerOverrideIncrement.increaseForNew(2);
 
 		Assert.assertNotSame(integerOverrideIncrement, overrideIncrement);
+
 		Assert.assertEquals(
 			Integer.valueOf(1), integerOverrideIncrement.getValue());
+
 		Assert.assertEquals(Integer.valueOf(2), overrideIncrement.getValue());
 
 		overrideIncrement = integerOverrideIncrement.increaseForNew(0);
 
 		Assert.assertNotSame(integerOverrideIncrement, overrideIncrement);
+
 		Assert.assertEquals(
 			Integer.valueOf(1), integerOverrideIncrement.getValue());
 		Assert.assertEquals(Integer.valueOf(1), overrideIncrement.getValue());
@@ -110,6 +113,7 @@ public class OverrideIncrementTest {
 		overrideIncrement = integerOverrideIncrement.decreaseForNew(0);
 
 		Assert.assertNotSame(integerOverrideIncrement, overrideIncrement);
+
 		Assert.assertEquals(
 			Integer.valueOf(1), integerOverrideIncrement.getValue());
 		Assert.assertEquals(Integer.valueOf(0), overrideIncrement.getValue());
@@ -117,6 +121,7 @@ public class OverrideIncrementTest {
 		overrideIncrement = integerOverrideIncrement.decreaseForNew(2);
 
 		Assert.assertNotSame(integerOverrideIncrement, overrideIncrement);
+
 		Assert.assertEquals(
 			Integer.valueOf(1), integerOverrideIncrement.getValue());
 		Assert.assertEquals(Integer.valueOf(1), overrideIncrement.getValue());

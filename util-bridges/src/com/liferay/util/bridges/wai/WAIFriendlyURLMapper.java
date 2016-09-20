@@ -99,6 +99,7 @@ public class WAIFriendlyURLMapper implements FriendlyURLMapper {
 		String portletId = prefix + PortletConstants.WAR_SEPARATOR + prefix;
 
 		parameterMap.put("p_p_id", new String[] {portletId});
+
 		parameterMap.put("p_p_lifecycle", new String[] {"0"});
 
 		if (hasBinaryExtension(friendlyURLPath)) {

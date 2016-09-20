@@ -94,6 +94,7 @@ public class MessageRoutingBagTest {
 		Assert.assertEquals(2, routingTrace.size());
 		Assert.assertEquals(routingId1, routingTrace.get(0));
 		Assert.assertEquals(routingId2, routingTrace.get(1));
+
 		Assert.assertTrue(newMessageRoutingBag.isVisited(routingId1));
 		Assert.assertTrue(newMessageRoutingBag.isVisited(routingId2));
 		Assert.assertFalse(newMessageRoutingBag.isVisited("routingId3"));
@@ -104,6 +105,7 @@ public class MessageRoutingBagTest {
 		Message newMessage = newMessageRoutingBag.getMessage();
 
 		Assert.assertNotNull(newMessage);
+
 		Assert.assertNull(
 			ReflectionTestUtil.getFieldValue(
 				newMessageRoutingBag, "_messageData"));
@@ -154,6 +156,7 @@ public class MessageRoutingBagTest {
 		Assert.assertEquals(2, routingTrace.size());
 		Assert.assertEquals(routingId1, routingTrace.get(0));
 		Assert.assertEquals(routingId2, routingTrace.get(1));
+
 		Assert.assertTrue(newMessageRoutingBag.isVisited(routingId1));
 		Assert.assertTrue(newMessageRoutingBag.isVisited(routingId2));
 		Assert.assertFalse(newMessageRoutingBag.isVisited("routingId3"));
@@ -164,6 +167,7 @@ public class MessageRoutingBagTest {
 		Message newMessage = newMessageRoutingBag.getMessage();
 
 		Assert.assertNotNull(newMessage);
+
 		Assert.assertNull(
 			ReflectionTestUtil.getFieldValue(
 				newMessageRoutingBag, "_messageData"));

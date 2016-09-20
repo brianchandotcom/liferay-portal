@@ -166,6 +166,7 @@ public class CalendarResourceStagedModelDataHandler
 			calendarResource.getUserUuid());
 
 		long classPK = getClassPK(portletDataContext, calendarResource, userId);
+
 		Map<Locale, String> calendarResourceNameMap =
 			getCalendarResourceNameMap(portletDataContext, calendarResource);
 

@@ -47,6 +47,7 @@ public class RouteImplTest {
 		String url = route.parametersToUrl(parameters);
 
 		Assert.assertNull(url);
+
 		Assert.assertEquals(originalParameters, parameters);
 	}
 

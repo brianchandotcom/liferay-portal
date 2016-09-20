@@ -384,6 +384,7 @@ public class DDLRecordServiceTest {
 		availableLocales.add(LocaleUtil.US);
 
 		ddmForm.setAvailableLocales(availableLocales);
+
 		ddmForm.setDefaultLocale(LocaleUtil.US);
 
 		return ddmForm;

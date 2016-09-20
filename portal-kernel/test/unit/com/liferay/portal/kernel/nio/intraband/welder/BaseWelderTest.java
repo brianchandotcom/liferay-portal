@@ -63,6 +63,7 @@ public class BaseWelderTest {
 			new MockRegistrationReference(null);
 
 		testWelder.registrationReference = registrationReference;
+
 		testWelder.state = BaseWelder.State.WELDED;
 
 		testWelder.destroy();
@@ -127,6 +128,7 @@ public class BaseWelderTest {
 
 		Assert.assertEquals(
 			newTestWelder._clientRegistrationReference, registrationReference);
+
 		Assert.assertNull(newTestWelder._serverRegistrationReference);
 		Assert.assertEquals(BaseWelder.State.WELDED, newTestWelder.state);
 	}

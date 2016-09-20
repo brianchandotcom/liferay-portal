@@ -71,6 +71,7 @@ public class DDLCSVExporter extends BaseDDLExporter {
 			LocalizedValue label = ddmFormField.getLabel();
 
 			sb.append(CSVUtil.encode(label.getString(getLocale())));
+
 			sb.append(CharPool.COMMA);
 		}
 

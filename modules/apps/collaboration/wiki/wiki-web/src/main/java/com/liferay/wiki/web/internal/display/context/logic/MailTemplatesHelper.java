@@ -100,6 +100,7 @@ public class MailTemplatesHelper {
 				resourceBundle,
 				"the-url-of-the-page-comparing-this-page-content-with-the-" +
 					"previous-version"));
+
 		definitionTerms.put(
 			"[$FROM_ADDRESS$]",
 			HtmlUtil.escape(

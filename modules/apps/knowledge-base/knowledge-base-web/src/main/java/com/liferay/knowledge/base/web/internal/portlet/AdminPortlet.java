@@ -255,6 +255,7 @@ public class AdminPortlet extends BaseKBPortlet {
 
 			long resourceClassNameId = ParamUtil.getLong(
 				renderRequest, "resourceClassNameId", kbArticleClassNameId);
+
 			long resourcePrimKey = ParamUtil.getLong(
 				renderRequest, "resourcePrimKey");
 			int status = WorkflowConstants.STATUS_ANY;
@@ -278,6 +279,7 @@ public class AdminPortlet extends BaseKBPortlet {
 			long parentResourceClassNameId = ParamUtil.getLong(
 				renderRequest, "parentResourceClassNameId",
 				kbFolderClassNameId);
+
 			long parentResourcePrimKey = ParamUtil.getLong(
 				renderRequest, "parentResourcePrimKey");
 

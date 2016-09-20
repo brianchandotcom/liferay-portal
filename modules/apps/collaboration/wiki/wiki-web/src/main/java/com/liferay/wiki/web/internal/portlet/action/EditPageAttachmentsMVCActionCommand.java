@@ -274,6 +274,7 @@ public class EditPageAttachmentsMVCActionCommand extends BaseMVCActionCommand {
 						(AntivirusScannerException)e;
 
 					errorMessage = themeDisplay.translate(ase.getMessageKey());
+
 					errorType =
 						ServletResponseConstants.SC_FILE_ANTIVIRUS_EXCEPTION;
 				}

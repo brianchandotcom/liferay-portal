@@ -233,6 +233,7 @@ public class WebServerServlet extends HttpServlet {
 			user = _getUser(request);
 
 			PrincipalThreadLocal.setName(user.getUserId());
+
 			PrincipalThreadLocal.setPassword(
 				PortalUtil.getUserPassword(request));
 
@@ -735,6 +736,7 @@ public class WebServerServlet extends HttpServlet {
 				fileEntry, fileVersion, themeDisplay, queryString);
 
 			response.setHeader(HttpHeaders.LOCATION, url);
+
 			response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
 
 			return true;

@@ -457,6 +457,7 @@ public class CalendarUtil {
 		int year = cal.get(Calendar.YEAR);
 		int month = cal.get(Calendar.MONTH);
 		int day = cal.get(Calendar.DATE);
+
 		int hour = 0;
 		int minute = 0;
 		int second = 0;

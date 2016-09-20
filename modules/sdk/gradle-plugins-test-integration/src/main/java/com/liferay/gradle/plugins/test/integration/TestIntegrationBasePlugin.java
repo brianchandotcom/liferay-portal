@@ -67,6 +67,7 @@ public class TestIntegrationBasePlugin implements Plugin<Project> {
 
 		configureEclipse(project, testIntegrationSourceSet);
 		configureIdea(project, testIntegrationSourceSet);
+
 		configureTaskCheck(testIntegrationTask);
 	}
 

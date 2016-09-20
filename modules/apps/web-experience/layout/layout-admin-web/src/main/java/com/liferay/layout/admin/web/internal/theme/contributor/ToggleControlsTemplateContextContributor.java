@@ -80,6 +80,7 @@ public class ToggleControlsTemplateContextContributor
 			contextObjects.put(
 				"toggle_controls_text",
 				LanguageUtil.get(resourceBundle, "toggle-controls"));
+
 			contextObjects.put("toggle_controls_url", "javascript:;");
 		}
 	}

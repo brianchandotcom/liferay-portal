@@ -63,6 +63,7 @@ public class ExpressionModelTest {
 		Expression rightOperand2 = comparisonExpression.getRightOperand();
 
 		Assert.assertEquals("!=", comparisonExpression.getOperator());
+
 		Assert.assertEquals(Term.class, leftOperand2.getClass());
 		Assert.assertEquals(Term.class, rightOperand2.getClass());
 
@@ -170,6 +171,7 @@ public class ExpressionModelTest {
 			comparisonExpression.getRightOperand();
 
 		Assert.assertEquals(">", comparisonExpression.getOperator());
+
 		Assert.assertEquals(
 			ArithmeticExpression.class, comparisonLeftOperand.getClass());
 		Assert.assertEquals(Term.class, comparisonRightOperand.getClass());
@@ -184,6 +186,7 @@ public class ExpressionModelTest {
 			arithmeticExpression.getRightOperand();
 
 		Assert.assertEquals("*", arithmeticExpression.getOperator());
+
 		Assert.assertEquals(Term.class, arithmeticLeftOperand.getClass());
 		Assert.assertEquals(Term.class, arithmeticRightOperand.getClass());
 
@@ -220,6 +223,7 @@ public class ExpressionModelTest {
 			comparisonExpression.getRightOperand();
 
 		Assert.assertEquals("<=", comparisonExpression.getOperator());
+
 		Assert.assertEquals(
 			ArithmeticExpression.class, comparisonLeftOperand.getClass());
 		Assert.assertEquals(
@@ -235,6 +239,7 @@ public class ExpressionModelTest {
 			arithmeticExpression.getRightOperand();
 
 		Assert.assertEquals("/", arithmeticExpression.getOperator());
+
 		Assert.assertEquals(
 			ArithmeticExpression.class, arithmeticLeftOperand.getClass());
 		Assert.assertEquals(
@@ -250,6 +255,7 @@ public class ExpressionModelTest {
 			arithmeticExpression2.getRightOperand();
 
 		Assert.assertEquals("+", arithmeticExpression2.getOperator());
+
 		Assert.assertEquals(Term.class, arithmeticLeftOperand2.getClass());
 		Assert.assertEquals(Term.class, arithmeticRightOperand2.getClass());
 
@@ -271,6 +277,7 @@ public class ExpressionModelTest {
 			arithmeticExpression3.getRightOperand();
 
 		Assert.assertEquals("-", arithmeticExpression3.getOperator());
+
 		Assert.assertEquals(Term.class, arithmeticLeftOperand3.getClass());
 		Assert.assertEquals(Term.class, arithmeticRightOperand3.getClass());
 
@@ -354,6 +361,7 @@ public class ExpressionModelTest {
 		Expression rightOperand2 = comparisonExpression.getRightOperand();
 
 		Assert.assertEquals("<", comparisonExpression.getOperator());
+
 		Assert.assertEquals(MinusExpression.class, leftOperand2.getClass());
 		Assert.assertEquals(Term.class, rightOperand2.getClass());
 

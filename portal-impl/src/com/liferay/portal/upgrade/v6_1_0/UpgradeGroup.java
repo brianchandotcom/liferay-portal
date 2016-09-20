@@ -96,6 +96,7 @@ public class UpgradeGroup extends UpgradeProcess {
 			sb.append(name);
 
 			ps.setString(1, sb.toString());
+
 			ps.setLong(2, groupId);
 
 			ps.executeUpdate();

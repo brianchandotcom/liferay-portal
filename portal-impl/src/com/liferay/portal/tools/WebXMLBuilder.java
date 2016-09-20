@@ -163,6 +163,7 @@ public class WebXMLBuilder {
 		x = content.lastIndexOf(filterName);
 
 		y = content.indexOf("</filter-mapping>", x);
+
 		y = content.indexOf(">", y) + 1;
 
 		return y;

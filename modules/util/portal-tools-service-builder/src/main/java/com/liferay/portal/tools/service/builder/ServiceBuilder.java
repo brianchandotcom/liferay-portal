@@ -3844,6 +3844,7 @@ public class ServiceBuilder {
 			comment = comment.replaceAll("(?m)^", indentation + " * ");
 
 			sb.append(comment);
+
 			sb.append("\n");
 
 			if (tags.length > 0) {

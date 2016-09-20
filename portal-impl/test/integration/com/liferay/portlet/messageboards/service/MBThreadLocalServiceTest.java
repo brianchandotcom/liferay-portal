@@ -71,6 +71,7 @@ public class MBThreadLocalServiceTest {
 
 		Assert.assertEquals(
 			rootMessage.getThreadId(), splitMessage.getThreadId());
+
 		Assert.assertEquals(1, rootMessage.getAttachmentsFileEntriesCount());
 		Assert.assertEquals(1, splitMessage.getAttachmentsFileEntriesCount());
 		Assert.assertEquals(1, childMessage.getAttachmentsFileEntriesCount());

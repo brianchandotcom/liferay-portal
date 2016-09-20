@@ -89,6 +89,7 @@ public class UpgradeCheckboxFieldToCheckboxMultipleField
 						definition);
 
 					ps2.setString(1, newDefinition);
+
 					ps2.setLong(2, structureId);
 
 					ps2.addBatch();
@@ -209,6 +210,7 @@ public class UpgradeCheckboxFieldToCheckboxMultipleField
 					ps2.setString(
 						1,
 						_ddmFormValuesJSONSerializer.serialize(ddmFormValues));
+
 					ps2.setLong(2, contentId);
 
 					ps2.addBatch();

@@ -309,6 +309,7 @@ public class WebDriverHelper {
 			Document document = connection.get();
 
 			sb.append(document.text());
+
 			sb.append("\n");
 		}
 

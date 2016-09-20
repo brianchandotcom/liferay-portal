@@ -2708,6 +2708,7 @@ public class PortalImpl implements Portal {
 		layout = getBrowsableLayout(layout);
 
 		variables.put("liferay:groupId", String.valueOf(layout.getGroupId()));
+
 		variables.put("liferay:mainPath", mainPath);
 		variables.put("liferay:plid", String.valueOf(layout.getPlid()));
 

@@ -200,6 +200,7 @@ public class XSDBuilderPlugin implements Plugin<Project> {
 		Task compileTask = addTaskBuildXSDCompile(buildXSDTask, generateTask);
 
 		buildXSDTask.from(compileTask.getOutputs());
+
 		buildXSDTask.from(generateTask.getOutputs());
 
 		TaskOutputs taskOutputs = buildXSDTask.getOutputs();

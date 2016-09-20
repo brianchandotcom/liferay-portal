@@ -642,6 +642,7 @@ public class AssetEntryFinderImpl
 			sql = StringUtil.replace(sql, "[$TAG_ID$]", getTagIds(tagIds[i]));
 
 			sb.append(sql);
+
 			sb.append(StringPool.CLOSE_PARENTHESIS);
 
 			if (((i + 1) < tagIds.length) && (tagIds[i + 1].length > 0)) {
@@ -690,6 +691,7 @@ public class AssetEntryFinderImpl
 			sql = StringUtil.replace(sql, "[$TAG_ID$]", getTagIds(notTagIds));
 
 			sb.append(sql);
+
 			sb.append(StringPool.CLOSE_PARENTHESIS);
 
 			if ((i + 1) < notTagIds.length) {

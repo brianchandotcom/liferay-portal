@@ -646,6 +646,7 @@ public class UploadServletRequestTest {
 				FileItem[] fileItems = entry.getValue();
 
 				Assert.assertEquals(fileItems.length, fileNames.length);
+
 				Assert.assertEquals(2, fileNames.length);
 
 				for (int i = 0; i < fileNames.length; i++) {
@@ -737,6 +738,7 @@ public class UploadServletRequestTest {
 				FileItem[] fileItems = entry.getValue();
 
 				Assert.assertEquals(fileItems.length, files.length);
+
 				Assert.assertEquals(2, files.length);
 
 				for (int i = 0; i < files.length; i++) {
@@ -830,6 +832,7 @@ public class UploadServletRequestTest {
 				FileItem[] fileItems = entry.getValue();
 
 				Assert.assertEquals(fileItems.length, inputStreams.length);
+
 				Assert.assertEquals(2, inputStreams.length);
 
 				for (int i = 0; i < inputStreams.length; i++) {

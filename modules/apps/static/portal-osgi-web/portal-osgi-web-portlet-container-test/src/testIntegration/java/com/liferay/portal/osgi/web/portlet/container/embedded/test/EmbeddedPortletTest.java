@@ -400,6 +400,7 @@ public class EmbeddedPortletTest {
 				portletURL.toString());
 
 			Assert.assertEquals(200, response.getCode());
+
 			Assert.assertTrue(testPortlet.isCalledRender());
 			Assert.assertTrue(testRuntimePortlet.isCalledRuntime());
 		}
@@ -481,6 +482,7 @@ public class EmbeddedPortletTest {
 				portletURL.toString());
 
 			Assert.assertEquals(200, response.getCode());
+
 			Assert.assertTrue(testPortlet.isCalledServeResource());
 			Assert.assertTrue(testRuntimePortlet.isCalledRuntime());
 		}

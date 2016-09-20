@@ -86,6 +86,7 @@ public class ActionUtil {
 			wikiEngineRenderer);
 
 		renderRequest.setAttribute(WebKeys.DIFF_HTML_RESULTS, htmlDiffResult);
+
 		renderRequest.setAttribute(WebKeys.SOURCE_VERSION, sourceVersion);
 		renderRequest.setAttribute(WebKeys.TARGET_VERSION, targetVersion);
 		renderRequest.setAttribute(WebKeys.TITLE, title);

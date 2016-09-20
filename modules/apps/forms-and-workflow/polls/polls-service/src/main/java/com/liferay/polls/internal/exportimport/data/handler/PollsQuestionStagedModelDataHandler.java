@@ -146,6 +146,7 @@ public class PollsQuestionStagedModelDataHandler
 			expirationYear = expirationCal.get(Calendar.YEAR);
 			expirationHour = expirationCal.get(Calendar.HOUR);
 			expirationMinute = expirationCal.get(Calendar.MINUTE);
+
 			neverExpire = false;
 
 			if (expirationCal.get(Calendar.AM_PM) == Calendar.PM) {

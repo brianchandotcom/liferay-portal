@@ -37,6 +37,7 @@ public abstract class BaseCacheKeyGeneratorTestCase extends TestCase {
 		StringBundler sb = new StringBundler(_KEYS);
 
 		Serializable hashCode1 = cacheKeyGenerator.getCacheKey(sb.toString());
+
 		Serializable hashCode2 = cacheKeyGenerator.getCacheKey(_KEYS);
 
 		assertEquals(hashCode1, hashCode2);

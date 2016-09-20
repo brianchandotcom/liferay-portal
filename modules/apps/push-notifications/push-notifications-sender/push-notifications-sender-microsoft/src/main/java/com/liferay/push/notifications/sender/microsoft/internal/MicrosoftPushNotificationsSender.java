@@ -124,6 +124,7 @@ public class MicrosoftPushNotificationsSender
 			String key = itr.next();
 
 			sb.append(key);
+
 			sb.append(CharPool.EQUAL);
 			sb.append(payloadJSONObject.getString(key));
 		}

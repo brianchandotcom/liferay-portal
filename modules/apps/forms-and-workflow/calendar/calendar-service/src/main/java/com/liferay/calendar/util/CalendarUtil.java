@@ -268,6 +268,7 @@ public class CalendarUtil {
 
 		jsonObject.put(
 			"hasChildCalendarBookings", childCalendarBookings.size() > 1);
+
 		jsonObject.put(
 			"hasWorkflowInstanceLink",
 			WorkflowInstanceLinkLocalServiceUtil.hasWorkflowInstanceLink(
@@ -363,6 +364,7 @@ public class CalendarUtil {
 			calendarResource.getName(themeDisplay.getLocale()));
 		jsonObject.put("classNameId", calendarResource.getClassNameId());
 		jsonObject.put("classPK", calendarResource.getClassPK());
+
 		jsonObject.put("color", ColorUtil.toHexString(calendar.getColor()));
 		jsonObject.put("defaultCalendar", calendar.isDefaultCalendar());
 		jsonObject.put("groupId", calendar.getGroupId());

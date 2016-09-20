@@ -309,6 +309,7 @@ public class ServletResponseUtilRangeTest extends PowerMockito {
 			byte[] bytes = ArrayUtil.subset(content, start, end + 1);
 
 			Assert.assertArrayEquals(bytes, lines[3].getBytes("UTF-8"));
+
 			Assert.assertEquals(StringPool.DOUBLE_DASH, lines[4]);
 		}
 	}

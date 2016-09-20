@@ -56,6 +56,7 @@ public class PortletSessionImplTest {
 		_mockHttpSession.setAttribute(_scopePrefix.concat(_KEY_1), _value1);
 		_mockHttpSession.setAttribute(_scopePrefix.concat(_KEY_2), _value2);
 		_mockHttpSession.setAttribute(_scopePrefix.concat(_KEY_3), _value3);
+
 		_mockHttpSession.setAttribute(_KEY_4, _value4);
 		_mockHttpSession.setAttribute(_KEY_5, _value5);
 	}

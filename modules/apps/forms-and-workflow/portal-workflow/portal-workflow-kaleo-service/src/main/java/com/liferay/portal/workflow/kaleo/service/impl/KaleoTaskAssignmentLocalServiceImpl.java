@@ -172,6 +172,7 @@ public class KaleoTaskAssignmentLocalServiceImpl
 
 			kaleoTaskAssignment.setAssigneeScriptLanguage(
 				scriptLanguage.getValue());
+
 			kaleoTaskAssignment.setAssigneeScriptRequiredContexts(
 				scriptAssignment.getScriptRequiredContexts());
 		}

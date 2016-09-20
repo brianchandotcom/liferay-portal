@@ -47,6 +47,7 @@ public class ExportImportBackgroundTaskDisplay
 			backgroundTask.getTaskContextMap();
 
 		_cmd = MapUtil.getString(taskContextMap, Constants.CMD);
+
 		_percentage = PERCENTAGE_NONE;
 
 		if (backgroundTaskStatus == null) {

@@ -621,6 +621,7 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 		attributes.putValue(
 			Constants.BUNDLE_DESCRIPTION,
 			properties.getProperty("description"));
+
 		attributes.putValue(Constants.BUNDLE_MANIFESTVERSION, "2");
 		attributes.putValue(
 			Constants.BUNDLE_SYMBOLICNAME, properties.getProperty("title"));

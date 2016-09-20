@@ -182,6 +182,7 @@ public class WallEntryLocalServiceImpl extends WallEntryLocalServiceBaseImpl {
 		Group group = groupLocalService.getGroup(wallEntry.getGroupId());
 
 		User user = userLocalService.getUserById(group.getClassPK());
+
 		User wallEntryUser = userLocalService.getUserById(
 			wallEntry.getUserId());
 

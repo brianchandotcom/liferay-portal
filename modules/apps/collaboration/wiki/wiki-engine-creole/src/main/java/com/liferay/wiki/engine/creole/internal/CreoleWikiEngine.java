@@ -164,7 +164,7 @@ public class CreoleWikiEngine extends BaseInputEditorWikiEngine {
 	}
 
 	@Reference(
-		target = "(bundle.symbolic.name=com.liferay.wiki.engine.creole)",
+		target = "(bundle.symbolic.name=com.liferay.wiki.engine.lang)",
 		unbind = "-"
 	)
 	protected void setResourceBundleLoader(

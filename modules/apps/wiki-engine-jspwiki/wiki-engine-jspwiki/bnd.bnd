@@ -23,6 +23,7 @@ Web-ContextPath: /wiki-engine-jspwiki
 -includeresource:\
 	@../../../../lib/portal/ecs.jar,\
 	@../../../../lib/portal/freshcookies-security.jar,\
+	@../../../../lib/portal/jrcs-diff.jar,\
 	@../../../../lib/portal/jsonrpc.jar,\
 	@../../../../lib/portal/jspwiki.jar,\
 	@../../../../lib/portal/oro.jar,\

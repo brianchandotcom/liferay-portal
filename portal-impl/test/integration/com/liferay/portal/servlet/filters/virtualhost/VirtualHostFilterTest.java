@@ -16,6 +16,7 @@ package com.liferay.portal.servlet.filters.virtualhost;
 
 import com.liferay.portal.kernel.struts.LastPath;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -54,17 +55,15 @@ public class VirtualHostFilterTest {
 
 				@Override
 				public String getPathContext() {
-					return _pathContext;
+					return GetterUtil.getString(_pathContext);
 				}
 
 				@Override
 				public String getPathProxy() {
-					return _pathProxy;
+					return GetterUtil.getString(_pathProxy);
 				}
 
 			});
-
-		_virtualHostFilter.init(_mockFilterConfig);
 	}
 
 	@After
@@ -118,6 +117,8 @@ public class VirtualHostFilterTest {
 			MockHttpServletRequest request, MockHttpServletResponse response,
 			MockFilterChain filterChain)
 		throws Exception {
+
+		_virtualHostFilter.init(_mockFilterConfig);
 
 		_virtualHostFilter.processFilter(request, response, filterChain);
 

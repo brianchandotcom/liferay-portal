@@ -26,7 +26,10 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(assetCategoriesDisplayContext.getVoc
 %>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<portlet:renderURL var="mainURL" />
+	<portlet:renderURL var="mainURL">
+		<portlet:param name="mvcPath" value="/view_categories.jsp" />
+		<portlet:param name="vocabularyId" value="<%= String.valueOf(assetCategoriesDisplayContext.getVocabularyId()) %>" />
+	</portlet:renderURL>
 
 	<aui:nav cssClass="navbar-nav">
 		<aui:nav-item href="<%= mainURL.toString() %>" label="categories" selected="<%= true %>" />

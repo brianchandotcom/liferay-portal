@@ -27,13 +27,13 @@
 		<requiredProperty key="buildType">
 			<defaultValue>maven</defaultValue>
 		</requiredProperty>
+		<requiredProperty key="className">
+		</requiredProperty>
 		<requiredProperty key="package">
 			<defaultValue>${groupId}.${artifactId}</defaultValue>
 		</requiredProperty>
 		<requiredProperty key="projectType">
 			<defaultValue>standalone</defaultValue>
-		</requiredProperty>
-		<requiredProperty key="className">
 		</requiredProperty>
 	</requiredProperties>
 </archetype-descriptor>

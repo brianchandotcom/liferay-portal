@@ -17,6 +17,7 @@ package com.liferay.users.admin.web.theme.contributor;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -53,25 +54,21 @@ public class UsersTemplateContextContributor
 
 		User user = themeDisplay.getUser();
 
+		Contact contact = user.fetchContact();
+
 		contextObjects.put("is_default_user", user.isDefaultUser());
 
-		try {
-			contextObjects.put("is_female", user.isFemale());
-			contextObjects.put("is_male", user.isMale());
-		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		if (contact != null) {
+			contextObjects.put("is_female", !contact.isMale());
+			contextObjects.put("is_male", contact.isMale());
 		}
 
 		contextObjects.put("is_setup_complete", user.isSetupComplete());
 		contextObjects.put("language", themeDisplay.getLanguageId());
 		contextObjects.put("language_id", user.getLanguageId());
 
-		try {
-			contextObjects.put("user_birthday", user.getBirthday());
-		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+		if (contact != null) {
+			contextObjects.put("user_birthday", contact.getBirthday());
 		}
 
 		contextObjects.put("user_comments", user.getComments());

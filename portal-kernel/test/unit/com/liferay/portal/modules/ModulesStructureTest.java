@@ -107,26 +107,26 @@ public class ModulesStructureTest {
 						_testAppBuildScripts(dirPath);
 					}
 					else if (Files.exists(dirPath.resolve("bnd.bnd"))) {
-						if (Files.notExists(buildGradlePath)) {
-							Assert.fail("Missing " + buildGradlePath);
-						}
+						Assert.assertTrue(
+							"Missing " + buildGradlePath,
+							Files.exists(buildGradlePath));
 
-						if (Files.exists(buildXMLPath)) {
-							Assert.fail("Forbidden " + buildXMLPath);
-						}
+						Assert.assertFalse(
+							"Forbidden " + buildXMLPath,
+							Files.exists(buildXMLPath));
 
 						Path ivyXmlPath = dirPath.resolve("ivy.xml");
 
-						if (Files.exists(ivyXmlPath)) {
-							Assert.fail("Forbidden " + ivyXmlPath);
-						}
+						Assert.assertFalse(
+							"Forbidden " + ivyXmlPath,
+							Files.exists(ivyXmlPath));
 
 						return FileVisitResult.SKIP_SUBTREE;
 					}
 					else if (Files.exists(buildXMLPath)) {
-						if (Files.exists(buildGradlePath)) {
-							Assert.fail("Forbidden " + buildGradlePath);
-						}
+						Assert.assertFalse(
+							"Forbidden " + buildGradlePath,
+							Files.exists(buildGradlePath));
 
 						return FileVisitResult.SKIP_SUBTREE;
 					}
@@ -415,9 +415,7 @@ public class ModulesStructureTest {
 		boolean gradlePropertiesExists = Files.exists(gradlePropertiesPath);
 		boolean settingsGradleExists = Files.exists(settingsGradlePath);
 
-		if (!buildGradleExists) {
-			Assert.fail("Missing " + buildGradlePath);
-		}
+		Assert.assertTrue("Missing " + buildGradlePath, buildGradleExists);
 
 		String buildGradle = _read(buildGradlePath);
 
@@ -425,9 +423,8 @@ public class ModulesStructureTest {
 			"Incorrect " + buildGradlePath,
 			_getGitRepoBuildGradle(dirPath, buildGradleTemplate), buildGradle);
 
-		if (!gradlePropertiesExists) {
-			Assert.fail("Missing " + gradlePropertiesPath);
-		}
+		Assert.assertTrue(
+			"Missing " + gradlePropertiesPath, gradlePropertiesExists);
 
 		String gradleProperties = _read(gradlePropertiesPath);
 
@@ -436,9 +433,8 @@ public class ModulesStructureTest {
 			_getGitRepoGradleProperties(dirPath, gradlePropertiesTemplate),
 			gradleProperties);
 
-		if (!settingsGradleExists) {
-			Assert.fail("Missing " + settingsGradlePath);
-		}
+		Assert.assertTrue(
+			"Missing " + settingsGradlePath, settingsGradleExists);
 
 		String settingsGradle = _read(settingsGradlePath);
 
@@ -486,9 +482,8 @@ public class ModulesStructureTest {
 
 		Path gulpfileJsPath = dirPath.resolve("gulpfile.js");
 
-		if (Files.notExists(gulpfileJsPath)) {
-			Assert.fail("Missing " + gulpfileJsPath);
-		}
+		Assert.assertTrue(
+			"Missing " + gulpfileJsPath, Files.exists(gulpfileJsPath));
 	}
 
 	private void _testThemeIgnoreFiles(Path dirPath, String gitIgnoreTemplate)

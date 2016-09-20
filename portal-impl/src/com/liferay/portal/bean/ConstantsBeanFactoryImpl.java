@@ -167,7 +167,7 @@ public class ConstantsBeanFactoryImpl implements ConstantsBeanFactory {
 
 			methodVisitor.visitMethodInsn(
 				Opcodes.INVOKESTATIC, constantsClassBinaryName,
-				method.getName(), methodDescriptor);
+				method.getName(), methodDescriptor, false);
 
 			Type returnType = Type.getType(method.getReturnType());
 

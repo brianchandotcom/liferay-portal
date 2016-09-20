@@ -741,6 +741,25 @@ public class HttpImpl implements Http {
 
 		uri = removePathParameters(uri);
 
+		for (int i = 0; i < uri.length(); i++) {
+			char c = uri.charAt(i);
+
+			if ((c == CharPool.PERCENT) || (c == CharPool.PERIOD) ||
+				((c == CharPool.SLASH) && ((i + 1) < uri.length()) &&
+				 (uri.charAt(i + 1) == CharPool.SLASH))) {
+
+				break;
+			}
+
+			if (i == (uri.length() - 1)) {
+				if (c == CharPool.QUESTION) {
+					return uri.substring(0, uri.length() - 1);
+				}
+
+				return uri;
+			}
+		}
+
 		String path = null;
 		String queryString = null;
 
@@ -1046,6 +1065,10 @@ public class HttpImpl implements Http {
 
 		if (pos == -1) {
 			return uri;
+		}
+
+		if (pos == 0) {
+			throw new IllegalArgumentException("Unable to handle uri :" + uri);
 		}
 
 		String[] uriParts = StringUtil.split(uri.substring(1), CharPool.SLASH);

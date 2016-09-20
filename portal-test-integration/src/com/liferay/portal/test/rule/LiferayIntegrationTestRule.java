@@ -95,8 +95,6 @@ public class LiferayIntegrationTestRule extends AggregateTestRule {
 					@Override
 					public void evaluate() throws Throwable {
 						if (!InitUtil.isInitialized()) {
-							System.setProperty("catalina.base", ".");
-
 							List<String> configLocations = ListUtil.fromArray(
 								PropsUtil.getArray(PropsKeys.SPRING_CONFIGS));
 

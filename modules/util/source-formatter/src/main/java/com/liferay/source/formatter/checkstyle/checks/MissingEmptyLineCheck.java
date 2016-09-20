@@ -27,7 +27,8 @@ import java.util.List;
  */
 public class MissingEmptyLineCheck extends AbstractCheck {
 
-	public static final String MSG_MISSING_EMPTY_LINE = "empty.line.missing";
+	public static final String MSG_MISSING_EMPTY_LINE_BEFORE_VARIABLE_USE =
+		"empty.line.missing.before.variable.use";
 
 	@Override
 	public int[] getDefaultTokens() {
@@ -36,10 +37,6 @@ public class MissingEmptyLineCheck extends AbstractCheck {
 
 	@Override
 	public void visitToken(DetailAST detailAST) {
-		checkMissingLine(detailAST);
-	}
-
-	protected void checkMissingLine(DetailAST detailAST) {
 		DetailAST firstChildAST = detailAST.getFirstChild();
 
 		if ((firstChildAST == null) ||
@@ -49,20 +46,6 @@ public class MissingEmptyLineCheck extends AbstractCheck {
 		}
 
 		DetailAST parentAST = detailAST.getParent();
-
-		DetailAST nextSibling = parentAST.getNextSibling();
-
-		if ((nextSibling == null) ||
-			(nextSibling.getType() != TokenTypes.SEMI)) {
-
-			return;
-		}
-
-		nextSibling = nextSibling.getNextSibling();
-
-		if (nextSibling == null) {
-			return;
-		}
 
 		DetailAST nameAST = null;
 
@@ -77,14 +60,32 @@ public class MissingEmptyLineCheck extends AbstractCheck {
 			return;
 		}
 
-		int endLine = DetailASTUtil.getEndLine(detailAST);
+		_checkMissingEmptyLineBetweenAssigningAndUsingVariable(
+			parentAST, nameAST.getText(), DetailASTUtil.getEndLine(detailAST));
+	}
+
+	private void _checkMissingEmptyLineBetweenAssigningAndUsingVariable(
+		DetailAST detailAST, String name, int endLine) {
+
+		DetailAST nextSibling = detailAST.getNextSibling();
+
+		if ((nextSibling == null) ||
+			(nextSibling.getType() != TokenTypes.SEMI)) {
+
+			return;
+		}
+
+		nextSibling = nextSibling.getNextSibling();
+
+		if (nextSibling == null) {
+			return;
+		}
+
 		int startLineNextExpression = DetailASTUtil.getStartLine(nextSibling);
 
 		if ((endLine + 1) != startLineNextExpression) {
 			return;
 		}
-
-		String name = nameAST.getText();
 
 		if (_isExpressionAssignsVariable(nextSibling, name)) {
 			return;
@@ -97,7 +98,9 @@ public class MissingEmptyLineCheck extends AbstractCheck {
 			String identName = identAST.getText();
 
 			if (identName.equals(name)) {
-				log(startLineNextExpression, MSG_MISSING_EMPTY_LINE, name);
+				log(
+					startLineNextExpression,
+					MSG_MISSING_EMPTY_LINE_BEFORE_VARIABLE_USE, name);
 			}
 		}
 	}

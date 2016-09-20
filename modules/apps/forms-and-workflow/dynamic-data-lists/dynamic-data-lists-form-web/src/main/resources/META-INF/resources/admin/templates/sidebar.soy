@@ -10,10 +10,10 @@
  *  @param toolbarTemplateContext
  */
 {template .render autoescape="deprecated-contextual"}
-    {call ddl.sidebar.header data="all" /}
-    {call ddl.sidebar.body}
-        {param bodyContent: $bodyContent /}
-    {/call}
+	{call ddl.sidebar.header data="all" /}
+	{call ddl.sidebar.body}
+		{param bodyContent: $bodyContent /}
+	{/call}
 {/template}
 
 /**
@@ -21,7 +21,7 @@
  *  @param? bodyContent
  */
 {template .body autoescape="deprecated-contextual"}
-    <div class="sidebar-body">{$bodyContent|noAutoescape}</div>
+	<div class="sidebar-body">{$bodyContent|noAutoescape}</div>
 {/template}
 
 /**
@@ -30,7 +30,7 @@
  *  @param toolbarTemplateContext
  */
 {template .field_options_toolbar autoescape="deprecated-contextual"}
-    {call ddl.field_settings_toolbar data="all" /}
+	{call ddl.field_settings_toolbar data="all" /}
 {/template}
 
 /**
@@ -42,20 +42,20 @@
  *  @param toolbarTemplateContext
  */
 {template .header autoescape="deprecated-contextual"}
-    <div class="sidebar-header">
-        <ul class="sidebar-header-actions">
-            {if $toolbarTemplateContext}
-            <li>
-                {call ddl.sidebar.field_options_toolbar data="all" /}
-            </li>
-            {/if}
+	<div class="sidebar-header">
+		<ul class="sidebar-header-actions">
+			{if $toolbarTemplateContext}
+			<li>
+				{call ddl.sidebar.field_options_toolbar data="all" /}
+			</li>
+			{/if}
 
-            <li>
-                <a class="form-builder-sidebar-close" href="javascript:;">{$closeButtonIcon|noAutoescape}</a>
-            </li>
-        </ul>
+			<li>
+				<a class="form-builder-sidebar-close" href="javascript:;">{$closeButtonIcon|noAutoescape}</a>
+			</li>
+		</ul>
 
-        <h4 class="form-builder-sidebar-title truncate-text" title="{$title}">{$title or ''}</h4>
-        <h5 class="form-builder-sidebar-description" title="{$description}">{$description or ''}</h5>
-    </div>
+		<h4 class="form-builder-sidebar-title truncate-text" title="{$title}">{$title or ''}</h4>
+		<h5 class="form-builder-sidebar-description" title="{$description}">{$description or ''}</h5>
+	</div>
 {/template}

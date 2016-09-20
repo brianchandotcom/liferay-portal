@@ -44,6 +44,33 @@ request.setAttribute("view.jsp-categorySubscriptionClassPKs", MBUtil.getCategory
 request.setAttribute("view.jsp-portletURL", portletURL);
 request.setAttribute("view.jsp-threadSubscriptionClassPKs", MBUtil.getThreadSubscriptionClassPKs(user.getUserId()));
 request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
+
+String orderByCol = ParamUtil.getString(request, "orderByCol");
+String orderByType = ParamUtil.getString(request, "orderByType");
+
+if (Validator.isNotNull(orderByCol) && Validator.isNotNull(orderByType)) {
+	portalPreferences.setValue(MBPortletKeys.MESSAGE_BOARDS_ADMIN, "order-by-col", orderByCol);
+	portalPreferences.setValue(MBPortletKeys.MESSAGE_BOARDS_ADMIN, "order-by-type", orderByType);
+}
+else {
+	orderByCol = portalPreferences.getValue(MBPortletKeys.MESSAGE_BOARDS_ADMIN, "order-by-col", "modified-date");
+	orderByType = portalPreferences.getValue(MBPortletKeys.MESSAGE_BOARDS_ADMIN, "order-by-type", "desc");
+}
+
+boolean orderByAsc = false;
+
+if (orderByType.equals("asc")) {
+	orderByAsc = true;
+}
+
+OrderByComparator orderByComparator = null;
+
+if (orderByCol.equals("modified-date")) {
+	orderByComparator = new MBObjectModifiedDateComparator(orderByAsc);
+
+}else if(orderByCol.equals("title")) {
+	orderByComparator = new MBObjectTitleComparator(orderByAsc);
+}
 %>
 
 <portlet:actionURL name="/message_boards/edit_category" var="restoreTrashEntriesURL">
@@ -85,6 +112,9 @@ MBListDisplayContext mbListDisplayContext = mbDisplayContextProvider.getMbListDi
 SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "cur1", 0, SearchContainer.DEFAULT_DELTA, portletURL, null, "there-are-no-threads-nor-categories");
 
 searchContainer.setId("mbEntries");
+searchContainer.setOrderByCol(orderByCol);
+searchContainer.setOrderByComparator(orderByComparator);
+searchContainer.setOrderByType(orderByType);
 
 EntriesChecker entriesChecker = new EntriesChecker(liferayPortletRequest, liferayPortletResponse);
 
@@ -129,6 +159,13 @@ mbListDisplayContext.populateResultsAndTotal(searchContainer);
 			navigationKeys='<%= new String[] {"all", "recent"} %>'
 			navigationParam="entriesNavigation"
 			portletURL="<%= navigationPortletURL %>"
+		/>
+
+		<liferay-frontend:management-bar-sort
+			orderByCol="<%= orderByCol %>"
+			orderByType="<%= orderByType %>"
+			orderColumns='<%= new String[] {"modified-date", "title"} %>'
+			portletURL="<%= portletURL %>"
 		/>
 	</liferay-frontend:management-bar-filters>
 

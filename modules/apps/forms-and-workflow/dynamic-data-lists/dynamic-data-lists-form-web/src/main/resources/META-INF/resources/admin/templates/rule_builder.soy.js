@@ -30,7 +30,7 @@ ddl.rule_list = function(opt_data, opt_ignored) {
       var conditionListLen174 = conditionList174.length;
       for (var conditionIndex174 = 0; conditionIndex174 < conditionListLen174; conditionIndex174++) {
         var conditionData174 = conditionList174[conditionIndex174];
-        output += ddl.condition({operandType: conditionData174.operands[0].type, operandValue: conditionData174.operands[0].label}) + '<b class="text-lowercase"><em> ' + soy.$$escapeHtml(opt_data.strings[conditionData174.operator]) + ' </em></b>' + ddl.condition({operandType: conditionData174.operands[1].type, operandValue: conditionData174.operands[1].label}) + ((! (conditionIndex174 == conditionListLen174 - 1)) ? ', <br /><b> and </b>' : '');
+        output += ddl.condition({operandType: conditionData174.operands[0].type, operandValue: conditionData174.operands[0].label}) + '<b class="text-lowercase"><em> ' + soy.$$escapeHtml(opt_data.strings[conditionData174.operator]) + ' </em></b>' + ddl.condition({operandType: conditionData174.operands[1].type, operandValue: conditionData174.operands[1].label != null ? conditionData174.operands[1].label : conditionData174.operands[1].value}) + ((! (conditionIndex174 == conditionListLen174 - 1)) ? ', <br /><b> and </b>' : '');
       }
       output += '<br />';
       var actionList182 = ruleData196.actions;

@@ -47,7 +47,7 @@
 
 							{call .condition}
 								{param operandType: $condition.operands[1].type /}
-								{param operandValue: $condition.operands[1].label /}
+								{param operandValue: isNonnull($condition.operands[1].label) ? $condition.operands[1].label : $condition.operands[1].value /}
 							{/call}
 
 							{if not isLast($condition)}

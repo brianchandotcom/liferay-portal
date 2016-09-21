@@ -17,6 +17,8 @@ package com.liferay.portal.kernel.util;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
+import java.lang.reflect.Field;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -34,6 +36,9 @@ public class ServerDetector {
 
 	public static final String RESIN_ID = "resin";
 
+	public static final String SERVER_DETECTOR_SERVER_ID =
+		"server.detector.server.id";
+
 	public static final String TOMCAT_ID = "tomcat";
 
 	public static final String WEBLOGIC_ID = "weblogic";
@@ -42,84 +47,89 @@ public class ServerDetector {
 
 	public static final String WILDFLY_ID = "wildfly";
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static ServerDetector getInstance() {
-		if (_instance == null) {
-			_instance = new ServerDetector();
-
-			_instance._init();
-		}
-
-		return _instance;
+		return new ServerDetector();
 	}
 
 	public static String getServerId() {
-		return getInstance()._serverId;
+		return StringUtil.toLowerCase(_serverType.toString());
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static void init(String serverId) {
-		ServerDetector serverDetector = new ServerDetector();
+		ServerType serverType = null;
 
-		serverDetector._serverId = serverId;
-
-		if (serverId.equals(GLASSFISH_ID)) {
-			serverDetector._glassfish = true;
+		try {
+			serverType = ServerType.valueOf(StringUtil.toUpperCase(serverId));
 		}
-		else if (serverId.equals(JBOSS_ID)) {
-			serverDetector._jBoss = true;
-		}
-		else if (serverId.equals(JETTY_ID)) {
-			serverDetector._jetty = true;
-		}
-		else if (serverId.equals(JONAS_ID)) {
-			serverDetector._jonas = true;
-		}
-		else if (serverId.equals(OC4J_ID)) {
-			serverDetector._oc4j = true;
-		}
-		else if (serverId.equals(RESIN_ID)) {
-			serverDetector._resin = true;
-		}
-		else if (serverId.equals(TOMCAT_ID)) {
-			serverDetector._tomcat = true;
-		}
-		else if (serverId.equals(WEBLOGIC_ID)) {
-			serverDetector._webLogic = true;
-		}
-		else if (serverId.equals(WEBSPHERE_ID)) {
-			serverDetector._webSphere = true;
-		}
-		else if (serverId.equals(WILDFLY_ID)) {
-			serverDetector._wildfly = true;
-		}
-		else {
-			serverDetector._init();
+		catch (IllegalArgumentException iae) {
+			serverType = _detectServerType();
 		}
 
-		_instance = serverDetector;
+		try {
+			Field field = ReflectionUtil.getDeclaredField(
+				ServerDetector.class, "_serverType");
+
+			field.set(null, serverType);
+		}
+		catch (Exception e) {
+			ReflectionUtil.throwException(e);
+		}
 	}
 
 	public static boolean isGlassfish() {
-		return getInstance()._glassfish;
+		if (_serverType == ServerType.GLASSFISH) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public static boolean isJBoss() {
-		return getInstance()._jBoss;
+		if (_serverType == ServerType.JBOSS) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public static boolean isJetty() {
-		return getInstance()._jetty;
+		if (_serverType == ServerType.JETTY) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public static boolean isJOnAS() {
-		return getInstance()._jonas;
+		if (_serverType == ServerType.JONAS) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public static boolean isOC4J() {
-		return getInstance()._oc4j;
+		if (_serverType == ServerType.OC4J) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public static boolean isResin() {
-		return getInstance()._resin;
+		if (_serverType == ServerType.RESIN) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public static boolean isSupportsComet() {
@@ -135,19 +145,35 @@ public class ServerDetector {
 	}
 
 	public static boolean isTomcat() {
-		return getInstance()._tomcat;
+		if (_serverType == ServerType.TOMCAT) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public static boolean isWebLogic() {
-		return getInstance()._webLogic;
+		if (_serverType == ServerType.WEBLOGIC) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public static boolean isWebSphere() {
-		return getInstance()._webSphere;
+		if (_serverType == ServerType.WEBSPHERE) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public static boolean isWildfly() {
-		return getInstance()._wildfly;
+		if (_serverType == ServerType.WILDFLY) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
@@ -157,7 +183,7 @@ public class ServerDetector {
 	public static void setSupportsHotDeploy(boolean supportsHotDeploy) {
 	}
 
-	private boolean _detect(String className) {
+	private static boolean _detect(String className) {
 		try {
 			ClassLoader systemClassLoader = ClassLoader.getSystemClassLoader();
 
@@ -166,9 +192,7 @@ public class ServerDetector {
 			return true;
 		}
 		catch (ClassNotFoundException cnfe) {
-			Class<?> clazz = getClass();
-
-			if (clazz.getResource(className) != null) {
+			if (ServerDetector.class.getResource(className) != null) {
 				return true;
 			}
 			else {
@@ -177,7 +201,57 @@ public class ServerDetector {
 		}
 	}
 
-	private boolean _hasSystemProperty(String key) {
+	private static ServerType _detectServerType() {
+		String serverId = System.getProperty(SERVER_DETECTOR_SERVER_ID);
+
+		if (serverId != null) {
+			return ServerType.valueOf(StringUtil.toUpperCase(serverId));
+		}
+
+		if (_hasSystemProperty("com.sun.aas.instanceRoot")) {
+			return ServerType.GLASSFISH;
+		}
+
+		if (_hasSystemProperty("jboss.home.dir")) {
+			return ServerType.JBOSS;
+		}
+
+		if (_hasSystemProperty("jonas.base")) {
+			return ServerType.JONAS;
+		}
+
+		if (_detect("oracle.oc4j.util.ClassUtils")) {
+			return ServerType.OC4J;
+		}
+
+		if (_hasSystemProperty("resin.home")) {
+			return ServerType.RESIN;
+		}
+
+		if (_detect("/weblogic/Server.class")) {
+			return ServerType.WEBLOGIC;
+		}
+
+		if (_detect("/com/ibm/websphere/product/VersionInfo.class")) {
+			return ServerType.WEBSPHERE;
+		}
+
+		if (_hasSystemProperty("jboss.home.dir")) {
+			return ServerType.WILDFLY;
+		}
+
+		if (_hasSystemProperty("jetty.home")) {
+			return ServerType.JETTY;
+		}
+
+		if (_hasSystemProperty("catalina.base")) {
+			return ServerType.TOMCAT;
+		}
+
+		return ServerType.UNKNOWN;
+	}
+
+	private static boolean _hasSystemProperty(String key) {
 		String value = System.getProperty(key);
 
 		if (value != null) {
@@ -188,123 +262,28 @@ public class ServerDetector {
 		}
 	}
 
-	private void _init() {
-		if (_isGlassfish()) {
-			_serverId = GLASSFISH_ID;
-			_glassfish = true;
-		}
-		else if (_isJBoss()) {
-			_serverId = JBOSS_ID;
-			_jBoss = true;
-		}
-		else if (_isJOnAS()) {
-			_serverId = JONAS_ID;
-			_jonas = true;
-		}
-		else if (_isOC4J()) {
-			_serverId = OC4J_ID;
-			_oc4j = true;
-		}
-		else if (_isResin()) {
-			_serverId = RESIN_ID;
-			_resin = true;
-		}
-		else if (_isWebLogic()) {
-			_serverId = WEBLOGIC_ID;
-			_webLogic = true;
-		}
-		else if (_isWebSphere()) {
-			_serverId = WEBSPHERE_ID;
-			_webSphere = true;
-		}
-		else if (_isWildfly()) {
-			_serverId = WILDFLY_ID;
-			_wildfly = true;
-		}
-
-		if (_serverId == null) {
-			if (_isJetty()) {
-				_serverId = JETTY_ID;
-				_jetty = true;
-			}
-			else if (_isTomcat()) {
-				_serverId = TOMCAT_ID;
-				_tomcat = true;
-			}
-		}
-
-		if (System.getProperty("external-properties") == null) {
-			if (_log.isInfoEnabled()) {
-				if (_serverId != null) {
-					_log.info("Detected server " + _serverId);
-				}
-				else {
-					_log.info("No server detected");
-				}
-			}
-		}
-
-		/*if (_serverId == null) {
-			throw new RuntimeException("Server is not supported");
-		}*/
-	}
-
-	private boolean _isGlassfish() {
-		return _hasSystemProperty("com.sun.aas.instanceRoot");
-	}
-
-	private boolean _isJBoss() {
-		return _hasSystemProperty("jboss.home.dir");
-	}
-
-	private boolean _isJetty() {
-		return _hasSystemProperty("jetty.home");
-	}
-
-	private boolean _isJOnAS() {
-		return _hasSystemProperty("jonas.base");
-	}
-
-	private boolean _isOC4J() {
-		return _detect("oracle.oc4j.util.ClassUtils");
-	}
-
-	private boolean _isResin() {
-		return _hasSystemProperty("resin.home");
-	}
-
-	private boolean _isTomcat() {
-		return _hasSystemProperty("catalina.base");
-	}
-
-	private boolean _isWebLogic() {
-		return _detect("/weblogic/Server.class");
-	}
-
-	private boolean _isWebSphere() {
-		return _detect("/com/ibm/websphere/product/VersionInfo.class");
-	}
-
-	private boolean _isWildfly() {
-		return _hasSystemProperty("jboss.home.dir");
-	}
-
 	private static final boolean _SUPPORTS_COMET = false;
 
 	private static final Log _log = LogFactoryUtil.getLog(ServerDetector.class);
 
-	private static ServerDetector _instance;
+	private static final ServerType _serverType;
 
-	private boolean _glassfish;
-	private boolean _jBoss;
-	private boolean _jetty;
-	private boolean _jonas;
-	private boolean _oc4j;
-	private boolean _resin;
-	private String _serverId;
-	private boolean _tomcat;
-	private boolean _webLogic;
-	private boolean _webSphere;
-	private boolean _wildfly;
+	static {
+		_serverType = _detectServerType();
+
+		if (System.getProperty("external-properties") == null) {
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Detected server " +
+						StringUtil.toLowerCase(_serverType.toString()));
+			}
+		}
+	}
+
+	private enum ServerType {
+
+		GLASSFISH, JBOSS, JETTY, JONAS, OC4J, RESIN, TOMCAT, UNKNOWN, WEBLOGIC,
+		WEBSPHERE, WILDFLY;
+	}
 
 }

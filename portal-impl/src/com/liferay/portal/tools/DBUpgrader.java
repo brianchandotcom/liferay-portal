@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.ReleaseLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourceActionLocalServiceUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
-import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.transaction.TransactionsUtil;
@@ -92,9 +91,6 @@ public class DBUpgrader {
 			StopWatch stopWatch = new StopWatch();
 
 			stopWatch.start();
-
-			ServerDetector.init(
-				System.getProperty("server.detector.server.id"));
 
 			ClassPathUtil.initializeClassPaths(null);
 

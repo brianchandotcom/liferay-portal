@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.test.rule.NewEnv.JVMArgsLine;
 import com.liferay.portal.kernel.test.rule.NewEnvTestRule;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.test.log.CaptureAppender;
 import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.util.InitUtil;
@@ -139,7 +138,10 @@ public class DataSourceFactoryImplTest {
 			Paths.get(PropsValues.LIFERAY_LIB_PORTAL_DIR, jarName));
 	}
 
-	@JVMArgsLine("-D" + _HIKARICP_JAR_URL + "=${" + _HIKARICP_JAR_URL + "}")
+	@JVMArgsLine(
+		"-Dcatalina.base=. -D" + _HIKARICP_JAR_URL + "=${" + _HIKARICP_JAR_URL +
+			"}"
+	)
 	@NewEnv(type = NewEnv.Type.JVM)
 	@Test
 	public void testHikariCP() throws Exception {
@@ -158,8 +160,6 @@ public class DataSourceFactoryImplTest {
 		}
 
 		InitUtil.init();
-
-		ServerDetector.init(ServerDetector.TOMCAT_ID);
 
 		DataSource dataSource = null;
 

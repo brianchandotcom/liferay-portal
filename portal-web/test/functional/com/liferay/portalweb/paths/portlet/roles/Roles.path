@@ -51,13 +51,6 @@
 	<td>//*[@data-qa-id='searchButton']</td>
 	<td></td>
 </tr>
-<!---->
-<!--BREADCRUMB-->
-<tr>
-	<td>BREADCRUMB</td>
-	<td>//ul[contains(@class,'breadcrumb-horizontal')]/li/a[contains(.,'${key_roleType} Roles')]</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

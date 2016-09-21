@@ -1806,7 +1806,15 @@ ${output.content}</echo>
 			</test-action>
 
 			<test-set-up>
-				<prepare-test-build />
+				<if>
+					<isset property="env.DIST_PATH" />
+					<then>
+						<prepare-test-environment />
+					</then>
+					<else>
+						<prepare-test-build />
+					</else>
+				</if>
 			</test-set-up>
 		</run-batch-test>
 	</target>

@@ -72,7 +72,7 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 
 		_applyPlugins(project);
 
-		_addRepositoryDefault(project, workspaceExtension);
+		_addRepositoryDefault(project);
 		_configureLiferay(project, workspaceExtension);
 		_configureTaskRunPoshi(project);
 
@@ -122,9 +122,7 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 		return projectDirs;
 	}
 
-	private MavenArtifactRepository _addRepositoryDefault(
-		Project project, WorkspaceExtension workspaceExtension) {
-
+	private MavenArtifactRepository _addRepositoryDefault(Project project) {
 		if (!isDefaultRepositoryEnabled()) {
 			return null;
 		}

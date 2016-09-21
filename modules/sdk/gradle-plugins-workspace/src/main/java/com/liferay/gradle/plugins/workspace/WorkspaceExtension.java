@@ -28,6 +28,8 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.gradle.api.Plugin;
+import org.gradle.api.Project;
 import org.gradle.api.initialization.Settings;
 import org.gradle.api.invocation.Gradle;
 
@@ -77,7 +79,7 @@ public class WorkspaceExtension {
 		return Collections.unmodifiableSet(_projectConfigurators);
 	}
 
-	public RootProjectConfigurator getRootProjectConfigurator() {
+	public Plugin<Project> getRootProjectConfigurator() {
 		return _rootProjectConfigurator;
 	}
 
@@ -124,7 +126,7 @@ public class WorkspaceExtension {
 	private Object _homeDir;
 	private final Set<ProjectConfigurator> _projectConfigurators =
 		new HashSet<>();
-	private final RootProjectConfigurator _rootProjectConfigurator =
+	private final Plugin<Project> _rootProjectConfigurator =
 		new RootProjectConfigurator();
 
 }

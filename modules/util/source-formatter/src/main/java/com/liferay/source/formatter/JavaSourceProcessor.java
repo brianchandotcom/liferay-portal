@@ -4237,6 +4237,48 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return fileNames;
 	}
 
+	protected List<File> getSuppressionsFiles() throws Exception {
+		String fileName = "checkstyle-suppressions.xml";
+
+		List<File> suppressionsFiles = new ArrayList<>();
+
+		// Find suppressions file in portal-impl/src/
+
+		suppressionsFiles.add(
+			getFile("portal-impl/src/" + fileName, PORTAL_MAX_DIR_LEVEL));
+
+		// Find suppressions files in any parent directory
+
+		String parentDirName = sourceFormatterArgs.getBaseDirName() + "../";
+
+		for (int i = 0; i < ToolsUtil.PORTAL_MAX_DIR_LEVEL - 1; i++) {
+			File suppressionsFile = new File(parentDirName + fileName);
+
+			if (suppressionsFile.exists()) {
+				suppressionsFiles.add(suppressionsFile);
+			}
+
+			parentDirName += "../";
+		}
+
+		// Find suppressions files in any child directory
+
+		List<String> moduleSuppressionsFileNames =
+			getFileNames(
+				sourceFormatterArgs.getBaseDirName(), null, new String[0],
+				new String[] {"**/modules/**/" + fileName});
+
+		for (String moduleSuppressionsFileName : moduleSuppressionsFileNames) {
+			moduleSuppressionsFileName = StringUtil.replace(
+				moduleSuppressionsFileName, CharPool.BACK_SLASH,
+				CharPool.SLASH);
+
+			suppressionsFiles.add(new File(moduleSuppressionsFileName));
+		}
+
+		return suppressionsFiles;
+	}
+
 	protected String getTruncateLongLinesContent(
 		String content, String line, String trimmedLine, int lineCount) {
 
@@ -4532,13 +4574,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 
 		File baseDirFile = new File(sourceFormatterArgs.getBaseDirName());
-		File suppressionsFile = getFile(
-			"portal-impl/src/checkstyle-suppressions.xml",
-			PORTAL_MAX_DIR_LEVEL);
 
 		Set<SourceFormatterMessage> sourceFormatterMessages =
 			CheckStyleUtil.process(
-				_ungeneratedFiles, suppressionsFile,
+				_ungeneratedFiles, getSuppressionsFiles(),
 				getAbsolutePath(baseDirFile));
 
 		for (SourceFormatterMessage sourceFormatterMessage :

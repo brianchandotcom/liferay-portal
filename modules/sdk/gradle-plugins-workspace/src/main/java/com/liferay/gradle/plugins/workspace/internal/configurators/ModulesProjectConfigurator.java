@@ -70,15 +70,15 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 		WorkspaceExtension workspaceExtension = GradleUtil.getExtension(
 			(ExtensionAware)project.getGradle(), WorkspaceExtension.class);
 
-		applyPlugins(project);
+		_applyPlugins(project);
 
-		addRepositoryDefault(project, workspaceExtension);
-		configureLiferay(project, workspaceExtension);
-		configureTaskRunPoshi(project);
+		_addRepositoryDefault(project, workspaceExtension);
+		_configureLiferay(project, workspaceExtension);
+		_configureTaskRunPoshi(project);
 
-		configureRootTaskDistBundle(
+		_configureRootTaskDistBundle(
 			project, RootProjectConfigurator.DIST_BUNDLE_TAR_TASK_NAME);
-		configureRootTaskDistBundle(
+		_configureRootTaskDistBundle(
 			project, RootProjectConfigurator.DIST_BUNDLE_ZIP_TASK_NAME);
 	}
 
@@ -93,74 +93,6 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 
 	public void setDefaultRepositoryEnabled(boolean defaultRepositoryEnabled) {
 		_defaultRepositoryEnabled = defaultRepositoryEnabled;
-	}
-
-	protected MavenArtifactRepository addRepositoryDefault(
-		Project project, WorkspaceExtension workspaceExtension) {
-
-		if (!isDefaultRepositoryEnabled()) {
-			return null;
-		}
-
-		RepositoryHandler repositoryHandler = project.getRepositories();
-
-		return repositoryHandler.maven(
-			new Action<MavenArtifactRepository>() {
-
-				@Override
-				public void execute(
-					MavenArtifactRepository mavenArtifactRepository) {
-
-					mavenArtifactRepository.setUrl(_DEFAULT_REPOSITORY_URL);
-				}
-
-			});
-	}
-
-	protected void applyPlugins(Project project) {
-		GradleUtil.applyPlugin(project, LiferayOSGiPlugin.class);
-		GradleUtil.applyPlugin(project, PoshiRunnerPlugin.class);
-
-		if (FileUtil.exists(project, "service.xml")) {
-			GradleUtil.applyPlugin(project, ServiceBuilderPlugin.class);
-		}
-	}
-
-	protected void configureLiferay(
-		Project project, WorkspaceExtension workspaceExtension) {
-
-		LiferayExtension liferayExtension = GradleUtil.getExtension(
-			project, LiferayExtension.class);
-
-		liferayExtension.setAppServerParentDir(workspaceExtension.getHomeDir());
-	}
-
-	protected void configureRootTaskDistBundle(
-		final Project project, String rootTaskName) {
-
-		CopySpec copySpec = (CopySpec)GradleUtil.getTask(
-			project.getRootProject(), rootTaskName);
-
-		copySpec.into(
-			"osgi/modules",
-			new Closure<Void>(project) {
-
-				@SuppressWarnings("unused")
-				public void doCall(CopySourceSpec copySourceSpec) {
-					Task jarTask = GradleUtil.getTask(
-						project, JavaPlugin.JAR_TASK_NAME);
-
-					copySourceSpec.from(jarTask);
-				}
-
-			});
-	}
-
-	protected void configureTaskRunPoshi(Project project) {
-		Task task = GradleUtil.getTask(
-			project, PoshiRunnerPlugin.RUN_POSHI_TASK_NAME);
-
-		task.dependsOn(LiferayBasePlugin.DEPLOY_TASK_NAME);
 	}
 
 	@Override
@@ -188,6 +120,74 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 			});
 
 		return projectDirs;
+	}
+
+	private MavenArtifactRepository _addRepositoryDefault(
+		Project project, WorkspaceExtension workspaceExtension) {
+
+		if (!isDefaultRepositoryEnabled()) {
+			return null;
+		}
+
+		RepositoryHandler repositoryHandler = project.getRepositories();
+
+		return repositoryHandler.maven(
+			new Action<MavenArtifactRepository>() {
+
+				@Override
+				public void execute(
+					MavenArtifactRepository mavenArtifactRepository) {
+
+					mavenArtifactRepository.setUrl(_DEFAULT_REPOSITORY_URL);
+				}
+
+			});
+	}
+
+	private void _applyPlugins(Project project) {
+		GradleUtil.applyPlugin(project, LiferayOSGiPlugin.class);
+		GradleUtil.applyPlugin(project, PoshiRunnerPlugin.class);
+
+		if (FileUtil.exists(project, "service.xml")) {
+			GradleUtil.applyPlugin(project, ServiceBuilderPlugin.class);
+		}
+	}
+
+	private void _configureLiferay(
+		Project project, WorkspaceExtension workspaceExtension) {
+
+		LiferayExtension liferayExtension = GradleUtil.getExtension(
+			project, LiferayExtension.class);
+
+		liferayExtension.setAppServerParentDir(workspaceExtension.getHomeDir());
+	}
+
+	private void _configureRootTaskDistBundle(
+		final Project project, String rootTaskName) {
+
+		CopySpec copySpec = (CopySpec)GradleUtil.getTask(
+			project.getRootProject(), rootTaskName);
+
+		copySpec.into(
+			"osgi/modules",
+			new Closure<Void>(project) {
+
+				@SuppressWarnings("unused")
+				public void doCall(CopySourceSpec copySourceSpec) {
+					Task jarTask = GradleUtil.getTask(
+						project, JavaPlugin.JAR_TASK_NAME);
+
+					copySourceSpec.from(jarTask);
+				}
+
+			});
+	}
+
+	private void _configureTaskRunPoshi(Project project) {
+		Task task = GradleUtil.getTask(
+			project, PoshiRunnerPlugin.RUN_POSHI_TASK_NAME);
+
+		task.dependsOn(LiferayBasePlugin.DEPLOY_TASK_NAME);
 	}
 
 	private static final boolean _DEFAULT_REPOSITORY_ENABLED = true;

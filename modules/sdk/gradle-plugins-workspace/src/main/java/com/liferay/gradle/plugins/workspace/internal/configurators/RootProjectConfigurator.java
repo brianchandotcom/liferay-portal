@@ -75,26 +75,26 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		WorkspaceExtension workspaceExtension = GradleUtil.getExtension(
 			(ExtensionAware)project.getGradle(), WorkspaceExtension.class);
 
-		addTaskClean(project);
+		_addTaskClean(project);
 
-		Download downloadBundleTask = addTaskDownloadBundle(
+		Download downloadBundleTask = _addTaskDownloadBundle(
 			project, workspaceExtension);
 
-		Tar distBundleTarTask = addTaskDistBundle(
+		Tar distBundleTarTask = _addTaskDistBundle(
 			project, DIST_BUNDLE_TAR_TASK_NAME, Tar.class, downloadBundleTask,
 			workspaceExtension);
 
 		distBundleTarTask.setCompression(Compression.GZIP);
 		distBundleTarTask.setExtension("tar.gz");
 
-		addTaskDistBundle(
+		_addTaskDistBundle(
 			project, DIST_BUNDLE_ZIP_TASK_NAME, Zip.class, downloadBundleTask,
 			workspaceExtension);
 
-		addTaskInitBundle(project, downloadBundleTask, workspaceExtension);
+		_addTaskInitBundle(project, downloadBundleTask, workspaceExtension);
 	}
 
-	protected Delete addTaskClean(final Project project) {
+	private Delete _addTaskClean(final Project project) {
 		Delete delete = GradleUtil.addTask(
 			project, CLEAN_TASK_NAME, Delete.class);
 
@@ -113,13 +113,13 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		return delete;
 	}
 
-	protected <T extends AbstractArchiveTask> T addTaskDistBundle(
+	private <T extends AbstractArchiveTask> T _addTaskDistBundle(
 		Project project, String taskName, Class<T> clazz,
 		Download downloadBundleTask, WorkspaceExtension workspaceExtension) {
 
 		final T task = GradleUtil.addTask(project, taskName, clazz);
 
-		configureTaskCopyBundle(task, downloadBundleTask, workspaceExtension);
+		_configureTaskCopyBundle(task, downloadBundleTask, workspaceExtension);
 
 		task.setBaseName(project.getName());
 		task.setDestinationDir(project.getBuildDir());
@@ -145,7 +145,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		return task;
 	}
 
-	protected Download addTaskDownloadBundle(
+	private Download _addTaskDownloadBundle(
 		Project project, final WorkspaceExtension workspaceExtension) {
 
 		final Download download = GradleUtil.addTask(
@@ -198,14 +198,14 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		return download;
 	}
 
-	protected Copy addTaskInitBundle(
+	private Copy _addTaskInitBundle(
 		Project project, Download downloadBundleTask,
 		final WorkspaceExtension workspaceExtension) {
 
 		final Copy copy = GradleUtil.addTask(
 			project, INIT_BUNDLE_TASK_NAME, Copy.class);
 
-		configureTaskCopyBundle(copy, downloadBundleTask, workspaceExtension);
+		_configureTaskCopyBundle(copy, downloadBundleTask, workspaceExtension);
 
 		copy.doFirst(
 			new Action<Task>() {
@@ -254,7 +254,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		return copy;
 	}
 
-	protected void configureTaskCopyBundle(
+	private void _configureTaskCopyBundle(
 		final AbstractCopyTask abstractCopyTask,
 		final Download downloadBundleTask,
 		final WorkspaceExtension workspaceExtension) {

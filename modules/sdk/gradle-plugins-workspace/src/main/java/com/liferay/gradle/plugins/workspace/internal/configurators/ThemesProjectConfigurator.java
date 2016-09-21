@@ -58,50 +58,17 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 
 		GradleUtil.applyPlugin(project, LiferayThemePlugin.class);
 
-		configureLiferay(project, workspaceExtension);
+		_configureLiferay(project, workspaceExtension);
 
-		configureRootTaskDistBundle(
+		_configureRootTaskDistBundle(
 			project, RootProjectConfigurator.DIST_BUNDLE_TAR_TASK_NAME);
-		configureRootTaskDistBundle(
+		_configureRootTaskDistBundle(
 			project, RootProjectConfigurator.DIST_BUNDLE_ZIP_TASK_NAME);
 	}
 
 	@Override
 	public String getName() {
 		return _NAME;
-	}
-
-	protected void configureLiferay(
-		Project project, WorkspaceExtension workspaceExtension) {
-
-		LiferayExtension liferayExtension = GradleUtil.getExtension(
-			project, LiferayExtension.class);
-
-		liferayExtension.setAppServerParentDir(workspaceExtension.getHomeDir());
-	}
-
-	protected void configureRootTaskDistBundle(
-		final Project project, String rootTaskName) {
-
-		CopySpec copySpec = (CopySpec)GradleUtil.getTask(
-			project.getRootProject(), rootTaskName);
-
-		copySpec.into(
-			"osgi/modules",
-			new Closure<Void>(project) {
-
-				@SuppressWarnings("unused")
-				public void doCall(CopySpec copySpec) {
-					ConfigurableFileCollection configurableFileCollection =
-						project.files(getWarFile(project));
-
-					configurableFileCollection.builtBy(
-						BasePlugin.ASSEMBLE_TASK_NAME);
-
-					copySpec.from(getWarFile(project));
-				}
-
-			});
 	}
 
 	@Override
@@ -142,7 +109,40 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 		return projectDirs;
 	}
 
-	protected File getWarFile(Project project) {
+	private void _configureLiferay(
+		Project project, WorkspaceExtension workspaceExtension) {
+
+		LiferayExtension liferayExtension = GradleUtil.getExtension(
+			project, LiferayExtension.class);
+
+		liferayExtension.setAppServerParentDir(workspaceExtension.getHomeDir());
+	}
+
+	private void _configureRootTaskDistBundle(
+		final Project project, String rootTaskName) {
+
+		CopySpec copySpec = (CopySpec)GradleUtil.getTask(
+			project.getRootProject(), rootTaskName);
+
+		copySpec.into(
+			"osgi/modules",
+			new Closure<Void>(project) {
+
+				@SuppressWarnings("unused")
+				public void doCall(CopySpec copySpec) {
+					ConfigurableFileCollection configurableFileCollection =
+						project.files(_getWarFile(project));
+
+					configurableFileCollection.builtBy(
+						BasePlugin.ASSEMBLE_TASK_NAME);
+
+					copySpec.from(_getWarFile(project));
+				}
+
+			});
+	}
+
+	private File _getWarFile(Project project) {
 		BasePluginConvention basePluginConvention = GradleUtil.getConvention(
 			project, BasePluginConvention.class);
 

@@ -1389,6 +1389,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		else {
 			javaSourceProcessor = new JavaSourceProcessor();
 
+			javaSourceProcessor.setProperties(_properties);
 			javaSourceProcessor.setSourceFormatterArgs(sourceFormatterArgs);
 		}
 

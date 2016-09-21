@@ -996,7 +996,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		// LPS-65213
 
-		checkVerifyUpgradeConnection(fileName, className, newContent);
+		if (portalSource) {
+			checkVerifyUpgradeConnection(fileName, className, newContent);
+		}
 
 		checkUpgradeClass(fileName, absolutePath, className, newContent);
 

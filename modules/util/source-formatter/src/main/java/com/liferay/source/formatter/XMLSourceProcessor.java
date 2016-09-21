@@ -669,14 +669,14 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			fileName, document.getRootElement(), "target", null,
 			new ElementComparator());
 
-		int x = content.lastIndexOf("</macrodef>");
-		int y = content.indexOf("<process-ivy");
+		int x = content.lastIndexOf("\n\t</macrodef>");
+		int y = content.indexOf("\n\t<process-ivy");
 
 		if ((y != -1) && (x > y)) {
 			processMessage(fileName, "Macrodefs go before process-ivy");
 		}
 
-		int z = content.indexOf("</target>");
+		int z = content.indexOf("\n\t</target>");
 
 		if ((z != -1) && (x > z)) {
 			processMessage(fileName, "Macrodefs go before targets");
@@ -1276,18 +1276,22 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected List<String> getTargetNames(
-			String buildfileName, String fileName, List<String> targetNames,
+			String buildFileName, String fileName, List<String> targetNames,
 			boolean importFile)
 		throws Exception {
 
-		File file = new File(buildfileName);
+		if (buildFileName.contains(StringPool.OPEN_CURLY_BRACE)) {
+			return null;
+		}
+
+		File file = new File(buildFileName);
 
 		if (!file.exists()) {
 			if (!importFile) {
 				processMessage(
 					fileName,
 					"Ant element points to non-existing build file '" +
-						buildfileName + "'");
+						buildFileName + "'");
 			}
 
 			return null;
@@ -1310,8 +1314,8 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		List<Element> importElements = rootElement.elements("import");
 
 		for (Element importElement : importElements) {
-			String buildDirName = buildfileName.substring(
-				0, buildfileName.lastIndexOf(CharPool.SLASH) + 1);
+			String buildDirName = buildFileName.substring(
+				0, buildFileName.lastIndexOf(CharPool.SLASH) + 1);
 
 			String importFileName =
 				buildDirName + importElement.attributeValue("file");

@@ -19,12 +19,12 @@ if (goog.DEBUG) {
 
 ddl.rule_list = function(opt_data, opt_ignored) {
   var output = '';
-  var ruleList55 = opt_data.rules;
-  var ruleListLen55 = ruleList55.length;
-  if (ruleListLen55 > 0) {
-    for (var ruleIndex55 = 0; ruleIndex55 < ruleListLen55; ruleIndex55++) {
-      var ruleData55 = ruleList55[ruleIndex55];
-      output += '<div class="card card-horizontal card-rule"><div class="card-row card-row-padded"><div class="card-col-content card-col-gutters"><h4>' + soy.$$escapeHtml(ruleData55.type) + '</h4><p>' + soy.$$escapeHtml(ruleData55.description) + '</p></div><div class="card-col-field"><div class="dropdown"><a class="dropdown-toggle icon-monospaced" data-toggle="dropdown" href="#1">' + soy.$$filterNoAutoescape(opt_data.kebab) + '</a><ul class="dropdown-menu dropdown-menu-right"><li class="rule-card-edit" data-card-id="' + soy.$$escapeHtmlAttribute(ruleIndex55) + '"><a href="javascript:;">Edit</a></li><li class="rule-card-delete" data-card-id="' + soy.$$escapeHtmlAttribute(ruleIndex55) + '"><a href="javascript:;">Delete</a></li></ul></div></div></div></div>';
+  var ruleList158 = opt_data.rules;
+  var ruleListLen158 = ruleList158.length;
+  if (ruleListLen158 > 0) {
+    for (var ruleIndex158 = 0; ruleIndex158 < ruleListLen158; ruleIndex158++) {
+      var ruleData158 = ruleList158[ruleIndex158];
+      output += '<div class="card card-horizontal card-rule"><div class="card-row card-row-padded"><div class="card-col-content card-col-gutters"><p>' + soy.$$escapeHtml(ruleData158['logical-operator']) + '</p></div><div class="card-col-field"><div class="dropdown"><a class="dropdown-toggle icon-monospaced" data-toggle="dropdown" href="#1">' + soy.$$filterNoAutoescape(opt_data.kebab) + '</a><ul class="dropdown-menu dropdown-menu-right"><li class="rule-card-edit" data-card-id="' + soy.$$escapeHtmlAttribute(ruleIndex158) + '"><a href="javascript:;">' + soy.$$escapeHtml(opt_data.strings.edit) + '</a></li><li class="rule-card-delete" data-card-id="' + soy.$$escapeHtmlAttribute(ruleIndex158) + '"><a href="javascript:;">' + soy.$$escapeHtml(opt_data.strings['delete']) + '</a></li></ul></div></div></div></div>';
     }
   } else {
     output += soy.$$escapeHtml(opt_data.strings.emptyListText);
@@ -33,12 +33,4 @@ ddl.rule_list = function(opt_data, opt_ignored) {
 };
 if (goog.DEBUG) {
   ddl.rule_list.soyTemplateName = 'ddl.rule_list';
-}
-
-
-ddl.rule_types = function(opt_data, opt_ignored) {
-  return '<ul class="dropdown-menu"><li><a href="javascript:;" data-rule-type="visibility">' + soy.$$escapeHtml(opt_data.strings.showHide) + '</a></li></ul>';
-};
-if (goog.DEBUG) {
-  ddl.rule_types.soyTemplateName = 'ddl.rule_types';
 }

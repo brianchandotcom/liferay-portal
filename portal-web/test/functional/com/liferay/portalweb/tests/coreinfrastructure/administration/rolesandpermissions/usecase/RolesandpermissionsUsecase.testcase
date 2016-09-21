@@ -679,7 +679,11 @@
 
 		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no documents or media files in this folder." />
 
-		<execute macro="Search#searchNoPG">
+		<execute macro="Search#searchPG">
+			<var name="searchTerm" value="Test Document" />
+		</execute>
+
+		<execute macro="Search#viewSearchNoPG">
 			<var name="searchAssetTitle" value="Test Document" />
 			<var name="searchNoResults" value="true" />
 			<var name="searchTerm" value="Test Document" />
@@ -1257,7 +1261,11 @@
 
 		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no documents or media files in this folder." />
 
-		<execute macro="Search#searchNoPG">
+		<execute macro="Search#searchPG">
+			<var name="searchTerm" value="Test Document" />
+		</execute>
+
+		<execute macro="Search#viewSearchNoPG">
 			<var name="searchAssetTitle" value="Test Document" />
 			<var name="searchNoResults" value="true" />
 			<var name="searchTerm" value="Test Document" />

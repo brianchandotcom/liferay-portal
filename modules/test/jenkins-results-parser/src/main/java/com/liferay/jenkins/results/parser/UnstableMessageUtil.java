@@ -285,8 +285,6 @@ public class UnstableMessageUtil {
 						if (description.length() > x) {
 							description = description.substring(x);
 
-							description = description.replace("\"", "\"");
-
 							sb.append(description);
 
 							sb.append(" - ");

@@ -94,10 +94,10 @@ public class AddRecordSetMVCActionCommand
 		return ddmStructureService.addStructure(
 			groupId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
 			PortalUtil.getClassNameId(DDLRecordSet.class), structureKey,
-			getLocalizedMap(themeDisplay.getLocale(), name),
-			getLocalizedMap(themeDisplay.getLocale(), description), ddmForm,
-			ddmFormLayout, storageType, DDMStructureConstants.TYPE_AUTO,
-			serviceContext);
+			getLocalizedMap(themeDisplay.getSiteDefaultLocale(), name),
+			getLocalizedMap(themeDisplay.getSiteDefaultLocale(), description),
+			ddmForm, ddmFormLayout, storageType,
+			DDMStructureConstants.TYPE_AUTO, serviceContext);
 	}
 
 	protected DDLRecordSet addRecordSet(
@@ -118,8 +118,8 @@ public class AddRecordSetMVCActionCommand
 
 		return ddlRecordSetService.addRecordSet(
 			groupId, ddmStructureId, recordSetKey,
-			getLocalizedMap(themeDisplay.getLocale(), name),
-			getLocalizedMap(themeDisplay.getLocale(), description),
+			getLocalizedMap(themeDisplay.getSiteDefaultLocale(), name),
+			getLocalizedMap(themeDisplay.getSiteDefaultLocale(), description),
 			DDLRecordSetConstants.MIN_DISPLAY_ROWS_DEFAULT,
 			DDLRecordSetConstants.SCOPE_FORMS, serviceContext);
 	}

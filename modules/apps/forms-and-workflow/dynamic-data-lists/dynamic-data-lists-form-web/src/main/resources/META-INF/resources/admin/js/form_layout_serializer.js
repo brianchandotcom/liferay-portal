@@ -12,6 +12,10 @@ AUI.add(
 						valueFn: '_valueColumnHandler'
 					},
 
+					defaultLanguageId: {
+						value: themeDisplay.getDefaultLanguageId()
+					},
+
 					fieldHandler: {
 						valueFn: '_valueFieldHandler'
 					},
@@ -35,6 +39,7 @@ AUI.add(
 
 						return A.JSON.stringify(
 							{
+								defaultLanguageId: instance.get('defaultLanguageId'),
 								pages: instance.visit()
 							}
 						);
@@ -76,14 +81,20 @@ AUI.add(
 						var descriptions = pages.get('descriptions');
 						var titles = pages.get('titles');
 
+						var languageId = instance.get('defaultLanguageId');
+
+						var description = {};
+
+						description[languageId] = descriptions[index] || '';
+
+						var title = {};
+
+						title[languageId] = titles[index] || '';
+
 						return {
-							description: {
-								en_US: descriptions[index] || ''
-							},
+							description: description,
 							rows: instance._visitRows(page.get('rows')),
-							title: {
-								en_US: titles[index] || ''
-							}
+							title: title
 						};
 					},
 

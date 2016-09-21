@@ -18,6 +18,7 @@ import com.liferay.gradle.plugins.workspace.internal.configurators.ModulesProjec
 import com.liferay.gradle.plugins.workspace.internal.configurators.PluginsProjectConfigurator;
 import com.liferay.gradle.plugins.workspace.internal.configurators.RootProjectConfigurator;
 import com.liferay.gradle.plugins.workspace.internal.configurators.ThemesProjectConfigurator;
+import com.liferay.gradle.plugins.workspace.internal.configurators.WarsProjectConfigurator;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
 
 import groovy.lang.MissingPropertyException;
@@ -45,6 +46,7 @@ public class WorkspaceExtension {
 		_projectConfigurators.add(new ModulesProjectConfigurator(settings));
 		_projectConfigurators.add(new PluginsProjectConfigurator(settings));
 		_projectConfigurators.add(new ThemesProjectConfigurator(settings));
+		_projectConfigurators.add(new WarsProjectConfigurator(settings));
 
 		_bundleUrl = GradleUtil.getProperty(
 			settings, WorkspacePlugin.PROPERTY_PREFIX + "bundle.url",

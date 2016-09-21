@@ -14,8 +14,6 @@
 
 package com.liferay.portal.tools.data.partitioning.sql.builder.internal.exporter;
 
-import java.sql.ResultSetMetaData;
-
 /**
  * @author Manuel de la Peña
  */
@@ -23,7 +21,6 @@ public interface SQLBuilder {
 
 	public String buildField(Object object);
 
-	public String buildInsert(
-		ResultSetMetaData resultSetMetaData, String tableName, String[] fields);
+	public String buildInsert(String tableName, String[] fields);
 
 }

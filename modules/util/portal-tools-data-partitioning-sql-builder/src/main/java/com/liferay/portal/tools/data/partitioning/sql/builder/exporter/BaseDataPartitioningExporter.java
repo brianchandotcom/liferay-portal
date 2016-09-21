@@ -83,13 +83,13 @@ public abstract class BaseDataPartitioningExporter
 	}
 
 	@Override
-	public List<String> getPartitionedTableNames(ExportContext exportContext) {
-		return getTableNames(getPartitionedTableNamesSQL(exportContext));
+	public String getOutputFileExtension() {
+		return ".sql";
 	}
 
 	@Override
-	public SQLBuilder getSQLBuilder() {
-		return new InsertSQLBuilder();
+	public List<String> getPartitionedTableNames(ExportContext exportContext) {
+		return getTableNames(getPartitionedTableNamesSQL(exportContext));
 	}
 
 	@Override
@@ -121,8 +121,7 @@ public abstract class BaseDataPartitioningExporter
 						resultSet.getObject(i + 1));
 				}
 
-				String insertSQL = _sqlBuilder.buildInsert(
-					resultSetMetaData, tableName, fields);
+				String insertSQL = _sqlBuilder.buildInsert(tableName, fields);
 
 				outputStream.write(insertSQL.getBytes());
 			}

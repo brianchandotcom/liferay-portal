@@ -669,14 +669,14 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			fileName, document.getRootElement(), "target", null,
 			new ElementComparator());
 
-		int x = content.lastIndexOf("</macrodef>");
-		int y = content.indexOf("<process-ivy");
+		int x = content.lastIndexOf("\n\t</macrodef>");
+		int y = content.indexOf("\n\t<process-ivy");
 
 		if ((y != -1) && (x > y)) {
 			processMessage(fileName, "Macrodefs go before process-ivy");
 		}
 
-		int z = content.indexOf("</target>");
+		int z = content.indexOf("\n\t</target>");
 
 		if ((z != -1) && (x > z)) {
 			processMessage(fileName, "Macrodefs go before targets");

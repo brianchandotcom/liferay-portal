@@ -14,6 +14,10 @@
 
 package com.liferay.source.formatter;
 
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.util.ReleaseInfo;
+
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -62,6 +66,19 @@ public class SourceFormatterTest {
 
 		SourceFormatter sourceFormatter = new SourceFormatter(
 			sourceFormatterArgs);
+
+		String name = ReleaseInfo.getName();
+
+		if (!name.contains(" DXP ")) {
+			List<String> defaultExcludes = new ArrayList<>(
+				ReflectionTestUtil.<List<String>>getFieldValue(
+					SourceFormatter.class, "_defaultExcludes"));
+
+			defaultExcludes.add("modules/private/**");
+
+			ReflectionTestUtil.setFieldValue(
+				SourceFormatter.class, "_defaultExcludes", defaultExcludes);
+		}
 
 		try {
 			sourceFormatter.format();

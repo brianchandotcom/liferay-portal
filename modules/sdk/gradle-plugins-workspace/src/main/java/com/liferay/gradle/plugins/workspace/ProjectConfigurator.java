@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.gradle.plugins.workspace.internal.configurators;
+package com.liferay.gradle.plugins.workspace;
 
 import java.io.File;
 

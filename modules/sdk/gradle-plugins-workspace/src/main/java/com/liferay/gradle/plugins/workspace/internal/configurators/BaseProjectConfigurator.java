@@ -14,6 +14,7 @@
 
 package com.liferay.gradle.plugins.workspace.internal.configurators;
 
+import com.liferay.gradle.plugins.workspace.ProjectConfigurator;
 import com.liferay.gradle.plugins.workspace.WorkspacePlugin;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
 import com.liferay.gradle.util.Validator;

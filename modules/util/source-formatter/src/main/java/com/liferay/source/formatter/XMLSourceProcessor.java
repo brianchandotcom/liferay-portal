@@ -1276,18 +1276,18 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected List<String> getTargetNames(
-			String buildfileName, String fileName, List<String> targetNames,
+			String buildFileName, String fileName, List<String> targetNames,
 			boolean importFile)
 		throws Exception {
 
-		File file = new File(buildfileName);
+		File file = new File(buildFileName);
 
 		if (!file.exists()) {
 			if (!importFile) {
 				processMessage(
 					fileName,
 					"Ant element points to non-existing build file '" +
-						buildfileName + "'");
+						buildFileName + "'");
 			}
 
 			return null;
@@ -1310,8 +1310,8 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		List<Element> importElements = rootElement.elements("import");
 
 		for (Element importElement : importElements) {
-			String buildDirName = buildfileName.substring(
-				0, buildfileName.lastIndexOf(CharPool.SLASH) + 1);
+			String buildDirName = buildFileName.substring(
+				0, buildFileName.lastIndexOf(CharPool.SLASH) + 1);
 
 			String importFileName =
 				buildDirName + importElement.attributeValue("file");

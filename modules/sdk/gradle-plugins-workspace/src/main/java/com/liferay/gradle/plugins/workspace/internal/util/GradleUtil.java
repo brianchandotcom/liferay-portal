@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.gradle.plugins.workspace.util;
+package com.liferay.gradle.plugins.workspace.internal.util;
 
 import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.Validator;

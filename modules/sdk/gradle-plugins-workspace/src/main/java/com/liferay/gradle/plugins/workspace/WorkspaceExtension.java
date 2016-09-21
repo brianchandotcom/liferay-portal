@@ -14,12 +14,12 @@
 
 package com.liferay.gradle.plugins.workspace;
 
-import com.liferay.gradle.plugins.workspace.configurators.ModulesProjectConfigurator;
-import com.liferay.gradle.plugins.workspace.configurators.PluginsProjectConfigurator;
-import com.liferay.gradle.plugins.workspace.configurators.ProjectConfigurator;
-import com.liferay.gradle.plugins.workspace.configurators.RootProjectConfigurator;
-import com.liferay.gradle.plugins.workspace.configurators.ThemesProjectConfigurator;
-import com.liferay.gradle.plugins.workspace.util.GradleUtil;
+import com.liferay.gradle.plugins.workspace.internal.configurators.ModulesProjectConfigurator;
+import com.liferay.gradle.plugins.workspace.internal.configurators.PluginsProjectConfigurator;
+import com.liferay.gradle.plugins.workspace.internal.configurators.ProjectConfigurator;
+import com.liferay.gradle.plugins.workspace.internal.configurators.RootProjectConfigurator;
+import com.liferay.gradle.plugins.workspace.internal.configurators.ThemesProjectConfigurator;
+import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
 
 import groovy.lang.MissingPropertyException;
 

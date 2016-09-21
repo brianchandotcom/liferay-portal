@@ -14,7 +14,7 @@
 
 package com.liferay.gradle.plugins.workspace.tasks;
 
-import com.liferay.gradle.plugins.workspace.util.GradleUtil;
+import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
 import com.liferay.gradle.util.FileUtil;
 
 import java.io.File;

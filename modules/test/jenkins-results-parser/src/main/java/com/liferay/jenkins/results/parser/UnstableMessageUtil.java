@@ -262,16 +262,6 @@ public class UnstableMessageUtil {
 					String jobVariant = JenkinsResultsParserUtil.getJobVariant(
 						runBuildURLJSONObject);
 
-					if (jobVariant.contains("functional") &&
-						testClassName.contains("EvaluateLogTest")) {
-
-						sb.append("[");
-						sb.append(
-							JenkinsResultsParserUtil.getAxisVariable(
-								runBuildURLJSONObject));
-						sb.append("]");
-					}
-
 					sb.append("</a>");
 
 					if (jobVariant.contains("functional")) {

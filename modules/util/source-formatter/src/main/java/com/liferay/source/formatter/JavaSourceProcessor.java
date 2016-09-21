@@ -4569,7 +4569,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected void processCheckStyle() throws Exception {
-		if (!portalSource) {
+		if (!portalSource || _ungeneratedFiles.isEmpty()) {
 			return;
 		}
 

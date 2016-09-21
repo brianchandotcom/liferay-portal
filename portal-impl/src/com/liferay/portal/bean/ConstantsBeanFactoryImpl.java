@@ -114,9 +114,7 @@ public class ConstantsBeanFactoryImpl implements ConstantsBeanFactory {
 		methodVisitor.visitMaxs(1, 1);
 		methodVisitor.visitEnd();
 
-		Field[] fields = constantsClass.getFields();
-
-		for (Field field : fields) {
+		for (Field field : constantsClass.getFields()) {
 			if (!Modifier.isStatic(field.getModifiers())) {
 				continue;
 			}
@@ -139,9 +137,7 @@ public class ConstantsBeanFactoryImpl implements ConstantsBeanFactory {
 			methodVisitor.visitEnd();
 		}
 
-		Method[] methods = constantsClass.getMethods();
-
-		for (Method method : methods) {
+		for (Method method : constantsClass.getMethods()) {
 			if (!Modifier.isStatic(method.getModifiers())) {
 				continue;
 			}
@@ -154,13 +150,13 @@ public class ConstantsBeanFactoryImpl implements ConstantsBeanFactory {
 
 			methodVisitor.visitCode();
 
-			int stackIndex = 0;
+			int i = 0;
 
 			for (Type parameterType : Type.getArgumentTypes(method)) {
 				methodVisitor.visitVarInsn(
-					parameterType.getOpcode(Opcodes.ILOAD), stackIndex);
+					parameterType.getOpcode(Opcodes.ILOAD), i);
 
-				stackIndex += parameterType.getSize();
+				i += parameterType.getSize();
 			}
 
 			methodVisitor.visitMethodInsn(

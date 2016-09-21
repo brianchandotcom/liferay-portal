@@ -504,6 +504,28 @@ public class StringUtilTest {
 	}
 
 	@Test
+	public void testShortenStringWith4byteChars() {
+		int space = (int)CharPool.SPACE;
+
+		int[] codePoints = new int[] {
+			128515, 128516, space, 128517, 128518, 128519, 128520, 128521
+		};
+
+		String string = new String(codePoints, 0, codePoints.length);
+
+		Assert.assertEquals(
+			new String(codePoints, 0, 1), StringUtil.shorten(string, 1));
+
+		Assert.assertEquals(
+			new String(codePoints, 0, 1) + "...",
+			StringUtil.shorten(string, 4));
+
+		Assert.assertEquals(
+			new String(codePoints, 0, 2) + "...",
+			StringUtil.shorten(string, 7));
+	}
+
+	@Test
 	public void testSplit() {
 		Assert.assertArrayEquals(
 			new String[] {"Alice", "Bob", "Charlie"},

@@ -96,7 +96,7 @@ public class ConstantsBeanFactoryImpl implements ConstantsBeanFactory {
 
 		String objectClassBinaryName = getClassBinaryName(Object.class);
 
-		ClassWriter classWriter = new ClassWriter(0);
+		ClassWriter classWriter = new ClassWriter(ClassWriter.COMPUTE_MAXS);
 
 		classWriter.visit(
 			Opcodes.V1_6, Opcodes.ACC_PUBLIC | Opcodes.ACC_SUPER,
@@ -114,9 +114,7 @@ public class ConstantsBeanFactoryImpl implements ConstantsBeanFactory {
 		methodVisitor.visitMaxs(1, 1);
 		methodVisitor.visitEnd();
 
-		Field[] fields = constantsClass.getFields();
-
-		for (Field field : fields) {
+		for (Field field : constantsClass.getFields()) {
 			if (!Modifier.isStatic(field.getModifiers())) {
 				continue;
 			}
@@ -139,23 +137,12 @@ public class ConstantsBeanFactoryImpl implements ConstantsBeanFactory {
 			methodVisitor.visitEnd();
 		}
 
-		Method[] methods = constantsClass.getMethods();
-
-		for (Method method : methods) {
+		for (Method method : constantsClass.getMethods()) {
 			if (!Modifier.isStatic(method.getModifiers())) {
 				continue;
 			}
 
-			Class<?>[] parameterClasses = method.getParameterTypes();
-
-			Type[] parameterTypes = new Type[parameterClasses.length];
-
-			for (int i = 0; i < parameterClasses.length; i++) {
-				parameterTypes[i] = Type.getType(parameterClasses[i]);
-			}
-
-			String methodDescriptor = Type.getMethodDescriptor(
-				Type.getType(method.getReturnType()), parameterTypes);
+			String methodDescriptor = Type.getMethodDescriptor(method);
 
 			methodVisitor = classWriter.visitMethod(
 				Opcodes.ACC_PUBLIC | Opcodes.ACC_STATIC, method.getName(),
@@ -163,25 +150,24 @@ public class ConstantsBeanFactoryImpl implements ConstantsBeanFactory {
 
 			methodVisitor.visitCode();
 
-			int stackIndex = 0;
+			int i = 0;
 
-			for (Type parameterType : parameterTypes) {
+			for (Type parameterType : Type.getArgumentTypes(method)) {
 				methodVisitor.visitVarInsn(
-					parameterType.getOpcode(Opcodes.ILOAD), stackIndex);
+					parameterType.getOpcode(Opcodes.ILOAD), i);
 
-				stackIndex += parameterType.getSize();
+				i += parameterType.getSize();
 			}
 
 			methodVisitor.visitMethodInsn(
 				Opcodes.INVOKESTATIC, constantsClassBinaryName,
-				method.getName(), methodDescriptor);
+				method.getName(), methodDescriptor, false);
 
 			Type returnType = Type.getType(method.getReturnType());
 
 			methodVisitor.visitInsn(returnType.getOpcode(Opcodes.IRETURN));
 
-			methodVisitor.visitMaxs(
-				stackIndex + returnType.getSize(), parameterTypes.length + 1);
+			methodVisitor.visitMaxs(0, 0);
 
 			methodVisitor.visitEnd();
 		}

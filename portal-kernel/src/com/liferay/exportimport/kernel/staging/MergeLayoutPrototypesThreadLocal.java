@@ -38,20 +38,42 @@ public class MergeLayoutPrototypesThreadLocal {
 		return _inProgress.get();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #isMergeComplete(String, Object...)}
+	 */
+	@Deprecated
 	public static boolean isMergeComplete(Method method, Object[] arguments) {
+		return isMergeComplete(method.getName(), arguments);
+	}
+
+	public static boolean isMergeComplete(
+		String methodName, Object... arguments) {
+
 		Set<MethodKey> methodKeys = _mergeComplete.get();
 
-		return methodKeys.contains(new MethodKey(method, arguments));
+		return methodKeys.contains(new MethodKey(methodName, arguments));
 	}
 
 	public static void setInProgress(boolean inProgress) {
 		_inProgress.set(inProgress);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #setMergeComplete(String, Object...)}
+	 */
+	@Deprecated
 	public static void setMergeComplete(Method method, Object[] arguments) {
+		setMergeComplete(method.getName(), arguments);
+	}
+
+	public static void setMergeComplete(
+		String methodName, Object... arguments) {
+
 		Set<MethodKey> methodKeys = _mergeComplete.get();
 
-		methodKeys.add(new MethodKey(method, arguments));
+		methodKeys.add(new MethodKey(methodName, arguments));
 
 		setInProgress(false);
 	}
@@ -66,8 +88,8 @@ public class MergeLayoutPrototypesThreadLocal {
 
 	private static class MethodKey {
 
-		public MethodKey(Method method, Object[] arguments) {
-			_method = method;
+		public MethodKey(String methodName, Object[] arguments) {
+			_methodName = methodName;
 			_arguments = arguments;
 		}
 
@@ -75,7 +97,7 @@ public class MergeLayoutPrototypesThreadLocal {
 		public boolean equals(Object obj) {
 			MethodKey methodKey = (MethodKey)obj;
 
-			if (Objects.equals(_method, methodKey._method) &&
+			if (Objects.equals(_methodName, methodKey._methodName) &&
 				Arrays.equals(_arguments, methodKey._arguments)) {
 
 				return true;
@@ -86,7 +108,7 @@ public class MergeLayoutPrototypesThreadLocal {
 
 		@Override
 		public int hashCode() {
-			int hashCode = _method.hashCode();
+			int hashCode = _methodName.hashCode();
 
 			if (_arguments != null) {
 				for (Object obj : _arguments) {
@@ -103,7 +125,7 @@ public class MergeLayoutPrototypesThreadLocal {
 		}
 
 		private final Object[] _arguments;
-		private final Method _method;
+		private final String _methodName;
 
 	}
 

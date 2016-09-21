@@ -16,6 +16,7 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.exportimport.kernel.lar.MissingReferences;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
+import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
@@ -28,7 +29,10 @@ import com.liferay.portal.kernel.exception.SitemapChangeFrequencyException;
 import com.liferay.portal.kernel.exception.SitemapIncludeException;
 import com.liferay.portal.kernel.exception.SitemapPagePriorityException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutFriendlyURL;
@@ -49,6 +53,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntry;
 import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntryThreadLocal;
+import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -62,6 +67,7 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.comparator.LayoutComparator;
 import com.liferay.portal.kernel.util.comparator.LayoutPriorityComparator;
+import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.service.base.LayoutLocalServiceBaseImpl;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.sites.kernel.util.Sites;
@@ -1114,6 +1120,17 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		return layout;
 	}
 
+	@Override
+	public Layout getLayout(long plid) throws PortalException {
+		Layout layout = layoutPersistence.findByPrimaryKey(plid);
+
+		if (_mergeLayout(layout, plid)) {
+			return layoutPersistence.findByPrimaryKey(plid);
+		}
+
+		return layout;
+	}
+
 	/**
 	 * Returns the layout matching the primary key, group, and privacy; throws a
 	 * {@link NoSuchLayoutException} otherwise.
@@ -1127,7 +1144,15 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	public Layout getLayout(long groupId, boolean privateLayout, long layoutId)
 		throws PortalException {
 
-		return layoutPersistence.findByG_P_L(groupId, privateLayout, layoutId);
+		Layout layout = layoutPersistence.findByG_P_L(
+			groupId, privateLayout, layoutId);
+
+		if (_mergeLayout(layout, groupId, privateLayout, layoutId)) {
+			return layoutPersistence.findByG_P_L(
+				groupId, privateLayout, layoutId);
+		}
+
+		return layout;
 	}
 
 	/**
@@ -1171,8 +1196,33 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	public List<Layout> getLayouts(
 		long groupId, boolean privateLayout, long parentLayoutId) {
 
-		return layoutPersistence.findByG_P_P(
-			groupId, privateLayout, parentLayoutId);
+		if (MergeLayoutPrototypesThreadLocal.isInProgress()) {
+			return layoutPersistence.findByG_P_P(
+				groupId, privateLayout, parentLayoutId);
+		}
+
+		try {
+			Group group = groupLocalService.getGroup(groupId);
+
+			LayoutSet layoutSet = layoutSetLocalService.getLayoutSet(
+				groupId, privateLayout);
+
+			if (!_mergeLayouts(
+					group, layoutSet, groupId, privateLayout, parentLayoutId)) {
+
+				return layoutPersistence.findByG_P_P(
+					groupId, privateLayout, parentLayoutId);
+			}
+
+			List<Layout> layouts = layoutPersistence.findByG_P_P(
+				groupId, privateLayout, parentLayoutId);
+
+			return _injectVirtualLayouts(
+				group, layoutSet, layouts, parentLayoutId);
+		}
+		catch (PortalException pe) {
+			throw new SystemException(pe);
+		}
 	}
 
 	/**
@@ -1202,8 +1252,34 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		long groupId, boolean privateLayout, long parentLayoutId,
 		boolean incomplete, int start, int end) {
 
-		return layoutPersistence.findByG_P_P(
-			groupId, privateLayout, parentLayoutId, start, end);
+		if (MergeLayoutPrototypesThreadLocal.isInProgress()) {
+			return layoutPersistence.findByG_P_P(
+				groupId, privateLayout, parentLayoutId, start, end);
+		}
+
+		try {
+			Group group = groupLocalService.getGroup(groupId);
+
+			LayoutSet layoutSet = layoutSetLocalService.getLayoutSet(
+				groupId, privateLayout);
+
+			if (!_mergeLayouts(
+					group, layoutSet, groupId, privateLayout, parentLayoutId,
+					start, end)) {
+
+				return layoutPersistence.findByG_P_P(
+					groupId, privateLayout, parentLayoutId);
+			}
+
+			List<Layout> layouts = layoutPersistence.findByG_P_P(
+				groupId, privateLayout, parentLayoutId);
+
+			return _injectVirtualLayouts(
+				group, layoutSet, layouts, parentLayoutId);
+		}
+		catch (PortalException pe) {
+			throw new SystemException(pe);
+		}
 	}
 
 	/**
@@ -3000,5 +3076,180 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 	@BeanReference(type = LayoutLocalServiceHelper.class)
 	protected LayoutLocalServiceHelper layoutLocalServiceHelper;
+
+	private List<Layout> _addChildUserGroupLayouts(
+			Group group, List<Layout> layouts)
+		throws PortalException {
+
+		List<Layout> childLayouts = new ArrayList<>(layouts.size());
+
+		for (Layout layout : layouts) {
+			Group layoutGroup = layout.getGroup();
+
+			if (layoutGroup.isUserGroup()) {
+				childLayouts.add(new VirtualLayout(layout, group));
+			}
+			else {
+				childLayouts.add(layout);
+			}
+		}
+
+		return childLayouts;
+	}
+
+	private List<Layout> _addUserGroupLayouts(
+			Group group, LayoutSet layoutSet, List<Layout> layouts,
+			long parentLayoutId)
+		throws PortalException {
+
+		layouts = new ArrayList<>(layouts);
+
+		List<UserGroup> userUserGroups =
+			userGroupLocalService.getUserUserGroups(group.getClassPK());
+
+		for (UserGroup userGroup : userUserGroups) {
+			Group userGroupGroup = userGroup.getGroup();
+
+			List<Layout> userGroupLayouts = getLayouts(
+				userGroupGroup.getGroupId(), layoutSet.isPrivateLayout(),
+				parentLayoutId);
+
+			for (Layout userGroupLayout : userGroupLayouts) {
+				layouts.add(new VirtualLayout(userGroupLayout, group));
+			}
+		}
+
+		return layouts;
+	}
+
+	private List<Layout> _injectVirtualLayouts(
+			Group group, LayoutSet layoutSet, List<Layout> layouts,
+			long parentLayoutId)
+		throws PortalException {
+
+		if (MergeLayoutPrototypesThreadLocal.isInProgress() ||
+			PropsValues.USER_GROUPS_COPY_LAYOUTS_TO_USER_PERSONAL_SITE) {
+
+			return layouts;
+		}
+
+		if (group.isUser()) {
+			_virtualLayoutTargetGroupId.set(group.getGroupId());
+
+			if (parentLayoutId == LayoutConstants.DEFAULT_PARENT_LAYOUT_ID) {
+				return _addUserGroupLayouts(
+					group, layoutSet, layouts, parentLayoutId);
+			}
+
+			return _addChildUserGroupLayouts(group, layouts);
+		}
+
+		if (group.isUserGroup() &&
+			(parentLayoutId != LayoutConstants.DEFAULT_PARENT_LAYOUT_ID)) {
+
+			long targetGroupId = _virtualLayoutTargetGroupId.get();
+
+			if (targetGroupId != GroupConstants.DEFAULT_LIVE_GROUP_ID) {
+				Group targetGroup = groupLocalService.getGroup(targetGroupId);
+
+				return _addChildUserGroupLayouts(targetGroup, layouts);
+			}
+		}
+
+		return layouts;
+	}
+
+	private boolean _mergeLayout(Layout layout, Object... arguments)
+		throws PortalException {
+
+		if (MergeLayoutPrototypesThreadLocal.isInProgress()) {
+			return false;
+		}
+
+		Group group = layout.getGroup();
+
+		if (MergeLayoutPrototypesThreadLocal.isMergeComplete(
+				"getLayout", arguments) &&
+			(!group.isUser() ||
+			 PropsValues.USER_GROUPS_COPY_LAYOUTS_TO_USER_PERSONAL_SITE)) {
+
+			return false;
+		}
+
+		if (Validator.isNull(layout.getLayoutPrototypeUuid()) &&
+			Validator.isNull(layout.getSourcePrototypeLayoutUuid())) {
+
+			return false;
+		}
+
+		boolean workflowEnabled = WorkflowThreadLocal.isEnabled();
+
+		LayoutSet layoutSet = layout.getLayoutSet();
+
+		try {
+			WorkflowThreadLocal.setEnabled(false);
+
+			SitesUtil.mergeLayoutPrototypeLayout(group, layout);
+
+			if (Validator.isNotNull(layout.getSourcePrototypeLayoutUuid())) {
+				SitesUtil.mergeLayoutSetPrototypeLayouts(group, layoutSet);
+			}
+		}
+		catch (PortalException pe) {
+			throw pe;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			MergeLayoutPrototypesThreadLocal.setMergeComplete(
+				"getLayout", arguments);
+			WorkflowThreadLocal.setEnabled(workflowEnabled);
+		}
+
+		return true;
+	}
+
+	private boolean _mergeLayouts(
+		Group group, LayoutSet layoutSet, Object... arguments) {
+
+		if (MergeLayoutPrototypesThreadLocal.isMergeComplete(
+				"getLayouts", arguments) &&
+			(!group.isUser() ||
+			 PropsValues.USER_GROUPS_COPY_LAYOUTS_TO_USER_PERSONAL_SITE)) {
+
+			return false;
+		}
+
+		boolean workflowEnabled = WorkflowThreadLocal.isEnabled();
+
+		try {
+			if (SitesUtil.isLayoutSetMergeable(group, layoutSet)) {
+				WorkflowThreadLocal.setEnabled(false);
+
+				SitesUtil.mergeLayoutSetPrototypeLayouts(group, layoutSet);
+			}
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to merge layouts for site template", e);
+			}
+		}
+		finally {
+			MergeLayoutPrototypesThreadLocal.setMergeComplete(
+				"getLayouts", arguments);
+			WorkflowThreadLocal.setEnabled(workflowEnabled);
+		}
+
+		return true;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		LayoutLocalServiceImpl.class);
+
+	private static final ThreadLocal<Long> _virtualLayoutTargetGroupId =
+		new AutoResetThreadLocal<Long>(
+			LayoutLocalServiceImpl.class + "._virtualLayoutTargetGroupId",
+			GroupConstants.DEFAULT_LIVE_GROUP_ID);
 
 }

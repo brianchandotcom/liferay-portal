@@ -79,41 +79,6 @@
 		<execute function="KeyPress" locator1="NavBar#BASIC_SEARCH_FIELD" value1="\RETURN" />
 	</command>
 
-	<command name="searchNoPG">
-		<execute function="Type" locator1="Search#SEARCH_FIELD" value1="${searchTerm}" />
-
-		<var name="key_searchIDName" value="Search" />
-
-		<if>
-			<equals arg1="${searchSocialOffice}" arg2="true" />
-			<then>
-				<execute function="KeyPress" locator1="Search#SEARCH_FIELD" value1="\RETURN" />
-			</then>
-			<else>
-				<execute function="Click" locator1="Search#SEARCH_PORTLET_SEARCH_BUTTON" />
-			</else>
-		</if>
-
-		<var name="key_searchAssetTitle" value="${searchAssetTitle}" />
-
-		<execute function="AssertElementNotPresent" locator1="SearchResults#ASSET_ENTRY_TABLE_TITLE" />
-		<execute function="AssertElementNotPresent" locator1="SearchResults#ASSET_ENTRY_TABLE_TYPE" />
-
-		<if>
-			<isset var="searchAssetSummary" />
-			<then>
-				<execute function="AssertElementNotPresent" locator1="SearchResults#ASSET_ENTRY_TABLE_SUMMARY" value1="${searchAssetSummary}" />
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${searchNoResults}" arg2="true" />
-			<then>
-				<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No results were found that matched the keywords: ${searchTerm}." />
-			</then>
-		</if>
-	</command>
-
 	<command name="searchPG">
 		<execute function="AssertElementPresent" locator1="Search#SEARCH_FIELD" />
 		<execute function="AssertElementPresent" locator1="Search#SEARCH_PORTLET_SEARCH_BUTTON" />

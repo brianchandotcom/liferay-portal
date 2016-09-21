@@ -4027,10 +4027,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		for (String fileName : fileNames) {
 			fileName = StringUtil.replace(
-				fileName, StringPool.BACK_SLASH, StringPool.SLASH);
+				fileName, CharPool.BACK_SLASH, CharPool.SLASH);
 
 			String className = StringUtil.replace(
-				fileName, StringPool.SLASH, StringPool.PERIOD);
+				fileName, CharPool.SLASH, CharPool.PERIOD);
 
 			int pos = className.lastIndexOf(".com.liferay.");
 

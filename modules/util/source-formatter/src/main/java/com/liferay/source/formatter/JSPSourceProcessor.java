@@ -1032,13 +1032,13 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		}
 
 		String logFileName = StringUtil.replace(
-			absolutePath, StringPool.PERIOD, StringPool.UNDERLINE);
+			absolutePath, CharPool.PERIOD, CharPool.UNDERLINE);
 
 		logFileName = StringUtil.replace(
-			logFileName, StringPool.SLASH, StringPool.PERIOD);
+			logFileName, CharPool.SLASH, CharPool.PERIOD);
 
 		logFileName = StringUtil.replace(
-			logFileName, StringPool.DASH, StringPool.UNDERLINE);
+			logFileName, CharPool.DASH, CharPool.UNDERLINE);
 
 		int x = logFileName.lastIndexOf(".portal_web.");
 
@@ -1487,7 +1487,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			utilTaglibSrcDirName = utilTaglibDir.getAbsolutePath();
 
 			utilTaglibSrcDirName = StringUtil.replace(
-				utilTaglibSrcDirName, StringPool.BACK_SLASH, StringPool.SLASH);
+				utilTaglibSrcDirName, CharPool.BACK_SLASH, CharPool.SLASH);
 
 			utilTaglibSrcDirName += StringPool.SLASH;
 		}
@@ -1797,7 +1797,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		try {
 			for (String fileName : allFileNames) {
 				fileName = StringUtil.replace(
-					fileName, StringPool.BACK_SLASH, StringPool.SLASH);
+					fileName, CharPool.BACK_SLASH, CharPool.SLASH);
 
 				File file = new File(fileName);
 
@@ -1877,7 +1877,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		outerLoop:
 		for (String tldFileName : tldFileNames) {
 			tldFileName = StringUtil.replace(
-				tldFileName, StringPool.BACK_SLASH, StringPool.SLASH);
+				tldFileName, CharPool.BACK_SLASH, CharPool.SLASH);
 
 			File tldFile = new File(tldFileName);
 
@@ -1909,7 +1909,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 						srcDir = tldFile.getAbsolutePath();
 
 						srcDir = StringUtil.replace(
-							srcDir, StringPool.BACK_SLASH, StringPool.SLASH);
+							srcDir, CharPool.BACK_SLASH, CharPool.SLASH);
 
 						srcDir =
 							srcDir.substring(0, srcDir.lastIndexOf("/src/")) +

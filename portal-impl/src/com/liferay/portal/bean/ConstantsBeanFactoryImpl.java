@@ -96,7 +96,7 @@ public class ConstantsBeanFactoryImpl implements ConstantsBeanFactory {
 
 		String objectClassBinaryName = getClassBinaryName(Object.class);
 
-		ClassWriter classWriter = new ClassWriter(0);
+		ClassWriter classWriter = new ClassWriter(ClassWriter.COMPUTE_MAXS);
 
 		classWriter.visit(
 			Opcodes.V1_6, Opcodes.ACC_PUBLIC | Opcodes.ACC_SUPER,
@@ -156,9 +156,7 @@ public class ConstantsBeanFactoryImpl implements ConstantsBeanFactory {
 
 			int stackIndex = 0;
 
-			Type[] parameterTypes = Type.getArgumentTypes(method);
-
-			for (Type parameterType : parameterTypes) {
+			for (Type parameterType : Type.getArgumentTypes(method)) {
 				methodVisitor.visitVarInsn(
 					parameterType.getOpcode(Opcodes.ILOAD), stackIndex);
 
@@ -173,8 +171,7 @@ public class ConstantsBeanFactoryImpl implements ConstantsBeanFactory {
 
 			methodVisitor.visitInsn(returnType.getOpcode(Opcodes.IRETURN));
 
-			methodVisitor.visitMaxs(
-				stackIndex + returnType.getSize(), parameterTypes.length + 1);
+			methodVisitor.visitMaxs(0, 0);
 
 			methodVisitor.visitEnd();
 		}

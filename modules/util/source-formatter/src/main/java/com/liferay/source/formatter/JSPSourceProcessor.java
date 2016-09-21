@@ -1796,10 +1796,10 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		try {
 			for (String fileName : allFileNames) {
-				File file = new File(fileName);
-
 				fileName = StringUtil.replace(
 					fileName, StringPool.BACK_SLASH, StringPool.SLASH);
+
+				File file = new File(fileName);
 
 				String absolutePath = getAbsolutePath(file);
 

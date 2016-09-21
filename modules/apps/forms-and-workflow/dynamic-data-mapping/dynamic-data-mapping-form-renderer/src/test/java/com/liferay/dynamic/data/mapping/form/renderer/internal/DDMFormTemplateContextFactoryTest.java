@@ -17,6 +17,9 @@ package com.liferay.dynamic.data.mapping.form.renderer.internal;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluationResult;
+import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluator;
+import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormFieldEvaluationResult;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesJSONSerializer;
@@ -25,21 +28,30 @@ import com.liferay.dynamic.data.mapping.io.DDMFormLayoutJSONSerializer;
 import com.liferay.dynamic.data.mapping.io.internal.DDMFormJSONSerializerImpl;
 import com.liferay.dynamic.data.mapping.io.internal.DDMFormLayoutJSONSerializerImpl;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
+import com.liferay.dynamic.data.mapping.model.DDMFormRule;
+import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
+import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.dynamic.data.mapping.util.impl.DDMImpl;
 import com.liferay.portal.json.JSONFactoryImpl;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PortalImpl;
 
 import java.lang.reflect.Field;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -76,6 +88,7 @@ public class DDMFormTemplateContextFactoryTest {
 		setUpDDMFormFieldTypesJSONSerializer();
 		setUpDDMFormJSONSerializer();
 		setUpDDMFormLayoutJSONSerializer();
+		setUpJSONFactory();
 
 		setUpLanguageUtil();
 		setUpLocaleThreadLocal();
@@ -132,6 +145,81 @@ public class DDMFormTemplateContextFactoryTest {
 
 		Assert.assertEquals(
 			expectedEvaluatorURL, templateContext.get("evaluatorURL"));
+	}
+
+	@Test
+	public void testFieldsWhichDispatchEvaluation() throws Exception {
+		DDMFormEvaluationResult ddmFormEvaluationResult =
+			new DDMFormEvaluationResult();
+
+		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult =
+			new DDMFormFieldEvaluationResult("Field0", StringPool.BLANK);
+
+		ddmFormEvaluationResult.setDDMFormFieldEvaluationResults(
+			Arrays.asList(ddmFormFieldEvaluationResult));
+
+		DDMFormEvaluator ddmFormEvaluator = mock(DDMFormEvaluator.class);
+
+		when(
+			ddmFormEvaluator.evaluate(
+				Matchers.any(DDMForm.class), Matchers.any(DDMFormValues.class),
+				Matchers.any(Locale.class))
+		).thenReturn(ddmFormEvaluationResult);
+
+		setDeclaredField(
+			_ddmFormTemplateContextFactory, "_ddmFormEvaluator",
+			ddmFormEvaluator);
+
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
+
+		DDMFormField ddmFormField1 = DDMFormTestUtil.createTextDDMFormField(
+			"Field0", false, false, false);
+
+		ddmForm.addDDMFormField(ddmFormField1);
+
+		DDMFormRule ddmFormRule1 = new DDMFormRule("getValue(\"Field0\") > 30");
+
+		ddmForm.addDDMFormRule(ddmFormRule1);
+
+		DDMFormRule ddmFormRule2 = new DDMFormRule("TRUE");
+
+		ddmForm.addDDMFormRule(ddmFormRule2);
+
+		DDMFormRule ddmFormRule3 = new DDMFormRule(
+			"between(getValue(\"Field0\"), 1, 10)");
+
+		ddmForm.addDDMFormRule(ddmFormRule3);
+
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm, ddmForm.getAvailableLocales(), ddmForm.getDefaultLocale());
+
+		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
+
+		ddmFormFieldValue.setName("Field0");
+		ddmFormFieldValue.setInstanceId(StringPool.BLANK);
+
+		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
+
+		DDMFormRenderingContext ddmFormRenderingContext =
+			new DDMFormRenderingContext();
+
+		ddmFormRenderingContext.setDDMFormValues(ddmFormValues);
+
+		Map<String, Object> templateContext =
+			_ddmFormTemplateContextFactory.create(
+				ddmForm, ddmFormRenderingContext);
+
+		Assert.assertTrue(
+			templateContext.containsKey("fieldsWhichDispatchEvaluation"));
+
+		String json = String.valueOf(
+			templateContext.get("fieldsWhichDispatchEvaluation"));
+
+		JSONArray jsonArray = _jsonFactory.createJSONArray(json);
+
+		Assert.assertEquals(1, jsonArray.length());
+
+		Assert.assertEquals("Field0", jsonArray.getString(0));
 	}
 
 	@Test
@@ -424,12 +512,18 @@ public class DDMFormTemplateContextFactoryTest {
 		DDMFormJSONSerializer ddmFormJSONSerializer =
 			new DDMFormJSONSerializerImpl();
 
+		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker = mock(
+			DDMFormFieldTypeServicesTracker.class);
+
+		setDeclaredField(
+			ddmFormJSONSerializer, "_ddmFormFieldTypeServicesTracker",
+			ddmFormFieldTypeServicesTracker);
+
 		setDeclaredField(
 			_ddmFormTemplateContextFactory, "_ddmFormJSONSerializer",
 			ddmFormJSONSerializer);
 
-		setDeclaredField(
-			ddmFormJSONSerializer, "_jsonFactory", new JSONFactoryImpl());
+		setDeclaredField(ddmFormJSONSerializer, "_jsonFactory", _jsonFactory);
 	}
 
 	protected void setUpDDMFormLayoutJSONSerializer() throws Exception {
@@ -441,7 +535,12 @@ public class DDMFormTemplateContextFactoryTest {
 			ddmFormLayoutJSONSerializer);
 
 		setDeclaredField(
-			ddmFormLayoutJSONSerializer, "_jsonFactory", new JSONFactoryImpl());
+			ddmFormLayoutJSONSerializer, "_jsonFactory", _jsonFactory);
+	}
+
+	protected void setUpJSONFactory() throws Exception {
+		setDeclaredField(
+			_ddmFormTemplateContextFactory, "_jsonFactory", _jsonFactory);
 	}
 
 	protected void setUpLanguageUtil() {
@@ -463,6 +562,7 @@ public class DDMFormTemplateContextFactoryTest {
 	}
 
 	private DDMFormTemplateContextFactoryImpl _ddmFormTemplateContextFactory;
+	private final JSONFactory _jsonFactory = new JSONFactoryImpl();
 	private Language _language;
 	private Locale _originalSiteDefaultLocale;
 

@@ -23,9 +23,13 @@ import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesJSONSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormJSONSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutJSONSerializer;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
+import com.liferay.dynamic.data.mapping.model.DDMFormRule;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -38,11 +42,13 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletConfig;
@@ -117,6 +123,10 @@ public class DDMFormTemplateContextFactoryImpl
 			_ddmFormFieldTypesJSONSerializer.serialize(ddmFormFieldTypes));
 
 		templateContext.put(
+			"fieldsWhichDispatchEvaluation",
+			getFieldsWhichDispatchEvaluation(ddmForm));
+
+		templateContext.put(
 			"layout", _ddmFormLayoutJSONSerializer.serialize(ddmFormLayout));
 
 		List<Object> pages = getPages(
@@ -170,6 +180,37 @@ public class DDMFormTemplateContextFactoryImpl
 
 		return servletContextPath.concat(
 			"/dynamic-data-mapping-form-context-provider/");
+	}
+
+	protected String getFieldsWhichDispatchEvaluation(DDMForm ddmForm) {
+		Set<String> fields = new HashSet<>();
+
+		List<DDMFormRule> ddmFormRules = ddmForm.getDDMFormRules();
+
+		Map<String, DDMFormField> ddmFormFields = ddmForm.getDDMFormFieldsMap(
+			true);
+
+		for (DDMFormRule ddmFormRule : ddmFormRules) {
+			String condition = ddmFormRule.getCondition();
+
+			if (Validator.isNull(condition) || "TRUE".equals(condition)) {
+				continue;
+			}
+
+			for (String ddmFormFieldName : ddmFormFields.keySet()) {
+				if (condition.contains(ddmFormFieldName)) {
+					fields.add(ddmFormFieldName);
+				}
+			}
+		}
+
+		JSONArray fieldsArray = _jsonFactory.createJSONArray();
+
+		for (String ddmFormFieldName : fields) {
+			fieldsArray.put(ddmFormFieldName);
+		}
+
+		return fields.toString();
 	}
 
 	protected Map<String, String> getLanguageStringsMap(
@@ -279,5 +320,8 @@ public class DDMFormTemplateContextFactoryImpl
 
 	@Reference
 	private DDMFormLayoutJSONSerializer _ddmFormLayoutJSONSerializer;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 }

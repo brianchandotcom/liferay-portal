@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<archetype-descriptor name="liferay-module-portletconfigurationicon">
+<archetype-descriptor name="liferay-module-portlet-configuration-icon">
 	<fileSets>
 		<fileSet filtered="true" packaged="true">
 			<directory>src/main/java</directory>

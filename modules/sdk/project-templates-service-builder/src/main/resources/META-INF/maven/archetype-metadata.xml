@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<archetype-descriptor name="liferay-module-servicebuilder">
+<archetype-descriptor name="liferay-module-service-builder">
 	<fileSets>
 		<fileSet filtered="true">
 			<directory>__artifactId__-api</directory>

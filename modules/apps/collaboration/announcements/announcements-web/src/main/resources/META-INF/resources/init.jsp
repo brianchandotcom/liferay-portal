@@ -65,6 +65,7 @@ page import="com.liferay.portal.kernel.service.UserGroupLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.UserLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.permission.PortalPermissionUtil" %><%@
 page import="com.liferay.portal.kernel.service.permission.PortletPermissionUtil" %><%@
+page import="com.liferay.portal.kernel.servlet.HttpHeaders" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
@@ -84,8 +85,7 @@ page import="com.liferay.taglib.search.ResultRow" %>
 <%@ page import="java.util.ArrayList" %><%@
 page import="java.util.List" %>
 
-<%@ page import="javax.portlet.PortletURL" %><%@
-page import="javax.portlet.WindowState" %>
+<%@ page import="javax.portlet.PortletURL" %>
 
 <liferay-frontend:defineObjects />
 

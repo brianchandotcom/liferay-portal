@@ -45,11 +45,18 @@
 	<command name="addPG">
 		<execute function="AssertClick" locator1="Button#ADD_ANNOUNCEMENT" value1="Add Announcement" />
 
+		<execute macro="AlloyEditor#addTitleAndContent">
+			<var name="content" value="${entryContent}" />
+			<var name="title" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Configuration" />
+		</execute>
+
 		<execute function="Select#selectAndWait" locator1="AnnouncementsManageEntries#DISTRIBUTION_SCOPE_SELECT" value1="${distributionScope}" />
 
-		<execute function="Type" locator1="TextInput#TITLE" value1="${entryTitle}" />
 		<execute function="Type" locator1="TextInput#URL" value1="${entryURL}" />
-		<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${entryContent}" />
 
 		<if>
 			<isset var="priority" />
@@ -113,11 +120,18 @@
 
 		<execute function="Click" locator1="MenuItem#EDIT" />
 
-		<execute function="AssertTextEquals#assertValue" locator1="TextInput#TITLE" value1="${entryTitle}" />
+		<execute function="AssertTextEquals" locator1="AlloyEditor#TITLE_FIELD" value1="${entryTitle}" />
 
-		<execute function="Type" locator1="TextInput#TITLE" value1="${entryTitleEdit}" />
+		<execute macro="AlloyEditor#addTitleAndContent">
+			<var name="content" value="${entryContentEdit}" />
+			<var name="title" value="${entryTitleEdit}" />
+		</execute>
+
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Configuration" />
+		</execute>
+
 		<execute function="Type" locator1="TextInput#URL" value1="${entryURLEdit}" />
-		<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${entryContentEdit}" />
 
 		<execute macro="Button#clickSave" />
 	</command>

@@ -23,6 +23,8 @@ AnnouncementsEntry entry = (AnnouncementsEntry)request.getAttribute(Announcement
 
 long entryId = BeanParamUtil.getLong(entry, request, "entryId");
 
+String title = BeanParamUtil.getString(entry, request, "title");
+
 String content = BeanParamUtil.getString(entry, request, "content");
 
 boolean alert = ParamUtil.getBoolean(request, "alert");
@@ -81,6 +83,16 @@ if (portletTitleBasedNavigation) {
 
 		<aui:fieldset-group markupView="lexicon">
 			<aui:fieldset>
+				<h1><liferay-ui:input-editor contents="<%= HtmlUtil.escape(title) %>" editorName="alloyeditor" name="titleEditor" placeholder="title" showSource="<%= false %>" /></h1>
+
+				<aui:input name="title" type="hidden" />
+
+				<liferay-ui:input-editor contents="<%= content %>" editorName='<%= PropsUtil.get("editor.wysiwyg.portal-web.docroot.html.portlet.announcements.edit_entry.jsp") %>' name="contentEditor" />
+
+				<aui:input name="content" type="hidden" />
+			</aui:fieldset>
+
+			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="configuration">
 				<c:choose>
 					<c:when test="<%= entry != null %>">
 						<%@ include file="/announcements/entry_scope.jspf" %>
@@ -107,20 +119,7 @@ if (portletTitleBasedNavigation) {
 					</c:otherwise>
 				</c:choose>
 
-				<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="title" />
-
 				<aui:input name="url" />
-
-				<aui:field-wrapper label="content" required="<%= true %>">
-
-					<%
-					String editorName = PropsUtil.get("editor.wysiwyg.portal-web.docroot.html.portlet.announcements.edit_entry.jsp");
-					%>
-
-					<liferay-ui:input-editor contents="<%= content %>" cssClass='<%= editorName.startsWith("alloyeditor") ? "form-control" : StringPool.BLANK %>' editorName="<%= editorName %>" name="contentEditor" />
-
-					<aui:input name="content" type="hidden" />
-				</aui:field-wrapper>
 
 				<aui:select name="type">
 
@@ -150,8 +149,6 @@ if (portletTitleBasedNavigation) {
 		<aui:button-row>
 			<aui:button cssClass="btn-lg" primary="<%= true %>" type="submit" />
 
-			<aui:button cssClass="btn-lg" onClick='<%= renderResponse.getNamespace() + "previewEntry();" %>' value="preview" />
-
 			<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
 		</aui:button-row>
 	</aui:form>
@@ -162,13 +159,8 @@ if (portletTitleBasedNavigation) {
 		return window.<portlet:namespace />contentEditor.getHTML();
 	}
 
-	function <portlet:namespace />previewEntry() {
-		document.<portlet:namespace />fm.action = '<portlet:renderURL><portlet:param name="mvcRenderCommandName" value="/announcements/preview_entry" /></portlet:renderURL>';
-		document.<portlet:namespace />fm.target = '_blank';
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.PREVIEW %>';
-		document.<portlet:namespace />fm.<portlet:namespace />content.value = <portlet:namespace />getContent();
-		document.<portlet:namespace />fm.<portlet:namespace />redirect.value = '<%= currentURL %>';
-		document.<portlet:namespace />fm.submit();
+	function <portlet:namespace />getTitle() {
+		return window.<portlet:namespace />titleEditor.getText();
 	}
 
 	function <portlet:namespace />saveEntry() {
@@ -176,6 +168,7 @@ if (portletTitleBasedNavigation) {
 		document.<portlet:namespace />fm.target = '';
 		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= (entry == null) ? Constants.ADD : Constants.UPDATE %>';
 		document.<portlet:namespace />fm.<portlet:namespace />content.value = <portlet:namespace />getContent();
+		document.<portlet:namespace />fm.<portlet:namespace />title.value = <portlet:namespace />getTitle();
 
 		submitForm(document.<portlet:namespace />fm);
 	}

@@ -16,7 +16,31 @@
 
 <%@ include file="/announcements/init.jsp" %>
 
-<liferay-ui:error-header />
+<%
+boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
+
+if (portletTitleBasedNavigation) {
+	portletDisplay.setShowBackIcon(true);
+
+	String backURL = request.getHeader(HttpHeaders.REFERER);
+
+	if (Validator.isNull(backURL)) {
+		PortletURL backURLObj = liferayPortletResponse.createRenderURL();
+
+		backURLObj.setParameter("mvcRenderCommandName", "/announcements/view");
+
+		backURL = backURLObj.toString();
+	}
+
+	portletDisplay.setURLBack(backURL);
+
+	renderResponse.setTitle(LanguageUtil.get(resourceBundle, "error"));
+}
+%>
+
+<c:if test="<%= !portletTitleBasedNavigation %>">
+	<liferay-ui:error-header />
+</c:if>
 
 <liferay-ui:error exception="<%= NoSuchEntryException.class %>" message="the-entry-could-not-be-found" />
 

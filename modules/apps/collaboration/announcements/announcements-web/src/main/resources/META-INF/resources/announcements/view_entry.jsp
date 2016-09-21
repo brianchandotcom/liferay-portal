@@ -91,11 +91,9 @@ if (portletTitleBasedNavigation) {
 					<%@ include file="/announcements/entry_scope.jspf" %>
 				</div>
 
-				<c:if test="<%= !announcementsDisplayContext.isShowPreview() %>">
-					<div class="card-col-field">
-						<%@ include file="/announcements/entry_action.jspf" %>
-					</div>
-				</c:if>
+				<div class="card-col-field">
+					<%@ include file="/announcements/entry_action.jspf" %>
+				</div>
 			</div>
 		</div>
 

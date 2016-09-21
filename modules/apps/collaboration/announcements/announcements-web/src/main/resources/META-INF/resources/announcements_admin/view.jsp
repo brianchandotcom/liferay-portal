@@ -132,7 +132,7 @@ List<AnnouncementsEntry> announcementsEntries = announcementsEntriesSearchContai
 					cssClass="table-cell-content"
 					href="<%= rowURL %>"
 					name="title"
-					value="<%= entry.getTitle() %>"
+					value="<%= HtmlUtil.escape(entry.getTitle()) %>"
 				/>
 
 				<liferay-ui:search-container-column-text

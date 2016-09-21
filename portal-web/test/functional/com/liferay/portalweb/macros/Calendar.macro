@@ -1093,6 +1093,8 @@
 		<execute function="Click" locator1="CalendarEditEvent#END_DATE" />
 
 		<execute function="AssertTextEquals" locator1="CalendarEditEvent#MINI_CALENDAR_WEEK_START_DAY_END_DATE" value1="${weekStartDay}" />
+
+		<execute function="Click" locator1="CalendarEditEvent#FORM_CONTENT" />
 	</command>
 
 	<command name="viewWeekStartDayViaMonthView">

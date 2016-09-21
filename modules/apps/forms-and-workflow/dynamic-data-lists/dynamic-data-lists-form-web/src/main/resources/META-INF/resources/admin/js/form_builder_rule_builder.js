@@ -51,7 +51,7 @@ AUI.add(
 							}
 						);
 
-						instance.get('boundingBox').setHTML(rulesBuilder);
+						instance.get('contentBox').setHTML(rulesBuilder);
 
 						instance._renderCards(instance.get('rules'));
 					},
@@ -97,7 +97,9 @@ AUI.add(
 							instance._ruleClasses = new Liferay.DDL.FormBuilderRule(
 								{
 									boundingBox: instance.get('boundingBox'),
-									bubbleTargets: [instance]
+									bubbleTargets: [instance],
+									contentBox: instance.get('contentBox'),
+									fields: instance.getFields()
 								}
 							);
 						}

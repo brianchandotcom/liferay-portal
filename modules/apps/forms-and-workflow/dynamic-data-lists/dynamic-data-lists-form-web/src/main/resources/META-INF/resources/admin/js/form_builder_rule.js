@@ -131,10 +131,10 @@ AUI.add(
 					_addAction: function(index, action) {
 						var instance = this;
 
-						var boundingBox = instance.get('boundingBox');
+						var contentBox = instance.get('contentBox');
 
-						instance._createActionSelect(index, action, boundingBox.one('.action-' + index));
-						instance._createTargetSelect(index, action, boundingBox.one('.target-' + index));
+						instance._createActionSelect(index, action, contentBox.one('.action-' + index));
+						instance._createTargetSelect(index, action, contentBox.one('.target-' + index));
 
 						instance._actionsIndexes.push(Number(index));
 					},
@@ -142,14 +142,14 @@ AUI.add(
 					_addCondition: function(index, condition) {
 						var instance = this;
 
-						var boundingBox = instance.get('boundingBox');
+						var contentBox = instance.get('contentBox');
 
-						instance._renderFirstOperand(index, condition, boundingBox.one('.condition-if-' + index));
-						instance._renderOperator(index, condition, boundingBox.one('.condition-operator-' + index));
-						instance._renderSecondOperandType(index, condition, boundingBox.one('.condition-the-' + index));
-						instance._renderSecondOperandInput(index, condition, boundingBox.one('.condition-type-value-' + index));
-						instance._renderSecondOperandSelectField(index, condition, boundingBox.one('.condition-type-value-' + index));
-						instance._renderSecondOperandSelectOptions(index, condition, boundingBox.one('.condition-type-value-options-' + index));
+						instance._renderFirstOperand(index, condition, contentBox.one('.condition-if-' + index));
+						instance._renderOperator(index, condition, contentBox.one('.condition-operator-' + index));
+						instance._renderSecondOperandType(index, condition, contentBox.one('.condition-the-' + index));
+						instance._renderSecondOperandInput(index, condition, contentBox.one('.condition-type-value-' + index));
+						instance._renderSecondOperandSelectField(index, condition, contentBox.one('.condition-type-value-' + index));
+						instance._renderSecondOperandSelectOptions(index, condition, contentBox.one('.condition-type-value-options-' + index));
 
 						instance._conditionsIndexes.push(Number(index));
 					},

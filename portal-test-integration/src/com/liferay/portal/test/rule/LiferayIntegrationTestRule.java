@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.test.rule.callback.DeleteAfterTestRunTestCallba
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.test.rule.callback.CITimeoutTestCallback;
 import com.liferay.portal.test.rule.callback.ClearThreadLocalTestCallback;
@@ -96,8 +95,6 @@ public class LiferayIntegrationTestRule extends AggregateTestRule {
 					@Override
 					public void evaluate() throws Throwable {
 						if (!InitUtil.isInitialized()) {
-							ServerDetector.init(ServerDetector.TOMCAT_ID);
-
 							List<String> configLocations = ListUtil.fromArray(
 								PropsUtil.getArray(PropsKeys.SPRING_CONFIGS));
 

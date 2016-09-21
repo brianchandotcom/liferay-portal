@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<!DOCTYPE suppressions PUBLIC "-//Puppy Crawl//DTD Check Suppressions 1.1//EN" "http://www.puppycrawl.com/dtds/suppressions_1_1.dtd">
+
+<suppressions>
+	<suppress checks="MemberName" files="modules/apps/web-experience/site-navigation/site-navigation-language-web/src/main/java/com/liferay/site/navigation/language/web/internal/upgrade/v1_0_0/UpgradePortletPreferences\.java" />
+</suppressions>

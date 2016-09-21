@@ -1110,7 +1110,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		fileName = StringUtil.replace(
-			fileName, StringPool.BACK_SLASH, StringPool.SLASH);
+			fileName, CharPool.BACK_SLASH, CharPool.SLASH);
 
 		File file = new File(fileName);
 
@@ -1800,10 +1800,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			String content = FileUtil.read(file);
 
 			fileName = StringUtil.replace(
-				fileName, StringPool.BACK_SLASH, StringPool.SLASH);
+				fileName, CharPool.BACK_SLASH, CharPool.SLASH);
 
 			fileName = StringUtil.replace(
-				fileName, StringPool.SLASH, StringPool.PERIOD);
+				fileName, CharPool.SLASH, CharPool.PERIOD);
 
 			int pos = fileName.indexOf("com.");
 

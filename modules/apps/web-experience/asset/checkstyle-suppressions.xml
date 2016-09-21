@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<!DOCTYPE suppressions PUBLIC "-//Puppy Crawl//DTD Check Suppressions 1.1//EN" "http://www.puppycrawl.com/dtds/suppressions_1_1.dtd">
+
+<suppressions>
+	<suppress checks="StaticVariableName" files="modules/apps/web-experience/asset/asset-publisher-web/src/main/java/com/liferay/asset/publisher/web/internal/configuration/AssetPublisherWebConfigurationValues\.java" />
+</suppressions>

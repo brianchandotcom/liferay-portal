@@ -30,6 +30,8 @@ import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.checkstyle.util.CheckStyleUtil;
 import com.liferay.source.formatter.util.FileUtil;
 
+import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
+
 import com.thoughtworks.qdox.JavaDocBuilder;
 import com.thoughtworks.qdox.model.JavaSource;
 
@@ -4483,10 +4485,14 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		try {
 			processCheckStyle();
 		}
-		catch (UnknownHostException uhe) {
-			System.out.println(
-				"Could not perform Checkstyle checks. Please check your " +
-					"network connection.");
+		catch (CheckstyleException ce) {
+			Throwable cause = ce.getCause();
+
+			if (cause instanceof UnknownHostException) {
+				System.out.println(
+					"Could not perform Checkstyle checks. Please check your " +
+						"network connection.");
+			}
 		}
 	}
 
@@ -4526,10 +4532,14 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 
 		File baseDirFile = new File(sourceFormatterArgs.getBaseDirName());
+		File suppressionsFile = getFile(
+			"portal-impl/src/checkstyle-suppressions.xml",
+			PORTAL_MAX_DIR_LEVEL);
 
 		Set<SourceFormatterMessage> sourceFormatterMessages =
 			CheckStyleUtil.process(
-				_ungeneratedFiles, getAbsolutePath(baseDirFile));
+				_ungeneratedFiles, suppressionsFile,
+				getAbsolutePath(baseDirFile));
 
 		for (SourceFormatterMessage sourceFormatterMessage :
 				sourceFormatterMessages) {

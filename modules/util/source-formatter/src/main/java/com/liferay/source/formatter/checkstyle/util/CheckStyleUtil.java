@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.SourceFormatterMessage;
 import com.liferay.source.formatter.checkstyle.Checker;
-import com.liferay.source.formatter.checkstyle.SuppressionsLoader;
 
 import com.puppycrawl.tools.checkstyle.ConfigurationLoader;
 import com.puppycrawl.tools.checkstyle.DefaultLogger;
@@ -28,7 +27,7 @@ import com.puppycrawl.tools.checkstyle.PropertiesExpander;
 import com.puppycrawl.tools.checkstyle.api.AuditEvent;
 import com.puppycrawl.tools.checkstyle.api.AuditListener;
 import com.puppycrawl.tools.checkstyle.api.Configuration;
-import com.puppycrawl.tools.checkstyle.api.FilterSet;
+import com.puppycrawl.tools.checkstyle.filters.SuppressionsLoader;
 
 import java.io.File;
 import java.io.OutputStream;
@@ -44,19 +43,20 @@ import org.xml.sax.InputSource;
 public class CheckStyleUtil {
 
 	public static Set<SourceFormatterMessage> process(
-			Set<File> files, String baseDirAbsolutePath)
+			Set<File> files, File suppressionsFile, String baseDirAbsolutePath)
 		throws Exception {
 
 		_sourceFormatterMessages.clear();
 
-		Checker checker = _getChecker(baseDirAbsolutePath);
+		Checker checker = _getChecker(suppressionsFile, baseDirAbsolutePath);
 
 		checker.process(ListUtil.fromCollection(files));
 
 		return _sourceFormatterMessages;
 	}
 
-	private static Checker _getChecker(String baseDirAbsolutePath)
+	private static Checker _getChecker(
+			File suppressionsFile, String baseDirAbsolutePath)
 		throws Exception {
 
 		Checker checker = new Checker();
@@ -65,12 +65,9 @@ public class CheckStyleUtil {
 
 		checker.setModuleClassLoader(classLoader);
 
-		FilterSet filterSet = SuppressionsLoader.loadSuppressions(
-			new InputSource(
-				classLoader.getResourceAsStream(
-					"checkstyle-suppressions.xml")));
-
-		checker.addFilter(filterSet);
+		checker.addFilter(
+			SuppressionsLoader.loadSuppressions(
+				suppressionsFile.getAbsolutePath()));
 
 		Configuration configuration = ConfigurationLoader.loadConfiguration(
 			new InputSource(classLoader.getResourceAsStream("checkstyle.xml")),

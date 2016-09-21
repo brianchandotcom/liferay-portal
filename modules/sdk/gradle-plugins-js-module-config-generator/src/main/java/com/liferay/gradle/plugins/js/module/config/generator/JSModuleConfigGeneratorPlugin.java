@@ -57,26 +57,24 @@ public class JSModuleConfigGeneratorPlugin implements Plugin<Project> {
 				JSModuleConfigGeneratorExtension.class);
 
 		final DownloadNodeModuleTask downloadLiferayModuleConfigGeneratorTask =
-			addTaskDownloadLiferayModuleConfigGenerator(
+			_addTaskDownloadLiferayModuleConfigGenerator(
 				project, jsModuleConfigGeneratorExtension);
 
-		addTaskConfigJSModules(project);
+		_addTaskConfigJSModules(project);
 
 		project.afterEvaluate(
 			new Action<Project>() {
 
 				@Override
 				public void execute(Project project) {
-					configureTasksConfigJSModules(
+					_configureTasksConfigJSModules(
 						project, downloadLiferayModuleConfigGeneratorTask);
 				}
 
 			});
 	}
 
-	protected ConfigJSModulesTask addTaskConfigJSModules(
-		final Project project) {
-
+	private ConfigJSModulesTask _addTaskConfigJSModules(final Project project) {
 		final ConfigJSModulesTask configJSModulesTask = GradleUtil.addTask(
 			project, CONFIG_JS_MODULES_TASK_NAME, ConfigJSModulesTask.class);
 
@@ -106,7 +104,7 @@ public class JSModuleConfigGeneratorPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(JavaPlugin javaPlugin) {
-					configureTaskConfigJSModulesForJavaPlugin(
+					_configureTaskConfigJSModulesForJavaPlugin(
 						configJSModulesTask);
 				}
 
@@ -115,8 +113,8 @@ public class JSModuleConfigGeneratorPlugin implements Plugin<Project> {
 		return configJSModulesTask;
 	}
 
-	protected DownloadNodeModuleTask
-		addTaskDownloadLiferayModuleConfigGenerator(
+	private DownloadNodeModuleTask
+		_addTaskDownloadLiferayModuleConfigGenerator(
 			Project project,
 			final JSModuleConfigGeneratorExtension
 				jsModuleConfigGeneratorExtension) {
@@ -142,7 +140,7 @@ public class JSModuleConfigGeneratorPlugin implements Plugin<Project> {
 		return downloadLiferayModuleConfigGeneratorTask;
 	}
 
-	protected void configureTaskConfigJSModules(
+	private void _configureTaskConfigJSModules(
 		ConfigJSModulesTask configJSModulesTask,
 		final DownloadNodeModuleTask downloadLiferayModuleConfigGeneratorTask) {
 
@@ -172,7 +170,7 @@ public class JSModuleConfigGeneratorPlugin implements Plugin<Project> {
 			});
 	}
 
-	protected void configureTaskConfigJSModulesForJavaPlugin(
+	private void _configureTaskConfigJSModulesForJavaPlugin(
 		ConfigJSModulesTask configJSModulesTask) {
 
 		configJSModulesTask.mustRunAfter(
@@ -215,7 +213,7 @@ public class JSModuleConfigGeneratorPlugin implements Plugin<Project> {
 		classesTask.dependsOn(configJSModulesTask);
 	}
 
-	protected void configureTasksConfigJSModules(
+	private void _configureTasksConfigJSModules(
 		Project project,
 		final DownloadNodeModuleTask downloadLiferayModuleConfigGeneratorTask) {
 
@@ -227,7 +225,7 @@ public class JSModuleConfigGeneratorPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(ConfigJSModulesTask configJSModulesTask) {
-					configureTaskConfigJSModules(
+					_configureTaskConfigJSModules(
 						configJSModulesTask,
 						downloadLiferayModuleConfigGeneratorTask);
 				}

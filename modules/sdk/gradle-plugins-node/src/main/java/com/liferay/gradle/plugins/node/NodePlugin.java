@@ -14,13 +14,13 @@
 
 package com.liferay.gradle.plugins.node;
 
+import com.liferay.gradle.plugins.node.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.node.tasks.DownloadNodeModuleTask;
 import com.liferay.gradle.plugins.node.tasks.DownloadNodeTask;
 import com.liferay.gradle.plugins.node.tasks.ExecuteNodeTask;
 import com.liferay.gradle.plugins.node.tasks.ExecuteNpmTask;
 import com.liferay.gradle.plugins.node.tasks.NpmInstallTask;
 import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask;
-import com.liferay.gradle.plugins.node.util.GradleUtil;
 
 import groovy.json.JsonSlurper;
 
@@ -54,38 +54,37 @@ public class NodePlugin implements Plugin<Project> {
 		final NodeExtension nodeExtension = GradleUtil.addExtension(
 			project, EXTENSION_NAME, NodeExtension.class);
 
-		final DownloadNodeTask downloadNodeTask = addTaskDownloadNode(
+		final DownloadNodeTask downloadNodeTask = _addTaskDownloadNode(
 			project, nodeExtension);
 
-		NpmInstallTask npmInstallTask = addTaskNpmInstall(
-			project, nodeExtension);
+		NpmInstallTask npmInstallTask = _addTaskNpmInstall(project);
 
-		configureTasksDownloadNodeModule(project, npmInstallTask);
+		_configureTasksDownloadNodeModule(project, npmInstallTask);
 
-		configureTasksExecuteNode(project, nodeExtension);
-		configureTasksPublishNodeModule(project);
+		_configureTasksExecuteNode(project, nodeExtension);
+		_configureTasksPublishNodeModule(project);
 
 		project.afterEvaluate(
 			new Action<Project>() {
 
 				@Override
 				public void execute(Project project) {
-					configureTaskDownloadNodeGlobal(
+					_configureTaskDownloadNodeGlobal(
 						downloadNodeTask, nodeExtension);
-					configureTasksExecuteNpm(project, nodeExtension);
+					_configureTasksExecuteNpm(project, nodeExtension);
 				}
 
 			});
 	}
 
-	protected DownloadNodeTask addTaskDownloadNode(
+	private DownloadNodeTask _addTaskDownloadNode(
 		Project project, final NodeExtension nodeExtension) {
 
-		return addTaskDownloadNode(
+		return _addTaskDownloadNode(
 			project, DOWNLOAD_NODE_TASK_NAME, nodeExtension);
 	}
 
-	protected DownloadNodeTask addTaskDownloadNode(
+	private DownloadNodeTask _addTaskDownloadNode(
 		Project project, String taskName, final NodeExtension nodeExtension) {
 
 		DownloadNodeTask downloadNodeTask = GradleUtil.addTask(
@@ -137,10 +136,8 @@ public class NodePlugin implements Plugin<Project> {
 		return downloadNodeTask;
 	}
 
-	protected NpmInstallTask addTaskNpmInstall(
-		Project project, final NodeExtension nodeExtension) {
-
-		final NpmInstallTask npmInstallTask = GradleUtil.addTask(
+	private NpmInstallTask _addTaskNpmInstall(Project project) {
+		NpmInstallTask npmInstallTask = GradleUtil.addTask(
 			project, NPM_INSTALL_TASK_NAME, NpmInstallTask.class);
 
 		npmInstallTask.setDescription(
@@ -149,7 +146,7 @@ public class NodePlugin implements Plugin<Project> {
 		return npmInstallTask;
 	}
 
-	protected void configureTaskDownloadNodeGlobal(
+	private void _configureTaskDownloadNodeGlobal(
 		DownloadNodeTask downloadNodeTask, NodeExtension nodeExtension) {
 
 		if (!nodeExtension.isDownload() || !nodeExtension.isGlobal()) {
@@ -189,7 +186,7 @@ public class NodePlugin implements Plugin<Project> {
 				taskName += rootDownloadNodeTasks.size();
 			}
 
-			rootDownloadNodeTask = addTaskDownloadNode(
+			rootDownloadNodeTask = _addTaskDownloadNode(
 				rootProject, taskName, nodeExtension);
 		}
 
@@ -197,7 +194,7 @@ public class NodePlugin implements Plugin<Project> {
 		downloadNodeTask.dependsOn(rootDownloadNodeTask);
 	}
 
-	protected void configureTaskDownloadNodeModule(
+	private void _configureTaskDownloadNodeModule(
 		DownloadNodeModuleTask downloadNodeModuleTask,
 		final NpmInstallTask npmInstallTask) {
 
@@ -256,7 +253,7 @@ public class NodePlugin implements Plugin<Project> {
 			});
 	}
 
-	protected void configureTaskExecuteNode(
+	private void _configureTaskExecuteNode(
 		ExecuteNodeTask executeNodeTask, final NodeExtension nodeExtension) {
 
 		executeNodeTask.setNodeDir(
@@ -274,13 +271,13 @@ public class NodePlugin implements Plugin<Project> {
 			});
 	}
 
-	protected void configureTaskExecuteNpm(
+	private void _configureTaskExecuteNpm(
 		ExecuteNpmTask executeNpmTask, NodeExtension nodeExtension) {
 
 		executeNpmTask.args(nodeExtension.getNpmArgs());
 	}
 
-	protected void configureTaskPublishNodeModule(
+	private void _configureTaskPublishNodeModule(
 		PublishNodeModuleTask publishNodeModuleTask) {
 
 		final Project project = publishNodeModuleTask.getProject();
@@ -327,7 +324,7 @@ public class NodePlugin implements Plugin<Project> {
 			});
 	}
 
-	protected void configureTasksDownloadNodeModule(
+	private void _configureTasksDownloadNodeModule(
 		Project project, final NpmInstallTask npmInstallTask) {
 
 		TaskContainer taskContainer = project.getTasks();
@@ -340,14 +337,14 @@ public class NodePlugin implements Plugin<Project> {
 				public void execute(
 					DownloadNodeModuleTask downloadNodeModuleTask) {
 
-					configureTaskDownloadNodeModule(
+					_configureTaskDownloadNodeModule(
 						downloadNodeModuleTask, npmInstallTask);
 				}
 
 			});
 	}
 
-	protected void configureTasksExecuteNode(
+	private void _configureTasksExecuteNode(
 		Project project, final NodeExtension nodeExtension) {
 
 		TaskContainer taskContainer = project.getTasks();
@@ -358,13 +355,13 @@ public class NodePlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(ExecuteNodeTask executeNodeTask) {
-					configureTaskExecuteNode(executeNodeTask, nodeExtension);
+					_configureTaskExecuteNode(executeNodeTask, nodeExtension);
 				}
 
 			});
 	}
 
-	protected void configureTasksExecuteNpm(
+	private void _configureTasksExecuteNpm(
 		Project project, final NodeExtension nodeExtension) {
 
 		TaskContainer taskContainer = project.getTasks();
@@ -375,13 +372,13 @@ public class NodePlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(ExecuteNpmTask executeNpmTask) {
-					configureTaskExecuteNpm(executeNpmTask, nodeExtension);
+					_configureTaskExecuteNpm(executeNpmTask, nodeExtension);
 				}
 
 			});
 	}
 
-	protected void configureTasksPublishNodeModule(Project project) {
+	private void _configureTasksPublishNodeModule(Project project) {
 		TaskContainer taskContainer = project.getTasks();
 
 		taskContainer.withType(
@@ -392,7 +389,7 @@ public class NodePlugin implements Plugin<Project> {
 				public void execute(
 					PublishNodeModuleTask publishNodeModuleTask) {
 
-					configureTaskPublishNodeModule(publishNodeModuleTask);
+					_configureTaskPublishNodeModule(publishNodeModuleTask);
 				}
 
 			});

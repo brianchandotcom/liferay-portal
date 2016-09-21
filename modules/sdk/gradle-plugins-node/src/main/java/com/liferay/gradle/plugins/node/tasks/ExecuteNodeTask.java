@@ -15,8 +15,8 @@
 package com.liferay.gradle.plugins.node.tasks;
 
 import com.liferay.gradle.plugins.node.NodePlugin;
-import com.liferay.gradle.plugins.node.util.GradleUtil;
-import com.liferay.gradle.plugins.node.util.NodeExecutor;
+import com.liferay.gradle.plugins.node.internal.NodeExecutor;
+import com.liferay.gradle.plugins.node.internal.util.GradleUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -105,6 +105,10 @@ public class ExecuteNodeTask extends DefaultTask {
 		return _nodeExecutor.getWorkingDir();
 	}
 
+	public boolean isInheritProxy() {
+		return _nodeExecutor.isInheritProxy();
+	}
+
 	public void setArgs(Iterable<?> args) {
 		_nodeExecutor.setArgs(args);
 	}
@@ -115,6 +119,10 @@ public class ExecuteNodeTask extends DefaultTask {
 
 	public void setCommand(Object command) {
 		_nodeExecutor.setCommand(command);
+	}
+
+	public void setInheritProxy(boolean inheritProxy) {
+		_nodeExecutor.setInheritProxy(inheritProxy);
 	}
 
 	public void setNodeDir(Object nodeDir) {

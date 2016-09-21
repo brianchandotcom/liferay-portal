@@ -14,8 +14,8 @@
 
 package com.liferay.gradle.plugins.node.tasks;
 
-import com.liferay.gradle.plugins.node.util.FileUtil;
-import com.liferay.gradle.plugins.node.util.GradleUtil;
+import com.liferay.gradle.plugins.node.internal.util.FileUtil;
+import com.liferay.gradle.plugins.node.internal.util.GradleUtil;
 import com.liferay.gradle.util.Validator;
 
 import java.io.File;
@@ -102,10 +102,6 @@ public class ExecuteNpmTask extends ExecuteNodeScriptTask {
 		return GradleUtil.toString(_registry);
 	}
 
-	public boolean isInheritProxy() {
-		return _inheritProxy;
-	}
-
 	public boolean isProgress() {
 		return _progress;
 	}
@@ -114,46 +110,12 @@ public class ExecuteNpmTask extends ExecuteNodeScriptTask {
 		_cacheDir = cacheDir;
 	}
 
-	public void setInheritProxy(boolean inheritProxy) {
-		_inheritProxy = inheritProxy;
-	}
-
 	public void setProgress(boolean progress) {
 		_progress = progress;
 	}
 
 	public void setRegistry(Object registry) {
 		_registry = registry;
-	}
-
-	protected void addProxyArg(List<String> args, String key, String protocol) {
-		Logger logger = getLogger();
-
-		if (args.contains(key)) {
-			if (logger.isInfoEnabled()) {
-				logger.info(
-					"{} proxy on {} is already set", protocol.toUpperCase(),
-					this);
-			}
-
-			return;
-		}
-
-		String host = System.getProperty(protocol + ".proxyHost");
-		String port = System.getProperty(protocol + ".proxyPort");
-
-		if (Validator.isNotNull(host) && Validator.isNotNull(port)) {
-			String url = protocol + "://" + host + ":" + port;
-
-			args.add(key);
-			args.add(url);
-
-			if (logger.isInfoEnabled()) {
-				logger.info(
-					"{} proxy on {} set to {}", protocol.toUpperCase(), this,
-					url);
-			}
-		}
 	}
 
 	@Override
@@ -195,11 +157,6 @@ public class ExecuteNpmTask extends ExecuteNodeScriptTask {
 		completeArgs.add("--progress");
 		completeArgs.add(Boolean.toString(isProgress()));
 
-		if (isInheritProxy()) {
-			addProxyArg(completeArgs, "--proxy", "http");
-			addProxyArg(completeArgs, "--https-proxy", "https");
-		}
-
 		String registry = getRegistry();
 
 		if (Validator.isNotNull(registry)) {
@@ -211,7 +168,6 @@ public class ExecuteNpmTask extends ExecuteNodeScriptTask {
 	}
 
 	private Object _cacheDir;
-	private boolean _inheritProxy = true;
 	private boolean _progress = true;
 	private Object _registry;
 

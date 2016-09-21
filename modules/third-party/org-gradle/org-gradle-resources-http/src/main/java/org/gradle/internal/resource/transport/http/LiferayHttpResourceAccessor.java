@@ -16,6 +16,7 @@ package org.gradle.internal.resource.transport.http;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
 
 import java.net.URI;
 
@@ -30,9 +31,10 @@ import org.apache.commons.io.filefilter.NameFileFilter;
 import org.apache.commons.io.filefilter.TrueFileFilter;
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.HttpHeaders;
-import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.HttpVersion;
+import org.apache.http.StatusLine;
+import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.entity.ContentType;
@@ -299,18 +301,21 @@ public class LiferayHttpResourceAccessor extends HttpResourceAccessor {
 
 		metadataXpp3Writer.write(byteArrayOutputStream, metadata);
 
-		HttpResponse httpResponse = new BasicHttpResponse(
-			new BasicStatusLine(HttpVersion.HTTP_1_1, HttpStatus.SC_OK, null));
+		CloseableHttpResponse closeableHttpResponse =
+			new BasicCloseableHttpResponse(
+				new BasicStatusLine(
+					HttpVersion.HTTP_1_1, HttpStatus.SC_OK, null));
 
-		httpResponse.setEntity(
+		closeableHttpResponse.setEntity(
 			new ByteArrayEntity(
 				byteArrayOutputStream.toByteArray(),
 				ContentType.APPLICATION_XML));
-		httpResponse.setHeader(
+		closeableHttpResponse.setHeader(
 			HttpHeaders.CONTENT_LENGTH,
 			String.valueOf(byteArrayOutputStream.size()));
 
-		return new HttpResponseResource(HttpGet.METHOD_NAME, uri, httpResponse);
+		return new HttpResponseResource(
+			HttpGet.METHOD_NAME, uri, closeableHttpResponse);
 	}
 
 	private String _getModuleLatestVersion(
@@ -365,17 +370,20 @@ public class LiferayHttpResourceAccessor extends HttpResourceAccessor {
 
 		String sha1 = hashValue.asHexString();
 
-		HttpResponse httpResponse = new BasicHttpResponse(
-			new BasicStatusLine(HttpVersion.HTTP_1_1, HttpStatus.SC_OK, null));
+		CloseableHttpResponse closeableHttpResponse =
+			new BasicCloseableHttpResponse(
+				new BasicStatusLine(
+					HttpVersion.HTTP_1_1, HttpStatus.SC_OK, null));
 
-		httpResponse.setEntity(new StringEntity(sha1));
-		httpResponse.setHeader(
+		closeableHttpResponse.setEntity(new StringEntity(sha1));
+		closeableHttpResponse.setHeader(
 			HttpHeaders.CONTENT_LENGTH, String.valueOf(sha1.length()));
-		httpResponse.setHeader(
+		closeableHttpResponse.setHeader(
 			HttpHeaders.LAST_MODIFIED,
 			String.valueOf(cachedArtifactFile.lastModified()));
 
-		return new HttpResponseResource(HttpGet.METHOD_NAME, uri, httpResponse);
+		return new HttpResponseResource(
+			HttpGet.METHOD_NAME, uri, closeableHttpResponse);
 	}
 
 	private boolean _isForcedCacheEnabled() {
@@ -398,5 +406,18 @@ public class LiferayHttpResourceAccessor extends HttpResourceAccessor {
 
 	private static final Logger _logger = LoggerFactory.getLogger(
 		LiferayHttpResourceAccessor.class);
+
+	private static class BasicCloseableHttpResponse
+		extends BasicHttpResponse implements CloseableHttpResponse {
+
+		public BasicCloseableHttpResponse(StatusLine statusLine) {
+			super(statusLine);
+		}
+
+		@Override
+		public void close() throws IOException {
+		}
+
+	}
 
 }

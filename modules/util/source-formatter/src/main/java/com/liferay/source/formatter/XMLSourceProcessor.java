@@ -1280,6 +1280,10 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			boolean importFile)
 		throws Exception {
 
+		if (buildFileName.contains(StringPool.OPEN_CURLY_BRACE)) {
+			return null;
+		}
+
 		File file = new File(buildFileName);
 
 		if (!file.exists()) {

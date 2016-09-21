@@ -1,0 +1,201 @@
+{namespace ddl.rule}
+
+/**
+ * Prints the DDL rule settings.
+ *
+ * @param actions
+ * @param conditions
+ * @param deleteIcon
+ * @param logicalOperator
+ * @param plusIcon
+ * @param strings
+ */
+{template .settings autoescape="deprecated-contextual"}
+	<div class="top-informations">
+		<h2 class="text-default">{$strings.title}</h2>
+		<h4 class="text-default">{$strings.description}</h4>
+	</div>
+
+	<ul class="liferay-ddl-form-rule-builder-timeline liferay-ddl-form-builder-rule-condition-list timeline">
+		{call .rulesHeader}
+			{param logicalOperator: $logicalOperator /}
+			{param title: 'Condition' /}
+		{/call}
+
+		{foreach $condition in $conditions}
+			{call .condition}
+				{param index: index($condition) /}
+				{param deleteIcon: $deleteIcon /}
+				{param logicOperator: $logicalOperator /}
+			{/call}
+			{ifempty}
+				{call .condition}
+					{param index: 0 /}
+					{param deleteIcon: $deleteIcon /}
+					{param logicOperator: $logicalOperator /}
+				{/call}
+		{/foreach}
+	</ul>
+
+	{call .btnAddNewTimelineItem}
+		{param plusIcon: $plusIcon /}
+		{param cssClass: 'form-builder-rule-add-condition' /}
+	{/call}
+
+	<ul class="action-list liferay-ddl-form-rule-builder-timeline liferay-ddl-form-builder-rule-action-list timeline">
+		{call .rulesHeader}
+			{param logicalOperator: $logicalOperator /}
+			{param title: 'Actions' /}
+		{/call}
+
+		{foreach $action in $actions}
+			{call .action}
+				{param index: index($action) /}
+				{param deleteIcon: $deleteIcon /}
+			{/call}
+			{ifempty}
+				{call .action}
+					{param index: 0 /}
+					{param deleteIcon: $deleteIcon /}
+				{/call}
+		{/foreach}
+	</ul>
+
+	{call .btnAddNewTimelineItem}
+		{param plusIcon: $plusIcon /}
+		{param cssClass: 'form-builder-rule-add-action' /}
+	{/call}
+
+	<div class="liferay-ddl-form-rule-builder-footer">
+		<button class="btn btn-lg ddl-button btn-primary btn-default form-builder-rule-settings-save" type="button">
+			<span class="form-builder-rule-settings-save-label">{$strings.save}</span>
+		</button>
+		<button type="button" class="btn btn-lg btn-cancel btn-default btn-link form-builder-rule-settings-cancel">
+			<span class="lfr-btn-label">{$strings.cancel}</span>
+		</button>
+	</div>
+{/template}
+
+/**
+ * Prints the DDL rule condition.
+ *
+ * @param index
+ * @param deleteIcon
+ * @param? logicOperator
+ */
+{template .condition autoescape="deprecated-contextual"}
+	<li class="form-builder-rule-condition-container-{$index} timeline-item">
+		<div class="panel panel-default">
+			<div class="panel-body flex-container">
+				<h4>If</h4>
+
+				<div class="form-group condition-if-{$index}"></div>
+				<div class="form-group condition-operator-{$index}"></div>
+				<div class="form-group condition-the-{$index}"></div>
+				<div class="form-group condition-type-value-{$index}"></div>
+				<div class="form-group condition-type-value-options-{$index}"></div>
+
+				<div class="timeline-increment-icon">
+					<span class="timeline-icon"></span>
+				</div>
+			</div>
+		</div>
+
+		<div class="operator panel panel-default panel-inline">
+			<div class="panel-body text-uppercase">{$logicOperator}</div>
+		</div>
+
+		<div class="container__trash">
+			<button
+				class="btn btn-link condition-card-delete icon-monospaced"
+				data-card-id="{$index}"
+				href="javascript:;"
+				type="button">
+				{$deleteIcon|noAutoescape}
+			</button>
+		</div>
+	</li>
+{/template}
+
+/**
+ * Prints the DDL rule condition.
+ *
+ * @param plusIcon
+ * @param? cssClass
+ */
+{template .btnAddNewTimelineItem autoescape="deprecated-contextual"}
+	<div class="addbutton-timeline-item">
+		<div class="timeline-increment-icon add-condition">
+			<a href="javascript:;" aria-role="button" class="btn btn-xs btn-primary form-builder-timeline-add-item {$cssClass or ''}">
+				{$plusIcon|noAutoescape}
+			</a>
+		</div>
+	</div>
+{/template}
+
+
+/**
+ * @param? logicalOperator
+ * @param title
+ */
+{template .rulesHeader}
+	
+	<li class="timeline-item">
+		<div class="panel panel-default">
+			<div class="panel-body flex-container">
+				<div class="h4 panel-title">
+					{$title}
+				</div>
+
+				<div class="btn-group dropdown" style="block">
+				    <button class="btn btn-default dropdown-toggle text-uppercase" data-toggle="dropdown" type="button">
+				       {$logicalOperator} <span class="caret"></span>
+				    </button>
+
+				    <ul class="dropdown-menu">
+				        <li class="logic-operator text-uppercase"><a>or</a></li>
+				        <li class="divider"></li>
+				        <li class="logic-operator text-uppercase"><a>and</a></li>
+				    </ul>
+				</div>
+
+				<div class="timeline-increment-icon">
+					<span class="timeline-icon"></span>
+				</div>
+			</div>
+		</div>
+	</li>					
+
+{/template}
+
+/**
+ * Prints the DDL property change action.
+ *
+ * @param index
+ * @param deleteIcon
+ */
+{template .action autoescape="deprecated-contextual"}
+	<li class="form-builder-rule-action-container-{$index} timeline-item">
+		<div class="panel panel-default">
+			<div class="panel-body flex-container">
+				<h4>Do</h4>
+
+				<div class="action-{$index} form-group"></div>
+				<div class="target-{$index} form-group"></div>
+
+				<div class="timeline-increment-icon">
+ 					<span class="timeline-icon"></span>
+  				</div>
+			</div>
+		</div>
+		<div class="container__trash">
+			<button
+				class="btn btn-link action-card-delete icon-monospaced"
+				data-card-id="{$index}"
+				href="javascript:;"
+				type="button">
+				{$deleteIcon|noAutoescape}
+			</button>
+		</div>
+	</li>
+{/template}

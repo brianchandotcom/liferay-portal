@@ -87,7 +87,7 @@ if (goog.DEBUG) {
 
 
 ddl.action = function(opt_data, opt_ignored) {
-  return '<b>' + soy.$$escapeHtml(opt_data.action.action) + '</b> ' + ddl.badge({content: opt_data.action.target});
+  return '<b>' + soy.$$escapeHtml(opt_data.action.action) + '</b> ' + ddl.badge({content: opt_data.action.label != null ? opt_data.action.label : opt_data.action.target});
 };
 if (goog.DEBUG) {
   ddl.action.soyTemplateName = 'ddl.action';

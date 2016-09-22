@@ -236,6 +236,7 @@ AUI.add(
 
 							var action = {
 								action: instance._actions[index + '-target'].getValue(),
+								label: instance._getFieldLabel(instance._actions[index + '-action'].getValue()),
 								target: instance._actions[index + '-action'].getValue()
 							};
 

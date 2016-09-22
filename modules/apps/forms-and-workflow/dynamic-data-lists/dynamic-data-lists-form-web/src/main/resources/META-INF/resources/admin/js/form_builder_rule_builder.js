@@ -59,7 +59,29 @@ AUI.add(
 
 						instance.get('contentBox').setHTML(rulesBuilder);
 
-						instance._renderCards(instance.get('rules'));
+						var rules = instance.get('rules');
+
+						rules.forEach(
+							function(rule) {
+								rule.conditions.forEach(
+									function(condition) {
+										condition.operands.forEach(
+											function(operand) {
+												operand.label = instance._getFieldLabel(operand.value);
+											}
+										);
+									}
+								);
+
+								rule.actions.forEach(
+									function(action) {
+										action.label = instance._getFieldLabel(action.target);
+									}
+								);
+							}
+						);
+
+						instance._renderCards(rules);
 					},
 
 					destructor: function() {
@@ -114,6 +136,22 @@ AUI.add(
 						instance._ruleClasses.set('fields', instance.getFields());
 
 						instance._ruleClasses.render(rule);
+					},
+
+					_getFieldLabel: function(fieldValue) {
+						var instance = this;
+
+						var fields = instance.getFields();
+
+						var fieldLabel;
+
+						for (var index in fields) {
+							if (fields[index].value === fieldValue) {
+								fieldLabel = fields[index].label;
+							}
+						}
+
+						return fieldLabel;
 					},
 
 					_handleAddRuleClick: function() {

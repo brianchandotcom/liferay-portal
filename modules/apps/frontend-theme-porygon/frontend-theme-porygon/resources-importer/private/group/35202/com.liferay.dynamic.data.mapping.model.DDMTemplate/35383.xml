@@ -15,7 +15,7 @@
   <__versionUserId>20164</__versionUserId>
   <__versionUserName>Test Test</__versionUserName>
   <__createDate class="sql-timestamp">2016-09-20 11:32:50.702</__createDate>
-  <__modifiedDate class="sql-timestamp">2016-09-22 11:14:33.401</__modifiedDate>
+  <__modifiedDate class="sql-timestamp">2016-09-22 11:18:07.952</__modifiedDate>
   <__setModifiedDate>false</__setModifiedDate>
   <__classNameId>29836</__classNameId>
   <__originalClassNameId>29836</__originalClassNameId>
@@ -26,7 +26,7 @@
   <__resourceClassNameId>29993</__resourceClassNameId>
   <__templateKey>33373</__templateKey>
   <__originalTemplateKey>33373</__originalTemplateKey>
-  <__version>1.2</__version>
+  <__version>1.3</__version>
   <__name>&lt;?xml version=&apos;1.0&apos; encoding=&apos;UTF-8&apos;?&gt;&lt;root available-locales=&quot;en_US&quot; default-locale=&quot;en_US&quot;&gt;&lt;Name language-id=&quot;en_US&quot;&gt;Porygon New Entry Template&lt;/Name&gt;&lt;/root&gt;</__name>
   <__description></__description>
   <__type>display</__type>
@@ -44,7 +44,7 @@
 	&lt;#assign pullTo = request.attributes.pullTo!&quot;&quot;&gt;
 
 	&lt;#if pullTo == &quot;right&quot; &gt;
-		&lt;#assign pullTo = &quot;pull-right&quot; &gt;
+		&lt;#assign pullTo = &quot;pull-sm-right&quot; &gt;
 	&lt;/#if&gt;
 
 	&lt;div class=&quot;blog-list-card col-sm-6 ${pullTo}&quot;&gt;

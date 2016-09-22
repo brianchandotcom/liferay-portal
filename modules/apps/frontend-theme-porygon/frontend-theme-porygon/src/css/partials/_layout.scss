@@ -4,3 +4,9 @@
 		padding-right: 0;
 	}
 }
+
+.pull-sm-right {
+	@include sm {
+		float: right !important;
+	}
+}

@@ -354,6 +354,9 @@ public interface RoleLocalService extends BaseLocalService,
 		ServiceContext serviceContext) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getAssigneesTotal(long roleId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getGroupRolesCount(long groupId);
 
 	/**

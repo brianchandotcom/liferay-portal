@@ -80,6 +80,22 @@ public class RoleImpl extends RoleBaseImpl {
 	}
 
 	@Override
+	public boolean isImplied() {
+		String name = getName();
+
+		if (name.equals(RoleConstants.GUEST) ||
+			name.equals(RoleConstants.ORGANIZATION_USER) ||
+			name.equals(RoleConstants.OWNER) ||
+			name.equals(RoleConstants.SITE_MEMBER) ||
+			name.equals(RoleConstants.USER)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public boolean isSystem() {
 		return PortalUtil.isSystemRole(getName());
 	}

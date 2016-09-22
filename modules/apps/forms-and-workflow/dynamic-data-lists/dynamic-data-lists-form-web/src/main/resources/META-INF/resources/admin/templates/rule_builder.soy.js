@@ -10,7 +10,7 @@ if (typeof ddl == 'undefined') { var ddl = {}; }
 
 
 ddl.rule_builder = function(opt_data, opt_ignored) {
-  return '<div class="form-builder-rule-builder-container"><h1 class="form-builder-section-title text-default">Rules Builder</h1><div class="liferay-ddl-form-rule-rules-list-container"></div><div class="form-builder-rule-builder-add-rule-container"><div class="btn-action-secondary btn-bottom-right dropdown form-builder-rule-builder-add-rule-button"><button class="btn btn-primary form-builder-rule-builder-add-rule-button-icon" type="button">' + soy.$$filterNoAutoescape(opt_data.plusIcon) + '</button></div></div></div>';
+  return '<div class="form-builder-rule-builder-container"><h1 class="form-builder-section-title text-default">' + soy.$$escapeHtml(opt_data.strings.ruleBuilder) + '</h1><div class="liferay-ddl-form-rule-rules-list-container"></div><div class="form-builder-rule-builder-add-rule-container"><div class="btn-action-secondary btn-bottom-right dropdown form-builder-rule-builder-add-rule-button"><button class="btn btn-primary form-builder-rule-builder-add-rule-button-icon" type="button">' + soy.$$filterNoAutoescape(opt_data.plusIcon) + '</button></div></div></div>';
 };
 if (goog.DEBUG) {
   ddl.rule_builder.soyTemplateName = 'ddl.rule_builder';
@@ -21,11 +21,25 @@ ddl.rule_list = function(opt_data, opt_ignored) {
   var output = '';
   if (opt_data.rules.length > 0) {
     output += '<ul class="ddl-form-body-content form-builder-rule-builder-rules-list tabular-list-group">';
-    var ruleList178 = opt_data.rules;
-    var ruleListLen178 = ruleList178.length;
-    for (var ruleIndex178 = 0; ruleIndex178 < ruleListLen178; ruleIndex178++) {
-      var ruleData178 = ruleList178[ruleIndex178];
-      output += '<li class="list-group-item"><div class="clamp-horizontal list-group-item-content"><p class="text-default">If ' + ddl.condition({content: ruleData178.conditions[0].operands[0].type + ' ' + ruleData178.conditions[0].operands[0].value}) + '<em> is ' + soy.$$escapeHtml(ruleData178.conditions[0].operator) + ', </em>' + ddl.condition({content: ruleData178.conditions[0].operands[1].value}) + '<br />' + ddl.action({rule: ruleData178}) + '</p></div><div class="list-group-item-field"><div class="card-col-field"><div class="dropdown"><a class="dropdown-toggle icon-monospaced" data-toggle="dropdown" href="#1">' + soy.$$filterNoAutoescape(opt_data.kebab) + '</a><ul class="dropdown-menu dropdown-menu-right"><li class="rule-card-edit" data-card-id="' + soy.$$escapeHtmlAttribute(ruleIndex178) + '"><a href="javascript:;">' + soy.$$escapeHtml(opt_data.strings.edit) + '</a></li><li class="rule-card-delete" data-card-id="' + soy.$$escapeHtmlAttribute(ruleIndex178) + '"><a href="javascript:;">' + soy.$$escapeHtml(opt_data.strings['delete']) + '</a></li></ul></div></div></div></li>';
+    var ruleList196 = opt_data.rules;
+    var ruleListLen196 = ruleList196.length;
+    for (var ruleIndex196 = 0; ruleIndex196 < ruleListLen196; ruleIndex196++) {
+      var ruleData196 = ruleList196[ruleIndex196];
+      output += '<li class="list-group-item"><div class="clamp-horizontal list-group-item-content"><p class="form-builder-rule-builder-rule-description text-default"><b>If </b>';
+      var conditionList174 = ruleData196.conditions;
+      var conditionListLen174 = conditionList174.length;
+      for (var conditionIndex174 = 0; conditionIndex174 < conditionListLen174; conditionIndex174++) {
+        var conditionData174 = conditionList174[conditionIndex174];
+        output += ddl.condition({operandType: conditionData174.operands[0].type, operandValue: conditionData174.operands[0].label}) + '<b class="text-lowercase"><em> ' + soy.$$escapeHtml(opt_data.strings[conditionData174.operator]) + ' </em></b>' + ddl.condition({operandType: conditionData174.operands[1].type, operandValue: conditionData174.operands[1].label}) + ((! (conditionIndex174 == conditionListLen174 - 1)) ? ', <br /><b> and </b>' : '');
+      }
+      output += '<br />';
+      var actionList182 = ruleData196.actions;
+      var actionListLen182 = actionList182.length;
+      for (var actionIndex182 = 0; actionIndex182 < actionListLen182; actionIndex182++) {
+        var actionData182 = actionList182[actionIndex182];
+        output += ddl.action({action: actionData182}) + ((! (actionIndex182 == actionListLen182 - 1)) ? ', <br /><b> and </b>' : '');
+      }
+      output += '</p></div><div class="list-group-item-field"><div class="card-col-field"><div class="dropdown"><a class="dropdown-toggle icon-monospaced" data-toggle="dropdown" href="#1">' + soy.$$filterNoAutoescape(opt_data.kebab) + '</a><ul class="dropdown-menu dropdown-menu-right"><li class="rule-card-edit" data-card-id="' + soy.$$escapeHtmlAttribute(ruleIndex196) + '"><a href="javascript:;">' + soy.$$escapeHtml(opt_data.strings.edit) + '</a></li><li class="rule-card-delete" data-card-id="' + soy.$$escapeHtmlAttribute(ruleIndex196) + '"><a href="javascript:;">' + soy.$$escapeHtml(opt_data.strings['delete']) + '</a></li></ul></div></div></div></li>';
     }
     output += '</ul>';
   } else {
@@ -48,7 +62,7 @@ if (goog.DEBUG) {
 
 
 ddl.rule_types = function(opt_data, opt_ignored) {
-  return '<ul class="dropdown-menu"><li><a href="javascript:;" data-rule-type="visibility">' + soy.$$escapeHtml(opt_data.strings.showHide) + '</a><a href="javascript:;" data-rule-type="readonly">' + soy.$$escapeHtml(opt_data.strings.enableDisable) + '</a><a href="javascript:;" data-rule-type="require">' + soy.$$escapeHtml(opt_data.strings.require) + '</a></li></ul>';
+  return '<ul class="dropdown-menu"><li><a data-rule-type="visibility" href="javascript:;">' + soy.$$escapeHtml(opt_data.strings.showHide) + '</a><a data-rule-type="readonly" href="javascript:;">' + soy.$$escapeHtml(opt_data.strings.enableDisable) + '</a><a data-rule-type="require" href="javascript:;">' + soy.$$escapeHtml(opt_data.strings.require) + '</a></li></ul>';
 };
 if (goog.DEBUG) {
   ddl.rule_types.soyTemplateName = 'ddl.rule_types';
@@ -65,7 +79,7 @@ if (goog.DEBUG) {
 
 
 ddl.condition = function(opt_data, opt_ignored) {
-  return '' + ddl.badge(opt_data);
+  return '<span>' + soy.$$escapeHtml(opt_data.operandType) + ' </span>' + ddl.badge({content: opt_data.operandValue});
 };
 if (goog.DEBUG) {
   ddl.condition.soyTemplateName = 'ddl.condition';
@@ -73,7 +87,7 @@ if (goog.DEBUG) {
 
 
 ddl.action = function(opt_data, opt_ignored) {
-  return '<em>' + soy.$$escapeHtml(opt_data.rule.actions[0].action) + '</em> ' + ddl.badge({content: opt_data.rule.actions[0].target});
+  return '<b>' + soy.$$escapeHtml(opt_data.action.action) + '</b> ' + ddl.badge({content: opt_data.action.target});
 };
 if (goog.DEBUG) {
   ddl.action.soyTemplateName = 'ddl.action';

@@ -52,7 +52,8 @@ AUI.add(
 
 						var rulesBuilder = ddl.rule_builder(
 							{
-								plusIcon: Liferay.Util.getLexiconIconTpl('plus', 'icon-monospaced')
+								plusIcon: Liferay.Util.getLexiconIconTpl('plus', 'icon-monospaced'),
+								strings: instance.get('strings')
 							}
 						);
 

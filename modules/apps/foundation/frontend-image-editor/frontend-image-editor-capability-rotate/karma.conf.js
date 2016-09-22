@@ -1,9 +1,9 @@
 'use strict';
 
-var metalKarmaConfig = require('metal-karma-config');
+var liferayKarmaConfig = require('liferay-karma-config');
 
 module.exports = function(config) {
-	metalKarmaConfig(config);
+	liferayKarmaConfig(config);
 
 	config.files.push(
 		'node_modules/resemblejs/resemble.js',

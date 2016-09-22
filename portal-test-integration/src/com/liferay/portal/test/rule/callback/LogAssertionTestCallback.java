@@ -16,6 +16,8 @@ package com.liferay.portal.test.rule.callback;
 
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.io.unsync.UnsyncPrintWriter;
+import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.test.rule.callback.TestCallback;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.log.CaptureAppender;
@@ -98,9 +100,15 @@ public class LogAssertionTestCallback
 				Thread thread = entry.getKey();
 				Error error = entry.getValue();
 
+				UnsyncStringWriter unsyncStringWriter =
+					new UnsyncStringWriter();
+
+				error.printStackTrace(
+					new UnsyncPrintWriter(unsyncStringWriter));
+
 				Assert.fail(
 					"Thread " + thread + " caught concurrent failure: " +
-						error);
+						error + "\n" + unsyncStringWriter.toString());
 
 				throw error;
 			}

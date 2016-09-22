@@ -1251,19 +1251,18 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		String moduleOrPluginFolder = fileName.substring(0, pos);
 
-		if (portalSource) {
+		tablesContent = FileUtil.read(
+			new File(
+				moduleOrPluginFolder +
+					"/src/main/resources/META-INF/sql/tables.sql"));
+
+		if (tablesContent == null) {
 			tablesContent = FileUtil.read(
 				new File(
-					moduleOrPluginFolder +
-						"/src/main/resources/META-INF/sql/tables.sql"));
-
-			if (tablesContent == null) {
-				tablesContent = FileUtil.read(
-					new File(
-						moduleOrPluginFolder + "/src/META-INF/sql/tables.sql"));
-			}
+					moduleOrPluginFolder + "/src/META-INF/sql/tables.sql"));
 		}
-		else {
+
+		if (tablesContent == null) {
 			tablesContent = FileUtil.read(
 				new File(moduleOrPluginFolder + "/sql/tables.sql"));
 		}

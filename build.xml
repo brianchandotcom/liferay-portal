@@ -115,8 +115,9 @@
 
 		<delete file="javac.output.txt" />
 
-		<gradle-execute dir="modules/core/registry-api" task="classes">
+		<gradle-execute dir="modules" task="classes">
 			<arg value="--parallel" />
+			<arg value="-Dportal.pre.build=true" />
 		</gradle-execute>
 
 		<ant dir="portal-kernel" inheritAll="false" target="compile" />
@@ -244,8 +245,9 @@
 		<if>
 			<equals arg1="${build.marketplace.apps.enabled}" arg2="true" />
 			<then>
-				<gradle-execute dir="${project.dir}/modules/core/registry-api" task="deploy">
+				<gradle-execute dir="${project.dir}/modules" task="deploy">
 					<arg value="--parallel" />
+					<arg value="-Dportal.pre.build=true" />
 				</gradle-execute>
 
 				<if>

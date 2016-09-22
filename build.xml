@@ -42,6 +42,7 @@
 				<fileset dir="." includes="*.ear,*.jar,*.war,*.zip" />
 				<fileset dir="test-coverage" />
 				<fileset dir="test-results" />
+				<fileset dir="tmp" />
 				<fileset dir="${doc.dir}" />
 				<fileset dir="${app.server.bin.dir}" includes="*.log*" />
 				<fileset dir="${app.server.classes.portal.dir}" includes="portal-*.properties,system-*.properties" />
@@ -115,9 +116,10 @@
 
 		<delete file="javac.output.txt" />
 
-		<gradle-execute dir="modules" task="classes">
+		<gradle-execute dir="modules" task="deploy">
 			<arg value="--parallel" />
 			<arg value="-Dportal.pre.build=true" />
+			<arg value="-Pforced.deploy.dir=${project.dir}/tmp/lib-pre" />
 		</gradle-execute>
 
 		<ant dir="portal-kernel" inheritAll="false" target="compile" />

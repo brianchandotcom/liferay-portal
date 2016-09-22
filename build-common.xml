@@ -57,9 +57,14 @@
 		<fileset dir="${project.dir}/lib/portal" includes="*.jar" />
 	</path>
 
+	<path id="lib.pre.classpath">
+		<fileset dir="${project.dir}/tmp/lib-pre" includes="*.jar" />
+	</path>
+
 	<path id="project.classpath">
 		<pathelement path="${classpath.full}" />
 		<path refid="lib.classpath" />
+		<path refid="lib.pre.classpath" />
 	</path>
 
 	<path id="web.classpath">
@@ -67,6 +72,7 @@
 		<fileset dir="${project.dir}/lib/development" includes="jsp-api.jar,mail.jar,servlet-api.jar" />
 		<fileset dir="${project.dir}/lib/global" includes="*.jar" />
 		<fileset dir="${project.dir}/lib/portal" includes="bnd.jar" />
+		<path refid="lib.pre.classpath" />
 		<path refid="web-lib.classpath" />
 	</path>
 
@@ -1092,6 +1098,7 @@ Error-Prone was automatically installed. Please rerun your task.
 				<pathelement path="test-classes/@{test.type}" />
 				<pathelement path="${junit.classpath}" />
 				<pathelement path="${test.additional.classpath}" />
+				<path refid="lib.pre.classpath" />
 				<fileset dir="${project.dir}/lib/development" excludes="jalopy.jar,jetty*.jar,tomcat*.jar" includes="*.jar" />
 				<fileset dir="${project.dir}/lib/global" includes="*.jar" />
 				<fileset dir="${project.dir}/lib/portal" excludes="ant.jar" includes="*.jar" />

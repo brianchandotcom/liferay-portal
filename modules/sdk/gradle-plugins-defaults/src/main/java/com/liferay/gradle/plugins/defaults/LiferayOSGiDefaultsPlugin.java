@@ -40,6 +40,7 @@ import com.liferay.gradle.plugins.js.module.config.generator.ConfigJSModulesTask
 import com.liferay.gradle.plugins.js.module.config.generator.JSModuleConfigGeneratorPlugin;
 import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask;
 import com.liferay.gradle.plugins.patcher.PatchTask;
+import com.liferay.gradle.plugins.service.builder.BuildServiceTask;
 import com.liferay.gradle.plugins.service.builder.ServiceBuilderPlugin;
 import com.liferay.gradle.plugins.test.integration.TestIntegrationBasePlugin;
 import com.liferay.gradle.plugins.tlddoc.builder.TLDDocBuilderPlugin;
@@ -374,6 +375,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 						project, portalRootDir,
 						ServiceBuilderPlugin.CONFIGURATION_NAME,
 						_SERVICE_BUILDER_PORTAL_TOOL_NAME);
+					_configureTaskBuildService(project);
 				}
 
 			});
@@ -2671,6 +2673,14 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 			verificationTask.setIgnoreFailures(true);
 		}
+	}
+
+	private void _configureTaskBuildService(Project project) {
+		BuildServiceTask buildServiceTask =
+			(BuildServiceTask)GradleUtil.getTask(
+				project, ServiceBuilderPlugin.BUILD_SERVICE_TASK_NAME);
+
+		buildServiceTask.setBuildNumberIncrement(false);
 	}
 
 	private void _configureTaskJavadocTitle(Javadoc javadoc) {

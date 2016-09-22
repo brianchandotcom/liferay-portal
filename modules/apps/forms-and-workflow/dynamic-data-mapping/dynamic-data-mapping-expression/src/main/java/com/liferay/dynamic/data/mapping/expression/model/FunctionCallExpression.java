@@ -31,6 +31,11 @@ public class FunctionCallExpression extends Expression {
 		_parameters = parameters;
 	}
 
+	@Override
+	public <T> T accept(ExpressionVisitor<T> visitor) {
+		return visitor.visit(this);
+	}
+
 	public int getArity() {
 		return _parameters.size();
 	}

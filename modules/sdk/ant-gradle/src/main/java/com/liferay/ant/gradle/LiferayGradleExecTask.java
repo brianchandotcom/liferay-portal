@@ -48,6 +48,10 @@ public class LiferayGradleExecTask extends GradleExecTask {
 		_portalBuild = portalBuild;
 	}
 
+	public void setPortalPreBuild(boolean portalPreBuild) {
+		_portalPreBuild = portalPreBuild;
+	}
+
 	private void _addArguments() {
 		Project project = getProject();
 
@@ -67,9 +71,11 @@ public class LiferayGradleExecTask extends GradleExecTask {
 		}
 
 		addArgument("-Dportal.build=" + _portalBuild);
+		addArgument("-Dportal.pre.build=" + _portalPreBuild);
 	}
 
 	private boolean _forcedCacheEnabled = true;
 	private boolean _portalBuild = true;
+	private boolean _portalPreBuild;
 
 }

@@ -51,12 +51,12 @@ else if (group.isStagingGroup()) {
 <c:if test="<%= liveGroup.isStaged() && !liveGroup.isStagedPortlet(portlet.getRootPortletId()) %>">
 	<c:choose>
 		<c:when test="<%= !liveGroup.isStagedRemotely() && inStaging %>">
-			<div class="alert alert-warning">
+			<div class="alert alert-warning lfr-portlet-message-staging-alert">
 				<liferay-ui:message key="this-portlet-is-not-staged-local-alert" />
 			</div>
 		</c:when>
 		<c:when test="<%= liveGroup.isStagedRemotely() && themeDisplay.isSignedIn() %>">
-			<div class="alert alert-warning">
+			<div class="alert alert-warning lfr-portlet-message-staging-alert">
 				<liferay-ui:message key="this-portlet-is-not-staged-remote-alert" />
 			</div>
 		</c:when>

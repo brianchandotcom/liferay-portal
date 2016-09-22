@@ -1250,10 +1250,20 @@
 
 			var dialog = event.dialog;
 
+			var lfrFormContent = iframeBody.one('.lfr-form-content');
+
 			iframeBody.addClass('dialog-iframe-popup');
 
-			if (iframeBody.one('.lfr-form-content') && iframeBody.one('.button-holder.dialog-footer')) {
+			if (lfrFormContent && iframeBody.one('.button-holder.dialog-footer')) {
 				iframeBody.addClass('dialog-with-footer');
+
+				var stagingAlert = iframeBody.one('.portlet-body > .lfr-portlet-message-staging-alert');
+
+				if (stagingAlert) {
+					stagingAlert.remove();
+
+					lfrFormContent.prepend(stagingAlert);
+				}
 			}
 
 			iframeBody.addClass(dialog.iframeConfig.bodyCssClass);

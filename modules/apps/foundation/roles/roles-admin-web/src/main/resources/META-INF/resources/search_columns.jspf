@@ -86,7 +86,7 @@
 			cssClass="table-cell-content"
 			href="<%= rowURL %>"
 			name="number-of-assignees"
-			value='<%= _isImpliedRole(role) ? LanguageUtil.get(request, "not-available") : String.valueOf(RoleLocalServiceUtil.getAssigneesTotal(role.getRoleId())) %>'
+			value='<%= role.isImplied() ? LanguageUtil.get(request, "not-available") : String.valueOf(RoleLocalServiceUtil.getAssigneesTotal(role.getRoleId())) %>'
 		/>
 
 		<liferay-ui:search-container-column-jsp

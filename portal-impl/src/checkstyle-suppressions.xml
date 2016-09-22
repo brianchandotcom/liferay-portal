@@ -7,7 +7,6 @@
 	<suppress checks="MemberName" files="portal-impl/test/unit/com/liferay/portal/bean/ConstantsBeanFactoryImplTest\.java" />
 	<suppress checks="MemberName" files="portal-impl/test/unit/com/liferay/portal/nio/intraband/proxy/IntrabandProxyUtilTest\.java" />
 	<suppress checks="MemberName" files="portal-test-integration/src/com/liferay/portal/search/test/BaseSearchTestCase\.java" />
-	<suppress checks="StaticVariableName" files="modules/apps/web-experience/journal/journal-service/src/main/java/com/liferay/journal/configuration/JournalServiceConfigurationValues\.java" />
 	<suppress checks="StaticVariableName" files="portal-impl/src/com/liferay/portal/language/LanguageResources\.java" />
 	<suppress checks="StaticVariableName" files="portal-impl/src/com/liferay/portal/util/PropsValues\.java" />
 	<suppress checks="StaticVariableName" files="portal-impl/test/integration/com/liferay/portal/security/pwd/bundle/pwdtoolkitutil/TestToolkit\.java" />

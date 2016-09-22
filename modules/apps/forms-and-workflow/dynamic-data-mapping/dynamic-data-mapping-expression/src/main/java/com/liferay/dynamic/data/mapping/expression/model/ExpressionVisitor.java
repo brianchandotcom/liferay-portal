@@ -17,37 +17,37 @@ package com.liferay.dynamic.data.mapping.expression.model;
 /**
  * @author Marcellus Tavares
  */
-public interface ExpressionVisitor<T> {
+public abstract class ExpressionVisitor<T> {
 
-	public default T visit(AndExpression andExpression) {
+	public T visit(AndExpression andExpression) {
 		return null;
 	}
 
-	public default T visit(ArithmeticExpression arithmeticExpression) {
+	public T visit(ArithmeticExpression arithmeticExpression) {
 		return null;
 	}
 
-	public default T visit(ComparisonExpression comparisonExpression) {
+	public T visit(ComparisonExpression comparisonExpression) {
 		return null;
 	}
 
-	public default T visit(FunctionCallExpression functionCallExpression) {
+	public T visit(FunctionCallExpression functionCallExpression) {
 		return null;
 	}
 
-	public default T visit(MinusExpression minusExpression) {
+	public T visit(MinusExpression minusExpression) {
 		return null;
 	}
 
-	public default T visit(NotExpression notExpression) {
+	public T visit(NotExpression notExpression) {
 		return null;
 	}
 
-	public default T visit(OrExpression orExpression) {
+	public T visit(OrExpression orExpression) {
 		return null;
 	}
 
-	public default T visit(Term term) {
+	public T visit(Term term) {
 		return null;
 	}
 

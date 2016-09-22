@@ -15,10 +15,11 @@
 package com.liferay.dynamic.data.mapping.expression.model;
 
 import com.liferay.portal.kernel.util.StringBundler;
-import org.junit.Assert;
-import org.junit.Test;
 
 import java.util.Arrays;
+
+import org.junit.Assert;
+import org.junit.Test;
 
 /**
  * @author Marcellus Tavares
@@ -80,7 +81,7 @@ public class ExpressionVisitorTest {
 		new PrintExpressionVisitor();
 
 	private static class PrintExpressionVisitor
-		implements ExpressionVisitor<String> {
+		extends ExpressionVisitor<String> {
 
 		@Override
 		public String visit(AndExpression andExpression) {

@@ -128,7 +128,7 @@ public class DDMFormRulesToDDLFormRulesConverter {
 	protected DDMExpressionFactory ddmExpressionFactory;
 
 	private static class ActionExpressionVisitor
-		implements ExpressionVisitor<Object> {
+		extends ExpressionVisitor<Object> {
 
 		@Override
 		public Object visit(FunctionCallExpression functionCallExpression) {
@@ -165,7 +165,7 @@ public class DDMFormRulesToDDLFormRulesConverter {
 	}
 
 	private static class ConditionExpressionVisitor
-		implements ExpressionVisitor<Object> {
+		extends ExpressionVisitor<Object> {
 
 		public List<DDLFormRuleCondition> getConditions() {
 			return _conditions;

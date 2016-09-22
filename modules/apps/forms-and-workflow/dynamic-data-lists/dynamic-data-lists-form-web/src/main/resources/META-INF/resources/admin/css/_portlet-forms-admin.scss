@@ -275,7 +275,9 @@
 	}
 
 	.form-builder-tabview {
-		padding-right: 70px;
+		border-bottom: 1px solid #DEE4E9;
+		padding: 20px 70px 11px 34px;
+		position: relative;
 
 		.form-builder-controls-trigger {
 			margin: 0;

@@ -259,6 +259,12 @@ thus improve performance, plugins in
 ### Changed
 - [LPS-66853]: Update the [Liferay Gradle Plugins] dependency to version 2.0.38.
 
+## 1.2.27 - 2016-09-22
+
+### Changed
+- [LPS-68305]: Set the `buildService.buildNumberIncrement` property to `false`
+by default.
+
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [Liferay Gradle Plugins Node]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-node
 [LPS-61099]: https://issues.liferay.com/browse/LPS-61099
@@ -277,5 +283,6 @@ thus improve performance, plugins in
 [LPS-68014]: https://issues.liferay.com/browse/LPS-68014
 [LPS-68131]: https://issues.liferay.com/browse/LPS-68131
 [LPS-68230]: https://issues.liferay.com/browse/LPS-68230
+[LPS-68305]: https://issues.liferay.com/browse/LPS-68305
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

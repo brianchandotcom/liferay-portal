@@ -4,6 +4,7 @@
 		"gulp-metal": "1.5.3",
 		"liferay-module-config-generator": "1.1.10",
 		"metal-cli": "2.0.0",
+		"liferay-karma-config": "0.0.3",
 		"metal-components": "1.0.0-rc.19",
 		"metal-karma-config": "2.1.0",
 		"resemblejs": "2.2.1",

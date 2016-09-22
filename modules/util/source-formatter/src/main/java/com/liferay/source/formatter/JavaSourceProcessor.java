@@ -1739,10 +1739,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			String fileName, String absolutePath, String line)
 		throws Exception {
 
-		if (!portalSource) {
-			return line;
-		}
-
 		Matcher matcher = _deprecatedPattern.matcher(line);
 
 		if (!matcher.find()) {

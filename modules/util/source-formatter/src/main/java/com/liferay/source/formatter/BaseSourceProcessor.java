@@ -2115,7 +2115,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		boolean usePortalReleaseVersion = true;
 
-		if (checkModuleVersion && isModulesFile(absolutePath)) {
+		if (checkModuleVersion &&
+			(!portalSource || isModulesFile(absolutePath))) {
+
 			usePortalReleaseVersion = false;
 		}
 

@@ -18,11 +18,18 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.BaseResourcePermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 
+import java.util.List;
+
 /**
+ * @deprecated As of 7.0.0, replaced by {@link AssetTagsPermission} and
+ * {@link AssetCategoriesPermission}
+ *
  * @author Jorge Ferrer
  */
+@Deprecated
 @OSGiBeanProperties(
 	property = {"resource.name=" + AssetPermission.RESOURCE_NAME}
 )
@@ -30,20 +37,38 @@ public class AssetPermission extends BaseResourcePermissionChecker {
 
 	public static final String RESOURCE_NAME = "com.liferay.asset";
 
+	public static final String RESOURCE_NAME_CATEGORIES =
+		"com.liferay.asset.categories";
+
+	public static final String RESOURCE_NAME_TAGS = "com.liferay.asset.tags";
+
 	public static void check(
 			PermissionChecker permissionChecker, long groupId, String actionId)
 		throws PortalException {
 
+		String resourceName = getResourceName(actionId);
+
 		if (!contains(permissionChecker, groupId, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker, RESOURCE_NAME, groupId, actionId);
+				permissionChecker, resourceName, groupId, actionId);
 		}
 	}
 
 	public static boolean contains(
 		PermissionChecker permissionChecker, long groupId, String actionId) {
 
-		return contains(permissionChecker, RESOURCE_NAME, groupId, actionId);
+		String resourceName = getResourceName(actionId);
+
+		if (resourceName.equals(RESOURCE_NAME_TAGS)) {
+			return AssetTagsPermission.contains(
+				permissionChecker, groupId, actionId);
+		}
+		else if (resourceName.equals(RESOURCE_NAME_CATEGORIES)) {
+			return AssetCategoriesPermission.contains(
+				permissionChecker, groupId, actionId);
+		}
+
+		return contains(permissionChecker, resourceName, groupId, actionId);
 	}
 
 	@Override
@@ -51,6 +76,24 @@ public class AssetPermission extends BaseResourcePermissionChecker {
 		PermissionChecker permissionChecker, long classPK, String actionId) {
 
 		return contains(permissionChecker, classPK, actionId);
+	}
+
+	protected static String getResourceName(String actionId) {
+		List<String> categoriesActions = ResourceActionsUtil.getResourceActions(
+			RESOURCE_NAME_CATEGORIES);
+		List<String> tagsActions = ResourceActionsUtil.getResourceActions(
+			RESOURCE_NAME_TAGS);
+
+		String resourceName = RESOURCE_NAME;
+
+		if (categoriesActions.contains(actionId)) {
+			resourceName = RESOURCE_NAME_CATEGORIES;
+		}
+		else if (tagsActions.contains(actionId)) {
+			resourceName = RESOURCE_NAME_TAGS;
+		}
+
+		return resourceName;
 	}
 
 }

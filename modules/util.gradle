@@ -118,32 +118,32 @@ private void _createSetUpTasks() {
 
 		File portalToolDir = ivyXmlFile.parentFile
 
-		String portalToolName = portalToolDir.name
-
-		String portalToolSuffix = _getPortalToolSuffix(portalToolName)
-		String portalToolVersion = PortalTools.getVersion(project, portalToolName)
+		String portalToolSuffix = _getPortalToolSuffix(portalToolDir.name)
 
 		Configuration portalToolConfiguration = configurations.create("portalTools" + portalToolSuffix)
 
 		portalToolConfiguration.exclude group: "com.liferay.portal"
 
-		if (portalToolVersion) {
-			dependencies.add portalToolConfiguration.name, "com.liferay:${portalToolName}:${portalToolVersion}"
-		}
-		else {
-			def ivyModuleNode = xmlSlurper.parse(ivyXmlFile)
+		def ivyModuleNode = xmlSlurper.parse(ivyXmlFile)
 
-			def dependencyNodes = ivyModuleNode.dependencies.children()
+		def dependencyNodes = ivyModuleNode.dependencies.children()
 
-			dependencyNodes.each {
-				String conf = it.@conf
+		dependencyNodes.each {
+			String dependencyConf = it.@conf
 
-				if (conf) {
-					return
-				}
-
-				dependencies.add portalToolConfiguration.name, "${it.@org}:${it.@name}:${it.@rev}"
+			if (dependencyConf) {
+				return
 			}
+
+			String dependencyGroup = it.@org
+			String dependencyName = it.@name
+			String dependencyVersion = PortalTools.getVersion(project, dependencyName)
+
+			if (!dependencyVersion) {
+				dependencyVersion = it.@rev
+			}
+
+			dependencies.add portalToolConfiguration.name, "${dependencyGroup}:${dependencyName}:${dependencyVersion}"
 		}
 
 		Task portalToolTask = tasks.create(name: "setUp" + portalToolSuffix, type: Copy) {

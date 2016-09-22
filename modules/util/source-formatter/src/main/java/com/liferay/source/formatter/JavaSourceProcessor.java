@@ -4246,8 +4246,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		// Find suppressions file in portal-impl/src/
 
-		suppressionsFiles.add(
-			getFile("portal-impl/src/" + fileName, PORTAL_MAX_DIR_LEVEL));
+		if (portalSource) {
+			suppressionsFiles.add(
+				getFile("portal-impl/src/" + fileName, PORTAL_MAX_DIR_LEVEL));
+		}
 
 		// Find suppressions files in any parent directory
 
@@ -4571,7 +4573,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected void processCheckStyle() throws Exception {
-		if (!portalSource || _ungeneratedFiles.isEmpty()) {
+		if (_ungeneratedFiles.isEmpty()) {
 			return;
 		}
 

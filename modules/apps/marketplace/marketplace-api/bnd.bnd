@@ -6,5 +6,6 @@ Export-Package:\
 	com.liferay.marketplace.model,\
 	com.liferay.marketplace.service,\
 	com.liferay.marketplace.service.persistence
+Import-Package: com.liferay.portal.kernel.model;version="${range;[=,=+)}",*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:

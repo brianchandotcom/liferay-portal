@@ -9,5 +9,6 @@ Export-Package:\
 	com.liferay.polls.service.permission,\
 	com.liferay.polls.service.persistence,\
 	com.liferay.polls.util.comparator
+Import-Package: com.liferay.portal.kernel.model;version="${range;[=,=+)}",*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Polls

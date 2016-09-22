@@ -7,5 +7,6 @@ Export-Package:\
 	com.liferay.microblogs.model,\
 	com.liferay.microblogs.service,\
 	com.liferay.microblogs.service.persistence
+Import-Package: com.liferay.portal.kernel.model;version="${range;[=,=+)}",*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Microblogs

@@ -244,10 +244,9 @@ directory instead of the root project directory. Doing this lets submodules like
 Node.js.
 
 ### Removed
-- [LPS-68230]: In order to reduce the number of plugins applied to a project and
-thus improve performance, plugins in
-`com.liferay.gradle.plugins.defaults.internal` are no longer applied via
-`apply plugin`.
+- [LPS-68230]: To reduce the number of plugins applied to a project and improve
+performance, plugins in `com.liferay.gradle.plugins.defaults.internal` are no
+longer applied via `apply plugin`.
 
 ## 1.2.25 - 2016-09-20
 

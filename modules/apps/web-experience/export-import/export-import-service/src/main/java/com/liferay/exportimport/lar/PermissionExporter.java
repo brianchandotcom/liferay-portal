@@ -19,6 +19,7 @@ import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
@@ -27,6 +28,7 @@ import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -104,8 +106,16 @@ public class PermissionExporter {
 		throws Exception {
 
 		String resourceName = PortletConstants.getRootPortletId(portletId);
-		String resourcePrimKey = PortletPermissionUtil.getPrimaryKey(
-			layout.getPlid(), portletId);
+		String resourcePrimKey = StringPool.BLANK;
+
+		if (layout != null) {
+			resourcePrimKey = PortletPermissionUtil.getPrimaryKey(
+				layout.getPlid(), portletId);
+		}
+		else {
+			resourcePrimKey = PortletPermissionUtil.getPrimaryKey(
+				LayoutConstants.DEFAULT_PLID, portletId);
+		}
 
 		Element permissionsElement = portletElement.addElement("permissions");
 

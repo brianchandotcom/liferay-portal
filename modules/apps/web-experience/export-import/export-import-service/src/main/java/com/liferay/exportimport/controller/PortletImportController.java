@@ -248,6 +248,33 @@ public class PortletImportController implements ImportController {
 		}
 	}
 
+	public void importPortletData(
+			PortletDataContext portletDataContext, Element portletDataElement)
+		throws Exception {
+
+		long ownerId = PortletKeys.PREFS_OWNER_ID_DEFAULT;
+		int ownerType = PortletKeys.PREFS_OWNER_TYPE_LAYOUT;
+
+		PortletPreferences portletPreferences =
+			PortletPreferencesUtil.fetchByO_O_P_P(
+				ownerId, ownerType, portletDataContext.getPlid(),
+				portletDataContext.getPortletId());
+
+		if (portletPreferences == null) {
+			portletPreferences =
+				new com.liferay.portal.model.impl.PortletPreferencesImpl();
+		}
+
+		String xml = importPortletData(
+			portletDataContext, portletPreferences, portletDataElement);
+
+		if (Validator.isNotNull(xml)) {
+			_portletPreferencesLocalService.updatePreferences(
+				ownerId, ownerType, portletDataContext.getPlid(),
+				portletDataContext.getPortletId(), xml);
+		}
+	}
+
 	public String importPortletData(
 			PortletDataContext portletDataContext,
 			PortletPreferences portletPreferences, Element portletDataElement)
@@ -306,6 +333,245 @@ public class PortletImportController implements ImportController {
 		}
 
 		return PortletPreferencesFactoryUtil.toXML(portletPreferencesImpl);
+	}
+
+	public void importPortletPreferences(
+			PortletDataContext portletDataContext, long companyId, long groupId,
+			Layout layout, Element parentElement, boolean preserveScopeLayoutId,
+			boolean importPortletArchivedSetups, boolean importPortletData,
+			boolean importPortletSetup, boolean importPortletUserPreferences)
+		throws Exception {
+
+		long plid = LayoutConstants.DEFAULT_PLID;
+		String scopeType = StringPool.BLANK;
+		String scopeLayoutUuid = StringPool.BLANK;
+
+		if (layout != null) {
+			plid = layout.getPlid();
+
+			if (preserveScopeLayoutId) {
+				javax.portlet.PortletPreferences jxPortletPreferences =
+					PortletPreferencesFactoryUtil.getLayoutPortletSetup(
+						layout, portletDataContext.getPortletId());
+
+				scopeType = GetterUtil.getString(
+					jxPortletPreferences.getValue("lfrScopeType", null));
+				scopeLayoutUuid = GetterUtil.getString(
+					jxPortletPreferences.getValue("lfrScopeLayoutUuid", null));
+
+				portletDataContext.setScopeType(scopeType);
+				portletDataContext.setScopeLayoutUuid(scopeLayoutUuid);
+			}
+		}
+
+		List<Element> portletPreferencesElements = parentElement.elements(
+			"portlet-preferences");
+
+		for (Element portletPreferencesElement : portletPreferencesElements) {
+			String path = portletPreferencesElement.attributeValue("path");
+
+			if (portletDataContext.isPathNotProcessed(path)) {
+				String xml = null;
+
+				Element element = null;
+
+				try {
+					xml = portletDataContext.getZipEntryAsString(path);
+
+					Document preferencesDocument = SAXReaderUtil.read(xml);
+
+					element = preferencesDocument.getRootElement();
+				}
+				catch (DocumentException de) {
+					throw new SystemException(de);
+				}
+
+				long ownerId = GetterUtil.getLong(
+					element.attributeValue("owner-id"));
+				int ownerType = GetterUtil.getInteger(
+					element.attributeValue("owner-type"));
+
+				if ((ownerType == PortletKeys.PREFS_OWNER_TYPE_COMPANY) ||
+					!importPortletSetup) {
+
+					continue;
+				}
+
+				if ((ownerType == PortletKeys.PREFS_OWNER_TYPE_ARCHIVED) &&
+					!importPortletArchivedSetups) {
+
+					continue;
+				}
+
+				if ((ownerType == PortletKeys.PREFS_OWNER_TYPE_USER) &&
+					(ownerId != PortletKeys.PREFS_OWNER_ID_DEFAULT) &&
+					!importPortletUserPreferences) {
+
+					continue;
+				}
+
+				long curPlid = plid;
+				String curPortletId = portletDataContext.getPortletId();
+
+				if (ownerType == PortletKeys.PREFS_OWNER_TYPE_GROUP) {
+					curPlid = PortletKeys.PREFS_PLID_SHARED;
+					curPortletId = portletDataContext.getRootPortletId();
+					ownerId = portletDataContext.getScopeGroupId();
+				}
+
+				if (ownerType == PortletKeys.PREFS_OWNER_TYPE_ARCHIVED) {
+					String userUuid = element.attributeValue(
+						"archive-user-uuid");
+
+					long userId = portletDataContext.getUserId(userUuid);
+
+					String name = element.attributeValue("archive-name");
+
+					curPortletId = portletDataContext.getRootPortletId();
+
+					PortletItem portletItem =
+						_portletItemLocalService.updatePortletItem(
+							userId, groupId, name, curPortletId,
+							PortletPreferences.class.getName());
+
+					curPlid = LayoutConstants.DEFAULT_PLID;
+					ownerId = portletItem.getPortletItemId();
+				}
+
+				if (ownerType == PortletKeys.PREFS_OWNER_TYPE_USER) {
+					String userUuid = element.attributeValue("user-uuid");
+
+					ownerId = portletDataContext.getUserId(userUuid);
+				}
+
+				boolean defaultUser = GetterUtil.getBoolean(
+					element.attributeValue("default-user"));
+
+				if (defaultUser) {
+					ownerId = _userLocalService.getDefaultUserId(companyId);
+				}
+
+				javax.portlet.PortletPreferences jxPortletPreferences =
+					PortletPreferencesFactoryUtil.fromXML(
+						companyId, ownerId, ownerType, curPlid, curPortletId,
+						xml);
+
+				Element importDataRootElement =
+					portletDataContext.getImportDataRootElement();
+
+				try {
+					Element preferenceDataElement =
+						portletPreferencesElement.element("preference-data");
+
+					if (preferenceDataElement != null) {
+						portletDataContext.setImportDataRootElement(
+							preferenceDataElement);
+					}
+
+					ExportImportPortletPreferencesProcessor
+						exportImportPortletPreferencesProcessor =
+							ExportImportPortletPreferencesProcessorRegistryUtil.
+								getExportImportPortletPreferencesProcessor(
+									PortletConstants.getRootPortletId(
+										curPortletId));
+
+					if (exportImportPortletPreferencesProcessor != null) {
+						List<Capability> importCapabilities =
+							exportImportPortletPreferencesProcessor.
+								getImportCapabilities();
+
+						if (ListUtil.isNotEmpty(importCapabilities)) {
+							for (Capability importCapability :
+									importCapabilities) {
+
+								importCapability.process(
+									portletDataContext, jxPortletPreferences);
+							}
+						}
+
+						exportImportPortletPreferencesProcessor.
+							processImportPortletPreferences(
+								portletDataContext, jxPortletPreferences);
+					}
+					else {
+						PortletDataHandler portletDataHandler =
+							_portletDataHandlerProvider.provide(
+								portletDataContext.getCompanyId(),
+								curPortletId);
+
+						if (portletDataHandler != null) {
+							jxPortletPreferences =
+								portletDataHandler.
+									processImportPortletPreferences(
+										portletDataContext, curPortletId,
+										jxPortletPreferences);
+						}
+					}
+				}
+				finally {
+					portletDataContext.setImportDataRootElement(
+						importDataRootElement);
+				}
+
+				updatePortletPreferences(
+					portletDataContext, ownerId, ownerType, curPlid,
+					curPortletId,
+					PortletPreferencesFactoryUtil.toXML(jxPortletPreferences),
+					importPortletData);
+			}
+		}
+
+		if (preserveScopeLayoutId && (layout != null)) {
+			javax.portlet.PortletPreferences jxPortletPreferences =
+				PortletPreferencesFactoryUtil.getLayoutPortletSetup(
+					layout, portletDataContext.getPortletId());
+
+			try {
+				jxPortletPreferences.setValue("lfrScopeType", scopeType);
+				jxPortletPreferences.setValue(
+					"lfrScopeLayoutUuid", scopeLayoutUuid);
+
+				jxPortletPreferences.store();
+			}
+			finally {
+				portletDataContext.setScopeType(scopeType);
+				portletDataContext.setScopeLayoutUuid(scopeLayoutUuid);
+			}
+		}
+	}
+
+	public void importServicePortletPreferences(
+			PortletDataContext portletDataContext, Element serviceElement)
+		throws PortalException {
+
+		long ownerId = GetterUtil.getLong(
+			serviceElement.attributeValue("owner-id"));
+		int ownerType = GetterUtil.getInteger(
+			serviceElement.attributeValue("owner-type"));
+		String serviceName = serviceElement.attributeValue("service-name");
+
+		PortletPreferences portletPreferences = getPortletPreferences(
+			portletDataContext.getCompanyId(), ownerId, ownerType,
+			LayoutConstants.DEFAULT_PLID, serviceName);
+
+		for (Attribute attribute : serviceElement.attributes()) {
+			serviceElement.remove(attribute);
+		}
+
+		String xml = serviceElement.asXML();
+
+		portletPreferences.setPreferences(xml);
+
+		_portletPreferencesLocalService.updatePortletPreferences(
+			portletPreferences);
+	}
+
+	public void resetPortletScope(
+		PortletDataContext portletDataContext, long groupId) {
+
+		portletDataContext.setScopeGroupId(groupId);
+		portletDataContext.setScopeLayoutUuid(StringPool.BLANK);
+		portletDataContext.setScopeType(StringPool.BLANK);
 	}
 
 	@Override
@@ -691,6 +957,7 @@ public class PortletImportController implements ImportController {
 		portletDataContext.setPlid(targetPlid);
 		portletDataContext.setPortletId(portletId);
 		portletDataContext.setPrivateLayout(layout.isPrivateLayout());
+		portletDataContext.setType("portlet");
 
 		return portletDataContext;
 	}
@@ -770,264 +1037,6 @@ public class PortletImportController implements ImportController {
 		finally {
 			portletDataContext.setImportDataRootElement(importDataRootElement);
 		}
-	}
-
-	protected void importPortletData(
-			PortletDataContext portletDataContext, Element portletDataElement)
-		throws Exception {
-
-		long ownerId = PortletKeys.PREFS_OWNER_ID_DEFAULT;
-		int ownerType = PortletKeys.PREFS_OWNER_TYPE_LAYOUT;
-
-		PortletPreferences portletPreferences =
-			PortletPreferencesUtil.fetchByO_O_P_P(
-				ownerId, ownerType, portletDataContext.getPlid(),
-				portletDataContext.getPortletId());
-
-		if (portletPreferences == null) {
-			portletPreferences =
-				new com.liferay.portal.model.impl.PortletPreferencesImpl();
-		}
-
-		String xml = importPortletData(
-			portletDataContext, portletPreferences, portletDataElement);
-
-		if (Validator.isNotNull(xml)) {
-			_portletPreferencesLocalService.updatePreferences(
-				ownerId, ownerType, portletDataContext.getPlid(),
-				portletDataContext.getPortletId(), xml);
-		}
-	}
-
-	protected void importPortletPreferences(
-			PortletDataContext portletDataContext, long companyId, long groupId,
-			Layout layout, Element parentElement, boolean preserveScopeLayoutId,
-			boolean importPortletArchivedSetups, boolean importPortletData,
-			boolean importPortletSetup, boolean importPortletUserPreferences)
-		throws Exception {
-
-		long plid = LayoutConstants.DEFAULT_PLID;
-		String scopeType = StringPool.BLANK;
-		String scopeLayoutUuid = StringPool.BLANK;
-
-		if (layout != null) {
-			plid = layout.getPlid();
-
-			if (preserveScopeLayoutId) {
-				javax.portlet.PortletPreferences jxPortletPreferences =
-					PortletPreferencesFactoryUtil.getLayoutPortletSetup(
-						layout, portletDataContext.getPortletId());
-
-				scopeType = GetterUtil.getString(
-					jxPortletPreferences.getValue("lfrScopeType", null));
-				scopeLayoutUuid = GetterUtil.getString(
-					jxPortletPreferences.getValue("lfrScopeLayoutUuid", null));
-
-				portletDataContext.setScopeType(scopeType);
-				portletDataContext.setScopeLayoutUuid(scopeLayoutUuid);
-			}
-		}
-
-		List<Element> portletPreferencesElements = parentElement.elements(
-			"portlet-preferences");
-
-		for (Element portletPreferencesElement : portletPreferencesElements) {
-			String path = portletPreferencesElement.attributeValue("path");
-
-			if (portletDataContext.isPathNotProcessed(path)) {
-				String xml = null;
-
-				Element element = null;
-
-				try {
-					xml = portletDataContext.getZipEntryAsString(path);
-
-					Document preferencesDocument = SAXReaderUtil.read(xml);
-
-					element = preferencesDocument.getRootElement();
-				}
-				catch (DocumentException de) {
-					throw new SystemException(de);
-				}
-
-				long ownerId = GetterUtil.getLong(
-					element.attributeValue("owner-id"));
-				int ownerType = GetterUtil.getInteger(
-					element.attributeValue("owner-type"));
-
-				if ((ownerType == PortletKeys.PREFS_OWNER_TYPE_COMPANY) ||
-					!importPortletSetup) {
-
-					continue;
-				}
-
-				if ((ownerType == PortletKeys.PREFS_OWNER_TYPE_ARCHIVED) &&
-					!importPortletArchivedSetups) {
-
-					continue;
-				}
-
-				if ((ownerType == PortletKeys.PREFS_OWNER_TYPE_USER) &&
-					(ownerId != PortletKeys.PREFS_OWNER_ID_DEFAULT) &&
-					!importPortletUserPreferences) {
-
-					continue;
-				}
-
-				long curPlid = plid;
-				String curPortletId = portletDataContext.getPortletId();
-
-				if (ownerType == PortletKeys.PREFS_OWNER_TYPE_GROUP) {
-					curPlid = PortletKeys.PREFS_PLID_SHARED;
-					curPortletId = portletDataContext.getRootPortletId();
-					ownerId = portletDataContext.getScopeGroupId();
-				}
-
-				if (ownerType == PortletKeys.PREFS_OWNER_TYPE_ARCHIVED) {
-					String userUuid = element.attributeValue(
-						"archive-user-uuid");
-
-					long userId = portletDataContext.getUserId(userUuid);
-
-					String name = element.attributeValue("archive-name");
-
-					curPortletId = portletDataContext.getRootPortletId();
-
-					PortletItem portletItem =
-						_portletItemLocalService.updatePortletItem(
-							userId, groupId, name, curPortletId,
-							PortletPreferences.class.getName());
-
-					curPlid = LayoutConstants.DEFAULT_PLID;
-					ownerId = portletItem.getPortletItemId();
-				}
-
-				if (ownerType == PortletKeys.PREFS_OWNER_TYPE_USER) {
-					String userUuid = element.attributeValue("user-uuid");
-
-					ownerId = portletDataContext.getUserId(userUuid);
-				}
-
-				boolean defaultUser = GetterUtil.getBoolean(
-					element.attributeValue("default-user"));
-
-				if (defaultUser) {
-					ownerId = _userLocalService.getDefaultUserId(companyId);
-				}
-
-				javax.portlet.PortletPreferences jxPortletPreferences =
-					PortletPreferencesFactoryUtil.fromXML(
-						companyId, ownerId, ownerType, curPlid, curPortletId,
-						xml);
-
-				Element importDataRootElement =
-					portletDataContext.getImportDataRootElement();
-
-				try {
-					Element preferenceDataElement =
-						portletPreferencesElement.element("preference-data");
-
-					if (preferenceDataElement != null) {
-						portletDataContext.setImportDataRootElement(
-							preferenceDataElement);
-					}
-
-					ExportImportPortletPreferencesProcessor
-						exportImportPortletPreferencesProcessor =
-							ExportImportPortletPreferencesProcessorRegistryUtil.
-								getExportImportPortletPreferencesProcessor(
-									PortletConstants.getRootPortletId(
-										curPortletId));
-
-					if (exportImportPortletPreferencesProcessor != null) {
-						List<Capability> importCapabilities =
-							exportImportPortletPreferencesProcessor.
-								getImportCapabilities();
-
-						if (ListUtil.isNotEmpty(importCapabilities)) {
-							for (Capability importCapability :
-									importCapabilities) {
-
-								importCapability.process(
-									portletDataContext, jxPortletPreferences);
-							}
-						}
-
-						exportImportPortletPreferencesProcessor.
-							processImportPortletPreferences(
-								portletDataContext, jxPortletPreferences);
-					}
-					else {
-						PortletDataHandler portletDataHandler =
-							_portletDataHandlerProvider.provide(
-								portletDataContext.getCompanyId(),
-								curPortletId);
-
-						if (portletDataHandler != null) {
-							jxPortletPreferences =
-								portletDataHandler.
-									processImportPortletPreferences(
-										portletDataContext, curPortletId,
-										jxPortletPreferences);
-						}
-					}
-				}
-				finally {
-					portletDataContext.setImportDataRootElement(
-						importDataRootElement);
-				}
-
-				updatePortletPreferences(
-					portletDataContext, ownerId, ownerType, curPlid,
-					curPortletId,
-					PortletPreferencesFactoryUtil.toXML(jxPortletPreferences),
-					importPortletData);
-			}
-		}
-
-		if (preserveScopeLayoutId && (layout != null)) {
-			javax.portlet.PortletPreferences jxPortletPreferences =
-				PortletPreferencesFactoryUtil.getLayoutPortletSetup(
-					layout, portletDataContext.getPortletId());
-
-			try {
-				jxPortletPreferences.setValue("lfrScopeType", scopeType);
-				jxPortletPreferences.setValue(
-					"lfrScopeLayoutUuid", scopeLayoutUuid);
-
-				jxPortletPreferences.store();
-			}
-			finally {
-				portletDataContext.setScopeType(scopeType);
-				portletDataContext.setScopeLayoutUuid(scopeLayoutUuid);
-			}
-		}
-	}
-
-	protected void importServicePortletPreferences(
-			PortletDataContext portletDataContext, Element serviceElement)
-		throws PortalException {
-
-		long ownerId = GetterUtil.getLong(
-			serviceElement.attributeValue("owner-id"));
-		int ownerType = GetterUtil.getInteger(
-			serviceElement.attributeValue("owner-type"));
-		String serviceName = serviceElement.attributeValue("service-name");
-
-		PortletPreferences portletPreferences = getPortletPreferences(
-			portletDataContext.getCompanyId(), ownerId, ownerType,
-			LayoutConstants.DEFAULT_PLID, serviceName);
-
-		for (Attribute attribute : serviceElement.attributes()) {
-			serviceElement.remove(attribute);
-		}
-
-		String xml = serviceElement.asXML();
-
-		portletPreferences.setPreferences(xml);
-
-		_portletPreferencesLocalService.updatePortletPreferences(
-			portletPreferences);
 	}
 
 	protected void populateDeletionStagedModelTypes(
@@ -1149,14 +1158,6 @@ public class PortletImportController implements ImportController {
 				portletDataContext.addLocks(className, key, lock);
 			}
 		}
-	}
-
-	protected void resetPortletScope(
-		PortletDataContext portletDataContext, long groupId) {
-
-		portletDataContext.setScopeGroupId(groupId);
-		portletDataContext.setScopeLayoutUuid(StringPool.BLANK);
-		portletDataContext.setScopeType(StringPool.BLANK);
 	}
 
 	@Reference(unbind = "-")

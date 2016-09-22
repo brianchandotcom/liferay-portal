@@ -9,5 +9,6 @@ Export-Package:\
 	com.liferay.push.notifications.service,\
 	com.liferay.push.notifications.service.persistence,\
 	com.liferay.push.notifications.util.comparator
+Import-Package: com.liferay.portal.kernel.model;version="${range;[=,=+)}",*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:

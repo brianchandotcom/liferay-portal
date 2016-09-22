@@ -12,5 +12,6 @@ Export-Package:\
 	com.liferay.dynamic.data.mapping.storage,\
 	com.liferay.dynamic.data.mapping.util,\
 	com.liferay.dynamic.data.mapping.util.comparator
+Import-Package: com.liferay.portal.kernel.model;version="${range;[=,=+)}",*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Dynamic Data Mapping

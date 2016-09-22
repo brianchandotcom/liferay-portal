@@ -25,15 +25,12 @@ public class ArithmeticExpression extends BinaryExpression {
 	public ArithmeticExpression(
 		String operator, Expression leftOperand, Expression rightOperand) {
 
-		super(leftOperand, rightOperand);
-
-		_operator = operator;
+		super(operator, leftOperand, rightOperand);
 	}
 
-	public String getOperator() {
-		return _operator;
+	@Override
+	public <T> T accept(ExpressionVisitor<T> visitor) {
+		return visitor.visit(this);
 	}
-
-	private final String _operator;
 
 }

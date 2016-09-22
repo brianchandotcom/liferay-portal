@@ -14,36 +14,41 @@
 
 package com.liferay.dynamic.data.mapping.expression.model;
 
-import aQute.bnd.annotation.ProviderType;
-
 /**
- * @author Leonardo Barros
+ * @author Marcellus Tavares
  */
-@ProviderType
-public abstract class BinaryExpression extends Expression {
+public interface ExpressionVisitor<T> {
 
-	public BinaryExpression(
-		String operator, Expression leftOperand, Expression rightOperand) {
-
-		_operator = operator;
-		_leftOperand = leftOperand;
-		_rightOperand = rightOperand;
+	public default T visit(AndExpression andExpression) {
+		return null;
 	}
 
-	public Expression getLeftOperand() {
-		return _leftOperand;
+	public default T visit(ArithmeticExpression arithmeticExpression) {
+		return null;
 	}
 
-	public String getOperator() {
-		return _operator;
+	public default T visit(ComparisonExpression comparisonExpression) {
+		return null;
 	}
 
-	public Expression getRightOperand() {
-		return _rightOperand;
+	public default T visit(FunctionCallExpression functionCallExpression) {
+		return null;
 	}
 
-	private final Expression _leftOperand;
-	private final String _operator;
-	private final Expression _rightOperand;
+	public default T visit(MinusExpression minusExpression) {
+		return null;
+	}
+
+	public default T visit(NotExpression notExpression) {
+		return null;
+	}
+
+	public default T visit(OrExpression orExpression) {
+		return null;
+	}
+
+	public default T visit(Term term) {
+		return null;
+	}
 
 }

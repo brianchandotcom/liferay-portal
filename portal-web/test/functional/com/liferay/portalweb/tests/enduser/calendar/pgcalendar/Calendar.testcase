@@ -2689,6 +2689,7 @@
 			<var name="eventTitle" value="Current Day Event" />
 			<var name="pageName" value="${pageName}" />
 			<var name="siteCalendarName" value="${siteName}" />
+			<var name="siteName" value="${siteName}" />
 		</execute>
 
 		<var method="selenium#getLocation()" name="rssURL" />

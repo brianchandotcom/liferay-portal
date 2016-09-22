@@ -77,8 +77,6 @@
 	</tear-down>
 
 	<command name="RejectPageRevisionPG" priority="4">
-		<property name="portal.acceptance" value="false" />
-
 		<var name="pageName" value="Page Revision Page" />
 
 		<execute macro="Navigator#gotoStagedSitePage">

@@ -283,205 +283,207 @@ while (manageableCalendarsIterator.hasNext()) {
 	<aui:input name="updateCalendarBookingInstance" type="hidden" />
 	<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_PUBLISH %>" />
 
-	<liferay-ui:error exception="<%= CalendarBookingDurationException.class %>" message="please-enter-a-start-date-that-comes-before-the-end-date" />
-	<liferay-ui:error exception="<%= CalendarBookingRecurrenceException.class %>" message="the-last-repeating-date-should-come-after-the-event-start-date" />
+	<div class="lfr-form-content">
+		<liferay-ui:error exception="<%= CalendarBookingDurationException.class %>" message="please-enter-a-start-date-that-comes-before-the-end-date" />
+		<liferay-ui:error exception="<%= CalendarBookingRecurrenceException.class %>" message="the-last-repeating-date-should-come-after-the-event-start-date" />
 
-	<liferay-ui:asset-categories-error />
+		<liferay-ui:asset-categories-error />
 
-	<liferay-ui:asset-tags-error />
+		<liferay-ui:asset-tags-error />
 
-	<aui:model-context bean="<%= calendarBooking %>" model="<%= CalendarBooking.class %>" />
+		<aui:model-context bean="<%= calendarBooking %>" model="<%= CalendarBooking.class %>" />
 
-	<aui:fieldset markupView="lexicon">
-		<aui:input defaultLanguageId="<%= themeDisplay.getLanguageId() %>" name="title" />
+		<aui:fieldset markupView="lexicon">
+			<aui:input defaultLanguageId="<%= themeDisplay.getLanguageId() %>" name="title" />
 
-		<div class="<%= allDay ? "allday-class-active" : "" %>" id="<portlet:namespace />startDateContainer">
-			<aui:input ignoreRequestValue="<%= true %>" label="starts" name="startTime" timeFormat="<%= timeFormat %>" value="<%= startTimeJCalendar %>" />
-		</div>
-
-		<div class="<%= allDay ? "allday-class-active" : "" %>" id="<portlet:namespace />endDateContainer">
-			<aui:input ignoreRequestValue="<%= true %>" label="ends" name="endTime" timeFormat="<%= timeFormat %>" value="<%= endTimeJCalendar %>" />
-		</div>
-
-		<aui:input checked="<%= allDay %>" name="allDay" />
-
-		<aui:field-wrapper cssClass="calendar-portlet-recurrence-container" inlineField="<%= true %>" label="">
-			<aui:input checked="<%= recurring %>" name="repeat" type="checkbox" />
-
-			<a class="calendar-portlet-recurrence-summary" href="javascript:;" id="<portlet:namespace />summary"></a>
-		</aui:field-wrapper>
-
-		<aui:input defaultLanguageId="<%= themeDisplay.getLanguageId() %>" name="description" />
-	</aui:fieldset>
-
-	<aui:fieldset markupView="lexicon">
-		<liferay-ui:panel-container extended="<%= true %>" id="calendarBookingDetailsPanelContainer" persistState="<%= true %>">
-			<liferay-ui:panel collapsible="<%= true %>" defaultState="closed" extended="<%= false %>" id="calendarBookingDetailsPanel" markupView="lexicon" persistState="<%= true %>" title="details">
-				<aui:select label="calendar" name="calendarId">
-
-					<%
-					for (Calendar curCalendar : manageableCalendars) {
-						if ((calendarBooking != null) && (curCalendar.getCalendarId() != calendarId) && (CalendarBookingLocalServiceUtil.getCalendarBookingsCount(curCalendar.getCalendarId(), calendarBooking.getParentCalendarBookingId()) > 0)) {
-							continue;
-						}
-
-						CalendarResource curCalendarResource = curCalendar.getCalendarResource();
-
-						String calendarName = curCalendar.getName(locale);
-						String calendarResourceName = curCalendarResource.getName(locale);
-
-						if (!calendarName.equals(calendarResourceName)) {
-							calendarName = calendarResourceName + StringPool.SPACE + StringPool.DASH + StringPool.SPACE + calendarName;
-						}
-					%>
-
-						<aui:option selected="<%= curCalendar.getCalendarId() == calendarId %>" value="<%= curCalendar.getCalendarId() %>"><%= HtmlUtil.escape(calendarName) %></aui:option>
-
-					<%
-					}
-					%>
-
-				</aui:select>
-
-				<aui:input name="location" />
-
-				<liferay-ui:custom-attributes-available className="<%= CalendarBooking.class.getName() %>">
-					<liferay-ui:custom-attribute-list
-						className="<%= CalendarBooking.class.getName() %>"
-						classPK="<%= (calendarBooking != null) ? calendarBooking.getCalendarBookingId() : 0 %>"
-						editable="<%= true %>"
-						label="<%= true %>"
-					/>
-				</liferay-ui:custom-attributes-available>
-
-				<c:if test="<%= calendarBooking == null %>">
-					<aui:field-wrapper label="permissions">
-						<liferay-ui:input-permissions
-							modelName="<%= CalendarBooking.class.getName() %>"
-						/>
-					</aui:field-wrapper>
-				</c:if>
-			</liferay-ui:panel>
-
-			<liferay-ui:panel collapsible="<%= true %>" defaultState='<%= BrowserSnifferUtil.isMobile(request) ? "closed" : "open" %>' extended="<%= false %>" id="calendarBookingInvitationPanel" markupView="lexicon" persistState="<%= true %>" title="invitations">
-				<c:if test="<%= invitable %>">
-					<aui:input inputCssClass="calendar-portlet-invite-resources-input" label="" name="inviteResource" placeholder="add-people-groups-rooms" type="text" />
-
-					<div class="separator"><!-- --></div>
-				</c:if>
-
-				<aui:row cssClass="calendar-booking-invitations">
-					<aui:col width="<%= (calendarBooking != null) ? 25 : 50 %>">
-						<label class="field-label">
-							<liferay-ui:message key="pending" /> (<span id="<portlet:namespace />pendingCounter"><%= pendingCalendarsJSONArray.length() %></span>)
-						</label>
-
-						<div class="calendar-portlet-calendar-list" id="<portlet:namespace />calendarListPending"></div>
-					</aui:col>
-
-					<aui:col width="<%= (calendarBooking != null) ? 25 : 50 %>">
-						<label class="field-label">
-							<liferay-ui:message key="accepted" /> (<span id="<portlet:namespace />acceptedCounter"><%= acceptedCalendarsJSONArray.length() %></span>)
-						</label>
-
-						<div class="calendar-portlet-calendar-list" id="<portlet:namespace />calendarListAccepted"></div>
-					</aui:col>
-
-					<c:if test="<%= calendarBooking != null %>">
-						<aui:col width="<%= 25 %>">
-							<label class="field-label">
-								<liferay-ui:message key="maybe" /> (<span id="<portlet:namespace />maybeCounter"><%= maybeCalendarsJSONArray.length() %></span>)
-							</label>
-
-							<div class="calendar-portlet-calendar-list" id="<portlet:namespace />calendarListMaybe"></div>
-						</aui:col>
-
-						<aui:col width="<%= 25 %>">
-							<label class="field-label">
-								<liferay-ui:message key="declined" /> (<span id="<portlet:namespace />declinedCounter"><%= declinedCalendarsJSONArray.length() %></span>)
-							</label>
-
-							<div class="calendar-portlet-calendar-list" id="<portlet:namespace />calendarListDeclined"></div>
-						</aui:col>
-					</c:if>
-
-					<aui:col width="<%= 100 %>">
-						<div class="calendar-portlet-list-header toggler-header-collapsed" id="<portlet:namespace />checkAvailability">
-							<span class="calendar-portlet-list-arrow"></span>
-
-							<span class="calendar-portlet-list-text"><liferay-ui:message key="resources-availability" /></span>
-						</div>
-
-						<div class="calendar-portlet-availability">
-							<div class="toggler-content-collapsed" id="<portlet:namespace />schedulerContainer">
-								<div id="<portlet:namespace />message"></div>
-
-								<liferay-util:include page="/scheduler.jsp" servletContext="<%= application %>">
-									<liferay-util:param name="activeView" value="<%= activeView %>" />
-									<liferay-util:param name="date" value="<%= String.valueOf(startTime) %>" />
-									<liferay-util:param name="filterCalendarBookings" value='<%= "window." + renderResponse.getNamespace() + "filterCalendarBookings" %>' />
-									<liferay-util:param name="hideAgendaView" value="<%= Boolean.TRUE.toString() %>" />
-									<liferay-util:param name="hideMonthView" value="<%= Boolean.TRUE.toString() %>" />
-									<liferay-util:param name="preventPersistence" value="<%= Boolean.TRUE.toString() %>" />
-									<liferay-util:param name="readOnly" value="<%= Boolean.TRUE.toString() %>" />
-								</liferay-util:include>
-							</div>
-						</div>
-					</aui:col>
-				</aui:row>
-			</liferay-ui:panel>
-
-			<liferay-ui:panel collapsible="<%= true %>" defaultState="closed" extended="<%= false %>" id="calendarBookingReminderPanel" markupView="lexicon" persistState="<%= true %>" title="reminders">
-				<div class="calendar-booking-reminders" id="<portlet:namespace />reminders"></div>
-			</liferay-ui:panel>
-
-			<liferay-ui:panel collapsible="<%= true %>" defaultState="closed" extended="<%= false %>" id="calendarBookingCategorizationPanel" markupView="lexicon" persistState="<%= true %>" title="categorization">
-				<liferay-asset:asset-categories-selector className="<%= CalendarBooking.class.getName() %>" classPK="<%= calendarBookingId %>" />
-
-				<liferay-asset:asset-tags-selector className="<%= CalendarBooking.class.getName() %>" classPK="<%= calendarBookingId %>" />
-			</liferay-ui:panel>
-
-			<liferay-ui:panel collapsible="<%= true %>" defaultState="closed" extended="<%= false %>" id="calendarBookingAssetLinksPanel" markupView="lexicon" persistState="<%= true %>" title="related-assets">
-				<liferay-ui:input-asset-links
-					className="<%= CalendarBooking.class.getName() %>"
-					classPK="<%= calendarBookingId %>"
-				/>
-			</liferay-ui:panel>
-		</liferay-ui:panel-container>
-
-		<aui:button-row>
-			<div class="alert alert-info <%= (hasWorkflowDefinitionLink && approved) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />approvalProcessAlert">
-				<liferay-ui:message arguments="<%= ResourceActionsUtil.getModelResource(locale, CalendarBooking.class.getName()) %>" key="this-x-is-approved.-publishing-these-changes-will-cause-it-to-be-unpublished-and-go-through-the-approval-process-again" translateArguments="<%= false %>" />
+			<div class="<%= allDay ? "allday-class-active" : "" %>" id="<portlet:namespace />startDateContainer">
+				<aui:input ignoreRequestValue="<%= true %>" label="starts" name="startTime" timeFormat="<%= timeFormat %>" value="<%= startTimeJCalendar %>" />
 			</div>
 
-			<%
-			String publishButtonLabel = "publish";
+			<div class="<%= allDay ? "allday-class-active" : "" %>" id="<portlet:namespace />endDateContainer">
+				<aui:input ignoreRequestValue="<%= true %>" label="ends" name="endTime" timeFormat="<%= timeFormat %>" value="<%= endTimeJCalendar %>" />
+			</div>
 
-			if (hasWorkflowDefinitionLink) {
-				publishButtonLabel = "submit-for-publication";
-			}
-			%>
+			<aui:input checked="<%= allDay %>" name="allDay" />
 
-			<aui:button name="publishButton" type="submit" value="<%= publishButtonLabel %>" />
+			<aui:field-wrapper cssClass="calendar-portlet-recurrence-container" inlineField="<%= true %>" label="">
+				<aui:input checked="<%= recurring %>" name="repeat" type="checkbox" />
 
-			<aui:button name="saveButton" primary="<%= false %>" type="submit" value="save-as-draft" />
+				<a class="calendar-portlet-recurrence-summary" href="javascript:;" id="<portlet:namespace />summary"></a>
+			</aui:field-wrapper>
 
-			<c:if test="<%= calendarBooking != null %>">
-				<liferay-security:permissionsURL
-					modelResource="<%= CalendarBooking.class.getName() %>"
-					modelResourceDescription="<%= calendarBooking.getTitle(locale) %>"
-					redirect="<%= redirectURL %>"
-					resourceGroupId="<%= calendarBooking.getGroupId() %>"
-					resourcePrimKey="<%= String.valueOf(calendarBooking.getCalendarBookingId()) %>"
-					var="permissionsCalendarBookingURL"
-				/>
+			<aui:input defaultLanguageId="<%= themeDisplay.getLanguageId() %>" name="description" />
+		</aui:fieldset>
 
-				<aui:button href="<%= permissionsCalendarBookingURL %>" value="permissions" />
-			</c:if>
-		</aui:button-row>
-	</aui:fieldset>
+		<aui:fieldset markupView="lexicon">
+			<liferay-ui:panel-container extended="<%= true %>" id="calendarBookingDetailsPanelContainer" persistState="<%= true %>">
+				<liferay-ui:panel collapsible="<%= true %>" defaultState="closed" extended="<%= false %>" id="calendarBookingDetailsPanel" markupView="lexicon" persistState="<%= true %>" title="details">
+					<aui:select label="calendar" name="calendarId">
 
-	<%@ include file="/calendar_booking_recurrence_container.jspf" %>
+						<%
+						for (Calendar curCalendar : manageableCalendars) {
+							if ((calendarBooking != null) && (curCalendar.getCalendarId() != calendarId) && (CalendarBookingLocalServiceUtil.getCalendarBookingsCount(curCalendar.getCalendarId(), calendarBooking.getParentCalendarBookingId()) > 0)) {
+								continue;
+							}
+
+							CalendarResource curCalendarResource = curCalendar.getCalendarResource();
+
+							String calendarName = curCalendar.getName(locale);
+							String calendarResourceName = curCalendarResource.getName(locale);
+
+							if (!calendarName.equals(calendarResourceName)) {
+								calendarName = calendarResourceName + StringPool.SPACE + StringPool.DASH + StringPool.SPACE + calendarName;
+							}
+						%>
+
+							<aui:option selected="<%= curCalendar.getCalendarId() == calendarId %>" value="<%= curCalendar.getCalendarId() %>"><%= HtmlUtil.escape(calendarName) %></aui:option>
+
+						<%
+						}
+						%>
+
+					</aui:select>
+
+					<aui:input name="location" />
+
+					<liferay-ui:custom-attributes-available className="<%= CalendarBooking.class.getName() %>">
+						<liferay-ui:custom-attribute-list
+							className="<%= CalendarBooking.class.getName() %>"
+							classPK="<%= (calendarBooking != null) ? calendarBooking.getCalendarBookingId() : 0 %>"
+							editable="<%= true %>"
+							label="<%= true %>"
+						/>
+					</liferay-ui:custom-attributes-available>
+
+					<c:if test="<%= calendarBooking == null %>">
+						<aui:field-wrapper label="permissions">
+							<liferay-ui:input-permissions
+								modelName="<%= CalendarBooking.class.getName() %>"
+							/>
+						</aui:field-wrapper>
+					</c:if>
+				</liferay-ui:panel>
+
+				<liferay-ui:panel collapsible="<%= true %>" defaultState='<%= BrowserSnifferUtil.isMobile(request) ? "closed" : "open" %>' extended="<%= false %>" id="calendarBookingInvitationPanel" markupView="lexicon" persistState="<%= true %>" title="invitations">
+					<c:if test="<%= invitable %>">
+						<aui:input inputCssClass="calendar-portlet-invite-resources-input" label="" name="inviteResource" placeholder="add-people-groups-rooms" type="text" />
+
+						<div class="separator"><!-- --></div>
+					</c:if>
+
+					<aui:row cssClass="calendar-booking-invitations">
+						<aui:col width="<%= (calendarBooking != null) ? 25 : 50 %>">
+							<label class="field-label">
+								<liferay-ui:message key="pending" /> (<span id="<portlet:namespace />pendingCounter"><%= pendingCalendarsJSONArray.length() %></span>)
+							</label>
+
+							<div class="calendar-portlet-calendar-list" id="<portlet:namespace />calendarListPending"></div>
+						</aui:col>
+
+						<aui:col width="<%= (calendarBooking != null) ? 25 : 50 %>">
+							<label class="field-label">
+								<liferay-ui:message key="accepted" /> (<span id="<portlet:namespace />acceptedCounter"><%= acceptedCalendarsJSONArray.length() %></span>)
+							</label>
+
+							<div class="calendar-portlet-calendar-list" id="<portlet:namespace />calendarListAccepted"></div>
+						</aui:col>
+
+						<c:if test="<%= calendarBooking != null %>">
+							<aui:col width="<%= 25 %>">
+								<label class="field-label">
+									<liferay-ui:message key="maybe" /> (<span id="<portlet:namespace />maybeCounter"><%= maybeCalendarsJSONArray.length() %></span>)
+								</label>
+
+								<div class="calendar-portlet-calendar-list" id="<portlet:namespace />calendarListMaybe"></div>
+							</aui:col>
+
+							<aui:col width="<%= 25 %>">
+								<label class="field-label">
+									<liferay-ui:message key="declined" /> (<span id="<portlet:namespace />declinedCounter"><%= declinedCalendarsJSONArray.length() %></span>)
+								</label>
+
+								<div class="calendar-portlet-calendar-list" id="<portlet:namespace />calendarListDeclined"></div>
+							</aui:col>
+						</c:if>
+
+						<aui:col width="<%= 100 %>">
+							<div class="calendar-portlet-list-header toggler-header-collapsed" id="<portlet:namespace />checkAvailability">
+								<span class="calendar-portlet-list-arrow"></span>
+
+								<span class="calendar-portlet-list-text"><liferay-ui:message key="resources-availability" /></span>
+							</div>
+
+							<div class="calendar-portlet-availability">
+								<div class="toggler-content-collapsed" id="<portlet:namespace />schedulerContainer">
+									<div id="<portlet:namespace />message"></div>
+
+									<liferay-util:include page="/scheduler.jsp" servletContext="<%= application %>">
+										<liferay-util:param name="activeView" value="<%= activeView %>" />
+										<liferay-util:param name="date" value="<%= String.valueOf(startTime) %>" />
+										<liferay-util:param name="filterCalendarBookings" value='<%= "window." + renderResponse.getNamespace() + "filterCalendarBookings" %>' />
+										<liferay-util:param name="hideAgendaView" value="<%= Boolean.TRUE.toString() %>" />
+										<liferay-util:param name="hideMonthView" value="<%= Boolean.TRUE.toString() %>" />
+										<liferay-util:param name="preventPersistence" value="<%= Boolean.TRUE.toString() %>" />
+										<liferay-util:param name="readOnly" value="<%= Boolean.TRUE.toString() %>" />
+									</liferay-util:include>
+								</div>
+							</div>
+						</aui:col>
+					</aui:row>
+				</liferay-ui:panel>
+
+				<liferay-ui:panel collapsible="<%= true %>" defaultState="closed" extended="<%= false %>" id="calendarBookingReminderPanel" markupView="lexicon" persistState="<%= true %>" title="reminders">
+					<div class="calendar-booking-reminders" id="<portlet:namespace />reminders"></div>
+				</liferay-ui:panel>
+
+				<liferay-ui:panel collapsible="<%= true %>" defaultState="closed" extended="<%= false %>" id="calendarBookingCategorizationPanel" markupView="lexicon" persistState="<%= true %>" title="categorization">
+					<liferay-asset:asset-categories-selector className="<%= CalendarBooking.class.getName() %>" classPK="<%= calendarBookingId %>" />
+
+					<liferay-asset:asset-tags-selector className="<%= CalendarBooking.class.getName() %>" classPK="<%= calendarBookingId %>" />
+				</liferay-ui:panel>
+
+				<liferay-ui:panel collapsible="<%= true %>" defaultState="closed" extended="<%= false %>" id="calendarBookingAssetLinksPanel" markupView="lexicon" persistState="<%= true %>" title="related-assets">
+					<liferay-ui:input-asset-links
+						className="<%= CalendarBooking.class.getName() %>"
+						classPK="<%= calendarBookingId %>"
+					/>
+				</liferay-ui:panel>
+			</liferay-ui:panel-container>
+		</aui:fieldset>
+
+		<%@ include file="/calendar_booking_recurrence_container.jspf" %>
+	</div>
+
+	<aui:button-row>
+		<div class="alert alert-info <%= (hasWorkflowDefinitionLink && approved) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />approvalProcessAlert">
+			<liferay-ui:message arguments="<%= ResourceActionsUtil.getModelResource(locale, CalendarBooking.class.getName()) %>" key="this-x-is-approved.-publishing-these-changes-will-cause-it-to-be-unpublished-and-go-through-the-approval-process-again" translateArguments="<%= false %>" />
+		</div>
+
+		<%
+		String publishButtonLabel = "publish";
+
+		if (hasWorkflowDefinitionLink) {
+			publishButtonLabel = "submit-for-publication";
+		}
+		%>
+
+		<aui:button cssClass="btn-lg" name="publishButton" type="submit" value="<%= publishButtonLabel %>" />
+
+		<aui:button cssClass="btn-lg" name="saveButton" primary="<%= false %>" type="submit" value="save-as-draft" />
+
+		<c:if test="<%= calendarBooking != null %>">
+			<liferay-security:permissionsURL
+				modelResource="<%= CalendarBooking.class.getName() %>"
+				modelResourceDescription="<%= calendarBooking.getTitle(locale) %>"
+				redirect="<%= redirectURL %>"
+				resourceGroupId="<%= calendarBooking.getGroupId() %>"
+				resourcePrimKey="<%= String.valueOf(calendarBooking.getCalendarBookingId()) %>"
+				var="permissionsCalendarBookingURL"
+			/>
+
+			<aui:button cssClass="btn-lg" href="<%= permissionsCalendarBookingURL %>" value="permissions" />
+		</c:if>
+	</aui:button-row>
 </aui:form>
 
 <aui:script>

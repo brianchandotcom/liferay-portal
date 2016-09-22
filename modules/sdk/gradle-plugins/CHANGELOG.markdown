@@ -198,6 +198,12 @@ dependency to version 2.0.0.
 - [LPS-66906]: Update the [Liferay Gradle Plugins JS Transpiler] dependency to
 version 2.0.0.
 
+## 2.0.38 - 2016-09-21
+
+### Changed
+- [LPS-66853]: Update the [Liferay Source Formatter] dependency to version
+1.0.282.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
 [Liferay CSS Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/css-builder

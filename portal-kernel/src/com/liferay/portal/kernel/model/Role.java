@@ -93,6 +93,8 @@ public interface Role extends RoleModel, PersistedModel {
 
 	public java.lang.String getTypeLabel();
 
+	public boolean isImplied();
+
 	public boolean isSystem();
 
 	public boolean isTeam();

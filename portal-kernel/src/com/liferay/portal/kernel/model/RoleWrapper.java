@@ -196,6 +196,11 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	}
 
 	@Override
+	public boolean isImplied() {
+		return _role.isImplied();
+	}
+
+	@Override
 	public boolean isNew() {
 		return _role.isNew();
 	}

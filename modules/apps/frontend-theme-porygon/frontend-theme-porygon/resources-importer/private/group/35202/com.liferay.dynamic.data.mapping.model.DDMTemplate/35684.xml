@@ -15,7 +15,7 @@
   <__versionUserId>20164</__versionUserId>
   <__versionUserName>Test Test</__versionUserName>
   <__createDate class="sql-timestamp">2016-09-20 13:40:43.42</__createDate>
-  <__modifiedDate class="sql-timestamp">2016-09-20 13:40:43.42</__modifiedDate>
+  <__modifiedDate class="sql-timestamp">2016-09-22 11:35:27.459</__modifiedDate>
   <__setModifiedDate>false</__setModifiedDate>
   <__classNameId>20006</__classNameId>
   <__originalClassNameId>20006</__originalClassNameId>
@@ -26,7 +26,7 @@
   <__resourceClassNameId>29901</__resourceClassNameId>
   <__templateKey>33494</__templateKey>
   <__originalTemplateKey>33494</__originalTemplateKey>
-  <__version>1.0</__version>
+  <__version>1.1</__version>
   <__name>&lt;?xml version=&apos;1.0&apos; encoding=&apos;UTF-8&apos;?&gt;&lt;root available-locales=&quot;en_US&quot; default-locale=&quot;en_US&quot;&gt;&lt;Name language-id=&quot;en_US&quot;&gt;Entry Card First Item Bigger - Right - ADT&lt;/Name&gt;&lt;/root&gt;</__name>
   <__description></__description>
   <__type>display</__type>
@@ -41,29 +41,23 @@
 
 	&lt;div class=&quot;col-no-padding&quot;&gt;
 		&lt;#list entries as curEntry&gt;
-			&lt;#assign assetRenderer = curEntry.getAssetRenderer() /&gt;
+			&lt;#assign
+				assetRenderer = curEntry.getAssetRenderer()
+				viewURL = (assetLinkBehavior != &quot;showFullContent&quot;)?then(assetPublisherHelper.getAssetViewURL(renderRequest, renderResponse, curEntry, true), assetPublisherHelper.getAssetViewURL(renderRequest, renderResponse, curEntry))
+			/&gt;
 
-			&lt;#assign viewURL = assetPublisherHelper.getAssetViewURL(renderRequest, renderResponse, curEntry) /&gt;
-
-			&lt;#if assetLinkBehavior != &quot;showFullContent&quot;&gt;
-				&lt;#assign viewURL = assetPublisherHelper.getAssetViewURL(renderRequest, renderResponse, curEntry, true) /&gt;
-			&lt;/#if&gt;
+			${(curEntry?index == 0)?then(request.setAttribute(&quot;aspectRatio&quot;, &quot;aspect-ratio-9-to-16&quot;), request.setAttribute(&quot;aspectRatio&quot;, &quot;aspect-ratio-16-to-9&quot;))}
 
 			${request.setAttribute(&quot;viewURL&quot;, viewURL )}
 			${request.setAttribute(&quot;author&quot;, portalUtil.getUserName(assetRenderer.getUserId(), assetRenderer.getUserName()) )}
 
-			&lt;#if curEntry?index == 0 &gt;
-				${request.setAttribute(&quot;aspectRatio&quot;, &quot;aspect-ratio-9-to-16&quot;)}
-			&lt;#else&gt;
-				${request.setAttribute(&quot;aspectRatio&quot;, &quot;aspect-ratio-16-to-9&quot;)}
-			&lt;/#if&gt;
-
 			&lt;@liferay_ui[&quot;asset-display&quot;]
 				assetEntry=curEntry
 				template=&quot;full_content&quot;
-				/&gt;
+			/&gt;
 		&lt;/#list&gt;
 	&lt;/div&gt;
+
 	&lt;div class=&quot;clearfix&quot;&gt;&lt;/div&gt;
 
 	${request.setAttribute(&quot;aspectRatio&quot;, &quot;&quot;)}
@@ -71,7 +65,6 @@
 	${request.setAttribute(&quot;displayMode&quot;, 0)}
 	${request.setAttribute(&quot;pullTo&quot;, &quot;&quot;)}
 	${request.setAttribute(&quot;viewURL&quot;, &quot;&quot; )}
-
 &lt;/#if&gt;</__script>
   <__cacheable>false</__cacheable>
   <__smallImage>false</__smallImage>

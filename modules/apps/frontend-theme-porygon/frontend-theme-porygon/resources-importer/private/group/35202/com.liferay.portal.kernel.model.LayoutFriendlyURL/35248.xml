@@ -13,8 +13,8 @@
   <__setOriginalCompanyId>false</__setOriginalCompanyId>
   <__userId>20164</__userId>
   <__userName>Test Test</__userName>
-  <__createDate>2016-09-20 13:22:50.390 UTC</__createDate>
-  <__modifiedDate>2016-09-20 13:30:40.509 UTC</__modifiedDate>
+  <__createDate class="sql-timestamp">2016-09-20 13:22:50.39</__createDate>
+  <__modifiedDate class="sql-timestamp">2016-09-20 13:30:40.509</__modifiedDate>
   <__setModifiedDate>false</__setModifiedDate>
   <__plid>35242</__plid>
   <__originalPlid>35242</__originalPlid>

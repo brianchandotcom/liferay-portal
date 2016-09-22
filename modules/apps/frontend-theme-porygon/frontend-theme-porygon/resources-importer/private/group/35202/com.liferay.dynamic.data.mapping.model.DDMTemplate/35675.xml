@@ -15,7 +15,7 @@
   <__versionUserId>20164</__versionUserId>
   <__versionUserName>Test Test</__versionUserName>
   <__createDate class="sql-timestamp">2016-09-20 13:39:02.931</__createDate>
-  <__modifiedDate class="sql-timestamp">2016-09-20 13:39:02.931</__modifiedDate>
+  <__modifiedDate class="sql-timestamp">2016-09-22 11:35:56.376</__modifiedDate>
   <__setModifiedDate>false</__setModifiedDate>
   <__classNameId>20006</__classNameId>
   <__originalClassNameId>20006</__originalClassNameId>
@@ -26,7 +26,7 @@
   <__resourceClassNameId>29901</__resourceClassNameId>
   <__templateKey>33482</__templateKey>
   <__originalTemplateKey>33482</__originalTemplateKey>
-  <__version>1.0</__version>
+  <__version>1.1</__version>
   <__name>&lt;?xml version=&apos;1.0&apos; encoding=&apos;UTF-8&apos;?&gt;&lt;root available-locales=&quot;en_US&quot; default-locale=&quot;en_US&quot;&gt;&lt;Name language-id=&quot;en_US&quot;&gt;Entry Full Screen ADT&lt;/Name&gt;&lt;/root&gt;</__name>
   <__description></__description>
   <__type>display</__type>
@@ -48,7 +48,7 @@
 				&lt;@liferay_ui[&quot;asset-display&quot;]
 					assetEntry=curEntry
 					template=&quot;full_content&quot;
-					/&gt;
+				/&gt;
 			&lt;/#list&gt;
 		&lt;/div&gt;
 	&lt;/div&gt;

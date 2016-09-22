@@ -15,7 +15,7 @@
   <__versionUserId>20164</__versionUserId>
   <__versionUserName>Test Test</__versionUserName>
   <__createDate class="sql-timestamp">2016-09-20 11:32:50.702</__createDate>
-  <__modifiedDate class="sql-timestamp">2016-09-22 11:18:07.952</__modifiedDate>
+  <__modifiedDate class="sql-timestamp">2016-09-22 11:33:26.739</__modifiedDate>
   <__setModifiedDate>false</__setModifiedDate>
   <__classNameId>29836</__classNameId>
   <__originalClassNameId>29836</__originalClassNameId>
@@ -26,7 +26,7 @@
   <__resourceClassNameId>29993</__resourceClassNameId>
   <__templateKey>33373</__templateKey>
   <__originalTemplateKey>33373</__originalTemplateKey>
-  <__version>1.3</__version>
+  <__version>1.4</__version>
   <__name>&lt;?xml version=&apos;1.0&apos; encoding=&apos;UTF-8&apos;?&gt;&lt;root available-locales=&quot;en_US&quot; default-locale=&quot;en_US&quot;&gt;&lt;Name language-id=&quot;en_US&quot;&gt;Porygon New Entry Template&lt;/Name&gt;&lt;/root&gt;</__name>
   <__description></__description>
   <__type>display</__type>
@@ -35,26 +35,21 @@
   <__originalMode></__originalMode>
   <__language>ftl</__language>
   <__originalLanguage>ftl</__originalLanguage>
-  <__script>&lt;#assign displayMode = getterUtil.getInteger(request.attributes.displayMode!0,0)&gt;
-&lt;#assign author = request.attributes.author!&quot;&quot; &gt;
-&lt;#assign viewURL = request.attributes.viewURL!&quot;&quot; &gt;
+  <__script>&lt;#assign
+	author = request.attributes.author!&quot;&quot;
+	displayMode = getterUtil.getInteger(request.attributes.displayMode!0,0)
+	viewURL = request.attributes.viewURL!&quot;&quot;
+/&gt;
 
 &lt;#if displayMode == 1 &gt;
-	&lt;#assign aspectRatio = request.attributes.aspectRatio!&quot;&quot;&gt;
-	&lt;#assign pullTo = request.attributes.pullTo!&quot;&quot;&gt;
-
-	&lt;#if pullTo == &quot;right&quot; &gt;
-		&lt;#assign pullTo = &quot;pull-sm-right&quot; &gt;
-	&lt;/#if&gt;
+	&lt;#assign
+		aspectRatio = request.attributes.aspectRatio!&quot;&quot;
+		pullTo = (request.attributes.pullTo!&quot;&quot; == &quot;right&quot;)?then(&quot;pull-sm-right&quot;, &quot;&quot;)
+	/&gt;
 
 	&lt;div class=&quot;blog-list-card col-sm-6 ${pullTo}&quot;&gt;
 		&lt;div class=&quot;asset-abstract&quot;&gt;
-
-		&lt;#if coverImage.getData()?? &amp;&amp; coverImage.getData() != &quot;&quot;&gt;
-			&lt;div class=&quot;aspect-ratio ${aspectRatio} aspect-ratio-bg-center aspect-ratio-bg-cover&quot; style=&quot;background-image: url(&apos;${coverImage.getData()}&apos;&quot;&gt;
-		&lt;#else&gt;
-			&lt;div class=&quot;aspect-ratio ${aspectRatio} aspect-ratio-bg-center aspect-ratio-bg-cover&quot;&gt;
-		&lt;/#if&gt;
+			&lt;div class=&quot;aspect-ratio ${aspectRatio} aspect-ratio-bg-center aspect-ratio-bg-cover&quot; style=&quot;background-image: url(&apos;${(coverImage.getData()?? &amp;&amp; coverImage.getData() != &quot;&quot;)?then(coverImage.getData(), &apos;&apos;)}&apos;)&quot;&gt;
 				&lt;div class=&quot;blog-list-card-content container-fluid&quot;&gt;
 					&lt;h2 class=&quot;asset-title&quot;&gt;
 						&lt;a href=&quot;${viewURL}&quot;&gt;
@@ -65,6 +60,7 @@
 					&lt;div class=&quot;asset-content&quot;&gt;
 						&lt;span class=&quot;asset-user-name&quot;&gt;
 							&lt;@liferay.language key=&quot;by&quot; /&gt;
+
 							${author}
 						&lt;/span&gt;
 					&lt;/div&gt;
@@ -77,7 +73,7 @@
 
 	&lt;div class=&quot;asset-abstract ${colMd}&quot;&gt;
 		&lt;#if coverImage.getData()?? &amp;&amp; coverImage.getData() != &quot;&quot;&gt;
-			&lt;a class=&quot;aspect-ratio aspect-ratio-16-to-9 aspect-ratio-bg-center aspect-ratio-bg-cover&quot; href=&quot;${viewURL}&quot; style=&quot;background-image: url(&apos;${coverImage.getData()}&apos;&quot;&gt;
+			&lt;a class=&quot;aspect-ratio aspect-ratio-16-to-9 aspect-ratio-bg-center aspect-ratio-bg-cover&quot; href=&quot;${viewURL}&quot; style=&quot;background-image: url(&apos;${(coverImage.getData()?? &amp;&amp; coverImage.getData() != &quot;&quot;)?then(coverImage.getData(), &apos;&apos;)}&apos;)&quot;&gt;
 			&lt;/a&gt;
 		&lt;/#if&gt;
 
@@ -98,13 +94,14 @@
 
 				&lt;div class=&quot;asset-user-name&quot;&gt;
 					&lt;@liferay.language key=&quot;by&quot; /&gt;
+
 					${author}
 				&lt;/div&gt;
 			&lt;/div&gt;
 		&lt;/div&gt;
 	&lt;/div&gt;
 &lt;#elseif displayMode == 3 &gt;
-	&lt;div class=&quot;aspect-ratio aspect-ratio-16-to-9 aspect-ratio-21-to-9 aspect-ratio-bg-center aspect-ratio-bg-cover&quot; style=&quot;background-image: url(&apos;${coverImage.getData()}&apos;&quot;&gt;
+	&lt;div class=&quot;aspect-ratio aspect-ratio-16-to-9 aspect-ratio-21-to-9 aspect-ratio-bg-center aspect-ratio-bg-cover&quot; style=&quot;background-image: url(&apos;${(coverImage.getData()?? &amp;&amp; coverImage.getData() != &apos;&apos;)?then(coverImage.getData(), &apos;&apos;)}&apos;)&quot;&gt;
 	&lt;/div&gt;
 
 	&lt;div class=&quot;carousel-caption&quot;&gt;
@@ -114,18 +111,21 @@
 
 		&lt;div class=&quot;asset-user-name&quot;&gt;
 			&lt;@liferay.language key=&quot;by&quot; /&gt;
+
 			${author}
 		&lt;/div&gt;
+
 		&lt;small class=&quot;sr-only&quot;&gt;
 			${subTitle.getData()}
 		&lt;/small&gt;
 	&lt;/div&gt;
 &lt;#else&gt;
 	&lt;div class=&quot;asset-entry-detail&quot;&gt;
-		&lt;div class=&quot;aspect-ratio aspect-ratio-16-to-9 aspect-ratio-21-to-9 aspect-ratio-bg-center aspect-ratio-bg-cover&quot; style=&quot;background-image: url(&apos;${coverImage.getData()}&apos;&quot;&gt;
+		&lt;div class=&quot;aspect-ratio aspect-ratio-16-to-9 aspect-ratio-21-to-9 aspect-ratio-bg-center aspect-ratio-bg-cover&quot; style=&quot;background-image: url(&apos;${(coverImage.getData()?? &amp;&amp; coverImage.getData() != &apos;&apos;)?then(coverImage.getData(), &apos;&apos;)}&apos;)&quot;&gt;
 		&lt;/div&gt;
 		&lt;div class=&quot;container-fluid-1280&quot;&gt;
 			&lt;h1 class=&quot;text-center&quot;&gt;${title.getData()}&lt;/h1&gt;
+
 			&lt;h2 class=&quot;text-center&quot;&gt;${subTitle.getData()}&lt;/h2&gt;
 
 			&lt;br/&gt;

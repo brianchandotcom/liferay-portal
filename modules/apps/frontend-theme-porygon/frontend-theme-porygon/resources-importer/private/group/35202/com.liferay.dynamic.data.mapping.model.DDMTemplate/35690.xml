@@ -15,7 +15,7 @@
   <__versionUserId>20164</__versionUserId>
   <__versionUserName>Test Test</__versionUserName>
   <__createDate class="sql-timestamp">2016-09-20 13:41:51.153</__createDate>
-  <__modifiedDate class="sql-timestamp">2016-09-20 13:41:51.153</__modifiedDate>
+  <__modifiedDate class="sql-timestamp">2016-09-22 11:36:15.509</__modifiedDate>
   <__setModifiedDate>false</__setModifiedDate>
   <__classNameId>20006</__classNameId>
   <__originalClassNameId>20006</__originalClassNameId>
@@ -26,7 +26,7 @@
   <__resourceClassNameId>29901</__resourceClassNameId>
   <__templateKey>33502</__templateKey>
   <__originalTemplateKey>33502</__originalTemplateKey>
-  <__version>1.0</__version>
+  <__version>1.1</__version>
   <__name>&lt;?xml version=&apos;1.0&apos; encoding=&apos;UTF-8&apos;?&gt;&lt;root available-locales=&quot;en_US&quot; default-locale=&quot;en_US&quot;&gt;&lt;Name language-id=&quot;en_US&quot;&gt;Entry List 1 items ADT&lt;/Name&gt;&lt;/root&gt;</__name>
   <__description></__description>
   <__type>display</__type>
@@ -42,12 +42,10 @@
 	&lt;div class=&quot;blog-list container-fluid-1280&quot;&gt;
 		&lt;div class=&quot;row&quot;&gt;
 			&lt;#list entries as curEntry&gt;
-				&lt;#assign assetRenderer = curEntry.getAssetRenderer() /&gt;
-				&lt;#assign viewURL = assetPublisherHelper.getAssetViewURL(renderRequest, renderResponse, curEntry) /&gt;
-
-				&lt;#if assetLinkBehavior != &quot;showFullContent&quot;&gt;
-					&lt;#assign viewURL = assetPublisherHelper.getAssetViewURL(renderRequest, renderResponse, curEntry, true) /&gt;
-				&lt;/#if&gt;
+				&lt;#assign
+					assetRenderer = curEntry.getAssetRenderer()
+					viewURL = (assetLinkBehavior != &quot;showFullContent&quot;)?then(assetPublisherHelper.getAssetViewURL(renderRequest, renderResponse, curEntry, true), assetPublisherHelper.getAssetViewURL(renderRequest, renderResponse, curEntry))
+				/&gt;
 
 				${request.setAttribute(&quot;viewURL&quot;, viewURL )}
 				${request.setAttribute(&quot;author&quot;, portalUtil.getUserName(assetRenderer.getUserId(), assetRenderer.getUserName()) )}
@@ -55,7 +53,7 @@
 				&lt;@liferay_ui[&quot;asset-display&quot;]
 					assetEntry=curEntry
 					template=&quot;full_content&quot;
-					/&gt;
+				/&gt;
 			&lt;/#list&gt;
 		&lt;/div&gt;
 	&lt;/div&gt;

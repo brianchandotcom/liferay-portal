@@ -15,7 +15,7 @@
   <__versionUserId>20164</__versionUserId>
   <__versionUserName>Test Test</__versionUserName>
   <__createDate class="sql-timestamp">2016-09-20 13:42:23.331</__createDate>
-  <__modifiedDate class="sql-timestamp">2016-09-20 13:42:23.331</__modifiedDate>
+  <__modifiedDate class="sql-timestamp">2016-09-22 11:35:42.539</__modifiedDate>
   <__setModifiedDate>false</__setModifiedDate>
   <__classNameId>20006</__classNameId>
   <__originalClassNameId>20006</__originalClassNameId>
@@ -26,7 +26,7 @@
   <__resourceClassNameId>29901</__resourceClassNameId>
   <__templateKey>33506</__templateKey>
   <__originalTemplateKey>33506</__originalTemplateKey>
-  <__version>1.0</__version>
+  <__version>1.1</__version>
   <__name>&lt;?xml version=&apos;1.0&apos; encoding=&apos;UTF-8&apos;?&gt;&lt;root available-locales=&quot;en_US&quot; default-locale=&quot;en_US&quot;&gt;&lt;Name language-id=&quot;en_US&quot;&gt;Entry Carousel ADT&lt;/Name&gt;&lt;/root&gt;</__name>
   <__description></__description>
   <__type>display</__type>
@@ -42,27 +42,17 @@
 		&lt;div class=&quot;carousel slide&quot; data-ride=&quot;carousel&quot; id=&quot;&lt;@portlet.namespace /&gt;-main-carousel&quot;&gt;
 			&lt;ol class=&quot;carousel-indicators hidden-sm hidden-xs&quot;&gt;
 				&lt;#list entries as indiEntry&gt;
-					&lt;#if indiEntry?counter == 1&gt;
-		    			&lt;li class=&quot;active&quot; data-slide-to=&quot;0&quot; data-target=&quot;#&lt;@portlet.namespace /&gt;-main-carousel&quot;&gt;&lt;/li&gt;
-		    		&lt;#else&gt;
-		    			&lt;li data-slide-to=&quot;${indiEntry?counter - 1}&quot; data-target=&quot;&lt;@portlet.namespace /&gt;-main-carousel&quot;&gt;&lt;/li&gt;
-		    		&lt;/#if&gt;
+					&lt;li class=&quot;${(indiEntry?counter == 1)?then(&apos;active&apos;, &apos;&apos;)}&quot; data-slide-to=&quot;${(indiEntry?counter == 1)?then(0, (indiEntry?counter - 1))}&quot; data-target=&quot;&lt;@portlet.namespace /&gt;-main-carousel&quot;&gt;&lt;/li&gt;
 				&lt;/#list&gt;
 			&lt;/ol&gt;
 
 			&lt;div class=&quot;carousel-inner gallery-xxl&quot; role=&quot;listbox&quot;&gt;
 				&lt;#list entries as curEntry&gt;
-					&lt;#if curEntry?counter == 1&gt;
-		    			&lt;div class=&quot;active item&quot;&gt;
-		    		&lt;#else&gt;
-		    			&lt;div class=&quot;item&quot;&gt;
-		    		&lt;/#if&gt;
-						&lt;#assign assetRenderer = curEntry.getAssetRenderer() /&gt;
-						&lt;#assign viewURL = assetPublisherHelper.getAssetViewURL(renderRequest, renderResponse, curEntry) /&gt;
-
-						&lt;#if assetLinkBehavior != &quot;showFullContent&quot;&gt;
-							&lt;#assign viewURL = assetPublisherHelper.getAssetViewURL(renderRequest, renderResponse, curEntry, true) /&gt;
-						&lt;/#if&gt;
+					&lt;div class=&quot;${(curEntry?counter == 1)?then(&apos;active&apos;, &apos;&apos;)} item&quot;&gt;
+						&lt;#assign
+							assetRenderer = curEntry.getAssetRenderer()
+							viewURL = (assetLinkBehavior != &quot;showFullContent&quot;)?then(assetPublisherHelper.getAssetViewURL(renderRequest, renderResponse, curEntry, true), assetPublisherHelper.getAssetViewURL(renderRequest, renderResponse, curEntry))
+						/&gt;
 
 						${request.setAttribute(&quot;viewURL&quot;, viewURL )}
 						${request.setAttribute(&quot;author&quot;, portalUtil.getUserName(assetRenderer.getUserId(), assetRenderer.getUserName()) )}
@@ -70,17 +60,20 @@
 						&lt;@liferay_ui[&quot;asset-display&quot;]
 							assetEntry=curEntry
 							template=&quot;full_content&quot;
-							/&gt;
+						/&gt;
 					&lt;/div&gt;
 				&lt;/#list&gt;
 			&lt;/div&gt;
 
 			&lt;a class=&quot;left carousel-control&quot; href=&quot;#&lt;@portlet.namespace /&gt;-main-carousel&quot; role=&quot;button&quot; data-slide=&quot;prev&quot;&gt;
 				&lt;span class=&quot;glyphicon glyphicon-chevron-left&quot; aria-hidden=&quot;true&quot;&gt;&lt;/span&gt;
+
 				&lt;span class=&quot;sr-only&quot;&gt;Previous&lt;/span&gt;
 			&lt;/a&gt;
+
 			&lt;a class=&quot;right carousel-control&quot; href=&quot;#&lt;@portlet.namespace /&gt;-main-carousel&quot; role=&quot;button&quot; data-slide=&quot;next&quot;&gt;
 				&lt;span class=&quot;glyphicon glyphicon-chevron-right&quot; aria-hidden=&quot;true&quot;&gt;&lt;/span&gt;
+
 				&lt;span class=&quot;sr-only&quot;&gt;Next&lt;/span&gt;
 			&lt;/a&gt;
 		&lt;/div&gt;

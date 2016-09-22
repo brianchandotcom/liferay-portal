@@ -18,6 +18,7 @@ import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
 import com.puppycrawl.tools.checkstyle.api.AbstractCheck;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
+import com.puppycrawl.tools.checkstyle.api.FileContents;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
 import java.util.List;
@@ -36,6 +37,14 @@ public class LPS42924Check extends AbstractCheck {
 
 	@Override
 	public void visitToken(DetailAST detailAST) {
+		FileContents fileContents = getFileContents();
+
+		String fileName = fileContents.getFileName();
+
+		if (!fileName.endsWith("ServiceImpl.java")) {
+			return;
+		}
+
 		List<DetailAST> methodCallASTList = DetailASTUtil.getMethodCalls(
 			detailAST, "PortalUtil", "getClassNameId");
 

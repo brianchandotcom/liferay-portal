@@ -212,6 +212,13 @@ version 2.0.0.
 - [LPS-68297]: Update the [Liferay Source Formatter] dependency to version
 1.0.283.
 
+## 2.0.40 - 2016-09-22
+
+### Added
+- [LPS-66906]: Allow to configure the [`sass-binary-path`](https://github.com/sass/node-sass#binary-configuration-parameters)
+argument in the `npmInstall` task by setting the project property
+`nodejs.npm.sass.binary.site`.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
 [Liferay CSS Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/css-builder

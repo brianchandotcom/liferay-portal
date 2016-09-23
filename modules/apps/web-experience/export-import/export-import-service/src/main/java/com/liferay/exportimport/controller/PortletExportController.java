@@ -20,6 +20,7 @@ import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleCon
 import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.PROCESS_FLAG_PORTLET_EXPORT_IN_PROCESS;
 import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.PROCESS_FLAG_PORTLET_STAGING_IN_PROCESS;
 
+import aQute.bnd.annotation.ProviderType;
 import com.liferay.asset.kernel.model.AssetLink;
 import com.liferay.asset.kernel.model.adapter.StagedAssetLink;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
@@ -127,6 +128,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {"model.class.name=com.liferay.portal.kernel.model.Portlet"},
 	service = {ExportImportController.class, PortletExportController.class}
 )
+@ProviderType
 public class PortletExportController implements ExportController {
 
 	@Override

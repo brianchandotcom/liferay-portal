@@ -3589,6 +3589,53 @@
 		</execute>
 	</command>
 
+	<command name="ViewBlankLabelWhenAddingNewField" priority="3">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Forms" />
+		</execute>
+
+		<execute macro="FormsAdminNavigator#gotoAddForm" />
+
+		<execute macro="Form#gotoAddField">
+			<var name="fieldType" value="Text Field" />
+		</execute>
+
+		<execute macro="Form#editFieldLabel">
+			<var name="fieldValue" value="One" />
+		</execute>
+
+		<execute macro="Form#closeSidebar" />
+
+		<execute macro="Form#gotoAddField">
+			<var name="fieldType" value="Text Field" />
+		</execute>
+
+		<execute macro="Form#editFieldLabel">
+			<var name="fieldValue" value="Two" />
+		</execute>
+
+		<execute macro="Form#closeSidebar" />
+
+		<execute macro="FormsAdminNavigator#gotoEditField">
+			<var name="fieldName" value="One" />
+		</execute>
+
+		<execute macro="Form#gotoAddField">
+			<var name="fieldType" value="Text Field" />
+		</execute>
+
+		<execute macro="Form#viewSidebarTitle">
+			<var name="fieldLabel" value="Unlabeled" />
+		</execute>
+
+		<execute macro="FormFields#viewFieldLabel">
+			<var name="fieldName" value="label" />
+			<var name="fieldValue" value="" />
+		</execute>
+	</command>
+
 	<command name="ViewDefaultFieldNamesWithPunctuationCharacters" priority="4">
 		<description message="This is a use case for LPS-64305." />
 

@@ -247,4 +247,8 @@
 			<var name="fieldName" value="${fieldName}" />
 		</execute>
 	</command>
+
+	<command name="viewSidebarTitle">
+		<execute function="AssertTextEquals" locator1="Form#SIDEBAR_HEADER" value1="${fieldLabel}" />
+	</command>
 </definition>

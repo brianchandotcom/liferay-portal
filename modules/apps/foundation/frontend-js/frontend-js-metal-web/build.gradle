@@ -23,7 +23,7 @@ buildMetalComponents {
 }
 
 configJSModules {
-	dependsOn buildMetalComponents
+	dependsOn buildMetalComponents, npmInstall
 
 	include "**/*.js*"
 

@@ -33,14 +33,39 @@ class WikiPortlet extends PortletBase {
 		}
 	}
 
+	checkImagesBeforeSave_() {
+		if (this.hasTempImages_()) {
+			if (confirm(this.get('strings').confirmDiscardImages)) {
+				this.getTempImages_().each(
+					function(node) {
+						node.ancestor().remove();
+					}
+				);
+
+				this.savePage_();
+			}
+		}
+		else {
+			this.savePage_();
+		}
+	}
+
+	getTempImages_() {
+		return this.all('img[data-random-id]');
+	}
+
+	hasTempImages_() {
+		return this.getTempImages_().length > 0;
+	}
+
 	publishPage_() {
 		this.one('#workflowAction').value = this.get('constants').ACTION_PUBLISH;
-		this.savePage_();
+		this.checkImagesBeforeSave_();
 	}
 
 	saveDraft_() {
 		this.one('#workflowAction').value = this.get('constants').ACTION_SAVE_DRAFT;
-		this.savePage_();
+		this.checkImagesBeforeSave_();
 	}
 
 	savePage_() {

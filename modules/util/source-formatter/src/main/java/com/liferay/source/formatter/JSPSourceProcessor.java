@@ -178,27 +178,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected void checkDefineObjectsVariables(
-		String fileName, String content, String objectType, String variableName,
-		String value, String tag) {
-
-		int x = -1;
-
-		while (true) {
-			x = content.indexOf(
-				objectType + " " + variableName + " = " + value + ";", x + 1);
-
-			if (x == -1) {
-				return;
-			}
-
-			processMessage(
-				fileName,
-				"Use '" + tag + ":defineObjects' or rename var, see LPS-62493",
-				getLineCount(content, x));
-		}
-	}
-
-	protected void checkDefineObjectsVariables(
 		String fileName, String content, String absolutePath) {
 
 		for (String[] defineObject : _LIFERAY_THEME_DEFINE_OBJECTS) {
@@ -233,6 +212,27 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			checkDefineObjectsVariables(
 				fileName, content, defineObject[0], defineObject[1],
 				defineObject[2], "liferay-frontend");
+		}
+	}
+
+	protected void checkDefineObjectsVariables(
+		String fileName, String content, String objectType, String variableName,
+		String value, String tag) {
+
+		int x = -1;
+
+		while (true) {
+			x = content.indexOf(
+				objectType + " " + variableName + " = " + value + ";", x + 1);
+
+			if (x == -1) {
+				return;
+			}
+
+			processMessage(
+				fileName,
+				"Use '" + tag + ":defineObjects' or rename var, see LPS-62493",
+				getLineCount(content, x));
 		}
 	}
 

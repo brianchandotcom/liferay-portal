@@ -39,7 +39,7 @@ AUI.add(
 
 				var col = fieldNode.ancestor('.col').getData('layout-col');
 
-				instance._layoutBuilder.get('chooseColMoveTarget')(fieldNode.one('.input-group-container '), col);
+				instance._layoutBuilder.get('chooseColMoveTarget')(fieldNode.one('.form-group'), col);
 			},
 
 			_afterMainClassRender: function() {

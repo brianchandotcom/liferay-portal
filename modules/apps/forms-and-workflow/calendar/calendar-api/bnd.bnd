@@ -15,6 +15,7 @@ Export-Package:\
 	com.liferay.calendar.service,\
 	com.liferay.calendar.service.persistence,\
 	com.liferay.calendar.util.comparator
+Import-Package: com.liferay.portal.kernel.model;version="${range;[=,=+)}",*
 Import-Package:\
 	!org.joda.*,\
 	*

@@ -9,5 +9,6 @@ Export-Package:\
 	com.liferay.sync.oauth.helper,\
 	com.liferay.sync.service,\
 	com.liferay.sync.service.persistence
+Import-Package: com.liferay.portal.kernel.model;version="${range;[=,=+)}",*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Sync Connector

@@ -8,5 +8,6 @@ Export-Package:\
 	com.liferay.social.privatemessaging.model,\
 	com.liferay.social.privatemessaging.service,\
 	com.liferay.social.privatemessaging.service.persistence
+Import-Package: com.liferay.portal.kernel.model;version="${range;[=,=+)}",*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Social Private Messaging

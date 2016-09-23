@@ -24,6 +24,10 @@ import com.liferay.gradle.util.Validator;
 
 import java.io.File;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+
 import org.gradle.api.Action;
 import org.gradle.api.GradleException;
 import org.gradle.api.Plugin;
@@ -39,11 +43,21 @@ public class LiferayCIPlugin implements Plugin<Project> {
 	public static final Plugin<Project> INSTANCE = new LiferayCIPlugin();
 
 	@Override
-	public void apply(Project project) {
+	public void apply(final Project project) {
 		_configureTasksDownloadNode(project);
 		_configureTasksExecuteNode(project);
 		_configureTasksExecuteNpm(project);
 		_configureTasksNpmInstall(project);
+
+		project.afterEvaluate(
+			new Action<Project>() {
+
+				@Override
+				public void execute(Project project) {
+					_configureTasksNpmInstallArgs(project);
+				}
+
+			});
 	}
 
 	private LiferayCIPlugin() {
@@ -69,6 +83,37 @@ public class LiferayCIPlugin implements Plugin<Project> {
 
 	private void _configureTaskExecuteNode(ExecuteNodeTask executeNodeTask) {
 		executeNodeTask.setNpmInstallRetries(_NPM_INSTALL_RETRIES);
+	}
+
+	private void _configureTaskExecuteNodeArgs(
+		ExecuteNodeTask executeNodeTask, Map<String, String> newArgs) {
+
+		List<String> args = executeNodeTask.getArgs();
+
+		for (Map.Entry<String, String> entry : newArgs.entrySet()) {
+			String key = entry.getKey();
+			String value = entry.getValue();
+
+			boolean changed = false;
+
+			for (int i = 0; i < args.size(); i++) {
+				String arg = args.get(i);
+
+				if (arg.startsWith(key)) {
+					changed = true;
+
+					args.set(i, key + value);
+
+					break;
+				}
+			}
+
+			if (!changed) {
+				args.add(key + value);
+			}
+		}
+
+		executeNodeTask.setArgs(args);
 	}
 
 	private void _configureTaskExecuteNpm(
@@ -149,9 +194,36 @@ public class LiferayCIPlugin implements Plugin<Project> {
 			});
 	}
 
+	private void _configureTasksNpmInstallArgs(Project project) {
+		final String ciSassBinarySite = GradleUtil.getProperty(
+			project, "nodejs.npm.ci.sass.binary.site", (String)null);
+
+		if (Validator.isNull(ciSassBinarySite)) {
+			return;
+		}
+
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			NpmInstallTask.class,
+			new Action<NpmInstallTask>() {
+
+				@Override
+				public void execute(NpmInstallTask npmInstallTask) {
+					_configureTaskExecuteNodeArgs(
+						npmInstallTask,
+						Collections.singletonMap(
+							_SASS_BINARY_SITE_ARG, ciSassBinarySite));
+				}
+
+			});
+	}
+
 	private static final File _NODE_MODULES_CACHE_DIR = new File(
 		System.getProperty("user.home"), ".liferay/node-modules-cache");
 
 	private static final int _NPM_INSTALL_RETRIES = 3;
+
+	private static final String _SASS_BINARY_SITE_ARG = "--sass-binary-site=";
 
 }

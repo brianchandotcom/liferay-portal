@@ -36,8 +36,8 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class PortalDelegatorServlet extends HttpServlet {
 
-	public static void addDelegate(String subContext, HttpServlet delegate) {
-		if (subContext == null) {
+	public static void addDelegate(String subcontext, HttpServlet delegate) {
+		if (subcontext == null) {
 			throw new IllegalArgumentException();
 		}
 
@@ -45,15 +45,15 @@ public class PortalDelegatorServlet extends HttpServlet {
 			throw new IllegalArgumentException();
 		}
 
-		_delegates.put(subContext, delegate);
+		_delegates.put(subcontext, delegate);
 	}
 
-	public static void removeDelegate(String subContext) {
-		if (subContext == null) {
+	public static void removeDelegate(String subcontext) {
+		if (subcontext == null) {
 			throw new IllegalArgumentException();
 		}
 
-		_delegates.remove(subContext);
+		_delegates.remove(subcontext);
 	}
 
 	@Override

@@ -70,6 +70,13 @@ public class OrganizationFinderUtil {
 			regionId, countryId, params, andOperator);
 	}
 
+	public static int countO_U_ByC_P(long companyId, long parentOrganizationId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition) {
+		return getFinder()
+				   .countO_U_ByC_P(companyId, parentOrganizationId,
+			queryDefinition);
+	}
+
 	public static java.util.List<com.liferay.portal.kernel.model.Organization> findByKeywords(
 		long companyId, long parentOrganizationId,
 		java.lang.String parentOrganizationIdComparator,
@@ -124,6 +131,14 @@ public class OrganizationFinderUtil {
 				   .findByC_PO_N_T_S_C_Z_R_C(companyId, parentOrganizationId,
 			parentOrganizationIdComparator, names, type, streets, cities, zips,
 			regionId, countryId, params, andOperator, start, end, obc);
+	}
+
+	public static java.util.List<java.lang.Object> findO_U_ByC_P(
+		long companyId, long parentOrganizationId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition) {
+		return getFinder()
+				   .findO_U_ByC_P(companyId, parentOrganizationId,
+			queryDefinition);
 	}
 
 	public static OrganizationFinder getFinder() {

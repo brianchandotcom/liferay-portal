@@ -318,11 +318,11 @@ public class OrganizationLocalServiceTest {
 	public void testGetOrganizationsAndUsers() throws Exception {
 		Organization organization = OrganizationTestUtil.addOrganization();
 
-		Organization subOrganization = OrganizationTestUtil.addOrganization(
+		Organization suborganization = OrganizationTestUtil.addOrganization(
 			organization.getOrganizationId(), RandomTestUtil.randomString(),
 			false);
 
-		_organizations.add(subOrganization);
+		_organizations.add(suborganization);
 
 		_organizations.add(organization);
 
@@ -334,7 +334,7 @@ public class OrganizationLocalServiceTest {
 		List<Object> results = getOrganizationsAndUsers(organization);
 
 		Assert.assertEquals(2, results.size());
-		Assert.assertTrue(results.contains(subOrganization));
+		Assert.assertTrue(results.contains(suborganization));
 		Assert.assertTrue(results.contains(TestPropsValues.getUser()));
 	}
 
@@ -361,11 +361,11 @@ public class OrganizationLocalServiceTest {
 	public void testGetOrganizationsAndUsersWithNoUsers() throws Exception {
 		Organization organization = OrganizationTestUtil.addOrganization();
 
-		Organization subOrganization = OrganizationTestUtil.addOrganization(
+		Organization suborganization = OrganizationTestUtil.addOrganization(
 			organization.getOrganizationId(), RandomTestUtil.randomString(),
 			false);
 
-		_organizations.add(subOrganization);
+		_organizations.add(suborganization);
 
 		_organizations.add(organization);
 
@@ -374,7 +374,7 @@ public class OrganizationLocalServiceTest {
 		List<Object> results = getOrganizationsAndUsers(organization);
 
 		Assert.assertEquals(1, results.size());
-		Assert.assertTrue(results.contains(subOrganization));
+		Assert.assertTrue(results.contains(suborganization));
 	}
 
 	@Test
@@ -596,10 +596,10 @@ public class OrganizationLocalServiceTest {
 	public void testSearchOrganizationsAndUsers() throws Exception {
 		Organization organization = OrganizationTestUtil.addOrganization();
 
-		Organization subOrganization = OrganizationTestUtil.addOrganization(
+		Organization suborganization = OrganizationTestUtil.addOrganization(
 			organization.getOrganizationId(), "Organization1", false);
 
-		_organizations.add(subOrganization);
+		_organizations.add(suborganization);
 
 		_organizations.add(organization);
 
@@ -615,7 +615,7 @@ public class OrganizationLocalServiceTest {
 		hits = searchOrganizationsAndUsers(organization, "Organization1");
 
 		Assert.assertEquals(
-			String.valueOf(subOrganization.getOrganizationId()),
+			String.valueOf(suborganization.getOrganizationId()),
 			hits.doc(0).get(Field.ORGANIZATION_ID));
 
 		hits = searchOrganizationsAndUsers(organization, "user1");
@@ -658,10 +658,10 @@ public class OrganizationLocalServiceTest {
 	public void testSearchOrganizationsAndUsersWhenNoUsers() throws Exception {
 		Organization organization = OrganizationTestUtil.addOrganization();
 
-		Organization subOrganization = OrganizationTestUtil.addOrganization(
+		Organization suborganization = OrganizationTestUtil.addOrganization(
 			organization.getOrganizationId(), "Organization1", false);
 
-		_organizations.add(subOrganization);
+		_organizations.add(suborganization);
 
 		_organizations.add(organization);
 
@@ -670,13 +670,13 @@ public class OrganizationLocalServiceTest {
 		Assert.assertEquals(1, hits.getLength());
 
 		Assert.assertEquals(
-			String.valueOf(subOrganization.getOrganizationId()),
+			String.valueOf(suborganization.getOrganizationId()),
 			hits.doc(0).get(Field.ORGANIZATION_ID));
 
 		hits = searchOrganizationsAndUsers(organization, "Organization1");
 
 		Assert.assertEquals(
-			String.valueOf(subOrganization.getOrganizationId()),
+			String.valueOf(suborganization.getOrganizationId()),
 			hits.doc(0).get(Field.ORGANIZATION_ID));
 
 		hits = searchOrganizationsAndUsers(organization, "user1");

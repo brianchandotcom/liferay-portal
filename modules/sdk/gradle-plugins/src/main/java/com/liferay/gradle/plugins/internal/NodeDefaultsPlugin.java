@@ -17,6 +17,7 @@ package com.liferay.gradle.plugins.internal;
 import com.liferay.gradle.plugins.BaseDefaultsPlugin;
 import com.liferay.gradle.plugins.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.node.NodePlugin;
+import com.liferay.gradle.plugins.node.tasks.ExecuteNodeTask;
 import com.liferay.gradle.plugins.node.tasks.ExecuteNpmTask;
 import com.liferay.gradle.plugins.node.tasks.NpmInstallTask;
 import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask;
@@ -48,13 +49,22 @@ public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
 	}
 
 	protected void configureTaskNpmInstall(NpmInstallTask npmInstallTask) {
+		Project project = npmInstallTask.getProject();
+
 		String removeShrinkwrappedUrls = GradleUtil.getProperty(
-			npmInstallTask.getProject(), "nodejs.npm.remove.shrinkwrapped.urls",
-			(String)null);
+			project, "nodejs.npm.remove.shrinkwrapped.urls", (String)null);
 
 		if (Validator.isNotNull(removeShrinkwrappedUrls)) {
 			npmInstallTask.setRemoveShrinkwrappedUrls(
 				Boolean.parseBoolean(removeShrinkwrappedUrls));
+		}
+
+		String sassBinarySite = GradleUtil.getProperty(
+			project, "nodejs.npm.sass.binary.site", (String)null);
+
+		if (Validator.isNotNull(sassBinarySite)) {
+			setTaskExecuteNodeArgDefault(
+				npmInstallTask, _SASS_BINARY_SITE_ARG, sassBinarySite);
 		}
 	}
 
@@ -164,5 +174,19 @@ public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
 	protected Class<NodePlugin> getPluginClass() {
 		return NodePlugin.class;
 	}
+
+	protected void setTaskExecuteNodeArgDefault(
+		ExecuteNodeTask executeNodeTask, String key, String value) {
+
+		for (String arg : executeNodeTask.getArgs()) {
+			if (arg.startsWith(key)) {
+				return;
+			}
+		}
+
+		executeNodeTask.args(key + value);
+	}
+
+	private static final String _SASS_BINARY_SITE_ARG = "--sass-binary-site=";
 
 }

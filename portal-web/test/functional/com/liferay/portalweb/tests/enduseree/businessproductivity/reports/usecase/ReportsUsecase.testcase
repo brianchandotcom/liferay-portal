@@ -75,7 +75,7 @@
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Reports Display" />
+			<var name="portletName" value="Report Display" />
 		</execute>
 
 		<execute macro="ReportsDisplayPortlet#viewReportEntry">
@@ -286,7 +286,7 @@ Thanks,<br/>
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Reports Display" />
+			<var name="portletName" value="Report Display" />
 		</execute>
 
 		<execute macro="ReportsDisplayPortlet#viewReportEntry">

@@ -39,9 +39,8 @@ public interface PanelCategory extends PanelEntry {
 	 * Returns the number of notifications for the user in this application
 	 * category.
 	 *
-	 * @param  panelCategoryHelper the {@link
-	 *         PanelCategoryHelper}
-	 *         to facilitate the method's implementation
+	 * @param  panelCategoryHelper the {@link PanelCategoryHelper} to facilitate
+	 *         the method's implementation
 	 * @param  permissionChecker the <code>PermissionChecker</code> (in
 	 *         <code>portal-kernel</code>) used to check the user's permissions
 	 * @param  group the group for which notifications are checked
@@ -83,9 +82,8 @@ public interface PanelCategory extends PanelEntry {
 	 * Returns <code>true</code> if the application category is active.
 	 *
 	 * @param  request the servlet request
-	 * @param  panelCategoryHelper the {@link
-	 *         PanelCategoryHelper}
-	 *         to facilitate the method's implementation
+	 * @param  panelCategoryHelper the {@link PanelCategoryHelper} to facilitate
+	 *         the method's implementation
 	 * @param  group the group for which the state of the application category
 	 *         is checked
 	 * @return <code>true</code> if the application category is active;

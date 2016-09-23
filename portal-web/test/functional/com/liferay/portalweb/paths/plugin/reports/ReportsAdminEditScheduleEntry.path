@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>START_DATE_TIME_FIELD</td>
-	<td>//span[@class='lfr-input-time ']/input</td>
+	<td>//span[contains(@class,'lfr-input-time')]/input</td>
 	<td></td>
 </tr>
 <tr>

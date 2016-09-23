@@ -35,5 +35,11 @@
 	<suppress checks="MissingModifier" files="portal-impl/test/unit/com/liferay/portal/nio/intraband/proxy/IntrabandProxyUtilTest\.java" />
 	<suppress checks="MissingModifier" files="portal-kernel/test/unit/com/liferay/portal/kernel/annotation/AnnotationLocatorTest\.java" />
 	<suppress checks="MissingModifier" files="portal-kernel/test/unit/com/liferay/portal/kernel/resiliency/spi/agent/annotation/DistributedRegistryTest\.java" />
+	<suppress checks="Subname" files="portal-kernel/src/com/liferay/portal/kernel/util/ListUtil\.java" />
+	<suppress checks="Subname" files="portal-kernel/src/com/liferay/portal/kernel/util/ListWrapper\.java" />
+	<suppress checks="Subname" files="portal-kernel/src/com/liferay/portal/kernel/util/PackagingUtil\.java" />
+	<suppress checks="Subname" files="portal-kernel/src/com/liferay/portal/kernel/util/TranslatedList\.java" />
+	<suppress checks="Subname" files="portal-kernel/src/com/liferay/portal/kernel/util/UnmodifiableList\.java" />
+	<suppress checks="Subname" files="portal-kernel/test/unit/com/liferay/portal/kernel/util/ListUtilTest\.java" />
 	<suppress checks="ValidatorIsNull" files="portal-impl/src/com/liferay/portal/service/persistence/impl/UserFinderImpl\.java" />
 </suppressions>

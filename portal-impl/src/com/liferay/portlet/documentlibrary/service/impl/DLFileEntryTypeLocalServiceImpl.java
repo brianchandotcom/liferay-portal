@@ -606,20 +606,20 @@ public class DLFileEntryTypeLocalServiceImpl
 				serviceContext.getAssetLinkEntryIds());
 		}
 
-		List<DLFolder> subFolders = dlFolderPersistence.findByG_M_P_H(
+		List<DLFolder> subfolders = dlFolderPersistence.findByG_M_P_H(
 			groupId, false, folderId, false);
 
-		for (DLFolder subFolder : subFolders) {
-			long subFolderId = subFolder.getFolderId();
+		for (DLFolder subfolder : subfolders) {
+			long subfolderId = subfolder.getFolderId();
 
-			if (subFolder.getRestrictionType() ==
+			if (subfolder.getRestrictionType() ==
 					DLFolderConstants.RESTRICTION_TYPE_INHERIT) {
 
 				continue;
 			}
 
 			cascadeFileEntryTypes(
-				userId, groupId, subFolderId, defaultFileEntryTypeId,
+				userId, groupId, subfolderId, defaultFileEntryTypeId,
 				fileEntryTypeIds, serviceContext);
 		}
 	}

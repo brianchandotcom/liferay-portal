@@ -891,16 +891,16 @@ public class JCRStore extends BaseStore {
 			while (itr.hasNext()) {
 				Node curNode = itr.nextNode();
 
-				String subDirName = null;
+				String subdirName = null;
 
 				if (Validator.isBlank(dirName)) {
-					subDirName = curNode.getName();
+					subdirName = curNode.getName();
 				}
 				else {
-					subDirName = dirName + StringPool.SLASH + curNode.getName();
+					subdirName = dirName + StringPool.SLASH + curNode.getName();
 				}
 
-				doGetFileNames(fileNames, subDirName, curNode);
+				doGetFileNames(fileNames, subdirName, curNode);
 			}
 		}
 		else if (primaryNodeTypeName.equals(JCRConstants.NT_FILE)) {

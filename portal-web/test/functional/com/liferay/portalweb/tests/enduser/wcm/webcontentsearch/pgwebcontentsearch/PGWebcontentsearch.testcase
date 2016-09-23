@@ -204,7 +204,7 @@
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="PortletEntry#publish" />
+		<execute macro="Button#clickPublish" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Web Content Search Page" />
@@ -302,7 +302,7 @@
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="PortletEntry#publish" />
+		<execute macro="Button#clickPublish" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Web Content Search Page" />

@@ -14,10 +14,12 @@
 
 package com.liferay.portal.osgi.web.servlet.jsp.compiler;
 
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.osgi.web.servlet.jsp.compiler.internal.JspBundleClassloader;
 import com.liferay.portal.osgi.web.servlet.jsp.compiler.internal.JspServletContext;
 import com.liferay.portal.osgi.web.servlet.jsp.compiler.internal.JspTagHandlerPool;
@@ -610,7 +612,8 @@ public class JspServlet extends HttpServlet {
 				return null;
 			}
 
-			String[] fragmentHostParts = fragmentHost.split(";");
+			String[] fragmentHostParts = StringUtil.split(
+				fragmentHost, CharPool.SEMICOLON);
 
 			fragmentHost = fragmentHostParts[0];
 
@@ -633,36 +636,23 @@ public class JspServlet extends HttpServlet {
 			while (enumeration.hasMoreElements()) {
 				URL url = enumeration.nextElement();
 
-				Path path = Paths.get(url.getPath());
+				String path = url.getPath();
 
 				if (path.startsWith(_DIR_NAME_RESOURCES)) {
-					path = path.subpath(2, path.getNameCount());
+					path = path.substring(
+						_DIR_NAME_RESOURCES.length() + 1, path.length() - 4);
+				}
+				else {
+					path = path.substring(1, path.length() - 4);
 				}
 
-				String dirName = "/org/apache/jsp/";
+				path = StringUtil.replace(path, CharPool.UNDERLINE, "_005f");
 
-				Path parentPath = path.getParent();
+				String jspClassPath = "/org/apache/jsp/".concat(path);
 
-				if (parentPath != null) {
-					String parentPathString = parentPath.toString();
+				jspClassPath = jspClassPath.concat("_jsp.class");
 
-					parentPathString = parentPathString.replaceAll(
-						StringPool.UNDERLINE, "_005f");
-
-					dirName += parentPathString + "/";
-				}
-
-				Path fileNamePath = path.getFileName();
-
-				String fileName = fileNamePath.toString();
-
-				fileName = fileName.replaceAll(StringPool.UNDERLINE, "_005f");
-
-				fileName = fileName.substring(0, fileName.length() - 4);
-
-				fileName = fileName + "_jsp.class";
-
-				paths.add(Paths.get(scratchDirName, dirName, fileName));
+				paths.add(Paths.get(scratchDirName, jspClassPath));
 			}
 
 			_deleteOutdatedJspFiles(scratchDirName, paths);

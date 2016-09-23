@@ -16,7 +16,7 @@
 
 <%@ include file="/init.jsp" %>
 
-<div class="event-display-portlet">
+<div class="container-fluid-1280 event-display-portlet">
 	<liferay-portlet:actionURL portletConfiguration="true" var="configurationActionURL" />
 
 	<aui:form action="<%= configurationActionURL %>" method="post" name="fm">

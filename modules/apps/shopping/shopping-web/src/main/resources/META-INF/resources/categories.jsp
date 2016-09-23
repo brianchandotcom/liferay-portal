@@ -276,13 +276,13 @@ boolean showSearch = (categoriesAndItemsCount > 0);
 
 						ShoppingCategoryServiceUtil.getSubcategoryIds(subcategoryIds, scopeGroupId, curCategory.getCategoryId());
 
-						int subCategoriesCount = subcategoryIds.size() - 1;
-						int subItemsCount = ShoppingItemServiceUtil.getCategoriesItemsCount(scopeGroupId, subcategoryIds);
+						int subcategoriesCount = subcategoryIds.size() - 1;
+						int subitemsCount = ShoppingItemServiceUtil.getCategoriesItemsCount(scopeGroupId, subcategoryIds);
 						%>
 
 						<h6 class="text-default">
-							<liferay-ui:message key="categories" />: <span><%= subCategoriesCount %></span>
-							<liferay-ui:message key="items" />: <span><%= subItemsCount %></span>
+							<liferay-ui:message key="categories" />: <span><%= subcategoriesCount %></span>
+							<liferay-ui:message key="items" />: <span><%= subitemsCount %></span>
 						</h6>
 					</liferay-ui:search-container-column-text>
 

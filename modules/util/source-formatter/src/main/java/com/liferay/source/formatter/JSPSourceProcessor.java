@@ -244,6 +244,17 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
+	protected void checkSubnames(String fileName, String content) {
+		Matcher matcher = _subnamePattern.matcher(content);
+
+		while (matcher.find()) {
+			processMessage(
+				fileName,
+				"'sub' should be followed by a lowercase character for '" +
+					matcher.group(1) + "'");
+		}
+	}
+
 	protected void checkValidatorEquals(String fileName, String content) {
 		Matcher matcher = validatorEqualsPattern.matcher(content);
 
@@ -409,6 +420,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			fileName, absolutePath, newContent, _taglibLanguageKeyPattern2);
 		checkLanguageKeys(
 			fileName, absolutePath, newContent, _taglibLanguageKeyPattern3);
+
+		checkSubnames(fileName, newContent);
 
 		newContent = sortPutOrSetCalls(
 			newContent, jsonObjectPutBlockPattern, jsonObjectPutPattern);
@@ -2162,6 +2175,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			"\\);)\n(String backURL = ParamUtil\\.getString\\(request, \"" +
 				"backURL\", redirect\\);)");
 	private boolean _stripJSPImports = true;
+	private final Pattern _subnamePattern = Pattern.compile(
+		"\\s(_?sub[A-Z]\\w+)[; ]");
 	private final Map<String, JavaClass> _tagJavaClassesMap = new HashMap<>();
 	private final Pattern _taglibLanguageKeyPattern1 = Pattern.compile(
 		"(?:confirmation|label|(?:M|m)essage|message key|names|title)=\"[^A-Z" +

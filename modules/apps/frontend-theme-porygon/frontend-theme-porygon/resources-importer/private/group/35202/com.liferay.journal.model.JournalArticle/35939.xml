@@ -1,9 +1,9 @@
 <JournalArticle>
   <__cachedModel>false</__cachedModel>
   <__new>false</__new>
-  <__uuid>9e9e2895-945f-b663-af66-f9c214080514</__uuid>
-  <__originalUuid>9e9e2895-945f-b663-af66-f9c214080514</__originalUuid>
-  <__id>35540</__id>
+  <__uuid>fe80c786-fd67-e3bc-feca-3fe8b257d68d</__uuid>
+  <__originalUuid>fe80c786-fd67-e3bc-feca-3fe8b257d68d</__originalUuid>
+  <__id>35939</__id>
   <__resourcePrimKey>35541</__resourcePrimKey>
   <__originalResourcePrimKey>35541</__originalResourcePrimKey>
   <__setOriginalResourcePrimKey>false</__setOriginalResourcePrimKey>
@@ -18,7 +18,7 @@
   <__setOriginalUserId>false</__setOriginalUserId>
   <__userName>Test Test</__userName>
   <__createDate class="sql-timestamp">2016-09-21 10:57:06.693</__createDate>
-  <__modifiedDate class="sql-timestamp">2016-09-21 10:57:06.806</__modifiedDate>
+  <__modifiedDate class="sql-timestamp">2016-09-23 09:35:56.78</__modifiedDate>
   <__setModifiedDate>false</__setModifiedDate>
   <__folderId>0</__folderId>
   <__originalFolderId>0</__originalFolderId>
@@ -32,8 +32,8 @@
   <__treePath>/</__treePath>
   <__articleId>35539</__articleId>
   <__originalArticleId>35539</__originalArticleId>
-  <__version>1.0</__version>
-  <__originalVersion>1.0</__originalVersion>
+  <__version>1.3</__version>
+  <__originalVersion>1.3</__originalVersion>
   <__setOriginalVersion>false</__setOriginalVersion>
   <__title>&lt;?xml version=&apos;1.0&apos; encoding=&apos;UTF-8&apos;?&gt;&lt;root available-locales=&quot;en_US&quot; default-locale=&quot;en_US&quot;&gt;&lt;Title language-id=&quot;en_US&quot;&gt;The Earth was small&lt;/Title&gt;&lt;/root&gt;</__title>
   <__urlTitle>the-earth-was-small</__urlTitle>
@@ -43,7 +43,7 @@
 
 &lt;root available-locales=&quot;en_US&quot; default-locale=&quot;en_US&quot;&gt;
 	&lt;dynamic-element name=&quot;coverImage&quot; type=&quot;image&quot; index-type=&quot;keyword&quot; instance-id=&quot;uoei&quot;&gt;
-		&lt;dynamic-content language-id=&quot;en_US&quot; alt=&quot;&quot; name=&quot;content_10.jpg&quot; title=&quot;content_10.jpg&quot; type=&quot;document&quot;&gt;&lt;![CDATA[[$dl-reference=/group/35202/com.liferay.document.library.kernel.model.DLFileEntry/35321.xml$]]]&gt;&lt;/dynamic-content&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot; alt=&quot;&quot; name=&quot;content_14.jpg&quot; title=&quot;content_14.jpg&quot; type=&quot;document&quot;&gt;&lt;![CDATA[[$dl-reference=/group/35202/com.liferay.document.library.kernel.model.DLFileEntry/35353.xml$]]]&gt;&lt;/dynamic-content&gt;
 	&lt;/dynamic-element&gt;
 	&lt;dynamic-element name=&quot;title&quot; type=&quot;text&quot; index-type=&quot;keyword&quot; instance-id=&quot;zqtz&quot;&gt;
 		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[The Earth was small]]&gt;&lt;/dynamic-content&gt;
@@ -55,8 +55,6 @@
 		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[&lt;p&gt;The Earth was small, light blue, and so touchingly alone, our home that must be defended like a holy relic. The Earth was absolutely round. I believe I never knew what the word round meant until I saw Earth from space.&lt;/p&gt;
 
 &lt;p&gt;You know, being a test pilot isn&amp;#39;t always the healthiest business in the world.&lt;/p&gt;
-
-&lt;p&gt;We want to explore. We&amp;rsquo;re curious people. Look back over history, people have put their lives at stake to go out and explore &amp;hellip; We believe in what we&amp;rsquo;re doing. Now it&amp;rsquo;s time to go.&lt;/p&gt;
 
 &lt;p&gt;Never in all their history have men been able truly to conceive of the world as one: a single sphere, a globe, having the qualities of a globe, a round earth in which all the directions eventually meet, in which there is no center because every point, or none, is center &amp;mdash; an equal earth which all men occupy as equals. The airman&amp;#39;s earth, if free men make it, will be truly round: a globe in practice, not in theory.&lt;/p&gt;
 
@@ -85,8 +83,8 @@
   <__originalIndexable>true</__originalIndexable>
   <__setOriginalIndexable>false</__setOriginalIndexable>
   <__smallImage>false</__smallImage>
-  <__smallImageId>35542</__smallImageId>
-  <__originalSmallImageId>35542</__originalSmallImageId>
+  <__smallImageId>0</__smallImageId>
+  <__originalSmallImageId>0</__originalSmallImageId>
   <__setOriginalSmallImageId>false</__setOriginalSmallImageId>
   <__smallImageURL></__smallImageURL>
   <__status>0</__status>
@@ -94,6 +92,6 @@
   <__setOriginalStatus>false</__setOriginalStatus>
   <__statusByUserId>20164</__statusByUserId>
   <__statusByUserName>Test Test</__statusByUserName>
-  <__statusDate class="sql-timestamp">2016-09-21 10:57:06.806</__statusDate>
+  <__statusDate class="sql-timestamp">2016-09-23 09:35:56.78</__statusDate>
   <__columnBitmask>0</__columnBitmask>
 </JournalArticle>

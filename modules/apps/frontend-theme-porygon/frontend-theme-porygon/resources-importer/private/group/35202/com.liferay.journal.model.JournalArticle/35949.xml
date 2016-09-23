@@ -1,9 +1,9 @@
 <JournalArticle>
   <__cachedModel>false</__cachedModel>
   <__new>false</__new>
-  <__uuid>67606865-9417-135e-8018-96a72ca15da2</__uuid>
-  <__originalUuid>67606865-9417-135e-8018-96a72ca15da2</__originalUuid>
-  <__id>35575</__id>
+  <__uuid>fa9c9a6b-ce70-53ec-7268-899312e40742</__uuid>
+  <__originalUuid>fa9c9a6b-ce70-53ec-7268-899312e40742</__originalUuid>
+  <__id>35949</__id>
   <__resourcePrimKey>35576</__resourcePrimKey>
   <__originalResourcePrimKey>35576</__originalResourcePrimKey>
   <__setOriginalResourcePrimKey>false</__setOriginalResourcePrimKey>
@@ -18,7 +18,7 @@
   <__setOriginalUserId>false</__setOriginalUserId>
   <__userName>Test Test</__userName>
   <__createDate class="sql-timestamp">2016-09-21 11:11:10.654</__createDate>
-  <__modifiedDate class="sql-timestamp">2016-09-21 11:11:10.721</__modifiedDate>
+  <__modifiedDate class="sql-timestamp">2016-09-23 09:38:31.573</__modifiedDate>
   <__setModifiedDate>false</__setModifiedDate>
   <__folderId>0</__folderId>
   <__originalFolderId>0</__originalFolderId>
@@ -32,8 +32,8 @@
   <__treePath>/</__treePath>
   <__articleId>35574</__articleId>
   <__originalArticleId>35574</__originalArticleId>
-  <__version>1.0</__version>
-  <__originalVersion>1.0</__originalVersion>
+  <__version>1.1</__version>
+  <__originalVersion>1.1</__originalVersion>
   <__setOriginalVersion>false</__setOriginalVersion>
   <__title>&lt;?xml version=&apos;1.0&apos; encoding=&apos;UTF-8&apos;?&gt;&lt;root available-locales=&quot;en_US&quot; default-locale=&quot;en_US&quot;&gt;&lt;Title language-id=&quot;en_US&quot;&gt;Astronomy compels the soul to look upward&lt;/Title&gt;&lt;/root&gt;</__title>
   <__urlTitle>astronomy-compels-the-soul-to-look-upward</__urlTitle>
@@ -58,15 +58,11 @@
 
 &lt;p&gt;Dinosaurs are extinct today because they lacked opposable thumbs and the brainpower to build a space program.&lt;/p&gt;
 
-&lt;p&gt;A Chinese tale tells of some men sent to harm a young girl who, upon seeing her beauty, become her protectors rather than her violators. That&amp;#39;s how I felt seeing the Earth for the first time. I could not help but love and cherish her.&lt;/p&gt;
-
 &lt;p&gt;NASA is not about the &amp;lsquo;Adventure of Human Space Exploration&amp;rsquo;&amp;hellip;We won&amp;rsquo;t be doing it just to get out there in space &amp;ndash; we&amp;rsquo;ll be doing it because the things we learn out there will be making life better for a lot of people who won&amp;rsquo;t be able to go.&lt;/p&gt;
 
 &lt;p&gt;Never in all their history have men been able truly to conceive of the world as one: a single sphere, a globe, having the qualities of a globe, a round earth in which all the directions eventually meet, in which there is no center because every point, or none, is center &amp;mdash; an equal earth which all men occupy as equals. The airman&amp;#39;s earth, if free men make it, will be truly round: a globe in practice, not in theory.&lt;/p&gt;
 
 &lt;p&gt;A Chinese tale tells of some men sent to harm a young girl who, upon seeing her beauty, become her protectors rather than her violators. That&amp;#39;s how I felt seeing the Earth for the first time. I could not help but love and cherish her.&lt;/p&gt;
-
-&lt;p&gt;Never in all their history have men been able truly to conceive of the world as one: a single sphere, a globe, having the qualities of a globe, a round earth in which all the directions eventually meet, in which there is no center because every point, or none, is center &amp;mdash; an equal earth which all men occupy as equals. The airman&amp;#39;s earth, if free men make it, will be truly round: a globe in practice, not in theory.&lt;/p&gt;
 
 &lt;p&gt;To be the first to enter the cosmos, to engage, single-handed, in an unprecedented duel with nature&amp;mdash;could one dream of anything more?&lt;/p&gt;]]&gt;&lt;/dynamic-content&gt;
 	&lt;/dynamic-element&gt;
@@ -83,8 +79,8 @@
   <__originalIndexable>true</__originalIndexable>
   <__setOriginalIndexable>false</__setOriginalIndexable>
   <__smallImage>false</__smallImage>
-  <__smallImageId>35577</__smallImageId>
-  <__originalSmallImageId>35577</__originalSmallImageId>
+  <__smallImageId>0</__smallImageId>
+  <__originalSmallImageId>0</__originalSmallImageId>
   <__setOriginalSmallImageId>false</__setOriginalSmallImageId>
   <__smallImageURL></__smallImageURL>
   <__status>0</__status>
@@ -92,6 +88,6 @@
   <__setOriginalStatus>false</__setOriginalStatus>
   <__statusByUserId>20164</__statusByUserId>
   <__statusByUserName>Test Test</__statusByUserName>
-  <__statusDate class="sql-timestamp">2016-09-21 11:11:10.721</__statusDate>
+  <__statusDate class="sql-timestamp">2016-09-23 09:38:31.573</__statusDate>
   <__columnBitmask>0</__columnBitmask>
 </JournalArticle>

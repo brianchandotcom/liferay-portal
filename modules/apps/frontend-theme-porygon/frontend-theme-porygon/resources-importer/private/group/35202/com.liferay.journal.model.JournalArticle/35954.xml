@@ -1,9 +1,9 @@
 <JournalArticle>
   <__cachedModel>false</__cachedModel>
   <__new>false</__new>
-  <__uuid>8c2ff4d9-f8d6-9c90-b55f-6a9d91aa54de</__uuid>
-  <__originalUuid>8c2ff4d9-f8d6-9c90-b55f-6a9d91aa54de</__originalUuid>
-  <__id>35499</__id>
+  <__uuid>d1d7bdc9-0a40-d33e-f349-ca5e01d33c11</__uuid>
+  <__originalUuid>d1d7bdc9-0a40-d33e-f349-ca5e01d33c11</__originalUuid>
+  <__id>35954</__id>
   <__resourcePrimKey>35500</__resourcePrimKey>
   <__originalResourcePrimKey>35500</__originalResourcePrimKey>
   <__setOriginalResourcePrimKey>false</__setOriginalResourcePrimKey>
@@ -18,7 +18,7 @@
   <__setOriginalUserId>false</__setOriginalUserId>
   <__userName>Test Test</__userName>
   <__createDate class="sql-timestamp">2016-09-21 08:46:53.665</__createDate>
-  <__modifiedDate class="sql-timestamp">2016-09-21 08:46:53.791</__modifiedDate>
+  <__modifiedDate class="sql-timestamp">2016-09-23 09:38:57.919</__modifiedDate>
   <__setModifiedDate>false</__setModifiedDate>
   <__folderId>0</__folderId>
   <__originalFolderId>0</__originalFolderId>
@@ -32,8 +32,8 @@
   <__treePath>/</__treePath>
   <__articleId>35498</__articleId>
   <__originalArticleId>35498</__originalArticleId>
-  <__version>1.0</__version>
-  <__originalVersion>1.0</__originalVersion>
+  <__version>1.2</__version>
+  <__originalVersion>1.2</__originalVersion>
   <__setOriginalVersion>false</__setOriginalVersion>
   <__title>&lt;?xml version=&apos;1.0&apos; encoding=&apos;UTF-8&apos;?&gt;&lt;root available-locales=&quot;en_US&quot; default-locale=&quot;en_US&quot;&gt;&lt;Title language-id=&quot;en_US&quot;&gt;I don&apos;t know what you could say&lt;/Title&gt;&lt;/root&gt;</__title>
   <__urlTitle>i-don-t-know-what-you-could-say</__urlTitle>
@@ -49,10 +49,20 @@
 		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[I don&apos;t know what you could say]]&gt;&lt;/dynamic-content&gt;
 	&lt;/dynamic-element&gt;
 	&lt;dynamic-element name=&quot;subTitle&quot; type=&quot;text_box&quot; index-type=&quot;keyword&quot; instance-id=&quot;fkrh&quot;&gt;
-		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[]]&gt;&lt;/dynamic-content&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[About a day in which you have seen four beautiful sunsets]]&gt;&lt;/dynamic-content&gt;
 	&lt;/dynamic-element&gt;
 	&lt;dynamic-element name=&quot;content&quot; type=&quot;text_area&quot; index-type=&quot;keyword&quot; instance-id=&quot;essy&quot;&gt;
-		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[]]&gt;&lt;/dynamic-content&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[&lt;p&gt;It suddenly struck me that that tiny pea, pretty and blue, was the Earth. I put up my thumb and shut one eye, and my thumb blotted out the planet Earth. I didn&amp;#39;t feel like a giant. I felt very, very small.&lt;/p&gt;
+
+&lt;p&gt;A Chinese tale tells of some men sent to harm a young girl who, upon seeing her beauty, become her protectors rather than her violators. That&amp;#39;s how I felt seeing the Earth for the first time. I could not help but love and cherish her.&lt;/p&gt;
+
+&lt;p&gt;To be the first to enter the cosmos, to engage, single-handed, in an unprecedented duel with nature&amp;mdash;could one dream of anything more?&lt;/p&gt;
+
+&lt;p&gt;Never in all their history have men been able truly to conceive of the world as one: a single sphere, a globe, having the qualities of a globe, a round earth in which all the directions eventually meet, in which there is no center because every point, or none, is center &amp;mdash; an equal earth which all men occupy as equals. The airman&amp;#39;s earth, if free men make it, will be truly round: a globe in practice, not in theory.&lt;/p&gt;
+
+&lt;p&gt;The dreams of yesterday are the hopes of today and the reality of tomorrow.&lt;/p&gt;
+
+&lt;p&gt;If you could see the earth illuminated when you were in a place as dark as night, it would look to you more splendid than the moon.&lt;/p&gt;]]&gt;&lt;/dynamic-content&gt;
 	&lt;/dynamic-element&gt;
 &lt;/root&gt;</__content>
   <__DDMStructureKey>33369</__DDMStructureKey>
@@ -67,8 +77,8 @@
   <__originalIndexable>true</__originalIndexable>
   <__setOriginalIndexable>false</__setOriginalIndexable>
   <__smallImage>false</__smallImage>
-  <__smallImageId>35501</__smallImageId>
-  <__originalSmallImageId>35501</__originalSmallImageId>
+  <__smallImageId>0</__smallImageId>
+  <__originalSmallImageId>0</__originalSmallImageId>
   <__setOriginalSmallImageId>false</__setOriginalSmallImageId>
   <__smallImageURL></__smallImageURL>
   <__status>0</__status>
@@ -76,6 +86,6 @@
   <__setOriginalStatus>false</__setOriginalStatus>
   <__statusByUserId>20164</__statusByUserId>
   <__statusByUserName>Test Test</__statusByUserName>
-  <__statusDate class="sql-timestamp">2016-09-21 08:46:53.791</__statusDate>
+  <__statusDate class="sql-timestamp">2016-09-23 09:38:57.919</__statusDate>
   <__columnBitmask>0</__columnBitmask>
 </JournalArticle>

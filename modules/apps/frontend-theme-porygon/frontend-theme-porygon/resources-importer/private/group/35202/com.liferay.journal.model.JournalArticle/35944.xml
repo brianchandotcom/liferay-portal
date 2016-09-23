@@ -1,9 +1,9 @@
 <JournalArticle>
   <__cachedModel>false</__cachedModel>
   <__new>false</__new>
-  <__uuid>10eb583a-f8cc-18c5-f7d0-5d80f817a26a</__uuid>
-  <__originalUuid>10eb583a-f8cc-18c5-f7d0-5d80f817a26a</__originalUuid>
-  <__id>35596</__id>
+  <__uuid>6b958b3d-668c-c0ad-28b0-26e0f03bebc2</__uuid>
+  <__originalUuid>6b958b3d-668c-c0ad-28b0-26e0f03bebc2</__originalUuid>
+  <__id>35944</__id>
   <__resourcePrimKey>35530</__resourcePrimKey>
   <__originalResourcePrimKey>35530</__originalResourcePrimKey>
   <__setOriginalResourcePrimKey>false</__setOriginalResourcePrimKey>
@@ -18,7 +18,7 @@
   <__setOriginalUserId>false</__setOriginalUserId>
   <__userName>Test Test</__userName>
   <__createDate class="sql-timestamp">2016-09-21 10:55:26.974</__createDate>
-  <__modifiedDate class="sql-timestamp">2016-09-21 11:14:38.676</__modifiedDate>
+  <__modifiedDate class="sql-timestamp">2016-09-23 09:38:04.957</__modifiedDate>
   <__setModifiedDate>false</__setModifiedDate>
   <__folderId>0</__folderId>
   <__originalFolderId>0</__originalFolderId>
@@ -32,8 +32,8 @@
   <__treePath>/</__treePath>
   <__articleId>35528</__articleId>
   <__originalArticleId>35528</__originalArticleId>
-  <__version>1.1</__version>
-  <__originalVersion>1.1</__originalVersion>
+  <__version>1.2</__version>
+  <__originalVersion>1.2</__originalVersion>
   <__setOriginalVersion>false</__setOriginalVersion>
   <__title>&lt;?xml version=&apos;1.0&apos; encoding=&apos;UTF-8&apos;?&gt;&lt;root available-locales=&quot;en_US&quot; default-locale=&quot;en_US&quot;&gt;&lt;Title language-id=&quot;en_US&quot;&gt;We choose to go to the moon&lt;/Title&gt;&lt;/root&gt;</__title>
   <__urlTitle>we-choose-to-go-to-the-moon</__urlTitle>
@@ -58,15 +58,11 @@
 
 &lt;p&gt;We choose to go to the moon in this decade and do the other things, not because they are easy, but because they are hard, because that goal will serve to organize and measure the best of our energies and skills, because that challenge is one that we are willing to accept, one we are unwilling to postpone, and one which we intend to win.&lt;/p&gt;
 
-&lt;p&gt;We choose to go to the moon in this decade and do the other things, not because they are easy, but because they are hard, because that goal will serve to organize and measure the best of our energies and skills, because that challenge is one that we are willing to accept, one we are unwilling to postpone, and one which we intend to win.&lt;/p&gt;
-
 &lt;p&gt;That&amp;#39;s one small step for [a] man, one giant leap for mankind.&lt;/p&gt;
 
 &lt;p&gt;As we got further and further away, it [the Earth] diminished in size. Finally it shrank to the size of a marble, the most beautiful you can imagine. That beautiful, warm, living object looked so fragile, so delicate, that if you touched it with a finger it would crumble and fall apart. Seeing this has to change a man.&lt;/p&gt;
 
 &lt;p&gt;The dreams of yesterday are the hopes of today and the reality of tomorrow.&lt;/p&gt;
-
-&lt;p&gt;NASA is not about the &amp;lsquo;Adventure of Human Space Exploration&amp;rsquo;&amp;hellip;We won&amp;rsquo;t be doing it just to get out there in space &amp;ndash; we&amp;rsquo;ll be doing it because the things we learn out there will be making life better for a lot of people who won&amp;rsquo;t be able to go.&lt;/p&gt;
 
 &lt;p&gt;NASA is not about the &amp;lsquo;Adventure of Human Space Exploration&amp;rsquo;&amp;hellip;We won&amp;rsquo;t be doing it just to get out there in space &amp;ndash; we&amp;rsquo;ll be doing it because the things we learn out there will be making life better for a lot of people who won&amp;rsquo;t be able to go.&lt;/p&gt;
 
@@ -85,8 +81,8 @@
   <__originalIndexable>true</__originalIndexable>
   <__setOriginalIndexable>false</__setOriginalIndexable>
   <__smallImage>false</__smallImage>
-  <__smallImageId>35597</__smallImageId>
-  <__originalSmallImageId>35597</__originalSmallImageId>
+  <__smallImageId>0</__smallImageId>
+  <__originalSmallImageId>0</__originalSmallImageId>
   <__setOriginalSmallImageId>false</__setOriginalSmallImageId>
   <__smallImageURL></__smallImageURL>
   <__status>0</__status>
@@ -94,6 +90,6 @@
   <__setOriginalStatus>false</__setOriginalStatus>
   <__statusByUserId>20164</__statusByUserId>
   <__statusByUserName>Test Test</__statusByUserName>
-  <__statusDate class="sql-timestamp">2016-09-21 11:14:38.676</__statusDate>
+  <__statusDate class="sql-timestamp">2016-09-23 09:38:04.957</__statusDate>
   <__columnBitmask>0</__columnBitmask>
 </JournalArticle>

@@ -1,9 +1,9 @@
 <JournalArticle>
   <__cachedModel>false</__cachedModel>
   <__new>false</__new>
-  <__uuid>28b2c6ed-5ddb-a563-0b46-b252efe61168</__uuid>
-  <__originalUuid>28b2c6ed-5ddb-a563-0b46-b252efe61168</__originalUuid>
-  <__id>35409</__id>
+  <__uuid>63d821b8-49b6-ca03-5a51-39492962a420</__uuid>
+  <__originalUuid>63d821b8-49b6-ca03-5a51-39492962a420</__originalUuid>
+  <__id>35919</__id>
   <__resourcePrimKey>35410</__resourcePrimKey>
   <__originalResourcePrimKey>35410</__originalResourcePrimKey>
   <__setOriginalResourcePrimKey>false</__setOriginalResourcePrimKey>
@@ -18,7 +18,7 @@
   <__setOriginalUserId>false</__setOriginalUserId>
   <__userName>Test Test</__userName>
   <__createDate class="sql-timestamp">2016-09-20 14:19:52.705</__createDate>
-  <__modifiedDate class="sql-timestamp">2016-09-20 14:19:52.764</__modifiedDate>
+  <__modifiedDate class="sql-timestamp">2016-09-23 09:29:47.074</__modifiedDate>
   <__setModifiedDate>false</__setModifiedDate>
   <__folderId>0</__folderId>
   <__originalFolderId>0</__originalFolderId>
@@ -32,8 +32,8 @@
   <__treePath>/</__treePath>
   <__articleId>35408</__articleId>
   <__originalArticleId>35408</__originalArticleId>
-  <__version>1.0</__version>
-  <__originalVersion>1.0</__originalVersion>
+  <__version>1.1</__version>
+  <__originalVersion>1.1</__originalVersion>
   <__setOriginalVersion>false</__setOriginalVersion>
   <__title>&lt;?xml version=&apos;1.0&apos; encoding=&apos;UTF-8&apos;?&gt;&lt;root available-locales=&quot;en_US&quot; default-locale=&quot;en_US&quot;&gt;&lt;Title language-id=&quot;en_US&quot;&gt;We want to explore&lt;/Title&gt;&lt;/root&gt;</__title>
   <__urlTitle>we-want-to-explore</__urlTitle>
@@ -64,13 +64,9 @@
 
 &lt;p&gt;A Chinese tale tells of some men sent to harm a young girl who, upon seeing her beauty, become her protectors rather than her violators. That&amp;#39;s how I felt seeing the Earth for the first time. I could not help but love and cherish her.&lt;/p&gt;
 
-&lt;p&gt;We want to explore. We&amp;rsquo;re curious people. Look back over history, people have put their lives at stake to go out and explore &amp;hellip; We believe in what we&amp;rsquo;re doing. Now it&amp;rsquo;s time to go.&lt;/p&gt;
-
 &lt;p&gt;Across the sea of space, the stars are other suns.&lt;/p&gt;
 
-&lt;p&gt;It suddenly struck me that that tiny pea, pretty and blue, was the Earth. I put up my thumb and shut one eye, and my thumb blotted out the planet Earth. I didn&amp;#39;t feel like a giant. I felt very, very small.&lt;/p&gt;
-
-&lt;p&gt;NASA is not about the &amp;lsquo;Adventure of Human Space Exploration&amp;rsquo;&amp;hellip;We won&amp;rsquo;t be doing it just to get out there in space &amp;ndash; we&amp;rsquo;ll be doing it because the things we learn out there will be making life better for a lot of people who won&amp;rsquo;t be able to go.&lt;/p&gt;]]&gt;&lt;/dynamic-content&gt;
+&lt;p&gt;It suddenly struck me that that tiny pea, pretty and blue, was the Earth. I put up my thumb and shut one eye, and my thumb blotted out the planet Earth. I didn&amp;#39;t feel like a giant. I felt very, very small.&lt;/p&gt;]]&gt;&lt;/dynamic-content&gt;
 	&lt;/dynamic-element&gt;
 &lt;/root&gt;</__content>
   <__DDMStructureKey>33369</__DDMStructureKey>
@@ -85,8 +81,8 @@
   <__originalIndexable>true</__originalIndexable>
   <__setOriginalIndexable>false</__setOriginalIndexable>
   <__smallImage>false</__smallImage>
-  <__smallImageId>35411</__smallImageId>
-  <__originalSmallImageId>35411</__originalSmallImageId>
+  <__smallImageId>0</__smallImageId>
+  <__originalSmallImageId>0</__originalSmallImageId>
   <__setOriginalSmallImageId>false</__setOriginalSmallImageId>
   <__smallImageURL></__smallImageURL>
   <__status>0</__status>
@@ -94,6 +90,6 @@
   <__setOriginalStatus>false</__setOriginalStatus>
   <__statusByUserId>20164</__statusByUserId>
   <__statusByUserName>Test Test</__statusByUserName>
-  <__statusDate class="sql-timestamp">2016-09-20 14:19:52.764</__statusDate>
+  <__statusDate class="sql-timestamp">2016-09-23 09:29:47.074</__statusDate>
   <__columnBitmask>0</__columnBitmask>
 </JournalArticle>

@@ -1,9 +1,9 @@
 <JournalArticle>
   <__cachedModel>false</__cachedModel>
   <__new>false</__new>
-  <__uuid>74cd08b8-bd8f-30af-20f2-2ebafe43bd01</__uuid>
-  <__originalUuid>74cd08b8-bd8f-30af-20f2-2ebafe43bd01</__originalUuid>
-  <__id>35652</__id>
+  <__uuid>b6e535a4-7c91-2315-2042-5c0b6fc3528d</__uuid>
+  <__originalUuid>b6e535a4-7c91-2315-2042-5c0b6fc3528d</__originalUuid>
+  <__id>35929</__id>
   <__resourcePrimKey>35553</__resourcePrimKey>
   <__originalResourcePrimKey>35553</__originalResourcePrimKey>
   <__setOriginalResourcePrimKey>false</__setOriginalResourcePrimKey>
@@ -18,7 +18,7 @@
   <__setOriginalUserId>false</__setOriginalUserId>
   <__userName>Test Test</__userName>
   <__createDate class="sql-timestamp">2016-09-21 10:58:23.111</__createDate>
-  <__modifiedDate class="sql-timestamp">2016-09-21 14:26:07.556</__modifiedDate>
+  <__modifiedDate class="sql-timestamp">2016-09-23 09:33:56.552</__modifiedDate>
   <__setModifiedDate>false</__setModifiedDate>
   <__folderId>0</__folderId>
   <__originalFolderId>0</__originalFolderId>
@@ -32,8 +32,8 @@
   <__treePath>/</__treePath>
   <__articleId>35551</__articleId>
   <__originalArticleId>35551</__originalArticleId>
-  <__version>1.2</__version>
-  <__originalVersion>1.2</__originalVersion>
+  <__version>1.3</__version>
+  <__originalVersion>1.3</__originalVersion>
   <__setOriginalVersion>false</__setOriginalVersion>
   <__title>&lt;?xml version=&apos;1.0&apos; encoding=&apos;UTF-8&apos;?&gt;&lt;root available-locales=&quot;en_US&quot; default-locale=&quot;en_US&quot;&gt;&lt;Title language-id=&quot;en_US&quot;&gt;Spaceflights cannot be stopped&lt;/Title&gt;&lt;/root&gt;</__title>
   <__urlTitle>spaceflights-cannot-be-stopped</__urlTitle>
@@ -56,8 +56,6 @@
 
 &lt;p&gt;Astronomy compels the soul to look upward, and leads us from this world to another.&lt;/p&gt;
 
-&lt;p&gt;As I stand out here in the wonders of the unknown at Hadley, I sort of realize there&amp;rsquo;s a fundamental truth to our nature, Man must explore . . . and this is exploration at its greatest.&lt;/p&gt;
-
 &lt;p&gt;As we got further and further away, it [the Earth] diminished in size. Finally it shrank to the size of a marble, the most beautiful you can imagine. That beautiful, warm, living object looked so fragile, so delicate, that if you touched it with a finger it would crumble and fall apart. Seeing this has to change a man.&lt;/p&gt;
 
 &lt;p&gt;The dreams of yesterday are the hopes of today and the reality of tomorrow.&lt;/p&gt;
@@ -65,8 +63,6 @@
 &lt;p&gt;Science has not yet mastered prophecy. We predict too much for the next year and yet far too little for the next 10.&lt;/p&gt;
 
 &lt;p&gt;The regret on our side is, they used to say years ago, we are reading about you in science class. Now they say, we are reading about you in history class.&lt;/p&gt;
-
-&lt;p&gt;Astronomy compels the soul to look upward, and leads us from this world to another.&lt;/p&gt;
 
 &lt;p&gt;As I stand out here in the wonders of the unknown at Hadley, I sort of realize there&amp;rsquo;s a fundamental truth to our nature, Man must explore . . . and this is exploration at its greatest.&lt;/p&gt;
 
@@ -85,8 +81,8 @@
   <__originalIndexable>true</__originalIndexable>
   <__setOriginalIndexable>false</__setOriginalIndexable>
   <__smallImage>false</__smallImage>
-  <__smallImageId>35653</__smallImageId>
-  <__originalSmallImageId>35653</__originalSmallImageId>
+  <__smallImageId>0</__smallImageId>
+  <__originalSmallImageId>0</__originalSmallImageId>
   <__setOriginalSmallImageId>false</__setOriginalSmallImageId>
   <__smallImageURL></__smallImageURL>
   <__status>0</__status>
@@ -94,6 +90,6 @@
   <__setOriginalStatus>false</__setOriginalStatus>
   <__statusByUserId>20164</__statusByUserId>
   <__statusByUserName>Test Test</__statusByUserName>
-  <__statusDate class="sql-timestamp">2016-09-21 14:26:07.556</__statusDate>
+  <__statusDate class="sql-timestamp">2016-09-23 09:33:56.552</__statusDate>
   <__columnBitmask>0</__columnBitmask>
 </JournalArticle>

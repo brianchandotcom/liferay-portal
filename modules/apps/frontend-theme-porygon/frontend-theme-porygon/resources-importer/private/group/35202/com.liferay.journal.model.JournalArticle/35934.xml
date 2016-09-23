@@ -1,9 +1,9 @@
 <JournalArticle>
   <__cachedModel>false</__cachedModel>
   <__new>false</__new>
-  <__uuid>d1e0c9f8-6281-80fb-20d4-27906fe6dced</__uuid>
-  <__originalUuid>d1e0c9f8-6281-80fb-20d4-27906fe6dced</__originalUuid>
-  <__id>35586</__id>
+  <__uuid>28b51523-fc15-b485-b381-a3ce06dee9a3</__uuid>
+  <__originalUuid>28b51523-fc15-b485-b381-a3ce06dee9a3</__originalUuid>
+  <__id>35934</__id>
   <__resourcePrimKey>35587</__resourcePrimKey>
   <__originalResourcePrimKey>35587</__originalResourcePrimKey>
   <__setOriginalResourcePrimKey>false</__setOriginalResourcePrimKey>
@@ -18,7 +18,7 @@
   <__setOriginalUserId>false</__setOriginalUserId>
   <__userName>Test Test</__userName>
   <__createDate class="sql-timestamp">2016-09-21 11:12:56.691</__createDate>
-  <__modifiedDate class="sql-timestamp">2016-09-21 11:12:56.757</__modifiedDate>
+  <__modifiedDate class="sql-timestamp">2016-09-23 09:35:10.469</__modifiedDate>
   <__setModifiedDate>false</__setModifiedDate>
   <__folderId>0</__folderId>
   <__originalFolderId>0</__originalFolderId>
@@ -32,8 +32,8 @@
   <__treePath>/</__treePath>
   <__articleId>35585</__articleId>
   <__originalArticleId>35585</__originalArticleId>
-  <__version>1.0</__version>
-  <__originalVersion>1.0</__originalVersion>
+  <__version>1.2</__version>
+  <__originalVersion>1.2</__originalVersion>
   <__setOriginalVersion>false</__setOriginalVersion>
   <__title>&lt;?xml version=&apos;1.0&apos; encoding=&apos;UTF-8&apos;?&gt;&lt;root available-locales=&quot;en_US&quot; default-locale=&quot;en_US&quot;&gt;&lt;Title language-id=&quot;en_US&quot;&gt;The Earth is all we have in common&lt;/Title&gt;&lt;/root&gt;</__title>
   <__urlTitle>the-earth-is-all-we-have-in-common</__urlTitle>
@@ -85,8 +85,8 @@
   <__originalIndexable>true</__originalIndexable>
   <__setOriginalIndexable>false</__setOriginalIndexable>
   <__smallImage>false</__smallImage>
-  <__smallImageId>35588</__smallImageId>
-  <__originalSmallImageId>35588</__originalSmallImageId>
+  <__smallImageId>0</__smallImageId>
+  <__originalSmallImageId>0</__originalSmallImageId>
   <__setOriginalSmallImageId>false</__setOriginalSmallImageId>
   <__smallImageURL></__smallImageURL>
   <__status>0</__status>
@@ -94,6 +94,6 @@
   <__setOriginalStatus>false</__setOriginalStatus>
   <__statusByUserId>20164</__statusByUserId>
   <__statusByUserName>Test Test</__statusByUserName>
-  <__statusDate class="sql-timestamp">2016-09-21 11:12:56.757</__statusDate>
+  <__statusDate class="sql-timestamp">2016-09-23 09:35:10.469</__statusDate>
   <__columnBitmask>0</__columnBitmask>
 </JournalArticle>

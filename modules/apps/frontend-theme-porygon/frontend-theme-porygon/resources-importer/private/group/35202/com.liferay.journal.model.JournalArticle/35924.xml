@@ -1,9 +1,9 @@
 <JournalArticle>
   <__cachedModel>false</__cachedModel>
   <__new>false</__new>
-  <__uuid>0a7feb91-d9e0-8792-907b-4d08ad28f014</__uuid>
-  <__originalUuid>0a7feb91-d9e0-8792-907b-4d08ad28f014</__originalUuid>
-  <__id>35464</__id>
+  <__uuid>09413189-43bf-5d2e-7ce1-1f24ee16ebb2</__uuid>
+  <__originalUuid>09413189-43bf-5d2e-7ce1-1f24ee16ebb2</__originalUuid>
+  <__id>35924</__id>
   <__resourcePrimKey>35465</__resourcePrimKey>
   <__originalResourcePrimKey>35465</__originalResourcePrimKey>
   <__setOriginalResourcePrimKey>false</__setOriginalResourcePrimKey>
@@ -18,7 +18,7 @@
   <__setOriginalUserId>false</__setOriginalUserId>
   <__userName>Test Test</__userName>
   <__createDate class="sql-timestamp">2016-09-21 08:21:15.116</__createDate>
-  <__modifiedDate class="sql-timestamp">2016-09-21 08:21:15.228</__modifiedDate>
+  <__modifiedDate class="sql-timestamp">2016-09-23 09:33:25.579</__modifiedDate>
   <__setModifiedDate>false</__setModifiedDate>
   <__folderId>0</__folderId>
   <__originalFolderId>0</__originalFolderId>
@@ -32,8 +32,8 @@
   <__treePath>/</__treePath>
   <__articleId>35463</__articleId>
   <__originalArticleId>35463</__originalArticleId>
-  <__version>1.0</__version>
-  <__originalVersion>1.0</__originalVersion>
+  <__version>1.1</__version>
+  <__originalVersion>1.1</__originalVersion>
   <__setOriginalVersion>false</__setOriginalVersion>
   <__title>&lt;?xml version=&apos;1.0&apos; encoding=&apos;UTF-8&apos;?&gt;&lt;root available-locales=&quot;en_US&quot; default-locale=&quot;en_US&quot;&gt;&lt;Title language-id=&quot;en_US&quot;&gt;For those who have seen the Earth from space&lt;/Title&gt;&lt;/root&gt;</__title>
   <__urlTitle>for-those-who-have-seen-the-earth-from-space</__urlTitle>
@@ -66,8 +66,6 @@
 
 &lt;p&gt;We are all connected; To each other, biologically. To the earth, chemically. To the rest of the universe atomically.&lt;/p&gt;
 
-&lt;p&gt;Spaceflights cannot be stopped. This is not the work of any one man or even a group of men. It is a historical process which mankind is carrying out in accordance with the natural laws of human development.&lt;/p&gt;
-
 &lt;p&gt;Space, the final frontier. These are the voyages of the Starship Enterprise. Its five-year mission: to explore strange new worlds, to seek out new life and new civilizations, to boldly go where no man has gone before.&lt;/p&gt;
 
 &lt;p&gt;The Earth was small, light blue, and so touchingly alone, our home that must be defended like a holy relic. The Earth was absolutely round. I believe I never knew what the word round meant until I saw Earth from space.&lt;/p&gt;]]&gt;&lt;/dynamic-content&gt;
@@ -85,8 +83,8 @@
   <__originalIndexable>true</__originalIndexable>
   <__setOriginalIndexable>false</__setOriginalIndexable>
   <__smallImage>false</__smallImage>
-  <__smallImageId>35466</__smallImageId>
-  <__originalSmallImageId>35466</__originalSmallImageId>
+  <__smallImageId>0</__smallImageId>
+  <__originalSmallImageId>0</__originalSmallImageId>
   <__setOriginalSmallImageId>false</__setOriginalSmallImageId>
   <__smallImageURL></__smallImageURL>
   <__status>0</__status>
@@ -94,6 +92,6 @@
   <__setOriginalStatus>false</__setOriginalStatus>
   <__statusByUserId>20164</__statusByUserId>
   <__statusByUserName>Test Test</__statusByUserName>
-  <__statusDate class="sql-timestamp">2016-09-21 08:21:15.228</__statusDate>
+  <__statusDate class="sql-timestamp">2016-09-23 09:33:25.579</__statusDate>
   <__columnBitmask>0</__columnBitmask>
 </JournalArticle>

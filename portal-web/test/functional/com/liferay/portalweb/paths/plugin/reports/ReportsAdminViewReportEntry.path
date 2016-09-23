@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>INFO_MESSAGE</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DEFINITION_NAME_FIELD</td>
 	<td>//span[contains(.,'Definition Name')]/../../div[contains(.,'Definition Name') and contains(.,'${key_reportsDefinitionName}')]</td>
 	<td></td>

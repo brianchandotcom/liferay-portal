@@ -279,7 +279,7 @@ argument in the `npmInstall` task with the value of the project property
 ### Changed
 - [LPS-66906]: Update the [Liferay Gradle Plugins] dependency to version 2.0.40.
 
-## 1.2.29 - 2016-09-22
+## 1.2.30 - 2016-09-23
 
 ### Changed
 - [LPS-66853]: Update the [Liferay Gradle Plugins] dependency to version 2.0.41.

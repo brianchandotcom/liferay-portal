@@ -25,12 +25,14 @@ import com.liferay.calendar.recurrence.Frequency;
 import com.liferay.calendar.recurrence.PositionalWeekday;
 import com.liferay.calendar.recurrence.Recurrence;
 import com.liferay.calendar.recurrence.RecurrenceSerializer;
+import com.liferay.calendar.service.CalendarBookingLocalService;
 import com.liferay.calendar.service.CalendarBookingLocalServiceUtil;
 import com.liferay.calendar.service.CalendarLocalServiceUtil;
 import com.liferay.calendar.util.CalendarResourceUtil;
 import com.liferay.calendar.workflow.CalendarBookingWorkflowConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -39,12 +41,16 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
 import com.liferay.portal.util.test.MailServiceTestUtil;
+
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -53,12 +59,18 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 
 /**
  * @author Adam Brandizzi
@@ -76,6 +88,48 @@ public class CalendarBookingLocalServiceTest {
 	@Before
 	public void setUp() throws Exception {
 		_user = UserTestUtil.addUser();
+
+		Bundle bundle = FrameworkUtil.getBundle(
+			CalendarBookingLocalServiceTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		ServiceReference<?> serviceReference =
+			bundleContext.getServiceReference(
+				"com.liferay.calendar.web.internal.messaging." +
+					"CheckBookingsMessageListener");
+
+		_checkBookingMessageListener = bundleContext.getService(
+			serviceReference);
+
+		ReflectionTestUtil.setFieldValue(
+			_checkBookingMessageListener, "_calendarBookingLocalService",
+			ProxyUtil.newProxyInstance(
+				CalendarBookingLocalService.class.getClassLoader(),
+				new Class<?>[] {CalendarBookingLocalService.class},
+				new InvocationHandler() {
+
+					@Override
+					public Object invoke(
+							Object proxy, Method method, Object[] args)
+						throws Throwable {
+
+						if ("checkCalendarBookings".equals(method.getName())) {
+							return null;
+						}
+
+						return method.invoke(
+							CalendarBookingLocalServiceUtil.getService(), args);
+					}
+
+				}));
+	}
+
+	@After
+	public void tearDown() {
+		ReflectionTestUtil.setFieldValue(
+			_checkBookingMessageListener, "_calendarBookingLocalService",
+			CalendarBookingLocalServiceUtil.getService());
 	}
 
 	@Test
@@ -1501,6 +1555,8 @@ public class CalendarBookingLocalServiceTest {
 
 		return childCalendarBooking;
 	}
+
+	private Object _checkBookingMessageListener;
 
 	@DeleteAfterTestRun
 	private User _invitingUser;

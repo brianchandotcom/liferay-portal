@@ -1036,6 +1036,11 @@ public class MainServlet extends ActionServlet {
 			}
 		}
 
+		if (request.getAttribute(WebKeys.USER) != null) {
+			request.setAttribute(WebKeys.USER, user);
+			request.setAttribute(WebKeys.USER_ID, Long.valueOf(userId));
+		}
+
 		HttpSession session = request.getSession();
 
 		session.setAttribute(Globals.LOCALE_KEY, user.getLocale());

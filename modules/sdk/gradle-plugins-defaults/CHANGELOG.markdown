@@ -284,6 +284,12 @@ argument in the `npmInstall` task with the value of the project property
 ### Changed
 - [LPS-66853]: Update the [Liferay Gradle Plugins] dependency to version 2.0.41.
 
+## 1.2.31 - 2016-09-23
+
+### Added
+- [LPS-68306]: Set the system property `portal.pre.build` to `true` to include
+only the projects that contain a `.lfrbuild-portal-pre` marker file.
+
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [Liferay Gradle Plugins Node]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-node
 [LPS-61099]: https://issues.liferay.com/browse/LPS-61099
@@ -304,5 +310,6 @@ argument in the `npmInstall` task with the value of the project property
 [LPS-68230]: https://issues.liferay.com/browse/LPS-68230
 [LPS-68305]: https://issues.liferay.com/browse/LPS-68305
 [LPS-68297]: https://issues.liferay.com/browse/LPS-68297
+[LPS-68306]: https://issues.liferay.com/browse/LPS-68306
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

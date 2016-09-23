@@ -32,8 +32,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Provides a skeletal implementation of the {@link PanelCategory} in order to
- * minimize the effort required to implement this interface.
+ * Provides a skeletal implementation of the {@link PanelCategory} to minimize
+ * the effort required to implement this interface.
  *
  * <p>
  * To implement an application category, this class should be extended and

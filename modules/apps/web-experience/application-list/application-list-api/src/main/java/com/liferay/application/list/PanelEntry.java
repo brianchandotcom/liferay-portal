@@ -50,7 +50,7 @@ public interface PanelEntry {
 
 	/**
 	 * Returns <code>true</code> if the panel entry should be displayed in the
-	 * group's context
+	 * group's context.
 	 *
 	 * @param  permissionChecker the permission checker
 	 * @param  group the group for which permissions are checked

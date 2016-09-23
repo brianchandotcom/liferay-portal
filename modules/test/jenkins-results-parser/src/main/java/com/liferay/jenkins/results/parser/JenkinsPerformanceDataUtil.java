@@ -344,9 +344,9 @@ public class JenkinsPerformanceDataUtil {
 			return;
 		}
 
-		List<?> subList = list.subList(maxSize, list.size());
+		List<?> sublist = list.subList(maxSize, list.size());
 
-		subList.clear();
+		sublist.clear();
 	}
 
 	private static boolean _broken;

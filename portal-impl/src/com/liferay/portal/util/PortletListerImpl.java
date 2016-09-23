@@ -181,10 +181,10 @@ public class PortletListerImpl implements PortletLister {
 
 			int nodeId = _nodeId;
 
-			List<PortletCategory> subCategories = ListUtil.fromCollection(
+			List<PortletCategory> subcategories = ListUtil.fromCollection(
 				portletCategory.getCategories());
 
-			iteratePortletCategories(nodeView, subCategories, nodeId, depth);
+			iteratePortletCategories(nodeView, subcategories, nodeId, depth);
 
 			if (_iteratePortlets) {
 				iteratePortlets(

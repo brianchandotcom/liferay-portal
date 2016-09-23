@@ -133,7 +133,7 @@ AUI.add(
 
 						instance._showLoading();
 
-						instance.set('description', field.get('type'));
+						instance.set('description', Liferay.DDM.Renderer.FieldTypes.get(field.get('type')).get('label'));
 						instance.set('title', field.get('context').label);
 
 						instance._loadFieldSettingsForm(field);

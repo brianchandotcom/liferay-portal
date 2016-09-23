@@ -26,6 +26,8 @@ configJSModules {
 	dependsOn buildMetalComponents
 
 	include "**/*.js*"
+
+	moduleFormat "/.soy/g,.soy.js"
 }
 
 dependencies {

@@ -7,7 +7,7 @@
 />
 
 <#if fieldValue != "">
-	<#if (hasFieldValue)>
+	<#if hasFieldValue>
 		<#assign
 			dateValue = fieldRawValue?date["yyyy-MM-dd"]
 
@@ -35,7 +35,7 @@
 		year = fieldValue.get(YEAR)
 	/>
 <#else>
-	<#if (required)>
+	<#if required>
 		<#assign
 			calendar = calendarFactory.getCalendar(timeZone)
 

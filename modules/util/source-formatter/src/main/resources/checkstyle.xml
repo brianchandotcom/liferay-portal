@@ -121,6 +121,11 @@
 		<module name="com.liferay.source.formatter.checkstyle.checks.MissingModifier">
 			<message key="modifier.missing" value="Missing modifier for ''{0}''" />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.checks.Subname">
+			<message key="method.invalidName" value="'sub' should be followed by a lowercase character for method ''{0}''" />
+			<message key="parameter.invalidName" value="'sub' should be followed by a lowercase character for parameter ''{0}''" />
+			<message key="variable.invalidName" value="'sub' should be followed by a lowercase character for variable ''{0}''" />
+		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.UnusedParameter">
 			<message key="parameter.unused" value="Parameter ''{0}'' is unused" />
 		</module>

@@ -226,7 +226,7 @@ public class MediaWikiToCreoleTranslatorTest {
 	}
 
 	@Test
-	public void testListSubItem() throws Exception {
+	public void testListSubitem() throws Exception {
 		String content = "** subitem";
 
 		String expected = content;
@@ -236,7 +236,7 @@ public class MediaWikiToCreoleTranslatorTest {
 	}
 
 	@Test
-	public void testListSubSubItem() throws Exception {
+	public void testListSubsubitem() throws Exception {
 		String content = "*** subsubitem";
 
 		String expected = content;
@@ -327,7 +327,7 @@ public class MediaWikiToCreoleTranslatorTest {
 	}
 
 	@Test
-	public void testOrderedListSubItem() throws Exception {
+	public void testOrderedListSubitem() throws Exception {
 		String content = "## subitem";
 
 		String expected = content;
@@ -337,7 +337,7 @@ public class MediaWikiToCreoleTranslatorTest {
 	}
 
 	@Test
-	public void testOrderedListSubSubItem() throws Exception {
+	public void testOrderedListSubsubitem() throws Exception {
 		String content = "### subsubitem";
 
 		String expected = content;

@@ -127,7 +127,7 @@ public class ClassicToCreoleTranslatorTest {
 	}
 
 	@Test
-	public void testListSubItem() throws Exception {
+	public void testListSubitem() throws Exception {
 		String content = "\t\t* subitem";
 
 		String expected = "** subitem";
@@ -137,7 +137,7 @@ public class ClassicToCreoleTranslatorTest {
 	}
 
 	@Test
-	public void testListSubSubItem() throws Exception {
+	public void testListSubsubitem() throws Exception {
 		String content = "\t\t\t* subsubitem";
 
 		String expected = "*** subsubitem";
@@ -147,7 +147,7 @@ public class ClassicToCreoleTranslatorTest {
 	}
 
 	@Test
-	public void testListSubSubSubItem() throws Exception {
+	public void testListSubsubsubitem() throws Exception {
 		String content = "\t\t\t\t* subsubitem";
 
 		String expected = "**** subsubitem";
@@ -209,7 +209,7 @@ public class ClassicToCreoleTranslatorTest {
 	}
 
 	@Test
-	public void testOrderedListSubItem() throws Exception {
+	public void testOrderedListSubitem() throws Exception {
 		String content = "\t\t1 subitem";
 
 		String expected = "## subitem";
@@ -219,7 +219,7 @@ public class ClassicToCreoleTranslatorTest {
 	}
 
 	@Test
-	public void testOrderedListSubSubItem() throws Exception {
+	public void testOrderedListSubsubitem() throws Exception {
 		String content = "\t\t\t1 subsubitem";
 
 		String expected = "### subsubitem";
@@ -229,7 +229,7 @@ public class ClassicToCreoleTranslatorTest {
 	}
 
 	@Test
-	public void testOrderedListSubSubSubItem() throws Exception {
+	public void testOrderedListSubsubsubitem() throws Exception {
 		String content = "\t\t\t\t1 subsubitem";
 
 		String expected = "#### subsubitem";

@@ -488,6 +488,25 @@ http://www.w3.org/TR/html401/struct/global.html
 	</tags-to-encode>
 
 	<tag-rules>
+		<tag name="picture" action="validate" />
+			<tag name="source" action="validate">
+			<attribute name="srcset">
+				<regexp-list>
+					<regexp name="onsiteURL"/>
+					<regexp name="offsiteURL"/>
+				</regexp-list>
+			</attribute>
+			<attribute name="media">
+				<regexp-list>
+					<regexp name="anything" />
+				</regexp-list>
+			</attribute>
+			<attribute name="type">
+				<regexp-list>
+					<regexp value="[a-zA-Z0-9]+/[a-zA-Z0-9]+" />
+				</regexp-list>
+			</attribute>
+		</tag>
 
 		<!-- Tags related to JavaScript -->
 

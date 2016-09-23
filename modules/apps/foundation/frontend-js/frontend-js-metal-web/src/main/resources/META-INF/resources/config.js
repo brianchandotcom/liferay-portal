@@ -1,3 +1,3 @@
-window.__METAL_COMPATIBILITY = {
+window.__METAL_COMPATIBILITY__ = {
 	renderers: ['soy']
 };

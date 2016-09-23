@@ -28,57 +28,54 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Provides an interface that defines applications to be used by a
  * <code>liferay-application-list:panel-app</code> tag instance to render a new
- * panel application. Applications included within application categories
+ * panel application. Applications are included within application categories
  * defined by {@link PanelCategory} implementations.
  *
- * @see PanelEntry
- *
  * @author Adolfo Pérez
+ * @see    PanelEntry
  */
 public interface PanelApp extends PanelEntry {
 
 	/**
 	 * Returns the number of notifications for the user.
 	 *
-	 * @param user the user to get notifications count
-	 * @return notifications count for the user
+	 * @param  user the user from which notifications are retrieved
+	 * @return the number of notifications for the user
 	 */
 	public int getNotificationsCount(User user);
 
 	/**
-	 * Returns the portlet associated with the application
+	 * Returns the portlet associated with the application.
 	 *
 	 * @return the portlet associated with the application
 	 */
 	public Portlet getPortlet();
 
 	/**
-	 * Returns the portlet's id associated with the application
+	 * Returns the portlet's ID associated with the application.
 	 *
-	 * @return the portlet's id associated with the application
+	 * @return the portlet's ID associated with the application
 	 */
 	public String getPortletId();
 
 	/**
-	 * Returns the URL used to render an associated portlet based on the
-	 * servlet request attributes
+	 * Returns the URL used to render a portlet based on the servlet request
+	 * attributes.
 	 *
-	 * @param request the servlet request to create a portlet's URL
-	 * @return the portlet's URL to be used to render a target portlet
-	 *
-	 * @throws PortalException if an Portal exception occurred
+	 * @param  request the servlet request used to create a portlet's URL
+	 * @return the portlet's URL used to render a target portlet
+	 * @throws PortalException if a portal exception occurred
 	 */
 	public PortletURL getPortletURL(HttpServletRequest request)
 		throws PortalException;
 
 	/**
-	 * Renders the application view.
+	 * Returns <code>true</code> if the application successfully renders.
 	 *
-	 * @param request the servlet request to be used in rendering process
-	 * @param response the servlet response to be used in rendering process
-	 * @return <code>true</code> in case of successful application rendering,
-	 * 		   <code>false</code> otherwise.
-	 *
+	 * @param  request the servlet request used in the rendering process
+	 * @param  response the servlet response used in the rendering process
+	 * @return <code>true</code> if the application successfully renders;
+	 *         <code>false</code> otherwise
 	 * @throws IOException if an IO exception occurred
 	 */
 	public boolean include(
@@ -86,14 +83,14 @@ public interface PanelApp extends PanelEntry {
 		throws IOException;
 
 	/**
-	 * Sets {@link GroupProvider} associated with the application
+	 * Sets the {@link GroupProvider} associated with the application.
 	 *
 	 * @param groupProvider the group provider associated with the application
 	 */
 	public void setGroupProvider(GroupProvider groupProvider);
 
 	/**
-	 * Sets the portlet associated with the application
+	 * Sets the portlet associated with the application.
 	 *
 	 * @param portlet the portlet associated with the application
 	 */

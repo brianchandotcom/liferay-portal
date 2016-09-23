@@ -27,23 +27,27 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * This class provides a skeletal implementation of the {@link PanelApp} with
- * JSP support to minimize the effort required to implement this interface.
+ * Provides a skeletal implementation of the {@link PanelApp} with JSP support
+ * to minimize the effort required to implement this interface.
  *
- * To implement a JSP application the programmer needs to extend this class and
- * implement <code>getJspPath</code> method which returns a path for main JSP
- * application view in current servlet context.
- * Servlet context should also be set using <code>setServletContext</code>
- * method to use appropriate servlet context for JSP pages otherwise
- * <code>include</code> method will throw a <code>NullPointerException</code>.
+ * <p>
+ * To implement a JSP application, this class should be extended and {@link
+ * #getJspPath()} should be implemented, which returns a path for the main JSP
+ * application view in the current servlet context. The servlet context should
+ * also be set using {@link #setServletContext(ServletContext)}, which uses the
+ * appropriate servlet context for JSP pages. If the servlet context is not set,
+ * {@link #include(HttpServletRequest, HttpServletResponse)} will throw a
+ * <code>NullPointerException</code>.
+ * </p>
  *
- * JSP applications are included within JSP application category defined by
+ * <p>
+ * JSP applications are included within JSP application categories defined by
  * {@link BaseJSPPanelCategory} implementations.
- *
- * @see BasePanelApp
- * @see PanelApp
+ * </p>
  *
  * @author Julio Camarero
+ * @see    BasePanelApp
+ * @see    PanelApp
  */
 public abstract class BaseJSPPanelApp extends BasePanelApp {
 

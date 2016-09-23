@@ -19,29 +19,28 @@ import com.liferay.portal.kernel.model.Group;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Provides an interface which defines how the instance of {@link Group},
- * associated with servlet request, is stored and retreived.
+ * Provides an interface that defines how a <code>Group</code> (in
+ * <code>portal-kernel</code>) associated with a servlet request is stored and
+ * retrieved.
  *
  * @author Julio Camarero
  */
 public interface GroupProvider {
 
 	/**
-	 * Returns the instance of <code>Group</code> associated with the request.
+	 * Returns the <code>Group</code> associated with the request.
 	 *
-	 * @param request the servlet request to retrieve associated group
-	 * @return the instance of <code>Group</code> associated with the request
+	 * @param  request the servlet request used to retrieve the group
+	 * @return the <code>Group</code> associated with the request
 	 */
 	public Group getGroup(HttpServletRequest request);
 
 	/**
-	 * Sets the association of the instance of <code>Group</code> and a servlet
-	 * request.
+	 * Sets the <code>Group</code> to associate with the request.
 	 *
-	 * @param request the servlet request to associate the <code>Group</code>
-	 *        instance
-	 * @param group the instance of <code>Group</code> to be associated with the
-	 *        servlet request
+	 * @param request the servlet request used to associate the
+	 *        <code>Group</code>
+	 * @param group the <code>Group</code> to associate with the request
 	 */
 	public void setGroup(HttpServletRequest request, Group group);
 

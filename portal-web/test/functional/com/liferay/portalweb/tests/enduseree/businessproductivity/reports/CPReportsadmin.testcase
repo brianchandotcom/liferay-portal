@@ -97,7 +97,7 @@
 			<var name="reportsFileName" value="reports_admin_template_source_sample_class_name" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="Message#INFO" value1="Processing report. This may take several minutes." />
+		<execute function="AssertTextEquals" locator1="ReportsAdminViewReportEntry#INFO_MESSAGE" value1="Processing report. This may take several minutes." />
 		<execute function="Pause" locator1="180000" />
 
 		<execute macro="Navigator#openURL" />

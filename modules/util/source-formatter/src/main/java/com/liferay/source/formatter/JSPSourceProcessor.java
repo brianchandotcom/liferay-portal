@@ -229,6 +229,14 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 				return;
 			}
 
+			int y = content.lastIndexOf("<%", x);
+
+			if ((y == -1) ||
+				(getLevel(content.substring(y, x), "{", "}") > 0)) {
+
+				continue;
+			}
+
 			processMessage(
 				fileName,
 				"Use '" + tag + ":defineObjects' or rename var, see LPS-62493",

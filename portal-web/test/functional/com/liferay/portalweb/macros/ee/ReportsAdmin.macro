@@ -245,7 +245,7 @@ Sincerely,<br />
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesConfiguration">
-			<var name="portlet" value="Reports Admin" />
+			<var name="portlet" value="Report Admin" />
 		</execute>
 
 		<execute macro="ReportsAdmin#gotoDefinitions" />
@@ -267,7 +267,7 @@ Sincerely,<br />
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesConfiguration">
-			<var name="portlet" value="Reports Admin" />
+			<var name="portlet" value="Report Admin" />
 		</execute>
 
 		<while>
@@ -287,7 +287,7 @@ Sincerely,<br />
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesConfiguration">
-			<var name="portlet" value="Reports Admin" />
+			<var name="portlet" value="Report Admin" />
 		</execute>
 
 		<execute macro="ReportsAdmin#gotoSources" />

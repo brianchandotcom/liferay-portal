@@ -1,0 +1,95 @@
+[
+	{
+		"actions": [
+			{
+				"action": "enable",
+				"target": "Field3"
+			}
+		],
+		"conditions": [
+			{
+
+				"operands": [
+					{
+						"type": "field",
+						"value": "Field1"
+					},
+					{
+						"type": "field",
+						"value": "Field2"
+					}
+				],
+				"operator": "contains"
+			},
+			{
+				"operands": [
+					{
+						"type": "field",
+						"value": "Field2"
+					},
+					{
+						"type": "constant",
+						"value": "4"
+					}
+				],
+				"operator": "less-than"
+			}
+		],
+		"logical-operator": "AND"
+	},
+	{
+		"actions": [
+			{
+				"action": "enable",
+				"target": "Field3"
+			},
+			{
+				"action": "show",
+				"target": "Field4"
+			}
+		],
+		"conditions": [
+			{
+
+				"operands": [
+					{
+						"type": "field",
+						"value": "Field1"
+					},
+					{
+						"type": "field",
+						"value": "Field2"
+					}
+				],
+				"operator": "equals-to"
+			},
+			{
+				"operands": [
+					{
+						"type": "field",
+						"value": "Field2"
+					},
+					{
+						"type": "constant",
+						"value": "4"
+					}
+				],
+				"operator": "greater-than"
+			},
+			{
+				"operands": [
+					{
+						"type": "constant",
+						"value": "5"
+					},
+					{
+						"type": "constant",
+						"value": "3"
+					}
+				],
+				"operator": "greater-than-equals"
+			}
+		],
+		"logical-operator": "OR"
+	}
+]

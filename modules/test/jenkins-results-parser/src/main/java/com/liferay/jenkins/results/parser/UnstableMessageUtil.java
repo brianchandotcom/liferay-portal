@@ -17,6 +17,8 @@ package com.liferay.jenkins.results.parser;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.tools.ant.Project;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -25,7 +27,9 @@ import org.json.JSONObject;
  */
 public class UnstableMessageUtil {
 
-	public static String getUnstableMessage(String buildURL) throws Exception {
+	public static String getUnstableMessage(Project project, String buildURL)
+		throws Exception {
+
 		StringBuilder sb = new StringBuilder();
 
 		JSONObject testReportJSONObject = JenkinsResultsParserUtil.toJSONObject(

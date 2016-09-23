@@ -138,7 +138,8 @@ public class GitHubJobMessageUtil {
 			}
 		}
 		else if (result.equals("UNSTABLE")) {
-			sb.append(UnstableMessageUtil.getUnstableMessage(buildURL));
+			sb.append(
+				UnstableMessageUtil.getUnstableMessage(project, buildURL));
 		}
 		else if (javacOutputFile.exists()) {
 			sb.append("<h6>Job Results:</h6>");

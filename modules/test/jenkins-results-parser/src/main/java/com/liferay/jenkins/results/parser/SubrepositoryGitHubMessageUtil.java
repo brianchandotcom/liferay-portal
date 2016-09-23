@@ -95,7 +95,7 @@ public class SubrepositoryGitHubMessageUtil {
 				sb.append("- ");
 
 				SubrepositoryTask subrepositoryTask = _getSubrepositoryTask(
-					buildURL, consoleSnippet);
+					project, buildURL, consoleSnippet);
 
 				sb.append(_getResult(subrepositoryTask));
 
@@ -136,14 +136,14 @@ public class SubrepositoryGitHubMessageUtil {
 	}
 
 	private static SubrepositoryTask _getSubrepositoryTask(
-			String buildURL, String console)
+			Project project, String buildURL, String console)
 		throws Exception {
 
 		if (console.contains(
 				"A report with all the test results can be found at " +
 					"test-results/html/index.html")) {
 
-			return new SubrepositoryTaskReport(buildURL);
+			return new SubrepositoryTaskReport(project, buildURL);
 		}
 		else {
 			return new SubrepositoryTaskNoReport(console);

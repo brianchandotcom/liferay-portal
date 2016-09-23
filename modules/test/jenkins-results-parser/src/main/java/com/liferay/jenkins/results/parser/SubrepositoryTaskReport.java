@@ -14,6 +14,8 @@
 
 package com.liferay.jenkins.results.parser;
 
+import org.apache.tools.ant.Project;
+
 import org.json.JSONObject;
 
 /**
@@ -21,8 +23,11 @@ import org.json.JSONObject;
  */
 public class SubrepositoryTaskReport extends SubrepositoryTask {
 
-	public SubrepositoryTaskReport(String buildURL) throws Exception {
+	public SubrepositoryTaskReport(Project project, String buildURL)
+		throws Exception {
+
 		this.buildURL = buildURL;
+		this.project = project;
 
 		testReportJSONObject = JenkinsResultsParserUtil.toJSONObject(
 			JenkinsResultsParserUtil.getLocalURL(
@@ -40,7 +45,7 @@ public class SubrepositoryTaskReport extends SubrepositoryTask {
 	public String getGitHubMessage() throws Exception {
 		StringBuilder sb = new StringBuilder();
 
-		sb.append(UnstableMessageUtil.getUnstableMessage(buildURL));
+		sb.append(UnstableMessageUtil.getUnstableMessage(project, buildURL));
 
 		return sb.toString();
 	}
@@ -48,5 +53,6 @@ public class SubrepositoryTaskReport extends SubrepositoryTask {
 	protected static JSONObject testReportJSONObject;
 
 	protected String buildURL;
+	protected Project project;
 
 }

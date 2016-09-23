@@ -156,7 +156,8 @@ public class ProjectTemplatesTest {
 			"public class BarActivator implements BundleActivator {");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
-			"activator", "bar-activator", "-DclassName=BarActivator");
+			"activator", "bar-activator", "-DclassName=BarActivator",
+			"-Dpackage=bar.activator");
 
 		_buildProjects(
 			gradleProjectDir, mavenProjectDir,

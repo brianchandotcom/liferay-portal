@@ -1,0 +1,37 @@
+<DDMStructure>
+  <__cachedModel>false</__cachedModel>
+  <__new>false</__new>
+  <__uuid>5de69bc3-9439-1b08-586d-204a12a58775</__uuid>
+  <__originalUuid>5de69bc3-9439-1b08-586d-204a12a58775</__originalUuid>
+  <__structureId>35380</__structureId>
+  <__groupId>35202</__groupId>
+  <__originalGroupId>35202</__originalGroupId>
+  <__setOriginalGroupId>false</__setOriginalGroupId>
+  <__companyId>20116</__companyId>
+  <__originalCompanyId>20116</__originalCompanyId>
+  <__setOriginalCompanyId>false</__setOriginalCompanyId>
+  <__userId>20164</__userId>
+  <__userName>Test Test</__userName>
+  <__versionUserId>20164</__versionUserId>
+  <__versionUserName>Test Test</__versionUserName>
+  <__createDate class="sql-timestamp">2016-09-20 11:31:35.457</__createDate>
+  <__modifiedDate class="sql-timestamp">2016-09-20 11:31:35.457</__modifiedDate>
+  <__setModifiedDate>false</__setModifiedDate>
+  <__parentStructureId>0</__parentStructureId>
+  <__originalParentStructureId>0</__originalParentStructureId>
+  <__setOriginalParentStructureId>false</__setOriginalParentStructureId>
+  <__classNameId>29993</__classNameId>
+  <__originalClassNameId>29993</__originalClassNameId>
+  <__setOriginalClassNameId>false</__setOriginalClassNameId>
+  <__structureKey>33369</__structureKey>
+  <__originalStructureKey>33369</__originalStructureKey>
+  <__version>1.0</__version>
+  <__name>&lt;?xml version=&apos;1.0&apos; encoding=&apos;UTF-8&apos;?&gt;&lt;root available-locales=&quot;en_US&quot; default-locale=&quot;en_US&quot;&gt;&lt;Name language-id=&quot;en_US&quot;&gt;Porygon New Entry&lt;/Name&gt;&lt;/root&gt;</__name>
+  <__originalName>&lt;?xml version=&apos;1.0&apos; encoding=&apos;UTF-8&apos;?&gt;&lt;root available-locales=&quot;en_US&quot; default-locale=&quot;en_US&quot;&gt;&lt;Name language-id=&quot;en_US&quot;&gt;Porygon New Entry&lt;/Name&gt;&lt;/root&gt;</__originalName>
+  <__description></__description>
+  <__originalDescription></__originalDescription>
+  <__definition>{&quot;availableLanguageIds&quot;:[&quot;en_US&quot;],&quot;defaultLanguageId&quot;:&quot;en_US&quot;,&quot;fields&quot;:[{&quot;dataType&quot;:&quot;image&quot;,&quot;predefinedValue&quot;:{&quot;en_US&quot;:&quot;&quot;},&quot;readOnly&quot;:false,&quot;label&quot;:{&quot;en_US&quot;:&quot;Cover image&quot;},&quot;type&quot;:&quot;ddm-image&quot;,&quot;required&quot;:true,&quot;showLabel&quot;:true,&quot;indexType&quot;:&quot;keyword&quot;,&quot;fieldNamespace&quot;:&quot;ddm&quot;,&quot;visibilityExpression&quot;:&quot;&quot;,&quot;repeatable&quot;:false,&quot;name&quot;:&quot;coverImage&quot;,&quot;localizable&quot;:true,&quot;tip&quot;:{&quot;en_US&quot;:&quot;&quot;},&quot;validation&quot;:{&quot;expression&quot;:&quot;&quot;,&quot;errorMessage&quot;:&quot;&quot;}},{&quot;dataType&quot;:&quot;string&quot;,&quot;predefinedValue&quot;:{&quot;en_US&quot;:&quot;&quot;},&quot;readOnly&quot;:false,&quot;label&quot;:{&quot;en_US&quot;:&quot;Title&quot;},&quot;type&quot;:&quot;text&quot;,&quot;required&quot;:true,&quot;showLabel&quot;:true,&quot;displayStyle&quot;:&quot;&quot;,&quot;indexType&quot;:&quot;keyword&quot;,&quot;fieldNamespace&quot;:&quot;&quot;,&quot;visibilityExpression&quot;:&quot;&quot;,&quot;repeatable&quot;:false,&quot;name&quot;:&quot;title&quot;,&quot;localizable&quot;:true,&quot;tip&quot;:{&quot;en_US&quot;:&quot;&quot;},&quot;validation&quot;:{&quot;expression&quot;:&quot;&quot;,&quot;errorMessage&quot;:&quot;&quot;}},{&quot;dataType&quot;:&quot;string&quot;,&quot;predefinedValue&quot;:{&quot;en_US&quot;:&quot;&quot;},&quot;readOnly&quot;:false,&quot;label&quot;:{&quot;en_US&quot;:&quot;Sub Title&quot;},&quot;type&quot;:&quot;textarea&quot;,&quot;required&quot;:false,&quot;showLabel&quot;:true,&quot;indexType&quot;:&quot;keyword&quot;,&quot;fieldNamespace&quot;:&quot;&quot;,&quot;visibilityExpression&quot;:&quot;&quot;,&quot;repeatable&quot;:false,&quot;name&quot;:&quot;subTitle&quot;,&quot;localizable&quot;:true,&quot;tip&quot;:{&quot;en_US&quot;:&quot;&quot;},&quot;validation&quot;:{&quot;expression&quot;:&quot;&quot;,&quot;errorMessage&quot;:&quot;&quot;}},{&quot;dataType&quot;:&quot;html&quot;,&quot;predefinedValue&quot;:{&quot;en_US&quot;:&quot;&quot;},&quot;readOnly&quot;:false,&quot;label&quot;:{&quot;en_US&quot;:&quot;Content&quot;},&quot;type&quot;:&quot;ddm-text-html&quot;,&quot;required&quot;:false,&quot;showLabel&quot;:true,&quot;indexType&quot;:&quot;keyword&quot;,&quot;fieldNamespace&quot;:&quot;ddm&quot;,&quot;visibilityExpression&quot;:&quot;&quot;,&quot;repeatable&quot;:false,&quot;name&quot;:&quot;content&quot;,&quot;localizable&quot;:true,&quot;tip&quot;:{&quot;en_US&quot;:&quot;&quot;},&quot;validation&quot;:{&quot;expression&quot;:&quot;&quot;,&quot;errorMessage&quot;:&quot;&quot;}}]}</__definition>
+  <__storageType>json</__storageType>
+  <__type>0</__type>
+  <__columnBitmask>0</__columnBitmask>
+</DDMStructure>

@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+
+<portlet portlet-id="com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet_INSTANCE_0jxRtFBDvVEC" root-portlet-id="com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet" old-plid="35205" scope-group-id="35202" private-layout="true">
+	<portlet-preferences path="/group/35202/portlet/com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet_INSTANCE_0jxRtFBDvVEC/preferences/layout/0/35205/portlet-preferences.xml">
+		<preference-data>
+			<DDMTemplate>
+				<staged-model group-id="35202" uuid="a0e8650e-1173-2706-ea25-da78f85be40f" resource-class-name="com.liferay.portlet.display.template.PortletDisplayTemplate" path="/group/35202/com.liferay.dynamic.data.mapping.model.DDMTemplate/35696.xml" attached-class-name="com.liferay.asset.kernel.model.AssetEntry"/>
+			</DDMTemplate>
+			<references>
+				<reference class-name="com.liferay.dynamic.data.mapping.model.DDMTemplate" class-pk="35696" attached-class-name="com.liferay.asset.kernel.model.AssetEntry" group-id="35202" live-group-id="35202" type="dependency" uuid="a0e8650e-1173-2706-ea25-da78f85be40f" company-id="20116" preloaded="false" referenced-class-name="com.liferay.asset.kernel.model.AssetEntry" template-key="33510" missing="false"/>
+				<reference class-name="com.liferay.dynamic.data.mapping.model.DDMStructure" class-pk="35380" attached-class-name="com.liferay.journal.model.JournalArticle" group-id="35202" live-group-id="35202" type="dependency" uuid="5de69bc3-9439-1b08-586d-204a12a58775" company-id="20116" preloaded="false" referenced-class-name="com.liferay.journal.model.JournalArticle" structure-key="33369"/>
+				<reference class-name="com.liferay.dynamic.data.mapping.model.DDMStructure" class-pk="35380" attached-class-name="com.liferay.journal.model.JournalArticle" group-id="35202" live-group-id="35202" type="dependency" uuid="5de69bc3-9439-1b08-586d-204a12a58775" company-id="20116" preloaded="false" referenced-class-name="com.liferay.journal.model.JournalArticle" structure-key="33369"/>
+			</references>
+		</preference-data>
+	</portlet-preferences>
+</portlet>

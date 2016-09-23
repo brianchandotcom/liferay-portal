@@ -1,0 +1,85 @@
+<Layout>
+  <__cachedModel>false</__cachedModel>
+  <__new>false</__new>
+  <__mvccVersion>0</__mvccVersion>
+  <__uuid>03b9acea-f37c-1a60-2545-b748d10011d3</__uuid>
+  <__originalUuid>03b9acea-f37c-1a60-2545-b748d10011d3</__originalUuid>
+  <__plid>35235</__plid>
+  <__groupId>35202</__groupId>
+  <__originalGroupId>35202</__originalGroupId>
+  <__setOriginalGroupId>false</__setOriginalGroupId>
+  <__companyId>20116</__companyId>
+  <__originalCompanyId>20116</__originalCompanyId>
+  <__setOriginalCompanyId>false</__setOriginalCompanyId>
+  <__userId>20164</__userId>
+  <__userName></__userName>
+  <__createDate>2016-09-20 13:21:52.632 UTC</__createDate>
+  <__modifiedDate>2016-09-21 15:03:45.825 UTC</__modifiedDate>
+  <__setModifiedDate>false</__setModifiedDate>
+  <__privateLayout>true</__privateLayout>
+  <__originalPrivateLayout>true</__originalPrivateLayout>
+  <__setOriginalPrivateLayout>false</__setOriginalPrivateLayout>
+  <__layoutId>5</__layoutId>
+  <__originalLayoutId>5</__originalLayoutId>
+  <__setOriginalLayoutId>false</__setOriginalLayoutId>
+  <__parentLayoutId>0</__parentLayoutId>
+  <__originalParentLayoutId>0</__originalParentLayoutId>
+  <__setOriginalParentLayoutId>false</__setOriginalParentLayoutId>
+  <__name>&lt;?xml version=&apos;1.0&apos; encoding=&apos;UTF-8&apos;?&gt;&lt;root available-locales=&quot;en_US&quot; default-locale=&quot;en_US&quot;&gt;&lt;Name language-id=&quot;en_US&quot;&gt;Blog Detail page&lt;/Name&gt;&lt;/root&gt;</__name>
+  <__title></__title>
+  <__description></__description>
+  <__keywords></__keywords>
+  <__robots></__robots>
+  <__type>portlet</__type>
+  <__originalType>portlet</__originalType>
+  <__typeSettings>column-1=com_liferay_blogs_web_portlet_BlogsPortlet
+layout-template-id=1_column
+layoutUpdateable=true
+privateLayout=true
+</__typeSettings>
+  <__hidden>true</__hidden>
+  <__friendlyURL>/blog-detail-page</__friendlyURL>
+  <__originalFriendlyURL>/blog-detail-page</__originalFriendlyURL>
+  <__iconImageId>0</__iconImageId>
+  <__originalIconImageId>0</__originalIconImageId>
+  <__setOriginalIconImageId>false</__setOriginalIconImageId>
+  <__themeId>classic_WAR_classictheme</__themeId>
+  <__colorSchemeId></__colorSchemeId>
+  <__css></__css>
+  <__priority>4</__priority>
+  <__layoutPrototypeUuid></__layoutPrototypeUuid>
+  <__originalLayoutPrototypeUuid></__originalLayoutPrototypeUuid>
+  <__layoutPrototypeLinkEnabled>false</__layoutPrototypeLinkEnabled>
+  <__sourcePrototypeLayoutUuid></__sourcePrototypeLayoutUuid>
+  <__originalSourcePrototypeLayoutUuid></__originalSourcePrototypeLayoutUuid>
+  <__columnBitmask>0</__columnBitmask>
+  <__layoutSet class="com.liferay.portal.model.impl.LayoutSetImpl">
+    <__cachedModel>true</__cachedModel>
+    <__new>false</__new>
+    <__mvccVersion>39</__mvccVersion>
+    <__layoutSetId>35203</__layoutSetId>
+    <__groupId>35202</__groupId>
+    <__originalGroupId>35202</__originalGroupId>
+    <__setOriginalGroupId>false</__setOriginalGroupId>
+    <__companyId>20116</__companyId>
+    <__createDate>2016-09-21 15:03:43.596 UTC</__createDate>
+    <__modifiedDate>2016-09-21 15:04:08.481 UTC</__modifiedDate>
+    <__setModifiedDate>false</__setModifiedDate>
+    <__privateLayout>true</__privateLayout>
+    <__originalPrivateLayout>true</__originalPrivateLayout>
+    <__setOriginalPrivateLayout>false</__setOriginalPrivateLayout>
+    <__logoId>35213</__logoId>
+    <__themeId>porygon_WAR_porygontheme</__themeId>
+    <__colorSchemeId>01</__colorSchemeId>
+    <__css></__css>
+    <__pageCount>6</__pageCount>
+    <__settings>showSiteName=false
+</__settings>
+    <__layoutSetPrototypeUuid></__layoutSetPrototypeUuid>
+    <__originalLayoutSetPrototypeUuid></__originalLayoutSetPrototypeUuid>
+    <__layoutSetPrototypeLinkEnabled>false</__layoutSetPrototypeLinkEnabled>
+    <__columnBitmask>0</__columnBitmask>
+    <__companyFallbackVirtualHostname></__companyFallbackVirtualHostname>
+    <__virtualHostname></__virtualHostname>
+  </__layoutSet>
+</Layout>

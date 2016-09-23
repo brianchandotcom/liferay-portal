@@ -1,0 +1,161 @@
+header {
+	.portlet:hover {
+		z-index: 1050;
+	}
+
+	.logo {
+		@include sm {
+			margin: 4px 0;
+		}
+	}
+
+	.navbar-toggle {
+		margin: 10px 15px;
+	}
+
+	a {
+		color: $main-header-color;
+
+		&:hover, &:focus {
+			color: $secondary-header-color;
+		}
+	}
+
+	.form-control:focus {
+		border-color: $main-header-color;
+		color: $main-header-color;
+	}
+
+	.navbar-user {
+		.user-avatar-link, .sign-in {
+			& > a {
+				color: $main-header-color;
+				display: inline-block;
+				font-size: 12px;
+				padding: 16px 16px 16px 6px;
+				text-transform: uppercase;
+
+				&:hover, &:focus, &.active, &.open {
+					color: $secondary-header-color;
+					text-decoration: none;
+				}
+			}
+		}
+
+		.user-icon, .icon-user {
+			display: inline-table;
+		}
+
+		.user-full-name {
+			margin-left: 4px;
+		}
+	}
+
+	#search {
+		overflow: hidden;
+
+		&.focus:hover {
+			overflow: visible;
+		}
+
+		.lfr-ddm-field-group {
+			display: none;
+		}
+
+		fieldset .form-group {
+			@include color-placeholder(".search-input", $secondary-header-color);
+			@include color-placeholder(".search-input:focus", $secondary-header-color);
+
+			width: 100%;
+
+			.search-input {
+				@include media-query(null, $screen-xs-max) {
+					font-size: 12px;
+					line-height: 18px;
+				}
+
+				text-transform: uppercase;
+				width: 98%;
+			}
+		}
+
+		@include sm {
+			@include position(absolute, 0 80px 0 0);
+			@include transition(height 0.8s $ease-out-circ);
+
+			background-color: $main-black-color;
+			height: 0;
+
+			.search-input {
+				margin: 12px 12px 6px;
+			}
+		}
+	}
+
+	.btn-search {
+		@include size(44px, 44px);
+
+		overflow: hidden;
+		position: relative;
+
+		&:hover, &:focus {
+			.lexicon-icon {
+				color: $secondary-header-color;
+				fill: $secondary-header-color;
+			}
+		}
+
+		.lexicon-icon {
+			@include position(absolute, 8px 8px null null);
+			@include size(24px, 24px);
+			@include transition(top 0.8s $ease-out-back);
+
+			&:nth-of-type(2) {
+				@include transform(scale(0.6));
+
+				top: 44px;
+			}
+		}
+
+		&.open {
+			.lexicon-icon {
+				top: 44px;
+
+				&:nth-of-type(2) {
+					@include transform(scale(1));
+
+					top: 8px;
+				}
+			}
+		}
+	}
+
+	.lfr-nav-child-toggle {
+		@include media-query(null, $screen-xs-max) {
+			float: left;
+			padding: 0 10px;
+		}
+	}
+
+	.portlet-body > .navbar {
+		margin: 0 15px;
+	}
+
+	li.open > a:focus {
+		@include tab-focus;
+	}
+}
+
+.search-opened {
+	header {
+		#search {
+			@include sm {
+				height: 60px;
+			}
+		}
+	}
+
+	#content, footer {
+		opacity: 0.3;
+	}
+}

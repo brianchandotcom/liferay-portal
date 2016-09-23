@@ -416,11 +416,11 @@ public class ConfigurationImpl
 			// line.
 
 			if (Validator.isNull(array[array.length - 1])) {
-				String[] subArray = new String[array.length - 1];
+				String[] subarray = new String[array.length - 1];
 
-				System.arraycopy(array, 0, subArray, 0, subArray.length);
+				System.arraycopy(array, 0, subarray, 0, subarray.length);
 
-				array = subArray;
+				array = subarray;
 			}
 
 			if (array.length > 0) {

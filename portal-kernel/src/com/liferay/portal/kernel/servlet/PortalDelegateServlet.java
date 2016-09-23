@@ -32,7 +32,7 @@ public class PortalDelegateServlet extends SecureServlet {
 
 	@Override
 	protected void doPortalDestroy() {
-		PortalDelegatorServlet.removeDelegate(_subContext);
+		PortalDelegatorServlet.removeDelegate(_subcontext);
 
 		servlet.destroy();
 	}
@@ -46,10 +46,10 @@ public class PortalDelegateServlet extends SecureServlet {
 
 		String servletClass = servletConfig.getInitParameter("servlet-class");
 
-		_subContext = servletConfig.getInitParameter("sub-context");
+		_subcontext = servletConfig.getInitParameter("sub-context");
 
-		if (_subContext == null) {
-			_subContext = getServletName();
+		if (_subcontext == null) {
+			_subcontext = getServletName();
 		}
 
 		servlet = (Servlet)InstanceFactory.newInstance(
@@ -63,9 +63,9 @@ public class PortalDelegateServlet extends SecureServlet {
 
 		servlet.init(servletConfig);
 
-		PortalDelegatorServlet.addDelegate(_subContext, (HttpServlet)servlet);
+		PortalDelegatorServlet.addDelegate(_subcontext, (HttpServlet)servlet);
 	}
 
-	private String _subContext;
+	private String _subcontext;
 
 }

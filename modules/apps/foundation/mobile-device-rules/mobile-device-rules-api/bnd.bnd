@@ -10,5 +10,6 @@ Export-Package:\
 	com.liferay.mobile.device.rules.service,\
 	com.liferay.mobile.device.rules.service.persistence,\
 	com.liferay.mobile.device.rules.util.comparator
+Import-Package: com.liferay.portal.kernel.model;version="${range;[=,=+)}",*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:

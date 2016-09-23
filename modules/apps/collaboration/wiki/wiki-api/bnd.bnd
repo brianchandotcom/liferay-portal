@@ -16,5 +16,6 @@ Export-Package:\
 	com.liferay.wiki.service,\
 	com.liferay.wiki.service.persistence,\
 	com.liferay.wiki.validator
+Import-Package: com.liferay.portal.kernel.model;version="${range;[=,=+)}",*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Wiki

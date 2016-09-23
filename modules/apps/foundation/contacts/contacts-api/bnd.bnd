@@ -8,5 +8,6 @@ Export-Package:\
 	com.liferay.contacts.service,\
 	com.liferay.contacts.service.persistence,\
 	com.liferay.contacts.util
+Import-Package: com.liferay.portal.kernel.model;version="${range;[=,=+)}",*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:

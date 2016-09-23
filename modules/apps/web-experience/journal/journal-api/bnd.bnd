@@ -10,5 +10,6 @@ Export-Package:\
 	com.liferay.journal.service.persistence,\
 	com.liferay.journal.util,\
 	com.liferay.journal.util.comparator
+Import-Package: com.liferay.portal.kernel.model;version="${range;[=,=+)}",*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Web Content

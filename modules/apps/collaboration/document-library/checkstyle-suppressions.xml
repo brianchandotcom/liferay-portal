@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<!DOCTYPE suppressions PUBLIC "-//Puppy Crawl//DTD Check Suppressions 1.1//EN" "http://www.puppycrawl.com/dtds/suppressions_1_1.dtd">
+
+<suppressions>
+	<suppress checks="Subname" files="modules/apps/collaboration/document-library/document-library-repository-cmis-impl/src/main/java/com/liferay/document/library/repository/cmis/internal/CMISRepository\.java" />
+</suppressions>

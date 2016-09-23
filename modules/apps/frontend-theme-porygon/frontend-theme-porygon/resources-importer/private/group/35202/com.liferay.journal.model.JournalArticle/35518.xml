@@ -1,0 +1,97 @@
+<JournalArticle>
+  <__cachedModel>false</__cachedModel>
+  <__new>false</__new>
+  <__uuid>fcdede46-dc29-180e-3800-051f3cb5110f</__uuid>
+  <__originalUuid>fcdede46-dc29-180e-3800-051f3cb5110f</__originalUuid>
+  <__id>35518</__id>
+  <__resourcePrimKey>35519</__resourcePrimKey>
+  <__originalResourcePrimKey>35519</__originalResourcePrimKey>
+  <__setOriginalResourcePrimKey>false</__setOriginalResourcePrimKey>
+  <__groupId>35202</__groupId>
+  <__originalGroupId>35202</__originalGroupId>
+  <__setOriginalGroupId>false</__setOriginalGroupId>
+  <__companyId>20116</__companyId>
+  <__originalCompanyId>20116</__originalCompanyId>
+  <__setOriginalCompanyId>false</__setOriginalCompanyId>
+  <__userId>20164</__userId>
+  <__originalUserId>20164</__originalUserId>
+  <__setOriginalUserId>false</__setOriginalUserId>
+  <__userName>Test Test</__userName>
+  <__createDate class="sql-timestamp">2016-09-21 09:26:16.909</__createDate>
+  <__modifiedDate class="sql-timestamp">2016-09-21 09:26:17.092</__modifiedDate>
+  <__setModifiedDate>false</__setModifiedDate>
+  <__folderId>0</__folderId>
+  <__originalFolderId>0</__originalFolderId>
+  <__setOriginalFolderId>false</__setOriginalFolderId>
+  <__classNameId>0</__classNameId>
+  <__originalClassNameId>0</__originalClassNameId>
+  <__setOriginalClassNameId>false</__setOriginalClassNameId>
+  <__classPK>0</__classPK>
+  <__originalClassPK>0</__originalClassPK>
+  <__setOriginalClassPK>false</__setOriginalClassPK>
+  <__treePath>/</__treePath>
+  <__articleId>35517</__articleId>
+  <__originalArticleId>35517</__originalArticleId>
+  <__version>1.0</__version>
+  <__originalVersion>1.0</__originalVersion>
+  <__setOriginalVersion>false</__setOriginalVersion>
+  <__title>&lt;?xml version=&apos;1.0&apos; encoding=&apos;UTF-8&apos;?&gt;&lt;root available-locales=&quot;en_US&quot; default-locale=&quot;en_US&quot;&gt;&lt;Title language-id=&quot;en_US&quot;&gt;Your dreams cannot be stopped&lt;/Title&gt;&lt;/root&gt;</__title>
+  <__urlTitle>your-dreams-cannot-be-stopped</__urlTitle>
+  <__originalUrlTitle>your-dreams-cannot-be-stopped</__originalUrlTitle>
+  <__description></__description>
+  <__content>&lt;?xml version=&quot;1.0&quot;?&gt;
+
+&lt;root available-locales=&quot;en_US&quot; default-locale=&quot;en_US&quot;&gt;
+	&lt;dynamic-element name=&quot;coverImage&quot; type=&quot;image&quot; index-type=&quot;keyword&quot; instance-id=&quot;wafk&quot;&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot; alt=&quot;&quot; name=&quot;content_05.jpg&quot; title=&quot;content_05.jpg&quot; type=&quot;document&quot;&gt;&lt;![CDATA[[$dl-reference=/group/35202/com.liferay.document.library.kernel.model.DLFileEntry/35281.xml$]]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+	&lt;dynamic-element name=&quot;title&quot; type=&quot;text&quot; index-type=&quot;keyword&quot; instance-id=&quot;eqov&quot;&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[Your dreams cannot be stopped]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+	&lt;dynamic-element name=&quot;subTitle&quot; type=&quot;text_box&quot; index-type=&quot;keyword&quot; instance-id=&quot;fjvw&quot;&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[This is not the work of any one man or even a group of men]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+	&lt;dynamic-element name=&quot;content&quot; type=&quot;text_area&quot; index-type=&quot;keyword&quot; instance-id=&quot;yath&quot;&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[&lt;p&gt;Buy why, some say, the moon? Why choose this as our goal? And they may as well ask why climb the highest mountain?&lt;/p&gt;
+
+&lt;p&gt;Houston, Tranquillity Base here. The Eagle has landed.&lt;/p&gt;
+
+&lt;p&gt;Science cuts two ways, of course; its products can be used for both good and evil. But there&amp;#39;s no turning back from science. The early warnings about technological dangers also come from science.&lt;/p&gt;
+
+&lt;p&gt;We want to explore. We&amp;rsquo;re curious people. Look back over history, people have put their lives at stake to go out and explore &amp;hellip; We believe in what we&amp;rsquo;re doing. Now it&amp;rsquo;s time to go.&lt;/p&gt;
+
+&lt;p&gt;Across the sea of space, the stars are other suns.&lt;/p&gt;
+
+&lt;p&gt;If you could see the earth illuminated when you were in a place as dark as night, it would look to you more splendid than the moon.&lt;/p&gt;
+
+&lt;p&gt;Spaceflights cannot be stopped. This is not the work of any one man or even a group of men. It is a historical process which mankind is carrying out in accordance with the natural laws of human development.&lt;/p&gt;
+
+&lt;p&gt;Space, the final frontier. These are the voyages of the Starship Enterprise. Its five-year mission: to explore strange new worlds, to seek out new life and new civilizations, to boldly go where no man has gone before.&lt;/p&gt;
+
+&lt;p&gt;I believe every human has a finite number of heartbeats. I don&amp;#39;t intend to waste any of mine&lt;/p&gt;]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+&lt;/root&gt;</__content>
+  <__DDMStructureKey>33369</__DDMStructureKey>
+  <__originalDDMStructureKey>33369</__originalDDMStructureKey>
+  <__DDMTemplateKey>33373</__DDMTemplateKey>
+  <__originalDDMTemplateKey>33373</__originalDDMTemplateKey>
+  <__layoutUuid>b2f4b1b0-90d0-91c0-fad5-e716362b501e</__layoutUuid>
+  <__originalLayoutUuid>b2f4b1b0-90d0-91c0-fad5-e716362b501e</__originalLayoutUuid>
+  <__displayDate class="sql-timestamp">2016-09-21 09:19:00.0</__displayDate>
+  <__originalDisplayDate class="sql-timestamp" reference="../__displayDate"/>
+  <__indexable>true</__indexable>
+  <__originalIndexable>true</__originalIndexable>
+  <__setOriginalIndexable>false</__setOriginalIndexable>
+  <__smallImage>false</__smallImage>
+  <__smallImageId>35520</__smallImageId>
+  <__originalSmallImageId>35520</__originalSmallImageId>
+  <__setOriginalSmallImageId>false</__setOriginalSmallImageId>
+  <__smallImageURL></__smallImageURL>
+  <__status>0</__status>
+  <__originalStatus>0</__originalStatus>
+  <__setOriginalStatus>false</__setOriginalStatus>
+  <__statusByUserId>20164</__statusByUserId>
+  <__statusByUserName>Test Test</__statusByUserName>
+  <__statusDate class="sql-timestamp">2016-09-21 09:26:17.092</__statusDate>
+  <__columnBitmask>0</__columnBitmask>
+</JournalArticle>

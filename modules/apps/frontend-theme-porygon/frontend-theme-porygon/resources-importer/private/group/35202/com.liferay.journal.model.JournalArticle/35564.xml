@@ -1,0 +1,99 @@
+<JournalArticle>
+  <__cachedModel>false</__cachedModel>
+  <__new>false</__new>
+  <__uuid>7f9c3df4-c0cf-513e-a616-7b374af448fb</__uuid>
+  <__originalUuid>7f9c3df4-c0cf-513e-a616-7b374af448fb</__originalUuid>
+  <__id>35564</__id>
+  <__resourcePrimKey>35565</__resourcePrimKey>
+  <__originalResourcePrimKey>35565</__originalResourcePrimKey>
+  <__setOriginalResourcePrimKey>false</__setOriginalResourcePrimKey>
+  <__groupId>35202</__groupId>
+  <__originalGroupId>35202</__originalGroupId>
+  <__setOriginalGroupId>false</__setOriginalGroupId>
+  <__companyId>20116</__companyId>
+  <__originalCompanyId>20116</__originalCompanyId>
+  <__setOriginalCompanyId>false</__setOriginalCompanyId>
+  <__userId>20164</__userId>
+  <__originalUserId>20164</__originalUserId>
+  <__setOriginalUserId>false</__setOriginalUserId>
+  <__userName>Test Test</__userName>
+  <__createDate class="sql-timestamp">2016-09-21 10:59:57.462</__createDate>
+  <__modifiedDate class="sql-timestamp">2016-09-21 10:59:57.574</__modifiedDate>
+  <__setModifiedDate>false</__setModifiedDate>
+  <__folderId>0</__folderId>
+  <__originalFolderId>0</__originalFolderId>
+  <__setOriginalFolderId>false</__setOriginalFolderId>
+  <__classNameId>0</__classNameId>
+  <__originalClassNameId>0</__originalClassNameId>
+  <__setOriginalClassNameId>false</__setOriginalClassNameId>
+  <__classPK>0</__classPK>
+  <__originalClassPK>0</__originalClassPK>
+  <__setOriginalClassPK>false</__setOriginalClassPK>
+  <__treePath>/</__treePath>
+  <__articleId>35563</__articleId>
+  <__originalArticleId>35563</__originalArticleId>
+  <__version>1.0</__version>
+  <__originalVersion>1.0</__originalVersion>
+  <__setOriginalVersion>false</__setOriginalVersion>
+  <__title>&lt;?xml version=&apos;1.0&apos; encoding=&apos;UTF-8&apos;?&gt;&lt;root available-locales=&quot;en_US&quot; default-locale=&quot;en_US&quot;&gt;&lt;Title language-id=&quot;en_US&quot;&gt;Space, the final frontier&lt;/Title&gt;&lt;/root&gt;</__title>
+  <__urlTitle>space-the-final-frontier</__urlTitle>
+  <__originalUrlTitle>space-the-final-frontier</__originalUrlTitle>
+  <__description></__description>
+  <__content>&lt;?xml version=&quot;1.0&quot;?&gt;
+
+&lt;root available-locales=&quot;en_US&quot; default-locale=&quot;en_US&quot;&gt;
+	&lt;dynamic-element name=&quot;coverImage&quot; type=&quot;image&quot; index-type=&quot;keyword&quot; instance-id=&quot;phvj&quot;&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot; alt=&quot;&quot; name=&quot;content_12.jpg&quot; title=&quot;content_12.jpg&quot; type=&quot;document&quot;&gt;&lt;![CDATA[[$dl-reference=/group/35202/com.liferay.document.library.kernel.model.DLFileEntry/35337.xml$]]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+	&lt;dynamic-element name=&quot;title&quot; type=&quot;text&quot; index-type=&quot;keyword&quot; instance-id=&quot;nblf&quot;&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[Space, the final frontier]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+	&lt;dynamic-element name=&quot;subTitle&quot; type=&quot;text_box&quot; index-type=&quot;keyword&quot; instance-id=&quot;qcad&quot;&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[These are the voyages of the Starship Enterprise]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+	&lt;dynamic-element name=&quot;content&quot; type=&quot;text_area&quot; index-type=&quot;keyword&quot; instance-id=&quot;buny&quot;&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[&lt;p&gt;Its five-year mission: to explore strange new worlds, to seek out new life and new civilizations, to boldly go where no man has gone before.&lt;/p&gt;
+
+&lt;p&gt;A Chinese tale tells of some men sent to harm a young girl who, upon seeing her beauty, become her protectors rather than her violators. That&amp;#39;s how I felt seeing the Earth for the first time. I could not help but love and cherish her.&lt;/p&gt;
+
+&lt;p&gt;Science cuts two ways, of course; its products can be used for both good and evil. But there&amp;#39;s no turning back from science. The early warnings about technological dangers also come from science.&lt;/p&gt;
+
+&lt;p&gt;We choose to go to the moon in this decade and do the other things, not because they are easy, but because they are hard, because that goal will serve to organize and measure the best of our energies and skills, because that challenge is one that we are willing to accept, one we are unwilling to postpone, and one which we intend to win.&lt;/p&gt;
+
+&lt;p&gt;The regret on our side is, they used to say years ago, we are reading about you in science class. Now they say, we are reading about you in history class.&lt;/p&gt;
+
+&lt;p&gt;Spaceflights cannot be stopped. This is not the work of any one man or even a group of men. It is a historical process which mankind is carrying out in accordance with the natural laws of human development.&lt;/p&gt;
+
+&lt;p&gt;To go places and do things that have never been done before &amp;ndash; that&amp;rsquo;s what living is all about.&lt;/p&gt;
+
+&lt;p&gt;Problems look mighty small from 150 miles up.&lt;/p&gt;
+
+&lt;p&gt;Never in all their history have men been able truly to conceive of the world as one: a single sphere, a globe, having the qualities of a globe, a round earth in which all the directions eventually meet, in which there is no center because every point, or none, is center &amp;mdash; an equal earth which all men occupy as equals. The airman&amp;#39;s earth, if free men make it, will be truly round: a globe in practice, not in theory.&lt;/p&gt;
+
+&lt;p&gt;We have an infinite amount to learn both from nature and from each other&lt;/p&gt;]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+&lt;/root&gt;</__content>
+  <__DDMStructureKey>33369</__DDMStructureKey>
+  <__originalDDMStructureKey>33369</__originalDDMStructureKey>
+  <__DDMTemplateKey>33373</__DDMTemplateKey>
+  <__originalDDMTemplateKey>33373</__originalDDMTemplateKey>
+  <__layoutUuid>b2f4b1b0-90d0-91c0-fad5-e716362b501e</__layoutUuid>
+  <__originalLayoutUuid>b2f4b1b0-90d0-91c0-fad5-e716362b501e</__originalLayoutUuid>
+  <__displayDate class="sql-timestamp">2016-09-21 10:58:00.0</__displayDate>
+  <__originalDisplayDate class="sql-timestamp" reference="../__displayDate"/>
+  <__indexable>true</__indexable>
+  <__originalIndexable>true</__originalIndexable>
+  <__setOriginalIndexable>false</__setOriginalIndexable>
+  <__smallImage>false</__smallImage>
+  <__smallImageId>35566</__smallImageId>
+  <__originalSmallImageId>35566</__originalSmallImageId>
+  <__setOriginalSmallImageId>false</__setOriginalSmallImageId>
+  <__smallImageURL></__smallImageURL>
+  <__status>0</__status>
+  <__originalStatus>0</__originalStatus>
+  <__setOriginalStatus>false</__setOriginalStatus>
+  <__statusByUserId>20164</__statusByUserId>
+  <__statusByUserName>Test Test</__statusByUserName>
+  <__statusDate class="sql-timestamp">2016-09-21 10:59:57.574</__statusDate>
+  <__columnBitmask>0</__columnBitmask>
+</JournalArticle>

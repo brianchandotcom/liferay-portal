@@ -1,0 +1,97 @@
+<JournalArticle>
+  <__cachedModel>false</__cachedModel>
+  <__new>false</__new>
+  <__uuid>4345ca6a-136f-5b8e-539f-6e5544e845f3</__uuid>
+  <__originalUuid>4345ca6a-136f-5b8e-539f-6e5544e845f3</__originalUuid>
+  <__id>35914</__id>
+  <__resourcePrimKey>35399</__resourcePrimKey>
+  <__originalResourcePrimKey>35399</__originalResourcePrimKey>
+  <__setOriginalResourcePrimKey>false</__setOriginalResourcePrimKey>
+  <__groupId>35202</__groupId>
+  <__originalGroupId>35202</__originalGroupId>
+  <__setOriginalGroupId>false</__setOriginalGroupId>
+  <__companyId>20116</__companyId>
+  <__originalCompanyId>20116</__originalCompanyId>
+  <__setOriginalCompanyId>false</__setOriginalCompanyId>
+  <__userId>20164</__userId>
+  <__originalUserId>20164</__originalUserId>
+  <__setOriginalUserId>false</__setOriginalUserId>
+  <__userName>Test Test</__userName>
+  <__createDate class="sql-timestamp">2016-09-20 14:18:34.81</__createDate>
+  <__modifiedDate class="sql-timestamp">2016-09-23 09:28:55.295</__modifiedDate>
+  <__setModifiedDate>false</__setModifiedDate>
+  <__folderId>0</__folderId>
+  <__originalFolderId>0</__originalFolderId>
+  <__setOriginalFolderId>false</__setOriginalFolderId>
+  <__classNameId>0</__classNameId>
+  <__originalClassNameId>0</__originalClassNameId>
+  <__setOriginalClassNameId>false</__setOriginalClassNameId>
+  <__classPK>0</__classPK>
+  <__originalClassPK>0</__originalClassPK>
+  <__setOriginalClassPK>false</__setOriginalClassPK>
+  <__treePath>/</__treePath>
+  <__articleId>35397</__articleId>
+  <__originalArticleId>35397</__originalArticleId>
+  <__version>1.1</__version>
+  <__originalVersion>1.1</__originalVersion>
+  <__setOriginalVersion>false</__setOriginalVersion>
+  <__title>&lt;?xml version=&apos;1.0&apos; encoding=&apos;UTF-8&apos;?&gt;&lt;root available-locales=&quot;en_US&quot; default-locale=&quot;en_US&quot;&gt;&lt;Title language-id=&quot;en_US&quot;&gt;We have an infinite amount to learn&lt;/Title&gt;&lt;/root&gt;</__title>
+  <__urlTitle>we-have-an-infinite-amount-to-learn</__urlTitle>
+  <__originalUrlTitle>we-have-an-infinite-amount-to-learn</__originalUrlTitle>
+  <__description></__description>
+  <__content>&lt;?xml version=&quot;1.0&quot;?&gt;
+
+&lt;root available-locales=&quot;en_US&quot; default-locale=&quot;en_US&quot;&gt;
+	&lt;dynamic-element name=&quot;coverImage&quot; type=&quot;image&quot; index-type=&quot;keyword&quot; instance-id=&quot;lccv&quot;&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot; alt=&quot;&quot; name=&quot;content_02.jpg&quot; title=&quot;content_02.jpg&quot; type=&quot;document&quot;&gt;&lt;![CDATA[[$dl-reference=/group/35202/com.liferay.document.library.kernel.model.DLFileEntry/35257.xml$]]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+	&lt;dynamic-element name=&quot;title&quot; type=&quot;text&quot; index-type=&quot;keyword&quot; instance-id=&quot;ovek&quot;&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[We have an infinite amount to learn]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+	&lt;dynamic-element name=&quot;subTitle&quot; type=&quot;text_box&quot; index-type=&quot;keyword&quot; instance-id=&quot;coan&quot;&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[both from nature and from each other]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+	&lt;dynamic-element name=&quot;content&quot; type=&quot;text_area&quot; index-type=&quot;keyword&quot; instance-id=&quot;sjrs&quot;&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[&lt;p&gt;We have an infinite amount to learn both from nature and from each other&lt;/p&gt;
+
+&lt;p&gt;I don&amp;#39;t know what you could say about a day in which you have seen four beautiful sunsets.&lt;/p&gt;
+
+&lt;p&gt;That&amp;#39;s one small step for [a] man, one giant leap for mankind.&lt;/p&gt;
+
+&lt;p&gt;There can be no thought of finishing for &amp;lsquo;aiming for the stars.&amp;rsquo; Both figuratively and literally, it is a task to occupy the generations. And no matter how much progress one makes, there is always the thrill of just beginning.&lt;/p&gt;
+
+&lt;p&gt;The regret on our side is, they used to say years ago, we are reading about you in science class. Now they say, we are reading about you in history class.&lt;/p&gt;
+
+&lt;p&gt;For those who have seen the Earth from space, and for the hundreds and perhaps thousands more who will, the experience most certainly changes your perspective. The things that we share in our world are far more valuable than those which divide us.&lt;/p&gt;
+
+&lt;p&gt;Failure is not an option.&lt;/p&gt;
+
+&lt;p&gt;To be the first to enter the cosmos, to engage, single-handed, in an unprecedented duel with nature&amp;mdash;could one dream of anything more?&lt;/p&gt;
+
+&lt;p&gt;Dinosaurs are extinct today because they lacked opposable thumbs and the brainpower to build a space program.&lt;/p&gt;]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+&lt;/root&gt;</__content>
+  <__DDMStructureKey>33369</__DDMStructureKey>
+  <__originalDDMStructureKey>33369</__originalDDMStructureKey>
+  <__DDMTemplateKey>33373</__DDMTemplateKey>
+  <__originalDDMTemplateKey>33373</__originalDDMTemplateKey>
+  <__layoutUuid>b2f4b1b0-90d0-91c0-fad5-e716362b501e</__layoutUuid>
+  <__originalLayoutUuid>b2f4b1b0-90d0-91c0-fad5-e716362b501e</__originalLayoutUuid>
+  <__displayDate class="sql-timestamp">2016-09-20 14:15:00.0</__displayDate>
+  <__originalDisplayDate class="sql-timestamp" reference="../__displayDate"/>
+  <__indexable>true</__indexable>
+  <__originalIndexable>true</__originalIndexable>
+  <__setOriginalIndexable>false</__setOriginalIndexable>
+  <__smallImage>false</__smallImage>
+  <__smallImageId>0</__smallImageId>
+  <__originalSmallImageId>0</__originalSmallImageId>
+  <__setOriginalSmallImageId>false</__setOriginalSmallImageId>
+  <__smallImageURL></__smallImageURL>
+  <__status>0</__status>
+  <__originalStatus>0</__originalStatus>
+  <__setOriginalStatus>false</__setOriginalStatus>
+  <__statusByUserId>20164</__statusByUserId>
+  <__statusByUserName>Test Test</__statusByUserName>
+  <__statusDate class="sql-timestamp">2016-09-23 09:28:55.295</__statusDate>
+  <__columnBitmask>0</__columnBitmask>
+</JournalArticle>

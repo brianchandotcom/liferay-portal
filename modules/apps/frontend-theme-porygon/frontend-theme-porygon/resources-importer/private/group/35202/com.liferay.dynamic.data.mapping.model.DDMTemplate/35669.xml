@@ -1,0 +1,214 @@
+<DDMTemplate>
+  <__cachedModel>false</__cachedModel>
+  <__new>false</__new>
+  <__uuid>72ce11a9-a437-ca0c-f3a3-c0ced9a7bfa4</__uuid>
+  <__originalUuid>72ce11a9-a437-ca0c-f3a3-c0ced9a7bfa4</__originalUuid>
+  <__templateId>35669</__templateId>
+  <__groupId>35202</__groupId>
+  <__originalGroupId>35202</__originalGroupId>
+  <__setOriginalGroupId>false</__setOriginalGroupId>
+  <__companyId>20116</__companyId>
+  <__originalCompanyId>20116</__originalCompanyId>
+  <__setOriginalCompanyId>false</__setOriginalCompanyId>
+  <__userId>20164</__userId>
+  <__userName>Test Test</__userName>
+  <__versionUserId>20164</__versionUserId>
+  <__versionUserName>Test Test</__versionUserName>
+  <__createDate class="sql-timestamp">2016-09-20 13:38:00.672</__createDate>
+  <__modifiedDate class="sql-timestamp">2016-09-20 13:38:00.672</__modifiedDate>
+  <__setModifiedDate>false</__setModifiedDate>
+  <__classNameId>20011</__classNameId>
+  <__originalClassNameId>20011</__originalClassNameId>
+  <__setOriginalClassNameId>false</__setOriginalClassNameId>
+  <__classPK>0</__classPK>
+  <__originalClassPK>0</__originalClassPK>
+  <__setOriginalClassPK>false</__setOriginalClassPK>
+  <__resourceClassNameId>29901</__resourceClassNameId>
+  <__templateKey>33474</__templateKey>
+  <__originalTemplateKey>33474</__originalTemplateKey>
+  <__version>1.0</__version>
+  <__name>&lt;?xml version=&apos;1.0&apos; encoding=&apos;UTF-8&apos;?&gt;&lt;root available-locales=&quot;en_US&quot; default-locale=&quot;en_US&quot;&gt;&lt;Name language-id=&quot;en_US&quot;&gt;Blog - Carousel - ADT&lt;/Name&gt;&lt;/root&gt;</__name>
+  <__description></__description>
+  <__type>display</__type>
+  <__originalType>display</__originalType>
+  <__mode></__mode>
+  <__originalMode></__originalMode>
+  <__language>ftl</__language>
+  <__originalLanguage>ftl</__originalLanguage>
+  <__script>&lt;style&gt;
+	#&lt;@portlet.namespace /&gt;.main-carousel-wrapper .item-wrapper-image {
+		background-size: cover;
+		padding-bottom: 100%;
+
+		 @media only screen and (min-width: 768px) {
+			bottom: 0;
+			left: 0;
+			padding-bottom: 0;
+			position: absolute;
+			top: 0;
+		}
+	}
+&lt;/style&gt;
+
+
+&lt;section class=&quot;container-fluid-1280 main-carousel-wrapper&quot; id=&quot;&lt;@portlet.namespace /&gt;&quot;&gt;
+&lt;div class=&quot;carousel slide&quot; data-ride=&quot;carousel&quot; id=&quot;&lt;@portlet.namespace /&gt;-main-carousel&quot;&gt;
+&lt;ol class=&quot;carousel-indicators hidden-sm hidden-xs&quot;&gt;
+&lt;#list entries as entry&gt;
+	&lt;#assign entry = entry /&gt;
+
+	&lt;#if (entry.getClassName() == &quot;com.liferay.blogs.kernel.model.BlogsEntry&quot;)&gt;
+		&lt;#assign assetRenderer = entry.getAssetRenderer() /&gt;
+
+		&lt;#assign blog = assetRenderer.getAssetObject() /&gt;
+
+		&lt;#assign entryTitle = htmlUtil.escape(assetRenderer.getTitle(locale)) /&gt;
+
+		&lt;#assign viewURL = assetPublisherHelper.getAssetViewURL(renderRequest, renderResponse, entry) /&gt;
+
+		&lt;#assign coverImageURL = blog.getCoverImageURL(themeDisplay)!&quot;&quot; /&gt;
+
+		&lt;#if assetLinkBehavior != &quot;showFullContent&quot;&gt;
+			&lt;#assign viewURL = assetPublisherHelper.getAssetViewURL(renderRequest, renderResponse, entry, true) /&gt;
+		&lt;/#if&gt;
+
+		&lt;#if entry?counter == 1&gt;
+			&lt;li class=&quot;active&quot; data-slide-to=&quot;0&quot; data-target=&quot;#main-carousel&quot;&gt;&lt;/li&gt;
+		&lt;#else&gt;
+			&lt;li data-slide-to=&quot;${cur_ItemCounter?counter - 1}&quot; data-target=&quot;#&lt;@portlet.namespace /&gt;-main-carousel&quot;&gt;&lt;/li&gt;
+		&lt;/#if&gt;
+
+
+		&lt;!------&gt;
+
+		&lt;div class=&quot;asset-abstract col-md-12&quot;&gt;
+			&lt;a class=&quot;aspect-ratio aspect-ratio-16-to-9 aspect-ratio-bg-center aspect-ratio-bg-cover&quot; href=&quot;${viewURL}&quot; style=&quot;background-image: url(&apos;${coverImageURL}&apos;&quot;&gt;
+			&lt;/a&gt;
+
+			&lt;@getEditIcon /&gt;
+
+				&lt;div class=&quot;blog-list-card-content&quot;&gt;
+
+					&lt;h3 class=&quot;asset-title&quot;&gt;
+						&lt;a href=&quot;${viewURL}&quot;&gt;
+							${entryTitle}
+						&lt;/a&gt;
+					&lt;/h3&gt;
+
+					&lt;div class=&quot;asset-content&quot;&gt;
+						&lt;div class=&quot;asset-summary&quot;&gt;
+							${htmlUtil.escape(assetRenderer.getSummary(renderRequest, renderResponse))}
+
+							&lt;a class=&quot;sr-only&quot; href=&quot;${viewURL}&quot;&gt;&lt;@liferay.language key=&quot;read-more&quot; /&gt;&lt;span class=&quot;hide-accessible&quot;&gt;&lt;@liferay.language key=&quot;about&quot; /&gt;${entryTitle}&lt;/span&gt; &amp;raquo;&lt;/a&gt;
+						&lt;/div&gt;
+
+						&lt;@getDiscussion /&gt;
+
+						&lt;div class=&quot;asset-user-name&quot;&gt;
+							&lt;@liferay.language key=&quot;by&quot; /&gt;
+							${portalUtil.getUserName(assetRenderer.getUserId(), assetRenderer.getUserName())}
+						&lt;/div&gt;
+					&lt;/div&gt;
+				&lt;/div&gt;
+			&lt;/div&gt;
+	&lt;/#if&gt;
+&lt;/#list&gt;
+&lt;/div&gt;
+&lt;/section&gt;
+
+&lt;!----&gt;
+
+
+&lt;section class=&quot;container-fluid-1280 main-carousel-wrapper&quot; id=&quot;&lt;@portlet.namespace /&gt;&quot;&gt;
+	&lt;div class=&quot;carousel slide&quot; data-ride=&quot;carousel&quot; id=&quot;main-carousel&quot;&gt;
+
+	    &lt;#if ItemHeading.getSiblings()?has_content&gt;
+
+		    &lt;ol class=&quot;carousel-indicators hidden-sm hidden-xs&quot;&gt;
+    			&lt;#list ItemHeading.getSiblings() as cur_ItemCounter&gt;
+			    	&lt;#if cur_ItemCounter?counter == 1&gt;
+		    			&lt;li class=&quot;active&quot; data-slide-to=&quot;0&quot; data-target=&quot;#main-carousel&quot;&gt;&lt;/li&gt;
+		    		&lt;#else&gt;
+		    			&lt;li data-slide-to=&quot;${cur_ItemCounter?counter - 1}&quot; data-target=&quot;#main-carousel&quot;&gt;&lt;/li&gt;
+		    		&lt;/#if&gt;
+				&lt;/#list&gt;
+		    &lt;/ol&gt;
+
+			&lt;div class=&quot;carousel-inner gallery-xxl&quot; role=&quot;listbox&quot;&gt;
+
+				&lt;#list ItemHeading.getSiblings() as cur_ItemHeading&gt;
+					&lt;#if cur_ItemHeading?counter == 1&gt;
+		    			&lt;div class=&quot;active item&quot;&gt;
+		    		&lt;#else&gt;
+		    			&lt;div class=&quot;item&quot;&gt;
+		    		&lt;/#if&gt;
+						&lt;div class=&quot;item-wrapper&quot;&gt;
+							&lt;div class=&quot;col-sm-5 item-wrapper-image&quot; style=&quot;background-image: url(${cur_ItemHeading.ItemImage.getData()})&quot;&gt;&lt;/div&gt;
+
+							&lt;div class=&quot;col-sm-6 col-sm-offset-6 item-wrapper-text&quot;&gt;
+								&lt;p class=&quot;small text-uppercase&quot;&gt;${cur_ItemHeading.OpeningShortText.getData()}&lt;/p&gt;
+								&lt;h2&gt;${cur_ItemHeading.getData()}&lt;/h2&gt;
+								&lt;p class=&quot;lead&quot;&gt;${cur_ItemHeading.ItemParagraph.getData()}&lt;/p&gt;
+								&lt;p&gt;&lt;a class=&quot;btn btn-default btn-theme-default text-uppercase&quot; href=&quot;${cur_ItemHeading.ItemLinkText.ItemLinkURL.getData()}&quot;&gt;${cur_ItemHeading.ItemLinkText.getData()}&lt;/a&gt;&lt;/p&gt;
+							&lt;/div&gt;
+						&lt;/div&gt;
+					&lt;/div&gt;
+				&lt;/#list&gt;
+
+			&lt;/div&gt;
+		&lt;/#if&gt;
+
+	&lt;/div&gt;
+&lt;/section&gt;
+
+
+&lt;#macro getDiscussion&gt;
+	&lt;#if getterUtil.getBoolean(enableComments) &amp;&amp; assetRenderer.isCommentable()&gt;
+		&lt;br /&gt;
+
+		&lt;#assign discussionURL = renderResponse.createActionURL() /&gt;
+
+		${discussionURL.setParameter(&quot;javax.portlet.action&quot;, &quot;invokeTaglibDiscussion&quot;)}
+
+		&lt;@liferay_ui[&quot;discussion&quot;]
+			className=entry.getClassName()
+			classPK=entry.getClassPK()
+			formAction=discussionURL?string
+			formName=&quot;fm&quot; + entry.getClassPK()
+			ratingsEnabled=getterUtil.getBoolean(enableCommentRatings)
+			redirect=currentURL
+			userId=assetRenderer.getUserId()
+		/&gt;
+	&lt;/#if&gt;
+&lt;/#macro&gt;
+
+&lt;#macro getEditIcon&gt;
+	&lt;#if assetRenderer.hasEditPermission(themeDisplay.getPermissionChecker())&gt;
+		&lt;#assign redirectURL = renderResponse.createRenderURL() /&gt;
+
+		${redirectURL.setParameter(&quot;mvcPath&quot;, &quot;/add_asset_redirect.jsp&quot;)}
+		${redirectURL.setWindowState(&quot;pop_up&quot;)}
+
+		&lt;#assign editPortletURL = assetRenderer.getURLEdit(renderRequest, renderResponse, windowStateFactory.getWindowState(&quot;pop_up&quot;), redirectURL)!&quot;&quot; /&gt;
+
+		&lt;#if validator.isNotNull(editPortletURL)&gt;
+			&lt;#assign title = languageUtil.format(locale, &quot;edit-x&quot;, entryTitle, false) /&gt;
+
+			&lt;@liferay_ui[&quot;icon&quot;]
+				cssClass=&quot;sticker sticker-default sticker-right icon-monospaced visible-interaction&quot;
+				icon=&quot;pencil&quot;
+				markupView=&quot;lexicon&quot;
+				message=title
+				url=&quot;javascript:Liferay.Util.openWindow({id:&apos;&quot; + renderResponse.getNamespace() + &quot;editAsset&apos;, title: &apos;&quot; + title + &quot;&apos;, uri:&apos;&quot; + htmlUtil.escapeURL(editPortletURL.toString()) + &quot;&apos;});&quot;
+			/&gt;
+		&lt;/#if&gt;
+	&lt;/#if&gt;
+&lt;/#macro&gt;</__script>
+  <__cacheable>false</__cacheable>
+  <__smallImage>false</__smallImage>
+  <__smallImageId>35670</__smallImageId>
+  <__originalSmallImageId>35670</__originalSmallImageId>
+  <__setOriginalSmallImageId>false</__setOriginalSmallImageId>
+  <__smallImageURL></__smallImageURL>
+  <__columnBitmask>0</__columnBitmask>
+</DDMTemplate>

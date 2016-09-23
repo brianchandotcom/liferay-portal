@@ -26,6 +26,11 @@ public class Term extends Expression {
 		_value = value;
 	}
 
+	@Override
+	public <T> T accept(ExpressionVisitor<T> visitor) {
+		return visitor.visit(this);
+	}
+
 	public String getValue() {
 		return _value;
 	}

@@ -78,9 +78,17 @@ public class DDMExpressionFactoryTest {
 	}
 
 	@Test
-	public void testCreateStringExpression() throws Exception {
+	public void testCreateStringExpression1() throws Exception {
 		DDMExpression<String> ddmExpression =
 			_ddmExpressionFactory.createStringDDMExpression("\"Test\"");
+
+		Assert.assertEquals("Test", ddmExpression.evaluate());
+	}
+
+	@Test
+	public void testCreateStringExpression2() throws Exception {
+		DDMExpression<String> ddmExpression =
+			_ddmExpressionFactory.createStringDDMExpression("'Test'");
 
 		Assert.assertEquals("Test", ddmExpression.evaluate());
 	}

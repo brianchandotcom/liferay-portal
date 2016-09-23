@@ -4023,6 +4023,144 @@ go]]></replacevalue>
 					match="(&lt;failure\s*)type"
 					replace="\1message"
 				/>
+
+				<local name="file.name" />
+
+				<property name="file.name" value="@{file.name}" />
+
+				<beanshell>
+					<![CDATA[
+						import java.io.BufferedReader;
+						import java.io.File;
+						import java.io.IOException;
+
+						import java.util.regex.Matcher;
+						import java.util.regex.Pattern;
+
+						Pattern failurePattern = Pattern.compile("<failure message=\"(?<failureMessage>[^\"]*)\" />");
+						Pattern testcaseStartPattern = Pattern.compile("<testcase>");
+						Pattern testcaseStopPattern = Pattern.compile("</testcase>");
+						Pattern testrayTestcaseNamePattern = Pattern.compile("<property name=\"testray.testcase.name\" value=\"(?<testrayTestcaseName>[^\"]*)\" ?/>");
+						Pattern propertiesPattern = Pattern.compile("<properties>");
+
+						BufferedReader bufferedReader = null;
+
+						Set testcaseFailures = new HashSet();
+						List testcaseNames = new ArrayList();
+						Map testcasePropertyLocations = new HashMap();
+
+						try {
+							File file = new File(project.getProperty("file.name"));
+
+							bufferedReader = new BufferedReader(new FileReader(file));
+
+							String line;
+
+							List lines = new ArrayList();
+
+							int lineNumber = 0;
+
+							Integer propertiesLocation = null;
+							Boolean testcaseFailed = null;
+							String testrayTestcaseName = null;
+
+							while ((line = bufferedReader.readLine()) != null) {
+								lineNumber++;
+
+								lines.add(line);
+
+								Matcher testcaseStartMatcher = testcaseStartPattern.matcher(line);
+
+								if (testcaseStartMatcher.find()) {
+									propertiesLocation = null;
+									testcaseFailed = null;
+									testrayTestcaseName = null;
+
+									continue;
+								}
+
+								Matcher testrayTestcaseNameMatcher = testrayTestcaseNamePattern.matcher(line);
+
+								if (testrayTestcaseNameMatcher.find()) {
+									testrayTestcaseName = testrayTestcaseNameMatcher.group("testrayTestcaseName");
+
+									continue;
+								}
+
+								Matcher failureMatcher = failurePattern.matcher(line);
+
+								if (failureMatcher.find()) {
+									testcaseFailed = true;
+
+									continue;
+								}
+
+								Matcher propertiesMatcher = propertiesPattern.matcher(line);
+
+								if (propertiesMatcher.find()) {
+									propertiesLocation = lineNumber;
+
+									continue;
+								}
+
+								Matcher testcaseStopMatcher = testcaseStopPattern.matcher(line);
+
+								if (testcaseStopMatcher.find()) {
+									if ((testrayTestcaseName != null) && (propertiesLocation != null)) {
+										testcaseNames.add(testrayTestcaseName);
+
+										testcasePropertyLocations.put(propertiesLocation, testrayTestcaseName);
+
+										if ((testcaseFailed != null) && (testcaseFailed.equals(Boolean.TRUE))) {
+											testcaseFailures.add(testrayTestcaseName);
+										}
+
+										testcaseFailed = null;
+										testrayTestcaseName = null;
+										propertiesLocation = null;
+									}
+									else {
+										System.out.println("WARNING: This testcase block doesn't include a testray.testcase.name property");
+									}
+
+									testcaseFailed = null;
+									testrayTestcaseName = null;
+								}
+							}
+
+							bufferedReader.close();
+
+							List propertyLocations = new ArrayList(testcasePropertyLocations.keySet());
+
+							Collections.sort(propertyLocations, Collections.reverseOrder());
+
+							for (Integer propertyLocation : propertyLocations) {
+								String testrayTestcaseName = testcasePropertyLocations.get(propertyLocation);
+
+								if (testcaseFailures.contains(testrayTestcaseName)) {
+									lines.add(propertyLocation, "<property name=\"testray.testcase.status\" value=\"failed\" />");
+								}
+								else {
+									lines.add(propertyLocation, "<property name=\"testray.testcase.status\" value=\"passed\" />");
+								}
+							}
+
+
+							FileWriter fileWriter = new FileWriter(file);
+							BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+
+							for (String currentLine : lines) {
+								bufferedWriter.write(currentLine);
+								bufferedWriter.write('\n');
+							}
+
+							bufferedWriter.close();
+						}
+						catch (IOException e) {
+							e.printStackTrace();
+						}
+					]]>
+				</beanshell>
 			</sequential>
 		</for>
 	</target>

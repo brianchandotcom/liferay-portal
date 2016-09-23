@@ -76,8 +76,8 @@ public class DDMForm implements Serializable {
 
 		if (Objects.equals(_availableLocales, ddmForm._availableLocales) &&
 			Objects.equals(_defaultLocale, ddmForm._defaultLocale) &&
-			Objects.equals(
-				_ddmFormFields, ddmForm._ddmFormFields)) {
+			Objects.equals(_ddmFormFields, ddmForm._ddmFormFields) &&
+			Objects.equals(_ddmFormRules, ddmForm._ddmFormRules)) {
 
 			return true;
 		}
@@ -124,7 +124,9 @@ public class DDMForm implements Serializable {
 
 		hash = HashUtil.hash(hash, _defaultLocale);
 
-		return HashUtil.hash(hash, _ddmFormFields);
+		hash = HashUtil.hash(hash, _ddmFormFields);
+
+		return HashUtil.hash(hash, _ddmFormRules);
 	}
 
 	public void setAvailableLocales(Set<Locale> availableLocales) {

@@ -54,6 +54,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FACEBOOK_LOGIN</td>
+	<td>//span[contains(.,'Facebook')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>GOOGLE_LOGIN</td>
 	<td>//span[contains(.,'Google')]</td>
 	<td></td>

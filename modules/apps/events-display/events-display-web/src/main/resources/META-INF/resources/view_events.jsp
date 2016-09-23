@@ -58,10 +58,10 @@ List<CalendarBooking> calendarBookings = (List<CalendarBooking>)request.getAttri
 
 			String eventHREF = groupURL.toString();
 
-			long selPlid = PortalUtil.getPlidFromPortletId(calendarBooking.getGroupId(), "1_WAR_calendarportlet");
+			long selPlid = PortalUtil.getPlidFromPortletId(calendarBooking.getGroupId(), CalendarPortletKeys.CALENDAR);
 
 			if (selPlid != LayoutConstants.DEFAULT_PLID) {
-				LiferayPortletURL eventURL = PortletURLFactoryUtil.create(request, "1_WAR_calendarportlet", selPlid, PortletRequest.RENDER_PHASE);
+				LiferayPortletURL eventURL = PortletURLFactoryUtil.create(request, CalendarPortletKeys.CALENDAR, selPlid, PortletRequest.RENDER_PHASE);
 
 				eventURL.setWindowState(LiferayWindowState.NORMAL);
 				eventURL.setPortletMode(PortletMode.VIEW);
@@ -94,5 +94,5 @@ List<CalendarBooking> calendarBookings = (List<CalendarBooking>)request.getAttri
 		</liferay-ui:search-container-column-text>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator type="article" />
+	<liferay-ui:search-iterator markupView="lexicon" type="article" />
 </liferay-ui:search-container>

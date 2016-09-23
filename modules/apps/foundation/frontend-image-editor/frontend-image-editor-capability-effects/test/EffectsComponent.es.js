@@ -3,6 +3,8 @@
 import EffectsComponent from '../src/main/resources/META-INF/resources/EffectsComponent.es';
 import { CancellablePromise } from '../node_modules/metal-promise/src/promise/Promise';
 
+const EFFECT_MISSMATCH_THRESHOLD = 3;
+
 describe('EffectsComponent', () => {
 	let baseline, ailis, amber, atari, aureus, chroma, elysium, expanse, flatfoot, glimmer, idyll, nucleus, orchid, paella, pyrexia, rouge, tripel, umbra;
 
@@ -62,114 +64,89 @@ describe('EffectsComponent', () => {
 	});
 
 	describe('Available Effects', () => {
-		let assertFilter = function(methodFn, filterName, expectedResult, done) {
+		let assertEffect = function(effectName, expectedResult, done) {
 			let component = new EffectsComponent({
 				modulePath: '/base/src/main/resources/META-INF/resources'
 			}, false);
 
 			component.cache_ = {};
 
-			component[methodFn](baseline, filterName)
+			component.process(baseline, effectName)
 				.then((result) => {
 					resemble(result).compareTo(expectedResult).onComplete((comparison) => {
-						assert.isBelow(comparison.rawMisMatchPercentage, 1, 'Image difference for ' + filterName + ' should be below 1%');
+						assert.isBelow(comparison.rawMisMatchPercentage, EFFECT_MISSMATCH_THRESHOLD, 'Image difference for ' + effectName + ' should be below ' + EFFECT_MISSMATCH_THRESHOLD + '%');
 
 						done();
 					});
 				});
 		};
 
-		let assertFilterPreview = function(filterName, expectedResult, done) {
-			assertFilter('preview', filterName, expectedResult, done);
-		};
-
-		let assertFilterProcess = function(filterName, expectedResult, done) {
-			assertFilter('process', filterName, expectedResult, done);
-		}
-
-		it('should apply the ailis filter', (done) => {
-			assertFilterPreview('ailis', ailis, done);
-			assertFilterProcess('ailis', ailis, done);
+		it('should apply the ailis effect', (done) => {
+			assertEffect('ailis', ailis, done);
 		});
 
-		it('should apply the amber filter', (done) => {
-			assertFilterPreview('amber', amber, done);
-			assertFilterProcess('amber', amber, done);
+		it('should apply the amber effect', (done) => {
+			assertEffect('amber', amber, done);
 		});
 
-		it('should apply the atari filter', (done) => {
-			assertFilterPreview('atari', atari, done);
-			assertFilterProcess('atari', atari, done);
+		it('should apply the atari effect', (done) => {
+			assertEffect('atari', atari, done);
 		});
 
-		it('should apply the aureus filter', (done) => {
-			assertFilterPreview('aureus', aureus, done);
-			assertFilterProcess('aureus', aureus, done);
+		it('should apply the aureus effect', (done) => {
+			assertEffect('aureus', aureus, done);
 		});
 
-		it('should apply the chroma filter', (done) => {
-			assertFilterPreview('chroma', chroma, done);
-			assertFilterProcess('chroma', chroma, done);
+		it('should apply the chroma effect', (done) => {
+			assertEffect('chroma', chroma, done);
 		});
 
-		it('should apply the elysium filter', (done) => {
-			assertFilterPreview('elysium', elysium, done);
-			assertFilterProcess('elysium', elysium, done);
+		it('should apply the elysium effect', (done) => {
+			assertEffect('elysium', elysium, done);
 		});
 
-		it('should apply the expanse filter', (done) => {
-			assertFilterPreview('expanse', expanse, done);
-			assertFilterProcess('expanse', expanse, done);
+		it('should apply the expanse effect', (done) => {
+			assertEffect('expanse', expanse, done);
 		});
 
-		it('should apply the flatfoot filter', (done) => {
-			assertFilterPreview('flatfoot', flatfoot, done);
-			assertFilterProcess('flatfoot', flatfoot, done);
+		it('should apply the flatfoot effect', (done) => {
+			assertEffect('flatfoot', flatfoot, done);
 		});
 
-		it('should apply the glimmer filter', (done) => {
-			assertFilterPreview('glimmer', glimmer, done);
-			assertFilterProcess('glimmer', glimmer, done);
+		it('should apply the glimmer effect', (done) => {
+			assertEffect('glimmer', glimmer, done);
 		});
 
-		it('should apply the idyll filter', (done) => {
-			assertFilterPreview('idyll', idyll, done);
-			assertFilterProcess('idyll', idyll, done);
+		it('should apply the idyll effect', (done) => {
+			assertEffect('idyll', idyll, done);
 		});
 
-		it('should apply the nucleus filter', (done) => {
-			assertFilterPreview('nucleus', nucleus, done);
-			assertFilterProcess('nucleus', nucleus, done);
+		it('should apply the nucleus effect', (done) => {
+			assertEffect('nucleus', nucleus, done);
 		});
 
-		it('should apply the orchid filter', (done) => {
-			assertFilterPreview('orchid', orchid, done);
-			assertFilterProcess('orchid', orchid, done);
+		it('should apply the orchid effect', (done) => {
+			assertEffect('orchid', orchid, done);
 		});
 
-		it('should apply the paella filter', (done) => {
-			assertFilterPreview('paella', paella, done);
-			assertFilterProcess('paella', paella, done);
+		it('should apply the paella effect', (done) => {
+			assertEffect('paella', paella, done);
 		});
 
-		it('should apply the pyrexia filter', (done) => {
-			assertFilterPreview('pyrexia', pyrexia, done);
-			assertFilterProcess('pyrexia', pyrexia, done);
+		it('should apply the pyrexia effect', (done) => {
+			assertEffect('pyrexia', pyrexia, done);
 		});
 
-		it('should apply the rouge filter', (done) => {
-			assertFilterPreview('rouge', rouge, done);
-			assertFilterProcess('rouge', rouge, done);
+		it('should apply the rouge effect', (done) => {
+			assertEffect('rouge', rouge, done);
 		});
 
-		it('should apply the tripel filter', (done) => {
-			assertFilterPreview('tripel', tripel, done);
-			assertFilterProcess('tripel', tripel, done);
+		it('should apply the tripel effect', (done) => {
+			assertEffect('tripel', tripel, done);
 		});
 
-		it('should apply the umbra filter', (done) => {
-			assertFilterPreview('umbra', umbra, done);
-			assertFilterProcess('umbra', umbra, done);
+		it('should apply the umbra effect', (done) => {
+			assertEffect('umbra', umbra, done);
 		});
 	});
 });

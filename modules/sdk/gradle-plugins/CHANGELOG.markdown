@@ -204,6 +204,14 @@ version 2.0.0.
 - [LPS-66853]: Update the [Liferay Source Formatter] dependency to version
 1.0.282.
 
+## 2.0.39 - 2016-09-22
+
+### Changed
+- [LPS-68297]: Update the default value of the
+`liferay.appServers.jboss.version` property to `7.0.0`.
+- [LPS-68297]: Update the [Liferay Source Formatter] dependency to version
+1.0.283.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
 [Liferay CSS Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/css-builder
@@ -232,3 +240,4 @@ version 2.0.0.
 [LPS-68035]: https://issues.liferay.com/browse/LPS-68035
 [LPS-68131]: https://issues.liferay.com/browse/LPS-68131
 [LPS-68165]: https://issues.liferay.com/browse/LPS-68165
+[LPS-68297]: https://issues.liferay.com/browse/LPS-68297

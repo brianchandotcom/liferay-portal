@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>EMAIL_RECIPIENT_FIELD</td>
-	<td>//input[contains(@id,'reportsportlet_emailAddresses')]</td>
+	<td>//input[contains(@id,'AdminPortlet_emailAddresses')]</td>
 	<td></td>
 </tr>
 <tr>

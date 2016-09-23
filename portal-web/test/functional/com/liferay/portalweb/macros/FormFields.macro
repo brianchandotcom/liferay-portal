@@ -216,6 +216,12 @@
 		<execute function="AssertTextEquals" locator1="FormFields#HELP_TEXT" value1="${fieldHelpText}" />
 	</command>
 
+	<command name="viewFieldLabel">
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute function="AssertTextEquals" locator1="FormFields#TEXT_FIELD" value1="${fieldValue}" />
+	</command>
+
 	<command name="viewFieldName">
 		<execute function="AssertTextEquals" locator1="FormFields#FIELD_NAME_EDIT" value1="${fieldName}" />
 	</command>

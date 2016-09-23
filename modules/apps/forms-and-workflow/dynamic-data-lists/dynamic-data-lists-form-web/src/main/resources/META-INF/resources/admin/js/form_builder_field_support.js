@@ -46,6 +46,37 @@ AUI.add(
 				);
 			},
 
+			generateFieldName: function(key) {
+				var instance = this;
+
+				var counter = 0;
+
+				var builder = instance.get('builder');
+
+				var existingField;
+
+				if (!key) {
+					key = instance.get('context').type;
+				}
+
+				var name = key;
+
+				if (name) {
+					do {
+						if (counter > 0) {
+							name = key + counter;
+						}
+
+						existingField = builder.findField(name);
+
+						counter++;
+					}
+					while (existingField !== undefined && existingField !== instance);
+				}
+
+				return name;
+			},
+
 			getSettings: function(settingsForm) {
 				var instance = this;
 
@@ -101,24 +132,26 @@ AUI.add(
 
 				var settingsRetriever = instance.get('settingsRetriever');
 
+				var fieldContext = instance.get('context');
+
 				return settingsRetriever
 					.getSettingsContext(instance.get('type'))
 					.then(
 						function(context) {
-							var settingsForm = instance._createSettingsForm(context);
+							var visitor = new Liferay.DDM.LayoutVisitor();
 
-							var visitor = settingsForm.get('visitor');
-
-							visitor.set(
-								'fieldHandler',
-								function(fieldContext) {
-									instance._fillSettingsFormField(fieldContext, settingsForm);
+							visitor.setAttrs(
+								{
+									fieldHandler: function(formFieldContext) {
+										instance._fillSettingsFormField(formFieldContext, fieldContext);
+									},
+									pages: context.pages
 								}
 							);
 
 							visitor.visit();
 
-							settingsForm.set('context', context);
+							var settingsForm = instance._createSettingsForm(context);
 
 							return settingsForm;
 						}
@@ -159,26 +192,24 @@ AUI.add(
 				);
 			},
 
-			_fillSettingsFormField: function(fieldContext, settingsForm) {
+			_fillSettingsFormField: function(formFieldContext, fieldContext, settingsForm) {
 				var instance = this;
 
-				var context = instance.get('context');
-
-				var contextKey = RendererUtil.getFieldNameFromQualifiedName(fieldContext.name);
+				var contextKey = RendererUtil.getFieldNameFromQualifiedName(formFieldContext.name);
 
 				if (contextKey === 'name') {
-					var fieldName = context.fieldName;
+					var fieldName = fieldContext.fieldName;
 
 					if (!fieldName) {
-						fieldName = settingsForm.generateFieldName(context.type);
+						fieldName = instance.generateFieldName(fieldContext.type);
 					}
 
-					fieldContext.value = fieldName;
+					formFieldContext.value = fieldName;
 
-					context.fieldName = fieldName;
+					fieldContext.fieldName = fieldName;
 				}
-				else if (contextKey in context) {
-					fieldContext.value = context[contextKey];
+				else if (contextKey in fieldContext) {
+					formFieldContext.value = fieldContext[contextKey];
 				}
 			},
 

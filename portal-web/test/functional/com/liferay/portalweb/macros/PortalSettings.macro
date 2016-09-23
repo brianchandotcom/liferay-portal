@@ -205,6 +205,18 @@
 		<execute macro="PortletEntry#save" />
 	</command>
 
+	<command name="editConfigurationAuthenticationFacebook">
+		<execute function="Check" locator1="PortalSettingsAuthentication#AUTHENTICATION_FACEBOOK_ENABLED_CHECKBOX" />
+		<execute function="Type" locator1="PortalSettingsAuthentication#AUTHENTICATION_FACEBOOK_APPLICATION_ID" value1="${facebookApplicationID}" />
+		<execute function="Type" locator1="PortalSettingsAuthentication#AUTHENTICATION_FACEBOOK_APPLICATION_SECRET" value1="${facebookApplicationSecret}" />
+		<execute function="Type" locator1="PortalSettingsAuthentication#AUTHENTICATION_FACEBOOK_GRAPH_URL" value1="https://graph.facebook.com" />
+		<execute function="Type" locator1="PortalSettingsAuthentication#AUTHENTICATION_FACEBOOK_OAUTH_AUTHENTICATION_URL" value1="https://graph.facebook.com/oauth/authorize" />
+		<execute function="Type" locator1="PortalSettingsAuthentication#AUTHENTICATION_FACEBOOK_OAUTH_TOKEN_URL" value1="https://graph.facebook.com/oauth/access_token" />
+		<execute function="Type" locator1="PortalSettingsAuthentication#AUTHENTICATION_FACEBOOK_REDIRECT_URL" value1="http://localhost:8080/c/portal/facebook_connect_oauth" />
+
+		<execute macro="PortletEntry#save" />
+	</command>
+
 	<command name="editConfigurationAuthenticationGeneral">
 		<execute macro="Panel#expandPanel">
 			<var name="panelHeading" value="Authentication" />

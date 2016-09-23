@@ -320,7 +320,7 @@ public class ExtRepositoryAdapter extends BaseRepositoryImpl {
 			_toExtRepositoryObjectAdapters(
 				ExtRepositoryObjectAdapterType.FILE, extRepositoryFileEntries);
 
-		return _subList(extRepositoryFileEntryAdapters, start, end, obc);
+		return _sublist(extRepositoryFileEntryAdapters, start, end, obc);
 	}
 
 	@Override
@@ -358,7 +358,7 @@ public class ExtRepositoryAdapter extends BaseRepositoryImpl {
 		extRepositoryFileEntryAdapters = _filterByMimeType(
 			extRepositoryFileEntryAdapters, mimeTypes);
 
-		return _subList(extRepositoryFileEntryAdapters, start, end, obc);
+		return _sublist(extRepositoryFileEntryAdapters, start, end, obc);
 	}
 
 	@Override
@@ -532,7 +532,7 @@ public class ExtRepositoryAdapter extends BaseRepositoryImpl {
 			_toExtRepositoryObjectAdapters(
 				ExtRepositoryObjectAdapterType.FOLDER, extRepositoryFolders);
 
-		return _subList(extRepositoryFolderAdapters, start, end, obc);
+		return _sublist(extRepositoryFolderAdapters, start, end, obc);
 	}
 
 	@Override
@@ -551,7 +551,7 @@ public class ExtRepositoryAdapter extends BaseRepositoryImpl {
 					ExtRepositoryObjectAdapterType.OBJECT,
 					extRepositoryObjects);
 
-			return _subList(
+			return _sublist(
 				extRepositoryObjectAdapters, start, end,
 				(OrderByComparator<Object>)obc);
 		}
@@ -579,7 +579,7 @@ public class ExtRepositoryAdapter extends BaseRepositoryImpl {
 		extRepositoryObjectAdapters = _filterByMimeType(
 			extRepositoryObjectAdapters, mimeTypes);
 
-		return _subList(
+		return _sublist(
 			extRepositoryObjectAdapters, start, end,
 			(OrderByComparator<Object>)obc);
 	}
@@ -1295,7 +1295,7 @@ public class ExtRepositoryAdapter extends BaseRepositoryImpl {
 		return false;
 	}
 
-	private <T, V extends T> List<T> _subList(
+	private <T, V extends T> List<T> _sublist(
 		List<V> list, int start, int end, OrderByComparator<T> obc) {
 
 		if (obc != null) {

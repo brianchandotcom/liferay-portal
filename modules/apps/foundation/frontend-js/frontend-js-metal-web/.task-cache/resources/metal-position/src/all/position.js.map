@@ -1,1 +1,0 @@
-{"version":3,"sources":["/source/position.js"],"names":[],"mappings":";AAAA;;;;;;;;;;;;;;;;;;;;UAOQ,K;UAAO,Q;UAAU,Q","sourcesContent":["'use strict';\n\nimport Align from '../Align';\nimport Geometry from '../Geometry';\nimport Position from '../Position';\n\nexport default Position;\nexport {Align, Geometry, Position};\n"]}

@@ -38,7 +38,9 @@
 		<execute function="Click" locator1="ReportsAdmin#DEFINITIONS_DEFINITION_TABLE_ACTIONS" />
 		<execute function="AssertClick" locator1="ReportsAdmin#DEFINITIONS_DEFINITION_MENULIST_ADD_SCHEDULE" value1="Add Schedule" />
 
-		<var method="selenium#getElementValue('//span[@class=\'lfr-input-time \']/input')" name="time" />
+		<execute function="AssertElementPresent" locator1="ReportsAdminEditScheduleEntry#START_DATE_TIME_FIELD" />
+
+		<var method="selenium#getElementValue('//span[contains(@class,\'lfr-input-time\')]/input')" name="time" />
 
 		<var group="3" input="${time}" name="ampm" pattern="([0-9]*):([0-9]*) ([A-Z]*)" />
 		<var group="1" input="${time}" name="hours" pattern="([0-9]*):([0-9]*) ([A-Z]*)" />
@@ -68,7 +70,7 @@
 				</then>
 			</elseif>
 			<else>
-				<var method="MathUtil#sum('${minutesIncremented2}', '2')" name="minutesIncremented2" />
+				<var method="MathUtil#sum('${minutes}', '2')" name="minutesIncremented2" />
 			</else>
 		</if>
 
@@ -245,7 +247,7 @@ Sincerely,<br />
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesConfiguration">
-			<var name="portlet" value="Reports Admin" />
+			<var name="portlet" value="Report Admin" />
 		</execute>
 
 		<execute macro="ReportsAdmin#gotoDefinitions" />
@@ -267,7 +269,7 @@ Sincerely,<br />
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesConfiguration">
-			<var name="portlet" value="Reports Admin" />
+			<var name="portlet" value="Report Admin" />
 		</execute>
 
 		<while>
@@ -287,7 +289,7 @@ Sincerely,<br />
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesConfiguration">
-			<var name="portlet" value="Reports Admin" />
+			<var name="portlet" value="Report Admin" />
 		</execute>
 
 		<execute macro="ReportsAdmin#gotoSources" />

@@ -10,12 +10,12 @@
 <tbody>
 <tr>
 	<td>DATA_SOURCE_NAME_SELECT</td>
-	<td>//select[contains(@id,'reportsportlet_sourceId')]</td>
+	<td>//select[contains(@id,'AdminPortlet_sourceId')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TEMPLATE_FILE_UPLOAD</td>
-	<td>//input[contains(@id,'reportsportlet_templateReport')]</td>
+	<td>//input[contains(@id,'AdminPortlet_templateReport')]</td>
 	<td></td>
 </tr>
 <tr>

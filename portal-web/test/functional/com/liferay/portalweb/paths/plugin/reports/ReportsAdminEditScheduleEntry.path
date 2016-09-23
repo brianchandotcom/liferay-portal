@@ -15,27 +15,27 @@
 </tr>
 <tr>
 	<td>START_DATE_TIME_FIELD</td>
-	<td>//span[@class='lfr-input-time ']/input</td>
+	<td>//span[contains(@class,'lfr-input-time')]/input</td>
 	<td></td>
 </tr>
 <tr>
 	<td>REPORT_FORMAT_SELECT</td>
-	<td>//select[contains(@id,'reportsportlet_format')]</td>
+	<td>//select[contains(@id,'AdminPortlet_format')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>REPORT_NAME_FIELD</td>
-	<td>//input[contains(@id,'reportsportlet_reportName')]</td>
+	<td>//input[contains(@id,'AdminPortlet_reportName')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>EMAIL_NOTIFICATIONS_FIELD</td>
-	<td>//input[contains(@id,'reportsportlet_emailNotifications')]</td>
+	<td>//input[contains(@id,'AdminPortlet_emailNotifications')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>EMAIL_RECIPIENT_FIELD</td>
-	<td>//input[contains(@id,'reportsportlet_emailDelivery')]</td>
+	<td>//input[contains(@id,'AdminPortlet_emailDelivery')]</td>
 	<td></td>
 </tr>
 <tr>

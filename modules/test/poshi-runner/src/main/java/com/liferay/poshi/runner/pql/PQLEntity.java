@@ -30,12 +30,12 @@ public abstract class PQLEntity {
 				break;
 			}
 
-			String subPQL = pql.substring(1, pql.length() - 1);
+			String subpql = pql.substring(1, pql.length() - 1);
 
 			int parenthesisCount = 0;
 
-			for (int i = 0; i < subPQL.length(); i++) {
-				char c = subPQL.charAt(i);
+			for (int i = 0; i < subpql.length(); i++) {
+				char c = subpql.charAt(i);
 
 				if (c == '(') {
 					parenthesisCount++;
@@ -54,7 +54,7 @@ public abstract class PQLEntity {
 				return pql.trim();
 			}
 
-			pql = subPQL;
+			pql = subpql;
 		}
 
 		return pql.trim();

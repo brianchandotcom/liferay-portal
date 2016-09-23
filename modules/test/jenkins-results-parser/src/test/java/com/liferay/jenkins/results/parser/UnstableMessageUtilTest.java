@@ -19,6 +19,8 @@ import java.io.File;
 import java.net.URL;
 import java.net.URLDecoder;
 
+import org.apache.tools.ant.Project;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -110,9 +112,24 @@ public class UnstableMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 
 	@Override
 	protected String getMessage(String urlString) throws Exception {
+		Project project = getProject();
+
 		return formatXML(
-			"<div>" + UnstableMessageUtil.getUnstableMessage(urlString) +
-				"</div>");
+			"<div>" +
+			UnstableMessageUtil.getUnstableMessage(project, urlString) +
+			"</div>");
+	}
+
+	protected Project getProject() {
+		Project project = new Project();
+
+		project.setProperty("env.BUILD_NUMBER", "1");
+		project.setProperty("env.JOB_NAME", "jenkins-job-name");
+		project.setProperty("env.MASTER_HOSTNAME", "test-1-1");
+		project.setProperty("env.TOP_LEVEL_START_TIME", "start-time");
+		project.setProperty("log.base.url", "log-base-url");
+
+		return project;
 	}
 
 }

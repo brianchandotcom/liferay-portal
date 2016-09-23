@@ -26,13 +26,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Represents the root panel category for all the implemented categories
- * in the {@link PanelCategoryRegistry}
- *
- * @see PanelCategory
- * @see PanelCategoryRegistry
+ * Represents the root panel category for all implemented categories in the
+ * {@link PanelCategoryRegistry}.
  *
  * @author Adolfo Pérez
+ * @see    PanelCategory
+ * @see    PanelCategoryRegistry
  */
 public class RootPanelCategory implements PanelCategory {
 

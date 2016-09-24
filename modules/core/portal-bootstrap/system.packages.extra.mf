@@ -1,11 +1,11 @@
 Manifest-Version: 1.0
-Bnd-LastModified: 1468904359940
+Bnd-LastModified: 1473067335548
 Bundle-ManifestVersion: 2
 Bundle-Name: system.packages.extra
 Bundle-SymbolicName: system.packages.extra
 Bundle-Vendor: Liferay, Inc.
 Bundle-Version: 1.0.0
-Created-By: 1.8.0_92 (Oracle Corporation)
+Created-By: 1.8.0_73 (Oracle Corporation)
 Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  u.impl;version="4.0.1";uses:="com.liferay.ibm.icu.math,com.liferay.ib
  m.icu.text,com.liferay.ibm.icu.util",com.liferay.ibm.icu.impl.coll;ve
@@ -4237,10 +4237,11 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  1.0.0",org.apache.tools.zip;version="1.0.0",org.eclipse.persistence.j
  avax.persistence.osgi;uses:="javax.persistence.spi";version="1.0.0",c
  om.ibm.crypto.provider;version="1.0.0",com.sun.security.auth.module;v
- ersion="1.0.0",org.apache.commons.validator.routines;version="1.5.0",
- org.apache.naming.java;version="1.0.0",org.apache.xml.serializer;vers
- ion="2.7.1",org.objectweb.asm.attrs;version="5.0.1",sun.misc;version=
- "1.0.0",sun.security.provider;version="1.0.0"
+ ersion="1.0.0",javax.websocket;version="1.1.0",javax.websocket.server
+ ;version="1.1.0",org.apache.commons.validator.routines;version="1.5.0
+ ",org.apache.naming.java;version="1.0.0",org.apache.xml.serializer;ve
+ rsion="2.7.1",org.objectweb.asm.attrs;version="5.0.1",sun.misc;versio
+ n="1.0.0",sun.security.provider;version="1.0.0"
 Javac-Debug: on
 Javac-Deprecation: off
 Javac-Encoding: UTF-8

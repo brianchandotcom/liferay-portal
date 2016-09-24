@@ -41,6 +41,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -65,7 +66,8 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	property = {
 		"osgi.command.function=check", "osgi.command.function=execute",
-		"osgi.command.function=list", "osgi.command.scope=upgrade"
+		"osgi.command.function=executeAll", "osgi.command.function=list",
+		"osgi.command.scope=upgrade"
 	},
 	service = ReleaseManagerOSGiCommands.class
 )
@@ -129,6 +131,37 @@ public class ReleaseManagerOSGiCommands {
 			bundleSymbolicName,
 			releaseGraphManager.getUpgradeInfos(
 				schemaVersionString, toVersionString));
+	}
+
+	public void executeAll() {
+		Set<String> upgradedFailedBundleSymbolicNames = new HashSet<>();
+
+		doExecuteAll(upgradedFailedBundleSymbolicNames);
+
+		if (upgradedFailedBundleSymbolicNames.isEmpty()) {
+			System.out.println("All modules have been successfully upgraded!");
+
+			return;
+		}
+
+		StringBundler sb = new StringBundler(
+			(upgradedFailedBundleSymbolicNames.size() * 3) + 3);
+
+		sb.append(
+			"\nThe following module upgrades have finished with errors:\n");
+
+		for (String upgradedFailedBundleSymbolicName :
+				upgradedFailedBundleSymbolicNames) {
+
+			sb.append("\t");
+			sb.append(upgradedFailedBundleSymbolicName);
+			sb.append("\n");
+		}
+
+		sb.append("Use the command upgrade:list <module name> to get more ");
+		sb.append("details about the status of a specific upgrade");
+
+		System.out.println(sb.toString());
 	}
 
 	public void list() {
@@ -200,20 +233,15 @@ public class ReleaseManagerOSGiCommands {
 		String bundleSymbolicName,
 		ServiceTrackerMap<String, List<UpgradeInfo>> serviceTrackerMap) {
 
-		ReleaseGraphManager releaseGraphManager = new ReleaseGraphManager(
-			serviceTrackerMap.getService(bundleSymbolicName));
-
-		String schemaVersionString = getSchemaVersionString(bundleSymbolicName);
-
-		List<List<UpgradeInfo>> upgradeInfosList =
-			releaseGraphManager.getUpgradeInfosList(schemaVersionString);
+		List<List<UpgradeInfo>> upgradeInfosList = getCurrentUpgradeInfosList(
+			bundleSymbolicName);
 
 		int size = upgradeInfosList.size();
 
 		if (size > 1) {
 			throw new IllegalStateException(
 				"There are " + size + " possible end nodes for " +
-					schemaVersionString);
+					getSchemaVersionString(bundleSymbolicName));
 		}
 
 		if (size == 0) {
@@ -221,6 +249,32 @@ public class ReleaseManagerOSGiCommands {
 		}
 
 		executeUpgradeInfos(bundleSymbolicName, upgradeInfosList.get(0));
+	}
+
+	protected void doExecuteAll(Set<String> upgradedFailedBundleSymbolicNames) {
+		Set<String> upgradableBundleSymbolicNames =
+			getUpgradableBundleSymbolicNames();
+
+		upgradableBundleSymbolicNames.removeAll(
+			upgradedFailedBundleSymbolicNames);
+
+		if (upgradableBundleSymbolicNames.isEmpty()) {
+			return;
+		}
+
+		for (String upgradableBundleSymbolicName :
+				upgradableBundleSymbolicNames) {
+
+			try {
+				doExecute(upgradableBundleSymbolicName, _serviceTrackerMap);
+			}
+			catch (Exception e) {
+				upgradedFailedBundleSymbolicNames.add(
+					upgradableBundleSymbolicName);
+			}
+		}
+
+		doExecuteAll(upgradedFailedBundleSymbolicNames);
 	}
 
 	protected void executeUpgradeInfos(
@@ -255,6 +309,17 @@ public class ReleaseManagerOSGiCommands {
 		}
 	}
 
+	protected List<List<UpgradeInfo>> getCurrentUpgradeInfosList(
+		String bundleSymbolicName) {
+
+		String schemaVersionString = getSchemaVersionString(bundleSymbolicName);
+
+		ReleaseGraphManager releaseGraphManager = new ReleaseGraphManager(
+			_serviceTrackerMap.getService(bundleSymbolicName));
+
+		return releaseGraphManager.getUpgradeInfosList(schemaVersionString);
+	}
+
 	protected String getSchemaVersionString(String bundleSymbolicName) {
 		Release release = _releaseLocalService.fetchRelease(bundleSymbolicName);
 
@@ -263,6 +328,26 @@ public class ReleaseManagerOSGiCommands {
 		}
 
 		return release.getSchemaVersion();
+	}
+
+	protected Set<String> getUpgradableBundleSymbolicNames() {
+		Set<String> upgradableBundleSymbolicNames = new HashSet<>();
+
+		for (String bundleSymbolicName : _serviceTrackerMap.keySet()) {
+			if (isUpgradable(bundleSymbolicName)) {
+				upgradableBundleSymbolicNames.add(bundleSymbolicName);
+			}
+		}
+
+		return upgradableBundleSymbolicNames;
+	}
+
+	protected boolean isUpgradable(String bundleSymbolicName) {
+		if (getCurrentUpgradeInfosList(bundleSymbolicName).size() == 1) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Reference(unbind = "-")

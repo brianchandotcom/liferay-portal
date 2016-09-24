@@ -326,7 +326,7 @@
 	</command>
 
 	<command name="ViewWikiNoXSS" priority="5">
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="quarantine" />
 
 		<var name="userFirstNameEdit"><![CDATA[<script>alert(123)</script>]]></var>
 		<var name="userLastNameEdit"><![CDATA[<script>alert(123)</script>]]></var>

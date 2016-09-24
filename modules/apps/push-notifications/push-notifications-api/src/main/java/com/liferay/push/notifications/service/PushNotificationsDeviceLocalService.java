@@ -92,7 +92,8 @@ public interface PushNotificationsDeviceLocalService extends BaseLocalService,
 		PushNotificationsDevice pushNotificationsDevice);
 
 	public PushNotificationsDevice addPushNotificationsDevice(long userId,
-		java.lang.String platform, java.lang.String token);
+		java.lang.String platform, java.lang.String token)
+		throws PortalException;
 
 	/**
 	* Creates a new push notifications device with the primary key. Does not add the push notifications device to the database.

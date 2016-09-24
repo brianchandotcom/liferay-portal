@@ -100,6 +100,10 @@ public class RegistryImpl implements Registry {
 		org.osgi.framework.ServiceReference<T> serviceReference =
 			_bundleContext.getServiceReference(clazz);
 
+		if (serviceReference == null) {
+			return null;
+		}
+
 		return _bundleContext.getService(serviceReference);
 	}
 

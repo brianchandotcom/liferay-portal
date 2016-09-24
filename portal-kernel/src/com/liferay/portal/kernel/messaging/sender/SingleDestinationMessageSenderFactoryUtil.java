@@ -63,6 +63,10 @@ public class SingleDestinationMessageSenderFactoryUtil {
 				_singleDestinationMessageSenderFactory = registry.getService(
 					SingleDestinationMessageSenderFactory.class);
 
+				if (_singleDestinationMessageSenderFactory != null) {
+					return _singleDestinationMessageSenderFactory;
+				}
+
 				if (_log.isDebugEnabled()) {
 					_log.debug("Waiting for a destination factory");
 				}

@@ -265,6 +265,8 @@ Export-Package:\
 	\
 	sun.misc,\
 	\
+	sun.net.util,\
+	\
 	sun.security.provider,\
 	*
 Import-Package: !*

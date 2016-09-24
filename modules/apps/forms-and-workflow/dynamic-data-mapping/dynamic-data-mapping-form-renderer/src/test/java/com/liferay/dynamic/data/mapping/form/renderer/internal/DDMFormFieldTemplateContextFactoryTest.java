@@ -71,7 +71,9 @@ public class DDMFormFieldTemplateContextFactoryTest {
 		DDMFormField ddmFormField = DDMFormTestUtil.createTextDDMFormField(
 			"Field1", false, false, false);
 
-		ddmFormField.setReadOnly(false);
+		boolean readOnly = false;
+
+		ddmFormField.setReadOnly(readOnly);
 
 		ddmForm.addDDMFormField(ddmFormField);
 
@@ -82,6 +84,7 @@ public class DDMFormFieldTemplateContextFactoryTest {
 		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult =
 			new DDMFormFieldEvaluationResult("Field1", instanceId);
 
+		ddmFormFieldEvaluationResult.setReadOnly(readOnly);
 		ddmFormFieldEvaluationResult.setVisible(true);
 
 		DDMFormEvaluationResult ddmFormEvaluationResult =
@@ -126,7 +129,9 @@ public class DDMFormFieldTemplateContextFactoryTest {
 		DDMFormField ddmFormField = DDMFormTestUtil.createTextDDMFormField(
 			"Field1", false, false, true);
 
-		ddmFormField.setReadOnly(true);
+		boolean readOnly = true;
+
+		ddmFormField.setReadOnly(readOnly);
 
 		ddmForm.addDDMFormField(ddmFormField);
 
@@ -137,6 +142,7 @@ public class DDMFormFieldTemplateContextFactoryTest {
 		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult =
 			new DDMFormFieldEvaluationResult("Field1", instanceId);
 
+		ddmFormFieldEvaluationResult.setReadOnly(readOnly);
 		ddmFormFieldEvaluationResult.setVisible(true);
 
 		DDMFormEvaluationResult ddmFormEvaluationResult =
@@ -178,8 +184,10 @@ public class DDMFormFieldTemplateContextFactoryTest {
 
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
 
+		boolean required = true;
+
 		DDMFormField ddmFormField = DDMFormTestUtil.createTextDDMFormField(
-			"Field1", false, false, true);
+			"Field1", false, false, required);
 
 		ddmFormField.setLabel(
 			DDMFormValuesTestUtil.createLocalizedValue("Field 1", _LOCALE));
@@ -199,6 +207,7 @@ public class DDMFormFieldTemplateContextFactoryTest {
 		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult =
 			new DDMFormFieldEvaluationResult("Field1", instanceId);
 
+		ddmFormFieldEvaluationResult.setRequired(required);
 		ddmFormFieldEvaluationResult.setValid(true);
 		ddmFormFieldEvaluationResult.setVisible(true);
 

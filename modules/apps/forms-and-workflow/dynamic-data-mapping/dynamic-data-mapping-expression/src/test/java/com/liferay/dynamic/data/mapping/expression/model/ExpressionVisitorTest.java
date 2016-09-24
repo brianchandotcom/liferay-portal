@@ -56,7 +56,7 @@ public class ExpressionVisitorTest {
 	@Test
 	public void testFunctionCallExpression() {
 		Expression expression = new FunctionCallExpression(
-			"sum", Arrays.asList(new Term("1"), new Term("2")));
+			"sum", Arrays.<Expression>asList(new Term("1"), new Term("2")));
 
 		Assert.assertEquals(
 			"sum(1, 2)", expression.accept(_printExpressionVisitor));

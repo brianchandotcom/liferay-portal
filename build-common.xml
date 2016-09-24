@@ -58,7 +58,7 @@
 	</path>
 
 	<path id="lib.pre.classpath">
-		<fileset dir="${project.dir}/tmp/lib-pre" includes="*.jar" />
+		<fileset dir="${project.dir}/tmp/lib-pre" erroronmissingdir="false" includes="*.jar" />
 	</path>
 
 	<path id="project.classpath">

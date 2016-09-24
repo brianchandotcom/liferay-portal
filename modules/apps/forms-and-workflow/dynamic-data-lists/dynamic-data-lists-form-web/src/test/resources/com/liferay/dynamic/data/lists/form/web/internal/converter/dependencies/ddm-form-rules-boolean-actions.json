@@ -1,0 +1,10 @@
+[
+	{
+		"actions": [
+			"setEnabled('Field3', true)",
+			"setRequired('Field3', true)",
+			"setVisible('Field4', true)"
+		],
+		"condition": "equals(getValue('Field1'), getValue('Field2'))"
+	}
+]

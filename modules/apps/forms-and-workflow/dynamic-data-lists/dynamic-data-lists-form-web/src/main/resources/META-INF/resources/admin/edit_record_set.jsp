@@ -230,6 +230,7 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 										{
 											definition: <%= ddlFormAdminDisplayContext.getSerializedDDMForm() %>,
 											description: '<%= HtmlUtil.escapeJS(description) %>',
+
 											editForm: event.form,
 											evaluatorURL: '<%= ddlFormAdminDisplayContext.getDDMFormContextProviderServletURL() %>',
 											fieldTypesDefinitions: <%= ddlFormAdminDisplayContext.getDDMFormFieldTypesDefinitionsMap() %>,
@@ -238,7 +239,8 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 											name: '<%= HtmlUtil.escapeJS(name) %>',
 											namespace: '<portlet:namespace />',
 											publishRecordSetURL: '<%= publishRecordSetURL.toString() %>',
-											recordSetId: <%= recordSetId %>
+											recordSetId: <%= recordSetId %>,
+											rules: <%= ddlFormAdminDisplayContext.getSerializedDDMFormRules() %>
 										}
 									)
 								);

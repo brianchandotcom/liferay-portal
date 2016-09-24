@@ -15,6 +15,7 @@
 package com.liferay.portal.library;
 
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -38,6 +39,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -45,12 +47,16 @@ import org.w3c.dom.NodeList;
 /**
  * @author Matthew Tambara
  * @author Shuyang Zhou
+ * @author Andrea Di Giorgi
  */
 public class LibraryReferenceTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
+		_portalPath = Paths.get(System.getProperty("user.dir"));
+
 		_initLibJars();
+		_initModuleSourceDirs();
 
 		DocumentBuilderFactory documentBuilderFactory =
 			DocumentBuilderFactory.newInstance();
@@ -58,14 +64,20 @@ public class LibraryReferenceTest {
 		DocumentBuilder documentBuilder =
 			documentBuilderFactory.newDocumentBuilder();
 
-		_initEclipseJars(documentBuilder);
-		_initNetBeansJars(documentBuilder);
+		_initEclipse(documentBuilder);
+		_initNetBeans(documentBuilder);
 		_initVersionsJars(documentBuilder);
 	}
 
 	@Test
 	public void testEclipseJarsInLib() {
 		testNonexistentJarReferences(_eclipseJars, _ECLIPSE_FILE_NAME);
+	}
+
+	@Test
+	public void testEclipseSourceDirsInModules() {
+		testNonexistentModuleSourceDirReferences(
+			_eclipseModuleSourceDirs, _ECLIPSE_FILE_NAME);
 	}
 
 	@Test
@@ -84,8 +96,26 @@ public class LibraryReferenceTest {
 	}
 
 	@Test
+	public void testModulesSourceDirsInEclipse() {
+		testMissingModuleSourceDirReferences(
+			_eclipseModuleSourceDirs, _ECLIPSE_FILE_NAME);
+	}
+
+	@Test
+	public void testModulesSourceDirsInNetBeans() {
+		testMissingModuleSourceDirReferences(
+			_netBeansModuleSourceDirs, _NETBEANS_FILE_NAME);
+	}
+
+	@Test
 	public void testNetBeansJarsInLib() {
 		testNonexistentJarReferences(_netBeansJars, _NETBEANS_FILE_NAME);
+	}
+
+	@Test
+	public void testNetBeansSourceDirsInModules() {
+		testNonexistentModuleSourceDirReferences(
+			_netBeansModuleSourceDirs, _NETBEANS_FILE_NAME);
 	}
 
 	@Test
@@ -107,6 +137,16 @@ public class LibraryReferenceTest {
 		}
 	}
 
+	protected void testMissingModuleSourceDirReferences(
+		Set<String> dirs, String fileName) {
+
+		for (String dir : _moduleSourceDirs) {
+			Assert.assertTrue(
+				fileName + " is missing a reference to " + dir,
+				dirs.contains(dir));
+		}
+	}
+
 	protected void testNonexistentJarReferences(
 		Set<String> jars, String fileName) {
 
@@ -117,7 +157,17 @@ public class LibraryReferenceTest {
 		}
 	}
 
-	private static void _initEclipseJars(DocumentBuilder documentBuilder)
+	protected void testNonexistentModuleSourceDirReferences(
+		Set<String> dirs, String fileName) {
+
+		for (String dir : dirs) {
+			Assert.assertTrue(
+				fileName + " has a nonexistent reference to " + dir,
+				_moduleSourceDirs.contains(dir));
+		}
+	}
+
+	private static void _initEclipse(DocumentBuilder documentBuilder)
 		throws Exception {
 
 		Document document = documentBuilder.parse(new File(_ECLIPSE_FILE_NAME));
@@ -130,16 +180,19 @@ public class LibraryReferenceTest {
 			NamedNodeMap namedNodeMap = node.getAttributes();
 
 			Node kindNode = namedNodeMap.getNamedItem("kind");
-
-			String value = kindNode.getNodeValue();
-
-			if (!value.equals(_LIB_DIR_NAME)) {
-				continue;
-			}
-
 			Node pathNode = namedNodeMap.getNamedItem("path");
 
-			_eclipseJars.add(pathNode.getNodeValue());
+			String kind = kindNode.getNodeValue();
+			String path = pathNode.getNodeValue();
+
+			if (kind.equals(_LIB_DIR_NAME)) {
+				_eclipseJars.add(path);
+			}
+			else if (kind.equals("src")) {
+				if (path.startsWith(_MODULES_DIR_NAME + CharPool.SLASH)) {
+					_eclipseModuleSourceDirs.add(path);
+				}
+			}
 		}
 	}
 
@@ -181,7 +234,41 @@ public class LibraryReferenceTest {
 			});
 	}
 
-	private static void _initNetBeansJars(DocumentBuilder documentBuilder)
+	private static void _initModuleSourceDirs() throws IOException {
+		Files.walkFileTree(
+			_portalPath.resolve(_MODULES_DIR_NAME),
+			new SimpleFileVisitor<Path>() {
+
+				@Override
+				public FileVisitResult preVisitDirectory(
+					Path dirPath, BasicFileAttributes basicFileAttributes) {
+
+					if (Files.exists(dirPath.resolve(".lfrbuild-portal-pre"))) {
+						Path sourceDirPath = dirPath.resolve(
+							_SRC_JAVA_DIR_NAME);
+
+						Path relativePath = _portalPath.relativize(
+							sourceDirPath);
+
+						String sourceDir = relativePath.toString();
+
+						if (File.separatorChar != CharPool.SLASH) {
+							sourceDir = StringUtil.replace(
+								sourceDir, File.separatorChar, CharPool.SLASH);
+						}
+
+						_moduleSourceDirs.add(sourceDir);
+
+						return FileVisitResult.SKIP_SUBTREE;
+					}
+
+					return FileVisitResult.CONTINUE;
+				}
+
+			});
+	}
+
+	private static void _initNetBeans(DocumentBuilder documentBuilder)
 		throws Exception {
 
 		Document document = documentBuilder.parse(
@@ -193,6 +280,25 @@ public class LibraryReferenceTest {
 			Node node = nodelist.item(i);
 
 			_netBeansJars.add(node.getTextContent());
+		}
+
+		nodelist = document.getElementsByTagName("source-folder");
+
+		for (int i = 0; i < nodelist.getLength(); i++) {
+			Element element = (Element)nodelist.item(i);
+
+			NodeList locationNodeList = element.getElementsByTagName(
+				"location");
+
+			Node locationNode = locationNodeList.item(0);
+
+			String location = locationNode.getTextContent();
+
+			if (location.startsWith(_MODULES_DIR_NAME + CharPool.SLASH) &&
+				location.endsWith(CharPool.SLASH + _SRC_JAVA_DIR_NAME)) {
+
+				_netBeansModuleSourceDirs.add(location);
+			}
 		}
 	}
 
@@ -215,15 +321,24 @@ public class LibraryReferenceTest {
 
 	private static final String _LIB_DIR_NAME = "lib";
 
+	private static final String _MODULES_DIR_NAME = "modules";
+
 	private static final String _NETBEANS_FILE_NAME = "nbproject/project.xml";
+
+	private static final String _SRC_JAVA_DIR_NAME = "src/main/java";
 
 	private static final String _VERSIONS_FILE_NAME =
 		_LIB_DIR_NAME + "/versions.xml";
 
 	private static final Set<String> _eclipseJars = new HashSet<>();
+	private static final Set<String> _eclipseModuleSourceDirs = new HashSet<>();
 	private static final Set<String> _excludeJars = new HashSet<>();
 	private static final Set<String> _libJars = new HashSet<>();
+	private static final Set<String> _moduleSourceDirs = new HashSet<>();
 	private static final Set<String> _netBeansJars = new HashSet<>();
+	private static final Set<String> _netBeansModuleSourceDirs =
+		new HashSet<>();
+	private static Path _portalPath;
 	private static final Set<String> _versionsJars = new HashSet<>();
 
 }

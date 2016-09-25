@@ -2612,7 +2612,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 					if (trimmedLine.matches("^\\} (catch|else|finally) .*")) {
 						processMessage(
-							fileName, "There should be a line break after '{'",
+							fileName, "There should be a line break after '}'",
 							lineCount);
 					}
 

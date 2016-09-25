@@ -32,12 +32,15 @@ import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.social.privatemessaging.constants.PrivateMessagingPortletKeys;
 import com.liferay.social.privatemessaging.model.UserThread;
 import com.liferay.social.privatemessaging.service.UserThreadLocalService;
+
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -106,9 +109,12 @@ public class PrivateMessagingUserNotificationHandler
 			userId = mbMessage.getUserId();
 		}
 
-		String title = serviceContext.translate(
-			"x-sent-you-a-message",
-			HtmlUtil.escape(PortalUtil.getUserName(userId, StringPool.BLANK)));
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", serviceContext.getLocale(), getClass());
+
+		String title = ResourceBundleUtil.getString(
+			resourceBundle, "x-sent-you-a-message", HtmlUtil.escape(
+				PortalUtil.getUserName(userId, StringPool.BLANK)));
 
 		return StringUtil.replace(
 			getBodyTemplate(), new String[] {"[$BODY$]", "[$TITLE$]"},

@@ -53,6 +53,16 @@ public class FunctionEvaluationTest {
 	@Test
 	public void testCustomFunction3() throws Exception {
 		DDMExpression<Boolean> ddmExpression = new DDMExpressionImpl<>(
+			"length('abc') == length('abc')", Boolean.class);
+
+		ddmExpression.setDDMExpressionFunction("length", new LengthFunction());
+
+		Assert.assertEquals(true, ddmExpression.evaluate());
+	}
+
+	@Test
+	public void testCustomFunction4() throws Exception {
+		DDMExpression<Boolean> ddmExpression = new DDMExpressionImpl<>(
 			"pow(2, 4) > (16 - 1)", Boolean.class);
 
 		ddmExpression.setDDMExpressionFunction("pow", new PowFunction());
@@ -61,7 +71,7 @@ public class FunctionEvaluationTest {
 	}
 
 	@Test
-	public void testCustomFunction4() throws Exception {
+	public void testCustomFunction5() throws Exception {
 		double expected = Math.pow(2., Math.pow(2., Math.pow(2., 4.)));
 
 		DDMExpression<Double> ddmExpression = new DDMExpressionImpl<>(

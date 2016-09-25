@@ -1,0 +1,15 @@
+[
+	{
+		"actions": [
+			"setEnabled('Field3', true)"
+		],
+		"condition": "contains(getValue('Field1'), getValue('Field2')) AND getValue('Field2') < 4"
+	},
+	{
+		"actions": [
+			"setEnabled('Field3', true)",
+			"setVisible('Field4', true)"
+		],
+		"condition": "equals(getValue('Field1'), getValue('Field2')) OR getValue('Field2') > 4 OR 5 >= 3"
+	}
+]

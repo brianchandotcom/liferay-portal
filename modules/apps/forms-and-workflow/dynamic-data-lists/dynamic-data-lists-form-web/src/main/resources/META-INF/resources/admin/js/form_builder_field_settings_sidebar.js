@@ -7,6 +7,8 @@ AUI.add(
 
 		var TPL_NAVBAR_WRAPER = '<nav class="navbar navbar-default navbar-no-collapse"></nav>';
 
+		var FieldTypes = Liferay.DDM.Renderer.FieldTypes;
+
 		var FormBuilderFieldsSettingsSidebar = A.Component.create(
 			{
 				ATTRS: {
@@ -133,8 +135,10 @@ AUI.add(
 
 						instance._showLoading();
 
-						instance.set('description', Liferay.DDM.Renderer.FieldTypes.get(field.get('type')).get('label'));
-						instance.set('title', field.get('context').label);
+						var fieldType = FieldTypes.get(field.get('type'));
+
+						instance.set('description', fieldType.get('label'));
+						instance.set('title', field.get('context.label'));
 
 						instance._loadFieldSettingsForm(field);
 

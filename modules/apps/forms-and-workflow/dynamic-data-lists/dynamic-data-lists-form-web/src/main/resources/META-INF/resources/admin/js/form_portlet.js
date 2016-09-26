@@ -404,21 +404,27 @@ AUI.add(
 
 						instance.serializeFormBuilder();
 
-						var editForm = instance.get('editForm');
+						var state = instance.getState();
 
-						A.io.request(
-							instance.get('autosaveURL'),
-							{
-								after: {
-									success: function() {
-										instance._defineIds(this.get('responseData'));
-									}
-								},
-								data: A.IO.stringify(editForm.form),
-								dataType: 'JSON',
-								method: 'POST'
-							}
-						);
+						var definition = state.definition;
+
+						if (definition.fields.length > 0) {
+							var editForm = instance.get('editForm');
+
+							A.io.request(
+								instance.get('autosaveURL'),
+								{
+									after: {
+										success: function() {
+											instance._defineIds(this.get('responseData'));
+										}
+									},
+									data: A.IO.stringify(editForm.form),
+									dataType: 'JSON',
+									method: 'POST'
+								}
+							);
+						}
 					},
 
 					_defineIds: function(response) {

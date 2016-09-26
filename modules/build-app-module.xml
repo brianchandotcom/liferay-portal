@@ -33,9 +33,14 @@
 
 	<condition property="artifact.exclude">
 		<or>
+			<available file="hotfix" />
 			<available file=".lfrbuild-app-server-lib" />
 			<contains string="${basedir}" substring="required-dependencies" />
 		</or>
+	</condition>
+
+	<condition property="artifact.hotfix">
+		<available file="hotfix" />
 	</condition>
 
 	<condition property="artifact.json">
@@ -46,7 +51,13 @@
 		<available file="build.xml" />
 	</condition>
 
-	<target depends="download-artifact,download-artifact-dependencies,record-artifact-change-log" name="dist-module-artifact" />
+	<target name="copy-hotfix-artifact" if="artifact.hotfix">
+		<copy todir="${dist.dir}">
+			<fileset dir="hotfix" includes="*.jar" />
+		</copy>
+	</target>
+
+	<target depends="copy-hotfix-artifact,download-artifact,download-artifact-dependencies,record-artifact-change-log" name="dist-module-artifact" />
 
 	<target depends="move-artifact,move-artifact-dependencies" name="dist-module-artifact-lpkg" />
 

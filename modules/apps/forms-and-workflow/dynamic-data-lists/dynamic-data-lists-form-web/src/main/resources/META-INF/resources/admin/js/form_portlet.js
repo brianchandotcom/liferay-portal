@@ -4,11 +4,16 @@ AUI.add(
 		var DefinitionSerializer = Liferay.DDL.DefinitionSerializer;
 		var LayoutSerializer = Liferay.DDL.LayoutSerializer;
 
+		var AUTOSAVE_INTERVAL = 60000;
+
 		var TPL_BUTTON_SPINNER = '<span aria-hidden="true"><span class="icon-spinner icon-spin"></span></span>';
 
 		var DDLPortlet = A.Component.create(
 			{
 				ATTRS: {
+					autosaveURL: {
+					},
+
 					availableLanguageIds: {
 						value: [
 							themeDisplay.getDefaultLanguageId()
@@ -148,10 +153,14 @@ AUI.add(
 							instance.one('#showForm').on('click', A.bind('_onFormButtonClick', instance)),
 							Liferay.on('destroyPortlet', A.bind('_onDestroyPortlet', instance))
 						];
+
+						instance._intervalId = setInterval(A.bind('_autosave', instance), AUTOSAVE_INTERVAL);
 					},
 
 					destructor: function() {
 						var instance = this;
+
+						clearInterval(instance._intervalId);
 
 						instance.get('formBuilder').destroy();
 						instance.get('ruleBuilder').destroy();
@@ -390,6 +399,23 @@ AUI.add(
 						instance.disableNameEditor();
 					},
 
+					_autosave: function() {
+						var instance = this;
+
+						instance.serializeFormBuilder();
+
+						var editForm = instance.get('editForm');
+
+						A.io.request(
+							instance.get('autosaveURL'),
+							{
+								data: A.IO.stringify(editForm.form),
+								dataType: 'JSON',
+								method: 'POST'
+							}
+						);
+					},
+
 					_getDescription: function() {
 						var instance = this;
 
@@ -559,6 +585,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['liferay-ddl-form-builder', 'liferay-ddl-form-builder-definition-serializer', 'liferay-ddl-form-builder-layout-serializer', 'liferay-ddl-form-builder-rule-builder', 'liferay-portlet-base', 'liferay-util-window']
+		requires: ['io-base', 'liferay-ddl-form-builder', 'liferay-ddl-form-builder-definition-serializer', 'liferay-ddl-form-builder-layout-serializer', 'liferay-ddl-form-builder-rule-builder', 'liferay-portlet-base', 'liferay-util-window']
 	}
 );

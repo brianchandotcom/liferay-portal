@@ -80,7 +80,8 @@ public class PushNotificationsDeviceLocalServiceWrapper
 
 	@Override
 	public com.liferay.push.notifications.model.PushNotificationsDevice addPushNotificationsDevice(
-		long userId, java.lang.String platform, java.lang.String token) {
+		long userId, java.lang.String platform, java.lang.String token)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _pushNotificationsDeviceLocalService.addPushNotificationsDevice(userId,
 			platform, token);
 	}

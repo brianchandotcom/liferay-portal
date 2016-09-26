@@ -66,10 +66,12 @@ public class PushNotificationsDeviceCacheModel implements CacheModel<PushNotific
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("{pushNotificationsDeviceId=");
 		sb.append(pushNotificationsDeviceId);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", createDate=");
@@ -88,6 +90,7 @@ public class PushNotificationsDeviceCacheModel implements CacheModel<PushNotific
 		PushNotificationsDeviceImpl pushNotificationsDeviceImpl = new PushNotificationsDeviceImpl();
 
 		pushNotificationsDeviceImpl.setPushNotificationsDeviceId(pushNotificationsDeviceId);
+		pushNotificationsDeviceImpl.setCompanyId(companyId);
 		pushNotificationsDeviceImpl.setUserId(userId);
 
 		if (createDate == Long.MIN_VALUE) {
@@ -120,6 +123,8 @@ public class PushNotificationsDeviceCacheModel implements CacheModel<PushNotific
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		pushNotificationsDeviceId = objectInput.readLong();
 
+		companyId = objectInput.readLong();
+
 		userId = objectInput.readLong();
 		createDate = objectInput.readLong();
 		platform = objectInput.readUTF();
@@ -130,6 +135,8 @@ public class PushNotificationsDeviceCacheModel implements CacheModel<PushNotific
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		objectOutput.writeLong(pushNotificationsDeviceId);
+
+		objectOutput.writeLong(companyId);
 
 		objectOutput.writeLong(userId);
 		objectOutput.writeLong(createDate);
@@ -150,6 +157,7 @@ public class PushNotificationsDeviceCacheModel implements CacheModel<PushNotific
 	}
 
 	public long pushNotificationsDeviceId;
+	public long companyId;
 	public long userId;
 	public long createDate;
 	public String platform;

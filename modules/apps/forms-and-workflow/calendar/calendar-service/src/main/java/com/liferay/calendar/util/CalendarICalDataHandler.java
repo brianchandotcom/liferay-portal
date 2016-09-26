@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.net.URI;
@@ -673,9 +674,9 @@ public class CalendarICalDataHandler implements CalendarDataHandler {
 
 		// Recurrence
 
-		if (calendarBooking.isRecurring()) {
-			String recurrence = calendarBooking.getRecurrence();
+		String recurrence = calendarBooking.getRecurrence();
 
+		if (Validator.isNotNull(recurrence)) {
 			int index = recurrence.indexOf(StringPool.NEW_LINE);
 
 			if (index > 0) {

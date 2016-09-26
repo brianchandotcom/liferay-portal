@@ -79,7 +79,7 @@ public class CalendarBookingImpl extends CalendarBookingBaseImpl {
 
 	@Override
 	public Recurrence getRecurrenceObj() {
-		if ((_recurrenceObj == null) && isRecurring()) {
+		if ((_recurrenceObj == null) && Validator.isNotNull(getRecurrence())) {
 			_recurrenceObj = RecurrenceSerializer.deserialize(
 				getRecurrence(), getTimeZone());
 		}

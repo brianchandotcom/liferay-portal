@@ -94,7 +94,7 @@ AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.getEntry(CalendarBookin
 					</dd>
 				</c:if>
 
-				<c:if test="<%= calendarBooking.isRecurring() %>">
+				<c:if test="<%= Validator.isNotNull(calendarBooking.getRecurrence()) %>">
 					<dt>
 						<liferay-ui:message key="repeat" />:
 					</dt>
@@ -165,7 +165,7 @@ AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.getEntry(CalendarBookin
 
 		<portlet:actionURL name="invokeTransition" var="invokeTransitionURL" />
 
-		<c:if test="<%= calendarBooking.isRecurring() %>">
+		<c:if test="<%= Validator.isNotNull(calendarBooking.getRecurrence()) %>">
 			<%@ include file="/calendar_booking_recurrence_language_keys.jspf" %>
 
 			<aui:script use="liferay-calendar-recurrence-util">

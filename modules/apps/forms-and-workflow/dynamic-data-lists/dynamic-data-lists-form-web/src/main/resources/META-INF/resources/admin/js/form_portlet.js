@@ -409,11 +409,32 @@ AUI.add(
 						A.io.request(
 							instance.get('autosaveURL'),
 							{
+								after: {
+									success: function() {
+										instance._defineIds(this.get('responseData'));
+									}
+								},
 								data: A.IO.stringify(editForm.form),
 								dataType: 'JSON',
 								method: 'POST'
 							}
 						);
+					},
+
+					_defineIds: function(response) {
+						var instance = this;
+
+						var recordSetIdNode = instance.byId('recordSetId');
+
+						var ddmStructureIdNode = instance.byId('ddmStructureId');
+
+						if (recordSetIdNode.val() === '0') {
+							recordSetIdNode.val(response.recordSetId);
+						}
+
+						if (ddmStructureIdNode.val() === '0') {
+							ddmStructureIdNode.val(response.ddmStructureId);
+						}
 					},
 
 					_getDescription: function() {

@@ -216,7 +216,7 @@ AUI.add(
 						value: true
 					},
 
-					simultaneousLimit: {
+					simultaneousUploads: {
 						validator: Lang.isNumber,
 						value: 2
 					},
@@ -1086,7 +1086,7 @@ AUI.add(
 									}
 								},
 								selectFilesButton: instance._selectFilesButton,
-								simLimit: instance.get('simultaneousLimit'),
+								simLimit: instance.get('simultaneousUploads'),
 								swfURL: Liferay.Util.addParams(timestampParam, URL_SWF_UPLOADER),
 								uploadURL: Liferay.Util.addParams(timestampParam, instance.get('uploadFile'))
 							}

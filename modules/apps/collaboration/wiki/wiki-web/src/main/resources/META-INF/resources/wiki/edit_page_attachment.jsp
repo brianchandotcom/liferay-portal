@@ -119,5 +119,5 @@ Ticket ticket = TicketLocalServiceUtil.addTicket(user.getCompanyId(), User.class
 				searchContainer.updateDataStore();
 			}
 		}
-	)
+	);
 </aui:script>

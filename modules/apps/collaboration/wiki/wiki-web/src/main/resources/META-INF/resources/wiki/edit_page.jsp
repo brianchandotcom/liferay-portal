@@ -378,49 +378,6 @@ if (portletTitleBasedNavigation) {
 	</aui:form>
 </div>
 
-<aui:script sandbox="<%= true %>">
-	var form = $(document.<portlet:namespace />fm);
-
-	var formatSelect = form.fm('format');
-
-	var currentFormat = formatSelect.find('option:selected').text().trim();
-
-	var currentIndex = formatSelect.prop('selectedIndex');
-
-	formatSelect.on(
-		'change',
-		function(event) {
-			var newFormat = formatSelect.find('option:selected').text().trim();
-
-			var confirmMessage = '<%= UnicodeLanguageUtil.get(request, "you-may-lose-formatting-when-switching-from-x-to-x") %>';
-
-			confirmMessage = _.sub(confirmMessage, currentFormat, newFormat);
-
-			if (!confirm(confirmMessage)) {
-				formatSelect.prop('selectedIndex', currentIndex);
-
-				return;
-			}
-
-			var titleEditor = window.<portlet:namespace />titleEditor;
-
-			if (titleEditor) {
-				form.fm('title').val(titleEditor.getText());
-			}
-
-			var contentEditor = window.<portlet:namespace />contentEditor;
-
-			if (contentEditor) {
-				form.fm('content').val(contentEditor.getHTML());
-			}
-
-			form.attr('action', '<%= editPageRenderURL %>');
-
-			submitForm(form, null, null, false);
-		}
-	);
-</aui:script>
-
 <aui:script require="wiki-web/wiki/js/wiki.es">
 	var wiki = new wikiWebWikiJsWikiEs.default(
 		{

@@ -176,6 +176,10 @@
 			<contains></contains>
 			<matches>.*Unable to process message.*product-app-theme.*</matches>
 		</ignore-error>
+		<ignore-error description="LPS-68366">
+			<contains></contains>
+			<matches>.*ServerAdminPortlet\_tabs1\=resources generates exception.*NullPointerException.*</matches>
+		</ignore-error>
 		<ignore-error description="LRQA-14442, temporary workaround until Kiyoshi Lee fixes it">
 			<contains>[org_eclipse_equinox_http_servlet.*Framework Event Dispatcher: Equinox Container:</contains>
 			<matches></matches>

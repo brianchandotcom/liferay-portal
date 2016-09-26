@@ -18,6 +18,8 @@ import com.liferay.dynamic.data.lists.constants.DDLActionKeys;
 import com.liferay.dynamic.data.lists.constants.DDLWebKeys;
 import com.liferay.dynamic.data.lists.form.web.configuration.DDLFormWebConfiguration;
 import com.liferay.dynamic.data.lists.form.web.constants.DDLFormPortletKeys;
+import com.liferay.dynamic.data.lists.form.web.internal.converter.DDMFormRulesToDDLFormRulesConverter;
+import com.liferay.dynamic.data.lists.form.web.internal.converter.model.DDLFormRule;
 import com.liferay.dynamic.data.lists.form.web.internal.display.context.util.DDLFormAdminRequestHelper;
 import com.liferay.dynamic.data.lists.form.web.internal.search.RecordSetSearch;
 import com.liferay.dynamic.data.lists.model.DDLFormRecord;
@@ -53,6 +55,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
@@ -98,6 +101,7 @@ public class DDLFormAdminDisplayContext {
 		DDMFormJSONSerializer ddmFormJSONSerializer,
 		DDMFormLayoutJSONSerializer ddmFormLayoutJSONSerializer,
 		DDMFormRenderer ddmFormRenderer,
+		DDMFormRulesToDDLFormRulesConverter ddmFormRulesToDDLFormRulesConverter,
 		DDMFormValuesFactory ddmFormValuesFactory,
 		DDMFormValuesMerger ddmFormValuesMerger,
 		DDMStructureLocalService ddmStructureLocalService,
@@ -115,6 +119,8 @@ public class DDLFormAdminDisplayContext {
 		_ddmFormJSONSerializer = ddmFormJSONSerializer;
 		_ddmFormLayoutJSONSerializer = ddmFormLayoutJSONSerializer;
 		_ddmFormRenderer = ddmFormRenderer;
+		_ddmFormRulesToDDLFormRulesConverter =
+			ddmFormRulesToDDLFormRulesConverter;
 		_ddmFormValuesFactory = ddmFormValuesFactory;
 		_ddmFormValuesMerger = ddmFormValuesMerger;
 		_ddmStructureLocalService = ddmStructureLocalService;
@@ -377,6 +383,18 @@ public class DDLFormAdminDisplayContext {
 		return _ddmFormLayoutJSONSerializer.serialize(ddmFormLayout);
 	}
 
+	public String getSerializedDDMFormRules() throws PortalException {
+		JSONSerializer jsonSerializer = _jsonFactory.createJSONSerializer();
+
+		DDMForm ddmForm = getDDMForm();
+
+		List<DDLFormRule> ddlFormRules =
+			_ddmFormRulesToDDLFormRulesConverter.convert(
+				ddmForm.getDDMFormRules());
+
+		return jsonSerializer.serializeDeep(ddlFormRules);
+	}
+
 	public boolean isDDLRecordWorkflowHandlerDeployed() {
 		if (!_workflowEngineManager.isDeployed()) {
 			return false;
@@ -478,6 +496,18 @@ public class DDLFormAdminDisplayContext {
 		}
 
 		return orderByComparator;
+	}
+
+	protected DDMForm getDDMForm() throws PortalException {
+		DDMStructure ddmStructure = getDDMStructure();
+
+		DDMForm ddmForm = new DDMForm();
+
+		if (ddmStructure != null) {
+			ddmForm = ddmStructure.getDDMForm();
+		}
+
+		return ddmForm;
 	}
 
 	protected JSONArray getDDMFormFieldTypePropertyNames(
@@ -648,6 +678,8 @@ public class DDLFormAdminDisplayContext {
 	private final DDMFormJSONSerializer _ddmFormJSONSerializer;
 	private final DDMFormLayoutJSONSerializer _ddmFormLayoutJSONSerializer;
 	private final DDMFormRenderer _ddmFormRenderer;
+	private final DDMFormRulesToDDLFormRulesConverter
+		_ddmFormRulesToDDLFormRulesConverter;
 	private final DDMFormValuesFactory _ddmFormValuesFactory;
 	private final DDMFormValuesMerger _ddmFormValuesMerger;
 	private final DDMStructureLocalService _ddmStructureLocalService;

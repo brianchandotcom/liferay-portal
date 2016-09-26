@@ -64,7 +64,7 @@ processSanitizerConfiguration {
 				|			</attribute>
 				|			<attribute name="type">
 				|				<regexp-list>
-				|					<regexp value="[a-zA-Z0-9]+/[a-zA-Z0-9]+" />
+				|					<regexp value="[a-zA-Z0-9\\-]+/[a-zA-Z0-9\\-]+" />
 				|				</regexp-list>
 				|			</attribute>
 				|		</tag>""".stripMargin()

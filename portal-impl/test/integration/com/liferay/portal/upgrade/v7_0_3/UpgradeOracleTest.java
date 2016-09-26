@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.service.ReleaseLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -41,7 +40,6 @@ import org.junit.Test;
 /**
  * @author Alberto Chaparro
  */
-@Sync(cleanTransaction = true)
 public class UpgradeOracleTest extends UpgradeOracle {
 
 	@ClassRule

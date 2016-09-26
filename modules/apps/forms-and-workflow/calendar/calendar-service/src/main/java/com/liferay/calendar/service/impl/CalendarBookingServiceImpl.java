@@ -418,6 +418,21 @@ public class CalendarBookingServiceImpl extends CalendarBookingServiceBaseImpl {
 
 	@Override
 	public CalendarBooking invokeTransition(
+			long calendarBookingId, int status, int instanceIndex,
+			boolean updateInstance, boolean allFollowing,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		CalendarBooking calendarBookingInstance = getCalendarBookingInstance(
+			calendarBookingId, instanceIndex);
+
+		return invokeTransition(
+			calendarBookingId, status, calendarBookingInstance.getStartTime(),
+			updateInstance, allFollowing, serviceContext);
+	}
+
+	@Override
+	public CalendarBooking invokeTransition(
 			long calendarBookingId, int status, long startTime,
 			boolean updateInstance, boolean allFollowing,
 			ServiceContext serviceContext)

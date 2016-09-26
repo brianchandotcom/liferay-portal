@@ -210,7 +210,7 @@ AUI.add(
 					isRecurring: function() {
 						var instance = this;
 
-						return instance.get('recurrence') !== STR_BLANK;
+						return (instance.get('recurrence') !== STR_BLANK) || (instance.get('calendarBookingId') != instance.get('recurringCalendarBookingId'));
 					},
 
 					syncNodeColorUI: function() {

@@ -37,6 +37,9 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONSerializer;
+import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -48,12 +51,16 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.io.IOException;
+
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -74,19 +81,40 @@ public class SaveRecordSetMVCResourceCommand extends BaseMVCResourceCommand {
 	@Override
 	protected void doServeResource(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
-		throws Exception {
+		throws IOException {
 
-		DDMFormValues settingsDDMFormValues = getSettingsDDMFormValues(
-			resourceRequest);
+		Map<String, Object> response = new HashMap<>();
 
-		DDMStructure ddmStructure = saveDDMStructure(
-			resourceRequest, settingsDDMFormValues);
+		try {
+			DDMFormValues settingsDDMFormValues = getSettingsDDMFormValues(
+				resourceRequest);
 
-		DDLRecordSet recordSet = saveRecordSet(
-			resourceRequest, ddmStructure.getStructureId());
+			DDMStructure ddmStructure = saveDDMStructure(
+				resourceRequest, settingsDDMFormValues);
 
-		updateRecordSetSettings(
-			resourceRequest, recordSet, settingsDDMFormValues);
+			DDLRecordSet recordSet = saveRecordSet(
+				resourceRequest, ddmStructure.getStructureId());
+
+			updateRecordSetSettings(
+				resourceRequest, recordSet, settingsDDMFormValues);
+
+			response.put("ddmStructureId", ddmStructure.getStructureId());
+			response.put("recordSetId", recordSet.getRecordSetId());
+		}
+		catch (Exception e) {
+			String statusCode = String.valueOf(
+				HttpServletResponse.SC_BAD_REQUEST);
+
+			resourceResponse.setProperty(
+				ResourceResponse.HTTP_STATUS_CODE, statusCode);
+
+			response.put("error", e.getMessage());
+		}
+
+		JSONSerializer serializer = jsonFactory.createJSONSerializer();
+
+		PortletResponseUtil.write(
+			resourceResponse, serializer.serializeDeep(response));
 	}
 
 	protected DDMForm getDDMForm(ResourceRequest resourceRequest)
@@ -304,6 +332,9 @@ public class SaveRecordSetMVCResourceCommand extends BaseMVCResourceCommand {
 
 	@Reference
 	protected DDMStructureService ddmStructureService;
+
+	@Reference
+	protected JSONFactory jsonFactory;
 
 	@Reference
 	protected WorkflowDefinitionLinkLocalService

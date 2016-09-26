@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+
+<archetype-descriptor name="liferay-workspace">
+	<fileSets>
+		<fileSet filtered="true">
+			<directory></directory>
+			<includes>
+				<include>configs/**</include>
+				<include>modules</include>
+				<include>themes</include>
+				<include>.gitignore</include>
+				<include>build.gradle</include>
+				<include>gradle.properties</include>
+				<include>settings.gradle</include>
+			</includes>
+		</fileSet>
+	</fileSets>
+</archetype-descriptor>

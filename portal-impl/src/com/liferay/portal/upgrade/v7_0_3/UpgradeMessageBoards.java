@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -36,39 +37,50 @@ public class UpgradeMessageBoards extends UpgradeProcess {
 			long classNameId = PortalUtil.getClassNameId(
 				MBDiscussion.class.getName());
 
-			StringBundler sb = new StringBundler(6);
+			StringBundler sb = new StringBundler(8);
 
 			sb.append("delete from AssetEntry where classPK in (");
 			sb.append("select messageId from MBMessage where threadId in (");
 			sb.append("select threadId from MBThread where categoryId = ");
 			sb.append(MBCategoryConstants.DISCUSSION_CATEGORY_ID);
-			sb.append(" and messageCount = 1)) and classNameId = ");
+			sb.append(" and messageCount = 1) and status = ");
+			sb.append(WorkflowConstants.STATUS_APPROVED);
+			sb.append(") and classNameId = ");
 			sb.append(classNameId);
 
 			runSQL(sb.toString());
 
-			sb = new StringBundler(4);
+			sb = new StringBundler(5);
 
 			sb.append("delete from MBDiscussion where threadId in (select ");
 			sb.append("threadId from MBThread where categoryId = ");
 			sb.append(MBCategoryConstants.DISCUSSION_CATEGORY_ID);
-			sb.append(" and messageCount = 1)");
+			sb.append(" and messageCount = 1 and threadId not in (");
+			sb.append("select threadId from MBMessage))");
+
+			runSQL(sb.toString());
+
+			sb = new StringBundler(8);
+
+			sb.append("delete from MBMessage where threadId in (select");
+			sb.append("threadId from MBThread where categoryId = ");
+			sb.append(MBCategoryConstants.DISCUSSION_CATEGORY_ID);
+			sb.append(" and messageCount = 1) and status = ");
+			sb.append(WorkflowConstants.STATUS_APPROVED);
+			sb.append(" and rootMessageId not in (select parentMessageId ");
+			sb.append("FROM (select parentMessageId from MBMessage) as ");
+			sb.append("parentMessageId)");
 
 			runSQL(sb.toString());
 
 			sb = new StringBundler(4);
 
-			sb.append("delete from MBMessage where threadId in (select ");
-			sb.append("threadId from MBThread where categoryId = ");
+			sb.append("delete from MBThread where categoryId = ");
 			sb.append(MBCategoryConstants.DISCUSSION_CATEGORY_ID);
-			sb.append(" and messageCount = 1)");
+			sb.append(" and messageCount = 1 and threadId not in ( ");
+			sb.append("select threadId from MBMessage)");
 
 			runSQL(sb.toString());
-
-			runSQL(
-				"delete from MBThread where categoryId = " +
-					MBCategoryConstants.DISCUSSION_CATEGORY_ID +
-						" and messageCount = 1");
 		}
 		catch (Exception e) {
 			throw new UpgradeException(e);

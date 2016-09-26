@@ -83,11 +83,17 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 					}
 				}
 
+				String title = fileEntry.getTitle();
+
+				if (Validator.isNotNull(fileEntry.getDescription())) {
+					title += " - " + fileEntry.getDescription();
+				}
+
 				row.setCssClass("lfr-asset-item");
 				%>
 
 				<liferay-ui:search-container-column-text>
-					<div class="image-link preview" <%= (hasAudio || hasVideo) ? "data-options=\"height=" + playerHeight + "&thumbnailURL=" + HtmlUtil.escapeURL(DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&videoThumbnail=1")) + "&width=640" + dataOptions + "\"" : StringPool.BLANK %> href="<%= imageURL %>" thumbnailId="<%= thumbnailId %>" title="<%= HtmlUtil.escapeAttribute(fileEntry.getTitle()) %>">
+					<div class="image-link preview" <%= (hasAudio || hasVideo) ? "data-options=\"height=" + playerHeight + "&thumbnailURL=" + HtmlUtil.escapeURL(DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&videoThumbnail=1")) + "&width=640" + dataOptions + "\"" : StringPool.BLANK %> href="<%= imageURL %>" thumbnailId="<%= thumbnailId %>" title="<%= HtmlUtil.escapeAttribute(title) %>">
 						<c:choose>
 							<c:when test="<%= Validator.isNull(imageURL) %>">
 								<liferay-frontend:icon-vertical-card
@@ -121,6 +127,12 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 				</portlet:renderURL>
 
 				<%
+				String curFolderTitle = curFolder.getName();
+
+				if (Validator.isNotNull(curFolder.getDescription())) {
+					curFolderTitle += " - " + curFolder.getDescription();
+				}
+
 				row.setCssClass("lfr-asset-folder");
 				%>
 
@@ -129,7 +141,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 						actionJsp='<%= dlPortletInstanceSettingsHelper.isShowActions() ? "/document_library/folder_action.jsp" : StringPool.BLANK %>'
 						actionJspServletContext="<%= application %>"
 						resultRow="<%= row %>"
-						text="<%= HtmlUtil.escape(curFolder.getName()) %>"
+						text="<%= HtmlUtil.escape(curFolderTitle) %>"
 						url="<%= viewFolderURL %>"
 					>
 						<liferay-frontend:horizontal-card-col>

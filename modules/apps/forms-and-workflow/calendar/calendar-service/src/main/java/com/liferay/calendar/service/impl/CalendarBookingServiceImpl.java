@@ -18,11 +18,14 @@ import com.liferay.calendar.constants.CalendarActionKeys;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.model.CalendarBookingConstants;
+import com.liferay.calendar.recurrence.Recurrence;
+import com.liferay.calendar.recurrence.RecurrenceSerializer;
 import com.liferay.calendar.service.base.CalendarBookingServiceBaseImpl;
 import com.liferay.calendar.service.permission.CalendarPermission;
 import com.liferay.calendar.util.CalendarUtil;
 import com.liferay.calendar.util.JCalendarUtil;
 import com.liferay.calendar.util.RSSUtil;
+import com.liferay.calendar.util.RecurrenceUtil;
 import com.liferay.calendar.workflow.CalendarBookingWorkflowConstants;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -411,6 +414,72 @@ public class CalendarBookingServiceImpl extends CalendarBookingServiceBaseImpl {
 		}
 
 		return false;
+	}
+
+	@Override
+	public CalendarBooking invokeTransition(
+			long calendarBookingId, int status, long startTime,
+			boolean updateInstance, boolean allFollowing,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		CalendarBooking calendarBooking =
+			calendarBookingPersistence.findByPrimaryKey(calendarBookingId);
+
+		if (updateInstance) {
+			long calendarId = calendarBooking.getCalendarId();
+
+			long[] childCalendarIds =
+				calendarBookingLocalService.getChildCalendarIds(
+					calendarBookingId, calendarId);
+
+			long duration =
+				calendarBooking.getEndTime() - calendarBooking.getStartTime();
+
+			long endTime = startTime + duration;
+
+			String recurrence = null;
+
+			if (allFollowing) {
+				Recurrence recurrenceObj = calendarBooking.getRecurrenceObj();
+
+				int count = recurrenceObj.getCount();
+
+				if (count > 0) {
+					int instanceIndex = RecurrenceUtil.getIndexOfInstance(
+						calendarBooking.getRecurrence(),
+						calendarBooking.getStartTime(), startTime);
+
+					recurrenceObj.setCount(count - instanceIndex);
+				}
+
+				recurrence = RecurrenceSerializer.serialize(recurrenceObj);
+			}
+
+			deleteCalendarBookingInstance(
+				calendarBookingId, startTime, allFollowing);
+
+			calendarBooking = addCalendarBooking(
+				calendarId, childCalendarIds, 0,
+				calendarBooking.getRecurringCalendarBookingId(),
+				calendarBooking.getTitleMap(),
+				calendarBooking.getDescriptionMap(),
+				calendarBooking.getLocation(), startTime, endTime,
+				calendarBooking.isAllDay(), recurrence,
+				calendarBooking.getFirstReminder(),
+				calendarBooking.getFirstReminderType(),
+				calendarBooking.getSecondReminder(),
+				calendarBooking.getSecondReminderType(), serviceContext);
+		}
+
+		CalendarPermission.check(
+			getPermissionChecker(), calendarBooking.getCalendarId(),
+			CalendarActionKeys.MANAGE_BOOKINGS);
+
+		calendarBookingLocalService.updateStatus(
+			getUserId(), calendarBooking, status, serviceContext);
+
+		return calendarBooking;
 	}
 
 	@Override

@@ -69,7 +69,7 @@ public class UpdateLanguageAction extends Action {
 			boolean persistState = ParamUtil.getBoolean(
 				request, "persistState", true);
 
-			if (themeDisplay.isSignedIn() && (persistState)) {
+			if (themeDisplay.isSignedIn() && persistState) {
 				User user = themeDisplay.getUser();
 
 				Contact contact = user.getContact();

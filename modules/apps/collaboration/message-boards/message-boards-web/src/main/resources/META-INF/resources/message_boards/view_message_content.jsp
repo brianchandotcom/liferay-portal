@@ -271,7 +271,7 @@ if (portletTitleBasedNavigation) {
 
 			rootIndexPage = mbMessageIterator.getIndexPage();
 
-			if ((messageFound) && ((index + 1) > PropsValues.DISCUSSION_COMMENTS_DELTA_VALUE)) {
+			if (messageFound && ((index + 1) > PropsValues.DISCUSSION_COMMENTS_DELTA_VALUE)) {
 				moreMessagesPagination = true;
 
 				break;

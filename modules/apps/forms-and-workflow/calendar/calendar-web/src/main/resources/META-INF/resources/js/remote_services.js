@@ -184,7 +184,7 @@ AUI.add(
 					);
 				},
 
-				invokeTransition: function(schedulerEvent, status) {
+				invokeTransition: function(schedulerEvent, status, instanceIndex, updateInstance, allFollowing) {
 					var instance = this;
 
 					var scheduler = schedulerEvent.get('scheduler');
@@ -194,6 +194,9 @@ AUI.add(
 							'/calendar.calendarbooking/invoke-transition': {
 								calendarBookingId: schedulerEvent.get('calendarBookingId'),
 								status: status,
+								instanceIndex: instanceIndex,
+								updateInstance: updateInstance,
+								allFollowing: allFollowing,
 								userId: instance.get('userId')
 							}
 						},

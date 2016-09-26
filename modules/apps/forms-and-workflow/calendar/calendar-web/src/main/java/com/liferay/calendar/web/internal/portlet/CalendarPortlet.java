@@ -257,11 +257,34 @@ public class CalendarPortlet extends MVCPortlet {
 
 		int status = ParamUtil.getInteger(actionRequest, "status");
 
+		long startTime = ParamUtil.getLong(actionRequest, "startTime");
+
+		boolean updateInstance = ParamUtil.getBoolean(
+			actionRequest, "updateInstance");
+
+		boolean allFollowing = ParamUtil.getBoolean(
+			actionRequest, "allFollowing");
+
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CalendarBooking.class.getName(), actionRequest);
 
-		_calendarBookingService.invokeTransition(
-			calendarBookingId, status, serviceContext);
+		CalendarBooking calendarBooking =
+			_calendarBookingService.invokeTransition(
+				calendarBookingId, status, startTime, updateInstance,
+				allFollowing, serviceContext);
+
+		String redirect = getRedirect(actionRequest, actionResponse);
+
+		if (calendarBooking.getCalendarBookingId() != calendarBookingId) {
+			redirect = StringUtil.replace(
+				redirect, "/-/calendar/event/" + calendarBookingId,
+				"/-/calendar/event/" + calendarBooking.getCalendarBookingId());
+
+			redirect = HttpUtil.removeParameter(
+				redirect, actionResponse.getNamespace() + "instanceIndex");
+		}
+
+		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 	}
 
 	public void moveCalendarBookingToTrash(

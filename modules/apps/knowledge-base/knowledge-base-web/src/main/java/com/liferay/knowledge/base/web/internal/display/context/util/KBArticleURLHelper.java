@@ -49,19 +49,23 @@ public class KBArticleURLHelper {
 		String portletId = PortalUtil.getPortletId(_renderRequest);
 
 		if (portletId.startsWith(KBPortletKeys.KNOWLEDGE_BASE_ADMIN) ||
+			portletId.startsWith(KBPortletKeys.KNOWLEDGE_BASE_SEARCH) ||
 			portletId.startsWith(KBPortletKeys.KNOWLEDGE_BASE_SECTION)) {
 
 			portletURL.setParameter(
 				"mvcPath", _templatePath + "view_article.jsp");
 		}
 
-		if (portletId.startsWith(KBPortletKeys.KNOWLEDGE_BASE_ADMIN)) {
+		if (portletId.startsWith(KBPortletKeys.KNOWLEDGE_BASE_ADMIN) ||
+			portletId.startsWith(KBPortletKeys.KNOWLEDGE_BASE_SEARCH)) {
+
 			portletURL.setParameter(
 				"redirect", PortalUtil.getCurrentURL(_renderRequest));
 		}
 
 		if (Validator.isNull(kbArticle.getUrlTitle()) ||
-			portletId.equals(KBPortletKeys.KNOWLEDGE_BASE_ADMIN)) {
+			portletId.equals(KBPortletKeys.KNOWLEDGE_BASE_ADMIN) ||
+			portletId.equals(KBPortletKeys.KNOWLEDGE_BASE_SEARCH)) {
 
 			portletURL.setParameter(
 				"resourceClassNameId",

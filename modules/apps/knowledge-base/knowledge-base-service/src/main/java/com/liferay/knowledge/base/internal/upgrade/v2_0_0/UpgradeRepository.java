@@ -27,7 +27,8 @@ public class UpgradeRepository extends BaseUpgradeRepository {
 			{
 				"com.liferay.knowledgebase.admin.portlet.AdminPortlet",
 				"com.liferay.knowledge.base"
-			}
+			},
+			{"3_WAR_knowledgebaseportlet", "com.liferay.knowledge.base"}
 		};
 	}
 

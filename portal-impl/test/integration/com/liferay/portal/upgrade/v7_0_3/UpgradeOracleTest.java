@@ -40,7 +40,7 @@ import org.junit.Test;
 /**
  * @author Alberto Chaparro
  */
-public class UpgradeOracleTest extends UpgradeOracle {
+public class UpgradeOracleTest {
 
 	@ClassRule
 	@Rule
@@ -60,7 +60,9 @@ public class UpgradeOracleTest extends UpgradeOracle {
 	public void setUp() throws Exception {
 		Assume.assumeTrue(_db.getDBType() == DBType.ORACLE);
 
-		runSQL(
+		_upgradeOracle = new UpgradeOracle();
+
+		_db.runSQL(
 			"alter table " + _TABLE_NAME + " modify " + _FIELD_NAME +
 				" varchar2(300 BYTE)");
 
@@ -73,7 +75,7 @@ public class UpgradeOracleTest extends UpgradeOracle {
 
 	@After
 	public void tearDown() throws Exception {
-		runSQL(
+		_db.runSQL(
 			"alter table " + _TABLE_NAME + " modify " + _FIELD_NAME +
 				" varchar2(75 CHAR)");
 
@@ -86,14 +88,14 @@ public class UpgradeOracleTest extends UpgradeOracle {
 
 	@Test
 	public void testUpgradeReduceFieldSizes() throws Exception {
-		upgrade();
+		_upgradeOracle.upgrade();
 
 		Assert.assertEquals(75, getDataLenght(_TABLE_NAME, _FIELD_NAME));
 	}
 
 	@Test
 	public void testUpgradeVarcharAsChar() throws Exception {
-		upgrade();
+		_upgradeOracle.upgrade();
 
 		Assert.assertEquals("C", getCharUsed(_TABLE_NAME, _FIELD_NAME));
 	}
@@ -137,5 +139,7 @@ public class UpgradeOracleTest extends UpgradeOracle {
 	private static final String _TABLE_NAME = "ACCOUNT_";
 
 	private static DB _db;
+
+	private UpgradeOracle _upgradeOracle;
 
 }

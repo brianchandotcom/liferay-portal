@@ -227,7 +227,7 @@ public class DDMFormRulesToDDLFormRulesConverter {
 
 			DDLFormRuleCondition ddlFormRuleCondition =
 				new DDLFormRuleCondition(
-					_functionToOperatorMap.get(functionName), operands);
+					_functionNameOperatorMap.get(functionName), operands);
 
 			_conditions.add(ddlFormRuleCondition);
 
@@ -280,7 +280,7 @@ public class DDMFormRulesToDDLFormRulesConverter {
 			return _conditions;
 		}
 
-		private static final Map<String, String> _functionToOperatorMap =
+		private static final Map<String, String> _functionNameOperatorMap =
 			new HashMap<>();
 		private static final Map<String, String> _operatorMap = new HashMap<>();
 
@@ -290,8 +290,8 @@ public class DDMFormRulesToDDLFormRulesConverter {
 			_operatorMap.put("<", "less-than");
 			_operatorMap.put("<=", "less-than-equals");
 
-			_functionToOperatorMap.put("contains", "contains");
-			_functionToOperatorMap.put("equals", "equals-to");
+			_functionNameOperatorMap.put("contains", "contains");
+			_functionNameOperatorMap.put("equals", "equals-to");
 		}
 
 		private boolean _andOperator = true;

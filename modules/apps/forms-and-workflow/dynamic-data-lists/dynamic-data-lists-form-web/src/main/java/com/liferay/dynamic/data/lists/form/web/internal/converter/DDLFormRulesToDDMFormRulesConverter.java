@@ -51,7 +51,7 @@ public class DDLFormRulesToDDMFormRulesConverter {
 	}
 
 	protected String convertAction(DDLFormRuleAction ddlFormRuleAction) {
-		String functionName = _actionToFunctionMap.get(
+		String functionName = _actionFunctionNameMap.get(
 			ddlFormRuleAction.getAction());
 
 		return String.format(
@@ -64,7 +64,7 @@ public class DDLFormRulesToDDMFormRulesConverter {
 
 		String operator = ddlFormRuleCondition.getOperator();
 
-		String functionName = _operatorToFunctionMap.get(operator);
+		String functionName = _operatorFunctionNameMap.get(operator);
 
 		List<DDLFormRuleCondition.Operand> operands =
 			ddlFormRuleCondition.getOperands();
@@ -156,26 +156,26 @@ public class DDLFormRulesToDDMFormRulesConverter {
 		return new DDMFormRule(condition, actions);
 	}
 
-	private static final Map<String, String> _actionToFunctionMap =
+	private static final Map<String, String> _actionFunctionNameMap =
 		new HashMap<>();
 	private static final String _comparisonExpressionFormat = "%s %s %s";
 	private static final String _functionCallExpressionFormat = "%s(%s)";
 	private static final String _notExpressionFormat = "not(%s)";
-	private static final Map<String, String> _operatorMap = new HashMap<>();
-	private static final Map<String, String> _operatorToFunctionMap =
+	private static final Map<String, String> _operatorFunctionNameMap =
 		new HashMap<>();
+	private static final Map<String, String> _operatorMap = new HashMap<>();
 	private static final String _setBooleanPropertyFormat = "%s('%s', true)";
 
 	static {
-		_actionToFunctionMap.put("show", "setVisible");
-		_actionToFunctionMap.put("enable", "setEnabled");
-		_actionToFunctionMap.put("require", "setRequired");
-		_actionToFunctionMap.put("invalidate", "setInvalid");
+		_actionFunctionNameMap.put("show", "setVisible");
+		_actionFunctionNameMap.put("enable", "setEnabled");
+		_actionFunctionNameMap.put("require", "setRequired");
+		_actionFunctionNameMap.put("invalidate", "setInvalid");
 
-		_operatorToFunctionMap.put("contains", "contains");
-		_operatorToFunctionMap.put("not-contains", "contains");
-		_operatorToFunctionMap.put("equals-to", "equals");
-		_operatorToFunctionMap.put("not-equals-to", "equals");
+		_operatorFunctionNameMap.put("contains", "contains");
+		_operatorFunctionNameMap.put("not-contains", "contains");
+		_operatorFunctionNameMap.put("equals-to", "equals");
+		_operatorFunctionNameMap.put("not-equals-to", "equals");
 
 		_operatorMap.put("greater-than", ">");
 		_operatorMap.put("greater-than-equals", ">=");

@@ -49,8 +49,8 @@ public class KBArticleURLHelper {
 		String portletId = PortalUtil.getPortletId(_renderRequest);
 
 		if (portletId.startsWith(KBPortletKeys.KNOWLEDGE_BASE_ADMIN) ||
-			portletId.startsWith(KBPortletKeys.KNOWLEDGE_BASE_SECTION) ||
-			portletId.startsWith(KBPortletKeys.KNOWLEDGE_BASE_SEARCH)) {
+			portletId.startsWith(KBPortletKeys.KNOWLEDGE_BASE_SEARCH) ||
+			portletId.startsWith(KBPortletKeys.KNOWLEDGE_BASE_SECTION)) {
 
 			portletURL.setParameter(
 				"mvcPath", _templatePath + "view_article.jsp");
@@ -58,6 +58,7 @@ public class KBArticleURLHelper {
 
 		if (portletId.startsWith(KBPortletKeys.KNOWLEDGE_BASE_ADMIN) ||
 			portletId.startsWith(KBPortletKeys.KNOWLEDGE_BASE_SEARCH)) {
+
 			portletURL.setParameter(
 				"redirect", PortalUtil.getCurrentURL(_renderRequest));
 		}

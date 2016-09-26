@@ -1,0 +1,13 @@
+Bundle-Name: Liferay WebSocket Api Spifly fragment
+Bundle-SymbolicName: com.liferay.websocket.api.spifly.fragment
+Bundle-Version: 1.0.0
+Fragment-Host: javax.websocket-api
+
+Require-Capability:\
+	osgi.serviceloader;\
+		filter:='(osgi.serviceloader=javax.websocket.server.ServerEndpointConfig$Configurator)';\
+		cardinality:=multiple,\
+	osgi.extender;\
+		filter:='(osgi.extender=osgi.serviceloader.processor)'
+
+-resourceonly: true

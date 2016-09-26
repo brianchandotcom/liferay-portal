@@ -383,78 +383,72 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			return;
 		}
 
-		ifClause = stripRedundantParentheses(ifClause);
-
-		int level = 0;
-		int max = StringUtil.count(ifClause, CharPool.OPEN_PARENTHESIS);
 		int previousParenthesisPos = -1;
-
-		int[] levels = new int[max];
 
 		for (int i = 0; i < ifClause.length(); i++) {
 			char c = ifClause.charAt(i);
 
-			if ((c == CharPool.OPEN_PARENTHESIS) ||
-				(c == CharPool.CLOSE_PARENTHESIS)) {
+			if ((c != CharPool.OPEN_PARENTHESIS) &&
+				(c != CharPool.CLOSE_PARENTHESIS)) {
 
-				if (previousParenthesisPos != -1) {
-					String s = ifClause.substring(
-						previousParenthesisPos + 1, i);
+				continue;
+			}
 
-					if (hasMissingParentheses(s)) {
-						processMessage(
-							fileName, "Missing parentheses in if-statement",
-							lineCount);
+			if (previousParenthesisPos != -1) {
+				String s = ifClause.substring(previousParenthesisPos + 1, i);
 
-						return;
-					}
+				if (hasMissingParentheses(s)) {
+					processMessage(
+						fileName, "Missing parentheses in if-statement",
+						lineCount);
+
+					return;
 				}
+			}
 
+			if (previousParenthesisPos == -1) {
 				previousParenthesisPos = i;
 
-				if (c == CharPool.OPEN_PARENTHESIS) {
-					levels[level] = i;
+				continue;
+			}
 
-					level += 1;
-				}
-				else {
-					int posOpenParenthesis = levels[level - 1];
+			previousParenthesisPos = i;
 
-					if (level > 1) {
-						char nextChar = ifClause.charAt(i + 1);
-						char previousChar = ifClause.charAt(
-							posOpenParenthesis - 1);
+			if (c != CharPool.OPEN_PARENTHESIS) {
+				continue;
+			}
 
-						if (!Character.isLetterOrDigit(nextChar) &&
-							(nextChar != CharPool.PERIOD) &&
-							!Character.isLetterOrDigit(previousChar)) {
+			char previousChar = ifClause.charAt(i - 1);
 
-							String s = ifClause.substring(
-								posOpenParenthesis + 1, i);
+			if ((previousChar != CharPool.OPEN_PARENTHESIS) &&
+				(previousChar != CharPool.SPACE)) {
 
-							if (hasRedundantParentheses(s)) {
-								processMessage(
-									fileName,
-									"Redundant parentheses in if-statement",
-									lineCount);
+				continue;
+			}
 
-								return;
-							}
-						}
+			int j = i;
 
-						if ((previousChar == CharPool.OPEN_PARENTHESIS) &&
-							(nextChar == CharPool.CLOSE_PARENTHESIS)) {
+			while (true) {
+				j = ifClause.indexOf(StringPool.CLOSE_PARENTHESIS, j + 1);
 
-							processMessage(
-								fileName,
-								"Redundant parentheses in if-statement",
-								lineCount);
+				String s = ifClause.substring(i + 1, j);
 
-							return;
-						}
+				if (getLevel(s) == 0) {
+					char nextChar = ifClause.charAt(j + 1);
+
+					if (((previousChar == CharPool.OPEN_PARENTHESIS) &&
+						 (nextChar == CharPool.CLOSE_PARENTHESIS)) ||
+						(((nextChar == CharPool.CLOSE_PARENTHESIS) ||
+						  (nextChar == CharPool.SPACE)) &&
+						 hasRedundantParentheses(s))) {
+
+						processMessage(
+							fileName,
+							"Redundant parentheses in if-statement",
+							lineCount);
 					}
 
-					level -= 1;
+					break;
 				}
 			}
 		}
@@ -2865,28 +2859,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		return sb.toString();
-	}
-
-	protected String stripRedundantParentheses(String s) {
-		for (int x = 0;;) {
-			x = s.indexOf(CharPool.OPEN_PARENTHESIS, x + 1);
-			int y = s.indexOf(CharPool.CLOSE_PARENTHESIS, x);
-
-			if ((x == -1) || (y == -1)) {
-				return s;
-			}
-
-			String linePart = s.substring(x + 1, y);
-
-			linePart = StringUtil.replace(
-				linePart, StringPool.COMMA, StringPool.BLANK);
-
-			if (Validator.isAlphanumericName(linePart) ||
-				Validator.isNull(linePart)) {
-
-				s = s.substring(0, x) + s.substring(y + 1);
-			}
-		}
 	}
 
 	protected String trimContent(String content, boolean allowLeadingSpaces)

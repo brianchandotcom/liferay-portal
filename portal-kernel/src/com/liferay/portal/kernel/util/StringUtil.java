@@ -1124,7 +1124,7 @@ public class StringUtil {
 					continue;
 				}
 
-				if ((i + texts[j].length() <= toIndex + 1) &&
+				if (((i + texts[j].length()) <= (toIndex + 1)) &&
 					s.startsWith(texts[j], i)) {
 
 					return i;
@@ -1556,7 +1556,7 @@ public class StringUtil {
 					continue;
 				}
 
-				if ((i + texts[j].length() <= toIndex + 1) &&
+				if (((i + texts[j].length()) <= (toIndex + 1)) &&
 					s.startsWith(texts[j], i)) {
 
 					return i;

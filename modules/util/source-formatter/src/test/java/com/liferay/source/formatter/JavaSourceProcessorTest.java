@@ -116,7 +116,7 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 				"Missing parentheses in if-statement",
 				"Missing parentheses in if-statement",
 				"Missing parentheses in if-statement",
-				"Missing parentheses in if-statement",
+				"Redundant parentheses in if-statement",
 				"Redundant parentheses in if-statement",
 				"Redundant parentheses in if-statement"
 			},

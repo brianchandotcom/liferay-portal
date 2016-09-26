@@ -17,6 +17,8 @@ Export-Package:\
 	com.liferay.calendar.util.comparator
 Import-Package:\
 	!org.joda.*,\
+	\
+	com.liferay.portal.kernel.model;version="${range;[=,=+)}",\
 	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Calendar

@@ -7,3 +7,4 @@ Export-Package:\
 	com.liferay.social.networking.model,\
 	com.liferay.social.networking.service,\
 	com.liferay.social.networking.service.persistence
+Import-Package: com.liferay.portal.kernel.model;version="${range;[=,=+)}",*

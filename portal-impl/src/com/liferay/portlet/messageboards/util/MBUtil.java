@@ -1095,14 +1095,14 @@ public class MBUtil {
 	}
 
 	private static String[] _getMessageIdStringParts(String messageIdString) {
-		int beginOfIds =
+		int start =
 			messageIdString.indexOf(MBUtil.MESSAGE_POP_PORTLET_PREFIX) +
 				MBUtil.MESSAGE_POP_PORTLET_PREFIX.length();
 
-		int endOfIds = messageIdString.indexOf(CharPool.AT);
+		int end = messageIdString.indexOf(CharPool.AT);
 
 		return StringUtil.split(
-			messageIdString.substring(beginOfIds, endOfIds), CharPool.PERIOD);
+			messageIdString.substring(start, end), CharPool.PERIOD);
 	}
 
 	private static String _getParentMessageIdFromSubject(Message message)

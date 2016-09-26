@@ -487,6 +487,12 @@ http://www.w3.org/TR/html401/struct/global.html
 		<tag>grin</tag>
 	</tags-to-encode>
 
+	<allowed-empty-tags>
+		<literal-list>
+			<literal value="source" />
+		</literal-list>
+	</allowed-empty-tags>
+
 	<tag-rules>
 		<tag name="picture" action="validate" />
 			<tag name="source" action="validate">

@@ -118,7 +118,7 @@ AUI.add(
 
 						instance.bindUI();
 
-						instance.initialState = instance.getState();
+						instance.savedState = instance.initialState = instance.getState();
 					},
 
 					renderUI: function() {
@@ -408,7 +408,7 @@ AUI.add(
 
 						var definition = state.definition;
 
-						if (definition.fields.length > 0) {
+						if ((definition.fields.length > 0) && !instance._isSameState(instance.savedState, state)) {
 							var editForm = instance.get('editForm');
 
 							var formData = instance._getFormData(A.IO.stringify(editForm.form));
@@ -419,6 +419,8 @@ AUI.add(
 									after: {
 										success: function() {
 											instance._defineIds(this.get('responseData'));
+
+											instance.savedState = state;
 										}
 									},
 									data: formData,
@@ -471,12 +473,12 @@ AUI.add(
 						return window[instance.ns('nameEditor')].getHTML();
 					},
 
-					_isSameState: function() {
+					_isSameState: function(state1, state2) {
 						var instance = this;
 
 						return AUI._.isEqual(
-							instance.getState(),
-							instance.initialState,
+							state1,
+							state2,
 							function(value1, value2, key) {
 								return (key === 'instanceId') || undefined;
 							}
@@ -486,7 +488,7 @@ AUI.add(
 					_onCancel: function(event) {
 						var instance = this;
 
-						if (!instance._isSameState()) {
+						if (!instance._isSameState(instance.getState(), instance.initialState)) {
 							event.preventDefault();
 							event.stopPropagation();
 

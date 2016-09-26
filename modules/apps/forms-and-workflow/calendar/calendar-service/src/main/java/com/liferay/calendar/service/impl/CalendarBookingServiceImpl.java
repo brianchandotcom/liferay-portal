@@ -482,20 +482,18 @@ public class CalendarBookingServiceImpl extends CalendarBookingServiceBaseImpl {
 		return calendarBooking;
 	}
 
+	/**
+	 * @deprecated As of 2.2.0, replaced by {@link #invokeTransition(long, int,
+	 *             long, boolean, boolean, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public void invokeTransition(
 			long calendarBookingId, int status, ServiceContext serviceContext)
 		throws PortalException {
 
-		CalendarBooking calendarBooking =
-			calendarBookingPersistence.findByPrimaryKey(calendarBookingId);
-
-		CalendarPermission.check(
-			getPermissionChecker(), calendarBooking.getCalendarId(),
-			CalendarActionKeys.MANAGE_BOOKINGS);
-
-		calendarBookingLocalService.updateStatus(
-			getUserId(), calendarBooking, status, serviceContext);
+		invokeTransition(
+			calendarBookingId, status, 0, false, false, serviceContext);
 	}
 
 	@Override

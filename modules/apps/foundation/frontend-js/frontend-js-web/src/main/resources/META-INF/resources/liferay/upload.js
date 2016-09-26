@@ -216,6 +216,11 @@ AUI.add(
 						value: true
 					},
 
+					simultaneousUploads: {
+						validator: Lang.isNumber,
+						value: 2
+					},
+
 					strings: {
 						value: {
 							allFilesSelectedText: Liferay.Language.get('all-files-selected'),
@@ -1081,7 +1086,7 @@ AUI.add(
 									}
 								},
 								selectFilesButton: instance._selectFilesButton,
-								simLimit: 2,
+								simLimit: instance.get('simultaneousUploads'),
 								swfURL: Liferay.Util.addParams(timestampParam, URL_SWF_UPLOADER),
 								uploadURL: Liferay.Util.addParams(timestampParam, instance.get('uploadFile'))
 							}

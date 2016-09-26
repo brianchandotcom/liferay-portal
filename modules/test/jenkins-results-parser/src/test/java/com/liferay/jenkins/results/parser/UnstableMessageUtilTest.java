@@ -112,11 +112,9 @@ public class UnstableMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 
 	@Override
 	protected String getMessage(String urlString) throws Exception {
-		Project project = getProject();
-
 		return formatXML(
 			"<div>" +
-			UnstableMessageUtil.getUnstableMessage(project, urlString) +
+			UnstableMessageUtil.getUnstableMessage(getProject(), urlString) +
 			"</div>");
 	}
 

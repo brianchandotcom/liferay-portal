@@ -14,23 +14,41 @@
 
 package com.liferay.dynamic.data.mapping.expression.model;
 
-import aQute.bnd.annotation.ProviderType;
-
 /**
- * @author Leonardo Barros
+ * @author Marcellus Tavares
  */
-@ProviderType
-public class ComparisonExpression extends BinaryExpression {
+public abstract class ExpressionVisitor<T> {
 
-	public ComparisonExpression(
-		String operator, Expression leftOperand, Expression rightOperand) {
-
-		super(operator, leftOperand, rightOperand);
+	public T visit(AndExpression andExpression) {
+		return null;
 	}
 
-	@Override
-	public <T> T accept(ExpressionVisitor<T> visitor) {
-		return visitor.visit(this);
+	public T visit(ArithmeticExpression arithmeticExpression) {
+		return null;
+	}
+
+	public T visit(ComparisonExpression comparisonExpression) {
+		return null;
+	}
+
+	public T visit(FunctionCallExpression functionCallExpression) {
+		return null;
+	}
+
+	public T visit(MinusExpression minusExpression) {
+		return null;
+	}
+
+	public T visit(NotExpression notExpression) {
+		return null;
+	}
+
+	public T visit(OrExpression orExpression) {
+		return null;
+	}
+
+	public T visit(Term term) {
+		return null;
 	}
 
 }

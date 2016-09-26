@@ -18,7 +18,11 @@ import aQute.bnd.annotation.ProviderType;
 
 /**
  * @author Leonardo Barros
+ * @author Marcellus Tavares
  */
 @ProviderType
 public abstract class Expression {
+
+	public abstract <T> T accept(ExpressionVisitor<T> visitor);
+
 }

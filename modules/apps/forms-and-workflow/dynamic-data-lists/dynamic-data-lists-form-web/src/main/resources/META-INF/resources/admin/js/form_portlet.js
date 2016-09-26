@@ -411,6 +411,8 @@ AUI.add(
 						if (definition.fields.length > 0) {
 							var editForm = instance.get('editForm');
 
+							var formData = instance._getFormData(A.IO.stringify(editForm.form));
+
 							A.io.request(
 								instance.get('autosaveURL'),
 								{
@@ -419,7 +421,7 @@ AUI.add(
 											instance._defineIds(this.get('responseData'));
 										}
 									},
-									data: A.IO.stringify(editForm.form),
+									data: formData,
 									dataType: 'JSON',
 									method: 'POST'
 								}
@@ -447,6 +449,20 @@ AUI.add(
 						var instance = this;
 
 						return window[instance.ns('descriptionEditor')].getHTML();
+					},
+
+					_getFormData: function(formString) {
+						var instance = this;
+
+						if (!instance.get('name').trim()) {
+							var formObject = A.QueryString.parse(formString);
+
+							formObject[instance.ns('name')] = Liferay.Language.get('untitled-form');
+
+							formString = A.QueryString.stringify(formObject);
+						}
+
+						return formString;
 					},
 
 					_getName: function() {
@@ -612,6 +628,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['io-base', 'liferay-ddl-form-builder', 'liferay-ddl-form-builder-definition-serializer', 'liferay-ddl-form-builder-layout-serializer', 'liferay-ddl-form-builder-rule-builder', 'liferay-portlet-base', 'liferay-util-window']
+		requires: ['io-base', 'liferay-ddl-form-builder', 'liferay-ddl-form-builder-definition-serializer', 'liferay-ddl-form-builder-layout-serializer', 'liferay-ddl-form-builder-rule-builder', 'liferay-portlet-base', 'liferay-util-window', 'querystring-parse']
 	}
 );

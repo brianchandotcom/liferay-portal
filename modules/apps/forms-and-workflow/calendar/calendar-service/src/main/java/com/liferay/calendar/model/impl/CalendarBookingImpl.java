@@ -130,7 +130,9 @@ public class CalendarBookingImpl extends CalendarBookingBaseImpl {
 
 	@Override
 	public boolean isRecurring() {
-		if (Validator.isNotNull(getRecurrence())) {
+		if (Validator.isNotNull(getRecurrence()) ||
+			(getCalendarBookingId() != getRecurringCalendarBookingId())) {
+
 			return true;
 		}
 

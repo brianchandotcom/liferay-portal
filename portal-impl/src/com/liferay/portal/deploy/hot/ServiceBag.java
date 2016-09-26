@@ -15,6 +15,7 @@
 package com.liferay.portal.deploy.hot;
 
 import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
+import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
@@ -44,7 +45,10 @@ public class ServiceBag<V> {
 				previousServiceClass.getClassLoader();
 
 			previousService = ProxyUtil.newProxyInstance(
-				previousServiceClassLoader, new Class<?>[] {serviceTypeClass},
+				previousServiceClassLoader,
+				new Class<?>[] {
+					serviceTypeClass, IdentifiableOSGiService.class
+				},
 				new ClassLoaderBeanHandler(
 					previousService, previousServiceClassLoader));
 
@@ -53,7 +57,10 @@ public class ServiceBag<V> {
 
 		Object nextTarget = ProxyUtil.newProxyInstance(
 			serviceTypeClass.getClassLoader(),
-			new Class<?>[] {serviceTypeClass, ServiceWrapper.class},
+			new Class<?>[] {
+				serviceTypeClass, ServiceWrapper.class,
+				IdentifiableOSGiService.class
+			},
 			new ClassLoaderBeanHandler(serviceWrapper, classLoader));
 
 		TargetSource nextTargetSource = new SingletonTargetSource(nextTarget) {

@@ -19,6 +19,7 @@ import com.liferay.project.templates.ProjectTemplatesArgs;
 import com.liferay.project.templates.internal.util.FileUtil;
 import com.liferay.project.templates.internal.util.ReflectionUtil;
 import com.liferay.project.templates.internal.util.Validator;
+import com.liferay.project.templates.internal.util.WorkspaceUtil;
 
 import java.io.File;
 
@@ -78,7 +79,7 @@ public class Archetyper {
 
 		String projectType = "standalone";
 
-		if (projectTemplatesArgs.getWorkspaceDir() != null) {
+		if (WorkspaceUtil.isWorkspace(destinationDir)) {
 			projectType = "workspace";
 		}
 

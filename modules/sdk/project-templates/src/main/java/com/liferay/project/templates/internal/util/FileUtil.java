@@ -43,6 +43,32 @@ import java.util.jar.JarFile;
  */
 public class FileUtil {
 
+	public static void deleteDir(Path dir) throws IOException {
+		Files.walkFileTree(
+			dir,
+			new SimpleFileVisitor<Path>() {
+
+				@Override
+				public FileVisitResult postVisitDirectory(
+						Path dir, IOException exc)
+					throws IOException {
+
+					Files.delete(dir);
+					return FileVisitResult.CONTINUE;
+				}
+
+				@Override
+				public FileVisitResult visitFile(
+						Path file, BasicFileAttributes attrs)
+					throws IOException {
+
+					Files.delete(file);
+					return FileVisitResult.CONTINUE;
+				}
+
+			});
+	}
+
 	public static void extractDirectory(
 			String dirName, final Path destinationDirPath)
 		throws Exception {

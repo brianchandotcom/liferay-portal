@@ -21,6 +21,7 @@ import com.liferay.project.templates.internal.Archetyper;
 import com.liferay.project.templates.internal.util.FileUtil;
 import com.liferay.project.templates.internal.util.StringUtil;
 import com.liferay.project.templates.internal.util.Validator;
+import com.liferay.project.templates.internal.util.WorkspaceUtil;
 
 import java.io.File;
 
@@ -177,7 +178,10 @@ public class ProjectTemplates {
 		catch (UnsupportedOperationException uoe) {
 		}
 
-		if (projectTemplatesArgs.getWorkspaceDir() != null) {
+		if (WorkspaceUtil.isWorkspace(destinationDir)) {
+			FileUtil.deleteDir(templateDirPath.resolve("gradle"));
+			Files.delete(templateDirPath.resolve("gradlew"));
+			Files.delete(templateDirPath.resolve("gradlew.bat"));
 			Files.deleteIfExists(templateDirPath.resolve("settings.gradle"));
 		}
 

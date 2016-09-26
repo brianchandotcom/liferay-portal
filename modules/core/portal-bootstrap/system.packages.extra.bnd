@@ -125,6 +125,9 @@ Export-Package:\
 	\
 	javax.servlet.*;version='3.0',\
 	\
+	javax.websocket;version='1.1.0',\
+	javax.websocket.server;version='1.1.0',\
+	\
 	javax.xml;version='1.4',\
 	javax.xml.crypto.*;version='1.4.5',\
 	javax.xml.datatype.*;version='1.4',\

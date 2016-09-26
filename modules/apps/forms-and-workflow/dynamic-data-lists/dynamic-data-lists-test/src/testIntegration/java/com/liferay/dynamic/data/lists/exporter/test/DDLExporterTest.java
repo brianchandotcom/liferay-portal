@@ -25,14 +25,11 @@ import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
-import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
-import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestHelper;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -53,7 +50,6 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.SimplePermissionChecker;
@@ -127,7 +123,10 @@ public class DDLExporterTest {
 
 		createDDMFormFieldValues(ddmFormValues);
 
-		DDLRecordSet recordSet = addRecordSet(ddmForm);
+		DDLRecordSetTestHelper recordSetTestHelper = new DDLRecordSetTestHelper(
+			_group);
+
+		DDLRecordSet recordSet = recordSetTestHelper.addRecordSet(ddmForm);
 
 		DDLRecordTestHelper recordTestHelper = new DDLRecordTestHelper(
 			_group, recordSet);
@@ -161,7 +160,10 @@ public class DDLExporterTest {
 
 		createDDMFormFieldValues(ddmFormValues);
 
-		DDLRecordSet recordSet = addRecordSet(ddmForm);
+		DDLRecordSetTestHelper recordSetTestHelper = new DDLRecordSetTestHelper(
+			_group);
+
+		DDLRecordSet recordSet = recordSetTestHelper.addRecordSet(ddmForm);
 
 		DDLRecordTestHelper recordTestHelper = new DDLRecordTestHelper(
 			_group, recordSet);
@@ -181,20 +183,6 @@ public class DDLExporterTest {
 		String actualFileContent = FileUtil.read(file);
 
 		Assert.assertEquals(expectedFileContent, actualFileContent);
-	}
-
-	protected DDLRecordSet addRecordSet(DDMForm ddmForm) throws Exception {
-		DDMStructureTestHelper ddmStructureTestHelper =
-			new DDMStructureTestHelper(
-				PortalUtil.getClassNameId(DDLRecordSet.class), _group);
-
-		DDMStructure ddmStructure = ddmStructureTestHelper.addStructure(
-			ddmForm, StorageType.JSON.toString());
-
-		DDLRecordSetTestHelper recordSetTestHelper = new DDLRecordSetTestHelper(
-			_group);
-
-		return recordSetTestHelper.addRecordSet(ddmStructure);
 	}
 
 	protected DDMFormField createDDMFormField(

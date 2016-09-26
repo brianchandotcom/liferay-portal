@@ -103,6 +103,7 @@ AUI.add(
 						location: calendarBooking.location,
 						parentCalendarBookingId: calendarBooking.parentCalendarBookingId,
 						recurrence: calendarBooking.recurrence,
+						recurringCalendarBookingId: calendarBooking.recurringCalendarBookingId,
 						secondReminder: calendarBooking.secondReminder,
 						secondReminderType: calendarBooking.secondReminderType,
 						startDate: startDate.getTime(),
@@ -199,6 +200,7 @@ AUI.add(
 							calendarResourceId: data.calendarResourceId,
 							parentCalendarBookingId: data.parentCalendarBookingId,
 							recurrence: data.recurrence,
+							recurringCalendarBookingId: data.recurringCalendarBookingId,
 							status: data.status
 						},
 						{

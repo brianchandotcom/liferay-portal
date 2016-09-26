@@ -64,7 +64,12 @@ public class FileTestUtil {
 
 					String fileName = fileNamePath.toString();
 
-					if (fileName.startsWith(PROJECT_TEMPLATE_DIR_PREFIX)) {
+					boolean isProjectTemplate = fileName.startsWith(
+						PROJECT_TEMPLATE_DIR_PREFIX);
+					boolean isProjectTemplateWorkspace = fileName.startsWith(
+						PROJECT_TEMPLATE_DIR_PREFIX + "workspace");
+
+					if (isProjectTemplate && !isProjectTemplateWorkspace) {
 						return true;
 					}
 

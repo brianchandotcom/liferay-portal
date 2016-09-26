@@ -16,11 +16,14 @@ package com.liferay.dynamic.data.mapping.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.HashUtil;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Leonardo Barros
@@ -33,23 +36,39 @@ public class DDMFormRule implements Serializable {
 
 	public DDMFormRule(DDMFormRule ddmFormRule) {
 		_condition = ddmFormRule._condition;
-		_actions.addAll(ddmFormRule.getActions());
+		_actions = new ArrayList<>(ddmFormRule._actions);
 		_enabled = ddmFormRule._enabled;
 	}
 
 	public DDMFormRule(String condition, List<String> actions) {
 		_condition = condition;
-		_actions.addAll(actions);
+		_actions = actions;
 	}
 
 	public DDMFormRule(String condition, String... actions) {
-		_condition = condition;
-
-		_actions.addAll(Arrays.asList(actions));
+		this(condition, Arrays.asList(actions));
 	}
 
-	public void addAction(String action) {
-		_actions.add(action);
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof DDMFormRule)) {
+			return false;
+		}
+
+		DDMFormRule ddmFormRule = (DDMFormRule)obj;
+
+		if (Objects.equals(_actions, ddmFormRule._actions) &&
+			Objects.equals(_condition, ddmFormRule._condition) &&
+			Objects.equals(_enabled, ddmFormRule._enabled)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public List<String> getActions() {
@@ -58,6 +77,15 @@ public class DDMFormRule implements Serializable {
 
 	public String getCondition() {
 		return _condition;
+	}
+
+	@Override
+	public int hashCode() {
+		int hash = HashUtil.hash(0, _actions);
+
+		hash = HashUtil.hash(hash, _condition);
+
+		return HashUtil.hash(hash, _enabled);
 	}
 
 	public boolean isEnabled() {

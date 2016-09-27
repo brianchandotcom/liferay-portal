@@ -48,47 +48,47 @@ public class OrganizationFinderImpl
 	extends OrganizationFinderBaseImpl implements OrganizationFinder {
 
 	public static final String COUNT_BY_GROUP_ID =
-		OrganizationFinder.class.getName() + ".countByGroupId";
+		OrganizationFinder.class.getName() + ".countO_ByGroupId";
 
 	public static final String COUNT_BY_ORGANIZATION_ID =
-		OrganizationFinder.class.getName() + ".countByOrganizationId";
+		OrganizationFinder.class.getName() + ".countO_ByOrganizationId";
 
 	public static final String COUNT_BY_C_PO_N_S_C_Z_R_C =
-		OrganizationFinder.class.getName() + ".countByC_PO_N_S_C_Z_R_C";
+		OrganizationFinder.class.getName() + ".countO_ByC_PO_N_S_C_Z_R_C";
 
 	public static final String COUNT_BY_C_PO_N_L_S_C_Z_R_C =
-		OrganizationFinder.class.getName() + ".countByC_PO_N_L_S_C_Z_R_C";
+		OrganizationFinder.class.getName() + ".countO_ByC_PO_N_L_S_C_Z_R_C";
 
 	public static final String FIND_BY_NO_ASSETS =
-		OrganizationFinder.class.getName() + ".findByNoAssets";
+		OrganizationFinder.class.getName() + ".findO_ByNoAssets";
 
 	public static final String FIND_BY_GROUP_ID =
-		OrganizationFinder.class.getName() + ".findByGroupId";
+		OrganizationFinder.class.getName() + ".findO_ByGroupId";
 
 	public static final String FIND_BY_C_P =
-		OrganizationFinder.class.getName() + ".findByC_P";
+		OrganizationFinder.class.getName() + ".findO_ByC_P";
 
 	public static final String FIND_BY_C_PO_N_S_C_Z_R_C =
-		OrganizationFinder.class.getName() + ".findByC_PO_N_S_C_Z_R_C";
+		OrganizationFinder.class.getName() + ".findO_ByC_PO_N_S_C_Z_R_C";
 
 	public static final String FIND_BY_C_PO_N_L_S_C_Z_R_C =
-		OrganizationFinder.class.getName() + ".findByC_PO_N_L_S_C_Z_R_C";
+		OrganizationFinder.class.getName() + ".findO_ByC_PO_N_L_S_C_Z_R_C";
 
 	public static final String JOIN_BY_ORGANIZATIONS_GROUPS =
-		OrganizationFinder.class.getName() + ".joinByOrganizationsGroups";
+		OrganizationFinder.class.getName() + ".joinO_ByOrganizationsGroups";
 
 	public static final String JOIN_BY_ORGANIZATIONS_PASSWORD_POLICIES =
 		OrganizationFinder.class.getName() +
-			".joinByOrganizationsPasswordPolicies";
+			".joinO_ByOrganizationsPasswordPolicies";
 
 	public static final String JOIN_BY_ORGANIZATIONS_ROLES =
-		OrganizationFinder.class.getName() + ".joinByOrganizationsRoles";
+		OrganizationFinder.class.getName() + ".joinO_ByOrganizationsRoles";
 
 	public static final String JOIN_BY_ORGANIZATIONS_USERS =
-		OrganizationFinder.class.getName() + ".joinByOrganizationsUsers";
+		OrganizationFinder.class.getName() + ".joinO_ByOrganizationsUsers";
 
 	public static final String JOIN_BY_USERS_ORGS =
-		OrganizationFinder.class.getName() + ".joinByUsersOrgs";
+		OrganizationFinder.class.getName() + ".joinO_ByUsersOrgs";
 
 	@Override
 	public int countByKeywords(

@@ -90,8 +90,75 @@ public class OrganizationFinderImpl
 	public static final String JOIN_O_BY_USERS_ORGS =
 		OrganizationFinder.class.getName() + ".joinO_ByUsersOrgs";
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #countO_ByKeywords(long,
+	 *             long, String, String, String, Long, Long,
+	 *             LinkedHashMap<String, Object>)}
+	 */
+	@Deprecated
 	@Override
 	public int countByKeywords(
+		long companyId, long parentOrganizationId,
+		String parentOrganizationIdComparator, String keywords, String type,
+		Long regionId, Long countryId, LinkedHashMap<String, Object> params) {
+
+		return countO_ByKeywords(
+			companyId, parentOrganizationId, parentOrganizationIdComparator,
+			keywords, type, regionId, countryId, params);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #countO_ByO_U(long, long)}
+	 */
+	@Deprecated
+	@Override
+	public int countByO_U(long organizationId, long userId) {
+		return countO_ByO_U(organizationId, userId);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #countO_ByC_PO_N_T_S_C_Z_R_C(long, long, String, String,
+	 *             String, String, String, String, Long, Long,
+	 *             LinkedHashMap<String, Object>, boolean)}
+	 */
+	@Deprecated
+	@Override
+	public int countByC_PO_N_T_S_C_Z_R_C(
+		long companyId, long parentOrganizationId,
+		String parentOrganizationIdComparator, String name, String type,
+		String street, String city, String zip, Long regionId, Long countryId,
+		LinkedHashMap<String, Object> params, boolean andOperator) {
+
+		return countO_ByC_PO_N_T_S_C_Z_R_C(
+			companyId, parentOrganizationId, parentOrganizationIdComparator,
+			name, type, street, city, zip, regionId, countryId, params,
+			andOperator);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #countO_ByC_PO_N_T_S_C_Z_R_C(long, long, String, String[],
+	 *             String, String[], String[], String[], Long, Long,
+	 *             LinkedHashMap<String, Object>, boolean)}
+	 */
+	@Deprecated
+	@Override
+	public int countByC_PO_N_T_S_C_Z_R_C(
+		long companyId, long parentOrganizationId,
+		String parentOrganizationIdComparator, String[] names, String type,
+		String[] streets, String[] cities, String[] zips, Long regionId,
+		Long countryId, LinkedHashMap<String, Object> params,
+		boolean andOperator) {
+
+		return countO_ByC_PO_N_T_S_C_Z_R_C(
+			companyId, parentOrganizationId, parentOrganizationIdComparator,
+			names, type, streets, cities, zips, regionId, countryId, params,
+			andOperator);
+	}
+
+	@Override
+	public int countO_ByKeywords(
 		long companyId, long parentOrganizationId,
 		String parentOrganizationIdComparator, String keywords, String type,
 		Long regionId, Long countryId, LinkedHashMap<String, Object> params) {
@@ -112,14 +179,14 @@ public class OrganizationFinderImpl
 			andOperator = true;
 		}
 
-		return countByC_PO_N_T_S_C_Z_R_C(
+		return countO_ByC_PO_N_T_S_C_Z_R_C(
 			companyId, parentOrganizationId, parentOrganizationIdComparator,
 			names, type, streets, cities, zips, regionId, countryId, params,
 			andOperator);
 	}
 
 	@Override
-	public int countByO_U(long organizationId, long userId) {
+	public int countO_ByO_U(long organizationId, long userId) {
 		LinkedHashMap<String, Object> params1 = new LinkedHashMap<>();
 
 		params1.put("usersOrgs", userId);
@@ -129,7 +196,8 @@ public class OrganizationFinderImpl
 		try {
 			session = openSession();
 
-			int count = countByOrganizationId(session, organizationId, params1);
+			int count = countO_ByOrganizationId(
+				session, organizationId, params1);
 
 			return count;
 		}
@@ -142,7 +210,7 @@ public class OrganizationFinderImpl
 	}
 
 	@Override
-	public int countByC_PO_N_T_S_C_Z_R_C(
+	public int countO_ByC_PO_N_T_S_C_Z_R_C(
 		long companyId, long parentOrganizationId,
 		String parentOrganizationIdComparator, String name, String type,
 		String street, String city, String zip, Long regionId, Long countryId,
@@ -153,14 +221,14 @@ public class OrganizationFinderImpl
 		String[] cities = CustomSQLUtil.keywords(city);
 		String[] zips = CustomSQLUtil.keywords(zip);
 
-		return countByC_PO_N_T_S_C_Z_R_C(
+		return countO_ByC_PO_N_T_S_C_Z_R_C(
 			companyId, parentOrganizationId, parentOrganizationIdComparator,
 			names, type, streets, cities, zips, regionId, countryId, params,
 			andOperator);
 	}
 
 	@Override
-	public int countByC_PO_N_T_S_C_Z_R_C(
+	public int countO_ByC_PO_N_T_S_C_Z_R_C(
 		long companyId, long parentOrganizationId,
 		String parentOrganizationIdComparator, String[] names, String type,
 		String[] streets, String[] cities, String[] zips, Long regionId,
@@ -298,8 +366,94 @@ public class OrganizationFinderImpl
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #findO_ByKeywords(long, long,
+	 *             String, String, String, Long, Long, LinkedHashMap<String,
+	 *             Object>, int, int, OrderByComparator<Organization>)}
+	 */
+	@Deprecated
 	@Override
 	public List<Organization> findByKeywords(
+		long companyId, long parentOrganizationId,
+		String parentOrganizationIdComparator, String keywords, String type,
+		Long regionId, Long countryId, LinkedHashMap<String, Object> params,
+		int start, int end, OrderByComparator<Organization> obc) {
+
+		return findO_ByKeywords(
+			companyId, parentOrganizationId, parentOrganizationIdComparator,
+			keywords, type, regionId, countryId, params, start, end, obc);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #findO_ByNoAssets()}
+	 */
+	@Deprecated
+	@Override
+	public List<Organization> findByNoAssets() {
+		return findO_ByNoAssets();
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #findO_ByC_P(long, long,
+	 *             long, int)}
+	 */
+	@Deprecated
+	@Override
+	public List<Long> findByC_P(
+		long companyId, long parentOrganizationId, long previousOrganizationId,
+		int size) {
+
+		return findO_ByC_P(
+			companyId, parentOrganizationId, previousOrganizationId, size);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #findO_ByC_PO_N_T_S_C_Z_R_C(long, long, String, String,
+	 *             String, String, String, String, Long, Long,
+	 *             LinkedHashMap<String, Object>, boolean, int, int,
+	 *             OrderByComparator<Organization>)}
+	 */
+	@Deprecated
+	@Override
+	public List<Organization> findByC_PO_N_T_S_C_Z_R_C(
+		long companyId, long parentOrganizationId,
+		String parentOrganizationIdComparator, String name, String type,
+		String street, String city, String zip, Long regionId, Long countryId,
+		LinkedHashMap<String, Object> params, boolean andOperator, int start,
+		int end, OrderByComparator<Organization> obc) {
+
+		return findO_ByC_PO_N_T_S_C_Z_R_C(
+			companyId, parentOrganizationId, parentOrganizationIdComparator,
+			name, type, street, city, zip, regionId, countryId, params,
+			andOperator, start, end, obc);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #findO_ByC_PO_N_T_S_C_Z_R_C(long, long, String, String[],
+	 *             String, String[], String[], String[], Long, Long,
+	 *             LinkedHashMap<String, Object>, boolean, int, int
+	 *             OrderByComparator<Organization>)}
+	 */
+	@Deprecated
+	@Override
+	public List<Organization> findByC_PO_N_T_S_C_Z_R_C(
+		long companyId, long parentOrganizationId,
+		String parentOrganizationIdComparator, String[] names, String type,
+		String[] streets, String[] cities, String[] zips, Long regionId,
+		Long countryId, LinkedHashMap<String, Object> params,
+		boolean andOperator, int start, int end,
+		OrderByComparator<Organization> obc) {
+
+		return findO_ByC_PO_N_T_S_C_Z_R_C(
+			companyId, parentOrganizationId, parentOrganizationIdComparator,
+			names, type, streets, cities, zips, regionId, countryId, params,
+			andOperator, start, end, obc);
+	}
+
+	@Override
+	public List<Organization> findO_ByKeywords(
 		long companyId, long parentOrganizationId,
 		String parentOrganizationIdComparator, String keywords, String type,
 		Long regionId, Long countryId, LinkedHashMap<String, Object> params,
@@ -321,14 +475,14 @@ public class OrganizationFinderImpl
 			andOperator = true;
 		}
 
-		return findByC_PO_N_T_S_C_Z_R_C(
+		return findO_ByC_PO_N_T_S_C_Z_R_C(
 			companyId, parentOrganizationId, parentOrganizationIdComparator,
 			names, type, streets, cities, zips, regionId, countryId, params,
 			andOperator, start, end, obc);
 	}
 
 	@Override
-	public List<Organization> findByNoAssets() {
+	public List<Organization> findO_ByNoAssets() {
 		Session session = null;
 
 		try {
@@ -351,7 +505,7 @@ public class OrganizationFinderImpl
 	}
 
 	@Override
-	public List<Long> findByC_P(
+	public List<Long> findO_ByC_P(
 		long companyId, long parentOrganizationId, long previousOrganizationId,
 		int size) {
 
@@ -391,7 +545,7 @@ public class OrganizationFinderImpl
 	}
 
 	@Override
-	public List<Organization> findByC_PO_N_T_S_C_Z_R_C(
+	public List<Organization> findO_ByC_PO_N_T_S_C_Z_R_C(
 		long companyId, long parentOrganizationId,
 		String parentOrganizationIdComparator, String name, String type,
 		String street, String city, String zip, Long regionId, Long countryId,
@@ -403,14 +557,14 @@ public class OrganizationFinderImpl
 		String[] cities = CustomSQLUtil.keywords(city);
 		String[] zips = CustomSQLUtil.keywords(zip);
 
-		return findByC_PO_N_T_S_C_Z_R_C(
+		return findO_ByC_PO_N_T_S_C_Z_R_C(
 			companyId, parentOrganizationId, parentOrganizationIdComparator,
 			names, type, streets, cities, zips, regionId, countryId, params,
 			andOperator, start, end, obc);
 	}
 
 	@Override
-	public List<Organization> findByC_PO_N_T_S_C_Z_R_C(
+	public List<Organization> findO_ByC_PO_N_T_S_C_Z_R_C(
 		long companyId, long parentOrganizationId,
 		String parentOrganizationIdComparator, String[] names, String type,
 		String[] streets, String[] cities, String[] zips, Long regionId,
@@ -544,7 +698,7 @@ public class OrganizationFinderImpl
 		}
 	}
 
-	protected int countByOrganizationId(
+	protected int countO_ByOrganizationId(
 		Session session, long organizationId,
 		LinkedHashMap<String, Object> params) {
 

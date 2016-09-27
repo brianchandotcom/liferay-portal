@@ -234,7 +234,7 @@ public class ReleaseManagerOSGiCommands {
 		ServiceTrackerMap<String, List<UpgradeInfo>> serviceTrackerMap) {
 
 		List<List<UpgradeInfo>> upgradeInfosList = getCurrentUpgradeInfosList(
-			bundleSymbolicName);
+			bundleSymbolicName, serviceTrackerMap);
 
 		int size = upgradeInfosList.size();
 
@@ -310,12 +310,13 @@ public class ReleaseManagerOSGiCommands {
 	}
 
 	protected List<List<UpgradeInfo>> getCurrentUpgradeInfosList(
-		String bundleSymbolicName) {
+		String bundleSymbolicName,
+		ServiceTrackerMap<String, List<UpgradeInfo>> serviceTrackerMap) {
 
 		String schemaVersionString = getSchemaVersionString(bundleSymbolicName);
 
 		ReleaseGraphManager releaseGraphManager = new ReleaseGraphManager(
-			_serviceTrackerMap.getService(bundleSymbolicName));
+			serviceTrackerMap.getService(bundleSymbolicName));
 
 		return releaseGraphManager.getUpgradeInfosList(schemaVersionString);
 	}
@@ -343,7 +344,10 @@ public class ReleaseManagerOSGiCommands {
 	}
 
 	protected boolean isUpgradable(String bundleSymbolicName) {
-		if (getCurrentUpgradeInfosList(bundleSymbolicName).size() == 1) {
+		List<List<UpgradeInfo>> upgradeInfosList = getCurrentUpgradeInfosList(
+			bundleSymbolicName, _serviceTrackerMap);
+
+		if (upgradeInfosList.size() == 1) {
 			return true;
 		}
 

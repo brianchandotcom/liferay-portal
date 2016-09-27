@@ -700,13 +700,13 @@ public abstract class BaseSearchTestCase {
 
 		searchContext.setKeywords(
 			RandomTestUtil.randomString() + " \"" + keyword2 + " " + keyword3 +
-				"\"" + " " + keyword5);
+				"\" " + keyword5);
 
 		assertBaseModelsCount(initialBaseModelsSearchCount + 1, searchContext);
 
 		searchContext.setKeywords(
 			RandomTestUtil.randomString() + " \"" + keyword2 + " " + keyword5 +
-				"\"" + " " + RandomTestUtil.randomString());
+				"\" " + RandomTestUtil.randomString());
 
 		assertBaseModelsCount(initialBaseModelsSearchCount, searchContext);
 	}

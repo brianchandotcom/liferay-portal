@@ -292,8 +292,7 @@ public class BaseCmisSearchQueryBuilderTest {
 		String cmisQuery = buildQuery(searchContext);
 
 		assertQueryEquals(
-			"(cmis:name = 'test document' OR cmis:createdBy = 'test " +
-				"document')",
+			"(cmis:name = 'test document' OR cmis:createdBy = 'test document')",
 			cmisQuery);
 	}
 

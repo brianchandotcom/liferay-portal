@@ -55,8 +55,7 @@ public class JenkinsResultsParserUtilTest
 			"cloud-10-50-0-47,cloud-10-50-0-0,cloud-10-50-0-1," +
 				"cloud-10-50-0-2,cloud-10-50-0-49,cloud-10-50-0-50",
 			JenkinsResultsParserUtil.expandSlaveRange(
-				"cloud-10-50-0-47, cloud-10-50-0-0..2, " +
-					"cloud-10-50-0-49..50"));
+				"cloud-10-50-0-47, cloud-10-50-0-0..2, cloud-10-50-0-49..50"));
 	}
 
 	@Test
@@ -158,8 +157,7 @@ public class JenkinsResultsParserUtilTest
 		throws Exception {
 
 		String urlString =
-			"https://${hostName}.liferay.com/job/${jobName}/" +
-				"/${buildNumber}/";
+			"https://${hostName}.liferay.com/job/${jobName}//${buildNumber}/";
 
 		if (axisVariable != null) {
 			urlString =

@@ -71,8 +71,7 @@ public class ThemeContributorDynamicInclude implements DynamicInclude {
 				public void render(PrintWriter printWriter, String href) {
 					printWriter.println(
 						"<link data-senna-track=\"temporary\" href=\"" + href +
-							"\" rel=\"stylesheet\" " + "type = \"text/css\"" +
-								" />");
+							"\" rel=\"stylesheet\" type = \"text/css\" />");
 				}
 
 			});
@@ -88,8 +87,7 @@ public class ThemeContributorDynamicInclude implements DynamicInclude {
 				public void render(PrintWriter printWriter, String href) {
 					printWriter.println(
 						"<script data-senna-track=\"temporary\" src=\"" + href +
-							"\" " + "\" type = \"text/javascript\">" +
-								"</script>");
+							"\" \" type = \"text/javascript\"></script>");
 				}
 
 			});

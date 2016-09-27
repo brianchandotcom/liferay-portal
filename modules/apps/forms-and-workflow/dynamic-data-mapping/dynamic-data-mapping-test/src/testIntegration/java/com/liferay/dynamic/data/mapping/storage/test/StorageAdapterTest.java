@@ -472,8 +472,7 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 
 		Field fieldsDisplayField = createFieldsDisplayField(
 			structure.getStructureId(),
-			"number_INSTANCE_rztm,number_INSTANCE_ovho," +
-				"number_INSTANCE_krvx");
+			"number_INSTANCE_rztm,number_INSTANCE_ovho,number_INSTANCE_krvx");
 
 		fields.put(fieldsDisplayField);
 

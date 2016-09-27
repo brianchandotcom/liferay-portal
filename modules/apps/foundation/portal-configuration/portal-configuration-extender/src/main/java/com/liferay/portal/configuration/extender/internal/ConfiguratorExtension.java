@@ -152,8 +152,7 @@ public class ConfiguratorExtension implements Extension {
 			_logger.log(
 				Logger.LOG_WARNING,
 				"Supplier from factory configuration description " +
-					factoryConfigurationDescription + " threw an " +
-						"exception: ",
+					factoryConfigurationDescription + " threw an exception: ",
 				t);
 
 			return;

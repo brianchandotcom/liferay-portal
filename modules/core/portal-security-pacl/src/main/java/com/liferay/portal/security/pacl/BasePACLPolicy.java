@@ -153,8 +153,7 @@ public abstract class BasePACLPolicy implements PACLPolicy {
 
 		if (policy.implies(protectionDomain, new AllPermission())) {
 			throw new IllegalStateException(
-				"The plugin's Java policy tried to declared all " +
-					"permissions");
+				"The plugin's Java policy tried to declared all permissions");
 		}
 	}
 

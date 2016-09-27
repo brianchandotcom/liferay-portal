@@ -524,8 +524,7 @@ public class XhtmlTranslationVisitorTest {
 			"<ol><li> T1<ol><li> T1.1</li></ol></li><li> T2</li><li> T3" +
 				"</li></ol><ul><li> Divider 1<ul><li> Divider 2a</li>" +
 					"<li> Divider 2b<ul><li> Divider 3</li></ul></li>" +
-						"</ul></li></ul><ol><li> T3.2</li>" +
-							"<li> T3.3</li></ol>",
+						"</ul></li></ul><ol><li> T3.2</li><li> T3.3</li></ol>",
 			translate("mixed-list-3.creole"));
 	}
 

@@ -77,8 +77,7 @@ public class DLFolderActivityInterpreter extends BaseSocialActivityInterpreter {
 				return "activity-document-library-folder-restore-from-trash";
 			}
 			else {
-				return "activity-document-library-folder-restore-from-trash-" +
-					"in";
+				return "activity-document-library-folder-restore-from-trash-in";
 			}
 		}
 

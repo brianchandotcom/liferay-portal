@@ -191,8 +191,7 @@ public class UpgradeCheckboxFieldToCheckboxMultipleField
 			PreparedStatement ps2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
-					"update DDMContent set data_= ? " +
-						"where contentId = ? ")) {
+					"update DDMContent set data_= ? where contentId = ? ")) {
 
 			ps1.setLong(1, recordSetId);
 

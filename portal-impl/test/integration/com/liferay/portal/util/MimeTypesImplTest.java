@@ -176,8 +176,7 @@ public class MimeTypesImplTest {
 	@Test
 	public void testXlsx() throws Exception {
 		String validContentType =
-			"application/" +
-				"vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+			"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 
 		String contentTypeStream = getContentType("test-2010.xlsx", true);
 		String contentTypeName = getContentType("test-2010.xlsx", false);

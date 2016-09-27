@@ -43,7 +43,7 @@ public class JaxWsApiBundleActivator implements BundleActivator {
 		_configurationAdminBundleActivator.start(bundleContext);
 
 		String filterString =
-			"(&(objectClass=" + Provider.class.getName() + ")" + "(" +
+			"(&(objectClass=" + Provider.class.getName() + ")(" +
 				HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_PATH +
 					"=/soap-test))";
 

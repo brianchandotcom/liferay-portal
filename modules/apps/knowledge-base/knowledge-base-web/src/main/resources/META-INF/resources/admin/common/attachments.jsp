@@ -69,7 +69,7 @@ if (kbArticle != null) {
 					%>
 
 					<liferay-ui:icon-delete
-						label="<%= false %>"
+						label="<%= true %>"
 						url="<%= taglibURL %>"
 					/>
 				</div>

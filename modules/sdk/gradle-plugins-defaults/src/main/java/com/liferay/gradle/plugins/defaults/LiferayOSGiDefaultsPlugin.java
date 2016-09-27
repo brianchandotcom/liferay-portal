@@ -3083,7 +3083,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 	private static final String _CACHE_COMMIT_MESSAGE = "FAKE GRADLE CACHE";
 
-	private static final char _DEPENDENCY_KEY_SEPARATOR = '-';
+	private static final char _DEPENDENCY_KEY_SEPARATOR = '/';
 
 	private static final String _GROUP = "com.liferay";
 

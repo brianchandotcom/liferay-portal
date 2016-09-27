@@ -2452,31 +2452,21 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	protected boolean hasRedundantParentheses(String s) {
-		if (!s.contains("&&") && !s.contains("||")) {
-			for (int x = 0;;) {
-				x = s.indexOf(CharPool.CLOSE_PARENTHESIS);
+		int x = -1;
 
-				if (x == -1) {
-					break;
-				}
+		while (true) {
+			x = s.indexOf(StringPool.SPACE, x + 1);
 
-				int y = s.substring(0, x).lastIndexOf(
-					CharPool.OPEN_PARENTHESIS);
+			if (x == -1) {
+				break;
+			}
 
-				if (y == -1) {
-					break;
-				}
-
-				s = s.substring(0, y) + s.substring(x + 1);
+			if (getLevel(s.substring(0, x)) == 0) {
+				return false;
 			}
 		}
 
-		if (Validator.isNotNull(s) && !s.contains(StringPool.SPACE)) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		return true;
 	}
 
 	protected boolean hasRedundantParentheses(

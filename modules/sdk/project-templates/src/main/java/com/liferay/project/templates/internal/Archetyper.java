@@ -32,6 +32,7 @@ import java.net.URLClassLoader;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 
 import java.util.Enumeration;
 import java.util.List;
@@ -281,7 +282,7 @@ public class Archetyper {
 
 							String name = jarEntry.getName();
 
-							if (!name.startsWith(artifactId + "-")) {
+							if (!name.startsWith(artifactId)) {
 								continue;
 							}
 
@@ -289,8 +290,8 @@ public class Archetyper {
 								"temp-archetype", null);
 
 							Files.copy(
-								jarFile.getInputStream(jarEntry),
-								archetypePath);
+								jarFile.getInputStream(jarEntry), archetypePath,
+								StandardCopyOption.REPLACE_EXISTING);
 
 							archetypeFile = archetypePath.toFile();
 

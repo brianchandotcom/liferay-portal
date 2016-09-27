@@ -18,7 +18,6 @@ import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.web.internal.settings.DLPortletInstanceSettings;
-import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -63,12 +62,9 @@ public class DLPortletToolbarContributorHelper {
 			_log.error(pe, pe);
 		}
 
-		long folderId = BeanParamUtil.getLong(
-			folder, portletRequest, "folderId", rootFolderId);
-
-		if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+		if (rootFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			try {
-				folder = _dlAppLocalService.getFolder(folderId);
+				folder = _dlAppLocalService.getFolder(rootFolderId);
 			}
 			catch (NoSuchFolderException nsfe) {
 				folder = null;

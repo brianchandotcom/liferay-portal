@@ -152,6 +152,31 @@ public class UnstableMessageUtil {
 		sb.append("</li>");
 	}
 
+	private static String _getLogURL(
+			String jobVariant, Project project,
+			JSONObject runBuildURLJSONObject)
+		throws Exception {
+
+		StringBuffer sb = new StringBuffer();
+
+		sb.append(project.getProperty("log.base.url"));
+		sb.append("/");
+		sb.append(project.getProperty("env.MASTER_HOSTNAME"));
+		sb.append("/");
+		sb.append(project.getProperty("env.TOP_LEVEL_START_TIME"));
+		sb.append("/");
+		sb.append(project.getProperty("env.JOB_NAME"));
+		sb.append("/");
+		sb.append(project.getProperty("env.BUILD_NUMBER"));
+		sb.append("/");
+		sb.append(jobVariant);
+		sb.append("/");
+		sb.append(
+			JenkinsResultsParserUtil.getAxisVariable(runBuildURLJSONObject));
+
+		return sb.toString();
+	}
+
 	private static int _getUnstableMessage(
 			Project project, List<String> runBuildURLs, StringBuilder sb)
 		throws Exception {
@@ -271,15 +296,8 @@ public class UnstableMessageUtil {
 
 						sb.append("</a> - ");
 
-						String logURL =
-							project.getProperty("log.base.url") + "/" +
-							project.getProperty("env.MASTER_HOSTNAME") + "/" +
-							project.getProperty("env.TOP_LEVEL_START_TIME") +
-							"/" + project.getProperty("env.JOB_NAME") + "/" +
-							project.getProperty("env.BUILD_NUMBER") + "/" +
-							jobVariant + "/" +
-							JenkinsResultsParserUtil.getAxisVariable(
-								runBuildURLJSONObject);
+						String logURL = _getLogURL(
+							jobVariant, project, runBuildURLJSONObject);
 
 						sb.append("<a href=\"");
 						sb.append(logURL);

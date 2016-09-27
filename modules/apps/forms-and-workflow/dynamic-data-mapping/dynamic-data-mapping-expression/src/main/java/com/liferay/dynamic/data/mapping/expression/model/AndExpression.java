@@ -22,8 +22,10 @@ import aQute.bnd.annotation.ProviderType;
 @ProviderType
 public class AndExpression extends BinaryExpression {
 
-	public AndExpression(Expression leftOperand, Expression rightOperand) {
-		super("and", leftOperand, rightOperand);
+	public AndExpression(
+		Expression leftOperandExpression, Expression rightOperandExpression) {
+
+		super("and", leftOperandExpression, rightOperandExpression);
 	}
 
 	@Override

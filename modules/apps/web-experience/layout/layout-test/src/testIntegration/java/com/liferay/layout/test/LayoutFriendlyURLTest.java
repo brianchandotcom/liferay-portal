@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.model.impl;
+package com.liferay.layout.test;
 
 import com.liferay.portal.kernel.exception.LayoutFriendlyURLException;
 import com.liferay.portal.kernel.exception.LayoutFriendlyURLsException;

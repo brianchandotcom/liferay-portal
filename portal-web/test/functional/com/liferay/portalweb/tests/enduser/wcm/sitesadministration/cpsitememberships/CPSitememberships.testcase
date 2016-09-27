@@ -93,7 +93,7 @@
 
 		<execute macro="Site#assignSiteRoleCP">
 			<var name="resourceName" value="userfn userln" />
-			<var name="roleName" value="Site Content Reviewer" />
+			<var name="roleTitle" value="Site Content Reviewer" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSitesMembers">
@@ -102,7 +102,7 @@
 
 		<execute macro="Site#viewSiteRoleViaSiteMembershipsCP">
 			<var name="resourceName" value="userfn userln" />
-			<var name="roleName" value="Site Content Reviewer" />
+			<var name="roleTitle" value="Site Content Reviewer" />
 		</execute>
 	</command>
 
@@ -239,7 +239,7 @@
 
 		<execute macro="Site#assignSiteRoleCP">
 			<var name="resourceName" value="User Group Name" />
-			<var name="roleName" value="Site Content Reviewer" />
+			<var name="roleTitle" value="Site Content Reviewer" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSitesMembers">
@@ -252,7 +252,7 @@
 
 		<execute macro="Site#viewSiteRoleViaSiteMembershipsCP">
 			<var name="resourceName" value="User Group Name" />
-			<var name="roleName" value="Site Content Reviewer" />
+			<var name="roleTitle" value="Site Content Reviewer" />
 		</execute>
 	</command>
 

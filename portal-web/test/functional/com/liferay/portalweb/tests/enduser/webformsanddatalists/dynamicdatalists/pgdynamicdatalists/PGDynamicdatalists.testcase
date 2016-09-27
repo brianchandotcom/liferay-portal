@@ -1104,7 +1104,7 @@
 		</execute>
 
 		<execute macro="Role#addCP">
-			<var name="roleName" value="No Permissions Role" />
+			<var name="roleTitle" value="No Permissions Role" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
@@ -1132,7 +1132,7 @@
 		</execute>
 
 		<execute macro="User#assignRegularRoleCP">
-			<var name="roleName" value="No Permissions Role" />
+			<var name="roleTitle" value="No Permissions Role" />
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
@@ -1181,7 +1181,7 @@
 
 		<execute macro="Role#removePermissionPG">
 			<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_VIEW_CHECKBOX" />
-			<var name="roleName" value="Guest" />
+			<var name="roleTitle" value="Guest" />
 		</execute>
 
 		<execute macro="Navigator#openURL" />

@@ -356,7 +356,7 @@
 				</if>
 
 				<var name="key_permissionsDefinitionKey" value="${permissionsDefinitionKey}" />
-				<var name="key_roleName" value="${roleName}" />
+				<var name="key_roleTitle" value="${roleTitle}" />
 
 				<execute function="Check" locator1="AssetPermissions#PERMISSIONS_CHECKBOX" />
 			</then>
@@ -997,7 +997,7 @@
 	</command>
 
 	<command name="removeViewPermissionPG">
-		<var method="StringUtil#lowerCase('${key_roleName}')" name="key_roleName" />
+		<var method="StringUtil#lowerCase('${key_roleTitle}')" name="key_roleTitle" />
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
 		<execute function="AssertClick" locator1="Link#DETAILS" value1="Details" />

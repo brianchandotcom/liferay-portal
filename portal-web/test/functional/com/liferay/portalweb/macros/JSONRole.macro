@@ -17,16 +17,16 @@
 		</if>
 
 		<if>
-			<isset var="roleName" />
+			<isset var="roleTitle" />
 			<then>
 				<execute class="java.net.URLEncoder" method="encode">
-					<arg value="${roleName}" />
+					<arg value="${roleTitle}" />
 					<arg value="UTF-8" />
-					<return name="roleNameEncoded" />
+					<return name="roleTitleEncoded" />
 				</execute>
 			</then>
 			<else>
-				<fail message="Please set 'roleName'." />
+				<fail message="Please set 'roleTitle'." />
 			</else>
 		</if>
 
@@ -77,7 +77,7 @@
 				-u test@liferay.com:test \
 				-d className=com.liferay.portal.kernel.model.Role \
 				-d classPK=0 \
-				-d name=${roleNameEncoded} \
+				-d name=${roleTitleEncoded} \
 				-d titleMap=${roleKeyMap} \
 				-d descriptionMap=${roleDescriptionMap} \
 				-d type=${roleTypeId} \
@@ -93,7 +93,7 @@
 			</then>
 		</if>
 
-		<echo>## * Role Name: ${roleName}</echo>
+		<echo>## * Role Name: ${roleTitle}</echo>
 
 		<if>
 			<isset var="roleKey" />
@@ -143,7 +143,7 @@
 
 		<execute macro="JSONRole#getRoleName">
 			<var name="roleId" value="${roleId}" />
-			<return from="roleName" name="roleName" />
+			<return from="roleTitle" name="roleTitle" />
 		</execute>
 
 		<execute macro="JSONUser#getUserEmailAddress">
@@ -153,7 +153,7 @@
 
 		<echo>## Assigning a 'User' to a 'Role' with the following info using JSONWS:</echo>
 
-		<echo>## * Role Name: ${roleName}</echo>
+		<echo>## * Role Name: ${roleTitle}</echo>
 
 		<echo>## * User Email Address: ${userEmailAddress}</echo>
 
@@ -167,17 +167,17 @@
 	<command name="addOrganizationRole">
 		<if>
 			<not>
-				<isset var="roleName" />
+				<isset var="roleTitle" />
 			</not>
 			<then>
-				<fail message="Please set 'roleName'." />
+				<fail message="Please set 'roleTitle'." />
 			</then>
 		</if>
 
 		<execute macro="JSONRole#_addRole">
 			<var name="roleDescription" value="${roleDescription}" />
 			<var name="roleKey" value="${roleKey}" />
-			<var name="roleName" value="${roleName}" />
+			<var name="roleTitle" value="${roleTitle}" />
 			<var name="roleType" value="organization" />
 		</execute>
 	</command>
@@ -185,17 +185,17 @@
 	<command name="addRegularRole">
 		<if>
 			<not>
-				<isset var="roleName" />
+				<isset var="roleTitle" />
 			</not>
 			<then>
-				<fail message="Please set 'roleName'." />
+				<fail message="Please set 'roleTitle'." />
 			</then>
 		</if>
 
 		<execute macro="JSONRole#_addRole">
 			<var name="roleDescription" value="${roleDescription}" />
 			<var name="roleKey" value="${roleKey}" />
-			<var name="roleName" value="${roleName}" />
+			<var name="roleTitle" value="${roleTitle}" />
 			<var name="roleType" value="regular" />
 		</execute>
 	</command>
@@ -203,17 +203,17 @@
 	<command name="addSiteRole">
 		<if>
 			<not>
-				<isset var="roleName" />
+				<isset var="roleTitle" />
 			</not>
 			<then>
-				<fail message="Please set 'roleName'." />
+				<fail message="Please set 'roleTitle'." />
 			</then>
 		</if>
 
 		<execute macro="JSONRole#_addRole">
 			<var name="roleDescription" value="${roleDescription}" />
 			<var name="roleKey" value="${roleKey}" />
-			<var name="roleName" value="${roleName}" />
+			<var name="roleTitle" value="${roleTitle}" />
 			<var name="roleType" value="site" />
 		</execute>
 	</command>
@@ -221,10 +221,10 @@
 	<command name="assignRoleToUser">
 		<if>
 			<not>
-				<isset var="roleName" />
+				<isset var="roleTitle" />
 			</not>
 			<then>
-				<fail message="Please set 'roleName'." />
+				<fail message="Please set 'roleTitle'." />
 			</then>
 		</if>
 
@@ -238,7 +238,7 @@
 		</if>
 
 		<execute macro="JSONRole#getRoleIdByName">
-			<var name="roleName" value="${roleName}" />
+			<var name="roleTitle" value="${roleTitle}" />
 			<return from="roleId" name="roleId" />
 		</execute>
 
@@ -255,16 +255,16 @@
 
 	<command name="getRoleIdByName" returns="roleId">
 		<if>
-			<isset var="roleName" />
+			<isset var="roleTitle" />
 			<then>
 				<execute class="java.net.URLEncoder" method="encode">
-					<arg value="${roleName}" />
+					<arg value="${roleTitle}" />
 					<arg value="UTF-8" />
-					<return name="roleNameEncoded" />
+					<return name="roleTitleEncoded" />
 				</execute>
 			</then>
 			<else>
-				<fail message="Please set 'roleName'." />
+				<fail message="Please set 'roleTitle'." />
 			</else>
 		</if>
 
@@ -280,7 +280,7 @@
 			${portalURL}/api/jsonws/role/get-role \
 				-u test@liferay.com:test \
 				-d companyId=${companyId} \
-				-d name=${roleNameEncoded}
+				-d name=${roleTitleEncoded}
 		</var>
 
 		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="get">
@@ -292,7 +292,7 @@
 		<return name="roleId" value="${roleId}" />
 	</command>
 
-	<command name="getRoleName" returns="roleName">
+	<command name="getRoleName" returns="roleTitle">
 		<if>
 			<not>
 				<isset var="roleId" />
@@ -315,9 +315,9 @@
 		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="get">
 			<arg value="${curl}" />
 			<arg value="$['name']" />
-			<return name="roleName" />
+			<return name="roleTitle" />
 		</execute>
 
-		<return name="roleName" value="${roleName}" />
+		<return name="roleTitle" value="${roleTitle}" />
 	</command>
 </definition>

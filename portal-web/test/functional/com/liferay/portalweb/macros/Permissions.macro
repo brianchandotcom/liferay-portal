@@ -78,7 +78,7 @@
 			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
 			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
 			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
-			<var name="roleName" value="${roleName}" />
+			<var name="roleTitle" value="${roleTitle}" />
 			<var name="roleType" value="${roleType}" />
 		</execute>
 	</command>
@@ -93,7 +93,7 @@
 			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
 			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
 			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
-			<var name="roleName" value="${roleName}" />
+			<var name="roleTitle" value="${roleTitle}" />
 			<var name="roleType" value="${roleType}" />
 		</execute>
 
@@ -112,7 +112,7 @@
 			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
 			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
 			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
-			<var name="roleName" value="${roleName}" />
+			<var name="roleTitle" value="${roleTitle}" />
 			<var name="roleType" value="${roleType}" />
 		</execute>
 	</command>
@@ -127,7 +127,7 @@
 			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
 			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
 			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
-			<var name="roleName" value="${roleName}" />
+			<var name="roleTitle" value="${roleTitle}" />
 			<var name="roleType" value="${roleType}" />
 		</execute>
 
@@ -185,12 +185,12 @@
 		</execute>
 
 		<execute macro="JSONRole#addOrganizationRole">
-			<var name="roleName" value="${roleName}" />
+			<var name="roleTitle" value="${roleTitle}" />
 		</execute>
 
 		<execute macro="JSONGroup#assignGroupRoleToUser">
 			<var name="groupName" value="${orgName}" />
-			<var name="roleName" value="${roleName}" />
+			<var name="roleTitle" value="${roleTitle}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 		</execute>
 
@@ -206,7 +206,7 @@
 		</execute>
 
 		<execute macro="PortalSettings#editConfigurationUsersDefaultUserAssociationsRolesCP">
-			<var name="roleName" value="" />
+			<var name="roleTitle" value="" />
 		</execute>
 
 		<execute macro="JSONUser#addUser">
@@ -228,11 +228,11 @@
 		</execute>
 
 		<execute macro="JSONRole#addRegularRole">
-			<var name="roleName" value="${roleName}" />
+			<var name="roleTitle" value="${roleTitle}" />
 		</execute>
 
 		<execute macro="JSONRole#assignRoleToUser">
-			<var name="roleName" value="${roleName}" />
+			<var name="roleTitle" value="${roleTitle}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 		</execute>
 
@@ -246,7 +246,7 @@
 		<execute macro="Permissions#setUpRegRolePG">
 			<var name="pageName" value="${pageName}" />
 			<var name="portletName" value="${portletName}" />
-			<var name="roleName" value="${roleName}" />
+			<var name="roleTitle" value="${roleTitle}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userFirstName" value="${userFirstName}" />
 			<var name="userLastName" value="${userLastName}" />
@@ -294,11 +294,11 @@
 		</execute>
 
 		<execute macro="JSONRole#addRegularRole">
-			<var name="roleName" value="${roleName}" />
+			<var name="roleTitle" value="${roleTitle}" />
 		</execute>
 
 		<execute macro="JSONRole#assignRoleToUser">
-			<var name="roleName" value="${roleName}" />
+			<var name="roleTitle" value="${roleTitle}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 		</execute>
 	</command>
@@ -391,7 +391,7 @@
 		</execute>
 
 		<execute macro="PortalSettings#editConfigurationUsersDefaultUserAssociationsRolesCP">
-			<var name="roleName" value="" />
+			<var name="roleTitle" value="" />
 		</execute>
 
 		<execute macro="JSONUser#addUser">
@@ -427,12 +427,12 @@
 		</execute>
 
 		<execute macro="JSONRole#addSiteRole">
-			<var name="roleName" value="${roleName}" />
+			<var name="roleTitle" value="${roleTitle}" />
 		</execute>
 
 		<execute macro="JSONGroup#assignGroupRoleToUser">
 			<var name="groupName" value="${siteName}" />
-			<var name="roleName" value="${roleName}" />
+			<var name="roleTitle" value="${roleTitle}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 		</execute>
 
@@ -446,7 +446,7 @@
 		<execute macro="Permissions#setUpSiteRoleCP">
 			<var name="newPassword" value="${newPassword}" />
 			<var name="pageName" value="${pageName}" />
-			<var name="roleName" value="${roleName}" />
+			<var name="roleTitle" value="${roleTitle}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="syntaxCheckingEnabled" value="${syntaxCheckingEnabled}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
@@ -545,7 +545,7 @@
 		<execute macro="Role#addCP">
 			<var name="roleDescription" value="${roleDescription}" />
 			<var name="roleKey" value="${roleKey}" />
-			<var name="roleName" value="${roleName}" />
+			<var name="roleTitle" value="${roleTitle}" />
 			<var name="roleType" value="${roleType}" />
 		</execute>
 
@@ -559,7 +559,7 @@
 
 		<execute macro="Site#assignSiteRoleCP">
 			<var name="resourceName" value="${userFirstName} ${userLastName}" />
-			<var name="roleName" value="${roleName}" />
+			<var name="roleTitle" value="${roleTitle}" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">

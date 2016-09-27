@@ -11,17 +11,17 @@
 <!--ROLE_TABLE-->
 <tr>
 	<td>ROLE_TABLE_TITLE</td>
-	<td>//tr[contains(.,'${key_roleName}')]/td[2]</td>
+	<td>//tr[contains(.,'${key_roleTitle}')]/td[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ROLE_TABLE_TITLE_LINK</td>
-	<td>//tr[contains(.,'${key_roleName}')]/td[2]//a</td>
+	<td>//tr[contains(.,'${key_roleTitle}')]/td[2]//a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ROLE_TABLE_DESCRIPTION</td>
-	<td>//tr[contains(.,'${key_roleName}')]/td[3]</td>
+	<td>//tr[contains(.,'${key_roleTitle}')]/td[3]</td>
 	<td></td>
 </tr>
 <tr>
@@ -36,7 +36,7 @@
 </tr>
 <tr>
 	<td>ROLE_TABLE_ACTIONS</td>
-	<td>//tr[contains(.,'${key_roleName}')]//span/*[name()='svg'][contains(@class,'icon-ellipsis-v')]</td>
+	<td>//tr[contains(.,'${key_roleTitle}')]//span/*[name()='svg'][contains(@class,'icon-ellipsis-v')]</td>
 	<td></td>
 </tr>
 <tr>

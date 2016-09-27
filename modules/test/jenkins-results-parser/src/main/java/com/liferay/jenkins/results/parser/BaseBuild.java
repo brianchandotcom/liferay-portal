@@ -788,8 +788,6 @@ public abstract class BaseBuild implements Build {
 				_parameters.put(nameValueArray[0], nameValueArray[1]);
 			}
 		}
-
-		return;
 	}
 
 	protected void setBuildNumber(int buildNumber) {

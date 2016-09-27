@@ -27,6 +27,7 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.URLDecoder;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -91,6 +92,10 @@ public class JenkinsResultsParserUtil {
 		URL url = new URL(urlString);
 
 		return encode(url);
+	}
+
+	public static String decode(String url) throws Exception {
+		return URLDecoder.decode(url, "UTF-8");
 	}
 
 	public static URL encode(URL url) throws Exception {
@@ -658,6 +663,16 @@ public class JenkinsResultsParserUtil {
 		}
 
 		Files.write(Paths.get(file.toURI()), content.getBytes());
+	}
+
+	public static void write(String path, String content) throws IOException {
+		if (path.startsWith("${dependencies.url}")) {
+			path = path.replace(
+				"${dependencies.url}",
+				DEPENDENCIES_URL_FILE.replace("file:", ""));
+		}
+
+		write(new File(path), content);
 	}
 
 	protected static final String DEPENDENCIES_URL_FILE;

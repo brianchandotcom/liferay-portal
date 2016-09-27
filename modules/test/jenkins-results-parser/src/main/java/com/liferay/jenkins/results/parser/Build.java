@@ -14,14 +14,27 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * @author Kevin Yen
  */
 public interface Build {
 
+	public void addDownstreamBuilds(String... urls);
+
 	public int getBuildNumber();
 
 	public String getBuildURL();
+
+	public String getConsoleText();
+
+	public int getDownstreamBuildCount(String status);
+
+	public List<Build> getDownstreamBuilds(String status);
+
+	public String getInvocationURL();
 
 	public String getJobName();
 
@@ -29,12 +42,26 @@ public interface Build {
 
 	public String getMaster();
 
+	public Map<String, String> getParameters();
+
+	public String getParameterValue(String name);
+
+	public Build getParent();
+
 	public String getResult();
 
 	public String getStatus();
 
 	public long getStatusAge();
 
-	public void update() throws Exception;
+	public String getStatusReport();
+
+	public String getStatusReport(int indentSize);
+
+	public boolean hasBuildURL(String buildURL);
+
+	public void reinvoke();
+
+	public void update();
 
 }

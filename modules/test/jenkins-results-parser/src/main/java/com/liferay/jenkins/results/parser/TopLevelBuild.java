@@ -14,97 +14,51 @@
 
 package com.liferay.jenkins.results.parser;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * @author Kevin Yen
  */
 public class TopLevelBuild extends BaseBuild {
 
-	public TopLevelBuild(String buildURL) throws Exception {
-		super(buildURL);
-	}
+	@Override
+	public String getStatusReport(int indentSize) {
+		String statusReport = super.getStatusReport(indentSize);
 
-	public void addDownstreamBuilds(String... invocationURLs) throws Exception {
-		for (String invocationURL : invocationURLs) {
-			_downstreamBuilds.add(new DownstreamBuild(invocationURL, this));
-		}
-
-		String status = getStatus();
-
-		if (status.equals("completed")) {
-			setStatus(null);
-		}
-
-		update();
-	}
-
-	public List<DownstreamBuild> getDownstreamBuilds(String status) {
-		if (status == null) {
-			return _downstreamBuilds;
-		}
-
-		List<DownstreamBuild> filteredDownstreamBuilds = new ArrayList<>();
-
-		for (DownstreamBuild downstreamBuild : _downstreamBuilds) {
-			if (status.equals(downstreamBuild.getStatus())) {
-				filteredDownstreamBuilds.add(downstreamBuild);
+		if (getDownstreamBuildCount(null) > 0) {
+			while (statusReport.endsWith("\n")) {
+				statusReport = statusReport.substring(
+					0, statusReport.length() - 1);
 			}
+
+			statusReport += " / ";
 		}
 
-		return filteredDownstreamBuilds;
+		return statusReport + "Update took " + _updateDuration +
+			" milliseconds.\n";
 	}
 
 	@Override
-	public void update() throws Exception {
-		String status = getStatus();
-
-		if (status == null) {
-			setStatus("running");
-
-			status = getStatus();
-		}
-
-		if (status.equals("completed")) {
-			return;
-		}
-
-		if (_downstreamBuilds != null) {
-			for (DownstreamBuild downstreamBuild : _downstreamBuilds) {
-				downstreamBuild.update();
-			}
-
-			if (_downstreamBuilds.size() ==
-					getDownstreamBuildCount("completed")) {
-
-				setStatus("completed");
-
-				return;
-			}
-
-			if (getDownstreamBuildCount("missing") > 0) {
-				setStatus("missing");
-
-				return;
-			}
-
-			if (getDownstreamBuildCount("starting") > 0) {
-				setStatus("starting");
-
-				return;
-			}
-		}
-
-		setStatus("running");
+	public void update() {
+		long start = System.currentTimeMillis();
+		super.update();
+		_updateDuration = System.currentTimeMillis() - start;
 	}
 
-	protected int getDownstreamBuildCount(String status) {
-		List<DownstreamBuild> downstreamBuilds = getDownstreamBuilds(status);
-
-		return downstreamBuilds.size();
+	protected TopLevelBuild(String url) throws Exception {
+		this(url, null);
 	}
 
-	private final List<DownstreamBuild> _downstreamBuilds = new ArrayList<>();
+	protected TopLevelBuild(String url, TopLevelBuild parent) throws Exception {
+		super(url, parent);
+	}
+
+	@Override
+	protected ExecutorService getExecutorService() {
+		return Executors.newFixedThreadPool(100);
+	}
+
+	private long _updateDuration;
 
 }

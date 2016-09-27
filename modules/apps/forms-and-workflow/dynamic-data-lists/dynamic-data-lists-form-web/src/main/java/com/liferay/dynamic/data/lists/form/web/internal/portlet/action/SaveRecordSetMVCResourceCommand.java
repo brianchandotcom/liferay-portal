@@ -16,46 +16,21 @@ package com.liferay.dynamic.data.lists.form.web.internal.portlet.action;
 
 import com.liferay.dynamic.data.lists.form.web.constants.DDLFormPortletKeys;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
-import com.liferay.dynamic.data.lists.model.DDLRecordSetConstants;
-import com.liferay.dynamic.data.lists.model.DDLRecordSetSettings;
-import com.liferay.dynamic.data.lists.service.DDLRecordSetService;
-import com.liferay.dynamic.data.mapping.exception.StructureDefinitionException;
-import com.liferay.dynamic.data.mapping.exception.StructureLayoutException;
-import com.liferay.dynamic.data.mapping.form.values.query.DDMFormValuesQuery;
-import com.liferay.dynamic.data.mapping.form.values.query.DDMFormValuesQueryFactory;
-import com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormLayoutJSONDeserializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
-import com.liferay.dynamic.data.mapping.model.DDMForm;
-import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
-import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
-import com.liferay.dynamic.data.mapping.model.Value;
-import com.liferay.dynamic.data.mapping.service.DDMStructureService;
-import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
-import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.dynamic.data.mapping.storage.StorageType;
-import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
-import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.Callable;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -86,29 +61,17 @@ public class SaveRecordSetMVCResourceCommand extends BaseMVCResourceCommand {
 		Map<String, Object> response = new HashMap<>();
 
 		try {
-			DDMFormValues settingsDDMFormValues = getSettingsDDMFormValues(
-				resourceRequest);
+			DDLRecordSet recordSet = saveRecordSetInTransaction(
+				resourceRequest, resourceResponse);
 
-			DDMStructure ddmStructure = saveDDMStructure(
-				resourceRequest, settingsDDMFormValues);
-
-			DDLRecordSet recordSet = saveRecordSet(
-				resourceRequest, ddmStructure.getStructureId());
-
-			updateRecordSetSettings(
-				resourceRequest, recordSet, settingsDDMFormValues);
-
-			response.put("ddmStructureId", ddmStructure.getStructureId());
 			response.put("recordSetId", recordSet.getRecordSetId());
 		}
-		catch (Exception e) {
-			String statusCode = String.valueOf(
-				HttpServletResponse.SC_BAD_REQUEST);
-
+		catch (Throwable t) {
 			resourceResponse.setProperty(
-				ResourceResponse.HTTP_STATUS_CODE, statusCode);
+				ResourceResponse.HTTP_STATUS_CODE,
+				String.valueOf(HttpServletResponse.SC_BAD_REQUEST));
 
-			response.put("error", e.getMessage());
+			response.put("error", t.getMessage());
 		}
 
 		JSONSerializer serializer = jsonFactory.createJSONSerializer();
@@ -117,227 +80,49 @@ public class SaveRecordSetMVCResourceCommand extends BaseMVCResourceCommand {
 			resourceResponse, serializer.serializeDeep(response));
 	}
 
-	protected DDMForm getDDMForm(ResourceRequest resourceRequest)
-		throws PortalException {
+	protected DDLRecordSet saveRecordSetInTransaction(
+			final ResourceRequest resourceRequest,
+			final ResourceResponse resourceResponse)
+		throws Throwable {
 
-		try {
-			String definition = ParamUtil.getString(
-				resourceRequest, "definition");
+		Callable<DDLRecordSet> callable = new Callable<DDLRecordSet>() {
 
-			return ddmFormJSONDeserializer.deserialize(definition);
-		}
-		catch (PortalException pe) {
-			throw new StructureDefinitionException(pe);
-		}
-	}
+			@Override
+			public DDLRecordSet call() throws Exception {
+				long recordSetId = ParamUtil.getLong(
+					resourceRequest, "recordSetId");
 
-	protected DDMFormLayout getDDMFormLayout(ResourceRequest resourceRequest)
-		throws PortalException {
+				if (recordSetId == 0) {
+					return addUpdateRecordSetMVCCommandHelper.addRecordSet(
+						resourceRequest, resourceResponse);
+				}
+				else {
+					return addUpdateRecordSetMVCCommandHelper.updateRecordSet(
+						resourceRequest, resourceResponse);
+				}
+			}
 
-		try {
-			String layout = ParamUtil.getString(resourceRequest, "layout");
+		};
 
-			return ddmFormLayoutJSONDeserializer.deserialize(layout);
-		}
-		catch (PortalException pe) {
-			throw new StructureLayoutException(pe);
-		}
-	}
-
-	protected Map<Locale, String> getLocalizedMap(Locale locale, String value) {
-		Map<Locale, String> localizedMap = new HashMap<>();
-
-		localizedMap.put(locale, value);
-
-		return localizedMap;
-	}
-
-	protected DDMFormValues getSettingsDDMFormValues(
-			ResourceRequest resourceRequest)
-		throws PortalException {
-
-		String serializedSettingsDDMFormValues = ParamUtil.getString(
-			resourceRequest, "serializedSettingsDDMFormValues");
-
-		DDMForm ddmForm = DDMFormFactory.create(DDLRecordSetSettings.class);
-
-		DDMFormValues settingsDDMFormValues =
-			ddmFormValuesJSONDeserializer.deserialize(
-				ddmForm, serializedSettingsDDMFormValues);
-
-		return settingsDDMFormValues;
-	}
-
-	protected String getStorageType(DDMFormValues ddmFormValues)
-		throws PortalException {
-
-		DDMFormValuesQuery ddmFormValuesQuery =
-			ddmFormValuesQueryFactory.create(ddmFormValues, "/storageType");
-
-		DDMFormFieldValue ddmFormFieldValue =
-			ddmFormValuesQuery.selectSingleDDMFormFieldValue();
-
-		Value value = ddmFormFieldValue.getValue();
-
-		String storageType = value.getString(ddmFormValues.getDefaultLocale());
-
-		if (Validator.isNull(storageType)) {
-			storageType = StorageType.JSON.toString();
-		}
-
-		return storageType;
-	}
-
-	protected String getWorkflowDefinition(DDMFormValues ddmFormValues)
-		throws PortalException {
-
-		DDMFormValuesQuery ddmFormValuesQuery =
-			ddmFormValuesQueryFactory.create(
-				ddmFormValues, "/workflowDefinition");
-
-		DDMFormFieldValue ddmFormFieldValue =
-			ddmFormValuesQuery.selectSingleDDMFormFieldValue();
-
-		Value value = ddmFormFieldValue.getValue();
-
-		return value.getString(ddmFormValues.getDefaultLocale());
-	}
-
-	protected DDMStructure saveDDMStructure(
-			ResourceRequest resourceRequest,
-			DDMFormValues settingsDDMFormValues)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		long ddmStructureId = ParamUtil.getLong(
-			resourceRequest, "ddmStructureId");
-		long groupId = ParamUtil.getLong(resourceRequest, "groupId");
-		String structureKey = ParamUtil.getString(
-			resourceRequest, "structureKey");
-		String storageType = getStorageType(settingsDDMFormValues);
-		String name = ParamUtil.getString(resourceRequest, "name");
-		String description = ParamUtil.getString(
-			resourceRequest, "description");
-		DDMForm ddmForm = getDDMForm(resourceRequest);
-		DDMFormLayout ddmFormLayout = getDDMFormLayout(resourceRequest);
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			DDMStructure.class.getName(), resourceRequest);
-
-		if (ddmStructureId != 0) {
-			return ddmStructureService.updateStructure(
-				ddmStructureId,
-				DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
-				getLocalizedMap(themeDisplay.getSiteDefaultLocale(), name),
-				getLocalizedMap(
-					themeDisplay.getSiteDefaultLocale(), description),
-				ddmForm, ddmFormLayout, serviceContext);
-		}
-		else {
-			return ddmStructureService.addStructure(
-				groupId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
-				PortalUtil.getClassNameId(DDLRecordSet.class), structureKey,
-				getLocalizedMap(themeDisplay.getSiteDefaultLocale(), name),
-				getLocalizedMap(
-					themeDisplay.getSiteDefaultLocale(), description),
-				ddmForm, ddmFormLayout, storageType,
-				DDMStructureConstants.TYPE_AUTO, serviceContext);
-		}
-	}
-
-	protected DDLRecordSet saveRecordSet(
-			ResourceRequest resourceRequest, long ddmStructureId)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		long recordSetId = ParamUtil.getLong(resourceRequest, "recordSetId");
-
-		long groupId = ParamUtil.getLong(resourceRequest, "groupId");
-		String recordSetKey = ParamUtil.getString(
-			resourceRequest, "recordSetKey");
-		String name = ParamUtil.getString(resourceRequest, "name");
-		String description = ParamUtil.getString(
-			resourceRequest, "description");
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			DDLRecordSet.class.getName(), resourceRequest);
-
-		if (recordSetId != 0) {
-			return ddlRecordSetService.updateRecordSet(
-				recordSetId, ddmStructureId,
-				getLocalizedMap(themeDisplay.getSiteDefaultLocale(), name),
-				getLocalizedMap(
-					themeDisplay.getSiteDefaultLocale(), description),
-				DDLRecordSetConstants.MIN_DISPLAY_ROWS_DEFAULT, serviceContext);
-		}
-		else {
-			return ddlRecordSetService.addRecordSet(
-				groupId, ddmStructureId, recordSetKey,
-				getLocalizedMap(themeDisplay.getSiteDefaultLocale(), name),
-				getLocalizedMap(
-					themeDisplay.getSiteDefaultLocale(), description),
-				DDLRecordSetConstants.MIN_DISPLAY_ROWS_DEFAULT,
-				DDLRecordSetConstants.SCOPE_FORMS, serviceContext);
-		}
-	}
-
-	protected void updateRecordSetSettings(
-			ResourceRequest resourceRequest, DDLRecordSet recordSet,
-			DDMFormValues settingsDDMFormValues)
-		throws PortalException {
-
-		ddlRecordSetService.updateRecordSet(
-			recordSet.getRecordSetId(), settingsDDMFormValues);
-
-		updateWorkflowDefinitionLink(
-			resourceRequest, recordSet, settingsDDMFormValues);
-	}
-
-	protected void updateWorkflowDefinitionLink(
-			ResourceRequest resourceRequest, DDLRecordSet recordSet,
-			DDMFormValues ddmFormValues)
-		throws PortalException {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		long groupId = ParamUtil.getLong(resourceRequest, "groupId");
-
-		String workflowDefinition = getWorkflowDefinition(ddmFormValues);
-
-		workflowDefinitionLinkLocalService.updateWorkflowDefinitionLink(
-			themeDisplay.getUserId(), themeDisplay.getCompanyId(), groupId,
-			DDLRecordSet.class.getName(), recordSet.getRecordSetId(), 0,
-			workflowDefinition);
+		return TransactionInvokerUtil.invoke(_transactionConfig, callable);
 	}
 
 	@Reference
-	protected DDLRecordSetService ddlRecordSetService;
-
-	@Reference
-	protected DDMFormJSONDeserializer ddmFormJSONDeserializer;
-
-	@Reference
-	protected DDMFormLayoutJSONDeserializer ddmFormLayoutJSONDeserializer;
-
-	@Reference
-	protected DDMFormValuesJSONDeserializer ddmFormValuesJSONDeserializer;
-
-	@Reference
-	protected DDMFormValuesQueryFactory ddmFormValuesQueryFactory;
-
-	@Reference
-	protected DDMStructureService ddmStructureService;
+	protected AddUpdateRecordSetMVCCommandHelper
+		addUpdateRecordSetMVCCommandHelper;
 
 	@Reference
 	protected JSONFactory jsonFactory;
 
-	@Reference
-	protected WorkflowDefinitionLinkLocalService
-		workflowDefinitionLinkLocalService;
+	private static final TransactionConfig _transactionConfig;
+
+	static {
+		TransactionConfig.Builder builder = new TransactionConfig.Builder();
+
+		builder.setPropagation(Propagation.REQUIRES_NEW);
+		builder.setRollbackForClasses(Exception.class);
+
+		_transactionConfig = builder.build();
+	}
 
 }

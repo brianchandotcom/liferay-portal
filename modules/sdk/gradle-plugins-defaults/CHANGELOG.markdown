@@ -287,8 +287,8 @@ argument in the `npmInstall` task with the value of the project property
 ## 1.2.31 - 2016-09-23
 
 ### Added
-- [LPS-68306]: Set the system property `portal.pre.build` to `true` to include
-only the projects that contain a `.lfrbuild-portal-pre` marker file.
+- [LPS-68306]: Set the system property `portal.pre.build` to `true` to only
+include the projects containing a `.lfrbuild-portal-pre` marker file.
 
 ## 1.2.32 - 2016-09-26
 
@@ -313,8 +313,8 @@ only the projects that contain a `.lfrbuild-portal-pre` marker file.
 [LPS-68014]: https://issues.liferay.com/browse/LPS-68014
 [LPS-68131]: https://issues.liferay.com/browse/LPS-68131
 [LPS-68230]: https://issues.liferay.com/browse/LPS-68230
-[LPS-68305]: https://issues.liferay.com/browse/LPS-68305
 [LPS-68297]: https://issues.liferay.com/browse/LPS-68297
+[LPS-68305]: https://issues.liferay.com/browse/LPS-68305
 [LPS-68306]: https://issues.liferay.com/browse/LPS-68306
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

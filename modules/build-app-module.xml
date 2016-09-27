@@ -51,7 +51,7 @@
 		<available file="build.xml" />
 	</condition>
 
-	<target name="copy-hotfix-artifact" if="artifact.hotfix">
+	<target if="artifact.hotfix" name="copy-hotfix-artifact">
 		<copy todir="${dist.dir}">
 			<fileset dir="hotfix" includes="*.jar" />
 		</copy>

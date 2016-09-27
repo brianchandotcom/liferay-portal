@@ -652,6 +652,10 @@
 		<priority value="ERROR" />
 	</category>
 
+	<category name="com.liferay.portal.service.persistence.impl">
+		<priority value="WARN " />
+	</category>
+
 	<category name="com.liferay.portal.servlet">
 		<priority value="ERROR" />
 	</category>

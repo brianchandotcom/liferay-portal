@@ -34,6 +34,8 @@ public class PollerHeader implements Serializable {
 		_browserKey = browserKey;
 		_portletIdsMap = portletIdsMap;
 		_startPolling = startPolling;
+
+		_timestamp = System.currentTimeMillis();
 	}
 
 	public long getBrowserKey() {
@@ -49,7 +51,7 @@ public class PollerHeader implements Serializable {
 	}
 
 	public long getTimestamp() {
-		return _TIMESTAMP;
+		return _timestamp;
 	}
 
 	public long getUserId() {
@@ -73,7 +75,7 @@ public class PollerHeader implements Serializable {
 		sb.append(", startPolling=");
 		sb.append(_startPolling);
 		sb.append(", timestamp=");
-		sb.append(_TIMESTAMP);
+		sb.append(_timestamp);
 		sb.append(", userId=");
 		sb.append(_userId);
 		sb.append("}");
@@ -81,14 +83,13 @@ public class PollerHeader implements Serializable {
 		return sb.toString();
 	}
 
-	private static final long _TIMESTAMP = System.currentTimeMillis();
-
 	private static final long serialVersionUID = 1L;
 
 	private final long _browserKey;
 	private final long _companyId;
 	private final Map<String, Boolean> _portletIdsMap;
 	private final boolean _startPolling;
+	private final long _timestamp;
 	private final long _userId;
 
 }

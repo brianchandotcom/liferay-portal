@@ -283,6 +283,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-tabview', 'liferay-ddl-form-builder-sidebar']
+		requires: ['aui-tabview', 'liferay-ddl-form-builder-sidebar', 'liferay-ddm-form-renderer-types']
 	}
 );

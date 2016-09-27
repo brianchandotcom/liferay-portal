@@ -16,9 +16,7 @@ package com.liferay.websocket.whiteboard.test.client;
 
 import java.io.IOException;
 
-import java.util.Stack;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.BlockingQueue;
 
 import javax.websocket.ClientEndpoint;
 import javax.websocket.OnMessage;
@@ -32,14 +30,8 @@ import javax.websocket.Session;
 @ClientEndpoint
 public class TestWebSocketClient {
 
-	public void await(long time, TimeUnit timeUnit)
-		throws InterruptedException {
-
-		_countDownLatch.await(time, timeUnit);
-	}
-
-	public long getOnTextCount() {
-		return _countDownLatch.getCount();
+	public TestWebSocketClient(BlockingQueue<String> textQueue) {
+		_textQueue = textQueue;
 	}
 
 	@OnOpen
@@ -48,37 +40,19 @@ public class TestWebSocketClient {
 	}
 
 	@OnMessage
-	public void onText(String text, Session session) {
-		if (_countDownLatch == null) {
-			throw new RuntimeException("Count down latch is null");
-		}
+	public void onText(String text, Session session)
+		throws InterruptedException {
 
-		_countDownLatch.countDown();
-
-		_texts.add(text);
+		_textQueue.put(text);
 	}
 
-	public String popReceivedTexts() {
-		return _texts.pop();
+	public void sendText(String text) throws IOException {
+		Basic basic = _session.getBasicRemote();
+
+		basic.sendText(text);
 	}
 
-	public void sendText(String text) {
-		try {
-			Basic basic = _session.getBasicRemote();
-
-			basic.sendText(text);
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
-		}
-	}
-
-	public void setInitialOnTextCount(int initialOnTextCount) {
-		_countDownLatch = new CountDownLatch(initialOnTextCount);
-	}
-
-	private CountDownLatch _countDownLatch;
 	private Session _session;
-	private final Stack<String> _texts = new Stack<>();
+	private final BlockingQueue<String> _textQueue;
 
 }

@@ -490,6 +490,7 @@ http://www.w3.org/TR/html401/struct/global.html
 
 	<allowed-empty-tags>
 		<literal-list>
+			<literal value="img" />
 			<literal value="source" />
 		</literal-list>
 	</allowed-empty-tags>

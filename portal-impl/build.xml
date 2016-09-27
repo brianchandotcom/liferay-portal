@@ -327,7 +327,9 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 		<antcall target="build-service-portal" />
 		<antcall target="build-service-portlets" />
 
-		<gradle-execute dir="../modules" task="buildService" />
+		<gradle-execute dir="../modules" task="buildService">
+			<arg value="-DbuildService.skipReadOnly=${build.services.skip.read.only}" />
+		</gradle-execute>
 	</target>
 
 	<target name="build-upgrade-table">

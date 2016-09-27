@@ -45,33 +45,37 @@ public class ExpressionModelTest {
 
 		AndExpression andExpression = (AndExpression)expressionModel;
 
-		Expression leftOperand = andExpression.getLeftOperand();
-		Expression rightOperand = andExpression.getRightOperand();
+		Expression leftOperandExpression =
+			andExpression.getLeftOperandExpression();
+		Expression rightOperandExpression =
+			andExpression.getRightOperandExpression();
 
-		Assert.assertEquals(Term.class, leftOperand.getClass());
+		Assert.assertEquals(Term.class, leftOperandExpression.getClass());
 		Assert.assertEquals(
-			ComparisonExpression.class, rightOperand.getClass());
+			ComparisonExpression.class, rightOperandExpression.getClass());
 
-		Term term = (Term)leftOperand;
+		Term term = (Term)leftOperandExpression;
 
 		Assert.assertEquals("true", term.getValue());
 
 		ComparisonExpression comparisonExpression =
-			(ComparisonExpression)rightOperand;
+			(ComparisonExpression)rightOperandExpression;
 
-		Expression leftOperand2 = comparisonExpression.getLeftOperand();
-		Expression rightOperand2 = comparisonExpression.getRightOperand();
+		Expression leftOperandExpression2 =
+			comparisonExpression.getLeftOperandExpression();
+		Expression rightOperandExpression2 =
+			comparisonExpression.getRightOperandExpression();
 
 		Assert.assertEquals("!=", comparisonExpression.getOperator());
 
-		Assert.assertEquals(Term.class, leftOperand2.getClass());
-		Assert.assertEquals(Term.class, rightOperand2.getClass());
+		Assert.assertEquals(Term.class, leftOperandExpression2.getClass());
+		Assert.assertEquals(Term.class, rightOperandExpression2.getClass());
 
-		term = (Term)leftOperand2;
+		term = (Term)leftOperandExpression2;
 
 		Assert.assertEquals("2", term.getValue());
 
-		term = (Term)rightOperand2;
+		term = (Term)rightOperandExpression2;
 
 		Assert.assertEquals("3", term.getValue());
 	}
@@ -89,47 +93,54 @@ public class ExpressionModelTest {
 		ArithmeticExpression arithmeticExpression =
 			(ArithmeticExpression)expressionModel;
 
-		Expression leftOperand = arithmeticExpression.getLeftOperand();
-		Expression rightOperand = arithmeticExpression.getRightOperand();
+		Expression leftOperandExpression =
+			arithmeticExpression.getLeftOperandExpression();
+		Expression rightOperandExpression =
+			arithmeticExpression.getRightOperandExpression();
 
-		Assert.assertEquals(ArithmeticExpression.class, leftOperand.getClass());
-		Assert.assertEquals(Term.class, rightOperand.getClass());
+		Assert.assertEquals(
+			ArithmeticExpression.class, leftOperandExpression.getClass());
+		Assert.assertEquals(Term.class, rightOperandExpression.getClass());
 		Assert.assertEquals("-", arithmeticExpression.getOperator());
 
-		Term term = (Term)rightOperand;
+		Term term = (Term)rightOperandExpression;
 
 		Assert.assertEquals("d", term.getValue());
 
 		ArithmeticExpression arithmeticExpression2 =
-			(ArithmeticExpression)leftOperand;
+			(ArithmeticExpression)leftOperandExpression;
 
-		Expression leftOperand2 = arithmeticExpression2.getLeftOperand();
-		Expression rightOperand2 = arithmeticExpression2.getRightOperand();
+		Expression leftOperandExpression2 =
+			arithmeticExpression2.getLeftOperandExpression();
+		Expression rightOperandExpression2 =
+			arithmeticExpression2.getRightOperandExpression();
 
-		Assert.assertEquals(Term.class, leftOperand2.getClass());
+		Assert.assertEquals(Term.class, leftOperandExpression2.getClass());
 		Assert.assertEquals(
-			ArithmeticExpression.class, rightOperand2.getClass());
+			ArithmeticExpression.class, rightOperandExpression2.getClass());
 		Assert.assertEquals("+", arithmeticExpression2.getOperator());
 
-		term = (Term)leftOperand2;
+		term = (Term)leftOperandExpression2;
 
 		Assert.assertEquals("a", term.getValue());
 
 		ArithmeticExpression arithmeticExpression3 =
-			(ArithmeticExpression)rightOperand2;
+			(ArithmeticExpression)rightOperandExpression2;
 
-		Expression leftOperand3 = arithmeticExpression3.getLeftOperand();
-		Expression rightOperand3 = arithmeticExpression3.getRightOperand();
+		Expression leftOperandExpression3 =
+			arithmeticExpression3.getLeftOperandExpression();
+		Expression rightOperandExpression3 =
+			arithmeticExpression3.getRightOperandExpression();
 
-		Assert.assertEquals(Term.class, leftOperand3.getClass());
-		Assert.assertEquals(Term.class, rightOperand3.getClass());
+		Assert.assertEquals(Term.class, leftOperandExpression3.getClass());
+		Assert.assertEquals(Term.class, rightOperandExpression3.getClass());
 		Assert.assertEquals("*", arithmeticExpression3.getOperator());
 
-		term = (Term)leftOperand3;
+		term = (Term)leftOperandExpression3;
 
 		Assert.assertEquals("b", term.getValue());
 
-		term = (Term)rightOperand3;
+		term = (Term)rightOperandExpression3;
 
 		Assert.assertEquals("c", term.getValue());
 	}
@@ -164,41 +175,43 @@ public class ExpressionModelTest {
 		ComparisonExpression comparisonExpression =
 			(ComparisonExpression)expressionModel;
 
-		Expression comparisonLeftOperand =
-			comparisonExpression.getLeftOperand();
+		Expression leftOperandExpression =
+			comparisonExpression.getLeftOperandExpression();
 
-		Expression comparisonRightOperand =
-			comparisonExpression.getRightOperand();
+		Expression rightOperandExpression =
+			comparisonExpression.getRightOperandExpression();
 
 		Assert.assertEquals(">", comparisonExpression.getOperator());
 
 		Assert.assertEquals(
-			ArithmeticExpression.class, comparisonLeftOperand.getClass());
-		Assert.assertEquals(Term.class, comparisonRightOperand.getClass());
+			ArithmeticExpression.class, leftOperandExpression.getClass());
+		Assert.assertEquals(Term.class, rightOperandExpression.getClass());
 
 		ArithmeticExpression arithmeticExpression =
-			(ArithmeticExpression)comparisonLeftOperand;
+			(ArithmeticExpression)leftOperandExpression;
 
-		Expression arithmeticLeftOperand =
-			arithmeticExpression.getLeftOperand();
+		Expression arithmeticLeftOperandExpression =
+			arithmeticExpression.getLeftOperandExpression();
 
-		Expression arithmeticRightOperand =
-			arithmeticExpression.getRightOperand();
+		Expression arithmeticRightOperandExpression =
+			arithmeticExpression.getRightOperandExpression();
 
 		Assert.assertEquals("*", arithmeticExpression.getOperator());
 
-		Assert.assertEquals(Term.class, arithmeticLeftOperand.getClass());
-		Assert.assertEquals(Term.class, arithmeticRightOperand.getClass());
+		Assert.assertEquals(
+			Term.class, arithmeticLeftOperandExpression.getClass());
+		Assert.assertEquals(
+			Term.class, arithmeticRightOperandExpression.getClass());
 
-		Term term = (Term)arithmeticLeftOperand;
+		Term term = (Term)arithmeticLeftOperandExpression;
 
 		Assert.assertEquals("2", term.getValue());
 
-		term = (Term)arithmeticRightOperand;
+		term = (Term)arithmeticRightOperandExpression;
 
 		Assert.assertEquals("5", term.getValue());
 
-		term = (Term)comparisonRightOperand;
+		term = (Term)rightOperandExpression;
 
 		Assert.assertEquals("3", term.getValue());
 	}
@@ -216,103 +229,112 @@ public class ExpressionModelTest {
 		ComparisonExpression comparisonExpression =
 			(ComparisonExpression)expressionModel;
 
-		Expression comparisonLeftOperand =
-			comparisonExpression.getLeftOperand();
+		Expression comparisonLeftOperandExpression =
+			comparisonExpression.getLeftOperandExpression();
 
-		Expression comparisonRightOperand =
-			comparisonExpression.getRightOperand();
+		Expression comparisonRightOperandExpression =
+			comparisonExpression.getRightOperandExpression();
 
 		Assert.assertEquals("<=", comparisonExpression.getOperator());
 
 		Assert.assertEquals(
-			ArithmeticExpression.class, comparisonLeftOperand.getClass());
+			ArithmeticExpression.class,
+			comparisonLeftOperandExpression.getClass());
 		Assert.assertEquals(
-			FunctionCallExpression.class, comparisonRightOperand.getClass());
+			FunctionCallExpression.class,
+			comparisonRightOperandExpression.getClass());
 
 		ArithmeticExpression arithmeticExpression =
-			(ArithmeticExpression)comparisonLeftOperand;
+			(ArithmeticExpression)comparisonLeftOperandExpression;
 
-		Expression arithmeticLeftOperand =
-			arithmeticExpression.getLeftOperand();
+		Expression arithmeticLeftOperandExpression =
+			arithmeticExpression.getLeftOperandExpression();
 
-		Expression arithmeticRightOperand =
-			arithmeticExpression.getRightOperand();
+		Expression arithmeticRightOperandExpression =
+			arithmeticExpression.getRightOperandExpression();
 
 		Assert.assertEquals("/", arithmeticExpression.getOperator());
 
 		Assert.assertEquals(
-			ArithmeticExpression.class, arithmeticLeftOperand.getClass());
+			ArithmeticExpression.class,
+			arithmeticLeftOperandExpression.getClass());
 		Assert.assertEquals(
-			ArithmeticExpression.class, arithmeticRightOperand.getClass());
+			ArithmeticExpression.class,
+			arithmeticRightOperandExpression.getClass());
 
 		ArithmeticExpression arithmeticExpression2 =
-			(ArithmeticExpression)arithmeticLeftOperand;
+			(ArithmeticExpression)arithmeticLeftOperandExpression;
 
-		Expression arithmeticLeftOperand2 =
-			arithmeticExpression2.getLeftOperand();
+		Expression arithmeticLeftOperandExpression2 =
+			arithmeticExpression2.getLeftOperandExpression();
 
-		Expression arithmeticRightOperand2 =
-			arithmeticExpression2.getRightOperand();
+		Expression arithmeticRightOperandExpression2 =
+			arithmeticExpression2.getRightOperandExpression();
 
 		Assert.assertEquals("+", arithmeticExpression2.getOperator());
 
-		Assert.assertEquals(Term.class, arithmeticLeftOperand2.getClass());
-		Assert.assertEquals(Term.class, arithmeticRightOperand2.getClass());
+		Assert.assertEquals(
+			Term.class, arithmeticLeftOperandExpression2.getClass());
+		Assert.assertEquals(
+			Term.class, arithmeticRightOperandExpression2.getClass());
 
-		Term term = (Term)arithmeticLeftOperand2;
+		Term term = (Term)arithmeticLeftOperandExpression2;
 
 		Assert.assertEquals("1", term.getValue());
 
-		term = (Term)arithmeticRightOperand2;
+		term = (Term)arithmeticRightOperandExpression2;
 
 		Assert.assertEquals("4", term.getValue());
 
 		ArithmeticExpression arithmeticExpression3 =
-			(ArithmeticExpression)arithmeticRightOperand;
+			(ArithmeticExpression)arithmeticRightOperandExpression;
 
-		Expression arithmeticLeftOperand3 =
-			arithmeticExpression3.getLeftOperand();
+		Expression arithmeticLeftOperandExpression3 =
+			arithmeticExpression3.getLeftOperandExpression();
 
-		Expression arithmeticRightOperand3 =
-			arithmeticExpression3.getRightOperand();
+		Expression arithmeticRightOperandExpression3 =
+			arithmeticExpression3.getRightOperandExpression();
 
 		Assert.assertEquals("-", arithmeticExpression3.getOperator());
 
-		Assert.assertEquals(Term.class, arithmeticLeftOperand3.getClass());
-		Assert.assertEquals(Term.class, arithmeticRightOperand3.getClass());
+		Assert.assertEquals(
+			Term.class, arithmeticLeftOperandExpression3.getClass());
+		Assert.assertEquals(
+			Term.class, arithmeticRightOperandExpression3.getClass());
 
-		term = (Term)arithmeticLeftOperand3;
+		term = (Term)arithmeticLeftOperandExpression3;
 
 		Assert.assertEquals("5", term.getValue());
 
-		term = (Term)arithmeticRightOperand3;
+		term = (Term)arithmeticRightOperandExpression3;
 
 		Assert.assertEquals("2", term.getValue());
 
 		FunctionCallExpression functionCallExpression =
-			(FunctionCallExpression)comparisonRightOperand;
+			(FunctionCallExpression)comparisonRightOperandExpression;
 
 		Assert.assertEquals("sum", functionCallExpression.getFunctionName());
 		Assert.assertEquals(2, functionCallExpression.getArity());
 
-		List<Expression> parameters = functionCallExpression.getParameters();
+		List<Expression> parameterExpressions =
+			functionCallExpression.getParameterExpressions();
 
-		Assert.assertNotNull(parameters);
-		Assert.assertEquals(2, parameters.size());
+		Assert.assertNotNull(parameterExpressions);
+		Assert.assertEquals(2, parameterExpressions.size());
 
-		Expression parameter = parameters.get(0);
+		Expression parameterExpression = parameterExpressions.get(0);
 
-		Assert.assertEquals(Term.class, parameter.getClass());
+		Assert.assertEquals(Term.class, parameterExpression.getClass());
 
-		term = (Term)parameter;
+		term = (Term)parameterExpression;
 
 		Assert.assertEquals("Var1", term.getValue());
 
-		parameter = parameters.get(1);
+		parameterExpression = parameterExpressions.get(1);
 
-		Assert.assertEquals(Term.class, parameter.getClass());
+		Assert.assertEquals(Term.class, parameterExpression.getClass());
 
-		term = (Term)parameter;
+		term = (Term)parameterExpression;
 
 		Assert.assertEquals("Var2", term.getValue());
 	}
@@ -328,11 +350,11 @@ public class ExpressionModelTest {
 
 		NotExpression notExpression = (NotExpression)expressionModel;
 
-		Expression operand = notExpression.getOperand();
+		Expression operandExpression = notExpression.getOperandExpression();
 
-		Assert.assertEquals(Term.class, operand.getClass());
+		Assert.assertEquals(Term.class, operandExpression.getClass());
 
-		Term term = (Term)operand;
+		Term term = (Term)operandExpression;
 
 		Assert.assertEquals("false", term.getValue());
 	}
@@ -348,90 +370,101 @@ public class ExpressionModelTest {
 
 		OrExpression orExpression = (OrExpression)expressionModel;
 
-		Expression leftOperand = orExpression.getLeftOperand();
-		Expression rightOperand = orExpression.getRightOperand();
+		Expression leftOperandExpression =
+			orExpression.getLeftOperandExpression();
+		Expression rightOperandExpression =
+			orExpression.getRightOperandExpression();
 
-		Assert.assertEquals(ComparisonExpression.class, leftOperand.getClass());
-		Assert.assertEquals(NotExpression.class, rightOperand.getClass());
+		Assert.assertEquals(
+			ComparisonExpression.class, leftOperandExpression.getClass());
+		Assert.assertEquals(
+			NotExpression.class, rightOperandExpression.getClass());
 
 		ComparisonExpression comparisonExpression =
-			(ComparisonExpression)leftOperand;
+			(ComparisonExpression)leftOperandExpression;
 
-		Expression leftOperand2 = comparisonExpression.getLeftOperand();
-		Expression rightOperand2 = comparisonExpression.getRightOperand();
+		Expression leftOperandExpression2 =
+			comparisonExpression.getLeftOperandExpression();
+		Expression rightOperandExpression2 =
+			comparisonExpression.getRightOperandExpression();
 
 		Assert.assertEquals("<", comparisonExpression.getOperator());
 
-		Assert.assertEquals(MinusExpression.class, leftOperand2.getClass());
-		Assert.assertEquals(Term.class, rightOperand2.getClass());
+		Assert.assertEquals(
+			MinusExpression.class, leftOperandExpression2.getClass());
+		Assert.assertEquals(Term.class, rightOperandExpression2.getClass());
 
-		MinusExpression minusExpression = (MinusExpression)leftOperand2;
+		MinusExpression minusExpression =
+			(MinusExpression)leftOperandExpression2;
 
-		Expression minusOperand = minusExpression.getOperand();
+		Expression minusOperandExpression =
+			minusExpression.getOperandExpression();
 
-		Assert.assertEquals(Term.class, minusOperand.getClass());
+		Assert.assertEquals(Term.class, minusOperandExpression.getClass());
 
-		Term term = (Term)minusOperand;
+		Term term = (Term)minusOperandExpression;
 
 		Assert.assertEquals("3", term.getValue());
 
-		term = (Term)rightOperand2;
+		term = (Term)rightOperandExpression2;
 
 		Assert.assertEquals("Var1", term.getValue());
 
-		NotExpression notExpression = (NotExpression)rightOperand;
+		NotExpression notExpression = (NotExpression)rightOperandExpression;
 
-		Expression notOperand = notExpression.getOperand();
+		Expression notOperandExpression = notExpression.getOperandExpression();
 
 		Assert.assertEquals(
-			FunctionCallExpression.class, notOperand.getClass());
+			FunctionCallExpression.class, notOperandExpression.getClass());
 
 		FunctionCallExpression functionCallExpression =
-			(FunctionCallExpression)notOperand;
+			(FunctionCallExpression)notOperandExpression;
 
 		Assert.assertEquals("equals", functionCallExpression.getFunctionName());
 		Assert.assertEquals(2, functionCallExpression.getArity());
 
-		List<Expression> parameters = functionCallExpression.getParameters();
+		List<Expression> parameterExpressions =
+			functionCallExpression.getParameterExpressions();
 
-		Assert.assertEquals(2, parameters.size());
+		Assert.assertEquals(2, parameterExpressions.size());
 
-		Expression parameter1 = parameters.get(0);
+		Expression parameterExpression1 = parameterExpressions.get(0);
 
-		Assert.assertEquals(Term.class, parameter1.getClass());
+		Assert.assertEquals(Term.class, parameterExpression1.getClass());
 
-		term = (Term)parameter1;
+		term = (Term)parameterExpression1;
 
 		Assert.assertEquals("Var2", term.getValue());
 
-		Expression parameter2 = parameters.get(1);
+		Expression parameterExpression2 = parameterExpressions.get(1);
 
 		Assert.assertEquals(
-			FunctionCallExpression.class, parameter2.getClass());
+			FunctionCallExpression.class, parameterExpression2.getClass());
 
 		FunctionCallExpression functionCallExpression2 =
-			(FunctionCallExpression)parameter2;
+			(FunctionCallExpression)parameterExpression2;
 
 		Assert.assertEquals("sum", functionCallExpression2.getFunctionName());
 		Assert.assertEquals(2, functionCallExpression2.getArity());
 
-		List<Expression> parameters2 = functionCallExpression2.getParameters();
+		List<Expression> parameterExpressions2 =
+			functionCallExpression2.getParameterExpressions();
 
-		Assert.assertEquals(2, parameters2.size());
+		Assert.assertEquals(2, parameterExpressions2.size());
 
-		Expression parameter3 = parameters2.get(0);
+		Expression parameterExpression3 = parameterExpressions2.get(0);
 
-		Assert.assertEquals(Term.class, parameter3.getClass());
+		Assert.assertEquals(Term.class, parameterExpression3.getClass());
 
-		term = (Term)parameter3;
+		term = (Term)parameterExpression3;
 
 		Assert.assertEquals("Var3", term.getValue());
 
-		Expression parameter4 = parameters2.get(1);
+		Expression parameterExpression4 = parameterExpressions2.get(1);
 
-		Assert.assertEquals(Term.class, parameter4.getClass());
+		Assert.assertEquals(Term.class, parameterExpression4.getClass());
 
-		term = (Term)parameter4;
+		term = (Term)parameterExpression4;
 
 		Assert.assertEquals("Var4", term.getValue());
 	}

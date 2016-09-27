@@ -272,9 +272,9 @@ by default.
 ## 1.2.29 - 2016-09-22
 
 ### Added
-- [LPS-66906]: When on Jenkins, override the [`sass-binary-path`](https://github.com/sass/node-sass#binary-configuration-parameters)
+- [LPS-66906]: Override the [`sass-binary-path`](https://github.com/sass/node-sass#binary-configuration-parameters)
 argument in the `npmInstall` task with the value of the project property
-`nodejs.npm.ci.sass.binary.site`.
+`nodejs.npm.ci.sass.binary.site` when using Jenkins.
 
 ### Changed
 - [LPS-66906]: Update the [Liferay Gradle Plugins] dependency to version 2.0.40.

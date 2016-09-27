@@ -357,8 +357,7 @@ public class ExportImportDateUtil {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"Not updating the portlet setup for " + portletId +
-						" because no setup was returned for the current " +
-							"page");
+						" because no setup was returned for the current page");
 			}
 		}
 		catch (Exception e) {

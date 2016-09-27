@@ -166,8 +166,7 @@ public class JSPWikiEngine extends BaseInputEditorWikiEngine {
 		ClassLoader classLoader = clazz.getClassLoader();
 
 		InputStream inputStream = classLoader.getResourceAsStream(
-			"com/liferay/wiki/engine/jspwiki/dependencies" +
-				"/jspwiki.properties");
+			"com/liferay/wiki/engine/jspwiki/dependencies/jspwiki.properties");
 
 		try {
 			_properties.load(inputStream);

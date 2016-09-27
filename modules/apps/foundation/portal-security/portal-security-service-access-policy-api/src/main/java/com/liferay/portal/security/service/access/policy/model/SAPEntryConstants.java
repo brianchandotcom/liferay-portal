@@ -20,7 +20,6 @@ package com.liferay.portal.security.service.access.policy.model;
 public interface SAPEntryConstants {
 
 	public static String NAME_ALLOWED_CHARACTERS =
-		"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz" +
-			"#:@./_-";
+		"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz#:@./_-";
 
 }

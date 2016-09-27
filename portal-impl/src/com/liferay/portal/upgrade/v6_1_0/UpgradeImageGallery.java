@@ -948,7 +948,7 @@ public class UpgradeImageGallery extends UpgradeProcess {
 			runSQL(
 				"update ResourcePermission set name = '" + dlResourceName +
 					"', actionIds = " + dlActionIdsLong + " where name = '" +
-						igResourceName + "'" + " and actionIds = " + i);
+						igResourceName + "' and actionIds = " + i);
 		}
 	}
 

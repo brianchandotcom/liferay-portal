@@ -230,8 +230,7 @@ public class CompositePasswordEncryptorTest extends PowerMockito {
 
 		testEncrypt(
 			algorithm, "password",
-			"qLZLq9CsqRpZvbt3YbQh1PK7OCgNOnW6DyHyvrxFWD1EbFmGYMl" +
-				"M5oDEfRnDB4On");
+			"qLZLq9CsqRpZvbt3YbQh1PK7OCgNOnW6DyHyvrxFWD1EbFmGYMlM5oDEfRnDB4On");
 	}
 
 	@Test

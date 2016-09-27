@@ -839,8 +839,7 @@ public class DLFolderFinderImpl
 			else {
 				sql = StringUtil.replace(
 					sql, "([$HIDDEN$]) AND",
-					"(DLFolder.hidden_ = ?) AND (DLFolder.mountPoint = ?) " +
-						"AND");
+					"(DLFolder.hidden_ = ?) AND (DLFolder.mountPoint = ?) AND");
 			}
 		}
 

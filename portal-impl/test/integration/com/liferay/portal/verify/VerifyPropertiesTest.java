@@ -114,7 +114,7 @@ public class VerifyPropertiesTest extends BaseVerifyProcessTestCase {
 
 			Assert.assertEquals(
 				"System property \"" + migratedSystemKey +
-					"\" was migrated to the " + "portal property \"" +
+					"\" was migrated to the portal property \"" +
 						migratedSystemKey + "\"",
 				loggingEvent.getMessage());
 		}

@@ -392,8 +392,7 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 
 		if (!content.contains("include-and-override=portlet-ext.properties")) {
 			content =
-				"include-and-override=portlet-ext.properties" + "\n\n" +
-					content;
+				"include-and-override=portlet-ext.properties\n\n" + content;
 		}
 
 		if (!portalSource) {

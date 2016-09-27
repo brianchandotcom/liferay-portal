@@ -66,8 +66,7 @@ public class DDMFormValidationException extends PortalException {
 
 		public MustSetAvailableLocales() {
 			super(
-				"The available locales property was not set for the " +
-					"DDM form");
+				"The available locales property was not set for the DDM form");
 		}
 
 	}

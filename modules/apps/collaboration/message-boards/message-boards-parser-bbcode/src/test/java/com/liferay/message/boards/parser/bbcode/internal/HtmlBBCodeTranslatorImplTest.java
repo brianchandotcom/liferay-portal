@@ -47,7 +47,7 @@ public class HtmlBBCodeTranslatorImplTest {
 		String expected =
 			"<strong>type</strong> some <u>text</u><li>this is a test</li>";
 		String actual = _htmlBBCodeTranslator.parse(
-			"[b]type[/b] some [u]text[/u]" + "[*]this is a test");
+			"[b]type[/b] some [u]text[/u][*]this is a test");
 
 		Assert.assertEquals(expected, actual);
 	}

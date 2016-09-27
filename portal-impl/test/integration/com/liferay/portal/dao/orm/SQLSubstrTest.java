@@ -52,7 +52,7 @@ public class SQLSubstrTest {
 			"create table TestSubStr (id LONG not null primary key, data " +
 				"VARCHAR(10) null)");
 
-		_db.runSQL("insert into TestSubStr values (1, 'EXAMPLE'" + ")");
+		_db.runSQL("insert into TestSubStr values (1, 'EXAMPLE')");
 	}
 
 	@AfterClass

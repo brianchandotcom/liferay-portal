@@ -152,8 +152,7 @@ public class GoogleDocsDLViewFileVersionDisplayContext
 		printWriter.write(
 			ResourceBundleUtil.getString(
 				resourceBundle,
-				"google-docs-does-not-provide-a-preview-for-this-" +
-					"document"));
+				"google-docs-does-not-provide-a-preview-for-this-document"));
 		printWriter.write("</div>");
 	}
 

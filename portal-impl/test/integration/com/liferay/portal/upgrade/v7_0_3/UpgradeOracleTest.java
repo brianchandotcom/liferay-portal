@@ -86,7 +86,14 @@ public class UpgradeOracleTest {
 	}
 
 	@Test
-	public void testUpgradeReduceFieldSizes() throws Exception {
+	public void testUpgradeAlterVarchar2ColumnsToChar() throws Exception {
+		_upgradeOracle.upgrade();
+
+		Assert.assertEquals("C", getCharUsed(_TABLE_NAME, _FIELD_NAME));
+	}
+
+	@Test
+	public void testUpgradeDividesFieldSizesByFour() throws Exception {
 		Release portalRelease = ReleaseLocalServiceUtil.fetchRelease("portal");
 
 		portalRelease.setBuildNumber(ReleaseInfo.RELEASE_6_1_20_BUILD_NUMBER);
@@ -96,13 +103,6 @@ public class UpgradeOracleTest {
 		_upgradeOracle.upgrade();
 
 		Assert.assertEquals(75, getCharLenght(_TABLE_NAME, _FIELD_NAME));
-	}
-
-	@Test
-	public void testUpgradeVarcharAsChar() throws Exception {
-		_upgradeOracle.upgrade();
-
-		Assert.assertEquals("C", getCharUsed(_TABLE_NAME, _FIELD_NAME));
 	}
 
 	protected int getCharLenght(String tableName, String tableColumn)

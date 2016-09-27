@@ -830,11 +830,15 @@ public class DLAppHelperLocalServiceImpl
 		String[] assetTagNames = assetTagLocalService.getTagNames(
 			DLFileEntryConstants.getClassName(), assetClassPk);
 
-		AssetEntry assetEntry = assetEntryLocalService.getEntry(
+		AssetEntry assetEntry = assetEntryLocalService.fetchEntry(
 			DLFileEntryConstants.getClassName(), assetClassPk);
 
-		List<AssetLink> assetLinks = assetLinkLocalService.getDirectLinks(
-			assetEntry.getEntryId(), false);
+		List<AssetLink> assetLinks = null;
+
+		if (assetEntry != null) {
+			assetLinks = assetLinkLocalService.getDirectLinks(
+				assetEntry.getEntryId(), false);
+		}
 
 		long[] assetLinkIds = ListUtil.toLongArray(
 			assetLinks, AssetLink.ENTRY_ID2_ACCESSOR);
